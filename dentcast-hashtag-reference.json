@@ -394,7 +394,7 @@
     "#Implant"
    ],
    "co_tags": [],
-   "count": 94,
+   "count": 95,
    "content_ids": [
     "episodes/episode-23",
     "episodes/episode-24",
@@ -489,7 +489,8 @@
     "chairside/chairside-36",
     "episodes/episode-162",
     "chairside/chairside-38",
-    "sharehub/share-35"
+    "sharehub/share-35",
+    "chairside/chairside-42"
    ]
   },
   {
@@ -579,7 +580,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 50,
+   "count": 51,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-25",
@@ -630,7 +631,8 @@
     "insight/insight-89",
     "chairside/chairside-41",
     "insight/insight-95",
-    "sharehub/share-36"
+    "sharehub/share-36",
+    "chairside/chairside-42"
    ]
   },
   {
@@ -765,6 +767,66 @@
    ]
   },
   {
+   "key": "چیرساید",
+   "tag": "#چیرساید",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام سری چیرساید — یادداشت کوتاه از یک ویزیت واقعی، با تصمیمی که سر یونیت گرفته شد.",
+   "use_when": "روی هر مدخل چیرساید، و هیچ‌جای دیگر.",
+   "aliases": [
+    "chairside",
+    "چیر ساید"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 43,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30",
+    "chairside/chairside-31",
+    "chairside/chairside-32",
+    "chairside/chairside-33",
+    "chairside/chairside-34",
+    "chairside/chairside-35",
+    "dentcast-plus/video-10",
+    "chairside/chairside-36",
+    "chairside/chairside-37",
+    "chairside/chairside-38",
+    "chairside/chairside-39",
+    "chairside/chairside-40",
+    "chairside/chairside-41",
+    "chairside/chairside-42"
+   ]
+  },
+  {
    "key": "نوت_کست",
    "tag": "#نوت_کست",
    "domain": "brand",
@@ -825,17 +887,22 @@
    ]
   },
   {
-   "key": "چیرساید",
-   "tag": "#چیرساید",
+   "key": "کیس_بالینی",
+   "tag": "#کیس_بالینی",
    "domain": "brand",
-   "words": 1,
-   "definition": "نام سری چیرساید — یادداشت کوتاه از یک ویزیت واقعی، با تصمیمی که سر یونیت گرفته شد.",
-   "use_when": "روی هر مدخل چیرساید، و هیچ‌جای دیگر.",
+   "words": 2,
+   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
+   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
    "aliases": [
-    "chairside",
-    "چیر ساید"
+    "ویزیت کلینیکی",
+    "گزارش کیس",
+    "کیس ریپورت",
+    "case report"
    ],
-   "variants": [],
+   "variants": [
+    "#ویزیت_کلینیکی",
+    "#گزارش_کیس"
+   ],
    "co_tags": [],
    "count": 42,
    "content_ids": [
@@ -874,76 +941,13 @@
     "chairside/chairside-33",
     "chairside/chairside-34",
     "chairside/chairside-35",
-    "dentcast-plus/video-10",
     "chairside/chairside-36",
     "chairside/chairside-37",
     "chairside/chairside-38",
     "chairside/chairside-39",
     "chairside/chairside-40",
-    "chairside/chairside-41"
-   ]
-  },
-  {
-   "key": "کیس_بالینی",
-   "tag": "#کیس_بالینی",
-   "domain": "brand",
-   "words": 2,
-   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
-   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
-   "aliases": [
-    "ویزیت کلینیکی",
-    "گزارش کیس",
-    "کیس ریپورت",
-    "case report"
-   ],
-   "variants": [
-    "#ویزیت_کلینیکی",
-    "#گزارش_کیس"
-   ],
-   "co_tags": [],
-   "count": 41,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-7",
-    "chairside/chairside-8",
-    "chairside/chairside-9",
-    "chairside/chairside-10",
-    "chairside/chairside-11",
-    "chairside/chairside-12",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-15",
-    "chairside/chairside-16",
-    "chairside/chairside-17",
-    "chairside/chairside-18",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "chairside/chairside-30",
-    "chairside/chairside-31",
-    "chairside/chairside-32",
-    "chairside/chairside-33",
-    "chairside/chairside-34",
-    "chairside/chairside-35",
-    "chairside/chairside-36",
-    "chairside/chairside-37",
-    "chairside/chairside-38",
-    "chairside/chairside-39",
-    "chairside/chairside-40",
-    "chairside/chairside-41"
+    "chairside/chairside-41",
+    "chairside/chairside-42"
    ]
   },
   {
@@ -2052,7 +2056,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 20,
+   "count": 21,
    "content_ids": [
     "episodes/episode-148-2",
     "chairside/chairside-23",
@@ -2073,7 +2077,8 @@
     "chairside/chairside-38",
     "chairside/chairside-39",
     "chairside/chairside-40",
-    "chairside/chairside-41"
+    "chairside/chairside-41",
+    "chairside/chairside-42"
    ]
   },
   {
@@ -3839,6 +3844,33 @@
    ]
   },
   {
+   "key": "دیاستم",
+   "tag": "#دیاستم",
+   "domain": null,
+   "words": 1,
+   "definition": "فاصله‌ی بین دو دندان مجاور در قدام.",
+   "use_when": "مقاله درباره‌ی بستن یا مدیریت دیاستم تصمیم بگیرد.",
+   "aliases": [
+    "diastema",
+    "دیاستما",
+    "فاصله بین دندانی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-26",
+    "insight/insight-61",
+    "chairside/chairside-33",
+    "insight/insight-72",
+    "chairside/chairside-39",
+    "insight/insight-89",
+    "chairside/chairside-41",
+    "chairside/chairside-42"
+   ]
+  },
+  {
    "key": "سایلان",
    "tag": "#سایلان",
    "domain": null,
@@ -3948,6 +3980,34 @@
    ]
   },
   {
+   "key": "ارتودنسی",
+   "tag": "#ارتودنسی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "درمان ارتودنتیک به‌عنوان بخشی از طرح درمان.",
+   "use_when": "مقاله تعاملِ ارتو و پروتز را دخیل بداند.",
+   "aliases": [
+    "ارتو",
+    "ortho",
+    "درمان ارتودنتیک"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#Orthodontics"
+   ],
+   "count": 8,
+   "content_ids": [
+    "insight/insight-19",
+    "sharehub/share-5",
+    "insight/insight-38",
+    "insight/insight-42",
+    "sharehub/share-19",
+    "chairside/chairside-39",
+    "sharehub/share-24",
+    "chairside/chairside-42"
+   ]
+  },
+  {
    "key": "اندوکراون",
    "tag": "#اندوکراون",
    "domain": null,
@@ -4022,32 +4082,6 @@
     "notecast/episode-38",
     "chairside/chairside-35",
     "sharehub/share-27"
-   ]
-  },
-  {
-   "key": "دیاستم",
-   "tag": "#دیاستم",
-   "domain": null,
-   "words": 1,
-   "definition": "فاصله‌ی بین دو دندان مجاور در قدام.",
-   "use_when": "مقاله درباره‌ی بستن یا مدیریت دیاستم تصمیم بگیرد.",
-   "aliases": [
-    "diastema",
-    "دیاستما",
-    "فاصله بین دندانی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-26",
-    "insight/insight-61",
-    "chairside/chairside-33",
-    "insight/insight-72",
-    "chairside/chairside-39",
-    "insight/insight-89",
-    "chairside/chairside-41"
    ]
   },
   {
@@ -4239,33 +4273,6 @@
     "dentai/promptologist/prompt4-3",
     "dentai/promptologist/prompt4-4",
     "dentai/promptologist/prompt6-4"
-   ]
-  },
-  {
-   "key": "ارتودنسی",
-   "tag": "#ارتودنسی",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "درمان ارتودنتیک به‌عنوان بخشی از طرح درمان.",
-   "use_when": "مقاله تعاملِ ارتو و پروتز را دخیل بداند.",
-   "aliases": [
-    "ارتو",
-    "ortho",
-    "درمان ارتودنتیک"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#Orthodontics"
-   ],
-   "count": 7,
-   "content_ids": [
-    "insight/insight-19",
-    "sharehub/share-5",
-    "insight/insight-38",
-    "insight/insight-42",
-    "sharehub/share-19",
-    "chairside/chairside-39",
-    "sharehub/share-24"
    ]
   },
   {
