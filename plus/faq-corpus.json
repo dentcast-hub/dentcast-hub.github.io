@@ -37879,6 +37879,70 @@
           ]
         }
       ]
+    },
+    "sharehub/share-38": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/sharehub/share-38.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا Reverse Scan Body همیشه از اسکن داخل‌دهانی یا فوتوگرامتری دقیق‌تر است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ این روش به‌خودی‌خود خطاهای پروتز موقت را اصلاح نمی‌کند و دقت آن به فیت مرجع، اتصال رزینی، اسکن خارج‌دهانی و شرایط دیگر وابسته است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "در اسکن فول‌آرچ بیمار کاملاً بی‌دندان، چه عواملی می‌توانند خطای ثبت موقعیت ایمپلنت‌ها را افزایش دهند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "نبود لندمارک‌های ثابت، فاصلهٔ زیاد بین ایمپلنت‌ها و خطاهای اتصال تصاویر متوالی اسکنر (Stitching) می‌توانند باعث اختلاف موقعیت ثبت‌شده با موقعیت واقعی شوند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "در روش Reverse Scan Body، اسکن‌بادی‌ها به کجا متصل می‌شوند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "اسکن‌بادی‌های مخصوص به اتصالات موجود در سطح داخلی پروتز موقتِ دارای فیت تأییدشده متصل می‌شوند و مجموعه بیرون از دهان اسکن می‌شود."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/sharehub/share-38.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-38.html#flashcards-c1",
+              "name": "Reverse Scan Body",
+              "description": "روشی برای بازسازی دیجیتال موقعیت اتصالات ایمپلنت از هندسهٔ اسکن‌بادی‌هایی که به سطح داخلی پروتز موقتِ دارای فیت تأییدشده متصل شده‌اند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-38.html#flashcards-c2",
+              "name": "Intraoral Pickup",
+              "description": "اتصال سیلندرهای موقت به پروتز موقت درون دهان با رزین، پس از قرار دادن پروتز در موقعیت مناسب؛ این اتصال، رابطهٔ واقعی پروتز با اتصالات ایمپلنت را منتقل می‌کند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-38.html#flashcards-c3",
+              "name": "Back-Pouring",
+              "description": "روش آنالوگی برای بازسازی موقعیت اتصالات ایمپلنت در کست؛ آنالوگ‌ها به اتصالات ترمیم متصل و درون آن فیکس می‌شوند، سپس با ریختن گچ مدل ساخته می‌شود.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
