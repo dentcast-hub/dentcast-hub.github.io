@@ -37815,6 +37815,70 @@
           ]
         }
       ]
+    },
+    "insight/insight-96": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/insight/insight-96.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا استفاده‌نکردن از پارسیل خلفی، حتی با طراحی و تنظیم مناسب آن، می‌تواند حمایت اکلوژنی خلفی را از بین ببرد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ اگر بیمار پارسیل را استفاده نکند، حمایت خلفی آن عملاً وجود ندارد و ممکن است بخش بیشتری از نیروها به قدام منتقل شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا بررسی اکلوژن در بیمار دارای چند فیکسچر شکسته، باید فقط به تماس‌های استاتیک محدود شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ بررسی حرکات اکسکورسیو نیز لازم است تا مؤثر و باثبات بودن تماس‌های پارسیل ارزیابی شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا تفاوت جابه‌جایی بافت نرم و دندان‌های طبیعی در پارسیل انتهای آزاد، اهمیت تنظیم تماس‌های اکلوژنی را بیشتر می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ این تفاوت از دلایل اهمیت تنظیم تماس‌ها برای ایجاد حمایت اکلوژنی مناسب در ناحیه خلفی است."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/insight/insight-96.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-96.html#flashcards-c1",
+              "name": "حمایت اکلوژنی خلفی و توزیع نیرو",
+              "description": "تماس‌های مؤثر و باثبات در ناحیه خلفی در توزیع بار نقش دارند؛ نبود این حمایت می‌تواند تمرکز نیرو بر ایمپلنت‌های قدامی را بیشتر کند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-96.html#flashcards-c2",
+              "name": "تفاوت تکیه‌گاه‌ها در پارسیل انتهای آزاد",
+              "description": "بافت نرم و دندان طبیعی زیر بار به یک اندازه جابه‌جا نمی‌شوند؛ این تفاوت، تنظیم تماس‌های اکلوژنی پارسیل انتهای آزاد را حساس می‌کند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-96.html#flashcards-c3",
+              "name": "استفاده از پارسیل و حمایت عملکردی",
+              "description": "حمایت خلفیِ تأمین‌شده با پارسیل به حضور آن در دهان وابسته است؛ پارسیل تنظیم‌شده‌ای که استفاده نمی‌شود، این حمایت را فراهم نمی‌کند.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }

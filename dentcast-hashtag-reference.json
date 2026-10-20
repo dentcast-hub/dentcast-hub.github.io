@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 114,
+   "count": 115,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -374,7 +374,8 @@
     "insight/insight-92",
     "insight/insight-93",
     "insight/insight-94",
-    "insight/insight-95"
+    "insight/insight-95",
+    "insight/insight-96"
    ]
   },
   {
@@ -633,6 +634,70 @@
    ]
   },
   {
+   "key": "اکلوژن",
+   "tag": "#اکلوژن",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "رابطه‌ی تماسی دندان‌های دو فک و هرچه بر آن اثر می‌گذارد.",
+   "use_when": "چتر عام اکلوژن. همیشه در کنار یک مفهوم مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "occlusion",
+    "اکلوزیون"
+   ],
+   "variants": [
+    "#Occlusion"
+   ],
+   "co_tags": [],
+   "count": 45,
+   "content_ids": [
+    "episodes/episode-14",
+    "episodes/episode-23",
+    "episodes/episode-35",
+    "episodes/episode-60",
+    "episodes/episode-123-2",
+    "episodes/episode-126",
+    "episodes/episode-131",
+    "episodes/episode-132",
+    "episodes/episode-142",
+    "episodes/episode-143",
+    "episodes/episode-144",
+    "episodes/episode-145",
+    "insight/insight-1",
+    "insight/insight-2",
+    "insight/insight-6",
+    "insight/insight-8",
+    "insight/insight-12",
+    "photocast/episode-2",
+    "dentcast-plus/video-2",
+    "notecast/episode-14",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "insight/insight-21",
+    "episodes/episode-154",
+    "sharehub/share-5",
+    "insight/insight-24",
+    "episodes/episode-155",
+    "dentcast-plus/video-6",
+    "insight/insight-29",
+    "chairside/chairside-11",
+    "insight/insight-37",
+    "chairside/chairside-15",
+    "sharehub/share-6",
+    "insight/insight-43",
+    "episodes/episode-160",
+    "chairside/chairside-23",
+    "insight/insight-56",
+    "chairside/chairside-31",
+    "insight/insight-65",
+    "chairside/chairside-36",
+    "sharehub/share-21",
+    "insight/insight-87",
+    "insight/insight-94",
+    "sharehub/share-36",
+    "insight/insight-96"
+   ]
+  },
+  {
    "key": "پست_و_کور",
    "tag": "#پست_و_کور",
    "domain": "clinical",
@@ -697,69 +762,6 @@
     "sharehub/share-31",
     "sharehub/share-34",
     "dentcast-plus/video-14"
-   ]
-  },
-  {
-   "key": "اکلوژن",
-   "tag": "#اکلوژن",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "رابطه‌ی تماسی دندان‌های دو فک و هرچه بر آن اثر می‌گذارد.",
-   "use_when": "چتر عام اکلوژن. همیشه در کنار یک مفهوم مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "occlusion",
-    "اکلوزیون"
-   ],
-   "variants": [
-    "#Occlusion"
-   ],
-   "co_tags": [],
-   "count": 44,
-   "content_ids": [
-    "episodes/episode-14",
-    "episodes/episode-23",
-    "episodes/episode-35",
-    "episodes/episode-60",
-    "episodes/episode-123-2",
-    "episodes/episode-126",
-    "episodes/episode-131",
-    "episodes/episode-132",
-    "episodes/episode-142",
-    "episodes/episode-143",
-    "episodes/episode-144",
-    "episodes/episode-145",
-    "insight/insight-1",
-    "insight/insight-2",
-    "insight/insight-6",
-    "insight/insight-8",
-    "insight/insight-12",
-    "photocast/episode-2",
-    "dentcast-plus/video-2",
-    "notecast/episode-14",
-    "notecast/episode-23",
-    "notecast/episode-24",
-    "insight/insight-21",
-    "episodes/episode-154",
-    "sharehub/share-5",
-    "insight/insight-24",
-    "episodes/episode-155",
-    "dentcast-plus/video-6",
-    "insight/insight-29",
-    "chairside/chairside-11",
-    "insight/insight-37",
-    "chairside/chairside-15",
-    "sharehub/share-6",
-    "insight/insight-43",
-    "episodes/episode-160",
-    "chairside/chairside-23",
-    "insight/insight-56",
-    "chairside/chairside-31",
-    "insight/insight-65",
-    "chairside/chairside-36",
-    "sharehub/share-21",
-    "insight/insight-87",
-    "insight/insight-94",
-    "sharehub/share-36"
    ]
   },
   {
@@ -4618,6 +4620,33 @@
    ]
   },
   {
+   "key": "شکست_ایمپلنت",
+   "tag": "#شکست_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتنِ ایمپلنت، بیولوژیک یا مکانیکی.",
+   "use_when": "مقاله علت یا پیشگیریِ شکست را بگوید.",
+   "aliases": [
+    "از دست رفتن ایمپلنت",
+    "فیلور ایمپلنت",
+    "ناموفق بودن ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#Implant_Failure"
+   ],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-130-1",
+    "sharehub/share-9",
+    "chairside/chairside-23",
+    "sharehub/share-11",
+    "sharehub/share-13",
+    "insight/insight-82",
+    "insight/insight-96"
+   ]
+  },
+  {
    "key": "مارجین_روکش",
    "tag": "#مارجین_روکش",
    "domain": "clinical",
@@ -5303,32 +5332,6 @@
     "chairside/chairside-19",
     "chairside/chairside-31",
     "sharehub/share-14"
-   ]
-  },
-  {
-   "key": "شکست_ایمپلنت",
-   "tag": "#شکست_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "از دست رفتنِ ایمپلنت، بیولوژیک یا مکانیکی.",
-   "use_when": "مقاله علت یا پیشگیریِ شکست را بگوید.",
-   "aliases": [
-    "از دست رفتن ایمپلنت",
-    "فیلور ایمپلنت",
-    "ناموفق بودن ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#Implant_Failure"
-   ],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-130-1",
-    "sharehub/share-9",
-    "chairside/chairside-23",
-    "sharehub/share-11",
-    "sharehub/share-13",
-    "insight/insight-82"
    ]
   },
   {
@@ -7270,6 +7273,30 @@
     "episodes/episode-124-1",
     "litecast/lite-CAST7",
     "dentai/dentai-30"
+   ]
+  },
+  {
+   "key": "پروتز_پارسیل",
+   "tag": "#پروتز_پارسیل",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پروتز پارسیل متحرک و الزاماتش روی پایه‌ها.",
+   "use_when": "مقاله طراحیِ RPD یا پایه‌هایش را موضوع کند.",
+   "aliases": [
+    "RPD",
+    "پارسیل",
+    "پروتز پارسیل متحرک",
+    "partial denture",
+    "پارسیل دفینیتیو"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-126-1",
+    "insight/insight-58",
+    "dentai/dentai-35",
+    "insight/insight-96"
    ]
   },
   {
@@ -9451,29 +9478,6 @@
     "episodes/episode-118",
     "episodes/episode-120",
     "episodes/episode-148"
-   ]
-  },
-  {
-   "key": "پروتز_پارسیل",
-   "tag": "#پروتز_پارسیل",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پروتز پارسیل متحرک و الزاماتش روی پایه‌ها.",
-   "use_when": "مقاله طراحیِ RPD یا پایه‌هایش را موضوع کند.",
-   "aliases": [
-    "RPD",
-    "پارسیل",
-    "پروتز پارسیل متحرک",
-    "partial denture",
-    "پارسیل دفینیتیو"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-126-1",
-    "insight/insight-58",
-    "dentai/dentai-35"
    ]
   },
   {
