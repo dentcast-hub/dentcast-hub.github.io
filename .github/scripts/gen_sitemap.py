@@ -11,6 +11,9 @@ DentCast Sitemap Generator
 """
 
 import subprocess, os, re, sys, datetime
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools"))
+from dentcast_text_io import write_text
 
 DOMAIN = "https://dentcast.org"
 DOMAIN_IR = "https://dentcast.ir"
@@ -286,8 +289,7 @@ def write_sitemap(filename, bucket, home_url):
         ]
     lines.append("</urlset>")
 
-    with open(filename, "w", encoding="utf-8") as f:
-        f.write("\n".join(lines) + "\n")
+    write_text(filename, "\n".join(lines) + "\n")
     return len(bucket)
 
 

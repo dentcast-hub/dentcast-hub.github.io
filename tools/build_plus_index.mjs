@@ -1,3 +1,4 @@
+import { writeText } from './text_io.mjs';
 // Build plus/content-index.json — the single taxonomy model shared by the
 // dashboard navigation tree (Phase 1) and the hex completion map (Phase 3).
 //
@@ -12,7 +13,7 @@
 // ".html" (matches the client's detectContentId()).
 //
 // Run from the repo root:  node tools/build_plus_index.mjs
-import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
@@ -251,7 +252,7 @@ const out = {
   byContent,
 };
 
-writeFileSync(resolve(root, 'plus', 'content-index.json'), JSON.stringify(out, null, 0) + '\n');
+writeText(resolve(root, 'plus', 'content-index.json'), JSON.stringify(out, null, 0) + '\n');
 console.log(`Wrote plus/content-index.json: ${folders.length} folders, ${clusters.length} pillar categories, ${tags.length} hashtags, ${out.contentCount} content pages.`);
 console.log('Folders (dashboard tree top level):');
 for (const f of folders) console.log(`  ${f.fa} (${f.key}) -> ${f.url} · ${f.total} مقاله`);

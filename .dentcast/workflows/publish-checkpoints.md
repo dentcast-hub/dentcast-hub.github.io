@@ -2,16 +2,116 @@
 
 This protocol wraps the existing twelve active source modules. It does not rewrite authoring, category exceptions, human approvals, builders or the scientific DES/Fidelity engine. Every agent follows it; native hooks are supplementary adapters, not proof that a client actually loaded instructions.
 
+## Continuous execution, source loading and delivery preflight
+
+The permanent guide (this file), temporary current state (`.dentcast/PUBLISH-HANDOFF.md`),
+and explicit recovery (`publish-handoff.md` / `publish-discovery.md`) have different
+roles. Ordinary publication still creates and updates the current state. It does
+not enter recovery because a gate reports a missing receipt or stale checkpoint.
+«کجایی؟», «چی شد؟», «ادامه بده» and «ادامه انتشار» during an active run request
+status/continuation: reply directly, then continue that same run. No reinitialization
+or branch discovery. `discover --recover-incomplete` is reserved for an explicit
+user request identifying an incomplete/interrupted publication; the option records
+that trigger, never invents it. Keep explicit recovery available and verify its
+selected immutable head before continuing.
+
+Choose the active route and required sources at the start. Read each necessary
+source completely in bounded, numbered ranges small enough to avoid truncation.
+Keep `(path, source hash/revision, complete ranges read)` in this session; no new
+state file. A cross-reference to an already completely read unchanged source
+requires no reread. Reload only the changed source, an authorized recovery source,
+or a source actually needed to diagnose a new error; state the reason. A changed
+source invalidates its loaded entry and affected evidence. Summaries and memory
+never replace the first complete reading of a required source.
+
+Before expensive authoring/builds, determine the usable read, write and delivery
+paths. Connector GitHub access and terminal Git credentials are separate. Read-only
+permission checks do not prove push; a bounded `git push --dry-run` to the intended
+feature ref may test transport without writing a commit/ref. Do not probe by
+committing on main. If transport fails, select an available connector/pack/blob
+route before heavy work. Report the real limitation once and preserve local work.
+
+Before push, long transfer, branch update and merge, freshly read the exact PR,
+its state/merged flag, head branch/repository/SHA and destination branch/SHA.
+`check-pr --repository owner/repo --number N --expected-head SHA --expected-base SHA
+--expected-branch BRANCH [--token-env NAME]` performs this read-only check through
+REST. Equivalent fresh connected GitHub reads are valid when REST credentials are
+unavailable; check both exact branch heads, never scan branches for this purpose.
+A closed/merged PR or moved ref requires revising the delivery plan, preserving
+local work and comparing it to current main. Post-merge edits are not in the merge
+until byte/Git evidence proves that. Do not deliver to the old branch automatically.
+Use expected SHA / non-force fast-forward; recheck after long blob uploads immediately
+before updating a ref. A check cannot remove the race on a service without atomic
+leases; report that limitation and never force overwrite.
+
+After scoped work is committed, `delivery-plan --base-ref <verified-base>
+--max-blob-bytes <actual-selected-tool-limit>` returns changed paths, blob IDs,
+sizes, total bytes and the expected final tree, without file bodies. It does not
+prove access, push, or approve work. Transfer only changed objects missing remotely;
+reuse successful blob uploads by Git object ID while bytes stay identical. Build
+one tree/commit from the verified base rather than tiny per-file commits. Verify
+every returned blob ID and the final tree against local Git before a ref update.
+Keep payloads, Base64, large JSON and tool registries out of conversation output.
+If only chunked transport exists, report bytes/call limits and the bounded number
+of calls; stop on an unchanged failure, preserving successes, rather than loop.
+
+If the same read/command with the same input and error is requested again without
+any source, digest, file or remote-state change, identify an execution loop: report
+the exact unchanged blocker and take a different diagnostic/correction step. Do
+not reread the guide or retry invalid arguments unchanged. Use `--help` once to
+resolve actual CLI schema uncertainty. `advance` is already available: prefer it
+over separate transition calls; it records verified real work and never substitutes
+for semantic judgment, scientific independence, human approvals or Phase F.
+
+Continue automatically until the authorized scope is complete or a real decision
+or blocker requires input. Existing explicit “merge after completion” permission
+persists once all gates pass; status requests do not revoke it. Without explicit
+merge authorization stop before merge. Page readiness or green CI is not full
+publication completion. At meaningful milestones and during long work, give a
+short report of actual result, current action and remaining work. Distinguish
+prepared, verified, committed, pushed, merged and live. Report no invented ETA or
+percent. A real blocker must name its cause, effect and required next action;
+record/preserve the current checkpoint and do independent authorized work.
+
+## Scope, baseline and final bytes
+
+Declare each related source/page/data path in `target_paths`, including inputs
+needed to detect stale evidence. The writer also enrolls only the concrete known
+canonical builder outputs it actually observes changing (pillar HTML/sidecars,
+homepage/player, generated indexes, sitemap and worker stamp). A new unrelated dirty
+path is not auto-enrolled: preserve it and review its relation before explicitly
+adding a target. Site-wide injectors may touch other articles; these are not
+blanket-authorized outputs and need separate review/scope. Never stage all dirty
+work blindly. Do not remove watched paths to conceal drift.
+
+Current comparisons retain the complete committed baseline inventory even when
+those files become clean. The commit tree, declared targets and actual generated
+outputs reconstruct the baseline in API-delivered or fresh checkouts; unchanged
+committed files disappearing from `git status` are not content changes. Changes
+to bytes, modes, index, inputs, rules or later commits still block/reconcile.
+`inspect` names changed file/rule paths and a limited next action; a stale/missing
+receipt is a current-run repair, not permission to discover branches. Never invent
+past semantic outcomes to satisfy a missing completion receipt.
+
+Preserve existing newline style and formatting from the first write. Canonical
+writers use `dentcast_text_io.write_text` / `text_io.mjs`; mixed endings fail with
+a request for a scoped byte edit, not global normalization. Manual patches must
+also preserve existing bytes; inspect normal diff and an EOL-insensitive diff to
+separate format churn. Finish all content, taxonomy, injectors, English and builder
+writes, then stamp last and run final verification on those final bytes. A later
+effective edit invalidates affected checks: rebuild dependencies, restamp and verify.
+Never certify the earlier tree as the final delivery.
+
 ## Start and identify the run
 
 1. Enter recovery only after the user explicitly says the publication is incomplete/interrupted. A request to resume counts only if it identifies the publication as incomplete/interrupted. Read `.dentcast/PUBLISH-HANDOFF.md` once, then run `python3 tools/dentcast_publish_handoff.py inspect` once in the actual checkout. If missing, do not invent progress. The inspector also detects a private pending-cleanup receipt in Git metadata and instructs `confirm-cleanup` or `restore-cleanup`.
-   For recovery from GitHub or a missing local handoff, follow `publish-discovery.md`: use `discover`/`discover --repository owner/repo` (or equivalent connected GitHub reads), require a complete stable scan and unique candidate, retrieve the selected named branch without disturbing local work, compare its HEAD with the returned `head_sha`, then inspect it. Do not choose a newest branch or continue from a partial/ambiguous result. Keep the recovered semantic state in the current session and do not reread/re-inspect the handoff during that run; use the latest helper digest. A generic `ادامه بده` does not trigger recovery.
+   For recovery from GitHub or a missing local handoff, follow `publish-discovery.md`: use `discover --recover-incomplete`/`discover --recover-incomplete --repository owner/repo` (or equivalent connected GitHub reads), require a complete stable scan and unique candidate, retrieve the selected named branch without disturbing local work, compare its HEAD with the returned `head_sha`, then inspect it. Do not choose a newest branch or continue from a partial/ambiguous result. Keep the recovered semantic state in the current session and do not reread/re-inspect the handoff during that run; use the latest helper digest. A generic `ادامه بده` does not trigger recovery.
 2. For a new run, check only whether the fixed handoff file exists; do not read its contents. If it exists, make no publication changes and ask whether the user means to resume an incomplete publication. Read it only after that explicit confirmation. Otherwise prepare the public-safe input described in `publish-handoff-tool.md`. Obtain the **full canonical ledger** using `python3 tools/dentcast_publish_handoff.py plan` and place its `steps` into the input JSON. `init`/`record` reject incomplete ledgers. For a known paper-only route use `plan --paper-only`, category `paper-only`, and watch the cabinet catalog.
 3. Before intake identity is known, use content ID `unassigned`, category `pending`, the full ordinary ledger and an initial watched path such as `dentcast-brain.json`. This is explicitly an unassigned run, not a guessed publication ID. Create it with `init` before the first canonical step. Resolve identity **once** with `bind --expected-sha256 <digest> --content-id <actual-id> --category <actual-category> --target-path <path> --evidence <intake-reference>` (repeat `--target-path` for required work). Binding is permitted only with unchanged work and no authoring/side effects started. Paper-only binding occurs at Phase 0; ordinary binding occurs during intake before authoring. Real identities cannot subsequently be silently rebound.
 
 ## Before and after EVERY canonical step
 
-Read the full relevant module. During the active run, use the publication state already held in the current session and the digest returned by the latest helper read/write; do not reread or re-inspect the fixed handoff before each step:
+Read the full relevant module once per unchanged source revision. A repeated module reference does not require a second read. During the active run, use the publication state already held in the current session and the digest returned by the latest helper read/write; do not reread or re-inspect the fixed handoff before each step:
 
 ```bash
 python3 tools/dentcast_publish_handoff.py step --id <canonical-id> --status started --expected-sha256 <digest> --reconcile-note 'Verified previous step delivery and reviewed Git changes'

@@ -1,3 +1,4 @@
+import { writeText } from './text_io.mjs';
 // Build plus/flashcards-index.json — the premium app's Leitner seed catalog.
 //
 // This file is GENERATED, never hand-written. The single source of truth for
@@ -17,7 +18,7 @@
 // extractor).
 //
 // Run from the repo root:  node tools/build_flashcards_index.mjs
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
@@ -77,5 +78,5 @@ const out = {
   byContent,
 };
 
-writeFileSync(resolve(root, 'plus', 'flashcards-index.json'), JSON.stringify(out, null, 0) + '\n');
+writeText(resolve(root, 'plus', 'flashcards-index.json'), JSON.stringify(out, null, 0) + '\n');
 console.log(`Wrote plus/flashcards-index.json: ${totalPages} pages, ${totalCards} cards.`);

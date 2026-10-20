@@ -75,6 +75,7 @@ tag it names must exist in the reference once `concepts` is merged in — that
 check is the protocol: no tag reaches the brain without a canonical entry.
 """
 
+from dentcast_text_io import write_text
 import argparse
 import json
 import re
@@ -255,7 +256,7 @@ def write_ref(ref: dict) -> None:
     # Concepts stay sorted by count then key so diffs stay readable as the
     # campaign walks folder by folder.
     ref["concepts"].sort(key=lambda c: (-c.get("count", 0), c["key"]))
-    REF.write_text(
+    write_text(REF,
         json.dumps(ref, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"
     )
 
@@ -501,7 +502,7 @@ def cmd_apply(path: str) -> None:
 
     # indent=2 is the brain's existing formatting and round-trips byte-for-byte;
     # anything else would bury a two-article change in a 12k-line diff.
-    BRAIN.write_text(json.dumps(brain, ensure_ascii=False, indent=2) + "\n",
+    write_text(BRAIN, json.dumps(brain, ensure_ascii=False, indent=2) + "\n",
                      encoding="utf-8")
     synced = sync_episode_chips(brain)
     if synced:
@@ -744,7 +745,7 @@ def sync_episode_chips(brain: list) -> int:
         new, n = EP_TAGS_RE.subn(lambda m: m.group(1) + chips + m.group(3),
                                  html, count=1)
         if n and new != html:
-            page.write_text(new, encoding="utf-8")
+            write_text(page, new, encoding="utf-8")
             changed += 1
     return changed
 

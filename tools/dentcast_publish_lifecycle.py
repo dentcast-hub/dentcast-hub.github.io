@@ -71,7 +71,7 @@ def state_for_update(root, expected):
 
 def require_step_delivery(root, state, expected):
     """Fresh read-only origin check; never commit/push or trust cached upstream."""
-    current = h.snapshot(root, state['publication']['target_paths'], check_remote=True)
+    current = h.current_snapshot(root, state, check_remote=True)
     remote = current['remote']
     h.require(remote['status'] == 'observed' and remote['head'] == current['head'],
               'PREVIOUS_STEP_PUSH_NOT_CONFIRMED')
@@ -121,6 +121,8 @@ def step(root, expected, sid, status, evidence, reason, note=None):
     if status == 'started':
         h.require(not any(a['status'] in ('started', 'outcome_unknown') for a in p['external_actions']),
                   'EXTERNAL_OUTCOME_UNKNOWN_DO_NOT_RETRY')
+    h.require(row["status"] != status or row["evidence"] != evidence or row["reason"] != reason,
+              "NO_STEP_STATE_CHANGE: do not repeat this transition; perform or diagnose the current action first")
     row.update(status=status, evidence=evidence, reason=reason)
     p["status"] = "blocked" if status in ("blocked", "failed") else "in_progress"
     p["blocker"] = f"{sid}: {reason}" if p["status"] == "blocked" else None
@@ -190,7 +192,7 @@ def bind(root, expected, content_id, category, targets, evidence):
                   and content_id != "unassigned" and h.nonempty(content_id), "VERIFIED_INTAKE_IDENTITY_REQUIRED")
         h.require(not old["external_actions"] and all(s["status"] == "pending" or s["id"] in GROUPS[0]+GROUPS[1]
                   for s in old["steps"]), "BIND_ONLY_BEFORE_AUTHORING")
-        h.require(not h.differences(root, state, h.snapshot(root, old["target_paths"])), "WORK_CHANGED_BEFORE_BIND")
+        h.require(not h.differences(root, state, h.current_snapshot(root, state)), "WORK_CHANGED_BEFORE_BIND")
         p = copy.deepcopy(old)
         p.update(content_id=content_id, category=category, target_paths=targets)
         if category == "paper-only":
@@ -257,13 +259,13 @@ def verify(root, expected, expect_title=None, expect_caption=None, catalog_id=No
     p = copy.deepcopy(state["publication"])
     paper = p["category"] == "paper-only"
     h.require(h.next_step(p) in (("G", None) if paper else ("F", "G", None)), "VERIFICATION_NOT_AT_CANONICAL_BOUNDARY")
-    current = h.snapshot(root, p["target_paths"])
+    current = h.current_snapshot(root, state)
     h.require(not h.differences(root, state, current), "RECORD_CURRENT_WORK_BEFORE_VERIFICATION")
     view = h.inspect(root)
     allowed = {"UNFINISHED_STEP_NEEDS_RECONCILIATION", "RECORDED_BLOCKER"}
     h.require(not (set(view["issues"]) - allowed), "UNRESOLVED_PUBLICATION_GATES")
     receipt = gate(root, p, expect_title, expect_caption, catalog_id)
-    after = h.snapshot(root, p["target_paths"])
+    after = h.current_snapshot(root, state)
     h.require(not h.differences(root, {"snapshot": current}, after), "VERIFIER_CHANGED_WORK")
     p["context"]["validation"].append({**{k: v for k, v in receipt.items() if k != "output"}, "recorded_at": h.now()})
     report = next(s for s in p["steps"] if s["id"] == "G")
@@ -319,8 +321,8 @@ def finish(root, expected):
         p = state["publication"]
         h.require(h.next_step(p) is None, "PUBLICATION_STEPS_UNFINISHED")
         # inspect uses its own lock; validate equivalent facts under this existing lock.
-        current = h.snapshot(root, p["target_paths"], check_remote=True)
-        h.require(not h.differences(root, state, current), "CHECKPOINT_STALE")
+        current = h.current_snapshot(root, state, check_remote=True)
+        h.require(not h.differences(root, state, current), "CHECKPOINT_STALE:" + json.dumps(h.change_details(state, current), sort_keys=True) + "; review these changes in the current run, reconcile and rerun affected verification; no branch discovery")
         h.require(not p["blocker"] and not p["context"]["pending_questions"]
                   and all(a["status"] in ("confirmed", "not_required") for a in p["context"]["approvals"])
                   and all(a["status"] not in ("started", "outcome_unknown") for a in p["external_actions"]),
@@ -344,7 +346,7 @@ def finish(root, expected):
         if receipt["exit_code"] != 0:
             return {"status": "blocked", "error": "FINAL_MECHANICAL_GATE_FAILED_HANDOFF_RETAINED",
                     "publication_completed": False, "verification": receipt}
-        after = h.snapshot(root, p["target_paths"])
+        after = h.current_snapshot(root, state)
         h.require(not h.differences(root, {"snapshot": current}, after), "WORK_CHANGED_DURING_COMPLETION")
         h.require(h.load_state(root)[1] == expected, "HANDOFF_CHANGED_DURING_COMPLETION")
         store_cleanup(root, {"schema": "publish-cleanup-v1", "state": state, "state_sha256": expected,
@@ -366,7 +368,7 @@ def confirm_cleanup(root):
         data = cleanup_record(root)
         h.require(not h.safe_path(root, h.STATE_PATH).exists(), "HANDOFF_STILL_EXISTS")
         state = data["state"]
-        current = h.snapshot(root, state["publication"]["target_paths"], check_remote=True)
+        current = h.current_snapshot(root, state, check_remote=True)
         h.require(not h.differences(root, state, current), "WORK_CHANGED_AFTER_CLEANUP")
         remote = current["remote"]
         h.require(remote["status"] == "observed" and remote["ahead"] == 0 and remote["behind"] == 0,
@@ -387,7 +389,7 @@ def restore_cleanup(root):
         if h.safe_path(root, h.STATE_PATH).exists():
             h.require(h.load_state(root)[1] == data["state_sha256"], "HANDOFF_CHANGED_DURING_INTERRUPTED_CLEANUP")
         state = data["state"]
-        current = h.snapshot(root, state["publication"]["target_paths"])
+        current = h.current_snapshot(root, state)
         h.require(all(state["snapshot"][k] == current[k] for k in ("repository", "branch")), "WRONG_CLEANUP_CHECKOUT")
         state["publication"].update(status="cleanup_pending", blocker="Cleanup delivery failed or was interrupted; reconcile before retry")
         state.update(generation=state["generation"]+1, updated_at=h.now(), previous_sha256=data["state_sha256"],
@@ -407,7 +409,7 @@ def guard(root, phase):
                 staged = h.git(root, "diff", "--cached", "--name-only", "-z").split(b"\0")
                 h.require(all(not p or p.decode() == h.STATE_PATH for p in staged), "CLEANUP_COMMIT_MUST_ONLY_DELETE_HANDOFF")
                 h.require(h.git(root, "show", ":" + h.STATE_PATH, optional=True) is None, "STAGE_HANDOFF_DELETION")
-                current = h.snapshot(root, data["state"]["publication"]["target_paths"])
+                current = h.current_snapshot(root, data["state"])
                 h.require(not h.differences(root, data["state"], current), "WORK_CHANGED_DURING_CLEANUP")
         elif phase == "ci":
             previous = h.git(root, "show", "HEAD^:" + h.STATE_PATH, optional=True)
@@ -452,7 +454,7 @@ def guard(root, phase):
         for p, sha in state["snapshot"]["workflow"].items():
             h.require(h.file_info(root, p)["sha256"] == sha, "COMMITTED_WORKFLOW_MISMATCH:" + p)
     else:
-        current = h.snapshot(root, state["publication"]["target_paths"])
+        current = h.current_snapshot(root, state)
         h.require(not h.differences(root, state, current), "CHECKPOINT_REQUIRED_BEFORE_COMMIT_OR_STOP")
         if phase == "pre-commit":
             h.require(h.git(root, "show", ":" + h.STATE_PATH, optional=True) == path.read_bytes(),
@@ -460,3 +462,74 @@ def guard(root, phase):
         elif phase == 'stop':
             require_step_delivery(root, state, h.digest(path.read_bytes()))
     return {"status": "guard_passed", "publication_completed": False}
+
+
+def delivery_plan(root, base_ref, max_blob_bytes):
+    """Read-only changed-object inventory, without payloads or credential probes."""
+    h.require(max_blob_bytes > 0, "POSITIVE_BLOB_LIMIT_REQUIRED")
+    h.require(not h.status_paths(root), "COMMIT_SCOPED_WORK_BEFORE_DELIVERY_PLAN")
+    h.require(h.git(root, 'diff', '--name-only', '--', h.STATE_PATH) == b''
+              and h.git(root, 'diff', '--cached', '--name-only', '--', h.STATE_PATH) == b'',
+              'COMMIT_CURRENT_HANDOFF_BEFORE_DELIVERY_PLAN')
+    state_path = h.safe_path(root, h.STATE_PATH)
+    if state_path.exists():
+        committed = h.git(root, 'show', 'HEAD:' + h.STATE_PATH, optional=True)
+        h.require(committed == state_path.read_bytes(), 'COMMIT_CURRENT_HANDOFF_BEFORE_DELIVERY_PLAN')
+    h.require(not base_ref.startswith('-'), "INVALID_BASE_REF")
+    base = h.text_git(root, 'rev-parse', '--verify', base_ref + '^{commit}')
+    head = h.text_git(root, 'rev-parse', 'HEAD')
+    h.require(h.git(root, 'merge-base', '--is-ancestor', base, head, optional=True) is not None,
+              'DELIVERY_BASE_NOT_ANCESTOR')
+    names = h.git(root, 'diff', '--name-only', '--no-renames', '-z', base, head).split(b'\0')
+    entries = []
+    for raw in names:
+        if not raw:
+            continue
+        name = h.relative_path(raw.decode('utf-8', 'surrogateescape'))
+        listing = h.git(root, 'ls-tree', '-z', head, '--', name)
+        if not listing:
+            entries.append({'path': name, 'sha': None, 'size': 0})
+            continue
+        meta, _ = listing.rstrip(b'\0').split(b'\t', 1)
+        mode, kind, oid = meta.decode('ascii').split()
+        h.require(kind == 'blob', 'DELIVERY_UNSUPPORTED_OBJECT:' + name)
+        size = int(h.text_git(root, 'cat-file', '-s', oid))
+        # Git already hashes mode/path/object identity into HEAD's tree.
+        entries.append({'path': name, 'mode': mode, 'type': kind, 'sha': oid, 'size': size,
+                        'over_tool_limit': size > max_blob_bytes})
+    return {'status': 'delivery_plan', 'base_sha': base, 'head_sha': head,
+            'tree_sha': h.text_git(root, 'rev-parse', 'HEAD^{tree}'), 'entries': entries,
+            'changed_bytes': sum(e['size'] for e in entries), 'max_blob_bytes': max_blob_bytes,
+            'oversized_paths': [e['path'] for e in entries if e.get('over_tool_limit')],
+            'push_access': 'unproven; connector permissions do not establish terminal Git access',
+            'publication_completed': False}
+
+
+def check_pr(repository, number, expected_head, expected_base, expected_branch, read=None):
+    """Fresh exact-PR and ref checks. Never scans branches or changes any ref."""
+    import dentcast_publish_discovery as discovery
+    from urllib.parse import quote
+    repo = discovery.repository_name(repository)
+    h.require(number > 0 and expected_head and expected_base and expected_branch, 'PR_EXPECTATIONS_REQUIRED')
+    read = read or discovery.GitHubReader()
+    api = f'{discovery.API}/repos/{repo}'
+    pr = read(f'{api}/pulls/{number}')
+    h.require(pr.get('state') == 'open' and not pr.get('merged') and not pr.get('merged_at'),
+              'PR_CLOSED_OR_MERGED: preserve local work; compare against current main and prepare a separate authorized delivery')
+    h.require(pr['head']['repo']['full_name'] == repo and pr['base']['repo']['full_name'] == repo,
+              'PR_REPOSITORY_CHANGED')
+    h.require(pr['head']['ref'] == expected_branch and pr['head']['sha'] == expected_head,
+              'PR_HEAD_CHANGED: review new head; do not overwrite or retry the old lease')
+    h.require(pr['base']['sha'] == expected_base, 'PR_BASE_CHANGED: reconcile with current destination before delivery')
+    for side in ('head', 'base'):
+        ref = read(f"{api}/git/ref/heads/{quote(pr[side]['ref'], safe='')}")
+        h.require(ref['object']['sha'] == pr[side]['sha'], 'PR_REF_CHANGED_DURING_CHECK')
+    # Catch a merge/close while reading refs as well.
+    after = read(f'{api}/pulls/{number}')
+    h.require(after.get('state') == 'open' and not after.get('merged') and not after.get('merged_at')
+              and after['head']['sha'] == expected_head and after['base']['sha'] == expected_base,
+              'PR_CHANGED_DURING_CHECK')
+    return {'status': 'delivery_target_checked', 'observed_at': h.now(), 'head_sha': expected_head,
+            'base_sha': expected_base, 'branch': expected_branch,
+            'next_action': 'Use expected SHA / non-force fast-forward immediately; recheck after long uploads and before updating ref or merge',
+            'publication_completed': False}

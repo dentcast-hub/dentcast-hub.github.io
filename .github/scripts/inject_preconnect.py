@@ -35,6 +35,10 @@ Usage:
     python3 .github/scripts/inject_preconnect.py --check    # exit 1 if any page is missing it
 """
 
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools"))
+from dentcast_text_io import write_text
 import os
 import re
 import sys
@@ -96,8 +100,7 @@ def main():
             missing.append(rel)
             continue
 
-        with open(path, "w", encoding="utf-8") as fh:
-            fh.write(new_text)
+        write_text(path, new_text)
         changed.append(rel)
 
     if check_only:

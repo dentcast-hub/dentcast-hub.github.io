@@ -12,6 +12,7 @@ two glossaries). Whenever any content is published the hash changes, so:
 Run it as part of the build (after content changes). Standard library only.
 """
 
+from dentcast_text_io import write_text
 import hashlib
 import re
 from pathlib import Path
@@ -68,7 +69,7 @@ def stamp_service_worker(ver):
     old = m.group(2)
     if old == new_name:
         return False, old, new_name
-    SERVICE_WORKER.write_text(pattern.sub(rf"\g<1>{new_name}\g<3>", text, count=1), encoding="utf-8")
+    write_text(SERVICE_WORKER, pattern.sub(rf"\g<1>{new_name}\g<3>", text, count=1), encoding="utf-8")
     return True, old, new_name
 
 
@@ -83,7 +84,7 @@ def stamp_brain_fetches(ver):
         text = html.read_text(encoding="utf-8")
         new_text, n = pattern.subn(rf"\g<1>{ver}", text)
         if n and new_text != text:
-            html.write_text(new_text, encoding="utf-8")
+            write_text(html, new_text, encoding="utf-8")
             changed.append((html.relative_to(ROOT), n))
     return changed
 

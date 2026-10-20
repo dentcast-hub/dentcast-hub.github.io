@@ -169,7 +169,7 @@ def verify_publication_history(root, base, added_paths):
             verified.add("sharehub/share-35")
         else:
             verified.add(validate_completion(root, raw))
-    h.require(needed <= verified, "PUBLICATION_COMPLETION_RECEIPT_MISSING:" + ",".join(sorted(needed - verified)))
+    h.require(needed <= verified, "PUBLICATION_COMPLETION_RECEIPT_MISSING:" + ",".join(sorted(needed - verified)) + "; finish and deliver the current run ledger, real Phase F and cleanup history on this PR; do not search branches or invent a completed receipt. Recovery requires an explicit user request")
     return verified
 
 

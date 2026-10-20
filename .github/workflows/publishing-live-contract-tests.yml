@@ -26,6 +26,13 @@ on:
       - '.github/workflows/publishing-live-contract-tests.yml'
       - '.github/workflows/sitemap_only.yml'
       - 'tools/update-homepage-counters.py'
+      - 'tools/dentcast_text_io.py'
+      - 'tools/text_io.mjs'
+      - 'tools/build_*.py'
+      - 'tools/build_*.mjs'
+      - 'tools/stamp-version.py'
+      - 'tools/hashtag_ref.py'
+      - '.github/scripts/*.py'
       - 'tools/check_publish_merge_gate.py'
       - 'tests/test_publish_merge_gate.py'
   pull_request:

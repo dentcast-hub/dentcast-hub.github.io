@@ -44,6 +44,7 @@ WORKFLOW_PATHS = (
     ".dentcast/workflows/global/site-invariants.md",
     "tools/dentcast_publish_handoff.py",
     "tools/dentcast_publish_lifecycle.py", "tools/verify_publish.py",
+    "tools/dentcast_text_io.py", "tools/text_io.mjs",
     ".dentcast/workflows/publish-checkpoints.md",
 ) + tuple(".dentcast/workflows/modules/" + m for m in MODULES)
 BEGIN = "<!-- dentcast-publish-state-v1 -->\n```json\n"
@@ -245,6 +246,32 @@ def remote_observation(root, head, current_branch, check_remote):
     observation.update(ahead=ahead, behind=behind,
                        unpushed_commits=text_git(root, "rev-list", remote_head + ".." + head).splitlines())
     return observation
+
+
+def builder_output(path):
+    """Only concrete outputs of canonical builders, never arbitrary dirty files."""
+    return path in {
+        "index.html", "player.html", "service-worker.js", "episodes.html",
+        "glossary/index.html", "glossary/structure.json", "pillar/index.html",
+        "pillar/structure.json", "plus/content-index.json", "plus/flashcards-index.json",
+        "plus/quiz-index.json", "plus/challenges.json", "up-board/index.json",
+        "sitemap.xml", "sitemap-ir.xml",
+    } or re.fullmatch(r"pillar/[a-z0-9-]+/(?:index\.html|structure\.json)", path) is not None
+
+
+def current_snapshot(root, state, check_remote=False):
+    # Keep the committed inventory even after files become clean. Expanding
+    # observation is not adopting current bytes: differences still compares
+    # each file, its mode and its index with the recorded baseline.
+    paths = set(state["publication"]["target_paths"]) | set(state["snapshot"]["files"])
+    return snapshot(root, paths, check_remote)
+
+
+def change_details(state, current):
+    old = state["snapshot"]
+    return {key: [name for name in sorted(set(old[key]) | set(current[key]))
+                  if old[key].get(name) != current[key].get(name)]
+            for key in ("files", "workflow")}
 
 
 def snapshot(root, targets, check_remote=False):
@@ -521,7 +548,12 @@ def snapshot_from_commit(root, publication, revision):
     workflow = {}
     for name in WORKFLOW_PATHS:
         rows = git(root, 'ls-tree', '-z', revision, '--', name, optional=True)
-        require(bool(rows), 'ACTIVE_WORKFLOW_FILE_MISSING_OR_SYMLINK:' + name)
+        if not rows:
+            # A newly introduced dependency did not exist in an older receipt's
+            # commit. Represent absence, never current bytes; normal workflow
+            # drift then requires invalidation. Current sources must still exist.
+            workflow[name] = digest(("absent-in-baseline:" + name).encode())
+            continue
         meta, _ = next(row.split(b'\t', 1) for row in rows.split(b'\0') if row)
         mode, kind, _ = meta.decode('ascii').split()
         require(kind == 'blob' and mode != '120000',
@@ -769,7 +801,19 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
             require(expected == old_digest, "STALE_HANDOFF_WRITE")
             require(all(previous["publication"][k] == publication[k] for k in ("content_id", "category")),
                     "PUBLICATION_IDENTITY_CHANGED")
-        current = snapshot(root, publication["target_paths"], check_remote)
+        # Persist known generated outputs as targets before they become clean.
+        # Do not silently enroll unrelated files merely because Git reports them.
+        publication = decode_json(json.dumps(publication))
+        dirty = status_paths(root)
+        publication["target_paths"] = sorted(set(publication["target_paths"]) |
+                                            {p for p in dirty if builder_output(p)})
+        targets = set(publication["target_paths"])
+        if previous:
+            targets.update(previous["snapshot"]["files"])
+            unknown = [p for p in dirty if p not in targets and p not in WORKFLOW_PATHS]
+            require(not unknown, "UNREVIEWED_PATHS_OUTSIDE_PUBLICATION:" + ",".join(sorted(unknown)) +
+                    "; preserve these files; add only reviewed related paths to target_paths")
+        current = snapshot(root, targets, check_remote)
         issues = []
         if previous:
             require(all(previous["snapshot"][k] == current[k] for k in ("repository", "branch")),
@@ -818,9 +862,14 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
 def inspect(root, check_remote=False):
     with locked(root):
         state, sha = load_state(root)
-        current = snapshot(root, state["publication"]["target_paths"], check_remote)
+        current = current_snapshot(root, state, check_remote)
         issues = differences(root, state, current)
         p = state["publication"]
+        unknown = [name for name, info in state["snapshot"]["files"].items()
+                   if name not in p["target_paths"] and not builder_output(name)
+                   and name not in WORKFLOW_PATHS and not info.get("status")]
+        if unknown:
+            issues.append("UNREVIEWED_COMMITTED_PATHS:" + ",".join(sorted(unknown)))
         if p["blocker"]:
             issues.append("RECORDED_BLOCKER")
         if p["context"]["pending_questions"]:
@@ -857,6 +906,8 @@ def inspect(root, check_remote=False):
         status = "blocked" if issues else "awaiting_operator_review"
         return {"status": status, "path": STATE_PATH, "sha256": sha, "issues": issues,
                 "next_step": next_step(p), "recorded_state": state, "current_snapshot": current,
+                "changed_paths": change_details(state, current),
+                "next_action": ("Review listed file/index/rule changes in this run; reconcile actual work and invalidate affected evidence. Do not repeat unchanged commands or discover branches." if issues else "Continue the next authorized canonical step"),
                 "git_snapshot_portable": portable, "portability_reason": reason,
                 "requires_operator_review": True, "publication_completed": False}
 
@@ -880,8 +931,19 @@ def main(argv=None):
     p = sub.add_parser("plan")
     p.add_argument("--paper-only", action="store_true")
     p = sub.add_parser('discover')
+    p.add_argument('--recover-incomplete', action='store_true', help='User explicitly requested recovery of an incomplete publication')
     p.add_argument('--repository', help='GitHub owner/repo; otherwise inferred from checkout origin')
     p.add_argument('--token-env', help='Optional explicitly named environment variable for GitHub authentication')
+    p = sub.add_parser("delivery-plan", help="List changed blobs, sizes and expected final tree; no content output")
+    p.add_argument("--base-ref", required=True)
+    p.add_argument("--max-blob-bytes", type=int, required=True, help="Observed per-call limit of selected transfer tool")
+    p = sub.add_parser("check-pr", help="Fresh known PR/head/base/ref check, no discovery")
+    p.add_argument("--repository", required=True)
+    p.add_argument("--number", type=int, required=True)
+    p.add_argument("--expected-head", required=True)
+    p.add_argument("--expected-base", required=True)
+    p.add_argument("--expected-branch", required=True)
+    p.add_argument("--token-env")
     p = sub.add_parser("step")
     p.add_argument("--expected-sha256", required=True)
     p.add_argument("--id", required=True)
@@ -915,11 +977,19 @@ def main(argv=None):
     p.add_argument("--phase", choices=("stop", "pre-commit", "ci"), required=True)
     args = ap.parse_args(argv)
     try:
-        root = None if args.command == "plan" or (args.command == 'discover' and args.repository) else Path(text_git(Path(args.repo).resolve(), "rev-parse", "--show-toplevel")).resolve()
+        root = None if args.command in ("plan", "check-pr") or (args.command == 'discover' and args.repository) else Path(text_git(Path(args.repo).resolve(), "rev-parse", "--show-toplevel")).resolve()
         if args.command == 'discover':
+            require(args.recover_incomplete, 'RECOVERY_REQUEST_REQUIRED: branch discovery is only for explicitly requested incomplete-publication recovery')
             import dentcast_publish_discovery as discovery
             repository = args.repository or discovery.infer_repository(root)
             result = discovery.discover(repository, discovery.GitHubReader(args.token_env))
+        elif args.command == "check-pr":
+            import dentcast_publish_discovery as discovery
+            result = lifecycle.check_pr(args.repository, args.number, args.expected_head,
+                                        args.expected_base, args.expected_branch,
+                                        discovery.GitHubReader(args.token_env))
+        elif args.command == "delivery-plan":
+            result = lifecycle.delivery_plan(root, args.base_ref, args.max_blob_bytes)
         elif args.command == "plan":
             result = {"status": "plan_template", "steps": lifecycle.plan(args.paper_only), "publication_completed": False}
         elif args.command == "inspect":
@@ -976,7 +1046,15 @@ def main(argv=None):
         import sys
         exc = sys.exc_info()[1]
         code = str(exc) if isinstance(exc, Blocked) else "INVALID_INPUT_OR_STATE"
+        action = "Resolve the named blocker in the current run; preserve work and review actual changes before reconciliation. Do not repeat an unchanged failed command or discover branches."
+        if code == "HANDOFF_MISSING":
+            action = "Restore the exact current-run receipt; initialize only if no publication action began. A missing receipt does not authorize branch discovery."
+        elif code.startswith("PR_"):
+            action = "Preserve local work, freshly read the exact PR and destination refs, and revise delivery for their actual state; do not write to the old branch automatically."
+        elif code.startswith("RECOVERY_REQUEST_REQUIRED"):
+            action = "Continue the active run without branch discovery; discovery requires an explicit user request identifying an incomplete publication."
         print(json.dumps({"status": "blocked", "error": code,
+                          "next_action": action,
                           "publication_completed": False}), file=sys.stderr)
         return 2
 
