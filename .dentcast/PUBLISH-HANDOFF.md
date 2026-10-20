@@ -3,9 +3,9 @@
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "sharehub/share-37"
-- Status: blocked
+- Status: in_progress
 - Next canonical step: null
-- Blocker: "Prepared and verified branch; standing founder merge approval required before main deployment; live cabinet UI check pending deployment."
+- Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
 Git facts are reconstructed from Git and are not duplicated in this handoff.
@@ -14,7 +14,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
 ```json
 {
   "publication": {
-    "blocker": "Prepared and verified branch; standing founder merge approval required before main deployment; live cabinet UI check pending deployment.",
+    "blocker": null,
     "category": "sharehub",
     "content_id": "sharehub/share-37",
     "context": {
@@ -28,10 +28,12 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "status": "confirmed"
         },
         {
-          "decision": null,
-          "evidence": [],
+          "decision": "Founder explicitly instructed merge on2026-10-20",
+          "evidence": [
+            "founder-merge-authorization-2026-10-20"
+          ],
           "scope": "merge prepared ShareHub37 publication into main",
-          "status": "pending"
+          "status": "confirmed"
         }
       ],
       "decisions": [
@@ -60,12 +62,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "reference": "founder-approved ShareHub article and uploaded full-text DOI 10.1016/j.prosdent.2025.11.040"
         }
       ],
-      "pending_questions": [
-        {
-          "question": "Merge the fully prepared verified branch into main for live publication?",
-          "scope": "merge"
-        }
-      ],
+      "pending_questions": [],
       "unrelated_changes": [],
       "validation": [
         {
@@ -90,7 +87,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "target": "Drive folder Printer 1GIxwR7qzSDHBNwZsNJUlfjjWBcLCV5hX; full-text PDF DOI 10.1016/j.prosdent.2025.11.040"
       }
     ],
-    "status": "blocked",
+    "status": "in_progress",
     "steps": [
       {
         "evidence": [
@@ -569,7 +566,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Prepared report and all work reviewed at actual delivery boundary; live merge remains pending standing founder approval"
+    "note": "Explicit founder merge authorization resolves previous approval blocker; content unchanged"
   },
   "schema": "publish-handoff-v3"
 }

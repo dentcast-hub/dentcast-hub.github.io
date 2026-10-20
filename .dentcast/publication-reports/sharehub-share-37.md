@@ -1,6 +1,6 @@
 # ShareHub 37 publication evidence — 2026-10-20
 
-Status: complete candidate on `publish/share-37-printed-definitive-crowns`; merge and live deployment pending the founder's standing merge approval. A passing local gate is not evidence of deployment. No PR or automatic merge was made.
+Status: complete candidate on `publish/share-37-printed-definitive-crowns`; merge explicitly authorized on2026-10-20; live deployment verification in progress. A passing local gate is not evidence of deployment. No PR or automatic merge was made.
 
 ## Editorial and page
 
@@ -156,4 +156,4 @@ No warned rows. The earlier sitemap failure came from checking while its generat
 
 ## Delivery boundary
 
-All applicable preparation is complete; actual branch push, remote tree equality and merge approval are recorded in the publication checkpoint. Main was not changed automatically. Live article, cabinet UI readback and deployment remain pending merge. The fixed checkpoint must be retained until verified completion and authorized cleanup.
+All applicable preparation is complete; actual branch push, remote tree equality and merge approval are recorded in the publication checkpoint. Founder authorized merge. Live article and cabinet readback are being checked after deployment. The fixed checkpoint must be retained until verified completion and authorized cleanup.
