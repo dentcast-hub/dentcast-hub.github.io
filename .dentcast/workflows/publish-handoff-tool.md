@@ -10,8 +10,8 @@ Prepare a public-safe publication JSON outside the checkout, using the shape bel
 python3 tools/dentcast_publish_handoff.py init --input /tmp/publish-input.json
 python3 tools/dentcast_publish_handoff.py inspect
 python3 tools/dentcast_publish_handoff.py inspect --check-remote
-python3 tools/dentcast_publish_handoff.py discover
-python3 tools/dentcast_publish_handoff.py discover --repository dentcast-hub/dentcast-hub.github.io
+python3 tools/dentcast_publish_handoff.py discover --recover-incomplete
+python3 tools/dentcast_publish_handoff.py discover --recover-incomplete --repository dentcast-hub/dentcast-hub.github.io
 python3 tools/dentcast_publish_handoff.py record --input /tmp/publish-input.json --expected-sha256 <digest-from-last-read>
 ```
 

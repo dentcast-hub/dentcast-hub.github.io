@@ -53,6 +53,7 @@ browser is work every reader would repeat for all 443 rows.
 """
 from __future__ import annotations
 
+from dentcast_text_io import write_text
 import json
 import sys
 from pathlib import Path
@@ -197,7 +198,7 @@ def main() -> int:
     }
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(
+    write_text(OUT,
         json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n",
         encoding="utf-8",
     )

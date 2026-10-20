@@ -26,6 +26,8 @@ Usage:
 import re
 import sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools"))
+from dentcast_text_io import write_text
 
 try:
     from PIL import Image
@@ -119,7 +121,7 @@ def main():
                 k: stats[k] - before[k] for k in stats if stats[k] != before[k]
             }))
             if not check:
-                page.write_text(new_text, encoding="utf-8")
+                write_text(page, new_text, encoding="utf-8")
 
     for path, delta in changed_files:
         print(f"  {path} {delta}")

@@ -23,6 +23,7 @@ Sources read (never modified):
 No other file in the project is read or written.
 """
 from __future__ import annotations
+from dentcast_text_io import write_text
 import html
 import json
 import os
@@ -1054,7 +1055,7 @@ def build_pillar(slug):
     out_dir = ROOT / "pillar" / slug
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / "index.html"
-    out_path.write_text(page, encoding="utf-8")
+    write_text(out_path, page, encoding="utf-8")
 
     # Sidecar for the premium layer. Also the taxonomy source for
     # tools/build_plus_index.mjs, which used to scrape the subtopic cards
@@ -1070,7 +1071,7 @@ def build_pillar(slug):
         "cards_html": cards_html,
     }
     struct_path = out_dir / "structure.json"
-    struct_path.write_text(
+    write_text(struct_path,
         json.dumps(structure, ensure_ascii=False, separators=(",", ":")) + "\n",
         encoding="utf-8")
 
@@ -1767,7 +1768,7 @@ def build_index():
     out_dir = ROOT / "pillar"
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / "index.html"
-    out_path.write_text(page, encoding="utf-8")
+    write_text(out_path, page, encoding="utf-8")
 
     # The subtopic breakdown the cards no longer carry, for the premium layer.
     # Keyed by slug so premium-index.js can fill each card in place.
@@ -1785,7 +1786,7 @@ def build_index():
             for p in pillars_info
         },
     }
-    (out_dir / "structure.json").write_text(
+    write_text((out_dir / "structure.json"),
         json.dumps(hub_structure, ensure_ascii=False, separators=(",", ":")) + "\n",
         encoding="utf-8")
 
@@ -2756,7 +2757,7 @@ def build_glossary():
     )
 
     out_path = ROOT / "glossary" / "index.html"
-    out_path.write_text(page, encoding="utf-8")
+    write_text(out_path, page, encoding="utf-8")
 
     print("Built " + str(out_path.relative_to(ROOT)))
     print("Total terms: " + str(total))

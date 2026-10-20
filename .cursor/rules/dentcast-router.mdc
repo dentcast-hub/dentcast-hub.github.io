@@ -13,6 +13,8 @@ New publication → `.dentcast/workflows/README.md`. Read complete `modules/01-h
 
 ## Interrupted publication
 
+The permanent execution guide is `publish-checkpoints.md`; the temporary current-run state is `.dentcast/PUBLISH-HANDOFF.md`; `publish-handoff.md` and `publish-discovery.md` describe explicit recovery. These are different roles. In a continuing active session, «کجایی؟», «چی شد؟», «ادامه بده» and «ادامه انتشار» are status/continuation requests: answer directly and continue from the current ledger and last valid tool digest. Missing receipts, stale checkpoints and module cross-references do not authorize recovery or branch scans. Read each required complete source once per unchanged revision in the continuous run; follow the execution/delivery discipline in `publish-checkpoints.md`. Infrastructure-only work does not initialize a publication.
+
 For «انتشار ناقص داشتم» or an explicit request to resume a publication the user identifies as incomplete/interrupted, read `.dentcast/PUBLISH-HANDOFF.md` exactly once, then `.dentcast/workflows/publish-handoff.md`. A generic «ادامه بده» or «ادامه انتشار» alone does not trigger recovery. During the active run, keep state in the current session and do not reread the handoff before each step; use the latest helper digest. Before a new publication, check only whether the file exists. If it does, make no changes and ask whether the user means to resume; read it only after explicit confirmation. Never overwrite unfinished work. Update the handoff after every canonical step and before handing off; delete it only after verified completion. A missing file or unavailable work must be reported, not invented. Local commits and dirty files are not automatically available in another checkout.
 
 ## Routes

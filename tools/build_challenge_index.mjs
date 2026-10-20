@@ -1,3 +1,4 @@
+import { writeText } from './text_io.mjs';
 // Build plus/challenges.json — the چالش block's PUBLIC half only.
 //
 // This file is GENERATED, never hand-written (handoff §11.4). It carries
@@ -20,7 +21,7 @@
 // the flashcards index use.
 //
 // Run from the repo root:  node tools/build_challenge_index.mjs
-import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, relative, resolve } from 'node:path';
 
@@ -155,5 +156,5 @@ const out = {
   byContent,
 };
 
-writeFileSync(resolve(root, 'plus', 'challenges.json'), JSON.stringify(out, null, 0) + '\n');
+writeText(resolve(root, 'plus', 'challenges.json'), JSON.stringify(out, null, 0) + '\n');
 console.log(`Wrote plus/challenges.json: ${totalPages} چالش pages.`);

@@ -1,3 +1,4 @@
+import { writeText } from './text_io.mjs';
 // Build plus/quiz-index.json — the premium app's scored-quiz question bank.
 //
 // This file is GENERATED, never hand-written. The single source of truth for
@@ -31,7 +32,7 @@
 // excluded, same as the flashcards index.
 //
 // Run from the repo root:  node tools/build_quiz_index.mjs
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
@@ -140,5 +141,5 @@ const out = {
   byContent,
 };
 
-writeFileSync(resolve(root, 'plus', 'quiz-index.json'), JSON.stringify(out, null, 0) + '\n');
+writeText(resolve(root, 'plus', 'quiz-index.json'), JSON.stringify(out, null, 0) + '\n');
 console.log(`Wrote plus/quiz-index.json: ${totalPages} pages, ${totalQuestions} binary questions (of ${scanned} FAQ items scanned).`);

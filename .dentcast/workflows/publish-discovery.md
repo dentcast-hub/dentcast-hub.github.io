@@ -9,13 +9,13 @@ The active fixed handoff and its recorded run identity determine candidates.
 From a checkout with these tools:
 
 ```bash
-python3 tools/dentcast_publish_handoff.py discover
+python3 tools/dentcast_publish_handoff.py discover --recover-incomplete
 ```
 
 Or name the repository explicitly; this does not require a Git checkout:
 
 ```bash
-python3 tools/dentcast_publish_handoff.py discover --repository dentcast-hub/dentcast-hub.github.io
+python3 tools/dentcast_publish_handoff.py discover --recover-incomplete --repository dentcast-hub/dentcast-hub.github.io
 ```
 
 The standalone tools still need to be available locally to execute Python.

@@ -207,7 +207,7 @@ class DiscoveryTests(unittest.TestCase):
         out, err = io.StringIO(), io.StringIO()
         with patch.object(d, 'GitHubReader', return_value=MemoryGitHub({'main': 'a'*40})), \
              redirect_stdout(out), redirect_stderr(err):
-            code = h.main(['--repo', str(self.base/'no-checkout'), 'discover', '--repository', REPO])
+            code = h.main(['--repo', str(self.base/'no-checkout'), 'discover', '--recover-incomplete', '--repository', REPO])
         self.assertEqual(code, 0, err.getvalue())
         self.assertEqual(json.loads(out.getvalue())['status'], 'not_found')
         self.assertEqual((self.root/h.STATE_PATH).read_bytes(), before)
@@ -217,7 +217,7 @@ class DiscoveryTests(unittest.TestCase):
                               {'a'*40: self.entry('a'), 'b'*40: self.entry('b')})
         out = io.StringIO()
         with patch.object(d, 'GitHubReader', return_value=reader), redirect_stdout(out):
-            code = h.main(['discover', '--repository', REPO])
+            code = h.main(['discover', '--recover-incomplete', '--repository', REPO])
         self.assertEqual(code, 2)
         self.assertIsNone(json.loads(out.getvalue())['selected'])
 

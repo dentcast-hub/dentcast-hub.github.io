@@ -32,6 +32,7 @@ Sources read (never modified):
 Deterministic for a given calendar day (only @@YEARS@@ is date-derived).
 """
 from __future__ import annotations
+from dentcast_text_io import write_text
 import datetime
 import html
 import json
@@ -368,7 +369,7 @@ def build():
     if "@@" in page:
         raise SystemExit("Unsubstituted @@MARKER@@ left in output — template/builder out of sync.")
 
-    OUT_PATH.write_text(page, encoding="utf-8", newline="\n")
+    write_text(OUT_PATH, page, encoding="utf-8", newline="\n")
 
     # Brain coverage + taxonomy guard
     matched = sum(1 for e in episodes_sorted if str(e.get("episode")) in brain_by_ep)

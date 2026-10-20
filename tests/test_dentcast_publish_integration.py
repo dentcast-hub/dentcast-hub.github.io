@@ -79,7 +79,7 @@ class IntegratedRecoveryTests(unittest.TestCase):
                 'import dentcast_publish_discovery as d\n'
                 'from test_dentcast_publish_integration import GitBackedGitHub\n'
                 f'd.GitHubReader=lambda token_env=None:GitBackedGitHub({str(self.remote)!r})\n'
-                f'raise SystemExit(h.main(["discover","--repository",{REPO!r}]))\n')
+                f'raise SystemExit(h.main(["discover", "--recover-incomplete","--repository",{REPO!r}]))\n')
         result = subprocess.run([sys.executable, '-c', code], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         return json.loads(result.stdout)

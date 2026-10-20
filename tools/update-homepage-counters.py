@@ -19,6 +19,7 @@ A url-less newest entry leaves its card untouched (never regress to an
 older item). Standard library only.
 """
 
+from dentcast_text_io import write_text
 import json
 import math
 import re
@@ -266,7 +267,7 @@ def main():
     html, hero_note = refresh_hero(html, episode)
     html, rail_notes = refresh_rail(html, latest)
 
-    INDEX.write_text(html, encoding="utf-8")
+    write_text(INDEX, html, encoding="utf-8")
     print("Updated homepage counters — " + ", ".join(changes))
     print("  " + hero_note)
     for n in rail_notes:
