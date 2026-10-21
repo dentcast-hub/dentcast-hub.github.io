@@ -26,6 +26,14 @@ vi.mock('/plus/js/api.js', () => ({
   meStatus: () => me.status,
   apiBase: () => Promise.resolve('https://api.test'),
 }));
+ // Dynamic browser imports carry the global asset-stamp query. Vitest must
+ // intercept both the clean path and the currently stamped path, or it loads
+ // a separate real API module and every signed-in/premium fixture reads anon.
+vi.mock('/plus/js/api.js?v=191', () => ({
+  currentUser: () => new Promise((resolve) => setTimeout(() => resolve(me.user), me.delayMs)),
+  meStatus: () => me.status,
+  apiBase: () => Promise.resolve('https://api.test'),
+}));
 
 // ── a controllable IntersectionObserver (jsdom has none) ─────────────────────
 type Obs = { cb: (entries: any[]) => void; disconnected: boolean };
