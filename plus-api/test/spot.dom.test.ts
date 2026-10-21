@@ -20,9 +20,10 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
 // ── the mocked /me ───────────────────────────────────────────────────────────
 const me: { user: any; status: string; delayMs: number } = { user: null, status: 'anon', delayMs: 0 };
+let meCalls: Array<{ user: any; status: string }> = [];
 
 vi.mock('/plus/js/api.js', () => ({
-  currentUser: () => new Promise((resolve) => setTimeout(() => resolve(me.user), me.delayMs)),
+  currentUser: () => { meCalls.push({ user: me.user, status: me.status }); return new Promise((resolve) => setTimeout(() => resolve(me.user), me.delayMs)); },
   meStatus: () => me.status,
   apiBase: () => Promise.resolve('https://api.test'),
 }));
@@ -30,7 +31,7 @@ vi.mock('/plus/js/api.js', () => ({
  // intercept both the clean path and the currently stamped path, or it loads
  // a separate real API module and every signed-in/premium fixture reads anon.
 vi.mock('/plus/js/api.js?v=191', () => ({
-  currentUser: () => new Promise((resolve) => setTimeout(() => resolve(me.user), me.delayMs)),
+  currentUser: () => { meCalls.push({ user: me.user, status: me.status }); return new Promise((resolve) => setTimeout(() => resolve(me.user), me.delayMs)); },
   meStatus: () => me.status,
   apiBase: () => Promise.resolve('https://api.test'),
 }));
@@ -129,6 +130,7 @@ const creativeShown = () => document.querySelector('.dc-spot')?.getAttribute('da
 beforeEach(() => {
   vi.useFakeTimers();
   posts = [];
+  meCalls = [];
   pageViews = 0;
   controls = {};
   campaign = null;
@@ -180,6 +182,7 @@ describe('premium never sees an ad', () => {
   it('renders nothing when /me answers premium in time', async () => {
     me.user = { tier: 'premium' }; me.status = 'user';
     await boot();
+    expect(meCalls, 'mocked currentUser must actually be called').toEqual([{ user: me.user, status: 'user' }]);
     expect(cards()).toBe(0);
     await seen();
     expect(posts).toHaveLength(0);
