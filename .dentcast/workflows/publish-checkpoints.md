@@ -114,7 +114,7 @@ Never certify the earlier tree as the final delivery.
 Read the full relevant module once per unchanged source revision. A repeated module reference does not require a second read. During the active run, use the publication state already held in the current session and the digest returned by the latest helper read/write; do not reread or re-inspect the fixed handoff before each step:
 
 ```bash
-python3 tools/dentcast_publish_handoff.py step --id <canonical-id> --status started --expected-sha256 <digest> --reconcile-note 'Verified previous step delivery and reviewed Git changes'
+python3 tools/dentcast_publish_handoff.py step --id <canonical-id> --status started --expected-sha256 <digest> --reconcile-note 'Reviewed current step prerequisites and Git changes'
 # Execute only the actual authorized canonical action and verify its result.
 python3 tools/dentcast_publish_handoff.py step --id <canonical-id> --status completed --evidence <actual-receipt-reference> --expected-sha256 <new-digest> --reconcile-note 'Reviewed the actual step changes and evidence'
 ```
@@ -132,8 +132,8 @@ python3 tools/dentcast_publish_handoff.py advance --id <current-id> --evidence <
 ```
 
 Read the full applicable module before requesting `--start-next`; omit that
-flag at an unread-module boundary, an approval wait, an external-action delivery
-boundary, or the end of the turn. The tool records progress only: it never
+flag at an unread-module boundary or an approval wait. At either fixed delivery
+cut, the helper saves the completed step and stops before starting the next one. The tool records progress only: it never
 executes the next action, grants approval or evaluates scientific work.
 
 For consecutive genuinely inapplicable pending steps, supply repeated
@@ -152,56 +152,57 @@ Do not replay a completed action or assume the whole request was atomic.
 Normal stale-write, identity, ordering, approval and external-outcome guards
 remain in force. This changes command overhead, not the 52-step canonical ledger.
 
-### Checkpoint every step; deliver coherent batches
+### Checkpoint every step locally; deliver exactly three times
 
-After **each** canonical step or dynamic substep (including a skip, failure or
-block), save its real result in the local handoff before continuing. Keep one
-step transition per handoff write (the `advance` helper automates these separate writes); do not combine finishing one step with
-starting the next or resolve multiple new steps in one write. This preserves
-precise recovery state without forcing a tiny Git commit after every action.
+After **each** canonical step or dynamic substep, save its real result locally
+before continuing. Keep one transition per write; `advance` performs separate
+writes and returns `delivery_required` rather than crossing an undelivered cut.
+Local checkpoints are not proof that another checkout can recover the work.
 
-Group scoped public-safe work and its latest handoff into a commit/push when a
-coherent unit is complete: for example, after a meaningful phase or related
-set of steps, before ending a turn or switching agents/checkouts, and before
-any irreversible external action. For an external action, first record
-`started`, then deliver that checkpoint before performing the action; record
-the observed outcome immediately afterward. Unknown outcomes must be
-reconciled before retrying. Private inputs stay outside public Git; record safe
-references. Use `inspect --check-remote` at delivery boundaries.
+Every new page publication has exactly these three commit/push deliveries:
 
-The Stop guard still requires the latest handoff and watched work to be
-delivered before a turn ends. Phase F and paper-only verification can run from
-a locally consistent checkpoint; save their results and include them in the
-next delivery batch. `finish` still requires a freshly synchronized remote,
-exact delivered handoff and completed gates before cleanup. If push/network
-access fails at a delivery boundary, preserve local work, record the blocker
-and actual error, and do not end the turn or cross an external side-effect
-boundary until delivery is resolved. The helper observes Git; it does not
-automatically commit, push, grant publication authorization, or transfer
-files.
+| Delivery | Boundary | What is delivered |
+|---|---|---|
+| 1 | After `C.4.9`: page construction and semantic linking complete | Scoped work and latest unfinished handoff |
+| 2 | After `C.4.13`: DES/Fidelity, required review and founder-approved corrections complete | Scoped work, scientific results or lawful exception, latest unfinished handoff |
+| 3 | After all remaining steps, final bytes, real Phase F and report G | Final work and completion receipt, with the old handoff deleted in the same commit/push |
 
-A work commit changes HEAD/index relative to its pre-commit observation. Once
-the exact handoff is committed, the helper rebuilds the baseline from that
-commit in the original checkout or a fresh clone. Actual later changes still
-require review and a specific reconciliation note. A note cannot bypass
-delivery. Do not create a checkpoint-only commit loop to embed a commit's own
-SHA.
+No discretionary phase, turn end, agent/checkout switch, approval wait or external
+action adds a fourth delivery. Between cuts, checkpoint locally and continue.
+If interrupted there, report that the newest work is local; remote recovery is
+available only through the last delivered cut. Do not claim otherwise or push an
+extra checkpoint. Before an external action record `started` locally; immediately
+record its observed outcome. Unknown outcomes block retry as before. External
+actions still require their existing scope and approval; this protocol grants none.
 
-The v3 handoff stores semantic state only: important decisions and approvals,
-DES/Fidelity scores and results, external outcomes, and other information
-that committed files do not contain. It does not repeat branch names, file
-status, commits, hashes, or Git fingerprints. Current Git facts are computed
-at inspection/delivery. A fresh checkout reconstructs the baseline from the
-commit that wrote the exact checkpoint bytes; later work commits still
-require review. The private same-checkout observation contains no semantic
-publication ledger.
+Cuts 1 and 2 require a fresh remote observation before crossing into the next
+step, including when scientific steps are lawfully skipped. Stage scoped work,
+refresh the local checkpoint after staging, stage the latest handoff, commit and
+push once; verify actual remote delivery. Failed transport blocks crossing that
+cut. Preserve work and report the real error; retrying the same unaccepted
+logical delivery does not create another milestone. Never advance by pretending
+a failed push succeeded. The helper does not commit or push automatically.
 
-The Stop guard also requires the latest active handoff/work to be delivered
-before normal turn completion. This applies when the native client actually
-executes that hook; explicit CLI discipline remains mandatory elsewhere. A
-coherent batch may contain multiple canonical steps. If delivery is
-unavailable, preserve the checkpoint and report the blocked state; do not
-repeatedly perform publication actions or claim delivery succeeded.
+`init` records `fixed_three_deliveries_v1` in semantic decisions for new page
+runs, including unassigned intake; it cannot subsequently be removed. Pre-commit
+and CI reject intermediate or duplicate checkpoint commits and check cut order.
+The completed-only `.dentcast/publication-reports/<content-id>.completion.json`
+receipt lets CI verify cut 3 without publishing a final active handoff. It records
+the finished ledger, final fingerprints and the two prior delivery commits; it
+is an audit report, not a recovery candidate. Final deletion and output changes
+must share that third commit. Git history checks enforce three delivery commits;
+hooks cannot count network retries or prevent a client bypassing local hooks.
+
+The Stop guard permits consistent local progress between cuts. At a delivery cut
+it requires delivered work; during final cleanup it requires final confirmation.
+A checkpoint written in an earlier run without the policy marker retains the
+legacy cleanup path so interrupted older work remains recoverable. Paper-only
+is a separate no-page route and keeps its catalog verification/cleanup contract;
+do not invent page/DES cuts for it. Never remove a policy marker to claim legacy.
+
+The v3 handoff remains semantic-only. Git reconstructs committed fingerprints;
+private same-checkout observations support local progress. Do not create commits
+to embed their own SHA. Keep private input bodies out of all public receipts.
 
 The lifecycle registry in `tools/dentcast_publish_lifecycle.py` maps every canonical phase/question/top-level action and the paper-ingestion parts to a module. Its order preserves two source dependencies: **C.8 builders before C.7 stamping**, and **LiteCast C.0.5/C.0.6 after C.2 page construction**. Canonical skip rules still come from the full source, not a guessed category map. All inventory checkpoints remain present on page publications, with explicit skips where applicable. `rules`, Phase `0`, Phase `F` and final report `G` cannot be skipped.
 
@@ -225,13 +226,34 @@ Omit an expectation only if the user genuinely provided neither corresponding st
 
 For paper-only, after Parts 1/2 and before reporting, run `verify --expected-sha256 <digest> --catalog-id <actual-P-id>`. It rechecks the actual catalog entry, Drive-link identities and a recorded completed Drive-action receipt. The agent must still verify the real upload, correct folder, enriched schema and metadata with the canonical tools; the local gate cannot contact Drive or replace those approvals. This is the documented no-page exception, not a synthetic page Phase F.
 
-Finish the report at G and record its real reference. Record `context.delivery` as objects with nonempty `scope` and nonempty `evidence` reference lists for actual required deployment/live/delivery checks. A bare Boolean is rejected; the agent must verify the evidence. Persist the public-safe checkpoint and work on the authorized branch before cleanup:
+Finish report G and record its real reference. `context.delivery` must contain
+objects with nonempty `scope` and `evidence` lists for actual required external
+checks; a Boolean is rejected. For new page runs, **do not commit or push this
+final handoff**:
 
-1. Stage only the scoped public work. Refresh the handoff **after staging**, with reviewed state/evidence, then stage the latest handoff. The pre-commit guard checks the staged state matches the current file and the captured work/index.
-2. Commit and push through the normal authorized Git workflow. Verify current remote state with `inspect --check-remote`. An exact committed checkpoint is reconstructed from Git; refresh with `record` and a reconciliation note only for actual additional changes/evidence, not merely to embed the commit's SHA.
-3. Run `finish --expected-sha256 <digest>`. It requires the full resolved ledger, no unresolved recorded gates, evidence references, clean watched work, the exact delivered handoff and a freshly synchronized remote. It reruns the actual applicable mechanical gate and checks work did not change during it. Only then does it remove the fixed temporary file locally.
-4. `finish` returns **cleanup_pending_delivery**, not publication success. A durable private recovery receipt is kept in Git metadata; it is not a second publication handoff in the repository. Commit/push **only the handoff deletion**, then run `confirm-cleanup`. Success requires the deletion to be observed on the synchronized remote branch and unchanged publication work. The private recovery receipt is then removed.
-5. If cleanup/push fails or is interrupted, run `restore-cleanup`. It restores the same fixed `.dentcast/PUBLISH-HANDOFF.md` as `cleanup_pending`, preserving the old work fingerprint so drift is still reported. It never restores content or repeats an external action. Keep it until reconciliation and successful delivery.
+1. Finish all final edits and verify the actual bytes; save the completed local
+   ledger and report evidence. Keep HEAD at the already pushed second delivery.
+2. Run `finish --expected-sha256 <digest>`. It requires all gates resolved, real
+   successful Phase F, actual delivery evidence and a freshly synchronized remote
+   at delivery 2. It reruns the mechanical gate and checks unchanged work. It
+   writes the completed-only receipt, retains private recovery metadata and
+   removes the active handoff locally.
+3. Stage only final scoped work, the completion receipt and handoff deletion.
+   Commit/push them **together as delivery 3**, then run `confirm-cleanup`.
+   This confirms actual remote delivery and unchanged final bytes. No additional
+   cleanup commit/push follows. Until confirmation, status is
+   `cleanup_pending_delivery`, never publication success.
+4. If interrupted before successful delivery, preserve work and use
+   `restore-cleanup` to restore the same local handoff. It removes its own unchanged
+   completion receipt locally, never restores content or repeats an external
+   action. If the final commit already exists, `restore-cleanup` preserves that
+   commit and returns `final_delivery_pending`: retry the same push and confirm,
+   without making another commit. Reconcile actual Git/index drift and rerun
+   affected checks before retry.
+
+For pre-policy interrupted runs and paper-only, compatibility retains the earlier
+exact delivered final handoff followed by a deletion-only cleanup commit and
+`confirm-cleanup`. This exception is not available to a new page run.
 
 The helper never commits, pushes, deploys or runs an external receipt's commands. `finish` is authorized by the publication's completion contract, not by a Boolean claiming founder consent. Its mechanical checks cannot independently prove private approvals, semantic quality, external service outcomes or that omitted approval requirements do not exist; the executing agent must verify those original gates. A stale/missing/corrupt state is not success.
 
@@ -287,7 +309,7 @@ without rerunning model calls; scoring prompts and voting are unchanged.
 
 - `scripts/cursor-parity-notice.mjs` recognizes active nested modules/global rules, avoids backup snapshots, reminds shared client edits and active-run checkpointing, and never writes a state or marks work done.
 - The existing Claude/Codex hook configurations call the advisory adapter and a Stop guard. These adapters require actual native client support; their JSON presence is not a runtime certification. Cursor's always-on rules and every client's explicit CLI protocol remain authoritative. Shell edits bypassing a file hook are caught by Stop/pre-commit checks when those hooks are installed.
-- Install local Git hooks once per checkout with `git config core.hooksPath .githooks`. The pre-commit guard permits consistent paused handoffs, blocks stale/unstaged checkpoints and unguarded deletion, and validates cleanup-only commits. It does not infer a publication from arbitrary content edits when no handoff exists. GitHub API commits bypass local hooks, so agents using them must preserve the same contract and CI verifies committed checkpoints/cleanup boundaries.
+- Install local Git hooks once per checkout with `git config core.hooksPath .githooks`. The pre-commit guard permits only the two fixed active checkpoints for new page runs, blocks stale/unstaged checkpoints and unguarded deletion, and validates the combined third delivery. Legacy and paper-only cleanup remains compatible. It does not infer a publication from arbitrary content edits when no handoff exists. GitHub API commits bypass local hooks, so agents using them must preserve the same contract and CI verifies committed checkpoints/cleanup boundaries.
 - `.github/workflows/publishing-live-contract-tests.yml` runs on main, fix/refactor branches and PRs. It tests active contracts, recovery/cleanup, hooks, and the committed-state boundary, including nested module/global changes. Historical staging CI remains separate and is not the active live-workflow certification.
 
 Read `PUBLISHING-FINAL-REPORT.md` for integrated CLI/Git/discovery acceptance and remaining native-client/live-publication limits. Tests that use fixture verifiers prove guard behavior, not scientific correctness or a real published page.

@@ -27,12 +27,12 @@ Before resuming:
 
 - Create the state file before the first publication mutation or external action.
 - Update it after **every canonical step**, including completed, skipped, blocked, and failed steps; write the reason and evidence.
-- After every step, save its real result in the local handoff. Commit/push scoped work with the latest handoff at coherent milestones, before ending a turn or switching agents/checkouts, and before irreversible external actions. Record and deliver `started` before performing an external action; reconcile unknown outcomes before retrying. See `publish-checkpoints.md` for the delivery boundaries.
+- After every step, save its real result in the local handoff. For new page runs, commit/push exactly at `C.4.9`, `C.4.13` (including lawful skips), and final completion after Phase F and G. Cuts 1/2 include work and latest handoff; cut 3 includes final work, completion receipt and deletion of the old handoff together. Intermediate steps, turn ends, agent switches and external-action receipts stay local. Record `started` locally before an external action; reconcile unknown outcomes before retrying. See `publish-checkpoints.md` for the delivery boundaries.
 - Before each external action, record intended action, target, and status `started`; afterward record its verified result or `outcome_unknown`.
 - Update semantic progress before ending a turn, switching agents, committing, or handing off. After commit/push, inspect Git directly; do not duplicate current HEAD, index, status, ahead/behind or remote observations in the handoff. Do not recursively commit just to put a commit's own SHA inside itself.
 - If interrupted mid-step, the next agent verifies the actual state rather than assuming the last checkpoint is current. A Markdown file cannot guarantee recovery from every crash.
 - Keep the file on any failure, pending approval, failed verification, unknown external outcome, or incomplete delivery.
-- Delete it only after all applicable steps and approvals, the complete Phase F, required publication delivery and its verification, and the final report are complete. Commit/push cleanup when Git delivery is part of the authorized publication. A cleanup push failure remains incomplete and must be reported; restore a local handoff describing it.
+- Delete it only after all applicable steps and approvals, the complete Phase F, required publication delivery and its verification, and the final report are complete. For new page runs, include deletion in the third final delivery; never push a completed final handoff and then a fourth cleanup. Legacy/paper-only runs keep their compatibility path. A cleanup push failure remains incomplete and must be reported; restore a local handoff describing it.
 - Retain permanent contracts, tools, and historical development documentation. Only the temporary state file is removed.
 
 ## Local work versus portable handoff

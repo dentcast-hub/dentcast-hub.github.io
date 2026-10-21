@@ -165,7 +165,12 @@ def verify_publication_history(root, base, added_paths):
     verified = set()
     for commit in deletions:
         raw = h.git(root, "show", commit + "^:" + STATE_PATH)
-        if reconcile_share35(root, raw):
+        publication = parse_handoff(raw.decode("utf-8")) if h.BEGIN.encode() in raw else None
+        import dentcast_publish_lifecycle as lifecycle
+        if publication and lifecycle.fixed_delivery(publication):
+            final = h.decode_json(h.safe_path(root, lifecycle.completion_path(publication)).read_text())
+            verified.add(lifecycle.validate_final_receipt(root, final, commit))
+        elif reconcile_share35(root, raw):
             verified.add("sharehub/share-35")
         else:
             verified.add(validate_completion(root, raw))

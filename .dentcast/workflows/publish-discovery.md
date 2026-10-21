@@ -77,10 +77,12 @@ Run `inspect --check-remote` in that checkout. Verify file/workflow fingerprints
 required inputs, completed evidence, approvals and external outcomes. An
 ambiguous upload/notification must be reconciled before retry. Read the active
 modular workflow and continue the first unfinished canonical step only when
-its prerequisites hold. Group work and the latest handoff into a coherent
-delivery before ending a turn, switching agents/checkouts, performing an
-irreversible external action, or cleaning up; do not require a commit after
-every canonical step. Discovery never switches branches, fetches, writes a
+its prerequisites hold. Preserve the recorded delivery policy. New page runs
+deliver exactly after `C.4.9`, after `C.4.13` (including lawful skips), and after
+final work, Phase F and G. Cuts 1/2 include work and latest handoff; cut 3 combines
+final work, completion receipt and handoff deletion. Intermediate progress,
+stops and external-action receipts stay local; do not add another push.
+Pre-policy interrupted runs and paper-only retain their compatibility path. Discovery never switches branches, fetches, writes a
 handoff, publishes, performs external actions, or certifies semantic completion.
 
 All agents use this shared procedure through `publish-handoff.md` and

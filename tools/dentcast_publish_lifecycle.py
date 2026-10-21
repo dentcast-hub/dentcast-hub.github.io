@@ -90,12 +90,115 @@ def require_step_delivery(root, state, expected):
     h.require(current['workflow'] == state['snapshot']['workflow'], 'DELIVERED_STEP_WORKFLOW_MISMATCH')
 
 
-def guard_step_transition(state, publication):
+DELIVERY_POLICY = "fixed_three_deliveries_v1"
+DELIVERY_CUTS = ("C.4.9", "C.4.13")
+
+
+def fixed_delivery(publication):
+    return publication["category"] != "paper-only" and any(
+        isinstance(d, dict) and d.get("kind") == DELIVERY_POLICY
+        for d in publication["context"]["decisions"])
+
+
+def delivery_boundary(publication):
+    """Only resolved prefixes followed by pending steps are deliverable cuts."""
+    rows = publication["steps"]
+    for number, sid in enumerate(DELIVERY_CUTS, 1):
+        index = next((i for i, row in enumerate(rows) if row["id"] == sid), None)
+        if index is not None and all(r["status"] in ("completed", "skipped") for r in rows[:index+1]) and all(
+                r["status"] == "pending" for r in rows[index+1:]):
+            return number
+    return None
+
+
+def committed_boundary(root, revision):
+    raw = h.git(root, "show", revision + ":" + h.STATE_PATH, optional=True)
+    if raw is None:
+        return None, None
+    state, _ = h.parse_state(raw)
+    require_plan(state["publication"])
+    return delivery_boundary(state["publication"]), state["publication"]
+
+
+def require_delivery_parent(root, publication, number, revision="HEAD"):
+    boundary, previous = committed_boundary(root, revision)
+    if number == 1:
+        h.require(previous is None, "FIRST_DELIVERY_REQUIRES_NO_ACTIVE_REMOTE_HANDOFF")
+    else:
+        h.require(boundary == number-1 and previous is not None
+                  and fixed_delivery(previous)
+                  and previous["content_id"] == publication["content_id"],
+                  "FIXED_DELIVERY_ORDER_REQUIRED")
+
+
+def completion_path(publication):
+    name = h.relative_path(publication["content_id"])
+    return ".dentcast/publication-reports/" + name + ".completion.json"
+
+
+def final_files_match(root, state):
+    current = h.current_snapshot(root, state)
+    h.require(all(current[k] == state["snapshot"][k] for k in ("repository", "branch")),
+              "WRONG_CLEANUP_CHECKOUT")
+    for name, info in state["snapshot"]["files"].items():
+        actual = h.file_info(root, name)
+        h.require(all(actual[k] == info[k] for k in actual), "WORK_CHANGED_AFTER_CLEANUP:" + name)
+    h.require(current["workflow"] == state["snapshot"]["workflow"], "WORKFLOW_CHANGED_AFTER_CLEANUP")
+    return current
+
+
+def validate_final_receipt(root, data, commit=None):
+    """Completed-only audit receipt, never an active recovery handoff."""
+    h.require(data.get("schema") == "publish-completion-v1", "INVALID_FINAL_DELIVERY_RECEIPT")
+    state = data["state"]
+    publication = state["publication"]
+    require_plan(publication)
+    h.require(fixed_delivery(publication) and h.next_step(publication) is None
+              and not publication["blocker"] and not publication["context"]["pending_questions"]
+              and all(a["status"] in ("confirmed", "not_required") for a in publication["context"]["approvals"])
+              and all(a["status"] not in ("started", "outcome_unknown", "failed") for a in publication["external_actions"]),
+              "INCOMPLETE_FINAL_DELIVERY_RECEIPT")
+    h.require(bool(publication["context"]["delivery"]) and all(
+        isinstance(d, dict) and h.nonempty(d.get("scope")) and isinstance(d.get("evidence"), list)
+        and d["evidence"] and all(h.nonempty(e) for e in d["evidence"])
+        for d in publication["context"]["delivery"]), "DELIVERY_EVIDENCE_REQUIRED")
+    h.require(set(publication["target_paths"]) <= set(state["snapshot"]["files"])
+              and set(state["snapshot"]["workflow"]) == set(h.WORKFLOW_PATHS), "INCOMPLETE_FINAL_FINGERPRINTS")
+    second = data["second_delivery_commit"]
+    h.require(bool(re.fullmatch(r"[0-9a-f]{40}", second)), "INVALID_DELIVERY_COMMIT")
+    require_delivery_parent(root, publication, 3, second)
+    first = h.text_git(root, "rev-parse", second + "^")
+    require_delivery_parent(root, publication, 2, first)
+    require_delivery_parent(root, publication, 1, first + "^")
+    if commit:
+        raw = h.git(root, "show", commit + ":" + completion_path(publication), optional=True)
+        h.require(raw is not None and h.decode_json(raw.decode("utf-8")) == data, "FINAL_RECEIPT_NOT_IN_DELIVERY_COMMIT")
+        h.require(h.text_git(root, "rev-parse", commit + "^") == second, "EXTRA_DELIVERY_COMMIT_FORBIDDEN")
+        h.require(h.git(root, "show", commit + ":" + h.STATE_PATH, optional=True) is None,
+                  "FINAL_HANDOFF_MUST_NOT_BE_PUSHED")
+        changed = set(h.text_git(root, "diff", "--name-only", second, commit).splitlines())
+        h.require(changed <= set(state["snapshot"]["files"]) | {h.STATE_PATH, completion_path(publication)},
+                  "UNRELATED_FINAL_DELIVERY_PATH")
+    for name, info in state["snapshot"]["files"].items():
+        actual = h.file_info(root, name)
+        h.require(all(actual[k] == info[k] for k in actual), "FINAL_RECEIPT_FILE_MISMATCH:" + name)
+    for name, sha in state["snapshot"]["workflow"].items():
+        h.require(h.file_info(root, name)["sha256"] == sha, "FINAL_RECEIPT_WORKFLOW_MISMATCH:" + name)
+    receipts = [r for r in publication["context"]["validation"] if isinstance(r, dict) and r.get("kind") == "phase_f"]
+    h.require(bool(receipts) and receipts[-1].get("exit_code") == 0, "MECHANICAL_GATE_RECEIPT_REQUIRED")
+    last = receipts[-1]
+    result = gate(root, publication, last.get("expected_title"), last.get("expected_caption"))
+    h.require(result["exit_code"] == 0, "FINAL_DELIVERY_VERIFICATION_FAILED")
+    return publication["content_id"]
+
+
+def guard_step_transition(state, publication, root=None):
+    if fixed_delivery(state["publication"]):
+        h.require(fixed_delivery(publication), "DELIVERY_POLICY_CANNOT_BE_DROPPED")
     old = {s['id']: s for s in state['publication']['steps']}
     h.require(all(s['id'] in old or s['status'] == 'pending' for s in publication['steps']),
               'NEW_SUBSTEPS_MUST_START_PENDING')
-    # Preserve one semantic checkpoint per step; commits may group multiple
-    # checkpoints into a coherent delivery unit.
+    # Preserve one semantic checkpoint per step; delivery cuts are independent.
     entered = [s for s in publication['steps'] if s['id'] in old
                and old[s['id']]['status'] not in ('started', 'completed', 'skipped')
                and s['status'] in ('started', 'completed', 'skipped')]
@@ -105,8 +208,9 @@ def guard_step_transition(state, publication):
                   'EXTERNAL_OUTCOME_UNKNOWN_DO_NOT_RETRY')
         h.require(row['id'] == h.next_step(state['publication']),
                   'START_NEXT_STEP_IN_SEPARATE_CHECKPOINT')
-        # Step completion is checkpointed locally after each canonical action.
-        # Delivery is a turn/side-effect boundary, not a per-step boundary.
+        if fixed_delivery(state["publication"]) and delivery_boundary(state["publication"]):
+            h.require(root is not None, "DELIVERY_CHECK_REQUIRES_CHECKOUT")
+            require_step_delivery(root, state, h.digest(h.render(state).encode()))
 
 
 def step(root, expected, sid, status, evidence, reason, note=None):
@@ -172,6 +276,13 @@ def advance(root, expected, sid=None, evidence=None, skips=(), start_next=False,
     result = {"sha256": expected, "publication_completed": False}
     try:
         for op_id, status, refs, reason in operations:
+            live, _ = h.load_state(root)
+            if fixed_delivery(live["publication"]) and delivery_boundary(live["publication"]):
+                try:
+                    require_step_delivery(root, live, result["sha256"])
+                except h.Blocked:
+                    return {**result, "status": "delivery_required", "delivery": delivery_boundary(live["publication"]),
+                            "transitions_written": written, "next_action": "Commit/push this fixed delivery before advancing"}
             result = step(root, result["sha256"], op_id, status, refs, reason, note)
             written.append({"id": op_id, "status": status})
     except (h.Blocked, OSError) as exc:
@@ -334,9 +445,13 @@ def finish(root, expected):
         remote = current["remote"]
         h.require(remote["status"] == "observed" and remote["ahead"] == 0 and remote["behind"] == 0,
                   "FRESH_SYNCHRONIZED_REMOTE_REQUIRED")
-        remote_state = h.git(root, "show", remote["head"] + ":" + h.STATE_PATH, optional=True)
-        h.require(remote_state is not None and h.digest(remote_state) == expected, "HANDOFF_MUST_BE_DELIVERED_FIRST")
-        h.require(all(f["status"] is None and f["kind"] != "missing" and bool(f["index"])
+        fixed = fixed_delivery(p)
+        if fixed:
+            require_delivery_parent(root, p, 3)
+        else:
+            remote_state = h.git(root, "show", remote["head"] + ":" + h.STATE_PATH, optional=True)
+            h.require(remote_state is not None and h.digest(remote_state) == expected, "HANDOFF_MUST_BE_DELIVERED_FIRST")
+        h.require(fixed or all(f["status"] is None and f["kind"] != "missing" and bool(f["index"])
                       and all(e["stage"] == 0 for e in f["index"]) for f in current["files"].values()),
                   "WORK_NOT_CLEAN_AND_AVAILABLE")
         receipts = [r for r in p["context"]["validation"] if isinstance(r, dict) and r.get("kind") in ("phase_f", "paper_catalog_gate")]
@@ -349,8 +464,27 @@ def finish(root, expected):
         after = h.current_snapshot(root, state)
         h.require(not h.differences(root, {"snapshot": current}, after), "WORK_CHANGED_DURING_COMPLETION")
         h.require(h.load_state(root)[1] == expected, "HANDOFF_CHANGED_DURING_COMPLETION")
-        store_cleanup(root, {"schema": "publish-cleanup-v1", "state": state, "state_sha256": expected,
-                             "prepared_at": h.now(), "gate": receipt})
+        data = {"schema": "publish-cleanup-v1", "state": state, "state_sha256": expected,
+                "prepared_at": h.now(), "gate": receipt}
+        if fixed:
+            report = completion_path(p)
+            h.require(not h.safe_path(root, report).exists(), "COMPLETION_RECEIPT_ALREADY_EXISTS")
+            # Public audit evidence excludes the private mutable Git/index observation.
+            audit = {"publication": p, "snapshot": {
+                "files": {name: {k: info[k] for k in ("kind", "sha256", "executable")}
+                          for name, info in state["snapshot"]["files"].items()},
+                "workflow": state["snapshot"]["workflow"]}}
+            final = {"schema": "publish-completion-v1", "state": audit,
+                     "second_delivery_commit": current["head"],
+                     "verification": {k: v for k, v in receipt.items() if k != "output"}}
+            validate_final_receipt(root, final)
+            data.update(completion_path=report, completion=final)
+        store_cleanup(root, data)
+        if fixed:
+            report_path = h.safe_path(root, report)
+            report_path.parent.mkdir(parents=True, exist_ok=True)
+            from dentcast_text_io import write_text
+            write_text(report_path, json.dumps(final, ensure_ascii=True, indent=2) + "\n")
         h.safe_path(root, h.STATE_PATH).unlink()
         if os.name != "nt":
             directory = os.open(h.safe_path(root, h.STATE_PATH).parent, os.O_RDONLY)
@@ -359,7 +493,8 @@ def finish(root, expected):
             finally:
                 os.close(directory)
         return {"status": "cleanup_pending_delivery", "publication_completed": False,
-                "next_action": "Commit/push only the handoff deletion, then confirm-cleanup; restore-cleanup on failure",
+                "next_action": ("Commit/push final work, completion receipt and handoff deletion together as delivery 3; then confirm-cleanup"
+                                if fixed else "Commit/push only the handoff deletion, then confirm-cleanup; restore-cleanup on failure"),
                 "verification": receipt}
 
 
@@ -369,7 +504,14 @@ def confirm_cleanup(root):
         h.require(not h.safe_path(root, h.STATE_PATH).exists(), "HANDOFF_STILL_EXISTS")
         state = data["state"]
         current = h.current_snapshot(root, state, check_remote=True)
-        h.require(not h.differences(root, state, current), "WORK_CHANGED_AFTER_CLEANUP")
+        if fixed_delivery(state["publication"]):
+            final_files_match(root, state)
+            name = data["completion_path"]
+            h.require(h.decode_json(h.safe_path(root, name).read_text()) == data["completion"], "COMPLETION_RECEIPT_CHANGED")
+            h.require(not h.status_paths(root), "FINAL_DELIVERY_WORK_NOT_COMMITTED")
+            validate_final_receipt(root, data["completion"], current["head"])
+        else:
+            h.require(not h.differences(root, state, current), "WORK_CHANGED_AFTER_CLEANUP")
         remote = current["remote"]
         h.require(remote["status"] == "observed" and remote["ahead"] == 0 and remote["behind"] == 0,
                   "CLEANUP_NOT_DELIVERED")
@@ -386,11 +528,20 @@ def confirm_cleanup(root):
 def restore_cleanup(root):
     with h.locked(root):
         data = cleanup_record(root)
+        if "completion" in data and h.text_git(root, "rev-parse", "HEAD") != data["completion"]["second_delivery_commit"]:
+            validate_final_receipt(root, data["completion"], "HEAD")
+            return {"status": "final_delivery_pending", "publication_completed": False,
+                    "next_action": "Final commit already prepared; retry the same push and confirm-cleanup, without another commit"}
         if h.safe_path(root, h.STATE_PATH).exists():
             h.require(h.load_state(root)[1] == data["state_sha256"], "HANDOFF_CHANGED_DURING_INTERRUPTED_CLEANUP")
         state = data["state"]
         current = h.current_snapshot(root, state)
         h.require(all(state["snapshot"][k] == current[k] for k in ("repository", "branch")), "WRONG_CLEANUP_CHECKOUT")
+        if "completion_path" in data:
+            report = h.safe_path(root, data["completion_path"])
+            if report.exists():
+                h.require(h.decode_json(report.read_text()) == data["completion"], "COMPLETION_RECEIPT_CHANGED")
+                report.unlink()
         state["publication"].update(status="cleanup_pending", blocker="Cleanup delivery failed or was interrupted; reconcile before retry")
         state.update(generation=state["generation"]+1, updated_at=h.now(), previous_sha256=data["state_sha256"],
                      reconciliation={"note": "Restored checkpoint after interrupted cleanup", "observed_changes": ["CLEANUP_INTERRUPTED"]})
@@ -407,6 +558,24 @@ def guard(root, phase):
             h.require(phase != "stop", "CLEANUP_DELIVERY_PENDING")
             if phase == "pre-commit":
                 staged = h.git(root, "diff", "--cached", "--name-only", "-z").split(b"\0")
+                if fixed_delivery(data["state"]["publication"]):
+                    allowed = set(data["state"]["snapshot"]["files"]) | {h.STATE_PATH, data["completion_path"]}
+                    h.require(all(not p or p.decode() in allowed for p in staged), "UNRELATED_FINAL_DELIVERY_PATH")
+                    final_files_match(root, data["state"])
+                    dirty = h.status_paths(root)
+                    h.require(set(dirty) <= allowed and all(v != "??" for v in dirty.values())
+                              and not h.git(root, "diff", "--name-only"), "FINAL_DELIVERY_MUST_BE_FULLY_STAGED")
+                    index = h.index_entries(root)
+                    h.require(all(info["kind"] == "missing" or bool(index.get(name))
+                                  for name, info in data["state"]["snapshot"]["files"].items()),
+                              "FINAL_DELIVERY_REQUIRED_FILE_NOT_TRACKED")
+                    h.require(h.decode_json(h.safe_path(root, data["completion_path"]).read_text()) == data["completion"],
+                              "COMPLETION_RECEIPT_CHANGED")
+                    h.require(h.git(root, "show", ":" + data["completion_path"], optional=True)
+                              == h.safe_path(root, data["completion_path"]).read_bytes(), "STAGE_COMPLETION_RECEIPT")
+                    validate_final_receipt(root, data["completion"])
+                    h.require(h.git(root, "show", ":" + h.STATE_PATH, optional=True) is None, "STAGE_HANDOFF_DELETION")
+                    return {"status": "guard_passed", "publication_completed": False}
                 h.require(all(not p or p.decode() == h.STATE_PATH for p in staged), "CLEANUP_COMMIT_MUST_ONLY_DELETE_HANDOFF")
                 h.require(h.git(root, "show", ":" + h.STATE_PATH, optional=True) is None, "STAGE_HANDOFF_DELETION")
                 current = h.current_snapshot(root, data["state"])
@@ -424,6 +593,10 @@ def guard(root, phase):
                     state = h.hydrate_v3(root, state, checkpoint_sha)
                 require_plan(state["publication"])
                 p = state["publication"]
+                if fixed_delivery(p):
+                    final = h.decode_json(h.safe_path(root, completion_path(p)).read_text())
+                    validate_final_receipt(root, final, "HEAD")
+                    return {"status": "guard_passed", "publication_completed": False}
                 h.require(h.next_step(p) is None and not p["blocker"]
                           and not p["context"]["pending_questions"]
                           and all(a["status"] in ("confirmed", "not_required") for a in p["context"]["approvals"])
@@ -446,6 +619,10 @@ def guard(root, phase):
     state, _ = h.load_state(root)
     require_plan(state["publication"])
     h.require(not pending(root), "CLEANUP_DELIVERY_PENDING")
+    if fixed_delivery(state["publication"]) and phase in ("pre-commit", "ci"):
+        number = delivery_boundary(state["publication"])
+        h.require(number is not None, "ONLY_THREE_FIXED_DELIVERIES_ALLOWED")
+        require_delivery_parent(root, state["publication"], number, "HEAD^" if phase == "ci" else "HEAD")
     if phase == "ci":
         # CI is detached and the recorded index/status may predate the checkpoint commit.
         for p, info in state["snapshot"]["files"].items():
@@ -459,7 +636,7 @@ def guard(root, phase):
         if phase == "pre-commit":
             h.require(h.git(root, "show", ":" + h.STATE_PATH, optional=True) == path.read_bytes(),
                       "LATEST_HANDOFF_MUST_BE_STAGED")
-        elif phase == 'stop':
+        elif phase == 'stop' and (not fixed_delivery(state['publication']) or delivery_boundary(state['publication'])):
             require_step_delivery(root, state, h.digest(path.read_bytes()))
     return {"status": "guard_passed", "publication_completed": False}
 
