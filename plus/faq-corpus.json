@@ -38015,6 +38015,63 @@
           ]
         }
       ]
+    },
+    "insight/insight-97": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/insight/insight-97.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا سمان موقت پست فلزی، خارج کردن آسان آن را تضمین می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ حتی با سمان موقت، گیر اصطکاکی زیاد پست ممکن است خارج کردن آن را دشوار کند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا پیش از پست‌گذاری در دندانی با کیفیت اندوی نامطمئن، باید نیاز به ری‌اندو مشخص شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ ابتدا باید مشخص شود ری‌اندو اندیکاسیون دارد یا نه و در صورت نیاز، قبل از پست‌گذاری انجام شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا آسان بودن خارج کردن پست با اولتراسونیک، به‌تنهایی سمان موقت چندماههٔ پست را به انتخابی منطقی تبدیل می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ این مسیر همچنان مستلزم خارج کردن روکش و پست، تمیز کردن کانال و سمان مجدد است و چند مرحلهٔ اضافی به درمان تحمیل می‌کند."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/insight/insight-97.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-97.html#flashcards-c1",
+              "name": "قابلیت خارج کردن درمان موقت (Retrievability)",
+              "description": "امکان برداشتن رستوریشن موقت برای دسترسی دوباره به دندان یا کانال در ادامهٔ درمان؛ این ویژگی باید همراه با سیل کرونال مناسب تأمین شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-97.html#flashcards-c2",
+              "name": "گیر اصطکاکی پست",
+              "description": "گیر ناشی از فیت پست در کانال می‌تواند مستقل از انتخاب سمان موقت، خارج کردن پست را دشوار کند؛ موقت بودن سمان معادل آسان بودن خارج کردن پست نیست.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
