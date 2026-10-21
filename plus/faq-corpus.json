@@ -38072,6 +38072,92 @@
           ]
         }
       ]
+    },
+    "dentai/promptologist/prompt-append2-2": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-2.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا انتخاب فایل در صفحهٔ آپلود گیت‌هاب برای ثبت نهایی آن کافی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ باید مرحلهٔ Commit changes هم انجام شود تا افزودن فایل نهایی شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا ریپوی خصوصی گیت‌هاب برای نگهداری اطلاعات بیمار، رمزها و کلیدهای دسترسی مجاز است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ خصوصی‌بودن ریپو مجوز قرار دادن این اطلاعات در آن نیست."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا بعد از اتصال ابزار مناسب هوش مصنوعی به گیت‌هاب و دادن دسترسی لازم، ایجنت می‌تواند فایل را در ریپو ثبت کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ می‌توان ساختن فایل، گذاشتن آن در ریپو و ثبت تغییرات را به ایجنت سپرد و لینک فایل را برای بررسی گرفت."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا ایجنت متصل به گیت‌هاب را باید از محتوای همهٔ گفت‌وگوهای کاربر در ابزارهای دیگر آگاه فرض کرد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ اگر دستور در گفت‌وگو یا ابزار دیگری ساخته شده، باید متن یا فایل آن را به ایجنت متصل داد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا گیت‌هاب علاوه بر فایل‌های پروژه، سابقهٔ تغییرات ثبت‌شدهٔ آن‌ها را هم نگه می‌دارد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ ریپو فایل‌ها و سابقهٔ تغییراتی را که در آن ثبت شده‌اند نگه می‌دارد."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-2.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-2.html#flashcards-c1",
+              "name": "ریپو در گیت‌هاب",
+              "description": "محل مشخص نگهداری فایل‌های یک پروژه در گیت‌هاب است که تغییرات ثبت‌شدهٔ آن فایل‌ها را نیز نگه می‌دارد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-2.html#flashcards-c2",
+              "name": "نقش README در ریپو",
+              "description": "فایل معرفی پروژه است و توضیح می‌دهد ریپو با چه هدفی ساخته شده و فایل‌های آن چه کاربردی دارند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-2.html#flashcards-c3",
+              "name": "ثبت فایل با کامیت",
+              "description": "انتخاب فایل در صفحهٔ آپلود به‌تنهایی افزودن آن را نهایی نمی‌کند؛ تغییر باید در مرحلهٔ Commit changes ثبت شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-2.html#flashcards-c4",
+              "name": "دسترسی ریپوی خصوصی",
+              "description": "محتوای ریپوی Private برای عموم نمایش داده نمی‌شود؛ دسترسی صاحب ریپو و افراد یا ابزارهای مجاز به مجوزهایشان وابسته است.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }

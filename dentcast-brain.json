@@ -17183,5 +17183,31 @@
       "secondary": [],
       "subtopic": "post-and-core"
     }
+  },
+  {
+    "type": "promptologist",
+    "id": "prompt-append2-2",
+    "title": "پیوست ۲ ـ قسمت ۲: اولین فایل را بیرون از اکانت نگه داریم",
+    "caption": "حالا می‌خواهید این دستور را نگه دارید؛ هم برای استفاده‌های بعدی، هم برای روزی که شاید به این اکانت دسترسی نداشته باشید.",
+    "hashtags": [
+      "#پرامپتولوژیست",
+      "#هوش_مصنوعی",
+      "#GitHub",
+      "#Markdown"
+    ],
+    "keywords": [
+      "ریپازیتوری",
+      "Public",
+      "Private",
+      "README",
+      "مارک‌داون",
+      "Commit changes"
+    ],
+    "page_url": "/dentai/promptologist/prompt-append2-2.html",
+    "pillar": {
+      "primary": "practice-infrastructure",
+      "secondary": [],
+      "subtopic": "llm-tools"
+    }
   }
 ]

@@ -1166,6 +1166,55 @@
    ]
   },
   {
+   "key": "هوش_مصنوعی",
+   "tag": "#هوش_مصنوعی",
+   "domain": "ai",
+   "words": 2,
+   "definition": "چترِ عامِ هوش مصنوعی.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "artificial intelligence",
+    "ای آی",
+    "ماشین هوشمند"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 31,
+   "content_ids": [
+    "episodes/episode-109",
+    "episodes/episode-109-2",
+    "episodes/episode-149-1",
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/dentai-28",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "sharehub/share-15",
+    "dentai/promptologist/prompt5-1",
+    "dentai/promptologist/prompt5-2",
+    "dentai/promptologist/prompt5-3",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2",
+    "dentai/promptologist/prompt6-3",
+    "dentai/promptologist/prompt6-4",
+    "dentai/promptologist/prompt6-5",
+    "dentai/promptologist/prompt7-1",
+    "dentai/promptologist/prompt7-2",
+    "insight/insight-89",
+    "sharehub/share-25",
+    "dentai/promptologist/prompt-append2-1",
+    "dentai/promptologist/prompt-append2-2"
+   ]
+  },
+  {
    "key": "روکش_ایمپلنت",
    "tag": "#روکش_ایمپلنت",
    "domain": "clinical",
@@ -1261,54 +1310,6 @@
     "sharehub/share-20",
     "insight/insight-91",
     "insight/insight-92"
-   ]
-  },
-  {
-   "key": "هوش_مصنوعی",
-   "tag": "#هوش_مصنوعی",
-   "domain": "ai",
-   "words": 2,
-   "definition": "چترِ عامِ هوش مصنوعی.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "artificial intelligence",
-    "ای آی",
-    "ماشین هوشمند"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 30,
-   "content_ids": [
-    "episodes/episode-109",
-    "episodes/episode-109-2",
-    "episodes/episode-149-1",
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-append1",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/dentai-28",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "sharehub/share-15",
-    "dentai/promptologist/prompt5-1",
-    "dentai/promptologist/prompt5-2",
-    "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1",
-    "dentai/promptologist/prompt6-2",
-    "dentai/promptologist/prompt6-3",
-    "dentai/promptologist/prompt6-4",
-    "dentai/promptologist/prompt6-5",
-    "dentai/promptologist/prompt7-1",
-    "dentai/promptologist/prompt7-2",
-    "insight/insight-89",
-    "sharehub/share-25",
-    "dentai/promptologist/prompt-append2-1"
    ]
   },
   {
@@ -1678,6 +1679,47 @@
    ]
   },
   {
+   "key": "پرامپتولوژیست",
+   "tag": "#پرامپتولوژیست",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام سری «پرامپتولوژیست».",
+   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
+   "aliases": [
+    "promptologist",
+    "پرامپتولوژی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 24,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt5-1",
+    "dentai/promptologist/prompt5-2",
+    "dentai/promptologist/prompt5-3",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2",
+    "dentai/promptologist/prompt6-3",
+    "dentai/promptologist/prompt6-4",
+    "dentai/promptologist/prompt6-5",
+    "dentai/promptologist/prompt7-1",
+    "dentai/promptologist/prompt7-2",
+    "dentai/promptologist/prompt-append2-1",
+    "dentai/promptologist/prompt-append2-2"
+   ]
+  },
+  {
    "key": "llm",
    "tag": "#LLM",
    "domain": "ai",
@@ -1784,46 +1826,6 @@
     "dentai/promptologist/prompt4-1",
     "dentai/promptologist/prompt4-2",
     "dentai/dentai-28",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "dentai/promptologist/prompt5-1",
-    "dentai/promptologist/prompt5-2",
-    "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1",
-    "dentai/promptologist/prompt6-2",
-    "dentai/promptologist/prompt6-3",
-    "dentai/promptologist/prompt6-4",
-    "dentai/promptologist/prompt6-5",
-    "dentai/promptologist/prompt7-1",
-    "dentai/promptologist/prompt7-2",
-    "dentai/promptologist/prompt-append2-1"
-   ]
-  },
-  {
-   "key": "پرامپتولوژیست",
-   "tag": "#پرامپتولوژیست",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام سری «پرامپتولوژیست».",
-   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
-   "aliases": [
-    "promptologist",
-    "پرامپتولوژی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 23,
-   "content_ids": [
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-append1",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
     "dentai/promptologist/prompt4-3",
     "dentai/promptologist/prompt4-4",
     "dentai/promptologist/prompt5-1",
@@ -6338,6 +6340,29 @@
    ]
   },
   {
+   "key": "markdown",
+   "tag": "#Markdown",
+   "domain": "ai",
+   "words": 1,
+   "definition": "فرمتِ متنیِ ساده که ساختارِ سند (تیتر، بولد، فهرست) را با علائمِ کوچک داخلِ خودِ متن نگه می‌دارد، نه در ظاهرِ چاپی.",
+   "use_when": "مقاله دربارهٔ آماده‌سازیِ فایل برای دادن به مدل یا نگه‌داشتنِ خروجیِ مدل به‌شکلی باشد که ساختارش برای ماشین سالم بماند.",
+   "aliases": [
+    "مارک‌داون",
+    "md فایل",
+    "markdown format",
+    "مارکداون"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "dentai/promptologist/prompt6-2",
+    "dentai/promptologist/prompt6-5",
+    "dentai/promptologist/prompt-append2-1",
+    "dentai/promptologist/prompt-append2-2"
+   ]
+  },
+  {
    "key": "nccl",
    "tag": "#NCCL",
    "domain": null,
@@ -7637,28 +7662,6 @@
     "episodes/episode-156",
     "episodes/episode-157",
     "episodes/episode-158"
-   ]
-  },
-  {
-   "key": "markdown",
-   "tag": "#Markdown",
-   "domain": "ai",
-   "words": 1,
-   "definition": "فرمتِ متنیِ ساده که ساختارِ سند (تیتر، بولد، فهرست) را با علائمِ کوچک داخلِ خودِ متن نگه می‌دارد، نه در ظاهرِ چاپی.",
-   "use_when": "مقاله دربارهٔ آماده‌سازیِ فایل برای دادن به مدل یا نگه‌داشتنِ خروجیِ مدل به‌شکلی باشد که ساختارش برای ماشین سالم بماند.",
-   "aliases": [
-    "مارک‌داون",
-    "md فایل",
-    "markdown format",
-    "مارکداون"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "dentai/promptologist/prompt6-2",
-    "dentai/promptologist/prompt6-5",
-    "dentai/promptologist/prompt-append2-1"
    ]
   },
   {
@@ -9911,6 +9914,30 @@
    "content_ids": [
     "dentai/promptologist/prompt1-1",
     "dentai/promptologist/prompt1-2"
+   ]
+  },
+  {
+   "key": "github",
+   "tag": "#GitHub",
+   "domain": "ai",
+   "words": 1,
+   "definition": "سرویسِ آنلاینِ نگه‌داریِ فایل‌ها در ریپو (repository)، که نسخه‌های قبلیِ هر فایل را هم نگه می‌دارد؛ برای کد ساخته شده ولی برای هر فایلِ متنی کار می‌کند.",
+   "use_when": "مطلب مشخصاً به این سرویس، ریپو یا نگه‌داریِ فایل‌ها در آن بپردازد.",
+   "aliases": [
+    "گیت‌هاب",
+    "گیت هاب",
+    "github",
+    "ریپو",
+    "ریپوزیتوری",
+    "repository",
+    "git hub"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/promptologist/prompt-append2-1",
+    "dentai/promptologist/prompt-append2-2"
    ]
   },
   {
@@ -13521,29 +13548,6 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-155"
-   ]
-  },
-  {
-   "key": "github",
-   "tag": "#GitHub",
-   "domain": "ai",
-   "words": 1,
-   "definition": "سرویسِ آنلاینِ نگه‌داریِ فایل‌ها در ریپو (repository)، که نسخه‌های قبلیِ هر فایل را هم نگه می‌دارد؛ برای کد ساخته شده ولی برای هر فایلِ متنی کار می‌کند.",
-   "use_when": "مطلب مشخصاً به این سرویس، ریپو یا نگه‌داریِ فایل‌ها در آن بپردازد.",
-   "aliases": [
-    "گیت‌هاب",
-    "گیت هاب",
-    "github",
-    "ریپو",
-    "ریپوزیتوری",
-    "repository",
-    "git hub"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "dentai/promptologist/prompt-append2-1"
    ]
   },
   {
@@ -22410,8 +22414,8 @@
   "استخوان مارژینال": "تحلیل استخوان کرستال",
   "digital presence": "حضور آنلاین دندانپزشک",
   "فاصله بین دندانی": "دیاستم",
-  "practice website": "سایت مطب",
   "temporary cement": "سمان موقت",
+  "practice website": "سایت مطب",
   "bonding protocol": "پروتکل باند",
   "cement selection": "انتخاب سمان",
   "بیومیمتیک ترمیمی": "ترمیم بیومیمتیک",
@@ -23287,8 +23291,8 @@
   "فضای بازسازی": "فضای رستوریتیو",
   "hydrofluoric": "اچ سرامیک",
   "تحلیل کرستال": "تحلیل استخوان کرستال",
-  "سیل فوری عاج": "ids",
   "سمان آزمایشی": "سمان موقت",
+  "سیل فوری عاج": "ids",
   "smile design": "طراحی لبخند",
   "دیزاین لبخند": "طراحی لبخند",
   "آنالیز لبخند": "طراحی لبخند",
@@ -24044,8 +24048,8 @@
   "play store": "گوگل پلی",
   "کامپلیکیشن": "عوارض",
   "پلن درمان": "طرح درمان",
-  "occlusion": "اکلوژن",
   "پست دندان": "پست و کور",
+  "occlusion": "اکلوژن",
   "chairside": "چیرساید",
   "گزارش کیس": "کیس اینسایت",
   "دنت ای آی": "dentai",
@@ -24328,10 +24332,10 @@
   "ایزولیشن": "ایزولاسیون",
   "فول ماوس": "بازسازی کامل دهان",
   "diastema": "دیاستم",
+  "سمان تمپ": "سمان موقت",
   "آی دی اس": "ids",
   "تی ام دی": "tmd",
   "اندوکران": "اندوکراون",
-  "سمان تمپ": "سمان موقت",
   "پرپ روکش": "تراش روکش",
   "لبه روکش": "مارجین روکش",
   "کانتیلور": "کانتی لیور",
