@@ -37,7 +37,15 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         }
       ],
       "decisions": [],
-      "delivery": [],
+      "delivery": [
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/pull/948",
+            "Remote head 0addba58eda7c38d1697ac49f3fc4682e42c0b51 observed synchronized; tree c0d280203d02f4fc5285cc04a9e5e7381738b895 matches local verified tree; all 28 uploaded blob hashes matched"
+          ],
+          "scope": "Authorized GitHub feature branch and review delivery"
+        }
+      ],
       "inputs": [
         {
           "reference": "Founder supplied full tutorial and screenshot ZIP in current publication request"
@@ -544,7 +552,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Reviewed and staged only declared publication files and canonical builder outputs; final 97/0/0 verification and report retained"
+    "note": "Reviewed report delivery evidence against actual PR 948, matching blob hashes and synchronized remote tree"
   },
   "schema": "publish-handoff-v3"
 }

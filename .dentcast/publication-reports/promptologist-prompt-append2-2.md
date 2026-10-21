@@ -91,3 +91,9 @@ Scoped content and this report are prepared for the founder-authorized feature-b
 - `sitemap.xml`
 - `up-board/index.json`
 - `dentai/promptologist/en/prompt-append2-2.html`
+
+## GitHub delivery evidence
+
+PR: https://github.com/dentcast-hub/dentcast-hub.github.io/pull/948
+
+The feature branch was delivered at `0addba58eda7c38d1697ac49f3fc4682e42c0b51`. All 28 uploaded blobs matched local Git blob hashes. The remote tree `c0d280203d02f4fc5285cc04a9e5e7381738b895` exactly matched the verified local tree. A fresh remote observation confirmed synchronization. The founder authorized completion and merge; final checkpoint cleanup precedes merge.
