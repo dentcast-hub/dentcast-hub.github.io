@@ -9,6 +9,7 @@ on:
       - '.claude/**'
       - '.codex/**'
       - '.dentcast/PUBLISH-HANDOFF.md'
+      - '.dentcast/publication-reports/**'
       - '.dentcast/workflows/**'
       - 'tools/dentcast_publish*.py'
       - 'tools/verify_publish.py'

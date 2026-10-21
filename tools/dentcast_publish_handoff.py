@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Fixed-path live publication checkpoint and guarded completion (no content authoring).
 
-Only writes .dentcast/PUBLISH-HANDOFF.md and an advisory lock in Git metadata.
+Writes the active handoff, completed audit receipt and private Git recovery metadata.
 Never commits, pushes, fetches, or restores content. Completion reruns the real
 mechanical gate and stages a recoverable handoff cleanup; see lifecycle commands.
-Inspection uses opt-in --check-remote; advancing a step requires a fresh
-read-only origin observation (git ls-remote, no fetch).
+Inspection uses opt-in --check-remote; crossing either fixed delivery cut requires
+a fresh read-only origin observation (git ls-remote, no fetch).
 """
 import argparse
 from contextlib import contextmanager
@@ -847,7 +847,7 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
                 require(all(s["status"] == "pending" for s in publication["steps"]),
                         "WORKFLOW_CHANGE_REQUIRES_STEP_INVALIDATION")
             require(not issues or nonempty(note), "RECONCILIATION_REQUIRED:" + ",".join(issues))
-            lifecycle.guard_step_transition(previous, publication)
+            lifecycle.guard_step_transition(previous, publication, root)
         state = {"schema": SCHEMA, "generation": previous["generation"]+1 if previous else 1,
                  "updated_at": now(), "source_revision": previous["source_revision"]
                  if previous and "WORKFLOW_CHANGED" not in issues else current["head"],
@@ -1028,6 +1028,8 @@ def main(argv=None):
             lifecycle.require_plan(publication)
             if args.command == "init":
                 require(all(s["status"] == "pending" for s in publication["steps"]), "INIT_REQUIRES_PENDING_PLAN")
+                if publication["category"] != "paper-only" and not lifecycle.fixed_delivery(publication):
+                    publication["context"]["decisions"].append({"kind": lifecycle.DELIVERY_POLICY})
             else:
                 previous, _ = load_state(root)
                 old_f = next((s for s in previous["publication"]["steps"] if s["id"] == "F"), None)

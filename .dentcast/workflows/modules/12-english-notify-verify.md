@@ -1,6 +1,8 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
 > **Live publication checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision; this repeated reference never requires a reread. Read the fixed handoff exactly once only when the user explicitly says this publication is incomplete/interrupted; a request to resume counts only if it identifies the publication as incomplete/interrupted. During an active run, keep its state in the current session; do not read or inspect the handoff before each step. Use the latest digest returned by the helper, then mark each step `started` with `tools/dentcast_publish_handoff.py step`. After EACH completed/skipped/blocked/failed step, write its real evidence/reason with the same tool before continuing or handing off. Never auto-mark semantic or scientific work complete.
 > Checkpoint IDs for this module: D, E, F, G. Category exceptions require explicit skip reasons. The protocol defines dependency ordering (builders before final stamping; LiteCast links after page construction). Phase F completion uses the real `verify` command.
+> **Fixed page deliveries:** after `C.4.9`, after `C.4.13` including lawful skips, and after all final work, Phase F and report G. Cuts 1/2 deliver work plus handoff; cut 3 delivers final work, completion receipt and handoff deletion together. All intermediate checkpoints stay local; no extra turn-end or cleanup push.
+
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
 ## Phase D — English mirror & language toggle (MANDATORY; Hard Rule 12)

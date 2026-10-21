@@ -12,7 +12,10 @@ run = fixtures.run
 class CompactHandoffTests(unittest.TestCase):
     setUp = fixtures.RecoveryAcceptanceTests.setUp
     prepare = fixtures.RecoveryAcceptanceTests.prepare
-    init = fixtures.RecoveryAcceptanceTests.init
+    def init(self):
+        result = fixtures.RecoveryAcceptanceTests.init(self)
+        self.p = copy.deepcopy(h.load_state(self.root)[0]['publication'])
+        return result
     cli = fixtures.RecoveryAcceptanceTests.cli
     clone = fixtures.RecoveryAcceptanceTests.clone
     deliver_checkpoint = fixtures.RecoveryAcceptanceTests.deliver_checkpoint
