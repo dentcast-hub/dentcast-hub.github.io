@@ -176,12 +176,15 @@ sentence.
 viewer class, `by_period`, and `since` = the first day that has any data) and
 `impressions_per_view` per viewer class. Use it: a bare impression count cannot
 be judged, and the guest ratio is the only thing that separates a quiet day from
-a hole in the pipeline. It is counted server-side from `GET /me`, which every
-page view calls exactly once — so it is adblock-proof and crawler-free (bots run
-no JS), and premium views are held out of it because those visitors are shown no
-ad. `impressions_per_view` is **null, never 0**, when the window has no
+a hole in the pipeline. It is counted server-side from explicit `POST /pageview` signals (one per
+document load and new article in the desktop in-page reader), not from repeated
+`GET /me` authentication refreshes. The signal is first-party and crawler-free
+(bots that run no JS do not send it); premium views are held out of the
+ad-eligible denominator because those visitors are shown no ad. `impressions_per_view` is **null, never 0**, when the window has no
 page-view data; report it as «داده‌ای نیست», not as a zero. Nothing exists
-before **2026-07-26**.
+before **2026-07-26**. After deployment of the explicit page-view
+counter, compare days on the same side of that cutover: historical `/me`-based
+numbers are not directly comparable to the corrected denominator.
 
 **The credentials are the founder's and are NOT in this repo — never ask for
 them, never store them anywhere in the repo.** So in practice:

@@ -69,7 +69,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=190';
+import { findProseRoot } from '/plus/js/config.js?v=192';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -111,6 +111,19 @@ function track(name, params) {
 // card-build time, so a /me answer that lands late still labels the click
 // correctly (the same lazy rule the targeting layer already uses).
 let viewerNow = () => 'anon';
+
+// ── first-party content-view counter ─────────────────────────────────────────
+
+// Authentication refreshes via /me are NOT page views. A new document counts
+// once, and desktop-shell article navigation counts once more per new article.
+function countContentView() {
+  import('/plus/js/api.js?v=192')
+    .then((m) => m.apiBase())
+    .then((base) => fetch(base + '/pageview', {
+      method: 'POST', credentials: 'include', cache: 'no-store', keepalive: true,
+    }))
+    .catch(() => {}); // telemetry must never delay an article or an ad
+}
 
 // ── first-party telemetry (our own API, alongside GA) ────────────────────────
 
@@ -163,7 +176,7 @@ function report(kind, slotName, creativeId) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ [key]: name, content_id: contentId }),
   });
-  import('/plus/js/api.js?v=190')
+  import('/plus/js/api.js?v=192')
     .then((m) => m.apiBase())
     .then((base) => {
       if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
@@ -182,7 +195,7 @@ function report(kind, slotName, creativeId) {
       // A network-level failure (not an HTTP error) may mean the cached base is
       // dead — self-heal so the NEXT event, and the next page's /me, re-probe
       // instead of retrying the same unreachable host all session.
-      import('/plus/js/api.js?v=190').then((m) => m.forgetBase()).catch(() => {});
+      import('/plus/js/api.js?v=192').then((m) => m.forgetBase()).catch(() => {});
     });
 }
 
@@ -981,9 +994,10 @@ function placeArticleCard(slot, prose, card) {
  */
 function setupShellArticleSlot(cfg, audienceNow) {
   window.dcSpotMountArticle = function (container) {
-    if (adsKilled || !container) return false;
-    if (!slotAllows(cfg, 'article', audienceNow())) return false;
+    if (!container) return false;
     if (container.querySelector('.dc-spot--article')) return false; // already seated
+    countContentView();
+    if (adsKilled || !slotAllows(cfg, 'article', audienceNow())) return false;
     // Scoped to the injected article. The document-wide lookup is wrong here: the
     // article sits inside #dcd-content-area while the homepage around it has
     // boxes of its own, and a document query would find one of those first and
@@ -1297,7 +1311,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=190')
+  return import('/plus/js/api.js?v=192')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
@@ -1323,18 +1337,22 @@ function removeAllAds() {
 // ── boot ─────────────────────────────────────────────────────────────────────
 
 async function main() {
-  // Fired in parallel with the config fetch below, not after it — viewerProbe()
-  // has no dependency on cfg (it only calls /me), so starting it here instead of
-  // once cfg resolves overlaps the two network round-trips instead of stacking
-  // them. That roughly halves how long the article page has already rendered
-  // (unshifted) before the ad slot's late DOM insertion pushes content down —
-  // the biggest lever available on that Cumulative Layout Shift without
-  // reserving space ahead of a creative that isn't picked yet (2026-08-12 CLS
-  // review; card height varies too much across creative types — text card vs.
-  // image banner — to reserve accurately before targeting resolves).
+  // Viewer classification starts FIRST: it gates all ad rendering. The
+  // independent view counter runs alongside it, never delaying that gate.
   const probe = viewerProbe();
-  classPending = probe; // impressions wait on this before they may be counted
+  classPending = probe;
   probe.then(rememberClass);
+  countContentView();
+  // A desktop article can replace the document's content without navigation.
+  // This counting-only hook remains if Spot is disabled or the user is premium.
+  // The normal ad-mount hook replaces it when an eligible slot is active.
+  if (document.getElementById('dcd-content-area')) {
+    window.dcSpotMountArticle = (container) => {
+      if (!container) return false;
+      countContentView();
+      return false;
+    };
+  }
 
   let cfg;
   try {
@@ -1345,7 +1363,7 @@ async function main() {
   // Untouched placements retain the checked-in rotation and targeting. Only
   // explicitly saved placements have a database override. Public read, no login.
   try {
-    const { apiBase } = await import('/plus/js/api.js?v=190');
+    const { apiBase } = await import('/plus/js/api.js?v=192');
     const base = await apiBase();
     const response = await fetch(base + '/spot/config', { cache: 'no-store', signal: AbortSignal.timeout(2500) });
     if (response.ok) {

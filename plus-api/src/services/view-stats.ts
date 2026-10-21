@@ -7,9 +7,9 @@ import { PERIOD_SQL, type GroupBy, type SpotStats, type SpotViewer } from './spo
  *
  * An ad impression count is only readable next to the number of page views that
  * could have produced it. This module counts page views the cheapest honest way
- * available: `GET /me` fires exactly once per page view for every visitor (see
- * migration 0010 for why that is true and why it is adblock-proof), so the /me
- * handler bumps a counter here and nothing else changes anywhere.
+ * available: the browser sends `POST /pageview` once per full document load
+ * and once per article opened inside the desktop shell. Repeated `GET /me`
+ * refreshes do not count as new views. This event remains first-party.
  *
  * Like `spot_stats`, this is a COUNTER, never a row per view, and it carries no
  * identity: a day and a viewer class is the whole record. It answers "how many

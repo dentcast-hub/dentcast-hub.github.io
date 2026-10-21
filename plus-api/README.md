@@ -75,7 +75,7 @@ Auth: `POST /auth/otp/request`, `POST /auth/otp/verify`, `POST /auth/logout`,
 `POST /auth/telegram/link`, `GET /auth/telegram/callback`,
 `POST /auth/telegram/unlink`, `POST /auth/phone/link`, `POST /auth/bale/connect`,
 `POST /auth/bale/unlink`, `POST /webhooks/bale/:secret` (Bale bot webhook),
-`GET /me`, `PATCH /me`. Data: `POST /activity`,
+`GET /me`, `PATCH /me`. Data: `POST /pageview`, `POST /activity`,
 `POST /anon/event`, `GET/POST/PATCH/DELETE /highlights`,
 `GET /highlights/recent`, `GET /highlights?topic=`, `GET /tree`, `GET /progress`,
 `GET /profile/stats`, `GET /export/highlights`. Web push:
@@ -197,19 +197,19 @@ quiet day or a broken pipeline depending entirely on how many guest page views
 produced them, and that number was the one thing the site never recorded
 (`user_activity` covers signed-in users only; GA is undercounted by adblockers).
 
-`GET /me` is called **exactly once per page view by every visitor**, guests
-included — `plus/js/api.js` memoizes the promise per page load, and the ad system
-must know whether the visitor is premium before it renders anything. So the /me
-handler bumps a counter in `view_stats (day, viewer, count)`, same counter shape
-as `spot_stats` (migration 0010). Consequences worth knowing:
+A dedicated first-party `POST /pageview` is sent once per document load
+and when a new article opens in the desktop in-page reader. A refresh of
+`GET /me` never increments this counter. In particular, opening the Plus
+dashboard or refreshing account details cannot inflate the denominator.
+The server classifies each event as `anon`, `plus` or `premium` from the
+authenticated profile; premium views remain separate because they receive no
+ads. The counter counts page/content views, not unique people. Crawlers that
+do not run JavaScript generate no events. A failed event never blocks the page.
 
-- costs **no extra request** and needed **no client change**;
-- **adblock-proof** — it rides the first-party API subdomain, not a tag host;
-- **crawler-free** — bots run no JavaScript, so they never call /me;
-- `premium` is counted **separately** from `plus`, because premium page views
-  must stay out of the ad denominator (those visitors are shown no ad by design);
-- the write is **fire-and-forget**: a counter must never delay a session check or
-  turn a valid session into a 401.
+**Cutover:** the old `/me`-based and new explicit counters occupy the same
+historical table; comparisons spanning the deployment date mix counting rules.
+Deploy the API endpoint before the updated browser script, or intermediate
+requests will not be counted.
 
 The same `GET /admin/spot/stats` response therefore also carries `page_views`
 (`totals`, `by_period`, and `since` = the first day with any data) and
