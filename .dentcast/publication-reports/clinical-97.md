@@ -1,6 +1,6 @@
 # Clinical Insight 97 — publication report
 
-Prepared on 2026-10-21. Publication candidate is complete and mechanically verified on its feature branch. Main integration and a live-site check remain subject to founder merge authorization.
+Prepared on 2026-10-21. Publication candidate is complete and mechanically verified on its feature branch. The founder has explicitly authorized final merge. Main integration and a live-site check follow the verified branch delivery and checkpoint cleanup.
 
 ## Content and approvals
 
@@ -211,3 +211,7 @@ warn  16 title             <h1> differs from the brain title only by chrome: 'In
 - `insight/insight-97.html`
 - `insight/en/insight-97.html`
 - `.dentcast/publication-reports/clinical-97.md`
+
+## Delivery approval
+
+The founder explicitly requested final merge after completion. All 22 uploaded Git blob IDs and the assembled tree matched local committed bytes; branch delivery was independently observed. PR: https://github.com/dentcast-hub/dentcast-hub.github.io/pull/945.

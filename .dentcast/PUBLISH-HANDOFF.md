@@ -34,6 +34,14 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           ],
           "scope": "English title, canonical hashtags and search keywords",
           "status": "confirmed"
+        },
+        {
+          "decision": "Founder explicitly instructed final merge after completion.",
+          "evidence": [
+            "Founder instruction in active publication conversation, 2026-10-21: final merge requested."
+          ],
+          "scope": "Merge Clinical Insight 97 after all checks and branch delivery",
+          "status": "confirmed"
         }
       ],
       "decisions": [
@@ -50,7 +58,15 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "scope": "taxonomy"
         }
       ],
-      "delivery": [],
+      "delivery": [
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/pull/945",
+            "All 22 uploaded blob IDs and final Git tree matched local committed bytes; exact checkpoint observed on synchronized remote branch."
+          ],
+          "scope": "GitHub branch delivery"
+        }
+      ],
       "inputs": [
         {
           "evidence": [
