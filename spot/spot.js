@@ -1337,7 +1337,11 @@ function removeAllAds() {
 // ── boot ─────────────────────────────────────────────────────────────────────
 
 async function main() {
-  // Count the document itself exactly once regardless of ad visibility/tier.
+  // Viewer classification starts FIRST: it gates all ad rendering. The
+  // independent view counter runs alongside it, never delaying that gate.
+  const probe = viewerProbe();
+  classPending = probe;
+  probe.then(rememberClass);
   countContentView();
   // A desktop article can replace the document's content without navigation.
   // This counting-only hook remains if Spot is disabled or the user is premium.
@@ -1349,18 +1353,6 @@ async function main() {
       return false;
     };
   }
-  // Fired in parallel with the config fetch below, not after it — viewerProbe()
-  // has no dependency on cfg (it only calls /me), so starting it here instead of
-  // once cfg resolves overlaps the two network round-trips instead of stacking
-  // them. That roughly halves how long the article page has already rendered
-  // (unshifted) before the ad slot's late DOM insertion pushes content down —
-  // the biggest lever available on that Cumulative Layout Shift without
-  // reserving space ahead of a creative that isn't picked yet (2026-08-12 CLS
-  // review; card height varies too much across creative types — text card vs.
-  // image banner — to reserve accurately before targeting resolves).
-  const probe = viewerProbe();
-  classPending = probe; // impressions wait on this before they may be counted
-  probe.then(rememberClass);
 
   let cfg;
   try {
