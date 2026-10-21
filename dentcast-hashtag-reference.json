@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 115,
+   "count": 116,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -375,7 +375,8 @@
     "insight/insight-93",
     "insight/insight-94",
     "insight/insight-95",
-    "insight/insight-96"
+    "insight/insight-96",
+    "insight/insight-97"
    ]
   },
   {
@@ -636,6 +637,74 @@
    ]
   },
   {
+   "key": "پست_و_کور",
+   "tag": "#پست_و_کور",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پست و کور — بازسازیِ ساختارِ ازدست‌رفته‌ی دندانِ اندوشده برای نگه‌داریِ روکش.",
+   "use_when": "مقاله پست/کور را موضوع داشته باشد.",
+   "aliases": [
+    "post and core",
+    "پست اند کور",
+    "پست کور",
+    "پست دندان",
+    "پست داخل کانال"
+   ],
+   "variants": [
+    "#پست و کور"
+   ],
+   "co_tags": [],
+   "count": 46,
+   "content_ids": [
+    "episodes/episode-36",
+    "episodes/episode-42",
+    "episodes/episode-47",
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "episodes/episode-79",
+    "episodes/episode-125-3",
+    "episodes/episode-128",
+    "episodes/episode-129",
+    "episodes/episode-147-7",
+    "insight/insight-12",
+    "insight/insight-15",
+    "insight/insight-17",
+    "insight/insight-20",
+    "metanotes/meta-7",
+    "insight/insight-21",
+    "metanotes/meta-9",
+    "insight/insight-28",
+    "metanotes/meta-11",
+    "chairside/chairside-5",
+    "insight/insight-39",
+    "insight/insight-41",
+    "notecast/episode-36",
+    "chairside/chairside-20",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19",
+    "metanotes/meta-20",
+    "dentcast-plus/video-7",
+    "dentcast-plus/video-10",
+    "insight/insight-66",
+    "notecast/episode-40",
+    "dentcast-plus/video-12",
+    "dentai/dentai-33",
+    "insight/insight-76",
+    "sharehub/share-20",
+    "notecast/episode-42",
+    "chairside/chairside-39",
+    "notecast/episode-43",
+    "metanotes/meta-21",
+    "insight/insight-88",
+    "sharehub/share-30",
+    "sharehub/share-31",
+    "sharehub/share-34",
+    "dentcast-plus/video-14",
+    "insight/insight-97"
+   ]
+  },
+  {
    "key": "اکلوژن",
    "tag": "#اکلوژن",
    "domain": "clinical",
@@ -697,73 +766,6 @@
     "insight/insight-94",
     "sharehub/share-36",
     "insight/insight-96"
-   ]
-  },
-  {
-   "key": "پست_و_کور",
-   "tag": "#پست_و_کور",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پست و کور — بازسازیِ ساختارِ ازدست‌رفته‌ی دندانِ اندوشده برای نگه‌داریِ روکش.",
-   "use_when": "مقاله پست/کور را موضوع داشته باشد.",
-   "aliases": [
-    "post and core",
-    "پست اند کور",
-    "پست کور",
-    "پست دندان",
-    "پست داخل کانال"
-   ],
-   "variants": [
-    "#پست و کور"
-   ],
-   "co_tags": [],
-   "count": 45,
-   "content_ids": [
-    "episodes/episode-36",
-    "episodes/episode-42",
-    "episodes/episode-47",
-    "episodes/episode-48",
-    "episodes/episode-49",
-    "episodes/episode-79",
-    "episodes/episode-125-3",
-    "episodes/episode-128",
-    "episodes/episode-129",
-    "episodes/episode-147-7",
-    "insight/insight-12",
-    "insight/insight-15",
-    "insight/insight-17",
-    "insight/insight-20",
-    "metanotes/meta-7",
-    "insight/insight-21",
-    "metanotes/meta-9",
-    "insight/insight-28",
-    "metanotes/meta-11",
-    "chairside/chairside-5",
-    "insight/insight-39",
-    "insight/insight-41",
-    "notecast/episode-36",
-    "chairside/chairside-20",
-    "dentai/dentai-27",
-    "metanotes/meta-15",
-    "metanotes/meta-19",
-    "metanotes/meta-20",
-    "dentcast-plus/video-7",
-    "dentcast-plus/video-10",
-    "insight/insight-66",
-    "notecast/episode-40",
-    "dentcast-plus/video-12",
-    "dentai/dentai-33",
-    "insight/insight-76",
-    "sharehub/share-20",
-    "notecast/episode-42",
-    "chairside/chairside-39",
-    "notecast/episode-43",
-    "metanotes/meta-21",
-    "insight/insight-88",
-    "sharehub/share-30",
-    "sharehub/share-31",
-    "sharehub/share-34",
-    "dentcast-plus/video-14"
    ]
   },
   {
@@ -1646,7 +1648,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 24,
+   "count": 25,
    "content_ids": [
     "episodes/episode-47",
     "episodes/episode-48",
@@ -1671,7 +1673,8 @@
     "insight/insight-76",
     "sharehub/share-20",
     "insight/insight-84",
-    "insight/insight-93"
+    "insight/insight-93",
+    "insight/insight-97"
    ]
   },
   {
@@ -3898,6 +3901,33 @@
    ]
   },
   {
+   "key": "سمان_موقت",
+   "tag": "#سمان_موقت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "سمانِ مرحله‌ی آزمایشی، که رنگش با دائم فرق دارد.",
+   "use_when": "مقاله تفاوتِ موقت و دائم را مسئله بداند.",
+   "aliases": [
+    "temporary cement",
+    "سمان تمپ",
+    "سمان آزمایشی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "insight/insight-5",
+    "insight/insight-29",
+    "insight/insight-44",
+    "insight/insight-59",
+    "insight/insight-65",
+    "insight/insight-85",
+    "insight/insight-86",
+    "chairside/chairside-40",
+    "insight/insight-97"
+   ]
+  },
+  {
    "key": "پلاک_صفر",
    "tag": "#پلاک_صفر",
    "domain": "brand",
@@ -4111,32 +4141,6 @@
     "plak-sefr/plak1-7",
     "plak-sefr/plak1-8",
     "plak-sefr/plak1-9"
-   ]
-  },
-  {
-   "key": "سمان_موقت",
-   "tag": "#سمان_موقت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "سمانِ مرحله‌ی آزمایشی، که رنگش با دائم فرق دارد.",
-   "use_when": "مقاله تفاوتِ موقت و دائم را مسئله بداند.",
-   "aliases": [
-    "temporary cement",
-    "سمان تمپ",
-    "سمان آزمایشی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "insight/insight-5",
-    "insight/insight-29",
-    "insight/insight-44",
-    "insight/insight-59",
-    "insight/insight-65",
-    "insight/insight-85",
-    "insight/insight-86",
-    "chairside/chairside-40"
    ]
   },
   {
@@ -22600,10 +22604,10 @@
   "online presence": "حضور آنلاین دندانپزشک",
   "silane coupling": "سایلان",
   "اختلال مفصل فکی": "tmd",
+  "درمان ارتودنتیک": "ارتودنسی",
   "تراش برای لمینت": "تراش لمینیت",
   "سایت دندانپزشکی": "سایت مطب",
   "research design": "طراحی مطالعه",
-  "درمان ارتودنتیک": "ارتودنسی",
   "اپلاینس اکلوزال": "اسپلینت",
   "اکلوزال اسپلینت": "اسپلینت",
   "ceramic bonding": "باندینگ سرامیک",
@@ -24303,8 +24307,8 @@
   "dentcast": "دنتکست",
   "ایمپلانت": "ایمپلنت",
   "اکلوزیون": "اکلوژن",
-  "notecast": "نوت کست",
   "چیر ساید": "چیرساید",
+  "notecast": "نوت کست",
   "زیرکونیم": "زیرکونیا",
   "zirconia": "زیرکونیا",
   "esthetic": "زیبایی",
@@ -24323,10 +24327,10 @@
   "all on 6": "ایمپلنت بیمار بی دندان",
   "ایزولیشن": "ایزولاسیون",
   "فول ماوس": "بازسازی کامل دهان",
+  "diastema": "دیاستم",
   "آی دی اس": "ids",
   "تی ام دی": "tmd",
   "اندوکران": "اندوکراون",
-  "diastema": "دیاستم",
   "سمان تمپ": "سمان موقت",
   "پرپ روکش": "تراش روکش",
   "لبه روکش": "مارجین روکش",
@@ -24511,8 +24515,8 @@
   "ایمپرشن": "قالبگیری",
   "denture": "پروتز متحرک",
   "رابر دم": "ایزولاسیون",
-  "overlay": "اورلی",
   "دیاستما": "دیاستم",
+  "overlay": "اورلی",
   "زیر لثه": "ترمیم ساب جینجیوال",
   "کست کور": "کور ریختگی",
   "فرم gad": "global diagnosis",
