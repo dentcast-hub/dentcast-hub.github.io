@@ -581,7 +581,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 51,
+   "count": 52,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-25",
@@ -633,7 +633,8 @@
     "chairside/chairside-41",
     "insight/insight-95",
     "sharehub/share-36",
-    "chairside/chairside-42"
+    "chairside/chairside-42",
+    "chairside/chairside-43"
    ]
   },
   {
@@ -1166,6 +1167,56 @@
    ]
   },
   {
+   "key": "روکش_ایمپلنت",
+   "tag": "#روکش_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
+   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
+   "aliases": [
+    "implant crown",
+    "روکش روی ایمپلنت",
+    "روکش ایمپلنتی",
+    "کراون ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 31,
+   "content_ids": [
+    "episodes/episode-125-1",
+    "episodes/episode-139",
+    "episodes/episode-147",
+    "episodes/episode-148-2",
+    "insight/insight-9",
+    "insight/insight-10",
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST12",
+    "litecast/lite-CAST16",
+    "litecast/lite-CAST18",
+    "dentcast-plus/video-4",
+    "sharehub/share-4",
+    "dentcast-plus/video-5",
+    "metanotes/meta-10",
+    "insight/insight-30",
+    "insight/insight-33",
+    "chairside/chairside-12",
+    "chairside/chairside-17",
+    "insight/insight-46",
+    "insight/insight-47",
+    "insight/insight-50",
+    "insight/insight-52",
+    "insight/insight-53",
+    "insight/insight-57",
+    "chairside/chairside-28",
+    "insight/insight-62",
+    "insight/insight-63",
+    "chairside/chairside-31",
+    "insight/insight-85",
+    "insight/insight-86",
+    "chairside/chairside-43"
+   ]
+  },
+  {
    "key": "هوش_مصنوعی",
    "tag": "#هوش_مصنوعی",
    "domain": "ai",
@@ -1212,55 +1263,6 @@
     "sharehub/share-25",
     "dentai/promptologist/prompt-append2-1",
     "dentai/promptologist/prompt-append2-2"
-   ]
-  },
-  {
-   "key": "روکش_ایمپلنت",
-   "tag": "#روکش_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
-   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
-   "aliases": [
-    "implant crown",
-    "روکش روی ایمپلنت",
-    "روکش ایمپلنتی",
-    "کراون ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 30,
-   "content_ids": [
-    "episodes/episode-125-1",
-    "episodes/episode-139",
-    "episodes/episode-147",
-    "episodes/episode-148-2",
-    "insight/insight-9",
-    "insight/insight-10",
-    "litecast/lite-CAST10",
-    "litecast/lite-CAST12",
-    "litecast/lite-CAST16",
-    "litecast/lite-CAST18",
-    "dentcast-plus/video-4",
-    "sharehub/share-4",
-    "dentcast-plus/video-5",
-    "metanotes/meta-10",
-    "insight/insight-30",
-    "insight/insight-33",
-    "chairside/chairside-12",
-    "chairside/chairside-17",
-    "insight/insight-46",
-    "insight/insight-47",
-    "insight/insight-50",
-    "insight/insight-52",
-    "insight/insight-53",
-    "insight/insight-57",
-    "chairside/chairside-28",
-    "insight/insight-62",
-    "insight/insight-63",
-    "chairside/chairside-31",
-    "insight/insight-85",
-    "insight/insight-86"
    ]
   },
   {
@@ -3534,6 +3536,34 @@
    ]
   },
   {
+   "key": "دیاستم",
+   "tag": "#دیاستم",
+   "domain": null,
+   "words": 1,
+   "definition": "فاصله‌ی بین دو دندان مجاور در قدام.",
+   "use_when": "مقاله درباره‌ی بستن یا مدیریت دیاستم تصمیم بگیرد.",
+   "aliases": [
+    "diastema",
+    "دیاستما",
+    "فاصله بین دندانی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-26",
+    "insight/insight-61",
+    "chairside/chairside-33",
+    "insight/insight-72",
+    "chairside/chairside-39",
+    "insight/insight-89",
+    "chairside/chairside-41",
+    "chairside/chairside-42",
+    "chairside/chairside-43"
+   ]
+  },
+  {
    "key": "زیبایی_قدامی",
    "tag": "#زیبایی_قدامی",
    "domain": null,
@@ -3671,6 +3701,35 @@
     "litecast/lite-CAST17",
     "litecast/lite-CAST18",
     "litecast/lite-CAST19"
+   ]
+  },
+  {
+   "key": "ارتودنسی",
+   "tag": "#ارتودنسی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "درمان ارتودنتیک به‌عنوان بخشی از طرح درمان.",
+   "use_when": "مقاله تعاملِ ارتو و پروتز را دخیل بداند.",
+   "aliases": [
+    "ارتو",
+    "ortho",
+    "درمان ارتودنتیک"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#Orthodontics"
+   ],
+   "count": 9,
+   "content_ids": [
+    "insight/insight-19",
+    "sharehub/share-5",
+    "insight/insight-38",
+    "insight/insight-42",
+    "sharehub/share-19",
+    "chairside/chairside-39",
+    "sharehub/share-24",
+    "chairside/chairside-42",
+    "chairside/chairside-43"
    ]
   },
   {
@@ -3849,33 +3908,6 @@
    ]
   },
   {
-   "key": "دیاستم",
-   "tag": "#دیاستم",
-   "domain": null,
-   "words": 1,
-   "definition": "فاصله‌ی بین دو دندان مجاور در قدام.",
-   "use_when": "مقاله درباره‌ی بستن یا مدیریت دیاستم تصمیم بگیرد.",
-   "aliases": [
-    "diastema",
-    "دیاستما",
-    "فاصله بین دندانی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-26",
-    "insight/insight-61",
-    "chairside/chairside-33",
-    "insight/insight-72",
-    "chairside/chairside-39",
-    "insight/insight-89",
-    "chairside/chairside-41",
-    "chairside/chairside-42"
-   ]
-  },
-  {
    "key": "سایلان",
    "tag": "#سایلان",
    "domain": null,
@@ -4009,34 +4041,6 @@
     "episodes/episode-145",
     "insight/insight-8",
     "episodes/episode-154"
-   ]
-  },
-  {
-   "key": "ارتودنسی",
-   "tag": "#ارتودنسی",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "درمان ارتودنتیک به‌عنوان بخشی از طرح درمان.",
-   "use_when": "مقاله تعاملِ ارتو و پروتز را دخیل بداند.",
-   "aliases": [
-    "ارتو",
-    "ortho",
-    "درمان ارتودنتیک"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#Orthodontics"
-   ],
-   "count": 8,
-   "content_ids": [
-    "insight/insight-19",
-    "sharehub/share-5",
-    "insight/insight-38",
-    "insight/insight-42",
-    "sharehub/share-19",
-    "chairside/chairside-39",
-    "sharehub/share-24",
-    "chairside/chairside-42"
    ]
   },
   {
@@ -22632,6 +22636,7 @@
   "ترمیم کم تهاجمی": "حداقل تهاجم",
   "مطالعه غیرتجربی": "مطالعه مشاهده ای",
   "جداسازی با زمان": "dwt",
+  "markdown format": "markdown",
   "skeletal change": "رشد فک",
   "زینک فسفات سمان": "زینک فسفات",
   "cement retained": "سمان ریتین",
@@ -22642,7 +22647,6 @@
   "partial denture": "پروتز پارشیال",
   "پارسیل دفینیتیو": "پروتز پارشیال",
   "کانتور رستوریشن": "کانتور ترمیم",
-  "markdown format": "markdown",
   "جدا کردن کانتکت": "باز کردن کانتکت",
   "شناسایی ایمپلنت": "برند ایمپلنت",
   "سفید کردن دندان": "بلیچینگ",
@@ -23887,6 +23891,8 @@
   "پست چندتکه": "پست دو تکه",
   "کلود ای آی": "کلود",
   "گلس سرامیک": "گلاس سرامیک",
+  "ریپوزیتوری": "github",
+  "repository": "github",
   "هیدروترمال": "ltd",
   "پی ام ام ا": "pmma",
   "اکریل موقت": "pmma",
@@ -23935,8 +23941,6 @@
   "ناحیه ایمن": "کنترل عمق",
   "ناحیه آرنج": "elbow zone",
   "اجزا محدود": "fea",
-  "ریپوزیتوری": "github",
-  "repository": "github",
   "hall crown": "hall technique",
   "جامپینگ گپ": "jumping gap",
   "رزین باندد": "rbfdp",
@@ -24097,6 +24101,7 @@
   "عاج دندان": "عاج",
   "پیچ پروتز": "پیچ ایمپلنت",
   "دیکاپلینگ": "dwt",
+  "مارک داون": "markdown",
   "آلوده شدن": "آلودگی",
   "نقد مقاله": "تحلیل مطالعه",
   "رنگ گرفتن": "پایداری رنگ",
@@ -24111,7 +24116,6 @@
   "اورکانتور": "کانتور ترمیم",
   "هموستاتیک": "کنترل خونریزی",
   "دیباندینگ": "debonding",
-  "مارک داون": "markdown",
   "لبه اضافه": "اورهنگ",
   "مثلث سیاه": "بلک تراینگل",
   "bleaching": "بلیچینگ",
@@ -24355,6 +24359,7 @@
   "وی دی او": "vdo",
   "کم تهاجم": "حداقل تهاجم",
   "عامل خطر": "ریسک فاکتور",
+  "مارکداون": "markdown",
   "توتال اچ": "اچ اند رینس",
   "رزین کوت": "رزین کوتینگ",
   "رشد فکین": "رشد فک",
@@ -24365,7 +24370,6 @@
   "سیت روکش": "نشست روکش",
   "build up": "بازسازی دیواره",
   "دباندینگ": "debonding",
-  "مارکداون": "markdown",
   "ام دی پی": "mdp",
   "پی دی ال": "pdl",
   "خطای دید": "ادراک بصری",
@@ -24532,12 +24536,12 @@
   "عصب کشی": "درمان ریشه",
   "امبرژور": "امبراژور",
   "اصل دال": "dahl concept",
+  "md فایل": "markdown",
   "دایمنشن": "vd",
   "رشد فکی": "رشد فک",
   "ایربورن": "سندبلاست",
   "لقی پیچ": "شل شدن پیچ",
   "mock up": "موک آپ",
-  "md فایل": "markdown",
   "amalgam": "آمالگام",
   "staging": "استیج بندی درمان",
   "biobase": "بایوبیس",
@@ -24549,6 +24553,8 @@
   "آلومینا": "پلی کریستالین",
   "alumina": "پلی کریستالین",
   "robbins": "کتاب رابینز",
+  "گیت هاب": "github",
+  "git hub": "github",
   "ونت هول": "smart ونت روکش",
   "لبه بات": "بات جوینت",
   "آب دهان": "بزاق",
@@ -24563,8 +24569,6 @@
   "papilla": "پاپیلا",
   "حس عمقی": "پروپریوسپشن",
   "فیو شات": "few shot prompting",
-  "گیت هاب": "github",
-  "git hub": "github",
   "فرم گیر": "retention form",
   "premill": "اباتمنت پریمیل",
   "هم رنگی": "اثر آفتاب پرست",
@@ -24795,12 +24799,12 @@
   "دارو": "داروشناسی",
   "مینا": "مینای دندان",
   "کلاد": "کلود",
+  "ریپو": "github",
   "endo": "اندو",
   "bond": "باند",
   "icon": "رزین اینفیلتریشن",
   "بیوی": "bewe",
   "bopt": "finish zone",
-  "ریپو": "github",
   "oaot": "one اباتمنت one time",
   "اپکر": "اوپکر",
   "اوپک": "اوپکر",
