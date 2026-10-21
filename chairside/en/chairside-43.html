@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared Persian header; use English chrome. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Should We Fill the Excess Space with Another Tooth or Move It? | Chairside 43 | DentCast</title>
+
+<meta name="description" content="Today, a patient came in for a consultation about an implant to replace the maxillary left central incisor. The tooth had not yet been extracted, but it was to be replaced with an implant. The left central incisor had migrated markedly distally, the lateral incisor on the same side was very small, and there was a large diastema between the central incisors.">
+
+<meta name="keywords" content="dental midline, diastema, space distribution, small lateral incisor, implant treatment planning">
+<link rel="canonical" href="https://dentcast.org/chairside/en/chairside-43.html">
+
+  <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
+    <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --bg1:#eaf1ff;
+      --bg2:#f5f8ff;
+      --text:#111;
+      --muted:#444;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.2);
+    }
+
+    html,body { margin:0; padding:0; height:100%; }
+
+    body {
+      font-family:'vazirmatn', sans-serif;
+      background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
+      color: var(--text);
+      max-width: 56.25rem;
+      margin: 0 auto;
+      padding: 3.75rem 1.625rem 6.25rem;line-height:1.9;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizelegibility;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 1.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 1.02rem;
+      margin: 0 0 1.875rem;
+    }
+
+    .text-box {
+      background: rgba(255,255,255,0.99);
+      border: 1px solid rgba(11,95,255,0.25);
+      border-radius: var(--radius);
+      padding: 1.75rem 2.25rem;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .text-box img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      margin: 0 auto 0.625rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      border: 2px solid rgba(11,95,255,0.1);
+    }
+
+    figure { margin: 0 0 1.5rem; }
+    figcaption { text-align: center; font-size: .85rem; color: #555; margin-top: 0.5rem; }
+
+    p { margin: 0.875rem 0;font-size:1.02rem; }
+
+    ul { padding-left: 1.375rem; margin: 0.875rem 0 1.25rem; }
+    ul li { margin: 0.5rem 0; font-size: 1.05rem; }
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin: 1.25rem 0 0.625rem 0;
+      border-bottom: 2px solid var(--lightblue);
+      padding-bottom: 0.25rem;
+    }
+
+    .text-divider {
+      margin: 1.875rem 0;
+      border: 0;
+      height: 0.0625rem;
+      background-image: linear-gradient(
+        to right,
+        rgba(0,0,0,0),
+        rgba(11,95,255,0.4),
+        rgba(0,0,0,0)
+      );
+    }
+
+.author-note{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:0.375rem 0.625rem;
+  margin:2.5rem auto 1rem;
+  padding-top:1.25rem;
+  border-top:1px solid rgba(120,140,170,0.18);
+  color:var(--txt3);
+  font-size:.78rem;
+}
+.author-note .author-link{
+  color:var(--txt2);
+  font-weight:600;
+  text-decoration:none;
+}
+.author-note .author-link:hover{
+  color:var(--ac);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+.author-note .author-role{
+  color:var(--txt3);
+}
+
+/* English-version toggle button (top-right) */
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 0 1.125rem auto;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/chairside/en/chairside-43.html"
+      },
+      "headline": "Should We Fill the Excess Space with Another Tooth or Move It?",
+      "description": "Today, a patient came in for a consultation about an implant to replace the maxillary left central incisor. The tooth had not yet been extracted, but it was to be replaced with an implant. The left central incisor had migrated markedly distally, the lateral incisor on the same side was very small, and there was a large diastema between the central incisors.",
+      "image": [
+        "https://dentcast.org/chairside/chairside43.webp"
+      ],
+      "datePublished": "2026-10-21",
+      "dateModified": "2026-10-21",
+      "lastReviewed": "2026-10-21",
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "reviewedBy": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "keywords": "dental midline, diastema, space distribution, small lateral incisor, implant treatment planning",
+      "articleSection": "Chairside",
+      "inLanguage": "en"
+    }
+  ]
+}
+</script>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+  <link rel="apple-touch-icon" href="/favicon-512.png">
+  <meta name="theme-color" content="#0b5fff">
+  <link rel="stylesheet" href="/dc-theme.css?v=7">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="Should We Fill the Excess Space with Another Tooth or Move It? | Chairside 43 | DentCast">
+  <meta property="og:description" content="Today, a patient came in for a consultation about an implant to replace the maxillary left central incisor. The tooth had not yet been extracted, but it was to be replaced with an implant. The left central incisor had migrated markedly distally, the lateral incisor on the same side was very small, and there was a large diastema between the central incisors.">
+  <meta property="og:url" content="https://dentcast.org/chairside/en/chairside-43.html">
+  <meta property="og:image" content="https://dentcast.org/chairside/chairside43.webp">
+  <meta property="og:image:width" content="1152">
+  <meta property="og:image:height" content="1536">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Should We Fill the Excess Space with Another Tooth or Move It? | Chairside 43 | DentCast">
+  <meta name="twitter:description" content="Today, a patient came in for a consultation about an implant to replace the maxillary left central incisor. The tooth had not yet been extracted, but it was to be replaced with an implant. The left central incisor had migrated markedly distally, the lateral incisor on the same side was very small, and there was a large diastema between the central incisors.">
+  <meta name="twitter:image" content="https://dentcast.org/chairside/chairside43.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "DentCast",
+      "item": "https://dentcast.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Chairside",
+      "item": "https://dentcast.org/chairside/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Should We Fill the Excess Space with Another Tooth or Move It?",
+      "item": "https://dentcast.org/chairside/en/chairside-43.html"
+    }
+  ]
+}
+</script>
+  <meta name="robots" content="noindex, follow">
+  
+</head>
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<main class="article-content-wrap">
+  <h2>Chairside 43</h2>
+  <h1>Should We Fill the Excess Space with Another Tooth or Move It?</h1>
+  <div class="dc-trustline" aria-label="Author and review information">
+    <span>Published: <time datetime="2026-10-21">2026-10-21</time></span>
+    <span>Last reviewed: <time datetime="2026-10-21">2026-10-21</time></span>
+  </div>
+
+
+<div class="text-box">
+
+   <!-- 🌐 English Version (SEO-friendly link) -->
+  <a class="lang-btn" href="../chairside-43.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+
+<figure>
+  <img loading="lazy" src="/chairside/chairside43.webp" alt="Should We Fill the Excess Space with Another Tooth or Move It?" style="max-width:100%; border-radius:0.75rem;" width="1152" height="1536">
+</figure>
+
+<p>Today, a patient came in for a consultation about an implant to replace the maxillary left central incisor. The tooth had not yet been extracted, but it was to be replaced with an implant. The left central incisor had migrated markedly distally, the lateral incisor on the same side was very small, and there was a large diastema between the central incisors.</p>
+
+<p>The first thing I did was assess the midline. Using the philtrum of the upper lip as a reference, I realized that placing the implant-supported central incisor crown directly next to the right central incisor, without a gap, would shift the dental midline by about two millimeters or more.</p>
+
+<p>With the teeth at their current widths, we therefore had to retain some diastema to achieve the desired midline.</p>
+
+<p>I explained to the patient that, if he wanted no space between the central incisors, we could increase the width of the right central incisor by adding composite. But he did not want that tooth to be wider. I therefore explained that he would need to accept some space between the central incisors in the final plan.</p>
+
+<p>The next question was what to do with the rest of the excess space.</p>
+
+<p>The patient himself suggested that perhaps, in addition to the implant-supported central incisor, we could make another small tooth resembling a lateral incisor alongside the existing lateral incisor to fill the entire space.</p>
+
+<p>That suggestion was worth considering initially. For me, the main issue was not the biomechanical problems of a small cantilever; the question was whether there was enough space to create such a tooth with suitable dimensions and esthetic proportions.</p>
+
+<p>I could have scanned the patient and asked the laboratory to determine the dimensions and positions of the teeth through digital design. But that would take time and impose a cost on the patient. For the initial decision, I tried to clarify the space situation with a simple mental analysis.</p>
+
+<p>The key point was that all the excess space was currently concentrated mesial to the left central incisor. The distal surface of that tooth was in contact with the small adjacent lateral incisor.</p>
+
+<p>But the implant crown did not necessarily have to occupy the current position of the central incisor crown. By replacing this tooth and designing the crown in an appropriate position, we could transfer some of the existing space to the distal side of the new central incisor.</p>
+
+<p>To make this easier to understand, imagine that all the excess space is money collected in one bag, which we need to divide among several people.</p>
+
+<p>First, we have to set aside the share for the midline diastema, because the patient does not want the opposite central incisor to be wider.</p>
+
+<p>Then we look at how much space remains. Is that enough to make another small tooth resembling a lateral incisor?</p>
+
+<p>With this mental calculation, I realized that, after setting aside the share for the diastema, there would not be suitable space for an additional tooth. The new tooth would probably be too small to have acceptable esthetic proportions.</p>
+
+<p>At that point I wondered: why make an additional tooth at all?</p>
+
+<p>We already have a small lateral incisor whose width we can increase to use up some of this awkward amount of space.</p>
+
+<p>Even with that approach, however, a small amount of excess space would probably remain.</p>
+
+<p>The next solution was to change the location of that space rather than try to fill it where it was.</p>
+
+<p>If the orthodontist could move the left lateral incisor slightly mesially, the remaining space would move to its distal side. In that position, we could compensate for the gap by slightly increasing the width of the canine.</p>
+
+<p>In this way, instead of making an additional tooth, we would redistribute the available space among the teeth through a combination of appropriate positioning of the implant crown, widening the lateral incisor, orthodontic movement, and reshaping the canine.</p>
+
+<p>I ultimately decided to refer the patient for an orthodontic consultation first, to establish whether such limited movement, for example with an aligner, would be feasible. Once that is clear, we can plan the final implant position and restoration dimensions more precisely.</p>
+
+<p>For me, the point of this case was the value of a simple mental analysis during the initial consultation.</p>
+
+<p>I did not need to take a scan and carry out a digital design at the outset to recognize that making an additional tooth was probably not a suitable solution.</p>
+
+<p>We had a fixed amount of excess space, all of which was concentrated in one place. We first set aside the share for the necessary diastema, then recognized that the remaining space was unsuitable for an independent tooth. We could use some of it by widening the lateral incisor, and consider orthodontic movement for the remainder.</p>
+
+<p>This mental analysis does not replace precise planning before treatment, but it helped me choose a more logical direction for continuing treatment without imposing an additional cost at the first appointment.</p>
+
+<p>Sometimes the question is not how to fill excess space; it is where to locate that space so that filling it becomes easier and the result more esthetic.</p>
+
+  <p class="dc-disclaimer">This page is intended for educational use by dentists and dental students.</p>
+</div>
+
+<div class="author-note">
+  <a href="/about.html" class="author-link">Dr. Foad Shahabian</a>
+  <span class="author-role">Prosthodontist & Implant Specialist</span>
+</div>
+
+<footer class="dc-site-footer">
+  <div style="margin-bottom:1.375rem;">
+    <a href="../index.html"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> Back to Chairside
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+    <strong style="color:#ffd46a;">Foad Shahabian</strong>
+  </div>
+</footer>
+</main>
+<script src="/global-search.js?v=15" defer></script>
+<script src="/dc-nav.js?v=286" defer></script>
+</body>
+</html>
