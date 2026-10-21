@@ -36,7 +36,15 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "status": "confirmed"
         }
       ],
-      "decisions": [],
+      "decisions": [
+        {
+          "decision": "Remove never-created dentai/promptologist/images from declared targets: all four actual WebP files are adjacent to the article and remain individually watched. No existing file or drift is removed.",
+          "evidence": [
+            "Git has never tracked this path; current snapshot records missing with empty index; actual four asset paths are preserved in target_paths"
+          ],
+          "scope": "Correct unused planned asset directory in target inventory"
+        }
+      ],
       "delivery": [
         {
           "evidence": [
@@ -524,7 +532,6 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       ".dentcast/publication-reports/promptologist-prompt-append2-2.md",
       "dentai/promptologist/en/prompt-append2-1.html",
       "dentai/promptologist/en/prompt-append2-2.html",
-      "dentai/promptologist/images",
       "dentai/promptologist/index.html",
       "dentai/promptologist/prompt-append2-1.html",
       "dentai/promptologist/prompt-append2-2-01-github-home.webp",
@@ -552,7 +559,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Reviewed report delivery evidence against actual PR 948, matching blob hashes and synchronized remote tree"
+    "note": "Correct initial unused directory declaration only; preserve all actual assets and complete evidence"
   },
   "schema": "publish-handoff-v3"
 }
