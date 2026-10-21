@@ -82,6 +82,7 @@ const CONFIG = {
 };
 
 let posts: Array<{ url: string; body: any }> = [];
+let pageViews = 0;
 let controls: Record<string, unknown> = {};
 let campaign: any = null;
 
@@ -90,6 +91,10 @@ function stubFetch(activityStatus = 204) {
     const url = String(input);
     if (url.includes('spot-config.json')) return { ok: true, json: async () => structuredClone(CONFIG) } as any;
     if (url.endsWith('/spot/config')) return { ok: true, json: async () => ({ slots: controls, ...(campaign ? { campaign } : {}) }) } as any;
+    if (url.endsWith('/pageview')) {
+      pageViews += 1;
+      return { ok: true, status: 204 } as any;
+    }
     posts.push({ url, body: JSON.parse(init.body) });
     if (url.includes('/activity') && activityStatus !== 204) return { ok: false, status: activityStatus } as any;
     return { ok: true, status: 204 } as any;
@@ -116,6 +121,7 @@ const creativeShown = () => document.querySelector('.dc-spot')?.getAttribute('da
 beforeEach(() => {
   vi.useFakeTimers();
   posts = [];
+  pageViews = 0;
   controls = {};
   campaign = null;
   observers = [];
@@ -132,6 +138,34 @@ afterEach(() => {
   // test's `posts` array the moment that test advances the clock.
   vi.clearAllTimers();
   vi.useRealTimers();
+});
+
+describe('page-view denominator', () => {
+  it('counts a document once, even when nobody scrolls to the ad', async () => {
+    await boot();
+    expect(pageViews).toBe(1);
+    expect(posts).toHaveLength(0);
+  });
+
+  it('counts premium documents without recording impressions', async () => {
+    me.user = { tier: 'premium' }; me.status = 'user';
+    await boot();
+    expect(pageViews).toBe(1);
+    expect(posts).toHaveLength(0);
+  });
+
+  it('counts another article in the desktop shell for a premium visitor', async () => {
+    me.user = { tier: 'premium' }; me.status = 'user';
+    document.body.innerHTML = '<div id="dcd-content-area"></div>';
+    vi.resetModules();
+    await import('/spot/spot.js');
+    await vi.advanceTimersByTimeAsync(10_000);
+    expect(pageViews).toBe(1);
+    (window as any).dcSpotMountArticle(document.getElementById('dcd-content-area'));
+    await vi.advanceTimersByTimeAsync(0);
+    expect(pageViews).toBe(2);
+    expect(posts).toHaveLength(0);
+  });
 });
 
 describe('premium never sees an ad', () => {

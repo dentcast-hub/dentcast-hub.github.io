@@ -112,6 +112,19 @@ function track(name, params) {
 // correctly (the same lazy rule the targeting layer already uses).
 let viewerNow = () => 'anon';
 
+// ── first-party content-view counter ─────────────────────────────────────────
+
+// Authentication refreshes via /me are NOT page views. A new document counts
+// once, and desktop-shell article navigation counts once more per new article.
+function countContentView() {
+  import('/plus/js/api.js?v=190')
+    .then((m) => m.apiBase())
+    .then((base) => fetch(base + '/pageview', {
+      method: 'POST', credentials: 'include', cache: 'no-store', keepalive: true,
+    }))
+    .catch(() => {}); // telemetry must never delay an article or an ad
+}
+
 // ── first-party telemetry (our own API, alongside GA) ────────────────────────
 
 // GA4 loses every adblocked visitor (googletagmanager.com is on EasyList; the
@@ -981,9 +994,10 @@ function placeArticleCard(slot, prose, card) {
  */
 function setupShellArticleSlot(cfg, audienceNow) {
   window.dcSpotMountArticle = function (container) {
-    if (adsKilled || !container) return false;
-    if (!slotAllows(cfg, 'article', audienceNow())) return false;
+    if (!container) return false;
     if (container.querySelector('.dc-spot--article')) return false; // already seated
+    countContentView();
+    if (adsKilled || !slotAllows(cfg, 'article', audienceNow())) return false;
     // Scoped to the injected article. The document-wide lookup is wrong here: the
     // article sits inside #dcd-content-area while the homepage around it has
     // boxes of its own, and a document query would find one of those first and
@@ -1323,6 +1337,18 @@ function removeAllAds() {
 // ── boot ─────────────────────────────────────────────────────────────────────
 
 async function main() {
+  // Count the document itself exactly once regardless of ad visibility/tier.
+  countContentView();
+  // A desktop article can replace the document's content without navigation.
+  // This counting-only hook remains if Spot is disabled or the user is premium.
+  // The normal ad-mount hook replaces it when an eligible slot is active.
+  if (document.getElementById('dcd-content-area')) {
+    window.dcSpotMountArticle = (container) => {
+      if (!container) return false;
+      countContentView();
+      return false;
+    };
+  }
   // Fired in parallel with the config fetch below, not after it — viewerProbe()
   // has no dependency on cfg (it only calls /me), so starting it here instead of
   // once cfg resolves overlaps the two network round-trips instead of stacking
