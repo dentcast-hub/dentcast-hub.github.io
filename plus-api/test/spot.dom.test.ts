@@ -143,14 +143,14 @@ afterEach(() => {
 describe('page-view denominator', () => {
   it('counts a document once, even when nobody scrolls to the ad', async () => {
     await boot();
-    expect(pageViews).toBe(1);
+    await vi.waitFor(() => expect(pageViews).toBe(1));
     expect(posts).toHaveLength(0);
   });
 
   it('counts premium documents without recording impressions', async () => {
     me.user = { tier: 'premium' }; me.status = 'user';
     await boot();
-    expect(pageViews).toBe(1);
+    await vi.waitFor(() => expect(pageViews).toBe(1));
     expect(posts).toHaveLength(0);
   });
 
@@ -160,10 +160,10 @@ describe('page-view denominator', () => {
     vi.resetModules();
     await import('/spot/spot.js');
     await vi.advanceTimersByTimeAsync(10_000);
-    expect(pageViews).toBe(1);
+    await vi.waitFor(() => expect(pageViews).toBe(1));
     (window as any).dcSpotMountArticle(document.getElementById('dcd-content-area'));
     await vi.advanceTimersByTimeAsync(0);
-    expect(pageViews).toBe(2);
+    await vi.waitFor(() => expect(pageViews).toBe(2));
     expect(posts).toHaveLength(0);
   });
 });
