@@ -17183,5 +17183,39 @@
       "secondary": [],
       "subtopic": "post-and-core"
     }
+  },
+  {
+    "type": "promptologist",
+    "id": "prompt-append2-2",
+    "title": "پرامپتولوژیست — پیوست ۲ ـ قسمت ۲: اولین فایل را بیرون از اکانت نگه داریم",
+    "caption": "در قسمت قبل گفتیم از هوش مصنوعی بخواهید نسخهٔ نهایی دستور را به شکل یک فایل مارک‌داون بدهد. حالا می‌خواهیم آن فایل را در گیت‌هاب بگذاریم تا بیرون از اکانت هوش مصنوعی هم وجود داشته باشد.",
+    "hashtags": [
+      "#پرامپتولوژیست",
+      "#هوش_مصنوعی",
+      "#سواد_هوش_مصنوعی",
+      "#AI_Literacy",
+      "#مدل_زبانی",
+      "#LLM",
+      "#مالکیت_پلتفرم",
+      "#Markdown",
+      "#پشتیبان_گیری",
+      "#GitHub"
+    ],
+    "keywords": [
+      "گیت‌هاب برای نگهداری پرامپت",
+      "ساخت مخزن خصوصی",
+      "Repository name",
+      "Add README",
+      "Upload files",
+      "Commit changes",
+      "Markdown",
+      "اتصال ایجنت هوش مصنوعی به گیت‌هاب"
+    ],
+    "page_url": "/dentai/promptologist/prompt-append2-2.html",
+    "pillar": {
+      "primary": "practice-infrastructure",
+      "secondary": [],
+      "subtopic": "llm-tools"
+    }
   }
 ]
