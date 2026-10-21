@@ -26,6 +26,14 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           ],
           "scope": "typo, hashtags, keywords, ordinary publication and Pulse",
           "status": "confirmed"
+        },
+        {
+          "decision": "Merge this publication after gates pass",
+          "evidence": [
+            "Current session: \u0645\u0631\u062c \u06a9\u0646"
+          ],
+          "scope": "PR 949 merge",
+          "status": "confirmed"
         }
       ],
       "decisions": [
@@ -34,7 +42,15 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "kind": "intake_identity_bound"
         }
       ],
-      "delivery": [],
+      "delivery": [
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/commit/872791c15ad1ab0f028e4bf86610ba0bde778e1c",
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/pull/949"
+          ],
+          "scope": "Verified feature branch delivery"
+        }
+      ],
       "inputs": [
         {
           "evidence": [
@@ -523,6 +539,8 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       "chairside/chairside43.webp",
       "chairside/en/chairside-43.html",
       "chairside/index.html",
+      "dentai/promptologist/en/prompt-append2-2.html",
+      "dentai/promptologist/prompt-append2-2.html",
       "dentcast-brain.json",
       "dentcast-hashtag-reference.json",
       "index.html",
