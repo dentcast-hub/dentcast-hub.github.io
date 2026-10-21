@@ -40912,5 +40912,64 @@
     "fidelity": [
       null
     ]
+  },
+  "dentai/promptologist/prompt-append2-2": {
+    "scored_at": "2026-10-21",
+    "sources": [
+      {
+        "des_version": "3.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "پیوست ۲ ـ قسمت ۲: اولین فایل را بیرون از اکانت نگه داریم",
+          "authors": "دکتر فواد شهابیان",
+          "year": 2026,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "اما یک بار مسیر را خودمان می‌رویم تا وقتی به هوش مصنوعی می‌گوییم «این فایل را در گیت‌هاب بگذار»، بدانیم فایل قرار است کجا برود و چطور وجودش را بررسی کنیم.",
+            "note": "The manual walkthrough is justified by knowing where files go and verifying their presence; backup is connected to loss of account access."
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "No research literature is cited or positioned against the tutorial; no statement of absent research evidence."
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "بعد از اتصال ابزار هوش مصنوعی به گیت‌هاب و دادن دسترسی لازم، ساختن فایل، گذاشتن آن در ریپو و ثبت تغییراتش را هم می‌توانید به خود ایجنت بسپارید.",
+            "note": "Agent actions are conditional on suitable tool connection and permission; article separately excludes assumed cross-tool access."
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "No explicit experience/opinion label in the body; Promptologist is outside the closed section-declaration carve-out."
+          }
+        ],
+        "des_score": 12,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این متن تألیفی دنت‌کست با امتیاز ۱۲ در سطح E، سطح پس‌زمینه و دیدگاه، قرار می‌گیرد.",
+        "interpretation_fa": "این راهنمای عملی، مسیر نگهداری یک فایل در گیت‌هاب و بررسی نتیجه را توضیح می‌دهد. ارزش آن در مدیریت فایل و شناخت حدود دسترسی ایجنت است و یافتهٔ پژوهشی یا توصیهٔ درمانی ارائه نمی‌کند."
+      }
+    ],
+    "fidelity": [
+      null
+    ]
   }
 }
