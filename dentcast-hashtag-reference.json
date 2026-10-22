@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 116,
+   "count": 117,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -376,7 +376,8 @@
     "insight/insight-94",
     "insight/insight-95",
     "insight/insight-96",
-    "insight/insight-97"
+    "insight/insight-97",
+    "insight/insight-98"
    ]
   },
   {
@@ -3749,7 +3750,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 9,
+   "count": 10,
    "content_ids": [
     "episodes/episode-68",
     "episodes/episode-147-4",
@@ -3759,7 +3760,8 @@
     "sharehub/share-29",
     "insight/insight-91",
     "insight/insight-92",
-    "chairside/chairside-40"
+    "chairside/chairside-40",
+    "insight/insight-98"
    ]
   },
   {
@@ -12573,10 +12575,11 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 2,
+   "count": 3,
    "content_ids": [
     "sharehub/share-29",
-    "insight/insight-91"
+    "insight/insight-91",
+    "insight/insight-98"
    ]
   },
   {
@@ -18609,9 +18612,10 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 1,
+   "count": 2,
    "content_ids": [
-    "sharehub/share-29"
+    "sharehub/share-29",
+    "insight/insight-98"
    ]
   },
   {
