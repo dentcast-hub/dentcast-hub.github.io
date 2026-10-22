@@ -284,6 +284,7 @@ export async function getSpotStats(opts: {
             coalesce(sum(count) filter (where kind = 'click'), 0)::bigint as clicks
        from spot_stats
       where day between $1::date and $2::date
+        and kind in ('impression', 'click')
         and ($3::text is null or host = $3::text)
       group by 1, 2, 3, 4, 5
       order by 1 desc, impressions desc, 2, 3`,
