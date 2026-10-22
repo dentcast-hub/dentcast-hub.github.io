@@ -1,0 +1,57 @@
+{
+  "type": "sharehub",
+  "concepts": [
+    {
+      "key": "rbfdp",
+      "tag": "#RBFDP",
+      "domain": null,
+      "words": 1,
+      "definition": "پروتز ثابتِ متکی بر باند رزینی (مریلند).",
+      "use_when": "مقاله RBFDP را ارزیابی یا طراحی کند.",
+      "aliases": [
+        "resin bonded",
+        "مریلند",
+        "maryland bridge",
+        "رزین باندد",
+        "رزین باند",
+        "RBFPD",
+        "resin-bonded bridge",
+        "resin bonded fixed partial denture",
+        "بریج باندشونده",
+        "بریج باند شونده",
+        "بریج رزین باند"
+      ],
+      "variants": [],
+      "co_tags": [],
+      "count": 1,
+      "content_ids": [
+        "dentai/dentai-7"
+      ]
+    },
+    {
+      "tag": "#اکلوزال_ونیر",
+      "domain": "clinical",
+      "definition": "رستوریشن نازک پوشانندهٔ سطح اکلوزال؛ می‌تواند به‌صورت تک‌واحدی یا ریتینر بریج مطرح شود.",
+      "use_when": "محتوا طراحی، اندیکاسیون یا عملکرد اکلوزال ونیر را بررسی می‌کند.",
+      "aliases": [
+        "occlusal veneer",
+        "occlusal veneers",
+        "ونیر اکلوزال"
+      ]
+    },
+    {
+      "tag": "#آنله_بریج",
+      "domain": "clinical",
+      "definition": "بریج باندشونده با ریتینرهای پوشش‌دهندهٔ بخشی از تاج یا سطح اکلوزال دندان‌های پایه.",
+      "use_when": "محتوا بریج‌های محافظه‌کارانه با ریتینر آنله یا اکلوزال ونیر و طراحی‌های مرتبط را بررسی می‌کند.",
+      "aliases": [
+        "onlay bridge",
+        "onlay-retained bridge",
+        "tabletop bridge",
+        "table top bridge",
+        "بریج آنله"
+      ]
+    }
+  ],
+  "articles": {}
+}

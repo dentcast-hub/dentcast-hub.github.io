@@ -1,0 +1,113 @@
+
+── verify_publish: sharehub/share-39 ──────────────────────────────
+  ok  5 brain              entry is the last element (569/569)
+  ok  5 brain              key set + order identical to 38
+  ok  5 brain              id 39 is unique within sharehub
+  ok  2.4 pillar           subtopic key present
+  ok  2.4 pillar           fixed-pros / crowns-onlays — both live in PILLARS
+  ok  2 page               sharehub/share-39.html (26,425 bytes)
+  ok  GA4                  deferred GA4 snippet present exactly once
+  ok  2 identity           canonical = https://dentcast.org/sharehub/share-39.html
+  ok  16 verbatim          brain title is codepoint-identical to the user's text
+  ok  16 verbatim          brain caption is codepoint-identical to the user's text
+  ok  16 title             <h1> is codepoint-identical to the brain title
+  ok  16 title             <title> carries the exact title
+  ok  16 title             og:title carries the exact title
+  ok  16 title             twitter:title carries the exact title
+  ok  16 caption           meta description is codepoint-identical to the brain caption
+  ok  16 caption           og:description present
+  ok  16 caption           twitter:description present
+  ok  16 caption           og and twitter descriptions agree
+  ok  3 dates              datePublished == dateModified (2026-10-22)
+  ok  2 body               prose paragraph precedes the first list (Spot card has an interior boundary)
+  ok  2.5 related          exactly one «کاوش بیشتر» section
+  ok  9 cap                5/5 links in «کاوش بیشتر»
+  ok  2.5 related          uses dc-related-* classes only
+  ok  2.5 related          فهرست موضوعی → /pillar/fixed-pros/
+  ok  4.9 related          no self-link
+  ok  4.12 no-page-schema  page carries no FAQPage/flashcards JSON-LD
+  ok  4.12 quiz            4 FAQ questions
+  ok  4.12 quiz            q0 is self-contained
+  ok  4.12 quiz            q0 binary, opens with an explicit verdict
+  ok  4.12 quiz            q1 is self-contained
+  ok  4.12 quiz            q1 binary, opens with an explicit verdict
+  ok  4.12 quiz            q2 is self-contained
+  ok  4.12 quiz            q2 binary, opens with an explicit verdict
+  ok  4.12 quiz            q3 is self-contained
+  ok  4.12 quiz            q3 binary, opens with an explicit verdict
+  ok  4.11 cards           one DefinedTermSet block
+  ok  4.11 cards           4 flashcards
+  ok  4.11 cards           flashcard @ids are unique
+  ok  4.11 cards           card 1 @id ends #flashcards-c1
+  ok  4.11 cards           card 2 @id ends #flashcards-c2
+  ok  4.11 cards           card 3 @id ends #flashcards-c3
+  ok  4.11 cards           card 4 @id ends #flashcards-c4
+  ok  4.11 cards           card 1 description is authored, not a FAQ copy
+  ok  4.11 cards           card 1 name is a recall prompt
+  ok  4.11 cards           card 2 description is authored, not a FAQ copy
+  ok  4.11 cards           card 2 name is a recall prompt
+  ok  4.11 cards           card 3 description is authored, not a FAQ copy
+  ok  4.11 cards           card 3 name is a recall prompt
+  ok  4.11 cards           card 4 description is authored, not a FAQ copy
+  ok  4.11 cards           card 4 name is a recall prompt
+  ok  4.13 DES             record carries only scored_at + sources (+ fidelity)
+  ok  4.13 DES             nonempty source records present
+  ok  4.13 DES             fidelity is parallel to sources
+  ok  4.13 DES             fid0 basis EXCERPT is on a 3.1+ object
+  ok  4.13 DES             fid0 is a FIDELITY object with a version stamp
+  ok  4.13 DES             fid0 scope is SOURCE
+  ok  4.13 DES             fid0 text_basis matches its source(s) (FULL_TEXT)
+  ok  4.13 DES             fid0 claim ids are page unit ids in order
+  ok  4.13 DES             fid0 every verdict is from the closed list
+  ok  4.13 DES             fid0 silence verdicts match the text basis
+  ok  4.13 DES             fid0 change_kind is on every ALTERED and nowhere else
+  ok  4.13 DES             fid0 every MATCHES/ALTERED/REVERSED quotes the source
+  ok  4.13 DES             fid0 source_ref follows the scope
+  ok  4.13 DES             fid0 every claim_quote is verbatim from this page
+ --  4.13 DES             fid0 source quotes not checkable (source text not in the repo)
+  ok  4.13 DES             fid0 counts equal the verdict tally
+  ok  4.13 DES             fid0 fidelity arithmetic checks out (100 · HIGH)
+  ok  4.13 DES             fid0 provisional follows text_basis
+  ok  4.13 DES             src0 carries des_version
+  ok  4.13 DES             src0 is scored from an abstract or a full text
+  ok  4.13 DES             src0 arithmetic checks out (23)
+  ok  4.13 DES             src0 penalty «follow-up shorter than the outcome plausibly requires» is scaled to the anchor (3)
+  ok  4.13 DES             src0 band D matches its score
+  ok  4.13 DES             src0 research shape is correct
+ --  4.13 DES             src0 quotes not checkable (source text not in the repo)
+  ok  D en-mirror          sharehub/en/share-39.html exists
+  ok  D en-mirror          en page has the English chrome attributes
+  ok  D en-mirror          en page carries GA4 once
+  ok  D en-mirror          en page is self-canonical
+  ok  D en-mirror          og:locale = en_US
+  ok  D en-mirror          inLanguage = en
+  ok  D en-mirror          en page carries no specialist capsules
+  ok  E notify             en mirror carries no notify marker
+  ok  D en-noindex         en mirror is noindexed
+  ok  D en-noindex         en mirror carries no hreflang
+  ok  D toggle             fa toggle → en/share-39.html
+  ok  D toggle             en toggle → ../share-39.html
+  ok  D en-mirror          structure-faithful translation (2 list items on both sides)
+  ok  D hreflang           3-line hreflang block present (no en — mirrors are noindexed)
+  ok  E notify             publish marker present exactly once
+  ok  2.6 landing          sharehub/index.html links to the page
+  ok  17 sweep             landing-page label carries the exact title
+  ok  6 pulse              Pulse has exactly 7 lines
+  ok  6 pulse              exactly one Pulse line links to the page
+  ok  6 pulse              new Pulse item is the first line
+  ok  6 pulse              previous bottom line removed; other Pulse lines preserved in order
+  ok  17 sweep             homepage rail card title matches the brain title
+  ok  8 sitemap            page is in sitemap.xml
+  ok  8 sitemap            en mirror stays out of sitemap.xml (noindexed)
+  ok  8 pillar             listed on /pillar/fixed-pros/index.html
+  ok  8 pillar-structure   in /pillar/fixed-pros/structure.json (premium subtopic view)
+  ok  8 pillar-structure   subtopic 'crowns-onlays' exists in /pillar/fixed-pros/structure.json
+  ok  8 plus-index         in plus/content-index.json
+  ok  8 flashcards         in plus/flashcards-index.json
+  ok  8 quiz               in plus/quiz-index.json
+  ok  5.6 pathway          placed in at least one learning pathway
+  ok  7 version            content version c09223b71c matches the stamp
+  ok  7 version            index.html ?v= is current
+  ok  7 version            player.html ?v= is current
+────────────────────────────────────────────────────
+107 passed, 0 warned, 0 failed  — publish is COMPLETE

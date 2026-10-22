@@ -967,7 +967,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 37,
+   "count": 38,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -1005,7 +1005,8 @@
     "sharehub/share-34",
     "sharehub/share-35",
     "sharehub/share-36",
-    "sharehub/share-38"
+    "sharehub/share-38",
+    "sharehub/share-39"
    ]
   },
   {
@@ -1021,7 +1022,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 37,
+   "count": 38,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -1059,7 +1060,8 @@
     "sharehub/share-34",
     "sharehub/share-35",
     "sharehub/share-36",
-    "sharehub/share-38"
+    "sharehub/share-38",
+    "sharehub/share-39"
    ]
   },
   {
@@ -1217,6 +1219,56 @@
    ]
   },
   {
+   "key": "زیرکونیا",
+   "tag": "#زیرکونیا",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "زیرکونیای دندانی به‌عنوان متریال رستوریشن.",
+   "use_when": "مقاله انتخاب، آماده‌سازی یا رفتار بالینی زیرکونیا را تعیین کند.",
+   "aliases": [
+    "زیرکونیوم",
+    "زیرکونیم",
+    "zirconia",
+    "زیرکونیای"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 31,
+   "content_ids": [
+    "episodes/episode-11",
+    "episodes/episode-17",
+    "episodes/episode-18",
+    "episodes/episode-87",
+    "episodes/episode-88",
+    "episodes/episode-89",
+    "episodes/episode-107",
+    "episodes/episode-122-5",
+    "episodes/episode-136",
+    "episodes/episode-139",
+    "episodes/episode-140",
+    "episodes/episode-146",
+    "insight/insight-5",
+    "photocast/episode-3",
+    "notecast/episode-2",
+    "notecast/episode-3",
+    "notecast/episode-5",
+    "notecast/episode-8",
+    "notecast/episode-11",
+    "notecast/episode-13",
+    "notecast/episode-17",
+    "notecast/episode-18",
+    "notecast/episode-30",
+    "insight/insight-27",
+    "dentai/dentai-26",
+    "insight/insight-62",
+    "sharehub/share-17",
+    "sharehub/share-20",
+    "insight/insight-91",
+    "insight/insight-92",
+    "sharehub/share-39"
+   ]
+  },
+  {
    "key": "هوش_مصنوعی",
    "tag": "#هوش_مصنوعی",
    "domain": "ai",
@@ -1263,55 +1315,6 @@
     "sharehub/share-25",
     "dentai/promptologist/prompt-append2-1",
     "dentai/promptologist/prompt-append2-2"
-   ]
-  },
-  {
-   "key": "زیرکونیا",
-   "tag": "#زیرکونیا",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "زیرکونیای دندانی به‌عنوان متریال رستوریشن.",
-   "use_when": "مقاله انتخاب، آماده‌سازی یا رفتار بالینی زیرکونیا را تعیین کند.",
-   "aliases": [
-    "زیرکونیوم",
-    "زیرکونیم",
-    "zirconia",
-    "زیرکونیای"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 30,
-   "content_ids": [
-    "episodes/episode-11",
-    "episodes/episode-17",
-    "episodes/episode-18",
-    "episodes/episode-87",
-    "episodes/episode-88",
-    "episodes/episode-89",
-    "episodes/episode-107",
-    "episodes/episode-122-5",
-    "episodes/episode-136",
-    "episodes/episode-139",
-    "episodes/episode-140",
-    "episodes/episode-146",
-    "insight/insight-5",
-    "photocast/episode-3",
-    "notecast/episode-2",
-    "notecast/episode-3",
-    "notecast/episode-5",
-    "notecast/episode-8",
-    "notecast/episode-11",
-    "notecast/episode-13",
-    "notecast/episode-17",
-    "notecast/episode-18",
-    "notecast/episode-30",
-    "insight/insight-27",
-    "dentai/dentai-26",
-    "insight/insight-62",
-    "sharehub/share-17",
-    "sharehub/share-20",
-    "insight/insight-91",
-    "insight/insight-92"
    ]
   },
   {
@@ -10106,6 +10109,34 @@
    ]
   },
   {
+   "key": "rbfdp",
+   "tag": "#RBFDP",
+   "domain": null,
+   "words": 1,
+   "definition": "پروتز ثابتِ متکی بر باند رزینی (مریلند).",
+   "use_when": "مقاله RBFDP را ارزیابی یا طراحی کند.",
+   "aliases": [
+    "resin bonded",
+    "مریلند",
+    "maryland bridge",
+    "رزین باندد",
+    "رزین باند",
+    "RBFPD",
+    "resin-bonded bridge",
+    "resin bonded fixed partial denture",
+    "بریج باندشونده",
+    "بریج باند شونده",
+    "بریج رزین باند"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-7",
+    "sharehub/share-39"
+   ]
+  },
+  {
    "key": "residual_cement",
    "tag": "#Residual_Cement",
    "domain": "clinical",
@@ -13967,28 +13998,6 @@
    ]
   },
   {
-   "key": "rbfdp",
-   "tag": "#RBFDP",
-   "domain": null,
-   "words": 1,
-   "definition": "پروتز ثابتِ متکی بر باند رزینی (مریلند).",
-   "use_when": "مقاله RBFDP را ارزیابی یا طراحی کند.",
-   "aliases": [
-    "resin bonded",
-    "مریلند",
-    "maryland bridge",
-    "رزین باندد",
-    "رزین باند",
-    "رزین باندد"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "dentai/dentai-7"
-   ]
-  },
-  {
    "key": "redeem",
    "tag": "#Redeem",
    "domain": "ai",
@@ -14392,6 +14401,27 @@
    "count": 1,
    "content_ids": [
     "sharehub/share-23"
+   ]
+  },
+  {
+   "key": "آنله_بریج",
+   "tag": "#آنله_بریج",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بریج باندشونده با ریتینرهای پوشش‌دهندهٔ بخشی از تاج یا سطح اکلوزال دندان‌های پایه.",
+   "use_when": "محتوا بریج‌های محافظه‌کارانه با ریتینر آنله یا اکلوزال ونیر و طراحی‌های مرتبط را بررسی می‌کند.",
+   "aliases": [
+    "onlay bridge",
+    "onlay-retained bridge",
+    "tabletop bridge",
+    "table top bridge",
+    "بریج آنله"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-39"
    ]
   },
   {
@@ -15194,6 +15224,25 @@
    "count": 1,
    "content_ids": [
     "chairside/chairside-24"
+   ]
+  },
+  {
+   "key": "اکلوزال_ونیر",
+   "tag": "#اکلوزال_ونیر",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "رستوریشن نازک پوشانندهٔ سطح اکلوزال؛ می‌تواند به‌صورت تک‌واحدی یا ریتینر بریج مطرح شود.",
+   "use_when": "محتوا طراحی، اندیکاسیون یا عملکرد اکلوزال ونیر را بررسی می‌کند.",
+   "aliases": [
+    "occlusal veneer",
+    "occlusal veneers",
+    "ونیر اکلوزال"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-39"
    ]
   },
   {
@@ -21838,6 +21887,7 @@
   }
  ],
  "aliases": {
+  "resin bonded fixed partial denture": "rbfdp",
   "biomimetic restorative dentistry": "کتاب مانیه",
   "molar incisor hypomineralization": "mih",
   "atraumatic restorative treatment": "art",
@@ -22004,6 +22054,7 @@
   "first permanent molar": "مولر اول دائمی",
   "موکوزیت اطراف ایمپلنت": "موکوزیت پری ایمپلنت",
   "حرکت پیش رونده مندیبل": "پروتروزیو",
+  "onlay retained bridge": "آنله بریج",
   "indirect restoration": "ترمیم غیرمستقیم",
   "کراون لنتنینگ زیبایی": "افزایش طول تاج",
   "دنچر متکی بر ایمپلنت": "اوردنچر",
@@ -22108,6 +22159,7 @@
   "هموگلوبین گلیکوزیله": "کنترل قند خون",
   "دندان کناری ایمپلنت": "adjacent tooth",
   "ایمپلنت سطح استخوان": "bone level ایمپلنت",
+  "resin bonded bridge": "rbfdp",
   "snow plow technique": "snow plow",
   "blood contamination": "آلودگی حین باندینگ",
   "shade communication": "ارتباط با لابراتوار",
@@ -22414,10 +22466,10 @@
   "taraz e shavahed": "تراز شواهد",
   "سلکتیو گرایندینگ": "تنظیم اکلوژن",
   "peri implantitis": "پری ایمپلنتیتیس",
+  "فاصله بین دندانی": "دیاستم",
   "ریهبیلیتیشن دهان": "بازسازی کامل دهان",
   "استخوان مارژینال": "تحلیل استخوان کرستال",
   "digital presence": "حضور آنلاین دندانپزشک",
-  "فاصله بین دندانی": "دیاستم",
   "temporary cement": "سمان موقت",
   "practice website": "سایت مطب",
   "bonding protocol": "پروتکل باند",
@@ -22594,6 +22646,8 @@
   "inception cohort": "کوهورت تک گروهی",
   "هدایت طرفی کانین": "گایدنس کانین",
   "فاصله پست و گوتا": "گپ پست و گوتا",
+  "table top bridge": "آنله بریج",
+  "occlusal veneers": "اکلوزال ونیر",
   "دست دندان ژله ای": "دندان مصنوعی ژله ای",
   "flexible denture": "دندان مصنوعی ژله ای",
   "لامینیت سرامیکی": "لمینیت سرامیکی",
@@ -22607,12 +22661,12 @@
   "tooth retention": "حفظ دندان",
   "پری ایمپلنتایتس": "پری ایمپلنتیتیس",
   "ایمپلنت تمام فک": "ایمپلنت بیمار بی دندان",
+  "درمان ارتودنتیک": "ارتودنسی",
   "shade selection": "انتخاب shade",
   "ceramic etching": "اچ سرامیک",
   "online presence": "حضور آنلاین دندانپزشک",
   "silane coupling": "سایلان",
   "اختلال مفصل فکی": "tmd",
-  "درمان ارتودنتیک": "ارتودنسی",
   "تراش برای لمینت": "تراش لمینیت",
   "سایت دندانپزشکی": "سایت مطب",
   "research design": "طراحی مطالعه",
@@ -22712,6 +22766,7 @@
   "بازیابی و تولید": "rag",
   "مطالعه راسپرینی": "rasperini",
   "maryland bridge": "rbfdp",
+  "بریج باند شونده": "rbfdp",
   "اسکن بادی معکوس": "reverse اسکن بادی",
   "prompt chaining": "شکستن کار",
   "type 2 diabetes": "type2 دیابت",
@@ -22808,6 +22863,8 @@
   "anti retraction": "کنترل عفونت",
   "جینگوال ریترکشن": "کنترل لثه",
   "گپ پست گوتاپرکا": "گپ پست و گوتا",
+  "tabletop bridge": "آنله بریج",
+  "occlusal veneer": "اکلوزال ونیر",
   "treatment plan": "طرح درمان",
   "پست داخل کانال": "پست و کور",
   "پروتز ایمپلنتی": "پروتز ایمپلنت",
@@ -22917,6 +22974,8 @@
   "finite element": "fea",
   "مسدود کردن تری": "posterior damming",
   "بازیابی افزوده": "rag",
+  "بریج باندشونده": "rbfdp",
+  "بریج رزین باند": "rbfdp",
   "tic douloureux": "trigeminal neuralgia",
   "رفع آلودگی عاج": "آلودگی حین باندینگ",
   "color blending": "اثر آفتاب پرست",
@@ -23514,6 +23573,8 @@
   "بیانیه اجماع": "کنسنسوس iti",
   "پلیمریزاسیون": "کیور",
   "friction fit": "گیر مکانیکی",
+  "onlay bridge": "آنله بریج",
+  "ونیر اکلوزال": "اکلوزال ونیر",
   "بیهوشی عمومی": "بیهوشی",
   "پروتز ژله ای": "دندان مصنوعی ژله ای",
   "آرتیکولاسیون": "ارتیکولاسیون",
@@ -24308,6 +24369,7 @@
   "کارت هدیه": "گیفت کارت",
   "آفت دهانی": "آفت دهان",
   "آفت راجعه": "آفت دهان",
+  "بریج آنله": "آنله بریج",
   "سماگلوتید": "تیرزپاتاید",
   "تیرزپاتید": "داروهای لاغری",
   "تریگر آفت": "محرک آفت",
@@ -24333,9 +24395,9 @@
   "اکسترکشن": "کشیدن دندان",
   "all on 4": "ایمپلنت بیمار بی دندان",
   "all on 6": "ایمپلنت بیمار بی دندان",
+  "diastema": "دیاستم",
   "ایزولیشن": "ایزولاسیون",
   "فول ماوس": "بازسازی کامل دهان",
-  "diastema": "دیاستم",
   "سمان تمپ": "سمان موقت",
   "آی دی اس": "ids",
   "تی ام دی": "tmd",
@@ -24520,10 +24582,10 @@
   "لنتنینگ": "افزایش طول تاج",
   "ساییدگی": "سایش دندان",
   "milling": "cad cam",
+  "دیاستما": "دیاستم",
   "ایمپرشن": "قالبگیری",
   "denture": "پروتز متحرک",
   "رابر دم": "ایزولاسیون",
-  "دیاستما": "دیاستم",
   "overlay": "اورلی",
   "زیر لثه": "ترمیم ساب جینجیوال",
   "کست کور": "کور ریختگی",
@@ -24740,9 +24802,9 @@
   "ایمکس": "لیتیوم دی سیلیکات",
   "کد کم": "cad cam",
   "onlay": "آنله",
+  "ortho": "ارتودنسی",
   "اچ hf": "اچ سرامیک",
   "سیلان": "سایلان",
-  "ortho": "ارتودنسی",
   "مرجین": "مارجین روکش",
   "کاریز": "پوسیدگی",
   "magne": "کتاب مانیه",
@@ -24764,6 +24826,7 @@
   "value": "ولیو",
   "hba1c": "کنترل قند خون",
   "دمینگ": "posterior damming",
+  "rbfpd": "rbfdp",
   "ریدیم": "redeem",
   "ساکسس": "success",
   "sprue": "اسپرو",

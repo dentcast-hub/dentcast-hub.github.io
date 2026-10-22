@@ -41028,5 +41028,814 @@
     "fidelity": [
       null
     ]
+  },
+  "sharehub/share-39": {
+    "scored_at": "2026-10-22",
+    "sources": [
+      {
+        "des_version": "3.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Clinical Evaluation of Zirconia Occlusal Veneer Fixed Partial Denture: A New Design for Posterior Resin-Bonded Fixed Partial Dentures (RBFPDs)",
+          "authors": "Yasmeen Abdul Kader Ghalawingy, Ramah Eimad Makieh, Mohammad Luai Ahmad Foad Morad",
+          "year": 2026,
+          "journal": "Journal of Esthetic and Restorative Dentistry",
+          "doi": "10.1111/jerd.70161"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 85,
+          "anchor": "Randomized four-group clinical trial (THERAPY RCT row, 85)",
+          "evidence_quote": "Simple randomization without restrictions was used."
+        },
+        "q_method": {
+          "tool": "RoB2",
+          "domains": [
+            {
+              "domain": "randomization process",
+              "rating": "low",
+              "evidence_quote": "Simple randomization without restrictions was used.",
+              "note": ""
+            },
+            {
+              "domain": "deviations from intended interventions",
+              "rating": "some_concerns",
+              "evidence_quote": "knowledge of the restorative material.",
+              "note": "Blinding is reported for the specialist's esthetic assessment, but not for participants or treatment providers."
+            },
+            {
+              "domain": "missing outcome data",
+              "rating": "some_concerns",
+              "evidence_quote": "(D1/5Y) group discontinued follow-­up after 12 and 18 months",
+              "note": "Two participants discontinued follow-up for unknown reasons."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "evaluations focused on debonding or fractures of the FPD and",
+              "note": "Critical flaw affecting the multiplier: 40 FPDs in 35 patients; groups were analyzed as n=10 FPDs without reported adjustment for clustering by patient."
+            },
+            {
+              "domain": "selection of the reported result",
+              "rating": "some_concerns",
+              "evidence_quote": "The study has been registered in the ISRCTN registry",
+              "note": "Registration is reported, but the text does not state whether it preceded enrollment or provide a prespecified analysis plan."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "conflict of interest / commercial funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors declare no conflicts of interest.",
+            "note": "A conflict-of-interest statement is present; no commercial manufacturer funding is reported."
+          },
+          {
+            "item": "prospective trial registration (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "The study has been registered in the ISRCTN registry",
+            "note": "Registration is reported, but the source does not establish whether it was prospective."
+          },
+          {
+            "item": "sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "statistical power of 95% and an alpha level of 0.05 were applied.",
+            "note": "A sample-size calculation and attrition allowance are reported."
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 3,
+            "evidence_quote": "follow-­up duration was limited to a short-­term period of up to",
+            "note": "The paper identifies follow-up of up to 18 months as short term; round-half-up(3 × 85 ÷ 100) = 3."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 23,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "امتیاز DES برابر ۲۳ از ۱۰۰ است؛ شواهد ضعیف (رده D) در پرسش درمانی (THERAPY).",
+        "interpretation_fa": "این کارآزمایی تصادفی‌شده، عملکرد کوتاه‌مدت طرح جدید را در مقایسه میان چهار گروه بررسی می‌کند. نبود شکست یا دباندینگ در برخی گروه‌ها امیدوارکننده است، اما پیگیری کوتاه، تعداد کم ترمیم‌ها و تحلیل بدون تعدیل خوشه‌بندی، برآورد پایداری بالینی را محدود می‌کنند."
+      }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.4",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "بریج با ریتینر اکلوزال ونیر؛ راهی محافظه‌کارانه برای جایگزینی دندان‌های خلفی؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "title"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "معرفی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "فرض کنیم بیماری مولر اولش را از دست داده، اما دندان‌های مجاور فضای بی‌دندانی سالم هستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Replacing missing posterior single teeth presents a significant \nclinical challenge, particularly when adjacent teeth are in­\ntact and do not require crowning.",
+            "source_ref": null
+          },
+          {
+            "id": "u4",
+            "claim_quote": "برای جایگزینی دندان ازدست‌رفته چه انتخاب‌هایی داریم؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "question with no answer"
+          },
+          {
+            "id": "u5",
+            "claim_quote": "ایمپلنت یکی از گزینه‌هاست، اما همیشه امکان‌پذیر نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Given these limitations, implant therapy may not be the \nmost appropriate solution for all patients [2].",
+            "source_ref": null
+          },
+          {
+            "id": "u6",
+            "claim_quote": "گاهی محدودیت‌های پزشکی یا آناتومیک وجود دارد و گاهی بیمار به دلایل مالی یا شخصی تمایلی به انجام جراحی ندارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, this option may not be suitable in cases in­\nvolving contraindications to implant therapy, such as systemic \ndisease or a history of head and neck radiotherapy.",
+            "source_ref": null
+          },
+          {
+            "id": "u7",
+            "claim_quote": "گزینهٔ دیگر بریج متداول سه‌واحدی است؛ درمانی که برای جایگزینی یک دندان، به تراش قابل‌توجه دو دندان سالم مجاور نیاز دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In such cases, the invasive \nremoval of healthy dental tissue from two sound abutments \nto place a conventional fixed partial denture (FPD) cannot \nbe clinically justified.",
+            "source_ref": null
+          },
+          {
+            "id": "u8",
+            "claim_quote": "بریج‌های باندشونده یا Resin-Bonded Fixed Partial Dentures راه محافظه‌کارانه‌تری هستند، اما این رستوریشن‌ها نیز مشکلاتی مانند دباندینگ و شکست ریتینر یا کانکتور دارند؛ مشکلاتی که در نواحی خلفی، به دلیل نیروهای بالاتر جویدن، اهمیت بیشتری پیدا می‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Previous studies agree that the most frequent failure mode of \nadhesive FPDs—regardless of design or material—is debonding, \nwhich may occur at one or both retainers.",
+            "source_ref": null
+          },
+          {
+            "id": "u9",
+            "claim_quote": "در مطالعه‌ای که سال ۲۰۲۶ منتشر شده، پژوهشگران طراحی متفاوتی را بررسی کردند: استفاده از اکلوزال ونیر به‌عنوان ریتینر بریج خلفی.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In this \nstudy, the concept of designing posterior resin-­bonded FPDs \nmade of zirconia with occlusal veneer retainers—typically used \nin the literature as single-­tooth restorations—was examined.",
+            "source_ref": null,
+            "note": "year is supplied by citation metadata; activity/design matches this sentence"
+          },
+          {
+            "id": "u10",
+            "claim_quote": "در واقع، همان ایدهٔ پوشاندن سطح اکلوزال با یک رستوریشن نازک، این بار برای ساخت یک بریج سه‌واحدی به کار گرفته شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The concept of occlusal veneers—\ntypically used as single-­unit restorations—was adapted to \ndevelop a new retainer design for posterior adhesive FPDs, \nreplacing traditional FPDs and commonly used RBFPDs.",
+            "source_ref": null
+          },
+          {
+            "id": "u11",
+            "claim_quote": "اما چنین طراحی‌ای چه مزیتی دارد و آیا می‌توان به نتایج آن اعتماد کرد؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "question with no answer"
+          },
+          {
+            "id": "u12",
+            "claim_quote": "توضیح",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u13",
+            "claim_quote": "منطق طراحی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u14",
+            "claim_quote": "برای موفقیت یک بریج باندشونده باید دو مسئله را هم‌زمان حل کنیم: ایجاد سطح باندینگ کافی و تأمین مقاومت مکانیکی مناسب.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The design \ndescribed in this study for occlusal veneer FPDs is proposed as \na standard design, with specifications—such as thickness, di­\nmensions, and marginal locations—selected to minimize the \nremoval of sound dental tissue, optimize adhesive bonding to \nenamel, and maintain the durability of the restorative material.",
+            "source_ref": null
+          },
+          {
+            "id": "u15",
+            "claim_quote": "در این طراحی، به‌جای استفاده از ریتینر اینله‌ای یا وینگ‌های متداول، سطح اکلوزال دندان‌های پایه پوشانده می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The retainer design was selected to mimic the shape of occlusal \nveneers, covering both the inner and outer slopes of the cusps, \nwith a peripheral occlusal shoulder.",
+            "source_ref": null
+          },
+          {
+            "id": "u16",
+            "claim_quote": "ریتینر علاوه بر شیب‌های داخلی کاسپ‌ها، یعنی سطوح رو به شیار مرکزی، شیب‌های خارجی آن‌ها را نیز می‌پوشاند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The retainer design was selected to mimic the shape of occlusal \nveneers, covering both the inner and outer slopes of the cusps, \nwith a peripheral occlusal shoulder.",
+            "source_ref": null
+          },
+          {
+            "id": "u17",
+            "claim_quote": "این پوشش در سمت فضای بی‌دندانی به سطح پروگزیمال دندان امتداد پیدا می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The axial surfaces adjacent to the missing tooth (the mesial sur­\nface of the molar and the distal surface of the premolar) were pre­\npared following the path of insertion, using a tapered bur to create \nan equigingival 0.5 mm chamfer finish line.",
+            "source_ref": null
+          },
+          {
+            "id": "u18",
+            "claim_quote": "بنابراین، هم سطح وسیعی برای باندینگ فراهم می‌شود و هم بخش‌های عمودی ریتینر می‌توانند به مقاومت آن در برابر جابه‌جایی کمک کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Additionally, the \nvertical component of these FPDs improved their retention, as \nvertical bonding surfaces are subjected to shear forces that re­\nsist dislodgement, thereby offering better retention than hori­\nzontal surfaces, which are more prone to tensile forces.",
+            "source_ref": null
+          },
+          {
+            "id": "u19",
+            "claim_quote": "نکتهٔ مهم این است که برخلاف بعضی ریتینرهای اینله‌ای، بخش عمدهٔ سطح باندینگ روی مینا قرار می‌گیرد؛ موضوعی که می‌تواند به دوام اتصال کمک کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Another contributing factor is that most of \nthe bonding area was on enamel, which forms a stronger and \nmore durable bond with adhesive systems.",
+            "source_ref": null
+          },
+          {
+            "id": "u20",
+            "claim_quote": "انتخاب بیمار",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u21",
+            "claim_quote": "در این مطالعه، ۴۰ بریج برای جایگزینی مولر اول در ۳۵ بیمار ساخته شد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A total of 35 patients (11 males and 24 females), with ages rang­\ning from 18 to 47 years and a mean age of 28.66 years, were \ntreated with 40 occlusal veneer-­retained adhesive FPDs to re­\nplace missing upper or lower first molars on either the right or \nleft side.",
+            "source_ref": null
+          },
+          {
+            "id": "u22",
+            "claim_quote": "دندان‌های پایه زنده، از نظر پریودنتال سالم و فاقد پوسیدگی‌های وسیع بودند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Abutment \nteeth were vital, periodontally healthy, and caries-­free or pre­\nsented with limited Class I or II carious lesions confined to sur­\nfaces adjacent to the edentulous space.",
+            "source_ref": null
+          },
+          {
+            "id": "u23",
+            "claim_quote": "ارتفاع کلینیکی تاج حداقل چهار میلی‌متر بود و دندان‌ها الاینمنت تقریباً طبیعی داشتند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Adequate clinical crown \nheight (≥ 4 mm) and near-­normal alignment were required.",
+            "source_ref": null
+          },
+          {
+            "id": "u24",
+            "claim_quote": "بیماران دارای براکسیسم، ریسک بالای پوسیدگی یا شرایط نامناسب پالپی وارد مطالعه نشدند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Participants were in good general health, with good oral hygiene \nand low caries risk, and presented with a single missing pos­\nterior tooth (first molar, maxillary or mandibular).",
+            "source_ref": null
+          },
+          {
+            "id": "u25",
+            "claim_quote": "بنابراین، نتایج را نمی‌توان مستقیماً به بیمارانی با ترمیم‌های وسیع، دندان‌های پایهٔ به‌شدت تخریب‌شده یا نیروهای اکلوزالی بالا تعمیم داد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source lists eligibility criteria but does not state this generalizability conclusion"
+          },
+          {
+            "id": "u26",
+            "claim_quote": "طراحی و تراش دندان‌های پایه",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u27",
+            "claim_quote": "پژوهشگران دو طراحی متفاوت را بررسی کردند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These FPDs were fabricated according to two different \npreparation designs (D1 & D2) and were made of either second-­\ngeneration traditional zirconia (3Y-­TZP) or third-­generation \ntranslucent zirconia (5Y-­PSZ), based on the results of a random \ndraw (n = 10).",
+            "source_ref": null
+          },
+          {
+            "id": "u28",
+            "claim_quote": "طراحی اول (D1)",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u29",
+            "claim_quote": "در این طراحی، سطح اکلوزال هر دو دندان پایه حدود یک میلی‌متر کاهش داده شد، به‌گونه‌ای که آناتومی کلی دندان حفظ شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The first design (D1) of the occlusal veneer FPDs (20 FPDs) was \nprepared by reducing the occlusal surfaces of the abutments by \n1 mm, achieved by creating orientation grooves parallel to the \ninternal cusp slopes using a 0.8 mm diamond fissure bur.",
+            "source_ref": null
+          },
+          {
+            "id": "u30",
+            "claim_quote": "کاسپ‌های فانکشنال بِوِل (Bevel) شدند و در محیط پیرامونی سطح اکلوزال، یک شولدر گرد با عرض حدود یک میلی‌متر ایجاد شد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The functional cusps were then beveled, and a finishing bur was \nused to smooth the prepared surfaces, removing approximately \n0.2 mm of enamel, thereby achieving a uniform reduction of \naround 1 mm.",
+            "source_ref": null
+          },
+          {
+            "id": "u31",
+            "claim_quote": "تراش در سطوح پروگزیمال مجاور فضای بی‌دندانی نیز گسترش پیدا کرد، اما تا محدودهٔ Line Angleهای باکال و لینگوال محدود ماند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The adjacent prepara­\ntion extended between the buccal and lingual line angles, forming \na longitudinal enamel wing at the preparation boundaries on both \nthe buccal and lingual surfaces (Figure 1B).",
+            "source_ref": null
+          },
+          {
+            "id": "u32",
+            "claim_quote": "در نتیجه، قسمت عمدهٔ سطوح باکال و لینگوال دست‌نخورده باقی می‌ماند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The source describes the preparation boundaries but does not state this inference about most of the surfaces remaining untouched."
+          },
+          {
+            "id": "u33",
+            "claim_quote": "طراحی دوم (D2)",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u34",
+            "claim_quote": "طراحی دوم مشابه D1 بود، اما دو تفاوت داشت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The second design (D2) of the occlusal veneer FPDs \n(Figure 1D,E) was prepared in the same manner as previously \ndescribed.",
+            "source_ref": null
+          },
+          {
+            "id": "u35",
+            "claim_quote": "اول اینکه تراش پروگزیمال از Line Angle لینگوال عبور می‌کرد و تا میانهٔ سطح لینگوال ادامه پیدا می‌کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, in this design, the adjacent preparation of \nthe abutments was extended to wrap around the lingual line \nangle and reach the midpoint of the lingual surface, following \nthe FPD's insertion axis.",
+            "source_ref": null
+          },
+          {
+            "id": "u36",
+            "claim_quote": "دوم اینکه یک شیار محوری در قسمت باکالی تراش پروگزیمال هر دندان پایه اضافه می‌شد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Additionally, a proximal \ngroove was added at the buccal end of the proximal preparation \nof each abutment, parallel to the insertion axis, using a tapered \nbur.",
+            "source_ref": null
+          },
+          {
+            "id": "u37",
+            "claim_quote": "هدف از این تغییرات، افزایش سطح باندینگ، بهبود مقاومت ریتینر و تقویت نواحی مستعد شکست بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The second design of the occlusal veneer FPDs increases the \nbonding area and better aligns the insertion line compared to \nthe first design.",
+            "source_ref": null
+          },
+          {
+            "id": "u38",
+            "claim_quote": "البته این مزایا به قیمت تراش بیشتر ساختار دندان به دست می‌آیند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Nevertheless, occlusal veneer retainers are considered relatively \nmore invasive than some other RBFPD retainers because they \nrequire occlusal and adjacent preparation, in contrast to other \ndesigns that are limited to enamel and have a smaller adhe­\nsive surface area of the wings; additionally, they require a layer \nthickness of 1 mm, whereas other designs have been used with a \nthickness of only 0.6 mm [7].",
+            "source_ref": null
+          },
+          {
+            "id": "u39",
+            "claim_quote": "بنابراین، باید مشخص شود که آیا این افزایش تراش واقعاً به بهبود عملکرد کلینیکی منجر می‌شود یا نه.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "question about what should be determined, with no answer in this unit"
+          },
+          {
+            "id": "u40",
+            "claim_quote": "انتخاب زیرکونیا و طراحی بریج",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u41",
+            "claim_quote": "پژوهشگران از دو نوع زیرکونیای مونولیتیک استفاده کردند:",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These FPDs were fabricated according to two different \npreparation designs (D1 & D2) and were made of either second-­\ngeneration traditional zirconia (3Y-­TZP) or third-­generation \ntranslucent zirconia (5Y-­PSZ), based on the results of a random \ndraw (n = 10).",
+            "source_ref": null
+          },
+          {
+            "id": "u42",
+            "claim_quote": "3Y-TZP که استحکام و چقرمگی شکست (Fracture Toughness) بالاتری دارد، اما اپک‌تر است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The high \nfracture resistance of 3Y-­TZP is primarily due to its ‘transforma­\ntion toughening’ property [23], as it contains a higher proportion \nof tetragonal crystals and a lower proportion of cubic crystals \nthan 5Y-­PSZ [24].",
+            "source_ref": null
+          },
+          {
+            "id": "u43",
+            "claim_quote": "5Y-PSZ که ترنسلوسنسی بیشتری دارد، اما از نظر خواص مکانیکی ضعیف‌تر است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Failure modes were observed in the third-­generation translu­\ncent zirconia groups, which can be attributed to the reduced \nflexural strength and mechanical properties of this type of zir­\nconia compared to second-­generation zirconia, which is stabi­\nlized with a different amount of yttrium oxide [22].",
+            "source_ref": null
+          },
+          {
+            "id": "u44",
+            "claim_quote": "با ترکیب دو نوع زیرکونیا و دو طراحی تراش، چهار گروه ده‌تایی تشکیل شد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Ten \npapers were randomly drawn for each of the four experimental \ngroups.",
+            "source_ref": null
+          },
+          {
+            "id": "u45",
+            "claim_quote": "در طراحی دیجیتال، حداقل ضخامت اکلوزالی ۰٫۸ میلی‌متر و سطح مقطع کانکتور ۱۲ میلی‌متر مربع در نظر گرفته شد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The software settings ensured that the occlusal surface thick­\nness did not fall below 0.8 mm, while allowing for increased \nthickness (exceeding 1 mm if necessary) to maintain intimate \nocclusal contact between opposing cusps.",
+            "source_ref": null
+          },
+          {
+            "id": "u46",
+            "claim_quote": "این مسئله اهمیت دارد، چون در بریج‌های خلفی، کانکتورها و نواحی اتصال اجزای ریتینر از قسمت‌های مستعد تمرکز تنش هستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The smaller the connector area, the \nmore concentrated the forces become [15].",
+            "source_ref": null
+          },
+          {
+            "id": "u47",
+            "claim_quote": "باندینگ؛ بخش مهم موفقیت درمان",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u48",
+            "claim_quote": "در این بریج‌ها، اتصال به دندان نقش اساسی دارد و نمی‌توان صرفاً به گیر مکانیکی ریتینر تکیه کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The bonding protocol used in this study also played a cru­\ncial role in ensuring lasting adhesion.",
+            "source_ref": null
+          },
+          {
+            "id": "u49",
+            "claim_quote": "در مطالعه، سطح داخلی زیرکونیا سندبلاست و با پرایمر حاوی MDP آماده شد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "To protect the external surfaces, red wax was applied, \nand the intaglio surfaces of the restorations were sandblasted \nwith 50 μm aluminum oxide for 10 s at a pressure of 2.5 bar.",
+            "source_ref": null
+          },
+          {
+            "id": "u50",
+            "claim_quote": "در سمت دندان نیز از اچ مینا، سیستم باندینگ و سمان رزینی دوال‌کیور استفاده شد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "After the abutments were isolated for bonding, the prepared \nenamel surfaces were selectively etched with 37% phosphoric \nacid (Eco-­Etch, Etching Gel, Ivoclar, Vivadent, Schaan, and \nLiechtenstein) for 30 s, rinsed thoroughly with water, and then \nthe enamel margins were dried until a chalky appearance was \nachieved while maintaining the moisture of the exposed dentin.",
+            "source_ref": null
+          },
+          {
+            "id": "u51",
+            "claim_quote": "بنابراین، موفقیت چنین درمانی به ایزولاسیون مناسب و ایجاد اتصال قابل اعتماد، هم در سمت دندان و هم در سمت زیرکونیا، وابسته است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Additionally, the bonding process (as with all ad­\nhesive FPDs) demands complete isolation and strict adherence \nto bonding protocols to achieve acceptable bond strength and \nprevent marginal leakage and secondary caries.",
+            "source_ref": null
+          },
+          {
+            "id": "u52",
+            "claim_quote": "نتایج کلینیکی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u53",
+            "claim_quote": "بیماران در ماه‌های ۱، ۶، ۱۲ و ۱۸ ارزیابی شدند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Patients were followed up for 18 months, with data recorded \nat follow-­up intervals of one, six, twelve, and 18 months.",
+            "source_ref": null
+          },
+          {
+            "id": "u54",
+            "claim_quote": "در طول پیگیری هیچ موردی از دباندینگ یا پوسیدگی ثانویه گزارش نشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "No cases of debonding were recorded in any of the study groups \nduring the different monitoring periods.",
+            "source_ref": null
+          },
+          {
+            "id": "u55",
+            "claim_quote": "اما سه مورد آسیب مکانیکی مشاهده شد:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost ending in a colon, introducing the next units"
+          },
+          {
+            "id": "u56",
+            "claim_quote": "دو شکست کامل در گروه D1/5Y، در ماه‌های چهارم و هفدهم؛ هر دو در محل اتصال قسمت افقی و عمودی ریتینر.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Two of the occlusal veneer FPDs in the D1/5Y group exhibited \ncomplete fractures at the distal retainer, specifically at the junc­\ntion between the horizontal and axial components (at the be­\nginning of the thin area). One fracture occurred after 4 months, \nand the second after 17 months.",
+            "source_ref": null
+          },
+          {
+            "id": "u57",
+            "claim_quote": "یک ترک در گروه D2/5Y، در ماه اول؛ روی شیب داخلی کاسپ باکال پرمولر.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Additionally, one FPD from the \ngroup (D2/5Y) showed a crack after 1 month of clinical use, lo­\ncated on the internal slope of the buccal cusp of the upper first \npremolar.",
+            "source_ref": null
+          },
+          {
+            "id": "u58",
+            "claim_quote": "در مقابل، هیچ شکست یا ترکی در ۲۰ بریج ساخته‌شده از 3Y گزارش نشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "No fractures were observed in \nthe D2/3Y and D1/3Y groups.",
+            "source_ref": null
+          },
+          {
+            "id": "u59",
+            "claim_quote": "نرخ موفقیت گزارش‌شده برای 3Y برابر ۱۰۰ درصد و برای 5Y برابر ۸۵ درصد بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Overall, occlusal veneer FPDs fabricated of 5Y-­PSZ demon­\nstrated an 85% success rate and a 90% survival rate after \n18 months of follow-­up, while those made of 3Y-­TZP showed a \n100% success rate over the same period.",
+            "source_ref": null
+          },
+          {
+            "id": "u60",
+            "claim_quote": "نرخ بقای 5Y نیز ۹۰ درصد گزارش شد، چون رستوریشن ترک‌خورده همچنان در دهان باقی مانده بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Both FPDs with complete frac­\ntures were replaced with monolithic 3Y-­TZP zirconia traditional \nfixed partial dentures, whereas the cracked FPD remains under \nobservation at the time of writing this manuscript, showing no \nsigns or symptoms after 53 months.",
+            "source_ref": null
+          },
+          {
+            "id": "u61",
+            "claim_quote": "با وجود این تفاوت، اختلاف گروه‌ها از نظر آماری معنادار نبود؛ بنابراین نمی‌توان برتری قطعی یکی از مواد یا طراحی‌ها را از این مطالعه نتیجه گرفت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The results did not show statistically significant differences \namong the study groups at the specified observation intervals, \nwhich extended up to 18 months.",
+            "source_ref": null,
+            "note": "the no-superiority inference is not directly stated; the claim that differences were not statistically significant is stated"
+          },
+          {
+            "id": "u62",
+            "claim_quote": "از نظر زیبایی نیز اگرچه 5Y امتیازات کمی بالاتری دریافت کرد، تفاوت رضایت بیماران و متخصصان معنادار نبود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In this study, FPDs made of 5Y-­PSZ were ranked slightly higher \nthan those made of 3Y-­TZP.",
+            "source_ref": null
+          },
+          {
+            "id": "u63",
+            "claim_quote": "شکست‌ها چه چیزی به ما یاد می‌دهند؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u64",
+            "claim_quote": "نکتهٔ جالب این مطالعه آن است که هیچ رستوریشنی دباند نشد، اما تعدادی از آن‌ها شکستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "No cases of debonding were recorded in any of the study groups \nduring the different monitoring periods.",
+            "source_ref": null
+          },
+          {
+            "id": "u65",
+            "claim_quote": "این موضوع نشان می‌دهد که موفقیت باندینگ لزوماً به معنای موفقیت مکانیکی رستوریشن نیست.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source reports debonding and fracture outcomes separately but does not state this inference"
+          },
+          {
+            "id": "u66",
+            "claim_quote": "دو شکست کامل در محل اتصال بخش افقی و عمودی ریتینر اتفاق افتاد؛ ناحیه‌ای که احتمال تمرکز تنش در آن وجود دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Most fractures in occlusal veneer FPDs have been observed at \nthe junction between the horizontal and vertical parts of the \nretainers.",
+            "source_ref": null
+          },
+          {
+            "id": "u67",
+            "claim_quote": "در یکی از موارد، بیمار هنگام جویدن استخوان دچار شکست رستوریشن شده بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In contrast, the fracture observed in the other FPD \nwas evidently caused by acute occlusal trauma, as the patient \nreported biting on a bone fragment, which led to immediate \nfailure.",
+            "source_ref": null
+          },
+          {
+            "id": "u68",
+            "claim_quote": "در مورد دیگر، وجود Wear Facetهایی روی مدل، احتمال براکسیسم تشخیص‌داده‌نشده را مطرح می‌کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In the gypsum cast related to one broken FPD (which fractured \nafter 17 months), wear facets were observed on the adjacent first \npremolar and canine. These were not clearly visible during the \nclinical examination, suggesting undiagnosed bruxism in the \npatient.",
+            "source_ref": null
+          },
+          {
+            "id": "u69",
+            "claim_quote": "ترک سوم نیز احتمالاً با ادجاستمنت اکلوزالی مرتبط بود؛ زیرا برای حذف تداخل در حرکت لترالی، بخشی از شیب کاسپ تراش داده شده بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Additionally, the crack observed on the inner slope of \nthe buccal cusp of the second upper premolar in a 5Y-­PSZ FPD \nmay have resulted from occlusal adjustment.",
+            "source_ref": null
+          },
+          {
+            "id": "u70",
+            "claim_quote": "بنابراین، انتخاب ماده، طراحی نواحی اتصال و بررسی دقیق اکلوژن، در کنار باندینگ، اهمیت زیادی دارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Therefore, \nselecting an appropriate restorative material and carefully \ndesigning the preparations to accommodate these FPDs is cru­\ncial in posterior regions.",
+            "source_ref": null,
+            "note": "the source also addresses occlusion elsewhere; this sentence directly supports material and design importance"
+          },
+          {
+            "id": "u71",
+            "claim_quote": "نتیجه‌گیری",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u72",
+            "claim_quote": "این مطالعه نشان می‌دهد که استفاده از اکلوزال ونیر به‌عنوان ریتینر بریج خلفی، دست‌کم در کوتاه‌مدت، می‌تواند نتایج امیدوارکننده‌ای داشته باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Nevertheless, the promising short-­term outcomes of \nsecond-­generation zirconia occlusal veneer fixed partial den­\ntures observed here may lay the foundation for the development \nof new posterior resin-­bonded fixed partial denture designs that \naddress the limitations of previous approaches.",
+            "source_ref": null
+          },
+          {
+            "id": "u73",
+            "claim_quote": "با این حال، چند نکته باید در تفسیر نتایج در نظر گرفته شود.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost introducing the following considerations"
+          },
+          {
+            "id": "u74",
+            "claim_quote": "اول اینکه پیگیری فقط ۱۸ ماه بود و هنوز دربارهٔ دوام بلندمدت این رستوریشن‌ها اطلاعات کافی نداریم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It is essential to emphasize the need for long-­term clinical stud­\nies on occlusal veneer fixed partial dentures.",
+            "source_ref": null
+          },
+          {
+            "id": "u75",
+            "claim_quote": "دوم اینکه تعداد نمونه‌ها محدود بود و نبود اختلاف آماری معنادار را نمی‌توان به معنی عملکرد یکسان مواد یا طراحی‌ها دانست.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The source reports a short follow-up and no significant differences but does not state that the sample was limited or that equal performance cannot be inferred."
+          },
+          {
+            "id": "u76",
+            "claim_quote": "سوم اینکه این روش، با وجود محافظه‌کارانه‌تر بودن نسبت به بریج متداول، الزاماً از تمام طراحی‌های باندشونده محافظه‌کارانه‌تر نیست؛ چون به تراش سطح اکلوزال هر دو دندان پایه نیاز دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Nevertheless, occlusal veneer retainers are considered relatively \nmore invasive than some other RBFPD retainers because they \nrequire occlusal and adjacent preparation, in contrast to other \ndesigns that are limited to enamel and have a smaller adhe­\nsive surface area of the wings; additionally, they require a layer \nthickness of 1 mm, whereas other designs have been used with a \nthickness of only 0.6 mm [7].",
+            "source_ref": null
+          },
+          {
+            "id": "u77",
+            "claim_quote": "همچنین این روش به دقت بالا در تراش و امکان ایزولاسیون مناسب برای باندینگ نیاز دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The complexity of the preparation also limits routine use by \npractitioners, as it requires careful attention to ensure precise, \nclear, and smooth marginal contours without excessive removal \nof dental tissue—something that may be challenging for non­\nspecialists.",
+            "source_ref": null
+          },
+          {
+            "id": "u78",
+            "claim_quote": "نویسندگان در نهایت طراحی D1 را به دلیل حفظ بیشتر ساختار دندان ترجیح دادند و استفاده از 3Y-TZP را به دلیل خواص مکانیکی بهتر پیشنهاد کردند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Both proposed preparation de­\nsigns can be utilized, with a preference for the first design due \nto its more conservative approach in preserving tooth structure.",
+            "source_ref": null
+          },
+          {
+            "id": "u79",
+            "claim_quote": "برداشت من این است که این مقاله بیشتر از آنکه یک روش درمانی تثبیت‌شده ارائه کند، مسیر تازه‌ای برای طراحی بریج‌های خلفی محافظه‌کارانه معرفی کرده است.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker: برداشت من"
+          },
+          {
+            "id": "u80",
+            "claim_quote": "نکتهٔ اصلی، ایجاد تعادل میان حفظ ساختار دندان، سطح باندینگ و مقاومت مکانیکی رستوریشن است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The design \ndescribed in this study for occlusal veneer FPDs is proposed as \na standard design, with specifications—such as thickness, di­\nmensions, and marginal locations—selected to minimize the \nremoval of sound dental tissue, optimize adhesive bonding to \nenamel, and maintain the durability of the restorative material.",
+            "source_ref": null
+          },
+          {
+            "id": "u81",
+            "claim_quote": "به همین دلیل، فعلاً بهتر است این روش را گزینه‌ای امیدوارکننده برای بیماران انتخاب‌شده بدانیم، نه جایگزینی عمومی برای ایمپلنت یا بریج متداول.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Occlusal veneer fixed partial dentures made of second-­generation zirconia provide an effective alternative to con­\nventional treatments for replacing first molars or second premolars, particularly when adjacent abutments are intact and the \npatient maintains good oral hygiene.",
+            "source_ref": null,
+            "note": "the source restricts this alternative to intact adjacent abutments and good oral hygiene; the selected-patient scope is consistent"
+          },
+          {
+            "id": "u82",
+            "claim_quote": "مقالهٔ مرجع: Yasmeen Abdul Kader Ghalawingy",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "bibliographic attribution only"
+          }
+        ],
+        "counts": {
+          "matches": 58,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 4,
+          "not_assessable": 0,
+          "author_view": 1,
+          "not_a_claim": 19
+        },
+        "assessable": 58,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "Nevertheless, the promising short-­term outcomes of  second-­generation zirconia occlusal veneer fixed partial den­ tures observed here may lay the foundation for the development  of new posterior resin-­bonded fixed partial denture designs that  address the limitations of previous approaches.",
+        "fact_fa": "از ۵۸ ادعایی که منبع به آن پرداخته‌اند، ۵۸ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۴ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
+    ]
   }
 }
