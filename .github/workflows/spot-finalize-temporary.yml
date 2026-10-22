@@ -1,0 +1,28 @@
+name: Spot temporary version-stamp finalizer
+on:
+  push:
+    branches: [fix/spot-measurement-reliability-20261022]
+permissions:
+  contents: write
+jobs:
+  stamp:
+    if: "!contains(github.event.head_commit.message, '[spot-stamped]')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/spot-measurement-reliability-20261022
+          persist-credentials: true
+      - name: Run canonical asset version stamper
+        run: |
+          python3 tools/asset_version.py --bump
+          python3 tools/asset_version.py --check
+      - name: Remove temporary workflow and commit generated versions
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/spot-finalize-temporary.yml
+          git add -A
+          git commit -m "Spot: stamp cache versions with canonical asset tool [spot-stamped]"
+          git push origin HEAD:fix/spot-measurement-reliability-20261022
