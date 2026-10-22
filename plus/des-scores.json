@@ -41837,5 +41837,64 @@
         "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       }
     ]
+  },
+  "dentai/promptologist/prompt-append2-3": {
+    "scored_at": "2026-10-22",
+    "sources": [
+      {
+        "des_version": "3.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "پیوست ۲ ـ قسمت ۳: هوش مصنوعی را به گیت‌هاب وصل کنیم",
+          "authors": "دکتر فواد شهابیان",
+          "year": 2026,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "فرض کنید برای بیماری یک روکش ساخته‌اید و آن را سمان کرده‌اید. بعداً تصمیم می‌گیرید به دلایل زیبایی روکش را عوض کنید، اما روکش فعلی هنوز کارکرد قابل‌قبولی دارد.",
+            "note": "Branch is explained through an explicit clinical crown-replacement analogy before Git vocabulary is introduced."
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "No research literature is cited; this is a tool-workflow tutorial without evidence positioning."
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "اگر دسترسی‌ها درست تنظیم شده باشند و ابزار امکان انجام این عملیات را داشته باشد، Work می‌تواند کار را انجام دهد.",
+            "note": "Success is conditioned on permissions and tool capability; merge is also conditioned later."
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "No explicit experience/opinion label; Promptologist outside closed section-declaration carve-out."
+          }
+        ],
+        "des_score": 12,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این متن تألیفی دنت‌کست با امتیاز ۱۲ در سطح E، سطح پس‌زمینه و دیدگاه، قرار می‌گیرد.",
+        "interpretation_fa": "این راهنما اتصال ChatGPT به گیت‌هاب، انتخاب مجوز خواندن، و کار روی برنچ قبل از مرج را توضیح می‌دهد. ارزش آن در مدیریت نسخه و کنترل دسترسی است و یافتهٔ پژوهشی یا توصیهٔ درمانی ارائه نمی‌کند."
+      }
+    ],
+    "fidelity": [
+      null
+    ]
   }
 }
