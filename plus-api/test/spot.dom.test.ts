@@ -122,6 +122,7 @@ async function boot(ms = 10_000): Promise<void> {
   document.body.innerHTML = '<div id="mobile-body"><div id="dcPulseCard">pulse</div></div>';
   vi.resetModules();
   await import('/spot/spot.js');
+  if (document.readyState === 'loading') document.dispatchEvent(new Event('DOMContentLoaded'));
   await vi.advanceTimersByTimeAsync(ms);
 }
 const tick = (ms: number) => vi.advanceTimersByTimeAsync(ms);
@@ -157,7 +158,6 @@ afterEach(() => {
 describe('mounted versus viewable measurements', () => {
   it('counts a mounted card separately before it is viewable, using stable event ids', async () => {
     await boot();
-    console.log('MOUNT_DIAG', JSON.stringify({cards:cards(),posts,mountedPosts,eventIds,pending:sessionStorage.getItem('dcSpot.pending.v1')}));
     expect(mountedPosts).toHaveLength(1);
     expect(posts).toHaveLength(0);
     expect(mountedPosts[0].body.event).toBe('spot_rendered');
@@ -186,7 +186,6 @@ describe('reliable telemetry retry', () => {
     }) as any;
     await boot();
     await seen();
-    console.log('RETRY_DIAG', JSON.stringify({posts,mountedPosts,eventIds,pending:sessionStorage.getItem('dcSpot.pending.v1')}));
     expect(posts).toHaveLength(1);
     await tick(2000);
     expect(posts).toHaveLength(2);
@@ -322,7 +321,6 @@ describe('an impression means seen, not rendered', () => {
     await boot();
     expect(cards(), 'the card is on the page...').toBe(1);
     await tick(60_000);
-    console.log('UNSCROLLED_DIAG', JSON.stringify({posts,mountedPosts,eventIds,pending:sessionStorage.getItem('dcSpot.pending.v1')}));
     expect(posts, '...but was never on screen, so it was never delivered').toHaveLength(0);
   });
 
