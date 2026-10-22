@@ -25,14 +25,16 @@ export async function activityRoutes(app: FastifyInstance): Promise<void> {
           action: { type: 'string' },
           content_id: { type: 'string' },
           meta: { type: 'object', additionalProperties: true },
+          event_id: { type: 'string', maxLength: 36 },
         },
       },
     },
   }, async (request, reply) => {
-    const { action, content_id, meta } = request.body as {
+    const { action, content_id, meta, event_id } = request.body as {
       action: string;
       content_id?: string;
       meta?: Record<string, unknown>;
+      event_id?: string;
     };
     if (!ACTION_RE.test(action)) {
       return reply.code(400).send({ error: 'invalid_action' });
@@ -70,7 +72,8 @@ export async function activityRoutes(app: FastifyInstance): Promise<void> {
       }
       // Reached through requireAuth, so the session cookie is valid by
       // construction: this traffic is `plus` (premium users see no ads at all).
-      await recordSpotEvent(target, 'plus', spotKind, hostFromHeaders(request.headers));
+      if (event_id && !/^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/i.test(event_id)) return reply.code(400).send({ error: 'invalid_event_id' });
+      await recordSpotEvent(target, 'plus', spotKind, hostFromHeaders(request.headers), new Date(), event_id);
       return reply.send({ ok: true, counted: true });
     }
 
