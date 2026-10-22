@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "insight/insight-98"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.4.14"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -390,46 +390,54 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "No attached paper file \u2014 B.4.7 skip"
+        ],
         "id": "C.4.10.1",
         "module": "06-paper-ingestion.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
         "evidence": [],
         "id": "C.4.10.2",
         "module": "06-paper-ingestion.md",
-        "reason": null,
-        "status": "pending"
+        "reason": "No attached paper file \u2014 B.4.7 skip",
+        "status": "skipped"
       },
       {
         "evidence": [],
         "id": "C.4.10.3",
         "module": "06-paper-ingestion.md",
-        "reason": null,
-        "status": "pending"
+        "reason": "No attached paper file \u2014 B.4.7 skip",
+        "status": "skipped"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "Authored 3 DefinedTerms + FAQPage in plus/faq-corpus.json for insight/insight-98"
+        ],
         "id": "C.4.11",
         "module": "07-flashcards-and-quiz.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "3 binary FAQ questions in corpus for insight/insight-98 (quiz index rebuild later in C.8)"
+        ],
         "id": "C.4.12",
         "module": "07-flashcards-and-quiz.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "COMMENTARY DES 15/E for insight/insight-98 in plus/des-scores.json; fidelity null (COMMENTARY self-record); checklist quotes verified on page/landing"
+        ],
         "id": "C.4.13",
         "module": "08-des-fidelity.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -528,11 +536,13 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       "insight/en/insight-98.html",
       "insight/index.html",
       "insight/insight-98.html",
-      "insight/insight98-shade-value-grayscale.webp"
+      "insight/insight98-shade-value-grayscale.webp",
+      "plus/des-scores.json",
+      "plus/faq-corpus.json"
     ]
   },
   "reconciliation": {
-    "note": "Delivery 1 staging: insight-98.html healthCondition + insight/index.html landing + unfinished handoff at C.4.9"
+    "note": "Delivery 2 staging after C.4.13: FAQ/flashcards and COMMENTARY DES 15/E for insight/insight-98; unfinished handoff"
   },
   "schema": "publish-handoff-v3"
 }
