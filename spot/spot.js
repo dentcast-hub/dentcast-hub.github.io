@@ -1559,7 +1559,7 @@ async function main() {
 }
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => { main().catch(() => {}); });
+  document.addEventListener('DOMContentLoaded', () => { main().catch(() => {}); }, { once: true });
 } else {
   main().catch(() => {});
 }
