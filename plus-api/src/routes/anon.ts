@@ -27,11 +27,12 @@ export async function anonRoutes(app: FastifyInstance): Promise<void> {
         properties: {
           event: { type: 'string' },
           content_id: { type: 'string' },
+          event_id: { type: 'string', maxLength: 36 },
         },
       },
     },
   }, async (request, reply) => {
-    const { event, content_id } = request.body as { event: string; content_id?: string };
+    const { event, content_id, event_id } = request.body as { event: string; content_id?: string; event_id?: string };
 
     // ── Spot telemetry: aggregate counter, no row ──────────────────────────
     const spotKind = SPOT_EVENTS[event];
@@ -58,7 +59,8 @@ export async function anonRoutes(app: FastifyInstance): Promise<void> {
       // Same rule for the mirror it came from: read off the request headers, so
       // ".ir vs .org" is a measurement rather than something the client asserts.
       const viewer = readSession(request) ? 'plus' : 'anon';
-      await recordSpotEvent(target, viewer, spotKind, hostFromHeaders(request.headers));
+      if (event_id && !/^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/i.test(event_id)) return reply.code(400).send({ error: 'invalid_event_id' });
+      await recordSpotEvent(target, viewer, spotKind, hostFromHeaders(request.headers), new Date(), event_id);
       return reply.code(204).send();
     }
 
