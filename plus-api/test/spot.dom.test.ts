@@ -122,7 +122,6 @@ async function boot(ms = 10_000): Promise<void> {
   document.body.innerHTML = '<div id="mobile-body"><div id="dcPulseCard">pulse</div></div>';
   vi.resetModules();
   await import('/spot/spot.js');
-  if (document.readyState === 'loading') document.dispatchEvent(new Event('DOMContentLoaded'));
   await vi.advanceTimersByTimeAsync(ms);
 }
 const tick = (ms: number) => vi.advanceTimersByTimeAsync(ms);
@@ -131,6 +130,10 @@ const cards = () => document.querySelectorAll('.dc-spot').length;
 const creativeShown = () => document.querySelector('.dc-spot')?.getAttribute('data-dc-spot') ?? null;
 
 beforeEach(() => {
+  // jsdom starts the first test while its own document can still be loading.
+  // A late DOMContentLoaded in test #2 can otherwise boot test #1's script and
+  // create phantom duplicate impressions. Drive each module boot immediately.
+  Object.defineProperty(document, 'readyState', { configurable: true, value: 'complete' });
   vi.useFakeTimers();
   posts = [];
   mountedPosts = [];
