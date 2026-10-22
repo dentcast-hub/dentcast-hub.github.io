@@ -17266,5 +17266,33 @@
       "secondary": [],
       "subtopic": "crowns-onlays"
     }
+  },
+  {
+    "type": "promptologist",
+    "id": "prompt-append2-3",
+    "title": "پیوست ۲ ـ قسمت ۳: هوش مصنوعی را به گیت‌هاب وصل کنیم",
+    "caption": "اما قرار نیست از این به بعد هر بار خودمان فایل‌ها را آپلود یا ویرایش کنیم. می‌خواهیم هوش مصنوعی این کارها را انجام بدهد و ما نتیجه را بررسی کنیم.",
+    "hashtags": [
+      "#پرامپتولوژیست",
+      "#هوش_مصنوعی",
+      "#GitHub",
+      "#ChatGPT"
+    ],
+    "keywords": [
+      "اتصال ChatGPT به GitHub",
+      "پلاگین GitHub",
+      "مجوز خواندن و نوشتن",
+      "Branch",
+      "Merge",
+      "main",
+      "ChatGPT Work",
+      "مدیریت نسخهٔ پرامپت"
+    ],
+    "page_url": "/dentai/promptologist/prompt-append2-3.html",
+    "pillar": {
+      "primary": "practice-infrastructure",
+      "secondary": [],
+      "subtopic": "llm-tools"
+    }
   }
 ]

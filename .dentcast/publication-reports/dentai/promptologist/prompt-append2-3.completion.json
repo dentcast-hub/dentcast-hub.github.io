@@ -1,0 +1,749 @@
+{
+  "schema": "publish-completion-v1",
+  "state": {
+    "publication": {
+      "blocker": null,
+      "category": "promptologist",
+      "content_id": "dentai/promptologist/prompt-append2-3",
+      "context": {
+        "approvals": [
+          {
+            "decision": "founder-approved-on-draft",
+            "evidence": [
+              "PR#952 body"
+            ],
+            "scope": "persian-title-body",
+            "status": "confirmed"
+          },
+          {
+            "decision": "ask-after-completion-per-publish-checkpoints",
+            "evidence": [
+              "publish-checkpoints.md:stop-before-merge-without-explicit-authorization"
+            ],
+            "scope": "merge",
+            "status": "not_required"
+          }
+        ],
+        "decisions": [
+          {
+            "kind": "fixed_three_deliveries_v1"
+          }
+        ],
+        "delivery": [
+          {
+            "evidence": [
+              "PR#952",
+              "delivery1:2d8640fa46",
+              "delivery2:a9ae5e0599"
+            ],
+            "scope": "github-pr-952-delivery-cuts"
+          },
+          {
+            "evidence": [
+              "phase_f:7e47a53fc1c446728638397dcea287cad7332d31a61fbf8d9258535f7481e746"
+            ],
+            "scope": "phase-f-mechanical-gate"
+          }
+        ],
+        "inputs": [
+          "PR#952 draft branch"
+        ],
+        "pending_questions": [],
+        "unrelated_changes": [],
+        "validation": [
+          {
+            "content_id": "dentai/promptologist/prompt-append2-3",
+            "exit_code": 0,
+            "expected_caption": "\u0627\u0645\u0627 \u0642\u0631\u0627\u0631 \u0646\u06cc\u0633\u062a \u0627\u0632 \u0627\u06cc\u0646 \u0628\u0647 \u0628\u0639\u062f \u0647\u0631 \u0628\u0627\u0631 \u062e\u0648\u062f\u0645\u0627\u0646 \u0641\u0627\u06cc\u0644\u200c\u0647\u0627 \u0631\u0627 \u0622\u067e\u0644\u0648\u062f \u06cc\u0627 \u0648\u06cc\u0631\u0627\u06cc\u0634 \u06a9\u0646\u06cc\u0645. \u0645\u06cc\u200c\u062e\u0648\u0627\u0647\u06cc\u0645 \u0647\u0648\u0634 \u0645\u0635\u0646\u0648\u0639\u06cc \u0627\u06cc\u0646 \u06a9\u0627\u0631\u0647\u0627 \u0631\u0627 \u0627\u0646\u062c\u0627\u0645 \u0628\u062f\u0647\u062f \u0648 \u0645\u0627 \u0646\u062a\u06cc\u062c\u0647 \u0631\u0627 \u0628\u0631\u0631\u0633\u06cc \u06a9\u0646\u06cc\u0645.",
+            "expected_title": "\u067e\u06cc\u0648\u0633\u062a \u06f2 \u0640 \u0642\u0633\u0645\u062a \u06f3: \u0647\u0648\u0634 \u0645\u0635\u0646\u0648\u0639\u06cc \u0631\u0627 \u0628\u0647 \u06af\u06cc\u062a\u200c\u0647\u0627\u0628 \u0648\u0635\u0644 \u06a9\u0646\u06cc\u0645",
+            "kind": "phase_f",
+            "output_sha256": "7e47a53fc1c446728638397dcea287cad7332d31a61fbf8d9258535f7481e746",
+            "recorded_at": "2026-10-22T14:02:32+00:00",
+            "summary": "96 passed, 1 warned, 0 failed  \u2014 publish is COMPLETE"
+          }
+        ]
+      },
+      "external_actions": [],
+      "status": "in_progress",
+      "steps": [
+        {
+          "evidence": [
+            "session:read-publish-checkpoints"
+          ],
+          "id": "rules",
+          "module": "01-hard-rules.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Continuation of PR#952 draft; category promptologist Part 3 appendix"
+          ],
+          "id": "0",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Brain/schema from prompt-append2-2; draft pages already on branch"
+          ],
+          "id": "A",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Category promptologist locked on draft PR#952"
+          ],
+          "id": "B.1",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Id prompt-append2-3 contiguous after append2-2"
+          ],
+          "id": "B.2",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Founder-approved fa title retained on all Persian title surfaces"
+          ],
+          "id": "B.3",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Tutorial prose already approved on draft; caption-04 only clarification"
+          ],
+          "id": "B.3.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Seven WebP screenshots present under dentai/promptologist/"
+          ],
+          "id": "B.4",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "No attached paper; paper ingestion will be skipped"
+          ],
+          "id": "B.4.7",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "COMMENTARY; source_text is page body; DES later at C.4.13"
+          ],
+          "id": "B.4.8",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Ordinary tutorial with intro/body/CTA, not a Challenge"
+          ],
+          "id": "B.4.9",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pulse title-only line prepared for exact approved title"
+          ],
+          "id": "B.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0",
+          "module": "03-litecast-and-page.md",
+          "reason": "Category is promptologist, not LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.1",
+          "module": "03-litecast-and-page.md",
+          "reason": "Category is promptologist, not LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.2",
+          "module": "03-litecast-and-page.md",
+          "reason": "Category is promptologist, not LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.3",
+          "module": "03-litecast-and-page.md",
+          "reason": "Category is promptologist, not LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.4",
+          "module": "03-litecast-and-page.md",
+          "reason": "Category is promptologist, not LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Template locked against prompt-append2-2.html structure"
+          ],
+          "id": "C.1",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "prompt-append2-3.html body+images; screenshot-04 figcaption clarified"
+          ],
+          "id": "C.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.5",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.6",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "pillar practice-infrastructure / subtopic llm-tools"
+          ],
+          "id": "C.2.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Specialist capsules present; related budget respected"
+          ],
+          "id": "C.2.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Promptologist landing card + series index updated on draft"
+          ],
+          "id": "C.2.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Meta/title/caption synchronized with brain entry"
+          ],
+          "id": "C.3",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Page integrity retained after taxonomy edits"
+          ],
+          "id": "C.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Not NoteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5-b",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Not episode/NoteCast pair",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "ep-nav: prev append2-2 active; next empty; reciprocal next on part 2"
+          ],
+          "id": "C.4.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Glossary reviewed; 0 qualifying back-links for tooling tutorial"
+          ],
+          "id": "C.4.7",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.7-b",
+          "module": "05-semantic-linking.md",
+          "reason": "Not glossary publication",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Fresh body analysis; 0 qualifying inline glossary/episode targets"
+          ],
+          "id": "C.4.8",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Fresh review; five-link section kept at Hard-Rule-9 cap"
+          ],
+          "id": "C.4.9",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.1",
+          "module": "06-paper-ingestion.md",
+          "reason": "4.10 Part 1: skipped \u2014 no attached paper",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.2",
+          "module": "06-paper-ingestion.md",
+          "reason": "4.10 Part 2: skipped \u2014 no attached paper",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.3",
+          "module": "06-paper-ingestion.md",
+          "reason": "4.10 Part 3: skipped \u2014 no attached paper",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "4 authored flashcards in plus/faq-corpus.json"
+          ],
+          "id": "C.4.11",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "5 binary FAQ questions with explicit yes/no"
+          ],
+          "id": "C.4.12",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "DES COMMENTARY FULL_TEXT v3.4 checklist 12/E; fidelity null"
+          ],
+          "id": "C.4.13",
+          "module": "08-des-fidelity.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.14",
+          "module": "09-challenge.md",
+          "reason": "Ordinary promptologist tutorial, not a Challenge; no challenge markup owed",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Hashtags canonical; hashtag --check green"
+          ],
+          "id": "C.5.0",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Brain entry at absolute tail with append2-2 key order"
+          ],
+          "id": "C.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pillar practice-infrastructure/llm-tools valid in live PILLARS"
+          ],
+          "id": "C.5.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pathway ai-dentistry after prompt-append2-2"
+          ],
+          "id": "C.5.6",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.5.6-b",
+          "module": "10-brain-and-pathways.md",
+          "reason": "ai-dentistry has no continuing bundle \u2014 \u0628\u062f\u0648\u0646 \u06a9\u0627\u0646\u062f\u06cc\u062f",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Pulse first line exact linked title; seven lines retained"
+          ],
+          "id": "C.6",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Builders: counters pillars flashcards quiz imgattrs plus upboard sitemap"
+          ],
+          "id": "C.8",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "stamp-version.py last \u2192 8c72175218"
+          ],
+          "id": "C.7",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "en mirror + reciprocal toggles; noindex; no hreflang"
+          ],
+          "id": "D",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Notify marker / report prepared; no direct push notification sent"
+          ],
+          "id": "E",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "phase_f:7e47a53fc1c446728638397dcea287cad7332d31a61fbf8d9258535f7481e746"
+          ],
+          "id": "F",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "report:.dentcast/publication-reports/promptologist-prompt-append2-3.md",
+            "phase_f:96-passed-1-warned-0-failed"
+          ],
+          "id": "G",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        }
+      ],
+      "target_paths": [
+        ".dentcast/handoffs/prompt-append2-3-cursor.md",
+        ".dentcast/publication-reports/promptologist-prompt-append2-3.md",
+        ".dentcast/work/drive-append23-handoff.py",
+        "dentai/promptologist/en/prompt-append2-2.html",
+        "dentai/promptologist/en/prompt-append2-3.html",
+        "dentai/promptologist/index.html",
+        "dentai/promptologist/prompt-append2-2.html",
+        "dentai/promptologist/prompt-append2-3-01-chatgpt-plugins-menu.webp",
+        "dentai/promptologist/prompt-append2-3-02-github-plugin-list.webp",
+        "dentai/promptologist/prompt-append2-3-03-github-plugin-account.webp",
+        "dentai/promptologist/prompt-append2-3-04-github-permission-options.webp",
+        "dentai/promptologist/prompt-append2-3-05-github-branches.webp",
+        "dentai/promptologist/prompt-append2-3-06-git-branch-symbol.webp",
+        "dentai/promptologist/prompt-append2-3-07-pull-request-symbol.webp",
+        "dentai/promptologist/prompt-append2-3.html",
+        "dentcast-brain.json",
+        "index.html",
+        "pillar/index.html",
+        "pillar/practice-infrastructure/index.html",
+        "pillar/practice-infrastructure/structure.json",
+        "pillar/structure.json",
+        "player.html",
+        "plus/content-index.json",
+        "plus/des-scores.json",
+        "plus/faq-corpus.json",
+        "plus/flashcards-index.json",
+        "plus/pathways.json",
+        "plus/quiz-index.json",
+        "service-worker.js",
+        "sitemap.xml",
+        "tools/verify_publish.py",
+        "up-board/index.json"
+      ]
+    },
+    "snapshot": {
+      "files": {
+        ".dentcast/handoffs/prompt-append2-3-cursor.md": {
+          "kind": "missing",
+          "sha256": null,
+          "executable": false
+        },
+        ".dentcast/publication-reports/promptologist-prompt-append2-3.md": {
+          "kind": "file",
+          "sha256": "c8418c1c7fc5cdb0593ef251de08c659dac555b095d5142a024c5d38546219e9",
+          "executable": false
+        },
+        ".dentcast/work/drive-append23-handoff.py": {
+          "kind": "file",
+          "sha256": "2f30102c6a078307f9871eb7f88e11a1f03e631290d24e73626c0b48f75d2d2e",
+          "executable": false
+        },
+        "dentai/promptologist/en/prompt-append2-2.html": {
+          "kind": "file",
+          "sha256": "5419500ac5c28a75433fe57c9afb28a8ad6e7a6dc67dfa9a4be9fb9dd89dfcf1",
+          "executable": false
+        },
+        "dentai/promptologist/en/prompt-append2-3.html": {
+          "kind": "file",
+          "sha256": "507b3cf16900dfd0c6e94d93515828d9390d0784a2758fd65ff330460b5f8b55",
+          "executable": false
+        },
+        "dentai/promptologist/index.html": {
+          "kind": "file",
+          "sha256": "ca59216eef398a567edb8f94a2ee7e3439ab8420e0414622088f080608ab847f",
+          "executable": false
+        },
+        "dentai/promptologist/prompt-append2-2.html": {
+          "kind": "file",
+          "sha256": "0ce2dd4c6a5beb3c30540ffa2bcc8dc0e683c29ca2fefa6acf331d60333dc669",
+          "executable": false
+        },
+        "dentai/promptologist/prompt-append2-3-01-chatgpt-plugins-menu.webp": {
+          "kind": "file",
+          "sha256": "75198dadbaa14be3d6cfc036b68fdc9005e5335b50a47b5107f9dcc08ee36594",
+          "executable": false
+        },
+        "dentai/promptologist/prompt-append2-3-02-github-plugin-list.webp": {
+          "kind": "file",
+          "sha256": "e0be51153d6533945ad06b52054561ca249a6b314d20c590f07e93ab08e6c133",
+          "executable": false
+        },
+        "dentai/promptologist/prompt-append2-3-03-github-plugin-account.webp": {
+          "kind": "file",
+          "sha256": "f9c900f790049b242acf55289ee37a6098975dfb2bc61698fee2dd689f4c3bfe",
+          "executable": false
+        },
+        "dentai/promptologist/prompt-append2-3-04-github-permission-options.webp": {
+          "kind": "file",
+          "sha256": "8ec0766ab5dd1f973d3d981f299185270668c6d060e460f2990ff6d0433460d7",
+          "executable": false
+        },
+        "dentai/promptologist/prompt-append2-3-05-github-branches.webp": {
+          "kind": "file",
+          "sha256": "c205455ccf335d55f2dc38207879604e171e24f98e092d3a829b7452004eca00",
+          "executable": false
+        },
+        "dentai/promptologist/prompt-append2-3-06-git-branch-symbol.webp": {
+          "kind": "file",
+          "sha256": "d40e930068e6106ec82dc4c34ac953bcbbb004d3acb2fc8f65e14702a86542d0",
+          "executable": false
+        },
+        "dentai/promptologist/prompt-append2-3-07-pull-request-symbol.webp": {
+          "kind": "file",
+          "sha256": "c692aef7c8960accf5c12dda514ff0b626e9c7e1eeeff42509cc166e7fc06b6c",
+          "executable": false
+        },
+        "dentai/promptologist/prompt-append2-3.html": {
+          "kind": "file",
+          "sha256": "ddc5cec70bc0572b3c25549fb10f7d3d6d8164de8561c8ce8d64816fa8805737",
+          "executable": false
+        },
+        "dentcast-brain.json": {
+          "kind": "file",
+          "sha256": "801438cbcc3ccba8a0bdd364d663a0314f64640646540c35459bec4edeee09e2",
+          "executable": false
+        },
+        "index.html": {
+          "kind": "file",
+          "sha256": "b59d9d8553b0da1f307eba295bb9b79fb5584a31ec8e22ef928be3d077212777",
+          "executable": false
+        },
+        "pillar/index.html": {
+          "kind": "file",
+          "sha256": "24fdf17321e7b47f90c5eb5546c89cc0c10f7393f09f5137068ddc25b1170f63",
+          "executable": false
+        },
+        "pillar/practice-infrastructure/index.html": {
+          "kind": "file",
+          "sha256": "5fc17588eebef5a2a52fd0e2fcd92d43b39d9e1bfd3fd7c8ff861680e3ee9226",
+          "executable": false
+        },
+        "pillar/practice-infrastructure/structure.json": {
+          "kind": "file",
+          "sha256": "06e991678ebbf660c2a231176777223f296fefee5eb97679c476c22cb1a7360d",
+          "executable": false
+        },
+        "pillar/structure.json": {
+          "kind": "file",
+          "sha256": "f5106c9012cf82863ba616228a758a2911643b28dab4c879e46f10a192ecfd11",
+          "executable": false
+        },
+        "player.html": {
+          "kind": "file",
+          "sha256": "5a632143cd0071ee7d7a851b45fe3624ecfd407fcfe493f4ac5197ad04fe741d",
+          "executable": false
+        },
+        "plus/content-index.json": {
+          "kind": "file",
+          "sha256": "03ea3c6154fcb15911770cd7cd8464cb5eb9c18098c6f1c531beeb13a34a0c56",
+          "executable": false
+        },
+        "plus/des-scores.json": {
+          "kind": "file",
+          "sha256": "e31001c64e8331b44fd3c075a83948649ecb16851d4bd5efeb433834174fa1da",
+          "executable": false
+        },
+        "plus/faq-corpus.json": {
+          "kind": "file",
+          "sha256": "20224677d2e1cdef741874976e58af7096318d41641e3497e77c1c0465d92215",
+          "executable": false
+        },
+        "plus/flashcards-index.json": {
+          "kind": "file",
+          "sha256": "f2bfe08466bb29c98afb4f710674211d75601fd4d3d2d2af80aca3b87cafcf5d",
+          "executable": false
+        },
+        "plus/pathways.json": {
+          "kind": "file",
+          "sha256": "c328fbab94f93fb1786be23709f8b0b2616182ee625678339f9a600a29833e6a",
+          "executable": false
+        },
+        "plus/quiz-index.json": {
+          "kind": "file",
+          "sha256": "f1632f1d980f21fea8341423a15390c64ff36039d0355afac8a547479bd14919",
+          "executable": false
+        },
+        "service-worker.js": {
+          "kind": "file",
+          "sha256": "a94fa94639be5581bec59248db30267bf6cc28f4b945ff0fd294ade350c57284",
+          "executable": false
+        },
+        "sitemap.xml": {
+          "kind": "file",
+          "sha256": "2bdf606b022066c7ac057c12d6242c18fdc461eabbc8054580419f7334c8c368",
+          "executable": false
+        },
+        "tools/verify_publish.py": {
+          "kind": "file",
+          "sha256": "5712fa58c34297c183d8675dcf810eec2e38da1d61b8e10ee4a3d667ca10acd7",
+          "executable": false
+        },
+        "up-board/index.json": {
+          "kind": "file",
+          "sha256": "f7cf3338dc1148916287a39865f4d16d108ac558ead90c254d520d368b1a9c5e",
+          "executable": false
+        }
+      },
+      "workflow": {
+        ".dentcast/workflows/README.md": "2166c4eabb3d9e5b135b85b3c6489cef58c1a07685a86e7f1835523f54da38a8",
+        ".dentcast/workflows/agent-parity.md": "849d0fd75816f83957190c6e25ef2e17fa2c09922d13f7bbd3dbc355cf792109",
+        ".dentcast/workflows/publish-handoff.md": "51e24c626d5d928acd5bea0888fefca34dc4beed7ac6f45e7f5b000bbb1a38c8",
+        ".dentcast/workflows/routing-details.md": "3e698a41fe79f82133b433b508c948ac7fbab95b03cebbb8c2ceb450e1eab552",
+        ".dentcast/workflows/global/README.md": "8be8dfb1047ee1a6026870ec996ad80205e7aef95b1d77cccf752ed1704fc955",
+        ".dentcast/workflows/global/LOAD-MAP.json": "2b18e92ea22229f340c94ff3bc09e3731bb1b88ed8d5172bb0584e55f4ad8b32",
+        "tools/dentcast_global_rules.py": "524271cfc10bfbf30e3b27e6f1c653a9c3009ef3b9c8d06ad23ce421aaaca130",
+        ".dentcast/workflows/global/repo-conventions.md": "07ad6321a9539898c555b795249699b4a67786c06ebf0d8242864dbc845e92a3",
+        ".dentcast/workflows/global/plus-premium.md": "3905b8017be9601666541145aa732469a664c2c3b0e229dfb40e063123668987",
+        ".dentcast/workflows/global/site-invariants.md": "806db16666dc3d42468f143ec279ba704718d3997ca96ce8316f2d17abbc6398",
+        "tools/dentcast_publish_handoff.py": "dc0a1c32c40461a2e2c3b79bc7da2f8ea9c95ec9a0f9b9052c5997757585c107",
+        "tools/dentcast_publish_lifecycle.py": "7c400cdf80855ab1c64e2526f0e9dcde784185307278217a8a8823044ce7c5cb",
+        "tools/verify_publish.py": "5712fa58c34297c183d8675dcf810eec2e38da1d61b8e10ee4a3d667ca10acd7",
+        "tools/dentcast_text_io.py": "28af00db98df97c6062e36d2d963e6a81454f90fb91f9cd8f267ad8a9ee8863d",
+        "tools/text_io.mjs": "c6f9208e26983c8eade43d8cf3effe865e6479df903d2cee661cd0a928565536",
+        ".dentcast/workflows/publish-checkpoints.md": "a8489689456128942e70546aee29e3052272b297d1c33390e9e8dade5c97a24a",
+        ".dentcast/workflows/modules/01-hard-rules.md": "177fb4e74bc4dab07aaf09508670ca06aa54f1d2d9b8d89290e1af42e2540884",
+        ".dentcast/workflows/modules/02-routing-intake.md": "83bd960b0567de35bd8f09d8ac0211651cf2b198b2756c371c51ecdc33821f8f",
+        ".dentcast/workflows/modules/03-litecast-and-page.md": "c694b142121afc3ea5da30b5f685462195408d0afdba3cfd21338c8d6eecfb00",
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "deff8de87f7c7af35edb2dbb88b19e1ba8a14538dfa5b73223af61d63f195c27",
+        ".dentcast/workflows/modules/05-semantic-linking.md": "0c8eedf826cc4b85862b63fea324d4e5236651d72d0df080daabfdf1b8afab15",
+        ".dentcast/workflows/modules/06-paper-ingestion.md": "8fe08a36b27c6d751651fce15f98b71f0af8a0abb39baa0eca44fdac401cef5b",
+        ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "1f447af28d76973e9300dea17004ed1ea164a64b5734d9e2160b24f3e95e7264",
+        ".dentcast/workflows/modules/08-des-fidelity.md": "93f7d8c6dab74d87f4cd5e1c074072b01a88f7c293f38b268ed033c0e6eb6bed",
+        ".dentcast/workflows/modules/09-challenge.md": "92c1d0be2868dac0aa417fc25a681494e0364b2720e75c98555f244ecc3d6d47",
+        ".dentcast/workflows/modules/10-brain-and-pathways.md": "edeed585c72b061ac5ec29b593c424aca7467bc210b09d4566e3d123ca179b61",
+        ".dentcast/workflows/modules/11-build-and-version.md": "4a7364c904615e5f73dffcc3647b87afb2efc89b5ade117bc447696cec7aae67",
+        ".dentcast/workflows/modules/12-english-notify-verify.md": "1c730d65ef14953b58d0a8cbbad247888419fae2ac56247c10d46897421b9e66"
+      }
+    }
+  },
+  "second_delivery_commit": "a9ae5e059958a6df0677dad0faae982065f0e8d2",
+  "verification": {
+    "kind": "phase_f",
+    "content_id": "dentai/promptologist/prompt-append2-3",
+    "expected_title": "\u067e\u06cc\u0648\u0633\u062a \u06f2 \u0640 \u0642\u0633\u0645\u062a \u06f3: \u0647\u0648\u0634 \u0645\u0635\u0646\u0648\u0639\u06cc \u0631\u0627 \u0628\u0647 \u06af\u06cc\u062a\u200c\u0647\u0627\u0628 \u0648\u0635\u0644 \u06a9\u0646\u06cc\u0645",
+    "expected_caption": "\u0627\u0645\u0627 \u0642\u0631\u0627\u0631 \u0646\u06cc\u0633\u062a \u0627\u0632 \u0627\u06cc\u0646 \u0628\u0647 \u0628\u0639\u062f \u0647\u0631 \u0628\u0627\u0631 \u062e\u0648\u062f\u0645\u0627\u0646 \u0641\u0627\u06cc\u0644\u200c\u0647\u0627 \u0631\u0627 \u0622\u067e\u0644\u0648\u062f \u06cc\u0627 \u0648\u06cc\u0631\u0627\u06cc\u0634 \u06a9\u0646\u06cc\u0645. \u0645\u06cc\u200c\u062e\u0648\u0627\u0647\u06cc\u0645 \u0647\u0648\u0634 \u0645\u0635\u0646\u0648\u0639\u06cc \u0627\u06cc\u0646 \u06a9\u0627\u0631\u0647\u0627 \u0631\u0627 \u0627\u0646\u062c\u0627\u0645 \u0628\u062f\u0647\u062f \u0648 \u0645\u0627 \u0646\u062a\u06cc\u062c\u0647 \u0631\u0627 \u0628\u0631\u0631\u0633\u06cc \u06a9\u0646\u06cc\u0645.",
+    "exit_code": 0,
+    "output_sha256": "7e47a53fc1c446728638397dcea287cad7332d31a61fbf8d9258535f7481e746",
+    "summary": "96 passed, 1 warned, 0 failed  \u2014 publish is COMPLETE"
+  }
+}
