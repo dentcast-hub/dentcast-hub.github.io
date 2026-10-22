@@ -764,9 +764,10 @@ function buildCard(creative, slotName) {
 const seenImpressions = new Set();
 const mountedSpots = new Set();
 function armMounted(el, creative, slotName) {
-  // Distinct metric: a card was actually attached to the document. Not a
-  // viewable impression; the existing 50%/one-second rule is unchanged.
-  requestAnimationFrame(() => {
+  // Count on the microtask AFTER synchronous insertion, not in rAF (which can
+  // be throttled in background tabs and is unreliable in test environments).
+  // This is a mounted metric, never an IAB-viewable impression.
+  Promise.resolve().then(() => {
     if (!el.isConnected || adsKilled) return;
     const key = slotName + ':' + (creative.id || '');
     if (mountedSpots.has(key)) return;
