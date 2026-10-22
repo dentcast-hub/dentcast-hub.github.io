@@ -1,0 +1,755 @@
+{
+  "schema": "publish-completion-v1",
+  "state": {
+    "publication": {
+      "blocker": null,
+      "category": "clinical",
+      "content_id": "insight/insight-98",
+      "context": {
+        "approvals": [
+          {
+            "decision": "approved as drafted on branch",
+            "evidence": [
+              "PR 953 founder-approved Persian text",
+              "insight/insight-98.html"
+            ],
+            "scope": "full Persian body text",
+            "status": "confirmed"
+          },
+          {
+            "decision": "confirmed by founder",
+            "evidence": [
+              "chat 2026-10-22: \u0647\u0645\u0647 \u062a\u0627\u06cc\u06cc\u062f"
+            ],
+            "scope": "opening paragraph",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc",
+            "evidence": [
+              "chat 2026-10-22"
+            ],
+            "scope": "ordinary vs challenge",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u06cc\u06a9 \u0627\u06cc\u0646\u0633\u0627\u06cc\u062a \u0628\u0627\u0644\u06cc\u0646\u06cc \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab\u06cc\u06a9 \u062a\u0631\u0641\u0646\u062f \u0633\u0627\u062f\u0647 \u0628\u0631\u0627\u06cc \u0627\u0646\u062a\u062e\u0627\u0628 \u0631\u0646\u06af \u0631\u0627\u062d\u062a\u200c\u062a\u0631\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f",
+            "evidence": [
+              "chat 2026-10-22"
+            ],
+            "scope": "pulse sentence",
+            "status": "confirmed"
+          },
+          {
+            "decision": "esthetic / shade-and-whitening",
+            "evidence": [
+              "chat 2026-10-22",
+              "PR 953",
+              "live PILLARS"
+            ],
+            "scope": "pillar/subtopic",
+            "status": "confirmed"
+          }
+        ],
+        "decisions": [
+          {
+            "evidence": "PR 953 + live PILLARS",
+            "id": "taxonomy_live_decision",
+            "value": "esthetic/shade-and-whitening"
+          },
+          {
+            "kind": "fixed_three_deliveries_v1"
+          },
+          {
+            "evidence": [
+              "git merge origin/main into publish/insight-98-shade-grayscale"
+            ],
+            "id": "workflow_reconcile_after_main_merge",
+            "value": "invalidated ledger then re-apply intake; tools/verify_publish.py changed on main"
+          },
+          {
+            "evidence": [
+              "insight/index.html"
+            ],
+            "id": "c26_landing_correction",
+            "value": "Added insight-98 link to insight/index.html (hand-maintained landing)"
+          },
+          {
+            "evidence": [
+              "corrected from clinical-98",
+              "tools/verify_publish.py path-without-.html",
+              "clinical-97 used insight/insight-97"
+            ],
+            "id": "content_id_path_convention",
+            "value": "insight/insight-98"
+          }
+        ],
+        "delivery": [
+          {
+            "evidence": [
+              "PR#953",
+              "delivery1:f9938a254f",
+              "delivery2:c9ecf2cb48",
+              "content_id path form insight/insight-98 in D1/D2"
+            ],
+            "scope": "github-pr-953-delivery-cuts"
+          },
+          {
+            "evidence": [
+              "phase_f:fa1a97b58bca93d8ca9e6b81c7cc482cd70af11f4bd1d649452ac6e2a8cecbd2",
+              "90 passed, 1 warned, 0 failed \u2014 publish is COMPLETE"
+            ],
+            "scope": "phase-f-mechanical-gate"
+          }
+        ],
+        "inputs": [
+          {
+            "kind": "draft_page",
+            "note": "Founder-approved Persian draft on branch",
+            "ref": "insight/insight-98.html"
+          },
+          {
+            "kind": "image",
+            "note": "Committed WebP already on branch",
+            "ref": "insight/insight98-shade-value-grayscale.webp"
+          },
+          {
+            "kind": "prior_pr",
+            "note": "Incomplete draft; no official handoff yet",
+            "ref": "https://github.com/dentcast-hub/dentcast-hub.github.io/pull/953"
+          }
+        ],
+        "pending_questions": [],
+        "unrelated_changes": [],
+        "validation": [
+          {
+            "content_id": "insight/insight-98",
+            "exit_code": 0,
+            "expected_caption": null,
+            "expected_title": null,
+            "kind": "phase_f",
+            "output_sha256": "fa1a97b58bca93d8ca9e6b81c7cc482cd70af11f4bd1d649452ac6e2a8cecbd2",
+            "recorded_at": "2026-10-22T16:15:53+00:00",
+            "summary": "90 passed, 1 warned, 0 failed  \u2014 publish is COMPLETE"
+          }
+        ]
+      },
+      "external_actions": [],
+      "status": "in_progress",
+      "steps": [
+        {
+          "evidence": [
+            "Modules/global/agent-parity/checkpoints loaded for clinical-98"
+          ],
+          "id": "rules",
+          "module": "01-hard-rules.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "text yes, no paper; normal publish"
+          ],
+          "id": "0",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "clinical category; clinical-97 template; live PILLARS esthetic"
+          ],
+          "id": "A",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Type clinical locked"
+          ],
+          "id": "B.1",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "clinical-98 / insight-98"
+          ],
+          "id": "B.2",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "founder-approved Persian on insight/insight-98.html"
+          ],
+          "id": "B.3",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "no AI-tell edits"
+          ],
+          "id": "B.3.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "WebP image present"
+          ],
+          "id": "B.4",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "no paper; 4.10 skip"
+          ],
+          "id": "B.4.7",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "COMMENTARY DES basket"
+          ],
+          "id": "B.4.8",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc"
+          ],
+          "id": "B.4.9",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pulse approved by founder"
+          ],
+          "id": "B.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Not LiteCast; clinical Insight uses specialist track"
+          ],
+          "id": "C.0",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.1",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; clinical Insight uses specialist track",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.2",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; clinical Insight uses specialist track",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.3",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; clinical Insight uses specialist track",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.4",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; clinical Insight uses specialist track",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Template lock insight/insight-97.html SHA-256 bf35846784b97e3b6de25d447752c4d6c1a2c63799c9304564c3aa5f591fe282"
+          ],
+          "id": "C.1",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Page insight/insight-98.html built from clinical template; founder text+WebP; fixed MedicalWebPage healthCondition to Dental Shade Selection; GA/preconnect/lang-btn present; opening prose before figure"
+          ],
+          "id": "C.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.5",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; clinical Insight uses specialist track",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.6",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; clinical Insight uses specialist track",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Pillar esthetic + subtopic shade-and-whitening; founder confirmed; live in PILLARS"
+          ],
+          "id": "C.2.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u06a9\u0627\u0648\u0634 \u0628\u06cc\u0634\u062a\u0631 capsules: glossary + /pillar/esthetic/ already on page; budget 2/5 used by nav"
+          ],
+          "id": "C.2.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "No parent-episode backlink required for clinical Insight"
+          ],
+          "id": "C.2.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Dates 2026-10-22 on trustline/JSON-LD; meta/canonical/OG present"
+          ],
+          "id": "C.3",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Integrity: page refs WebP path; width/height 560x420; GA+preconnect once"
+          ],
+          "id": "C.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Not NoteCast \u2014 clinical Insight",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5-b",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Not NoteCast \u2014 clinical Insight",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Not Promptologist \u2014 clinical Insight",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Analyzed glossary.json: no unmistakable related term for Value grayscale tip; bleaching same subtopic but different concept and already at 5-link cap \u2014 0 back-links added"
+          ],
+          "id": "C.4.7",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.7-b",
+          "module": "05-semantic-linking.md",
+          "reason": "skipped \u2014 not a glossary publish",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Analyzed body vs glossary+episodes: no qualifying in-body glossary/episode anchors (Value/Grayscale have no glossary entries; avoid weak bleaching/translucency matches) \u2014 0 inline links"
+          ],
+          "id": "C.4.8",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Semantic \u06a9\u0627\u0648\u0634 \u0628\u06cc\u0634\u062a\u0631: insight-91 (Value), insight-92 (shade match), episode-68 (final color factors) + nav capsules; section at Hard Rule 9 cap of 5"
+          ],
+          "id": "C.4.9",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "No attached paper file \u2014 B.4.7 skip"
+          ],
+          "id": "C.4.10.1",
+          "module": "06-paper-ingestion.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.2",
+          "module": "06-paper-ingestion.md",
+          "reason": "No attached paper file \u2014 B.4.7 skip",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.3",
+          "module": "06-paper-ingestion.md",
+          "reason": "No attached paper file \u2014 B.4.7 skip",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Authored 3 DefinedTerms + FAQPage in plus/faq-corpus.json for insight/insight-98"
+          ],
+          "id": "C.4.11",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "3 binary FAQ questions in corpus for insight/insight-98 (quiz index rebuild later in C.8)"
+          ],
+          "id": "C.4.12",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "COMMENTARY DES 15/E for insight/insight-98 in plus/des-scores.json; fidelity null (COMMENTARY self-record); checklist quotes verified on page/landing"
+          ],
+          "id": "C.4.13",
+          "module": "08-des-fidelity.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.14",
+          "module": "09-challenge.md",
+          "reason": "Ordinary post (\u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc); not a \u0686\u0627\u0644\u0634",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Canonical hashtags #\u0627\u06cc\u0646\u0633\u0627\u06cc\u062a #\u0648\u0644\u06cc\u0648 #\u0627\u0646\u062a\u062e\u0627\u0628_shade #\u0632\u06cc\u0628\u0627\u06cc\u06cc; hashtag_ref --check OK"
+          ],
+          "id": "C.5.0",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Brain entry clinical-98 appended at end; pillar esthetic/shade-and-whitening"
+          ],
+          "id": "C.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Verified brain id/page_url/pillar match page and live PILLARS"
+          ],
+          "id": "C.5.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Inserted insight/insight-98 into esthetic after sharehub/share-26; founder \u0627\u0644\u0641"
+          ],
+          "id": "C.5.6",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.5.6-b",
+          "module": "10-brain-and-pathways.md",
+          "reason": "Bundle check: candidate bundle-laminate under esthetic rejected GATE 2 \u2014 title is a clinical tip/trick (\u062a\u0631\u0641\u0646\u062f), not a complete beginner core concept; default NO",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Pulse line inserted at top of index.html (7 lines); founder-approved sentence"
+          ],
+          "id": "C.6",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Builders: homepage counters, pillar all, flashcards/quiz/plus indexes, upboard, img attrs"
+          ],
+          "id": "C.8",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "stamp-version.py content version d95828389c"
+          ],
+          "id": "C.7",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "English mirror insight/en/insight-98.html + fa\u2194en toggles; noindex on en"
+          ],
+          "id": "D",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "dc-notify=true already on insight/insight-98.html"
+          ],
+          "id": "E",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "phase_f:fa1a97b58bca93d8ca9e6b81c7cc482cd70af11f4bd1d649452ac6e2a8cecbd2"
+          ],
+          "id": "F",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            ".dentcast/publication-reports/clinical-98.md; Phase F 90 passed, 1 warned, 0 failed; deliveries d2beada300 / 3fda9fd6ee"
+          ],
+          "id": "G",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        }
+      ],
+      "target_paths": [
+        ".dentcast/publication-reports/clinical-98.md",
+        "dentcast-brain.json",
+        "index.html",
+        "insight/en/insight-98.html",
+        "insight/index.html",
+        "insight/insight-98.html",
+        "insight/insight98-shade-value-grayscale.webp",
+        "pillar/esthetic/index.html",
+        "pillar/esthetic/structure.json",
+        "pillar/index.html",
+        "pillar/structure.json",
+        "player.html",
+        "plus/content-index.json",
+        "plus/des-scores.json",
+        "plus/faq-corpus.json",
+        "plus/flashcards-index.json",
+        "plus/pathways.json",
+        "plus/quiz-index.json",
+        "service-worker.js",
+        "sitemap.xml",
+        "up-board/index.json"
+      ]
+    },
+    "snapshot": {
+      "files": {
+        ".dentcast/publication-reports/clinical-98.md": {
+          "kind": "file",
+          "sha256": "b0f15734e2c8ffaaffa8642239174a5aeb68e670a03e747d5201f2c68c2b1fd4",
+          "executable": false
+        },
+        "dentcast-brain.json": {
+          "kind": "file",
+          "sha256": "e3d64870b87d9536f5aeda68704b4b2b079b362ff9d5a0473cb9b51b5d0aae95",
+          "executable": false
+        },
+        "index.html": {
+          "kind": "file",
+          "sha256": "a3febbcc3bc20aedb8d57f1f9e9f868ad11b9b0bb88a9d8b507716860ef6bb04",
+          "executable": false
+        },
+        "insight/en/insight-98.html": {
+          "kind": "file",
+          "sha256": "7c838112fdf7b5b53359351d3c0293efe260595d92ba0658b6cb0bf866f57b69",
+          "executable": false
+        },
+        "insight/index.html": {
+          "kind": "file",
+          "sha256": "820db9db3153856afd4be5c780dd1d4cd8c0b372f54b64610d264b58ecc63739",
+          "executable": false
+        },
+        "insight/insight-98.html": {
+          "kind": "file",
+          "sha256": "604ebf6c184e31256003a08618adbcbf5b4c12c4c2081054b6e917d319c9d9ae",
+          "executable": false
+        },
+        "insight/insight98-shade-value-grayscale.webp": {
+          "kind": "file",
+          "sha256": "fba4e8ece709d6e93fc008e057d570249c86a358dd5fe0859c7f029c68cff3e1",
+          "executable": false
+        },
+        "pillar/esthetic/index.html": {
+          "kind": "file",
+          "sha256": "4844b2da4c58d559d30291965b97081e79299b8ee0b04c557d250269e5d44b82",
+          "executable": false
+        },
+        "pillar/esthetic/structure.json": {
+          "kind": "file",
+          "sha256": "758551da1bee3ccc250fd7a596b9e7f6516122149848665e7b4f32afe0b3b81b",
+          "executable": false
+        },
+        "pillar/index.html": {
+          "kind": "file",
+          "sha256": "88cc2377e9e6786fa9247c2a20d396ddc627618c7cb93667813b003f8ccf93d9",
+          "executable": false
+        },
+        "pillar/structure.json": {
+          "kind": "file",
+          "sha256": "eb30edd289eb645bed21c69be82e9096e8e455e107b1758cf73caf4c57829a8b",
+          "executable": false
+        },
+        "player.html": {
+          "kind": "file",
+          "sha256": "774638aae22095b573288e88dff76f7a0b3112aa5a0279901cdff1cc96998e74",
+          "executable": false
+        },
+        "plus/content-index.json": {
+          "kind": "file",
+          "sha256": "800e1144e267a46586d4f81ef371ae64bcdfaf7b7998f019eaaa5611c09ce3ef",
+          "executable": false
+        },
+        "plus/des-scores.json": {
+          "kind": "file",
+          "sha256": "814bea5ae1ef8b34b91d456a454d394908a67b49ad549d33feb83167afc2cd8e",
+          "executable": false
+        },
+        "plus/faq-corpus.json": {
+          "kind": "file",
+          "sha256": "e4aa4985826eb843b871c02a4183ab97eb00a9cfd523c5f5b06b9d274069ebb8",
+          "executable": false
+        },
+        "plus/flashcards-index.json": {
+          "kind": "file",
+          "sha256": "8719f055b0685b7b99ab42619a63874e1e8a269e8b65af411157f7ab09de3659",
+          "executable": false
+        },
+        "plus/pathways.json": {
+          "kind": "file",
+          "sha256": "04eaa3eac045fee56aa0420bb4167f707f9afb742a549bfa19739a4e766f334e",
+          "executable": false
+        },
+        "plus/quiz-index.json": {
+          "kind": "file",
+          "sha256": "05c05ca305a27664c17cf2a12c993e264213065b4c0dbb439f3bbea669cd2978",
+          "executable": false
+        },
+        "service-worker.js": {
+          "kind": "file",
+          "sha256": "3d33ee67b082980b1c893d348fce33c0229fd163fcfecb15663a46db44f33bcb",
+          "executable": false
+        },
+        "sitemap.xml": {
+          "kind": "file",
+          "sha256": "5bb25af10e54e57933b69fed9a45084496fe3337aaaba23ef911f6581672a97d",
+          "executable": false
+        },
+        "up-board/index.json": {
+          "kind": "file",
+          "sha256": "9f83004ad3a4ba091e106989b02fda722c90b65c79220cbe9f064aff336d8386",
+          "executable": false
+        }
+      },
+      "workflow": {
+        ".dentcast/workflows/README.md": "2166c4eabb3d9e5b135b85b3c6489cef58c1a07685a86e7f1835523f54da38a8",
+        ".dentcast/workflows/agent-parity.md": "849d0fd75816f83957190c6e25ef2e17fa2c09922d13f7bbd3dbc355cf792109",
+        ".dentcast/workflows/publish-handoff.md": "51e24c626d5d928acd5bea0888fefca34dc4beed7ac6f45e7f5b000bbb1a38c8",
+        ".dentcast/workflows/routing-details.md": "3e698a41fe79f82133b433b508c948ac7fbab95b03cebbb8c2ceb450e1eab552",
+        ".dentcast/workflows/global/README.md": "8be8dfb1047ee1a6026870ec996ad80205e7aef95b1d77cccf752ed1704fc955",
+        ".dentcast/workflows/global/LOAD-MAP.json": "2b18e92ea22229f340c94ff3bc09e3731bb1b88ed8d5172bb0584e55f4ad8b32",
+        "tools/dentcast_global_rules.py": "524271cfc10bfbf30e3b27e6f1c653a9c3009ef3b9c8d06ad23ce421aaaca130",
+        ".dentcast/workflows/global/repo-conventions.md": "07ad6321a9539898c555b795249699b4a67786c06ebf0d8242864dbc845e92a3",
+        ".dentcast/workflows/global/plus-premium.md": "3905b8017be9601666541145aa732469a664c2c3b0e229dfb40e063123668987",
+        ".dentcast/workflows/global/site-invariants.md": "806db16666dc3d42468f143ec279ba704718d3997ca96ce8316f2d17abbc6398",
+        "tools/dentcast_publish_handoff.py": "dc0a1c32c40461a2e2c3b79bc7da2f8ea9c95ec9a0f9b9052c5997757585c107",
+        "tools/dentcast_publish_lifecycle.py": "7c400cdf80855ab1c64e2526f0e9dcde784185307278217a8a8823044ce7c5cb",
+        "tools/verify_publish.py": "5712fa58c34297c183d8675dcf810eec2e38da1d61b8e10ee4a3d667ca10acd7",
+        "tools/dentcast_text_io.py": "28af00db98df97c6062e36d2d963e6a81454f90fb91f9cd8f267ad8a9ee8863d",
+        "tools/text_io.mjs": "c6f9208e26983c8eade43d8cf3effe865e6479df903d2cee661cd0a928565536",
+        ".dentcast/workflows/publish-checkpoints.md": "a8489689456128942e70546aee29e3052272b297d1c33390e9e8dade5c97a24a",
+        ".dentcast/workflows/modules/01-hard-rules.md": "177fb4e74bc4dab07aaf09508670ca06aa54f1d2d9b8d89290e1af42e2540884",
+        ".dentcast/workflows/modules/02-routing-intake.md": "83bd960b0567de35bd8f09d8ac0211651cf2b198b2756c371c51ecdc33821f8f",
+        ".dentcast/workflows/modules/03-litecast-and-page.md": "c694b142121afc3ea5da30b5f685462195408d0afdba3cfd21338c8d6eecfb00",
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "deff8de87f7c7af35edb2dbb88b19e1ba8a14538dfa5b73223af61d63f195c27",
+        ".dentcast/workflows/modules/05-semantic-linking.md": "0c8eedf826cc4b85862b63fea324d4e5236651d72d0df080daabfdf1b8afab15",
+        ".dentcast/workflows/modules/06-paper-ingestion.md": "8fe08a36b27c6d751651fce15f98b71f0af8a0abb39baa0eca44fdac401cef5b",
+        ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "1f447af28d76973e9300dea17004ed1ea164a64b5734d9e2160b24f3e95e7264",
+        ".dentcast/workflows/modules/08-des-fidelity.md": "93f7d8c6dab74d87f4cd5e1c074072b01a88f7c293f38b268ed033c0e6eb6bed",
+        ".dentcast/workflows/modules/09-challenge.md": "92c1d0be2868dac0aa417fc25a681494e0364b2720e75c98555f244ecc3d6d47",
+        ".dentcast/workflows/modules/10-brain-and-pathways.md": "edeed585c72b061ac5ec29b593c424aca7467bc210b09d4566e3d123ca179b61",
+        ".dentcast/workflows/modules/11-build-and-version.md": "4a7364c904615e5f73dffcc3647b87afb2efc89b5ade117bc447696cec7aae67",
+        ".dentcast/workflows/modules/12-english-notify-verify.md": "1c730d65ef14953b58d0a8cbbad247888419fae2ac56247c10d46897421b9e66"
+      }
+    }
+  },
+  "second_delivery_commit": "c9ecf2cb480249f71de8a163477b5554dc06d261",
+  "verification": {
+    "kind": "phase_f",
+    "content_id": "insight/insight-98",
+    "expected_title": null,
+    "expected_caption": null,
+    "exit_code": 0,
+    "output_sha256": "fa1a97b58bca93d8ca9e6b81c7cc482cd70af11f4bd1d649452ac6e2a8cecbd2",
+    "summary": "90 passed, 1 warned, 0 failed  \u2014 publish is COMPLETE"
+  }
+}

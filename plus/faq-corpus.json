@@ -38395,6 +38395,70 @@
           ]
         }
       ]
+    },
+    "insight/insight-98": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/insight/insight-98.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Value در انتخاب رنگ دندان به چه معناست؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Value میزان روشنی و تیرگی رنگ است و یکی از مهم‌ترین عوامل در انتخاب شید دندان به‌شمار می‌رود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا برای مقایسه Value باید از فیلترهای هنری سیاه‌وسفید گوشی استفاده کرد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ باید از تبدیل ساده به سیاه‌وسفید (Grayscale) استفاده کرد، نه فیلترهایی که روشنایی و کنتراست را تغییر می‌دهند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا شید نزدیک‌تر از نظر Value در عکس سیاه‌وسفید، به‌تنهایی انتخاب رنگ نهایی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ این ترفند فقط برای مقایسه Value است و به‌تنهایی به معنی انتخاب رنگ نهایی نیست."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/insight/insight-98.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-98.html#flashcards-c1",
+              "name": "Value در انتخاب رنگ دندان",
+              "description": "Value همان میزان روشنی و تیرگی رنگ است؛ در انتخاب شید دندان یکی از عوامل کلیدی برای نزدیک‌شدن به ظاهر دندان طبیعی است.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-98.html#flashcards-c2",
+              "name": "مقایسه Value با Grayscale",
+              "description": "شیدها کنار دندان قرار می‌گیرند، عکس گرفته می‌شود و با تبدیل ساده به سیاه‌وسفید (نه فیلتر هنری) مقایسه می‌شوند؛ شید شبیه‌تر از نظر روشنی و تیرگی احتمالاً Value نزدیک‌تری دارد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-98.html#flashcards-c3",
+              "name": "محدوده کاربرد ترفند Value",
+              "description": "این روش فقط برای مقایسه Value است و به‌تنهایی جایگزین انتخاب کامل رنگ نهایی نمی‌شود.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
