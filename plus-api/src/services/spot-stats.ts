@@ -16,10 +16,11 @@ import { config } from '../config.js';
 /** The two Spot events, as sent in `event` (anon) / `action` (signed-in). */
 export const SPOT_EVENTS: Record<string, SpotKind> = {
   spot_impression: 'impression',
+  spot_rendered: 'rendered',
   spot_click: 'click',
 };
 
-export type SpotKind = 'impression' | 'click';
+export type SpotKind = 'rendered' | 'impression' | 'click';
 export type SpotViewer = 'anon' | 'plus';
 
 /**
@@ -104,19 +105,52 @@ export function parseSpotContentId(contentId: unknown): SpotTarget | null {
  * Increment one counter. Single statement, no read-modify-write: concurrent
  * requests for the same key serialize on the row and both land.
  */
+// A browser may retry a request after an ambiguous network failure. Claiming
+// its event ID in the SAME statement that increments the aggregate prevents
+// double-counting. Old clients without an ID retain the legacy path.
+let nextReceiptCleanup = 0;
 export async function recordSpotEvent(
   target: SpotTarget,
   viewer: SpotViewer,
   kind: SpotKind,
   host: string = 'unknown',
   at: Date = new Date(),
+  eventId?: string,
 ): Promise<void> {
+  const params = [dayInTz(at), target.slot, target.creative, viewer, kind,
+    SPOT_HOSTS.has(host) ? host : 'unknown'];
+  if (eventId) {
+    // Reject malformed identifiers rather than allowing arbitrary values to
+    // expand the receipt table. UUIDs are not user identifiers.
+    if (!/^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/i.test(eventId)) {
+      throw new Error('invalid_spot_event_id');
+    }
+    await query(
+      `with claim as (
+         insert into spot_delivery_receipts (id) values ($7::uuid)
+         on conflict (id) do nothing returning id
+       )
+       insert into spot_stats (day, slot, creative, viewer, kind, host, count)
+       select $1::date, $2, $3, $4, $5, $6, 1 from claim
+       on conflict (day, slot, creative, viewer, kind, host)
+       do update set count = spot_stats.count + 1, updated_at = now()`,
+      [...params, eventId],
+    );
+    // Receipts only need to outlive the browser's 24-hour retry window.
+    // Maintenance runs at most once hourly per process, off the request path.
+    if (Date.now() >= nextReceiptCleanup) {
+      nextReceiptCleanup = Date.now() + 60 * 60 * 1000;
+      void query("delete from spot_delivery_receipts where created_at < now() - interval '48 hours'")
+        .catch(() => {});
+    }
+    return;
+  }
   await query(
     `insert into spot_stats (day, slot, creative, viewer, kind, host, count)
      values ($1::date, $2, $3, $4, $5, $6, 1)
      on conflict (day, slot, creative, viewer, kind, host)
      do update set count = spot_stats.count + 1, updated_at = now()`,
-    [dayInTz(at), target.slot, target.creative, viewer, kind, SPOT_HOSTS.has(host) ? host : 'unknown'],
+    params,
   );
 }
 
@@ -200,6 +234,15 @@ export interface SpotStats {
   /** Each creative with its own slot breakdown — see SpotCreativeSlots. */
   by_creative_slot: SpotCreativeSlots[];
   rows: SpotRow[];
+  // Separate diagnostic funnel. Rendered = mounted once per placement/content
+  // view; impressions retain the 50%/one-second viewability definition.
+  delivery: {
+    rendered: number;
+    viewable: number;
+    viewability_pct: number | null;
+    by_slot: Array<{ slot: string; rendered: number; viewable: number; viewability_pct: number | null }>;
+    by_viewer: Array<{ viewer: SpotViewer; rendered: number; viewable: number; viewability_pct: number | null }>;
+  };
 }
 
 function ctr(impressions: number, clicks: number): number | null {
@@ -246,6 +289,26 @@ export async function getSpotStats(opts: {
       order by 1 desc, impressions desc, 2, 3`,
     [opts.from, opts.to, opts.host ?? null],
   );
+
+  const mounted = await query<{ slot: string; viewer: SpotViewer; rendered: string }>(
+    `select slot, viewer, sum(count)::bigint as rendered
+       from spot_stats
+      where kind = 'rendered' and day between $1::date and $2::date
+        and ($3::text is null or host = $3::text)
+      group by slot, viewer`,
+    [opts.from, opts.to, opts.host ?? null],
+  );
+  const renderedBySlot = new Map<string, number>();
+  const renderedByViewer = new Map<SpotViewer, number>();
+  let renderedTotal = 0;
+  for (const row of mounted.rows) {
+    const n = Number(row.rendered);
+    renderedTotal += n;
+    renderedBySlot.set(row.slot, (renderedBySlot.get(row.slot) || 0) + n);
+    renderedByViewer.set(row.viewer, (renderedByViewer.get(row.viewer) || 0) + n);
+  }
+  const viewability = (viewable: number, rendered: number): number | null =>
+    rendered ? Math.round((viewable / rendered) * 1000) / 10 : null;
 
   const totals = { impressions: 0, clicks: 0 };
   const bucket = <K extends string>(m: Map<string, { key: K; impressions: number; clicks: number }>, key: K) => {
@@ -321,5 +384,20 @@ export async function getSpotStats(opts: {
       })
       .sort((a, b) => b.impressions - a.impressions || a.creative.localeCompare(b.creative)),
     rows,
+    delivery: {
+      rendered: renderedTotal,
+      viewable: totals.impressions,
+      viewability_pct: viewability(totals.impressions, renderedTotal),
+      by_slot: [...new Set([...renderedBySlot.keys(), ...slots.keys()])].map((slot) => {
+        const rendered = renderedBySlot.get(slot) || 0;
+        const viewable = slots.get(slot)?.impressions || 0;
+        return { slot, rendered, viewable, viewability_pct: viewability(viewable, rendered) };
+      }),
+      by_viewer: (['anon', 'plus'] as SpotViewer[]).map((viewer) => {
+        const rendered = renderedByViewer.get(viewer) || 0;
+        const viewable = viewers.get(viewer)?.impressions || 0;
+        return { viewer, rendered, viewable, viewability_pct: viewability(viewable, rendered) };
+      }),
+    },
   };
 }
