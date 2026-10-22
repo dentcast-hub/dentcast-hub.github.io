@@ -167,6 +167,31 @@ describe('mounted versus viewable measurements', () => {
   });
 });
 
+describe('reliable telemetry retry', () => {
+  it('retries a failed viewable impression with exactly the same event ID', async () => {
+    const original = globalThis.fetch;
+    let first = true;
+    globalThis.fetch = vi.fn(async (input: any, init: any) => {
+      if (String(input).endsWith('/anon/event') && init?.body
+        && JSON.parse(init.body).event === 'spot_impression' && first) {
+        first = false;
+        const body = JSON.parse(init.body);
+        eventIds.push(body.event_id);
+        posts.push({ url: String(input), body: { event: body.event, content_id: body.content_id } });
+        return { ok: false, status: 503 } as any;
+      }
+      return original(input, init);
+    }) as any;
+    await boot();
+    await seen();
+    expect(posts).toHaveLength(1);
+    await tick(2000);
+    expect(posts).toHaveLength(2);
+    const viewIds = eventIds.filter((id) => id === eventIds[eventIds.length - 1]);
+    expect(viewIds).toHaveLength(2);
+  });
+});
+
 describe('page-view denominator', () => {
   it('counts a document once, even when nobody scrolls to the ad', async () => {
     await boot();
