@@ -82,6 +82,8 @@ const CONFIG = {
 };
 
 let posts: Array<{ url: string; body: any }> = [];
+let mountedPosts: Array<{ url: string; body: any }> = [];
+let eventIds: string[] = [];
 let pageViews = 0;
 let controls: Record<string, unknown> = {};
 let campaign: any = null;
@@ -95,7 +97,16 @@ function stubFetch(activityStatus = 204) {
       pageViews += 1;
       return { ok: true, status: 204 } as any;
     }
-    posts.push({ url, body: JSON.parse(init.body) });
+    const body = JSON.parse(init.body);
+    if (body.event_id) eventIds.push(body.event_id);
+    // Legacy assertions below deliberately focus on VIEWABLE impressions.
+    // Mounted events have their own bucket and their IDs are tested separately.
+    if (body.event === 'spot_rendered' || body.action === 'spot_rendered') {
+      mountedPosts.push({ url, body });
+      return { ok: true, status: 204 } as any;
+    }
+    const { event_id, ...legacyBody } = body;
+    posts.push({ url, body: legacyBody });
     if (url.includes('/activity') && activityStatus !== 204) return { ok: false, status: activityStatus } as any;
     return { ok: true, status: 204 } as any;
   }) as any;
@@ -121,6 +132,8 @@ const creativeShown = () => document.querySelector('.dc-spot')?.getAttribute('da
 beforeEach(() => {
   vi.useFakeTimers();
   posts = [];
+  mountedPosts = [];
+  eventIds = [];
   pageViews = 0;
   controls = {};
   campaign = null;
@@ -138,6 +151,20 @@ afterEach(() => {
   // test's `posts` array the moment that test advances the clock.
   vi.clearAllTimers();
   vi.useRealTimers();
+});
+
+describe('mounted versus viewable measurements', () => {
+  it('counts a mounted card separately before it is viewable, using stable event ids', async () => {
+    await boot();
+    expect(mountedPosts).toHaveLength(1);
+    expect(posts).toHaveLength(0);
+    expect(mountedPosts[0].body.event).toBe('spot_rendered');
+    await seen();
+    expect(posts).toHaveLength(1);
+    expect(posts[0].body.event).toBe('spot_impression');
+    expect(eventIds).toHaveLength(2);
+    expect(new Set(eventIds).size).toBe(2);
+  });
 });
 
 describe('page-view denominator', () => {
