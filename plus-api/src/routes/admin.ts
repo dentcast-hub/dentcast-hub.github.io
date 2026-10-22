@@ -817,6 +817,17 @@ ${renderMemberSpotControls()}
         + '</tbody></table>';
     }
 
+    function deliveryRows(b) {
+      var d = b.delivery || {};
+      if (!d.rendered) return '<p class="muted">برای این بازه هنوز شمارشِ «کارتِ قرارگرفته در صفحه» نداریم. ثبت این شاخص از نسخهٔ جدید شروع می‌شود؛ داده‌های قدیمی را نمی‌توان بازسازی کرد.</p>';
+      var rows = (d.by_slot || []).slice().sort(function (a, c) { return c.rendered - a.rendered; });
+      return '<table><thead><tr><th>جایگاه</th><th>قرارگرفته در صفحه</th><th>واقعاً دیده‌شده</th><th>نسبت</th></tr></thead><tbody>'
+        + rows.map(function (r) {
+          return '<tr><td>' + esc(SLOT_FA[r.slot] || r.slot) + '</td><td>' + num(r.rendered)
+            + '</td><td>' + num(r.viewable) + '</td><td>' + pct(r.viewability_pct) + '</td></tr>';
+        }).join('') + '</tbody></table>';
+    }
+
     function creativeCard(c) {
       var h = '<div class="sp-c"><div class="head"><h4>' + esc(c.creative) + '</h4>'
         + '<span class="big">' + num(c.impressions) + '</span>'
@@ -858,6 +869,13 @@ ${renderMemberSpotControls()}
         + '<div class="card"><h3>کل کلیک</h3><div class="v">' + num(b.totals.clicks) + '</div><div class="s">کارت‌های بدون لینک اصلاً کلیک‌پذیر نیستند</div></div>'
         + '<div class="card"><h3>CTR</h3><div class="v">' + pct(b.totals.ctr_pct) + '</div><div class="s">کلیک تقسیم بر نمایش</div></div>'
         + '</div>'
+        + '<h4 style="margin:18px 0 0">قیفِ نمایش تبلیغ‌ها</h4>'
+        + '<p class="muted">قرارگرفته در صفحه = کارت در DOM گذاشته شده، نه لزوماً دیده‌شده. واقعاً دیده‌شده = دست‌کم ۵۰٪ برای یک ثانیه (۳۰٪ برای بنر بزرگ). آمارِ هر دو فقط پس از ارسال موفق به API ثبت می‌شود.</p>'
+        + (b.delivery && b.delivery.rendered ? '<div class="grid">'
+          + '<div class="card"><h3>کارتِ قرارگرفته</h3><div class="v">' + num(b.delivery.rendered) + '</div></div>'
+          + '<div class="card"><h3>واقعاً دیده‌شده</h3><div class="v">' + num(b.delivery.viewable) + '</div></div>'
+          + '<div class="card"><h3>درصدِ قابل‌مشاهده</h3><div class="v">' + pct(b.delivery.viewability_pct) + '</div></div></div>' : '')
+        + deliveryRows(b)
         + '<h4 style="margin:18px 0 0">به تفکیک بیننده</h4>' + viewerRows(b)
         + '<h4 style="margin:18px 0 0">هر تبلیغ (زمانِ چرخش) و محل‌هایش</h4>'
         + (cs.length ? cs.map(creativeCard).join('') : '<div class="muted" style="margin-top:8px">هیچ تبلیغی در این بازه نمایشی نداشته.</div>')
