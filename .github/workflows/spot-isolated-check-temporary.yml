@@ -1,0 +1,62 @@
+name: Spot isolated DOM verification
+on:
+  push:
+    branches: [fix/spot-measurement-reliability-20261022]
+permissions:
+  contents: write
+jobs:
+  verify:
+    if: "!contains(github.event.head_commit.message, '[spot-regression-gate]')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env: {POSTGRES_USER: dentcast, POSTGRES_PASSWORD: dentcast, POSTGRES_DB: dentcast_plus_test}
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/spot-measurement-reliability-20261022
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: plus-api/package-lock.json
+      - id: asset
+        continue-on-error: true
+        run: python3 tools/asset_version.py --check
+      - id: install
+        continue-on-error: true
+        working-directory: plus-api
+        run: npm ci
+      - id: build
+        if: steps.install.outcome == 'success'
+        continue-on-error: true
+        working-directory: plus-api
+        run: npm run build
+      - id: tests
+        if: steps.build.outcome == 'success'
+        continue-on-error: true
+        working-directory: plus-api
+        run: |
+          set -o pipefail
+          npm test -- test/spot.dom.test.ts test/spot-stats.test.ts test/view-stats.test.ts test/admin-member-spot.test.ts test/admin-member-spot.dom.test.ts 2>&1 | tee /tmp/spot-final-regression.log
+      - name: Record result and remove transient workflow
+        if: always()
+        env:
+          ASSET: ${{ steps.asset.outcome }}
+          BUILD: ${{ steps.build.outcome }}
+          TESTS: ${{ steps.tests.outcome }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/spot-isolated-check-temporary.yml
+          if [ "$TESTS" != "success" ]; then
+            tail -n 230 /tmp/spot-final-regression.log > spot/spot-test-failures.txt
+            git add spot/spot-test-failures.txt
+          fi
+          git commit -m "Spot isolated gate: asset=$ASSET build=$BUILD tests=$TESTS [spot-regression-gate]"
+          git push origin HEAD:fix/spot-measurement-reliability-20261022
