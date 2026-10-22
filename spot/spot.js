@@ -142,61 +142,108 @@ function countContentView() {
 // never retry. A dropped impression is acceptable; a broken card is not.
 // keepalive lets a click still report while the browser navigates away (the
 // house ad's link is internal, so that tab really does unload).
-const SPOT_EVENT = { impression: 'spot_impression', click: 'spot_click' };
 
-/**
- * Telemetry heartbeat. Everything below is fire-and-forget, which used to mean a
- * dead reporting channel and an audience that genuinely saw no ads produced the
- * SAME silence — on 2026-07-27 that ambiguity cost a full investigation before
- * the numbers could be trusted at all.
- *
- * So a failed report says so through the OTHER channel: GA and our API fail
- * independently (an adblocker takes GA, a CORS/rate-limit/outage takes ours), so
- * both going quiet at once is itself the signal. Capped at one per page view —
- * this is a smoke alarm, not a log stream — and it never disturbs the page: a
- * failure to report a failure is simply dropped.
- */
+const SPOT_EVENT = { rendered: 'spot_rendered', impression: 'spot_impression', click: 'spot_click' };
+// Persist unacknowledged telemetry for a maximum of 24 hours in this browser
+// tab. No names, user identifiers or browsing history are retained.
+const SPOT_PENDING_KEY = 'dcSpot.pending.v1';
+const SPOT_PENDING_TTL = 24 * 60 * 60 * 1000;
+const SPOT_RETRY = [2000, 10000, 60000, 300000];
+function spotId() {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+  const v = new Uint8Array(16);
+  if (typeof crypto !== 'undefined' && crypto.getRandomValues) crypto.getRandomValues(v);
+  else for (let i = 0; i < v.length; i++) v[i] = Math.floor(Math.random() * 256);
+  v[6] = (v[6] & 15) | 64; v[8] = (v[8] & 63) | 128;
+  const h = Array.from(v, (b) => b.toString(16).padStart(2, '0')).join('');
+  return h.slice(0, 8) + '-' + h.slice(8, 12) + '-' + h.slice(12, 16)
+    + '-' + h.slice(16, 20) + '-' + h.slice(20);
+}
+function loadPending() {
+  try {
+    const q = JSON.parse(sessionStorage.getItem(SPOT_PENDING_KEY) || '[]');
+    return Array.isArray(q) ? q.filter((t) => t && SPOT_EVENT[t.kind]
+      && typeof t.id === 'string' && Date.now() - t.created < SPOT_PENDING_TTL).slice(-120) : [];
+  } catch (_) { return []; }
+}
+const spotPending = loadPending();
+const spotSending = new Set();
+function savePending() {
+  try { sessionStorage.setItem(SPOT_PENDING_KEY, JSON.stringify(spotPending)); } catch (_) {}
+}
+function forgetPending(task) {
+  const i = spotPending.findIndex((t) => t.id === task.id);
+  if (i !== -1) spotPending.splice(i, 1);
+  savePending();
+}
 let reportFailureSent = false;
 function reportFailed(status, slotName) {
   if (reportFailureSent) return;
   reportFailureSent = true;
-  try {
-    track('spot_report_failed', { status: String(status), ad_slot: slotName, viewer: viewerNow() });
-  } catch (_) { /* never let the alarm break the page */ }
+  try { track('spot_report_failed', { status: String(status), ad_slot: slotName, viewer: viewerNow() }); }
+  catch (_) { /* diagnostics must not disturb reading */ }
 }
-
-function report(kind, slotName, creativeId) {
-  const name = SPOT_EVENT[kind];
-  const contentId = slotName + ':' + (creativeId || 'unknown');
+function sendPending(task) {
+  if (!spotPending.some((t) => t.id === task.id)) return;
+  if (spotSending.has(task.id) || Date.now() < (task.nextAt || 0)) return;
+  spotSending.add(task.id);
   const post = (base, path, key) => fetch(base + path, {
-    method: 'POST',
-    credentials: 'include', // the session cookie is what labels this as "plus"
-    keepalive: true,
-    cache: 'no-store',
+    method: 'POST', credentials: 'include', keepalive: true, cache: 'no-store',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ [key]: name, content_id: contentId }),
+    body: JSON.stringify({ [key]: SPOT_EVENT[task.kind],
+      content_id: task.slot + ':' + task.creative, event_id: task.id }),
   });
-  import('/plus/js/api.js?v=192')
-    .then((m) => m.apiBase())
-    .then((base) => {
-      if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
-      // We think this visitor is signed in — but the belief can come from the
-      // device hint while the session has actually expired, and /activity is
-      // behind requireAuth. Fall back once so the event is counted as a guest
-      // rather than silently lost; the server labels the viewer either way.
-      return post(base, '/activity', 'action')
-        .then((res) => (res && res.status === 401 ? post(base, '/anon/event', 'event') : res));
-    })
-    // A 4xx/5xx does NOT reject fetch, so the status has to be read: a 400 wall
-    // or a 429 ceiling is exactly the kind of failure that was invisible before.
-    .then((res) => { if (res && !res.ok) reportFailed(res.status, slotName); })
-    .catch(() => {
-      reportFailed('network', slotName);
-      // A network-level failure (not an HTTP error) may mean the cached base is
-      // dead — self-heal so the NEXT event, and the next page's /me, re-probe
-      // instead of retrying the same unreachable host all session.
-      import('/plus/js/api.js?v=192').then((m) => m.forgetBase()).catch(() => {});
-    });
+  import('/plus/js/api.js?v=192').then((m) => m.apiBase()).then((base) => {
+    if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
+    return post(base, '/activity', 'action')
+      .then((res) => res.status === 401 ? post(base, '/anon/event', 'event') : res);
+  }).then((res) => {
+    if (res && res.ok) { forgetPending(task); return; }
+    const status = res ? res.status : 'network';
+    reportFailed(status, task.slot);
+    if (res && status >= 400 && status < 500 && status !== 429) {
+      forgetPending(task); return;
+    }
+    task.attempts = (task.attempts || 0) + 1;
+    const after = status === 429 && res && res.headers
+      ? Number(res.headers.get('retry-after')) * 1000 : 0;
+    const delay = Math.max(SPOT_RETRY[Math.min(task.attempts - 1, 3)],
+      Number.isFinite(after) ? after : 0);
+    task.nextAt = Date.now() + Math.min(delay, 60 * 60 * 1000);
+    savePending();
+    if (document.visibilityState === 'visible')
+      setTimeout(() => sendPending(task), task.nextAt - Date.now());
+  }).catch(() => {
+    reportFailed('network', task.slot);
+    task.attempts = (task.attempts || 0) + 1;
+    task.nextAt = Date.now() + SPOT_RETRY[Math.min(task.attempts - 1, 3)];
+    savePending();
+    import('/plus/js/api.js?v=192').then((m) => m.forgetBase()).catch(() => {});
+    if (document.visibilityState === 'visible')
+      setTimeout(() => sendPending(task), task.nextAt - Date.now());
+  }).finally(() => { spotSending.delete(task.id); });
+}
+function flushPending() {
+  const now = Date.now();
+  for (const task of [...spotPending]) {
+    if (now - task.created >= SPOT_PENDING_TTL) { forgetPending(task); continue; }
+    if (task.nextAt > now) {
+      if (document.visibilityState === 'visible')
+        setTimeout(() => sendPending(task), task.nextAt - now);
+    } else sendPending(task);
+  }
+}
+window.addEventListener('online', flushPending);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') flushPending();
+});
+function report(kind, slotName, creativeId) {
+  const task = { id: spotId(), kind, slot: slotName,
+    creative: creativeId || 'unknown', created: Date.now(), nextAt: 0, attempts: 0 };
+  spotPending.push(task);
+  if (spotPending.length > 120) spotPending.shift();
+  savePending();
+  sendPending(task);
 }
 
 // ── creative selection ───────────────────────────────────────────────────────
@@ -660,6 +707,7 @@ function buildCard(creative, slotName) {
     img.decoding = 'async';
     a.appendChild(img);
     aside.appendChild(a);
+    armMounted(aside, creative, slotName);
     armSeen(aside, creative, slotName);
     return aside;
   }
@@ -698,6 +746,7 @@ function buildCard(creative, slotName) {
   }
 
   aside.appendChild(a);
+  armMounted(aside, creative, slotName);
   // Every card counts itself, once it has actually been seen. Doing it here (the
   // one place a card is ever built) means no placement can be added later that
   // forgets to measure, or that measures at insertion by accident.
@@ -713,6 +762,21 @@ function buildCard(creative, slotName) {
 // card in the SAME content view from being counted twice when an overlay watcher
 // re-seats it — it never collapses repeat views.
 const seenImpressions = new Set();
+const mountedSpots = new Set();
+function armMounted(el, creative, slotName) {
+  // Distinct metric: a card was actually attached to the document. Not a
+  // viewable impression; the existing 50%/one-second rule is unchanged.
+  requestAnimationFrame(() => {
+    if (!el.isConnected || adsKilled) return;
+    const key = slotName + ':' + (creative.id || '');
+    if (mountedSpots.has(key)) return;
+    mountedSpots.add(key);
+    const done = () => { if (!adsKilled && el.isConnected) report('rendered', slotName, creative.id); };
+    if (!classPending) done();
+    else Promise.race([classPending,
+      new Promise((resolve) => setTimeout(resolve, CLASS_WAIT_MS))]).then(done);
+  });
+}
 // The desktop shell reads ten articles inside ONE page load, so "page view"
 // would silently mean "the first article, then nothing for the rest of the
 // visit" — the sponsor delivered ten cards and would be billed for one. The
@@ -721,6 +785,7 @@ const seenImpressions = new Set();
 // this: the guard against double-counting one seated card stays intact.
 function forgetImpression(slotName, creativeId) {
   seenImpressions.delete(slotName + ':' + (creativeId || ''));
+  mountedSpots.delete(slotName + ':' + (creativeId || ''));
 }
 // Slots that are PINNED to sequence[0] instead of rotating (see
 // pinnedCreative). They are on screen for the whole visit rather than once per
@@ -1343,6 +1408,7 @@ async function main() {
   classPending = probe;
   probe.then(rememberClass);
   countContentView();
+  flushPending(); // replay previously unacknowledged events across navigations
   // A desktop article can replace the document's content without navigation.
   // This counting-only hook remains if Spot is disabled or the user is premium.
   // The normal ad-mount hook replaces it when an eligible slot is active.
