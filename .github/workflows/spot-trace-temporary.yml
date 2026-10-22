@@ -1,0 +1,48 @@
+name: Spot test trace
+on:
+  push:
+    branches: [fix/spot-measurement-reliability-20261022]
+permissions:
+  contents: write
+jobs:
+  trace:
+    if: "!contains(github.event.head_commit.message, '[spot-traced]')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env: {POSTGRES_USER: dentcast, POSTGRES_PASSWORD: dentcast, POSTGRES_DB: dentcast_plus_test}
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/spot-measurement-reliability-20261022
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: plus-api/package-lock.json
+      - run: npm ci
+        working-directory: plus-api
+      - name: Execute browser regression and retain diagnostic output
+        id: test
+        continue-on-error: true
+        working-directory: plus-api
+        run: |
+          set -o pipefail
+          npm test -- test/spot.dom.test.ts 2>&1 | tee /tmp/spot-trace.log
+      - name: Capture outcome
+        if: always()
+        env:
+          RESULT: ${{ steps.test.outcome }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/spot-trace-temporary.yml
+          tail -n 240 /tmp/spot-trace.log > spot/spot-test-failures.txt
+          git add spot/spot-test-failures.txt
+          git commit -m "Spot trace result: $RESULT [spot-traced]"
+          git push origin HEAD:fix/spot-measurement-reliability-20261022
