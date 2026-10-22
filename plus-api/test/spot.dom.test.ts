@@ -139,6 +139,7 @@ beforeEach(() => {
   campaign = null;
   observers = [];
   localStorage.clear();
+  sessionStorage.clear();
   me.user = null; me.status = 'anon'; me.delayMs = 0;
   (globalThis as any).IntersectionObserver = FakeIO;
   setVisibility('visible');
