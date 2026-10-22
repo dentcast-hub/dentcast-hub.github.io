@@ -130,10 +130,6 @@ const cards = () => document.querySelectorAll('.dc-spot').length;
 const creativeShown = () => document.querySelector('.dc-spot')?.getAttribute('data-dc-spot') ?? null;
 
 beforeEach(() => {
-  // jsdom starts the first test while its own document can still be loading.
-  // A late DOMContentLoaded in test #2 can otherwise boot test #1's script and
-  // create phantom duplicate impressions. Drive each module boot immediately.
-  Object.defineProperty(document, 'readyState', { configurable: true, value: 'complete' });
   vi.useFakeTimers();
   posts = [];
   mountedPosts = [];
@@ -156,45 +152,6 @@ afterEach(() => {
   // test's `posts` array the moment that test advances the clock.
   vi.clearAllTimers();
   vi.useRealTimers();
-});
-
-describe('mounted versus viewable measurements', () => {
-  it('counts a mounted card separately before it is viewable, using stable event ids', async () => {
-    await boot();
-    expect(mountedPosts).toHaveLength(1);
-    expect(posts).toHaveLength(0);
-    expect(mountedPosts[0].body.event).toBe('spot_rendered');
-    await seen();
-    expect(posts).toHaveLength(1);
-    expect(posts[0].body.event).toBe('spot_impression');
-    expect(eventIds).toHaveLength(2);
-    expect(new Set(eventIds).size).toBe(2);
-  });
-});
-
-describe('reliable telemetry retry', () => {
-  it('retries a failed viewable impression with exactly the same event ID', async () => {
-    const original = globalThis.fetch;
-    let first = true;
-    globalThis.fetch = vi.fn(async (input: any, init: any) => {
-      if (String(input).endsWith('/anon/event') && init?.body
-        && JSON.parse(init.body).event === 'spot_impression' && first) {
-        first = false;
-        const body = JSON.parse(init.body);
-        eventIds.push(body.event_id);
-        posts.push({ url: String(input), body: { event: body.event, content_id: body.content_id } });
-        return { ok: false, status: 503 } as any;
-      }
-      return original(input, init);
-    }) as any;
-    await boot();
-    await seen();
-    expect(posts).toHaveLength(1);
-    await tick(2000);
-    expect(posts).toHaveLength(2);
-    const viewIds = eventIds.filter((id) => id === eventIds[eventIds.length - 1]);
-    expect(viewIds).toHaveLength(2);
-  });
 });
 
 describe('page-view denominator', () => {
@@ -659,5 +616,44 @@ describe('saved placement controls', () => {
     localStorage.setItem('dcAds.tick', '1');
     await boot();
     expect(cards()).toBe(0);
+  });
+});
+
+describe('mounted versus viewable measurements', () => {
+  it('counts a mounted card separately before it is viewable, using stable event ids', async () => {
+    await boot();
+    expect(mountedPosts).toHaveLength(1);
+    expect(posts).toHaveLength(0);
+    expect(mountedPosts[0].body.event).toBe('spot_rendered');
+    await seen();
+    expect(posts).toHaveLength(1);
+    expect(posts[0].body.event).toBe('spot_impression');
+    expect(eventIds).toHaveLength(2);
+    expect(new Set(eventIds).size).toBe(2);
+  });
+});
+
+describe('reliable telemetry retry', () => {
+  it('retries a failed viewable impression with exactly the same event ID', async () => {
+    const original = globalThis.fetch;
+    let first = true;
+    globalThis.fetch = vi.fn(async (input: any, init: any) => {
+      if (String(input).endsWith('/anon/event') && init?.body
+        && JSON.parse(init.body).event === 'spot_impression' && first) {
+        first = false;
+        const body = JSON.parse(init.body);
+        eventIds.push(body.event_id);
+        posts.push({ url: String(input), body: { event: body.event, content_id: body.content_id } });
+        return { ok: false, status: 503 } as any;
+      }
+      return original(input, init);
+    }) as any;
+    await boot();
+    await seen();
+    expect(posts).toHaveLength(1);
+    await tick(2000);
+    expect(posts).toHaveLength(2);
+    const viewIds = eventIds.filter((id) => id === eventIds[eventIds.length - 1]);
+    expect(viewIds).toHaveLength(2);
   });
 });
