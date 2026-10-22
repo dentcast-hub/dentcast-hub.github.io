@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "dentai/promptologist/prompt-append2-3"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.4.14"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -333,43 +333,49 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "evidence": [],
         "id": "C.4.10.1",
         "module": "06-paper-ingestion.md",
-        "reason": null,
-        "status": "pending"
+        "reason": "4.10 Part 1: skipped \u2014 no attached paper",
+        "status": "skipped"
       },
       {
         "evidence": [],
         "id": "C.4.10.2",
         "module": "06-paper-ingestion.md",
-        "reason": null,
-        "status": "pending"
+        "reason": "4.10 Part 2: skipped \u2014 no attached paper",
+        "status": "skipped"
       },
       {
         "evidence": [],
         "id": "C.4.10.3",
         "module": "06-paper-ingestion.md",
-        "reason": null,
-        "status": "pending"
+        "reason": "4.10 Part 3: skipped \u2014 no attached paper",
+        "status": "skipped"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "4 authored flashcards in plus/faq-corpus.json"
+        ],
         "id": "C.4.11",
         "module": "07-flashcards-and-quiz.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "5 binary FAQ questions with explicit yes/no"
+        ],
         "id": "C.4.12",
         "module": "07-flashcards-and-quiz.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "DES COMMENTARY FULL_TEXT v3.4 checklist 12/E; fidelity null"
+        ],
         "id": "C.4.13",
         "module": "08-des-fidelity.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -499,7 +505,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Pre-commit delivery-1 reconcile; staged work reviewed"
+    "note": "Completed C.4.13"
   },
   "schema": "publish-handoff-v3"
 }
