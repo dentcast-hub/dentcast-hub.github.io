@@ -139597,6 +139597,53 @@
         "Philippe François",
         "Elisabeth Dursun"
       ]
+    },
+    {
+      "id": "P2944",
+      "title": "Clinical Evaluation of Zirconia Occlusal Veneer Fixed Partial Denture: A New Design for Posterior Resin-Bonded Fixed Partial Dentures (RBFPDs)",
+      "file_name": "Clinical Evaluation of Zirconia Occlusal Veneer Fixed Partial Denture - A New Design for Posterior Resin-Bonded Fixed Partial Dentures (RBFPDs).pdf",
+      "topic": "Maryland bridge",
+      "topic_path": "Maryland bridge",
+      "type": "clinical trial",
+      "local_path": "",
+      "file_size": 1083470,
+      "key_finding": "Forty posterior zirconia occlusal-veneer FPDs were evaluated for 18 months; no debonding or recurrent caries occurred. Two complete fractures and one crack occurred in 5Y groups; differences were not statistically significant.",
+      "clinical_bottom_line": "Short-term results in selected patients are promising; limited sample size and follow-up do not establish equivalence or long-term durability.",
+      "linked_episodes": [
+        "sharehub/share-39"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1EPexRej8M-K-rY87nvbwT5Q4FRNt01Xh/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1EPexRej8M-K-rY87nvbwT5Q4FRNt01Xh",
+      "drive_view": "https://drive.google.com/file/d/1EPexRej8M-K-rY87nvbwT5Q4FRNt01Xh/view",
+      "drive_id": "1EPexRej8M-K-rY87nvbwT5Q4FRNt01Xh",
+      "tags": [
+        "resin-bonded-fixed-partial-dentures",
+        "occlusal-veneer",
+        "posterior-bridge",
+        "zirconia",
+        "3y-tzp",
+        "5y-psz",
+        "clinical-trial",
+        "topic:maryland-bridge",
+        "clinical-evaluation-of-zirconia-occlusal-veneer-fixed-partial-denture"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Clinical Evaluation of Zirconia Occlusal Veneer Fixed Partial Denture: A New Design for Posterior Resin-Bonded Fixed Partial Dentures (RBFPDs)",
+      "doi": "10.1111/jerd.70161",
+      "journal": "Journal of Esthetic and Restorative Dentistry",
+      "crossref_year": 2026,
+      "subjects": [
+        "Dentistry"
+      ],
+      "abstract": "Purpose: To evaluate the clinical performance of zirconia occlusal veneer fixed partial dentures (FPDs). Materials and Methods: Forty occlusal veneer FPDs (n = 10) replacing first molars were fabricated using two preparation de- signs (D1 and D2) and two types of zirconia: second-­generation traditional zirconia (3Y-­TZP) and third-­generation translucent zirconia (5Y-­PSZ). Design D1 involved a 1 mm occlusal reduction of the abutments, a 1 mm circumferential occlusal shoulder, and axial wall preparation of the surfaces adjacent to the missing molar, limited between the buccal and lingual line angles. The adjacent preparation in the design D2 was extended to the lingual midpoint and included an axial groove on each abutment. After resin cementation, patient and specialist satisfaction with esthetic appearance was recorded. Clinical data on fracture, debond- ing, and recurrent caries were collected at 1, 6, 12, and 18 months. Results: No cases of debonding or recurrent caries were observed. Two occlusal veneer FPDs in Group D1/5Y experienced com- plete fractures at 4 and 17 months, respectively. Only one FPD in Group D2/5Y developed a crack at the first-­month follow-­up. Statistical analysis showed no significant differences among the groups in fracture resistance or esthetic satisfaction. Conclusion: Occlusal veneer fixed partial dentures made of second-­generation zirconia provide an effective alternative to con- ventional treatments for replacing first molars or second premolars, particularly when adjacent abutments are intact and the patient maintains good oral hygiene.",
+      "display_title": "Clinical Evaluation of Zirconia Occlusal Veneer Fixed Partial Denture: A New Design for Posterior Resin-Bonded Fixed Partial Dentures (RBFPDs)",
+      "authors": [
+        "Yasmeen Abdul Kader Ghalawingy",
+        "Ramah Eimad Makieh",
+        "Mohammad Luai Ahmad Foad Morad"
+      ]
     }
   ],
   "drive_matched": 2849,
@@ -140121,5 +140168,5 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2258
+  "total_papers": 2259
 }

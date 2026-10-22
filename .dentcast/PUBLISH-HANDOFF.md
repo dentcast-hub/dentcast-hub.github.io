@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "sharehub/share-39"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.4.14"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -30,7 +30,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         {
           "decision": "User approved #\u0628\u0631\u06cc\u062c_\u0628\u0627\u0646\u062f\u0634\u0648\u0646\u062f\u0647 #\u0627\u06a9\u0644\u0648\u0632\u0627\u0644_\u0648\u0646\u06cc\u0631 #\u0622\u0646\u0644\u0647_\u0628\u0631\u06cc\u062c #RBFDP #\u0632\u06cc\u0631\u06a9\u0648\u0646\u06cc\u0627 and RBFPD, Resin-Bonded Bridge, Occlusal Veneer, Onlay Bridge, Tabletop Bridge search equivalents",
           "evidence": [
-            "User confirmation: \u062e\u0648\u0628\u0647 \u0647\u0645\u06cc\u0646\u0627\u06cc\u06cc \u06a9\u0647 \u06af\u0641\u062a\u06cc \u0627\u0648\u06a9\u06cc\u0647 \u062a\u0627\u06cc\u06cc\u062f \u0648 \u0627\u062f\u0627\u0645\u0647 \u0628\u062f\u0647"
+            "Current conversation: explicit approval of proposed search hashtags and equivalent keyword phrases"
           ],
           "scope": "Search hashtags and keyword variants",
           "status": "confirmed"
@@ -41,6 +41,14 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             "Current ShareHub publication request and confirmation to continue"
           ],
           "scope": "Feature-branch publication deliveries",
+          "status": "confirmed"
+        },
+        {
+          "decision": "Extract/crop actual paper figures, exclude printed surrounding text/captions, save WebP and place in corresponding Persian sections",
+          "evidence": [
+            "User follow-up requesting cropped article images in Persian article"
+          ],
+          "scope": "PDF figures in Persian article",
           "status": "confirmed"
         }
       ],
@@ -57,6 +65,14 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "cabinet_id": "P2944",
           "kind": "drafts",
           "status": "Prepared locally only; catalog not yet changed and no publication delivered"
+        },
+        {
+          "kind": "figures",
+          "result": "Seven exact embedded PDF figure images extracted; captions are outside image bounds and excluded; original panel markers retained; only Persian page receives figures"
+        },
+        {
+          "decision": "total_papers tracks current papers array (2258 -> 2259); historical scan/match counters do not match array and are preserved",
+          "kind": "catalog_counters"
         }
       ],
       "delivery": [],
@@ -161,6 +177,32 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
               "\u0641\u0627\u0632\u0647\u0627\u06cc \u0632\u06cc\u0631\u06a9\u0648\u0646\u06cc\u0627 \u0648 \u062a\u06a9\u0627\u0645\u0644 \u0622\u0646 \u2014 \u0646\u0633\u0644\u200c\u0647\u0627\u06cc \u0645\u062e\u062a\u0644\u0641 \u0648 \u062e\u0648\u0627\u0635 \u0641\u0627\u0632\u06cc"
             ]
           ]
+        },
+        {
+          "kind": "delivery_reconciliation",
+          "result": "Fresh ls-remote equals local HEAD and GitHub-created first delivery; all page/glossary/index bytes identical to delivered tree; sole later difference is local handoff containing observed completed delivery receipt and user image authorization. Recorded actual helper blockage before reconciling continuation."
+        },
+        {
+          "basis": "FULL_TEXT",
+          "checker_reasoning": "high",
+          "checker_requested_model": "gpt-6-luna",
+          "executed_model_identifier": "Requested model accepted by delegation API; per-agent runtime introspection UNVERIFIED",
+          "independent_contexts": true,
+          "kind": "scientific_preflight",
+          "per_role_model_selection": true,
+          "price": "UNVERIFIED",
+          "reviewer_reasoning": "high",
+          "reviewer_requested_model": "gpt-6-astra",
+          "source_text_sha256": "dae1798d91190d3dd52ce6bd604856fd011bc23642900bd506c08dca664948b3"
+        },
+        {
+          "checker1_result": "82 units; 58 MATCHES, 0 ALTERED, 0 REVERSED; full quotes validated",
+          "checker2_result": "82 units; 57 MATCHES, 1 ALTERED, 0 REVERSED; full quotes validated",
+          "disagreement_only_run": "u3,u32,u48,u75,u81; isolated checker launched with same requested model/settings",
+          "extraction_repair": "Floating TABLE 6/header moved outside an interrupted sentence; both checkers and SOURCE scorer revalidated against same final complete text",
+          "kind": "scientific_progress",
+          "source_result": "SOURCE JSON validated; 23/D; all evidence quotes match final column-aware extraction",
+          "source_text_sha256": "6e47ba6a3b77e6f622089b5a723b8d0156593fe296d83db3d350db98cec81405"
         }
       ]
     },
@@ -174,9 +216,11 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "target": "Google Drive folder 14ez2Wd98xDyVs1hN2NZnR5tjkKv22zh2; DOI 10.1111/jerd.70161"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "GitHub branch created at ad72369643ea834d2fee979f7a2509c519312301; matching local tree verified by git diff"
+        ],
         "id": "github-delivery-1",
-        "status": "started",
+        "status": "completed",
         "target": "Feature branch publish/share-39-occlusal-veneer-bridge, first publication delivery"
       }
     ],
@@ -458,46 +502,58 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "Drive upload completed and readback verified earlier: Maryland bridge folder, real-title filename, id 1EPexRej8M-K-rY87nvbwT5Q4FRNt01Xh, 1083470 bytes; no duplicate"
+        ],
         "id": "C.4.10.1",
         "module": "06-paper-ingestion.md",
-        "reason": null,
-        "status": "pending"
+        "reason": "Delivery 1 exists remotely with matching content tree; helper rejected refreshed local receipt because it demands byte-identical handoff after receipt update",
+        "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "Added catalog P2944, exact enriched schema and verified Drive links, paper abstract and semantic tags; seven inspected WebP figures inserted only in Persian article without printed surrounding captions"
+        ],
         "id": "C.4.10.2",
         "module": "06-paper-ingestion.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "Verified DOI/title/first author against supplied PDF and Wiley/PubMed; sole visible reference is first-author name linked to DOI, no full reference list; page JSON-LD site authorship preserved"
+        ],
         "id": "C.4.10.3",
         "module": "06-paper-ingestion.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "Four atomic authored concept cards in FAQ corpus, stable unique IDs, no on-page flashcard schema; decision-shaped concepts not forced into definition copies"
+        ],
         "id": "C.4.11",
         "module": "07-flashcards-and-quiz.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "Four standalone binary quiz questions, all answers open with explicit yes/no verdict; no article deixis and no new clinical claims"
+        ],
         "id": "C.4.12",
         "module": "07-flashcards-and-quiz.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "SOURCE FULL_TEXT 23/D; independent Fidelity 2 full runs plus 5-unit tie-break, canonical vote 58 MATCHES, zero ALTERED/REVERSED, 100 HIGH, no unresolved or stronger-review duties. All evidence quotes normalized against full text; no scientific body changes."
+        ],
         "id": "C.4.13",
         "module": "08-des-fidelity.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -598,9 +654,18 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       "glossary/mdp.html",
       "glossary/translucency.html",
       "glossary/zirconia-primer.html",
+      "plus/des-scores.json",
+      "plus/faq-corpus.json",
       "sharehub/en/share-39.html",
       "sharehub/index.html",
-      "sharehub/share-39.html"
+      "sharehub/share-39.html",
+      "sharehub/share39-figure-1.webp",
+      "sharehub/share39-figure-2.webp",
+      "sharehub/share39-figure-3.webp",
+      "sharehub/share39-figure-4.webp",
+      "sharehub/share39-figure-5.webp",
+      "sharehub/share39-figure-6.webp",
+      "sharehub/share39-figure-7.webp"
     ]
   },
   "reconciliation": {

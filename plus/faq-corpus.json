@@ -38230,6 +38230,85 @@
           ]
         }
       ]
+    },
+    "sharehub/share-39": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/sharehub/share-39.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا نبود دباندینگ، موفقیت مکانیکی بریج باندشونده را تضمین می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ اتصال باندینگ ممکن است حفظ شود، اما ریتینر یا بخش‌های دیگر رستوریشن دچار شکست یا ترک شوند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا نبود اختلاف آماری معنادار، عملکرد یکسان دو ماده یا طراحی را اثبات می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ به‌خصوص با تعداد نمونهٔ محدود، نتیجهٔ غیرمعنادار را نمی‌توان اثبات برابری عملکرد دانست."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا نتایج پیگیری ۱۸ماههٔ بریج اکلوزال ونیر در بیماران انتخاب‌شده، دوام بلندمدت آن را ثابت می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ برای قضاوت دربارهٔ دوام بلندمدت به داده‌های پیگیری طولانی‌تر نیاز است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا گسترش تراش پروگزیمال و افزودن شیار محوری در طراحی D2، به برداشت بیشتر ساختار دندان نیاز دارد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ مزایای احتمالی این تغییرات با تراش بیشتر ساختار دندان همراه است."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/sharehub/share-39.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-39.html#flashcards-c1",
+              "name": "ریتینر اکلوزال ونیر در بریج خلفی",
+              "description": "ریتینری که سطح اکلوزال دندان پایه و شیب‌های داخلی و خارجی کاسپ‌ها را می‌پوشاند و در سمت فضای بی‌دندانی به سطح پروگزیمال امتداد می‌یابد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-39.html#flashcards-c2",
+              "name": "تفاوت طراحی D2 با D1",
+              "description": "در D2 تراش پروگزیمال تا میانهٔ سطح لینگوال امتداد دارد و یک شیار محوری در قسمت باکالی آن اضافه می‌شود؛ این طراحی نسبت به D1 به تراش بیشتری نیاز دارد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-39.html#flashcards-c3",
+              "name": "موفقیت در برابر بقا در رستوریشن",
+              "description": "بقای رستوریشن به باقی ماندن آن در دهان اشاره دارد؛ رستوریشن ترک‌خورده می‌تواند همچنان باقی بماند، در حالی که معیار موفقیت را برآورده نمی‌کند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-39.html#flashcards-c4",
+              "name": "تعادل استحکام و ترنسلوسنسی زیرکونیا",
+              "description": "3Y-TZP استحکام و چقرمگی شکست بیشتری دارد؛ 5Y-PSZ ترنسلوسنسی بیشتری فراهم می‌کند اما خواص مکانیکی ضعیف‌تری دارد.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
