@@ -1447,7 +1447,9 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                               "step 4.13 Part 3(1) — quote the source, never reconstruct it")
 
     # ---------------- Phase D / E ----------------
-    en_rel = f"{Path(content_id).parent}/en/{Path(content_id).name}.html"
+    # as_posix(): on Windows Path.parent injects backslashes, which must never
+    # enter URL / HTML substring checks (canonical, sitemap).
+    en_rel = f"{Path(content_id).parent.as_posix()}/en/{Path(content_id).name}.html"
     if is_lite:
         rep.skip("D en-mirror", "LiteCast is .ir-only — no hreflang, no en mirror (Hard Rule 10)")
         rep.skip("E notify", "LiteCast is outside the Plus push ecosystem")

@@ -38309,6 +38309,92 @@
           ]
         }
       ]
+    },
+    "dentai/promptologist/prompt-append2-3": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-3.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا برای شروع اتصال ChatGPT به گیت‌هاب، Allow read actions انتخاب مناسبی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ این گزینه اجازه می‌دهد اطلاعات خوانده شود، اما پیش از انجام تغییرات از شما تأیید می‌خواهد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا برنچ مسیر موازی برای تغییر فایل بدون دست‌زدن به نسخهٔ اصلی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ برنچ یک مسیر موازی است که می‌توان در آن اصلاح کرد درحالی‌که فایل موجود در main دست‌نخورده می‌ماند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا مرج همان وارد کردن تغییرات تأییدشده به مسیر اصلی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ پس از اطمینان از نتیجه، تغییرات برنچ با merge وارد مسیر اصلی می‌شوند و سابقهٔ قبلی هم باقی می‌ماند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا لازم است تک‌تک مراحل گیت‌هاب را خودمان دنبال کنیم وقتی Work دسترسی دارد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ اگر دسترسی‌ها درست باشد، می‌توان کار را به Work سپرد و در پایان گزارش و تغییر پیشنهادی را بررسی کرد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا بدون تأیید کاربر باید تغییرات را مرج کرد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ دستور نمونه صریحاً می‌گوید روی برنچ جدا کار شود و بدون تأیید کاربر مرج نشود."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-3.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-3.html#flashcards-c1",
+              "name": "پلاگین گیت‌هاب در ChatGPT",
+              "description": "راه ارتباطی بین دو برنامه است که با مجوز کاربر به ChatGPT اجازه می‌دهد به فایل‌های گیت‌هاب دسترسی پیدا کند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-3.html#flashcards-c2",
+              "name": "Allow read actions",
+              "description": "گزینه‌ای که خواندن اطلاعات را مجاز می‌کند اما پیش از انجام تغییرات از کاربر تأیید می‌خواهد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-3.html#flashcards-c3",
+              "name": "Branch",
+              "description": "مسیر موازی در ریپو برای انجام اصلاحات بدون تغییر نسخهٔ اصلی در main.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-3.html#flashcards-c4",
+              "name": "Merge",
+              "description": "وارد کردن تغییرات تأییدشدهٔ یک برنچ به مسیر اصلی، در حالی که سابقهٔ قبلی نیز باقی می‌ماند.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
