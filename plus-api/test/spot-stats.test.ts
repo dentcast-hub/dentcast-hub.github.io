@@ -102,6 +102,32 @@ describe('spot telemetry — guest path', () => {
   });
 });
 
+describe('spot delivery funnel and idempotent replay', () => {
+  it('counts mounted cards independently and never double-counts the same event ID', async () => {
+    const id = '58c389a6-9040-46ec-a984-46c13dbf99a1';
+    const send = (event: string, event_id: string) => app.inject({
+      method: 'POST', url: '/anon/event',
+      payload: { event, content_id: 'article:sponsor-x', event_id },
+    });
+    expect((await send('spot_rendered', id)).statusCode).toBe(204);
+    expect((await send('spot_rendered', id)).statusCode).toBe(204);
+    expect((await send('spot_impression', '58c389a6-9040-46ec-a984-46c13dbf99a2')).statusCode).toBe(204);
+    const response = await app.inject({
+      method: 'GET', url: '/admin/spot/stats', headers: { authorization: basic },
+    });
+    const body = response.json();
+    expect(body.totals.impressions).toBe(1);
+    expect(body.delivery).toMatchObject({ rendered: 1, viewable: 1, viewability_pct: 100 });
+    expect(body.delivery.by_slot).toContainEqual({
+      slot: 'article', rendered: 1, viewable: 1, viewability_pct: 100,
+    });
+    const bad = await send('spot_rendered', 'not-a-uuid');
+    expect(bad.statusCode).toBe(400);
+    const receipts = await pool.query('select count(*)::int as n from spot_delivery_receipts');
+    expect(receipts.rows[0].n).toBe(2);
+  });
+});
+
 describe('spot telemetry — signed-in path', () => {
   it('counts as plus and never touches user_activity, streak or XP', async () => {
     const cookie = await loginAs(app, '09121110002');

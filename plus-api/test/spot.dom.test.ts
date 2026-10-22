@@ -82,6 +82,8 @@ const CONFIG = {
 };
 
 let posts: Array<{ url: string; body: any }> = [];
+let mountedPosts: Array<{ url: string; body: any }> = [];
+let eventIds: string[] = [];
 let pageViews = 0;
 let controls: Record<string, unknown> = {};
 let campaign: any = null;
@@ -95,7 +97,16 @@ function stubFetch(activityStatus = 204) {
       pageViews += 1;
       return { ok: true, status: 204 } as any;
     }
-    posts.push({ url, body: JSON.parse(init.body) });
+    const body = JSON.parse(init.body);
+    if (body.event_id) eventIds.push(body.event_id);
+    // Legacy assertions below deliberately focus on VIEWABLE impressions.
+    // Mounted events have their own bucket and their IDs are tested separately.
+    if (body.event === 'spot_rendered' || body.action === 'spot_rendered') {
+      mountedPosts.push({ url, body });
+      return { ok: true, status: 204 } as any;
+    }
+    const { event_id, ...legacyBody } = body;
+    posts.push({ url, body: legacyBody });
     if (url.includes('/activity') && activityStatus !== 204) return { ok: false, status: activityStatus } as any;
     return { ok: true, status: 204 } as any;
   }) as any;
@@ -121,11 +132,14 @@ const creativeShown = () => document.querySelector('.dc-spot')?.getAttribute('da
 beforeEach(() => {
   vi.useFakeTimers();
   posts = [];
+  mountedPosts = [];
+  eventIds = [];
   pageViews = 0;
   controls = {};
   campaign = null;
   observers = [];
   localStorage.clear();
+  sessionStorage.clear();
   me.user = null; me.status = 'anon'; me.delayMs = 0;
   (globalThis as any).IntersectionObserver = FakeIO;
   setVisibility('visible');
@@ -602,5 +616,44 @@ describe('saved placement controls', () => {
     localStorage.setItem('dcAds.tick', '1');
     await boot();
     expect(cards()).toBe(0);
+  });
+});
+
+describe('mounted versus viewable measurements', () => {
+  it('counts a mounted card separately before it is viewable, using stable event ids', async () => {
+    await boot();
+    expect(mountedPosts).toHaveLength(1);
+    expect(posts).toHaveLength(0);
+    expect(mountedPosts[0].body.event).toBe('spot_rendered');
+    await seen();
+    expect(posts).toHaveLength(1);
+    expect(posts[0].body.event).toBe('spot_impression');
+    expect(eventIds).toHaveLength(2);
+    expect(new Set(eventIds).size).toBe(2);
+  });
+});
+
+describe('reliable telemetry retry', () => {
+  it('retries a failed viewable impression with exactly the same event ID', async () => {
+    const original = globalThis.fetch;
+    let first = true;
+    globalThis.fetch = vi.fn(async (input: any, init: any) => {
+      if (String(input).endsWith('/anon/event') && init?.body
+        && JSON.parse(init.body).event === 'spot_impression' && first) {
+        first = false;
+        const body = JSON.parse(init.body);
+        eventIds.push(body.event_id);
+        posts.push({ url: String(input), body: { event: body.event, content_id: body.content_id } });
+        return { ok: false, status: 503 } as any;
+      }
+      return original(input, init);
+    }) as any;
+    await boot();
+    await seen();
+    expect(posts).toHaveLength(1);
+    await tick(2000);
+    expect(posts).toHaveLength(2);
+    const viewIds = eventIds.filter((id) => id === eventIds[eventIds.length - 1]);
+    expect(viewIds).toHaveLength(2);
   });
 });
