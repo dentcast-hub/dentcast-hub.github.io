@@ -16,6 +16,7 @@ exports.up = (pgm) => {
 exports.down = (pgm) => {
   pgm.sql(`
     drop table if exists spot_delivery_receipts;
+    delete from spot_stats where kind = 'rendered';
     alter table spot_stats drop constraint if exists spot_stats_kind_check;
     alter table spot_stats add constraint spot_stats_kind_check
       check (kind in ('impression', 'click'));
