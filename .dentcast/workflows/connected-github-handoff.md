@@ -129,3 +129,14 @@ A Python connected metadata compiler can use its optional
 a pure-data callback cannot prove remote truth on its own. The transfer
 adapter independently verifies the GitHub baseline and final tree. JS
 rendering verifies the provenance and scope declarations, not HTML bytes.
+
+
+### Independent static-landing guard
+
+Before uploading any blob, the REST/connector transfer reads the category
+landing page on the exact expected GitHub base commit. If its actual HTML
+lists static article links (`<li><a href=...>`), it cannot be waived by
+claiming `generated_later` or `client_render`: it must be included in the
+reviewed first-cut package and the new article link must be present. This
+is a fail-closed heuristic for the active site's static listing convention,
+not an infallible content or builder dependency analyzer.

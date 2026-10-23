@@ -164,3 +164,26 @@ def validate_media(files, baseline_verifier=None):
         need(ok, "FIRST_CUT_WEBP_NOT_IN_BUNDLE_OR_BASE:" + path)
         checked.append(path)
     return checked
+
+
+def verify_remote_landing(publication, files, baseline_reader):
+    """Independently inspect GitHub baseline category index before first cut."""
+    audit = only_decision(publication, SCOPE)
+    path = audit["landing_path"]
+    if audit["landing_mode"] == "included":
+        body = files.get(path)
+        need(isinstance(body, bytes), "FIRST_CUT_LANDING_BYTES_MISSING")
+        slug = publication["content_id"].rsplit("/", 1)[-1] + ".html"
+        pattern = (rb"<a\b[^>]*\bhref\s*=\s*['\"][^'\"]*" +
+                   re.escape(slug.encode("utf-8")) + rb"(?:[?#][^'\"]*)?['\"]")
+        need(re.search(pattern, body, flags=re.I),
+             "FIRST_CUT_LANDING_ENTRY_MISSING:" + path)
+        return
+    try:
+        body = baseline_reader(path)
+    except (ValueError, KeyError, OSError) as exc:
+        raise h.Blocked("FIRST_CUT_LANDING_BASE_NOT_VERIFIED:" + path) from exc
+    need(isinstance(body, bytes) and bool(body), "FIRST_CUT_LANDING_BASE_NOT_VERIFIED")
+    # The live insight/sharehub/notecast/litecast landing pages use static li/a.
+    manual_rows = re.search(rb"<li\b[^>]*>\s*<a\b[^>]*\bhref\s*=", body, re.I)
+    need(not manual_rows, "MANUAL_LANDING_MUST_BE_INCLUDED_BEFORE_CUT:" + path)

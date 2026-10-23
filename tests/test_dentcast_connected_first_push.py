@@ -68,6 +68,7 @@ class FakeGitHub:
         self.handoff = None
         self.mutate_before_update = False
         self.baseline_media = {}
+        self.baseline_landing = b"<html><div id='fixture-builder-render'></div></html>"
 
     def head(self, branch):
         return self.ref
@@ -103,6 +104,8 @@ class FakeGitHub:
         self.updated += 1
 
     def path_oid(self, path, commit):
+        if path == "insight/index.html" and commit in (HEAD, COMMIT):
+            return fp.git_oid(self.baseline_landing)
         if path in self.baseline_media and commit in (HEAD, COMMIT):
             return fp.git_oid(self.baseline_media[path])
         if commit == HEAD:
@@ -111,6 +114,8 @@ class FakeGitHub:
         return next(x["sha"] for x in self.entries if x["path"] == path)
 
     def get_blob(self, sha):
+        if sha == fp.git_oid(self.baseline_landing):
+            return self.baseline_landing
         for body in self.baseline_media.values():
             if fp.git_oid(body) == sha:
                 return body
@@ -351,6 +356,18 @@ class FirstCutTests(unittest.TestCase):
         result = fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
         self.assertEqual(result["baseline_media"], [path])
         self.assertEqual(client.updated, 1)
+
+    def test_undeclared_static_index_detected_from_actual_base(self):
+        files = fixture()
+        client = FakeGitHub()
+        client.baseline_landing = (
+            b'<html><ul><li><a href="insight-98.html">existing article</a>'
+            b'</li></ul></html>')
+        with self.assertRaisesRegex(h.Blocked,
+                                    "MANUAL_LANDING_MUST_BE_INCLUDED_BEFORE_CUT"):
+            fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
+        self.assertEqual(client.blobs, {})
+        self.assertEqual(client.updated, 0)
 
     def test_bad_existing_baseline_webp_is_blocked(self):
         files = fixture()

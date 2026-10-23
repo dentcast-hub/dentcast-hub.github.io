@@ -191,6 +191,11 @@ def deliver(transport, branch, expected_head, files, max_blob_bytes):
         baseline_oids[path] = oid
         return True
     meta = validate_cut(files, baseline_verifier=baseline_verifier)
+    publication, _ = h.parse_state(files[HANDOFF])
+    def base_read(path):
+        oid = transport.path_oid(path, expected_head)
+        return transport.get_blob(oid)
+    gates.verify_remote_landing(publication["publication"], files, base_read)
     need(transport.existing_handoff(branch) is None,
          "REMOTE_HANDOFF_EXISTS_RECONCILE_FIRST")
     base_tree = transport.commit_tree(expected_head)
