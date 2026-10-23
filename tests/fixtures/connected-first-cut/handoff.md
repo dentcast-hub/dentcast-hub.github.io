@@ -19,7 +19,30 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     "content_id": "tests/fixtures/connected-first-cut/page",
     "context": {
       "approvals": [],
-      "decisions": [],
+      "decisions": [
+        {
+          "evidence": [
+            "fixture:synthetic-only"
+          ],
+          "kind": "first_cut_lead_provenance_v1",
+          "origin": "not_applicable",
+          "source_ref": "fixture:structural-page-no-lead"
+        },
+        {
+          "builder_ref": "fixture:synthetic-builder",
+          "evidence": [
+            "fixture:synthetic-audit-only"
+          ],
+          "kind": "first_cut_scope_audit_v1",
+          "landing_mode": "generated_later",
+          "landing_path": "tests/index.html",
+          "observed_changed_paths": [
+            "tests/fixtures/connected-first-cut/page.html",
+            "tests/fixtures/connected-first-cut/image.webp"
+          ],
+          "related_changed_paths": []
+        }
+      ],
       "delivery": [],
       "inputs": [],
       "pending_questions": [],

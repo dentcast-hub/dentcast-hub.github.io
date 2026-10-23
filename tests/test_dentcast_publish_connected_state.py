@@ -144,6 +144,35 @@ class ConnectedTests(unittest.TestCase):
                            sha_by_path={PAGE: c.digest(BODY), IMAGE: c.digest(WEBP)},
                            target_bytes={PAGE: BODY, IMAGE: WEBP})
 
+    def test_compiler_lead_provenance_absent_vs_agent_approved(self):
+        common = {"observed_branch": "content/connected-fixture",
+                  "observed_head": HEAD, "observed_workflow_sources": workflow(),
+                  "actual_targets": {PAGE: BODY, IMAGE: WEBP}}
+        for scenario in ("absent", "agent_missing", "agent_confirmed", "author_original"):
+            with self.subTest(scenario=scenario):
+                s = step_sequence(fresh())
+                p = s["state"]["publication"]
+                lead = next(d for d in p["context"]["decisions"]
+                            if d["kind"] == "first_cut_lead_provenance_v1")
+                if scenario == "absent":
+                    p["context"]["decisions"].remove(lead)
+                if scenario.startswith("agent"):
+                    lead["origin"] = "agent_authored"
+                    lead["source_ref"] = "fixture:agent-authored"
+                if scenario == "author_original":
+                    lead["origin"] = "author_original"
+                    lead["source_ref"] = "fixture:author-text"
+                if scenario == "agent_confirmed":
+                    p["context"]["approvals"].append({
+                        "scope": "authored-intro", "status": "confirmed",
+                        "decision": "approved", "evidence": ["fixture:explicit-yes"]})
+                if scenario in ("absent", "agent_missing"):
+                    with self.assertRaises(h.Blocked):
+                        c.compile_cut1(s, c.cas(s), **common)
+                else:
+                    self.assertEqual(c.compile_cut1(s, c.cas(s), **common)["next_step"],
+                                     "C.4.10.1")
+
     def test_page_and_webp_are_genuine_bytes_not_just_declared_paths(self):
         s = step_sequence(fresh())
         common = {"observed_branch": "content/connected-fixture",

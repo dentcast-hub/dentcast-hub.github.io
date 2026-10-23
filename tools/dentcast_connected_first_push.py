@@ -17,6 +17,7 @@ import os
 
 import dentcast_publish_handoff as h
 import dentcast_publish_lifecycle as lc
+import dentcast_connected_cut_gates as gates
 
 REPO = "dentcast-hub/dentcast-hub.github.io"
 HANDOFF = h.STATE_PATH
@@ -31,7 +32,7 @@ def git_oid(body):
     return hashlib.sha1(b"blob " + str(len(body)).encode() + b"\0" + body).hexdigest()
 
 
-def validate_cut(files):
+def validate_cut(files, *, baseline_verifier=None):
     """Validate canonical v3 wire state and structural asset inventory; no
     simulated semantic or scientific validation is implied.
     """
@@ -65,6 +66,8 @@ def validate_cut(files):
     need(all(a["status"] in ("confirmed", "not_required")
              for a in p["context"]["approvals"]),
          "FIRST_CUT_UNRESOLVED_APPROVAL")
+    gates.validate_declarations(p)
+    baseline_media = gates.validate_media(files, baseline_verifier)
     html = p["content_id"] + ".html"
     need(html in files and b"<html" in files[html].lower(),
          "PAGE_BYTES_REQUIRED")
@@ -83,7 +86,8 @@ def validate_cut(files):
                  "INVALID_WEBP_BYTES:" + path)
     return {"content_id": p["content_id"],
             "next_step": h.next_step(p),
-            "state_sha256": hashlib.sha256(files[HANDOFF]).hexdigest()}
+            "state_sha256": hashlib.sha256(files[HANDOFF]).hexdigest(),
+            "baseline_media": baseline_media}
 
 
 class REST:
@@ -174,8 +178,19 @@ def deliver(transport, branch, expected_head, files, max_blob_bytes):
          "TOOL_BLOB_LIMIT_REQUIRED")
     for path, body in files.items():
         need(len(body) <= max_blob_bytes, "BLOB_EXCEEDS_TOOL_LIMIT:" + path)
-    meta = validate_cut(files)
     need(transport.head(branch) == expected_head, "HEAD_CHANGED_BEFORE_UPLOAD")
+    baseline_oids = {}
+    def baseline_verifier(path):
+        # Read the actual blob from the exact immutable expected GitHub head.
+        try:
+            oid = transport.path_oid(path, expected_head)
+            if not gates.is_webp(transport.get_blob(oid)):
+                return False
+        except (ValueError, KeyError, OSError):
+            return False
+        baseline_oids[path] = oid
+        return True
+    meta = validate_cut(files, baseline_verifier=baseline_verifier)
     need(transport.existing_handoff(branch) is None,
          "REMOTE_HANDOFF_EXISTS_RECONCILE_FIRST")
     base_tree = transport.commit_tree(expected_head)
@@ -192,6 +207,9 @@ def deliver(transport, branch, expected_head, files, max_blob_bytes):
     transport.update(branch, commit)  # no force, no retry on ambiguous error
     need(transport.head(branch) == commit, "POST_UPDATE_HEAD_NOT_CONFIRMED")
     need(transport.commit_tree(commit) == tree, "POST_UPDATE_TREE_MISMATCH")
+    for path, oid in baseline_oids.items():
+        need(transport.path_oid(path, commit) == oid,
+             "POST_UPDATE_INHERITED_WEBP_MISMATCH:" + path)
     for path, body in files.items():
         oid = git_oid(body)
         need(transport.path_oid(path, commit) == oid,

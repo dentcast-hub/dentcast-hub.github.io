@@ -1,4 +1,5 @@
 """Pure ECMAScript render parity with Python canonical v3 wire."""
+import copy
 import json
 import subprocess
 from pathlib import Path
@@ -50,6 +51,25 @@ class ConnectedWireParity(unittest.TestCase):
                 "try{renderCut1(JSON.parse(process.argv[1]))}"
                 "catch(e){process.stdout.write(e.message)}")
         self.assertEqual(node(script,pub),"FIRST_CUT_UNRESOLVED_APPROVAL")
+
+    def test_js_lead_origin_absent_and_approval_required(self):
+        base=step_sequence(fresh())["state"]["publication"]
+        script=("import {renderCut1} from './tools/dentcast_connected_wire.mjs';"
+                "try{renderCut1(JSON.parse(process.argv[1]));process.stdout.write('OK')}"
+                "catch(e){process.stdout.write(e.message)}")
+        absent=copy.deepcopy(base)
+        absent["context"]["decisions"]=[d for d in absent["context"]["decisions"]
+                                         if d["kind"]!="first_cut_lead_provenance_v1"]
+        self.assertIn("FIRST_CUT_DECLARATION_REQUIRED",node(script,absent))
+        agent=copy.deepcopy(base)
+        lead=next(d for d in agent["context"]["decisions"]
+                  if d["kind"]=="first_cut_lead_provenance_v1")
+        lead["origin"]="agent_authored"
+        self.assertEqual(node(script,agent),"AGENT_LEAD_EXPLICIT_FOUNDER_APPROVAL_REQUIRED")
+        agent["context"]["approvals"].append({
+            "scope":"authored-intro","status":"confirmed","decision":"approved",
+            "evidence":["fixture:author-approved"]})
+        self.assertEqual(node(script,agent),"OK")
 
     def test_renderer_refuses_incomplete_first_cut_and_fabricated_completion(self):
         pub=fresh()["state"]["publication"]

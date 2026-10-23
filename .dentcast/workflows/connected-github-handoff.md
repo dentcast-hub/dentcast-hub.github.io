@@ -96,3 +96,36 @@ lead paragraphs must receive the user approval required by the live module
 and have a recorded receipt before creating the page. An absent approval
 entry is not proof of permission; authoring requirements must be verified by
 the executing agent. This patch does not bypass or modify DES/Fidelity.
+
+### Required reviewed first-cut facts
+
+For the opt-in connected pathway, record exactly one of each canonical-v3
+`context.decisions` entries before preparing cut 1:
+
+- `{"kind":"first_cut_lead_provenance_v1","origin":"author_original|agent_authored|not_applicable","source_ref":"<real public-safe source reference or exception reason>","evidence":["<real review receipt>"]}`.
+  If an agent wrote the lead, a separate `context.approvals` receipt with
+  `scope="authored-intro"` and `status="confirmed"` is mandatory. Neither
+  absence nor `not_required` is an implicit approval. When original text
+  provides the opening paragraph, use `author_original` with its real source;
+  `not_applicable` requires a specific, justified route exception.
+- `{"kind":"first_cut_scope_audit_v1","landing_path":"<actual category index>","landing_mode":"included|generated_later|client_render","builder_ref":"<real builder or manual inspection reference>","related_changed_paths":[],"observed_changed_paths":["<actual changed page and other files>"],"evidence":["<real complete-scope review receipt>"]}`.
+  `included` requires the landing page to be in target_paths and the bundle;
+  generated/client-rendered modes are only lawful if confirmed by the active
+  module and actual source code. Every changed related page and observed
+  changed path must be in `target_paths`; unobserved/unreported changes
+  cannot be proven by metadata alone.
+
+Both entries are mandatory for new opt-in first-cut states; no new handoff
+schema or changes to scientific gates are introduced. These metadata guards
+cannot independently prove the author supplied a paragraph or enumerate
+an unreported local diff. Agents must inspect the actual source and retain
+genuine (not synthetic) references. For every local WebP URL in submitted
+HTML, the adapter requires valid bytes in the bundle or re-reads the
+WebP bytes from the immutable expected GitHub base commit before upload.
+Existing assets must remain unchanged after the ref update.
+
+A Python connected metadata compiler can use its optional
+`baseline_verifier` callback only after real immutable-base verification;
+a pure-data callback cannot prove remote truth on its own. The transfer
+adapter independently verifies the GitHub baseline and final tree. JS
+rendering verifies the provenance and scope declarations, not HTML bytes.

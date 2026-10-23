@@ -88,11 +88,39 @@ export function updateStep(p,id,status,evidence=[],reason=null){
   out.status=["blocked","failed"].includes(status)?"blocked":"in_progress";out.blocker=out.status==="blocked"?id+": "+reason:null;
   validate(out);return out;
 }
+function cutDeclarations(p){
+  const find=k=>p.context.decisions.filter(d=>obj(d)&&d.kind===k);
+  const leads=find("first_cut_lead_provenance_v1");
+  need(leads.length===1,"FIRST_CUT_DECLARATION_REQUIRED:first_cut_lead_provenance_v1");
+  const lead=leads[0];
+  need(sameKeys(lead,["kind","origin","source_ref","evidence"])&&["author_original","agent_authored","not_applicable"].includes(lead.origin)&&nonempty(lead.source_ref)&&Array.isArray(lead.evidence)&&lead.evidence.length&&lead.evidence.every(nonempty),"FIRST_CUT_LEAD_PROVENANCE_INVALID");
+  if(lead.origin==="agent_authored"){
+    const approvals=p.context.approvals.filter(a=>a.scope==="authored-intro");
+    need(approvals.length===1&&approvals[0].status==="confirmed"&&nonempty(approvals[0].decision)&&approvals[0].evidence.length,"AGENT_LEAD_EXPLICIT_FOUNDER_APPROVAL_REQUIRED");
+  }
+  const audits=find("first_cut_scope_audit_v1");
+  need(audits.length===1,"FIRST_CUT_DECLARATION_REQUIRED:first_cut_scope_audit_v1");
+  const a=audits[0];
+  need(sameKeys(a,["kind","landing_path","landing_mode","builder_ref","related_changed_paths","observed_changed_paths","evidence"]),"FIRST_CUT_SCOPE_AUDIT_FIELDS");
+  const folder=p.content_id.split("/")[0],expected=folder==="episodes"?"episodes.html":folder+"/index.html";
+  need(a.landing_path===expected,"FIRST_CUT_LANDING_IDENTITY");
+  need(["included","generated_later","client_render"].includes(a.landing_mode)&&nonempty(a.builder_ref)&&Array.isArray(a.evidence)&&a.evidence.length&&a.evidence.every(nonempty),"FIRST_CUT_LANDING_REVIEW_REQUIRED");
+  const targets=new Set(p.target_paths);
+  if(a.landing_mode==="included")need(targets.has(a.landing_path),"FIRST_CUT_LANDING_NOT_DECLARED:"+a.landing_path);
+  else need(!targets.has(a.landing_path),"FIRST_CUT_LANDING_MODE_CONTRADICTS_SCOPE");
+  for(const key of ["related_changed_paths","observed_changed_paths"]){
+    const paths=a[key];
+    need(Array.isArray(paths)&&new Set(paths).size===paths.length,"FIRST_CUT_AUDIT_PATHS_INVALID:"+key);
+    for(const path of paths)need(validPath(path)&&targets.has(path),"FIRST_CUT_CHANGED_PATH_NOT_DECLARED:"+path);
+  }
+  need(a.observed_changed_paths.includes(p.content_id+".html"),"FIRST_CUT_PAGE_NOT_OBSERVED_CHANGED");
+}
 export function renderCut1(p){
   validate(p);const cut=p.steps.findIndex(x=>x.id==="C.4.9");
   need(cut>=0&&p.steps.slice(0,cut+1).every(x=>["completed","skipped"].includes(x.status))&&p.steps.slice(cut+1).every(x=>x.status==="pending")&&p.status==="in_progress"&&p.blocker===null,"FIRST_CUT_NOT_READY");
   need(!p.context.pending_questions.length&&!p.external_actions.some(x=>["started","outcome_unknown","failed"].includes(x.status)),"OPEN_DECISION_OR_ACTION");
   need(p.context.approvals.every(a=>["confirmed","not_required"].includes(a.status)),"FIRST_CUT_UNRESOLVED_APPROVAL");
+  cutDeclarations(p);
   const state={schema:SCHEMA,publication:p,reconciliation:null};
   const prefix="# Publication handoff\n\nSemantic progress and evidence; current Git facts are read from Git.\n- Schema: "+SCHEMA+"\n- Content: "+ascii(p.content_id)+"\n- Status: "+p.status+"\n- Next canonical step: "+ascii(nextStep(p))+"\n- Blocker: "+ascii(p.blocker)+"\n\nThe structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.\nGit facts are reconstructed from Git and are not duplicated in this handoff.\n\n";
   return prefix+BEGIN+pretty(state)+END;
