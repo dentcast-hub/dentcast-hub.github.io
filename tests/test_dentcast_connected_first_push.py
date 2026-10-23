@@ -31,6 +31,19 @@ def fixture():
             "inputs", "decisions", "approvals", "pending_questions", "validation",
             "delivery", "unrelated_changes")},
         "steps": lc.plan(), "external_actions": []}
+    # Synthetic only: these declarations exercise first-cut infrastructure
+    # and NEVER represent clinical review or a real author approval.
+    p["context"]["decisions"] = [
+        {"kind": "first_cut_lead_provenance_v1",
+         "origin": "not_applicable", "source_ref": "fixture:no-lead-in-test",
+         "evidence": ["fixture:structural-only"]},
+        {"kind": "first_cut_scope_audit_v1",
+         "landing_path": "insight/index.html",
+         "landing_mode": "generated_later",
+         "builder_ref": "fixture:synthetic-builder",
+         "related_changed_paths": [],
+         "observed_changed_paths": [path, asset],
+         "evidence": ["fixture:synthetic-audit"]}]
     for row in p["steps"]:
         row["status"] = "completed"
         row["evidence"] = ["fixture:synthetic:" + row["id"]]
