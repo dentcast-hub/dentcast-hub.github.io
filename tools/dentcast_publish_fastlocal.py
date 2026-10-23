@@ -221,6 +221,10 @@ def enroll_target(root, expected, path, evidence_ref):
 
 def validate_projection(root, pub, expected):
     init,new,_,_,_=read(root)
+    # h.save canonically sorts the target inventory after auto-enrolling
+    # authorized paths; WAL replay stores their insertion order.
+    new=copy.deepcopy(new)
+    new["target_paths"]=sorted(set(new["target_paths"]))
     h.require(init["base_sha256"]==expected and new==pub,
               "WAL_PROJECTION_INVALID")
 
