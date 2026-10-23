@@ -1,4 +1,5 @@
 """No-checkout contract parity: connected compiler reuses canonical source rules."""
+import base64
 import copy
 import hashlib
 import unittest
@@ -14,7 +15,7 @@ import dentcast_publish_lifecycle as lc
 HEAD = "a" * 40
 PAGE = "insight/insight-connected-fixture.html"
 IMAGE = "insight/images/connected-fixture.webp"
-WEBP = bytes.fromhex("524946460c0000005745425056503820")  # synthetic file bytes: transport fixture only
+WEBP = base64.b64decode("UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=")
 BODY = b"<!doctype html><html><body>Fixture: NOT published</body></html>"
 
 
@@ -116,6 +117,17 @@ class ConnectedTests(unittest.TestCase):
             c.receive_cut1(out["handoff_bytes"], branch="content/connected-fixture",
                            sha_by_path=out["target_sha256"],
                            target_bytes={PAGE: BODY, IMAGE: b"tampered"})
+
+    def test_page_and_webp_are_genuine_bytes_not_just_declared_paths(self):
+        s = step_sequence(fresh())
+        common = {"observed_branch": "content/connected-fixture",
+                  "observed_head": HEAD, "observed_workflow_sources": workflow()}
+        with self.assertRaisesRegex(h.Blocked, "ACTUAL_WEBP_BYTES_REQUIRED"):
+            c.compile_cut1(s, c.cas(s), **common,
+                           actual_targets={PAGE: BODY, IMAGE: b"fake-webp"})
+        with self.assertRaisesRegex(h.Blocked, "ACTUAL_PAGE_HTML_REQUIRED"):
+            c.compile_cut1(s, c.cas(s), **common,
+                           actual_targets={PAGE: b"not an html page", IMAGE: WEBP})
 
     def test_confirmed_approval_history_and_unknown_external_outcome(self):
         s = fresh()

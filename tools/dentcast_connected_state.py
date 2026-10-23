@@ -212,6 +212,22 @@ def update_context(session, expected_digest, *, context, external_actions,
     return validate_session(new)
 
 
+def validate_real_bytes(publication, targets):
+    """Structural page/media guard; not evidence of semantic correctness."""
+    page = publication["content_id"] + ".html"
+    h.require(page in targets and b"<html" in targets[page].lower(),
+              "ACTUAL_PAGE_HTML_REQUIRED")
+    for path, data in targets.items():
+        h.relative_path(path)
+        h.require(bool(data), "EMPTY_TARGET_BYTES:" + path)
+        if path.lower().endswith(".webp"):
+            h.require(len(data) >= 20 and data[:4] == b"RIFF"
+                      and data[8:12] == b"WEBP"
+                      and int.from_bytes(data[4:8], "little") + 8 == len(data)
+                      and data[12:16] in (b"VP8 ", b"VP8L", b"VP8X"),
+                      "ACTUAL_WEBP_BYTES_REQUIRED:" + path)
+
+
 def compile_cut1(session, expected_digest, *, observed_branch, observed_head,
                  observed_workflow_sources, actual_targets):
     """Materialize exact canonical v3 handoff only after observed source checks.
@@ -240,9 +256,7 @@ def compile_cut1(session, expected_digest, *, observed_branch, observed_head,
               "ALL_DECLARED_TARGET_BYTES_REQUIRED")
     h.require(set(actual_targets) == set(p["target_paths"]),
               "UNREVIEWED_FILE_SCOPE")
-    for path in actual_targets:
-        h.relative_path(path)
-        h.require(len(actual_targets[path]) > 0, "EMPTY_TARGET_BYTES:" + path)
+    validate_real_bytes(p, actual_targets)
     # The shared renderer encodes v3 exactly as the local CLI does.
     wire = h.render(session["state"]).encode("utf-8")
     projected, handoff_sha = h.parse_state(wire)
@@ -271,6 +285,7 @@ def receive_cut1(raw_handoff, *, branch, sha_by_path, target_bytes):
     h.require(all(isinstance(target_bytes[k], bytes)
                   and digest(target_bytes[k]) == sha_by_path.get(k)
                   for k in target_bytes), "RECEIVED_TARGET_BYTES_MISMATCH")
+    validate_real_bytes(p, target_bytes)
     h.require(valid_branch(branch), "RECEIVED_FEATURE_BRANCH_REQUIRED")
     return {"status": "cut1_wire_and_bytes_verified", "handoff_sha256": handoff_sha,
             "next_step": h.next_step(p),
