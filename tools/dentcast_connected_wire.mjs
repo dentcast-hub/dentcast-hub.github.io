@@ -92,6 +92,7 @@ export function renderCut1(p){
   validate(p);const cut=p.steps.findIndex(x=>x.id==="C.4.9");
   need(cut>=0&&p.steps.slice(0,cut+1).every(x=>["completed","skipped"].includes(x.status))&&p.steps.slice(cut+1).every(x=>x.status==="pending")&&p.status==="in_progress"&&p.blocker===null,"FIRST_CUT_NOT_READY");
   need(!p.context.pending_questions.length&&!p.external_actions.some(x=>["started","outcome_unknown","failed"].includes(x.status)),"OPEN_DECISION_OR_ACTION");
+  need(p.context.approvals.every(a=>["confirmed","not_required"].includes(a.status)),"FIRST_CUT_UNRESOLVED_APPROVAL");
   const state={schema:SCHEMA,publication:p,reconciliation:null};
   const prefix="# Publication handoff\n\nSemantic progress and evidence; current Git facts are read from Git.\n- Schema: "+SCHEMA+"\n- Content: "+ascii(p.content_id)+"\n- Status: "+p.status+"\n- Next canonical step: "+ascii(nextStep(p))+"\n- Blocker: "+ascii(p.blocker)+"\n\nThe structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.\nGit facts are reconstructed from Git and are not duplicated in this handoff.\n\n";
   return prefix+BEGIN+pretty(state)+END;

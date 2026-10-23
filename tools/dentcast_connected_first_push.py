@@ -51,8 +51,20 @@ def validate_cut(files):
     need(p["status"] == "in_progress" and p["blocker"] is None, "PUBLICATION_BLOCKED")
     need(not any(a["status"] in ("started", "outcome_unknown")
                  for a in p["external_actions"]), "EXTERNAL_OUTCOME_UNRESOLVED")
-    need(all(path == HANDOFF or path in p["target_paths"] for path in files),
-         "PATH_NOT_IN_CANONICAL_TARGETS")
+    # Fail closed on the entire reviewed first-cut scope. An index or an
+    # edited older linked page must not vanish merely because the new HTML
+    # does not directly reference it.
+    expected = set(p["target_paths"]) | {HANDOFF}
+    received = set(files)
+    need(not expected - received,
+         "MISSING_CANONICAL_TARGET_BYTES:" + ",".join(sorted(expected - received)))
+    need(not received - expected,
+         "UNDECLARED_FIRST_CUT_PATH:" + ",".join(sorted(received - expected)))
+    need(not p["context"]["pending_questions"],
+         "FIRST_CUT_PENDING_QUESTIONS")
+    need(all(a["status"] in ("confirmed", "not_required")
+             for a in p["context"]["approvals"]),
+         "FIRST_CUT_UNRESOLVED_APPROVAL")
     html = p["content_id"] + ".html"
     need(html in files and b"<html" in files[html].lower(),
          "PAGE_BYTES_REQUIRED")
