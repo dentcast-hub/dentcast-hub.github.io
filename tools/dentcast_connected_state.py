@@ -91,12 +91,14 @@ def start(*, content_id, category, target_paths, repository, branch,
               set(workflow_sources) == set(h.WORKFLOW_PATHS), "CONNECTED_WORKFLOW_FINGERPRINTS")
     for path in target_paths:
         h.relative_path(path)
-    h.require(bool(target_paths), "CONNECTED_TARGET_REQUIRED")
+    h.require(bool(target_paths) and
+              len(target_paths) == len(set(target_paths)),
+              "CONNECTED_TARGET_REQUIRED")
     h.require(isinstance(content_id, str) and content_id.strip()
               and content_id not in ("unassigned",), "CONNECTED_ID_REQUIRED")
     p = {
         "content_id": content_id, "category": category,
-        "target_paths": list(target_paths), "status": "in_progress",
+        "target_paths": sorted(target_paths), "status": "in_progress",
         "blocker": None,
         "context": {"inputs": list(inputs),
                     "decisions": [{"kind": lc.DELIVERY_POLICY}] + list(decisions),

@@ -25,7 +25,7 @@ function pretty(x,n=0){
 const validPath=p=>nonempty(p)&&!p.startsWith("/")&&!p.includes("\\")&&!p.includes("\0")&&!/^[A-Za-z]:/.test(p)&&p.split("/").every(s=>s&&s!=="."&&s!=="..")&&p.split("/")[0].toLowerCase()!==".git";
 export function plan(){return groups.flatMap((g,i)=>g.map(id=>({id,module:modules[i],status:"pending",evidence:[],reason:null})));}
 export function newPublication(content_id,category,target_paths,context={}){
-  const p={content_id,category,target_paths,status:"in_progress",blocker:null,context:{
+  const p={content_id,category,target_paths:[...target_paths].sort(),status:"in_progress",blocker:null,context:{
     inputs:context.inputs||[],decisions:[{kind:POLICY},...(context.decisions||[])],
     approvals:context.approvals||[],pending_questions:context.pending_questions||[],
     validation:[],delivery:[],unrelated_changes:[]},steps:plan(),external_actions:[]};
