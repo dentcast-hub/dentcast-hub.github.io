@@ -251,7 +251,12 @@ def flush(root, expected, review_note=None):
             sha=result["sha256"]
         else:
             # Interrupted after canonical write, before WAL deletion: idempotent.
-            h.require(state["publication"]==pub and
+            # h.save sorts/deduplicates target_paths; the WAL replay keeps
+            # reviewed enrollment order. Compare the same canonical projection
+            # used by validate_projection, without weakening any other check.
+            projected=copy.deepcopy(pub)
+            projected["target_paths"]=sorted(set(projected["target_paths"]))
+            h.require(state["publication"]==projected and
                       state["snapshot"]["branch"]==init["base_branch"],
                       "WAL_BASE_CHANGED_RECONCILE")
         path=location(root);path.unlink();sync_parent(path)

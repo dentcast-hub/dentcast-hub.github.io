@@ -155,6 +155,57 @@ class ConnectedTests(unittest.TestCase):
                            sha_by_path={PAGE: c.digest(BODY), IMAGE: c.digest(WEBP)},
                            target_bytes={PAGE: BODY, IMAGE: WEBP})
 
+    def test_receiver_rejects_unresolved_external_action_statuses(self):
+        for status in ("failed", "outcome_unknown", "started"):
+            with self.subTest(status=status):
+                s = step_sequence(fresh())
+                p = s["state"]["publication"]
+                p["external_actions"].append({
+                    "id": "fixture:attempt-one",
+                    "target": "fixture:external-upload",
+                    "status": status,
+                    "evidence": (["fixture:observed-failure"]
+                                 if status == "failed" else [])})
+                raw = h.render(s["state"]).encode()
+                with self.assertRaisesRegex(
+                        h.Blocked, "RECEIVED_EXTERNAL_OUTCOME_UNRESOLVED"):
+                    c.receive_cut1(
+                        raw, branch="content/connected-fixture",
+                        sha_by_path={PAGE: c.digest(BODY), IMAGE: c.digest(WEBP)},
+                        target_bytes={PAGE: BODY, IMAGE: WEBP})
+
+    def test_receiver_rejects_publication_blocker_and_nonprogress_status(self):
+        for status, blocker in (
+                ("blocked", "fixture:recorded-blocker"),
+                ("in_progress", "fixture:stale-blocker"),
+                ("verifying", None)):
+            with self.subTest(status=status):
+                s = step_sequence(fresh())
+                p = s["state"]["publication"]
+                p["status"], p["blocker"] = status, blocker
+                raw = h.render(s["state"]).encode()
+                with self.assertRaisesRegex(
+                        h.Blocked, "RECEIVED_PUBLICATION_BLOCKED"):
+                    c.receive_cut1(
+                        raw, branch="content/connected-fixture",
+                        sha_by_path={PAGE: c.digest(BODY), IMAGE: c.digest(WEBP)},
+                        target_bytes={PAGE: BODY, IMAGE: WEBP})
+
+    def test_receiver_accepts_verified_completed_external_action(self):
+        s = step_sequence(fresh())
+        s["state"]["publication"]["external_actions"].append({
+            "id": "fixture:attempt-one",
+            "target": "fixture:external-upload",
+            "status": "completed",
+            "evidence": ["fixture:confirmed-outcome"]})
+        raw = h.render(s["state"]).encode()
+        result = c.receive_cut1(
+            raw, branch="content/connected-fixture",
+            sha_by_path={PAGE: c.digest(BODY), IMAGE: c.digest(WEBP)},
+            target_bytes={PAGE: BODY, IMAGE: WEBP})
+        self.assertEqual(result["status"], "cut1_wire_and_bytes_verified")
+        self.assertEqual(result["next_step"], "C.4.10.1")
+
     def test_compiler_lead_provenance_absent_vs_agent_approved(self):
         common = {"observed_branch": "content/connected-fixture",
                   "observed_head": HEAD, "observed_workflow_sources": workflow(),
