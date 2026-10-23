@@ -166,6 +166,30 @@ Do not replay a completed action or assume the whole request was atomic.
 Normal stale-write, identity, ordering, approval and external-outcome guards
 remain in force. This changes command overhead, not the 52-step canonical ledger.
 
+### First-cut human decision checks in every execution mode
+
+At the first cut, and on every subsequent fixed delivery, both the canonical
+local CLI/Git/CI route and the connected route must have zero unanswered
+`pending_questions` and no unconfirmed/rejected approval. The canonical
+local guard also requires exactly one
+`context.decisions` entry with
+`kind="first_cut_lead_provenance_v1"`, a real `source_ref` and nonempty
+evidence. Set `origin` to `author_original` when the first paragraph is
+supplied by the author; no additional approval is required for that paragraph.
+If the agent composed a new lead, set `origin="agent_authored"` and record
+the author's real explicit confirmation as `scope="authored-intro"`,
+`status="confirmed"` in `context.approvals`. Use
+`origin="not_applicable"` only for a genuine reviewed exception (e.g. the
+page already has ordinary prose and no new lead was created), with a specific
+reason in `source_ref`. Never infer approval from the absence of a record.
+
+The pre-commit guard and the independent committed CI guard both reject a
+missing declaration or outstanding questions. These checks do not create a
+new human approval requirement for an original author paragraph, and an
+agent-supplied metadata claim is not itself proof of consent; inspect its
+real evidence. Existing category exceptions, paper-only route, scientific
+DES/Fidelity and the three fixed push boundaries remain unchanged.
+
 ### Checkpoint every step locally; deliver exactly three times
 
 After **each** canonical step or dynamic substep, save its real result locally
