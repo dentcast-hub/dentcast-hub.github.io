@@ -61,7 +61,7 @@ def append(root, data, first=False):
     data["digest"]=digest(encode(data))
     line=encode(data)+b"\n"
     p=location(root)
-    flags=(os.O_CREAT|os.O_EXCL if first else os.O_WRONLY|os.O_APPEND)
+    flags=(os.O_CREAT|os.O_EXCL|os.O_WRONLY if first else os.O_WRONLY|os.O_APPEND)
     fd=os.open(p,flags|getattr(os,"O_NOFOLLOW",0),0o600)
     try:
         h.require(os.fstat(fd).st_size+len(line)<=MAX_BYTES,"WAL_LIMIT_FLUSH_FIRST")
