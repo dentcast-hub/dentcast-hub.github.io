@@ -141,7 +141,7 @@ class CompactHandoffTests(unittest.TestCase):
         self.assertEqual((self.root/h.STATE_PATH).read_bytes(), raw)
         h.save(self.root, loaded['publication'], expected=sha)
         self.assertEqual(self.wire()['schema'], 'publish-handoff-v3')
-        self.assertEqual(self.wire()['publication'], self.p)
+        self.assertEqual(h.parse_state((self.root/h.STATE_PATH).read_bytes())[0]['publication'], self.p)
 
     def test_compact_encoding_is_smaller_and_canonical(self):
         self.prepare()

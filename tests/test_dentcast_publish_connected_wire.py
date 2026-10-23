@@ -34,7 +34,7 @@ class ConnectedWireParity(unittest.TestCase):
         restored,_=h.parse_state(wire.encode())
         self.assertEqual(restored["publication"]["steps"],pub["steps"])
         script=("import {inspectCut1} from './tools/dentcast_connected_wire.mjs';"
-                "process.stdout.write(JSON.stringify(inspectCut1(process.argv[1]).state.publication.steps));")
+                "process.stdout.write(JSON.stringify(inspectCut1(JSON.parse(process.argv[1])).state.publication.steps));")
         self.assertEqual(json.loads(node(script,wire)),pub["steps"])
         legacy=h.render(obj,compact=False)
         old,_=h.parse_state(legacy.encode())

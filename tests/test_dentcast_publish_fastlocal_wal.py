@@ -34,7 +34,7 @@ class FastLocalWALTests(unittest.TestCase):
         # fixture inputs; the test proves storage and ordering mechanics only.
         items=[{"id":"A","status":"skipped","evidence":[],"reason":"fixture:category-check-not-applicable"},
                {"id":"B.1","status":"skipped","evidence":[],"reason":"fixture:type-already-known"}]
-        with patch.object(wal,"read",wraps=wal.read) as reads, \\
+        with patch.object(wal,"read",wraps=wal.read) as reads, \
              patch.object(h,"snapshot",side_effect=AssertionError("FULL_GIT_SCAN")):
             result=wal.batch(self.root,d,items)
         self.assertEqual(reads.call_count,1)
