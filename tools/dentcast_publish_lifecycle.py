@@ -274,16 +274,24 @@ def advance(root, expected, sid=None, evidence=None, skips=(), start_next=False,
                   "BIND_INTAKE_IDENTITY_BEFORE_AUTHORING")
     written = []
     result = {"sha256": expected, "publication_completed": False}
+    # The full plan was preflighted above. Keep a transition-only prefix in
+    # memory: every step() independently reloads the canonical state, checks
+    # the expected digest and persists a fresh snapshot through h.save().
+    # Reloading it *again* before every step adds no safety. Only a fixed
+    # delivery boundary needs a fresh read for the remote/byte guard.
+    live_prefix = copy.deepcopy(state["publication"])
     try:
         for op_id, status, refs, reason in operations:
-            live, _ = h.load_state(root)
-            if fixed_delivery(live["publication"]) and delivery_boundary(live["publication"]):
+            if fixed_delivery(live_prefix) and delivery_boundary(live_prefix):
+                live, _ = h.load_state(root)
                 try:
                     require_step_delivery(root, live, result["sha256"])
                 except h.Blocked:
                     return {**result, "status": "delivery_required", "delivery": delivery_boundary(live["publication"]),
                             "transitions_written": written, "next_action": "Commit/push this fixed delivery before advancing"}
             result = step(root, result["sha256"], op_id, status, refs, reason, note)
+            # Update only AFTER the durable canonical step succeeded.
+            next(row for row in live_prefix["steps"] if row["id"] == op_id)["status"] = status
             written.append({"id": op_id, "status": status})
     except (h.Blocked, OSError) as exc:
         # Never undo a saved checkpoint or replay an action. A concurrent write
