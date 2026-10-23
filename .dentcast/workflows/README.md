@@ -11,7 +11,11 @@ module, scientific checker, review gate, or founder approval. A GitHub
 connector by itself does not prove the JavaScript/Python adapter can be
 executed or that the intended bytes were delivered. Push 1 is a
 durability boundary only; the current agent continues normally after
-remote read-back, with optional user-initiated handoff.
+remote read-back, with optional user-initiated handoff. The connected-only metadata adapters
+currently stop at the first cut: they are not a terminal-free engine for
+DES/Fidelity, builders, Phase F or subsequent deliveries. See
+`connected-github-postcut-status.md` for the measured limits and the
+non-mandatory continuation/handoff distinction.
 
 ## Interrupted publication
 
