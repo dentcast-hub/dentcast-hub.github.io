@@ -42718,4 +42718,64 @@
       }
     ]
   }
+,
+    "dentai/promptologist/prompt-append2-4": {
+      "scored_at": "2026-10-23",
+      "sources": [
+        {
+          "des_version": "3.4",
+          "content_type": "COMMENTARY",
+          "question_type": null,
+          "text_basis": "FULL_TEXT",
+          "citation": {
+            "title": "پیوست ۲ ـ قسمت ۴: تغییرات چطور ثبت می‌شوند و به گیت‌هاب می‌رسند؟",
+            "authors": "دکتر فواد شهابیان",
+            "year": null,
+            "journal": "",
+            "doi": ""
+          },
+          "journal_quartile": {
+            "value": "NR",
+            "source": "NR"
+          },
+          "s_design": null,
+          "q_method": null,
+          "penalties": null,
+          "commentary_checklist": [
+            {
+              "item": "reasoning chain is explicit",
+              "points": 4,
+              "evidence_quote": "اگر بعداً متوجه شویم تغییرات جدید مناسب نبودند، می‌توانیم به نسخهٔ ثبت‌شدهٔ قبلی مراجعه کنیم.",
+              "note": ""
+            },
+            {
+              "item": "relationship to published evidence is stated",
+              "points": 0,
+              "evidence_quote": "",
+              "note": "متن رابطه‌ای با شواهد منتشرشده بیان نمی‌کند."
+            },
+            {
+              "item": "scope of the claim is bounded",
+              "points": 3,
+              "evidence_quote": "البته این‌ها مثال‌هایی برای فهمیدن مفهوم نگهداری نسخه‌ها هستند. گیت‌هاب به‌خصوص برای فایل‌های متنی و پروژه‌های نرم‌افزاری مناسب است و فایل‌های پاورپوینت یا طراحی دندانی محدودیت‌های خودشان را دارند.",
+              "note": ""
+            },
+            {
+              "item": "explicitly labeled as experience/opinion, not evidence",
+              "points": 0,
+              "evidence_quote": "",
+              "note": "متن خود را تجربه یا نظر شخصی معرفی نمی‌کند."
+            }
+          ],
+          "des_score": 12,
+          "band": "E",
+          "provisional": false,
+          "fact_fa": "این متن امتیاز ۱۲ از ۱۰۰ در باند E گرفته است.",
+          "interpretation_fa": "برای کار روزمرهٔ دنت‌کست، متن تفاوت ثبت محلی، ارسال به گیت‌هاب و ادغام را روشن می‌کند و فهم تاریخچهٔ تغییرات دستورهای کاری را آسان‌تر می‌کند."
+        }
+      ],
+      "fidelity": [
+        null
+      ]
+    }
 }

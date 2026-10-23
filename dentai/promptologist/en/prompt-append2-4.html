@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appendix 2 — Part 4: How Changes Are Recorded and Reach GitHub | Promptologist | DentCast</title>
+  <meta name="description" content="Learn how Stage, Commit, and Push work, using examples from a dental practice and laboratory.">
+  <link rel="canonical" href="https://dentcast.org/dentai/promptologist/en/prompt-append2-4.html">
+  <meta name="author" content="Dr. Foad Shahabian">
+  <meta name="robots" content="noindex, follow">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="Appendix 2 — Part 4: How Changes Are Recorded and Reach GitHub | Promptologist | DentCast">
+  <meta property="og:description" content="Learn how Stage, Commit, and Push work, using examples from a dental practice and laboratory.">
+  <meta property="og:url" content="https://dentcast.org/dentai/promptologist/en/prompt-append2-4.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Appendix 2 — Part 4: How Changes Are Recorded and Reach GitHub | Promptologist | DentCast">
+  <meta name="twitter:description" content="Learn how Stage, Commit, and Push work, using examples from a dental practice and laboratory.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/promptologist/en/prompt-append2-4.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/dentai/promptologist/en/prompt-append2-4.html"
+      },
+      "url": "https://dentcast.org/dentai/promptologist/en/prompt-append2-4.html",
+      "headline": "Appendix 2 — Part 4: How Changes Are Recorded and Reach GitHub",
+      "description": "Learn how Stage, Commit, and Push work, using examples from a dental practice and laboratory.",
+      "datePublished": "2026-10-23",
+      "dateModified": "2026-10-23",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.org/dentcast-cover.webp",
+        "width": 1200,
+        "height": 630
+      },
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "name": "Promptologist",
+        "url": "https://dentcast.org/dentai/promptologist"
+      },
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Promptologist",
+          "item": "https://dentcast.org/dentai/promptologist"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Appendix 2 — Part 4: How Changes Are Recorded and Reach GitHub",
+          "item": "https://dentcast.org/dentai/promptologist/en/prompt-append2-4.html"
+        }
+      ]
+    }
+  ]
+}</script>
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/dc-theme.css?v=7">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <meta name="theme-color" content="#F3F5F7">
+  <style>
+@font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-display:swap;}
+body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
+.ep-page{max-width:47.5rem;margin:0 auto;padding:2.5rem 1.25rem 5rem;}
+.ep-back{display:inline-flex;align-items:center;gap:0.375rem;font-size:.85rem;color:var(--txt3);text-decoration:none;margin-bottom:1.75rem;transition:color .15s;}
+.ep-back:hover{color:var(--ac);}
+.ep-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:1.125rem;box-shadow:var(--card-sh);overflow:hidden;margin-bottom:1.25rem;}
+.ep-box-head{padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--card-border);}
+.ep-badge{display:inline-flex;align-items:center;background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.72rem;font-weight:700;padding:0.1875rem 0.75rem;border-radius:3.125rem;margin-bottom:0.875rem;letter-spacing:.03em;}
+.ep-badge.sub{background:var(--surface2);color:var(--txt3);}
+.ep-title{font-size:1.55rem;font-weight:800;color:var(--txt);line-height:1.45;margin:0 0 0.75rem;}
+.ep-meta{display:flex;gap:1.125rem;font-size:.8rem;color:var(--txt3);flex-wrap:wrap;}
+.ep-section{padding:1.375rem 1.75rem 0;}
+.ep-section:last-child{padding-bottom:1.75rem;}
+.ep-section-label{font-size:1rem;font-weight:700;color:var(--ac);border-left:4px solid var(--ac);padding-left:0.75rem;margin-bottom:0.875rem;}
+.ep-caption{font-size:.95rem;color:var(--txt);line-height:1.9;margin:0;}
+.ep-caption p{margin:0 0 1.8rem;}
+.ep-caption p:last-child{margin-bottom:0;}
+.ep-fig{display:block;max-width:18.75rem;width:100%;height:auto;margin:1.125rem auto;border:1px solid var(--card-border);border-radius:0.875rem;box-shadow:var(--card-sh);}
+.ep-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-chip{background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.78rem;padding:0.25rem 0.75rem;border-radius:3.125rem;}
+.ep-chip-link{text-decoration:none;transition:background .15s,color .15s;}
+.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+.ep-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
+.ep-nav{display:flex;justify-content:space-between;gap:0.75rem;margin-top:1.75rem;}
+.ep-nav-btn{flex:1;text-align:center;padding:0.75rem 1rem;border:1px solid var(--card-border);border-radius:0.75rem;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+@media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+  </style>
+</head>
+<body>
+
+<!-- ── TOP BAR ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GLOBAL SEARCH ── -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<main class="article-content-wrap ep-page">
+  <a href="/dentai/promptologist/" class="ep-back">&#8592; Back to Promptologist</a>
+  <a class="lang-btn" href="../prompt-append2-4.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+  <div class="ep-box">
+    <div class="ep-box-head">
+      <div class="ep-badge">Appendix 2 · Part 4</div>
+      <h1 class="ep-title">Appendix 2 — Part 4: How Changes Are Recorded and Reach GitHub</h1>
+      <div class="ep-meta"><span>&#9201; 8 min read</span></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">This Part</h2>
+      <div class="ep-caption">
+<p>In the previous part, we learned how to connect AI to GitHub, make changes on a separate branch, and bring them into the main line after reviewing the result.</p>
+<p>But GitHub is not just a place to store files. One of its most important features is keeping a history of a project's changes.</p>
+<h3>What does that mean?</h3>
+<h3>Imagine you are preparing a PowerPoint presentation</h3>
+<p>You are going to speak at a dental conference and are creating your slides.</p>
+<p>You have prepared the first ten slides and spent several hours on them. Now you want to continue, but you would like to be able to return to this state if something goes wrong later.</p>
+<p>You might make a copy of the PowerPoint file and name it “Version 1.”</p>
+<p>You make ten more slides and save another copy: “Version 2.”</p>
+<p>If you keep doing this, after a while you will have several files and may not even remember how each version differs from the previous one.</p>
+<p>One GitHub feature lets us record the state of a project at different stages and keep its history.</p>
+<p>For example, after preparing the first ten slides, we record one state. After completing the second section, we record another.</p>
+<p>If we later decide the new changes were not suitable, we can return to an earlier recorded version.</p>
+<p>In dentistry, imagine you are digitally designing a crown. You complete the initial design, refine the contours, and then work on the occlusion.</p>
+<p>It would be useful to save the design at each important stage, so you could return to an earlier one if later adjustments did not work out.</p>
+<p>These are examples to help explain version history. GitHub is especially suited to text files and software projects; PowerPoint files and dental designs have their own limitations.</p>
+<p>Now let us see how changes are recorded and reach GitHub.</p>
+<p>One note before we continue: you do not need to learn technical commands or perform these steps yourself. AI can handle the operational work. We just want to understand the workflow and a few terms, so when AI reports what it did, we can tell what happened and whether the changes actually reached GitHub.</p>
+<h3>From the practice to the laboratory: three simple stages</h3>
+<p>Imagine that today we took impressions for several patients and are preparing to send their cases to the laboratory.</p>
+<p>The impressions, bite records, and patient information are ready, but we have not handed them over to the laboratory yet.</p>
+<p>There are three stages.</p>
+<h3>1. Stage: selecting and preparing changes</h3>
+<p>First, we select the impressions and case information we want to send from among the practice's work and place them on a table.</p>
+<p>For example, we bring the first patient's impression together with its bite record. Then we place the second patient's impression beside it.</p>
+<p>These are now the cases we have selected to send.</p>
+<p>But nothing is final yet. We might notice that one patient's shade information is incomplete, so we set that case aside for now.</p>
+<p>In a project, several files may have changed, but we may want only some of those changes included in the next recorded update.</p>
+<p>Selecting and preparing changes this way is called staging, or Stage.</p>
+<p>At this point, we have only decided what to record; no new version has been added to the history yet.</p>
+<h3>2. Commit: recording a specific state of the project</h3>
+<p>Now imagine that we review the cases on the table and make sure the set we want is complete.</p>
+<p>We record the date and contents of this set in the case log, so that even if more work is added to the table later, we can still tell what was ready at this stage.</p>
+<p>In a project, we similarly record a specific state of the selected changes in its history.</p>
+<p>This is called a commit.</p>
+<p>Each commit usually has a short description, such as “Revise postoperative care instructions.”</p>
+<p>The difference from Stage is that staging only selected the changes, while a commit actually records a specific version of them in the history.</p>
+<p>And importantly, nothing needs to have been sent to the GitHub website yet.</p>
+<p>GitHub uses a system called Git, which can also run on a computer. If we work on our own laptop, the commit may be recorded there for now. If AI works in its own cloud workspace, the commit may be there instead.</p>
+<h3>3. Push: sending changes to GitHub</h3>
+<p>Let us return to the laboratory example.</p>
+<p>We selected the cases, prepared the set, and recorded it in the log.</p>
+<p>But they are all still on the practice's table!</p>
+<p>Now we send the package to the laboratory.</p>
+<p>In GitHub work, sending commits recorded in a workspace to the online repository is called a push.</p>
+<p>So if AI says “I committed,” that means it recorded the changes in the history, but they may not have reached the GitHub website yet.</p>
+<p>When a push succeeds, the commits that were sent have also reached the GitHub repository.</p>
+<p>Some AI tools make changes directly on GitHub. In that case, the commit is recorded there, so a separate push is not needed.</p>
+<p>If changes were recorded on a separate branch, reaching GitHub does not mean they have been merged into <code>main</code>. We can review them first and then decide whether they should enter the main line.</p>
+<h3>Let us try it</h3>
+<p>In Work (ChatGPT), say:</p>
+<p>“In the <code>my-prompts</code> repository, add to the postoperative care instructions that the final text should be reviewed before it is given to the patient. Do it on a separate branch, record the changes on GitHub, and do not merge yet.”</p>
+<p>After the work is done, you can simply ask:</p>
+<p>“Send me the link to the changes and tell me what was changed.”</p>
+<p>AI can carry out the necessary steps and provide the result for us to review.</p>
+<h3>What if we want to return to an earlier version?</h3>
+<p>Let us go back to the PowerPoint example.</p>
+<p>Imagine you have prepared twenty slides. Now you decide to change their appearance: you choose a new template, change the colors and fonts, and move some details around.</p>
+<p>You like the result, so you record this new state too (you commit it).</p>
+<p>But when you look at the presentation again tomorrow, you realize the earlier design was much better!</p>
+<p>If you recorded the earlier state (committed it), you can return to it and undo the newer changes.</p>
+<p>This is another capability we can use with AI: reverting changes.</p>
+<p>It is useful for more than undoing the latest change.</p>
+<p>Imagine that over several months you have revised the postoperative care instructions many times and recorded the changes each time (committed them).</p>
+<p>Now you can ask AI:</p>
+<p>“Review the change history for these instructions. Tell me the dates when changes were recorded and what changed each time.”</p>
+<p>AI can report when each version was recorded and what changed at each stage.</p>
+<p>Then you can say:</p>
+<p>“Review the changes we made on that date. I want to see what things looked like before then.”</p>
+<p>Or even:</p>
+<p>“I did not like the changes we made that day. I want to undo those changes without losing the others. First tell me what would be affected.”</p>
+<p>This way, we do not have to start all over or search through old files for the version we want.</p>
+<p>We just need the change history and can tell AI what we want to review or restore.</p>
+<p>This applies to changes that were actually recorded in the history; unrecorded changes are not necessarily recoverable.</p>
+<p>In the next part, we will learn about another GitHub feature: Pull Requests, where we can review a branch's changes before they enter the main line.</p>
+      </div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Keywords</h2>
+      <div class="ep-chips"><span class="ep-chip">GitHub</span><span class="ep-chip">Git</span><span class="ep-chip">Stage</span><span class="ep-chip">Commit</span><span class="ep-chip">Push</span><span class="ep-chip">Revert</span><span class="ep-chip">Branch</span></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Tags</h2>
+      <div class="ep-tags"><span class="ep-hashtag">#Promptologist</span><span class="ep-hashtag">#AI</span><span class="ep-hashtag">#GitHub</span><span class="ep-hashtag">#ChatGPT</span></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Related content</h2>
+      <a href="/dentai/promptologist/" class="ep-related-link">Back to the Promptologist index</a>
+    </div>
+  </div>
+  <div class="ep-nav">
+    <a href="prompt-append2-3.html" class="ep-nav-btn">&#8592; Previous Part</a>
+    <span class="ep-nav-btn ep-nav-empty">Next Part &#8594;</span>
+  </div>
+</main>
+
+<script src="/global-search.js?v=15" defer></script>
+<script src="/dc-nav.js?v=289" defer></script>
+</body>
+</html>
