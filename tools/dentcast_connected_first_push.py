@@ -50,8 +50,7 @@ def validate_cut(files, *, baseline_verifier=None):
          and p["category"] != "pending", "INTAKE_UNBOUND")
     need(lc.delivery_boundary(p) == 1, "FIRST_CUT_NOT_COMPLETE")
     need(p["status"] == "in_progress" and p["blocker"] is None, "PUBLICATION_BLOCKED")
-    need(not any(a["status"] in ("started", "outcome_unknown", "failed")
-                 for a in p["external_actions"]), "EXTERNAL_OUTCOME_UNRESOLVED")
+    h.require_external_outcomes(p, "EXTERNAL_OUTCOME_UNRESOLVED")
     # Fail closed on the entire reviewed first-cut scope. An index or an
     # edited older linked page must not vanish merely because the new HTML
     # does not directly reference it.
