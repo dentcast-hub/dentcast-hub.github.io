@@ -274,12 +274,16 @@ def change_details(state, current):
             for key in ("files", "workflow")}
 
 
-def snapshot(root, targets, check_remote=False):
+def snapshot(root, targets, check_remote=False, observed_status=None):
     first_head = text_git(root, "rev-parse", "--verify", "HEAD^{commit}")
     first_branch = branch(root)
     origin = config(root, "remote.origin.url")
     require(bool(origin), "ORIGIN_REQUIRED")
-    paths = status_paths(root)
+    # save() already read porcelain status to scope its dirty/builder paths.
+    # Reuse that first observation rather than invoking git status a second
+    # time. The independent status check at the END of this snapshot remains:
+    # any concurrent path change still aborts, and file bytes are rehashed.
+    paths = observed_status if observed_status is not None else status_paths(root)
     # Preserve the full-index race guard, but build its large Python mapping
     # only once. The second Git read is still mandatory and byte-compared.
     index_raw = git(root, "ls-files", "--stage", "-z")
@@ -813,7 +817,7 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
             unknown = [p for p in dirty if p not in targets and p not in WORKFLOW_PATHS]
             require(not unknown, "UNREVIEWED_PATHS_OUTSIDE_PUBLICATION:" + ",".join(sorted(unknown)) +
                     "; preserve these files; add only reviewed related paths to target_paths")
-        current = snapshot(root, targets, check_remote)
+        current = snapshot(root, targets, check_remote, observed_status=dirty)
         issues = []
         if previous:
             require(all(previous["snapshot"][k] == current[k] for k in ("repository", "branch")),

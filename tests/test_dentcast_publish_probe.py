@@ -69,6 +69,7 @@ class BaselineProbe(unittest.TestCase):
         print("DENTCAST_CHECKPOINT_BASELINE " + json.dumps(counts, sort_keys=True))
         self.assertEqual(result["next_step"], "0")
         self.assertEqual(counts["snapshot_calls"], 3)
+        self.assertEqual(counts["status_paths_calls"], 6)
         self.assertGreater(counts["git_calls"], 0)
         self.assertGreater(counts["file_info_calls"], 0)
 
