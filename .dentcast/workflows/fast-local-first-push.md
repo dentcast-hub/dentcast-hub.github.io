@@ -81,7 +81,7 @@ done, start the private journal in the same checkout:
     python3 tools/dentcast_publish_fastlocal.py step --expected-digest <wal-digest> --id <id> --status started
     # Actually perform and verify the canonical action.
     python3 tools/dentcast_publish_fastlocal.py step --expected-digest <wal-digest> --id <id> --status completed --evidence <real-evidence-ref>
-    python3 tools/dentcast_publish_fastlocal.py flush --expected-digest <wal-digest>
+    python3 tools/dentcast_publish_fastlocal.py flush --expected-digest <wal-digest> --reconcile-note '<actual reviewed work/diff>'
 
 All actions remain separate from the logging utility. Every transition is an
 append-only, hash-chained, fsynced event in private Git metadata. It cannot
@@ -103,3 +103,6 @@ The journal is deleted only after the v3 handoff is durably materialized.
 
 The Fast Local adapter cannot run from a shell-less GitHub connection.
 Portable GitHub-only handoff generation remains the next distinct stage.
+
+The flush reconciliation note must describe reviewed evidence/worktree changes;
+a generic automatic note must not be used as proof of review.

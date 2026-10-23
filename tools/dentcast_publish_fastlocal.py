@@ -187,7 +187,9 @@ def validate_projection(root, pub, expected):
     h.require(init["base_sha256"]==expected and new==pub,
               "WAL_PROJECTION_INVALID")
 
-def flush(root, expected):
+def flush(root, expected, review_note=None):
+    h.require(h.nonempty(review_note),
+              "WAL_FLUSH_REQUIRES_REAL_REVIEW_NOTE")
     with lock(root):
         init,pub,d,_,_=read(root)
         h.require(d==expected,"STALE_WAL_WRITE")
@@ -203,7 +205,7 @@ def flush(root, expected):
                       and digest(encode(state["publication"]["context"]["inputs"]))==
                       init["input_fingerprint"],"WAL_BASE_CHANGED")
             result=h.save(root,pub,expected=sha,
-                          note="Validated Fast Local event journal against canonical base",
+                          note=review_note,
                           wal_materialize=True)
             sha=result["sha256"]
         else:
@@ -261,6 +263,8 @@ def main():
     s.add_argument("--evidence",action="append",default=[])
     s.add_argument("--reason")
     f=sub.add_parser("flush");f.add_argument("--expected-digest",required=True)
+    f.add_argument("--reconcile-note",required=True,
+                   help="Operator-reviewed actual work and Git diffs, not a generic token")
     sub.add_parser("inspect")
     r=sub.add_parser("repair-torn-tail");r.add_argument("--expected-good-digest",required=True)
     args=ap.parse_args()
@@ -269,7 +273,7 @@ def main():
         if args.action=="begin": out=begin(root,args.expected_sha256)
         elif args.action=="step":
             out=step(root,args.expected_digest,args.id,args.status,args.evidence,args.reason)
-        elif args.action=="flush":out=flush(root,args.expected_digest)
+        elif args.action=="flush":out=flush(root,args.expected_digest,args.reconcile_note)
         elif args.action=="inspect":out=inspect(root)
         else:out=repair(root,args.expected_good_digest)
         print(json.dumps(out,ensure_ascii=True,indent=2))

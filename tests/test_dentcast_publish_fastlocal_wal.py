@@ -38,7 +38,7 @@ class FastLocalWALTests(unittest.TestCase):
         with self.assertRaisesRegex(h.Blocked, "WAL_ACTIVE"):
             h.save(self.root, self.p, expected=init["sha256"],
                    note="not allowed outside WAL")
-        result = wal.flush(self.root, d)
+        result = wal.flush(self.root, d, 'fixture:reviewed actual canonical state')
         self.assertEqual(result["status"], "checkpoint_materialized")
         self.assertFalse(wal.active(self.root))
         saved, sha = h.load_state(self.root)
@@ -52,7 +52,7 @@ class FastLocalWALTests(unittest.TestCase):
         d = wal.begin(self.root, init["sha256"])["digest"]
         d = wal.step(self.root, d, "rules", "started")["digest"]
         self.assertEqual(wal.inspect(self.root)["next_step"], "rules")
-        wal.flush(self.root, d)
+        wal.flush(self.root, d, 'fixture:reviewed actual canonical state')
         state, _ = h.load_state(self.root)
         self.assertEqual(state["publication"]["steps"][0]["status"], "started")
 
@@ -65,6 +65,13 @@ class FastLocalWALTests(unittest.TestCase):
         with self.assertRaisesRegex(h.Blocked, "STALE_WAL_WRITE"):
             wal.step(self.root, d, "rules", "completed", ["invented"])
         self.assertEqual(wal.inspect(self.root)["digest"], x["digest"])
+
+    def test_flush_without_review_receipt_fails_closed(self):
+        init = self.start()
+        digest = wal.begin(self.root, init["sha256"])["digest"]
+        with self.assertRaisesRegex(h.Blocked, "WAL_FLUSH_REQUIRES_REAL_REVIEW_NOTE"):
+            wal.flush(self.root, digest)
+        self.assertTrue(wal.active(self.root))
 
     def test_torn_tail_requires_explicit_repair_with_expected_hash(self):
         init = self.start()
@@ -83,7 +90,7 @@ class FastLocalWALTests(unittest.TestCase):
         with self.assertRaisesRegex(h.Blocked, "CANONICAL_SKIP_REASON_REQUIRED"):
             wal.step(self.root, recovered["digest"], "rules", "skipped",
                      reason="cannot skip started action")
-        wal.flush(self.root, recovered["digest"])
+        wal.flush(self.root, recovered["digest"], "fixture:reviewed recovered prefix")
         state, _ = h.load_state(self.root)
         self.assertEqual(state["publication"]["steps"][0]["status"], "started")
 
@@ -111,7 +118,7 @@ class FastLocalWALTests(unittest.TestCase):
         self.assertTrue(st["first_delivery_cut"])
         with self.assertRaisesRegex(h.Blocked, "FIRST_PUSH_REQUIRED"):
             wal.step(self.root, digest, "C.4.10.1", "started")
-        result = wal.flush(self.root, digest)
+        result = wal.flush(self.root, digest, 'fixture:reviewed first-cut prefix')
         self.assertTrue(result["first_delivery_cut"])
         self.assertEqual(result["next_step"], "C.4.10.1")
         self.assertIn("SAME agent", result["next_action"])
