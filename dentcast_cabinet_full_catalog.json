@@ -139644,6 +139644,53 @@
         "Ramah Eimad Makieh",
         "Mohammad Luai Ahmad Foad Morad"
       ]
+    },
+    {
+      "id": "P2945",
+      "title": "Veneer-retained Fixed Dental Prosthesis: A Clinical Report on Three Cases with Up to 5 Years Follow-up and Literature Review",
+      "file_name": "Veneer-retained Fixed Dental Prosthesis - A Clinical Report on Three Cases with Up to 5 Years Follow-up and Literature Review.pdf",
+      "topic": "Maryland bridge",
+      "topic_path": "Maryland bridge",
+      "type": "case series",
+      "local_path": "",
+      "file_size": 1145768,
+      "key_finding": "Three patients received four lithium-disilicate veneer-retained fixed dental prostheses, with follow-up reported up to five years and no mechanical or biological complications. A literature review included seven earlier reports.",
+      "clinical_bottom_line": "An option for selected cases, particularly when adjacent teeth also require veneers or lingual retainers are limited; uncontrolled case reports cannot establish a general five-year survival rate.",
+      "linked_episodes": [
+        "sharehub/share-40"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1gLyrSp6vLIRDR_pFoCsgndsCSKrWwfxG/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1gLyrSp6vLIRDR_pFoCsgndsCSKrWwfxG",
+      "drive_view": "https://drive.google.com/file/d/1gLyrSp6vLIRDR_pFoCsgndsCSKrWwfxG/view",
+      "drive_id": "1gLyrSp6vLIRDR_pFoCsgndsCSKrWwfxG",
+      "tags": [
+        "veneer-retained-fixed-dental-prosthesis",
+        "resin-bonded-bridge",
+        "lithium-disilicate",
+        "anterior-tooth-replacement",
+        "connector-design",
+        "case-series",
+        "topic:maryland-bridge",
+        "veneer-retained-fixed-dental-prosthesis-three-cases-five-years-follow-up"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Veneer-retained Fixed Dental Prosthesis: A Clinical Report on Three Cases with Up to 5 Years Follow-up and Literature Review",
+      "doi": "10.32592/3dj.14.1.8",
+      "journal": "Journal of Dentomaxillofacial Radiology, Pathology and Surgery",
+      "crossref_year": 2025,
+      "subjects": [
+        "Dentistry"
+      ],
+      "abstract": "Replacement of a single missing tooth in the esthetic zone is a challenging clinical situation. As treatment expectations of dental patients continue to escalate, restorative dentists must consider several factors to ensure a management with optimum results. Preservation of the remaining teeth structure plays an important role in determining a suitable option for replacement of a single missing tooth. The treatment options should not only be confined to implants or lingually/palatally resin bonded bridges but also veneer-retained fixed dental prosthesis in selected cases could prove to be beneficial for the patient. This clinical report presents three cases treated with this approach and followed-up for up to five years. In addition, a review of the literature was conducted to identify the potential complications of this treatment modality.",
+      "display_title": "Veneer-retained Fixed Dental Prosthesis: A Clinical Report on Three Cases with Up to 5 Years Follow-up and Literature Review",
+      "authors": [
+        "Marzieh Alikhasi",
+        "Vanya Rasaie",
+        "Yasamin Babaee Hemmati",
+        "Mehran Falahchai"
+      ]
     }
   ],
   "drive_matched": 2849,
@@ -140168,5 +140215,5 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2259
+  "total_papers": 2260
 }

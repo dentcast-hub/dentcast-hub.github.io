@@ -955,20 +955,19 @@
    ]
   },
   {
-   "key": "curated_content",
-   "tag": "#Curated_Content",
+   "key": "share_hub",
+   "tag": "#Share_Hub",
    "domain": "brand",
    "words": 2,
-   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
-   "use_when": "روی مدخل‌های بازنشر.",
+   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
+   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
    "aliases": [
-    "محتوای گلچین شده",
-    "کیوریتد",
-    "بازنشر محتوا"
+    "شیرهاب",
+    "شر هاب"
    ],
    "variants": [],
    "co_tags": [],
-   "count": 38,
+   "count": 39,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -1007,19 +1006,21 @@
     "sharehub/share-35",
     "sharehub/share-36",
     "sharehub/share-38",
-    "sharehub/share-39"
+    "sharehub/share-39",
+    "sharehub/share-40"
    ]
   },
   {
-   "key": "share_hub",
-   "tag": "#Share_Hub",
+   "key": "curated_content",
+   "tag": "#Curated_Content",
    "domain": "brand",
    "words": 2,
-   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
-   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
+   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
+   "use_when": "روی مدخل‌های بازنشر.",
    "aliases": [
-    "شیرهاب",
-    "شر هاب"
+    "محتوای گلچین شده",
+    "کیوریتد",
+    "بازنشر محتوا"
    ],
    "variants": [],
    "co_tags": [],
@@ -1170,6 +1171,56 @@
    ]
   },
   {
+   "key": "هوش_مصنوعی",
+   "tag": "#هوش_مصنوعی",
+   "domain": "ai",
+   "words": 2,
+   "definition": "چترِ عامِ هوش مصنوعی.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "artificial intelligence",
+    "ای آی",
+    "ماشین هوشمند"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 32,
+   "content_ids": [
+    "episodes/episode-109",
+    "episodes/episode-109-2",
+    "episodes/episode-149-1",
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/dentai-28",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "sharehub/share-15",
+    "dentai/promptologist/prompt5-1",
+    "dentai/promptologist/prompt5-2",
+    "dentai/promptologist/prompt5-3",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2",
+    "dentai/promptologist/prompt6-3",
+    "dentai/promptologist/prompt6-4",
+    "dentai/promptologist/prompt6-5",
+    "dentai/promptologist/prompt7-1",
+    "dentai/promptologist/prompt7-2",
+    "insight/insight-89",
+    "sharehub/share-25",
+    "dentai/promptologist/prompt-append2-1",
+    "dentai/promptologist/prompt-append2-2",
+    "dentai/promptologist/prompt-append2-3"
+   ]
+  },
+  {
    "key": "روکش_ایمپلنت",
    "tag": "#روکش_ایمپلنت",
    "domain": "clinical",
@@ -1267,55 +1318,6 @@
     "insight/insight-91",
     "insight/insight-92",
     "sharehub/share-39"
-   ]
-  },
-  {
-   "key": "هوش_مصنوعی",
-   "tag": "#هوش_مصنوعی",
-   "domain": "ai",
-   "words": 2,
-   "definition": "چترِ عامِ هوش مصنوعی.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "artificial intelligence",
-    "ای آی",
-    "ماشین هوشمند"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 31,
-   "content_ids": [
-    "episodes/episode-109",
-    "episodes/episode-109-2",
-    "episodes/episode-149-1",
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-append1",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/dentai-28",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "sharehub/share-15",
-    "dentai/promptologist/prompt5-1",
-    "dentai/promptologist/prompt5-2",
-    "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1",
-    "dentai/promptologist/prompt6-2",
-    "dentai/promptologist/prompt6-3",
-    "dentai/promptologist/prompt6-4",
-    "dentai/promptologist/prompt6-5",
-    "dentai/promptologist/prompt7-1",
-    "dentai/promptologist/prompt7-2",
-    "insight/insight-89",
-    "sharehub/share-25",
-    "dentai/promptologist/prompt-append2-1",
-    "dentai/promptologist/prompt-append2-2"
    ]
   },
   {
@@ -1697,7 +1699,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 24,
+   "count": 25,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
     "dentai/promptologist/prompt1-2",
@@ -1722,7 +1724,8 @@
     "dentai/promptologist/prompt7-1",
     "dentai/promptologist/prompt7-2",
     "dentai/promptologist/prompt-append2-1",
-    "dentai/promptologist/prompt-append2-2"
+    "dentai/promptologist/prompt-append2-2",
+    "dentai/promptologist/prompt-append2-3"
    ]
   },
   {
@@ -1803,6 +1806,53 @@
     "notecast/episode-15",
     "notecast/episode-16",
     "notecast/episode-30"
+   ]
+  },
+  {
+   "key": "لمینیت_سرامیکی",
+   "tag": "#لمینیت_سرامیکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ونیر/لمینیتِ سرامیکی — رستوریشنِ نازکِ باندشونده‌ی زیبایی.",
+   "use_when": "مقاله لمینیتِ سرامیکی را موضوع داشته باشد.",
+   "aliases": [
+    "ceramic laminate",
+    "لامینیت",
+    "لمینت",
+    "لامینیت سرامیکی",
+    "veneer laminate"
+   ],
+   "variants": [
+    "#لمینیت"
+   ],
+   "co_tags": [
+    "#Laminate_Veneer"
+   ],
+   "count": 23,
+   "content_ids": [
+    "episodes/episode-9",
+    "episodes/episode-19",
+    "episodes/episode-37",
+    "episodes/episode-38",
+    "episodes/episode-39",
+    "episodes/episode-148",
+    "notecast/episode-19",
+    "metanotes/meta-1",
+    "dentai/dentai-10",
+    "chairside/chairside-1",
+    "insight/insight-36",
+    "insight/insight-37",
+    "sharehub/share-6",
+    "sharehub/share-8",
+    "notecast/episode-37",
+    "notecast/episode-38",
+    "chairside/chairside-32",
+    "chairside/chairside-35",
+    "sharehub/share-22",
+    "insight/insight-79",
+    "sharehub/share-27",
+    "insight/insight-92",
+    "sharehub/share-40"
    ]
   },
   {
@@ -1964,52 +2014,6 @@
     "sharehub/share-22",
     "sharehub/share-32",
     "sharehub/share-34"
-   ]
-  },
-  {
-   "key": "لمینیت_سرامیکی",
-   "tag": "#لمینیت_سرامیکی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ونیر/لمینیتِ سرامیکی — رستوریشنِ نازکِ باندشونده‌ی زیبایی.",
-   "use_when": "مقاله لمینیتِ سرامیکی را موضوع داشته باشد.",
-   "aliases": [
-    "ceramic laminate",
-    "لامینیت",
-    "لمینت",
-    "لامینیت سرامیکی",
-    "veneer laminate"
-   ],
-   "variants": [
-    "#لمینیت"
-   ],
-   "co_tags": [
-    "#Laminate_Veneer"
-   ],
-   "count": 22,
-   "content_ids": [
-    "episodes/episode-9",
-    "episodes/episode-19",
-    "episodes/episode-37",
-    "episodes/episode-38",
-    "episodes/episode-39",
-    "episodes/episode-148",
-    "notecast/episode-19",
-    "metanotes/meta-1",
-    "dentai/dentai-10",
-    "chairside/chairside-1",
-    "insight/insight-36",
-    "insight/insight-37",
-    "sharehub/share-6",
-    "sharehub/share-8",
-    "notecast/episode-37",
-    "notecast/episode-38",
-    "chairside/chairside-32",
-    "chairside/chairside-35",
-    "sharehub/share-22",
-    "insight/insight-79",
-    "sharehub/share-27",
-    "insight/insight-92"
    ]
   },
   {
@@ -2207,6 +2211,43 @@
    ]
   },
   {
+   "key": "chatgpt",
+   "tag": "#ChatGPT",
+   "domain": "ai",
+   "words": 1,
+   "definition": "سرویسِ ChatGPT.",
+   "use_when": "مقاله مشخصاً به این سرویس بپردازد.",
+   "aliases": [
+    "چت جی پی تی",
+    "chat gpt",
+    "جی پی تی",
+    "gpt"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 18,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/dentai-28",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt5-1",
+    "dentai/promptologist/prompt5-2",
+    "dentai/promptologist/prompt5-3",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2",
+    "dentai/promptologist/prompt6-3",
+    "dentai/promptologist/prompt7-1",
+    "dentai/promptologist/prompt-append2-3"
+   ]
+  },
+  {
    "key": "ترمیم_غیرمستقیم",
    "tag": "#ترمیم_غیرمستقیم",
    "domain": "clinical",
@@ -2280,42 +2321,6 @@
     "sharehub/share-30",
     "insight/insight-94",
     "sharehub/share-37"
-   ]
-  },
-  {
-   "key": "chatgpt",
-   "tag": "#ChatGPT",
-   "domain": "ai",
-   "words": 1,
-   "definition": "سرویسِ ChatGPT.",
-   "use_when": "مقاله مشخصاً به این سرویس بپردازد.",
-   "aliases": [
-    "چت جی پی تی",
-    "chat gpt",
-    "جی پی تی",
-    "gpt"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 17,
-   "content_ids": [
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-append1",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/dentai-28",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "dentai/promptologist/prompt5-1",
-    "dentai/promptologist/prompt5-2",
-    "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1",
-    "dentai/promptologist/prompt6-2",
-    "dentai/promptologist/prompt6-3",
-    "dentai/promptologist/prompt7-1"
    ]
   },
   {
@@ -2894,6 +2899,43 @@
    ]
   },
   {
+   "key": "لیتیوم_دی_سیلیکات",
+   "tag": "#لیتیوم_دی_سیلیکات",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "گلاس‌سرامیکِ لیتیوم‌دی‌سیلیکات (اِمکس) — تعادلِ استحکام و زیبایی برای ونیر، اینله/آنله و روکشِ تک‌واحدی.",
+   "use_when": "مقاله لیتیوم‌دی‌سیلیکات یا اِمکس را انتخاب یا ارزیابی کند.",
+   "aliases": [
+    "lithium disilicate",
+    "emax",
+    "e.max",
+    "ایمکس",
+    "امکس",
+    "اینگات ایمکس",
+    "لیتیوم دیسیلیکات"
+   ],
+   "variants": [
+    "#lithium_disilicate"
+   ],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-69",
+    "episodes/episode-123-1",
+    "notecast/episode-8",
+    "notecast/episode-9",
+    "notecast/episode-10",
+    "dentai/dentai-25",
+    "episodes/episode-159-1",
+    "metanotes/meta-14",
+    "dentai/dentai-26",
+    "sharehub/share-27",
+    "insight/insight-91",
+    "insight/insight-92",
+    "sharehub/share-40"
+   ]
+  },
+  {
    "key": "پروگنوز_دندان",
    "tag": "#پروگنوز_دندان",
    "domain": null,
@@ -2960,42 +3002,6 @@
     "chairside/chairside-32",
     "insight/insight-85",
     "insight/insight-86"
-   ]
-  },
-  {
-   "key": "لیتیوم_دی_سیلیکات",
-   "tag": "#لیتیوم_دی_سیلیکات",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "گلاس‌سرامیکِ لیتیوم‌دی‌سیلیکات (اِمکس) — تعادلِ استحکام و زیبایی برای ونیر، اینله/آنله و روکشِ تک‌واحدی.",
-   "use_when": "مقاله لیتیوم‌دی‌سیلیکات یا اِمکس را انتخاب یا ارزیابی کند.",
-   "aliases": [
-    "lithium disilicate",
-    "emax",
-    "e.max",
-    "ایمکس",
-    "امکس",
-    "اینگات ایمکس",
-    "لیتیوم دیسیلیکات"
-   ],
-   "variants": [
-    "#lithium_disilicate"
-   ],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-69",
-    "episodes/episode-123-1",
-    "notecast/episode-8",
-    "notecast/episode-9",
-    "notecast/episode-10",
-    "dentai/dentai-25",
-    "episodes/episode-159-1",
-    "metanotes/meta-14",
-    "dentai/dentai-26",
-    "sharehub/share-27",
-    "insight/insight-91",
-    "insight/insight-92"
    ]
   },
   {
@@ -3502,6 +3508,34 @@
    ]
   },
   {
+   "key": "انتخاب_shade",
+   "tag": "#انتخاب_shade",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخابِ رنگِ کار، شامل رنگِ سمان.",
+   "use_when": "مقاله رنگ را متغیرِ تصمیم بداند.",
+   "aliases": [
+    "shade selection",
+    "انتخاب رنگ",
+    "shade"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-68",
+    "episodes/episode-147-4",
+    "insight/insight-5",
+    "insight/insight-42",
+    "sharehub/share-26",
+    "sharehub/share-29",
+    "insight/insight-91",
+    "insight/insight-92",
+    "chairside/chairside-40",
+    "insight/insight-98"
+   ]
+  },
+  {
    "key": "ایمپلنت_فول_آرچ",
    "tag": "#ایمپلنت_فول_آرچ",
    "domain": "clinical",
@@ -3734,34 +3768,6 @@
     "sharehub/share-24",
     "chairside/chairside-42",
     "chairside/chairside-43"
-   ]
-  },
-  {
-   "key": "انتخاب_shade",
-   "tag": "#انتخاب_shade",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتخابِ رنگِ کار، شامل رنگِ سمان.",
-   "use_when": "مقاله رنگ را متغیرِ تصمیم بداند.",
-   "aliases": [
-    "shade selection",
-    "انتخاب رنگ",
-    "shade"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-68",
-    "episodes/episode-147-4",
-    "insight/insight-5",
-    "insight/insight-42",
-    "sharehub/share-26",
-    "sharehub/share-29",
-    "insight/insight-91",
-    "insight/insight-92",
-    "chairside/chairside-40",
-    "insight/insight-98"
    ]
   },
   {
@@ -5857,6 +5863,31 @@
    ]
   },
   {
+   "key": "بریج",
+   "tag": "#بریج",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "پروتزِ ثابتِ چندواحدی که فضای بی‌دندانی را با اتکا به دندان‌های پایه پر می‌کند (FPD).",
+   "use_when": "مقاله بریج/پروتزِ ثابتِ چندواحدی را موضوع یا گزینه‌ی درمان قرار دهد.",
+   "aliases": [
+    "bridge",
+    "FPD",
+    "بریج دندانی",
+    "fixed partial denture",
+    "پروتز ثابت چند واحدی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-119-1",
+    "chairside/chairside-34",
+    "sharehub/share-17",
+    "chairside/chairside-38",
+    "sharehub/share-40"
+   ]
+  },
+  {
    "key": "ترمیم_خلفی",
    "tag": "#ترمیم_خلفی",
    "domain": "clinical",
@@ -6556,30 +6587,6 @@
     "notecast/episode-4",
     "notecast/episode-5",
     "sharehub/share-23"
-   ]
-  },
-  {
-   "key": "بریج",
-   "tag": "#بریج",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "پروتزِ ثابتِ چندواحدی که فضای بی‌دندانی را با اتکا به دندان‌های پایه پر می‌کند (FPD).",
-   "use_when": "مقاله بریج/پروتزِ ثابتِ چندواحدی را موضوع یا گزینه‌ی درمان قرار دهد.",
-   "aliases": [
-    "bridge",
-    "FPD",
-    "بریج دندانی",
-    "fixed partial denture",
-    "پروتز ثابت چند واحدی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-119-1",
-    "chairside/chairside-34",
-    "sharehub/share-17",
-    "chairside/chairside-38"
    ]
   },
   {
@@ -7634,6 +7641,31 @@
    ]
   },
   {
+   "key": "github",
+   "tag": "#GitHub",
+   "domain": "ai",
+   "words": 1,
+   "definition": "سرویسِ آنلاینِ نگه‌داریِ فایل‌ها در ریپو (repository)، که نسخه‌های قبلیِ هر فایل را هم نگه می‌دارد؛ برای کد ساخته شده ولی برای هر فایلِ متنی کار می‌کند.",
+   "use_when": "مطلب مشخصاً به این سرویس، ریپو یا نگه‌داریِ فایل‌ها در آن بپردازد.",
+   "aliases": [
+    "گیت‌هاب",
+    "گیت هاب",
+    "github",
+    "ریپو",
+    "ریپوزیتوری",
+    "repository",
+    "git hub"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/promptologist/prompt-append2-1",
+    "dentai/promptologist/prompt-append2-2",
+    "dentai/promptologist/prompt-append2-3"
+   ]
+  },
+  {
    "key": "hallucination",
    "tag": "#Hallucination",
    "domain": "ai",
@@ -7754,6 +7786,35 @@
     "episodes/episode-96",
     "episodes/episode-97",
     "episodes/episode-98"
+   ]
+  },
+  {
+   "key": "rbfdp",
+   "tag": "#RBFDP",
+   "domain": null,
+   "words": 1,
+   "definition": "پروتز ثابتِ متکی بر باند رزینی (مریلند).",
+   "use_when": "مقاله RBFDP را ارزیابی یا طراحی کند.",
+   "aliases": [
+    "resin bonded",
+    "مریلند",
+    "maryland bridge",
+    "رزین باندد",
+    "رزین باند",
+    "RBFPD",
+    "resin-bonded bridge",
+    "resin bonded fixed partial denture",
+    "بریج باندشونده",
+    "بریج باند شونده",
+    "بریج رزین باند"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/dentai-7",
+    "sharehub/share-39",
+    "sharehub/share-40"
    ]
   },
   {
@@ -9404,6 +9465,29 @@
    ]
   },
   {
+   "key": "ولیو",
+   "tag": "#ولیو",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "بُعد روشنی یا تیرگی رنگ، مستقل از hue و chroma؛ در انتخاب رنگ دندان مهم‌ترین بُعد تطابق است و چشم آن را مستقل از chroma درک نمی‌کند.",
+   "use_when": "مطلب درباره‌ی انتخاب، مقایسه، ثبت یا خطای درک value در تطابق رنگ دندان و رستوریشن باشد.",
+   "aliases": [
+    "value",
+    "ولیو رنگ",
+    "روشنایی رنگ",
+    "brightness",
+    "lightness"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "sharehub/share-29",
+    "insight/insight-91",
+    "insight/insight-98"
+   ]
+  },
+  {
    "key": "پارافانکشن",
    "tag": "#پارافانکشن",
    "domain": "clinical",
@@ -9926,30 +10010,6 @@
    ]
   },
   {
-   "key": "github",
-   "tag": "#GitHub",
-   "domain": "ai",
-   "words": 1,
-   "definition": "سرویسِ آنلاینِ نگه‌داریِ فایل‌ها در ریپو (repository)، که نسخه‌های قبلیِ هر فایل را هم نگه می‌دارد؛ برای کد ساخته شده ولی برای هر فایلِ متنی کار می‌کند.",
-   "use_when": "مطلب مشخصاً به این سرویس، ریپو یا نگه‌داریِ فایل‌ها در آن بپردازد.",
-   "aliases": [
-    "گیت‌هاب",
-    "گیت هاب",
-    "github",
-    "ریپو",
-    "ریپوزیتوری",
-    "repository",
-    "git hub"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "dentai/promptologist/prompt-append2-1",
-    "dentai/promptologist/prompt-append2-2"
-   ]
-  },
-  {
    "key": "implant_complications",
    "tag": "#Implant_Complications",
    "domain": "clinical",
@@ -10108,34 +10168,6 @@
    "content_ids": [
     "dentai/dentai-13",
     "dentai/dentai-14"
-   ]
-  },
-  {
-   "key": "rbfdp",
-   "tag": "#RBFDP",
-   "domain": null,
-   "words": 1,
-   "definition": "پروتز ثابتِ متکی بر باند رزینی (مریلند).",
-   "use_when": "مقاله RBFDP را ارزیابی یا طراحی کند.",
-   "aliases": [
-    "resin bonded",
-    "مریلند",
-    "maryland bridge",
-    "رزین باندد",
-    "رزین باند",
-    "RBFPD",
-    "resin-bonded bridge",
-    "resin bonded fixed partial denture",
-    "بریج باندشونده",
-    "بریج باند شونده",
-    "بریج رزین باند"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "dentai/dentai-7",
-    "sharehub/share-39"
    ]
   },
   {
@@ -12006,6 +12038,28 @@
    ]
   },
   {
+   "key": "عکس_سیاه_سفید",
+   "tag": "#عکس_سیاه_سفید",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "عکسی از دندان و تب شید که رنگ آن حذف شده (grayscale) تا فقط value باقی بماند و مقایسه‌ی روشنی دندان و شید بدون اثر chroma ممکن شود.",
+   "use_when": "مطلب درباره‌ی استفاده از عکس grayscale یا سیاه‌سفید برای مقایسه‌ی value در انتخاب رنگ یا ارتباط با لابراتوار باشد.",
+   "aliases": [
+    "black and white photography",
+    "grayscale",
+    "عکس سیاه و سفید",
+    "عکس سیاه‌وسفید",
+    "عکس گری اسکیل"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "sharehub/share-29",
+    "insight/insight-98"
+   ]
+  },
+  {
    "key": "فاز_زیرکونیا",
    "tag": "#فاز_زیرکونیا",
    "domain": null,
@@ -12557,29 +12611,6 @@
    "content_ids": [
     "insight/insight-14",
     "chairside/chairside-37"
-   ]
-  },
-  {
-   "key": "ولیو",
-   "tag": "#ولیو",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "بُعد روشنی یا تیرگی رنگ، مستقل از hue و chroma؛ در انتخاب رنگ دندان مهم‌ترین بُعد تطابق است و چشم آن را مستقل از chroma درک نمی‌کند.",
-   "use_when": "مطلب درباره‌ی انتخاب، مقایسه، ثبت یا خطای درک value در تطابق رنگ دندان و رستوریشن باشد.",
-   "aliases": [
-    "value",
-    "ولیو رنگ",
-    "روشنایی رنگ",
-    "brightness",
-    "lightness"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "sharehub/share-29",
-    "insight/insight-91",
-    "insight/insight-98"
    ]
   },
   {
@@ -18597,28 +18628,6 @@
    ]
   },
   {
-   "key": "عکس_سیاه_سفید",
-   "tag": "#عکس_سیاه_سفید",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "عکسی از دندان و تب شید که رنگ آن حذف شده (grayscale) تا فقط value باقی بماند و مقایسه‌ی روشنی دندان و شید بدون اثر chroma ممکن شود.",
-   "use_when": "مطلب درباره‌ی استفاده از عکس grayscale یا سیاه‌سفید برای مقایسه‌ی value در انتخاب رنگ یا ارتباط با لابراتوار باشد.",
-   "aliases": [
-    "black and white photography",
-    "grayscale",
-    "عکس سیاه و سفید",
-    "عکس سیاه‌وسفید",
-    "عکس گری اسکیل"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "sharehub/share-29",
-    "insight/insight-98"
-   ]
-  },
-  {
    "key": "فاز_گلاس",
    "tag": "#فاز_گلاس",
    "domain": "clinical",
@@ -22035,6 +22044,7 @@
   "محل اتصال مینا و سمان": "cej",
   "پروتز ایمپلنت انگلیسی": "ایمپلنت prosthetics",
   "prompt writing prompt": "متاپرامپت",
+  "onlay retained bridge": "آنله بریج",
   "ارتودنسی قبل از لمینت": "ارتودنسی پیش از زیبایی",
   "سابسکریپشن هوش مصنوعی": "اشتراک هوش مصنوعی",
   "subperiosteal implant": "ایمپلنت ساب پریوستئال",
@@ -22058,7 +22068,6 @@
   "first permanent molar": "مولر اول دائمی",
   "موکوزیت اطراف ایمپلنت": "موکوزیت پری ایمپلنت",
   "حرکت پیش رونده مندیبل": "پروتروزیو",
-  "onlay retained bridge": "آنله بریج",
   "indirect restoration": "ترمیم غیرمستقیم",
   "کراون لنتنینگ زیبایی": "افزایش طول تاج",
   "دنچر متکی بر ایمپلنت": "اوردنچر",
@@ -22149,6 +22158,7 @@
   "اکستراکشن و ایمپلنت": "کشیدن و ایمپلنت",
   "caries detector dye": "پوسیدگی detector",
   "محلول تشخیص پوسیدگی": "پوسیدگی detector",
+  "resin bonded bridge": "rbfdp",
   "ترنسفورمیشن توفنینگ": "transformation toughening",
   "non vital bleaching": "اینترنال بلیچینگ",
   "prosthesis delivery": "تحویل پروتز",
@@ -22163,7 +22173,6 @@
   "هموگلوبین گلیکوزیله": "کنترل قند خون",
   "دندان کناری ایمپلنت": "adjacent tooth",
   "ایمپلنت سطح استخوان": "bone level ایمپلنت",
-  "resin bonded bridge": "rbfdp",
   "snow plow technique": "snow plow",
   "blood contamination": "آلودگی حین باندینگ",
   "shade communication": "ارتباط با لابراتوار",
@@ -22568,6 +22577,7 @@
   "ایمپلنت سطح بافت": "tissue level ایمپلنت",
   "تراش دندان عمومی": "tooth preparation",
   "آماده سازی دندان": "tooth preparation",
+  "table top bridge": "آنله بریج",
   "chameleon effect": "اثر آفتاب پرست",
   "ارتباط با تکنسین": "ارتباط با لابراتوار",
   "space assessment": "فضای ارتودنسی",
@@ -22578,6 +22588,7 @@
   "border movements": "انولوپ آو موشن",
   "over preparation": "اورپرپ",
   "واسطه هوش مصنوعی": "اکانت اشتراکی",
+  "occlusal veneers": "اکلوزال ونیر",
   "radiation safety": "ایمنی پرتو",
   "sleeping implant": "ایمپلنت خواب",
   "فول ماوس ایمپلنت": "ایمپلنت بازسازی کامل دهان",
@@ -22650,8 +22661,6 @@
   "inception cohort": "کوهورت تک گروهی",
   "هدایت طرفی کانین": "گایدنس کانین",
   "فاصله پست و گوتا": "گپ پست و گوتا",
-  "table top bridge": "آنله بریج",
-  "occlusal veneers": "اکلوزال ونیر",
   "دست دندان ژله ای": "دندان مصنوعی ژله ای",
   "flexible denture": "دندان مصنوعی ژله ای",
   "لامینیت سرامیکی": "لمینیت سرامیکی",
@@ -22725,6 +22734,8 @@
   "کنترل لابراتوار": "کنترل کار لابراتوار",
   "چک قبل از تحویل": "کنترل کار لابراتوار",
   "بازسازی ایمپلنت": "ایمپلنت restoration",
+  "maryland bridge": "rbfdp",
+  "بریج باند شونده": "rbfdp",
   "custom abutment": "اباتمنت کاستوم",
   "umbrella effect": "اثر چتر",
   "تحویل کار پروتز": "تحویل پروتز",
@@ -22769,12 +22780,11 @@
   "بستن انتهای تری": "posterior damming",
   "بازیابی و تولید": "rag",
   "مطالعه راسپرینی": "rasperini",
-  "maryland bridge": "rbfdp",
-  "بریج باند شونده": "rbfdp",
   "اسکن بادی معکوس": "reverse اسکن بادی",
   "prompt chaining": "شکستن کار",
   "type 2 diabetes": "type2 دیابت",
   "implant abscess": "آبسه ایمپلنت",
+  "tabletop bridge": "آنله بریج",
   "آگاهی به اکلوژن": "پروپریوسپشن",
   "angled abutment": "اباتمنت زاویه دار",
   "blending effect": "اثر آفتاب پرست",
@@ -22787,6 +22797,7 @@
   "مسیر عملکردی فک": "انولوپ آو فانکشن",
   "posselt diagram": "انولوپ آو موشن",
   "برداشتن ایمپلنت": "اکسپلنت ایمپلنت",
+  "occlusal veneer": "اکلوزال ونیر",
   "ایمپلنت دفن شده": "ایمپلنت خواب",
   "ایمپلنت زایگوما": "ایمپلنت زایگوماتیک",
   "infra occlusion": "اینفرااکلوژن",
@@ -22867,8 +22878,6 @@
   "anti retraction": "کنترل عفونت",
   "جینگوال ریترکشن": "کنترل لثه",
   "گپ پست گوتاپرکا": "گپ پست و گوتا",
-  "tabletop bridge": "آنله بریج",
-  "occlusal veneer": "اکلوزال ونیر",
   "treatment plan": "طرح درمان",
   "پست داخل کانال": "پست و کور",
   "پروتز ایمپلنتی": "پروتز ایمپلنت",
@@ -22946,6 +22955,8 @@
   "پیش بینی درمان": "پیش آگهی",
   "پیش آگهی درمان": "پیش آگهی",
   "شکست لبه محیطی": "prf",
+  "بریج باندشونده": "rbfdp",
+  "بریج رزین باند": "rbfdp",
   "اباتمنت سفارشی": "اباتمنت کاستوم",
   "کاستوم اباتمنت": "اباتمنت کاستوم",
   "intraoral scan": "اسکن دهانی",
@@ -22978,8 +22989,6 @@
   "finite element": "fea",
   "مسدود کردن تری": "posterior damming",
   "بازیابی افزوده": "rag",
-  "بریج باندشونده": "rbfdp",
-  "بریج رزین باند": "rbfdp",
   "tic douloureux": "trigeminal neuralgia",
   "رفع آلودگی عاج": "آلودگی حین باندینگ",
   "color blending": "اثر آفتاب پرست",
@@ -23442,6 +23451,7 @@
   "پروتز استتیک": "پروتز زیبایی",
   "کنتاکت مجاور": "کانتکت پروگزیمال",
   "کریز دیتکتور": "پوسیدگی detector",
+  "resin bonded": "rbfdp",
   "عدم قطعیت vd": "vd تخمینی",
   "uncertain vd": "vd تخمینی",
   "جفری اوکیسون": "اوکیسون",
@@ -23473,8 +23483,8 @@
   "printed cast": "کست پرینتی",
   "کور کامپوزیت": "کور کامپوزیتی",
   "محدوده فینیش": "finish zone",
-  "resin bonded": "rbfdp",
   "دیابت نوع دو": "type2 دیابت",
+  "onlay bridge": "آنله بریج",
   "اسکرو درایور": "آچار ایمپلنت",
   "اباتمنت انگل": "اباتمنت زاویه دار",
   "مهارت بالینی": "استدلال تشخیصی",
@@ -23484,6 +23494,7 @@
   "پاکت عملکردی": "انولوپ آو فانکشن",
   "آلودگی اسیدی": "اچ ناخواسته",
   "حساب اشتراکی": "اکانت اشتراکی",
+  "ونیر اکلوزال": "اکلوزال ونیر",
   "تحریم دسترسی": "ایران",
   "ساب پریوستیل": "ایمپلنت ساب پریوستئال",
   "بیمار باردار": "بارداری",
@@ -23577,8 +23588,6 @@
   "بیانیه اجماع": "کنسنسوس iti",
   "پلیمریزاسیون": "کیور",
   "friction fit": "گیر مکانیکی",
-  "onlay bridge": "آنله بریج",
-  "ونیر اکلوزال": "اکلوزال ونیر",
   "بیهوشی عمومی": "بیهوشی",
   "پروتز ژله ای": "دندان مصنوعی ژله ای",
   "آرتیکولاسیون": "ارتیکولاسیون",
@@ -23961,6 +23970,7 @@
   "هیدروترمال": "ltd",
   "پی ام ام ا": "pmma",
   "اکریل موقت": "pmma",
+  "رزین باندد": "rbfdp",
   "بقای درمان": "survival",
   "اثر امبرلا": "اثر چتر",
   "اسلاید کست": "اسلایدکست",
@@ -24008,7 +24018,6 @@
   "اجزا محدود": "fea",
   "hall crown": "hall technique",
   "جامپینگ گپ": "jumping gap",
-  "رزین باندد": "rbfdp",
   "ریتنشن فرم": "retention form",
   "آلودگی خون": "آلودگی حین باندینگ",
   "آلودگی عاج": "آلودگی حین باندینگ",
@@ -24205,6 +24214,7 @@
   "پری مولار": "پرمولر",
   "پست دوتکه": "پست دو تکه",
   "lab check": "کنترل کار لابراتوار",
+  "رزین باند": "rbfdp",
   "قوس کوتاه": "sda",
   "vent hole": "smart ونت روکش",
   "تیرگی لثه": "اثر چتر",
@@ -24255,8 +24265,8 @@
   "فینیش زون": "finish zone",
   "هال تکنیک": "hall technique",
   "راینی ریج": "rainey ridge",
-  "رزین باند": "rbfdp",
   "ساسریزیشن": "saucerization",
+  "بریج آنله": "آنله بریج",
   "ankylosed": "آنکیلوز",
   "ankylosis": "آنکیلوز",
   "بدون حرکت": "آنکیلوز",
@@ -24373,7 +24383,6 @@
   "کارت هدیه": "گیفت کارت",
   "آفت دهانی": "آفت دهان",
   "آفت راجعه": "آفت دهان",
-  "بریج آنله": "آنله بریج",
   "سماگلوتید": "تیرزپاتاید",
   "تیرزپاتید": "داروهای لاغری",
   "تریگر آفت": "محرک آفت",
@@ -24743,6 +24752,7 @@
   "enamel": "مینای دندان",
   "ننشستن": "نشست ناقص",
   "claude": "کلود",
+  "مریلند": "rbfdp",
   "ریج لپ": "ridge lap",
   "okeson": "اوکیسون",
   "اینستا": "اینستاگرام",
@@ -24754,7 +24764,6 @@
   "خط وسط": "میدلاین",
   "veneer": "ونیر",
   "کن بیم": "cbct",
-  "مریلند": "rbfdp",
   "saucer": "saucerization",
   "driver": "آچار ایمپلنت",
   "ha gel": "اسید هیالورونیک",
@@ -24819,6 +24828,7 @@
   "جمنای": "جمینای",
   "لیکیج": "ریز نشت",
   "aging": "ltd",
+  "rbfpd": "rbfdp",
   "insta": "اینستاگرام",
   "loupe": "بزرگ نمایی",
   "سیگار": "دخانیات",
@@ -24830,7 +24840,6 @@
   "value": "ولیو",
   "hba1c": "کنترل قند خون",
   "دمینگ": "posterior damming",
-  "rbfpd": "rbfdp",
   "ریدیم": "redeem",
   "ساکسس": "success",
   "sprue": "اسپرو",
