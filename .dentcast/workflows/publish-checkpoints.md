@@ -189,6 +189,22 @@ extra checkpoint. Before an external action record `started` locally; immediatel
 record its observed outcome. Unknown outcomes block retry as before. External
 actions still require their existing scope and approval; this protocol grants none.
 
+At the first cut, both the canonical checkout/CLI and connector adapters
+must fail closed if `pending_questions` is not empty, or if the lead
+provenance and applicable founder approval are not explicitly recorded.
+Before completing `C.4.9`, record one public-safe
+`first_cut_lead_provenance_v1` decision in `context.decisions` with
+`kind`, `origin` (`author_original`, `agent_authored`, or a genuinely
+documented `not_applicable` exception), `source_ref`, and nonempty
+`evidence`. For `agent_authored`, also record the separately confirmed
+`authored-intro` approval with actual founder evidence. Merely omitting
+an approval record never means approval. The user's original paragraph
+does not require a new approval. The pre-commit, CI and post-cut
+transition guards enforce this condition for new three-cut page runs;
+legacy and paper-only paths retain their documented exceptions. As with
+all handoff metadata, evidence must reflect the actual source and
+founder decision; synthetic references are not authorizations.
+
 Cuts 1 and 2 require a fresh remote observation before crossing into the next
 step, including when scientific steps are lawfully skipped. Stage scoped work,
 refresh the local checkpoint after staging, stage the latest handoff, commit and

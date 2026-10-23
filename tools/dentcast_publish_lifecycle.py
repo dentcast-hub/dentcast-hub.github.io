@@ -69,8 +69,27 @@ def state_for_update(root, expected):
     return state
 
 
+def require_first_cut_human_gates(publication):
+    """Run the same founder-lead check for local and connected first cuts.
+
+    Do not require this new metadata from legacy or paper-only runs.
+    An empty approvals list is not proof that an agent-authored lead was
+    approved; provenance must be explicitly declared at the first cut.
+    """
+    if not fixed_delivery(publication) or delivery_boundary(publication) != 1:
+        return
+    h.require(not publication["context"]["pending_questions"],
+              "FIRST_CUT_PENDING_QUESTIONS")
+    h.require(all(a["status"] in ("confirmed", "not_required")
+                  for a in publication["context"]["approvals"]),
+              "FIRST_CUT_UNRESOLVED_APPROVAL")
+    import dentcast_connected_cut_gates as cut_gates
+    cut_gates.validate_lead_provenance(publication)
+
+
 def require_step_delivery(root, state, expected):
     """Fresh read-only origin check; never commit/push or trust cached upstream."""
+    require_first_cut_human_gates(state["publication"])
     current = h.current_snapshot(root, state, check_remote=True)
     remote = current['remote']
     h.require(remote['status'] == 'observed' and remote['head'] == current['head'],
@@ -630,6 +649,8 @@ def guard(root, phase):
     state, _ = h.load_state(root)
     require_plan(state["publication"])
     h.require(not pending(root), "CLEANUP_DELIVERY_PENDING")
+    if phase in ("pre-commit", "ci", "stop"):
+        require_first_cut_human_gates(state["publication"])
     if fixed_delivery(state["publication"]) and phase in ("pre-commit", "ci"):
         number = delivery_boundary(state["publication"])
         h.require(number is not None, "ONLY_THREE_FIXED_DELIVERIES_ALLOWED")

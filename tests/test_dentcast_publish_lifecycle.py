@@ -62,6 +62,122 @@ class LifecycleTests(unittest.TestCase):
         run(self.root, 'commit', '-m', 'checkpoint')
         run(self.root, 'push', 'origin', 'main')
 
+
+    def first_cut_permissions_fixture(self, *, lead=None, approval=None,
+                                      pending_questions=()):
+        """A complete synthetic first-cut ledger; never a real publication."""
+        self.p["content_id"] = "note"
+        self.p["category"] = "insight"
+        self.p["steps"] = lc.plan()
+        for row in self.p["steps"]:
+            if row["id"] == "C.4.10.1":
+                break
+            row.update(status="completed", evidence=["fixture:synthetic:" + row["id"]])
+        self.assertEqual(lc.delivery_boundary({
+            **self.p, "context": {
+                **self.p["context"],
+                "decisions": [{"kind": lc.DELIVERY_POLICY}]}}), 1)
+        self.p["context"]["decisions"].append({"kind": lc.DELIVERY_POLICY})
+        if lead:
+            self.p["context"]["decisions"].append({
+                "kind": "first_cut_lead_provenance_v1",
+                "origin": lead,
+                "source_ref": "fixture:recorded-source-or-exception",
+                "evidence": ["fixture:operator-reviewed-provenance"]})
+        if approval:
+            self.p["context"]["approvals"].append({
+                "scope": "authored-intro", "status": approval,
+                "decision": None if approval == "pending" else
+                            ("approved" if approval == "confirmed" else "declined"),
+                "evidence": [] if approval == "pending"
+                            else ["fixture:founder-decision-record"]})
+        self.p["context"]["pending_questions"] = list(pending_questions)
+        init = h.save(self.root, self.p, initial=True)
+        run(self.root, "add", h.STATE_PATH)
+        return init
+
+    def test_canonical_first_cut_blocks_unanswered_question_before_commit_and_in_ci(self):
+        self.first_cut_permissions_fixture(
+            lead="author_original", pending_questions=["fixture:unanswered"])
+        self.assert_blocked("FIRST_CUT_PENDING_QUESTIONS",
+                            lc.guard, self.root, "pre-commit")
+        # Even if local hooks are missing, CI must detect the invalid first cut.
+        run(self.root, "commit", "-m", "fixture:simulated bypassed local hook")
+        self.assert_blocked("FIRST_CUT_PENDING_QUESTIONS",
+                            lc.guard, self.root, "ci")
+
+    def test_canonical_first_cut_blocks_missing_lead_provenance(self):
+        self.first_cut_permissions_fixture()
+        self.assert_blocked("FIRST_CUT_DECLARATION_REQUIRED",
+                            lc.guard, self.root, "pre-commit")
+
+    def test_canonical_first_cut_requires_explicit_approval_for_agent_lead(self):
+        self.first_cut_permissions_fixture(lead="agent_authored")
+        self.assert_blocked("AGENT_LEAD_EXPLICIT_FOUNDER_APPROVAL_REQUIRED",
+                            lc.guard, self.root, "pre-commit")
+
+    def test_canonical_first_cut_blocks_pending_and_rejected_agent_approval(self):
+        for state in ("pending", "rejected"):
+            with self.subTest(state=state):
+                p = {"context": {"decisions": [
+                    {"kind": lc.DELIVERY_POLICY},
+                    {"kind": "first_cut_lead_provenance_v1",
+                     "origin": "agent_authored", "source_ref": "fixture:agent",
+                     "evidence": ["fixture:observed"]}],
+                    "approvals": [{
+                        "scope": "authored-intro",
+                        "status": state,
+                        "decision": None if state == "pending" else "declined",
+                        "evidence": [] if state == "pending" else ["fixture:rejected"]}],
+                    "pending_questions": []},
+                    "category": "insight", "steps": lc.plan()}
+                for row in p["steps"]:
+                    if row["id"] == "C.4.10.1":
+                        break
+                    row.update(status="completed", evidence=["fixture:" + row["id"]])
+                error = ("FIRST_CUT_UNRESOLVED_APPROVAL" if state == "pending"
+                         else "FIRST_CUT_UNRESOLVED_APPROVAL")
+                self.assert_blocked(error, lc.require_first_cut_human_gates, p)
+
+    def test_canonical_first_cut_accepts_original_and_confirmed_agent_lead(self):
+        for lead, approval in (("author_original", None),
+                               ("agent_authored", "confirmed"),
+                               ("not_applicable", None)):
+            with self.subTest(lead=lead):
+                p = {"category": "insight", "steps": lc.plan(),
+                     "context": {"decisions": [
+                         {"kind": lc.DELIVERY_POLICY},
+                         {"kind": "first_cut_lead_provenance_v1",
+                          "origin": lead,
+                          "source_ref": "fixture:recorded-source-or-exception",
+                          "evidence": ["fixture:documented"]}],
+                         "approvals": ([{
+                             "scope": "authored-intro", "status": "confirmed",
+                             "decision": "approved",
+                             "evidence": ["fixture:explicit-founder-approval"]}
+                             ] if approval else []),
+                         "pending_questions": []}}
+                for row in p["steps"]:
+                    if row["id"] == "C.4.10.1":
+                        break
+                    row.update(status="completed", evidence=["fixture:" + row["id"]])
+                lc.require_first_cut_human_gates(p)
+
+    def test_canonical_first_cut_allows_original_author_paragraph_in_real_git(self):
+        self.first_cut_permissions_fixture(lead="author_original")
+        lc.guard(self.root, "pre-commit")
+        run(self.root, "commit", "-m", "fixture:valid first-cut checkpoint")
+        lc.guard(self.root, "ci")
+
+    def test_first_cut_new_human_gate_does_not_affect_legacy_or_paper_only(self):
+        for category, marker in (("paper-only", True), ("insight", False)):
+            p = {"category": category,
+                 "steps": lc.plan(paper=category == "paper-only"),
+                 "context": {"decisions": ([{"kind": lc.DELIVERY_POLICY}]
+                                           if marker else []),
+                             "approvals": [], "pending_questions": ["fixture:question"]}}
+            lc.require_first_cut_human_gates(p)
+
     def test_full_inventory_covers_all_modules_and_preserves_dependencies(self):
         p=fixtures.publication();p['steps']=lc.plan();lc.require_plan(p)
         self.assertEqual({s['module'] for s in p['steps']}, set(h.MODULES))
