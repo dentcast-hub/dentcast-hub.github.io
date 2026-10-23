@@ -104,6 +104,10 @@ class FakeGitHub:
         self.updated += 1
 
     def path_oid(self, path, commit):
+        if commit == COMMIT and hasattr(self, "entries"):
+            for item in self.entries:
+                if item["path"] == path:
+                    return item["sha"]
         if path == "insight/index.html" and commit in (HEAD, COMMIT):
             return fp.git_oid(self.baseline_landing)
         if path in self.baseline_media and commit in (HEAD, COMMIT):
@@ -365,6 +369,40 @@ class FirstCutTests(unittest.TestCase):
             b'</li></ul></html>')
         with self.assertRaisesRegex(h.Blocked,
                                     "MANUAL_LANDING_MUST_BE_INCLUDED_BEFORE_CUT"):
+            fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
+        self.assertEqual(client.blobs, {})
+        self.assertEqual(client.updated, 0)
+
+    def test_manual_landing_included_with_new_link_is_valid(self):
+        files = fixture()
+        state, _ = h.parse_state(files[h.STATE_PATH])
+        index = "insight/index.html"
+        state["publication"]["target_paths"].append(index)
+        audit = next(d for d in state["publication"]["context"]["decisions"]
+                     if d["kind"] == "first_cut_scope_audit_v1")
+        audit["landing_mode"] = "included"
+        audit["observed_changed_paths"].append(index)
+        files[h.STATE_PATH] = h.render(state).encode()
+        files[index] = (b'<html><li><a href="insight-fixture.html">'
+                        b'New article</a></li></html>')
+        result = fp.deliver(FakeGitHub(), "content/test-cut", HEAD,
+                            files, 1024 * 1024)
+        self.assertEqual(result["delivery"], "verified-first-cut")
+        self.assertIn(index, result["paths"])
+
+    def test_manual_landing_without_new_link_blocks_upload(self):
+        files = fixture()
+        state, _ = h.parse_state(files[h.STATE_PATH])
+        index = "insight/index.html"
+        state["publication"]["target_paths"].append(index)
+        audit = next(d for d in state["publication"]["context"]["decisions"]
+                     if d["kind"] == "first_cut_scope_audit_v1")
+        audit["landing_mode"] = "included"
+        audit["observed_changed_paths"].append(index)
+        files[h.STATE_PATH] = h.render(state).encode()
+        files[index] = b'<html><li><a href="insight-previous.html">Old</a></li></html>'
+        client = FakeGitHub()
+        with self.assertRaisesRegex(h.Blocked, "FIRST_CUT_LANDING_ENTRY_MISSING"):
             fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
         self.assertEqual(client.blobs, {})
         self.assertEqual(client.updated, 0)
