@@ -135,6 +135,32 @@ requirements still apply. After an actual verified first remote delivery,
 **continue in the same agent whenever possible**; changing agents or
 entering a Work session is optional, not mandated by Push 1.
 
+### Bounded heavy validation using Fast Local WAL
+
+When working in a local Git checkout on a new page *before Push 1*,
+use the already-supported `tools/dentcast_publish_fastlocal.py` WAL.
+Every transition retains its own timestamped, hash-chained and fsynced
+receipt; a missing or torn event remains detectable. The **expensive**
+Git checkout/workflow snapshot runs at `flush`, not on every semantic
+step. Flush and reconcile after **at most 10 resolved canonical steps**,
+before any first-cut delivery, when changing an input/approval/external
+action, and before stopping or handing off. Re-begin after the flush
+if the fixed delivery boundary was not reached. Never push these
+intermediate flushes: the same three delivery commits still apply.
+A journal cap is a safety checkpoint, not permission to assert scientific
+steps without running them.
+
+For consecutive genuinely inapplicable skips, or a previous step's
+completion and the next step's start, `fastlocal.py batch` can store
+up to 20 transitions with **one WAL replay**, while persisting every
+individual event. The input is a JSON array of `{id,status,evidence,reason}`
+records supplied from reviewed real actions. A step cannot be
+`started` and `completed` within the same batch command: the actual
+semantic action must take place between them. Lightweight ordering,
+approval and outcome rules remain checked on every transition;
+hard validation stays at flush, the fixed push gates, and Phase F.
+Do not use this local WAL option as proof of work in a GitHub-only agent.
+
 ### Compact handoff, unchanged canonical plan
 
 For new canonical v3 handoffs, persist the significant `steps` prefix only:

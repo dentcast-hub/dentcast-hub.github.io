@@ -23,6 +23,56 @@ class FastLocalWALTests(unittest.TestCase):
         self.p["context"]["decisions"].append({"kind": lc.DELIVERY_POLICY})
         return h.save(self.root, self.p, initial=True)
 
+    def test_batch_skips_are_durable_and_do_not_rescan_git_per_event(self):
+        initial=self.start()
+        d=wal.begin(self.root,initial["sha256"])["digest"]
+        d=wal.step(self.root,d,"rules","started")["digest"]
+        d=wal.step(self.root,d,"rules","completed",["fixture:rules-reviewed"])["digest"]
+        d=wal.step(self.root,d,"0","started")["digest"]
+        d=wal.step(self.root,d,"0","completed",["fixture:routing-reviewed"])["digest"]
+        # No semantic action is done by a batch call: skip reasons are reviewed
+        # fixture inputs; the test proves storage and ordering mechanics only.
+        items=[{"id":"A","status":"skipped","evidence":[],"reason":"fixture:category-check-not-applicable"},
+               {"id":"B.1","status":"skipped","evidence":[],"reason":"fixture:type-already-known"}]
+        with patch.object(wal,"read",wraps=wal.read) as reads, \\
+             patch.object(h,"snapshot",side_effect=AssertionError("FULL_GIT_SCAN")):
+            result=wal.batch(self.root,d,items)
+        self.assertEqual(reads.call_count,1)
+        self.assertEqual(len(result["transitions_written"]),2)
+        self.assertEqual(wal.inspect(self.root)["next_step"],"B.2")
+        durable=wal.read(self.root)[1]
+        self.assertEqual(durable["steps"][3]["status"],"skipped")
+
+    def test_batch_refuses_premature_completion_and_stale_or_invalid_order(self):
+        initial=self.start()
+        d=wal.begin(self.root,initial["sha256"])["digest"]
+        pair=[{"id":"rules","status":"started","evidence":[],"reason":None},
+              {"id":"rules","status":"completed","evidence":["fixture:fake-action"],"reason":None}]
+        with self.assertRaisesRegex(h.Blocked,"WAL_BATCH_ACTION_MUST_RUN_BETWEEN_CALLS"):
+            wal.batch(self.root,d,pair)
+        with self.assertRaisesRegex(h.Blocked,"NOT_NEXT_CANONICAL_STEP"):
+            wal.batch(self.root,d,[{"id":"A","status":"skipped","evidence":[],"reason":"wrong-order"}])
+        with self.assertRaisesRegex(h.Blocked,"STALE_WAL_WRITE"):
+            wal.batch(self.root,"0"*64,[pair[0]])
+        self.assertEqual(wal.inspect(self.root)["digest"],d)
+
+    def test_ten_resolved_steps_force_full_checkpoint_before_next(self):
+        initial=self.start()
+        d=wal.begin(self.root,initial["sha256"])["digest"]
+        plan=self.p["steps"]
+        for item in plan[:10]:
+            d=wal.step(self.root,d,item["id"],"started")["digest"]
+            out=wal.step(self.root,d,item["id"],"completed",["fixture:"+item["id"]])
+            d=out["digest"]
+        self.assertEqual(out["status"],"batch_flush_required")
+        with self.assertRaisesRegex(h.Blocked,"WAL_BATCH_FULL_FLUSH_REQUIRED"):
+            wal.step(self.root,d,plan[10]["id"],"started")
+        checkpoint=wal.flush(self.root,d,"fixture:reviewed bounded batch")
+        self.assertFalse(wal.active(self.root))
+        d=wal.begin(self.root,checkpoint["sha256"])["digest"]
+        self.assertEqual(wal.step(self.root,d,plan[10]["id"],"started")["status"],
+                         "fastlocal_active")
+
     def test_two_steps_flush_to_one_canonical_handoff(self):
         init = self.start()
         begin = wal.begin(self.root, init["sha256"])
