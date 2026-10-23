@@ -559,6 +559,10 @@ def restore_cleanup(root):
 
 
 def guard(root, phase):
+    if phase == "pre-commit":
+        import dentcast_publish_fastlocal as fastlocal
+        h.require(not fastlocal.active(root),
+                  "WAL_MUST_BE_MATERIALIZED_BEFORE_COMMIT")
     path = h.safe_path(root, h.STATE_PATH)
     if not path.exists():
         if pending(root):

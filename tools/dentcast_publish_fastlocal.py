@@ -124,6 +124,8 @@ def replay(raw, allow_torn=False):
                       h.valid_hash(record.get("input_fingerprint")),
                       "WAL_BEGIN_INVALID")
             init=record;pub=copy.deepcopy(record["publication"]);lc.require_plan(pub)
+            h.require(record.get("wal_engine_sha256")==digest(Path(__file__).read_bytes()),
+                      "WAL_ENGINE_CHANGED_INVALIDATE_AND_RECONCILE")
         elif record.get("kind")=="step":
             h.require(record.get("input_fingerprint")==init["input_fingerprint"],
                       "WAL_INPUT_FINGERPRINT_CHANGED")
@@ -160,6 +162,7 @@ def begin(root, expected):
                "base_branch":state["snapshot"]["branch"],
                "workflow_fingerprint":digest(encode(state["snapshot"]["workflow"])),
                "input_fingerprint":digest(encode(pub["context"]["inputs"])),
+               "wal_engine_sha256":digest(Path(__file__).read_bytes()),
                "publication":pub}
         out=append(root,event,True)
         return {"status":"fastlocal_active","digest":out,
@@ -190,6 +193,9 @@ def flush(root, expected):
         h.require(d==expected,"STALE_WAL_WRITE")
         state,sha=h.load_state(root)
         if sha==init["base_sha256"]:
+            h.require(h.text_git(root,"rev-parse","HEAD")==init["base_head"]
+                      and h.branch(root)==init["base_branch"],
+                      "WAL_CHECKOUT_HEAD_OR_BRANCH_CHANGED")
             h.require(state["snapshot"]["head"]==init["base_head"]
                       and state["snapshot"]["branch"]==init["base_branch"]
                       and digest(encode(state["snapshot"]["workflow"]))==

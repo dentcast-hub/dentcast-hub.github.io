@@ -118,6 +118,19 @@ class FastLocalWALTests(unittest.TestCase):
         state, _ = h.load_state(self.root)
         self.assertEqual(lc.delivery_boundary(state["publication"]), 1)
 
+    def test_precommit_rejects_unflushed_local_wal(self):
+        init = self.start()
+        wal.begin(self.root, init["sha256"])
+        with self.assertRaisesRegex(h.Blocked, "WAL_MUST_BE_MATERIALIZED"):
+            lc.guard(self.root, "pre-commit")
+
+    def test_wal_engine_change_fails_closed(self):
+        init = self.start()
+        wal.begin(self.root, init["sha256"])
+        with patch.object(wal.Path, "read_bytes", return_value=b"modified module"):
+            with self.assertRaisesRegex(h.Blocked, "WAL_ENGINE_CHANGED"):
+                wal.inspect(self.root)
+
     def test_journal_step_has_no_full_snapshots(self):
         init = self.start()
         d = wal.begin(self.root, init["sha256"])["digest"]
