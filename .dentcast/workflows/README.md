@@ -67,6 +67,11 @@ Authority: applicable canonical workflow and active modules > active shared glob
 
 Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details.md`. Read the selected specialty workflow completely. New content uses the modular sequence, including paper-only and category exceptions.
 
+## Publication services and waits
+
+`publish-checkpoints.md` defines the actual service/check scope and wait policy.
+Vercel statuses are unrelated to publication and are never a publishing gate.
+
 ## Completion
 
 Complete all applicable actions and approvals, verify Phase F and required delivery, provide the final report, then remove the temporary handoff as the completion contract specifies. Hashes or checkpoints alone are not publication. Read `publish-checkpoints.md` for the three fixed deliveries and guarded completion, and `publish-discovery.md` for remote recovery. `PUBLISHING-FINAL-REPORT.md` records delivered repair stages, integrated acceptance and the native-client/live-publication limits; main integration is tracked in [PR #914](https://github.com/dentcast-hub/dentcast-hub.github.io/pull/914). Existing clones must update to a revision containing these changes.
