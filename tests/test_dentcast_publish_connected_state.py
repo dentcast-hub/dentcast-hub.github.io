@@ -29,7 +29,18 @@ def fresh():
                    category="insight", target_paths=[PAGE, IMAGE],
                    repository=c.REPO, branch="content/connected-fixture",
                    base_head=HEAD, workflow_sources=workflow(),
-                   inputs=["fixture:public-safe-input-reference"])
+                   inputs=["fixture:public-safe-input-reference"],
+                   decisions=[
+                       {"kind": "first_cut_lead_provenance_v1",
+                        "origin": "not_applicable", "source_ref": "fixture:no-lead",
+                        "evidence": ["fixture:structural-only"]},
+                       {"kind": "first_cut_scope_audit_v1",
+                        "landing_path": "insight/index.html",
+                        "landing_mode": "generated_later",
+                        "builder_ref": "fixture:synthetic-builder",
+                        "related_changed_paths": [],
+                        "observed_changed_paths": [PAGE, IMAGE],
+                        "evidence": ["fixture:synthetic-audit"]}])
 
 
 def step_sequence(obj, until="C.4.9"):
