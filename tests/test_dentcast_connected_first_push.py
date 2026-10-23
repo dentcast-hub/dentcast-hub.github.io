@@ -59,6 +59,30 @@ def fixture():
     }
 
 
+def nested_promptologist_fixture():
+    """Synthetic nested-series first-cut bundle, never a live publication."""
+    files = fixture()
+    old_page = "insight/insight-fixture.html"
+    page = "dentai/promptologist/prompt-append2-4.html"
+    index = "dentai/promptologist/index.html"
+    state, _ = h.parse_state(files[h.STATE_PATH])
+    p = state["publication"]
+    p["content_id"], p["category"] = "dentai/promptologist/prompt-append2-4", "promptologist"
+    p["target_paths"] = [page, "insight/assets/first-cut-fixture.webp", index]
+    audit = next(d for d in p["context"]["decisions"]
+                 if d["kind"] == "first_cut_scope_audit_v1")
+    audit["landing_path"] = index
+    audit["landing_mode"] = "included"
+    audit["builder_ref"] = "fixture:reviewed-static-series-index"
+    audit["related_changed_paths"] = []
+    audit["observed_changed_paths"] = list(p["target_paths"])
+    files[page] = files.pop(old_page)
+    files[index] = (b'<html><a href="prompt-append2-3.html" class="ai-item">Old</a>'
+                    b'<a class="ai-item" href="prompt-append2-4.html">New</a></html>')
+    files[h.STATE_PATH] = h.render(state).encode()
+    return files
+
+
 class FakeGitHub:
     def __init__(self):
         self.ref = HEAD
@@ -69,6 +93,7 @@ class FakeGitHub:
         self.mutate_before_update = False
         self.baseline_media = {}
         self.baseline_landing = b"<html><div id='fixture-builder-render'></div></html>"
+        self.baseline_landing_path = "insight/index.html"
 
     def head(self, branch):
         return self.ref
@@ -108,7 +133,7 @@ class FakeGitHub:
             for item in self.entries:
                 if item["path"] == path:
                     return item["sha"]
-        if path == "insight/index.html" and commit in (HEAD, COMMIT):
+        if path == self.baseline_landing_path and commit in (HEAD, COMMIT):
             return fp.git_oid(self.baseline_landing)
         if path in self.baseline_media and commit in (HEAD, COMMIT):
             return fp.git_oid(self.baseline_media[path])
@@ -374,6 +399,73 @@ class FirstCutTests(unittest.TestCase):
             fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
         self.assertEqual(client.blobs, {})
         self.assertEqual(client.updated, 0)
+
+    def test_nested_promptologist_manual_index_is_valid_and_delivered(self):
+        files = nested_promptologist_fixture()
+        self.assertEqual(fp.validate_cut(files)["next_step"], "C.4.10.1")
+        remote = FakeGitHub()
+        result = fp.deliver(remote, "content/nested-fixture", HEAD,
+                            files, 1024 * 1024)
+        self.assertEqual(result["delivery"], "verified-first-cut")
+        self.assertEqual(remote.updated, 1)
+        self.assertIn("dentai/promptologist/index.html",
+                      [entry["path"] for entry in remote.entries])
+
+    def test_nested_promptologist_rejects_wrong_parent_index_before_upload(self):
+        files = nested_promptologist_fixture()
+        state, _ = h.parse_state(files[h.STATE_PATH])
+        audit = next(d for d in state["publication"]["context"]["decisions"]
+                     if d["kind"] == "first_cut_scope_audit_v1")
+        audit["landing_path"] = "dentai/index.html"
+        files[h.STATE_PATH] = h.render(state).encode()
+        remote = FakeGitHub()
+        with self.assertRaisesRegex(h.Blocked, "FIRST_CUT_LANDING_IDENTITY"):
+            fp.deliver(remote, "content/nested-fixture", HEAD,
+                       files, 1024 * 1024)
+        self.assertEqual(remote.blobs, {})
+        self.assertEqual(remote.updated, 0)
+
+    def test_nested_promptologist_missing_index_or_new_link_still_blocks(self):
+        for case in ("missing_bytes", "missing_link"):
+            with self.subTest(case=case):
+                files = nested_promptologist_fixture()
+                index = "dentai/promptologist/index.html"
+                if case == "missing_bytes":
+                    del files[index]
+                    error = "MISSING_CANONICAL_TARGET_BYTES"
+                else:
+                    files[index] = b'<a class="ai-item" href="prompt-append2-3.html">Old</a>'
+                    error = "FIRST_CUT_LANDING_ENTRY_MISSING"
+                remote = FakeGitHub()
+                with self.assertRaisesRegex((h.Blocked, ValueError), error):
+                    fp.deliver(remote, "content/nested-fixture", HEAD,
+                               files, 1024 * 1024)
+                self.assertEqual(remote.blobs, {})
+                self.assertEqual(remote.updated, 0)
+
+    def test_nested_promptologist_manual_cards_cannot_claim_generated_later(self):
+        files = nested_promptologist_fixture()
+        state, _ = h.parse_state(files[h.STATE_PATH])
+        index = "dentai/promptologist/index.html"
+        p = state["publication"]
+        p["target_paths"].remove(index)
+        audit = next(d for d in p["context"]["decisions"]
+                     if d["kind"] == "first_cut_scope_audit_v1")
+        audit["landing_mode"] = "generated_later"
+        audit["observed_changed_paths"].remove(index)
+        del files[index]
+        files[h.STATE_PATH] = h.render(state).encode()
+        remote = FakeGitHub()
+        remote.baseline_landing_path = index
+        remote.baseline_landing = (
+            b'<html><a class="ai-item" href="prompt-append2-3.html">'
+            b'Previous part</a></html>')
+        with self.assertRaisesRegex(h.Blocked,
+                                    "MANUAL_LANDING_MUST_BE_INCLUDED_BEFORE_CUT"):
+            fp.deliver(remote, "content/nested-fixture", HEAD,
+                       files, 1024 * 1024)
+        self.assertEqual(remote.blobs, {})
+        self.assertEqual(remote.updated, 0)
 
     def test_manual_landing_included_with_new_link_is_valid(self):
         files = fixture()

@@ -42,6 +42,30 @@ class ConnectedWireParity(unittest.TestCase):
         parsed,d=h.parse_state(wire.encode())
         self.assertEqual(parsed["publication"],pub)
 
+    def test_nested_landing_python_js_parity_and_parent_rejection(self):
+        session = step_sequence(fresh())
+        pub = session["state"]["publication"]
+        page = "dentai/promptologist/prompt-append2-4.html"
+        index = "dentai/promptologist/index.html"
+        pub["content_id"], pub["category"] = page[:-5], "promptologist"
+        pub["target_paths"] = [page, index]
+        audit = next(d for d in pub["context"]["decisions"]
+                     if d["kind"] == "first_cut_scope_audit_v1")
+        audit["landing_path"], audit["landing_mode"] = index, "included"
+        audit["observed_changed_paths"] = [page, index]
+        script = ("import {renderCut1} from './tools/dentcast_connected_wire.mjs';"
+                  "try{process.stdout.write(renderCut1(JSON.parse(process.argv[1])))}"
+                  "catch(e){process.stdout.write('BLOCKED:'+e.message)}")
+        expected = h.render({"schema": h.SCHEMA, "publication": pub,
+                             "reconciliation": None})
+        self.assertEqual(node(script, pub), expected)
+        from dentcast_connected_cut_gates import validate_declarations
+        validate_declarations(pub)
+        audit["landing_path"] = "dentai/index.html"
+        with self.assertRaisesRegex(h.Blocked, "FIRST_CUT_LANDING_IDENTITY"):
+            validate_declarations(pub)
+        self.assertEqual(node(script, pub), "BLOCKED:FIRST_CUT_LANDING_IDENTITY")
+
     def test_js_renderer_refuses_pending_intro_approval(self):
         pub=step_sequence(fresh())["state"]["publication"]
         pub["context"]["approvals"].append({
