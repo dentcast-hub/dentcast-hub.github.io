@@ -9,7 +9,6 @@ import sys
 import tempfile
 
 import dentcast_publish_handoff as h
-import dentcast_connected_cut_gates as cut_gates
 
 # These are checkpoints into the original source, not rewritten publishing logic.
 # C.8 builders precede C.7 stamping; LiteCast links run after page construction.
@@ -126,7 +125,10 @@ def require_fixed_cut_readiness(publication):
     h.require(all(a["status"] in ("confirmed", "not_required")
                   for a in publication["context"]["approvals"]),
               "DELIVERY_UNRESOLVED_APPROVAL")
-    cut_gates.validate_lead_provenance(publication)
+    # Optional adapter is imported only at the cut: standalone legacy checkout
+    # fixtures that do not contain the connected adapter remain importable.
+    from dentcast_connected_cut_gates import validate_lead_provenance
+    validate_lead_provenance(publication)
 
 
 def committed_boundary(root, revision):
