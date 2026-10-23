@@ -143,6 +143,36 @@ class FastLocalWALTests(unittest.TestCase):
             with self.assertRaisesRegex(h.Blocked, "WAL_ENGINE_CHANGED"):
                 wal.inspect(self.root)
 
+    def test_enroll_really_related_new_path_without_extra_checkpoint_push(self):
+        init = self.start()
+        digest = wal.begin(self.root, init["sha256"])["digest"]
+        new_path = "insight/new-image.webp"
+        file = self.root / new_path
+        file.parent.mkdir(parents=True, exist_ok=True)
+        file.write_bytes(b"RIFF-not-publishable-fixture")
+        enrolled = wal.enroll_target(self.root, digest, new_path,
+                                     "fixture:reviewed-new-image-path")
+        with self.assertRaisesRegex(h.Blocked, "WAL_TARGET_MUST_BE_REVIEWED"):
+            wal.enroll_target(self.root, enrolled["digest"], new_path,
+                              "fixture:duplicate")
+        out = wal.flush(self.root, enrolled["digest"],
+                        "Fixture: reviewed new scoped image byte and path")
+        self.assertEqual(out["status"], "checkpoint_materialized")
+        state, _ = h.load_state(self.root)
+        self.assertIn(new_path, state["publication"]["target_paths"])
+
+    def test_changed_workflow_source_invalidates_nonempty_wal(self):
+        init = self.start()
+        digest = wal.begin(self.root, init["sha256"])["digest"]
+        digest = wal.step(self.root, digest, "rules", "started")["digest"]
+        digest = wal.step(self.root, digest, "rules", "completed",
+                          ["fixture:read-hard-rules"])["digest"]
+        path = self.root / h.WORKFLOW_PATHS[0]
+        path.write_text("changed fixture rule, intentional invalidation")
+        with self.assertRaisesRegex(h.Blocked, "WORKFLOW_CHANGE_REQUIRES_STEP_INVALIDATION"):
+            wal.flush(self.root, digest, "Fixture: reviewed changed workflow")
+        self.assertTrue(wal.active(self.root))
+
     def test_journal_step_has_no_full_snapshots(self):
         init = self.start()
         d = wal.begin(self.root, init["sha256"])["digest"]

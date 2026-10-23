@@ -106,3 +106,9 @@ Portable GitHub-only handoff generation remains the next distinct stage.
 
 The flush reconciliation note must describe reviewed evidence/worktree changes;
 a generic automatic note must not be used as proof of review.
+
+Additional scoped files created during Fast Local may be enrolled with
+`enroll-target --expected-digest ... --path ... --evidence-ref ...` after
+actual scope review. This does not upload the file or make unapproved content
+public. The normal canonical file/index checks run at flush; the first remote
+push remains the only first-cut delivery.

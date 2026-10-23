@@ -131,6 +131,14 @@ def replay(raw, allow_torn=False):
                       "WAL_INPUT_FINGERPRINT_CHANGED")
             pub=apply(pub,record["step_id"],record["status"],
                       record["evidence"],record["reason"])
+        elif record.get("kind")=="target":
+            target=h.relative_path(record["path"])
+            h.require(target!=h.STATE_PATH and target not in pub["target_paths"] and
+                      h.nonempty(record.get("evidence_ref")),
+                      "WAL_TARGET_MUST_BE_REVIEWED_AND_UNIQUE")
+            pub=copy.deepcopy(pub)
+            pub["target_paths"].append(target)
+            lc.require_plan(pub)
         elif record.get("kind")!="torn_tail_repaired":
             raise h.Blocked("WAL_UNKNOWN_EVENT")
         prev=record["digest"]; seq+=1; valid+=len(line)
@@ -181,6 +189,25 @@ def step(root, expected, sid, status, evidence=None, reason=None):
         return {"status":"first_delivery_ready" if lc.delivery_boundary(after)==1
                 else "fastlocal_active","digest":d,"next_step":h.next_step(after),
                 "publication_completed":False}
+
+def enroll_target(root, expected, path, evidence_ref):
+    """Track an actually reviewed new scoped file, never its private bytes."""
+    with lock(root):
+        init,pub,d,n,_=read(root)
+        h.require(d==expected,"STALE_WAL_WRITE")
+        path=h.relative_path(path)
+        h.require(path!=h.STATE_PATH and path not in pub["target_paths"] and
+                  h.nonempty(evidence_ref),"WAL_TARGET_MUST_BE_REVIEWED_AND_UNIQUE")
+        h.require(not lc.delivery_boundary(pub),"FIRST_PUSH_REQUIRED_BEFORE_NEXT_STEP")
+        updated=copy.deepcopy(pub)
+        updated["target_paths"].append(path)
+        lc.require_plan(updated)
+        out=append(root,{"kind":"target","version":VERSION,"seq":n,
+                        "prev":d,"timestamp":timestamp(),"path":path,
+                        "evidence_ref":evidence_ref})
+        return {"status":"target_enrolled","digest":out,
+                "next_step":h.next_step(updated),"publication_completed":False}
+
 
 def validate_projection(root, pub, expected):
     init,new,_,_,_=read(root)
@@ -265,6 +292,10 @@ def main():
     f=sub.add_parser("flush");f.add_argument("--expected-digest",required=True)
     f.add_argument("--reconcile-note",required=True,
                    help="Operator-reviewed actual work and Git diffs, not a generic token")
+    e=sub.add_parser("enroll-target")
+    e.add_argument("--expected-digest",required=True)
+    e.add_argument("--path",required=True)
+    e.add_argument("--evidence-ref",required=True)
     sub.add_parser("inspect")
     r=sub.add_parser("repair-torn-tail");r.add_argument("--expected-good-digest",required=True)
     args=ap.parse_args()
@@ -274,6 +305,8 @@ def main():
         elif args.action=="step":
             out=step(root,args.expected_digest,args.id,args.status,args.evidence,args.reason)
         elif args.action=="flush":out=flush(root,args.expected_digest,args.reconcile_note)
+        elif args.action=="enroll-target":
+            out=enroll_target(root,args.expected_digest,args.path,args.evidence_ref)
         elif args.action=="inspect":out=inspect(root)
         else:out=repair(root,args.expected_good_digest)
         print(json.dumps(out,ensure_ascii=True,indent=2))
