@@ -17348,5 +17348,34 @@
       "secondary": [],
       "subtopic": "crowns-onlays"
     }
+  },
+  {
+    "type": "promptologist",
+    "id": "prompt-append2-4",
+    "title": "پیوست ۲ ـ قسمت ۴: تغییرات چطور ثبت می‌شوند و به گیت‌هاب می‌رسند؟",
+    "caption": "Stage، Commit و Push چه تفاوتی دارند؟ با مثال مطب و لابراتوار یاد می‌گیریم تغییرات چطور ثبت می‌شوند و به گیت‌هاب می‌رسند.",
+    "hashtags": [
+      "#پرامپتولوژیست",
+      "#هوش_مصنوعی",
+      "#GitHub",
+      "#ChatGPT"
+    ],
+    "keywords": [
+      "GitHub",
+      "Git",
+      "تاریخچهٔ تغییرات",
+      "مدیریت نسخه",
+      "Stage",
+      "Commit",
+      "Push",
+      "Branch",
+      "Revert"
+    ],
+    "page_url": "/dentai/promptologist/prompt-append2-4.html",
+    "pillar": {
+      "primary": "practice-infrastructure",
+      "secondary": [],
+      "subtopic": "llm-tools"
+    }
   }
 ]
