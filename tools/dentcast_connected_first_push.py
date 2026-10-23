@@ -133,6 +133,13 @@ class REST:
         self.call("PATCH", "/git/refs/heads/" + quote(branch, safe="/"),
                   {"sha": sha, "force": False})
 
+    def path_oid(self, path, commit):
+        """Prove the delivered tree actually binds each path to its blob."""
+        response = self.call("GET", "/contents/" + quote(path, safe="/")
+                             + "?ref=" + quote(commit, safe=""))
+        need(response.get("type") == "file", "REMOTE_PATH_NOT_FILE:" + path)
+        return response["sha"]
+
     def get_blob(self, sha):
         data = self.call("GET", "/git/blobs/" + sha)
         need(data["encoding"] == "base64", "UNSUPPORTED_REMOTE_BLOB_ENCODING")
@@ -174,7 +181,10 @@ def deliver(transport, branch, expected_head, files, max_blob_bytes):
     need(transport.head(branch) == commit, "POST_UPDATE_HEAD_NOT_CONFIRMED")
     need(transport.commit_tree(commit) == tree, "POST_UPDATE_TREE_MISMATCH")
     for path, body in files.items():
-        need(transport.get_blob(git_oid(body)) == body,
+        oid = git_oid(body)
+        need(transport.path_oid(path, commit) == oid,
+             "POST_UPDATE_TREE_PATH_MISMATCH:" + path)
+        need(transport.get_blob(oid) == body,
              "POST_UPDATE_BLOB_BYTES_MISMATCH:" + path)
     return {**meta, "branch": branch, "commit": commit,
             "tree": tree, "paths": list(sorted(files)),

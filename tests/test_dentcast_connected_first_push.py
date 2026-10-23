@@ -88,6 +88,10 @@ class FakeGitHub:
         self.ref = sha
         self.updated += 1
 
+    def path_oid(self, path, commit):
+        assert commit == COMMIT
+        return next(x["sha"] for x in self.entries if x["path"] == path)
+
     def get_blob(self, sha):
         return self.blobs[sha]
 
@@ -110,6 +114,15 @@ class FirstCutTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "BLOB_EXCEEDS_TOOL_LIMIT"):
             fp.deliver(client, "content/test-cut", HEAD, fixture(), 10)
         self.assertEqual(client.blobs, {})
+
+    def test_bad_post_update_path_receipt_is_not_success(self):
+        class Tampered(FakeGitHub):
+            def path_oid(self, path, commit):
+                return "e" * 40
+        client = Tampered()
+        with self.assertRaisesRegex(ValueError, "POST_UPDATE_TREE_PATH_MISMATCH"):
+            fp.deliver(client, "content/test-cut", HEAD, fixture(), 1024 * 1024)
+        self.assertEqual(client.updated, 1)  # outcome needs reconciliation; no retry
 
     def test_ref_moved_before_blob_upload(self):
         client = FakeGitHub()
