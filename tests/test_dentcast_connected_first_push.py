@@ -105,6 +105,8 @@ class FakeGitHub:
     def path_oid(self, path, commit):
         if path in self.baseline_media and commit in (HEAD, COMMIT):
             return fp.git_oid(self.baseline_media[path])
+        if commit == HEAD:
+            raise ValueError("REMOTE_PATH_NOT_FILE:" + path)
         assert commit == COMMIT
         return next(x["sha"] for x in self.entries if x["path"] == path)
 
