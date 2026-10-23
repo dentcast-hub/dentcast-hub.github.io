@@ -50,6 +50,19 @@ class ConnectedWireParity(unittest.TestCase):
         with self.assertRaisesRegex(h.Blocked,"COMPACT_STEPS_NONPREFIX_OR_UNKNOWN"):
             h.parse_state(corrupted.encode())
 
+    def test_planned_dynamic_pending_substep_is_never_discarded(self):
+        pub=fresh()["state"]["publication"]
+        idx=next(i for i,s in enumerate(pub["steps"]) if s["id"]=="C.4.13")
+        pending={"id":"C.4.13/synthetic-review-unit","module":"08-des-fidelity.md",
+                 "status":"pending","evidence":[],"reason":None}
+        pub["steps"].insert(idx,pending)
+        state={"schema":h.SCHEMA,"publication":pub,"reconciliation":None}
+        wire=h.render(state)
+        stored=json.loads(wire.split(h.BEGIN)[1].split(h.END)[0])
+        self.assertEqual(stored["publication"]["steps"][-1]["id"],pending["id"])
+        restored,_=h.parse_state(wire.encode())
+        self.assertEqual(restored["publication"]["steps"],pub["steps"])
+
     def test_plan_is_exact_authoritative_canonical_plan(self):
         result=node("import {plan} from './tools/dentcast_connected_wire.mjs'; process.stdout.write(JSON.stringify(plan()));")
         self.assertEqual(json.loads(result),lc.plan())

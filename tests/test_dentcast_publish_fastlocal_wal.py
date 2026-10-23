@@ -157,13 +157,18 @@ class FastLocalWALTests(unittest.TestCase):
     def test_first_cut_is_boundary_not_agent_stop(self):
         init = self.start()
         digest = wal.begin(self.root, init["sha256"])["digest"]
+        completed = 0
         for row in self.p["steps"]:
             if row["id"] == "C.4.10.1":
                 break
+            if completed and completed % wal.MAX_RESOLVED_STEPS == 0:
+                checkpoint = wal.flush(self.root, digest, "fixture:reviewed bounded block")
+                digest = wal.begin(self.root, checkpoint["sha256"])["digest"]
             sid = row["id"]
             digest = wal.step(self.root, digest, sid, "started")["digest"]
             digest = wal.step(self.root, digest, sid, "completed",
                               ["fixture:transport-only:" + sid])["digest"]
+            completed += 1
         st = wal.inspect(self.root)
         self.assertTrue(st["first_delivery_cut"])
         with self.assertRaisesRegex(h.Blocked, "FIRST_PUSH_REQUIRED"):
