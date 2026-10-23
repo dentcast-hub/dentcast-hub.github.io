@@ -171,6 +171,20 @@ class FirstCutTests(unittest.TestCase):
         with self.assertRaises((h.Blocked, ValueError)):
             fp.validate_cut(files)
 
+    def test_failed_external_action_blocks_before_blob_upload(self):
+        files = fixture()
+        state, _ = h.parse_state(files[h.STATE_PATH])
+        state["publication"]["external_actions"].append({
+            "id": "fixture:drive-upload", "target": "drive:fixture",
+            "status": "failed", "evidence": ["fixture:failed-outcome"]})
+        files[h.STATE_PATH] = h.render(state).encode()
+        client = FakeGitHub()
+        with self.assertRaisesRegex(ValueError, "EXTERNAL_OUTCOME_UNRESOLVED"):
+            fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
+        self.assertEqual(client.blobs, {})
+        self.assertEqual(client.updated, 0)
+        self.assertEqual(client.ref, HEAD)
+
     def test_missing_static_landing_page_blocks_upload(self):
         files = fixture()
         state, _ = h.parse_state(files[h.STATE_PATH])
