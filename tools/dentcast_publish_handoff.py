@@ -790,12 +790,17 @@ def preserve_actions(old, new):
     return resolved
 
 
-def save(root, publication, expected=None, note=None, check_remote=False, initial=False):
+def save(root, publication, expected=None, note=None, check_remote=False, initial=False, wal_materialize=False):
     validate_publication(publication)
     require(note is None or nonempty(note), "RECONCILIATION_NOTE_EMPTY")
     with locked(root):
         import dentcast_publish_lifecycle as lifecycle
+        import dentcast_publish_fastlocal as fastlocal
         require(not lifecycle.pending(root), "CLEANUP_DELIVERY_PENDING")
+        require(not fastlocal.active(root) or wal_materialize,
+                "WAL_ACTIVE_MATERIALIZE_BEFORE_CANONICAL_WRITES")
+        require(not wal_materialize or (not initial and expected is not None),
+                "WAL_MATERIALIZATION_REQUIRES_EXISTING_BASE")
         path = safe_path(root, STATE_PATH)
         if initial:
             require(not path.exists(), "HANDOFF_ALREADY_EXISTS")
@@ -851,7 +856,10 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
                 require(all(s["status"] == "pending" for s in publication["steps"]),
                         "WORKFLOW_CHANGE_REQUIRES_STEP_INVALIDATION")
             require(not issues or nonempty(note), "RECONCILIATION_REQUIRED:" + ",".join(issues))
-            lifecycle.guard_step_transition(previous, publication, root)
+            if wal_materialize:
+                fastlocal.validate_projection(root, publication, expected)
+            else:
+                lifecycle.guard_step_transition(previous, publication, root)
         state = {"schema": SCHEMA, "generation": previous["generation"]+1 if previous else 1,
                  "updated_at": now(), "source_revision": previous["source_revision"]
                  if previous and "WORKFLOW_CHANGED" not in issues else current["head"],
@@ -864,6 +872,9 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
 
 
 def inspect(root, check_remote=False):
+    import dentcast_publish_fastlocal as fastlocal
+    require(not fastlocal.active(root),
+            "WAL_ACTIVE_USE_FASTLOCAL_INSPECT_OR_FLUSH")
     with locked(root):
         state, sha = load_state(root)
         current = current_snapshot(root, state, check_remote)

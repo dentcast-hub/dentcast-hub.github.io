@@ -64,3 +64,42 @@ accepts only paths in the canonical target_paths plus the handoff.
 - Never bump or edit DES/Fidelity spec as part of this optimization. If those
   files have an independent inconsistency, fix it separately with its own
   scientific version decision and tests.
+
+
+## Fast Local journal — opt-in Stage 1
+
+**First Push is not a pause.** It is the first of three required remote
+durability cuts and a possible, *optional* handoff to Work/Cursor. The same
+agent normally continues immediately after confirmed remote delivery and any
+applicable approvals. Work can own the entire publication from the beginning.
+
+The existing canonical CLI is still the default, and Phase 1 is opt-in.
+Once canonical \`init\`, intake identity binding, approvals and preflight are
+done, start the private journal in the same checkout:
+
+    python3 tools/dentcast_publish_fastlocal.py begin --expected-sha256 <handoff-sha>
+    python3 tools/dentcast_publish_fastlocal.py step --expected-digest <wal-digest> --id <id> --status started
+    # Actually perform and verify the canonical action.
+    python3 tools/dentcast_publish_fastlocal.py step --expected-digest <wal-digest> --id <id> --status completed --evidence <real-evidence-ref>
+    python3 tools/dentcast_publish_fastlocal.py flush --expected-digest <wal-digest>
+
+All actions remain separate from the logging utility. Every transition is an
+append-only, hash-chained, fsynced event in private Git metadata. It cannot
+invent completed actions, author approvals, changed input references, remote
+pushes or scientific results. Canonical handoff writes/inspect are blocked
+while WAL is active; flush checks the replay against the actual canonical
+publication and performs the original Git/byte/fingerprint safeguards.
+To update approvals, tracked input references or external-action outcomes,
+flush first, use the canonical \`record\`/other applicable operation and
+optionally reopen Fast Local before C.4.9. Never continue past C.4.9 until
+the first real remote commit/push has been verified.
+
+A partial final event is detected and only explicitly repairable with
+\`repair-torn-tail --expected-good-digest\`; the removed incomplete bytes
+are backed up in private Git metadata. A fully written corrupted event is a
+hard stop. An interrupted started action remains *started*, never completed.
+This journal is checkout-local: it is not a substitute for remote recovery.
+The journal is deleted only after the v3 handoff is durably materialized.
+
+The Fast Local adapter cannot run from a shell-less GitHub connection.
+Portable GitHub-only handoff generation remains the next distinct stage.
