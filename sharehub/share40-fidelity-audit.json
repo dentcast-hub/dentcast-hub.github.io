@@ -1,0 +1,3002 @@
+{
+  "content_id": "sharehub/share-40",
+  "source_basis": "FULL_TEXT",
+  "source_sha256": "e9a3ff51cf5f1a47e4abdabf5caf1ecc1fcac88e86e801e2ed492c0d991e83af",
+  "checker_model": "gpt-6-luna",
+  "checker_reasoning": "medium",
+  "reviewer_model": "gpt-6-astra",
+  "reviewer_reasoning": "medium",
+  "pricing": "UNVERIFIED",
+  "source_result": {
+    "des_version": "3.4",
+    "content_type": "RESEARCH",
+    "question_type": "THERAPY",
+    "text_basis": "FULL_TEXT",
+    "citation": {
+      "title": "Veneer-retained Fixed Dental Prosthesis: A Clinical Report on Three Cases with Up to 5 Years Follow-up and Literature Review",
+      "authors": "Marzieh Alikhasi, Vanya Rasaie, Yasamin Babaee Hemmati, Mehran Falahchai",
+      "year": 2025,
+      "journal": "Journal of Dentomaxillofacial Radiology, Pathology and Surgery",
+      "doi": "10.32592/3dj.14.1.8"
+    },
+    "journal_quartile": {
+      "value": "NR",
+      "source": "NR"
+    },
+    "s_design": {
+      "value": 30,
+      "anchor": "Clinical report of three VRFDP cases (THERAPY case series / case report row, 30)",
+      "evidence_quote": "This clinical report presents three cases treated with this approach and \nfollowed-up for up to five years."
+    },
+    "q_method": {
+      "tool": "ROBINS-I",
+      "domains": [
+        {
+          "domain": "confounding",
+          "rating": "high",
+          "evidence_quote": "",
+          "note": "Absence rating under FULL_TEXT: read Case Report and Discussion; no comparative analysis, confounder adjustment, matching, restriction, or stratification is described."
+        },
+        {
+          "domain": "selection of participants",
+          "rating": "some_concerns",
+          "evidence_quote": "a conservative treatment option was preferred.",
+          "note": "Case-specific clinical reasons are described, but no prespecified participant-selection criteria are reported."
+        },
+        {
+          "domain": "classification of interventions/exposures",
+          "rating": "low",
+          "evidence_quote": "monolithic IPS e.max CAD VRFDPs",
+          "note": "The intervention is explicitly identified; case-specific preparation and fabrication are described in the Case Report."
+        },
+        {
+          "domain": "missing data",
+          "rating": "some_concerns",
+          "evidence_quote": "followed-up through five years.",
+          "note": "Follow-up is reported, but the report does not explicitly state whether any participants missed visits or had incomplete outcome data."
+        },
+        {
+          "domain": "measurement of the outcome",
+          "rating": "some_concerns",
+          "evidence_quote": "The teeth and periodontal \nhealth, as well as the restorations, were maintained in \nyearly recalls.",
+          "note": "Clinical outcome domains and yearly recall are described, but outcome-assessor procedures are not detailed."
+        }
+      ],
+      "multiplier": 0.55
+    },
+    "penalties": [
+      {
+        "item": "conflict-of-interest statement / commercial funding",
+        "base_points": 8,
+        "points": 0,
+        "evidence_quote": "The authors declare no conflict of interest.",
+        "note": "No penalty: a conflict-of-interest statement is present."
+      },
+      {
+        "item": "prospective clinical trial registration",
+        "base_points": 5,
+        "points": 0,
+        "evidence_quote": "This clinical report presents three cases treated with this approach",
+        "note": "Not applicable: this is a clinical case report, not an RCT."
+      },
+      {
+        "item": "sample size justification / power analysis",
+        "base_points": 5,
+        "points": 2,
+        "evidence_quote": "This clinical report presents three cases treated with this approach",
+        "note": "No sample-size justification or power analysis appears in the full text; 5 × 30 / 100 = 1.5, rounded half up to 2."
+      },
+      {
+        "item": "follow-up shorter than the outcome plausibly requires",
+        "base_points": 3,
+        "points": 0,
+        "evidence_quote": "through five years of follow-up.",
+        "note": "No penalty: five years of follow-up is reported, not a duration shorter than three years."
+      }
+    ],
+    "commentary_checklist": null,
+    "des_score": 15,
+    "band": "E",
+    "provisional": false,
+    "fact_fa": "این گزارش با امتیاز ۱۵ در باند E شواهد درمانی قرار می‌گیرد.",
+    "interpretation_fa": "این گزارش سه مورد VRFDP را با پیگیری تا پنج سال توصیف می‌کند و جزئیات بالینی کاربرد روش را نشان می‌دهد. نبود گروه مقایسه و توجیه حجم نمونه، استنباط درباره اثربخشی و تعمیم‌پذیری را محدود می‌کند. ارزش بالینی آن در ثبت پیامدهای اولیه در موارد منتخب است."
+  },
+  "initial_runs": [
+    {
+      "des_version": "3.4",
+      "mode": "FIDELITY",
+      "scope": "SOURCE",
+      "text_basis": "FULL_TEXT",
+      "claims": [
+        {
+          "id": "u1",
+          "claim_quote": "بریج با ریتینر ونیر؛ چه زمانی انتخاب مناسبی است؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u2",
+          "claim_quote": "معرفی",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u3",
+          "claim_quote": "فرض کنیم بیماری یکی از دندان‌های قدامی را از دست داده، اما دندان‌های مجاور سالم‌اند.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "framing hypothetical"
+        },
+        {
+          "id": "u4",
+          "claim_quote": "ایمپلنت یکی از گزینه‌هاست، ولی محدودیت فضا یا استخوان، نزدیکی ریشه‌ها یا تمایل نداشتن بیمار به جراحی می‌تواند انتخاب آن را دشوار کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Despite the unassailable advantages of implant rehabilitation, it cannot be used in certain clinical situations, including limited dimensions of the edentulous space, adjacent roots proximity to the implant site, and minimal available bone.",
+          "source_ref": null
+        },
+        {
+          "id": "u5",
+          "claim_quote": "بریج متداول هم به تراش قابل‌توجه دندان‌های مجاور نیاز دارد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "FDP has been regarded as the standard of care for some time in replacement of single and multiple missing teeth.",
+          "source_ref": null
+        },
+        {
+          "id": "u6",
+          "claim_quote": "بریج باندشونده با ریتینر لینگوال یا پالاتال گزینهٔ محافظه‌کارانه‌تری است، اما در بعضی شرایط محدودیت دارد؛ مثلاً دیپ‌بایت می‌تواند فضای لازم برای ریتینر پالاتال را محدود کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "However, RBB was contraindicated based on deep overbite.",
+          "source_ref": null
+        },
+        {
+          "id": "u7",
+          "claim_quote": "ضمن اینکه چنین ریتینری، فرم یا رنگ دندان‌های مجاور را اصلاح نمی‌کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Since RBB is dependent on bonding to the oral surface of the abutment tooth it is powerless in tooth color or shape correction.",
+          "source_ref": null
+        },
+        {
+          "id": "u8",
+          "claim_quote": "ایدهٔ بریج با ریتینر ونیر (Veneer-Retained Fixed Dental Prosthesis یا VRFDP) این است که پونتیک به ونیرهای دندان‌های مجاور متصل شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "To avoid preparation of the maxillary right canine and central incisor on both labial and palatal surfaces, decision was made to place the pontic by means of veneer retainers.",
+          "source_ref": null
+        },
+        {
+          "id": "u9",
+          "claim_quote": "بنابراین، در کیس مناسب، جایگزینی دندان و اصلاح فرم دندان‌های پایه می‌تواند در یک درمان انجام شود.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "منبع در اینجا دربارهٔ هم‌زمانی جایگزینی دندان و اصلاح فرم پایه‌ها به‌عنوان یک درمان واحد گزاره‌ای ندارد."
+        },
+        {
+          "id": "u10",
+          "claim_quote": "در مقاله‌ای منتشرشده در سال ۲۰۲۵، این روش در سه بیمار و مجموعاً چهار بریج گزارش شد؛ زیرا بیمار اول دو دندان ازدست‌رفته داشت.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "This clinical report presents three cases treated with this approach and followed-up for up to five years.",
+          "source_ref": null,
+          "note": "منبع در این جمله سه کیس و حداکثر پنج سال را می‌گوید؛ چهار بریج از شرح کیس‌ها قابل شمارش است، اما این تعداد در یک جملهٔ منبع تصریح نشده است."
+        },
+        {
+          "id": "u11",
+          "claim_quote": "پیگیری‌ها تا پنج سال ادامه داشت.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "After completion of the treatment patients were followed-up through five years.",
+          "source_ref": null
+        },
+        {
+          "id": "u12",
+          "claim_quote": "توضیح",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u13",
+          "claim_quote": "چه زمانی به ونیر بریج فکر کنیم؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u14",
+          "claim_quote": "این روش قرار نیست جایگزین تمام بریج‌های باندشونده شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The treatment options should not only be confined to implants or lingually/palatally resin bonded bridges but also veneer-retained fixed dental prosthesis in selected cases could prove to be beneficial for the patient.",
+          "source_ref": null
+        },
+        {
+          "id": "u15",
+          "claim_quote": "منطق آن زمانی قوی‌تر است که دندان‌های مجاور از قبل به ونیر نیاز دارند، فضای بی‌دندانی باید همراه با تغییر فرم دندان‌ها مدیریت شود یا شرایط اکلوژن استفاده از ریتینر لینگوال یا پالاتال را دشوار کرده است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Veneer-retained fixed dental prosthesis (VRFDP) is a treatment modality that can be considered as an alternative option when these clinical situations exist.",
+          "source_ref": null
+        },
+        {
+          "id": "u16",
+          "claim_quote": "سه کیس مقاله، سه وضعیت متفاوت را نشان می‌دهند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "This clinical report presents three cases treated with this approach and followed-up for up to five years.",
+          "source_ref": null
+        },
+        {
+          "id": "u17",
+          "claim_quote": "کیس اول: دیپ‌بایت و محدودیت ریتینر لینگوال",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u18",
+          "claim_quote": "بیمار ۲۲ساله‌ای پرمولر اول بالا و پایین سمت چپ را از دست داده بود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "A 22-years-old male with a dental history of orthodontic treatment sought care for his missing left maxillary and mandibular first premolar teeth.",
+          "source_ref": null
+        },
+        {
+          "id": "u19",
+          "claim_quote": "دندان‌های مجاور زنده و بدون رستوریشن بودند، اما دیپ‌بایت شدید و راهنمای قدامی شیب‌دار داشت.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Clinical examinations showed vital and non-restored teeth adjacent to the edentulous areas, as well as an excessive overbite and steep anterior guidance.",
+          "source_ref": null
+        },
+        {
+          "id": "u20",
+          "claim_quote": "ریشه‌های مجاور فضای بی‌دندانی نیز پس از ارتودنسی قبلی تیپ شده بودند و بیمار درمان ارتودنسی مجدد را نمی‌پذیرفت.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The radiographic examination revealed the previous orthodontic treatment had resulted in tipped adjacent roots in both edentulous areas.",
+          "source_ref": null,
+          "note": "پذیرفتن‌نکردن درمان ارتودنسی مجدد نیز در جملهٔ منبع بعدی آمده است."
+        },
+        {
+          "id": "u21",
+          "claim_quote": "نویسندگان به دلیل دیپ‌بایت، بریج باندشونده با ریتینر متداول را مناسب ندانستند و برای هر دو ناحیه، بریج با ریتینر ونیر از لیتیوم دی‌سیلیکات مونولیتیک انتخاب کردند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Thus, monolithic IPS e.max CAD VRFDPs were selected as the treatment of choice.",
+          "source_ref": null,
+          "note": "منبع در جملهٔ پیشین می‌گوید RBB به‌دلیل دیپ‌بایت منع داشت."
+        },
+        {
+          "id": "u22",
+          "claim_quote": "برای پرمولر پایه در فک بالا، به‌دلیل جهت نیروهای اکلوزالی، طراحی آنله به کار رفت.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Due to the \noutward direction of the occlusal forces in the maxilla, \nan onlay preparation was considered for the maxillary 10 Alikhasi M, et al. Veneer-retained Fixed Dental Prosthesis: A Clinical Report on Three Cases with Up to 5 Years Follow-up and Literature Review. Journal of Dentomaxillofacial Radiology, Pathology and Surgery. 2025; 14(1): 8-12\nfirst premolar in case 1 (Figure 2).",
+          "source_ref": null
+        },
+        {
+          "id": "u23",
+          "claim_quote": "نکتهٔ کلینیکی: وقتی ریتینر لینگوال یا پالاتال با شرایط اکلوژن سازگار نیست، می‌توان طراحی دیگری را بررسی کرد؛ البته به شرط وجود فضای کافی برای مادهٔ رستوریتیو و کانکتورها.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "To provide an adequate bucco\u0002lingual dimension of connectors the preparation \nextended to the proximo-lingual line angles adjacent to \nthe edentulous areas.",
+          "source_ref": null,
+          "note": "منبع از تراش برای ابعاد کانکتور و آنله در جهت نیروها می‌گوید؛ جملهٔ توصیه‌ای دربارهٔ بررسی طراحی جایگزین، بیان کلینیکی صفحه است."
+        },
+        {
+          "id": "u24",
+          "claim_quote": "تراش ونیر و آنلهٔ دندان‌های پایه برای جایگزینی پرمولر اول فک بالا.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "caption"
+        },
+        {
+          "id": "u25",
+          "claim_quote": "Alikhasi et al., 2025, Fig.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "reference label"
+        },
+        {
+          "id": "u26",
+          "claim_quote": "2",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "figure number"
+        },
+        {
+          "id": "u27",
+          "claim_quote": "کیس دوم: همراه شدن جایگزینی دندان با مدیریت فضا",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u28",
+          "claim_quote": "بیمار ۴۵ساله‌ای لترال پایین سمت راست را به‌دلیل مشکل شدید پریودنتال از دست داد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "A female patient, 45-years-old, sought treatment concerning her anterior mandibular teeth.",
+          "source_ref": null,
+          "note": "علت پریودنتال شدید در جمله‌های بلافاصله بعدی توضیح داده شده است."
+        },
+        {
+          "id": "u29",
+          "claim_quote": "او اپن‌بایت قدامی سه‌میلی‌متری، فاصله میان دندان‌های قدامی و تغییر رنگ خفیف داشت.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Intraorally, the prominent features were 3mm open bite, mild teeth discoloration, spacing in anterior mandibular incisors, vertically displaced right lateral incisor with grade II mobility, which was confirmed by alveolar bone loss and inappropriate crown-root ratio in the subsequent radiographic examination.",
+          "source_ref": null
+        },
+        {
+          "id": "u30",
+          "claim_quote": "پس از کشیدن، از تاج همان دندان به مدت دو ماه به‌عنوان پونتیک موقت استفاده شد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The patient’s extracted tooth was modified into an ovate pontic and used as a temporary restoration for two months.",
+          "source_ref": null
+        },
+        {
+          "id": "u31",
+          "claim_quote": "عرض فضای موجود از ابعاد طبیعی لترال پایین بیشتر بود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "According to the interdental spacing in the anterior lower teeth, the mesiodistal width of the edentulous space was beyond the anatomic dimensions of a mandibular lateral incisor, and a lingual RBB could lead to an unesthetic appearance.",
+          "source_ref": null
+        },
+        {
+          "id": "u32",
+          "claim_quote": "بنابراین، ساخت بریج با ریتینر لینگوال بدون اصلاح فرم و توزیع فضا می‌توانست نتیجهٔ زیبایی نامناسبی ایجاد کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "According to the interdental spacing in the anterior lower teeth, the mesiodistal width of the edentulous space was beyond the anatomic dimensions of a mandibular lateral incisor, and a lingual RBB could lead to an unesthetic appearance.",
+          "source_ref": null
+        },
+        {
+          "id": "u33",
+          "claim_quote": "به همین دلیل، برای لترال راست بریج با ریتینر ونیر و برای دندان‌های قدامی سمت چپ ونیرهای جداگانه طراحی شد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Based on these limitations, a layered lithium disilicate press VRFDP for the right lateral incisor and veneers on left incisors was planned.",
+          "source_ref": null
+        },
+        {
+          "id": "u34",
+          "claim_quote": "نکتهٔ کلینیکی: گاهی مسئله فقط پر کردن فضای خالی نیست؛ باید عرض و فرم دندان‌های مجاور نیز هم‌زمان در طرح درمان دیده شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Since RBB is dependent on bonding to the oral surface of the abutment tooth it is powerless in tooth color or shape correction.",
+          "source_ref": null,
+          "note": "منبع از اصلاح شکل یا رنگ و مسئلهٔ فضای بین‌دندانی می‌گوید؛ توصیهٔ طرح درمان هم‌زمان به‌عنوان نکتهٔ بالینی، بازگویی مستقیم نیست."
+        },
+        {
+          "id": "u35",
+          "claim_quote": "کیس سوم: وقتی دندان‌های پایه خودشان به ونیر نیاز دارند",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u36",
+          "claim_quote": "بیمار ۲۱ساله‌ای لترال راست بالا را از دست داده بود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "A 21-years-old female with a concern about her smile in the upper arch, including a missing right lateral incisor, peg-shaped left lateral incisor, midline diastema, and wear in central incisors, presented for treatment (Figure 1).",
+          "source_ref": null
+        },
+        {
+          "id": "u37",
+          "claim_quote": "لترال چپ Peg-Shaped بود، بین سانترال‌ها دیاستم وجود داشت و لبه‌های اینسایزال سانترال‌ها نیز ساییده شده بودند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "A 21-years-old female with a concern about her smile in the upper arch, including a missing right lateral incisor, peg-shaped left lateral incisor, midline diastema, and wear in central incisors, presented for treatment (Figure 1).",
+          "source_ref": null
+        },
+        {
+          "id": "u38",
+          "claim_quote": "بیمار تمایلی به جراحی ایمپلنت نداشت و اصلاح زیبایی دندان‌های قدامی هم بخشی از درمان بود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Despite the patient’s demand for conservative fixed treatment of the edentulous area, she was reluctant to undergo any surgical procedure.",
+          "source_ref": null,
+          "note": "نیاز به ترمیم ونیر در جملهٔ بعدی آمده است."
+        },
+        {
+          "id": "u39",
+          "claim_quote": "اگر بریج باندشوندهٔ پالاتال همراه با ونیرهای لبیال ساخته می‌شد، بعضی دندان‌های پایه باید از هر دو سطح لبیال و پالاتال تراش می‌خوردند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "To avoid preparation of the maxillary right canine and central incisor on both labial and palatal surfaces, decision was made to place the pontic by means of veneer retainers.",
+          "source_ref": null
+        },
+        {
+          "id": "u40",
+          "claim_quote": "بنابراین، نویسندگان تصمیم گرفتند همان ونیرهای لبیال نقش ریتینر بریج را نیز داشته باشند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "To avoid preparation of the maxillary right canine and central incisor on both labial and palatal surfaces, decision was made to place the pontic by means of veneer retainers.",
+          "source_ref": null
+        },
+        {
+          "id": "u41",
+          "claim_quote": "نکتهٔ کلینیکی: وقتی دندان‌های پایه از قبل اندیکاسیون ونیر دارند، می‌توان از تراش اضافهٔ پالاتال برای یک ریتینر مجزا پرهیز کرد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "To avoid preparation of the maxillary right canine and central incisor on both labial and palatal surfaces, decision was made to place the pontic by means of veneer retainers.",
+          "source_ref": null,
+          "note": "عبارت «دندان‌های پایه از قبل اندیکاسیون ونیر دارند» همان کیس را توصیف می‌کند؛ پرهیز از تراش پالاتال با تصمیم گزارش‌شده هم‌جهت است."
+        },
+        {
+          "id": "u42",
+          "claim_quote": "اما اگر دندان‌های پایه کاملاً سالم باشند، تراش لبیال صرفاً برای ساخت بریج لزوماً محافظه‌کارانه‌تر نیست.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "این قید دربارهٔ سالم بودن پایه‌ها و محافظه‌کارانه‌تر نبودن تراش لبیال در منبع تصریح نشده است."
+        },
+        {
+          "id": "u43",
+          "claim_quote": "نمای قبل از درمان؛ فقدان لترال راست بالا، لترال مقابل Peg-Shaped و دیاستم.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "caption"
+        },
+        {
+          "id": "u44",
+          "claim_quote": "Alikhasi et al., 2025, Fig.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "reference label"
+        },
+        {
+          "id": "u45",
+          "claim_quote": "1",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "figure number"
+        },
+        {
+          "id": "u46",
+          "claim_quote": "طراحی ریتینر؛ چرا کانکتور مهم است؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u47",
+          "claim_quote": "در این گزارش از لیتیوم دی‌سیلیکات استفاده شد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The present report used CAD-CAM lithium disilicate VRFDP in anterior and premolar area in both maxilla and mandible with no mechanical or biological complication through five years of follow-up.",
+          "source_ref": null
+        },
+        {
+          "id": "u48",
+          "claim_quote": "برای ریتینرهای ونیر، طراحی Butt-Joint با حدود دو میلی‌متر تراش اینسایزال و ۰٫۵ تا یک میلی‌متر تراش لبیال توصیف شده است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Veneer-restored abutments were prepared in butt-joint design with 2 mm incisal and 0.5-1 mm labial reduction.",
+          "source_ref": null
+        },
+        {
+          "id": "u49",
+          "claim_quote": "البته در کیس دوم فقط اصلاح محدودی در لبه‌های اینسایزال انجام شد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "In case 2 only minor incisal modification was performed to remove sharpness.",
+          "source_ref": null
+        },
+        {
+          "id": "u50",
+          "claim_quote": "تراش در سمت فضای بی‌دندانی تا Line Angle پروگزیمولینگوال امتداد یافت تا عرض کافی برای کانکتور فراهم شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "To provide an adequate bucco\u0002lingual dimension of connectors the preparation \nextended to the proximo-lingual line angles adjacent to \nthe edentulous areas.",
+          "source_ref": null
+        },
+        {
+          "id": "u51",
+          "claim_quote": "چون پونتیک از طریق اتصال به ریتینرهای نسبتاً نازک نگهداری می‌شود، ابعاد کانکتور اهمیت زیادی دارد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "To provide an adequate bucco\u0002lingual dimension of connectors the preparation \nextended to the proximo-lingual line angles adjacent to \nthe edentulous areas.",
+          "source_ref": null,
+          "note": "این جمله ضرورت ابعاد کافی را با امتداد تراش برای کانکتور پشتیبانی می‌کند."
+        },
+        {
+          "id": "u52",
+          "claim_quote": "نویسندگان به توصیهٔ سازنده برای سطح مقطع ۱۶ میلی‌متر مربع و در صورت محدودیت عرض باکولینگوال، افزایش ارتفاع اکلوزوژنژیوال کانکتور اشاره می‌کنند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The fabrication guideline for IPS e.max fixed bridges recommends 16mm2for the connector’s dimension.",
+          "source_ref": null,
+          "note": "توصیهٔ افزایش ارتفاع در جملهٔ بعدی آمده است."
+        },
+        {
+          "id": "u53",
+          "claim_quote": "نسبت ارتفاع به عرض بیشتر از یک نیز در مقاله مطرح شده است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "As the guideline indicates, the ratio of height to width should be greater than one.",
+          "source_ref": null
+        },
+        {
+          "id": "u54",
+          "claim_quote": "این اعداد به پروتکل ماده و طراحی مورد بحث مربوط‌اند؛ نباید آن‌ها را بدون بررسی اندیکاسیون و دستورالعمل سازنده به تمام بریج‌ها تعمیم داد.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "این محدودیت تعمیم و توصیه به بررسی اندیکاسیون در منبع بیان نشده است."
+        },
+        {
+          "id": "u55",
+          "claim_quote": "اکلوژن؛ بخشی از طرح درمان، نه فقط تحویل",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u56",
+          "claim_quote": "پیش از ساخت، از Wax-up و Mock-up برای بررسی فرم و اکلوژن استفاده شد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The diagnostic wax-up was digitally designed and used to fabricate a guide for the mock-up.",
+          "source_ref": null,
+          "note": "بررسی اکلوژن در جمله‌های بعدی شرح داده شده است."
+        },
+        {
+          "id": "u57",
+          "claim_quote": "در کیس‌های اول و سوم، راهنمای کانین در نظر گرفته شد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Canine protected occlusion was planned as the occlusal scheme in case 1 and 3.",
+          "source_ref": null
+        },
+        {
+          "id": "u58",
+          "claim_quote": "در کیس دوم، چون بیمار قصد تغییر اپن‌بایت موجود را نداشت، اصلاح اکلوژن برنامه‌ریزی نشد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Since case 2 had no concern about her anterior open bite no occlusal modification was considered.",
+          "source_ref": null
+        },
+        {
+          "id": "u59",
+          "claim_quote": "هدف تنظیم تماس‌های سنتریک و اکسنتریک به‌گونه‌ای بود که تنش بیش‌ازحد به پونتیک وارد نشود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Further, in the present report a precise occlusion was adjusted with the opposing teeth to distribute the centric and eccentric loads in a way to avoid high stresses in the pontic area.",
+          "source_ref": null
+        },
+        {
+          "id": "u60",
+          "claim_quote": "محافظه‌کارانه بودن تراش، به‌تنهایی موفقیت بریج را تضمین نمی‌کند؛ طراحی کانکتور و کنترل نیروها هم تعیین‌کننده‌اند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Implementation of the digital protocols in the design and fabrication process of the restoration provided the advantages of precise control over the restorations’ dimension, occlusal contacts, and planning a conservative preparation.",
+          "source_ref": null,
+          "note": "منبع همچنین در جمله‌ای جداگانه توزیع بار برای اجتناب از تنش بالا در ناحیهٔ پونتیک را گزارش می‌کند؛ اهمیت کانکتور در بخش ساخت و ابعاد آمده است."
+        },
+        {
+          "id": "u61",
+          "claim_quote": "نمای نهایی بریج‌های با ریتینر ونیر پس از سمان.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "caption"
+        },
+        {
+          "id": "u62",
+          "claim_quote": "Alikhasi et al., 2025, Fig.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "reference label"
+        },
+        {
+          "id": "u63",
+          "claim_quote": "3",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "figure number"
+        },
+        {
+          "id": "u64",
+          "claim_quote": "نتایج درمان و شواهد پیشین",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u65",
+          "claim_quote": "نویسندگان از پیگیری سالانهٔ بیماران تا حداکثر پنج سال و نبود عارضهٔ مکانیکی یا بیولوژیک گزارش داده‌اند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "After completion of the treatment patients were followed-up through five years.",
+          "source_ref": null,
+          "note": "گزارش نبود عارضه در جملهٔ نتیجه‌گیری بحث آمده است."
+        },
+        {
+          "id": "u66",
+          "claim_quote": "بیماران از نتیجهٔ درمان رضایت داشتند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Additionally, patients were satisfied with the treatment results.",
+          "source_ref": null
+        },
+        {
+          "id": "u67",
+          "claim_quote": "این خبر امیدوارکننده است، اما نباید آن را نرخ موفقیت پنج‌سالهٔ این روش دانست؛ مقاله فقط سه بیمار را توصیف می‌کند و مدت پیگیری هر بریج را جداگانه مشخص نکرده است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "This clinical report presents three cases treated with this approach and followed-up for up to five years.",
+          "source_ref": null,
+          "note": "منبع سه کیس و حداکثر پنج سال را گزارش می‌کند، اما حکم صریح «نباید نرخ موفقیت پنج‌ساله دانست» یا مدت جداگانهٔ هر بریج را نمی‌دهد."
+        },
+        {
+          "id": "u68",
+          "claim_quote": "در مرور گزارش‌های پیشین، هفت مقاله شناسایی شد.",
+          "verdict": "ALTERED",
+          "change_kind": "MAGNITUDE_CHANGED",
+          "source_quote": "Eight articles were identified.",
+          "source_ref": null,
+          "note": "منبع هشت مقاله را شناسایی کرد و پس از حذف گزارش تکراری، هفت مقاله را وارد مرور کرد؛ ادعا شمار شناسایی را با شمار مقاله‌های واردشده یکی گرفته است."
+        },
+        {
+          "id": "u69",
+          "claim_quote": "در تعدادی از گزارش‌های قدیمی‌تر، به‌ویژه با پرسلن فلدسپاتیک، شکست پونتیک یا ریتینر، مشکلات مارجینال و مشکلات پریودنتال گزارش شده بود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Although high-stress conditions were avoided, restoration fracture has been reported in all early publications with a duration of follow-up (14-16).",
+          "source_ref": null,
+          "note": "مشکلات مارجینال و پریودنتال نیز در جملهٔ بعدی ذکر شده‌اند."
+        },
+        {
+          "id": "u70",
+          "claim_quote": "استفاده از لیتیوم دی‌سیلیکات در مطالعهٔ حاضر ممکن است مزیتی داشته باشد، اما از این گزارش‌های غیرکنترل‌شده نمی‌توان اثر مستقل جنس سرامیک را اثبات کرد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The flexural strength of the lithium disilicate glass ceramic is about four times more than feldspathic porcelain.",
+          "source_ref": null,
+          "note": "منبع همچنین می‌گوید شکست‌های گزارش‌های اولیه تا حدی می‌تواند با استحکام کمتر فلدسپاتیک مرتبط باشد؛ اثبات اثر مستقل سرامیک در گزارش کنترل‌نشده ارائه نشده است."
+        },
+        {
+          "id": "u71",
+          "claim_quote": "نتیجه‌گیری",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u72",
+          "claim_quote": "بریج با ریتینر ونیر گزینه‌ای برای کیس‌های انتخاب‌شده است، نه جایگزینی عمومی برای ایمپلنت یا بریج باندشوندهٔ متداول.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The treatment options should not only be confined to implants or lingually/palatally resin bonded bridges but also veneer-retained fixed dental prosthesis in selected cases could prove to be beneficial for the patient.",
+          "source_ref": null
+        },
+        {
+          "id": "u73",
+          "claim_quote": "این طراحی زمانی جذاب‌تر است که جایگزینی دندان با اصلاح فرم، رنگ یا توزیع فضای دندان‌های مجاور همراه باشد یا ریتینر لینگوال و پالاتال از نظر اکلوژنی با محدودیت روبه‌رو باشد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Since RBB is dependent on bonding to the oral surface of the abutment tooth it is powerless in tooth color or shape correction.",
+          "source_ref": null,
+          "note": "منبع بعدی همان‌طور می‌گوید که فاصله یا مدیریت فضا می‌تواند نتیجهٔ زیبایی را مختل کند و محدودیت بین‌اکلوزالی نیز مطرح می‌کند."
+        },
+        {
+          "id": "u74",
+          "claim_quote": "برداشت کلینیکی من از مقاله این است که سؤال اصلی فقط «چگونه جای دندان غایب را پر کنیم؟» نیست؛ باید ببینیم کدام طراحی، با کمترین تراش توجیه‌پذیر، زیبایی و مقاومت مکانیکی لازم را هم‌زمان فراهم می‌کند.",
+          "verdict": "AUTHOR_VIEW",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "opinion marker: برداشت کلینیکی من"
+        },
+        {
+          "id": "u75",
+          "claim_quote": "برای توصیهٔ فراگیر این درمان به مطالعات کنترل‌شده و پیگیری‌های بیشتر نیاز داریم.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "This treatment modality can benefit from further controlled studies to justify clinical parameters such as the optimum preparation design.",
+          "source_ref": null,
+          "note": "این جمله پشتیبانی می‌کند که مطالعات کنترل‌شدهٔ بیشتر لازم است؛ نیاز به پیگیری‌های بیشتر در آن تصریح نشده است."
+        }
+      ],
+      "counts": {
+        "matches": 49,
+        "altered": 1,
+        "reversed": 0,
+        "not_in_source": 3,
+        "not_assessable": 0,
+        "author_view": 1,
+        "not_a_claim": 21
+      },
+      "assessable": 50,
+      "fidelity_score": 99,
+      "level": "HIGH",
+      "provisional": false,
+      "source_conclusion": "This treatment modality can benefit from further controlled studies to justify clinical parameters such as the optimum preparation design.",
+      "fact_fa": "منبع 49 ادعا را تأیید می‌کند و 1 ادعا را تغییر‌یافته یا 0 ادعا را معکوس نشان می‌دهد؛ سطح وفاداری بالا است. منبع 3 ادعا را پوشش نمی‌دهد.",
+      "interpretation_fa": "همهٔ ادعاهای ارزیابی‌پذیر با متن منبع هم‌جهت‌اند."
+    },
+    {
+      "des_version": "3.4",
+      "mode": "FIDELITY",
+      "scope": "SOURCE",
+      "text_basis": "FULL_TEXT",
+      "claims": [
+        {
+          "id": "u1",
+          "claim_quote": "بریج با ریتینر ونیر؛ چه زمانی انتخاب مناسبی است؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "title"
+        },
+        {
+          "id": "u2",
+          "claim_quote": "معرفی",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u3",
+          "claim_quote": "فرض کنیم بیماری یکی از دندان‌های قدامی را از دست داده، اما دندان‌های مجاور سالم‌اند.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "scenario is not stated in the source"
+        },
+        {
+          "id": "u4",
+          "claim_quote": "ایمپلنت یکی از گزینه‌هاست، ولی محدودیت فضا یا استخوان، نزدیکی ریشه‌ها یا تمایل نداشتن بیمار به جراحی می‌تواند انتخاب آن را دشوار کند.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "the listed implant constraints are not stated as a general claim in the source"
+        },
+        {
+          "id": "u5",
+          "claim_quote": "بریج متداول هم به تراش قابل‌توجه دندان‌های مجاور نیاز دارد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "It has been shown that damaging the neighboring teeth was among the most important factors affecting the choice of treatment (3, 19).",
+          "source_ref": null
+        },
+        {
+          "id": "u6",
+          "claim_quote": "بریج باندشونده با ریتینر لینگوال یا پالاتال گزینهٔ محافظه‌کارانه‌تری است، اما در بعضی شرایط محدودیت دارد؛ مثلاً دیپ‌بایت می‌تواند فضای لازم برای ریتینر پالاتال را محدود کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "However, RBB was contraindicated based on deep overbite.",
+          "source_ref": null
+        },
+        {
+          "id": "u7",
+          "claim_quote": "ضمن اینکه چنین ریتینری، فرم یا رنگ دندان‌های مجاور را اصلاح نمی‌کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Since RBB is dependent on bonding to the oral surface of the abutment tooth it is powerless in tooth color or shape correction.",
+          "source_ref": null
+        },
+        {
+          "id": "u8",
+          "claim_quote": "ایدهٔ بریج با ریتینر ونیر (Veneer-Retained Fixed Dental Prosthesis یا VRFDP) این است که پونتیک به ونیرهای دندان‌های مجاور متصل شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "To avoid preparation of the maxillary right canine and central incisor on both labial and palatal surfaces, decision was made to place the pontic by means of veneer retainers.",
+          "source_ref": null
+        },
+        {
+          "id": "u9",
+          "claim_quote": "بنابراین، در کیس مناسب، جایگزینی دندان و اصلاح فرم دندان‌های پایه می‌تواند در یک درمان انجام شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Based on these limitations, a layered lithium disilicate press VRFDP for the right lateral incisor and veneers on left incisors was planned.",
+          "source_ref": null
+        },
+        {
+          "id": "u10",
+          "claim_quote": "در مقاله‌ای منتشرشده در سال ۲۰۲۵، این روش در سه بیمار و مجموعاً چهار بریج گزارش شد؛ زیرا بیمار اول دو دندان ازدست‌رفته داشت.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "the source does not state a total of four bridges"
+        },
+        {
+          "id": "u11",
+          "claim_quote": "پیگیری‌ها تا پنج سال ادامه داشت.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "After completion of the treatment patients were followed-up through five years.",
+          "source_ref": null
+        },
+        {
+          "id": "u12",
+          "claim_quote": "توضیح",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u13",
+          "claim_quote": "چه زمانی به ونیر بریج فکر کنیم؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u14",
+          "claim_quote": "این روش قرار نیست جایگزین تمام بریج‌های باندشونده شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Veneer-retained fixed dental prosthesis (VRFDP) is a treatment modality that can be considered as an alternative option when these clinical situations exist.",
+          "source_ref": null
+        },
+        {
+          "id": "u15",
+          "claim_quote": "منطق آن زمانی قوی‌تر است که دندان‌های مجاور از قبل به ونیر نیاز دارند، فضای بی‌دندانی باید همراه با تغییر فرم دندان‌ها مدیریت شود یا شرایط اکلوژن استفاده از ریتینر لینگوال یا پالاتال را دشوار کرده است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Veneer-retained fixed dental prosthesis (VRFDP) is a treatment modality that can be considered as an alternative option when these clinical situations exist.",
+          "source_ref": null
+        },
+        {
+          "id": "u16",
+          "claim_quote": "سه کیس مقاله، سه وضعیت متفاوت را نشان می‌دهند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Following describes the lithium disilicate glass ceramic VRFDP in three clinical situations where the common conservative treatments were not applicable.",
+          "source_ref": null
+        },
+        {
+          "id": "u17",
+          "claim_quote": "کیس اول: دیپ‌بایت و محدودیت ریتینر لینگوال",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u18",
+          "claim_quote": "بیمار ۲۲ساله‌ای پرمولر اول بالا و پایین سمت چپ را از دست داده بود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "A 22-years-old male with a dental history of orthodontic treatment sought care for his missing left maxillary and mandibular first premolar teeth.",
+          "source_ref": null
+        },
+        {
+          "id": "u19",
+          "claim_quote": "دندان‌های مجاور زنده و بدون رستوریشن بودند، اما دیپ‌بایت شدید و راهنمای قدامی شیب‌دار داشت.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Clinical examinations showed vital and non-restored teeth adjacent to the edentulous areas, as well as an excessive overbite and steep anterior guidance.",
+          "source_ref": null
+        },
+        {
+          "id": "u20",
+          "claim_quote": "ریشه‌های مجاور فضای بی‌دندانی نیز پس از ارتودنسی قبلی تیپ شده بودند و بیمار درمان ارتودنسی مجدد را نمی‌پذیرفت.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The radiographic examination revealed the previous orthodontic treatment had resulted in tipped adjacent roots in both edentulous areas.",
+          "source_ref": null
+        },
+        {
+          "id": "u21",
+          "claim_quote": "نویسندگان به دلیل دیپ‌بایت، بریج باندشونده با ریتینر متداول را مناسب ندانستند و برای هر دو ناحیه، بریج با ریتینر ونیر از لیتیوم دی‌سیلیکات مونولیتیک انتخاب کردند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "However, RBB was contraindicated based on deep overbite. Thus, monolithic IPS e.max CAD VRFDPs were selected as the treatment of choice.",
+          "source_ref": null
+        },
+        {
+          "id": "u22",
+          "claim_quote": "برای پرمولر پایه در فک بالا، به‌دلیل جهت نیروهای اکلوزالی، طراحی آنله به کار رفت.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "the source sentence is interrupted by a page header and no complete sentence is quotable"
+        },
+        {
+          "id": "u23",
+          "claim_quote": "نکتهٔ کلینیکی: وقتی ریتینر لینگوال یا پالاتال با شرایط اکلوژن سازگار نیست، می‌توان طراحی دیگری را بررسی کرد؛ البته به شرط وجود فضای کافی برای مادهٔ رستوریتیو و کانکتورها.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "clinical recommendation is not stated in the source"
+        },
+        {
+          "id": "u24",
+          "claim_quote": "تراش ونیر و آنلهٔ دندان‌های پایه برای جایگزینی پرمولر اول فک بالا.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Figure 2. Veneer and onlay preparation for VRFDP replacement of the 1st premolar in maxilla",
+          "source_ref": null
+        },
+        {
+          "id": "u25",
+          "claim_quote": "Alikhasi et al., 2025, Fig.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "figure citation fragment"
+        },
+        {
+          "id": "u26",
+          "claim_quote": "2",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "figure number"
+        },
+        {
+          "id": "u27",
+          "claim_quote": "کیس دوم: همراه شدن جایگزینی دندان با مدیریت فضا",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u28",
+          "claim_quote": "بیمار ۴۵ساله‌ای لترال پایین سمت راست را به‌دلیل مشکل شدید پریودنتال از دست داد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "A female patient, 45-years-old, sought treatment concerning her anterior mandibular teeth.",
+          "source_ref": null
+        },
+        {
+          "id": "u29",
+          "claim_quote": "او اپن‌بایت قدامی سه‌میلی‌متری، فاصله میان دندان‌های قدامی و تغییر رنگ خفیف داشت.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Intraorally, the prominent features were 3mm open bite, mild teeth discoloration, spacing in anterior mandibular incisors, vertically displaced right lateral incisor with grade II mobility, which was confirmed by alveolar bone loss and inappropriate crown-root ratio in the subsequent radiographic examination.",
+          "source_ref": null
+        },
+        {
+          "id": "u30",
+          "claim_quote": "پس از کشیدن، از تاج همان دندان به مدت دو ماه به‌عنوان پونتیک موقت استفاده شد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The patient’s extracted tooth was modified into an ovate pontic and used as a temporary restoration for two months.",
+          "source_ref": null
+        },
+        {
+          "id": "u31",
+          "claim_quote": "عرض فضای موجود از ابعاد طبیعی لترال پایین بیشتر بود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "According to the interdental spacing in the anterior lower teeth, the mesiodistal width of the edentulous space was beyond the anatomic dimensions of a mandibular lateral incisor, and a lingual RBB could lead to an unesthetic appearance.",
+          "source_ref": null
+        },
+        {
+          "id": "u32",
+          "claim_quote": "بنابراین، ساخت بریج با ریتینر لینگوال بدون اصلاح فرم و توزیع فضا می‌توانست نتیجهٔ زیبایی نامناسبی ایجاد کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "According to the interdental spacing in the anterior lower teeth, the mesiodistal width of the edentulous space was beyond the anatomic dimensions of a mandibular lateral incisor, and a lingual RBB could lead to an unesthetic appearance.",
+          "source_ref": null
+        },
+        {
+          "id": "u33",
+          "claim_quote": "به همین دلیل، برای لترال راست بریج با ریتینر ونیر و برای دندان‌های قدامی سمت چپ ونیرهای جداگانه طراحی شد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Based on these limitations, a layered lithium disilicate press VRFDP for the right lateral incisor and veneers on left incisors was planned.",
+          "source_ref": null
+        },
+        {
+          "id": "u34",
+          "claim_quote": "نکتهٔ کلینیکی: گاهی مسئله فقط پر کردن فضای خالی نیست؛ باید عرض و فرم دندان‌های مجاور نیز هم‌زمان در طرح درمان دیده شود.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "clinical recommendation is not stated in the source"
+        },
+        {
+          "id": "u35",
+          "claim_quote": "کیس سوم: وقتی دندان‌های پایه خودشان به ونیر نیاز دارند",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u36",
+          "claim_quote": "بیمار ۲۱ساله‌ای لترال راست بالا را از دست داده بود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "A 21-years-old female with a concern about her smile in the upper arch, including a missing right lateral incisor, peg-shaped left lateral incisor, midline diastema, and wear in central incisors, presented for treatment (Figure 1).",
+          "source_ref": null
+        },
+        {
+          "id": "u37",
+          "claim_quote": "لترال چپ Peg-Shaped بود، بین سانترال‌ها دیاستم وجود داشت و لبه‌های اینسایزال سانترال‌ها نیز ساییده شده بودند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "A 21-years-old female with a concern about her smile in the upper arch, including a missing right lateral incisor, peg-shaped left lateral incisor, midline diastema, and wear in central incisors, presented for treatment (Figure 1).",
+          "source_ref": null
+        },
+        {
+          "id": "u38",
+          "claim_quote": "بیمار تمایلی به جراحی ایمپلنت نداشت و اصلاح زیبایی دندان‌های قدامی هم بخشی از درمان بود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Despite the patient’s demand for conservative fixed treatment of the edentulous area, she was reluctant to undergo any surgical procedure.",
+          "source_ref": null
+        },
+        {
+          "id": "u39",
+          "claim_quote": "اگر بریج باندشوندهٔ پالاتال همراه با ونیرهای لبیال ساخته می‌شد، بعضی دندان‌های پایه باید از هر دو سطح لبیال و پالاتال تراش می‌خوردند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "However, this treatment option required additional preparation of the abutment teeth on the palatal surface.",
+          "source_ref": null
+        },
+        {
+          "id": "u40",
+          "claim_quote": "بنابراین، نویسندگان تصمیم گرفتند همان ونیرهای لبیال نقش ریتینر بریج را نیز داشته باشند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "To avoid preparation of the maxillary right canine and central incisor on both labial and palatal surfaces, decision was made to place the pontic by means of veneer retainers.",
+          "source_ref": null
+        },
+        {
+          "id": "u41",
+          "claim_quote": "نکتهٔ کلینیکی: وقتی دندان‌های پایه از قبل اندیکاسیون ونیر دارند، می‌توان از تراش اضافهٔ پالاتال برای یک ریتینر مجزا پرهیز کرد.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "clinical recommendation is not stated in the source"
+        },
+        {
+          "id": "u42",
+          "claim_quote": "اما اگر دندان‌های پایه کاملاً سالم باشند، تراش لبیال صرفاً برای ساخت بریج لزوماً محافظه‌کارانه‌تر نیست.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "clinical recommendation is not stated in the source"
+        },
+        {
+          "id": "u43",
+          "claim_quote": "نمای قبل از درمان؛ فقدان لترال راست بالا، لترال مقابل Peg-Shaped و دیاستم.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Figure 1. Worn central incisors and peg-shaped lateral (preoperative view)",
+          "source_ref": null
+        },
+        {
+          "id": "u44",
+          "claim_quote": "Alikhasi et al., 2025, Fig.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "figure citation fragment"
+        },
+        {
+          "id": "u45",
+          "claim_quote": "1",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "figure number"
+        },
+        {
+          "id": "u46",
+          "claim_quote": "طراحی ریتینر؛ چرا کانکتور مهم است؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u47",
+          "claim_quote": "در این گزارش از لیتیوم دی‌سیلیکات استفاده شد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The present report used CAD-CAM lithium disilicate VRFDP in anterior and premolar area in both maxilla and mandible with no mechanical or biological complication through five years of follow-up.",
+          "source_ref": null
+        },
+        {
+          "id": "u48",
+          "claim_quote": "برای ریتینرهای ونیر، طراحی Butt-Joint با حدود دو میلی‌متر تراش اینسایزال و ۰٫۵ تا یک میلی‌متر تراش لبیال توصیف شده است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Veneer-restored abutments were prepared in butt-joint design with 2 mm incisal and 0.5-1 mm labial reduction.",
+          "source_ref": null
+        },
+        {
+          "id": "u49",
+          "claim_quote": "البته در کیس دوم فقط اصلاح محدودی در لبه‌های اینسایزال انجام شد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "In case 2 only minor incisal modification was performed to remove sharpness.",
+          "source_ref": null
+        },
+        {
+          "id": "u50",
+          "claim_quote": "تراش در سمت فضای بی‌دندانی تا Line Angle پروگزیمولینگوال امتداد یافت تا عرض کافی برای کانکتور فراهم شود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "To provide an adequate bucco\u0002lingual dimension of connectors the preparation extended to the proximo-lingual line angles adjacent to the edentulous areas.",
+          "source_ref": null
+        },
+        {
+          "id": "u51",
+          "claim_quote": "چون پونتیک از طریق اتصال به ریتینرهای نسبتاً نازک نگهداری می‌شود، ابعاد کانکتور اهمیت زیادی دارد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "To provide an adequate bucco\u0002lingual dimension of connectors the preparation extended to the proximo-lingual line angles adjacent to the edentulous areas.",
+          "source_ref": null
+        },
+        {
+          "id": "u52",
+          "claim_quote": "نویسندگان به توصیهٔ سازنده برای سطح مقطع ۱۶ میلی‌متر مربع و در صورت محدودیت عرض باکولینگوال، افزایش ارتفاع اکلوزوژنژیوال کانکتور اشاره می‌کنند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The fabrication guideline for IPS e.max fixed bridges recommends 16mm2for the connector’s dimension.",
+          "source_ref": null
+        },
+        {
+          "id": "u53",
+          "claim_quote": "نسبت ارتفاع به عرض بیشتر از یک نیز در مقاله مطرح شده است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "As the guideline indicates, the ratio of height to width should be greater than one.",
+          "source_ref": null
+        },
+        {
+          "id": "u54",
+          "claim_quote": "این اعداد به پروتکل ماده و طراحی مورد بحث مربوط‌اند؛ نباید آن‌ها را بدون بررسی اندیکاسیون و دستورالعمل سازنده به تمام بریج‌ها تعمیم داد.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "the source does not state this generalization caution"
+        },
+        {
+          "id": "u55",
+          "claim_quote": "اکلوژن؛ بخشی از طرح درمان، نه فقط تحویل",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u56",
+          "claim_quote": "پیش از ساخت، از Wax-up و Mock-up برای بررسی فرم و اکلوژن استفاده شد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The diagnostic wax-up was digitally designed and used to fabricate a guide for the mock-up.",
+          "source_ref": null
+        },
+        {
+          "id": "u57",
+          "claim_quote": "در کیس‌های اول و سوم، راهنمای کانین در نظر گرفته شد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Canine protected occlusion was planned as the occlusal scheme in case 1 and 3.",
+          "source_ref": null
+        },
+        {
+          "id": "u58",
+          "claim_quote": "در کیس دوم، چون بیمار قصد تغییر اپن‌بایت موجود را نداشت، اصلاح اکلوژن برنامه‌ریزی نشد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Since case 2 had no concern about her anterior open bite no occlusal modification was considered.",
+          "source_ref": null
+        },
+        {
+          "id": "u59",
+          "claim_quote": "هدف تنظیم تماس‌های سنتریک و اکسنتریک به‌گونه‌ای بود که تنش بیش‌ازحد به پونتیک وارد نشود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Further, in the present report a precise occlusion was adjusted with the opposing teeth to distribute the centric and eccentric loads in a way to avoid high stresses in the pontic area.",
+          "source_ref": null
+        },
+        {
+          "id": "u60",
+          "claim_quote": "محافظه‌کارانه بودن تراش، به‌تنهایی موفقیت بریج را تضمین نمی‌کند؛ طراحی کانکتور و کنترل نیروها هم تعیین‌کننده‌اند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Further, in the present report a precise occlusion was adjusted with the opposing teeth to distribute the centric and eccentric loads in a way to avoid high stresses in the pontic area.",
+          "source_ref": null
+        },
+        {
+          "id": "u61",
+          "claim_quote": "نمای نهایی بریج‌های با ریتینر ونیر پس از سمان.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Figure 3. Final appearance of the VRFDPs in position immediately after cementation",
+          "source_ref": null
+        },
+        {
+          "id": "u62",
+          "claim_quote": "Alikhasi et al., 2025, Fig.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "figure citation fragment"
+        },
+        {
+          "id": "u63",
+          "claim_quote": "3",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "figure number"
+        },
+        {
+          "id": "u64",
+          "claim_quote": "نتایج درمان و شواهد پیشین",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u65",
+          "claim_quote": "نویسندگان از پیگیری سالانهٔ بیماران تا حداکثر پنج سال و نبود عارضهٔ مکانیکی یا بیولوژیک گزارش داده‌اند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The present report used CAD-CAM lithium disilicate VRFDP in anterior and premolar area in both maxilla and mandible with no mechanical or biological complication through five years of follow-up.",
+          "source_ref": null
+        },
+        {
+          "id": "u66",
+          "claim_quote": "بیماران از نتیجهٔ درمان رضایت داشتند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Additionally, patients were satisfied with the treatment results.",
+          "source_ref": null
+        },
+        {
+          "id": "u67",
+          "claim_quote": "این خبر امیدوارکننده است، اما نباید آن را نرخ موفقیت پنج‌سالهٔ این روش دانست؛ مقاله فقط سه بیمار را توصیف می‌کند و مدت پیگیری هر بریج را جداگانه مشخص نکرده است.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The present report used CAD-CAM lithium disilicate VRFDP in anterior and premolar area in both maxilla and mandible with no mechanical or biological complication through five years of follow-up.",
+          "source_ref": null
+        },
+        {
+          "id": "u68",
+          "claim_quote": "در مرور گزارش‌های پیشین، هفت مقاله شناسایی شد.",
+          "verdict": "ALTERED",
+          "change_kind": "MAGNITUDE_CHANGED",
+          "source_quote": "Eight articles were identified.",
+          "source_ref": null
+        },
+        {
+          "id": "u69",
+          "claim_quote": "در تعدادی از گزارش‌های قدیمی‌تر، به‌ویژه با پرسلن فلدسپاتیک، شکست پونتیک یا ریتینر، مشکلات مارجینال و مشکلات پریودنتال گزارش شده بود.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Although high-stress conditions were avoided, restoration fracture has been reported in all early publications with a duration of follow-up (14-16).",
+          "source_ref": null
+        },
+        {
+          "id": "u70",
+          "claim_quote": "استفاده از لیتیوم دی‌سیلیکات در مطالعهٔ حاضر ممکن است مزیتی داشته باشد، اما از این گزارش‌های غیرکنترل‌شده نمی‌توان اثر مستقل جنس سرامیک را اثبات کرد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The flexural strength of the lithium disilicate glass ceramic is about four times more than feldspathic porcelain.",
+          "source_ref": null
+        },
+        {
+          "id": "u71",
+          "claim_quote": "نتیجه‌گیری",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u72",
+          "claim_quote": "بریج با ریتینر ونیر گزینه‌ای برای کیس‌های انتخاب‌شده است، نه جایگزینی عمومی برای ایمپلنت یا بریج باندشوندهٔ متداول.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Given the high number of variables affecting treatment decisions, a universally effective solution does not exist for single tooth replacement.",
+          "source_ref": null
+        },
+        {
+          "id": "u73",
+          "claim_quote": "این طراحی زمانی جذاب‌تر است که جایگزینی دندان با اصلاح فرم، رنگ یا توزیع فضای دندان‌های مجاور همراه باشد یا ریتینر لینگوال و پالاتال از نظر اکلوژنی با محدودیت روبه‌رو باشد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Veneer-retained fixed dental prosthesis (VRFDP) is a treatment modality that can be considered as an alternative option when these clinical situations exist.",
+          "source_ref": null
+        },
+        {
+          "id": "u74",
+          "claim_quote": "برداشت کلینیکی من از مقاله این است که سؤال اصلی فقط «چگونه جای دندان غایب را پر کنیم؟» نیست؛ باید ببینیم کدام طراحی، با کمترین تراش توجیه‌پذیر، زیبایی و مقاومت مکانیکی لازم را هم‌زمان فراهم می‌کند.",
+          "verdict": "AUTHOR_VIEW",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "opinion marker: برداشت کلینیکی من"
+        },
+        {
+          "id": "u75",
+          "claim_quote": "برای توصیهٔ فراگیر این درمان به مطالعات کنترل‌شده و پیگیری‌های بیشتر نیاز داریم.",
+          "verdict": "ALTERED",
+          "change_kind": "HEDGE_REMOVED",
+          "source_quote": "This treatment modality can benefit from further controlled studies to justify clinical parameters such as the optimum preparation design.",
+          "source_ref": null
+        }
+      ],
+      "counts": {
+        "matches": 46,
+        "altered": 2,
+        "reversed": 0,
+        "not_in_source": 9,
+        "not_assessable": 0,
+        "author_view": 1,
+        "not_a_claim": 17
+      },
+      "assessable": 48,
+      "fidelity_score": 98,
+      "level": "HIGH",
+      "provisional": false,
+      "source_conclusion": "This treatment modality can benefit from further controlled studies to justify clinical parameters such as the optimum preparation design.",
+      "fact_fa": "از 48 ادعای قابل ارزیابی، 46 مورد با متن منبع هم‌خوان بود و 2 مورد تغییر داشت؛ 9 ادعا در متن کامل منبع نیامده است. امتیاز وفاداری: 98 از ۱۰۰.",
+      "interpretation_fa": "متن جزئیات بالینی گزارش را عمدتاً درست بازتاب می‌دهد؛ یک شمارش در مرور پیشینه، هشت مقالهٔ شناسایی‌شده را هفت مقاله دانسته و جملهٔ پایانی نیز امکان را به ضرورت تبدیل کرده است."
+    },
+    {
+      "des_version": "3.4",
+      "mode": "FIDELITY",
+      "scope": "SOURCE",
+      "text_basis": "FULL_TEXT",
+      "claims": [
+        {
+          "id": "u3",
+          "claim_quote": "فرض کنیم بیماری یکی از دندان‌های قدامی را از دست داده، اما دندان‌های مجاور سالم‌اند.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "The source describes anterior tooth loss in one case and intact neighboring teeth in a different premolar case, but it does not state this combined scenario."
+        },
+        {
+          "id": "u4",
+          "claim_quote": "ایمپلنت یکی از گزینه‌هاست، ولی محدودیت فضا یا استخوان، نزدیکی ریشه‌ها یا تمایل نداشتن بیمار به جراحی می‌تواند انتخاب آن را دشوار کند.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Despite the unassailable advantages of implant rehabilitation, it cannot be used in certain clinical situations, including limited dimensions of the edentulous space, adjacent roots proximity to the implant site, and minimal available bone.",
+          "source_ref": null,
+          "note": "The source addresses the space, root-proximity, and bone limitations; the patient preference against surgery is not stated as a reason implant placement is difficult."
+        },
+        {
+          "id": "u9",
+          "claim_quote": "بنابراین، در کیس مناسب، جایگزینی دندان و اصلاح فرم دندان‌های پایه می‌تواند در یک درمان انجام شود.",
+          "verdict": "ALTERED",
+          "change_kind": "POPULATION_OR_CONDITION_CHANGED",
+          "source_quote": "Based on these limitations, a layered lithium disilicate press VRFDP for the right lateral incisor and veneers on left incisors was planned.",
+          "source_ref": null
+        },
+        {
+          "id": "u10",
+          "claim_quote": "در مقاله‌ای منتشرشده در سال ۲۰۲۵، این روش در سه بیمار و مجموعاً چهار بریج گزارش شد؛ زیرا بیمار اول دو دندان ازدست‌رفته داشت.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "The source reports three cases but does not state a total of four bridges or that the first patient had two missing teeth."
+        },
+        {
+          "id": "u22",
+          "claim_quote": "برای پرمولر پایه در فک بالا، به‌دلیل جهت نیروهای اکلوزالی، طراحی آنله به کار رفت.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Due to the outward direction of the occlusal forces in the maxilla, an onlay preparation was considered for the maxillary 10 Alikhasi M, et al. Veneer-retained Fixed Dental Prosthesis: A Clinical Report on Three Cases with Up to 5 Years Follow-up and Literature Review. Journal of Dentomaxillofacial Radiology, Pathology and Surgery. 2025; 14(1): 8-12 first premolar in case 1 (Figure 2).",
+          "source_ref": null
+        },
+        {
+          "id": "u23",
+          "claim_quote": "نکتهٔ کلینیکی: وقتی ریتینر لینگوال یا پالاتال با شرایط اکلوژن سازگار نیست، می‌توان طراحی دیگری را بررسی کرد؛ البته به شرط وجود فضای کافی برای مادهٔ رستوریتیو و کانکتورها.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "The source does not address an alternative retainer design for an occlusally incompatible lingual or palatal retainer, or the stated space condition."
+        },
+        {
+          "id": "u24",
+          "claim_quote": "تراش ونیر و آنلهٔ دندان‌های پایه برای جایگزینی پرمولر اول فک بالا.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Figure 2. Veneer and onlay preparation for VRFDP replacement of the 1st premolar in maxilla",
+          "source_ref": null
+        },
+        {
+          "id": "u34",
+          "claim_quote": "نکتهٔ کلینیکی: گاهی مسئله فقط پر کردن فضای خالی نیست؛ باید عرض و فرم دندان‌های مجاور نیز هم‌زمان در طرح درمان دیده شود.",
+          "verdict": "NOT_IN_SOURCE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "The source discusses the edentulous-space dimensions and neighboring-tooth appearance, but does not state this general planning recommendation."
+        },
+        {
+          "id": "u41",
+          "claim_quote": "نکتهٔ کلینیکی: وقتی دندان‌های پایه از قبل اندیکاسیون ونیر دارند، می‌توان از تراش اضافهٔ پالاتال برای یک ریتینر مجزا پرهیز کرد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "To avoid preparation of the maxillary right canine and central incisor on both labial and palatal surfaces, decision was made to place the pontic by means of veneer retainers.",
+          "source_ref": null
+        },
+        {
+          "id": "u43",
+          "claim_quote": "نمای قبل از درمان؛ فقدان لترال راست بالا، لترال مقابل Peg-Shaped و دیاستم.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "A 21-years-old female with a concern about her smile in the upper arch, including a missing right lateral incisor, peg-shaped left lateral incisor, midline diastema, and wear in central incisors, presented for treatment (Figure 1).",
+          "source_ref": null
+        },
+        {
+          "id": "u61",
+          "claim_quote": "نمای نهایی بریج‌های با ریتینر ونیر پس از سمان.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Figure 3. Final appearance of the VRFDPs in position immediately after cementation",
+          "source_ref": null
+        },
+        {
+          "id": "u75",
+          "claim_quote": "برای توصیهٔ فراگیر این درمان به مطالعات کنترل‌شده و پیگیری‌های بیشتر نیاز داریم.",
+          "verdict": "ALTERED",
+          "change_kind": "HEDGE_REMOVED",
+          "source_quote": "This treatment modality can benefit from further controlled studies to justify clinical parameters such as the optimum preparation design.",
+          "source_ref": null
+        }
+      ],
+      "counts": {
+        "matches": 6,
+        "altered": 2,
+        "reversed": 0,
+        "not_in_source": 4,
+        "not_assessable": 0,
+        "author_view": 0,
+        "not_a_claim": 0
+      },
+      "assessable": 8,
+      "fidelity_score": 88,
+      "level": "HIGH",
+      "provisional": false,
+      "source_conclusion": "This treatment modality can benefit from further controlled studies to justify clinical parameters such as the optimum preparation design.",
+      "fact_fa": "منبع ۶ ادعا را تأیید می‌کند، ۲ ادعا را با تغییر بیان می‌کند و ۴ ادعا را مطرح نمی‌کند؛ سطح وفاداری بالا است.",
+      "interpretation_fa": "ادعای امکان انجام هم‌زمان درمان از یک مورد مشخص به کیس‌های مناسب تعمیم یافته است. همچنین نیاز قطعی به مطالعات بیشتر، از بیان مشروط منبع قاطع‌تر است."
+    }
+  ],
+  "initial_vote": {
+    "des_version": "3.4",
+    "mode": "FIDELITY",
+    "scope": "SOURCE",
+    "text_basis": "FULL_TEXT",
+    "claims": [
+      {
+        "id": "u1",
+        "claim_quote": "بریج با ریتینر ونیر؛ چه زمانی انتخاب مناسبی است؟",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u2",
+        "claim_quote": "معرفی",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u3",
+        "claim_quote": "فرض کنیم بیماری یکی از دندان‌های قدامی را از دست داده، اما دندان‌های مجاور سالم‌اند.",
+        "verdict": "NOT_IN_SOURCE",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "scenario is not stated in the source"
+      },
+      {
+        "id": "u4",
+        "claim_quote": "ایمپلنت یکی از گزینه‌هاست، ولی محدودیت فضا یا استخوان، نزدیکی ریشه‌ها یا تمایل نداشتن بیمار به جراحی می‌تواند انتخاب آن را دشوار کند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Despite the unassailable advantages of implant rehabilitation, it cannot be used in certain clinical situations, including limited dimensions of the edentulous space, adjacent roots proximity to the implant site, and minimal available bone.",
+        "source_ref": null
+      },
+      {
+        "id": "u5",
+        "claim_quote": "بریج متداول هم به تراش قابل‌توجه دندان‌های مجاور نیاز دارد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "FDP has been regarded as the standard of care for some time in replacement of single and multiple missing teeth.",
+        "source_ref": null
+      },
+      {
+        "id": "u6",
+        "claim_quote": "بریج باندشونده با ریتینر لینگوال یا پالاتال گزینهٔ محافظه‌کارانه‌تری است، اما در بعضی شرایط محدودیت دارد؛ مثلاً دیپ‌بایت می‌تواند فضای لازم برای ریتینر پالاتال را محدود کند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "However, RBB was contraindicated based on deep overbite.",
+        "source_ref": null
+      },
+      {
+        "id": "u7",
+        "claim_quote": "ضمن اینکه چنین ریتینری، فرم یا رنگ دندان‌های مجاور را اصلاح نمی‌کند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Since RBB is dependent on bonding to the oral surface of the abutment tooth it is powerless in tooth color or shape correction.",
+        "source_ref": null
+      },
+      {
+        "id": "u8",
+        "claim_quote": "ایدهٔ بریج با ریتینر ونیر (Veneer-Retained Fixed Dental Prosthesis یا VRFDP) این است که پونتیک به ونیرهای دندان‌های مجاور متصل شود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "To avoid preparation of the maxillary right canine and central incisor on both labial and palatal surfaces, decision was made to place the pontic by means of veneer retainers.",
+        "source_ref": null
+      },
+      {
+        "id": "u9",
+        "claim_quote": "بنابراین، در کیس مناسب، جایگزینی دندان و اصلاح فرم دندان‌های پایه می‌تواند در یک درمان انجام شود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "To avoid preparation of the maxillary right \ncanine and central incisor on both labial and palatal \nsurfaces, decision was made to place the pontic by means \nof veneer retainers.",
+        "source_ref": null,
+        "note": "F1: judged the conclusion after بنابراین. Case 3 describes worn central incisors, a peg-shaped lateral and diastema, then states that veneer restoration was necessary for esthetic and functional rehabilitation. The governing sentence reports using those veneer retainers to place the pontic while avoiding additional palatal preparation of the same abutments. Thus replacement and veneer restoration of the abutments occur together in the suitable case. The unit keeps this as a possibility in suitable cases; F2-ii permits a hedged generalization from that reported finding. The case-2 sentence quoted by runs 2 and 3 concerns veneers on the left incisors and is less direct for this claim about the abutments. Run 3 also used SCOPE_BROADENED, which is not a legal F2-i change_kind."
+      },
+      {
+        "id": "u10",
+        "claim_quote": "در مقاله‌ای منتشرشده در سال ۲۰۲۵، این روش در سه بیمار و مجموعاً چهار بریج گزارش شد؛ زیرا بیمار اول دو دندان ازدست‌رفته داشت.",
+        "verdict": "NOT_IN_SOURCE",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "the source does not state a total of four bridges"
+      },
+      {
+        "id": "u11",
+        "claim_quote": "پیگیری‌ها تا پنج سال ادامه داشت.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "After completion of the treatment patients were followed-up through five years.",
+        "source_ref": null
+      },
+      {
+        "id": "u12",
+        "claim_quote": "توضیح",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u13",
+        "claim_quote": "چه زمانی به ونیر بریج فکر کنیم؟",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u14",
+        "claim_quote": "این روش قرار نیست جایگزین تمام بریج‌های باندشونده شود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "The treatment options should not only be confined to implants or lingually/palatally resin bonded bridges but also veneer-retained fixed dental prosthesis in selected cases could prove to be beneficial for the patient.",
+        "source_ref": null
+      },
+      {
+        "id": "u15",
+        "claim_quote": "منطق آن زمانی قوی‌تر است که دندان‌های مجاور از قبل به ونیر نیاز دارند، فضای بی‌دندانی باید همراه با تغییر فرم دندان‌ها مدیریت شود یا شرایط اکلوژن استفاده از ریتینر لینگوال یا پالاتال را دشوار کرده است.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Veneer-retained fixed dental prosthesis (VRFDP) is a treatment modality that can be considered as an alternative option when these clinical situations exist.",
+        "source_ref": null
+      },
+      {
+        "id": "u16",
+        "claim_quote": "سه کیس مقاله، سه وضعیت متفاوت را نشان می‌دهند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "This clinical report presents three cases treated with this approach and followed-up for up to five years.",
+        "source_ref": null
+      },
+      {
+        "id": "u17",
+        "claim_quote": "کیس اول: دیپ‌بایت و محدودیت ریتینر لینگوال",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u18",
+        "claim_quote": "بیمار ۲۲ساله‌ای پرمولر اول بالا و پایین سمت چپ را از دست داده بود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "A 22-years-old male with a dental history of orthodontic treatment sought care for his missing left maxillary and mandibular first premolar teeth.",
+        "source_ref": null
+      },
+      {
+        "id": "u19",
+        "claim_quote": "دندان‌های مجاور زنده و بدون رستوریشن بودند، اما دیپ‌بایت شدید و راهنمای قدامی شیب‌دار داشت.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Clinical examinations showed vital and non-restored teeth adjacent to the edentulous areas, as well as an excessive overbite and steep anterior guidance.",
+        "source_ref": null
+      },
+      {
+        "id": "u20",
+        "claim_quote": "ریشه‌های مجاور فضای بی‌دندانی نیز پس از ارتودنسی قبلی تیپ شده بودند و بیمار درمان ارتودنسی مجدد را نمی‌پذیرفت.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "The radiographic examination revealed the previous orthodontic treatment had resulted in tipped adjacent roots in both edentulous areas.",
+        "source_ref": null,
+        "note": "پذیرفتن‌نکردن درمان ارتودنسی مجدد نیز در جملهٔ منبع بعدی آمده است."
+      },
+      {
+        "id": "u21",
+        "claim_quote": "نویسندگان به دلیل دیپ‌بایت، بریج باندشونده با ریتینر متداول را مناسب ندانستند و برای هر دو ناحیه، بریج با ریتینر ونیر از لیتیوم دی‌سیلیکات مونولیتیک انتخاب کردند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Thus, monolithic IPS e.max CAD VRFDPs were selected as the treatment of choice.",
+        "source_ref": null,
+        "note": "منبع در جملهٔ پیشین می‌گوید RBB به‌دلیل دیپ‌بایت منع داشت."
+      },
+      {
+        "id": "u22",
+        "claim_quote": "برای پرمولر پایه در فک بالا، به‌دلیل جهت نیروهای اکلوزالی، طراحی آنله به کار رفت.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Due to the \noutward direction of the occlusal forces in the maxilla, \nan onlay preparation was considered for the maxillary 10 Alikhasi M, et al. Veneer-retained Fixed Dental Prosthesis: A Clinical Report on Three Cases with Up to 5 Years Follow-up and Literature Review. Journal of Dentomaxillofacial Radiology, Pathology and Surgery. 2025; 14(1): 8-12\nfirst premolar in case 1 (Figure 2).",
+        "source_ref": null
+      },
+      {
+        "id": "u23",
+        "claim_quote": "نکتهٔ کلینیکی: وقتی ریتینر لینگوال یا پالاتال با شرایط اکلوژن سازگار نیست، می‌توان طراحی دیگری را بررسی کرد؛ البته به شرط وجود فضای کافی برای مادهٔ رستوریتیو و کانکتورها.",
+        "verdict": "NOT_IN_SOURCE",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "clinical recommendation is not stated in the source"
+      },
+      {
+        "id": "u24",
+        "claim_quote": "تراش ونیر و آنلهٔ دندان‌های پایه برای جایگزینی پرمولر اول فک بالا.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Figure 2. Veneer and onlay preparation for VRFDP replacement of the 1st premolar in maxilla",
+        "source_ref": null
+      },
+      {
+        "id": "u25",
+        "claim_quote": "Alikhasi et al., 2025, Fig.",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "reference label"
+      },
+      {
+        "id": "u26",
+        "claim_quote": "2",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "figure number"
+      },
+      {
+        "id": "u27",
+        "claim_quote": "کیس دوم: همراه شدن جایگزینی دندان با مدیریت فضا",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u28",
+        "claim_quote": "بیمار ۴۵ساله‌ای لترال پایین سمت راست را به‌دلیل مشکل شدید پریودنتال از دست داد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "A female patient, 45-years-old, sought treatment concerning her anterior mandibular teeth.",
+        "source_ref": null,
+        "note": "علت پریودنتال شدید در جمله‌های بلافاصله بعدی توضیح داده شده است."
+      },
+      {
+        "id": "u29",
+        "claim_quote": "او اپن‌بایت قدامی سه‌میلی‌متری، فاصله میان دندان‌های قدامی و تغییر رنگ خفیف داشت.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Intraorally, the prominent features were 3mm open bite, mild teeth discoloration, spacing in anterior mandibular incisors, vertically displaced right lateral incisor with grade II mobility, which was confirmed by alveolar bone loss and inappropriate crown-root ratio in the subsequent radiographic examination.",
+        "source_ref": null
+      },
+      {
+        "id": "u30",
+        "claim_quote": "پس از کشیدن، از تاج همان دندان به مدت دو ماه به‌عنوان پونتیک موقت استفاده شد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "The patient’s extracted tooth was modified into an ovate pontic and used as a temporary restoration for two months.",
+        "source_ref": null
+      },
+      {
+        "id": "u31",
+        "claim_quote": "عرض فضای موجود از ابعاد طبیعی لترال پایین بیشتر بود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "According to the interdental spacing in the anterior lower teeth, the mesiodistal width of the edentulous space was beyond the anatomic dimensions of a mandibular lateral incisor, and a lingual RBB could lead to an unesthetic appearance.",
+        "source_ref": null
+      },
+      {
+        "id": "u32",
+        "claim_quote": "بنابراین، ساخت بریج با ریتینر لینگوال بدون اصلاح فرم و توزیع فضا می‌توانست نتیجهٔ زیبایی نامناسبی ایجاد کند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "According to the interdental spacing in the anterior lower teeth, the mesiodistal width of the edentulous space was beyond the anatomic dimensions of a mandibular lateral incisor, and a lingual RBB could lead to an unesthetic appearance.",
+        "source_ref": null
+      },
+      {
+        "id": "u33",
+        "claim_quote": "به همین دلیل، برای لترال راست بریج با ریتینر ونیر و برای دندان‌های قدامی سمت چپ ونیرهای جداگانه طراحی شد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Based on these limitations, a layered lithium disilicate press VRFDP for the right lateral incisor and veneers on left incisors was planned.",
+        "source_ref": null
+      },
+      {
+        "id": "u34",
+        "claim_quote": "نکتهٔ کلینیکی: گاهی مسئله فقط پر کردن فضای خالی نیست؛ باید عرض و فرم دندان‌های مجاور نیز هم‌زمان در طرح درمان دیده شود.",
+        "verdict": "NOT_IN_SOURCE",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "clinical recommendation is not stated in the source"
+      },
+      {
+        "id": "u35",
+        "claim_quote": "کیس سوم: وقتی دندان‌های پایه خودشان به ونیر نیاز دارند",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u36",
+        "claim_quote": "بیمار ۲۱ساله‌ای لترال راست بالا را از دست داده بود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "A 21-years-old female with a concern about her smile in the upper arch, including a missing right lateral incisor, peg-shaped left lateral incisor, midline diastema, and wear in central incisors, presented for treatment (Figure 1).",
+        "source_ref": null
+      },
+      {
+        "id": "u37",
+        "claim_quote": "لترال چپ Peg-Shaped بود، بین سانترال‌ها دیاستم وجود داشت و لبه‌های اینسایزال سانترال‌ها نیز ساییده شده بودند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "A 21-years-old female with a concern about her smile in the upper arch, including a missing right lateral incisor, peg-shaped left lateral incisor, midline diastema, and wear in central incisors, presented for treatment (Figure 1).",
+        "source_ref": null
+      },
+      {
+        "id": "u38",
+        "claim_quote": "بیمار تمایلی به جراحی ایمپلنت نداشت و اصلاح زیبایی دندان‌های قدامی هم بخشی از درمان بود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Despite the patient’s demand for conservative fixed treatment of the edentulous area, she was reluctant to undergo any surgical procedure.",
+        "source_ref": null,
+        "note": "نیاز به ترمیم ونیر در جملهٔ بعدی آمده است."
+      },
+      {
+        "id": "u39",
+        "claim_quote": "اگر بریج باندشوندهٔ پالاتال همراه با ونیرهای لبیال ساخته می‌شد، بعضی دندان‌های پایه باید از هر دو سطح لبیال و پالاتال تراش می‌خوردند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "To avoid preparation of the maxillary right canine and central incisor on both labial and palatal surfaces, decision was made to place the pontic by means of veneer retainers.",
+        "source_ref": null
+      },
+      {
+        "id": "u40",
+        "claim_quote": "بنابراین، نویسندگان تصمیم گرفتند همان ونیرهای لبیال نقش ریتینر بریج را نیز داشته باشند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "To avoid preparation of the maxillary right canine and central incisor on both labial and palatal surfaces, decision was made to place the pontic by means of veneer retainers.",
+        "source_ref": null
+      },
+      {
+        "id": "u41",
+        "claim_quote": "نکتهٔ کلینیکی: وقتی دندان‌های پایه از قبل اندیکاسیون ونیر دارند، می‌توان از تراش اضافهٔ پالاتال برای یک ریتینر مجزا پرهیز کرد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "To avoid preparation of the maxillary right canine and central incisor on both labial and palatal surfaces, decision was made to place the pontic by means of veneer retainers.",
+        "source_ref": null,
+        "note": "عبارت «دندان‌های پایه از قبل اندیکاسیون ونیر دارند» همان کیس را توصیف می‌کند؛ پرهیز از تراش پالاتال با تصمیم گزارش‌شده هم‌جهت است."
+      },
+      {
+        "id": "u42",
+        "claim_quote": "اما اگر دندان‌های پایه کاملاً سالم باشند، تراش لبیال صرفاً برای ساخت بریج لزوماً محافظه‌کارانه‌تر نیست.",
+        "verdict": "NOT_IN_SOURCE",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "این قید دربارهٔ سالم بودن پایه‌ها و محافظه‌کارانه‌تر نبودن تراش لبیال در منبع تصریح نشده است."
+      },
+      {
+        "id": "u43",
+        "claim_quote": "نمای قبل از درمان؛ فقدان لترال راست بالا، لترال مقابل Peg-Shaped و دیاستم.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Figure 1. Worn central incisors and peg-shaped lateral (preoperative view)",
+        "source_ref": null
+      },
+      {
+        "id": "u44",
+        "claim_quote": "Alikhasi et al., 2025, Fig.",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "reference label"
+      },
+      {
+        "id": "u45",
+        "claim_quote": "1",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "figure number"
+      },
+      {
+        "id": "u46",
+        "claim_quote": "طراحی ریتینر؛ چرا کانکتور مهم است؟",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u47",
+        "claim_quote": "در این گزارش از لیتیوم دی‌سیلیکات استفاده شد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "The present report used CAD-CAM lithium disilicate VRFDP in anterior and premolar area in both maxilla and mandible with no mechanical or biological complication through five years of follow-up.",
+        "source_ref": null
+      },
+      {
+        "id": "u48",
+        "claim_quote": "برای ریتینرهای ونیر، طراحی Butt-Joint با حدود دو میلی‌متر تراش اینسایزال و ۰٫۵ تا یک میلی‌متر تراش لبیال توصیف شده است.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Veneer-restored abutments were prepared in butt-joint design with 2 mm incisal and 0.5-1 mm labial reduction.",
+        "source_ref": null
+      },
+      {
+        "id": "u49",
+        "claim_quote": "البته در کیس دوم فقط اصلاح محدودی در لبه‌های اینسایزال انجام شد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "In case 2 only minor incisal modification was performed to remove sharpness.",
+        "source_ref": null
+      },
+      {
+        "id": "u50",
+        "claim_quote": "تراش در سمت فضای بی‌دندانی تا Line Angle پروگزیمولینگوال امتداد یافت تا عرض کافی برای کانکتور فراهم شود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "To provide an adequate bucco\u0002lingual dimension of connectors the preparation \nextended to the proximo-lingual line angles adjacent to \nthe edentulous areas.",
+        "source_ref": null
+      },
+      {
+        "id": "u51",
+        "claim_quote": "چون پونتیک از طریق اتصال به ریتینرهای نسبتاً نازک نگهداری می‌شود، ابعاد کانکتور اهمیت زیادی دارد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "To provide an adequate bucco\u0002lingual dimension of connectors the preparation \nextended to the proximo-lingual line angles adjacent to \nthe edentulous areas.",
+        "source_ref": null,
+        "note": "این جمله ضرورت ابعاد کافی را با امتداد تراش برای کانکتور پشتیبانی می‌کند."
+      },
+      {
+        "id": "u52",
+        "claim_quote": "نویسندگان به توصیهٔ سازنده برای سطح مقطع ۱۶ میلی‌متر مربع و در صورت محدودیت عرض باکولینگوال، افزایش ارتفاع اکلوزوژنژیوال کانکتور اشاره می‌کنند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "The fabrication guideline for IPS e.max fixed bridges recommends 16mm2for the connector’s dimension.",
+        "source_ref": null,
+        "note": "توصیهٔ افزایش ارتفاع در جملهٔ بعدی آمده است."
+      },
+      {
+        "id": "u53",
+        "claim_quote": "نسبت ارتفاع به عرض بیشتر از یک نیز در مقاله مطرح شده است.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "As the guideline indicates, the ratio of height to width should be greater than one.",
+        "source_ref": null
+      },
+      {
+        "id": "u54",
+        "claim_quote": "این اعداد به پروتکل ماده و طراحی مورد بحث مربوط‌اند؛ نباید آن‌ها را بدون بررسی اندیکاسیون و دستورالعمل سازنده به تمام بریج‌ها تعمیم داد.",
+        "verdict": "NOT_IN_SOURCE",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "این محدودیت تعمیم و توصیه به بررسی اندیکاسیون در منبع بیان نشده است."
+      },
+      {
+        "id": "u55",
+        "claim_quote": "اکلوژن؛ بخشی از طرح درمان، نه فقط تحویل",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u56",
+        "claim_quote": "پیش از ساخت، از Wax-up و Mock-up برای بررسی فرم و اکلوژن استفاده شد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "The diagnostic wax-up was digitally designed and used to fabricate a guide for the mock-up.",
+        "source_ref": null,
+        "note": "بررسی اکلوژن در جمله‌های بعدی شرح داده شده است."
+      },
+      {
+        "id": "u57",
+        "claim_quote": "در کیس‌های اول و سوم، راهنمای کانین در نظر گرفته شد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Canine protected occlusion was planned as the occlusal scheme in case 1 and 3.",
+        "source_ref": null
+      },
+      {
+        "id": "u58",
+        "claim_quote": "در کیس دوم، چون بیمار قصد تغییر اپن‌بایت موجود را نداشت، اصلاح اکلوژن برنامه‌ریزی نشد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Since case 2 had no concern about her anterior open bite no occlusal modification was considered.",
+        "source_ref": null
+      },
+      {
+        "id": "u59",
+        "claim_quote": "هدف تنظیم تماس‌های سنتریک و اکسنتریک به‌گونه‌ای بود که تنش بیش‌ازحد به پونتیک وارد نشود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Further, in the present report a precise occlusion was adjusted with the opposing teeth to distribute the centric and eccentric loads in a way to avoid high stresses in the pontic area.",
+        "source_ref": null
+      },
+      {
+        "id": "u60",
+        "claim_quote": "محافظه‌کارانه بودن تراش، به‌تنهایی موفقیت بریج را تضمین نمی‌کند؛ طراحی کانکتور و کنترل نیروها هم تعیین‌کننده‌اند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Implementation of the digital protocols in the design and fabrication process of the restoration provided the advantages of precise control over the restorations’ dimension, occlusal contacts, and planning a conservative preparation.",
+        "source_ref": null,
+        "note": "منبع همچنین در جمله‌ای جداگانه توزیع بار برای اجتناب از تنش بالا در ناحیهٔ پونتیک را گزارش می‌کند؛ اهمیت کانکتور در بخش ساخت و ابعاد آمده است."
+      },
+      {
+        "id": "u61",
+        "claim_quote": "نمای نهایی بریج‌های با ریتینر ونیر پس از سمان.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Figure 3. Final appearance of the VRFDPs in position immediately after cementation",
+        "source_ref": null
+      },
+      {
+        "id": "u62",
+        "claim_quote": "Alikhasi et al., 2025, Fig.",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "reference label"
+      },
+      {
+        "id": "u63",
+        "claim_quote": "3",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "figure number"
+      },
+      {
+        "id": "u64",
+        "claim_quote": "نتایج درمان و شواهد پیشین",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u65",
+        "claim_quote": "نویسندگان از پیگیری سالانهٔ بیماران تا حداکثر پنج سال و نبود عارضهٔ مکانیکی یا بیولوژیک گزارش داده‌اند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "After completion of the treatment patients were followed-up through five years.",
+        "source_ref": null,
+        "note": "گزارش نبود عارضه در جملهٔ نتیجه‌گیری بحث آمده است."
+      },
+      {
+        "id": "u66",
+        "claim_quote": "بیماران از نتیجهٔ درمان رضایت داشتند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Additionally, patients were satisfied with the treatment results.",
+        "source_ref": null
+      },
+      {
+        "id": "u67",
+        "claim_quote": "این خبر امیدوارکننده است، اما نباید آن را نرخ موفقیت پنج‌سالهٔ این روش دانست؛ مقاله فقط سه بیمار را توصیف می‌کند و مدت پیگیری هر بریج را جداگانه مشخص نکرده است.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "This clinical report presents three cases treated with this approach and followed-up for up to five years.",
+        "source_ref": null,
+        "note": "منبع سه کیس و حداکثر پنج سال را گزارش می‌کند، اما حکم صریح «نباید نرخ موفقیت پنج‌ساله دانست» یا مدت جداگانهٔ هر بریج را نمی‌دهد."
+      },
+      {
+        "id": "u68",
+        "claim_quote": "در مرور گزارش‌های پیشین، هفت مقاله شناسایی شد.",
+        "verdict": "ALTERED",
+        "change_kind": "MAGNITUDE_CHANGED",
+        "source_quote": "Eight articles were identified.",
+        "source_ref": null,
+        "note": "منبع هشت مقاله را شناسایی کرد و پس از حذف گزارش تکراری، هفت مقاله را وارد مرور کرد؛ ادعا شمار شناسایی را با شمار مقاله‌های واردشده یکی گرفته است. | Stronger-model review disagrees: Disagree with ALTERED/MAGNITUDE_CHANGED. I read the complete supplied source, including the search-method paragraph and Discussion, and u65-u70 in context. The search-method paragraph says \"Eight articles were identified.\" and then says seven were included after removal of a duplicate report. However, Discussion explicitly repeats the claim: 'A search of the literature identified seven reports that \\ndescribed cases treated with the VRFDP (12-18).'. u68 says only that seven articles were identified in the review of earlier reports; it does not specify the initial pre-deduplication search yield. Under F2-v steps 1-3 this Discussion sentence must be gathered and states the same subject, predicate, unhedged magnitude and scope. One faithful sentence is enough, so the review supports MATCHES with this sentence and a note acknowledging the eight-before-deduplication wording. F2-v step 4 does not permit choosing the earlier discrepant sentence merely because it occurs first; earliest applies among qualifying governing sentences. This dissent is review-only and must not override the two-run checker verdict."
+      },
+      {
+        "id": "u69",
+        "claim_quote": "در تعدادی از گزارش‌های قدیمی‌تر، به‌ویژه با پرسلن فلدسپاتیک، شکست پونتیک یا ریتینر، مشکلات مارجینال و مشکلات پریودنتال گزارش شده بود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Although high-stress conditions were avoided, restoration fracture has been reported in all early publications with a duration of follow-up (14-16).",
+        "source_ref": null,
+        "note": "مشکلات مارجینال و پریودنتال نیز در جملهٔ بعدی ذکر شده‌اند."
+      },
+      {
+        "id": "u70",
+        "claim_quote": "استفاده از لیتیوم دی‌سیلیکات در مطالعهٔ حاضر ممکن است مزیتی داشته باشد، اما از این گزارش‌های غیرکنترل‌شده نمی‌توان اثر مستقل جنس سرامیک را اثبات کرد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "The flexural strength of the lithium disilicate glass ceramic is about four times more than feldspathic porcelain.",
+        "source_ref": null,
+        "note": "منبع همچنین می‌گوید شکست‌های گزارش‌های اولیه تا حدی می‌تواند با استحکام کمتر فلدسپاتیک مرتبط باشد؛ اثبات اثر مستقل سرامیک در گزارش کنترل‌نشده ارائه نشده است."
+      },
+      {
+        "id": "u71",
+        "claim_quote": "نتیجه‌گیری",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u72",
+        "claim_quote": "بریج با ریتینر ونیر گزینه‌ای برای کیس‌های انتخاب‌شده است، نه جایگزینی عمومی برای ایمپلنت یا بریج باندشوندهٔ متداول.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "The treatment options should not only be confined to implants or lingually/palatally resin bonded bridges but also veneer-retained fixed dental prosthesis in selected cases could prove to be beneficial for the patient.",
+        "source_ref": null
+      },
+      {
+        "id": "u73",
+        "claim_quote": "این طراحی زمانی جذاب‌تر است که جایگزینی دندان با اصلاح فرم، رنگ یا توزیع فضای دندان‌های مجاور همراه باشد یا ریتینر لینگوال و پالاتال از نظر اکلوژنی با محدودیت روبه‌رو باشد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Since RBB is dependent on bonding to the oral surface of the abutment tooth it is powerless in tooth color or shape correction.",
+        "source_ref": null,
+        "note": "منبع بعدی همان‌طور می‌گوید که فاصله یا مدیریت فضا می‌تواند نتیجهٔ زیبایی را مختل کند و محدودیت بین‌اکلوزالی نیز مطرح می‌کند."
+      },
+      {
+        "id": "u74",
+        "claim_quote": "برداشت کلینیکی من از مقاله این است که سؤال اصلی فقط «چگونه جای دندان غایب را پر کنیم؟» نیست؛ باید ببینیم کدام طراحی، با کمترین تراش توجیه‌پذیر، زیبایی و مقاومت مکانیکی لازم را هم‌زمان فراهم می‌کند.",
+        "verdict": "AUTHOR_VIEW",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "opinion marker: برداشت کلینیکی من"
+      },
+      {
+        "id": "u75",
+        "claim_quote": "برای توصیهٔ فراگیر این درمان به مطالعات کنترل‌شده و پیگیری‌های بیشتر نیاز داریم.",
+        "verdict": "ALTERED",
+        "change_kind": "HEDGE_REMOVED",
+        "source_quote": "This treatment modality can benefit from further controlled studies to justify clinical parameters such as the optimum preparation design.",
+        "source_ref": null,
+        "note": "Stronger-model review disagrees: Disagree with ALTERED/HEDGE_REMOVED. The governing conclusion says: \"This treatment modality can benefit from further controlled studies to justify clinical parameters such as the optimum preparation design.\" F2-ii expressly excludes can from its closed hedge list. No may, might, could, suggests or other defined hedge occurs here, and no added absolute from F2-i occurs in u75. Both sentences express the value/need of further controlled research; a stronger impression from can benefit versus نیاز داریم cannot itself create an unlisted hedge alteration. Additional follow-up and the framing about broad recommendation are not expressly stated, so they may be noted as unaddressed under F2/F3, but silence cannot turn the addressed research claim into HEDGE_REMOVED. Review-only dissent; the majority verdict must remain unchanged."
+      }
+    ],
+    "counts": {
+      "matches": 49,
+      "altered": 2,
+      "reversed": 0,
+      "not_in_source": 6,
+      "not_assessable": 0,
+      "author_view": 1,
+      "not_a_claim": 17
+    },
+    "assessable": 51,
+    "fidelity_score": 98,
+    "level": "HIGH",
+    "provisional": false,
+    "source_conclusion": "This treatment modality can benefit from further controlled studies to justify clinical parameters such as the optimum preparation design.",
+    "fact_fa": "از ۵۱ ادعایی که منبع به آن پرداخته‌اند، ۴۹ مورد مطابق است، ۲ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۶ جمله‌ی دیگر در منبع نیامده است.",
+    "interpretation_fa": "موارد تغییریافته یا برعکس: «در مرور گزارش‌های پیشین، هفت مقاله شناسایی شد.…» (اندازه متفاوت)؛ «برای توصیهٔ فراگیر این درمان به مطالعات کنترل‌شده …» (قاطع‌تر از منبع)."
+  },
+  "strong_review": {
+    "src0": {
+      "u68": {
+        "agree": false,
+        "reason": "Disagree with ALTERED/MAGNITUDE_CHANGED. I read the complete supplied source, including the search-method paragraph and Discussion, and u65-u70 in context. The search-method paragraph says \"Eight articles were identified.\" and then says seven were included after removal of a duplicate report. However, Discussion explicitly repeats the claim: 'A search of the literature identified seven reports that \\ndescribed cases treated with the VRFDP (12-18).'. u68 says only that seven articles were identified in the review of earlier reports; it does not specify the initial pre-deduplication search yield. Under F2-v steps 1-3 this Discussion sentence must be gathered and states the same subject, predicate, unhedged magnitude and scope. One faithful sentence is enough, so the review supports MATCHES with this sentence and a note acknowledging the eight-before-deduplication wording. F2-v step 4 does not permit choosing the earlier discrepant sentence merely because it occurs first; earliest applies among qualifying governing sentences. This dissent is review-only and must not override the two-run checker verdict."
+      },
+      "u75": {
+        "agree": false,
+        "reason": "Disagree with ALTERED/HEDGE_REMOVED. The governing conclusion says: \"This treatment modality can benefit from further controlled studies to justify clinical parameters such as the optimum preparation design.\" F2-ii expressly excludes can from its closed hedge list. No may, might, could, suggests or other defined hedge occurs here, and no added absolute from F2-i occurs in u75. Both sentences express the value/need of further controlled research; a stronger impression from can benefit versus نیاز داریم cannot itself create an unlisted hedge alteration. Additional follow-up and the framing about broad recommendation are not expressly stated, so they may be noted as unaddressed under F2/F3, but silence cannot turn the addressed research claim into HEDGE_REMOVED. Review-only dissent; the majority verdict must remain unchanged."
+      }
+    }
+  },
+  "adjudication": {
+    "src0": {
+      "u9": {
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "To avoid preparation of the maxillary right \ncanine and central incisor on both labial and palatal \nsurfaces, decision was made to place the pontic by means \nof veneer retainers.",
+        "note": "F1: judged the conclusion after بنابراین. Case 3 describes worn central incisors, a peg-shaped lateral and diastema, then states that veneer restoration was necessary for esthetic and functional rehabilitation. The governing sentence reports using those veneer retainers to place the pontic while avoiding additional palatal preparation of the same abutments. Thus replacement and veneer restoration of the abutments occur together in the suitable case. The unit keeps this as a possibility in suitable cases; F2-ii permits a hedged generalization from that reported finding. The case-2 sentence quoted by runs 2 and 3 concerns veneers on the left incisors and is less direct for this claim about the abutments. Run 3 also used SCOPE_BROADENED, which is not a legal F2-i change_kind."
+      }
+    }
+  },
+  "founder_decision": {
+    "u68": "اصلاح کن",
+    "u75": "اصلاح کن"
+  },
+  "rechecked_units": [
+    "u68",
+    "u75"
+  ],
+  "recheck_runs": [
+    {
+      "des_version": "3.4",
+      "mode": "FIDELITY",
+      "scope": "SOURCE",
+      "text_basis": "FULL_TEXT",
+      "claims": [
+        {
+          "id": "u68",
+          "claim_quote": "در مرور گزارش‌های پیشین، هفت مقاله وارد مرور شد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "After removing the \nduplicated article with same case being reported in \ndifferent years (11), seven articles (12-18) were included, \namong which four reported a duration of follow-up \n(Table 1) (14-16, 18).",
+          "source_ref": null
+        },
+        {
+          "id": "u75",
+          "claim_quote": "برای بررسی پارامترهای بالینی این درمان، مانند طراحی بهینهٔ تراش، مطالعات کنترل‌شدهٔ بیشتر می‌تواند مفید باشد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "This treatment modality can benefit from further \ncontrolled studies to justify clinical parameters such as \nthe optimum preparation design.",
+          "source_ref": null
+        }
+      ],
+      "counts": {
+        "matches": 2,
+        "altered": 0,
+        "reversed": 0,
+        "not_in_source": 0,
+        "not_assessable": 0,
+        "author_view": 0,
+        "not_a_claim": 0
+      },
+      "assessable": 2,
+      "fidelity_score": 100,
+      "level": "HIGH",
+      "provisional": false,
+      "source_conclusion": "This treatment modality can benefit from further controlled studies to justify clinical parameters such as the optimum preparation design.",
+      "fact_fa": "منبع هر دو ادعای قابل ارزیابی را تأیید می‌کند و هیچ‌یک را تغییر نمی‌دهد؛ سطح وفاداری بالا است.",
+      "interpretation_fa": "هر دو ادعای ارزیابی‌پذیر با متن منبع هم‌خوان‌اند."
+    },
+    {
+      "des_version": "3.4",
+      "mode": "FIDELITY",
+      "scope": "SOURCE",
+      "text_basis": "FULL_TEXT",
+      "claims": [
+        {
+          "id": "u68",
+          "claim_quote": "در مرور گزارش‌های پیشین، هفت مقاله وارد مرور شد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "After removing the duplicated article with same case being reported in different years (11), seven articles (12-18) were included, among which four reported a duration of follow-up (Table 1) (14-16, 18).",
+          "source_ref": null
+        },
+        {
+          "id": "u75",
+          "claim_quote": "برای بررسی پارامترهای بالینی این درمان، مانند طراحی بهینهٔ تراش، مطالعات کنترل‌شدهٔ بیشتر می‌تواند مفید باشد.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "This treatment modality can benefit from further controlled studies to justify clinical parameters such as the optimum preparation design.",
+          "source_ref": null
+        }
+      ],
+      "counts": {
+        "matches": 2,
+        "altered": 0,
+        "reversed": 0,
+        "not_in_source": 0,
+        "not_assessable": 0,
+        "author_view": 0,
+        "not_a_claim": 0
+      },
+      "assessable": 2,
+      "fidelity_score": 100,
+      "level": "HIGH",
+      "provisional": false,
+      "source_conclusion": "This treatment modality can benefit from further controlled studies to justify clinical parameters such as the optimum preparation design.",
+      "fact_fa": "هر دو ادعای قابل ارزیابی با متن منبع هم‌خوان‌اند؛ امتیاز وفاداری ۱۰۰ از ۱۰۰ است.",
+      "interpretation_fa": "بازنویسی، شمار مقالات واردشده به مرور و توصیهٔ محتاطانهٔ منبع دربارهٔ مطالعات کنترل‌شدهٔ بیشتر را با همان معنا و میزان احتیاط منتقل می‌کند."
+    }
+  ],
+  "final_vote": {
+    "des_version": "3.4",
+    "mode": "FIDELITY",
+    "scope": "SOURCE",
+    "text_basis": "FULL_TEXT",
+    "claims": [
+      {
+        "id": "u1",
+        "claim_quote": "بریج با ریتینر ونیر؛ چه زمانی انتخاب مناسبی است؟",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u2",
+        "claim_quote": "معرفی",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u3",
+        "claim_quote": "فرض کنیم بیماری یکی از دندان‌های قدامی را از دست داده، اما دندان‌های مجاور سالم‌اند.",
+        "verdict": "NOT_IN_SOURCE",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "scenario is not stated in the source"
+      },
+      {
+        "id": "u4",
+        "claim_quote": "ایمپلنت یکی از گزینه‌هاست، ولی محدودیت فضا یا استخوان، نزدیکی ریشه‌ها یا تمایل نداشتن بیمار به جراحی می‌تواند انتخاب آن را دشوار کند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Despite the unassailable advantages of implant rehabilitation, it cannot be used in certain clinical situations, including limited dimensions of the edentulous space, adjacent roots proximity to the implant site, and minimal available bone.",
+        "source_ref": null
+      },
+      {
+        "id": "u5",
+        "claim_quote": "بریج متداول هم به تراش قابل‌توجه دندان‌های مجاور نیاز دارد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "FDP has been regarded as the standard of care for some time in replacement of single and multiple missing teeth.",
+        "source_ref": null
+      },
+      {
+        "id": "u6",
+        "claim_quote": "بریج باندشونده با ریتینر لینگوال یا پالاتال گزینهٔ محافظه‌کارانه‌تری است، اما در بعضی شرایط محدودیت دارد؛ مثلاً دیپ‌بایت می‌تواند فضای لازم برای ریتینر پالاتال را محدود کند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "However, RBB was contraindicated based on deep overbite.",
+        "source_ref": null
+      },
+      {
+        "id": "u7",
+        "claim_quote": "ضمن اینکه چنین ریتینری، فرم یا رنگ دندان‌های مجاور را اصلاح نمی‌کند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Since RBB is dependent on bonding to the oral surface of the abutment tooth it is powerless in tooth color or shape correction.",
+        "source_ref": null
+      },
+      {
+        "id": "u8",
+        "claim_quote": "ایدهٔ بریج با ریتینر ونیر (Veneer-Retained Fixed Dental Prosthesis یا VRFDP) این است که پونتیک به ونیرهای دندان‌های مجاور متصل شود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "To avoid preparation of the maxillary right canine and central incisor on both labial and palatal surfaces, decision was made to place the pontic by means of veneer retainers.",
+        "source_ref": null
+      },
+      {
+        "id": "u9",
+        "claim_quote": "بنابراین، در کیس مناسب، جایگزینی دندان و اصلاح فرم دندان‌های پایه می‌تواند در یک درمان انجام شود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "To avoid preparation of the maxillary right \ncanine and central incisor on both labial and palatal \nsurfaces, decision was made to place the pontic by means \nof veneer retainers.",
+        "source_ref": null,
+        "note": "F1: judged the conclusion after بنابراین. Case 3 describes worn central incisors, a peg-shaped lateral and diastema, then states that veneer restoration was necessary for esthetic and functional rehabilitation. The governing sentence reports using those veneer retainers to place the pontic while avoiding additional palatal preparation of the same abutments. Thus replacement and veneer restoration of the abutments occur together in the suitable case. The unit keeps this as a possibility in suitable cases; F2-ii permits a hedged generalization from that reported finding. The case-2 sentence quoted by runs 2 and 3 concerns veneers on the left incisors and is less direct for this claim about the abutments. Run 3 also used SCOPE_BROADENED, which is not a legal F2-i change_kind."
+      },
+      {
+        "id": "u10",
+        "claim_quote": "در مقاله‌ای منتشرشده در سال ۲۰۲۵، این روش در سه بیمار و مجموعاً چهار بریج گزارش شد؛ زیرا بیمار اول دو دندان ازدست‌رفته داشت.",
+        "verdict": "NOT_IN_SOURCE",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "the source does not state a total of four bridges"
+      },
+      {
+        "id": "u11",
+        "claim_quote": "پیگیری‌ها تا پنج سال ادامه داشت.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "After completion of the treatment patients were followed-up through five years.",
+        "source_ref": null
+      },
+      {
+        "id": "u12",
+        "claim_quote": "توضیح",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u13",
+        "claim_quote": "چه زمانی به ونیر بریج فکر کنیم؟",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u14",
+        "claim_quote": "این روش قرار نیست جایگزین تمام بریج‌های باندشونده شود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "The treatment options should not only be confined to implants or lingually/palatally resin bonded bridges but also veneer-retained fixed dental prosthesis in selected cases could prove to be beneficial for the patient.",
+        "source_ref": null
+      },
+      {
+        "id": "u15",
+        "claim_quote": "منطق آن زمانی قوی‌تر است که دندان‌های مجاور از قبل به ونیر نیاز دارند، فضای بی‌دندانی باید همراه با تغییر فرم دندان‌ها مدیریت شود یا شرایط اکلوژن استفاده از ریتینر لینگوال یا پالاتال را دشوار کرده است.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Veneer-retained fixed dental prosthesis (VRFDP) is a treatment modality that can be considered as an alternative option when these clinical situations exist.",
+        "source_ref": null
+      },
+      {
+        "id": "u16",
+        "claim_quote": "سه کیس مقاله، سه وضعیت متفاوت را نشان می‌دهند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "This clinical report presents three cases treated with this approach and followed-up for up to five years.",
+        "source_ref": null
+      },
+      {
+        "id": "u17",
+        "claim_quote": "کیس اول: دیپ‌بایت و محدودیت ریتینر لینگوال",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u18",
+        "claim_quote": "بیمار ۲۲ساله‌ای پرمولر اول بالا و پایین سمت چپ را از دست داده بود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "A 22-years-old male with a dental history of orthodontic treatment sought care for his missing left maxillary and mandibular first premolar teeth.",
+        "source_ref": null
+      },
+      {
+        "id": "u19",
+        "claim_quote": "دندان‌های مجاور زنده و بدون رستوریشن بودند، اما دیپ‌بایت شدید و راهنمای قدامی شیب‌دار داشت.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Clinical examinations showed vital and non-restored teeth adjacent to the edentulous areas, as well as an excessive overbite and steep anterior guidance.",
+        "source_ref": null
+      },
+      {
+        "id": "u20",
+        "claim_quote": "ریشه‌های مجاور فضای بی‌دندانی نیز پس از ارتودنسی قبلی تیپ شده بودند و بیمار درمان ارتودنسی مجدد را نمی‌پذیرفت.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "The radiographic examination revealed the previous orthodontic treatment had resulted in tipped adjacent roots in both edentulous areas.",
+        "source_ref": null,
+        "note": "پذیرفتن‌نکردن درمان ارتودنسی مجدد نیز در جملهٔ منبع بعدی آمده است."
+      },
+      {
+        "id": "u21",
+        "claim_quote": "نویسندگان به دلیل دیپ‌بایت، بریج باندشونده با ریتینر متداول را مناسب ندانستند و برای هر دو ناحیه، بریج با ریتینر ونیر از لیتیوم دی‌سیلیکات مونولیتیک انتخاب کردند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Thus, monolithic IPS e.max CAD VRFDPs were selected as the treatment of choice.",
+        "source_ref": null,
+        "note": "منبع در جملهٔ پیشین می‌گوید RBB به‌دلیل دیپ‌بایت منع داشت."
+      },
+      {
+        "id": "u22",
+        "claim_quote": "برای پرمولر پایه در فک بالا، به‌دلیل جهت نیروهای اکلوزالی، طراحی آنله به کار رفت.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Due to the \noutward direction of the occlusal forces in the maxilla, \nan onlay preparation was considered for the maxillary 10 Alikhasi M, et al. Veneer-retained Fixed Dental Prosthesis: A Clinical Report on Three Cases with Up to 5 Years Follow-up and Literature Review. Journal of Dentomaxillofacial Radiology, Pathology and Surgery. 2025; 14(1): 8-12\nfirst premolar in case 1 (Figure 2).",
+        "source_ref": null
+      },
+      {
+        "id": "u23",
+        "claim_quote": "نکتهٔ کلینیکی: وقتی ریتینر لینگوال یا پالاتال با شرایط اکلوژن سازگار نیست، می‌توان طراحی دیگری را بررسی کرد؛ البته به شرط وجود فضای کافی برای مادهٔ رستوریتیو و کانکتورها.",
+        "verdict": "NOT_IN_SOURCE",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "clinical recommendation is not stated in the source"
+      },
+      {
+        "id": "u24",
+        "claim_quote": "تراش ونیر و آنلهٔ دندان‌های پایه برای جایگزینی پرمولر اول فک بالا.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Figure 2. Veneer and onlay preparation for VRFDP replacement of the 1st premolar in maxilla",
+        "source_ref": null
+      },
+      {
+        "id": "u25",
+        "claim_quote": "Alikhasi et al., 2025, Fig.",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "reference label"
+      },
+      {
+        "id": "u26",
+        "claim_quote": "2",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "figure number"
+      },
+      {
+        "id": "u27",
+        "claim_quote": "کیس دوم: همراه شدن جایگزینی دندان با مدیریت فضا",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u28",
+        "claim_quote": "بیمار ۴۵ساله‌ای لترال پایین سمت راست را به‌دلیل مشکل شدید پریودنتال از دست داد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "A female patient, 45-years-old, sought treatment concerning her anterior mandibular teeth.",
+        "source_ref": null,
+        "note": "علت پریودنتال شدید در جمله‌های بلافاصله بعدی توضیح داده شده است."
+      },
+      {
+        "id": "u29",
+        "claim_quote": "او اپن‌بایت قدامی سه‌میلی‌متری، فاصله میان دندان‌های قدامی و تغییر رنگ خفیف داشت.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Intraorally, the prominent features were 3mm open bite, mild teeth discoloration, spacing in anterior mandibular incisors, vertically displaced right lateral incisor with grade II mobility, which was confirmed by alveolar bone loss and inappropriate crown-root ratio in the subsequent radiographic examination.",
+        "source_ref": null
+      },
+      {
+        "id": "u30",
+        "claim_quote": "پس از کشیدن، از تاج همان دندان به مدت دو ماه به‌عنوان پونتیک موقت استفاده شد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "The patient’s extracted tooth was modified into an ovate pontic and used as a temporary restoration for two months.",
+        "source_ref": null
+      },
+      {
+        "id": "u31",
+        "claim_quote": "عرض فضای موجود از ابعاد طبیعی لترال پایین بیشتر بود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "According to the interdental spacing in the anterior lower teeth, the mesiodistal width of the edentulous space was beyond the anatomic dimensions of a mandibular lateral incisor, and a lingual RBB could lead to an unesthetic appearance.",
+        "source_ref": null
+      },
+      {
+        "id": "u32",
+        "claim_quote": "بنابراین، ساخت بریج با ریتینر لینگوال بدون اصلاح فرم و توزیع فضا می‌توانست نتیجهٔ زیبایی نامناسبی ایجاد کند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "According to the interdental spacing in the anterior lower teeth, the mesiodistal width of the edentulous space was beyond the anatomic dimensions of a mandibular lateral incisor, and a lingual RBB could lead to an unesthetic appearance.",
+        "source_ref": null
+      },
+      {
+        "id": "u33",
+        "claim_quote": "به همین دلیل، برای لترال راست بریج با ریتینر ونیر و برای دندان‌های قدامی سمت چپ ونیرهای جداگانه طراحی شد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Based on these limitations, a layered lithium disilicate press VRFDP for the right lateral incisor and veneers on left incisors was planned.",
+        "source_ref": null
+      },
+      {
+        "id": "u34",
+        "claim_quote": "نکتهٔ کلینیکی: گاهی مسئله فقط پر کردن فضای خالی نیست؛ باید عرض و فرم دندان‌های مجاور نیز هم‌زمان در طرح درمان دیده شود.",
+        "verdict": "NOT_IN_SOURCE",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "clinical recommendation is not stated in the source"
+      },
+      {
+        "id": "u35",
+        "claim_quote": "کیس سوم: وقتی دندان‌های پایه خودشان به ونیر نیاز دارند",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u36",
+        "claim_quote": "بیمار ۲۱ساله‌ای لترال راست بالا را از دست داده بود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "A 21-years-old female with a concern about her smile in the upper arch, including a missing right lateral incisor, peg-shaped left lateral incisor, midline diastema, and wear in central incisors, presented for treatment (Figure 1).",
+        "source_ref": null
+      },
+      {
+        "id": "u37",
+        "claim_quote": "لترال چپ Peg-Shaped بود، بین سانترال‌ها دیاستم وجود داشت و لبه‌های اینسایزال سانترال‌ها نیز ساییده شده بودند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "A 21-years-old female with a concern about her smile in the upper arch, including a missing right lateral incisor, peg-shaped left lateral incisor, midline diastema, and wear in central incisors, presented for treatment (Figure 1).",
+        "source_ref": null
+      },
+      {
+        "id": "u38",
+        "claim_quote": "بیمار تمایلی به جراحی ایمپلنت نداشت و اصلاح زیبایی دندان‌های قدامی هم بخشی از درمان بود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Despite the patient’s demand for conservative fixed treatment of the edentulous area, she was reluctant to undergo any surgical procedure.",
+        "source_ref": null,
+        "note": "نیاز به ترمیم ونیر در جملهٔ بعدی آمده است."
+      },
+      {
+        "id": "u39",
+        "claim_quote": "اگر بریج باندشوندهٔ پالاتال همراه با ونیرهای لبیال ساخته می‌شد، بعضی دندان‌های پایه باید از هر دو سطح لبیال و پالاتال تراش می‌خوردند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "To avoid preparation of the maxillary right canine and central incisor on both labial and palatal surfaces, decision was made to place the pontic by means of veneer retainers.",
+        "source_ref": null
+      },
+      {
+        "id": "u40",
+        "claim_quote": "بنابراین، نویسندگان تصمیم گرفتند همان ونیرهای لبیال نقش ریتینر بریج را نیز داشته باشند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "To avoid preparation of the maxillary right canine and central incisor on both labial and palatal surfaces, decision was made to place the pontic by means of veneer retainers.",
+        "source_ref": null
+      },
+      {
+        "id": "u41",
+        "claim_quote": "نکتهٔ کلینیکی: وقتی دندان‌های پایه از قبل اندیکاسیون ونیر دارند، می‌توان از تراش اضافهٔ پالاتال برای یک ریتینر مجزا پرهیز کرد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "To avoid preparation of the maxillary right canine and central incisor on both labial and palatal surfaces, decision was made to place the pontic by means of veneer retainers.",
+        "source_ref": null,
+        "note": "عبارت «دندان‌های پایه از قبل اندیکاسیون ونیر دارند» همان کیس را توصیف می‌کند؛ پرهیز از تراش پالاتال با تصمیم گزارش‌شده هم‌جهت است."
+      },
+      {
+        "id": "u42",
+        "claim_quote": "اما اگر دندان‌های پایه کاملاً سالم باشند، تراش لبیال صرفاً برای ساخت بریج لزوماً محافظه‌کارانه‌تر نیست.",
+        "verdict": "NOT_IN_SOURCE",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "این قید دربارهٔ سالم بودن پایه‌ها و محافظه‌کارانه‌تر نبودن تراش لبیال در منبع تصریح نشده است."
+      },
+      {
+        "id": "u43",
+        "claim_quote": "نمای قبل از درمان؛ فقدان لترال راست بالا، لترال مقابل Peg-Shaped و دیاستم.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Figure 1. Worn central incisors and peg-shaped lateral (preoperative view)",
+        "source_ref": null
+      },
+      {
+        "id": "u44",
+        "claim_quote": "Alikhasi et al., 2025, Fig.",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "reference label"
+      },
+      {
+        "id": "u45",
+        "claim_quote": "1",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "figure number"
+      },
+      {
+        "id": "u46",
+        "claim_quote": "طراحی ریتینر؛ چرا کانکتور مهم است؟",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u47",
+        "claim_quote": "در این گزارش از لیتیوم دی‌سیلیکات استفاده شد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "The present report used CAD-CAM lithium disilicate VRFDP in anterior and premolar area in both maxilla and mandible with no mechanical or biological complication through five years of follow-up.",
+        "source_ref": null
+      },
+      {
+        "id": "u48",
+        "claim_quote": "برای ریتینرهای ونیر، طراحی Butt-Joint با حدود دو میلی‌متر تراش اینسایزال و ۰٫۵ تا یک میلی‌متر تراش لبیال توصیف شده است.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Veneer-restored abutments were prepared in butt-joint design with 2 mm incisal and 0.5-1 mm labial reduction.",
+        "source_ref": null
+      },
+      {
+        "id": "u49",
+        "claim_quote": "البته در کیس دوم فقط اصلاح محدودی در لبه‌های اینسایزال انجام شد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "In case 2 only minor incisal modification was performed to remove sharpness.",
+        "source_ref": null
+      },
+      {
+        "id": "u50",
+        "claim_quote": "تراش در سمت فضای بی‌دندانی تا Line Angle پروگزیمولینگوال امتداد یافت تا عرض کافی برای کانکتور فراهم شود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "To provide an adequate bucco\u0002lingual dimension of connectors the preparation \nextended to the proximo-lingual line angles adjacent to \nthe edentulous areas.",
+        "source_ref": null
+      },
+      {
+        "id": "u51",
+        "claim_quote": "چون پونتیک از طریق اتصال به ریتینرهای نسبتاً نازک نگهداری می‌شود، ابعاد کانکتور اهمیت زیادی دارد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "To provide an adequate bucco\u0002lingual dimension of connectors the preparation \nextended to the proximo-lingual line angles adjacent to \nthe edentulous areas.",
+        "source_ref": null,
+        "note": "این جمله ضرورت ابعاد کافی را با امتداد تراش برای کانکتور پشتیبانی می‌کند."
+      },
+      {
+        "id": "u52",
+        "claim_quote": "نویسندگان به توصیهٔ سازنده برای سطح مقطع ۱۶ میلی‌متر مربع و در صورت محدودیت عرض باکولینگوال، افزایش ارتفاع اکلوزوژنژیوال کانکتور اشاره می‌کنند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "The fabrication guideline for IPS e.max fixed bridges recommends 16mm2for the connector’s dimension.",
+        "source_ref": null,
+        "note": "توصیهٔ افزایش ارتفاع در جملهٔ بعدی آمده است."
+      },
+      {
+        "id": "u53",
+        "claim_quote": "نسبت ارتفاع به عرض بیشتر از یک نیز در مقاله مطرح شده است.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "As the guideline indicates, the ratio of height to width should be greater than one.",
+        "source_ref": null
+      },
+      {
+        "id": "u54",
+        "claim_quote": "این اعداد به پروتکل ماده و طراحی مورد بحث مربوط‌اند؛ نباید آن‌ها را بدون بررسی اندیکاسیون و دستورالعمل سازنده به تمام بریج‌ها تعمیم داد.",
+        "verdict": "NOT_IN_SOURCE",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "این محدودیت تعمیم و توصیه به بررسی اندیکاسیون در منبع بیان نشده است."
+      },
+      {
+        "id": "u55",
+        "claim_quote": "اکلوژن؛ بخشی از طرح درمان، نه فقط تحویل",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u56",
+        "claim_quote": "پیش از ساخت، از Wax-up و Mock-up برای بررسی فرم و اکلوژن استفاده شد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "The diagnostic wax-up was digitally designed and used to fabricate a guide for the mock-up.",
+        "source_ref": null,
+        "note": "بررسی اکلوژن در جمله‌های بعدی شرح داده شده است."
+      },
+      {
+        "id": "u57",
+        "claim_quote": "در کیس‌های اول و سوم، راهنمای کانین در نظر گرفته شد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Canine protected occlusion was planned as the occlusal scheme in case 1 and 3.",
+        "source_ref": null
+      },
+      {
+        "id": "u58",
+        "claim_quote": "در کیس دوم، چون بیمار قصد تغییر اپن‌بایت موجود را نداشت، اصلاح اکلوژن برنامه‌ریزی نشد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Since case 2 had no concern about her anterior open bite no occlusal modification was considered.",
+        "source_ref": null
+      },
+      {
+        "id": "u59",
+        "claim_quote": "هدف تنظیم تماس‌های سنتریک و اکسنتریک به‌گونه‌ای بود که تنش بیش‌ازحد به پونتیک وارد نشود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Further, in the present report a precise occlusion was adjusted with the opposing teeth to distribute the centric and eccentric loads in a way to avoid high stresses in the pontic area.",
+        "source_ref": null
+      },
+      {
+        "id": "u60",
+        "claim_quote": "محافظه‌کارانه بودن تراش، به‌تنهایی موفقیت بریج را تضمین نمی‌کند؛ طراحی کانکتور و کنترل نیروها هم تعیین‌کننده‌اند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Implementation of the digital protocols in the design and fabrication process of the restoration provided the advantages of precise control over the restorations’ dimension, occlusal contacts, and planning a conservative preparation.",
+        "source_ref": null,
+        "note": "منبع همچنین در جمله‌ای جداگانه توزیع بار برای اجتناب از تنش بالا در ناحیهٔ پونتیک را گزارش می‌کند؛ اهمیت کانکتور در بخش ساخت و ابعاد آمده است."
+      },
+      {
+        "id": "u61",
+        "claim_quote": "نمای نهایی بریج‌های با ریتینر ونیر پس از سمان.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Figure 3. Final appearance of the VRFDPs in position immediately after cementation",
+        "source_ref": null
+      },
+      {
+        "id": "u62",
+        "claim_quote": "Alikhasi et al., 2025, Fig.",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "reference label"
+      },
+      {
+        "id": "u63",
+        "claim_quote": "3",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "figure number"
+      },
+      {
+        "id": "u64",
+        "claim_quote": "نتایج درمان و شواهد پیشین",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u65",
+        "claim_quote": "نویسندگان از پیگیری سالانهٔ بیماران تا حداکثر پنج سال و نبود عارضهٔ مکانیکی یا بیولوژیک گزارش داده‌اند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "After completion of the treatment patients were followed-up through five years.",
+        "source_ref": null,
+        "note": "گزارش نبود عارضه در جملهٔ نتیجه‌گیری بحث آمده است."
+      },
+      {
+        "id": "u66",
+        "claim_quote": "بیماران از نتیجهٔ درمان رضایت داشتند.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Additionally, patients were satisfied with the treatment results.",
+        "source_ref": null
+      },
+      {
+        "id": "u67",
+        "claim_quote": "این خبر امیدوارکننده است، اما نباید آن را نرخ موفقیت پنج‌سالهٔ این روش دانست؛ مقاله فقط سه بیمار را توصیف می‌کند و مدت پیگیری هر بریج را جداگانه مشخص نکرده است.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "This clinical report presents three cases treated with this approach and followed-up for up to five years.",
+        "source_ref": null,
+        "note": "منبع سه کیس و حداکثر پنج سال را گزارش می‌کند، اما حکم صریح «نباید نرخ موفقیت پنج‌ساله دانست» یا مدت جداگانهٔ هر بریج را نمی‌دهد."
+      },
+      {
+        "id": "u68",
+        "claim_quote": "در مرور گزارش‌های پیشین، هفت مقاله وارد مرور شد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "After removing the \nduplicated article with same case being reported in \ndifferent years (11), seven articles (12-18) were included, \namong which four reported a duration of follow-up \n(Table 1) (14-16, 18).",
+        "source_ref": null
+      },
+      {
+        "id": "u69",
+        "claim_quote": "در تعدادی از گزارش‌های قدیمی‌تر، به‌ویژه با پرسلن فلدسپاتیک، شکست پونتیک یا ریتینر، مشکلات مارجینال و مشکلات پریودنتال گزارش شده بود.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Although high-stress conditions were avoided, restoration fracture has been reported in all early publications with a duration of follow-up (14-16).",
+        "source_ref": null,
+        "note": "مشکلات مارجینال و پریودنتال نیز در جملهٔ بعدی ذکر شده‌اند."
+      },
+      {
+        "id": "u70",
+        "claim_quote": "استفاده از لیتیوم دی‌سیلیکات در مطالعهٔ حاضر ممکن است مزیتی داشته باشد، اما از این گزارش‌های غیرکنترل‌شده نمی‌توان اثر مستقل جنس سرامیک را اثبات کرد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "The flexural strength of the lithium disilicate glass ceramic is about four times more than feldspathic porcelain.",
+        "source_ref": null,
+        "note": "منبع همچنین می‌گوید شکست‌های گزارش‌های اولیه تا حدی می‌تواند با استحکام کمتر فلدسپاتیک مرتبط باشد؛ اثبات اثر مستقل سرامیک در گزارش کنترل‌نشده ارائه نشده است."
+      },
+      {
+        "id": "u71",
+        "claim_quote": "نتیجه‌گیری",
+        "verdict": "NOT_A_CLAIM",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "heading only"
+      },
+      {
+        "id": "u72",
+        "claim_quote": "بریج با ریتینر ونیر گزینه‌ای برای کیس‌های انتخاب‌شده است، نه جایگزینی عمومی برای ایمپلنت یا بریج باندشوندهٔ متداول.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "The treatment options should not only be confined to implants or lingually/palatally resin bonded bridges but also veneer-retained fixed dental prosthesis in selected cases could prove to be beneficial for the patient.",
+        "source_ref": null
+      },
+      {
+        "id": "u73",
+        "claim_quote": "این طراحی زمانی جذاب‌تر است که جایگزینی دندان با اصلاح فرم، رنگ یا توزیع فضای دندان‌های مجاور همراه باشد یا ریتینر لینگوال و پالاتال از نظر اکلوژنی با محدودیت روبه‌رو باشد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "Since RBB is dependent on bonding to the oral surface of the abutment tooth it is powerless in tooth color or shape correction.",
+        "source_ref": null,
+        "note": "منبع بعدی همان‌طور می‌گوید که فاصله یا مدیریت فضا می‌تواند نتیجهٔ زیبایی را مختل کند و محدودیت بین‌اکلوزالی نیز مطرح می‌کند."
+      },
+      {
+        "id": "u74",
+        "claim_quote": "برداشت کلینیکی من از مقاله این است که سؤال اصلی فقط «چگونه جای دندان غایب را پر کنیم؟» نیست؛ باید ببینیم کدام طراحی، با کمترین تراش توجیه‌پذیر، زیبایی و مقاومت مکانیکی لازم را هم‌زمان فراهم می‌کند.",
+        "verdict": "AUTHOR_VIEW",
+        "change_kind": null,
+        "source_quote": "",
+        "source_ref": null,
+        "note": "opinion marker: برداشت کلینیکی من"
+      },
+      {
+        "id": "u75",
+        "claim_quote": "برای بررسی پارامترهای بالینی این درمان، مانند طراحی بهینهٔ تراش، مطالعات کنترل‌شدهٔ بیشتر می‌تواند مفید باشد.",
+        "verdict": "MATCHES",
+        "change_kind": null,
+        "source_quote": "This treatment modality can benefit from further \ncontrolled studies to justify clinical parameters such as \nthe optimum preparation design.",
+        "source_ref": null
+      }
+    ],
+    "counts": {
+      "matches": 51,
+      "altered": 0,
+      "reversed": 0,
+      "not_in_source": 6,
+      "not_assessable": 0,
+      "author_view": 1,
+      "not_a_claim": 17
+    },
+    "assessable": 51,
+    "fidelity_score": 100,
+    "level": "HIGH",
+    "provisional": false,
+    "source_conclusion": "This treatment modality can benefit from further controlled studies to justify clinical parameters such as the optimum preparation design.",
+    "fact_fa": "از ۵۱ ادعایی که منبع به آن پرداخته‌اند، ۵۱ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۶ جمله‌ی دیگر در منبع نیامده است.",
+    "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+  },
+  "provenance": {
+    "run3-provenance.txt": "Independent FIDELITY run 3 provenance\nChecker model/settings: gpt-6-luna, medium\nWorkdir: /workspace/scratch/80a8504ac411/dentcast\nRead: .dentcast/des-v3.4-knowledge.md (complete) and /tmp/vrfdp-tiebreak/input-src0.json only.\nScope: SOURCE; FULL_TEXT; 11 input units, preserved in input order and with unchanged IDs/text.\nNo prior outputs, DES scores, derivative page, or other agents' work were read.\nOutput: /tmp/vrfdp-fidelity/out-src0-3.json\n\nSupplemental independent vote, u3 only\nChecker model/settings: gpt-6-luna, medium. Read the full .dentcast/des-v3.4-knowledge.md and only /tmp/vrfdp-tiebreak-u3/input-src0.json for this unit. No unchanged units rejudged.\nJudgment: u3 is NOT_IN_SOURCE under FULL_TEXT: the source describes anterior tooth loss in one case and intact neighboring teeth in a separate premolar case, but does not state the combined scenario.\nMechanical schema/quote correction: replaced u9 change_kind with the canonical POPULATION_OR_CONDITION_CHANGED enum for the same scope-broadening judgment; u22 source_quote now reproduces the complete source sentence including the embedded page-header text in the supplied extraction. Verdicts unchanged.\n",
+    "reviewer-provenance.txt": "Role: stronger FIDELITY reviewer; not a third checker vote\nModel: gpt-6-astra\nReasoning effort: medium\nSettings basis: assigned agent launch configuration\nReviewed unit: src0/u68 only\nRead: complete .dentcast/des-v3.4-knowledge.md; complete input-src0.json; both complete clean out-src0-1.json and out-src0-2.json\nNo source DES score record read. No external retrieval. No page edits.\nResult: dissent recorded; checker verdict not changed.\n\nContinuation: reviewed src0/u75; preserved u68 dissent; adjudicated no-majority src0/u9.\nModel/settings: gpt-6-astra / medium, same assigned agent launch configuration; no separate runtime telemetry available.\nRead checker 3 relevant claims and canonical vote_source plus workflow Part 2c. Reused complete source/spec and checker 1/2 context from prior turn. No source DES record read.\nReview votes not changed; u9 adjudication MATCHES.\n",
+    "run2-provenance.txt": "Independent FIDELITY checker 2\nModel: gpt-6-luna\nReasoning: medium\nContext: independently read .dentcast/des-v3.4-knowledge.md and only /tmp/vrfdp-fidelity/input-src0.json as generated user block; did not inspect scores, other agent outputs, old extraction directories, original unsplit page, or ARTICLE.md.\nOutput: /tmp/vrfdp-fidelity/out-src0-2.json\n",
+    "run1-provenance.txt": "Run 1 provenance\nModel: gpt-6-luna\nReasoning: medium\nEvaluation: independent context; assessed only /tmp/vrfdp-fidelity/input-src0.json against the governing .dentcast/des-v3.4-knowledge.md instructions.\n"
+  },
+  "source_provenance": "DES v3.4 SOURCE scoring run (corrected extraction)\nModel: gpt-6-luna\nReasoning: medium\nIsolation: SOURCE only; no derivative page, ARTICLE.md, or Fidelity output read.\nInput: revised clean logical-reading-order /tmp/vrfdp-source.txt for the same user-supplied PDF; caller verified exact PDF identity and size 1,145,768 bytes. The previous column-interleaved extraction and score are superseded; prior result preserved at /tmp/vrfdp-des-column-extraction.json.\nBasis: FULL_TEXT; supplied citation metadata; journal quartile not supplied (NR).\n",
+  "recheck_provenance": {
+    "run2-provenance.txt": "Independent FIDELITY checker 2\nModel: gpt-6-luna\nReasoning: medium\nContext: read the complete .dentcast/des-v3.4-knowledge.md FIDELITY specification and only /tmp/vrfdp-fidelity-recheck/input-src0.json as the generated user block. No DES results or prior-run outputs were read.\nOutput: /tmp/vrfdp-fidelity-recheck/out-src0-2.json\n",
+    "run1-provenance.txt": "Run 1 provenance\nModel: gpt-6-luna\nReasoning: medium\nEvaluation: independent context; assessed only /tmp/vrfdp-fidelity-recheck/input-src0.json under .dentcast/des-v3.4-knowledge.md.\n"
+  },
+  "verification": "Root independently checked each current output schema, exact claim echoes and source quote presence; final rebase checks unchanged units remained untouched. No private input/full source text stored. Superseded column-interleaved extraction runs not reused; correction incurred extra calls."
+}

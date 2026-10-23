@@ -38459,6 +38459,78 @@
           ]
         }
       ]
+    },
+    "sharehub/share-40": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/sharehub/share-40.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا بریج با ریتینر ونیر جایگزینی عمومی برای تمام بریج‌های باندشونده است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ کاربرد آن به کیس‌های انتخاب‌شده و ارزیابی نیاز دندان‌های پایه، فضای کانکتور و اکلوژن محدود است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا نبود عارضه در یک گزارش سه‌بیماری، نرخ موفقیت پنج‌سالهٔ بریج با ریتینر ونیر را اثبات می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ گزارش چند کیس بدون گروه مقایسه و مدت پیگیری جداگانهٔ هر بریج برای چنین نتیجه‌ای کافی نیست."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا وجود اندیکاسیون ونیر در دندان‌های پایه می‌تواند استفاده از ونیر به‌عنوان ریتینر بریج را توجیه کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ در کیس مناسب می‌توان اصلاح فرم دندان‌های پایه و جایگزینی دندان غایب را در یک طرح درمان ترکیب کرد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا سطح مقطع ۱۶ میلی‌متر مربع برای کانکتور را می‌توان به تمام بریج‌ها تعمیم داد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ این مقدار به راهنمای ماده و طراحی مطرح‌شده مربوط است و باید اندیکاسیون و دستورالعمل سازنده بررسی شود."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/sharehub/share-40.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-40.html#flashcards-c1",
+              "name": "ریتینر ونیر در بریج",
+              "description": "ونیر دندان پایه که افزون بر اصلاح سطح لبیال، اتصال پونتیک را نیز تأمین می‌کند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-40.html#flashcards-c2",
+              "name": "کانکتور بریج",
+              "description": "ناحیهٔ اتصال پونتیک به ریتینر؛ ابعاد و شکل آن برای تحمل نیروها در طراحی بریج اهمیت دارد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-40.html#flashcards-c3",
+              "name": "نقش ونیرهای موجود در انتخاب VRFDP",
+              "description": "وجود اندیکاسیون ونیر در دندان‌های پایه می‌تواند استفاده از همان ونیرها برای نگهداری پونتیک را توجیه کند و نیاز به ریتینر جداگانهٔ پالاتال را کاهش دهد.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }

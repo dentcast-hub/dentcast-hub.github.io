@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "sharehub/share-40"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.4.14"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -58,6 +58,30 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           ],
           "scope": "publication preparation",
           "status": "confirmed"
+        },
+        {
+          "decision": "Rename supplied Drive paper to its real article title and move into correct cabinet topic folder; update cabinet and use full paper for DES",
+          "evidence": [
+            "Founder explicit Drive instruction 2026-10-23"
+          ],
+          "scope": "Drive filing",
+          "status": "confirmed"
+        },
+        {
+          "decision": "\u0627\u0635\u0644\u0627\u062d \u06a9\u0646 \u2014 apply exact proposed rewrite shown for this sentence",
+          "evidence": [
+            "Founder explicit approval: \u0627\u0635\u0644\u0627\u062d \u06a9\u0646 \u062e\u0648\u062f\u062a \u0647\u0645\u06cc\u0646 \u062f\u0648 \u0645\u0648\u0631\u062f \u0631\u0648"
+          ],
+          "scope": "Fidelity founder decision u68",
+          "status": "confirmed"
+        },
+        {
+          "decision": "\u0627\u0635\u0644\u0627\u062d \u06a9\u0646 \u2014 apply exact proposed rewrite shown for this sentence",
+          "evidence": [
+            "Founder explicit approval: \u0627\u0635\u0644\u0627\u062d \u06a9\u0646 \u062e\u0648\u062f\u062a \u0647\u0645\u06cc\u0646 \u062f\u0648 \u0645\u0648\u0631\u062f \u0631\u0648"
+          ],
+          "scope": "Fidelity founder decision u75",
+          "status": "confirmed"
         }
       ],
       "decisions": [
@@ -73,6 +97,36 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "kind": "source_basis",
           "reference": "User-attached PDF 1737-383756-en-1664285.pdf",
           "text_basis": "FULL_TEXT"
+        },
+        {
+          "folder_id": "14ez2Wd98xDyVs1hN2NZnR5tjkKv22zh2",
+          "kind": "paper_filing",
+          "reason": "Resin-bonded veneer-retained fixed bridges; same topic folder as preceding occlusal-veneer bridge paper",
+          "topic_path": "Maryland bridge"
+        },
+        {
+          "checker_model": "gpt-6-luna",
+          "checker_reasoning": "medium",
+          "independent_contexts": true,
+          "kind": "scientific_model_routing",
+          "per_role_selection": true,
+          "pricing": "UNVERIFIED",
+          "reviewer_model": "gpt-6-astra",
+          "reviewer_reasoning": "medium"
+        },
+        {
+          "kind": "scientific_input_replaced",
+          "reason": "Two-column Library extraction interleaved sentences; replace with logical reading-order extraction from founder-supplied Drive file of the same PDF. Prior scientific runs superseded.",
+          "source_reference": "Drive 1gLyrSp6vLIRDR_pFoCsgndsCSKrWwfxG; same PDF size 1145768 bytes",
+          "source_sha256": "e9a3ff51cf5f1a47e4abdabf5caf1ecc1fcac88e86e801e2ed492c0d991e83af"
+        },
+        {
+          "decision": "Apply the two proposed rewrites exactly; rerun only these units against unchanged full source.",
+          "kind": "fidelity-edits",
+          "units": [
+            "u68",
+            "u75"
+          ]
         }
       ],
       "delivery": [],
@@ -84,9 +138,71 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       ],
       "pending_questions": [],
       "unrelated_changes": [],
-      "validation": []
+      "validation": [
+        {
+          "artifacts": [
+            {
+              "path": "/tmp/vrfdp-fidelity/out-src0-3.json",
+              "sha256": "87a41c8fbfe897026ef4e2634b61f9462846ab1f8c7f17a0404f5247b49e08ee"
+            },
+            {
+              "path": "/tmp/vrfdp-fidelity/review.json",
+              "sha256": "fbb0cb02c9c6444db22b80c3cf59eb2dc5e0244fdd7592d40c2d1955e8ef1b83"
+            },
+            {
+              "path": "/tmp/vrfdp-fidelity/adjudicate.json",
+              "sha256": "21d62fe8ab60e443848737555309f2fe3a166df9f4b579e8d2031a616a927fdf"
+            },
+            {
+              "path": "/tmp/vrfdp-fidelity/out-src0-1.json",
+              "sha256": "ab837b1f5d84885075fdf4873cdb6ce0dc5c3f4615b22dfd8184f710a9dc7372"
+            },
+            {
+              "path": "/tmp/vrfdp-fidelity/voted-src0.json",
+              "sha256": "52d5da1d21b253b8e7e742c53b54636964e9bf5dd3b379a5f6e366209e0d66d9"
+            },
+            {
+              "path": "/tmp/vrfdp-fidelity/out-src0-2.json",
+              "sha256": "3ba80d0ba3246274afb982a1c9b199e5fe104ea5a66baa024ad28cbd6b86bcc2"
+            },
+            {
+              "path": "/tmp/vrfdp-fidelity/input-src0.json",
+              "sha256": "914555776018cd083570ce5d4fa4a996097dca0e20f76150aa1e339cda277150"
+            },
+            {
+              "path": "/tmp/vrfdp-des.json",
+              "sha256": "2901c09f1d30f59e30d969d345922b09361df8d06a90abeccd441bb1b235747c"
+            },
+            {
+              "path": "/tmp/vrfdp-source.txt",
+              "sha256": "e9a3ff51cf5f1a47e4abdabf5caf1ecc1fcac88e86e801e2ed492c0d991e83af"
+            }
+          ],
+          "fidelity_level": "HIGH",
+          "fidelity_score": 98,
+          "flagged": [
+            "u68",
+            "u75"
+          ],
+          "kind": "scientific-founder-gate",
+          "note": "Actual independent runs. SOURCE isolated from Fidelity. All three current checker outputs and final voted result pass 15 schema/quote checks each. Third checker repaired own encoding/exact-quotation issues without changing verdicts. All votes closed; strong-review dissents retained for u68/u75. Explicit per-sentence founder decision pending before final Fidelity storage. Not final publication verification.",
+          "open_vote_items": [],
+          "source_band": "E",
+          "source_basis": "FULL_TEXT",
+          "source_score": 15
+        }
+      ]
     },
-    "external_actions": [],
+    "external_actions": [
+      {
+        "evidence": [
+          "Drive update_file succeeded; metadata readback confirms exact article filename and sole parent 14ez2Wd98xDyVs1hN2NZnR5tjkKv22zh2"
+        ],
+        "id": "drive-paper-rename-move",
+        "status": "completed",
+        "target": "Drive file 1gLyrSp6vLIRDR_pFoCsgndsCSKrWwfxG"
+      }
+    ],
     "status": "in_progress",
     "steps": [
       {
@@ -365,46 +481,85 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "Renamed existing supplied Drive file and moved from cabinet root to Maryland bridge folder 14ez2Wd98xDyVs1hN2NZnR5tjkKv22zh2; original file ID retained and metadata verified"
+        ],
         "id": "C.4.10.1",
         "module": "06-paper-ingestion.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "Catalog P2945 added with retained Drive ID, exact real paper title, Maryland bridge topic, DOI, abstract, verified 1145768-byte size, semantic tags including title tag and ShareHub-40 link. Same keys as P2944. total_papers=2260; historical scan counters preserved; no round-hundred claim crossed"
+        ],
         "id": "C.4.10.2",
         "module": "06-paper-ingestion.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "Source author anchor already correct: Marzieh Alikhasi \u2192 https://doi.org/10.32592/3dj.14.1.8; matched user-attached full paper, supplied Drive PDF and published PDF search. DOI resolver tool unavailable; no DOI inferred. Existing site byline preserved; page hash unchanged"
+        ],
         "id": "C.4.10.3",
         "module": "06-paper-ingestion.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "3 authored concept flashcards added to plus/faq-corpus.json only: veneer retainer, connector, role of pre-existing veneer indication; distinct unique IDs and complete definitions"
+        ],
         "id": "C.4.11",
         "module": "07-flashcards-and-quiz.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "4 standalone binary quiz FAQ questions added; explicit yes/no answers, no article deixis, all body-grounded. Flashcard descriptions independently authored, not FAQ copies"
+        ],
         "id": "C.4.12",
         "module": "07-flashcards-and-quiz.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "Clean reading-order Drive full text re-scored in isolated SOURCE gpt-6-luna medium: 15/E THERAPY; quotes/arithmetic/schema/band validated against corrected source; all 75 final body units in canonical Fidelity block; prior interleaved extraction runs superseded"
+        ],
+        "id": "C.4.13/source-validation",
+        "module": "08-des-fidelity.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Two independent clean-source full checker contexts completed on identical canonical 75-unit block, gpt-6-luna medium; output artifacts separate. Initial vote identifies 11 disagreement units and agreed flagged u68 requiring strong review"
+        ],
+        "id": "C.4.13/checker-runs",
+        "module": "08-des-fidelity.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Both exact proposed rewrites explicitly approved and applied. Independent edited-unit-only rechecks agree MATCHES for u68/u75. Final rebase 100 HIGH; all schema/quotes checks PASS. Receipts sharehub/share40-fidelity-audit.json."
+        ],
+        "id": "C.4.13/vote-review",
+        "module": "08-des-fidelity.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Final source and Fidelity outputs stored verbatim parallel: FULL_TEXT SOURCE 15/E THERAPY non-provisional, Fidelity100 HIGH with51MATCHES6NOT_IN_SOURCE1AUTHOR_VIEW17NOT_A_CLAIM zero ALTERED/REVERSED. DOI verified from supplied PDF, no invented abstract/quartile. Scientific audit retained, approved corrections propagated into English translation preparation."
+        ],
         "id": "C.4.13",
         "module": "08-des-fidelity.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -502,15 +657,20 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       ".dentcast/work/vrfdp-veneer-bridge-2025/ARTICLE.md",
       ".dentcast/work/vrfdp-veneer-bridge-2025/WORK-HANDOFF.md",
       "dentcast-brain.json",
+      "dentcast_cabinet_full_catalog.json",
+      "plus/des-scores.json",
+      "plus/faq-corpus.json",
       "sharehub/index.html",
       "sharehub/share-40.html",
+      "sharehub/share40-fidelity-audit.json",
       "sharehub/share40-fig1.webp",
       "sharehub/share40-fig2.webp",
-      "sharehub/share40-fig3.webp"
+      "sharehub/share40-fig3.webp",
+      "sharehub/share40-publication-report.json"
     ]
   },
   "reconciliation": {
-    "note": "Reviewed actual staged article, figures and index at delivery cut; refresh staged snapshot without replaying completed steps"
+    "note": "Refresh staged cut2 snapshot after actual scoped review; preserve original DES CRLF bytes outside new record, final science receipts, cabinet action and corpus. No unrelated changes."
   },
   "schema": "publish-handoff-v3"
 }
