@@ -161,6 +161,56 @@ class FastLocalWALTests(unittest.TestCase):
         state, _ = h.load_state(self.root)
         self.assertIn(new_path, state["publication"]["target_paths"])
 
+    def test_flush_recovers_after_canonical_save_with_unsorted_wal_targets(self):
+        init = self.start()
+        digest = wal.begin(self.root, init["sha256"])["digest"]
+        # WAL enrollment order differs from h.save's sorted canonical inventory.
+        new_path = "insight/a-reviewed-image.webp"
+        image = self.root / new_path
+        image.parent.mkdir(parents=True, exist_ok=True)
+        image.write_bytes(b"RIFF-test-content-only")
+        digest = wal.enroll_target(
+            self.root, digest, new_path, "fixture:reviewed-image")["digest"]
+        with patch.object(Path, "unlink",
+                          side_effect=OSError("fixture:crash-before-WAL-unlink")):
+            with self.assertRaisesRegex(OSError, "crash-before-WAL-unlink"):
+                wal.flush(self.root, digest, "fixture:explicit-review")
+        self.assertTrue(wal.active(self.root))
+        saved, canonical_sha = h.load_state(self.root)
+        self.assertEqual(saved["publication"]["target_paths"],
+                         sorted(["note.html", new_path]))
+        # Retry validates existing canonical bytes; it must not write again.
+        generation = saved["generation"]
+        recovered = wal.flush(self.root, digest, "fixture:explicit-review")
+        after, after_sha = h.load_state(self.root)
+        self.assertFalse(wal.active(self.root))
+        self.assertEqual(recovered["sha256"], canonical_sha)
+        self.assertEqual(after_sha, canonical_sha)
+        self.assertEqual(after["generation"], generation)
+        self.assertEqual(after["publication"], saved["publication"])
+
+    def test_flush_recovery_still_rejects_a_genuinely_different_wal(self):
+        init = self.start()
+        digest = wal.begin(self.root, init["sha256"])["digest"]
+        first_path = "insight/a-reviewed-image.webp"
+        image = self.root / first_path
+        image.parent.mkdir(parents=True, exist_ok=True)
+        image.write_bytes(b"RIFF-test-content-only")
+        digest = wal.enroll_target(
+            self.root, digest, first_path, "fixture:reviewed-image")["digest"]
+        with patch.object(Path, "unlink",
+                          side_effect=OSError("fixture:interrupt-after-save")):
+            with self.assertRaisesRegex(OSError, "interrupt-after-save"):
+                wal.flush(self.root, digest, "fixture:explicit-review")
+        # A new WAL target that was not part of the saved checkpoint
+        # is real drift, not the harmless target_paths ordering mismatch.
+        digest = wal.enroll_target(
+            self.root, digest, "insight/different.webp",
+            "fixture:subsequent-append")["digest"]
+        with self.assertRaisesRegex(h.Blocked, "WAL_BASE_CHANGED_RECONCILE"):
+            wal.flush(self.root, digest, "fixture:explicit-review")
+        self.assertTrue(wal.active(self.root))
+
     def test_changed_workflow_source_invalidates_nonempty_wal(self):
         init = self.start()
         digest = wal.begin(self.root, init["sha256"])["digest"]

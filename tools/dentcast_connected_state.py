@@ -289,6 +289,11 @@ def receive_cut1(raw_handoff, *, branch, sha_by_path, target_bytes,
     p = state["publication"]
     lc.require_plan(p)
     h.require(lc.delivery_boundary(p) == 1, "RECEIVED_WRONG_CUT")
+    h.require(p["status"] == "in_progress" and p["blocker"] is None,
+              "RECEIVED_PUBLICATION_BLOCKED")
+    h.require(not any(a["status"] in ("started", "outcome_unknown", "failed")
+                      for a in p["external_actions"]),
+              "RECEIVED_EXTERNAL_OUTCOME_UNRESOLVED")
     h.require(not p["context"]["pending_questions"],
               "RECEIVED_PENDING_QUESTIONS")
     h.require(all(a["status"] in ("confirmed", "not_required")
