@@ -73,6 +73,36 @@ prepared, verified, committed, pushed, merged and live. Report no invented ETA o
 percent. A real blocker must name its cause, effect and required next action;
 record/preserve the current checkpoint and do independent authorized work.
 
+## Publication services and remote checks
+
+Vercel is not a DentCast publication service. Its commit status, deployment,
+preview, failure or pending state must never be requested as publication evidence,
+polled, awaited, treated as a publishing/merge gate, or included in the completion
+criteria or routine final report. A GitHub response may include that unrelated
+status; its presence does not enroll a new external action or approval requirement.
+Design references to Vercel in site styling are unrelated to hosting.
+
+Use the actual repository checks, canonical Phase F, required remote delivery
+observations and applicable checks of the real DentCast destinations (Cloudflare
+Pages / ArvanCloud). Do not infer a new deployment task from an aggregate status
+or a third-party bot. A successful Vercel status cannot substitute for a failed
+repository check or Phase F. If GitHub itself refuses a merge because of an
+unrelated required check, report that exact configuration blocker; do not claim a
+merge or weaken branch protection. Removal of an external installation is a
+separate administration action, not an implicit publishing step.
+
+## Waiting and refreshing remote state
+
+At a real wait, report the canonical step, the exact pending result, and whether
+it blocks the next action. Keep that outcome in the existing run ledger; do not
+create another checkpoint format. Continue independent authorized work.
+Refresh only the relevant result after a plausible state change (an action was
+submitted, a callback/new event arrived, or a bounded polling interval elapsed).
+Do not poll all PRs/checks after each local step. Stop an unchanged error loop and
+report the cause instead of issuing identical failing requests. This does not
+waive the fresh exact-PR/ref preflight immediately before a delivery/ref update
+or merge, or remote read-back at the fixed three delivery cuts.
+
 ## Scope, baseline and final bytes
 
 Declare each related source/page/data path in `target_paths`, including inputs

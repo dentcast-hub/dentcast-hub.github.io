@@ -261,6 +261,15 @@ publishِ بلوکه‌شده، پس عمداً صفر برمی‌گرداند.
 
 ---
 
+## Publication service and wait discipline
+
+Follow `publish-checkpoints.md` sections “Publication services and remote checks”
+and “Waiting and refreshing remote state”. Vercel is unrelated to DentCast
+publication: never wait for or use its status as a gate or completion criterion.
+Report a real wait with its step, pending result and blocking effect; refresh
+only the relevant result when it can change. Preserve fresh delivery/merge
+preflights, actual repository checks, Phase F and the three fixed deliveries.
+
 ## 6. پروتکل گیت
 
 - روی برنچی که کاربر مشخص کرده کار کن؛ اگر نبود، برنچ فیچر بساز. مستقیم روی
