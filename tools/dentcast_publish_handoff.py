@@ -494,7 +494,11 @@ def render(state, compact=True):
                                'previous_sha256')}
         if compact:
             pub = wire['publication']
-            wire['publication'] = {**pub, 'steps': compact_v3_steps(pub['steps'])}
+            # Legacy standalone/local fixtures with a deliberately noncanonical
+            # short ledger are not new compact canonical records.
+            rows = pub['steps']
+            if rows and rows[0].get('id') == 'rules':
+                wire['publication'] = {**pub, 'steps': compact_v3_steps(rows)}
         if isinstance(wire.get('reconciliation'), dict):
             wire['reconciliation'] = {'note': wire['reconciliation']['note']}
         snapshot_note = "Git facts are reconstructed from Git and are not duplicated in this handoff."
@@ -704,12 +708,19 @@ def parse_state(raw):
                 'RECONCILIATION_INVALID')
             stored_rows = state['publication'].get('steps')
             require(isinstance(stored_rows, list), 'COMPACT_STEPS_INVALID')
-            # Previous v3 files had the entire canonical tail, including G.
-            legacy_full = bool(stored_rows) and stored_rows[-1].get('id') in ('G', 'C.4.10.2')
-            expand_v3_steps(state['publication'])
-            require(render(state) == text or (
-                legacy_full and render(state, compact=False) == text),
-                'HANDOFF_SUMMARY_OR_ENCODING_CHANGED')
+            if stored_rows and isinstance(stored_rows[0], dict) and stored_rows[0].get('id') != 'rules':
+                # Legacy standalone shorter plans remain readable; only live
+                # canonical publication states get the prefix reconstruction.
+                validate_publication(state['publication'])
+                require(render(state, compact=False) == text,
+                        'HANDOFF_SUMMARY_OR_ENCODING_CHANGED')
+            else:
+                # Previous canonical v3 files had the entire tail, including G.
+                legacy_full = bool(stored_rows) and stored_rows[-1].get('id') in ('G',)
+                expand_v3_steps(state['publication'])
+                require(render(state) == text or (
+                    legacy_full and render(state, compact=False) == text),
+                    'HANDOFF_SUMMARY_OR_ENCODING_CHANGED')
             state.update(generation=1, updated_at=now(), previous_sha256=None)
             return state, digest(raw)
         if state.get('schema') != 'publish-handoff-v2':
