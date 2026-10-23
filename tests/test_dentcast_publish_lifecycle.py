@@ -172,7 +172,7 @@ class LifecycleTests(unittest.TestCase):
     def test_first_cut_new_human_gate_does_not_affect_legacy_or_paper_only(self):
         for category, marker in (("paper-only", True), ("insight", False)):
             p = {"category": category,
-                 "steps": lc.plan(paper=category == "paper-only"),
+                 "steps": lc.plan(paper_only=category == "paper-only"),
                  "context": {"decisions": ([{"kind": lc.DELIVERY_POLICY}]
                                            if marker else []),
                              "approvals": [], "pending_questions": ["fixture:question"]}}

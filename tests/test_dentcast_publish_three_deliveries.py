@@ -30,7 +30,12 @@ class ThreeDeliveriesTests(unittest.TestCase):
         run(self.root, 'commit', '-m', 'fixture empty brain')
         result = self.prepare()
         state, sha = h.load_state(self.root)
-        state['publication']['context']['decisions'].append({'kind': lc.DELIVERY_POLICY})
+        state['publication']['context']['decisions'].extend([
+            {'kind': lc.DELIVERY_POLICY},
+            {'kind': 'first_cut_lead_provenance_v1',
+             'origin': 'author_original',
+             'source_ref': 'fixture:original-writer-paragraph',
+             'evidence': ['fixture:synthetic-author-content']}])
         result = h.save(self.root, state['publication'], expected=sha)
         run(self.root, 'push', 'origin', 'main')
         self.baseline = h.text_git(self.root, 'rev-parse', 'HEAD')
