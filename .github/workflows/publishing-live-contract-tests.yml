@@ -12,6 +12,9 @@ on:
       - '.dentcast/publication-reports/**'
       - '.dentcast/workflows/**'
       - 'tools/dentcast_publish*.py'
+      - 'tools/dentcast_connected_state.py'
+      - 'tools/dentcast_connected_wire.mjs'
+      - 'tools/dentcast_connected_first_push.py'
       - 'tools/verify_publish.py'
       - 'tools/dentcast_global_rules.py'
       - 'tests/test_dentcast_global_rules.py'
@@ -67,6 +70,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p test_dentcast_agent_entrypoint_migration.py -v
       - name: Check live checkpoint and completion lifecycle
         run: python3 -m unittest discover -s tests -p 'test_dentcast_publish*.py' -v
+      - name: Check first-cut GitHub Git-Data transport (no scientific mocks)
+        run: python3 -m unittest discover -s tests -p 'test_dentcast_connected_first_push.py' -v
       - name: Check hook adapters and shared rule routing
         run: node --test tests/publishing-hooks.test.mjs
       - name: Inspect committed checkpoint or cleanup boundary

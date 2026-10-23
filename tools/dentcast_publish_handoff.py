@@ -274,12 +274,16 @@ def change_details(state, current):
             for key in ("files", "workflow")}
 
 
-def snapshot(root, targets, check_remote=False):
+def snapshot(root, targets, check_remote=False, observed_status=None):
     first_head = text_git(root, "rev-parse", "--verify", "HEAD^{commit}")
     first_branch = branch(root)
     origin = config(root, "remote.origin.url")
     require(bool(origin), "ORIGIN_REQUIRED")
-    paths = status_paths(root)
+    # save() already read porcelain status to scope its dirty/builder paths.
+    # Reuse that first observation rather than invoking git status a second
+    # time. The independent status check at the END of this snapshot remains:
+    # any concurrent path change still aborts, and file bytes are rehashed.
+    paths = observed_status if observed_status is not None else status_paths(root)
     # Preserve the full-index race guard, but build its large Python mapping
     # only once. The second Git read is still mandatory and byte-compared.
     index_raw = git(root, "ls-files", "--stage", "-z")
@@ -786,12 +790,28 @@ def preserve_actions(old, new):
     return resolved
 
 
-def save(root, publication, expected=None, note=None, check_remote=False, initial=False):
+def fastlocal_active(root):
+    """Cheap normal-checkout WAL guard; linked Git worktrees use git --git-path."""
+    dotgit = root / ".git"
+    if dotgit.is_dir():
+        path = dotgit / "dentcast-fastlocal.wal"
+    else:
+        value = text_git(root, "rev-parse", "--git-path", "dentcast-fastlocal.wal")
+        path = Path(value) if Path(value).is_absolute() else root / value
+    require(not path.is_symlink(), "UNSAFE_WAL_SYMLINK")
+    return path.is_file()
+
+
+def save(root, publication, expected=None, note=None, check_remote=False, initial=False, wal_materialize=False):
     validate_publication(publication)
     require(note is None or nonempty(note), "RECONCILIATION_NOTE_EMPTY")
     with locked(root):
         import dentcast_publish_lifecycle as lifecycle
         require(not lifecycle.pending(root), "CLEANUP_DELIVERY_PENDING")
+        require(not fastlocal_active(root) or wal_materialize,
+                "WAL_ACTIVE_MATERIALIZE_BEFORE_CANONICAL_WRITES")
+        require(not wal_materialize or (not initial and expected is not None),
+                "WAL_MATERIALIZATION_REQUIRES_EXISTING_BASE")
         path = safe_path(root, STATE_PATH)
         if initial:
             require(not path.exists(), "HANDOFF_ALREADY_EXISTS")
@@ -813,7 +833,7 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
             unknown = [p for p in dirty if p not in targets and p not in WORKFLOW_PATHS]
             require(not unknown, "UNREVIEWED_PATHS_OUTSIDE_PUBLICATION:" + ",".join(sorted(unknown)) +
                     "; preserve these files; add only reviewed related paths to target_paths")
-        current = snapshot(root, targets, check_remote)
+        current = snapshot(root, targets, check_remote, observed_status=dirty)
         issues = []
         if previous:
             require(all(previous["snapshot"][k] == current[k] for k in ("repository", "branch")),
@@ -847,7 +867,11 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
                 require(all(s["status"] == "pending" for s in publication["steps"]),
                         "WORKFLOW_CHANGE_REQUIRES_STEP_INVALIDATION")
             require(not issues or nonempty(note), "RECONCILIATION_REQUIRED:" + ",".join(issues))
-            lifecycle.guard_step_transition(previous, publication, root)
+            if wal_materialize:
+                import dentcast_publish_fastlocal as fastlocal
+                fastlocal.validate_projection(root, publication, expected)
+            else:
+                lifecycle.guard_step_transition(previous, publication, root)
         state = {"schema": SCHEMA, "generation": previous["generation"]+1 if previous else 1,
                  "updated_at": now(), "source_revision": previous["source_revision"]
                  if previous and "WORKFLOW_CHANGED" not in issues else current["head"],
@@ -860,6 +884,8 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
 
 
 def inspect(root, check_remote=False):
+    require(not fastlocal_active(root),
+            "WAL_ACTIVE_USE_FASTLOCAL_INSPECT_OR_FLUSH")
     with locked(root):
         state, sha = load_state(root)
         current = current_snapshot(root, state, check_remote)

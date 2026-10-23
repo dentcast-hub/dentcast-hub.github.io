@@ -1,0 +1,105 @@
+/* Portable, import-free handoff codec for connector-only agents.
+ * Data transformations only. No shell, filesystem, Git, network or science.
+ * Python/JS output parity is CI-gated.
+ */
+export const SCHEMA="publish-handoff-v3";
+export const POLICY="fixed_three_deliveries_v1";
+const modules=["01-hard-rules.md","02-routing-intake.md","03-litecast-and-page.md","04-taxonomy-and-navigation.md","05-semantic-linking.md","06-paper-ingestion.md","07-flashcards-and-quiz.md","08-des-fidelity.md","09-challenge.md","10-brain-and-pathways.md","11-build-and-version.md","12-english-notify-verify.md"];
+const groups=[["rules"],["0","A","B.1","B.2","B.3","B.3.5","B.4","B.4.7","B.4.8","B.4.9","B.5"],["C.0","C.0.1","C.0.2","C.0.3","C.0.4","C.1","C.2","C.0.5","C.0.6"],["C.2.4","C.2.5","C.2.6","C.3","C.4","C.4.5","C.4.5-b","C.4.6"],["C.4.7","C.4.7-b","C.4.8","C.4.9"],["C.4.10.1","C.4.10.2","C.4.10.3"],["C.4.11","C.4.12"],["C.4.13"],["C.4.14"],["C.5.0","C.5","C.5.5","C.5.6","C.5.6-b"],["C.6","C.8","C.7"],["D","E","F","G"]];
+const q=String.fromCharCode(96).repeat(3);
+const BEGIN="<!-- dentcast-publish-state-v1 -->\n"+q+"json\n";
+const END="\n"+q+"\n<!-- /dentcast-publish-state-v1 -->\n";
+const need=(ok,msg)=>{if(!ok)throw new Error(msg);};
+const nonempty=x=>typeof x==="string"&&!!x.trim();
+const obj=x=>x!==null&&typeof x==="object"&&!Array.isArray(x);
+const sameKeys=(x,keys)=>obj(x)&&JSON.stringify(Object.keys(x).sort())===JSON.stringify([...keys].sort());
+const deepCopy=x=>JSON.parse(JSON.stringify(x));
+const ascii=x=>JSON.stringify(x).replace(/[\u007f-\uffff]/g,c=>"\\u"+c.charCodeAt(0).toString(16).padStart(4,"0"));
+function pretty(x,n=0){
+  const p="  ".repeat(n),i="  ".repeat(n+1);
+  if(Array.isArray(x))return x.length?"[\n"+x.map(v=>i+pretty(v,n+1)).join(",\n")+"\n"+p+"]":"[]";
+  if(obj(x)){const ks=Object.keys(x).sort();return ks.length?"{\n"+ks.map(k=>i+ascii(k)+": "+pretty(x[k],n+1)).join(",\n")+"\n"+p+"}":"{}";}
+  need(x===null||typeof x==="boolean"||typeof x==="string"||(typeof x==="number"&&Number.isFinite(x)),"UNSUPPORTED_JSON");
+  return ascii(x);
+}
+const validPath=p=>nonempty(p)&&!p.startsWith("/")&&!p.includes("\\")&&!p.includes("\0")&&!/^[A-Za-z]:/.test(p)&&p.split("/").every(s=>s&&s!=="."&&s!=="..")&&p.split("/")[0].toLowerCase()!==".git";
+export function plan(){return groups.flatMap((g,i)=>g.map(id=>({id,module:modules[i],status:"pending",evidence:[],reason:null})));}
+export function newPublication(content_id,category,target_paths,context={}){
+  const p={content_id,category,target_paths:[...target_paths].sort(),status:"in_progress",blocker:null,context:{
+    inputs:context.inputs||[],decisions:[{kind:POLICY},...(context.decisions||[])],
+    approvals:context.approvals||[],pending_questions:context.pending_questions||[],
+    validation:[],delivery:[],unrelated_changes:[]},steps:plan(),external_actions:[]};
+  validate(p);return p;
+}
+export function nextStep(p){return p.steps.find(s=>!["completed","skipped"].includes(s.status))?.id??null;}
+export function validate(p){
+  need(sameKeys(p,["content_id","category","target_paths","status","blocker","context","steps","external_actions"]),"PUBLICATION_FIELDS_INVALID");
+  need(nonempty(p.content_id)&&nonempty(p.category),"IDENTITY_REQUIRED");
+  need(["in_progress","blocked","verifying","cleanup_pending"].includes(p.status),"STATUS_INVALID");
+  need(p.blocker===null||nonempty(p.blocker),"BLOCKER_INVALID");
+  need(p.status!=="blocked"||nonempty(p.blocker),"BLOCKER_REQUIRED");
+  need(Array.isArray(p.target_paths)&&p.target_paths.length&&p.target_paths.every(validPath)&&new Set(p.target_paths).size===p.target_paths.length&&!p.target_paths.includes(".dentcast/PUBLISH-HANDOFF.md"),"TARGET_PATHS_INVALID");
+  need(obj(p.context)&&["inputs","decisions","approvals","pending_questions","validation","delivery","unrelated_changes"].every(k=>Array.isArray(p.context[k])),"CONTEXT_INVALID");
+  need(p.context.decisions.some(x=>obj(x)&&x.kind===POLICY),"FIXED_DELIVERY_REQUIRED");
+  const scopes=new Set();
+  for(const a of p.context.approvals){
+    need(sameKeys(a,["scope","decision","status","evidence"])&&nonempty(a.scope)&&["pending","confirmed","rejected","not_required"].includes(a.status)&&(a.decision===null||nonempty(a.decision))&&Array.isArray(a.evidence)&&a.evidence.every(nonempty),"APPROVAL_INVALID");
+    need(a.status==="pending"||(nonempty(a.decision)&&a.evidence.length),"APPROVAL_EVIDENCE_REQUIRED");
+    need(!scopes.has(a.scope),"DUPLICATE_APPROVAL");scopes.add(a.scope);
+  }
+  const base=plan(),indexes=new Map(base.map((x,i)=>[x.id,{...x,i}]));
+  need(Array.isArray(p.steps)&&p.steps.length>=base.length,"FULL_CANONICAL_PLAN_REQUIRED");
+  const ids=new Set();let lastModule=-1,unfinished=false;
+  for(const s of p.steps){
+    need(sameKeys(s,["id","module","status","evidence","reason"])&&nonempty(s.id)&&!ids.has(s.id),"STEP_FIELDS_OR_ID_INVALID");
+    ids.add(s.id);
+    const ref=indexes.get(s.id.split("/")[0]);
+    need(ref&&ref.module===s.module,"STEP_MODULE_INVALID");
+    const m=modules.indexOf(s.module);need(m>=lastModule,"MODULE_ORDER_INVALID");lastModule=m;
+    need(["pending","started","completed","skipped","blocked","failed"].includes(s.status)&&Array.isArray(s.evidence)&&s.evidence.every(nonempty)&&(s.reason===null||nonempty(s.reason)),"STEP_VALUE_INVALID");
+    need(s.status!=="completed"||s.evidence.length,"COMPLETION_EVIDENCE_REQUIRED");
+    need(!["skipped","blocked","failed"].includes(s.status)||nonempty(s.reason),"STEP_REASON_REQUIRED");
+    need(!unfinished||s.status==="pending","OUT_OF_ORDER_STEP_STATE");
+    if(!["completed","skipped"].includes(s.status))unfinished=true;
+    need(!["rules","0","F","G"].includes(s.id)||s.status!=="skipped","MANDATORY_STEP_SKIPPED");
+  }
+  need(JSON.stringify(p.steps.filter(x=>indexes.has(x.id)).map(x=>x.id))===JSON.stringify(base.map(x=>x.id)),"CANONICAL_ORDER_INVALID");
+  for(const s of p.steps)if(s.id.includes("/"))
+    need(p.steps.findIndex(x=>x.id===s.id)<p.steps.findIndex(x=>x.id===s.id.split("/")[0]),"SUBSTEP_ORDER_INVALID");
+  need(Array.isArray(p.external_actions),"EXTERNAL_ACTIONS_INVALID");
+  const actions=new Set();
+  for(const a of p.external_actions){
+    need(sameKeys(a,["id","target","status","evidence"])&&nonempty(a.id)&&nonempty(a.target)&&!actions.has(a.id)&&["started","outcome_unknown","completed","failed","not_performed"].includes(a.status)&&Array.isArray(a.evidence)&&a.evidence.every(nonempty)&&(["started","outcome_unknown"].includes(a.status)||a.evidence.length),"EXTERNAL_ACTION_INVALID");
+    actions.add(a.id);
+  }
+  return true;
+}
+export function updateStep(p,id,status,evidence=[],reason=null){
+  validate(p);const next=nextStep(p);
+  const cut=p.steps.findIndex(x=>x.id==="C.4.9"),i=p.steps.findIndex(x=>x.id===id);
+  need(id===next&&i>=0&&i<=cut,"NOT_NEXT_PRE_CUT_STEP");
+  need(!p.external_actions.some(x=>["started","outcome_unknown"].includes(x.status)),"EXTERNAL_OUTCOME_UNKNOWN");
+  const x=p.steps[i];
+  if(status==="started")need(x.status==="pending"&&!evidence.length&&reason===null,"START_PENDING_ONLY");
+  else if(status==="completed")need(x.status==="started"&&evidence.length&&reason===null,"COMPLETE_REQUIRES_STARTED_AND_EVIDENCE");
+  else if(status==="skipped")need(x.status==="pending"&&!["rules","0"].includes(id)&&nonempty(reason),"CANONICAL_SKIP_REQUIRED");
+  else need(["blocked","failed"].includes(status)&&["pending","started"].includes(x.status)&&nonempty(reason),"BLOCK_REASON_REQUIRED");
+  const out=deepCopy(p),s=out.steps[i];s.status=status;s.evidence=evidence;s.reason=reason;
+  out.status=["blocked","failed"].includes(status)?"blocked":"in_progress";out.blocker=out.status==="blocked"?id+": "+reason:null;
+  validate(out);return out;
+}
+export function renderCut1(p){
+  validate(p);const cut=p.steps.findIndex(x=>x.id==="C.4.9");
+  need(cut>=0&&p.steps.slice(0,cut+1).every(x=>["completed","skipped"].includes(x.status))&&p.steps.slice(cut+1).every(x=>x.status==="pending")&&p.status==="in_progress"&&p.blocker===null,"FIRST_CUT_NOT_READY");
+  need(!p.context.pending_questions.length&&!p.external_actions.some(x=>["started","outcome_unknown","failed"].includes(x.status)),"OPEN_DECISION_OR_ACTION");
+  const state={schema:SCHEMA,publication:p,reconciliation:null};
+  const prefix="# Publication handoff\n\nSemantic progress and evidence; current Git facts are read from Git.\n- Schema: "+SCHEMA+"\n- Content: "+ascii(p.content_id)+"\n- Status: "+p.status+"\n- Next canonical step: "+ascii(nextStep(p))+"\n- Blocker: "+ascii(p.blocker)+"\n\nThe structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.\nGit facts are reconstructed from Git and are not duplicated in this handoff.\n\n";
+  return prefix+BEGIN+pretty(state)+END;
+}
+export function inspectCut1(wire){
+  need(typeof wire==="string"&&wire.includes(BEGIN)&&wire.endsWith(END),"HANDOFF_FORMAT_INVALID");
+  const x=JSON.parse(wire.split(BEGIN)[1].split(END)[0]);
+  need(sameKeys(x,["schema","publication","reconciliation"])&&x.schema===SCHEMA&&x.reconciliation===null,"HANDOFF_V3_REQUIRED");
+  need(renderCut1(x.publication)===wire,"HANDOFF_CANONICAL_ENCODING_MISMATCH");
+  return {next_step:nextStep(x.publication),content_id:x.publication.content_id,state:x};
+}

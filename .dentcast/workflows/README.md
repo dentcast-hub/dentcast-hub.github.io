@@ -2,6 +2,17 @@
 
 **LIVE_MODULAR_PUBLISHING_ENABLED.** The twelve active modules below are the new-publication execution contract. Legacy files are backup only; do not read them for execution, fallback, or conflict resolution. No approval, exception, scientific requirement or mandatory validation is waived.
 
+## Connected first-cut metadata, opt-in
+
+The no-checkout metadata-only adapters are documented in
+`.dentcast/workflows/connected-github-handoff.md`. They serialize
+the **existing** canonical v3 handoff and do not replace any publishing
+module, scientific checker, review gate, or founder approval. A GitHub
+connector by itself does not prove the JavaScript/Python adapter can be
+executed or that the intended bytes were delivered. Push 1 is a
+durability boundary only; the current agent continues normally after
+remote read-back, with optional user-initiated handoff.
+
 ## Interrupted publication
 
 The permanent execution guide is `publish-checkpoints.md`; the temporary current-run state is `.dentcast/PUBLISH-HANDOFF.md`; `publish-handoff.md` and `publish-discovery.md` describe explicit recovery. These are different roles. In a continuing active session, «کجایی؟», «چی شد؟», «ادامه بده» and «ادامه انتشار» are status/continuation requests: answer directly and continue from the current ledger and last valid tool digest. Missing receipts, stale checkpoints and module cross-references do not authorize recovery or branch scans. Read each required complete source once per unchanged revision in the continuous run; follow the execution/delivery discipline in `publish-checkpoints.md`. Infrastructure-only work does not initialize a publication.
