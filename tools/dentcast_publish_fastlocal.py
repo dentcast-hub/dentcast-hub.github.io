@@ -119,6 +119,9 @@ def replay(raw, allow_torn=False):
                       k:v for k,v in record.items() if k!="digest"})),
                   "WAL_HASH_CHAIN_INVALID")
         if seq==0:
+            h.require(isinstance(record.get("run_id"),str)
+                      and len(record["run_id"])==24,
+                      "WAL_RUN_ID_REQUIRED")
             h.require(record.get("kind")=="begin" and
                       h.valid_hash(record.get("base_sha256")) and
                       h.valid_hash(record.get("input_fingerprint")),
@@ -127,11 +130,13 @@ def replay(raw, allow_torn=False):
             h.require(record.get("wal_engine_sha256")==digest(Path(__file__).read_bytes()),
                       "WAL_ENGINE_CHANGED_INVALIDATE_AND_RECONCILE")
         elif record.get("kind")=="step":
+            h.require(record.get("run_id")==init["run_id"],"WAL_RUN_ID_CHANGED")
             h.require(record.get("input_fingerprint")==init["input_fingerprint"],
                       "WAL_INPUT_FINGERPRINT_CHANGED")
             pub=apply(pub,record["step_id"],record["status"],
                       record["evidence"],record["reason"])
         elif record.get("kind")=="target":
+            h.require(record.get("run_id")==init["run_id"],"WAL_RUN_ID_CHANGED")
             target=h.relative_path(record["path"])
             h.require(target!=h.STATE_PATH and target not in pub["target_paths"] and
                       h.nonempty(record.get("evidence_ref")),
@@ -139,7 +144,10 @@ def replay(raw, allow_torn=False):
             pub=copy.deepcopy(pub)
             pub["target_paths"].append(target)
             lc.require_plan(pub)
-        elif record.get("kind")!="torn_tail_repaired":
+        elif record.get("kind")=="torn_tail_repaired":
+            h.require(record.get("run_id")==init["run_id"] and
+                      h.valid_hash(record.get("tail_sha256")),"WAL_REPAIR_INVALID")
+        else:
             raise h.Blocked("WAL_UNKNOWN_EVENT")
         prev=record["digest"]; seq+=1; valid+=len(line)
     return init,pub,prev,seq,valid
@@ -165,6 +173,8 @@ def begin(root, expected):
         h.require(not any(a["status"] in ("started","outcome_unknown")
                       for a in pub["external_actions"]),"EXTERNAL_OUTCOME_UNKNOWN")
         event={"version":VERSION,"kind":"begin","seq":0,"prev":ZERO,
+               "run_id":digest(encode({"base":sha,"branch":state["snapshot"]["branch"],
+                                      "created":timestamp()}))[:24],
                "timestamp":timestamp(),"base_sha256":sha,
                "base_head":state["snapshot"]["head"],
                "base_branch":state["snapshot"]["branch"],
@@ -182,7 +192,7 @@ def step(root, expected, sid, status, evidence=None, reason=None):
         h.require(old==expected,"STALE_WAL_WRITE")
         after=apply(pub,sid,status,evidence or [],reason)
         d=append(root,{"version":VERSION,"kind":"step","seq":n,
-                 "prev":old,"timestamp":timestamp(),
+                 "prev":old,"run_id":init["run_id"],"timestamp":timestamp(),
                  "input_fingerprint":init["input_fingerprint"],
                  "step_id":sid,"status":status,
                  "evidence":evidence or [],"reason":reason})
@@ -203,7 +213,7 @@ def enroll_target(root, expected, path, evidence_ref):
         updated["target_paths"].append(path)
         lc.require_plan(updated)
         out=append(root,{"kind":"target","version":VERSION,"seq":n,
-                        "prev":d,"timestamp":timestamp(),"path":path,
+                        "prev":d,"run_id":init["run_id"],"timestamp":timestamp(),"path":path,
                         "evidence_ref":evidence_ref})
         return {"status":"target_enrolled","digest":out,
                 "next_step":h.next_step(updated),"publication_completed":False}
@@ -263,7 +273,7 @@ def repair(root, expected):
         with p.open("r+b") as f:
             f.truncate(end);f.flush();os.fsync(f.fileno())
         new=append(root,{"kind":"torn_tail_repaired","version":VERSION,
-                        "seq":n,"prev":d,"timestamp":timestamp(),
+                        "seq":n,"prev":d,"run_id":init["run_id"],"timestamp":timestamp(),
                         "tail_sha256":digest(tail)})
         return {"status":"wal_tail_repaired","digest":new,
                 "next_step":h.next_step(pub),
