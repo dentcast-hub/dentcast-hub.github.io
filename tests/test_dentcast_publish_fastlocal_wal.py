@@ -56,22 +56,35 @@ class FastLocalWALTests(unittest.TestCase):
             wal.batch(self.root,"0"*64,[pair[0]])
         self.assertEqual(wal.inspect(self.root)["digest"],d)
 
-    def test_ten_resolved_steps_force_full_checkpoint_before_next(self):
-        initial=self.start()
-        d=wal.begin(self.root,initial["sha256"])["digest"]
-        plan=self.p["steps"]
-        for item in plan[:10]:
-            d=wal.step(self.root,d,item["id"],"started")["digest"]
-            out=wal.step(self.root,d,item["id"],"completed",["fixture:"+item["id"]])
-            d=out["digest"]
-        self.assertEqual(out["status"],"batch_flush_required")
-        with self.assertRaisesRegex(h.Blocked,"WAL_BATCH_FULL_FLUSH_REQUIRED"):
-            wal.step(self.root,d,plan[10]["id"],"started")
-        checkpoint=wal.flush(self.root,d,"fixture:reviewed bounded batch")
-        self.assertFalse(wal.active(self.root))
-        d=wal.begin(self.root,checkpoint["sha256"])["digest"]
-        self.assertEqual(wal.step(self.root,d,plan[10]["id"],"started")["status"],
-                         "fastlocal_active")
+    def test_unrelated_step_count_does_not_require_heavy_checkpoint(self):
+        initial = self.start()
+        d = wal.begin(self.root, initial["sha256"])["digest"]
+        with patch.object(h, "snapshot", side_effect=AssertionError("FULL_GIT_SCAN")):
+            for item in self.p["steps"][:12]:
+                d = wal.step(self.root, d, item["id"], "started")["digest"]
+                out = wal.step(self.root, d, item["id"], "completed",
+                               ["fixture:" + item["id"]])
+                d = out["digest"]
+                self.assertEqual(out["status"], "fastlocal_active")
+        # A real pause still materializes and validates the canonical state.
+        result = wal.flush(self.root, d, "fixture:reviewed actual work before pause")
+        self.assertFalse(result["first_delivery_cut"])
+        self.assertIn("no delivery is due", result["next_action"])
+        saved, _ = h.load_state(self.root)
+        self.assertTrue(all(s["status"] == "completed"
+                            for s in saved["publication"]["steps"][:12]))
+
+    def test_byte_limit_preserves_previous_durable_state_until_reviewed_flush(self):
+        initial = self.start()
+        d = wal.begin(self.root, initial["sha256"])["digest"]
+        before = wal.location(self.root).read_bytes()
+        with patch.object(wal, "MAX_BYTES", len(before) + 1):
+            with self.assertRaisesRegex(h.Blocked, "WAL_LIMIT_FLUSH_FIRST"):
+                wal.step(self.root, d, "rules", "started")
+        self.assertEqual(wal.location(self.root).read_bytes(), before)
+        self.assertEqual(wal.inspect(self.root)["digest"], d)
+        result = wal.flush(self.root, d, "fixture:reviewed state at byte limit")
+        self.assertEqual(result["next_step"], "rules")
 
     def test_two_steps_flush_to_one_canonical_handoff(self):
         init = self.start()
@@ -157,18 +170,13 @@ class FastLocalWALTests(unittest.TestCase):
     def test_first_cut_is_boundary_not_agent_stop(self):
         init = self.start()
         digest = wal.begin(self.root, init["sha256"])["digest"]
-        completed = 0
         for row in self.p["steps"]:
             if row["id"] == "C.4.10.1":
                 break
-            if completed and completed % wal.MAX_RESOLVED_STEPS == 0:
-                checkpoint = wal.flush(self.root, digest, "fixture:reviewed bounded block")
-                digest = wal.begin(self.root, checkpoint["sha256"])["digest"]
             sid = row["id"]
             digest = wal.step(self.root, digest, sid, "started")["digest"]
             digest = wal.step(self.root, digest, sid, "completed",
                               ["fixture:transport-only:" + sid])["digest"]
-            completed += 1
         st = wal.inspect(self.root)
         self.assertTrue(st["first_delivery_cut"])
         with self.assertRaisesRegex(h.Blocked, "FIRST_PUSH_REQUIRED"):
