@@ -45,7 +45,7 @@ generated, using absolute paths to staged byte files in a private manifest):
 
     GH_TOKEN=... python3 tools/dentcast_connected_first_push.py \
       --branch content/my-new-page --expected-head <40-hex-SHA> \
-      --manifest /private/path/first-cut.json
+      --manifest /private/path/first-cut.json --max-blob-bytes <actual-tool-limit>
 
 The manifest is a JSON object mapping *repository paths* (including the
 handoff) to *local absolute paths* containing the exact finished bytes.

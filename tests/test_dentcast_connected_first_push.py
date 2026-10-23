@@ -38,7 +38,7 @@ def fixture():
             break
     wire = h.render({"schema": h.SCHEMA, "publication": p,
                      "reconciliation": None}).encode()
-    tiny_webp = bytes.fromhex("524946460400000057454250")
+    tiny_webp = base64.b64decode("UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=")
     return {
         path: ('<html><img src="/' + asset + '"></html>').encode(),
         asset: tiny_webp,
@@ -96,7 +96,7 @@ class FirstCutTests(unittest.TestCase):
     def test_atomic_first_cut_and_binary_readback(self):
         client = FakeGitHub()
         files = fixture()
-        result = fp.deliver(client, "content/test-cut", HEAD, files)
+        result = fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
         self.assertEqual(result["delivery"], "verified-first-cut")
         self.assertEqual(result["next_step"], "C.4.10.1")
         self.assertEqual(client.updated, 1)
@@ -105,25 +105,31 @@ class FirstCutTests(unittest.TestCase):
         self.assertEqual(result["sha256"][h.STATE_PATH],
                          hashlib.sha256(files[h.STATE_PATH]).hexdigest())
 
+    def test_tool_specific_size_limit_checked_before_transfer(self):
+        client = FakeGitHub()
+        with self.assertRaisesRegex(ValueError, "BLOB_EXCEEDS_TOOL_LIMIT"):
+            fp.deliver(client, "content/test-cut", HEAD, fixture(), 10)
+        self.assertEqual(client.blobs, {})
+
     def test_ref_moved_before_blob_upload(self):
         client = FakeGitHub()
         client.ref = "f" * 40
         with self.assertRaisesRegex(ValueError, "HEAD_CHANGED_BEFORE_UPLOAD"):
-            fp.deliver(client, "content/test-cut", HEAD, fixture())
+            fp.deliver(client, "content/test-cut", HEAD, fixture(), 1024 * 1024)
         self.assertEqual(client.blobs, {})
 
     def test_ref_moves_after_commit(self):
         client = FakeGitHub()
         client.mutate_before_update = True
         with self.assertRaisesRegex(ValueError, "NON_FAST_FORWARD"):
-            fp.deliver(client, "content/test-cut", HEAD, fixture())
+            fp.deliver(client, "content/test-cut", HEAD, fixture(), 1024 * 1024)
         self.assertEqual(client.updated, 0)
 
     def test_no_replacement_of_existing_handoff(self):
         client = FakeGitHub()
         client.handoff = {"sha": "other-run"}
         with self.assertRaisesRegex(ValueError, "REMOTE_HANDOFF_EXISTS"):
-            fp.deliver(client, "content/test-cut", HEAD, fixture())
+            fp.deliver(client, "content/test-cut", HEAD, fixture(), 1024 * 1024)
 
     def test_invalid_ledger_and_missing_image_rejected(self):
         files = fixture()
@@ -148,7 +154,7 @@ class FirstCutTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "FIRST_CUT_NOT_COMPLETE"):
             fp.validate_cut(files)
         with self.assertRaisesRegex(ValueError, "FEATURE_BRANCH_REQUIRED"):
-            fp.deliver(FakeGitHub(), "main", HEAD, fixture())
+            fp.deliver(FakeGitHub(), "main", HEAD, fixture(), 1024 * 1024)
 
 
 if __name__ == "__main__":

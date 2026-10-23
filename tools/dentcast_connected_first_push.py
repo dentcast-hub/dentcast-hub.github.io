@@ -63,7 +63,11 @@ def validate_cut(files):
                 path.encode("utf-8") in files[html]
                 or Path(path).name.encode("utf-8") in files[html]):
             need(path in files, "REFERENCED_WEBP_BYTES_REQUIRED:" + path)
-            need(files[path][:4] == b"RIFF" and files[path][8:12] == b"WEBP",
+            body = files[path]
+            need(len(body) >= 20 and body[:4] == b"RIFF"
+                 and body[8:12] == b"WEBP"
+                 and int.from_bytes(body[4:8], "little") + 8 == len(body)
+                 and body[12:16] in (b"VP8 ", b"VP8L", b"VP8X"),
                  "INVALID_WEBP_BYTES:" + path)
     return {"content_id": p["content_id"],
             "next_step": h.next_step(p),
@@ -135,7 +139,7 @@ class REST:
         return base64.b64decode(data["content"])
 
 
-def deliver(transport, branch, expected_head, files):
+def deliver(transport, branch, expected_head, files, max_blob_bytes):
     """Commit exactly once on a pre-created publication branch, fail-closed.
 
     No CLI git checkout needed for the GitHub REST backend. For connector-only
@@ -147,6 +151,10 @@ def deliver(transport, branch, expected_head, files):
     need(isinstance(expected_head, str) and len(expected_head) == 40
          and all(x in "0123456789abcdef" for x in expected_head),
          "EXACT_EXPECTED_HEAD_REQUIRED")
+    need(type(max_blob_bytes) is int and max_blob_bytes > 0,
+         "TOOL_BLOB_LIMIT_REQUIRED")
+    for path, body in files.items():
+        need(len(body) <= max_blob_bytes, "BLOB_EXCEEDS_TOOL_LIMIT:" + path)
     meta = validate_cut(files)
     need(transport.head(branch) == expected_head, "HEAD_CHANGED_BEFORE_UPLOAD")
     need(transport.existing_handoff(branch) is None,
@@ -180,13 +188,15 @@ def main():
     parser.add_argument("--branch", required=True)
     parser.add_argument("--expected-head", required=True)
     parser.add_argument("--manifest", required=True, help="Local JSON path-to-file map")
+    parser.add_argument("--max-blob-bytes", type=int, required=True,
+                        help="Measured maximum accepted by the selected transfer tool")
     args = parser.parse_args()
     manifest = json.loads(Path(args.manifest).read_text(encoding="utf-8"))
     need(isinstance(manifest, dict) and manifest, "MANIFEST_REQUIRED")
     files = {h.relative_path(dst): Path(src).read_bytes()
              for dst, src in manifest.items()}
     result = deliver(REST(os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN"),
-                          args.repo), args.branch, args.expected_head, files)
+                          args.repo), args.branch, args.expected_head, files, args.max_blob_bytes)
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
