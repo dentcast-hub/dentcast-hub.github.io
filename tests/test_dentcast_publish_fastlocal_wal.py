@@ -80,7 +80,7 @@ class FastLocalWALTests(unittest.TestCase):
         recovered = wal.repair(self.root, d)
         self.assertEqual(recovered["status"], "wal_tail_repaired")
         self.assertEqual(wal.inspect(self.root)["next_step"], "rules")
-        with self.assertRaisesRegex(h.Blocked, "COMPLETION_REQUIRES"):
+        with self.assertRaisesRegex(h.Blocked, "CANONICAL_SKIP_REASON_REQUIRED"):
             wal.step(self.root, recovered["digest"], "rules", "skipped",
                      reason="cannot skip started action")
         wal.flush(self.root, recovered["digest"])
