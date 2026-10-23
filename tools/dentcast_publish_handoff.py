@@ -450,7 +450,37 @@ def compact_snapshot(snap):
                       for name, info in snap["files"].items()}, "workflow": snap["workflow"]}
 
 
-def render(state):
+def compact_v3_steps(steps):
+    """Omit only the inferable trailing pending canonical rows on the wire."""
+    end = len(steps)
+    while end and steps[end - 1]["status"] == "pending" and "/" not in steps[end - 1]["id"]:
+        end -= 1
+    return steps[:end]
+
+
+def expand_v3_steps(publication):
+    """Recover the omitted canonical tail; reject gaps and retain all dynamic rows."""
+    import dentcast_publish_lifecycle as lifecycle
+    required = lifecycle.plan(publication["category"] == "paper-only")
+    serialized = publication["steps"]
+    require(isinstance(serialized, list), "COMPACT_STEPS_INVALID")
+    rebuilt, index = [], 0
+    for row in serialized:
+        require(isinstance(row, dict) and index < len(required), "COMPACT_STEPS_INVALID")
+        sid = row.get("id")
+        if sid == required[index]["id"]:
+            rebuilt.append(row)
+            index += 1
+        elif isinstance(sid, str) and sid.startswith(required[index]["id"] + "/"):
+            rebuilt.append(row)
+        else:
+            raise Blocked("COMPACT_STEPS_NONPREFIX_OR_UNKNOWN")
+    publication["steps"] = rebuilt + required[index:]
+    lifecycle.require_plan(publication)
+    return publication
+
+
+def render(state, compact=True):
     if state['schema'] == 'publish-handoff-v1':
         return render_full(state)
     if state['schema'] == 'publish-handoff-v2':
@@ -462,6 +492,9 @@ def render(state):
         wire = {key: value for key, value in state.items()
                 if key not in ('snapshot', 'source_revision', 'generation', 'updated_at',
                                'previous_sha256')}
+        if compact:
+            pub = wire['publication']
+            wire['publication'] = {**pub, 'steps': compact_v3_steps(pub['steps'])}
         if isinstance(wire.get('reconciliation'), dict):
             wire['reconciliation'] = {'note': wire['reconciliation']['note']}
         snapshot_note = "Git facts are reconstructed from Git and are not duplicated in this handoff."
@@ -669,8 +702,14 @@ def parse_state(raw):
                 and nonempty(state['reconciliation']['note'])
                 ),
                 'RECONCILIATION_INVALID')
-            validate_publication(state['publication'])
-            require(render(state) == text, 'HANDOFF_SUMMARY_OR_ENCODING_CHANGED')
+            stored_rows = state['publication'].get('steps')
+            require(isinstance(stored_rows, list), 'COMPACT_STEPS_INVALID')
+            # Previous v3 files had the entire canonical tail, including G.
+            legacy_full = bool(stored_rows) and stored_rows[-1].get('id') in ('G', 'C.4.10.2')
+            expand_v3_steps(state['publication'])
+            require(render(state) == text or (
+                legacy_full and render(state, compact=False) == text),
+                'HANDOFF_SUMMARY_OR_ENCODING_CHANGED')
             state.update(generation=1, updated_at=now(), previous_sha256=None)
             return state, digest(raw)
         if state.get('schema') != 'publish-handoff-v2':

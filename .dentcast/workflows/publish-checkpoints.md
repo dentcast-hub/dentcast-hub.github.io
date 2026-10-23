@@ -135,6 +135,16 @@ requirements still apply. After an actual verified first remote delivery,
 **continue in the same agent whenever possible**; changing agents or
 entering a Work session is optional, not mandated by Push 1.
 
+### Compact handoff, unchanged canonical plan
+
+For new canonical v3 handoffs, persist the significant `steps` prefix only:
+all started/completed/skipped/failed records, plus any explicitly enrolled
+dynamic substeps (even when pending). Pure trailing `pending` canonical
+rows are omitted from the file and **reconstructed from the live registry**
+when opened. A missing or reordered step inside the prefix is an error.
+Older full-length v3 files remain accepted. This is a storage format
+optimization, not permission to bypass a step, gate or review.
+
 ### Prefer one command per verified action
 
 Use `advance` to reduce manual calls and digest copying. After completing and

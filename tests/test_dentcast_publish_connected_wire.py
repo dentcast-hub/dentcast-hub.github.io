@@ -24,6 +24,32 @@ def node(script, obj=None):
 
 
 class ConnectedWireParity(unittest.TestCase):
+    def test_compact_v3_wire_and_legacy_roundtrip(self):
+        pub=step_sequence(fresh())["state"]["publication"]
+        obj={"schema":h.SCHEMA,"publication":pub,"reconciliation":None}
+        wire=h.render(obj)
+        saved=json.loads(wire.split(h.BEGIN)[1].split(h.END)[0])
+        self.assertEqual(saved["publication"]["steps"][-1]["id"],"C.4.9")
+        self.assertEqual(len(saved["publication"]["steps"]),33)
+        restored,_=h.parse_state(wire.encode())
+        self.assertEqual(restored["publication"]["steps"],pub["steps"])
+        script=("import {inspectCut1} from './tools/dentcast_connected_wire.mjs';"
+                "process.stdout.write(JSON.stringify(inspectCut1(process.argv[1]).state.publication.steps));")
+        self.assertEqual(json.loads(node(script,wire)),pub["steps"])
+        legacy=h.render(obj,compact=False)
+        old,_=h.parse_state(legacy.encode())
+        self.assertEqual(old["publication"]["steps"],pub["steps"])
+        self.assertEqual(json.loads(node(script,legacy)),pub["steps"])
+
+    def test_compact_wire_rejects_missing_middle_step(self):
+        pub=step_sequence(fresh())["state"]["publication"]
+        wire=h.render({"schema":h.SCHEMA,"publication":pub,"reconciliation":None})
+        parsed=json.loads(wire.split(h.BEGIN)[1].split(h.END)[0])
+        del parsed["publication"]["steps"][2]
+        corrupted=wire.split(h.BEGIN)[0]+h.BEGIN+json.dumps(parsed,sort_keys=True)+h.END
+        with self.assertRaisesRegex(h.Blocked,"COMPACT_STEPS_NONPREFIX_OR_UNKNOWN"):
+            h.parse_state(corrupted.encode())
+
     def test_plan_is_exact_authoritative_canonical_plan(self):
         result=node("import {plan} from './tools/dentcast_connected_wire.mjs'; process.stdout.write(JSON.stringify(plan()));")
         self.assertEqual(json.loads(result),lc.plan())
