@@ -13,6 +13,7 @@ on:
       - '.dentcast/workflows/**'
       - 'tools/dentcast_publish*.py'
       - 'tools/dentcast_connected_state.py'
+      - 'tools/dentcast_connected_cut_gates.py'
       - 'tools/dentcast_connected_wire.mjs'
       - 'tools/dentcast_connected_first_push.py'
       - 'tools/verify_publish.py'

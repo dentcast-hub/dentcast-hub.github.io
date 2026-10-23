@@ -31,6 +31,19 @@ def fixture():
             "inputs", "decisions", "approvals", "pending_questions", "validation",
             "delivery", "unrelated_changes")},
         "steps": lc.plan(), "external_actions": []}
+    # Synthetic only: these declarations exercise first-cut infrastructure
+    # and NEVER represent clinical review or a real author approval.
+    p["context"]["decisions"] = [
+        {"kind": "first_cut_lead_provenance_v1",
+         "origin": "not_applicable", "source_ref": "fixture:no-lead-in-test",
+         "evidence": ["fixture:structural-only"]},
+        {"kind": "first_cut_scope_audit_v1",
+         "landing_path": "insight/index.html",
+         "landing_mode": "generated_later",
+         "builder_ref": "fixture:synthetic-builder",
+         "related_changed_paths": [],
+         "observed_changed_paths": [path, asset],
+         "evidence": ["fixture:synthetic-audit"]}]
     for row in p["steps"]:
         row["status"] = "completed"
         row["evidence"] = ["fixture:synthetic:" + row["id"]]
@@ -54,6 +67,8 @@ class FakeGitHub:
         self.updated = 0
         self.handoff = None
         self.mutate_before_update = False
+        self.baseline_media = {}
+        self.baseline_landing = b"<html><div id='fixture-builder-render'></div></html>"
 
     def head(self, branch):
         return self.ref
@@ -89,10 +104,25 @@ class FakeGitHub:
         self.updated += 1
 
     def path_oid(self, path, commit):
+        if commit == COMMIT and hasattr(self, "entries"):
+            for item in self.entries:
+                if item["path"] == path:
+                    return item["sha"]
+        if path == "insight/index.html" and commit in (HEAD, COMMIT):
+            return fp.git_oid(self.baseline_landing)
+        if path in self.baseline_media and commit in (HEAD, COMMIT):
+            return fp.git_oid(self.baseline_media[path])
+        if commit == HEAD:
+            raise ValueError("REMOTE_PATH_NOT_FILE:" + path)
         assert commit == COMMIT
         return next(x["sha"] for x in self.entries if x["path"] == path)
 
     def get_blob(self, sha):
+        if sha == fp.git_oid(self.baseline_landing):
+            return self.baseline_landing
+        for body in self.baseline_media.values():
+            if fp.git_oid(body) == sha:
+                return body
         return self.blobs[sha]
 
 
@@ -132,7 +162,9 @@ class FirstCutTests(unittest.TestCase):
     def test_bad_post_update_path_receipt_is_not_success(self):
         class Tampered(FakeGitHub):
             def path_oid(self, path, commit):
-                return "e" * 40
+                if commit == COMMIT:
+                    return "e" * 40
+                return super().path_oid(path, commit)
         client = Tampered()
         with self.assertRaisesRegex(ValueError, "POST_UPDATE_TREE_PATH_MISMATCH"):
             fp.deliver(client, "content/test-cut", HEAD, fixture(), 1024 * 1024)
@@ -171,10 +203,28 @@ class FirstCutTests(unittest.TestCase):
         with self.assertRaises((h.Blocked, ValueError)):
             fp.validate_cut(files)
 
+    def test_failed_external_action_blocks_before_blob_upload(self):
+        files = fixture()
+        state, _ = h.parse_state(files[h.STATE_PATH])
+        state["publication"]["external_actions"].append({
+            "id": "fixture:drive-upload", "target": "drive:fixture",
+            "status": "failed", "evidence": ["fixture:failed-outcome"]})
+        files[h.STATE_PATH] = h.render(state).encode()
+        client = FakeGitHub()
+        with self.assertRaisesRegex(ValueError, "EXTERNAL_OUTCOME_UNRESOLVED"):
+            fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
+        self.assertEqual(client.blobs, {})
+        self.assertEqual(client.updated, 0)
+        self.assertEqual(client.ref, HEAD)
+
     def test_missing_static_landing_page_blocks_upload(self):
         files = fixture()
         state, _ = h.parse_state(files[h.STATE_PATH])
         state["publication"]["target_paths"].append("insight/index.html")
+        audit = next(x for x in state["publication"]["context"]["decisions"]
+                     if x["kind"] == "first_cut_scope_audit_v1")
+        audit["landing_mode"] = "included"
+        audit["observed_changed_paths"].append("insight/index.html")
         files[h.STATE_PATH] = h.render(state).encode()
         client = FakeGitHub()
         with self.assertRaisesRegex(ValueError, "MISSING_CANONICAL_TARGET_BYTES:insight/index.html"):
@@ -221,6 +271,156 @@ class FirstCutTests(unittest.TestCase):
             "decision": "approved", "evidence": ["fixture:author-message"]})
         files[h.STATE_PATH] = h.render(state).encode()
         self.assertEqual(fp.validate_cut(files)["next_step"], "C.4.10.1")
+
+    def test_missing_lead_origin_declaration_is_blocked(self):
+        files = fixture()
+        state, _ = h.parse_state(files[h.STATE_PATH])
+        state["publication"]["context"]["decisions"] = [
+            d for d in state["publication"]["context"]["decisions"]
+            if d["kind"] != "first_cut_lead_provenance_v1"]
+        files[h.STATE_PATH] = h.render(state).encode()
+        client = FakeGitHub()
+        with self.assertRaisesRegex(h.Blocked, "FIRST_CUT_DECLARATION_REQUIRED"):
+            fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
+        self.assertEqual(client.blobs, {})
+        self.assertEqual(client.updated, 0)
+
+    def test_agent_written_intro_requires_recorded_confirmed_approval(self):
+        for status in ("absent", "pending", "rejected", "confirmed"):
+            with self.subTest(status=status):
+                files = fixture()
+                state, _ = h.parse_state(files[h.STATE_PATH])
+                lead = next(d for d in state["publication"]["context"]["decisions"]
+                            if d["kind"] == "first_cut_lead_provenance_v1")
+                lead["origin"] = "agent_authored"
+                lead["source_ref"] = "fixture:agent-wrote-lead"
+                if status != "absent":
+                    state["publication"]["context"]["approvals"].append({
+                        "scope": "authored-intro", "status": status,
+                        "decision": None if status == "pending" else
+                                    ("approved" if status == "confirmed" else "declined"),
+                        "evidence": [] if status == "pending" else ["fixture:user-message"]})
+                files[h.STATE_PATH] = h.render(state).encode()
+                client = FakeGitHub()
+                if status == "confirmed":
+                    self.assertEqual(fp.validate_cut(files)["next_step"], "C.4.10.1")
+                else:
+                    with self.assertRaises((h.Blocked, ValueError)):
+                        fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
+                    self.assertEqual(client.blobs, {})
+                    self.assertEqual(client.updated, 0)
+
+    def test_original_author_paragraph_needs_no_new_approval(self):
+        files = fixture()
+        state, _ = h.parse_state(files[h.STATE_PATH])
+        lead = next(d for d in state["publication"]["context"]["decisions"]
+                    if d["kind"] == "first_cut_lead_provenance_v1")
+        lead["origin"] = "author_original"
+        lead["source_ref"] = "fixture:original-author-paragraph"
+        files[h.STATE_PATH] = h.render(state).encode()
+        self.assertEqual(fp.validate_cut(files)["next_step"], "C.4.10.1")
+
+    def test_undeclared_manual_landing_and_related_changed_pages_block(self):
+        for changed in ("landing", "related"):
+            with self.subTest(changed=changed):
+                files = fixture()
+                state, _ = h.parse_state(files[h.STATE_PATH])
+                audit = next(d for d in state["publication"]["context"]["decisions"]
+                             if d["kind"] == "first_cut_scope_audit_v1")
+                if changed == "landing":
+                    audit["landing_mode"] = "included"
+                else:
+                    audit["related_changed_paths"].append("glossary/another-page.html")
+                files[h.STATE_PATH] = h.render(state).encode()
+                client = FakeGitHub()
+                with self.assertRaises((h.Blocked, ValueError)):
+                    fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
+                self.assertEqual(client.blobs, {})
+                self.assertEqual(client.updated, 0)
+
+    def test_webp_referenced_but_not_declared_or_in_base_blocks_before_upload(self):
+        files = fixture()
+        page = "insight/insight-fixture.html"
+        files[page] = files[page].replace(
+            b"</html>", b'<img src="/insight/assets/unlisted.webp?v=3"></html>')
+        client = FakeGitHub()
+        with self.assertRaisesRegex((h.Blocked, ValueError),
+                                    "FIRST_CUT_WEBP_NOT_IN_BUNDLE_OR_BASE"):
+            fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
+        self.assertEqual(client.blobs, {})
+        self.assertEqual(client.updated, 0)
+
+    def test_existing_baseline_webp_is_verified_by_oid_and_bytes(self):
+        files = fixture()
+        page = "insight/insight-fixture.html"
+        path = "insight/assets/old-existing.webp"
+        files[page] = files[page].replace(
+            b"</html>", b'<img src="/insight/assets/old-existing.webp?v=1"></html>')
+        body = files["insight/assets/first-cut-fixture.webp"]
+        client = FakeGitHub()
+        client.baseline_media[path] = body
+        result = fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
+        self.assertEqual(result["baseline_media"], [path])
+        self.assertEqual(client.updated, 1)
+
+    def test_undeclared_static_index_detected_from_actual_base(self):
+        files = fixture()
+        client = FakeGitHub()
+        client.baseline_landing = (
+            b'<html><ul><li><a href="insight-98.html">existing article</a>'
+            b'</li></ul></html>')
+        with self.assertRaisesRegex(h.Blocked,
+                                    "MANUAL_LANDING_MUST_BE_INCLUDED_BEFORE_CUT"):
+            fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
+        self.assertEqual(client.blobs, {})
+        self.assertEqual(client.updated, 0)
+
+    def test_manual_landing_included_with_new_link_is_valid(self):
+        files = fixture()
+        state, _ = h.parse_state(files[h.STATE_PATH])
+        index = "insight/index.html"
+        state["publication"]["target_paths"].append(index)
+        audit = next(d for d in state["publication"]["context"]["decisions"]
+                     if d["kind"] == "first_cut_scope_audit_v1")
+        audit["landing_mode"] = "included"
+        audit["observed_changed_paths"].append(index)
+        files[h.STATE_PATH] = h.render(state).encode()
+        files[index] = (b'<html><li><a href="insight-fixture.html">'
+                        b'New article</a></li></html>')
+        result = fp.deliver(FakeGitHub(), "content/test-cut", HEAD,
+                            files, 1024 * 1024)
+        self.assertEqual(result["delivery"], "verified-first-cut")
+        self.assertIn(index, result["paths"])
+
+    def test_manual_landing_without_new_link_blocks_upload(self):
+        files = fixture()
+        state, _ = h.parse_state(files[h.STATE_PATH])
+        index = "insight/index.html"
+        state["publication"]["target_paths"].append(index)
+        audit = next(d for d in state["publication"]["context"]["decisions"]
+                     if d["kind"] == "first_cut_scope_audit_v1")
+        audit["landing_mode"] = "included"
+        audit["observed_changed_paths"].append(index)
+        files[h.STATE_PATH] = h.render(state).encode()
+        files[index] = b'<html><li><a href="insight-previous.html">Old</a></li></html>'
+        client = FakeGitHub()
+        with self.assertRaisesRegex(h.Blocked, "FIRST_CUT_LANDING_ENTRY_MISSING"):
+            fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
+        self.assertEqual(client.blobs, {})
+        self.assertEqual(client.updated, 0)
+
+    def test_bad_existing_baseline_webp_is_blocked(self):
+        files = fixture()
+        page = "insight/insight-fixture.html"
+        path = "insight/assets/old-existing.webp"
+        files[page] = files[page].replace(
+            b"</html>", b'<img src="/insight/assets/old-existing.webp"></html>')
+        client = FakeGitHub()
+        client.baseline_media[path] = b"fake webp"
+        with self.assertRaisesRegex((h.Blocked, ValueError),
+                                    "FIRST_CUT_WEBP_NOT_IN_BUNDLE_OR_BASE"):
+            fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
+        self.assertEqual(client.blobs, {})
 
     def test_not_full_publication_or_paper_only(self):
         files = fixture()

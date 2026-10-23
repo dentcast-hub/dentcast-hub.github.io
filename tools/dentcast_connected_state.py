@@ -14,6 +14,7 @@ from pathlib import PurePosixPath
 
 import dentcast_publish_handoff as h
 import dentcast_publish_lifecycle as lc
+import dentcast_connected_cut_gates as gates
 
 SCHEMA = "connected-publish-state-v1"
 REPO = "dentcast-hub/dentcast-hub.github.io"
@@ -231,7 +232,7 @@ def validate_real_bytes(publication, targets):
 
 
 def compile_cut1(session, expected_digest, *, observed_branch, observed_head,
-                 observed_workflow_sources, actual_targets):
+                 observed_workflow_sources, actual_targets, baseline_verifier=None):
     """Materialize exact canonical v3 handoff only after observed source checks.
 
     actual_targets: repository-relative path => bytes from the real assets.
@@ -255,6 +256,7 @@ def compile_cut1(session, expected_digest, *, observed_branch, observed_head,
     h.require(not any(a["status"] in ("started", "outcome_unknown", "failed")
                       for a in p["external_actions"]),
               "EXTERNAL_OUTCOME_NOT_RESOLVED")
+    gates.validate_declarations(p)
     h.require(isinstance(actual_targets, dict)
               and set(p["target_paths"]) <= set(actual_targets)
               and all(isinstance(b, bytes) for b in actual_targets.values()),
@@ -262,6 +264,7 @@ def compile_cut1(session, expected_digest, *, observed_branch, observed_head,
     h.require(set(actual_targets) == set(p["target_paths"]),
               "UNREVIEWED_FILE_SCOPE")
     validate_real_bytes(p, actual_targets)
+    gates.validate_media(actual_targets, baseline_verifier)
     # The shared renderer encodes v3 exactly as the local CLI does.
     wire = h.render(session["state"]).encode("utf-8")
     projected, handoff_sha = h.parse_state(wire)
@@ -276,7 +279,8 @@ def compile_cut1(session, expected_digest, *, observed_branch, observed_head,
             "publication_completed": False}
 
 
-def receive_cut1(raw_handoff, *, branch, sha_by_path, target_bytes):
+def receive_cut1(raw_handoff, *, branch, sha_by_path, target_bytes,
+                 baseline_verifier=None):
     """Fresh-agent pure byte validation. Remote HEAD and blob relationships
     must ALSO be independently confirmed by the connector delivery adapter.
     """
@@ -290,12 +294,14 @@ def receive_cut1(raw_handoff, *, branch, sha_by_path, target_bytes):
     h.require(all(a["status"] in ("confirmed", "not_required")
                   for a in p["context"]["approvals"]),
               "RECEIVED_UNRESOLVED_APPROVAL")
+    gates.validate_declarations(p)
     h.require(set(p["target_paths"]) == set(target_bytes),
               "RECEIVED_TARGETS_MISSING")
     h.require(all(isinstance(target_bytes[k], bytes)
                   and digest(target_bytes[k]) == sha_by_path.get(k)
                   for k in target_bytes), "RECEIVED_TARGET_BYTES_MISMATCH")
     validate_real_bytes(p, target_bytes)
+    gates.validate_media(target_bytes, baseline_verifier)
     h.require(valid_branch(branch), "RECEIVED_FEATURE_BRANCH_REQUIRED")
     return {"status": "cut1_wire_and_bytes_verified", "handoff_sha256": handoff_sha,
             "next_step": h.next_step(p),
