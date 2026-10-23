@@ -31,6 +31,20 @@ export function newPublication(content_id,category,target_paths,context={}){
     validation:[],delivery:[],unrelated_changes:[]},steps:plan(),external_actions:[]};
   validate(p);return p;
 }
+// Only static pending suffix entries are reconstructible. Planned dynamic
+// substeps are preserved because their presence cannot be inferred.
+function compactSteps(rows){let i=rows.length;while(i&&rows[i-1].status==="pending"&&!rows[i-1].id.includes("/"))i--;return rows.slice(0,i);}
+function expandSteps(p){
+  const base=plan(),rows=[],given=p.steps;let idx=0;
+  need(Array.isArray(given),"COMPACT_STEPS_INVALID");
+  for(const step of given){
+    need(obj(step)&&idx<base.length,"COMPACT_STEPS_INVALID");
+    if(step.id===base[idx].id){rows.push(step);idx++;}
+    else if(typeof step.id==="string"&&step.id.startsWith(base[idx].id+"/"))rows.push(step);
+    else throw new Error("COMPACT_STEPS_NONPREFIX_OR_UNKNOWN");
+  }
+  return {...p,steps:[...rows,...base.slice(idx)]};
+}
 export function nextStep(p){return p.steps.find(s=>!["completed","skipped"].includes(s.status))?.id??null;}
 export function validate(p){
   need(sameKeys(p,["content_id","category","target_paths","status","blocker","context","steps","external_actions"]),"PUBLICATION_FIELDS_INVALID");
@@ -134,14 +148,14 @@ function requireExternalOutcomes(p){
   const resolved=reconciledExternalFailures(p);
   need(!p.external_actions.some(a=>["started","outcome_unknown"].includes(a.status)||(a.status==="failed"&&!resolved.has(a.id))),"OPEN_DECISION_OR_ACTION");
 }
-export function renderCut1(p){
+export function renderCut1(p,compact=true){
   validate(p);const cut=p.steps.findIndex(x=>x.id==="C.4.9");
   need(cut>=0&&p.steps.slice(0,cut+1).every(x=>["completed","skipped"].includes(x.status))&&p.steps.slice(cut+1).every(x=>x.status==="pending")&&p.status==="in_progress"&&p.blocker===null,"FIRST_CUT_NOT_READY");
   need(!p.context.pending_questions.length,"OPEN_DECISION_OR_ACTION");
   requireExternalOutcomes(p);
   need(p.context.approvals.every(a=>["confirmed","not_required"].includes(a.status)),"FIRST_CUT_UNRESOLVED_APPROVAL");
   cutDeclarations(p);
-  const state={schema:SCHEMA,publication:p,reconciliation:null};
+  const state={schema:SCHEMA,publication:compact?{...p,steps:compactSteps(p.steps)}:p,reconciliation:null};
   const prefix="# Publication handoff\n\nSemantic progress and evidence; current Git facts are read from Git.\n- Schema: "+SCHEMA+"\n- Content: "+ascii(p.content_id)+"\n- Status: "+p.status+"\n- Next canonical step: "+ascii(nextStep(p))+"\n- Blocker: "+ascii(p.blocker)+"\n\nThe structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.\nGit facts are reconstructed from Git and are not duplicated in this handoff.\n\n";
   return prefix+BEGIN+pretty(state)+END;
 }
@@ -149,6 +163,7 @@ export function inspectCut1(wire){
   need(typeof wire==="string"&&wire.includes(BEGIN)&&wire.endsWith(END),"HANDOFF_FORMAT_INVALID");
   const x=JSON.parse(wire.split(BEGIN)[1].split(END)[0]);
   need(sameKeys(x,["schema","publication","reconciliation"])&&x.schema===SCHEMA&&x.reconciliation===null,"HANDOFF_V3_REQUIRED");
-  need(renderCut1(x.publication)===wire,"HANDOFF_CANONICAL_ENCODING_MISMATCH");
-  return {next_step:nextStep(x.publication),content_id:x.publication.content_id,state:x};
+  const expanded={...x,publication:expandSteps(x.publication)};
+  need(renderCut1(expanded.publication)===wire||renderCut1(expanded.publication,false)===wire,"HANDOFF_CANONICAL_ENCODING_MISMATCH");
+  return {next_step:nextStep(expanded.publication),content_id:expanded.publication.content_id,state:expanded};
 }
