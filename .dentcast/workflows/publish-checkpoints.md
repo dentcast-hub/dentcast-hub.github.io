@@ -121,6 +121,20 @@ python3 tools/dentcast_publish_handoff.py step --id <canonical-id> --status comp
 
 Use `skipped --reason <canonical-exception>` for an inapplicable step, or `blocked`/`failed` with a real reason. Record before pausing. A completed checkpoint must first have been started; neither the hook nor the CLI performs semantic work or creates a scientific result. Add actual decisions, approvals, input references, validation and delivery receipts via `record` using the full current `recorded_state.publication` object, never by replacing it with a partial example. Known approval scopes and external action history cannot disappear.
 
+### Optional connected GitHub state construction (not a forced handoff)
+
+For a new page publication in a tool-limited GitHub-connected runtime,
+the portable metadata compiler in connected-github-handoff.md may
+construct the same complete canonical v3 handoff without local Git.
+Its Python variant imports the authoritative plan and validation; its
+import-free JavaScript wire codec has strict Python byte/plan parity
+checks. These tools are only recorders/validators; they never perform
+a semantic step, grant author approval, evaluate DES/Fidelity, commit
+files or certify delivery. All normal workflow modules and approval
+requirements still apply. After an actual verified first remote delivery,
+**continue in the same agent whenever possible**; changing agents or
+entering a Work session is optional, not mandated by Push 1.
+
 ### Prefer one command per verified action
 
 Use `advance` to reduce manual calls and digest copying. After completing and

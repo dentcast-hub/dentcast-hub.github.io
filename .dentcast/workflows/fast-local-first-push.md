@@ -59,8 +59,7 @@ accepts only paths in the canonical target_paths plus the handoff.
   against a fake Git backend. These are deterministic transport tests, NOT
   independent scientific reviewers or a genuine GitHub remote run.
 - Next: measured before/after baseline, durable fast-local WAL or equivalent
-  per-step persistence with valid recovery, portable canonical-state compiler,
-  a **real connector-only** test branch delivery and cold-agent resume.
+  per-step persistence with valid recovery, a **real connector-only** test branch delivery and cold-agent resume.
 - Never bump or edit DES/Fidelity spec as part of this optimization. If those
   files have an independent inconsistency, fix it separately with its own
   scientific version decision and tests.
@@ -102,7 +101,9 @@ This journal is checkout-local: it is not a substitute for remote recovery.
 The journal is deleted only after the v3 handoff is durably materialized.
 
 The Fast Local adapter cannot run from a shell-less GitHub connection.
-Portable GitHub-only handoff generation remains the next distinct stage.
+Portable Python/JavaScript handoff compilers now exist on this PR, with
+canonical byte-parity tests. They do not themselves perform GitHub transfers,
+semantic publishing or cold-agent recovery; see connected-github-handoff.md.
 
 The flush reconciliation note must describe reviewed evidence/worktree changes;
 a generic automatic note must not be used as proof of review.
