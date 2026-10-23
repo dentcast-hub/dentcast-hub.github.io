@@ -375,6 +375,51 @@ def validate_publication(p):
                 "INVALID_ACTION_EVIDENCE")
         require(a["status"] in ("started", "outcome_unknown") or bool(a["evidence"]),
                 "EXTERNAL_OUTCOME_EVIDENCE_REQUIRED")
+    reconciled_external_failures(p)
+
+
+EXTERNAL_RECONCILIATION = "external_action_reconciliation_v1"
+
+
+def reconciled_external_failures(p):
+    """Validate explicit failed-attempt -> verified later-success receipts.
+
+    Evidence references must be checked against the service by the operator;
+    this validator never executes an action or treats metadata as remote proof.
+    """
+    actions = {a["id"]: (i, a) for i, a in enumerate(p["external_actions"])}
+    resolved = set()
+    for receipt in p["context"]["decisions"]:
+        if not isinstance(receipt, dict) or receipt.get("kind") != EXTERNAL_RECONCILIATION:
+            continue
+        require(set(receipt) == {"kind", "failed_id", "successful_id", "target",
+                                 "reason", "verification_ref", "evidence"}
+                and all(nonempty(receipt[k]) for k in (
+                    "failed_id", "successful_id", "target", "reason", "verification_ref"))
+                and isinstance(receipt["evidence"], list) and receipt["evidence"]
+                and all(nonempty(e) for e in receipt["evidence"]),
+                "EXTERNAL_RECONCILIATION_INVALID")
+        failed_id, successful_id = receipt["failed_id"], receipt["successful_id"]
+        require(failed_id != successful_id and failed_id in actions
+                and successful_id in actions and failed_id not in resolved,
+                "EXTERNAL_RECONCILIATION_IDENTITIES")
+        fi, failed = actions[failed_id]
+        si, successful = actions[successful_id]
+        require(fi < si and failed["status"] == "failed"
+                and successful["status"] == "completed"
+                and failed["target"] == successful["target"] == receipt["target"]
+                and receipt["verification_ref"] in successful["evidence"]
+                and receipt["verification_ref"] in receipt["evidence"],
+                "EXTERNAL_RECONCILIATION_NOT_VERIFIED")
+        resolved.add(failed_id)
+    return resolved
+
+
+def require_external_outcomes(p, error="EXTERNAL_OUTCOME_UNRESOLVED"):
+    resolved = reconciled_external_failures(p)
+    require(not any(a["status"] in ("started", "outcome_unknown")
+                    or (a["status"] == "failed" and a["id"] not in resolved)
+                    for a in p["external_actions"]), error)
 
 
 def next_step(p):
@@ -787,6 +832,23 @@ def preserve_actions(old, new):
         if previous != current:
             require(previous["status"] in ("started", "outcome_unknown"), "EXTERNAL_TERMINAL_RECORD_IMMUTABLE")
             resolved.append("EXTERNAL_OUTCOME_RECONCILIATION:" + previous["id"])
+    # Attempts stay ordered and append-only; a retry starts in its own write.
+    old_ids = [a["id"] for a in old["external_actions"]]
+    require([a["id"] for a in new["external_actions"]][:len(old_ids)] == old_ids,
+            "EXTERNAL_HISTORY_ORDER_CHANGED")
+    observed = list(old["external_actions"])
+    for action in new["external_actions"][len(old_ids):]:
+        prior = [a for a in observed if a["target"] == action["target"]]
+        require(not any(a["status"] in ("started", "outcome_unknown") for a in prior),
+                "EXTERNAL_OUTCOME_UNKNOWN_DO_NOT_RETRY")
+        if any(a["status"] == "failed" for a in prior):
+            require(action["status"] == "started", "EXTERNAL_RETRY_MUST_START_FIRST")
+        observed.append(action)
+    for receipt in old["context"]["decisions"]:
+        if isinstance(receipt, dict) and receipt.get("kind") == EXTERNAL_RECONCILIATION:
+            require(receipt in new["context"]["decisions"],
+                    "EXTERNAL_RECONCILIATION_HISTORY_IMMUTABLE")
+    reconciled_external_failures(new)
     return resolved
 
 

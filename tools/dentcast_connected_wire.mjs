@@ -72,6 +72,7 @@ export function validate(p){
     need(sameKeys(a,["id","target","status","evidence"])&&nonempty(a.id)&&nonempty(a.target)&&!actions.has(a.id)&&["started","outcome_unknown","completed","failed","not_performed"].includes(a.status)&&Array.isArray(a.evidence)&&a.evidence.every(nonempty)&&(["started","outcome_unknown"].includes(a.status)||a.evidence.length),"EXTERNAL_ACTION_INVALID");
     actions.add(a.id);
   }
+  reconciledExternalFailures(p);
   return true;
 }
 export function updateStep(p,id,status,evidence=[],reason=null){
@@ -115,10 +116,28 @@ function cutDeclarations(p){
   }
   need(a.observed_changed_paths.includes(p.content_id+".html"),"FIRST_CUT_PAGE_NOT_OBSERVED_CHANGED");
 }
+const EXTERNAL_RECONCILIATION="external_action_reconciliation_v1";
+function reconciledExternalFailures(p){
+  const actions=new Map(p.external_actions.map((a,i)=>[a.id,{a,i}])),resolved=new Set();
+  for(const r of p.context.decisions){
+    if(!obj(r)||r.kind!==EXTERNAL_RECONCILIATION)continue;
+    need(sameKeys(r,["kind","failed_id","successful_id","target","reason","verification_ref","evidence"])&&["failed_id","successful_id","target","reason","verification_ref"].every(k=>nonempty(r[k]))&&Array.isArray(r.evidence)&&r.evidence.length&&r.evidence.every(nonempty),"EXTERNAL_RECONCILIATION_INVALID");
+    need(r.failed_id!==r.successful_id&&actions.has(r.failed_id)&&actions.has(r.successful_id)&&!resolved.has(r.failed_id),"EXTERNAL_RECONCILIATION_IDENTITIES");
+    const f=actions.get(r.failed_id),s=actions.get(r.successful_id);
+    need(f.i<s.i&&f.a.status==="failed"&&s.a.status==="completed"&&f.a.target===s.a.target&&s.a.target===r.target&&s.a.evidence.includes(r.verification_ref)&&r.evidence.includes(r.verification_ref),"EXTERNAL_RECONCILIATION_NOT_VERIFIED");
+    resolved.add(r.failed_id);
+  }
+  return resolved;
+}
+function requireExternalOutcomes(p){
+  const resolved=reconciledExternalFailures(p);
+  need(!p.external_actions.some(a=>["started","outcome_unknown"].includes(a.status)||(a.status==="failed"&&!resolved.has(a.id))),"OPEN_DECISION_OR_ACTION");
+}
 export function renderCut1(p){
   validate(p);const cut=p.steps.findIndex(x=>x.id==="C.4.9");
   need(cut>=0&&p.steps.slice(0,cut+1).every(x=>["completed","skipped"].includes(x.status))&&p.steps.slice(cut+1).every(x=>x.status==="pending")&&p.status==="in_progress"&&p.blocker===null,"FIRST_CUT_NOT_READY");
-  need(!p.context.pending_questions.length&&!p.external_actions.some(x=>["started","outcome_unknown","failed"].includes(x.status)),"OPEN_DECISION_OR_ACTION");
+  need(!p.context.pending_questions.length,"OPEN_DECISION_OR_ACTION");
+  requireExternalOutcomes(p);
   need(p.context.approvals.every(a=>["confirmed","not_required"].includes(a.status)),"FIRST_CUT_UNRESOLVED_APPROVAL");
   cutDeclarations(p);
   const state={schema:SCHEMA,publication:p,reconciliation:null};

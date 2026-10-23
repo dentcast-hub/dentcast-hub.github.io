@@ -177,9 +177,9 @@ def validate_final_receipt(root, data, commit=None):
         require_fixed_cut_readiness(publication)
     h.require(fixed_delivery(publication) and h.next_step(publication) is None
               and not publication["blocker"] and not publication["context"]["pending_questions"]
-              and all(a["status"] in ("confirmed", "not_required") for a in publication["context"]["approvals"])
-              and all(a["status"] not in ("started", "outcome_unknown", "failed") for a in publication["external_actions"]),
+              and all(a["status"] in ("confirmed", "not_required") for a in publication["context"]["approvals"]),
               "INCOMPLETE_FINAL_DELIVERY_RECEIPT")
+    h.require_external_outcomes(publication, "INCOMPLETE_FINAL_DELIVERY_RECEIPT")
     h.require(bool(publication["context"]["delivery"]) and all(
         isinstance(d, dict) and h.nonempty(d.get("scope")) and isinstance(d.get("evidence"), list)
         and d["evidence"] and all(h.nonempty(e) for e in d["evidence"])

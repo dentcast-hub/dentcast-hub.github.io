@@ -140,3 +140,52 @@ claiming `generated_later` or `client_render`: it must be included in the
 reviewed first-cut package and the new article link must be present. This
 is a fail-closed heuristic for the active site's static listing convention,
 not an infallible content or builder dependency analyzer.
+
+
+### Explicit recovery of a confirmed external failure
+
+A failed attempt is immutable history, not a permanent publication veto after
+an independently recorded, verified retry. Never delete/rewrite it. Record the
+new attempt with a new ID and the **same exact operation target** (service,
+object and intended action; do not reuse a broad service label). Persist its
+`started` record before executing the authorized retry; persist `completed`
+only after reading back the actual service result. No helper executes retries.
+
+If the previous attempt is `started` or `outcome_unknown`, do not retry.
+Inspect the service and reconcile its actual outcome in a separate checkpoint
+first; resolving it and starting another attempt in the same write is rejected.
+A failed, safely retryable outcome must be established, not inferred from timeout.
+
+After the later attempt is completed, append this public-safe decision to
+`context.decisions` (illustrative placeholders, never executable evidence):
+
+```json
+{
+  "kind": "external_action_reconciliation_v1",
+  "failed_id": "<original-failed-attempt-id>",
+  "successful_id": "<later-independent-attempt-id>",
+  "target": "<identical-exact-operation-target>",
+  "reason": "<why the observed later result resolves this failure>",
+  "verification_ref": "<actual service read-back evidence reference>",
+  "evidence": ["<same verification reference>", "<operator review reference>"]
+}
+```
+
+The verification reference must also occur in the successful attempt's evidence.
+IDs must exist, differ and retain failure-before-success ledger order; statuses
+must be `failed` and `completed`; targets must match. One receipt per failed ID;
+multiple failed attempts each require their own explicit receipt. Existing
+receipts cannot disappear or change. A duplicate, malformed, mismatched or
+unverified receipt fails closed. Unlinked failures and **all** started/unknown
+actions still block the cut. Python compiler/transport/receiver share the same
+validator; import-free JS mirrors it with parity tests. The final completion
+receipt uses it too, so preserved failure history does not re-block Push 3.
+
+`update_context()` permits only external-action recovery at the first cut,
+including staged retry outcomes and these receipts; inputs, approvals, unrelated
+decisions and steps cannot change through that exception. Recompile and deliver
+the existing cut after recovery; no additional delivery boundary is introduced.
+A cold receiver validates these same receipts from the canonical v3 handoff.
+The operator must check actual service evidence: structural validation cannot
+prove that an evidence reference is truthful. DES/Fidelity and human approvals
+remain separate and unchanged.

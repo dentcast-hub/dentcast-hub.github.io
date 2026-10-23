@@ -186,9 +186,26 @@ def update_context(session, expected_digest, *, context, external_actions,
                    review_note):
     h.require(cas(session) == expected_digest, "STALE_CONNECTED_STATE")
     h.require(h.nonempty(review_note), "CONTEXT_CHANGE_REVIEW_REQUIRED")
-    h.require(lc.delivery_boundary(session["state"]["publication"]) is None,
-              "CUT_DELIVERY_REQUIRED")
     before = session["state"]["publication"]
+    if lc.delivery_boundary(before) is not None:
+        # Repair only external-action receipts at the cut; never advance it or
+        # use reconciliation to change approvals, inputs or other decisions.
+        def without_receipts(value):
+            result = copy.deepcopy(value)
+            result["decisions"] = [d for d in result["decisions"]
+                                   if not isinstance(d, dict)
+                                   or d.get("kind") != h.EXTERNAL_RECONCILIATION]
+            return result
+        resolved = h.reconciled_external_failures(before)
+        retry_targets = {a["target"] for a in before["external_actions"]
+                         if a["status"] == "failed" and a["id"] not in resolved}
+        old_ids = {a["id"] for a in before["external_actions"]}
+        h.require(all(a["id"] in old_ids or a["target"] in retry_targets
+                      for a in external_actions), "CUT_EXTERNAL_RECOVERY_ONLY")
+        h.require(without_receipts(context) == without_receipts(before["context"])
+                  and any(a["status"] in ("failed", "started", "outcome_unknown")
+                          for a in before["external_actions"]),
+                  "CUT_DELIVERY_REQUIRED")
     new = copy.deepcopy(session)
     p = new["state"]["publication"]
     p["context"] = copy.deepcopy(context)
@@ -253,9 +270,7 @@ def compile_cut1(session, expected_digest, *, observed_branch, observed_head,
     h.require(all(a["status"] in ("confirmed", "not_required")
                   for a in p["context"]["approvals"]),
               "FIRST_CUT_UNRESOLVED_APPROVAL")
-    h.require(not any(a["status"] in ("started", "outcome_unknown", "failed")
-                      for a in p["external_actions"]),
-              "EXTERNAL_OUTCOME_NOT_RESOLVED")
+    h.require_external_outcomes(p, "EXTERNAL_OUTCOME_NOT_RESOLVED")
     gates.validate_declarations(p)
     h.require(isinstance(actual_targets, dict)
               and set(p["target_paths"]) <= set(actual_targets)
@@ -291,9 +306,7 @@ def receive_cut1(raw_handoff, *, branch, sha_by_path, target_bytes,
     h.require(lc.delivery_boundary(p) == 1, "RECEIVED_WRONG_CUT")
     h.require(p["status"] == "in_progress" and p["blocker"] is None,
               "RECEIVED_PUBLICATION_BLOCKED")
-    h.require(not any(a["status"] in ("started", "outcome_unknown", "failed")
-                      for a in p["external_actions"]),
-              "RECEIVED_EXTERNAL_OUTCOME_UNRESOLVED")
+    h.require_external_outcomes(p, "RECEIVED_EXTERNAL_OUTCOME_UNRESOLVED")
     h.require(not p["context"]["pending_questions"],
               "RECEIVED_PENDING_QUESTIONS")
     h.require(all(a["status"] in ("confirmed", "not_required")
