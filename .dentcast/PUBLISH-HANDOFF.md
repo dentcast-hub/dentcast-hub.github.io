@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "dentai/promptologist/prompt-append2-4"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.4.14"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -74,7 +74,9 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       "pending_questions": [],
       "unrelated_changes": [],
       "validation": [
-        "Reviewed real uncommitted blobs and source template, including reciprocal navigation and 5-link cap; these are content checks, not scientific DES/Fidelity"
+        "Reviewed real uncommitted blobs and source template, including reciprocal navigation and 5-link cap; these are content checks, not scientific DES/Fidelity",
+        "scope:plus/faq-corpus.json:required-by-C.4.11-and-C.4.12",
+        "scope:plus/des-scores.json:required-by-C.4.13"
       ]
     },
     "external_actions": [],
@@ -372,43 +374,49 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "evidence": [],
         "id": "C.4.10.1",
         "module": "06-paper-ingestion.md",
-        "reason": null,
-        "status": "pending"
+        "reason": "No attached paper was supplied; canonical 4.10 paper-ingestion branch is inapplicable",
+        "status": "skipped"
       },
       {
         "evidence": [],
         "id": "C.4.10.2",
         "module": "06-paper-ingestion.md",
-        "reason": null,
-        "status": "pending"
+        "reason": "No attached paper was supplied; canonical 4.10 paper-ingestion branch is inapplicable",
+        "status": "skipped"
       },
       {
         "evidence": [],
         "id": "C.4.10.3",
         "module": "06-paper-ingestion.md",
-        "reason": null,
-        "status": "pending"
+        "reason": "No attached paper was supplied; canonical 4.10 paper-ingestion branch is inapplicable",
+        "status": "skipped"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "local:plus/faq-corpus.json:febbe889f5a1ff180b69ca11e040e4d9e158c93bfd42c5dee02fcc524b52b088:4-authored-DefinedTerms;source-page-sha256:e353eee7ba10c1adf210d70a8396f720ba1058f601367f1c10c9d3f214995714"
+        ],
         "id": "C.4.11",
         "module": "07-flashcards-and-quiz.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "local:plus/faq-corpus.json:c6441ebda54c030142783a777c65183f31140b9ec13665d11d98993d295d152f:5-standalone-verdict-first-FAQ;4-atomic-unique-DefinedTerms;page-sha256:e353eee7ba10c1adf210d70a8396f720ba1058f601367f1c10c9d3f214995714"
+        ],
         "id": "C.4.12",
         "module": "07-flashcards-and-quiz.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "local:plus/des-scores.json:dentai/promptologist/prompt-append2-4:COMMENTARY-v3.4-score12-bandE;source-sha256:e353eee7ba10c1adf210d70a8396f720ba1058f601367f1c10c9d3f214995714;quotes-arithmetic-provisional-fidelity-null-validated"
+        ],
         "id": "C.4.13",
         "module": "08-des-fidelity.md",
         "reason": null,
-        "status": "pending"
+        "status": "completed"
       },
       {
         "evidence": [],
@@ -505,10 +513,14 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     "target_paths": [
       "dentai/promptologist/index.html",
       "dentai/promptologist/prompt-append2-3.html",
-      "dentai/promptologist/prompt-append2-4.html"
+      "dentai/promptologist/prompt-append2-4.html",
+      "plus/des-scores.json",
+      "plus/faq-corpus.json"
     ]
   },
-  "reconciliation": null,
+  "reconciliation": {
+    "note": "Reviewed exact quote substrings against final page body, COMMENTARY arithmetic, band, null Fidelity slot, and scoped JSON diff"
+  },
   "schema": "publish-handoff-v3"
 }
 ```

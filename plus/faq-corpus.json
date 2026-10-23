@@ -38531,6 +38531,92 @@
           ]
         }
       ]
+    },
+    "dentai/promptologist/prompt-append2-4": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-4.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا Stage به‌معنی ثبت‌شدن نسخه‌ای تازه در تاریخچهٔ Git است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ Stage فقط تغییرات موردنظر را برای ثبت آماده می‌کند. ثبت وضعیت در تاریخچه با Commit انجام می‌شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا یک Commit می‌تواند ثبت شده باشد اما هنوز به مخزن آنلاین GitHub نرسیده باشد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ Commit می‌تواند در محیط محلی ثبت شده باشد. برای فرستادن آن به مخزن آنلاین معمولاً Push لازم است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا Push تغییرات یک برنچ را خودبه‌خود با main ادغام می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ Push تغییرات را به مخزن آنلاین می‌فرستد، اما به‌تنهایی آن‌ها را با main ادغام نمی‌کند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا تغییراتی که در Git ثبت نشده‌اند حتماً از تاریخچه قابل بازیابی هستند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ تغییرات ثبت‌نشده لزوماً در تاریخچهٔ Git وجود ندارند و ممکن است از آن مسیر قابل بازیابی نباشند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا تاریخچهٔ Git می‌تواند برای بررسی تغییرات ثبت‌شده در زمان‌های مختلف به کار برود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ با مرور تاریخچه می‌توان زمان ثبت نسخه‌ها و تغییرات هر مرحله را بررسی کرد."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-4.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-4.html#flashcards-c1",
+              "name": "Stage",
+              "description": "مرحله‌ای که تغییرات موردنظر برای ثبت در یک commit انتخاب و آماده می‌شوند؛ Stage به‌تنهایی نسخه‌ای در تاریخچه ثبت نمی‌کند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-4.html#flashcards-c2",
+              "name": "Commit",
+              "description": "ثبت یک وضعیت مشخص از تغییرات انتخاب‌شده در تاریخچهٔ Git؛ این ثبت می‌تواند محلی باشد و هنوز به GitHub نرسیده باشد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-4.html#flashcards-c3",
+              "name": "Push",
+              "description": "ارسال commitهای ثبت‌شده از محیط کار به مخزن آنلاین GitHub؛ Push به‌خودی‌خود آن تغییرات را با main ادغام نمی‌کند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-4.html#flashcards-c4",
+              "name": "Revert",
+              "description": "برگرداندن تغییرات ثبت‌شده با استفاده از تاریخچهٔ Git؛ فقط تغییراتی که واقعاً ثبت شده‌اند در این تاریخچه قابل بازیابی‌اند.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
