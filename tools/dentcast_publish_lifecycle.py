@@ -111,6 +111,26 @@ def delivery_boundary(publication):
     return None
 
 
+def require_fixed_cut_readiness(publication):
+    """Fail closed at every fixed delivery, including local Git/CI without hooks.
+
+    Existing human approval rules are not inferred from an empty approval list:
+    first-cut lead provenance must be declared explicitly. The connected-only
+    scope audit is deliberately not imposed on the canonical local workflow.
+    """
+    h.require(publication["status"] == "in_progress" and not publication["blocker"],
+              "DELIVERY_PUBLICATION_BLOCKED")
+    h.require(not publication["context"]["pending_questions"],
+              "DELIVERY_PENDING_QUESTIONS")
+    h.require(all(a["status"] in ("confirmed", "not_required")
+                  for a in publication["context"]["approvals"]),
+              "DELIVERY_UNRESOLVED_APPROVAL")
+    # Optional adapter is imported only at the cut: standalone legacy checkout
+    # fixtures that do not contain the connected adapter remain importable.
+    from dentcast_connected_cut_gates import validate_lead_provenance
+    validate_lead_provenance(publication)
+
+
 def committed_boundary(root, revision):
     raw = h.git(root, "show", revision + ":" + h.STATE_PATH, optional=True)
     if raw is None:
@@ -153,6 +173,8 @@ def validate_final_receipt(root, data, commit=None):
     state = data["state"]
     publication = state["publication"]
     require_plan(publication)
+    if fixed_delivery(publication):
+        require_fixed_cut_readiness(publication)
     h.require(fixed_delivery(publication) and h.next_step(publication) is None
               and not publication["blocker"] and not publication["context"]["pending_questions"]
               and all(a["status"] in ("confirmed", "not_required") for a in publication["context"]["approvals"])
@@ -633,6 +655,7 @@ def guard(root, phase):
     if fixed_delivery(state["publication"]) and phase in ("pre-commit", "ci"):
         number = delivery_boundary(state["publication"])
         h.require(number is not None, "ONLY_THREE_FIXED_DELIVERIES_ALLOWED")
+        require_fixed_cut_readiness(state["publication"])
         require_delivery_parent(root, state["publication"], number, "HEAD^" if phase == "ci" else "HEAD")
     if phase == "ci":
         # CI is detached and the recorded index/status may predate the checkpoint commit.
@@ -648,6 +671,8 @@ def guard(root, phase):
             h.require(h.git(root, "show", ":" + h.STATE_PATH, optional=True) == path.read_bytes(),
                       "LATEST_HANDOFF_MUST_BE_STAGED")
         elif phase == 'stop' and (not fixed_delivery(state['publication']) or delivery_boundary(state['publication'])):
+            if fixed_delivery(state['publication']):
+                require_fixed_cut_readiness(state['publication'])
             require_step_delivery(root, state, h.digest(path.read_bytes()))
     return {"status": "guard_passed", "publication_completed": False}
 

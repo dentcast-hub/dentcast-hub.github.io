@@ -30,7 +30,13 @@ class ThreeDeliveriesTests(unittest.TestCase):
         run(self.root, 'commit', '-m', 'fixture empty brain')
         result = self.prepare()
         state, sha = h.load_state(self.root)
-        state['publication']['context']['decisions'].append({'kind': lc.DELIVERY_POLICY})
+        state['publication']['context']['decisions'].extend([
+            {'kind': lc.DELIVERY_POLICY},
+            {'kind': 'first_cut_lead_provenance_v1',
+             'origin': 'not_applicable',
+             'source_ref': 'fixture:page-already-has-prose',
+             'evidence': ['fixture:synthetic-lead-origin-review']},
+        ])
         result = h.save(self.root, state['publication'], expected=sha)
         run(self.root, 'push', 'origin', 'main')
         self.baseline = h.text_git(self.root, 'rev-parse', 'HEAD')
@@ -78,6 +84,76 @@ class ThreeDeliveriesTests(unittest.TestCase):
         state, _ = h.load_state(self.root)
         state['publication']['context']['delivery'] = [{'scope':'fixture external checks', 'evidence':['fixture:checked']}]
         return h.save(self.root, state['publication'], expected=sha)['sha256']
+
+    def test_canonical_fixed_cut_gate_rejects_questions_and_missing_approval(self):
+        p = fixtures.publication()
+        p['content_id'], p['category'] = 'note', 'insight'
+        p['steps'] = lc.plan()
+        p['context']['decisions'] = [{'kind': lc.DELIVERY_POLICY}]
+        with self.assertRaisesRegex(h.Blocked, 'FIRST_CUT_DECLARATION_REQUIRED'):
+            lc.require_fixed_cut_readiness(p)
+        lead = {'kind': 'first_cut_lead_provenance_v1',
+                'origin': 'agent_authored', 'source_ref': 'fixture:agent-lead',
+                'evidence': ['fixture:lead-reviewed']}
+        p['context']['decisions'].append(lead)
+        with self.assertRaisesRegex(h.Blocked, 'AGENT_LEAD_EXPLICIT_FOUNDER_APPROVAL_REQUIRED'):
+            lc.require_fixed_cut_readiness(p)
+        p['context']['approvals'].append({
+            'scope': 'authored-intro', 'decision': None,
+            'status': 'pending', 'evidence': []})
+        with self.assertRaisesRegex(h.Blocked, 'DELIVERY_UNRESOLVED_APPROVAL'):
+            lc.require_fixed_cut_readiness(p)
+        p['context']['approvals'][0].update(status='rejected', decision='declined',
+                                             evidence=['fixture:declined'])
+        with self.assertRaisesRegex(h.Blocked, 'DELIVERY_UNRESOLVED_APPROVAL'):
+            lc.require_fixed_cut_readiness(p)
+        p['context']['approvals'][0].update(status='confirmed', decision='approved',
+                                             evidence=['fixture:explicit-author-yes'])
+        lc.require_fixed_cut_readiness(p)
+        p['context']['pending_questions'] = ['fixture:unanswered question']
+        with self.assertRaisesRegex(h.Blocked, 'DELIVERY_PENDING_QUESTIONS'):
+            lc.require_fixed_cut_readiness(p)
+        p['context']['pending_questions'] = []
+        lc.require_fixed_cut_readiness(p)
+        # Original author paragraph needs no fresh, inferred author approval.
+        p['context']['approvals'] = []
+        lead['origin'] = 'author_original'
+        lead['source_ref'] = 'fixture:original-paragraph'
+        lc.require_fixed_cut_readiness(p)
+        lead['origin'] = 'not_applicable'
+        lead['source_ref'] = 'fixture:preexisting-prose-no-new-lead'
+        lc.require_fixed_cut_readiness(p)
+
+    def test_first_cut_precommit_and_ci_fail_without_lead_provenance(self):
+        sha = self.start()
+        self.walk(sha, 'C.4.9')
+        state, _ = h.load_state(self.root)
+        state['publication']['context']['decisions'] = [
+            d for d in state['publication']['context']['decisions']
+            if d.get('kind') != 'first_cut_lead_provenance_v1']
+        h.write_atomic(self.root, state)
+        run(self.root, 'add', h.STATE_PATH)
+        self.assert_blocked('FIRST_CUT_DECLARATION_REQUIRED',
+                            lc.guard, self.root, 'pre-commit')
+        # Even when the native pre-commit hook was not installed or bypassed,
+        # CI must reject the same invalid committed checkpoint.
+        run(self.root, 'commit', '-m', 'fixture:unsafe first cut')
+        self.assert_blocked('FIRST_CUT_DECLARATION_REQUIRED',
+                            lc.guard, self.root, 'ci')
+
+    def test_first_cut_precommit_and_ci_block_unanswered_question(self):
+        sha = self.start()
+        self.walk(sha, 'C.4.9')
+        state, _ = h.load_state(self.root)
+        state['publication']['context']['pending_questions'] = [
+            'fixture:unanswered intake detail']
+        h.write_atomic(self.root, state)
+        run(self.root, 'add', h.STATE_PATH)
+        self.assert_blocked('DELIVERY_PENDING_QUESTIONS',
+                            lc.guard, self.root, 'pre-commit')
+        run(self.root, 'commit', '-m', 'fixture:unsafe unresolved questions')
+        self.assert_blocked('DELIVERY_PENDING_QUESTIONS',
+                            lc.guard, self.root, 'ci')
 
     def test_exactly_three_deliveries_and_final_work_without_final_handoff(self):
         sha = self.prepare_final()

@@ -29,8 +29,8 @@ def only_decision(publication, kind):
     return found[0]
 
 
-def validate_declarations(publication):
-    """Require explicit review of lead provenance and first-cut write scope."""
+def validate_lead_provenance(publication):
+    """Require a real lead-origin declaration and approval for agent-authored text."""
     lead = only_decision(publication, LEAD)
     need(set(lead) == {"kind", "origin", "source_ref", "evidence"}
          and lead["origin"] in ("author_original", "agent_authored", "not_applicable")
@@ -46,6 +46,12 @@ def validate_declarations(publication):
              and h.nonempty(approvals[0]["decision"])
              and approvals[0]["evidence"],
              "AGENT_LEAD_EXPLICIT_FOUNDER_APPROVAL_REQUIRED")
+    return lead
+
+
+def validate_declarations(publication):
+    """Require explicit review of lead provenance and first-cut write scope."""
+    validate_lead_provenance(publication)
     audit = only_decision(publication, SCOPE)
     need(set(audit) == {"kind", "landing_path", "landing_mode",
                         "builder_ref", "related_changed_paths",
