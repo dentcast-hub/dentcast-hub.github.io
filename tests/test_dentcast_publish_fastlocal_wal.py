@@ -127,7 +127,12 @@ class FastLocalWALTests(unittest.TestCase):
     def test_wal_engine_change_fails_closed(self):
         init = self.start()
         wal.begin(self.root, init["sha256"])
-        with patch.object(wal.Path, "read_bytes", return_value=b"modified module"):
+        original_read = Path.read_bytes
+        def changed_engine_only(path):
+            return (b"modified module" if path.name == "dentcast_publish_fastlocal.py"
+                    else original_read(path))
+        with patch.object(Path, "read_bytes", autospec=True,
+                          side_effect=changed_engine_only):
             with self.assertRaisesRegex(h.Blocked, "WAL_ENGINE_CHANGED"):
                 wal.inspect(self.root)
 
