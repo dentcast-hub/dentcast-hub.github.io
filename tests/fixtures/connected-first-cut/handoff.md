@@ -35,7 +35,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           ],
           "kind": "first_cut_scope_audit_v1",
           "landing_mode": "generated_later",
-          "landing_path": "tests/index.html",
+          "landing_path": "tests/fixtures/connected-first-cut/index.html",
           "observed_changed_paths": [
             "tests/fixtures/connected-first-cut/page.html",
             "tests/fixtures/connected-first-cut/image.webp"
