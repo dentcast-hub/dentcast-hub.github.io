@@ -118,6 +118,32 @@ class ConnectedTests(unittest.TestCase):
                            sha_by_path=out["target_sha256"],
                            target_bytes={PAGE: BODY, IMAGE: b"tampered"})
 
+    def test_first_cut_pending_or_rejected_approval_blocks_compiler(self):
+        common = {"observed_branch": "content/connected-fixture",
+                  "observed_head": HEAD, "observed_workflow_sources": workflow()}
+        for status in ("pending", "rejected"):
+            with self.subTest(status=status):
+                s = step_sequence(fresh())
+                p = s["state"]["publication"]
+                p["context"]["approvals"].append({
+                    "scope": "authored-intro", "status": status,
+                    "decision": None if status == "pending" else "declined",
+                    "evidence": [] if status == "pending" else ["fixture:declined"]})
+                with self.assertRaisesRegex(h.Blocked, "FIRST_CUT_UNRESOLVED_APPROVAL"):
+                    c.compile_cut1(s, c.cas(s), **common,
+                                   actual_targets={PAGE: BODY, IMAGE: WEBP})
+
+    def test_receive_cut1_blocks_pending_approval(self):
+        s = step_sequence(fresh())
+        s["state"]["publication"]["context"]["approvals"].append({
+            "scope": "authored-intro", "status": "pending",
+            "decision": None, "evidence": []})
+        raw = h.render(s["state"]).encode()
+        with self.assertRaisesRegex(h.Blocked, "RECEIVED_UNRESOLVED_APPROVAL"):
+            c.receive_cut1(raw, branch="content/connected-fixture",
+                           sha_by_path={PAGE: c.digest(BODY), IMAGE: c.digest(WEBP)},
+                           target_bytes={PAGE: BODY, IMAGE: WEBP})
+
     def test_page_and_webp_are_genuine_bytes_not_just_declared_paths(self):
         s = step_sequence(fresh())
         common = {"observed_branch": "content/connected-fixture",

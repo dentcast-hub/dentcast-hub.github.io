@@ -249,6 +249,9 @@ def compile_cut1(session, expected_digest, *, observed_branch, observed_head,
               "CANONICAL_FIRST_CUT_NOT_READY")
     h.require(not p["context"]["pending_questions"],
               "UNRESOLVED_QUESTIONS_BEFORE_CUT")
+    h.require(all(a["status"] in ("confirmed", "not_required")
+                  for a in p["context"]["approvals"]),
+              "FIRST_CUT_UNRESOLVED_APPROVAL")
     h.require(not any(a["status"] in ("started", "outcome_unknown", "failed")
                       for a in p["external_actions"]),
               "EXTERNAL_OUTCOME_NOT_RESOLVED")
@@ -282,6 +285,11 @@ def receive_cut1(raw_handoff, *, branch, sha_by_path, target_bytes):
     p = state["publication"]
     lc.require_plan(p)
     h.require(lc.delivery_boundary(p) == 1, "RECEIVED_WRONG_CUT")
+    h.require(not p["context"]["pending_questions"],
+              "RECEIVED_PENDING_QUESTIONS")
+    h.require(all(a["status"] in ("confirmed", "not_required")
+                  for a in p["context"]["approvals"]),
+              "RECEIVED_UNRESOLVED_APPROVAL")
     h.require(set(p["target_paths"]) == set(target_bytes),
               "RECEIVED_TARGETS_MISSING")
     h.require(all(isinstance(target_bytes[k], bytes)

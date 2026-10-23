@@ -161,7 +161,7 @@ class FirstCutTests(unittest.TestCase):
     def test_invalid_ledger_and_missing_image_rejected(self):
         files = fixture()
         del files["insight/assets/first-cut-fixture.webp"]
-        with self.assertRaisesRegex(ValueError, "REFERENCED_WEBP_BYTES_REQUIRED"):
+        with self.assertRaisesRegex(ValueError, "MISSING_CANONICAL_TARGET_BYTES"):
             fp.validate_cut(files)
         files = fixture()
         p, _ = h.parse_state(files[h.STATE_PATH])
@@ -170,6 +170,57 @@ class FirstCutTests(unittest.TestCase):
         files[h.STATE_PATH] = h.render(p).encode()
         with self.assertRaises((h.Blocked, ValueError)):
             fp.validate_cut(files)
+
+    def test_missing_static_landing_page_blocks_upload(self):
+        files = fixture()
+        state, _ = h.parse_state(files[h.STATE_PATH])
+        state["publication"]["target_paths"].append("insight/index.html")
+        files[h.STATE_PATH] = h.render(state).encode()
+        client = FakeGitHub()
+        with self.assertRaisesRegex(ValueError, "MISSING_CANONICAL_TARGET_BYTES:insight/index.html"):
+            fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
+        self.assertEqual(client.blobs, {})
+        self.assertEqual(client.updated, 0)
+
+    def test_unreviewed_extra_path_blocks(self):
+        files = fixture()
+        files["insight/index.html"] = b"<html>unreviewed</html>"
+        with self.assertRaisesRegex(ValueError, "UNDECLARED_FIRST_CUT_PATH"):
+            fp.validate_cut(files)
+
+    def test_pending_question_blocks_before_upload(self):
+        files = fixture()
+        state, _ = h.parse_state(files[h.STATE_PATH])
+        state["publication"]["context"]["pending_questions"].append("fixture:ask author")
+        files[h.STATE_PATH] = h.render(state).encode()
+        client = FakeGitHub()
+        with self.assertRaisesRegex(ValueError, "FIRST_CUT_PENDING_QUESTIONS"):
+            fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
+        self.assertEqual(client.blobs, {})
+
+    def test_pending_or_rejected_approval_blocks_before_upload(self):
+        for status in ("pending", "rejected"):
+            with self.subTest(status=status):
+                files = fixture()
+                state, _ = h.parse_state(files[h.STATE_PATH])
+                state["publication"]["context"]["approvals"].append({
+                    "scope": "authored-intro", "status": status,
+                    "decision": None if status == "pending" else "declined",
+                    "evidence": [] if status == "pending" else ["fixture:declined"]})
+                files[h.STATE_PATH] = h.render(state).encode()
+                client = FakeGitHub()
+                with self.assertRaisesRegex(ValueError, "FIRST_CUT_UNRESOLVED_APPROVAL"):
+                    fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
+                self.assertEqual(client.blobs, {})
+
+    def test_explicit_approved_intro_allows_transport(self):
+        files = fixture()
+        state, _ = h.parse_state(files[h.STATE_PATH])
+        state["publication"]["context"]["approvals"].append({
+            "scope": "authored-intro", "status": "confirmed",
+            "decision": "approved", "evidence": ["fixture:author-message"]})
+        files[h.STATE_PATH] = h.render(state).encode()
+        self.assertEqual(fp.validate_cut(files)["next_step"], "C.4.10.1")
 
     def test_not_full_publication_or_paper_only(self):
         files = fixture()

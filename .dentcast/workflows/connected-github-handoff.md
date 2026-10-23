@@ -77,3 +77,22 @@ python3 -m unittest discover -s tests -p test_dentcast_publish_connected_wire.py
 The JS parity test is a strict byte comparison including Persian Unicode
 and emoji. Canonical plan drift is a test failure, not an opportunity to
 relax or silently duplicate the publication logic.
+
+
+## First-cut safety gates
+
+The GitHub transfer adapter must receive actual bytes for EVERY path in the
+reviewed canonical `target_paths`, plus the handoff. A missing manually
+maintained landing page, edited glossary/related page or any other declared
+first-cut file blocks the entire transfer before blobs are uploaded.
+Unreviewed extra paths are also forbidden. The agent must inspect the
+applicable source modules and enroll ALL genuinely required paths before
+compilation and transfer. A validator cannot discover a requirement that
+was never declared or identified in the publishing plan.
+
+The independent Python first-cut compiler, JS renderer and GitHub transfer
+adapter all block unresolved recorded questions and approvals. Author-written
+lead paragraphs must receive the user approval required by the live module
+and have a recorded receipt before creating the page. An absent approval
+entry is not proof of permission; authoring requirements must be verified by
+the executing agent. This patch does not bypass or modify DES/Fidelity.

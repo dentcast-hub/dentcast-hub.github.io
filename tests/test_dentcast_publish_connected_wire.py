@@ -41,6 +41,16 @@ class ConnectedWireParity(unittest.TestCase):
         parsed,d=h.parse_state(wire.encode())
         self.assertEqual(parsed["publication"],pub)
 
+    def test_js_renderer_refuses_pending_intro_approval(self):
+        pub=step_sequence(fresh())["state"]["publication"]
+        pub["context"]["approvals"].append({
+            "scope": "authored-intro", "status": "pending",
+            "decision": None, "evidence": []})
+        script=("import {renderCut1} from './tools/dentcast_connected_wire.mjs';"
+                "try{renderCut1(JSON.parse(process.argv[1]))}"
+                "catch(e){process.stdout.write(e.message)}")
+        self.assertEqual(node(script,pub),"FIRST_CUT_UNRESOLVED_APPROVAL")
+
     def test_renderer_refuses_incomplete_first_cut_and_fabricated_completion(self):
         pub=fresh()["state"]["publication"]
         script=("import {renderCut1,updateStep} from './tools/dentcast_connected_wire.mjs';"
