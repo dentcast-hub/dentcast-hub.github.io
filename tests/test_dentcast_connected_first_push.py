@@ -162,7 +162,9 @@ class FirstCutTests(unittest.TestCase):
     def test_bad_post_update_path_receipt_is_not_success(self):
         class Tampered(FakeGitHub):
             def path_oid(self, path, commit):
-                return "e" * 40
+                if commit == COMMIT:
+                    return "e" * 40
+                return super().path_oid(path, commit)
         client = Tampered()
         with self.assertRaisesRegex(ValueError, "POST_UPDATE_TREE_PATH_MISMATCH"):
             fp.deliver(client, "content/test-cut", HEAD, fixture(), 1024 * 1024)
