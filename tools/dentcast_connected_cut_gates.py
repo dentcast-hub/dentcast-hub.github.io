@@ -58,7 +58,10 @@ def validate_declarations(publication):
                         "observed_changed_paths", "evidence"},
          "FIRST_CUT_SCOPE_AUDIT_FIELDS")
     path = audit["landing_path"]
-    page_dir = publication["content_id"].split("/", 1)[0]
+    # The landing belongs to the page's immediate directory, not its first
+    # path component. E.g. dentai/promptologist/... uses its own manual index,
+    # not dentai/index.html (a redirect to an unrelated section).
+    page_dir = publication["content_id"].rsplit("/", 1)[0]
     expected = "episodes.html" if page_dir == "episodes" else page_dir + "/index.html"
     need(path == expected, "FIRST_CUT_LANDING_IDENTITY")
     need(audit["landing_mode"] in ("included", "generated_later", "client_render")
@@ -190,6 +193,9 @@ def verify_remote_landing(publication, files, baseline_reader):
     except (ValueError, KeyError, OSError) as exc:
         raise h.Blocked("FIRST_CUT_LANDING_BASE_NOT_VERIFIED:" + path) from exc
     need(isinstance(body, bytes) and bool(body), "FIRST_CUT_LANDING_BASE_NOT_VERIFIED")
-    # The live insight/sharehub/notecast/litecast landing pages use static li/a.
-    manual_rows = re.search(rb"<li\b[^>]*>\s*<a\b[^>]*\bhref\s*=", body, re.I)
+    # Both li/a lists and Promptologist's static a.ai-item cards are
+    # hand-maintained. They cannot be misdeclared generated_later/client_render.
+    manual_rows = (re.search(rb"<li\b[^>]*>\s*<a\b[^>]*\bhref\s*=", body, re.I)
+                   or re.search(rb"""<a\b[^>]*\bclass\s*=\s*['"][^'"]*\bai-item\b""",
+                                body, re.I))
     need(not manual_rows, "MANUAL_LANDING_MUST_BE_INCLUDED_BEFORE_CUT:" + path)

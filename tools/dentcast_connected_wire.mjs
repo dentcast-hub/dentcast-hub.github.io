@@ -103,7 +103,8 @@ function cutDeclarations(p){
   need(audits.length===1,"FIRST_CUT_DECLARATION_REQUIRED:first_cut_scope_audit_v1");
   const a=audits[0];
   need(sameKeys(a,["kind","landing_path","landing_mode","builder_ref","related_changed_paths","observed_changed_paths","evidence"]),"FIRST_CUT_SCOPE_AUDIT_FIELDS");
-  const folder=p.content_id.split("/")[0],expected=folder==="episodes"?"episodes.html":folder+"/index.html";
+  // Resolve the immediately containing directory, including nested series.
+  const folder=p.content_id.split("/").slice(0,-1).join("/"),expected=folder==="episodes"?"episodes.html":folder+"/index.html";
   need(a.landing_path===expected,"FIRST_CUT_LANDING_IDENTITY");
   need(["included","generated_later","client_render"].includes(a.landing_mode)&&nonempty(a.builder_ref)&&Array.isArray(a.evidence)&&a.evidence.length&&a.evidence.every(nonempty),"FIRST_CUT_LANDING_REVIEW_REQUIRED");
   const targets=new Set(p.target_paths);

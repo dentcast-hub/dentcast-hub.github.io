@@ -111,7 +111,12 @@ For the opt-in connected pathway, record exactly one of each canonical-v3
 - `{"kind":"first_cut_scope_audit_v1","landing_path":"<actual category index>","landing_mode":"included|generated_later|client_render","builder_ref":"<real builder or manual inspection reference>","related_changed_paths":[],"observed_changed_paths":["<actual changed page and other files>"],"evidence":["<real complete-scope review receipt>"]}`.
   `included` requires the landing page to be in target_paths and the bundle;
   generated/client-rendered modes are only lawful if confirmed by the active
-  module and actual source code. Every changed related page and observed
+  module and actual source code. The expected index uses the page's **immediate
+  containing directory**, including nested series: e.g.
+  `dentai/promptologist/prompt-append2-4` requires
+  `dentai/promptologist/index.html` (not the unrelated
+  `dentai/index.html` redirect). `episodes/episode-XXX` retains its
+  `episodes.html` exception. Every changed related page and observed
   changed path must be in `target_paths`; unobserved/unreported changes
   cannot be proven by metadata alone.
 
@@ -135,8 +140,9 @@ rendering verifies the provenance and scope declarations, not HTML bytes.
 
 Before uploading any blob, the REST/connector transfer reads the category
 landing page on the exact expected GitHub base commit. If its actual HTML
-lists static article links (`<li><a href=...>`), it cannot be waived by
-claiming `generated_later` or `client_render`: it must be included in the
+lists static article links (`<li><a href=...>` or Promptologist's
+`<a class="ai-item" ...>` rows), it cannot be waived by claiming
+`generated_later` or `client_render`: it must be included in the
 reviewed first-cut package and the new article link must be present. This
 is a fail-closed heuristic for the active site's static listing convention,
 not an infallible content or builder dependency analyzer.
