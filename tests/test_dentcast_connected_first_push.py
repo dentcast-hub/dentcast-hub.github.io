@@ -97,6 +97,20 @@ class FakeGitHub:
 
 
 class FirstCutTests(unittest.TestCase):
+    def test_checked_in_real_webp_and_schema_fixture(self):
+        """Fixture written through connected GitHub blob/tree/ref, not publishing."""
+        folder = Path(__file__).resolve().parent / "fixtures/connected-first-cut"
+        path = "tests/fixtures/connected-first-cut/page.html"
+        asset = "tests/fixtures/connected-first-cut/image.webp"
+        files = {
+            path: (folder / "page.html").read_bytes(),
+            asset: (folder / "image.webp").read_bytes(),
+            h.STATE_PATH: (folder / "handoff.md").read_bytes()
+        }
+        meta = fp.validate_cut(files)
+        self.assertEqual(meta["next_step"], "C.4.10.1")
+        self.assertEqual(files[asset][:4], b"RIFF")
+
     def test_atomic_first_cut_and_binary_readback(self):
         client = FakeGitHub()
         files = fixture()
