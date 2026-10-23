@@ -12,8 +12,7 @@ VERSION = "fastlocal-v1"
 ZERO = "0"*64
 MAX_BYTES = 2*1024*1024
 # Full checkout validation/snapshot is done on flush, not every journal event.
-# A journal may cover up to ten resolved logical steps; then flush and re-begin.
-MAX_RESOLVED_STEPS = 10
+# The fixed first-delivery cut and MAX_BYTES bound a journal, not step counts.
 MAX_BATCH_EVENTS = 20
 
 def encode(value):
@@ -190,37 +189,17 @@ def begin(root, expected):
         return {"status":"fastlocal_active","digest":out,
                 "next_step":h.next_step(pub),"publication_completed":False}
 
-def newly_resolved(base, current):
-    earlier = {s["id"]: s["status"] for s in base["steps"]}
-    return sum(s["status"] in ("completed", "skipped") and
-               earlier.get(s["id"]) not in ("completed", "skipped")
-               for s in current["steps"])
-
-
-def require_batch_room(base, current, upcoming):
-    if newly_resolved(base, current) >= MAX_RESOLVED_STEPS:
-        h.require(upcoming == h.next_step(current) and
-                  next(s for s in current["steps"]
-                       if s["id"] == upcoming)["status"] == "started",
-                  "WAL_BATCH_FULL_FLUSH_REQUIRED")
-
-
 def step(root, expected, sid, status, evidence=None, reason=None):
     with lock(root):
         init,pub,old,n,_=read(root)
         h.require(old==expected,"STALE_WAL_WRITE")
-        base = init["publication"]
-        require_batch_room(base, pub, sid)
         after=apply(pub,sid,status,evidence or [],reason)
-        h.require(newly_resolved(base, after) <= MAX_RESOLVED_STEPS,
-                  "WAL_BATCH_FULL_FLUSH_REQUIRED")
         d=append(root,{"version":VERSION,"kind":"step","seq":n,
                  "prev":old,"run_id":init["run_id"],"timestamp":timestamp(),
                  "input_fingerprint":init["input_fingerprint"],
                  "step_id":sid,"status":status,
                  "evidence":evidence or [],"reason":reason})
         status_name = ("first_delivery_ready" if lc.delivery_boundary(after)==1
-                       else "batch_flush_required" if newly_resolved(base,after) >= MAX_RESOLVED_STEPS
                        else "fastlocal_active")
         return {"status":status_name,"digest":d,"next_step":h.next_step(after),
                 "publication_completed":False}
@@ -244,10 +223,7 @@ def batch(root, expected, operations):
             sid, status = op["id"], op["status"]
             if status == "completed":
                 h.require(sid not in seen_starts, "WAL_BATCH_ACTION_MUST_RUN_BETWEEN_CALLS")
-            require_batch_room(init["publication"], projected, sid)
             projected = apply(projected, sid, status, op["evidence"], op["reason"])
-            h.require(newly_resolved(init["publication"], projected) <= MAX_RESOLVED_STEPS,
-                      "WAL_BATCH_FULL_FLUSH_REQUIRED")
             if status == "started":
                 seen_starts.add(sid)
         # Preflight first; after writing the first event, every acknowledged
@@ -263,9 +239,8 @@ def batch(root, expected, operations):
                                 "evidence": op["evidence"], "reason": op["reason"]})
             recorded.append({"id": op["id"], "status": op["status"]})
         cut = lc.delivery_boundary(projected) == 1
-        full = newly_resolved(init["publication"], projected) >= MAX_RESOLVED_STEPS
         return {"status": "first_delivery_ready" if cut else
-                "batch_flush_required" if full else "fastlocal_active",
+                "fastlocal_active",
                 "digest": prev, "next_step": h.next_step(projected),
                 "transitions_written": recorded, "publication_completed": False}
 
@@ -333,7 +308,9 @@ def flush(root, expected, review_note=None):
         return {"status":"checkpoint_materialized","sha256":sha,
                 "first_delivery_cut":lc.delivery_boundary(pub)==1,
                 "next_step":h.next_step(pub),
-                "next_action":"At cut: deliver/verify Push 1, then continue in SAME agent unless user chooses a handoff",
+                "next_action":("At cut: deliver/verify Push 1, then continue in SAME agent unless user chooses a handoff"
+                               if lc.delivery_boundary(pub)==1 else
+                               "Continue in SAME agent from next_step; no delivery is due"),
                 "publication_completed":False}
 
 def repair(root, expected):

@@ -172,13 +172,21 @@ use the already-supported `tools/dentcast_publish_fastlocal.py` WAL.
 Every transition retains its own timestamped, hash-chained and fsynced
 receipt; a missing or torn event remains detectable. The **expensive**
 Git checkout/workflow snapshot runs at `flush`, not on every semantic
-step. Flush and reconcile after **at most 10 resolved canonical steps**,
-before any first-cut delivery, when changing an input/approval/external
-action, and before stopping or handing off. Re-begin after the flush
-if the fixed delivery boundary was not reached. Never push these
-intermediate flushes: the same three delivery commits still apply.
-A journal cap is a safety checkpoint, not permission to assert scientific
-steps without running them.
+step. Flush and reconcile at the first delivery cut, before changing a recorded
+input/approval/external action, when a relevant source or prerequisite changes,
+and before stopping or handing off. Re-begin after the flush if the fixed
+delivery boundary was not reached. Do not trigger a full Git/workflow snapshot
+merely because five or ten steps elapsed. Every event still validates ordering
+and its recorded prerequisites. The existing 2 MiB journal limit and first-cut
+guard bound local work; reaching the byte limit requires a reviewed local flush,
+never discarding the WAL or pushing an extra checkpoint. Never push intermediate
+flushes: the same three delivery commits still apply.
+
+The WAL is only available before Push 1. Later scientific work uses the existing
+canonical writer and validation; this optimization does not defer DES/Fidelity,
+approval validation or Phase F. Changing an enrolled input invalidates affected
+evidence under the existing reconciliation rules, including uncommitted bytes.
+A step receipt records work actually performed, not a substitute for that work.
 
 For consecutive genuinely inapplicable skips, or a previous step's
 completion and the next step's start, `fastlocal.py batch` can store
