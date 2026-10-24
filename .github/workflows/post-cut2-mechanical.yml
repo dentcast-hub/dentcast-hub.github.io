@@ -154,6 +154,13 @@ jobs:
           if [[ -n "$EXPECT_CAPTION" ]]; then args+=(--expect-caption "$EXPECT_CAPTION"); fi
           python3 tools/dentcast_post_cut2_runner.py "${args[@]}" | tee "$RUNNER_TEMP/post-cut2-result.json"
 
+      # Commits pushed with GITHUB_TOKEN do not get normal PR checks, so the
+      # merge gate is run here against the exact delivery-3 commit.
+      - name: Verify delivery 3 against the publication merge gate
+        env:
+          BASE_REF: ${{ github.event.repository.default_branch }}
+        run: python3 tools/check_publish_merge_gate.py
+
       - name: Upload logs and recovery bundle
         if: always()
         uses: actions/upload-artifact@v4

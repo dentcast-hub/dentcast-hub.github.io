@@ -50,6 +50,11 @@ class EntrypointMigrationTests(unittest.TestCase):
    s=read(f".cursor/rules/dentcast-{name}.mdc")
    self.assertTrue(s.startswith("---\n"))
    self.assertIn(f"alwaysApply: {always}",s.split("---",2)[1])
+ def test_post_push2_handoff_notice_shared(self):
+  for p in ("AGENTS.md","CLAUDE.md",".cursor/rules/dentcast-router.mdc"):
+   with self.subTest(path=p):
+    s=read(p); self.assertIn("After a new v2 publication's second delivery is confirmed",s)
+    self.assertIn("Keep checking the run until it succeeds or fails",s)
  def test_specialty_routes_preserved(self):
   for p in ("AGENTS.md","CLAUDE.md",".cursor/rules/dentcast-router.mdc"):
    for route in ("en-version.md","ads.md","spot-report.md","cross-link.md","new-section.md",
