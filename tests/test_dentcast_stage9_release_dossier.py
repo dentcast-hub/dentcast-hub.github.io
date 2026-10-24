@@ -13,6 +13,9 @@ dossier = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(dossier)
 
 
+# Live publication deliberately removed the staging-only boundary this asserts.
+LIVE = "LIVE_MODULAR_PUBLISHING_ENABLED" in (Path(__file__).resolve().parents[1] / ".dentcast/workflows/README.md").read_text(encoding="utf-8")
+
 class Stage9ReleaseBoundaryTests(unittest.TestCase):
     def test_explicit_staging_writers_only(self):
         valid = (
@@ -47,6 +50,7 @@ class Stage9ReleaseBoundaryTests(unittest.TestCase):
         for path in invalid:
             self.assertFalse(dossier.in_staging_scope(path), path)
 
+    @unittest.skipIf(LIVE, "Certifies the pre-activation staging snapshot (still on refactor/publishing-modular-workflow); live repos retired that boundary on purpose. Live invariants: test_dentcast_agent_entrypoint_migration.")
     def test_actual_git_dossier_still_blocks_every_external_gate(self):
         out = dossier.evaluate("origin/main")
         self.assertEqual(out["issues"], [], out["issues"])

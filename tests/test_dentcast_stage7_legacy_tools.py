@@ -6,6 +6,7 @@ import base64
 import hashlib
 import importlib.util
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -17,6 +18,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 D = "a" * 64
 REV = "b" * 40
+sys.path.insert(0, str(ROOT / "tools"))  # tools import shared helpers by name
+os.environ["PYTHONDONTWRITEBYTECODE"] = "1"  # paired sandboxes compare whole trees; no .pyc noise
 
 
 def load(name, path):
@@ -33,6 +36,12 @@ editor = load("s7_editor", "tools/dentcast_stage3_apply.py")
 bridge = load("s7_bridge", "tools/dentcast_stage3_bridge.py")
 glossary_builder = load("s7_glossary_builder", "tools/build_pillar.py")
 pairwise = load("s7_pairwise", "tools/audit_dentcast_stage7_pairwise.py")
+
+
+def install_tools(root):
+    """Copy every real tool byte for byte, so shared helpers they import exist."""
+    shutil.copytree(ROOT / "tools", Path(root) / "tools", dirs_exist_ok=True,
+                    ignore=shutil.ignore_patterns("__pycache__"))
 
 
 def fake_report(inv, receipt=D):
@@ -70,9 +79,7 @@ class LegacyToolSandboxTests(unittest.TestCase):
 
     def test_original_stamp_version_real_execution_then_idempotent(self):
         # Preserve the EXISTING builder byte for byte: no replacement logic.
-        (self.sandbox / "tools").mkdir()
-        shutil.copy2(ROOT / "tools/stamp-version.py",
-                     self.sandbox / "tools/stamp-version.py")
+        install_tools(self.sandbox)
         source_fingerprints = {}
         rels = [p.relative_to(ROOT) for p in stamp.VERSION_INPUTS]
         for rel in rels:
@@ -142,9 +149,7 @@ class LegacyToolSandboxTests(unittest.TestCase):
                 destination.parent.mkdir(parents=True, exist_ok=True)
                 if path.exists():
                     shutil.copyfile(path, destination)
-            (workspace / "tools").mkdir()
-            shutil.copyfile(ROOT / "tools/stamp-version.py",
-                            workspace / "tools/stamp-version.py")
+            install_tools(workspace)
             shutil.copyfile(ROOT / "service-worker.js",
                             workspace / "service-worker.js")
             (workspace / "index.html").write_text(
@@ -363,8 +368,7 @@ class StagingClosureTests(unittest.TestCase):
 
     def tool(self, root, name, *args):
         target = root / "tools" / name
-        target.parent.mkdir(exist_ok=True)
-        shutil.copyfile(ROOT / "tools" / name, target)
+        install_tools(root)
         run = subprocess.run(["node" if name.endswith(".mjs") else sys.executable,
                               str(target), *args], cwd=root, text=True,
                              capture_output=True, timeout=40)
