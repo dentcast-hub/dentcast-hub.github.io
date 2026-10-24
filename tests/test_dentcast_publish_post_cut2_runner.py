@@ -1,0 +1,156 @@
+"""Focused contract tests for the post-cut2 runner's safety and recovery edges."""
+import json
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import unittest
+from unittest.mock import patch
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+import dentcast_post_cut2_runner as runner
+import dentcast_publish_lifecycle as lifecycle
+
+
+HEAD = "a" * 40
+BRANCH = "content/litecast-40-test"
+
+
+def sample_publication():
+    rows = lifecycle.plan()
+    states = {row["id"]: row for row in rows}
+    states["C.6"]["status"] = "completed"
+    states["C.4.14"]["status"] = "skipped"
+    return {
+        "content_id": "insight/insight100",
+        "category": "insight",
+        "target_paths": ["insight/insight100.html", "insight/en/insight100.html"],
+        "context": {"external_actions": []},
+        "steps": rows,
+    }
+
+
+class PostCut2RunnerTests(unittest.TestCase):
+    def test_first_cut_is_rejected_before_any_builder(self):
+        pub = sample_publication()
+        args = type("Args", (), {
+            "expected_head": HEAD, "expected_branch": BRANCH,
+            "expect_title": "title", "expect_caption": "caption",
+        })()
+        with patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]), \
+             patch.object(runner, "publication", return_value=(pub, "digest")), \
+             patch.object(lifecycle, "editorial_cut_v2", return_value=True), \
+             patch.object(lifecycle, "delivery_boundary", return_value=1), \
+             patch.object(lifecycle, "require_fixed_cut_readiness"), \
+             patch.object(runner, "command_plan") as commands:
+            with self.assertRaisesRegex(runner.RunnerError, "NOT_AT_V2_SECOND_DELIVERY"):
+                runner.run_phase(Path("."), Path("/tmp/runner-artifacts"), args)
+            commands.assert_not_called()
+
+    def test_legacy_v1_is_rejected_before_any_builder(self):
+        pub = sample_publication()
+        args = type("Args", (), {
+            "expected_head": HEAD, "expected_branch": BRANCH,
+            "expect_title": "title", "expect_caption": "caption",
+        })()
+        with patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]), \
+             patch.object(runner, "publication", return_value=(pub, "digest")), \
+             patch.object(lifecycle, "editorial_cut_v2", return_value=False), \
+             patch.object(runner, "command_plan") as commands:
+            with self.assertRaisesRegex(runner.RunnerError, "V2_REQUIRED"):
+                runner.run_phase(Path("."), Path("/tmp/runner-artifacts"), args)
+            commands.assert_not_called()
+
+    def test_success_stops_at_g_without_delivery_three(self):
+        pub = sample_publication()
+        states = {row["id"]: row for row in pub["steps"]}
+        args = type("Args", (), {
+            "expected_head": HEAD, "expected_branch": BRANCH,
+            "expect_title": "title", "expect_caption": "caption",
+        })()
+        def record(_root, sid, status, evidence=(), reason=None):
+            states[sid]["status"] = status
+            return "digest"
+        def command(_root, _artifact, label, _argv, _logs):
+            if label == "F-verify-publish":
+                states["F"]["status"] = "completed"
+        with tempfile.TemporaryDirectory() as tmp, \
+             patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]), \
+             patch.object(runner, "publication", return_value=(pub, "digest")), \
+             patch.object(lifecycle, "editorial_cut_v2", return_value=True), \
+             patch.object(lifecycle, "delivery_boundary", return_value=2), \
+             patch.object(lifecycle, "require_fixed_cut_readiness"), \
+             patch.object(runner, "command_plan", return_value=[["python3", "builder"]]), \
+             patch.object(runner, "record_step", side_effect=record), \
+             patch.object(runner, "run_command", side_effect=command), \
+             patch.object(runner, "verify_scope"):
+            result = runner.run_phase(Path(tmp), Path(tmp) / "artifacts", args)
+        self.assertEqual(result["status"], "mechanical_steps_complete")
+        self.assertEqual(result["next_step"], "G")
+        self.assertFalse(result["third_delivery_created"])
+
+    def test_failed_command_preserves_a_recovery_attempt(self):
+        pub = sample_publication()
+        args = type("Args", (), {
+            "expected_head": HEAD, "expected_branch": BRANCH,
+            "expect_title": "title", "expect_caption": "caption",
+        })()
+        with tempfile.TemporaryDirectory() as tmp, \
+             patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]), \
+             patch.object(runner, "publication", return_value=(pub, "digest")), \
+             patch.object(lifecycle, "editorial_cut_v2", return_value=True), \
+             patch.object(lifecycle, "delivery_boundary", return_value=2), \
+             patch.object(lifecycle, "require_fixed_cut_readiness"), \
+             patch.object(runner, "command_plan", return_value=[["python3", "builder"]]), \
+             patch.object(runner, "record_step"), \
+             patch.object(runner, "run_command", side_effect=runner.RunnerError("injected builder failure")), \
+             patch.object(runner, "verify_scope"), \
+             patch.object(runner, "write_recovery") as recovery:
+            with self.assertRaisesRegex(runner.RunnerError, "injected builder failure"):
+                runner.run_phase(Path(tmp), Path(tmp) / "artifacts", args)
+        recovery.assert_called_once()
+        self.assertEqual(recovery.call_args.args[4], "blocked")
+
+    def test_recovery_bundle_excludes_out_of_scope_files_and_restores_after_review(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "repo"
+            artifact = Path(tmp) / "artifact"
+            root.mkdir()
+            (root / ".dentcast").mkdir()
+            (root / runner.HANDOFF).write_text("canonical handoff bytes", encoding="utf-8")
+            (root / "index.html").write_text("generated output", encoding="utf-8")
+            (root / "private.env").write_text("secret", encoding="utf-8")
+            pub = {
+                "content_id": "insight/insight100",
+                "category": "insight",
+                "target_paths": ["insight/insight100.html"],
+            }
+            changed = {runner.HANDOFF, "index.html", "private.env"}
+            with patch.object(runner, "git", side_effect=lambda _r, *a, **k:
+                              BRANCH if a[:2] == ("branch", "--show-current") else HEAD), \
+                 patch.object(runner, "changed_paths", return_value=changed):
+                manifest = runner.write_recovery(root, artifact, pub, HEAD,
+                                                 "blocked", "C.8", [], "injected failure")
+            self.assertNotIn("private.env", manifest["recovery_paths"])
+            self.assertIn("private.env", manifest["changed_paths"])
+
+            # Restoration starts from a clean checkout at the same immutable SHA.
+            for name in (runner.HANDOFF, "index.html", "private.env"):
+                (root / name).unlink()
+            calls = []
+            completed = subprocess.CompletedProcess([], 0, stdout="invalidated", stderr="")
+            with patch.object(runner, "git", side_effect=lambda _r, *a, **k:
+                              BRANCH if a[:2] == ("branch", "--show-current") else HEAD), \
+                 patch.object(runner, "changed_paths", return_value=set()), \
+                 patch.object(runner, "publication", return_value=({"publication": True}, "digest")), \
+                 patch.object(runner.subprocess, "run", side_effect=lambda *a, **k:
+                              (calls.append(a[0]) or completed)):
+                runner.restore_recovery(root, artifact, HEAD, BRANCH, "reviewed retry")
+            self.assertEqual((root / runner.HANDOFF).read_text(encoding="utf-8"),
+                             "canonical handoff bytes")
+            self.assertFalse((root / "private.env").exists())
+            self.assertIn("--reconcile-note", calls[0])
+
+
+if __name__ == "__main__":
+    unittest.main()
