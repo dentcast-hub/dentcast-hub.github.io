@@ -8,9 +8,13 @@ Inspection uses opt-in --check-remote; crossing either fixed delivery cut requir
 a fresh read-only origin observation (git ls-remote, no fetch).
 """
 import argparse
+import copy
+from contextvars import ContextVar
+from functools import wraps
 from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
+import html
 import json
 import os
 from pathlib import Path, PurePosixPath
@@ -522,12 +526,45 @@ def observation_path(root):
     return path
 
 
+def page_text_digest(body):
+    """Exact decoded text, preserving internal whitespace and Persian codepoints.
+
+    Link wrappers, cache stamps and non-prose script/style changes alone do not
+    revoke text approval. This is not a scientific or DOM/visibility validator.
+    """
+    try:
+        text = body.decode('utf-8')
+    except UnicodeError:
+        return digest(body)  # Unknown encoding: fail conservatively on byte drift.
+    text = re.sub(r'<(?:script|style)\b[^>]*>.*?</(?:script|style)\s*>', '', text,
+                  flags=re.S | re.I)
+    return digest(html.unescape(re.sub(r'<[^>]+>', '', text)).strip().encode('utf-8'))
+
+
+def approved_pages(publication):
+    if not any(a['status'] in ('confirmed', 'not_required')
+               for a in publication['context']['approvals']):
+        return set()
+    primary = publication['content_id'] + '.html'
+    return ({primary} if primary in publication['target_paths'] else
+            {p for p in publication['target_paths'] if p.endswith('.html')})
+
+
 def remember_observation(root, state, sha):
     # Non-portable Git observations stay in Git metadata, not in the handoff.
     path = observation_path(root)
     encoded_snapshot = json.dumps(state['snapshot'], ensure_ascii=True, sort_keys=True).encode()
+    text_hashes = {}
+    for name in approved_pages(state['publication']):
+        info = state['snapshot']['files'].get(name, {})
+        if info.get('kind') == 'file':
+            body = safe_path(root, name).read_bytes()
+            require(digest(body) == info['sha256'], 'FILE_CHANGED_DURING_SNAPSHOT')
+            text_hashes[name] = page_text_digest(body)
     data = json.dumps({'sha256': sha, 'snapshot': state['snapshot'],
-                       'snapshot_sha256': digest(encoded_snapshot)},
+                       'snapshot_sha256': digest(encoded_snapshot),
+                       'approved_text': text_hashes,
+                       'approved_text_sha256': digest(json.dumps(text_hashes, sort_keys=True).encode())},
                       ensure_ascii=True).encode()
     require(len(data) <= LIMIT * 2, 'OBSERVATION_TOO_LARGE')
     fd, temporary = tempfile.mkstemp(prefix='.publish-observation-', dir=path.parent)
@@ -595,6 +632,27 @@ def checkpoint_revision(root, sha):
     return None
 
 
+_baseline_reads = ContextVar("publication_baseline_reads", default=None)
+
+
+def baseline_read_session(fn):
+    """Cache immutable commit inventories only, for one nested helper operation.
+
+    Never cache the worktree, index, branch, origin or remote observations.
+    Context-local lifetime also prevents reuse across commands or checkouts.
+    """
+    @wraps(fn)
+    def wrapped(*args, **kwargs):
+        if _baseline_reads.get() is not None:
+            return fn(*args, **kwargs)
+        token = _baseline_reads.set({})
+        try:
+            return fn(*args, **kwargs)
+        finally:
+            _baseline_reads.reset(token)
+    return wrapped
+
+
 def snapshot_from_commit(root, publication, revision):
     """Rebuild the verification baseline from Git without storing it in handoff."""
     # CI commonly checks out a commit directly. Branch identity is deliberately
@@ -603,6 +661,15 @@ def snapshot_from_commit(root, publication, revision):
     current_branch = text_git(root, 'symbolic-ref', '--quiet', '--short', 'HEAD', optional=True)
     origin = config(root, 'remote.origin.url')
     require(bool(origin), 'ORIGIN_REQUIRED')
+    revision = text_git(root, 'rev-parse', revision + '^{commit}')
+    cache = _baseline_reads.get()
+    key = (str(root.resolve()), revision, tuple(sorted(publication['target_paths'])),
+           tuple(WORKFLOW_PATHS))
+    if cache is not None and key in cache:
+        files, workflow = copy.deepcopy(cache[key])
+        return {'repository': identity(origin, root), 'branch': current_branch, 'head': revision,
+                'files': files, 'workflow': workflow,
+                'remote': remote_observation(root, revision, current_branch, False)}
     changed = git(root, 'diff-tree', '--root', '--no-commit-id', '--name-only', '-r', '-z',
                   revision, optional=True)
     require(changed is not None, 'HANDOFF_BASELINE_UNAVAILABLE')
@@ -645,6 +712,8 @@ def snapshot_from_commit(root, publication, revision):
         require(kind == 'blob' and mode != '120000',
                 'ACTIVE_WORKFLOW_FILE_MISSING_OR_SYMLINK:' + name)
         workflow[name] = digest(git(root, 'show', revision + ':' + name))
+    if cache is not None:
+        cache[key] = copy.deepcopy((files, workflow))
     return {'repository': identity(origin, root), 'branch': current_branch, 'head': revision,
             'files': files, 'workflow': workflow,
             'remote': remote_observation(root, revision, current_branch, False)}
@@ -895,7 +964,7 @@ def preserve_actions(old, new):
             require(action["status"] == "started", "EXTERNAL_RETRY_MUST_START_FIRST")
         observed.append(action)
     for receipt in old["context"]["decisions"]:
-        if isinstance(receipt, dict) and receipt.get("kind") == EXTERNAL_RECONCILIATION:
+        if isinstance(receipt, dict) and receipt.get("kind") in (EXTERNAL_RECONCILIATION, INVALIDATION):
             require(receipt in new["context"]["decisions"],
                     "EXTERNAL_RECONCILIATION_HISTORY_IMMUTABLE")
     reconciled_external_failures(new)
@@ -914,6 +983,127 @@ def fastlocal_active(root):
     return path.is_file()
 
 
+INVALIDATION = "dependency_invalidation_v1"
+
+
+def local_input_bindings(publication):
+    """Existing input references may bind local bytes; URLs remain operator-owned.
+
+    Explicit path bindings must be enrolled. Legacy {ref: enrolled-path, sha256: ...}
+    records have the same meaning. No remote source is fetched by this helper.
+    """
+    for item in publication['context']['inputs']:
+        if not isinstance(item, dict):
+            continue
+        path = item.get('path')
+        if path is None and item.get('ref') in publication['target_paths']:
+            path = item['ref']
+        if path is not None:
+            relative_path(path)
+            require(path in publication['target_paths'], 'INPUT_PATH_MUST_BE_ENROLLED:' + path)
+            require(valid_hash(item.get('sha256')), 'INPUT_HASH_REQUIRED:' + path)
+            yield item, path
+
+
+def require_current_inputs(root, publication, snapshot=None):
+    for item, path in local_input_bindings(publication):
+        info = snapshot['files'].get(path, {}) if snapshot is not None else file_info(root, path)
+        require(info.get('kind') == 'file' and info.get('sha256') == item['sha256'],
+                'INPUT_BYTES_CHANGED_RECONCILE:' + path)
+
+
+def invalidate_publication(publication, from_step, note):
+    """Preserve superseded semantic evidence; never generate replacement evidence."""
+    require(nonempty(note), 'INVALIDATION_REVIEW_REQUIRED')
+    p = copy.deepcopy(publication)
+    ids = [s['id'] for s in p['steps']]
+    require(from_step in ids, 'INVALIDATION_STEP_UNKNOWN')
+    start = ids.index(from_step)
+    require(any(s['status'] != 'pending' for s in p['steps'][start:]),
+            'NO_EVIDENCE_TO_INVALIDATE')
+    old = {key: copy.deepcopy(p['context'][key])
+           for key in ('inputs', 'approvals', 'validation', 'delivery')}
+    old['steps'] = copy.deepcopy(p['steps'][start:])
+    p['context']['decisions'].append({'kind': INVALIDATION, 'from_step': from_step,
+                                     'reason': note, 'superseded': old})
+    for row in p['steps'][start:]:
+        row.update(status='pending', evidence=[], reason=None)
+    # Approval scopes have no machine-readable semantic dependency map. Fail
+    # closed: retain each scope, preserve its old decision above, ask again.
+    for approval in p['context']['approvals']:
+        if approval['status'] in ('confirmed', 'not_required'):
+            approval.update(status='pending', decision=None, evidence=[])
+    p['context']['validation'] = []
+    p['context']['delivery'] = []
+    p.update(status='in_progress', blocker=None)
+    return p
+
+
+def refresh_local_inputs(root, publication):
+    for item, path in local_input_bindings(publication):
+        info = file_info(root, path)
+        require(info['kind'] == 'file', 'INPUT_FILE_UNAVAILABLE:' + path)
+        item['sha256'] = info['sha256']
+
+
+def require_dependency_invalidation(root, previous, publication, current):
+    """A review note cannot carry an old approval across changed page bytes."""
+    old = previous['publication']
+    pages = approved_pages(old)
+    changed_pages = [path for path, info in previous['snapshot']['files'].items()
+                     if path in pages
+                     and info['kind'] == 'file'
+                     and any(info.get(k) != current['files'].get(path, {}).get(k)
+                             for k in ('kind', 'sha256', 'executable'))]
+    if not changed_pages or not any(a['status'] in ('confirmed', 'not_required')
+                                    for a in old['context']['approvals']):
+        return
+    # Only semantic text changes invalidate text approvals. Hashes of uncommitted
+    # approved text live in the existing private observation; committed baselines
+    # are reconstructed from Git. No page bodies/fingerprints enter the handoff.
+    cache = observation_path(root)
+    old_text = {}
+    if cache.is_file() and cache.stat().st_size <= LIMIT * 2:
+        observed = decode_json(cache.read_text(encoding='utf-8'))
+        if observed.get('sha256') == digest(render(previous).encode()):
+            text_hashes = observed.get('approved_text', {})
+            if observed.get('approved_text_sha256') == digest(json.dumps(text_hashes, sort_keys=True).encode()):
+                old_text = text_hashes
+    effective = []
+    for path in changed_pages:
+        before = old_text.get(path)
+        if before is None:
+            body = git(root, 'show', previous['snapshot']['head'] + ':' + path, optional=True)
+            if body is not None and digest(body) == previous['snapshot']['files'][path]['sha256']:
+                before = page_text_digest(body)
+        info = current['files'].get(path, {})
+        if info.get('kind') != 'file':
+            effective.append(path)
+            continue
+        body = safe_path(root, path).read_bytes()
+        require(digest(body) == info['sha256'], 'FILE_CHANGED_DURING_SNAPSHOT')
+        if before is None or before != page_text_digest(body):
+            effective.append(path)
+    changed_pages = effective
+    if not changed_pages:
+        return
+    # Require an explicit invalidation, not a changed note or copied approval.
+    receipts = [x for x in publication['context']['decisions']
+                if isinstance(x, dict) and x.get('kind') == INVALIDATION
+                and x not in old['context']['decisions']]
+    require(bool(receipts), 'APPROVED_PAGE_CHANGED_INVALIDATE:' + ','.join(changed_pages))
+    approvals = {a['scope']: a for a in publication['context']['approvals']}
+    require(all(approvals.get(a['scope'], {}).get('status') == 'pending'
+                for a in old['context']['approvals']
+                if a['status'] in ('confirmed', 'not_required')),
+            'CHANGED_PAGE_APPROVAL_MUST_BE_PENDING')
+    ids = [s['id'] for s in publication['steps']]
+    start = ids.index('C.2') if 'C.2' in ids else 0
+    require(all(s['status'] == 'pending' for s in publication['steps'][start:]),
+            'CHANGED_PAGE_REQUIRES_DEPENDENT_STEP_INVALIDATION')
+
+
+@baseline_read_session
 def save(root, publication, expected=None, note=None, check_remote=False, initial=False, wal_materialize=False):
     validate_publication(publication)
     require(note is None or nonempty(note), "RECONCILIATION_NOTE_EMPTY")
@@ -941,15 +1131,19 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
                                             {p for p in dirty if builder_output(p)})
         targets = set(publication["target_paths"])
         if previous:
+            require(set(previous['publication']['target_paths']) <= targets,
+                    'WATCHED_PATHS_CANNOT_BE_DROPPED')
             targets.update(previous["snapshot"]["files"])
             unknown = [p for p in dirty if p not in targets and p not in WORKFLOW_PATHS]
             require(not unknown, "UNREVIEWED_PATHS_OUTSIDE_PUBLICATION:" + ",".join(sorted(unknown)) +
                     "; preserve these files; add only reviewed related paths to target_paths")
         current = snapshot(root, targets, check_remote, observed_status=dirty)
+        require_current_inputs(root, publication, current)
         issues = []
         if previous:
             require(all(previous["snapshot"][k] == current[k] for k in ("repository", "branch")),
                     "REPOSITORY_OR_BRANCH_CHANGED")
+            require_dependency_invalidation(root, previous, publication, current)
             issues = differences(root, previous, current)
             issues += preserve_actions(previous["publication"], publication)
             approvals = {a["scope"]: a for a in publication["context"]["approvals"]}
@@ -971,6 +1165,10 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
                 issues.append("RESOLVED_STEP_CHANGED")
             if previous["publication"]["context"]["inputs"] != publication["context"]["inputs"]:
                 issues.append("INPUT_REFERENCES_CHANGED")
+                if previous["publication"]["context"]["inputs"]:
+                    require(not any(a['status'] in ('confirmed', 'not_required')
+                                    for a in publication['context']['approvals']),
+                            'INPUT_CHANGE_APPROVAL_MUST_BE_PENDING')
                 if previous["publication"]["context"]["inputs"] and any(
                         s["status"] in ("completed", "skipped") for s in previous["publication"]["steps"]):
                     require(all(s["status"] == "pending" for s in publication["steps"]),
@@ -1003,6 +1201,10 @@ def inspect(root, check_remote=False):
         current = current_snapshot(root, state, check_remote)
         issues = differences(root, state, current)
         p = state["publication"]
+        try:
+            require_current_inputs(root, p, current)
+        except Blocked as exc:
+            issues.append(str(exc))
         unknown = [name for name, info in state["snapshot"]["files"].items()
                    if name not in p["target_paths"] and not builder_output(name)
                    and name not in WORKFLOW_PATHS and not info.get("status")]
@@ -1096,6 +1298,10 @@ def main(argv=None):
     p.add_argument("--skip", action="append", default=[], metavar="ID=REASON")
     p.add_argument("--start-next", action="store_true", help="Next module has been read and the next action is ready")
     p.add_argument("--reconcile-note")
+    p = sub.add_parser("invalidate", help="Preserve old evidence and reset its dependent suffix")
+    p.add_argument("--expected-sha256", required=True)
+    p.add_argument("--from-step", required=True)
+    p.add_argument("--reconcile-note", required=True)
     p = sub.add_parser("verify")
     p.add_argument("--expected-sha256", required=True)
     p.add_argument("--expect-title")
@@ -1147,6 +1353,8 @@ def main(argv=None):
             require(args.id is not None or not args.evidence, "EVIDENCE_REQUIRES_COMPLETED_STEP_ID")
             result = lifecycle.advance(root, args.expected_sha256, args.id, args.evidence,
                                        skips, args.start_next, args.reconcile_note)
+        elif args.command == "invalidate":
+            result = lifecycle.invalidate(root, args.expected_sha256, args.from_step, args.reconcile_note)
         elif args.command == "verify":
             result = lifecycle.verify(root, args.expected_sha256, args.expect_title, args.expect_caption, args.catalog_id)
         elif args.command == "bind":

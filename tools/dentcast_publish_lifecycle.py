@@ -235,6 +235,7 @@ def guard_step_transition(state, publication, root=None):
             require_step_delivery(root, state, h.digest(h.render(state).encode()))
 
 
+@h.baseline_read_session
 def step(root, expected, sid, status, evidence, reason, note=None):
     state = state_for_update(root, expected)
     p = copy.deepcopy(state["publication"])
@@ -256,6 +257,16 @@ def step(root, expected, sid, status, evidence, reason, note=None):
     return h.save(root, p, expected=expected, note=note)
 
 
+@h.baseline_read_session
+def invalidate(root, expected, from_step, note):
+    state = state_for_update(root, expected)
+    p = h.invalidate_publication(state['publication'], from_step, note)
+    h.refresh_local_inputs(root, p)
+    require_plan(p)
+    return h.save(root, p, expected=expected, note=note)
+
+
+@h.baseline_read_session
 def advance(root, expected, sid=None, evidence=None, skips=(), start_next=False, note=None):
     """Reduce CLI round trips while preserving a durable write per transition.
 
@@ -304,14 +315,17 @@ def advance(root, expected, sid=None, evidence=None, skips=(), start_next=False,
     live_prefix = copy.deepcopy(state["publication"])
     try:
         for op_id, status, refs, reason in operations:
-            if fixed_delivery(live_prefix) and delivery_boundary(live_prefix):
-                live, _ = h.load_state(root)
-                try:
-                    require_step_delivery(root, live, result["sha256"])
-                except h.Blocked:
-                    return {**result, "status": "delivery_required", "delivery": delivery_boundary(live["publication"]),
-                            "transitions_written": written, "next_action": "Commit/push this fixed delivery before advancing"}
-            result = step(root, result["sha256"], op_id, status, refs, reason, note)
+            cut = delivery_boundary(live_prefix) if fixed_delivery(live_prefix) else None
+            try:
+                # save -> guard_step_transition verifies this boundary once,
+                # under the writer lock, against freshly observed remote bytes.
+                result = step(root, result["sha256"], op_id, status, refs, reason, note)
+            except h.Blocked as exc:
+                if cut and str(exc).startswith(('PREVIOUS_STEP_', 'DELIVERED_STEP_')):
+                    return {**result, "status": "delivery_required", "delivery": cut,
+                            "error": str(exc), "transitions_written": written,
+                            "next_action": "Commit/push this fixed delivery before advancing"}
+                raise
             # Update only AFTER the durable canonical step succeeded.
             next(row for row in live_prefix["steps"] if row["id"] == op_id)["status"] = status
             written.append({"id": op_id, "status": status})

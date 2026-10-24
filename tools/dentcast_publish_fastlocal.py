@@ -106,12 +106,16 @@ def apply(p, sid, status, evidence, reason):
     lc.guard_step_transition({"publication":p},new)
     return new
 
-def replay(raw, allow_torn=False):
+def replay(raw, allow_torn=False, allow_engine_change=False):
     h.require(0<len(raw)<=MAX_BYTES,"WAL_EMPTY_OR_TOO_LARGE")
-    prev=ZERO; init=None; pub=None; seq=0; valid=0
+    prev=ZERO; init=None; pub=None; seq=0; valid=0; engine=None
+    current_engine=digest(Path(__file__).read_bytes())
     for line in raw.splitlines(keepends=True):
         if not line.endswith(b"\n"):
-            if allow_torn and valid: return init,pub,prev,seq,valid
+            if allow_torn and valid:
+                h.require(allow_engine_change or engine==current_engine,
+                          "WAL_ENGINE_CHANGED_INVALIDATE_AND_RECONCILE")
+                return init,pub,prev,seq,valid
             raise h.Blocked("WAL_TORN_TAIL")
         try: record=h.decode_json(line.decode("utf-8"))
         except (ValueError,UnicodeError):
@@ -130,8 +134,8 @@ def replay(raw, allow_torn=False):
                       h.valid_hash(record.get("input_fingerprint")),
                       "WAL_BEGIN_INVALID")
             init=record;pub=copy.deepcopy(record["publication"]);lc.require_plan(pub)
-            h.require(record.get("wal_engine_sha256")==digest(Path(__file__).read_bytes()),
-                      "WAL_ENGINE_CHANGED_INVALIDATE_AND_RECONCILE")
+            engine=record.get("wal_engine_sha256")
+            h.require(h.valid_hash(engine), "WAL_ENGINE_HASH_INVALID")
         elif record.get("kind")=="step":
             h.require(record.get("run_id")==init["run_id"],"WAL_RUN_ID_CHANGED")
             h.require(record.get("input_fingerprint")==init["input_fingerprint"],
@@ -147,18 +151,40 @@ def replay(raw, allow_torn=False):
             pub=copy.deepcopy(pub)
             pub["target_paths"].append(target)
             lc.require_plan(pub)
+        elif record.get("kind")=="invalidate":
+            h.require(record.get("run_id")==init["run_id"], "WAL_RUN_ID_CHANGED")
+            pub=h.invalidate_publication(pub,record["from_step"],record["reason"])
+            # Only hashes of already enrolled local input references may change.
+            updated=record["inputs"]
+            expected=copy.deepcopy(pub)
+            bindings=list(h.local_input_bindings(expected))
+            h.require(len(updated)==len(expected["context"]["inputs"]), "WAL_INVALIDATION_INPUTS")
+            for item,path in bindings:
+                index=expected["context"]["inputs"].index(item)
+                new_hash=updated[index].get("sha256")
+                h.require(h.valid_hash(new_hash), "WAL_INVALIDATION_INPUTS")
+                item["sha256"]=new_hash
+            h.require(expected["context"]["inputs"]==updated, "WAL_INVALIDATION_INPUTS")
+            pub=expected
+            updated_engine=record.get("wal_engine_sha256")
+            h.require(h.valid_hash(updated_engine), "WAL_ENGINE_HASH_INVALID")
+            h.require(updated_engine==engine or all(s['status']=='pending' for s in pub['steps']),
+                      "ENGINE_CHANGE_INVALIDATE_FROM_RULES")
+            engine=updated_engine
         elif record.get("kind")=="torn_tail_repaired":
             h.require(record.get("run_id")==init["run_id"] and
                       h.valid_hash(record.get("tail_sha256")),"WAL_REPAIR_INVALID")
         else:
             raise h.Blocked("WAL_UNKNOWN_EVENT")
         prev=record["digest"]; seq+=1; valid+=len(line)
+    h.require(allow_engine_change or engine==current_engine,
+              "WAL_ENGINE_CHANGED_INVALIDATE_AND_RECONCILE")
     return init,pub,prev,seq,valid
 
-def read(root, allow_torn=False):
+def read(root, allow_torn=False, allow_engine_change=False):
     p=location(root)
     h.require(p.is_file(),"WAL_NOT_ACTIVE")
-    return replay(p.read_bytes(),allow_torn)
+    return replay(p.read_bytes(),allow_torn,allow_engine_change)
 
 def begin(root, expected):
     with lock(root):
@@ -313,6 +339,33 @@ def flush(root, expected, review_note=None):
                                "Continue in SAME agent from next_step; no delivery is due"),
                 "publication_completed":False}
 
+def invalidate(root, expected, from_step, note):
+    """Append an auditable invalidation; flush remains a separate resumable step."""
+    with lock(root):
+        init,pub,d,n,_=read(root,allow_engine_change=True)
+        h.require(d==expected,"STALE_WAL_WRITE")
+        projected=h.invalidate_publication(pub,from_step,note)
+        h.refresh_local_inputs(root,projected)
+        # Existing source-reference and workflow changes require the full plan
+        # invalidated. Refuse an insufficient suffix before appending anything.
+        engine_hash=digest(Path(__file__).read_bytes())
+        engine_changed=init['wal_engine_sha256'] != engine_hash
+        source_changed=projected['context']['inputs'] != pub['context']['inputs']
+        state,_=h.load_state(root)
+        workflow_changed=any(h.file_info(root,path)['sha256'] != value
+                             for path,value in state['snapshot']['workflow'].items())
+        h.require(not (source_changed or workflow_changed or engine_changed) or
+                  all(s['status']=='pending' for s in projected['steps']),
+                  'DEPENDENCY_CHANGE_INVALIDATE_FROM_RULES')
+        d=append(root,{"version":VERSION,"kind":"invalidate","seq":n,"prev":d,
+                       "run_id":init["run_id"],"timestamp":timestamp(),
+                       "from_step":from_step,"reason":note,
+                       "inputs":projected['context']['inputs'],"wal_engine_sha256":engine_hash})
+        return {"status":"wal_evidence_invalidated","digest":d,
+                "next_step":h.next_step(projected),"publication_completed":False,
+                "next_action":"Flush this WAL with the returned digest, then continue from next_step; no delivery is due"}
+
+
 def repair(root, expected):
     with lock(root):
         p=location(root);raw=p.read_bytes()
@@ -366,6 +419,10 @@ def main():
     q.add_argument("--expected-digest",required=True)
     q.add_argument("--input",required=True,
                    help="JSON array of pre-reviewed transitions outside the checkout")
+    i=sub.add_parser("invalidate")
+    i.add_argument("--expected-digest",required=True)
+    i.add_argument("--from-step",required=True)
+    i.add_argument("--reconcile-note",required=True)
     sub.add_parser("inspect")
     r=sub.add_parser("repair-torn-tail");r.add_argument("--expected-good-digest",required=True)
     args=ap.parse_args()
@@ -380,6 +437,8 @@ def main():
         elif args.action=="batch":
             operations=h.decode_json(Path(args.input).read_text(encoding="utf-8"))
             out=batch(root,args.expected_digest,operations)
+        elif args.action=="invalidate":
+            out=invalidate(root,args.expected_digest,args.from_step,args.reconcile_note)
         elif args.action=="inspect":out=inspect(root)
         else:out=repair(root,args.expected_good_digest)
         print(json.dumps(out,ensure_ascii=True,indent=2))

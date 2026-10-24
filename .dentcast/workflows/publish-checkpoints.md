@@ -199,6 +199,68 @@ approval and outcome rules remain checked on every transition;
 hard validation stays at flush, the fixed push gates, and Phase F.
 Do not use this local WAL option as proof of work in a GitHub-only agent.
 
+### Explicit dependency invalidation (same run, no extra delivery)
+
+A reconciliation note is not replacement evidence. Enroll each local source in
+`target_paths` and bind its bytes in the existing `context.inputs` list using
+`{"path":"sources/paper.txt","sha256":"<actual SHA-256>"}`. Existing
+`{"ref":"<enrolled local path>","sha256":"..."}` entries are also checked.
+URLs/non-file references still require the operator's real source verification;
+these tools do not fetch or assess a paper. Watched paths cannot be removed to
+hide drift. Index-only changes do not invalidate byte-bound evidence.
+
+Changed bound input bytes block writes/inspection until reconciled. An effective text change to
+the approved primary page also requires explicit invalidation; unchanged approval
+metadata plus a review note cannot bless changed bytes. Where no unique primary
+page can be identified from the content ID, watched HTML pages are checked
+conservatively. Link wrappers/cache stamps alone do not invalidate text approval;
+the exact decoded text preserves internal whitespace and Persian codepoints.
+Its uncommitted hash stays in the existing private Git observation; committed
+text is reconstructed from Git, and a missing baseline fails conservatively.
+The current approval schema has no narrower machine-readable
+scope-to-text binding, so invalidation returns confirmed/not-required approvals
+to pending, preserves their prior decisions in the audit, and never grants consent.
+
+If a nonempty Fast Local WAL cannot flush because rules or inputs changed, do
+not retry flush or remove the WAL. Review the actual change, then run:
+
+```bash
+python3 tools/dentcast_publish_fastlocal.py invalidate --expected-digest <digest> --from-step rules --reconcile-note '<actual dependency review>'
+python3 tools/dentcast_publish_fastlocal.py flush --expected-digest <returned-digest> --reconcile-note '<review of preserved evidence and invalidated suffix>'
+```
+
+The first command appends a hash-chained invalidation event; it does not replace
+prior events. The second materializes it through the normal canonical writer.
+An interruption between them resumes with `fastlocal.py inspect` and flush;
+an interruption after the canonical save retries that same flush idempotently.
+An explicit invalidation can reconcile a changed WAL engine only with full
+invalidation and structurally valid replay; ordinary reads still reject an
+engine mismatch, and corruption/torn tails retain their existing guards.
+
+For canonical state after WAL materialization use:
+
+```bash
+python3 tools/dentcast_publish_handoff.py invalidate --expected-sha256 <digest> --from-step <first-affected-step> --reconcile-note '<actual dependency review>'
+```
+
+The unaffected prefix is preserved. Changed workflow or existing input references
+require invalidation from `rules` under the existing conservative contract; an
+approved-page edit invalidates `C.2` and the following steps. Earlier invalidation
+is permitted. Superseded steps, inputs, approvals, validation and delivery evidence
+remain in an append-only `dependency_invalidation_v1` decision in the existing
+handoff, not another state format. Only local input hashes are refreshed, never
+scientific scores, independent reviews or human decisions. Pending questions,
+external attempts and reconciliations remain intact; unknown external outcomes
+still block retry. Re-execute affected actions and real Phase F as required.
+This creates no fourth delivery and does not change the three fixed cuts.
+
+Within one canonical operation, immutable baseline file/workflow inventories may
+be reused for the same resolved commit, checkout and target set. The cache ends
+with that operation; worktree bytes, index, origin, branch and remote observations
+are always fresh. `advance` uses the writer's boundary guard once instead of
+preflighting the same remote boundary twice. A later delivery operation must
+observe remote state again.
+
 ### Compact handoff, unchanged canonical plan
 
 For new canonical v3 handoffs, persist the significant `steps` prefix only:
