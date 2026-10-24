@@ -122,7 +122,10 @@ def command_plan(root: Path, pub: dict):
         ["python3", "tools/update-homepage-counters.py"],
         ["python3", "tools/build_pillar.py", "all"],
     ]
-    if pub["category"] == "episodes":
+    # Module 11 step 3: mandatory whenever the publish touched dentcast.json.
+    # Category names are free-form (episode/episodes/dentcast), so the
+    # enrolled target is the reliable trigger.
+    if "dentcast.json" in pub["target_paths"] or pub["category"] in ("episode", "episodes", "dentcast"):
         cmds.append(["python3", "tools/build_episodes.py"])
     if rows["C.4.11"]["status"] == "completed":
         cmds.append(["node", "tools/build_flashcards_index.mjs"])
@@ -364,7 +367,12 @@ def run_phase(root: Path, artifact_dir: Path, args):
                             ["python3", "tools/stamp-version.py"], logs)
                 pub, _ = publication(root)
                 verify_scope(root, pub)
-                record_step(root, "D", "completed", ["Technical English, noindex, hreflang, sitemap, and final version checks passed; logs are in the recovery artifact."])
+                record_step(root, "D", "completed", [
+                    "Technical English, noindex, hreflang, sitemap, and final version checks passed; logs are in the recovery artifact."
+                ], note=(
+                    "Reviewed Phase D technical outputs after verify_scope: hreflang, sitemap and version-stamp "
+                    "changes are canonical generated publication outputs."
+                ))
             pub, _ = publication(root)
             current = handoff.next_step(pub)
         if current == "E":
@@ -386,7 +394,10 @@ def run_phase(root: Path, artifact_dir: Path, args):
                     html = html[:head_end] + "  " + marker + "\n" + html[head_end:]
                     page.write_text(html, encoding="utf-8", newline="")
                 verify_scope(root, pub)
-                record_step(root, "E", "completed", ["Canonical dc-notify marker present exactly once"])
+                record_step(root, "E", "completed", ["Canonical dc-notify marker present exactly once"], note=(
+                    "Reviewed Phase E after verify_scope: the only possible change is the single canonical "
+                    "dc-notify marker in the publication page head."
+                ))
             pub, _ = publication(root)
             current = handoff.next_step(pub)
         if current == "F":

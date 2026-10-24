@@ -271,6 +271,9 @@ def main():
     for root, dirs, files in os.walk(REPO_ROOT):
         # Skip .git and any hidden dirs except .github (we want to NOT walk .github either).
         dirs[:] = [d for d in dirs if not d.startswith(".")]
+        # Test fixtures model input HTML; production builders must never rewrite them.
+        if os.path.relpath(root, REPO_ROOT).replace("\\", "/") == "tests":
+            dirs[:] = [d for d in dirs if d != "fixtures"]
         for f in files:
             if not f.endswith(".html"):
                 continue

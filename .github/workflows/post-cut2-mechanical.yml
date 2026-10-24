@@ -28,7 +28,9 @@ permissions:
   contents: read
 
 concurrency:
-  group: post-cut2-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.expected_head || github.sha }}
+  # One publication branch = one run at a time; a reconciliation push waits
+  # for the earlier run instead of racing it for delivery 3.
+  group: post-cut2-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.target_branch || github.ref_name }}
   cancel-in-progress: false
 
 jobs:
