@@ -97,6 +97,22 @@ class EditorialSecondCutTests(unittest.TestCase):
         self.assert_blocked("SECOND_CUT_EDITORIAL_SCOPE_INVALID",
                             lc.require_fixed_cut_readiness, p)
 
+    def test_c6_cannot_resolve_before_the_editorial_lock_is_complete(self):
+        before = sample(category="insight", second="C.5.6-b")
+        after = copy.deepcopy(before)
+        next(s for s in after["steps"] if s["id"] == "C.6").update(
+            status="completed", evidence=["fixture:C.6"])
+        self.assert_blocked("SECOND_CUT_EDITORIAL_LOCK_REQUIRED",
+                            lc.guard_step_transition, {"publication": before}, after)
+        after["context"]["decisions"].append(receipt(after))
+        after["context"]["approvals"].append(
+            {"scope": "pulse sentence", "status": "pending", "decision": None, "evidence": []})
+        self.assert_blocked("SECOND_CUT_JUDGMENTS_UNRESOLVED",
+                            lc.guard_step_transition, {"publication": before}, after)
+        after["context"]["approvals"][-1].update(
+            status="confirmed", decision="fixture:pulse", evidence=["fixture:founder"])
+        lc.guard_step_transition({"publication": before}, after)
+
     def test_unresolved_human_decision_is_still_a_blocker(self):
         p = sample()
         p["context"]["decisions"].append(receipt(p))
