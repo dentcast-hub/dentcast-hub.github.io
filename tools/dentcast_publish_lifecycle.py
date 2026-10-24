@@ -495,8 +495,12 @@ def bind(root, expected, content_id, category, targets, evidence):
         h.require(old["content_id"] == "unassigned" and old["category"] == "pending", "IDENTITY_ALREADY_BOUND")
         h.require(h.nonempty(evidence) and category not in ("pending", "")
                   and content_id != "unassigned" and h.nonempty(content_id), "VERIFIED_INTAKE_IDENTITY_REQUIRED")
-        h.require(not old["external_actions"] and all(s["status"] == "pending" or s["id"] in GROUPS[0]+GROUPS[1]
-                  for s in old["steps"]), "BIND_ONLY_BEFORE_AUTHORING")
+        # A founder-requested external action during intake (e.g. a Drive
+        # rename/move) may precede binding only when its outcome is settled and
+        # evidenced; its receipt is carried over unchanged.
+        h.require(all(a["status"] == "completed" and a["evidence"] for a in old["external_actions"])
+                  and all(s["status"] == "pending" or s["id"] in GROUPS[0]+GROUPS[1]
+                          for s in old["steps"]), "BIND_ONLY_BEFORE_AUTHORING")
         h.require(not h.differences(root, state, h.current_snapshot(root, state)), "WORK_CHANGED_BEFORE_BIND")
         p = copy.deepcopy(old)
         p.update(content_id=content_id, category=category, target_paths=targets)

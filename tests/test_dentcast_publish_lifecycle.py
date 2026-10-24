@@ -277,6 +277,39 @@ class LifecycleTests(unittest.TestCase):
         sha=h.write_atomic(self.root,state)
         self.assert_blocked('BIND_ONLY_BEFORE_AUTHORING',lc.bind,self.root,sha,'note','insight',['note.html'],'fixture:identity')
 
+    def placeholder_with_action(self, status, evidence):
+        self.prepare()
+        state,_=h.load_state(self.root)
+        p=state['publication'];p.update(content_id='unassigned',category='pending')
+        p['steps'][0].update(status='completed',evidence=['fixture:rules'])
+        p['external_actions']=[{'id':'drive-rename','target':'drive:fixture-file','status':status,'evidence':evidence}]
+        return h.write_atomic(self.root,state)
+
+    def test_bind_after_completed_founder_requested_external_action_keeps_receipt(self):
+        sha=self.placeholder_with_action('completed',['fixture:drive rename+move observed'])
+        result=lc.bind(self.root,sha,'note','insight',['note.html'],'fixture:identity')
+        p=h.load_state(self.root)[0]['publication']
+        self.assertEqual(result['status'],'checkpoint_written')
+        self.assertEqual((p['content_id'],p['category']),('note','insight'))
+        self.assertEqual(p['external_actions'],[{'id':'drive-rename','target':'drive:fixture-file','status':'completed','evidence':['fixture:drive rename+move observed']}])
+
+    def test_bind_rejects_unsettled_or_failed_external_action(self):
+        for status,evidence in (('started',[]),('outcome_unknown',[]),('failed',['fixture:error'])):
+            with self.subTest(status=status):
+                self.setUp()
+                sha=self.placeholder_with_action(status,evidence)
+                self.assert_blocked('BIND_ONLY_BEFORE_AUTHORING',lc.bind,self.root,sha,'note','insight',['note.html'],'fixture:identity')
+
+    def test_bind_after_external_action_still_rejects_started_authoring(self):
+        sha=self.placeholder_with_action('completed',['fixture:observed'])
+        state,_=h.load_state(self.root)
+        for row in state['publication']['steps']:
+            if row['id']=='C.0':
+                row.update(status='started');break
+            row.update(status='completed',evidence=['fixture:intake'])
+        sha=h.write_atomic(self.root,state)
+        self.assert_blocked('BIND_ONLY_BEFORE_AUTHORING',lc.bind,self.root,sha,'note','insight',['note.html'],'fixture:identity')
+
     def test_cli_cannot_seed_completed_plan_or_replace_real_phase_f_with_a_flag(self):
         self.prepare(complete=True)
         state,_=h.load_state(self.root)
