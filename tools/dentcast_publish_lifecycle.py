@@ -90,20 +90,82 @@ def require_step_delivery(root, state, expected):
     h.require(current['workflow'] == state['snapshot']['workflow'], 'DELIVERED_STEP_WORKFLOW_MISMATCH')
 
 
-DELIVERY_POLICY = "fixed_three_deliveries_v1"
+DELIVERY_POLICY = "fixed_three_deliveries_v1"  # legacy/in-flight source of truth
+DELIVERY_POLICY_V2 = "fixed_three_deliveries_v2"  # authoring before second cut
 DELIVERY_CUTS = ("C.4.9", "C.4.13")
+DELIVERY_CUTS_V2 = ("C.4.9", "C.6")
+EDITORIAL_SCOPES = frozenset((
+    "scientific", "challenge", "taxonomy", "links", "hashtags",
+    "content_record", "pathways", "pulse", "english", "author_approvals"
+))
+
+
+def editorial_cut_v2(publication):
+    return publication["category"] != "paper-only" and any(
+        isinstance(d, dict) and d.get("kind") == DELIVERY_POLICY_V2
+        for d in publication["context"]["decisions"])
+
+
+def editorial_cut_receipt(publication):
+    """Check the recorded pre-Push-2 scope inventory, not the truth of claims."""
+    entries = [d for d in publication["context"]["decisions"]
+               if isinstance(d, dict) and d.get("kind") == "second_cut_editorial_lock_v1"]
+    h.require(len(entries) == 1, "SECOND_CUT_EDITORIAL_LOCK_REQUIRED")
+    entry = entries[0]
+    h.require(set(entry) == {"kind", "scopes", "english", "evidence"}
+              and isinstance(entry["evidence"], list)
+              and entry["evidence"] and all(h.nonempty(x) for x in entry["evidence"]),
+              "SECOND_CUT_EDITORIAL_LOCK_FIELDS")
+    scopes = entry["scopes"]
+    h.require(isinstance(scopes, list) and len(scopes) == len(EDITORIAL_SCOPES),
+              "SECOND_CUT_EDITORIAL_SCOPES_REQUIRED")
+    seen = set()
+    for row in scopes:
+        h.require(isinstance(row, dict) and set(row) == {"scope", "status", "evidence"}
+                  and row["scope"] in EDITORIAL_SCOPES and row["scope"] not in seen
+                  and row["status"] in ("resolved", "not_applicable")
+                  and isinstance(row["evidence"], list) and bool(row["evidence"])
+                  and all(h.nonempty(x) for x in row["evidence"]),
+                  "SECOND_CUT_EDITORIAL_SCOPE_INVALID")
+        seen.add(row["scope"])
+    h.require(seen == EDITORIAL_SCOPES, "SECOND_CUT_EDITORIAL_SCOPES_REQUIRED")
+    eng = entry["english"]
+    h.require(isinstance(eng, dict) and set(eng) == {"status", "path", "evidence"}
+              and eng["status"] in ("ready", "exempt")
+              and isinstance(eng["evidence"], list) and bool(eng["evidence"])
+              and all(h.nonempty(x) for x in eng["evidence"]),
+              "SECOND_CUT_ENGLISH_INVALID")
+    challenge = next(x for x in publication["steps"] if x["id"] == "C.4.14")
+    exempt = publication["category"] == "litecast" or challenge["status"] == "completed"
+    if exempt:
+        h.require(eng["status"] == "exempt" and eng["path"] is None,
+                  "SECOND_CUT_ENGLISH_EXCEPTION_REQUIRED")
+    else:
+        parts = publication["content_id"].rsplit("/", 1)
+        h.require(len(parts) == 2, "SECOND_CUT_ENGLISH_ID_INVALID")
+        path = parts[0] + "/en/" + parts[1] + ".html"
+        h.require(eng["status"] == "ready" and eng["path"] == path
+                  and path in publication["target_paths"],
+                  "SECOND_CUT_ENGLISH_MIRROR_MISSING")
+    h.require(not publication["context"]["pending_questions"]
+              and all(a["status"] in ("confirmed", "not_required")
+                      for a in publication["context"]["approvals"]),
+              "SECOND_CUT_JUDGMENTS_UNRESOLVED")
+    return entry
+
 
 
 def fixed_delivery(publication):
     return publication["category"] != "paper-only" and any(
-        isinstance(d, dict) and d.get("kind") == DELIVERY_POLICY
+        isinstance(d, dict) and d.get("kind") in (DELIVERY_POLICY, DELIVERY_POLICY_V2)
         for d in publication["context"]["decisions"])
 
 
 def delivery_boundary(publication):
     """Only resolved prefixes followed by pending steps are deliverable cuts."""
     rows = publication["steps"]
-    for number, sid in enumerate(DELIVERY_CUTS, 1):
+    cuts = DELIVERY_CUTS_V2 if editorial_cut_v2(publication) else DELIVERY_CUTS
+    for number, sid in enumerate(cuts, 1):
         index = next((i for i, row in enumerate(rows) if row["id"] == sid), None)
         if index is not None and all(r["status"] in ("completed", "skipped") for r in rows[:index+1]) and all(
                 r["status"] == "pending" for r in rows[index+1:]):
@@ -129,6 +191,10 @@ def require_fixed_cut_readiness(publication):
     # fixtures that do not contain the connected adapter remain importable.
     from dentcast_connected_cut_gates import validate_lead_provenance
     validate_lead_provenance(publication)
+    if editorial_cut_v2(publication):
+        c6 = next(s for s in publication["steps"] if s["id"] == "C.6")
+        if c6["status"] in ("completed", "skipped"):
+            editorial_cut_receipt(publication)
 
 
 def committed_boundary(root, revision):
@@ -147,6 +213,7 @@ def require_delivery_parent(root, publication, number, revision="HEAD"):
     else:
         h.require(boundary == number-1 and previous is not None
                   and fixed_delivery(previous)
+                  and editorial_cut_v2(previous) == editorial_cut_v2(publication)
                   and previous["content_id"] == publication["content_id"],
                   "FIXED_DELIVERY_ORDER_REQUIRED")
 
@@ -217,6 +284,21 @@ def validate_final_receipt(root, data, commit=None):
 def guard_step_transition(state, publication, root=None):
     if fixed_delivery(state["publication"]):
         h.require(fixed_delivery(publication), "DELIVERY_POLICY_CANNOT_BE_DROPPED")
+        h.require(editorial_cut_v2(state["publication"]) == editorial_cut_v2(publication),
+                  "DELIVERY_POLICY_VERSION_CANNOT_CHANGE")
+        if editorial_cut_v2(state["publication"]):
+            old_c6 = next(s for s in state["publication"]["steps"] if s["id"] == "C.6")
+            new_c6 = next(s for s in publication["steps"] if s["id"] == "C.6")
+            if old_c6["status"] in ("completed", "skipped") and new_c6["status"] in ("completed", "skipped"):
+                old_lock = [d for d in state["publication"]["context"]["decisions"]
+                            if isinstance(d, dict) and d.get("kind") == "second_cut_editorial_lock_v1"]
+                new_lock = [d for d in publication["context"]["decisions"]
+                            if isinstance(d, dict) and d.get("kind") == "second_cut_editorial_lock_v1"]
+                h.require(old_lock == new_lock, "SECOND_CUT_EDITORIAL_LOCK_CHANGED")
+                h.require(state["publication"]["context"]["approvals"] ==
+                          publication["context"]["approvals"],
+                          "POST_CUT_EDITORIAL_APPROVAL_CHANGED")
+
     old = {s['id']: s for s in state['publication']['steps']}
     h.require(all(s['id'] in old or s['status'] == 'pending' for s in publication['steps']),
               'NEW_SUBSTEPS_MUST_START_PENDING')

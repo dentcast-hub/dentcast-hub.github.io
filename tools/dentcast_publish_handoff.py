@@ -1374,8 +1374,13 @@ def main(argv=None):
             lifecycle.require_plan(publication)
             if args.command == "init":
                 require(all(s["status"] == "pending" for s in publication["steps"]), "INIT_REQUIRES_PENDING_PLAN")
-                if publication["category"] != "paper-only" and not lifecycle.fixed_delivery(publication):
-                    publication["context"]["decisions"].append({"kind": lifecycle.DELIVERY_POLICY})
+                if publication["category"] != "paper-only":
+                    if not lifecycle.fixed_delivery(publication):
+                        publication["context"]["decisions"].append({"kind": lifecycle.DELIVERY_POLICY})
+                    # The old marker remains present for the existing cut-1
+                    # adapters. Only an actual NEW init opts in to cut-2 v2.
+                    if not lifecycle.editorial_cut_v2(publication):
+                        publication["context"]["decisions"].append({"kind": lifecycle.DELIVERY_POLICY_V2})
             else:
                 previous, _ = load_state(root)
                 old_f = next((s for s in previous["publication"]["steps"] if s["id"] == "F"), None)
