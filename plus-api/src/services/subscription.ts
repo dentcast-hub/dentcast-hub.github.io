@@ -371,6 +371,91 @@ export async function revokeSubscription(
   });
 }
 
+/**
+ * Shorten a finite active subscription by N Tehran calendar days.
+ * The row lock makes simultaneous adjustments deterministic; the append-only
+ * activity event records both dates. If the new date has passed, expire the
+ * subscription immediately and project tier from both subscription authorities.
+ */
+export async function reduceSubscriptionDays(
+  userId: string,
+  days: number,
+  now: Date = new Date(),
+): Promise<Subscription> {
+  if (!Number.isInteger(days) || days < 1 || days > 90) {
+    throw new Error(`reduceSubscriptionDays: days must be an integer in 1..90, got ${days}`);
+  }
+
+  return withTransaction(async (client) => {
+    const existing = await one<Subscription>(
+      `select ${SUB_COLUMNS} from subscriptions where user_id = $1 for update`,
+      [userId],
+      client,
+    );
+    if (!existing) throw new Error('subscription_not_found');
+    if (existing.is_founder || existing.expires_at === null) {
+      throw new Error('founder_subscription');
+    }
+    if (existing.status !== 'active') throw new Error('subscription_not_active');
+
+    const remaining = summarizeSubscription(existing, now)?.days_left ?? 0;
+    if (days > remaining) throw new Error('reduction_exceeds_remaining');
+
+    const nextExpiry = (await one<{ expires_at: Date }>(
+      `select ((($1::timestamptz at time zone $3) - make_interval(days => $2::int))
+                   at time zone $3) as expires_at`,
+      [existing.expires_at.toISOString(), days, config.streakTimezone],
+      client,
+    ))!.expires_at;
+    const expired = nextExpiry.getTime() <= now.getTime();
+
+    const updated = (await one<Subscription>(
+      `update subscriptions
+          set expires_at = $2,
+              status = $3
+        where user_id = $1
+        returning ${SUB_COLUMNS}`,
+      [userId, nextExpiry.toISOString(), expired ? 'expired' : 'active'],
+      client,
+    ))!;
+
+    // Tier is a projection of subscriptions AND league prizes. Recompute this
+    // user's cache in the same transaction so removing the final active source
+    // does not leave premium access behind until the nightly sweep.
+    await client.query(
+      `update profiles p
+          set tier = case
+            when exists (
+              select 1 from subscriptions s
+               where s.user_id = p.id and s.status = 'active'
+                 and (s.expires_at is null or s.expires_at > $2)
+            ) or exists (
+              select 1 from premium_grants g
+               where g.user_id = p.id and g.revoked_at is null and g.expires_at > $2
+            ) then 'premium'
+            else 'free'
+          end
+        where p.id = $1`,
+      [userId, now.toISOString()],
+    );
+
+    await client.query(
+      `insert into user_activity (user_id, action, meta)
+       values ($1, 'subscription_adjusted', $2)`,
+      [userId, JSON.stringify({
+        kind: 'days_reduced',
+        source: 'admin',
+        days,
+        previous_expires_at: existing.expires_at,
+        expires_at: updated.expires_at,
+        status: updated.status,
+      })],
+    );
+
+    return updated;
+  });
+}
+
 export interface SubscriptionSummary {
   status: 'active' | 'expired';
   plan: string;
