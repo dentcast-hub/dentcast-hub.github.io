@@ -64,7 +64,7 @@ only the chosen local temporary reading/manifest files.
 ## New-publication dispatch
 
 1. Classify text, attached paper, category, media and scientific basis using Phase 0/A/B in module 02, including all required approvals.
-2. Execute original canonical steps, reading every applicable rule in full either directly from its module or via the verified, byte-exact post-intake readpack (below), in this order:
+2. Execute original canonical steps, reading every applicable rule in full either directly from its module or via the verified, byte-exact post-intake readpack (above), in this order:
    - `modules/01-hard-rules.md`
    - `modules/02-routing-intake.md`
    - `modules/03-litecast-and-page.md`
