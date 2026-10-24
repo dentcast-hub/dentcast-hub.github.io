@@ -30,3 +30,5 @@ jobs:
             echo "OK - no NUL bytes in tracked text files."
           fi
           exit $rc
+      - name: Reject damaged UTF-8 in tracked text files
+        run: python3 tools/check_text_encoding.py

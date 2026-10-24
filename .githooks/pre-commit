@@ -46,6 +46,13 @@ if ((${#bad[@]})); then
   exit 1
 fi
 
+# Damaged UTF-8 (a multi-byte Persian character cut in half becomes U+FFFD)
+# is invisible to the NUL check above.
+if [ -f tools/check_text_encoding.py ] && ! python3 tools/check_text_encoding.py --staged >&2; then
+  echo "  Commit rejected: regenerate or restore the damaged file(s) above." >&2
+  exit 1
+fi
+
 # Live publication recovery must be current before the commit. Paused runs are
 # allowed; a stale checkpoint, unstaged state or unguarded deletion is not.
 if ! python3 tools/dentcast_publish_handoff.py guard --phase pre-commit >/dev/null; then
