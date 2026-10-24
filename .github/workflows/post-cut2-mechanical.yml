@@ -28,7 +28,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: post-cut2-${{ github.event_name == 'workflow_dispatch' && inputs.expected_head || github.sha }}
+  group: post-cut2-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.expected_head || github.sha }}
   cancel-in-progress: false
 
 jobs:
@@ -47,8 +47,8 @@ jobs:
         id: validate
         env:
           EVENT_NAME: ${{ github.event_name }}
-          INPUT_BRANCH: ${{ inputs.target_branch }}
-          INPUT_HEAD: ${{ inputs.expected_head }}
+          INPUT_BRANCH: ${{ github.event.inputs.target_branch }}
+          INPUT_HEAD: ${{ github.event.inputs.expected_head }}
           EVENT_BRANCH: ${{ github.ref_name }}
           EVENT_HEAD: ${{ github.sha }}
         run: |
@@ -136,8 +136,8 @@ jobs:
         env:
           TARGET_BRANCH: ${{ needs.preflight.outputs.target_branch }}
           EXPECTED_HEAD: ${{ needs.preflight.outputs.expected_head }}
-          EXPECT_TITLE: ${{ github.event_name == 'workflow_dispatch' && inputs.expect_title || '' }}
-          EXPECT_CAPTION: ${{ github.event_name == 'workflow_dispatch' && inputs.expect_caption || '' }}
+          EXPECT_TITLE: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.expect_title || '' }}
+          EXPECT_CAPTION: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.expect_caption || '' }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           RECOVERY_DIR: ${{ runner.temp }}/dentcast-post-cut2
         run: |

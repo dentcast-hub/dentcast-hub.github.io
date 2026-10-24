@@ -34,6 +34,10 @@ def sample_publication():
 
 
 class PostCut2RunnerTests(unittest.TestCase):
+    def test_runner_and_automation_workflow_are_handoff_inputs(self):
+        self.assertIn("tools/dentcast_post_cut2_runner.py", runner.handoff.WORKFLOW_PATHS)
+        self.assertIn(".github/workflows/post-cut2-mechanical.yml", runner.handoff.WORKFLOW_PATHS)
+
     def test_push1_preflight_is_a_noop(self):
         pub = sample_publication()
         with tempfile.TemporaryDirectory() as tmp:

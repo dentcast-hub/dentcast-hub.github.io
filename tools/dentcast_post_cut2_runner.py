@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Run the deterministic post-Push-2 publication work without committing.
+"""Run the deterministic post-Push-2 work and prepare the canonical third delivery.
 
-This runner is intended for a future GitHub Actions job. It never commits or
-pushes. On failure it writes a bounded recovery bundle outside the checkout;
-an agent/operator must inspect the failure before resuming.
+On failure it writes bounded recovery data outside the checkout so an
+agent/operator can inspect the cause and continue without repeating completed
+or external work.
 """
 from __future__ import annotations
 
@@ -15,6 +15,7 @@ import subprocess
 import sys
 import tarfile
 import time
+from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -451,7 +452,9 @@ def write_delivery_recovery(root: Path, artifact_dir: Path, base_sha: str,
 def finalize_and_push(root: Path, artifact_dir: Path, expected_head: str,
                       expected_branch: str, run_url: str):
     """Record G, prepare delivery 3 canonically, push once, then confirm cleanup."""
-    if not run_url.startswith(("https://github.com/", "https://github.enterprise/")):
+    parsed_run_url = urlparse(run_url)
+    if parsed_run_url.scheme != "https" or not parsed_run_url.netloc \
+            or "/actions/runs/" not in parsed_run_url.path:
         raise RunnerError("GITHUB_ACTIONS_RUN_URL_REQUIRED")
     pub, digest = publication(root)
     if handoff.next_step(pub) != "G":
@@ -483,7 +486,7 @@ def finalize_and_push(root: Path, artifact_dir: Path, expected_head: str,
             "evidence": [run_url],
         })
         digest = record_publication(root, artifact_dir, pub, digest)
-        record_step(root, "G", "completed", [str(report_path), run_url])
+        record_step(root, "G", "completed", [run_url])
         digest = publication(root)[1]
 
         finish = subprocess.run(
