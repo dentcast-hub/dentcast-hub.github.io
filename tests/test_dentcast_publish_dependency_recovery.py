@@ -90,6 +90,25 @@ class DependencyRecoveryTests(unittest.TestCase):
         self.assertEqual(out['next_step'],'C.0.5')
         self.assertEqual(p['context']['approvals'][0]['status'],'confirmed')
 
+    def test_non_prose_and_intact_verbatim_approvals_survive_later_page_step(self):
+        self.source()
+        self.p['context']['approvals'] = [
+            {'scope':'title', 'status':'confirmed', 'decision':'fixture title',
+             'evidence':['fixture:title']},
+            {'scope':'pillar', 'status':'confirmed', 'decision':'fixture pillar',
+             'evidence':['fixture:pillar']}]
+        (self.root/'note.html').write_text('<h1>fixture title</h1><p>body</p>')
+        initial=self.start();d=wal.begin(self.root,initial['sha256'])['digest']
+        d=self.walk(d,'C.2')
+        (self.root/'note.html').write_text('<h1>fixture title</h1><p>body</p><div>credit capsule</div>')
+        wal.flush(self.root,d,'fixture reviewed later canonical page step')
+        p=h.load_state(self.root)[0]['publication']
+        self.assertEqual([a['status'] for a in p['context']['approvals']],['confirmed','confirmed'])
+        d=wal.begin(self.root,h.load_state(self.root)[1])['digest']
+        (self.root/'note.html').write_text('<h1>fixture retitled</h1><p>body</p>')
+        with self.assertRaisesRegex(h.Blocked,'APPROVED_PAGE_CHANGED_INVALIDATE'):
+            wal.flush(self.root,d,'fixture changed approved title')
+
     def test_committed_approval_text_reconstructs_without_private_observation(self):
         self.source()
         (self.root/'note.html').write_text('<p>fixture exact text</p>')

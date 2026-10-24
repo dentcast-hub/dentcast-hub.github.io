@@ -42777,5 +42777,640 @@
       "fidelity": [
         null
       ]
-    }
+    },
+  "sharehub/share-41": {
+    "scored_at": "2026-10-24",
+    "sources": [
+      {
+        "des_version": "3.4",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Managing Fractured Ceramic Restorations: Current Evidence and Best Practices—A Scoping Review",
+          "authors": "Gabriela Almeida, Joana A. Marques, Markus B. Blatz, Rui I. Falacho",
+          "year": 2026,
+          "journal": "Journal of Esthetic and Restorative Dentistry",
+          "doi": "10.1111/jerd.70055"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "Systematic scoping review (PRISMA-ScR, three-database search) of predominantly in-vitro repair studies (MATERIAL SR/MA of in-vitro studies row, 100)",
+          "evidence_quote": "this scoping review aims to assess the effect"
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Absence: read Methodology 2 (reporting statement), 2.1 Eligibility Criteria, 2.2 Information Sources and Search Strategy, 2.3 Selection of Sources of Evidence, 2.4 Data Extraction, plus Funding/Disclosure/Data Availability and Supporting Information blocks; no protocol, registration, PROSPERO, OSF or a priori protocol is mentioned anywhere. The paper cites PRISMA-ScR reporting guidance only."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "An electronic search was conducted in three databases (PubMed, Cochrane Library, and Embase)",
+              "note": "Three bibliographic databases (MEDLINE via PubMed, Cochrane Library, Embase), above the 2-database threshold; reference lists also screened."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "some_concerns",
+              "evidence_quote": "2423 remaining after duplicate removal. Title and abstract screening resulted in the exclusion of 2136 and 136 studies, respectively.",
+              "note": "No list of excluded full-text studies with reasons (37 full-text exclusions reported only as a count), but (a) a screening account with counts and PRISMA flowchart (Figure 1) and (b) explicit inclusion/exclusion criteria (2.1) are both reported (3b-iii line 2)."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Absence: read Methodology 2.1-2.4 (eligibility, search, selection, data extraction), Results 3, Discussion 4-4.5 and Limitations 5; data extraction lists study type, sample size, materials, groups, outcome, aging and main findings only; no quality, risk-of-bias, appraisal or critical-appraisal tool or step is described for the included studies anywhere in the text."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Absence: read Methodology 2.1-2.4, Results 3 and Discussion 4; no meta-analysis, pooling, statistical synthesis, heterogeneity test or effect model is described; synthesis is narrative/tabular (Table 2) only."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Absence: read Methodology 2.1-2.4, Results 3, Discussion 4 and Limitations 5; no publication bias, small-study effect, funnel plot or related assessment is mentioned."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors declare no conflicts of interest.",
+            "note": "Conflict-of-interest statement present; Funding section reads that the authors have nothing to report; no manufacturer funding."
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: not an RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "source text makes no clinical survival/success claim; its outcomes are laboratory bond strength, ultrastructure, chemistry, color and mechanical properties, and its Limitations (section 5) do not raise follow-up duration"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 30,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "این مقاله امتیاز ۳۰ و باند D (شواهد ضعیف) را در نوع پرسش MATERIAL می‌گیرد.",
+        "interpretation_fa": "این scoping review با جست‌وجوی سه پایگاه داده ۱۲۶ مطالعه‌ی عمدتاً in vitro را نقشه‌برداری کرده، اما protocol ثبت‌شده و ارزیابی risk of bias مطالعات ندارد. ارزشش مرور منظم پروتکل‌های تعمیر است: hydrofluoric acid و silane برای glass ceramic، و air abrasion با primer حاوی MDP برای metal oxide ceramic. این نتایج بر bond strength آزمایشگاهی تکیه دارند، نه پیامد بالینی."
+      }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.4",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "ترمیم شکستگی و پریدگی روکش‌های سرامیکی؛ از شناخت نوع سرامیک تا انتخاب پروتکل",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "English",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "link label"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "شکستگی و پریدگی روکش‌های سرامیکی، با وجود موفقیت بالای این رستوریشن‌ها، همچنان در کلینیک پیش می‌آید.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Despite the high success rates associated with these materials,\nchipping and fractures have been reported [4, 5].",
+            "source_ref": null
+          },
+          {
+            "id": "u4",
+            "claim_quote": "عواملی مثل پارافانکشن و الگوی اکلوژن بیمار، طراحی نامناسب رستوریشن، باندینگ ناکافی و نقایص داخلی سرامیک در بروز آن نقش دارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This can be\ncaused by either patient-­related factors, such as parafunctional\nhabits and occlusal patterns, or by restoration-­related features,\nincluding design, an inadequate bonding protocol, occlusal adjustments, or the presence of internal defects [4].",
+            "source_ref": null
+          },
+          {
+            "id": "u5",
+            "claim_quote": "در بیشتر موارد، ترمیم داخل دهان جایگزین محافظه‌کارانه‌تری برای تعویض کامل روکش است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In\nmost cases, this procedure allows for a more efficient and conservative approach compared to restoration replacement, as no\nadditional tooth preparation is required and structural integrity\nand pulp vitality are not compromised [1, 4, 7–10].",
+            "source_ref": null
+          },
+          {
+            "id": "u6",
+            "claim_quote": "نیازی به تراش دوباره دندان ندارد و ساختار دندان و حیات پالپ را به خطر نمی‌اندازد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In\nmost cases, this procedure allows for a more efficient and conservative approach compared to restoration replacement, as no\nadditional tooth preparation is required and structural integrity\nand pulp vitality are not compromised [1, 4, 7–10].",
+            "source_ref": null
+          },
+          {
+            "id": "u7",
+            "claim_quote": "اما همه شکستگی‌ها را نمی‌شود با یک پروتکل ترمیم کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In ceramic repair procedures, glass ceramics should be treated with a combination of hydrofluoric acid etching\nand silanization, while metal oxide ceramics demonstrate superior outcomes when air abrasion and an MDP-­containing primer\nare employed.",
+            "source_ref": null,
+            "note": "different protocols for glass vs metal oxide ceramics"
+          },
+          {
+            "id": "u8",
+            "claim_quote": "قدم اول و تعیین‌کننده این است که بدانیم در محل شکستگی چه سرامیکی نمایان شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Substrate identification is a crucial step in\nestablishing a ceramic repair protocol; therefore, literature\ninterpretation should always consider the type of ceramic\ninvolved.",
+            "source_ref": null
+          },
+          {
+            "id": "u9",
+            "claim_quote": "۱.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u10",
+            "claim_quote": "اول جنس سرامیک را مشخص کنیم",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u11",
+            "claim_quote": "سرامیک‌ها از نظر آماده‌سازی سطح در دو گروه اصلی قرار می‌گیرند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Ceramics are typically classified as either glass or metal oxide ceramics, with the former\nconsidered acid-­sensitive and the latter acid-­resistant [2].",
+            "source_ref": null,
+            "note": "classification by acid sensitivity"
+          },
+          {
+            "id": "u12",
+            "claim_quote": "گروه اول سرامیک‌های دارای فاز شیشه‌ای هستند، یعنی پرسلن فلدسپاتیک، سرامیک‌های تقویت‌شده با لوسایت و لیتیوم دی‌سیلیکات، که به اچ با هیدروفلوریک اسید (HF) پاسخ می‌دهند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Ceramics are typically classified as either glass or metal oxide ceramics, with the former\nconsidered acid-­sensitive and the latter acid-­resistant [2].",
+            "source_ref": null,
+            "note": "glass ceramics acid-sensitive; HF as treatment of choice stated in the Bond Strength discussion"
+          },
+          {
+            "id": "u13",
+            "claim_quote": "گروه دوم زیرکونیا و آلومینا هستند که فاز شیشه‌ای ندارند و HF روی آن‌ها اثری ندارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Ceramics are typically classified as either glass or metal oxide ceramics, with the former\nconsidered acid-­sensitive and the latter acid-­resistant [2].",
+            "source_ref": null,
+            "note": "acid-resistant plain; silica-free zirconia/alumina less susceptible to etching, HF cannot increase roughness"
+          },
+          {
+            "id": "u14",
+            "claim_quote": "حالت سوم وقتی پیش می‌آید که دو سرامیک با هم نمایان شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In addition to the studies that conducted the repair protocol on\na homogeneous surface, seven articles evaluated the repair bond\nstrength for hybrid substrates [7, 11, 43, 44, 59, 84, 117], simulating\na clinical scenario in which the fracture exposes more than one\nmaterial.",
+            "source_ref": null
+          },
+          {
+            "id": "u15",
+            "claim_quote": "نمونه رایجش روکش زیرکونیای ونیرشده است که شکستگی در آن از پرسلن ونیر عبور کرده و به کور زیرکونیا رسیده است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The source reports which material combinations were studied but does not describe a veneered zirconia crown fracture running from the veneer porcelain to the core as a common example."
+          },
+          {
+            "id": "u16",
+            "claim_quote": "۲.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u17",
+            "claim_quote": "سرامیک‌های دارای فاز شیشه‌ای: HF و سایلان",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u18",
+            "claim_quote": "برای این گروه، اچ با HF و سپس سایلان بیشترین پشتوانه را دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Overall, the combination of hydrofluoric acid etching and silanization provided the strongest bond between composite resin\nand glass ceramics [5, 39, 40, 62, 64, 70, 78, 90].",
+            "source_ref": null,
+            "note": "ranking stated by a ranking sentence"
+          },
+          {
+            "id": "u19",
+            "claim_quote": "HF بخشی از فاز شیشه‌ای را حل می‌کند و سطح را برای گیر میکرومکانیکی آماده می‌کند، و سایلان اتصال شیمیایی بین سرامیک و رزین را برقرار می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Regarding glass ceramics, hydrofluoric acid has been widely\nrecognized as the most effective surface conditioning treatment [8, 21, 31, 37, 125, 129], due to its ability to dissolve the\nglass phase, expose the crystalline matrix and enhance micromechanical retention [1, 9, 31, 34, 37, 43, 45, 60, 69, 83, 114, 128].",
+            "source_ref": null,
+            "note": "silane half stated in the sentence beginning Its interaction with the ceramic crystalline phase"
+          },
+          {
+            "id": "u20",
+            "claim_quote": "سایلان باید در یک مرحله جداگانه زده شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Literature is consensual in stating that the sole use of\na universal adhesive containing silane cannot be equated to a\nseparate silanization step, which has been proven to be more\neffective [51, 64, 70, 74, 89, 95].",
+            "source_ref": null
+          },
+          {
+            "id": "u21",
+            "claim_quote": "سایلانی که داخل یونیورسال ادهزیو است جای این مرحله را نمی‌گیرد، چون مخلوط‌شدنش با اجزای دیگر در یک بطری اثرش را کم می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Literature is consensual in stating that the sole use of\na universal adhesive containing silane cannot be equated to a\nseparate silanization step, which has been proven to be more\neffective [51, 64, 70, 74, 89, 95].",
+            "source_ref": null,
+            "note": "mixing mechanism stated in the following sentence"
+          },
+          {
+            "id": "u22",
+            "claim_quote": "فسفریک اسید هم جایگزین HF نیست، چون روی سطح گلس‌سرامیک اثر مؤثری ندارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It is noteworthy that, in contrast to hydrofluoric acid, phosphoric acid is unable to interact effectively with glass ceramics\n[23, 30, 66].",
+            "source_ref": null
+          },
+          {
+            "id": "u23",
+            "claim_quote": "سندبلاست به‌تنهایی باند ضعیف‌تری از HF می‌دهد و ممکن است در گلس‌سرامیک ترک‌های سطحی ایجاد کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Hydrofluoric acid was associated with higher repair bond\nstrength values than air abrasion for all glass ceramics\n[21, 26, 31, 37, 52, 60, 63, 72, 93, 119, 128].",
+            "source_ref": null,
+            "note": "crack half stated: air abrasion can lead to formation and propagation of cracks in glass ceramics"
+          },
+          {
+            "id": "u24",
+            "claim_quote": "سرامیک پرایمرهای سلف‌اچ مثل Monobond Etch & Prime در مقایسه با HF گاهی نتیجه مشابه و گاهی ضعیف‌تری داشته‌اند، و هنوز نمی‌شود آن‌ها را هم‌ارز HF دانست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Although some studies reported bond strength results superior to air abrasion [120] but similar [94] or inferior [72] to\nhydrofluoric acid, the literature lacks more direct comparisons\nwith the latter.",
+            "source_ref": null
+          },
+          {
+            "id": "u25",
+            "claim_quote": "یک نکته مهم درباره سرامیک‌های لیتیوم سیلیکات تقویت‌شده با زیرکونیا (ZLS) هم وجود دارد.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "importance judgment, claim stated in following unit"
+          },
+          {
+            "id": "u26",
+            "claim_quote": "با وجود کلمه زیرکونیا در اسمشان، این سرامیک‌ها سیلیکای زیادی دارند، به HF پاسخ می‌دهند، و پروتکلشان همان HF و سایلان است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Apart from conventional glass ceramics, publications evaluating zirconia-­\nreinforced lithium disilicate ceramics\n[8, 9, 33, 43, 54, 57, 62, 119, 123, 126, 127] or lithium aluminosilicate ceramics reinforced with lithium disilicate [8] demonstrated these materials' sensitivity to hydrofluoric acid [8, 62],\nas a consequence of their elevated silica content.",
+            "source_ref": null,
+            "note": "HF plus silanization protocol stated in the following sentence"
+          },
+          {
+            "id": "u27",
+            "claim_quote": "۳.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u28",
+            "claim_quote": "زیرکونیا و آلومینا: سندبلاست و MDP",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u29",
+            "claim_quote": "چون HF روی زیرکونیا و آلومینا اثری ندارد، آماده‌سازی مکانیکی سطح با سندبلاست انجام می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "As a consequence, air abrasion\nis more efficient for the repair of metal oxide ceramics [62], significantly improving the bond strength between ceramic and\ncomposite resin [103].",
+            "source_ref": null
+          },
+          {
+            "id": "u30",
+            "claim_quote": "ولی سندبلاست به‌تنهایی کافی نیست و برای اتصال شیمیایی باید از پرایمر حاوی MDP استفاده کرد، که با سطح اکسیدی زیرکونیا واکنش می‌دهد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Mechanical pretreatments have been shown to improve bonding\nperformance by creating microretentions; however, this alone is\ninsufficient to achieve clinically acceptable bond strength values\n[102].",
+            "source_ref": null,
+            "note": "MDP half stated: primers containing MDP should be used for chemical bond to zirconia"
+          },
+          {
+            "id": "u31",
+            "claim_quote": "سایلان در زیرکونیا اثر چندانی ندارد، چون سطح آن سیلیکای کافی ندارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Silane coupling agents are less effective on zirconia than\non glass ceramics due to the lower silica content [35, 68, 106].",
+            "source_ref": null,
+            "note": "source says less effective than on glass ceramics"
+          },
+          {
+            "id": "u32",
+            "claim_quote": "سندبلاست با ذرات پوشش‌داده‌شده با سیلیکا در چند مطالعه نتیجه بهتری از ذرات معمولی آلومینیوم اکساید داشته است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The use of silica-­coated aluminum oxide particles led to better results compared to aluminum oxide particles alone\n[18, 35, 107, 108, 112].",
+            "source_ref": null
+          },
+          {
+            "id": "u33",
+            "claim_quote": "ولی این سیلیکا فقط به‌صورت سطحی روی زیرکونیا می‌نشیند و ممکن است با گذشت زمان جدا شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Despite this, it is noteworthy that, because\nsilica remains superficially attached rather than chemically\nbonded to the ceramic, it can dislodge over time, compromising\nthe long-­term interaction [109, 110].",
+            "source_ref": null
+          },
+          {
+            "id": "u34",
+            "claim_quote": "۴.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u35",
+            "claim_quote": "وقتی پرسلن و زیرکونیا با هم نمایان شده‌اند",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u36",
+            "claim_quote": "در این حالت، منطقی‌ترین کار این است که هر سطح با پروتکل مخصوص خودش آماده شود: پرسلن با HF و زیرکونیا با سندبلاست.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "ranking (most logical) not stated; source reports some studies adapted treatment per substrate while most used one strategy and avoided HF"
+          },
+          {
+            "id": "u37",
+            "claim_quote": "مشکل این است که هنگام آماده‌سازی دو سطح کنار هم، احتمال آلودگی متقابل وجود دارد و روشی برای جلوگیری از آن گزارش نشده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It is noteworthy that, although the materials were prepared individually,\nthe authors do not mention any isolation method to prevent\ncross-­contamination, which may be a fundamental consideration for intra-­oral workflows.",
+            "source_ref": null,
+            "note": "cross-contamination risk also in Limitations; source reports no isolation method mentioned by the authors"
+          },
+          {
+            "id": "u38",
+            "claim_quote": "به همین دلیل، برای این نوع شکستگی هنوز پروتکل قطعی وجود ندارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Another major limitation is the reduced number of publications reporting repair protocols on hybrid substrates requiring\ndistinct pretreatments, which would more accurately reflect the\nclinical complexity and inherent risk of cross-­contamination.",
+            "source_ref": null
+          },
+          {
+            "id": "u39",
+            "claim_quote": "۵.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u40",
+            "claim_quote": "چند نکته اجرایی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u41",
+            "claim_quote": "اچ داخل‌دهانی با HF فقط زیر رابردم انجام شود، چون HF برای بافت نرم آسیب‌زاست و ایزولاسیون با رابردم با باند بهتری هم همراه بوده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Taking into account the associated\nrisks, the use of absolute isolation under rubber dam is mandatory [4, 27, 125], as bond strength values are also exponentiated\nunder these conditions [120, 132].",
+            "source_ref": null,
+            "note": "source states soft tissue concern and rubber dam mandatory with enhanced bond values"
+          },
+          {
+            "id": "u42",
+            "claim_quote": "سندبلاست داخل دهان هم به رابردم نیاز دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In addition, it is noteworthy\nthat alternative pretreatments, such as air abrasion, also require\nrubber dam isolation [27, 133].",
+            "source_ref": null
+          },
+          {
+            "id": "u43",
+            "claim_quote": "لیزر جایگزین مناسبی نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Furthermore, laser treatment induces surface modifications\ncharacterized by homogenous, shallow and evenly distributed\nroughness, with no associated cracks or fissures [22, 34, 38];\nhowever, it is considered insufficient to influence bond strength\nresults compared to hydrofluoric acid [37, 43, 46, 62] and air\nabrasion [43, 62].",
+            "source_ref": null,
+            "note": "other source sentences: majority inferior to HF; more effective in zirconia than glass ceramics"
+          },
+          {
+            "id": "u44",
+            "claim_quote": "در گلس‌سرامیک‌ها معمولاً باند ضعیف‌تری از HF داده و در زیرکونیا هم به سندبلاست نمی‌رسد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In the majority of the included publications, laser irradiation rendered\ninferior bond strength results compared to hydrofluoric acid\n[37, 40, 43, 62, 67, 90, 92, 121, 125], but comparisons with air\nabrasion were contradictory [35, 65, 67].",
+            "source_ref": null,
+            "note": "zirconia half: air abrasion superior to laser (Air abrasion results in superior bond strength values compared to laser treatment)"
+          },
+          {
+            "id": "u45",
+            "claim_quote": "نوع کامپوزیت ترمیمی در مطالعات تفاوت معنی‌داری در استحکام باند ایجاد نکرده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Studies comparing\ndifferent composite resins reported no statistically significant\ndifferences in bond strength values [29, 55, 98].",
+            "source_ref": null
+          },
+          {
+            "id": "u46",
+            "claim_quote": "۶.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u47",
+            "claim_quote": "باند خوب همه ماجرا نیست",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u48",
+            "claim_quote": "کامپوزیتی که موقع ترمیم با سرامیک هم‌رنگ است، ممکن است با گذشت زمان، در اثر رنگ‌پذیری یا تغییر ترنسلوسنسی، تطابقش را از دست بدهد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The aging process influenced the\ntranslucency of the restorations, leading to a mismatch between the ceramic and the composite resin used for repair [87].",
+            "source_ref": null,
+            "note": "hedged generalization of stated finding; staining unsatisfactory in Sanal study"
+          },
+          {
+            "id": "u49",
+            "claim_quote": "تطابق رنگ آن زیر نورهای مختلف هم ممکن است یکسان دیده نشود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Translucency and color differences also varied under different\nilluminants [87].",
+            "source_ref": null,
+            "note": "hedged generalization of stated finding"
+          },
+          {
+            "id": "u50",
+            "claim_quote": "از نظر مکانیکی هم، در یک مطالعه مقاومت شکست همه روکش‌های ترمیم‌شده پس از بارگذاری چرخه‌ای کاهش پیدا کرد، فارغ از اینکه سطحشان با چه روشی آماده شده بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It is noteworthy that cyclic loading diminished the fracture resistance of all\nrepaired zirconia crowns, regardless of the pretreatment employed [53].",
+            "source_ref": null
+          },
+          {
+            "id": "u51",
+            "claim_quote": "پس باند خوب اولیه به معنای دوام تضمین‌شده نیست.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "inference that good initial bond does not guarantee durability is not stated by the source"
+          },
+          {
+            "id": "u52",
+            "claim_quote": "جمع‌بندی کلینیکی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u53",
+            "claim_quote": "پیش از ترمیم، جنس سرامیک نمایان‌شده را مشخص کنید.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Substrate identification is a crucial step in\nestablishing a ceramic repair protocol; therefore, literature\ninterpretation should always consider the type of ceramic\ninvolved.",
+            "source_ref": null
+          },
+          {
+            "id": "u54",
+            "claim_quote": "برای پرسلن فلدسپاتیک، لوسایت، لیتیوم دی‌سیلیکات و ZLS، اچ با HF و سپس سایلان در مرحله‌ای جداگانه، و برای زیرکونیا و آلومینا، سندبلاست همراه با پرایمر حاوی MDP.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In ceramic repair procedures, glass ceramics should be treated with a combination of hydrofluoric acid etching\nand silanization, while metal oxide ceramics demonstrate superior outcomes when air abrasion and an MDP-­containing primer\nare employed.",
+            "source_ref": null,
+            "note": "separate silane step and ZLS stated elsewhere in the discussion"
+          },
+          {
+            "id": "u55",
+            "claim_quote": "هر دو زیر رابردم انجام شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In addition, it is noteworthy\nthat alternative pretreatments, such as air abrasion, also require\nrubber dam isolation [27, 133].",
+            "source_ref": null,
+            "note": "HF mandatory under rubber dam stated in the earlier sentence"
+          },
+          {
+            "id": "u56",
+            "claim_quote": "در شکستگی‌هایی که هم پرسلن و هم کور زیرکونیا را درگیر کرده‌اند، هنوز پروتکل قطعی وجود ندارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Another major limitation is the reduced number of publications reporting repair protocols on hybrid substrates requiring\ndistinct pretreatments, which would more accurately reflect the\nclinical complexity and inherent risk of cross-­contamination.",
+            "source_ref": null
+          },
+          {
+            "id": "u57",
+            "claim_quote": "این توصیه‌ها تقریباً به‌طور کامل بر مطالعات آزمایشگاهی تکیه دارند و کارآزمایی بالینی در این زمینه وجود ندارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Out of the total 126 publications considered, 7 papers are reviews\n[1, 2, 4, 5, 14–16] while the others are in vitro studies [7–11, 17–131].",
+            "source_ref": null,
+            "note": "no clinical trials half: total absence of randomized clinical trials in Limitations and absence of clinical trials in Conclusion"
+          },
+          {
+            "id": "u58",
+            "claim_quote": "بنابراین برای انتخاب روش آماده‌سازی راهنمای خوبی هستند، ولی دوام کلینیکی ترمیم را تضمین نمی‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Based on this scoping review, the following conclusions can\nbe drawn:\n• Methodological heterogeneity among studies and the absence of clinical trials precludes the establishment of definitive clinical conclusions;\n• In ceramic repair procedures, glass ceramics should be\ntreated with a combination of hydrofluoric acid etching and\nsilanization, while metal oxide ceramics demonstrate superior outcomes when air abrasion and an MDP-­containing\nprimer are employed;\n• Standardized methodologies should be established to enable the design of more consistent and comparable laboratory and clinical studies.",
+            "source_ref": null,
+            "note": "inference judged on conclusion; heterogeneity and absence of clinical trials preclude definitive clinical conclusions"
+          }
+        ],
+        "counts": {
+          "matches": 39,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 3,
+          "not_assessable": 0,
+          "author_view": 0,
+          "not_a_claim": 16
+        },
+        "assessable": 39,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "Based on this scoping review, the following conclusions can be drawn: • Methodological heterogeneity among studies and the absence of clinical trials precludes the establishment of definitive clinical conclusions; • In ceramic repair procedures, glass ceramics should be treated with a combination of hydrofluoric acid etching and silanization, while metal oxide ceramics demonstrate superior outcomes when air abrasion and an MDP-­containing primer are employed; • Standardized methodologies should be established to enable the design of more consistent and comparable laboratory and clinical studies.",
+        "fact_fa": "از ۳۹ ادعایی که منبع به آن پرداخته‌اند، ۳۹ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۳ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
+    ]
+  }
 }

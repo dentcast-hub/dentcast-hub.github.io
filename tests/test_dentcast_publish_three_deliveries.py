@@ -223,6 +223,20 @@ class ThreeDeliveriesTests(unittest.TestCase):
         self.deliver('delivery 1')
         self.assert_blocked('FIRST_DELIVERY_REQUIRES_NO_ACTIVE_REMOTE_HANDOFF', lc.guard, self.root, 'pre-commit')
 
+    def test_audited_invalidation_after_first_cut_may_redeliver_it_once(self):
+        sha = self.start()
+        sha = self.walk(sha, 'C.4.9')
+        self.deliver('delivery 1')
+        state, sha = h.load_state(self.root)
+        sha = lc.invalidate(self.root, sha, 'C.2', 'fixture reviewed post-cut page step')['sha256']
+        sha = self.walk(sha, 'C.4.9')
+        self.deliver('delivery 1 again after audited invalidation')
+        # Without a further invalidation the same cut cannot be delivered twice.
+        state, sha = h.load_state(self.root)
+        h.save(self.root, state['publication'], expected=sha, note='fixture unchanged')
+        run(self.root, 'add', h.STATE_PATH)
+        self.assert_blocked('FIRST_DELIVERY_REQUIRES_NO_ACTIVE_REMOTE_HANDOFF', lc.guard, self.root, 'pre-commit')
+
     def test_failed_final_verifier_preserves_handoff(self):
         sha = self.prepare_final()
         with patch.dict('os.environ', {'DENTCAST_FIXTURE_FAIL':'1'}):

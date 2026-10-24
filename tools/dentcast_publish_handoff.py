@@ -1048,6 +1048,25 @@ def refresh_local_inputs(root, publication):
         item['sha256'] = info['sha256']
 
 
+NON_PROSE_APPROVAL_SCOPES = frozenset((
+    "pillar", "taxonomy", "hashtags", "links", "links-borderline", "pathways",
+))
+VERBATIM_APPROVAL_SCOPES = frozenset(("title", "caption"))
+
+
+def approval_survives_page_edit(root, approval, pages):
+    if approval['scope'] in NON_PROSE_APPROVAL_SCOPES:
+        return True
+    if approval['scope'] in VERBATIM_APPROVAL_SCOPES and nonempty(approval.get('decision')):
+        for path in pages:
+            # Raw unescaped bytes: a caption lives in meta attributes, not prose.
+            text = html.unescape(safe_path(root, path).read_bytes().decode('utf-8', 'replace'))
+            if approval['decision'] not in text:
+                return False
+        return True
+    return False
+
+
 def require_dependency_invalidation(root, previous, publication, current):
     """A review note cannot carry an old approval across changed page bytes."""
     old = previous['publication']
@@ -1088,6 +1107,13 @@ def require_dependency_invalidation(root, previous, publication, current):
             effective.append(path)
     changed_pages = effective
     if not changed_pages:
+        return
+    # Approvals that do not bind page prose (taxonomy, tags, link choices) and
+    # exact title/caption strings still present verbatim do not make an
+    # ordinary later page step (4.8/4.9 links, 4.10 credit) an approval change.
+    if all(approval_survives_page_edit(root, a, changed_pages)
+           for a in old['context']['approvals']
+           if a['status'] in ('confirmed', 'not_required')):
         return
     # Require an explicit invalidation, not a changed note or copied approval.
     receipts = [x for x in publication['context']['decisions']
