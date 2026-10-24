@@ -184,6 +184,19 @@ article ul li::before{
 @media (max-width:768px){
   article{ padding:1.25rem 1.375rem; }
 }
+/* دکمهٔ «تماس با مطب»: سفید روی سرمه‌ای در هر دو تم. قاعدهٔ لینکِ dc-theme
+   (body:has(.dc-topbar) main a → var(--ac)) قوی‌تر از .cta-button بود و متن را
+   آبی روی سرمه‌ای، و در تم تیره آبی روی آبی (نامرئی) می‌کرد. */
+main.article-content-wrap a.cta-button,
+main.article-content-wrap a.cta-button:hover{
+  color:#ffffff;
+  text-decoration:none;
+}
+[data-theme="dark"] main.article-content-wrap a.cta-button{
+  background:#022360;
+  border:1px solid rgba(91,156,246,.45);
+  box-shadow:0 6px 20px rgba(0,0,0,.35);
+}
 </style>
 
     <link rel="stylesheet" href="/dc-theme.css?v=7">
