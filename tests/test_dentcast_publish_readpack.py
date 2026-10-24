@@ -143,6 +143,14 @@ class ReadpackTests(unittest.TestCase):
                 self.assertIn(word, text)
             self.assertEqual(m['bytes_saved'], 0)
 
+    def test_after_intake_reuses_six_completely_read_sources(self):
+        text, m = rp.build(self.root, category='sharehub', attached_paper='no',
+                           challenge='no', after_intake=True)
+        self.assertEqual(m['already_loaded_required'], rp.REQUIRED[:6])
+        self.assertNotIn('FULL_SOURCE:.dentcast/workflows/agent-parity.md', text)
+        self.assertIn('NORMAL_1', text)
+        self.assertEqual(sum(r['selected_bytes'] for r in m['source_paths'][:6]), 0)
+
     def test_source_drift_falls_back_to_full_instead_of_silent_omit(self):
         path = self.root / rp.MODULES / '09-challenge.md'
         path.write_text('NEW CONDITION THAT MAY APPLY TO ALL PAGES\n')
