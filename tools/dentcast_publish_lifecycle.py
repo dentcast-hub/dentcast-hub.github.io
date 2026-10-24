@@ -327,6 +327,16 @@ def validate_final_receipt(root, data, commit=None):
     return publication["content_id"]
 
 
+def challenge_markup(root, publication):
+    """Same signal as Phase F: a real element attribute outside script/style."""
+    page = h.safe_path(root, h.relative_path(publication["content_id"] + ".html"))
+    if not page.is_file():
+        return False
+    text = page.read_text(encoding="utf-8", errors="replace")
+    text = re.sub(r"<!--.*?-->|<(script|style)\b.*?</\1\s*>", "", text, flags=re.S | re.I)
+    return re.search(r"<[A-Za-z][^>]*\sdata-dc-challenge-question\b", text) is not None
+
+
 def guard_step_transition(state, publication, root=None):
     if fixed_delivery(state["publication"]):
         h.require(fixed_delivery(publication), "DELIVERY_POLICY_CANNOT_BE_DROPPED")
@@ -351,6 +361,10 @@ def guard_step_transition(state, publication, root=None):
     old = {s['id']: s for s in state['publication']['steps']}
     h.require(all(s['id'] in old or s['status'] == 'pending' for s in publication['steps']),
               'NEW_SUBSTEPS_MUST_START_PENDING')
+    challenge = next((s for s in publication['steps'] if s['id'] == 'C.4.14'), None)
+    if challenge and challenge['status'] == 'completed' and old.get('C.4.14', {}).get('status') != 'completed':
+        h.require(root is not None and challenge_markup(root, publication),
+                  'C.4.14 completed means Challenge; record skipped for an ordinary post')
     # Preserve one semantic checkpoint per step; delivery cuts are independent.
     entered = [s for s in publication['steps'] if s['id'] in old
                and old[s['id']]['status'] not in ('started', 'completed', 'skipped')

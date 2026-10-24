@@ -294,4 +294,35 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(h.load_state(self.root)[1],sha)
 
 
+
+class ChallengeCheckpointTests(unittest.TestCase):
+    setUp = LifecycleTests.setUp
+    prepare = LifecycleTests.prepare
+
+    def at_challenge(self):
+        self.prepare()
+        state, _ = h.load_state(self.root)
+        for row in state['publication']['steps']:
+            if row['id'] == 'C.4.14':
+                row.update(status='started', evidence=[], reason=None)
+                break
+            row.update(status='completed', evidence=['fixture:' + row['id']])
+        return h.write_atomic(self.root, state)
+
+    def test_completed_challenge_without_markup_is_rejected(self):
+        digest = self.at_challenge()
+        (self.root / 'note.html').write_text('<p data-x="data-dc-challenge-question">ordinary</p>\n'
+                                             '<script>q("[data-dc-challenge-question]")</script>\n')
+        with self.assertRaisesRegex(h.Blocked, 'C.4.14 completed means Challenge; record skipped for an ordinary post'):
+            lc.step(self.root, digest, 'C.4.14', 'completed', ['fixture:challenge'], None, 'Reviewed page edit')
+        result = lc.step(self.root, digest, 'C.4.14', 'skipped', [], 'ordinary post, not a Challenge', 'Reviewed page edit')
+        self.assertEqual(h.next_step(h.load_state(self.root)[0]['publication']), 'C.5.0')
+        self.assertTrue(result['sha256'])
+
+    def test_completed_challenge_with_real_markup_is_accepted(self):
+        digest = self.at_challenge()
+        (self.root / 'note.html').write_text('<p data-dc-challenge-question data-dc-challenge-image="/insight/x.webp">Q</p>\n')
+        lc.step(self.root, digest, 'C.4.14', 'completed', ['fixture:challenge'], None, 'Reviewed page edit')
+        self.assertEqual(h.next_step(h.load_state(self.root)[0]['publication']), 'C.5.0')
+
 if __name__=='__main__':unittest.main()

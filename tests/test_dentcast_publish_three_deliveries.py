@@ -51,7 +51,11 @@ class ThreeDeliveriesTests(unittest.TestCase):
             else:
                 row = next(r for r in state['publication']['steps'] if r['id'] == sid)
                 started = {'sha256':sha} if row['status']=='started' else lc.step(self.root, sha, sid, 'started', [], None)
-                result = lc.step(self.root, started['sha256'], sid, 'completed', ['fixture:' + sid], None)
+                if sid == 'C.4.14':
+                    # An ordinary fixture page is not a Challenge.
+                    result = lc.step(self.root, started['sha256'], sid, 'skipped', [], 'fixture: ordinary page, no Challenge')
+                else:
+                    result = lc.step(self.root, started['sha256'], sid, 'completed', ['fixture:' + sid], None)
             sha = result['sha256']
             if sid == until:
                 return sha

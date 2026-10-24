@@ -21,7 +21,10 @@ RANGES = ((1,56),(57,356),(357,528),(529,794),(795,957),(958,1143),
 EDITS = {"02-routing-intake.md":{"CLAUDE.md → Repo conventions":".dentcast/workflows/global/repo-conventions.md"},
  "03-litecast-and-page.md":{"AGENTS.md` §۸":".dentcast/workflows/global/site-invariants.md`"},
  "08-des-fidelity.md":{'CLAUDE.md § "DES display"':".dentcast/workflows/global/plus-premium.md — DES display",
- "CLAUDE.md § DES":".dentcast/workflows/global/plus-premium.md — DES"}}
+ "CLAUDE.md § DES":".dentcast/workflows/global/plus-premium.md — DES"},
+ # Approved clarification (share-41 audit): C.4.14 completed means Challenge.
+ "09-challenge.md":{"**Runs only when Question 4.9 answered «چالش».** Full design in":
+  "**Runs only when Question 4.9 answered «چالش».** The ledger checkpoint\n`C.4.14` therefore has exactly two outcomes: `completed` means *this post is\na چالش* (its page carries the `data-dc-challenge-question` markup below, and\nthe English mirror is exempt); an ordinary post records `C.4.14` as\n**`skipped`** only, never `completed`. Full design in"}}
 def read(p): return (ROOT/p).read_text(encoding="utf-8")
 class EntrypointMigrationTests(unittest.TestCase):
  def test_progress_reporting_is_timely_without_per_command_noise(self):

@@ -405,7 +405,10 @@ correction after the second cut. Fill the full ten-scope
 
 The sample is SCHEMA ONLY, never copy its example evidence into a real run.
 Each ten-scope status is either `resolved` or `not_applicable` with a
-genuine independent source/reference for the actual category. For LiteCast
+genuine independent source/reference for the actual category. `C.4.14`
+`completed` *means* Challenge: an ordinary post records `C.4.14` as `skipped`
+only, and the writer rejects `completed` when the page lacks real
+`data-dc-challenge-question` markup. For LiteCast
 or confirmed Challenge the English status MUST be `exempt`, path `null`
 and a justified evidence reference; all other pages MUST be `ready`, with
 the correct mirror path in `target_paths` and a real file already on disk.
