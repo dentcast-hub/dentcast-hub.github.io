@@ -408,6 +408,15 @@ and a justified evidence reference; all other pages MUST be `ready`, with
 the correct mirror path in `target_paths` and a real file already on disk.
 The canonical writer validates this at cut 2 and at completion. Its
 structural check does not substitute for the actual author sign-off.
+Before the v2 second delivery, also record both `title` and `caption` in
+`context.approvals`. Use `status="confirmed"` with the exact approved text in
+`decision` and evidence of that approval when Phase F must verify a string.
+Use `status="not_required"` with a specific decision and evidence when no
+separate exact title or caption string applies; at least one of the two scopes
+must be `confirmed` so Phase F has exact text to verify. The automatic post-Push-2
+workflow reads these frozen records; it does not invent or prompt for missing
+text. Missing either scope blocks the second cut before any mechanical builder
+runs.
 All editorial work (including tags, Pulse and the English writing itself)
 must be completed before the second boundary. If any mechanical operation
 later reveals a needed substantive change, STOP and explicitly invalidate
