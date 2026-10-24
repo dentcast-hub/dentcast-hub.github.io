@@ -16,7 +16,7 @@ import { one, query } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import { diagnoseStreak, repairStreak } from '../services/streak-repair.js';
 import {
-  activateMonths, activateDays, grantLifetime, revokeSubscription, getSubscription,
+  activateMonths, activateDays, grantLifetime, revokeSubscription, reduceSubscriptionDays, getSubscription,
   summarizeSubscription, sweepExpiredSubscriptions, subscriptionReport, neverPremiumUserIds,
   type Subscription,
 } from '../services/subscription.js';
@@ -442,11 +442,13 @@ ${renderMemberSpotControls()}
     }
 
     function soonestRows(rows) {
-      if (!rows.length) return '<tr><td colspan="5">اشتراکِ رو‌به‌اتمامی نیست</td></tr>';
+      if (!rows.length) return '<tr><td colspan="6">اشتراکِ رو‌به‌اتمامی نیست</td></tr>';
       return rows.map(function (r) {
         return '<tr><td>' + esc(r.display_name || r.username || r.phone || r.user_id) + '</td>'
           + '<td>' + esc(r.phone || '—') + '</td><td>' + esc(r.plan) + '</td>'
-          + '<td>' + esc(r.expires_on) + '</td><td>' + num(r.days_left) + '</td></tr>';
+          + '<td>' + esc(r.expires_on) + '</td><td>' + num(r.days_left) + '</td>'
+          + '<td><button type="button" class="sub-reduce-select" data-reduce-user="' + esc(r.user_id)
+          + '">انتخاب</button></td></tr>';
       }).join('');
     }
 
@@ -479,7 +481,7 @@ ${renderMemberSpotControls()}
         + bucketBar('بیش از ۳۰ روز', d.d31_plus, activeCounted)
         + '</div>'
         + '<h4 style="margin:18px 0 0">زودتر از همه تمام می‌شود (تا ۳۰ ردیف)</h4>'
-        + '<div class="tblwrap"><table><thead><tr><th>کاربر</th><th>موبایل</th><th>پلن</th><th>تا</th><th>روزِ مانده</th></tr></thead>'
+        + '<div class="tblwrap"><table><thead><tr><th>کاربر</th><th>موبایل</th><th>پلن</th><th>تا</th><th>روزِ مانده</th><th>عملیات</th></tr></thead>'
         + '<tbody>' + soonestRows(b.soonest_expiring) + '</tbody></table></div>';
     }
 
@@ -490,6 +492,70 @@ ${renderMemberSpotControls()}
         render(res.j);
       })
       .catch(function () { out.textContent = 'خوانده نشد (شبکه).'; });
+  })();
+  </script>
+
+
+  <h4 style="margin:18px 0 0">کم‌کردن روزهای اشتراک</h4>
+  <div class="muted">از جدول بالا کاربر را انتخاب کن، یا ایمیلِ متصل به حساب گوگل / شمارهٔ موبایل را وارد کن. تعداد روز از تاریخ پایان کم می‌شود و از مدتِ باقی‌مانده بیشتر نمی‌تواند باشد.</div>
+  <form class="bc" id="srForm" onsubmit="return false">
+    <div class="row">
+      <div style="flex:1 1 220px"><label for="srUser">ایمیل یا شمارهٔ موبایل</label><input id="srUser" type="text" dir="ltr" autocomplete="off"></div>
+      <div style="flex:0 0 140px"><label for="srDays">چند روز کم شود</label><input id="srDays" type="number" min="1" max="90" value="1"></div>
+    </div>
+    <button id="srSend" type="button">کم‌کردن روزها</button>
+    <div id="srOut" aria-live="polite"></div>
+  </form>
+  <script>
+  (function () {
+    var out = document.getElementById('srOut');
+    var user = document.getElementById('srUser');
+    var daysBox = document.getElementById('srDays');
+    var btn = document.getElementById('srSend');
+    var report = document.getElementById('subOut');
+    function faDigits(s) {
+      return String(s).replace(/[۰-۹]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d); })
+        .replace(/[٠-٩]/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'.indexOf(d); });
+    }
+    report.addEventListener('click', function (event) {
+      var target = event.target.closest('[data-reduce-user]');
+      if (!target) return;
+      user.value = target.getAttribute('data-reduce-user');
+      daysBox.focus();
+    });
+    btn.addEventListener('click', function () {
+      var identifier = user.value.trim();
+      var days = parseInt(faDigits(daysBox.value.trim()), 10);
+      if (!identifier) { out.textContent = 'کاربر را از جدول انتخاب کن یا ایمیل/شماره‌اش را وارد کن.'; return; }
+      if (!days || days < 1 || days > 90) { out.textContent = 'تعداد روز باید بین ۱ تا ۹۰ باشد.'; return; }
+      if (!confirm(days + ' روز از اشتراکِ «' + identifier + '» کم شود؟')) return;
+      btn.disabled = true; out.textContent = 'در حال اصلاح اشتراک…';
+      fetch('/admin/subscriptions/reduce-days', {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ user: identifier, days: days })
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          btn.disabled = false;
+          if (!res.ok) { out.textContent = res.j.message || res.j.error || 'اصلاح انجام نشد.'; return; }
+          var j = res.j;
+          var name = j.display_name || j.username || j.phone || j.user_id;
+          var until = j.subscription && j.subscription.expires_on;
+          out.textContent = days + ' روز از اشتراکِ ' + name + ' کم شد. '
+            + (j.days_left === 0 ? 'اشتراک اکنون منقضی است.' : 'روزِ باقی‌مانده: ' + j.days_left + (until ? ' (تا ' + until + ')' : '') + '.');
+          user.value = '';
+          var rowButton = Array.prototype.find.call(
+            report.querySelectorAll('[data-reduce-user]'),
+            function (el) { return el.getAttribute('data-reduce-user') === j.user_id; }
+          );
+          if (rowButton) {
+            var cells = rowButton.closest('tr').cells;
+            cells[3].textContent = until || '—';
+            cells[4].textContent = j.days_left;
+          }
+        })
+        .catch(function () { btn.disabled = false; out.textContent = 'درخواست به سرور نرسید.'; });
+    });
   })();
   </script>
 
@@ -4666,6 +4732,31 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       if (!who) return reply;
       const sub = await activateDays(who.id, body.days, { source: 'admin', meta: { via: 'admin_grant_days' } });
       return reply.send(subscriptionView(who, sub));
+    });
+
+
+  // POST /admin/subscriptions/reduce-days { user, days } — subtract N days
+  // from one finite subscription, retaining the row and the audit history.
+  app.post('/admin/subscriptions/reduce-days',
+    userBody({ days: { type: 'integer', minimum: 1, maximum: 90 } }, ['days']),
+    async (request, reply) => {
+      const body = request.body as { user?: string; phone?: string; days: number };
+      const who = await resolveUser(pick(body), reply);
+      if (!who) return reply;
+      try {
+        const sub = await reduceSubscriptionDays(who.id, body.days);
+        return reply.send({ ...subscriptionView(who, sub), reduced_days: body.days });
+      } catch (err) {
+        const code = (err as Error).message;
+        const errors: Record<string, { status: number; message: string }> = {
+          subscription_not_found: { status: 404, message: 'این کاربر اشتراک قابل‌کاهشی ندارد.' },
+          founder_subscription: { status: 400, message: 'اشتراکِ همیشگی را نمی‌توان با کم‌کردن روز تغییر داد.' },
+          subscription_not_active: { status: 400, message: 'اشتراک این کاربر فعال نیست.' },
+          reduction_exceeds_remaining: { status: 400, message: 'تعداد روزِ درخواستی از روزهای باقی‌مانده بیشتر است.' },
+        };
+        if (errors[code]) return reply.code(errors[code].status).send({ error: code, message: errors[code].message });
+        throw err;
+      }
     });
 
   // POST /admin/subscriptions/grant-lifetime { phone } — premium with no end.
