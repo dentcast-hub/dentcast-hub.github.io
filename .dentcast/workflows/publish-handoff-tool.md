@@ -29,6 +29,11 @@ python3 tools/dentcast_publish_handoff.py record --input /tmp/publish-input.json
 
 A reconciliation note records the operator's review; it does not prove that review occurred. Do not use it to hide missing work. Workflow fingerprint changes require invalidating all steps to pending. Replacing existing input references after resolved steps also requires invalidation. Changing the plan or a resolved step requires a note. The helper refuses rebinding an actual run to another content ID, category, repository identity or branch. The sole exception is a one-time `bind` of an unchanged `unassigned`/`pending` intake before authoring or side effects; see `publish-checkpoints.md`. Resolve branch migration deliberately outside this initial tool scope rather than silently changing the saved identity.
 
+For changed bound local inputs, approved page bytes, or workflow rules use the
+explicit `invalidate` command described in `publish-checkpoints.md`; a review note
+alone cannot retain stale dependent evidence. Active WALs have their own durable
+`fastlocal.py invalidate` followed by `flush`, without deleting their history.
+
 ## Publication input
 
 This is a **shape example**, not a complete execution plan. Replace its `steps` with the full output of `plan` (or `plan --paper-only`); CLI init/record reject incomplete plans. New init plans must be pending. Enumerate the actual applicable canonical substeps from the active modules; do not substitute two example steps for the real workflow. Intake can refine the plan with an explicit reconciliation note.
