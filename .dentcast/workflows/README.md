@@ -29,10 +29,42 @@ Read `.dentcast/workflows/global/README.md` and the complete active sections sel
 
 Authority: applicable canonical workflow and active modules > active shared global rules > agent-parity > client summaries. User instructions take priority. Surface genuine active-rule conflicts; do not silently fall back to backups.
 
+## Optional byte-exact readpack after locked Phase B
+
+To reduce avoidable context loading, after completing and actually locking Phase B
+category, Question 4.7 (paper attached?), and Question 4.9 (Challenge?), a local
+checkout agent MAY use the deterministic reading selector. Always read this router,
+the global router/selected complete global sections, agent-parity, checkpoint
+protocol, and full modules 01/02 first. Then, in that same unchanged session:
+
+```bash
+python3 tools/dentcast_publish_readpack.py \
+  --category sharehub --attached-paper no --challenge no --after-intake \
+  --output /tmp/dentcast-readpack.txt --manifest /tmp/dentcast-readpack.json
+```
+
+Replace arguments only with verified, locked intake facts; use `unknown` if
+anything remains unsettled. Read all selected source ranges from the pack in
+bounded chunks and retain the manifest/source hashes. The selector copies
+applicable source bytes verbatim, not summaries. It omits only explicitly
+category-inapplicable branches; omitted steps still require their actual
+canonical ledger SKIP reason. Changed pinned source files automatically
+fall back to full-file reading. If the selector, provenance, source revision,
+category or tool capability is uncertain, read original full applicable modules
+instead. Regenerate/read any changed dependency before using its rules.
+
+The `--after-intake` switch is legal **only** if those six introductory sources
+were fully read earlier in this same session/revision. Omit that switch for a
+self-contained full pack. Required specialty workflows, dynamic global sections,
+scientific prompt files, original DES/Fidelity independence, human approvals,
+the three delivery cuts, builders, and full Phase F remain mandatory. This
+readpack performs no semantic/scientific step, grants no approval, and writes
+only the chosen local temporary reading/manifest files.
+
 ## New-publication dispatch
 
 1. Classify text, attached paper, category, media and scientific basis using Phase 0/A/B in module 02, including all required approvals.
-2. Execute original canonical steps, loading each FULL applicable module immediately before its step, in this order:
+2. Execute original canonical steps, reading every applicable rule in full either directly from its module or via the verified, byte-exact post-intake readpack (below), in this order:
    - `modules/01-hard-rules.md`
    - `modules/02-routing-intake.md`
    - `modules/03-litecast-and-page.md`
