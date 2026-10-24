@@ -105,6 +105,14 @@ class ReadpackTests(unittest.TestCase):
         self.assertNotIn('NOTECAST_PARENT', episode)
         self.assertIn('EPISODE_SHARED', episode)
 
+    def test_broad_legacy_type_keeps_all_navigation_exceptions(self):
+        text, manifest = self.pack(category='dentcast')
+        self.assertIn('NOTECAST_PARENT', text)
+        self.assertIn('EPISODE_SHARED', text)
+        self.assertIn('PROMPTOLOGIST_ONLY', text)
+        self.assertEqual(self.get(manifest, '04-taxonomy-and-navigation.md')['selection_reason'],
+                         'AMBIGUOUS_CATEGORY_KEEP_ALL_NAVIGATION_BRANCHES')
+
     def test_glossary_keeps_glossary_only_scans(self):
         text, _ = self.pack(category='glossary')
         self.assertIn('GLOSSARY_ONLY', text)
