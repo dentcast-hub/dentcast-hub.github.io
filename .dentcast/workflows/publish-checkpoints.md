@@ -73,6 +73,29 @@ prepared, verified, committed, pushed, merged and live. Report no invented ETA o
 percent. A real blocker must name its cause, effect and required next action;
 record/preserve the current checkpoint and do independent authorized work.
 
+### Verbatim route-dependent source loading (no shorter scientific protocol)
+
+After the actual Phase B decisions for category, attached paper and Challenge
+are locked, a local checkout may run `tools/dentcast_publish_readpack.py`
+as documented in `.dentcast/workflows/README.md`. Only that pinned,
+hash-identified byte-for-byte extraction of proven inapplicable branches may
+stand in for reading an entire applicable publication module. Read all selected
+ranges completely, including ordinary DES/Fidelity execution instructions
+when owed; record source revision and selection coverage in the current
+session. The readpack is not a checkpoint, execution engine, scientific
+summary, category exemption, or authorization to bypass anything. It never
+loads dynamic global path rules, specialty workflows or scientific prompts:
+those remain separately required in their complete applicable form.
+
+If source hashes drift, regenerate the selection; the tool reverts that module
+to its full text. Unknown intake retains full text. If selector execution,
+provenance or actual locked intake cannot be verified, read the original
+complete relevant modules. Never reuse an old pack after its source revision
+or locked intake changes. After-intake reuse is allowed only for the six
+introductory sources already completely read in that unchanged session.
+Canonical ledger steps, durable receipts, approvals, DES/Fidelity, Phase F,
+and the three fixed pushes are identical in both reading modes.
+
 ## Publication services and remote checks
 
 Vercel is not a DentCast publication service. Its commit status, deployment,
