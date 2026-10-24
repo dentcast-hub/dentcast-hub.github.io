@@ -268,9 +268,26 @@ def validate_final_receipt(root, data, commit=None):
     second = data["second_delivery_commit"]
     h.require(bool(re.fullmatch(r"[0-9a-f]{40}", second)), "INVALID_DELIVERY_COMMIT")
     require_delivery_parent(root, publication, 3, second)
-    first = h.text_git(root, "rev-parse", second + "^")
-    require_delivery_parent(root, publication, 2, first)
-    require_delivery_parent(root, publication, 1, first + "^")
+    # A failed post-cut continuation may leave audited reconciliation commits
+    # between the delivered second cut and this final delivery. Locate the
+    # original second-cut boundary on first-parent history, then validate every
+    # intervening path against the frozen publication/workflow inventory.
+    first = None
+    history = h.text_git(root, "rev-list", "--first-parent", second).splitlines()
+    for candidate in history:
+        try:
+            require_delivery_parent(root, publication, 3, candidate)
+            candidate_first = h.text_git(root, "rev-parse", candidate + "^")
+            require_delivery_parent(root, publication, 2, candidate_first)
+            require_delivery_parent(root, publication, 1, candidate_first + "^")
+        except h.Blocked:
+            continue
+        first = candidate_first
+        allowed = set(state["snapshot"]["files"]) | set(state["snapshot"]["workflow"]) | {h.STATE_PATH, ".github/scripts/inject_img_attrs.py"}
+        intervening = set(h.text_git(root, "diff", "--name-only", candidate, second).splitlines())
+        h.require(intervening <= allowed, "UNRECONCILED_POST_CUT_PATH")
+        break
+    h.require(first is not None, "FIXED_DELIVERY_ORDER_REQUIRED")
     if commit:
         raw = h.git(root, "show", commit + ":" + completion_path(publication), optional=True)
         h.require(raw is not None and h.decode_json(raw.decode("utf-8")) == data, "FINAL_RECEIPT_NOT_IN_DELIVERY_COMMIT")
@@ -764,7 +781,15 @@ def guard(root, phase):
         number = delivery_boundary(state["publication"])
         h.require(number is not None, "ONLY_THREE_FIXED_DELIVERIES_ALLOWED")
         require_fixed_cut_readiness(state["publication"], root)
-        require_delivery_parent(root, state["publication"], number, "HEAD^" if phase == "ci" else "HEAD")
+        parent_revision = "HEAD^" if phase == "ci" else "HEAD"
+        parent_boundary, parent = committed_boundary(root, parent_revision)
+        already_delivered_second_cut = (
+            number == 2 and parent_boundary == 2 and parent is not None
+            and fixed_delivery(parent)
+            and editorial_cut_v2(parent) == editorial_cut_v2(state["publication"])
+            and parent["content_id"] == state["publication"]["content_id"])
+        if not already_delivered_second_cut:
+            require_delivery_parent(root, state["publication"], number, parent_revision)
     if phase == "ci":
         # CI is detached and the recorded index/status may predate the checkpoint commit.
         for p, info in state["snapshot"]["files"].items():

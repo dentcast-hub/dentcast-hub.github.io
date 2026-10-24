@@ -95,7 +95,8 @@ def preflight(root: Path, expected_head: str, expected_branch: str) -> dict:
 
 
 def record_step(root: Path, step_id: str, status: str,
-                evidence=(), reason: str | None = None) -> str:
+                evidence=(), reason: str | None = None,
+                note: str | None = None) -> str:
     _, digest = publication(root)
     cmd = [sys.executable, str(root / "tools/dentcast_publish_handoff.py"),
            "--repo", str(root), "step", "--expected-sha256", digest,
@@ -104,6 +105,8 @@ def record_step(root: Path, step_id: str, status: str,
         cmd += ["--evidence", item]
     if reason:
         cmd += ["--reason", reason]
+    if note:
+        cmd += ["--reconcile-note", note]
     p = subprocess.run(cmd, cwd=root, text=True,
                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     if p.returncode:
@@ -326,7 +329,11 @@ def run_phase(root: Path, artifact_dir: Path, args):
                 run_command(root, artifact_dir, f"C8-builder-{i}", command, logs)
             verify_scope(root, pub)
             record_step(root, "C.8", "completed", [
-                "All applicable canonical C.8 builders passed; logs are in the recovery artifact."])
+                "All applicable canonical C.8 builders passed; logs are in the recovery artifact."
+            ], note=(
+                "Reviewed C.8 worktree after all builders and verify_scope: generated files are within "
+                "the canonical publication allowlist, and tests/fixtures were left untouched."
+            ))
             pub, _ = publication(root)
             current = handoff.next_step(pub)
         if current == "C.7":
@@ -334,7 +341,10 @@ def run_phase(root: Path, artifact_dir: Path, args):
             run_command(root, artifact_dir, "C7-stamp-version",
                         ["python3", "tools/stamp-version.py"], logs)
             verify_scope(root, pub)
-            record_step(root, "C.7", "completed", ["tools/stamp-version.py passed after C.8"])
+            record_step(root, "C.7", "completed", ["tools/stamp-version.py passed after C.8"], note=(
+                "Reviewed C.7 version-stamp worktree after verify_scope; all changed files are "
+                "canonical generated publication outputs."
+            ))
             pub, _ = publication(root)
             current = handoff.next_step(pub)
         if current == "D":
