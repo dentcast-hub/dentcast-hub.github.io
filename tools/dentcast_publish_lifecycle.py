@@ -106,7 +106,7 @@ def editorial_cut_v2(publication):
         for d in publication["context"]["decisions"])
 
 
-def editorial_cut_receipt(publication):
+def editorial_cut_receipt(publication, root=None):
     """Check the recorded pre-Push-2 scope inventory, not the truth of claims."""
     entries = [d for d in publication["context"]["decisions"]
                if isinstance(d, dict) and d.get("kind") == "second_cut_editorial_lock_v1"]
@@ -147,6 +147,9 @@ def editorial_cut_receipt(publication):
         h.require(eng["status"] == "ready" and eng["path"] == path
                   and path in publication["target_paths"],
                   "SECOND_CUT_ENGLISH_MIRROR_MISSING")
+        if root is not None:
+            h.require(h.file_info(root, path)["kind"] == "file",
+                      "SECOND_CUT_ENGLISH_FILE_NOT_ON_DISK")
     h.require(not publication["context"]["pending_questions"]
               and all(a["status"] in ("confirmed", "not_required")
                       for a in publication["context"]["approvals"]),
@@ -173,7 +176,7 @@ def delivery_boundary(publication):
     return None
 
 
-def require_fixed_cut_readiness(publication):
+def require_fixed_cut_readiness(publication, root=None):
     """Fail closed at every fixed delivery, including local Git/CI without hooks.
 
     Existing human approval rules are not inferred from an empty approval list:
@@ -194,7 +197,7 @@ def require_fixed_cut_readiness(publication):
     if editorial_cut_v2(publication):
         c6 = next(s for s in publication["steps"] if s["id"] == "C.6")
         if c6["status"] in ("completed", "skipped"):
-            editorial_cut_receipt(publication)
+            editorial_cut_receipt(publication, root)
 
 
 def committed_boundary(root, revision):
@@ -241,7 +244,7 @@ def validate_final_receipt(root, data, commit=None):
     publication = state["publication"]
     require_plan(publication)
     if fixed_delivery(publication):
-        require_fixed_cut_readiness(publication)
+        require_fixed_cut_readiness(publication, root)
     h.require(fixed_delivery(publication) and h.next_step(publication) is None
               and not publication["blocker"] and not publication["context"]["pending_questions"]
               and all(a["status"] in ("confirmed", "not_required") for a in publication["context"]["approvals"]),
@@ -751,7 +754,7 @@ def guard(root, phase):
     if fixed_delivery(state["publication"]) and phase in ("pre-commit", "ci"):
         number = delivery_boundary(state["publication"])
         h.require(number is not None, "ONLY_THREE_FIXED_DELIVERIES_ALLOWED")
-        require_fixed_cut_readiness(state["publication"])
+        require_fixed_cut_readiness(state["publication"], root)
         require_delivery_parent(root, state["publication"], number, "HEAD^" if phase == "ci" else "HEAD")
     if phase == "ci":
         # CI is detached and the recorded index/status may predate the checkpoint commit.
@@ -768,7 +771,7 @@ def guard(root, phase):
                       "LATEST_HANDOFF_MUST_BE_STAGED")
         elif phase == 'stop' and (not fixed_delivery(state['publication']) or delivery_boundary(state['publication'])):
             if fixed_delivery(state['publication']):
-                require_fixed_cut_readiness(state['publication'])
+                require_fixed_cut_readiness(state['publication'], root)
             require_step_delivery(root, state, h.digest(path.read_bytes()))
     return {"status": "guard_passed", "publication_completed": False}
 

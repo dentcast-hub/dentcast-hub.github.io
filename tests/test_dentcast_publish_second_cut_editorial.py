@@ -4,6 +4,7 @@ Tests use synthetic metadata to test the guard, NOT proof that science ran.
 """
 import copy
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -125,6 +126,17 @@ class EditorialSecondCutTests(unittest.TestCase):
         item["evidence"].clear()
         self.assert_blocked("SECOND_CUT_EDITORIAL_LOCK_FIELDS",
                             lc.require_fixed_cut_readiness, p)
+
+    def test_enrolled_english_mirror_must_exist_on_disk_at_cut(self):
+        p = sample(category="insight")
+        p["context"]["decisions"].append(receipt(p))
+        with tempfile.TemporaryDirectory() as folder:
+            self.assert_blocked("SECOND_CUT_ENGLISH_FILE_NOT_ON_DISK",
+                                lc.require_fixed_cut_readiness, p, Path(folder))
+            en = Path(folder) / "insight/en/insight100.html"
+            en.parent.mkdir(parents=True)
+            en.write_text("<html lang='en'>fixture</html>", encoding="utf-8")
+            lc.require_fixed_cut_readiness(p, Path(folder))
 
     def test_three_boundaries_still_exactly_three(self):
         p = sample(second="C.4.9")
