@@ -1,4 +1,6 @@
 """Focused contract tests for the post-cut2 runner's safety and recovery edges."""
+from contextlib import redirect_stdout
+import io
 import json
 from pathlib import Path
 import subprocess
@@ -256,6 +258,30 @@ class PostCut2RunnerTests(unittest.TestCase):
         self.assertEqual(result["status"], "publication_completed")
         self.assertEqual(result["third_delivery_sha"], third)
         self.assertTrue(result["publication_completed"])
+
+    def test_cli_reports_third_delivery_success_truthfully(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "repo"
+            artifact = Path(tmp) / "artifact"
+            root.mkdir()
+            output = io.StringIO()
+            with patch.object(runner, "run_phase", return_value={
+                "status": "mechanical_steps_complete", "next_step": "G",
+                "publication_completed": False, "third_delivery_created": False,
+            }), patch.object(runner, "finalize_and_push", return_value={
+                "status": "publication_completed", "publication_completed": True,
+                "third_delivery_sha": "c" * 40, "run_url": "https://github.com/o/r/actions/runs/1",
+            }), redirect_stdout(output):
+                status = runner.main([
+                    "--repo", str(root), "--expected-head", "b" * 40,
+                    "--expected-branch", "content/test", "--artifact-dir", str(artifact),
+                    "--deliver-third", "--run-url", "https://github.com/o/r/actions/runs/1",
+                ])
+            result = json.loads(output.getvalue())
+        self.assertEqual(status, 0)
+        self.assertEqual(result["status"], "publication_completed")
+        self.assertTrue(result["publication_completed"])
+        self.assertTrue(result["third_delivery_created"])
 
     def test_rejected_third_push_preserves_same_commit_and_cleanup_record(self):
         pub = sample_publication()

@@ -596,9 +596,13 @@ def main(argv=None):
         ensure_layout(root, artifact_dir)
         result = run_phase(root, artifact_dir, args)
         if args.deliver_third:
-            result["delivery"] = finalize_and_push(
+            delivery = finalize_and_push(
                 root, artifact_dir, args.expected_head, args.expected_branch,
                 args.run_url or "")
+            result["delivery"] = delivery
+            result.update(status=delivery["status"],
+                          publication_completed=delivery["publication_completed"],
+                          third_delivery_created=True, next_step=None)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0
     except Exception as exc:
