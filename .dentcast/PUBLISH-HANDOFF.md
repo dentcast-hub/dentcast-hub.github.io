@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "litecast/lite-CAST40"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.4.14"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -76,6 +76,15 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           ],
           "kind": "semantic_related",
           "reason": "Existing general-audience ceramic-vs-composite comparison is directly relevant; no specialist content links"
+        },
+        {
+          "checks": [
+            "Text is a general-audience LiteCast entry, verified in litecast/lite-glossary.json",
+            "No DOI, research paper, clinical-grade source-dependent scoring or Challenge input attached",
+            "C.4.13 skipped \u2014 LiteCast; no DES/Fidelity model invoked and no record in plus/des-scores.json"
+          ],
+          "kind": "cut2_scientific_skip_audit",
+          "source": "Live canonical 08-des-fidelity.md: LiteCast outside specialist DES ecosystem"
         }
       ],
       "delivery": [],
@@ -371,6 +380,48 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "id": "C.4.9",
         "module": "05-semantic-linking.md",
         "reason": "LiteCast specialist related-links excluded; executed LiteCast C.0.6 instead",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.1",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached research paper: Drive filing not applicable (Phase 0 / C.4.10)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.2",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached research paper: cabinet catalog addition not applicable",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.3",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached research paper: first-author DOI credit not applicable",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": "LiteCast excluded from specialist DefinedTermSet flashcards",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": "LiteCast excluded from specialist quiz/FAQ index",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.13",
+        "module": "08-des-fidelity.md",
+        "reason": "LiteCast explicit DES/Fidelity exemption (module 08, Hard Rule 10)",
         "status": "skipped"
       }
     ],
