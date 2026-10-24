@@ -174,7 +174,7 @@ jobs:
           {
             echo "## Post-Push-2 mechanical continuation"
             echo
-            echo "- Push-2 SHA: `$EXPECTED_HEAD`"
+            printf '%s\n' "- Push-2 SHA: \`$EXPECTED_HEAD\`"
             echo "- Job result: **$JOB_STATUS**"
             echo "- Push 1 and pushes without a v2 second-cut handoff are skipped by the read-only preflight."
             echo "- A successful run creates and confirms exactly delivery 3."
