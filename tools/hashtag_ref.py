@@ -824,6 +824,43 @@ def cmd_say(tag: str, forms: list) -> None:
     cmd_sync()
 
 
+# Hard Rule 15: a canonical tag is never another concept's alias. These pairs
+# predate the --check rule (share-41 audit, 1405/08/02) and await founder
+# decisions; they are reported as warnings. Any other collision fails --check.
+# Remove a pair here once its batch resolves it.
+KNOWN_CANONICAL_ALIAS_COLLISIONS = frozenset({
+    ("#قالب‌گیری_دیجیتال", "اسکن دیجیتال"),
+    ("#پروتکل_باند", "پروتکل باندینگ"),
+    ("#پروتکل_باند", "پروتکل ادهزیو"),
+    ("#استاپ_خلفی", "ساپورت خلفی"),
+    ("#اسکرو_سمنتد", "اسکروسمنت"),
+    ("#کانتور_ترمیم", "اورکانتور"),
+    ("#برداشت_ترمیم", "خارج کردن روکش"),
+    ("#ناحیه_زیبایی", "ناحیه لبخند"),
+    ("#ریتریتمنت", "درمان مجدد ریشه"),
+    ("#شکستن_کار", "task decomposition"),
+    ("#پایداری_رنگ", "تغییر رنگ"),
+    ("#پروپریوسپشن", "آگاهی اکلوزال"),
+    ("#Finish_Zone", "BOPT"),
+    ("#تثبیت_موقت_روکش", "ترای این"),
+    ("#تیرزپاتاید", "اسپارتینا"),
+    ("#حرکت_پروتروزیو", "پروتروزیو"),
+    ("#فضای_ارتودنسی", "ارزیابی فضا"),
+    ("#متاپرامپت", "meta prompting"),
+    ("#پوسیدگی_عودکننده", "پوسیدگی ثانویه"),
+})
+
+
+def canonical_alias_collisions(ref: dict) -> list:
+    """(concept tag, alias, other canonical tag) where the alias IS that tag."""
+    canon = defaultdict(list)
+    for c in ref["concepts"]:
+        canon[normalize_chars(c["tag"])].append(c["tag"])
+    return [(c["tag"], a, other) for c in ref["concepts"]
+            for a in c.get("aliases") or []
+            for other in canon.get(normalize_chars(a), ()) if other != c["tag"]]
+
+
 def cmd_check() -> None:
     ref, brain = load_ref(), load_brain()
     enforced = set(ref.get("enforced_types") or [])
@@ -863,6 +900,19 @@ def cmd_check() -> None:
                 errors.append(f'alias "{a}" -> "{target}" chains through "{k}" '
                               f'— run --sync to fold it flat')
                 break
+
+    known_pairs = []
+    for tag, alias, other in canonical_alias_collisions(ref):
+        line = f'alias "{alias}" of {tag} is the canonical tag {other} (Hard Rule 15)'
+        if (tag, alias) in KNOWN_CANONICAL_ALIAS_COLLISIONS:
+            known_pairs.append(line)
+        else:
+            errors.append(line)
+    if known_pairs:
+        print(f"check warning: {len(known_pairs)} known canonical/alias collision(s) "
+              "awaiting a founder decision:")
+        for line in known_pairs:
+            print(f"  - {line}")
 
     if errors:
         print(f"check FAILED ({len(errors)} problem(s)) "

@@ -1,4 +1,6 @@
-"""--apply on a not-yet-published article points to the step-5 route."""
+"""--apply on a not-yet-published article; --check on canonical tags filed as aliases."""
+import io
+from contextlib import redirect_stdout, redirect_stderr
 import json
 from pathlib import Path
 import shutil
@@ -39,6 +41,44 @@ class ApplyNewArticleTests(unittest.TestCase):
                      '--sync', 'build_plus_index.mjs', '--check'):
             self.assertIn(term, message)
         self.assertEqual(before, (self.dir / 'dentcast-brain.json').read_bytes())
+
+
+class CanonicalAliasCheckTests(unittest.TestCase):
+    setUp = ApplyNewArticleTests.setUp
+
+    def check(self, mutate=None):
+        path = self.dir / 'dentcast-hashtag-reference.json'
+        data = json.loads(path.read_text(encoding='utf-8'))
+        if mutate:
+            mutate({c['tag']: c for c in data['concepts']})
+        path.write_text(json.dumps(data, ensure_ascii=False), encoding='utf-8')
+        out = io.StringIO()
+        with redirect_stdout(out), redirect_stderr(io.StringIO()) as err:
+            try:
+                ref.cmd_check()
+                code = 0
+            except SystemExit as exc:
+                code = exc.code
+        return code, out.getvalue() + err.getvalue()
+
+    def test_live_library_passes_and_rubber_dam_is_no_longer_an_isolation_alias(self):
+        code, output = self.check()
+        self.assertEqual(code, 0, output)
+        self.assertNotIn('رابردم', output)
+        concepts = {c['tag']: c for c in json.loads((ROOT / 'dentcast-hashtag-reference.json').read_text(encoding='utf-8'))['concepts']}
+        self.assertIn('#رابردم', concepts)
+        self.assertFalse({'رابردم', 'رابر دم'} & set(concepts['#ایزولاسیون']['aliases']))
+
+    def test_new_alias_equal_to_another_canonical_fails(self):
+        code, output = self.check(lambda c: c['#ایزولاسیون']['aliases'].append('رابردم'))
+        self.assertEqual(code, 1)
+        self.assertIn('alias "رابردم" of #ایزولاسیون is the canonical tag #رابردم', output)
+
+    def test_known_pairs_are_reported_as_warnings(self):
+        code, output = self.check()
+        self.assertEqual(code, 0)
+        self.assertIn('known canonical/alias collision', output)
+        self.assertIn('#اسکن_دیجیتال', output)
 
 
 if __name__ == '__main__':
