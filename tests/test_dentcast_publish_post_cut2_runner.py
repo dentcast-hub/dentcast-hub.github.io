@@ -19,8 +19,10 @@ BRANCH = "content/litecast-40-test"
 def sample_publication():
     rows = lifecycle.plan()
     states = {row["id"]: row for row in rows}
-    states["C.6"]["status"] = "completed"
-    states["C.4.14"]["status"] = "skipped"
+    for row in rows:
+        if row["id"] == "C.8":
+            break
+        row["status"] = "skipped" if row["id"] == "C.4.14" else "completed"
     return {
         "content_id": "insight/insight100",
         "category": "insight",
