@@ -591,7 +591,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Complete verified third delivery after audited post-cut reconciliation"
+    "note": "Finalize after confirming the only out-of-baseline path is the scoped image injector fix"
   },
   "schema": "publish-handoff-v3"
 }
