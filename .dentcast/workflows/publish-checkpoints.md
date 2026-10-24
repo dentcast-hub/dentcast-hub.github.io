@@ -417,6 +417,13 @@ must be `confirmed` so Phase F has exact text to verify. The automatic post-Push
 workflow reads these frozen records; it does not invent or prompt for missing
 text. Missing either scope blocks the second cut before any mechanical builder
 runs.
+
+### Agent update and wait after Push 2
+
+Immediately after the second-delivery push is confirmed, tell the user that the agent's content/preparation work is complete through Push 2, GitHub Actions is performing the remaining mechanical steps, and the agent is actively monitoring the run. Include the exact branch and Push-2 SHA, plus the Actions run link as soon as it is available. This is a handoff update, not a claim that publication is complete.
+
+Stay with the run and poll at bounded intervals until it reaches a terminal state; do not end the turn or leave the user without a status while the job is queued or running. If preflight skips or no run appears, inspect the event, branch and handoff before reporting that Actions started. If the run succeeds, verify that delivery 3 is based on the exact Push-2 SHA, the completion receipt is present, the active handoff is removed, and cleanup is confirmed before reporting publication complete. If it fails, inspect the uploaded logs/recovery artifact, diagnose and resume through the guarded recovery path where possible, and keep the user informed of the real status.
+
 All editorial work (including tags, Pulse and the English writing itself)
 must be completed before the second boundary. If any mechanical operation
 later reveals a needed substantive change, STOP and explicitly invalidate
