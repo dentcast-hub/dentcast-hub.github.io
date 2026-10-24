@@ -34,6 +34,15 @@ class GlobalRulesTests(unittest.TestCase):
     def test_pathway_edit_loads_certificate_and_exam_constraints(self):
         self.assertIn('pathway-operations', self.ids(['plus/pathways.json']))
 
+    def test_routine_publication_paths_load_only_core(self):
+        core = {b['id'] for b in self.blocks if b['core']}
+        for path in ['.dentcast/hashtag-batches/share-41.json', '.dentcast/publication-reports/sharehub-share-41.md']:
+            self.assertEqual(self.ids([path]), core)
+
+    def test_home_bundles_loads_core_and_pathway_operations(self):
+        core = {b['id'] for b in self.blocks if b['core']}
+        self.assertEqual(self.ids(['plus/js/home-bundles.js']), core | {'pathway-operations'})
+
     def test_episode_loads_audio_constraints(self):
         self.assertIn('audio-hub', self.ids(['episodes/episode-166.html']))
 

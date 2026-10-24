@@ -464,6 +464,14 @@
       "sections": []
     },
     {
+      "pattern": ".dentcast/hashtag-batches/*.json",
+      "sections": []
+    },
+    {
+      "pattern": ".dentcast/publication-reports/*.md",
+      "sections": []
+    },
+    {
       "pattern": "plus/pathways.json",
       "sections": [
         "pathway-operations"
@@ -471,6 +479,12 @@
     },
     {
       "pattern": "plus/bundles.json",
+      "sections": [
+        "pathway-operations"
+      ]
+    },
+    {
+      "pattern": "plus/js/home-bundles.js",
       "sections": [
         "pathway-operations"
       ]
