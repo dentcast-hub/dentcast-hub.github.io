@@ -223,11 +223,14 @@ def require_delivery_parent(root, publication, number, revision="HEAD"):
     if number == 1:
         h.require(previous is None, "FIRST_DELIVERY_REQUIRES_NO_ACTIVE_REMOTE_HANDOFF")
     else:
-        h.require(boundary == number-1 and previous is not None
-                  and fixed_delivery(previous)
-                  and editorial_cut_v2(previous) == editorial_cut_v2(publication)
-                  and previous["content_id"] == publication["content_id"],
-                  "FIXED_DELIVERY_ORDER_REQUIRED")
+        facts = {"boundary": boundary, "expected_boundary": number-1,
+                 "parent_fixed": previous is not None and fixed_delivery(previous),
+                 "parent_v2": previous is not None and editorial_cut_v2(previous),
+                 "current_v2": editorial_cut_v2(publication),
+                 "content_match": previous is not None and previous["content_id"] == publication["content_id"]}
+        h.require(facts["boundary"] == facts["expected_boundary"] and facts["parent_fixed"]
+                  and facts["parent_v2"] == facts["current_v2"] and facts["content_match"],
+                  "FIXED_DELIVERY_ORDER_REQUIRED:" + json.dumps(facts, sort_keys=True))
 
 
 def completion_path(publication):
