@@ -261,7 +261,7 @@ def run_phase(root: Path, artifact_dir: Path, args):
         raise RunnerError("APPROVED_EXPECTED_TEXT_REQUIRED_FOR_PHASE_F")
 
     logs: list[dict] = []
-    current = lifecycle.next_step(pub)
+    current = handoff.next_step(pub)
     try:
         if current == "C.8":
             record_step(root, "C.8", "started", ["GitHub Actions post-Push-2 mechanical runner started"])
