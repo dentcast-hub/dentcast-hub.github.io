@@ -102,6 +102,12 @@ def route_spans(name, lines, *, category, attached_paper, challenge):
         return include([(0, preamble), (common, size)], size), 'OMIT_LITECAST_ONLY_BRANCH'
 
     if name == '04-taxonomy-and-navigation.md':
+        # Broad/legacy types may actually be episode or Promptologist variants.
+        # Restrict section omission to explicitly modeled living routes.
+        if category not in {'sharehub', 'chairside', 'insight', 'clinical',
+                            'metanotes', 'glossary', 'litecast',
+                            'notecast', 'episode', 'promptologist'}:
+            return whole, 'AMBIGUOUS_CATEGORY_KEEP_ALL_NAVIGATION_BRANCHES'
         note = boundary(lines, '### 4.5. Update parent episode')
         shared = boundary(lines, '### 4.5-ب. Shared evidence base')
         prompt = boundary(lines, '### 4.6. Promptologist series')
