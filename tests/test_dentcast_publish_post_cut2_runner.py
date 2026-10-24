@@ -62,29 +62,39 @@ class PostCut2RunnerTests(unittest.TestCase):
             commands.assert_not_called()
 
     def test_success_stops_at_g_without_delivery_three(self):
+        from contextlib import ExitStack
+
         pub = sample_publication()
         states = {row["id"]: row for row in pub["steps"]}
         args = type("Args", (), {
             "expected_head": HEAD, "expected_branch": BRANCH,
             "expect_title": "title", "expect_caption": "caption",
         })()
+
         def record(_root, sid, status, evidence=(), reason=None):
             states[sid]["status"] = status
             return "digest"
+
         def command(_root, _artifact, label, _argv, _logs):
             if label == "F-verify-publish":
                 states["F"]["status"] = "completed"
-        with tempfile.TemporaryDirectory() as tmp, \
-             patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]), \
-             patch.object(runner, "publication", return_value=(pub, "digest")), \
-             patch.object(lifecycle, "editorial_cut_v2", return_value=True), \
-             patch.object(lifecycle, "delivery_boundary", return_value=2), \
-             patch.object(lifecycle, "require_fixed_cut_readiness"), \
-             patch.object(runner, "command_plan", return_value=[["python3", "builder"]]), \
-             patch.object(runner, "record_step", side_effect=record), \
-             patch.object(runner, "run_command", side_effect=command), \
-             patch.object(runner, "verify_scope"):
-            result = runner.run_phase(Path(tmp), Path(tmp) / "artifacts", args)
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            page = root / "insight/insight100.html"
+            page.parent.mkdir(parents=True)
+            page.write_text("<html><head></head><body></body></html>", encoding="utf-8")
+            with ExitStack() as stack:
+                stack.enter_context(patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]))
+                stack.enter_context(patch.object(runner, "publication", return_value=(pub, "digest")))
+                stack.enter_context(patch.object(lifecycle, "editorial_cut_v2", return_value=True))
+                stack.enter_context(patch.object(lifecycle, "delivery_boundary", return_value=2))
+                stack.enter_context(patch.object(lifecycle, "require_fixed_cut_readiness"))
+                stack.enter_context(patch.object(runner, "command_plan", return_value=[["python3", "builder"]]))
+                stack.enter_context(patch.object(runner, "record_step", side_effect=record))
+                stack.enter_context(patch.object(runner, "run_command", side_effect=command))
+                stack.enter_context(patch.object(runner, "verify_scope"))
+                result = runner.run_phase(root, root / "artifacts", args)
         self.assertEqual(result["status"], "mechanical_steps_complete")
         self.assertEqual(result["next_step"], "G")
         self.assertFalse(result["third_delivery_created"])
