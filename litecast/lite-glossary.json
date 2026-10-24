@@ -27,960 +27,863 @@
       "page_url": "litecast/lite-CAST12.html"
     },
     {
-      "type": "litecast",
-      "id": "litecast-13",
-      "title": "مراحل ایمپلنت",
-      "caption": "مراحل انجام ایمپلنت دندانی از بررسی اولیه تا دوره ترمیم و بارگذاری نهایی؛ توضیح ساده و قابل فهم از روند درمان ایمپلنت برای بیماران.",
-      "hashtags": [
-        "#مراحل_ایمپلنت",
-        "#ایمپلنت",
-        "#درمان_ایمپلنت",
-        "#جراحی_ایمپلنت",
-        "#بارگذاری_ایمپلنت",
-        "#ایمپلنت_فوری",
-        "#آگاهی_درمانی"
-      ],
-      "keywords": [
-        "implant steps",
-        "dental implant procedure",
-        "implant treatment stages",
-        "implant process",
-        "implant surgery steps",
-        "implant timeline",
-        "implant healing",
-        "patient guide implant"
-      ],
-      "page_url": "litecast/lite-CAST13.html"
-    },
+  "type": "litecast",
+  "id": "litecast-13",
+  "title": "مراحل ایمپلنت",
+  "caption": "مراحل انجام ایمپلنت دندانی از بررسی اولیه تا دوره ترمیم و بارگذاری نهایی؛ توضیح ساده و قابل فهم از روند درمان ایمپلنت برای بیماران.",
+  "hashtags": [
+    "#مراحل_ایمپلنت",
+    "#ایمپلنت",
+    "#درمان_ایمپلنت",
+    "#جراحی_ایمپلنت",
+    "#بارگذاری_ایمپلنت",
+    "#ایمپلنت_فوری",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "implant steps",
+    "dental implant procedure",
+    "implant treatment stages",
+    "implant process",
+    "implant surgery steps",
+    "implant timeline",
+    "implant healing",
+    "patient guide implant"
+  ],
+  "page_url": "litecast/lite-CAST13.html"
+},
     {
-      "type": "litecast",
-      "id": "litecast-14",
-      "title": "ایمپلنت دیجیتال چیست؟",
-      "caption": "ایمپلنت دیجیتال روشی از درمان ایمپلنت است که با استفاده از اسکن و برنامه‌ریزی کامپیوتری انجام می‌شود و باعث کاهش زمان درمان، راحتی بیشتر بیمار و امکان پیگیری ساده‌تر مراحل درمان می‌شود.",
-      "hashtags": [
-        "#ایمپلنت_دیجیتال",
-        "#ایمپلنت",
-        "#درمان_ایمپلنت",
-        "#دندانپزشکی_دیجیتال",
-        "#اسکن_دیجیتال",
-        "#ایمپلنت_بدون_قالبگیری",
-        "#آگاهی_درمانی"
-      ],
-      "keywords": [
-        "digital implant",
-        "digital dental implant",
-        "digital implant dentistry",
-        "implant digital workflow",
-        "implant planning",
-        "digital scan implant",
-        "implant patient guide",
-        "digital dentistry"
-      ],
-      "page_url": "litecast/lite-CAST14.html"
-    },
+  "type": "litecast",
+  "id": "litecast-14",
+  "title": "ایمپلنت دیجیتال چیست؟",
+  "caption": "ایمپلنت دیجیتال روشی از درمان ایمپلنت است که با استفاده از اسکن و برنامه‌ریزی کامپیوتری انجام می‌شود و باعث کاهش زمان درمان، راحتی بیشتر بیمار و امکان پیگیری ساده‌تر مراحل درمان می‌شود.",
+  "hashtags": [
+    "#ایمپلنت_دیجیتال",
+    "#ایمپلنت",
+    "#درمان_ایمپلنت",
+    "#دندانپزشکی_دیجیتال",
+    "#اسکن_دیجیتال",
+    "#ایمپلنت_بدون_قالبگیری",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "digital implant",
+    "digital dental implant",
+    "digital implant dentistry",
+    "implant digital workflow",
+    "implant planning",
+    "digital scan implant",
+    "implant patient guide",
+    "digital dentistry"
+  ],
+  "page_url": "litecast/lite-CAST14.html"
+},
+   {
+  "type": "litecast",
+  "id": "litecast-15",
+  "title": "ایمپلنت فوری چیست؟",
+  "caption": "ایمپلنت فوری روشی از درمان ایمپلنت است که در آن پایه ایمپلنت بلافاصله یا در مدت کوتاهی پس از کشیدن دندان قرار داده می‌شود و می‌تواند مدت درمان و بی‌دندانی را کاهش دهد.",
+  "hashtags": [
+    "#ایمپلنت_فوری",
+    "#ایمپلنت",
+    "#درمان_ایمپلنت",
+    "#کاشت_فوری_ایمپلنت",
+    "#ایمپلنت_بعد_از_کشیدن_دندان",
+    "#دندانپزشکی",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "immediate implant",
+    "immediate dental implant",
+    "immediate implant placement",
+    "tooth extraction and implant",
+    "implant after extraction",
+    "fast implant treatment",
+    "implant treatment",
+    "dental implant"
+  ],
+  "page_url": "litecast/lite-CAST15.html"
+},
     {
-      "type": "litecast",
-      "id": "litecast-15",
-      "title": "ایمپلنت فوری چیست؟",
-      "caption": "ایمپلنت فوری روشی از درمان ایمپلنت است که در آن پایه ایمپلنت بلافاصله یا در مدت کوتاهی پس از کشیدن دندان قرار داده می‌شود و می‌تواند مدت درمان و بی‌دندانی را کاهش دهد.",
-      "hashtags": [
-        "#ایمپلنت_فوری",
-        "#ایمپلنت",
-        "#درمان_ایمپلنت",
-        "#کاشت_فوری_ایمپلنت",
-        "#ایمپلنت_بعد_از_کشیدن_دندان",
-        "#دندانپزشکی",
-        "#آگاهی_درمانی"
-      ],
-      "keywords": [
-        "immediate implant",
-        "immediate dental implant",
-        "immediate implant placement",
-        "tooth extraction and implant",
-        "implant after extraction",
-        "fast implant treatment",
-        "implant treatment",
-        "dental implant"
-      ],
-      "page_url": "litecast/lite-CAST15.html"
-    },
+  "type": "litecast",
+  "id": "litecast-16",
+  "title": "روکش ایمپلنت چیست؟",
+  "caption": "روکش ایمپلنت بخشی از درمان ایمپلنت است که روی پایه ایمپلنت قرار می‌گیرد و نقش دندان قابل‌مشاهده را دارد. این روکش ظاهر، عملکرد و توانایی جویدن را بازمی‌گرداند.",
+  "hashtags": [
+    "#روکش_ایمپلنت",
+    "#دندان_ایمپلنت",
+    "#درمان_ایمپلنت",
+    "#تاج_ایمپلنت",
+    "#پروتز_دندانی",
+    "#دندانپزشکی",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "implant crown",
+    "dental implant crown",
+    "crown on implant",
+    "implant prosthesis",
+    "implant restoration",
+    "dental crown implant",
+    "implant treatment",
+    "prosthodontics"
+  ],
+  "page_url": "litecast/lite-CAST16.html"
+},
     {
-      "type": "litecast",
-      "id": "litecast-16",
-      "title": "روکش ایمپلنت چیست؟",
-      "caption": "روکش ایمپلنت بخشی از درمان ایمپلنت است که روی پایه ایمپلنت قرار می‌گیرد و نقش دندان قابل‌مشاهده را دارد. این روکش ظاهر، عملکرد و توانایی جویدن را بازمی‌گرداند.",
-      "hashtags": [
-        "#روکش_ایمپلنت",
-        "#دندان_ایمپلنت",
-        "#درمان_ایمپلنت",
-        "#تاج_ایمپلنت",
-        "#پروتز_دندانی",
-        "#دندانپزشکی",
-        "#آگاهی_درمانی"
-      ],
-      "keywords": [
-        "implant crown",
-        "dental implant crown",
-        "crown on implant",
-        "implant prosthesis",
-        "implant restoration",
-        "dental crown implant",
-        "implant treatment",
-        "prosthodontics"
-      ],
-      "page_url": "litecast/lite-CAST16.html"
-    },
+  "type": "litecast",
+  "id": "litecast-17",
+  "title": "پیچ ایمپلنت چیست؟",
+  "caption": "پیچ ایمپلنت قطعه‌ای است که برای اتصال اجزای مختلف ایمپلنت به یکدیگر استفاده می‌شود و باعث ثابت ماندن روکش یا قطعه واسط روی ایمپلنت می‌گردد.",
+  "hashtags": [
+    "#پیچ_ایمپلنت",
+    "#ایمپلنت",
+    "#درمان_ایمپلنت",
+    "#اجزای_ایمپلنت",
+    "#پروتز_دندانی",
+    "#دندانپزشکی",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "implant screw",
+    "dental implant screw",
+    "screw retained implant",
+    "implant components",
+    "implant prosthesis",
+    "implant restoration",
+    "prosthodontics",
+    "dental implant treatment"
+  ],
+  "page_url": "litecast/lite-CAST17.html"
+},
     {
-      "type": "litecast",
-      "id": "litecast-17",
-      "title": "پیچ ایمپلنت چیست؟",
-      "caption": "پیچ ایمپلنت قطعه‌ای است که برای اتصال اجزای مختلف ایمپلنت به یکدیگر استفاده می‌شود و باعث ثابت ماندن روکش یا قطعه واسط روی ایمپلنت می‌گردد.",
-      "hashtags": [
-        "#پیچ_ایمپلنت",
-        "#ایمپلنت",
-        "#درمان_ایمپلنت",
-        "#اجزای_ایمپلنت",
-        "#پروتز_دندانی",
-        "#دندانپزشکی",
-        "#آگاهی_درمانی"
-      ],
-      "keywords": [
-        "implant screw",
-        "dental implant screw",
-        "screw retained implant",
-        "implant components",
-        "implant prosthesis",
-        "implant restoration",
-        "prosthodontics",
-        "dental implant treatment"
-      ],
-      "page_url": "litecast/lite-CAST17.html"
-    },
+  "type": "litecast",
+  "id": "litecast-18",
+  "title": "اباتمنت چیست؟",
+  "caption": "اباتمنت بخشی از ساختار ایمپلنت است که روی پایه ایمپلنت قرار می‌گیرد و محل اتصال روکش دندان را فراهم می‌کند. انتخاب صحیح اباتمنت نقش مهمی در زیبایی و عملکرد نهایی درمان دارد.",
+  "hashtags": [
+    "#اباتمنت",
+    "#ایمپلنت",
+    "#اجزای_ایمپلنت",
+    "#روکش_ایمپلنت",
+    "#پروتز_دندانی",
+    "#دندانپزشکی",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "abutment",
+    "dental abutment",
+    "implant abutment",
+    "implant components",
+    "implant prosthetics",
+    "implant restoration",
+    "prosthodontics",
+    "dental implant treatment"
+  ],
+  "page_url": "litecast/lite-CAST18.html"
+},
     {
-      "type": "litecast",
-      "id": "litecast-18",
-      "title": "اباتمنت چیست؟",
-      "caption": "اباتمنت بخشی از ساختار ایمپلنت است که روی پایه ایمپلنت قرار می‌گیرد و محل اتصال روکش دندان را فراهم می‌کند. انتخاب صحیح اباتمنت نقش مهمی در زیبایی و عملکرد نهایی درمان دارد.",
-      "hashtags": [
-        "#اباتمنت",
-        "#ایمپلنت",
-        "#اجزای_ایمپلنت",
-        "#روکش_ایمپلنت",
-        "#پروتز_دندانی",
-        "#دندانپزشکی",
-        "#آگاهی_درمانی"
-      ],
-      "keywords": [
-        "abutment",
-        "dental abutment",
-        "implant abutment",
-        "implant components",
-        "implant prosthetics",
-        "implant restoration",
-        "prosthodontics",
-        "dental implant treatment"
-      ],
-      "page_url": "litecast/lite-CAST18.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-19",
-      "title": "فالوآپ ایمپلنت چیست؟",
-      "caption": "فالوآپ ایمپلنت به بررسی‌های دوره‌ای پس از درمان گفته می‌شود که برای کنترل سلامت لثه، وضعیت روکش و پایداری ایمپلنت انجام می‌گیرد. پیگیری منظم نقش مهمی در موفقیت بلندمدت درمان دارد.",
-      "hashtags": [
-        "#فالوآپ_ایمپلنت",
-        "#مراقبت_بعد_از_ایمپلنت",
-        "#پیگیری_ایمپلنت",
-        "#ایمپلنت",
-        "#درمان_ایمپلنت",
-        "#سلامت_دهان",
-        "#آگاهی_درمانی"
-      ],
-      "keywords": [
-        "implant follow-up",
-        "implant maintenance",
-        "dental implant follow up",
-        "implant check-up",
-        "post implant care",
-        "implant monitoring",
-        "implant aftercare",
-        "dental implant maintenance"
-      ],
-      "page_url": "litecast/lite-CAST19.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-1",
-      "title": "قانون ۲-۲-۲ در دندان‌پزشکی",
-      "caption": "توضیح ساده و کاربردی درباره‌ی قانون ۲-۲-۲؛ دو بار مسواک در روز، دو دقیقه، و دو بار مراجعه سالانه به دندان‌پزشک.",
-      "hashtags": [
-        "#مسواک",
-        "#سلامت_دهان",
-        "#بهداشت_دهان",
-        "#پیشگیری",
-        "#دندانپزشکی",
-        "#قانون_۲۲۲"
-      ],
-      "keywords": [
-        "oral hygiene",
-        "2-2-2 rule",
-        "tooth brushing",
-        "prevention",
-        "dental care"
-      ],
-      "page_url": "litecast/lite-CAST1.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-2",
-      "title": "چرا دنچر پایین لق می‌شود؟",
-      "caption": "توضیح روشن دربارهٔ علت لق شدن دنچر پایین و اینکه چرا دو ایمپلنت بهترین روش برای افزایش پایداری آن است.",
-      "hashtags": [
-        "#دنچر",
-        "#اوردنچر",
-        "#ایمپلنت",
-        "#پروتز_کامل",
-        "#پایداری_دنچر",
-        "#دندان_مصنوعی"
-      ],
-      "keywords": [
-        "lower denture",
-        "overdenture",
-        "implant retained denture",
-        "dentures",
-        "prosthodontics"
-      ],
-      "page_url": "litecast/lite-CAST2.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-3",
-      "title": "اگر دندان از دست رفته را جایگزین نکنیم چه می‌شود؟",
-      "caption": "توضیح ساده و علمی دربارهٔ پیامدهای جایگزین نکردن دندان و اینکه چه تغییراتی ممکن است در دهان رخ دهد.",
-      "hashtags": [
-        "#دندان_از_دست_رفته",
-        "#تحلیل_استخوان",
-        "#ایمپلنت",
-        "#پروتز",
-        "#سلامت_دهان"
-      ],
-      "keywords": [
-        "missing tooth",
-        "bone resorption",
-        "tooth shifting",
-        "implant consultation"
-      ],
-      "page_url": "litecast/lite-CAST3.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-4",
-      "title": "آیا ایمپلنت برای کسانی که دندان مصنوعی کامل دارند، مزیتی دارد؟",
-      "caption": "پاسخ ساده و علمی به اینکه ایمپلنت چه مزایایی برای افراد دارای دنچر کامل دارد و چرا معمولاً عملکرد جویدن بهتر می‌شود.",
-      "hashtags": [
-        "#اوردنچر",
-        "#ایمپلنت",
-        "#دندان_مصنوعی",
-        "#تحلیل_استخوان",
-        "#قدرت_جویدن"
-      ],
-      "keywords": [
-        "overdenture",
-        "full denture implant benefits",
-        "bone preservation",
-        "chewing efficiency"
-      ],
-      "page_url": "litecast/lite-CAST4.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-5",
-      "title": "دندان مصنوعی متحرک یا ایمپلنت ثابت؟ بهترین انتخاب کدام است؟",
-      "caption": "مقایسهٔ علمی و ساده بین پلاک متحرک پارسیل و بریج ثابت روی ایمپلنت؛ تمرکز بر سلامت بلندمدت و حفاظت از دندان‌های سالم.",
-      "hashtags": [
-        "#ایمپلنت",
-        "#بریج_ثابت",
-        "#دندان_مصنوعی_متحرک",
-        "#سلامت_دهان",
-        "#پلاک_پارسیل"
-      ],
-      "keywords": [
-        "partial denture",
-        "implant bridge",
-        "removable vs fixed",
-        "abutment tooth risk"
-      ],
-      "page_url": "litecast/lite-CAST5.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-6",
-      "title": "تبخال و دندانپزشکی؛ آیا با تبخال فعال می‌توانم به دندانپزشکی بروم؟",
-      "caption": "چرا درمان‌های دندانپزشکی هنگام تبخال فعال ممنوع است، چه زمانی مراجعه بی‌خطر است، و در شرایط اورژانسی چه باید کرد.",
-      "hashtags": [
-        "#تبخال",
-        "#HSV1",
-        "#بهداشت_دهان",
-        "#اقدامات_اورژانسی",
-        "#پیشگیری_از_انتقال"
-      ],
-      "keywords": [
-        "herpes simplex",
-        "active cold sore",
-        "dental treatment contraindication",
-        "cross-contamination risk"
-      ],
-      "page_url": "litecast/lite-CAST6.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-7",
-      "title": "تفاوت لمینت سرامیکی و کامپوزیت دندان چیست؟ (و کدام بهتر است؟)",
-      "caption": "مقایسهٔ علمی و کاربردی کامپوزیت و لمینت سرامیکی از نظر جنس، دوام، تغییر رنگ، تراش دندان و انتخاب درمان.",
-      "hashtags": [
-        "#لمینت",
-        "#کامپوزیت",
-        "#طراحی_لبخند",
-        "#زیبایی_دندان",
-        "#ونیر_سرامیکی"
-      ],
-      "keywords": [
-        "ceramic veneers",
-        "composite bonding",
-        "aesthetic dentistry",
-        "porcelain laminate",
-        "color stability"
-      ],
-      "page_url": "litecast/lite-CAST7.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-8",
-      "title": "مراحل ایمپلنت دندان چقدر طول می‌کشد؟ (از جراحی تا روکش دیجیتال)",
-      "caption": "مرور ساده و کاربردی مراحل ایمپلنت: از جراحی توسط متخصص لثه تا اسکن دیجیتال و تحویل روکش نهایی.",
-      "hashtags": [
-        "#ایمپلنت",
-        "#جراحی_ایمپلنت",
-        "#روکش_دیجیتال",
-        "#اسکن_دهانی",
-        "#اوسئواینتگریشن"
-      ],
-      "keywords": [
-        "dental implant timeline",
-        "osseointegration period",
-        "digital crown workflow",
-        "immediate provisional implant"
-      ],
-      "page_url": "litecast/lite-CAST8.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-10",
-      "title": "چرا روکش بعضی از ایمپلنت‌ها شل می‌شود؟",
-      "caption": "توضیح ساده و بیمارمحور درباره شل شدن روکش‌های ایمپلنتی، تفاوت شل شدن سمان و شل شدن پیچ پایه، و اهمیت مراجعه و پیگیری به‌موقع.",
-      "hashtags": [
-        "#ایمپلنت",
-        "#روکش_ایمپلنت",
-        "#شل_شدن_روکش",
-        "#پیچ_ایمپلنت",
-        "#اباتمنت",
-        "#فالوآپ_ایمپلنت"
-      ],
-      "keywords": [
-        "loose implant crown",
-        "implant screw loosening",
-        "cement retained implant crown",
-        "implant abutment screw",
-        "implant crown mobility",
-        "implant follow up",
-        "implant maintenance",
-        "implant mechanical complications"
-      ],
-      "page_url": "litecast/lite-CAST10.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-9",
-      "title": "ایمپلنت دیجیتال یعنی چی؟ (جراحی و پروتز با طراحی کامپیوتری)",
-      "caption": "توضیح ساده و بیمارمحور ایمپلنت دیجیتال؛ تفاوت آن با روش معمول، نقش طراحی کامپیوتری در جراحی و پروتز، و تأثیر آن بر دقت درمان و راحتی بیمار.",
-      "hashtags": [
-        "#ایمپلنت_دیجیتال",
-        "#ایمپلنت",
-        "#جراحی_دیجیتال",
-        "#اسکن_دهانی",
-        "#پروتز_دیجیتال",
-        "#دندانپزشکی_دیجیتال"
-      ],
-      "keywords": [
-        "digital dental implant",
-        "computer guided implant surgery",
-        "digital implant workflow",
-        "intraoral scanner",
-        "digital prosthodontics",
-        "guided implant placement",
-        "digital crown",
-        "patient comfort in implant dentistry"
-      ],
-      "page_url": "litecast/lite-CAST9.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-11",
-      "title": "بهترین دکتر، بهترین متخصص پروتز یا بهترین کلینیک؟ معیار درست انتخاب چیست؟",
-      "caption": "بررسی اینکه مفهوم «بهترین دکتر» یا «بهترین کلینیک دندانپزشکی» واقعاً چه معنایی دارد، چرا این عناوین تعریف مطلق ندارند و چگونه می‌توان بر اساس شرایط فردی، انتخابی آگاهانه و قابل‌اعتماد انجام داد.",
-      "hashtags": [
-        "#بهترین_دکتر",
-        "#بهترین_کلینیک",
-        "#انتخاب_دندانپزشک",
-        "#متخصص_پروتز",
-        "#ایمپلنت",
-        "#تصمیم_درمانی",
-        "#آگاهی_درمانی"
-      ],
-      "keywords": [
-        "best dentist",
-        "best dental clinic",
-        "choosing a dentist",
-        "prosthodontist selection",
-        "implant dentist",
-        "dental decision making",
-        "patient centered care",
-        "how to choose a dentist"
-      ],
-      "page_url": "litecast/lite-CAST11.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-20",
-      "title": "چرا عکس پانورامیک برای تشخیص پوسیدگی مناسب نیست؟",
-      "caption": "توضیح ساده برای بیماران درباره تفاوت عکس پانورامیک (OPG یا «عکس بزرگ») با تصاویر دقیق‌تر دندانی و اینکه چرا برای تشخیص پوسیدگی‌های بین‌دندانی، عکس‌هایی مانند PA یا بایت‌وینگ دقت بیشتری دارند.",
-      "hashtags": [
-        "#عکس_پانورامیک",
-        "#OPG",
-        "#عکس_بزرگ",
-        "#پوسیدگی_دندان",
-        "#تشخیص_پوسیدگی",
-        "#رادیوگرافی_دندان",
-        "#آگاهی_بیمار"
-      ],
-      "keywords": [
-        "panoramic dental xray",
-        "OPG dental radiograph",
-        "bitewing vs panoramic",
-        "periapical radiograph",
-        "interproximal caries detection",
-        "dental xray accuracy",
-        "tooth decay diagnosis",
-        "patient dental education"
-      ],
-      "page_url": "litecast/lite-CAST20.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-21",
-      "title": "آیا عصب‌کشی دندان درد دارد؟",
-      "caption": "پاسخ ساده و علمی برای بیماران درباره اینکه چرا عصب‌کشی معمولاً بدون درد انجام می‌شود، چه احساس‌هایی بعد از درمان طبیعی است و چه علائمی نیاز به بررسی دارند.",
-      "hashtags": [
-        "#عصب_کشی",
-        "#درمان_ریشه",
-        "#درد_دندان",
-        "#عفونت_دندان",
-        "#آبسه_دندان",
-        "#سلامت_دهان",
-        "#آگاهی_بیمار"
-      ],
-      "keywords": [
-        "root canal pain",
-        "does root canal hurt",
-        "root canal procedure",
-        "tooth infection treatment",
-        "endodontic treatment pain",
-        "abscessed tooth treatment",
-        "dental pain relief",
-        "patient dental education"
-      ],
-      "page_url": "litecast/lite-CAST21.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-22",
-      "title": "آیا دندان عصب‌کشی شده ضعیف می‌شود؟",
-      "caption": "توضیح ساده و علمی برای بیماران درباره اینکه چرا دندان پس از درمان ریشه ممکن است مقاومت کمتری داشته باشد، چه عواملی در این موضوع نقش دارند و چگونه می‌توان از شکستگی آن جلوگیری کرد.",
-      "hashtags": [
-        "#دندان_عصب_کشی",
-        "#درمان_ریشه",
-        "#شکستگی_دندان",
-        "#روکش_دندان",
-        "#بازسازی_دندان",
-        "#سلامت_دهان",
-        "#آگاهی_بیمار"
-      ],
-      "keywords": [
-        "root canal tooth strength",
-        "endodontically treated tooth fracture",
-        "tooth fracture after root canal",
-        "cuspal coverage restoration",
-        "dental crown protection",
-        "post root canal restoration",
-        "tooth structure loss dentistry",
-        "patient dental education"
-      ],
-      "page_url": "litecast/lite-CAST22.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-23",
-      "title": "چه زمانی دندان عصب‌کشی شده نیاز به روکش دارد؟",
-      "caption": "توضیح ساده و علمی برای بیماران درباره اینکه چه زمانی دندان عصب‌کشی شده به محافظت بیشتر نیاز دارد، چه عواملی خطر شکستگی را افزایش می‌دهند و چگونه روکش می‌تواند از دندان محافظت کند.",
-      "hashtags": [
-        "#روکش_دندان",
-        "#دندان_عصب_کشی",
-        "#درمان_ریشه",
-        "#شکستگی_دندان",
-        "#بازسازی_دندان",
-        "#محافظت_از_دندان",
-        "#آگاهی_بیمار"
-      ],
-      "keywords": [
-        "dental crown after root canal",
-        "when crown is needed after root canal",
-        "protecting endodontically treated teeth",
-        "tooth fracture prevention dentistry",
-        "post root canal restoration options",
-        "cuspal coverage crown indication",
-        "restoration after root canal treatment",
-        "patient dental education"
-      ],
-      "page_url": "litecast/lite-CAST23.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-24",
-      "title": "اگر روی دندان عصب‌کشی شده روکش نگذاریم چه می‌شود؟",
-      "caption": "توضیح ساده و علمی برای بیماران درباره اینکه در صورت محافظت نکردن از دندان عصب‌کشی شده چه اتفاق‌هایی ممکن است رخ دهد، چه عواملی خطر ترک یا شکستگی را افزایش می‌دهند و چرا گاهی محافظت بیشتر توصیه می‌شود.",
-      "hashtags": [
-        "#دندان_عصب_کشی",
-        "#روکش_دندان",
-        "#درمان_ریشه",
-        "#شکستگی_دندان",
-        "#ترک_دندان",
-        "#محافظت_از_دندان",
-        "#آگاهی_بیمار"
-      ],
-      "keywords": [
-        "no crown after root canal",
-        "tooth fracture after root canal",
-        "protecting endodontically treated teeth",
-        "root canal tooth breaking risk",
-        "post root canal restoration need",
-        "tooth structure loss dentistry",
-        "prevent tooth fracture dentistry",
-        "patient dental education"
-      ],
-      "page_url": "litecast/lite-CAST24.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-25",
-      "title": "اگر دندان عصب‌کشی شده بشکند چه می‌شود؟",
-      "caption": "توضیح ساده و علمی برای بیماران درباره شکستگی دندان عصب‌کشی شده، اینکه آیا دندان قابل حفظ است، قطعه شکسته چه اطلاعاتی درباره عمق شکستگی می‌دهد و چه زمانی درمان پیچیده‌تر می‌شود.",
-      "hashtags": [
-        "#دندان_عصب_کشی",
-        "#شکستگی_دندان",
-        "#ترک_دندان",
-        "#درمان_ریشه",
-        "#حفظ_دندان",
-        "#روکش_دندان",
-        "#آگاهی_بیمار"
-      ],
-      "keywords": [
-        "broken root canal tooth",
-        "tooth fracture after root canal",
-        "cracked tooth root canal treated",
-        "can broken tooth be saved",
-        "crown fracture vs root fracture",
-        "tooth fracture prognosis dentistry",
-        "endodontically treated tooth fracture",
-        "patient dental education"
-      ],
-      "page_url": "litecast/lite-CAST25.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-26",
-      "title": "دیابت و دندان‌ها؛ چرا باید بیشتر مراقب باشید",
-      "caption": "توضیح ساده و علمی برای بیماران درباره اینکه چرا دیابت خطر پوسیدگی دندان را افزایش می‌دهد، نقش کاهش بزاق و خشکی دهان در این فرایند، و چند راهکار ساده برای محافظت از سلامت دهان.",
-      "hashtags": [
-        "#دیابت",
-        "#پوسیدگی_دندان",
-        "#خشکی_دهان",
-        "#بزاق",
-        "#سلامت_دهان",
-        "#مراقبت_از_دندان",
-        "#آگاهی_بیمار"
-      ],
-      "keywords": [
-        "diabetes and tooth decay",
-        "dry mouth diabetes",
-        "saliva and cavities",
-        "diabetes oral health",
-        "diabetes dental care",
-        "xerostomia and caries",
-        "preventing cavities diabetes",
-        "patient dental education"
-      ],
-      "page_url": "litecast/lite-CAST26.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-27",
-      "title": "واترجت دندان چیست و آیا جای نخ دندان را می‌گیرد؟",
-      "caption": "واترجت دندان چیست، چطور کار می‌کند و آیا واقعاً جای نخ دندان را می‌گیرد؟ توضیح ساده و علمی درباره تفاوت واترجت و نخ دندان و اینکه چرا یکی جایگزین دیگری نیست.",
-      "hashtags": [
-        "#واترجت",
-        "#واترجت_دندان",
-        "#نخ_دندان",
-        "#پلاک_دندان",
-        "#بهداشت_دهان",
-        "#سلامت_لثه",
-        "#آگاهی_بیمار"
-      ],
-      "keywords": [
-        "water flosser",
-        "oral irrigator",
-        "water flosser vs floss",
-        "dental floss",
-        "dental plaque removal",
-        "gingival health",
-        "interdental cleaning",
-        "patient dental education"
-      ],
-      "page_url": "litecast/lite-CAST27.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-28",
-      "title": "بعد از عصب‌کشی چقدر وقت داریم تا دندان را ترمیم کنیم؟",
-      "caption": "بعد از عصب‌کشی چقدر فرصت داریم تا دندان را با روکش یا پرکردگی دائمی ترمیم کنیم؟ توضیح ساده و علمی درباره اهمیت ترمیم به‌موقع و خطر نفوذ دوباره بزاق و باکتری به ریشه.",
-      "hashtags": [
-        "#عصب_کشی",
-        "#درمان_ریشه",
-        "#ترمیم_دندان",
-        "#روکش_دندان",
-        "#پرکردگی_موقت",
-        "#محافظت_از_دندان",
-        "#آگاهی_بیمار"
-      ],
-      "keywords": [
-        "restoration after root canal",
-        "timing of final restoration",
-        "temporary filling root canal",
-        "permanent restoration endodontic tooth",
-        "crown after root canal",
-        "coronal leakage root canal",
-        "bacterial reinfection root canal",
-        "patient dental education"
-      ],
-      "page_url": "litecast/lite-CAST28.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-29",
-      "title": "هزینهٔ ایمپلنت دندان چقدر است و چرا فرق می‌کند؟",
-      "caption": "هزینهٔ ایمپلنت دندان به چه عواملی بستگی دارد، چرا نمی‌توان یک قیمت ثابت گفت و چرا «ایمپلنت ارزان» همیشه انتخاب درستی نیست؛ توضیح ساده و بیمارمحور.",
-      "hashtags": [
-        "#هزینه_ایمپلنت",
-        "#قیمت_ایمپلنت",
-        "#ایمپلنت",
-        "#روکش_ایمپلنت",
-        "#هزینه_دندانپزشکی",
-        "#ایمپلنت_دندان",
-        "#آگاهی_بیمار"
-      ],
-      "keywords": [
-        "dental implant cost",
-        "implant price",
-        "cost of dental implant",
-        "implant crown cost",
-        "implant brand price",
-        "affordable implant",
-        "implant treatment cost",
-        "patient dental education"
-      ],
-      "page_url": "litecast/lite-CAST29.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-30",
-      "title": "ایمپلنت دندان درد دارد؟ بعد از جراحی چند روز طول می‌کشد؟",
-      "caption": "آیا کاشت ایمپلنت دردناک است، بعد از جراحی چقدر درد و تورم طبیعی است، چند روز طول می‌کشد و چه علائمی نیاز به مراجعه دارد؛ توضیح ساده و بیمارمحور.",
-      "hashtags": [
-        "#درد_ایمپلنت",
-        "#ایمپلنت",
-        "#جراحی_ایمپلنت",
-        "#نقاهت_ایمپلنت",
-        "#تورم_بعد_جراحی",
-        "#مراقبت_بعد_ایمپلنت",
-        "#آگاهی_بیمار"
-      ],
-      "keywords": [
-        "dental implant pain",
-        "implant surgery recovery",
-        "pain after dental implant",
-        "swelling after implant surgery",
-        "implant healing time",
-        "post implant care",
-        "painless implant",
-        "patient dental education"
-      ],
-      "page_url": "litecast/lite-CAST30.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-31",
-      "title": "آیا سیگاری‌ها می‌توانند ایمپلنت بگذارند؟",
-      "caption": "آیا افراد سیگاری می‌توانند ایمپلنت بگذارند، سیگار چه اثری بر موفقیت ایمپلنت دارد، چقدر باید قبل و بعد از جراحی سیگار را قطع کرد و قلیان و ویپ چه خطری دارند؛ توضیح ساده و بیمارمحور.",
-      "hashtags": [
-        "#سیگار",
-        "#ایمپلنت",
-        "#سیگار_و_ایمپلنت",
-        "#شکست_ایمپلنت",
-        "#ترک_سیگار",
-        "#قلیان",
-        "#آگاهی_بیمار"
-      ],
-      "keywords": [
-        "smoking and dental implants",
-        "smoking implant failure",
-        "dental implant success smoking",
-        "quit smoking before implant",
-        "hookah dental implant",
-        "vaping dental implant",
-        "implant risk factors",
-        "patient dental education"
-      ],
-      "page_url": "litecast/lite-CAST31.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-32",
-      "title": "آیا دندانی که آبسه کرده را می‌توان کشید؟",
-      "caption": "آیا دندانی که آبسه کرده قابل کشیدن است، آیا کشیدن دندان عفونت را پخش می‌کند، نقش تب در زمان‌بندی کشیدن دندان، چه زمانی نباید فوری دندان را کشید و چرا دندان عفونی گاهی دیر بی‌حس می‌شود؛ توضیح ساده و بیمارمحور.",
-      "hashtags": [
-        "#آبسه_دندان",
-        "#کشیدن_دندان",
-        "#عفونت_دندان",
-        "#آبسه",
-        "#اورژانس_دندانپزشکی",
-        "#سلامت_دهان",
-        "#آگاهی_بیمار"
-      ],
-      "keywords": [
-        "abscessed tooth extraction",
-        "can you pull an abscessed tooth",
-        "dental abscess",
-        "tooth infection extraction",
-        "pulling infected tooth",
-        "dental abscess treatment",
-        "extraction with fever infection",
-        "patient dental education"
-      ],
-      "page_url": "litecast/lite-CAST32.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-33",
-      "title": "آیا باید پرکردگی آمالگام را با کامپوزیت عوض کنم؟",
-      "caption": "آیا باید پرکردگی آمالگام (نقره‌ای) سالم را با کامپوزیت هم‌رنگ دندان عوض کرد؟ توضیح ساده و بیمارمحور درباره اینکه چرا قدیمی یا نقره‌ای بودن دلیل تعویض نیست، نگرانی جیوه، خطر برداشتن بافت سالم دندان، و اینکه تعویض واقعاً چه زمانی لازم می‌شود.",
-      "hashtags": [
-        "#آمالگام",
-        "#کامپوزیت",
-        "#پرکردگی_دندان",
-        "#تعویض_پرکردگی",
-        "#پوسیدگی_دندان",
-        "#جیوه_آمالگام",
-        "#آگاهی_بیمار"
-      ],
-      "keywords": [
-        "amalgam filling",
-        "composite filling",
-        "replacing amalgam fillings",
-        "amalgam vs composite",
-        "mercury amalgam safety",
-        "secondary caries under filling",
-        "when to replace dental filling",
-        "patient dental education"
-      ],
-      "page_url": "litecast/lite-CAST33.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-34",
-      "title": "فلوراید خطرناک است یا ایمن؟ پاسخ به پرسش‌های رایج بیماران",
-      "caption": "پاسخ به رایج‌ترین پرسش‌های بیماران دربارهٔ فلوراید بر اساس بیانیه‌های انجمن دندان‌پزشکی آمریکا (ADA): آیا فلوراید سمی است، خمیردندان فلورایددار برای کودکان چقدر ایمن است و باید چقدر استفاده شود، قورت دادن تصادفی خمیردندان چه خطری دارد، و ارتباط فلوراید با فلوروزیس و ادعاهای کاهش هوش.",
-      "hashtags": [
-        "#فلوراید",
-        "#خمیردندان",
-        "#پیشگیری_از_پوسیدگی",
-        "#سلامت_دهان_کودکان",
-        "#فلوراید_کودکان",
-        "#ADA",
-        "#آگاهی_بیمار"
-      ],
-      "keywords": [
-        "fluoride safety",
-        "fluoride toothpaste children",
-        "ADA fluoride guidelines",
-        "is fluoride toxic",
-        "fluoride dosage toothpaste",
-        "fluorosis white spots",
-        "community water fluoridation",
-        "patient dental education"
-      ],
-      "page_url": "litecast/lite-CAST34.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-35",
-      "title": "اسپارتینا و داروهای مشابه لاغری: چیزی که باید قبل از دندانپزشکی بدانید",
-      "caption": "اگر اسپارتینا، مونجارو یا زپباوند می‌زنید، قبل از دندانپزشکی چه چیزهایی را باید به تیم درمان بگویید: اثر کند شدن تخلیه‌ی معده روی بیهوشی و آرام‌بخشی، جذب مسکن خوراکی، مسواک‌نزدن فوری بعد از استفراغ، و هماهنگی قرار ناشتا اگر دیابت دارید؛ توضیح ساده و بیمارمحور.",
-      "hashtags": [
-        "#اسپارتینا",
-        "#داروهای_لاغری",
-        "#دیابت",
-        "#بیهوشی",
-        "#تداخل_دارویی",
-        "#سلامت_دهان",
-        "#آگاهی_درمانی"
-      ],
-      "keywords": [
-        "GLP-1 agonist dentistry",
-        "semaglutide dental visit",
-        "Mounjaro Ozempic Zepbound dental",
-        "delayed gastric emptying anesthesia",
-        "weight loss injection dental care",
-        "vomiting enamel brushing",
-        "diabetes fasting dental appointment",
-        "patient dental education"
-      ],
-      "page_url": "litecast/lite-CAST35.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-36",
-      "title": "آیا آفت دهان میکروبی است؟",
-      "caption": "آفت دهان یک عفونت میکروبی یا ویروسی نیست و از راه بوسیدن یا وسایل مشترک منتقل نمی‌شود. گاهی بعد از کار دندان‌پزشکی هم به‌خاطر کشش و فشار به بافت نرم ظاهر می‌شود، نه ورود میکروب. آنتی‌بیوتیک آن را زودتر خوب نمی‌کند و معمولاً ظرف یک تا دو هفته خودش بهبود می‌یابد؛ اگر بیش از دو تا سه هفته طول کشید یا مکرر شد، بررسی لازم است.",
-      "hashtags": [
-        "#آفت_دهان",
-        "#محرک_آفت",
-        "#آنتی‌بیوتیک_دندانپزشکی",
-        "#سلامت_دهان",
-        "#بهداشت_دهان",
-        "#آگاهی_درمانی"
-      ],
-      "keywords": [
-        "aphthous ulcer not bacterial",
-        "canker sore not contagious",
-        "mouth ulcer after dental work",
-        "antibiotics for canker sore",
-        "recurrent aphthous stomatitis",
-        "when to see dentist mouth ulcer"
-      ],
-      "page_url": "litecast/lite-CAST36.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-37",
-      "title": "دندان مصنوعی ژله‌ای خوب است یا بد؟",
-      "caption": "دندان مصنوعی ژله‌ای، چه پارسیل و چه دست دندان کامل، نرم است و قلاب فلزی ندارد؛ اما همین نرمی باعث می‌شود موقع جویدن تکان بخورد، فشار بیشتری به لثه بیاید، زودتر کثیف شود و رنگش عوض شود و تعمیرش سخت باشد. برای مدت کوتاه، حساسیت به فلز یا شرایط خاص دهان انتخاب خوبی است، ولی برای بیشتر افراد بهترین گزینه‌ی بلندمدت نیست.",
-      "hashtags": [
-        "#دندان_مصنوعی_ژله‌ای",
-        "#دندان_مصنوعی",
-        "#پروتز_پارسیل",
-        "#پروتز_متحرک",
-        "#آگاهی_درمانی"
-      ],
-      "keywords": [
-        "flexible denture pros and cons",
-        "flexible partial denture problems",
-        "nylon denture disadvantages",
-        "valplast denture",
-        "flexible complete denture",
-        "when is a flexible denture indicated"
-      ],
-      "page_url": "litecast/lite-CAST37.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-38",
-      "title": "ایمپلنت یک روزه یا ایمپلنت فوری چیست و آیا برای همه قابل انجام است؟",
-      "caption": "ایمپلنت یک روزه یا فوری یعنی کاشت ایمپلنت در همان جلسه‌ی کشیدن دندان، یا گذاشتن روکش موقت روی آن در همان روز؛ نه اینکه کل درمان در یک روز تمام شود. روکش نهایی بعد از چند ماه و جوش خوردن ایمپلنت ساخته می‌شود. این روش فقط وقتی ممکن است که ایمپلنت در لحظه‌ی کاشت محکم در استخوان گیر کند، استخوان کافی و سالم باشد و عفونت فعال، دندان‌قروچه‌ی شدید یا بیماری کنترل‌نشده وجود نداشته باشد.",
-      "hashtags": [
-        "#ایمپلنت_فوری",
-        "#زمان_لود_ایمپلنت",
-        "#روکش_موقت",
-        "#ثبات_اولیه",
-        "#ایمپلنت",
-        "#آگاهی_درمانی"
-      ],
-      "keywords": [
-        "immediate implant placement",
-        "immediate loading dental implant",
-        "same day implant",
-        "teeth in a day",
-        "ILI implant",
-        "provisional crown out of occlusion",
-        "implant primary stability",
-        "immediate implant candidate"
-      ],
-      "page_url": "litecast/lite-CAST38.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-39",
-      "title": "سوالات متداول: مراقبت‌های دندانپزشکی در دوران بارداری",
-      "caption": "درمان‌های دندانپزشکی در هیچ هفته‌ای از بارداری ممنوع نیست و درد و عفونت را نباید تا بعد از زایمان عقب انداخت. کارهای غیرفوری بهتر است در سه‌ماهه‌ی دوم انجام شوند. رادیوگرافی ایمن است، استامینوفن مسکن اول است، و در ماه‌های آخر وضعیت نیمه‌خوابیده روی یونیت مهم است.",
-      "hashtags": [
-        "#بارداری",
-        "#سلامت_دهان",
-        "#بهداشت_دهان",
-        "#آگاهی_درمانی"
-      ],
-      "keywords": [
-        "dental care during pregnancy",
-        "dental x-ray pregnancy",
-        "acetaminophen toothache pregnancy",
-        "elective dentistry second trimester",
-        "dental infection pregnancy",
-        "dental chair third trimester",
-        "vomiting oral care pregnancy",
-        "patient dental education"
-      ],
-      "page_url": "litecast/lite-CAST39.html"
-    },
-    {
-      "type": "litecast",
-      "id": "litecast-40",
-      "title": "لمینت میکرومورف چیست؟ واقعیت پشت یک نام تبلیغاتی",
-      "caption": "لمینت میکرومورف چیست و آیا واقعاً بهتر از لمینت معمولی است؟ بررسی علمی میکرومورف، لمینت‌های چندلایه، نسل جدید و باندینگ آنتی‌باکتریال.",
-      "hashtags": [
-        "#لمینت_دندان",
-        "#لمینت_سرامیکی",
-        "#میکرومورف",
-        "#لمینت_بدون_تراش",
-        "#آگاهی_بیمار"
-      ],
-      "keywords": [
-        "micromorph veneer",
-        "micromorph dental veneer",
-        "micromorph veneer meaning",
-        "ceramic laminate veneer",
-        "no prep veneers",
-        "antibacterial dental bonding",
-        "multilayer ceramic veneers",
-        "laminate veneer generations"
-      ],
-      "page_url": "litecast/lite-CAST40.html"
-    }
+  "type": "litecast",
+  "id": "litecast-19",
+  "title": "فالوآپ ایمپلنت چیست؟",
+  "caption": "فالوآپ ایمپلنت به بررسی‌های دوره‌ای پس از درمان گفته می‌شود که برای کنترل سلامت لثه، وضعیت روکش و پایداری ایمپلنت انجام می‌گیرد. پیگیری منظم نقش مهمی در موفقیت بلندمدت درمان دارد.",
+  "hashtags": [
+    "#فالوآپ_ایمپلنت",
+    "#مراقبت_بعد_از_ایمپلنت",
+    "#پیگیری_ایمپلنت",
+    "#ایمپلنت",
+    "#درمان_ایمپلنت",
+    "#سلامت_دهان",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "implant follow-up",
+    "implant maintenance",
+    "dental implant follow up",
+    "implant check-up",
+    "post implant care",
+    "implant monitoring",
+    "implant aftercare",
+    "dental implant maintenance"
+  ],
+  "page_url": "litecast/lite-CAST19.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-1",
+  "title": "قانون ۲-۲-۲ در دندان‌پزشکی",
+  "caption": "توضیح ساده و کاربردی درباره‌ی قانون ۲-۲-۲؛ دو بار مسواک در روز، دو دقیقه، و دو بار مراجعه سالانه به دندان‌پزشک.",
+  "hashtags": ["#مسواک", "#سلامت_دهان", "#بهداشت_دهان", "#پیشگیری", "#دندانپزشکی", "#قانون_۲۲۲"],
+  "keywords": ["oral hygiene", "2-2-2 rule", "tooth brushing", "prevention", "dental care"],
+  "page_url": "litecast/lite-CAST1.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-2",
+  "title": "چرا دنچر پایین لق می‌شود؟",
+  "caption": "توضیح روشن دربارهٔ علت لق شدن دنچر پایین و اینکه چرا دو ایمپلنت بهترین روش برای افزایش پایداری آن است.",
+  "hashtags": ["#دنچر", "#اوردنچر", "#ایمپلنت", "#پروتز_کامل", "#پایداری_دنچر", "#دندان_مصنوعی"],
+  "keywords": ["lower denture", "overdenture", "implant retained denture", "dentures", "prosthodontics"],
+  "page_url": "litecast/lite-CAST2.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-3",
+  "title": "اگر دندان از دست رفته را جایگزین نکنیم چه می‌شود؟",
+  "caption": "توضیح ساده و علمی دربارهٔ پیامدهای جایگزین نکردن دندان و اینکه چه تغییراتی ممکن است در دهان رخ دهد.",
+  "hashtags": ["#دندان_از_دست_رفته", "#تحلیل_استخوان", "#ایمپلنت", "#پروتز", "#سلامت_دهان"],
+  "keywords": ["missing tooth", "bone resorption", "tooth shifting", "implant consultation"],
+  "page_url": "litecast/lite-CAST3.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-4",
+  "title": "آیا ایمپلنت برای کسانی که دندان مصنوعی کامل دارند، مزیتی دارد؟",
+  "caption": "پاسخ ساده و علمی به اینکه ایمپلنت چه مزایایی برای افراد دارای دنچر کامل دارد و چرا معمولاً عملکرد جویدن بهتر می‌شود.",
+  "hashtags": ["#اوردنچر", "#ایمپلنت", "#دندان_مصنوعی", "#تحلیل_استخوان", "#قدرت_جویدن"],
+  "keywords": ["overdenture", "full denture implant benefits", "bone preservation", "chewing efficiency"],
+  "page_url": "litecast/lite-CAST4.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-5",
+  "title": "دندان مصنوعی متحرک یا ایمپلنت ثابت؟ بهترین انتخاب کدام است؟",
+  "caption": "مقایسهٔ علمی و ساده بین پلاک متحرک پارسیل و بریج ثابت روی ایمپلنت؛ تمرکز بر سلامت بلندمدت و حفاظت از دندان‌های سالم.",
+  "hashtags": ["#ایمپلنت", "#بریج_ثابت", "#دندان_مصنوعی_متحرک", "#سلامت_دهان", "#پلاک_پارسیل"],
+  "keywords": ["partial denture", "implant bridge", "removable vs fixed", "abutment tooth risk"],
+  "page_url": "litecast/lite-CAST5.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-6",
+  "title": "تبخال و دندانپزشکی؛ آیا با تبخال فعال می‌توانم به دندانپزشکی بروم؟",
+  "caption": "چرا درمان‌های دندانپزشکی هنگام تبخال فعال ممنوع است، چه زمانی مراجعه بی‌خطر است، و در شرایط اورژانسی چه باید کرد.",
+  "hashtags": ["#تبخال", "#HSV1", "#بهداشت_دهان", "#اقدامات_اورژانسی", "#پیشگیری_از_انتقال"],
+  "keywords": ["herpes simplex", "active cold sore", "dental treatment contraindication", "cross-contamination risk"],
+  "page_url": "litecast/lite-CAST6.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-7",
+  "title": "تفاوت لمینت سرامیکی و کامپوزیت دندان چیست؟ (و کدام بهتر است؟)",
+  "caption": "مقایسهٔ علمی و کاربردی کامپوزیت و لمینت سرامیکی از نظر جنس، دوام، تغییر رنگ، تراش دندان و انتخاب درمان.",
+  "hashtags": ["#لمینت", "#کامپوزیت", "#طراحی_لبخند", "#زیبایی_دندان", "#ونیر_سرامیکی"],
+  "keywords": ["ceramic veneers", "composite bonding", "aesthetic dentistry", "porcelain laminate", "color stability"],
+  "page_url": "litecast/lite-CAST7.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-8",
+  "title": "مراحل ایمپلنت دندان چقدر طول می‌کشد؟ (از جراحی تا روکش دیجیتال)",
+  "caption": "مرور ساده و کاربردی مراحل ایمپلنت: از جراحی توسط متخصص لثه تا اسکن دیجیتال و تحویل روکش نهایی.",
+  "hashtags": ["#ایمپلنت", "#جراحی_ایمپلنت", "#روکش_دیجیتال", "#اسکن_دهانی", "#اوسئواینتگریشن"],
+  "keywords": ["dental implant timeline", "osseointegration period", "digital crown workflow", "immediate provisional implant"],
+  "page_url": "litecast/lite-CAST8.html"
+},{
+  "type": "litecast",
+  "id": "litecast-10",
+  "title": "چرا روکش بعضی از ایمپلنت‌ها شل می‌شود؟",
+  "caption": "توضیح ساده و بیمارمحور درباره شل شدن روکش‌های ایمپلنتی، تفاوت شل شدن سمان و شل شدن پیچ پایه، و اهمیت مراجعه و پیگیری به‌موقع.",
+  "hashtags": [
+    "#ایمپلنت",
+    "#روکش_ایمپلنت",
+    "#شل_شدن_روکش",
+    "#پیچ_ایمپلنت",
+    "#اباتمنت",
+    "#فالوآپ_ایمپلنت"
+  ],
+  "keywords": [
+    "loose implant crown",
+    "implant screw loosening",
+    "cement retained implant crown",
+    "implant abutment screw",
+    "implant crown mobility",
+    "implant follow up",
+    "implant maintenance",
+    "implant mechanical complications"
+  ],
+  "page_url": "litecast/lite-CAST10.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-9",
+  "title": "ایمپلنت دیجیتال یعنی چی؟ (جراحی و پروتز با طراحی کامپیوتری)",
+  "caption": "توضیح ساده و بیمارمحور ایمپلنت دیجیتال؛ تفاوت آن با روش معمول، نقش طراحی کامپیوتری در جراحی و پروتز، و تأثیر آن بر دقت درمان و راحتی بیمار.",
+  "hashtags": [
+    "#ایمپلنت_دیجیتال",
+    "#ایمپلنت",
+    "#جراحی_دیجیتال",
+    "#اسکن_دهانی",
+    "#پروتز_دیجیتال",
+    "#دندانپزشکی_دیجیتال"
+  ],
+  "keywords": [
+    "digital dental implant",
+    "computer guided implant surgery",
+    "digital implant workflow",
+    "intraoral scanner",
+    "digital prosthodontics",
+    "guided implant placement",
+    "digital crown",
+    "patient comfort in implant dentistry"
+  ],
+  "page_url": "litecast/lite-CAST9.html"
+},{
+  "type": "litecast",
+  "id": "litecast-11",
+  "title": "بهترین دکتر، بهترین متخصص پروتز یا بهترین کلینیک؟ معیار درست انتخاب چیست؟",
+  "caption": "بررسی اینکه مفهوم «بهترین دکتر» یا «بهترین کلینیک دندانپزشکی» واقعاً چه معنایی دارد، چرا این عناوین تعریف مطلق ندارند و چگونه می‌توان بر اساس شرایط فردی، انتخابی آگاهانه و قابل‌اعتماد انجام داد.",
+  "hashtags": [
+    "#بهترین_دکتر",
+    "#بهترین_کلینیک",
+    "#انتخاب_دندانپزشک",
+    "#متخصص_پروتز",
+    "#ایمپلنت",
+    "#تصمیم_درمانی",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "best dentist",
+    "best dental clinic",
+    "choosing a dentist",
+    "prosthodontist selection",
+    "implant dentist",
+    "dental decision making",
+    "patient centered care",
+    "how to choose a dentist"
+  ],
+  "page_url": "litecast/lite-CAST11.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-20",
+  "title": "چرا عکس پانورامیک برای تشخیص پوسیدگی مناسب نیست؟",
+  "caption": "توضیح ساده برای بیماران درباره تفاوت عکس پانورامیک (OPG یا «عکس بزرگ») با تصاویر دقیق‌تر دندانی و اینکه چرا برای تشخیص پوسیدگی‌های بین‌دندانی، عکس‌هایی مانند PA یا بایت‌وینگ دقت بیشتری دارند.",
+  "hashtags": [
+    "#عکس_پانورامیک",
+    "#OPG",
+    "#عکس_بزرگ",
+    "#پوسیدگی_دندان",
+    "#تشخیص_پوسیدگی",
+    "#رادیوگرافی_دندان",
+    "#آگاهی_بیمار"
+  ],
+  "keywords": [
+    "panoramic dental xray",
+    "OPG dental radiograph",
+    "bitewing vs panoramic",
+    "periapical radiograph",
+    "interproximal caries detection",
+    "dental xray accuracy",
+    "tooth decay diagnosis",
+    "patient dental education"
+  ],
+  "page_url": "litecast/lite-CAST20.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-21",
+  "title": "آیا عصب‌کشی دندان درد دارد؟",
+  "caption": "پاسخ ساده و علمی برای بیماران درباره اینکه چرا عصب‌کشی معمولاً بدون درد انجام می‌شود، چه احساس‌هایی بعد از درمان طبیعی است و چه علائمی نیاز به بررسی دارند.",
+  "hashtags": [
+    "#عصب_کشی",
+    "#درمان_ریشه",
+    "#درد_دندان",
+    "#عفونت_دندان",
+    "#آبسه_دندان",
+    "#سلامت_دهان",
+    "#آگاهی_بیمار"
+  ],
+  "keywords": [
+    "root canal pain",
+    "does root canal hurt",
+    "root canal procedure",
+    "tooth infection treatment",
+    "endodontic treatment pain",
+    "abscessed tooth treatment",
+    "dental pain relief",
+    "patient dental education"
+  ],
+  "page_url": "litecast/lite-CAST21.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-22",
+  "title": "آیا دندان عصب‌کشی شده ضعیف می‌شود؟",
+  "caption": "توضیح ساده و علمی برای بیماران درباره اینکه چرا دندان پس از درمان ریشه ممکن است مقاومت کمتری داشته باشد، چه عواملی در این موضوع نقش دارند و چگونه می‌توان از شکستگی آن جلوگیری کرد.",
+  "hashtags": [
+    "#دندان_عصب_کشی",
+    "#درمان_ریشه",
+    "#شکستگی_دندان",
+    "#روکش_دندان",
+    "#بازسازی_دندان",
+    "#سلامت_دهان",
+    "#آگاهی_بیمار"
+  ],
+  "keywords": [
+    "root canal tooth strength",
+    "endodontically treated tooth fracture",
+    "tooth fracture after root canal",
+    "cuspal coverage restoration",
+    "dental crown protection",
+    "post root canal restoration",
+    "tooth structure loss dentistry",
+    "patient dental education"
+  ],
+  "page_url": "litecast/lite-CAST22.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-23",
+  "title": "چه زمانی دندان عصب‌کشی شده نیاز به روکش دارد؟",
+  "caption": "توضیح ساده و علمی برای بیماران درباره اینکه چه زمانی دندان عصب‌کشی شده به محافظت بیشتر نیاز دارد، چه عواملی خطر شکستگی را افزایش می‌دهند و چگونه روکش می‌تواند از دندان محافظت کند.",
+  "hashtags": [
+    "#روکش_دندان",
+    "#دندان_عصب_کشی",
+    "#درمان_ریشه",
+    "#شکستگی_دندان",
+    "#بازسازی_دندان",
+    "#محافظت_از_دندان",
+    "#آگاهی_بیمار"
+  ],
+  "keywords": [
+    "dental crown after root canal",
+    "when crown is needed after root canal",
+    "protecting endodontically treated teeth",
+    "tooth fracture prevention dentistry",
+    "post root canal restoration options",
+    "cuspal coverage crown indication",
+    "restoration after root canal treatment",
+    "patient dental education"
+  ],
+  "page_url": "litecast/lite-CAST23.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-24",
+  "title": "اگر روی دندان عصب‌کشی شده روکش نگذاریم چه می‌شود؟",
+  "caption": "توضیح ساده و علمی برای بیماران درباره اینکه در صورت محافظت نکردن از دندان عصب‌کشی شده چه اتفاق‌هایی ممکن است رخ دهد، چه عواملی خطر ترک یا شکستگی را افزایش می‌دهند و چرا گاهی محافظت بیشتر توصیه می‌شود.",
+  "hashtags": [
+    "#دندان_عصب_کشی",
+    "#روکش_دندان",
+    "#درمان_ریشه",
+    "#شکستگی_دندان",
+    "#ترک_دندان",
+    "#محافظت_از_دندان",
+    "#آگاهی_بیمار"
+  ],
+  "keywords": [
+    "no crown after root canal",
+    "tooth fracture after root canal",
+    "protecting endodontically treated teeth",
+    "root canal tooth breaking risk",
+    "post root canal restoration need",
+    "tooth structure loss dentistry",
+    "prevent tooth fracture dentistry",
+    "patient dental education"
+  ],
+  "page_url": "litecast/lite-CAST24.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-25",
+  "title": "اگر دندان عصب‌کشی شده بشکند چه می‌شود؟",
+  "caption": "توضیح ساده و علمی برای بیماران درباره شکستگی دندان عصب‌کشی شده، اینکه آیا دندان قابل حفظ است، قطعه شکسته چه اطلاعاتی درباره عمق شکستگی می‌دهد و چه زمانی درمان پیچیده‌تر می‌شود.",
+  "hashtags": [
+    "#دندان_عصب_کشی",
+    "#شکستگی_دندان",
+    "#ترک_دندان",
+    "#درمان_ریشه",
+    "#حفظ_دندان",
+    "#روکش_دندان",
+    "#آگاهی_بیمار"
+  ],
+  "keywords": [
+    "broken root canal tooth",
+    "tooth fracture after root canal",
+    "cracked tooth root canal treated",
+    "can broken tooth be saved",
+    "crown fracture vs root fracture",
+    "tooth fracture prognosis dentistry",
+    "endodontically treated tooth fracture",
+    "patient dental education"
+  ],
+  "page_url": "litecast/lite-CAST25.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-26",
+  "title": "دیابت و دندان‌ها؛ چرا باید بیشتر مراقب باشید",
+  "caption": "توضیح ساده و علمی برای بیماران درباره اینکه چرا دیابت خطر پوسیدگی دندان را افزایش می‌دهد، نقش کاهش بزاق و خشکی دهان در این فرایند، و چند راهکار ساده برای محافظت از سلامت دهان.",
+  "hashtags": [
+    "#دیابت",
+    "#پوسیدگی_دندان",
+    "#خشکی_دهان",
+    "#بزاق",
+    "#سلامت_دهان",
+    "#مراقبت_از_دندان",
+    "#آگاهی_بیمار"
+  ],
+  "keywords": [
+    "diabetes and tooth decay",
+    "dry mouth diabetes",
+    "saliva and cavities",
+    "diabetes oral health",
+    "diabetes dental care",
+    "xerostomia and caries",
+    "preventing cavities diabetes",
+    "patient dental education"
+  ],
+  "page_url": "litecast/lite-CAST26.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-27",
+  "title": "واترجت دندان چیست و آیا جای نخ دندان را می‌گیرد؟",
+  "caption": "واترجت دندان چیست، چطور کار می‌کند و آیا واقعاً جای نخ دندان را می‌گیرد؟ توضیح ساده و علمی درباره تفاوت واترجت و نخ دندان و اینکه چرا یکی جایگزین دیگری نیست.",
+  "hashtags": [
+    "#واترجت",
+    "#واترجت_دندان",
+    "#نخ_دندان",
+    "#پلاک_دندان",
+    "#بهداشت_دهان",
+    "#سلامت_لثه",
+    "#آگاهی_بیمار"
+  ],
+  "keywords": [
+    "water flosser",
+    "oral irrigator",
+    "water flosser vs floss",
+    "dental floss",
+    "dental plaque removal",
+    "gingival health",
+    "interdental cleaning",
+    "patient dental education"
+  ],
+  "page_url": "litecast/lite-CAST27.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-28",
+  "title": "بعد از عصب‌کشی چقدر وقت داریم تا دندان را ترمیم کنیم؟",
+  "caption": "بعد از عصب‌کشی چقدر فرصت داریم تا دندان را با روکش یا پرکردگی دائمی ترمیم کنیم؟ توضیح ساده و علمی درباره اهمیت ترمیم به‌موقع و خطر نفوذ دوباره بزاق و باکتری به ریشه.",
+  "hashtags": [
+    "#عصب_کشی",
+    "#درمان_ریشه",
+    "#ترمیم_دندان",
+    "#روکش_دندان",
+    "#پرکردگی_موقت",
+    "#محافظت_از_دندان",
+    "#آگاهی_بیمار"
+  ],
+  "keywords": [
+    "restoration after root canal",
+    "timing of final restoration",
+    "temporary filling root canal",
+    "permanent restoration endodontic tooth",
+    "crown after root canal",
+    "coronal leakage root canal",
+    "bacterial reinfection root canal",
+    "patient dental education"
+  ],
+  "page_url": "litecast/lite-CAST28.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-29",
+  "title": "هزینهٔ ایمپلنت دندان چقدر است و چرا فرق می‌کند؟",
+  "caption": "هزینهٔ ایمپلنت دندان به چه عواملی بستگی دارد، چرا نمی‌توان یک قیمت ثابت گفت و چرا «ایمپلنت ارزان» همیشه انتخاب درستی نیست؛ توضیح ساده و بیمارمحور.",
+  "hashtags": [
+    "#هزینه_ایمپلنت",
+    "#قیمت_ایمپلنت",
+    "#ایمپلنت",
+    "#روکش_ایمپلنت",
+    "#هزینه_دندانپزشکی",
+    "#ایمپلنت_دندان",
+    "#آگاهی_بیمار"
+  ],
+  "keywords": [
+    "dental implant cost",
+    "implant price",
+    "cost of dental implant",
+    "implant crown cost",
+    "implant brand price",
+    "affordable implant",
+    "implant treatment cost",
+    "patient dental education"
+  ],
+  "page_url": "litecast/lite-CAST29.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-30",
+  "title": "ایمپلنت دندان درد دارد؟ بعد از جراحی چند روز طول می‌کشد؟",
+  "caption": "آیا کاشت ایمپلنت دردناک است، بعد از جراحی چقدر درد و تورم طبیعی است، چند روز طول می‌کشد و چه علائمی نیاز به مراجعه دارد؛ توضیح ساده و بیمارمحور.",
+  "hashtags": [
+    "#درد_ایمپلنت",
+    "#ایمپلنت",
+    "#جراحی_ایمپلنت",
+    "#نقاهت_ایمپلنت",
+    "#تورم_بعد_جراحی",
+    "#مراقبت_بعد_ایمپلنت",
+    "#آگاهی_بیمار"
+  ],
+  "keywords": [
+    "dental implant pain",
+    "implant surgery recovery",
+    "pain after dental implant",
+    "swelling after implant surgery",
+    "implant healing time",
+    "post implant care",
+    "painless implant",
+    "patient dental education"
+  ],
+  "page_url": "litecast/lite-CAST30.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-31",
+  "title": "آیا سیگاری‌ها می‌توانند ایمپلنت بگذارند؟",
+  "caption": "آیا افراد سیگاری می‌توانند ایمپلنت بگذارند، سیگار چه اثری بر موفقیت ایمپلنت دارد، چقدر باید قبل و بعد از جراحی سیگار را قطع کرد و قلیان و ویپ چه خطری دارند؛ توضیح ساده و بیمارمحور.",
+  "hashtags": [
+    "#سیگار",
+    "#ایمپلنت",
+    "#سیگار_و_ایمپلنت",
+    "#شکست_ایمپلنت",
+    "#ترک_سیگار",
+    "#قلیان",
+    "#آگاهی_بیمار"
+  ],
+  "keywords": [
+    "smoking and dental implants",
+    "smoking implant failure",
+    "dental implant success smoking",
+    "quit smoking before implant",
+    "hookah dental implant",
+    "vaping dental implant",
+    "implant risk factors",
+    "patient dental education"
+  ],
+  "page_url": "litecast/lite-CAST31.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-32",
+  "title": "آیا دندانی که آبسه کرده را می‌توان کشید؟",
+  "caption": "آیا دندانی که آبسه کرده قابل کشیدن است، آیا کشیدن دندان عفونت را پخش می‌کند، نقش تب در زمان‌بندی کشیدن دندان، چه زمانی نباید فوری دندان را کشید و چرا دندان عفونی گاهی دیر بی‌حس می‌شود؛ توضیح ساده و بیمارمحور.",
+  "hashtags": [
+    "#آبسه_دندان",
+    "#کشیدن_دندان",
+    "#عفونت_دندان",
+    "#آبسه",
+    "#اورژانس_دندانپزشکی",
+    "#سلامت_دهان",
+    "#آگاهی_بیمار"
+  ],
+  "keywords": [
+    "abscessed tooth extraction",
+    "can you pull an abscessed tooth",
+    "dental abscess",
+    "tooth infection extraction",
+    "pulling infected tooth",
+    "dental abscess treatment",
+    "extraction with fever infection",
+    "patient dental education"
+  ],
+  "page_url": "litecast/lite-CAST32.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-33",
+  "title": "آیا باید پرکردگی آمالگام را با کامپوزیت عوض کنم؟",
+  "caption": "آیا باید پرکردگی آمالگام (نقره‌ای) سالم را با کامپوزیت هم‌رنگ دندان عوض کرد؟ توضیح ساده و بیمارمحور درباره اینکه چرا قدیمی یا نقره‌ای بودن دلیل تعویض نیست، نگرانی جیوه، خطر برداشتن بافت سالم دندان، و اینکه تعویض واقعاً چه زمانی لازم می‌شود.",
+  "hashtags": [
+    "#آمالگام",
+    "#کامپوزیت",
+    "#پرکردگی_دندان",
+    "#تعویض_پرکردگی",
+    "#پوسیدگی_دندان",
+    "#جیوه_آمالگام",
+    "#آگاهی_بیمار"
+  ],
+  "keywords": [
+    "amalgam filling",
+    "composite filling",
+    "replacing amalgam fillings",
+    "amalgam vs composite",
+    "mercury amalgam safety",
+    "secondary caries under filling",
+    "when to replace dental filling",
+    "patient dental education"
+  ],
+  "page_url": "litecast/lite-CAST33.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-34",
+  "title": "فلوراید خطرناک است یا ایمن؟ پاسخ به پرسش‌های رایج بیماران",
+  "caption": "پاسخ به رایج‌ترین پرسش‌های بیماران دربارهٔ فلوراید بر اساس بیانیه‌های انجمن دندان‌پزشکی آمریکا (ADA): آیا فلوراید سمی است، خمیردندان فلورایددار برای کودکان چقدر ایمن است و باید چقدر استفاده شود، قورت دادن تصادفی خمیردندان چه خطری دارد، و ارتباط فلوراید با فلوروزیس و ادعاهای کاهش هوش.",
+  "hashtags": [
+    "#فلوراید",
+    "#خمیردندان",
+    "#پیشگیری_از_پوسیدگی",
+    "#سلامت_دهان_کودکان",
+    "#فلوراید_کودکان",
+    "#ADA",
+    "#آگاهی_بیمار"
+  ],
+  "keywords": [
+    "fluoride safety",
+    "fluoride toothpaste children",
+    "ADA fluoride guidelines",
+    "is fluoride toxic",
+    "fluoride dosage toothpaste",
+    "fluorosis white spots",
+    "community water fluoridation",
+    "patient dental education"
+  ],
+  "page_url": "litecast/lite-CAST34.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-35",
+  "title": "اسپارتینا و داروهای مشابه لاغری: چیزی که باید قبل از دندانپزشکی بدانید",
+  "caption": "اگر اسپارتینا، مونجارو یا زپباوند می‌زنید، قبل از دندانپزشکی چه چیزهایی را باید به تیم درمان بگویید: اثر کند شدن تخلیه‌ی معده روی بیهوشی و آرام‌بخشی، جذب مسکن خوراکی، مسواک‌نزدن فوری بعد از استفراغ، و هماهنگی قرار ناشتا اگر دیابت دارید؛ توضیح ساده و بیمارمحور.",
+  "hashtags": [
+    "#اسپارتینا",
+    "#داروهای_لاغری",
+    "#دیابت",
+    "#بیهوشی",
+    "#تداخل_دارویی",
+    "#سلامت_دهان",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "GLP-1 agonist dentistry",
+    "semaglutide dental visit",
+    "Mounjaro Ozempic Zepbound dental",
+    "delayed gastric emptying anesthesia",
+    "weight loss injection dental care",
+    "vomiting enamel brushing",
+    "diabetes fasting dental appointment",
+    "patient dental education"
+  ],
+  "page_url": "litecast/lite-CAST35.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-36",
+  "title": "آیا آفت دهان میکروبی است؟",
+  "caption": "آفت دهان یک عفونت میکروبی یا ویروسی نیست و از راه بوسیدن یا وسایل مشترک منتقل نمی‌شود. گاهی بعد از کار دندان‌پزشکی هم به‌خاطر کشش و فشار به بافت نرم ظاهر می‌شود، نه ورود میکروب. آنتی‌بیوتیک آن را زودتر خوب نمی‌کند و معمولاً ظرف یک تا دو هفته خودش بهبود می‌یابد؛ اگر بیش از دو تا سه هفته طول کشید یا مکرر شد، بررسی لازم است.",
+  "hashtags": [
+    "#آفت_دهان",
+    "#محرک_آفت",
+    "#آنتی‌بیوتیک_دندانپزشکی",
+    "#سلامت_دهان",
+    "#بهداشت_دهان",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "aphthous ulcer not bacterial",
+    "canker sore not contagious",
+    "mouth ulcer after dental work",
+    "antibiotics for canker sore",
+    "recurrent aphthous stomatitis",
+    "when to see dentist mouth ulcer"
+  ],
+  "page_url": "litecast/lite-CAST36.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-37",
+  "title": "دندان مصنوعی ژله‌ای خوب است یا بد؟",
+  "caption": "دندان مصنوعی ژله‌ای، چه پارسیل و چه دست دندان کامل، نرم است و قلاب فلزی ندارد؛ اما همین نرمی باعث می‌شود موقع جویدن تکان بخورد، فشار بیشتری به لثه بیاید، زودتر کثیف شود و رنگش عوض شود و تعمیرش سخت باشد. برای مدت کوتاه، حساسیت به فلز یا شرایط خاص دهان انتخاب خوبی است، ولی برای بیشتر افراد بهترین گزینه‌ی بلندمدت نیست.",
+  "hashtags": [
+    "#دندان_مصنوعی_ژله‌ای",
+    "#دندان_مصنوعی",
+    "#پروتز_پارسیل",
+    "#پروتز_متحرک",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "flexible denture pros and cons",
+    "flexible partial denture problems",
+    "nylon denture disadvantages",
+    "valplast denture",
+    "flexible complete denture",
+    "when is a flexible denture indicated"
+  ],
+  "page_url": "litecast/lite-CAST37.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-38",
+  "title": "ایمپلنت یک روزه یا ایمپلنت فوری چیست و آیا برای همه قابل انجام است؟",
+  "caption": "ایمپلنت یک روزه یا فوری یعنی کاشت ایمپلنت در همان جلسه‌ی کشیدن دندان، یا گذاشتن روکش موقت روی آن در همان روز؛ نه اینکه کل درمان در یک روز تمام شود. روکش نهایی بعد از چند ماه و جوش خوردن ایمپلنت ساخته می‌شود. این روش فقط وقتی ممکن است که ایمپلنت در لحظه‌ی کاشت محکم در استخوان گیر کند، استخوان کافی و سالم باشد و عفونت فعال، دندان‌قروچه‌ی شدید یا بیماری کنترل‌نشده وجود نداشته باشد.",
+  "hashtags": [
+    "#ایمپلنت_فوری",
+    "#زمان_لود_ایمپلنت",
+    "#روکش_موقت",
+    "#ثبات_اولیه",
+    "#ایمپلنت",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "immediate implant placement",
+    "immediate loading dental implant",
+    "same day implant",
+    "teeth in a day",
+    "ILI implant",
+    "provisional crown out of occlusion",
+    "implant primary stability",
+    "immediate implant candidate"
+  ],
+  "page_url": "litecast/lite-CAST38.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-39",
+  "title": "سوالات متداول: مراقبت‌های دندانپزشکی در دوران بارداری",
+  "caption": "درمان‌های دندانپزشکی در هیچ هفته‌ای از بارداری ممنوع نیست و درد و عفونت را نباید تا بعد از زایمان عقب انداخت. کارهای غیرفوری بهتر است در سه‌ماهه‌ی دوم انجام شوند. رادیوگرافی ایمن است، استامینوفن مسکن اول است، و در ماه‌های آخر وضعیت نیمه‌خوابیده روی یونیت مهم است.",
+  "hashtags": [
+    "#بارداری",
+    "#سلامت_دهان",
+    "#بهداشت_دهان",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "dental care during pregnancy",
+    "dental x-ray pregnancy",
+    "acetaminophen toothache pregnancy",
+    "elective dentistry second trimester",
+    "dental infection pregnancy",
+    "dental chair third trimester",
+    "vomiting oral care pregnancy",
+    "patient dental education"
+  ],
+  "page_url": "litecast/lite-CAST39.html"
+},
+{
+  "type": "litecast",
+  "id": "litecast-40",
+  "title": "لمینت میکرومورف چیست؟ واقعیت پشت یک نام تبلیغاتی",
+  "caption": "لمینت میکرومورف چیست و آیا واقعاً بهتر از لمینت معمولی است؟ بررسی علمی میکرومورف، لمینت‌های چندلایه، نسل جدید و باندینگ آنتی‌باکتریال.",
+  "hashtags": [
+    "#میکرومورف",
+    "#لمینیت_سرامیکی",
+    "#آگاهی_درمانی"
+  ],
+  "keywords": [
+    "micromorph veneer",
+    "micromorph dental veneer",
+    "micromorph veneer meaning",
+    "ceramic laminate veneer",
+    "no prep veneers",
+    "antibacterial dental bonding",
+    "multilayer ceramic veneers",
+    "laminate veneer generations"
+  ],
+  "page_url": "litecast/lite-CAST40.html"
+}
   ]
 }

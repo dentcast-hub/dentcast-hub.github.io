@@ -1,0 +1,18 @@
+{
+  "type": "litecast",
+  "note": "Publish of litecast/lite-CAST40. Founder approved adding #میکرومورف. Reuses #لمینیت_سرامیکی and #آگاهی_درمانی. The proposed #لمینت_دندان resolves to the ceramic laminate concept; #لمینت_بدون_تراش resolves to #درمان_غیرتهاجمی but is omitted because it is not a central resolved concept here. LiteCast is not in dentcast-brain.json, so articles is empty; tags are written to litecast/lite-glossary.json by hand.",
+  "concepts": [
+    {
+      "tag": "#میکرومورف",
+      "domain": "clinical",
+      "definition": "نام تبلیغاتیِ به‌کاررفته دربارهٔ لمینیت دندان؛ به‌خودی‌خود روش علمی مستقل، نوع تازهٔ لمینیت یا نظام پذیرفته‌شدهٔ رتبه‌بندی کیفیت نیست.",
+      "use_when": "محتوا مستقیماً معنای نام میکرومورف یا ادعاهای همراه آن دربارهٔ لمینیت دندان را بررسی کند.",
+      "aliases": [
+        "micromorph",
+        "micromorph veneer",
+        "micromorph dental veneer"
+      ]
+    }
+  ],
+  "articles": {}
+}
