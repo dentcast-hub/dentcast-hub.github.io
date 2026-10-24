@@ -29,7 +29,12 @@ def sample_publication():
         "content_id": "insight/insight100",
         "category": "insight",
         "target_paths": ["insight/insight100.html", "insight/en/insight100.html"],
-        "context": {"approvals": []},
+        "context": {"approvals": [
+            {"scope": "title", "status": "confirmed", "decision": "title",
+             "evidence": ["fixture:title approved"]},
+            {"scope": "caption", "status": "confirmed", "decision": "caption",
+             "evidence": ["fixture:caption approved"]},
+        ]},
         "external_actions": [],
         "steps": rows,
     }

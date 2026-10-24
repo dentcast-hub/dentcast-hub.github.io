@@ -107,7 +107,7 @@ class EditorialSecondCutTests(unittest.TestCase):
         ]
         self.assert_blocked("DELIVERY_UNRESOLVED_APPROVAL",
                             lc.require_fixed_cut_readiness, p)
-        p["context"]["approvals"][0].update(
+        p["context"]["approvals"][1].update(
             status="confirmed", decision="approved", evidence=["fixture:human decision"])
         lc.require_fixed_cut_readiness(p)
 
