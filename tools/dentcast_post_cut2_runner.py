@@ -43,6 +43,34 @@ def publication(root: Path):
     return state["publication"], digest
 
 
+def phase_f_expectations(pub: dict, args) -> tuple[str | None, str | None]:
+    """Resolve Phase F strings from frozen human approvals when available."""
+    approvals = {item["scope"]: item for item in pub.get("context", {}).get("approvals", [])}
+    resolved = []
+    for scope, arg_name in (("title", "expect_title"), ("caption", "expect_caption")):
+        supplied = getattr(args, arg_name, None)
+        approval = approvals.get(scope)
+        if approval is None:
+            resolved.append(supplied)
+            continue
+        status = approval["status"]
+        if status == "confirmed":
+            approved = approval["decision"]
+            if supplied is not None and supplied != approved:
+                raise RunnerError("APPROVED_EXPECTED_TEXT_MISMATCH:" + scope)
+            resolved.append(approved)
+        elif status == "not_required":
+            if supplied is not None:
+                raise RunnerError("EXPECTED_TEXT_MARKED_NOT_REQUIRED:" + scope)
+            resolved.append(None)
+        else:
+            raise RunnerError("APPROVED_EXPECTED_TEXT_UNRESOLVED:" + scope)
+    title, caption = resolved
+    if not title and not caption:
+        raise RunnerError("APPROVED_EXPECTED_TEXT_REQUIRED_FOR_PHASE_F")
+    return title, caption
+
+
 def record_step(root: Path, step_id: str, status: str,
                 evidence=(), reason: str | None = None) -> str:
     _, digest = publication(root)
@@ -257,8 +285,7 @@ def run_phase(root: Path, artifact_dir: Path, args):
     lifecycle.require_fixed_cut_readiness(pub, root)
     if any(a["status"] in ("started", "outcome_unknown") for a in pub["external_actions"]):
         raise RunnerError("EXTERNAL_ACTION_OUTCOME_UNKNOWN")
-    if not args.expect_title and not args.expect_caption:
-        raise RunnerError("APPROVED_EXPECTED_TEXT_REQUIRED_FOR_PHASE_F")
+    expect_title, expect_caption = phase_f_expectations(pub, args)
 
     logs: list[dict] = []
     current = handoff.next_step(pub)
@@ -323,15 +350,13 @@ def run_phase(root: Path, artifact_dir: Path, args):
             pub, _ = publication(root)
             current = handoff.next_step(pub)
         if current == "F":
-            if not args.expect_title and not args.expect_caption:
-                raise RunnerError("APPROVED_EXPECTED_TEXT_REQUIRED_FOR_PHASE_F")
             _, digest = publication(root)
             cmd = [sys.executable, str(root / "tools/dentcast_publish_handoff.py"),
                    "--repo", str(root), "verify", "--expected-sha256", digest]
-            if args.expect_title:
-                cmd.extend(["--expect-title", args.expect_title])
-            if args.expect_caption:
-                cmd.extend(["--expect-caption", args.expect_caption])
+            if expect_title:
+                cmd.extend(["--expect-title", expect_title])
+            if expect_caption:
+                cmd.extend(["--expect-caption", expect_caption])
             run_command(root, artifact_dir, "F-verify-publish", cmd, logs)
             verify_scope(root, publication(root)[0])
             current = handoff.next_step(publication(root)[0])
