@@ -495,6 +495,35 @@ def advance(root, expected, sid=None, evidence=None, skips=(), start_next=False,
     return {**result, "transitions_written": written, "publication_completed": False}
 
 
+def stage_delivery(root, expected, paths):
+    """Stage reviewed fixed-cut work and refresh the checkpoint for that index only.
+
+    Bytes must already match the latest checkpoint; only the index may change.
+    The unchanged pre-commit guard is run on the result; nothing is committed.
+    """
+    state = state_for_update(root, expected)
+    p = state["publication"]
+    h.require(fixed_delivery(p) and delivery_boundary(p) in (1, 2), "STAGE_DELIVERY_ONLY_AT_FIXED_CUT")
+    h.require(bool(paths), "STAGE_DELIVERY_PATHS_REQUIRED")
+    scope = set(p["target_paths"]) | set(state["snapshot"]["files"])
+    for path in paths:
+        h.require(h.relative_path(path) in scope and path != h.STATE_PATH, "STAGE_PATH_OUTSIDE_PUBLICATION:" + path)
+    current = h.current_snapshot(root, state)
+    recorded = state["snapshot"]
+    bytes_of = lambda files: {name: {k: info[k] for k in ("kind", "sha256", "executable")}
+                              for name, info in files.items()}
+    h.require(all(recorded[k] == current[k] for k in ("repository", "branch", "head", "workflow"))
+              and bytes_of(recorded["files"]) == bytes_of(current["files"]),
+              "RECORD_WORK_CHANGES_BEFORE_STAGING")
+    h.git(root, "add", "--", *paths)
+    result = h.save(root, copy.deepcopy(p), expected=expected,
+                    note="Index-only refresh after staging delivery paths: " + ", ".join(paths))
+    h.git(root, "add", "--", h.STATE_PATH)
+    guard(root, "pre-commit")
+    return {"status": "delivery_staged", "sha256": result["sha256"], "staged": list(paths),
+            "next_action": "Commit and push this fixed delivery once", "publication_completed": False}
+
+
 def bind(root, expected, content_id, category, targets, evidence):
     """Resolve an intake placeholder once, before any authoring or side effect."""
     with h.locked(root):

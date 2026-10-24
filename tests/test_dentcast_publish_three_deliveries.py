@@ -194,6 +194,38 @@ class ThreeDeliveriesTests(unittest.TestCase):
         run(other, 'commit', '--allow-empty', '-m', 'forbidden fourth delivery')
         self.assert_blocked('EXTRA_DELIVERY_COMMIT_FORBIDDEN', lc.validate_final_receipt, other, data, 'HEAD')
 
+    def at_first_cut_with_recorded_edit(self):
+        sha = self.walk(self.start(), 'C.4.9')
+        (self.root/'note.html').write_text('first cut fixture bytes\n')
+        state, _ = h.load_state(self.root)
+        return h.save(self.root, state['publication'], expected=sha, note='Reviewed first-cut edit')['sha256']
+
+    def test_stage_delivery_refreshes_checkpoint_for_index_only(self):
+        sha = self.at_first_cut_with_recorded_edit()
+        # Without it, staging alone leaves the checkpoint stale for the guard.
+        run(self.root, 'add', 'note.html', h.STATE_PATH)
+        self.assert_blocked('CHECKPOINT_REQUIRED_BEFORE_COMMIT_OR_STOP', lc.guard, self.root, 'pre-commit')
+        run(self.root, 'reset', '-q')
+        result = lc.stage_delivery(self.root, sha, ['note.html'])
+        self.assertEqual(result['status'], 'delivery_staged')
+        run(self.root, 'commit', '-m', 'delivery 1')
+        lc.guard(self.root, 'ci')
+        run(self.root, 'push', 'origin', 'main')
+        self.assertEqual(h.load_state(self.root)[1], result['sha256'])
+
+    def test_stage_delivery_refuses_unrecorded_bytes_and_foreign_paths(self):
+        sha = self.at_first_cut_with_recorded_edit()
+        self.assert_blocked('STAGE_PATH_OUTSIDE_PUBLICATION:unrelated.md',
+                            lc.stage_delivery, self.root, sha, ['unrelated.md'])
+        (self.root/'note.html').write_text('edited after the checkpoint\n')
+        self.assert_blocked('RECORD_WORK_CHANGES_BEFORE_STAGING',
+                            lc.stage_delivery, self.root, sha, ['note.html'])
+        self.assertEqual(h.git(self.root, 'diff', '--cached', '--name-only'), b'')
+
+    def test_stage_delivery_only_at_a_fixed_cut(self):
+        sha = self.walk(self.start(), 'C.4.8')
+        self.assert_blocked('STAGE_DELIVERY_ONLY_AT_FIXED_CUT', lc.stage_delivery, self.root, sha, ['note.html'])
+
     def test_third_delivery_may_carry_the_public_technical_report_only(self):
         sha = self.prepare_final()
         lc.finish(self.root, sha)

@@ -453,7 +453,11 @@ actions still require their existing scope and approval; this protocol grants no
 Cuts 1 and 2 require a fresh remote observation before crossing into the next
 step, including when scientific steps are lawfully skipped. Stage scoped work,
 refresh the local checkpoint after staging, stage the latest handoff, commit and
-push once; verify actual remote delivery. Failed transport blocks crossing that
+push once; verify actual remote delivery. `stage-delivery --expected-sha256
+<digest> --path <scoped-path>` (repeat `--path`) does the staging, the index-only
+checkpoint refresh and handoff staging in one call, then runs the unchanged
+pre-commit guard; it refuses paths outside the publication and any bytes not
+already recorded in the latest checkpoint, and never commits or pushes. Failed transport blocks crossing that
 cut. Preserve work and report the real error; retrying the same unaccepted
 logical delivery does not create another milestone. Never advance by pretending
 a failed push succeeded. The helper does not commit or push automatically.
