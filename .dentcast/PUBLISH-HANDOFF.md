@@ -1,7 +1,5 @@
 # Publication handoff
 
-<!-- Retry post-Push-2 continuation after excluding test fixtures from the image-attribute builder; publication decisions are unchanged. -->
-
 Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "litecast/lite-CAST41"
