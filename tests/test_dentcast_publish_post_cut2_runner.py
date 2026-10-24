@@ -27,12 +27,34 @@ def sample_publication():
         "content_id": "insight/insight100",
         "category": "insight",
         "target_paths": ["insight/insight100.html", "insight/en/insight100.html"],
+        "context": {"approvals": []},
         "external_actions": [],
         "steps": rows,
     }
 
 
 class PostCut2RunnerTests(unittest.TestCase):
+    def test_phase_f_uses_frozen_handoff_approvals(self):
+        pub = sample_publication()
+        pub["context"]["approvals"] = [
+            {"scope": "title", "status": "confirmed", "decision": "Exact approved title"},
+            {"scope": "caption", "status": "confirmed", "decision": "Exact approved caption"},
+        ]
+        args = type("Args", (), {"expect_title": None, "expect_caption": None})()
+        self.assertEqual(
+            runner.phase_f_expectations(pub, args),
+            ("Exact approved title", "Exact approved caption"),
+        )
+
+    def test_phase_f_rejects_manual_text_that_conflicts_with_frozen_approval(self):
+        pub = sample_publication()
+        pub["context"]["approvals"] = [
+            {"scope": "title", "status": "confirmed", "decision": "Exact approved title"},
+        ]
+        args = type("Args", (), {"expect_title": "different title", "expect_caption": "caption"})()
+        with self.assertRaisesRegex(runner.RunnerError, "APPROVED_EXPECTED_TEXT_MISMATCH:title"):
+            runner.phase_f_expectations(pub, args)
+
     def test_first_cut_is_rejected_before_any_builder(self):
         pub = sample_publication()
         args = type("Args", (), {
