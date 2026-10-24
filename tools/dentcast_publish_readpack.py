@@ -19,17 +19,19 @@ ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = '.dentcast/workflows/'
 MODULES = WORKFLOW + 'modules/'
 
-# These blobs were independently inspected at main c16554c (PR #971).
+# These blobs were independently inspected at main c16554c (PR #971) and
+# re-audited after the v2 checkpoint-preface update: only the always-kept
+# preface changed; every boundary and omitted section is byte-identical.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
-    '03-litecast-and-page.md': '93cdab5ca0318aeabfb6e58f15a9518ce5c77c10',
-    '04-taxonomy-and-navigation.md': '2f91e19a9ebd67306ec60f97b83f524c52d2c555',
-    '05-semantic-linking.md': 'd063a45d4896d7b433feec34f9b049489aadd214',
-    '06-paper-ingestion.md': 'f6fd85654e77a93d748d1f7680fd63b192fc9b21',
-    '08-des-fidelity.md': 'a920f75b84f899f025cc8dee56a6d0aae0d909da',
-    '09-challenge.md': 'b935925ebceb91acf7513a9087858e76bb1b6693',
-    '12-english-notify-verify.md': '9b16e2445a3229d6077ca392d4811b115b77db0c',
+    '03-litecast-and-page.md': '4258a930b01c8691dc3c38636c0f4ab2b6592cca',
+    '04-taxonomy-and-navigation.md': '25fc88e1d657ae9eb5ad0fdd5d9ba6dfca6dba38',
+    '05-semantic-linking.md': '760dcf77dd3baff173aebb2d40492604fb096d1f',
+    '06-paper-ingestion.md': '58cfc5613dc82b846c8b11bf890a32789b1e73ac',
+    '08-des-fidelity.md': '5b67df3b88fb89f427d93116631a715c04534e82',
+    '09-challenge.md': '89ae9ee5f875192ed978bc8a58205210295abd4e',
+    '12-english-notify-verify.md': '41e4cc020caf406501ce762a1008cf07b018def1',
 }
 
 REQUIRED = [
