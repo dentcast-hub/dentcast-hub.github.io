@@ -1,0 +1,713 @@
+{
+  "schema": "publish-completion-v1",
+  "state": {
+    "publication": {
+      "blocker": null,
+      "category": "litecast",
+      "content_id": "litecast/lite-CAST40",
+      "context": {
+        "approvals": [
+          {
+            "decision": "Approved complete revised LiteCast text including opening paragraph",
+            "evidence": [
+              "Founder accepted revision \u00ab\u062e\u0648\u0628 \u0628\u0648\u062f\u00bb and requested \u00ab\u0645\u0646\u062a\u0634\u0631\u0634 \u06a9\u0646\u00bb on 2026-10-24"
+            ],
+            "scope": "authored-intro",
+            "status": "confirmed"
+          },
+          {
+            "decision": "Approved #\u0645\u06cc\u06a9\u0631\u0648\u0645\u0648\u0631\u0641; with the two recommended existing canonical tags #\u0644\u0645\u06cc\u0646\u06cc\u062a_\u0633\u0631\u0627\u0645\u06cc\u06a9\u06cc and #\u0622\u06af\u0627\u0647\u06cc_\u062f\u0631\u0645\u0627\u0646\u06cc.",
+            "evidence": [
+              "Founder selected \u00ab\u0627\u0641\u0632\u0648\u062f\u0646 #\u0645\u06cc\u06a9\u0631\u0648\u0645\u0648\u0631\u0641\u00bb in the hashtag choice; scope interpreted as adding the new term to the recommended existing pair."
+            ],
+            "scope": "LiteCast 40 canonical hashtag list and new vocabulary concept",
+            "status": "confirmed"
+          }
+        ],
+        "decisions": [
+          {
+            "kind": "fixed_three_deliveries_v1"
+          },
+          {
+            "evidence": [
+              "Founder: \u00ab\u062e\u0648\u0628 \u0628\u0648\u062f \u0645\u0646\u062a\u0634\u0631\u0634 \u06a9\u0646 \u0637\u0628\u0642 \u067e\u0631\u0648\u062a\u06a9\u0644 \u0627\u0646\u062a\u0634\u0627\u0631\u00bb; lead identical to accepted draft"
+            ],
+            "kind": "first_cut_lead_provenance_v1",
+            "origin": "agent_authored",
+            "source_ref": "Current conversation: founder accepted revised body and requested publication"
+          },
+          {
+            "builder_ref": "Inspected static <ul><li><a href='lite-CAST39.html'> in existing LiteCast landing page",
+            "evidence": [
+              "Direct read of last template, LiteCast glossary and static landing page at baseline SHA 06300fe7c96042d828bee61578d6991d106e25f8"
+            ],
+            "kind": "first_cut_scope_audit_v1",
+            "landing_mode": "included",
+            "landing_path": "litecast/index.html",
+            "observed_changed_paths": [
+              "litecast/lite-CAST40.html",
+              "litecast/index.html",
+              "litecast/lite-glossary.json"
+            ],
+            "related_changed_paths": []
+          },
+          {
+            "attached_paper": false,
+            "category_isolated": true,
+            "challenge": false,
+            "des_fidelity": "skipped per LiteCast canonical exception",
+            "kind": "litecast_routing",
+            "source": "litecast/lite-glossary.json"
+          },
+          {
+            "kind": "pulse_not_opted_in",
+            "reason": "LiteCast historically absent from homepage Pulse; previous explicit question to founder did not opt in, so do not announce in Pulse."
+          },
+          {
+            "capsules": [
+              "/litecast/lite-CAST7.html"
+            ],
+            "inline": [
+              "/litecast/lite-CAST7.html"
+            ],
+            "kind": "semantic_related",
+            "reason": "Existing general-audience ceramic-vs-composite comparison is directly relevant; no specialist content links"
+          },
+          {
+            "checks": [
+              "Text is a general-audience LiteCast entry, verified in litecast/lite-glossary.json",
+              "No DOI, research paper, clinical-grade source-dependent scoring or Challenge input attached",
+              "C.4.13 skipped \u2014 LiteCast; no DES/Fidelity model invoked and no record in plus/des-scores.json"
+            ],
+            "kind": "cut2_scientific_skip_audit",
+            "source": "Live canonical 08-des-fidelity.md: LiteCast outside specialist DES ecosystem"
+          },
+          {
+            "kind": "founder_approved_litecast_hashtags",
+            "minted": [
+              "#\u0645\u06cc\u06a9\u0631\u0648\u0645\u0648\u0631\u0641"
+            ],
+            "omitted_proposals": [
+              "#\u0644\u0645\u06cc\u0646\u062a_\u062f\u0646\u062f\u0627\u0646",
+              "#\u0644\u0645\u06cc\u0646\u062a_\u0628\u062f\u0648\u0646_\u062a\u0631\u0627\u0634"
+            ],
+            "reused": [
+              "#\u0644\u0645\u06cc\u0646\u06cc\u062a_\u0633\u0631\u0627\u0645\u06cc\u06a9\u06cc (alias resolves from proposed #\u0644\u0645\u06cc\u0646\u062a_\u0633\u0631\u0627\u0645\u06cc\u06a9\u06cc)",
+              "#\u0622\u06af\u0627\u0647\u06cc_\u062f\u0631\u0645\u0627\u0646\u06cc (alias resolves from proposed #\u0622\u06af\u0627\u0647\u06cc_\u0628\u06cc\u0645\u0627\u0631)"
+            ],
+            "tags": [
+              "#\u0645\u06cc\u06a9\u0631\u0648\u0645\u0648\u0631\u0641",
+              "#\u0644\u0645\u06cc\u0646\u06cc\u062a_\u0633\u0631\u0627\u0645\u06cc\u06a9\u06cc",
+              "#\u0622\u06af\u0627\u0647\u06cc_\u062f\u0631\u0645\u0627\u0646\u06cc"
+            ]
+          }
+        ],
+        "delivery": [
+          {
+            "evidence": [
+              "PR #973 body records commit 6a9257dcc39b174e4adc5c570c534d7810cf21a7 as Delivery 1.",
+              "Git verifies this commit is an ancestor of freshly observed remote branch head f6dfb43febee30cbeb3a2372e93f08912f35567c."
+            ],
+            "scope": "Delivery 1: feature-branch delivery of first cut for PR #973."
+          },
+          {
+            "evidence": [
+              "PR #973 body records commit f6dfb43febee30cbeb3a2372e93f08912f35567c as Delivery 2.",
+              "Fresh git ls-remote observed refs/heads/content/litecast-40-micromorph-20261024 at f6dfb43febee30cbeb3a2372e93f08912f35567c.",
+              "Git verifies this commit is the remote branch head and follows Delivery 1."
+            ],
+            "scope": "Delivery 2: feature-branch delivery of canonical LiteCast skips for PR #973."
+          }
+        ],
+        "inputs": [
+          {
+            "kind": "founder_approved_article",
+            "reference": "Founder-approved LiteCast text in current conversation (2026-10-24)"
+          },
+          {
+            "kind": "live_git_base",
+            "sha": "06300fe7c96042d828bee61578d6991d106e25f8"
+          }
+        ],
+        "pending_questions": [],
+        "unrelated_changes": [],
+        "validation": [
+          {
+            "evidence": [
+              "A93-litecast-40.json applied; hashtag_ref --sync and --check succeeded; build_plus_index completed.",
+              "LiteGlossary entries 1-39 match origin/main semantic data and original bytes; entry 40 has the approved canonical tag order.",
+              "The homepage patient feed displays up to the first two LiteCast tags, so #\u0645\u06cc\u06a9\u0631\u0648\u0645\u0648\u0631\u0641 and #\u0644\u0645\u06cc\u0646\u06cc\u062a_\u0633\u0631\u0627\u0645\u06cc\u06a9\u06cc are ordered first.",
+              "hashtag_ref --simulate ranks existing related laminate tags but derives its content map from dentcast-brain.json; LiteCast 40 remains outside that source, so no case-assistant reachability is asserted."
+            ],
+            "kind": "litecast_hashtag_validation"
+          },
+          {
+            "evidence": [
+              "python3 tools/update-homepage-counters.py: CONTENT 721\u2192722 and CAT_LITECAST 39\u219240; all other counts unchanged.",
+              "python3 tools/build_pillar.py all completed for 11 pillars and glossary; generated files produced no diff, and LiteCast was not forced into any pillar.",
+              "python3 .github/scripts/inject_img_attrs.py reported only tests/fixtures/connected-first-cut/page.html; that fixture-only change was restored, leaving no fixture change.",
+              "Episodes, flashcards, quiz and challenge builders are inapplicable to this non-episode, non-Challenge LiteCast. Up-board/brain-only builder is inapplicable because LiteCast has no specialist brain entry. build_plus_index already ran in C.5.0 after the hashtag reference update."
+            ],
+            "kind": "litecast_builds"
+          },
+          {
+            "evidence": [
+              "python3 tools/stamp-version.py ran after all applicable C.8 builders. Version 869970c322; service-worker cache changed dentcast-assets-4da2d2b4bd \u2192 dentcast-assets-869970c322; brain fetch version query stamped in player.html and index.html."
+            ],
+            "kind": "site_version_stamp"
+          },
+          {
+            "content_id": "litecast/lite-CAST40",
+            "exit_code": 0,
+            "expected_caption": "\u0644\u0645\u06cc\u0646\u062a \u0645\u06cc\u06a9\u0631\u0648\u0645\u0648\u0631\u0641 \u0686\u06cc\u0633\u062a \u0648 \u0622\u06cc\u0627 \u0648\u0627\u0642\u0639\u0627\u064b \u0628\u0647\u062a\u0631 \u0627\u0632 \u0644\u0645\u06cc\u0646\u062a \u0645\u0639\u0645\u0648\u0644\u06cc \u0627\u0633\u062a\u061f \u0628\u0631\u0631\u0633\u06cc \u0639\u0644\u0645\u06cc \u0645\u06cc\u06a9\u0631\u0648\u0645\u0648\u0631\u0641\u060c \u0644\u0645\u06cc\u0646\u062a\u200c\u0647\u0627\u06cc \u0686\u0646\u062f\u0644\u0627\u06cc\u0647\u060c \u0646\u0633\u0644 \u062c\u062f\u06cc\u062f \u0648 \u0628\u0627\u0646\u062f\u06cc\u0646\u06af \u0622\u0646\u062a\u06cc\u200c\u0628\u0627\u06a9\u062a\u0631\u06cc\u0627\u0644.",
+            "expected_title": "\u0644\u0645\u06cc\u0646\u062a \u0645\u06cc\u06a9\u0631\u0648\u0645\u0648\u0631\u0641 \u0686\u06cc\u0633\u062a\u061f \u0648\u0627\u0642\u0639\u06cc\u062a \u067e\u0634\u062a \u06cc\u06a9 \u0646\u0627\u0645 \u062a\u0628\u0644\u06cc\u063a\u0627\u062a\u06cc",
+            "kind": "phase_f",
+            "output_sha256": "2969c9f04a628971bf478a9f8b5a8fdd5d6b0123ca34661d385189f2ae42219b",
+            "recorded_at": "2026-10-24T07:40:27+00:00",
+            "summary": "24 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+          },
+          {
+            "evidence": [
+              "Report covers all applicable LiteCast checks and explicit category skips; exact Phase F summary and pending delivery boundary recorded."
+            ],
+            "kind": "final_technical_report",
+            "path": ".dentcast/publication-reports/litecast-40.md",
+            "sha256": "91ae6bf970e8473cb7815c4e5c02f849a0ca0ee4e51cb3d6350eba0459e0db9b"
+          }
+        ]
+      },
+      "external_actions": [],
+      "status": "in_progress",
+      "steps": [
+        {
+          "evidence": [
+            "Read live modular publishing router, LiteCast exception, and connected GitHub checkpoint contract at main SHA 06300fe7c96042d828bee61578d6991d106e25f8"
+          ],
+          "id": "rules",
+          "module": "01-hard-rules.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Text supplied and founder approved; no research PDF attachment"
+          ],
+          "id": "0",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Read LiteCast source of truth (39 entries), previous page #39, static index; live main SHA 06300fe7c96042d828bee61578d6991d106e25f8"
+          ],
+          "id": "A",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Founder requested LiteCast explicitly"
+          ],
+          "id": "B.1",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Max verified LiteCast ID 39; new page 40"
+          ],
+          "id": "B.2",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Accepted final Persian article text from conversation used unchanged"
+          ],
+          "id": "B.3",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Approved article wording kept; no unsolicited style changes"
+          ],
+          "id": "B.3.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Previous LiteCast page has no mandatory image/audio/video and user supplied none"
+          ],
+          "id": "B.4",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "No research paper file attached in this publication"
+          ],
+          "id": "B.4.7",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "LiteCast explicit DES/Fidelity exemption in module 08"
+          ],
+          "id": "B.4.8",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Ordinary informational patient article, not a Challenge"
+          ],
+          "id": "B.4.9",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "B.5",
+          "module": "02-routing-intake.md",
+          "reason": "No opt-in for normally unannounced LiteCast Pulse; no homepage announcement drafted for shipment",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "LiteCast isolated category selected"
+          ],
+          "id": "C.0",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "LightGlossary appended with 40th same-schema entry"
+          ],
+          "id": "C.0.1",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "All new internal links LiteCast-to-LiteCast; no specialist cross-links"
+          ],
+          "id": "C.0.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Page structure cloned from lite-CAST39.html on immutable main"
+          ],
+          "id": "C.0.3",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "No specialist brain/pillar/English/DES for LiteCast"
+          ],
+          "id": "C.0.4",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Immutable predecessor blob SHA 8d12f91bc1f3591840d6dc5e81c4f788a86edd33 before page clone"
+          ],
+          "id": "C.1",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Full page constructed from exact template with approved Persian body; date, meta, canonical, JSON-LD and preconnect inspected"
+          ],
+          "id": "C.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Performed semantic review of 39 LiteCast entries; first relevant body mention linked to LiteCast7, first occurrence only"
+          ],
+          "id": "C.0.5",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Performed semantic related-links review; only strong LiteCast7 capsule retained, under five-link cap"
+          ],
+          "id": "C.0.6",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.2.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "LiteCast outside specialist pillar/subtopic taxonomy",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.2.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "LiteCast specialist capsules prohibited; replaces with C.0.6 internal capsules",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Static landing litecast/index.html has one added new row at top for #40"
+          ],
+          "id": "C.2.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Page title/meta/OG/Twitter/canonical/date set to 2026-10-24 and dentcast.ir"
+          ],
+          "id": "C.3",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Previous template read directly from immutable base and not modified; git blob SHA 8d12f91bc1f3591840d6dc5e81c4f788a86edd33"
+          ],
+          "id": "C.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Not NoteCast; no parent episode",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5-b",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Not NoteCast; no shared evidence record",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Not Promptologist",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.7",
+          "module": "05-semantic-linking.md",
+          "reason": "LiteCast prohibited from specialist glossary backlinks",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.7-b",
+          "module": "05-semantic-linking.md",
+          "reason": "No specialist glossary term publish",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.8",
+          "module": "05-semantic-linking.md",
+          "reason": "LiteCast specialist in-body links excluded; executed LiteCast C.0.5 instead",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.9",
+          "module": "05-semantic-linking.md",
+          "reason": "LiteCast specialist related-links excluded; executed LiteCast C.0.6 instead",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.1",
+          "module": "06-paper-ingestion.md",
+          "reason": "No attached research paper: Drive filing not applicable (Phase 0 / C.4.10)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.2",
+          "module": "06-paper-ingestion.md",
+          "reason": "No attached research paper: cabinet catalog addition not applicable",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.3",
+          "module": "06-paper-ingestion.md",
+          "reason": "No attached research paper: first-author DOI credit not applicable",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.11",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": "LiteCast excluded from specialist DefinedTermSet flashcards",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.12",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": "LiteCast excluded from specialist quiz/FAQ index",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.13",
+          "module": "08-des-fidelity.md",
+          "reason": "LiteCast explicit DES/Fidelity exemption (module 08, Hard Rule 10)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.14",
+          "module": "09-challenge.md",
+          "reason": "Not a Challenge: locked intake B.4.9 identifies ordinary informational LiteCast; no challenge markup or admin payload applies.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Founder-approved list applied: #\u0645\u06cc\u06a9\u0631\u0648\u0645\u0648\u0631\u0641 (new canonical concept, recorded in A93-litecast-40.json), #\u0644\u0645\u06cc\u0646\u06cc\u062a_\u0633\u0631\u0627\u0645\u06cc\u06a9\u06cc and #\u0622\u06af\u0627\u0647\u06cc_\u062f\u0631\u0645\u0627\u0646\u06cc reused. Glossary entry 40 is the only added entry and preserves all 39 main-baseline entries byte-for-byte; LiteCast homepage feed uses its first two tags. --sync ran, --check passed, and build_plus_index ran. Limitation recorded: hashtag_ref --simulate derives article mappings from dentcast-brain.json, so it cannot return LiteCast 40 (outside the specialist brain); it ranked related existing laminate tags, not this page. No reachability claim for the case-assistant was made."
+          ],
+          "id": "C.5.0",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Validated LiteCast 40 has the same ordered key set as entry 39, exact content id/page URL, approved title/caption, and eight keyword fields. All three hashtags exist as canonical concepts; the page is present in the LiteCast source and no LiteCast 40 entry was added to dentcast-brain.json. The page follows the prior LiteCast template, which has no article-level hashtag chip block; homepage patient-feed cards read tags from the LiteGlossary."
+          ],
+          "id": "C.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.5.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": "LiteCast has no specialist brain/pillar assignment; C.2.4 was a documented category skip, so no pillar object is to verify.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.5.6",
+          "module": "10-brain-and-pathways.md",
+          "reason": "LiteCast is explicitly excluded from professional learning pathways.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.5.6-b",
+          "module": "10-brain-and-pathways.md",
+          "reason": "No pathway membership or continuation bundle applies to this LiteCast entry.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.6",
+          "module": "11-build-and-version.md",
+          "reason": "LiteCast is not customary in homepage Pulse and the handoff records no founder opt-in; no Pulse line is added.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Ran the LiteCast-applicable C.8 builders on the main-reflected checkout: update-homepage-counters.py and build_pillar.py all succeeded. Homepage counts advanced LiteCast 39\u219240 and total content 721\u2192722. Pillar/all outputs were up-to-date; image-attribute backfill touched only a transport-test fixture, which was restored. Episode, flashcard, quiz, Challenge and Up-board builders were skipped as documented for LiteCast."
+          ],
+          "id": "C.8",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Ran python3 tools/stamp-version.py last after all applicable C.8 builders. Site content version 869970c322; service-worker CACHE_NAME changed from dentcast-assets-4da2d2b4bd to dentcast-assets-869970c322."
+          ],
+          "id": "C.7",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "D",
+          "module": "12-english-notify-verify.md",
+          "reason": "LiteCast is an explicit English-mirror exception; no English page or language toggle applies.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "E",
+          "module": "12-english-notify-verify.md",
+          "reason": "LiteCast is an explicit dc-notify marker exception.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "phase_f:2969c9f04a628971bf478a9f8b5a8fdd5d6b0123ca34661d385189f2ae42219b"
+          ],
+          "id": "F",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            ".dentcast/publication-reports/litecast-40.md sha256=91ae6bf970e8473cb7815c4e5c02f849a0ca0ee4e51cb3d6350eba0459e0db9b"
+          ],
+          "id": "G",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        }
+      ],
+      "target_paths": [
+        ".dentcast/hashtag-batches/A93-litecast-40.json",
+        ".dentcast/publication-reports/litecast-40.md",
+        "dentcast-hashtag-reference.json",
+        "index.html",
+        "litecast/index.html",
+        "litecast/lite-CAST40.html",
+        "litecast/lite-glossary.json",
+        "player.html",
+        "plus/content-index.json",
+        "service-worker.js"
+      ]
+    },
+    "snapshot": {
+      "files": {
+        ".dentcast/hashtag-batches/A93-litecast-40.json": {
+          "kind": "file",
+          "sha256": "ee2b3baad06b41bff2249153b138cad8e12ad3a7679db8245671f4c8fc6fd974",
+          "executable": false
+        },
+        ".dentcast/publication-reports/litecast-40.md": {
+          "kind": "file",
+          "sha256": "91ae6bf970e8473cb7815c4e5c02f849a0ca0ee4e51cb3d6350eba0459e0db9b",
+          "executable": false
+        },
+        "dentcast-hashtag-reference.json": {
+          "kind": "file",
+          "sha256": "5a115d0e9832840c9be0f302b8f5bd3da8cdc266ca997c7169fb75bd46a793f8",
+          "executable": false
+        },
+        "index.html": {
+          "kind": "file",
+          "sha256": "a929563a8aef10be344ee8c74727aa90870975b9a22e2c78b06fee21b458159d",
+          "executable": false
+        },
+        "litecast/index.html": {
+          "kind": "file",
+          "sha256": "ae0de7ba9b7371c0d0ac48a453683861e09d6719e45fc34bbd9a110ce1b517e5",
+          "executable": false
+        },
+        "litecast/lite-CAST40.html": {
+          "kind": "file",
+          "sha256": "26bc31a445e2fbff553e1e728ca246f48c8f91c0ffdbdca097d54411494a9f6f",
+          "executable": false
+        },
+        "litecast/lite-glossary.json": {
+          "kind": "file",
+          "sha256": "4a63a944b4e86f16cee2e161de8d195c399a71cadbccdded4d04671bcf2eeb6f",
+          "executable": false
+        },
+        "player.html": {
+          "kind": "file",
+          "sha256": "7b95eb41506e8dc9e7d6ee8abd4ed9a3a884a93014db8435254b61678bd43e2e",
+          "executable": false
+        },
+        "plus/content-index.json": {
+          "kind": "file",
+          "sha256": "66030d4f6f211be916df58cb2333867571bc41729ebd661e5719c358c4e307ef",
+          "executable": false
+        },
+        "service-worker.js": {
+          "kind": "file",
+          "sha256": "e633f6c6de6ab85f7a0485e7515708f3d1e5d8f659570d2ec7f65c85cea3d69f",
+          "executable": false
+        }
+      },
+      "workflow": {
+        ".dentcast/workflows/README.md": "45af2ba4af965a898b11429ee996523ee3c57fed8f61bcaf22460c60a6f88dd4",
+        ".dentcast/workflows/agent-parity.md": "d4f5911407964a29aa644ede2083277fce1ca41274ef6d253dfba71b8447fd2a",
+        ".dentcast/workflows/publish-handoff.md": "51e24c626d5d928acd5bea0888fefca34dc4beed7ac6f45e7f5b000bbb1a38c8",
+        ".dentcast/workflows/routing-details.md": "3e698a41fe79f82133b433b508c948ac7fbab95b03cebbb8c2ceb450e1eab552",
+        ".dentcast/workflows/global/README.md": "8be8dfb1047ee1a6026870ec996ad80205e7aef95b1d77cccf752ed1704fc955",
+        ".dentcast/workflows/global/LOAD-MAP.json": "2b18e92ea22229f340c94ff3bc09e3731bb1b88ed8d5172bb0584e55f4ad8b32",
+        "tools/dentcast_global_rules.py": "524271cfc10bfbf30e3b27e6f1c653a9c3009ef3b9c8d06ad23ce421aaaca130",
+        ".dentcast/workflows/global/repo-conventions.md": "07ad6321a9539898c555b795249699b4a67786c06ebf0d8242864dbc845e92a3",
+        ".dentcast/workflows/global/plus-premium.md": "3905b8017be9601666541145aa732469a664c2c3b0e229dfb40e063123668987",
+        ".dentcast/workflows/global/site-invariants.md": "806db16666dc3d42468f143ec279ba704718d3997ca96ce8316f2d17abbc6398",
+        "tools/dentcast_publish_handoff.py": "c2fbbd1b5e98bb89259f139d02915120c1c9785e303cae5e48f5504f1774d362",
+        "tools/dentcast_publish_lifecycle.py": "95916a46df084b397db188a2b3d0030dd10d4d4f44dd1060c613a61a55a37149",
+        "tools/verify_publish.py": "5712fa58c34297c183d8675dcf810eec2e38da1d61b8e10ee4a3d667ca10acd7",
+        "tools/dentcast_text_io.py": "28af00db98df97c6062e36d2d963e6a81454f90fb91f9cd8f267ad8a9ee8863d",
+        "tools/text_io.mjs": "c6f9208e26983c8eade43d8cf3effe865e6479df903d2cee661cd0a928565536",
+        ".dentcast/workflows/publish-checkpoints.md": "298aa2ef5ecc7c6065cdf6fe691778d363248989e81846a6aac3f22152b60c54",
+        ".dentcast/workflows/modules/01-hard-rules.md": "177fb4e74bc4dab07aaf09508670ca06aa54f1d2d9b8d89290e1af42e2540884",
+        ".dentcast/workflows/modules/02-routing-intake.md": "83bd960b0567de35bd8f09d8ac0211651cf2b198b2756c371c51ecdc33821f8f",
+        ".dentcast/workflows/modules/03-litecast-and-page.md": "c694b142121afc3ea5da30b5f685462195408d0afdba3cfd21338c8d6eecfb00",
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "deff8de87f7c7af35edb2dbb88b19e1ba8a14538dfa5b73223af61d63f195c27",
+        ".dentcast/workflows/modules/05-semantic-linking.md": "0c8eedf826cc4b85862b63fea324d4e5236651d72d0df080daabfdf1b8afab15",
+        ".dentcast/workflows/modules/06-paper-ingestion.md": "8fe08a36b27c6d751651fce15f98b71f0af8a0abb39baa0eca44fdac401cef5b",
+        ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "1f447af28d76973e9300dea17004ed1ea164a64b5734d9e2160b24f3e95e7264",
+        ".dentcast/workflows/modules/08-des-fidelity.md": "93f7d8c6dab74d87f4cd5e1c074072b01a88f7c293f38b268ed033c0e6eb6bed",
+        ".dentcast/workflows/modules/09-challenge.md": "92c1d0be2868dac0aa417fc25a681494e0364b2720e75c98555f244ecc3d6d47",
+        ".dentcast/workflows/modules/10-brain-and-pathways.md": "edeed585c72b061ac5ec29b593c424aca7467bc210b09d4566e3d123ca179b61",
+        ".dentcast/workflows/modules/11-build-and-version.md": "4a7364c904615e5f73dffcc3647b87afb2efc89b5ade117bc447696cec7aae67",
+        ".dentcast/workflows/modules/12-english-notify-verify.md": "1c730d65ef14953b58d0a8cbbad247888419fae2ac56247c10d46897421b9e66"
+      }
+    }
+  },
+  "second_delivery_commit": "f6dfb43febee30cbeb3a2372e93f08912f35567c",
+  "verification": {
+    "kind": "phase_f",
+    "content_id": "litecast/lite-CAST40",
+    "expected_title": "\u0644\u0645\u06cc\u0646\u062a \u0645\u06cc\u06a9\u0631\u0648\u0645\u0648\u0631\u0641 \u0686\u06cc\u0633\u062a\u061f \u0648\u0627\u0642\u0639\u06cc\u062a \u067e\u0634\u062a \u06cc\u06a9 \u0646\u0627\u0645 \u062a\u0628\u0644\u06cc\u063a\u0627\u062a\u06cc",
+    "expected_caption": "\u0644\u0645\u06cc\u0646\u062a \u0645\u06cc\u06a9\u0631\u0648\u0645\u0648\u0631\u0641 \u0686\u06cc\u0633\u062a \u0648 \u0622\u06cc\u0627 \u0648\u0627\u0642\u0639\u0627\u064b \u0628\u0647\u062a\u0631 \u0627\u0632 \u0644\u0645\u06cc\u0646\u062a \u0645\u0639\u0645\u0648\u0644\u06cc \u0627\u0633\u062a\u061f \u0628\u0631\u0631\u0633\u06cc \u0639\u0644\u0645\u06cc \u0645\u06cc\u06a9\u0631\u0648\u0645\u0648\u0631\u0641\u060c \u0644\u0645\u06cc\u0646\u062a\u200c\u0647\u0627\u06cc \u0686\u0646\u062f\u0644\u0627\u06cc\u0647\u060c \u0646\u0633\u0644 \u062c\u062f\u06cc\u062f \u0648 \u0628\u0627\u0646\u062f\u06cc\u0646\u06af \u0622\u0646\u062a\u06cc\u200c\u0628\u0627\u06a9\u062a\u0631\u06cc\u0627\u0644.",
+    "exit_code": 0,
+    "output_sha256": "2969c9f04a628971bf478a9f8b5a8fdd5d6b0123ca34661d385189f2ae42219b",
+    "summary": "24 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+  }
+}
