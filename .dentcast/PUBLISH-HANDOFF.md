@@ -591,7 +591,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "F verification found stale title metadata; all title surfaces and the breadcrumb now match the approved title. Retry the mechanical continuation."
+    "note": "Inspect fixed-delivery gate facts for the already verified second cut"
   },
   "schema": "publish-handoff-v3"
 }
