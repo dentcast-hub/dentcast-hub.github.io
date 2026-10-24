@@ -452,6 +452,7 @@ def write_delivery_recovery(root: Path, artifact_dir: Path, base_sha: str,
 def finalize_and_push(root: Path, artifact_dir: Path, expected_head: str,
                       expected_branch: str, run_url: str):
     """Record G, prepare delivery 3 canonically, push once, then confirm cleanup."""
+    artifact_dir = ensure_layout(root, artifact_dir)
     parsed_run_url = urlparse(run_url)
     if parsed_run_url.scheme != "https" or not parsed_run_url.netloc \
             or "/actions/runs/" not in parsed_run_url.path:

@@ -257,6 +257,51 @@ class PostCut2RunnerTests(unittest.TestCase):
         self.assertEqual(result["third_delivery_sha"], third)
         self.assertTrue(result["publication_completed"])
 
+    def test_rejected_third_push_preserves_same_commit_and_cleanup_record(self):
+        pub = sample_publication()
+        for row in pub["steps"]:
+            if row["id"] == "G":
+                break
+            row["status"] = "completed"
+        pub["context"]["delivery"] = []
+        base = "b" * 40
+        third = "c" * 40
+        report_path = ".dentcast/publication-reports/insight/insight100.completion.json"
+        completed = subprocess.CompletedProcess([], 0, stdout="ok", stderr="")
+        rejected = subprocess.CompletedProcess([], 1, stdout="branch protection rejected push", stderr="")
+
+        def fake_git(_root, *args, check=True):
+            if args[:2] == ("rev-parse", "HEAD"):
+                return third
+            if args[:2] == ("rev-parse", "HEAD^"):
+                return base
+            if args and args[0] == "ls-remote":
+                return base + "\trefs/heads/automation/test"
+            return ""
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "repo"
+            root.mkdir()
+            artifact = Path(tmp) / "artifact"
+            cleanup = Path(tmp) / "cleanup-record.json"
+            cleanup.write_text("cleanup receipt", encoding="utf-8")
+            with patch.object(runner, "publication", return_value=(pub, "digest")), \
+                 patch.object(runner, "record_step", side_effect=["g-start", "g-complete"]), \
+                 patch.object(runner, "record_publication", return_value="delivery-recorded"), \
+                 patch.object(runner, "git", side_effect=fake_git), \
+                 patch.object(runner, "changed_paths", return_value={runner.HANDOFF, "index.html", report_path}), \
+                 patch.object(runner.lifecycle, "pending", return_value=True), \
+                 patch.object(runner.lifecycle, "metadata_path", return_value=cleanup), \
+                 patch.object(runner.subprocess, "run", side_effect=[completed, completed, rejected, completed]):
+                with self.assertRaisesRegex(runner.RunnerError, "FINAL_DELIVERY_PUSH_UNCONFIRMED"):
+                    runner.finalize_and_push(
+                        root, artifact, base, "automation/test",
+                        "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/123")
+            manifest = json.loads((artifact / "final-delivery-recovery.json").read_text(encoding="utf-8"))
+            self.assertEqual(manifest["attempted_head"], third)
+            self.assertEqual(manifest["remote_head_observed"], base)
+            self.assertTrue((artifact / "cleanup-record.json").is_file())
+
 
 if __name__ == "__main__":
     unittest.main()
