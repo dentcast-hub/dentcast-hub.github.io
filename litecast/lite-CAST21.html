@@ -44,7 +44,7 @@
 }
 
 /* ===== تصاویر ===== */
-article img {
+:is(main.article-content-wrap, .dcd-content-area) main > article img {
   display: block;
   width: 100%;
   max-width: 42.5rem;
@@ -159,7 +159,7 @@ footer a:hover {
 
 /* ===== موبایل ===== */
 @media (max-width: 520px) {
-  article img {
+  :is(main.article-content-wrap, .dcd-content-area) main > article img {
     max-width: 92%;
     margin-bottom: 0.875rem;
     border-radius: 0.875rem;
@@ -192,13 +192,22 @@ footer a:hover {
 }
 
 /* ===== هم‌شکلی با ShareHub (بنیان‌گذار، 2026-10-24) =====
-   فونت، اندازهٔ متن و تیترها، رنگ‌ها، بولد و فاصله‌ها از /dc-article.css
-   می‌آیند — همان لایه‌ای که ShareHub دارد. این‌جا فقط سه چیز هست: کیکرِ
-   «Lite-CAST» بالای عنوان (همان .sh-kicker)، <article> به‌عنوان همان کارتِ
-   .glass-box، و تیترها/لیست‌های داخلش. کلاسِ باکس عمداً روی <article> نیست:
-   آن کلاس میز کار و ردیفِ کنش را روی صفحه روشن می‌کند و این تغییر فقط ظاهر است.
-   اندازه یا رنگِ متن را این‌جا دوباره تعریف نکن. */
-main.article-content-wrap main > h2:first-child{
+   فونت، اندازهٔ متن و تیترها، رنگ‌ها، بولد و فاصله‌ها روی صفحهٔ مستقل از
+   /dc-article.css می‌آیند — همان لایه‌ای که ShareHub دارد — و در ستونِ C
+   دسکتاپ از قاعده‌های .dcd-content-area خودِ index.html، باز همان‌که ShareHub
+   آن‌جا می‌گیرد. اندازه یا رنگِ متن را این‌جا دوباره تعریف نکن.
+
+   هر قاعدهٔ این بلوک به یکی از دو ظرف بسته است: main.article-content-wrap
+   (صفحهٔ مستقل) یا .dcd-content-area (ستونِ C، که این <style> را به کلِ سندِ
+   صفحهٔ اصلی تزریق می‌کند و خودِ main.article-content-wrap را دور می‌اندازد).
+   سلکتورِ خامِ `article` در ستونِ C روی کارت‌های article.dc-monitor صفحهٔ
+   اصلی هم می‌نشست.
+
+   کلاسِ باکس عمداً روی <article> نیست: آن کلاس میز کار و ردیفِ کنش را روشن
+   می‌کند و این تغییر فقط ظاهر است. */
+
+/* کیکرِ «Lite-CAST» بالای عنوان — همان .sh-kicker */
+:is(main.article-content-wrap, .dcd-content-area) main > h2:first-child{
   display:flex;
   align-items:center;
   justify-content:center;
@@ -210,7 +219,9 @@ main.article-content-wrap main > h2:first-child{
   letter-spacing:.02em;
   margin:0 0 0.5rem;
 }
-article{
+
+/* صفحهٔ مستقل: <article> همان کارتِ .glass-box در dc-article.css */
+main.article-content-wrap > main > article{
   background:var(--card-bg, #ffffff);
   color:var(--txt, #0a1a33);
   border:1px solid var(--card-border, rgba(2,35,96,.09));
@@ -220,8 +231,8 @@ article{
   margin:1.25rem 0;
   line-height:1.9;
 }
-article h2,
-article h3{
+main.article-content-wrap > main > article h2,
+main.article-content-wrap > main > article h3{
   text-align:right;
   font-size:1.05rem;
   font-weight:700;
@@ -229,31 +240,56 @@ article h3{
   padding-right:0.75rem;
   margin:1.75rem 0 0.875rem;
 }
-article ul{
+@media (max-width:768px){
+  main.article-content-wrap > main > article{ padding:1.25rem 1.375rem; }
+}
+
+/* ستونِ C: <article> همان کارتِ .dcd-content-area .glass-box در index.html */
+.dcd-content-area main > article{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:var(--r-lg);
+  padding:1.125rem 1.25rem;
+  margin-bottom:1.125rem;
+  box-shadow:var(--card-sh);
+  color:var(--txt);
+}
+
+/* لیست‌ها — همان ✦ ShareHub */
+:is(main.article-content-wrap, .dcd-content-area) main > article ul{
   list-style:none;
   padding-right:0;
   margin:0.875rem 0;
 }
-article ul li::before{
+:is(main.article-content-wrap, .dcd-content-area) main > article ul li::before{
   content:"✦ ";
   color:var(--blue);
   font-weight:bold;
 }
-@media (max-width:768px){
-  article{ padding:1.25rem 1.375rem; }
-}
-/* دکمهٔ «تماس با مطب»: سفید روی سرمه‌ای در هر دو تم. قاعدهٔ لینکِ dc-theme
-   (body:has(.dc-topbar) main a → var(--ac)) قوی‌تر از .cta-button بود و متن را
-   آبی روی سرمه‌ای، و در تم تیره آبی روی آبی (نامرئی) می‌کرد. */
-main.article-content-wrap a.cta-button,
-main.article-content-wrap a.cta-button:hover{
+
+/* دکمهٔ «تماس با مطب»: سفید روی سرمه‌ای در هر دو تم و هر دو ظرف. قاعدهٔ لینکِ
+   dc-theme (body:has(.dc-topbar) main a) و .dcd-content-area a هر دو قوی‌تر از
+   .cta-button بودند و متن را آبی روی سرمه‌ای، و در تم تیره آبی روی آبی
+   (نامرئی) می‌کردند. */
+:is(main.article-content-wrap, .dcd-content-area) a.cta-button,
+:is(main.article-content-wrap, .dcd-content-area) a.cta-button:hover{
   color:#ffffff;
   text-decoration:none;
 }
-[data-theme="dark"] main.article-content-wrap a.cta-button{
+:is(main.article-content-wrap, .dcd-content-area) a.cta-button{
   background:#022360;
+}
+[data-theme="dark"] :is(main.article-content-wrap, .dcd-content-area) a.cta-button{
   border:1px solid rgba(91,156,246,.45);
   box-shadow:0 6px 20px rgba(0,0,0,.35);
+}
+
+/* «برگشت به صفحه‌ی قبل» history.back() است: در ستونِ C کلِ صفحهٔ اصلی را عقب
+   می‌برد، و در نمایشگرِ iframe همان ستون را خالی می‌کرد. سایدبارِ پوسته راهِ
+   برگشت است — ShareHub هم آن‌جا دکمهٔ برگشت ندارد. */
+.dcd-content-area div:has(> .back-btn),
+body.dc-content-only div:has(> .back-btn){
+  display:none;
 }
 </style>
 
