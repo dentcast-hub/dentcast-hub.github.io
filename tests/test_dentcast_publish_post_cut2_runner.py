@@ -136,7 +136,7 @@ class PostCut2RunnerTests(unittest.TestCase):
             "expect_title": "title", "expect_caption": "caption",
         })()
 
-        def record(_root, sid, status, evidence=(), reason=None):
+        def record(_root, sid, status, evidence=(), reason=None, note=None):
             states[sid]["status"] = status
             return "digest"
 
