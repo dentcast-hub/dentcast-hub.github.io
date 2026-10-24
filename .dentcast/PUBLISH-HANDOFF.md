@@ -591,7 +591,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Trace final delivery parent for the verified second cut"
+    "note": "Complete verified third delivery after audited post-cut reconciliation"
   },
   "schema": "publish-handoff-v3"
 }
