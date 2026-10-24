@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "litecast/lite-CAST41"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -94,6 +94,112 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           ],
           "kind": "semantic_related",
           "reason": "Relevant LiteCast patient articles about root-canal treatment and restoration"
+        },
+        {
+          "kind": "pulse_not_applicable",
+          "reason": "LiteCast excluded from Pulse after checking historical homepage and source verify_publish.py"
+        },
+        {
+          "basis": "Only existing canonical concepts in dentcast-hashtag-reference.json; root canal intent remains in actual title/body/SEO keywords",
+          "canonical": [
+            "#\u062f\u0631\u0645\u0627\u0646_\u0631\u06cc\u0634\u0647",
+            "#\u0631\u0648\u06a9\u0634_\u062f\u0646\u062f\u0627\u0646",
+            "#\u0633\u0644\u0627\u0645\u062a_\u062f\u0647\u0627\u0646",
+            "#\u0622\u06af\u0627\u0647\u06cc_\u062f\u0631\u0645\u0627\u0646\u06cc"
+          ],
+          "kind": "hashtag_reconciliation",
+          "previous": [
+            "#\u0639\u0635\u0628_\u06a9\u0634\u06cc",
+            "#\u062f\u0631\u0645\u0627\u0646_\u0631\u06cc\u0634\u0647",
+            "#\u062f\u0646\u062f\u0627\u0646_\u0639\u0635\u0628_\u06a9\u0634\u06cc",
+            "#\u0639\u0641\u0648\u0646\u062a_\u062f\u0646\u062f\u0627\u0646",
+            "#\u0622\u06af\u0627\u0647\u06cc_\u062f\u0631\u0645\u0627\u0646\u06cc"
+          ]
+        },
+        {
+          "english": {
+            "evidence": [
+              "Canonical LiteCast .ir-only category, module 12 Phase D exemption"
+            ],
+            "path": null,
+            "status": "exempt"
+          },
+          "evidence": [
+            "All applicable steps through C.6 are resolved; public article and internal links exist at first cut; canonical tags adjusted for second cut; no unresolved user question or external action"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "Reviewed text against ESE 2023 S3 guideline DOI 10.1111/iej.13974: asymptomatic disease/retreatment contextualized; LiteCast DES/Fidelity exception recorded"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.14 skipped: this is an ordinary patient explainer and no challenge-answer material"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "LiteCast41 registered only in litecast/lite-glossary.json; no specialist brain/pillar injection"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Actual LiteCast41 HTML contains in-body links to 28/23 and patient-related capsules to 21/28/23; no specialist capsules"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Canonical concept match to dentcast-hashtag-reference.json: \u062f\u0631\u0645\u0627\u0646_\u0631\u06cc\u0634\u0647, \u0631\u0648\u06a9\u0634_\u062f\u0646\u062f\u0627\u0646, \u0633\u0644\u0627\u0645\u062a_\u062f\u0647\u0627\u0646, \u0622\u06af\u0627\u0647\u06cc_\u062f\u0631\u0645\u0627\u0646\u06cc"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "LiteCast41 JSON title/caption and page schema/head/index agree; entry is the 41st record"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "LiteCast patient format is excluded from premium specialist pathways and bundles by canonical module 10"
+              ],
+              "scope": "pathways",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "Category convention: main Pulse does not announce LiteCast; actual verify_publish.py explicitly bypasses LiteCast Pulse assertion"
+              ],
+              "scope": "pulse",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "Canonical LiteCast .ir-only English mirror exemption, no bilingual toggle"
+              ],
+              "scope": "english",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "User directed publication of the SEO-revised LiteCast text in this conversation; exact frozen title and caption approvals are attached"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -380,6 +486,101 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "id": "C.4.9",
         "module": "05-semantic-linking.md",
         "reason": "Canonical LiteCast-only category exception at C.4.9; excluded from specialist/general route",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.1",
+        "module": "06-paper-ingestion.md",
+        "reason": "LiteCast patient-explainer without attached paper; paper Drive ingestion inapplicable",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.2",
+        "module": "06-paper-ingestion.md",
+        "reason": "LiteCast patient-explainer without paper or citation-to-score; paper extraction inapplicable",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.3",
+        "module": "06-paper-ingestion.md",
+        "reason": "No paper file / paper metadata to process; canonical LiteCast exception",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": "LiteCast excluded from professional flashcards (DefinedTermSet)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": "LiteCast excluded from scored quiz extraction",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.13",
+        "module": "08-des-fidelity.md",
+        "reason": "Canonical LiteCast exclusion from DES and Fidelity; no research scoring record",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "Ordinary LiteCast question-answer explainer, not a Challenge item",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Reviewed tags against dentcast-hashtag-reference.json at main ab4f00a71445a2c811e84c3712330ef928e910f0; reused #\u062f\u0631\u0645\u0627\u0646_\u0631\u06cc\u0634\u0647, #\u0631\u0648\u06a9\u0634_\u062f\u0646\u062f\u0627\u0646, #\u0633\u0644\u0627\u0645\u062a_\u062f\u0647\u0627\u0646 and #\u0622\u06af\u0627\u0647\u06cc_\u062f\u0631\u0645\u0627\u0646\u06cc"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Confirmed LiteCast41 glossary entry title, caption, canonical tag spelling, keyword content, and append position; specialist brain not edited"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": "No specialist brain pillar or structured subtopic for LiteCast",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": "LiteCast patient material excluded from specialist learning pathways",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": "LiteCast excluded from specialist pathway bundles",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": "LiteCast has no established homepage Pulse convention; source verify_publish explicitly exempts LiteCast from Pulse link verification",
         "status": "skipped"
       }
     ],
