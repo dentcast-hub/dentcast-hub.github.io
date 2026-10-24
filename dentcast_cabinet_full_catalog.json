@@ -139691,6 +139691,59 @@
         "Yasamin Babaee Hemmati",
         "Mehran Falahchai"
       ]
+    },
+    {
+      "id": "P2946",
+      "title": "Managing Fractured Ceramic Restorations: Current Evidence and Best Practices—A Scoping Review",
+      "file_name": "Managing Fractured Ceramic Restorations - Current Evidence and Best Practices - A Scoping Review.pdf",
+      "topic": "Ceramics",
+      "topic_path": "Ceramics",
+      "type": "scoping review",
+      "local_path": "",
+      "file_size": 624408,
+      "key_finding": "126 studies (119 in vitro, 7 reviews) on ceramic restoration repair were mapped; bond strength was the most frequently evaluated outcome and methodology was heterogeneous.",
+      "clinical_bottom_line": "Glass ceramics: hydrofluoric acid etching plus silanization; metal oxide ceramics (zirconia, alumina): air abrasion plus an MDP-containing primer.",
+      "linked_episodes": [
+        "sharehub/share-41"
+      ],
+      "drive_link": "https://drive.google.com/file/d/17mLsnSNNvoxzkUjrjQUHgKKcWsRQbnWi/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=17mLsnSNNvoxzkUjrjQUHgKKcWsRQbnWi",
+      "drive_view": "https://drive.google.com/file/d/17mLsnSNNvoxzkUjrjQUHgKKcWsRQbnWi/view",
+      "drive_id": "17mLsnSNNvoxzkUjrjQUHgKKcWsRQbnWi",
+      "tags": [
+        "ceramic-repair",
+        "intraoral-repair",
+        "ceramic-fracture",
+        "surface-treatment",
+        "glass-ceramic",
+        "zirconia",
+        "lithium-disilicate",
+        "silane",
+        "mdp",
+        "sandblasting",
+        "bond-strength",
+        "scoping-review",
+        "topic:ceramics",
+        "managing-fractured-ceramic-restorations-scoping-review"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Managing Fractured Ceramic Restorations: Current Evidence and Best Practices—A Scoping Review",
+      "doi": "10.1111/jerd.70055",
+      "journal": "Journal of Esthetic and Restorative Dentistry",
+      "crossref_year": 2026,
+      "subjects": [
+        "Dentistry"
+      ],
+      "abstract": "Objective: This scoping review aims to assess the effect of different protocols on the outcome of ceramic restoration repairs. Materials and Methods: An electronic search was conducted in three databases (PubMed, Cochrane Library, and Embase), up to July 31st 2025, with previously identified MeSH terms. Results: Out of the 2423 records, title and abstract screening resulted in the exclusion of 2136 and 136 studies, respectively, while full-text analysis excluded another 37 articles. In addition, 10 records were not included, as full texts could not be obtained after requesting the authors. Twenty-two cross-references were added. Thus, 126 studies were included in this review. It is important to emphasize the methodological heterogeneity among studies. Bond strength was the most frequently evaluated outcome, followed by ultrastructural analysis, chemical analysis, color evaluation and mechanical properties. Conclusions: In ceramic repair procedures, glass ceramics should be treated with a combination of hydrofluoric acid etching and silanization, while metal oxide ceramics demonstrate superior outcomes when air abrasion and an MDP-containing primer are employed.",
+      "display_title": "Managing Fractured Ceramic Restorations: Current Evidence and Best Practices—A Scoping Review",
+      "authors": [
+        "Gabriela Almeida",
+        "Joana A. Marques",
+        "Markus B. Blatz",
+        "Rui I. Falacho"
+      ]
     }
   ],
   "drive_matched": 2849,
@@ -140215,5 +140268,5 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2260
+  "total_papers": 2261
 }

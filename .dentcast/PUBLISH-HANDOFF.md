@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "sharehub/share-41"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -23,7 +23,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "decision": "\u062a\u0631\u0645\u06cc\u0645 \u0634\u06a9\u0633\u062a\u06af\u06cc \u0648 \u067e\u0631\u06cc\u062f\u06af\u06cc \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u0633\u0631\u0627\u0645\u06cc\u06a9\u06cc\u061b \u0627\u0632 \u0634\u0646\u0627\u062e\u062a \u0646\u0648\u0639 \u0633\u0631\u0627\u0645\u06cc\u06a9 \u062a\u0627 \u0627\u0646\u062a\u062e\u0627\u0628 \u067e\u0631\u0648\u062a\u06a9\u0644",
           "evidence": [
             "Founder-authored H1 of doc artifact 5Pkm4z7JjsvbLvoERjcTEF (verified by Claude Docs search hit .1-.76)",
-            "restored after dependency_invalidation_v1 #3 (workflow tool fix): approved scope unchanged"
+            "restored after dependency_invalidation_v1 #4 (ledger C.4.14 correction): scope unchanged"
           ],
           "scope": "title",
           "status": "confirmed"
@@ -33,7 +33,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "evidence": [
             "founder AskUserQuestion answers 2026-10-24",
             "option 'first sentence + paragraph-2 first sentence', verbatim from founder text",
-            "restored after dependency_invalidation_v1 #3 (workflow tool fix): approved scope unchanged"
+            "restored after dependency_invalidation_v1 #4 (ledger C.4.14 correction): scope unchanged"
           ],
           "scope": "caption",
           "status": "confirmed"
@@ -42,7 +42,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "decision": "ceramics / failures",
           "evidence": [
             "founder AskUserQuestion answers 2026-10-24",
-            "restored after dependency_invalidation_v1 #3 (workflow tool fix): approved scope unchanged"
+            "restored after dependency_invalidation_v1 #4 (ledger C.4.14 correction): scope unchanged"
           ],
           "scope": "pillar",
           "status": "confirmed"
@@ -51,7 +51,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "decision": "#Share_Hub #Curated_Content #\u0634\u06a9\u0633\u062a_\u0633\u0631\u0627\u0645\u06cc\u06a9 #\u0627\u0686_\u0633\u0631\u0627\u0645\u06cc\u06a9 #\u0633\u0627\u06cc\u0644\u0627\u0646 #\u0632\u06cc\u0631\u06a9\u0648\u0646\u06cc\u0627 #MDP + mint #\u0631\u06cc\u067e\u0631_\u0633\u0631\u0627\u0645\u06cc\u06a9",
           "evidence": [
             "founder AskUserQuestion answers 2026-10-24",
-            "restored after dependency_invalidation_v1 #3 (workflow tool fix): approved scope unchanged"
+            "restored after dependency_invalidation_v1 #4 (ledger C.4.14 correction): scope unchanged"
           ],
           "scope": "hashtags",
           "status": "confirmed"
@@ -60,9 +60,27 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "decision": "4.7: link dental-ceramics, rubber-dam, universal-adhesive; 4.8: link \u067e\u0627\u0631\u0627\u0641\u0627\u0646\u06a9\u0634\u0646 -> /glossary/bruxism.html",
           "evidence": [
             "founder AskUserQuestion answer 2026-10-24",
-            "restored after dependency_invalidation_v1 #3 (workflow tool fix): approved scope unchanged"
+            "restored after dependency_invalidation_v1 #4 (ledger C.4.14 correction): scope unchanged"
           ],
           "scope": "links-borderline",
+          "status": "confirmed"
+        },
+        {
+          "decision": "Add sharehub/share-41 to fixed-pros after sharehub/share-17 (third full pathway, --confirmed)",
+          "evidence": [
+            "founder AskUserQuestion answer 2026-10-24 (round 4)",
+            "restored after dependency_invalidation_v1 #4 (ledger C.4.14 correction): scope unchanged"
+          ],
+          "scope": "pathway-third",
+          "status": "confirmed"
+        },
+        {
+          "decision": "Approve sharehub/en/share-41.html (title 'Repairing Fractured and Chipped Ceramic Crowns: From Identifying the Ceramic Type to Choosing the Protocol') and the Pulse line; proceed to Push 2",
+          "evidence": [
+            "founder AskUserQuestion answer 2026-10-24 (round 4)",
+            "restored after dependency_invalidation_v1 #4 (ledger C.4.14 correction): scope unchanged"
+          ],
+          "scope": "english-mirror",
           "status": "confirmed"
         }
       ],
@@ -1235,6 +1253,275 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
               }
             ]
           }
+        },
+        {
+          "english": {
+            "evidence": [
+              "Mirror reviewed against final fa body and founder-approved before Push 2"
+            ],
+            "path": "sharehub/en/share-41.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "Current-run editorial close review 2026-10-24 before Push 2"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "DES 30/D MATERIAL FULL_TEXT (Opus SOURCE, Part 3 pass); Fidelity 39/39 HIGH, no ALTERED/REVERSED -> no Part 3b offer; stored plus/des-scores.json sharehub/share-41"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Founder: ordinary post, not Challenge (B.4.9)"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "pillar ceramics / subtopic failures, founder-confirmed; brain entry verified C.5.5"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "4.7: 10 glossary back-links; 4.8: 15 inline glossary anchors; 4.9: 3 related capsules (5/5); borderline items founder-confirmed"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "8 canonical tags incl. minted #\u0631\u06cc\u067e\u0631_\u0633\u0631\u0627\u0645\u06cc\u06a9 (A94 batch); hashtag_ref --check OK; simulate rank 1"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Brain tail entry key set == share-40; title/caption approvals confirmed and identical on page surfaces"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "ceramics + biomimetic (auto STRONG), fixed-pros (founder yes); bundles rejected gate 2"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "index.html Pulse: new top line /sharehub/share-41.html with title only, bottom line removed, 7 lines"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "sharehub/en/share-41.html authored, structure-faithful (17 p / 7 h2), noindex, no hreflang, reciprocal toggles; founder approved"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "title, caption, pillar, hashtags, links-borderline, pathway-third, english-mirror all confirmed by founder on 2026-10-24"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
+        },
+        {
+          "from_step": "C.4.14",
+          "kind": "dependency_invalidation_v1",
+          "reason": "C.4.14 was mis-recorded as completed for a non-Challenge post; must be skipped. No content change.",
+          "superseded": {
+            "approvals": [
+              {
+                "decision": "\u062a\u0631\u0645\u06cc\u0645 \u0634\u06a9\u0633\u062a\u06af\u06cc \u0648 \u067e\u0631\u06cc\u062f\u06af\u06cc \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u0633\u0631\u0627\u0645\u06cc\u06a9\u06cc\u061b \u0627\u0632 \u0634\u0646\u0627\u062e\u062a \u0646\u0648\u0639 \u0633\u0631\u0627\u0645\u06cc\u06a9 \u062a\u0627 \u0627\u0646\u062a\u062e\u0627\u0628 \u067e\u0631\u0648\u062a\u06a9\u0644",
+                "evidence": [
+                  "Founder-authored H1 of doc artifact 5Pkm4z7JjsvbLvoERjcTEF (verified by Claude Docs search hit .1-.76)",
+                  "restored after dependency_invalidation_v1 #3 (workflow tool fix): approved scope unchanged"
+                ],
+                "scope": "title",
+                "status": "confirmed"
+              },
+              {
+                "decision": "\u0634\u06a9\u0633\u062a\u06af\u06cc \u0648 \u067e\u0631\u06cc\u062f\u06af\u06cc \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u0633\u0631\u0627\u0645\u06cc\u06a9\u06cc\u060c \u0628\u0627 \u0648\u062c\u0648\u062f \u0645\u0648\u0641\u0642\u06cc\u062a \u0628\u0627\u0644\u0627\u06cc \u0627\u06cc\u0646 \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646\u200c\u0647\u0627\u060c \u0647\u0645\u0686\u0646\u0627\u0646 \u062f\u0631 \u06a9\u0644\u06cc\u0646\u06cc\u06a9 \u067e\u06cc\u0634 \u0645\u06cc\u200c\u0622\u06cc\u062f. \u0627\u0645\u0627 \u0647\u0645\u0647 \u0634\u06a9\u0633\u062a\u06af\u06cc\u200c\u0647\u0627 \u0631\u0627 \u0646\u0645\u06cc\u200c\u0634\u0648\u062f \u0628\u0627 \u06cc\u06a9 \u067e\u0631\u0648\u062a\u06a9\u0644 \u062a\u0631\u0645\u06cc\u0645 \u06a9\u0631\u062f.",
+                "evidence": [
+                  "founder AskUserQuestion answers 2026-10-24",
+                  "option 'first sentence + paragraph-2 first sentence', verbatim from founder text",
+                  "restored after dependency_invalidation_v1 #3 (workflow tool fix): approved scope unchanged"
+                ],
+                "scope": "caption",
+                "status": "confirmed"
+              },
+              {
+                "decision": "ceramics / failures",
+                "evidence": [
+                  "founder AskUserQuestion answers 2026-10-24",
+                  "restored after dependency_invalidation_v1 #3 (workflow tool fix): approved scope unchanged"
+                ],
+                "scope": "pillar",
+                "status": "confirmed"
+              },
+              {
+                "decision": "#Share_Hub #Curated_Content #\u0634\u06a9\u0633\u062a_\u0633\u0631\u0627\u0645\u06cc\u06a9 #\u0627\u0686_\u0633\u0631\u0627\u0645\u06cc\u06a9 #\u0633\u0627\u06cc\u0644\u0627\u0646 #\u0632\u06cc\u0631\u06a9\u0648\u0646\u06cc\u0627 #MDP + mint #\u0631\u06cc\u067e\u0631_\u0633\u0631\u0627\u0645\u06cc\u06a9",
+                "evidence": [
+                  "founder AskUserQuestion answers 2026-10-24",
+                  "restored after dependency_invalidation_v1 #3 (workflow tool fix): approved scope unchanged"
+                ],
+                "scope": "hashtags",
+                "status": "confirmed"
+              },
+              {
+                "decision": "4.7: link dental-ceramics, rubber-dam, universal-adhesive; 4.8: link \u067e\u0627\u0631\u0627\u0641\u0627\u0646\u06a9\u0634\u0646 -> /glossary/bruxism.html",
+                "evidence": [
+                  "founder AskUserQuestion answer 2026-10-24",
+                  "restored after dependency_invalidation_v1 #3 (workflow tool fix): approved scope unchanged"
+                ],
+                "scope": "links-borderline",
+                "status": "confirmed"
+              },
+              {
+                "decision": "Add sharehub/share-41 to fixed-pros after sharehub/share-17 (third full pathway, --confirmed)",
+                "evidence": [
+                  "founder AskUserQuestion answer 2026-10-24 (round 4)"
+                ],
+                "scope": "pathway-third",
+                "status": "confirmed"
+              },
+              {
+                "decision": "Approve sharehub/en/share-41.html (title 'Repairing Fractured and Chipped Ceramic Crowns: From Identifying the Ceramic Type to Choosing the Protocol') and the Pulse line; proceed to Push 2",
+                "evidence": [
+                  "founder AskUserQuestion answer 2026-10-24 (round 4)"
+                ],
+                "scope": "english-mirror",
+                "status": "confirmed"
+              }
+            ],
+            "delivery": [],
+            "inputs": [
+              {
+                "note": "Almeida G, Marques JA, Blatz MB, Falacho RI. J Esthet Restor Dent 2026;38(5):1032-1071. PMID 41474072, PMC13069366, CC-BY open access. Verified from PDF title page + PubMed metadata.",
+                "ref": "doi:10.1111/jerd.70055"
+              }
+            ],
+            "steps": [
+              {
+                "evidence": [
+                  "skipped-equivalent: not a Challenge (founder answer B.4.9)"
+                ],
+                "id": "C.4.14",
+                "module": "09-challenge.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Reused canonical: #Share_Hub #Curated_Content #\u0634\u06a9\u0633\u062a_\u0633\u0631\u0627\u0645\u06cc\u06a9 #\u0627\u0686_\u0633\u0631\u0627\u0645\u06cc\u06a9 #\u0633\u0627\u06cc\u0644\u0627\u0646 #\u0632\u06cc\u0631\u06a9\u0648\u0646\u06cc\u0627 #MDP (simulate). Minted #\u0631\u06cc\u067e\u0631_\u0633\u0631\u0627\u0645\u06cc\u06a9 (founder-approved) via .dentcast/hashtag-batches/A94-share-41.json (definition/use_when/7 aliases, articles {} because brain entry did not exist yet). --sync, build_plus_index, --check OK; simulate '\u0631\u06cc\u067e\u0631 \u0631\u0648\u06a9\u0634 \u0633\u0631\u0627\u0645\u06cc\u06a9\u06cc \u0634\u06a9\u0633\u062a\u0647 \u0628\u0627 HF \u0648 \u0633\u0627\u06cc\u0644\u0627\u0646' -> rank 1 sharehub/share-41"
+                ],
+                "id": "C.5.0",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Brain entry appended as last element (CRLF preserved via dentcast_text_io): key set == share-40, hashtags canonical, keywords = title + tag names, url /sharehub/share-41.html, pillar ceramics/[]/failures"
+                ],
+                "id": "C.5",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "pillar.primary ceramics (live PILLARS), subtopic failures valid, no extra keys; capsule /pillar/ceramics/ consistent"
+                ],
+                "id": "C.5.5",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "pathway_place.py ranking: ceramics/biomimetic/fixed-pros/esthetic STRONG. Placed ceramics + biomimetic after notecast/episode-16 (end of surface-prep run; semantic anchor chosen over tool's notecast/episode-5), fixed-pros after sharehub/share-17 (third pathway, founder yes, --confirmed). esthetic not placed. --coverage: share-41 in 3 pathways; 1.51 per item (baseline 1.38, was 1.51)"
+                ],
+                "id": "C.5.6",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Candidate bundles (continues ceramics/biomimetic/fixed-pros): bundle-ceramic-select, bundle-ceramic-cement, bundle-bonding, bundle-biomimetic, bundle-crown-prep \u2014 all \u00ab\u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f2)\u00bb: title concerns managing a complication (fracture repair), not a beginner core concept"
+                ],
+                "id": "C.5.6-b",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.6",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "started"
+              },
+              {
+                "evidence": [],
+                "id": "C.8",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "C.7",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "D",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "E",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "F",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "G",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              }
+            ],
+            "validation": []
+          }
         }
       ],
       "delivery": [],
@@ -1538,9 +1825,125 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "05-semantic-linking.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [
+          "PDF renamed to title, moved to Drive Ceramics; drive_id 17mLsnSNNvoxzkUjrjQUHgKKcWsRQbnWi (external action drive-rename-move-1 completed)"
+        ],
+        "id": "C.4.10.1",
+        "module": "06-paper-ingestion.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Catalog P2946 appended (key set = P2945 template), topic Ceramics, 14 tags incl topic:ceramics + title tag, Drive links, DOI; total_papers 2261 (<2300, paper-count claim unchanged); verified rendered in dentcast_cabinet_search.html"
+        ],
+        "id": "C.4.10.2",
+        "module": "06-paper-ingestion.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "DOI 10.1111/jerd.70055 + first author Gabriela Almeida verified (PDF title page + PubMed 41474072); .author block '\u0646\u0648\u06cc\u0633\u0646\u062f\u0647: <a href=https://doi.org/10.1111/jerd.70055>Gabriela Almeida</a>' below body, beside DentCast author-note; template has no isBasedOn; delivered in 2a017cd (bytes added before cut 1 re-delivery)"
+        ],
+        "id": "C.4.10.3",
+        "module": "06-paper-ingestion.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "plus/faq-corpus.json byContent sharehub/share-41: DefinedTermSet #flashcards with 4 authored DefinedTerms (c1-c4), unique sequential @id, none re-pasted from FAQ answers"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "FAQPage #faq with 8 standalone yes/no questions (no article deixis), every answer opens with \u062e\u06cc\u0631\u061b verdict, grounded in body"
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "DES: source_text = full PDF text (pdftotext raw sha256 41c55eee), FULL_TEXT. SOURCE call Opus 5.5 (separate context, never saw page): RESEARCH/MATERIAL, AMSTAR-2 critically low x0.30, S_design 100 -> 30/D, provisional false, quartile NR; Part 3 quote/arithmetic/band/schema pass. FIDELITY: units from des_fidelity_units.py (58 units, scope SOURCE); checkers Sonnet 5.5 x2 independent + Sonnet 5.5 tie-break on u15/u38/u56; vote -> 39/39 MATCHES, 0 ALTERED/REVERSED, 3 NOT_IN_SOURCE (u15,u36,u51), level HIGH; no stronger-reviewer duty (nothing flagged), no Part 3b offer owed; stored verbatim in plus/des-scores.json (CRLF preserved), nothing in brain, no page markup"
+        ],
+        "id": "C.4.13",
+        "module": "08-des-fidelity.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "Not a Challenge: founder answered ordinary post at B.4.9",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Reused 7 canonical tags; minted #\u0631\u06cc\u067e\u0631_\u0633\u0631\u0627\u0645\u06cc\u06a9 via A94-share-41.json; --sync/--check OK; simulate rank 1"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Brain tail entry (key set == share-40, canonical hashtags, pillar ceramics/failures)"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pillar/subtopic verified against live PILLARS; capsule consistent"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "ceramics + biomimetic after notecast/episode-16; fixed-pros after sharehub/share-17 (founder yes, --confirmed); coverage 1.51/item"
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "5 candidate bundles all \u00ab\u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f2)\u00bb \u2014 complication-management title"
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Pulse title-only line on top, oldest removed (7 lines); editorial lock second_cut_editorial_lock_v1 complete; English mirror ready; approvals confirmed"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
+      ".dentcast/hashtag-batches/A94-share-41.json",
       "dentcast-brain.json",
       "dentcast-hashtag-reference.json",
       "dentcast_cabinet_full_catalog.json",
@@ -1555,6 +1958,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       "glossary/zirconia-primer.html",
       "glossary/zls.html",
       "index.html",
+      "plus/content-index.json",
       "plus/des-scores.json",
       "plus/faq-corpus.json",
       "plus/pathways.json",
@@ -1562,11 +1966,12 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       "sharehub/index.html",
       "sharehub/share-41.html",
       "tests/test_dentcast_publish_dependency_recovery.py",
-      "tests/test_dentcast_publish_three_deliveries.py"
+      "tests/test_dentcast_publish_three_deliveries.py",
+      "tools/pathway_place.py"
     ]
   },
   "reconciliation": {
-    "note": "Staged cut-1 redelivery scope reviewed"
+    "note": "Staged delivery-2 scope reviewed"
   },
   "schema": "publish-handoff-v3"
 }

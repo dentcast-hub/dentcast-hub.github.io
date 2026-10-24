@@ -1,0 +1,22 @@
+{
+  "type": "sharehub",
+  "note": "Publish of sharehub/share-41 (repair of fractured ceramic restorations). Founder approved minting #ریپر_سرامیک; reuses #Share_Hub #Curated_Content #شکست_سرامیک #اچ_سرامیک #سایلان #زیرکونیا #MDP. #ترمیم_سرامیکی means the ceramic restoration itself, not repair, so it is not reused. articles is empty because the brain entry is written in step 5 after this batch.",
+  "concepts": [
+    {
+      "tag": "#ریپر_سرامیک",
+      "domain": "clinical",
+      "definition": "ترمیم داخل‌دهانیِ شکستگی یا پریدگیِ رستوریشن سرامیکی با کامپوزیت، با آماده‌سازی سطح متناسب با نوع سرامیکِ نمایان‌شده، به‌جای تعویض کامل رستوریشن.",
+      "use_when": "مقاله پروتکل یا شواهدِ ترمیم داخل‌دهانیِ سرامیکِ شکسته یا پریده را موضوع داشته باشد.",
+      "aliases": [
+        "ceramic repair",
+        "intraoral ceramic repair",
+        "repair of fractured ceramic",
+        "ریپر سرامیک",
+        "ریپیر سرامیک",
+        "ترمیم داخل دهانی سرامیک",
+        "تعمیر سرامیک"
+      ]
+    }
+  ],
+  "articles": {}
+}

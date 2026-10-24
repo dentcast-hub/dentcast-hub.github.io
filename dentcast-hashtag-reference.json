@@ -967,6 +967,64 @@
    ],
    "variants": [],
    "co_tags": [],
+   "count": 40,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25",
+    "sharehub/share-26",
+    "sharehub/share-27",
+    "sharehub/share-28",
+    "sharehub/share-29",
+    "sharehub/share-30",
+    "sharehub/share-31",
+    "sharehub/share-32",
+    "sharehub/share-33",
+    "sharehub/share-34",
+    "sharehub/share-35",
+    "sharehub/share-36",
+    "sharehub/share-38",
+    "sharehub/share-39",
+    "sharehub/share-40",
+    "sharehub/share-41"
+   ]
+  },
+  {
+   "key": "curated_content",
+   "tag": "#Curated_Content",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
+   "use_when": "روی مدخل‌های بازنشر.",
+   "aliases": [
+    "محتوای گلچین شده",
+    "کیوریتد",
+    "بازنشر محتوا"
+   ],
+   "variants": [],
+   "co_tags": [],
    "count": 39,
    "content_ids": [
     "sharehub/share-1",
@@ -1007,63 +1065,7 @@
     "sharehub/share-36",
     "sharehub/share-38",
     "sharehub/share-39",
-    "sharehub/share-40"
-   ]
-  },
-  {
-   "key": "curated_content",
-   "tag": "#Curated_Content",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
-   "use_when": "روی مدخل‌های بازنشر.",
-   "aliases": [
-    "محتوای گلچین شده",
-    "کیوریتد",
-    "بازنشر محتوا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 38,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24",
-    "sharehub/share-25",
-    "sharehub/share-26",
-    "sharehub/share-27",
-    "sharehub/share-28",
-    "sharehub/share-29",
-    "sharehub/share-30",
-    "sharehub/share-31",
-    "sharehub/share-32",
-    "sharehub/share-33",
-    "sharehub/share-34",
-    "sharehub/share-35",
-    "sharehub/share-36",
-    "sharehub/share-38",
-    "sharehub/share-39"
+    "sharehub/share-41"
    ]
   },
   {
@@ -1222,6 +1224,57 @@
    ]
   },
   {
+   "key": "زیرکونیا",
+   "tag": "#زیرکونیا",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "زیرکونیای دندانی به‌عنوان متریال رستوریشن.",
+   "use_when": "مقاله انتخاب، آماده‌سازی یا رفتار بالینی زیرکونیا را تعیین کند.",
+   "aliases": [
+    "زیرکونیوم",
+    "زیرکونیم",
+    "zirconia",
+    "زیرکونیای"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 32,
+   "content_ids": [
+    "episodes/episode-11",
+    "episodes/episode-17",
+    "episodes/episode-18",
+    "episodes/episode-87",
+    "episodes/episode-88",
+    "episodes/episode-89",
+    "episodes/episode-107",
+    "episodes/episode-122-5",
+    "episodes/episode-136",
+    "episodes/episode-139",
+    "episodes/episode-140",
+    "episodes/episode-146",
+    "insight/insight-5",
+    "photocast/episode-3",
+    "notecast/episode-2",
+    "notecast/episode-3",
+    "notecast/episode-5",
+    "notecast/episode-8",
+    "notecast/episode-11",
+    "notecast/episode-13",
+    "notecast/episode-17",
+    "notecast/episode-18",
+    "notecast/episode-30",
+    "insight/insight-27",
+    "dentai/dentai-26",
+    "insight/insight-62",
+    "sharehub/share-17",
+    "sharehub/share-20",
+    "insight/insight-91",
+    "insight/insight-92",
+    "sharehub/share-39",
+    "sharehub/share-41"
+   ]
+  },
+  {
    "key": "روکش_ایمپلنت",
    "tag": "#روکش_ایمپلنت",
    "domain": "clinical",
@@ -1269,56 +1322,6 @@
     "insight/insight-85",
     "insight/insight-86",
     "chairside/chairside-43"
-   ]
-  },
-  {
-   "key": "زیرکونیا",
-   "tag": "#زیرکونیا",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "زیرکونیای دندانی به‌عنوان متریال رستوریشن.",
-   "use_when": "مقاله انتخاب، آماده‌سازی یا رفتار بالینی زیرکونیا را تعیین کند.",
-   "aliases": [
-    "زیرکونیوم",
-    "زیرکونیم",
-    "zirconia",
-    "زیرکونیای"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 31,
-   "content_ids": [
-    "episodes/episode-11",
-    "episodes/episode-17",
-    "episodes/episode-18",
-    "episodes/episode-87",
-    "episodes/episode-88",
-    "episodes/episode-89",
-    "episodes/episode-107",
-    "episodes/episode-122-5",
-    "episodes/episode-136",
-    "episodes/episode-139",
-    "episodes/episode-140",
-    "episodes/episode-146",
-    "insight/insight-5",
-    "photocast/episode-3",
-    "notecast/episode-2",
-    "notecast/episode-3",
-    "notecast/episode-5",
-    "notecast/episode-8",
-    "notecast/episode-11",
-    "notecast/episode-13",
-    "notecast/episode-17",
-    "notecast/episode-18",
-    "notecast/episode-30",
-    "insight/insight-27",
-    "dentai/dentai-26",
-    "insight/insight-62",
-    "sharehub/share-17",
-    "sharehub/share-20",
-    "insight/insight-91",
-    "insight/insight-92",
-    "sharehub/share-39"
    ]
   },
   {
@@ -3539,6 +3542,39 @@
    ]
   },
   {
+   "key": "اچ_سرامیک",
+   "tag": "#اچ_سرامیک",
+   "domain": null,
+   "words": 2,
+   "definition": "اچ کردنِ سطح سرامیک با هیدروفلوریک.",
+   "use_when": "مقاله پروتکل اچ سرامیک را تعیین کند.",
+   "aliases": [
+    "HF",
+    "هیدروفلوریک",
+    "hydrofluoric",
+    "اچ HF",
+    "ceramic etching",
+    "hf"
+   ],
+   "variants": [
+    "#HF"
+   ],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-10",
+    "episodes/episode-16",
+    "notecast/episode-9",
+    "notecast/episode-10",
+    "notecast/episode-12",
+    "notecast/episode-16",
+    "notecast/episode-29",
+    "insight/insight-42",
+    "sharehub/share-32",
+    "sharehub/share-41"
+   ]
+  },
+  {
    "key": "ایمپلنت_فول_آرچ",
    "tag": "#ایمپلنت_فول_آرچ",
    "domain": "clinical",
@@ -3629,6 +3665,34 @@
     "insight/insight-61",
     "insight/insight-62",
     "chairside/chairside-33"
+   ]
+  },
+  {
+   "key": "سایلان",
+   "tag": "#سایلان",
+   "domain": null,
+   "words": 1,
+   "definition": "عاملِ جفت‌کننده‌ی بین سرامیک و رزین.",
+   "use_when": "مقاله نقش یا پروتکلِ سایلان را شرح دهد.",
+   "aliases": [
+    "silane",
+    "سیلان",
+    "silane coupling"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-10",
+    "episodes/episode-16",
+    "episodes/episode-136",
+    "notecast/episode-10",
+    "notecast/episode-12",
+    "notecast/episode-16",
+    "insight/insight-42",
+    "notecast/episode-42",
+    "notecast/episode-43",
+    "sharehub/share-41"
    ]
   },
   {
@@ -3774,38 +3838,6 @@
    ]
   },
   {
-   "key": "اچ_سرامیک",
-   "tag": "#اچ_سرامیک",
-   "domain": null,
-   "words": 2,
-   "definition": "اچ کردنِ سطح سرامیک با هیدروفلوریک.",
-   "use_when": "مقاله پروتکل اچ سرامیک را تعیین کند.",
-   "aliases": [
-    "HF",
-    "هیدروفلوریک",
-    "hydrofluoric",
-    "اچ HF",
-    "ceramic etching",
-    "hf"
-   ],
-   "variants": [
-    "#HF"
-   ],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-10",
-    "episodes/episode-16",
-    "notecast/episode-9",
-    "notecast/episode-10",
-    "notecast/episode-12",
-    "notecast/episode-16",
-    "notecast/episode-29",
-    "insight/insight-42",
-    "sharehub/share-32"
-   ]
-  },
-  {
    "key": "ایزولاسیون",
    "tag": "#ایزولاسیون",
    "domain": "clinical",
@@ -3919,33 +3951,6 @@
     "plak-sefr/plak1-7",
     "plak-sefr/plak1-8",
     "plak-sefr/plak1-9"
-   ]
-  },
-  {
-   "key": "سایلان",
-   "tag": "#سایلان",
-   "domain": null,
-   "words": 1,
-   "definition": "عاملِ جفت‌کننده‌ی بین سرامیک و رزین.",
-   "use_when": "مقاله نقش یا پروتکلِ سایلان را شرح دهد.",
-   "aliases": [
-    "silane",
-    "سیلان",
-    "silane coupling"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-10",
-    "episodes/episode-16",
-    "episodes/episode-136",
-    "notecast/episode-10",
-    "notecast/episode-12",
-    "notecast/episode-16",
-    "insight/insight-42",
-    "notecast/episode-42",
-    "notecast/episode-43"
    ]
   },
   {
@@ -6432,6 +6437,27 @@
    ]
   },
   {
+   "key": "mdp",
+   "tag": "#MDP",
+   "domain": null,
+   "words": 1,
+   "definition": "مونومر عاملیِ اتصال شیمیایی به زیرکونیا و فلز.",
+   "use_when": "مقاله نقش MDP را در باند بررسی کند.",
+   "aliases": [
+    "10-MDP",
+    "ام دی پی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "notecast/episode-5",
+    "notecast/episode-11",
+    "sharehub/share-20",
+    "sharehub/share-41"
+   ]
+  },
+  {
    "key": "nccl",
    "tag": "#NCCL",
    "domain": null,
@@ -7053,6 +7079,30 @@
     "insight/insight-22",
     "insight/insight-47",
     "insight/insight-68"
+   ]
+  },
+  {
+   "key": "شکست_سرامیک",
+   "tag": "#شکست_سرامیک",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "چیپ یا پریدگیِ لبه‌ی سرامیک.",
+   "use_when": "مقاله علتِ شکستِ سرامیک را دنبال کند.",
+   "aliases": [
+    "ceramic fracture",
+    "چیپینگ",
+    "پریدگی سرامیک",
+    "chipping",
+    "لب پریدگی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-123-4",
+    "insight/insight-37",
+    "chairside/chairside-38",
+    "sharehub/share-41"
    ]
   },
   {
@@ -7707,26 +7757,6 @@
     "episodes/episode-156",
     "episodes/episode-157",
     "episodes/episode-158"
-   ]
-  },
-  {
-   "key": "mdp",
-   "tag": "#MDP",
-   "domain": null,
-   "words": 1,
-   "definition": "مونومر عاملیِ اتصال شیمیایی به زیرکونیا و فلز.",
-   "use_when": "مقاله نقش MDP را در باند بررسی کند.",
-   "aliases": [
-    "10-MDP",
-    "ام دی پی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "notecast/episode-5",
-    "notecast/episode-11",
-    "sharehub/share-20"
    ]
   },
   {
@@ -9005,29 +9035,6 @@
     "chairside/chairside-34",
     "chairside/chairside-39",
     "chairside/chairside-41"
-   ]
-  },
-  {
-   "key": "شکست_سرامیک",
-   "tag": "#شکست_سرامیک",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "چیپ یا پریدگیِ لبه‌ی سرامیک.",
-   "use_when": "مقاله علتِ شکستِ سرامیک را دنبال کند.",
-   "aliases": [
-    "ceramic fracture",
-    "چیپینگ",
-    "پریدگی سرامیک",
-    "chipping",
-    "لب پریدگی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-123-4",
-    "insight/insight-37",
-    "chairside/chairside-38"
    ]
   },
   {
@@ -17750,6 +17757,29 @@
    ]
   },
   {
+   "key": "ریپر_سرامیک",
+   "tag": "#ریپر_سرامیک",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ترمیم داخل‌دهانیِ شکستگی یا پریدگیِ رستوریشن سرامیکی با کامپوزیت، با آماده‌سازی سطح متناسب با نوع سرامیکِ نمایان‌شده، به‌جای تعویض کامل رستوریشن.",
+   "use_when": "مقاله پروتکل یا شواهدِ ترمیم داخل‌دهانیِ سرامیکِ شکسته یا پریده را موضوع داشته باشد.",
+   "aliases": [
+    "ceramic repair",
+    "intraoral ceramic repair",
+    "repair of fractured ceramic",
+    "ریپر سرامیک",
+    "ریپیر سرامیک",
+    "ترمیم داخل دهانی سرامیک",
+    "تعمیر سرامیک"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-41"
+   ]
+  },
+  {
    "key": "ریپیر_کامپوزیت",
    "tag": "#ریپیر_کامپوزیت",
    "domain": "clinical",
@@ -21948,6 +21978,7 @@
   "radiographic interpretation": "تفسیر رادیوگرافی",
   "alveolar ridge preservation": "حفظ ریج",
   "clarifying questions prompt": "سؤال پیش از تولید",
+  "repair of fractured ceramic": "ریپر سرامیک",
   "esthetic crown lengthening": "افزایش طول تاج",
   "temporomandibular disorder": "tmd",
   "interproximal contact loss": "از دست رفتن کانتکت",
@@ -21992,6 +22023,7 @@
   "statistical significance": "معنی داری آماری",
   "مصرف بی رویه آنتی بیوتیک": "آنتی بیوتیک دندانپزشکی",
   "flexible partial denture": "دندان مصنوعی ژله ای",
+  "intraoral ceramic repair": "ریپر سرامیک",
   "micromorph dental veneer": "میکرومورف",
   "artificial intelligence": "هوش مصنوعی",
   "مسیر یادگیری هوش مصنوعی": "سواد هوش مصنوعی",
@@ -22018,6 +22050,7 @@
   "pit and fissure sealant": "فیشور سیلانت",
   "fractured implant screw": "شکست پیچ ایمپلنت",
   "non metal clasp denture": "دندان مصنوعی ژله ای",
+  "ترمیم داخل دهانی سرامیک": "ریپر سرامیک",
   "differential diagnosis": "تشخیص افتراقی",
   "occlusal equilibration": "تنظیم اکلوژن",
   "تحلیل استخوان حاشیه ای": "تحلیل استخوان کرستال",
@@ -23106,6 +23139,7 @@
   "post gutta gap": "گپ پست و گوتا",
   "aphthous ulcer": "آفت دهان",
   "آرام بخشی عمیق": "بیهوشی",
+  "ceramic repair": "ریپر سرامیک",
   "prosthodontics": "پروتز",
   "post and core": "پست و کور",
   "ویزیت کلینیکی": "کیس اینسایت",
@@ -23613,6 +23647,8 @@
   "friction fit": "گیر مکانیکی",
   "بیهوشی عمومی": "بیهوشی",
   "پروتز ژله ای": "دندان مصنوعی ژله ای",
+  "ریپیر سرامیک": "ریپر سرامیک",
+  "تعمیر سرامیک": "ریپر سرامیک",
   "آرتیکولاسیون": "ارتیکولاسیون",
   "articulation": "ارتیکولاسیون",
   "بایو میمتیک": "بیومیمتیک",

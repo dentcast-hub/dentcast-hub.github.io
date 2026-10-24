@@ -53,6 +53,9 @@ the nearest neighbour, which in a series is part N, not the end.
 """
 import json, os, re, sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from dentcast_text_io import write_text  # noqa: E402
+
 ROOT = os.path.join(os.path.dirname(__file__), '..')
 BRAIN = os.path.join(ROOT, 'dentcast-brain.json')
 HREF = os.path.join(ROOT, 'dentcast-hashtag-reference.json')
@@ -372,8 +375,9 @@ def insert(cid, pid, after=None, at_end=False, milestone=False, confirmed=False,
         idx = ids.index(after) + 1
         target['steps'].insert(idx, new)
         pos = f'after {after} (index {idx})'
-    json.dump(pw, open(PW, 'w'), ensure_ascii=False, indent=2)
-    open(PW, 'a').write('\n')
+    # Canonical writer: keep the file's existing CRLF/LF bytes (a raw dump
+    # rewrote every line of the CRLF pathways file on each placement).
+    write_text(PW, json.dumps(pw, ensure_ascii=False, indent=2) + '\n')
     print(f'inserted {cid} into {pid} at {pos}; milestone={milestone}; '
           f'{pid} now {len(target["steps"])} steps')
 
@@ -415,8 +419,7 @@ def freeze_core():
     d, by_id, pw = load()
     core = {p['id']: [s['content_id'] for s in p['steps']] for p in full_pathways(pw)}
     os.makedirs(os.path.dirname(CORE), exist_ok=True)
-    json.dump(core, open(CORE, 'w'), ensure_ascii=False, indent=1)
-    open(CORE, 'a').write('\n')
+    write_text(CORE, json.dumps(core, ensure_ascii=False, indent=1) + '\n')
     print(f'froze core for {len(core)} pathways → {os.path.relpath(CORE, ROOT)} '
           f'({sum(len(v) for v in core.values())} steps)')
 
