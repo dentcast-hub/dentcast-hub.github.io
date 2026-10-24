@@ -29,6 +29,7 @@
 
 <link rel="canonical" href="https://dentcast.ir/litecast/lite-CAST33.html">
   <!-- ⚠️ استایل بدون هیچ تغییری -->
+  <link rel="stylesheet" href="/dc-article.css?v=6">
   <style>
     :root {
   --gold: #FFD95E;
@@ -41,67 +42,8 @@
   --shadow: 0 14px 42px rgba(0,0,0,0.14);
 }
 
-/* ===== صفحه ===== */
-
-body {
-  margin: 0;
-  font-family: 'Vazirmatn', sans-serif;
-  background: #fff2b8;
-  color: var(--text);
-  max-width: 57.5rem;
-  margin: 0 auto;
-  padding: 2.625rem 1.375rem 4rem;
-  line-height: 1.9;
-}
-/* ===== تیترها ===== */
-h1 {
-  text-align: center;
-  color: var(--blue);
-  font-weight: 800;
-  font-size: 2rem;
-  margin-bottom: 0.625rem;
-}
-
-h2 {
-  text-align: center;
-  color: var(--text);
-  font-weight: 600;
-  font-size: 1.1rem;
-  margin-bottom: 1.625rem;
-}
-
-/* ===== باکس اصلی محتوا ===== */
-article {
-  background: #ffffff;
-  border-radius: var(--radius);
-  border: 1px solid rgba(0,0,0,0.06);
-  box-shadow: var(--shadow);
-  padding: 1.875rem 1.625rem;
-  color: var(--text);
-  line-height: 2;
-}
-
-/* ===== تم تیره ===== */
-/* dc-theme.css بعد از این استایل لود می‌شود و --text را روشن می‌کند،
-   اما پس‌زمینه‌ی article اینجا سفت‌کد سفید است → متن روی کارت محو می‌شد. */
-[data-theme="dark"] article {
-  background: var(--card-bg, #1e2c3a);
-  border-color: var(--card-border, rgba(255,255,255,.07));
-  box-shadow: var(--card-sh, 0 1px 3px rgba(0,0,0,.22), 0 4px 14px rgba(0,0,0,.14));
-  color: var(--txt, #e8f0ff);
-}
-[data-theme="dark"] strong {
-  color: var(--ac, #5b9cf6);
-}
-
-/* تاکیدها */
-strong {
-  color: var(--blue);
-  font-weight: 700;
-}
-
 /* ===== تصاویر ===== */
-article img {
+:is(main.article-content-wrap, .dcd-content-area) main > article img {
   display: block;
   width: 100%;
   max-width: 42.5rem;
@@ -216,18 +158,7 @@ footer a:hover {
 
 /* ===== موبایل ===== */
 @media (max-width: 520px) {
-  body {
-    padding: 1.625rem 1rem 3.25rem;
-  }
-
-  article {
-    padding: 1.375rem 1.125rem;
-    font-size: 1.08rem;
-    max-width: 47.5rem;
-    margin: 0 auto;
-  }
-
-  article img {
+  :is(main.article-content-wrap, .dcd-content-area) main > article img {
     max-width: 92%;
     margin-bottom: 0.875rem;
     border-radius: 0.875rem;
@@ -258,6 +189,107 @@ footer a:hover {
 }
 .author-note .author-role{
   color:var(--txt3);
+}
+
+/* ===== هم‌شکلی با ShareHub (بنیان‌گذار، 2026-10-24) =====
+   فونت، اندازهٔ متن و تیترها، رنگ‌ها، بولد و فاصله‌ها روی صفحهٔ مستقل از
+   /dc-article.css می‌آیند — همان لایه‌ای که ShareHub دارد — و در ستونِ C
+   دسکتاپ از قاعده‌های .dcd-content-area خودِ index.html، باز همان‌که ShareHub
+   آن‌جا می‌گیرد. اندازه یا رنگِ متن را این‌جا دوباره تعریف نکن.
+
+   هر قاعدهٔ این بلوک به یکی از دو ظرف بسته است: main.article-content-wrap
+   (صفحهٔ مستقل) یا .dcd-content-area (ستونِ C، که این <style> را به کلِ سندِ
+   صفحهٔ اصلی تزریق می‌کند و خودِ main.article-content-wrap را دور می‌اندازد).
+   سلکتورِ خامِ `article` در ستونِ C روی کارت‌های article.dc-monitor صفحهٔ
+   اصلی هم می‌نشست.
+
+   کلاسِ باکس عمداً روی <article> نیست: آن کلاس میز کار و ردیفِ کنش را روشن
+   می‌کند و این تغییر فقط ظاهر است. */
+
+/* کیکرِ «Lite-CAST» بالای عنوان — همان .sh-kicker */
+:is(main.article-content-wrap, .dcd-content-area) main > h2:first-child{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.375rem;
+  direction:ltr;
+  color:var(--blue);
+  font-weight:800;
+  font-size:0.95rem;
+  letter-spacing:.02em;
+  margin:0 0 0.5rem;
+}
+
+/* صفحهٔ مستقل: <article> همان کارتِ .glass-box در dc-article.css */
+main.article-content-wrap > main > article{
+  background:var(--card-bg, #ffffff);
+  color:var(--txt, #0a1a33);
+  border:1px solid var(--card-border, rgba(2,35,96,.09));
+  border-radius:var(--r-lg, 1.125rem);
+  box-shadow:var(--card-sh, 0 1px 3px rgba(2,35,96,.07));
+  padding:1.625rem 2rem;
+  margin:1.25rem 0;
+  line-height:1.9;
+}
+main.article-content-wrap > main > article h2,
+main.article-content-wrap > main > article h3{
+  text-align:right;
+  font-size:1.05rem;
+  font-weight:700;
+  border-right:4px solid var(--ac, #0b5fff);
+  padding-right:0.75rem;
+  margin:1.75rem 0 0.875rem;
+}
+@media (max-width:768px){
+  main.article-content-wrap > main > article{ padding:1.25rem 1.375rem; }
+}
+
+/* ستونِ C: <article> همان کارتِ .dcd-content-area .glass-box در index.html */
+.dcd-content-area main > article{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:var(--r-lg);
+  padding:1.125rem 1.25rem;
+  margin-bottom:1.125rem;
+  box-shadow:var(--card-sh);
+  color:var(--txt);
+}
+
+/* لیست‌ها — همان ✦ ShareHub */
+:is(main.article-content-wrap, .dcd-content-area) main > article ul{
+  list-style:none;
+  padding-right:0;
+  margin:0.875rem 0;
+}
+:is(main.article-content-wrap, .dcd-content-area) main > article ul li::before{
+  content:"✦ ";
+  color:var(--blue);
+  font-weight:bold;
+}
+
+/* دکمهٔ «تماس با مطب»: سفید روی سرمه‌ای در هر دو تم و هر دو ظرف. قاعدهٔ لینکِ
+   dc-theme (body:has(.dc-topbar) main a) و .dcd-content-area a هر دو قوی‌تر از
+   .cta-button بودند و متن را آبی روی سرمه‌ای، و در تم تیره آبی روی آبی
+   (نامرئی) می‌کردند. */
+:is(main.article-content-wrap, .dcd-content-area) a.cta-button,
+:is(main.article-content-wrap, .dcd-content-area) a.cta-button:hover{
+  color:#ffffff;
+  text-decoration:none;
+}
+:is(main.article-content-wrap, .dcd-content-area) a.cta-button{
+  background:#022360;
+}
+[data-theme="dark"] :is(main.article-content-wrap, .dcd-content-area) a.cta-button{
+  border:1px solid rgba(91,156,246,.45);
+  box-shadow:0 6px 20px rgba(0,0,0,.35);
+}
+
+/* «برگشت به صفحه‌ی قبل» history.back() است: در ستونِ C کلِ صفحهٔ اصلی را عقب
+   می‌برد، و در نمایشگرِ iframe همان ستون را خالی می‌کرد. سایدبارِ پوسته راهِ
+   برگشت است — ShareHub هم آن‌جا دکمهٔ برگشت ندارد. */
+.dcd-content-area div:has(> .back-btn),
+body.dc-content-only div:has(> .back-btn){
+  display:none;
 }
 </style>
 
