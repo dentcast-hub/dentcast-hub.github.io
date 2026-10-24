@@ -418,7 +418,12 @@ def advance(root, expected, sid=None, evidence=None, skips=(), start_next=False,
     for skip_id, reason in skips:
         h.require(skip_id == h.next_step(p), "NOT_NEXT_CANONICAL_STEP")
         row = next(s for s in p["steps"] if s["id"] == skip_id)
-        h.require(row["status"] == "pending", "ONLY_PENDING_STEPS_CAN_BE_BATCH_SKIPPED")
+        # A row an earlier --start-next opened may be skipped while it is still
+        # bare: no evidence or reason, no external outcome in flight (checked
+        # below for every transition) and no work or rule drift since then.
+        bare_start = (row["status"] == "started" and not row["evidence"] and row["reason"] is None
+                      and not h.differences(root, state, h.current_snapshot(root, state)))
+        h.require(row["status"] == "pending" or bare_start, "ONLY_PENDING_STEPS_CAN_BE_BATCH_SKIPPED")
         row.update(status="skipped", evidence=[], reason=reason)
         operations.append((skip_id, "skipped", [], reason))
         require_plan(p)

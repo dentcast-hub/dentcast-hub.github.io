@@ -313,7 +313,10 @@ For consecutive genuinely inapplicable pending steps, supply repeated
 `--skip '<id>=<canonical exception and reason>'` arguments in canonical order.
 These may follow `--id`, or be used without it. The agent must establish each
 exception from its applicable module; the tool does not guess category skips.
-Each skip still gets its own durable checkpoint. Use `--start-next` alone to
+Each skip still gets its own durable checkpoint. A row an earlier `--start-next`
+opened (e.g. C.0.5 after C.2, C.4.5 after C.4) may also be skipped this way while
+it has no evidence or reason, no external outcome is in flight and no work or
+rule changed since that checkpoint; otherwise use `step`. Use `--start-next` alone to
 start the first ready pending step, if needed. Failure/blocking results still
 use `step --status failed/blocked`; Phase F still uses the real `verify` command.
 

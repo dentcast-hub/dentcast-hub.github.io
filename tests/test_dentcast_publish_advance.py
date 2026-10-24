@@ -73,6 +73,43 @@ class AdvanceTests(unittest.TestCase):
         self.assertEqual(state['publication']['steps'][2]['reason'], 'fixture:canonical A exception')
         self.assertEqual(state['publication']['steps'][4]['status'], 'started')
 
+    def bare_started_a(self):
+        self.prepare()
+        state, _ = h.load_state(self.root)
+        for row in state['publication']['steps'][:2]:
+            row.update(status='completed', evidence=['fixture:done'])
+        digest = h.write_atomic(self.root, state)
+        return lc.advance(self.root, digest, start_next=True)['sha256']
+
+    def test_skip_row_that_start_next_opened(self):
+        digest = self.bare_started_a()
+        result = lc.advance(self.root, digest, skips=[('A', 'fixture:canonical A exception')], start_next=True)
+        self.assertEqual(result['transitions_written'], [{'id': 'A', 'status': 'skipped'}, {'id': 'B.1', 'status': 'started'}])
+        state, _ = h.load_state(self.root)
+        self.assertEqual(state['publication']['steps'][2]['reason'], 'fixture:canonical A exception')
+
+    def test_started_row_with_drift_or_evidence_still_rejected(self):
+        digest = self.bare_started_a()
+        (self.root / 'note.html').write_text('work done during A\n')
+        raw = (self.root / h.STATE_PATH).read_bytes()
+        with self.assertRaisesRegex(h.Blocked, 'ONLY_PENDING_STEPS_CAN_BE_BATCH_SKIPPED'):
+            lc.advance(self.root, digest, skips=[('A', 'fixture:exception')])
+        self.assertEqual(raw, (self.root / h.STATE_PATH).read_bytes())
+        (self.root / 'note.html').write_text('original\n')
+        state, _ = h.load_state(self.root)
+        state['publication']['steps'][2]['evidence'] = ['fixture:partial-work']
+        digest = h.write_atomic(self.root, state)
+        with self.assertRaisesRegex(h.Blocked, 'ONLY_PENDING_STEPS_CAN_BE_BATCH_SKIPPED'):
+            lc.advance(self.root, digest, skips=[('A', 'fixture:exception')])
+
+    def test_started_row_skip_keeps_external_outcome_guard(self):
+        digest = self.bare_started_a()
+        state, _ = h.load_state(self.root)
+        state['publication']['external_actions'] = [{'id': 'upload', 'target': 'fixture', 'status': 'outcome_unknown', 'evidence': []}]
+        digest = h.write_atomic(self.root, state)
+        with self.assertRaisesRegex(h.Blocked, 'EXTERNAL_OUTCOME_UNKNOWN'):
+            lc.advance(self.root, digest, skips=[('A', 'fixture:exception')])
+
     def test_unknown_external_outcome_blocks_advance(self):
         initial = self.prepare()
         state, _ = h.load_state(self.root)
