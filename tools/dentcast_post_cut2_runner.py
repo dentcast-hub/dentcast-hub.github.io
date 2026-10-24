@@ -46,15 +46,14 @@ def publication(root: Path):
 
 
 def phase_f_expectations(pub: dict, args) -> tuple[str | None, str | None]:
-    """Resolve Phase F strings from frozen human approvals when available."""
+    """Resolve Phase F strings from both frozen title/caption decisions."""
     approvals = {item["scope"]: item for item in pub.get("context", {}).get("approvals", [])}
     resolved = []
     for scope, arg_name in (("title", "expect_title"), ("caption", "expect_caption")):
         supplied = getattr(args, arg_name, None)
         approval = approvals.get(scope)
         if approval is None:
-            resolved.append(supplied)
-            continue
+            raise RunnerError("APPROVED_EXPECTED_TEXT_SCOPE_REQUIRED:" + scope)
         status = approval["status"]
         if status == "confirmed":
             approved = approval["decision"]

@@ -98,6 +98,7 @@ EDITORIAL_SCOPES = frozenset((
     "scientific", "challenge", "taxonomy", "links", "hashtags",
     "content_record", "pathways", "pulse", "english", "author_approvals"
 ))
+PHASE_F_EXPECTATION_SCOPES = frozenset(("title", "caption"))
 
 
 def editorial_cut_v2(publication):
@@ -154,6 +155,14 @@ def editorial_cut_receipt(publication, root=None):
               and all(a["status"] in ("confirmed", "not_required")
                       for a in publication["context"]["approvals"]),
               "SECOND_CUT_JUDGMENTS_UNRESOLVED")
+    approvals = {a["scope"]: a for a in publication["context"]["approvals"]}
+    h.require(PHASE_F_EXPECTATION_SCOPES <= set(approvals)
+              and all(approvals[s]["status"] in ("confirmed", "not_required")
+                      for s in PHASE_F_EXPECTATION_SCOPES),
+              "SECOND_CUT_PHASE_F_EXPECTATIONS_REQUIRED")
+    h.require(any(approvals[s]["status"] == "confirmed"
+                  for s in PHASE_F_EXPECTATION_SCOPES),
+              "SECOND_CUT_PHASE_F_TEXT_REQUIRED")
     return entry
 
 

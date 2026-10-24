@@ -30,6 +30,12 @@ def sample(category="litecast", second="C.6", modern=True):
     }
     if modern:
         p["context"]["decisions"].append({"kind": lc.DELIVERY_POLICY_V2})
+        p["context"]["approvals"] = [
+            {"scope": "title", "status": "confirmed", "decision": "fixture:exact title",
+             "evidence": ["fixture:title approved"]},
+            {"scope": "caption", "status": "not_required", "decision": "fixture:no separate caption",
+             "evidence": ["fixture:no separate caption required"]},
+        ]
     for step in p["steps"]:
         step["status"] = "completed"
         step["evidence"] = ["synthetic fixture: " + step["id"]]
@@ -94,8 +100,11 @@ class EditorialSecondCutTests(unittest.TestCase):
     def test_unresolved_human_decision_is_still_a_blocker(self):
         p = sample()
         p["context"]["decisions"].append(receipt(p))
-        p["context"]["approvals"] = [{
-            "scope": "caption", "status": "pending", "decision": None, "evidence": []}]
+        p["context"]["approvals"] = [
+            {"scope": "title", "status": "confirmed", "decision": "fixture:exact title",
+             "evidence": ["fixture:title approved"]},
+            {"scope": "caption", "status": "pending", "decision": None, "evidence": []},
+        ]
         self.assert_blocked("DELIVERY_UNRESOLVED_APPROVAL",
                             lc.require_fixed_cut_readiness, p)
         p["context"]["approvals"][0].update(

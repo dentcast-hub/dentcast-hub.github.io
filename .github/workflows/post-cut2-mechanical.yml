@@ -16,11 +16,11 @@ on:
         required: true
         type: string
       expect_title:
-        description: Optional exact title; otherwise uses frozen handoff approval
+        description: Optional exact title; must match frozen handoff approval
         required: false
         type: string
       expect_caption:
-        description: Optional exact caption; otherwise uses frozen handoff approval
+        description: Optional exact caption; must match frozen handoff approval
         required: false
         type: string
 
