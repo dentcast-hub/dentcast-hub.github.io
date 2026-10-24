@@ -22,7 +22,7 @@ Legacy snapshots are backup only and are not read for execution or ambiguity res
 | [12-english-notify-verify.md](12-english-notify-verify.md) | 2394–2598 |
 
 
-The original line ranges document extraction provenance, not runtime reads. Each active module now has an explicit checkpoint-protocol preface; its original source body is preserved. Modules 02, 03 and 08 redirect obsolete global-rule pointers to active shared files. Scientific content and execution rules are unchanged. The earlier eight-file extraction is historical reference only and is not an alternative route.
+The original line ranges document extraction provenance, not runtime reads. Each active module now has an explicit checkpoint-protocol preface; its original source body is preserved. Modules 02, 03 and 08 redirect obsolete global-rule pointers to active shared files. Scientific content and execution rules are unchanged. The earlier eight-file extraction is historical reference only (`historical/`) and is not an alternative route.
 
 ## Development records and staging tools
 

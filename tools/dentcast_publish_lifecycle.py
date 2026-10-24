@@ -318,6 +318,9 @@ def guard_step_transition(state, publication, root=None):
         if editorial_cut_v2(state["publication"]):
             old_c6 = next(s for s in state["publication"]["steps"] if s["id"] == "C.6")
             new_c6 = next(s for s in publication["steps"] if s["id"] == "C.6")
+            if old_c6["status"] not in ("completed", "skipped") and new_c6["status"] in ("completed", "skipped"):
+                # Fail at C.6 itself, not first at the cut-2 commit guard.
+                editorial_cut_receipt(publication, root)
             if old_c6["status"] in ("completed", "skipped") and new_c6["status"] in ("completed", "skipped"):
                 old_lock = [d for d in state["publication"]["context"]["decisions"]
                             if isinstance(d, dict) and d.get("kind") == "second_cut_editorial_lock_v1"]

@@ -136,8 +136,11 @@ class PostCut2RunnerTests(unittest.TestCase):
             "expect_title": "title", "expect_caption": "caption",
         })()
 
+        notes = {}
+
         def record(_root, sid, status, evidence=(), reason=None, note=None):
             states[sid]["status"] = status
+            notes[(sid, status)] = note
             return "digest"
 
         def command(_root, _artifact, label, _argv, _logs):
@@ -163,6 +166,53 @@ class PostCut2RunnerTests(unittest.TestCase):
         self.assertEqual(result["status"], "mechanical_steps_complete")
         self.assertEqual(result["next_step"], "G")
         self.assertFalse(result["third_delivery_created"])
+        # Every completion after a file-changing mechanical step must carry the
+        # reviewed reconciliation note, or the canonical writer rejects it.
+        for sid in ("C.8", "C.7", "D", "E"):
+            self.assertTrue(notes[(sid, "completed")], sid)
+
+    def test_builder_plan_follows_category_and_enrolled_inputs(self):
+        def plan(category, targets=(), done=()):
+            pub = sample_publication()
+            pub["category"] = category
+            pub["target_paths"] = list(targets)
+            for row in pub["steps"]:
+                if row["id"] in ("C.4.11", "C.4.12", "C.4.14"):
+                    row["status"] = "completed" if row["id"] in done else "skipped"
+            return [" ".join(c) for c in runner.command_plan(Path("."), pub)]
+
+        episodes = "python3 tools/build_episodes.py"
+        for category in ("dentcast", "episode", "episodes"):
+            self.assertIn(episodes, plan(category))
+        self.assertIn(episodes, plan("notecast", ["dentcast.json"]))
+        self.assertNotIn(episodes, plan("clinical", ["insight/insight-99.html"]))
+        challenge = plan("chairside", done=("C.4.14",))
+        self.assertIn("node tools/build_challenge_index.mjs", challenge)
+        self.assertLess(challenge.index("python3 tools/build_pillar.py all"),
+                        challenge.index("node tools/build_challenge_index.mjs"))
+        self.assertLess(challenge.index("node tools/build_challenge_index.mjs"),
+                        challenge.index("node tools/build_plus_index.mjs"))
+        full = plan("clinical", done=("C.4.11", "C.4.12"))
+        self.assertIn("node tools/build_flashcards_index.mjs", full)
+        self.assertIn("node tools/build_quiz_index.mjs", full)
+        self.assertNotIn("node tools/build_plus_index.mjs", plan("paper-only"))
+
+    def test_site_wide_injectors_never_rewrite_test_fixtures(self):
+        repo = Path(__file__).resolve().parents[1]
+        fixture = "tests/fixtures/sample/page.html"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for script in ("inject_hreflang.py", "inject_img_attrs.py"):
+                (root / ".github/scripts").mkdir(parents=True, exist_ok=True)
+                (root / ".github/scripts" / script).write_bytes((repo / ".github/scripts" / script).read_bytes())
+            page = root / fixture
+            page.parent.mkdir(parents=True)
+            body = "<!doctype html>\n<html lang=\"fa\"><head></head><body><img src=\"x.webp\"></body></html>\n"
+            page.write_text(body, encoding="utf-8")
+            for script in ("inject_hreflang.py", "inject_img_attrs.py"):
+                subprocess.run([sys.executable, str(root / ".github/scripts" / script)], cwd=root,
+                               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            self.assertEqual(page.read_text(encoding="utf-8"), body)
 
     def test_failed_command_preserves_a_recovery_attempt(self):
         pub = sample_publication()

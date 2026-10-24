@@ -209,3 +209,26 @@ class ReadpackTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class LiveReadpackPinTests(unittest.TestCase):
+    """The real modules must stay pinned, or every route silently reads everything."""
+
+    def test_live_modules_match_their_audited_pins(self):
+        root = SCRIPT.parents[1]
+        for name, blob in rp.PINNED_BLOBS.items():
+            with self.subTest(module=name):
+                raw = (root / rp.MODULES / name).read_bytes()
+                self.assertEqual(rp.git_blob_id(raw), blob,
+                                 'module changed: re-audit its readpack boundaries and skipped sections, then re-pin')
+
+    def test_live_routes_select_without_drift_fallback(self):
+        root = SCRIPT.parents[1]
+        for category, paper, challenge in (('clinical', 'no', 'no'), ('litecast', 'no', 'no'),
+                                           ('sharehub', 'yes', 'no'), ('chairside', 'no', 'yes')):
+            with self.subTest(category=category):
+                _, m = rp.build(root, category=category, attached_paper=paper, challenge=challenge,
+                                after_intake=True)
+                reasons = {p['selection_reason'] for p in m['source_paths']}
+                self.assertNotIn('SOURCE_CHANGED_FULL_FALLBACK_REAUDIT_MAP', reasons)
+                self.assertGreater(m['bytes_saved'], 0)

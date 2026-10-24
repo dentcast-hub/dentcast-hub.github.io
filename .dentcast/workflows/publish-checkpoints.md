@@ -424,6 +424,13 @@ Immediately after the second-delivery push is confirmed, tell the user that the 
 
 Stay with the run and poll at bounded intervals until it reaches a terminal state; do not end the turn or leave the user without a status while the job is queued or running. If preflight skips or no run appears, inspect the event, branch and handoff before reporting that Actions started. If the run succeeds, verify that delivery 3 is based on the exact Push-2 SHA, the completion receipt is present, the active handoff is removed, and cleanup is confirmed before reporting publication complete. If it fails, inspect the uploaded logs/recovery artifact, diagnose and resume through the guarded recovery path where possible, and keep the user informed of the real status.
 
+A failed run pushes nothing; the branch stays at the Push-2 commit. Recover from that commit:
+
+- **Transient cause** (runner lost, network, a service outage): re-run the same commit with `workflow_dispatch` (`target_branch`, `expected_head` = the Push-2 SHA). Do not commit anything. The run uses the tools on the publication branch, so a tool defect is not transient: report it, fix it on `main` first, and bring it in under the existing workflow-change rule (invalidation from `rules`).
+- **Cause in the publication itself** (Phase F names a page, entry, approval or text): in the checkout at the Push-2 commit, run `invalidate --from-step <first affected step>` with the real cause (`C.6` when only a frozen approval/title/caption is wrong). Approvals return to `pending` and their earlier decisions stay in the `dependency_invalidation_v1` audit; restore each one from there with the founder's actual correction, fix any affected bytes, and redo the invalidated steps through `C.6`. Then stage the fix plus the handoff and push **one** reconciliation commit. That push starts the workflow again from the new commit; delivery 3 and the final receipt accept the audited reconciliation commit between Push 2 and delivery 3.
+
+Never edit a frozen approval with `record` after Push 2, never run C.8 onward locally while the workflow can still run, and never push a new run while an earlier run of the same branch is still in progress.
+
 All editorial work (including tags, Pulse and the English writing itself)
 must be completed before the second boundary. If any mechanical operation
 later reveals a needed substantive change, STOP and explicitly invalidate

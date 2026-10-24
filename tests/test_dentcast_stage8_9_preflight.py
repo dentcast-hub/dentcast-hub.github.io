@@ -11,7 +11,11 @@ preflight = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(preflight)
 
 
+# Live publication deliberately removed the staging-only boundary this asserts.
+LIVE = "LIVE_MODULAR_PUBLISHING_ENABLED" in (Path(__file__).resolve().parents[1] / ".dentcast/workflows/README.md").read_text(encoding="utf-8")
+
 class OfflineIntegrationTests(unittest.TestCase):
+    @unittest.skipIf(LIVE, "Certifies the pre-activation staging snapshot (still on refactor/publishing-modular-workflow); live repos retired that boundary on purpose. Live invariants: test_dentcast_agent_entrypoint_migration.")
     def test_all_17_public_safe_routes_with_canonical_oracle(self):
         with patch.object(preflight, "baseline_check", return_value=[]):
             outcome = preflight.analyze("origin/main")
