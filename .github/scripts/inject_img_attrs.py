@@ -111,6 +111,10 @@ def main():
     changed_files = []
 
     for page in sorted(ROOT.rglob("*.html")):
+        relative = page.relative_to(ROOT)
+        # Test fixtures model input HTML; production builders must never rewrite them.
+        if relative.parts[:2] == ("tests", "fixtures"):
+            continue
         if "/.git/" in str(page):
             continue
         text = page.read_text(encoding="utf-8")
