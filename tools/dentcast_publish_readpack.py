@@ -143,7 +143,7 @@ def route_spans(name, lines, *, category, attached_paper, challenge):
     return whole, 'FULL_REQUIRED'
 
 
-def build(root, *, category, attached_paper, challenge):
+def build(root, *, category, attached_paper, challenge, after_intake=False):
     root = Path(root).resolve(strict=True)
     manifest = {
         'schema': 'dentcast_publish_readpack_v1',
@@ -151,6 +151,7 @@ def build(root, *, category, attached_paper, challenge):
                            'challenge': challenge},
         'contract': 'READING_SELECTION_ONLY_NOT_SCIENTIFIC_APPROVAL',
         'source_paths': [],
+        'already_loaded_required': REQUIRED[:6] if after_intake else [],
         'uncovered_if_unverified': [
             'This selection is conditional on truthful locked Phase B intake.',
             'Read full applicable global rule sections via dentcast_global_rules.py.',
@@ -174,7 +175,9 @@ def build(root, *, category, attached_paper, challenge):
         name = full.name
         drift = name in PINNED_BLOBS and git_blob_id(raw) != PINNED_BLOBS[name]
         lines = decoded.splitlines(keepends=True)
-        if drift:
+        if after_intake and path in REQUIRED[:6]:
+            spans, reason = [], 'ALREADY_READ_IN_THIS_SESSION_BEFORE_LOCKED_INTAKE'
+        elif drift:
             # A new heading or exception may make an old omission unsound.
             # Reading the whole changed source is always conservative.
             spans, reason = [(0, len(lines))], 'SOURCE_CHANGED_FULL_FALLBACK_REAUDIT_MAP'
@@ -233,6 +236,8 @@ def main(argv=None):
                    help='locked Phase B Q4.7; unknown retains complete modules')
     p.add_argument('--challenge', required=True, choices=['yes', 'no', 'unknown'],
                    help='locked Phase B Q4.9; unknown retains complete modules')
+    p.add_argument('--after-intake', action='store_true',
+                   help='omit routers + modules 01/02 already read in this same session')
     p.add_argument('--output', type=Path, required=True, help='temporary UTF-8 verbatim reading pack')
     p.add_argument('--manifest', type=Path, required=True, help='temporary provenance/coverage JSON')
     a = p.parse_args(argv)
@@ -240,7 +245,8 @@ def main(argv=None):
         p.error('--output and --manifest must differ')
     try:
         pack, report = build(a.root, category=a.category.casefold(),
-                             attached_paper=a.attached_paper, challenge=a.challenge)
+                             attached_paper=a.attached_paper, challenge=a.challenge,
+                             after_intake=a.after_intake)
         atomic_write(a.output, pack)
         atomic_write(a.manifest, json.dumps(report, ensure_ascii=False, indent=2) + '\n')
     except (OSError, UnsafeSelection, UnicodeError) as error:
