@@ -7,11 +7,6 @@
 
 ### 5.0. Hashtag standardization against the reference library (Hard Rule 15)
 
-For new v2 publications this and all other semantic decisions in this module
-are completed BEFORE the second delivery after C.6. No hashtags, metadata,
-pathway or bundle judgment can be deferred to the subsequent builders.
-
-
 The entry's `hashtags` are a **standardized vocabulary** governed by `dentcast-hashtag-reference.json` — the canonical library the AI case-assistant search reads (mirrored into `plus/content-index.json`, which the live API loads with auto-reload). Settle the **final canonical hashtag list here**, before it is consumed by the brain write (step 5) and the page's visible chips. This runs on **every publish that writes a brain entry** — LiteCast included (its brain is `litecast/lite-glossary.json`; run the same discipline against the library). The `dentcast_cabinet_full_catalog.json` paper `tags` are a **separate** kebab-style system and are **out of scope here** (step 4.10 owns them).
 
 **Step 1 — Draft the concepts.** From the confirmed text, draft the genuinely semantic concepts the article *resolves* (Rule: tag what it resolves, not what it merely mentions) — golden length **2–3 words**, no junk/generic tags, and include the article's own series/name tag where the type uses one. These are concepts to look up, not final tags yet. They remain proposals under Hard Rule 13 (shown to the user).
