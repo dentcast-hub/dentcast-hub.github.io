@@ -78,10 +78,17 @@ only the chosen local temporary reading/manifest files.
    - `modules/11-build-and-version.md`
    - `modules/12-english-notify-verify.md`
 
-3. Respect all category exceptions, semantic decisions, founder approvals, original builder ordering, English mirror, notices, versioning and complete Phase F. At step 4.13, validate and reuse a founder-supplied DES score with its complete canonical JSON for this exact page **without rerunning DES**. Independently reuse supplied valid Fidelity JSON; if only DES was supplied, run only any owed Fidelity. Reject mismatched/incomplete supplied results rather than silently rescoring. If neither is supplied, use the canonical source-dependent procedure in module 08; Part 3, founder decisions and Phase F remain mandatory. A skipped module requires its canonical exemption and a recorded reason; "not loaded" is not an exemption.
-4. Use actual approved tools. Report missing capabilities or failed gates; do not substitute simulated scientific results, synthetic receipts or Boolean assertions.
-5. Maintain the fixed temporary handoff under `publish-handoff.md`. Optional staging tools (`tools/dentcast_stage3_route.py`, `tools/dentcast_stage3_orchestrator.py`, `tools/dentcast_stage6_handoff.py`, `tools/dentcast_github_memory.py`, `tools/dentcast_fidelity_resume.py`) are development aids, not the live handoff or publishing engine. Their staging restrictions remain in force.
-6. Keep private/restricted material out of public history. No arbitrary branch merges or inferred approval.
+3. For newly initialized v2 publications, complete all authoring,
+semantic judgments, DES/Fidelity and human approvals **through C.6**
+before second Push. This includes the authored English mirror + reciprocal
+toggle when the category needs one; Phase D's technical verification stays
+after builders. Before resolving C.6, write the full ten-scope editorial
+lock specified in `publish-checkpoints.md`. The mechanical cut2 gate
+enforces it. Previous v1-only handoffs retain the original C.4.13 cut.
+4. Respect all category exceptions, semantic decisions, founder approvals, original builder ordering, English mirror, notices, versioning and complete Phase F. At step 4.13, validate and reuse a founder-supplied DES score with its complete canonical JSON for this exact page **without rerunning DES**. Independently reuse supplied valid Fidelity JSON; if only DES was supplied, run only any owed Fidelity. Reject mismatched/incomplete supplied results rather than silently rescoring. If neither is supplied, use the canonical source-dependent procedure in module 08; Part 3, founder decisions and Phase F remain mandatory. A skipped module requires its canonical exemption and a recorded reason; "not loaded" is not an exemption.
+5. Use actual approved tools. Report missing capabilities or failed gates; do not substitute simulated scientific results, synthetic receipts or Boolean assertions.
+6. Maintain the fixed temporary handoff under `publish-handoff.md`. Optional staging tools (`tools/dentcast_stage3_route.py`, `tools/dentcast_stage3_orchestrator.py`, `tools/dentcast_stage6_handoff.py`, `tools/dentcast_github_memory.py`, `tools/dentcast_fidelity_resume.py`) are development aids, not the live handoff or publishing engine. Their staging restrictions remain in force.
+7. Keep private/restricted material out of public history. No arbitrary branch merges or inferred approval.
 
 ## Routes
 

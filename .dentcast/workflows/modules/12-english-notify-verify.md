@@ -1,11 +1,23 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
 > **Live publication checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision; this repeated reference never requires a reread. Read the fixed handoff exactly once only when the user explicitly says this publication is incomplete/interrupted; a request to resume counts only if it identifies the publication as incomplete/interrupted. During an active run, keep its state in the current session; do not read or inspect the handoff before each step. Use the latest digest returned by the helper, then mark each step `started` with `tools/dentcast_publish_handoff.py step`. After EACH completed/skipped/blocked/failed step, write its real evidence/reason with the same tool before continuing or handing off. Never auto-mark semantic or scientific work complete.
 > Checkpoint IDs for this module: D, E, F, G. Category exceptions require explicit skip reasons. The protocol defines dependency ordering (builders before final stamping; LiteCast links after page construction). Phase F completion uses the real `verify` command.
-> **Fixed page deliveries:** after `C.4.9`, after `C.4.13` including lawful skips, and after all final work, Phase F and report G. Cuts 1/2 deliver work plus handoff; cut 3 delivers final work, completion receipt and handoff deletion together. All intermediate checkpoints stay local; no extra turn-end or cleanup push.
+> **Fixed page deliveries:** after `C.4.9`, then after `C.6` for new v2 editorial-locked publications (legacy v1-only publications keep `C.4.13`), then after actual Phase F + report G. Cuts 1/2 deliver work plus handoff; cut 3 delivers final work, completion receipt and handoff deletion together. All intermediate checkpoints stay local; no extra turn-end or cleanup push.
 
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
 ## Phase D — English mirror & language toggle (MANDATORY; Hard Rule 12)
+
+**v2 publication rule:** The actual translated article, source-faithful
+editorial decisions, author review, English page file, and both toggles
+MUST already exist before the C.6 second cut. During Phase D **after**
+that cut, the same en-version rules are used as a mechanically checked
+verification: compare final English to the preapproved Persian body,
+validate reciprocal links, run noindex/hreflang and sitemap commands.
+No new prose is authored here on v2. Any substantive mismatch must
+block completion and be explicitly reconciled with author approval;
+it must not be silently rewritten post-Push-2. For the existing v1-only
+publication contract, preserve the legacy sequencing of the steps below.
+
 
 **This phase is not optional and is not the «… رو انگلیسی کن» trigger — it runs automatically at the end of every `.org` publish.** A publish that produced a new fa page but no English counterpart + working toggle is **incomplete**. The recurring failure this prevents: shipping an insight/notecast/etc. page with **no language toggle** because the cloned template never had one. The toggle is meaningless without its target, so the en page and the toggle are produced together, here, by reusing the existing English-version machinery.
 
@@ -19,7 +31,9 @@ page missing the only thing on it"). Every other publish runs it.
 
 **Steps:**
 
-1. **Hand off to the English-version workflow.** Treat the page you just published (`{type}/{file}.html`) as the source and run **`.dentcast/workflows/en-version.md`** against it. That workflow already owns every detail correctly — do not re-improvise them here:
+1. **Hand off to the English-version workflow.** (v2: source-faithful
+authored translation done pre-C.6, verification now; v1: author it here.)
+Treat the page you just published (`{type}/{file}.html`) as the source and run **`.dentcast/workflows/en-version.md`** against it. That workflow already owns every detail correctly — do not re-improvise them here:
    - en page at `/{type}/en/{file}.html`; **English chrome cloned from `metanotes/en/meta-1.html`** (`<html lang="en" dir="ltr" data-dc-no-header>`, English topbar/toolbar labels, the `.lang-btn` CSS + markup), GA4 present exactly once.
    - **Body, box/section CSS classes, and JSON-LD `@type`/shape inherited from THIS page's own type** (e.g. the insight `.glass-box` structure), rendered LTR and **translated** structure-faithfully (same headings, same number of `<li>` items, nothing added or dropped).
    - **Scripts/analytics follow this type's conventions, not meta-1's extras.**

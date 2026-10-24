@@ -1,11 +1,31 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
 > **Live publication checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision; this repeated reference never requires a reread. Read the fixed handoff exactly once only when the user explicitly says this publication is incomplete/interrupted; a request to resume counts only if it identifies the publication as incomplete/interrupted. During an active run, keep its state in the current session; do not read or inspect the handoff before each step. Use the latest digest returned by the helper, then mark each step `started` with `tools/dentcast_publish_handoff.py step`. After EACH completed/skipped/blocked/failed step, write its real evidence/reason with the same tool before continuing or handing off. Never auto-mark semantic or scientific work complete.
 > Checkpoint IDs for this module: C.6, C.8, C.7. Category exceptions require explicit skip reasons. The protocol defines dependency ordering (builders before final stamping; LiteCast links after page construction). Phase F completion uses the real `verify` command.
-> **Fixed page deliveries:** after `C.4.9`, after `C.4.13` including lawful skips, and after all final work, Phase F and report G. Cuts 1/2 deliver work plus handoff; cut 3 delivers final work, completion receipt and handoff deletion together. All intermediate checkpoints stay local; no extra turn-end or cleanup push.
+> **Fixed page deliveries:** after `C.4.9`, then after `C.6` for new v2 editorial-locked publications (legacy v1-only publications keep `C.4.13`), then after actual Phase F + report G. Cuts 1/2 deliver work plus handoff; cut 3 delivers final work, completion receipt and handoff deletion together. All intermediate checkpoints stay local; no extra turn-end or cleanup push.
 
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
 ### 6. Pulse update
+
+**v2 cut-2 preparation (this is the final authoring checkpoint).**
+Complete and retain all actual semantic decisions and approvals from C.4.13
+(scientific/fidelity), C.4.14 (Challenge), C.5.0 through C.5.6-b
+(canonical tags, schema, taxonomy/pathways/bundles), links and C.6 (Pulse).
+Before C.6 can be resolved, author the exact approved English mirror and
+both language toggles using the unchanged Phase D rules of module 12;
+LiteCast/Challenge are explicit exemptions. This is *authoring* work, not
+the later mechanical Phase D verification. Record one genuine
+`second_cut_editorial_lock_v1` decision per the ten-scope schema in
+`publish-checkpoints.md`; evidence must be actual and approvals complete.
+Never fabricate a checklist to let the build run.
+
+**Then Push 2 at C.6** after a real precommit/CI cut check. The existing
+mechanical builder C.8, stamper C.7, Phase D technical checks, E marker,
+real Phase F and receipt/cleanup must run afterwards. If a builder would
+change authored content substantially, fail and reconcile approval,
+rather than performing editorial work behind the second cut. Historical
+v1-only runs retain C.4.13 as their second boundary.
+
 
 Use the sentence + hyperlink word from intake Question 5. **No spoilers (see Question 5): the line names the piece by its title and never narrates its decision/mechanism/finding/conclusion.** If the drafted sentence describes content beyond the title, rewrite it before inserting — never ship a Pulse line that summarizes the article.
 
