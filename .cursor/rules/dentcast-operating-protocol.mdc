@@ -6,7 +6,7 @@ alwaysApply: true
 # Cursor operating protocol
 
 **LIVE_MODULAR_PUBLISHING_ENABLED.** Read `.dentcast/workflows/global/README.md` and all complete active global sections selected by that router for the current edit scope, plus the complete `.dentcast/workflows/agent-parity.md`. They govern conversation, approvals, capability failures, Git, builders and final verification. Legacy files are backup only; do not read them for execution.
-New publication follows `.dentcast/workflows/README.md` and the applicable full modules. Staging receipts never replace scientific execution or founder consent.
+New publication follows `.dentcast/workflows/README.md` and all applicable verbatim module rules (complete modules by default, or verified pinned readpack selections only after locked Phase B). Staging receipts never replace scientific execution or founder consent.
 
 ## Interrupted publication
 

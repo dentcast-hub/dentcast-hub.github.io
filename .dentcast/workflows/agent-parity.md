@@ -4,7 +4,7 @@
 
 Before content changes, read `.dentcast/workflows/global/README.md`, the complete active sections selected by that router for the current edit scope, and `.dentcast/workflows/agent-parity.md`. All clients use these same rules.
 
-New publication → `.dentcast/workflows/README.md`. Read complete `modules/01-hard-rules.md` and `02-routing-intake.md`, then each applicable full module in canonical order. Preserve all approvals, category exceptions, builders, English and final Phase F. At step 4.13, independently validate and reuse founder-supplied complete DES score JSON and Fidelity JSON for this exact publication, without rerunning accepted tracks. If only valid DES JSON was supplied, run only any still-owed Fidelity; block on supplied incomplete/stale results rather than silently rescoring. If neither is supplied, perform the canonical source-dependent procedure; Phase F remains mandatory. Stage-only planning tools and synthetic receipts do not perform or authorize live publication.
+New publication → `.dentcast/workflows/README.md`. Read complete `modules/01-hard-rules.md` and `02-routing-intake.md`, then read every applicable canonical rule in order: full modules by default, or verified verbatim pinned readpack ranges after locked Phase B under publish-checkpoints.md. Preserve all approvals, category exceptions, builders, English and final Phase F. At step 4.13, independently validate and reuse founder-supplied complete DES score JSON and Fidelity JSON for this exact publication, without rerunning accepted tracks. If only valid DES JSON was supplied, run only any still-owed Fidelity; block on supplied incomplete/stale results rather than silently rescoring. If neither is supplied, perform the canonical source-dependent procedure; Phase F remains mandatory. Stage-only planning tools and synthetic receipts do not perform or authorize live publication.
 
 ## Interrupted publication
 
@@ -15,7 +15,7 @@ For «انتشار ناقص داشتم» or an explicit request to resume a publ
 ## Rule 0 — فایل فعال را کامل بخوان
 
 1. پیش از انتشار یا ویرایش محتوا، `.dentcast/workflows/global/README.md` و تمام بخش‌های فعالی را که روتر برای محدودهٔ کار انتخاب می‌کند کامل بخوان؛ پیش از تغییر فایل‌های جدید، انتخاب را با مسیرهای جدید به‌روز کن. اگر محدوده ناشناخته یا ابزار انتخاب نامعتبر بود، هر سه فایل کانونی را کامل بخوان؛ این منبع مشترک Cursor، Codex و Claude است. قواعد سراسری دیگر در فایل‌های بزرگِ ورودی یا بک‌آپ خوانده نمی‌شوند.
-2. برای انتشار جدید، روتر `.dentcast/workflows/README.md`، دو ماژول 01 و 02 و سپس هر ماژولِ مربوط را کامل و به ترتیب کانونی بخوان. خلاصه، حافظهٔ جلسه و خواندن بخشی از ماژول جای متن کامل آن را نمی‌گیرد.
+2. برای انتشار جدید، روتر `.dentcast/workflows/README.md`، دو ماژول 01 و 02 و سپس تمام قواعد لازمِ ماژول‌های مربوط را به ترتیب کانونی بخوان. مسیر پیش‌فرض خواندن فایل کامل است؛ فقط پس از قفل‌شدن پاسخ‌های Phase B می‌توان از خروجیِ بایت‌به‌بایت، هش‌دار و تأییدشدهٔ `tools/dentcast_publish_readpack.py` طبق `publish-checkpoints.md` استفاده کرد. بخش‌های حذف‌شده باید واقعاً خارج از مسیر باشند؛ خلاصهٔ مدل، حافظهٔ جلسه یا انتخاب سلیقه‌ایِ پاراگراف‌ها هرگز جای متن منبع را نمی‌گیرد. در ابهام یا تغییر نسخه، فایل کامل خوانده می‌شود.
 3. برای مسیرهای تخصصی، فایل کانونی همان مسیر کامل خوانده می‌شود؛ `routing-details.md` تریگرها و شرایط مسیرها را نگه می‌دارد.
 4. اگر ابزار فایل را تکه‌تکه می‌خواند، همهٔ تکه‌های فایل فعالِ لازم را بخوان. legacy فقط بک‌آپ است و در اجرا خوانده نمی‌شود.
 5. نسخهٔ گیت‌هاب را از برنچ کاری و revision تأییدشده بخوان؛ برای ادامهٔ انتشار، نبود فایل روی main دلیل نبود آن روی برنچ کاری نیست.

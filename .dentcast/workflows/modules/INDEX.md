@@ -1,6 +1,6 @@
 # Publishing modules — active index
 
-**LIVE_MODULAR_PUBLISHING_ENABLED.** New publications use `../README.md` and the twelve complete modules below. Read modules 01 and 02 first, then applicable modules in order. Global rules: `../global/README.md`; behavior: `../agent-parity.md`; interruption contract: `../publish-handoff.md`; temporary state: `.dentcast/PUBLISH-HANDOFF.md`.
+**LIVE_MODULAR_PUBLISHING_ENABLED.** New publications use `../README.md` and the twelve authoritative modules below. Read modules 01 and 02 completely first, then every applicable rule in order; the optional pinned, verbatim post-intake readpack is described in `../README.md` and cannot replace scientific execution or the original sources. Global rules: `../global/README.md`; behavior: `../agent-parity.md`; interruption contract: `../publish-handoff.md`; temporary state: `.dentcast/PUBLISH-HANDOFF.md`.
 
 Legacy snapshots are backup only and are not read for execution or ambiguity resolution. Preserve source-dependent DES/Fidelity and all original gates.
 
