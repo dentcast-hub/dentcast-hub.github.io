@@ -18,7 +18,9 @@ SLICES = ("01-hard-rules.md","02-routing-intake.md","03-litecast-and-page.md",
  "10-brain-and-pathways.md","11-build-and-version.md","12-english-notify-verify.md")
 RANGES = ((1,56),(57,356),(357,528),(529,794),(795,957),(958,1143),
  (1144,1335),(1336,1966),(1967,2038),(2039,2329),(2330,2393),(2394,2598))
-EDITS = {"02-routing-intake.md":{"CLAUDE.md → Repo conventions":".dentcast/workflows/global/repo-conventions.md"},
+EDITS = {"02-routing-intake.md":{"CLAUDE.md → Repo conventions":".dentcast/workflows/global/repo-conventions.md",
+ # Approved addition (share-41 audit): ask before a silent paper-only route.
+ '**Paper-only fast path (text-less) detail.**':'**Paper file without text, but a page is asked for → ASK.** If the paper\narrives with no متن but the request only makes sense on a page — DES/Fidelity,\nthe first-author→DOI credit, a post/page itself — or the user says the text lives\nelsewhere (a document, an artifact, an earlier message), do **not** silently take\nthe paper-only path. Ask, with the two named options: «متن صفحه کجاست؟ (لینک یا\nفایلش را بده)» / «فقط paper-only بماند (Drive + کاتالوگ، بدون صفحه)». Route only\nafter the answer.\n\n'+'**Paper-only fast path (text-less) detail.**'},
  "03-litecast-and-page.md":{"AGENTS.md` §۸":".dentcast/workflows/global/site-invariants.md`"},
  "08-des-fidelity.md":{'CLAUDE.md § "DES display"':".dentcast/workflows/global/plus-premium.md — DES display",
  "CLAUDE.md § DES":".dentcast/workflows/global/plus-premium.md — DES"},
