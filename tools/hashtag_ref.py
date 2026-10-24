@@ -490,7 +490,10 @@ def cmd_apply(path: str) -> None:
     touched = 0
     for cid, tags_ in articles.items():
         if cid not in by_cid:
-            sys.exit(f"refusing to apply — no brain entry for {cid}")
+            sys.exit(f"refusing to apply — no brain entry for {cid}. For an article "
+                     "not yet in the brain, apply the batch with \"articles\": {}, write "
+                     "its canonical tags with the brain entry (module 10 step 5), then run "
+                     "--sync, node tools/build_plus_index.mjs and --check.")
         by_cid[cid]["hashtags"] = list(tags_)
         touched += 1
 

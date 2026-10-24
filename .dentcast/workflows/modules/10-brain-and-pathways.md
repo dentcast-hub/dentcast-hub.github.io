@@ -35,6 +35,8 @@ The phrase is tokenized through the alias layer, so a concept already in the lib
 ```bash
 python3 tools/hashtag_ref.py --apply .dentcast/hashtag-batches/NNN-<short-name>.json
 ```
+**The article being published has no brain entry yet** — step 5.0 runs before step 5, and `--apply` refuses an `articles` key whose `content_id` the brain lacks. So for a new article write the batch with **`"articles": {}`** (concepts only). Its canonical tag list lands in **step 5**, written with the brain entry (and the page chips); run Step 4's `--sync`, `node tools/build_plus_index.mjs` and `--check` **after** that brain write. `articles` is for re-tagging entries that already exist.
+
 Rules for a new concept: **only non-canonical spellings go in `aliases`** — an existing canonical `#tag` is **never** filed as another concept's alias (Hard Rule 15); an alias must not equal another concept's word-set or an alias already in use (the compiler reports collisions — heed them). The guard **refuses** any tag lacking a library entry and any door-closing merge/rename — **fix what it flags, never force it** (`allow_lossy` is almost never right).
 
 **Step 4 — Write canonical tags everywhere, then verify.** Only canonical `#tag`s reach the brain `hashtags` (step 5) and the page's visible chips. **For episodes**, `--apply` rewrites the on-page chips from the brain and `tools/build_episodes.py` (step 8) regenerates `episodes.html`; **for other types**, set the cloned page's chip markup to the canonical list by hand so page and brain agree. Then:
