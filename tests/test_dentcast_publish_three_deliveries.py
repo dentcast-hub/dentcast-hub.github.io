@@ -194,6 +194,25 @@ class ThreeDeliveriesTests(unittest.TestCase):
         run(other, 'commit', '--allow-empty', '-m', 'forbidden fourth delivery')
         self.assert_blocked('EXTRA_DELIVERY_COMMIT_FORBIDDEN', lc.validate_final_receipt, other, data, 'HEAD')
 
+    def test_third_delivery_may_carry_the_public_technical_report_only(self):
+        sha = self.prepare_final()
+        lc.finish(self.root, sha)
+        receipt = lc.completion_path({'content_id': 'note'})
+        report = lc.technical_report_path({'content_id': 'note', 'category': 'insight'})
+        self.assertEqual(report, '.dentcast/publication-reports/insight-note.md')
+        (self.root/report).write_text('# note — publication technical report\n')
+        (self.root/'unrelated.md').write_text('not part of this publication\n')
+        run(self.root, 'add', 'note.html', h.STATE_PATH, receipt, report, 'unrelated.md')
+        self.assert_blocked('UNRELATED_FINAL_DELIVERY_PATH', lc.guard, self.root, 'pre-commit')
+        run(self.root, 'rm', '--cached', '-q', 'unrelated.md')
+        (self.root/'unrelated.md').unlink()
+        lc.guard(self.root, 'pre-commit')
+        run(self.root, 'commit', '-m', 'delivery 3 with technical report')
+        lc.guard(self.root, 'ci')
+        run(self.root, 'push', 'origin', 'main')
+        self.assertTrue(lc.confirm_cleanup(self.root)['publication_completed'])
+        self.assertEqual(merge.verify_publication_history(self.root, self.baseline, []), {'note'})
+
     def test_intermediate_progress_is_local_and_cut_requires_real_push(self):
         sha = self.start()
         sha = self.walk(sha, '0')

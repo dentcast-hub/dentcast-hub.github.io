@@ -40,6 +40,15 @@ def sample_publication():
     }
 
 
+def write_completion(root, pub):
+    """What `finish` writes before the runner stages delivery 3."""
+    path = root / lifecycle.completion_path(pub)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({"schema": "publish-completion-v1", "state": {"publication": pub},
+                                "verification": {"summary": "9 passed, 0 warned, 0 failed — publish is COMPLETE",
+                                                 "output_sha256": "f" * 64}}), encoding="utf-8")
+
+
 class PostCut2RunnerTests(unittest.TestCase):
     def test_runner_and_automation_workflow_are_handoff_inputs(self):
         self.assertIn("tools/dentcast_post_cut2_runner.py", runner.handoff.WORKFLOW_PATHS)
@@ -287,7 +296,6 @@ class PostCut2RunnerTests(unittest.TestCase):
         base = "b" * 40
         third = "c" * 40
         report_path = Path(".dentcast/publication-reports/insight/insight100.completion.json")
-        root = Path("/tmp/fake-post-cut2-repo")
 
         def fake_git(_root, *args, check=True):
             if args[:2] == ("rev-parse", "HEAD"):
@@ -300,6 +308,7 @@ class PostCut2RunnerTests(unittest.TestCase):
 
         completed = subprocess.CompletedProcess([], 0, stdout="ok", stderr="")
         with tempfile.TemporaryDirectory() as tmp, \
+             tempfile.TemporaryDirectory() as checkout, \
              patch.object(runner, "publication", return_value=(pub, "digest")), \
              patch.object(runner, "record_step", side_effect=["g-start", "g-complete"]), \
              patch.object(runner, "record_publication", return_value="delivery-recorded"), \
@@ -307,9 +316,27 @@ class PostCut2RunnerTests(unittest.TestCase):
              patch.object(runner, "changed_paths", return_value={runner.HANDOFF, "index.html", str(report_path)}), \
              patch.object(runner.lifecycle, "pending", return_value=False), \
              patch.object(runner.subprocess, "run", return_value=completed):
+            root = Path(checkout)
+            next(r for r in pub["steps"] if r["id"] == "C.4.14").update(
+                status="skipped", reason="ordinary article, not a Challenge")
+            write_completion(root, pub)
+            (root / "plus").mkdir()
+            (root / "plus/des-scores.json").write_text(json.dumps({"insight/insight100": {
+                "sources": [{"des_score": 15, "band": "E", "content_type": "THERAPY", "provisional": False}],
+                "fidelity": [{"fidelity_score": 100, "level": "HIGH", "provisional": False,
+                              "counts": {"MATCHES": 51, "ALTERED": 0}}]}}), encoding="utf-8")
             result = runner.finalize_and_push(
                 root, Path(tmp), base, "automation/test",
                 "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/123")
+            report = (root / ".dentcast/publication-reports/insight-insight100.md").read_text(encoding="utf-8")
+        self.assertEqual(lifecycle.technical_report_path(pub), ".dentcast/publication-reports/insight-insight100.md")
+        for text in ("`C.4.14` skipped — ordinary article, not a Challenge", "`C.8` completed",
+                     "**9 passed, 0 warned, 0 failed — publish is COMPLETE**",
+                     "Source 1: DES 15/100, band E, THERAPY, provisional False",
+                     "Fidelity 1: 100 HIGH, provisional False (ALTERED 0, MATCHES 51)",
+                     "`index.html`", "`.dentcast/publication-reports/insight-insight100.md`", base):
+            self.assertIn(text, report)
+        self.assertNotIn("fixture:title approved", report)
         self.assertEqual(result["status"], "publication_completed")
         self.assertEqual(result["third_delivery_sha"], third)
         self.assertTrue(result["publication_completed"])
@@ -366,6 +393,7 @@ class PostCut2RunnerTests(unittest.TestCase):
             artifact = Path(tmp) / "artifact"
             cleanup = Path(tmp) / "cleanup-record.json"
             cleanup.write_text("cleanup receipt", encoding="utf-8")
+            write_completion(root, pub)
             with patch.object(runner, "publication", return_value=(pub, "digest")), \
                  patch.object(runner, "record_step", side_effect=["g-start", "g-complete"]), \
                  patch.object(runner, "record_publication", return_value="delivery-recorded"), \

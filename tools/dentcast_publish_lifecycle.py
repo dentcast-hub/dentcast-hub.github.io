@@ -252,6 +252,13 @@ def completion_path(publication):
     return ".dentcast/publication-reports/" + name + ".completion.json"
 
 
+def technical_report_path(publication):
+    """Public-safe Phase G technical report delivered with the third commit."""
+    h.relative_path(publication["content_id"])
+    name = publication["category"] + "-" + publication["content_id"].rsplit("/", 1)[-1]
+    return h.relative_path(".dentcast/publication-reports/" + name + ".md")
+
+
 def final_files_match(root, state):
     current = h.current_snapshot(root, state)
     h.require(all(current[k] == state["snapshot"][k] for k in ("repository", "branch")),
@@ -312,7 +319,8 @@ def validate_final_receipt(root, data, commit=None):
         h.require(h.git(root, "show", commit + ":" + h.STATE_PATH, optional=True) is None,
                   "FINAL_HANDOFF_MUST_NOT_BE_PUSHED")
         changed = set(h.text_git(root, "diff", "--name-only", second, commit).splitlines())
-        h.require(changed <= set(state["snapshot"]["files"]) | {h.STATE_PATH, completion_path(publication)},
+        h.require(changed <= set(state["snapshot"]["files"]) | {
+            h.STATE_PATH, completion_path(publication), technical_report_path(publication)},
                   "UNRELATED_FINAL_DELIVERY_PATH")
     for name, info in state["snapshot"]["files"].items():
         actual = h.file_info(root, name)
@@ -760,7 +768,9 @@ def guard(root, phase):
             if phase == "pre-commit":
                 staged = h.git(root, "diff", "--cached", "--name-only", "-z").split(b"\0")
                 if fixed_delivery(data["state"]["publication"]):
-                    allowed = set(data["state"]["snapshot"]["files"]) | {h.STATE_PATH, data["completion_path"]}
+                    allowed = set(data["state"]["snapshot"]["files"]) | {
+                        h.STATE_PATH, data["completion_path"],
+                        technical_report_path(data["state"]["publication"])}
                     h.require(all(not p or p.decode() in allowed for p in staged), "UNRELATED_FINAL_DELIVERY_PATH")
                     final_files_match(root, data["state"])
                     dirty = h.status_paths(root)

@@ -520,7 +520,9 @@ final handoff**:
    at delivery 2. It reruns the mechanical gate and checks unchanged work. It
    writes the completed-only receipt, retains private recovery metadata and
    removes the active handoff locally.
-3. Stage only final scoped work, the completion receipt and handoff deletion.
+3. Stage only final scoped work, the completion receipt, the public-safe technical
+   report `.dentcast/publication-reports/<category>-<id>.md` (the post-Push-2
+   workflow writes it from the ledger and Phase F receipt) and handoff deletion.
    Commit/push them **together as delivery 3**, then run `confirm-cleanup`.
    This confirms actual remote delivery and unchanged final bytes. No additional
    cleanup commit/push follows. Until confirmation, status is
