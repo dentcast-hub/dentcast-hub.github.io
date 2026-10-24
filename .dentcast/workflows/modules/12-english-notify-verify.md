@@ -3,6 +3,8 @@
 > Checkpoint IDs for this module: D, E, F, G. Category exceptions require explicit skip reasons. The protocol defines dependency ordering (builders before final stamping; LiteCast links after page construction). Phase F completion uses the real `verify` command.
 > **Fixed page deliveries:** after `C.4.9`, then after `C.6` for new v2 editorial-locked publications (legacy v1-only publications keep `C.4.13`), then after actual Phase F + report G. Cuts 1/2 deliver work plus handoff; cut 3 delivers final work, completion receipt and handoff deletion together. All intermediate checkpoints stay local; no extra turn-end or cleanup push.
 
+> **v2 Phase D split:** English body and toggles were authored and approved BEFORE C.6/Push 2. This post-cut phase verifies the same content and runs technical noindex/hreflang checks only; substantive drift must block. v1-only runs follow the original authoring order.
+
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
 ## Phase D — English mirror & language toggle (MANDATORY; Hard Rule 12)

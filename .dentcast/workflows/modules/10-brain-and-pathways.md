@@ -3,6 +3,8 @@
 > Checkpoint IDs for this module: C.5.0, C.5, C.5.5, C.5.6, C.5.6-b. Category exceptions require explicit skip reasons. The protocol defines dependency ordering (builders before final stamping; LiteCast links after page construction). Phase F completion uses the real `verify` command.
 > **Fixed page deliveries:** after `C.4.9`, then after `C.6` for new v2 editorial-locked publications (legacy v1-only publications keep `C.4.13`), then after actual Phase F + report G. Cuts 1/2 deliver work plus handoff; cut 3 delivers final work, completion receipt and handoff deletion together. All intermediate checkpoints stay local; no extra turn-end or cleanup push.
 
+> **v2 cut-2 readiness:** Complete canonical tag, metadata, pathway and bundle decisions here before the C.6 editorial lock and second Push. No judgment work moves behind Push 2.
+
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
 ### 5.0. Hashtag standardization against the reference library (Hard Rule 15)
