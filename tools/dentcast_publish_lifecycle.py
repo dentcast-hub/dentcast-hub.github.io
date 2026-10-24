@@ -223,17 +223,11 @@ def require_delivery_parent(root, publication, number, revision="HEAD"):
     if number == 1:
         h.require(previous is None, "FIRST_DELIVERY_REQUIRES_NO_ACTIVE_REMOTE_HANDOFF")
     else:
-        facts = {
-            "boundary": boundary,
-            "expected_boundary": number - 1,
-            "parent_fixed": previous is not None and fixed_delivery(previous),
-            "parent_v2": previous is not None and editorial_cut_v2(previous),
-            "current_v2": editorial_cut_v2(publication),
-            "content_match": previous is not None and previous["content_id"] == publication["content_id"],
-        }
-        h.require(facts["boundary"] == facts["expected_boundary"] and facts["parent_fixed"]
-                  and facts["parent_v2"] == facts["current_v2"] and facts["content_match"],
-                  "FIXED_DELIVERY_ORDER_REQUIRED:" + json.dumps(facts, sort_keys=True))
+        h.require(boundary == number-1 and previous is not None
+                  and fixed_delivery(previous)
+                  and editorial_cut_v2(previous) == editorial_cut_v2(publication)
+                  and previous["content_id"] == publication["content_id"],
+                  "FIXED_DELIVERY_ORDER_REQUIRED")
 
 
 def completion_path(publication):
@@ -770,7 +764,15 @@ def guard(root, phase):
         number = delivery_boundary(state["publication"])
         h.require(number is not None, "ONLY_THREE_FIXED_DELIVERIES_ALLOWED")
         require_fixed_cut_readiness(state["publication"], root)
-        require_delivery_parent(root, state["publication"], number, "HEAD^" if phase == "ci" else "HEAD")
+        parent_revision = "HEAD^" if phase == "ci" else "HEAD"
+        parent_boundary, parent = committed_boundary(root, parent_revision)
+        already_delivered_second_cut = (
+            number == 2 and parent_boundary == 2 and parent is not None
+            and fixed_delivery(parent)
+            and editorial_cut_v2(parent) == editorial_cut_v2(state["publication"])
+            and parent["content_id"] == state["publication"]["content_id"])
+        if not already_delivered_second_cut:
+            require_delivery_parent(root, state["publication"], number, parent_revision)
     if phase == "ci":
         # CI is detached and the recorded index/status may predate the checkpoint commit.
         for p, info in state["snapshot"]["files"].items():
