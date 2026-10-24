@@ -25,7 +25,7 @@ def sample_publication():
         "content_id": "insight/insight100",
         "category": "insight",
         "target_paths": ["insight/insight100.html", "insight/en/insight100.html"],
-        "context": {"external_actions": []},
+        "external_actions": [],
         "steps": rows,
     }
 
