@@ -495,7 +495,6 @@ ${renderMemberSpotControls()}
   })();
   </script>
 
-
   <h4 style="margin:18px 0 0">کم‌کردن روزهای اشتراک</h4>
   <div class="muted">از جدول بالا کاربر را انتخاب کن، یا ایمیلِ متصل به حساب گوگل / شمارهٔ موبایل را وارد کن. تعداد روز از تاریخ پایان کم می‌شود و از مدتِ باقی‌مانده بیشتر نمی‌تواند باشد.</div>
   <form class="bc" id="srForm" onsubmit="return false">
@@ -4609,7 +4608,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     if (!needle) {
       void reply.code(400).send({
         error: 'missing_user',
-        message: 'شماره‌ی موبایل، نام کاربری، یا شناسه‌ی کاربر را بفرست.',
+        message: 'ایمیلِ ثبت‌شده، شماره‌ی موبایل، نام کاربری، یا شناسه‌ی کاربر را بفرست.',
       });
       return null;
     }
@@ -4733,7 +4732,6 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       const sub = await activateDays(who.id, body.days, { source: 'admin', meta: { via: 'admin_grant_days' } });
       return reply.send(subscriptionView(who, sub));
     });
-
 
   // POST /admin/subscriptions/reduce-days { user, days } — subtract N days
   // from one finite subscription, retaining the row and the audit history.
