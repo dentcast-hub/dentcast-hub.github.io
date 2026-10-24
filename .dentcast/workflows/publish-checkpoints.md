@@ -356,13 +356,62 @@ before continuing. Keep one transition per write; `advance` performs separate
 writes and returns `delivery_required` rather than crossing an undelivered cut.
 Local checkpoints are not proof that another checkout can recover the work.
 
-Every new page publication has exactly these three commit/push deliveries:
+Every new page publication still has exactly three commit/push deliveries.
+**Newly initialized pages** carry `fixed_three_deliveries_v2` (alongside the
+v1 compatibility marker), whereas already-started v1-only handoffs remain
+on their original second cut; NEVER relabel or retroactively migrate their
+published first/second delivery. The new schedule is:
 
 | Delivery | Boundary | What is delivered |
 |---|---|---|
 | 1 | After `C.4.9`: page construction and semantic linking complete | Scoped work and latest unfinished handoff |
-| 2 | After `C.4.13`: DES/Fidelity, required review and founder-approved corrections complete | Scoped work, scientific results or lawful exception, latest unfinished handoff |
+| 2 — new v2 only | After `C.6`: DES/Fidelity, Challenge, hashtags, content registry, pathways, Pulse, translations and all human sign-offs completed or legitimately exempted | Scoped editorially finalized work and current handoff |
+| 2 — existing v1-only | After `C.4.13`: old scientific cut, unchanged | Historical v1 step order and handoff |
 | 3 | After all remaining steps, final bytes, real Phase F and report G | Final work and completion receipt, with the old handoff deleted in the same commit/push |
+
+### Editorial closure required before the v2 second delivery
+
+The *author* side of Phase D (complete English body, first/final
+editorial review, reciprocal toggles and any consent) is performed before
+C.6 is resolved; after second Push, Phase D only performs mechanical
+consistency checks and noindex/hreflang/sitemap tools. LiteCast and Challenge
+keep their existing English exemption. Move no scientific review or founder
+correction after the second cut. Fill the full ten-scope
+`second_cut_editorial_lock_v1` decision:
+
+```json
+{
+  "kind": "second_cut_editorial_lock_v1",
+  "scopes": [
+    {"scope": "scientific", "status": "resolved", "evidence": ["real source/review reference"]},
+    {"scope": "challenge", "status": "not_applicable", "evidence": ["reason based on route"]},
+    {"scope": "taxonomy", "status": "resolved", "evidence": ["verified classification"]},
+    {"scope": "links", "status": "resolved", "evidence": ["actual semantic-link audit"]},
+    {"scope": "hashtags", "status": "resolved", "evidence": ["canonical library check"]},
+    {"scope": "content_record", "status": "resolved", "evidence": ["entry and title/meta check"]},
+    {"scope": "pathways", "status": "resolved", "evidence": ["placement/exception audit"]},
+    {"scope": "pulse", "status": "resolved", "evidence": ["seven-line update or justified exception"]},
+    {"scope": "english", "status": "resolved", "evidence": ["existing approved mirror or exemption"]},
+    {"scope": "author_approvals", "status": "resolved", "evidence": ["documented human decisions"]}
+  ],
+  "english": {"status": "ready", "path": "insight/en/insightNN.html",
+              "evidence": ["source and mirror reviewed before Push 2"]},
+  "evidence": ["actual current-run editorial close review"]
+}
+```
+
+The sample is SCHEMA ONLY, never copy its example evidence into a real run.
+Each ten-scope status is either `resolved` or `not_applicable` with a
+genuine independent source/reference for the actual category. For LiteCast
+or confirmed Challenge the English status MUST be `exempt`, path `null`
+and a justified evidence reference; all other pages MUST be `ready`, with
+the correct mirror path in `target_paths` and a real file already on disk.
+The canonical writer validates this at cut 2 and at completion. Its
+structural check does not substitute for the actual author sign-off.
+All editorial work (including tags, Pulse and the English writing itself)
+must be completed before the second boundary. If any mechanical operation
+later reveals a needed substantive change, STOP and explicitly invalidate
+affected approvals; do not silently resolve it in Phase D/Phase F.
 
 No discretionary phase, turn end, agent/checkout switch, approval wait or external
 action adds a fourth delivery. Between cuts, checkpoint locally and continue.
@@ -400,6 +449,13 @@ do not invent page/DES cuts for it. Never remove a policy marker to claim legacy
 The v3 handoff remains semantic-only. Git reconstructs committed fingerprints;
 private same-checkout observations support local progress. Do not create commits
 to embed their own SHA. Keep private input bodies out of all public receipts.
+
+For v2 only, the cut moves *forward in the step sequence* from C.4.13 to
+C.6, **after** the judgment-dependent steps. The canonical plan's 52
+step IDs, science requirements and module order remain unchanged. C.8,
+C.7, D technical checks, E, real Phase F, final report G and final
+delivery run after the v2 second cut. The legacy v1 boundary retains
+C.4.13 without migration.
 
 The lifecycle registry in `tools/dentcast_publish_lifecycle.py` maps every canonical phase/question/top-level action and the paper-ingestion parts to a module. Its order preserves two source dependencies: **C.8 builders before C.7 stamping**, and **LiteCast C.0.5/C.0.6 after C.2 page construction**. Canonical skip rules still come from the full source, not a guessed category map. All inventory checkpoints remain present on page publications, with explicit skips where applicable. `rules`, Phase `0`, Phase `F` and final report `G` cannot be skipped.
 

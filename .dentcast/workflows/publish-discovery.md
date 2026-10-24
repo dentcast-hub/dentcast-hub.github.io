@@ -78,7 +78,7 @@ required inputs, completed evidence, approvals and external outcomes. An
 ambiguous upload/notification must be reconciled before retry. Read the active
 modular workflow and continue the first unfinished canonical step only when
 its prerequisites hold. Preserve the recorded delivery policy. New page runs
-deliver exactly after `C.4.9`, after `C.4.13` (including lawful skips), and after
+deliver exactly after `C.4.9`, then after `C.6` for new v2 editorial-locked publications (or `C.4.13` for a v1-only in-flight publication with its original order), and after
 final work, Phase F and G. Cuts 1/2 include work and latest handoff; cut 3 combines
 final work, completion receipt and handoff deletion. Intermediate progress,
 stops and external-action receipts stay local; do not add another push.

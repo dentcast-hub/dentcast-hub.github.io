@@ -4,6 +4,7 @@
  */
 export const SCHEMA="publish-handoff-v3";
 export const POLICY="fixed_three_deliveries_v1";
+export const EDITORIAL_POLICY="fixed_three_deliveries_v2";
 const modules=["01-hard-rules.md","02-routing-intake.md","03-litecast-and-page.md","04-taxonomy-and-navigation.md","05-semantic-linking.md","06-paper-ingestion.md","07-flashcards-and-quiz.md","08-des-fidelity.md","09-challenge.md","10-brain-and-pathways.md","11-build-and-version.md","12-english-notify-verify.md"];
 const groups=[["rules"],["0","A","B.1","B.2","B.3","B.3.5","B.4","B.4.7","B.4.8","B.4.9","B.5"],["C.0","C.0.1","C.0.2","C.0.3","C.0.4","C.1","C.2","C.0.5","C.0.6"],["C.2.4","C.2.5","C.2.6","C.3","C.4","C.4.5","C.4.5-b","C.4.6"],["C.4.7","C.4.7-b","C.4.8","C.4.9"],["C.4.10.1","C.4.10.2","C.4.10.3"],["C.4.11","C.4.12"],["C.4.13"],["C.4.14"],["C.5.0","C.5","C.5.5","C.5.6","C.5.6-b"],["C.6","C.8","C.7"],["D","E","F","G"]];
 const q=String.fromCharCode(96).repeat(3);
@@ -26,7 +27,7 @@ const validPath=p=>nonempty(p)&&!p.startsWith("/")&&!p.includes("\\")&&!p.includ
 export function plan(){return groups.flatMap((g,i)=>g.map(id=>({id,module:modules[i],status:"pending",evidence:[],reason:null})));}
 export function newPublication(content_id,category,target_paths,context={}){
   const p={content_id,category,target_paths:[...target_paths].sort(),status:"in_progress",blocker:null,context:{
-    inputs:context.inputs||[],decisions:[{kind:POLICY},...(context.decisions||[])],
+    inputs:context.inputs||[],decisions:[{kind:POLICY},{kind:EDITORIAL_POLICY},...(context.decisions||[])],
     approvals:context.approvals||[],pending_questions:context.pending_questions||[],
     validation:[],delivery:[],unrelated_changes:[]},steps:plan(),external_actions:[]};
   validate(p);return p;
