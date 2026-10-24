@@ -591,7 +591,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Post-Push-2 retry: reviewed the failed C.8 run, confirmed only canonical generated outputs changed and fixtures remained untouched; rerun uses the corrected C.8/C.7 reconciliation handling."
+    "note": "F verification found stale title metadata; all title surfaces and the breadcrumb now match the approved title. Retry the mechanical continuation."
   },
   "schema": "publish-handoff-v3"
 }
