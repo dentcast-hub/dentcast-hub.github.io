@@ -57,6 +57,26 @@ socket`, `GBR`, `periimplantitis`, `biomimetic`, with nested paths like
    - `drive_id` = the uploaded file's id
    - `drive_view` = `https://drive.google.com/file/d/<drive_id>/view`
    - `drive_download` = `https://drive.google.com/uc?export=download&id=<drive_id>`
+   **Founder-uploaded file (the usual case).** When the founder has already
+   uploaded the PDF to the cabinet root instead of handing you the file, do not
+   upload a second copy:
+   - **Find** it among the files directly under the parent folder (Drive MCP
+     search/list) and confirm it is this paper (title/first page, size). If more
+     than one file could be it, **ask**.
+   - **Rename** it to the paper's real title (the verified title, never a
+     guess), keeping its extension. Part 2's `file_name` is this new name.
+   - **Move** that same file into the subfolder chosen in steps 1–2 — never a
+     copy or re-upload.
+   - Capture `drive_id` from **that same file**; `drive_view` and
+     `drive_download` derive from it exactly as above.
+
+   **Doing the Drive work early.** If the founder asks for it «اول از همه»,
+   before the ledger reaches `C.4.10.1`, perform it then and record it as an
+   `external_action` (`started` before acting; the observed outcome and evidence,
+   e.g. target `drive:<drive_id>`, right after). When the ledger reaches
+   `C.4.10.1`, do not repeat the find/rename/move/upload: complete the step with
+   evidence that references that recorded receipt. Every ask-don't-guess rule in
+   this branch applies to the early run unchanged.
 4. **Ambiguity → ASK.** If no existing subfolder clearly fits, or two fit
    equally, **ask the user** which subfolder to use (or whether to create a new
    one). **Never create a new subfolder without explicit confirmation.**
