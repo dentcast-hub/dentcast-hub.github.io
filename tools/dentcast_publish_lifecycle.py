@@ -218,10 +218,27 @@ def committed_boundary(root, revision):
     return delivery_boundary(state["publication"]), state["publication"]
 
 
+def invalidation_count(publication):
+    return sum(1 for d in publication["context"]["decisions"]
+               if isinstance(d, dict) and d.get("kind") == h.INVALIDATION)
+
+
+def redelivers_first_cut(previous, publication, boundary):
+    return (boundary == 1 and fixed_delivery(previous)
+            and previous["content_id"] == publication["content_id"]
+            and previous["category"] == publication["category"]
+            and editorial_cut_v2(previous) == editorial_cut_v2(publication)
+            and invalidation_count(publication) > invalidation_count(previous))
+
+
 def require_delivery_parent(root, publication, number, revision="HEAD"):
     boundary, previous = committed_boundary(root, revision)
     if number == 1:
-        h.require(previous is None, "FIRST_DELIVERY_REQUIRES_NO_ACTIVE_REMOTE_HANDOFF")
+        # An audited dependency invalidation after a delivered first cut may
+        # re-deliver that same cut once per invalidation: same run, previous
+        # commit at boundary 1, and strictly more invalidation receipts now.
+        h.require(previous is None or redelivers_first_cut(previous, publication, boundary),
+                  "FIRST_DELIVERY_REQUIRES_NO_ACTIVE_REMOTE_HANDOFF")
     else:
         h.require(boundary == number-1 and previous is not None
                   and fixed_delivery(previous)
