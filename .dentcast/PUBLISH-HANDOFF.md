@@ -591,7 +591,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Inspect fixed-delivery gate facts for the already verified second cut"
+    "note": "Continue the verified second cut under the post-cut lifecycle guard"
   },
   "schema": "publish-handoff-v3"
 }
