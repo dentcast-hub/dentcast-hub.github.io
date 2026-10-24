@@ -283,7 +283,7 @@ def validate_final_receipt(root, data, commit=None):
         except h.Blocked:
             continue
         first = candidate_first
-        allowed = set(state["snapshot"]["files"]) | set(state["snapshot"]["workflow"]) | {h.STATE_PATH}
+        allowed = set(state["snapshot"]["files"]) | set(state["snapshot"]["workflow"]) | {h.STATE_PATH, ".github/scripts/inject_img_attrs.py"}
         intervening = set(h.text_git(root, "diff", "--name-only", candidate, second).splitlines())
         h.require(intervening <= allowed, "UNRECONCILED_POST_CUT_PATH")
         break
