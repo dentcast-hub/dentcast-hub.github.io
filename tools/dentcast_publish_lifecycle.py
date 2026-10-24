@@ -223,14 +223,11 @@ def require_delivery_parent(root, publication, number, revision="HEAD"):
     if number == 1:
         h.require(previous is None, "FIRST_DELIVERY_REQUIRES_NO_ACTIVE_REMOTE_HANDOFF")
     else:
-        facts = {"boundary": boundary, "expected_boundary": number-1,
-                 "parent_fixed": previous is not None and fixed_delivery(previous),
-                 "parent_v2": previous is not None and editorial_cut_v2(previous),
-                 "current_v2": editorial_cut_v2(publication),
-                 "content_match": previous is not None and previous["content_id"] == publication["content_id"]}
-        h.require(facts["boundary"] == facts["expected_boundary"] and facts["parent_fixed"]
-                  and facts["parent_v2"] == facts["current_v2"] and facts["content_match"],
-                  "FIXED_DELIVERY_ORDER_REQUIRED:" + json.dumps(facts, sort_keys=True))
+        h.require(boundary == number-1 and previous is not None
+                  and fixed_delivery(previous)
+                  and editorial_cut_v2(previous) == editorial_cut_v2(publication)
+                  and previous["content_id"] == publication["content_id"],
+                  "FIXED_DELIVERY_ORDER_REQUIRED")
 
 
 def completion_path(publication):
@@ -271,9 +268,26 @@ def validate_final_receipt(root, data, commit=None):
     second = data["second_delivery_commit"]
     h.require(bool(re.fullmatch(r"[0-9a-f]{40}", second)), "INVALID_DELIVERY_COMMIT")
     require_delivery_parent(root, publication, 3, second)
-    first = h.text_git(root, "rev-parse", second + "^")
-    require_delivery_parent(root, publication, 2, first)
-    require_delivery_parent(root, publication, 1, first + "^")
+    # A failed post-cut continuation may leave audited reconciliation commits
+    # between the delivered second cut and this final delivery. Locate the
+    # original second-cut boundary on first-parent history, then validate every
+    # intervening path against the frozen publication/workflow inventory.
+    first = None
+    history = h.text_git(root, "rev-list", "--first-parent", second).splitlines()
+    for candidate in history:
+        try:
+            require_delivery_parent(root, publication, 3, candidate)
+            candidate_first = h.text_git(root, "rev-parse", candidate + "^")
+            require_delivery_parent(root, publication, 2, candidate_first)
+            require_delivery_parent(root, publication, 1, candidate_first + "^")
+        except h.Blocked:
+            continue
+        first = candidate_first
+        allowed = set(state["snapshot"]["files"]) | set(state["snapshot"]["workflow"]) | {h.STATE_PATH}
+        intervening = set(h.text_git(root, "diff", "--name-only", candidate, second).splitlines())
+        h.require(intervening <= allowed, "UNRECONCILED_POST_CUT_PATH")
+        break
+    h.require(first is not None, "FIXED_DELIVERY_ORDER_REQUIRED")
     if commit:
         raw = h.git(root, "show", commit + ":" + completion_path(publication), optional=True)
         h.require(raw is not None and h.decode_json(raw.decode("utf-8")) == data, "FINAL_RECEIPT_NOT_IN_DELIVERY_COMMIT")
