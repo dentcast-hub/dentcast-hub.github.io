@@ -34,6 +34,36 @@ def sample_publication():
 
 
 class PostCut2RunnerTests(unittest.TestCase):
+    def test_push1_preflight_is_a_noop(self):
+        pub = sample_publication()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / runner.HANDOFF).parent.mkdir(parents=True)
+            (root / runner.HANDOFF).write_text("handoff", encoding="utf-8")
+            with patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]), \
+                 patch.object(runner, "publication", return_value=(pub, "digest")), \
+                 patch.object(lifecycle, "editorial_cut_v2", return_value=True), \
+                 patch.object(lifecycle, "delivery_boundary", return_value=1), \
+                 patch.object(runner, "command_plan") as commands:
+                result = runner.preflight(root, HEAD, BRANCH)
+                commands.assert_not_called()
+        self.assertFalse(result["continue"])
+        self.assertEqual(result["reason"], "NOT_AT_V2_SECOND_DELIVERY")
+
+    def test_push2_preflight_enters_mechanical_job(self):
+        pub = sample_publication()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / runner.HANDOFF).parent.mkdir(parents=True)
+            (root / runner.HANDOFF).write_text("handoff", encoding="utf-8")
+            with patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]), \
+                 patch.object(runner, "publication", return_value=(pub, "digest")), \
+                 patch.object(lifecycle, "editorial_cut_v2", return_value=True), \
+                 patch.object(lifecycle, "delivery_boundary", return_value=2):
+                result = runner.preflight(root, HEAD, BRANCH)
+        self.assertTrue(result["continue"])
+        self.assertEqual(result["boundary"], 2)
+
     def test_phase_f_uses_frozen_handoff_approvals(self):
         pub = sample_publication()
         pub["context"]["approvals"] = [
@@ -184,6 +214,44 @@ class PostCut2RunnerTests(unittest.TestCase):
                              "canonical handoff bytes")
             self.assertFalse((root / "private.env").exists())
             self.assertIn("--reconcile-note", calls[0])
+
+    def test_finalization_creates_one_third_delivery_then_confirms_cleanup(self):
+        pub = sample_publication()
+        states = {row["id"]: row for row in pub["steps"]}
+        for row in pub["steps"]:
+            if row["id"] == "G":
+                break
+            row["status"] = "completed"
+        pub["context"]["delivery"] = []
+        base = "b" * 40
+        third = "c" * 40
+        report_path = Path(".dentcast/publication-reports/insight/insight100.completion.json")
+        root = Path("/tmp/fake-post-cut2-repo")
+
+        def fake_git(_root, *args, check=True):
+            if args[:2] == ("rev-parse", "HEAD"):
+                return third
+            if args[:2] == ("rev-parse", "HEAD^"):
+                return base
+            if args and args[0] == "ls-remote":
+                return third + "\trefs/heads/automation/test"
+            return ""
+
+        completed = subprocess.CompletedProcess([], 0, stdout="ok", stderr="")
+        with tempfile.TemporaryDirectory() as tmp, \
+             patch.object(runner, "publication", return_value=(pub, "digest")), \
+             patch.object(runner, "record_step", side_effect=["g-start", "g-complete"]), \
+             patch.object(runner, "record_publication", return_value="delivery-recorded"), \
+             patch.object(runner, "git", side_effect=fake_git), \
+             patch.object(runner, "changed_paths", return_value={runner.HANDOFF, "index.html", str(report_path)}), \
+             patch.object(runner.lifecycle, "pending", return_value=False), \
+             patch.object(runner.subprocess, "run", return_value=completed):
+            result = runner.finalize_and_push(
+                root, Path(tmp), base, "automation/test",
+                "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/123")
+        self.assertEqual(result["status"], "publication_completed")
+        self.assertEqual(result["third_delivery_sha"], third)
+        self.assertTrue(result["publication_completed"])
 
 
 if __name__ == "__main__":

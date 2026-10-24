@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path, PurePosixPath
 import subprocess
 import sys
@@ -69,6 +70,28 @@ def phase_f_expectations(pub: dict, args) -> tuple[str | None, str | None]:
     if not title and not caption:
         raise RunnerError("APPROVED_EXPECTED_TEXT_REQUIRED_FOR_PHASE_F")
     return title, caption
+
+
+def preflight(root: Path, expected_head: str, expected_branch: str) -> dict:
+    """Read-only trigger gate; Push 1 and post-cleanup pushes are clean skips."""
+    actual = git(root, "rev-parse", "HEAD").lower()
+    if actual != expected_head.lower():
+        raise RunnerError("EXPECTED_EVENT_SHA_MISMATCH")
+    branch = git(root, "branch", "--show-current")
+    if branch != expected_branch:
+        raise RunnerError("EXPECTED_BRANCH_MISMATCH")
+    remote = git(root, "ls-remote", "origin", f"refs/heads/{branch}").split()
+    if not remote or remote[0].lower() != expected_head.lower():
+        raise RunnerError("REMOTE_BRANCH_MOVED_OR_UNOBSERVABLE")
+    if not (root / HANDOFF).is_file():
+        return {"continue": False, "reason": "NO_ACTIVE_HANDOFF"}
+    pub, _ = publication(root)
+    if not lifecycle.editorial_cut_v2(pub):
+        return {"continue": False, "reason": "V2_REQUIRED_FOR_AUTOMATIC_CONTINUATION"}
+    boundary = lifecycle.delivery_boundary(pub)
+    if boundary != 2:
+        return {"continue": False, "reason": "NOT_AT_V2_SECOND_DELIVERY", "boundary": boundary}
+    return {"continue": True, "reason": "V2_SECOND_DELIVERY", "boundary": boundary}
 
 
 def record_step(root: Path, step_id: str, status: str,
@@ -225,7 +248,7 @@ def restore_recovery(root: Path, artifact_dir: Path, expected_head: str,
     if handoff.digest((root / HANDOFF).read_bytes()) != manifest.get("handoff_sha256"):
         raise RunnerError("RECOVERY_HANDOFF_DIGEST_MISMATCH")
     step = manifest.get("next_step")
-    if step not in ("C.8", "C.7", "D", "E", "F"):
+    if step not in ("C.8", "C.7", "D", "E", "F", "G"):
         raise RunnerError("RECOVERY_STEP_NOT_RESUMABLE")
     error = manifest.get("error")
     if not error or not reconcile_note.strip():
@@ -238,6 +261,13 @@ def restore_recovery(root: Path, artifact_dir: Path, expected_head: str,
         if path.exists():
             path.unlink()
     _, digest = publication(root)
+    current_pub = publication(root)[0]
+    g_state = next((row["status"] for row in current_pub.get("steps", [])
+                    if row["id"] == "G"), None)
+    if step == "G" and g_state == "pending" and handoff.next_step(current_pub) == "G":
+        # G is a mechanical report checkpoint. If it was still pending in the
+        # failed attempt, there is no prior G evidence to invalidate.
+        return "G remains pending after reviewed recovery; continue from G."
     cmd = [sys.executable, str(root / "tools/dentcast_publish_handoff.py"),
            "--repo", str(root), "invalidate", "--expected-sha256", digest,
            "--from-step", step,
@@ -374,6 +404,158 @@ def run_phase(root: Path, artifact_dir: Path, args):
         raise
 
 
+def record_publication(root: Path, artifact_dir: Path, pub: dict, digest: str):
+    """Persist one canonical publication-context update through the handoff CLI."""
+    path = artifact_dir / "post-cut2-record-input.json"
+    path.write_text(json.dumps(pub, ensure_ascii=True, indent=2) + "\n", encoding="utf-8")
+    cmd = [sys.executable, str(root / "tools/dentcast_publish_handoff.py"),
+           "--repo", str(root), "record", "--expected-sha256", digest, "--input", str(path)]
+    p = subprocess.run(cmd, cwd=root, text=True, stdout=subprocess.PIPE,
+                       stderr=subprocess.STDOUT)
+    path.unlink(missing_ok=True)
+    if p.returncode:
+        raise RunnerError("POST_CUT2_RECORD_FAILED:" + p.stdout.strip())
+    _, next_digest = publication(root)
+    return next_digest
+
+
+def write_delivery_recovery(root: Path, artifact_dir: Path, base_sha: str,
+                            branch: str, error: str):
+    """Preserve a prepared third delivery if its remote outcome needs an agent."""
+    artifact_dir.mkdir(parents=True, exist_ok=True)
+    head = git(root, "rev-parse", "HEAD")
+    metadata = lifecycle.metadata_path(root)
+    if metadata.is_file():
+        (artifact_dir / "cleanup-record.json").write_bytes(metadata.read_bytes())
+    bundle = artifact_dir / "final-delivery.bundle"
+    if head != base_sha:
+        p = subprocess.run(["git", "bundle", "create", str(bundle), "HEAD", "^" + base_sha],
+                           cwd=root, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        if p.returncode:
+            error += "; bundle creation failed: " + p.stdout.strip()
+    remote = git(root, "ls-remote", "origin", f"refs/heads/{branch}", check=False).split()
+    manifest = {
+        "schema": "dentcast-post-cut2-final-delivery-recovery-v1",
+        "base_sha": base_sha,
+        "attempted_head": head,
+        "remote_head_observed": remote[0] if remote else None,
+        "branch": branch,
+        "error": error,
+        "next_action": "Inspect remote_head_observed. If it equals attempted_head, restore cleanup-record.json and run confirm-cleanup. If it equals base_sha, import and push the exact final-delivery.bundle commit, then run confirm-cleanup. Do not create another commit.",
+    }
+    (artifact_dir / "final-delivery-recovery.json").write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return manifest
+
+
+def finalize_and_push(root: Path, artifact_dir: Path, expected_head: str,
+                      expected_branch: str, run_url: str):
+    """Record G, prepare delivery 3 canonically, push once, then confirm cleanup."""
+    if not run_url.startswith(("https://github.com/", "https://github.enterprise/")):
+        raise RunnerError("GITHUB_ACTIONS_RUN_URL_REQUIRED")
+    pub, digest = publication(root)
+    if handoff.next_step(pub) != "G":
+        raise RunnerError("FINAL_REPORT_NOT_AT_G")
+    content_id = pub["content_id"]
+
+    report = [
+        "## Automated post-Push-2 publication report", "",
+        f"- Second-delivery SHA: `{expected_head}`",
+        f"- Branch: `{expected_branch}`",
+        f"- Mechanical workflow run: {run_url}",
+        "- C.8 builders, C.7 stamping, applicable technical D, E, and real Phase F completed.",
+        "- The canonical completion receipt will be included in delivery 3.",
+    ]
+    for item in sorted((artifact_dir / "logs").glob("*.stdout.log")):
+        report.append(f"- `{item.name}`: output captured in this run's recovery artifact.")
+    report_path = artifact_dir / "final-report.md"
+    report_path.write_text("\n".join(report) + "\n", encoding="utf-8")
+    summary = os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary:
+        with open(summary, "a", encoding="utf-8") as f:
+            f.write(report_path.read_text(encoding="utf-8") + "\n")
+
+    try:
+        digest = record_step(root, "G", "started", [run_url])
+        pub, digest = publication(root)
+        pub["context"]["delivery"].append({
+            "scope": "GitHub Actions post-Push-2 mechanical continuation",
+            "evidence": [run_url],
+        })
+        digest = record_publication(root, artifact_dir, pub, digest)
+        record_step(root, "G", "completed", [str(report_path), run_url])
+        digest = publication(root)[1]
+
+        finish = subprocess.run(
+            [sys.executable, str(root / "tools/dentcast_publish_handoff.py"),
+             "--repo", str(root), "finish", "--expected-sha256", digest],
+            cwd=root, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        if finish.returncode:
+            raise RunnerError("FINALIZE_FAILED:" + finish.stdout.strip())
+
+        # Delivery 3 may contain only generated scope, the canonical receipt,
+        # and deletion of the active handoff.
+        completion = lifecycle.completion_path({"content_id": content_id})
+        allowed = allowed_paths(pub) | {completion}
+        changed = changed_paths(root)
+        if changed - allowed:
+            raise RunnerError("POST_CUT2_FINAL_OUT_OF_SCOPE:" + ",".join(sorted(changed - allowed)))
+        git(root, "add", "--all")
+        guard = subprocess.run(
+            [sys.executable, str(root / "tools/dentcast_publish_handoff.py"),
+             "--repo", str(root), "guard", "--phase", "pre-commit"],
+            cwd=root, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        if guard.returncode:
+            raise RunnerError("FINAL_DELIVERY_GUARD_FAILED:" + guard.stdout.strip())
+        git(root, "config", "user.name", "github-actions[bot]")
+        git(root, "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com")
+        git(root, "commit", "-m", f"Complete publication {expected_branch} delivery 3")
+        third_sha = git(root, "rev-parse", "HEAD")
+        if git(root, "rev-parse", "HEAD^") != expected_head:
+            raise RunnerError("FINAL_DELIVERY_PARENT_MISMATCH")
+        pushed = subprocess.run(["git", "push", "origin", f"HEAD:refs/heads/{expected_branch}"],
+                                cwd=root, text=True, stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT)
+        remote = git(root, "ls-remote", "origin", f"refs/heads/{expected_branch}", check=False).split()
+        if not remote or remote[0] != third_sha:
+            detail = pushed.stdout.strip() or "remote branch did not advance to the final commit"
+            raise RunnerError("FINAL_DELIVERY_PUSH_UNCONFIRMED:" + detail)
+        confirmed = subprocess.run(
+            [sys.executable, str(root / "tools/dentcast_publish_handoff.py"),
+             "--repo", str(root), "confirm-cleanup"],
+            cwd=root, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        if confirmed.returncode:
+            raise RunnerError("FINAL_CLEANUP_CONFIRM_FAILED:" + confirmed.stdout.strip())
+        if pushed.returncode:
+            # A nonzero response can still mean the remote accepted the commit;
+            # exact ls-remote confirmation above is authoritative.
+            pass
+        return {"status": "publication_completed", "third_delivery_sha": third_sha,
+                "publication_completed": True, "run_url": run_url}
+    except Exception as exc:
+        if lifecycle.pending(root):
+            head = git(root, "rev-parse", "HEAD")
+            if head == expected_head:
+                restore = subprocess.run(
+                    [sys.executable, str(root / "tools/dentcast_publish_handoff.py"),
+                     "--repo", str(root), "restore-cleanup"],
+                    cwd=root, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                if restore.returncode == 0 and (root / HANDOFF).is_file():
+                    pub, _ = publication(root)
+                    write_recovery(root, artifact_dir, pub, expected_head,
+                                   "blocked", "G", [], str(exc))
+                else:
+                    write_delivery_recovery(root, artifact_dir, expected_head,
+                                            expected_branch, str(exc) + "; " + restore.stdout.strip())
+            else:
+                write_delivery_recovery(root, artifact_dir, expected_head,
+                                        expected_branch, str(exc))
+        elif (root / HANDOFF).is_file():
+            pub, _ = publication(root)
+            write_recovery(root, artifact_dir, pub, expected_head, "blocked", "G", [], str(exc))
+        raise
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--repo", default=".")
@@ -382,12 +564,26 @@ def main(argv=None):
     ap.add_argument("--artifact-dir", required=True)
     ap.add_argument("--expect-title")
     ap.add_argument("--expect-caption")
+    ap.add_argument("--deliver-third", action="store_true",
+                     help="Complete G and create/push the canonical third delivery")
+    ap.add_argument("--run-url", help="GitHub Actions run URL used as G/report evidence")
+    ap.add_argument("--preflight-only", action="store_true",
+                     help="Print a read-only trigger decision without running builders")
     ap.add_argument("--resume-artifact", help="Restore and reconcile a prior recovery bundle after agent review")
     ap.add_argument("--reconcile-note", help="Required agent/operator note when restoring a failed attempt")
     args = ap.parse_args(argv)
     root = Path(args.repo).resolve()
     artifact_dir = Path(args.artifact_dir).resolve()
     try:
+        if args.preflight_only:
+            result = preflight(root, args.expected_head, args.expected_branch)
+            print(json.dumps(result, ensure_ascii=False))
+            output = os.environ.get("GITHUB_OUTPUT")
+            if output:
+                with open(output, "a", encoding="utf-8") as f:
+                    f.write(f"continue={str(result['continue']).lower()}\n")
+                    f.write(f"reason={result['reason']}\n")
+            return 0
         if args.resume_artifact:
             restored = restore_recovery(root, Path(args.resume_artifact),
                                         args.expected_head, args.expected_branch,
@@ -395,6 +591,10 @@ def main(argv=None):
             print(restored)
         ensure_layout(root, artifact_dir)
         result = run_phase(root, artifact_dir, args)
+        if args.deliver_third:
+            result["delivery"] = finalize_and_push(
+                root, artifact_dir, args.expected_head, args.expected_branch,
+                args.run_url or "")
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0
     except Exception as exc:

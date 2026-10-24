@@ -1,6 +1,10 @@
 name: Post-Push-2 mechanical continuation
 
 on:
+  push:
+    branches: ["**"]
+    paths:
+      - ".dentcast/PUBLISH-HANDOFF.md"
   workflow_dispatch:
     inputs:
       target_branch:
@@ -12,11 +16,11 @@ on:
         required: true
         type: string
       expect_title:
-        description: Exact approved user title for Phase F, if supplied
+        description: Optional exact title; otherwise uses frozen handoff approval
         required: false
         type: string
       expect_caption:
-        description: Exact approved user caption for Phase F, if supplied
+        description: Optional exact caption; otherwise uses frozen handoff approval
         required: false
         type: string
 
@@ -24,33 +28,94 @@ permissions:
   contents: read
 
 concurrency:
-  group: post-cut2-${{ inputs.expected_head }}
+  group: post-cut2-${{ github.event_name == 'workflow_dispatch' && inputs.expected_head || github.sha }}
   cancel-in-progress: false
 
 jobs:
-  mechanical-continuation:
+  preflight:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      continue: ${{ steps.cut.outputs.continue }}
+      expected_head: ${{ steps.validate.outputs.expected_head }}
+      target_branch: ${{ steps.validate.outputs.target_branch }}
+      reason: ${{ steps.cut.outputs.reason }}
     steps:
-      - name: Validate inputs
+      - name: Select and validate the exact event commit
+        id: validate
         env:
-          TARGET_BRANCH: ${{ inputs.target_branch }}
-          EXPECTED_HEAD: ${{ inputs.expected_head }}
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_BRANCH: ${{ inputs.target_branch }}
+          INPUT_HEAD: ${{ inputs.expected_head }}
+          EVENT_BRANCH: ${{ github.ref_name }}
+          EVENT_HEAD: ${{ github.sha }}
         run: |
           set -euo pipefail
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            TARGET_BRANCH="$INPUT_BRANCH"
+            EXPECTED_HEAD="$INPUT_HEAD"
+          else
+            TARGET_BRANCH="$EVENT_BRANCH"
+            EXPECTED_HEAD="$EVENT_HEAD"
+          fi
           [[ "$EXPECTED_HEAD" =~ ^[0-9a-f]{40}$ ]]
           git check-ref-format --branch "$TARGET_BRANCH"
+          {
+            echo "target_branch=$TARGET_BRANCH"
+            echo "expected_head=$EXPECTED_HEAD"
+          } >> "$GITHUB_OUTPUT"
 
-      - name: Check out the exact second-push commit
+      - name: Check out the publication branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.target_branch }}
+          ref: ${{ steps.validate.outputs.target_branch }}
+          fetch-depth: 0
+
+      - name: Pin the read-only preflight to the event SHA
+        env:
+          TARGET_BRANCH: ${{ steps.validate.outputs.target_branch }}
+          EXPECTED_HEAD: ${{ steps.validate.outputs.expected_head }}
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin "refs/heads/$TARGET_BRANCH"
+          git checkout -B "$TARGET_BRANCH" "$EXPECTED_HEAD"
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+
+      - name: Skip Push 1 and non-publication pushes before any builder runs
+        id: cut
+        env:
+          TARGET_BRANCH: ${{ steps.validate.outputs.target_branch }}
+          EXPECTED_HEAD: ${{ steps.validate.outputs.expected_head }}
+          RECOVERY_DIR: ${{ runner.temp }}/dentcast-post-cut2-preflight
+        run: |
+          set -euo pipefail
+          python3 tools/dentcast_post_cut2_runner.py \
+            --repo "$GITHUB_WORKSPACE" \
+            --expected-head "$EXPECTED_HEAD" \
+            --expected-branch "$TARGET_BRANCH" \
+            --artifact-dir "$RECOVERY_DIR" \
+            --preflight-only
+
+  mechanical-continuation:
+    needs: preflight
+    if: needs.preflight.outputs.continue == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the exact Push-2 branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.preflight.outputs.target_branch }}
           fetch-depth: 0
 
       - name: Pin checkout to the expected delivered SHA
         env:
-          TARGET_BRANCH: ${{ inputs.target_branch }}
-          EXPECTED_HEAD: ${{ inputs.expected_head }}
+          TARGET_BRANCH: ${{ needs.preflight.outputs.target_branch }}
+          EXPECTED_HEAD: ${{ needs.preflight.outputs.expected_head }}
         run: |
           set -euo pipefail
           git fetch --no-tags origin "refs/heads/$TARGET_BRANCH"
@@ -67,13 +132,13 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Run post-Push-2 mechanical continuation
-        id: continue
+      - name: Run post-Push-2 mechanics and create delivery 3
         env:
-          TARGET_BRANCH: ${{ inputs.target_branch }}
-          EXPECTED_HEAD: ${{ inputs.expected_head }}
-          EXPECT_TITLE: ${{ inputs.expect_title }}
-          EXPECT_CAPTION: ${{ inputs.expect_caption }}
+          TARGET_BRANCH: ${{ needs.preflight.outputs.target_branch }}
+          EXPECTED_HEAD: ${{ needs.preflight.outputs.expected_head }}
+          EXPECT_TITLE: ${{ github.event_name == 'workflow_dispatch' && inputs.expect_title || '' }}
+          EXPECT_CAPTION: ${{ github.event_name == 'workflow_dispatch' && inputs.expect_caption || '' }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           RECOVERY_DIR: ${{ runner.temp }}/dentcast-post-cut2
         run: |
           set -euo pipefail
@@ -82,6 +147,8 @@ jobs:
             --expected-head "$EXPECTED_HEAD"
             --expected-branch "$TARGET_BRANCH"
             --artifact-dir "$RECOVERY_DIR"
+            --deliver-third
+            --run-url "$RUN_URL"
           )
           if [[ -n "$EXPECT_TITLE" ]]; then args+=(--expect-title "$EXPECT_TITLE"); fi
           if [[ -n "$EXPECT_CAPTION" ]]; then args+=(--expect-caption "$EXPECT_CAPTION"); fi
@@ -91,7 +158,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: post-cut2-${{ inputs.expected_head }}
+          name: post-cut2-${{ needs.preflight.outputs.expected_head }}
           path: |
             ${{ runner.temp }}/dentcast-post-cut2/
             ${{ runner.temp }}/post-cut2-result.json
@@ -101,7 +168,7 @@ jobs:
       - name: Summarize result
         if: always()
         env:
-          EXPECTED_HEAD: ${{ inputs.expected_head }}
+          EXPECTED_HEAD: ${{ needs.preflight.outputs.expected_head }}
           JOB_STATUS: ${{ job.status }}
         run: |
           {
@@ -109,7 +176,7 @@ jobs:
             echo
             echo "- Push-2 SHA: `$EXPECTED_HEAD`"
             echo "- Job result: **$JOB_STATUS**"
-            echo "- This workflow has read-only repository permissions and never commits or pushes."
-            echo "- A successful run stops before G, cleanup, and delivery 3."
-            echo "- On failure, inspect the uploaded logs/recovery artifact before resuming."
+            echo "- Push 1 and pushes without a v2 second-cut handoff are skipped by the read-only preflight."
+            echo "- A successful run creates and confirms exactly delivery 3."
+            echo "- On failure, inspect the uploaded logs/recovery bundle before resuming."
           } >> "$GITHUB_STEP_SUMMARY"
