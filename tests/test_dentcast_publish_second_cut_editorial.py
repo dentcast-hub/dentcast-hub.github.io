@@ -32,6 +32,10 @@ def sample(category="litecast", second="C.6", modern=True):
     for step in p["steps"]:
         step["status"] = "completed"
         step["evidence"] = ["synthetic fixture: " + step["id"]]
+        if step["id"] == "C.4.14" and category != "litecast":
+            # An ordinary specialist article is NOT a Challenge.
+            step["status"], step["evidence"], step["reason"] = (
+                "skipped", [], "fixture: ordinary article, no Challenge")
         if step["id"] == second:
             break
     h.validate_publication(p)
