@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "chairside/chairside-44"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -1717,6 +1717,115 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "05-semantic-linking.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.1",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper file (Question 4.7): paper branch skipped",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.2",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper file",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.3",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper file; no page credit",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "plus/faq-corpus.json chairside/chairside-44 definedTermSets: 3 authored DefinedTerms #flashcards-c1..c3 (palatal ferrule; deep-bite horizontal component with one wall; occlusion in borderline cases); 0 from faq; none is a FAQ answer copy [re-verified after rules invalidation for merged tool fixes PR #999: work unchanged]"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "plus/faq-corpus.json FAQPage chairside/chairside-44#faq: 5 standalone questions (no deixis), 4 binary opening with \u0628\u0644\u0647/\u062e\u06cc\u0631, 1 open; 4.12-\u0628: 2 founder-approved MCQs in plus/exam-questions.json (keys idx1, idx2), validate_exam_questions.py 0 errors [re-verified after rules invalidation for merged tool fixes PR #999: work unchanged]"
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "COMMENTARY, source_text = final page body FULL_TEXT; .dentcast/des-v3.4-knowledge.md re-run in an isolated subagent with the repository Persian checklist labels; des_score 15, band E, provisional false; Part 3: quotes verbatim (items 1,3 body; item 4 from chairside/index.html with note), arithmetic 5+4+0+3+3=15, band E, key set identical to chairside-43; stored in plus/des-scores.json chairside/chairside-44 (delivered in 1cfd514); fidelity [null] (basket 1)"
+        ],
+        "id": "C.4.13",
+        "module": "08-des-fidelity.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "Question 4.9: founder answered \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc \u2014 not a challenge",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Re-verified after invalidation: 8 canonical tags reused (none minted), committed at Push 2; hashtag_ref.py --check OK [re-verified after rules invalidation for merged tool fixes PR #999: work unchanged]"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Re-verified: brain chairside-44 is last element, key parity with chairside-43, title/caption verbatim (committed at Push 2, unchanged) [re-verified after rules invalidation for merged tool fixes PR #999: work unchanged]"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Re-verified pillar treatment-planning/extraction-vs-preservation against live PILLARS [re-verified after rules invalidation for merged tool fixes PR #999: work unchanged]"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Re-verified plus/pathways.json: chairside-44 in treatment-planning after insight-93 and post-and-core after chairside-5 (founder-confirmed), unchanged since Push 2 [re-verified after rules invalidation for merged tool fixes PR #999: work unchanged]"
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "bundle-post-core: \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1, chairside); no other candidate [re-verified after rules invalidation for merged tool fixes PR #999: work unchanged]"
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Re-verified Pulse: chairside-44 line first, 7 lines, unchanged since Push 2; ten-scope editorial lock retained; scientific scope now references rerun DES record [re-verified after rules invalidation for merged tool fixes PR #999: work unchanged]"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
@@ -1740,7 +1849,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: plus/des-scores.json, tools/verify_publish.py, tools/dentcast_publish_lifecycle.py, .dentcast/workflows/publish-checkpoints.md, tests/test_dentcast_agent_entrypoint_migration.py, tests/test_dentcast_publish_three_deliveries.py"
+    "note": "Index-only refresh after staging delivery paths: plus/des-scores.json"
   },
   "schema": "publish-handoff-v3"
 }
