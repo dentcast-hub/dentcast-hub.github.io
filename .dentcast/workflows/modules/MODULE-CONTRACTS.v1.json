@@ -534,13 +534,19 @@
           "required": "conditional_per_canonical_route"
         },
         {
+          "name": "exam_questions",
+          "required": "conditional_per_canonical_route",
+          "note": "step 4.12-ب: founder-approved MCQs under content_id in plus/exam-questions.json (or a recorded skip)"
+        },
+        {
           "name": "skip_reason",
           "required": "conditional_per_canonical_route"
         }
       ],
       "reads": "restricted_to_declared_inputs_and_authoritative_sources",
       "writes": [
-        "learning_indexes"
+        "learning_indexes",
+        "plus/exam-questions.json"
       ],
       "side_effects": "explicit receipts and idempotency checks required",
       "approval_gates": "founder approval scoped to exact inputs, according to canonical workflow",

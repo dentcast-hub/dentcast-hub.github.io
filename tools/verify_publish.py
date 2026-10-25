@@ -1729,9 +1729,13 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                   "restore the data-dc-challenge-question scope check in mountArticleThreads() "
                   "(plus/js/article-threads.js)")
         rep.skip("8 flashcards", "چالش: 4.11/4.12 are a documented skip — no prose to define terms from")
+        rep.skip("4.12-ب exam", "چالش: a challenge is the reader's exam of itself — no pathway-exam question")
         rep.skip("5.6 pathway", "چالش: 5.6/5.6-ب are a documented skip — a pathway step is something to read")
+    elif is_lite:
+        rep.skip("4.12-ب exam", "LiteCast is patient-facing — outside the pathway exam")
     elif is_flashcard_optional and not questions:
         rep.skip("8 flashcards", "dentcast_plus: flashcards/quiz are optional — no cards authored")
+        rep.skip("4.12-ب exam", "dentcast_plus without authored text: no exam question (step 4.12-ب records the skip)")
     elif not is_lite:
         rep.check(content_id in read("plus/flashcards-index.json"), "8 flashcards",
                   "in plus/flashcards-index.json", "missing from plus/flashcards-index.json",
@@ -1751,12 +1755,10 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
             p.get("kind") != "bundle" and any(st.get("content_id") == content_id for st in p.get("steps", []))
             for p in json.loads(read("plus/pathways.json"))
         ) if exists("plus/pathways.json") else False
-        if not in_full_pathway:
-            rep.skip("4.12-ب exam", "page is not a step of a full pathway — no exam draws from it")
-        elif content_id not in exam_file:
-            rep.skip("4.12-ب exam", "no exam question written for this page (step 4.12-ب records the reason)")
+        if content_id not in exam_file:
+            rep.skip("4.12-ب exam", "no exam question written for this page (step 4.12-ب records the reason)"
+                     + ("" if in_full_pathway else "; page is in no full pathway yet — rows would wait there"))
         else:
-            import subprocess
             r = subprocess.run([sys.executable, str(ROOT / "tools" / "validate_exam_questions.py"), "--content", content_id],
                                capture_output=True, text=True)
             rows = exam_file[content_id].get("questions", [])

@@ -199,10 +199,14 @@ compliance and anything you asked the user about.
 
 ### 4.12-ب. سؤالِ آزمونِ مسیر برای همین مطلب — `plus/exam-questions.json`
 
-**Runs on every publish whose page becomes (or already is) a step of a full
-pathway — i.e. every specialist type that step 5.6 files into `plus/pathways.json`.
-Skipped, as a documented skip, for LiteCast, چالش, glossary terms and any
-publish whose page lands in no full pathway.** Founder decision 1405/08/03
+**Runs on every specialist publish — the same scope as 4.12 minus glossary
+terms: every type that step 5.6 may file into `plus/pathways.json`. Skipped,
+as a documented skip, only for LiteCast, چالش and glossary terms.** It runs
+HERE, before step 5.6 has placed the page, on purpose: the question is keyed
+by `content_id`, not by pathway, so it waits in the file and is drawn the day
+the page joins a pathway — this month's placement or next year's — exactly
+like a founder's row in `content_exam_questions`. Do not skip it because «the
+page is in no pathway yet». Founder decision 1405/08/03
 («بانک سوال مسیر دوگانه … که دیگه وقتی مطلب منتشر می‌کنیم اذیت نشیم»): the
 pathway certificate exam draws article questions from two sources — the
 founder's own rows in the API (`content_exam_questions`) and this repo file —
