@@ -1,0 +1,15 @@
+{
+  "note": "Founder decision 1405/08/02 (share-41 audit, option A): #رابردم is itself a canonical concept, so «رابردم» and «رابر دم» are removed from the aliases of #ایزولاسیون (Hard Rule 15: a canonical tag is never another concept's alias). Both concepts stay; no article is retagged. «rubber dam» is left on #ایزولاسیون as decided.",
+  "concepts": [
+    {
+      "tag": "#ایزولاسیون",
+      "aliases": [
+        "isolation",
+        "ایزوله کردن",
+        "ایزولیشن",
+        "rubber dam"
+      ]
+    }
+  ],
+  "articles": {}
+}

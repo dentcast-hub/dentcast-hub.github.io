@@ -24,6 +24,14 @@ category is (or even when there is no category at all). Route as follows:
 | **No** | **Yes** | **Paper-only fast path** — do **NOT** run the publishing phases (no page clone, no brain entry, no pillar, no Pulse, no en mirror, no rebuild). Run **only step 4.10 Part 1 (Drive) and Part 2 (catalog)**. **Skip Part 3** — there is no published page to put a credit under. Then commit. |
 | **No** | **No** | Nothing to do — ask the user what they want. |
 
+**Paper file without text, but a page is asked for → ASK.** If the paper
+arrives with no متن but the request only makes sense on a page — DES/Fidelity,
+the first-author→DOI credit, a post/page itself — or the user says the text lives
+elsewhere (a document, an artifact, an earlier message), do **not** silently take
+the paper-only path. Ask, with the two named options: «متن صفحه کجاست؟ (لینک یا
+فایلش را بده)» / «فقط paper-only بماند (Drive + کاتالوگ، بدون صفحه)». Route only
+after the answer.
+
 **Paper-only fast path (text-less) detail.** When the user gives you just a paper
 file with no متن: jump straight to **step 4.10**, run **Parts 1 & 2 only**, and
 stop. The cabinet catalog (`dentcast_cabinet_full_catalog.json`) is read

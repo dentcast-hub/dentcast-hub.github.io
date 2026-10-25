@@ -443,6 +443,12 @@ def cmd_apply(path: str) -> None:
                  "`aliases` in the reference, keep both as co_tags, or set "
                  "\"allow_lossy\": true if the old form is genuinely unreachable "
                  "text nobody types:\n  " + "\n  ".join(closed))
+    # The shadow table above exists only for the door-check. Left live, it
+    # leaks into normalize_concept()/cmd_sync() below and inflates `words`
+    # (its manual aliases are unfiltered: "پروگنوز" -> "پروگنوز دندان").
+    # Drop it so both read the same table a standalone --sync reads.
+    _alias_cache = None
+    _reset_index()
 
     for old, new in renames.items():
         old_c = index.get(old)
@@ -490,7 +496,10 @@ def cmd_apply(path: str) -> None:
     touched = 0
     for cid, tags_ in articles.items():
         if cid not in by_cid:
-            sys.exit(f"refusing to apply — no brain entry for {cid}")
+            sys.exit(f"refusing to apply — no brain entry for {cid}. For an article "
+                     "not yet in the brain, apply the batch with \"articles\": {}, write "
+                     "its canonical tags with the brain entry (module 10 step 5), then run "
+                     "--sync, node tools/build_plus_index.mjs and --check.")
         by_cid[cid]["hashtags"] = list(tags_)
         touched += 1
 
@@ -688,7 +697,10 @@ def cmd_sync() -> None:
     # Fold chains flat AFTER manual_aliases are in, so a chain that runs through
     # a manual entry is resolved too.
     problems += resolve_chains(table)
-    ref["aliases"] = dict(sorted(table.items(), key=lambda kv: -len(kv[0])))
+    # Total order (length, then text): ties used to follow concept order, which
+    # --sync re-sorts by count AFTER compiling, so the next --sync reshuffled
+    # the table with no change in meaning.
+    ref["aliases"] = dict(sorted(table.items(), key=lambda kv: (-len(kv[0]), kv[0])))
     write_ref(ref)
     global _alias_cache
     _alias_cache = None
@@ -821,6 +833,43 @@ def cmd_say(tag: str, forms: list) -> None:
     cmd_sync()
 
 
+# Hard Rule 15: a canonical tag is never another concept's alias. These pairs
+# predate the --check rule (share-41 audit, 1405/08/02) and await founder
+# decisions; they are reported as warnings. Any other collision fails --check.
+# Remove a pair here once its batch resolves it.
+KNOWN_CANONICAL_ALIAS_COLLISIONS = frozenset({
+    ("#قالب‌گیری_دیجیتال", "اسکن دیجیتال"),
+    ("#پروتکل_باند", "پروتکل باندینگ"),
+    ("#پروتکل_باند", "پروتکل ادهزیو"),
+    ("#استاپ_خلفی", "ساپورت خلفی"),
+    ("#اسکرو_سمنتد", "اسکروسمنت"),
+    ("#کانتور_ترمیم", "اورکانتور"),
+    ("#برداشت_ترمیم", "خارج کردن روکش"),
+    ("#ناحیه_زیبایی", "ناحیه لبخند"),
+    ("#ریتریتمنت", "درمان مجدد ریشه"),
+    ("#شکستن_کار", "task decomposition"),
+    ("#پایداری_رنگ", "تغییر رنگ"),
+    ("#پروپریوسپشن", "آگاهی اکلوزال"),
+    ("#Finish_Zone", "BOPT"),
+    ("#تثبیت_موقت_روکش", "ترای این"),
+    ("#تیرزپاتاید", "اسپارتینا"),
+    ("#حرکت_پروتروزیو", "پروتروزیو"),
+    ("#فضای_ارتودنسی", "ارزیابی فضا"),
+    ("#متاپرامپت", "meta prompting"),
+    ("#پوسیدگی_عودکننده", "پوسیدگی ثانویه"),
+})
+
+
+def canonical_alias_collisions(ref: dict) -> list:
+    """(concept tag, alias, other canonical tag) where the alias IS that tag."""
+    canon = defaultdict(list)
+    for c in ref["concepts"]:
+        canon[normalize_chars(c["tag"])].append(c["tag"])
+    return [(c["tag"], a, other) for c in ref["concepts"]
+            for a in c.get("aliases") or []
+            for other in canon.get(normalize_chars(a), ()) if other != c["tag"]]
+
+
 def cmd_check() -> None:
     ref, brain = load_ref(), load_brain()
     enforced = set(ref.get("enforced_types") or [])
@@ -860,6 +909,19 @@ def cmd_check() -> None:
                 errors.append(f'alias "{a}" -> "{target}" chains through "{k}" '
                               f'— run --sync to fold it flat')
                 break
+
+    known_pairs = []
+    for tag, alias, other in canonical_alias_collisions(ref):
+        line = f'alias "{alias}" of {tag} is the canonical tag {other} (Hard Rule 15)'
+        if (tag, alias) in KNOWN_CANONICAL_ALIAS_COLLISIONS:
+            known_pairs.append(line)
+        else:
+            errors.append(line)
+    if known_pairs:
+        print(f"check warning: {len(known_pairs)} known canonical/alias collision(s) "
+              "awaiting a founder decision:")
+        for line in known_pairs:
+            print(f"  - {line}")
 
     if errors:
         print(f"check FAILED ({len(errors)} problem(s)) "

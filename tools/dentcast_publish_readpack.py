@@ -28,9 +28,9 @@ PINNED_BLOBS = {
     '03-litecast-and-page.md': '4258a930b01c8691dc3c38636c0f4ab2b6592cca',
     '04-taxonomy-and-navigation.md': '25fc88e1d657ae9eb5ad0fdd5d9ba6dfca6dba38',
     '05-semantic-linking.md': '760dcf77dd3baff173aebb2d40492604fb096d1f',
-    '06-paper-ingestion.md': '58cfc5613dc82b846c8b11bf890a32789b1e73ac',
+    '06-paper-ingestion.md': '359b9aa2548ddb490f7fff4c1a4b874da80cdd51',
     '08-des-fidelity.md': '5b67df3b88fb89f427d93116631a715c04534e82',
-    '09-challenge.md': '89ae9ee5f875192ed978bc8a58205210295abd4e',
+    '09-challenge.md': 'dd46a16eafabdd4b40813a0578eeca4a81dcd44d',
     '12-english-notify-verify.md': '41e4cc020caf406501ce762a1008cf07b018def1',
 }
 

@@ -1341,6 +1341,9 @@ def main(argv=None):
     p.add_argument("--category", required=True)
     p.add_argument("--target-path", action="append", required=True)
     p.add_argument("--evidence", required=True)
+    p = sub.add_parser("stage-delivery", help="At cut 1/2: git add reviewed paths, refresh the checkpoint, stage it, run the pre-commit guard")
+    p.add_argument("--expected-sha256", required=True)
+    p.add_argument("--path", action="append", required=True)
     p = sub.add_parser("finish")
     p.add_argument("--expected-sha256", required=True)
     sub.add_parser("confirm-cleanup")
@@ -1387,6 +1390,8 @@ def main(argv=None):
             result = lifecycle.verify(root, args.expected_sha256, args.expect_title, args.expect_caption, args.catalog_id)
         elif args.command == "bind":
             result = lifecycle.bind(root, args.expected_sha256, args.content_id, args.category, args.target_path, args.evidence)
+        elif args.command == "stage-delivery":
+            result = lifecycle.stage_delivery(root, args.expected_sha256, args.path)
         elif args.command == "finish":
             result = lifecycle.finish(root, args.expected_sha256)
         elif args.command == "confirm-cleanup":

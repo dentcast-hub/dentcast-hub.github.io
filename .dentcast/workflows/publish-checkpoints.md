@@ -160,7 +160,7 @@ Never certify the earlier tree as the final delivery.
 1. Enter recovery only after the user explicitly says the publication is incomplete/interrupted. A request to resume counts only if it identifies the publication as incomplete/interrupted. Read `.dentcast/PUBLISH-HANDOFF.md` once, then run `python3 tools/dentcast_publish_handoff.py inspect` once in the actual checkout. If missing, do not invent progress. The inspector also detects a private pending-cleanup receipt in Git metadata and instructs `confirm-cleanup` or `restore-cleanup`.
    For recovery from GitHub or a missing local handoff, follow `publish-discovery.md`: use `discover --recover-incomplete`/`discover --recover-incomplete --repository owner/repo` (or equivalent connected GitHub reads), require a complete stable scan and unique candidate, retrieve the selected named branch without disturbing local work, compare its HEAD with the returned `head_sha`, then inspect it. Do not choose a newest branch or continue from a partial/ambiguous result. Keep the recovered semantic state in the current session and do not reread/re-inspect the handoff during that run; use the latest helper digest. A generic `ادامه بده` does not trigger recovery.
 2. For a new run, check only whether the fixed handoff file exists; do not read its contents. If it exists, make no publication changes and ask whether the user means to resume an incomplete publication. Read it only after that explicit confirmation. Otherwise prepare the public-safe input described in `publish-handoff-tool.md`. Obtain the **full canonical ledger** using `python3 tools/dentcast_publish_handoff.py plan` and place its `steps` into the input JSON. `init`/`record` reject incomplete ledgers. For a known paper-only route use `plan --paper-only`, category `paper-only`, and watch the cabinet catalog.
-3. Before intake identity is known, use content ID `unassigned`, category `pending`, the full ordinary ledger and an initial watched path such as `dentcast-brain.json`. This is explicitly an unassigned run, not a guessed publication ID. Create it with `init` before the first canonical step. Resolve identity **once** with `bind --expected-sha256 <digest> --content-id <actual-id> --category <actual-category> --target-path <path> --evidence <intake-reference>` (repeat `--target-path` for required work). Binding is permitted only with unchanged work and no authoring/side effects started. Paper-only binding occurs at Phase 0; ordinary binding occurs during intake before authoring. Real identities cannot subsequently be silently rebound.
+3. If the identity is known from the start, `init` directly with the real content ID and category. Before intake identity is known, use content ID `unassigned`, category `pending`, the full ordinary ledger and an initial watched path such as `dentcast-brain.json`. This is explicitly an unassigned run, not a guessed publication ID. Create it with `init` before the first canonical step. Resolve identity **once** with `bind --expected-sha256 <digest> --content-id <actual-id> --category <actual-category> --target-path <path> --evidence <intake-reference>` (repeat `--target-path` for required work). Binding is permitted only with unchanged work and no authoring started; a founder-requested external action already performed during intake (e.g. a Drive rename/move) does not prevent binding when every recorded external action is `completed` with evidence, and its receipt is kept unchanged. Paper-only binding occurs at Phase 0; ordinary binding occurs during intake before authoring. Real identities cannot subsequently be silently rebound.
 
 ## Before and after EVERY canonical step
 
@@ -313,7 +313,11 @@ For consecutive genuinely inapplicable pending steps, supply repeated
 `--skip '<id>=<canonical exception and reason>'` arguments in canonical order.
 These may follow `--id`, or be used without it. The agent must establish each
 exception from its applicable module; the tool does not guess category skips.
-Each skip still gets its own durable checkpoint. Use `--start-next` alone to
+Each skip still gets its own durable checkpoint. A row an earlier `--start-next`
+opened (e.g. C.0.5 after C.2, C.4.5 after C.4) may also be skipped this way while
+it has no evidence or reason, no external action is attributed to it (an action
+id without a `<step-id>:` prefix also blocks), no external outcome is in flight
+and no work or rule changed since that checkpoint; otherwise use `step`. Use `--start-next` alone to
 start the first ready pending step, if needed. Failure/blocking results still
 use `step --status failed/blocked`; Phase F still uses the real `verify` command.
 
@@ -402,7 +406,10 @@ correction after the second cut. Fill the full ten-scope
 
 The sample is SCHEMA ONLY, never copy its example evidence into a real run.
 Each ten-scope status is either `resolved` or `not_applicable` with a
-genuine independent source/reference for the actual category. For LiteCast
+genuine independent source/reference for the actual category. `C.4.14`
+`completed` *means* Challenge: an ordinary post records `C.4.14` as `skipped`
+only, and the writer rejects `completed` when the page lacks real
+`data-dc-challenge-question` markup. For LiteCast
 or confirmed Challenge the English status MUST be `exempt`, path `null`
 and a justified evidence reference; all other pages MUST be `ready`, with
 the correct mirror path in `target_paths` and a real file already on disk.
@@ -447,7 +454,11 @@ actions still require their existing scope and approval; this protocol grants no
 Cuts 1 and 2 require a fresh remote observation before crossing into the next
 step, including when scientific steps are lawfully skipped. Stage scoped work,
 refresh the local checkpoint after staging, stage the latest handoff, commit and
-push once; verify actual remote delivery. Failed transport blocks crossing that
+push once; verify actual remote delivery. `stage-delivery --expected-sha256
+<digest> --path <scoped-path>` (repeat `--path`) does the staging, the index-only
+checkpoint refresh and handoff staging in one call, then runs the unchanged
+pre-commit guard; it refuses paths outside the publication and any bytes not
+already recorded in the latest checkpoint, and never commits or pushes. Failed transport blocks crossing that
 cut. Preserve work and report the real error; retrying the same unaccepted
 logical delivery does not create another milestone. Never advance by pretending
 a failed push succeeded. The helper does not commit or push automatically.
@@ -484,7 +495,7 @@ The lifecycle registry in `tools/dentcast_publish_lifecycle.py` maps every canon
 
 For repeating scientific checks or other dynamic substeps, add explicit ledger IDs like `C.4.13/<unit-and-checker-id>` before their aggregate `C.4.13` checkpoint, with the same module. Record each outcome and preserve verified result references. This does not change scientific voting, independence or adjudication. The registry checks ordering and coverage, not the truth or completeness of semantic judgments. Paper-only runs follow only `rules`, `0`, paper Parts 1/2 and reporting, without inventing a page, English mirror, brain entry, version bump or page Phase F.
 
-Before an external action, record a unique action ID with `started`; afterward record the observed outcome/evidence. Unknown outcomes block a retry until reconciled. The registry aggregate does not excuse recording per-action and per-unit progress.
+Before an external action, record a unique action ID with `started`, named `<step-id>:<name>` for the step it serves (e.g. `C.4.10.1:drive-move`, even when the founder asks for it earlier); afterward record the observed outcome/evidence. Unknown outcomes block a retry until reconciled. The registry aggregate does not excuse recording per-action and per-unit progress.
 
 The step command and transition writer reject starting/restarting a step while
 an external outcome is started/unknown; raw `record` cannot bypass that guard.
@@ -512,16 +523,19 @@ final handoff**:
 2. Run `finish --expected-sha256 <digest>`. It requires all gates resolved, real
    successful Phase F, actual delivery evidence and a freshly synchronized remote
    at delivery 2. It reruns the mechanical gate and checks unchanged work. It
-   writes the completed-only receipt, retains private recovery metadata and
-   removes the active handoff locally.
-3. Stage only final scoped work, the completion receipt and handoff deletion.
+   writes the completed-only receipt and the public technical report, retains
+   private recovery metadata and removes the active handoff locally.
+3. Stage only final scoped work, the completion receipt, the public-safe technical
+   report `.dentcast/publication-reports/<category>-<id>.md` (`finish` writes it
+   from the ledger and Phase F receipt, locally and in the post-Push-2 workflow,
+   unless an authored one already exists) and handoff deletion.
    Commit/push them **together as delivery 3**, then run `confirm-cleanup`.
    This confirms actual remote delivery and unchanged final bytes. No additional
    cleanup commit/push follows. Until confirmation, status is
    `cleanup_pending_delivery`, never publication success.
 4. If interrupted before successful delivery, preserve work and use
    `restore-cleanup` to restore the same local handoff. It removes its own unchanged
-   completion receipt locally, never restores content or repeats an external
+   completion receipt and technical report locally, never restores content or repeats an external
    action. If the final commit already exists, `restore-cleanup` preserves that
    commit and returns `final_delivery_pending`: retry the same push and confirm,
    without making another commit. Reconcile actual Git/index drift and rerun
@@ -585,7 +599,7 @@ without rerunning model calls; scoring prompts and voting are unchanged.
 
 - `scripts/cursor-parity-notice.mjs` recognizes active nested modules/global rules, avoids backup snapshots, reminds shared client edits and active-run checkpointing, and never writes a state or marks work done.
 - The existing Claude/Codex hook configurations call the advisory adapter and a Stop guard. These adapters require actual native client support; their JSON presence is not a runtime certification. Cursor's always-on rules and every client's explicit CLI protocol remain authoritative. Shell edits bypassing a file hook are caught by Stop/pre-commit checks when those hooks are installed.
-- Install local Git hooks once per checkout with `git config core.hooksPath .githooks`. The pre-commit guard permits only the two fixed active checkpoints for new page runs, blocks stale/unstaged checkpoints and unguarded deletion, and validates the combined third delivery. Legacy and paper-only cleanup remains compatible. It does not infer a publication from arbitrary content edits when no handoff exists. GitHub API commits bypass local hooks, so agents using them must preserve the same contract and CI verifies committed checkpoints/cleanup boundaries.
+- Install local Git hooks once per checkout with `git config core.hooksPath .githooks` (the Claude Code and Codex SessionStart hook sets it automatically when it is unset). The pre-commit guard permits only the two fixed active checkpoints for new page runs, blocks stale/unstaged checkpoints and unguarded deletion, and validates the combined third delivery. Legacy and paper-only cleanup remains compatible. It does not infer a publication from arbitrary content edits when no handoff exists. GitHub API commits bypass local hooks, so agents using them must preserve the same contract and CI verifies committed checkpoints/cleanup boundaries.
 - `.github/workflows/publishing-live-contract-tests.yml` runs on main, fix/refactor branches and PRs. It tests active contracts, recovery/cleanup, hooks, and the committed-state boundary, including nested module/global changes. Historical staging CI remains separate and is not the active live-workflow certification.
 
 Read `PUBLISHING-FINAL-REPORT.md` for integrated CLI/Git/discovery acceptance and remaining native-client/live-publication limits. Tests that use fixture verifiers prove guard behavior, not scientific correctness or a real published page.

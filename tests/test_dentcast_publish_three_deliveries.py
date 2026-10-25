@@ -51,7 +51,11 @@ class ThreeDeliveriesTests(unittest.TestCase):
             else:
                 row = next(r for r in state['publication']['steps'] if r['id'] == sid)
                 started = {'sha256':sha} if row['status']=='started' else lc.step(self.root, sha, sid, 'started', [], None)
-                result = lc.step(self.root, started['sha256'], sid, 'completed', ['fixture:' + sid], None)
+                if sid == 'C.4.14':
+                    # An ordinary fixture page is not a Challenge.
+                    result = lc.step(self.root, started['sha256'], sid, 'skipped', [], 'fixture: ordinary page, no Challenge')
+                else:
+                    result = lc.step(self.root, started['sha256'], sid, 'completed', ['fixture:' + sid], None)
             sha = result['sha256']
             if sid == until:
                 return sha
@@ -164,10 +168,10 @@ class ThreeDeliveriesTests(unittest.TestCase):
         self.assertTrue((self.root/report).exists())
         original_report = (self.root/report).read_bytes()
         (self.root/report).write_text('{}')
-        run(self.root, 'add', 'note.html', h.STATE_PATH, report)
+        run(self.root, 'add', 'note.html', h.STATE_PATH, report, lc.technical_report_path({'content_id': 'note', 'category': 'insight'}))
         self.assert_blocked('COMPLETION_RECEIPT_CHANGED', lc.guard, self.root, 'pre-commit')
         (self.root/report).write_bytes(original_report)
-        run(self.root, 'add', 'note.html', report)
+        run(self.root, 'add', 'note.html', report, lc.technical_report_path({'content_id': 'note', 'category': 'insight'}))
         lc.guard(self.root, 'pre-commit')
         run(self.root, 'commit', '-m', 'delivery 3: final work, report and deletion')
         lc.guard(self.root, 'ci')
@@ -189,6 +193,64 @@ class ThreeDeliveriesTests(unittest.TestCase):
         run(other, 'config', 'user.email', 'fixture@example.invalid')
         run(other, 'commit', '--allow-empty', '-m', 'forbidden fourth delivery')
         self.assert_blocked('EXTRA_DELIVERY_COMMIT_FORBIDDEN', lc.validate_final_receipt, other, data, 'HEAD')
+
+    def at_first_cut_with_recorded_edit(self):
+        sha = self.walk(self.start(), 'C.4.9')
+        (self.root/'note.html').write_text('first cut fixture bytes\n')
+        state, _ = h.load_state(self.root)
+        return h.save(self.root, state['publication'], expected=sha, note='Reviewed first-cut edit')['sha256']
+
+    def test_stage_delivery_refreshes_checkpoint_for_index_only(self):
+        sha = self.at_first_cut_with_recorded_edit()
+        # Without it, staging alone leaves the checkpoint stale for the guard.
+        run(self.root, 'add', 'note.html', h.STATE_PATH)
+        self.assert_blocked('CHECKPOINT_REQUIRED_BEFORE_COMMIT_OR_STOP', lc.guard, self.root, 'pre-commit')
+        run(self.root, 'reset', '-q')
+        result = lc.stage_delivery(self.root, sha, ['note.html'])
+        self.assertEqual(result['status'], 'delivery_staged')
+        run(self.root, 'commit', '-m', 'delivery 1')
+        lc.guard(self.root, 'ci')
+        run(self.root, 'push', 'origin', 'main')
+        self.assertEqual(h.load_state(self.root)[1], result['sha256'])
+
+    def test_stage_delivery_refuses_unrecorded_bytes_and_foreign_paths(self):
+        sha = self.at_first_cut_with_recorded_edit()
+        self.assert_blocked('STAGE_PATH_OUTSIDE_PUBLICATION:unrelated.md',
+                            lc.stage_delivery, self.root, sha, ['unrelated.md'])
+        (self.root/'note.html').write_text('edited after the checkpoint\n')
+        self.assert_blocked('RECORD_WORK_CHANGES_BEFORE_STAGING',
+                            lc.stage_delivery, self.root, sha, ['note.html'])
+        self.assertEqual(h.git(self.root, 'diff', '--cached', '--name-only'), b'')
+
+    def test_stage_delivery_only_at_a_fixed_cut(self):
+        sha = self.walk(self.start(), 'C.4.8')
+        self.assert_blocked('STAGE_DELIVERY_ONLY_AT_FIXED_CUT', lc.stage_delivery, self.root, sha, ['note.html'])
+
+    def test_third_delivery_may_carry_the_public_technical_report_only(self):
+        sha = self.prepare_final()
+        lc.finish(self.root, sha)
+        receipt = lc.completion_path({'content_id': 'note'})
+        report = lc.technical_report_path({'content_id': 'note', 'category': 'insight'})
+        self.assertEqual(report, '.dentcast/publication-reports/insight-note.md')
+        text = (self.root/report).read_text(encoding='utf-8')
+        for line in ('# note — publication technical report', '- `C.4.14` skipped — fixture: ordinary page, no Challenge',
+                     '- `F` completed', '**1 passed, 0 warned, 0 failed — publish is COMPLETE**',
+                     '- fixture external checks: fixture:checked', '- `note.html`', '- `' + report + '`',
+                     '- No DES record'):
+            self.assertIn(line, text)
+        run(self.root, 'add', 'note.html', h.STATE_PATH, receipt)
+        self.assert_blocked('FINAL_DELIVERY_MUST_BE_FULLY_STAGED', lc.guard, self.root, 'pre-commit')
+        (self.root/'unrelated.md').write_text('not part of this publication\n')
+        run(self.root, 'add', receipt, report, 'unrelated.md')
+        self.assert_blocked('UNRELATED_FINAL_DELIVERY_PATH', lc.guard, self.root, 'pre-commit')
+        run(self.root, 'rm', '--cached', '-q', 'unrelated.md')
+        (self.root/'unrelated.md').unlink()
+        lc.guard(self.root, 'pre-commit')
+        run(self.root, 'commit', '-m', 'delivery 3 with technical report')
+        lc.guard(self.root, 'ci')
+        run(self.root, 'push', 'origin', 'main')
+        self.assertTrue(lc.confirm_cleanup(self.root)['publication_completed'])
+        self.assertEqual(merge.verify_publication_history(self.root, self.baseline, []), {'note'})
 
     def test_intermediate_progress_is_local_and_cut_requires_real_push(self):
         sha = self.start()
@@ -252,7 +314,31 @@ class ThreeDeliveriesTests(unittest.TestCase):
         lc.restore_cleanup(self.root)
         self.assertTrue((self.root/h.STATE_PATH).exists())
         self.assertFalse((self.root/lc.completion_path({'content_id':'note'})).exists())
+        self.assertFalse((self.root/lc.technical_report_path({'content_id':'note', 'category':'insight'})).exists())
         self.assertEqual(h.text_git(self.root, 'rev-list', '--count', self.baseline+'..HEAD'), '2')
+
+    def test_restore_refuses_an_edited_technical_report_and_removes_its_own(self):
+        sha = self.prepare_final()
+        report = self.root/lc.technical_report_path({'content_id': 'note', 'category': 'insight'})
+        lc.finish(self.root, sha)
+        original = report.read_bytes()
+        report.write_text('edited by hand\n')
+        self.assert_blocked('TECHNICAL_REPORT_CHANGED', lc.restore_cleanup, self.root)
+        report.write_bytes(original)
+        lc.restore_cleanup(self.root)
+        self.assertFalse(report.exists())
+
+    def test_finish_never_overwrites_an_authored_technical_report(self):
+        sha = self.prepare_final()
+        report = self.root/lc.technical_report_path({'content_id': 'note', 'category': 'insight'})
+        report.parent.mkdir(parents=True, exist_ok=True)
+        report.write_text('authored report\n')
+        state, _ = h.load_state(self.root)
+        state['publication']['target_paths'].append(report.relative_to(self.root).as_posix())
+        sha = h.save(self.root, state['publication'], expected=sha, note='Reviewed authored report')['sha256']
+        lc.finish(self.root, sha)
+        self.assertEqual(report.read_text(), 'authored report\n')
+        self.assertNotIn('technical_report', lc.cleanup_record(self.root))
 
     def test_cli_init_automatically_selects_fixed_policy(self):
         self.prepare()

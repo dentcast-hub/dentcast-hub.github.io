@@ -518,9 +518,10 @@ def finalize_and_push(root: Path, artifact_dir: Path, expected_head: str,
             raise RunnerError("FINALIZE_FAILED:" + finish.stdout.strip())
 
         # Delivery 3 may contain only generated scope, the canonical receipt,
-        # and deletion of the active handoff.
+        # the public technical report and deletion of the active handoff.
         completion = lifecycle.completion_path({"content_id": content_id})
-        allowed = allowed_paths(pub) | {completion}
+        report = lifecycle.technical_report_path(pub)  # written by finish
+        allowed = allowed_paths(pub) | {completion, report}
         changed = changed_paths(root)
         if changed - allowed:
             raise RunnerError("POST_CUT2_FINAL_OUT_OF_SCOPE:" + ",".join(sorted(changed - allowed)))

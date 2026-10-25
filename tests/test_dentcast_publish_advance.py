@@ -73,6 +73,69 @@ class AdvanceTests(unittest.TestCase):
         self.assertEqual(state['publication']['steps'][2]['reason'], 'fixture:canonical A exception')
         self.assertEqual(state['publication']['steps'][4]['status'], 'started')
 
+    def bare_started_a(self):
+        self.prepare()
+        state, _ = h.load_state(self.root)
+        for row in state['publication']['steps'][:2]:
+            row.update(status='completed', evidence=['fixture:done'])
+        digest = h.write_atomic(self.root, state)
+        return lc.advance(self.root, digest, start_next=True)['sha256']
+
+    def test_skip_row_that_start_next_opened(self):
+        digest = self.bare_started_a()
+        result = lc.advance(self.root, digest, skips=[('A', 'fixture:canonical A exception')], start_next=True)
+        self.assertEqual(result['transitions_written'], [{'id': 'A', 'status': 'skipped'}, {'id': 'B.1', 'status': 'started'}])
+        state, _ = h.load_state(self.root)
+        self.assertEqual(state['publication']['steps'][2]['reason'], 'fixture:canonical A exception')
+
+    def test_started_row_with_drift_or_evidence_still_rejected(self):
+        digest = self.bare_started_a()
+        (self.root / 'note.html').write_text('work done during A\n')
+        raw = (self.root / h.STATE_PATH).read_bytes()
+        with self.assertRaisesRegex(h.Blocked, 'ONLY_PENDING_STEPS_CAN_BE_BATCH_SKIPPED'):
+            lc.advance(self.root, digest, skips=[('A', 'fixture:exception')])
+        self.assertEqual(raw, (self.root / h.STATE_PATH).read_bytes())
+        (self.root / 'note.html').write_text('original\n')
+        state, _ = h.load_state(self.root)
+        state['publication']['steps'][2]['evidence'] = ['fixture:partial-work']
+        digest = h.write_atomic(self.root, state)
+        with self.assertRaisesRegex(h.Blocked, 'ONLY_PENDING_STEPS_CAN_BE_BATCH_SKIPPED'):
+            lc.advance(self.root, digest, skips=[('A', 'fixture:exception')])
+
+    def test_started_row_skip_keeps_external_outcome_guard(self):
+        digest = self.bare_started_a()
+        state, _ = h.load_state(self.root)
+        # Attributed to another step, so only the in-flight outcome can block.
+        state['publication']['external_actions'] = [{'id': 'C.4.10.1:upload', 'target': 'fixture', 'status': 'outcome_unknown', 'evidence': []}]
+        digest = h.write_atomic(self.root, state)
+        with self.assertRaisesRegex(h.Blocked, 'EXTERNAL_OUTCOME_UNKNOWN'):
+            lc.advance(self.root, digest, skips=[('A', 'fixture:exception')])
+
+    def with_action(self, digest, action_id):
+        state, _ = h.load_state(self.root)
+        state['publication']['external_actions'] = [
+            {'id': action_id, 'target': 'drive:fixture', 'status': 'completed', 'evidence': ['fixture:observed']}]
+        return h.write_atomic(self.root, state)
+
+    def test_started_row_with_its_own_external_action_is_not_batch_skipped(self):
+        for action_id in ('A:drive-upload', 'drive-upload-without-step-prefix'):
+            with self.subTest(action=action_id):
+                self.setUp()
+                digest = self.with_action(self.bare_started_a(), action_id)
+                with self.assertRaisesRegex(h.Blocked, 'ONLY_PENDING_STEPS_CAN_BE_BATCH_SKIPPED'):
+                    lc.advance(self.root, digest, skips=[('A', 'fixture:exception')])
+
+    def test_external_action_of_another_step_does_not_block_the_skip(self):
+        digest = self.with_action(self.bare_started_a(), 'C.4.10.1:drive-move')
+        result = lc.advance(self.root, digest, skips=[('A', 'fixture:exception')])
+        self.assertEqual(result['transitions_written'], [{'id': 'A', 'status': 'skipped'}])
+
+    def test_action_step_reads_only_real_ledger_prefixes(self):
+        p = {'steps': lc.plan()}
+        self.assertEqual(lc.action_step(p, {'id': 'C.4.10.1:drive-move'}), 'C.4.10.1')
+        self.assertIsNone(lc.action_step(p, {'id': 'drive:abc'}))
+        self.assertIsNone(lc.action_step(p, {'id': 'upload'}))
+
     def test_unknown_external_outcome_blocks_advance(self):
         initial = self.prepare()
         state, _ = h.load_state(self.root)

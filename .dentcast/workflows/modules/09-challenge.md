@@ -7,7 +7,11 @@
 
 ### 4.14. چالش — public half on the page, private half in the admin queue
 
-**Runs only when Question 4.9 answered «چالش».** Full design in
+**Runs only when Question 4.9 answered «چالش».** The ledger checkpoint
+`C.4.14` therefore has exactly two outcomes: `completed` means *this post is
+a چالش* (its page carries the `data-dc-challenge-question` markup below, and
+the English mirror is exempt); an ordinary post records `C.4.14` as
+**`skipped`** only, never `completed`. Full design in
 `.dentcast/challenge-handoff.md`; this step is a summary of its §11.3, not a
 second source of truth for it — read the handoff before touching this step.
 
