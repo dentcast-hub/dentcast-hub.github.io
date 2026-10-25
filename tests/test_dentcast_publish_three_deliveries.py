@@ -168,10 +168,10 @@ class ThreeDeliveriesTests(unittest.TestCase):
         self.assertTrue((self.root/report).exists())
         original_report = (self.root/report).read_bytes()
         (self.root/report).write_text('{}')
-        run(self.root, 'add', 'note.html', h.STATE_PATH, report)
+        run(self.root, 'add', 'note.html', h.STATE_PATH, report, lc.technical_report_path({'content_id': 'note', 'category': 'insight'}))
         self.assert_blocked('COMPLETION_RECEIPT_CHANGED', lc.guard, self.root, 'pre-commit')
         (self.root/report).write_bytes(original_report)
-        run(self.root, 'add', 'note.html', report)
+        run(self.root, 'add', 'note.html', report, lc.technical_report_path({'content_id': 'note', 'category': 'insight'}))
         lc.guard(self.root, 'pre-commit')
         run(self.root, 'commit', '-m', 'delivery 3: final work, report and deletion')
         lc.guard(self.root, 'ci')
@@ -232,9 +232,16 @@ class ThreeDeliveriesTests(unittest.TestCase):
         receipt = lc.completion_path({'content_id': 'note'})
         report = lc.technical_report_path({'content_id': 'note', 'category': 'insight'})
         self.assertEqual(report, '.dentcast/publication-reports/insight-note.md')
-        (self.root/report).write_text('# note — publication technical report\n')
+        text = (self.root/report).read_text(encoding='utf-8')
+        for line in ('# note — publication technical report', '- `C.4.14` skipped — fixture: ordinary page, no Challenge',
+                     '- `F` completed', '**1 passed, 0 warned, 0 failed — publish is COMPLETE**',
+                     '- fixture external checks: fixture:checked', '- `note.html`', '- `' + report + '`',
+                     '- No DES record'):
+            self.assertIn(line, text)
+        run(self.root, 'add', 'note.html', h.STATE_PATH, receipt)
+        self.assert_blocked('FINAL_DELIVERY_MUST_BE_FULLY_STAGED', lc.guard, self.root, 'pre-commit')
         (self.root/'unrelated.md').write_text('not part of this publication\n')
-        run(self.root, 'add', 'note.html', h.STATE_PATH, receipt, report, 'unrelated.md')
+        run(self.root, 'add', receipt, report, 'unrelated.md')
         self.assert_blocked('UNRELATED_FINAL_DELIVERY_PATH', lc.guard, self.root, 'pre-commit')
         run(self.root, 'rm', '--cached', '-q', 'unrelated.md')
         (self.root/'unrelated.md').unlink()
@@ -307,7 +314,31 @@ class ThreeDeliveriesTests(unittest.TestCase):
         lc.restore_cleanup(self.root)
         self.assertTrue((self.root/h.STATE_PATH).exists())
         self.assertFalse((self.root/lc.completion_path({'content_id':'note'})).exists())
+        self.assertFalse((self.root/lc.technical_report_path({'content_id':'note', 'category':'insight'})).exists())
         self.assertEqual(h.text_git(self.root, 'rev-list', '--count', self.baseline+'..HEAD'), '2')
+
+    def test_restore_refuses_an_edited_technical_report_and_removes_its_own(self):
+        sha = self.prepare_final()
+        report = self.root/lc.technical_report_path({'content_id': 'note', 'category': 'insight'})
+        lc.finish(self.root, sha)
+        original = report.read_bytes()
+        report.write_text('edited by hand\n')
+        self.assert_blocked('TECHNICAL_REPORT_CHANGED', lc.restore_cleanup, self.root)
+        report.write_bytes(original)
+        lc.restore_cleanup(self.root)
+        self.assertFalse(report.exists())
+
+    def test_finish_never_overwrites_an_authored_technical_report(self):
+        sha = self.prepare_final()
+        report = self.root/lc.technical_report_path({'content_id': 'note', 'category': 'insight'})
+        report.parent.mkdir(parents=True, exist_ok=True)
+        report.write_text('authored report\n')
+        state, _ = h.load_state(self.root)
+        state['publication']['target_paths'].append(report.relative_to(self.root).as_posix())
+        sha = h.save(self.root, state['publication'], expected=sha, note='Reviewed authored report')['sha256']
+        lc.finish(self.root, sha)
+        self.assertEqual(report.read_text(), 'authored report\n')
+        self.assertNotIn('technical_report', lc.cleanup_record(self.root))
 
     def test_cli_init_automatically_selects_fixed_policy(self):
         self.prepare()

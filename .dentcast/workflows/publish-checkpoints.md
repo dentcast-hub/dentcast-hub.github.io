@@ -523,18 +523,19 @@ final handoff**:
 2. Run `finish --expected-sha256 <digest>`. It requires all gates resolved, real
    successful Phase F, actual delivery evidence and a freshly synchronized remote
    at delivery 2. It reruns the mechanical gate and checks unchanged work. It
-   writes the completed-only receipt, retains private recovery metadata and
-   removes the active handoff locally.
+   writes the completed-only receipt and the public technical report, retains
+   private recovery metadata and removes the active handoff locally.
 3. Stage only final scoped work, the completion receipt, the public-safe technical
-   report `.dentcast/publication-reports/<category>-<id>.md` (the post-Push-2
-   workflow writes it from the ledger and Phase F receipt) and handoff deletion.
+   report `.dentcast/publication-reports/<category>-<id>.md` (`finish` writes it
+   from the ledger and Phase F receipt, locally and in the post-Push-2 workflow,
+   unless an authored one already exists) and handoff deletion.
    Commit/push them **together as delivery 3**, then run `confirm-cleanup`.
    This confirms actual remote delivery and unchanged final bytes. No additional
    cleanup commit/push follows. Until confirmation, status is
    `cleanup_pending_delivery`, never publication success.
 4. If interrupted before successful delivery, preserve work and use
    `restore-cleanup` to restore the same local handoff. It removes its own unchanged
-   completion receipt locally, never restores content or repeats an external
+   completion receipt and technical report locally, never restores content or repeats an external
    action. If the final commit already exists, `restore-cleanup` preserves that
    commit and returns `final_delivery_pending`: retry the same push and confirm,
    without making another commit. Reconcile actual Git/index drift and rerun
