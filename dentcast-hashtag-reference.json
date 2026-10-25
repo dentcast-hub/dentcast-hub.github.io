@@ -396,7 +396,7 @@
     "#Implant"
    ],
    "co_tags": [],
-   "count": 95,
+   "count": 96,
    "content_ids": [
     "episodes/episode-23",
     "episodes/episode-24",
@@ -492,7 +492,8 @@
     "episodes/episode-162",
     "chairside/chairside-38",
     "sharehub/share-35",
-    "chairside/chairside-42"
+    "chairside/chairside-42",
+    "chairside/chairside-44"
    ]
   },
   {
@@ -582,7 +583,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 52,
+   "count": 53,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-25",
@@ -635,7 +636,73 @@
     "insight/insight-95",
     "sharehub/share-36",
     "chairside/chairside-42",
-    "chairside/chairside-43"
+    "chairside/chairside-43",
+    "chairside/chairside-44"
+   ]
+  },
+  {
+   "key": "اکلوژن",
+   "tag": "#اکلوژن",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "رابطه‌ی تماسی دندان‌های دو فک و هرچه بر آن اثر می‌گذارد.",
+   "use_when": "چتر عام اکلوژن. همیشه در کنار یک مفهوم مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "occlusion",
+    "اکلوزیون"
+   ],
+   "variants": [
+    "#Occlusion"
+   ],
+   "co_tags": [],
+   "count": 46,
+   "content_ids": [
+    "episodes/episode-14",
+    "episodes/episode-23",
+    "episodes/episode-35",
+    "episodes/episode-60",
+    "episodes/episode-123-2",
+    "episodes/episode-126",
+    "episodes/episode-131",
+    "episodes/episode-132",
+    "episodes/episode-142",
+    "episodes/episode-143",
+    "episodes/episode-144",
+    "episodes/episode-145",
+    "insight/insight-1",
+    "insight/insight-2",
+    "insight/insight-6",
+    "insight/insight-8",
+    "insight/insight-12",
+    "photocast/episode-2",
+    "dentcast-plus/video-2",
+    "notecast/episode-14",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "insight/insight-21",
+    "episodes/episode-154",
+    "sharehub/share-5",
+    "insight/insight-24",
+    "episodes/episode-155",
+    "dentcast-plus/video-6",
+    "insight/insight-29",
+    "chairside/chairside-11",
+    "insight/insight-37",
+    "chairside/chairside-15",
+    "sharehub/share-6",
+    "insight/insight-43",
+    "episodes/episode-160",
+    "chairside/chairside-23",
+    "insight/insight-56",
+    "chairside/chairside-31",
+    "insight/insight-65",
+    "chairside/chairside-36",
+    "sharehub/share-21",
+    "insight/insight-87",
+    "insight/insight-94",
+    "sharehub/share-36",
+    "insight/insight-96",
+    "chairside/chairside-44"
    ]
   },
   {
@@ -707,70 +774,6 @@
    ]
   },
   {
-   "key": "اکلوژن",
-   "tag": "#اکلوژن",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "رابطه‌ی تماسی دندان‌های دو فک و هرچه بر آن اثر می‌گذارد.",
-   "use_when": "چتر عام اکلوژن. همیشه در کنار یک مفهوم مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "occlusion",
-    "اکلوزیون"
-   ],
-   "variants": [
-    "#Occlusion"
-   ],
-   "co_tags": [],
-   "count": 45,
-   "content_ids": [
-    "episodes/episode-14",
-    "episodes/episode-23",
-    "episodes/episode-35",
-    "episodes/episode-60",
-    "episodes/episode-123-2",
-    "episodes/episode-126",
-    "episodes/episode-131",
-    "episodes/episode-132",
-    "episodes/episode-142",
-    "episodes/episode-143",
-    "episodes/episode-144",
-    "episodes/episode-145",
-    "insight/insight-1",
-    "insight/insight-2",
-    "insight/insight-6",
-    "insight/insight-8",
-    "insight/insight-12",
-    "photocast/episode-2",
-    "dentcast-plus/video-2",
-    "notecast/episode-14",
-    "notecast/episode-23",
-    "notecast/episode-24",
-    "insight/insight-21",
-    "episodes/episode-154",
-    "sharehub/share-5",
-    "insight/insight-24",
-    "episodes/episode-155",
-    "dentcast-plus/video-6",
-    "insight/insight-29",
-    "chairside/chairside-11",
-    "insight/insight-37",
-    "chairside/chairside-15",
-    "sharehub/share-6",
-    "insight/insight-43",
-    "episodes/episode-160",
-    "chairside/chairside-23",
-    "insight/insight-56",
-    "chairside/chairside-31",
-    "insight/insight-65",
-    "chairside/chairside-36",
-    "sharehub/share-21",
-    "insight/insight-87",
-    "insight/insight-94",
-    "sharehub/share-36",
-    "insight/insight-96"
-   ]
-  },
-  {
    "key": "چیرساید",
    "tag": "#چیرساید",
    "domain": "brand",
@@ -783,7 +786,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 43,
+   "count": 44,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -827,7 +830,71 @@
     "chairside/chairside-39",
     "chairside/chairside-40",
     "chairside/chairside-41",
-    "chairside/chairside-42"
+    "chairside/chairside-42",
+    "chairside/chairside-44"
+   ]
+  },
+  {
+   "key": "کیس_بالینی",
+   "tag": "#کیس_بالینی",
+   "domain": "brand",
+   "words": 2,
+   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
+   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
+   "aliases": [
+    "ویزیت کلینیکی",
+    "گزارش کیس"
+   ],
+   "variants": [
+    "#ویزیت_کلینیکی",
+    "#گزارش_کیس"
+   ],
+   "co_tags": [],
+   "count": 43,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30",
+    "chairside/chairside-31",
+    "chairside/chairside-32",
+    "chairside/chairside-33",
+    "chairside/chairside-34",
+    "chairside/chairside-35",
+    "chairside/chairside-36",
+    "chairside/chairside-37",
+    "chairside/chairside-38",
+    "chairside/chairside-39",
+    "chairside/chairside-40",
+    "chairside/chairside-41",
+    "chairside/chairside-42",
+    "chairside/chairside-44"
    ]
   },
   {
@@ -888,68 +955,6 @@
     "notecast/episode-41",
     "notecast/episode-42",
     "notecast/episode-43"
-   ]
-  },
-  {
-   "key": "کیس_بالینی",
-   "tag": "#کیس_بالینی",
-   "domain": "brand",
-   "words": 2,
-   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
-   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
-   "aliases": [
-    "ویزیت کلینیکی",
-    "گزارش کیس"
-   ],
-   "variants": [
-    "#ویزیت_کلینیکی",
-    "#گزارش_کیس"
-   ],
-   "co_tags": [],
-   "count": 42,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-7",
-    "chairside/chairside-8",
-    "chairside/chairside-9",
-    "chairside/chairside-10",
-    "chairside/chairside-11",
-    "chairside/chairside-12",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-15",
-    "chairside/chairside-16",
-    "chairside/chairside-17",
-    "chairside/chairside-18",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "chairside/chairside-30",
-    "chairside/chairside-31",
-    "chairside/chairside-32",
-    "chairside/chairside-33",
-    "chairside/chairside-34",
-    "chairside/chairside-35",
-    "chairside/chairside-36",
-    "chairside/chairside-37",
-    "chairside/chairside-38",
-    "chairside/chairside-39",
-    "chairside/chairside-40",
-    "chairside/chairside-41",
-    "chairside/chairside-42"
    ]
   },
   {
@@ -1601,6 +1606,48 @@
    ]
   },
   {
+   "key": "فرول",
+   "tag": "#فرول",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
+   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
+   "aliases": [
+    "ferrule"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 26,
+   "content_ids": [
+    "episodes/episode-47",
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "episodes/episode-147-7",
+    "insight/insight-4",
+    "insight/insight-7",
+    "insight/insight-13",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19",
+    "insight/insight-58",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "insight/insight-64",
+    "chairside/chairside-30",
+    "sharehub/share-18",
+    "dentai/dentai-33",
+    "insight/insight-76",
+    "sharehub/share-20",
+    "insight/insight-84",
+    "insight/insight-93",
+    "insight/insight-97",
+    "chairside/chairside-44"
+   ]
+  },
+  {
    "key": "بیومکانیک",
    "tag": "#بیومکانیک",
    "domain": "clinical",
@@ -1690,47 +1737,6 @@
     "dentai/promptologist/prompt7-1",
     "dentai/promptologist/prompt7-2",
     "dentai/promptologist/prompt-append2-1"
-   ]
-  },
-  {
-   "key": "فرول",
-   "tag": "#فرول",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
-   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
-   "aliases": [
-    "ferrule"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 25,
-   "content_ids": [
-    "episodes/episode-47",
-    "episodes/episode-48",
-    "episodes/episode-49",
-    "episodes/episode-147-7",
-    "insight/insight-4",
-    "insight/insight-7",
-    "insight/insight-13",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-9",
-    "dentai/dentai-27",
-    "metanotes/meta-15",
-    "metanotes/meta-19",
-    "insight/insight-58",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "insight/insight-64",
-    "chairside/chairside-30",
-    "sharehub/share-18",
-    "dentai/dentai-33",
-    "insight/insight-76",
-    "sharehub/share-20",
-    "insight/insight-84",
-    "insight/insight-93",
-    "insight/insight-97"
    ]
   },
   {
@@ -3047,6 +3053,38 @@
    ]
   },
   {
+   "key": "حفظ_دندان",
+   "tag": "#حفظ_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نگه داشتنِ دندانِ questionable در برابر کشیدن و جایگزینی.",
+   "use_when": "مقاله بین حفظ و کشیدن تصمیم بگیرد.",
+   "aliases": [
+    "tooth preservation",
+    "نگه داشتن دندان",
+    "tooth retention"
+   ],
+   "variants": [
+    "#نگهداری_دندان"
+   ],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "metanotes/meta-6",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-4",
+    "chairside/chairside-13",
+    "chairside/chairside-16",
+    "chairside/chairside-30",
+    "insight/insight-76",
+    "insight/insight-93",
+    "chairside/chairside-44"
+   ]
+  },
+  {
    "key": "کشیدن_دندان",
    "tag": "#کشیدن_دندان",
    "domain": null,
@@ -3232,37 +3270,6 @@
     "insight/insight-54",
     "insight/insight-56",
     "chairside/chairside-37"
-   ]
-  },
-  {
-   "key": "حفظ_دندان",
-   "tag": "#حفظ_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نگه داشتنِ دندانِ questionable در برابر کشیدن و جایگزینی.",
-   "use_when": "مقاله بین حفظ و کشیدن تصمیم بگیرد.",
-   "aliases": [
-    "tooth preservation",
-    "نگه داشتن دندان",
-    "tooth retention"
-   ],
-   "variants": [
-    "#نگهداری_دندان"
-   ],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-150-2",
-    "episodes/episode-151",
-    "metanotes/meta-6",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "chairside/chairside-4",
-    "chairside/chairside-13",
-    "chairside/chairside-16",
-    "chairside/chairside-30",
-    "insight/insight-76",
-    "insight/insight-93"
    ]
   },
   {
@@ -8866,6 +8873,28 @@
    ]
   },
   {
+   "key": "دیپ_بایت",
+   "tag": "#دیپ_بایت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "همپوشانیِ عمودیِ زیادِ قدامی که فضای رستوریتیو را می‌بندد.",
+   "use_when": "مقاله دیپ‌بایت را محدودیتِ فضا بداند.",
+   "aliases": [
+    "deep bite",
+    "بایت عمیق",
+    "اوربایت عمیق",
+    "دیپ بایت شدید"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-10",
+    "insight/insight-66",
+    "chairside/chairside-44"
+   ]
+  },
+  {
    "key": "راحتی_بیمار",
    "tag": "#راحتی_بیمار",
    "domain": "clinical",
@@ -11626,27 +11655,6 @@
    "content_ids": [
     "episodes/episode-111-1",
     "photocast/episode-3"
-   ]
-  },
-  {
-   "key": "دیپ_بایت",
-   "tag": "#دیپ_بایت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "همپوشانیِ عمودیِ زیادِ قدامی که فضای رستوریتیو را می‌بندد.",
-   "use_when": "مقاله دیپ‌بایت را محدودیتِ فضا بداند.",
-   "aliases": [
-    "deep bite",
-    "بایت عمیق",
-    "اوربایت عمیق",
-    "دیپ بایت شدید"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-10",
-    "insight/insight-66"
    ]
   },
   {
