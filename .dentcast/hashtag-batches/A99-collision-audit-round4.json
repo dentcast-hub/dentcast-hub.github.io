@@ -1,0 +1,59 @@
+{
+  "note": "Founder decision 1405/08/03 (2026-10-25), canonical/alias collision audit, round 4 of 4 (founder delegated every cluster to the agent's stated recommendation). 19) «build up» is the general core-buildup term and belongs to #کور_بیلدآپ; removed from #بازسازی_دیواره. 20) «پالیش» on both #پالیش_نهایی and #پالیش_یا_گلیز, and «گلیز» on the latter, were dead data: the compiler already drops an alias contained in its own target, so they never reached the table. Removed; zero behaviour change, three --sync notes disappear. 21) #پروتکل_باندینگ and #پروتکل_ادهزیو merged into #پروتکل_باند — one concept (the bonding protocol) under three spellings; both spellings stay as aliases; episodes 129/149 (chips rewritten by --apply) and metanotes/meta-14 retagged. 22) #پوسیدگی_عودکننده merged into #پوسیدگی_ثانویه — identical definitions (secondary = recurrent caries); its aliases «عود پوسیدگی»/«recurrent caries» and its own form move to the survivor; chairside-6 retagged. 23) «case report»/«کیس ریپورت» name the study design, which is #گزارش_مورد; removed from the structural chairside tag #کیس_بالینی (which keeps «گزارش کیس»/«ویزیت کلینیکی»). 24) «سئو»/«seo» (search-engine optimisation = being found) belong to the broad #جستجوپذیری_محتوا; removed from #رتبه_بندی_گوگل, whose use_when explicitly excludes mere visibility. No definition or use_when text was written.",
+  "concepts": [
+    {
+      "tag": "#بازسازی_دیواره",
+      "aliases": [
+        "بیلدآپ دیواره",
+        "تقویت دیواره"
+      ]
+    },
+    {
+      "tag": "#پالیش_نهایی",
+      "aliases": [
+        "polishing",
+        "پرداخت",
+        "polish"
+      ]
+    },
+    {
+      "tag": "#پالیش_یا_گلیز",
+      "aliases": [
+        "polish vs glaze"
+      ]
+    },
+    {
+      "tag": "#پوسیدگی_ثانویه",
+      "aliases": [
+        "secondary caries",
+        "پوسیدگی ثانوی",
+        "عود پوسیدگی",
+        "recurrent caries",
+        "پوسیدگی عودکننده"
+      ]
+    },
+    {
+      "tag": "#کیس_بالینی",
+      "aliases": [
+        "ویزیت کلینیکی",
+        "گزارش کیس"
+      ]
+    },
+    {
+      "tag": "#رتبه_بندی_گوگل",
+      "aliases": [
+        "google ranking",
+        "search ranking",
+        "رتبه در گوگل",
+        "رتبه‌بندی جستجو",
+        "الگوریتم رتبه‌بندی"
+      ]
+    }
+  ],
+  "renames": {
+    "#پروتکل_باندینگ": "#پروتکل_باند",
+    "#پروتکل_ادهزیو": "#پروتکل_باند",
+    "#پوسیدگی_عودکننده": "#پوسیدگی_ثانویه"
+  },
+  "articles": {}
+}

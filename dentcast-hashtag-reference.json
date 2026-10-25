@@ -899,9 +899,7 @@
    "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
    "aliases": [
     "ویزیت کلینیکی",
-    "گزارش کیس",
-    "کیس ریپورت",
-    "case report"
+    "گزارش کیس"
    ],
    "variants": [
     "#ویزیت_کلینیکی",
@@ -3353,6 +3351,38 @@
    ]
   },
   {
+   "key": "پروتکل_باند",
+   "tag": "#پروتکل_باند",
+   "domain": null,
+   "words": 2,
+   "definition": "ترتیب و جزئیاتِ مراحل باندینگ.",
+   "use_when": "مقاله پروتکل را عاملِ نتیجه بداند.",
+   "aliases": [
+    "bonding protocol",
+    "پروتکل باندینگ",
+    "پروتکل ادهزیو"
+   ],
+   "variants": [
+    "#پروتکل_باندینگ",
+    "#پروتکل_ادهزیو"
+   ],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-129",
+    "episodes/episode-138",
+    "episodes/episode-149",
+    "notecast/episode-9",
+    "notecast/episode-11",
+    "notecast/episode-12",
+    "dentai/dentai-8",
+    "insight/insight-36",
+    "dentai/dentai-25",
+    "metanotes/meta-14",
+    "chairside/chairside-32"
+   ]
+  },
+  {
    "key": "پروفایل_امرجنس",
    "tag": "#پروفایل_امرجنس",
    "domain": "clinical",
@@ -4226,32 +4256,6 @@
     "taraz/taraz1-7",
     "taraz/taraz1-8",
     "taraz/taraz1-9"
-   ]
-  },
-  {
-   "key": "پروتکل_باند",
-   "tag": "#پروتکل_باند",
-   "domain": null,
-   "words": 2,
-   "definition": "ترتیب و جزئیاتِ مراحل باندینگ.",
-   "use_when": "مقاله پروتکل را عاملِ نتیجه بداند.",
-   "aliases": [
-    "bonding protocol",
-    "پروتکل باندینگ",
-    "پروتکل ادهزیو"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-138",
-    "notecast/episode-9",
-    "notecast/episode-11",
-    "notecast/episode-12",
-    "dentai/dentai-8",
-    "insight/insight-36",
-    "dentai/dentai-25",
-    "chairside/chairside-32"
    ]
   },
   {
@@ -6246,6 +6250,33 @@
    ]
   },
   {
+   "key": "پوسیدگی_ثانویه",
+   "tag": "#پوسیدگی_ثانویه",
+   "domain": null,
+   "words": 2,
+   "definition": "پوسیدگیِ برگشته در حاشیه‌ی ترمیم.",
+   "use_when": "مقاله پوسیدگی ثانویه را پیامد بسنجد.",
+   "aliases": [
+    "secondary caries",
+    "پوسیدگی ثانوی",
+    "عود پوسیدگی",
+    "recurrent caries",
+    "پوسیدگی عودکننده"
+   ],
+   "variants": [
+    "#پوسیدگی_عودکننده"
+   ],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-23",
+    "chairside/chairside-6",
+    "dentai/dentai-22",
+    "insight/insight-58",
+    "insight/insight-86"
+   ]
+  },
+  {
    "key": "پوسیدگی_عمیق",
    "tag": "#پوسیدگی_عمیق",
    "domain": null,
@@ -7443,27 +7474,6 @@
     "insight/insight-58",
     "dentai/dentai-35",
     "insight/insight-96"
-   ]
-  },
-  {
-   "key": "پوسیدگی_ثانویه",
-   "tag": "#پوسیدگی_ثانویه",
-   "domain": null,
-   "words": 2,
-   "definition": "پوسیدگیِ برگشته در حاشیه‌ی ترمیم.",
-   "use_when": "مقاله پوسیدگی ثانویه را پیامد بسنجد.",
-   "aliases": [
-    "secondary caries",
-    "پوسیدگی ثانوی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-23",
-    "dentai/dentai-22",
-    "insight/insight-58",
-    "insight/insight-86"
    ]
   },
   {
@@ -11659,8 +11669,6 @@
    "aliases": [
     "google ranking",
     "search ranking",
-    "seo",
-    "سئو",
     "رتبه در گوگل",
     "رتبه‌بندی جستجو",
     "الگوریتم رتبه‌بندی"
@@ -12725,22 +12733,6 @@
    "content_ids": [
     "sharehub/share-1",
     "dentai/dentai-34"
-   ]
-  },
-  {
-   "key": "پروتکل_باندینگ",
-   "tag": "#پروتکل_باندینگ",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-129",
-    "episodes/episode-149"
    ]
   },
   {
@@ -15568,8 +15560,7 @@
    "use_when": "مقاله بازسازیِ دیواره را جایگزینِ حذفِ آن بداند.",
    "aliases": [
     "بیلدآپ دیواره",
-    "تقویت دیواره",
-    "build up"
+    "تقویت دیواره"
    ],
    "variants": [],
    "co_tags": [],
@@ -20349,7 +20340,6 @@
    "aliases": [
     "polishing",
     "پرداخت",
-    "پالیش",
     "polish"
    ],
    "variants": [],
@@ -20367,9 +20357,7 @@
    "definition": "انتخاب بین پالیش و گلیز و اثرش بر سایش.",
    "use_when": "مقاله بین این دو مقایسه کند.",
    "aliases": [
-    "polish vs glaze",
-    "گلیز",
-    "پالیش"
+    "polish vs glaze"
    ],
    "variants": [],
    "co_tags": [],
@@ -20438,21 +20426,6 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-123-4"
-   ]
-  },
-  {
-   "key": "پروتکل_ادهزیو",
-   "tag": "#پروتکل_ادهزیو",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پروتکلِ باندینگ که بقای ترمیمِ ادهزیو به آن وابسته است.",
-   "use_when": "مقاله پروتکل را عاملِ نتیجه بداند.",
-   "aliases": [],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "metanotes/meta-14"
    ]
   },
   {
@@ -20597,25 +20570,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-74"
-   ]
-  },
-  {
-   "key": "پوسیدگی_عودکننده",
-   "tag": "#پوسیدگی_عودکننده",
-   "domain": null,
-   "words": 2,
-   "definition": "پوسیدگیِ برگشته در حاشیه‌ی ترمیم قبلی.",
-   "use_when": "مقاله عود پوسیدگی را یافته‌ی تعیین‌کننده بداند.",
-   "aliases": [
-    "عود پوسیدگی",
-    "پوسیدگی ثانویه",
-    "recurrent caries"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "chairside/chairside-6"
    ]
   },
   {
@@ -22497,12 +22451,12 @@
   "pregnant patient": "بارداری",
   "proximal contact": "کانتکت باز",
   "radiation safety": "ایمنی پرتو",
-  "recurrent caries": "پوسیدگی عودکننده",
+  "recurrent caries": "پوسیدگی ثانویه",
   "retraction paste": "خمیر کنارزننده",
   "role play prompt": "role prompting",
   "sasan rasaeipour": "رسایی پور",
   "scan file format": "فرمت اسکن",
-  "secondary caries": "پوسیدگی عودکننده",
+  "secondary caries": "پوسیدگی ثانویه",
   "silicone replica": "سیلیکون رپلیکا",
   "single arm study": "مطالعه بدون کنترل",
   "sleeping implant": "ایمپلنت خواب",
@@ -22613,6 +22567,7 @@
   "پرسلن هم رنگ لثه": "پرسلن صورتی",
   "پرکردگی رتروگراد": "جراحی اپیکال",
   "پلی اتر اتر کتون": "peek",
+  "پوسیدگی عودکننده": "پوسیدگی ثانویه",
   "پیر شدن زیرکونیا": "ltd",
   "چت با هوش مصنوعی": "مصاحبه با هوش مصنوعی",
   "چسبندگی به دنتین": "باند به دنتین",
@@ -23031,7 +22986,6 @@
   "پست زیرکونیایی": "پست زیرکونیا",
   "پلن پروتز محور": "پلنینگ پروتز محور",
   "پلی کریستالاین": "پلی کریستالین",
-  "پوسیدگی ثانویه": "پوسیدگی عودکننده",
   "پیست کنارزننده": "خمیر کنارزننده",
   "پیش آگهی درمان": "پیش آگهی",
   "پیش آگهی دندان": "پروگنوز دندان",
@@ -23273,7 +23227,7 @@
   "پری ایمپلنتیت": "پری ایمپلنتیتیس",
   "پریدگی سرامیک": "شکست سرامیک",
   "پوزیشن فیکسچر": "جایگذاری ایمپلنت",
-  "پوسیدگی ثانوی": "پوسیدگی عودکننده",
+  "پوسیدگی ثانوی": "پوسیدگی ثانویه",
   "پوسیدگی داخلی": "تخریب داخلی",
   "پوسیدگی دندان": "پوسیدگی",
   "پیامد بلندمدت": "درمان بلندمدت",
@@ -23754,7 +23708,7 @@
   "طرح شهابیان": "shahabian concept",
   "عضلات جونده": "عضلات ماضغه",
   "عمق ایمپلنت": "جایگذاری ایمپلنت",
-  "عود پوسیدگی": "پوسیدگی عودکننده",
+  "عود پوسیدگی": "پوسیدگی ثانویه",
   "عکاسی دندان": "عکاسی دندانپزشکی",
   "فارماکولوژی": "داروشناسی",
   "فاز آزمایشی": "دوره آزمایشی",
@@ -24356,7 +24310,7 @@
   "bitewing": "تفسیر رادیوگرافی",
   "blinding": "بلایندینگ",
   "branding": "برندینگ",
-  "build up": "بازسازی دیواره",
+  "build up": "کور بیلدآپ",
   "c shaped": "سی شیپ",
   "chat gpt": "chatgpt",
   "chipping": "شکست سرامیک",
@@ -24885,7 +24839,7 @@
   "rnc": "سرامیک هیبرید",
   "rpd": "پروتز پارشیال",
   "rsb": "reverse اسکن بادی",
-  "seo": "رتبه بندی گوگل",
+  "seo": "جستجوپذیری محتوا",
   "stl": "فرمت اسکن",
   "svc": "smart ونت روکش",
   "tmj": "مفصل فکی",
@@ -24899,7 +24853,7 @@
   "درگ": "کشیدگی قالب",
   "رنچ": "آچار ایمپلنت",
   "ریگ": "پترن رزین",
-  "سئو": "رتبه بندی گوگل",
+  "سئو": "جستجوپذیری محتوا",
   "عقل": "مولر سوم",
   "لوپ": "بزرگ نمایی",
   "پیک": "peek",
