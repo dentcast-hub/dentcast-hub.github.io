@@ -106,5 +106,30 @@ class ApplyWordsTests(unittest.TestCase):
         self.assertEqual(words['#درمان_بین_رشته_ای'], 4)
 
 
+class SyncOrderTests(unittest.TestCase):
+    setUp = ApplyNewArticleTests.setUp
+
+    def sync(self):
+        ref._alias_cache = None
+        ref._reset_index()
+        with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+            ref.cmd_sync()
+        return (self.dir / 'dentcast-hashtag-reference.json').read_bytes()
+
+    def test_count_change_does_not_reshuffle_the_next_sync(self):
+        brain_path = self.dir / 'dentcast-brain.json'
+        brain = json.loads(brain_path.read_text(encoding='utf-8'))
+        rare = next(c['tag'] for c in json.loads((self.dir / 'dentcast-hashtag-reference.json')
+                                                 .read_text(encoding='utf-8'))['concepts']
+                    if c['count'] == 1 and c.get('aliases'))
+        for entry in brain[:12]:
+            entry.setdefault('hashtags', []).append(rare)
+        brain_path.write_text(json.dumps(brain, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        first = self.sync()
+        self.assertEqual(first, self.sync())
+        table = json.loads(first)['aliases']
+        self.assertEqual(list(table), sorted(table, key=lambda k: (-len(k), k)))
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -697,7 +697,10 @@ def cmd_sync() -> None:
     # Fold chains flat AFTER manual_aliases are in, so a chain that runs through
     # a manual entry is resolved too.
     problems += resolve_chains(table)
-    ref["aliases"] = dict(sorted(table.items(), key=lambda kv: -len(kv[0])))
+    # Total order (length, then text): ties used to follow concept order, which
+    # --sync re-sorts by count AFTER compiling, so the next --sync reshuffled
+    # the table with no change in meaning.
+    ref["aliases"] = dict(sorted(table.items(), key=lambda kv: (-len(kv[0]), kv[0])))
     write_ref(ref)
     global _alias_cache
     _alias_cache = None
