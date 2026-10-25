@@ -78,7 +78,21 @@ class CanonicalAliasCheckTests(unittest.TestCase):
         code, output = self.check()
         self.assertEqual(code, 0)
         self.assertIn('known canonical/alias collision', output)
-        self.assertIn('#اسکن_دیجیتال', output)
+        self.assertIn('#اسپارتینا', output)
+
+    def test_known_list_holds_exactly_the_pairs_the_founder_left_open(self):
+        # Batches A96-A99 (1405/08/03) resolved 18 of the 19 share-41 pairs. The
+        # one left is a decision about the #اسپارتینا concept itself, not an
+        # alias edit. Anything else here is drift: resolve it in a batch, never
+        # by adding to this list.
+        self.assertEqual(ref.KNOWN_CANONICAL_ALIAS_COLLISIONS,
+                         frozenset({('#تیرزپاتاید', 'اسپارتینا')}))
+        code, output = self.check()
+        self.assertEqual(code, 0)
+        self.assertIn('1 known canonical/alias collision(s)', output)
+        live = {(tag, alias) for tag, alias, _ in ref.canonical_alias_collisions(
+            json.loads((ROOT / 'dentcast-hashtag-reference.json').read_text(encoding='utf-8')))}
+        self.assertEqual(live, set(ref.KNOWN_CANONICAL_ALIAS_COLLISIONS))
 
 
 class ApplyWordsTests(unittest.TestCase):

@@ -836,27 +836,13 @@ def cmd_say(tag: str, forms: list) -> None:
 # Hard Rule 15: a canonical tag is never another concept's alias. These pairs
 # predate the --check rule (share-41 audit, 1405/08/02) and await founder
 # decisions; they are reported as warnings. Any other collision fails --check.
-# Remove a pair here once its batch resolves it.
+# Remove a pair here once its batch resolves it. Batches A96-A99 (1405/08/03)
+# resolved 18 of the original 19; the one left needs a founder decision on the
+# #اسپارتینا concept itself (its definition describes semaglutide, not the
+# tirzepatide brand the alias names). tests/test_hashtag_ref_apply.py pins
+# this list, so a change here is a visible decision, not drift.
 KNOWN_CANONICAL_ALIAS_COLLISIONS = frozenset({
-    ("#قالب‌گیری_دیجیتال", "اسکن دیجیتال"),
-    ("#پروتکل_باند", "پروتکل باندینگ"),
-    ("#پروتکل_باند", "پروتکل ادهزیو"),
-    ("#استاپ_خلفی", "ساپورت خلفی"),
-    ("#اسکرو_سمنتد", "اسکروسمنت"),
-    ("#کانتور_ترمیم", "اورکانتور"),
-    ("#برداشت_ترمیم", "خارج کردن روکش"),
-    ("#ناحیه_زیبایی", "ناحیه لبخند"),
-    ("#ریتریتمنت", "درمان مجدد ریشه"),
-    ("#شکستن_کار", "task decomposition"),
-    ("#پایداری_رنگ", "تغییر رنگ"),
-    ("#پروپریوسپشن", "آگاهی اکلوزال"),
-    ("#Finish_Zone", "BOPT"),
-    ("#تثبیت_موقت_روکش", "ترای این"),
     ("#تیرزپاتاید", "اسپارتینا"),
-    ("#حرکت_پروتروزیو", "پروتروزیو"),
-    ("#فضای_ارتودنسی", "ارزیابی فضا"),
-    ("#متاپرامپت", "meta prompting"),
-    ("#پوسیدگی_عودکننده", "پوسیدگی ثانویه"),
 })
 
 
