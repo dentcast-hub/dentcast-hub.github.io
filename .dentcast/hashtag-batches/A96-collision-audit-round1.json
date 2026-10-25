@@ -1,0 +1,70 @@
+{
+  "note": "Founder decision 1405/08/03 (2026-10-25), canonical/alias collision audit, round 1 of 4 (founder delegated every cluster to the agent's stated recommendation). 1) #درمان_مجدد_ریشه merged into #ریتریتمنت — identical definitions (retreatment); dead tag recorded in variants, «درمان مجدد ریشه» stays an alias. 2) #اسکروسمنت merged into #اسکرو_سمنتد — one concept (screwmentable); self-alias «اسکرو سمنتد» dropped. 3) #کانتور_ترمیم keeps only its own form: «اورکانتور»/«overcontour» belong to #اورکانتور (genus vs. pathological excess). 4) #ترای_این is the stage, #تثبیت_موقت_روکش the technique: «ترای این»/«try in» removed from the technique, self-alias removed from #ترای_این. 5) #ناحیه_زیبایی (anterior, surgical risk) and #ناحیه_لبخند (visible in smile, even posterior) stay distinct as their definitions intend: «ناحیه لبخند» removed from #ناحیه_زیبایی, self-alias removed from #ناحیه_لبخند. 6) #ارزیابی_فضا (the assessment) and #فضای_ارتودنسی (the space) stay distinct: «ارزیابی فضا» removed from #فضای_ارتودنسی, self-alias removed from #ارزیابی_فضا. No definition or use_when text was written.",
+  "concepts": [
+    {
+      "tag": "#اسکرو_سمنتد",
+      "aliases": [
+        "screwmentable",
+        "اسکروسمنت",
+        "اسکرو سمنت",
+        "screw cement"
+      ]
+    },
+    {
+      "tag": "#کانتور_ترمیم",
+      "aliases": [
+        "کانتور رستوریشن"
+      ]
+    },
+    {
+      "tag": "#تثبیت_موقت_روکش",
+      "aliases": [
+        "تثبیت موقت",
+        "نگه داشتن موقت روکش"
+      ]
+    },
+    {
+      "tag": "#ترای_این",
+      "aliases": [
+        "try in",
+        "امتحان روکش",
+        "پروو"
+      ]
+    },
+    {
+      "tag": "#ناحیه_زیبایی",
+      "aliases": [
+        "esthetic zone",
+        "ناحیه استتیک",
+        "زون استتیک"
+      ]
+    },
+    {
+      "tag": "#ناحیه_لبخند",
+      "aliases": [
+        "smile zone",
+        "داخل لبخند",
+        "قابل رویت در لبخند"
+      ]
+    },
+    {
+      "tag": "#فضای_ارتودنسی",
+      "aliases": [
+        "فضای ارتو"
+      ]
+    },
+    {
+      "tag": "#ارزیابی_فضا",
+      "aliases": [
+        "space assessment",
+        "بررسی فضا",
+        "کنترل فضا"
+      ]
+    }
+  ],
+  "renames": {
+    "#درمان_مجدد_ریشه": "#ریتریتمنت",
+    "#اسکروسمنت": "#اسکرو_سمنتد"
+  },
+  "articles": {}
+}
