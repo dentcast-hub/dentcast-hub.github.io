@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "d=\"${CLAUDE_PROJECT_DIR:-${CODEX_PROJECT_DIR:-.}}\"; { git -C \"$d\" config core.hooksPath >/dev/null || git -C \"$d\" config core.hooksPath .githooks; } 2>/dev/null || true",
+            "command": "d=\"${CLAUDE_PROJECT_DIR:-${CODEX_PROJECT_DIR:-.}}\"; { [ -n \"$(git -C \"$d\" config core.hooksPath)\" ] || git -C \"$d\" config core.hooksPath .githooks; } 2>/dev/null || true",
             "timeout": 10
           }
         ]

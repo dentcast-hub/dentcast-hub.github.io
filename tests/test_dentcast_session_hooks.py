@@ -41,6 +41,16 @@ class SessionStartHookTests(unittest.TestCase):
                     self.assertEqual((result.returncode, result.stdout, result.stderr), (0, '', ''))
                     self.assertEqual(self.hooks_path(repo), '.githooks')
 
+    def test_empty_hooks_path_is_treated_as_unset(self):
+        for config, var in zip(CONFIGS, ('CLAUDE_PROJECT_DIR', 'CODEX_PROJECT_DIR')):
+            with self.subTest(config=config):
+                repo = self.repo()
+                subprocess.run(['git', '-C', repo, 'config', 'core.hooksPath', ''], check=True)
+                (command,) = session_start(config)
+                result = self.run_hook(command, repo, var)
+                self.assertEqual((result.returncode, result.stdout, result.stderr), (0, '', ''))
+                self.assertEqual(self.hooks_path(repo), '.githooks')
+
     def test_existing_hooks_path_is_left_alone(self):
         repo = self.repo()
         subprocess.run(['git', '-C', repo, 'config', 'core.hooksPath', 'custom-hooks'], check=True)
