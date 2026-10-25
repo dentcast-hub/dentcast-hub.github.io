@@ -17412,5 +17412,33 @@
       "secondary": [],
       "subtopic": "failures"
     }
+  },
+  {
+    "type": "promptologist",
+    "id": "prompt-append2-5",
+    "title": "پیوست ۲ ـ قسمت ۵: هوش مصنوعی فایل‌ها را تغییر داده است؛ از کجا بفهمیم همه‌چیز درست است؟",
+    "caption": "هوش مصنوعی فایل را تغییر داده است؛ با Pull Request می‌بینیم دقیقاً چه چیزی عوض شده و بعد تصمیم می‌گیریم آن را مرج کنیم یا نه.",
+    "hashtags": [
+      "#پرامپتولوژیست",
+      "#هوش_مصنوعی",
+      "#GitHub",
+      "#ChatGPT"
+    ],
+    "keywords": [
+      "Pull Request",
+      "PR",
+      "Files changed",
+      "Merge",
+      "Conflict",
+      "Branch",
+      "بررسی تغییرات هوش مصنوعی",
+      "GitHub"
+    ],
+    "page_url": "/dentai/promptologist/prompt-append2-5.html",
+    "pillar": {
+      "primary": "practice-infrastructure",
+      "secondary": [],
+      "subtopic": "llm-tools"
+    }
   }
 ]

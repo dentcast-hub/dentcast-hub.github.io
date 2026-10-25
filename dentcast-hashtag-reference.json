@@ -1119,6 +1119,58 @@
    ]
   },
   {
+   "key": "هوش_مصنوعی",
+   "tag": "#هوش_مصنوعی",
+   "domain": "ai",
+   "words": 2,
+   "definition": "چترِ عامِ هوش مصنوعی.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "artificial intelligence",
+    "ای آی",
+    "ماشین هوشمند"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 34,
+   "content_ids": [
+    "episodes/episode-109",
+    "episodes/episode-109-2",
+    "episodes/episode-149-1",
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/dentai-28",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "sharehub/share-15",
+    "dentai/promptologist/prompt5-1",
+    "dentai/promptologist/prompt5-2",
+    "dentai/promptologist/prompt5-3",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2",
+    "dentai/promptologist/prompt6-3",
+    "dentai/promptologist/prompt6-4",
+    "dentai/promptologist/prompt6-5",
+    "dentai/promptologist/prompt7-1",
+    "dentai/promptologist/prompt7-2",
+    "insight/insight-89",
+    "sharehub/share-25",
+    "dentai/promptologist/prompt-append2-1",
+    "dentai/promptologist/prompt-append2-2",
+    "dentai/promptologist/prompt-append2-3",
+    "dentai/promptologist/prompt-append2-4",
+    "dentai/promptologist/prompt-append2-5"
+   ]
+  },
+  {
    "key": "پروتز_ایمپلنت",
    "tag": "#پروتز_ایمپلنت",
    "domain": "clinical",
@@ -1168,57 +1220,6 @@
     "episodes/episode-162",
     "insight/insight-77",
     "insight/insight-78"
-   ]
-  },
-  {
-   "key": "هوش_مصنوعی",
-   "tag": "#هوش_مصنوعی",
-   "domain": "ai",
-   "words": 2,
-   "definition": "چترِ عامِ هوش مصنوعی.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "artificial intelligence",
-    "ای آی",
-    "ماشین هوشمند"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 33,
-   "content_ids": [
-    "episodes/episode-109",
-    "episodes/episode-109-2",
-    "episodes/episode-149-1",
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-append1",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/dentai-28",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "sharehub/share-15",
-    "dentai/promptologist/prompt5-1",
-    "dentai/promptologist/prompt5-2",
-    "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1",
-    "dentai/promptologist/prompt6-2",
-    "dentai/promptologist/prompt6-3",
-    "dentai/promptologist/prompt6-4",
-    "dentai/promptologist/prompt6-5",
-    "dentai/promptologist/prompt7-1",
-    "dentai/promptologist/prompt7-2",
-    "insight/insight-89",
-    "sharehub/share-25",
-    "dentai/promptologist/prompt-append2-1",
-    "dentai/promptologist/prompt-append2-2",
-    "dentai/promptologist/prompt-append2-3",
-    "dentai/promptologist/prompt-append2-4"
    ]
   },
   {
@@ -1508,6 +1509,50 @@
    ]
   },
   {
+   "key": "پرامپتولوژیست",
+   "tag": "#پرامپتولوژیست",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام سری «پرامپتولوژیست».",
+   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
+   "aliases": [
+    "promptologist",
+    "پرامپتولوژی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 27,
+   "content_ids": [
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt5-1",
+    "dentai/promptologist/prompt5-2",
+    "dentai/promptologist/prompt5-3",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2",
+    "dentai/promptologist/prompt6-3",
+    "dentai/promptologist/prompt6-4",
+    "dentai/promptologist/prompt6-5",
+    "dentai/promptologist/prompt7-1",
+    "dentai/promptologist/prompt7-2",
+    "dentai/promptologist/prompt-append2-1",
+    "dentai/promptologist/prompt-append2-2",
+    "dentai/promptologist/prompt-append2-3",
+    "dentai/promptologist/prompt-append2-4",
+    "dentai/promptologist/prompt-append2-5"
+   ]
+  },
+  {
    "key": "تصمیم_درمانی",
    "tag": "#تصمیم_درمانی",
    "domain": "clinical",
@@ -1553,49 +1598,6 @@
     "metanotes/meta-13",
     "chairside/chairside-21",
     "insight/insight-89"
-   ]
-  },
-  {
-   "key": "پرامپتولوژیست",
-   "tag": "#پرامپتولوژیست",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام سری «پرامپتولوژیست».",
-   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
-   "aliases": [
-    "promptologist",
-    "پرامپتولوژی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 26,
-   "content_ids": [
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-append1",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "dentai/promptologist/prompt5-1",
-    "dentai/promptologist/prompt5-2",
-    "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1",
-    "dentai/promptologist/prompt6-2",
-    "dentai/promptologist/prompt6-3",
-    "dentai/promptologist/prompt6-4",
-    "dentai/promptologist/prompt6-5",
-    "dentai/promptologist/prompt7-1",
-    "dentai/promptologist/prompt7-2",
-    "dentai/promptologist/prompt-append2-1",
-    "dentai/promptologist/prompt-append2-2",
-    "dentai/promptologist/prompt-append2-3",
-    "dentai/promptologist/prompt-append2-4"
    ]
   },
   {
@@ -2114,7 +2116,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 19,
+   "count": 20,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
     "dentai/promptologist/prompt1-2",
@@ -2134,7 +2136,8 @@
     "dentai/promptologist/prompt6-3",
     "dentai/promptologist/prompt7-1",
     "dentai/promptologist/prompt-append2-3",
-    "dentai/promptologist/prompt-append2-4"
+    "dentai/promptologist/prompt-append2-4",
+    "dentai/promptologist/prompt-append2-5"
    ]
   },
   {
@@ -5674,6 +5677,33 @@
    ]
   },
   {
+   "key": "github",
+   "tag": "#GitHub",
+   "domain": "ai",
+   "words": 1,
+   "definition": "سرویسِ آنلاینِ نگه‌داریِ فایل‌ها در ریپو (repository)، که نسخه‌های قبلیِ هر فایل را هم نگه می‌دارد؛ برای کد ساخته شده ولی برای هر فایلِ متنی کار می‌کند.",
+   "use_when": "مطلب مشخصاً به این سرویس، ریپو یا نگه‌داریِ فایل‌ها در آن بپردازد.",
+   "aliases": [
+    "گیت‌هاب",
+    "گیت هاب",
+    "github",
+    "ریپو",
+    "ریپوزیتوری",
+    "repository",
+    "git hub"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "dentai/promptologist/prompt-append2-1",
+    "dentai/promptologist/prompt-append2-2",
+    "dentai/promptologist/prompt-append2-3",
+    "dentai/promptologist/prompt-append2-4",
+    "dentai/promptologist/prompt-append2-5"
+   ]
+  },
+  {
    "key": "psz",
    "tag": "#PSZ",
    "domain": null,
@@ -6426,32 +6456,6 @@
     "episodes/episode-73",
     "episodes/episode-74",
     "dentai/dentai-19"
-   ]
-  },
-  {
-   "key": "github",
-   "tag": "#GitHub",
-   "domain": "ai",
-   "words": 1,
-   "definition": "سرویسِ آنلاینِ نگه‌داریِ فایل‌ها در ریپو (repository)، که نسخه‌های قبلیِ هر فایل را هم نگه می‌دارد؛ برای کد ساخته شده ولی برای هر فایلِ متنی کار می‌کند.",
-   "use_when": "مطلب مشخصاً به این سرویس، ریپو یا نگه‌داریِ فایل‌ها در آن بپردازد.",
-   "aliases": [
-    "گیت‌هاب",
-    "گیت هاب",
-    "github",
-    "ریپو",
-    "ریپوزیتوری",
-    "repository",
-    "git hub"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "dentai/promptologist/prompt-append2-1",
-    "dentai/promptologist/prompt-append2-2",
-    "dentai/promptologist/prompt-append2-3",
-    "dentai/promptologist/prompt-append2-4"
    ]
   },
   {
