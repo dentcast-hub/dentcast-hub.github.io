@@ -1,0 +1,87 @@
+{
+  "note": "Founder decision 1405/08/03 (2026-10-25), canonical/alias collision audit, round 3 of 4 (founder delegated every cluster to the agent's stated recommendation). 13) #Meta_Prompting is the deliberate Latin twin of #متاپرامپت (co_tags design): the alias «meta prompting» is removed from #متاپرامپت and the co_tag relation is recorded on both sides. 14) Same for #Task_Decomposition / #شکستن_کار: «task decomposition» removed from #شکستن_کار, reciprocal co_tag recorded. 15) #پروپریوسپشن (the sense) and #آگاهی_اکلوزال (the iatrogenic complication) stay distinct: «آگاهی اکلوزال» removed from #پروپریوسپشن. 16) #پروتروزیو merged into #حرکت_پروتروزیو — identical definitions; the two-word form is the canonical, «پروتروزیو» stays an alias, the dead concept's aliases «protrusion»/«حرکت پیش رونده مندیبل»/«پروتروژن» move to the survivor; sharehub/share-6 retagged. 17) «پری اپیکال» and «periapical» name a radiograph type, which belongs to the broad #رادیوگرافی_تشخیصی; both removed from #رادیوگرافی_کنترل (which keeps «رادیوگرافی کنترلی»/«چک رادیوگرافیک»). 18) «عدم نشست» is the negative, so it belongs to #نشست_ناقص and is removed from #فیت_پروتز; the self-alias «نشست ناقص» is dropped. No definition or use_when text was written.",
+  "concepts": [
+    {
+      "tag": "#متاپرامپت",
+      "aliases": [
+        "متا پرامپت",
+        "پرامپت نویسی با مدل",
+        "prompt generation",
+        "نوشتن پرامپت توسط مدل"
+      ],
+      "co_tags": [
+        "#Meta_Prompting"
+      ]
+    },
+    {
+      "tag": "#شکستن_کار",
+      "aliases": [
+        "شکستن درخواست",
+        "پرامپت مرحله ای",
+        "پله پله",
+        "step by step prompting",
+        "تقسیم کار"
+      ],
+      "co_tags": [
+        "#Task_Decomposition"
+      ]
+    },
+    {
+      "tag": "#پروپریوسپشن",
+      "aliases": [
+        "proprioception",
+        "حس عمقی"
+      ]
+    },
+    {
+      "tag": "#حرکت_پروتروزیو",
+      "aliases": [
+        "protrusive",
+        "پروتروزیو",
+        "حرکت پیشگرایی",
+        "protrusive movement",
+        "protrusion",
+        "حرکت پیش رونده مندیبل",
+        "پروتروژن"
+      ]
+    },
+    {
+      "tag": "#رادیوگرافی_کنترل",
+      "aliases": [
+        "رادیوگرافی کنترلی",
+        "چک رادیوگرافیک"
+      ]
+    },
+    {
+      "tag": "#رادیوگرافی_تشخیصی",
+      "aliases": [
+        "پانورامیک",
+        "پری اپیکال",
+        "opg",
+        "periapical"
+      ]
+    },
+    {
+      "tag": "#فیت_پروتز",
+      "aliases": [
+        "fit",
+        "پسیو فیت",
+        "passive fit",
+        "فیت روکش",
+        "misfit"
+      ]
+    },
+    {
+      "tag": "#نشست_ناقص",
+      "aliases": [
+        "عدم نشست",
+        "incomplete seating",
+        "ننشستن"
+      ]
+    }
+  ],
+  "renames": {
+    "#پروتروزیو": "#حرکت_پروتروزیو"
+  },
+  "articles": {}
+}
