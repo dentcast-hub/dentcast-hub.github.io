@@ -43412,5 +43412,64 @@
         "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       }
     ]
+  },
+  "dentai/promptologist/prompt-append2-5": {
+    "scored_at": "2026-10-25",
+    "sources": [
+      {
+        "des_version": "3.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "پیوست ۲ ـ قسمت ۵: هوش مصنوعی فایل‌ها را تغییر داده است؛ از کجا بفهمیم همه‌چیز درست است؟",
+          "authors": "دکتر فواد شهابیان",
+          "year": null,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "ما نمی‌خواهیم هر چیزی که هوش مصنوعی نوشت، بلافاصله وارد نسخهٔ اصلی شود. ممکن است توضیحاتش کامل نباشد، جمله‌ای را اشتباه نوشته باشد یا حتی بخشی از متن قبلی را ناخواسته تغییر داده باشد.",
+            "note": "توصیهٔ بررسی پیش از پذیرش تغییرات با دلیل مشخص (خطای احتمالی هوش مصنوعی) همراه شده است."
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "متن هیچ نسبتی با منابع منتشرشده برقرار نمی‌کند و به منبعی ارجاع نمی‌دهد."
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "البته این مقایسه به ما می‌گوید چه چیزی تغییر کرده است، نه اینکه آن تغییر از نظر علمی درست است یا نه.",
+            "note": "حد کاربرد مقایسهٔ تغییرات صریحاً مشخص شده است."
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "متن خود را تجربه یا نظر شخصی معرفی نمی‌کند و بخش آن جزو سه بخش دارای اعلان سطح بخش نیست."
+          }
+        ],
+        "des_score": 12,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این متن آموزشی DentCast با امتیاز ۱۲ در باند E (سطح پیش‌زمینه و نظر) قرار می‌گیرد.",
+        "interpretation_fa": "متن یک راهنمای عملی دربارهٔ Pull Request، Merge و Conflict در GitHub است و ادعای پژوهشی ندارد، پس امتیاز آن در باند ثابت Commentary می‌ماند. استدلال هر مرحله روشن است و مرز کاربرد diff را نیز مشخص می‌کند. ارزش آن در کنترل تغییرات هوش مصنوعی روی متن‌های بالینی مطب است، نه در شواهد درمانی."
+      }
+    ],
+    "fidelity": [
+      null
+    ]
   }
 }

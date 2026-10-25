@@ -38728,6 +38728,100 @@
           ]
         }
       ]
+    },
+    "dentai/promptologist/prompt-append2-5": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-5.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا ساختن یک Pull Request در گیت‌هاب به‌معنی قبول‌شدن تغییرات و ورود آن‌ها به نسخهٔ اصلی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ ساختن PR فقط فرصتی برای دیدن و بررسی تغییرات پیش از تصمیم است و تا وقتی مرج نشود، تغییرات پیشنهادی وارد نسخهٔ اصلی نمی‌شوند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا در بخش Files changed یک Pull Request می‌توان قسمت‌های اضافه‌شده و حذف‌شدهٔ فایل را از هم تشخیص داد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ معمولاً قسمت‌های اضافه‌شده با رنگ سبز و قسمت‌های حذف‌شده با رنگ قرمز مشخص می‌شوند، پس لازم نیست دو نسخهٔ کامل را خط‌به‌خط مقایسه کرد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا مقایسهٔ تغییرات در بخش Files changed نشان می‌دهد یک توصیهٔ درمانیِ نوشته‌شده توسط هوش مصنوعی از نظر علمی درست است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ این مقایسه فقط نشان می‌دهد چه چیزی تغییر کرده است و صحت علمی توصیه‌های درمانی همچنان باید توسط دندان‌پزشک بررسی شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا برای اصلاح تغییراتی که هوش مصنوعی در یک Pull Request پیشنهاد داده، باید کار را از اول شروع کرد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ هوش مصنوعی می‌تواند اصلاحات را روی همان برنچ انجام بدهد و PR را به‌روز کند تا نتیجه دوباره بررسی شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا بستن یک Pull Request بدون مرج، نسخهٔ اصلی فایل‌ها را تغییر می‌دهد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ اگر PR بدون مرج بسته شود، تغییرات پیشنهادی وارد نسخهٔ اصلی نمی‌شوند و نسخهٔ اصلی همان‌طور باقی می‌ماند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا وقتی یک قسمت از فایل هم روی برنچ جدا و هم در نسخهٔ اصلی به دو شکل متفاوت تغییر کرده باشد، ممکن است Conflict پیش بیاید؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ در این حالت ممکن است گیت‌هاب نتواند تشخیص بدهد هنگام ترکیب کدام متن باید باقی بماند و به این وضعیت Conflict یا تداخل تغییرات می‌گویند."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-5.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-5.html#flashcards-c1",
+              "name": "Pull Request (PR)",
+              "description": "درخواستی در گیت‌هاب برای واردکردن تغییرات یک برنچ به برنچ اصلی؛ محلی برای دیدن، نظر دادن و تصمیم‌گرفتن دربارهٔ تغییرات پیش از مرج، که خودش هنوز پذیرش تغییرات نیست.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-5.html#flashcards-c2",
+              "name": "Files changed",
+              "description": "بخشی از Pull Request که نسخهٔ قبلی و جدید هر فایل را مقایسه می‌کند و خطوط اضافه‌شده را معمولاً سبز و خطوط حذف‌شده را قرمز نمایش می‌دهد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-5.html#flashcards-c3",
+              "name": "Merge",
+              "description": "واردکردن تغییرات یک برنچ به برنچ اصلی؛ پیش از مرج، تغییرات پیشنهادیِ یک PR در نسخهٔ اصلی وجود ندارند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-5.html#flashcards-c4",
+              "name": "Conflict",
+              "description": "تداخل تغییرات؛ وضعیتی که یک قسمت از فایل در دو مسیر به دو شکل متفاوت تغییر کرده و گیت‌هاب به‌تنهایی نمی‌تواند تعیین کند هنگام ترکیب کدام نسخه بماند.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }

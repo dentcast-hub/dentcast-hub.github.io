@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appendix 2 — Part 5: AI Has Changed the Files; How Do We Know Everything Is Right? | Promptologist | DentCast</title>
+  <meta name="description" content="AI has changed a file; with a Pull Request we see exactly what changed and then decide whether to merge it.">
+  <link rel="canonical" href="https://dentcast.org/dentai/promptologist/en/prompt-append2-5.html">
+  <meta name="author" content="Dr. Foad Shahabian">
+  <meta name="robots" content="noindex, follow">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="Appendix 2 — Part 5: AI Has Changed the Files; How Do We Know Everything Is Right? | Promptologist | DentCast">
+  <meta property="og:description" content="AI has changed a file; with a Pull Request we see exactly what changed and then decide whether to merge it.">
+  <meta property="og:url" content="https://dentcast.org/dentai/promptologist/en/prompt-append2-5.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Appendix 2 — Part 5: AI Has Changed the Files; How Do We Know Everything Is Right? | Promptologist | DentCast">
+  <meta name="twitter:description" content="AI has changed a file; with a Pull Request we see exactly what changed and then decide whether to merge it.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/dentai/promptologist/en/prompt-append2-5.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/dentai/promptologist/en/prompt-append2-5.html"
+      },
+      "url": "https://dentcast.org/dentai/promptologist/en/prompt-append2-5.html",
+      "headline": "Appendix 2 — Part 5: AI Has Changed the Files; How Do We Know Everything Is Right?",
+      "description": "AI has changed a file; with a Pull Request we see exactly what changed and then decide whether to merge it.",
+      "datePublished": "2026-10-25",
+      "dateModified": "2026-10-25",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.org/dentcast-cover.webp",
+        "width": 1200,
+        "height": 630
+      },
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "name": "Promptologist",
+        "url": "https://dentcast.org/dentai/promptologist"
+      },
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Promptologist",
+          "item": "https://dentcast.org/dentai/promptologist"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Appendix 2 — Part 5: AI Has Changed the Files; How Do We Know Everything Is Right?",
+          "item": "https://dentcast.org/dentai/promptologist/en/prompt-append2-5.html"
+        }
+      ]
+    }
+  ]
+}</script>
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/dc-theme.css?v=7">
+  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <meta name="theme-color" content="#F3F5F7">
+  <style>
+@font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-display:swap;}
+body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
+.ep-page{max-width:47.5rem;margin:0 auto;padding:2.5rem 1.25rem 5rem;}
+.ep-back{display:inline-flex;align-items:center;gap:0.375rem;font-size:.85rem;color:var(--txt3);text-decoration:none;margin-bottom:1.75rem;transition:color .15s;}
+.ep-back:hover{color:var(--ac);}
+.ep-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:1.125rem;box-shadow:var(--card-sh);overflow:hidden;margin-bottom:1.25rem;}
+.ep-box-head{padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--card-border);}
+.ep-badge{display:inline-flex;align-items:center;background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.72rem;font-weight:700;padding:0.1875rem 0.75rem;border-radius:3.125rem;margin-bottom:0.875rem;letter-spacing:.03em;}
+.ep-badge.sub{background:var(--surface2);color:var(--txt3);}
+.ep-title{font-size:1.55rem;font-weight:800;color:var(--txt);line-height:1.45;margin:0 0 0.75rem;}
+.ep-meta{display:flex;gap:1.125rem;font-size:.8rem;color:var(--txt3);flex-wrap:wrap;}
+.ep-section{padding:1.375rem 1.75rem 0;}
+.ep-section:last-child{padding-bottom:1.75rem;}
+.ep-section-label{font-size:1rem;font-weight:700;color:var(--ac);border-left:4px solid var(--ac);padding-left:0.75rem;margin-bottom:0.875rem;}
+.ep-caption{font-size:.95rem;color:var(--txt);line-height:1.9;margin:0;}
+.ep-caption p{margin:0 0 1.8rem;}
+.ep-caption p:last-child{margin-bottom:0;}
+.ep-fig{display:block;max-width:18.75rem;width:100%;height:auto;margin:1.125rem auto;border:1px solid var(--card-border);border-radius:0.875rem;box-shadow:var(--card-sh);}
+.ep-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-chip{background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.78rem;padding:0.25rem 0.75rem;border-radius:3.125rem;}
+.ep-chip-link{text-decoration:none;transition:background .15s,color .15s;}
+.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+.ep-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
+.ep-nav{display:flex;justify-content:space-between;gap:0.75rem;margin-top:1.75rem;}
+.ep-nav-btn{flex:1;text-align:center;padding:0.75rem 1rem;border:1px solid var(--card-border);border-radius:0.75rem;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+@media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+  </style>
+</head>
+<body>
+
+<!-- ── TOP BAR ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GLOBAL SEARCH ── -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<main class="article-content-wrap ep-page">
+  <a href="/dentai/promptologist/" class="ep-back">&#8592; Back to Promptologist</a>
+  <a class="lang-btn" href="../prompt-append2-5.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+  <div class="ep-box">
+    <div class="ep-box-head">
+      <div class="ep-badge">Appendix 2 · Part 5</div>
+      <h1 class="ep-title">Appendix 2 — Part 5: AI Has Changed the Files; How Do We Know Everything Is Right?</h1>
+      <div class="ep-meta"><span>&#9201; 8 min read</span></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">This Part</h2>
+      <div class="ep-caption">
+<p>In the previous part, we learned how changes are recorded in GitHub and how we can return to earlier versions of our files.</p>
+<p>But one important question remains.</p>
+<p>Suppose we have asked AI to revise one of our files. It has done the work and told us the changes are ready.</p>
+<p>How do we know exactly what it changed? And if we are not happy with the result, what should we do?</p>
+<p>Fortunately, GitHub has a solution for this as well.</p>
+<h3>Before we accept the changes</h3>
+<p>Let us return to the same example of the postoperative care instructions prompt that we placed in the <code>my-prompts</code> repository in earlier parts.</p>
+<p>Suppose we have decided to make this prompt more complete and add some explanation about bleeding after surgery.</p>
+<p>We ask AI to read the file, write the new section, and add it to the prompt.</p>
+<p>But there is one point.</p>
+<p>We do not want everything AI writes to go straight into the main version. Its explanation may be incomplete, it may have written a sentence incorrectly, or it may even have unintentionally changed part of the previous text.</p>
+<p>So it is better to see the result first and then decide whether to accept it.</p>
+<p>In Part 3 we learned about branches: a separate path where we can make changes without touching the main version for now.</p>
+<p>Now we want to review the result of the work on that branch.</p>
+<h3>What is a Pull Request?</h3>
+<p>GitHub has a feature called a Pull Request, usually abbreviated as PR.</p>
+<p>The name may sound a little strange, but the concept is simple.</p>
+<p>Suppose a colleague has asked you to review the postoperative care instructions used in their practice. You read the text, revise a few parts, and send them the proposed version.</p>
+<p>Now your colleague can see the changes, comment on them, and accept them if they agree.</p>
+<p>A Pull Request does roughly the same thing.</p>
+<p>That is, the changes are ready, and now we can review them before bringing them into the main version.</p>
+<p>Creating a PR does not mean the changes have been accepted. It is only an opportunity to see what has happened and decide.</p>
+<figure style="margin:1.5rem 0"><a href="/dentai/promptologist/prompt-append2-5-01-pull-request.webp" target="_blank" rel="noopener"><img src="/dentai/promptologist/prompt-append2-5-01-pull-request.webp" alt="A real Pull Request in the DentCast repository: its title and Merged status" width="720" height="673" loading="lazy" decoding="async" style="display:block;max-width:100%;height:auto;margin:auto;border-radius:.75rem"></a><figcaption style="font-size:.85em;color:var(--txt3);text-align:center;margin-top:.75rem">A real Pull Request in the DentCast repository: its title and Merged status</figcaption></figure>
+<h3>What does GitHub show us?</h3>
+<p>One of GitHub's useful features is that we can compare the previous and new versions of a file.</p>
+<p>For example, in the postoperative care instructions, AI has added a few sentences about bleeding.</p>
+<p>When we open the PR and go to the section showing the file changes, called Files changed, we can see which sentences were added and which parts were removed or modified.</p>
+<p>Added parts are usually marked in green and removed parts in red.</p>
+<p>This way, we do not need to put two complete versions side by side and search for the differences line by line.</p>
+<p>For example, we may have asked AI only to add an explanation about bleeding, yet see that it also changed one of the earlier recommendations.</p>
+<p>Now we can ask it why it did this and, if necessary, ask it to revert the change.</p>
+<figure style="margin:1.5rem 0"><a href="/dentai/promptologist/prompt-append2-5-02-files-changed.webp" target="_blank" rel="noopener"><img src="/dentai/promptologist/prompt-append2-5-02-files-changed.webp" alt="The Files changed section: red shows the previous text, green the new text" width="720" height="1172" loading="lazy" decoding="async" style="display:block;max-width:100%;height:auto;margin:auto;border-radius:.75rem"></a><figcaption style="font-size:.85em;color:var(--txt3);text-align:center;margin-top:.75rem">The Files changed section: red shows the previous text, green the new text</figcaption></figure>
+<p>Of course, this comparison tells us what has changed, not whether that change is scientifically correct.</p>
+<p>In our example, the accuracy of the treatment recommendations must still be checked by the dentist.</p>
+<h3>What if we do not like the changes?</h3>
+<p>That is no problem. The changes are not yet supposed to enter the main version.</p>
+<p>Suppose the new section AI wrote is too long, or its explanation is too complicated for the patient.</p>
+<p>We can ask it to simplify the text.</p>
+<p>Or we may notice that it removed one of the earlier recommendations, even though we never asked for that.</p>
+<p>It is enough to tell it to restore that part to its previous state.</p>
+<p>AI can make the corrections on the same branch and update the PR so we can review the result again.</p>
+<p>We do not need to start over for every correction.</p>
+<h3>Now let us try it once</h3>
+<p>Consider the same <code>my-prompts</code> repository.</p>
+<p>If you use an AI tool connected to GitHub, such as Work in ChatGPT, and the tool has permission to change files, you can give it this instruction:</p>
+<p>“In the <code>my-prompts</code> repository, find the file with the postoperative care instructions prompt. Add a new section about bleeding after surgery. The text should be simple and easy for the patient to understand. Work on a separate branch and create a Pull Request. Do not merge the changes into the main version for now. Send me the PR link.”</p>
+<p>If it has the necessary access, AI can prepare the changes and give you the PR link.</p>
+<p>By opening that link, you can see the result in GitHub itself.</p>
+<p>You can even ask AI to make the job easier:</p>
+<p>“Explain the changes you made. Tell me which sentences were added, what was removed, and whether you touched any other parts of the file.”</p>
+<p>If you are not happy with the result, ask it to correct it.</p>
+<p>And if everything is right, it is time to approve.</p>
+<h3>Merge: when we accept the changes</h3>
+<p>In Part 3 we also learned about Merge.</p>
+<p>Merging means bringing the changes from one branch into the main branch.</p>
+<p>Now that we have seen and reviewed the changes, if we are happy with the result, we can tell AI:</p>
+<p>“I approve the changes. Merge this PR and send me the link to the final file in the main version.”</p>
+<p>If the tool has the necessary access and nothing else stands in the way, it can do this.</p>
+<p>Or we can merge the changes ourselves through GitHub.</p>
+<p>The important point is that until the merge, the proposed changes have not entered the main version.</p>
+<p>And if we are not happy with the proposal at all, we can close the PR without merging it. The main version stays as it was.</p>
+<figure style="margin:1.5rem 0"><a href="/dentai/promptologist/prompt-append2-5-03-merge-status.webp" target="_blank" rel="noopener"><img src="/dentai/promptologist/prompt-append2-5-03-merge-status.webp" alt="After the merge: the changes have entered main" width="720" height="507" loading="lazy" decoding="async" style="display:block;max-width:100%;height:auto;margin:auto;border-radius:.75rem"></a><figcaption style="font-size:.85em;color:var(--txt3);text-align:center;margin-top:.75rem">After the merge: the changes have entered main</figcaption></figure>
+<h3>What if the changes are not compatible?</h3>
+<p>Suppose you have asked AI to rewrite the bleeding section of the postoperative care instructions prompt. AI has prepared the changes on a separate branch.</p>
+<p>But before you approve those changes, you revise the same section yourself in the main version.</p>
+<p>Now we have two different versions of the same part. GitHub may not be able to tell which text should remain when combining them.</p>
+<p>This situation is called a Conflict.</p>
+<p>We are not supposed to deal with the technical resolution of this problem ourselves.</p>
+<p>It is enough to ask AI to check which changes conflict and how the problem can be resolved.</p>
+<p>For example, we can say:</p>
+<p>“Check why the changes conflict. Show me both versions and suggest which parts should remain. Do not delete or merge anything before I approve.”</p>
+<p>It is that simple. We decide what the final text should be, and AI can carry out the practical work.</p>
+<h3>So what exactly do we need to do?</h3>
+<p>If you have noticed, at no point in these steps do we need to memorize a specific command or know programming.</p>
+<p>AI can find the file, change it, create a branch, record the changes, and prepare a PR.</p>
+<p>Our job is to specify what we want, review the result, and finally decide whether to accept the changes.</p>
+<p>GitHub also helps make this process visible: we know what has changed, who changed it, and whether it has entered the main version or is still awaiting approval.</p>
+<p>Just remember: the fact that AI can do GitHub tasks does not mean we should let it finalize any change without review.</p>
+<p>We have now learned almost all the main concepts we need.</p>
+<p>In the next part, the last part of this appendix, we will see how we can keep an independent copy of our files and their change history on our own computer, so that even if we lose access to GitHub one day, we do not lose our information.</p>
+      </div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Keywords</h2>
+      <div class="ep-chips"><span class="ep-chip">Pull Request</span><span class="ep-chip">PR</span><span class="ep-chip">Files changed</span><span class="ep-chip">Merge</span><span class="ep-chip">Conflict</span><span class="ep-chip">Branch</span><span class="ep-chip">Reviewing AI changes</span><span class="ep-chip">GitHub</span></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Tags</h2>
+      <div class="ep-tags"><span class="ep-hashtag">#Promptologist</span><span class="ep-hashtag">#AI</span><span class="ep-hashtag">#GitHub</span><span class="ep-hashtag">#ChatGPT</span></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Related content</h2>
+      <a href="/dentai/promptologist/" class="ep-related-link">Back to the Promptologist index</a>
+    </div>
+  </div>
+  <div class="ep-nav">
+    <a href="prompt-append2-4.html" class="ep-nav-btn">&#8592; Previous Part</a>
+    <span class="ep-nav-btn ep-nav-empty">Next Part &#8594;</span>
+  </div>
+</main>
+
+<script src="/global-search.js?v=15" defer></script>
+<script src="/dc-nav.js?v=289" defer></script>
+</body>
+</html>
