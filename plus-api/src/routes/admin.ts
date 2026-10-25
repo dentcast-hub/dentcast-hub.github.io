@@ -71,6 +71,7 @@ import {
   addContentQuestion, removeContentQuestion, listContentQuestions, normalizeContentId, pathwaysContaining,
 } from '../services/pathway-exams.js';
 import { getContentInfo } from '../content-index.js';
+import { repoQuestionsFor } from '../exam-questions.js';
 import { isCertifiable, getPathways } from '../pathways.js';
 import {
   requestQueue, getRequest, requestByReference, markAnswered, markRejected,
@@ -1756,7 +1757,7 @@ ${renderMemberSpotControls()}
               + '<b>' + fa(i + 1) + '.</b> <span class="pill">' + (q.kind === 'mcq' ? 'تستی' : 'تشریحی') + '</span> '
               + (q.from ? '<span class="pill">' + esc(q.from) + '</span> ' : '')
               + esc(q.prompt_fa)
-              + ' <button type="button" ' + delAttr + '="' + esc(q.delId || q.id) + '" style="float:left">حذف</button>'
+              + (q.readonly ? '' : ' <button type="button" ' + delAttr + '="' + esc(q.delId || q.id) + '" style="float:left">حذف</button>')
               + body + '</div>';
           }).join('');
     }
@@ -1769,9 +1770,11 @@ ${renderMemberSpotControls()}
         if (!qbContentId) { qbList.innerHTML = ''; return; }
         get('/admin/content-questions?content=' + encodeURIComponent(qbContentId)).then(function (d) {
           var qs = (d.questions || []).map(function (r) { var q = r.question; q.delId = r.id; return q; });
+          var repo = (d.repo_questions || []).map(function (q) { q.from = 'از ریپو'; q.readonly = true; return q; });
+          qs = qs.concat(repo);
           if (!qs.length) { qbList.innerHTML = '<div class="muted">این مقاله هنوز سؤالی ندارد.</div>'; return; }
           qbList.innerHTML = '<div class="tk"><div class="tk-head"><b>سؤال‌های مقالهٔ ' + esc(d.content.title) + '</b> — '
-            + fa(qs.length) + ' سؤال · در ' + fa((d.pathways || []).length) + ' مسیر</div>' + questionRows(qs, 'data-cq-del') + '</div>';
+            + fa(qs.length) + ' سؤال' + (repo.length ? ' (' + fa(repo.length) + ' از ریپو، فقط‌خواندنی)' : '') + ' · در ' + fa((d.pathways || []).length) + ' مسیر</div>' + questionRows(qs, 'data-cq-del') + '</div>';
         }).catch(function () { qbList.innerHTML = '<div class="muted">فهرست نیامد.</div>'; });
         return;
       }
@@ -6395,6 +6398,10 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       content: { id, title: info.title, url: info.url, type: info.type },
       pathways: pathwaysContaining(id).map((p) => ({ id: p.id, title_fa: p.title_fa, certifiable: isCertifiable(p) })),
       questions: await listContentQuestions(id),
+      // The repo's rows for the same article (plus/exam-questions.json) —
+      // listed so the builder shows the WHOLE article pool, never deletable
+      // here: they live in Git and the next publish would bring them back.
+      repo_questions: repoQuestionsFor(id),
     });
   });
 

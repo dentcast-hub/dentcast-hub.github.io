@@ -196,3 +196,84 @@ page contributed (and, if zero, confirm its FAQ is intentionally all
 open/comparison-shaped); confirm no question `name` on the page contains a
 deictic reference per (a); and list any question you rewrote/dropped for
 compliance and anything you asked the user about.
+
+### 4.12-ب. سؤالِ آزمونِ مسیر برای همین مطلب — `plus/exam-questions.json`
+
+**Runs on every publish whose page becomes (or already is) a step of a full
+pathway — i.e. every specialist type that step 5.6 files into `plus/pathways.json`.
+Skipped, as a documented skip, for LiteCast, چالش, glossary terms and any
+publish whose page lands in no full pathway.** Founder decision 1405/08/03
+(«بانک سوال مسیر دوگانه … که دیگه وقتی مطلب منتشر می‌کنیم اذیت نشیم»): the
+pathway certificate exam draws article questions from two sources — the
+founder's own rows in the API (`content_exam_questions`) and this repo file —
+so a question committed with the article is in every carrying pathway's pool
+the same afternoon, with no panel step and no deploy. This is the step that
+writes the repo half.
+
+**What to write.** One to three **four-option multiple-choice** questions for
+this page, authored from the body (and the FAQ you just finalized in 4.12),
+to the standard of `reports/exam-questions-from-quiz-2026-10-25.md`:
+
+- **Conceptual, not article-recall** — a dentist who knows the concept but
+  never read this page can answer. Not a named study's number, not «what the
+  authors concluded», not one patient's story. Textbook constants are fine.
+- **Self-contained stem** (same deixis ban as 4.12(a)); embed a case's key
+  conditions in the stem when the concept only holds under them.
+- **Exactly four options, one correct per the body**, three distractors that
+  are *wrong according to the body* (not merely less complete), same
+  grammatical form and category, comparable length (longest ≤ 1.25× the
+  shortest), the key not the single longest, no «همهٔ موارد»/«هیچ‌کدام»,
+  no option that restates the stem. Persian ی/ک, ZWNJ, the page's own ezafe
+  style; Latin terms as the page writes them.
+- **Never a yes/no question dressed as two options**, never a claim the body
+  does not make, never an «it depends» forced into one key. When nothing on
+  the page passes this bar, write none and record the skip with its reason —
+  a thin question costs a certificate's credibility, a missing one costs
+  nothing (every pathway opens on its own at twenty article questions, so no
+  single page carries the pool).
+
+**Ask, don't guess — the founder approves every question in chat before it is
+written** (same standard as 4.10/4.11/4.12): present stem, options and key
+with one line on why the key is right per the body; write only what was
+approved. A question the founder wants kept «for later» goes in with
+`"status": "review"` and a `review_note`, which the API never draws.
+
+**Where it goes.** Under this page's `content_id` in `plus/exam-questions.json`
+(`byContent[content_id].questions[]`), appended, never replacing existing
+rows. Each row:
+
+```json
+{
+  "id": "r-<8 hex of sha1(content_id + '|' + a stable per-question handle)>",
+  "kind": "mcq",
+  "prompt_fa": "…",
+  "options": ["…", "…", "…", "…"],
+  "correct": 2,
+  "source": "publish"
+}
+```
+
+- `id` is **load-bearing and never re-minted** (attempt snapshots and the
+  «unseen first» draw reference it) and must carry the `r-` class so it can
+  never collide with a form's `qN` or a table row's `c-…` inside one snapshot.
+  Mint it from `sha1("<content_id>|publish-<n>")[:8]` with `n` the next free
+  ordinal for this page; a later wording fix keeps the id.
+- `correct` is the 0-based index. Vary the key position across the page's
+  questions; the API does not shuffle.
+- `source` is `"publish"` for a question written at publish time (the
+  1405/08/03 backfill carries `"quiz"` + `source_quiz_id`).
+
+Then run `python3 tools/validate_exam_questions.py` (shape, ids, option
+rules, duplicate prompts) — it is also what `verify_publish.py` reads in its
+«4.12-ب exam» row. No builder: the file is hand-authored like
+`plus/pathways.json`, and `plus-api` re-fetches the published copy on its own
+(`EXAM_QUESTIONS_URL`, `content-refresh.ts`), so nothing else runs.
+
+**Ledger:** this step has no checkpoint id of its own; record its result (rows
+written, or the skip reason) in the evidence of **C.4.12**, which stays the
+module's second checkpoint.
+
+**Verify:** report how many questions this page added (and the skip reason if
+none), that each was approved in chat, that `validate_exam_questions.py`
+passes, and which full pathways now draw them (`pathwaysContaining` — the
+panel's «پیدا کن» names them, or read `plus/pathways.json`).

@@ -2,6 +2,7 @@ import { config } from './config.js';
 import { applyRemoteIndex, indexSource } from './content-index.js';
 import { applyRemotePathways, pathwaysSource } from './pathways.js';
 import { applyRemoteBadges, badgesSource } from './badges.js';
+import { applyRemoteExamQuestions, examQuestionsSource } from './exam-questions.js';
 import { applyRemoteFlashcards, flashcardsSource } from './flashcards.js';
 import { applyRemoteGlossary, glossarySource } from './glossary.js';
 import { applyRemoteHashtagRef, hashtagRefSource } from './hashtag-ref.js';
@@ -104,7 +105,7 @@ async function fetchJson(
  * instead of waiting out the interval.
  */
 export interface ContentFileStatus {
-  key: 'content-index' | 'pathways' | 'badges' | 'flashcards' | 'glossary' | 'hashtag-ref';
+  key: 'content-index' | 'pathways' | 'badges' | 'exam-questions' | 'flashcards' | 'glossary' | 'hashtag-ref';
   /** The env var that turns the refresh on for this file. */
   env: string;
   configured: boolean;
@@ -128,6 +129,10 @@ const FILES: Array<{
   { key: 'content-index', env: 'CONTENT_INDEX_URL', urls: () => config.content.indexUrls, apply: applyRemoteIndex, source: indexSource },
   { key: 'pathways', env: 'PATHWAYS_URL', urls: () => config.content.pathwaysUrls, apply: applyRemotePathways, source: pathwaysSource },
   { key: 'badges', env: 'BADGES_URL', urls: () => config.content.badgesUrls, apply: applyRemoteBadges, source: badgesSource },
+  // Article exam questions written at publish time (src/exam-questions.ts):
+  // the pathway exam draws them from the published copy, so a question
+  // committed with an article is in its pathways' pools the same afternoon.
+  { key: 'exam-questions', env: 'EXAM_QUESTIONS_URL', urls: () => config.content.examQuestionsUrls, apply: applyRemoteExamQuestions, source: examQuestionsSource },
   { key: 'flashcards', env: 'FLASHCARDS_URL', urls: () => config.content.flashcardsUrls, apply: applyRemoteFlashcards, source: flashcardsSource },
   // The دانشنامه catalog and the hashtag library, for the concept views
   // (services/highlight-concepts.ts). A term published this afternoon has to

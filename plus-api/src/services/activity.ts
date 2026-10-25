@@ -108,6 +108,10 @@ export const SERVER_MINTED_ACTIONS: ReadonlySet<string> = new Set([
   'streak_reminder_sent',
   'streak_sms_sent',
   'subscription_activated',
+  // The founder shortened a subscription from the panel (subscription.ts
+  // reduceSubscriptionDays) — an admin's record about the account, read by
+  // nothing a browser should be able to forge.
+  'subscription_adjusted',
   'subscription_reminder_sent',
 ]);
 

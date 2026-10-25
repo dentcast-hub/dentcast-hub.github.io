@@ -2,6 +2,7 @@ import { config } from '../config.js';
 import { pool, one, query, withTransaction, type Queryable } from '../db.js';
 import { getPathwayById, getPathways, computeProgress, isCertifiable, mayOpenPathway, type Pathway } from '../pathways.js';
 import { getContentInfo } from '../content-index.js';
+import { repoQuestionsFor, repoQuestionCounts } from '../exam-questions.js';
 import { randomUUID } from 'node:crypto';
 import { getConsumedContentIds } from './consumption.js';
 import { mintReference } from './reference.js';
@@ -287,14 +288,89 @@ export async function listContentQuestions(contentRaw: string, client: Queryable
   return r.rows;
 }
 
-/** The article questions a pathway draws from — every step's, in writing order. */
+/**
+ * The article questions a pathway draws from — every step's, from BOTH
+ * article sources (founder, 1405/08/03 — «بانک سوال مسیر دوگانه»): the
+ * founder's own rows in `content_exam_questions` (the panel's «برای یک
+ * مقاله»), then the rows the publish workflow commits to
+ * `plus/exam-questions.json` (src/exam-questions.ts), step by step in the
+ * pathway's own order. Keyed by `content_id` on both sides and never copied
+ * anywhere, so a pathway that adopts the article next month draws both.
+ * Neither source can shadow the other: table ids are `c-…`, file ids `r-…`.
+ */
 export async function contentQuestionsFor(pathway: Pathway, client: Queryable = pool): Promise<ExamQuestion[]> {
   const ids = pathway.steps.map((st) => st.content_id);
   if (!ids.length) return [];
   const r = await query<{ question: ExamQuestion }>(
     'select question from content_exam_questions where content_id = any($1) order by created_at, id', [ids], client,
   );
-  return r.rows.map((row) => row.question);
+  const fromTable = r.rows.map((row) => row.question);
+  const fromRepo: ExamQuestion[] = [];
+  for (const cid of ids) fromRepo.push(...repoQuestionsFor(cid));
+  return [...fromTable, ...fromRepo];
+}
+
+/** How many article questions (both sources) a pathway's steps carry — the counters' cheap read. */
+export async function contentQuestionCount(pathway: Pathway, client: Queryable = pool): Promise<number> {
+  const ids = pathway.steps.map((st) => st.content_id);
+  if (!ids.length) return 0;
+  const r = await one<{ n: number }>(
+    'select count(*)::int as n from content_exam_questions where content_id = any($1)', [ids], client,
+  );
+  const repo = repoQuestionCounts();
+  return (r?.n ?? 0) + ids.reduce((m, cid) => m + (repo.get(cid) ?? 0), 0);
+}
+
+/**
+ * AUTO-OPEN (founder, 1405/08/03: «هر مسیری که حداقل ۲۰ تا سوال داشت باز
+ * بشه»). A pathway the founder never wrote a form for opens on its own the
+ * moment its article questions — table plus repo file — reach
+ * `config.exam.autoOpenMin`: a form row is created with the column defaults
+ * (the founder's defaults, exactly as the panel's builder creates one) and
+ * published in the same insert, so the nightly `announceOpenExams` sweep
+ * tells the readers who are waiting for it.
+ *
+ * This replaces the «اعلام آمادگی» press only where there is NO form row.
+ * That press existed because an exam used to go live with its first typed
+ * question (migration 0067); a floor of twenty questions closes that same
+ * failure without the press. Once a row exists, `published_at` is the only
+ * switch, so a founder who closed an exam from the panel («one of these
+ * questions is wrong») finds it still closed tomorrow — auto-open never
+ * touches a row it did not create. The certificate floors (`isCertifiable`:
+ * fifteen steps, no `pending` flag) stay in front of it, and `autoOpenMin`
+ * at 0 turns it off.
+ *
+ * Idempotent and race-safe: `on conflict do nothing` on the pathway's unique
+ * key, so two readers opening the catalog together create one row.
+ */
+export async function ensureAutoForm(pathway: Pathway, client: Queryable = pool): Promise<ExamForm | null> {
+  const min = config.exam.autoOpenMin;
+  if (min <= 0 || pathway.kind === 'bundle' || !isCertifiable(pathway)) return null;
+  const existing = await getForm(pathway.id, client);
+  if (existing) return existing;
+  const n = await contentQuestionCount(pathway, client);
+  if (n < min) return null;
+  const row = await one<ExamForm>(
+    `insert into pathway_exam_forms (pathway_id, questions, note, published_at)
+     values ($1, '[]'::jsonb, $2, now())
+     on conflict (pathway_id) do nothing
+     returning ${FORM_COLS}`,
+    [pathway.id, `بازشدهٔ خودکار: ${n} سؤالِ مقاله (کفِ ${min})`], client,
+  );
+  return row ?? getForm(pathway.id, client);
+}
+
+/** Every full pathway through `ensureAutoForm`; returns the ids opened in this call. */
+export async function autoOpenExams(client: Queryable = pool): Promise<string[]> {
+  const opened: string[] = [];
+  if (config.exam.autoOpenMin <= 0) return opened;
+  for (const p of getPathways()) {
+    if (p.kind === 'bundle' || !isCertifiable(p)) continue;
+    if (await getForm(p.id, client)) continue;
+    const form = await ensureAutoForm(p, client);
+    if (form) opened.push(p.id);
+  }
+  return opened;
 }
 
 /** The whole pool an attempt draws from: the form's own questions, then the articles'. */
@@ -326,9 +402,9 @@ export interface ExamForm {
   updated_at: Date;
 }
 
-const FORM_SELECT = `select id, pathway_id, questions, draw, pass_percent, max_attempts,
-                            retry_days, supervised_until, note, published_at, created_at, updated_at
-                       from pathway_exam_forms`;
+const FORM_COLS = `id, pathway_id, questions, draw, pass_percent, max_attempts,
+                   retry_days, supervised_until, note, published_at, created_at, updated_at`;
+const FORM_SELECT = `select ${FORM_COLS} from pathway_exam_forms`;
 
 export interface FormInput {
   /** The founder's paste: plain text (the usual case) or a JSON array. */
@@ -744,6 +820,10 @@ export async function announceOpenExams(
 ): Promise<ExamOpenRun> {
   const out: ExamOpenRun = { told: [], waiting: 0 };
   try {
+    // The nightly call (no pathwayId) is also where a pathway whose article
+    // questions reached the floor since yesterday gets its row and its
+    // readers get the news — the same run, so the two never drift.
+    if (!opts.pathwayId) await autoOpenExams();
     const open = await query<{ pathway_id: string }>(
       `select pathway_id from pathway_exam_forms
         where published_at is not null
@@ -1242,11 +1322,14 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
   // lands, whatever form exists or does not — a certificate already held
   // (issued before the flag) still reads as passed, because it is the record.
   if (!isCertifiable(pathway)) { base.state = cert ? 'passed' : 'pending'; return base; }
-  if (!form) { if (cert) base.state = 'passed'; return base; }
-  const poolQs = await poolFor(pathway, form);
+  // No form row: the article questions may have reached the auto-open floor
+  // since anybody last looked (a publish commits them, nothing else runs).
+  const live = form ?? await ensureAutoForm(pathway);
+  if (!live) { if (cert) base.state = 'passed'; return base; }
+  const poolQs = await poolFor(pathway, live);
   if (poolQs.length === 0) { if (cert) base.state = 'passed'; return base; }
 
-  base.rules = formRules(form, poolQs);
+  base.rules = formRules(live, poolQs);
   const attempts = await listAttempts(userId, pathwayId);
   const counted = attempts.filter((a) => COUNTED.includes(a.status));
   base.attempts_used = counted.length;
@@ -1271,16 +1354,16 @@ export async function examState(userId: string, pathwayId: string, now = new Dat
   // questions are its own snapshot and it is still gradable. For everybody
   // else a draft reads exactly like no form at all, rules included, because
   // that is what it is: nothing they can sit.
-  if (!form.published_at) { base.state = 'no_form'; base.rules = null; return base; }
+  if (!live.published_at) { base.state = 'no_form'; base.rules = null; return base; }
   // Enrolment is the deliberate act (founder, 2026-09-12): the exam is for
   // somebody who is ON the pathway, not somebody whose reading happens to
   // cover it. It costs one tap on the pathway page and progress is derived,
   // so nobody who finished loses anything by pressing it late.
   if (!onPathway || (!base.is_complete && !base.assigned)) { base.state = 'locked'; return base; }
-  if (counted.length >= form.max_attempts) { base.state = 'exhausted'; return base; }
+  if (counted.length >= live.max_attempts) { base.state = 'exhausted'; return base; }
   const last = counted.reduce<Date | null>((m, a) => (a.submitted_at && (!m || a.submitted_at > m) ? a.submitted_at : m), null);
-  if (last && form.retry_days > 0) {
-    const retryAt = new Date(last.getTime() + form.retry_days * 86_400_000);
+  if (last && live.retry_days > 0) {
+    const retryAt = new Date(last.getTime() + live.retry_days * 86_400_000);
     if (retryAt > now) { base.state = 'wait'; base.retry_at = retryAt; return base; }
   }
   base.state = 'ready';
@@ -2008,7 +2091,21 @@ export async function examStates(userId: string, pathwayIds: string[]): Promise<
     )
     : { rows: [] as { content_id: string; n: number }[] };
   const cqBy = new Map(cq.rows.map((r) => [r.content_id, r.n]));
-  const articleCount = (id: string) => (getPathwayById(id)?.steps ?? []).reduce((m, st) => m + (cqBy.get(st.content_id) ?? 0), 0);
+  const repo = repoQuestionCounts();
+  const articleCount = (id: string) => (getPathwayById(id)?.steps ?? [])
+    .reduce((m, st) => m + (cqBy.get(st.content_id) ?? 0) + (repo.get(st.content_id) ?? 0), 0);
+  // A pathway with no form whose article questions reached the floor opens
+  // here too (ensureAutoForm) — the catalog is the first place most readers
+  // would otherwise see a `no_form` that is no longer true.
+  for (const id of pathwayIds) {
+    if (formBy.has(id)) continue;
+    const p = getPathwayById(id);
+    if (!p || !isCertifiable(p) || articleCount(id) < config.exam.autoOpenMin || config.exam.autoOpenMin <= 0) continue;
+    const f = await ensureAutoForm(p);
+    if (f) {
+      formBy.set(id, { pathway_id: id, max_attempts: f.max_attempts, retry_days: f.retry_days, question_count: f.questions.length, published_at: f.published_at });
+    }
+  }
   const assignedSet = new Set(assigned.rows.map((a) => a.pathway_id));
   const enrolledSet = new Set(enrolled.rows.map((a) => a.pathway_id));
   const now = Date.now();
