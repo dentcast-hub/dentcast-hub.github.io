@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>دررفتگی فک، قفل شدن فک و صدای تق تق فک چه فرقی دارند؟ | Lite-CAST</title>
+
+<meta name="description" content="فک شما صدا می‌دهد، قفل می‌شود یا بسته نمی‌شود؟ این‌ها سه مشکل جدا هستند. ببینید هر کدام چه علامتی دارد و چرا جا انداختن فک با ضربه کار درستی نیست.">
+
+<link rel="canonical" href="https://dentcast.ir/litecast/lite-CAST42.html">
+  <!-- ⚠️ استایل بدون هیچ تغییری -->
+  <link rel="stylesheet" href="/dc-article.css?v=6">
+  <style>
+    :root {
+  --gold: #FFD95E;
+  --gold-soft: #FFF5CC;
+  --blue: #0B5FFF;
+  --text: #1C1C2E;
+  --muted: #606070;
+
+  --radius: 18px;
+  --shadow: 0 14px 42px rgba(0,0,0,0.14);
+}
+
+/* ===== تصاویر ===== */
+:is(main.article-content-wrap, .dcd-content-area) main > article img {
+  display: block;
+  width: 100%;
+  max-width: 42.5rem;
+  height: auto;
+  margin: 0 auto 1.125rem;
+  border-radius: 1rem;
+}
+
+/* hero */
+figure.hero {
+  margin: 0 0 1.25rem;
+}
+
+/* ===== CTA ===== */
+.cta-container {
+  margin-top: 2.5rem;
+  padding: 1.375rem 1.25rem;
+  background: var(--surface2, #f4f6fb);
+  border: 1px solid var(--card-border, rgba(2,35,96,.09));
+  border-right: 3px solid rgba(2,35,96,.28);
+  border-radius: 1rem;
+  text-align: center;
+  box-shadow: var(--card-sh, 0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04));
+}
+[data-theme="dark"] .cta-container {
+  border-right-color: rgba(91,156,246,.35);
+}
+.cta-text {
+  font-weight: 700;
+  font-size: .93rem;
+  color: var(--txt, #0a1a33);
+  margin: 0 0 1rem;
+  line-height: 1.5;
+}
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pr, #022360);
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0.8125rem 1.75rem;
+  border-radius: 62.4375rem;
+  font-weight: 700;
+  font-size: .90rem;
+  letter-spacing: .01em;
+  box-shadow: 0 6px 20px rgba(2,35,96,.28);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+[data-theme="dark"] .cta-button {
+  background: var(--ac, #5b9cf6);
+  box-shadow: 0 6px 20px rgba(91,156,246,.25);
+}
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(2,35,96,.40);
+}
+.cta-button:active {
+  transform: scale(.97);
+}
+/* ===== دکمه برگشت ===== */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface2, #f4f6fb);
+  color: var(--pr, #022360);
+  border: 1px solid var(--card-border, rgba(2,35,96,.09));
+  border-top: 2px solid rgba(2,35,96,.28);
+  border-radius: 0.875rem;
+  padding: 0.8125rem 2.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: .92rem;
+  box-shadow: var(--card-sh, 0 1px 3px rgba(2,35,96,.07),0 4px 14px rgba(2,35,96,.04));
+  transition: all .2s ease;
+  min-height: 3rem;
+}
+[data-theme="dark"] .back-btn {
+  color: var(--ac, #5b9cf6);
+  border-color: rgba(255,255,255,.08);
+  border-top-color: rgba(91,156,246,.30);
+}
+.back-btn:active {
+  transform: scale(.975);
+  background: var(--surface3, #eaecf5);
+}
+/* ===== فوتر ===== */
+footer {
+  margin-top: 3.25rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+footer a {
+  background: rgba(11,95,255,0.85);
+  color: #fff;
+  border: 1px solid rgba(11,95,255,0.5);
+  border-radius: 0.625rem;
+  padding: 0.375rem 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 0 8px rgba(11,95,255,0.18);
+  transition: all .25s ease;
+}
+
+footer a:hover {
+  background: rgba(11,95,255,1);
+  transform: scale(1.04);
+}
+
+/* ===== موبایل ===== */
+@media (max-width: 520px) {
+  :is(main.article-content-wrap, .dcd-content-area) main > article img {
+    max-width: 92%;
+    margin-bottom: 0.875rem;
+    border-radius: 0.875rem;
+  }
+}
+
+.author-note{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:0.375rem 0.625rem;
+  margin:2.5rem auto 1rem;
+  padding-top:1.25rem;
+  border-top:1px solid rgba(120,140,170,0.18);
+  color:var(--txt3);
+  font-size:.78rem;
+}
+.author-note .author-link{
+  color:var(--txt2);
+  font-weight:600;
+  text-decoration:none;
+}
+.author-note .author-link:hover{
+  color:var(--ac);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+.author-note .author-role{
+  color:var(--txt3);
+}
+
+/* ===== هم‌شکلی با ShareHub (بنیان‌گذار، 2026-10-25) =====
+   فونت، اندازهٔ متن و تیترها، رنگ‌ها، بولد و فاصله‌ها روی صفحهٔ مستقل از
+   /dc-article.css می‌آیند — همان لایه‌ای که ShareHub دارد — و در ستونِ C
+   دسکتاپ از قاعده‌های .dcd-content-area خودِ index.html، باز همان‌که ShareHub
+   آن‌جا می‌گیرد. اندازه یا رنگِ متن را این‌جا دوباره تعریف نکن.
+
+   هر قاعدهٔ این بلوک به یکی از دو ظرف بسته است: main.article-content-wrap
+   (صفحهٔ مستقل) یا .dcd-content-area (ستونِ C، که این <style> را به کلِ سندِ
+   صفحهٔ اصلی تزریق می‌کند و خودِ main.article-content-wrap را دور می‌اندازد).
+   سلکتورِ خامِ `article` در ستونِ C روی کارت‌های article.dc-monitor صفحهٔ
+   اصلی هم می‌نشست.
+
+   کلاسِ باکس عمداً روی <article> نیست: آن کلاس میز کار و ردیفِ کنش را روشن
+   می‌کند و این تغییر فقط ظاهر است. */
+
+/* کیکرِ «Lite-CAST» بالای عنوان — همان .sh-kicker */
+:is(main.article-content-wrap, .dcd-content-area) main > h2:first-child{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.375rem;
+  direction:ltr;
+  color:var(--blue);
+  font-weight:800;
+  font-size:0.95rem;
+  letter-spacing:.02em;
+  margin:0 0 0.5rem;
+}
+
+/* صفحهٔ مستقل: <article> همان کارتِ .glass-box در dc-article.css */
+main.article-content-wrap > main > article{
+  background:var(--card-bg, #ffffff);
+  color:var(--txt, #0a1a33);
+  border:1px solid var(--card-border, rgba(2,35,96,.09));
+  border-radius:var(--r-lg, 1.125rem);
+  box-shadow:var(--card-sh, 0 1px 3px rgba(2,35,96,.07));
+  padding:1.625rem 2rem;
+  margin:1.25rem 0;
+  line-height:1.9;
+}
+main.article-content-wrap > main > article h2,
+main.article-content-wrap > main > article h3{
+  text-align:right;
+  font-size:1.05rem;
+  font-weight:700;
+  border-right:4px solid var(--ac, #0b5fff);
+  padding-right:0.75rem;
+  margin:1.75rem 0 0.875rem;
+}
+@media (max-width:768px){
+  main.article-content-wrap > main > article{ padding:1.25rem 1.375rem; }
+}
+
+/* ستونِ C: <article> همان کارتِ .dcd-content-area .glass-box در index.html */
+.dcd-content-area main > article{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:var(--r-lg);
+  padding:1.125rem 1.25rem;
+  margin-bottom:1.125rem;
+  box-shadow:var(--card-sh);
+  color:var(--txt);
+}
+
+/* لیست‌ها — همان ✦ ShareHub */
+:is(main.article-content-wrap, .dcd-content-area) main > article ul{
+  list-style:none;
+  padding-right:0;
+  margin:0.875rem 0;
+}
+:is(main.article-content-wrap, .dcd-content-area) main > article ul li::before{
+  content:"✦ ";
+  color:var(--blue);
+  font-weight:bold;
+}
+
+/* دکمهٔ «تماس با مطب»: سفید روی سرمه‌ای در هر دو تم و هر دو ظرف. قاعدهٔ لینکِ
+   dc-theme (body:has(.dc-topbar) main a) و .dcd-content-area a هر دو قوی‌تر از
+   .cta-button بودند و متن را آبی روی سرمه‌ای، و در تم تیره آبی روی آبی
+   (نامرئی) می‌کردند. */
+:is(main.article-content-wrap, .dcd-content-area) a.cta-button,
+:is(main.article-content-wrap, .dcd-content-area) a.cta-button:hover{
+  color:#ffffff;
+  text-decoration:none;
+}
+:is(main.article-content-wrap, .dcd-content-area) a.cta-button{
+  background:#022360;
+}
+[data-theme="dark"] :is(main.article-content-wrap, .dcd-content-area) a.cta-button{
+  border:1px solid rgba(91,156,246,.45);
+  box-shadow:0 6px 20px rgba(0,0,0,.35);
+}
+
+/* «برگشت به صفحه‌ی قبل» history.back() است: در ستونِ C کلِ صفحهٔ اصلی را عقب
+   می‌برد، و در نمایشگرِ iframe همان ستون را خالی می‌کرد. سایدبارِ پوسته راهِ
+   برگشت است — ShareHub هم آن‌جا دکمهٔ برگشت ندارد. */
+.dcd-content-area div:has(> .back-btn),
+body.dc-content-only div:has(> .back-btn){
+  display:none;
+}
+
+/* ===== زیرنویس تصویر و جدول (lite-CAST42) — فقط وقتی صفحه چنین عنصری دارد؛
+   اندازه و رنگ متن از dc-article.css می‌آید. */
+:is(main.article-content-wrap, .dcd-content-area) main > article figure.hero figcaption{
+  text-align:center;
+  font-size:.85rem;
+  color:var(--txt3, #606070);
+  margin:-0.5rem auto 1.25rem;
+  line-height:1.7;
+}
+:is(main.article-content-wrap, .dcd-content-area) main > article .table-wrap{
+  overflow-x:auto;
+  margin:0.875rem 0 1rem;
+}
+:is(main.article-content-wrap, .dcd-content-area) main > article table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.95rem;
+}
+:is(main.article-content-wrap, .dcd-content-area) main > article th,
+:is(main.article-content-wrap, .dcd-content-area) main > article td{
+  padding:.6rem .75rem;
+  text-align:right;
+  border-bottom:1px solid var(--card-border, rgba(2,35,96,.09));
+  vertical-align:top;
+}
+:is(main.article-content-wrap, .dcd-content-area) main > article th{
+  font-weight:700;
+  color:var(--pr, #022360);
+}
+[data-theme="dark"] :is(main.article-content-wrap, .dcd-content-area) main > article th{
+  color:var(--ac, #5b9cf6);
+}
+:is(main.article-content-wrap, .dcd-content-area) main > article td.urgent{
+  color:#a2452c;
+  font-weight:700;
+}
+[data-theme="dark"] :is(main.article-content-wrap, .dcd-content-area) main > article td.urgent{
+  color:#e8957b;
+}
+</style>
+
+
+    <link rel="stylesheet" href="/dc-theme.css?v=7">
+<link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="دررفتگی فک، قفل شدن فک و صدای تق تق فک چه فرقی دارند؟ | Lite-CAST">
+  <meta property="og:description" content="فک شما صدا می‌دهد، قفل می‌شود یا بسته نمی‌شود؟ این‌ها سه مشکل جدا هستند. ببینید هر کدام چه علامتی دارد و چرا جا انداختن فک با ضربه کار درستی نیست.">
+  <meta property="og:url" content="https://dentcast.ir/litecast/lite-CAST42.html">
+  <meta property="og:image" content="https://dentcast.org/litecast/litecast42-jaw-dislocation.webp">
+  <meta property="og:image:width" content="900">
+  <meta property="og:image:height" content="1497">
+  <meta property="og:image:alt" content="جا انداختن فک با فشار ناگهانی؛ نقاشی خطی از دستی که چانه‌ی بیمار را به زور به عقب هل می‌دهد و فشار روی مفصل فک">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="دررفتگی فک، قفل شدن فک و صدای تق تق فک چه فرقی دارند؟ | Lite-CAST">
+  <meta name="twitter:description" content="فک شما صدا می‌دهد، قفل می‌شود یا بسته نمی‌شود؟ این‌ها سه مشکل جدا هستند. ببینید هر کدام چه علامتی دارد و چرا جا انداختن فک با ضربه کار درستی نیست.">
+  <meta name="twitter:image" content="https://dentcast.org/litecast/litecast42-jaw-dislocation.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "DentCast", "item": "https://dentcast.org/" },
+    { "@type": "ListItem", "position": 2, "name": "LiteCast", "item": "https://dentcast.ir/litecast/" },
+    { "@type": "ListItem", "position": 3, "name": "دررفتگی فک، قفل شدن فک و صدای تق تق فک چه فرقی دارند؟ | Lite-CAST", "item": "https://dentcast.ir/litecast/lite-CAST42.html" }
+  ]
+}
+</script>
+  <meta name="robots" content="index, follow, max-image-preview:large">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MedicalWebPage",
+  "@id": "https://dentcast.ir/litecast/lite-CAST42.html#webpage",
+  "url": "https://dentcast.ir/litecast/lite-CAST42.html",
+  "name": "دررفتگی فک، قفل شدن فک و صدای تق تق فک چه فرقی دارند؟",
+  "description": "فک شما صدا می‌دهد، قفل می‌شود یا بسته نمی‌شود؟ این‌ها سه مشکل جدا هستند. ببینید هر کدام چه علامتی دارد و چرا جا انداختن فک با ضربه کار درستی نیست.",
+  "inLanguage": "fa",
+  "primaryImageOfPage": {
+    "@id": "https://dentcast.org/litecast/litecast42-jaw-dislocation.webp"
+  },
+  "image": [
+    {
+      "@type": "ImageObject",
+      "@id": "https://dentcast.org/litecast/litecast42-jaw-dislocation.webp",
+      "url": "https://dentcast.org/litecast/litecast42-jaw-dislocation.webp",
+      "contentUrl": "https://dentcast.org/litecast/litecast42-jaw-dislocation.webp",
+      "width": 900,
+      "height": 1497,
+      "caption": "فشار محکم و ناگهانی روی فک، درمان مشکلات مفصل فک نیست و ممکن است درد را بیشتر کند."
+    }
+  ],
+      "datePublished": "2026-10-25",
+      "dateModified": "2026-10-25",
+      "lastReviewed": "2026-10-25",
+  "isPartOf": {
+    "@id": "https://dentcast.org/#website"
+  },
+  "audience": {
+    "@type": "MedicalAudience",
+    "audienceType": "Patient"
+  },
+  "author": {
+    "@id": "https://dentcast.org/#person-foad"
+  },
+  "reviewedBy": {
+    "@id": "https://dentcast.org/#person-foad"
+  },
+  "publisher": {
+    "@id": "https://dentcast.org/#org-dentcast"
+  },
+  "about": {
+    "@type": "MedicalCondition",
+    "name": "Temporomandibular joint disorders"
+  }
+}
+</script>
+</head>
+
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<main class="article-content-wrap">
+<main>
+
+
+<h2><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M8.5 3.5c1.2 0 2 .6 3.5.6s2.3-.6 3.5-.6c2 0 3.5 1.6 3.5 4 0 2.8-1.5 4.4-2.2 7.4-.7 3-1.4 5.6-3 5.6-1.2 0-1.1-3.5-1.8-3.5s-.6 3.5-1.8 3.5c-1.6 0-2.3-2.6-3-5.6C6.5 11.9 5 10.3 5 7.5c0-2.4 1.5-4 3.5-4z"/></svg> Lite-CAST</h2>
+
+<h1>دررفتگی فک، قفل شدن فک و صدای تق تق فک چه فرقی دارند؟</h1>
+  <div class="dc-trustline" aria-label="اطلاعات نویسنده و بازبینی">
+    <span>نویسنده و بازبین: <a href="/about.html">دکتر فواد شهابیان، متخصص پروتزهای دندانی و ایمپلنت</a></span>
+    <span>تاریخ انتشار: <time datetime="2026-10-25">2026-10-25</time></span>
+    <span>آخرین بازبینی: <time datetime="2026-10-25">2026-10-25</time></span>
+  </div>
+
+
+<article>
+
+  <figure class="hero">
+    <img src="/litecast/litecast42-jaw-dislocation.webp" alt="جا انداختن فک با فشار ناگهانی؛ نقاشی خطی از دستی که چانه‌ی بیمار را به زور به عقب هل می‌دهد و فشار روی مفصل فک" width="900" height="1497" loading="eager" fetchpriority="high" decoding="async">
+  <figcaption>فشار محکم و ناگهانی روی فک، درمان مشکلات مفصل فک نیست و ممکن است درد را بیشتر کند.</figcaption>
+  </figure>
+  <p>شاید در اینستاگرام ویدیوهایی دیده باشید که کسی فک بیمار را با یک فشار محکم و ناگهانی «جا می‌اندازد». این ویدیوها باعث می‌شوند فکر کنیم هر مشکلی که در فک داریم یعنی چیزی از جایش در رفته و با یک ضربه درست می‌شود. اما فک این‌طور کار نمی‌کند. مشکلات فک چند نوع مختلف دارند و هر کدام راه درمان خودش را دارد.</p>
+
+  <h2>مفصل فک چطور کار می‌کند؟</h2>
+  <p>مفصل فک درست جلوی گوش شماست. اگر انگشتتان را آنجا بگذارید و دهانتان را باز و بسته کنید، حرکتش را حس می‌کنید. داخل این مفصل یک بالشتک کوچک و نرم به اسم دیسک وجود دارد که بین استخوان فک و جمجمه قرار گرفته و هنگام باز و بسته شدن دهان همراه فک حرکت می‌کند.</p>
+
+  <h2>صدای تق تق فک از کجا می‌آید؟</h2>
+  <p>گاهی این بالشتک کمی از جای همیشگی‌اش جلوتر می‌رود. وقتی دهان را باز می‌کنید، فک دوباره زیر آن قرار می‌گیرد و همین باعث صدای تق تق فک می‌شود. به این حالت جابجایی دیسک فک می‌گویند.</p>
+  <p>این مشکل خیلی شایع است و خیلی‌ها سال‌ها بدون هیچ دردی با آن زندگی می‌کنند. اگر فکتان فقط صدا می‌دهد و درد ندارد، معمولاً جای نگرانی نیست. اما اگر صدا با درد یا گیر کردن فک همراه شد، بهتر است معاینه شوید.</p>
+
+  <h2>قفل شدن فک یعنی چه؟</h2>
+  <p>گاهی آن بالشتک جلو می‌رود و دیگر برنمی‌گردد. در این حالت معمولاً صدای فک قطع می‌شود، اما دهان کامل باز نمی‌شود و موقع باز کردن به یک طرف کج می‌شود. به این حالت قفل شدن فک می‌گویند.</p>
+  <p>قفل شدن فک ترسناک است، اما معمولاً اورژانسی نیست. در بیشتر افراد با درمان‌های ساده، باز شدن دهان کم‌کم بهتر می‌شود، حتی اگر بالشتک دقیقاً سر جای اولش برنگردد، چون مفصل با وضعیت جدید کنار می‌آید.</p>
+
+  <h2>دررفتگی فک چیست و چه علائمی دارد؟</h2>
+  <p>دررفتگی فک با دو مورد قبلی فرق دارد. در دررفتگی، خود استخوان فک بیش از حد جلو می‌رود و همان‌جا گیر می‌کند. مهم‌ترین علامت این است که دهان باز می‌ماند و نمی‌توانید آن را ببندید. درد، سختی در حرف زدن و جلو آمدن چانه هم معمولاً همراهش هست.</p>
+  <p>دررفتگی فک بیشتر بعد از خمیازه‌ی خیلی بزرگ، گاز زدن لقمه‌ی بزرگ، باز ماندن طولانی دهان یا ضربه به صورت پیش می‌آید. گاهی فک خودش برمی‌گردد، اما اگر برنگشت باید فوراً به اورژانس یا جراح فک و صورت مراجعه کنید.</p>
+
+  <h2>جا انداختن فک در رفته چطور انجام می‌شود؟</h2>
+  <p>جا انداختن فک کار پزشک است و با فشار آرام و کنترل‌شده انجام می‌شود، نه با ضربه‌ی ناگهانی. گاهی قبل از آن به بیمار دارو می‌دهند تا عضلات فک شل شوند و کار راحت‌تر انجام شود. هیچ‌وقت سعی نکنید فک در رفته را خودتان یا با کمک اطرافیان به زور جا بیندازید.</p>
+
+  <h2>خلاصه‌ی فرق‌ها</h2>
+  <div class="table-wrap">
+  <table>
+  <thead><tr><th>مشکل</th><th>علامت اصلی</th><th>آیا فوری است؟</th></tr></thead>
+  <tbody>
+  <tr><td>جابجایی دیسک</td><td>صدای تق تق فک</td><td>معمولاً نه</td></tr>
+  <tr><td>قفل شدن فک</td><td>دهان کامل باز نمی‌شود</td><td>نه، اما باید معاینه شوید</td></tr>
+  <tr><td>دررفتگی فک</td><td>دهان بسته نمی‌شود</td><td class="urgent">بله</td></tr>
+  </tbody>
+  </table>
+  </div>
+
+  <h2>چرا ضربه زدن به فک درمان نیست؟</h2>
+  <p>بالشتک داخل مفصل به بافت‌های اطرافش وصل است. وقتی جابجا شد، با یک ضربه سر جایش برنمی‌گردد و اگر هم لحظه‌ای جابجا شود، آنجا نمی‌ماند. حتی پزشکان متخصص هم معمولاً تلاشی برای برگرداندن آن نمی‌کنند، چون هدف اصلی درمان این است که درد کم شود و فک راحت حرکت کند.</p>
+  <p>فشار محکم و ناگهانی روی مفصلی که ملتهب و دردناک است ممکن است درد و گرفتگی عضلات را بیشتر کند. شنیدن یک صدا یا حس سبکی بعد از چنین ضربه‌ای هم به این معنی نیست که مشکل حل شده است.</p>
+  <p>البته در بعضی موارد قفل شدن تازه، درمانگر آموزش‌دیده بعد از معاینه با یک حرکت آرام و کنترل‌شده به باز شدن دهان کمک می‌کند. این کار با ضربه زدن فرق دارد.</p>
+
+  <h2>آیا دندانپزشکی باعث مشکلات فک می‌شود؟</h2>
+  <p>باز ماندن طولانی دهان در درمان‌های دندانپزشکی، مثل جلسه‌های طولانی یا کشیدن دندان عقل، در بعضی افراد می‌تواند درد مفصل فک را شروع کند یا بیشتر کند و در کسانی که زمینه دارند گاهی به دررفتگی فک برسد. اگر قبلاً درد فک یا دررفتگی داشته‌اید، قبل از شروع درمان به دندانپزشک بگویید تا در طول کار به فک شما استراحت بدهد.</p>
+  <p>البته دندانپزشکی تنها دلیل نیست. فشار دادن یا ساییدن دندان‌ها روی هم، استرس، ضربه به صورت و جویدن زیاد آدامس هم در این مشکلات نقش دارند.</p>
+
+  <h2>درمان درد مفصل فک</h2>
+  <p>خبر خوب این است که بیشتر مشکلات فک با درمان‌های ساده و بدون تهاجم بهتر می‌شوند:</p>
+  <ul>
+  <li>غذای نرم بخورید و از لقمه‌های بزرگ و آدامس پرهیز کنید.</li>
+  <li>موقع خمیازه، دستتان را زیر چانه بگذارید تا دهان زیاد باز نشود.</li>
+  <li>روی ناحیه‌ی دردناک کمپرس گرم بگذارید.</li>
+  <li>مسکن را طبق نظر پزشک یا دندانپزشک مصرف کنید.</li>
+  <li><strong>فیزیوتراپی فک را پیش فیزیوتراپیستی انجام دهید که با این مفصل آشناست</strong>؛ تمرین‌ها آرام هستند و ضربه‌ای در کار نیست.</li>
+  <li>اگر شب‌ها دندان‌هایتان را روی هم فشار می‌دهید، دندانپزشک برایتان پلاک شبانه می‌سازد.</li>
+  <li>استرس را کنترل کنید.</li>
+  </ul>
+  <p>تزریق یا جراحی فقط برای تعداد کمی از افراد لازم می‌شود که با این روش‌ها بهتر نشده‌اند.</p>
+
+  <h2>چه زمانی باید فوری به پزشک مراجعه کنید؟</h2>
+  <ul>
+  <li>دهانتان باز مانده و بسته نمی‌شود.</li>
+  <li>بعد از ضربه به صورت، درد دارید یا دندان‌هایتان مثل قبل روی هم قرار نمی‌گیرند.</li>
+  <li>فکتان ناگهان قفل شده و بهتر نمی‌شود.</li>
+  <li>درد فک با ورم یا تب همراه است.</li>
+  </ul>
+
+  <h2>سؤالات متداول</h2>
+  <h3>آیا صدای تق تق فک خطرناک است؟</h3>
+  <p>اگر درد نداشته باشید و دهانتان راحت باز و بسته شود، معمولاً خطرناک نیست و درمان خاصی لازم ندارد.</p>
+
+  <h3>فک در رفته را می‌شود در خانه جا انداخت؟</h3>
+  <p>نه. اگر فک خودش برنگشت، فوراً به اورژانس یا جراح فک و صورت مراجعه کنید. جا انداختن فک با زور در خانه می‌تواند آسیب بزند.</p>
+
+  <h3>آیا دیسک جابجا شده‌ی فک دوباره سر جایش برمی‌گردد؟</h3>
+  <p>اغلب نه، اما این لزوماً مشکل نیست. بیشتر افراد حتی با دیسک جابجا شده، بعد از درمان ساده بدون درد غذا می‌خورند و حرف می‌زنند.</p>
+
+  <h3>برای درد فک به چه دکتری مراجعه کنیم؟</h3>
+  <p>اول به دندانپزشک. او بررسی می‌کند مشکل از کجاست و اگر لازم باشد شما را به فیزیوتراپیست یا جراح فک و صورت معرفی می‌کند. برای دررفتگی فک مستقیم به اورژانس بروید.</p>
+
+
+  <p class="dc-disclaimer">این محتوا صرفاً جنبهٔ آموزشی دارد و جایگزین معاینه، تشخیص یا درمان حرفه‌ای نیست.</p>
+
+</article>
+
+  <div class="cta-container">
+    <p class="cta-text">برای درمان  با ما تماس بگیرید</p>
+    <a href="tel:06133380090" class="cta-button"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.4 2.1L8.1 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.6 1.9z"/></svg> تماس با مطب و نوبت‌دهی</a>
+  </div>
+
+</main>
+
+<div style="text-align:center; margin-top:2.25rem; margin-bottom:0.25rem;">
+  <a href="javascript:history.back()" class="back-btn">
+    ← برگشت به صفحه‌ی قبل
+  </a>
+</div>
+
+<div class="author-note">
+  <a href="/about.html" class="author-link">دکتر فواد شهابیان</a>
+  <span class="author-role">متخصص پروتزهای دندانی و ایمپلنت</span>
+</div>
+
+<div class="dc-related-section">
+  <h2 class="dc-related-label">کاوش بیشتر</h2>
+  <div class="dc-related-capsules">
+    <a href="/litecast/lite-CAST11.html" class="dc-related-capsule">معیار درست انتخاب دکتر و کلینیک</a>
+    <a href="/litecast/lite-CAST32.html" class="dc-related-capsule">کشیدن دندان آبسه‌دار</a>
+  </div>
+</div>
+
+<footer class="dc-site-footer">
+  <div style="margin-top:0.375rem;">
+    © 2025 Lite-CAST
+  </div>
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=15" defer></script>
+<script src="/dc-nav.js?v=289" defer></script>
+</body>
+</html>
