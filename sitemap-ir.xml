@@ -216,10 +216,10 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://dentcast.org/litecast/litecast40-micromorph-cover.webp</image:loc>
+      <image:loc>https://dentcast.ir/litecast/litecast40-micromorph-cover.webp</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://dentcast.org/litecast/litecast40-micromorph.webp</image:loc>
+      <image:loc>https://dentcast.ir/litecast/litecast40-micromorph.webp</image:loc>
     </image:image>
   </url>
   <url>
@@ -234,7 +234,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://dentcast.org/litecast/litecast42-jaw-dislocation.webp</image:loc>
+      <image:loc>https://dentcast.ir/litecast/litecast42-jaw-dislocation.webp</image:loc>
     </image:image>
   </url>
   <url>

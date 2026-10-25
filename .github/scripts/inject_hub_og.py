@@ -65,7 +65,9 @@ def build_og_block(indent: str, title: str, desc: str, og_url: str) -> str:
     t = esc(title.strip())
     d = esc(desc.strip())
     u = esc(og_url.strip())
-    i = esc(OG_IMAGE)
+    # LiteCast hubs are single-domain on dentcast.ir: their image URL follows the page's own host.
+    img = OG_IMAGE.replace("https://dentcast.org", "https://dentcast.ir") if og_url.strip().startswith("https://dentcast.ir/") else OG_IMAGE
+    i = esc(img)
     lines = [
         f'<meta property="og:type" content="website">',
         f'<meta property="og:locale" content="fa_IR">',
