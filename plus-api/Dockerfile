@@ -28,6 +28,7 @@ ENV NODE_ENV=production
 ENV CONTENT_INDEX_PATH=/app/content-index.json
 ENV PATHWAYS_PATH=/app/pathways.json
 ENV BADGES_PATH=/app/badges.json
+ENV EXAM_QUESTIONS_PATH=/app/exam-questions.json
 ENV GLOSSARY_PATH=/app/glossary.json
 ENV HASHTAG_REF_PATH=/app/dentcast-hashtag-reference.json
 ENV FLASHCARDS_PATH=/app/flashcards-index.json
@@ -41,6 +42,7 @@ ENV EPISODES_CATALOG_PATH=/app/dentcast.json
 ENV CONTENT_INDEX_URL=https://dentcast.ir/plus/content-index.json,https://dentcast.org/plus/content-index.json
 ENV PATHWAYS_URL=https://dentcast.ir/plus/pathways.json,https://dentcast.org/plus/pathways.json
 ENV BADGES_URL=https://dentcast.ir/plus/badges.json,https://dentcast.org/plus/badges.json
+ENV EXAM_QUESTIONS_URL=https://dentcast.ir/plus/exam-questions.json,https://dentcast.org/plus/exam-questions.json
 ENV GLOSSARY_URL=https://dentcast.ir/glossary/glossary.json,https://dentcast.org/glossary/glossary.json
 ENV HASHTAG_REF_URL=https://dentcast.ir/dentcast-hashtag-reference.json,https://dentcast.org/dentcast-hashtag-reference.json
 ENV FLASHCARDS_URL=https://dentcast.ir/plus/flashcards-index.json,https://dentcast.org/plus/flashcards-index.json
@@ -65,6 +67,7 @@ COPY plus-api/scripts ./scripts
 COPY plus/content-index.json ./content-index.json
 COPY plus/pathways.json ./pathways.json
 COPY plus/badges.json ./badges.json
+COPY plus/exam-questions.json ./exam-questions.json
 COPY plus/flashcards-index.json ./flashcards-index.json
 COPY glossary/glossary.json ./glossary.json
 COPY dentcast-hashtag-reference.json ./dentcast-hashtag-reference.json

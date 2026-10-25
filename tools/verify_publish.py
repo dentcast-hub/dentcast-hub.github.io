@@ -1740,6 +1740,30 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
             rep.check(content_id in read("plus/quiz-index.json"), "8 quiz",
                       "in plus/quiz-index.json", "has binary questions but is missing from the quiz bank",
                       "node tools/build_quiz_index.mjs")
+        # 4.12-ب — the repo source of pathway-exam questions (founder,
+        # 1405/08/03). Only a page that is a step of a FULL pathway feeds an
+        # exam, so the row is a documented skip otherwise; where it applies,
+        # the page's rows must pass the same shape the API's loader enforces
+        # (tools/validate_exam_questions.py). Writing none is allowed — the
+        # workflow records the reason — so the check is on shape, not count.
+        exam_file = json.loads(read("plus/exam-questions.json")).get("byContent", {}) if exists("plus/exam-questions.json") else {}
+        in_full_pathway = any(
+            p.get("kind") != "bundle" and any(st.get("content_id") == content_id for st in p.get("steps", []))
+            for p in json.loads(read("plus/pathways.json"))
+        ) if exists("plus/pathways.json") else False
+        if not in_full_pathway:
+            rep.skip("4.12-ب exam", "page is not a step of a full pathway — no exam draws from it")
+        elif content_id not in exam_file:
+            rep.skip("4.12-ب exam", "no exam question written for this page (step 4.12-ب records the reason)")
+        else:
+            import subprocess
+            r = subprocess.run([sys.executable, str(ROOT / "tools" / "validate_exam_questions.py"), "--content", content_id],
+                               capture_output=True, text=True)
+            rows = exam_file[content_id].get("questions", [])
+            rep.check(r.returncode == 0, "4.12-ب exam",
+                      f"{len(rows)} question(s) in plus/exam-questions.json, shape valid",
+                      f"plus/exam-questions.json rows fail validation: {r.stdout.strip().splitlines()[-1] if r.stdout.strip() else r.stderr.strip()[:200]}",
+                      "python3 tools/validate_exam_questions.py --content " + content_id)
         if is_gloss:
             # Step 5.6 is "MANDATORY on every publish that wrote a specialist
             # brain entry" — a glossary term writes no brain entry (it is a

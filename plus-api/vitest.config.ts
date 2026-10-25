@@ -24,6 +24,10 @@ export default defineConfig({
     hookTimeout: 30_000,
     env: {
       NODE_ENV: 'test',
+      // The repo's real plus/exam-questions.json would otherwise be the
+      // boot copy and put 300 editorial questions into every exam fixture;
+      // cases that need repo rows apply their own (applyRemoteExamQuestions).
+      EXAM_QUESTIONS_PATH: path.join(repoRoot, 'plus-api/test/fixtures/exam-questions.empty.json'),
       DATABASE_URL: 'postgres://dentcast:dentcast@localhost:5432/dentcast_plus_test',
       // Throwaway bot tokens so the Telegram-login route/verifier have keys under
       // test. dotenv does not override an already-set env var, so these win over

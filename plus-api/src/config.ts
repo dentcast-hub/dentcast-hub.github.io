@@ -380,6 +380,13 @@ export const config = {
     // Two model calls per free question per submit; this is the third route
     // on the site that spends model money per call.
     maxSubmitsPerHour: int('EXAM_MAX_SUBMITS_PER_HOUR', 6),
+    // A pathway with NO form row opens on its own once the article questions
+    // of its steps (table + repo file) reach this many (founder, 1405/08/03:
+    // «هر مسیری که حداقل ۲۰ تا سوال داشت باز بشه»). It replaces the
+    // «اعلام آمادگی» press for pathways the founder never wrote a form for;
+    // a form row that exists keeps `published_at` as the only switch, so a
+    // closed exam stays closed. 0 = never auto-open.
+    autoOpenMin: int('EXAM_AUTO_OPEN_MIN', 20),
   },
 
   // Subscription renewal reminders: one `daysBefore` days out and one on the
@@ -790,6 +797,12 @@ export const config = {
   // container.
   badgesPath: process.env.BADGES_PATH || '',
 
+  // Path to plus/exam-questions.json (article exam questions kept in the repo
+  // — the second source of «سؤالِ مقاله» beside the content_exam_questions
+  // table; src/exam-questions.ts). Same story: repo default in dev, explicit
+  // in the container.
+  examQuestionsPath: process.env.EXAM_QUESTIONS_PATH || '',
+
   // Path to plus/flashcards-index.json (AI review card text — versioned in the
   // repo, no DB). Same story as pathwaysPath: repo default in dev, explicit in
   // the container.
@@ -812,6 +825,7 @@ export const config = {
     indexUrls: list('CONTENT_INDEX_URL', []),
     pathwaysUrls: list('PATHWAYS_URL', []),
     badgesUrls: list('BADGES_URL', []),
+    examQuestionsUrls: list('EXAM_QUESTIONS_URL', []),
     flashcardsUrls: list('FLASHCARDS_URL', []),
     glossaryUrls: list('GLOSSARY_URL', []),
     hashtagRefUrls: list('HASHTAG_REF_URL', []),

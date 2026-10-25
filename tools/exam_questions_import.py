@@ -9,11 +9,14 @@ tool feeds the SECOND one in bulk, through the same admin door the panel's
 still goes through `normalizeQuestions` and nothing is written that the panel
 could not have written by hand.
 
-Why a tool and not a file in the repo: the exam key must never sit in Git or
-in any published file (the repo is public and `plus/*` is served as-is — the
-same rule the challenge answers follow). So the draft JSON lives OUTSIDE the
-repo (the agent hands it over as a file), the founder reviews it, and this
-tool posts only the rows the founder has approved.
+Since 1405/08/03 the article pool is DUAL-SOURCE: the same questions can live
+in the repo file `plus/exam-questions.json` (workflow step 4.12-ب, read by
+plus-api/src/exam-questions.ts) — that is where publish-time questions go,
+key included, by the founder's decision. This tool is the other road: for a
+reviewed draft the founder wants in the DATABASE rather than in Git (a row to
+edit from the panel, or one that should not be public), it posts the approved
+rows. Do not run both on the same draft — the pool is the union of the two
+sources and a question present in both would be drawn twice as often.
 
 Draft shape (see the review page that accompanies it):
 

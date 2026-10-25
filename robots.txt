@@ -7,6 +7,11 @@ Disallow: /dentcast-music.json
 # served as page markup, same reason as the music JSON above.
 Disallow: /plus/faq-corpus.json
 
+# Article exam questions for the pathway certificate exam, keys included
+# (founder decision 1405/08/03 — this is not a national exam; the key may sit
+# in the public repo, but it has no business in a search result).
+Disallow: /plus/exam-questions.json
+
 # Premium arrangement of the topical index (subtopic foldering + reading order).
 # The indexable surface is the page itself: /pillar/ and /pillar/<slug>/ each
 # serve every link once, in one flat date order. These sidecars hold the SAME

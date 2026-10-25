@@ -22,7 +22,9 @@ import {
   examState, startAttempt, submitAttempt, ruleAttempt, queueRows, attemptRoster, getAttempt,
   drawQuestions, tally, setCertificateIntent, type ExamQuestion,
   addContentQuestion, removeContentQuestion, listContentQuestions, pathwaysContaining, normalizeContentId, poolFor,
+  contentQuestionCount, contentQuestionsFor, ensureAutoForm, autoOpenExams, examStates,
 } from '../src/services/pathway-exams.js';
+import { applyRemoteExamQuestions, resetRemoteExamQuestions, repoQuestionsFor, examQuestionsSource, liveQuestion } from '../src/exam-questions.js';
 import { issueCertificate, listCertificates } from '../src/services/certificates.js';
 import { availableCredits } from '../src/services/discount-credits.js';
 import { getCardsFor } from '../src/flashcards.js';
@@ -1663,12 +1665,15 @@ describe('article questions — written once, drawn by every pathway the article
 });
 
 /**
- * Two question systems, and they never touch (founder, 2026-09-13: «کوییز
- * هوش مصنوعی … نمی‌خوام قاطی بشه»). Every article ships with AI-generated
- * review cards and quiz items (plus/flashcards-index.json,
+ * Two question systems, and the exam never DRAWS from the AI one (founder,
+ * 2026-09-13: «کوییز هوش مصنوعی … نمی‌خوام قاطی بشه»). Every article ships
+ * with AI-generated review cards and quiz items (plus/flashcards-index.json,
  * plus/quiz-index.json, faq-corpus.json — src/flashcards.ts, routes/review.ts).
- * The exam draws from exactly two places, both founder-written:
- * pathway_exam_forms.questions and content_exam_questions. Nothing else.
+ * The exam draws from exactly three places, every one of them approved by
+ * the founder: pathway_exam_forms.questions, content_exam_questions, and
+ * plus/exam-questions.json — the third added 1405/08/03 («بانک سوال مسیر
+ * دوگانه»), where a question is a REWRITE the founder approved, never a quiz
+ * row copied across. Nothing else.
  */
 describe('the exam never draws from the AI quiz/flashcard system', () => {
   it('the exam service imports nothing from it, by name', () => {
@@ -1677,20 +1682,162 @@ describe('the exam never draws from the AI quiz/flashcard system', () => {
     for (const bad of ['flashcards', 'review', 'quiz', 'faq']) {
       expect(imports.some((l) => l.toLowerCase().includes(bad)), `imports ${bad}`).toBe(false);
     }
+    // The repo source is its own module, and that module reads one file.
+    const repo = readFileSync(new URL('../src/exam-questions.ts', import.meta.url), 'utf8');
+    for (const bad of ['flashcards', 'review.js', 'quiz-index', 'faq-corpus']) {
+      expect(repo.toLowerCase().includes(bad), `exam-questions.ts mentions ${bad}`).toBe(false);
+    }
   });
 
   it('a pathway whose steps carry AI cards still has an EMPTY pool until the founder writes a question', async () => {
     const withCards = STEPS.find((cid) => getCardsFor(cid).length > 0)!;
     expect(withCards, 'the fixture needs a digital step that has AI cards').toBeTruthy();
     const pathway = getPathwayById(PATHWAY)!;
-    // Only content questions the founder wrote count — and there are none.
+    // Only content questions the founder wrote count — and there are none
+    // (the test env points the repo file at an empty fixture, see vitest.config.ts).
     await openForm(PATHWAY, { questions: [MCQ(1)] });
     const poolQs = await poolFor(pathway, (await getForm(PATHWAY))!);
     expect(poolQs.map((q) => q.id)).toEqual(['m1']);
     await removeQuestion(PATHWAY, 'm1').catch(() => {});
-    // The wall reads the same two sources: no founder question → no exam,
+    // The wall reads the same sources: no founder question → no exam,
     // however many AI cards the articles carry.
     expect((await examState(await userId(), PATHWAY)).rules!.question_count).toBe(1);
+  });
+});
+
+/* ------------------------------------- the repo source of article questions -- */
+
+/**
+ * plus/exam-questions.json (founder, 1405/08/03): questions written per
+ * article at publish time, committed with the article, drawn by every
+ * pathway that carries it beside the founder's own content_exam_questions
+ * rows — «وقتی مطلب منتشر می‌کنیم اذیت نشیم». And a pathway with no form
+ * whose article questions reach twenty opens on its own.
+ */
+describe('article questions from the repo file', () => {
+  const SHARED = 'insight/insight-63';
+  const repoQ = (cid: string, n: number, extra: Record<string, unknown> = {}) => ({
+    id: `r-${cid.replace(/[^a-z0-9]/g, '')}-${n}`, kind: 'mcq', prompt_fa: `سؤالِ ریپو ${n} برای ${cid}`,
+    options: ['الف', 'ب', 'ج', 'د'], correct: 2, ...extra,
+  });
+  const file = (by: Record<string, unknown[]>) => ({
+    version: 1, byContent: Object.fromEntries(Object.entries(by).map(([k, v]) => [k, { questions: v }])),
+  });
+
+  afterEach(() => { resetRemoteExamQuestions(); config.exam.autoOpenMin = 20; });
+
+  it('serves only live rows with r- ids; review/rejected rows and malformed rows never reach a pool', () => {
+    expect(examQuestionsSource()).toBe('image/disk');
+    expect(applyRemoteExamQuestions({ nope: true })).toBe(false);
+    expect(applyRemoteExamQuestions(file({}))).toBe(false);                          // an empty bank is a deploy decision
+    expect(applyRemoteExamQuestions(file({ [SHARED]: [repoQ(SHARED, 1, { status: 'review' })] }))).toBe(false);
+    expect(applyRemoteExamQuestions(file({
+      [SHARED]: [
+        repoQ(SHARED, 1),
+        repoQ(SHARED, 2, { status: 'review', review_note: 'x' }),
+        repoQ(SHARED, 3, { status: 'rejected' }),
+        repoQ(SHARED, 4, { id: 'q4' }),                   // a form's id class — refused
+        repoQ(SHARED, 5, { correct: 9 }),
+        repoQ(SHARED, 6, { options: ['الف', 'الف', 'ب', 'ج'] }),
+        { id: 'r-free-1', kind: 'free', prompt_fa: 'تشریحی', key_points: ['یک', { text: 'دو' }] },
+      ],
+    }))).toBe(true);
+    expect(examQuestionsSource()).toBe('published (2 live question(s))');
+    const live = repoQuestionsFor(SHARED);
+    expect(live.map((q) => q.id)).toEqual([`r-${SHARED.replace(/[^a-z0-9]/g, '')}-1`, 'r-free-1']);
+    expect(live[1]).toMatchObject({ kind: 'free', key_points: [{ id: 'r-free-1-k1', text: 'یک' }, { id: 'r-free-1-k2', text: 'دو' }] });
+    expect(liveQuestion({ id: 'r-ok-1', prompt_fa: 'p', options: ['a', 'b'], correct: 1 }, 'x').q).toMatchObject({ kind: 'mcq', correct: 1 });
+    expect(liveQuestion({ id: 'r-ok-1', prompt_fa: 'p', options: ['a', 'b'], correct: 1, status: 'review' }, 'x')).toEqual({ q: null });
+  });
+
+  it('joins the pool after the table rows, counts in the rules and the roster, and is drawn like any other', async () => {
+    const uid = await userId();
+    await openForm(PATHWAY, { questions: [MCQ(1)], draw: 0 });
+    const table = await addContentQuestion(SHARED, MCQ(2));
+    expect(applyRemoteExamQuestions(file({ [SHARED]: [repoQ(SHARED, 1)] }))).toBe(true);
+    const pathway = getPathwayById(PATHWAY)!;
+    const ids = (await poolFor(pathway, (await getForm(PATHWAY))!)).map((q) => q.id);
+    expect(ids).toEqual(['m1', table.row.question.id, `r-${SHARED.replace(/[^a-z0-9]/g, '')}-1`]);
+    expect(await contentQuestionCount(pathway)).toBe(2);
+    expect((await formRoster()).find((f) => f.pathway_id === PATHWAY)!.content_count).toBe(2);
+    expect((await examState(uid, PATHWAY)).rules!.question_count).toBe(3);
+    // Every pathway that carries the article draws it, not just this one.
+    for (const other of pathwaysContaining(SHARED).filter((p) => p.id !== PATHWAY)) {
+      expect((await contentQuestionsFor(other)).map((q) => q.id)).toContain(`r-${SHARED.replace(/[^a-z0-9]/g, '')}-1`);
+    }
+    await enroll(uid); await finish(uid);
+    const started = await startAttempt(uid, PATHWAY, 'سارا احمدی');
+    expect(started.ok).toBe(true);
+    expect(started.ok && started.attempt.questions.map((q) => q.id).sort()).toEqual(ids.sort());
+  });
+
+  it('the panel lists the repo rows beside the table rows, read-only', async () => {
+    expect(applyRemoteExamQuestions(file({ [SHARED]: [repoQ(SHARED, 1)] }))).toBe(true);
+    const r = await adminGet(`/admin/content-questions?content=${encodeURIComponent(SHARED)}`);
+    expect(r.statusCode).toBe(200);
+    expect(r.json().questions).toEqual([]);
+    expect(r.json().repo_questions.map((q: ExamQuestion) => q.id)).toEqual([`r-${SHARED.replace(/[^a-z0-9]/g, '')}-1`]);
+  });
+
+  it('a pathway with NO form opens on its own at the floor, with the column defaults, and is announced by the sweep', async () => {
+    const uid = await userId();
+    config.exam.autoOpenMin = 3;
+    expect(await getForm(PATHWAY)).toBeNull();
+    // Two from the file, none from the table: under the floor — nothing opens.
+    expect(applyRemoteExamQuestions(file({ [SHARED]: [repoQ(SHARED, 1), repoQ(SHARED, 2)] }))).toBe(true);
+    expect((await examState(uid, PATHWAY)).state).toBe('no_form');
+    expect(await getForm(PATHWAY)).toBeNull();
+    // The founder's table row is the third: the next look opens it.
+    await addContentQuestion(SHARED, MCQ(9));
+    expect((await examStates(uid, [PATHWAY])).get(PATHWAY)).toBe('locked');   // open, and this reader has not finished
+    const form = (await getForm(PATHWAY))!;
+    expect(form.published_at).not.toBeNull();
+    expect(form.questions).toEqual([]);
+    expect(form).toMatchObject({ draw: config.exam.draw, pass_percent: config.exam.passPercent, max_attempts: config.exam.maxAttempts });
+    expect(form.note).toContain('بازشدهٔ خودکار');
+    expect(await ensureAutoForm(getPathwayById(PATHWAY)!)).toMatchObject({ id: form.id });   // idempotent
+    expect(await autoOpenExams()).not.toContain(PATHWAY);                                       // already has a row (siblings sharing the article may open)
+    // A finisher who asked for the certificate is told by the nightly sweep.
+    await enroll(uid); await finish(uid);
+    await setCertificateIntent(uid, PATHWAY, 'wanted');
+    const run = await announceOpenExams({ now: new Date() });
+    expect(run.told).toContainEqual({ user_id: uid, pathway_id: PATHWAY });
+    expect((await examState(uid, PATHWAY)).state).toBe('ready');
+    const started = await startAttempt(uid, PATHWAY, 'سارا احمدی');
+    expect(started.ok && started.attempt.questions).toHaveLength(3);
+  });
+
+  it('the founder closing an auto-opened exam sticks; a row that exists is never re-opened by the floor', async () => {
+    const uid = await userId();
+    config.exam.autoOpenMin = 1;
+    expect(applyRemoteExamQuestions(file({ [SHARED]: [repoQ(SHARED, 1)] }))).toBe(true);
+    expect((await examState(uid, PATHWAY)).state).toBe('locked');
+    expect(await unpublishForm(PATHWAY)).toBe(true);
+    expect((await examState(uid, PATHWAY)).state).toBe('no_form');
+    expect(await autoOpenExams()).not.toContain(PATHWAY);
+    expect((await getForm(PATHWAY))!.published_at).toBeNull();
+    // Off switch.
+    await deleteForm(PATHWAY);
+    config.exam.autoOpenMin = 0;
+    expect((await examState(uid, PATHWAY)).state).toBe('no_form');
+    expect(await getForm(PATHWAY)).toBeNull();
+    // The sweep itself opens what reached the floor since yesterday.
+    config.exam.autoOpenMin = 1;
+    const run = await announceOpenExams({ now: new Date() });
+    expect(run).toBeTruthy();
+    expect((await getForm(PATHWAY))!.published_at).not.toBeNull();
+  });
+
+  it('a pending or too-short pathway never auto-opens, whatever its articles carry', async () => {
+    config.exam.autoOpenMin = 1;
+    const raw = JSON.parse(readFileSync(new URL('../../plus/pathways.json', import.meta.url), 'utf8'));
+    const p = raw.find((x: { id: string }) => x.id === PATHWAY);
+    p.certificate = 'pending';
+    expect(applyRemotePathways(raw)).toBe(true);
+    expect(applyRemoteExamQuestions(file({ [SHARED]: [repoQ(SHARED, 1)] }))).toBe(true);
+    expect(await ensureAutoForm(getPathwayById(PATHWAY)!)).toBeNull();
+    expect(await autoOpenExams()).not.toContain(PATHWAY);
+    resetRemotePathways();
   });
 });
 

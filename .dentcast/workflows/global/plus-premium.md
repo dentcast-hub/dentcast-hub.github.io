@@ -11,6 +11,7 @@ Plus/Premium تبدیل می‌کند. همهٔ این‌ها گام‌های خ
 | Plus | درخت ناوبریِ «میز کار» | `plus/content-index.json` | `node tools/build_plus_index.mjs` — هر publish که brain را تغییر داده |
 | Plus/Premium | فلش‌کارت (Leitner) | `DefinedTermSet` در `plus/faq-corpus.json` (نه روی خودِ صفحه) → `plus/flashcards-index.json` | گام ۴.۱۱ + `node tools/build_flashcards_index.mjs` |
 | Plus/Premium | کوییز نمره‌دار | `FAQPage` در `plus/faq-corpus.json` (نه روی خودِ صفحه) → `plus/quiz-index.json` | گام ۴.۱۲ + `node tools/build_quiz_index.mjs` |
+| Premium | سؤالِ آزمونِ مسیر (منبعِ ریپو) | `plus/exam-questions.json` زیرِ `content_id` (کلید داخلِ فایل؛ `robots.txt` می‌بندد) | گام ۴.۱۲-ب — هر publish تخصصی که قدمِ مسیر است (جز LiteCast/چالش/واژه‌نامه)؛ تأیید در چت، بدون بیلدر |
 | عادی | امتیاز شواهد (DES) | `plus/des-scores.json` (نه brain — Hard Rule 5؛ نه مارک‌آپِ صفحه) | سوال ۴.۸ + گام ۴.۱۳ — هر publish (جز LiteCast و «بدون DES»ِ کاربر) |
 | Premium | مسیرهای یادگیری (pathways) | `plus/pathways.json` | گام ۵.۶ — هر publish تخصصی (جز LiteCast) |
 | Premium | کالکشن‌ها | دیتابیس API (`collections`/`collection_items`) | کاربر می‌سازد؛ publish کاری ندارد |
