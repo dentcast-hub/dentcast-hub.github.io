@@ -833,17 +833,13 @@ def cmd_say(tag: str, forms: list) -> None:
     cmd_sync()
 
 
-# Hard Rule 15: a canonical tag is never another concept's alias. These pairs
-# predate the --check rule (share-41 audit, 1405/08/02) and await founder
-# decisions; they are reported as warnings. Any other collision fails --check.
-# Remove a pair here once its batch resolves it. Batches A96-A99 (1405/08/03)
-# resolved 18 of the original 19; the one left needs a founder decision on the
-# #اسپارتینا concept itself (its definition describes semaglutide, not the
-# tirzepatide brand the alias names). tests/test_hashtag_ref_apply.py pins
-# this list, so a change here is a visible decision, not drift.
-KNOWN_CANONICAL_ALIAS_COLLISIONS = frozenset({
-    ("#تیرزپاتاید", "اسپارتینا"),
-})
+# Hard Rule 15: a canonical tag is never another concept's alias. A pair listed
+# here is reported as a warning instead of failing --check; it exists for
+# collisions that predate the rule and await a founder decision. The 19 pairs
+# from the share-41 audit (1405/08/02) were all resolved by batches A96-A100
+# (1405/08/03), so the list is empty and tests/test_hashtag_ref_apply.py pins it
+# that way: a new collision is fixed in a batch, never parked here.
+KNOWN_CANONICAL_ALIAS_COLLISIONS = frozenset()
 
 
 def canonical_alias_collisions(ref: dict) -> list:

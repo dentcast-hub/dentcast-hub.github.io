@@ -1,0 +1,9 @@
+{
+  "note": "Founder decision 1405/08/03 (2026-10-25), collision audit follow-up. The #اسپارتینا concept was misnamed: its definition, use_when and aliases (اوزمپیک/ozempic/wegovy/سماگلوتید/semaglutide) all describe semaglutide, while «اسپارتینا» is the Iranian brand of tirzepatide and is correctly an alias of #تیرزپاتاید. Until now every semaglutide query folded into «تیرزپاتاید» through this concept. Renamed to #سماگلوتید with no text change; 0 articles carry it. allow_lossy is set with the founder's approval because the door-check compares the OLD name «اسپارتینا», which must keep reaching #تیرزپاتاید (the right concept for that word), not follow this concept. Batch A101 clears the dead form the rename records in variants, since «اسپارتینا» is not a name of semaglutide.",
+  "concepts": [],
+  "renames": {
+    "#اسپارتینا": "#سماگلوتید"
+  },
+  "allow_lossy": true,
+  "articles": {}
+}

@@ -74,26 +74,25 @@ class CanonicalAliasCheckTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn('alias "رابردم" of #ایزولاسیون is the canonical tag #رابردم', output)
 
-    def test_known_pairs_are_reported_as_warnings(self):
+    def test_no_known_pairs_remain_and_check_prints_no_warning(self):
+        # Batches A96-A100 (1405/08/03) resolved all 19 share-41 pairs; the
+        # last one (#اسپارتینا) was a misnamed concept and became #سماگلوتید.
+        # Anything appearing here again is drift: resolve it in a batch, never
+        # by re-growing the list.
+        self.assertEqual(ref.KNOWN_CANONICAL_ALIAS_COLLISIONS, frozenset())
         code, output = self.check()
-        self.assertEqual(code, 0)
-        self.assertIn('known canonical/alias collision', output)
-        self.assertIn('#اسپارتینا', output)
+        self.assertEqual(code, 0, output)
+        self.assertNotIn('known canonical/alias collision', output)
+        live = ref.canonical_alias_collisions(
+            json.loads((ROOT / 'dentcast-hashtag-reference.json').read_text(encoding='utf-8')))
+        self.assertEqual(live, [])
 
-    def test_known_list_holds_exactly_the_pairs_the_founder_left_open(self):
-        # Batches A96-A99 (1405/08/03) resolved 18 of the 19 share-41 pairs. The
-        # one left is a decision about the #اسپارتینا concept itself, not an
-        # alias edit. Anything else here is drift: resolve it in a batch, never
-        # by adding to this list.
-        self.assertEqual(ref.KNOWN_CANONICAL_ALIAS_COLLISIONS,
-                         frozenset({('#تیرزپاتاید', 'اسپارتینا')}))
-        code, output = self.check()
-        self.assertEqual(code, 0)
+    def test_known_pairs_would_still_be_reported_as_warnings(self):
+        with patch.object(ref, 'KNOWN_CANONICAL_ALIAS_COLLISIONS', frozenset({('#ایزولاسیون', 'رابردم')})):
+            code, output = self.check(lambda c: c['#ایزولاسیون']['aliases'].append('رابردم'))
+        self.assertEqual(code, 0, output)
         self.assertIn('1 known canonical/alias collision(s)', output)
-        live = {(tag, alias) for tag, alias, _ in ref.canonical_alias_collisions(
-            json.loads((ROOT / 'dentcast-hashtag-reference.json').read_text(encoding='utf-8')))}
-        self.assertEqual(live, set(ref.KNOWN_CANONICAL_ALIAS_COLLISIONS))
-
+        self.assertIn('alias "رابردم" of #ایزولاسیون is the canonical tag #رابردم', output)
 
 class ApplyWordsTests(unittest.TestCase):
     setUp = ApplyNewArticleTests.setUp

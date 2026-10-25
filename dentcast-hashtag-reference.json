@@ -10367,6 +10367,28 @@
    ]
   },
   {
+   "key": "task_decomposition",
+   "tag": "#Task_Decomposition",
+   "domain": "ai",
+   "words": 2,
+   "definition": "Breaking a compound request into a chain of smaller prompts whose output is checked at each step before the next one builds on it.",
+   "use_when": "معادلِ لاتینِ #شکستن_کار؛ روی همان مقاله‌هایی که آن تگ را دارند، تا کوئریِ انگلیسی هم به مطلب برسد.",
+   "aliases": [
+    "chained prompting",
+    "stepwise prompting",
+    "prompt chaining"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#شکستن_کار"
+   ],
+   "count": 2,
+   "content_ids": [
+    "dentai/promptologist/prompt4-4",
+    "dentai/promptologist/prompt6-5"
+   ]
+  },
+  {
    "key": "total_occlusal_convergence",
    "tag": "#total_occlusal_convergence",
    "domain": "clinical",
@@ -14253,27 +14275,6 @@
    "count": 1,
    "content_ids": [
     "metanotes/meta-3"
-   ]
-  },
-  {
-   "key": "task_decomposition",
-   "tag": "#Task_Decomposition",
-   "domain": "ai",
-   "words": 2,
-   "definition": "Breaking a compound request into a chain of smaller prompts whose output is checked at each step before the next one builds on it.",
-   "use_when": "معادلِ لاتینِ #شکستن_کار؛ روی همان مقاله‌هایی که آن تگ را دارند، تا کوئریِ انگلیسی هم به مطلب برسد.",
-   "aliases": [
-    "chained prompting",
-    "stepwise prompting",
-    "prompt chaining"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#شکستن_کار"
-   ],
-   "count": 1,
-   "content_ids": [
-    "dentai/promptologist/prompt4-4"
    ]
   },
   {
@@ -21628,25 +21629,6 @@
    "content_ids": []
   },
   {
-   "key": "اسپارتینا",
-   "tag": "#اسپارتینا",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "داروی تزریقیِ کاهش وزن یا کنترل قند خون از خانوادهٔ آگونیست GLP-1 (سماگلوتید و برندهای نزدیک مثل اوزمپیک)، که تخلیه‌ی معده را کند می‌کند و برای دندانپزشکی اهمیت دارد.",
-   "use_when": "مقاله اثر این دارو یا برندهای سماگلوتید را روی ویزیت دندانپزشکی، بیهوشی، یا جذب داروی خوراکی مطرح کند.",
-   "aliases": [
-    "اوزمپیک",
-    "ozempic",
-    "wegovy",
-    "سماگلوتید",
-    "semaglutide"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 0,
-   "content_ids": []
-  },
-  {
    "key": "بیهوشی",
    "tag": "#بیهوشی",
    "domain": "clinical",
@@ -21729,6 +21711,24 @@
    "definition": "",
    "use_when": "",
    "aliases": [],
+   "variants": [],
+   "co_tags": [],
+   "count": 0,
+   "content_ids": []
+  },
+  {
+   "key": "سماگلوتید",
+   "tag": "#سماگلوتید",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "داروی تزریقیِ کاهش وزن یا کنترل قند خون از خانوادهٔ آگونیست GLP-1 (سماگلوتید و برندهای نزدیک مثل اوزمپیک)، که تخلیه‌ی معده را کند می‌کند و برای دندانپزشکی اهمیت دارد.",
+   "use_when": "مقاله اثر این دارو یا برندهای سماگلوتید را روی ویزیت دندانپزشکی، بیهوشی، یا جذب داروی خوراکی مطرح کند.",
+   "aliases": [
+    "اوزمپیک",
+    "ozempic",
+    "wegovy",
+    "semaglutide"
+   ],
    "variants": [],
    "co_tags": [],
    "count": 0,
@@ -23574,7 +23574,7 @@
   "reverse jig": "اسپرو",
   "risk factor": "ریسک فاکتور",
   "root dentin": "باند به عاج ریشه",
-  "semaglutide": "تیرزپاتاید",
+  "semaglutide": "سماگلوتید",
   "shear force": "نیروی برشی",
   "sinus tract": "تریس آبسه",
   "skill decay": "فرسایش مهارت",
@@ -24209,7 +24209,6 @@
   "سطح شواهد": "نردبان شواهد",
   "سقف گفتگو": "پنجره کانتکست",
   "سمان رزین": "سمان رزینی",
-  "سماگلوتید": "تیرزپاتاید",
   "سند تحویل": "سند هندآف",
   "سندرم کلی": "کامبینیشن سندروم",
   "سوپر فلاس": "سوپرفلاس",
@@ -24527,7 +24526,7 @@
   "opaquer": "اوپکر",
   "orifice": "دسترسی کانال",
   "overlay": "اورلی",
-  "ozempic": "تیرزپاتاید",
+  "ozempic": "سماگلوتید",
   "papilla": "پاپیلا",
   "persona": "نقش دادن",
   "posselt": "انولوپ آو موشن",
@@ -24549,7 +24548,7 @@
   "امرجنسی": "امرجنس",
   "اور پرپ": "اورپرپ",
   "اوریفیس": "دسترسی کانال",
-  "اوزمپیک": "تیرزپاتاید",
+  "اوزمپیک": "سماگلوتید",
   "اکلوژال": "اکلوزال",
   "اکلوژنی": "اکلوزال",
   "ایجنتیک": "ایجنت هوش مصنوعی",
@@ -24658,7 +24657,7 @@
   "torque": "تورک پیچ",
   "try in": "ترای این",
   "veneer": "ونیر",
-  "wegovy": "تیرزپاتاید",
+  "wegovy": "سماگلوتید",
   "آنستزی": "بی حسی",
   "اتریشن": "سایش دندان",
   "ادهسیو": "ادهزیو",

@@ -1,0 +1,31 @@
+{
+  "note": "Founder decision 1405/08/03 (2026-10-25), collision audit follow-up. (1) #سماگلوتید: the pure rename in A100 recorded «#اسپارتینا» as a variant, but that word is not a name of semaglutide (plus-api reads variants as names), so variants is cleared. (2) #Task_Decomposition's use_when says it rides on every article tagged #شکستن_کار so English queries reach them; dentai/promptologist/prompt6-5 carried only the Persian twin. Added, mirroring prompt4-4's order. No other tag on the entry changed. The redundant self-alias «سماگلوتید» (always dropped by the compiler) is removed too.",
+  "concepts": [
+    {
+      "tag": "#سماگلوتید",
+      "variants": [],
+      "aliases": [
+        "اوزمپیک",
+        "ozempic",
+        "wegovy",
+        "semaglutide"
+      ]
+    }
+  ],
+  "articles": {
+    "dentai/promptologist/prompt6-5": [
+      "#پرامپتولوژیست",
+      "#هوش_مصنوعی",
+      "#سواد_هوش_مصنوعی",
+      "#AI_Literacy",
+      "#مدل_زبانی",
+      "#LLM",
+      "#شکستن_کار",
+      "#Task_Decomposition",
+      "#پنجره_کانتکست",
+      "#سند_هندآف",
+      "#Markdown",
+      "#گفتگو_با_هوش_مصنوعی"
+    ]
+  }
+}
