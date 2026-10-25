@@ -224,7 +224,10 @@ def invalidation_count(publication):
 
 
 def redelivers_first_cut(previous, publication, boundary):
-    return (boundary == 1 and fixed_delivery(previous)
+    # The previous commit may sit at cut 1, or at cut 2 when a failed post-Push-2
+    # continuation needed a workflow fix (e.g. a tool defect fixed on main), whose
+    # mandatory invalidation from `rules` reopens the ledger before cut 1.
+    return (boundary in (1, 2) and fixed_delivery(previous)
             and previous["content_id"] == publication["content_id"]
             and previous["category"] == publication["category"]
             and editorial_cut_v2(previous) == editorial_cut_v2(publication)
@@ -234,9 +237,10 @@ def redelivers_first_cut(previous, publication, boundary):
 def require_delivery_parent(root, publication, number, revision="HEAD"):
     boundary, previous = committed_boundary(root, revision)
     if number == 1:
-        # An audited dependency invalidation after a delivered first cut may
-        # re-deliver that same cut once per invalidation: same run, previous
-        # commit at boundary 1, and strictly more invalidation receipts now.
+        # An audited dependency invalidation after a delivered first (or
+        # second) cut may re-deliver the first cut once per invalidation: same
+        # run, previous commit at boundary 1 or 2, and strictly more
+        # invalidation receipts now.
         h.require(previous is None or redelivers_first_cut(previous, publication, boundary),
                   "FIRST_DELIVERY_REQUIRES_NO_ACTIVE_REMOTE_HANDOFF")
     else:

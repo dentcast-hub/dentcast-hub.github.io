@@ -299,6 +299,35 @@ class ThreeDeliveriesTests(unittest.TestCase):
         run(self.root, 'add', h.STATE_PATH)
         self.assert_blocked('FIRST_DELIVERY_REQUIRES_NO_ACTIVE_REMOTE_HANDOFF', lc.guard, self.root, 'pre-commit')
 
+    def test_rules_invalidation_after_second_cut_redelivers_both_cuts_once(self):
+        # A failed post-Push-2 continuation whose fix changes a workflow file
+        # (a tool defect fixed on main) must invalidate from `rules`; the run
+        # then re-crosses cut 1 and cut 2 once each and still finishes.
+        sha = self.complete_two()
+        state, sha = h.load_state(self.root)
+        sha = lc.invalidate(self.root, sha, 'rules', 'fixture reviewed workflow fix after cut 2')['sha256']
+        sha = self.walk(sha, 'C.4.9')
+        self.deliver('delivery 1 again after rules invalidation')
+        sha = self.walk(self.deliver_sha(), 'C.4.13')
+        self.deliver('delivery 2 again')
+        # Each further audited invalidation may re-open cut 1 once more.
+        state, sha = h.load_state(self.root)
+        sha = lc.invalidate(self.root, sha, 'C.2', 'fixture second page review')['sha256']
+        sha = self.walk(sha, 'C.4.9')
+        self.deliver('delivery 1 after a second invalidation is allowed')
+        sha = self.walk(self.deliver_sha(), 'C.4.13')
+        self.deliver('delivery 2 again')
+        state, sha = h.load_state(self.root)
+        sha = lc.step(self.root, sha, 'C.4.14', 'started', [], None)['sha256']
+        sha = self.walk(sha, 'G')
+        state, _ = h.load_state(self.root)
+        state['publication']['context']['delivery'] = [{'scope':'fixture external checks', 'evidence':['fixture:checked']}]
+        sha = h.save(self.root, state['publication'], expected=sha)['sha256']
+        self.assertEqual(lc.finish(self.root, sha)['status'], 'cleanup_pending_delivery')
+
+    def deliver_sha(self):
+        return h.load_state(self.root)[1]
+
     def test_failed_final_verifier_preserves_handoff(self):
         sha = self.prepare_final()
         with patch.dict('os.environ', {'DENTCAST_FIXTURE_FAIL':'1'}):
