@@ -1,0 +1,71 @@
+{
+  "note": "Founder decision 1405/08/03 (2026-10-25), canonical/alias collision audit, round 2 of 4 (founder delegated every cluster to the agent's stated recommendation). 7) #ساپورت_خلفی merged into #استاپ_خلفی — same concept (posterior occlusal support); its aliases «اکلوژن خلفی»/«ساپورت اکلوزالی» move to the survivor, «ساپورت خلفی»/«تماس خلفی» stay as aliases. 8) #تیرزپاتاید (the molecule) owns its own names: «tirzepatide»/«mounjaro»/«مونجارو»/«zepbound»/«زپباوند» removed from the class concept #داروهای_لاغری, and the spelling «تیرزپاتید» moves from the class to the molecule; the class keeps «GLP-1»/«GLP1». The #اسپارتینا canonical concept is NOT touched here: its definition describes semaglutide, so the right fix needs a founder decision (see report). 9) #اسکن_دیجیتال merged into #قالب‌گیری_دیجیتال — the same act (digital arch capture); insight-67 and litecast/lite-CAST14 retagged in the brain. 10) #برداشت_ترمیم (diagnostic removal of existing work) and #خارج_کردن_روکش (crown-removal technique) stay distinct: «خارج کردن روکش» removed from the former. 11) #پایداری_رنگ (material property) and #تغییر_رنگ (clinical outcome) stay distinct: «تغییر رنگ» removed from the former. 12) #BOPT (the preparation technique) and #Finish_Zone (the margin concept) stay distinct: «BOPT» and the Persian spelling «بی او پی تی» move to #BOPT; the self-alias «finish zone» is dropped. No definition or use_when text was written.",
+  "concepts": [
+    {
+      "tag": "#استاپ_خلفی",
+      "aliases": [
+        "posterior stop",
+        "استاپ عقبی",
+        "ساپورت خلفی",
+        "تماس خلفی",
+        "اکلوژن خلفی",
+        "ساپورت اکلوزالی"
+      ]
+    },
+    {
+      "tag": "#داروهای_لاغری",
+      "aliases": [
+        "GLP-1",
+        "GLP1"
+      ]
+    },
+    {
+      "tag": "#تیرزپاتاید",
+      "aliases": [
+        "اسپارتینا",
+        "Spartina",
+        "Tirzepatide",
+        "Mounjaro",
+        "مونجارو",
+        "Zepbound",
+        "زپباوند",
+        "GLP-1 agonist",
+        "آگونیست GLP-1",
+        "تیرزپاتید"
+      ]
+    },
+    {
+      "tag": "#برداشت_ترمیم",
+      "aliases": [
+        "برداشتن ترمیم",
+        "باز کردن ترمیم",
+        "برداشت روکش"
+      ]
+    },
+    {
+      "tag": "#پایداری_رنگ",
+      "aliases": [
+        "color stability",
+        "ثبات رنگ"
+      ]
+    },
+    {
+      "tag": "#Finish_Zone",
+      "aliases": [
+        "فینیش زون",
+        "محدوده فینیش"
+      ]
+    },
+    {
+      "tag": "#BOPT",
+      "aliases": [
+        "بی او پی تی"
+      ]
+    }
+  ],
+  "renames": {
+    "#ساپورت_خلفی": "#استاپ_خلفی",
+    "#اسکن_دیجیتال": "#قالب‌گیری_دیجیتال"
+  },
+  "articles": {}
+}

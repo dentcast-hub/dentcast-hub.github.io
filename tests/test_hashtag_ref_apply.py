@@ -78,7 +78,7 @@ class CanonicalAliasCheckTests(unittest.TestCase):
         code, output = self.check()
         self.assertEqual(code, 0)
         self.assertIn('known canonical/alias collision', output)
-        self.assertIn('#اسکن_دیجیتال', output)
+        self.assertIn('#اسپارتینا', output)
 
 
 class ApplyWordsTests(unittest.TestCase):

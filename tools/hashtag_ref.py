@@ -838,15 +838,10 @@ def cmd_say(tag: str, forms: list) -> None:
 # decisions; they are reported as warnings. Any other collision fails --check.
 # Remove a pair here once its batch resolves it.
 KNOWN_CANONICAL_ALIAS_COLLISIONS = frozenset({
-    ("#قالب‌گیری_دیجیتال", "اسکن دیجیتال"),
     ("#پروتکل_باند", "پروتکل باندینگ"),
     ("#پروتکل_باند", "پروتکل ادهزیو"),
-    ("#استاپ_خلفی", "ساپورت خلفی"),
-    ("#برداشت_ترمیم", "خارج کردن روکش"),
     ("#شکستن_کار", "task decomposition"),
-    ("#پایداری_رنگ", "تغییر رنگ"),
     ("#پروپریوسپشن", "آگاهی اکلوزال"),
-    ("#Finish_Zone", "BOPT"),
     ("#تیرزپاتاید", "اسپارتینا"),
     ("#حرکت_پروتروزیو", "پروتروزیو"),
     ("#متاپرامپت", "meta prompting"),
