@@ -443,6 +443,12 @@ def cmd_apply(path: str) -> None:
                  "`aliases` in the reference, keep both as co_tags, or set "
                  "\"allow_lossy\": true if the old form is genuinely unreachable "
                  "text nobody types:\n  " + "\n  ".join(closed))
+    # The shadow table above exists only for the door-check. Left live, it
+    # leaks into normalize_concept()/cmd_sync() below and inflates `words`
+    # (its manual aliases are unfiltered: "پروگنوز" -> "پروگنوز دندان").
+    # Drop it so both read the same table a standalone --sync reads.
+    _alias_cache = None
+    _reset_index()
 
     for old, new in renames.items():
         old_c = index.get(old)

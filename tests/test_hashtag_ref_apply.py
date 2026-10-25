@@ -81,5 +81,30 @@ class CanonicalAliasCheckTests(unittest.TestCase):
         self.assertIn('#اسکن_دیجیتال', output)
 
 
+class ApplyWordsTests(unittest.TestCase):
+    setUp = ApplyNewArticleTests.setUp
+
+    def test_apply_alone_matches_a_following_sync(self):
+        root = patch.object(ref, 'ROOT', self.dir)   # no episode pages to rewrite here
+        root.start()
+        self.addCleanup(root.stop)
+        path = self.dir / 'dentcast-hashtag-reference.json'
+        concept = {c['tag']: c for c in json.loads(path.read_text(encoding='utf-8'))['concepts']}['#ایزولاسیون']
+        batch = self.dir / 'batch.json'
+        batch.write_text(json.dumps({'concepts': [{'tag': '#ایزولاسیون', 'aliases': concept['aliases']}],
+                                     'articles': {}}), encoding='utf-8')
+        with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+            ref._alias_cache = None
+            ref.cmd_apply(str(batch))
+            applied = path.read_bytes()
+            ref._alias_cache = None
+            ref._reset_index()
+            ref.cmd_sync()
+        self.assertEqual(applied, path.read_bytes())
+        words = {c['tag']: c['words'] for c in json.loads(applied)['concepts']}
+        self.assertEqual(words['#پروگنوز_دندان'], 2)
+        self.assertEqual(words['#درمان_بین_رشته_ای'], 4)
+
+
 if __name__ == '__main__':
     unittest.main()
