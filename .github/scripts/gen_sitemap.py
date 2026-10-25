@@ -10,7 +10,8 @@ DentCast Sitemap Generator
 - در پایان: گزارش هشدارها (no-canonical, off-domain, duplicates)
 """
 
-import subprocess, os, re, sys, datetime
+import subprocess, os, re, sys, datetime, json
+from xml.sax.saxutils import escape as xml_escape
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools"))
 from dentcast_text_io import write_text
@@ -214,6 +215,60 @@ def read_page_meta(file_path):
     )
 
 
+# ---------------------------------------------------------------------------
+# Image sitemap entries.
+#
+# A page earns <image:image> entries only when it declares a real picture in its
+# own JSON-LD: an ImageObject with a `contentUrl` that points at an image file.
+# That is the exact signal the LiteCast pages that carry an illustration already
+# write (lite-CAST40, lite-CAST42), and it is deliberately narrow: the other
+# ImageObject nodes on the site are publisher logos or have no contentUrl, and the
+# `contentUrl`s that exist elsewhere are audio/video embeds. Nothing is inferred
+# from og:image, which most pages point at the shared site cover.
+IMAGE_EXT_RE = re.compile(r"\.(?:webp|jpe?g|png|gif|avif)(?:\?.*)?$", re.IGNORECASE)
+LDJSON_RE = re.compile(
+    r'<script\b[^>]*type\s*=\s*["\']application/ld\+json["\'][^>]*>(.*?)</script>',
+    re.IGNORECASE | re.DOTALL,
+)
+
+
+def _walk_image_objects(node, out):
+    if isinstance(node, dict):
+        t = node.get("@type")
+        types = t if isinstance(t, list) else [t]
+        url = node.get("contentUrl")
+        if "ImageObject" in types and isinstance(url, str) and IMAGE_EXT_RE.search(url):
+            out.append(url.strip())
+        for v in node.values():
+            _walk_image_objects(v, out)
+    elif isinstance(node, list):
+        for v in node:
+            _walk_image_objects(v, out)
+
+
+def read_page_images(file_path):
+    """Image URLs a page declares via JSON-LD ImageObject.contentUrl, in order."""
+    try:
+        with open(file_path, "rb") as f:
+            text = f.read().decode("utf-8", errors="replace")
+    except OSError:
+        return []
+    end = text.lower().find("</head>")
+    head = text if end == -1 else text[:end]
+    found = []
+    for m in LDJSON_RE.finditer(head):
+        try:
+            _walk_image_objects(json.loads(m.group(1)), found)
+        except ValueError:
+            continue
+    seen_img, ordered = set(), []
+    for u in found:
+        if u not in seen_img:
+            seen_img.add(u)
+            ordered.append(u)
+    return ordered
+
+
 html_files = []
 for root, dirs, files in os.walk(BASE):
     dirs[:] = [d for d in dirs if not d.startswith(".")]
@@ -229,6 +284,7 @@ html_files.sort()
 entries = []
 entries_ir = []
 seen = set()
+page_images = {}        # canonical URL -> [image URL, ...] (only pages that declare any)
 
 warn_no_canonical = []
 warn_off_domain = []
@@ -263,6 +319,9 @@ for rel in html_files:
     if not content_date:
         git_dated.append(rel)
     bucket.append((rel, canon, content_date))
+    imgs = read_page_images(file_path)
+    if imgs:
+        page_images[canon] = imgs
 
 
 def write_sitemap(filename, bucket, home_url):
@@ -273,9 +332,15 @@ def write_sitemap(filename, bucket, home_url):
 
     bucket = sorted(bucket, key=_sort_key)
 
+    # The image namespace is declared only in a file that actually carries image
+    # entries, so a sitemap without any stays byte-identical to what it was.
+    has_images = any(url in page_images for _p, url, _d in bucket)
+    urlset = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"'
+    if has_images:
+        urlset += ' xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+        urlset + ">",
     ]
     for path, url, content_date in bucket:
         d = get_date(path, content_date)
@@ -285,8 +350,14 @@ def write_sitemap(filename, bucket, home_url):
             f"    <lastmod>{d}</lastmod>",
             f"    <changefreq>{get_freq(path)}</changefreq>",
             f"    <priority>{get_priority(path)}</priority>",
-            "  </url>",
         ]
+        for img in page_images.get(url, []):
+            lines += [
+                "    <image:image>",
+                f"      <image:loc>{xml_escape(img)}</image:loc>",
+                "    </image:image>",
+            ]
+        lines.append("  </url>")
     lines.append("</urlset>")
 
     write_text(filename, "\n".join(lines) + "\n")
@@ -309,6 +380,7 @@ print(f"  URLs emitted (sitemap-ir.xml / .ir)     : {len(entries_ir)}")
 print(f"  lastmod from the page's own JSON-LD     : "
       f"{len(entries) + len(entries_ir) - len(git_dated)}")
 print(f"  lastmod from git history (no JSON-LD)   : {len(git_dated)}")
+print(f"  pages with image:image entries          : {len(page_images)}")
 
 if git_dated:
     print("\nlastmod from git history (page carries no JSON-LD date):")

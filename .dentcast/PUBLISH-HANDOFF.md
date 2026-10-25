@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "litecast/lite-CAST42"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -122,6 +122,91 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             "Q8-body-markup"
           ],
           "kind": "intake_resolution_v1"
+        },
+        {
+          "english": {
+            "evidence": [
+              "LiteCast: no English mirror or toggle by Hard Rule 10/12 exception; page carries no hreflang and no lang-btn"
+            ],
+            "path": null,
+            "status": "exempt"
+          },
+          "evidence": [
+            "Editorial close review of litecast/lite-CAST42.html, litecast/lite-glossary.json, litecast/index.html, index.html Pulse, hashtag library and gen_sitemap.py image support, performed before Push 2"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "C.4.13 skipped: LiteCast is outside the DES ecosystem (Hard Rule 10); body is the founder's own authored text used unchanged, no paper basket (B.4.8 skipped)"
+              ],
+              "scope": "scientific",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "C.4.14 skipped: ordinary post, Question 4.9 answered \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc; page has no data-dc-challenge-question markup"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "C.2.4/C.5.5 skipped: LiteCast lives outside the specialist pillar taxonomy (module 03 step 0.4); lite-glossary.json entry carries no pillar field, matching litecast-41"
+              ],
+              "scope": "taxonomy",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "Step 0.5 in-body analysis against all 41 LiteCast entries: 0 candidates; step 0.6 \u00ab\u06a9\u0627\u0648\u0634 \u0628\u06cc\u0634\u062a\u0631\u00bb holds lite-CAST11 and lite-CAST32 (both founder-approved), LiteCast-only, 2 of cap 5; C.4.7/4.8/4.9 skipped by LiteCast isolation rule 0.2"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5.0: four canonical tags reused, #\u062f\u0631\u0631\u0641\u062a\u06af\u06cc_\u0641\u06a9 minted via .dentcast/hashtag-batches/152-litecast-42.json; hashtag_ref.py --apply/--sync, build_plus_index.mjs, --check green"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5: litecast-42 appended to litecast/lite-glossary.json with identical key set/order to litecast-41, title/caption codepoint-identical to approved strings; C.3 audit table 16/16 OK"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5.6/C.5.6-b skipped: LiteCast is excluded from professional pathways (module 10 step 5.6); bundle GATE 1 is NO for litecast/"
+              ],
+              "scope": "pathways",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "index.html Pulse: founder-approved line \u00ab\u0644\u0627\u06cc\u062a\u200c\u06a9\u0633\u062a: \u00ab<title>\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f\u00bb inserted at the top, bottom line removed, exactly 7 lines remain, no spoiler beyond the title"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Hard Rule 12 documented exception: LiteCast is .ir-only with no hreflang and no English mirror or toggle (Hard Rule 10)"
+              ],
+              "scope": "english",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "Founder confirmed all eight intake items (title, caption, hashtags, keywords, Pulse, related links, image + sitemap, body markup) in chat; first paragraph is author-original, no agent-authored lead; recorded in context.approvals and intake_resolution_v1"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -417,17 +502,119 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "05-semantic-linking.md",
         "reason": "LiteCast isolation (module 03 step 0.2): no links out to brain entries; LiteCast-internal related links done in step 0.6",
         "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.1",
+        "module": "06-paper-ingestion.md",
+        "reason": "no attached paper file (Question 4.7): paper branch is a documented skip",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.2",
+        "module": "06-paper-ingestion.md",
+        "reason": "no attached paper file (Question 4.7): catalog enrichment skipped",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.3",
+        "module": "06-paper-ingestion.md",
+        "reason": "no attached paper file (Question 4.7): first-author DOI credit skipped",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": "LiteCast is outside the flashcard ecosystem (module 07 step 4.11)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": "LiteCast is outside the quiz ecosystem (module 07 step 4.12; 4.12-\u0628 exam also skipped for LiteCast)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.13",
+        "module": "08-des-fidelity.md",
+        "reason": "LiteCast is outside the specialist DES ecosystem (Hard Rule 10, module 08)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "ordinary post, not a Challenge (Question 4.9); no data-dc-challenge-question markup",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Hashtags per Hard Rule 15 (founder-approved list): reused canonical #\u0645\u0641\u0635\u0644_\u0641\u06a9\u06cc #\u062f\u0631\u062f_\u0641\u06a9\u06cc #\u0633\u0644\u0627\u0645\u062a_\u062f\u0647\u0627\u0646 #\u0622\u06af\u0627\u0647\u06cc_\u062f\u0631\u0645\u0627\u0646\u06cc (verified by direct lookup in dentcast-hashtag-reference.json); newly minted #\u062f\u0631\u0631\u0641\u062a\u06af\u06cc_\u0641\u06a9 via .dentcast/hashtag-batches/152-litecast-42.json (definition, use_when, 7 non-canonical aliases, no collision) with --apply, then --sync and node tools/build_plus_index.mjs; hashtag_ref.py --check passed; --simulate cannot rank the new tag because LiteCast items are not in the brain (article count 0)"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Appended litecast-42 as the last element of LightGlossary in litecast/lite-glossary.json by byte edit (no other bytes touched, JSON valid, 42 entries): keys/order identical to litecast-41 (type,id,title,caption,hashtags,keywords,page_url), title and caption codepoint-identical to the founder-approved strings, 5 canonical hashtags, 17 keywords, page_url litecast/lite-CAST42.html; nothing written to dentcast-brain.json"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": "LiteCast has no pillar/subtopic (step 2.4 skipped); nothing to verify",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": "LiteCast is patient-facing and excluded from professional pathways (module 10 step 5.6)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": "bundle gate GATE 1 is NO for litecast/ folder; no pathway joined so no candidate bundle: \u00ab\u0628\u0627\u0646\u062f\u0644: \u0628\u062f\u0648\u0646 \u06a9\u0627\u0646\u062f\u06cc\u062f\u00bb",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Editorial close: Pulse line approved by the founder inserted at the top of index.html with the bottom line removed (7 lines); English exempt for LiteCast; second_cut_editorial_lock_v1 written with ten scopes; title and caption approvals confirmed with the exact strings; homepage counters already reflect 726 content / 42 LiteCast; no pending questions"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
+      ".dentcast/hashtag-batches/152-litecast-42.json",
+      ".github/scripts/gen_sitemap.py",
+      "dentcast-hashtag-reference.json",
+      "index.html",
       "litecast/index.html",
       "litecast/lite-CAST42.html",
       "litecast/lite-glossary.json",
-      "litecast/litecast42-jaw-dislocation.webp"
+      "litecast/litecast42-jaw-dislocation.webp",
+      "plus/content-index.json"
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: litecast/lite-CAST42.html, litecast/index.html, litecast/litecast42-jaw-dislocation.webp"
+    "note": "Index-only refresh after staging delivery paths: index.html, litecast/lite-glossary.json, dentcast-hashtag-reference.json, plus/content-index.json, .dentcast/hashtag-batches/152-litecast-42.json, .github/scripts/gen_sitemap.py"
   },
   "schema": "publish-handoff-v3"
 }
