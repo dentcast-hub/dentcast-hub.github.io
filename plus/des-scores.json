@@ -43528,5 +43528,64 @@
     "fidelity": [
       null
     ]
+  },
+  "chairside/chairside-45": {
+    "scored_at": "2026-10-25",
+    "sources": [
+      {
+        "des_version": "3.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "وقتی اختلاف لبه‌ی دو سانترال، سابقه‌ی ضربه رو لو داد",
+          "authors": "دکتر فواد شهابیان",
+          "year": 2026,
+          "journal": "DentCast Chairside",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "در آنکیلوز، بخشی از سطح ریشه به استخوان جوش می‌خوره و دندان رفتاری شبیه ایمپلنت پیدا می‌کنه.",
+            "note": "مکانیسم آنکیلوز و عقب‌ماندن دندان از تغییرات دنتوآلوئولار، استدلال پیش‌بینی سابقه‌ی ضربه را توضیح می‌دهد"
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "متن هیچ جایی خود را با مقالات یا شواهد منتشرشده مقایسه نمی‌کند و حتی نبودِ شواهد را هم ذکر نمی‌کند"
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "البته تأیید آنکیلوز به بررسی کلینیکی و رادیوگرافیک و مقایسه با مدارک قبلی نیاز داره.",
+            "note": "تشخیص آنکیلوز احتمالی مشروط به تأیید کلینیکی و رادیوگرافیک بیان شده است"
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "Chairside متن‌های آموزشی یا کیس‌ریپورت نیستند؛ ثبت لحظه‌های واقعی و مسیر فکر بالینی‌اند.",
+            "note": "اعلانِ سطحِ بخش، از chairside/index.html"
+          }
+        ],
+        "des_score": 15,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این یادداشت Chairside به‌عنوان Commentary امتیاز 15 و باند E گرفته است.",
+        "interpretation_fa": "ارزش این متن در مسیر فکر بالینی آن است: اختلاف سطح لبه‌ی انسیزال بین یک لمینیت و یک روکش روی دندان طبیعی می‌تواند نشانه‌ی آنکیلوز ناشی از ضربه‌ی قبلی باشد، نه جابه‌جایی رستوریشن. استدلال مکانیسمی روشن است و تشخیص به تأیید رادیوگرافیک موکول شده، اما ارتباطی با شواهد منتشرشده برقرار نمی‌شود."
+      }
+    ],
+    "fidelity": [
+      null
+    ]
   }
 }

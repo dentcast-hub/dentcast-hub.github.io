@@ -786,7 +786,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 44,
+   "count": 45,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -831,7 +831,8 @@
     "chairside/chairside-40",
     "chairside/chairside-41",
     "chairside/chairside-42",
-    "chairside/chairside-44"
+    "chairside/chairside-44",
+    "chairside/chairside-45"
    ]
   },
   {
@@ -850,7 +851,7 @@
     "#گزارش_کیس"
    ],
    "co_tags": [],
-   "count": 43,
+   "count": 44,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -894,7 +895,8 @@
     "chairside/chairside-40",
     "chairside/chairside-41",
     "chairside/chairside-42",
-    "chairside/chairside-44"
+    "chairside/chairside-44",
+    "chairside/chairside-45"
    ]
   },
   {
@@ -1740,6 +1742,54 @@
    ]
   },
   {
+   "key": "لمینیت_سرامیکی",
+   "tag": "#لمینیت_سرامیکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ونیر/لمینیتِ سرامیکی — رستوریشنِ نازکِ باندشونده‌ی زیبایی.",
+   "use_when": "مقاله لمینیتِ سرامیکی را موضوع داشته باشد.",
+   "aliases": [
+    "ceramic laminate",
+    "لامینیت",
+    "لمینت",
+    "لامینیت سرامیکی",
+    "veneer laminate"
+   ],
+   "variants": [
+    "#لمینیت"
+   ],
+   "co_tags": [
+    "#Laminate_Veneer"
+   ],
+   "count": 24,
+   "content_ids": [
+    "episodes/episode-9",
+    "episodes/episode-19",
+    "episodes/episode-37",
+    "episodes/episode-38",
+    "episodes/episode-39",
+    "episodes/episode-148",
+    "notecast/episode-19",
+    "metanotes/meta-1",
+    "dentai/dentai-10",
+    "chairside/chairside-1",
+    "insight/insight-36",
+    "insight/insight-37",
+    "sharehub/share-6",
+    "sharehub/share-8",
+    "notecast/episode-37",
+    "notecast/episode-38",
+    "chairside/chairside-32",
+    "chairside/chairside-35",
+    "sharehub/share-22",
+    "insight/insight-79",
+    "sharehub/share-27",
+    "insight/insight-92",
+    "sharehub/share-40",
+    "chairside/chairside-45"
+   ]
+  },
+  {
    "key": "llm",
    "tag": "#LLM",
    "domain": "ai",
@@ -1817,53 +1867,6 @@
     "notecast/episode-15",
     "notecast/episode-16",
     "notecast/episode-30"
-   ]
-  },
-  {
-   "key": "لمینیت_سرامیکی",
-   "tag": "#لمینیت_سرامیکی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ونیر/لمینیتِ سرامیکی — رستوریشنِ نازکِ باندشونده‌ی زیبایی.",
-   "use_when": "مقاله لمینیتِ سرامیکی را موضوع داشته باشد.",
-   "aliases": [
-    "ceramic laminate",
-    "لامینیت",
-    "لمینت",
-    "لامینیت سرامیکی",
-    "veneer laminate"
-   ],
-   "variants": [
-    "#لمینیت"
-   ],
-   "co_tags": [
-    "#Laminate_Veneer"
-   ],
-   "count": 23,
-   "content_ids": [
-    "episodes/episode-9",
-    "episodes/episode-19",
-    "episodes/episode-37",
-    "episodes/episode-38",
-    "episodes/episode-39",
-    "episodes/episode-148",
-    "notecast/episode-19",
-    "metanotes/meta-1",
-    "dentai/dentai-10",
-    "chairside/chairside-1",
-    "insight/insight-36",
-    "insight/insight-37",
-    "sharehub/share-6",
-    "sharehub/share-8",
-    "notecast/episode-37",
-    "notecast/episode-38",
-    "chairside/chairside-32",
-    "chairside/chairside-35",
-    "sharehub/share-22",
-    "insight/insight-79",
-    "sharehub/share-27",
-    "insight/insight-92",
-    "sharehub/share-40"
    ]
   },
   {
@@ -2147,6 +2150,43 @@
    ]
   },
   {
+   "key": "تشخیص_افتراقی",
+   "tag": "#تشخیص_افتراقی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "رسیدن به علت با رد کردن گزینه‌های رقیب، نه با تأیید مستقیم اولین حدس.",
+   "use_when": "مقاله چند علت محتمل را کنار هم بگذارد و یکی‌یکی ردشان کند.",
+   "aliases": [
+    "differential diagnosis",
+    "افتراق تشخیصی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 20,
+   "content_ids": [
+    "episodes/episode-117",
+    "episodes/episode-119",
+    "dentai/dentai-1",
+    "insight/insight-9",
+    "insight/insight-11",
+    "photocast/episode-1",
+    "episodes/episode-152",
+    "insight/insight-23",
+    "insight/insight-25",
+    "dentai/dentai-13",
+    "dentai/dentai-14",
+    "chairside/chairside-7",
+    "insight/insight-43",
+    "chairside/chairside-18",
+    "insight/insight-45",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "sharehub/share-12",
+    "chairside/chairside-29",
+    "chairside/chairside-45"
+   ]
+  },
+  {
    "key": "انتخاب_متریال",
    "tag": "#انتخاب_متریال",
    "domain": "clinical",
@@ -2181,42 +2221,6 @@
     "insight/insight-57",
     "notecast/episode-41",
     "sharehub/share-37"
-   ]
-  },
-  {
-   "key": "تشخیص_افتراقی",
-   "tag": "#تشخیص_افتراقی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "رسیدن به علت با رد کردن گزینه‌های رقیب، نه با تأیید مستقیم اولین حدس.",
-   "use_when": "مقاله چند علت محتمل را کنار هم بگذارد و یکی‌یکی ردشان کند.",
-   "aliases": [
-    "differential diagnosis",
-    "افتراق تشخیصی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 19,
-   "content_ids": [
-    "episodes/episode-117",
-    "episodes/episode-119",
-    "dentai/dentai-1",
-    "insight/insight-9",
-    "insight/insight-11",
-    "photocast/episode-1",
-    "episodes/episode-152",
-    "insight/insight-23",
-    "insight/insight-25",
-    "dentai/dentai-13",
-    "dentai/dentai-14",
-    "chairside/chairside-7",
-    "insight/insight-43",
-    "chairside/chairside-18",
-    "insight/insight-45",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "sharehub/share-12",
-    "chairside/chairside-29"
    ]
   },
   {
@@ -2261,6 +2265,42 @@
    ]
   },
   {
+   "key": "روکش",
+   "tag": "#روکش",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "چترِ عامِ روکش.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "crown",
+    "کراون"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 19,
+   "content_ids": [
+    "episodes/episode-2",
+    "episodes/episode-8",
+    "dentcast-plus/video-6",
+    "metanotes/meta-12",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "chairside/chairside-15",
+    "insight/insight-49",
+    "chairside/chairside-22",
+    "chairside/chairside-27",
+    "chairside/chairside-29",
+    "insight/insight-61",
+    "sharehub/share-15",
+    "dentcast-plus/video-9",
+    "insight/insight-76",
+    "sharehub/share-30",
+    "insight/insight-94",
+    "sharehub/share-37",
+    "chairside/chairside-45"
+   ]
+  },
+  {
    "key": "ترمیم_غیرمستقیم",
    "tag": "#ترمیم_غیرمستقیم",
    "domain": "clinical",
@@ -2299,41 +2339,6 @@
     "dentai/dentai-29",
     "insight/insight-84",
     "sharehub/share-32"
-   ]
-  },
-  {
-   "key": "روکش",
-   "tag": "#روکش",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "چترِ عامِ روکش.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "crown",
-    "کراون"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 18,
-   "content_ids": [
-    "episodes/episode-2",
-    "episodes/episode-8",
-    "dentcast-plus/video-6",
-    "metanotes/meta-12",
-    "chairside/chairside-6",
-    "chairside/chairside-9",
-    "chairside/chairside-15",
-    "insight/insight-49",
-    "chairside/chairside-22",
-    "chairside/chairside-27",
-    "chairside/chairside-29",
-    "insight/insight-61",
-    "sharehub/share-15",
-    "dentcast-plus/video-9",
-    "insight/insight-76",
-    "sharehub/share-30",
-    "insight/insight-94",
-    "sharehub/share-37"
    ]
   },
   {
@@ -10482,6 +10487,27 @@
    ]
   },
   {
+   "key": "آنکیلوز",
+   "tag": "#آنکیلوز",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "بی‌حرکتیِ ایمپلنت، در برابر حرکتِ فیزیولوژیکِ دندان.",
+   "use_when": "مقاله این تفاوت را مبنای بیومکانیک قرار دهد.",
+   "aliases": [
+    "ankylosed",
+    "آنکیلوزه",
+    "ankylosis",
+    "بدون حرکت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-24",
+    "chairside/chairside-45"
+   ]
+  },
+  {
    "key": "اباتمنت_کاستوم",
    "tag": "#اباتمنت_کاستوم",
    "domain": "clinical",
@@ -11799,6 +11825,27 @@
    "content_ids": [
     "sharehub/share-14",
     "sharehub/share-24"
+   ]
+  },
+  {
+   "key": "رویش_مداوم",
+   "tag": "#رویش_مداوم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "رویش آهسته و مادام‌العمر دندان طبیعی، در برابر ایمپلنتِ ثابتِ آنکیلوزه.",
+   "use_when": "مقاله این تفاوت را عاملِ تغییر رابطه‌ی ایمپلنت و دندان مجاور بداند.",
+   "aliases": [
+    "رویش پیوسته",
+    "اروپشن مداوم"
+   ],
+   "variants": [],
+   "co_tags": [
+    "#Continued_Eruption"
+   ],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-159",
+    "chairside/chairside-45"
    ]
   },
   {
@@ -14448,26 +14495,6 @@
    "count": 1,
    "content_ids": [
     "sharehub/share-39"
-   ]
-  },
-  {
-   "key": "آنکیلوز",
-   "tag": "#آنکیلوز",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "بی‌حرکتیِ ایمپلنت، در برابر حرکتِ فیزیولوژیکِ دندان.",
-   "use_when": "مقاله این تفاوت را مبنای بیومکانیک قرار دهد.",
-   "aliases": [
-    "ankylosed",
-    "آنکیلوزه",
-    "ankylosis",
-    "بدون حرکت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-24"
    ]
   },
   {
@@ -17626,26 +17653,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-11"
-   ]
-  },
-  {
-   "key": "رویش_مداوم",
-   "tag": "#رویش_مداوم",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "رویش آهسته و مادام‌العمر دندان طبیعی، در برابر ایمپلنتِ ثابتِ آنکیلوزه.",
-   "use_when": "مقاله این تفاوت را عاملِ تغییر رابطه‌ی ایمپلنت و دندان مجاور بداند.",
-   "aliases": [
-    "رویش پیوسته",
-    "اروپشن مداوم"
-   ],
-   "variants": [],
-   "co_tags": [
-    "#Continued_Eruption"
-   ],
-   "count": 1,
-   "content_ids": [
-    "episodes/episode-159"
    ]
   },
   {
