@@ -648,7 +648,10 @@ def des_source_text(source, doc, page_title=None):
 # findings and so could not tell a reader which one a given page was; v1.7
 # added it after that page was rewritten.
 DES_TYPE_LABEL_SECTIONS = ("chairside", "metanotes", "insight")
+# The spec's own checklist table names item 4 in English; stored records use
+# either that label or the Persian one, so both identify the same item.
 DES_TYPE_LABEL_ITEM = "صریحاً تجربه/دیدگاه نامیده شده، نه شواهد"
+DES_TYPE_LABEL_ITEMS = (DES_TYPE_LABEL_ITEM, "explicitly labeled as experience/opinion, not evidence")
 
 
 def des_section_declaration(content_id):
@@ -1389,7 +1392,7 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                 # normal check below.
                 section_quotes = []
                 for c in (s.get("commentary_checklist") or []):
-                    if c.get("item") != DES_TYPE_LABEL_ITEM or not c.get("points"):
+                    if c.get("item") not in DES_TYPE_LABEL_ITEMS or not c.get("points"):
                         continue
                     note = (c.get("note") or "").strip()
                     if not note:
@@ -1756,7 +1759,6 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
         elif content_id not in exam_file:
             rep.skip("4.12-ب exam", "no exam question written for this page (step 4.12-ب records the reason)")
         else:
-            import subprocess
             r = subprocess.run([sys.executable, str(ROOT / "tools" / "validate_exam_questions.py"), "--content", content_id],
                                capture_output=True, text=True)
             rows = exam_file[content_id].get("questions", [])
