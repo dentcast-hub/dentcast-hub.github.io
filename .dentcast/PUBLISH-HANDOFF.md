@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "chairside/chairside-45"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -62,6 +62,30 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             "Restored after C.2 invalidation: page edit was only 4.8/4.9 links; approved strings unchanged"
           ],
           "scope": "challenge",
+          "status": "confirmed"
+        },
+        {
+          "decision": "Both MCQs approved as presented (r-ids publish-1, publish-2)",
+          "evidence": [
+            "Founder reply: \u0633\u0648\u0627\u0644\u0627 \u0647\u0631 \u062f\u0648 \u062a\u0627\u06cc\u06cc\u062f"
+          ],
+          "scope": "exam-questions",
+          "status": "confirmed"
+        },
+        {
+          "decision": "Founder pre-approved all remaining decisions for this publication and authorized merge after completion",
+          "evidence": [
+            "Founder reply: \u0628\u0642\u06cc\u0647 \u0686\u06cc\u0632\u0627\u0645 \u0647\u0645\u06cc\u0634\u0647 \u062a\u0627\u06cc\u06cc\u062f \u0628\u0631\u0648 \u062a\u0627 \u0622\u062e\u0631\u0634 \u0645\u0631\u062c \u06a9\u0646"
+          ],
+          "scope": "remaining-founder-decisions",
+          "status": "confirmed"
+        },
+        {
+          "decision": "Authored English mirror chairside/en/chairside-45.html accepted under founder blanket approval",
+          "evidence": [
+            "Founder reply: \u0628\u0642\u06cc\u0647 \u0686\u06cc\u0632\u0627\u0645 \u0647\u0645\u06cc\u0634\u0647 \u062a\u0627\u06cc\u06cc\u062f"
+          ],
+          "scope": "english-mirror",
           "status": "confirmed"
         }
       ],
@@ -391,13 +415,113 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             ],
             "validation": []
           }
+        },
+        {
+          "english": {
+            "evidence": [
+              "Structure-faithful translation of 12 paragraphs; toggles exact inverses; noindex_en_mirrors --check 0 missing"
+            ],
+            "path": "chairside/en/chairside-45.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "Current-run editorial close review before Push 2"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "C.4.13 COMMENTARY DES 15/E validated (quotes/arithmetic/band/schema); stored in plus/des-scores.json"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Founder answered Q4.9: ordinary post; C.4.14 skipped"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "treatment-planning/comprehensive-diagnosis in brain, verified at C.5.5 against live PILLARS"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.7 0 (cap), C.4.8 1 inline glossary link, C.4.9 three related capsules; section 5/5"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "7 founder-approved canonical tags; hashtag_ref --check OK"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Brain entry chairside-45 last element, keys = chairside-44; title/caption on all page meta surfaces"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "treatment-planning after chairside-18, esthetic after share-24; bundle-laminate rejected at gate 1"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "index.html Pulse: new top line, bottom (insight-98) removed, 7 lines"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "chairside/en/chairside-45.html authored from reference en/chairside-44; noindex, no hreflang, reciprocal toggles"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "title, caption, hashtags, keywords, challenge, exam-questions confirmed; founder blanket approval for remaining decisions"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
       "inputs": [],
       "pending_questions": [],
       "unrelated_changes": [],
-      "validation": []
+      "validation": [
+        {
+          "band": "E",
+          "checks": [
+            "quotes verbatim (items 1,3 body; item 4 chairside/index.html + note)",
+            "arithmetic 5+4+0+3+3=15",
+            "band E",
+            "spec key set"
+          ],
+          "content_id": "chairside/chairside-45",
+          "des_score": 15,
+          "executed_by": "separate subagent context with spec minus appendix",
+          "kind": "des_commentary_v3.4",
+          "stored": "plus/des-scores.json (CRLF, append-only)"
+        }
+      ]
     },
     "external_actions": [],
     "status": "in_progress",
@@ -676,6 +800,115 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "05-semantic-linking.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.1",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper (Q4.7)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.2",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper (Q4.7)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.3",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper (Q4.7)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "DefinedTermSet written to plus/faq-corpus.json byContent[chairside/chairside-45]: 3 authored terms #flashcards-c1..c3 (ankylosed tooth implant-like behaviour; adult dentoalveolar change; incisal discrepancy as diagnostic clue); none copies a FAQ answer; CRLF preserved; flashcards builder runs in C.8"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "FAQPage (5 Q, standalone, no deixis; 4 binary opening with \u062e\u06cc\u0631, 1 open) in plus/faq-corpus.json. 4.12-\u0628: 2 founder-approved MCQs appended to plus/exam-questions.json; validate_exam_questions.py 0 errors"
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "COMMENTARY (basket 1) source_text=page body FULL_TEXT; SOURCE call by separate agent with spec v3.4 minus appendix; 15/E not provisional; Part 3 quotes/arithmetic/band/schema checked; fidelity [null] (self-record); stored verbatim in plus/des-scores.json; no brain/page markup"
+        ],
+        "id": "C.4.13",
+        "module": "08-des-fidelity.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "Q4.9: \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc, not a challenge; no challenge markup",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "All 7 approved concepts resolved via hashtag_ref --simulate to existing canonical tags (#\u0686\u06cc\u0631\u0633\u0627\u06cc\u062f #\u06a9\u06cc\u0633_\u0628\u0627\u0644\u06cc\u0646\u06cc #\u0622\u0646\u06a9\u06cc\u0644\u0648\u0632 #\u0631\u0648\u06cc\u0634_\u0645\u062f\u0627\u0648\u0645 #\u062a\u0634\u062e\u06cc\u0635_\u0627\u0641\u062a\u0631\u0627\u0642\u06cc #\u0644\u0645\u06cc\u0646\u06cc\u062a_\u0633\u0631\u0627\u0645\u06cc\u06a9\u06cc #\u0631\u0648\u06a9\u0634); none minted, no batch; --sync/--check/plus-index after brain write"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Brain entry chairside-45 appended as last element (577), key set identical to chairside-44, pillar {treatment-planning,[],comprehensive-diagnosis}; hashtag --sync, build_plus_index, --check OK; --simulate ranks #\u0622\u0646\u06a9\u06cc\u0644\u0648\u0632 first incl. this article"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Recorded pillar/subtopic identical to C.2.4; comprehensive-diagnosis is live subtopic of treatment-planning; capsule /pillar/treatment-planning/ consistent; no extra pillar keys"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pathway_place: all ASK; founder blanket-approved remaining decisions. Placed (semantic): treatment-planning after chairside/chairside-18 (diagnostic-clue block: two competing possibilities), esthetic after sharehub/share-24 (incisal-edge/short central block); milestone false; 2 pathways (no third); coverage 1.51 per item (baseline 1.38, was 1.51 before rounding)"
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Candidate bundle: bundle-laminate (continues esthetic) -> \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1: chairside folder is never bundle type). No bundle edit, no home-bundles.js change."
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Pulse: new top line \u00ab\u06cc\u06a9 \u0686\u06cc\u0631\u0633\u0627\u06cc\u062f \u062a\u0627\u0632\u0647 \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab<title>\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f\u00bb linking /chairside/chairside-45.html; bottom line (insight-98) removed; 7 lines. Editorial lock written; English mirror authored with reciprocal toggles."
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
@@ -684,7 +917,9 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       "chairside/en/chairside-45.html",
       "chairside/index.html",
       "dentcast-brain.json",
+      "dentcast-hashtag-reference.json",
       "index.html",
+      "plus/content-index.json",
       "plus/des-scores.json",
       "plus/exam-questions.json",
       "plus/faq-corpus.json",
@@ -692,7 +927,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: chairside/chairside-45.html, chairside/chairside45.webp, chairside/index.html"
+    "note": "Index-only refresh after staging delivery paths: chairside/en/chairside-45.html, index.html, dentcast-brain.json, dentcast-hashtag-reference.json, plus/content-index.json, plus/des-scores.json, plus/exam-questions.json, plus/faq-corpus.json, plus/pathways.json"
   },
   "schema": "publish-handoff-v3"
 }
