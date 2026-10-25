@@ -1050,8 +1050,9 @@ def refresh_local_inputs(root, publication):
 
 NON_PROSE_APPROVAL_SCOPES = frozenset((
     "pillar", "taxonomy", "hashtags", "links", "links-borderline", "pathways",
+    "challenge", "exam-questions",
 ))
-VERBATIM_APPROVAL_SCOPES = frozenset(("title", "caption"))
+VERBATIM_APPROVAL_SCOPES = frozenset(("title", "caption", "keywords"))
 
 
 def approval_survives_page_edit(root, approval, pages):
@@ -1108,8 +1109,9 @@ def require_dependency_invalidation(root, previous, publication, current):
     changed_pages = effective
     if not changed_pages:
         return
-    # Approvals that do not bind page prose (taxonomy, tags, link choices) and
-    # exact title/caption strings still present verbatim do not make an
+    # Approvals that do not bind page prose (taxonomy, tags, link choices, the
+    # Q4.9 challenge answer, 4.12-b exam questions kept off the page) and exact
+    # title/caption/keywords strings still present verbatim do not make an
     # ordinary later page step (4.8/4.9 links, 4.10 credit) an approval change.
     if all(approval_survives_page_edit(root, a, changed_pages)
            for a in old['context']['approvals']
