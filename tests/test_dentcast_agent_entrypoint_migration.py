@@ -32,6 +32,40 @@ EDITS = {"02-routing-intake.md":{"CLAUDE.md → Repo conventions":".dentcast/wor
  "09-challenge.md":{"**Runs only when Question 4.9 answered «چالش».** Full design in":
   "**Runs only when Question 4.9 answered «چالش».** The ledger checkpoint\n`C.4.14` therefore has exactly two outcomes: `completed` means *this post is\na چالش* (its page carries the `data-dc-challenge-question` markup below, and\nthe English mirror is exempt); an ordinary post records `C.4.14` as\n**`skipped`** only, never `completed`. Full design in"}}
 def read(p): return (ROOT/p).read_text(encoding="utf-8")
+
+# Approved global-rule amendments that postdate the legacy snapshot (founder
+# decision 1405/08/03, PR #994: repo-file article exam questions + auto-open at
+# twenty). Each is a bounded block: the test removes exactly that block, pins its
+# required terms, and the rest of the file must still equal the legacy text.
+GLOBAL_AMENDMENTS = {
+ ".dentcast/workflows/global/repo-conventions.md": {
+  "new_start": '**سؤالِ مقاله منبعِ دومی هم در ریپو دارد',
+  "old_start": '**و آزمون هرگز از سیستمِ کوییز',
+  "end": '**آزمونِ بی\u200cسؤال آزمون نیست',
+  "terms": ("plus/exam-questions.json", "۴.۱۲-ب", "tools/validate_exam_questions.py",
+            "`r-`", "**سه** منبع", "config.exam.autoOpenMin", "بذرپاشی",
+            "`published_at`اش حرفِ آخر"),
+ },
+ ".dentcast/workflows/global/plus-premium.md": {
+  "row": '| Premium | سؤالِ آزمونِ مسیر (منبعِ ریپو) | `plus/exam-questions.json` زیرِ `content_id` (کلید داخلِ فایل؛ `robots.txt` می\u200cبندد) | گام ۴.۱۲-ب — هر publish تخصصی که قدمِ مسیر است (جز LiteCast/چالش/واژه\u200cنامه)؛ تأیید در چت، بدون بیلدر |\n',
+  "terms": ("plus/exam-questions.json", "۴.۱۲-ب", "LiteCast"),
+ },
+}
+def strip_global_amendment(test, path, actual, expected):
+ rule = GLOBAL_AMENDMENTS.get(path)
+ if not rule:
+  return actual
+ if "row" in rule:
+  test.assertEqual(actual.count(rule["row"]), 1)
+  for term in rule["terms"]:
+   test.assertIn(term, rule["row"])
+  return actual.replace(rule["row"], "", 1)
+ a_start = actual.index(rule["new_start"]); a_end = actual.index(rule["end"], a_start)
+ e_start = expected.index(rule["old_start"]); e_end = expected.index(rule["end"], e_start)
+ block = actual[a_start:a_end]
+ for term in rule["terms"]:
+  test.assertIn(term, block)
+ return actual[:a_start] + expected[e_start:e_end] + actual[a_end:]
 class EntrypointMigrationTests(unittest.TestCase):
  def test_progress_reporting_is_timely_without_per_command_noise(self):
   s=read(".dentcast/workflows/agent-parity.md")
@@ -78,7 +112,8 @@ class EntrypointMigrationTests(unittest.TestCase):
    a,b=item["source_lines"]; original="".join(src[a-1:b])
    self.assertEqual(hashlib.sha256(original.encode()).hexdigest(),item["source_sha256"])
    expected=original.replace("CLAUDE.md، بخش Repo conventions.","فایل فعال .dentcast/workflows/global/repo-conventions.md.")
-   self.assertEqual(read(item["active"]),expected)
+   actual=strip_global_amendment(self,item["active"],read(item["active"]),expected)
+   self.assertEqual(actual,expected)
    self.assertIn(item["active"],read(".dentcast/workflows/global/README.md"))
  def test_canonical_modules_unchanged_except_pointer_repairs(self):
   src=read(".dentcast/workflows/README.legacy.md").splitlines(keepends=True)
@@ -91,6 +126,17 @@ class EntrypointMigrationTests(unittest.TestCase):
     self.assertTrue(actual.startswith("<!-- dentcast-checkpoint-protocol:v1 -->"))
     self.assertIn(".dentcast/workflows/publish-checkpoints.md",actual.split("<!-- /dentcast-checkpoint-protocol:v1 -->",1)[0])
     body=actual.split("<!-- /dentcast-checkpoint-protocol:v1 -->\n\n",1)[1]
+    if name == "07-flashcards-and-quiz.md":
+     # Approved addition (founder 1405/08/03, PR #994): step 4.12-ب writes the
+     # page's exam questions into plus/exam-questions.json. Strip that bounded
+     # section, pin its required terms, compare the rest with the legacy text.
+     cut=body.index("\n\n### 4.12-ب.")
+     section=body[cut:]
+     for term in ("plus/exam-questions.json", "tools/validate_exam_questions.py",
+                  "**C.4.12**", "LiteCast", "approves every question in chat",
+                  "never re-minted", "`r-`"):
+      self.assertIn(term,section)
+     body=body[:cut]+"\n"
     if name == "11-build-and-version.md":
      body=body.replace("- Keep exactly **7** Pulse lines. Phase F checks the count, first position, and preservation of the previous first six lines when a new URL is added against main.\n", "")
      self.assertIn("Keep exactly **7**",actual)

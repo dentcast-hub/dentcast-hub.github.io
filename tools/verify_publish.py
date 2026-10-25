@@ -1756,7 +1756,6 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
         elif content_id not in exam_file:
             rep.skip("4.12-ب exam", "no exam question written for this page (step 4.12-ب records the reason)")
         else:
-            import subprocess
             r = subprocess.run([sys.executable, str(ROOT / "tools" / "validate_exam_questions.py"), "--content", content_id],
                                capture_output=True, text=True)
             rows = exam_file[content_id].get("questions", [])
