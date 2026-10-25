@@ -22,10 +22,13 @@ class SessionStartHookTests(unittest.TestCase):
         subprocess.run(['git', 'init', '-q', temp.name], check=True)
         return temp.name
 
-    def run_hook(self, command, repo, var):
-        env = {k: v for k, v in os.environ.items() if k not in ('CLAUDE_PROJECT_DIR', 'CODEX_PROJECT_DIR')}
-        env[var] = repo
-        return subprocess.run(['sh', '-c', command], cwd=repo, env=env, capture_output=True, text=True)
+    def run_hook(self, command, repo, var, stdin=''):
+        env = {k: v for k, v in os.environ.items()
+               if k not in ('CLAUDE_PROJECT_DIR', 'CODEX_PROJECT_DIR', 'CURSOR_PROJECT_DIR')}
+        if var:
+            env[var] = repo
+        return subprocess.run(['sh', '-c', command], cwd=repo, env=env, capture_output=True, text=True,
+                              input=stdin)
 
     def hooks_path(self, repo):
         out = subprocess.run(['git', '-C', repo, 'config', 'core.hooksPath'], capture_output=True, text=True)
@@ -63,6 +66,47 @@ class SessionStartHookTests(unittest.TestCase):
             (command,) = session_start(CONFIGS[0])
             result = self.run_hook(command, folder, 'CLAUDE_PROJECT_DIR')
             self.assertEqual((result.returncode, result.stdout, result.stderr), (0, '', ''))
+
+
+def cursor_hooks(event):
+    hooks = json.loads((ROOT / '.cursor/hooks.json').read_text(encoding='utf-8'))
+    assert hooks['version'] == 1
+    return [h['command'] for h in hooks['hooks'][event]]
+
+
+class CursorHookTests(SessionStartHookTests.__base__):
+    repo = SessionStartHookTests.repo
+    run_hook = SessionStartHookTests.run_hook
+    hooks_path = SessionStartHookTests.hooks_path
+
+    def test_session_start_sets_githooks_with_or_without_project_dir(self):
+        (command,) = cursor_hooks('sessionStart')
+        for var in ('CURSOR_PROJECT_DIR', None):
+            with self.subTest(var=var):
+                repo = self.repo()
+                for _ in range(2):
+                    result = self.run_hook(command, repo, var, '{}')
+                    self.assertEqual((result.returncode, result.stdout, result.stderr), (0, '', ''))
+                    self.assertEqual(self.hooks_path(repo), '.githooks')
+
+    def test_shell_hook_sets_githooks_and_always_allows(self):
+        # Cursor CLI fires only shell hooks; this one must cover a commit too.
+        (command,) = cursor_hooks('beforeShellExecution')
+        repo = self.repo()
+        subprocess.run(['git', '-C', repo, 'config', 'core.hooksPath', ''], check=True)
+        result = self.run_hook(command, repo, 'CURSOR_PROJECT_DIR', '{"command": "git commit -m x"}')
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(json.loads(result.stdout), {'permission': 'allow'})
+        self.assertEqual(self.hooks_path(repo), '.githooks')
+        subprocess.run(['git', '-C', repo, 'config', 'core.hooksPath', 'custom-hooks'], check=True)
+        self.assertEqual(json.loads(self.run_hook(command, repo, None, '{}').stdout), {'permission': 'allow'})
+        self.assertEqual(self.hooks_path(repo), 'custom-hooks')
+
+    def test_shell_hook_allows_outside_git(self):
+        (command,) = cursor_hooks('beforeShellExecution')
+        with tempfile.TemporaryDirectory() as folder:
+            result = self.run_hook(command, folder, None, '{}')
+            self.assertEqual((result.returncode, json.loads(result.stdout)), (0, {'permission': 'allow'}))
 
 
 if __name__ == '__main__':
