@@ -315,8 +315,9 @@ These may follow `--id`, or be used without it. The agent must establish each
 exception from its applicable module; the tool does not guess category skips.
 Each skip still gets its own durable checkpoint. A row an earlier `--start-next`
 opened (e.g. C.0.5 after C.2, C.4.5 after C.4) may also be skipped this way while
-it has no evidence or reason, no external outcome is in flight and no work or
-rule changed since that checkpoint; otherwise use `step`. Use `--start-next` alone to
+it has no evidence or reason, no external action is attributed to it (an action
+id without a `<step-id>:` prefix also blocks), no external outcome is in flight
+and no work or rule changed since that checkpoint; otherwise use `step`. Use `--start-next` alone to
 start the first ready pending step, if needed. Failure/blocking results still
 use `step --status failed/blocked`; Phase F still uses the real `verify` command.
 
@@ -494,7 +495,7 @@ The lifecycle registry in `tools/dentcast_publish_lifecycle.py` maps every canon
 
 For repeating scientific checks or other dynamic substeps, add explicit ledger IDs like `C.4.13/<unit-and-checker-id>` before their aggregate `C.4.13` checkpoint, with the same module. Record each outcome and preserve verified result references. This does not change scientific voting, independence or adjudication. The registry checks ordering and coverage, not the truth or completeness of semantic judgments. Paper-only runs follow only `rules`, `0`, paper Parts 1/2 and reporting, without inventing a page, English mirror, brain entry, version bump or page Phase F.
 
-Before an external action, record a unique action ID with `started`; afterward record the observed outcome/evidence. Unknown outcomes block a retry until reconciled. The registry aggregate does not excuse recording per-action and per-unit progress.
+Before an external action, record a unique action ID with `started`, named `<step-id>:<name>` for the step it serves (e.g. `C.4.10.1:drive-move`, even when the founder asks for it earlier); afterward record the observed outcome/evidence. Unknown outcomes block a retry until reconciled. The registry aggregate does not excuse recording per-action and per-unit progress.
 
 The step command and transition writer reject starting/restarting a step while
 an external outcome is started/unknown; raw `record` cannot bypass that guard.

@@ -72,8 +72,9 @@ socket`, `GBR`, `periimplantitis`, `biomimetic`, with nested paths like
 
    **Doing the Drive work early.** If the founder asks for it «اول از همه»,
    before the ledger reaches `C.4.10.1`, perform it then and record it as an
-   `external_action` (`started` before acting; the observed outcome and evidence,
-   e.g. target `drive:<drive_id>`, right after). When the ledger reaches
+   `external_action` with id `C.4.10.1:<name>` (e.g. `C.4.10.1:drive-move`;
+   `started` before acting; the observed outcome and evidence, e.g. target
+   `drive:<drive_id>`, right after). When the ledger reaches
    `C.4.10.1`, do not repeat the find/rename/move/upload: complete the step with
    evidence that references that recorded receipt. Every ask-don't-guess rule in
    this branch applies to the early run unchanged.

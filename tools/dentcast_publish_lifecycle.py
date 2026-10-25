@@ -419,6 +419,15 @@ def invalidate(root, expected, from_step, note):
     return h.save(root, p, expected=expected, note=note)
 
 
+def action_step(publication, action):
+    """Step an external action belongs to, from its id convention "<step>:<name>".
+
+    None when the prefix is not a step of this ledger (older, unattributed ids).
+    """
+    head, sep, _ = action["id"].partition(":")
+    return head if sep and head in {s["id"] for s in publication["steps"]} else None
+
+
 @h.baseline_read_session
 def advance(root, expected, sid=None, evidence=None, skips=(), start_next=False, note=None):
     """Reduce CLI round trips while preserving a durable write per transition.
@@ -441,9 +450,12 @@ def advance(root, expected, sid=None, evidence=None, skips=(), start_next=False,
         h.require(skip_id == h.next_step(p), "NOT_NEXT_CANONICAL_STEP")
         row = next(s for s in p["steps"] if s["id"] == skip_id)
         # A row an earlier --start-next opened may be skipped while it is still
-        # bare: no evidence or reason, no external outcome in flight (checked
-        # below for every transition) and no work or rule drift since then.
+        # bare: no evidence or reason, no external action attributed to it (an
+        # unattributed one might be, so it also blocks), no external outcome in
+        # flight (checked below for every transition) and no work or rule drift.
+        owners = [action_step(p, a) for a in p["external_actions"]]
         bare_start = (row["status"] == "started" and not row["evidence"] and row["reason"] is None
+                      and skip_id not in owners and None not in owners
                       and not h.differences(root, state, h.current_snapshot(root, state)))
         h.require(row["status"] == "pending" or bare_start, "ONLY_PENDING_STEPS_CAN_BE_BATCH_SKIPPED")
         row.update(status="skipped", evidence=[], reason=reason)

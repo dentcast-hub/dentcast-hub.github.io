@@ -105,10 +105,36 @@ class AdvanceTests(unittest.TestCase):
     def test_started_row_skip_keeps_external_outcome_guard(self):
         digest = self.bare_started_a()
         state, _ = h.load_state(self.root)
-        state['publication']['external_actions'] = [{'id': 'upload', 'target': 'fixture', 'status': 'outcome_unknown', 'evidence': []}]
+        # Attributed to another step, so only the in-flight outcome can block.
+        state['publication']['external_actions'] = [{'id': 'C.4.10.1:upload', 'target': 'fixture', 'status': 'outcome_unknown', 'evidence': []}]
         digest = h.write_atomic(self.root, state)
         with self.assertRaisesRegex(h.Blocked, 'EXTERNAL_OUTCOME_UNKNOWN'):
             lc.advance(self.root, digest, skips=[('A', 'fixture:exception')])
+
+    def with_action(self, digest, action_id):
+        state, _ = h.load_state(self.root)
+        state['publication']['external_actions'] = [
+            {'id': action_id, 'target': 'drive:fixture', 'status': 'completed', 'evidence': ['fixture:observed']}]
+        return h.write_atomic(self.root, state)
+
+    def test_started_row_with_its_own_external_action_is_not_batch_skipped(self):
+        for action_id in ('A:drive-upload', 'drive-upload-without-step-prefix'):
+            with self.subTest(action=action_id):
+                self.setUp()
+                digest = self.with_action(self.bare_started_a(), action_id)
+                with self.assertRaisesRegex(h.Blocked, 'ONLY_PENDING_STEPS_CAN_BE_BATCH_SKIPPED'):
+                    lc.advance(self.root, digest, skips=[('A', 'fixture:exception')])
+
+    def test_external_action_of_another_step_does_not_block_the_skip(self):
+        digest = self.with_action(self.bare_started_a(), 'C.4.10.1:drive-move')
+        result = lc.advance(self.root, digest, skips=[('A', 'fixture:exception')])
+        self.assertEqual(result['transitions_written'], [{'id': 'A', 'status': 'skipped'}])
+
+    def test_action_step_reads_only_real_ledger_prefixes(self):
+        p = {'steps': lc.plan()}
+        self.assertEqual(lc.action_step(p, {'id': 'C.4.10.1:drive-move'}), 'C.4.10.1')
+        self.assertIsNone(lc.action_step(p, {'id': 'drive:abc'}))
+        self.assertIsNone(lc.action_step(p, {'id': 'upload'}))
 
     def test_unknown_external_outcome_blocks_advance(self):
         initial = self.prepare()
