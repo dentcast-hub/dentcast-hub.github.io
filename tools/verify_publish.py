@@ -1870,7 +1870,8 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
               f"— the stamper did not run last",
               "python tools/stamp-version.py  (ALWAYS the final builder)")
     for f in ("index.html", "player.html"):
-        vs = set(re.findall(r"dentcast-brain\.json\?v=([a-z0-9]+)", read(f)))
+        # Brain and episode-catalogue (dentcast.json) fetches, as stamped.
+        vs = set(re.findall(r"(?:dentcast-brain|(?<![\w-])dentcast)\.json\?v=([a-z0-9]+)", read(f)))
         if vs:
             rep.check(vs == {want}, "7 version", f"{f} ?v= is current",
                       f"{f} carries ?v={vs}, expected {want}", "python tools/stamp-version.py")
