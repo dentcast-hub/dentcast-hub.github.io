@@ -158,8 +158,38 @@ def own_paths_after(root, commit, main_ref=None):
     commits = h.text_git(root, "rev-list", "--no-merges", commit + "..HEAD", *exclude).splitlines()
     paths = set()
     for item in commits:
-        paths.update(h.text_git(root, "diff-tree", "--no-commit-id", "--name-only", "-r", item).splitlines())
+        for path in h.text_git(root, "diff-tree", "--no-commit-id", "--name-only", "-r", item).splitlines():
+            if not recomputed_only(root, item, path):
+                paths.add(path)
     return paths
+
+
+# Mechanical values recomputed from the merged tree after main is merged into a
+# finished publication branch: the stamp-version.py content version
+# (CACHE_NAME, brain/catalogue ?v=), asset ?v= stamps and homepage counters.
+# A commit that only rewrites these ("Restamp after merging main") is not an
+# authored change; Phase F (step 7 version) and the counter gate recheck them
+# on the current tree, so the file stays checked at its delivery commit.
+RECOMPUTED = (
+    re.compile(r"dentcast-assets-[0-9a-z]+"),
+    re.compile(r"\?v=[0-9A-Za-z._-]+"),
+    re.compile(r"(<!-- COUNTER:[A-Z_]+:START -->).*?(<!-- COUNTER:[A-Z_]+:END -->)", re.DOTALL),
+)
+
+
+def recomputed_only(root, commit, path):
+    import dentcast_publish_handoff as h
+    before = h.git(root, "show", commit + "^:" + path, optional=True)
+    after = h.git(root, "show", commit + ":" + path, optional=True)
+    if before is None or after is None or before == after:
+        return False
+
+    def norm(raw):
+        text = raw.decode("utf-8", "surrogateescape")
+        for pattern in RECOMPUTED:
+            text = pattern.sub(lambda m: "".join(g or "" for g in m.groups()) or "<v>", text)
+        return text
+    return norm(before) == norm(after)
 
 
 def verify_publication_history(root, base, added_paths, main_ref=None):
@@ -271,7 +301,7 @@ def main():
         if ok:
             root = Path.cwd()
             base = subprocess.check_output(["git", "merge-base", "FETCH_HEAD", "HEAD"], text=True).strip()
-            added = subprocess.check_output(["git", "diff", "--name-only", "--diff-filter=A", base + "...HEAD"], text=True).splitlines()
+            added = subprocess.check_output(["git", "-c", "core.quotepath=false", "diff", "--name-only", "--diff-filter=A", base + "...HEAD"], text=True).splitlines()
             verify_publication_history(root, base, added, "FETCH_HEAD")
     except (OSError, subprocess.CalledProcessError, ValueError, RuntimeError) as exc:
         reason = str(exc) or "PUBLISH_MERGE_GATE_FAILED"

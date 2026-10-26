@@ -247,6 +247,12 @@ def require_fixed_cut_readiness(publication, root=None):
     h.require(all(a["status"] in ("confirmed", "not_required")
                   for a in publication["context"]["approvals"]),
               "DELIVERY_UNRESOLVED_APPROVAL")
+    # Once the cut is committed, recording the outcome is a record on the
+    # delivered handoff and starting the next step is refused while it is open,
+    # so an open outcome would strand the run: resolve it before the cut.
+    h.require(not any(a["status"] in ("started", "outcome_unknown") for a in publication["external_actions"]),
+              "EXTERNAL_OUTCOME_UNRESOLVED_AT_CUT: record the observed outcome of each started/unknown "
+              "external action (or reconcile it) before completing the cut step or committing the delivery")
     # Optional adapter is imported only at the cut: standalone legacy checkout
     # fixtures that do not contain the connected adapter remain importable.
     from dentcast_connected_cut_gates import validate_lead_provenance
@@ -722,6 +728,9 @@ def stage_delivery(root, expected, paths):
     paper_final = h.publication_category(p) == "paper-only" and h.next_step(p) is None
     h.require(paper_final or (fixed_delivery(p) and delivery_boundary(p) in (1, 2)),
               "STAGE_DELIVERY_ONLY_AT_FIXED_CUT")
+    if not paper_final:
+        # Refuse before staging or refreshing the checkpoint, not in the final guard.
+        require_fixed_cut_readiness(p, root)
     h.require(bool(paths), "STAGE_DELIVERY_PATHS_REQUIRED")
     scope = set(p["target_paths"]) | set(state["snapshot"]["files"])
     local_only = h.local_only_inputs(root, p)

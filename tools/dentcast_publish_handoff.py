@@ -91,7 +91,10 @@ def git(root, *args, optional=False, timeout=15):
     env = {**os.environ, "GIT_TERMINAL_PROMPT": "0", "GIT_OPTIONAL_LOCKS": "0",
            "GIT_NO_LAZY_FETCH": "1"}
     try:
-        p = subprocess.run(["git", "-C", str(root), *args], capture_output=True,
+        # core.quotepath=false: path listings (diff --name-only, diff-tree) must
+        # print non-ASCII names verbatim, e.g. a report named after a Persian
+        # category («چالش-insight-71.md»), not as "\332\206..." C-quoted strings.
+        p = subprocess.run(["git", "-c", "core.quotepath=false", "-C", str(root), *args], capture_output=True,
                            env=env, timeout=timeout)
     except (OSError, subprocess.TimeoutExpired):
         if optional:

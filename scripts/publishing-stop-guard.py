@@ -77,7 +77,8 @@ ADVICE = (
      "once; between cuts record the changed work in the checkpoint first; then rerun guard --phase stop."),
     ("PREVIOUS_STEP_HANDOFF_NOT_DELIVERED", ". The local handoff changed after the pushed cut: if that was only a "
      "later record, restore the delivered file (git restore .dentcast/PUBLISH-HANDOFF.md), start the next step, "
-     "then record again; otherwise inspect."),
+     "then record again; after Push 2 of a v2 run only restore it and monitor the post-cut2 Actions run "
+     "(never start C.8 locally); otherwise inspect."),
     ("CLEANUP_", ". Interrupted local cleanup: confirm-cleanup after the cleanup push, or restore-cleanup if "
      "that delivery failed."),
 )
