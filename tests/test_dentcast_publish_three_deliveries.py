@@ -222,6 +222,54 @@ class ThreeDeliveriesTests(unittest.TestCase):
                             lc.stage_delivery, self.root, sha, ['note.html'])
         self.assertEqual(h.git(self.root, 'diff', '--cached', '--name-only'), b'')
 
+    def complete_three(self):
+        sha = self.prepare_final()
+        lc.finish(self.root, sha)
+        report = lc.completion_path({'content_id': 'note'})
+        tech = lc.technical_report_path({'content_id': 'note', 'category': 'insight'})
+        run(self.root, 'add', '-A', 'note.html', h.STATE_PATH, report, tech)
+        run(self.root, 'commit', '-m', 'delivery 3')
+        run(self.root, 'push', 'origin', 'main')
+        lc.confirm_cleanup(self.root)
+        return report
+
+    def test_merge_gate_checks_workflow_against_the_delivered_commit(self):
+        report = self.complete_three()
+        delivered = h.text_git(self.root, 'rev-parse', 'HEAD')
+        # Main changes an active rule after delivery but before the PR merges.
+        (self.root/'.dentcast/workflows/README.md').write_text('rules changed on main\n')
+        run(self.root, 'commit', '-am', 'main: workflow edit landed mid-run')
+        self.assertEqual(merge.verify_publication_history(self.root, self.baseline, []), {'note'})
+        data = h.decode_json((self.root/report).read_text())
+        self.assertEqual(lc.validate_final_receipt(self.root, data, delivered), 'note')
+        # Without a delivery commit (local finish) the live workspace is still checked.
+        self.assert_blocked('FINAL_RECEIPT_WORKFLOW_MISMATCH', lc.validate_final_receipt,
+                            self.root, data)
+
+    def test_ignored_private_input_is_local_only_after_delivery(self):
+        (self.root/'.ignored').mkdir()
+        pdf = self.root/'.ignored/paper.pdf'
+        pdf.write_bytes(b'%PDF private fixture')
+        self.p['target_paths'].append('.ignored/paper.pdf')
+        self.p['context']['inputs'].append(
+            {'path': '.ignored/paper.pdf', 'sha256': h.file_info(self.root, '.ignored/paper.pdf')['sha256']})
+        sha = self.walk(self.start(), 'C.4.9')
+        self.assert_blocked('LOCAL_ONLY_INPUT_IS_NEVER_DELIVERED', lc.stage_delivery,
+                            self.root, sha, ['.ignored/paper.pdf'])
+        sha = self.deliver('delivery 1')
+        self.assertEqual(h.text_git(self.root, 'ls-tree', '-r', '--name-only', 'HEAD', '.ignored'), '')
+        # Present and unchanged after the cut: the next step may start.
+        sha = lc.step(self.root, sha, 'C.4.10.1', 'started', [], None)['sha256']
+        sha = lc.step(self.root, sha, 'C.4.10.1', 'completed', ['fixture:part-1'], None)['sha256']
+        # Absent (another checkout or removed after delivery): local-only, allowed.
+        pdf.unlink()
+        sha = lc.step(self.root, sha, 'C.4.10.2', 'started', [], None)['sha256']
+        # Present with different bytes: still caught against the bound hash.
+        pdf.write_bytes(b'%PDF tampered')
+        self.assert_blocked('INPUT_BYTES_CHANGED_RECONCILE:.ignored/paper.pdf', lc.step,
+                            self.root, sha, 'C.4.10.2', 'completed', ['fixture:part-2'], None)
+        self.assertEqual(h.inspect(self.root)['portability_reason'], 'UNTRACKED_OR_IGNORED_REQUIRED_FILE')
+
     def test_stage_delivery_only_at_a_fixed_cut(self):
         sha = self.walk(self.start(), 'C.4.8')
         self.assert_blocked('STAGE_DELIVERY_ONLY_AT_FIXED_CUT', lc.stage_delivery, self.root, sha, ['note.html'])

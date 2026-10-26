@@ -130,8 +130,9 @@ def validate_completion(root, raw):
     h.require(bool(publication["context"]["delivery"]) and all(
         isinstance(d, dict) and h.nonempty(d.get("scope")) and d.get("evidence")
         for d in publication["context"]["delivery"]), "DELIVERY_EVIDENCE_REQUIRED")
+    local_only = h.local_only_inputs(root, publication)
     for name, info in state["snapshot"]["files"].items():
-        actual = h.file_info(root, name)
+        actual = h.delivered_file_info(root, name, local_only)
         h.require(all(actual[k] == info[k] for k in actual), "PUBLICATION_CHANGED_AFTER_COMPLETION:" + name)
     receipts = [r for r in publication["context"]["validation"]
                 if isinstance(r, dict) and r.get("kind") in ("phase_f", "paper_catalog_gate")]

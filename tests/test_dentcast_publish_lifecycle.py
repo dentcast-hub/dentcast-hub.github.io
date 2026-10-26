@@ -98,6 +98,15 @@ class LifecycleTests(unittest.TestCase):
         result=lc.bind(self.root,sha,'note','insight',['note.html'],'fixture:resolved intake')
         self.assert_blocked('IDENTITY_ALREADY_BOUND',lc.bind,self.root,result['sha256'],'other','insight',['note.html'],'fixture')
 
+    def test_binding_stores_the_canonical_category(self):
+        initial=self.prepare()
+        state,_=h.load_state(self.root)
+        state['publication'].update(content_id='unassigned',category='Pending')
+        h.write_atomic(self.root,state)
+        sha=h.load_state(self.root)[1]
+        lc.bind(self.root,sha,'note','LiteCast',['note.html'],'fixture:resolved intake')
+        self.assertEqual(h.load_state(self.root)[0]['publication']['category'],'litecast')
+
     def test_raw_phase_f_completion_is_rejected(self):
         self.prepare(complete=True)
         state,_=h.load_state(self.root)
@@ -206,6 +215,24 @@ class LifecycleTests(unittest.TestCase):
             result=lc.finish(self.root,initial['sha256'])
         self.assertEqual(result['status'],'cleanup_pending_delivery')
         self.assertEqual(result['verification']['kind'],'paper_catalog_gate')
+
+    def test_paper_only_final_handoff_uses_stage_delivery(self):
+        initial=self.prepare(complete=True,paper=True)
+        catalog='dentcast_cabinet_full_catalog.json'
+        data=json.loads((self.root/catalog).read_text());data['papers'][0]['title']='fixture title'
+        (self.root/catalog).write_text(json.dumps(data))
+        state,_=h.load_state(self.root)
+        sha=h.save(self.root,state['publication'],expected=initial['sha256'],note='Reviewed catalog enrichment')['sha256']
+        result=lc.stage_delivery(self.root,sha,[catalog])
+        self.assertEqual(result['status'],'delivery_staged')
+        run(self.root,'commit','-m','paper-only final handoff');run(self.root,'push','origin','main')
+        self.assertEqual(lc.finish(self.root,result['sha256'])['status'],'cleanup_pending_delivery')
+
+    def test_paper_only_stage_delivery_requires_the_finished_ledger(self):
+        self.prepare(paper=True)
+        sha=h.load_state(self.root)[1]
+        self.assert_blocked('STAGE_DELIVERY_ONLY_AT_FIXED_CUT',lc.stage_delivery,self.root,sha,
+                            ['dentcast_cabinet_full_catalog.json'])
 
     def test_bare_delivery_boolean_is_not_completion_evidence(self):
         self.prepare(complete=True)

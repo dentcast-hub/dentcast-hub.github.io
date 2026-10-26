@@ -81,8 +81,24 @@ def preflight(root: Path, expected_head: str, expected_branch: str) -> dict:
     if branch != expected_branch:
         raise RunnerError("EXPECTED_BRANCH_MISMATCH")
     remote = git(root, "ls-remote", "origin", f"refs/heads/{branch}").split()
-    if not remote or remote[0].lower() != expected_head.lower():
+    if not remote:
         raise RunnerError("REMOTE_BRANCH_MOVED_OR_UNOBSERVABLE")
+    decision = classify(root)
+    if remote[0].lower() == expected_head.lower():
+        return decision
+    # A quick later push (Push 2 after Push 1, paper-only deletion after its
+    # handoff) supersedes this event: the skip classification of this SHA
+    # stands. A real Push-2 run skips only when a descendant push that touches
+    # the handoff exists, i.e. its own run is queued for the newer head.
+    if not decision["continue"]:
+        return {**decision, "superseded_by": remote[0].lower()}
+    if superseded_by_handoff_push(root, expected_head, remote[0]):
+        return {"continue": False, "reason": "SUPERSEDED_BY_NEWER_HANDOFF_PUSH",
+                "superseded_by": remote[0].lower(), "boundary": decision["boundary"]}
+    raise RunnerError("REMOTE_BRANCH_MOVED_OR_UNOBSERVABLE")
+
+
+def classify(root: Path) -> dict:
     if not (root / HANDOFF).is_file():
         return {"continue": False, "reason": "NO_ACTIVE_HANDOFF"}
     pub, _ = publication(root)
@@ -92,6 +108,16 @@ def preflight(root: Path, expected_head: str, expected_branch: str) -> dict:
     if boundary != 2:
         return {"continue": False, "reason": "NOT_AT_V2_SECOND_DELIVERY", "boundary": boundary}
     return {"continue": True, "reason": "V2_SECOND_DELIVERY", "boundary": boundary}
+
+
+def superseded_by_handoff_push(root: Path, expected_head: str, remote_head: str) -> bool:
+    """Fast-forward descendant whose range changes the handoff (the path filter)."""
+    try:
+        git(root, "merge-base", "--is-ancestor", expected_head, remote_head)
+        changed = git(root, "diff", "--name-only", expected_head, remote_head, "--", HANDOFF)
+    except RunnerError:
+        return False  # not a descendant, or the newer commit is not observable
+    return changed == HANDOFF
 
 
 def record_step(root: Path, step_id: str, status: str,
@@ -125,7 +151,7 @@ def command_plan(root: Path, pub: dict):
     # Module 11 step 3: mandatory whenever the publish touched dentcast.json.
     # Category names are free-form (episode/episodes/dentcast), so the
     # enrolled target is the reliable trigger.
-    if "dentcast.json" in pub["target_paths"] or pub["category"] in ("episode", "episodes", "dentcast"):
+    if "dentcast.json" in pub["target_paths"] or handoff.publication_category(pub) in ("episode", "episodes", "dentcast"):
         cmds.append(["python3", "tools/build_episodes.py"])
     if rows["C.4.11"]["status"] == "completed":
         cmds.append(["node", "tools/build_flashcards_index.mjs"])
@@ -134,7 +160,7 @@ def command_plan(root: Path, pub: dict):
     if rows["C.4.14"]["status"] == "completed":
         cmds.append(["node", "tools/build_challenge_index.mjs"])
     cmds.append(["python3", ".github/scripts/inject_img_attrs.py"])
-    if pub["category"] != "paper-only":
+    if handoff.publication_category(pub) != "paper-only":
         cmds.extend([
             ["node", "tools/build_plus_index.mjs"],
             ["python3", "tools/build_upboard_index.py"],
@@ -352,8 +378,9 @@ def run_phase(root: Path, artifact_dir: Path, args):
             current = handoff.next_step(pub)
         if current == "D":
             challenge = next(s for s in pub["steps"] if s["id"] == "C.4.14")
-            if pub["category"] == "litecast" or challenge["status"] == "completed":
-                reason = "Canonical Phase D exemption: LiteCast" if pub["category"] == "litecast" else "Canonical Phase D exemption: Challenge"
+            litecast = handoff.publication_category(pub) == "litecast"
+            if litecast or challenge["status"] == "completed":
+                reason = "Canonical Phase D exemption: LiteCast" if litecast else "Canonical Phase D exemption: Challenge"
                 record_step(root, "D", "skipped", reason=reason)
             else:
                 record_step(root, "D", "started", ["English mirror and reciprocal toggles were editorially closed before C.6; technical verification only"])
@@ -376,8 +403,9 @@ def run_phase(root: Path, artifact_dir: Path, args):
             pub, _ = publication(root)
             current = handoff.next_step(pub)
         if current == "E":
-            if pub["category"] in ("litecast", "glossary"):
-                record_step(root, "E", "skipped", reason=f"Canonical Phase E exemption: {pub['category']}")
+            category = handoff.publication_category(pub)
+            if category in ("litecast", "glossary"):
+                record_step(root, "E", "skipped", reason=f"Canonical Phase E exemption: {category}")
             else:
                 record_step(root, "E", "started", ["Ensure the single canonical dc-notify publish marker"])
                 page = root / (pub["content_id"] + ".html")

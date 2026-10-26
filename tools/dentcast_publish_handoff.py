@@ -270,7 +270,26 @@ def current_snapshot(root, state, check_remote=False):
     # observation is not adopting current bytes: differences still compares
     # each file, its mode and its index with the recorded baseline.
     paths = set(state["publication"]["target_paths"]) | set(state["snapshot"]["files"])
-    return snapshot(root, paths, check_remote)
+    return snapshot(root, paths, check_remote, local_only=local_only_inputs(root, state["publication"]))
+
+
+LOCAL_ONLY = {"kind": "missing", "sha256": None, "executable": False}
+
+
+def local_only_inputs(root, publication):
+    """Enrolled, hash-bound inputs that Git ignores and does not track.
+
+    Their bytes are private and local-only: no delivery commit contains them,
+    so every tree fingerprint records them as absent and only the bound hash
+    in context.inputs is checked (require_current_inputs).
+    """
+    return {path for _, path in local_input_bindings(publication)
+            if git(root, "check-ignore", "-q", "--", path, optional=True) is not None}
+
+
+def delivered_file_info(root, path, local_only=()):
+    """File fingerprint as a delivered commit records it."""
+    return dict(LOCAL_ONLY) if path in local_only else file_info(root, path)
 
 
 def change_details(state, current):
@@ -280,7 +299,7 @@ def change_details(state, current):
             for key in ("files", "workflow")}
 
 
-def snapshot(root, targets, check_remote=False, observed_status=None):
+def snapshot(root, targets, check_remote=False, observed_status=None, local_only=()):
     first_head = text_git(root, "rev-parse", "--verify", "HEAD^{commit}")
     first_branch = branch(root)
     origin = config(root, "remote.origin.url")
@@ -295,7 +314,7 @@ def snapshot(root, targets, check_remote=False, observed_status=None):
     index_raw = git(root, "ls-files", "--stage", "-z")
     index = index_entries(root, raw=index_raw)
     watched = sorted(set(paths) | set(targets))
-    files = {p: {**file_info(root, p), "status": paths.get(p),
+    files = {p: {**delivered_file_info(root, p, local_only), "status": paths.get(p),
                  "index": index.get(p, [])} for p in watched if p != STATE_PATH}
     workflow = {}
     for p in WORKFLOW_PATHS:
@@ -307,7 +326,7 @@ def snapshot(root, targets, check_remote=False, observed_status=None):
             and first_head == text_git(root, "rev-parse", "HEAD")
             and first_branch == branch(root), "GIT_CHANGED_DURING_SNAPSHOT")
     for p in files:
-        info = file_info(root, p)
+        info = delivered_file_info(root, p, local_only)
         require(all(files[p][k] == info[k] for k in info), "FILE_CHANGED_DURING_SNAPSHOT")
     return {"repository": identity(origin, root), "branch": first_branch,
             "head": first_head, "files": files, "workflow": workflow,
@@ -316,6 +335,29 @@ def snapshot(root, targets, check_remote=False, observed_status=None):
 
 def nonempty(value):
     return isinstance(value, str) and bool(value.strip())
+
+
+# Route exceptions key on one spelling: LiteCast, lite-cast, لایت‌کست -> litecast.
+CATEGORY_ALIASES = {"litecast": "litecast", "لایتکست": "litecast",
+                    "glossary": "glossary", "دانشنامه": "glossary",
+                    "paperonly": "paper-only", "pending": "pending"}
+
+
+def canonical_category(value):
+    if not isinstance(value, str):
+        return value
+    key = re.sub(r"[\s_\-‌‍]+", "", value).casefold()
+    return CATEGORY_ALIASES.get(key, value.strip().casefold())
+
+
+def publication_category(publication):
+    """Canonical category for every comparison; the litecast/ and glossary/
+    content-ID prefixes decide those route exceptions whatever the spelling."""
+    category = canonical_category(publication["category"])
+    prefix = str(publication.get("content_id") or "").split("/", 1)[0]
+    if category not in ("paper-only", "pending") and prefix in ("litecast", "glossary"):
+        return prefix
+    return category
 
 
 def validate_publication(p):
@@ -467,7 +509,7 @@ def compact_v3_steps(steps):
 def expand_v3_steps(publication):
     """Recover the omitted canonical tail; reject gaps and retain all dynamic rows."""
     import dentcast_publish_lifecycle as lifecycle
-    required = lifecycle.plan(publication["category"] == "paper-only")
+    required = lifecycle.plan(publication_category(publication) == "paper-only")
     serialized = publication["steps"]
     require(isinstance(serialized, list), "COMPACT_STEPS_INVALID")
     rebuilt, index = [], 0
@@ -1014,8 +1056,14 @@ def local_input_bindings(publication):
 
 
 def require_current_inputs(root, publication, snapshot=None):
+    local_only = local_only_inputs(root, publication)
     for item, path in local_input_bindings(publication):
-        info = snapshot['files'].get(path, {}) if snapshot is not None else file_info(root, path)
+        if path in local_only:
+            info = file_info(root, path)
+            if info['kind'] == 'missing':
+                continue  # local-only: absent after delivery or in another checkout
+        else:
+            info = snapshot['files'].get(path, {}) if snapshot is not None else file_info(root, path)
         require(info.get('kind') == 'file' and info.get('sha256') == item['sha256'],
                 'INPUT_BYTES_CHANGED_RECONCILE:' + path)
 
@@ -1157,7 +1205,8 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
         else:
             previous, old_digest = load_state(root)
             require(expected == old_digest, "STALE_HANDOFF_WRITE")
-            require(all(previous["publication"][k] == publication[k] for k in ("content_id", "category")),
+            require(previous["publication"]["content_id"] == publication["content_id"]
+                    and publication_category(previous["publication"]) == publication_category(publication),
                     "PUBLICATION_IDENTITY_CHANGED")
         # Persist known generated outputs as targets before they become clean.
         # Do not silently enroll unrelated files merely because Git reports them.
@@ -1173,7 +1222,8 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
             unknown = [p for p in dirty if p not in targets and p not in WORKFLOW_PATHS]
             require(not unknown, "UNREVIEWED_PATHS_OUTSIDE_PUBLICATION:" + ",".join(sorted(unknown)) +
                     "; preserve these files; add only reviewed related paths to target_paths")
-        current = snapshot(root, targets, check_remote, observed_status=dirty)
+        current = snapshot(root, targets, check_remote, observed_status=dirty,
+                           local_only=local_only_inputs(root, publication))
         require_current_inputs(root, publication, current)
         issues = []
         if previous:
@@ -1267,7 +1317,8 @@ def inspect(root, check_remote=False):
             issues.append("REMOTE_HISTORY_NOT_LOCAL_REVIEW_REQUIRED")
         if any(f["status"] for f in current["files"].values()):
             portable, reason = "no", "UNCOMMITTED_WORK_IS_LOCAL_ONLY"
-        elif any(f["kind"] != "missing" and not f["index"] for f in current["files"].values()):
+        elif any(f["kind"] != "missing" and not f["index"] for f in current["files"].values()) or any(
+                file_info(root, name)["kind"] != "missing" for name in local_only_inputs(root, p)):
             portable, reason = "no", "UNTRACKED_OR_IGNORED_REQUIRED_FILE"
         elif remote["status"] == "observed" and remote["ahead"] is not None:
             remote_state = git(root, "show", remote["head"] + ":" + STATE_PATH, optional=True)
@@ -1349,7 +1400,7 @@ def main(argv=None):
     p.add_argument("--category", required=True)
     p.add_argument("--target-path", action="append", required=True)
     p.add_argument("--evidence", required=True)
-    p = sub.add_parser("stage-delivery", help="At cut 1/2: git add reviewed paths, refresh the checkpoint, stage it, run the pre-commit guard")
+    p = sub.add_parser("stage-delivery", help="At cut 1/2 (or the paper-only final handoff): git add reviewed paths, refresh the checkpoint, stage it, run the pre-commit guard")
     p.add_argument("--expected-sha256", required=True)
     p.add_argument("--path", action="append", required=True)
     p = sub.add_parser("finish")
@@ -1412,10 +1463,12 @@ def main(argv=None):
             path = Path(args.input)
             require(path.stat().st_size <= LIMIT, "INPUT_TOO_LARGE")
             publication = decode_json(path.read_text(encoding="utf-8"))
+            if args.command == "init" and isinstance(publication, dict):
+                publication["category"] = canonical_category(publication.get("category"))
             lifecycle.require_plan(publication)
             if args.command == "init":
                 require(all(s["status"] == "pending" for s in publication["steps"]), "INIT_REQUIRES_PENDING_PLAN")
-                if publication["category"] != "paper-only":
+                if publication_category(publication) != "paper-only":
                     if not lifecycle.fixed_delivery(publication):
                         publication["context"]["decisions"].append({"kind": lifecycle.DELIVERY_POLICY})
                     # The old marker remains present for the existing cut-1
