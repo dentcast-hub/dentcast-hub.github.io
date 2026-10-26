@@ -1056,6 +1056,13 @@ def restore_cleanup(root):
         return {"status": "checkpoint_restored", "sha256": sha, "publication_completed": False}
 
 
+def paper_only_before_final(publication):
+    """Paper-only has one delivery, the completed final handoff; earlier
+    checkpoints stay local (stage-delivery refuses them), so a stop before
+    then has nothing to push."""
+    return h.publication_category(publication) == "paper-only" and h.next_step(publication) is not None
+
+
 def guard(root, phase):
     if phase == "pre-commit":
         h.require(not h.fastlocal_active(root),
@@ -1158,7 +1165,8 @@ def guard(root, phase):
         if phase == "pre-commit":
             h.require(h.git(root, "show", ":" + h.STATE_PATH, optional=True) == path.read_bytes(),
                       "LATEST_HANDOFF_MUST_BE_STAGED")
-        elif phase == 'stop' and (not fixed_delivery(state['publication']) or delivery_boundary(state['publication'])):
+        elif phase == 'stop' and (not fixed_delivery(state['publication']) or delivery_boundary(state['publication'])) \
+                and not paper_only_before_final(state['publication']):
             if fixed_delivery(state['publication']):
                 require_fixed_cut_readiness(state['publication'], root)
             require_step_delivery(root, state, h.digest(path.read_bytes()))

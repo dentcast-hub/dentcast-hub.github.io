@@ -234,6 +234,12 @@ class LifecycleTests(unittest.TestCase):
         self.assert_blocked('STAGE_DELIVERY_ONLY_AT_FIXED_CUT',lc.stage_delivery,self.root,sha,
                             ['dentcast_cabinet_full_catalog.json'])
 
+    def test_paper_only_stop_before_final_has_nothing_to_push(self):
+        # Its single delivery is the finished handoff; stage-delivery refuses
+        # earlier checkpoints, so the stop guard must not ask for one.
+        self.prepare(paper=True)
+        self.assertEqual(lc.guard(self.root, 'stop')['status'], 'guard_passed')
+
     def test_bare_delivery_boolean_is_not_completion_evidence(self):
         self.prepare(complete=True)
         state,_=h.load_state(self.root);state['publication']['context']['delivery']=[True]
