@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "plak-sefr/plak1-10"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -62,6 +62,38 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             "restored from dependency_invalidation_v1 audit (from C.2): approved title/caption/body text byte-identical; only 4.8 anchor wrapper and 4.9 kavosh capsules added"
           ],
           "scope": "body-fact-note",
+          "status": "confirmed"
+        },
+        {
+          "decision": "ai-dentistry, at end (option \u0628; option \u0627\u0644\u0641 would block Phase F/merge which founder asked for)",
+          "evidence": [
+            "founder-chat:2026-10-26:\u00ab\u0647\u0645\u0647 \u062a\u0627\u06cc\u06cc\u062f \u0628\u0631\u0648 \u062a\u0627 \u0645\u0631\u062c\u00bb answering pathway (\u0627\u0644\u0641/\u0628), exam questions and English approval"
+          ],
+          "scope": "pathway",
+          "status": "confirmed"
+        },
+        {
+          "decision": "3 MCQ rows r-* for plak-sefr/plak1-10 as shown in chat (keys \u0628/\u062c/\u0627\u0644\u0641)",
+          "evidence": [
+            "founder-chat:2026-10-26:\u00ab\u0647\u0645\u0647 \u062a\u0627\u06cc\u06cc\u062f \u0628\u0631\u0648 \u062a\u0627 \u0645\u0631\u062c\u00bb answering pathway (\u0627\u0644\u0641/\u0628), exam questions and English approval"
+          ],
+          "scope": "exam-questions",
+          "status": "confirmed"
+        },
+        {
+          "decision": "plak-sefr/en/plak1-10.html as authored (What Information Architecture Means)",
+          "evidence": [
+            "founder-chat:2026-10-26:\u00ab\u0647\u0645\u0647 \u062a\u0627\u06cc\u06cc\u062f \u0628\u0631\u0648 \u062a\u0627 \u0645\u0631\u062c\u00bb answering pathway (\u0627\u0644\u0641/\u0628), exam questions and English approval"
+          ],
+          "scope": "english-mirror",
+          "status": "confirmed"
+        },
+        {
+          "decision": "merge after all gates pass",
+          "evidence": [
+            "founder-chat:2026-10-26:\u00ab\u0647\u0645\u0647 \u062a\u0627\u06cc\u06cc\u062f \u0628\u0631\u0648 \u062a\u0627 \u0645\u0631\u062c\u00bb answering pathway (\u0627\u0644\u0641/\u0628), exam questions and English approval"
+          ],
+          "scope": "merge",
           "status": "confirmed"
         }
       ],
@@ -398,6 +430,91 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             ],
             "validation": []
           }
+        },
+        {
+          "english": {
+            "evidence": [
+              "source and mirror reviewed before Push 2; founder \u00ab\u0647\u0645\u0647 \u062a\u0627\u06cc\u06cc\u062f\u00bb"
+            ],
+            "path": "plak-sefr/en/plak1-10.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "current-run editorial close review 2026-10-26"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "plus/des-scores.json[plak-sefr/plak1-10]: COMMENTARY 12/E, Part 3 checks passed; fidelity not owed (basket 1)"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "B.4.9 ordinary series part; C.4.14 skipped"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "practice-infrastructure/site-ownership, brain entry verified C.5.5"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.7 0 terms; C.4.8 1 inline link plak1-5; C.4.9 kavosh 5/5"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "hashtag_ref --check OK; #\u0645\u0639\u0645\u0627\u0631\u06cc_\u0627\u0637\u0644\u0627\u0639\u0627\u062a minted A103"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "brain entry last element, title/caption = confirmed approvals"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "ai-dentistry at end (founder option \u0628); no bundle candidates"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "index.html Pulse: new top line plak1-10, bottom prompt-append2-4 removed, 7 lines"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "plak-sefr/en/plak1-10.html authored, structure-matched, toggles reciprocal; founder approved"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "title, caption, hashtags, keywords, body-fact-note, pathway, exam-questions, english-mirror, merge all confirmed in chat"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -687,20 +804,137 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "05-semantic-linking.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.1",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper (B.4.7)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.2",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.3",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "plus/faq-corpus.json byContent[plak-sefr/plak1-10].definedTermSets: 4 DefinedTerms #flashcards-c1..c4, all source faq (idx 0,2,3,4), re-authored as concept definitions (not FAQ copies); FAQ 1,5,6 (decision/criteria/why-shaped) skipped"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "FAQPage 7 questions, standalone (no deixis); binary Q2,Q3,Q5 open with \u00ab\u062e\u06cc\u0631\u061b\u00bb; Q1,Q4,Q6,Q7 open. 4.12-\u0628 exam: 3 MCQ drafted, written only if founder places page in a full pathway (decision at C.5.6); otherwise documented skip"
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "COMMENTARY basket; source_text = page body (FULL_TEXT); independent SOURCE call (Sonnet subagent) with spec v3.4 minus appendix: des_score 12 band E (items 4/0/3/0); Part 3: 2/2 quotes verbatim, 5+7=12, band E, exact key set; stored verbatim in plus/des-scores.json[plak-sefr/plak1-10] scored_at 2026-10-26; FIDELITY not owed (basket 1)"
+        ],
+        "id": "C.4.13",
+        "module": "08-des-fidelity.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "Ordinary post, not a \u0686\u0627\u0644\u0634 (B.4.9)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Reused canonical #\u067e\u0644\u0627\u06a9_\u0635\u0641\u0631 #\u0633\u0624\u0627\u0644_\u0628\u06cc\u0645\u0627\u0631 #\u0633\u0627\u06cc\u062a_\u0645\u0637\u0628 #\u062d\u0636\u0648\u0631_\u0622\u0646\u0644\u0627\u06cc\u0646_\u062f\u0646\u062f\u0627\u0646\u067e\u0632\u0634\u06a9; minted #\u0645\u0639\u0645\u0627\u0631\u06cc_\u0627\u0637\u0644\u0627\u0639\u0627\u062a (domain web, aliases information architecture/\u0645\u0639\u0645\u0627\u0631\u06cc \u0633\u0627\u06cc\u062a/\u0633\u0627\u062e\u062a\u0627\u0631 \u0633\u0627\u06cc\u062a) via .dentcast/hashtag-batches/A103-plak1-10.json --apply (articles {}); after brain write: --sync, build_plus_index.mjs, --check OK; --simulate \u00ab\u0645\u0639\u0645\u0627\u0631\u06cc \u0627\u0637\u0644\u0627\u0639\u0627\u062a \u0633\u0627\u06cc\u062a \u0645\u0637\u0628\u00bb -> rank 1 plak1-10"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Brain entry plak1-10 appended as last element (579/579), key set + order identical to plak1-9, CRLF/indent preserved, approved title/caption/hashtags/keywords, page_url /plak-sefr/plak1-10.html"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pillar.primary practice-infrastructure, subtopic site-ownership (valid in live PILLARS), identical to C.2.4; capsule /pillar/practice-infrastructure/ consistent"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pathway_place: all candidates ASK and spurious (clinical example words); founder chose ai-dentistry (option \u0628) -> --insert --at-end, milestone false (34 steps); coverage 1.51 per item (baseline 1.38, +0.00 from this item vs prior run state 1.51); exam rows (C.4.12-\u0628) written: 3 MCQ, validate_exam_questions 0 errors 2 length warnings, founder-approved text kept"
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "\u0628\u0627\u0646\u062f\u0644: \u0628\u062f\u0648\u0646 \u06a9\u0627\u0646\u062f\u06cc\u062f (no bundle continues ai-dentistry)"
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Pulse updated (7 lines, new top \u00ab\u067e\u0644\u0627\u06a9 \u0635\u0641\u0631\u060c \u0642\u0633\u0645\u062a \u06f1\u06f0: \u00ab\u0645\u0639\u0645\u0627\u0631\u06cc \u0627\u0637\u0644\u0627\u0639\u0627\u062a \u06cc\u0639\u0646\u06cc \u0686\u0647\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f\u00bb, bottom removed); second_cut_editorial_lock_v1 recorded; English mirror ready"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
+      ".dentcast/hashtag-batches/A103-plak1-10.json",
       "dentcast-brain.json",
+      "dentcast-hashtag-reference.json",
+      "index.html",
       "plak-sefr/dentcast-content-groups.webp",
       "plak-sefr/en/plak1-10.html",
       "plak-sefr/en/plak1-9.html",
       "plak-sefr/index.html",
       "plak-sefr/plak1-10.html",
-      "plak-sefr/plak1-9.html"
+      "plak-sefr/plak1-9.html",
+      "plus/content-index.json",
+      "plus/des-scores.json",
+      "plus/exam-questions.json",
+      "plus/faq-corpus.json",
+      "plus/pathways.json"
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: plak-sefr/plak1-10.html, plak-sefr/dentcast-content-groups.webp, plak-sefr/index.html, plak-sefr/plak1-9.html, plak-sefr/en/plak1-9.html"
+    "note": "Index-only refresh after staging delivery paths: plak-sefr/en/plak1-10.html, dentcast-brain.json, dentcast-hashtag-reference.json, .dentcast/hashtag-batches/A103-plak1-10.json, plus/content-index.json, plus/des-scores.json, plus/faq-corpus.json, plus/pathways.json, plus/exam-questions.json, index.html"
   },
   "schema": "publish-handoff-v3"
 }
