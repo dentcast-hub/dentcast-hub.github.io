@@ -475,8 +475,12 @@ def validate_final_receipt(root, data, commit=None, own_paths=None):
         h.require(h.git(root, "show", commit + ":" + h.STATE_PATH, optional=True) is None,
                   "FINAL_HANDOFF_MUST_NOT_BE_PUSHED")
         changed = set(h.text_git(root, "diff", "--name-only", second, commit).splitlines())
+        # A receipt finished before category canonicalisation may carry the
+        # raw spelling ("plak sefr-<slug>.md") in its report name.
+        legacy_report = (".dentcast/publication-reports/" + publication["category"] + "-"
+                         + publication["content_id"].rsplit("/", 1)[-1] + ".md")
         h.require(changed <= set(state["snapshot"]["files"]) | {
-            h.STATE_PATH, completion_path(publication), technical_report_path(publication)},
+            h.STATE_PATH, completion_path(publication), technical_report_path(publication), legacy_report},
                   "UNRELATED_FINAL_DELIVERY_PATH")
     local_only = h.local_only_inputs(root, publication)
     for name, info in state["snapshot"]["files"].items():
