@@ -126,10 +126,31 @@ score built on it.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v3.4.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v3.5.md` as the system prompt — the whole
 file, verbatim, minus the appendix.**
 
-**v3.3 is the current spec, and its change from 3.2 is one FIDELITY rule** (F0, F2,
+**v3.5 is the current spec, and its change from 3.4 is the FIDELITY pipeline
+only** (appendix rules 10, 12–14; founder 1405/08/04). The model instruction, every
+verdict rule, F4 and the bands are 3.4's word for word, so no score and no verdict
+moves; what changes is which sentences reach a call. `sharehub/share-42` is why:
+the prose names its three sources in Persian («اوکیسون», «کونتی»), the tool's
+markers were Latin only, two sources share an author, and the founder had to
+hand-build the plan — while twenty-five sentences that named no source reached no
+call at all. Four rules close that: (1) a page may **declare Persian markers** and,
+for sources that share a name, **disambiguators** (the year always is one) in
+`.dentcast/des-source-markers.json`; (2) a **recorded plan**
+(`.dentcast/des-fidelity-plans/<content_id>.json`) — a founder decision or an
+orphan-sweep receipt — replaces the computed assignment, and Phase F reads the same
+file; (3) the **orphan sweep** (Part 2c step 5): every body sentence no call judged,
+or every call left silent, is read by the stronger reviewer against **every**
+source; the reviewer only finds, never judges — a found sentence joins that
+source's plan and is judged by the ordinary two checker runs, and a sentence found
+nowhere is listed to the founder; (4) a plan that grows, or a source text that
+grows (a longer excerpt), re-checks only what it must instead of the whole step.
+Records below 3.5 keep their assignment: the tool reads the sidecar and the plan
+only when a source record is stamped 3.5 or later.
+
+**v3.3's change from 3.2 is one FIDELITY rule** (F0, F2,
 F6, appendix rule 8; founder 1405/07/20): a `SECONDARY_REPORT` source — a consensus
 statement or a guideline, read whole — is a **complete text** for the FIDELITY
 question. Its silence is `NOT_IN_SOURCE` (never `NOT_ASSESSABLE`), the F2-v grains
@@ -333,7 +354,7 @@ clinical_question: <omit unless this publish explicitly answers one>
   input blocks and three DES objects. Never concatenate sources into one block and
   never average their scores.
 
-#### Part 2b — Run the FIDELITY call (spec v2.5, v2.7, v3.1, v3.2, v3.3), once per source whose text is in hand
+#### Part 2b — Run the FIDELITY call (spec v2.5, v2.7, v3.1, v3.2, v3.3, v3.5), once per source whose text is in hand
 
 **When.** For every source in basket 2 whose SOURCE call read a text — RESEARCH,
 COMMENTARY, **or `NOT_APPRAISABLE` with `text_basis` `FULL_TEXT` or `EXCERPT`**
@@ -383,7 +404,26 @@ several and none named → `POOLED`, which is one ordinary `SOURCE` call **per
 source** (`input-pooled-S<n>.json`, every unit in each, `pooled_part` set) and
 then `python3 tools/des_fidelity_units.py <content_id> --merge <dir>` over the
 answers saved as `out-S<n>.json`, which writes the one pooled object by spec
-F6's fold — the model never reads two papers in one call (v2.7). Each block it
+F6's fold — the model never reads two papers in one call (v2.7).
+
+**v3.5 (appendix rule 10).** When the prose names a source in Persian, or two
+sources share an author, declare it before the first run — never fix the plan
+afterwards by hand:
+
+```json
+// .dentcast/des-source-markers.json
+{"<content_id>": {"S1": {"markers": ["اوکیسون"], "disambiguators": ["1988"]},
+                  "S2": {"markers": ["اوکیسون"], "disambiguators": ["2020", "کتاب"]}}}
+```
+
+A marker matches as a whole word in either script (Persian digits read as Latin);
+when a sentence names several sources, those whose disambiguator it also names
+keep it. When the founder decides the plan outright, record it in
+`.dentcast/des-fidelity-plans/<content_id>.json`
+(`{"content_id", "origin": "founder", "decision": {"status": "confirmed", …},
+"plan": {"<source index>": ["u…", …]}}`); the tool refuses an unconfirmed
+decision, an unknown unit or a source without a text, and Phase F reads the same
+file. Each block it
 writes has this shape:
 
 ```
@@ -412,7 +452,7 @@ in Part 4.
 #### Part 2c — How the FIDELITY call is run: two independent checker runs, a tie-break, a stronger reviewer
 
 The FIDELITY call is an independent agent per input block, reading
-`.dentcast/des-v3.4-knowledge.md` (the spec minus its appendix) as its
+`.dentcast/des-v3.5-knowledge.md` (the spec minus its appendix) as its
 instruction and the block as its user turn. **The roles are provider-neutral:**
 choose a capable, lighter reasoning model as the **checker**, and a stronger
 reasoning model as the **reviewer/adjudicator**. Sonnet and Opus name the original
@@ -469,6 +509,27 @@ Keep historical records and their provenance unchanged.
    `<dir>/review.json` (`{"src<k>": {"u…": {"agree": true|false, "reason":
    "…"}}}`). A dissent never flips the verdict: `--vote` appends it to the
    unit's `note`, and Part 3b shows the founder both reasons side by side.
+
+5. **Orphan sweep (spec v3.5 rule 12) — after the vote, before Part 3b.**
+   `python3 tools/des_fidelity_units.py <content_id> --orphans <dir> --texts texts.json`
+   lists every body sentence no call judged, or that every call judging it left
+   `NOT_IN_SOURCE`/`NOT_ASSESSABLE` (headings, `NOT_A_CLAIM` and `AUTHOR_VIEW`
+   are not orphans), and writes `<dir>/orphans-input.json` with those sentences
+   and the text of **every** source. The stronger reviewer reads it — all
+   sources, not only the one the sentence was assigned to — and writes
+   `<dir>/orphans.json`: `{"u…": {"found": "S<n>", "source_quote": "…", "note":
+   "…"}}` or `{"u…": {"found": null, "note": "…"}}`. **It finds; it never
+   judges:** no verdict, no `change_kind`. Then
+   `python3 tools/des_fidelity_units.py <content_id> --sweep <dir>` refuses an
+   unanswered sentence or a `source_quote` that is not verbatim in that source,
+   adds every found sentence to its source in the recorded plan (origin
+   `orphan_sweep`, with the receipt), and prints them. Judge them as a re-check:
+   `--build <dir2> --only u…`, two checker runs, a tie-break, the review of
+   anything flagged, then `--vote <dir2> --base <dir>` — the base may **grow** by
+   exactly those units (rule 13). The sentences found nowhere are reported to
+   the founder in the same message as Part 3b, as a list, never as faults: they
+   are the author's own reasoning or background unless the founder points to a
+   source the run did not have.
 
 `--vote` exits non-zero while any unit still needs a tie-break run, an
 adjudication or a review. `voted-src<k>.json` is what Part 3 validates and
@@ -579,6 +640,13 @@ never a «بله» to the others.
   page's unit ids (a sentence split or joined), when a changed unit was not
   re-checked, or when a re-check judged old text — in those cases, and only
   those, run the full step again. Never patch a verdict by hand.
+- **A source text that grows** (spec v3.5 rule 14 — the founder adds pages to an
+  excerpt): pass the new `texts.json` with `--vote <dir2> --base <dir1> --texts
+  texts.json`. The tool compares it with `<dir1>/input-src<k>.json`; when the old
+  text is contained in the new one, re-check every unit of that source that was
+  not `MATCHES` (`NOT_IN_SOURCE` and `NOT_ASSESSABLE` included — the new pages may
+  speak to them) and keep the `MATCHES` units; anything else changed in the text
+  is refused, and then the full step runs again.
 - Report the grade **before → after** («تطابق خیلی بالا → کاملاً مطابق»). If the
   new run still flags a sentence — including one just rewritten — offer it
   again; the loop ends when nothing is flagged or the founder says «همین بماند».

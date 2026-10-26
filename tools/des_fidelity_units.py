@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DES v3.4 FIDELITY — the caller's half: split a page into units and say
+"""DES v3.5 FIDELITY — the caller's half: split a page into units and say
 which cited source each unit is judged against.
 
 The spec (appendix rules 7 and 10) takes segmentation and attribution out of
@@ -35,6 +35,25 @@ Three modes, decided here and nowhere else:
     `input-pooled-S<n>.json`, judged as SOURCE), then `--merge DIR` folds the
     answers (`out-S<n>.json`) into the one pooled object by spec F6.
 
+From spec v3.5 (records stamped 3.5 or later; older pages assign exactly as
+before) the assignment is completed on the caller's side:
+  * declared markers — `.dentcast/des-source-markers.json`
+    {content_id: {"S<n>": {"markers": [...], "disambiguators": [...]}}} adds
+    the page's own Persian forms («اوکیسون», «کتاب»); a unit reaching several
+    sources is narrowed to the ones whose disambiguator (their year, always,
+    plus any declared) it also contains (appendix rule 10);
+  * a recorded plan — `.dentcast/des-fidelity-plans/<content_id>.json`
+    {"content_id", "origin": "founder"|"orphan_sweep", "plan": {"<k>": [ids]},
+    "decision": {...}, "sweep": [...]} replaces the computed assignment, here
+    and in Phase F (rule 10);
+  * `--orphans DIR --texts T` lists the units no call judged or every call left
+    silent and writes the stronger reviewer's block (`orphans-input.json`);
+    `--sweep DIR` checks its `orphans.json` and adds found units to the plan
+    (rule 12);
+  * `--vote --base` accepts a plan that grew (rule 13) and, with `--texts`,
+    a source text that grew, when every non-MATCHES unit was re-checked
+    (rule 14).
+
 A core audio episode (`episodes/…`) gets DES only, never a FIDELITY call
 (founder, 1405/08/04): its page is a caption, a player and labels, not a
 write-up of the paper. The tool says so and builds nothing for it.
@@ -51,6 +70,12 @@ sys.path.insert(0, str(ROOT / "tools"))
 import verify_publish as vp  # noqa: E402  (article_region, text_of)
 
 HMARK = "\x01"
+MARKERS_FILE = ROOT / ".dentcast/des-source-markers.json"
+PLANS_DIR = ROOT / ".dentcast/des-fidelity-plans"
+FA_DIGITS = str.maketrans("۰۱۲۳۴۵۶۷۸۹٠١٢٣٤٥٦٧٨٩", "01234567890123456789")
+# Arabic-script LETTERS (not diacritics, not ZWNJ): a declared Persian marker
+# is a whole word when no letter touches it on either side.
+FA_LETTER = "\u0621-\u063A\u0641-\u064A\u066E-\u066F\u0671-\u06D3\u06D5\u06EE-\u06EF\u06FA-\u06FC\u06FF"
 TERMINATORS = re.compile(r"(?<=[.!?؟۔])\s+")
 BLOCK_TAGS = re.compile(r"(?i)</?(p|div|li|ul|ol|br|section|blockquote|tr|td|th|table|figcaption)\b[^>]*>")
 INITIALS = re.compile(r"^[A-ZÀ-Ý]{1,4}$")
@@ -126,6 +151,74 @@ def names(unit_text, marks):
     return False
 
 
+def names_v35(unit_text, marks):
+    """Spec v3.5 rule 10: a marker matches as a whole word in either script —
+    Latin markers keep the Latin boundary, a Persian one must not touch an
+    Arabic-script letter, and Persian/Arabic digits read as Latin ones."""
+    low = unit_text.lower().translate(FA_DIGITS)
+    for m in marks:
+        mm = m.lower().translate(FA_DIGITS)
+        if re.search(r"[A-Za-z]", mm):
+            pat = r"(?<![A-Za-z])" + re.escape(mm) + r"(?![A-Za-z])"
+        else:
+            pat = r"(?<![" + FA_LETTER + r"])" + re.escape(mm) + r"(?![" + FA_LETTER + r"])"
+        if re.search(pat, low):
+            return True
+    return False
+
+
+def is_v35(sources):
+    return any(vp.des_ge((s or {}).get("des_version"), (3, 5)) for s in sources)
+
+
+def declared_for(content_id):
+    """{source index: {"markers": [...], "disambiguators": [...]}} declared for
+    this page in .dentcast/des-source-markers.json (keys S<n>, 1-based)."""
+    if not content_id or not MARKERS_FILE.exists():
+        return {}
+    rec = json.loads(MARKERS_FILE.read_text(encoding="utf-8")).get(content_id) or {}
+    out = {}
+    for tag, v in rec.items():
+        if not re.fullmatch(r"S[1-9][0-9]*", tag):
+            sys.exit(f"{MARKERS_FILE.name}: {content_id}: bad source tag {tag!r} (want S<n>)")
+        out[int(tag[1:]) - 1] = {"markers": list(v.get("markers") or []),
+                                 "disambiguators": list(v.get("disambiguators") or [])}
+    return out
+
+
+def plan_path(content_id):
+    return PLANS_DIR / f"{content_id}.json"
+
+
+def recorded_plan(content_id, units, sources):
+    """Spec v3.5 rule 10: a recorded plan replaces the computed assignment.
+    Refused when an id is not a unit of the page or a key is not a source."""
+    p = plan_path(content_id) if content_id else None
+    if not p or not p.exists():
+        return None
+    rec = json.loads(p.read_text(encoding="utf-8"))
+    if rec.get("content_id") != content_id:
+        sys.exit(f"{p}: content_id {rec.get('content_id')!r} is not {content_id!r}")
+    if rec.get("origin") not in ("founder", "orphan_sweep"):
+        sys.exit(f"{p}: origin must be founder or orphan_sweep")
+    if rec.get("origin") == "orphan_sweep" and not rec.get("sweep"):
+        sys.exit(f"{p}: an orphan_sweep plan needs its sweep receipt")
+    if rec.get("origin") == "founder" and (rec.get("decision") or {}).get("status") != "confirmed":
+        sys.exit(f"{p}: a founder plan needs decision.status = confirmed")
+    ids = {u["id"] for u in units}
+    plan = {}
+    for k, v in (rec.get("plan") or {}).items():
+        k = int(k)
+        if not (0 <= k < len(sources)) or not scorable(sources[k]):
+            sys.exit(f"{p}: source index {k} is not a source with a text")
+        bad = [i for i in v if i not in ids]
+        if bad:
+            sys.exit(f"{p}: {bad} are not units of the page — re-check the plan against the current page")
+        order = [u["id"] for u in units]
+        plan[k] = sorted(set(v), key=order.index)
+    return {k: ids_ for k, ids_ in plan.items() if ids_}
+
+
 def stop_line(line, sources):
     letters = re.sub(r"^[^\w]+|[^\w]+$", "", line)
     if letters.lower() in ("منابع", "منبع", "references", "reference"):
@@ -173,7 +266,7 @@ def split_page(content_id, sources):
     return units
 
 
-def assign(units, sources):
+def assign(units, sources, content_id=None):
     """Spec F6 + appendix rule 10. Markers come from EVERY cited source (a book
     with no text still takes the units that name it — they are about the book,
     not about the paper beside it); calls go only to the sources with a text.
@@ -182,12 +275,35 @@ def assign(units, sources):
     — on sharehub/share-10 that was the whole body, written from the one paper
     the prose never names. Those units now go to the cited source(s) no unit
     names; when that is one source it is an ordinary SOURCE call."""
+    v35 = is_v35(sources)
+    if v35:
+        fixed = recorded_plan(content_id, units, sources)
+        if fixed is not None:
+            return "SOURCE", fixed
     cited = [i for i, s in enumerate(sources) if not s.get("error")]
     idx = [i for i in cited if scorable(sources[i])]
     if len(cited) == 1:
         return "SOURCE", {idx[0]: [u["id"] for u in units]} if idx else {}
     marks = {i: markers_for(sources[i]) for i in cited}
-    direct = {u["id"]: [i for i in cited if names(u["text"], marks[i])] for u in units}
+    if v35:
+        decl = declared_for(content_id)
+        for i in cited:
+            marks[i] |= set(decl.get(i, {}).get("markers", []))
+        dis = {}
+        for i in cited:
+            year = (sources[i].get("citation") or {}).get("year")
+            dis[i] = set(decl.get(i, {}).get("disambiguators", [])) | ({str(year)} if year else set())
+
+        def hits(text):
+            h = [i for i in cited if names_v35(text, marks[i])]
+            if len(h) > 1:
+                keep = [i for i in h if dis[i] and names_v35(text, dis[i])]
+                if keep:
+                    h = keep
+            return h
+        direct = {u["id"]: hits(u["text"]) for u in units}
+    else:
+        direct = {u["id"]: [i for i in cited if names(u["text"], marks[i])] for u in units}
     if not any(direct.values()):
         return "POOLED", {"pooled": [u["id"] for u in units]}
     out = {i: [] for i in idx}
@@ -493,8 +609,16 @@ def rebase(base, runs, page_units, k):
     split or joined a sentence shifts ids, and then only a full run is honest."""
     rechecked = {c["id"] for r in runs for c in r["claims"]}
     base_ids = [c["id"] for c in base["claims"]]
-    if base_ids != [u["id"] for u in page_units]:
-        sys.exit(f"src{k}: the page's units are no longer the base's (ids shifted) — run the full step again")
+    page_ids = [u["id"] for u in page_units]
+    if base_ids != page_ids:
+        # spec v3.5 rule 13: a plan may GROW (orphan sweep, founder plan) when
+        # every added unit was re-checked; ids still never shift or vanish.
+        added = [i for i in page_ids if i not in base_ids]
+        if not added or [i for i in page_ids if i in base_ids] != base_ids or set(added) - rechecked:
+            sys.exit(f"src{k}: the page's units are no longer the base's (ids shifted) — run the full step again")
+        first = {c["id"]: c for c in runs[0]["claims"]} if runs else {}
+        by_base = {c["id"]: c for c in base["claims"]}
+        base = {**base, "claims": [by_base.get(i) or first[i] for i in page_ids]}
     stale = [u["id"] for u, c in zip(page_units, base["claims"])
              if u["text"] != c["claim_quote"] and u["id"] not in rechecked]
     if stale:
@@ -509,6 +633,29 @@ def rebase(base, runs, page_units, k):
     first = {c["id"]: c for c in runs[0]["claims"]}
     run0 = {**base, "claims": [first.get(c["id"], c) for c in base["claims"]]}
     return [run0] + runs[1:]
+
+
+SILENT_ONLY = ("NOT_IN_SOURCE", "NOT_ASSESSABLE")
+
+
+def orphan_units(units, plan, voted):
+    """Spec v3.5 rule 12: body units no call judged, or that every call
+    judging them left silent. Headings and NOT_A_CLAIM/AUTHOR_VIEW are not
+    orphans — the first are labels, the others are excluded by design."""
+    seen = {}
+    for k, v in voted.items():
+        for c in v["claims"]:
+            seen.setdefault(c["id"], []).append(c["verdict"])
+    out = []
+    for u in units:
+        if u.get("heading"):
+            continue
+        vs = seen.get(u["id"], [])
+        if any(v in EXCLUDED for v in vs):
+            continue
+        if not vs or all(v in SILENT_ONLY for v in vs):
+            out.append(u)
+    return out
 
 
 def main():
@@ -527,6 +674,10 @@ def main():
                     "units they disagree on) into DIR/voted-src<k>.json; DIR/review.json holds the stronger-model "
                     "review of every flagged unit; DIR/adjudicate.json "
                     "{\"src<k>\": {uid: claim fields}} settles a unit with no majority")
+    ap.add_argument("--orphans", metavar="DIR", help="spec v3.5 rule 12: after --vote DIR, list the units no call judged "
+                    "or every call left silent and write DIR/orphans-input.json (needs --texts) for the stronger reviewer")
+    ap.add_argument("--sweep", metavar="DIR", help="spec v3.5 rule 12: verify DIR/orphans.json and add each found unit "
+                    "to that source in the recorded plan; prints the units to re-check and the ones found nowhere")
     a = ap.parse_args()
     rec = json.loads((ROOT / "plus/des-scores.json").read_text(encoding="utf-8")).get(a.content_id)
     if not rec:
@@ -538,7 +689,7 @@ def main():
         return
     sources = rec["sources"]
     units = split_page(a.content_id, sources)
-    mode, plan = assign(units, sources)
+    mode, plan = assign(units, sources, a.content_id)
     if a.merge:
         if mode != "POOLED":
             sys.exit("--merge is for a POOLED page")
@@ -567,11 +718,31 @@ def main():
                 sys.exit("--vote is per source (scope SOURCE); a POOLED page votes each S<n> part, then --merge")
             runs = [json.loads(p.read_text(encoding="utf-8"))
                     for p in sorted(d.glob(f"out-src{k}-*.json"), key=lambda p: int(p.stem.rsplit("-", 1)[1]))]
-            if a.base:
-                base_p = Path(a.base) / f"voted-src{k}.json"
-                if not base_p.exists():
+            base_p = Path(a.base) / f"voted-src{k}.json" if a.base else None
+            if base_p and not base_p.exists():
+                # v3.5 rule 13: a source the sweep gave its first units has no
+                # base; its runs must then cover every unit it holds
+                got = {c["id"] for r in runs for c in r["claims"]}
+                if not (is_v35(sources) and runs and set(plan[k]) <= got):
                     sys.exit(f"--base: no {base_p}")
+                base_p = None
+            if base_p:
                 base = json.loads(base_p.read_text(encoding="utf-8"))
+                if a.texts:
+                    # spec v3.5 rule 14: a source text that grew since the base
+                    old_p = Path(a.base) / f"input-src{k}.json"
+                    if not old_p.exists():
+                        sys.exit(f"--texts with --base: no {old_p} (the base's own input) to compare the text with")
+                    texts = {kk.lower(): vv for kk, vv in json.loads(Path(a.texts).read_text(encoding="utf-8")).items()}
+                    old_t = _squash(json.loads(old_p.read_text(encoding="utf-8"))["source_text"])
+                    new_t = _squash(text_for(sources[k], texts, k + 1)["source_text"])
+                    if old_t != new_t:
+                        if old_t not in new_t:
+                            sys.exit(f"src{k}: the source text changed and does not contain the base's — run the full step")
+                        rech = {c["id"] for r in runs for c in r["claims"]}
+                        owed = [c["id"] for c in base["claims"] if c["verdict"] != "MATCHES" and c["id"] not in rech]
+                        if owed:
+                            sys.exit(f"src{k}: the source text grew; re-check every non-MATCHES unit first: {owed}")
                 runs = rebase(base, runs, [by_id[i] for i in plan[k]], k)
             if not runs:
                 continue
@@ -585,6 +756,65 @@ def main():
         if open_units:
             sys.exit(f"{open_units} unit(s) open — tie-break run (--only), {adj_p} for no majority, "
                      f"{rev_p} for the stronger-model review of every flagged unit")
+        return
+    if (a.orphans or a.sweep) and not is_v35(sources):
+        sys.exit("--orphans/--sweep are spec v3.5 steps; this page's records are older")
+    if a.orphans:
+        if not a.texts:
+            sys.exit("--orphans needs --texts (the reviewer reads every source)")
+        d = Path(a.orphans)
+        voted = {int(p.stem[len("voted-src"):]): json.loads(p.read_text(encoding="utf-8"))
+                 for p in d.glob("voted-src*.json")}
+        if mode != "SOURCE" or not voted:
+            sys.exit("--orphans runs after --vote of a SOURCE-scope page")
+        texts = {k.lower(): v for k, v in json.loads(Path(a.texts).read_text(encoding="utf-8")).items()}
+        orph = orphan_units(units, plan, voted)
+        srcs = [{"tag": f"S{n}", "text_basis": text_for(s, texts, n)["text_basis"],
+                 "source_text": text_for(s, texts, n)["source_text"]}
+                for n, s in enumerate(sources, 1) if scorable(s)]
+        blk = {"mode": "ORPHAN_SWEEP", "units": [{k2: v for k2, v in u.items() if k2 != "para"} for u in orph],
+               "sources": srcs,
+               "answer": "orphans.json: {uid: {found: 'S<n>'|null, source_quote, note}} — find, never judge"}
+        (d / "orphans-input.json").write_text(json.dumps(blk, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"{len(orph)} orphan unit(s): {[u['id'] for u in orph]} -> {d / 'orphans-input.json'}")
+        return
+    if a.sweep:
+        d = Path(a.sweep)
+        blk = json.loads((d / "orphans-input.json").read_text(encoding="utf-8"))
+        ans = json.loads((d / "orphans.json").read_text(encoding="utf-8"))
+        want = [u["id"] for u in blk["units"]]
+        missing = [i for i in want if i not in ans]
+        if missing:
+            sys.exit(f"orphans.json does not answer {missing}")
+        hay = {s["tag"]: vp.des_norm(s["source_text"]) for s in blk["sources"]}
+        found, absent = {}, []
+        for uid in want:
+            r = ans[uid]
+            tag = r.get("found")
+            if tag is None:
+                absent.append(uid)
+                continue
+            if tag not in hay:
+                sys.exit(f"{uid}: found in {tag!r}, which is not a source of the block")
+            q = vp.des_norm(r.get("source_quote") or "")
+            if not q or q not in hay[tag]:
+                sys.exit(f"{uid}: source_quote is not a verbatim substring of {tag} (rule 2)")
+            found.setdefault(int(tag[1:]) - 1, []).append(uid)
+        p = plan_path(a.content_id)
+        rec = json.loads(p.read_text(encoding="utf-8")) if p.exists() else \
+            {"content_id": a.content_id, "origin": "orphan_sweep", "plan": {str(k): v for k, v in plan.items()}}
+        order = [u["id"] for u in units]
+        for k, ids in found.items():
+            cur = set(rec["plan"].get(str(k), [])) | set(ids)
+            rec["plan"][str(k)] = sorted(cur, key=order.index)
+        rec.setdefault("sweep", []).append({"found": {f"S{k + 1}": v for k, v in found.items()},
+                                            "absent": absent, "receipt": str(d / "orphans.json")})
+        if found:
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text(json.dumps(rec, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        for k, ids in found.items():
+            print(f"src{k}: re-check {','.join(ids)} (--build --only, two runs, --vote --base)")
+        print(f"found in no source (report to the founder): {absent or '—'}")
         return
     if a.build:
         if not a.texts:

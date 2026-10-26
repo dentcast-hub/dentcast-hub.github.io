@@ -5668,7 +5668,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         </a>
         <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-42.html">
           <span class="dc-type-chip t-share">ShareHub</span>
-          <p class="dc-rail-title">کلیک فک و اسپلینت ریپوزیشن قدامی؛ از تشخیص تا پایان درمان</p>
+          <p class="dc-rail-title">کلیک فک و اسپلینت ریپوزیشن؛ از تشخیص تا درمان</p>
           <span class="dc-rail-meta">تازه‌ترین مطلب</span>
         </a>
         <a class="dc-rail-card" data-cat="sharehub" href="/sharehub/share-34.html">
@@ -5700,7 +5700,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           </div>
         </div>
         <ul class="dc-pulse-list">
-<li><a href="/sharehub/share-42.html">کلیک فک و اسپلینت ریپوزیشن قدامی؛ از تشخیص تا پایان درمان</a></li>
+<li><a href="/sharehub/share-42.html">کلیک فک و اسپلینت ریپوزیشن؛ از تشخیص تا درمان</a></li>
 <li>پلاک صفر، قسمت ۱۰: «<a href="/plak-sefr/plak1-10.html">معماری اطلاعات یعنی چه</a>» منتشر شد</li>
 <li><a href="/dentai/promptologist/prompt-append2-6.html">پیوست ۲ ـ قسمت ۶: اگر به گیت‌هاب هم دسترسی نداشته باشیم، چه؟</a></li>
 <li>یک چیرساید تازه با عنوانِ «<a href="/chairside/chairside-45.html">وقتی اختلاف لبه‌ی دو سانترال، سابقه‌ی ضربه رو لو داد</a>» منتشر شد</li>
@@ -7100,7 +7100,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=b93c2f7d93',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=1738a0920b',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -7471,7 +7471,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=b93c2f7d93';
+  const FEED_URL='/dentcast-brain.json?v=1738a0920b';
   /* Two hosts, one per homepage shell — the same SLOT_IDS split
      plus/js/home-upboard.js uses for the «بالاترین» arrangement of this same
      box. This script owns «تازه‌ترین» and is the ONLY renderer of it (the
@@ -7758,7 +7758,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=b93c2f7d93', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=1738a0920b', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });

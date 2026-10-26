@@ -543,7 +543,7 @@ def fidelity_absence_allowed(content_id, sources, index, assignment=None):
         if "result" not in assignment:
             import des_fidelity_units as units_tool
             units = units_tool.split_page(content_id, sources)
-            mode, plan = units_tool.assign(units, sources)
+            mode, plan = units_tool.assign(units, sources, content_id)
             assignment["result"] = (units, mode, plan)
         units, mode, plan = assignment["result"]
         if not units:
