@@ -494,7 +494,14 @@ def des_absence_allowed(content_id, doc, etype):
             raise ValueError("invalid exemption fields")
         if exemption["content_id"] != content_id:
             raise ValueError("exemption belongs to another publication")
-        if exemption["page_sha256"] != hashlib.sha256(doc.encode("utf-8")).hexdigest():
+        # A v2 run binds the exemption before Push 2; the post-Push-2 Phase E
+        # then adds only the publish marker. Accept the page without that one
+        # marker as well as the final bytes.
+        marker = '<meta name="dc-notify" content="true">'
+        hashes = {hashlib.sha256(doc.encode("utf-8")).hexdigest()}
+        if doc.count(marker) == 1:
+            hashes.add(hashlib.sha256(doc.replace(marker, "", 1).encode("utf-8")).hexdigest())
+        if exemption["page_sha256"] not in hashes:
             raise ValueError("exemption is stale: page changed")
         reason = exemption["reason"]
         if reason not in {"founder_without_des", "unsourced_audio_caption"}:

@@ -38,6 +38,16 @@ class PresenceTests(unittest.TestCase):
     def test_changed_page_invalidates_approval(self):
         self.assertFalse(self.absence(exemption(), DOC + 'changed'))
 
+    def test_post_push2_publish_marker_keeps_approval(self):
+        # v2: bound before Push 2; Phase E then inserts only the marker.
+        marker = '<meta name="dc-notify" content="true">'
+        bare = DOC.replace(marker, '')
+        record = exemption(); record['page_sha256'] = hashlib.sha256(bare.encode()).hexdigest()
+        final = bare.replace('</head>', marker + '</head>', 1)
+        self.assertTrue(self.absence(record, final))
+        self.assertFalse(self.absence(record, final.replace('</head>', marker + '</head>', 1)))
+        self.assertFalse(self.absence(record, final + 'changed'))
+
     def test_wrong_content_cannot_reuse_approval(self):
         record = exemption(); record['content_id'] = 'sharehub/share-34'
         self.assertFalse(self.absence(record))

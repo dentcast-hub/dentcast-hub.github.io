@@ -957,12 +957,45 @@ def finish(root, expected):
                 "verification": receipt}
 
 
+def confirm_remote_final_delivery(root):
+    """Read-only check of a delivery 3 pushed by the post-Push-2 Actions run.
+
+    After `git pull --ff-only` this checkout holds that commit but no local
+    cleanup record (the runner confirmed cleanup in its own checkout). Verify
+    the same facts CI does: HEAD deletes the parent's fixed-delivery handoff,
+    its completion receipt validates, the work is committed and HEAD is the
+    freshly observed origin branch head.
+    """
+    previous = h.git(root, "show", "HEAD^:" + h.STATE_PATH, optional=True)
+    h.require(previous is not None and h.git(root, "ls-tree", "HEAD", "--", h.STATE_PATH) == b"",
+              "CLEANUP_RECORD_MISSING_OR_INVALID")
+    state, checkpoint_sha = h.parse_state(previous)
+    if state["schema"] == h.SCHEMA:
+        state = h.hydrate_v3(root, state, checkpoint_sha)
+    p = state["publication"]
+    h.require(fixed_delivery(p), "CLEANUP_RECORD_MISSING_OR_INVALID")
+    receipt = h.git(root, "show", "HEAD:" + completion_path(p), optional=True)
+    h.require(receipt is not None, "FINAL_RECEIPT_NOT_IN_DELIVERY_COMMIT")
+    validate_final_receipt(root, h.decode_json(receipt.decode("utf-8")), "HEAD")
+    h.require(not h.status_paths(root), "FINAL_DELIVERY_WORK_NOT_COMMITTED")
+    head = h.text_git(root, "rev-parse", "HEAD")
+    remote = h.remote_observation(root, head, h.branch(root), True)
+    h.require(remote["status"] == "observed" and remote["head"] == head, "CLEANUP_NOT_DELIVERED")
+    observation = h.observation_path(root)
+    if observation.exists():
+        observation.unlink()  # stale Push-2 observation of this checkout
+    return {"status": "publication_completed", "publication_completed": True,
+            "cleanup_commit": head, "content_id": p["content_id"], "delivered_by": "remote_final_delivery"}
+
+
 def confirm_cleanup(root):
     with h.locked(root):
         if not pending(root) and h.safe_path(root, h.STATE_PATH).exists():
             state, sha = h.load_state(root)
             pull = remote_delivery_ahead(root, state, h.current_snapshot(root, state, check_remote=True), sha)
             h.require(pull is None, pull)
+        if not pending(root) and not h.safe_path(root, h.STATE_PATH).exists():
+            return confirm_remote_final_delivery(root)
         data = cleanup_record(root)
         h.require(not h.safe_path(root, h.STATE_PATH).exists(), "HANDOFF_STILL_EXISTS")
         state = data["state"]

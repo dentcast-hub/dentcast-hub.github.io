@@ -159,6 +159,9 @@ def command_plan(root: Path, pub: dict):
         cmds.append(["node", "tools/build_quiz_index.mjs"])
     if rows["C.4.14"]["status"] == "completed":
         cmds.append(["node", "tools/build_challenge_index.mjs"])
+        # A چالش page belongs in sitemap.xml (Phase F checks it), but its
+        # Phase D, which otherwise regenerates the sitemap, is skipped.
+        cmds.append(["python3", ".github/scripts/gen_sitemap.py"])
     cmds.append(["python3", ".github/scripts/inject_img_attrs.py"])
     if handoff.publication_category(pub) != "paper-only":
         cmds.extend([
@@ -419,7 +422,11 @@ def run_phase(root: Path, artifact_dir: Path, args):
                     head_end = html.lower().find("</head>")
                     if head_end < 0:
                         raise RunnerError("PAGE_HEAD_MISSING_FOR_PHASE_E")
-                    html = html[:head_end] + "  " + marker + "\n" + html[head_end:]
+                    # No added whitespace: the approved-page text digest stays
+                    # unchanged (else the E checkpoint needs an invalidation),
+                    # and removing the marker restores the Push-2 bytes that a
+                    # page-bound DES exemption was hashed on.
+                    html = html[:head_end] + marker + html[head_end:]
                     page.write_text(html, encoding="utf-8", newline="")
                 verify_scope(root, pub)
                 record_step(root, "E", "completed", ["Canonical dc-notify marker present exactly once"], note=(
