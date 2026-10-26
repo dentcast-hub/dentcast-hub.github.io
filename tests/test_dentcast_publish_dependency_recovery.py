@@ -96,14 +96,20 @@ class DependencyRecoveryTests(unittest.TestCase):
             {'scope':'title', 'status':'confirmed', 'decision':'fixture title',
              'evidence':['fixture:title']},
             {'scope':'pillar', 'status':'confirmed', 'decision':'fixture pillar',
-             'evidence':['fixture:pillar']}]
-        (self.root/'note.html').write_text('<h1>fixture title</h1><p>body</p>')
+             'evidence':['fixture:pillar']},
+            {'scope':'challenge', 'status':'confirmed', 'decision':'ordinary post',
+             'evidence':['fixture:challenge']},
+            {'scope':'exam-questions', 'status':'confirmed', 'decision':'two MCQs',
+             'evidence':['fixture:exam']},
+            {'scope':'keywords', 'status':'confirmed', 'decision':'fixture kw',
+             'evidence':['fixture:keywords']}]
+        (self.root/'note.html').write_text('<meta name="keywords" content="fixture kw"><h1>fixture title</h1><p>body</p>')
         initial=self.start();d=wal.begin(self.root,initial['sha256'])['digest']
         d=self.walk(d,'C.2')
-        (self.root/'note.html').write_text('<h1>fixture title</h1><p>body</p><div>credit capsule</div>')
+        (self.root/'note.html').write_text('<meta name="keywords" content="fixture kw"><h1>fixture title</h1><p>body</p><div>credit capsule</div>')
         wal.flush(self.root,d,'fixture reviewed later canonical page step')
         p=h.load_state(self.root)[0]['publication']
-        self.assertEqual([a['status'] for a in p['context']['approvals']],['confirmed','confirmed'])
+        self.assertEqual([a['status'] for a in p['context']['approvals']],['confirmed']*5)
         d=wal.begin(self.root,h.load_state(self.root)[1])['digest']
         (self.root/'note.html').write_text('<h1>fixture retitled</h1><p>body</p>')
         with self.assertRaisesRegex(h.Blocked,'APPROVED_PAGE_CHANGED_INVALIDATE'):
