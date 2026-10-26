@@ -145,7 +145,24 @@ def validate_completion(root, raw):
     return publication["content_id"]
 
 
-def verify_publication_history(root, base, added_paths):
+def own_paths_after(root, commit, main_ref=None):
+    """Paths the PR itself changed after a delivery commit (not main-side changes).
+
+    main_ref is the destination tip; on a synthetic PR merge checkout it
+    defaults to HEAD's first parent. Without one, every later commit counts.
+    """
+    import dentcast_publish_handoff as h
+    if main_ref is None and h.text_git(root, "rev-parse", "--verify", "--quiet", "HEAD^2", optional=True):
+        main_ref = "HEAD^1"
+    exclude = ["^" + main_ref] if main_ref else []
+    commits = h.text_git(root, "rev-list", "--no-merges", commit + "..HEAD", *exclude).splitlines()
+    paths = set()
+    for item in commits:
+        paths.update(h.text_git(root, "diff-tree", "--no-commit-id", "--name-only", "-r", item).splitlines())
+    return paths
+
+
+def verify_publication_history(root, base, added_paths, main_ref=None):
     """Use the whole PR range, not HEAD^ (which is main on PR merge checkouts)."""
     import dentcast_publish_handoff as h
     needed = publication_ids(added_paths)
@@ -169,8 +186,13 @@ def verify_publication_history(root, base, added_paths):
         publication = parse_handoff(raw.decode("utf-8")) if h.BEGIN.encode() in raw else None
         import dentcast_publish_lifecycle as lifecycle
         if publication and lifecycle.fixed_delivery(publication):
-            final = h.decode_json(h.safe_path(root, lifecycle.completion_path(publication)).read_text())
-            verified.add(lifecycle.validate_final_receipt(root, final, commit))
+            # The receipt and its delivered facts are read from the delivery
+            # commit; only the PR's own later changes are checked in the tree.
+            receipt = h.git(root, "show", commit + ":" + lifecycle.completion_path(publication), optional=True)
+            h.require(receipt is not None, "FINAL_RECEIPT_NOT_IN_DELIVERY_COMMIT")
+            final = h.decode_json(receipt.decode("utf-8"))
+            verified.add(lifecycle.validate_final_receipt(
+                root, final, commit, own_paths_after(root, commit, main_ref)))
         elif reconcile_share35(root, raw):
             verified.add("sharehub/share-35")
         else:
@@ -250,7 +272,7 @@ def main():
             root = Path.cwd()
             base = subprocess.check_output(["git", "merge-base", "FETCH_HEAD", "HEAD"], text=True).strip()
             added = subprocess.check_output(["git", "diff", "--name-only", "--diff-filter=A", base + "...HEAD"], text=True).splitlines()
-            verify_publication_history(root, base, added)
+            verify_publication_history(root, base, added, "FETCH_HEAD")
     except (OSError, subprocess.CalledProcessError, ValueError, RuntimeError) as exc:
         reason = str(exc) or "PUBLISH_MERGE_GATE_FAILED"
         ok = False

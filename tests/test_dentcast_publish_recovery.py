@@ -53,6 +53,7 @@ class RecoveryAcceptanceTests(unittest.TestCase):
         return self.cli(*args, root=root)
 
     def init(self):
+        self.p['content_id'] = 'insight/note'  # CLI init requires <section>/<slug>
         path = self.base / 'operator-input.json'
         path.write_text(json.dumps(self.p))
         return self.cli('init', '--input', str(path))

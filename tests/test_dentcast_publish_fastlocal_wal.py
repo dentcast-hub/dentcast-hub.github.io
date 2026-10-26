@@ -21,6 +21,11 @@ class FastLocalWALTests(unittest.TestCase):
     def start(self):
         self.p["steps"] = lc.plan()
         self.p["context"]["decisions"].append({"kind": lc.DELIVERY_POLICY})
+        # C.4.9 completion now requires the first-cut lead declaration.
+        self.p["context"]["decisions"].append({
+            "kind": "first_cut_lead_provenance_v1", "origin": "not_applicable",
+            "source_ref": "fixture:page-already-has-prose",
+            "evidence": ["fixture:synthetic-lead-origin-review"]})
         return h.save(self.root, self.p, initial=True)
 
     def test_batch_skips_are_durable_and_do_not_rescan_git_per_event(self):

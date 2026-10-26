@@ -95,7 +95,7 @@ class LifecycleTests(unittest.TestCase):
         state['publication']['content_id']='unassigned'
         h.write_atomic(self.root,state)
         sha=h.load_state(self.root)[1]
-        result=lc.bind(self.root,sha,'note','insight',['note.html'],'fixture:resolved intake')
+        result=lc.bind(self.root,sha,'insight/note','insight',['note.html'],'fixture:resolved intake')
         self.assert_blocked('IDENTITY_ALREADY_BOUND',lc.bind,self.root,result['sha256'],'other','insight',['note.html'],'fixture')
 
     def test_binding_stores_the_canonical_category(self):
@@ -104,7 +104,7 @@ class LifecycleTests(unittest.TestCase):
         state['publication'].update(content_id='unassigned',category='Pending')
         h.write_atomic(self.root,state)
         sha=h.load_state(self.root)[1]
-        lc.bind(self.root,sha,'note','LiteCast',['note.html'],'fixture:resolved intake')
+        lc.bind(self.root,sha,'litecast/note','LiteCast',['note.html'],'fixture:resolved intake')
         self.assertEqual(h.load_state(self.root)[0]['publication']['category'],'litecast')
 
     def test_raw_phase_f_completion_is_rejected(self):
@@ -314,10 +314,10 @@ class LifecycleTests(unittest.TestCase):
 
     def test_bind_after_completed_founder_requested_external_action_keeps_receipt(self):
         sha=self.placeholder_with_action('completed',['fixture:drive rename+move observed'])
-        result=lc.bind(self.root,sha,'note','insight',['note.html'],'fixture:identity')
+        result=lc.bind(self.root,sha,'insight/note','insight',['note.html'],'fixture:identity')
         p=h.load_state(self.root)[0]['publication']
         self.assertEqual(result['status'],'checkpoint_written')
-        self.assertEqual((p['content_id'],p['category']),('note','insight'))
+        self.assertEqual((p['content_id'],p['category']),('insight/note','insight'))
         self.assertEqual(p['external_actions'],[{'id':'drive-rename','target':'drive:fixture-file','status':'completed','evidence':['fixture:drive rename+move observed']}])
 
     def test_bind_rejects_unsettled_or_failed_external_action(self):
