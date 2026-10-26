@@ -227,7 +227,8 @@ class PostCut2RunnerTests(unittest.TestCase):
                 root = Path(tmp)
                 page = root / "insight/insight100.html"
                 page.parent.mkdir(parents=True)
-                page.write_text("<html><head></head><body></body></html>", encoding="utf-8")
+                original = "<html><head>\n  <title>t</title>\n</head><body><p>متن</p></body></html>"
+                page.write_text(original, encoding="utf-8")
                 stack.enter_context(patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]))
                 stack.enter_context(patch.object(runner, "publication", return_value=(pub, "digest")))
                 stack.enter_context(patch.object(lifecycle, "editorial_cut_v2", return_value=True))
@@ -238,7 +239,13 @@ class PostCut2RunnerTests(unittest.TestCase):
                 stack.enter_context(patch.object(runner, "run_command", side_effect=command))
                 stack.enter_context(patch.object(runner, "verify_scope"))
                 runner.run_phase(root, root / "artifacts", args)
-                marker = '<meta name="dc-notify" content="true">' in page.read_text(encoding="utf-8")
+                final = page.read_text(encoding="utf-8")
+                marker = '<meta name="dc-notify" content="true">' in final
+                if marker:
+                    # Whitespace-neutral: approved text and the pre-E bytes survive.
+                    self.assertEqual(runner.handoff.page_text_digest(final.encode()),
+                                     runner.handoff.page_text_digest(original.encode()))
+                    self.assertEqual(final.replace('<meta name="dc-notify" content="true">', ""), original)
             return states["D"]["status"], states["E"]["status"], marker
 
         for spelling in ("LiteCast", "Litecast", "lite-cast", "لایت‌کست"):
@@ -268,6 +275,10 @@ class PostCut2RunnerTests(unittest.TestCase):
                         challenge.index("node tools/build_challenge_index.mjs"))
         self.assertLess(challenge.index("node tools/build_challenge_index.mjs"),
                         challenge.index("node tools/build_plus_index.mjs"))
+        # Its Phase D (the usual sitemap regeneration) is skipped, yet Phase F
+        # requires the page in sitemap.xml.
+        self.assertIn("python3 .github/scripts/gen_sitemap.py", challenge)
+        self.assertNotIn("python3 .github/scripts/gen_sitemap.py", plan("clinical"))
         full = plan("clinical", done=("C.4.11", "C.4.12"))
         self.assertIn("node tools/build_flashcards_index.mjs", full)
         self.assertIn("node tools/build_quiz_index.mjs", full)
