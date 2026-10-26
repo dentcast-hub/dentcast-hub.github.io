@@ -3,12 +3,12 @@
   "hooks": {
     "sessionStart": [
       {
-        "command": "d=\"${CURSOR_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}\"; { [ -n \"$(git -C \"$d\" config core.hooksPath)\" ] || git -C \"$d\" config core.hooksPath .githooks; } 2>/dev/null || true"
+        "command": "d=\"${CURSOR_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}\"; { t=\"$(git -C \"$d\" rev-parse --show-toplevel)\" && case \"$(git -C \"$d\" config core.hooksPath)\" in .githooks|.githooks/|./.githooks|./.githooks/|\"$t/.githooks\"|\"$t/.githooks/\") ;; *) git -C \"$d\" config core.hooksPath .githooks;; esac; } >/dev/null 2>&1 || true"
       }
     ],
     "beforeShellExecution": [
       {
-        "command": "d=\"${CURSOR_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}\"; { [ -n \"$(git -C \"$d\" config core.hooksPath)\" ] || git -C \"$d\" config core.hooksPath .githooks; } 2>/dev/null || true; cat >/dev/null; printf '{\"permission\":\"allow\"}\\n'"
+        "command": "d=\"${CURSOR_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}\"; { t=\"$(git -C \"$d\" rev-parse --show-toplevel)\" && case \"$(git -C \"$d\" config core.hooksPath)\" in .githooks|.githooks/|./.githooks|./.githooks/|\"$t/.githooks\"|\"$t/.githooks/\") ;; *) git -C \"$d\" config core.hooksPath .githooks;; esac; } >/dev/null 2>&1 || true; cat >/dev/null; printf '{\"permission\":\"allow\"}\\n'"
       }
     ],
     "afterFileEdit": [

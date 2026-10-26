@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "d=\"${CLAUDE_PROJECT_DIR:-${CODEX_PROJECT_DIR:-.}}\"; { [ -n \"$(git -C \"$d\" config core.hooksPath)\" ] || git -C \"$d\" config core.hooksPath .githooks; } 2>/dev/null || true",
+            "command": "d=\"${CLAUDE_PROJECT_DIR:-${CODEX_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}}\"; { t=\"$(git -C \"$d\" rev-parse --show-toplevel)\" && case \"$(git -C \"$d\" config core.hooksPath)\" in .githooks|.githooks/|./.githooks|./.githooks/|\"$t/.githooks\"|\"$t/.githooks/\") ;; *) git -C \"$d\" config core.hooksPath .githooks;; esac; } >/dev/null 2>&1 || true",
             "timeout": 10
           }
         ]
@@ -13,7 +13,7 @@
     ],
     "PostToolUse": [
       {
-        "matcher": "Edit|Write|MultiEdit",
+        "matcher": "Edit|Write|MultiEdit|Bash",
         "hooks": [
           {
             "type": "command",

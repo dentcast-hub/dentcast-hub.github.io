@@ -54,12 +54,38 @@ class SessionStartHookTests(unittest.TestCase):
                 self.assertEqual((result.returncode, result.stdout, result.stderr), (0, '', ''))
                 self.assertEqual(self.hooks_path(repo), '.githooks')
 
-    def test_existing_hooks_path_is_left_alone(self):
-        repo = self.repo()
-        subprocess.run(['git', '-C', repo, 'config', 'core.hooksPath', 'custom-hooks'], check=True)
+    def test_stale_hooks_path_is_replaced_and_own_githooks_kept(self):
+        # A stale or global value would silently disable .githooks/pre-commit.
+        for config, var in zip(CONFIGS, ('CLAUDE_PROJECT_DIR', 'CODEX_PROJECT_DIR')):
+            with self.subTest(config=config):
+                (command,) = session_start(config)
+                repo = self.repo()
+                subprocess.run(['git', '-C', repo, 'config', 'core.hooksPath', 'custom-hooks'], check=True)
+                result = self.run_hook(command, repo, var)
+                self.assertEqual((result.returncode, result.stdout, result.stderr), (0, '', ''))
+                self.assertEqual(self.hooks_path(repo), '.githooks')
+                top = subprocess.run(['git', '-C', repo, 'rev-parse', '--show-toplevel'],
+                                     capture_output=True, text=True).stdout.strip()
+                own = top + '/.githooks'
+                subprocess.run(['git', '-C', repo, 'config', 'core.hooksPath', own], check=True)
+                self.run_hook(command, repo, var)
+                self.assertEqual(self.hooks_path(repo), own)
+
+    def test_without_project_dir_uses_the_enclosing_repository(self):
         (command,) = session_start(CONFIGS[0])
-        self.assertEqual(self.run_hook(command, repo, 'CLAUDE_PROJECT_DIR').stdout, '')
-        self.assertEqual(self.hooks_path(repo), 'custom-hooks')
+        repo = self.repo()
+        sub = Path(repo) / 'sub'
+        sub.mkdir()
+        env = {k: v for k, v in os.environ.items() if k not in ('CLAUDE_PROJECT_DIR', 'CODEX_PROJECT_DIR')}
+        result = subprocess.run(['sh', '-c', command], cwd=sub, env=env, capture_output=True, text=True)
+        self.assertEqual((result.returncode, result.stdout, result.stderr), (0, '', ''))
+        self.assertEqual(self.hooks_path(repo), '.githooks')
+
+    def test_post_tool_use_covers_bash_edits(self):
+        for config in CONFIGS:
+            hooks = json.loads((ROOT / config).read_text(encoding='utf-8'))['hooks']['PostToolUse']
+            with self.subTest(config=config):
+                self.assertEqual(set(hooks[0]['matcher'].split('|')), {'Edit', 'Write', 'MultiEdit', 'Bash'})
 
     def test_outside_git_is_silent_and_non_failing(self):
         with tempfile.TemporaryDirectory() as folder:
@@ -100,7 +126,7 @@ class CursorHookTests(SessionStartHookTests.__base__):
         self.assertEqual(self.hooks_path(repo), '.githooks')
         subprocess.run(['git', '-C', repo, 'config', 'core.hooksPath', 'custom-hooks'], check=True)
         self.assertEqual(json.loads(self.run_hook(command, repo, None, '{}').stdout), {'permission': 'allow'})
-        self.assertEqual(self.hooks_path(repo), 'custom-hooks')
+        self.assertEqual(self.hooks_path(repo), '.githooks')
 
     def test_shell_hook_allows_outside_git(self):
         (command,) = cursor_hooks('beforeShellExecution')
