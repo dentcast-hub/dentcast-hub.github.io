@@ -113,6 +113,28 @@ class ReadpackTests(unittest.TestCase):
         self.assertEqual(self.get(manifest, '04-taxonomy-and-navigation.md')['selection_reason'],
                          'AMBIGUOUS_CATEGORY_KEEP_ALL_NAVIGATION_BRANCHES')
 
+    def test_handoff_category_values_and_typed_names_never_fall_back_to_full(self):
+        # The handoff stores the brain type; init/bind accept typed names.
+        known = {'meta': 'metanotes', 'Insight': 'clinical', 'اینسایت': 'clinical',
+                 'dentcast_plus': 'dentcast-plus', 'دنتکست+': 'dentcast-plus',
+                 'متانوت': 'metanotes', 'لایت‌کست': 'litecast', 'نوت‌کست': 'notecast',
+                 'پرامپتولوژیست': 'promptologist', 'دانشنامه': 'glossary'}
+        for typed, same_as in known.items():
+            with self.subTest(typed=typed):
+                text, m = self.pack(category=typed)
+                expected, _ = self.pack(category=same_as)
+                self.assertEqual(text, expected)
+                self.assertNotEqual(self.get(m, '06-paper-ingestion.md')['selection_reason'],
+                                    'UNLOCKED_OR_UNKNOWN_INTAKE_FULL_SOURCE')
+        for typed in ('plak_sefr', 'پلاک صفر', 'taraz', 'تراز', 'اپیزود'):
+            with self.subTest(typed=typed):
+                text, m = self.pack(category=typed)
+                self.assertNotIn('ATTACHED_PAPER_ONLY', text)
+                # Unmodeled navigation stays complete rather than guessed.
+                self.assertIn('NOTECAST_PARENT', text)
+                self.assertIn('PROMPTOLOGIST_ONLY', text)
+        self.assertEqual(self.pack(category='episode')[0], self.pack(category='Episode')[0])
+
     def test_glossary_keeps_glossary_only_scans(self):
         text, _ = self.pack(category='glossary')
         self.assertIn('GLOSSARY_ONLY', text)

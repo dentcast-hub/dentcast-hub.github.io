@@ -16,6 +16,8 @@ import sys
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from dentcast_publish_handoff import canonical_category  # noqa: E402
 WORKFLOW = '.dentcast/workflows/'
 MODULES = WORKFLOW + 'modules/'
 
@@ -56,8 +58,24 @@ REQUIRED = [
 KNOWN_CATEGORIES = frozenset({
     'sharehub', 'chairside', 'insight', 'clinical', 'notecast', 'episode',
     'litecast', 'glossary', 'metanotes', 'dentai', 'photocast',
-    'dentcast', 'dentcast-plus', 'promptologist',
+    'dentcast', 'dentcast-plus', 'promptologist', 'plak_sefr', 'taraz',
 })
+
+# The handoff stores the brain `type` (clinical, meta, dentcast_plus, plak_sefr,
+# ...) and init/bind accept spellings such as Insight or «اینسایت». A name this
+# map already models keeps its exact meaning ('dentcast' stays the broad,
+# keep-all-navigation type; 'episode' the core-episode route); any other
+# spelling selects exactly what its canonical brain type selects.
+_SELECTOR_NAMES = {'meta': 'metanotes', 'dentcast_plus': 'dentcast-plus'}
+
+
+def selector_category(value):
+    folded = value.casefold() if isinstance(value, str) else value
+    if folded in KNOWN_CATEGORIES:
+        return folded
+    canonical = canonical_category(value)
+    return _SELECTOR_NAMES.get(canonical, canonical)
+
 
 class UnsafeSelection(ValueError):
     pass
@@ -157,6 +175,7 @@ def route_spans(name, lines, *, category, attached_paper, challenge):
 
 def build(root, *, category, attached_paper, challenge, after_intake=False):
     root = Path(root).resolve(strict=True)
+    category = selector_category(category)
     manifest = {
         'schema': 'dentcast_publish_readpack_v1',
         'classification': {'category': category, 'attached_paper': attached_paper,
@@ -256,7 +275,7 @@ def main(argv=None):
     if a.output.resolve() == a.manifest.resolve():
         p.error('--output and --manifest must differ')
     try:
-        pack, report = build(a.root, category=a.category.casefold(),
+        pack, report = build(a.root, category=a.category,
                              attached_paper=a.attached_paper, challenge=a.challenge,
                              after_intake=a.after_intake)
         atomic_write(a.output, pack)
