@@ -109,7 +109,8 @@ Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details
 ## Publication services and waits
 
 `publish-checkpoints.md` defines the actual service/check scope and wait policy.
-Vercel statuses are unrelated to publication and are never a publishing gate.
+The real destinations are ArvanCloud and GitHub Pages (proxied through Cloudflare DNS). Cloudflare Pages
+and Vercel are backups only: their statuses are never a publishing gate.
 
 ## Completion
 

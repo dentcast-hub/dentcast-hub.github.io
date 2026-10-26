@@ -265,8 +265,9 @@ publishِ بلوکه‌شده، پس عمداً صفر برمی‌گرداند.
 ## Publication service and wait discipline
 
 Follow `publish-checkpoints.md` sections “Publication services and remote checks”
-and “Waiting and refreshing remote state”. Vercel is unrelated to DentCast
-publication: never wait for or use its status as a gate or completion criterion.
+and “Waiting and refreshing remote state”. The real destinations are ArvanCloud and
+GitHub Pages (proxied through Cloudflare DNS); Cloudflare Pages and Vercel are backups only: never
+wait for or use their status as a gate or completion criterion.
 Report a real wait with its step, pending result and blocking effect; refresh
 only the relevant result when it can change. Preserve fresh delivery/merge
 preflights, actual repository checks, Phase F and the three fixed deliveries.

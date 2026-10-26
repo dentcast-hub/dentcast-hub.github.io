@@ -18,7 +18,8 @@ Read `.dentcast/workflows/publish-checkpoints.md`. Use the full canonical ledger
 
 ## Publication services and waits
 
-Follow the service and wait discipline in `publish-checkpoints.md`: Vercel is not
-part of DentCast publication and never supplies a gate or completion criterion.
+Follow the service and wait discipline in `publish-checkpoints.md`: the real
+destinations are ArvanCloud and GitHub Pages (proxied through Cloudflare DNS); Cloudflare Pages and
+Vercel are backups only and never supply a gate or completion criterion.
 Report the step, pending result and blocking effect of a real wait; refresh only
 relevant results while preserving fresh delivery/merge preflights and Phase F.

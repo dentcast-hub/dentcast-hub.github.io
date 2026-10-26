@@ -98,17 +98,21 @@ and the three fixed pushes are identical in both reading modes.
 
 ## Publication services and remote checks
 
-Vercel is not a DentCast publication service. Its commit status, deployment,
-preview, failure or pending state must never be requested as publication evidence,
-polled, awaited, treated as a publishing/merge gate, or included in the completion
-criteria or routine final report. A GitHub response may include that unrelated
-status; its presence does not enroll a new external action or approval requirement.
-Design references to Vercel in site styling are unrelated to hosting.
+DentCast is served from exactly two destinations: ArvanCloud, and GitHub Pages
+itself (`dentcast.org`/`www` are CNAMEs to `dentcast-hub.github.io`, proxied through
+Cloudflare DNS). Cloudflare Pages and Vercel are backup mirrors only
+(founder, 1405/08/04); neither is a DentCast publication service. Their commit
+status, deployment, preview, failure or pending state must never be requested as
+publication evidence, polled, awaited, treated as a publishing/merge gate, or
+included in the completion criteria or routine final report. A GitHub response may
+include those statuses or bot comments; their presence does not enroll a new
+external action or approval requirement. Design references to Vercel in site
+styling are unrelated to hosting.
 
 Use the actual repository checks, canonical Phase F, required remote delivery
-observations and applicable checks of the real DentCast destinations (Cloudflare
-Pages / ArvanCloud). Do not infer a new deployment task from an aggregate status
-or a third-party bot. A successful Vercel status cannot substitute for a failed
+observations and applicable checks of the real DentCast destinations (ArvanCloud /
+GitHub Pages). Do not infer a new deployment task from an aggregate status
+or a third-party bot. A successful backup status cannot substitute for a failed
 repository check or Phase F. If GitHub itself refuses a merge because of an
 unrelated required check, report that exact configuration blocker; do not claim a
 merge or weaken branch protection. Removal of an external installation is a
