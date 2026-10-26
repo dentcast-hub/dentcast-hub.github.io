@@ -53,6 +53,10 @@ before) the assignment is completed on the caller's side:
   * `--vote --base` accepts a plan that grew (rule 13) and, with `--texts`,
     a source text that grew, when every non-MATCHES unit was re-checked
     (rule 14).
+
+A core audio episode (`episodes/…`) gets DES only, never a FIDELITY call
+(founder, 1405/08/04): its page is a caption, a player and labels, not a
+write-up of the paper. The tool says so and builds nothing for it.
 """
 import argparse
 import html
@@ -229,6 +233,11 @@ def stop_line(line, sources):
         if (doi and doi in low) or (title and len(title) > 12 and title in low):
             return True
     return False
+
+
+def is_audio_episode(content_id):
+    """A core podcast episode page: DES only, no FIDELITY (founder, 1405/08/04)."""
+    return content_id.startswith("episodes/")
 
 
 def split_page(content_id, sources):
@@ -673,6 +682,11 @@ def main():
     rec = json.loads((ROOT / "plus/des-scores.json").read_text(encoding="utf-8")).get(a.content_id)
     if not rec:
         sys.exit(f"no DES record for {a.content_id}")
+    if is_audio_episode(a.content_id):
+        print(f"{a.content_id}: audio episode — DES only, no FIDELITY call (founder, 1405/08/04)")
+        if a.build or a.vote or a.merge:
+            sys.exit("refusing to build or vote FIDELITY for an audio episode")
+        return
     sources = rec["sources"]
     units = split_page(a.content_id, sources)
     mode, plan = assign(units, sources, a.content_id)

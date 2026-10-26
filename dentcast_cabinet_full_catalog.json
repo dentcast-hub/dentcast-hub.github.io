@@ -139796,6 +139796,59 @@
         "Luiz Fernando Pegoraro",
         "Carlos dos Reis Pereira de Araújo"
       ]
+    },
+    {
+      "id": "P2948",
+      "title": "Impact of lateral occlusion schemes: A systematic review",
+      "file_name": "Impact of lateral occlusion schemes: A systematic review.pdf",
+      "topic": "Occlusion",
+      "topic_path": "Occlusion",
+      "type": "systematic review",
+      "local_path": "",
+      "file_size": 378074,
+      "key_finding": "Across 26 studies, CGO was associated with narrower chewing and less masticatory-muscle EMG activity during clenching, GFO with wider mandibular movement and quicker chewing; during chewing EMG did not differ, and long-term studies showed no difference between the two schemes in patient comfort or restoration longevity.",
+      "clinical_bottom_line": "CGO or GFO are equally acceptable when restoring the dentition; patients adapt to either, so a flexible occlusion principle (long centric, morphology-induced disclusion, no balancing contacts) is supported over a preconceived scheme.",
+      "linked_episodes": [
+        "episodes/episode-131",
+        "episodes/episode-132"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1BKMubfMDwl7M-OT_jelNjlvI1sMvKtaN/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1BKMubfMDwl7M-OT_jelNjlvI1sMvKtaN",
+      "drive_view": "https://drive.google.com/file/d/1BKMubfMDwl7M-OT_jelNjlvI1sMvKtaN/view",
+      "drive_id": "1BKMubfMDwl7M-OT_jelNjlvI1sMvKtaN",
+      "tags": [
+        "lateral-occlusion",
+        "occlusal-scheme",
+        "canine-guidance",
+        "group-function",
+        "balanced-occlusion",
+        "electromyography",
+        "mandibular-movement",
+        "condylar-displacement",
+        "mastication",
+        "patient-adaptation",
+        "implant-prosthesis",
+        "occlusion",
+        "systematic-review",
+        "topic:occlusion",
+        "impact-of-lateral-occlusion-schemes-systematic-review"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Impact of lateral occlusion schemes: A systematic review",
+      "doi": "10.1016/j.prosdent.2014.04.032",
+      "journal": "The Journal of Prosthetic Dentistry",
+      "crossref_year": 2015,
+      "subjects": [
+        "Dentistry"
+      ],
+      "abstract": "Although several lateral occlusion philosophies have been proposed in the literature, there is a lack of compelling evidence supporting any scheme. The purpose of this systematic review was to investigate the clinical implications of different lateral occlusion schemes. A literature search was completed through PubMed (MEDLINE), Google Scholar, and Cochrane Library, up to January 2014. The literature search aimed to retrieve 2 study categories: group 1: comparative studies; group 2: clinical outcome studies. The inclusion criteria were peer-reviewed human clinical studies published in English. The search was further supplemented by manual searching through the reference lists of the selected studies. The initial search revealed a total of 680 studies; however, after applying the inclusion criteria, 26 studies were found suitable for the analysis (13 for group 1 and 13 for group 2). The most commonly evaluated lateral occlusion schemes were canine-guided occlusion (CGO) and group function occlusion (GFO). Group 1 studies evaluated the impact of lateral occlusion schemes on muscular electromyographic (EMG) activity, condylar displacement, mastication, and mandibular movement. Group 2 studies evaluated the impact of restored occlusion on longevity, patient comfort, and pathologic consequences. CGO was associated with narrower mastication and less EMG activity of the masticatory muscles during clenching. GFO was associated with wider mandibular movement and quicker mastication. During mastication, there was no difference in EMG activity between the 2 lateral occlusion schemes. Furthermore, the long-term studies indicated that there is no difference between the 2 schemes in patient comfort and restoration longevity. Although there are immediate differences between the different lateral occlusion schemes, patients have the capability to successfully adapt to CGO or GFO.",
+      "display_title": "Impact of lateral occlusion schemes: A systematic review",
+      "authors": [
+        "Jaafar Abduo",
+        "Marc Tennant"
+      ]
     }
   ],
   "drive_matched": 2849,
@@ -140320,5 +140373,5 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2262
+  "total_papers": 2263
 }
