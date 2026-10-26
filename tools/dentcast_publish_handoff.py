@@ -1583,7 +1583,8 @@ def main(argv=None):
         code = str(exc) if isinstance(exc, Blocked) else "INVALID_INPUT_OR_STATE"
         action = "Resolve the named blocker in the current run; preserve work and review actual changes before reconciliation. Do not repeat an unchanged failed command or discover branches."
         if code == "HANDOFF_MISSING":
-            action = "Restore the exact current-run receipt; initialize only if no publication action began. A missing receipt does not authorize branch discovery."
+            action = ("Restore the exact current-run receipt; initialize only if no publication action began. A missing receipt does not authorize branch discovery. "
+                      "If `git pull --ff-only` just brought in the post-Push-2 Actions delivery 3, run confirm-cleanup to verify it.")
         elif code.startswith("PR_"):
             action = "Preserve local work, freshly read the exact PR and destination refs, and revise delivery for their actual state; do not write to the old branch automatically."
         elif code.startswith("RECOVERY_REQUEST_REQUIRED"):

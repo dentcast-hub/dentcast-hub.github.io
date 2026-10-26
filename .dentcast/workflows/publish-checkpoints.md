@@ -442,7 +442,7 @@ Immediately after the second-delivery push is confirmed, tell the user that the 
 
 Stay with the run and poll at bounded intervals until it reaches a terminal state; do not end the turn or leave the user without a status while the job is queued or running. If preflight skips or no run appears, inspect the event, branch and handoff before reporting that Actions started. If the run succeeds, verify that delivery 3 is based on the exact Push-2 SHA, the completion receipt is present, the active handoff is removed, and cleanup is confirmed before reporting publication complete. If it fails, inspect the uploaded logs/recovery artifact, diagnose and resume through the guarded recovery path where possible, and keep the user informed of the real status.
 
-Delivery 3 is a commit that Actions pushes, so the local checkout still holds the Push-2 state (and the active handoff) after the run succeeds. Run `git pull --ff-only` on the publication branch first; only then does the handoff disappear locally and delivery 3, the completion receipt and cleanup can be verified. A pull that is not a fast-forward means the branch moved unexpectedly: stop and inspect instead of merging. Monitoring does not need `gh`: in a cloud session without it, use the GitHub MCP tools (`actions_list` for the branch's workflow runs of `post-cut2-mechanical.yml`, `actions_get` for a run's status and conclusion, `get_job_logs` for failed jobs) or the equivalent connected GitHub reads available to the client. The logs and recovery bundle are the run artifact `post-cut2-<Push-2 SHA>` (kept 14 days); fetch it through the Actions API (list the run's artifacts, then download that artifact's zip), not from the branch, which a failed run leaves at Push 2.
+Delivery 3 is a commit that Actions pushes, so the local checkout still holds the Push-2 state (and the active handoff) after the run succeeds. Run `git pull --ff-only` on the publication branch first; only then does the handoff disappear locally and delivery 3, the completion receipt and cleanup can be verified: `confirm-cleanup` checks them read-only from the pulled HEAD (no local cleanup record exists). A pull that is not a fast-forward means the branch moved unexpectedly: stop and inspect instead of merging. Monitoring does not need `gh`: in a cloud session without it, use the GitHub MCP tools (`actions_list` for the branch's workflow runs of `post-cut2-mechanical.yml`, `actions_get` for a run's status and conclusion, `get_job_logs` for failed jobs) or the equivalent connected GitHub reads available to the client. The logs and recovery bundle are the run artifact `post-cut2-<Push-2 SHA>` (kept 14 days); fetch it through the Actions API (list the run's artifacts, then download that artifact's zip), not from the branch, which a failed run leaves at Push 2.
 
 A failed run pushes nothing; the branch stays at the Push-2 commit. Recover from that commit:
 
@@ -592,7 +592,9 @@ be inferred from missing results. Never fabricate approval or copy one from
 another publication. Keep private conversations out of Git. The verifier
 checks the reference's presence and scope; the agent must verify its truth.
 Hash with `hashlib.sha256(Path(page).read_text(encoding="utf-8").encode("utf-8")).hexdigest()`
-after builders finish. Any later page change invalidates the record: reconcile
+after builders finish. A v2 run hashes the page delivered at C.6 (its builders
+run after Push 2); Phase F also accepts that page plus only the single Phase E
+`dc-notify` marker. Any later page change invalidates the record: reconcile
 its scope with the real approval before updating it, and rerun Phase F. Add
 `.dentcast/des-exemptions.json` to this run's watched target paths when used.
 
