@@ -16,8 +16,10 @@ correct.
 the same identifier `plus/content-index.json`, the quiz index and the
 flashcards index use.
 
-Exit codes: 0 = every check passed (publish is complete), 1 = at least one
-FAIL (publish is incomplete — fix what is listed, then re-run).
+Exit codes (single content_id or --last): 0 = every check passed (publish is
+complete), 1 = at least one FAIL (publish is incomplete — fix what is listed,
+then re-run). --all is a backlog report, not a gate: it prints every FAIL but
+always exits 0.
 
 Standard library only, same as the other tools in this directory.
 """
@@ -247,7 +249,9 @@ def episode_landing_title(content_id):
     would render, not a second opinion about it."""
     sys.path.insert(0, str(ROOT / "tools"))
     from build_episodes import clean_title  # noqa: E402
-    num = Path(content_id).name.replace("episode-", "")
+    # Sub-episodes live at episode-159-1.html but dentcast.json numbers them
+    # "159.1", so the file's "-" separator maps back to ".".
+    num = Path(content_id).name.replace("episode-", "").replace("-", ".")
     try:
         eps = json.loads((ROOT / "dentcast.json").read_text(encoding="utf-8"))
     except (OSError, ValueError):
@@ -1541,16 +1545,25 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
     # and never should — and failed all 209 episodes on a page that is working
     # exactly as designed. The real landing page is episodes.html, built by
     # tools/build_episodes.py.
+    #
+    # DentAI and PhotoCast are closed sections: their folders stay on disk but
+    # their pages are listed on sharehub/index.html, not on their own landing
+    # (.dentcast/workflows/global/repo-conventions.md).
     landing = f"{Path(content_id).parent}/index.html"
+    needle = Path(content_id).name + ".html"
     if landing == "episodes/index.html":
         landing = "episodes.html"
+    elif landing in ("dentai/index.html", "photocast/index.html"):
+        # sharehub/index.html also lists its own pages, so match the full
+        # path (photocast/episode-2.html is not episodes/episode-2.html).
+        landing, needle = "sharehub/index.html", "/" + page_rel
     if exists(landing):
         land = read(landing)
-        n = len(re.findall(re.escape(Path(content_id).name + ".html"), land))
+        n = len(re.findall(re.escape(needle), land))
         rep.check(n >= 1, "2.6 landing", f"{landing} links to the page",
                   f"{landing} has no link to the new entry", "step 2.6")
         if n >= 1:
-            li = re.search(r"<li>(?:(?!</li>).)*?" + re.escape(Path(content_id).name + ".html")
+            li = re.search(r"<li>(?:(?!</li>).)*?" + re.escape(needle)
                            + r".*?</li>", land, re.S)
             if li:
                 # An episode carries TWO legitimate titles: the podcast's own
@@ -1820,7 +1833,8 @@ def main():
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("content_id", nargs="?", help="e.g. chairside/chairside-28")
     ap.add_argument("--last", action="store_true", help="verify the newest brain entry")
-    ap.add_argument("--all", action="store_true", help="verify every brain entry that has a page")
+    ap.add_argument("--all", action="store_true", help="verify every brain entry that has a page "
+                         "(backlog report: always exits 0, even with FAILs)")
     ap.add_argument("--quiet", action="store_true", help="print only failures")
     ap.add_argument("--expect-title", metavar="STR",
                     help="the title EXACTLY as the user wrote it — compared codepoint-for-codepoint")
