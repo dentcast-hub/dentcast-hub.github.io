@@ -28,15 +28,19 @@ the «unseen first» draw point at them), so it is an ERROR when:
   * a row that existed (matched by id) is gone — retire a row with
     "status": "rejected", never by deleting it
   * a row that existed changed in any field (prompt, options, key, kind,
-    source, …) — except a founder-approved wording fix, which needs
-    --allow-edit <content_id> (the id stays; record the approval in chat)
+    source, …) — except a founder-approved fix (the id stays). Its durable
+    record is an entry in .dentcast/exam-edit-approvals.json, keyed
+    "<content_id>#<id>", with exactly content_id, question_id, row_sha256 (of
+    the approved row: --row-sha256 <content_id>#<id>) and approval {status
+    "confirmed", decision, evidence}; CI and Phase F read it. --allow-edit
+    <content_id> only previews such a fix locally.
   * `version` changed or another top-level key disappeared
 
 and a WARN when a `review` row was promoted to live (founder approval needed),
-rows were inserted before existing ones instead of appended, or rows were
-appended to a content_id other than --content. New content_ids and rows
-appended at the end pass. Comparison is on parsed JSON, so re-indenting the
-file is not a change; editing a value is.
+rows were inserted before existing ones instead of appended, existing rows were
+reordered, or rows were appended to a content_id other than --content. New
+content_ids and rows appended at the end pass. Comparison is on parsed JSON,
+so re-indenting the file is not a change; editing a value is.
 
 Usage:
   python3 tools/validate_exam_questions.py              # whole file
@@ -44,6 +48,7 @@ Usage:
   python3 tools/validate_exam_questions.py --strict     # warnings fail too
   python3 tools/validate_exam_questions.py --baseline origin/main
   python3 tools/validate_exam_questions.py --baseline-file OLD.json
+  python3 tools/validate_exam_questions.py --row-sha256 insight/insight-63#r-0123abcd
 
 Exit 0 when clean, 1 on any error. Prints a one-line summary (live/review per
 content when --content is given).
@@ -51,6 +56,7 @@ content when --content is given).
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import subprocess
@@ -112,13 +118,44 @@ def _rows(entry):
     return entry.get('questions') if isinstance(entry, dict) else None
 
 
-def compare_banks(old, new, content: str | None = None, allow_edit=()) -> tuple[list[str], list[str]]:
+EDIT_APPROVALS_REL = '.dentcast/exam-edit-approvals.json'
+
+
+def row_sha256(row) -> str:
+    """Digest of one parsed row (key order and indentation do not matter)."""
+    return hashlib.sha256(json.dumps(row, ensure_ascii=False, sort_keys=True,
+                                     separators=(',', ':')).encode('utf-8')).hexdigest()
+
+
+def edit_approvals(root: Path = ROOT) -> dict:
+    """{"<content_id>#<id>": row_sha256} for every well-formed confirmed entry of
+    .dentcast/exam-edit-approvals.json; anything else approves nothing."""
+    try:
+        data = json.loads((root / EDIT_APPROVALS_REL).read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        return {}
+    out = {}
+    for key, e in (data.items() if isinstance(data, dict) else ()):
+        a = e.get('approval') if isinstance(e, dict) else None
+        if (isinstance(a, dict) and set(e) == {'content_id', 'question_id', 'row_sha256', 'approval'}
+                and key == f"{e['content_id']}#{e['question_id']}" and isinstance(e['row_sha256'], str)
+                and a.get('status') == 'confirmed' and isinstance(a.get('decision'), str) and a['decision'].strip()
+                and isinstance(a.get('evidence'), list) and a['evidence']
+                and all(isinstance(x, str) and x.strip() for x in a['evidence'])):
+            out[key] = e['row_sha256']
+    return out
+
+
+def compare_banks(old, new, content: str | None = None, allow_edit=(), approved=None) -> tuple[list[str], list[str]]:
     """Key-level append-only comparison of two parsed exam-question files.
 
-    Returns (errors, warnings); the rules are in the module docstring."""
+    Returns (errors, warnings); the rules are in the module docstring.
+    `approved` defaults to the founder-approved edits recorded in this
+    checkout's EDIT_APPROVALS_REL."""
     errors: list[str] = []
     warnings: list[str] = []
     allow_edit = set(allow_edit or ())
+    approved = edit_approvals() if approved is None else approved
     if not isinstance(old, dict) or not isinstance(old.get('byContent'), dict):
         return errors, ['baseline copy is not an exam-questions file — nothing compared']
     if not isinstance(new, dict) or not isinstance(new.get('byContent'), dict):
@@ -161,16 +198,24 @@ def compare_banks(old, new, content: str | None = None, allow_edit=()) -> tuple[
             if (q.get('status') == 'review' and cur.get('status') in LIVE
                     and set(changed) <= {'status', 'review_note'}):
                 warnings.append(f"{cid}#{qid}: promoted from review to live — needs the founder's approval in chat")
+            elif approved.get(f'{cid}#{qid}') == row_sha256(cur):
+                warnings.append(f'{cid}#{qid}: edited ({", ".join(changed)}) under the founder approval '
+                                f'recorded in {EDIT_APPROVALS_REL}')
             elif cid in allow_edit:
-                warnings.append(f'{cid}#{qid}: edited ({", ".join(changed)}) under --allow-edit')
+                warnings.append(f'{cid}#{qid}: edited ({", ".join(changed)}) under --allow-edit (local preview '
+                                f'only; CI and Phase F need its {EDIT_APPROVALS_REL} entry)')
             else:
                 errors.append(f'{cid}#{qid}: existing question modified ({", ".join(changed)}); only a '
-                              f'founder-approved fix may change it (--allow-edit {cid})')
+                              f'founder-approved fix may change it, recorded in {EDIT_APPROVALS_REL} '
+                              f'(row_sha256: --row-sha256 {cid}#{qid})')
         old_set = set(old_ids)
         new_ids = [q.get('id') if isinstance(q, dict) else None for q in new_rows]
         kept = [x for x in new_ids if x in old_set]
         if kept and new_ids[:len(kept)] != kept:
             warnings.append(f'{cid}: new rows inserted before existing ones (append at the end)')
+        elif kept != [x for x in old_ids if x in set(kept)]:
+            warnings.append(f'{cid}: existing rows reordered (nothing lost — ids, not positions, are '
+                            'load-bearing; restore the original order)')
         appended = sum(1 for x in new_ids if x not in old_set)
         if appended and content and cid != content:
             warnings.append(f'{cid}: {appended} row(s) appended to another page than {content}')
@@ -202,7 +247,7 @@ def guard(path: Path, content: str | None = None, allow_edit=(), ref: str | None
         new = json.loads(Path(path).read_text(encoding='utf-8'))
     except (OSError, ValueError) as e:
         return [f'cannot read {path}: {e}'], warnings, label
-    errors, more = compare_banks(old, new, content, allow_edit)
+    errors, more = compare_banks(old, new, content, allow_edit, edit_approvals(root))
     return errors, warnings + more, label
 
 
@@ -214,8 +259,21 @@ def main() -> int:
     ap.add_argument('--baseline', metavar='REF', help='compare with this commit instead of the merge-base')
     ap.add_argument('--baseline-file', metavar='PATH', help='compare with this JSON file instead of git')
     ap.add_argument('--allow-edit', metavar='CONTENT_ID', action='append', default=[],
-                    help='a founder-approved fix to existing rows of this content_id (repeatable)')
+                    help='preview a founder-approved fix to existing rows of this content_id locally '
+                         f'(repeatable); CI and Phase F need its {EDIT_APPROVALS_REL} entry')
+    ap.add_argument('--row-sha256', metavar='CONTENT_ID#ID',
+                    help=f'print the row_sha256 of that row in --file for its {EDIT_APPROVALS_REL} entry')
     args = ap.parse_args()
+
+    if args.row_sha256:
+        cid, _, qid = args.row_sha256.rpartition('#')
+        try:
+            rows = json.loads(Path(args.file).read_text(encoding='utf-8'))['byContent'][cid]['questions']
+            print(row_sha256(next(q for q in rows if isinstance(q, dict) and q.get('id') == qid)))
+            return 0
+        except (OSError, ValueError, KeyError, TypeError, StopIteration):
+            print(f'ERROR: no row {args.row_sha256} in {args.file}')
+            return 1
 
     errors: list[str] = []
     warnings: list[str] = []

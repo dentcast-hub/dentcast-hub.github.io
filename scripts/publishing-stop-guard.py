@@ -80,7 +80,19 @@ ADVICE = (
      "then record again; otherwise inspect."),
     ("CLEANUP_", ". Interrupted local cleanup: confirm-cleanup after the cleanup push, or restore-cleanup if "
      "that delivery failed."),
+    ("FINAL_HANDOFF_DELIVERED_FINISH_REQUIRED", ": the completed final handoff (paper-only or pre-policy run) is "
+     "delivered but the publication is not finished: run finish --expected-sha256 <digest>, commit and push only "
+     "the handoff deletion, then confirm-cleanup."),
 )
+
+
+def require_finish_after_final_handoff(h, lifecycle, root):
+    """The guard allows a stop once a paper-only/pre-policy run's completed final
+    handoff is delivered; finish, the deletion push and confirm-cleanup are still owed."""
+    if has_handoff(root):
+        publication = h.load_state(root)[0]["publication"]
+        if not lifecycle.fixed_delivery(publication) and h.next_step(publication) is None:
+            raise h.Blocked("FINAL_HANDOFF_DELIVERED_FINISH_REQUIRED")
 
 
 def advice(code):
@@ -112,6 +124,7 @@ def main(argv=None):
         import dentcast_publish_handoff as h
         import dentcast_publish_lifecycle as lifecycle
         lifecycle.guard(root, "stop")
+        require_finish_after_final_handoff(h, lifecycle, root)
     except Exception as exc:
         blocked = type(exc).__name__ == "Blocked"
         if not blocked and not has_handoff(root):

@@ -723,6 +723,14 @@ def stage_delivery(root, expected, paths):
     h.require(paper_final or (fixed_delivery(p) and delivery_boundary(p) in (1, 2)),
               "STAGE_DELIVERY_ONLY_AT_FIXED_CUT")
     h.require(bool(paths), "STAGE_DELIVERY_PATHS_REQUIRED")
+    # finish requires context.delivery on that exact delivered handoff, so a
+    # paper-only final handoff without it would need a second final commit.
+    h.require(not paper_final or (bool(p["context"]["delivery"]) and all(
+        isinstance(d, dict) and h.nonempty(d.get("scope")) and isinstance(d.get("evidence"), list)
+        and bool(d["evidence"]) and all(h.nonempty(e) for e in d["evidence"])
+        for d in p["context"]["delivery"])),
+        "DELIVERY_EVIDENCE_REQUIRED: record context.delivery (scope + evidence of the verified Drive "
+        "filing) before staging the paper-only final handoff")
     scope = set(p["target_paths"]) | set(state["snapshot"]["files"])
     local_only = h.local_only_inputs(root, p)
     for path in paths:

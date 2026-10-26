@@ -413,8 +413,9 @@ def tool_staleness_warnings():
         last = text_git(root, "log", "-1", "--format=%H", ref, "--", name, optional=True)
         if last and git(root, "merge-base", "--is-ancestor", last, "HEAD", optional=True) is None:
             return ["TOOL_OLDER_THAN_ORIGIN_MAIN: " + name + " differs from origin/main and HEAD lacks "
-                    "its latest change; branch from origin/main (git switch -c <branch> origin/main) "
-                    "before starting a publication"]
+                    "its latest change; before starting a publication move the still-empty session branch "
+                    "onto origin/main (git switch -C <current-branch> --no-track origin/main; a cloud ccr-* "
+                    "branch already exists) or branch anew (git switch -c <branch> --no-track origin/main)"]
     return []
 
 
