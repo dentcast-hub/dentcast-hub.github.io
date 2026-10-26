@@ -6,7 +6,10 @@ on:
       - 'AGENTS.md'
       - 'CLAUDE.md'
       - '.cursor/**'
+      - '.cursor/hooks.json'
       - '.claude/**'
+      - '.claude/settings.json'
+      - '.agents/**'
       - '.codex/**'
       - '.dentcast/PUBLISH-HANDOFF.md'
       - '.dentcast/publication-reports/**'
@@ -23,10 +26,14 @@ on:
       - 'tests/test_dentcast_publish*.py'
       - 'tests/test_dentcast_agent_entrypoint_migration.py'
       - 'tests/publishing-hooks.test.mjs'
+      - 'tests/test_dentcast_session_hooks.py'
+      - 'tests/test_verify_publish_checks.py'
+      - 'tests/fixtures/**'
+      - 'scripts/**'
       - 'scripts/*publishing*.mjs'
       - 'scripts/publishing-stop-guard.py'
       - 'scripts/cursor-parity-notice.mjs'
-      - '.githooks/pre-commit'
+      - '.githooks/**'
       - '.workflow-sync.json'
       - '.github/workflows/publishing-live-contract-tests.yml'
       - '.github/workflows/sitemap_only.yml'
@@ -73,6 +80,10 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_dentcast_publish*.py' -v
       - name: Check first-cut GitHub Git-Data transport (no scientific mocks)
         run: python3 -m unittest discover -s tests -p 'test_dentcast_connected_first_push.py' -v
+      - name: Check session-start, Cursor and Codex hook commands
+        run: python3 -m unittest discover -s tests -p test_dentcast_session_hooks.py -v
+      - name: Check Phase F verifier rows
+        run: python3 -m unittest discover -s tests -p test_verify_publish_checks.py -v
       - name: Check hook adapters and shared rule routing
         run: node --test tests/publishing-hooks.test.mjs
       - name: Inspect committed checkpoint or cleanup boundary
