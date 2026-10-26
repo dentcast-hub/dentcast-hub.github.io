@@ -82,5 +82,72 @@ class StampCatalogueTests(unittest.TestCase):
                              'c="my-dentcast.json?v=3"')
 
 
+def pulse_home(urls):
+    return ('<ul class="dc-pulse-list">'
+            + ''.join(f'<li><a href="{u}">x</a></li>' for u in urls) + '</ul>')
+
+
+class PulseBaselineTests(unittest.TestCase):
+    """Pulse is compared with the main commit the branch was cut from, not
+    with whatever origin/main has become since (another publication)."""
+
+    def setUp(self):
+        import subprocess, tempfile
+        self.sp = subprocess
+        self.tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self.tmp.name)
+        self.git('init', '-q', '-b', 'main')
+        self.git('config', 'user.email', 't@t'); self.git('config', 'user.name', 't')
+        self.base = [f'/insight/insight-{n}.html' for n in range(1, 8)]
+        self.commit(pulse_home(self.base), 'A')                        # main@A
+        self.git('checkout', '-q', '-b', 'pub')
+        self.mine = '/insight/insight-100.html'
+        self.commit(pulse_home([self.mine] + self.base[:-1]), 'mine')  # correct vs A
+        self.git('checkout', '-q', 'main')
+        other = '/episodes/episode-200.html'
+        self.commit(pulse_home([other] + self.base[:-1]), 'other')     # main advances
+        self.git('update-ref', 'refs/remotes/origin/main', 'main')
+        self.git('checkout', '-q', 'pub')
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def git(self, *args):
+        return self.sp.run(['git', '-C', str(self.root), *args], check=True,
+                           capture_output=True, text=True).stdout
+
+    def commit(self, home, msg):
+        (self.root / 'index.html').write_text(home, encoding='utf-8')
+        self.git('add', 'index.html'); self.git('commit', '-q', '-m', msg)
+
+    def verdict(self, home):
+        from unittest.mock import patch
+        rep = vp.Report('fixture')
+        with patch.object(vp, 'ROOT', self.root):
+            vp.check_pulse(rep, home, self.mine, False, vp.pulse_baseline(rep))
+        return rep
+
+    def test_branch_cut_before_main_advanced_passes(self):
+        rep = self.verdict((self.root / 'index.html').read_text(encoding='utf-8'))
+        self.assertFalse(rep.failures, rep.rows)
+        self.assertTrue(any('merge-base' in r[2] for r in rep.rows if r[0] == 'PASS'))
+
+    def test_wrong_pulse_still_fails(self):
+        wrong = pulse_home([self.mine] + self.base[1:])   # dropped the top, not the bottom
+        self.assertTrue(self.verdict(wrong).failures)
+
+    def test_falls_back_to_origin_main_without_merge_base(self):
+        from unittest.mock import patch
+        real = vp._git
+        def no_merge_base(*args):
+            if args[0] == 'merge-base':
+                raise self.sp.CalledProcessError(1, 'git')
+            return real(*args)
+        with patch.object(vp, '_git', no_merge_base):
+            rep = self.verdict((self.root / 'index.html').read_text(encoding='utf-8'))
+        self.assertTrue(any(r[0] == 'WARN' and 'fell back' in r[2] for r in rep.rows))
+        self.assertTrue(rep.failures)   # current main moved on: the old false FAIL, flagged
+
+
 if __name__ == '__main__':
     unittest.main()

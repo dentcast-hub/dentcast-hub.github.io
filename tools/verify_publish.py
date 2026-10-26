@@ -720,6 +720,41 @@ def pulse_items(home):
     return re.findall(r'<li\b[^>]*>.*?</li>', block.group(1), re.S) if block else []
 
 
+def _git(*args):
+    return subprocess.check_output(['git', *args], cwd=ROOT,
+                                   stderr=subprocess.DEVNULL, timeout=10).decode('utf-8')
+
+
+def pulse_baseline(rep):
+    """The homepage this branch was cut from: `git merge-base HEAD origin/main`.
+    Comparing against the current origin/main would falsely fail whenever
+    another publication reached main after this branch was cut. Falls back to
+    origin/main (and says so) when no merge base is available, e.g. a shallow
+    clone. Returns None after recording a FAIL if neither is readable."""
+    try:
+        base = _git('merge-base', 'HEAD', 'origin/main').strip()
+    except (OSError, subprocess.SubprocessError, UnicodeError):
+        base = ''
+    if base:
+        try:
+            home = _git('show', f'{base}:index.html')
+            rep.ok('6 pulse', f'Pulse baseline: merge-base {base[:10]} of HEAD and origin/main')
+            return home
+        except (OSError, subprocess.SubprocessError, UnicodeError):
+            pass
+    try:
+        home = _git('show', 'origin/main:index.html')
+    except (OSError, subprocess.SubprocessError, UnicodeError):
+        rep.fail('6 pulse', 'cannot verify previous Pulse: local origin/main:index.html unavailable',
+                 'fetch the main baseline before final verification')
+        return None
+    rep.warn('6 pulse', 'Pulse baseline: no merge-base of HEAD and origin/main (shallow '
+                        'clone?); fell back to the current origin/main, which is only correct '
+                        'if main has not advanced since this branch was cut',
+             'git fetch --unshallow origin')
+    return home
+
+
 def check_pulse(rep, home, url, sweep=False, previous_home=None):
     items = pulse_items(home)
     def links(item):
@@ -1669,15 +1704,7 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
     elif is_gloss:
         rep.skip("6 pulse", "glossary: not customary in Pulse")
     else:
-        previous_home = None
-        if not sweep:
-            try:
-                previous_home = subprocess.check_output(
-                    ['git', 'show', 'origin/main:index.html'], cwd=ROOT,
-                    stderr=subprocess.DEVNULL, timeout=10).decode('utf-8')
-            except (OSError, subprocess.SubprocessError, UnicodeError):
-                rep.fail('6 pulse', 'cannot verify previous Pulse: local origin/main:index.html unavailable',
-                         'fetch the main baseline before final verification')
+        previous_home = None if sweep else pulse_baseline(rep)
         check_pulse(rep, home, url, sweep, previous_home)
 
     rail = re.search(r'<a class="dc-rail-card"[^>]*href="%s">(.*?)</a>' % re.escape(url), home, re.S)
