@@ -16,8 +16,10 @@ correct.
 the same identifier `plus/content-index.json`, the quiz index and the
 flashcards index use.
 
-Exit codes: 0 = every check passed (publish is complete), 1 = at least one
-FAIL (publish is incomplete — fix what is listed, then re-run).
+Exit codes (single content_id or --last): 0 = every check passed (publish is
+complete), 1 = at least one FAIL (publish is incomplete — fix what is listed,
+then re-run). --all is a backlog report, not a gate: it prints every FAIL but
+always exits 0.
 
 Standard library only, same as the other tools in this directory.
 """
@@ -26,6 +28,7 @@ import argparse
 import hashlib
 import html
 import json
+import posixpath
 import re
 import sys
 import subprocess
@@ -247,7 +250,9 @@ def episode_landing_title(content_id):
     would render, not a second opinion about it."""
     sys.path.insert(0, str(ROOT / "tools"))
     from build_episodes import clean_title  # noqa: E402
-    num = Path(content_id).name.replace("episode-", "")
+    # Sub-episodes live at episode-159-1.html but dentcast.json numbers them
+    # "159.1", so the file's "-" separator maps back to ".".
+    num = Path(content_id).name.replace("episode-", "").replace("-", ".")
     try:
         eps = json.loads((ROOT / "dentcast.json").read_text(encoding="utf-8"))
     except (OSError, ValueError):
@@ -741,6 +746,57 @@ def check_pulse(rep, home, url, sweep=False, previous_home=None):
                   'Pulse must drop only the previous bottom line and preserve the other six', 'step 6')
 
 
+def site_path(href, page_rel):
+    """The repo-relative path an internal href points at, or None if the href
+    leaves the site (external host, tel:, mailto:, a bare #fragment)."""
+    href = href.split("#")[0].split("?")[0]
+    m = re.match(r"https?://(?:www\.)?dentcast\.(?:org|ir)(/.*)?$", href)
+    if m:
+        href = m.group(1) or "/"
+    elif re.match(r"^[a-z][a-z0-9+.-]*:", href, re.I) or href.startswith("//") or not href:
+        return None
+    if href.startswith("/"):
+        return posixpath.normpath(href).lstrip("/")
+    return posixpath.normpath(posixpath.join(posixpath.dirname(page_rel), href))
+
+
+def check_litecast_links(rep, doc, page_rel, brain):
+    """Hard Rules 9/10, steps 0.2/0.5/0.6: LiteCast is an isolated track. Its
+    «کاوش بیشتر» holds at most 5 links, all to other LiteCast entries (never
+    the دانشنامه / فهرست موضوعی capsules, glossary terms or brain entries),
+    and its body carries no inline links into specialist content."""
+    lite = json.loads(read("litecast/lite-glossary.json"))["LightGlossary"]
+    lite_pages = {(e.get("page_url") or "").lstrip("/") for e in lite} - {""}
+    # The rules cap and scope the section's links; they do not require one
+    # (step 0.3: no fabricated linking where the template has none).
+    n_sections = doc.count('<div class="dc-related-section">')
+    rep.check(n_sections <= 1, "2.5 related", "at most one «کاوش بیشتر» section",
+              f"found {n_sections} dc-related-section blocks (expected at most 1)", "step 0.6")
+    sec = related_section(doc)
+    if sec:
+        links = re.findall(r'href="([^"]+)"', sec.group(0))
+        rep.check(len(links) <= 5, "9 cap",
+                  f"{len(links)}/5 links in «کاوش بیشتر»",
+                  f"{len(links)} links — over the hard cap of 5", "Hard Rule 9")
+        foreign = [h for h in links if site_path(h, page_rel) not in lite_pages]
+        rep.check(not foreign, "10 lite",
+                  "«کاوش بیشتر» links only to other LiteCast entries",
+                  f"«کاوش بیشتر» links outside LiteCast: {foreign}",
+                  "Hard Rule 10 / step 0.6 — LiteCast-to-LiteCast only")
+        rep.check(not any(site_path(h, page_rel) == page_rel for h in links), "4.9 related",
+                  "no self-link", "the section links to the page itself")
+    # Specialist content = every folder a non-LiteCast brain entry lives in,
+    # plus the glossary and pillar hubs and the episodes landing page.
+    specialist = {entry_url(e).lstrip("/").split("/")[0] for e in brain
+                  if entry_url(e) and e.get("type") != LITECAST} | {"glossary", "pillar"}
+    body = [h for h in re.findall(r'href="([^"]+)"', article_region(doc))
+            if (p := site_path(h, page_rel)) is not None
+            and (p.split("/")[0] in specialist or p == "episodes.html")]
+    rep.check(not body, "10 lite", "body has no inline links to specialist content",
+              f"body links into the specialist ecosystem: {body}",
+              "Hard Rule 10 / step 0.2 — LiteCast in-body links go to other LiteCast items only")
+
+
 def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False):
     """`sweep` = this is a site-wide regression pass over already-published
     pages, not the gate on a publish in flight. Checks that are only meaningful
@@ -972,7 +1028,9 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
     # Core episodes carried no `type` field for their first 202 entries; more
     # recent ones (154+) write "type": "dentcast" instead (same category,
     # schema drift — see Hard Rule 6). Both must hit the episode branch.
-    if is_lite or etype in ("episode", "dentcast"):
+    if is_lite:
+        check_litecast_links(rep, doc, page_rel, brain)
+    elif etype in ("episode", "dentcast"):
         rep.skip("2.5 related", f"{etype} uses its own related-links convention")
     else:
         rep.check(n_sections == 1, "2.5 related",
@@ -1541,16 +1599,25 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
     # and never should — and failed all 209 episodes on a page that is working
     # exactly as designed. The real landing page is episodes.html, built by
     # tools/build_episodes.py.
+    #
+    # DentAI and PhotoCast are closed sections: their folders stay on disk but
+    # their pages are listed on sharehub/index.html, not on their own landing
+    # (.dentcast/workflows/global/repo-conventions.md).
     landing = f"{Path(content_id).parent}/index.html"
+    needle = Path(content_id).name + ".html"
     if landing == "episodes/index.html":
         landing = "episodes.html"
+    elif landing in ("dentai/index.html", "photocast/index.html"):
+        # sharehub/index.html also lists its own pages, so match the full
+        # path (photocast/episode-2.html is not episodes/episode-2.html).
+        landing, needle = "sharehub/index.html", "/" + page_rel
     if exists(landing):
         land = read(landing)
-        n = len(re.findall(re.escape(Path(content_id).name + ".html"), land))
+        n = len(re.findall(re.escape(needle), land))
         rep.check(n >= 1, "2.6 landing", f"{landing} links to the page",
                   f"{landing} has no link to the new entry", "step 2.6")
         if n >= 1:
-            li = re.search(r"<li>(?:(?!</li>).)*?" + re.escape(Path(content_id).name + ".html")
+            li = re.search(r"<li>(?:(?!</li>).)*?" + re.escape(needle)
                            + r".*?</li>", land, re.S)
             if li:
                 # An episode carries TWO legitimate titles: the podcast's own
@@ -1805,7 +1872,8 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
               f"— the stamper did not run last",
               "python tools/stamp-version.py  (ALWAYS the final builder)")
     for f in ("index.html", "player.html"):
-        vs = set(re.findall(r"dentcast-brain\.json\?v=([a-z0-9]+)", read(f)))
+        # Brain and episode-catalogue (dentcast.json) fetches, as stamped.
+        vs = set(re.findall(r"(?:dentcast-brain|(?<![\w-])dentcast)\.json\?v=([a-z0-9]+)", read(f)))
         if vs:
             rep.check(vs == {want}, "7 version", f"{f} ?v= is current",
                       f"{f} carries ?v={vs}, expected {want}", "python tools/stamp-version.py")
@@ -1820,7 +1888,8 @@ def main():
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("content_id", nargs="?", help="e.g. chairside/chairside-28")
     ap.add_argument("--last", action="store_true", help="verify the newest brain entry")
-    ap.add_argument("--all", action="store_true", help="verify every brain entry that has a page")
+    ap.add_argument("--all", action="store_true", help="verify every brain entry that has a page "
+                         "(backlog report: always exits 0, even with FAILs)")
     ap.add_argument("--quiet", action="store_true", help="print only failures")
     ap.add_argument("--expect-title", metavar="STR",
                     help="the title EXACTLY as the user wrote it — compared codepoint-for-codepoint")
