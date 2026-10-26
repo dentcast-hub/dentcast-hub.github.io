@@ -211,3 +211,10 @@ is still answered by the user, including but not limited to:
 
 The skill produces the scientific input and points the workflow at it; the
 workflow owns every decision and gate from there.
+
+**Publishing a cluster.** One publication run = one term = one `content_id` and
+one fixed `.dentcast/PUBLISH-HANDOFF.md` (`tools/dentcast_publish_handoff.py`
+cannot rebind a run to another ID). Draft the cluster together, then publish the
+terms **one after another**, each a complete run with its own three deliveries;
+start the next term only after the previous run's handoff was deleted by its
+verified final delivery. Never batch several terms into one handoff.

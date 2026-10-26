@@ -38,6 +38,9 @@ stop. The cabinet catalog (`dentcast_cabinet_full_catalog.json`) is read
 client-side by `dentcast_cabinet_search.html` via `fetch`, and it is **not** part
 of the site version hash (step 7), so a paper-only addition needs **no** builder
 run and **no** version bump — Drive upload + catalog edit + commit is the whole job.
+The one exception is step 4.10 Part 2 item 7: when the paper count crosses a round
+hundred, the advertised figure changes and `python3 tools/asset_version.py --bump`
+runs with it — a cache-buster for the shared gate module, not the site version stamp.
 
 The catalog is also deliberately **kept out of search**: `robots.txt` disallows
 both `dentcast_cabinet_full_catalog.json` and its `.enriched.json` sibling,
@@ -140,6 +143,10 @@ Look at the latest entry in the locked category and identify which media fields 
 - If previous entries have an **audio field** populated:
   - For types where audio lives in a sibling directory (e.g., NoteCast pulls audio from `/episodes/episode-XX`): **don't ask**. Try to fetch automatically from the matching sibling path. If sibling path can't be resolved or has no audio, then ask the user.
   - Otherwise ask the user directly.
+  - Audio files never enter the repo: they are uploaded to ArvanCloud object
+    storage and only the URL is written (e.g.
+    `https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast162%20.mp3?versionId=`
+    in `dentcast.json`). Ask for the uploaded URL; never commit the file.
 - If previous entries have a **video / external link field** populated → ask: «لینک ویدیو/منبع چیه؟»
 - If previous entries have a **transcript or attachment field** populated → ask for it.
 - For any other populated field that the user clearly needs to supply (not derivable from text), ask.
@@ -173,7 +180,8 @@ Phase 0 — Parts 1 & 2 only, no publish.)
 
 ### Question 4.8 — DES evidence basis (what text will the score be computed from?)
 
-**Runs for EVERY type, on EVERY publish that produces a page.** This arms the **DES
+**Runs for EVERY type, on EVERY publish that produces a page** — except LiteCast and
+a چالش (Question 4.9), the canonical skips of `modules/08-des-fidelity.md`. This arms the **DES
 scoring step (Phase C step 4.13)**. The question is *not* "how good is this
 content" — it is the purely factual one of **what text the scoring model will be
 given**, because that model never fetches anything (DES spec Core Rule 4: "You score
@@ -272,7 +280,9 @@ and ask, as a two-option menu:
 - **User supplies DOI(s)** → the publish becomes basket 2; carry them to step 4.13.
 - **User picks «بدون DES»** → the publish carries **no DES record at all**, and step
   4.13 is a documented skip ("4.13: skipped — کاربر انتخاب کرد بدون DES منتشر شود").
-  It does **not** quietly fall back to the COMMENTARY track: scoring a
+  Record that decision as a page-bound entry in `.dentcast/des-exemptions.json`
+  (`publish-checkpoints.md`; reason `unsourced_audio_caption` for a caption+audio-only
+  episode, otherwise `founder_without_des`) — without it Phase F fails. It does **not** quietly fall back to the COMMENTARY track: scoring a
   research-derived piece as though it were the author's own opinion is a false
   statement about what the page is, and a band E on a paper summary is worse than no
   band at all.

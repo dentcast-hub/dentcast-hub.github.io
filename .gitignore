@@ -31,3 +31,14 @@ plus-api/.deploy.env
 # key + secret). Same rule as plus-api/.deploy.env: belongs to whoever is
 # deploying, never the repo.
 .deploy-frontend.env
+
+# Publication inputs that never belong in public Git history: episode audio is
+# uploaded to ArvanCloud object storage and only its URL is committed (see
+# dentcast.json), and attached papers are filed in the Drive cabinet. No such
+# file is tracked; a deliberate exception needs `git add -f`.
+*.mp3
+*.m4a
+*.wav
+*.ogg
+*.aac
+*.pdf

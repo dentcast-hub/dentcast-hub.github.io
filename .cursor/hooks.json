@@ -10,6 +10,16 @@
       {
         "command": "d=\"${CURSOR_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}\"; { [ -n \"$(git -C \"$d\" config core.hooksPath)\" ] || git -C \"$d\" config core.hooksPath .githooks; } 2>/dev/null || true; cat >/dev/null; printf '{\"permission\":\"allow\"}\\n'"
       }
+    ],
+    "afterFileEdit": [
+      {
+        "command": "d=\"${CURSOR_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}\"; CURSOR_PROJECT_DIR=\"$d\" node \"$d/scripts/cursor-parity-notice.mjs\" --cursor"
+      }
+    ],
+    "stop": [
+      {
+        "command": "d=\"${CURSOR_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}\"; CURSOR_PROJECT_DIR=\"$d\" python3 \"$d/scripts/publishing-stop-guard.py\" --cursor"
+      }
     ]
   }
 }

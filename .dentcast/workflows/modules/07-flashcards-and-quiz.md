@@ -8,7 +8,8 @@
 ### 4.11. Flashcards (Leitner) — semantic `DefinedTermSet` in the FAQ corpus
 
 **Runs for EVERY type, on EVERY publish that produces a page — LiteCast and
-DentCast+ (`dentcast_plus`) are the two exceptions.** LiteCast stays outside
+DentCast+ (`dentcast_plus`) are the two exceptions** (a چالش from Question 4.9
+also skips it — `modules/09-challenge.md`). LiteCast stays outside
 the specialist ecosystem, same as the glossary/pillar linking it skips in
 step 0. **DentCast+ is optional, not skipped:** a video's real content is
 in the video itself, not in re-typable prose — the page's own text is often
@@ -125,7 +126,8 @@ shaped and skipped.
 ### 4.12. Quiz-ready FAQ + scored binary bank
 
 **Runs for EVERY type, on EVERY publish that produces a page — LiteCast is the
-sole exception** (same scope as flashcards: LiteCast is patient-facing and
+sole category exception** (a چالش also skips it — `modules/09-challenge.md`;
+same scope as flashcards: LiteCast is patient-facing and
 stays out of the specialist quiz/flashcard ecosystem). The FAQPage node
 authored for this content — written into `plus/faq-corpus.json` under its
 content id, **never into the page's own JSON-LD** (see step 4.11) — feeds
@@ -202,7 +204,9 @@ compliance and anything you asked the user about.
 **Runs on every publish whose page becomes (or already is) a step of a full
 pathway — i.e. every specialist type that step 5.6 files into `plus/pathways.json`.
 Skipped, as a documented skip, for LiteCast, چالش, glossary terms and any
-publish whose page lands in no full pathway.** Founder decision 1405/08/03
+publish whose page lands in no full pathway.** Pathway membership is decided
+only at step 5.6, so this step is **evaluated there, after placement** (module
+10 triggers it), not right after 4.12. Founder decision 1405/08/03
 («بانک سوال مسیر دوگانه … که دیگه وقتی مطلب منتشر می‌کنیم اذیت نشیم»): the
 pathway certificate exam draws article questions from two sources — the
 founder's own rows in the API (`content_exam_questions`) and this repo file —
@@ -269,9 +273,10 @@ rules, duplicate prompts) — it is also what `verify_publish.py` reads in its
 `plus/pathways.json`, and `plus-api` re-fetches the published copy on its own
 (`EXAM_QUESTIONS_URL`, `content-refresh.ts`), so nothing else runs.
 
-**Ledger:** this step has no checkpoint id of its own; record its result (rows
-written, or the skip reason) in the evidence of **C.4.12**, which stays the
-module's second checkpoint.
+**Ledger:** this step has no checkpoint id of its own and does not hold
+**C.4.12**, which stays the module's second checkpoint (its evidence notes
+«4.12-ب: evaluated at 5.6»); record this step's result (rows written, or the
+skip reason) in the evidence of **C.5.6**.
 
 **Verify:** report how many questions this page added (and the skip reason if
 none), that each was approved in chat, that `validate_exam_questions.py`
