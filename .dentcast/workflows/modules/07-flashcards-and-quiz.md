@@ -267,6 +267,30 @@ rows. Each row:
 - `source` is `"publish"` for a question written at publish time (the
   1405/08/03 backfill carries `"quiz"` + `source_quiz_id`).
 
+**Existing rows are append-only** — CI, the validator and Phase F's «4.12-ب
+bank» row FAIL when any row that already exists (this page's or another's)
+is deleted or changed, naming the lost `content_id#id`; retire a row with
+`"status": "rejected"`. Reordering existing rows loses nothing (ids, not
+positions, are load-bearing) and only WARNs. The single exception is a fix the
+founder approves in chat for an existing row (wording, key): keep its `id`,
+edit the row, then record that approval for exactly the edited bytes as an
+entry of `.dentcast/exam-edit-approvals.json` (add it to `target_paths`):
+
+```json
+{
+  "insight/insight-63#r-0123abcd": {
+    "content_id": "insight/insight-63",
+    "question_id": "r-0123abcd",
+    "row_sha256": "<python3 tools/validate_exam_questions.py --row-sha256 insight/insight-63#r-0123abcd>",
+    "approval": {"status": "confirmed", "decision": "exact scope of the fix",
+                 "evidence": ["public-safe reference to the founder's approval"]}
+  }
+}
+```
+
+Any later change to that row needs a new approval and hash. `--allow-edit
+<content_id>` only previews a fix locally; it is not read by CI or Phase F.
+
 Then run `python3 tools/validate_exam_questions.py` (shape, ids, option
 rules, duplicate prompts) — it is also what `verify_publish.py` reads in its
 «4.12-ب exam» row. No builder: the file is hand-authored like

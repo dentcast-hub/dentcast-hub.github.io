@@ -41,8 +41,13 @@ A helper refusal `SHALLOW_CLONE_DEEPEN_REQUIRED` means exactly this: run
 `git fetch --deepen=50 origin` (repeat, or `git fetch --unshallow`, if it persists)
 and retry the same command. A `TOOL_OLDER_THAN_ORIGIN_MAIN` warning from the
 helper means this checkout's publishing tool lacks `origin/main`'s latest change:
-before starting a publication, branch from `origin/main`
-(`git switch -c <branch> origin/main`) instead of continuing on the stale base.
+before starting a publication, branch from `origin/main` instead of continuing on
+the stale base. A cloud session's own `ccr-*` branch already exists, so move that
+still-empty branch with `git switch -C <that-branch> --no-track origin/main`
+(`-c` fails with "already exists"; `--no-track` keeps `git pull`/`git push` on the
+publication branch instead of `main`); elsewhere use
+`git switch -c <branch> --no-track origin/main`. Never move a branch that already
+holds publication commits.
 
 `content_id` is `<section>/<slug>` without `.html`, exactly the page path minus
 its extension (e.g. `insight/insight-99`, `dentai/promptologist/<slug>`); the page,
@@ -552,7 +557,7 @@ python3 tools/dentcast_publish_handoff.py verify --expected-sha256 <digest> --ex
 
 Omit an expectation only if the user genuinely provided neither corresponding string; never derive an alternative from the rendered page. Do not use `--all` or `--last`. The helper captures exit code, output digest, expected strings and summary, marks F completed/failed, and preserves state on failure. It does not suppress warnings; review the actual verifier output and source rules. The helper's receipt is metadata, not a substitute for the scientific and human gates. Re-run verification after any affected change.
 
-For paper-only, after Parts 1/2 and before reporting, run `verify --expected-sha256 <digest> --catalog-id <actual-P-id>`. It rechecks the actual catalog entry, Drive-link identities and a recorded completed Drive-action receipt. The agent must still verify the real upload, correct folder, enriched schema and metadata with the canonical tools; the local gate cannot contact Drive or replace those approvals. This is the documented no-page exception, not a synthetic page Phase F. Stage its catalog work and handoff for the commit with the same `stage-delivery --expected-sha256 <digest> --path <scoped-path>` used at page cuts.
+For paper-only, after Parts 1/2 and before reporting, run `verify --expected-sha256 <digest> --catalog-id <actual-P-id>`. It rechecks the actual catalog entry, Drive-link identities and a recorded completed Drive-action receipt. The agent must still verify the real upload, correct folder, enriched schema and metadata with the canonical tools; the local gate cannot contact Drive or replace those approvals. This is the documented no-page exception, not a synthetic page Phase F. After G, record `context.delivery` (scope + evidence of the verified Drive filing) **before** staging: `finish` requires it on that exact delivered handoff, so `stage-delivery` refuses the final handoff without it (`DELIVERY_EVIDENCE_REQUIRED`). Stage its catalog work and handoff for the commit with the same `stage-delivery --expected-sha256 <digest> --path <scoped-path>` used at page cuts (an ignored local PDF is never staged), commit and push it once, then run `finish`, commit/push only the handoff deletion and run `confirm-cleanup`; the Stop guard blocks between that push and `finish`.
 
 Finish report G and record its real reference. `context.delivery` must contain
 objects with nonempty `scope` and `evidence` lists for actual required external
