@@ -1,0 +1,14 @@
+{
+  "type": "plak_sefr",
+  "note": "Publish of plak-sefr/plak1-10 (پلاک صفر — معماری اطلاعات یعنی چه). #پلاک_صفر, #سؤال_بیمار, #سایت_مطب and #حضور_آنلاین_دندانپزشک are REUSED (the part groups the patient-question list of part 5 into the site's structure). One concept the part resolves is newly minted (founder-approved 1405/08/04): information architecture — deciding how a site's texts are grouped and where each sits before the first is written. --simulate for «معماری اطلاعات» / «information architecture» returned only a word collision (#اطلاعات_مطب) or nothing above threshold. Article tags land with the brain entry (step 5).",
+  "concepts": [
+    {
+      "tag": "#معماری_اطلاعات",
+      "domain": "web",
+      "definition": "تصمیم درباره‌ی اینکه متن‌های یک سایت در چه گروه‌هایی قرار می‌گیرند و هر متن، حتی متن‌هایی که هنوز نوشته نشده‌اند، کجا می‌نشیند؛ پیش از نوشتن اولین متن گرفته می‌شود تا متن تازه فقط به گروه خودش اضافه شود و آدرس متن‌های قبلی عوض نشود.",
+      "use_when": "مطلب درباره‌ی گروه‌بندی و ساختار محتوای سایت، نام‌گذاری گروه‌ها و منو، یا تعیین جای هر متن پیش از نوشتن آن باشد.",
+      "aliases": ["information architecture", "معماری سایت", "ساختار سایت"]
+    }
+  ],
+  "articles": {}
+}
