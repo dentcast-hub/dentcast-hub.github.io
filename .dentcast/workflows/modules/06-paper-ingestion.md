@@ -106,13 +106,17 @@ socket`, `GBR`, `periimplantitis`, `biomimetic`, with nested paths like
    - `topic` and `topic_path` → the subfolder chosen in Part 1 (the search
      page's topic filter reads `topic`).
    - `doi`, `journal`, `crossref_year`, `abstract` → from the metadata lookup.
+     On the **paper-only fast path** Part 3 does not run, so do only its step 1
+     lookup (DOI + metadata, same ask-don't-guess rule, no page credit) to fill
+     these fields.
    - `file_name` → the real filename; `file_size` → the file's byte size.
    - **`drive_link` / `drive_view` / `drive_download` / `drive_id` → the Drive
      URLs/id captured in Part 1.** (Putting the paper's Drive link into the JSON
      is the whole point of this part.)
    - `status` → match the template (e.g. `"linked"`); `semantic_tagged` → `true`.
    - `linked_episodes` → the page being published, if any (follow the template's
-     value shape); on the **paper-only fast path** there is no page, so leave it
+     value shape) — never a LiteCast page, since nothing links to LiteCast (step
+     0.2); on the **paper-only fast path** there is no page, so leave it
      as the template's empty shape (e.g. `[]`). `key_finding` /
      `clinical_bottom_line` may stay `""` as on most entries unless the content
      gives them clearly.
@@ -159,6 +163,8 @@ socket`, `GBR`, `periimplantitis`, `biomimetic`, with nested paths like
    needed with it: `index.html`'s copy is its own, but the gate sheet's text is
    in a shared module, so run `python3 tools/asset_version.py --bump` in the same
    commit (see the cache-buster rule) or returning browsers keep the old figure.
+   This holds on the paper-only fast path too: Phase 0's «no version bump» means
+   the site version stamp, not this asset cache-buster.
 
 #### Part 3 — Find the DOI on the web and add a first-author → DOI credit on the page (ShareHub style)
 
@@ -204,6 +210,9 @@ the **DOI**.
 4. **Hash the new page before and after Part 3.** The only allowed diffs are the
    first-author→DOI credit (and any `isBasedOn` value update). Report before/after
    hashes. Don't break HTML (no link inside an existing link or heading).
+5. **Several attached papers.** Run Parts 1–2 once per paper (one catalog entry
+   each, all linking this page) and give **each** paper its own first-author→DOI
+   anchor — as a «منابع» list like `sharehub/share-22.html`, not N `.author` blocks.
 
 **Verify after the branch:** report the Drive subfolder the paper landed in (and
 its `drive_view` URL); the new catalog entry's `id`, `topic`/`topic_path`,

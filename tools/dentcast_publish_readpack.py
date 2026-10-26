@@ -22,16 +22,20 @@ MODULES = WORKFLOW + 'modules/'
 # These blobs were independently inspected at main c16554c (PR #971) and
 # re-audited after the v2 checkpoint-preface update: only the always-kept
 # preface changed; every boundary and omitted section is byte-identical.
+# Re-audited 2026-10-26 (doc-contradiction fixes): 03 edits only the LiteCast
+# branch it omits for non-LiteCast; 04 only the always-kept capsule table; 06
+# only paper-branch text (omitted only without a paper); 12 only the kept
+# Final output summary. No boundary heading changed.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
-    '03-litecast-and-page.md': '4258a930b01c8691dc3c38636c0f4ab2b6592cca',
-    '04-taxonomy-and-navigation.md': '25fc88e1d657ae9eb5ad0fdd5d9ba6dfca6dba38',
+    '03-litecast-and-page.md': '28ab4d554f9e5631724d3133177332843cc0c900',
+    '04-taxonomy-and-navigation.md': '711e1ed6f34d0a4a3041adcbe8df532f6b098094',
     '05-semantic-linking.md': '760dcf77dd3baff173aebb2d40492604fb096d1f',
-    '06-paper-ingestion.md': '359b9aa2548ddb490f7fff4c1a4b874da80cdd51',
+    '06-paper-ingestion.md': '543aa4cc50f54b55adecbd6d7826cc5aecc134dd',
     '08-des-fidelity.md': '5b67df3b88fb89f427d93116631a715c04534e82',
     '09-challenge.md': 'dd46a16eafabdd4b40813a0578eeca4a81dcd44d',
-    '12-english-notify-verify.md': '41e4cc020caf406501ce762a1008cf07b018def1',
+    '12-english-notify-verify.md': '37a2ccdfa5f839821bdaa52063e9f6dc253ee8ba',
 }
 
 REQUIRED = [

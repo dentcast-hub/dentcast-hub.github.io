@@ -32,6 +32,11 @@ EDITS = {"02-routing-intake.md":{"CLAUDE.md → Repo conventions":".dentcast/wor
  "09-challenge.md":{"**Runs only when Question 4.9 answered «چالش».** Full design in":
   "**Runs only when Question 4.9 answered «چالش».** The ledger checkpoint\n`C.4.14` therefore has exactly two outcomes: `completed` means *this post is\na چالش* (its page carries the `data-dc-challenge-question` markup below, and\nthe English mirror is exempt); an ordinary post records `C.4.14` as\n**`skipped`** only, never `completed`. Full design in"}}
 def read(p): return (ROOT/p).read_text(encoding="utf-8")
+# Approved clarifications (doc-contradiction audit 2026-10-26): exact
+# legacy-text -> active-text hunks that align the modules with tool behaviour
+# (DES/Challenge skips, LiteCast URL, episode brain shape, paper-only, 4.12-ب
+# after 5.6). Each old text must occur exactly once.
+CLARIFICATIONS=json.loads(read("tests/fixtures/module-clarifications-2026-10-26.json"))
 
 # Approved global-rule amendments that postdate the legacy snapshot (founder
 # decision 1405/08/03, PR #994: repo-file article exam questions + auto-open at
@@ -122,6 +127,9 @@ class EntrypointMigrationTests(unittest.TestCase):
    with self.subTest(module=name):
     expected="".join(src[a-1:b])
     for old,new in EDITS.get(name,{}).items(): expected=expected.replace(old,new)
+    for old,new in CLARIFICATIONS.get(name,()):
+     self.assertEqual(expected.count(old),1,old)
+     expected=expected.replace(old,new)
     actual=read(".dentcast/workflows/modules/"+name)
     self.assertTrue(actual.startswith("<!-- dentcast-checkpoint-protocol:v1 -->"))
     self.assertIn(".dentcast/workflows/publish-checkpoints.md",actual.split("<!-- /dentcast-checkpoint-protocol:v1 -->",1)[0])
