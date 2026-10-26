@@ -767,9 +767,11 @@ def check_litecast_links(rep, doc, page_rel, brain):
     and its body carries no inline links into specialist content."""
     lite = json.loads(read("litecast/lite-glossary.json"))["LightGlossary"]
     lite_pages = {(e.get("page_url") or "").lstrip("/") for e in lite} - {""}
+    # The rules cap and scope the section's links; they do not require one
+    # (step 0.3: no fabricated linking where the template has none).
     n_sections = doc.count('<div class="dc-related-section">')
-    rep.check(n_sections == 1, "2.5 related", "exactly one «کاوش بیشتر» section",
-              f"found {n_sections} dc-related-section blocks (expected 1)", "step 0.6")
+    rep.check(n_sections <= 1, "2.5 related", "at most one «کاوش بیشتر» section",
+              f"found {n_sections} dc-related-section blocks (expected at most 1)", "step 0.6")
     sec = related_section(doc)
     if sec:
         links = re.findall(r'href="([^"]+)"', sec.group(0))
