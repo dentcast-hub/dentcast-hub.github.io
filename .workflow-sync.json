@@ -1,8 +1,8 @@
 {
   "version": 2,
   "note": "Client entrypoints are maintained together. Shared canonical workflow/global/module files are read directly by every client and are not duplicated as another client side. Nested canonical edits are covered by the advisory hook and live-contract CI. This old hash baseline is a drift heuristic, not proof of semantic parity or approval.",
-  "acknowledged_at": "2026-10-26T11:30:30.349Z",
-  "acknowledged_commit": "d2bc13f216d1c50a14942e7cf6a6bfbed964849d",
+  "acknowledged_at": "2026-10-26T13:15:41.665Z",
+  "acknowledged_commit": "2e481ea3da3e42cd25b4604fe808014928a4f67f",
   "sides": {
     "claude": {
       "label": "Claude",

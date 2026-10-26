@@ -467,6 +467,8 @@ A failed run pushes nothing; the branch stays at the Push-2 commit. Recover from
 
 Never edit a frozen approval with `record` after Push 2, never run C.8 onward locally while the workflow can still run, and never push a new run while an earlier run of the same branch is still in progress.
 
+A completed publication PR whose `main` advanced (another publication merged) usually conflicts on the Pulse, the homepage counters and the version stamp, so GitHub builds no merge ref and the PR checks do not run. Update it with `git merge origin/main` on the completed branch, never by re-running the publication: keep both sides' entries and Pulse lines, then run `python3 tools/update-homepage-counters.py` and `python3 tools/stamp-version.py` (last) and include their output in the merge commit or in a following commit that changes only those recomputed values. Until the stamp is rerun, the merge gate fails on the Phase F `7 version` rows.
+
 All editorial work (including tags, Pulse and the English writing itself)
 must be completed before the second boundary. If any mechanical operation
 later reveals a needed substantive change, STOP and explicitly invalidate
