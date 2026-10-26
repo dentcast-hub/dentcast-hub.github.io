@@ -1,0 +1,1315 @@
+{
+  "schema": "publish-completion-v1",
+  "state": {
+    "publication": {
+      "blocker": null,
+      "category": "promptologist",
+      "content_id": "dentai/promptologist/prompt-append2-6",
+      "context": {
+        "approvals": [
+          {
+            "decision": "convert colloquial text to written register (option \u0628), as part 5",
+            "evidence": [
+              "founder-chat:2026-10-26:answers \u00ab\u06f1\u0628 \u06f2\u0628 \u06f3\u062a\u0623\u06cc\u06cc\u062f \u06f4\u0627\u0644\u0641 \u06f5\u062a\u0623\u06cc\u06cc\u062f \u06f6\u0627\u0644\u0641 \u06f7\u0645\u0639\u0645\u0648\u0644\u06cc\u00bb",
+              "restored from dependency_invalidation_v1 audit (from C.2): approved body/title/caption/figure text byte-identical; only 4.9 kavosh capsules added"
+            ],
+            "scope": "register-conversion",
+            "status": "confirmed"
+          },
+          {
+            "decision": "Founder approved full agent-converted written-register text incl. opening paragraph (founder's own first paragraph, register-converted)",
+            "evidence": [
+              "founder-chat:2026-10-26:\u00ab\u0647\u0645\u0647 \u0686\u06cc \u062a\u0627\u06cc\u06cc\u062f\u00bb on full converted text",
+              "restored from dependency_invalidation_v1 audit (from C.2): approved body/title/caption/figure text byte-identical; only 4.9 kavosh capsules added"
+            ],
+            "scope": "authored-intro",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u067e\u06cc\u0648\u0633\u062a \u06f2 \u0640 \u0642\u0633\u0645\u062a \u06f6: \u0627\u06af\u0631 \u0628\u0647 \u06af\u06cc\u062a\u200c\u0647\u0627\u0628 \u0647\u0645 \u062f\u0633\u062a\u0631\u0633\u06cc \u0646\u062f\u0627\u0634\u062a\u0647 \u0628\u0627\u0634\u06cc\u0645\u060c \u0686\u0647\u061f",
+            "evidence": [
+              "founder-chat:2026-10-26:answers \u00ab\u06f1\u0628 \u06f2\u0628 \u06f3\u062a\u0623\u06cc\u06cc\u062f \u06f4\u0627\u0644\u0641 \u06f5\u062a\u0623\u06cc\u06cc\u062f \u06f6\u0627\u0644\u0641 \u06f7\u0645\u0639\u0645\u0648\u0644\u06cc\u00bb",
+              "restored from dependency_invalidation_v1 audit (from C.2): approved body/title/caption/figure text byte-identical; only 4.9 kavosh capsules added"
+            ],
+            "scope": "title",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u0627\u06af\u0631 \u0631\u0648\u0632\u06cc \u0628\u0647 \u06af\u06cc\u062a\u200c\u0647\u0627\u0628 \u0647\u0645 \u062f\u0633\u062a\u0631\u0633\u06cc \u0646\u062f\u0627\u0634\u062a\u0647 \u0628\u0627\u0634\u06cc\u0645\u060c \u0641\u0627\u06cc\u0644\u200c\u0647\u0627\u06cc\u0645\u0627\u0646 \u06a9\u062c\u0627 \u0645\u06cc\u200c\u0645\u0627\u0646\u0646\u062f\u061f \u0628\u0627 Download ZIP \u0648 Clone \u06cc\u06a9 \u0646\u0633\u062e\u0647 \u0627\u0632 \u0631\u06cc\u067e\u0648 \u0631\u0627 \u0631\u0648\u06cc \u06a9\u0627\u0645\u067e\u06cc\u0648\u062a\u0631 \u062e\u0648\u062f\u0645\u0627\u0646 \u0646\u06af\u0647 \u0645\u06cc\u200c\u062f\u0627\u0631\u06cc\u0645.",
+            "evidence": [
+              "founder-chat:2026-10-26:answers \u00ab\u06f1\u0628 \u06f2\u0628 \u06f3\u062a\u0623\u06cc\u06cc\u062f \u06f4\u0627\u0644\u0641 \u06f5\u062a\u0623\u06cc\u06cc\u062f \u06f6\u0627\u0644\u0641 \u06f7\u0645\u0639\u0645\u0648\u0644\u06cc\u00bb",
+              "restored from dependency_invalidation_v1 audit (from C.2): approved body/title/caption/figure text byte-identical; only 4.9 kavosh capsules added"
+            ],
+            "scope": "caption",
+            "status": "confirmed"
+          },
+          {
+            "decision": "practice-infrastructure / llm-tools (option \u0627\u0644\u0641 over site-ownership)",
+            "evidence": [
+              "founder-chat:2026-10-26:answers \u00ab\u06f1\u0628 \u06f2\u0628 \u06f3\u062a\u0623\u06cc\u06cc\u062f \u06f4\u0627\u0644\u0641 \u06f5\u062a\u0623\u06cc\u06cc\u062f \u06f6\u0627\u0644\u0641 \u06f7\u0645\u0639\u0645\u0648\u0644\u06cc\u00bb",
+              "restored from dependency_invalidation_v1 audit (from C.2): approved body/title/caption/figure text byte-identical; only 4.9 kavosh capsules added"
+            ],
+            "scope": "subtopic",
+            "status": "confirmed"
+          },
+          {
+            "decision": "#\u067e\u0631\u0627\u0645\u067e\u062a\u0648\u0644\u0648\u0698\u06cc\u0633\u062a #\u0647\u0648\u0634_\u0645\u0635\u0646\u0648\u0639\u06cc #GitHub #\u067e\u0634\u062a\u06cc\u0628\u0627\u0646_\u06af\u06cc\u0631\u06cc; keywords Download ZIP\u060c Clone\u060c GitHub Desktop\u060c Fetch origin\u060c Pull origin\u060c \u062a\u0627\u0631\u06cc\u062e\u0686\u0647\u0654 \u062a\u063a\u06cc\u06cc\u0631\u0627\u062a\u060c \u0646\u0633\u062e\u0647\u0654 \u067e\u0634\u062a\u06cc\u0628\u0627\u0646\u060c \u0647\u0627\u0631\u062f \u062e\u0627\u0631\u062c\u06cc",
+            "evidence": [
+              "founder-chat:2026-10-26:answers \u00ab\u06f1\u0628 \u06f2\u0628 \u06f3\u062a\u0623\u06cc\u06cc\u062f \u06f4\u0627\u0644\u0641 \u06f5\u062a\u0623\u06cc\u06cc\u062f \u06f6\u0627\u0644\u0641 \u06f7\u0645\u0639\u0645\u0648\u0644\u06cc\u00bb",
+              "restored from dependency_invalidation_v1 audit (from C.2): approved body/title/caption/figure text byte-identical; only 4.9 kavosh capsules added"
+            ],
+            "scope": "hashtags-keywords",
+            "status": "confirmed"
+          },
+          {
+            "decision": "small credit line \u00ab\u062a\u0635\u0627\u0648\u06cc\u0631: GitHub Docs (CC BY 4.0)\u00bb under last figure",
+            "evidence": [
+              "founder-chat:2026-10-26:answers \u00ab\u06f1\u0628 \u06f2\u0628 \u06f3\u062a\u0623\u06cc\u06cc\u062f \u06f4\u0627\u0644\u0641 \u06f5\u062a\u0623\u06cc\u06cc\u062f \u06f6\u0627\u0644\u0641 \u06f7\u0645\u0639\u0645\u0648\u0644\u06cc\u00bb",
+              "restored from dependency_invalidation_v1 audit (from C.2): approved body/title/caption/figure text byte-identical; only 4.9 kavosh capsules added"
+            ],
+            "scope": "image-credit",
+            "status": "confirmed"
+          },
+          {
+            "decision": "founder's artifact figcaptions, register-converted",
+            "evidence": [
+              "founder-chat:2026-10-26:\u00ab\u0647\u0645\u0647 \u0686\u06cc \u062a\u0627\u06cc\u06cc\u062f\u00bb on full converted text",
+              "restored from dependency_invalidation_v1 audit (from C.2): approved body/title/caption/figure text byte-identical; only 4.9 kavosh capsules added"
+            ],
+            "scope": "image-captions",
+            "status": "confirmed"
+          },
+          {
+            "decision": "ordinary article, not challenge",
+            "evidence": [
+              "founder-chat:2026-10-26:answers \u00ab\u06f1\u0628 \u06f2\u0628 \u06f3\u062a\u0623\u06cc\u06cc\u062f \u06f4\u0627\u0644\u0641 \u06f5\u062a\u0623\u06cc\u06cc\u062f \u06f6\u0627\u0644\u0641 \u06f7\u0645\u0639\u0645\u0648\u0644\u06cc\u00bb",
+              "restored from dependency_invalidation_v1 audit (from C.2): approved body/title/caption/figure text byte-identical; only 4.9 kavosh capsules added"
+            ],
+            "scope": "challenge",
+            "status": "confirmed"
+          },
+          {
+            "decision": "title-only pulse line linking the new page",
+            "evidence": [
+              "founder-chat:2026-10-26:\u00ab\u0647\u0645\u0647 \u0686\u06cc \u062a\u0627\u06cc\u06cc\u062f\u00bb on full converted text",
+              "restored from dependency_invalidation_v1 audit (from C.2): approved body/title/caption/figure text byte-identical; only 4.9 kavosh capsules added"
+            ],
+            "scope": "pulse",
+            "status": "confirmed"
+          },
+          {
+            "decision": "two MCQs (Fetch origin role; Clone keeps history) as presented, keys 0 and 1",
+            "evidence": [
+              "founder-chat:2026-10-26:\u00ab\u0647\u0645\u0647 \u062a\u0627\u06cc\u06cc\u062f \u2014 \u0628\u0631\u0648 \u062a\u0627 \u0645\u0631\u062c\u00bb"
+            ],
+            "scope": "exam-questions",
+            "status": "confirmed"
+          },
+          {
+            "decision": "dentai/promptologist/en/prompt-append2-6.html as presented (title \u00abAppendix 2 \u2014 Part 6: What If We Lose Access to GitHub Too?\u00bb)",
+            "evidence": [
+              "founder-chat:2026-10-26:\u00ab\u0647\u0645\u0647 \u062a\u0627\u06cc\u06cc\u062f \u2014 \u0628\u0631\u0648 \u062a\u0627 \u0645\u0631\u062c\u00bb"
+            ],
+            "scope": "english-mirror",
+            "status": "confirmed"
+          },
+          {
+            "decision": "founder authorized merging the publication PR after all gates pass",
+            "evidence": [
+              "founder-chat:2026-10-26:\u00ab\u0647\u0645\u0647 \u062a\u0627\u06cc\u06cc\u062f \u2014 \u0628\u0631\u0648 \u062a\u0627 \u0645\u0631\u062c\u00bb"
+            ],
+            "scope": "merge",
+            "status": "confirmed"
+          }
+        ],
+        "decisions": [
+          {
+            "kind": "fixed_three_deliveries_v1"
+          },
+          {
+            "kind": "fixed_three_deliveries_v2"
+          },
+          {
+            "evidence": [
+              "founder-chat:2026-10-26:\u00ab\u0647\u0645\u0647 \u0686\u06cc \u062a\u0627\u06cc\u06cc\u062f\u00bb on full converted text"
+            ],
+            "kind": "first_cut_lead_provenance_v1",
+            "origin": "agent_authored",
+            "source_ref": "founder-submitted-text:artifact 6J6nNi3J8L8w5ZqN9Jwdmu first paragraph, converted to written register by agent at founder's request (option \u0628); founder approved full converted text 2026-10-26"
+          },
+          {
+            "basket": "COMMENTARY",
+            "evidence": [
+              "page cites no DOI/PubMed/references; author's own tutorial"
+            ],
+            "kind": "des_basket"
+          },
+          {
+            "from_step": "C.2",
+            "kind": "dependency_invalidation_v1",
+            "reason": "Step 4.9 added three dc-related-capsule links (labels = sibling series titles) to the kavosh section after approvals were recorded; approved body text, title, caption, figure captions and credit are byte-identical (diff: only 3 inserted <a> lines). Guard requires invalidation from C.2; re-verifying C.2..C.4.9 and restoring still-valid approvals from this audit.",
+            "superseded": {
+              "approvals": [
+                {
+                  "decision": "convert colloquial text to written register (option \u0628), as part 5",
+                  "evidence": [
+                    "founder-chat:2026-10-26:answers \u00ab\u06f1\u0628 \u06f2\u0628 \u06f3\u062a\u0623\u06cc\u06cc\u062f \u06f4\u0627\u0644\u0641 \u06f5\u062a\u0623\u06cc\u06cc\u062f \u06f6\u0627\u0644\u0641 \u06f7\u0645\u0639\u0645\u0648\u0644\u06cc\u00bb"
+                  ],
+                  "scope": "register-conversion",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "Founder approved full agent-converted written-register text incl. opening paragraph (founder's own first paragraph, register-converted)",
+                  "evidence": [
+                    "founder-chat:2026-10-26:\u00ab\u0647\u0645\u0647 \u0686\u06cc \u062a\u0627\u06cc\u06cc\u062f\u00bb on full converted text"
+                  ],
+                  "scope": "authored-intro",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "\u067e\u06cc\u0648\u0633\u062a \u06f2 \u0640 \u0642\u0633\u0645\u062a \u06f6: \u0627\u06af\u0631 \u0628\u0647 \u06af\u06cc\u062a\u200c\u0647\u0627\u0628 \u0647\u0645 \u062f\u0633\u062a\u0631\u0633\u06cc \u0646\u062f\u0627\u0634\u062a\u0647 \u0628\u0627\u0634\u06cc\u0645\u060c \u0686\u0647\u061f",
+                  "evidence": [
+                    "founder-chat:2026-10-26:answers \u00ab\u06f1\u0628 \u06f2\u0628 \u06f3\u062a\u0623\u06cc\u06cc\u062f \u06f4\u0627\u0644\u0641 \u06f5\u062a\u0623\u06cc\u06cc\u062f \u06f6\u0627\u0644\u0641 \u06f7\u0645\u0639\u0645\u0648\u0644\u06cc\u00bb"
+                  ],
+                  "scope": "title",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "\u0627\u06af\u0631 \u0631\u0648\u0632\u06cc \u0628\u0647 \u06af\u06cc\u062a\u200c\u0647\u0627\u0628 \u0647\u0645 \u062f\u0633\u062a\u0631\u0633\u06cc \u0646\u062f\u0627\u0634\u062a\u0647 \u0628\u0627\u0634\u06cc\u0645\u060c \u0641\u0627\u06cc\u0644\u200c\u0647\u0627\u06cc\u0645\u0627\u0646 \u06a9\u062c\u0627 \u0645\u06cc\u200c\u0645\u0627\u0646\u0646\u062f\u061f \u0628\u0627 Download ZIP \u0648 Clone \u06cc\u06a9 \u0646\u0633\u062e\u0647 \u0627\u0632 \u0631\u06cc\u067e\u0648 \u0631\u0627 \u0631\u0648\u06cc \u06a9\u0627\u0645\u067e\u06cc\u0648\u062a\u0631 \u062e\u0648\u062f\u0645\u0627\u0646 \u0646\u06af\u0647 \u0645\u06cc\u200c\u062f\u0627\u0631\u06cc\u0645.",
+                  "evidence": [
+                    "founder-chat:2026-10-26:answers \u00ab\u06f1\u0628 \u06f2\u0628 \u06f3\u062a\u0623\u06cc\u06cc\u062f \u06f4\u0627\u0644\u0641 \u06f5\u062a\u0623\u06cc\u06cc\u062f \u06f6\u0627\u0644\u0641 \u06f7\u0645\u0639\u0645\u0648\u0644\u06cc\u00bb"
+                  ],
+                  "scope": "caption",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "practice-infrastructure / llm-tools (option \u0627\u0644\u0641 over site-ownership)",
+                  "evidence": [
+                    "founder-chat:2026-10-26:answers \u00ab\u06f1\u0628 \u06f2\u0628 \u06f3\u062a\u0623\u06cc\u06cc\u062f \u06f4\u0627\u0644\u0641 \u06f5\u062a\u0623\u06cc\u06cc\u062f \u06f6\u0627\u0644\u0641 \u06f7\u0645\u0639\u0645\u0648\u0644\u06cc\u00bb"
+                  ],
+                  "scope": "subtopic",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "#\u067e\u0631\u0627\u0645\u067e\u062a\u0648\u0644\u0648\u0698\u06cc\u0633\u062a #\u0647\u0648\u0634_\u0645\u0635\u0646\u0648\u0639\u06cc #GitHub #\u067e\u0634\u062a\u06cc\u0628\u0627\u0646_\u06af\u06cc\u0631\u06cc; keywords Download ZIP\u060c Clone\u060c GitHub Desktop\u060c Fetch origin\u060c Pull origin\u060c \u062a\u0627\u0631\u06cc\u062e\u0686\u0647\u0654 \u062a\u063a\u06cc\u06cc\u0631\u0627\u062a\u060c \u0646\u0633\u062e\u0647\u0654 \u067e\u0634\u062a\u06cc\u0628\u0627\u0646\u060c \u0647\u0627\u0631\u062f \u062e\u0627\u0631\u062c\u06cc",
+                  "evidence": [
+                    "founder-chat:2026-10-26:answers \u00ab\u06f1\u0628 \u06f2\u0628 \u06f3\u062a\u0623\u06cc\u06cc\u062f \u06f4\u0627\u0644\u0641 \u06f5\u062a\u0623\u06cc\u06cc\u062f \u06f6\u0627\u0644\u0641 \u06f7\u0645\u0639\u0645\u0648\u0644\u06cc\u00bb"
+                  ],
+                  "scope": "hashtags-keywords",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "small credit line \u00ab\u062a\u0635\u0627\u0648\u06cc\u0631: GitHub Docs (CC BY 4.0)\u00bb under last figure",
+                  "evidence": [
+                    "founder-chat:2026-10-26:answers \u00ab\u06f1\u0628 \u06f2\u0628 \u06f3\u062a\u0623\u06cc\u06cc\u062f \u06f4\u0627\u0644\u0641 \u06f5\u062a\u0623\u06cc\u06cc\u062f \u06f6\u0627\u0644\u0641 \u06f7\u0645\u0639\u0645\u0648\u0644\u06cc\u00bb"
+                  ],
+                  "scope": "image-credit",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "founder's artifact figcaptions, register-converted",
+                  "evidence": [
+                    "founder-chat:2026-10-26:\u00ab\u0647\u0645\u0647 \u0686\u06cc \u062a\u0627\u06cc\u06cc\u062f\u00bb on full converted text"
+                  ],
+                  "scope": "image-captions",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "ordinary article, not challenge",
+                  "evidence": [
+                    "founder-chat:2026-10-26:answers \u00ab\u06f1\u0628 \u06f2\u0628 \u06f3\u062a\u0623\u06cc\u06cc\u062f \u06f4\u0627\u0644\u0641 \u06f5\u062a\u0623\u06cc\u06cc\u062f \u06f6\u0627\u0644\u0641 \u06f7\u0645\u0639\u0645\u0648\u0644\u06cc\u00bb"
+                  ],
+                  "scope": "challenge",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "title-only pulse line linking the new page",
+                  "evidence": [
+                    "founder-chat:2026-10-26:\u00ab\u0647\u0645\u0647 \u0686\u06cc \u062a\u0627\u06cc\u06cc\u062f\u00bb on full converted text"
+                  ],
+                  "scope": "pulse",
+                  "status": "confirmed"
+                }
+              ],
+              "delivery": [],
+              "inputs": [
+                {
+                  "note": "founder text + 5 screenshots (sha256 recorded at C.2)",
+                  "ref": "artifact:https://claude.ai/artifact/6J6nNi3J8L8w5ZqN9Jwdmu#version=1792992043-2e97"
+                }
+              ],
+              "steps": [
+                {
+                  "evidence": [
+                    "page dentai/promptologist/prompt-append2-6.html sha256 d4c6d0b9 (pre-linking); structural clone of append2-5 (CRLF kept); GA4 once, 2 preconnect, no trustseal, dc-notify carried; founder-approved written-register body+title+caption verified codepoint-equal; 5 webp figures (4 figures) + CC BY credit; lead = founder first paragraph"
+                  ],
+                  "id": "C.2",
+                  "module": "03-litecast-and-page.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.0.5",
+                  "module": "03-litecast-and-page.md",
+                  "reason": "LiteCast-only link step; category promptologist",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.0.6",
+                  "module": "03-litecast-and-page.md",
+                  "reason": "LiteCast-only kavosh step; category promptologist",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "pillar practice-infrastructure (clear; structured); subtopic llm-tools chosen by founder over site-ownership (2026-10-26)"
+                  ],
+                  "id": "C.2.4",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "typed-brain branch: dc-related-section with \u062f\u0627\u0646\u0634\u0646\u0627\u0645\u0647 + \u0641\u0647\u0631\u0633\u062a \u0645\u0648\u0636\u0648\u0639\u06cc -> /pillar/practice-infrastructure/ (2 links); dc-related-* classes; no duplicate section"
+                  ],
+                  "id": "C.2.5",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "hand-maintained dentai/promptologist/index.html: added row \u00ab\u0642\u0633\u0645\u062a \u06f6 \u2014 <brain title>\u00bb after part 5 with approved caption as ai-desc; sha256 42884108->4450f4bb; 5-line insertion only"
+                  ],
+                  "id": "C.2.6",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "audit: datePublished=dateModified=2026-10-26 (only dates on page); title/og/twitter/headline/breadcrumb/h1 = approved title; description/og/twitter/JSON-LD description = approved caption; canonical/og:url/hreflang/lang-btn -> append2-6 on .org; all OK"
+                  ],
+                  "id": "C.3",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "template prompt-append2-5.html sha256 088a742f\u2026 unchanged vs C.1"
+                  ],
+                  "id": "C.4",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.5",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "NoteCast-only parent-episode step; category promptologist",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.5-b",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "episode/NoteCast sibling DES-credit mirror; not applicable to promptologist (no sibling, no paper)",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "new page prev->prompt-append2-5.html, next empty placeholder; prompt-append2-5.html next slot span->a to prompt-append2-6.html, sha256 088a742f->725a2718 (only that slot)"
+                  ],
+                  "id": "C.4.6",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "semantic review of all 109 glossary terms (cements/bonding/ceramics/implant/occlusion/restorative concepts); none conceptually related to repository download/clone/local backup -> analyzed, 0 qualifying terms; no glossary page edited"
+                  ],
+                  "id": "C.4.7",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.7-b",
+                  "module": "05-semantic-linking.md",
+                  "reason": "not a glossary publication",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "fresh semantic analysis of this body vs 109 glossary terms + all brain episodes: no clinical glossary concept present; \u00ab\u0647\u0648\u0634 \u0645\u0635\u0646\u0648\u0639\u06cc\u00bb used generically as a tool, not the concept of episode-109 -> analyzed body, 0 qualifying glossary/episode candidates; page unchanged d4c6d0b9"
+                  ],
+                  "id": "C.4.8",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.9",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "started"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.1",
+                  "module": "06-paper-ingestion.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.2",
+                  "module": "06-paper-ingestion.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.3",
+                  "module": "06-paper-ingestion.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.11",
+                  "module": "07-flashcards-and-quiz.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.12",
+                  "module": "07-flashcards-and-quiz.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.13",
+                  "module": "08-des-fidelity.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.14",
+                  "module": "09-challenge.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.0",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.5",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.6",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.6-b",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.6",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.8",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.7",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "D",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "E",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "F",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "G",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                }
+              ],
+              "validation": []
+            }
+          },
+          {
+            "category": "promptologist",
+            "challenge": false,
+            "des_basis": "COMMENTARY",
+            "kind": "routing_basis_v1",
+            "paper_file": false,
+            "pillar": "practice-infrastructure",
+            "subtopic": "llm-tools"
+          },
+          {
+            "builder_ref": "manual-index:dentai/promptologist/index.html:ai-item rows",
+            "evidence": [
+              "review:all-first-cut-modified-paths; prompt-append2-5 diff is single ep-nav slot; index.html 5-line row insertion"
+            ],
+            "kind": "first_cut_scope_audit_v1",
+            "landing_mode": "included",
+            "landing_path": "dentai/promptologist/index.html",
+            "observed_changed_paths": [
+              "dentai/promptologist/prompt-append2-6.html",
+              "dentai/promptologist/prompt-append2-5.html",
+              "dentai/promptologist/index.html",
+              "dentai/promptologist/prompt-append2-6-01-download-zip.webp",
+              "dentai/promptologist/prompt-append2-6-02-open-desktop.webp",
+              "dentai/promptologist/prompt-append2-6-03-clone.webp",
+              "dentai/promptologist/prompt-append2-6-04-fetch.webp",
+              "dentai/promptologist/prompt-append2-6-05-pull.webp"
+            ],
+            "related_changed_paths": [
+              "dentai/promptologist/prompt-append2-5.html"
+            ]
+          },
+          {
+            "kind": "pulse_draft_v1",
+            "page_url": "/dentai/promptologist/prompt-append2-6.html",
+            "text": "\u067e\u06cc\u0648\u0633\u062a \u06f2 \u0640 \u0642\u0633\u0645\u062a \u06f6: \u0627\u06af\u0631 \u0628\u0647 \u06af\u06cc\u062a\u200c\u0647\u0627\u0628 \u0647\u0645 \u062f\u0633\u062a\u0631\u0633\u06cc \u0646\u062f\u0627\u0634\u062a\u0647 \u0628\u0627\u0634\u06cc\u0645\u060c \u0686\u0647\u061f"
+          },
+          {
+            "english": {
+              "evidence": [
+                "source and mirror reviewed before Push 2: h3 6/6, figure 4/4, img 5/5, strong 5/5; no same-word gloss; noindex, no hreflang"
+              ],
+              "path": "dentai/promptologist/en/prompt-append2-6.html",
+              "status": "ready"
+            },
+            "evidence": [
+              "current-run editorial close review 2026-10-26"
+            ],
+            "kind": "second_cut_editorial_lock_v1",
+            "scopes": [
+              {
+                "evidence": [
+                  "C.4.13 COMMENTARY DES 12/E validated (Part 3 all green), fidelity null by COMMENTARY rule"
+                ],
+                "scope": "scientific",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Q4.9 ordinary article confirmed by founder; C.4.14 skipped"
+                ],
+                "scope": "challenge",
+                "status": "not_applicable"
+              },
+              {
+                "evidence": [
+                  "practice-infrastructure/llm-tools founder-chosen; verified against live PILLARS (C.5.5)"
+                ],
+                "scope": "taxonomy",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "4.7 0 terms, 4.8 0 candidates, 4.9 three series capsules; kavosh 5/5"
+                ],
+                "scope": "links",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "4 tags all existing canonical concepts; hashtag_ref --check OK"
+                ],
+                "scope": "hashtags",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "brain entry last (578), key parity with prompt-append2-5; title/caption on all page surfaces"
+                ],
+                "scope": "content_record",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "ai-dentistry after prompt-append2-5 (founder approved); bundles: no candidate"
+                ],
+                "scope": "pathways",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "index.html pulse: new title-only line first, share-40 line removed, 7 lines"
+                ],
+                "scope": "pulse",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "dentai/promptologist/en/prompt-append2-6.html authored and founder-approved; reciprocal toggles; en part-5 next wired"
+                ],
+                "scope": "english",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "title, caption, register-conversion, authored-intro, image-captions, image-credit, subtopic, hashtags-keywords, challenge, pulse, exam-questions, english-mirror, merge all confirmed"
+                ],
+                "scope": "author_approvals",
+                "status": "resolved"
+              }
+            ]
+          }
+        ],
+        "delivery": [
+          {
+            "evidence": [
+              "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/40276877539"
+            ],
+            "scope": "GitHub Actions post-Push-2 mechanical continuation"
+          }
+        ],
+        "inputs": [
+          {
+            "note": "founder text + 5 screenshots (sha256 recorded at C.2)",
+            "ref": "artifact:https://claude.ai/artifact/6J6nNi3J8L8w5ZqN9Jwdmu#version=1792992043-2e97"
+          }
+        ],
+        "pending_questions": [],
+        "unrelated_changes": [],
+        "validation": [
+          {
+            "content_id": "dentai/promptologist/prompt-append2-6",
+            "exit_code": 0,
+            "expected_caption": "\u0627\u06af\u0631 \u0631\u0648\u0632\u06cc \u0628\u0647 \u06af\u06cc\u062a\u200c\u0647\u0627\u0628 \u0647\u0645 \u062f\u0633\u062a\u0631\u0633\u06cc \u0646\u062f\u0627\u0634\u062a\u0647 \u0628\u0627\u0634\u06cc\u0645\u060c \u0641\u0627\u06cc\u0644\u200c\u0647\u0627\u06cc\u0645\u0627\u0646 \u06a9\u062c\u0627 \u0645\u06cc\u200c\u0645\u0627\u0646\u0646\u062f\u061f \u0628\u0627 Download ZIP \u0648 Clone \u06cc\u06a9 \u0646\u0633\u062e\u0647 \u0627\u0632 \u0631\u06cc\u067e\u0648 \u0631\u0627 \u0631\u0648\u06cc \u06a9\u0627\u0645\u067e\u06cc\u0648\u062a\u0631 \u062e\u0648\u062f\u0645\u0627\u0646 \u0646\u06af\u0647 \u0645\u06cc\u200c\u062f\u0627\u0631\u06cc\u0645.",
+            "expected_title": "\u067e\u06cc\u0648\u0633\u062a \u06f2 \u0640 \u0642\u0633\u0645\u062a \u06f6: \u0627\u06af\u0631 \u0628\u0647 \u06af\u06cc\u062a\u200c\u0647\u0627\u0628 \u0647\u0645 \u062f\u0633\u062a\u0631\u0633\u06cc \u0646\u062f\u0627\u0634\u062a\u0647 \u0628\u0627\u0634\u06cc\u0645\u060c \u0686\u0647\u061f",
+            "kind": "phase_f",
+            "output_sha256": "dbee59e165b72dceb09f69ea009fc872270c0dbebbbd96017fab2af2cbfd0065",
+            "recorded_at": "2026-10-26T05:56:32+00:00",
+            "summary": "98 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+          }
+        ]
+      },
+      "external_actions": [],
+      "status": "in_progress",
+      "steps": [
+        {
+          "evidence": [
+            "Read complete: CLAUDE.md, global/README.md, global rules --read (core sections), agent-parity.md, workflows/README.md, publish-checkpoints.md, modules/01, modules/02"
+          ],
+          "id": "rules",
+          "module": "01-hard-rules.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Phase0: text=yes (artifact 6J6nNi3J8L8w5ZqN9Jwdmu), paper file=no -> normal publish, no paper branch"
+          ],
+          "id": "0",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Brain parsed fully (577 entries); category promptologist latest entry prompt-append2-5 (/dentai/promptologist/); live PILLARS read from tools/build_pillar.py on main 230d0ee"
+          ],
+          "id": "A",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "founder message 2026-10-26 \u00ab\u0642\u0633\u0645\u062a \u0634\u0634\u0645 \u067e\u06cc\u0648\u0633\u062a \u062f\u0648\u00bb names the Promptologist appendix-2 series (brain prompt-append2-1..5, type promptologist); category locked promptologist"
+          ],
+          "id": "B.1",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "auto: series prompt-append2-1..5 contiguous; next id prompt-append2-6 matches founder \u00ab\u0642\u0633\u0645\u062a \u0634\u0634\u0645\u00bb"
+          ],
+          "id": "B.2",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "text received: artifact 6J6nNi3J8L8w5ZqN9Jwdmu version 1792992043-2e97 (h1 + 6 sections + closing \u00ab\u067e\u0627\u06cc\u0627\u0646 \u067e\u06cc\u0648\u0633\u062a \u062f\u0648\u0645\u00bb + 5 PNG figures)"
+          ],
+          "id": "B.3",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "de-AI scan: no genuine AI tells; founder chose register option \u0628 (written) and approved converted full text (founder-chat:2026-10-26)"
+          ],
+          "id": "B.3.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "media: 5 founder-supplied PNG screenshots in artifact (GitHub Docs, CC BY 4.0) -> webp figures; brain schema has no media field"
+          ],
+          "id": "B.4",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "no paper file attached; step 4.10 branch inactive"
+          ],
+          "id": "B.4.7",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "basket 1 COMMENTARY: page names no DOI/PubMed/references; author's own tutorial"
+          ],
+          "id": "B.4.8",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "founder: ordinary article, not challenge (founder-chat:2026-10-26)"
+          ],
+          "id": "B.4.9",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "pulse draft: title-only link to /dentai/promptologist/prompt-append2-6.html; founder approved (founder-chat:2026-10-26)"
+          ],
+          "id": "B.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast branch inactive: locked category promptologist",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.1",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast-only step; category promptologist",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.2",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast-only step; category promptologist",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.3",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast-only step; category promptologist",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.4",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast-only step; category promptologist",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "template dentai/promptologist/prompt-append2-5.html sha256 088a742f4630155f243826312658f54fc6f009e80c4733ce3ebbae7ad7e0146c (CRLF)"
+          ],
+          "id": "C.1",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "re-verified: dentai/promptologist/prompt-append2-6.html (sha256 64012772 incl. 4.9 capsules); structural clone of append2-5 (CRLF); GA4 once, 2 preconnect, no trustseal, dc-notify; approved body/title/caption codepoint-equal; 4 figures (5 webp) + CC BY credit"
+          ],
+          "id": "C.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.5",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast-only link step; category promptologist",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.6",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast-only kavosh step; category promptologist",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "pillar practice-infrastructure (clear; structured); subtopic llm-tools chosen by founder over site-ownership (2026-10-26)"
+          ],
+          "id": "C.2.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "typed-brain branch: dc-related-section with \u062f\u0627\u0646\u0634\u0646\u0627\u0645\u0647 + \u0641\u0647\u0631\u0633\u062a \u0645\u0648\u0636\u0648\u0639\u06cc -> /pillar/practice-infrastructure/; dc-related-* classes; single section"
+          ],
+          "id": "C.2.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "hand-maintained dentai/promptologist/index.html: row \u00ab\u0642\u0633\u0645\u062a \u06f6 \u2014 <brain title>\u00bb after part 5, approved caption as ai-desc; sha256 42884108->4450f4bb; 5-line insertion only"
+          ],
+          "id": "C.2.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "audit: datePublished=dateModified=2026-10-26 (only dates); title on title/og/twitter/headline/breadcrumb/h1; caption on description/og/twitter/JSON-LD; canonical/og:url/hreflang/lang-btn -> append2-6 on .org; all OK"
+          ],
+          "id": "C.3",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "template prompt-append2-5.html sha256 088a742f\u2026 matched C.1 before the C.4.6 nav edit"
+          ],
+          "id": "C.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "NoteCast-only parent-episode step; category promptologist",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5-b",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "episode/NoteCast sibling DES-credit mirror; not applicable to promptologist",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "new page prev->prompt-append2-5.html, next empty; prompt-append2-5.html next slot span->a to append2-6, sha256 088a742f->725a2718 (only that slot)"
+          ],
+          "id": "C.4.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "semantic review of all 109 glossary terms (clinical materials/techniques); none related to repo download/clone/local backup -> analyzed, 0 qualifying terms; no glossary page edited"
+          ],
+          "id": "C.4.7",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.7-b",
+          "module": "05-semantic-linking.md",
+          "reason": "not a glossary publication",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "fresh semantic analysis of body vs 109 glossary terms + brain episodes: 0 qualifying (AI used generically as a tool, not episode-109 concept); no inline links"
+          ],
+          "id": "C.4.8",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "whole-brain comparison; 3 free slots; auto-applied series siblings append2-5, append2-1, append2-4 (strongest); section 5/5; only capsule additions"
+          ],
+          "id": "C.4.9",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.1",
+          "module": "06-paper-ingestion.md",
+          "reason": "skipped \u2014 no attached paper (Q4.7 no)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.2",
+          "module": "06-paper-ingestion.md",
+          "reason": "skipped \u2014 no attached paper",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.3",
+          "module": "06-paper-ingestion.md",
+          "reason": "skipped \u2014 no attached paper",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "plus/faq-corpus.json[dentai/promptologist/prompt-append2-6].definedTermSets: 4 authored DefinedTerms #flashcards-c1..c4 (Download ZIP, Clone, GitHub Desktop, Fetch/Pull origin); none copies a FAQ answer; CRLF format preserved (+86 lines only)"
+          ],
+          "id": "C.4.11",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "FAQPage 5 standalone yes/no questions (no deixis), all answers open with \u0628\u0644\u0647/\u062e\u06cc\u0631 verdict -> 5 binary; 4.12-\u0628: 2 founder-approved MCQs r-ids written to plus/exam-questions.json, validate_exam_questions.py 0 errors; page joins ai-dentistry full pathway"
+          ],
+          "id": "C.4.12",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "COMMENTARY basket; source_text = page title+body (FULL_TEXT); spec v3.4 lines 1-1378 run by independent agent; des_score 12 band E provisional false; Part 3: quotes verbatim, 5+4+0+3+0=12, band E, schema keys = spec; fidelity [null] (COMMENTARY self-record); stored verbatim in plus/des-scores.json; no DOI/quartile guessed; no page markup"
+          ],
+          "id": "C.4.13",
+          "module": "08-des-fidelity.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.14",
+          "module": "09-challenge.md",
+          "reason": "ordinary article (Q4.9 founder confirmed), not a challenge",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "all 4 approved tags resolve to existing canonical concepts (#\u067e\u0631\u0627\u0645\u067e\u062a\u0648\u0644\u0648\u0698\u06cc\u0633\u062a #\u0647\u0648\u0634_\u0645\u0635\u0646\u0648\u0639\u06cc #GitHub #\u067e\u0634\u062a\u06cc\u0628\u0627\u0646_\u06af\u06cc\u0631\u06cc; --simulate rank 1-2); no new concept minted; page chips set to canonical list; --sync/build_plus_index/--check run after brain write (C.5)"
+          ],
+          "id": "C.5.0",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "dentcast-brain.json: prompt-append2-6 appended as element 578 (last); key set/order identical to prompt-append2-5; CRLF/indent preserved (+28 lines); hashtag_ref --sync, build_plus_index.mjs, --check OK"
+          ],
+          "id": "C.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "pillar.primary practice-infrastructure, subtopic llm-tools = C.2.4 decision; valid in live PILLARS; no extra pillar keys; capsule -> /pillar/practice-infrastructure/"
+          ],
+          "id": "C.5.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "pathway_place: ai-dentistry ASK 70 (series continuation; founder approved placement 2026-10-26); --insert after prompt-append2-5 (index 32, milestone false); coverage 1.51 per item (baseline 1.38); no third-pathway/series-split guard triggered"
+          ],
+          "id": "C.5.6",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0628\u0627\u0646\u062f\u0644: \u0628\u062f\u0648\u0646 \u06a9\u0627\u0646\u062f\u06cc\u062f \u2014 no bundle has continues_pathway=ai-dentistry"
+          ],
+          "id": "C.5.6-b",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pulse: inserted title-only link line at top, removed bottom share-40 line, 7 lines; editorial lock (10 scopes) recorded; English mirror ready"
+          ],
+          "id": "C.6",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "All applicable canonical C.8 builders passed; logs are in the recovery artifact."
+          ],
+          "id": "C.8",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "tools/stamp-version.py passed after C.8"
+          ],
+          "id": "C.7",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Technical English, noindex, hreflang, sitemap, and final version checks passed; logs are in the recovery artifact."
+          ],
+          "id": "D",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Canonical dc-notify marker present exactly once"
+          ],
+          "id": "E",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "phase_f:dbee59e165b72dceb09f69ea009fc872270c0dbebbbd96017fab2af2cbfd0065"
+          ],
+          "id": "F",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/40276877539"
+          ],
+          "id": "G",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        }
+      ],
+      "target_paths": [
+        "dentai/promptologist/en/prompt-append2-5.html",
+        "dentai/promptologist/en/prompt-append2-6.html",
+        "dentai/promptologist/index.html",
+        "dentai/promptologist/prompt-append2-5.html",
+        "dentai/promptologist/prompt-append2-6-01-download-zip.webp",
+        "dentai/promptologist/prompt-append2-6-02-open-desktop.webp",
+        "dentai/promptologist/prompt-append2-6-03-clone.webp",
+        "dentai/promptologist/prompt-append2-6-04-fetch.webp",
+        "dentai/promptologist/prompt-append2-6-05-pull.webp",
+        "dentai/promptologist/prompt-append2-6.html",
+        "dentcast-brain.json",
+        "dentcast-hashtag-reference.json",
+        "index.html",
+        "pillar/index.html",
+        "pillar/practice-infrastructure/index.html",
+        "pillar/practice-infrastructure/structure.json",
+        "pillar/structure.json",
+        "player.html",
+        "plus/content-index.json",
+        "plus/des-scores.json",
+        "plus/exam-questions.json",
+        "plus/faq-corpus.json",
+        "plus/flashcards-index.json",
+        "plus/pathways.json",
+        "plus/quiz-index.json",
+        "service-worker.js",
+        "sitemap.xml",
+        "up-board/index.json"
+      ]
+    },
+    "snapshot": {
+      "files": {
+        "dentai/promptologist/en/prompt-append2-5.html": {
+          "kind": "file",
+          "sha256": "3bb1989df61b5bc29260cb9644f8899472fb8616aa66c3a3d56d526d799cd6de",
+          "executable": false
+        },
+        "dentai/promptologist/en/prompt-append2-6.html": {
+          "kind": "file",
+          "sha256": "cd89434abfd673f729b9a9d0fa7de4efb32d04276ae3f48f5b5832dc578f180f",
+          "executable": false
+        },
+        "dentai/promptologist/index.html": {
+          "kind": "file",
+          "sha256": "4450f4bbbe6903514e1ee442838708b4e56e2fe6f013bcd7d7be9d7bc51547fd",
+          "executable": false
+        },
+        "dentai/promptologist/prompt-append2-5.html": {
+          "kind": "file",
+          "sha256": "725a27186baa24c2fb4cedb05280120b7624b1ae68ebbc35f0d670de88eb84c6",
+          "executable": false
+        },
+        "dentai/promptologist/prompt-append2-6-01-download-zip.webp": {
+          "kind": "file",
+          "sha256": "d80e15ac34bce5bc5f92fb196754d36fc6ac35711cb9c14c772cf9f510a69af2",
+          "executable": false
+        },
+        "dentai/promptologist/prompt-append2-6-02-open-desktop.webp": {
+          "kind": "file",
+          "sha256": "3735d12c4e66c2f6d251d65dcfc1ba10bb2d4ca00c4abb814850ba1fd42456c4",
+          "executable": false
+        },
+        "dentai/promptologist/prompt-append2-6-03-clone.webp": {
+          "kind": "file",
+          "sha256": "3bd346deb5b4e6479b13458ad2064b74eba03d56033a6e5f3e60d9d676960584",
+          "executable": false
+        },
+        "dentai/promptologist/prompt-append2-6-04-fetch.webp": {
+          "kind": "file",
+          "sha256": "46e980b9582cddd9328234495155b5501fc159578425b59b21cc7b386b52943c",
+          "executable": false
+        },
+        "dentai/promptologist/prompt-append2-6-05-pull.webp": {
+          "kind": "file",
+          "sha256": "e0274ef65077117d2231f4cc4bf0298c1670e4fb1a9a0b9a56159754b643eb06",
+          "executable": false
+        },
+        "dentai/promptologist/prompt-append2-6.html": {
+          "kind": "file",
+          "sha256": "640127721655181d85de09517d8bccfdcffc6b24aeec93d490e0b99500547407",
+          "executable": false
+        },
+        "dentcast-brain.json": {
+          "kind": "file",
+          "sha256": "7f7587a0437a99cdd6ad19c06d1bec027df9df6a6fea38082370d2fceb0cd4d8",
+          "executable": false
+        },
+        "dentcast-hashtag-reference.json": {
+          "kind": "file",
+          "sha256": "394fdea324543dc95cc86f161dee02cf9407325af168333d50fff68948748f17",
+          "executable": false
+        },
+        "index.html": {
+          "kind": "file",
+          "sha256": "90dbf9aa3051b4948e50d530a748971ab35ade8a1d95151715e99cf671f8777d",
+          "executable": false
+        },
+        "pillar/index.html": {
+          "kind": "file",
+          "sha256": "ac3355d933a86f117a8d4f9775a409e9ccd855746807c73bb4a52d9adc3db09c",
+          "executable": false
+        },
+        "pillar/practice-infrastructure/index.html": {
+          "kind": "file",
+          "sha256": "5d5b91aeba70024da8c80cf3de9d4afe72b1c3db837e71b9e43c6b5401703560",
+          "executable": false
+        },
+        "pillar/practice-infrastructure/structure.json": {
+          "kind": "file",
+          "sha256": "ae62d9605e1f7ceae3dd399508c473b9c19454be531003d18d931922fa5b49d7",
+          "executable": false
+        },
+        "pillar/structure.json": {
+          "kind": "file",
+          "sha256": "64b58ea870ea64f3bfeeeec74dc0a5e1738e8ae946ae2c61075e95b1e85c841d",
+          "executable": false
+        },
+        "player.html": {
+          "kind": "file",
+          "sha256": "4484d50f70d4ee3de9beec0e6fb9b17a070408983f799260781e40004d88d573",
+          "executable": false
+        },
+        "plus/content-index.json": {
+          "kind": "file",
+          "sha256": "823c11af62fc44dc9b1aa2ee54930e8ca7975d66189f6a7b10a8ee7dc3573c2a",
+          "executable": false
+        },
+        "plus/des-scores.json": {
+          "kind": "file",
+          "sha256": "fbe235427f0de9b8a96e90038187ae1845f2f9b2c153a10969739c22a72f70e6",
+          "executable": false
+        },
+        "plus/exam-questions.json": {
+          "kind": "file",
+          "sha256": "dc555ab504f1127f7497459648a68a2101b66440f7ad8e3e82de0c0a9fe4513e",
+          "executable": false
+        },
+        "plus/faq-corpus.json": {
+          "kind": "file",
+          "sha256": "8ab670108d9808afdb0a118476d57d735f17785dc2d9df5cbac811d9dd2c2b9a",
+          "executable": false
+        },
+        "plus/flashcards-index.json": {
+          "kind": "file",
+          "sha256": "07ab8527fb95d0f3a68864b3a58965d82e6a518dedb89462a53edf502cf1b868",
+          "executable": false
+        },
+        "plus/pathways.json": {
+          "kind": "file",
+          "sha256": "09653b06b525a2cdbb7ed5538089f6835cdc01a1afc53c9b7285a2202a2247de",
+          "executable": false
+        },
+        "plus/quiz-index.json": {
+          "kind": "file",
+          "sha256": "b47086eb353f00f3f48ed05677259cce16e58d87f56227fa4f0d904ad25c077f",
+          "executable": false
+        },
+        "service-worker.js": {
+          "kind": "file",
+          "sha256": "67b8abc38b39cf5b6bf6f1c15d4d60de1ca987bd59841c3a944222a90096c5c5",
+          "executable": false
+        },
+        "sitemap.xml": {
+          "kind": "file",
+          "sha256": "d77c96a41974dac990c4cd286b73bbeb2f0fb8f0b87c42cdb2803fbc339c6099",
+          "executable": false
+        },
+        "up-board/index.json": {
+          "kind": "file",
+          "sha256": "65a3a22b8ac267df53a4ffde307f77c08a1cb3686bc1028dad1ba6bda88960ee",
+          "executable": false
+        }
+      },
+      "workflow": {
+        ".dentcast/workflows/README.md": "347ade03c4e9db247e1bafa3fa5275d0aca1f695a8a3deb22e3bda66d156f0a5",
+        ".dentcast/workflows/agent-parity.md": "a33abe1bb233175fe20bde50453dfa542f2888cd9e79e1c0959ae3a456cf2c32",
+        ".dentcast/workflows/publish-handoff.md": "be23aedfc943c1de67422db671f679bee749d52a4de48d38c851a12cfb2fe543",
+        ".dentcast/workflows/routing-details.md": "656fda00687dc45e71c7058c458d093f9d2243021d6a9b02be65f41079a406c5",
+        ".dentcast/workflows/global/README.md": "8be8dfb1047ee1a6026870ec996ad80205e7aef95b1d77cccf752ed1704fc955",
+        ".dentcast/workflows/global/LOAD-MAP.json": "abe316aa2a0c757af437845efdf5fdf9c592a01fcd704e42707c217704b179d7",
+        "tools/dentcast_global_rules.py": "524271cfc10bfbf30e3b27e6f1c653a9c3009ef3b9c8d06ad23ce421aaaca130",
+        ".dentcast/workflows/global/repo-conventions.md": "941d41cc8eece5eec1897b65e34497d331cb6d1e97335724400bb573367dd3e7",
+        ".dentcast/workflows/global/plus-premium.md": "f29f4a5160b20c307dcef8f79e44b2e0d1135514f53c3c263c652067049710ad",
+        ".dentcast/workflows/global/site-invariants.md": "806db16666dc3d42468f143ec279ba704718d3997ca96ce8316f2d17abbc6398",
+        "tools/dentcast_publish_handoff.py": "8bc48a558d86c2250ffd1c0ec4089d51ab476186f1761c52defdb051f0d3d1e6",
+        "tools/dentcast_publish_lifecycle.py": "5c1189f088d49ba702a9311d56ecd10ee2cb07bf2146cdd64be52e20315d9111",
+        "tools/verify_publish.py": "3da00d7c239be2ed6c614ef72c66297b28ba9f38de5edfeebee02c0c144ec3ff",
+        "tools/dentcast_text_io.py": "28af00db98df97c6062e36d2d963e6a81454f90fb91f9cd8f267ad8a9ee8863d",
+        "tools/text_io.mjs": "c6f9208e26983c8eade43d8cf3effe865e6479df903d2cee661cd0a928565536",
+        "tools/dentcast_post_cut2_runner.py": "d689c2e466c8a87495c688d2910a41cb2993124b7fba4a70fa83ba01745d27e3",
+        ".github/workflows/post-cut2-mechanical.yml": "16095f4353f5b91934e460afcf0ad51c0d933d4f5411cdbe6fc633ad6d219525",
+        ".dentcast/workflows/publish-checkpoints.md": "d676d6bf14cdf10a24a0a09344141b1d99760b7628643d055e46d12975686ab3",
+        ".dentcast/workflows/modules/01-hard-rules.md": "0b5f1ef7276308a3b23ed00f3e4b95dbb9f4263079169498a8e391c10ef50427",
+        ".dentcast/workflows/modules/02-routing-intake.md": "db48c6aba20b2611fcd4295b98c8136e3d77d7e6b63634165aa34689288d6e02",
+        ".dentcast/workflows/modules/03-litecast-and-page.md": "14905b06e0342ea49b76356972f2ff4c5e727d09a067c10b29246662b5353709",
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "e6543ee5f567ea37b870714e330ec6961688ef76cfda223399983eb525b9ec18",
+        ".dentcast/workflows/modules/05-semantic-linking.md": "4f9949082207741b45a8be8301c1fa758d960c40fb57d3ee3d90ccc8aa0384f9",
+        ".dentcast/workflows/modules/06-paper-ingestion.md": "59e7efbddfaeb45f9a2240e0faa19dcf972ac8f9f82a306152df243cb16e417e",
+        ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "9e863f269b64221d9569fcb4530e2140d7bc970669da22b10fe2ee60b2eec10d",
+        ".dentcast/workflows/modules/08-des-fidelity.md": "d49e06ccd0b1fda388ee0745a1ea474f72c8f664f83fafc65fc9e164d239b497",
+        ".dentcast/workflows/modules/09-challenge.md": "ef36cbed0344cc20b199cd0bd243c017f4444daa7032df75df18bf5290bba569",
+        ".dentcast/workflows/modules/10-brain-and-pathways.md": "18e99371659675120cd5ff562eb110727d729f598c4a78f1014cf31152f6b061",
+        ".dentcast/workflows/modules/11-build-and-version.md": "cdc8f1b3b2a7cbafd77394c68b74c5a000d93cb725cd495e64ecd24c50f2fa1e",
+        ".dentcast/workflows/modules/12-english-notify-verify.md": "c4e329f4f91190248ab552f0182cdf79414581d95855d2263b6768723c4e9fa5"
+      }
+    }
+  },
+  "second_delivery_commit": "4283a1792237e993ffec072043a1a0e239b5dda9",
+  "verification": {
+    "kind": "phase_f",
+    "content_id": "dentai/promptologist/prompt-append2-6",
+    "expected_title": "\u067e\u06cc\u0648\u0633\u062a \u06f2 \u0640 \u0642\u0633\u0645\u062a \u06f6: \u0627\u06af\u0631 \u0628\u0647 \u06af\u06cc\u062a\u200c\u0647\u0627\u0628 \u0647\u0645 \u062f\u0633\u062a\u0631\u0633\u06cc \u0646\u062f\u0627\u0634\u062a\u0647 \u0628\u0627\u0634\u06cc\u0645\u060c \u0686\u0647\u061f",
+    "expected_caption": "\u0627\u06af\u0631 \u0631\u0648\u0632\u06cc \u0628\u0647 \u06af\u06cc\u062a\u200c\u0647\u0627\u0628 \u0647\u0645 \u062f\u0633\u062a\u0631\u0633\u06cc \u0646\u062f\u0627\u0634\u062a\u0647 \u0628\u0627\u0634\u06cc\u0645\u060c \u0641\u0627\u06cc\u0644\u200c\u0647\u0627\u06cc\u0645\u0627\u0646 \u06a9\u062c\u0627 \u0645\u06cc\u200c\u0645\u0627\u0646\u0646\u062f\u061f \u0628\u0627 Download ZIP \u0648 Clone \u06cc\u06a9 \u0646\u0633\u062e\u0647 \u0627\u0632 \u0631\u06cc\u067e\u0648 \u0631\u0627 \u0631\u0648\u06cc \u06a9\u0627\u0645\u067e\u06cc\u0648\u062a\u0631 \u062e\u0648\u062f\u0645\u0627\u0646 \u0646\u06af\u0647 \u0645\u06cc\u200c\u062f\u0627\u0631\u06cc\u0645.",
+    "exit_code": 0,
+    "output_sha256": "dbee59e165b72dceb09f69ea009fc872270c0dbebbbd96017fab2af2cbfd0065",
+    "summary": "98 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+  }
+}

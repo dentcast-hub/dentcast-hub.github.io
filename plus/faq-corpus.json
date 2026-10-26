@@ -38982,6 +38982,92 @@
           ]
         }
       ]
+    },
+    "dentai/promptologist/prompt-append2-6": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-6.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا فایل ZIP دانلودشده از یک ریپوی گیت‌هاب، تاریخچهٔ تغییرات فایل‌ها را هم در بر دارد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ با Download ZIP فقط فایل‌های نسخهٔ انتخاب‌شده دریافت می‌شوند و تاریخچهٔ تغییراتشان همراهشان نیست، پس از روی آن نمی‌شود فهمید قبلاً چه چیزی تغییر کرده است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا با Clone کردن یک ریپوی گیت‌هاب، تاریخچهٔ تغییرات فایل‌ها هم روی کامپیوتر ذخیره می‌شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ کلون‌کردن یک نسخه از ریپو را همراه با تاریخچهٔ تغییراتش روی کامپیوتر می‌آورد، طوری که حتی بدون دسترسی به گیت‌هاب هم می‌توان فایل‌ها و نسخه‌های قبلیِ دریافت‌شده را بررسی کرد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا نسخهٔ کلون‌شدهٔ یک ریپو روی کامپیوتر، با تغییراتی که بعداً در گیت‌هاب ثبت می‌شوند، خودبه‌خود به‌روز می‌شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ تغییرات جدید باید دریافت شوند؛ در GitHub Desktop گزینهٔ Fetch origin وجود تغییر تازه را بررسی می‌کند و Pull origin آن را دریافت می‌کند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا دسترسی یک ابزار هوش مصنوعی به گیت‌هاب به این معنی است که به فایل‌های روی کامپیوتر کاربر هم دسترسی دارد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ دسترسی به گیت‌هاب لزوماً دسترسی به کامپیوتر نیست؛ فقط اگر ابزار روی کامپیوتر خود کاربر اجرا شود و اجازهٔ دسترسی به فایل‌ها را داشته باشد، ممکن است بتواند نسخهٔ محلی را هم به‌روز کند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا برای اینکه تاریخچهٔ تغییرات در نسخهٔ پشتیبانِ یک ریپوی کلون‌شده حفظ شود، کپی‌کردن فایل‌های قابل‌مشاهدهٔ آن کافی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ برای حفظ تاریخچهٔ تغییرات باید از کل پوشهٔ ریپو، شامل فایل‌های مخفی آن، نسخهٔ پشتیبان گرفت."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-6.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-6.html#flashcards-c1",
+              "name": "Download ZIP",
+              "description": "گزینه‌ای در منوی Code گیت‌هاب که فایل‌های نسخهٔ انتخاب‌شدهٔ ریپو را در قالب یک فایل فشرده می‌دهد؛ یک کپی ساده از فایل‌ها، بدون سابقهٔ نسخه‌های قبلی.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-6.html#flashcards-c2",
+              "name": "Clone",
+              "description": "گرفتن نسخه‌ای از کل ریپو همراه با تاریخچهٔ تغییراتش روی کامپیوتر خود کاربر؛ نسخه‌ای مستقل که بدون دسترسی به گیت‌هاب هم قابل بررسی است.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-6.html#flashcards-c3",
+              "name": "GitHub Desktop",
+              "description": "برنامهٔ گیت‌هاب برای کار با ریپو روی کامپیوتر بدون نیاز به دستورنویسی؛ ریپو را کلون می‌کند و نسخهٔ محلی را با تغییرات گیت‌هاب به‌روز نگه می‌دارد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentai/promptologist/prompt-append2-6.html#flashcards-c4",
+              "name": "Fetch origin و Pull origin",
+              "description": "دو گام به‌روزرسانی نسخهٔ محلی در GitHub Desktop: Fetch origin وجود تغییر تازه در گیت‌هاب را بررسی می‌کند و Pull origin آن تغییرات را به کامپیوتر می‌آورد.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }

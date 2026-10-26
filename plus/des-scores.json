@@ -43587,5 +43587,64 @@
     "fidelity": [
       null
     ]
+  },
+  "dentai/promptologist/prompt-append2-6": {
+    "scored_at": "2026-10-26",
+    "sources": [
+      {
+        "des_version": "3.4",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "پیوست ۲ ـ قسمت ۶: اگر به گیت‌هاب هم دسترسی نداشته باشیم، چه؟",
+          "authors": "دکتر فواد شهابیان",
+          "year": 2026,
+          "journal": "DentCast (Promptologist series, dentcast.org)",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "برای همین بهتر است از فایل‌های مهم، نسخهٔ دیگری هم روی هارد خارجی یا محل امن دیگری نگه داریم.",
+            "note": "توصیه به نسخهٔ پشتیبانِ جداگانه با «برای همین» به دلیلِ بیان‌شده در جملهٔ قبل (خرابیِ کامپیوتر) وصل شده است؛ محدودیتِ Download ZIP هم با «یعنی» به پیامدش وصل شده است."
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "متن یک آموزشِ عملی است و هیچ نسبتی با شواهد یا منابعِ منتشرشده بیان نمی‌کند و حتی نبودِ شواهد را هم ذکر نمی‌کند."
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "اگر ابزار هوش مصنوعی روی کامپیوتر خودمان اجرا شود و اجازهٔ دسترسی به فایل‌ها را داشته باشد، ممکن است بتواند این کار را هم برایمان انجام بدهد.",
+            "note": "کمکِ هوش مصنوعی به به‌روزرسانیِ نسخهٔ محلی به شرطِ اجرا روی کامپیوتر و داشتنِ اجازهٔ دسترسی محدود شده است."
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "متن خودش را آموزش معرفی می‌کند، نه تجربه یا نظرِ شخصی؛ بخشِ promptologist/ در فهرستِ بسته‌ی اعلانِ سطحِ بخش نیست."
+          }
+        ],
+        "des_score": 12,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این متن به‌عنوان COMMENTARY امتیاز ۱۲ و باند E گرفته است.",
+        "interpretation_fa": "این قسمت یک آموزشِ عملی برای نگه‌داشتنِ نسخهٔ محلی از ریپو با Download ZIP و Clone است و استدلالِ هر مرحله و حدودِ کمکِ هوش مصنوعی را روشن می‌گوید. ادعای پژوهشی ندارد و به شواهدِ منتشرشده تکیه نمی‌کند، پس امتیازش در سطحِ زمینه‌ای است. ارزشِ آن برای کلینیسین در حفظِ امنِ پرامپت‌ها و فایل‌های کاری است، نه در تصمیمِ بالینی."
+      }
+    ],
+    "fidelity": [
+      null
+    ]
   }
 }
