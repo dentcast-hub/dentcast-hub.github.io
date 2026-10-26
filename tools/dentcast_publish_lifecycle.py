@@ -70,7 +70,61 @@ def state_for_update(root, expected):
 
 
 PULL_ADVICE = ("run `git pull --ff-only` (fast-forward only; never reset, force-push, "
-               "confirm-cleanup or restore-cleanup for this), then rerun the guard")
+               "confirm-cleanup or restore-cleanup for this), then rerun the guard; if that pull "
+               "is refused (undelivered local changes or commits: another checkout continued this "
+               "run), follow publish-handoff.md 'Stale checkout after a switch'")
+STALE_ADVICE = ("Do not stage, commit, merge, rebase or force-push this checkout's undelivered work; keep it "
+                "recoverable and follow publish-handoff.md 'Stale checkout after a switch'")
+
+
+def stale_checkout(root):
+    """Fresh ls-remote: origin's branch holds commits this checkout lacks.
+
+    A stale checkout (the run continued in another checkout/client from the
+    last delivered cut) must not create a diverging cut commit; git would only
+    reject its push after the commit. An unknown remote is left to the push.
+    """
+    branch = h.text_git(root, "symbolic-ref", "--quiet", "--short", "HEAD", optional=True)
+    if not branch:
+        return None
+    head = h.text_git(root, "rev-parse", "HEAD")
+    remote = h.remote_observation(root, head, branch, True)
+    if remote["status"] != "observed" or remote["head"] == head or (
+            remote["ahead"] is not None and not remote["behind"]):
+        return None
+    return ("REMOTE_BRANCH_MOVED_STALE_CHECKOUT: origin/" + branch + " is at " + remote["head"][:12]
+            + ", which this checkout does not contain (another checkout or client may have continued "
+            "this publication). " + STALE_ADVICE)
+
+
+def delivered_cut_elsewhere(root, current):
+    """This branch is absent on origin, but another origin branch is at this exact delivered commit.
+
+    A receiving checkout that copied a delivered cut onto its own new branch
+    (e.g. a cloud session's `ccr-*` branch) would otherwise be told to push it,
+    leaving the original branch's active handoff behind as a second run.
+    """
+    if current["remote"].get("reason") != "REMOTE_UNAVAILABLE_OR_BRANCH_MISSING" or not current["branch"]:
+        return None
+    out = h.git(root, "ls-remote", "--heads", "--", "origin", optional=True, timeout=h.remote_timeout())
+    if out is None:
+        return None  # origin unreachable: the push state stays unknown
+    heads = {}
+    for line in out.decode("utf-8", "replace").splitlines():
+        sha, _, ref = line.partition("\t")
+        heads[ref.strip()] = sha.strip()
+    if "refs/heads/" + current["branch"] in heads:
+        return None
+    others = sorted(ref[len("refs/heads/"):] for ref, sha in heads.items()
+                    if ref.startswith("refs/heads/") and sha == current["head"])
+    if not others:
+        return None
+    b = others[0]
+    return ("DELIVERED_CUT_IS_ON_ANOTHER_BRANCH: origin/" + b + " already holds this delivered commit and origin "
+            "has no " + current["branch"] + "; continue on that branch (git remote set-branches --add origin " + b
+            + "; git fetch origin " + b + "; git switch --track origin/" + b + ") instead of pushing this run under "
+            "a new branch name. If this session may push only its own branch, stop and report that the run must "
+            "continue on " + b)
 
 
 def remote_delivery_ahead(root, state, current, expected):
@@ -120,8 +174,14 @@ def require_step_delivery(root, state, expected):
     pull = remote_delivery_ahead(root, state, current, expected)
     h.require(pull is None, pull)
     remote = current['remote']
+    if remote['status'] != 'observed':
+        elsewhere = delivered_cut_elsewhere(root, current)
+        h.require(elsewhere is None, elsewhere)
     h.require(remote['status'] == 'observed' and remote['head'] == current['head'],
-              'PREVIOUS_STEP_PUSH_NOT_CONFIRMED')
+              'PREVIOUS_STEP_PUSH_NOT_CONFIRMED' + (
+                  '' if remote['status'] == 'observed' else
+                  ': origin/' + str(current['branch']) + ' could not be read (network/auth) or does not exist; '
+                  'if the push already succeeded, never commit again: retry once origin is reachable'))
     h.require(not h.status_paths(root), 'PREVIOUS_STEP_WORK_NOT_COMMITTED')
     delivered = h.git(root, 'show', current['head'] + ':' + h.STATE_PATH, optional=True)
     h.require(delivered is not None and h.digest(delivered) == expected,
@@ -731,6 +791,8 @@ def stage_delivery(root, expected, paths):
     if not paper_final:
         # Refuse before staging or refreshing the checkpoint, not in the final guard.
         require_fixed_cut_readiness(p, root)
+    stale = stale_checkout(root)
+    h.require(stale is None, stale)
     h.require(bool(paths), "STAGE_DELIVERY_PATHS_REQUIRED")
     # finish requires context.delivery on that exact delivered handoff, so a
     # paper-only final handoff without it would need a second final commit.

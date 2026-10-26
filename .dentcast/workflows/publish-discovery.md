@@ -72,6 +72,12 @@ fresh checkout (or another isolated checkout using the normal Git workflow),
 then verify its actual HEAD equals the observed `head_sha`. If it differs,
 refresh discovery/reconcile the new state rather than force-resetting work.
 Use the matching named branch so the recorded branch identity remains intact.
+In a single-branch clone (the usual cloud session) run
+`git remote set-branches --add origin <branch>`, `git fetch origin <branch>` and
+`git switch --track origin/<branch>`, then deepen a shallow clone. Continue and
+push on that branch, not on the session's own new `ccr-*` branch. Copying the
+work to a new branch leaves the original active handoff behind as a second run.
+If the session may push only its own branch, stop and report that instead.
 
 Run `inspect --check-remote` in that checkout. Verify file/workflow fingerprints,
 required inputs, completed evidence, approvals and external outcomes. An
