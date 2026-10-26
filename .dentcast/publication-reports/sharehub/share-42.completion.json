@@ -1,0 +1,1901 @@
+{
+  "schema": "publish-completion-v1",
+  "state": {
+    "publication": {
+      "blocker": null,
+      "category": "sharehub",
+      "content_id": "sharehub/share-42",
+      "context": {
+        "approvals": [
+          {
+            "decision": "All 16 readability/de-AI rewrites applied",
+            "evidence": [
+              "founder reply: \u00ab\u0647\u0645\u0647 \u0627\u0639\u0645\u0627\u0644 \u0628\u0634\u0647\u00bb",
+              "re-confirmed after caption invalidation: founder \u00ab\u0628\u0642\u06cc\u0647 \u062a\u0627\u06cc\u06cc\u062f\u00bb",
+              "restored after Part 3b invalidation (decision unchanged; edits limited to u47/u63 per founder)",
+              "restored after Part 3b round-3 invalidation"
+            ],
+            "scope": "style-pass-B.3.5",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u06a9\u0644\u06cc\u06a9 \u0641\u06a9 \u0648 \u0627\u0633\u067e\u0644\u06cc\u0646\u062a \u0631\u06cc\u067e\u0648\u0632\u06cc\u0634\u0646 \u0642\u062f\u0627\u0645\u06cc\u061b \u0627\u0632 \u062a\u0634\u062e\u06cc\u0635 \u062a\u0627 \u067e\u0627\u06cc\u0627\u0646 \u062f\u0631\u0645\u0627\u0646",
+            "evidence": [
+              "founder-supplied title in publication message",
+              "re-confirmed after caption invalidation: founder \u00ab\u0628\u0642\u06cc\u0647 \u062a\u0627\u06cc\u06cc\u062f\u00bb",
+              "restored after Part 3b invalidation (decision unchanged; edits limited to u47/u63 per founder)",
+              "restored after Part 3b round-3 invalidation"
+            ],
+            "scope": "title",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u06cc\u06a9\u06cc \u0627\u0632 \u06cc\u0627\u0641\u062a\u0647\u200c\u0647\u0627\u06cc \u0628\u0627\u0644\u06cc\u0646\u06cc \u062f\u0631 \u0628\u06cc\u0645\u0627\u0631\u0627\u0646 \u062f\u0627\u0631\u0627\u06cc \u06a9\u0644\u06cc\u06a9\u060c \u062d\u0630\u0641 \u0635\u062f\u0627 \u0628\u0627 \u062c\u0644\u0648\u0622\u0648\u0631\u062f\u0646 \u0641\u06a9 \u0627\u0633\u062a. \u0627\u0645\u0627 \u067e\u06cc\u0634 \u0627\u0632 \u0633\u0627\u062e\u062a \u0627\u0633\u067e\u0644\u06cc\u0646\u062a\u060c \u0628\u0627\u06cc\u062f \u0645\u0634\u062e\u0635 \u0634\u0648\u062f \u0628\u06cc\u0645\u0627\u0631 \u0639\u0644\u0627\u0648\u0647 \u0628\u0631 \u0635\u062f\u0627\u060c \u062f\u0631\u062f \u0645\u0641\u0635\u0644 \u06cc\u0627 \u0627\u062e\u062a\u0644\u0627\u0644 \u0639\u0645\u0644\u06a9\u0631\u062f \u0647\u0645 \u062f\u0627\u0631\u062f \u06cc\u0627 \u062e\u06cc\u0631.",
+            "evidence": [
+              "founder reply: \u00ab\u06a9\u067e\u0634\u0646 \u0627\u0644\u0641\u00bb",
+              "re-confirmed after caption invalidation: founder \u00ab\u0628\u0642\u06cc\u0647 \u062a\u0627\u06cc\u06cc\u062f\u00bb",
+              "restored after Part 3b invalidation (decision unchanged; edits limited to u47/u63 per founder)",
+              "restored after Part 3b round-3 invalidation"
+            ],
+            "scope": "caption",
+            "status": "confirmed"
+          },
+          {
+            "decision": "Publish Okeson 2020 Figs 15.28/15.29 as webp; figcaption = short book source line only (no explanatory text)",
+            "evidence": [
+              "founder: \u00ab\u0641\u0642\u0637 \u2026 \u06cc\u0647 \u0686\u06cc\u0632 \u06a9\u0648\u062a\u0627\u0647 \u0628\u0646\u0648\u06cc\u0633 \u06a9\u0647 \u0645\u0646\u0628\u0639\u0634 \u0686\u06cc\u0647 \u0627\u0632 \u062e\u0648\u062f \u06a9\u062a\u0627\u0628 \u2026 \u062a\u0648\u0636\u06cc\u062d\u0634 \u0646\u0645\u06cc\u200c\u062e\u0648\u0627\u062f\u00bb",
+              "restored after Part 3b invalidation (decision unchanged; edits limited to u47/u63 per founder)",
+              "restored after Part 3b round-3 invalidation"
+            ],
+            "scope": "figures-okeson",
+            "status": "confirmed"
+          },
+          {
+            "decision": "#Share_Hub #Curated_Content #TMD #\u062f\u0627\u062e\u0644_\u06a9\u067e\u0633\u0648\u0644\u06cc #\u0627\u0633\u067e\u0644\u06cc\u0646\u062a + mint #\u0627\u0633\u067e\u0644\u06cc\u0646\u062a_\u0631\u06cc\u067e\u0648\u0632\u06cc\u0634\u0646 #\u062c\u0627\u0628\u062c\u0627\u06cc\u06cc_\u062f\u06cc\u0633\u06a9",
+            "evidence": [
+              "founder: \u00ab\u0628\u0642\u06cc\u0647 \u062a\u0627\u06cc\u06cc\u062f\u00bb",
+              "restored after Part 3b invalidation (decision unchanged; edits limited to u47/u63 per founder)",
+              "restored after Part 3b round-3 invalidation"
+            ],
+            "scope": "hashtags",
+            "status": "confirmed"
+          },
+          {
+            "decision": "Option 1 founder-directed unit assignment (book = all body units drawn from the 11 pages)",
+            "evidence": [
+              "founder: \u00ab\u067e\u06cc\u0634\u0646\u0647\u0627\u062f \u062e\u0648\u062f\u062a \u0628\u0647 \u0646\u0638\u0631\u0645 \u0628\u0647\u062a\u0631\u0647\u00bb",
+              "restored after Part 3b invalidation (decision unchanged; edits limited to u47/u63 per founder)",
+              "restored after Part 3b round-3 invalidation"
+            ],
+            "scope": "fidelity-assignment",
+            "status": "confirmed"
+          },
+          {
+            "decision": "u63 \u00ab\u06a9\u0645 \u0634\u0648\u062f\u00bb\u2192\u00ab\u062d\u0630\u0641 \u0634\u0648\u062f\u00bb (\u0627\u0635\u0644\u0627\u062d \u06a9\u0646); u47 reason rewritten to Okeson p.399 rationale (\u0627\u0635\u0644\u0627\u062d \u06a9\u0646); re-check the 25 NOT_ASSESSABLE book units and also judge them against Okeson 1988 abstract and Conti full text",
+            "evidence": [
+              "founder: \u00ab\u0647\u0631 \u062f\u0648 \u0631\u0648 \u0627\u0635\u0644\u0627\u062d \u06a9\u0646 \u0648 \u0627\u0648\u0646 \u062c\u0645\u0644\u0647 \u0647\u0627\u06cc\u06cc \u06a9\u0647 \u06af\u0641\u062a\u06cc\u0645 \u062a\u0648 \u06a9\u062a\u0627\u0628 \u0628\u0648\u062f\u0646 \u0627\u0645\u0627 \u0646\u0628\u0648\u062f\u0646 \u062a\u0633\u062a \u0645\u062c\u062f\u062f \u0628\u0634\u0646 \u0627\u06af\u0631 \u0646\u0628\u0648\u062f\u0646 \u062a\u0648 \u062f\u0648 \u0645\u0646\u0628\u0639 \u062f\u06cc\u06af\u0647 \u0633\u0631\u0686 \u0628\u0634\u0646\u00bb",
+              "restored after Part 3b round-3 invalidation"
+            ],
+            "scope": "fidelity-3b",
+            "status": "confirmed"
+          },
+          {
+            "decision": "u47 restored to founder original \u00ab\u0642\u0648\u0633 \u0628\u0627\u0644\u0627 \u0645\u0639\u0645\u0648\u0644\u0627\u064b \u062a\u0631\u062c\u06cc\u062d \u062f\u0627\u0631\u062f\u060c \u0632\u06cc\u0631\u0627 \u0633\u0627\u062e\u062a \u0631\u0645\u067e \u0647\u062f\u0627\u06cc\u062a\u200c\u06a9\u0646\u0646\u062f\u0647 \u0628\u0631\u0627\u06cc \u06a9\u0646\u062a\u0631\u0644 \u0645\u0648\u0642\u0639\u06cc\u062a \u0641\u06a9 \u0631\u0648\u06cc \u0622\u0646 \u0622\u0633\u0627\u0646\u200c\u062a\u0631 \u0627\u0633\u062a.\u00bb (Okeson p.394); u89 replaced by founder text \u00ab\u062f\u0631 \u0627\u06cc\u0646 \u0634\u0631\u0627\u06cc\u0637\u060c \u0627\u0633\u067e\u0644\u06cc\u0646\u062a \u0631\u06cc\u067e\u0648\u0632\u06cc\u0634\u0646 \u0628\u0647 \u0627\u0633\u067e\u0644\u06cc\u0646\u062a \u0627\u0633\u062a\u0628\u06cc\u0644\u0627\u06cc\u0632\u06cc\u0634\u0646 \u062a\u0628\u062f\u06cc\u0644 \u0645\u06cc\u200c\u0634\u0648\u062f \u062a\u0627 \u0627\u0645\u06a9\u0627\u0646 \u0628\u0627\u0632\u06af\u0634\u062a \u06a9\u0646\u062f\u06cc\u0644\u200c\u0647\u0627 \u0628\u0647 \u0645\u0648\u0642\u0639\u06cc\u062a \u0627\u0633\u06a9\u0644\u062a\u06cc\u200c\u0639\u0636\u0644\u0627\u0646\u06cc \u067e\u0627\u06cc\u062f\u0627\u0631 \u0641\u0631\u0627\u0647\u0645 \u0634\u0648\u062f.\u00bb; Okeson source excerpt extended with founder pages 360 and 394",
+            "evidence": [
+              "founder: \u00ab\u062c\u0645\u0644\u0647\u0654 \u0627\u0635\u0644\u06cc \u062e\u0648\u062f\u0645 \u0628\u0631\u06af\u0631\u062f\u0647\u060c \u06af\u0632\u06cc\u0646\u0647 \u06f1\u00bb",
+              "founder message supplying pp.329/360/394 and the u89 rewrite"
+            ],
+            "scope": "fidelity-3b-r3",
+            "status": "confirmed"
+          },
+          {
+            "decision": "2 MCQs for sharehub/share-42 (r-19203d44 key 0; r-d92e7e94 key 1) as presented",
+            "evidence": [
+              "founder: \u00ab\u0647\u0631 \u062f\u0648 \u0633\u0624\u0627\u0644 \u062a\u0623\u06cc\u06cc\u062f\u00bb"
+            ],
+            "scope": "exam-questions",
+            "status": "confirmed"
+          },
+          {
+            "decision": "English mirror sharehub/en/share-42.html as drafted (incl. u47/u63/u89 fixes)",
+            "evidence": [
+              "founder: \u00ab\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc \u0647\u0645 \u062a\u0623\u06cc\u06cc\u062f\u00bb"
+            ],
+            "scope": "english",
+            "status": "confirmed"
+          },
+          {
+            "decision": "occlusion pathway after episodes/episode-145 (STRONG); other candidates not placed; bundle-occlusion-rehab rejected gate 3",
+            "evidence": [
+              "announced to founder; no objection \u2014 founder approved remaining items \u00ab\u0647\u0631 \u062f\u0648 \u0633\u0624\u0627\u0644 \u062a\u0623\u06cc\u06cc\u062f\u060c \u0627\u0646\u06af\u0644\u06cc\u0633\u06cc \u0647\u0645 \u062a\u0623\u06cc\u06cc\u062f\u00bb"
+            ],
+            "scope": "pathways",
+            "status": "confirmed"
+          }
+        ],
+        "decisions": [
+          {
+            "kind": "fixed_three_deliveries_v1"
+          },
+          {
+            "kind": "fixed_three_deliveries_v2"
+          },
+          {
+            "evidence": [
+              "founder-text-of-record sha256 8c10736d77868a04b262889a5a7a9f1f13b87863521db9bfaf34d5ebdf5a9591"
+            ],
+            "kind": "first_cut_lead_provenance_v1",
+            "origin": "author_original",
+            "source_ref": "Founder message text: first paragraph \u00ab\u062f\u06cc\u0633\u06a9 \u0645\u0641\u0635\u0644 \u06af\u06cc\u062c\u06af\u0627\u0647\u06cc\u200c\u0641\u06a9\u06cc \u0645\u06cc\u0627\u0646 \u06a9\u0646\u062f\u06cc\u0644\u2026\u00bb used verbatim as lead; no agent-composed lead"
+          },
+          {
+            "from_step": "C.2",
+            "kind": "dependency_invalidation_v1",
+            "reason": "Founder asked to shorten both figcaptions to the book source line only (no explanatory text); approved page prose changed -> invalidate C.2 onward",
+            "superseded": {
+              "approvals": [
+                {
+                  "decision": "All 16 readability/de-AI rewrites applied",
+                  "evidence": [
+                    "founder reply: \u00ab\u0647\u0645\u0647 \u0627\u0639\u0645\u0627\u0644 \u0628\u0634\u0647\u00bb"
+                  ],
+                  "scope": "style-pass-B.3.5",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "\u06a9\u0644\u06cc\u06a9 \u0641\u06a9 \u0648 \u0627\u0633\u067e\u0644\u06cc\u0646\u062a \u0631\u06cc\u067e\u0648\u0632\u06cc\u0634\u0646 \u0642\u062f\u0627\u0645\u06cc\u061b \u0627\u0632 \u062a\u0634\u062e\u06cc\u0635 \u062a\u0627 \u067e\u0627\u06cc\u0627\u0646 \u062f\u0631\u0645\u0627\u0646",
+                  "evidence": [
+                    "founder-supplied title in publication message"
+                  ],
+                  "scope": "title",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "\u06cc\u06a9\u06cc \u0627\u0632 \u06cc\u0627\u0641\u062a\u0647\u200c\u0647\u0627\u06cc \u0628\u0627\u0644\u06cc\u0646\u06cc \u062f\u0631 \u0628\u06cc\u0645\u0627\u0631\u0627\u0646 \u062f\u0627\u0631\u0627\u06cc \u06a9\u0644\u06cc\u06a9\u060c \u062d\u0630\u0641 \u0635\u062f\u0627 \u0628\u0627 \u062c\u0644\u0648\u0622\u0648\u0631\u062f\u0646 \u0641\u06a9 \u0627\u0633\u062a. \u0627\u0645\u0627 \u067e\u06cc\u0634 \u0627\u0632 \u0633\u0627\u062e\u062a \u0627\u0633\u067e\u0644\u06cc\u0646\u062a\u060c \u0628\u0627\u06cc\u062f \u0645\u0634\u062e\u0635 \u0634\u0648\u062f \u0628\u06cc\u0645\u0627\u0631 \u0639\u0644\u0627\u0648\u0647 \u0628\u0631 \u0635\u062f\u0627\u060c \u062f\u0631\u062f \u0645\u0641\u0635\u0644 \u06cc\u0627 \u0627\u062e\u062a\u0644\u0627\u0644 \u0639\u0645\u0644\u06a9\u0631\u062f \u0647\u0645 \u062f\u0627\u0631\u062f \u06cc\u0627 \u062e\u06cc\u0631.",
+                  "evidence": [
+                    "founder reply: \u00ab\u06a9\u067e\u0634\u0646 \u0627\u0644\u0641\u00bb"
+                  ],
+                  "scope": "caption",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "Publish Okeson 2020 Figs 15.28/15.29 with reference credit as webp at relevant positions",
+                  "evidence": [
+                    "founder reply: \u00ab\u062f\u0631 \u0645\u0648\u0631\u062f \u0639\u06a9\u0633 \u0631\u0641\u0631\u0646\u0633 \u0628\u062f\u0647 \u2026 \u0628\u0647 \u0634\u06a9\u0644 \u0648\u0628 \u067e\u06cc\u00bb"
+                  ],
+                  "scope": "figures-okeson",
+                  "status": "confirmed"
+                }
+              ],
+              "delivery": [],
+              "inputs": [
+                {
+                  "note": "private copyrighted source, kept local; used for Fidelity EXCERPT",
+                  "ref": "okeson-2020-excerpts: 11 founder-selected pages (pp. 325,327,329,330,331,332,396,397,398,399,400)"
+                }
+              ],
+              "steps": [
+                {
+                  "evidence": [
+                    "sharehub/share-42.html cloned from share-41 (structure preserved, .org domain, GA4 once, 2 preconnect crossorigin, no enamad); body = text of record; 2 figures webp; refs list; lead author_original; page sha d6621aa3"
+                  ],
+                  "id": "C.2",
+                  "module": "03-litecast-and-page.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.0.5",
+                  "module": "03-litecast-and-page.md",
+                  "reason": "LiteCast branch inactive: sharehub",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.0.6",
+                  "module": "03-litecast-and-page.md",
+                  "reason": "LiteCast branch inactive: sharehub",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "pillar.primary=occlusion (structured), subtopic=tmd-orofacial-pain; single clear fit (HR14 auto-applied, announced to founder)"
+                  ],
+                  "id": "C.2.4",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "dc-related-section with 2 capsules: /glossary/ + /pillar/occlusion/ (typed-brain branch)"
+                  ],
+                  "id": "C.2.5",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "sharehub/index.html hand-maintained: added <li> share-42 at top with \u00ab(\u0645\u0637\u0644\u0628\u06cc \u0627\u0632 \u062f\u06a9\u062a\u0631 \u0641\u0648\u0627\u062f \u0634\u0647\u0627\u0628\u06cc\u0627\u0646)\u00bb, 1-line diff, CRLF preserved"
+                  ],
+                  "id": "C.2.6",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Audit: datePublished=dateModified=2026-10-26; title on 9 surfaces, caption on 4 meta surfaces, canonical/og:url/JSON-LD all share-42; no stale share-41 refs; all OK"
+                  ],
+                  "id": "C.3",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Template share-41 sha256 a865d04b\u2026 unchanged (matches C.1)"
+                  ],
+                  "id": "C.4",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.5",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "NoteCast only; category sharehub",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.5-b",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "episode/NoteCast pair only; category sharehub",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.6",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "Promptologist only; category sharehub",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "Fresh semantic review of glossary.json (109 terms): genuine candidates tmd, occlusal-splint, centric-relation \u2014 all three \u00ab\u06a9\u0627\u0648\u0634 \u0628\u06cc\u0634\u062a\u0631\u00bb sections at/over 5-link cap (5/6/5) -> 0 added, nothing touched"
+                  ],
+                  "id": "C.4.7",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.7-b",
+                  "module": "05-semantic-linking.md",
+                  "reason": "Not a glossary publish (scoped cross-link runs only for glossary terms)",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "Fresh body analysis vs glossary+episodes: auto-applied (unmistakable, first occurrence) \u00ab\u0627\u0633\u067e\u0644\u06cc\u0646\u062a\u00bb (para 4) -> /glossary/occlusal-splint.html; \u00abCR\u00bb (section 6) -> /glossary/centric-relation.html. Rejected: tmd (body names the joint, not the disorder); episode links handled in 4.9. Only anchor insertions; prose digest unchanged"
+                  ],
+                  "id": "C.4.8",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.9",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "started"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.1",
+                  "module": "06-paper-ingestion.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.2",
+                  "module": "06-paper-ingestion.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.3",
+                  "module": "06-paper-ingestion.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.11",
+                  "module": "07-flashcards-and-quiz.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.12",
+                  "module": "07-flashcards-and-quiz.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.13",
+                  "module": "08-des-fidelity.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.14",
+                  "module": "09-challenge.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.0",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.5",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.6",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.6-b",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.6",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.8",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.7",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "D",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "E",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "F",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "G",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                }
+              ],
+              "validation": []
+            }
+          },
+          {
+            "decision": "Founder chose option 1: run des_fidelity_units.py split/build/vote unchanged but with an explicit unit plan, because the tool's Latin-only markers map no body sentence to the Okeson 2020 book (Persian \u00ab\u0627\u0648\u06a9\u06cc\u0633\u0648\u0646\u00bb unrecognised; \u00abOkeson\u00bb shared with the 1988 paper). Plan: src0 book EXCERPT 70 body units; src1 Okeson 1988 abstract u80,u81,u92,u101,u102,u103; src2 Conti u104,u105; excluded headings, toggle label u2, figure source lines u24-u29,u56-u61.",
+            "evidence": [
+              "founder: \u00ab\u067e\u06cc\u0634\u0646\u0647\u0627\u062f \u062e\u0648\u062f\u062a \u0628\u0647 \u0646\u0638\u0631\u0645 \u0628\u0647\u062a\u0631\u0647 \u0686\u0648\u0646 \u0648\u0627\u0642\u0639\u0627\u064b \u06a9\u062a\u0627\u0628 \u0645\u0646\u0628\u0639 \u0627\u0635\u0644\u06cc\u0647\u00bb"
+            ],
+            "kind": "fidelity_unit_assignment_founder_directed"
+          },
+          {
+            "from_step": "C.2",
+            "kind": "dependency_invalidation_v1",
+            "reason": "Part 3b founder-accepted fidelity fixes changed approved page prose after delivery 1: u63 \u00ab\u06a9\u0645 \u0634\u0648\u062f\u00bb\u2192\u00ab\u062d\u0630\u0641 \u0634\u0648\u062f\u00bb; u47 rationale per Okeson p.399. Re-verify C.2 onward; Drive external action remains completed",
+            "superseded": {
+              "approvals": [
+                {
+                  "decision": "All 16 readability/de-AI rewrites applied",
+                  "evidence": [
+                    "founder reply: \u00ab\u0647\u0645\u0647 \u0627\u0639\u0645\u0627\u0644 \u0628\u0634\u0647\u00bb",
+                    "re-confirmed after caption invalidation: founder \u00ab\u0628\u0642\u06cc\u0647 \u062a\u0627\u06cc\u06cc\u062f\u00bb"
+                  ],
+                  "scope": "style-pass-B.3.5",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "\u06a9\u0644\u06cc\u06a9 \u0641\u06a9 \u0648 \u0627\u0633\u067e\u0644\u06cc\u0646\u062a \u0631\u06cc\u067e\u0648\u0632\u06cc\u0634\u0646 \u0642\u062f\u0627\u0645\u06cc\u061b \u0627\u0632 \u062a\u0634\u062e\u06cc\u0635 \u062a\u0627 \u067e\u0627\u06cc\u0627\u0646 \u062f\u0631\u0645\u0627\u0646",
+                  "evidence": [
+                    "founder-supplied title in publication message",
+                    "re-confirmed after caption invalidation: founder \u00ab\u0628\u0642\u06cc\u0647 \u062a\u0627\u06cc\u06cc\u062f\u00bb"
+                  ],
+                  "scope": "title",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "\u06cc\u06a9\u06cc \u0627\u0632 \u06cc\u0627\u0641\u062a\u0647\u200c\u0647\u0627\u06cc \u0628\u0627\u0644\u06cc\u0646\u06cc \u062f\u0631 \u0628\u06cc\u0645\u0627\u0631\u0627\u0646 \u062f\u0627\u0631\u0627\u06cc \u06a9\u0644\u06cc\u06a9\u060c \u062d\u0630\u0641 \u0635\u062f\u0627 \u0628\u0627 \u062c\u0644\u0648\u0622\u0648\u0631\u062f\u0646 \u0641\u06a9 \u0627\u0633\u062a. \u0627\u0645\u0627 \u067e\u06cc\u0634 \u0627\u0632 \u0633\u0627\u062e\u062a \u0627\u0633\u067e\u0644\u06cc\u0646\u062a\u060c \u0628\u0627\u06cc\u062f \u0645\u0634\u062e\u0635 \u0634\u0648\u062f \u0628\u06cc\u0645\u0627\u0631 \u0639\u0644\u0627\u0648\u0647 \u0628\u0631 \u0635\u062f\u0627\u060c \u062f\u0631\u062f \u0645\u0641\u0635\u0644 \u06cc\u0627 \u0627\u062e\u062a\u0644\u0627\u0644 \u0639\u0645\u0644\u06a9\u0631\u062f \u0647\u0645 \u062f\u0627\u0631\u062f \u06cc\u0627 \u062e\u06cc\u0631.",
+                  "evidence": [
+                    "founder reply: \u00ab\u06a9\u067e\u0634\u0646 \u0627\u0644\u0641\u00bb",
+                    "re-confirmed after caption invalidation: founder \u00ab\u0628\u0642\u06cc\u0647 \u062a\u0627\u06cc\u06cc\u062f\u00bb"
+                  ],
+                  "scope": "caption",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "Publish Okeson 2020 Figs 15.28/15.29 as webp; figcaption = short book source line only (no explanatory text)",
+                  "evidence": [
+                    "founder: \u00ab\u0641\u0642\u0637 \u2026 \u06cc\u0647 \u0686\u06cc\u0632 \u06a9\u0648\u062a\u0627\u0647 \u0628\u0646\u0648\u06cc\u0633 \u06a9\u0647 \u0645\u0646\u0628\u0639\u0634 \u0686\u06cc\u0647 \u0627\u0632 \u062e\u0648\u062f \u06a9\u062a\u0627\u0628 \u2026 \u062a\u0648\u0636\u06cc\u062d\u0634 \u0646\u0645\u06cc\u200c\u062e\u0648\u0627\u062f\u00bb"
+                  ],
+                  "scope": "figures-okeson",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "#Share_Hub #Curated_Content #TMD #\u062f\u0627\u062e\u0644_\u06a9\u067e\u0633\u0648\u0644\u06cc #\u0627\u0633\u067e\u0644\u06cc\u0646\u062a + mint #\u0627\u0633\u067e\u0644\u06cc\u0646\u062a_\u0631\u06cc\u067e\u0648\u0632\u06cc\u0634\u0646 #\u062c\u0627\u0628\u062c\u0627\u06cc\u06cc_\u062f\u06cc\u0633\u06a9",
+                  "evidence": [
+                    "founder: \u00ab\u0628\u0642\u06cc\u0647 \u062a\u0627\u06cc\u06cc\u062f\u00bb"
+                  ],
+                  "scope": "hashtags",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "Option 1 founder-directed unit assignment (book = all body units drawn from the 11 pages)",
+                  "evidence": [
+                    "founder: \u00ab\u067e\u06cc\u0634\u0646\u0647\u0627\u062f \u062e\u0648\u062f\u062a \u0628\u0647 \u0646\u0638\u0631\u0645 \u0628\u0647\u062a\u0631\u0647\u00bb"
+                  ],
+                  "scope": "fidelity-assignment",
+                  "status": "confirmed"
+                }
+              ],
+              "delivery": [],
+              "inputs": [
+                {
+                  "note": "private copyrighted source, kept local; used for Fidelity EXCERPT",
+                  "ref": "okeson-2020-excerpts: 11 founder-selected pages (pp. 325,327,329,330,331,332,396,397,398,399,400)"
+                }
+              ],
+              "steps": [
+                {
+                  "evidence": [
+                    "Re-verified: share-42 clone structure, .org, GA4 once, preconnect x2, no enamad; figcaptions now short book source line (founder); page sha d41e7650"
+                  ],
+                  "id": "C.2",
+                  "module": "03-litecast-and-page.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.0.5",
+                  "module": "03-litecast-and-page.md",
+                  "reason": "LiteCast branch inactive: sharehub",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.0.6",
+                  "module": "03-litecast-and-page.md",
+                  "reason": "LiteCast branch inactive: sharehub",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "Re-verified pillar occlusion / tmd-orofacial-pain (unchanged decision)"
+                  ],
+                  "id": "C.2.4",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Re-verified dc-related-section: /glossary/ + /pillar/occlusion/"
+                  ],
+                  "id": "C.2.5",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Re-verified sharehub/index.html single added <li> for share-42"
+                  ],
+                  "id": "C.2.6",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Re-audit: dates 2026-10-26 x2, title/caption surfaces unchanged, all OK"
+                  ],
+                  "id": "C.3",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Template share-41 sha a865d04b\u2026 unchanged"
+                  ],
+                  "id": "C.4",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.5",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "NoteCast only; category sharehub",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.5-b",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "episode/NoteCast pair only; category sharehub",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.6",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "Promptologist only; category sharehub",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "Re-verified: tmd/occlusal-splint/centric-relation glossary sections at cap -> 0 added"
+                  ],
+                  "id": "C.4.7",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.7-b",
+                  "module": "05-semantic-linking.md",
+                  "reason": "Not a glossary publish",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "Re-verified inline anchors: \u0627\u0633\u067e\u0644\u06cc\u0646\u062a -> /glossary/occlusal-splint.html; CR -> /glossary/centric-relation.html (first occurrence)"
+                  ],
+                  "id": "C.4.8",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Fresh semantic comparison vs whole brain: added 3 capsules (5/5 cap): episode-86 TMD intracapsular, episode-144 Dawson-Okeson pt3 joint pathologies, episode-145 pt4 splint therapy; budget 2 used + 3 = 5"
+                  ],
+                  "id": "C.4.9",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "See external_action C.4.10.1:drive-rename-move (completed): founder-uploaded root file renamed to real title and moved to Occlusion; drive_id 1N7v7QVCdWHCJVdIHtpxjyArw2Bkgn63s"
+                  ],
+                  "id": "C.4.10.1",
+                  "module": "06-paper-ingestion.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Catalog P2947 appended (key set == P2946 template), topic Occlusion, 12 kebab tags incl topic:occlusion + title tag, Drive view/download/id, DOI/journal/year from PDF+DOI, total_papers 2261->2262 (no round-hundred crossing; \u06f2\u06f2\u06f0\u06f0 claim unchanged); JSON valid"
+                  ],
+                  "id": "C.4.10.2",
+                  "module": "06-paper-ingestion.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "DOI 10.1590/S1678-77572005000400006 + first author Conti PCR from PDF header; page \u00ab\u2206 \u0645\u0646\u0627\u0628\u0639\u00bb list (share-22 style, several sources) links Conti PCR et al. -> doi.org; Okeson 1988 DOI 10.1016/0022-3913(88)90224-7 verified via PubMed PMID 3199322; no isBasedOn in sharehub template"
+                  ],
+                  "id": "C.4.10.3",
+                  "module": "06-paper-ingestion.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "plus/faq-corpus.json byContent[sharehub/share-42].definedTermSets: 6 authored DefinedTerms #flashcards-c1..c6; none copies a FAQ answer"
+                  ],
+                  "id": "C.4.11",
+                  "module": "07-flashcards-and-quiz.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "FAQPage 9 questions, all standalone (no deixis), all binary with explicit \u0628\u0644\u0647/\u062e\u06cc\u0631 verdict opening; 4.12-\u0628: evaluated at 5.6"
+                  ],
+                  "id": "C.4.12",
+                  "module": "07-flashcards-and-quiz.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.13",
+                  "module": "08-des-fidelity.md",
+                  "reason": null,
+                  "status": "started"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.14",
+                  "module": "09-challenge.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.0",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.5",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.6",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.6-b",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.6",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.8",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.7",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "D",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "E",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "F",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "G",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                }
+              ],
+              "validation": []
+            }
+          },
+          {
+            "from_step": "C.2",
+            "kind": "dependency_invalidation_v1",
+            "reason": "Part 3b round 3: founder restored original u47 (supported verbatim by Okeson p.394) and supplied u89 text; Okeson excerpt extended with pp.360,394; FAQ7/flashcard c5 swept",
+            "superseded": {
+              "approvals": [
+                {
+                  "decision": "All 16 readability/de-AI rewrites applied",
+                  "evidence": [
+                    "founder reply: \u00ab\u0647\u0645\u0647 \u0627\u0639\u0645\u0627\u0644 \u0628\u0634\u0647\u00bb",
+                    "re-confirmed after caption invalidation: founder \u00ab\u0628\u0642\u06cc\u0647 \u062a\u0627\u06cc\u06cc\u062f\u00bb",
+                    "restored after Part 3b invalidation (decision unchanged; edits limited to u47/u63 per founder)"
+                  ],
+                  "scope": "style-pass-B.3.5",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "\u06a9\u0644\u06cc\u06a9 \u0641\u06a9 \u0648 \u0627\u0633\u067e\u0644\u06cc\u0646\u062a \u0631\u06cc\u067e\u0648\u0632\u06cc\u0634\u0646 \u0642\u062f\u0627\u0645\u06cc\u061b \u0627\u0632 \u062a\u0634\u062e\u06cc\u0635 \u062a\u0627 \u067e\u0627\u06cc\u0627\u0646 \u062f\u0631\u0645\u0627\u0646",
+                  "evidence": [
+                    "founder-supplied title in publication message",
+                    "re-confirmed after caption invalidation: founder \u00ab\u0628\u0642\u06cc\u0647 \u062a\u0627\u06cc\u06cc\u062f\u00bb",
+                    "restored after Part 3b invalidation (decision unchanged; edits limited to u47/u63 per founder)"
+                  ],
+                  "scope": "title",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "\u06cc\u06a9\u06cc \u0627\u0632 \u06cc\u0627\u0641\u062a\u0647\u200c\u0647\u0627\u06cc \u0628\u0627\u0644\u06cc\u0646\u06cc \u062f\u0631 \u0628\u06cc\u0645\u0627\u0631\u0627\u0646 \u062f\u0627\u0631\u0627\u06cc \u06a9\u0644\u06cc\u06a9\u060c \u062d\u0630\u0641 \u0635\u062f\u0627 \u0628\u0627 \u062c\u0644\u0648\u0622\u0648\u0631\u062f\u0646 \u0641\u06a9 \u0627\u0633\u062a. \u0627\u0645\u0627 \u067e\u06cc\u0634 \u0627\u0632 \u0633\u0627\u062e\u062a \u0627\u0633\u067e\u0644\u06cc\u0646\u062a\u060c \u0628\u0627\u06cc\u062f \u0645\u0634\u062e\u0635 \u0634\u0648\u062f \u0628\u06cc\u0645\u0627\u0631 \u0639\u0644\u0627\u0648\u0647 \u0628\u0631 \u0635\u062f\u0627\u060c \u062f\u0631\u062f \u0645\u0641\u0635\u0644 \u06cc\u0627 \u0627\u062e\u062a\u0644\u0627\u0644 \u0639\u0645\u0644\u06a9\u0631\u062f \u0647\u0645 \u062f\u0627\u0631\u062f \u06cc\u0627 \u062e\u06cc\u0631.",
+                  "evidence": [
+                    "founder reply: \u00ab\u06a9\u067e\u0634\u0646 \u0627\u0644\u0641\u00bb",
+                    "re-confirmed after caption invalidation: founder \u00ab\u0628\u0642\u06cc\u0647 \u062a\u0627\u06cc\u06cc\u062f\u00bb",
+                    "restored after Part 3b invalidation (decision unchanged; edits limited to u47/u63 per founder)"
+                  ],
+                  "scope": "caption",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "Publish Okeson 2020 Figs 15.28/15.29 as webp; figcaption = short book source line only (no explanatory text)",
+                  "evidence": [
+                    "founder: \u00ab\u0641\u0642\u0637 \u2026 \u06cc\u0647 \u0686\u06cc\u0632 \u06a9\u0648\u062a\u0627\u0647 \u0628\u0646\u0648\u06cc\u0633 \u06a9\u0647 \u0645\u0646\u0628\u0639\u0634 \u0686\u06cc\u0647 \u0627\u0632 \u062e\u0648\u062f \u06a9\u062a\u0627\u0628 \u2026 \u062a\u0648\u0636\u06cc\u062d\u0634 \u0646\u0645\u06cc\u200c\u062e\u0648\u0627\u062f\u00bb",
+                    "restored after Part 3b invalidation (decision unchanged; edits limited to u47/u63 per founder)"
+                  ],
+                  "scope": "figures-okeson",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "#Share_Hub #Curated_Content #TMD #\u062f\u0627\u062e\u0644_\u06a9\u067e\u0633\u0648\u0644\u06cc #\u0627\u0633\u067e\u0644\u06cc\u0646\u062a + mint #\u0627\u0633\u067e\u0644\u06cc\u0646\u062a_\u0631\u06cc\u067e\u0648\u0632\u06cc\u0634\u0646 #\u062c\u0627\u0628\u062c\u0627\u06cc\u06cc_\u062f\u06cc\u0633\u06a9",
+                  "evidence": [
+                    "founder: \u00ab\u0628\u0642\u06cc\u0647 \u062a\u0627\u06cc\u06cc\u062f\u00bb",
+                    "restored after Part 3b invalidation (decision unchanged; edits limited to u47/u63 per founder)"
+                  ],
+                  "scope": "hashtags",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "Option 1 founder-directed unit assignment (book = all body units drawn from the 11 pages)",
+                  "evidence": [
+                    "founder: \u00ab\u067e\u06cc\u0634\u0646\u0647\u0627\u062f \u062e\u0648\u062f\u062a \u0628\u0647 \u0646\u0638\u0631\u0645 \u0628\u0647\u062a\u0631\u0647\u00bb",
+                    "restored after Part 3b invalidation (decision unchanged; edits limited to u47/u63 per founder)"
+                  ],
+                  "scope": "fidelity-assignment",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "u63 \u00ab\u06a9\u0645 \u0634\u0648\u062f\u00bb\u2192\u00ab\u062d\u0630\u0641 \u0634\u0648\u062f\u00bb (\u0627\u0635\u0644\u0627\u062d \u06a9\u0646); u47 reason rewritten to Okeson p.399 rationale (\u0627\u0635\u0644\u0627\u062d \u06a9\u0646); re-check the 25 NOT_ASSESSABLE book units and also judge them against Okeson 1988 abstract and Conti full text",
+                  "evidence": [
+                    "founder: \u00ab\u0647\u0631 \u062f\u0648 \u0631\u0648 \u0627\u0635\u0644\u0627\u062d \u06a9\u0646 \u0648 \u0627\u0648\u0646 \u062c\u0645\u0644\u0647 \u0647\u0627\u06cc\u06cc \u06a9\u0647 \u06af\u0641\u062a\u06cc\u0645 \u062a\u0648 \u06a9\u062a\u0627\u0628 \u0628\u0648\u062f\u0646 \u0627\u0645\u0627 \u0646\u0628\u0648\u062f\u0646 \u062a\u0633\u062a \u0645\u062c\u062f\u062f \u0628\u0634\u0646 \u0627\u06af\u0631 \u0646\u0628\u0648\u062f\u0646 \u062a\u0648 \u062f\u0648 \u0645\u0646\u0628\u0639 \u062f\u06cc\u06af\u0647 \u0633\u0631\u0686 \u0628\u0634\u0646\u00bb"
+                  ],
+                  "scope": "fidelity-3b",
+                  "status": "confirmed"
+                }
+              ],
+              "delivery": [],
+              "inputs": [
+                {
+                  "note": "private copyrighted source, kept local; used for Fidelity EXCERPT",
+                  "ref": "okeson-2020-excerpts: 11 founder-selected pages (pp. 325,327,329,330,331,332,396,397,398,399,400)"
+                }
+              ],
+              "steps": [
+                {
+                  "evidence": [
+                    "Re-verified share-42 structure; prose changed only in u47 (maxillary rationale per Okeson p.399) and u63 (eliminate); sha 59074fd739db"
+                  ],
+                  "id": "C.2",
+                  "module": "03-litecast-and-page.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.0.5",
+                  "module": "03-litecast-and-page.md",
+                  "reason": "LiteCast branch inactive: sharehub",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.0.6",
+                  "module": "03-litecast-and-page.md",
+                  "reason": "LiteCast branch inactive: sharehub",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "pillar occlusion / tmd-orofacial-pain unchanged"
+                  ],
+                  "id": "C.2.4",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "dc-related-section capsules unchanged"
+                  ],
+                  "id": "C.2.5",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "sharehub/index.html <li> unchanged"
+                  ],
+                  "id": "C.2.6",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Dates 2026-10-26; title/caption surfaces unchanged"
+                  ],
+                  "id": "C.3",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Template share-41 sha a865d04b\u2026 unchanged"
+                  ],
+                  "id": "C.4",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.5",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "NoteCast only; category sharehub",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.5-b",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "episode/NoteCast pair only; category sharehub",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.6",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "Promptologist only; category sharehub",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "Glossary candidates still at cap -> 0 added"
+                  ],
+                  "id": "C.4.7",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.7-b",
+                  "module": "05-semantic-linking.md",
+                  "reason": "Not a glossary publish",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "Inline anchors unchanged (\u0627\u0633\u067e\u0644\u06cc\u0646\u062a, CR)"
+                  ],
+                  "id": "C.4.8",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "\u06a9\u0627\u0648\u0634 \u0628\u06cc\u0634\u062a\u0631 5/5 unchanged (episode-86/144/145)"
+                  ],
+                  "id": "C.4.9",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Receipt C.4.10.1:drive-rename-move (completed) unchanged: drive_id 1N7v7QVCdWHCJVdIHtpxjyArw2Bkgn63s in Occlusion"
+                  ],
+                  "id": "C.4.10.1",
+                  "module": "06-paper-ingestion.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Catalog P2947 re-validated (JSON valid, template key set, total_papers 2262)"
+                  ],
+                  "id": "C.4.10.2",
+                  "module": "06-paper-ingestion.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Refs list Conti PCR -> doi.org/10.1590/S1678-77572005000400006 unchanged"
+                  ],
+                  "id": "C.4.10.3",
+                  "module": "06-paper-ingestion.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "faq-corpus share-42: 6 authored flashcards; none rests on u47/u63"
+                  ],
+                  "id": "C.4.11",
+                  "module": "07-flashcards-and-quiz.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "FAQ 9 binary standalone; none rests on u47/u63; 4.12-\u0628 evaluated at 5.6"
+                  ],
+                  "id": "C.4.12",
+                  "module": "07-flashcards-and-quiz.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.13",
+                  "module": "08-des-fidelity.md",
+                  "reason": null,
+                  "status": "started"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.14",
+                  "module": "09-challenge.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.0",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.5",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.6",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.6-b",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.6",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.8",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.7",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "D",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "E",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "F",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "G",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                }
+              ],
+              "validation": []
+            }
+          },
+          {
+            "english": {
+              "evidence": [
+                "founder: \u00ab\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc \u0647\u0645 \u062a\u0623\u06cc\u06cc\u062f\u00bb; mirror rebuilt after every 3b edit"
+              ],
+              "path": "sharehub/en/share-42.html",
+              "status": "ready"
+            },
+            "evidence": [
+              "Editorial close review 2026-10-26: local verify_publish 169 passed, only builder/stamp rows (C.8/C.7, post-Push-2) failing"
+            ],
+            "kind": "second_cut_editorial_lock_v1",
+            "scopes": [
+              {
+                "evidence": [
+                  "plus/des-scores.json sharehub/share-42: 3 SOURCE records + 3 fidelity objects (52/52, 3/3, 8/8 HIGH), Part 3 checks green; Part 3b founder decisions u63/u47/u89 applied"
+                ],
+                "scope": "scientific",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "B.4.9: ordinary post (founder requested DES/Fidelity; C.4.14 skipped)"
+                ],
+                "scope": "challenge",
+                "status": "not_applicable"
+              },
+              {
+                "evidence": [
+                  "pillar occlusion / tmd-orofacial-pain (C.2.4, verified C.5.5)"
+                ],
+                "scope": "taxonomy",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.4.7 0 (cap), C.4.8 2 inline glossary links, C.4.9 3 episode capsules (5/5)"
+                ],
+                "scope": "links",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "hashtag_ref --check OK; #\u0627\u0633\u067e\u0644\u06cc\u0646\u062a_\u0631\u06cc\u067e\u0648\u0632\u06cc\u0634\u0646 minted (A104); --simulate rank 1"
+                ],
+                "scope": "hashtags",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "brain entry last element, key parity with share-41; local verify_publish brain/title/caption rows pass with --expect-title/--expect-caption"
+                ],
+                "scope": "content_record",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "occlusion after episodes/episode-145; bundle rejected gate 3; 2 exam MCQs approved"
+                ],
+                "scope": "pathways",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "index.html Pulse: share-42 title line on top, share-41 bottom line removed; 7 lines"
+                ],
+                "scope": "pulse",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "sharehub/en/share-42.html authored, founder-approved; reciprocal toggles; noindex, no hreflang"
+                ],
+                "scope": "english",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "title, caption, style pass, figures, hashtags, fidelity assignment, Part 3b rounds 1\u20133, exam questions, English all confirmed by founder"
+                ],
+                "scope": "author_approvals",
+                "status": "resolved"
+              }
+            ]
+          }
+        ],
+        "delivery": [
+          {
+            "evidence": [
+              "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/40375856727"
+            ],
+            "scope": "GitHub Actions post-Push-2 mechanical continuation"
+          }
+        ],
+        "inputs": [
+          {
+            "note": "private copyrighted source, kept local; used for Fidelity EXCERPT",
+            "ref": "okeson-2020-excerpts: 11 founder-selected pages (pp. 325,327,329,330,331,332,396,397,398,399,400)"
+          }
+        ],
+        "pending_questions": [],
+        "unrelated_changes": [],
+        "validation": [
+          {
+            "content_id": "sharehub/share-42",
+            "exit_code": 0,
+            "expected_caption": "\u06cc\u06a9\u06cc \u0627\u0632 \u06cc\u0627\u0641\u062a\u0647\u200c\u0647\u0627\u06cc \u0628\u0627\u0644\u06cc\u0646\u06cc \u062f\u0631 \u0628\u06cc\u0645\u0627\u0631\u0627\u0646 \u062f\u0627\u0631\u0627\u06cc \u06a9\u0644\u06cc\u06a9\u060c \u062d\u0630\u0641 \u0635\u062f\u0627 \u0628\u0627 \u062c\u0644\u0648\u0622\u0648\u0631\u062f\u0646 \u0641\u06a9 \u0627\u0633\u062a. \u0627\u0645\u0627 \u067e\u06cc\u0634 \u0627\u0632 \u0633\u0627\u062e\u062a \u0627\u0633\u067e\u0644\u06cc\u0646\u062a\u060c \u0628\u0627\u06cc\u062f \u0645\u0634\u062e\u0635 \u0634\u0648\u062f \u0628\u06cc\u0645\u0627\u0631 \u0639\u0644\u0627\u0648\u0647 \u0628\u0631 \u0635\u062f\u0627\u060c \u062f\u0631\u062f \u0645\u0641\u0635\u0644 \u06cc\u0627 \u0627\u062e\u062a\u0644\u0627\u0644 \u0639\u0645\u0644\u06a9\u0631\u062f \u0647\u0645 \u062f\u0627\u0631\u062f \u06cc\u0627 \u062e\u06cc\u0631.",
+            "expected_title": "\u06a9\u0644\u06cc\u06a9 \u0641\u06a9 \u0648 \u0627\u0633\u067e\u0644\u06cc\u0646\u062a \u0631\u06cc\u067e\u0648\u0632\u06cc\u0634\u0646 \u0642\u062f\u0627\u0645\u06cc\u061b \u0627\u0632 \u062a\u0634\u062e\u06cc\u0635 \u062a\u0627 \u067e\u0627\u06cc\u0627\u0646 \u062f\u0631\u0645\u0627\u0646",
+            "kind": "phase_f",
+            "output_sha256": "9da0fababa48ebd108d58c4481a00d12f5b59e05736b21c61f70d675e16f9f97",
+            "recorded_at": "2026-10-26T18:14:51+00:00",
+            "summary": "178 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+          }
+        ]
+      },
+      "external_actions": [
+        {
+          "evidence": [
+            "drive:1N7v7QVCdWHCJVdIHtpxjyArw2Bkgn63s renamed to real title (Partial time use of anterior repositioning splints in the management of TMJ pain and dysfunction: a one-year controlled study.pdf), moved root -> Occlusion (1pcawf1jOJ14ZyVobSzJkbigBJbeT08U3); same file, 59873 bytes = attached PDF"
+          ],
+          "id": "C.4.10.1:drive-rename-move",
+          "status": "completed",
+          "target": "drive:1N7v7QVCdWHCJVdIHtpxjyArw2Bkgn63s"
+        }
+      ],
+      "status": "in_progress",
+      "steps": [
+        {
+          "evidence": [
+            "Complete reads: CLAUDE.md, global/README + dentcast_global_rules --read pages 1-3, agent-parity.md, workflows/README.md, modules/01, modules/02, publish-checkpoints.md, publish-handoff-tool.md"
+          ],
+          "id": "rules",
+          "module": "01-hard-rules.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Phase 0: text present (user message) + paper files attached (Conti 2005 full-text PDF, Okeson 2020 textbook excerpts PDF) + PubMed link 3199322 -> normal publish plus step 4.10"
+          ],
+          "id": "0",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Brain read: 579 entries; sharehub latest share-41 (/sharehub/share-41.html, keys type,id,title,caption,author,source,hashtags,keywords,url,pillar); live PILLARS read (occlusion subtopics incl. tmd-orofacial-pain)"
+          ],
+          "id": "A",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "User message names category: Sharehub -> sharehub (locked)"
+          ],
+          "id": "B.1",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "sharehub ids 1..41 contiguous, no gap -> share-42 auto-stated (HR14)"
+          ],
+          "id": "B.2",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Full text received in user message (title + body, 7 numbered sections + intro/outcome)"
+          ],
+          "id": "B.3",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "de-AI + readability review: 16 numbered proposals shown; founder approved all (\"\u0647\u0645\u0647 \u0627\u0639\u0645\u0627\u0644 \u0628\u0634\u0647\"); text of record = original + 16 edits (scratch sha 8c10736d)"
+          ],
+          "id": "B.3.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Media: sharehub precedent uses inline webp figures (share-40). Founder supplied Okeson Fig 15.28/15.29; decision: publish with reference, crop better source from PDF if available, webp. No audio/video for sharehub."
+          ],
+          "id": "B.4",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Paper attached: Conti 2005 full-text PDF (DOI 10.1590/S1678-77572005000400006); founder placed PDF in Drive and asked rename+move+catalog -> step 4.10 ACTIVE. Okeson textbook excerpts are reference input for Fidelity only."
+          ],
+          "id": "B.4.7",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Basket 2 RESEARCH: Okeson 2020 textbook (NOT_APPRAISABLE book, Fidelity on 11 founder-selected pages), Conti 2005 FULL_TEXT, Okeson 1988 (PMID 3199322, DOI 10.1016/0022-3913(88)90224-7) ABSTRACT_ONLY via PubMed"
+          ],
+          "id": "B.4.8",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Ordinary post, not Challenge: body is an article, not a question; founder explicitly requested DES/Fidelity runs, which a Challenge never has"
+          ],
+          "id": "B.4.9",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pulse drafted per sharehub convention (title as link text, no spoiler): \u06a9\u0644\u06cc\u06a9 \u0641\u06a9 \u0648 \u0627\u0633\u067e\u0644\u06cc\u0646\u062a \u0631\u06cc\u067e\u0648\u0632\u06cc\u0634\u0646 \u0642\u062f\u0627\u0645\u06cc\u061b \u0627\u0632 \u062a\u0634\u062e\u06cc\u0635 \u062a\u0627 \u067e\u0627\u06cc\u0627\u0646 \u062f\u0631\u0645\u0627\u0646 -> /sharehub/share-42.html"
+          ],
+          "id": "B.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast branch inactive: locked category sharehub",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.1",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast branch inactive: sharehub",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.2",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast branch inactive: sharehub",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.3",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast branch inactive: sharehub",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.4",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast branch inactive: sharehub",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Template sharehub/share-41.html sha256 a865d04b7dbd16d1321e09d976afd4d6ac13b1e760dc0ac006ab7cc57f6f9997"
+          ],
+          "id": "C.1",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Re-verified share-42 structure; prose changes vs delivered: u47 founder original restored, u89 founder text; sha d842271aef54"
+          ],
+          "id": "C.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.5",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast branch inactive: sharehub",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.6",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast branch inactive: sharehub",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "pillar occlusion / tmd-orofacial-pain unchanged"
+          ],
+          "id": "C.2.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "dc-related-section capsules unchanged"
+          ],
+          "id": "C.2.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "sharehub/index.html <li> unchanged"
+          ],
+          "id": "C.2.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Dates 2026-10-26; title/caption surfaces unchanged"
+          ],
+          "id": "C.3",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Template share-41 sha a865d04b\u2026 unchanged"
+          ],
+          "id": "C.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "NoteCast only; category sharehub",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5-b",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "episode/NoteCast pair only; category sharehub",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Promptologist only; category sharehub",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Glossary candidates still at cap -> 0 added"
+          ],
+          "id": "C.4.7",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.7-b",
+          "module": "05-semantic-linking.md",
+          "reason": "Not a glossary publish",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Inline anchors unchanged (\u0627\u0633\u067e\u0644\u06cc\u0646\u062a, CR)"
+          ],
+          "id": "C.4.8",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u06a9\u0627\u0648\u0634 \u0628\u06cc\u0634\u062a\u0631 5/5 unchanged"
+          ],
+          "id": "C.4.9",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Receipt C.4.10.1:drive-rename-move (completed) unchanged"
+          ],
+          "id": "C.4.10.1",
+          "module": "06-paper-ingestion.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Catalog P2947 re-validated (total_papers 2262)"
+          ],
+          "id": "C.4.10.2",
+          "module": "06-paper-ingestion.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Refs Conti PCR -> doi.org unchanged"
+          ],
+          "id": "C.4.10.3",
+          "module": "06-paper-ingestion.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "faq-corpus share-42: 6 flashcards; c5 no longer claims \u00ab\u0628\u062f\u0648\u0646 \u062a\u0631\u0627\u0634 \u062f\u0646\u062f\u0627\u0646\u00bb (u89 removed from page)"
+          ],
+          "id": "C.4.11",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "FAQ 9 binary standalone; Q7 replaced (orthopedic instability -> conversion, grounded in u98/u99) since u89 claim left the page; 4.12-\u0628 at 5.6"
+          ],
+          "id": "C.4.12",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "plus/des-scores.json sharehub/share-42 (v3.4): src0 Okeson 2020 NOT_APPRAISABLE book EXCERPT (13 founder pages); src1 Okeson 1988 RESEARCH THERAPY 17/E ABSTRACT_ONLY provisional (PubMed 3199322); src2 Conti 2005 RESEARCH THERAPY 15/E FULL_TEXT (RoB2 0.30, penalties 7+4). Fidelity (founder-directed assignment, Sonnet checkers x2 + tie-break, Opus review of every ALTERED): src0 52/52 HIGH 100 (18 NOT_ASSESSABLE), src1 3/3 HIGH 100, src2 8/8 HIGH 100 (19 NOT_IN_SOURCE). Part 3b: u63 fixed, u47 restored to founder original (Okeson p.394), u89 founder text. Part 3 checks green (quotes, arithmetic, band, schema, fidelity F4)."
+          ],
+          "id": "C.4.13",
+          "module": "08-des-fidelity.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.14",
+          "module": "09-challenge.md",
+          "reason": "Ordinary post, not Challenge (B.4.9)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Resolved via hashtag_ref --simulate: REUSED #Share_Hub #Curated_Content #TMD #\u062f\u0627\u062e\u0644_\u06a9\u067e\u0633\u0648\u0644\u06cc #\u0627\u0633\u067e\u0644\u06cc\u0646\u062a; founder-proposed #\u062c\u0627\u0628\u062c\u0627\u06cc\u06cc_\u062f\u06cc\u0633\u06a9 NOT minted (already alias of #\u062f\u0627\u062e\u0644_\u06a9\u067e\u0633\u0648\u0644\u06cc, HR15); MINTED #\u0627\u0633\u067e\u0644\u06cc\u0646\u062a_\u0631\u06cc\u067e\u0648\u0632\u06cc\u0634\u0646 via .dentcast/hashtag-batches/A104-share-42.json --apply (articles {}); --sync/build_plus_index/--check after brain write"
+          ],
+          "id": "C.5.0",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Brain entry appended as last element (sharehub id 42), key set == share-41 entry; hashtags 6 canonical; keywords = title + tags; page JSON-LD keywords synced; --sync, build_plus_index.mjs, --check OK; --simulate rank 1 #\u0627\u0633\u067e\u0644\u06cc\u0646\u062a_\u0631\u06cc\u067e\u0648\u0632\u06cc\u0634\u0646"
+          ],
+          "id": "C.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "pillar.primary occlusion, subtopic tmd-orofacial-pain (live PILLARS), identical to C.2.4; no extra keys; capsule /pillar/occlusion/ consistent"
+          ],
+          "id": "C.5.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "pathway_place --insert sharehub/share-42 occlusion after episodes/episode-145 (STRONG vs frozen core; milestone false; index 43 of 45); other 7 ASK candidates judged unrelated (no placement); coverage 1.51/item. 4.12-\u0628: 2 founder-approved MCQs in plus/exam-questions.json (r-19203d44, r-d92e7e94), validate_exam_questions 0 errors (1 length WARN kept as approved)"
+          ],
+          "id": "C.5.6",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Candidate bundle-occlusion-rehab (continues occlusion): \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f3) \u2014 bundle covers restorative occlusion rehab, TMD splint therapy is outside its core sub-topics; also at 8 steps (gate 5 would fail)"
+          ],
+          "id": "C.5.6-b",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pulse: new top line /sharehub/share-42.html (title only, no spoiler), bottom share-41 line removed, 7 lines; editorial lock recorded; English mirror ready"
+          ],
+          "id": "C.6",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "All applicable canonical C.8 builders passed; logs are in the recovery artifact."
+          ],
+          "id": "C.8",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "tools/stamp-version.py passed after C.8"
+          ],
+          "id": "C.7",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Technical English, noindex, hreflang, sitemap, and final version checks passed; logs are in the recovery artifact."
+          ],
+          "id": "D",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Canonical dc-notify marker present exactly once"
+          ],
+          "id": "E",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "phase_f:9da0fababa48ebd108d58c4481a00d12f5b59e05736b21c61f70d675e16f9f97"
+          ],
+          "id": "F",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/40375856727"
+          ],
+          "id": "G",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        }
+      ],
+      "target_paths": [
+        ".dentcast/hashtag-batches/A104-share-42.json",
+        "dentcast-brain.json",
+        "dentcast-hashtag-reference.json",
+        "dentcast_cabinet_full_catalog.json",
+        "index.html",
+        "pillar/index.html",
+        "pillar/occlusion/index.html",
+        "pillar/occlusion/structure.json",
+        "pillar/structure.json",
+        "player.html",
+        "plus/content-index.json",
+        "plus/des-scores.json",
+        "plus/exam-questions.json",
+        "plus/faq-corpus.json",
+        "plus/flashcards-index.json",
+        "plus/pathways.json",
+        "plus/quiz-index.json",
+        "service-worker.js",
+        "sharehub/en/share-42.html",
+        "sharehub/index.html",
+        "sharehub/share-42.html",
+        "sharehub/share42-fig1.webp",
+        "sharehub/share42-fig2.webp",
+        "sitemap.xml",
+        "up-board/index.json"
+      ]
+    },
+    "snapshot": {
+      "files": {
+        ".dentcast/hashtag-batches/A104-share-42.json": {
+          "kind": "file",
+          "sha256": "79e6ca5df330b1ec1659ed6c64bde9dc87ef727b8258f4ce3fdf6738acd6ad43",
+          "executable": false
+        },
+        "dentcast-brain.json": {
+          "kind": "file",
+          "sha256": "27af1c476d2a8bec3770494928522080d4bd889ad29f698b4f1b72f5c26cae7a",
+          "executable": false
+        },
+        "dentcast-hashtag-reference.json": {
+          "kind": "file",
+          "sha256": "eaaa64fcd30f7004958e31081c7f78a180873ec184a2a729b3d3a4266365f6bd",
+          "executable": false
+        },
+        "dentcast_cabinet_full_catalog.json": {
+          "kind": "file",
+          "sha256": "8a66314936b5cb32db3eff20788de4c0a3d1a56be3323828e7b8eb354b1cf9c0",
+          "executable": false
+        },
+        "index.html": {
+          "kind": "file",
+          "sha256": "7f8b2df7bea598290bb41e3c8c7be7d57273cf1d45239070ec61ffd3ab73623c",
+          "executable": false
+        },
+        "pillar/index.html": {
+          "kind": "file",
+          "sha256": "bf40325d5e195c196f18281445e08d06fd12a6e46f607b6858a1494e3ee873f8",
+          "executable": false
+        },
+        "pillar/occlusion/index.html": {
+          "kind": "file",
+          "sha256": "19dfcada46b8d7ab48f1b8fdb76bd39d00548bea89280eefbe49726b4feeb40a",
+          "executable": false
+        },
+        "pillar/occlusion/structure.json": {
+          "kind": "file",
+          "sha256": "dbc184459f5ff541d4528b026a9cba001db2289ad9bcf5534485b9a00e9a6fba",
+          "executable": false
+        },
+        "pillar/structure.json": {
+          "kind": "file",
+          "sha256": "7e24dbc82bbc3e558d5df1bf196df3e7d788e5cd874fede084b47e8a96010d35",
+          "executable": false
+        },
+        "player.html": {
+          "kind": "file",
+          "sha256": "433e91c25c3e4cbd76a96a8d5c590bfd792fcd1db256d7cac23845175decbe93",
+          "executable": false
+        },
+        "plus/content-index.json": {
+          "kind": "file",
+          "sha256": "8a4a2683b4418815d43a12139c69d1f199bbee605780b7264d094309a42dd8d5",
+          "executable": false
+        },
+        "plus/des-scores.json": {
+          "kind": "file",
+          "sha256": "8faec3c3088efa6d3830a8a8a3ad989a6a62a3f36fc1ed22d4d36239e1e9bc80",
+          "executable": false
+        },
+        "plus/exam-questions.json": {
+          "kind": "file",
+          "sha256": "e371e064088d2eaa54a95f89982981ed078c9c27a07dd9393aed846cc299995f",
+          "executable": false
+        },
+        "plus/faq-corpus.json": {
+          "kind": "file",
+          "sha256": "b683e843cce10d14a2ca7728da6656db54929012ae46de330dd22f94de45ae4a",
+          "executable": false
+        },
+        "plus/flashcards-index.json": {
+          "kind": "file",
+          "sha256": "2edc2bd28d5ea0ba68eefe359e3cf94987df6e2412c95ce3dd7718d8a69643e9",
+          "executable": false
+        },
+        "plus/pathways.json": {
+          "kind": "file",
+          "sha256": "a7efa567f2da88ebdd0b4ff0543505bb14071f2c60ccc6133b46a7d40b777878",
+          "executable": false
+        },
+        "plus/quiz-index.json": {
+          "kind": "file",
+          "sha256": "5bd6bcdc4475c904bfdca301b4d1079bc7079272f27eb16316e68c0dec72617c",
+          "executable": false
+        },
+        "service-worker.js": {
+          "kind": "file",
+          "sha256": "5adf78fe36681e08edb21b2fefbe348b8db262ab810b38463cfa088bd68fcc54",
+          "executable": false
+        },
+        "sharehub/en/share-42.html": {
+          "kind": "file",
+          "sha256": "260cf38874274267f31b4eaa092dda246a9f73530dc6259eaf0ee0cb4c163e1a",
+          "executable": false
+        },
+        "sharehub/index.html": {
+          "kind": "file",
+          "sha256": "d733289baed00e97ff274c436f1ba9288587cce1862f29a2f93aba3e13712709",
+          "executable": false
+        },
+        "sharehub/share-42.html": {
+          "kind": "file",
+          "sha256": "1f946b93bae8ce00dce20932324ccb66d923c6c79d6a8028e8ab35022557d13b",
+          "executable": false
+        },
+        "sharehub/share42-fig1.webp": {
+          "kind": "file",
+          "sha256": "5958cfc8c2029c9ad43d1f7a6894e55811aef95b9426e50248e90ba47048c5fe",
+          "executable": false
+        },
+        "sharehub/share42-fig2.webp": {
+          "kind": "file",
+          "sha256": "3b3197e79e20fcb64caeb0684af63ec7b654f0309448cc9e6325b40376dd3f75",
+          "executable": false
+        },
+        "sitemap.xml": {
+          "kind": "file",
+          "sha256": "2f215cd8fda4c6ce844df4648224119a5dee5adf771c7bf0ecfe3b48d34a2906",
+          "executable": false
+        },
+        "up-board/index.json": {
+          "kind": "file",
+          "sha256": "6b98ec0c15ac9c4c7f5c0450a6dd48b9203ebf26703677289f39d48d310b745c",
+          "executable": false
+        }
+      },
+      "workflow": {
+        ".dentcast/workflows/README.md": "0d32353547c2d2b37762c6b80928c0fa863baec590631b540a52f08b8efdf4d4",
+        ".dentcast/workflows/agent-parity.md": "419104303286d57c717c0d2bd45f248a3d71a1f967894e44fc3e1ff4d4408a7d",
+        ".dentcast/workflows/publish-handoff.md": "50e59f0b5fd9742b1b4b91767edbe82ddfa81d8c0098ce92a56bd93981bd9eda",
+        ".dentcast/workflows/routing-details.md": "2b4f1300c9b82da5a926546da5ddd3a8996d17b80229bd660f87f12c6e82606e",
+        ".dentcast/workflows/global/README.md": "5c7495d4431acf07ad7fa0bdc05fe2ab662f2f75b99968df8744d379bd2115af",
+        ".dentcast/workflows/global/LOAD-MAP.json": "3bc73b1527fbc7e3cd85f836ce505b0fc5a71f0e08530fad7857529701afb613",
+        "tools/dentcast_global_rules.py": "c92d378a875dec54ed7845015797c37f211f0acab93150f669b0f820dfd94464",
+        ".dentcast/workflows/global/repo-conventions.md": "f3187b61edd157f4bb24c9f64c70ab6068abbf0096ca9eb209b7e8f54defb0c6",
+        ".dentcast/workflows/global/plus-premium.md": "b87d17b74c6478a623a04fba36046659b02b31975fe334e57d46599923c93d6f",
+        ".dentcast/workflows/global/site-invariants.md": "c41c43b17502f6c01ef91b3e786e1bd9000b06858375f6c8c65e2e15cb6c15ca",
+        "tools/dentcast_publish_handoff.py": "ef43540d94532266c47136c514976bcccc2364c74e992972332e57582ed3dbe2",
+        "tools/dentcast_publish_lifecycle.py": "4dcde1d2500d18671b6c5f2d0d0f8223fe4901e1a93c52fe947ec9085542b966",
+        "tools/verify_publish.py": "3d147c7e408d815d73593930ddcbc640562b8a81b1e7692aa7889dcc618fe9a6",
+        "tools/dentcast_text_io.py": "28af00db98df97c6062e36d2d963e6a81454f90fb91f9cd8f267ad8a9ee8863d",
+        "tools/text_io.mjs": "c6f9208e26983c8eade43d8cf3effe865e6479df903d2cee661cd0a928565536",
+        "tools/dentcast_post_cut2_runner.py": "e2b345cab35e8a3e74817ffe61187c4a7a44bd29cafca285d14544a59a89ff18",
+        ".github/workflows/post-cut2-mechanical.yml": "16095f4353f5b91934e460afcf0ad51c0d933d4f5411cdbe6fc633ad6d219525",
+        ".dentcast/workflows/publish-checkpoints.md": "ca172f67727c73c8b570212d8a6ab9468052af7260656ac3ebfb1273d3f09e04",
+        ".dentcast/workflows/modules/01-hard-rules.md": "0b5f1ef7276308a3b23ed00f3e4b95dbb9f4263079169498a8e391c10ef50427",
+        ".dentcast/workflows/modules/02-routing-intake.md": "6663d3a35a2b55f4c92d5312ebe6b8ab669238745f4547a8e21018fcaca036e5",
+        ".dentcast/workflows/modules/03-litecast-and-page.md": "b448b1996ab49a44f2b8136d759e0cc1362305ed9ed7a2ebf9baf19fd37382b2",
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "744e173ce25a8bf549f94584359dcea9851301fa892d273209ed8e25e745f1f8",
+        ".dentcast/workflows/modules/05-semantic-linking.md": "4f9949082207741b45a8be8301c1fa758d960c40fb57d3ee3d90ccc8aa0384f9",
+        ".dentcast/workflows/modules/06-paper-ingestion.md": "413ff021ae01aada1ab373c3eb5cca1e8f8a2445a427198f3093a6f29d1381a0",
+        ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "bf7c14308abb7f602bd047c671a8aa5caf8691d8e5808f49ca617b5f07c2ea13",
+        ".dentcast/workflows/modules/08-des-fidelity.md": "d49e06ccd0b1fda388ee0745a1ea474f72c8f664f83fafc65fc9e164d239b497",
+        ".dentcast/workflows/modules/09-challenge.md": "ef36cbed0344cc20b199cd0bd243c017f4444daa7032df75df18bf5290bba569",
+        ".dentcast/workflows/modules/10-brain-and-pathways.md": "d1c5faeb4be70dbadfb8a8895841f9b8fc229414cbafa55df21d60c90ccabdd8",
+        ".dentcast/workflows/modules/11-build-and-version.md": "1251769e2e81b93362d75c5f8ea395244db37d178269224be21f419904a703a0",
+        ".dentcast/workflows/modules/12-english-notify-verify.md": "0e56cb9c487c2e06c7afc620eaa5931f3ac14895c3ed25faab7582fced892a71"
+      }
+    }
+  },
+  "second_delivery_commit": "b628a2c04ba9692a18bc16b8f3839b44b879701d",
+  "verification": {
+    "kind": "phase_f",
+    "content_id": "sharehub/share-42",
+    "expected_title": "\u06a9\u0644\u06cc\u06a9 \u0641\u06a9 \u0648 \u0627\u0633\u067e\u0644\u06cc\u0646\u062a \u0631\u06cc\u067e\u0648\u0632\u06cc\u0634\u0646 \u0642\u062f\u0627\u0645\u06cc\u061b \u0627\u0632 \u062a\u0634\u062e\u06cc\u0635 \u062a\u0627 \u067e\u0627\u06cc\u0627\u0646 \u062f\u0631\u0645\u0627\u0646",
+    "expected_caption": "\u06cc\u06a9\u06cc \u0627\u0632 \u06cc\u0627\u0641\u062a\u0647\u200c\u0647\u0627\u06cc \u0628\u0627\u0644\u06cc\u0646\u06cc \u062f\u0631 \u0628\u06cc\u0645\u0627\u0631\u0627\u0646 \u062f\u0627\u0631\u0627\u06cc \u06a9\u0644\u06cc\u06a9\u060c \u062d\u0630\u0641 \u0635\u062f\u0627 \u0628\u0627 \u062c\u0644\u0648\u0622\u0648\u0631\u062f\u0646 \u0641\u06a9 \u0627\u0633\u062a. \u0627\u0645\u0627 \u067e\u06cc\u0634 \u0627\u0632 \u0633\u0627\u062e\u062a \u0627\u0633\u067e\u0644\u06cc\u0646\u062a\u060c \u0628\u0627\u06cc\u062f \u0645\u0634\u062e\u0635 \u0634\u0648\u062f \u0628\u06cc\u0645\u0627\u0631 \u0639\u0644\u0627\u0648\u0647 \u0628\u0631 \u0635\u062f\u0627\u060c \u062f\u0631\u062f \u0645\u0641\u0635\u0644 \u06cc\u0627 \u0627\u062e\u062a\u0644\u0627\u0644 \u0639\u0645\u0644\u06a9\u0631\u062f \u0647\u0645 \u062f\u0627\u0631\u062f \u06cc\u0627 \u062e\u06cc\u0631.",
+    "exit_code": 0,
+    "output_sha256": "9da0fababa48ebd108d58c4481a00d12f5b59e05736b21c61f70d675e16f9f97",
+    "summary": "178 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+  }
+}

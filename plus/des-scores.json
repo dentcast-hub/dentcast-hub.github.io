@@ -43702,5 +43702,1888 @@
         "interpretation_fa": "متن یک آموزش روشی درباره‌ی گروه‌بندی محتوای سایت است و ادعای پژوهشی ندارد. استدلال آن روشن و مثال‌محور است و دامنه‌ی ادعا را مشخص می‌کند. ارزش آن آموزشی است، برای دندانپزشکی که می‌خواهد ساختار محتوای مطب یا سایتش را از ابتدا درست بچیند."
       }
     ]
+  },
+  "sharehub/share-42": {
+    "scored_at": "2026-10-26",
+    "sources": [
+      {
+        "des_version": "3.4",
+        "content_type": "NOT_APPRAISABLE",
+        "source_kind": "book",
+        "question_type": null,
+        "text_basis": "EXCERPT",
+        "citation": {
+          "title": "Management of Temporomandibular Disorders and Occlusion (8th edition), Chapters 13 and 15",
+          "authors": "Okeson JP",
+          "year": 2020,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": null,
+        "des_score": null,
+        "band": null,
+        "provisional": false,
+        "fact_fa": "این منبع یک textbook است (Okeson، فصل‌های 13 و 15) که ارجاع داده شده اما امتیاز DES نمی‌گیرد، چون کتاب درسی روش پژوهشی قابل ارزیابی ندارد.",
+        "interpretation_fa": "این بخش از کتاب Okeson مرجع آموزشی برای درمان disc displacement با و بدون reduction، کاربرد anterior positioning appliance و stabilization appliance و روش ساخت و تنظیم آن‌هاست. نقش آن در صفحه پشتوانه‌ی آموزشی و بالینی است، نه گزارش یک یافته‌ی پژوهشی."
+      },
+      {
+        "des_version": "3.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Long-term treatment of disk-interference disorders of the temporomandibular joint with anterior repositioning occlusal splints",
+          "authors": "Okeson JP",
+          "year": 1988,
+          "journal": "The Journal of Prosthetic Dentistry",
+          "doi": "10.1016/0022-3913(88)90224-7"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 30,
+          "anchor": "single-arm case series of 40 treated patients with no comparison group (THERAPY case series row, 30)",
+          "evidence_quote": "Forty patients with three different types of symptomatic disk-interference disorders were treated with anterior repositioning splint therapy for 8 weeks."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not address confounding; single-arm report with no comparative analysis, so the 3b-i confounding threshold does not apply"
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "some_concerns",
+              "evidence_quote": "Forty patients with three different types of symptomatic disk-interference disorders",
+              "note": "population described, but recruitment and eligibility criteria are not stated"
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "Each patient's splint was then gradually modified until the patient's original occlusal condition was reestablished."
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not report how many of the 40 patients were reevaluated at follow-up or any losses"
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "Seventy-five percent of the patients had no joint pain and 66% had a return of joint sounds.",
+              "note": "outcomes named, but how joint sounds and pain were assessed and whether assessment was blinded is not stated"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: not an RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "The patients were reevaluated an average of 2 1/2 years later.",
+            "note": "an average 2.5-year follow-up is adequate for the long-term symptom outcomes reported; does not fire"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 17,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۱۷ است و در باند E (سطح پس‌زمینه) برای پرسش THERAPY قرار می‌گیرد.",
+        "interpretation_fa": "این مطالعه یک case series تک‌گروهی از ۴۰ بیمار بدون گروه کنترل است و امتیاز فقط بر پایه‌ی abstract محاسبه شده که بیشتر جزئیات روش در آن گزارش نشده است. ارزش بالینی آن در توصیف سیر طولانی‌مدت پس از anterior repositioning splint است: درد در بیشتر بیماران برنگشت، اما صدای مفصل در دو سوم آن‌ها بازگشت."
+      },
+      {
+        "des_version": "3.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Partial time use of anterior repositioning splints in the management of TMJ pain and dysfunction: a one-year controlled study",
+          "authors": "Conti PCR, Miranda JES, Conti ACCF, Pegoraro LF, Araújo CRP",
+          "year": 2005,
+          "journal": "Journal of Applied Oral Science",
+          "doi": "10.1590/S1678-77572005000400006"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 85,
+          "anchor": "RCT, three parallel arms (stabilization splint, repositioning splint, no treatment) (THERAPY RCT row, 85)",
+          "evidence_quote": "randomly divided into three groups: I- stabilization splints, II- repositioning splints and IIIno treatment"
+        },
+        "q_method": {
+          "tool": "RoB2",
+          "domains": [
+            {
+              "domain": "randomization process",
+              "rating": "some_concerns",
+              "evidence_quote": "randomly located into one of the following groups:",
+              "note": "random allocation stated, but sequence generation method and allocation concealment are not described anywhere (Sample, Methods); groups also said to be matched for gender and age; baseline VAS reported as not significantly different"
+            },
+            {
+              "domain": "deviations from intended interventions",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "absence: Methods (Sample, Group I-III protocols, Evaluations and follow-up visits, Statistical analysis), Results and Discussion read; intended splint-wearing protocols are prescribed but no adherence/compliance monitoring, no report of deviations, and no assignment-based (intention-to-treat) analysis; participants could not be blinded (no-treatment control) and this is not addressed; no adherence/compliance/deviation/intention-to-treat wording anywhere"
+            },
+            {
+              "domain": "missing outcome data",
+              "rating": "some_concerns",
+              "evidence_quote": "patients (2 from group II and 6 from the control group) were",
+              "note": "8 of 60 randomized excluded (6 of them controls) 'for different reasons' not specified; analysis on 52 completers with no handling of missing data or sensitivity analysis"
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "previously calibrated researcher, blinded for group",
+              "note": "palpation examiner calibrated and blinded, but the main pain outcome (VAS) is self-reported by participants who knew their allocation; joint sounds by manual inspection"
+            },
+            {
+              "domain": "selection of the reported result",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "absence: Introduction (aim), Methods (Sample, Evaluations, Statistical analysis) and Acknowledgements read; no pre-specified protocol, trial registration or pre-specified analysis plan mentioned anywhere; no protocol/registration/pre-specified wording found"
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all, or manufacturer funding of a tested product",
+            "base_points": 8,
+            "points": 7,
+            "evidence_quote": "This study was supported by CAPES - Coordenação de",
+            "note": "fires: Acknowledgements name a government funder (CAPES, not a manufacturer) but no conflict-of-interest declaration exists anywhere (front matter, Acknowledgements, end of text read; no conflict/interest/disclosure wording, ligature forms checked); 8×85/100=6.8→7"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "covered in Q_method: selection of the reported result rated high for absence of registration/protocol"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 4,
+            "evidence_quote": "The sample was initially constituted of 60 patients, with",
+            "note": "fires: no sample size calculation or power analysis in Sample or Statistical analysis; 5×85/100=4.25→4"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "in a one-year follow-up",
+            "note": "does not fire: outcomes are pain, tenderness, joint sounds, range of motion and occlusal contacts, not long-term survival; one-year follow-up is adequate to the stated outcomes"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 15,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "امتیاز DES این مقاله ۱۵ است و در باند E (سطح زمینه یا نظر) برای نوع سؤال THERAPY قرار می‌گیرد.",
+        "interpretation_fa": "این RCT سه‌گروهی پیگیری یک‌ساله و معاینه‌گر blind دارد، اما گزارش‌نشدن پایبندی بیماران، نبودن پروتکل ثبت‌شده، ریزش نامتوازن گروه کنترل، نبودن power analysis و نبودن بیانیه‌ی تعارض منافع امتیاز را پایین آورده است. کاهش زودتر درد با repositioning splint در مدیریت اولیه‌ی درد داخل مفصلی TMJ فقط نشانه‌ای اولیه است."
+      }
+    ]
+  },
+  "sharehub/share-42": {
+    "scored_at": "2026-10-26",
+    "sources": [
+      {
+        "des_version": "3.4",
+        "content_type": "NOT_APPRAISABLE",
+        "source_kind": "book",
+        "question_type": null,
+        "text_basis": "EXCERPT",
+        "citation": {
+          "title": "Management of Temporomandibular Disorders and Occlusion (8th edition)",
+          "authors": "Okeson JP",
+          "year": 2020,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": null,
+        "des_score": null,
+        "band": null,
+        "provisional": false,
+        "fact_fa": "این منبع یک textbook است (Okeson، ویرایش هشتم، ۲۰۲۰، بخش‌هایی از فصل‌های ۱۳، ۱۴ و ۱۵) و ارجاع داده شده اما امتیاز DES نمی‌گیرد، چون کتاب درسی protocol، search strategy یا ارزیابی risk of bias ندارد که بتوان سنجید.",
+        "interpretation_fa": "این متن مرجع آموزشی برای درمان disc displacement with reduction و without reduction، کاربرد anterior positioning appliance و stabilization appliance، عوارضی مثل posterior openbite و روش ساخت و تنظیم این دستگاه‌هاست و نقش آن در صفحه تبیین مفاهیم و روند بالینی است، نه ارائه‌ی یک یافته‌ی پژوهشی."
+      },
+      {
+        "des_version": "3.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Long-term treatment of disk-interference disorders of the temporomandibular joint with anterior repositioning occlusal splints",
+          "authors": "Okeson JP",
+          "year": 1988,
+          "journal": "The Journal of Prosthetic Dentistry",
+          "doi": "10.1016/0022-3913(88)90224-7"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 30,
+          "anchor": "single-arm case series of 40 treated patients with no comparison group (THERAPY case series row, 30)",
+          "evidence_quote": "Forty patients with three different types of symptomatic disk-interference disorders were treated with anterior repositioning splint therapy for 8 weeks."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not address confounding; single-arm report with no comparative analysis, so the 3b-i confounding threshold does not apply"
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "some_concerns",
+              "evidence_quote": "Forty patients with three different types of symptomatic disk-interference disorders",
+              "note": "population described, but recruitment and eligibility criteria are not stated"
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "Each patient's splint was then gradually modified until the patient's original occlusal condition was reestablished."
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not report how many of the 40 patients were reevaluated at follow-up or any losses"
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "Seventy-five percent of the patients had no joint pain and 66% had a return of joint sounds.",
+              "note": "outcomes named, but how joint sounds and pain were assessed and whether assessment was blinded is not stated"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: not an RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "The patients were reevaluated an average of 2 1/2 years later.",
+            "note": "an average 2.5-year follow-up is adequate for the long-term symptom outcomes reported; does not fire"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 17,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۱۷ است و در باند E (سطح پس‌زمینه) برای پرسش THERAPY قرار می‌گیرد.",
+        "interpretation_fa": "این مطالعه یک case series تک‌گروهی از ۴۰ بیمار بدون گروه کنترل است و امتیاز فقط بر پایه‌ی abstract محاسبه شده که بیشتر جزئیات روش در آن گزارش نشده است. ارزش بالینی آن در توصیف سیر طولانی‌مدت پس از anterior repositioning splint است: درد در بیشتر بیماران برنگشت، اما صدای مفصل در دو سوم آن‌ها بازگشت."
+      },
+      {
+        "des_version": "3.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Partial time use of anterior repositioning splints in the management of TMJ pain and dysfunction: a one-year controlled study",
+          "authors": "Conti PCR, Miranda JES, Conti ACCF, Pegoraro LF, Araújo CRP",
+          "year": 2005,
+          "journal": "Journal of Applied Oral Science",
+          "doi": "10.1590/S1678-77572005000400006"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 85,
+          "anchor": "RCT, three parallel arms (stabilization splint, repositioning splint, no treatment) (THERAPY RCT row, 85)",
+          "evidence_quote": "randomly divided into three groups: I- stabilization splints, II- repositioning splints and IIIno treatment"
+        },
+        "q_method": {
+          "tool": "RoB2",
+          "domains": [
+            {
+              "domain": "randomization process",
+              "rating": "some_concerns",
+              "evidence_quote": "randomly located into one of the following groups:",
+              "note": "random allocation stated, but sequence generation method and allocation concealment are not described anywhere (Sample, Methods); groups also said to be matched for gender and age; baseline VAS reported as not significantly different"
+            },
+            {
+              "domain": "deviations from intended interventions",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "absence: Methods (Sample, Group I-III protocols, Evaluations and follow-up visits, Statistical analysis), Results and Discussion read; intended splint-wearing protocols are prescribed but no adherence/compliance monitoring, no report of deviations, and no assignment-based (intention-to-treat) analysis; participants could not be blinded (no-treatment control) and this is not addressed; no adherence/compliance/deviation/intention-to-treat wording anywhere"
+            },
+            {
+              "domain": "missing outcome data",
+              "rating": "some_concerns",
+              "evidence_quote": "patients (2 from group II and 6 from the control group) were",
+              "note": "8 of 60 randomized excluded (6 of them controls) 'for different reasons' not specified; analysis on 52 completers with no handling of missing data or sensitivity analysis"
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "previously calibrated researcher, blinded for group",
+              "note": "palpation examiner calibrated and blinded, but the main pain outcome (VAS) is self-reported by participants who knew their allocation; joint sounds by manual inspection"
+            },
+            {
+              "domain": "selection of the reported result",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "absence: Introduction (aim), Methods (Sample, Evaluations, Statistical analysis) and Acknowledgements read; no pre-specified protocol, trial registration or pre-specified analysis plan mentioned anywhere; no protocol/registration/pre-specified wording found"
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all, or manufacturer funding of a tested product",
+            "base_points": 8,
+            "points": 7,
+            "evidence_quote": "This study was supported by CAPES - Coordenação de",
+            "note": "fires: Acknowledgements name a government funder (CAPES, not a manufacturer) but no conflict-of-interest declaration exists anywhere (front matter, Acknowledgements, end of text read; no conflict/interest/disclosure wording, ligature forms checked); 8×85/100=6.8→7"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "covered in Q_method: selection of the reported result rated high for absence of registration/protocol"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 4,
+            "evidence_quote": "The sample was initially constituted of 60 patients, with",
+            "note": "fires: no sample size calculation or power analysis in Sample or Statistical analysis; 5×85/100=4.25→4"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "in a one-year follow-up",
+            "note": "does not fire: outcomes are pain, tenderness, joint sounds, range of motion and occlusal contacts, not long-term survival; one-year follow-up is adequate to the stated outcomes"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 15,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "امتیاز DES این مقاله ۱۵ است و در باند E (سطح زمینه یا نظر) برای نوع سؤال THERAPY قرار می‌گیرد.",
+        "interpretation_fa": "این RCT سه‌گروهی پیگیری یک‌ساله و معاینه‌گر blind دارد، اما گزارش‌نشدن پایبندی بیماران، نبودن پروتکل ثبت‌شده، ریزش نامتوازن گروه کنترل، نبودن power analysis و نبودن بیانیه‌ی تعارض منافع امتیاز را پایین آورده است. کاهش زودتر درد با repositioning splint در مدیریت اولیه‌ی درد داخل مفصلی TMJ فقط نشانه‌ای اولیه است."
+      }
+    ]
+  },
+  "sharehub/share-42": {
+    "scored_at": "2026-10-26",
+    "sources": [
+      {
+        "des_version": "3.4",
+        "content_type": "NOT_APPRAISABLE",
+        "source_kind": "book",
+        "question_type": null,
+        "text_basis": "EXCERPT",
+        "citation": {
+          "title": "Management of Temporomandibular Disorders and Occlusion (8th edition)",
+          "authors": "Okeson JP",
+          "year": 2020,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": null,
+        "des_score": null,
+        "band": null,
+        "provisional": false,
+        "fact_fa": "این منبع یک textbook است (Okeson، ویرایش هشتم، ۲۰۲۰، بخش‌هایی از فصل‌های ۱۳، ۱۴ و ۱۵) و ارجاع داده شده اما امتیاز DES نمی‌گیرد، چون کتاب درسی protocol، search strategy یا ارزیابی risk of bias ندارد که بتوان سنجید.",
+        "interpretation_fa": "این متن مرجع آموزشی برای درمان disc displacement with reduction و without reduction، کاربرد anterior positioning appliance و stabilization appliance، عوارضی مثل posterior openbite و روش ساخت و تنظیم این دستگاه‌هاست و نقش آن در صفحه تبیین مفاهیم و روند بالینی است، نه ارائه‌ی یک یافته‌ی پژوهشی."
+      },
+      {
+        "des_version": "3.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Long-term treatment of disk-interference disorders of the temporomandibular joint with anterior repositioning occlusal splints",
+          "authors": "Okeson JP",
+          "year": 1988,
+          "journal": "The Journal of Prosthetic Dentistry",
+          "doi": "10.1016/0022-3913(88)90224-7"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 30,
+          "anchor": "single-arm case series of 40 treated patients with no comparison group (THERAPY case series row, 30)",
+          "evidence_quote": "Forty patients with three different types of symptomatic disk-interference disorders were treated with anterior repositioning splint therapy for 8 weeks."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not address confounding; single-arm report with no comparative analysis, so the 3b-i confounding threshold does not apply"
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "some_concerns",
+              "evidence_quote": "Forty patients with three different types of symptomatic disk-interference disorders",
+              "note": "population described, but recruitment and eligibility criteria are not stated"
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "Each patient's splint was then gradually modified until the patient's original occlusal condition was reestablished."
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not report how many of the 40 patients were reevaluated at follow-up or any losses"
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "Seventy-five percent of the patients had no joint pain and 66% had a return of joint sounds.",
+              "note": "outcomes named, but how joint sounds and pain were assessed and whether assessment was blinded is not stated"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: not an RCT"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "The patients were reevaluated an average of 2 1/2 years later.",
+            "note": "an average 2.5-year follow-up is adequate for the long-term symptom outcomes reported; does not fire"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 17,
+        "band": "E",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۱۷ است و در باند E (سطح پس‌زمینه) برای پرسش THERAPY قرار می‌گیرد.",
+        "interpretation_fa": "این مطالعه یک case series تک‌گروهی از ۴۰ بیمار بدون گروه کنترل است و امتیاز فقط بر پایه‌ی abstract محاسبه شده که بیشتر جزئیات روش در آن گزارش نشده است. ارزش بالینی آن در توصیف سیر طولانی‌مدت پس از anterior repositioning splint است: درد در بیشتر بیماران برنگشت، اما صدای مفصل در دو سوم آن‌ها بازگشت."
+      },
+      {
+        "des_version": "3.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Partial time use of anterior repositioning splints in the management of TMJ pain and dysfunction: a one-year controlled study",
+          "authors": "Conti PCR, Miranda JES, Conti ACCF, Pegoraro LF, Araújo CRP",
+          "year": 2005,
+          "journal": "Journal of Applied Oral Science",
+          "doi": "10.1590/S1678-77572005000400006"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 85,
+          "anchor": "RCT, three parallel arms (stabilization splint, repositioning splint, no treatment) (THERAPY RCT row, 85)",
+          "evidence_quote": "randomly divided into three groups: I- stabilization splints, II- repositioning splints and IIIno treatment"
+        },
+        "q_method": {
+          "tool": "RoB2",
+          "domains": [
+            {
+              "domain": "randomization process",
+              "rating": "some_concerns",
+              "evidence_quote": "randomly located into one of the following groups:",
+              "note": "random allocation stated, but sequence generation method and allocation concealment are not described anywhere (Sample, Methods); groups also said to be matched for gender and age; baseline VAS reported as not significantly different"
+            },
+            {
+              "domain": "deviations from intended interventions",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "absence: Methods (Sample, Group I-III protocols, Evaluations and follow-up visits, Statistical analysis), Results and Discussion read; intended splint-wearing protocols are prescribed but no adherence/compliance monitoring, no report of deviations, and no assignment-based (intention-to-treat) analysis; participants could not be blinded (no-treatment control) and this is not addressed; no adherence/compliance/deviation/intention-to-treat wording anywhere"
+            },
+            {
+              "domain": "missing outcome data",
+              "rating": "some_concerns",
+              "evidence_quote": "patients (2 from group II and 6 from the control group) were",
+              "note": "8 of 60 randomized excluded (6 of them controls) 'for different reasons' not specified; analysis on 52 completers with no handling of missing data or sensitivity analysis"
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "previously calibrated researcher, blinded for group",
+              "note": "palpation examiner calibrated and blinded, but the main pain outcome (VAS) is self-reported by participants who knew their allocation; joint sounds by manual inspection"
+            },
+            {
+              "domain": "selection of the reported result",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "absence: Introduction (aim), Methods (Sample, Evaluations, Statistical analysis) and Acknowledgements read; no pre-specified protocol, trial registration or pre-specified analysis plan mentioned anywhere; no protocol/registration/pre-specified wording found"
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement anywhere in the text at all, or manufacturer funding of a tested product",
+            "base_points": 8,
+            "points": 7,
+            "evidence_quote": "This study was supported by CAPES - Coordenação de",
+            "note": "fires: Acknowledgements name a government funder (CAPES, not a manufacturer) but no conflict-of-interest declaration exists anywhere (front matter, Acknowledgements, end of text read; no conflict/interest/disclosure wording, ligature forms checked); 8×85/100=6.8→7"
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "covered in Q_method: selection of the reported result rated high for absence of registration/protocol"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 4,
+            "evidence_quote": "The sample was initially constituted of 60 patients, with",
+            "note": "fires: no sample size calculation or power analysis in Sample or Statistical analysis; 5×85/100=4.25→4"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "in a one-year follow-up",
+            "note": "does not fire: outcomes are pain, tenderness, joint sounds, range of motion and occlusal contacts, not long-term survival; one-year follow-up is adequate to the stated outcomes"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 15,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "امتیاز DES این مقاله ۱۵ است و در باند E (سطح زمینه یا نظر) برای نوع سؤال THERAPY قرار می‌گیرد.",
+        "interpretation_fa": "این RCT سه‌گروهی پیگیری یک‌ساله و معاینه‌گر blind دارد، اما گزارش‌نشدن پایبندی بیماران، نبودن پروتکل ثبت‌شده، ریزش نامتوازن گروه کنترل، نبودن power analysis و نبودن بیانیه‌ی تعارض منافع امتیاز را پایین آورده است. کاهش زودتر درد با repositioning splint در مدیریت اولیه‌ی درد داخل مفصلی TMJ فقط نشانه‌ای اولیه است."
+      }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.4",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "EXCERPT",
+        "claims": [
+          {
+            "id": "u3",
+            "claim_quote": "دیسک مفصل گیجگاهی‌فکی میان کندیل و سطح مفصلی استخوان تمپورال قرار دارد و به حرکت هماهنگ مفصل و توزیع نیرو کمک می‌کند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "No sentence in the excerpt states the disc position or its function."
+          },
+          {
+            "id": "u4",
+            "claim_quote": "اگر موقعیت دیسک نسبت به کندیل تغییر کند، رابطهٔ این دو هنگام بازوبسته‌شدن دهان ممکن است مختل شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The excerpt does not state what a change in disc-condyle relation does during opening and closing."
+          },
+          {
+            "id": "u5",
+            "claim_quote": "در جابه‌جایی دیسک با برگشت (Disc Displacement with Reduction)، وقتی دهان بسته است، دیسک در موقعیت طبیعی خود نسبت به کندیل قرار ندارد؛ اما با بازشدن دهان، رابطهٔ دیسک و کندیل دوباره برقرار می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In the resting closed joint position the disc is anteriorly displaced from the condyle.",
+            "source_ref": null,
+            "note": "Only the closed-position half is stated (Fig. 13.5 caption); the half about the relation being re-established on opening is not addressed and is not scored."
+          },
+          {
+            "id": "u6",
+            "claim_quote": "این اتفاق می‌تواند با کلیک همراه باشد.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The excerpt does not state that the reduction event is accompanied by a click."
+          },
+          {
+            "id": "u7",
+            "claim_quote": "هنگام بسته‌شدن نیز ممکن است دیسک دوباره جابه‌جا شود و کلیک دیگری ایجاد کند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The excerpt does not describe the closing-phase re-displacement and second click."
+          },
+          {
+            "id": "u8",
+            "claim_quote": "پس «با برگشت» یعنی رابطهٔ دیسک و کندیل هنگام حرکت دوباره برقرار می‌شود، نه اینکه جابه‌جایی برای همیشه برطرف شده باشد.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "Conclusion about what with reduction means is not stated in the excerpt; premise not compared."
+          },
+          {
+            "id": "u9",
+            "claim_quote": "در جابه‌جایی دیسک بدون برگشت (Disc Displacement without Reduction)، هنگام بازشدن دهان نیز این رابطه برقرار نمی‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Disc displacement without reduction is a clinical condition in\nwhich the disc is totally displaced (dislocated) most frequently\nanteromedially to the condyle and does not return to normal position with condylar movement.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u10",
+            "claim_quote": "بیمار ممکن است محدودیت بازشدن یا احساس قفل‌شدن فک داشته باشد؛ هرچند با گذشت زمان و سازگاری مفصل، محدودیت حرکت می‌تواند کمتر شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Examination reveals limited mandibular opening (25 to 30 mm)\nwith some slight defection to the ipsilateral side during maximum\nopening.",
+            "source_ref": null,
+            "note": "Source states limited opening as a plain finding; the claim is a careful, hedged version. Locking sensation is also reported in Case 5. The half about limitation lessening with time is not addressed."
+          },
+          {
+            "id": "u11",
+            "claim_quote": "پس قطع‌شدن کلیک به‌تنهایی نشانهٔ بهبود نیست، به‌ویژه اگر هم‌زمان دهان کمتر از قبل باز شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "Conclusion that loss of a click alone is not improvement is not stated; the source says click elimination does not always mean successful reduction, a neighbouring proposition."
+          },
+          {
+            "id": "u12",
+            "claim_quote": "یکی از یافته‌های بالینی در بیماران دارای کلیک، حذف صدا با جلوآوردن فک است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The patient protrudes slightly until an opening and closing movement\noccurs that eliminates the painful clicking.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u13",
+            "claim_quote": "از بیمار خواسته می‌شود فک پایین را کمی جلو بیاورد و در همان وضعیت دهان را باز و بسته کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The patient protrudes slightly until an opening and closing movement\noccurs that eliminates the painful clicking.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u14",
+            "claim_quote": "اگر کلیک حذف شود، این موقعیت می‌تواند مبنای طراحی اسپلینت ریپوزیشن قدامی قرار گیرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The least amount of\nanterior positioning of the mandible that will eliminate the joint\nsound is selected.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u15",
+            "claim_quote": "اما پیش از ساخت اسپلینت، باید مشخص شود بیمار علاوه بر صدا، درد مفصل یا اختلال عملکرد هم دارد یا خیر.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The excerpt does not state that pain or dysfunction must be established before appliance fabrication."
+          },
+          {
+            "id": "u16",
+            "claim_quote": "کلیک بدون درد و اختلال عملکرد الزاماً به درمان نیاز ندارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Observe over time,\nNo treatment indicated",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u17",
+            "claim_quote": "همچنین، اگر درد منشأ عضلانی داشته باشد و کلیک مفصل بدون درد باشد، درمان جابه‌جایی دیسک لزوماً علت درد بیمار را برطرف نمی‌کند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "Not addressed in the excerpt."
+          },
+          {
+            "id": "u19",
+            "claim_quote": "اسپلینت ریپوزیشن قدامی (Anterior Repositioning Splint) فک پایین را هنگام بسته‌شدن در موقعیتی جلوتر هدایت می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "When the mouth\nis closed the anterior teeth contact on the guiding ramp and the mandible is brought forward (arrow) to\nthe therapeutic position that keeps the disc in a more normal relationship with the condyle.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u20",
+            "claim_quote": "این تغییر می‌تواند رابطهٔ دیسک و کندیل را مناسب‌تر کند و بار وارد بر بافت‌های دردناک پشت دیسک را کاهش دهد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "When anterior positioning appliances were first used it was discovered that the they were immediately helpful in reducing painful joint symptoms by improving the condyle-disc relationship,\nwhich reduced loading on the retrodiscal tissues.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u21",
+            "claim_quote": "در توضیح اوکیسون، این موقعیت موقت فرصتی برای سازگاری بافت‌های رترو‌دیسکال فراهم می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This\nis a temporary therapeutic position that will encourage adaptation of the retrodiscal tissues.",
+            "source_ref": null,
+            "note": "Other source sentences hedge this (may help provide better opportunity for adaptation); a plain sentence also states it, so the hedge is not removed."
+          },
+          {
+            "id": "u22",
+            "claim_quote": "پس از این سازگاری، مفصل ممکن است بدون درد کار کند، حتی اگر دیسک هنوز جابه‌جا باشد و کلیک باقی بماند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The condyle now functions on the adaptive fibrotic tissues resulting in a painless functioning joint, but because the disc is still displaced, clicking may still be present.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u23",
+            "claim_quote": "بنابراین، هدف درمان را نباید فقط بازگرداندن دائمی دیسک یا حذف همیشگی صدا دانست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The reasonable goal of definitive therapy for disc\n\ndisplacements with reduction is to reduce intracapsular pain, not\nto recapture the disc.",
+            "source_ref": null,
+            "note": "Claim says not only; source says the goal is pain reduction, not disc recapture; same direction."
+          },
+          {
+            "id": "u30",
+            "claim_quote": "اوکیسون توصیه می‌کند اگر اسپلینت استبیلایزیشن بتواند علائم را کنترل کند، همان ترجیح داده شود، چون خطر تغییرات اکلوژنی کمتری دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "When a stabilization appliance reduces\nsymptoms, it should be used instead of an anterior positioning\nappliance since this appliance rarely leads to irreversible occlusal\nchanges.",
+            "source_ref": null,
+            "note": "Another source sentence gives the same advice with a hedge (may be considered); a plain sentence states it."
+          },
+          {
+            "id": "u31",
+            "claim_quote": "اگر کافی نبود، اسپلینت ریپوزیشن قدامی مطرح می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "When this appliance is not effective,\nan anterior positioning appliance should be fabricated.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u34",
+            "claim_quote": "درد، حساسیت مفصل و عضلات، صدا، احساس گیرکردن یا قفل‌شدن، دامنهٔ حرکات فک و تماس‌های اکلوژنی بررسی و ثبت می‌شوند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The list of recorded findings is not stated in the excerpt."
+          },
+          {
+            "id": "u35",
+            "claim_quote": "این یافته‌ها مبنای مقایسه در جلسات بعد هستند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "Baseline findings as the basis for comparison are not stated; only that examinations are repeated at each visit (stabilization appliance)."
+          },
+          {
+            "id": "u36",
+            "claim_quote": "وجود درد هنگام حرکت یا لمس مفصل باید از درد عضلانی تفکیک شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "Not addressed in the excerpt."
+          },
+          {
+            "id": "u37",
+            "claim_quote": "همچنین، لازم است مشخص شود شکایت اصلی بیمار درد است، محدودیت عملکرد است یا صرفاً نگرانی از صدای مفصل.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "Not addressed in the excerpt."
+          },
+          {
+            "id": "u40",
+            "claim_quote": "از بیمار خواسته می‌شود فک پایین را کمی جلو بیاورد و در همان موقعیت دهان را باز و بسته کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The patient protrudes slightly until an opening and closing movement\noccurs that eliminates the painful clicking.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u41",
+            "claim_quote": "به گفتهٔ اوکیسون، کمترین جلوآمدگی‌ای که کلیک را حذف کند، راهنمای بالینی انتخاب این موقعیت است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The least amount of\nanterior positioning of the mandible that will eliminate the joint\nsound is selected.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u42",
+            "claim_quote": "در این وضعیت، علائم مفصل هنگام بازوبسته‌شدن نیز بررسی می‌شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The forward position established by the appliance should eliminate the joint symptoms during opening and closing to and\nfrom that position.",
+            "source_ref": null,
+            "note": "Source states the requirement that the position eliminate symptoms on opening and closing, which is assessed in that position."
+          },
+          {
+            "id": "u43",
+            "claim_quote": "حذف کلیک، مرجع بالینی مفیدی برای شروع درمان است؛ اما به‌تنهایی ثابت نمی‌کند که دیسک کاملاً به موقعیت طبیعی برگشته است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Although eliminating the click does not always denote successful reduction of the disc,49 it is a good clinical reference point for\nbeginning therapy.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u46",
+            "claim_quote": "در روش شرح‌داده‌شده در کتاب، اسپلینت از آکریل سخت ساخته می‌شود و تمام قوس دندانی را می‌پوشاند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Like the stabilization appliance, the anterior positioning appliance is a full-arch hard acrylic device that can be used in either\narch.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u47",
+            "claim_quote": "قوس بالا معمولاً ترجیح دارد، زیرا ساخت رمپ هدایت‌کننده برای کنترل موقعیت فک روی آن آسان‌تر است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, the maxillary arch is preferred because a guiding\nramp can be more easily fabricated to direct the mandible into\nthe desired forward position.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u48",
+            "claim_quote": "ابتدا یک استاپ قدامی روی اسپلینت ایجاد می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Note a stop has been placed on the anterior region.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u49",
+            "claim_quote": "موقعیتی که در آن جلوآوردن فک علائم را حذف می‌کند، روی این استاپ با کاغذ آرتیکولاسیون علامت‌گذاری می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The contact area on the anterior stop is marked with articulating\npaper in this position.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u50",
+            "claim_quote": "سپس یک شیار کوچک در محل تماس ایجاد می‌شود تا بیمار هنگام ثبت تماس‌ها بتواند همان موقعیت را تکرار کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The contact on the anterior stop that eliminated the painful\nclicking is grooved with a small round bur.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u51",
+            "claim_quote": "بعد، بدون پوشاندن استاپ قدامی، به سطح جوندهٔ اسپلینت آکریل اضافه می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Auto-curing acrylic is added to all occluding areas of the appliance except the anterior stop.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u52",
+            "claim_quote": "بیمار فک را در موقعیت جلوآمدهٔ ثبت‌شده می‌بندد تا محل تماس دندان‌های پایین روی آکریل شکل بگیرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The appliance is returned\nto the mouth and the patient closes in the forward position.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u53",
+            "claim_quote": "پشت محل تماس دندان‌های قدامی پایین نیز آکریل بیشتری قرار داده می‌شود تا یک سطح شیب‌دار ساخته شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "An excess of acrylic is placed in the anterior palatal area, which will\nbe located lingual to the mandibular anterior teeth when occluded.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u54",
+            "claim_quote": "این سطح همان رمپ هدایت‌کننده است: هنگام بسته‌شدن دهان، دندان‌های قدامی پایین روی آن می‌لغزند و فک به موقعیت درمانی هدایت می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "When the mouth\nis closed the anterior teeth contact on the guiding ramp and the mandible is brought forward (arrow) to\nthe therapeutic position that keeps the disc in a more normal relationship with the condyle.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u55",
+            "claim_quote": "پس از سخت‌شدن آکریل، تماس‌ها تنظیم می‌شوند تا دندان‌ها در این موقعیت تماس‌های یکنواخت و هم‌زمان داشته باشند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A well-adjusted\nappliance allows contact on all teeth evenly and simultaneously\nin the established forward position (Fig. 15.28A).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u62",
+            "claim_quote": "رمپ باید صاف و پرداخت‌شده باشد تا دندان‌ها هنگام حرکت روی آن گیر نکنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The ramp is developed into a smooth sliding\nsurface so as not to promote catching or locking of the teeth in\nany position.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u63",
+            "claim_quote": "همچنین کنترل می‌شود که اسپلینت ثابت و گیردار باشد، با بافت‌های نرم سازگار باشد و در موقعیت ثبت‌شده، علائم هنگام بازوبسته‌شدن حذف شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It should accurately fit the maxillary teeth with total stability\nand retention when in contact with the mandibular teeth and\nwhen checked by digital palpation.",
+            "source_ref": null,
+            "note": "A single list claim; fit/stability and retention in criterion 1, symptom elimination on opening and closing in criterion 3, soft-tissue compatibility in criterion 5."
+          },
+          {
+            "id": "u66",
+            "claim_quote": "در رویکرد ویرایش ۲۰۲۰ اوکیسون، بیمار معمولاً ابتدا اسپلینت را هنگام خواب استفاده می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The patient\nshould be encouraged to wear the appliance only at night to protect\nthe retrodiscal tissues from heavy loading during sleep-related bruxism.",
+            "source_ref": null,
+            "note": "The edition year is not stated in the excerpt; content (night use) is stated."
+          },
+          {
+            "id": "u67",
+            "claim_quote": "اگر برای کنترل درد به استفادهٔ روزانه نیز نیاز باشد، این زمان اضافه می‌شود و با برطرف‌شدن درد، استفاده دوباره به شب محدود می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "As soon as the pain is resolved the\nuse of the appliance is limited to nighttime only (refer to Chapters\n13 and 16).",
+            "source_ref": null,
+            "note": "Daytime use if pain persists is stated in neighbouring sentences (may be worn for short periods during the day)."
+          },
+          {
+            "id": "u68",
+            "claim_quote": "پیگیری اولیه باید زود انجام شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The patient is asked to return in 2 to 7 days for evaluation.",
+            "source_ref": null,
+            "note": "Source gives this follow-up interval in the stabilization appliance section."
+          },
+          {
+            "id": "u69",
+            "claim_quote": "در نمونهٔ بالینی کتاب برای جابه‌جایی دیسک با برگشت، بیمار یک هفته پس از تحویل اسپلینت معاینه شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In 1 week, she returned reporting significant pain relief and\nthe joint had not “popped.”",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u70",
+            "claim_quote": "در بخش پیگیری اسپلینت استبیلایزیشن نیز ویزیت اولیه طی دو تا هفت روز ذکر شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The patient is asked to return in 2 to 7 days for evaluation.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u71",
+            "claim_quote": "در معاینات بعدی، درد و حساسیت مفصل و عضلات، حرکت فک، وضعیت وسیله و تماس‌های آن دوباره بررسی می‌شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The muscle and TMJ examinations are repeated at\neach subsequent visit so it can be determined whether the signs\nand symptoms are being eliminated.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u72",
+            "claim_quote": "تماس دندان‌ها پس از خارج‌کردن اسپلینت نیز اهمیت دارد، زیرا استفاده از وسیله می‌تواند با تغییر اکلوژن همراه باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A certain percentage of patients\nwho wear these appliances may develop a posterior openbite.",
+            "source_ref": null,
+            "note": "Reason half: dental instability can be a consequence of anterior positioning appliance use (also stated plainly elsewhere)."
+          },
+          {
+            "id": "u73",
+            "claim_quote": "فاصله و ادامهٔ پیگیری بر اساس پاسخ بیمار تعیین می‌شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "Follow-up interval being set by patient response is not stated."
+          },
+          {
+            "id": "u74",
+            "claim_quote": "اگر علائم بهبود پیدا نکنند، فیت، تماس‌های وسیله و نحوهٔ استفاده بررسی می‌شوند و تشخیص نیز باید دوباره ارزیابی شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "If symptoms are not relieved or improved, the\nappliance should be reevaluated for proper fit and occlusal contacts.",
+            "source_ref": null,
+            "note": "Reevaluation of diagnosis is implied (either the initial diagnosis was incorrect) but not stated as an instruction; the stated half decides."
+          },
+          {
+            "id": "u77",
+            "claim_quote": "کاهش استفاده از اسپلینت وقتی شروع می‌شود که درد برطرف شده باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "As soon as the patient becomes symptom free, the use of the appliance should be gradually reduced.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u78",
+            "claim_quote": "اوکیسون توضیح می‌دهد که سازگاری بافت‌های رترو‌دیسکال ممکن است هشت تا ده هفته یا بیشتر زمان ببرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These adaptive changes may take 8 to 10 weeks or even longer.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u79",
+            "claim_quote": "تازگی و شدت آسیب، سن و سلامت عمومی بیمار بر این زمان اثر دارند؛ بنابراین، پایان درمان صرفاً با رسیدن به یک تاریخ مشخص تعیین نمی‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Numerous factors determine the length of time an appliance\nneeds to be worn.",
+            "source_ref": null,
+            "note": "Conclusion judged; premise factors are listed in the source for macrotrauma."
+          },
+          {
+            "id": "u82",
+            "claim_quote": "در ویرایش ۲۰۲۰ کتاب، مسیر خروج از درمان بیشتر با کاهش زمان استفاده و در صورت نیاز، تبدیل اسپلینت ریپوزیشن به استبیلایزیشن توضیح داده می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "As soon as the patient becomes symptom free, the use of the appliance should be gradually reduced.",
+            "source_ref": null,
+            "note": "Conversion to stabilization appliance when repeated attempts fail is also stated; the word mostly and the edition year are not addressed."
+          },
+          {
+            "id": "u83",
+            "claim_quote": "برگشت مرحله‌ای مطالعهٔ قدیمی و این رویکرد را نباید یک برنامهٔ واحد با مراحل زمانی ثابت در نظر گرفت.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The relation between the old step-back study and the present approach as a fixed program is not stated; source only says the manner of use has changed considerably."
+          },
+          {
+            "id": "u86",
+            "claim_quote": "اسپلینت ریپوزیشن با کمک رمپ قدامی، فک را هنگام بسته‌شدن به جلو هدایت می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "When the mouth\nis closed the anterior teeth contact on the guiding ramp and the mandible is brought forward (arrow) to\nthe therapeutic position that keeps the disc in a more normal relationship with the condyle.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u87",
+            "claim_quote": "در مقابل، اسپلینت استبیلایزیشن در موقعیت CR تنظیم می‌شود؛ به‌گونه‌ای که وقتی کندیل‌ها در موقعیت اسکلتی‌عضلانی پایدار قرار دارند، دندان‌ها تماس‌های یکنواخت و هم‌زمان با اسپلینت داشته باشند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "Adjustment of the stabilization appliance in CR with even simultaneous contacts is not stated in the excerpt."
+          },
+          {
+            "id": "u88",
+            "claim_quote": "پس تبدیل ریپوزیشن به استبیلایزیشن یعنی سطح هدایت‌کننده تغییر کند و تماس‌های روی وسیله دوباره تنظیم شوند، تا فک دیگر به موقعیت جلوآمده هدایت نشود و تماس‌ها در CR برقرار شوند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "Inference conclusion (ramp changed, contacts re-adjusted in CR) is not stated; the source says only that conversion allows the condyle to return to the stable position."
+          },
+          {
+            "id": "u89",
+            "claim_quote": "در این شرایط، اسپلینت ریپوزیشن به اسپلینت استبیلایزیشن تبدیل می‌شود تا امکان بازگشت کندیل‌ها به موقعیت اسکلتی‌عضلانی پایدار فراهم شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "When this\ncondition occurs a gradual relengthening of the muscle can be\naccomplished by converting the anterior positioning appliance to\na stabilization appliance, which allows the condyles to reassume\nthe musculoskeletally stable position.",
+            "source_ref": null,
+            "note": "Conversion for the same purpose is also stated for repeated failure of weaning."
+          },
+          {
+            "id": "u90",
+            "claim_quote": "به گفتهٔ اوکیسون، این تبدیل یکی از راه‌هایی است که اجازه می‌دهد کندیل به موقعیت اسکلتی‌عضلانی پایدار برگردد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "When this\ncondition occurs a gradual relengthening of the muscle can be\naccomplished by converting the anterior positioning appliance to\na stabilization appliance, which allows the condyles to reassume\nthe musculoskeletally stable position.",
+            "source_ref": null,
+            "note": "Source also gives gradual decrease of use as another way (one of the ways)."
+          },
+          {
+            "id": "u91",
+            "claim_quote": "پس از آن، هماهنگی این موقعیت با تماس‌های دندانی ارزیابی می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Once the condyles\nare in the musculoskeletally stable position, the occlusal condition\nshould be assessed for orthopedic stability.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u95",
+            "claim_quote": "به گفتهٔ اوکیسون، نخستین و شایع‌ترین علت این است که بافت‌ها هنوز زمان کافی برای سازگاری نداشته‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The first and most common\nis that the time allowed for tissue repair has not been adequate.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u96",
+            "claim_quote": "در این حالت، استفاده از اسپلینت ریپوزیشن دوباره برقرار می‌شود و زمان بیشتری برای سازگاری داده می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In\nthis instance, the anterior positioning appliance should be reinstituted and more time given for tissue adaptation.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u97",
+            "claim_quote": "پس از کنترل درد، کاهش استفاده دوباره بررسی می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "As soon as the patient becomes symptom free, the use of the appliance should be gradually reduced.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u98",
+            "claim_quote": "اگر تلاش‌های مکرر برای کنارگذاشتن وسیله با بازگشت علائم همراه باشند، احتمال ناپایداری ارتوپدیک مطرح می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "When repeated attempts to eliminate the appliance fail to\ncontrol symptoms, orthopedic instability should be suspected.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u99",
+            "claim_quote": "در این شرایط، تبدیل اسپلینت به استبیلایزیشن و ارزیابی رابطهٔ موقعیت پایدار مفصل با تماس‌های دندانی، بخشی از تصمیم‌گیری است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "When this occurs, the anterior positioning appliance should be\nconverted to a stabilization appliance that allows the condyle to\nreturn to the musculoskeletally stable position.",
+            "source_ref": null,
+            "note": "Assessment of orthopedic stability after conversion stated in the next sentence."
+          },
+          {
+            "id": "u106",
+            "claim_quote": "در طول درمان، تغییر تماس‌های دندانی و اپن‌بایت خلفی باید زیر نظر باشند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "Monitoring of contact change and posterior openbite during therapy is not stated as an instruction in the excerpt."
+          },
+          {
+            "id": "u107",
+            "claim_quote": "کاهش درد، حرکت مناسب فک و عملکرد قابل‌قبول، معیارهای اصلی ارزیابی نتیجه‌اند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "Main outcome criteria (pain, jaw movement, function) are not stated in the excerpt."
+          },
+          {
+            "id": "u108",
+            "claim_quote": "باقی‌ماندن کلیک بدون درد، به‌تنهایی به معنای شکست درمان یا ضرورت ادامهٔ ریپوزیشن نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The reasonable goal of definitive therapy for disc\n\ndisplacements with reduction is to reduce intracapsular pain, not\nto recapture the disc.",
+            "source_ref": null,
+            "note": ""
+          }
+        ],
+        "counts": {
+          "matches": 52,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 0,
+          "not_assessable": 18,
+          "author_view": 0,
+          "not_a_claim": 0
+        },
+        "assessable": 52,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": true,
+        "source_conclusion": "If contact occurs, the posterior portion",
+        "fact_fa": "از ۵۲ ادعایی که منبع به آن پرداخته‌اند، ۵۲ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      },
+      {
+        "des_version": "3.4",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "ABSTRACT_ONLY",
+        "claims": [
+          {
+            "id": "u3",
+            "claim_quote": "دیسک مفصل گیجگاهی‌فکی میان کندیل و سطح مفصلی استخوان تمپورال قرار دارد و به حرکت هماهنگ مفصل و توزیع نیرو کمک می‌کند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u4",
+            "claim_quote": "اگر موقعیت دیسک نسبت به کندیل تغییر کند، رابطهٔ این دو هنگام بازوبسته‌شدن دهان ممکن است مختل شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u6",
+            "claim_quote": "این اتفاق می‌تواند با کلیک همراه باشد.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u7",
+            "claim_quote": "هنگام بسته‌شدن نیز ممکن است دیسک دوباره جابه‌جا شود و کلیک دیگری ایجاد کند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u8",
+            "claim_quote": "پس «با برگشت» یعنی رابطهٔ دیسک و کندیل هنگام حرکت دوباره برقرار می‌شود، نه اینکه جابه‌جایی برای همیشه برطرف شده باشد.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "inference conclusion not stated in abstract"
+          },
+          {
+            "id": "u11",
+            "claim_quote": "پس قطع‌شدن کلیک به‌تنهایی نشانهٔ بهبود نیست، به‌ویژه اگر هم‌زمان دهان کمتر از قبل باز شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "inference conclusion not stated in abstract"
+          },
+          {
+            "id": "u15",
+            "claim_quote": "اما پیش از ساخت اسپلینت، باید مشخص شود بیمار علاوه بر صدا، درد مفصل یا اختلال عملکرد هم دارد یا خیر.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u17",
+            "claim_quote": "همچنین، اگر درد منشأ عضلانی داشته باشد و کلیک مفصل بدون درد باشد، درمان جابه‌جایی دیسک لزوماً علت درد بیمار را برطرف نمی‌کند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u34",
+            "claim_quote": "درد، حساسیت مفصل و عضلات، صدا، احساس گیرکردن یا قفل‌شدن، دامنهٔ حرکات فک و تماس‌های اکلوژنی بررسی و ثبت می‌شوند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u35",
+            "claim_quote": "این یافته‌ها مبنای مقایسه در جلسات بعد هستند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u36",
+            "claim_quote": "وجود درد هنگام حرکت یا لمس مفصل باید از درد عضلانی تفکیک شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u37",
+            "claim_quote": "همچنین، لازم است مشخص شود شکایت اصلی بیمار درد است، محدودیت عملکرد است یا صرفاً نگرانی از صدای مفصل.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u46",
+            "claim_quote": "در روش شرح‌داده‌شده در کتاب، اسپلینت از آکریل سخت ساخته می‌شود و تمام قوس دندانی را می‌پوشاند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u68",
+            "claim_quote": "پیگیری اولیه باید زود انجام شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u69",
+            "claim_quote": "در نمونهٔ بالینی کتاب برای جابه‌جایی دیسک با برگشت، بیمار یک هفته پس از تحویل اسپلینت معاینه شده است.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u70",
+            "claim_quote": "در بخش پیگیری اسپلینت استبیلایزیشن نیز ویزیت اولیه طی دو تا هفت روز ذکر شده است.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u71",
+            "claim_quote": "در معاینات بعدی، درد و حساسیت مفصل و عضلات، حرکت فک، وضعیت وسیله و تماس‌های آن دوباره بررسی می‌شوند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u73",
+            "claim_quote": "فاصله و ادامهٔ پیگیری بر اساس پاسخ بیمار تعیین می‌شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u74",
+            "claim_quote": "اگر علائم بهبود پیدا نکنند، فیت، تماس‌های وسیله و نحوهٔ استفاده بررسی می‌شوند و تشخیص نیز باید دوباره ارزیابی شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u80",
+            "claim_quote": "در مطالعهٔ قدیمی اوکیسون، پس از هشت هفته درمان اولیه، اسپلینت به‌تدریج اصلاح شد تا وضعیت اکلوژنی اولیه دوباره برقرار شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Each patient's splint was then gradually modified until the patient's original occlusal condition was reestablished.",
+            "source_ref": null,
+            "note": "year/author naming not assessed; 8-week treatment stated in the preceding sentence"
+          },
+          {
+            "id": "u81",
+            "claim_quote": "به این روش برگشت مرحله‌ای (Step-back) گفته می‌شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "terminology (Step-back) not in abstract"
+          },
+          {
+            "id": "u83",
+            "claim_quote": "برگشت مرحله‌ای مطالعهٔ قدیمی و این رویکرد را نباید یک برنامهٔ واحد با مراحل زمانی ثابت در نظر گرفت.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "advice about how to regard the approach; abstract gives no schedule statement"
+          },
+          {
+            "id": "u87",
+            "claim_quote": "در مقابل، اسپلینت استبیلایزیشن در موقعیت CR تنظیم می‌شود؛ به‌گونه‌ای که وقتی کندیل‌ها در موقعیت اسکلتی‌عضلانی پایدار قرار دارند، دندان‌ها تماس‌های یکنواخت و هم‌زمان با اسپلینت داشته باشند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u88",
+            "claim_quote": "پس تبدیل ریپوزیشن به استبیلایزیشن یعنی سطح هدایت‌کننده تغییر کند و تماس‌های روی وسیله دوباره تنظیم شوند، تا فک دیگر به موقعیت جلوآمده هدایت نشود و تماس‌ها در CR برقرار شوند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "inference conclusion not stated in abstract"
+          },
+          {
+            "id": "u89",
+            "claim_quote": "در این شرایط، اسپلینت ریپوزیشن به اسپلینت استبیلایزیشن تبدیل می‌شود تا امکان بازگشت کندیل‌ها به موقعیت اسکلتی‌عضلانی پایدار فراهم شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u92",
+            "claim_quote": "عبارت «بازگشت به اکلوژن اولیه» در مطالعهٔ قدیمی نیز نباید بدون بررسی، معادل رسیدن به CR در نظر گرفته شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u101",
+            "claim_quote": "در مطالعهٔ ۱۹۸۸ اوکیسون، پس از هشت هفته، ۸۰٪ بیماران بدون درد و صدای مفصل بودند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "At the end of that period 80% of the patients were free of joint sound and pain.",
+            "source_ref": null,
+            "note": "the year 1988 is not in the abstract"
+          },
+          {
+            "id": "u102",
+            "claim_quote": "در پیگیری با میانگین دو سال و نیم، ۷۵٪ درد نداشتند، اما صدای مفصل در ۶۶٪ برگشته بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Seventy-five percent of the patients had no joint pain and 66% had a return of joint sounds.",
+            "source_ref": null,
+            "note": "the 2 1/2 year mean follow-up is stated in the next sentence"
+          },
+          {
+            "id": "u103",
+            "claim_quote": "این تفاوت نشان می‌دهد که ماندگاری کاهش درد و ماندگاری حذف کلیک یکسان نیستند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "author's interpretation of the difference; abstract does not state it"
+          },
+          {
+            "id": "u106",
+            "claim_quote": "در طول درمان، تغییر تماس‌های دندانی و اپن‌بایت خلفی باید زیر نظر باشند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          },
+          {
+            "id": "u107",
+            "claim_quote": "کاهش درد، حرکت مناسب فک و عملکرد قابل‌قبول، معیارهای اصلی ارزیابی نتیجه‌اند.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "abstract does not address this claim"
+          }
+        ],
+        "counts": {
+          "matches": 3,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 0,
+          "not_assessable": 28,
+          "author_view": 0,
+          "not_a_claim": 0
+        },
+        "assessable": 3,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": true,
+        "source_conclusion": "Sixty-six percent of the patients did not find the need to seek additional treatment for jaw pain and dysfunction.",
+        "fact_fa": "از ۳ ادعایی که منبع به آن پرداخته‌اند، ۳ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      },
+      {
+        "des_version": "3.4",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u3",
+            "claim_quote": "دیسک مفصل گیجگاهی‌فکی میان کندیل و سطح مفصلی استخوان تمپورال قرار دارد و به حرکت هماهنگ مفصل و توزیع نیرو کمک می‌کند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not describe disc anatomy or function"
+          },
+          {
+            "id": "u4",
+            "claim_quote": "اگر موقعیت دیسک نسبت به کندیل تغییر کند، رابطهٔ این دو هنگام بازوبسته‌شدن دهان ممکن است مختل شود.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not state this disc-condyle relation; it only attributes joint sound to disc position change"
+          },
+          {
+            "id": "u6",
+            "claim_quote": "این اتفاق می‌تواند با کلیک همراه باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Joint sound has been thought to originate from ligament\nproblems, excessive changes on the disc anatomy and joint\nfibers1, and changes on disc position related to mandibular\nmovement.",
+            "source_ref": null,
+            "note": "pointing word read as disc-condyle relation disruption"
+          },
+          {
+            "id": "u7",
+            "claim_quote": "هنگام بسته‌شدن نیز ممکن است دیسک دوباره جابه‌جا شود و کلیک دیگری ایجاد کند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not describe a second click on closing"
+          },
+          {
+            "id": "u8",
+            "claim_quote": "پس «با برگشت» یعنی رابطهٔ دیسک و کندیل هنگام حرکت دوباره برقرار می‌شود، نه اینکه جابه‌جایی برای همیشه برطرف شده باشد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not define reduction or state what it means; only that permanent recapturing was not the goal"
+          },
+          {
+            "id": "u11",
+            "claim_quote": "پس قطع‌شدن کلیک به‌تنهایی نشانهٔ بهبود نیست، به‌ویژه اگر هم‌زمان دهان کمتر از قبل باز شود.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "conclusion that click loss alone is not improvement is not stated; source says click persistence is acceptable if pain and dysfunction resolve"
+          },
+          {
+            "id": "u15",
+            "claim_quote": "اما پیش از ساخت اسپلینت، باید مشخص شود بیمار علاوه بر صدا، درد مفصل یا اختلال عملکرد هم دارد یا خیر.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source gives no advice to determine pain or dysfunction before splint fabrication"
+          },
+          {
+            "id": "u17",
+            "claim_quote": "همچنین، اگر درد منشأ عضلانی داشته باشد و کلیک مفصل بدون درد باشد، درمان جابه‌جایی دیسک لزوماً علت درد بیمار را برطرف نمی‌کند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not address muscular pain with painless click or whether treating displacement resolves pain"
+          },
+          {
+            "id": "u34",
+            "claim_quote": "درد، حساسیت مفصل و عضلات، صدا، احساس گیرکردن یا قفل‌شدن، دامنهٔ حرکات فک و تماس‌های اکلوژنی بررسی و ثبت می‌شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The whole sample was evaluated by means of TMJ and muscle palpation, mandibular AROM, analysis of\nocclusal contacts, joint sounds inspection and Visual Analogue Scale (VAS) for one year; 52 patients composed the final\nsample.",
+            "source_ref": null,
+            "note": "locking sensation not addressed by source; remainder stated"
+          },
+          {
+            "id": "u35",
+            "claim_quote": "این یافته‌ها مبنای مقایسه در جلسات بعد هستند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not state that baseline findings serve as the basis for later comparison as a protocol step"
+          },
+          {
+            "id": "u36",
+            "claim_quote": "وجود درد هنگام حرکت یا لمس مفصل باید از درد عضلانی تفکیک شود.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source gives no advice on separating joint pain from muscle pain"
+          },
+          {
+            "id": "u37",
+            "claim_quote": "همچنین، لازم است مشخص شود شکایت اصلی بیمار درد است، محدودیت عملکرد است یا صرفاً نگرانی از صدای مفصل.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source gives no advice on identifying the main complaint"
+          },
+          {
+            "id": "u46",
+            "claim_quote": "در روش شرح‌داده‌شده در کتاب، اسپلینت از آکریل سخت ساخته می‌شود و تمام قوس دندانی را می‌پوشاند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "unit is about the method in the book, a different source; hard acrylic is not stated here"
+          },
+          {
+            "id": "u68",
+            "claim_quote": "پیگیری اولیه باید زود انجام شود.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source gives no advice on timing of the first follow-up"
+          },
+          {
+            "id": "u69",
+            "claim_quote": "در نمونهٔ بالینی کتاب برای جابه‌جایی دیسک با برگشت، بیمار یک هفته پس از تحویل اسپلینت معاینه شده است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "unit is about a clinical sample in the book, a different source"
+          },
+          {
+            "id": "u70",
+            "claim_quote": "در بخش پیگیری اسپلینت استبیلایزیشن نیز ویزیت اولیه طی دو تا هفت روز ذکر شده است.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "unit is about the book follow-up section, a different source"
+          },
+          {
+            "id": "u71",
+            "claim_quote": "در معاینات بعدی، درد و حساسیت مفصل و عضلات، حرکت فک، وضعیت وسیله و تماس‌های آن دوباره بررسی می‌شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The whole sample was evaluated by means of TMJ and muscle palpation, mandibular AROM, analysis of\nocclusal contacts, joint sounds inspection and Visual Analogue Scale (VAS) for one year; 52 patients composed the final\nsample.",
+            "source_ref": null,
+            "note": "device status not addressed by source; re-evaluation at follow-up visits stated"
+          },
+          {
+            "id": "u73",
+            "claim_quote": "فاصله و ادامهٔ پیگیری بر اساس پاسخ بیمار تعیین می‌شود.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not say follow-up interval is set by patient response"
+          },
+          {
+            "id": "u74",
+            "claim_quote": "اگر علائم بهبود پیدا نکنند، فیت، تماس‌های وسیله و نحوهٔ استفاده بررسی می‌شوند و تشخیص نیز باید دوباره ارزیابی شود.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not address what to do if symptoms do not improve"
+          },
+          {
+            "id": "u83",
+            "claim_quote": "برگشت مرحله‌ای مطالعهٔ قدیمی و این رویکرد را نباید یک برنامهٔ واحد با مراحل زمانی ثابت در نظر گرفت.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "a normative caution about not treating two protocols as one program is not stated; source only reports at-once conversion versus a gradual return proposed in the past"
+          },
+          {
+            "id": "u87",
+            "claim_quote": "در مقابل، اسپلینت استبیلایزیشن در موقعیت CR تنظیم می‌شود؛ به‌گونه‌ای که وقتی کندیل‌ها در موقعیت اسکلتی‌عضلانی پایدار قرار دارند، دندان‌ها تماس‌های یکنواخت و هم‌زمان با اسپلینت داشته باشند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Design of these appliances included bilateral,\nsimultaneous, posterior contacts, anterior and canine\nguidance, with full disocclusion of posterior teeth.",
+            "source_ref": null,
+            "note": "stated half: stabilization splint with bilateral simultaneous posterior contacts; CR position and condylar position are not addressed by the source"
+          },
+          {
+            "id": "u88",
+            "claim_quote": "پس تبدیل ریپوزیشن به استبیلایزیشن یعنی سطح هدایت‌کننده تغییر کند و تماس‌های روی وسیله دوباره تنظیم شوند، تا فک دیگر به موقعیت جلوآمده هدایت نشود و تماس‌ها در CR برقرار شوند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source does not describe how conversion changes the guiding surface or contacts"
+          },
+          {
+            "id": "u89",
+            "claim_quote": "در این شرایط، اسپلینت ریپوزیشن به اسپلینت استبیلایزیشن تبدیل می‌شود تا امکان بازگشت کندیل‌ها به موقعیت اسکلتی‌عضلانی پایدار فراهم شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Protrusive splints were used at nighttime for three to four\nmonths and then converted into stabilization splints,\ncontinuing its use until completion of the one year period.",
+            "source_ref": null,
+            "note": "stated half: repositioning splint converted into stabilization splint; the purpose clause (allowing condyles to return to a stable position) is not addressed"
+          },
+          {
+            "id": "u104",
+            "claim_quote": "در مطالعهٔ Conti نیز ریپوزیشن باعث کاهش زودتر درد شد، اما در پیگیری طولانی‌تر، تفاوت گروه‌ها کمتر شد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A significant (after 15 days) improvement in pain report (VAS) and palpation index was found for group II (p≤0.01).",
+            "source_ref": null,
+            "note": "second half (groups converging later) also stated plainly: groups I and III improved only after 6 months, Table 2 ns at 6 months and 1 year"
+          },
+          {
+            "id": "u105",
+            "claim_quote": "در آن مطالعه، اسپلینت پس از سه تا چهار ماه استفادهٔ شبانه، یک‌باره به استبیلایزیشن تبدیل شد؛ بنابراین، پروتکل آن با برگشت مرحله‌ای مطالعهٔ اوکیسون متفاوت بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In the\npresent study, after a period of initial use of protrusion,\nsplints were transformed into stabilization splints at once,\nalthough a gradual return to an intercuspal position had\nbeen proposed in the past19.",
+            "source_ref": null,
+            "note": "inference judged on conclusion (protocol differs from the gradual return proposed in the past, ref 19 Okeson); source states it"
+          },
+          {
+            "id": "u106",
+            "claim_quote": "در طول درمان، تغییر تماس‌های دندانی و اپن‌بایت خلفی باید زیر نظر باشند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "source gives no advice to monitor contacts or open bite during treatment"
+          },
+          {
+            "id": "u107",
+            "claim_quote": "کاهش درد، حرکت مناسب فک و عملکرد قابل‌قبول، معیارهای اصلی ارزیابی نتیجه‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In the\npresent moment, one can accept disc displacement and\nclicking maintenance after therapy, as long as joint pain and\ndysfunction have been resolved.",
+            "source_ref": null,
+            "note": "source states acceptance depends on pain and dysfunction being resolved"
+          }
+        ],
+        "counts": {
+          "matches": 8,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 19,
+          "not_assessable": 0,
+          "author_view": 0,
+          "not_a_claim": 0
+        },
+        "assessable": 8,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "Irreversible occlusal changes (mainly posterior open bite) and increased muscle pain (caused by the protrusive position) do not seem to be problems with the protocol used in this study.",
+        "fact_fa": "از ۸ ادعایی که منبع به آن پرداخته‌اند، ۸ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۱۹ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
+    ]
   }
 }

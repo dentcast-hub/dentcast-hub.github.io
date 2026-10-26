@@ -972,7 +972,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 40,
+   "count": 41,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -1013,7 +1013,8 @@
     "sharehub/share-38",
     "sharehub/share-39",
     "sharehub/share-40",
-    "sharehub/share-41"
+    "sharehub/share-41",
+    "sharehub/share-42"
    ]
   },
   {
@@ -1030,7 +1031,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 39,
+   "count": 40,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -1070,7 +1071,8 @@
     "sharehub/share-36",
     "sharehub/share-38",
     "sharehub/share-39",
-    "sharehub/share-41"
+    "sharehub/share-41",
+    "sharehub/share-42"
    ]
   },
   {
@@ -3890,6 +3892,34 @@
    ]
   },
   {
+   "key": "tmd",
+   "tag": "#TMD",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "اختلالاتِ گیجگاهی-فکی — طیفِ دردها و ناکارآمدی‌های عضلانی و مفصلیِ سیستمِ فک.",
+   "use_when": "مقاله TMD را تشخیص، افتراق یا درمان کند.",
+   "aliases": [
+    "temporomandibular disorder",
+    "اختلال گیجگاهی فکی",
+    "اختلال مفصل فکی",
+    "تی ام دی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-85",
+    "episodes/episode-86",
+    "episodes/episode-142",
+    "episodes/episode-143",
+    "episodes/episode-144",
+    "episodes/episode-145",
+    "insight/insight-8",
+    "episodes/episode-154",
+    "sharehub/share-42"
+   ]
+  },
+  {
    "key": "آگاهی_درمانی",
    "tag": "#آگاهی_درمانی",
    "domain": "clinical",
@@ -4117,30 +4147,31 @@
    ]
   },
   {
-   "key": "tmd",
-   "tag": "#TMD",
+   "key": "اسپلینت",
+   "tag": "#اسپلینت",
    "domain": "clinical",
    "words": 1,
-   "definition": "اختلالاتِ گیجگاهی-فکی — طیفِ دردها و ناکارآمدی‌های عضلانی و مفصلیِ سیستمِ فک.",
-   "use_when": "مقاله TMD را تشخیص، افتراق یا درمان کند.",
+   "definition": "اسپلینت/اپلاینسِ اکلوزال — وسیله‌ی متحرکِ روی دندان برای مدیریتِ اکلوژن، TMD یا براکسیسم.",
+   "use_when": "مقاله اسپلینتِ اکلوزال را موضوع داشته باشد.",
    "aliases": [
-    "temporomandibular disorder",
-    "اختلال گیجگاهی فکی",
-    "اختلال مفصل فکی",
-    "تی ام دی"
+    "splint",
+    "occlusal appliance",
+    "اسپلینت تراپی",
+    "اپلاینس اکلوزال",
+    "اکلوزال اسپلینت"
    ],
    "variants": [],
    "co_tags": [],
    "count": 8,
    "content_ids": [
-    "episodes/episode-85",
-    "episodes/episode-86",
-    "episodes/episode-142",
-    "episodes/episode-143",
-    "episodes/episode-144",
     "episodes/episode-145",
-    "insight/insight-8",
-    "episodes/episode-154"
+    "insight/insight-14",
+    "insight/insight-16",
+    "insight/insight-26",
+    "notecast/episode-33",
+    "metanotes/meta-18",
+    "sharehub/share-17",
+    "sharehub/share-42"
    ]
   },
   {
@@ -4358,33 +4389,6 @@
     "insight/insight-43",
     "chairside/chairside-32",
     "insight/insight-77"
-   ]
-  },
-  {
-   "key": "اسپلینت",
-   "tag": "#اسپلینت",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "اسپلینت/اپلاینسِ اکلوزال — وسیله‌ی متحرکِ روی دندان برای مدیریتِ اکلوژن، TMD یا براکسیسم.",
-   "use_when": "مقاله اسپلینتِ اکلوزال را موضوع داشته باشد.",
-   "aliases": [
-    "splint",
-    "occlusal appliance",
-    "اسپلینت تراپی",
-    "اپلاینس اکلوزال",
-    "اکلوزال اسپلینت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-145",
-    "insight/insight-14",
-    "insight/insight-16",
-    "insight/insight-26",
-    "notecast/episode-33",
-    "metanotes/meta-18",
-    "sharehub/share-17"
    ]
   },
   {
@@ -11521,6 +11525,28 @@
    ]
   },
   {
+   "key": "داخل_کپسولی",
+   "tag": "#داخل_کپسولی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "اختلالاتِ داخلِ کپسولِ مفصل — جابه‌جاییِ دیسک، کلیک و قفلِ مفصلی.",
+   "use_when": "مقاله مشکلِ داخل‌کپسولی/دیسک را تشخیص یا مرور کند.",
+   "aliases": [
+    "intracapsular",
+    "جابجایی دیسک",
+    "disc displacement",
+    "کلیک مفصل",
+    "internal derangement"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-86",
+    "sharehub/share-42"
+   ]
+  },
+  {
    "key": "داوسون",
    "tag": "#داوسون",
    "domain": "clinical",
@@ -14918,6 +14944,26 @@
    ]
   },
   {
+   "key": "اسپلینت_ریپوزیشن",
+   "tag": "#اسپلینت_ریپوزیشن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "اسپلینت سخت تمام‌قوس که با رمپ هدایت‌کنندهٔ قدامی، فک پایین را هنگام بسته‌شدن به موقعیتی جلوتر هدایت می‌کند تا رابطهٔ دیسک و کندیل مناسب‌تر شود و بار بافت‌های رترو‌دیسکال کم شود؛ در جابه‌جایی دیسک با برگشتِ دردناک به کار می‌رود.",
+   "use_when": "مطلب دربارهٔ اسپلینت ریپوزیشن (پوزیشنینگ) قدامی باشد: اندیکاسیون، تعیین موقعیت درمانی، ساخت، برنامهٔ استفاده یا خروج از درمان با آن.",
+   "aliases": [
+    "anterior repositioning splint",
+    "anterior positioning appliance",
+    "اسپلینت ریپوزیشن قدامی",
+    "repositioning splint"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-42"
+   ]
+  },
+  {
    "key": "اسپلینت_پروتزی",
    "tag": "#اسپلینت_پروتزی",
    "domain": "clinical",
@@ -16998,27 +17044,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-40"
-   ]
-  },
-  {
-   "key": "داخل_کپسولی",
-   "tag": "#داخل_کپسولی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "اختلالاتِ داخلِ کپسولِ مفصل — جابه‌جاییِ دیسک، کلیک و قفلِ مفصلی.",
-   "use_when": "مقاله مشکلِ داخل‌کپسولی/دیسک را تشخیص یا مرور کند.",
-   "aliases": [
-    "intracapsular",
-    "جابجایی دیسک",
-    "disc displacement",
-    "کلیک مفصل",
-    "internal derangement"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "episodes/episode-86"
    ]
   },
   {
@@ -21884,12 +21909,14 @@
   "molar incisor hypomineralization": "mih",
   "biofunctional prosthetic system": "bps",
   "vertical dimension of occlusion": "vdo",
+  "anterior positioning appliance": "اسپلینت ریپوزیشن",
   "basic erosive wear examination": "bewe",
   "computer controlled anesthesia": "تزریق بی درد",
   "prosthetically driven planning": "پلنینگ پروتز محور",
   "retrieval augmented generation": "rag",
   "supportive periodontal therapy": "spt",
   "تشخیص رادیوگرافی با هوش مصنوعی": "هوش مصنوعی رادیوگرافی",
+  "anterior repositioning splint": "اسپلینت ریپوزیشن",
   "endodontically treated teeth": "دندان اندوشده",
   "implant supported prosthesis": "پروتز متکی بر ایمپلنت",
   "previous dentist restoration": "رستوریشن همکار قبلی",
@@ -22002,6 +22029,7 @@
   "zirconium dioxide post": "پست زیرکونیا",
   "اتصال دندان به ایمپلنت": "بریج دندان ایمپلنت",
   "ارسال رنگ به لابراتوار": "ارتباط با لابراتوار",
+  "اسپلینت ریپوزیشن قدامی": "اسپلینت ریپوزیشن",
   "بات تلگرامی هوش مصنوعی": "اکانت اشتراکی",
   "باند به کامپوزیت قدیمی": "ریپیر کامپوزیت",
   "برندینگ شخصی دندانپزشک": "حضور آنلاین دندانپزشک",
@@ -22082,6 +22110,7 @@
   "peripheral seal zone": "psz",
   "prosthetic splinting": "اسپلینت پروتزی",
   "proximal preparation": "باکس پروگزیمال",
+  "repositioning splint": "اسپلینت ریپوزیشن",
   "resin matrix ceramic": "سرامیک هیبرید",
   "saliva contamination": "آلودگی حین باندینگ",
   "self adhesive cement": "سمان سلف ادهزیو",
