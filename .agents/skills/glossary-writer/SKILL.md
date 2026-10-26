@@ -234,4 +234,7 @@ one fixed `.dentcast/PUBLISH-HANDOFF.md` (`tools/dentcast_publish_handoff.py`
 cannot rebind a run to another ID). Draft the cluster together, then publish the
 terms **one after another**, each a complete run with its own three deliveries;
 start the next term only after the previous run's handoff was deleted by its
-verified final delivery. Never batch several terms into one handoff.
+verified final delivery. GitHub Actions pushes that delivery for a v2 run, so
+first `git pull --ff-only` (the local handoff disappears only then), and start
+the next term on a new branch from a freshly fetched `origin/main`. Its
+`content_id` is `glossary/<slug>`. Never batch several terms into one handoff.

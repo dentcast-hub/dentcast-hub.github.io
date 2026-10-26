@@ -491,6 +491,12 @@ already recorded in the latest checkpoint, and never commits or pushes. Failed t
 cut. Preserve work and report the real error; retrying the same unaccepted
 logical delivery does not create another milestone. Never advance by pretending
 a failed push succeeded. The helper does not commit or push automatically.
+After a cut is pushed, the first write is starting the next step (`step --status
+started` or `advance --start-next`); a `record` written before it leaves the local
+handoff different from the delivered one, and the next step and the Stop guard
+then refuse with `PREVIOUS_STEP_HANDOFF_NOT_DELIVERED`. If that was only such a
+record, restore the delivered file (`git restore .dentcast/PUBLISH-HANDOFF.md`),
+start the next step, then record the change again.
 
 `init` records `fixed_three_deliveries_v1` in semantic decisions for new page
 runs, including unassigned intake; it cannot subsequently be removed. Pre-commit

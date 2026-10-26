@@ -124,6 +124,22 @@ class SessionStartHookTests(unittest.TestCase):
                 self.assertEqual(out['decision'], 'block')
                 self.assertIn('GUARD_UNAVAILABLE', out['reason'])
 
+    def test_stop_advice_names_cleanup_commands_only_for_local_cleanup(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('stop_guard', ROOT / 'scripts/publishing-stop-guard.py')
+        guard = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(guard)
+        for code in ('PREVIOUS_STEP_PUSH_NOT_CONFIRMED', 'PREVIOUS_STEP_HANDOFF_NOT_DELIVERED',
+                     'CHECKPOINT_REQUIRED_BEFORE_COMMIT_OR_STOP', 'GUARD_UNAVAILABLE',
+                     'SHALLOW_CLONE_DEEPEN_REQUIRED: run git fetch --deepen=50 origin',
+                     'DELIVERY_3_ON_REMOTE_PULL_REQUIRED: run `git pull --ff-only`'):
+            with self.subTest(code=code):
+                self.assertNotIn('confirm-cleanup', guard.advice(code))
+        self.assertIn('git restore .dentcast/PUBLISH-HANDOFF.md', guard.advice('PREVIOUS_STEP_HANDOFF_NOT_DELIVERED'))
+        self.assertIn('stage-delivery', guard.advice('PREVIOUS_STEP_PUSH_NOT_CONFIRMED'))
+        self.assertEqual(guard.advice('SHALLOW_CLONE_DEEPEN_REQUIRED: run git fetch --deepen=50 origin'), '')
+        self.assertIn('restore-cleanup', guard.advice('CLEANUP_DELIVERY_PENDING'))
+
     def test_outside_git_is_silent_and_non_failing(self):
         with tempfile.TemporaryDirectory() as folder:
             (command,) = session_start(CONFIGS[0])

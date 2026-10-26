@@ -68,6 +68,28 @@ def active(root):
     return bool(path) and (Path(path) if Path(path).is_absolute() else root / path).exists()
 
 
+# Cleanup commands are named only for an interrupted local cleanup: a v2 run's
+# delivery 3 and cleanup happen in GitHub Actions, never locally.
+ADVICE = (
+    ("PREVIOUS_STEP_PUSH_NOT_CONFIRMED", ". At a fixed cut: stage-delivery, then commit and push that delivery "
+     "once (or retry the failed push); then rerun guard --phase stop."),
+    ("PREVIOUS_STEP_HANDOFF_NOT_DELIVERED", ". The local handoff changed after the pushed cut: if that was only a "
+     "later record, restore the delivered file (git restore .dentcast/PUBLISH-HANDOFF.md), start the next step, "
+     "then record again; otherwise inspect."),
+    ("CLEANUP_", ". Interrupted local cleanup: confirm-cleanup after the cleanup push, or restore-cleanup if "
+     "that delivery failed."),
+)
+
+
+def advice(code):
+    if "git pull --ff-only" in code or "git fetch --deepen" in code:
+        return ""  # the code already names the exact command
+    for prefix, text in ADVICE:
+        if code.startswith(prefix):
+            return text
+    return ". Run guard --phase stop and record the actual state."
+
+
 def main(argv=None):
     cursor = "--cursor" in (sys.argv[1:] if argv is None else argv)
     try:
@@ -93,11 +115,7 @@ def main(argv=None):
         if not blocked and not has_handoff(root):
             return 0  # guard-internal failure with no active handoff: allow
         code = str(exc) if blocked else "GUARD_UNAVAILABLE"
-        if "git pull --ff-only" in code:
-            reason = "Publication handoff needs review: " + code
-        else:
-            reason = ("Publication handoff needs review: " + code + ". Run guard --phase stop, record actual state, "
-                      "or confirm-cleanup/restore-cleanup for interrupted cleanup.")
+        reason = "Publication handoff needs review: " + code + advice(code)
         if cursor:
             print(json.dumps({"followup_message": reason}))
         elif payload.get("stop_hook_active") is True:
