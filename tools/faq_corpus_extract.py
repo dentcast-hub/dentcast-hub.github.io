@@ -11,8 +11,17 @@ the pages. tools/build_quiz_index.mjs and tools/build_flashcards_index.mjs
 read this file instead of walking page HTML.
 
 Run from the repo root:  python3 tools/faq_corpus_extract.py
+
+DANGER, since the 2026-08-11 strip: the pages no longer carry this schema, so
+plus/faq-corpus.json is now the ONLY copy of every page's FAQ and flashcards
+and a re-run would rebuild it from nothing. The script therefore refuses to
+write when the result would drop or change any content id the existing file
+holds (it prints which), and writes only with --force — which is never part
+of a publication. --dry-run reports without writing.
 """
+import argparse
 import json
+import sys
 import re
 from datetime import date
 from pathlib import Path
@@ -74,7 +83,20 @@ def extract_nodes(html: str):
     return faq_pages, defined_term_sets
 
 
-def main():
+def lost_entries(existing: dict, fresh: dict) -> tuple[list, list]:
+    """(content ids the rewrite would drop, content ids it would change)."""
+    dropped = sorted(k for k in existing if k not in fresh)
+    changed = sorted(k for k in existing if k in fresh and fresh[k] != existing[k])
+    return dropped, changed
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--force", action="store_true",
+                    help="write even if existing corpus entries would be dropped or changed")
+    ap.add_argument("--dry-run", action="store_true", help="report only; write nothing")
+    args = ap.parse_args(argv)
     by_content = {}
     total_faq_pages = total_questions = 0
     total_dts = total_cards = 0
@@ -112,6 +134,31 @@ def main():
     }
 
     out_path = ROOT / "plus" / "faq-corpus.json"
+    existing = {}
+    if out_path.exists():
+        try:
+            existing = json.loads(out_path.read_text(encoding="utf-8")).get("byContent", {}) or {}
+        except (ValueError, AttributeError) as exc:
+            if not args.force:
+                print(f"REFUSED: plus/faq-corpus.json is unreadable ({exc}); not overwriting it. "
+                      "Restore it from git; --force overwrites.", file=sys.stderr)
+                return 1
+    dropped, changed = lost_entries(existing, out["byContent"])
+    if dropped or changed:
+        print(f"REFUSED: rebuilding plus/faq-corpus.json from the pages would drop "
+              f"{len(dropped)} and change {len(changed)} of its {len(existing)} existing "
+              f"entr{'y' if len(existing) == 1 else 'ies'} (the pages no longer carry the FAQ/"
+              f"flashcards schema — the corpus is the only copy).", file=sys.stderr)
+        for k in (dropped + changed)[:10]:
+            print(f"  {'dropped' if k in dropped else 'changed'}: {k}", file=sys.stderr)
+        if not args.force:
+            print("Nothing written. Edit the page's entry in plus/faq-corpus.json directly "
+                  "(step 4.12); --force overwrites the corpus.", file=sys.stderr)
+            return 1
+        print("--force given: overwriting anyway.", file=sys.stderr)
+    if args.dry_run:
+        print(f"[dry-run] would write {len(by_content)} pages; nothing written.")
+        return 0
     out_path.write_text(
         json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
@@ -126,7 +173,8 @@ def main():
     print(
         f"  DefinedTermSet nodes: {total_dts}, cards: {total_cards}"
     )
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

@@ -762,6 +762,176 @@ def pulse_baseline(rep):
     return home
 
 
+_EXAM_VALIDATOR = []
+_BANK_CACHE = {}
+
+
+def exam_validator():
+    """tools/validate_exam_questions.py as a module (its git baseline and
+    append-only comparison), or None where it is not present (synthetic
+    roots in tests copy only this file)."""
+    if not _EXAM_VALIDATOR:
+        mod = None
+        path = ROOT / "tools" / "validate_exam_questions.py"
+        if path.exists():
+            import importlib.util
+            spec = importlib.util.spec_from_file_location("_dc_validate_exam_questions", path)
+            mod = importlib.util.module_from_spec(spec)
+            try:
+                spec.loader.exec_module(mod)
+            except Exception:  # noqa: BLE001 — a broken helper must not crash the gate
+                mod = None
+        _EXAM_VALIDATOR.append(mod)
+    return _EXAM_VALIDATOR[0]
+
+
+def _cid_of(key):
+    return str(key or "").strip().lstrip("/").removesuffix(".html")
+
+
+def _by_key(field, key):
+    def extract(data):
+        rows = data.get(field) if field and isinstance(data, dict) else data
+        if not isinstance(rows, list):
+            raise ValueError(f'expected a list{" under " + field if field else ""}')
+        return {_cid_of(key(e)): e for e in rows if isinstance(e, dict) and key(e)}
+    return extract
+
+
+def _top_dict(field=None):
+    def extract(data):
+        d = data.get(field) if field else data
+        if not isinstance(d, dict):
+            raise ValueError(f'expected an object{" under " + field if field else ""}')
+        return d
+    return extract
+
+
+def _pathway_steps(data):
+    if not isinstance(data, list):
+        raise ValueError("expected a list of pathways")
+    return {p.get("id"): [s.get("content_id") for s in p.get("steps", []) if isinstance(s, dict)]
+            for p in data if isinstance(p, dict) and p.get("id")}
+
+
+# Bank-like files a publication appends to. (path, step, extractor, removal
+# is a FAIL?) — removing another publication's entry FAILs; changing one
+# WARNs (a founder-asked backfill or a cross-link pass is legitimate, but it
+# should be seen). plus/challenges.json is regenerated from the pages and
+# plus/pathways.json is re-curated by the founder, so a disappearance there
+# WARNs. plus/exam-questions.json has its own row-level rules
+# (tools/validate_exam_questions.py) and is checked through it.
+BANK_FILES = [
+    ("dentcast-brain.json", "F brain kept", _by_key(None, entry_url), True),
+    ("dentcast.json", "F catalogue kept", _by_key(None, lambda e: e.get("page_url")), True),
+    ("glossary/glossary.json", "F glossary kept", _by_key("glossary", lambda e: e.get("url") or e.get("slug")), True),
+    ("litecast/lite-glossary.json", "F litecast kept", _by_key("LightGlossary", lambda e: e.get("page_url") or e.get("id")), True),
+    ("plus/faq-corpus.json", "F faq-corpus kept", _top_dict("byContent"), True),
+    ("plus/des-scores.json", "F des-scores kept", _top_dict(), True),
+    (".dentcast/des-exemptions.json", "F des-exemptions kept", _top_dict(), True),
+    ("plus/challenges.json", "F challenges kept", _top_dict("byContent"), False),
+]
+
+
+def _bank_pair(rel):
+    """(baseline text or None, label, warning, current text or None), cached
+    for the life of the process (a --all sweep compares each file once)."""
+    if rel not in _BANK_CACHE:
+        v = exam_validator()
+        old, label, warning = v.git_baseline(rel, ROOT) if v else (None, "none", None)
+        _BANK_CACHE[rel] = (old, label, warning, read(rel) if exists(rel) else None)
+    return _BANK_CACHE[rel]
+
+
+def _list_keys(keys, n=4):
+    keys = sorted(map(str, keys))
+    return ", ".join(keys[:n]) + (f" (+{len(keys) - n} more)" if len(keys) > n else "")
+
+
+def check_bank_preservation(rep, content_id):
+    """Phase F: a publication only ADDS to the shared data files — nothing it
+    commits may delete or rewrite another publication's entry. Compared on
+    parsed JSON keyed by content id against the branch's merge-base with
+    origin/main, so a re-indent is not a change and the page's own entry may
+    change freely."""
+    v = exam_validator()
+    if v is None:
+        rep.skip("F data kept", "tools/validate_exam_questions.py not present — prior-data check not run")
+        return
+    # plus/exam-questions.json: row-level append-only rules.
+    old, label, warning, cur = _bank_pair(v.REL)
+    if warning:
+        rep.warn("4.12-ب bank", f"exam bank: {warning}", "git fetch origin main")
+    if old is not None:
+        if cur is None:
+            rep.fail("4.12-ب bank", f"plus/exam-questions.json deleted (it existed at {label})",
+                     "restore it: git checkout origin/main -- plus/exam-questions.json")
+        else:
+            try:
+                errors, warns = v.compare_banks(json.loads(old), json.loads(cur), content_id)
+            except ValueError as exc:
+                errors, warns = [f"not valid JSON: {exc}"], []
+            for w in warns:
+                rep.warn("4.12-ب bank", w)
+            rep.check(not errors, "4.12-ب bank",
+                      f"existing exam questions unchanged since {label} (append-only)",
+                      "plus/exam-questions.json lost or changed existing questions: "
+                      + "; ".join(errors[:4]) + (f" (+{len(errors) - 4} more)" if len(errors) > 4 else ""),
+                      f"restore the existing rows from {label}; only append new ones "
+                      "(python3 tools/validate_exam_questions.py)")
+    for rel, step, extract, removal_fails in BANK_FILES:
+        old, label, warning, cur = _bank_pair(rel)
+        if warning:
+            rep.warn(step, f"{rel}: {warning}", "git fetch origin main")
+        if old is None:
+            continue
+        try:
+            before = extract(json.loads(old))
+        except ValueError:
+            continue  # the baseline itself was not this shape: nothing to protect
+        if cur is None:
+            rep.fail(step, f"{rel} deleted (it existed at {label})", f"restore it from {label}")
+            continue
+        try:
+            after = extract(json.loads(cur))
+        except ValueError as exc:
+            rep.fail(step, f"{rel} structure damaged: {exc}", f"restore its structure from {label}")
+            continue
+        removed = [k for k in before if k not in after]
+        changed = [k for k in before if k in after and k != content_id and after[k] != before[k]]
+        if removed:
+            msg = (f"{rel}: {len(removed)} existing entr{'y' if len(removed) == 1 else 'ies'} "
+                   f"removed since {label}: {_list_keys(removed)}")
+            fix = f"restore them from {label} — a publication only adds its own entry"
+            rep.fail(step, msg, fix) if removal_fails else rep.warn(step, msg, fix)
+        if changed:
+            rep.warn(step, f"{rel}: {len(changed)} other publication(s)' entries changed since "
+                           f"{label}: {_list_keys(changed)} — confirm each was asked for")
+        if not removed and not changed:
+            rep.ok(step, f"{rel}: every entry from {label} kept")
+    old, label, warning, cur = _bank_pair("plus/pathways.json")
+    if old is not None and cur is not None:
+        try:
+            before, after = _pathway_steps(json.loads(old)), _pathway_steps(json.loads(cur))
+        except ValueError as exc:
+            rep.fail("F pathways kept", f"plus/pathways.json structure damaged: {exc}",
+                     f"restore it from {label}")
+            return
+        gone = [p for p in before if p not in after]
+        dropped = [f"{p}:{c}" for p, steps in before.items() if p in after
+                   for c in steps if c not in after[p]]
+        if gone or dropped:
+            rep.warn("F pathways kept", f"plus/pathways.json since {label}: "
+                     + (f"pathway(s) removed {_list_keys(gone)}; " if gone else "")
+                     + (f"step(s) removed {_list_keys(dropped)}" if dropped else "")
+                     + " — a publication only inserts its own step; confirm a founder curation pass")
+        else:
+            rep.ok("F pathways kept", f"plus/pathways.json: every pathway and step from {label} kept")
+    elif old is not None and cur is None:
+        rep.fail("F pathways kept", f"plus/pathways.json deleted (it existed at {label})",
+                 f"restore it from {label}")
+
+
 def check_pulse(rep, home, url, sweep=False, previous_home=None):
     items = pulse_items(home)
     def links(item):
@@ -1896,6 +2066,9 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                           "after the part before it",
                           f"python3 tools/pathway_place.py --insert {content_id} "
                           f"--pathway evidence-literacy --after <previous part>")
+
+    # ---------------- prior data preserved (Phase F) ----------------
+    check_bank_preservation(rep, content_id)
 
     # ---------------- version stamp (step 7, always last) ----------------
     want = content_version()
