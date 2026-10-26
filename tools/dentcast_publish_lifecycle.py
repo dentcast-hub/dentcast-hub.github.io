@@ -769,7 +769,7 @@ def bind(root, expected, content_id, category, targets, evidence):
         old = state["publication"]
         h.require(old["content_id"] == "unassigned" and h.canonical_category(old["category"]) == "pending",
                   "IDENTITY_ALREADY_BOUND")
-        category = h.canonical_category(category)
+        category = h.require_category_input(category)
         h.require(h.nonempty(evidence) and category not in ("pending", "")
                   and content_id != "unassigned" and h.nonempty(content_id), "VERIFIED_INTAKE_IDENTITY_REQUIRED")
         # A founder-requested external action during intake (e.g. a Drive

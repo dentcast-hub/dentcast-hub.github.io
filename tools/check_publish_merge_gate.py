@@ -172,8 +172,11 @@ def own_paths_after(root, commit, main_ref=None):
 # on the current tree, so the file stays checked at its delivery commit.
 RECOMPUTED = (
     re.compile(r"dentcast-assets-[0-9a-z]+"),
-    re.compile(r"\?v=[0-9A-Za-z._-]+"),
-    re.compile(r"(<!-- COUNTER:[A-Z_]+:START -->).*?(<!-- COUNTER:[A-Z_]+:END -->)", re.DOTALL),
+    # Only the stamped asset/data references: a bare "?v=" would also hide a
+    # changed YouTube id (watch?v=...) or another authored query value.
+    re.compile(r"(\.(?:js|css|json)\?v=)[0-9A-Za-z._-]+"),
+    # A counter body is a number; any other text inside the markers stays an edit.
+    re.compile(r"(<!-- COUNTER:([A-Z_]+):START -->)[0-9۰-۹٬,.+]*(<!-- COUNTER:\2:END -->)"),
 )
 
 

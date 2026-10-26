@@ -151,13 +151,15 @@ class EditorialSecondCutTests(unittest.TestCase):
         self.assertEqual(h.canonical_category("Glossary"), "glossary")
         self.assertEqual(h.canonical_category("دانشنامه"), "glossary")
         self.assertEqual(h.canonical_category("Paper Only"), "paper-only")
-        self.assertEqual(h.canonical_category("Insight"), "insight")
-        # Multi-word categories take the folder slug form; stored spellings stay.
-        self.assertEqual(h.canonical_category("Plak Sefr"), "plak-sefr")
+        # Known names map to the brain type the receipts and reports use.
+        self.assertEqual(h.canonical_category("Insight"), "clinical")
+        self.assertEqual(h.canonical_category("Plak Sefr"), "plak_sefr")
         self.assertEqual(h.canonical_category("plak_sefr"), "plak_sefr")
         self.assertEqual(lc.technical_report_path(
             {"category": "plak sefr", "content_id": "plak-sefr/plak1-10"}),
-            ".dentcast/publication-reports/plak-sefr-plak1-10.md")
+            ".dentcast/publication-reports/plak_sefr-plak1-10.md")
+        # Unknown multi-word names still take the folder slug form.
+        self.assertEqual(h.canonical_category("New Section"), "new-section")
         self.assertEqual(h.publication_category(
             {"category": "page", "content_id": "litecast/lite-CAST40"}), "litecast")
 

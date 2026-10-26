@@ -350,19 +350,52 @@ def nonempty(value):
     return isinstance(value, str) and bool(value.strip())
 
 
-# Route exceptions key on one spelling: LiteCast, lite-cast, لایت‌کست -> litecast.
-CATEGORY_ALIASES = {"litecast": "litecast", "لایتکست": "litecast",
-                    "glossary": "glossary", "دانشنامه": "glossary",
-                    "paperonly": "paper-only", "pending": "pending"}
+# Every category spelling an agent may type maps to the brain `type` that
+# Phase B Question 1 offers and that existing receipts and report names use
+# («اینسایت»/Insight -> clinical, «پلاک صفر» -> plak_sefr, «اپیزود» -> dentcast);
+# route exceptions key on the same value (LiteCast, lite-cast, لایت‌کست -> litecast).
+_CATEGORY_NAMES = {
+    "clinical": ("clinical", "insight", "insights", "clinicalinsight", "اینسایت", "اینسایتبالینی"),
+    "chairside": ("chairside", "چیرساید"),
+    "litecast": ("litecast", "لایتکست"),
+    "sharehub": ("sharehub", "شیرهاب"),
+    "plak_sefr": ("plaksefr", "پلاکصفر"),
+    "promptologist": ("promptologist", "پرامپتولوژیست"),
+    "meta": ("meta", "metanote", "metanotes", "متانوت"),
+    "notecast": ("notecast", "نوتکست"),
+    "dentcast_plus": ("dentcastplus", "dentcast+", "دنتکستپلاس", "دنتکست+"),
+    "taraz": ("taraz", "تراز"),
+    "dentcast": ("dentcast", "episode", "episodes", "اپیزود", "دنتکست"),
+    "glossary": ("glossary", "دانشنامه"),
+    "paper-only": ("paperonly",),
+    "pending": ("pending",),
+}
+CATEGORY_ALIASES = {name: canonical for canonical, names in _CATEGORY_NAMES.items() for name in names}
+# «چالش» is the Question 4.9 Challenge flag (checkpoint C.4.14), not a category:
+# a Challenge page lives in its section folder and uses that section's type.
+CHALLENGE_NAMES = ("چالش", "challenge")
+
+
+def _category_key(value):
+    key = re.sub(r"[\s_\-\u200c\u200d\u0640]+", "", value).casefold()
+    return key.replace("\u064a", "\u06cc").replace("\u0643", "\u06a9")
 
 
 def canonical_category(value):
     if not isinstance(value, str):
         return value
-    key = re.sub(r"[\s_\-‌‍]+", "", value).casefold()
-    # "Plak Sefr" -> "plak-sefr" (the folder slug form); existing stored
-    # spellings such as "plak_sefr" are left unchanged.
-    return CATEGORY_ALIASES.get(key, re.sub(r"\s+", "-", value.strip()).casefold())
+    # Unknown spellings keep the folder slug form; stored values that predate
+    # the alias table (e.g. «چالش» in an in-flight handoff) stay stable.
+    return CATEGORY_ALIASES.get(_category_key(value), re.sub(r"\s+", "-", value.strip()).casefold())
+
+
+def require_category_input(value):
+    """A newly typed category (init/bind): refuse the Challenge flag by name."""
+    require(not (isinstance(value, str) and _category_key(value) in CHALLENGE_NAMES),
+            "CHALLENGE_IS_NOT_A_CATEGORY: «چالش» is the Question 4.9 Challenge flag (C.4.14 completed), not a "
+            "category; use the type of the section the Challenge page lives in (insight/ -> clinical, "
+            "chairside/ -> chairside, ...)")
+    return canonical_category(value)
 
 
 def publication_category(publication):
@@ -397,14 +430,15 @@ def require_content_id(publication):
 TOOL_FILES = ("tools/dentcast_publish_handoff.py", "tools/dentcast_publish_lifecycle.py")
 
 
-def tool_staleness_warnings():
-    """Local refs only (no fetch): warn when this checkout's tool predates origin/main's.
+def tool_staleness_warnings(root=None):
+    """Local refs only (no fetch): warn when the --repo checkout's tool predates origin/main's.
 
     A publication branch legitimately starts from origin/main; it is stale only
     when origin/main's latest change to a tool file is not in HEAD and the file
-    here differs from origin/main's.
+    there differs from origin/main's. `root` is the publication checkout
+    (--repo), not necessarily the checkout this script was started from.
     """
-    root = Path(__file__).resolve().parents[1]
+    root = Path(root) if root is not None else Path(__file__).resolve().parents[1]
     ref = "refs/remotes/origin/main"
     if text_git(root, "rev-parse", "--verify", "--quiet", ref + "^{commit}", optional=True) is None:
         return []
@@ -415,10 +449,20 @@ def tool_staleness_warnings():
             continue
         last = text_git(root, "log", "-1", "--format=%H", ref, "--", name, optional=True)
         if last and git(root, "merge-base", "--is-ancestor", last, "HEAD", optional=True) is None:
-            return ["TOOL_OLDER_THAN_ORIGIN_MAIN: " + name + " differs from origin/main and HEAD lacks "
-                    "its latest change; before starting a publication move the still-empty session branch "
-                    "onto origin/main (git switch -C <current-branch> --no-track origin/main; a cloud ccr-* "
-                    "branch already exists) or branch anew (git switch -c <branch> --no-track origin/main)"]
+            head = "TOOL_OLDER_THAN_ORIGIN_MAIN: " + name + " differs from origin/main and HEAD lacks its latest change; "
+            # `switch -C` resets the branch: offer it only when that discards nothing.
+            ahead = text_git(root, "rev-list", "--count", ref + "..HEAD", optional=True)
+            current = text_git(root, "symbolic-ref", "--quiet", "--short", "HEAD", optional=True)
+            if ahead != "0" or not current:
+                return [head + "this branch holds " + (ahead or "unknown") + " commit(s) not on origin/main, "
+                        "so do not reset it (no git switch -C / reset --hard): bring the tools in with "
+                        "git merge --no-edit origin/main, or ask the user before starting on a new branch "
+                        "(git switch -c <branch> --no-track origin/main)"]
+            return [head + "before starting a publication move this still-empty session branch onto "
+                    "origin/main (git switch -C <current-branch> --no-track origin/main, here: git switch -C "
+                    + current + " --no-track origin/main; a cloud ccr-* branch already exists; uncommitted "
+                    "changes are kept or the switch refuses) or branch anew (git switch -c <branch> "
+                    "--no-track origin/main)"]
     return []
 
 
@@ -1512,7 +1556,8 @@ def main(argv=None):
             result = lifecycle.delivery_plan(root, args.base_ref, args.max_blob_bytes)
         elif args.command == "plan":
             result = {"status": "plan_template", "steps": lifecycle.plan(args.paper_only), "publication_completed": False}
-            warnings = tool_staleness_warnings()
+            repo_top = text_git(Path(args.repo).resolve(), "rev-parse", "--show-toplevel", optional=True)
+            warnings = tool_staleness_warnings(repo_top or None)
             if warnings:
                 result["warnings"] = warnings
         elif args.command == "inspect":
@@ -1553,7 +1598,7 @@ def main(argv=None):
             require(path.stat().st_size <= LIMIT, "INPUT_TOO_LARGE")
             publication = decode_json(path.read_text(encoding="utf-8"))
             if args.command == "init" and isinstance(publication, dict):
-                publication["category"] = canonical_category(publication.get("category"))
+                publication["category"] = require_category_input(publication.get("category"))
             lifecycle.require_plan(publication)
             if args.command == "init":
                 require(all(s["status"] == "pending" for s in publication["steps"]), "INIT_REQUIRES_PENDING_PLAN")
@@ -1578,7 +1623,7 @@ def main(argv=None):
                           expected=getattr(args, "expected_sha256", None),
                           note=getattr(args, "reconcile_note", None), check_remote=args.check_remote)
             if args.command == "init":
-                warnings = tool_staleness_warnings()
+                warnings = tool_staleness_warnings(root)
                 if warnings:
                     result["warnings"] = warnings
         print(json.dumps(result, ensure_ascii=True, indent=2))

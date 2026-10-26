@@ -115,7 +115,7 @@ class StaleToolHintTests(unittest.TestCase):
     def test_hint_moves_an_existing_session_branch_without_tracking_main(self):
         text = (ROOT / "tools/dentcast_publish_handoff.py").read_text(encoding="utf-8")
         start = text.index('"TOOL_OLDER_THAN_ORIGIN_MAIN: "')
-        hint = text[start:text.index("]", start)]
+        hint = text[start:text.index("\n    return []", start)]
         self.assertIn("git switch -C <current-branch> --no-track origin/main", hint)
         self.assertIn("--no-track", (ROOT / ".dentcast/workflows/publish-checkpoints.md").read_text(encoding="utf-8"))
 
