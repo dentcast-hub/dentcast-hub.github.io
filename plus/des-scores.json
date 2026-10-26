@@ -45585,5 +45585,215 @@
         "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       }
     ]
+  },
+  "episodes/episode-131": {
+    "scored_at": "2026-10-26",
+    "sources": [
+      {
+        "des_version": "3.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Impact of lateral occlusion schemes: A systematic review",
+          "authors": "Abduo J, Tennant M",
+          "year": 2015,
+          "journal": "The Journal of Prosthetic Dentistry",
+          "doi": "10.1016/j.prosdent.2014.04.032"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "Systematic review (narrative synthesis, no meta-analysis) of non-randomized clinical studies: cross-sectional comparative studies and prospective/retrospective clinical outcome studies (THERAPY SR/MA row, 100, via Step 2 routing)",
+          "evidence_quote": "This systematic review determined that the lateral occlusion scheme has an impact on muscle activity, chewing, and mandibular movements."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غیاب: کل Material and Methods (Search strategy and selection criteria → Studies classification) و Results و Discussion خوانده شد؛ هیچ اشاره‌ای به protocol، ثبت (PROSPERO یا registration) یا پروتکل ازپیش‌تعریف‌شده نیست. تنها «predefined inclusion criteria» آمده که پروتکل ثبت‌شده نیست."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "Scholar, and Cochrane Central Registrar of Controlled\nTrials. Through the PubMed database, the Boolean\noperator was used",
+              "note": "دست‌کم دو بانک کتاب‌شناختی جستجو شده (PubMed/MEDLINE و Cochrane CENTRAL، به‌علاوه‌ی Google Scholar)، با کلیدواژه‌های مشخص و جستجوی دستی فهرست منابع؛ آستانه‌ی 3b-i (کمتر از ۲ بانک) برقرار نیست."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "some_concerns",
+              "evidence_quote": "The electronic search yielded a total of 680 articles. After\nanalysis of title relevance, 621 articles were excluded.\nScreening of abstracts excluded an additional 24 articles.\nThus, 35 articles were suitable for full-text analysis.",
+              "note": "فهرست مطالعات full-text حذف‌شده با دلیل هر یک ارائه نشده (۳۵ full-text، ۱۶ واردشده، ۱۹ حذف‌شده بی‌نام)؛ اما هم شرح غربالگری با شمارش (a) و هم معیارهای ورود صریح در Table 1 (b) گزارش شده‌اند، پس طبق 3b-iii بند ۲."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غیاب: Material and Methods (search strategy → study selection در ۳ مرحله → studies classification) و Results (Literature search → Description of studies → Outcome) و Discussion خوانده شد؛ هیچ مرحله‌ی ارزیابی کیفیت یا خطر سوگیری مطالعات واردشده و هیچ واژه‌ی quality/bias/appraisal/risk of bias درباره‌ی مطالعات نیامده؛ فقط استخراج داده («Only relevant information ... was extracted») گزارش شده است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غیاب: هیچ بخش statistical analysis یا روش سنتز در Material and Methods نیست؛ Results و Discussion فقط روایت مطالعه‌به‌مطالعه و جداول ۲ تا ۵ است؛ هیچ meta-analysis، مدل pooling، آزمون heterogeneity یا روش ترکیب نتایج توصیف نشده است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غیاب: Material and Methods، Results، Discussion و Conclusions خوانده شد؛ هیچ ارزیابی publication bias (funnel plot، آزمون Egger یا بحث کیفی آن) و هیچ واژه‌ی publication bias یا small-study effect در متن نیست."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 8,
+            "evidence_quote": "",
+            "note": "غیاب: صفحه‌ی اول (عنوان، نویسندگان، affiliations با پانویس a و b)، کل متن تا Conclusions، فهرست References و بلوک Corresponding author و Copyright خوانده شد؛ هیچ بیانیه‌ی conflict of interest، funding، support یا disclosure (با توجه به ligatureها) وجود ندارد. points = max(1, round_half_up(8×100÷100)) = 8."
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "مطالعه RCT نیست (systematic review)؛ این ردیف کاربرد ندارد."
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "CGO and GFO\nappear to have a satisfactory outcome for composite resin\nrestorations and for ﬁxed prostheses for up to 5 years.",
+            "note": "ادعای longevity خود review به بازه‌ی گزارش‌شده محدود شده («up to 5 years»؛ و برای composite «over a period of 3 to 6 years»)، که از آستانه‌ی ۳ سال کوتاه‌تر نیست؛ متن review هیچ‌جا پیگیری مطالعات longevity را کوتاه نسبت به ادعا توصیف نمی‌کند. پیگیری‌های ۱ تا ۳ ماهه مربوط به سازگاری و EMG است نه survival. ردیف فعال نمی‌شود."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 22,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "این مقاله با DES برابر ۲۲ در باند D (شواهد ضعیف) و نوع پرسش THERAPY ارزیابی شد.",
+        "interpretation_fa": "یک systematic review از مطالعات غیرتصادفی است که پروتکل ثبت‌شده، ارزیابی خطر سوگیری مطالعات و روش سنتز ندارد و بیانیه‌ی conflict of interest هم ندارد. نتیجه‌ی آن، یعنی برابری CGO و GFO در longevity و راحتی بیمار، جمع‌بندی روایی از مطالعات cross-sectional و case series است. برای انتخاب lateral occlusion scheme در پروتز ثابت، مرور مفیدی است اما قطعیت پایینی دارد."
+      }
+    ]
+  },
+  "episodes/episode-132": {
+    "scored_at": "2026-10-26",
+    "sources": [
+      {
+        "des_version": "3.4",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Impact of lateral occlusion schemes: A systematic review",
+          "authors": "Abduo J, Tennant M",
+          "year": 2015,
+          "journal": "The Journal of Prosthetic Dentistry",
+          "doi": "10.1016/j.prosdent.2014.04.032"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "Systematic review (narrative synthesis, no meta-analysis) of non-randomized clinical studies: cross-sectional comparative studies and prospective/retrospective clinical outcome studies (THERAPY SR/MA row, 100, via Step 2 routing)",
+          "evidence_quote": "This systematic review determined that the lateral occlusion scheme has an impact on muscle activity, chewing, and mandibular movements."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غیاب: کل Material and Methods (Search strategy and selection criteria → Studies classification) و Results و Discussion خوانده شد؛ هیچ اشاره‌ای به protocol، ثبت (PROSPERO یا registration) یا پروتکل ازپیش‌تعریف‌شده نیست. تنها «predefined inclusion criteria» آمده که پروتکل ثبت‌شده نیست."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "Scholar, and Cochrane Central Registrar of Controlled\nTrials. Through the PubMed database, the Boolean\noperator was used",
+              "note": "دست‌کم دو بانک کتاب‌شناختی جستجو شده (PubMed/MEDLINE و Cochrane CENTRAL، به‌علاوه‌ی Google Scholar)، با کلیدواژه‌های مشخص و جستجوی دستی فهرست منابع؛ آستانه‌ی 3b-i (کمتر از ۲ بانک) برقرار نیست."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "some_concerns",
+              "evidence_quote": "The electronic search yielded a total of 680 articles. After\nanalysis of title relevance, 621 articles were excluded.\nScreening of abstracts excluded an additional 24 articles.\nThus, 35 articles were suitable for full-text analysis.",
+              "note": "فهرست مطالعات full-text حذف‌شده با دلیل هر یک ارائه نشده (۳۵ full-text، ۱۶ واردشده، ۱۹ حذف‌شده بی‌نام)؛ اما هم شرح غربالگری با شمارش (a) و هم معیارهای ورود صریح در Table 1 (b) گزارش شده‌اند، پس طبق 3b-iii بند ۲."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غیاب: Material and Methods (search strategy → study selection در ۳ مرحله → studies classification) و Results (Literature search → Description of studies → Outcome) و Discussion خوانده شد؛ هیچ مرحله‌ی ارزیابی کیفیت یا خطر سوگیری مطالعات واردشده و هیچ واژه‌ی quality/bias/appraisal/risk of bias درباره‌ی مطالعات نیامده؛ فقط استخراج داده («Only relevant information ... was extracted») گزارش شده است."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غیاب: هیچ بخش statistical analysis یا روش سنتز در Material and Methods نیست؛ Results و Discussion فقط روایت مطالعه‌به‌مطالعه و جداول ۲ تا ۵ است؛ هیچ meta-analysis، مدل pooling، آزمون heterogeneity یا روش ترکیب نتایج توصیف نشده است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غیاب: Material and Methods، Results، Discussion و Conclusions خوانده شد؛ هیچ ارزیابی publication bias (funnel plot، آزمون Egger یا بحث کیفی آن) و هیچ واژه‌ی publication bias یا small-study effect در متن نیست."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 8,
+            "evidence_quote": "",
+            "note": "غیاب: صفحه‌ی اول (عنوان، نویسندگان، affiliations با پانویس a و b)، کل متن تا Conclusions، فهرست References و بلوک Corresponding author و Copyright خوانده شد؛ هیچ بیانیه‌ی conflict of interest، funding، support یا disclosure (با توجه به ligatureها) وجود ندارد. points = max(1, round_half_up(8×100÷100)) = 8."
+          },
+          {
+            "item": "clinical trial not prospectively registered (RCTs only)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "مطالعه RCT نیست (systematic review)؛ این ردیف کاربرد ندارد."
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "CGO and GFO\nappear to have a satisfactory outcome for composite resin\nrestorations and for ﬁxed prostheses for up to 5 years.",
+            "note": "ادعای longevity خود review به بازه‌ی گزارش‌شده محدود شده («up to 5 years»؛ و برای composite «over a period of 3 to 6 years»)، که از آستانه‌ی ۳ سال کوتاه‌تر نیست؛ متن review هیچ‌جا پیگیری مطالعات longevity را کوتاه نسبت به ادعا توصیف نمی‌کند. پیگیری‌های ۱ تا ۳ ماهه مربوط به سازگاری و EMG است نه survival. ردیف فعال نمی‌شود."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 22,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "این مقاله با DES برابر ۲۲ در باند D (شواهد ضعیف) و نوع پرسش THERAPY ارزیابی شد.",
+        "interpretation_fa": "یک systematic review از مطالعات غیرتصادفی است که پروتکل ثبت‌شده، ارزیابی خطر سوگیری مطالعات و روش سنتز ندارد و بیانیه‌ی conflict of interest هم ندارد. نتیجه‌ی آن، یعنی برابری CGO و GFO در longevity و راحتی بیمار، جمع‌بندی روایی از مطالعات cross-sectional و case series است. برای انتخاب lateral occlusion scheme در پروتز ثابت، مرور مفیدی است اما قطعیت پایینی دارد."
+      }
+    ]
   }
 }
