@@ -197,20 +197,37 @@ When publishing IS requested, the flow is two stages, in order:
 
    Then let the workflow proceed through the rest of its normal run.
 
-**Hard constraint — feed the input, do NOT auto-approve the run.** The handoff
+**Hard constraint — feed the input, do NOT pre-decide the run.** The handoff
 supplies only the two intake values above (type + text). It must **not** answer,
-skip, pre-empt, or auto-confirm any other step of the workflow. In particular,
-every one of the workflow's own confirmation gates stays fully interactive and
-is still answered by the user, including but not limited to:
-- Phase B **Question 2** (number/identifier), **Question 4** (media),
-  **Question 5** (Pulse sentence + hyperlinked word).
-- The link-insertion confirmations at Phase C steps **4.7**, **4.8**, and
-  **4.9** — each of which requires the user's explicit confirmation before any
-  link is inserted. Never insert links on the user's behalf; always present the
-  candidates and wait for approval, exactly as the workflow specifies.
+skip, pre-empt, or auto-confirm any other step of the workflow. Every other step
+runs exactly as the workflow specifies, with the workflow's own confirmation
+rule — no stricter and no looser:
+- **Hard Rule 14** (`.dentcast/workflows/modules/01-hard-rules.md`) decides what
+  is auto-applied and what is asked. A judgment call the workflow lets the agent
+  make at genuinely high confidence — an unambiguous identifier at Question 2, a
+  glossary-term or brain-entry link whose matched phrase unmistakably names that
+  exact concept — is applied and stated plainly in the running commentary and
+  the final summary; genuine uncertainty is asked as a short menu of named
+  options. **Hard Rule 13** still applies in full: any title, hashtag, keyword or
+  label the user did not supply, and any non-derivable fact, is always asked.
+- Phase B **Question 2** (number/identifier), **Question 4** (media) and
+  **Question 5** (Pulse) run as written. Pulse is not customary for glossary
+  terms — Phase F records `6 pulse` as skipped for glossary — so Question 5
+  takes its not-customary branch: draft the line and ask the yes/no «این نوع
+  معمولاً تو پالس اعلان نمی‌شه — همین‌طوری درج کنم یا رد شم؟». Never assume
+  either answer.
+- The link steps of Phase C — **4.7**, **4.7-ب** (the new term into existing
+  bodies through `.dentcast/workflows/cross-link.md` scoped to this slug; it
+  runs on glossary publishes only), **4.8** and **4.9** — each run their own
+  candidate analysis: high-confidence links are auto-applied under Hard Rule 14,
+  borderline ones are presented as «لینک بشه / رد شه», and the final report
+  states, per step, what was auto-applied, asked-and-confirmed or skipped and
+  why (the cross-linking completion gate of
+  `.dentcast/workflows/modules/12-english-notify-verify.md`).
 
 The skill produces the scientific input and points the workflow at it; the
-workflow owns every decision and gate from there.
+workflow owns every decision and gate from there. This skill itself never
+inserts a link, answers a gate or marks a step done.
 
 **Publishing a cluster.** One publication run = one term = one `content_id` and
 one fixed `.dentcast/PUBLISH-HANDOFF.md` (`tools/dentcast_publish_handoff.py`

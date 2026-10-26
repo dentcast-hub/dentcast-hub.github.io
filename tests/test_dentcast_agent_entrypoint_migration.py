@@ -125,6 +125,16 @@ class EntrypointMigrationTests(unittest.TestCase):
     if len(line)>2000:
      with self.subTest(path=rel,line=n):
       self.assertTrue(any(rel==p and line.startswith(prefix) for p,prefix in table_rows))
+ def test_skill_copies_identical_and_follow_hard_rule_14(self):
+  claude=sorted(p.relative_to(ROOT/".claude/skills") for p in (ROOT/".claude/skills").rglob("*") if p.is_file())
+  agents=sorted(p.relative_to(ROOT/".agents/skills") for p in (ROOT/".agents/skills").rglob("*") if p.is_file())
+  self.assertEqual(claude,agents)
+  for rel in claude:
+   self.assertEqual((ROOT/".claude/skills"/rel).read_bytes(),(ROOT/".agents/skills"/rel).read_bytes(),str(rel))
+  s=read(".claude/skills/glossary-writer/SKILL.md")
+  for term in ("Hard Rule 14","Hard Rule 13","**4.7-ب**","`6 pulse`","همین‌طوری درج کنم یا رد شم؟"):
+   self.assertIn(term,s)
+  self.assertNotIn("Never insert links on the user's behalf",s)
  def test_post_push2_handoff_notice_shared(self):
   for p in ("AGENTS.md","CLAUDE.md",".cursor/rules/dentcast-router.mdc"):
    with self.subTest(path=p):
