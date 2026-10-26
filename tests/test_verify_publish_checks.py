@@ -198,5 +198,107 @@ class PulseBaselineTests(unittest.TestCase):
         self.assertTrue(rep.failures)   # current main moved on: the old false FAIL, flagged
 
 
+PB = '/dentai/promptologist/'
+P_BRAIN = [{'type': 'promptologist', 'page_url': PB + 'prompt1-1.html'},
+           {'type': 'promptologist', 'page_url': PB + 'prompt1-append1.html'},
+           {'type': 'clinical', 'page_url': '/insight/insight-9.html'},
+           {'type': 'promptologist', 'page_url': PB + 'prompt2-1.html'}]
+EMPTY_PREV = '<span class="ep-nav-btn ep-nav-empty"></span>'
+EMPTY_NEXT = '<span class="ep-nav-btn ep-nav-empty">قسمت بعدی &#8594;</span>'
+
+
+def prev_a(slug):
+    return f'<a href="{PB}{slug}.html" class="ep-nav-btn">&#8592; قسمت قبلی</a>'
+
+
+def next_a(slug):
+    return f'<a href="{PB}{slug}.html" class="ep-nav-btn">قسمت بعدی &#8594;</a>'
+
+
+def prompt_doc(first, second, tail=''):
+    return ('<main><div class="ep-box">x</div>\n<div class="ep-nav">\n  ' + first + '\n  '
+            + second + '\n</div>\n' + tail + '</main>')
+
+
+class SeriesNavigationTests(unittest.TestCase):
+    """Steps 4.5 (NoteCast parent link) and 4.6 (Promptologist prev/next)."""
+
+    def run_check(self, fn, files, *args):
+        from unittest.mock import patch
+        rep = vp.Report('fixture')
+        with patch.object(vp, 'read', lambda p: files[p]), \
+                patch.object(vp, 'exists', lambda p: p in files):
+            fn(rep, *args)
+        return rep
+
+    def nav(self, cid, doc, files=None, sweep=False):
+        return self.run_check(vp.check_promptologist_nav, files or {}, cid, doc, P_BRAIN, sweep)
+
+    def test_new_part_wired_and_previous_next_slot_updated(self):
+        files = {'dentai/promptologist/prompt1-append1.html':
+                 prompt_doc(prev_a('prompt1-1'), next_a('prompt2-1'))}
+        rep = self.nav('dentai/promptologist/prompt2-1',
+                       prompt_doc(prev_a('prompt1-append1'), EMPTY_NEXT), files)
+        self.assertFalse(rep.failures, rep.render())
+
+    def test_template_clone_with_both_slots_empty_fails(self):
+        files = {'dentai/promptologist/prompt1-append1.html':
+                 prompt_doc(prev_a('prompt1-1'), next_a('prompt2-1'))}
+        rep = self.nav('dentai/promptologist/prompt2-1', prompt_doc(EMPTY_PREV, EMPTY_NEXT), files)
+        self.assertEqual(len(rep.failures), 1, rep.render())
+
+    def test_previous_part_next_slot_left_empty_fails(self):
+        files = {'dentai/promptologist/prompt1-append1.html':
+                 prompt_doc(prev_a('prompt1-1'), EMPTY_NEXT)}
+        rep = self.nav('dentai/promptologist/prompt2-1',
+                       prompt_doc(prev_a('prompt1-append1'), EMPTY_NEXT), files)
+        self.assertEqual(len(rep.failures), 1, rep.render())
+        self.assertIn('previous part', rep.failures[0][2])
+
+    def test_wrong_target_extra_slot_and_misplaced_block_fail(self):
+        cid = 'dentai/promptologist/prompt1-append1'
+        files = {'dentai/promptologist/prompt1-1.html': prompt_doc(EMPTY_PREV, next_a('prompt1-append1'))}
+        good = prompt_doc(prev_a('prompt1-1'), next_a('prompt2-1'))
+        self.assertFalse(self.nav(cid, good, files).failures)
+        for doc in (prompt_doc(prev_a('prompt1-1'), next_a('prompt1-1')),
+                    prompt_doc(prev_a('prompt1-1'), next_a('prompt2-1') + EMPTY_NEXT),
+                    prompt_doc(prev_a('prompt1-1'), next_a('prompt2-1'), '<p>after</p>'),
+                    good + good):
+            self.assertTrue(self.nav(cid, doc, files).failures, doc)
+
+    def test_first_part_has_empty_previous_slot(self):
+        ok = self.nav('dentai/promptologist/prompt1-1', prompt_doc(EMPTY_PREV, next_a('prompt1-append1')))
+        self.assertFalse(ok.failures, ok.render())
+        bad = self.nav('dentai/promptologist/prompt1-1',
+                       prompt_doc(prev_a('prompt1-1'), next_a('prompt1-append1')))
+        self.assertTrue(bad.failures)
+
+    def test_sweep_reports_backlog_as_warn_not_fail(self):
+        rep = self.nav('dentai/promptologist/prompt1-append1',
+                       prompt_doc(EMPTY_PREV, EMPTY_NEXT), sweep=True)
+        self.assertFalse(rep.failures)
+        self.assertEqual(sum(r[0] == 'WARN' for r in rep.rows), 2)
+
+    def parent(self, files, sweep=False):
+        return self.run_check(vp.check_notecast_parent, files, 'notecast/episode-50', sweep)
+
+    def test_notecast_parent_episode_links_back(self):
+        block = ('<div class="ep-section">\n<h2 class="ep-section-label">محتوای مرتبط</h2>\n'
+                 '<a href="/pillar/x/" class="ep-related-link">p</a>\n{}</div>')
+        link = '<a href="/notecast/episode-50.html" class="ep-related-link">n</a>\n'
+        self.assertFalse(self.parent({'episodes/episode-50.html': block.format(link)}).failures)
+        self.assertTrue(self.parent({'episodes/episode-50.html': block.format('')}).failures)
+        self.assertTrue(self.parent({'episodes/episode-50.html': block.format('') + link}).failures)
+        self.assertTrue(self.parent({}).failures)
+        self.assertFalse(self.parent({}, sweep=True).failures)
+
+    def test_live_pages_pass(self):
+        for cid in ('notecast/episode-43', 'dentai/promptologist/prompt-append2-6',
+                    'dentai/promptologist/prompt2-1'):
+            rep = vp.verify(cid, vp.Report(cid))
+            self.assertFalse([f for f in rep.failures if f[1] in ('4.5 parent', '4.6 nav')], cid)
+            self.assertTrue([r for r in rep.rows if r[1] in ('4.5 parent', '4.6 nav')], cid)
+
+
 if __name__ == '__main__':
     unittest.main()

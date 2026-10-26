@@ -1010,6 +1010,118 @@ def check_litecast_links(rep, doc, page_rel, brain):
               "Hard Rule 10 / step 0.2 — LiteCast in-body links go to other LiteCast items only")
 
 
+def _gate(rep, sweep, cond, step, ok_msg, fail_msg, fix=None):
+    """FAIL for the page being published; WARN in the --all backlog sweep."""
+    if cond:
+        rep.ok(step, ok_msg)
+    else:
+        (rep.warn if sweep else rep.fail)(step, fail_msg, fix)
+    return cond
+
+
+RELATED_LABEL = '<h2 class="ep-section-label">محتوای مرتبط</h2>'
+
+
+def check_notecast_parent(rep, content_id, sweep=False):
+    """Step 4.5: the parent episode /episodes/episode-XX.html (same XX) links
+    back to /notecast/episode-XX.html in its «محتوای مرتبط» block."""
+    slug = content_id.rsplit("/", 1)[-1]
+    parent = "episodes/" + slug + ".html"
+    fix = "step 4.5 — add the NoteCast link to the parent episode's related-content block"
+    if not _gate(rep, sweep, exists(parent), "4.5 parent", f"parent episode {parent} exists",
+                 f"parent episode {parent} does not exist", fix):
+        return
+    pdoc = strip_code(read(parent))
+    want = "/" + content_id + ".html"
+    links = []
+    start = pdoc.find(RELATED_LABEL)
+    if start >= 0:
+        end = pdoc.find("</div>", start)
+        links = re.findall(r'href="([^"#?]+)', pdoc[start:end if end >= 0 else len(pdoc)])
+    _gate(rep, sweep, start >= 0 and want in links, "4.5 parent",
+          f"{parent} «محتوای مرتبط» links to {want}",
+          f"{parent} has no «محتوای مرتبط» link to {want}"
+          + ("" if start >= 0 else " (no related-content block)"), fix)
+
+
+EP_NAV_RE = re.compile(r'<div class="ep-nav">(.*?)</div>', re.S)
+EP_SLOT_RE = re.compile(r'<(a|span)\b([^>]*)>(.*?)</\1>', re.S)
+
+
+def _ep_nav_slots(doc):
+    """[(tag, attrs, text)] of the single ep-nav block, or None."""
+    blocks = list(EP_NAV_RE.finditer(doc))
+    if len(blocks) != 1:
+        return None, blocks
+    return EP_SLOT_RE.findall(blocks[0].group(1)), blocks
+
+
+def _slot_href(attrs):
+    m = re.search(r'href="([^"]*)"', attrs)
+    return m.group(1) if m else None
+
+
+def _classes(attrs):
+    m = re.search(r'class="([^"]*)"', attrs)
+    return set(m.group(1).split()) if m else set()
+
+
+def check_promptologist_nav(rep, content_id, doc, brain, sweep=False):
+    """Step 4.6: the part's ep-nav (last element in <main>, after .ep-box) has
+    exactly two slots — previous part, next part — each an active
+    `<a href="/dentai/promptologist/<id>.html" class="ep-nav-btn">` or an
+    empty `<span class="ep-nav-btn ep-nav-empty">`; the previous part's next
+    slot links to this part. The series order is the brain order (appendix
+    parts sit between numbered parts and season boundaries chain on)."""
+    fix = "step 4.6 — wire the Promptologist prev/next ep-nav slots"
+    parts = [entry_url(e) for e in brain if e.get("type") == "promptologist" and entry_url(e)]
+    url = "/" + content_id + ".html"
+    i = parts.index(url)
+    prev = parts[i - 1] if i else None
+    nxt = parts[i + 1] if i + 1 < len(parts) else None
+    body = strip_code(doc)
+    slots, blocks = _ep_nav_slots(body)
+    if not _gate(rep, sweep, slots is not None and len(slots) == 2, "4.6 nav",
+                 "exactly one ep-nav block with exactly two slots",
+                 f"{len(blocks)} ep-nav block(s), "
+                 f"{len(slots) if slots is not None else '?'} slot(s) (expected one block, two slots)", fix):
+        return
+    block = blocks[0]
+    main_end = body.find("</main>", block.end())
+    box = body.rfind('class="ep-box"', 0, block.start())
+    _gate(rep, sweep, main_end >= 0 and not body[block.end():main_end].strip() and box >= 0,
+          "4.6 nav", "ep-nav is the last element inside <main>, after .ep-box",
+          "ep-nav is not the last element inside <main> after the .ep-box", fix)
+
+    def expect(slot, target, label, side):
+        tag, attrs, text = slot
+        if target:
+            return _gate(rep, sweep, tag == "a" and _slot_href(attrs) == target
+                         and "ep-nav-btn" in _classes(attrs) and "ep-nav-empty" not in _classes(attrs)
+                         and label in text,
+                         "4.6 nav", f"{side} slot links to {target}",
+                         f"{side} slot should be <a href=\"{target}\" class=\"ep-nav-btn\">…{label}…</a>, "
+                         f"found <{tag}> href={_slot_href(attrs)} class={sorted(_classes(attrs))}", fix)
+        return _gate(rep, sweep, tag == "span" and {"ep-nav-btn", "ep-nav-empty"} <= _classes(attrs)
+                     and _slot_href(attrs) is None,
+                     "4.6 nav", f"{side} slot is the empty placeholder (no {side} part)",
+                     f"{side} slot should be <span class=\"ep-nav-btn ep-nav-empty\">, "
+                     f"found <{tag}> href={_slot_href(attrs)}", fix)
+
+    expect(slots[0], prev, "قسمت قبلی", "previous")
+    expect(slots[1], nxt, "قسمت بعدی", "next")
+    if prev and not sweep:
+        # In the sweep the previous part is checked as its own page.
+        prev_rel = prev.lstrip("/")
+        pslots, _ = _ep_nav_slots(strip_code(read(prev_rel))) if exists(prev_rel) else (None, [])
+        tag, attrs, text = pslots[1] if pslots and len(pslots) == 2 else ("", "", "")
+        rep.check(tag == "a" and _slot_href(attrs) == url and "ep-nav-empty" not in _classes(attrs)
+                  and "قسمت بعدی" in text, "4.6 nav",
+                  f"previous part {prev_rel} next slot links here",
+                  f"previous part {prev_rel} next slot does not link to {url} "
+                  "(or its ep-nav does not have exactly two slots)", fix)
+
+
 def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False):
     """`sweep` = this is a site-wide regression pass over already-published
     pages, not the gate on a publish in flight. Checks that are only meaningful
@@ -1235,6 +1347,12 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
               "prose paragraph precedes the first list (Spot card has an interior boundary)",
               "body opens with a list — the in-article Spot card has nowhere to land",
               "step 2 — write a real 2-4 sentence lead before the first <ul>")
+
+    # ---------------- series / parent navigation (steps 4.5, 4.6) ----------------
+    if etype == "notecast":
+        check_notecast_parent(rep, content_id, sweep)
+    elif etype == "promptologist":
+        check_promptologist_nav(rep, content_id, doc, brain, sweep)
 
     # ---------------- کاوش بیشتر ----------------
     n_sections = doc.count('<div class="dc-related-section">')
