@@ -85,8 +85,7 @@ def main():
         targets = only
     else:
         for root, dirs, files in os.walk("."):
-            if "/.git" in root or root.startswith("./.git"):
-                continue
+            dirs[:] = [d for d in dirs if not d.startswith(".")]
             for fn in files:
                 if fn.endswith((".html", ".css")):
                     targets.append(os.path.join(root, fn))

@@ -36,7 +36,7 @@ def plan(paper_only=False):
 
 def require_plan(publication):
     h.validate_publication(publication)
-    required = PAPER_IDS if publication["category"] == "paper-only" else tuple(REGISTRY)
+    required = PAPER_IDS if h.publication_category(publication) == "paper-only" else tuple(REGISTRY)
     steps = publication["steps"]
     ids = [s["id"] for s in steps]
     h.require([sid for sid in ids if sid in REGISTRY] == list(required), "CANONICAL_PLAN_REQUIRED")
@@ -69,12 +69,119 @@ def state_for_update(root, expected):
     return state
 
 
+PULL_ADVICE = ("run `git pull --ff-only` (fast-forward only; never reset, force-push, "
+               "confirm-cleanup or restore-cleanup for this), then rerun the guard; if that pull "
+               "is refused (undelivered local changes or commits: another checkout continued this "
+               "run), follow publish-handoff.md 'Stale checkout after a switch'")
+STALE_ADVICE = ("Do not stage, commit, merge, rebase or force-push this checkout's undelivered work; keep it "
+                "recoverable and follow publish-handoff.md 'Stale checkout after a switch'")
+
+
+def stale_checkout(root):
+    """Fresh ls-remote: origin's branch holds commits this checkout lacks.
+
+    A stale checkout (the run continued in another checkout/client from the
+    last delivered cut) must not create a diverging cut commit; git would only
+    reject its push after the commit. An unknown remote is left to the push.
+    """
+    branch = h.text_git(root, "symbolic-ref", "--quiet", "--short", "HEAD", optional=True)
+    if not branch:
+        return None
+    head = h.text_git(root, "rev-parse", "HEAD")
+    remote = h.remote_observation(root, head, branch, True)
+    if remote["status"] != "observed" or remote["head"] == head or (
+            remote["ahead"] is not None and not remote["behind"]):
+        return None
+    return ("REMOTE_BRANCH_MOVED_STALE_CHECKOUT: origin/" + branch + " is at " + remote["head"][:12]
+            + ", which this checkout does not contain (another checkout or client may have continued "
+            "this publication). " + STALE_ADVICE)
+
+
+def delivered_cut_elsewhere(root, current):
+    """This branch is absent on origin, but another origin branch is at this exact delivered commit.
+
+    A receiving checkout that copied a delivered cut onto its own new branch
+    (e.g. a cloud session's `ccr-*` branch) would otherwise be told to push it,
+    leaving the original branch's active handoff behind as a second run.
+    """
+    if current["remote"].get("reason") != "REMOTE_UNAVAILABLE_OR_BRANCH_MISSING" or not current["branch"]:
+        return None
+    out = h.git(root, "ls-remote", "--heads", "--", "origin", optional=True, timeout=h.remote_timeout())
+    if out is None:
+        return None  # origin unreachable: the push state stays unknown
+    heads = {}
+    for line in out.decode("utf-8", "replace").splitlines():
+        sha, _, ref = line.partition("\t")
+        heads[ref.strip()] = sha.strip()
+    if "refs/heads/" + current["branch"] in heads:
+        return None
+    others = sorted(ref[len("refs/heads/"):] for ref, sha in heads.items()
+                    if ref.startswith("refs/heads/") and sha == current["head"])
+    if not others:
+        return None
+    b = others[0]
+    return ("DELIVERED_CUT_IS_ON_ANOTHER_BRANCH: origin/" + b + " already holds this delivered commit and origin "
+            "has no " + current["branch"] + "; continue on that branch (git remote set-branches --add origin " + b
+            + "; git fetch origin " + b + "; git switch --track origin/" + b + ") instead of pushing this run under "
+            "a new branch name. If this session may push only its own branch, stop and report that the run must "
+            "continue on " + b)
+
+
+def remote_delivery_ahead(root, state, current, expected):
+    """Advice when origin moved past this checkout, e.g. post-cut2 Actions delivery 3.
+
+    The Actions run pushes delivery 3 (receipt + handoff deletion) to the branch
+    while the agent's checkout still holds the Push-2 handoff and no local
+    cleanup record, so "push not confirmed"/confirm-cleanup advice is wrong.
+    Read-only: inspects only objects already in this checkout; never fetches.
+    """
+    remote = current["remote"]
+    if remote["status"] != "observed" or remote["head"] == current["head"]:
+        return None
+    head = remote["head"]
+    if remote["ahead"] is None:
+        return ("REMOTE_BRANCH_ADVANCED_NOT_FETCHED: origin/" + str(current["branch"]) + " is at " + head[:12]
+                + ", not in this checkout (GitHub Actions delivery 3 after Push 2?); " + PULL_ADVICE)
+    if remote["ahead"] != 0:
+        return None
+    publication = state["publication"]
+    if h.git(root, "ls-tree", head, "--", h.STATE_PATH, optional=True) != b"":
+        return None
+    raw = h.git(root, "show", head + ":" + completion_path(publication), optional=True)
+    try:
+        data = h.decode_json(raw.decode("utf-8")) if raw is not None else {}
+        receipt = data["state"]["publication"]
+        second = data["second_delivery_commit"]
+        valid = (data.get("schema") == "publish-completion-v1"
+                 and receipt["content_id"] == publication["content_id"]
+                 and h.next_step(receipt) is None
+                 and re.fullmatch(r"[0-9a-f]{40}", second) is not None
+                 and h.git(root, "merge-base", "--is-ancestor", current["head"], second, optional=True) is not None
+                 and h.git(root, "merge-base", "--is-ancestor", second, head, optional=True) is not None)
+        delivered = h.git(root, "show", second + ":" + h.STATE_PATH, optional=True) if valid else None
+    except (ValueError, KeyError, TypeError, AttributeError):
+        return None
+    if delivered is None or h.digest(delivered) != expected:
+        return None
+    return ("DELIVERY_3_ON_REMOTE_PULL_REQUIRED: origin/" + str(current["branch"]) + " at " + head[:12]
+            + " fast-forwards this checkout with the completion receipt and handoff deletion for "
+            + publication["content_id"] + "; no local cleanup is pending; " + PULL_ADVICE)
+
+
 def require_step_delivery(root, state, expected):
     """Fresh read-only origin check; never commit/push or trust cached upstream."""
     current = h.current_snapshot(root, state, check_remote=True)
+    pull = remote_delivery_ahead(root, state, current, expected)
+    h.require(pull is None, pull)
     remote = current['remote']
+    if remote['status'] != 'observed':
+        elsewhere = delivered_cut_elsewhere(root, current)
+        h.require(elsewhere is None, elsewhere)
     h.require(remote['status'] == 'observed' and remote['head'] == current['head'],
-              'PREVIOUS_STEP_PUSH_NOT_CONFIRMED')
+              'PREVIOUS_STEP_PUSH_NOT_CONFIRMED' + (
+                  '' if remote['status'] == 'observed' else
+                  ': origin/' + str(current['branch']) + ' could not be read (network/auth) or does not exist; '
+                  'if the push already succeeded, never commit again: retry once origin is reachable'))
     h.require(not h.status_paths(root), 'PREVIOUS_STEP_WORK_NOT_COMMITTED')
     delivered = h.git(root, 'show', current['head'] + ':' + h.STATE_PATH, optional=True)
     h.require(delivered is not None and h.digest(delivered) == expected,
@@ -82,8 +189,9 @@ def require_step_delivery(root, state, expected):
     h.require(current['repository'] == state['snapshot']['repository']
               and current['branch'] == state['snapshot']['branch'], 'REPOSITORY_OR_BRANCH_CHANGED')
     index = h.index_entries(root)
+    local_only = h.local_only_inputs(root, state['publication'])
     for name, info in state['snapshot']['files'].items():
-        actual = h.file_info(root, name)
+        actual = h.delivered_file_info(root, name, local_only)
         h.require(all(actual[k] == info[k] for k in actual), 'DELIVERED_STEP_WORK_MISMATCH:' + name)
         h.require(actual['kind'] == 'missing' or bool(index.get(name)),
                   'PREVIOUS_STEP_REQUIRED_FILE_NOT_TRACKED:' + name)
@@ -102,7 +210,7 @@ PHASE_F_EXPECTATION_SCOPES = frozenset(("title", "caption"))
 
 
 def editorial_cut_v2(publication):
-    return publication["category"] != "paper-only" and any(
+    return h.publication_category(publication) != "paper-only" and any(
         isinstance(d, dict) and d.get("kind") == DELIVERY_POLICY_V2
         for d in publication["context"]["decisions"])
 
@@ -137,7 +245,7 @@ def editorial_cut_receipt(publication, root=None):
               and all(h.nonempty(x) for x in eng["evidence"]),
               "SECOND_CUT_ENGLISH_INVALID")
     challenge = next(x for x in publication["steps"] if x["id"] == "C.4.14")
-    exempt = publication["category"] == "litecast" or challenge["status"] == "completed"
+    exempt = h.publication_category(publication) == "litecast" or challenge["status"] == "completed"
     if exempt:
         h.require(eng["status"] == "exempt" and eng["path"] is None,
                   "SECOND_CUT_ENGLISH_EXCEPTION_REQUIRED")
@@ -168,7 +276,7 @@ def editorial_cut_receipt(publication, root=None):
 
 
 def fixed_delivery(publication):
-    return publication["category"] != "paper-only" and any(
+    return h.publication_category(publication) != "paper-only" and any(
         isinstance(d, dict) and d.get("kind") in (DELIVERY_POLICY, DELIVERY_POLICY_V2)
         for d in publication["context"]["decisions"])
 
@@ -199,6 +307,12 @@ def require_fixed_cut_readiness(publication, root=None):
     h.require(all(a["status"] in ("confirmed", "not_required")
                   for a in publication["context"]["approvals"]),
               "DELIVERY_UNRESOLVED_APPROVAL")
+    # Once the cut is committed, recording the outcome is a record on the
+    # delivered handoff and starting the next step is refused while it is open,
+    # so an open outcome would strand the run: resolve it before the cut.
+    h.require(not any(a["status"] in ("started", "outcome_unknown") for a in publication["external_actions"]),
+              "EXTERNAL_OUTCOME_UNRESOLVED_AT_CUT: record the observed outcome of each started/unknown "
+              "external action (or reconcile it) before completing the cut step or committing the delivery")
     # Optional adapter is imported only at the cut: standalone legacy checkout
     # fixtures that do not contain the connected adapter remain importable.
     from dentcast_connected_cut_gates import validate_lead_provenance
@@ -229,7 +343,7 @@ def redelivers_first_cut(previous, publication, boundary):
     # mandatory invalidation from `rules` reopens the ledger before cut 1.
     return (boundary in (1, 2) and fixed_delivery(previous)
             and previous["content_id"] == publication["content_id"]
-            and previous["category"] == publication["category"]
+            and h.publication_category(previous) == h.publication_category(publication)
             and editorial_cut_v2(previous) == editorial_cut_v2(publication)
             and invalidation_count(publication) > invalidation_count(previous))
 
@@ -259,7 +373,7 @@ def completion_path(publication):
 def technical_report_path(publication):
     """Public-safe Phase G technical report delivered with the third commit."""
     h.relative_path(publication["content_id"])
-    name = publication["category"] + "-" + publication["content_id"].rsplit("/", 1)[-1]
+    name = h.canonical_category(publication["category"]) + "-" + publication["content_id"].rsplit("/", 1)[-1]
     return h.relative_path(".dentcast/publication-reports/" + name + ".md")
 
 
@@ -314,15 +428,71 @@ def final_files_match(root, state):
     current = h.current_snapshot(root, state)
     h.require(all(current[k] == state["snapshot"][k] for k in ("repository", "branch")),
               "WRONG_CLEANUP_CHECKOUT")
+    local_only = h.local_only_inputs(root, state["publication"])
     for name, info in state["snapshot"]["files"].items():
-        actual = h.file_info(root, name)
+        actual = h.delivered_file_info(root, name, local_only)
         h.require(all(actual[k] == info[k] for k in actual), "WORK_CHANGED_AFTER_CLEANUP:" + name)
     h.require(current["workflow"] == state["snapshot"]["workflow"], "WORKFLOW_CHANGED_AFTER_CLEANUP")
     return current
 
 
-def validate_final_receipt(root, data, commit=None):
-    """Completed-only audit receipt, never an active recovery handoff."""
+def workflow_paths_at(root, commit):
+    """WORKFLOW_PATHS as the delivery commit's own handoff tool declared them.
+
+    Evaluates only the literal tuple/concatenation/generator forms the tool
+    uses (never executes code); None when they cannot be read.
+    """
+    import ast
+    raw = h.git(root, "show", commit + ":tools/dentcast_publish_handoff.py", optional=True)
+    if raw is None:
+        return None
+    try:
+        tree = ast.parse(raw.decode("utf-8"))
+    except (SyntaxError, ValueError):
+        return None
+    env = {}
+
+    def value(node, scope):
+        if isinstance(node, ast.Constant) and isinstance(node.value, str):
+            return node.value
+        if isinstance(node, ast.Name) and node.id in scope:
+            return scope[node.id]
+        if isinstance(node, (ast.Tuple, ast.List)):
+            return tuple(value(e, scope) for e in node.elts)
+        if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Add):
+            left, right = value(node.left, scope), value(node.right, scope)
+            if type(left) is not type(right):
+                raise ValueError
+            return left + right
+        if (isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "tuple"
+                and len(node.args) == 1 and isinstance(node.args[0], ast.GeneratorExp)):
+            gen = node.args[0]
+            (comp,) = gen.generators
+            if comp.ifs or not isinstance(comp.target, ast.Name):
+                raise ValueError
+            return tuple(value(gen.elt, {**scope, comp.target.id: item}) for item in value(comp.iter, scope))
+        raise ValueError
+    try:
+        for node in tree.body:
+            if (isinstance(node, ast.Assign) and len(node.targets) == 1
+                    and isinstance(node.targets[0], ast.Name)
+                    and node.targets[0].id in ("MODULES", "WORKFLOW_PATHS")):
+                env[node.targets[0].id] = value(node.value, env)
+    except (ValueError, TypeError):
+        return None
+    paths = env.get("WORKFLOW_PATHS")
+    return set(paths) if isinstance(paths, tuple) and all(isinstance(x, str) for x in paths) else None
+
+
+def validate_final_receipt(root, data, commit=None, own_paths=None):
+    """Completed-only audit receipt, never an active recovery handoff.
+
+    With a delivery commit, its delivered facts (files, workflow and the
+    workflow inventory) are checked in that commit's tree, so later main-side
+    changes cannot fail an older publication. own_paths, when given, are paths
+    the PR itself changed after that commit; those stay checked in the working
+    tree. Without own_paths every file is checked in the working tree.
+    """
     h.require(data.get("schema") == "publish-completion-v1", "INVALID_FINAL_DELIVERY_RECEIPT")
     state = data["state"]
     publication = state["publication"]
@@ -338,8 +508,9 @@ def validate_final_receipt(root, data, commit=None):
         isinstance(d, dict) and h.nonempty(d.get("scope")) and isinstance(d.get("evidence"), list)
         and d["evidence"] and all(h.nonempty(e) for e in d["evidence"])
         for d in publication["context"]["delivery"]), "DELIVERY_EVIDENCE_REQUIRED")
+    inventory = (workflow_paths_at(root, commit) if commit else None) or set(h.WORKFLOW_PATHS)
     h.require(set(publication["target_paths"]) <= set(state["snapshot"]["files"])
-              and set(state["snapshot"]["workflow"]) == set(h.WORKFLOW_PATHS), "INCOMPLETE_FINAL_FINGERPRINTS")
+              and set(state["snapshot"]["workflow"]) == inventory, "INCOMPLETE_FINAL_FINGERPRINTS")
     second = data["second_delivery_commit"]
     h.require(bool(re.fullmatch(r"[0-9a-f]{40}", second)), "INVALID_DELIVERY_COMMIT")
     require_delivery_parent(root, publication, 3, second)
@@ -370,19 +541,42 @@ def validate_final_receipt(root, data, commit=None):
         h.require(h.git(root, "show", commit + ":" + h.STATE_PATH, optional=True) is None,
                   "FINAL_HANDOFF_MUST_NOT_BE_PUSHED")
         changed = set(h.text_git(root, "diff", "--name-only", second, commit).splitlines())
+        # A receipt finished before category canonicalisation may carry the
+        # raw spelling ("plak sefr-<slug>.md") in its report name.
+        legacy_report = (".dentcast/publication-reports/" + publication["category"] + "-"
+                         + publication["content_id"].rsplit("/", 1)[-1] + ".md")
         h.require(changed <= set(state["snapshot"]["files"]) | {
-            h.STATE_PATH, completion_path(publication), technical_report_path(publication)},
+            h.STATE_PATH, completion_path(publication), technical_report_path(publication), legacy_report},
                   "UNRELATED_FINAL_DELIVERY_PATH")
+    local_only = h.local_only_inputs(root, publication)
     for name, info in state["snapshot"]["files"].items():
-        actual = h.file_info(root, name)
+        if commit and own_paths is not None and name not in own_paths:
+            actual = committed_file_info(root, commit, name, local_only)
+        else:
+            actual = h.delivered_file_info(root, name, local_only)
         h.require(all(actual[k] == info[k] for k in actual), "FINAL_RECEIPT_FILE_MISMATCH:" + name)
+    # The workflow snapshot is a fact of the delivered tree. Once delivered, main
+    # may legitimately change the rules before merge, so check that commit.
     for name, sha in state["snapshot"]["workflow"].items():
-        h.require(h.file_info(root, name)["sha256"] == sha, "FINAL_RECEIPT_WORKFLOW_MISMATCH:" + name)
+        if commit:
+            raw = h.git(root, "show", commit + ":" + name, optional=True)
+            actual = None if raw is None else h.digest(raw)
+        else:
+            actual = h.file_info(root, name)["sha256"]
+        h.require(actual == sha, "FINAL_RECEIPT_WORKFLOW_MISMATCH:" + name)
     receipts = [r for r in publication["context"]["validation"] if isinstance(r, dict) and r.get("kind") == "phase_f"]
     h.require(bool(receipts) and receipts[-1].get("exit_code") == 0, "MECHANICAL_GATE_RECEIPT_REQUIRED")
     last = receipts[-1]
     result = gate(root, publication, last.get("expected_title"), last.get("expected_caption"))
-    h.require(result["exit_code"] == 0, "FINAL_DELIVERY_VERIFICATION_FAILED")
+    if result["exit_code"] != 0:
+        # Name the verifier's own failing rows and fixes, e.g. a checkout
+        # without origin/main (a single-branch shallow clone) cannot rebuild
+        # the Pulse/append-only baselines: "git fetch origin main".
+        lines = result.get("output", "").splitlines()
+        rows = [" ".join(l.split()) for i, l in enumerate(lines) if l.startswith("FAIL")
+                or (l.strip().startswith("↳ fix:") and i and lines[i-1].startswith("FAIL"))]
+        raise h.Blocked("FINAL_DELIVERY_VERIFICATION_FAILED" + (": " + " | ".join(rows[:6]) if rows else
+                                                                ": " + result["summary"]))
     return publication["content_id"]
 
 
@@ -399,6 +593,12 @@ def challenge_markup(root, publication):
 def guard_step_transition(state, publication, root=None):
     if fixed_delivery(state["publication"]):
         h.require(fixed_delivery(publication), "DELIVERY_POLICY_CANNOT_BE_DROPPED")
+        old_c49 = next((s for s in state["publication"]["steps"] if s["id"] == "C.4.9"), None)
+        new_c49 = next((s for s in publication["steps"] if s["id"] == "C.4.9"), None)
+        if (old_c49 and new_c49 and old_c49["status"] not in ("completed", "skipped")
+                and new_c49["status"] in ("completed", "skipped")):
+            # Fail at C.4.9 itself, not first at the cut-1 stop/commit guard.
+            require_fixed_cut_readiness(publication, root)
         h.require(editorial_cut_v2(state["publication"]) == editorial_cut_v2(publication),
                   "DELIVERY_POLICY_VERSION_CANNOT_CHANGE")
         if editorial_cut_v2(state["publication"]):
@@ -429,6 +629,23 @@ def guard_step_transition(state, publication, root=None):
                and old[s['id']]['status'] not in ('started', 'completed', 'skipped')
                and s['status'] in ('started', 'completed', 'skipped')]
     h.require(len(entered) <= 1, 'ONE_STEP_PER_CHECKPOINT_REQUIRED')
+    if (not entered and root is not None and fixed_delivery(state["publication"])
+            and delivery_boundary(state["publication"])
+            and invalidation_count(publication) == invalidation_count(state["publication"])):
+        # Refuse up front what the next step and the Stop guard would refuse
+        # later (PREVIOUS_STEP_HANDOFF_NOT_DELIVERED): any other write on top
+        # of the already committed cut handoff. An audited invalidation (the
+        # documented post-cut recovery) remains allowed.
+        delivered = h.git(root, "show", "HEAD:" + h.STATE_PATH, optional=True)
+        cut = delivery_boundary(state["publication"])
+        h.require(delivered is None or h.digest(delivered) != h.digest(h.render(state).encode()),
+                  "RECORD_AFTER_DELIVERED_CUT_START_NEXT_STEP_FIRST: this handoff is the committed fixed "
+                  "delivery " + str(cut) + "; " + (
+                      "after Push 2 the post-cut2 GitHub Actions run continues from this exact commit and "
+                      "the frozen handoff is not recorded locally; correct it only through the documented "
+                      "invalidate recovery" if cut == 2 and editorial_cut_v2(state["publication"]) else
+                      "first start the next step (step --status started or advance --start-next), "
+                      "then record this change"))
     for row in entered:
         h.require(not any(a['status'] in ('started', 'outcome_unknown') for a in publication['external_actions']),
                   'EXTERNAL_OUTCOME_UNKNOWN_DO_NOT_RETRY')
@@ -445,7 +662,7 @@ def step(root, expected, sid, status, evidence, reason, note=None):
     p = copy.deepcopy(state["publication"])
     h.require(sid == h.next_step(p), "NOT_NEXT_CANONICAL_STEP")
     row = next(s for s in p["steps"] if s["id"] == sid)
-    h.require(sid in GROUPS[0]+GROUPS[1] or (p["content_id"] != "unassigned" and p["category"] != "pending"),
+    h.require(sid in GROUPS[0]+GROUPS[1] or (p["content_id"] != "unassigned" and h.publication_category(p) != "pending"),
               "BIND_INTAKE_IDENTITY_BEFORE_AUTHORING")
     h.require(not (sid == "F" and status == "completed"), "USE_REAL_VERIFY_FOR_PHASE_F")
     h.require(status != "completed" or row["status"] == "started", "STEP_MUST_BE_STARTED_FIRST")
@@ -524,7 +741,7 @@ def advance(root, expected, sid=None, evidence=None, skips=(), start_next=False,
               "EXTERNAL_OUTCOME_UNKNOWN_DO_NOT_RETRY")
     for op_id, _, _, _ in operations:
         h.require(op_id in GROUPS[0]+GROUPS[1] or
-                  (p["content_id"] != "unassigned" and p["category"] != "pending"),
+                  (p["content_id"] != "unassigned" and h.publication_category(p) != "pending"),
                   "BIND_INTAKE_IDENTITY_BEFORE_AUTHORING")
     written = []
     result = {"sha256": expected, "publication_completed": False}
@@ -566,11 +783,30 @@ def stage_delivery(root, expected, paths):
     """
     state = state_for_update(root, expected)
     p = state["publication"]
-    h.require(fixed_delivery(p) and delivery_boundary(p) in (1, 2), "STAGE_DELIVERY_ONLY_AT_FIXED_CUT")
+    # Paper-only keeps its single delivery: the exact completed final handoff
+    # (with its catalog work), followed later by the deletion-only cleanup.
+    paper_final = h.publication_category(p) == "paper-only" and h.next_step(p) is None
+    h.require(paper_final or (fixed_delivery(p) and delivery_boundary(p) in (1, 2)),
+              "STAGE_DELIVERY_ONLY_AT_FIXED_CUT")
+    if not paper_final:
+        # Refuse before staging or refreshing the checkpoint, not in the final guard.
+        require_fixed_cut_readiness(p, root)
+    stale = stale_checkout(root)
+    h.require(stale is None, stale)
     h.require(bool(paths), "STAGE_DELIVERY_PATHS_REQUIRED")
+    # finish requires context.delivery on that exact delivered handoff, so a
+    # paper-only final handoff without it would need a second final commit.
+    h.require(not paper_final or (bool(p["context"]["delivery"]) and all(
+        isinstance(d, dict) and h.nonempty(d.get("scope")) and isinstance(d.get("evidence"), list)
+        and bool(d["evidence"]) and all(h.nonempty(e) for e in d["evidence"])
+        for d in p["context"]["delivery"])),
+        "DELIVERY_EVIDENCE_REQUIRED: record context.delivery (scope + evidence of the verified Drive "
+        "filing) before staging the paper-only final handoff")
     scope = set(p["target_paths"]) | set(state["snapshot"]["files"])
+    local_only = h.local_only_inputs(root, p)
     for path in paths:
         h.require(h.relative_path(path) in scope and path != h.STATE_PATH, "STAGE_PATH_OUTSIDE_PUBLICATION:" + path)
+        h.require(path not in local_only, "LOCAL_ONLY_INPUT_IS_NEVER_DELIVERED:" + path)
     current = h.current_snapshot(root, state)
     recorded = state["snapshot"]
     bytes_of = lambda files: {name: {k: info[k] for k in ("kind", "sha256", "executable")}
@@ -584,7 +820,8 @@ def stage_delivery(root, expected, paths):
     h.git(root, "add", "--", h.STATE_PATH)
     guard(root, "pre-commit")
     return {"status": "delivery_staged", "sha256": result["sha256"], "staged": list(paths),
-            "next_action": "Commit and push this fixed delivery once", "publication_completed": False}
+            "next_action": ("Commit and push this paper-only final handoff once, then finish" if paper_final
+                            else "Commit and push this fixed delivery once"), "publication_completed": False}
 
 
 def bind(root, expected, content_id, category, targets, evidence):
@@ -592,7 +829,9 @@ def bind(root, expected, content_id, category, targets, evidence):
     with h.locked(root):
         state = state_for_update(root, expected)
         old = state["publication"]
-        h.require(old["content_id"] == "unassigned" and old["category"] == "pending", "IDENTITY_ALREADY_BOUND")
+        h.require(old["content_id"] == "unassigned" and h.canonical_category(old["category"]) == "pending",
+                  "IDENTITY_ALREADY_BOUND")
+        category = h.require_category_input(category)
         h.require(h.nonempty(evidence) and category not in ("pending", "")
                   and content_id != "unassigned" and h.nonempty(content_id), "VERIFIED_INTAKE_IDENTITY_REQUIRED")
         # A founder-requested external action during intake (e.g. a Drive
@@ -604,14 +843,15 @@ def bind(root, expected, content_id, category, targets, evidence):
         h.require(not h.differences(root, state, h.current_snapshot(root, state)), "WORK_CHANGED_BEFORE_BIND")
         p = copy.deepcopy(old)
         p.update(content_id=content_id, category=category, target_paths=targets)
-        if category == "paper-only":
+        h.require_content_id(p)
+        if h.publication_category(p) == "paper-only":
             h.require(all(s["status"] == "pending" or s["id"] in ("rules", "0") for s in old["steps"]),
                       "PAPER_ONLY_ROUTE_MUST_BE_SELECTED_AT_PHASE_ZERO")
             p["steps"] = [next((s for s in old["steps"] if s["id"] == row["id"]), row)
                           for row in plan(paper_only=True)]
         p["context"]["decisions"].append({"kind": "intake_identity_bound", "evidence": evidence})
         require_plan(p)
-        state.update(schema=h.SCHEMA, publication=p, snapshot=h.snapshot(root, targets), generation=state["generation"]+1,
+        state.update(schema=h.SCHEMA, publication=p, snapshot=h.snapshot(root, targets, local_only=h.local_only_inputs(root, p)), generation=state["generation"]+1,
                      updated_at=h.now(), previous_sha256=expected,
                      reconciliation={"note": "Resolved previously unassigned intake identity", "observed_changes": ["IDENTITY_BOUND_ONCE"]})
         sha = h.write_atomic(root, state)
@@ -620,7 +860,7 @@ def bind(root, expected, content_id, category, targets, evidence):
 
 def gate(root, p, expect_title=None, expect_caption=None, catalog_id=None):
     """Execute the actual local Phase F, or the documented no-page catalog check."""
-    if p["category"] == "paper-only":
+    if h.publication_category(p) == "paper-only":
         h.require(h.nonempty(catalog_id), "PAPER_CATALOG_ID_REQUIRED")
         path = "dentcast_cabinet_full_catalog.json"
         h.require(path in p["target_paths"], "PAPER_CATALOG_MUST_BE_WATCHED")
@@ -666,7 +906,7 @@ def gate(root, p, expect_title=None, expect_caption=None, catalog_id=None):
 def verify(root, expected, expect_title=None, expect_caption=None, catalog_id=None):
     state = state_for_update(root, expected)
     p = copy.deepcopy(state["publication"])
-    paper = p["category"] == "paper-only"
+    paper = h.publication_category(p) == "paper-only"
     h.require(h.next_step(p) in (("G", None) if paper else ("F", "G", None)), "VERIFICATION_NOT_AT_CANONICAL_BOUNDARY")
     current = h.current_snapshot(root, state)
     h.require(not h.differences(root, state, current), "RECORD_CURRENT_WORK_BEFORE_VERIFICATION")
@@ -689,6 +929,23 @@ def verify(root, expected, expect_title=None, expect_caption=None, catalog_id=No
     p["blocker"] = None if receipt["exit_code"] == 0 else "Mechanical verification failed"
     result = h.save(root, p, expected=expected, note="Executed the applicable real mechanical gate")
     return {**result, "status": "checkpoint_written" if receipt["exit_code"] == 0 else "blocked", "verification": receipt}
+
+
+def committed_file_info(root, commit, name, local_only=()):
+    """File fingerprint as recorded in a commit's tree (same shape as file_info)."""
+    if name in local_only:
+        return dict(h.LOCAL_ONLY)
+    rows = h.git(root, "ls-tree", "-z", commit, "--", name, optional=True) or b""
+    for row in rows.split(b"\0"):
+        if row:
+            meta, path = row.split(b"\t", 1)
+            if path.decode("utf-8", "surrogateescape") == name:
+                mode, kind, _ = meta.decode("ascii").split()
+                h.require(kind == "blob", "UNSUPPORTED_DELIVERED_FILE")
+                return {"kind": "symlink" if mode == "120000" else "file",
+                        "sha256": h.digest(h.git(root, "show", commit + ":" + name)),
+                        "executable": mode == "100755"}
+    return {"kind": "missing", "sha256": None, "executable": False}
 
 
 def cleanup_record(root):
@@ -749,8 +1006,10 @@ def finish(root, expected):
         else:
             remote_state = h.git(root, "show", remote["head"] + ":" + h.STATE_PATH, optional=True)
             h.require(remote_state is not None and h.digest(remote_state) == expected, "HANDOFF_MUST_BE_DELIVERED_FIRST")
+        local_only = h.local_only_inputs(root, p)
         h.require(fixed or all(f["status"] is None and f["kind"] != "missing" and bool(f["index"])
-                      and all(e["stage"] == 0 for e in f["index"]) for f in current["files"].values()),
+                      and all(e["stage"] == 0 for e in f["index"])
+                      for name, f in current["files"].items() if name not in local_only),
                   "WORK_NOT_CLEAN_AND_AVAILABLE")
         receipts = [r for r in p["context"]["validation"] if isinstance(r, dict) and r.get("kind") in ("phase_f", "paper_catalog_gate")]
         h.require(bool(receipts) and receipts[-1].get("exit_code") == 0, "MECHANICAL_GATE_RECEIPT_REQUIRED")
@@ -806,8 +1065,45 @@ def finish(root, expected):
                 "verification": receipt}
 
 
+def confirm_remote_final_delivery(root):
+    """Read-only check of a delivery 3 pushed by the post-Push-2 Actions run.
+
+    After `git pull --ff-only` this checkout holds that commit but no local
+    cleanup record (the runner confirmed cleanup in its own checkout). Verify
+    the same facts CI does: HEAD deletes the parent's fixed-delivery handoff,
+    its completion receipt validates, the work is committed and HEAD is the
+    freshly observed origin branch head.
+    """
+    previous = h.git(root, "show", "HEAD^:" + h.STATE_PATH, optional=True)
+    h.require(previous is not None and h.git(root, "ls-tree", "HEAD", "--", h.STATE_PATH) == b"",
+              "CLEANUP_RECORD_MISSING_OR_INVALID")
+    state, checkpoint_sha = h.parse_state(previous)
+    if state["schema"] == h.SCHEMA:
+        state = h.hydrate_v3(root, state, checkpoint_sha)
+    p = state["publication"]
+    h.require(fixed_delivery(p), "CLEANUP_RECORD_MISSING_OR_INVALID")
+    receipt = h.git(root, "show", "HEAD:" + completion_path(p), optional=True)
+    h.require(receipt is not None, "FINAL_RECEIPT_NOT_IN_DELIVERY_COMMIT")
+    validate_final_receipt(root, h.decode_json(receipt.decode("utf-8")), "HEAD")
+    h.require(not h.status_paths(root), "FINAL_DELIVERY_WORK_NOT_COMMITTED")
+    head = h.text_git(root, "rev-parse", "HEAD")
+    remote = h.remote_observation(root, head, h.branch(root), True)
+    h.require(remote["status"] == "observed" and remote["head"] == head, "CLEANUP_NOT_DELIVERED")
+    observation = h.observation_path(root)
+    if observation.exists():
+        observation.unlink()  # stale Push-2 observation of this checkout
+    return {"status": "publication_completed", "publication_completed": True,
+            "cleanup_commit": head, "content_id": p["content_id"], "delivered_by": "remote_final_delivery"}
+
+
 def confirm_cleanup(root):
     with h.locked(root):
+        if not pending(root) and h.safe_path(root, h.STATE_PATH).exists():
+            state, sha = h.load_state(root)
+            pull = remote_delivery_ahead(root, state, h.current_snapshot(root, state, check_remote=True), sha)
+            h.require(pull is None, pull)
+        if not pending(root) and not h.safe_path(root, h.STATE_PATH).exists():
+            return confirm_remote_final_delivery(root)
         data = cleanup_record(root)
         h.require(not h.safe_path(root, h.STATE_PATH).exists(), "HANDOFF_STILL_EXISTS")
         state = data["state"]
@@ -862,6 +1158,13 @@ def restore_cleanup(root):
         sha = h.write_atomic(root, state)
         metadata_path(root).unlink()
         return {"status": "checkpoint_restored", "sha256": sha, "publication_completed": False}
+
+
+def paper_only_before_final(publication):
+    """Paper-only has one delivery, the completed final handoff; earlier
+    checkpoints stay local (stage-delivery refuses them), so a stop before
+    then has nothing to push."""
+    return h.publication_category(publication) == "paper-only" and h.next_step(publication) is not None
 
 
 def guard(root, phase):
@@ -921,8 +1224,9 @@ def guard(root, phase):
                           and all(a["status"] in ("confirmed", "not_required") for a in p["context"]["approvals"])
                           and all(a["status"] not in ("started", "outcome_unknown") for a in p["external_actions"]),
                           "CI_UNFINISHED_HANDOFF_DELETION")
+                local_only = h.local_only_inputs(root, p)
                 for name, info in state["snapshot"]["files"].items():
-                    actual = h.file_info(root, name)
+                    actual = h.delivered_file_info(root, name, local_only)
                     h.require(all(actual[k] == info[k] for k in actual), "CI_CLEANUP_CHANGED_WORK")
                 for name, sha in state["snapshot"]["workflow"].items():
                     h.require(h.file_info(root, name)["sha256"] == sha, "CI_CLEANUP_CHANGED_WORKFLOW")
@@ -953,8 +1257,9 @@ def guard(root, phase):
             require_delivery_parent(root, state["publication"], number, parent_revision)
     if phase == "ci":
         # CI is detached and the recorded index/status may predate the checkpoint commit.
+        local_only = h.local_only_inputs(root, state["publication"])
         for p, info in state["snapshot"]["files"].items():
-            actual = h.file_info(root, p)
+            actual = h.delivered_file_info(root, p, local_only)
             h.require(all(actual[k] == info[k] for k in actual), "COMMITTED_CHECKPOINT_FILE_MISMATCH:" + p)
         for p, sha in state["snapshot"]["workflow"].items():
             h.require(h.file_info(root, p)["sha256"] == sha, "COMMITTED_WORKFLOW_MISMATCH:" + p)
@@ -964,7 +1269,8 @@ def guard(root, phase):
         if phase == "pre-commit":
             h.require(h.git(root, "show", ":" + h.STATE_PATH, optional=True) == path.read_bytes(),
                       "LATEST_HANDOFF_MUST_BE_STAGED")
-        elif phase == 'stop' and (not fixed_delivery(state['publication']) or delivery_boundary(state['publication'])):
+        elif phase == 'stop' and (not fixed_delivery(state['publication']) or delivery_boundary(state['publication'])) \
+                and not paper_only_before_final(state['publication']):
             if fixed_delivery(state['publication']):
                 require_fixed_cut_readiness(state['publication'], root)
             require_step_delivery(root, state, h.digest(path.read_bytes()))

@@ -30,7 +30,7 @@ LDJSON_RE = re.compile(
 def iter_html_files():
     for path in sorted(ROOT.rglob("*.html")):
         rel = path.relative_to(ROOT)
-        if any(part in EXCLUDE_DIRS for part in rel.parts):
+        if any(part in EXCLUDE_DIRS or part.startswith(".") for part in rel.parts):
             continue
         if rel.name in EXCLUDE_FILES:
             continue
@@ -121,9 +121,39 @@ def _end_with_newline(html: str, end: int) -> int:
     return end
 
 
-def process(path: Path) -> bool:
+def _corpus() -> dict:
+    try:
+        return json.loads((ROOT / "plus" / "faq-corpus.json").read_text(encoding="utf-8")).get("byContent", {})
+    except (OSError, ValueError, AttributeError):
+        return {}
+
+
+def unarchived_nodes(html: str, content_id: str, corpus: dict) -> int:
+    """How many FAQPage/#flashcards nodes on the page are NOT already in
+    plus/faq-corpus.json under content_id. Stripping those would delete the
+    only copy (the extractor's migration ran once, in 2026-08)."""
+    here = str(Path(__file__).resolve().parent)
+    if here not in sys.path:
+        sys.path.insert(0, here)
+    from faq_corpus_extract import extract_nodes
+    faq_pages, term_sets = extract_nodes(html)
+    entry = corpus.get(content_id) or {}
+    have = [*entry.get("faqPages", []), *entry.get("definedTermSets", [])]
+    return sum(1 for n in (*faq_pages, *term_sets) if n not in have)
+
+
+def process(path: Path, force: bool = False, corpus: dict | None = None) -> bool:
     html = path.read_text(encoding="utf-8")
     new_html, changed = strip_html(html, str(path.relative_to(ROOT)))
+    if changed and not force:
+        cid = path.relative_to(ROOT).as_posix().removesuffix(".html")
+        missing = unarchived_nodes(html, cid, _corpus() if corpus is None else corpus)
+        if missing:
+            print(f"REFUSED: {cid}: {missing} FAQ/flashcards node(s) on the page are not in "
+                  f"plus/faq-corpus.json — stripping them would delete the only copy. Move "
+                  f"them into byContent[\"{cid}\"] first (step 4.12), or pass --force.",
+                  file=sys.stderr)
+            return False
     if changed:
         path.write_text(new_html, encoding="utf-8")
     return changed
@@ -133,6 +163,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("paths", nargs="*", help="one or more page paths")
     ap.add_argument("--all", action="store_true", help="sweep every page site-wide")
+    ap.add_argument("--force", action="store_true",
+                    help="strip even nodes that plus/faq-corpus.json does not hold (deletes them)")
     args = ap.parse_args()
 
     if not args.all and not args.paths:
@@ -140,9 +172,10 @@ def main():
 
     targets = list(iter_html_files()) if args.all else [Path(p).resolve() for p in args.paths]
 
+    corpus = _corpus()
     touched = 0
     for path in targets:
-        if process(path):
+        if process(path, args.force, corpus):
             touched += 1
             print(f"stripped: {path.relative_to(ROOT)}")
 

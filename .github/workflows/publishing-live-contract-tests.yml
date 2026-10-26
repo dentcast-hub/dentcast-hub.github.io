@@ -6,7 +6,10 @@ on:
       - 'AGENTS.md'
       - 'CLAUDE.md'
       - '.cursor/**'
+      - '.cursor/hooks.json'
       - '.claude/**'
+      - '.claude/settings.json'
+      - '.agents/**'
       - '.codex/**'
       - '.dentcast/PUBLISH-HANDOFF.md'
       - '.dentcast/publication-reports/**'
@@ -23,10 +26,14 @@ on:
       - 'tests/test_dentcast_publish*.py'
       - 'tests/test_dentcast_agent_entrypoint_migration.py'
       - 'tests/publishing-hooks.test.mjs'
+      - 'tests/test_dentcast_session_hooks.py'
+      - 'tests/test_verify_publish_checks.py'
+      - 'tests/fixtures/**'
+      - 'scripts/**'
       - 'scripts/*publishing*.mjs'
       - 'scripts/publishing-stop-guard.py'
       - 'scripts/cursor-parity-notice.mjs'
-      - '.githooks/pre-commit'
+      - '.githooks/**'
       - '.workflow-sync.json'
       - '.github/workflows/publishing-live-contract-tests.yml'
       - '.github/workflows/sitemap_only.yml'
@@ -40,6 +47,12 @@ on:
       - '.github/scripts/*.py'
       - 'tools/check_publish_merge_gate.py'
       - 'tests/test_publish_merge_gate.py'
+      - 'plus/exam-questions.json'
+      - '.dentcast/exam-edit-approvals.json'
+      - 'tools/validate_exam_questions.py'
+      - 'tools/faq_corpus_extract.py'
+      - 'tools/strip_faq_schema.py'
+      - 'tests/test_exam_bank_guard.py'
   pull_request:
   workflow_dispatch:
 permissions:
@@ -73,8 +86,30 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_dentcast_publish*.py' -v
       - name: Check first-cut GitHub Git-Data transport (no scientific mocks)
         run: python3 -m unittest discover -s tests -p 'test_dentcast_connected_first_push.py' -v
+      - name: Check session-start, Cursor and Codex hook commands
+        run: python3 -m unittest discover -s tests -p test_dentcast_session_hooks.py -v
+      - name: Check Phase F verifier rows
+        run: python3 -m unittest discover -s tests -p test_verify_publish_checks.py -v
       - name: Check hook adapters and shared rule routing
         run: node --test tests/publishing-hooks.test.mjs
+      - name: Check prior data guards (exam bank append-only, bank files kept)
+        run: python3 -m unittest discover -s tests -p test_exam_bank_guard.py -v
+      - name: Existing exam questions are never removed or edited
+        env:
+          PR_BASE_REF: ${{ github.base_ref }}
+          EVENT_BEFORE: ${{ github.event.before }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          baseline=()
+          if [[ "$EVENT_NAME" == "pull_request" ]]; then
+            git fetch --no-tags origin "refs/heads/$PR_BASE_REF:refs/remotes/origin/$PR_BASE_REF"
+            baseline=(--baseline "origin/$PR_BASE_REF")
+          elif [[ "$EVENT_NAME" == "push" && -n "$EVENT_BEFORE" && ! "$EVENT_BEFORE" =~ ^0+$ ]] \
+               && git cat-file -e "$EVENT_BEFORE^{commit}" 2>/dev/null; then
+            baseline=(--baseline "$EVENT_BEFORE")
+          fi
+          python3 tools/validate_exam_questions.py "${baseline[@]}"
       - name: Inspect committed checkpoint or cleanup boundary
         env:
           PR_BASE_REF: ${{ github.base_ref }}
@@ -93,7 +128,7 @@ jobs:
           else
             diff_range="$EVENT_BEFORE..$EVENT_SHA"
           fi
-          if git diff --name-only "$diff_range" | grep -Eq '^(.dentcast/PUBLISH-HANDOFF.md|dentcast-brain.json|dentcast.json|chairside/|dentcast-plus/|episodes/|glossary/|insight/|litecast/|metanotes/|notecast/|plak-sefr/|promptologist/|sharehub/|taraz/|plus/des-scores.json)'; then
+          if git -c core.quotepath=false diff --name-only "$diff_range" | grep -Eq '^(.dentcast/PUBLISH-HANDOFF.md|dentcast-brain.json|dentcast.json|chairside/|dentcast-plus/|episodes/|glossary/|insight/|litecast/|metanotes/|notecast/|plak-sefr/|dentai/promptologist/|sharehub/|taraz/|plus/des-scores.json)'; then
             python3 tools/dentcast_publish_handoff.py guard --phase ci
           else
             echo "No publication or handoff files changed; checkpoint guard not applicable."

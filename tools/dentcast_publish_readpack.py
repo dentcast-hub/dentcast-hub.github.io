@@ -16,22 +16,28 @@ import sys
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from dentcast_publish_handoff import canonical_category  # noqa: E402
 WORKFLOW = '.dentcast/workflows/'
 MODULES = WORKFLOW + 'modules/'
 
 # These blobs were independently inspected at main c16554c (PR #971) and
 # re-audited after the v2 checkpoint-preface update: only the always-kept
 # preface changed; every boundary and omitted section is byte-identical.
+# Re-audited 2026-10-26 (doc-contradiction fixes): 03 edits only the LiteCast
+# branch it omits for non-LiteCast; 04 only the always-kept capsule table; 06
+# only paper-branch text (omitted only without a paper); 12 only the kept
+# Final output summary. No boundary heading changed.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
-    '03-litecast-and-page.md': '4258a930b01c8691dc3c38636c0f4ab2b6592cca',
-    '04-taxonomy-and-navigation.md': '25fc88e1d657ae9eb5ad0fdd5d9ba6dfca6dba38',
+    '03-litecast-and-page.md': '28ab4d554f9e5631724d3133177332843cc0c900',
+    '04-taxonomy-and-navigation.md': '539fd195fb90d19587ba8b243782355228a14238',
     '05-semantic-linking.md': '760dcf77dd3baff173aebb2d40492604fb096d1f',
-    '06-paper-ingestion.md': '359b9aa2548ddb490f7fff4c1a4b874da80cdd51',
+    '06-paper-ingestion.md': '543aa4cc50f54b55adecbd6d7826cc5aecc134dd',
     '08-des-fidelity.md': '5b67df3b88fb89f427d93116631a715c04534e82',
     '09-challenge.md': 'dd46a16eafabdd4b40813a0578eeca4a81dcd44d',
-    '12-english-notify-verify.md': '41e4cc020caf406501ce762a1008cf07b018def1',
+    '12-english-notify-verify.md': '37a2ccdfa5f839821bdaa52063e9f6dc253ee8ba',
 }
 
 REQUIRED = [
@@ -52,8 +58,24 @@ REQUIRED = [
 KNOWN_CATEGORIES = frozenset({
     'sharehub', 'chairside', 'insight', 'clinical', 'notecast', 'episode',
     'litecast', 'glossary', 'metanotes', 'dentai', 'photocast',
-    'dentcast', 'dentcast-plus', 'promptologist',
+    'dentcast', 'dentcast-plus', 'promptologist', 'plak_sefr', 'taraz',
 })
+
+# The handoff stores the brain `type` (clinical, meta, dentcast_plus, plak_sefr,
+# ...) and init/bind accept spellings such as Insight or «اینسایت». A name this
+# map already models keeps its exact meaning ('dentcast' stays the broad,
+# keep-all-navigation type; 'episode' the core-episode route); any other
+# spelling selects exactly what its canonical brain type selects.
+_SELECTOR_NAMES = {'meta': 'metanotes', 'dentcast_plus': 'dentcast-plus'}
+
+
+def selector_category(value):
+    folded = value.casefold() if isinstance(value, str) else value
+    if folded in KNOWN_CATEGORIES:
+        return folded
+    canonical = canonical_category(value)
+    return _SELECTOR_NAMES.get(canonical, canonical)
+
 
 class UnsafeSelection(ValueError):
     pass
@@ -153,6 +175,7 @@ def route_spans(name, lines, *, category, attached_paper, challenge):
 
 def build(root, *, category, attached_paper, challenge, after_intake=False):
     root = Path(root).resolve(strict=True)
+    category = selector_category(category)
     manifest = {
         'schema': 'dentcast_publish_readpack_v1',
         'classification': {'category': category, 'attached_paper': attached_paper,
@@ -252,7 +275,7 @@ def main(argv=None):
     if a.output.resolve() == a.manifest.resolve():
         p.error('--output and --manifest must differ')
     try:
-        pack, report = build(a.root, category=a.category.casefold(),
+        pack, report = build(a.root, category=a.category,
                              attached_paper=a.attached_paper, challenge=a.challenge,
                              after_intake=a.after_intake)
         atomic_write(a.output, pack)

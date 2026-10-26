@@ -42,12 +42,15 @@ function isExcludedContentId(contentId) {
 
 // The specialist content folders a چالش can be published into (handoff §0 —
 // "an existing folder, chairside/, insight/, whichever the founder names").
+// Must cover every folder dentcast-brain.json has entries in (taraz/ and
+// plak-sefr/ were missing, so a چالش there could never pass Phase F 4.14).
 // Everything else (plus/, plus-api/, tools/, assets/, pillar/, up-board/,
 // spot/, glossary/, …) is infrastructure or a differently-shaped generated
 // page and is never walked.
 const CONTENT_DIRS = [
   'chairside', 'dentai', 'dentcast-plus', 'episodes', 'insight',
-  'litecast', 'metanotes', 'notecast', 'sharehub',
+  'litecast', 'metanotes', 'notecast', 'photocast', 'plak-sefr',
+  'sharehub', 'taraz',
 ];
 
 function walkHtml(dir) {
@@ -59,6 +62,7 @@ function walkHtml(dir) {
     return out;
   }
   for (const name of entries) {
+    if (name.startsWith('.')) continue; // hidden dirs hold no live page
     const full = join(dir, name);
     const stat = statSync(full);
     if (stat.isDirectory()) out.push(...walkHtml(full));

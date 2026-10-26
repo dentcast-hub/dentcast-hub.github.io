@@ -31,6 +31,30 @@ feature ref may test transport without writing a commit/ref. Do not probe by
 committing on main. If transport fails, select an available connector/pack/blob
 route before heavy work. Report the real limitation once and preserve local work.
 
+Start a new publication branch from a freshly fetched `origin/main`
+(`git fetch origin main`, then branch from `origin/main`), never from a local
+`main` that may be stale. Before resuming a handoff in a shallow clone
+(`git rev-parse --is-shallow-repository` prints `true`, the usual cloud-session
+checkout), deepen it first with `git fetch --deepen=<N>` or `git fetch --unshallow`
+so the Push-1/Push-2 commits and the base the tools compare against are present.
+A helper refusal `SHALLOW_CLONE_DEEPEN_REQUIRED` means exactly this: run
+`git fetch --deepen=50 origin` (repeat, or `git fetch --unshallow`, if it persists)
+and retry the same command. A `TOOL_OLDER_THAN_ORIGIN_MAIN` warning from the
+helper means this checkout's publishing tool lacks `origin/main`'s latest change:
+before starting a publication, branch from `origin/main` instead of continuing on
+the stale base. A cloud session's own `ccr-*` branch already exists, so move that
+still-empty branch with `git switch -C <that-branch> --no-track origin/main`
+(`-c` fails with "already exists"; `--no-track` keeps `git pull`/`git push` on the
+publication branch instead of `main`); elsewhere use
+`git switch -c <branch> --no-track origin/main`. Never move a branch that already
+holds commits: the warning then names `git merge --no-edit origin/main` instead.
+
+`content_id` is `<section>/<slug>` without `.html`, exactly the page path minus
+its extension (e.g. `insight/insight-99`, `dentai/promptologist/<slug>`); the page,
+the English mirror `<section>/en/<slug>.html` and the receipts derive from it, and
+`init`/`bind` refuse other forms (`CONTENT_ID_INVALID`). Paper-only keeps its
+catalog id form.
+
 Before push, long transfer, branch update and merge, freshly read the exact PR,
 its state/merged flag, head branch/repository/SHA and destination branch/SHA.
 `check-pr --repository owner/repo --number N --expected-head SHA --expected-base SHA
@@ -230,7 +254,9 @@ Do not use this local WAL option as proof of work in a GitHub-only agent.
 
 A reconciliation note is not replacement evidence. Enroll each local source in
 `target_paths` and bind its bytes in the existing `context.inputs` list using
-`{"path":"sources/paper.txt","sha256":"<actual SHA-256>"}`. Existing
+`{"path":"sources/paper.txt","sha256":"<actual SHA-256>"}`. The path and hash are written into the public handoff and receipt, so
+give a private input a neutral name before enrolling it (`inputs/paper-1.pdf`,
+never the paper title, author or patient name); only its bytes stay local. Existing
 `{"ref":"<enrolled local path>","sha256":"..."}` entries are also checked.
 URLs/non-file references still require the operator's real source verification;
 these tools do not fetch or assess a paper. Watched paths cannot be removed to
@@ -349,6 +375,9 @@ the author's real explicit confirmation as `scope="authored-intro"`,
 `origin="not_applicable"` only for a genuine reviewed exception (e.g. the
 page already has ordinary prose and no new lead was created), with a specific
 reason in `source_ref`. Never infer approval from the absence of a record.
+Record `first_cut_lead_provenance_v1` before completing C.4.9: completing (or
+skipping) C.4.9 in the ledger already requires it, together with the other
+first-cut checks above, so the step write itself is refused without it.
 
 The pre-commit guard and the independent committed CI guard both reject a
 missing declaration or outstanding questions. These checks do not create a
@@ -435,6 +464,8 @@ Immediately after the second-delivery push is confirmed, tell the user that the 
 
 Stay with the run and poll at bounded intervals until it reaches a terminal state; do not end the turn or leave the user without a status while the job is queued or running. If preflight skips or no run appears, inspect the event, branch and handoff before reporting that Actions started. If the run succeeds, verify that delivery 3 is based on the exact Push-2 SHA, the completion receipt is present, the active handoff is removed, and cleanup is confirmed before reporting publication complete. If it fails, inspect the uploaded logs/recovery artifact, diagnose and resume through the guarded recovery path where possible, and keep the user informed of the real status.
 
+Delivery 3 is a commit that Actions pushes, so the local checkout still holds the Push-2 state (and the active handoff) after the run succeeds. Run `git pull --ff-only` on the publication branch first, and always before ending the session; only then does the handoff disappear locally and delivery 3, the completion receipt and cleanup can be verified: after the pull, `confirm-cleanup` checks them read-only from the pulled HEAD (no local cleanup record exists). It reruns Phase F, which needs `origin/main` for its Pulse and append-only baselines: in a checkout that tracks only the publication branch (a single-branch or depth-limited clone) it fails with `FINAL_DELIVERY_VERIFICATION_FAILED` naming that row, so run `git fetch origin +refs/heads/main:refs/remotes/origin/main` and retry. A pull that is not a fast-forward means the branch moved unexpectedly: stop and inspect instead of merging. For a v2 run never run `restore-cleanup`, and never run `confirm-cleanup` before the pull: the workflow performed the cleanup and no local cleanup is pending. Until the pull, the stop guard reports `DELIVERY_3_ON_REMOTE_PULL_REQUIRED` (delivery 3 already fetched) or `REMOTE_BRANCH_ADVANCED_NOT_FETCHED` (origin moved past this checkout); both clear with the pull, never with reset, force-push or cleanup commands. Monitoring does not need `gh`: in a cloud session without it, use the GitHub MCP tools (`actions_list` for the branch's workflow runs of `post-cut2-mechanical.yml`, `actions_get` for a run's status and conclusion, `get_job_logs` for failed jobs) or the equivalent connected GitHub reads available to the client. The logs and recovery bundle are the run artifact `post-cut2-<Push-2 SHA>` (kept 14 days); fetch it through the Actions API (list the run's artifacts, then download that artifact's zip), not from the branch, which a failed run leaves at Push 2.
+
 A failed run pushes nothing; the branch stays at the Push-2 commit. Recover from that commit:
 
 - **Transient cause** (runner lost, network, a service outage): re-run the same commit with `workflow_dispatch` (`target_branch`, `expected_head` = the Push-2 SHA). Do not commit anything. The run uses the tools on the publication branch, so a tool defect is not transient: report it, fix it on `main` first, and bring it in under the existing workflow-change rule (invalidation from `rules`).
@@ -442,6 +473,8 @@ A failed run pushes nothing; the branch stays at the Push-2 commit. Recover from
 - **Cause in the publication itself** (Phase F names a page, entry, approval or text): in the checkout at the Push-2 commit, run `invalidate --from-step <first affected step>` with the real cause (`C.6` when only a frozen approval/title/caption is wrong). Approvals return to `pending` and their earlier decisions stay in the `dependency_invalidation_v1` audit; restore each one from there with the founder's actual correction, fix any affected bytes, and redo the invalidated steps through `C.6`. Then stage the fix plus the handoff and push **one** reconciliation commit. That push starts the workflow again from the new commit; delivery 3 and the final receipt accept the audited reconciliation commit between Push 2 and delivery 3.
 
 Never edit a frozen approval with `record` after Push 2, never run C.8 onward locally while the workflow can still run, and never push a new run while an earlier run of the same branch is still in progress.
+
+A completed publication PR whose `main` advanced (another publication merged) usually conflicts on the Pulse, the homepage counters and the version stamp, so GitHub builds no merge ref and the PR checks do not run. Update it with `git merge origin/main` on the completed branch, never by re-running the publication: keep both sides' entries and Pulse lines, then run `python3 tools/update-homepage-counters.py` and `python3 tools/stamp-version.py` (last) and include their output in the merge commit or in a following commit that changes only those recomputed values. Until the stamp is rerun, the merge gate fails on the Phase F `7 version` rows.
 
 All editorial work (including tags, Pulse and the English writing itself)
 must be completed before the second boundary. If any mechanical operation
@@ -467,6 +500,14 @@ already recorded in the latest checkpoint, and never commits or pushes. Failed t
 cut. Preserve work and report the real error; retrying the same unaccepted
 logical delivery does not create another milestone. Never advance by pretending
 a failed push succeeded. The helper does not commit or push automatically.
+After a cut is committed, the first write is starting the next step (`step --status
+started` or `advance --start-next`); any other write on top of the committed cut
+handoff (except an audited `invalidate`) is refused up front with
+`RECORD_AFTER_DELIVERED_CUT_START_NEXT_STEP_FIRST`: start the next step, then
+record the change. If a handoff was nevertheless changed after the pushed cut, the
+next step and the Stop guard refuse with `PREVIOUS_STEP_HANDOFF_NOT_DELIVERED`; if
+that was only such a record, restore the delivered file (`git restore
+.dentcast/PUBLISH-HANDOFF.md`), start the next step, then record the change again.
 
 `init` records `fixed_three_deliveries_v1` in semantic decisions for new page
 runs, including unassigned intake; it cannot subsequently be removed. Pre-commit
@@ -483,7 +524,9 @@ it requires delivered work; during final cleanup it requires final confirmation.
 A checkpoint written in an earlier run without the policy marker retains the
 legacy cleanup path so interrupted older work remains recoverable. Paper-only
 is a separate no-page route and keeps its catalog verification/cleanup contract;
-do not invent page/DES cuts for it. Never remove a policy marker to claim legacy.
+do not invent page/DES cuts for it. Its one delivery is the completed final
+handoff, so the Stop guard permits consistent local progress until G is resolved
+and then requires that final handoff delivered. Never remove a policy marker to claim legacy.
 
 The v3 handoff remains semantic-only. Git reconstructs committed fingerprints;
 private same-checkout observations support local progress. Do not create commits
@@ -516,7 +559,7 @@ python3 tools/dentcast_publish_handoff.py verify --expected-sha256 <digest> --ex
 
 Omit an expectation only if the user genuinely provided neither corresponding string; never derive an alternative from the rendered page. Do not use `--all` or `--last`. The helper captures exit code, output digest, expected strings and summary, marks F completed/failed, and preserves state on failure. It does not suppress warnings; review the actual verifier output and source rules. The helper's receipt is metadata, not a substitute for the scientific and human gates. Re-run verification after any affected change.
 
-For paper-only, after Parts 1/2 and before reporting, run `verify --expected-sha256 <digest> --catalog-id <actual-P-id>`. It rechecks the actual catalog entry, Drive-link identities and a recorded completed Drive-action receipt. The agent must still verify the real upload, correct folder, enriched schema and metadata with the canonical tools; the local gate cannot contact Drive or replace those approvals. This is the documented no-page exception, not a synthetic page Phase F.
+For paper-only, after Parts 1/2 and before reporting, run `verify --expected-sha256 <digest> --catalog-id <actual-P-id>`. It rechecks the actual catalog entry, Drive-link identities and a recorded completed Drive-action receipt. The agent must still verify the real upload, correct folder, enriched schema and metadata with the canonical tools; the local gate cannot contact Drive or replace those approvals. This is the documented no-page exception, not a synthetic page Phase F. After G, record `context.delivery` (scope + evidence of the verified Drive filing) **before** staging: `finish` requires it on that exact delivered handoff, so `stage-delivery` refuses the final handoff without it (`DELIVERY_EVIDENCE_REQUIRED`). Stage its catalog work and handoff for the commit with the same `stage-delivery --expected-sha256 <digest> --path <scoped-path>` used at page cuts (an ignored local PDF is never staged), commit and push it once, then run `finish`, commit/push only the handoff deletion and run `confirm-cleanup`; the Stop guard blocks between that push and `finish`.
 
 Finish report G and record its real reference. `context.delivery` must contain
 objects with nonempty `scope` and `evidence` lists for actual required external
@@ -583,7 +626,9 @@ be inferred from missing results. Never fabricate approval or copy one from
 another publication. Keep private conversations out of Git. The verifier
 checks the reference's presence and scope; the agent must verify its truth.
 Hash with `hashlib.sha256(Path(page).read_text(encoding="utf-8").encode("utf-8")).hexdigest()`
-after builders finish. Any later page change invalidates the record: reconcile
+after builders finish. A v2 run hashes the page delivered at C.6 (its builders
+run after Push 2); Phase F also accepts that page plus only the single Phase E
+`dc-notify` marker. Any later page change invalidates the record: reconcile
 its scope with the real approval before updating it, and rerun Phase F. Add
 `.dentcast/des-exemptions.json` to this run's watched target paths when used.
 
@@ -602,9 +647,9 @@ without rerunning model calls; scoring prompts and voting are unchanged.
 
 ## Hook and CI coverage
 
-- `scripts/cursor-parity-notice.mjs` recognizes active nested modules/global rules, avoids backup snapshots, reminds shared client edits and active-run checkpointing, and never writes a state or marks work done.
-- The existing Claude/Codex hook configurations call the advisory adapter and a Stop guard. These adapters require actual native client support; their JSON presence is not a runtime certification. Cursor's always-on rules and every client's explicit CLI protocol remain authoritative. Shell edits bypassing a file hook are caught by Stop/pre-commit checks when those hooks are installed.
-- Install local Git hooks once per checkout with `git config core.hooksPath .githooks` (the Claude Code and Codex SessionStart hooks, and Cursor's `.cursor/hooks.json` `sessionStart` plus `beforeShellExecution` hooks, set it automatically when it is unset; the shell hook also covers Cursor CLI and builds without `sessionStart`). The pre-commit guard permits only the two fixed active checkpoints for new page runs, blocks stale/unstaged checkpoints and unguarded deletion, and validates the combined third delivery. Legacy and paper-only cleanup remains compatible. It does not infer a publication from arbitrary content edits when no handoff exists. GitHub API commits bypass local hooks, so agents using them must preserve the same contract and CI verifies committed checkpoints/cleanup boundaries.
+- `scripts/cursor-parity-notice.mjs` recognizes active nested modules/global rules, the `.claude/skills/` and `.agents/skills/` copies (it warns when they are no longer byte-identical) and the three hook configurations, avoids backup snapshots, reminds shared client edits and active-run checkpointing, and never writes publication state or marks work done. After a Bash call it compares `git status` with its previous snapshot (a small file in the OS temp directory) and stays silent unless a path changed since then; the repository root comes from the hook payload's `cwd`, because in worktree subagents `CLAUDE_PROJECT_DIR` can name the main checkout.
+- The existing Claude/Codex hook configurations call the advisory adapter (after `Edit`, `Write`, `MultiEdit` and `Bash`) and a Stop guard; `.cursor/hooks.json` calls the same two scripts with `--cursor` from `afterFileEdit` (advice on stderr, since that event accepts no output) and `stop` (`followup_message`, at most three automatic follow-ups). These adapters require actual native client support; their JSON presence is not a runtime certification. Cursor's always-on rules and every client's explicit CLI protocol remain authoritative. Shell edits bypassing a file hook are caught by Stop/pre-commit checks when those hooks are installed.
+- Install local Git hooks once per checkout with `git config core.hooksPath .githooks` (the Claude Code and Codex SessionStart hooks, and Cursor's `.cursor/hooks.json` `sessionStart` plus `beforeShellExecution` hooks, set it to `.githooks` automatically unless it already resolves to this checkout's `.githooks`, so a stale or global value cannot disable the pre-commit guard; the shell hook also covers Cursor CLI and builds without `sessionStart`). The pre-commit guard permits only the two fixed active checkpoints for new page runs, blocks stale/unstaged checkpoints and unguarded deletion, and validates the combined third delivery. Legacy and paper-only cleanup remains compatible. It does not infer a publication from arbitrary content edits when no handoff exists. GitHub API commits bypass local hooks, so agents using them must preserve the same contract and CI verifies committed checkpoints/cleanup boundaries.
 - `.github/workflows/publishing-live-contract-tests.yml` runs on main, fix/refactor branches and PRs. It tests active contracts, recovery/cleanup, hooks, and the committed-state boundary, including nested module/global changes. Historical staging CI remains separate and is not the active live-workflow certification.
 
 Read `PUBLISHING-FINAL-REPORT.md` for integrated CLI/Git/discovery acceptance and remaining native-client/live-publication limits. Tests that use fixture verifiers prove guard behavior, not scientific correctness or a real published page.

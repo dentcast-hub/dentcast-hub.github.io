@@ -6,7 +6,7 @@ import copy
 import io
 import json
 import subprocess
-from contextlib import redirect_stdout
+from contextlib import redirect_stderr, redirect_stdout
 import unittest
 from unittest.mock import patch
 
@@ -222,6 +222,54 @@ class ThreeDeliveriesTests(unittest.TestCase):
                             lc.stage_delivery, self.root, sha, ['note.html'])
         self.assertEqual(h.git(self.root, 'diff', '--cached', '--name-only'), b'')
 
+    def complete_three(self):
+        sha = self.prepare_final()
+        lc.finish(self.root, sha)
+        report = lc.completion_path({'content_id': 'note'})
+        tech = lc.technical_report_path({'content_id': 'note', 'category': 'insight'})
+        run(self.root, 'add', '-A', 'note.html', h.STATE_PATH, report, tech)
+        run(self.root, 'commit', '-m', 'delivery 3')
+        run(self.root, 'push', 'origin', 'main')
+        lc.confirm_cleanup(self.root)
+        return report
+
+    def test_merge_gate_checks_workflow_against_the_delivered_commit(self):
+        report = self.complete_three()
+        delivered = h.text_git(self.root, 'rev-parse', 'HEAD')
+        # Main changes an active rule after delivery but before the PR merges.
+        (self.root/'.dentcast/workflows/README.md').write_text('rules changed on main\n')
+        run(self.root, 'commit', '-am', 'main: workflow edit landed mid-run')
+        self.assertEqual(merge.verify_publication_history(self.root, self.baseline, []), {'note'})
+        data = h.decode_json((self.root/report).read_text())
+        self.assertEqual(lc.validate_final_receipt(self.root, data, delivered), 'note')
+        # Without a delivery commit (local finish) the live workspace is still checked.
+        self.assert_blocked('FINAL_RECEIPT_WORKFLOW_MISMATCH', lc.validate_final_receipt,
+                            self.root, data)
+
+    def test_ignored_private_input_is_local_only_after_delivery(self):
+        (self.root/'.ignored').mkdir()
+        pdf = self.root/'.ignored/paper.pdf'
+        pdf.write_bytes(b'%PDF private fixture')
+        self.p['target_paths'].append('.ignored/paper.pdf')
+        self.p['context']['inputs'].append(
+            {'path': '.ignored/paper.pdf', 'sha256': h.file_info(self.root, '.ignored/paper.pdf')['sha256']})
+        sha = self.walk(self.start(), 'C.4.9')
+        self.assert_blocked('LOCAL_ONLY_INPUT_IS_NEVER_DELIVERED', lc.stage_delivery,
+                            self.root, sha, ['.ignored/paper.pdf'])
+        sha = self.deliver('delivery 1')
+        self.assertEqual(h.text_git(self.root, 'ls-tree', '-r', '--name-only', 'HEAD', '.ignored'), '')
+        # Present and unchanged after the cut: the next step may start.
+        sha = lc.step(self.root, sha, 'C.4.10.1', 'started', [], None)['sha256']
+        sha = lc.step(self.root, sha, 'C.4.10.1', 'completed', ['fixture:part-1'], None)['sha256']
+        # Absent (another checkout or removed after delivery): local-only, allowed.
+        pdf.unlink()
+        sha = lc.step(self.root, sha, 'C.4.10.2', 'started', [], None)['sha256']
+        # Present with different bytes: still caught against the bound hash.
+        pdf.write_bytes(b'%PDF tampered')
+        self.assert_blocked('INPUT_BYTES_CHANGED_RECONCILE:.ignored/paper.pdf', lc.step,
+                            self.root, sha, 'C.4.10.2', 'completed', ['fixture:part-2'], None)
+        self.assertEqual(h.inspect(self.root)['portability_reason'], 'UNTRACKED_OR_IGNORED_REQUIRED_FILE')
+
     def test_stage_delivery_only_at_a_fixed_cut(self):
         sha = self.walk(self.start(), 'C.4.8')
         self.assert_blocked('STAGE_DELIVERY_ONLY_AT_FIXED_CUT', lc.stage_delivery, self.root, sha, ['note.html'])
@@ -231,7 +279,7 @@ class ThreeDeliveriesTests(unittest.TestCase):
         lc.finish(self.root, sha)
         receipt = lc.completion_path({'content_id': 'note'})
         report = lc.technical_report_path({'content_id': 'note', 'category': 'insight'})
-        self.assertEqual(report, '.dentcast/publication-reports/insight-note.md')
+        self.assertEqual(report, '.dentcast/publication-reports/clinical-note.md')
         text = (self.root/report).read_text(encoding='utf-8')
         for line in ('# note — publication technical report', '- `C.4.14` skipped — fixture: ordinary page, no Challenge',
                      '- `F` completed', '**1 passed, 0 warned, 0 failed — publish is COMPLETE**',
@@ -293,11 +341,16 @@ class ThreeDeliveriesTests(unittest.TestCase):
         sha = lc.invalidate(self.root, sha, 'C.2', 'fixture reviewed post-cut page step')['sha256']
         sha = self.walk(sha, 'C.4.9')
         self.deliver('delivery 1 again after audited invalidation')
-        # Without a further invalidation the same cut cannot be delivered twice.
+        # Without a further invalidation the same cut cannot be delivered twice:
+        # a new write on the delivered cut is refused up front (round 4), and
+        # the pre-commit guard still refuses a re-delivery of cut 1.
         state, sha = h.load_state(self.root)
-        h.save(self.root, state['publication'], expected=sha, note='fixture unchanged')
+        self.assert_blocked('RECORD_AFTER_DELIVERED_CUT_START_NEXT_STEP_FIRST', h.save, self.root,
+                            state['publication'], expected=sha, note='fixture unchanged')
+        (self.root/h.STATE_PATH).write_bytes((self.root/h.STATE_PATH).read_bytes() + b'\n')
         run(self.root, 'add', h.STATE_PATH)
-        self.assert_blocked('FIRST_DELIVERY_REQUIRES_NO_ACTIVE_REMOTE_HANDOFF', lc.guard, self.root, 'pre-commit')
+        with self.assertRaises(h.Blocked):
+            lc.guard(self.root, 'pre-commit')
 
     def test_rules_invalidation_after_second_cut_redelivers_both_cuts_once(self):
         # A failed post-Push-2 continuation whose fix changes a workflow file
@@ -374,6 +427,13 @@ class ThreeDeliveriesTests(unittest.TestCase):
         (self.root/h.STATE_PATH).unlink()
         data = copy.deepcopy(self.p)
         path = self.base/'new-input.json'
+        # The English mirror path derives from <section>/<slug>: reject others at init.
+        path.write_text(json.dumps(data))
+        with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()) as err:
+            self.assertEqual(h.main(['--repo',str(self.root),'init','--input',str(path)]), 2)
+        self.assertIn('CONTENT_ID_INVALID', err.getvalue())
+        self.assertFalse((self.root/h.STATE_PATH).exists())
+        data['content_id'] = 'insight/note'
         path.write_text(json.dumps(data))
         with redirect_stdout(io.StringIO()):
             self.assertEqual(h.main(['--repo',str(self.root),'init','--input',str(path)]), 0)

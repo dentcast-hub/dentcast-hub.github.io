@@ -141,6 +141,28 @@ class EditorialSecondCutTests(unittest.TestCase):
         self.assert_blocked("SECOND_CUT_ENGLISH_MIRROR_MISSING",
                             lc.require_fixed_cut_readiness, p)
 
+    def test_litecast_english_exception_ignores_category_spelling(self):
+        for spelling in ("LiteCast", "Litecast", "lite-cast", "لایت‌کست"):
+            p = sample()
+            p["category"] = spelling
+            p["content_id"] = "lite/lite-CAST40"  # only the category decides here
+            p["context"]["decisions"].append(receipt(sample()))
+            lc.require_fixed_cut_readiness(p)
+        self.assertEqual(h.canonical_category("Glossary"), "glossary")
+        self.assertEqual(h.canonical_category("دانشنامه"), "glossary")
+        self.assertEqual(h.canonical_category("Paper Only"), "paper-only")
+        # Known names map to the brain type the receipts and reports use.
+        self.assertEqual(h.canonical_category("Insight"), "clinical")
+        self.assertEqual(h.canonical_category("Plak Sefr"), "plak_sefr")
+        self.assertEqual(h.canonical_category("plak_sefr"), "plak_sefr")
+        self.assertEqual(lc.technical_report_path(
+            {"category": "plak sefr", "content_id": "plak-sefr/plak1-10"}),
+            ".dentcast/publication-reports/plak_sefr-plak1-10.md")
+        # Unknown multi-word names still take the folder slug form.
+        self.assertEqual(h.canonical_category("New Section"), "new-section")
+        self.assertEqual(h.publication_category(
+            {"category": "page", "content_id": "litecast/lite-CAST40"}), "litecast")
+
     def test_no_multiple_or_fabricated_empty_lock(self):
         p = sample()
         item = receipt(p)

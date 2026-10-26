@@ -18,7 +18,8 @@
 set -euo pipefail
 
 is_text() {
-  case "${1,,}" in
+  # Lower-case portably: macOS ships bash 3.2, which has no ${1,,}.
+  case "$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')" in
     *.html|*.htm|*.css|*.js|*.mjs|*.cjs|*.json|*.md|*.txt|*.svg|*.xml|*.webmanifest|*.yml|*.yaml|*.py) return 0 ;;
     *) return 1 ;;
   esac
@@ -28,8 +29,10 @@ bad=()
 while IFS= read -r -d '' f; do
   is_text "$f" || continue
   # Inspect the staged blob, not the working-tree copy.
-  if git show ":$f" 2>/dev/null | LC_ALL=C grep -qaP '\x00'; then
-    n=$(git show ":$f" | LC_ALL=C tr -cd '\000' | wc -c | tr -d ' ')
+  # Count with tr rather than `grep -P`: BSD/macOS grep has no -P and would
+  # silently report "no NUL".
+  n=$(git show ":$f" 2>/dev/null | LC_ALL=C tr -cd '\000' | wc -c | tr -d ' ')
+  if [ "${n:-0}" -gt 0 ]; then
     bad+=("$f ($n NUL byte(s))")
   fi
 done < <(git diff --cached --name-only --diff-filter=ACMR -z)

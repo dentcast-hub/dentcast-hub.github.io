@@ -130,8 +130,9 @@ def validate_completion(root, raw):
     h.require(bool(publication["context"]["delivery"]) and all(
         isinstance(d, dict) and h.nonempty(d.get("scope")) and d.get("evidence")
         for d in publication["context"]["delivery"]), "DELIVERY_EVIDENCE_REQUIRED")
+    local_only = h.local_only_inputs(root, publication)
     for name, info in state["snapshot"]["files"].items():
-        actual = h.file_info(root, name)
+        actual = h.delivered_file_info(root, name, local_only)
         h.require(all(actual[k] == info[k] for k in actual), "PUBLICATION_CHANGED_AFTER_COMPLETION:" + name)
     receipts = [r for r in publication["context"]["validation"]
                 if isinstance(r, dict) and r.get("kind") in ("phase_f", "paper_catalog_gate")]
@@ -144,7 +145,57 @@ def validate_completion(root, raw):
     return publication["content_id"]
 
 
-def verify_publication_history(root, base, added_paths):
+def own_paths_after(root, commit, main_ref=None):
+    """Paths the PR itself changed after a delivery commit (not main-side changes).
+
+    main_ref is the destination tip; on a synthetic PR merge checkout it
+    defaults to HEAD's first parent. Without one, every later commit counts.
+    """
+    import dentcast_publish_handoff as h
+    if main_ref is None and h.text_git(root, "rev-parse", "--verify", "--quiet", "HEAD^2", optional=True):
+        main_ref = "HEAD^1"
+    exclude = ["^" + main_ref] if main_ref else []
+    commits = h.text_git(root, "rev-list", "--no-merges", commit + "..HEAD", *exclude).splitlines()
+    paths = set()
+    for item in commits:
+        for path in h.text_git(root, "diff-tree", "--no-commit-id", "--name-only", "-r", item).splitlines():
+            if not recomputed_only(root, item, path):
+                paths.add(path)
+    return paths
+
+
+# Mechanical values recomputed from the merged tree after main is merged into a
+# finished publication branch: the stamp-version.py content version
+# (CACHE_NAME, brain/catalogue ?v=), asset ?v= stamps and homepage counters.
+# A commit that only rewrites these ("Restamp after merging main") is not an
+# authored change; Phase F (step 7 version) and the counter gate recheck them
+# on the current tree, so the file stays checked at its delivery commit.
+RECOMPUTED = (
+    re.compile(r"dentcast-assets-[0-9a-z]+"),
+    # Only the stamped asset/data references: a bare "?v=" would also hide a
+    # changed YouTube id (watch?v=...) or another authored query value.
+    re.compile(r"(\.(?:js|css|json)\?v=)[0-9A-Za-z._-]+"),
+    # A counter body is a number; any other text inside the markers stays an edit.
+    re.compile(r"(<!-- COUNTER:([A-Z_]+):START -->)[0-9۰-۹٬,.+]*(<!-- COUNTER:\2:END -->)"),
+)
+
+
+def recomputed_only(root, commit, path):
+    import dentcast_publish_handoff as h
+    before = h.git(root, "show", commit + "^:" + path, optional=True)
+    after = h.git(root, "show", commit + ":" + path, optional=True)
+    if before is None or after is None or before == after:
+        return False
+
+    def norm(raw):
+        text = raw.decode("utf-8", "surrogateescape")
+        for pattern in RECOMPUTED:
+            text = pattern.sub(lambda m: "".join(g or "" for g in m.groups()) or "<v>", text)
+        return text
+    return norm(before) == norm(after)
+
+
+def verify_publication_history(root, base, added_paths, main_ref=None):
     """Use the whole PR range, not HEAD^ (which is main on PR merge checkouts)."""
     import dentcast_publish_handoff as h
     needed = publication_ids(added_paths)
@@ -168,8 +219,13 @@ def verify_publication_history(root, base, added_paths):
         publication = parse_handoff(raw.decode("utf-8")) if h.BEGIN.encode() in raw else None
         import dentcast_publish_lifecycle as lifecycle
         if publication and lifecycle.fixed_delivery(publication):
-            final = h.decode_json(h.safe_path(root, lifecycle.completion_path(publication)).read_text())
-            verified.add(lifecycle.validate_final_receipt(root, final, commit))
+            # The receipt and its delivered facts are read from the delivery
+            # commit; only the PR's own later changes are checked in the tree.
+            receipt = h.git(root, "show", commit + ":" + lifecycle.completion_path(publication), optional=True)
+            h.require(receipt is not None, "FINAL_RECEIPT_NOT_IN_DELIVERY_COMMIT")
+            final = h.decode_json(receipt.decode("utf-8"))
+            verified.add(lifecycle.validate_final_receipt(
+                root, final, commit, own_paths_after(root, commit, main_ref)))
         elif reconcile_share35(root, raw):
             verified.add("sharehub/share-35")
         else:
@@ -248,8 +304,8 @@ def main():
         if ok:
             root = Path.cwd()
             base = subprocess.check_output(["git", "merge-base", "FETCH_HEAD", "HEAD"], text=True).strip()
-            added = subprocess.check_output(["git", "diff", "--name-only", "--diff-filter=A", base + "...HEAD"], text=True).splitlines()
-            verify_publication_history(root, base, added)
+            added = subprocess.check_output(["git", "-c", "core.quotepath=false", "diff", "--name-only", "--diff-filter=A", base + "...HEAD"], text=True).splitlines()
+            verify_publication_history(root, base, added, "FETCH_HEAD")
     except (OSError, subprocess.CalledProcessError, ValueError, RuntimeError) as exc:
         reason = str(exc) or "PUBLISH_MERGE_GATE_FAILED"
         ok = False

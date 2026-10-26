@@ -75,6 +75,38 @@ class PostCut2RunnerTests(unittest.TestCase):
         self.assertTrue(result["continue"])
         self.assertEqual(result["boundary"], 2)
 
+    def preflight_after_move(self, boundary, git_results):
+        pub = sample_publication()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / runner.HANDOFF).parent.mkdir(parents=True)
+            (root / runner.HANDOFF).write_text("handoff", encoding="utf-8")
+            with patch.object(runner, "git", side_effect=[HEAD, BRANCH, *git_results]), \
+                 patch.object(runner, "publication", return_value=(pub, "digest")), \
+                 patch.object(lifecycle, "editorial_cut_v2", return_value=True), \
+                 patch.object(lifecycle, "delivery_boundary", return_value=boundary):
+                return runner.preflight(root, HEAD, BRANCH)
+
+    def test_superseded_push1_run_is_a_clean_skip_not_a_failure(self):
+        newer = "b" * 40
+        result = self.preflight_after_move(1, [newer])
+        self.assertFalse(result["continue"])
+        self.assertEqual(result["reason"], "NOT_AT_V2_SECOND_DELIVERY")
+        self.assertEqual(result["superseded_by"], newer)
+
+    def test_moved_push2_skips_only_for_a_newer_handoff_push(self):
+        newer = "b" * 40
+        result = self.preflight_after_move(2, [newer, "", runner.HANDOFF])
+        self.assertFalse(result["continue"])
+        self.assertEqual(result["reason"], "SUPERSEDED_BY_NEWER_HANDOFF_PUSH")
+        # No queued run would handle the newer head: still a real failure.
+        with self.assertRaisesRegex(runner.RunnerError, "REMOTE_BRANCH_MOVED_OR_UNOBSERVABLE"):
+            self.preflight_after_move(2, [newer, "", ""])
+        with self.assertRaisesRegex(runner.RunnerError, "REMOTE_BRANCH_MOVED_OR_UNOBSERVABLE"):
+            self.preflight_after_move(2, [newer, runner.RunnerError("not an ancestor")])
+        with self.assertRaisesRegex(runner.RunnerError, "REMOTE_BRANCH_MOVED_OR_UNOBSERVABLE"):
+            self.preflight_after_move(1, [""])
+
     def test_phase_f_uses_frozen_handoff_approvals(self):
         pub = sample_publication()
         pub["context"]["approvals"] = [
@@ -171,6 +203,95 @@ class PostCut2RunnerTests(unittest.TestCase):
         for sid in ("C.8", "C.7", "D", "E"):
             self.assertTrue(notes[(sid, "completed")], sid)
 
+    def test_category_exemptions_ignore_spelling(self):
+        from contextlib import ExitStack
+
+        def statuses(category):
+            pub = sample_publication()
+            pub["category"] = category
+            states = {row["id"]: row for row in pub["steps"]}
+            args = type("Args", (), {
+                "expected_head": HEAD, "expected_branch": BRANCH,
+                "expect_title": "title", "expect_caption": "caption",
+            })()
+
+            def record(_root, sid, status, evidence=(), reason=None, note=None):
+                states[sid]["status"] = status
+                return "digest"
+
+            def command(_root, _artifact, label, _argv, _logs):
+                if label == "F-verify-publish":
+                    states["F"]["status"] = "completed"
+
+            with tempfile.TemporaryDirectory() as tmp, ExitStack() as stack:
+                root = Path(tmp)
+                page = root / "insight/insight100.html"
+                page.parent.mkdir(parents=True)
+                original = "<html><head>\n  <title>t</title>\n</head><body><p>متن</p></body></html>"
+                page.write_text(original, encoding="utf-8")
+                stack.enter_context(patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]))
+                stack.enter_context(patch.object(runner, "publication", return_value=(pub, "digest")))
+                stack.enter_context(patch.object(lifecycle, "editorial_cut_v2", return_value=True))
+                stack.enter_context(patch.object(lifecycle, "delivery_boundary", return_value=2))
+                stack.enter_context(patch.object(lifecycle, "require_fixed_cut_readiness"))
+                stack.enter_context(patch.object(runner, "command_plan", return_value=[]))
+                stack.enter_context(patch.object(runner, "record_step", side_effect=record))
+                stack.enter_context(patch.object(runner, "run_command", side_effect=command))
+                stack.enter_context(patch.object(runner, "verify_scope"))
+                runner.run_phase(root, root / "artifacts", args)
+                final = page.read_text(encoding="utf-8")
+                marker = '<meta name="dc-notify" content="true">' in final
+                if marker:
+                    # Whitespace-neutral: approved text and the pre-E bytes survive.
+                    self.assertEqual(runner.handoff.page_text_digest(final.encode()),
+                                     runner.handoff.page_text_digest(original.encode()))
+                    self.assertEqual(final.replace('<meta name="dc-notify" content="true">', ""), original)
+            return states["D"]["status"], states["E"]["status"], marker
+
+        for spelling in ("LiteCast", "Litecast", "lite-cast", "لایت‌کست"):
+            self.assertEqual(statuses(spelling), ("skipped", "skipped", False), spelling)
+        for spelling in ("Glossary", "دانشنامه"):
+            self.assertEqual(statuses(spelling), ("completed", "skipped", False), spelling)
+        self.assertEqual(statuses("insight"), ("completed", "completed", True))
+
+    def test_phase_e_marker_keeps_crlf_page_bytes(self):
+        # 991 live pages are CRLF; a page cloned from one keeps CRLF. Inserting
+        # the marker must not normalise newlines (the approved text digest would
+        # change: APPROVED_PAGE_CHANGED_INVALIDATE at E, replay of share-9).
+        from contextlib import ExitStack
+        pub = sample_publication()
+        states = {row["id"]: row for row in pub["steps"]}
+        args = type("Args", (), {"expected_head": HEAD, "expected_branch": BRANCH,
+                                 "expect_title": "title", "expect_caption": "caption"})()
+
+        def record(_root, sid, status, evidence=(), reason=None, note=None):
+            states[sid]["status"] = status
+            return "digest"
+
+        def command(_root, _artifact, label, _argv, _logs):
+            if label == "F-verify-publish":
+                states["F"]["status"] = "completed"
+
+        original = "<html><head>\r\n  <title>t</title>\r\n</head><body><p>متن</p></body></html>\r\n".encode()
+        with tempfile.TemporaryDirectory() as tmp, ExitStack() as stack:
+            root = Path(tmp)
+            page = root / "insight/insight100.html"
+            page.parent.mkdir(parents=True)
+            page.write_bytes(original)
+            stack.enter_context(patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]))
+            stack.enter_context(patch.object(runner, "publication", return_value=(pub, "digest")))
+            stack.enter_context(patch.object(lifecycle, "editorial_cut_v2", return_value=True))
+            stack.enter_context(patch.object(lifecycle, "delivery_boundary", return_value=2))
+            stack.enter_context(patch.object(lifecycle, "require_fixed_cut_readiness"))
+            stack.enter_context(patch.object(runner, "command_plan", return_value=[]))
+            stack.enter_context(patch.object(runner, "record_step", side_effect=record))
+            stack.enter_context(patch.object(runner, "run_command", side_effect=command))
+            stack.enter_context(patch.object(runner, "verify_scope"))
+            runner.run_phase(root, root / "artifacts", args)
+            final = page.read_bytes()
+        self.assertEqual(final.replace(b'<meta name="dc-notify" content="true">', b""), original)
+        self.assertEqual(runner.handoff.page_text_digest(final), runner.handoff.page_text_digest(original))
+
     def test_builder_plan_follows_category_and_enrolled_inputs(self):
         def plan(category, targets=(), done=()):
             pub = sample_publication()
@@ -192,6 +313,10 @@ class PostCut2RunnerTests(unittest.TestCase):
                         challenge.index("node tools/build_challenge_index.mjs"))
         self.assertLess(challenge.index("node tools/build_challenge_index.mjs"),
                         challenge.index("node tools/build_plus_index.mjs"))
+        # Its Phase D (the usual sitemap regeneration) is skipped, yet Phase F
+        # requires the page in sitemap.xml.
+        self.assertIn("python3 .github/scripts/gen_sitemap.py", challenge)
+        self.assertNotIn("python3 .github/scripts/gen_sitemap.py", plan("clinical"))
         full = plan("clinical", done=("C.4.11", "C.4.12"))
         self.assertIn("node tools/build_flashcards_index.mjs", full)
         self.assertIn("node tools/build_quiz_index.mjs", full)
@@ -306,7 +431,7 @@ class PostCut2RunnerTests(unittest.TestCase):
              patch.object(runner, "git", side_effect=fake_git), \
              patch.object(runner, "changed_paths", return_value={
                  runner.HANDOFF, "index.html", str(report_path),
-                 ".dentcast/publication-reports/insight-insight100.md"}), \
+                 ".dentcast/publication-reports/clinical-insight100.md"}), \
              patch.object(runner.lifecycle, "pending", return_value=False), \
              patch.object(runner.subprocess, "run", return_value=completed):
             result = runner.finalize_and_push(

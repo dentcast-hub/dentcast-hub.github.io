@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "d=\"${CLAUDE_PROJECT_DIR:-${CODEX_PROJECT_DIR:-.}}\"; { [ -n \"$(git -C \"$d\" config core.hooksPath)\" ] || git -C \"$d\" config core.hooksPath .githooks; } 2>/dev/null || true",
+            "command": "d=\"${CLAUDE_PROJECT_DIR:-${CODEX_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}}\"; { t=\"$(git -C \"$d\" rev-parse --show-toplevel)\" && case \"$(git -C \"$d\" config core.hooksPath)\" in .githooks|.githooks/|./.githooks|./.githooks/|\"$t/.githooks\"|\"$t/.githooks/\") ;; *) git -C \"$d\" config core.hooksPath .githooks;; esac; } >/dev/null 2>&1 || true",
             "timeout": 10
           }
         ]
@@ -13,11 +13,11 @@
     ],
     "PostToolUse": [
       {
-        "matcher": "Edit|Write|MultiEdit",
+        "matcher": "Edit|Write|MultiEdit|Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "node \"${CLAUDE_PROJECT_DIR:-${CODEX_PROJECT_DIR:-.}}/scripts/cursor-parity-notice.mjs\"",
+            "command": "for d in \"${CLAUDE_PROJECT_DIR:-}\" \"${CODEX_PROJECT_DIR:-}\" \"$(git rev-parse --show-toplevel 2>/dev/null)\"; do if [ -n \"$d\" ] && [ -f \"$d/scripts/cursor-parity-notice.mjs\" ]; then command -v node >/dev/null 2>&1 || exit 0; exec node \"$d/scripts/cursor-parity-notice.mjs\"; fi; done; exit 0",
             "timeout": 10,
             "statusMessage": "بررسی همسانی Codex/Cursor"
           }
@@ -29,7 +29,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 \"${CLAUDE_PROJECT_DIR:-${CODEX_PROJECT_DIR:-.}}/scripts/publishing-stop-guard.py\"",
+            "command": "for d in \"${CLAUDE_PROJECT_DIR:-}\" \"${CODEX_PROJECT_DIR:-}\" \"$(git rev-parse --show-toplevel 2>/dev/null)\"; do if [ -n \"$d\" ] && [ -f \"$d/scripts/publishing-stop-guard.py\" ]; then command -v python3 >/dev/null 2>&1 || exit 0; exec python3 \"$d/scripts/publishing-stop-guard.py\"; fi; done; exit 0",
             "timeout": 25
           }
         ]

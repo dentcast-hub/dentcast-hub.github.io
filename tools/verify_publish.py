@@ -16,8 +16,10 @@ correct.
 the same identifier `plus/content-index.json`, the quiz index and the
 flashcards index use.
 
-Exit codes: 0 = every check passed (publish is complete), 1 = at least one
-FAIL (publish is incomplete — fix what is listed, then re-run).
+Exit codes (single content_id or --last): 0 = every check passed (publish is
+complete), 1 = at least one FAIL (publish is incomplete — fix what is listed,
+then re-run). --all is a backlog report, not a gate: it prints every FAIL but
+always exits 0.
 
 Standard library only, same as the other tools in this directory.
 """
@@ -26,6 +28,7 @@ import argparse
 import hashlib
 import html
 import json
+import posixpath
 import re
 import sys
 import subprocess
@@ -247,7 +250,9 @@ def episode_landing_title(content_id):
     would render, not a second opinion about it."""
     sys.path.insert(0, str(ROOT / "tools"))
     from build_episodes import clean_title  # noqa: E402
-    num = Path(content_id).name.replace("episode-", "")
+    # Sub-episodes live at episode-159-1.html but dentcast.json numbers them
+    # "159.1", so the file's "-" separator maps back to ".".
+    num = Path(content_id).name.replace("episode-", "").replace("-", ".")
     try:
         eps = json.loads((ROOT / "dentcast.json").read_text(encoding="utf-8"))
     except (OSError, ValueError):
@@ -489,7 +494,14 @@ def des_absence_allowed(content_id, doc, etype):
             raise ValueError("invalid exemption fields")
         if exemption["content_id"] != content_id:
             raise ValueError("exemption belongs to another publication")
-        if exemption["page_sha256"] != hashlib.sha256(doc.encode("utf-8")).hexdigest():
+        # A v2 run binds the exemption before Push 2; the post-Push-2 Phase E
+        # then adds only the publish marker. Accept the page without that one
+        # marker as well as the final bytes.
+        marker = '<meta name="dc-notify" content="true">'
+        hashes = {hashlib.sha256(doc.encode("utf-8")).hexdigest()}
+        if doc.count(marker) == 1:
+            hashes.add(hashlib.sha256(doc.replace(marker, "", 1).encode("utf-8")).hexdigest())
+        if exemption["page_sha256"] not in hashes:
             raise ValueError("exemption is stale: page changed")
         reason = exemption["reason"]
         if reason not in {"founder_without_des", "unsourced_audio_caption"}:
@@ -715,6 +727,212 @@ def pulse_items(home):
     return re.findall(r'<li\b[^>]*>.*?</li>', block.group(1), re.S) if block else []
 
 
+def _git(*args):
+    return subprocess.check_output(['git', *args], cwd=ROOT,
+                                   stderr=subprocess.DEVNULL, timeout=10).decode('utf-8')
+
+
+def pulse_baseline(rep):
+    """The homepage this branch was cut from: `git merge-base HEAD origin/main`.
+    Comparing against the current origin/main would falsely fail whenever
+    another publication reached main after this branch was cut. Falls back to
+    origin/main (and says so) when no merge base is available, e.g. a shallow
+    clone. Returns None after recording a FAIL if neither is readable."""
+    try:
+        base = _git('merge-base', 'HEAD', 'origin/main').strip()
+    except (OSError, subprocess.SubprocessError, UnicodeError):
+        base = ''
+    if base:
+        try:
+            home = _git('show', f'{base}:index.html')
+            rep.ok('6 pulse', f'Pulse baseline: merge-base {base[:10]} of HEAD and origin/main')
+            return home
+        except (OSError, subprocess.SubprocessError, UnicodeError):
+            pass
+    try:
+        home = _git('show', 'origin/main:index.html')
+    except (OSError, subprocess.SubprocessError, UnicodeError):
+        rep.fail('6 pulse', 'cannot verify previous Pulse: local origin/main:index.html unavailable',
+                 'fetch the main baseline before final verification: '
+                 'git fetch origin +refs/heads/main:refs/remotes/origin/main')
+        return None
+    rep.warn('6 pulse', 'Pulse baseline: no merge-base of HEAD and origin/main (shallow '
+                        'clone?); fell back to the current origin/main, which is only correct '
+                        'if main has not advanced since this branch was cut',
+             'git fetch --unshallow origin')
+    return home
+
+
+_EXAM_VALIDATOR = []
+_BANK_CACHE = {}
+
+
+def exam_validator():
+    """tools/validate_exam_questions.py as a module (its git baseline and
+    append-only comparison), or None where it is not present (synthetic
+    roots in tests copy only this file)."""
+    if not _EXAM_VALIDATOR:
+        mod = None
+        path = ROOT / "tools" / "validate_exam_questions.py"
+        if path.exists():
+            import importlib.util
+            spec = importlib.util.spec_from_file_location("_dc_validate_exam_questions", path)
+            mod = importlib.util.module_from_spec(spec)
+            try:
+                spec.loader.exec_module(mod)
+            except Exception:  # noqa: BLE001 — a broken helper must not crash the gate
+                mod = None
+        _EXAM_VALIDATOR.append(mod)
+    return _EXAM_VALIDATOR[0]
+
+
+def _cid_of(key):
+    return str(key or "").strip().lstrip("/").removesuffix(".html")
+
+
+def _by_key(field, key):
+    def extract(data):
+        rows = data.get(field) if field and isinstance(data, dict) else data
+        if not isinstance(rows, list):
+            raise ValueError(f'expected a list{" under " + field if field else ""}')
+        return {_cid_of(key(e)): e for e in rows if isinstance(e, dict) and key(e)}
+    return extract
+
+
+def _top_dict(field=None):
+    def extract(data):
+        d = data.get(field) if field else data
+        if not isinstance(d, dict):
+            raise ValueError(f'expected an object{" under " + field if field else ""}')
+        return d
+    return extract
+
+
+def _pathway_steps(data):
+    if not isinstance(data, list):
+        raise ValueError("expected a list of pathways")
+    return {p.get("id"): [s.get("content_id") for s in p.get("steps", []) if isinstance(s, dict)]
+            for p in data if isinstance(p, dict) and p.get("id")}
+
+
+# Bank-like files a publication appends to. (path, step, extractor, removal
+# is a FAIL?) — removing another publication's entry FAILs; changing one
+# WARNs (a founder-asked backfill or a cross-link pass is legitimate, but it
+# should be seen). plus/challenges.json is regenerated from the pages and
+# plus/pathways.json is re-curated by the founder, so a disappearance there
+# WARNs. plus/exam-questions.json has its own row-level rules
+# (tools/validate_exam_questions.py) and is checked through it.
+BANK_FILES = [
+    ("dentcast-brain.json", "F brain kept", _by_key(None, entry_url), True),
+    ("dentcast.json", "F catalogue kept", _by_key(None, lambda e: e.get("page_url")), True),
+    ("glossary/glossary.json", "F glossary kept", _by_key("glossary", lambda e: e.get("url") or e.get("slug")), True),
+    ("litecast/lite-glossary.json", "F litecast kept", _by_key("LightGlossary", lambda e: e.get("page_url") or e.get("id")), True),
+    ("plus/faq-corpus.json", "F faq-corpus kept", _top_dict("byContent"), True),
+    ("plus/des-scores.json", "F des-scores kept", _top_dict(), True),
+    (".dentcast/des-exemptions.json", "F des-exemptions kept", _top_dict(), True),
+    ("plus/challenges.json", "F challenges kept", _top_dict("byContent"), False),
+]
+
+
+def _bank_pair(rel):
+    """(baseline text or None, label, warning, current text or None), cached
+    for the life of the process (a --all sweep compares each file once)."""
+    if rel not in _BANK_CACHE:
+        v = exam_validator()
+        old, label, warning = v.git_baseline(rel, ROOT) if v else (None, "none", None)
+        _BANK_CACHE[rel] = (old, label, warning, read(rel) if exists(rel) else None)
+    return _BANK_CACHE[rel]
+
+
+def _list_keys(keys, n=4):
+    keys = sorted(map(str, keys))
+    return ", ".join(keys[:n]) + (f" (+{len(keys) - n} more)" if len(keys) > n else "")
+
+
+def check_bank_preservation(rep, content_id):
+    """Phase F: a publication only ADDS to the shared data files — nothing it
+    commits may delete or rewrite another publication's entry. Compared on
+    parsed JSON keyed by content id against the branch's merge-base with
+    origin/main, so a re-indent is not a change and the page's own entry may
+    change freely."""
+    v = exam_validator()
+    if v is None:
+        rep.skip("F data kept", "tools/validate_exam_questions.py not present — prior-data check not run")
+        return
+    # plus/exam-questions.json: row-level append-only rules.
+    old, label, warning, cur = _bank_pair(v.REL)
+    if warning:
+        rep.warn("4.12-ب bank", f"exam bank: {warning}", "git fetch origin +refs/heads/main:refs/remotes/origin/main")
+    if old is not None:
+        if cur is None:
+            rep.fail("4.12-ب bank", f"plus/exam-questions.json deleted (it existed at {label})",
+                     "restore it: git checkout origin/main -- plus/exam-questions.json")
+        else:
+            try:
+                errors, warns = v.compare_banks(json.loads(old), json.loads(cur), content_id)
+            except ValueError as exc:
+                errors, warns = [f"not valid JSON: {exc}"], []
+            for w in warns:
+                rep.warn("4.12-ب bank", w)
+            rep.check(not errors, "4.12-ب bank",
+                      f"existing exam questions unchanged since {label} (append-only)",
+                      "plus/exam-questions.json lost or changed existing questions: "
+                      + "; ".join(errors[:4]) + (f" (+{len(errors) - 4} more)" if len(errors) > 4 else ""),
+                      f"restore the existing rows from {label}; only append new ones "
+                      "(python3 tools/validate_exam_questions.py)")
+    for rel, step, extract, removal_fails in BANK_FILES:
+        old, label, warning, cur = _bank_pair(rel)
+        if warning:
+            rep.warn(step, f"{rel}: {warning}", "git fetch origin +refs/heads/main:refs/remotes/origin/main")
+        if old is None:
+            continue
+        try:
+            before = extract(json.loads(old))
+        except ValueError:
+            continue  # the baseline itself was not this shape: nothing to protect
+        if cur is None:
+            rep.fail(step, f"{rel} deleted (it existed at {label})", f"restore it from {label}")
+            continue
+        try:
+            after = extract(json.loads(cur))
+        except ValueError as exc:
+            rep.fail(step, f"{rel} structure damaged: {exc}", f"restore its structure from {label}")
+            continue
+        removed = [k for k in before if k not in after]
+        changed = [k for k in before if k in after and k != content_id and after[k] != before[k]]
+        if removed:
+            msg = (f"{rel}: {len(removed)} existing entr{'y' if len(removed) == 1 else 'ies'} "
+                   f"removed since {label}: {_list_keys(removed)}")
+            fix = f"restore them from {label} — a publication only adds its own entry"
+            rep.fail(step, msg, fix) if removal_fails else rep.warn(step, msg, fix)
+        if changed:
+            rep.warn(step, f"{rel}: {len(changed)} other publication(s)' entries changed since "
+                           f"{label}: {_list_keys(changed)} — confirm each was asked for")
+        if not removed and not changed:
+            rep.ok(step, f"{rel}: every entry from {label} kept")
+    old, label, warning, cur = _bank_pair("plus/pathways.json")
+    if old is not None and cur is not None:
+        try:
+            before, after = _pathway_steps(json.loads(old)), _pathway_steps(json.loads(cur))
+        except ValueError as exc:
+            rep.fail("F pathways kept", f"plus/pathways.json structure damaged: {exc}",
+                     f"restore it from {label}")
+            return
+        gone = [p for p in before if p not in after]
+        dropped = [f"{p}:{c}" for p, steps in before.items() if p in after
+                   for c in steps if c not in after[p]]
+        if gone or dropped:
+            rep.warn("F pathways kept", f"plus/pathways.json since {label}: "
+                     + (f"pathway(s) removed {_list_keys(gone)}; " if gone else "")
+                     + (f"step(s) removed {_list_keys(dropped)}" if dropped else "")
+                     + " — a publication only inserts its own step; confirm a founder curation pass")
+        else:
+            rep.ok("F pathways kept", f"plus/pathways.json: every pathway and step from {label} kept")
+    elif old is not None and cur is None:
+        rep.fail("F pathways kept", f"plus/pathways.json deleted (it existed at {label})",
+                 f"restore it from {label}")
+
+
 def check_pulse(rep, home, url, sweep=False, previous_home=None):
     items = pulse_items(home)
     def links(item):
@@ -739,6 +957,169 @@ def check_pulse(rep, home, url, sweep=False, previous_home=None):
         rep.check(len(previous) == 7 and items[1:] == previous[:-1], '6 pulse',
                   'previous bottom line removed; other Pulse lines preserved in order',
                   'Pulse must drop only the previous bottom line and preserve the other six', 'step 6')
+
+
+def site_path(href, page_rel):
+    """The repo-relative path an internal href points at, or None if the href
+    leaves the site (external host, tel:, mailto:, a bare #fragment)."""
+    href = href.split("#")[0].split("?")[0]
+    m = re.match(r"https?://(?:www\.)?dentcast\.(?:org|ir)(/.*)?$", href)
+    if m:
+        href = m.group(1) or "/"
+    elif re.match(r"^[a-z][a-z0-9+.-]*:", href, re.I) or href.startswith("//") or not href:
+        return None
+    if href.startswith("/"):
+        return posixpath.normpath(href).lstrip("/")
+    return posixpath.normpath(posixpath.join(posixpath.dirname(page_rel), href))
+
+
+def check_litecast_links(rep, doc, page_rel, brain):
+    """Hard Rules 9/10, steps 0.2/0.5/0.6: LiteCast is an isolated track. Its
+    «کاوش بیشتر» holds at most 5 links, all to other LiteCast entries (never
+    the دانشنامه / فهرست موضوعی capsules, glossary terms or brain entries),
+    and its body carries no inline links into specialist content."""
+    lite = json.loads(read("litecast/lite-glossary.json"))["LightGlossary"]
+    lite_pages = {(e.get("page_url") or "").lstrip("/") for e in lite} - {""}
+    # The rules cap and scope the section's links; they do not require one
+    # (step 0.3: no fabricated linking where the template has none).
+    n_sections = doc.count('<div class="dc-related-section">')
+    rep.check(n_sections <= 1, "2.5 related", "at most one «کاوش بیشتر» section",
+              f"found {n_sections} dc-related-section blocks (expected at most 1)", "step 0.6")
+    sec = related_section(doc)
+    if sec:
+        links = re.findall(r'href="([^"]+)"', sec.group(0))
+        rep.check(len(links) <= 5, "9 cap",
+                  f"{len(links)}/5 links in «کاوش بیشتر»",
+                  f"{len(links)} links — over the hard cap of 5", "Hard Rule 9")
+        foreign = [h for h in links if site_path(h, page_rel) not in lite_pages]
+        rep.check(not foreign, "10 lite",
+                  "«کاوش بیشتر» links only to other LiteCast entries",
+                  f"«کاوش بیشتر» links outside LiteCast: {foreign}",
+                  "Hard Rule 10 / step 0.6 — LiteCast-to-LiteCast only")
+        rep.check(not any(site_path(h, page_rel) == page_rel for h in links), "4.9 related",
+                  "no self-link", "the section links to the page itself")
+    # Specialist content = every folder a non-LiteCast brain entry lives in,
+    # plus the glossary and pillar hubs and the episodes landing page.
+    specialist = {entry_url(e).lstrip("/").split("/")[0] for e in brain
+                  if entry_url(e) and e.get("type") != LITECAST} | {"glossary", "pillar"}
+    body = [h for h in re.findall(r'href="([^"]+)"', article_region(doc))
+            if (p := site_path(h, page_rel)) is not None
+            and (p.split("/")[0] in specialist or p == "episodes.html")]
+    rep.check(not body, "10 lite", "body has no inline links to specialist content",
+              f"body links into the specialist ecosystem: {body}",
+              "Hard Rule 10 / step 0.2 — LiteCast in-body links go to other LiteCast items only")
+
+
+def _gate(rep, sweep, cond, step, ok_msg, fail_msg, fix=None):
+    """FAIL for the page being published; WARN in the --all backlog sweep."""
+    if cond:
+        rep.ok(step, ok_msg)
+    else:
+        (rep.warn if sweep else rep.fail)(step, fail_msg, fix)
+    return cond
+
+
+RELATED_LABEL = '<h2 class="ep-section-label">محتوای مرتبط</h2>'
+
+
+def check_notecast_parent(rep, content_id, sweep=False):
+    """Step 4.5: the parent episode /episodes/episode-XX.html (same XX) links
+    back to /notecast/episode-XX.html in its «محتوای مرتبط» block."""
+    slug = content_id.rsplit("/", 1)[-1]
+    parent = "episodes/" + slug + ".html"
+    fix = "step 4.5 — add the NoteCast link to the parent episode's related-content block"
+    if not _gate(rep, sweep, exists(parent), "4.5 parent", f"parent episode {parent} exists",
+                 f"parent episode {parent} does not exist", fix):
+        return
+    pdoc = strip_code(read(parent))
+    want = "/" + content_id + ".html"
+    links = []
+    start = pdoc.find(RELATED_LABEL)
+    if start >= 0:
+        end = pdoc.find("</div>", start)
+        links = re.findall(r'href="([^"#?]+)', pdoc[start:end if end >= 0 else len(pdoc)])
+    _gate(rep, sweep, start >= 0 and want in links, "4.5 parent",
+          f"{parent} «محتوای مرتبط» links to {want}",
+          f"{parent} has no «محتوای مرتبط» link to {want}"
+          + ("" if start >= 0 else " (no related-content block)"), fix)
+
+
+EP_NAV_RE = re.compile(r'<div class="ep-nav">(.*?)</div>', re.S)
+EP_SLOT_RE = re.compile(r'<(a|span)\b([^>]*)>(.*?)</\1>', re.S)
+
+
+def _ep_nav_slots(doc):
+    """[(tag, attrs, text)] of the single ep-nav block, or None."""
+    blocks = list(EP_NAV_RE.finditer(doc))
+    if len(blocks) != 1:
+        return None, blocks
+    return EP_SLOT_RE.findall(blocks[0].group(1)), blocks
+
+
+def _slot_href(attrs):
+    m = re.search(r'href="([^"]*)"', attrs)
+    return m.group(1) if m else None
+
+
+def _classes(attrs):
+    m = re.search(r'class="([^"]*)"', attrs)
+    return set(m.group(1).split()) if m else set()
+
+
+def check_promptologist_nav(rep, content_id, doc, brain, sweep=False):
+    """Step 4.6: the part's ep-nav (last element in <main>, after .ep-box) has
+    exactly two slots — previous part, next part — each an active
+    `<a href="/dentai/promptologist/<id>.html" class="ep-nav-btn">` or an
+    empty `<span class="ep-nav-btn ep-nav-empty">`; the previous part's next
+    slot links to this part. The series order is the brain order (appendix
+    parts sit between numbered parts and season boundaries chain on)."""
+    fix = "step 4.6 — wire the Promptologist prev/next ep-nav slots"
+    parts = [entry_url(e) for e in brain if e.get("type") == "promptologist" and entry_url(e)]
+    url = "/" + content_id + ".html"
+    i = parts.index(url)
+    prev = parts[i - 1] if i else None
+    nxt = parts[i + 1] if i + 1 < len(parts) else None
+    body = strip_code(doc)
+    slots, blocks = _ep_nav_slots(body)
+    if not _gate(rep, sweep, slots is not None and len(slots) == 2, "4.6 nav",
+                 "exactly one ep-nav block with exactly two slots",
+                 f"{len(blocks)} ep-nav block(s), "
+                 f"{len(slots) if slots is not None else '?'} slot(s) (expected one block, two slots)", fix):
+        return
+    block = blocks[0]
+    main_end = body.find("</main>", block.end())
+    box = body.rfind('class="ep-box"', 0, block.start())
+    _gate(rep, sweep, main_end >= 0 and not body[block.end():main_end].strip() and box >= 0,
+          "4.6 nav", "ep-nav is the last element inside <main>, after .ep-box",
+          "ep-nav is not the last element inside <main> after the .ep-box", fix)
+
+    def expect(slot, target, label, side):
+        tag, attrs, text = slot
+        if target:
+            return _gate(rep, sweep, tag == "a" and _slot_href(attrs) == target
+                         and "ep-nav-btn" in _classes(attrs) and "ep-nav-empty" not in _classes(attrs)
+                         and label in text,
+                         "4.6 nav", f"{side} slot links to {target}",
+                         f"{side} slot should be <a href=\"{target}\" class=\"ep-nav-btn\">…{label}…</a>, "
+                         f"found <{tag}> href={_slot_href(attrs)} class={sorted(_classes(attrs))}", fix)
+        return _gate(rep, sweep, tag == "span" and {"ep-nav-btn", "ep-nav-empty"} <= _classes(attrs)
+                     and _slot_href(attrs) is None,
+                     "4.6 nav", f"{side} slot is the empty placeholder (no {side} part)",
+                     f"{side} slot should be <span class=\"ep-nav-btn ep-nav-empty\">, "
+                     f"found <{tag}> href={_slot_href(attrs)}", fix)
+
+    expect(slots[0], prev, "قسمت قبلی", "previous")
+    expect(slots[1], nxt, "قسمت بعدی", "next")
+    if prev and not sweep:
+        # In the sweep the previous part is checked as its own page.
+        prev_rel = prev.lstrip("/")
+        pslots, _ = _ep_nav_slots(strip_code(read(prev_rel))) if exists(prev_rel) else (None, [])
+        tag, attrs, text = pslots[1] if pslots and len(pslots) == 2 else ("", "", "")
+        rep.check(tag == "a" and _slot_href(attrs) == url and "ep-nav-empty" not in _classes(attrs)
+                  and "قسمت بعدی" in text, "4.6 nav",
+                  f"previous part {prev_rel} next slot links here",
+                  f"previous part {prev_rel} next slot does not link to {url} "
+                  "(or its ep-nav does not have exactly two slots)", fix)
 
 
 def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False):
@@ -967,12 +1348,20 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
               "body opens with a list — the in-article Spot card has nowhere to land",
               "step 2 — write a real 2-4 sentence lead before the first <ul>")
 
+    # ---------------- series / parent navigation (steps 4.5, 4.6) ----------------
+    if etype == "notecast":
+        check_notecast_parent(rep, content_id, sweep)
+    elif etype == "promptologist":
+        check_promptologist_nav(rep, content_id, doc, brain, sweep)
+
     # ---------------- کاوش بیشتر ----------------
     n_sections = doc.count('<div class="dc-related-section">')
     # Core episodes carried no `type` field for their first 202 entries; more
     # recent ones (154+) write "type": "dentcast" instead (same category,
     # schema drift — see Hard Rule 6). Both must hit the episode branch.
-    if is_lite or etype in ("episode", "dentcast"):
+    if is_lite:
+        check_litecast_links(rep, doc, page_rel, brain)
+    elif etype in ("episode", "dentcast"):
         rep.skip("2.5 related", f"{etype} uses its own related-links convention")
     else:
         rep.check(n_sections == 1, "2.5 related",
@@ -1541,16 +1930,25 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
     # and never should — and failed all 209 episodes on a page that is working
     # exactly as designed. The real landing page is episodes.html, built by
     # tools/build_episodes.py.
+    #
+    # DentAI and PhotoCast are closed sections: their folders stay on disk but
+    # their pages are listed on sharehub/index.html, not on their own landing
+    # (.dentcast/workflows/global/repo-conventions.md).
     landing = f"{Path(content_id).parent}/index.html"
+    needle = Path(content_id).name + ".html"
     if landing == "episodes/index.html":
         landing = "episodes.html"
+    elif landing in ("dentai/index.html", "photocast/index.html"):
+        # sharehub/index.html also lists its own pages, so match the full
+        # path (photocast/episode-2.html is not episodes/episode-2.html).
+        landing, needle = "sharehub/index.html", "/" + page_rel
     if exists(landing):
         land = read(landing)
-        n = len(re.findall(re.escape(Path(content_id).name + ".html"), land))
+        n = len(re.findall(re.escape(needle), land))
         rep.check(n >= 1, "2.6 landing", f"{landing} links to the page",
                   f"{landing} has no link to the new entry", "step 2.6")
         if n >= 1:
-            li = re.search(r"<li>(?:(?!</li>).)*?" + re.escape(Path(content_id).name + ".html")
+            li = re.search(r"<li>(?:(?!</li>).)*?" + re.escape(needle)
                            + r".*?</li>", land, re.S)
             if li:
                 # An episode carries TWO legitimate titles: the podcast's own
@@ -1602,15 +2000,7 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
     elif is_gloss:
         rep.skip("6 pulse", "glossary: not customary in Pulse")
     else:
-        previous_home = None
-        if not sweep:
-            try:
-                previous_home = subprocess.check_output(
-                    ['git', 'show', 'origin/main:index.html'], cwd=ROOT,
-                    stderr=subprocess.DEVNULL, timeout=10).decode('utf-8')
-            except (OSError, subprocess.SubprocessError, UnicodeError):
-                rep.fail('6 pulse', 'cannot verify previous Pulse: local origin/main:index.html unavailable',
-                         'fetch the main baseline before final verification')
+        previous_home = None if sweep else pulse_baseline(rep)
         check_pulse(rep, home, url, sweep, previous_home)
 
     rail = re.search(r'<a class="dc-rail-card"[^>]*href="%s">(.*?)</a>' % re.escape(url), home, re.S)
@@ -1796,6 +2186,9 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                           f"python3 tools/pathway_place.py --insert {content_id} "
                           f"--pathway evidence-literacy --after <previous part>")
 
+    # ---------------- prior data preserved (Phase F) ----------------
+    check_bank_preservation(rep, content_id)
+
     # ---------------- version stamp (step 7, always last) ----------------
     want = content_version()
     sw = re.search(r"dentcast-assets-([a-z0-9]+)", read("service-worker.js"))
@@ -1805,7 +2198,8 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
               f"— the stamper did not run last",
               "python tools/stamp-version.py  (ALWAYS the final builder)")
     for f in ("index.html", "player.html"):
-        vs = set(re.findall(r"dentcast-brain\.json\?v=([a-z0-9]+)", read(f)))
+        # Brain and episode-catalogue (dentcast.json) fetches, as stamped.
+        vs = set(re.findall(r"(?:dentcast-brain|(?<![\w-])dentcast)\.json\?v=([a-z0-9]+)", read(f)))
         if vs:
             rep.check(vs == {want}, "7 version", f"{f} ?v= is current",
                       f"{f} carries ?v={vs}, expected {want}", "python tools/stamp-version.py")
@@ -1820,7 +2214,8 @@ def main():
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("content_id", nargs="?", help="e.g. chairside/chairside-28")
     ap.add_argument("--last", action="store_true", help="verify the newest brain entry")
-    ap.add_argument("--all", action="store_true", help="verify every brain entry that has a page")
+    ap.add_argument("--all", action="store_true", help="verify every brain entry that has a page "
+                         "(backlog report: always exits 0, even with FAILs)")
     ap.add_argument("--quiet", action="store_true", help="print only failures")
     ap.add_argument("--expect-title", metavar="STR",
                     help="the title EXACTLY as the user wrote it — compared codepoint-for-codepoint")

@@ -95,8 +95,17 @@ class LifecycleTests(unittest.TestCase):
         state['publication']['content_id']='unassigned'
         h.write_atomic(self.root,state)
         sha=h.load_state(self.root)[1]
-        result=lc.bind(self.root,sha,'note','insight',['note.html'],'fixture:resolved intake')
+        result=lc.bind(self.root,sha,'insight/note','insight',['note.html'],'fixture:resolved intake')
         self.assert_blocked('IDENTITY_ALREADY_BOUND',lc.bind,self.root,result['sha256'],'other','insight',['note.html'],'fixture')
+
+    def test_binding_stores_the_canonical_category(self):
+        initial=self.prepare()
+        state,_=h.load_state(self.root)
+        state['publication'].update(content_id='unassigned',category='Pending')
+        h.write_atomic(self.root,state)
+        sha=h.load_state(self.root)[1]
+        lc.bind(self.root,sha,'litecast/note','LiteCast',['note.html'],'fixture:resolved intake')
+        self.assertEqual(h.load_state(self.root)[0]['publication']['category'],'litecast')
 
     def test_raw_phase_f_completion_is_rejected(self):
         self.prepare(complete=True)
@@ -207,6 +216,30 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(result['status'],'cleanup_pending_delivery')
         self.assertEqual(result['verification']['kind'],'paper_catalog_gate')
 
+    def test_paper_only_final_handoff_uses_stage_delivery(self):
+        initial=self.prepare(complete=True,paper=True)
+        catalog='dentcast_cabinet_full_catalog.json'
+        data=json.loads((self.root/catalog).read_text());data['papers'][0]['title']='fixture title'
+        (self.root/catalog).write_text(json.dumps(data))
+        state,_=h.load_state(self.root)
+        sha=h.save(self.root,state['publication'],expected=initial['sha256'],note='Reviewed catalog enrichment')['sha256']
+        result=lc.stage_delivery(self.root,sha,[catalog])
+        self.assertEqual(result['status'],'delivery_staged')
+        run(self.root,'commit','-m','paper-only final handoff');run(self.root,'push','origin','main')
+        self.assertEqual(lc.finish(self.root,result['sha256'])['status'],'cleanup_pending_delivery')
+
+    def test_paper_only_stage_delivery_requires_the_finished_ledger(self):
+        self.prepare(paper=True)
+        sha=h.load_state(self.root)[1]
+        self.assert_blocked('STAGE_DELIVERY_ONLY_AT_FIXED_CUT',lc.stage_delivery,self.root,sha,
+                            ['dentcast_cabinet_full_catalog.json'])
+
+    def test_paper_only_stop_before_final_has_nothing_to_push(self):
+        # Its single delivery is the finished handoff; stage-delivery refuses
+        # earlier checkpoints, so the stop guard must not ask for one.
+        self.prepare(paper=True)
+        self.assertEqual(lc.guard(self.root, 'stop')['status'], 'guard_passed')
+
     def test_bare_delivery_boolean_is_not_completion_evidence(self):
         self.prepare(complete=True)
         state,_=h.load_state(self.root);state['publication']['context']['delivery']=[True]
@@ -287,10 +320,10 @@ class LifecycleTests(unittest.TestCase):
 
     def test_bind_after_completed_founder_requested_external_action_keeps_receipt(self):
         sha=self.placeholder_with_action('completed',['fixture:drive rename+move observed'])
-        result=lc.bind(self.root,sha,'note','insight',['note.html'],'fixture:identity')
+        result=lc.bind(self.root,sha,'insight/note','insight',['note.html'],'fixture:identity')
         p=h.load_state(self.root)[0]['publication']
         self.assertEqual(result['status'],'checkpoint_written')
-        self.assertEqual((p['content_id'],p['category']),('note','insight'))
+        self.assertEqual((p['content_id'],p['category']),('insight/note','clinical'))
         self.assertEqual(p['external_actions'],[{'id':'drive-rename','target':'drive:fixture-file','status':'completed','evidence':['fixture:drive rename+move observed']}])
 
     def test_bind_rejects_unsettled_or_failed_external_action(self):

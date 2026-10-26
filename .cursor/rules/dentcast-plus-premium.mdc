@@ -13,13 +13,13 @@ alwaysApply: false
 | سطح | آرتیفکت | گامِ ورکفلو | بیلدر (تنها نویسنده) |
 |---|---|---|---|
 | Plus | درخت ناوبریِ «میز کار» | همیشه (brain تغییر کرده) | `node tools/build_plus_index.mjs` → `plus/content-index.json` |
-| Plus/Premium | فلش‌کارت Leitner | `4.11` — `DefinedTermSet` در `plus/faq-corpus.json` (نه روی خودِ صفحه) | `node tools/build_flashcards_index.mjs` → `plus/flashcards-index.json` |
-| Plus/Premium | کوییز نمره‌دار | `4.12` — `FAQPage` در `plus/faq-corpus.json` (نه روی خودِ صفحه) | `node tools/build_quiz_index.mjs` → `plus/quiz-index.json` |
-| Premium | مسیر یادگیری | `5.6` | `python3 tools/pathway_place.py --insert …` → `plus/pathways.json` |
-| Premium | باندلِ شروع (`kind: "bundle"`) | `5.6-ب` (زنجیرهٔ پنج‌گیتی) | همان ابزار، `--pathway <bundle-id>` + جاروی دستیِ `plus/js/home-bundles.js` + `asset_version.py --bump` |
+| Plus/Premium | فلش‌کارت Leitner | `C.4.11` — `DefinedTermSet` در `plus/faq-corpus.json` (نه روی خودِ صفحه) | `node tools/build_flashcards_index.mjs` → `plus/flashcards-index.json` |
+| Plus/Premium | کوییز نمره‌دار | `C.4.12` — `FAQPage` در `plus/faq-corpus.json` (نه روی خودِ صفحه) | `node tools/build_quiz_index.mjs` → `plus/quiz-index.json` |
+| Premium | مسیر یادگیری | `C.5.6` | `python3 tools/pathway_place.py --insert …` → `plus/pathways.json` |
+| Premium | باندلِ شروع (`kind: "bundle"`) | `C.5.6-b` (زنجیرهٔ پنج‌گیتی) | همان ابزار، `--pathway <bundle-id>` + جاروی دستیِ `plus/js/home-bundles.js` + `asset_version.py --bump` |
 | Plus/Premium | نوتیف مطلب جدید | فاز E | `<meta name="dc-notify" content="true">` در `<head>` |
 | Premium | کالکشن‌ها | — | مالِ کاربر است؛ publish کاری با آن ندارد |
-| Premium | کتابخانهٔ کابینت | `4.10` (فقط با پیپر پیوست) | ندارد — `dentcast_cabinet_full_catalog.json` دستی طبق گام ۴.۱۰ |
+| Premium | کتابخانهٔ کابینت | `C.4.10.2` (فقط با پیپر پیوست) | ندارد — `dentcast_cabinet_full_catalog.json` دستی طبق `C.4.10.2` |
 
 **هیچ‌کدام از فایل‌های ایندکس را دستی ویرایش نکن** — `content-index.json`،
 `flashcards-index.json`، `quiz-index.json` تماماً تولیدی‌اند. تنها فایل Plus که
@@ -27,7 +27,7 @@ alwaysApply: false
 
 ## قواعدی که زیاد اشتباه می‌شوند
 
-- **pathway ≠ pillar.** pillar خانهٔ آیتم است (دقیقاً یکی، گام ۲.۴). pathway یک
+- **pathway ≠ pillar.** pillar خانهٔ آیتم است (دقیقاً یکی، `C.2.4`). pathway یک
   سفر یادگیری است و **یک آیتم می‌تواند در چند pathway باشد**، هر بار در جای درستِ
   پیش‌نیاز→پیشرفته. pillarِ آیتم هیچ نقشی در انتخاب pathway ندارد. تصمیم
   **معنایی** است؛ مرزی بود، بپرس.
@@ -48,9 +48,9 @@ alwaysApply: false
   قبل از commit حتماً `python3 -m json.tool plus/pathways.json > /dev/null`.
 - **باندل ≠ مسیر.** باندل‌های شروع (`kind: "bundle"`) در همان `pathways.json`
   می‌نشینند ولی زیرمجموعه‌ای ۵ تا ۸ قدمیِ «فقط هستهٔ» یک مسیرند، نه مسیرِ تازه.
-  گام ۵.۶ آیتم را در **مسیرهای کامل** جا می‌دهد؛ ورود به باندل کارِ گام
-  **5.6-ب** است: پنج گیتِ مکانیکی با **پیش‌فرضِ «نه»** (نوع پوشه ∈ episodes/
-  notecast/sharehub/dentai · عنوان یک مفهومِ کامل، نه کیس/نکته · پرکردنِ حفره‌ای
+  `C.5.6` آیتم را در **مسیرهای کامل** جا می‌دهد؛ ورود به باندل کارِ گام
+  **`C.5.6-b`** است: پنج گیتِ مکانیکی با **پیش‌فرضِ «نه»** (نوع پوشه ∈ episodes/
+  notecast/sharehub؛ dentai/ بسته است و مطلبِ تازه ندارد · عنوان یک مفهومِ کامل، نه کیس/نکته · پرکردنِ حفره‌ای
   که هیچ قدمِ فعلی نمی‌پوشاند · نبودنِ دوقلو · ≤ ۸ قدم بعد از درج). هر ابهامی =
   **سوال از بنیان‌گذار**. درج فقط **وسطِ لیست** با `--after <anchor>` — هرگز
   `--at-end`، چون قدمِ آخرِ باندل تنها حاملِ `milestone: true` (پرچمِ 🏁) است.

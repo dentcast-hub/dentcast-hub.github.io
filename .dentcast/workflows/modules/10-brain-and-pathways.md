@@ -54,14 +54,14 @@ python3 tools/hashtag_ref.py --simulate "<a real question a dentist would type a
 
 **The `hashtags` field is the canonical list resolved in step 5.0 (Hard Rule 15) — do not re-invent or re-spell tags here.** Every tag written must already be a canonical concept in `dentcast-hashtag-reference.json`; if step 5.0 was skipped, go back and run it before writing this entry.
 
-**Schema templating stays category-locked, even though physical placement does not.** Match the locked category by its `type` field — or, for the core podcast episodes, by the **absence of a `type` field** (the 202 episode entries have no `type` key at all). Don't confuse "where to put it" (end of the whole array) with "what shape to give it" (the most recent same-category entry).
+**Schema templating stays category-locked, even though physical placement does not.** Match the locked category by its `type` field — or, for the core podcast episodes, by **`"type": "dentcast"`**, the shape every episode has carried since 154 (latest, 159.1–162: `type`, `episode`, `title`, `caption`, `hashtags`, `keywords`, `audio_url`, `page_url`, `pillar`). The 202 older episode entries have no `type` key; never use one as the template. Don't confuse "where to put it" (end of the whole array) with "what shape to give it" (the most recent same-category entry).
 
 Build the new entry with **identical keys, nesting, and ordering** as the previous same-category entry. Fill all fields based on new content + today's date + new URL — including the entire `pillar` object, using the values **confirmed in step 2.4**: `pillar.primary` (the confirmed pillar slug, or `null` if the user chose no pillar), `pillar.secondary` (matches previous entries' shape — usually `[]`), and `pillar.subtopic` (the confirmed subtopic slug for a structured pillar, otherwise `null`). The `subtopic` key is **always present** under `pillar` (that is the brain's convention — never omit it). Do **not** re-decide the pillar or subtopic here — just record exactly what step 2.4 confirmed; step 5.5 then verifies it.
 
 **Critical constraints:**
 - Do NOT add any field that doesn't exist on the previous same-category entry.
 - Do NOT remove any field that exists on the previous entry — every key must be present.
-- **Episode entries have NO `type` field.** When the user picks "Episode", treat absence of `type` as the category marker. Do NOT invent a `type: "episode"` field — that would break schema parity with the previous 202 episode entries.
+- **Episode entries carry `"type": "dentcast"` and a filled `audio_url`** (the episode's ArvanCloud URL — `tools/update-homepage-counters.py` and the `index.html` hero take the newest entry with `audio_url`). When the user picks "Episode", copy the latest `dentcast` entry's key set. Do NOT invent a `type: "episode"` field.
 - If the category's schema has a `pillar` field, fill it with the assigned pillar value only. Do NOT add reasoning, notes, justifications, or any extra commentary field. The JSON shape must remain identical to the previous entry.
 
 **Append the new entry at the absolute END of the flat `dentcast-brain.json` array** — it becomes the last element of the whole file, regardless of type. This is non-negotiable — the latest-content widget reads the last 30 entries globally, so physical tail position is what makes the new entry visible.
@@ -69,7 +69,7 @@ Build the new entry with **identical keys, nesting, and ordering** as the previo
 Re-read the file and confirm:
 - Entry is the **last element of the array**.
 - It has exactly the same set of keys as the previous same-category entry — no extras, no missing.
-- For episode entries: confirm **no `type` field was added**.
+- For episode entries: confirm **`type` is `"dentcast"` and `audio_url` is filled**.
 - It's well-formed and contains no stale data from previous entries.
 
 ### 5.5. Verify the recorded pillar & subtopic
@@ -233,6 +233,11 @@ subscribers rather than parked for later, so the **«اگر شک داشتی سو
 guard above is about live UI, not about data hygiene; and the file must be
 valid JSON at commit time (`python3 -m json.tool plus/pathways.json > /dev/null`),
 because a broken publish is what the API's last-good fallback would be holding.
+
+**Then run step 4.12-ب** (`modules/07-flashcards-and-quiz.md`) now that this
+page's full-pathway membership is known: write its exam questions if it landed
+in at least one full pathway, otherwise record the skip — either way in the
+evidence of **C.5.6**.
 
 ### 5.6-ب. Bundle check (runs after every full-pathway placement)
 

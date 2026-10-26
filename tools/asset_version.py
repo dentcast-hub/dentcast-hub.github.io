@@ -73,7 +73,14 @@ SPEC_RE = re.compile(
 CSS_IMPORT_RE = re.compile(r'''@import\s+(?:url\()?['"](?P<p>[^'"]+)['"]''')
 
 # Directories that hold no site page (build inputs, tooling, dependencies).
-SKIP_DIRS = {'.git', 'node_modules', 'plus-api', '.dentcast', '.github', '.cursor'}
+# Any hidden directory is skipped too (see skipped()): .git, .dentcast,
+# .github, .cursor, and .claude/worktrees/*, which holds full site copies.
+SKIP_DIRS = {'node_modules', 'plus-api'}
+
+
+def skipped(path: Path) -> bool:
+    return any(part in SKIP_DIRS or part.startswith('.')
+               for part in path.relative_to(ROOT).parts)
 
 # ── the assets no page references ───────────────────────────────────────────
 # Four shared assets are never written into a page's HTML: dc-nav.js appends
@@ -269,8 +276,7 @@ def module_files() -> list[Path]:
         if len(g) < 2:  # an island: no imports, nothing importing it
             continue
         for f in g:
-            if f.suffix == '.js' and not any(
-                    part in SKIP_DIRS for part in f.relative_to(ROOT).parts):
+            if f.suffix == '.js' and not skipped(f):
                 seen[f.relative_to(ROOT).as_posix()] = f
     return [seen[k] for k in sorted(seen)]
 
@@ -331,8 +337,7 @@ def audit_modules() -> list[str]:
 
 def html_pages() -> list[Path]:
     return sorted(
-        p for p in ROOT.rglob('*.html')
-        if not any(part in SKIP_DIRS for part in p.relative_to(ROOT).parts)
+        p for p in ROOT.rglob('*.html') if not skipped(p)
     )
 
 

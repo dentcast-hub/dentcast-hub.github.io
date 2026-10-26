@@ -32,9 +32,9 @@
 // window.dcAudioHub / window.dcAudioPending (the dcpPendingListen shape).
 // player.html keeps its own record-keeping (#dc-audio is never adopted); the
 // hub only asks it to stop when something else starts.
-import { apiBase } from './api.js?v=195';
-import { el, faNum } from './util.js?v=195';
-import { fmtClock, segmentActive } from './clip-audio.js?v=195';
+import { apiBase } from './api.js?v=196';
+import { el, faNum } from './util.js?v=196';
+import { fmtClock, segmentActive } from './clip-audio.js?v=196';
 
 export const RESUME_KEY = 'dc-resume-state';   // player.html's own record — same key, same shape
 export const META_KEY = 'dc-resume-meta';      // what the bar needs to draw it without the 500 KB catalog
@@ -103,8 +103,9 @@ function episodeOfPath(path) {
 function catalog() {
   if (!catalogP) {
     // Same URL and cache mode as clip-audio's episodeCatalog(), so the two
-    // share one HTTP-cache entry instead of fetching 500 KB twice.
-    catalogP = fetch('/dentcast.json?v=3', { cache: 'force-cache' })
+    // share one HTTP-cache entry instead of fetching 500 KB twice. 'no-cache'
+    // revalidates (a cheap 304 via ETag), so new episodes are never hidden.
+    catalogP = fetch('/dentcast.json', { cache: 'no-cache' })
       .then((r) => (r.ok ? r.json() : []))
       .then((j) => (Array.isArray(j) ? j : []))
       .catch(() => []);

@@ -1,0 +1,98 @@
+{
+ "02-routing-intake.md": [
+  [
+   "run and **no** version bump — Drive upload + catalog edit + commit is the whole job.\n\n",
+   "run and **no** version bump — Drive upload + catalog edit + commit is the whole job.\nThe one exception is step 4.10 Part 2 item 7: when the paper count crosses a round\nhundred, the advertised figure changes and `python3 tools/asset_version.py --bump`\nruns with it — a cache-buster for the shared gate module, not the site version stamp.\n\n"
+  ],
+  [
+   "  - Otherwise ask the user directly.\n- If previous entries have a **video / external link field** populated → ask: «لینک ویدیو/منبع چیه؟»\n",
+   "  - Otherwise ask the user directly.\n  - Audio files never enter the repo: they are uploaded to ArvanCloud object\n    storage and only the URL is written (e.g.\n    `https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast162%20.mp3?versionId=`\n    in `dentcast.json`). Ask for the uploaded URL; never commit the file.\n- If previous entries have a **video / external link field** populated → ask: «لینک ویدیو/منبع چیه؟»\n"
+  ],
+  [
+   "\n**Runs for EVERY type, on EVERY publish that produces a page.** This arms the **DES\nscoring step (Phase C step 4.13)**. The question is *not* \"how good is this\n",
+   "\n**Runs for EVERY type, on EVERY publish that produces a page** — except LiteCast and\na چالش (Question 4.9), the canonical skips of `modules/08-des-fidelity.md`. This arms the **DES\nscoring step (Phase C step 4.13)**. The question is *not* \"how good is this\n"
+  ],
+  [
+   "  4.13 is a documented skip (\"4.13: skipped — کاربر انتخاب کرد بدون DES منتشر شود\").\n  It does **not** quietly fall back to the COMMENTARY track: scoring a\n  research-derived piece as though it were the author's own opinion is a false\n",
+   "  4.13 is a documented skip (\"4.13: skipped — کاربر انتخاب کرد بدون DES منتشر شود\").\n  Record that decision as a page-bound entry in `.dentcast/des-exemptions.json`\n  (`publish-checkpoints.md`; reason `unsourced_audio_caption` for a caption+audio-only\n  episode, otherwise `founder_without_des`) — without it Phase F fails. It does **not** quietly fall back to the COMMENTARY track: scoring a\n  research-derived piece as though it were the author's own opinion is a false\n"
+  ]
+ ],
+ "03-litecast-and-page.md": [
+  [
+   "**0.1 — Source of truth is `litecast/lite-glossary.json`, not `dentcast-brain.json`.**\n- The file is a JSON **object** whose entries live under the top-level **`LightGlossary`** key — an array of LiteCast entries (despite the filename, this is LiteCast *content*, not a glossary of terms). The current entry shape is `type` (`\"litecast\"`), `id` (`litecast-N`), `title`, `caption`, `hashtags`, `keywords`, `page_url` (a path like `litecast/lite-CAST-N.html`). There is **no** `pillar` field — confirm the live shape from the file rather than trusting this list.\n- Infer **all** LiteCast structure from `litecast/lite-glossary.json`: required fields, schema shape, directory/URL pattern, and media requirements. Read it the way Phase A reads the brain — find the **most recent** entry in `LightGlossary` and use it as both the **schema** and **structural** template.\n",
+   "**0.1 — Source of truth is `litecast/lite-glossary.json`, not `dentcast-brain.json`.**\n- The file is a JSON **object** whose entries live under the top-level **`LightGlossary`** key — an array of LiteCast entries (despite the filename, this is LiteCast *content*, not a glossary of terms). The current entry shape is `type` (`\"litecast\"`), `id` (`litecast-N`), `title`, `caption`, `hashtags`, `keywords`, `page_url` (a path like `litecast/lite-CASTN.html`, e.g. `litecast/lite-CAST42.html`). There is **no** `pillar` field — confirm the live shape from the file rather than trusting this list.\n- Infer **all** LiteCast structure from `litecast/lite-glossary.json`: required fields, schema shape, directory/URL pattern, and media requirements. Read it the way Phase A reads the brain — find the **most recent** entry in `LightGlossary` and use it as both the **schema** and **structural** template.\n"
+  ]
+ ],
+ "04-taxonomy-and-navigation.md": [
+  [
+   "|---|---|\n| Typed brain entry (any entry in `dentcast-brain.json` with a `type` field — NoteCast, Insight, Clinical, Chairside, DentAI, MetaNote, PhotoCast, ShareHub, DentCast+, DentCast, …) | **Both** capsules: دانشنامه + فهرست موضوعی (the فهرست موضوعی capsule points to the entry's own pillar — see below) |\n| Glossary term page (sourced from `glossary/glossary.json`, not from the brain) | **Only** the فهرست موضوعی capsule (pointing to the term's own pillar) |\n| Core podcast episode (no `type` field — `/episodes/episode-XX.html`) | **No `dc-related-section`.** Instead add the pillar link into the episode's existing «محتوای مرتبط» (`ep-section`) block using `ep-related-link` — see the **Episode branch** below. |\n| **LiteCast** (isolated track — see Phase C step 0) | **Skip the specialist capsules** (دانشنامه / فهرست موضوعی point into the specialist ecosystem; LiteCast must not link into it). The «کاوش بیشتر» section itself is **kept** and filled with **LiteCast-internal** capsule links instead — see step 0.6. |\n",
+   "|---|---|\n| Typed brain entry (any entry in `dentcast-brain.json` with a `type` field — NoteCast, Insight, Clinical, Chairside, DentAI, MetaNote, PhotoCast, ShareHub, DentCast+, …) | **Both** capsules: دانشنامه + فهرست موضوعی (the فهرست موضوعی capsule points to the entry's own pillar — see below) |\n| Glossary term page (sourced from `glossary/glossary.json`, not from the brain) | **Only** the فهرست موضوعی capsule (pointing to the term's own pillar) |\n| Core podcast episode (`/episodes/episode-XX.html`; `\"type\": \"dentcast\"` since episode 154, no `type` on older entries) | **No `dc-related-section`.** Instead add the pillar link into the episode's existing «محتوای مرتبط» (`ep-section`) block using `ep-related-link` — see the **Episode branch** below. |\n| **LiteCast** (isolated track — see Phase C step 0) | **Skip the specialist capsules** (دانشنامه / فهرست موضوعی point into the specialist ecosystem; LiteCast must not link into it). The «کاوش بیشتر» section itself is **kept** and filled with **LiteCast-internal** capsule links instead — see step 0.6. |\n"
+  ],
+  [
+   "Convert the **first (previous)** slot from the empty placeholder into a real link to the immediately-preceding part (`prompt<season>-<part − 1>`):",
+   "Convert the **first (previous)** slot from the empty placeholder into a real link to the immediately-preceding part — the Promptologist entry just before the new one in `dentcast-brain.json` order (usually `prompt<season>-<part − 1>`; across a season boundary or after an appendix part it is that brain-order predecessor, e.g. `prompt2-1` → `prompt1-5`):"
+  ]
+ ],
+ "06-paper-ingestion.md": [
+  [
+   "   - `doi`, `journal`, `crossref_year`, `abstract` → from the metadata lookup.\n   - `file_name` → the real filename; `file_size` → the file's byte size.\n",
+   "   - `doi`, `journal`, `crossref_year`, `abstract` → from the metadata lookup.\n     On the **paper-only fast path** Part 3 does not run, so do only its step 1\n     lookup (DOI + metadata, same ask-don't-guess rule, no page credit) to fill\n     these fields.\n   - `file_name` → the real filename; `file_size` → the file's byte size.\n"
+  ],
+  [
+   "   - `linked_episodes` → the page being published, if any (follow the template's\n     value shape); on the **paper-only fast path** there is no page, so leave it\n     as the template's empty shape (e.g. `[]`). `key_finding` /\n",
+   "   - `linked_episodes` → the page being published, if any (follow the template's\n     value shape) — never a LiteCast page, since nothing links to LiteCast (step\n     0.2); on the **paper-only fast path** there is no page, so leave it\n     as the template's empty shape (e.g. `[]`). `key_finding` /\n"
+  ],
+  [
+   "   commit (see the cache-buster rule) or returning browsers keep the old figure.\n\n",
+   "   commit (see the cache-buster rule) or returning browsers keep the old figure.\n   This holds on the paper-only fast path too: Phase 0's «no version bump» means\n   the site version stamp, not this asset cache-buster.\n\n"
+  ],
+  [
+   "   hashes. Don't break HTML (no link inside an existing link or heading).\n\n",
+   "   hashes. Don't break HTML (no link inside an existing link or heading).\n5. **Several attached papers.** Run Parts 1–2 once per paper (one catalog entry\n   each, all linking this page) and give **each** paper its own first-author→DOI\n   anchor — as a «منابع» list like `sharehub/share-22.html`, not N `.author` blocks.\n\n"
+  ]
+ ],
+ "07-flashcards-and-quiz.md": [
+  [
+   "**Runs for EVERY type, on EVERY publish that produces a page — LiteCast and\nDentCast+ (`dentcast_plus`) are the two exceptions.** LiteCast stays outside\nthe specialist ecosystem, same as the glossary/pillar linking it skips in\n",
+   "**Runs for EVERY type, on EVERY publish that produces a page — LiteCast and\nDentCast+ (`dentcast_plus`) are the two exceptions** (a چالش from Question 4.9\nalso skips it — `modules/09-challenge.md`). LiteCast stays outside\nthe specialist ecosystem, same as the glossary/pillar linking it skips in\n"
+  ],
+  [
+   "**Runs for EVERY type, on EVERY publish that produces a page — LiteCast is the\nsole exception** (same scope as flashcards: LiteCast is patient-facing and\nstays out of the specialist quiz/flashcard ecosystem). The FAQPage node\n",
+   "**Runs for EVERY type, on EVERY publish that produces a page — LiteCast is the\nsole category exception** (a چالش also skips it — `modules/09-challenge.md`;\nsame scope as flashcards: LiteCast is patient-facing and\nstays out of the specialist quiz/flashcard ecosystem). The FAQPage node\n"
+  ]
+ ],
+ "10-brain-and-pathways.md": [
+  [
+   "\n**Schema templating stays category-locked, even though physical placement does not.** Match the locked category by its `type` field — or, for the core podcast episodes, by the **absence of a `type` field** (the 202 episode entries have no `type` key at all). Don't confuse \"where to put it\" (end of the whole array) with \"what shape to give it\" (the most recent same-category entry).\n\n",
+   "\n**Schema templating stays category-locked, even though physical placement does not.** Match the locked category by its `type` field — or, for the core podcast episodes, by **`\"type\": \"dentcast\"`**, the shape every episode has carried since 154 (latest, 159.1–162: `type`, `episode`, `title`, `caption`, `hashtags`, `keywords`, `audio_url`, `page_url`, `pillar`). The 202 older episode entries have no `type` key; never use one as the template. Don't confuse \"where to put it\" (end of the whole array) with \"what shape to give it\" (the most recent same-category entry).\n\n"
+  ],
+  [
+   "- Do NOT remove any field that exists on the previous entry — every key must be present.\n- **Episode entries have NO `type` field.** When the user picks \"Episode\", treat absence of `type` as the category marker. Do NOT invent a `type: \"episode\"` field — that would break schema parity with the previous 202 episode entries.\n- If the category's schema has a `pillar` field, fill it with the assigned pillar value only. Do NOT add reasoning, notes, justifications, or any extra commentary field. The JSON shape must remain identical to the previous entry.\n",
+   "- Do NOT remove any field that exists on the previous entry — every key must be present.\n- **Episode entries carry `\"type\": \"dentcast\"` and a filled `audio_url`** (the episode's ArvanCloud URL — `tools/update-homepage-counters.py` and the `index.html` hero take the newest entry with `audio_url`). When the user picks \"Episode\", copy the latest `dentcast` entry's key set. Do NOT invent a `type: \"episode\"` field.\n- If the category's schema has a `pillar` field, fill it with the assigned pillar value only. Do NOT add reasoning, notes, justifications, or any extra commentary field. The JSON shape must remain identical to the previous entry.\n"
+  ],
+  [
+   "- It has exactly the same set of keys as the previous same-category entry — no extras, no missing.\n- For episode entries: confirm **no `type` field was added**.\n- It's well-formed and contains no stale data from previous entries.\n",
+   "- It has exactly the same set of keys as the previous same-category entry — no extras, no missing.\n- For episode entries: confirm **`type` is `\"dentcast\"` and `audio_url` is filled**.\n- It's well-formed and contains no stale data from previous entries.\n"
+  ],
+  [
+   "\n### 5.6-ب. Bundle check (runs after every full-pathway placement)\n",
+   "\n**Then run step 4.12-ب** (`modules/07-flashcards-and-quiz.md`) now that this\npage's full-pathway membership is known: write its exam questions if it landed\nin at least one full pathway, otherwise record the skip — either way in the\nevidence of **C.5.6**.\n\n### 5.6-ب. Bundle check (runs after every full-pathway placement)\n"
+  ]
+ ],
+ "11-build-and-version.md": [
+  [
+   "4. **Flashcards index builder — run whenever step 4.11 added a `DefinedTermSet` to the corpus.** Run `node tools/build_flashcards_index.mjs`. It reads `plus/faq-corpus.json` (never page HTML — pages carry no `DefinedTermSet` of their own, see step 4.11) for every content id's `DefinedTermSet`, skipping LiteCast and `/en/` entries, and regenerates `plus/flashcards-index.json` from scratch — **never hand-edit that file**, this builder is its only writer. Skip only on the documented \"4.11: skipped — LiteCast\" publishes.\n4b. **Quiz index builder — run on every non-LiteCast publish that produced a page (step 4.12).** Run `node tools/build_quiz_index.mjs`. It reads `plus/faq-corpus.json` (never page HTML) for every content id's `FAQPage`, skipping LiteCast, `/en/` entries, and the homepage, keeps only the binary (yes/no) questions whose answer opens with an explicit «بله»/«خیر» verdict, and regenerates `plus/quiz-index.json` from scratch — **never hand-edit that file**, this builder is its only writer. It prints `<pages>, <questions> binary questions (of <N> FAQ items scanned)`; the \"scanned − kept\" gap is the open/hedged questions correctly left out of the scored bank. Skip only on the documented \"4.12: skipped — LiteCast\" publishes.\n4c. **چالش index builder — run whenever step 4.14 fired (a چالش publish).** Run `node tools/build_challenge_index.mjs`. It walks the specialist content folders for the `data-dc-challenge-question`/`data-dc-challenge-image` markup step 4.14 wrote and regenerates `plus/challenges.json` from scratch — **never hand-edit that file**, this builder is its only writer, and it never carries `answer_fa`/`key_points` (it asserts so itself). Runs after the pillar builder (step 2) and before the plus content-index builder (step 5b). Skip on any publish that did not answer «چالش» at Question 4.9.\n",
+   "4. **Flashcards index builder — run whenever step 4.11 added a `DefinedTermSet` to the corpus.** Run `node tools/build_flashcards_index.mjs`. It reads `plus/faq-corpus.json` (never page HTML — pages carry no `DefinedTermSet` of their own, see step 4.11) for every content id's `DefinedTermSet`, skipping LiteCast and `/en/` entries, and regenerates `plus/flashcards-index.json` from scratch — **never hand-edit that file**, this builder is its only writer. Skip only on the documented \"4.11: skipped — LiteCast\" publishes.\n4b. **Quiz index builder — run on every non-LiteCast, non-چالش publish that produced a page (step 4.12).** Run `node tools/build_quiz_index.mjs`. It reads `plus/faq-corpus.json` (never page HTML) for every content id's `FAQPage`, skipping LiteCast, `/en/` entries, and the homepage, keeps only the binary (yes/no) questions whose answer opens with an explicit «بله»/«خیر» verdict, and regenerates `plus/quiz-index.json` from scratch — **never hand-edit that file**, this builder is its only writer. It prints `<pages>, <questions> binary questions (of <N> FAQ items scanned)`; the \"scanned − kept\" gap is the open/hedged questions correctly left out of the scored bank. Skip only on the documented \"4.12: skipped — LiteCast\" publishes.\n4c. **چالش index builder — run whenever step 4.14 fired (a چالش publish).** Run `node tools/build_challenge_index.mjs`. It walks the specialist content folders for the `data-dc-challenge-question`/`data-dc-challenge-image` markup step 4.14 wrote and regenerates `plus/challenges.json` from scratch — **never hand-edit that file**, this builder is its only writer, and it never carries `answer_fa`/`key_points` (it asserts so itself). Runs after the pillar builder (step 2) and before the plus content-index builder (step 5b). Skip on any publish that did not answer «چالش» at Question 4.9.\n"
+  ]
+ ],
+ "12-english-notify-verify.md": [
+  [
+   "- New brain entry (printed as it now exists at the end of the flat array) — confirmation that it's the last element, that its key set matches the previous same-category entry exactly, and (for episodes) that no `type` field was added\n",
+   "- New brain entry (printed as it now exists at the end of the flat array) — confirmation that it's the last element, that its key set matches the previous same-category entry exactly, and (for episodes) that `type` is `\"dentcast\"` and `audio_url` is filled, as on the latest episode entry\n"
+  ],
+  [
+   "- **Phase D (English mirror & toggle — Hard Rule 12; REQUIRED unless LiteCast):** the en page path created (`/{type}/en/{file}.html`); confirmation the body was translated structure-faithfully from THIS type (not rendered as a metanote) with GA4 once and `lang`/`inLanguage`/`og:locale` all `en`; confirmation the en page carries `noindex, follow` and zero hreflang lines and stays out of the sitemap (`inject_hreflang.py` + `noindex_en_mirrors.py --check` both run); both toggle targets (exact inverses, no meta-1 hardcode) and that the fa page got both the `.lang-btn` markup **and** its CSS; chrome standard `metanotes/en/meta-1.html` hash unchanged. For LiteCast, the documented skip line instead.\n",
+   "- **Phase D (English mirror & toggle — Hard Rule 12; REQUIRED unless LiteCast or چالش):** the en page path created (`/{type}/en/{file}.html`); confirmation the body was translated structure-faithfully from THIS type (not rendered as a metanote) with GA4 once and `lang`/`inLanguage`/`og:locale` all `en`; confirmation the en page carries `noindex, follow` and zero hreflang lines and stays out of the sitemap (`inject_hreflang.py` + `noindex_en_mirrors.py --check` both run); both toggle targets (exact inverses, no meta-1 hardcode) and that the fa page got both the `.lang-btn` markup **and** its CSS; chrome standard `metanotes/en/meta-1.html` hash unchanged. For LiteCast, the documented skip line instead.\n"
+  ]
+ ]
+}

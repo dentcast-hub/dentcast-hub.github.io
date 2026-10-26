@@ -42,7 +42,12 @@ Usage:
   python3 tools/exam_questions_import.py DRAFT.json --high
   python3 tools/exam_questions_import.py DRAFT.json --api https://api.dentcast.org
 
-Nothing here reads the repo; it is safe to run from any checkout.
+This tool never writes plus/exam-questions.json (or any repo file except the
+append-only --log): the repo half is hand-appended at step 4.12-ب and guarded
+by tools/validate_exam_questions.py. It only READS that file, when present,
+to skip any row whose prompt is already in the repo source for the same
+content_id — the «do not run both» rule above, enforced. Safe to run from any
+checkout.
 """
 from __future__ import annotations
 
@@ -57,6 +62,18 @@ import urllib.parse
 import urllib.request
 
 DEFAULT_API = 'https://api.dentcast.ir'
+REPO_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'plus', 'exam-questions.json')
+
+
+def repo_prompts(path: str = REPO_FILE) -> dict[str, set[str]]:
+    """content_id -> prompts already in the repo source (read-only)."""
+    try:
+        with open(path, encoding='utf-8') as f:
+            by = json.load(f).get('byContent') or {}
+    except (OSError, ValueError, AttributeError):
+        return {}
+    return {cid: {str(q.get('prompt_fa', '')).strip() for q in (e or {}).get('questions', []) if isinstance(q, dict)}
+            for cid, e in by.items() if isinstance(e, dict)}
 
 
 def auth_header() -> str:
@@ -111,9 +128,15 @@ def main() -> int:
     planned = 0
     posted = 0
     skipped_existing = 0
+    in_repo = repo_prompts()
     failed: list[tuple[str, str, str]] = []
     for content_id, entry in sorted(by.items()):
         rows = [q for q in entry.get('questions', []) if selected(q, args.high)]
+        dup = [q for q in rows if q['prompt_fa'].strip() in in_repo.get(content_id, set())]
+        for q in dup:
+            print(f'[skip] {content_id} :: already in plus/exam-questions.json (would be drawn twice) :: {q["prompt_fa"][:60]}')
+        skipped_existing += len(dup)
+        rows = [q for q in rows if q not in dup]
         if not rows:
             continue
         planned += len(rows)

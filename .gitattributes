@@ -11,3 +11,8 @@
 # and JSON files in one commit, which is a large diff for no benefit — every
 # other format here is read by tools that do not care.
 *.sh text eol=lf
+# Git hooks have no extension but are run by bash through their shebang, so a
+# CRLF checkout breaks every commit (`/usr/bin/env: 'bash\r'`). The hook
+# adapters under scripts/ carry shebangs too and stay LF for the same reason.
+.githooks/* text eol=lf
+scripts/* text eol=lf

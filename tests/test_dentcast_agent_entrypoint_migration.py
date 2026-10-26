@@ -32,6 +32,24 @@ EDITS = {"02-routing-intake.md":{"CLAUDE.md → Repo conventions":".dentcast/wor
  "09-challenge.md":{"**Runs only when Question 4.9 answered «چالش».** Full design in":
   "**Runs only when Question 4.9 answered «چالش».** The ledger checkpoint\n`C.4.14` therefore has exactly two outcomes: `completed` means *this post is\na چالش* (its page carries the `data-dc-challenge-question` markup below, and\nthe English mirror is exempt); an ordinary post records `C.4.14` as\n**`skipped`** only, never `completed`. Full design in"}}
 def read(p): return (ROOT/p).read_text(encoding="utf-8")
+# Approved clarifications (doc-contradiction audit 2026-10-26): exact
+# legacy-text -> active-text hunks that align the modules with tool behaviour
+# (DES/Challenge skips, LiteCast URL, episode brain shape, paper-only, 4.12-ب
+# after 5.6). Each old text must occur exactly once.
+CLARIFICATIONS=json.loads(read("tests/fixtures/module-clarifications-2026-10-26.json"))
+# Approved line re-wraps (Claude-path audit 2026-10-26): lines over 2000
+# characters were split at sentence boundaries so clients that truncate long
+# lines can read them completely. Each hunk is [original line, re-wrapped
+# text]; only a single space becomes newline + continuation indent, so undoing
+# it restores the reviewed text exactly.
+REWRAPS=json.loads(read("tests/fixtures/line-rewraps-2026-10-26.json"))
+def unwrap(test, path, text):
+ for old,new in REWRAPS.get(path,()):
+  test.assertEqual(re.sub(r"\n *"," ",new),old)
+  test.assertTrue(all(len(line)<=2000 for line in new.split("\n")))
+  test.assertEqual(text.count(new),1,new[:80])
+  text=text.replace(new,old)
+ return text
 
 # Approved global-rule amendments that postdate the legacy snapshot (founder
 # decision 1405/08/03, PR #994: repo-file article exam questions + auto-open at
@@ -93,6 +111,30 @@ class EntrypointMigrationTests(unittest.TestCase):
    s=read(f".cursor/rules/dentcast-{name}.mdc")
    self.assertTrue(s.startswith("---\n"))
    self.assertIn(f"alwaysApply: {always}",s.split("---",2)[1])
+ def test_required_reading_has_no_truncated_lines(self):
+  # Readers such as Claude's Read tool cut lines after 2000 characters. A
+  # Markdown table row cannot be wrapped; such rows are listed explicitly.
+  table_rows={(".dentcast/workflows/agent-parity.md","| C.4.13 |")}
+  files=["AGENTS.md","CLAUDE.md",*map(str,ROOT.glob(".cursor/rules/*.mdc")),
+   *map(str,ROOT.glob(".claude/skills/**/*.md")),*map(str,ROOT.glob(".agents/skills/**/*.md")),
+   *map(str,ROOT.glob(".dentcast/workflows/**/*.md"))]
+  for f in files:
+   rel=str(Path(f).resolve().relative_to(ROOT)) if Path(f).is_absolute() else f
+   if "/legacy/" in rel or rel.endswith(".legacy.md") or "/historical/" in rel: continue
+   for n,line in enumerate(read(rel).split("\n"),1):
+    if len(line)>2000:
+     with self.subTest(path=rel,line=n):
+      self.assertTrue(any(rel==p and line.startswith(prefix) for p,prefix in table_rows))
+ def test_skill_copies_identical_and_follow_hard_rule_14(self):
+  claude=sorted(p.relative_to(ROOT/".claude/skills") for p in (ROOT/".claude/skills").rglob("*") if p.is_file())
+  agents=sorted(p.relative_to(ROOT/".agents/skills") for p in (ROOT/".agents/skills").rglob("*") if p.is_file())
+  self.assertEqual(claude,agents)
+  for rel in claude:
+   self.assertEqual((ROOT/".claude/skills"/rel).read_bytes(),(ROOT/".agents/skills"/rel).read_bytes(),str(rel))
+  s=read(".claude/skills/glossary-writer/SKILL.md")
+  for term in ("Hard Rule 14","Hard Rule 13","**4.7-ب**","`6 pulse`","همین‌طوری درج کنم یا رد شم؟"):
+   self.assertIn(term,s)
+  self.assertNotIn("Never insert links on the user's behalf",s)
  def test_post_push2_handoff_notice_shared(self):
   for p in ("AGENTS.md","CLAUDE.md",".cursor/rules/dentcast-router.mdc"):
    with self.subTest(path=p):
@@ -112,7 +154,7 @@ class EntrypointMigrationTests(unittest.TestCase):
    a,b=item["source_lines"]; original="".join(src[a-1:b])
    self.assertEqual(hashlib.sha256(original.encode()).hexdigest(),item["source_sha256"])
    expected=original.replace("CLAUDE.md، بخش Repo conventions.","فایل فعال .dentcast/workflows/global/repo-conventions.md.")
-   actual=strip_global_amendment(self,item["active"],read(item["active"]),expected)
+   actual=strip_global_amendment(self,item["active"],unwrap(self,item["active"],read(item["active"])),expected)
    self.assertEqual(actual,expected)
    self.assertIn(item["active"],read(".dentcast/workflows/global/README.md"))
  def test_canonical_modules_unchanged_except_pointer_repairs(self):
@@ -122,7 +164,10 @@ class EntrypointMigrationTests(unittest.TestCase):
    with self.subTest(module=name):
     expected="".join(src[a-1:b])
     for old,new in EDITS.get(name,{}).items(): expected=expected.replace(old,new)
-    actual=read(".dentcast/workflows/modules/"+name)
+    for old,new in CLARIFICATIONS.get(name,()):
+     self.assertEqual(expected.count(old),1,old)
+     expected=expected.replace(old,new)
+    actual=unwrap(self,".dentcast/workflows/modules/"+name,read(".dentcast/workflows/modules/"+name))
     self.assertTrue(actual.startswith("<!-- dentcast-checkpoint-protocol:v1 -->"))
     self.assertIn(".dentcast/workflows/publish-checkpoints.md",actual.split("<!-- /dentcast-checkpoint-protocol:v1 -->",1)[0])
     body=actual.split("<!-- /dentcast-checkpoint-protocol:v1 -->\n\n",1)[1]

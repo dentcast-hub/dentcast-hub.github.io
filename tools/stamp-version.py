@@ -7,7 +7,11 @@ two glossaries). Whenever any content is published the hash changes, so:
   1. the service worker's CACHE_NAME bumps  -> old asset caches are purged and
      the browser re-fetches everything, keeping the whole site consistent;
   2. every `dentcast-brain.json?v=<ver>` fetch URL changes -> any intermediary
-     /CDN cache that ignores `no-store` is still defeated.
+     /CDN cache that ignores `no-store` is still defeated;
+  3. every `dentcast.json?v=<ver>` fetch URL in HTML (player.html's episode
+     catalogue) changes too, so a returning visitor's cached catalogue cannot
+     hide a newly published episode. An episode publish always appends a brain
+     entry, so the brain-derived version moves with it.
 
 Run it as part of the build (after content changes). Standard library only.
 """
@@ -74,12 +78,16 @@ def stamp_service_worker(ver):
 
 
 def stamp_brain_fetches(ver):
-    """Rewrite every `dentcast-brain.json?v=<...>` query string in all HTML.
+    """Rewrite every `dentcast-brain.json?v=<...>` and `dentcast.json?v=<...>`
+    query string in all HTML.
     Returns a list of (path, count) for files changed."""
-    pattern = re.compile(r"(dentcast-brain\.json\?v=)[0-9A-Za-z._-]*")
+    # `(?<![\w-])dentcast\.json` = the episode catalogue, never dentcast-brain.json.
+    pattern = re.compile(r"((?:dentcast-brain|(?<![\w-])dentcast)\.json\?v=)[0-9A-Za-z._-]*")
     changed = []
     for html in ROOT.rglob("*.html"):
-        if "/.git/" in str(html):
+        # Hidden dirs (.git, .claude/worktrees/* site copies, .dentcast, ...)
+        # hold no live page — same rule as .github/scripts/gen_sitemap.py.
+        if any(part.startswith(".") for part in html.relative_to(ROOT).parts):
             continue
         text = html.read_text(encoding="utf-8")
         new_text, n = pattern.subn(rf"\g<1>{ver}", text)
@@ -98,7 +106,7 @@ def main():
 
     changed = stamp_brain_fetches(ver)
     total = sum(n for _, n in changed)
-    print(f"brain fetch ?v= stamped: {total} occurrence(s) in {len(changed)} file(s)")
+    print(f"brain/catalogue fetch ?v= stamped: {total} occurrence(s) in {len(changed)} file(s)")
     for path, n in changed:
         print(f"  {path} ({n})")
 

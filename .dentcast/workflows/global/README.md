@@ -5,6 +5,12 @@ Then run `python3 tools/dentcast_global_rules.py --read` to load all core
 sections. These include repository/content restrictions, publishing data,
 cache rules, ads integration, publication surfaces, DES display and every
 site-wide invariant. Full canonical publication modules remain mandatory.
+If a client caps tool output (the full read is tens of thousands of characters),
+read the same selection in parts instead: `--list` shows the chosen sections,
+their sizes and the page count; add `--page 1`, `--page 2`, … to `--read` until
+the last page says so (pages split only at line boundaries; `--page-chars`
+changes the size), or read named sections with repeated `--section <id>`.
+Every page or section of the selection must be read; paging never omits text.
 
 Before editing any file, run the selector with **every planned path**:
 `python3 tools/dentcast_global_rules.py --path <path> --path <other-path>`.
