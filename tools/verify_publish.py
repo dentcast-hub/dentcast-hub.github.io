@@ -753,7 +753,8 @@ def pulse_baseline(rep):
         home = _git('show', 'origin/main:index.html')
     except (OSError, subprocess.SubprocessError, UnicodeError):
         rep.fail('6 pulse', 'cannot verify previous Pulse: local origin/main:index.html unavailable',
-                 'fetch the main baseline before final verification')
+                 'fetch the main baseline before final verification: '
+                 'git fetch origin +refs/heads/main:refs/remotes/origin/main')
         return None
     rep.warn('6 pulse', 'Pulse baseline: no merge-base of HEAD and origin/main (shallow '
                         'clone?); fell back to the current origin/main, which is only correct '
@@ -861,7 +862,7 @@ def check_bank_preservation(rep, content_id):
     # plus/exam-questions.json: row-level append-only rules.
     old, label, warning, cur = _bank_pair(v.REL)
     if warning:
-        rep.warn("4.12-ب bank", f"exam bank: {warning}", "git fetch origin main")
+        rep.warn("4.12-ب bank", f"exam bank: {warning}", "git fetch origin +refs/heads/main:refs/remotes/origin/main")
     if old is not None:
         if cur is None:
             rep.fail("4.12-ب bank", f"plus/exam-questions.json deleted (it existed at {label})",
@@ -882,7 +883,7 @@ def check_bank_preservation(rep, content_id):
     for rel, step, extract, removal_fails in BANK_FILES:
         old, label, warning, cur = _bank_pair(rel)
         if warning:
-            rep.warn(step, f"{rel}: {warning}", "git fetch origin main")
+            rep.warn(step, f"{rel}: {warning}", "git fetch origin +refs/heads/main:refs/remotes/origin/main")
         if old is None:
             continue
         try:

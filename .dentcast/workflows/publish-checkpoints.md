@@ -457,7 +457,7 @@ Immediately after the second-delivery push is confirmed, tell the user that the 
 
 Stay with the run and poll at bounded intervals until it reaches a terminal state; do not end the turn or leave the user without a status while the job is queued or running. If preflight skips or no run appears, inspect the event, branch and handoff before reporting that Actions started. If the run succeeds, verify that delivery 3 is based on the exact Push-2 SHA, the completion receipt is present, the active handoff is removed, and cleanup is confirmed before reporting publication complete. If it fails, inspect the uploaded logs/recovery artifact, diagnose and resume through the guarded recovery path where possible, and keep the user informed of the real status.
 
-Delivery 3 is a commit that Actions pushes, so the local checkout still holds the Push-2 state (and the active handoff) after the run succeeds. Run `git pull --ff-only` on the publication branch first, and always before ending the session; only then does the handoff disappear locally and delivery 3, the completion receipt and cleanup can be verified: after the pull, `confirm-cleanup` checks them read-only from the pulled HEAD (no local cleanup record exists). A pull that is not a fast-forward means the branch moved unexpectedly: stop and inspect instead of merging. For a v2 run never run `restore-cleanup`, and never run `confirm-cleanup` before the pull: the workflow performed the cleanup and no local cleanup is pending. Until the pull, the stop guard reports `DELIVERY_3_ON_REMOTE_PULL_REQUIRED` (delivery 3 already fetched) or `REMOTE_BRANCH_ADVANCED_NOT_FETCHED` (origin moved past this checkout); both clear with the pull, never with reset, force-push or cleanup commands. Monitoring does not need `gh`: in a cloud session without it, use the GitHub MCP tools (`actions_list` for the branch's workflow runs of `post-cut2-mechanical.yml`, `actions_get` for a run's status and conclusion, `get_job_logs` for failed jobs) or the equivalent connected GitHub reads available to the client. The logs and recovery bundle are the run artifact `post-cut2-<Push-2 SHA>` (kept 14 days); fetch it through the Actions API (list the run's artifacts, then download that artifact's zip), not from the branch, which a failed run leaves at Push 2.
+Delivery 3 is a commit that Actions pushes, so the local checkout still holds the Push-2 state (and the active handoff) after the run succeeds. Run `git pull --ff-only` on the publication branch first, and always before ending the session; only then does the handoff disappear locally and delivery 3, the completion receipt and cleanup can be verified: after the pull, `confirm-cleanup` checks them read-only from the pulled HEAD (no local cleanup record exists). It reruns Phase F, which needs `origin/main` for its Pulse and append-only baselines: in a checkout that tracks only the publication branch (a single-branch or depth-limited clone) it fails with `FINAL_DELIVERY_VERIFICATION_FAILED` naming that row, so run `git fetch origin +refs/heads/main:refs/remotes/origin/main` and retry. A pull that is not a fast-forward means the branch moved unexpectedly: stop and inspect instead of merging. For a v2 run never run `restore-cleanup`, and never run `confirm-cleanup` before the pull: the workflow performed the cleanup and no local cleanup is pending. Until the pull, the stop guard reports `DELIVERY_3_ON_REMOTE_PULL_REQUIRED` (delivery 3 already fetched) or `REMOTE_BRANCH_ADVANCED_NOT_FETCHED` (origin moved past this checkout); both clear with the pull, never with reset, force-push or cleanup commands. Monitoring does not need `gh`: in a cloud session without it, use the GitHub MCP tools (`actions_list` for the branch's workflow runs of `post-cut2-mechanical.yml`, `actions_get` for a run's status and conclusion, `get_job_logs` for failed jobs) or the equivalent connected GitHub reads available to the client. The logs and recovery bundle are the run artifact `post-cut2-<Push-2 SHA>` (kept 14 days); fetch it through the Actions API (list the run's artifacts, then download that artifact's zip), not from the branch, which a failed run leaves at Push 2.
 
 A failed run pushes nothing; the branch stays at the Push-2 commit. Recover from that commit:
 
@@ -491,12 +491,14 @@ already recorded in the latest checkpoint, and never commits or pushes. Failed t
 cut. Preserve work and report the real error; retrying the same unaccepted
 logical delivery does not create another milestone. Never advance by pretending
 a failed push succeeded. The helper does not commit or push automatically.
-After a cut is pushed, the first write is starting the next step (`step --status
-started` or `advance --start-next`); a `record` written before it leaves the local
-handoff different from the delivered one, and the next step and the Stop guard
-then refuse with `PREVIOUS_STEP_HANDOFF_NOT_DELIVERED`. If that was only such a
-record, restore the delivered file (`git restore .dentcast/PUBLISH-HANDOFF.md`),
-start the next step, then record the change again.
+After a cut is committed, the first write is starting the next step (`step --status
+started` or `advance --start-next`); any other write on top of the committed cut
+handoff (except an audited `invalidate`) is refused up front with
+`RECORD_AFTER_DELIVERED_CUT_START_NEXT_STEP_FIRST`: start the next step, then
+record the change. If a handoff was nevertheless changed after the pushed cut, the
+next step and the Stop guard refuse with `PREVIOUS_STEP_HANDOFF_NOT_DELIVERED`; if
+that was only such a record, restore the delivered file (`git restore
+.dentcast/PUBLISH-HANDOFF.md`), start the next step, then record the change again.
 
 `init` records `fixed_three_deliveries_v1` in semantic decisions for new page
 runs, including unassigned intake; it cannot subsequently be removed. Pre-commit
@@ -513,7 +515,9 @@ it requires delivered work; during final cleanup it requires final confirmation.
 A checkpoint written in an earlier run without the policy marker retains the
 legacy cleanup path so interrupted older work remains recoverable. Paper-only
 is a separate no-page route and keeps its catalog verification/cleanup contract;
-do not invent page/DES cuts for it. Never remove a policy marker to claim legacy.
+do not invent page/DES cuts for it. Its one delivery is the completed final
+handoff, so the Stop guard permits consistent local progress until G is resolved
+and then requires that final handoff delivered. Never remove a policy marker to claim legacy.
 
 The v3 handoff remains semantic-only. Git reconstructs committed fingerprints;
 private same-checkout observations support local progress. Do not create commits

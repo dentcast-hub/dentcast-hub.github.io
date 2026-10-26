@@ -104,7 +104,8 @@ def git_baseline(rel: str = REL, root: Path = ROOT, ref: str | None = None):
             return None, label, None
         return text, label, warning
     return None, 'none', (f'no baseline for {rel} ({", ".join(tried)} unavailable) — existing '
-                          'rows were NOT checked for removal or edits; git fetch origin main')
+                          'rows were NOT checked for removal or edits; '
+                          'git fetch origin +refs/heads/main:refs/remotes/origin/main')
 
 
 def _rows(entry):
