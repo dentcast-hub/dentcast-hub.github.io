@@ -64,6 +64,34 @@ class GlobalRulesTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'MAP_STALE'):
                 rules.sections(root)
 
+    def test_pages_cover_read_output_exactly_on_line_boundaries(self):
+        chosen = rules.select(self.manifest, self.blocks, all_rules=True)
+        lines = rules.emitted_lines(chosen)
+        split = rules.pages(lines, 20000)
+        self.assertGreater(len(split), 1)
+        self.assertEqual(''.join(''.join(p) for p in split), ''.join(lines))
+        for page in split:
+            self.assertTrue(len(page) == 1 or sum(map(len, page)) <= 20000)
+
+    def test_cli_page_and_section(self):
+        import subprocess
+        tool = str(ROOT / 'tools/dentcast_global_rules.py')
+        run = lambda *a: subprocess.run([sys.executable, tool, *a], capture_output=True, text=True)
+        full = run('--read').stdout
+        listing = run('--list').stdout
+        count = int(listing.rsplit(': ', 1)[1])
+        body = ''
+        for n in range(1, count + 1):
+            out = run('--read', '--page', str(n)).stdout
+            first, rest = out.split('\n', 1)
+            self.assertIn(f'page {n}/{count}', first)
+            body += rest.rsplit('\n<!-- ', 1)[0]
+        self.assertEqual(body, full)
+        one = run('--read', '--section', 'ads').stdout
+        self.assertIn('full active section: ads', one)
+        self.assertNotIn('full active section: repo-core', one)
+        self.assertEqual(run('--read', '--section', 'nope').returncode, 2)
+
     def test_no_path_escape(self):
         with self.assertRaisesRegex(ValueError, 'RELATIVE_PATH'):
             self.ids(['../outside'])

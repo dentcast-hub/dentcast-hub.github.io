@@ -3,69 +3,69 @@
   "sources": [
     {
       "path": ".dentcast/workflows/global/repo-conventions.md",
-      "sha256": "941d41cc8eece5eec1897b65e34497d331cb6d1e97335724400bb573367dd3e7",
+      "sha256": "f3187b61edd157f4bb24c9f64c70ab6068abbf0096ca9eb209b7e8f54defb0c6",
       "sections": [
         {
           "id": "repo-core",
           "lines": [
             1,
-            160
+            162
           ],
           "core": true
         },
         {
           "id": "up-board",
           "lines": [
-            161,
-            256
+            163,
+            258
           ],
           "core": false
         },
         {
           "id": "ads",
           "lines": [
-            257,
-            266
+            259,
+            268
           ],
           "core": true
         },
         {
           "id": "clinic",
           "lines": [
-            267,
-            295
+            269,
+            297
           ],
           "core": false
         },
         {
           "id": "pathway-operations",
           "lines": [
-            296,
-            825
+            298,
+            827
           ],
           "core": false
         },
         {
           "id": "premium-shell",
           "lines": [
-            826,
-            874
+            828,
+            884
           ],
           "core": false
         },
         {
           "id": "audio-hub",
           "lines": [
-            875,
-            875
+            885,
+            887
           ],
           "core": false
         },
         {
           "id": "google-auth",
           "lines": [
-            876,
-            877
+            888,
+            892
           ],
           "core": false
         }
@@ -73,7 +73,7 @@
     },
     {
       "path": ".dentcast/workflows/global/plus-premium.md",
-      "sha256": "f29f4a5160b20c307dcef8f79e44b2e0d1135514f53c3c263c652067049710ad",
+      "sha256": "b87d17b74c6478a623a04fba36046659b02b31975fe334e57d46599923c93d6f",
       "sections": [
         {
           "id": "publication-surfaces",
@@ -87,23 +87,23 @@
           "id": "badges-ai",
           "lines": [
             110,
-            128
+            135
           ],
           "core": false
         },
         {
           "id": "des-display",
           "lines": [
-            129,
-            129
+            136,
+            145
           ],
           "core": true
         },
         {
           "id": "plus-features",
           "lines": [
-            130,
-            232
+            146,
+            274
           ],
           "core": false
         }
@@ -111,13 +111,13 @@
     },
     {
       "path": ".dentcast/workflows/global/site-invariants.md",
-      "sha256": "806db16666dc3d42468f143ec279ba704718d3997ca96ce8316f2d17abbc6398",
+      "sha256": "c41c43b17502f6c01ef91b3e786e1bd9000b06858375f6c8c65e2e15cb6c15ca",
       "sections": [
         {
           "id": "site-invariants",
           "lines": [
             1,
-            147
+            148
           ],
           "core": true
         }
