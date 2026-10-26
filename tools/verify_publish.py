@@ -28,6 +28,7 @@ import argparse
 import hashlib
 import html
 import json
+import posixpath
 import re
 import sys
 import subprocess
@@ -745,6 +746,55 @@ def check_pulse(rep, home, url, sweep=False, previous_home=None):
                   'Pulse must drop only the previous bottom line and preserve the other six', 'step 6')
 
 
+def site_path(href, page_rel):
+    """The repo-relative path an internal href points at, or None if the href
+    leaves the site (external host, tel:, mailto:, a bare #fragment)."""
+    href = href.split("#")[0].split("?")[0]
+    m = re.match(r"https?://(?:www\.)?dentcast\.(?:org|ir)(/.*)?$", href)
+    if m:
+        href = m.group(1) or "/"
+    elif re.match(r"^[a-z][a-z0-9+.-]*:", href, re.I) or href.startswith("//") or not href:
+        return None
+    if href.startswith("/"):
+        return posixpath.normpath(href).lstrip("/")
+    return posixpath.normpath(posixpath.join(posixpath.dirname(page_rel), href))
+
+
+def check_litecast_links(rep, doc, page_rel, brain):
+    """Hard Rules 9/10, steps 0.2/0.5/0.6: LiteCast is an isolated track. Its
+    «کاوش بیشتر» holds at most 5 links, all to other LiteCast entries (never
+    the دانشنامه / فهرست موضوعی capsules, glossary terms or brain entries),
+    and its body carries no inline links into specialist content."""
+    lite = json.loads(read("litecast/lite-glossary.json"))["LightGlossary"]
+    lite_pages = {(e.get("page_url") or "").lstrip("/") for e in lite} - {""}
+    n_sections = doc.count('<div class="dc-related-section">')
+    rep.check(n_sections == 1, "2.5 related", "exactly one «کاوش بیشتر» section",
+              f"found {n_sections} dc-related-section blocks (expected 1)", "step 0.6")
+    sec = related_section(doc)
+    if sec:
+        links = re.findall(r'href="([^"]+)"', sec.group(0))
+        rep.check(len(links) <= 5, "9 cap",
+                  f"{len(links)}/5 links in «کاوش بیشتر»",
+                  f"{len(links)} links — over the hard cap of 5", "Hard Rule 9")
+        foreign = [h for h in links if site_path(h, page_rel) not in lite_pages]
+        rep.check(not foreign, "10 lite",
+                  "«کاوش بیشتر» links only to other LiteCast entries",
+                  f"«کاوش بیشتر» links outside LiteCast: {foreign}",
+                  "Hard Rule 10 / step 0.6 — LiteCast-to-LiteCast only")
+        rep.check(not any(site_path(h, page_rel) == page_rel for h in links), "4.9 related",
+                  "no self-link", "the section links to the page itself")
+    # Specialist content = every folder a non-LiteCast brain entry lives in,
+    # plus the glossary and pillar hubs and the episodes landing page.
+    specialist = {entry_url(e).lstrip("/").split("/")[0] for e in brain
+                  if entry_url(e) and e.get("type") != LITECAST} | {"glossary", "pillar"}
+    body = [h for h in re.findall(r'href="([^"]+)"', article_region(doc))
+            if (p := site_path(h, page_rel)) is not None
+            and (p.split("/")[0] in specialist or p == "episodes.html")]
+    rep.check(not body, "10 lite", "body has no inline links to specialist content",
+              f"body links into the specialist ecosystem: {body}",
+              "Hard Rule 10 / step 0.2 — LiteCast in-body links go to other LiteCast items only")
+
+
 def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False):
     """`sweep` = this is a site-wide regression pass over already-published
     pages, not the gate on a publish in flight. Checks that are only meaningful
@@ -976,7 +1026,9 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
     # Core episodes carried no `type` field for their first 202 entries; more
     # recent ones (154+) write "type": "dentcast" instead (same category,
     # schema drift — see Hard Rule 6). Both must hit the episode branch.
-    if is_lite or etype in ("episode", "dentcast"):
+    if is_lite:
+        check_litecast_links(rep, doc, page_rel, brain)
+    elif etype in ("episode", "dentcast"):
         rep.skip("2.5 related", f"{etype} uses its own related-links convention")
     else:
         rep.check(n_sections == 1, "2.5 related",
