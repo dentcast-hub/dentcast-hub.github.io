@@ -73,6 +73,9 @@ def active(root):
 ADVICE = (
     ("PREVIOUS_STEP_PUSH_NOT_CONFIRMED", ". At a fixed cut: stage-delivery, then commit and push that delivery "
      "once (or retry the failed push); then rerun guard --phase stop."),
+    # Raised at a cut whose work is still uncommitted (the branch tip is pushed).
+    ("PREVIOUS_STEP_WORK_NOT_COMMITTED", ". At a fixed cut: stage-delivery for the cut's work, then commit and "
+     "push that delivery once; then rerun guard --phase stop."),
     ("PREVIOUS_STEP_HANDOFF_NOT_DELIVERED", ". The local handoff changed after the pushed cut: if that was only a "
      "later record, restore the delivered file (git restore .dentcast/PUBLISH-HANDOFF.md), start the next step, "
      "then record again; otherwise inspect."),
