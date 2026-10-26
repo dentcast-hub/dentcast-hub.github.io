@@ -1,0 +1,14 @@
+{
+  "type": "sharehub",
+  "note": "Publish of sharehub/share-42 (کلیک فک و اسپلینت ریپوزیشن قدامی؛ از تشخیص تا پایان درمان). #Share_Hub, #Curated_Content, #TMD, #داخل_کپسولی and #اسپلینت are REUSED. The founder-approved proposal #جابجایی_دیسک is NOT minted: «جابجایی دیسک» and «disc displacement» are already aliases of #داخل_کپسولی, so minting it would duplicate a concept and file an alias as a tag (Hard Rule 15); the article carries #داخل_کپسولی instead. One concept is newly minted (founder-approved 1405/08/04): the anterior repositioning splint, a specific full-arch appliance with an anterior guiding ramp, narrower than the general #اسپلینت. --simulate for «اسپلینت ریپوزیشن» / «anterior repositioning splint» returned only the general #اسپلینت. Article tags land with the brain entry (step 5).",
+  "concepts": [
+    {
+      "tag": "#اسپلینت_ریپوزیشن",
+      "domain": "clinical",
+      "definition": "اسپلینت سخت تمام‌قوس که با رمپ هدایت‌کنندهٔ قدامی، فک پایین را هنگام بسته‌شدن به موقعیتی جلوتر هدایت می‌کند تا رابطهٔ دیسک و کندیل مناسب‌تر شود و بار بافت‌های رترو‌دیسکال کم شود؛ در جابه‌جایی دیسک با برگشتِ دردناک به کار می‌رود.",
+      "use_when": "مطلب دربارهٔ اسپلینت ریپوزیشن (پوزیشنینگ) قدامی باشد: اندیکاسیون، تعیین موقعیت درمانی، ساخت، برنامهٔ استفاده یا خروج از درمان با آن.",
+      "aliases": ["anterior repositioning splint", "anterior positioning appliance", "اسپلینت ریپوزیشن قدامی", "repositioning splint"]
+    }
+  ],
+  "articles": {}
+}

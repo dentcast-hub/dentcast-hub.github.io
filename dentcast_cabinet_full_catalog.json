@@ -139744,6 +139744,58 @@
         "Markus B. Blatz",
         "Rui I. Falacho"
       ]
+    },
+    {
+      "id": "P2947",
+      "title": "Partial time use of anterior repositioning splints in the management of TMJ pain and dysfunction: a one-year controlled study",
+      "file_name": "Partial time use of anterior repositioning splints in the management of TMJ pain and dysfunction: a one-year controlled study.pdf",
+      "topic": "Occlusion",
+      "topic_path": "Occlusion",
+      "type": "primary/other",
+      "local_path": "",
+      "file_size": 59873,
+      "key_finding": "In 52 patients with painful disc displacement with reduction, nighttime repositioning splints (converted to stabilization splints after 3–4 months) reduced pain significantly earlier (from 15 days) than stabilization splints or no treatment; by 6 months and 1 year the groups no longer differed.",
+      "clinical_bottom_line": "Partial, nighttime use of an anterior repositioning splint gave faster early relief of intra-articular pain without irreversible occlusal changes; long-term symptoms subsided regardless of group.",
+      "linked_episodes": [
+        "sharehub/share-42"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1N7v7QVCdWHCJVdIHtpxjyArw2Bkgn63s/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1N7v7QVCdWHCJVdIHtpxjyArw2Bkgn63s",
+      "drive_view": "https://drive.google.com/file/d/1N7v7QVCdWHCJVdIHtpxjyArw2Bkgn63s/view",
+      "drive_id": "1N7v7QVCdWHCJVdIHtpxjyArw2Bkgn63s",
+      "tags": [
+        "anterior-repositioning-splint",
+        "stabilization-splint",
+        "disc-displacement-with-reduction",
+        "tmj-pain",
+        "joint-sounds",
+        "tmd",
+        "occlusal-splint",
+        "posterior-open-bite",
+        "rct",
+        "clinical-trial",
+        "topic:occlusion",
+        "partial-time-use-of-anterior-repositioning-splints-tmj-pain-dysfunction"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Partial time use of anterior repositioning splints in the management of TMJ pain and dysfunction: a one-year controlled study",
+      "doi": "10.1590/S1678-77572005000400006",
+      "journal": "Journal of Applied Oral Science",
+      "crossref_year": 2005,
+      "subjects": [
+        "Dentistry"
+      ],
+      "abstract": "This study aimed at evaluating the effectiveness of partial use of anterior repositioning appliances in the management of TMJ pain and dysfunction when compared to stabilization splints and a control group in a one-year follow-up. Sample was initially constituted by 60 patients, randomly divided into three groups: I- stabilization splints, II- repositioning splints and III- no treatment. The whole sample was evaluated by means of TMJ and muscle palpation, mandibular AROM, analysis of occlusal contacts, joint sounds inspection and Visual Analogue Scale (VAS) for one year; 52 patients composed the final sample. A significant (after 15 days) improvement in pain report (VAS) and palpation index was found for group II (p≤0.01). The occurrence of occlusal alterations as posterior open bite or gross interferences after the splint therapy and increased muscle tenderness were not problems in this study. Similar results in joint noises reduction were observed for the entire sample. It was concluded that controlled partial use of repositioning splints is a beneficial tool in the management of intra-articular pain and dysfunction, with no risks of irreversible occlusal changes.",
+      "display_title": "Partial time use of anterior repositioning splints in the management of TMJ pain and dysfunction: a one-year controlled study",
+      "authors": [
+        "Paulo César Rodrigues Conti",
+        "João Evandro Silva Miranda",
+        "Ana Cláudia C. Ferreira Conti",
+        "Luiz Fernando Pegoraro",
+        "Carlos dos Reis Pereira de Araújo"
+      ]
     }
   ],
   "drive_matched": 2849,
@@ -140268,5 +140320,5 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2261
+  "total_papers": 2262
 }

@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "sharehub/share-42"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -98,6 +98,30 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             "founder message supplying pp.329/360/394 and the u89 rewrite"
           ],
           "scope": "fidelity-3b-r3",
+          "status": "confirmed"
+        },
+        {
+          "decision": "2 MCQs for sharehub/share-42 (r-19203d44 key 0; r-d92e7e94 key 1) as presented",
+          "evidence": [
+            "founder: \u00ab\u0647\u0631 \u062f\u0648 \u0633\u0624\u0627\u0644 \u062a\u0623\u06cc\u06cc\u062f\u00bb"
+          ],
+          "scope": "exam-questions",
+          "status": "confirmed"
+        },
+        {
+          "decision": "English mirror sharehub/en/share-42.html as drafted (incl. u47/u63/u89 fixes)",
+          "evidence": [
+            "founder: \u00ab\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc \u0647\u0645 \u062a\u0623\u06cc\u06cc\u062f\u00bb"
+          ],
+          "scope": "english",
+          "status": "confirmed"
+        },
+        {
+          "decision": "occlusion pathway after episodes/episode-145 (STRONG); other candidates not placed; bundle-occlusion-rehab rejected gate 3",
+          "evidence": [
+            "announced to founder; no objection \u2014 founder approved remaining items \u00ab\u0647\u0631 \u062f\u0648 \u0633\u0624\u0627\u0644 \u062a\u0623\u06cc\u06cc\u062f\u060c \u0627\u0646\u06af\u0644\u06cc\u0633\u06cc \u0647\u0645 \u062a\u0623\u06cc\u06cc\u062f\u00bb"
+          ],
+          "scope": "pathways",
           "status": "confirmed"
         }
       ],
@@ -1113,6 +1137,91 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             ],
             "validation": []
           }
+        },
+        {
+          "english": {
+            "evidence": [
+              "founder: \u00ab\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc \u0647\u0645 \u062a\u0623\u06cc\u06cc\u062f\u00bb; mirror rebuilt after every 3b edit"
+            ],
+            "path": "sharehub/en/share-42.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "Editorial close review 2026-10-26: local verify_publish 169 passed, only builder/stamp rows (C.8/C.7, post-Push-2) failing"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "plus/des-scores.json sharehub/share-42: 3 SOURCE records + 3 fidelity objects (52/52, 3/3, 8/8 HIGH), Part 3 checks green; Part 3b founder decisions u63/u47/u89 applied"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "B.4.9: ordinary post (founder requested DES/Fidelity; C.4.14 skipped)"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "pillar occlusion / tmd-orofacial-pain (C.2.4, verified C.5.5)"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.7 0 (cap), C.4.8 2 inline glossary links, C.4.9 3 episode capsules (5/5)"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "hashtag_ref --check OK; #\u0627\u0633\u067e\u0644\u06cc\u0646\u062a_\u0631\u06cc\u067e\u0648\u0632\u06cc\u0634\u0646 minted (A104); --simulate rank 1"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "brain entry last element, key parity with share-41; local verify_publish brain/title/caption rows pass with --expect-title/--expect-caption"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "occlusion after episodes/episode-145; bundle rejected gate 3; 2 exam MCQs approved"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "index.html Pulse: share-42 title line on top, share-41 bottom line removed; 7 lines"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "sharehub/en/share-42.html authored, founder-approved; reciprocal toggles; noindex, no hreflang"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "title, caption, style pass, figures, hashtags, fidelity assignment, Part 3b rounds 1\u20133, exam questions, English all confirmed by founder"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -1412,6 +1521,121 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "05-semantic-linking.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [
+          "Receipt C.4.10.1:drive-rename-move (completed) unchanged"
+        ],
+        "id": "C.4.10.1",
+        "module": "06-paper-ingestion.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Catalog P2947 re-validated (total_papers 2262)"
+        ],
+        "id": "C.4.10.2",
+        "module": "06-paper-ingestion.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Refs Conti PCR -> doi.org unchanged"
+        ],
+        "id": "C.4.10.3",
+        "module": "06-paper-ingestion.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "faq-corpus share-42: 6 flashcards; c5 no longer claims \u00ab\u0628\u062f\u0648\u0646 \u062a\u0631\u0627\u0634 \u062f\u0646\u062f\u0627\u0646\u00bb (u89 removed from page)"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "FAQ 9 binary standalone; Q7 replaced (orthopedic instability -> conversion, grounded in u98/u99) since u89 claim left the page; 4.12-\u0628 at 5.6"
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "plus/des-scores.json sharehub/share-42 (v3.4): src0 Okeson 2020 NOT_APPRAISABLE book EXCERPT (13 founder pages); src1 Okeson 1988 RESEARCH THERAPY 17/E ABSTRACT_ONLY provisional (PubMed 3199322); src2 Conti 2005 RESEARCH THERAPY 15/E FULL_TEXT (RoB2 0.30, penalties 7+4). Fidelity (founder-directed assignment, Sonnet checkers x2 + tie-break, Opus review of every ALTERED): src0 52/52 HIGH 100 (18 NOT_ASSESSABLE), src1 3/3 HIGH 100, src2 8/8 HIGH 100 (19 NOT_IN_SOURCE). Part 3b: u63 fixed, u47 restored to founder original (Okeson p.394), u89 founder text. Part 3 checks green (quotes, arithmetic, band, schema, fidelity F4)."
+        ],
+        "id": "C.4.13",
+        "module": "08-des-fidelity.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "Ordinary post, not Challenge (B.4.9)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Resolved via hashtag_ref --simulate: REUSED #Share_Hub #Curated_Content #TMD #\u062f\u0627\u062e\u0644_\u06a9\u067e\u0633\u0648\u0644\u06cc #\u0627\u0633\u067e\u0644\u06cc\u0646\u062a; founder-proposed #\u062c\u0627\u0628\u062c\u0627\u06cc\u06cc_\u062f\u06cc\u0633\u06a9 NOT minted (already alias of #\u062f\u0627\u062e\u0644_\u06a9\u067e\u0633\u0648\u0644\u06cc, HR15); MINTED #\u0627\u0633\u067e\u0644\u06cc\u0646\u062a_\u0631\u06cc\u067e\u0648\u0632\u06cc\u0634\u0646 via .dentcast/hashtag-batches/A104-share-42.json --apply (articles {}); --sync/build_plus_index/--check after brain write"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Brain entry appended as last element (sharehub id 42), key set == share-41 entry; hashtags 6 canonical; keywords = title + tags; page JSON-LD keywords synced; --sync, build_plus_index.mjs, --check OK; --simulate rank 1 #\u0627\u0633\u067e\u0644\u06cc\u0646\u062a_\u0631\u06cc\u067e\u0648\u0632\u06cc\u0634\u0646"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pillar.primary occlusion, subtopic tmd-orofacial-pain (live PILLARS), identical to C.2.4; no extra keys; capsule /pillar/occlusion/ consistent"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pathway_place --insert sharehub/share-42 occlusion after episodes/episode-145 (STRONG vs frozen core; milestone false; index 43 of 45); other 7 ASK candidates judged unrelated (no placement); coverage 1.51/item. 4.12-\u0628: 2 founder-approved MCQs in plus/exam-questions.json (r-19203d44, r-d92e7e94), validate_exam_questions 0 errors (1 length WARN kept as approved)"
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Candidate bundle-occlusion-rehab (continues occlusion): \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f3) \u2014 bundle covers restorative occlusion rehab, TMD splint therapy is outside its core sub-topics; also at 8 steps (gate 5 would fail)"
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Pulse: new top line /sharehub/share-42.html (title only, no spoiler), bottom share-41 line removed, 7 lines; editorial lock recorded; English mirror ready"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
@@ -1419,8 +1643,12 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       "dentcast-brain.json",
       "dentcast-hashtag-reference.json",
       "dentcast_cabinet_full_catalog.json",
+      "index.html",
+      "plus/content-index.json",
       "plus/des-scores.json",
+      "plus/exam-questions.json",
       "plus/faq-corpus.json",
+      "plus/pathways.json",
       "sharehub/en/share-42.html",
       "sharehub/index.html",
       "sharehub/share-42.html",
@@ -1429,7 +1657,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: sharehub/share-42.html"
+    "note": "Index-only refresh after staging delivery paths: sharehub/share-42.html, sharehub/en/share-42.html, dentcast-brain.json, dentcast-hashtag-reference.json, .dentcast/hashtag-batches/A104-share-42.json, dentcast_cabinet_full_catalog.json, plus/des-scores.json, plus/faq-corpus.json, plus/content-index.json, plus/pathways.json, plus/exam-questions.json, index.html"
   },
   "schema": "publish-handoff-v3"
 }
