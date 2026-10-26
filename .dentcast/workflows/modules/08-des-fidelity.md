@@ -347,7 +347,12 @@ and its slot is the spec's own error object
 `{"des_version":"3.1","error":"INSUFFICIENT_TEXT"}` — never a silent `null`; the
 reader is told nothing about it (what is not there is not announced — founder,
 1405/07/19), the record and the publish report are. Basket 1 pages never reach this call: fidelity needs a
-cited source. No classifier decides whether the page «is a report of the paper»
+cited source. **A core audio episode (`episodes/…`) never reaches it either —
+DES only, no FIDELITY** (founder, 1405/08/04): its page is a caption, a player
+and labels, not a write-up of the paper, so the record is `scored_at` +
+`sources` with no `fidelity` key; `tools/des_fidelity_units.py` builds nothing
+for it and Phase F fails a `fidelity` slot on one. Its NoteCast is a written
+page and keeps the call. No classifier decides whether the page «is a report of the paper»
 — spec F1 decides per unit, and a page that merely lists the paper in its
 references attributes fewer than three claims to it and lands on
 `INSUFFICIENT_CLAIMS` by itself (spec appendix rule 9).
@@ -618,7 +623,7 @@ on a `NOT_APPRAISABLE` source must be stamped ≥ 3.1 over a `FULL_TEXT`/`EXCERP
 record, and a `null` on such a source in a record with no 3.1 slot is still what
 the rule then said. **Under `POOLED` scope it is the one pooled object instead of an array**,
 because that call judged the page against all its sources at once. It is omitted entirely on a record
-written before v2.5 or on a basket-1 page; Phase F accepts both shapes and
+written before v2.5, on a basket-1 page, or on a core audio episode (Part 2b); Phase F accepts both shapes and
 rejects a `fidelity` whose length differs from `sources`. Parallel by index
 rather than keyed by DOI because the spec's output object carries no
 identifier of its own, and inventing one would be a second copy of

@@ -526,6 +526,9 @@ def fidelity_absence_allowed(content_id, sources, index, assignment=None):
 
     assignment is a per-verification cache, not a stored claim of zero units.
     """
+    import des_fidelity_units as units_tool
+    if units_tool.is_audio_episode(content_id):
+        return True, "audio episode: DES only, no Fidelity (founder, 1405/08/04)"
     source = sources[index]
     if source.get("error") or source.get("content_type") == "COMMENTARY":
         return True, "source error or COMMENTARY: no Fidelity call"
@@ -1521,6 +1524,11 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                     rep.check(allowed, "4.13 DES", f"fid{i}: {reason}",
                               f"fid{i} missing: {reason}", "step 4.13 Part 2b")
             if "fidelity" in rec:
+                import des_fidelity_units as units_tool
+                rep.check(not units_tool.is_audio_episode(content_id), "4.13 DES",
+                          "no Fidelity on an audio episode",
+                          "an audio episode carries a fidelity slot — episodes get DES only",
+                          "step 4.13 Part 2b — drop the record's fidelity key (founder, 1405/08/04)")
                 fid = rec.get("fidelity")
                 srcs = rec.get("sources") or []
                 # the tool's units start with the page's own <h1>, which
