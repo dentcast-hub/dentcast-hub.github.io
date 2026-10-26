@@ -253,7 +253,7 @@ It has two slots, in DOM order: **first = previous part**, **second = next part*
 Because step 2 cloned the previous part **verbatim**, the new page arrives with **both** slots still empty (copied straight from the template). **Two pages must be fixed** — the new part's own nav, and the previous part's "next" slot:
 
 **A) On the NEW part's page — wire its «previous» slot.**
-- Convert the **first (previous)** slot from the empty placeholder into a real link to the immediately-preceding part (`prompt<season>-<part − 1>`):
+- Convert the **first (previous)** slot from the empty placeholder into a real link to the immediately-preceding part — the Promptologist entry just before the new one in `dentcast-brain.json` order (usually `prompt<season>-<part − 1>`; across a season boundary or after an appendix part it is that brain-order predecessor, e.g. `prompt2-1` → `prompt1-5`):
   `<a href="/dentai/promptologist/<prev-id>.html" class="ep-nav-btn">&#8592; قسمت قبلی</a>`
 - Leave the **second (next)** slot as the empty placeholder `<span class="ep-nav-btn ep-nav-empty">قسمت بعدی &#8594;</span>` — there is no next part yet. (When a later part is published, *that* publish converts this slot per (B).)
 

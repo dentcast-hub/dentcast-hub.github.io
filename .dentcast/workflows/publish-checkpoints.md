@@ -254,7 +254,9 @@ Do not use this local WAL option as proof of work in a GitHub-only agent.
 
 A reconciliation note is not replacement evidence. Enroll each local source in
 `target_paths` and bind its bytes in the existing `context.inputs` list using
-`{"path":"sources/paper.txt","sha256":"<actual SHA-256>"}`. Existing
+`{"path":"sources/paper.txt","sha256":"<actual SHA-256>"}`. The path and hash are written into the public handoff and receipt, so
+give a private input a neutral name before enrolling it (`inputs/paper-1.pdf`,
+never the paper title, author or patient name); only its bytes stay local. Existing
 `{"ref":"<enrolled local path>","sha256":"..."}` entries are also checked.
 URLs/non-file references still require the operator's real source verification;
 these tools do not fetch or assess a paper. Watched paths cannot be removed to

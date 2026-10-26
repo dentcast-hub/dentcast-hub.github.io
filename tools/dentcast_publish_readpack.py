@@ -32,7 +32,7 @@ MODULES = WORKFLOW + 'modules/'
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
     '03-litecast-and-page.md': '28ab4d554f9e5631724d3133177332843cc0c900',
-    '04-taxonomy-and-navigation.md': '711e1ed6f34d0a4a3041adcbe8df532f6b098094',
+    '04-taxonomy-and-navigation.md': '539fd195fb90d19587ba8b243782355228a14238',
     '05-semantic-linking.md': '760dcf77dd3baff173aebb2d40492604fb096d1f',
     '06-paper-ingestion.md': '543aa4cc50f54b55adecbd6d7826cc5aecc134dd',
     '08-des-fidelity.md': '5b67df3b88fb89f427d93116631a715c04534e82',
