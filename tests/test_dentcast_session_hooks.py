@@ -1,6 +1,7 @@
 """SessionStart activates the repository Git hooks in a fresh clone, quietly and idempotently."""
 import json
 import os
+import shutil
 from pathlib import Path
 import subprocess
 import tempfile
@@ -86,6 +87,42 @@ class SessionStartHookTests(unittest.TestCase):
             hooks = json.loads((ROOT / config).read_text(encoding='utf-8'))['hooks']['PostToolUse']
             with self.subTest(config=config):
                 self.assertEqual(set(hooks[0]['matcher'].split('|')), {'Edit', 'Write', 'MultiEdit', 'Bash'})
+
+    def event_command(self, config, event):
+        hooks = json.loads((ROOT / config).read_text(encoding='utf-8'))['hooks'][event]
+        (command,) = [h['command'] for group in hooks for h in group['hooks']]
+        return command
+
+    def test_stop_and_post_tool_allow_when_scripts_are_not_found(self):
+        # Exit 2 is a block in Claude; python/node on a missing file exit 2.
+        for config in CONFIGS:
+            for event, stdin in (('Stop', '{"stop_hook_active": false}'),
+                                 ('PostToolUse', '{"tool_input": {"file_path": "CLAUDE.md"}}')):
+                with self.subTest(config=config, event=event), tempfile.TemporaryDirectory() as folder:
+                    command = self.event_command(config, event)
+                    for repo in (folder, self.repo()):  # outside Git; a repo without scripts/
+                        result = self.run_hook(command, repo, None, stdin)
+                        self.assertEqual((result.returncode, result.stdout, result.stderr), (0, '', ''))
+                    bogus = self.run_hook(command, folder, 'CLAUDE_PROJECT_DIR', stdin)
+                    self.assertEqual(bogus.returncode, 0)
+
+    def test_stop_without_project_dir_finds_the_enclosing_checkout(self):
+        for config in CONFIGS:
+            with self.subTest(config=config):
+                repo = self.repo()
+                shutil.copytree(ROOT / 'scripts', Path(repo) / 'scripts')
+                (Path(repo) / '.dentcast').mkdir()
+                (Path(repo) / '.dentcast/PUBLISH-HANDOFF.md').write_text('fixture handoff\n')
+                sub = Path(repo) / 'پوشه فارسی'
+                sub.mkdir()
+                env = {k: v for k, v in os.environ.items()
+                       if k not in ('CLAUDE_PROJECT_DIR', 'CODEX_PROJECT_DIR', 'CURSOR_PROJECT_DIR')}
+                result = subprocess.run(['sh', '-c', self.event_command(config, 'Stop')], cwd=sub, env=env,
+                                        input='{"stop_hook_active": false}', capture_output=True, text=True)
+                self.assertEqual(result.returncode, 0)
+                out = json.loads(result.stdout)
+                self.assertEqual(out['decision'], 'block')
+                self.assertIn('GUARD_UNAVAILABLE', out['reason'])
 
     def test_outside_git_is_silent_and_non_failing(self):
         with tempfile.TemporaryDirectory() as folder:

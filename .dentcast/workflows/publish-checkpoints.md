@@ -37,6 +37,18 @@ Start a new publication branch from a freshly fetched `origin/main`
 (`git rev-parse --is-shallow-repository` prints `true`, the usual cloud-session
 checkout), deepen it first with `git fetch --deepen=<N>` or `git fetch --unshallow`
 so the Push-1/Push-2 commits and the base the tools compare against are present.
+A helper refusal `SHALLOW_CLONE_DEEPEN_REQUIRED` means exactly this: run
+`git fetch --deepen=50 origin` (repeat, or `git fetch --unshallow`, if it persists)
+and retry the same command. A `TOOL_OLDER_THAN_ORIGIN_MAIN` warning from the
+helper means this checkout's publishing tool lacks `origin/main`'s latest change:
+before starting a publication, branch from `origin/main`
+(`git switch -c <branch> origin/main`) instead of continuing on the stale base.
+
+`content_id` is `<section>/<slug>` without `.html`, exactly the page path minus
+its extension (e.g. `insight/insight-99`, `dentai/promptologist/<slug>`); the page,
+the English mirror `<section>/en/<slug>.html` and the receipts derive from it, and
+`init`/`bind` refuse other forms (`CONTENT_ID_INVALID`). Paper-only keeps its
+catalog id form.
 
 Before push, long transfer, branch update and merge, freshly read the exact PR,
 its state/merged flag, head branch/repository/SHA and destination branch/SHA.
@@ -356,6 +368,9 @@ the author's real explicit confirmation as `scope="authored-intro"`,
 `origin="not_applicable"` only for a genuine reviewed exception (e.g. the
 page already has ordinary prose and no new lead was created), with a specific
 reason in `source_ref`. Never infer approval from the absence of a record.
+Record `first_cut_lead_provenance_v1` before completing C.4.9: completing (or
+skipping) C.4.9 in the ledger already requires it, together with the other
+first-cut checks above, so the step write itself is refused without it.
 
 The pre-commit guard and the independent committed CI guard both reject a
 missing declaration or outstanding questions. These checks do not create a
@@ -442,7 +457,7 @@ Immediately after the second-delivery push is confirmed, tell the user that the 
 
 Stay with the run and poll at bounded intervals until it reaches a terminal state; do not end the turn or leave the user without a status while the job is queued or running. If preflight skips or no run appears, inspect the event, branch and handoff before reporting that Actions started. If the run succeeds, verify that delivery 3 is based on the exact Push-2 SHA, the completion receipt is present, the active handoff is removed, and cleanup is confirmed before reporting publication complete. If it fails, inspect the uploaded logs/recovery artifact, diagnose and resume through the guarded recovery path where possible, and keep the user informed of the real status.
 
-Delivery 3 is a commit that Actions pushes, so the local checkout still holds the Push-2 state (and the active handoff) after the run succeeds. Run `git pull --ff-only` on the publication branch first; only then does the handoff disappear locally and delivery 3, the completion receipt and cleanup can be verified. A pull that is not a fast-forward means the branch moved unexpectedly: stop and inspect instead of merging. Monitoring does not need `gh`: in a cloud session without it, use the GitHub MCP tools (`actions_list` for the branch's workflow runs of `post-cut2-mechanical.yml`, `actions_get` for a run's status and conclusion, `get_job_logs` for failed jobs) or the equivalent connected GitHub reads available to the client. The logs and recovery bundle are the run artifact `post-cut2-<Push-2 SHA>` (kept 14 days); fetch it through the Actions API (list the run's artifacts, then download that artifact's zip), not from the branch, which a failed run leaves at Push 2.
+Delivery 3 is a commit that Actions pushes, so the local checkout still holds the Push-2 state (and the active handoff) after the run succeeds. Run `git pull --ff-only` on the publication branch first, and always before ending the session; only then does the handoff disappear locally and delivery 3, the completion receipt and cleanup can be verified. A pull that is not a fast-forward means the branch moved unexpectedly: stop and inspect instead of merging. For a v2 run do not run `confirm-cleanup` or `restore-cleanup` locally: the workflow performed the cleanup and no local cleanup is pending. Until the pull, the stop guard reports `DELIVERY_3_ON_REMOTE_PULL_REQUIRED` (delivery 3 already fetched) or `REMOTE_BRANCH_ADVANCED_NOT_FETCHED` (origin moved past this checkout); both clear with the pull, never with reset, force-push or cleanup commands. Monitoring does not need `gh`: in a cloud session without it, use the GitHub MCP tools (`actions_list` for the branch's workflow runs of `post-cut2-mechanical.yml`, `actions_get` for a run's status and conclusion, `get_job_logs` for failed jobs) or the equivalent connected GitHub reads available to the client. The logs and recovery bundle are the run artifact `post-cut2-<Push-2 SHA>` (kept 14 days); fetch it through the Actions API (list the run's artifacts, then download that artifact's zip), not from the branch, which a failed run leaves at Push 2.
 
 A failed run pushes nothing; the branch stays at the Push-2 commit. Recover from that commit:
 
