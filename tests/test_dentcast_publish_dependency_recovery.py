@@ -90,6 +90,24 @@ class DependencyRecoveryTests(unittest.TestCase):
         self.assertEqual(out['next_step'],'C.0.5')
         self.assertEqual(p['context']['approvals'][0]['status'],'confirmed')
 
+    def test_related_capsules_added_at_4_9_do_not_revoke_prose_approval(self):
+        self.source()
+        page=('<p>fixture approved body</p><div class="dc-related-section"><h2>کاوش بیشتر</h2>'
+              '<div class="dc-related-capsules"><a href="/glossary/" class="dc-related-capsule">دانشنامه</a>{}</div></div>')
+        (self.root/'note.html').write_text(page.format(''))
+        initial=self.start();d=wal.begin(self.root,initial['sha256'])['digest']
+        d=self.walk(d,'C.2')
+        (self.root/'note.html').write_text(page.format(
+            '<a class="dc-related-capsule" href="/x/sibling.html">fixture sibling label</a>'
+            '<a href="/y.html" class="ep-related-link">fixture episode label</a>'))
+        wal.flush(self.root,d,'fixture reviewed 4.9 capsules, unchanged prose')
+        p=h.load_state(self.root)[0]['publication']
+        self.assertEqual(p['context']['approvals'][0]['status'],'confirmed')
+        d=wal.begin(self.root,h.load_state(self.root)[1])['digest']
+        (self.root/'note.html').write_text(page.format('').replace('approved body','edited body'))
+        with self.assertRaisesRegex(h.Blocked,'APPROVED_PAGE_CHANGED_INVALIDATE'):
+            wal.flush(self.root,d,'fixture changed approved prose')
+
     def test_non_prose_and_intact_verbatim_approvals_survive_later_page_step(self):
         self.source()
         self.p['context']['approvals'] = [

@@ -532,7 +532,11 @@ def page_text_digest(body):
     """Exact decoded text, preserving internal whitespace and Persian codepoints.
 
     Link wrappers, cache stamps and non-prose script/style changes alone do not
-    revoke text approval. This is not a scientific or DOM/visibility validator.
+    revoke text approval. Neither do the related-link capsules that steps 2.5 and
+    4.9 add after approval («کاوش بیشتر» `dc-related-capsule`, episode
+    `ep-related-link`): Hard Rule 9 makes that section links only, never approved
+    prose, and counting their labels invalidated every publish at 4.9.
+    This is not a scientific or DOM/visibility validator.
     """
     try:
         text = body.decode('utf-8')
@@ -540,6 +544,8 @@ def page_text_digest(body):
         return digest(body)  # Unknown encoding: fail conservatively on byte drift.
     text = re.sub(r'<(?:script|style)\b[^>]*>.*?</(?:script|style)\s*>', '', text,
                   flags=re.S | re.I)
+    text = re.sub(r'<a\b[^>]*\bclass="[^"]*\b(?:dc-related-capsule|ep-related-link)\b'
+                  r'[^"]*"[^>]*>.*?</a\s*>', '', text, flags=re.S | re.I)
     return digest(html.unescape(re.sub(r'<[^>]+>', '', text)).strip().encode('utf-8'))
 
 
