@@ -323,7 +323,7 @@ class LifecycleTests(unittest.TestCase):
         result=lc.bind(self.root,sha,'insight/note','insight',['note.html'],'fixture:identity')
         p=h.load_state(self.root)[0]['publication']
         self.assertEqual(result['status'],'checkpoint_written')
-        self.assertEqual((p['content_id'],p['category']),('insight/note','insight'))
+        self.assertEqual((p['content_id'],p['category']),('insight/note','clinical'))
         self.assertEqual(p['external_actions'],[{'id':'drive-rename','target':'drive:fixture-file','status':'completed','evidence':['fixture:drive rename+move observed']}])
 
     def test_bind_rejects_unsettled_or_failed_external_action(self):

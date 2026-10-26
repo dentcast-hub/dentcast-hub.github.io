@@ -61,7 +61,7 @@ TITLE_RE = re.compile(r'<title>(.*?)</title>', re.IGNORECASE | re.DOTALL)
 
 def run_git(args):
     return subprocess.run(
-        ["git", *args], capture_output=True, text=True, encoding="utf-8"
+        ["git", "-c", "core.quotepath=false", *args], capture_output=True, text=True, encoding="utf-8"
     ).stdout
 
 

@@ -33,7 +33,7 @@ class RunnerError(RuntimeError):
 
 
 def git(root: Path, *args: str, check: bool = True) -> str:
-    p = subprocess.run(["git", *args], cwd=root, text=True,
+    p = subprocess.run(["git", "-c", "core.quotepath=false", *args], cwd=root, text=True,
                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if check and p.returncode:
         raise RunnerError(f"git {' '.join(args)} failed ({p.returncode}): {p.stderr.strip()}")

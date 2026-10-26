@@ -47,7 +47,7 @@ still-empty branch with `git switch -C <that-branch> --no-track origin/main`
 (`-c` fails with "already exists"; `--no-track` keeps `git pull`/`git push` on the
 publication branch instead of `main`); elsewhere use
 `git switch -c <branch> --no-track origin/main`. Never move a branch that already
-holds publication commits.
+holds commits: the warning then names `git merge --no-edit origin/main` instead.
 
 `content_id` is `<section>/<slug>` without `.html`, exactly the page path minus
 its extension (e.g. `insight/insight-99`, `dentai/promptologist/<slug>`); the page,

@@ -98,7 +98,7 @@ const sha256 = (buf) => createHash('sha256').update(buf).digest('hex');
 
 function git(args, { allowFail = false } = {}) {
   try {
-    return execFileSync('git', ['-C', ROOT, ...args], {
+    return execFileSync('git', ['-c', 'core.quotepath=false', '-C', ROOT, ...args], {
       maxBuffer: 64 * 1024 * 1024,
       encoding: 'utf8',
       stdio: ['ignore', 'pipe', 'ignore'],
