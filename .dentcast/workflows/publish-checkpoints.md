@@ -491,12 +491,14 @@ already recorded in the latest checkpoint, and never commits or pushes. Failed t
 cut. Preserve work and report the real error; retrying the same unaccepted
 logical delivery does not create another milestone. Never advance by pretending
 a failed push succeeded. The helper does not commit or push automatically.
-After a cut is pushed, the first write is starting the next step (`step --status
-started` or `advance --start-next`); a `record` written before it leaves the local
-handoff different from the delivered one, and the next step and the Stop guard
-then refuse with `PREVIOUS_STEP_HANDOFF_NOT_DELIVERED`. If that was only such a
-record, restore the delivered file (`git restore .dentcast/PUBLISH-HANDOFF.md`),
-start the next step, then record the change again.
+After a cut is committed, the first write is starting the next step (`step --status
+started` or `advance --start-next`); any other write on top of the committed cut
+handoff (except an audited `invalidate`) is refused up front with
+`RECORD_AFTER_DELIVERED_CUT_START_NEXT_STEP_FIRST`: start the next step, then
+record the change. If a handoff was nevertheless changed after the pushed cut, the
+next step and the Stop guard refuse with `PREVIOUS_STEP_HANDOFF_NOT_DELIVERED`; if
+that was only such a record, restore the delivered file (`git restore
+.dentcast/PUBLISH-HANDOFF.md`), start the next step, then record the change again.
 
 `init` records `fixed_three_deliveries_v1` in semantic decisions for new page
 runs, including unassigned intake; it cannot subsequently be removed. Pre-commit
@@ -513,7 +515,9 @@ it requires delivered work; during final cleanup it requires final confirmation.
 A checkpoint written in an earlier run without the policy marker retains the
 legacy cleanup path so interrupted older work remains recoverable. Paper-only
 is a separate no-page route and keeps its catalog verification/cleanup contract;
-do not invent page/DES cuts for it. Never remove a policy marker to claim legacy.
+do not invent page/DES cuts for it. Its one delivery is the completed final
+handoff, so the Stop guard permits consistent local progress until G is resolved
+and then requires that final handoff delivered. Never remove a policy marker to claim legacy.
 
 The v3 handoff remains semantic-only. Git reconstructs committed fingerprints;
 private same-checkout observations support local progress. Do not create commits

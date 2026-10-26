@@ -551,6 +551,18 @@ def guard_step_transition(state, publication, root=None):
                and old[s['id']]['status'] not in ('started', 'completed', 'skipped')
                and s['status'] in ('started', 'completed', 'skipped')]
     h.require(len(entered) <= 1, 'ONE_STEP_PER_CHECKPOINT_REQUIRED')
+    if (not entered and root is not None and fixed_delivery(state["publication"])
+            and delivery_boundary(state["publication"])
+            and invalidation_count(publication) == invalidation_count(state["publication"])):
+        # Refuse up front what the next step and the Stop guard would refuse
+        # later (PREVIOUS_STEP_HANDOFF_NOT_DELIVERED): any other write on top
+        # of the already committed cut handoff. An audited invalidation (the
+        # documented post-cut recovery) remains allowed.
+        delivered = h.git(root, "show", "HEAD:" + h.STATE_PATH, optional=True)
+        h.require(delivered is None or h.digest(delivered) != h.digest(h.render(state).encode()),
+                  "RECORD_AFTER_DELIVERED_CUT_START_NEXT_STEP_FIRST: this handoff is the committed fixed "
+                  "delivery " + str(delivery_boundary(state["publication"])) + "; first start the next step "
+                  "(step --status started or advance --start-next), then record this change")
     for row in entered:
         h.require(not any(a['status'] in ('started', 'outcome_unknown') for a in publication['external_actions']),
                   'EXTERNAL_OUTCOME_UNKNOWN_DO_NOT_RETRY')
@@ -1154,7 +1166,10 @@ def guard(root, phase):
         if phase == "pre-commit":
             h.require(h.git(root, "show", ":" + h.STATE_PATH, optional=True) == path.read_bytes(),
                       "LATEST_HANDOFF_MUST_BE_STAGED")
-        elif phase == 'stop' and (not fixed_delivery(state['publication']) or delivery_boundary(state['publication'])):
+        elif phase == 'stop' and (delivery_boundary(state['publication']) if fixed_delivery(state['publication'])
+                                  # Paper-only has one delivery: its completed final handoff.
+                                  else h.publication_category(state['publication']) != 'paper-only'
+                                  or h.next_step(state['publication']) is None):
             if fixed_delivery(state['publication']):
                 require_fixed_cut_readiness(state['publication'], root)
             require_step_delivery(root, state, h.digest(path.read_bytes()))

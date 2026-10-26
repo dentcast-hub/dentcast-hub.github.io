@@ -341,11 +341,16 @@ class ThreeDeliveriesTests(unittest.TestCase):
         sha = lc.invalidate(self.root, sha, 'C.2', 'fixture reviewed post-cut page step')['sha256']
         sha = self.walk(sha, 'C.4.9')
         self.deliver('delivery 1 again after audited invalidation')
-        # Without a further invalidation the same cut cannot be delivered twice.
+        # Without a further invalidation the same cut cannot be delivered twice:
+        # a new write on the delivered cut is refused up front (round 4), and
+        # the pre-commit guard still refuses a re-delivery of cut 1.
         state, sha = h.load_state(self.root)
-        h.save(self.root, state['publication'], expected=sha, note='fixture unchanged')
+        self.assert_blocked('RECORD_AFTER_DELIVERED_CUT_START_NEXT_STEP_FIRST', h.save, self.root,
+                            state['publication'], expected=sha, note='fixture unchanged')
+        (self.root/h.STATE_PATH).write_bytes((self.root/h.STATE_PATH).read_bytes() + b'\n')
         run(self.root, 'add', h.STATE_PATH)
-        self.assert_blocked('FIRST_DELIVERY_REQUIRES_NO_ACTIVE_REMOTE_HANDOFF', lc.guard, self.root, 'pre-commit')
+        with self.assertRaises(h.Blocked):
+            lc.guard(self.root, 'pre-commit')
 
     def test_rules_invalidation_after_second_cut_redelivers_both_cuts_once(self):
         # A failed post-Push-2 continuation whose fix changes a workflow file
