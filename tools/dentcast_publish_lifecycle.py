@@ -307,7 +307,7 @@ def completion_path(publication):
 def technical_report_path(publication):
     """Public-safe Phase G technical report delivered with the third commit."""
     h.relative_path(publication["content_id"])
-    name = publication["category"] + "-" + publication["content_id"].rsplit("/", 1)[-1]
+    name = h.canonical_category(publication["category"]) + "-" + publication["content_id"].rsplit("/", 1)[-1]
     return h.relative_path(".dentcast/publication-reports/" + name + ".md")
 
 

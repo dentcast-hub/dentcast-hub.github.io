@@ -357,7 +357,9 @@ def canonical_category(value):
     if not isinstance(value, str):
         return value
     key = re.sub(r"[\s_\-‌‍]+", "", value).casefold()
-    return CATEGORY_ALIASES.get(key, value.strip().casefold())
+    # "Plak Sefr" -> "plak-sefr" (the folder slug form); existing stored
+    # spellings such as "plak_sefr" are left unchanged.
+    return CATEGORY_ALIASES.get(key, re.sub(r"\s+", "-", value.strip()).casefold())
 
 
 def publication_category(publication):
