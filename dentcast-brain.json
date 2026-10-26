@@ -17499,5 +17499,33 @@
       "secondary": [],
       "subtopic": "comprehensive-diagnosis"
     }
+  },
+  {
+    "type": "promptologist",
+    "id": "prompt-append2-6",
+    "title": "پیوست ۲ ـ قسمت ۶: اگر به گیت‌هاب هم دسترسی نداشته باشیم، چه؟",
+    "caption": "اگر روزی به گیت‌هاب هم دسترسی نداشته باشیم، فایل‌هایمان کجا می‌مانند؟ با Download ZIP و Clone یک نسخه از ریپو را روی کامپیوتر خودمان نگه می‌داریم.",
+    "hashtags": [
+      "#پرامپتولوژیست",
+      "#هوش_مصنوعی",
+      "#GitHub",
+      "#پشتیبان_گیری"
+    ],
+    "keywords": [
+      "Download ZIP",
+      "Clone",
+      "GitHub Desktop",
+      "Fetch origin",
+      "Pull origin",
+      "تاریخچهٔ تغییرات",
+      "نسخهٔ پشتیبان",
+      "هارد خارجی"
+    ],
+    "page_url": "/dentai/promptologist/prompt-append2-6.html",
+    "pillar": {
+      "primary": "practice-infrastructure",
+      "secondary": [],
+      "subtopic": "llm-tools"
+    }
   }
 ]

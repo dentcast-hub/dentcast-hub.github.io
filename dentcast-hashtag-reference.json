@@ -1139,7 +1139,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 34,
+   "count": 35,
    "content_ids": [
     "episodes/episode-109",
     "episodes/episode-109-2",
@@ -1174,7 +1174,8 @@
     "dentai/promptologist/prompt-append2-2",
     "dentai/promptologist/prompt-append2-3",
     "dentai/promptologist/prompt-append2-4",
-    "dentai/promptologist/prompt-append2-5"
+    "dentai/promptologist/prompt-append2-5",
+    "dentai/promptologist/prompt-append2-6"
    ]
   },
   {
@@ -1528,7 +1529,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 27,
+   "count": 28,
    "content_ids": [
     "dentai/promptologist/prompt1-1",
     "dentai/promptologist/prompt1-2",
@@ -1556,7 +1557,8 @@
     "dentai/promptologist/prompt-append2-2",
     "dentai/promptologist/prompt-append2-3",
     "dentai/promptologist/prompt-append2-4",
-    "dentai/promptologist/prompt-append2-5"
+    "dentai/promptologist/prompt-append2-5",
+    "dentai/promptologist/prompt-append2-6"
    ]
   },
   {
@@ -4953,6 +4955,34 @@
    ]
   },
   {
+   "key": "github",
+   "tag": "#GitHub",
+   "domain": "ai",
+   "words": 1,
+   "definition": "سرویسِ آنلاینِ نگه‌داریِ فایل‌ها در ریپو (repository)، که نسخه‌های قبلیِ هر فایل را هم نگه می‌دارد؛ برای کد ساخته شده ولی برای هر فایلِ متنی کار می‌کند.",
+   "use_when": "مطلب مشخصاً به این سرویس، ریپو یا نگه‌داریِ فایل‌ها در آن بپردازد.",
+   "aliases": [
+    "گیت‌هاب",
+    "گیت هاب",
+    "github",
+    "ریپو",
+    "ریپوزیتوری",
+    "repository",
+    "git hub"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "dentai/promptologist/prompt-append2-1",
+    "dentai/promptologist/prompt-append2-2",
+    "dentai/promptologist/prompt-append2-3",
+    "dentai/promptologist/prompt-append2-4",
+    "dentai/promptologist/prompt-append2-5",
+    "dentai/promptologist/prompt-append2-6"
+   ]
+  },
+  {
    "key": "global_diagnosis",
    "tag": "#Global_Diagnosis",
    "domain": "clinical",
@@ -5686,33 +5716,6 @@
     "dentai/promptologist/prompt1-4",
     "dentai/promptologist/prompt3-1",
     "dentai/dentai-28"
-   ]
-  },
-  {
-   "key": "github",
-   "tag": "#GitHub",
-   "domain": "ai",
-   "words": 1,
-   "definition": "سرویسِ آنلاینِ نگه‌داریِ فایل‌ها در ریپو (repository)، که نسخه‌های قبلیِ هر فایل را هم نگه می‌دارد؛ برای کد ساخته شده ولی برای هر فایلِ متنی کار می‌کند.",
-   "use_when": "مطلب مشخصاً به این سرویس، ریپو یا نگه‌داریِ فایل‌ها در آن بپردازد.",
-   "aliases": [
-    "گیت‌هاب",
-    "گیت هاب",
-    "github",
-    "ریپو",
-    "ریپوزیتوری",
-    "repository",
-    "git hub"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "dentai/promptologist/prompt-append2-1",
-    "dentai/promptologist/prompt-append2-2",
-    "dentai/promptologist/prompt-append2-3",
-    "dentai/promptologist/prompt-append2-4",
-    "dentai/promptologist/prompt-append2-5"
    ]
   },
   {
@@ -12855,6 +12858,29 @@
    "content_ids": [
     "episodes/episode-147-9",
     "sharehub/share-37"
+   ]
+  },
+  {
+   "key": "پشتیبان_گیری",
+   "tag": "#پشتیبان_گیری",
+   "domain": "ai",
+   "words": 2,
+   "definition": "نگه‌داشتنِ نسخه‌ای از کاری که ساخته‌اید در جایی بیرون از جایی که ساخته شده، تا از بین رفتنِ آن جا کارِ شما را با خودش نبرد.",
+   "use_when": "مطلب به این بپردازد که چه چیزی از کارِ ساخته‌شده با مدل (پرامپت، روشِ کاری، تصمیم) را و کجا نگه دارید تا از دست رفتنِ اکانت یا پروژه همه‌چیز را نبرد.",
+   "aliases": [
+    "backup",
+    "بک آپ",
+    "بکاپ",
+    "نسخه پشتیبان",
+    "نسخه‌ی پشتیبان",
+    "نسخه گرفتن از کار"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/promptologist/prompt-append2-1",
+    "dentai/promptologist/prompt-append2-6"
    ]
   },
   {
@@ -20505,28 +20531,6 @@
    "count": 1,
    "content_ids": [
     "dentai/dentai-27"
-   ]
-  },
-  {
-   "key": "پشتیبان_گیری",
-   "tag": "#پشتیبان_گیری",
-   "domain": "ai",
-   "words": 2,
-   "definition": "نگه‌داشتنِ نسخه‌ای از کاری که ساخته‌اید در جایی بیرون از جایی که ساخته شده، تا از بین رفتنِ آن جا کارِ شما را با خودش نبرد.",
-   "use_when": "مطلب به این بپردازد که چه چیزی از کارِ ساخته‌شده با مدل (پرامپت، روشِ کاری، تصمیم) را و کجا نگه دارید تا از دست رفتنِ اکانت یا پروژه همه‌چیز را نبرد.",
-   "aliases": [
-    "backup",
-    "بک آپ",
-    "بکاپ",
-    "نسخه پشتیبان",
-    "نسخه‌ی پشتیبان",
-    "نسخه گرفتن از کار"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "dentai/promptologist/prompt-append2-1"
    ]
   },
   {

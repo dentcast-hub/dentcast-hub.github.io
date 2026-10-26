@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "dentai/promptologist/prompt-append2-6"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -107,6 +107,30 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             "restored from dependency_invalidation_v1 audit (from C.2): approved body/title/caption/figure text byte-identical; only 4.9 kavosh capsules added"
           ],
           "scope": "pulse",
+          "status": "confirmed"
+        },
+        {
+          "decision": "two MCQs (Fetch origin role; Clone keeps history) as presented, keys 0 and 1",
+          "evidence": [
+            "founder-chat:2026-10-26:\u00ab\u0647\u0645\u0647 \u062a\u0627\u06cc\u06cc\u062f \u2014 \u0628\u0631\u0648 \u062a\u0627 \u0645\u0631\u062c\u00bb"
+          ],
+          "scope": "exam-questions",
+          "status": "confirmed"
+        },
+        {
+          "decision": "dentai/promptologist/en/prompt-append2-6.html as presented (title \u00abAppendix 2 \u2014 Part 6: What If We Lose Access to GitHub Too?\u00bb)",
+          "evidence": [
+            "founder-chat:2026-10-26:\u00ab\u0647\u0645\u0647 \u062a\u0627\u06cc\u06cc\u062f \u2014 \u0628\u0631\u0648 \u062a\u0627 \u0645\u0631\u062c\u00bb"
+          ],
+          "scope": "english-mirror",
+          "status": "confirmed"
+        },
+        {
+          "decision": "founder authorized merging the publication PR after all gates pass",
+          "evidence": [
+            "founder-chat:2026-10-26:\u00ab\u0647\u0645\u0647 \u062a\u0627\u06cc\u06cc\u062f \u2014 \u0628\u0631\u0648 \u062a\u0627 \u0645\u0631\u062c\u00bb"
+          ],
+          "scope": "merge",
           "status": "confirmed"
         }
       ],
@@ -517,6 +541,96 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "related_changed_paths": [
             "dentai/promptologist/prompt-append2-5.html"
           ]
+        },
+        {
+          "kind": "pulse_draft_v1",
+          "page_url": "/dentai/promptologist/prompt-append2-6.html",
+          "text": "\u067e\u06cc\u0648\u0633\u062a \u06f2 \u0640 \u0642\u0633\u0645\u062a \u06f6: \u0627\u06af\u0631 \u0628\u0647 \u06af\u06cc\u062a\u200c\u0647\u0627\u0628 \u0647\u0645 \u062f\u0633\u062a\u0631\u0633\u06cc \u0646\u062f\u0627\u0634\u062a\u0647 \u0628\u0627\u0634\u06cc\u0645\u060c \u0686\u0647\u061f"
+        },
+        {
+          "english": {
+            "evidence": [
+              "source and mirror reviewed before Push 2: h3 6/6, figure 4/4, img 5/5, strong 5/5; no same-word gloss; noindex, no hreflang"
+            ],
+            "path": "dentai/promptologist/en/prompt-append2-6.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "current-run editorial close review 2026-10-26"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "C.4.13 COMMENTARY DES 12/E validated (Part 3 all green), fidelity null by COMMENTARY rule"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Q4.9 ordinary article confirmed by founder; C.4.14 skipped"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "practice-infrastructure/llm-tools founder-chosen; verified against live PILLARS (C.5.5)"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "4.7 0 terms, 4.8 0 candidates, 4.9 three series capsules; kavosh 5/5"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "4 tags all existing canonical concepts; hashtag_ref --check OK"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "brain entry last (578), key parity with prompt-append2-5; title/caption on all page surfaces"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "ai-dentistry after prompt-append2-5 (founder approved); bundles: no candidate"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "index.html pulse: new title-only line first, share-40 line removed, 7 lines"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "dentai/promptologist/en/prompt-append2-6.html authored and founder-approved; reciprocal toggles; en part-5 next wired"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "title, caption, register-conversion, authored-intro, image-captions, image-credit, subtopic, hashtags-keywords, challenge, pulse, exam-questions, english-mirror, merge all confirmed"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -809,6 +923,115 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "05-semantic-linking.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.1",
+        "module": "06-paper-ingestion.md",
+        "reason": "skipped \u2014 no attached paper (Q4.7 no)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.2",
+        "module": "06-paper-ingestion.md",
+        "reason": "skipped \u2014 no attached paper",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.3",
+        "module": "06-paper-ingestion.md",
+        "reason": "skipped \u2014 no attached paper",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "plus/faq-corpus.json[dentai/promptologist/prompt-append2-6].definedTermSets: 4 authored DefinedTerms #flashcards-c1..c4 (Download ZIP, Clone, GitHub Desktop, Fetch/Pull origin); none copies a FAQ answer; CRLF format preserved (+86 lines only)"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "FAQPage 5 standalone yes/no questions (no deixis), all answers open with \u0628\u0644\u0647/\u062e\u06cc\u0631 verdict -> 5 binary; 4.12-\u0628: 2 founder-approved MCQs r-ids written to plus/exam-questions.json, validate_exam_questions.py 0 errors; page joins ai-dentistry full pathway"
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "COMMENTARY basket; source_text = page title+body (FULL_TEXT); spec v3.4 lines 1-1378 run by independent agent; des_score 12 band E provisional false; Part 3: quotes verbatim, 5+4+0+3+0=12, band E, schema keys = spec; fidelity [null] (COMMENTARY self-record); stored verbatim in plus/des-scores.json; no DOI/quartile guessed; no page markup"
+        ],
+        "id": "C.4.13",
+        "module": "08-des-fidelity.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "ordinary article (Q4.9 founder confirmed), not a challenge",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "all 4 approved tags resolve to existing canonical concepts (#\u067e\u0631\u0627\u0645\u067e\u062a\u0648\u0644\u0648\u0698\u06cc\u0633\u062a #\u0647\u0648\u0634_\u0645\u0635\u0646\u0648\u0639\u06cc #GitHub #\u067e\u0634\u062a\u06cc\u0628\u0627\u0646_\u06af\u06cc\u0631\u06cc; --simulate rank 1-2); no new concept minted; page chips set to canonical list; --sync/build_plus_index/--check run after brain write (C.5)"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "dentcast-brain.json: prompt-append2-6 appended as element 578 (last); key set/order identical to prompt-append2-5; CRLF/indent preserved (+28 lines); hashtag_ref --sync, build_plus_index.mjs, --check OK"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pillar.primary practice-infrastructure, subtopic llm-tools = C.2.4 decision; valid in live PILLARS; no extra pillar keys; capsule -> /pillar/practice-infrastructure/"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pathway_place: ai-dentistry ASK 70 (series continuation; founder approved placement 2026-10-26); --insert after prompt-append2-5 (index 32, milestone false); coverage 1.51 per item (baseline 1.38); no third-pathway/series-split guard triggered"
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "\u0628\u0627\u0646\u062f\u0644: \u0628\u062f\u0648\u0646 \u06a9\u0627\u0646\u062f\u06cc\u062f \u2014 no bundle has continues_pathway=ai-dentistry"
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Pulse: inserted title-only link line at top, removed bottom share-40 line, 7 lines; editorial lock (10 scopes) recorded; English mirror ready"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
@@ -823,14 +1046,17 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       "dentai/promptologist/prompt-append2-6-05-pull.webp",
       "dentai/promptologist/prompt-append2-6.html",
       "dentcast-brain.json",
+      "dentcast-hashtag-reference.json",
       "index.html",
+      "plus/content-index.json",
       "plus/des-scores.json",
+      "plus/exam-questions.json",
       "plus/faq-corpus.json",
       "plus/pathways.json"
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: dentai/promptologist/prompt-append2-6.html, dentai/promptologist/prompt-append2-5.html, dentai/promptologist/index.html, dentai/promptologist/prompt-append2-6-01-download-zip.webp, dentai/promptologist/prompt-append2-6-02-open-desktop.webp, dentai/promptologist/prompt-append2-6-03-clone.webp, dentai/promptologist/prompt-append2-6-04-fetch.webp, dentai/promptologist/prompt-append2-6-05-pull.webp"
+    "note": "Index-only refresh after staging delivery paths: dentai/promptologist/en/prompt-append2-5.html, dentcast-brain.json, dentcast-hashtag-reference.json, index.html, plus/content-index.json, plus/des-scores.json, plus/exam-questions.json, plus/faq-corpus.json, plus/pathways.json, dentai/promptologist/en/prompt-append2-6.html"
   },
   "schema": "publish-handoff-v3"
 }
