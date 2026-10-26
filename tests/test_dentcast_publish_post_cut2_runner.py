@@ -393,7 +393,7 @@ class PostCut2RunnerTests(unittest.TestCase):
              patch.object(runner, "git", side_effect=fake_git), \
              patch.object(runner, "changed_paths", return_value={
                  runner.HANDOFF, "index.html", str(report_path),
-                 ".dentcast/publication-reports/insight-insight100.md"}), \
+                 ".dentcast/publication-reports/clinical-insight100.md"}), \
              patch.object(runner.lifecycle, "pending", return_value=False), \
              patch.object(runner.subprocess, "run", return_value=completed):
             result = runner.finalize_and_push(

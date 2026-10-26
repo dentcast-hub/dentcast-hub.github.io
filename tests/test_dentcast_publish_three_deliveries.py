@@ -279,7 +279,7 @@ class ThreeDeliveriesTests(unittest.TestCase):
         lc.finish(self.root, sha)
         receipt = lc.completion_path({'content_id': 'note'})
         report = lc.technical_report_path({'content_id': 'note', 'category': 'insight'})
-        self.assertEqual(report, '.dentcast/publication-reports/insight-note.md')
+        self.assertEqual(report, '.dentcast/publication-reports/clinical-note.md')
         text = (self.root/report).read_text(encoding='utf-8')
         for line in ('# note — publication technical report', '- `C.4.14` skipped — fixture: ordinary page, no Challenge',
                      '- `F` completed', '**1 passed, 0 warned, 0 failed — publish is COMPLETE**',
