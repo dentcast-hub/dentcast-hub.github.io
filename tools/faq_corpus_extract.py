@@ -30,7 +30,7 @@ LDJSON_RE = re.compile(
 def iter_html_files():
     for path in sorted(ROOT.rglob("*.html")):
         rel = path.relative_to(ROOT)
-        if any(part in EXCLUDE_DIRS for part in rel.parts):
+        if any(part in EXCLUDE_DIRS or part.startswith(".") for part in rel.parts):
             continue
         if rel.name in EXCLUDE_FILES:
             continue

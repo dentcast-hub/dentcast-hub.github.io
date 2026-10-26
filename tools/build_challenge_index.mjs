@@ -62,6 +62,7 @@ function walkHtml(dir) {
     return out;
   }
   for (const name of entries) {
+    if (name.startsWith('.')) continue; // hidden dirs hold no live page
     const full = join(dir, name);
     const stat = statSync(full);
     if (stat.isDirectory()) out.push(...walkHtml(full));

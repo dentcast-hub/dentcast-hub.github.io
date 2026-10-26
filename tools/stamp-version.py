@@ -85,7 +85,9 @@ def stamp_brain_fetches(ver):
     pattern = re.compile(r"((?:dentcast-brain|(?<![\w-])dentcast)\.json\?v=)[0-9A-Za-z._-]*")
     changed = []
     for html in ROOT.rglob("*.html"):
-        if "/.git/" in str(html):
+        # Hidden dirs (.git, .claude/worktrees/* site copies, .dentcast, ...)
+        # hold no live page — same rule as .github/scripts/gen_sitemap.py.
+        if any(part.startswith(".") for part in html.relative_to(ROOT).parts):
             continue
         text = html.read_text(encoding="utf-8")
         new_text, n = pattern.subn(rf"\g<1>{ver}", text)

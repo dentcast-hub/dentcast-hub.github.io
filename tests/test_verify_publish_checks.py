@@ -82,6 +82,43 @@ class StampCatalogueTests(unittest.TestCase):
                              'c="my-dentcast.json?v=3"')
 
 
+class HiddenDirWalkTests(unittest.TestCase):
+    """Builders never walk into hidden dirs: .claude/worktrees/agent-* holds
+    full site copies that must not be stamped or scanned."""
+
+    def load(self, name):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(name.replace('-', '_'), ROOT / 'tools' / name)
+        mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+        return mod
+
+    def test_walkers_skip_hidden_dirs(self):
+        import tempfile
+        from unittest.mock import patch
+        token = '<script>fetch("/dentcast-brain.json?v=old")</script>'
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for rel in ('index.html', 'en/a.html',
+                        '.claude/worktrees/agent-x/index.html',
+                        '.claude/worktrees/agent-x/en/a.html'):
+                (root / rel).parent.mkdir(parents=True, exist_ok=True)
+                (root / rel).write_text(token, encoding='utf-8')
+            stamper = self.load('stamp-version.py')
+            with patch.object(stamper, 'ROOT', root):
+                changed = stamper.stamp_brain_fetches('new')
+            self.assertEqual(sorted(str(p) for p, _ in changed), ['en/a.html', 'index.html'])
+            self.assertIn('?v=old', (root / '.claude/worktrees/agent-x/index.html').read_text())
+            for name, fn in (('asset_version.py', 'html_pages'),
+                             ('noindex_en_mirrors.py', 'iter_en_pages'),
+                             ('faq_corpus_extract.py', 'iter_html_files'),
+                             ('strip_faq_schema.py', 'iter_html_files')):
+                mod = self.load(name)
+                with patch.object(mod, 'ROOT', root):
+                    found = [p[0] if isinstance(p, tuple) else p for p in getattr(mod, fn)()]
+                self.assertFalse([p for p in found if '.claude' in p.parts], name)
+                self.assertTrue(found, name)
+
+
 def pulse_home(urls):
     return ('<ul class="dc-pulse-list">'
             + ''.join(f'<li><a href="{u}">x</a></li>' for u in urls) + '</ul>')

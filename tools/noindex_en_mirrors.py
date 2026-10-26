@@ -29,7 +29,7 @@ ROBOTS_RE = re.compile(r'<meta\s+name="robots"\s+content="([^"]*)"\s*/?>')
 def iter_en_pages():
     for path in sorted(ROOT.rglob("*.html")):
         rel = path.relative_to(ROOT)
-        if any(part in EXCLUDE_DIRS for part in rel.parts):
+        if any(part in EXCLUDE_DIRS or part.startswith(".") for part in rel.parts):
             continue
         if "en" in rel.parts[:-1]:
             yield path, rel.as_posix()
