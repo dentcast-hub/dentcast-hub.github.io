@@ -218,6 +218,16 @@ def index_entries(root, raw=None):
     return result
 
 
+def remote_timeout():
+    """Seconds allowed for the one read-only ls-remote; hooks lower it to stay
+    well inside their own timeout (an unreachable origin then reads unknown)."""
+    try:
+        value = float(os.environ.get("DENTCAST_GIT_REMOTE_TIMEOUT", "15"))
+    except ValueError:
+        value = 15.0
+    return value if 0 < value <= 15 else 15.0
+
+
 def remote_observation(root, head, current_branch, check_remote):
     upstream = text_git(root, "rev-parse", "--abbrev-ref", "--symbolic-full-name",
                         "@{upstream}", optional=True)
@@ -233,7 +243,7 @@ def remote_observation(root, head, current_branch, check_remote):
     if not check_remote:
         return observation
     out = git(root, "ls-remote", "--exit-code", "--", "origin",
-              "refs/heads/" + current_branch, optional=True)
+              "refs/heads/" + current_branch, optional=True, timeout=remote_timeout())
     observation["observed_at"] = now()
     if out is None:
         observation["reason"] = "REMOTE_UNAVAILABLE_OR_BRANCH_MISSING"
@@ -358,6 +368,52 @@ def publication_category(publication):
     if category not in ("paper-only", "pending") and prefix in ("litecast", "glossary"):
         return prefix
     return category
+
+
+# Page paths, the English mirror and receipts derive from <section>/<slug>
+# (sections may nest, e.g. dentai/promptologist/<slug>).
+CONTENT_ID_RE = re.compile(r"[a-z0-9][a-z0-9_-]*(?:/[a-z0-9][a-z0-9_-]*)*/[A-Za-z0-9][A-Za-z0-9_.-]*")
+
+
+def require_content_id(publication):
+    """Fail at init/bind, not first at C.6 (SECOND_CUT_ENGLISH_ID_INVALID).
+
+    Paper-only keeps its own catalog id form; "unassigned" is bound later.
+    """
+    content_id = publication.get("content_id")
+    if content_id == "unassigned" or publication_category(publication) == "paper-only":
+        return
+    require(isinstance(content_id, str) and CONTENT_ID_RE.fullmatch(content_id) is not None
+            and not content_id.endswith(".html"),
+            "CONTENT_ID_INVALID: expected <section>/<slug> without .html (e.g. insight/insight-99); "
+            "the page, English mirror <section>/en/<slug>.html and receipts derive from it")
+
+
+TOOL_FILES = ("tools/dentcast_publish_handoff.py", "tools/dentcast_publish_lifecycle.py")
+
+
+def tool_staleness_warnings():
+    """Local refs only (no fetch): warn when this checkout's tool predates origin/main's.
+
+    A publication branch legitimately starts from origin/main; it is stale only
+    when origin/main's latest change to a tool file is not in HEAD and the file
+    here differs from origin/main's.
+    """
+    root = Path(__file__).resolve().parents[1]
+    ref = "refs/remotes/origin/main"
+    if text_git(root, "rev-parse", "--verify", "--quiet", ref + "^{commit}", optional=True) is None:
+        return []
+    for name in TOOL_FILES:
+        theirs = text_git(root, "rev-parse", "--verify", "--quiet", ref + ":" + name, optional=True)
+        ours = text_git(root, "hash-object", "--", name, optional=True)
+        if not theirs or not ours or theirs == ours:
+            continue
+        last = text_git(root, "log", "-1", "--format=%H", ref, "--", name, optional=True)
+        if last and git(root, "merge-base", "--is-ancestor", last, "HEAD", optional=True) is None:
+            return ["TOOL_OLDER_THAN_ORIGIN_MAIN: " + name + " differs from origin/main and HEAD lacks "
+                    "its latest change; branch from origin/main (git switch -c <branch> origin/main) "
+                    "before starting a publication"]
+    return []
 
 
 def validate_publication(p):
@@ -671,6 +727,24 @@ def hydrate_observation(root, state, sha):
     return state
 
 
+SHALLOW_ADVICE = ("SHALLOW_CLONE_DEEPEN_REQUIRED: this checkout lacks the history the checkpoint "
+                  "baseline needs; run git fetch --deepen=50 origin (or git fetch --unshallow) and retry")
+
+
+def shallow_boundary(root, revision=None):
+    """True in a shallow clone (and, given a revision, when it is a graft boundary)."""
+    if text_git(root, "rev-parse", "--is-shallow-repository", optional=True) != "true":
+        return False
+    if revision is None:
+        return True
+    path = Path(text_git(root, "rev-parse", "--git-path", "shallow"))
+    path = path if path.is_absolute() else root / path
+    try:
+        return revision in path.read_text(encoding="ascii").split()
+    except OSError:
+        return False
+
+
 def checkpoint_revision(root, sha):
     """Find the commit containing these exact handoff bytes, if available."""
     # Retain the checkpoint side branch on synthetic PR merge checkouts.
@@ -712,6 +786,9 @@ def snapshot_from_commit(root, publication, revision):
     origin = config(root, 'remote.origin.url')
     require(bool(origin), 'ORIGIN_REQUIRED')
     revision = text_git(root, 'rev-parse', revision + '^{commit}')
+    # A graft boundary has no parent to diff: --root would list the whole tree
+    # as this commit's change (UNREVIEWED_COMMITTED_PATHS for every file).
+    require(not shallow_boundary(root, revision), SHALLOW_ADVICE)
     cache = _baseline_reads.get()
     key = (str(root.resolve()), revision, tuple(sorted(publication['target_paths'])),
            tuple(WORKFLOW_PATHS))
@@ -789,6 +866,7 @@ def hydrate_v3(root, state, sha):
             require(digest(render(state).encode()) == sha, 'OBSERVATION_BASELINE_MISMATCH')
             return state
     revision = checkpoint_revision(root, sha)
+    require(revision is not None or not shallow_boundary(root), SHALLOW_ADVICE)
     require(revision is not None, 'HANDOFF_BASELINE_UNAVAILABLE')
     state['source_revision'] = revision
     state['snapshot'] = snapshot_from_commit(root, state['publication'], revision)
@@ -1331,10 +1409,12 @@ def inspect(root, check_remote=False):
             else:
                 portable, reason = "yes", "GIT_SNAPSHOT_AND_HANDOFF_ON_OBSERVED_REMOTE_BRANCH"
         status = "blocked" if issues else "awaiting_operator_review"
+        import dentcast_publish_lifecycle as lifecycle
+        pull = lifecycle.remote_delivery_ahead(root, state, current, sha)
         return {"status": status, "path": STATE_PATH, "sha256": sha, "issues": issues,
                 "next_step": next_step(p), "recorded_state": state, "current_snapshot": current,
                 "changed_paths": change_details(state, current),
-                "next_action": ("Review listed file/index/rule changes in this run; reconcile actual work and invalidate affected evidence. Do not repeat unchanged commands or discover branches." if issues else "Continue the next authorized canonical step"),
+                "next_action": pull or ("Review listed file/index/rule changes in this run; reconcile actual work and invalidate affected evidence. Do not repeat unchanged commands or discover branches." if issues else "Continue the next authorized canonical step"),
                 "git_snapshot_portable": portable, "portability_reason": reason,
                 "requires_operator_review": True, "publication_completed": False}
 
@@ -1426,6 +1506,9 @@ def main(argv=None):
             result = lifecycle.delivery_plan(root, args.base_ref, args.max_blob_bytes)
         elif args.command == "plan":
             result = {"status": "plan_template", "steps": lifecycle.plan(args.paper_only), "publication_completed": False}
+            warnings = tool_staleness_warnings()
+            if warnings:
+                result["warnings"] = warnings
         elif args.command == "inspect":
             if not safe_path(root, STATE_PATH).exists() and lifecycle.pending(root):
                 raise Blocked("CLEANUP_DELIVERY_PENDING:confirm-cleanup_or_restore-cleanup")
@@ -1468,6 +1551,7 @@ def main(argv=None):
             lifecycle.require_plan(publication)
             if args.command == "init":
                 require(all(s["status"] == "pending" for s in publication["steps"]), "INIT_REQUIRES_PENDING_PLAN")
+                require_content_id(publication)
                 if publication_category(publication) != "paper-only":
                     if not lifecycle.fixed_delivery(publication):
                         publication["context"]["decisions"].append({"kind": lifecycle.DELIVERY_POLICY})
@@ -1487,6 +1571,10 @@ def main(argv=None):
             result = save(root, publication, initial=args.command == "init",
                           expected=getattr(args, "expected_sha256", None),
                           note=getattr(args, "reconcile_note", None), check_remote=args.check_remote)
+            if args.command == "init":
+                warnings = tool_staleness_warnings()
+                if warnings:
+                    result["warnings"] = warnings
         print(json.dumps(result, ensure_ascii=True, indent=2))
         return 2 if result["status"] == "blocked" else 0
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError):

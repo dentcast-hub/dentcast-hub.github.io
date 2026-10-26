@@ -149,7 +149,10 @@ class CursorHookTests(SessionStartHookTests.__base__):
 
     def test_cursor_stop_adapter_returns_followup_and_never_loops(self):
         script = str(ROOT / 'scripts/publishing-stop-guard.py')
-        with tempfile.TemporaryDirectory() as folder:  # no tools/ => guard unavailable
+        with tempfile.TemporaryDirectory() as folder:  # active handoff, no tools/ => guard unavailable
+            subprocess.run(['git', 'init', '-q', folder], check=True)
+            (Path(folder) / '.dentcast').mkdir()
+            (Path(folder) / '.dentcast/PUBLISH-HANDOFF.md').write_text('fixture handoff\n')
             env = {**os.environ, 'CURSOR_PROJECT_DIR': folder}
             run = lambda stdin: subprocess.run(['python3', script, '--cursor'], input=stdin, env=env,
                                                capture_output=True, text=True)

@@ -6,7 +6,7 @@ import copy
 import io
 import json
 import subprocess
-from contextlib import redirect_stdout
+from contextlib import redirect_stderr, redirect_stdout
 import unittest
 from unittest.mock import patch
 
@@ -422,6 +422,13 @@ class ThreeDeliveriesTests(unittest.TestCase):
         (self.root/h.STATE_PATH).unlink()
         data = copy.deepcopy(self.p)
         path = self.base/'new-input.json'
+        # The English mirror path derives from <section>/<slug>: reject others at init.
+        path.write_text(json.dumps(data))
+        with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()) as err:
+            self.assertEqual(h.main(['--repo',str(self.root),'init','--input',str(path)]), 2)
+        self.assertIn('CONTENT_ID_INVALID', err.getvalue())
+        self.assertFalse((self.root/h.STATE_PATH).exists())
+        data['content_id'] = 'insight/note'
         path.write_text(json.dumps(data))
         with redirect_stdout(io.StringIO()):
             self.assertEqual(h.main(['--repo',str(self.root),'init','--input',str(path)]), 0)

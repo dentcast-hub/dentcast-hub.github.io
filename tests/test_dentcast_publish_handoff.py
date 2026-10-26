@@ -449,6 +449,7 @@ class HandoffTests(unittest.TestCase):
         inp = self.base / "operator-input.json"
         import dentcast_publish_lifecycle as lifecycle
         self.p["steps"] = lifecycle.plan()
+        self.p["content_id"] = "insight/insight-fixture"
         inp.write_text(json.dumps(self.p))
         with redirect_stdout(io.StringIO()):
             self.assertEqual(h.main(["--repo", str(self.root), "init", "--input", str(inp)]), 0)
