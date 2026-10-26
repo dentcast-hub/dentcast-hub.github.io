@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {mkdtempSync,mkdirSync,writeFileSync,readFileSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {sideOf,advisory} from '../scripts/cursor-parity-notice.mjs';
+import {sideOf,advisory,cursorRoot} from '../scripts/cursor-parity-notice.mjs';
 
 test('nested modules and global rules are active canonical sources',()=>{
   for(const p of ['.dentcast/workflows/modules/08-des-fidelity.md','.dentcast/workflows/global/site-invariants.md']) {
@@ -36,4 +36,9 @@ test('active publication gets an advisory reminder without state mutation',()=>{
     assert.match(advisory({file_path:'insight/new.html'},dir).hookSpecificOutput.additionalContext,/هندآف ثابت/);
     assert.equal(readFileSync(path,'utf8'),'untouched');
   } finally {rmSync(dir,{recursive:true,force:true});}
+});
+test('Cursor adapter resolves the project from env or workspace_roots',()=>{
+  assert.equal(cursorRoot({workspace_roots:['/w']},{CURSOR_PROJECT_DIR:'/p'}),'/p');
+  assert.equal(cursorRoot({workspace_roots:['/w']},{}),'/w');
+  assert.equal(cursorRoot({},{}),process.cwd());
 });

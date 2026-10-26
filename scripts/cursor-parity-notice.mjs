@@ -28,15 +28,28 @@ export function advisory(payload, root) {
   }};
 }
 
+// Cursor `afterFileEdit` ({file_path, edits, workspace_roots}) accepts no
+// output fields, so `--cursor` writes the same advice to stderr (Cursor's
+// Hooks output channel) and keeps stdout empty; the always-on Cursor rules
+// and the Stop guard remain the enforcing layers.
+export function cursorRoot(payload, env = process.env) {
+  const roots = payload?.workspace_roots;
+  return env.CURSOR_PROJECT_DIR || (Array.isArray(roots) && typeof roots[0] === 'string' ? roots[0] : process.cwd());
+}
+
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const cursor = process.argv.includes('--cursor');
   let raw = '';
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', d => { raw += d; });
   process.stdin.on('end', () => {
     let payload;
     try { payload = JSON.parse(raw || '{}'); } catch { return; }
-    const root = process.env.CLAUDE_PROJECT_DIR || process.env.CODEX_PROJECT_DIR || process.cwd();
+    const root = cursor ? cursorRoot(payload)
+      : process.env.CLAUDE_PROJECT_DIR || process.env.CODEX_PROJECT_DIR || process.cwd();
     const message = advisory(payload, root);
-    if (message) process.stdout.write(JSON.stringify(message));
+    if (!message) return;
+    if (cursor) process.stderr.write(message.hookSpecificOutput.additionalContext + '\n');
+    else process.stdout.write(JSON.stringify(message));
   });
 }

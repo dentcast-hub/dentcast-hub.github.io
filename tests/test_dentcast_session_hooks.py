@@ -108,6 +108,40 @@ class CursorHookTests(SessionStartHookTests.__base__):
             result = self.run_hook(command, folder, None, '{}')
             self.assertEqual((result.returncode, json.loads(result.stdout)), (0, {'permission': 'allow'}))
 
+    def test_cursor_has_the_same_guards_as_claude(self):
+        # Claude's Stop guard and PostToolUse parity notice, in Cursor's events.
+        (stop,) = cursor_hooks('stop')
+        (edit,) = cursor_hooks('afterFileEdit')
+        self.assertIn('scripts/publishing-stop-guard.py" --cursor', stop)
+        self.assertIn('scripts/cursor-parity-notice.mjs" --cursor', edit)
+
+    def test_cursor_stop_hook_is_silent_without_a_publication(self):
+        (command,) = cursor_hooks('stop')
+        result = self.run_hook(command, str(ROOT), 'CURSOR_PROJECT_DIR',
+                               '{"status": "completed", "loop_count": 0}')
+        self.assertEqual((result.returncode, result.stdout), (0, ''))
+
+    def test_cursor_stop_adapter_returns_followup_and_never_loops(self):
+        script = str(ROOT / 'scripts/publishing-stop-guard.py')
+        with tempfile.TemporaryDirectory() as folder:  # no tools/ => guard unavailable
+            env = {**os.environ, 'CURSOR_PROJECT_DIR': folder}
+            run = lambda stdin: subprocess.run(['python3', script, '--cursor'], input=stdin, env=env,
+                                               capture_output=True, text=True)
+            out = json.loads(run('{"status": "completed", "loop_count": 0}').stdout)
+            self.assertEqual(list(out), ['followup_message'])
+            self.assertIn('GUARD_UNAVAILABLE', out['followup_message'])
+            self.assertEqual(run('{"status": "completed", "loop_count": 3}').stdout, '')
+            self.assertEqual(run('not json').stdout, '')
+
+    def test_cursor_edit_hook_advises_on_stderr_only(self):
+        (command,) = cursor_hooks('afterFileEdit')
+        result = self.run_hook(command, str(ROOT), 'CURSOR_PROJECT_DIR',
+                               json.dumps({'file_path': str(ROOT / 'CLAUDE.md'), 'edits': []}))
+        self.assertEqual((result.returncode, result.stdout), (0, ''))
+        self.assertIn('هماهنگ کن', result.stderr)
+        quiet = self.run_hook(command, str(ROOT), 'CURSOR_PROJECT_DIR', '{"file_path": "unrelated.py"}')
+        self.assertEqual((quiet.returncode, quiet.stdout, quiet.stderr), (0, '', ''))
+
 
 if __name__ == '__main__':
     unittest.main()
