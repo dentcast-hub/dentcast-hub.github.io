@@ -82,6 +82,18 @@ class StampCatalogueTests(unittest.TestCase):
                              'c="my-dentcast.json?v=3"')
 
 
+class CatalogueFetchTests(unittest.TestCase):
+    def test_plus_modules_revalidate_the_episode_catalogue(self):
+        import re
+        for rel in ('plus/js/audio-hub.js', 'plus/js/clip-audio.js'):
+            src = (ROOT / rel).read_text(encoding='utf-8')
+            fetches = re.findall(r"fetch\('/dentcast\.json[^']*',\s*\{[^}]*\}\)", src)
+            self.assertTrue(fetches, rel)
+            for f in fetches:   # a frozen ?v= + force-cache hid new episodes forever
+                self.assertNotIn('force-cache', f, rel)
+                self.assertNotIn('?v=', f, rel)
+
+
 class HiddenDirWalkTests(unittest.TestCase):
     """Builders never walk into hidden dirs: .claude/worktrees/agent-* holds
     full site copies that must not be stamped or scanned."""

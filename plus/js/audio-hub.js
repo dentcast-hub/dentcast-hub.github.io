@@ -103,8 +103,9 @@ function episodeOfPath(path) {
 function catalog() {
   if (!catalogP) {
     // Same URL and cache mode as clip-audio's episodeCatalog(), so the two
-    // share one HTTP-cache entry instead of fetching 500 KB twice.
-    catalogP = fetch('/dentcast.json?v=3', { cache: 'force-cache' })
+    // share one HTTP-cache entry instead of fetching 500 KB twice. 'no-cache'
+    // revalidates (a cheap 304 via ETag), so new episodes are never hidden.
+    catalogP = fetch('/dentcast.json', { cache: 'no-cache' })
       .then((r) => (r.ok ? r.json() : []))
       .then((j) => (Array.isArray(j) ? j : []))
       .catch(() => []);

@@ -58,10 +58,12 @@ export function parseClock(text) {
 // audio_url and duration. The دفترچه needs the same two facts to play a clip
 // without opening the episode, and this is the only place they live outside
 // the episode pages themselves. Fetched once, on first need, never at boot.
+// 'no-cache' revalidates against the server (a cheap 304 via ETag) so a new
+// episode is seen on the next visit; a fixed ?v= with 'force-cache' never was.
 let catalog = null;
 export async function episodeCatalog() {
   if (!catalog) {
-    catalog = fetch('/dentcast.json?v=3', { cache: 'force-cache' })
+    catalog = fetch('/dentcast.json', { cache: 'no-cache' })
       .then((r) => (r.ok ? r.json() : []))
       .then((rows) => {
         const map = new Map();
