@@ -65,5 +65,22 @@ class LiteCastIsolationTests(unittest.TestCase):
                                         f'<a href="{href}">x</a>').failures, href)
 
 
+class StampCatalogueTests(unittest.TestCase):
+    def test_stamper_rewrites_catalogue_token(self):
+        import importlib.util, tempfile
+        from unittest.mock import patch
+        spec = importlib.util.spec_from_file_location('stamper', ROOT / 'tools/stamp-version.py')
+        mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+        with tempfile.TemporaryDirectory() as tmp:
+            page = Path(tmp) / 'player.html'
+            page.write_text('a="dentcast.json?v=3"; b="/dentcast-brain.json?v=old"; '
+                            'c="my-dentcast.json?v=3"', encoding='utf-8')
+            with patch.object(mod, 'ROOT', Path(tmp)):
+                mod.stamp_brain_fetches('abc123')
+            self.assertEqual(page.read_text(encoding='utf-8'),
+                             'a="dentcast.json?v=abc123"; b="/dentcast-brain.json?v=abc123"; '
+                             'c="my-dentcast.json?v=3"')
+
+
 if __name__ == '__main__':
     unittest.main()
