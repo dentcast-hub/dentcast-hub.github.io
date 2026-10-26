@@ -414,7 +414,9 @@ def run_phase(root: Path, artifact_dir: Path, args):
                 page = root / (pub["content_id"] + ".html")
                 if not page.is_file():
                     raise RunnerError("PUBLISH_PAGE_MISSING_FOR_PHASE_E")
-                html = page.read_text(encoding="utf-8")
+                # Bytes, not read_text: universal newlines would rewrite a
+                # CRLF page (most cloned templates) to LF and revoke approval.
+                html = page.read_bytes().decode("utf-8")
                 marker = '<meta name="dc-notify" content="true">'
                 if html.count(marker) > 1:
                     raise RunnerError("DUPLICATE_DC_NOTIFY_MARKER")
