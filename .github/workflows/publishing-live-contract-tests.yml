@@ -47,6 +47,11 @@ on:
       - '.github/scripts/*.py'
       - 'tools/check_publish_merge_gate.py'
       - 'tests/test_publish_merge_gate.py'
+      - 'plus/exam-questions.json'
+      - 'tools/validate_exam_questions.py'
+      - 'tools/faq_corpus_extract.py'
+      - 'tools/strip_faq_schema.py'
+      - 'tests/test_exam_bank_guard.py'
   pull_request:
   workflow_dispatch:
 permissions:
@@ -86,6 +91,24 @@ jobs:
         run: python3 -m unittest discover -s tests -p test_verify_publish_checks.py -v
       - name: Check hook adapters and shared rule routing
         run: node --test tests/publishing-hooks.test.mjs
+      - name: Check prior data guards (exam bank append-only, bank files kept)
+        run: python3 -m unittest discover -s tests -p test_exam_bank_guard.py -v
+      - name: Existing exam questions are never removed or edited
+        env:
+          PR_BASE_REF: ${{ github.base_ref }}
+          EVENT_BEFORE: ${{ github.event.before }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          baseline=()
+          if [[ "$EVENT_NAME" == "pull_request" ]]; then
+            git fetch --no-tags origin "refs/heads/$PR_BASE_REF:refs/remotes/origin/$PR_BASE_REF"
+            baseline=(--baseline "origin/$PR_BASE_REF")
+          elif [[ "$EVENT_NAME" == "push" && -n "$EVENT_BEFORE" && ! "$EVENT_BEFORE" =~ ^0+$ ]] \
+               && git cat-file -e "$EVENT_BEFORE^{commit}" 2>/dev/null; then
+            baseline=(--baseline "$EVENT_BEFORE")
+          fi
+          python3 tools/validate_exam_questions.py "${baseline[@]}"
       - name: Inspect committed checkpoint or cleanup boundary
         env:
           PR_BASE_REF: ${{ github.base_ref }}
