@@ -498,7 +498,15 @@ def validate_final_receipt(root, data, commit=None, own_paths=None):
     h.require(bool(receipts) and receipts[-1].get("exit_code") == 0, "MECHANICAL_GATE_RECEIPT_REQUIRED")
     last = receipts[-1]
     result = gate(root, publication, last.get("expected_title"), last.get("expected_caption"))
-    h.require(result["exit_code"] == 0, "FINAL_DELIVERY_VERIFICATION_FAILED")
+    if result["exit_code"] != 0:
+        # Name the verifier's own failing rows and fixes, e.g. a checkout
+        # without origin/main (a single-branch shallow clone) cannot rebuild
+        # the Pulse/append-only baselines: "git fetch origin main".
+        lines = result.get("output", "").splitlines()
+        rows = [" ".join(l.split()) for i, l in enumerate(lines) if l.startswith("FAIL")
+                or (l.strip().startswith("↳ fix:") and i and lines[i-1].startswith("FAIL"))]
+        raise h.Blocked("FINAL_DELIVERY_VERIFICATION_FAILED" + (": " + " | ".join(rows[:6]) if rows else
+                                                                ": " + result["summary"]))
     return publication["content_id"]
 
 
@@ -559,10 +567,15 @@ def guard_step_transition(state, publication, root=None):
         # of the already committed cut handoff. An audited invalidation (the
         # documented post-cut recovery) remains allowed.
         delivered = h.git(root, "show", "HEAD:" + h.STATE_PATH, optional=True)
+        cut = delivery_boundary(state["publication"])
         h.require(delivered is None or h.digest(delivered) != h.digest(h.render(state).encode()),
                   "RECORD_AFTER_DELIVERED_CUT_START_NEXT_STEP_FIRST: this handoff is the committed fixed "
-                  "delivery " + str(delivery_boundary(state["publication"])) + "; first start the next step "
-                  "(step --status started or advance --start-next), then record this change")
+                  "delivery " + str(cut) + "; " + (
+                      "after Push 2 the post-cut2 GitHub Actions run continues from this exact commit and "
+                      "the frozen handoff is not recorded locally; correct it only through the documented "
+                      "invalidate recovery" if cut == 2 and editorial_cut_v2(state["publication"]) else
+                      "first start the next step (step --status started or advance --start-next), "
+                      "then record this change"))
     for row in entered:
         h.require(not any(a['status'] in ('started', 'outcome_unknown') for a in publication['external_actions']),
                   'EXTERNAL_OUTCOME_UNKNOWN_DO_NOT_RETRY')

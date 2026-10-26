@@ -137,6 +137,7 @@ class SessionStartHookTests(unittest.TestCase):
                 self.assertNotIn('confirm-cleanup', guard.advice(code))
         self.assertIn('git restore .dentcast/PUBLISH-HANDOFF.md', guard.advice('PREVIOUS_STEP_HANDOFF_NOT_DELIVERED'))
         self.assertIn('stage-delivery', guard.advice('PREVIOUS_STEP_PUSH_NOT_CONFIRMED'))
+        self.assertIn('stage-delivery', guard.advice('PREVIOUS_STEP_WORK_NOT_COMMITTED'))
         self.assertEqual(guard.advice('SHALLOW_CLONE_DEEPEN_REQUIRED: run git fetch --deepen=50 origin'), '')
         self.assertIn('restore-cleanup', guard.advice('CLEANUP_DELIVERY_PENDING'))
 

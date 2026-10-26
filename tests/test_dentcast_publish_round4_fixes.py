@@ -1,12 +1,14 @@
 """Round 4 regressions: record after a pushed cut, paper-only mid-run Stop."""
 import copy
 import unittest
+from unittest.mock import patch
 
 import test_dentcast_publish_handoff as fixtures
 import test_dentcast_publish_lifecycle as lifecycle_fixtures
 import test_dentcast_publish_three_deliveries as three
 import dentcast_publish_handoff as h
 import dentcast_publish_lifecycle as lc
+import test_dentcast_publish_round2_fixes as round2
 
 run = fixtures.run
 
@@ -64,6 +66,29 @@ class Round4Tests(unittest.TestCase):
         run(self.root, 'commit', '-m', 'paper-only final handoff')
         run(self.root, 'push', 'origin', 'main')
         self.assertEqual(lc.guard(self.root, 'stop')['status'], 'guard_passed')
+
+
+class ConfirmAfterPullTests(unittest.TestCase):
+    setUp = fixtures.HandoffTests.setUp
+    assert_blocked = fixtures.HandoffTests.assert_blocked
+    prepare = lifecycle_fixtures.LifecycleTests.prepare
+    start = three.ThreeDeliveriesTests.start
+    walk = three.ThreeDeliveriesTests.walk
+    deliver = three.ThreeDeliveriesTests.deliver
+    complete_two = three.ThreeDeliveriesTests.complete_two
+    clone = round2.Round2Tests.clone
+    actions_delivers_third = round2.Round2Tests.actions_delivers_third
+
+    def test_confirm_cleanup_names_the_failing_verifier_rows(self):
+        self.actions_delivers_third()
+        run(self.root, 'pull', '-q', '--ff-only')
+        failed = {'exit_code': 1, 'summary': '0 passed, 0 warned, 1 failed',
+                  'output': ('FAIL  6 pulse   cannot verify previous Pulse: local origin/main:index.html unavailable\n'
+                             '                ↳ fix: git fetch origin +refs/heads/main:refs/remotes/origin/main\n')}
+        with patch.object(lc, 'gate', return_value=failed):
+            self.assert_blocked(r'FINAL_DELIVERY_VERIFICATION_FAILED: FAIL 6 pulse .*refs/remotes/origin/main',
+                                lc.confirm_cleanup, self.root)
+        self.assertTrue(lc.confirm_cleanup(self.root)['publication_completed'])
 
 
 if __name__ == '__main__':
