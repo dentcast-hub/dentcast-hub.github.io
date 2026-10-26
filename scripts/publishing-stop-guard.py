@@ -97,7 +97,7 @@ def require_finish_after_final_handoff(h, lifecycle, root):
 
 
 def advice(code):
-    if "git pull --ff-only" in code or "git fetch --deepen" in code:
+    if "git pull --ff-only" in code or "git fetch --deepen" in code or "git switch --track" in code:
         return ""  # the code already names the exact command
     for prefix, text in ADVICE:
         if code.startswith(prefix):
