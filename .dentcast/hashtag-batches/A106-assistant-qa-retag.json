@@ -1,0 +1,147 @@
+{
+  "note": "Second half of A105 (founder request 1405/08/05, case-assistant QA). #ونیر_سرامیکی (which now also holds the retired #ونیر) merged into #لمینیت_سرامیکی — the latter's definition already names both («ونیر/لمینیتِ سرامیکی»); «ونیر سرامیکی» and its aliases move onto the survivor. #جایگزینی_دندان added to the pages that answer the replacement question (anterior RBFDP, the two veneer-retainer bridges, anterior implant position, free-end implant vs partial). #ایمپلنت_قدامی removed from the two AI-mockup pages. #اسپلینت (occlusal appliance, by its definition) removed from pages about splinted teeth or implants, which now carry #اسپلینت_پروتزی / #اسپلینت_ایمپلنت; the Snap-On Smile page (a removable periodontal splint) loses it without a substitute.",
+  "concepts": [
+    {
+      "tag": "#لمینیت_سرامیکی",
+      "aliases": [
+        "ceramic laminate",
+        "لامینیت",
+        "لمینت",
+        "لامینیت سرامیکی",
+        "veneer laminate",
+        "Laminate Veneer",
+        "laminate veneer",
+        "ونیر سرامیکی",
+        "ceramic veneer",
+        "ونیر سرامیک",
+        "ونیر پرسلن",
+        "veneer",
+        "ونیر دندان",
+        "روکش ونیر"
+      ]
+    }
+  ],
+  "renames": {
+    "#ونیر_سرامیکی": "#لمینیت_سرامیکی"
+  },
+  "articles": {
+    "dentai/dentai-7": [
+      "#DentAI",
+      "#پروتز_ثابت",
+      "#RBFDP",
+      "#کانتی_لیور",
+      "#طراحی_فریم_ورک",
+      "#متاآنالیز",
+      "#دندان_قدامی",
+      "#جایگزینی_دندان"
+    ],
+    "sharehub/share-39": [
+      "#Share_Hub",
+      "#Curated_Content",
+      "#RBFDP",
+      "#اکلوزال_ونیر",
+      "#آنله_بریج",
+      "#زیرکونیا",
+      "#جایگزینی_دندان"
+    ],
+    "sharehub/share-40": [
+      "#Share_Hub",
+      "#RBFDP",
+      "#بریج",
+      "#لمینیت_سرامیکی",
+      "#لیتیوم_دی_سیلیکات",
+      "#جایگزینی_دندان"
+    ],
+    "sharehub/share-3": [
+      "#Share_Hub",
+      "#Curated_Content",
+      "#ستایش",
+      "#ایمپلنت_قدامی",
+      "#فاصله_ایمپلنت",
+      "#پاپیلا",
+      "#پونتیک",
+      "#کانتی_لیور",
+      "#طراحی_پروتز",
+      "#Prosthetic_Design",
+      "#زیبایی_ایمپلنت",
+      "#Implant_Esthetics",
+      "#پوزیشن_ایمپلنت",
+      "#جایگزینی_دندان"
+    ],
+    "episodes/episode-126-1": [
+      "#دنتکست",
+      "#فری_اند",
+      "#پروتز_پارسیل",
+      "#ایمپلنت",
+      "#اینسایت",
+      "#جایگزینی_دندان"
+    ],
+    "insight/insight-89": [
+      "#اینسایت",
+      "#ماکاپ_تصویری",
+      "#هوش_مصنوعی",
+      "#کشیدن_دندان",
+      "#دیاستم",
+      "#طرح_درمان",
+      "#تصمیم_درمانی"
+    ],
+    "sharehub/share-25": [
+      "#Share_Hub",
+      "#Curated_Content",
+      "#ماکاپ_تصویری",
+      "#هوش_مصنوعی",
+      "#پرامپت_نویسی"
+    ],
+    "insight/insight-14": [
+      "#اینسایت",
+      "#طرح_درمان",
+      "#روکش_اسپلینت",
+      "#هپلس",
+      "#پروگنوز_دندان",
+      "#برداشت_ترمیم",
+      "#پریودنتال",
+      "#اسپلینت_پروتزی",
+      "#تصمیم_درمانی"
+    ],
+    "metanotes/meta-18": [
+      "#متانوت",
+      "#اسپلینت_پروتزی",
+      "#بیومکانیک",
+      "#سختی_تکیه_گاه",
+      "#کانتی_لیور",
+      "#نسبت_تاج_به_ریشه",
+      "#توزیع_نیرو",
+      "#PDL"
+    ],
+    "insight/insight-16": [
+      "#اینسایت",
+      "#ایمپلنت",
+      "#پری_ایمپلنتیتیس",
+      "#بهداشت_پذیری",
+      "#اسپلینت_ایمپلنت",
+      "#امبراژور",
+      "#سوپرفلاس",
+      "#تست_سوند",
+      "#کانتور_ترمیم",
+      "#تحویل_پروتز"
+    ],
+    "insight/insight-26": [
+      "#اینسایت",
+      "#ایمپلنت",
+      "#اسکن_بادی",
+      "#لایبرری_دیجیتال",
+      "#خطای_لابراتوار",
+      "#فیت_پروتز",
+      "#قالب‌گیری_دیجیتال",
+      "#پروتز_ایمپلنت",
+      "#اسپلینت_ایمپلنت"
+    ],
+    "notecast/episode-33": [
+      "#نوت_کست",
+      "#Snap_On_Smile",
+      "#پروتز_متحرک",
+      "#زیبایی",
+      "#درمان_غیرتهاجمی"
+    ]
+  }
+}

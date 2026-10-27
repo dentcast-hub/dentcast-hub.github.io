@@ -8,12 +8,6 @@
   "adjacent tooth": [
    "adjacent-teeth"
   ],
-  "ai literacy": [
-   "artificial-intelligence"
-  ],
-  "anterior implant": [
-   "esthetic-zone"
-  ],
   "augmented intelligence": [
    "physician-ai-collaboration"
   ],
@@ -29,14 +23,6 @@
   "bopt": [
    "bopt",
    "biologically-oriented-preparation-technique"
-  ],
-  "bruxism": [
-   "bruxism",
-   "sleep-bruxism",
-   "awake-bruxism"
-  ],
-  "butt joint": [
-   "butt-joint"
   ],
   "cad cam": [
    "cad-cam",
@@ -99,19 +85,9 @@
   "ids": [
    "immediate-dentin-sealing"
   ],
-  "immediate implant": [
-   "immediate-implant"
-  ],
-  "implant complications": [
-   "implant-complications"
-  ],
   "implant esthetics": [
    "esthetic-outcome",
    "pink-esthetic-score"
-  ],
-  "implant failure": [
-   "implant-failure",
-   "early-implant-failure"
   ],
   "implant planning": [
    "guided-surgery",
@@ -129,15 +105,9 @@
   "jumping gap": [
    "jumping-gap"
   ],
-  "laminate veneer": [
-   "porcelain-laminate-veneer"
-  ],
   "limiting taper": [
    "total-occlusal-convergence",
    "convergence-angle"
-  ],
-  "llm": [
-   "large-language-models"
   ],
   "ltd": [
    "low-temperature-degradation"
@@ -188,12 +158,6 @@
    "resin-bonded-bridge",
    "maryland-bridge"
   ],
-  "residual cement": [
-   "residual-cement"
-  ],
-  "resistance form": [
-   "resistance-form"
-  ],
   "retention form": [
    "resistance-form"
   ],
@@ -203,15 +167,8 @@
   "saliva": [
    "saliva"
   ],
-  "sda": [
-   "shortened-dental-arch"
-  ],
   "smart vent crown": [
    "residual-cement"
-  ],
-  "smoking": [
-   "smoking",
-   "tobacco-smoke"
   ],
   "soft tissue management": [
    "soft-tissue-management"
@@ -260,9 +217,6 @@
    "vertical-dimension"
   ],
   "vdo": [
-   "vertical-dimension"
-  ],
-  "vertical dimension": [
    "vertical-dimension"
   ],
   "zero bone loss": [
@@ -561,7 +515,8 @@
   "براکسیسم": [
    "bruxism",
    "sleep-bruxism",
-   "awake-bruxism"
+   "awake-bruxism",
+   "clenching"
   ],
   "برداشت ترمیم": [
    "restoration-removal"
@@ -722,10 +677,6 @@
    "marginal-fit",
    "marginal-adaptation"
   ],
-  "تطابق مارژینال": [
-   "marginal-fit",
-   "marginal-adaptation"
-  ],
   "تغییر رنگ": [
    "masking-ability",
    "translucency",
@@ -733,9 +684,6 @@
   ],
   "تفکر بالینی": [
    "decision-making"
-  ],
-  "تماس باز": [
-   "interproximal-contact-loss"
   ],
   "تماس زودرس": [
    "occlusal-interference"
@@ -784,6 +732,10 @@
   ],
   "جایگزین آمالگام": [
    "dental-amalgam"
+  ],
+  "جایگزینی دندان": [
+   "missing-teeth",
+   "single-tooth-replacement"
   ],
   "جراحی ایمپلنت": [
    "surgical-protocol"
@@ -855,12 +807,6 @@
   ],
   "دندان قدامی": [
    "anterior-region"
-  ],
-  "دندان قروچه": [
-   "bruxism",
-   "sleep-bruxism",
-   "awake-bruxism",
-   "clenching"
   ],
   "دندان مصنوعی": [
    "complete-denture",
@@ -1189,10 +1135,6 @@
   "فضای رستوریتیو": [
    "restorative-space"
   ],
-  "فقدان دندان": [
-   "missing-teeth",
-   "single-tooth-replacement"
-  ],
   "فقدان مولر": [
    "shortened-dental-arch"
   ],
@@ -1412,12 +1354,6 @@
   ],
   "ولیو": [
    "shade-matching"
-  ],
-  "ونیر": [
-   "veneer"
-  ],
-  "ونیر سرامیکی": [
-   "porcelain-laminate-veneer"
   ],
   "پارافانکشن": [
    "parafunction",

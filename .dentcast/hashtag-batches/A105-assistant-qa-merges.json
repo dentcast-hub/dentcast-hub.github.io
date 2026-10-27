@@ -1,0 +1,348 @@
+{
+  "note": "Founder request 1405/08/05 (2026-10-27) after the case-assistant QA (three simulated-user agents, ~50 cases through the real pipeline): «همه رو اصلاح کن». 1) Persian/English twins and spelling duplicates merged (#ونیر into #ونیر_سرامیکی here; that one into #لمینیت_سرامیکی in A106, since a rename is one hop) into one concept each; every retired form and all its aliases move onto the survivor, so no door closes (the twins existed only as separate lexical doors). 2) #فقدان_دندان merged into #جایگزینی_دندان (same definition: a missing tooth and the replacement question, sometimes answered «no»); #جایگزینی_دندان added to the RBFDP/bridge/anterior-implant/free-end decision pages that answer that question. #فضای_بی_دندان kept: its one page is about visual perception, not replacement. 3) #اسپلینت kept for occlusal splints only (its definition); splinted teeth/implants pages moved to #اسپلینت_پروتزی / #اسپلینت_ایمپلنت. 4) #ایمپلنت_قدامی removed from the two AI-mockup pages (insight-89, share-25), which are not about anterior implants. 5) Colloquial spellings added; «دست دندان» moved from #دندان_مصنوعی (denture teeth) to #پروتز_متحرک (a denture). Kept apart on purpose: #VD/#VDO (bare-acronym aliases would rewrite #افزایش_VD/#کاهش_VDO into an alias cycle), #اندو (a bare «اندو» alias would rewrite #تست_اندو, a pulp-vitality test), and by definition retention vs resistance form, #روکش vs #روکش_دندان, #بارگذاری_ایمپلنت vs #زمان_لود_ایمپلنت, #مدل_زبانی_بزرگ (diagnostic LLM) vs #مدل_زبانی.",
+  "concepts": [
+    {
+      "tag": "#جایگزینی_دندان",
+      "aliases": [
+        "tooth replacement",
+        "جایگزین کردن دندان",
+        "ریپلیس دندان",
+        "از دست رفتن دندان",
+        "بی دندانی موضعی"
+      ]
+    },
+    {
+      "tag": "#براکسیسم",
+      "aliases": [
+        "بروکسیسم",
+        "براکسیزم",
+        "بروکسیزم",
+        "bruxism",
+        "دندان قروچه",
+        "clenching",
+        "grinding",
+        "کلینچینگ",
+        "ساییدن دندان"
+      ]
+    },
+    {
+      "tag": "#لمینیت_سرامیکی",
+      "aliases": [
+        "ceramic laminate",
+        "لامینیت",
+        "لمینت",
+        "لامینیت سرامیکی",
+        "veneer laminate",
+        "Laminate Veneer",
+        "laminate veneer"
+      ]
+    },
+    {
+      "tag": "#شکست_ایمپلنت",
+      "aliases": [
+        "از دست رفتن ایمپلنت",
+        "فیلور ایمپلنت",
+        "ناموفق بودن ایمپلنت",
+        "Implant Failure"
+      ]
+    },
+    {
+      "tag": "#عوارض_ایمپلنت",
+      "aliases": [
+        "کامپلیکیشن ایمپلنت",
+        "مشکلات ایمپلنت",
+        "عارضه ایمپلنت",
+        "Implant Complications"
+      ]
+    },
+    {
+      "tag": "#ایمپلنت_قدامی",
+      "aliases": [
+        "ایمپلنت ناحیه قدام",
+        "ایمپلنت جلو",
+        "ایمپلنت زون زیبایی",
+        "Anterior Implant"
+      ]
+    },
+    {
+      "tag": "#سمان_باقیمانده",
+      "aliases": [
+        "سمان اضافه",
+        "باقیمانده سمان",
+        "سمان زیر لثه",
+        "excess cement",
+        "Residual Cement"
+      ]
+    },
+    {
+      "tag": "#توهم_هوش_مصنوعی",
+      "aliases": [
+        "هذیان هوش مصنوعی",
+        "توهم مدل",
+        "خیال پردازی مدل",
+        "Hallucination"
+      ]
+    },
+    {
+      "tag": "#ایمپلنت_فوری",
+      "aliases": [
+        "ایمپلنت ایمدیت",
+        "کاشت فوری",
+        "immediate placement",
+        "Immediate Implant",
+        "کاشت فوری دندان"
+      ]
+    },
+    {
+      "tag": "#قوس_دندانی_کوتاه_شده",
+      "aliases": [
+        "قوس کوتاه شده",
+        "کوتاه شدن قوس",
+        "SDA",
+        "shortened dental arch",
+        "اس دی ای",
+        "قوس کوتاه"
+      ]
+    },
+    {
+      "tag": "#سواد_هوش_مصنوعی",
+      "aliases": [
+        "یادگیری ماشین",
+        "machine learning",
+        "deep learning",
+        "یادگیری عمیق",
+        "یادگیری ai",
+        "ai research",
+        "مسیر یادگیری هوش مصنوعی",
+        "AI Literacy"
+      ]
+    },
+    {
+      "tag": "#مدل_زبانی",
+      "aliases": [
+        "language model",
+        "لنگویج مدل",
+        "LLM",
+        "ال ال ام"
+      ]
+    },
+    {
+      "tag": "#دخانیات",
+      "aliases": [
+        "سیگار",
+        "سیگاری",
+        "تنباکو",
+        "Smoking"
+      ]
+    },
+    {
+      "tag": "#تطابق_مارجینال",
+      "aliases": [
+        "marginal fit",
+        "marginal gap",
+        "marginal discrepancy",
+        "گپ مارجینال",
+        "دقت لبه ای",
+        "تطابق لبه ای",
+        "انطباق لبه"
+      ]
+    },
+    {
+      "tag": "#لبه_اینسایزال",
+      "aliases": [
+        "incisal edge preparation",
+        "لبه برنده لمینت",
+        "تراش لبه انسیزال",
+        "incisal edge",
+        "لبه برنده",
+        "incisal edge position",
+        "موقعیت لبه انسیزال"
+      ]
+    },
+    {
+      "tag": "#کانتکت_باز",
+      "aliases": [
+        "open contact",
+        "proximal contact",
+        "تماس باز پروگزیمال",
+        "باز بودن تماس"
+      ],
+      "definition": "نبودِ تماس پروگزیمالِ مؤثر بین دو دندان مجاور؛ معمولاً با گیر کردن غذا و درد موضعی بروز می‌کند.",
+      "use_when": "مقاله کانتکت باز را تشخیص بدهد، علتش را بررسی کند، یا راه اصلاحش را بگوید."
+    },
+    {
+      "tag": "#هرز_شدن_پیچ",
+      "aliases": [
+        "هرز شدن",
+        "stripped screw",
+        "هرز شدن گل پیچ",
+        "لق زدن آچار",
+        "گل پیچ خراب"
+      ]
+    },
+    {
+      "tag": "#بات_جوینت",
+      "aliases": [
+        "اتصال سربه سر",
+        "لبه بات",
+        "Butt Joint"
+      ]
+    },
+    {
+      "tag": "#ضد_چرخش",
+      "aliases": [
+        "آنتی روتیشن",
+        "ضد چرخش اباتمنت",
+        "anti rotation"
+      ]
+    },
+    {
+      "tag": "#فرم_رزیستنس",
+      "aliases": [
+        "مقاومت تراش",
+        "فرم مقاومت",
+        "Resistance Form"
+      ]
+    },
+    {
+      "tag": "#ونیر_سرامیکی",
+      "aliases": [
+        "ceramic veneer",
+        "ونیر سرامیک",
+        "ونیر پرسلن",
+        "veneer",
+        "ونیر دندان",
+        "روکش ونیر"
+      ]
+    },
+    {
+      "tag": "#بعد_عمودی",
+      "aliases": [
+        "ارتفاع عمودی",
+        "دایمنشن عمودی",
+        "بعد عمودی صورت",
+        "Vertical Dimension"
+      ]
+    },
+    {
+      "tag": "#روکش_استیل",
+      "aliases": [
+        "stainless steel crown",
+        "استیل کراون",
+        "روکش فلزی کودکان",
+        "SSC",
+        "اس اس سی",
+        "روکش استنلس استیل",
+        "روکش استیل ضدزنگ"
+      ]
+    },
+    {
+      "tag": "#افزایش_طول_تاج",
+      "aliases": [
+        "کراون لنتنینگ",
+        "crown lengthening",
+        "لنتنینگ",
+        "کراون لنتنینگ زیبایی",
+        "esthetic crown lengthening",
+        "کراون لنگتنینگ"
+      ]
+    },
+    {
+      "tag": "#پری_ایمپلنتیتیس",
+      "aliases": [
+        "peri-implantitis",
+        "پری ایمپلنتایتس",
+        "پری ایمپلنتیت",
+        "پری‌ایمپلنت دیزیز",
+        "peri implant disease",
+        "peri implantitis",
+        "پری ایمپلنتایتیس"
+      ]
+    },
+    {
+      "tag": "#شل_شدن_پیچ",
+      "aliases": [
+        "screw loosening",
+        "لقی پیچ",
+        "شل شدن اسکرو",
+        "لق شدن روکش",
+        "لق شدن پیچ"
+      ]
+    },
+    {
+      "tag": "#زیرکونیا",
+      "aliases": [
+        "زیرکونیوم",
+        "زیرکونیم",
+        "zirconia",
+        "زیرکونیای",
+        "زیرکنیا"
+      ]
+    },
+    {
+      "tag": "#دندان_۶",
+      "aliases": [
+        "دندان شش"
+      ]
+    },
+    {
+      "tag": "#RBFDP",
+      "aliases": [
+        "resin bonded",
+        "مریلند",
+        "maryland bridge",
+        "رزین باندد",
+        "رزین باند",
+        "RBFPD",
+        "resin-bonded bridge",
+        "resin bonded fixed partial denture",
+        "بریج باندشونده",
+        "بریج باند شونده",
+        "بریج رزین باند",
+        "بریج چسبنده"
+      ]
+    },
+    {
+      "tag": "#پروتز_متحرک",
+      "aliases": [
+        "دنچر",
+        "denture",
+        "پروتز کامل",
+        "دست دندان"
+      ]
+    },
+    {
+      "tag": "#دندان_مصنوعی",
+      "aliases": [
+        "denture teeth",
+        "دندان مصنوعی متحرک"
+      ]
+    }
+  ],
+  "renames": {
+    "#فقدان_دندان": "#جایگزینی_دندان",
+    "#bruxism": "#براکسیسم",
+    "#دندان_قروچه": "#براکسیسم",
+    "#Laminate_Veneer": "#لمینیت_سرامیکی",
+    "#Implant_Failure": "#شکست_ایمپلنت",
+    "#Implant_Complications": "#عوارض_ایمپلنت",
+    "#Anterior_Implant": "#ایمپلنت_قدامی",
+    "#Residual_Cement": "#سمان_باقیمانده",
+    "#Hallucination": "#توهم_هوش_مصنوعی",
+    "#Immediate_Implant": "#ایمپلنت_فوری",
+    "#SDA": "#قوس_دندانی_کوتاه_شده",
+    "#AI_Literacy": "#سواد_هوش_مصنوعی",
+    "#LLM": "#مدل_زبانی",
+    "#Smoking": "#دخانیات",
+    "#تطابق_مارژینال": "#تطابق_مارجینال",
+    "#لبه_انسیزال": "#لبه_اینسایزال",
+    "#تماس_باز": "#کانتکت_باز",
+    "#پیچ_هرز_شده": "#هرز_شدن_پیچ",
+    "#Butt_Joint": "#بات_جوینت",
+    "#anti_rotation": "#ضد_چرخش",
+    "#Resistance_Form": "#فرم_رزیستنس",
+    "#ونیر": "#ونیر_سرامیکی",
+    "#Vertical_Dimension": "#بعد_عمودی",
+    "#SSC": "#روکش_استیل"
+  }
+}

@@ -267,12 +267,11 @@ describe('tag round (real site hashtags)', () => {
   });
 
   it('drops a one-page tag that only echoes the case (the anterior-gap screenshot)', async () => {
-    // «فضای بی دندان» and «فقدان دندان» each lead to ONE page — a crown that
-    // looks too wide, an old missing molar — and nothing else picked for the
-    // case touches those pages. They took two of four chips from the tags
-    // that answer the question.
+    // «فضای بی دندان» leads to ONE page — a crown that looks too wide next to
+    // a gap — and nothing else picked for the case touches it. Echoed from the
+    // case's own words, it took a chip from the tags that answer the question.
     await makePremium();
-    vi.spyOn(ai, 'selectTags').mockResolvedValue(['فضای بی دندان', 'فقدان دندان', 'RBFDP', 'بریج']);
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['فضای بی دندان', 'RBFDP', 'بریج']);
     const body = (await next({ description: 'یه فضای بی دندانی داره بیمارم در قدام پایین چیکار کنم' })).json();
     const labels = body.options.map((o: { label: string }) => o.label);
     expect(labels).toEqual(['RBFDP', 'بریج']);
