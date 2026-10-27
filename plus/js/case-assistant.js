@@ -7,10 +7,10 @@
 // every assistant turn, a typing indicator while waiting, a recap trail of
 // the case + past answers) without becoming free-form chat - see
 // dcp-assist-* in plus-pages.css.
-import { el, faNum } from './util.js?v=208';
-import { api, ApiError } from './api.js?v=208';
-import { FOLDER_EN } from './content-index.js?v=208';
-import { premiumCta } from './premium-cta.js?v=208';
+import { el, faNum } from './util.js?v=210';
+import { api, ApiError } from './api.js?v=210';
+import { FOLDER_EN } from './content-index.js?v=210';
+import { premiumCta } from './premium-cta.js?v=210';
 
 // The server reads 500 characters of a case; past that it would silently drop
 // the tail, so the box stops there and counts down instead.
@@ -384,7 +384,7 @@ export function renderCaseAssistant(container) {
    * «شروع دوباره» clears it. `actions` replaces the retry where retrying cannot
    * help (logged out, no subscription, the hourly limit).
    */
-  function errorScreen(message, actions) {
+  function errorScreen(message, actions, detail) {
     stopScan();
     const trail = recapTrail(description, history);
     const restart = el('button', { class: 'dcp-assist-restart', type: 'button' }, 'شروع دوباره');
@@ -397,9 +397,10 @@ export function renderCaseAssistant(container) {
     }
     live.textContent = ''; // the alert below speaks; a stale «در حال جست‌وجو» must not
     const msg = el('p', { role: 'alert' }, message);
+    const code = detail ? el('p', { class: 'dcp-assist-errcode', dir: 'ltr' }, detail) : null;
     trail.appendChild(el('div', { class: 'dcp-assist-turn' }, [
       sparkAvatar(true),
-      el('div', { class: 'dcp-assist-card' }, [msg, el('div', { class: 'dcp-assist-actions' }, [...buttons, restart])]),
+      el('div', { class: 'dcp-assist-card' }, [msg, code, el('div', { class: 'dcp-assist-actions' }, [...buttons, restart])].filter(Boolean)),
     ]));
     show(trail, buttons[0]);
   }
@@ -439,7 +440,7 @@ export function renderCaseAssistant(container) {
       if (status === 401) {
         const login = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود دوباره');
         login.addEventListener('click', async () => {
-          const { openLoginModal } = await import('./login-modal.js?v=208');
+          const { openLoginModal } = await import('./login-modal.js?v=210');
           const res = await openLoginModal({ returnTo: '/plus/assistant.html' });
           if (res && res.user) step();
         });
@@ -453,7 +454,11 @@ export function renderCaseAssistant(container) {
         const mins = Math.max(1, Math.ceil(ms / 60000));
         errorScreen('در این ساعت بیش از حد استفاده شده؛ ' + (ms ? 'حدود ' + faNum(mins) + ' دقیقه‌ی دیگر' : 'کمی بعد') + ' دوباره امتحان کن.', []);
       } else {
-        errorScreen('مشکلی پیش اومد؛ دوباره امتحان کن.');
+        // The code is shown small under the sentence: it is what tells a 500
+        // from a timeout from an unreachable API when the founder sends a
+        // screenshot, and it costs the reader nothing.
+        const why = (e && e.body && (e.body.error || e.body.message)) || (e && (e.name && e.name !== 'Error' ? e.name : e.message)) || '';
+        errorScreen('مشکلی پیش اومد؛ دوباره امتحان کن.', null, 'کد: ' + (status || 'network') + (why ? ' · ' + String(why).slice(0, 60) : ''));
       }
     }
   }

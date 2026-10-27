@@ -6,11 +6,11 @@
 // is the clip itself: a play button that plays THIS segment right here, the
 // span, a small bar showing where in the episode it sits, and the note. Going
 // to the episode is one action among others and lands ON the clip (?dcclip=).
-import { el, faNum } from './util.js?v=208';
-import { api } from './api.js?v=208';
-import { LABELS } from './config.js?v=208';
-import { noteBlock, labelChip, actionBtn, confirmStrip, toast, copyToClipboard } from './hl-view.js?v=208';
-import { fmtClock, fmtLength, episodeNumber, episodeCatalog, playSegment, stopSegment } from './clip-audio.js?v=208';
+import { el, faNum } from './util.js?v=210';
+import { api } from './api.js?v=210';
+import { LABELS } from './config.js?v=210';
+import { noteBlock, labelChip, actionBtn, confirmStrip, toast, copyToClipboard } from './hl-view.js?v=210';
+import { fmtClock, fmtLength, episodeNumber, episodeCatalog, playSegment, stopSegment } from './clip-audio.js?v=210';
 
 const PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
 const PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>';
