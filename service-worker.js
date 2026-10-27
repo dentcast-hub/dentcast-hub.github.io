@@ -17,7 +17,7 @@
 //      re-stamps it on each publish — the byte change makes browsers fetch
 //      and activate the new worker promptly.
 
-const CACHE_NAME = 'dentcast-assets-3b1ecbdc42';
+const CACHE_NAME = 'dentcast-assets-e15a7ce79b';
 
 /* Caches owned by THIS worker. tools/stamp-version.py rewrites CACHE_NAME on
    each publish, so the old name is never known here — match on the stable
