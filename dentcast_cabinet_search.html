@@ -53,6 +53,10 @@ main#list{padding:0.375rem 0 1.25rem}
 .meta{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.5rem}
 .badge{font-size:.72rem;color:var(--txt2);background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:0.125rem 0.5625rem}
 .tags{display:flex;gap:0.375rem;flex-wrap:wrap;margin-bottom:0.625rem}
+.kf{margin:0 0 0.625rem;font-size:.8rem;color:var(--txt2)}
+.kf summary{cursor:pointer;color:var(--ac);font-size:.76rem;font-weight:600}
+.kf p{margin:0.375rem 0 0;line-height:1.55}
+.kf .bl b{color:var(--txt)}
 #list .tag{font-size:.74rem;color:var(--ac);cursor:pointer}
 #list .tag:hover{text-decoration:underline}
 /* #list-scoped so these win over dc-theme's .card a / main a link rules */
@@ -197,16 +201,19 @@ main#list{padding:0.375rem 0 1.25rem}
 <script>
 // JSON lives next to this file in the repo. Relative path works on any domain.
 const SRC="dentcast_cabinet_full_catalog.json";
-let DATA=[],active=new Set(),shown=0;const PAGE=80;
+let DATA=[],ALIAS={},active=new Set(),shown=0;const PAGE=80;
 const q=document.getElementById('q'),topic=document.getElementById('topic'),type=document.getElementById('type'),sort=document.getElementById('sort');
 const nm=s=>(s||'').toLowerCase();
+const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 fetch(SRC).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(j=>{
   const papers=Array.isArray(j)?j:(j.papers||[]);
+  ALIAS=(!Array.isArray(j)&&j.tag_aliases)||{};
   DATA=papers.map(p=>({
     t:p.display_title||p.real_title||p.title||"",
     tp:p.topic||"",ty:p.type||"",tg:p.tags||[],
-    d:p.drive_download||"",v:p.drive_view||"",j:p.journal||""
+    d:p.drive_download||"",v:p.drive_view||"",j:p.journal||"",y:p.crossref_year||"",
+    kf:p.key_finding||"",bl:p.clinical_bottom_line||""
   }));
   document.getElementById('total').textContent='\u00b7 '+DATA.length+' papers';
   fill(topic,[...new Set(DATA.map(p=>p.tp).filter(x=>x&&x!=='(root)'))].sort());
@@ -220,7 +227,9 @@ fetch(SRC).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(j
 
 function fill(sel,arr){for(const v of arr){const o=document.createElement('option');o.textContent=v;sel.appendChild(o);}}
 function match(p){const t=nm(q.value).trim();
- if(t&&!(nm(p.t).includes(t)||p.tg.some(x=>nm(x).includes(t))))return false;
+ // a typed abbreviation/variant (e.g. "gbr") also finds its canonical tag
+ const al=ALIAS[t.replace(/\s+/g,'-')];
+ if(t&&!(nm(p.t).includes(t)||p.tg.some(x=>nm(x).includes(t)||x===al)))return false;
  if(topic.value&&p.tp!==topic.value)return false;if(type.value&&p.ty!==type.value)return false;
  for(const a of active)if(!p.tg.includes(a))return false;return true;}
 function render(reset){if(reset){shown=0;document.getElementById('list').innerHTML='';}
@@ -231,8 +240,10 @@ function render(reset){if(reset){shown=0;document.getElementById('list').innerHT
   const tags=p.tg.map(t=>'<span class="tag" data-t="'+t+'">#'+t+'</span>').join(' ');
   const dl=p.d?'<a class="dl" href="'+p.d+'" target="_blank">Download</a>':'<a class="dl nolink">No link</a>';
   const vw=p.v?'<a href="'+p.v+'" target="_blank">View</a>':'';
-  const jr=p.j?'<p class="jr">'+p.j+'</p>':'';
-  d.innerHTML='<p class="title">'+p.t+'</p>'+jr+'<div class="meta"><span class="badge">'+p.ty+'</span><span class="badge">'+p.tp+'</span></div><div class="tags">'+tags+'</div><div class="act">'+dl+vw+'</div>';
+  const jy=[p.j,p.y].filter(Boolean).join(' · ');
+  const jr=jy?'<p class="jr">'+esc(jy)+'</p>':'';
+  const kf=p.kf?'<details class="kf"><summary>Key finding</summary><p>'+esc(p.kf)+'</p>'+(p.bl?'<p class="bl"><b>Clinical bottom line:</b> '+esc(p.bl)+'</p>':'')+'</details>':'';
+  d.innerHTML='<p class="title">'+p.t+'</p>'+jr+'<div class="meta"><span class="badge">'+p.ty+'</span><span class="badge">'+p.tp+'</span></div>'+kf+'<div class="tags">'+tags+'</div><div class="act">'+dl+vw+'</div>';
   list.appendChild(d);}
  shown+=Math.min(PAGE,Math.max(0,res.length-shown));let mb=document.getElementById('more');if(mb)mb.remove();
  if(shown<res.length){const b=document.createElement('button');b.id='more';b.className='more';b.textContent='show more ('+(res.length-shown)+' left)';b.onclick=()=>render(false);list.appendChild(b);}}
