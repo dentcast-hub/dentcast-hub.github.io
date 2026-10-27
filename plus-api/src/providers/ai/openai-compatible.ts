@@ -65,6 +65,21 @@ interface ChatCompletionResponse {
  */
 class TransientAiError extends Error {}
 
+/**
+ * The temperature to send for a model, or null to send none. AI_TEMPERATURE
+ * overrides ('' or 'none' = send none); by default Claude models get none and
+ * everything else gets 0.
+ */
+export function samplingTemperature(model: string, override = process.env.AI_TEMPERATURE): number | null {
+  if (override !== undefined) {
+    const v = override.trim().toLowerCase();
+    if (v === '' || v === 'none') return null;
+    const n = Number(v);
+    return Number.isFinite(n) ? n : null;
+  }
+  return /claude/i.test(model) ? null : 0;
+}
+
 const RETRYABLE_STATUS = new Set([400, 408, 409, 425, 429, 500, 502, 503, 504]);
 
 /** Backoff before attempt 2, 3, ... The last value repeats if attempts go higher. */
@@ -169,12 +184,17 @@ export class OpenAiCompatibleProvider implements AiProvider {
 
     const body: Record<string, unknown> = {
       model: config.ai.model,
-      temperature: 0,
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userContent },
       ],
     };
+    // Claude's current models (Haiku 5.5, Sonnet 5.5, Opus 4.7+) reject any
+    // non-default sampling value with a 400, and the retry loop would read that
+    // 400 as the gateway's usual hiccup: three failed calls and the pillar
+    // fallback on every round. They run at their default; other models keep 0.
+    const temperature = samplingTemperature(config.ai.model);
+    if (temperature !== null) body.temperature = temperature;
     if (useJsonMode) body.response_format = { type: 'json_object' };
 
     let res: Response;
