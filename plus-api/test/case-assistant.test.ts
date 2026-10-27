@@ -3,7 +3,7 @@ import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
-import { getClusters, getTags } from '../src/content-index.js';
+import { getClusters, getContentInfo, getTags } from '../src/content-index.js';
 import { ai } from '../src/providers/registry.js';
 import { DEFAULT_QUESTION, FALLBACK_QUESTION, assistantTags } from '../src/services/case-assistant.js';
 
@@ -248,7 +248,51 @@ describe('tag round (real site hashtags)', () => {
     expect(input.description).toBe('یک سوال کلی درباره‌ی سمان');
     expect(input.refinements).toEqual(['در واقع منظورم زینک فسفات بود']);
     expect(input.catalog).toHaveLength(assistantTags().length);
-    expect(input.catalog).toContain(TAG.fa);
+    // Each label carries its page count, so a one-page tag looks like one.
+    expect(input.catalog).toContain(`${TAG.fa} (${TAG.contentIds.length})`);
+  });
+
+  it('reads a label the model copied back with its page count', async () => {
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['نبود فرول (2)', 'افزایش طول تاج(۱۲)']);
+    const body = (await next({ description: 'فرول ندارم' })).json();
+    expect(body.options.map((o: { label: string }) => o.label)).toEqual(['نبود فرول', 'افزایش طول تاج']);
+  });
+
+  it('rescues a plural or a squashed spelling of a real label', async () => {
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['فرول\u200cها', 'پست\u200cوکور', 'implants']);
+    const body = (await next({ description: 'دندان اندو شده بدون فرول' })).json();
+    expect(body.options.map((o: { label: string }) => o.label)).toEqual(['فرول', 'پست و کور', 'ایمپلنت']);
+  });
+
+  it('drops a one-page tag that only echoes the case (the anterior-gap screenshot)', async () => {
+    // «فضای بی دندان» and «فقدان دندان» each lead to ONE page — a crown that
+    // looks too wide, an old missing molar — and nothing else picked for the
+    // case touches those pages. They took two of four chips from the tags
+    // that answer the question.
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['فضای بی دندان', 'فقدان دندان', 'RBFDP', 'بریج']);
+    const body = (await next({ description: 'یه فضای بی دندانی داره بیمارم در قدام پایین چیکار کنم' })).json();
+    const labels = body.options.map((o: { label: string }) => o.label);
+    expect(labels).toEqual(['RBFDP', 'بریج']);
+  });
+
+  it('keeps a one-page tag whose page the case actually describes', async () => {
+    await makePremium();
+    const one = assistantTags().find((t) => t.fa === 'فضای بی دندان')!;
+    expect(one.contentIds).toHaveLength(1);
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['فضای بی دندان', 'RBFDP', 'بریج']);
+    const title = getContentInfo(one.contentIds[0])!.title; // a crown next to a gap looks too wide
+    const body = (await next({ description: title })).json();
+    expect(body.options.map((o: { label: string }) => o.label)).toContain('فضای بی دندان');
+  });
+
+  it('puts umbrella tags after the specific ones', async () => {
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['ایمپلنت', 'تحلیل استخوان کرستال']);
+    const body = (await next({ description: 'تحلیل استخوان دور ایمپلنت' })).json();
+    expect(body.options.map((o: { label: string }) => o.label)).toEqual(['تحلیل استخوان کرستال', 'ایمپلنت']);
   });
 
   it("keeps the model's own ranking order", async () => {

@@ -380,6 +380,44 @@ function tagLookup(): { exact: Map<string, Tag>; folded: Map<string, Tag> } {
   return lookupCache;
 }
 
+// The catalog shows each label with its page count, «بریج (5)», and a model
+// sometimes copies the count back with the label.
+const COUNT_SUFFIX = /\s*[([]\s*[0-9\u06f0-\u06f9\u0660-\u0669]+\s*[)\]]\s*$/;
+
+/**
+ * Last-resort spellings, tried only after every exact and alias lookup missed,
+ * so they can never shadow a real tag: a plural the model made of a label
+ * («فرول‌ها», «implants») and a label written with or without its inner
+ * space («پست‌وکور» for «پست و کور»). Measured on 76 variants a model
+ * plausibly returns: 30 were dropped, and the round fell to the pillar list.
+ */
+const PLURAL_TAIL = /^(.{2,}?)(های|ها|s)$/u;
+let squashCacheKey: Tag[] | null = null;
+let squashCache = new Map<string, Tag>();
+
+function squashed(): Map<string, Tag> {
+  const tags = assistantTags();
+  if (squashCacheKey === tags) return squashCache;
+  const next = new Map<string, Tag>();
+  for (const t of tags) {
+    const k = baseFa(t.fa, true).replace(/ /g, '');
+    const cur = next.get(k);
+    if (k && (!cur || t.contentCount > cur.contentCount)) next.set(k, t);
+  }
+  squashCache = next;
+  squashCacheKey = tags;
+  return next;
+}
+
+function looseTag(s: string): Tag | undefined {
+  const lookup = tagLookup();
+  const joined = baseFa(s, true);
+  const singular = joined.split(' ').filter((w) => w !== 'ها' && w !== 'های')
+    .map((w) => w.replace(PLURAL_TAIL, '$1')).join(' ');
+  return lookup.exact.get(singular) ?? lookup.folded.get(normalizeFa(singular))
+    ?? squashed().get(joined.replace(/ /g, '')) ?? squashed().get(singular.replace(/ /g, ''));
+}
+
 /**
  * The safety net, unchanged in spirit: nothing the model said reaches a user
  * until it has been matched against a tag that really exists in the index.
@@ -391,8 +429,10 @@ function validateTags(raw: string[]): Tag[] {
   const lookup = tagLookup();
   const seen = new Set<string>();
   const out: Tag[] = [];
-  for (const s of raw) {
-    const tag = lookup.exact.get(baseFa(s)) ?? lookup.exact.get(baseFa(s, true)) ?? lookup.folded.get(normalizeFa(s));
+  for (const r of raw) {
+    const s = r.replace(COUNT_SUFFIX, '');
+    const tag = lookup.exact.get(baseFa(s)) ?? lookup.exact.get(baseFa(s, true)) ?? lookup.folded.get(normalizeFa(s))
+      ?? looseTag(s);
     if (!tag || seen.has(tag.key)) continue;
     seen.add(tag.key);
     out.push(tag);
@@ -401,34 +441,82 @@ function validateTags(raw: string[]): Tag[] {
 }
 
 /**
- * Greedily keep only tags that bring at least one NEW content_id not already
+ * Greedily keep only tags whose shown pages are at least half NEW, not already
  * covered by a higher-ranked tag. Necessary because most site tags are
  * single-article (each article gets its own bespoke AI-proposed hashtags at
  * publish time), so several near-duplicate tags ("سمان دائم", "گیر روکش", ...)
  * can all point at the SAME small handful of articles — and four options that
  * lead to one article are one option wearing four labels. Ranking is not this
- * function's job: the order it is handed is the model's own.
+ * function's job: the order it is handed is the model's own, minus the
+ * uncorroborated one-page tags (withoutStrays) and with umbrellas last.
  */
-function dedupeByContentCoverage(sorted: Tag[], limit: number): Tag[] {
+function dedupeByContentCoverage(sorted: Tag[], limit: number, caseText = ''): Tag[] {
   // Coverage is judged on what a pick would actually SHOW (its first page of
   // results), not on everything it carries: «فرول» (26 pages) used to swallow
   // «نبود فرول» (2) whose two pages were in its list but never on its screen.
   const covered = new Set<string>();
   const picked: Tag[] = [];
-  for (const t of narrowerFirst(sorted)) {
+  const caseWords = new Set(words(caseText));
+  for (const t of broadLast(narrowerFirst(withoutStrays(sorted, caseText)))) {
     if (picked.length >= limit) break;
     const shown = rankIds(t.contentIds, sorted, t).slice(0, ARTICLES_PER_MATCH);
-    if (!shown.some((id) => !covered.has(id))) continue;
+    // From the third chip on, at least half of what it shows must be new: a
+    // chip that adds one page to three already offered is the same chip again
+    // («سینوس لیفت», «ایمپلنت کوتاه», «نسبت تاج به ایمپلنت» -> one pair of
+    // pages). The first two need only one new page, so an «X or Y» case keeps
+    // both of its sides even when they share their articles, and so does a tag
+    // the case names word for word («سلف ادهزیو کافیه؟» -> «سمان سلف ادهزیو»).
+    const fresh = shown.filter((id) => !covered.has(id)).length;
+    const named = words(t.fa).every((w) => caseWords.has(w));
+    if (!fresh || (picked.length >= 2 && !named && fresh * 2 < shown.length)) continue;
     for (const id of shown) covered.add(id);
     picked.push(t);
   }
   return picked;
 }
 
+// Words too common in a dentist's case to show that a page is about it.
+const GENERIC_WORDS = new Set(['دندان', 'دندانی', 'دندون', 'بیمار', 'بیمارم', 'درمان', 'کنم', 'چیکار', 'داره', 'دارد']);
+
+/**
+ * A one-page tag is the label a small model reaches for when it echoes the
+ * case's own words: «فضای بی دندان» for an anterior gap led to one page about a
+ * crown that looks too wide, while the bridge/RBFDP/implant pages that answer
+ * the question sat behind other chips. Such a tag stays only when its page is
+ * corroborated — it also carries another tag picked for this case, or its
+ * title shares a real word with the case. Never thins the round below two.
+ */
+function withoutStrays(tags: Tag[], caseText: string): Tag[] {
+  const caseWords = new Set(words(caseText).filter((w) => w.length > 2 && !GENERIC_WORDS.has(w)));
+  const stray = (t: Tag) => {
+    if (t.contentIds.length !== 1) return false;
+    const id = t.contentIds[0];
+    if (tags.some((o) => o.key !== t.key && o.contentIds.includes(id))) return false;
+    const title = getContentInfo(id)?.title ?? '';
+    return !words(title).some((w) => caseWords.has(w));
+  };
+  const kept = tags.filter((t) => !stray(t));
+  return kept.length >= 2 ? kept : tags;
+}
+
+/**
+ * Umbrella tags («ایمپلنت» 81 pages, «طرح درمان» 53) go after the specific
+ * ones: their first four pages are whatever the index lists first, so as an
+ * early chip they crowd out the tag that answers the case.
+ */
+const BROAD_TAG_PAGES = 30;
+
+function broadLast(tags: Tag[]): Tag[] {
+  const broad = (t: Tag) => t.contentIds.length > BROAD_TAG_PAGES;
+  return [...tags.filter((t) => !broad(t)), ...tags.filter(broad)];
+}
+
 /**
  * A tag whose pages are a strict subset of an earlier tag's is the more
  * precise answer to the same question, so it moves ahead of that tag
- * («نبود فرول» before «فرول»). Otherwise the model's order stands.
+ * («نبود فرول» before «فرول»). Otherwise the model's order stands. A one-page
+ * tag never jumps ahead: its page is already near the top of the wider tag's
+ * results, and leading with it made the thinnest chip the first one.
  */
 function narrowerFirst(tags: Tag[]): Tag[] {
   const out = [...tags];
@@ -438,7 +526,7 @@ function narrowerFirst(tags: Tag[]): Tag[] {
       const wide = new Set(out[i].contentIds);
       for (let j = i + 1; j < out.length; j += 1) {
         const n = out[j];
-        if (n.contentIds.length < wide.size && n.contentIds.every((id) => wide.has(id))) {
+        if (n.contentIds.length >= 2 && n.contentIds.length < wide.size && n.contentIds.every((id) => wide.has(id))) {
           out.splice(j, 1);
           out.splice(i, 0, n);
           moved = true;
@@ -524,9 +612,9 @@ async function selectTagsUncoalesced(description: string, refinements: string[],
   }
   if (hit) tagSelectionCache.delete(cacheKey); // expired
 
-  // The model sees the site's real vocabulary and nothing else about it — just
-  // the Persian labels, no counts and no definitions, which would multiply the
-  // prompt for nothing.
+  // The model sees the site's real vocabulary: each Persian label with its page
+  // count and nothing more. Without the count «فضای بی دندان» (1 page) and
+  // «جایگزینی دندان» looked alike; definitions would multiply the prompt.
   // A provider outage (every retry spent) is a round with no understanding,
   // not an error screen: it falls through to the honest pillar fallback, and
   // the empty answer is not cached, so the next round asks again.
@@ -535,7 +623,7 @@ async function selectTagsUncoalesced(description: string, refinements: string[],
     picked = await ai.selectTags({
       description,
       refinements,
-      catalog: assistantTags().map((t) => t.fa),
+      catalog: assistantTags().map((t) => `${t.fa} (${t.contentIds.length})`),
     });
   } catch (err) {
     console.warn('[case-assistant] selectTags failed; using the pillar fallback:', (err as Error)?.message ?? err);
@@ -577,7 +665,8 @@ async function nextRootCatalog(description: string, history: NarrowHistoryEntry[
   const offered = offeredKeys(history);
   const tags = keys.map(tagByKey).filter((t): t is Tag => Boolean(t) && !offered.has(TAG_PREFIX + t!.key));
 
-  const options = dedupeByContentCoverage(tags, MAX_TAG_OPTIONS)
+  const caseText = [description, ...customAnswers(history)].join('\n');
+  const options = dedupeByContentCoverage(tags, MAX_TAG_OPTIONS, caseText)
     .map((t) => ({ key: TAG_PREFIX + t.key, label: t.fa }));
 
   return options.length ? options : null;

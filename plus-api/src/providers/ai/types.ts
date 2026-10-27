@@ -25,7 +25,9 @@ export interface SelectTagsInput {
   description: string;
   /** The user's own "غیر از این‌ها" free-text refinements, in order. */
   refinements: string[];
-  /** The Persian label of every REAL site hashtag — the full catalog. */
+  /** Every REAL site hashtag — the full catalog — as its Persian label plus its
+   * page count, «بریج (5)»: the count is what lets the model tell a broad
+   * concept from a one-page tag. The model answers with the bare label. */
   catalog: string[];
 }
 
