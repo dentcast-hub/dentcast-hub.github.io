@@ -816,6 +816,11 @@ export const config = {
   glossaryPath: process.env.GLOSSARY_PATH || '',
   hashtagRefPath: process.env.HASHTAG_REF_PATH || '',
 
+  // Path to plus/cabinet-papers.json — the library papers the case assistant
+  // suggests beside a site hashtag (tools/build_cabinet_papers.py). Same story:
+  // repo default in dev, explicit in the container.
+  cabinetPath: process.env.CABINET_PAPERS_PATH || '',
+
   // Where to re-fetch those files from at runtime (content-refresh.ts).
   // The paths above are the boot value and the permanent fallback; these URLs
   // are what stop every publish from needing an image rebuild. Comma-separated
@@ -829,6 +834,7 @@ export const config = {
     flashcardsUrls: list('FLASHCARDS_URL', []),
     glossaryUrls: list('GLOSSARY_URL', []),
     hashtagRefUrls: list('HASHTAG_REF_URL', []),
+    cabinetUrls: list('CABINET_PAPERS_URL', []),
     refreshSeconds: int('CONTENT_REFRESH_SECONDS', 300),
   },
 

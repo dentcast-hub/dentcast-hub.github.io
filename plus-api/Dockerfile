@@ -32,6 +32,7 @@ ENV EXAM_QUESTIONS_PATH=/app/exam-questions.json
 ENV GLOSSARY_PATH=/app/glossary.json
 ENV HASHTAG_REF_PATH=/app/dentcast-hashtag-reference.json
 ENV FLASHCARDS_PATH=/app/flashcards-index.json
+ENV CABINET_PAPERS_PATH=/app/cabinet-papers.json
 # The episode catalog (dentcast.json) names each episode's audio file, which is
 # what a downloaded هایلایت صوتی is cut from (services/clip-audio.ts).
 ENV EPISODES_CATALOG_PATH=/app/dentcast.json
@@ -46,6 +47,7 @@ ENV EXAM_QUESTIONS_URL=https://dentcast.ir/plus/exam-questions.json,https://dent
 ENV GLOSSARY_URL=https://dentcast.ir/glossary/glossary.json,https://dentcast.org/glossary/glossary.json
 ENV HASHTAG_REF_URL=https://dentcast.ir/dentcast-hashtag-reference.json,https://dentcast.org/dentcast-hashtag-reference.json
 ENV FLASHCARDS_URL=https://dentcast.ir/plus/flashcards-index.json,https://dentcast.org/plus/flashcards-index.json
+ENV CABINET_PAPERS_URL=https://dentcast.ir/plus/cabinet-papers.json,https://dentcast.org/plus/cabinet-papers.json
 ENV EPISODES_CATALOG_URL=https://dentcast.ir/dentcast.json,https://dentcast.org/dentcast.json
 # Google's signing keys, mirrored onto the site by .github/workflows/google-certs-mirror.yml
 # (googleapis.com does not answer an Iranian address); Google itself is the last resort.
@@ -69,6 +71,7 @@ COPY plus/pathways.json ./pathways.json
 COPY plus/badges.json ./badges.json
 COPY plus/exam-questions.json ./exam-questions.json
 COPY plus/flashcards-index.json ./flashcards-index.json
+COPY plus/cabinet-papers.json ./cabinet-papers.json
 COPY glossary/glossary.json ./glossary.json
 COPY dentcast-hashtag-reference.json ./dentcast-hashtag-reference.json
 COPY dentcast.json ./dentcast.json

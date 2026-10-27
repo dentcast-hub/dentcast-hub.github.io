@@ -38,6 +38,11 @@ jobs:
         # the freshest articles (a stale index silently drops new pages).
         run: node tools/build_plus_index.mjs
 
+      - name: 2b2. Rebuild the assistant's library-paper suggestions
+        # plus/cabinet-papers.json follows the content index (site hashtags)
+        # and the paper library; either changing leaves it stale.
+        run: python3 tools/build_cabinet_papers.py
+
       - name: 2c. Rebuild homepage counters and static fallbacks
         # Safety net: publication runs must build these before merging; this
         # post-merge rebuild also keeps static counters/SEO fallbacks current.
@@ -73,7 +78,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name  "github-actions[bot]"
-          git add sitemap.xml sitemap-ir.xml plus/content-index.json service-worker.js
+          git add sitemap.xml sitemap-ir.xml plus/content-index.json plus/cabinet-papers.json service-worker.js
           # The stamper rewrites every `dentcast-brain.json?v=` URL in the HTML
           # (today index.html + player.html). Staging tracked+modified HTML by
           # pattern rather than by name means a future page that fetches the

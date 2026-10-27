@@ -1,6 +1,7 @@
 import { config } from '../config.js';
 import { getAliases, getAllContent, getClusters, getContentInfo, getTags, type Tag } from '../content-index.js';
 import { ai } from '../providers/registry.js';
+import { cabinetIdsFor, cabinetPaper } from '../cabinet.js';
 import type { NarrowHistoryEntry, NarrowOption } from '../providers/ai/types.js';
 import { getConsumedContentIds } from './consumption.js';
 import {
@@ -72,11 +73,26 @@ export interface CaseArticle {
   type: string;
 }
 
+/** A paper from «کتابخانهٔ دنت‌کست» on the same topic as the matched tag. */
+export interface CasePaper {
+  id: string;
+  title: string;
+  year: number | string | null;
+  type: string;
+  journal: string;
+  key_finding: string;
+  view_url: string;
+  download_url: string;
+}
+
+// Library papers offered beside the site's own articles.
+const MAX_PAPERS = 8;
+
 export type CaseStep =
   // final_round: the next answer resolves (maxRounds), so a free-text answer
   // would have nothing left to refine — the client hides «غیر از این‌ها».
   | { done: false; question: string; options: NarrowOption[]; final_round?: boolean; round_id?: string | null }
-  | { done: true; matched_fa: string | null; articles: CaseArticle[]; round_id?: string | null };
+  | { done: true; matched_fa: string | null; articles: CaseArticle[]; papers: CasePaper[]; round_id?: string | null };
 
 /**
  * What the assistant may offer. Two kinds of tag never answer a dentist's case:
@@ -629,14 +645,42 @@ function glossaryFor(label: string): string | null {
   return glossaryCache.get(k) ?? glossaryFolded.get(normalizeFa(k)) ?? null;
 }
 
+/**
+ * The library papers for a matched tag (tools/build_cabinet_papers.py ranks
+ * them per tag). A paper that the case's OTHER offered tags also point to is
+ * about more of what was described, so it moves up — the same rule rankIds()
+ * applies to the site's own articles. Plain lookup, no model call.
+ */
+function papersFor(tag: Tag, history: NarrowHistoryEntry[]): CasePaper[] {
+  const ids = cabinetIdsFor(tag.key);
+  if (!ids.length) return [];
+  const others = offeredTags(history).filter((t) => t.key !== tag.key).map((t) => new Set(cabinetIdsFor(t.key)));
+  const ranked = ids
+    .map((id, i) => ({ id, i, s: others.reduce((n, set) => n + (set.has(id) ? 1 : 0), 0) }))
+    .sort((a, b) => b.s - a.s || a.i - b.i);
+  const out: CasePaper[] = [];
+  for (const { id } of ranked) {
+    const p = cabinetPaper(id);
+    if (!p || !(p.v || p.d)) continue;
+    out.push({
+      id, title: p.t, year: p.y ?? null, type: p.ty ?? '', journal: p.j ?? '',
+      key_finding: p.kf ?? '', view_url: p.v ?? '', download_url: p.d ?? '',
+    });
+    if (out.length >= MAX_PAPERS) break;
+  }
+  return out;
+}
+
 async function resolve(userId: string, history: NarrowHistoryEntry[]): Promise<CaseStep> {
   const key = lastConcreteKey(history) ?? fallbackKey(history);
   let contentIds: string[] = [];
   let matchedFa: string | null = null;
+  let papers: CasePaper[] = [];
 
   if (key?.startsWith(TAG_PREFIX)) {
     const tag = tagByKey(key.slice(TAG_PREFIX.length));
     if (tag) {
+      papers = papersFor(tag, history);
       contentIds = rankIds(tag.contentIds, offeredTags(history), tag);
       matchedFa = tag.fa;
       const term = glossaryFor(tag.fa);
@@ -664,7 +708,7 @@ async function resolve(userId: string, history: NarrowHistoryEntry[]): Promise<C
     if (articles.length >= MAX_ARTICLES) break;
   }
 
-  return { done: true, matched_fa: matchedFa, articles };
+  return { done: true, matched_fa: matchedFa, articles, papers };
 }
 
 export async function nextCaseStep(

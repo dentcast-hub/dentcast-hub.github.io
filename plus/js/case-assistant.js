@@ -7,11 +7,11 @@
 // every assistant turn, a typing indicator while waiting, a recap trail of
 // the case + past answers) without becoming free-form chat - see
 // dcp-assist-* in plus-pages.css.
-import { el, faNum } from './util.js?v=205';
-import { api, ApiError } from './api.js?v=205';
-import { FOLDER_EN, getModel } from './content-index.js?v=205';
-import { openLoginModal } from './login-modal.js?v=205';
-import { premiumCta } from './premium-cta.js?v=205';
+import { el, faNum } from './util.js?v=206';
+import { api, ApiError } from './api.js?v=206';
+import { FOLDER_EN, getModel } from './content-index.js?v=206';
+import { openLoginModal } from './login-modal.js?v=206';
+import { premiumCta } from './premium-cta.js?v=206';
 
 // The server reads 500 characters of a case; past that it would silently drop
 // the tail, so the box stops there and counts down instead.
@@ -19,6 +19,7 @@ const MAX_CASE = 500;
 const MAX_CUSTOM = 200;
 // Results shown at once; the rest open with «مطالب بیشتر».
 const SHOWN = 4;
+const PAPERS_SHOWN = 3;
 
 function sparkAvatar(isSmall) {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -78,6 +79,45 @@ function articleRow(item, roundId) {
     });
   }
   return row;
+}
+
+/**
+ * A paper from «کتابخانهٔ دنت‌کست» on the matched topic: title, design and
+ * source, its key finding behind a disclosure, and the library's own View /
+ * Download links. English content, so the row is left-to-right.
+ */
+function paperRow(p) {
+  const meta = [p.type, p.journal, p.year ? String(p.year) : ''].filter(Boolean).join(' · ');
+  const links = el('div', { class: 'dcp-assist-paper-links' }, [
+    p.view_url ? el('a', { href: p.view_url, target: '_blank', rel: 'noopener' }, 'View') : null,
+    p.download_url ? el('a', { href: p.download_url, target: '_blank', rel: 'noopener' }, 'Download') : null,
+  ].filter(Boolean));
+  return el('div', { class: 'dcp-assist-paper', dir: 'ltr', lang: 'en' }, [
+    el('div', { class: 'dcp-assist-paper-title' }, p.title),
+    meta ? el('div', { class: 'dcp-assist-paper-meta' }, meta) : null,
+    p.key_finding ? el('details', { class: 'dcp-assist-paper-kf' }, [
+      el('summary', {}, 'Key finding'),
+      el('p', { dir: 'auto' }, p.key_finding),
+    ]) : null,
+    links,
+  ].filter(Boolean));
+}
+
+/** The library section under the site's own results; absent when there is nothing to offer. */
+function papersBlock(papers) {
+  if (!papers || !papers.length) return null;
+  const head = el('p', { class: 'dcp-assist-papers-lead' }, 'از کتابخانه‌ی دنت‌کست، مقاله‌هایی که ممکن است جواب سؤالت باشند:');
+  const list = el('div', { class: 'dcp-assist-papers' }, papers.slice(0, PAPERS_SHOWN).map(paperRow));
+  if (papers.length > PAPERS_SHOWN) {
+    const more = el('button', { class: 'dcp-assist-more', type: 'button' },
+      'مقاله‌های بیشتر (' + faNum(papers.length - PAPERS_SHOWN) + ')');
+    more.addEventListener('click', () => {
+      const rows = papers.slice(PAPERS_SHOWN).map(paperRow);
+      more.replaceWith(...rows);
+    });
+    list.appendChild(more);
+  }
+  return el('section', { class: 'dcp-assist-papers-wrap', 'aria-label': 'مقاله‌های کتابخانه' }, [head, list]);
 }
 
 /** GET /plus/assistant.html — the whole wizard, one screen at a time. */
@@ -267,11 +307,14 @@ export function renderCaseAssistant(container) {
     const restart = el('button', { class: 'dcp-assist-restart', type: 'button' }, 'شروع دوباره');
     restart.addEventListener('click', () => showIntro(false));
     const articles = body.articles || [];
+    const papers = body.papers || [];
     const lead = el('p', { class: 'dcp-assist-result-lead', tabindex: '-1', dir: 'auto' },
       body.matched_fa ? 'نزدیک‌ترین حیطه: ' + body.matched_fa : 'نتیجه‌ی روشنی پیدا نشد.');
     let list;
-    if (articles.length) {
-      list = el('div', { class: 'dcp-pw-steps' }, articles.slice(0, SHOWN).map((a) => articleRow(a, body.round_id)));
+    if (articles.length || papers.length) {
+      list = articles.length
+        ? el('div', { class: 'dcp-pw-steps' }, articles.slice(0, SHOWN).map((a) => articleRow(a, body.round_id)))
+        : el('div', { class: 'dcp-muted' }, 'در مطالب سایت چیزی پیدا نشد.');
       if (articles.length > SHOWN) {
         const more = el('button', { class: 'dcp-assist-more', type: 'button' },
           'مطالب بیشتر (' + faNum(articles.length - SHOWN) + ')');
@@ -287,12 +330,17 @@ export function renderCaseAssistant(container) {
     }
     trail.appendChild(el('div', { class: 'dcp-assist-turn' }, [
       sparkAvatar(true),
-      el('div', { class: 'dcp-assist-card' }, [lead, list, articles.length ? verdictBox(body.round_id) : null, restart].filter(Boolean)),
+      el('div', { class: 'dcp-assist-card' }, [
+        lead, list, papersBlock(papers),
+        articles.length || papers.length ? verdictBox(body.round_id) : null, restart,
+      ].filter(Boolean)),
     ]));
     show(trail, lead);
     lead.scrollIntoView({ block: 'nearest', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-    announce(articles.length
-      ? faNum(articles.length) + ' مطلب پیدا شد' + (body.matched_fa ? '؛ ' + body.matched_fa : '')
+    announce(articles.length || papers.length
+      ? [articles.length ? faNum(articles.length) + ' مطلب' : '', papers.length ? faNum(papers.length) + ' مقاله‌ی کتابخانه' : '']
+        .filter(Boolean).join(' و ') + ' پیدا شد'
+        + (body.matched_fa ? '؛ ' + body.matched_fa : '')
       : 'مقاله‌ی مرتبطی پیدا نشد.');
   }
 

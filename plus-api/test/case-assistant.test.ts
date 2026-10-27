@@ -519,3 +519,42 @@ describe('assistant QA regressions', () => {
     expect((await next({ description: 'شکستگی' })).statusCode).toBe(200);
   });
 });
+
+// «کتابخانهٔ دنت‌کست»: a matched tag also brings the library papers bridged to
+// it (plus/cabinet-bridge.json -> plus/cabinet-papers.json). Plain lookup.
+describe('library papers beside the result', () => {
+  it('a bridged tag resolves with library papers, ferrule papers for «نبود فرول»', async () => {
+    await makePremium();
+    const spy = vi.spyOn(ai, 'selectTags');
+    const history = [{ question: 'q', options: [], answer: { key: 'tag:نبود فرول', label: 'نبود فرول' } }];
+    const body = (await next({ description: 'دندان پایه فرول ندارد', history })).json();
+    expect(body.done).toBe(true);
+    expect(body.papers.length).toBeGreaterThan(0);
+    expect(body.papers.length).toBeLessThanOrEqual(8);
+    expect(body.papers[0].title.toLowerCase()).toContain('ferrule');
+    for (const p of body.papers) {
+      expect(typeof p.id).toBe('string');
+      expect(p.view_url || p.download_url).toBeTruthy();
+    }
+    expect(spy, 'papers cost no model call').not.toHaveBeenCalled();
+  });
+
+  it('a tag with no bridge resolves with an empty paper list, not an error', async () => {
+    await makePremium();
+    const history = [{ question: 'q', options: [], answer: { key: 'tag:' + getTags().find((t) => t.key === 'زینک فسفات')!.key, label: 'x' } }];
+    const body = (await next({ description: 'سمان', history })).json();
+    expect(body.done).toBe(true);
+    expect(Array.isArray(body.papers)).toBe(true);
+  });
+
+  it('a pillar result carries no papers', async () => {
+    await makePremium();
+    const history = [
+      { question: 'q1', options: [], answer: { key: CLUSTER.key, label: CLUSTER.fa } },
+      { question: 'q2', options: [], answer: { key: CLUSTER.key + '/' + SUBTOPIC.key, label: SUBTOPIC.fa } },
+    ];
+    const body = (await next({ description: 'شکستگی', history })).json();
+    expect(body.papers).toEqual([]);
+  });
+});
+

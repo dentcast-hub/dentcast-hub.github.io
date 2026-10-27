@@ -6,6 +6,7 @@ import { applyRemoteExamQuestions, examQuestionsSource } from './exam-questions.
 import { applyRemoteFlashcards, flashcardsSource } from './flashcards.js';
 import { applyRemoteGlossary, glossarySource } from './glossary.js';
 import { applyRemoteHashtagRef, hashtagRefSource } from './hashtag-ref.js';
+import { applyRemoteCabinet, cabinetSource } from './cabinet.js';
 
 /**
  * Keeps the taxonomy index and the pathway definitions current WITHOUT a
@@ -105,7 +106,7 @@ async function fetchJson(
  * instead of waiting out the interval.
  */
 export interface ContentFileStatus {
-  key: 'content-index' | 'pathways' | 'badges' | 'exam-questions' | 'flashcards' | 'glossary' | 'hashtag-ref';
+  key: 'content-index' | 'pathways' | 'badges' | 'exam-questions' | 'flashcards' | 'glossary' | 'hashtag-ref' | 'cabinet';
   /** The env var that turns the refresh on for this file. */
   env: string;
   configured: boolean;
@@ -140,6 +141,9 @@ const FILES: Array<{
   // publishes and builds nothing.
   { key: 'glossary', env: 'GLOSSARY_URL', urls: () => config.content.glossaryUrls, apply: applyRemoteGlossary, source: glossarySource },
   { key: 'hashtag-ref', env: 'HASHTAG_REF_URL', urls: () => config.content.hashtagRefUrls, apply: applyRemoteHashtagRef, source: hashtagRefSource },
+  // The case assistant's library-paper suggestions: rebuilt on main whenever
+  // the site's hashtags or the paper library change.
+  { key: 'cabinet', env: 'CABINET_PAPERS_URL', urls: () => config.content.cabinetUrls, apply: applyRemoteCabinet, source: cabinetSource },
 ];
 
 type FileState = {
