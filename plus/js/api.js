@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import * as CFG from './config.js?v=203';
+import * as CFG from './config.js?v=205';
 
 const API_BASES = CFG.API_BASES;
 
@@ -148,6 +148,8 @@ const REQUEST_TIMEOUT_MS = 30000;
 // not a slow answer, it is no answer, and it should become «could not ask»
 // while the reader is still on the page.
 const ME_TIMEOUT_MS = 15000;
+// The assistant's model round: a few seconds normally; past a minute it is not coming.
+const ASSISTANT_TIMEOUT_MS = 60000;
 
 function signalFor(ms) {
   try {
@@ -535,13 +537,18 @@ export const api = {
 
   // premium: «دستیار هوشمند» — stateless narrowing wizard, not a chat. The
   // caller resends the whole history every call; nothing is stored server-side.
-  assistantNext: (description, history) => request('/assistant/next', { method: 'POST', body: { description, history } }),
+  // Bounded: a POST has no default deadline, and a stalled gateway left the
+  // reader on the thinking screen indefinitely.
+  assistantNext: (description, history) =>
+    request('/assistant/next', { method: 'POST', body: { description, history }, timeoutMs: ASSISTANT_TIMEOUT_MS }),
   // Assistant telemetry: the explicit two-button verdict, and which suggested
   // article was opened. Fire-and-forget at every call site — it must never
   // delay the reader.
   assistantFeedback: (roundId, kind, optionKey) => request('/assistant/feedback', {
     method: 'POST',
     body: { round_id: roundId, kind, option_key: optionKey },
+    // A click report is sent as the article opens; it must outlive this page.
+    keepalive: true,
   }),
 
   // premium: collections (Phase 3) - user-made freeform folders of highlights/pages

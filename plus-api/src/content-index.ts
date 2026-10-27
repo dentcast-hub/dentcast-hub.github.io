@@ -15,7 +15,11 @@ interface Cluster { key: string; fa: string; contentCount: number; contentIds: s
 interface Folder { key: string; fa: string; url: string; total: number; prefix?: string; }
 interface ContentInfo { cluster: string | null; subtopic: string | null; type: string; title: string; url: string; secondary: string[]; }
 /** One real site #hashtag, with every content_id that carries it. */
-export interface Tag { key: string; fa: string; contentCount: number; contentIds: string[]; }
+export interface Tag {
+  key: string; fa: string; contentCount: number; contentIds: string[];
+  /** The concept's domain in dentcast-hashtag-reference.json ('clinical', 'brand', ...), when it has one. */
+  domain?: string;
+}
 interface IndexFile { version: number; folders: Folder[]; clusters: Cluster[]; tags: Tag[]; aliases?: Record<string, string>; byContent: Record<string, ContentInfo>; }
 
 let cached: IndexFile | null = null;
@@ -110,6 +114,11 @@ export function getTags(): Tag[] {
  */
 export function getAliases(): Record<string, string> {
   return getIndex().aliases || {};
+}
+
+/** Every content_id with its metadata — for lookups that have to scan by title or type. */
+export function getAllContent(): Record<string, ContentInfo> {
+  return getIndex().byContent || {};
 }
 
 /** Title/url/type for a content_id (pathway steps resolve display metadata through this), or null if unknown. */

@@ -60,6 +60,7 @@ export const FOLDER_EN = {
   promptologist: 'Promptologist',
   'plak-sefr': 'Plak-e Sefr',
   taraz: 'Taraz-e Shavahed',
+  litecast: 'LiteCast',
 };
 
 // Detect the folder-landing topic key for the current path, or null. The card

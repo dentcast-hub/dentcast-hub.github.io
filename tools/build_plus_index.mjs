@@ -111,6 +111,14 @@ const prettify = (s) => s.replace(/-/g, ' ');
 // is eligible; glossary terms currently carry no hashtags, so they simply
 // contribute nothing here.
 const tagsByKey = new Map(); // normalizedKey -> { fa, contentIds: Set }
+// Titles as shown in the assistant and the dashboard: no stray edge or double spaces.
+const cleanTitle = (t) => (typeof t === 'string' ? t.replace(/\s+/g, ' ').trim() : '');
+// A pillar key nothing defines: the page is silently left out of every cluster,
+// which is how three glossary terms became unreachable. Say so at build time.
+const unknownPrimary = new Map();
+const notePrimary = (p, id) => {
+  if (p && !clusterContent.has(p)) unknownPrimary.set(p, [...(unknownPrimary.get(p) || []), id]);
+};
 function addHashtags(e, contentId) {
   for (const raw of e.hashtags || []) {
     if (typeof raw !== 'string' || !raw.trim()) continue;
@@ -144,11 +152,12 @@ for (const e of brain) {
     cluster: primary,
     subtopic,
     type,
-    title: e.title || contentId,
+    title: cleanTitle(e.title) || contentId,
     url,
     secondary: (e.pillar && e.pillar.secondary) || [],
   };
   addHashtags(e, contentId);
+  notePrimary(primary, contentId);
   // Pillar categories feed the Phase 3 map; only pillar-tagged content joins them.
   if (!primary || !clusterContent.has(primary)) continue;
   clusterContent.get(primary).add(contentId);
@@ -163,9 +172,16 @@ for (const e of brain) {
 // Fold glossary terms into the SAME maps so they show in the dashboard tree and
 // resolve for the homepage "continue" line. Each term carries slug/url/fa_title
 // and its own pillar, so it slots into clusters just like brain content.
-const hashtagAliases = existsSync(resolve(root,'dentcast-hashtag-reference.json'))
-  ? (JSON.parse(read('dentcast-hashtag-reference.json')).aliases || {})
+const hashtagReference = existsSync(resolve(root,'dentcast-hashtag-reference.json'))
+  ? JSON.parse(read('dentcast-hashtag-reference.json'))
   : {};
+const hashtagAliases = hashtagReference.aliases || {};
+// Each concept's domain (clinical / brand / ai / web), keyed like a tag key, so
+// the case assistant can leave series and people tags («دنتکست», a speaker's
+// name) out of what it offers for a clinical case.
+const tagDomain = new Map((hashtagReference.concepts || [])
+  .filter((c) => c && c.key && c.domain)
+  .map((c) => [String(c.key).replace(/_/g, ' ').trim().toLowerCase(), c.domain]));
 
 const glossaryTerms = JSON.parse(read('glossary/glossary.json')).glossary || [];
 for (const e of glossaryTerms) {
@@ -179,11 +195,12 @@ for (const e of glossaryTerms) {
     cluster: primary,
     subtopic,
     type: 'glossary',
-    title: e.fa_title || e.title || contentId,
+    title: cleanTitle(e.fa_title || e.title) || contentId,
     url,
     secondary: (e.pillar && e.pillar.secondary) || [],
   };
   addHashtags(e, contentId);
+  notePrimary(primary, contentId);
   if (!primary || !clusterContent.has(primary)) continue;
   clusterContent.get(primary).add(contentId);
   if (subtopic) {
@@ -232,7 +249,10 @@ const folders = FOLDER_META.map(([key, fa, url, dir]) => ({ key, fa, url, prefix
 // when eyeballing the file; case-assistant.ts scores every tag itself and
 // doesn't rely on this order.
 const tags = [...tagsByKey.entries()]
-  .map(([key, v]) => ({ key, fa: v.fa, contentCount: v.contentIds.size, contentIds: [...v.contentIds] }))
+  .map(([key, v]) => ({
+    key, fa: v.fa, contentCount: v.contentIds.size, contentIds: [...v.contentIds],
+    ...(tagDomain.has(key) ? { domain: tagDomain.get(key) } : {}),
+  }))
   .sort((a, b) => b.contentCount - a.contentCount || a.fa.localeCompare(b.fa, 'fa'));
 
 const out = {
@@ -252,6 +272,9 @@ const out = {
   byContent,
 };
 
+for (const [p, ids] of unknownPrimary) {
+  console.warn(`WARN: pillar "${p}" is not a known cluster; left out of the tree: ${ids.join(', ')}`);
+}
 writeText(resolve(root, 'plus', 'content-index.json'), JSON.stringify(out, null, 0) + '\n');
 console.log(`Wrote plus/content-index.json: ${folders.length} folders, ${clusters.length} pillar categories, ${tags.length} hashtags, ${out.contentCount} content pages.`);
 console.log('Folders (dashboard tree top level):');
