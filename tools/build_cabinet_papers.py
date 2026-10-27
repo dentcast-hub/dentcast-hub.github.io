@@ -80,11 +80,19 @@ def build():
             continue
         papers = {p['id']: p for lib in libs for p in by_lib.get(lib, [])}
 
+        # A paper whose TITLE names the topic is about it; one that only carries
+        # the tag may mention it in passing (an endocrown review tagged ferrule).
+        stems = [[w[:6] for w in re.split(r'[-_]', lib) if len(w) > 2] for lib in libs]
+
+        def in_title(p):
+            t = (p.get('display_title') or p.get('title') or '').lower()
+            return any(ws and all(w in t for w in ws) for ws in stems)
+
         def rank(pid):
             p = papers[pid]
             year = int(p.get('crossref_year') or 0)
-            return (-(score[pid] + DESIGN.get(p.get('type'), 0) + (0.1 if p.get('key_finding') else 0)
-                      + (0.15 if year >= 2018 else 0)), -year, pid)
+            return (-(score[pid] + (0.8 if in_title(p) else 0) + DESIGN.get(p.get('type'), 0)
+                      + (0.1 if p.get('key_finding') else 0) + (0.15 if year >= 2018 else 0)), -year, pid)
 
         ids = sorted(score, key=rank)[:PER_TAG]
         by_tag[key] = ids

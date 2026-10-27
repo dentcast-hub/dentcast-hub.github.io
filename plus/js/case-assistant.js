@@ -7,11 +7,11 @@
 // every assistant turn, a typing indicator while waiting, a recap trail of
 // the case + past answers) without becoming free-form chat - see
 // dcp-assist-* in plus-pages.css.
-import { el, faNum } from './util.js?v=205';
-import { api, ApiError } from './api.js?v=205';
-import { FOLDER_EN, getModel } from './content-index.js?v=205';
-import { openLoginModal } from './login-modal.js?v=205';
-import { premiumCta } from './premium-cta.js?v=205';
+import { el, faNum } from './util.js?v=206';
+import { api, ApiError } from './api.js?v=206';
+import { FOLDER_EN, getModel } from './content-index.js?v=206';
+import { openLoginModal } from './login-modal.js?v=206';
+import { premiumCta } from './premium-cta.js?v=206';
 
 // The server reads 500 characters of a case; past that it would silently drop
 // the tail, so the box stops there and counts down instead.
@@ -338,7 +338,8 @@ export function renderCaseAssistant(container) {
     show(trail, lead);
     lead.scrollIntoView({ block: 'nearest', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     announce(articles.length || papers.length
-      ? faNum(articles.length) + ' مطلب' + (papers.length ? ' و ' + faNum(papers.length) + ' مقاله‌ی کتابخانه' : '') + ' پیدا شد'
+      ? [articles.length ? faNum(articles.length) + ' مطلب' : '', papers.length ? faNum(papers.length) + ' مقاله‌ی کتابخانه' : '']
+        .filter(Boolean).join(' و ') + ' پیدا شد'
         + (body.matched_fa ? '؛ ' + body.matched_fa : '')
       : 'مقاله‌ی مرتبطی پیدا نشد.');
   }
