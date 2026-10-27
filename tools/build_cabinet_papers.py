@@ -39,6 +39,15 @@ DESIGN = {
     'in vitro study': 0.15, 'finite element analysis': 0.1, 'animal study': 0.1,
     'narrative review': 0.15, 'case series': 0.1, 'case report': 0.05, 'technique report': 0.05,
 }
+# The library leans heavily on implants: generic tags such as crown, cementation,
+# impression, splinting or provisional-restoration are mostly implant papers.
+# For a site tag about natural teeth those papers drop below the tooth ones
+# (still listed when nothing else exists). A site tag is about implants when
+# its own label or one of its bridged library tags says so.
+IMPLANT_SITE = re.compile(r'ایمپلنت|اباتمنت|implant|abutment|اوردنچر|overdenture|all-on|زایگوماتیک|سینوس|ساکت|ریج|استئواینتگریشن|پری ایمپلنت|فول آرچ|بی دندان')
+IMPLANT_LIB = re.compile(r'implant|abutment|overdenture|all-on|full-arch|sinus|socket|ridge-|osseointegration|zygomatic|pterygoid|edentulous|bone-graft|guided-bone|membrane|ti-base')
+IMPLANT_PENALTY = 1.5
+
 # Not papers a dentist's case should be pointed to.
 SKIP_TYPES = {'journal issue', 'manufacturer document', 'other document', 'book / chapter'}
 
@@ -49,7 +58,11 @@ def load(path):
 
 
 def build():
-    bridge = load(BRIDGE)['map']
+    raw = load(BRIDGE)
+    bridge = raw['map']
+    # Papers a reviewer has ruled out for one site tag (a tag that is only a
+    # minor tag on them): {site key: [paper id, ...]}.
+    exclude = {k: set(v) for k, v in raw.get('exclude', {}).items()}
     cat = load(CATALOG)
     site_keys = {t['key'] for t in load(INDEX)['tags']}
     aliases = cat.get('tag_aliases', {})
@@ -78,7 +91,15 @@ def build():
                 score[p['id']] = score.get(p['id'], 0) + TAG_WEIGHT[i]
         if not score:
             continue
+        for pid in exclude.get(key, ()):
+            score.pop(pid, None)
+        if not score:
+            continue
         papers = {p['id']: p for lib in libs for p in by_lib.get(lib, [])}
+        implant_topic = bool(IMPLANT_SITE.search(key)) or any(IMPLANT_LIB.search(x) for x in libs)
+
+        def implant_paper(p):
+            return any(IMPLANT_LIB.search(t) for t in p.get('tags', []) if not t.startswith('topic:'))
 
         # A paper whose TITLE names the topic is about it; one that only carries
         # the tag may mention it in passing (an endocrown review tagged ferrule).
@@ -91,8 +112,9 @@ def build():
         def rank(pid):
             p = papers[pid]
             year = int(p.get('crossref_year') or 0)
+            off_topic = 0 if implant_topic or not implant_paper(p) else IMPLANT_PENALTY
             return (-(score[pid] + (0.8 if in_title(p) else 0) + DESIGN.get(p.get('type'), 0)
-                      + (0.1 if p.get('key_finding') else 0) + (0.15 if year >= 2018 else 0)), -year, pid)
+                      + (0.1 if p.get('key_finding') else 0) + (0.15 if year >= 2018 else 0) - off_topic), -year, pid)
 
         ids = sorted(score, key=rank)[:PER_TAG]
         by_tag[key] = ids

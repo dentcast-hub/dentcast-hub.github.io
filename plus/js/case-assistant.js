@@ -9,7 +9,7 @@
 // dcp-assist-* in plus-pages.css.
 import { el, faNum } from './util.js?v=206';
 import { api, ApiError } from './api.js?v=206';
-import { FOLDER_EN, getModel } from './content-index.js?v=206';
+import { FOLDER_EN } from './content-index.js?v=206';
 import { openLoginModal } from './login-modal.js?v=206';
 import { premiumCta } from './premium-cta.js?v=206';
 
@@ -20,6 +20,19 @@ const MAX_CUSTOM = 200;
 // Results shown at once; the rest open with «مطالب بیشتر».
 const SHOWN = 4;
 const PAPERS_SHOWN = 3;
+
+// Just the hashtag labels for the scan line (tools/build_plus_index.mjs), not
+// the whole content index. Fetched once, as the wizard opens.
+let labelsPromise = null;
+function tagLabels() {
+  if (!labelsPromise) {
+    labelsPromise = fetch('/plus/assistant-tags.json', { cache: 'no-cache' })
+      .then((r) => (r.ok ? r.json() : { tags: [] }))
+      .then((j) => (Array.isArray(j.tags) ? j.tags : []))
+      .catch(() => { labelsPromise = null; return []; });
+  }
+  return labelsPromise;
+}
 
 function sparkAvatar(isSmall) {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -230,9 +243,9 @@ export function renderCaseAssistant(container) {
   function startScan(node) {
     const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const token = scanToken;
-    getModel().then((model) => {
+    tagLabels().then((labels) => {
       if (token !== scanToken || !node.isConnected) return;
-      const tags = (model.tags || []).map((t) => t.fa).filter(Boolean);
+      const tags = labels.filter(Boolean);
       if (!tags.length) return;
       if (still) {
         // No motion: state the scope once instead of animating.
@@ -445,6 +458,7 @@ export function renderCaseAssistant(container) {
     }
   }
 
+  tagLabels(); // warm it while the reader types
   // Pick up a case left mid-way (a reload, or Back from an article it opened).
   let saved = null;
   try { saved = JSON.parse(sessionStorage.getItem(SS) || 'null'); } catch (e) { saved = null; }

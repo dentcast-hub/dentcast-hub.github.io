@@ -68,7 +68,7 @@ class TransientAiError extends Error {}
 const RETRYABLE_STATUS = new Set([400, 408, 409, 425, 429, 500, 502, 503, 504]);
 
 /** Backoff before attempt 2, 3, ... The last value repeats if attempts go higher. */
-const BACKOFF_MS = [400, 1200];
+const BACKOFF_MS = [150, 600];
 
 const sleep = (ms: number): Promise<void> => new Promise((r) => { setTimeout(r, ms); });
 
@@ -224,7 +224,10 @@ export class OpenAiCompatibleProvider implements AiProvider {
   private async selectTagsAttempt({ description, refinements, catalog }: SelectTagsInput): Promise<string[]> {
     const parsed = await this.chatJson(
       SELECT_TAGS_SYSTEM_PROMPT,
-      JSON.stringify({ description, refinements, catalog }),
+      // The catalog first: it is the same ~5K tokens on every call, so as the
+      // leading part of the message it is a prefix a gateway can cache, which
+      // it never was behind each case's own description.
+      JSON.stringify({ catalog, description, refinements }),
     ) as { tags?: unknown };
 
     // Shape cleanup only. Whatever doesn't look like a short real label is just

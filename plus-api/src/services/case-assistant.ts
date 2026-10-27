@@ -498,8 +498,24 @@ function tagSelectionCacheKey(text: string): string {
 
 /** The one model call, validated and memoised. Returns real tag keys, in the
  * order the model ranked them. */
+// The same case asked twice at once (a double submit, a reload while the first
+// call is still out) shares the one model call already in flight.
+const inFlight = new Map<string, Promise<string[]>>();
+
 async function cachedTagSelection(description: string, refinements: string[]): Promise<string[]> {
   const cacheKey = tagSelectionCacheKey([description, ...refinements].join('\n'));
+  const pending = inFlight.get(cacheKey);
+  if (pending) return pending;
+  const p = selectTagsUncoalesced(description, refinements, cacheKey);
+  inFlight.set(cacheKey, p);
+  try {
+    return await p;
+  } finally {
+    inFlight.delete(cacheKey);
+  }
+}
+
+async function selectTagsUncoalesced(description: string, refinements: string[], cacheKey: string): Promise<string[]> {
   const hit = tagSelectionCache.get(cacheKey);
   if (hit && Date.now() - hit.at < TAG_SELECTION_TTL_MS) {
     tagSelectionCache.delete(cacheKey);
@@ -727,9 +743,12 @@ export async function nextCaseStep(
   const descHash = hashDescription(normalizeFa(description));
   const roundNo = history.length;
   const searchWords = [...new Set(words([description, ...customAnswers(history)].join('\n')))];
+  // Recorded alongside the round's own work rather than before it: the model
+  // call does not wait on a learning-table write.
+  let choiceWrite: Promise<unknown> = Promise.resolve();
   if (roundNo > 0) {
     const last = history[history.length - 1].answer;
-    await recordChoice({
+    choiceWrite = recordChoice({
       userId, descHash, roundNo: roundNo - 1,
       chosenKey: 'custom' in last ? null : last.key,
     }).catch(() => { /* learning must never break a round */ });
@@ -743,6 +762,7 @@ export async function nextCaseStep(
     const resolvedTag = step.done && lastConcreteKey(history)?.startsWith(TAG_PREFIX)
       ? lastConcreteKey(history)!.slice(TAG_PREFIX.length)
       : null;
+    await choiceWrite; // the choice row precedes the next round's row, as before
     const roundId = await recordRound({
       userId, descHash, words: searchWords, roundNo, offered, resolvedTag,
     }).catch(() => null);

@@ -272,6 +272,17 @@ const out = {
   byContent,
 };
 
+// The case assistant's «دارم هشتگ‌های سایت را می‌خوانم…» line only needs the
+// labels: ~15 KB instead of this whole index on the reader's first submit.
+// Same exclusions as the server's assistantTags(): LiteCast-only tags and
+// series/people tags never reach the catalog the model reads.
+const KEPT_BRAND = new Set(['مارکتینگ دندانپزشکی', 'مدیریت مطب', 'برندینگ']);
+const assistantLabels = tags
+  .filter((t) => !(t.domain === 'brand' && !KEPT_BRAND.has(t.key)))
+  .filter((t) => t.contentIds.some((id) => byContent[id] && byContent[id].type !== 'litecast'))
+  .map((t) => t.fa);
+writeText(resolve(root, 'plus', 'assistant-tags.json'), JSON.stringify({ tags: assistantLabels }) + '\n');
+
 for (const [p, ids] of unknownPrimary) {
   console.warn(`WARN: pillar "${p}" is not a known cluster; left out of the tree: ${ids.join(', ')}`);
 }

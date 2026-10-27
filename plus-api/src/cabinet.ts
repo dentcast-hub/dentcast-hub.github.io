@@ -34,6 +34,7 @@ let cached: CabinetFile | null = null;
 let cachedMtimeMs = 0;
 /** Set by content-refresh.ts once a published copy has been fetched and validated. */
 let remote: CabinetFile | null = null;
+let remoteText = '';
 
 function defaultPath(): string {
   const here = dirname(fileURLToPath(import.meta.url)); // plus-api/src (or dist)
@@ -55,7 +56,11 @@ export function applyRemoteCabinet(raw: unknown): boolean {
   const lists = Object.values(f.byTag);
   if (lists.length === 0) return false;
   if (!lists.every((ids) => Array.isArray(ids) && ids.every((id) => typeof id === 'string' && f.papers[id]))) return false;
+  // An unchanged poll keeps the object in service (see applyRemoteIndex).
+  const text = JSON.stringify(f);
+  if (remote && text === remoteText) return true;
   remote = f;
+  remoteText = text;
   return true;
 }
 
@@ -67,6 +72,7 @@ export function cabinetSource(): string {
 /** Test-only: forget the fetched copy so a case can start from the baked file. */
 export function resetRemoteCabinet(): void {
   remote = null;
+  remoteText = '';
 }
 
 function getFile(): CabinetFile {
