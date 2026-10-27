@@ -26,7 +26,7 @@
 // GROUPS ARE INFORMATION, not decoration: they answer «what kind of thing is
 // this» for a reader who has never used any of it. Order inside a group is the
 // order a new subscriber meets them, the everyday ones first.
-import { PREMIUM_FEATURES } from './config.js?v=196';
+import { PREMIUM_FEATURES } from './config.js?v=198';
 
 const F = PREMIUM_FEATURES;
 
@@ -121,7 +121,7 @@ export const PREMIUM_GROUPS = [
     entries: [
       entry('assistant', IC.assistant, '/plus/assistant.html', 'شرح کیس را بنویسید و به مرتبط‌ترین مطلب برسید', { feature: F[4] }),
       entry('wayfinder', IC.wayfinder, '/plus/wayfinder.html', 'نقشه‌ی خواندن متناسب با تخصص و هدف شما', { title: 'مسیریاب' }),
-      entry('cabinet', IC.cabinet, '/dentcast_cabinet_search.html', 'بیش از ۲۲۰۰ مقاله‌ی علمی، دسته‌بندی‌شده و قابل جستجو', { title: 'کتابخانه‌ی دنت‌کست' }),
+      entry('cabinet', IC.cabinet, '/dentcast_cabinet_search.html', 'بیش از ۲۱۰۰ مقاله‌ی علمی، دسته‌بندی‌شده و قابل جستجو', { title: 'کتابخانه‌ی دنت‌کست' }),
       // The scorer's drawer sits at the very END of this tab (premium-panel.js
       // desToolBand — the same box the home panel carries). The href names
       // that copy; premium-panel.js resolves it inside the panel, scrolls to
