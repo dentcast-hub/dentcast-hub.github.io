@@ -3860,6 +3860,101 @@
       "abstract": "To compare marginal changes at bone-level implants restored with screw-retained implant prosthesis with or without intermediate standardised abutments, after 1 year of follow-up.\n\nThirty-six partially edentulous patients received 72 implants. Each patient received 2 implants and a 2- to 4-unit screw-retained implant-prosthesis. The test group received implants consisting of a screw-retained prosthesis connected directly to the implant shoulder, while the prostheses in the control group were connected through a 3-mm standardised intermediate abutment. Clinical and radiological data were recorded at baseline and at 3, 6 and 12 months in follow-up visits.\n\nAt 12 months, the marginal bone loss was 0.17 ± 0.24 mm for the test group (19 patients) and 0.09 ± 0.15 mm for the control group (17 patients), with no statistically significant differences (p > .05). The mean probing pocket depth was 2.96 mm ± 0.46 for the test group and 2.86 ± 0.62 mm for the control group. The test and control groups showed bleeding on probing levels of 18.86 ± 14.12% and 13.73 ± 17.66%, respectively. All patients scored below 25% on the plaque index levels.\n\nRestoration of bone-level implants with fixed screw-retained partial prostheses with or without intermediate abutments presented similar radiographic and clinical outcomes after 1 year."
     },
     {
+      "id": "P0087",
+      "title": "Mechanical stability and technical outcomes of monolithic CADCAM fabricated abutmentcrowns supported by titanium bases an in vitro study",
+      "file_name": "Mechanical stability and technical outcomes of monolithic CAD/CAM fabricated abutment-crowns supported by titanium bases: An in vitro study.pdf",
+      "topic": "abutment",
+      "topic_path": "abutment",
+      "type": "in vitro study",
+      "local_path": "E:\\Paper farzad\\abutment\\Mechanical stability and technical outcomes of monolithic CADCAM fabricated abutmentcrowns supported by titanium bases an in vitro study.pdf",
+      "file_size": 26898697,
+      "key_finding": "In vitro study of 60 conical implants with five abutment-crown designs after thermocycling and 1,200,000 chewing cycles: survival was 100% for lithium disilicate on custom titanium abutments or Ti-bases, 91.7% for PFM, 66.7% for zirconia and 58.3% for PICN on Ti-bases.",
+      "clinical_bottom_line": "Laboratory evidence only: lithium disilicate hybrid abutment-crowns may be an alternative to PFM, while PICN and zirconia on Ti-bases performed worse mechanically or in bonding.",
+      "linked_episodes": [],
+      "drive_link": "",
+      "status": "linked",
+      "tags": [
+        "abutment",
+        "cad-cam",
+        "in-vitro",
+        "monolithic-restoration",
+        "ti-base",
+        "topic:abutment",
+        "titanium",
+        "crown",
+        "dental-implant",
+        "lithium-disilicate",
+        "zirconia",
+        "polymer-infiltrated-ceramic-network",
+        "metal-ceramic",
+        "chewing-simulation",
+        "hybrid-abutment",
+        "2020",
+        "monolithic-abutment-crowns-on-titanium-bases"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "display_title": "Mechanical stability and technical outcomes of monolithic CAD/CAM fabricated abutment-crowns supported by titanium bases: An in vitro study",
+      "doi": "10.1111/clr.13693",
+      "authors": [
+        "João Pitta",
+        "Jenni Hjerppe",
+        "Felix Burkhardt",
+        "Vincent Fehmer",
+        "Philippe Mojon",
+        "Irena Sailer"
+      ],
+      "concepts": [
+        {
+          "name": "Abutment",
+          "score": 0.751
+        },
+        {
+          "name": "Materials science",
+          "score": 0.7399
+        },
+        {
+          "name": "Titanium",
+          "score": 0.7092
+        },
+        {
+          "name": "Crown (dentistry)",
+          "score": 0.7085
+        },
+        {
+          "name": "Dentistry",
+          "score": 0.6012
+        },
+        {
+          "name": "Lithium fluoride",
+          "score": 0.5363
+        },
+        {
+          "name": "Lithium disilicate",
+          "score": 0.4869
+        },
+        {
+          "name": "Dental Abutments",
+          "score": 0.4657
+        },
+        {
+          "name": "Composite material",
+          "score": 0.4357
+        },
+        {
+          "name": "Ceramic",
+          "score": 0.3253
+        }
+      ],
+      "abstract": "OBJECTIVES: To evaluate mechanical stability (survival and complication rates) and bending moments of different all-ceramic monolithic restorations bonded to titanium bases (hybrid abutment-crowns) or to customized titanium abutments compared to porcelain-fused-to-metal crowns (PFM) after thermo-mechanical aging. MATERIAL AND METHODS: Sixty conical connection implants (4.3 mm-diameter) were divided in five groups (n = 12): PFM using gold abutment (GAbut-PFM), lithium disilicate crown bonded to customized titanium abutment (TAbut+LDS), lithium disilicate abutment-crown bonded to titanium base (TiBase+LDS), zirconia abutment-crown bonded to titanium base (TiBase+ZR), polymer-infiltrated ceramic-network (PICN) abutment-crown bonded to titanium base (TiBase+PICN). Simultaneous thermocycling (5°-55°C) and chewing simulation (1,200,000-cycles, 49 N, 1.67 Hz) were applied. Catastrophic and non-catastrophic events were evaluated under light microscope, and survival and complication rates were calculated. Specimens that survived aging were loaded until failure and bending moments were calculated. RESULTS: Survival rates after aging were 100% (TAbut+LDS, TiBase+LDS), 91.7% (GA-PFM), 66.7% (TiBase+ZR) and 58.3% (TiBase+PICN) and differed among the groups (p = .006). Non-catastrophic events as screw loosening (GA-PFM) and loss of retention or micro-/macro-movement (TiBase groups) were observed. Complication rates varied among the groups (p < .001). TiBase+PICN had lower bending moment than all the other groups (p < .001). CONCLUSIONS: Hybrid abutment-crowns made of lithium disilicate can be an alternative to PFM-based restorations, although concerns regarding the bonded interface between the titanium base and abutment-crown can be raised. PICN and zirconia may not be recommended due to its inferior mechanical and bonding outcomes, respectively. Titanium customized abutment with bonded lithium disilicate crown appears to be the most stable combination.",
+      "journal": "Clinical Oral Implants Research",
+      "crossref_year": 2020,
+      "real_title": "Mechanical stability and technical outcomes of monolithic CAD/CAM fabricated abutment-crowns supported by titanium bases: An in vitro study",
+      "drive_id": "16zUcFK2dZ1ca-PGqJYYpSsDGUyM7ssXh",
+      "drive_view": "https://drive.google.com/file/d/16zUcFK2dZ1ca-PGqJYYpSsDGUyM7ssXh/view",
+      "drive_download": "https://drive.google.com/uc?export=download&id=16zUcFK2dZ1ca-PGqJYYpSsDGUyM7ssXh"
+    },
+    {
       "id": "P0088",
       "title": "Mechanics of the Implant-Abutment Connection An 8-Degree Taper Compared to a Butt Joint",
       "file_name": "Mechanics of the Implant-Abutment Connection An 8-Degree Taper Compared to a Butt Joint.pdf",
@@ -15239,6 +15334,38 @@
       ]
     },
     {
+      "id": "P0342",
+      "title": "فهرست باندینگ‌های موجود در بازار ایران (بر اساس نسل)",
+      "file_name": "فهرست باندینگ‌های موجود در بازار ایران (بر اساس نسل).pdf",
+      "topic": "biomimetic",
+      "topic_path": "biomimetic/Bonding",
+      "type": "other document",
+      "local_path": "E:\\Paper farzad\\biomimetic\\Bonding\\Bonding iranian market 1.pdf",
+      "file_size": 23844306,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [],
+      "drive_link": "",
+      "status": "linked",
+      "tags": [
+        "bonding",
+        "topic:biomimetic",
+        "topic:bonding",
+        "adhesive-systems",
+        "universal-adhesive",
+        "self-etch-adhesive",
+        "product-list",
+        "bonding-agents-iranian-market"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "display_title": "فهرست باندینگ‌های موجود در بازار ایران (بر اساس نسل)",
+      "real_title": "فهرست باندینگ‌های موجود در بازار ایران (بر اساس نسل)",
+      "drive_id": "1FXpgx58YZiWgGSPOGWvOoqPMvNPK8DtS",
+      "drive_view": "https://drive.google.com/file/d/1FXpgx58YZiWgGSPOGWvOoqPMvNPK8DtS/view",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1FXpgx58YZiWgGSPOGWvOoqPMvNPK8DtS"
+    },
+    {
       "id": "P0343",
       "title": "Bonding iranian market 2",
       "file_name": "Bonding iranian market 2.pdf",
@@ -17008,6 +17135,52 @@
       "abstract": "Optimal strategies for the application of an adhesive differ between enamel and dentin because of the differences in their composition. The development of adhesive systems has mainly focused on the bonding of dentin, rather than on the enamel, by etching with phosphoric acid (PA). Dental adhesive technologies continue to rapidly advance, and various adhesive systems have been developed since the study of Buonocore in 1955. He introduced the enamel acid-etch technique. Then, the etch-and-rinse (ER) system was developed, and subsequently, the self-etch (SE) system. Universal adhesives are a new generation of one-bottle SE adhesives that can be applied with either ER mode or SE mode, or a combined system involving selective enamel etching mode. Since the combination of PA etching and the SE system differs from conventional ER systems, the enamel bonding strategy should be carefully considered. This concise review of the literature on reliable enamel bonding strategies should prove helpful to clinicians to choose an appropriate adhesive system to achieve optimal clinical outcomes.",
       "journal": "Frontiers in Dental Medicine",
       "crossref_year": 2021
+    },
+    {
+      "id": "P0379",
+      "title": "Supra-Gingival Minimally Invasive Dentistry: A Healthier Approach to Esthetic Restorations",
+      "file_name": "Supra-Gingival Minimally Invasive Dentistry: A Healthier Approach to Esthetic Restorations.pdf",
+      "topic": "biomimetic",
+      "topic_path": "biomimetic/Bonding",
+      "type": "book / chapter",
+      "local_path": "E:\\Paper farzad\\biomimetic\\Bonding\\upra-Gingival Minimally Invasive Dentistry A Healthier Approach to Esthetic Restorations- jose-luis ruiz.pdf",
+      "file_size": 31398100,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [],
+      "drive_link": "",
+      "status": "linked",
+      "tags": [
+        "topic:biomimetic",
+        "topic:bonding",
+        "bonding",
+        "biomimetic-dentistry",
+        "esthetic-dentistry",
+        "minimally-invasive",
+        "textbook",
+        "adhesive-dentistry",
+        "onlay",
+        "veneer",
+        "subgingival-margin",
+        "supra-gingival-minimally-invasive-dentistry"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "display_title": "Supra-Gingival Minimally Invasive Dentistry: A Healthier Approach to Esthetic Restorations",
+      "real_title": "Supra-Gingival Minimally Invasive Dentistry: A Healthier Approach to Esthetic Restorations",
+      "duplicate_paths": [
+        "E:\\Paper farzad\\biomimetic\\supra-gingival minimally invasi - jose-luis ruiz.pdf"
+      ],
+      "journal": "John Wiley & Sons",
+      "crossref_year": 2017,
+      "authors": [
+        "Jose-Luis Ruiz"
+      ],
+      "abstract": "",
+      "doi": "",
+      "drive_id": "18eytGdh_9kKlQ4fnBeiWZKxKTaxTrM-i",
+      "drive_view": "https://drive.google.com/file/d/18eytGdh_9kKlQ4fnBeiWZKxKTaxTrM-i/view",
+      "drive_download": "https://drive.google.com/uc?export=download&id=18eytGdh_9kKlQ4fnBeiWZKxKTaxTrM-i"
     },
     {
       "id": "P0380",
@@ -122786,6 +122959,93 @@
       ]
     },
     {
+      "id": "P2683",
+      "title": "Mechanical Properties of Translucent Zirconia: An In Vitro Study",
+      "file_name": "Mechanical Properties of Translucent Zirconia: An In Vitro Study.pdf",
+      "topic": "zirconia",
+      "topic_path": "zirconia/3Y & 4Y & 5Y",
+      "type": "in vitro study",
+      "local_path": "E:\\Paper farzad\\zirconia\\3Y & 4Y & 5Y\\Mechanical Properties of Translucent Zirconia An In Vitro Study.pdf",
+      "file_size": 20828554,
+      "key_finding": "In vitro study of 23 specimens: high-translucent Y-TZP had flexural strength 427 (±59.5) MPa and fracture toughness 4.9 (±0.9) MPa.m1/2 versus 805 (±198.4) MPa and 8.9 (±1.1) MPa.m1/2 for low-translucent Y-TZP; aged high-translucent specimens reached 440 MPa.",
+      "clinical_bottom_line": "Authors suggest high-translucent zirconia for anterior/lateral areas up to premolars; small-sample laboratory evidence only, not clinical proof.",
+      "linked_episodes": [],
+      "drive_link": "",
+      "status": "linked",
+      "tags": [
+        "in-vitro",
+        "topic:3y-4y-5y",
+        "topic:zirconia",
+        "translucency",
+        "zirconia",
+        "prosthodontics",
+        "topic:flexural-strength",
+        "2023",
+        "flexural-strength",
+        "fracture-toughness",
+        "monolithic-restoration",
+        "aging",
+        "mechanical-properties-translucent-zirconia"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "display_title": "Mechanical Properties of Translucent Zirconia: An In Vitro Study",
+      "doi": "10.3390/prosthesis5010004",
+      "authors": [
+        "Luan Mavriqi",
+        "Tonino Traini"
+      ],
+      "concepts": [
+        {
+          "name": "Cubic zirconia",
+          "score": 0.846
+        },
+        {
+          "name": "Flexural strength",
+          "score": 0.8243
+        },
+        {
+          "name": "Materials science",
+          "score": 0.7251
+        },
+        {
+          "name": "Brittleness",
+          "score": 0.6747
+        },
+        {
+          "name": "Fracture toughness",
+          "score": 0.5928
+        },
+        {
+          "name": "Group (periodic table)",
+          "score": 0.5634
+        },
+        {
+          "name": "Vickers hardness test",
+          "score": 0.5528
+        },
+        {
+          "name": "Composite material",
+          "score": 0.5374
+        },
+        {
+          "name": "Ceramic",
+          "score": 0.3911
+        }
+      ],
+      "abstract": "Background: The introduction of translucent zirconia has improved mimetics: nevertheless, a reduction in the mechanical performance was registered. The study aim was to investigate the mechanical characteristics of a high-translucent zirconia used for monolithic restorations before and after the aging process compared to a low-translucent zirconia. Methods: A total of 23 specimens were used in the present study. Group A (n = 10) was made of a high-translucent Y-TZP; group B (n = 7) was made of a low-translucent Y-TZP and finally group C (n = 6) was an aged high-translucent Y-TZP. Flexural strength, fracture toughness, brittleness, microcrack’s propagation and grain size were analyzed. Results: The Vickers hardness was: 1483 ± 187 MPa (group C); 1102 ± 392 MPa (group A); 1284 ± 32 MPa (group B). The flexural strength was: 440 (±96.2) MPa (group C); 427 (±59.5) MPa (group A); 805 (±198.4) MPa (group B). The fracture toughness was: 5.1 (±0.7) MPa.m1/2 (group C); 4.9 (±0.9) MPa.m1/2 (group A); 8.9 (±1.1) MPa.m1/2 (group B). The brittleness was: 295 (±42.8) (group C), 230.9 (±46.4) (group A) and 144.9 (±20.3) (group B). The grain size was: 2.75 (±1.2) µm2 (group A); 0.16 (±0.05) µm2 (group B); 3.04 (±1.1) µm2 (group C). Conclusions: The significant reduction in the mechanical properties of high-translucent zirconia, compared to the traditional one, suggests their use in the anterior/lateral area (up to premolars).",
+      "journal": "Prosthesis",
+      "crossref_year": 2023,
+      "duplicate_paths": [
+        "E:\\Paper farzad\\zirconia\\flexural strength\\Mechanical Properties of Translucent Zirconia An In Vitro Study.pdf",
+        "E:\\Paper farzad\\zirconia\\Mavriqi-2023-Mechanical-properties-of-translucen.pdf"
+      ],
+      "real_title": "Mechanical Properties of Translucent Zirconia: An In Vitro Study",
+      "drive_id": "1uzR-_oaOT3qUlKG4a6_1GwfkO90p27Al",
+      "drive_view": "https://drive.google.com/file/d/1uzR-_oaOT3qUlKG4a6_1GwfkO90p27Al/view",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1uzR-_oaOT3qUlKG4a6_1GwfkO90p27Al"
+    },
+    {
       "id": "P2684",
       "title": "Mechanical Properties of New Generations of Monolithic, Multi-Layered Zirconia",
       "file_name": "Mechanical_Properties_of_New_Generations_of_Monoli.pdf",
@@ -133415,7 +133675,7 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2156,
+  "total_papers": 2160,
   "tag_aliases": {
     "additive-manufacturing": "3d-printing",
     "adhesion": "bonding",
