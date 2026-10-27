@@ -18099,7 +18099,6 @@
         "coronal-margin-relocation",
         "subgingival-margin",
         "immediate-dentin-sealing",
-        "crown-lengthening",
         "inlay-onlay",
         "biomimetic-dentistry",
         "topic:biomimetic",
@@ -21399,8 +21398,7 @@
         "primer",
         "composite-resin",
         "composite-repair",
-        "meta-analysis",
-        "in-vitro"
+        "meta-analysis"
       ],
       "name_bucket": "meaningful",
       "semantic_tagged": true,
@@ -29407,7 +29405,6 @@
         "mandible",
         "marginal-bone-loss",
         "prospective",
-        "provisional-restoration",
         "randomized-controlled-trial",
         "success",
         "topic:connection",
@@ -52166,7 +52163,6 @@
         "topic:fresh-socket",
         "fresh-socket",
         "esthetic-dentistry",
-        "soft-tissue-management",
         "esthetic-zone",
         "prospective",
         "soft-tissue-thickness",
@@ -91782,7 +91778,6 @@
         "dental-implant",
         "peri-implantitis",
         "peri-implant-disease",
-        "peri-implant-tissue",
         "in-vitro",
         "decontamination"
       ],
@@ -95183,7 +95178,6 @@
       "drive_view": "https://drive.google.com/file/d/1YlQf2xeuyMEETeuaK9ZKgBqcZ34DPAIx/view",
       "drive_id": "1YlQf2xeuyMEETeuaK9ZKgBqcZ34DPAIx",
       "tags": [
-        "2011",
         "topic:platform-switch",
         "platform-switching",
         "dental-implant",
@@ -95769,7 +95763,6 @@
         "soft-tissue-thickness",
         "topic:platform-switch",
         "dental-implant",
-        "soft-tissue-management",
         "topic:zero-bone-loss",
         "cohort",
         "prospective"
@@ -100889,8 +100882,7 @@
         "resorbed-mandible",
         "guided-surgery",
         "mandible",
-        "allograft",
-        "inlay"
+        "allograft"
       ],
       "name_bucket": "heavy",
       "semantic_tagged": true,
@@ -104196,7 +104188,6 @@
       "tags": [
         "topic:short-implant",
         "dental-implant",
-        "short-implant",
         "crown",
         "prosthodontics",
         "in-vitro",
