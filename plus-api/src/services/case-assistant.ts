@@ -471,7 +471,7 @@ function rankIds(ids: string[], context: Tag[], self?: Tag): string[] {
  * from memory.
  *
  * It is safe to cache because the call is deterministic by construction:
- * temperature 0, no user identity in the input, and the result is only ever a
+ * the same model and prompt, no user identity in the input, and the result is only ever a
  * list of the site's own tag keys. Two users describing the same case should
  * reach the same tags.
  *

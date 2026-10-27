@@ -283,3 +283,14 @@ describe('the timeout / retry-budget pair', () => {
     expect(used).toBe(config.ai.maxAttempts);
   });
 });
+
+describe('sampling temperature per model', () => {
+  it('sends none to Claude models, 0 to the rest, and honours AI_TEMPERATURE', async () => {
+    const { samplingTemperature } = await import('../src/providers/ai/openai-compatible.js');
+    expect(samplingTemperature('Claude-Haiku-5.5', undefined)).toBeNull();
+    expect(samplingTemperature('GPT-5-Nano', undefined)).toBe(0);
+    expect(samplingTemperature('GPT-5-Nano', '')).toBeNull();
+    expect(samplingTemperature('Claude-Haiku-5.5', '0.2')).toBe(0.2);
+  });
+});
+
