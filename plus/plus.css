@@ -1583,6 +1583,27 @@ html.dcp-touring #mobile-body { overflow: hidden; }
 .dcp-tour-foot { display: flex; align-items: center; gap: 8px; }
 .dcp-tour-next { min-width: 96px; }
 .dcp-tour-progress { margin-inline-start: auto; font-size: .8rem; opacity: .65; font-variant-numeric: tabular-nums; }
+/* What a subscription buys wears amber — the site's one meaning for it. */
+.dcp-tour-badge {
+  display: inline-block; margin: 0 0 8px; padding: 1px 10px; border-radius: 999px;
+  font-size: .74rem; font-weight: 800; line-height: 1.8;
+  color: var(--dcp-gold, #b7791f); background: var(--dcp-gold-bg, rgba(183, 121, 31, .10));
+  border: 1px solid color-mix(in srgb, var(--dcp-gold, #b7791f) 40%, transparent);
+}
+.dcp-tour-cta {
+  display: block; margin: -4px 0 12px; font-size: .86rem; font-weight: 800;
+  color: var(--dcp-gold, #b7791f); text-decoration: none;
+}
+
+/* The پریمیوم tab as a subscriber sees it, drawn by premium-panel.js from a
+   sample reader while the tour is on the tab; the real slot is hidden, never
+   touched, and comes back when the sample is removed. */
+#panel-premium.dcp-tour-previewing #dcPremiumPanel { display: none !important; }
+.dcp-tour-sample {
+  margin: 0 0 .7rem; padding: .3rem .8rem; border-radius: 999px; text-align: center;
+  font-size: .76rem; font-weight: 800; color: var(--dcp-gold, #b7791f);
+  border: 1px dashed color-mix(in srgb, var(--dcp-gold, #b7791f) 55%, transparent);
+}
 
 /* First-login invite (reuses the welcome overlay look). */
 .dcp-tour-offer-hint { margin: 0 0 14px; font-size: .85rem; opacity: .8; line-height: 1.9; }
