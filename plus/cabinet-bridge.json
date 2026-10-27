@@ -8,6 +8,9 @@
   "adjacent tooth": [
    "adjacent-teeth"
   ],
+  "ai literacy": [
+   "artificial-intelligence"
+  ],
   "anterior implant": [
    "esthetic-zone"
   ],
@@ -36,7 +39,9 @@
    "butt-joint"
   ],
   "cad cam": [
-   "cad-cam"
+   "cad-cam",
+   "marginal-fit",
+   "monolithic-restoration"
   ],
   "caries detector": [
    "caries-detector-dye"
@@ -55,9 +60,6 @@
    "tooth-preparations-complete-crowns",
    "tooth-preparation"
   ],
-  "debonding": [
-   "debonding"
-  ],
   "dental ai": [
    "artificial-intelligence"
   ],
@@ -70,6 +72,9 @@
   "digital implant planning": [
    "cbct-in-implant-dentistry",
    "guided-surgery"
+  ],
+  "distortion": [
+   "ios-accuracy"
   ],
   "dme": [
    "deep-margin-elevation"
@@ -107,6 +112,11 @@
   "implant failure": [
    "implant-failure",
    "early-implant-failure"
+  ],
+  "implant planning": [
+   "guided-surgery",
+   "cbct-in-implant-dentistry",
+   "dynamic-navigation"
   ],
   "implant prosthetics": [
    "implant-prosthesis",
@@ -163,12 +173,16 @@
    "peri-implant-phenotype",
    "gingival-phenotype"
   ],
-  "pmma": [
-   "pmma",
-   "cad-cam-materials-pmma"
+  "prf": [
+   "prf",
+   "platelet-concentrates"
   ],
   "prosthetic design": [
    "prosthetic-design"
+  ],
+  "psz": [
+   "deep-caries",
+   "carious-dentin"
   ],
   "rbfdp": [
    "resin-bonded-bridge",
@@ -198,9 +212,6 @@
   "smoking": [
    "smoking",
    "tobacco-smoke"
-  ],
-  "snap on smile": [
-   "snap-on-smile"
   ],
   "soft tissue management": [
    "soft-tissue-management"
@@ -255,7 +266,13 @@
    "vertical-dimension"
   ],
   "zero bone loss": [
-   "crestal-bone-loss"
+   "crestal-bone-loss",
+   "soft-tissue-thickness"
+  ],
+  "آبسه ایمپلنت": [
+   "residual-cement",
+   "peri-implant-mucositis",
+   "cement-retained"
   ],
   "آلودگی": [
    "surface-contamination",
@@ -282,20 +299,16 @@
   "آنله بریج": [
    "resin-bonded-bridge"
   ],
-  "آچار ایمپلنت": [
-   "abutment-driver-tips"
-  ],
   "اباتمنت": [
    "abutment"
   ],
   "اباتمنت زاویه دار": [
-   "angulated-implants"
+   "angulated-screw-channel",
+   "multi-unit-abutment",
+   "custom-abutment"
   ],
   "اباتمنت کاستوم": [
    "custom-abutment"
-  ],
-  "ابزار ایمپلنت": [
-   "abutment-driver-tips"
   ],
   "ابفرکشن": [
    "non-carious-cervical-lesion"
@@ -334,7 +347,9 @@
    "varthis-2019-interproximal-open-contacts"
   ],
   "استئواینتگریشن": [
-   "osseointegration"
+   "osseointegration",
+   "implant-surface",
+   "surface-roughness"
   ],
   "استتیک ویدث": [
    "esthetic-width"
@@ -393,10 +408,15 @@
    "shade-guide"
   ],
   "انتخاب سمان": [
-   "luting-agent",
+   "resin-cement",
+   "self-adhesive-resin-cement",
+   "adhesive-luting",
    "cementation"
   ],
   "انتخاب متریال": [
+   "monolithic-restoration",
+   "all-ceramic",
+   "metal-ceramic",
    "material-selection"
   ],
   "اندو": [
@@ -430,13 +450,18 @@
    "etch-and-rinse-adhesive"
   ],
   "اچ سرامیک": [
-   "hydrofluoric-acid-etching"
+   "glass-ceramic",
+   "lithium-disilicate",
+   "hydrofluoric-acid-etching",
+   "silane"
   ],
   "اکلوزال ونیر": [
    "occlusal-veneer"
   ],
   "اکلوژن": [
-   "occlusion"
+   "occlusion",
+   "occlusal-scheme",
+   "vertical-dimension"
   ],
   "ایزولاسیون": [
    "rubber-dam",
@@ -449,6 +474,7 @@
    "basal-implants"
   ],
   "ایمپلنت دیجیتال": [
+   "guided-surgery",
    "digital-implant-scans"
   ],
   "ایمپلنت زاویه دار": [
@@ -456,7 +482,10 @@
    "implant-angulation"
   ],
   "ایمپلنت فوری": [
-   "immediate-implant"
+   "immediate-implant",
+   "socket-shield",
+   "infected-socket",
+   "compromised-socket"
   ],
   "ایمپلنت فول آرچ": [
    "full-arch-implant-prosthesis",
@@ -479,9 +508,6 @@
   ],
   "اینترفیرنس": [
    "occlusal-interference"
-  ],
-  "اینترنال بلیچینگ": [
-   "bleaching"
   ],
   "اینفرااکلوژن": [
    "infraocclusion"
@@ -548,7 +574,8 @@
    "fixed-dental-prosthesis"
   ],
   "بریج دندان ایمپلنت": [
-   "natural-tooth-vs-implant"
+   "questionable-tooth",
+   "treatment-planning"
   ],
   "بزاق": [
    "saliva"
@@ -579,9 +606,9 @@
    "gummy-smile"
   ],
   "بیس فسفونات": [
-   "bisphosphonate",
    "mronj",
-   "antiresorptive-therapy"
+   "antiresorptive-therapy",
+   "bisphosphonate"
   ],
   "بیمار بی دندان": [
    "edentulous"
@@ -593,7 +620,10 @@
    "late-facial-growth-implant-position"
   ],
   "بیولوژیک ویدث": [
-   "biological-width"
+   "biological-width",
+   "deep-margin-elevation",
+   "crown-lengthening",
+   "subgingival-margin"
   ],
   "بیومیمتیک": [
    "biomimetic-dentistry"
@@ -618,9 +648,6 @@
   ],
   "تداخل اکلوزالی": [
    "occlusal-interference"
-  ],
-  "تداخل سمت کارگر": [
-   "group-function"
   ],
   "تراش دندان": [
    "tooth-preparation"
@@ -685,9 +712,6 @@
   "تزریق بی‌درد": [
    "local-anesthesia"
   ],
-  "تشخیص پوسیدگی": [
-   "caries-detector-dye"
-  ],
   "تصمیم درمانی": [
    "decision-making"
   ],
@@ -703,6 +727,8 @@
    "marginal-adaptation"
   ],
   "تغییر رنگ": [
+   "masking-ability",
+   "translucency",
    "color-stability"
   ],
   "تفکر بالینی": [
@@ -725,6 +751,9 @@
    "vasoconstrictor",
    "epinephrine"
   ],
+  "توروس مندیبولاریس": [
+   "mandibular-torus"
+  ],
   "تورک پیچ": [
    "tightening-torque",
    "screw-preload"
@@ -740,8 +769,7 @@
    "ti-base"
   ],
   "تیرزپاتاید": [
-   "tirzepatide",
-   "zepbound"
+   "tirzepatide"
   ],
   "ثبات اولیه": [
    "primary-stability",
@@ -757,20 +785,16 @@
   "جایگزین آمالگام": [
    "dental-amalgam"
   ],
-  "جراحی ارتوگناتیک": [
-   "orthognathic-surgery"
-  ],
   "جراحی ایمپلنت": [
    "surgical-protocol"
   ],
   "حداقل تهاجم": [
    "minimally-invasive"
   ],
-  "حساسیت بعد از درمان": [
-   "postoperative-sensitivity"
-  ],
   "حفظ دندان": [
-   "natural-tooth-vs-implant"
+   "questionable-tooth",
+   "periodontal-regeneration",
+   "treatment-planning"
   ],
   "حفظ ریج": [
    "ridge-preservation",
@@ -804,9 +828,6 @@
    "smoking",
    "tobacco-smoke"
   ],
-  "درد فکی": [
-   "orofacial-pain"
-  ],
   "درمان بین رشته ای": [
    "interdisciplinary-treatment"
   ],
@@ -815,6 +836,9 @@
    "endodontics"
   ],
   "درمان غیرتهاجمی": [
+   "minimally-invasive"
+  ],
+  "درمان محافظه‌کارانه": [
    "minimally-invasive"
   ],
   "دریفت مزیالی": [
@@ -833,8 +857,14 @@
    "anterior-region"
   ],
   "دندان قروچه": [
-   "clenching",
-   "grinding"
+   "bruxism",
+   "sleep-bruxism",
+   "awake-bruxism",
+   "clenching"
+  ],
+  "دندان مصنوعی": [
+   "complete-denture",
+   "denture-teeth"
   ],
   "دندانپزشکی دیجیتال": [
    "digital-workflow"
@@ -849,8 +879,8 @@
    "pediatric-dentistry"
   ],
   "دوام ترمیم": [
-   "longevity",
-   "restoration-survival"
+   "restoration-survival",
+   "longevity"
   ],
   "دیابت": [
    "diabetes",
@@ -879,13 +909,18 @@
    "cotton-roll-isolation"
   ],
   "روکش": [
-   "crown"
+   "all-ceramic",
+   "metal-ceramic",
+   "monolithic-restoration",
+   "fixed-dental-prosthesis"
   ],
   "روکش pfm": [
    "metal-ceramic",
    "modern-metal-ceramic-restorations"
   ],
   "روکش اسپلینت": [
+   "trauma-from-occlusion",
+   "crown-to-root-ratio",
    "splinting"
   ],
   "روکش ایمپلنت": [
@@ -907,9 +942,6 @@
   ],
   "ریز نشت": [
    "microleakage"
-  ],
-  "ریسک فاکتور": [
-   "risk-factor"
   ],
   "ریشه کوتاه": [
    "crown-to-root-ratio"
@@ -977,8 +1009,7 @@
   ],
   "سرامیک هیبرید": [
    "polymer-infiltrated-ceramic-network",
-   "resin-matrix-ceramic",
-   "hybrid-ceramic"
+   "resin-matrix-ceramic"
   ],
   "سلامت دهان": [
    "oral-health"
@@ -1036,10 +1067,15 @@
    "tribochemical-silica-coating"
   ],
   "سینوس لیفت": [
-   "sinus-augmentation"
+   "sinus-augmentation",
+   "transcrestal-sinus-lift",
+   "sinus-membrane-perforation"
   ],
   "شل شدن پیچ": [
-   "screw-loosening"
+   "screw-loosening",
+   "abutment-screw",
+   "tightening-torque",
+   "screw-preload"
   ],
   "شکست ایمپلنت": [
    "implant-failure",
@@ -1056,6 +1092,11 @@
    "ceramic-fracture",
    "chipping",
    "veneering-porcelain"
+  ],
+  "شکست پست": [
+   "post-and-core",
+   "fiber-post",
+   "ferrule"
   ],
   "شکست پیچ": [
    "abutment-screw"
@@ -1110,6 +1151,10 @@
    "inter-implant-distance",
    "adjacent-implants"
   ],
+  "فالوآپ ایمپلنت": [
+   "supportive-peri-implant-therapy",
+   "peri-implant-mucositis"
+  ],
   "فایبر پست": [
    "fiber-post",
    "glass-fiber-post"
@@ -1124,7 +1169,10 @@
    "basic-erosive-wear-examination"
   ],
   "فرش ساکت": [
-   "fresh-socket"
+   "fresh-socket",
+   "socket-shield",
+   "compromised-socket",
+   "infected-socket"
   ],
   "فرم رزیستنس": [
    "resistance-form"
@@ -1148,23 +1196,15 @@
   "فقدان مولر": [
    "shortened-dental-arch"
   ],
-  "فلبی ریج": [
-   "flabby-ridge"
-  ],
   "فلدسپاتیک": [
    "feldspathic-porcelain"
   ],
   "فنوتیپ پری ایمپلنت": [
-   "peri-implant-phenotype"
+   "peri-implant-phenotype",
+   "soft-tissue-thickness"
   ],
   "فورکا": [
    "furcation"
-  ],
-  "فونتیک": [
-   "phonetics"
-  ],
-  "فیت پروتز": [
-   "marginal-fit"
   ],
   "فیشیال فلو": [
    "facial-flow-concept-orofacial-analysis"
@@ -1265,8 +1305,9 @@
   "مولتی یونیت اباتمنت": [
    "multi-unit-abutment"
   ],
-  "مولر مندیبل": [
-   "mandibular-molar"
+  "موک آپ": [
+   "diagnostic-wax-up",
+   "digital-smile-design"
   ],
   "موکوزیت پری ایمپلنت": [
    "peri-implant-mucositis"
@@ -1285,6 +1326,10 @@
    "occlusal-splint",
    "stabilization-splint"
   ],
+  "نایف اج": [
+   "vertical-preparation",
+   "vertical-finish-line"
+  ],
   "نبود فرول": [
    "ferrule"
   ],
@@ -1299,9 +1344,6 @@
   "نسبت تاج به ریشه": [
    "crown-to-root-ratio",
    "periodontally-compromised-teeth"
-  ],
-  "نسخه نویسی": [
-   "antibiotic-prescription-in-dentistry"
   ],
   "نسل باندینگ": [
    "adhesive-systems",
@@ -1337,8 +1379,8 @@
    "canine-guidance",
    "lateral-occlusion"
   ],
-  "هرز شدن پیچ": [
-   "abutment-driver-tips"
+  "هوش افزوده": [
+   "physician-ai-collaboration"
   ],
   "هوش مصنوعی": [
    "artificial-intelligence"
@@ -1352,8 +1394,8 @@
   "هوش مصنوعی رادیوگرافی": [
    "artificial-intelligence"
   ],
-  "هوم بلیچ": [
-   "bleaching"
+  "هوش مصنوعی مولد": [
+   "large-language-models"
   ],
   "هپلس": [
    "questionable-tooth"
@@ -1417,6 +1459,9 @@
    "fixed-dental-prosthesis",
    "fixed-prosthodontics"
   ],
+  "پروتز دیجیتال": [
+   "digital-workflow"
+  ],
   "پروتز متحرک": [
    "removable-partial-denture",
    "complete-denture"
@@ -1430,6 +1475,10 @@
   "پروتز پارسیل": [
    "removable-partial-denture"
   ],
+  "پروتز کامل": [
+   "complete-denture",
+   "edentulous"
+  ],
   "پروتکل باند": [
    "bonding-protocol"
   ],
@@ -1438,6 +1487,10 @@
   ],
   "پروپریوسپشن": [
    "proprioception"
+  ],
+  "پروگنوز دندان": [
+   "questionable-tooth",
+   "treatment-planning"
   ],
   "پری ایمپلنتیتیس": [
    "peri-implantitis",
@@ -1467,14 +1520,16 @@
   "پست و کور": [
    "post-and-core"
   ],
-  "پلان اکلوژن": [
-   "occlusal-plane"
+  "پلاک پارسیل": [
+   "removable-partial-denture"
   ],
   "پلتفرم سویچ": [
    "platform-switching"
   ],
   "پلنینگ ایمپلنت": [
-   "cbct-in-implant-dentistry"
+   "guided-surgery",
+   "cbct-in-implant-dentistry",
+   "dynamic-navigation"
   ],
   "پوزیشن ایمپلنت": [
    "implant-position"
@@ -1485,6 +1540,10 @@
   "پوسیدگی ثانویه": [
    "secondary-caries"
   ],
+  "پوسیدگی جامانده": [
+   "deep-caries",
+   "carious-dentin"
+  ],
   "پوسیدگی عمیق": [
    "deep-caries"
   ],
@@ -1493,6 +1552,10 @@
   ],
   "پونتیک": [
    "pontic"
+  ],
+  "پیش آگهی": [
+   "questionable-tooth",
+   "treatment-planning"
   ],
   "پیچ اباتمنت": [
    "abutment-screw",
@@ -1563,6 +1626,12 @@
   "کشیدن دندان": [
    "tooth-extraction"
   ],
+  "کشیدن و ایمپلنت": [
+   "immediate-implant",
+   "early-implant-placement",
+   "delayed-implant-placement",
+   "fresh-socket"
+  ],
   "کمبود فضای عمودی": [
    "restorative-space"
   ],
@@ -1622,5 +1691,55 @@
   "یونیورسال باند": [
    "universal-adhesive"
   ]
- }
+ },
+ "exclude": {
+  "بیس فسفونات": [
+   "P1786",
+   "P1742"
+  ],
+  "هوش مصنوعی رادیوگرافی": [
+   "P2889"
+  ],
+  "تطابق بیمار": [
+   "P2948"
+  ],
+  "ایمپلنت فول آرچ": [
+   "P2929",
+   "P2930"
+  ]
+ },
+ "tooth_topics": [
+  "cad cam",
+  "اسکنر داخل دهانی",
+  "انتخاب سمان",
+  "انتخاب متریال",
+  "اکلوژن",
+  "بریج",
+  "بقای رستوریشن",
+  "بیولوژیک ویدث",
+  "تراش روکش",
+  "تکنیک سمان",
+  "خطای اسکن",
+  "دقت اسکن",
+  "دوام ترمیم",
+  "روکش",
+  "روکش اسپلینت",
+  "روکش موقت",
+  "زیرکونیا",
+  "سرامیک",
+  "سمان",
+  "سمان دائم",
+  "سمان دندانی",
+  "سمان کردن",
+  "سمنتیشن",
+  "شکست پرسلن",
+  "قالبگیری",
+  "قالب‌گیری دیجیتال",
+  "موقتی به‌عنوان مرجع",
+  "پروتز ثابت",
+  "کانتکت",
+  "کانتکت سنگین",
+  "کانتکت پروگزیمال",
+  "کانتی لیور"
+ ]
 }

@@ -460,7 +460,7 @@ function rankIds(ids: string[], context: Tag[], self?: Tag): string[] {
   const sets = context.filter((t) => t !== self && t.key !== self?.key).map((t) => new Set(t.contentIds));
   return ids
     .map((id, i) => ({ id, i, s: sets.reduce((n, set) => n + (set.has(id) ? 1 : 0), 0) }))
-    .sort((a, b) => b.s - a.s || a.i - b.i)
+    .sort(lifted)
     .map((x) => x.id);
 }
 
@@ -606,13 +606,31 @@ function offeredKeys(history: NarrowHistoryEntry[]): Set<string> {
   return new Set(history.flatMap((h) => (h.options || []).map((o) => o.key)));
 }
 
-/** The tags offered anywhere in this case — what the case is "about". */
+/**
+ * The tags shown beside the one the user picked — the case's other facets.
+ * Only that round: a round answered with «غیر از این‌ها» was rejected, so its
+ * options say what the case is NOT about.
+ */
 function offeredTags(history: NarrowHistoryEntry[]): Tag[] {
-  return [...offeredKeys(history)]
+  let round: NarrowHistoryEntry | undefined;
+  for (let i = history.length - 1; i >= 0 && !round; i -= 1) {
+    if (!('custom' in history[i].answer)) round = history[i];
+  }
+  return (round?.options || [])
+    .map((o) => o.key)
     .filter((k) => k.startsWith(TAG_PREFIX))
     .map((k) => tagByKey(k.slice(TAG_PREFIX.length)))
     .filter((t): t is Tag => Boolean(t));
 }
+
+/**
+ * Each facet a page shares moves it up this many places — a nudge on top of
+ * the order it came in, never a re-sort that lets any shared page jump the
+ * best-ranked one.
+ */
+const SHARED_FACET_LIFT = 2;
+const lifted = <T extends { i: number; s: number }>(a: T, b: T) =>
+  (a.i - SHARED_FACET_LIFT * a.s) - (b.i - SHARED_FACET_LIFT * b.s) || a.i - b.i;
 
 /**
  * maxRounds reached with nothing picked (only «غیر از این‌ها» answers): the
@@ -673,7 +691,7 @@ function papersFor(tag: Tag, history: NarrowHistoryEntry[]): CasePaper[] {
   const others = offeredTags(history).filter((t) => t.key !== tag.key).map((t) => new Set(cabinetIdsFor(t.key)));
   const ranked = ids
     .map((id, i) => ({ id, i, s: others.reduce((n, set) => n + (set.has(id) ? 1 : 0), 0) }))
-    .sort((a, b) => b.s - a.s || a.i - b.i);
+    .sort(lifted);
   const out: CasePaper[] = [];
   for (const { id } of ranked) {
     const p = cabinetPaper(id);

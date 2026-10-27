@@ -7,11 +7,11 @@
 // every assistant turn, a typing indicator while waiting, a recap trail of
 // the case + past answers) without becoming free-form chat - see
 // dcp-assist-* in plus-pages.css.
-import { el, faNum } from './util.js?v=206';
-import { api, ApiError } from './api.js?v=206';
-import { FOLDER_EN } from './content-index.js?v=206';
-import { openLoginModal } from './login-modal.js?v=206';
-import { premiumCta } from './premium-cta.js?v=206';
+import { el, faNum } from './util.js?v=207';
+import { api, ApiError } from './api.js?v=207';
+import { FOLDER_EN } from './content-index.js?v=207';
+import { openLoginModal } from './login-modal.js?v=207';
+import { premiumCta } from './premium-cta.js?v=207';
 
 // The server reads 500 characters of a case; past that it would silently drop
 // the tail, so the box stops there and counts down instead.
