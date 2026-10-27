@@ -64,6 +64,8 @@ main#list{padding:0.375rem 0 1.25rem}
 .chip.x{font-family:inherit}
 .row select{flex:1 1 9rem}
 main#list{padding-bottom:4.5rem}
+.clr{font:inherit;color:var(--ac);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+input#q{flex:3 1 18rem}
 /* #list-scoped so these win over dc-theme's .card a / main a link rules */
 #list .act a{display:inline-block;font-size:.78rem;text-decoration:none;border:1px solid var(--border);border-radius:var(--r-sm);padding:0.375rem 0.875rem;margin-right:0.5rem;color:var(--txt);background:var(--surface);transition:all var(--tr)}
 #list .act a:hover{background:var(--surface2);text-decoration:none}
@@ -219,11 +221,15 @@ const UKUS=[[/aesth/g,'esth'],[/colour/g,'color'],[/fibre/g,'fiber'],[/haem/g,'h
   [/oedema/g,'edema'],[/([a-z]{3,})is(e|ed|es|ing|ation|ations)\b/g,'$1iz$2'],[/centre/g,'center'],[/titre/g,'titer'],[/behaviour/g,'behavior']];
 const NUM={one:'1',two:'2',three:'3',four:'4',five:'5',six:'6'};
 function nm(s){s=String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase()
-  .replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/‌/g,' ');
+  .replace(/\u064a/g,'\u06cc').replace(/\u0643/g,'\u06a9').replace(/\u200c/g,' ').replace(/[\u2010-\u2015\u2212]/g,'-')
+  .replace(/[\u06f0-\u06f9]/g,d=>d.charCodeAt(0)-0x6f0).replace(/[\u0660-\u0669]/g,d=>d.charCodeAt(0)-0x660);
   for(const [a,b] of UKUS)s=s.replace(a,b);return s;}
 const WORD=/[a-z0-9؀-ۿ]+/g;
 // light plural folding: implants -> implant, therapies -> therapy, prostheses -> prosthes(is)
-const stem=w=>w.length>4&&/ies$/.test(w)?w.slice(0,-3)+'y':w.length>6&&/ses$/.test(w)?w.slice(0,-2):(w.length>3&&/[^s]s$/.test(w)?w.slice(0,-1):w);
+const stem=w=>w.length>4&&/ies$/.test(w)?w.slice(0,-3)+'y'
+  :w.length>6&&/s[ei]s$/.test(w)?w.slice(0,-2)          // prostheses, prosthesis -> prosthes
+  :w.length>6&&/se$/.test(w)?w.slice(0,-1)               // disease -> diseas (= diseases)
+  :(w.length>3&&/[^s]s$/.test(w)?w.slice(0,-1):w);
 // words of a text, plus the joined form of hyphen / slash / dot compounds
 // ("peri-implantitis" -> peri, implantitis, periimplantitis; "e.max" -> emax)
 function words(s){s=nm(s);const out=new Set();
@@ -244,7 +250,7 @@ const ABBR={ctg:['connective tissue graft','subepithelial connective tissue'],sc
   emax:['e.max'],ptfe:['polytetrafluoroethylene'],dbbm:['deproteinized bovine bone','bio-oss'],
   pes:['pink esthetic score'],wes:['white esthetic score'],bop:['bleeding on probing'],kt:['keratinized tissue','keratinized mucosa'],
   coir:['clinical oral implants research'],jpd:['journal of prosthetic dentistry'],jcp:['journal of clinical periodontology'],
-  jop:['journal of periodontology'],emdogain:['enamel matrix derivative','emd'],ijprd:['periodontics restorative dentistry'],ijomi:['oral maxillofacial implants'],
+  jop:['journal of periodontology'],mucograft:['collagen matrix'],dsd:['digital smile design'],jomi:['oral maxillofacial implants'],emdogain:['enamel matrix derivative','emd'],ijprd:['periodontics restorative dentistry'],ijomi:['oral maxillofacial implants'],
   cid:['clinical implant dentistry'],cidrr:['clinical implant dentistry'],jerd:['esthetic restorative dentistry'],
   jdr:['journal of dental research'],jdent:['journal of dentistry'],dentmat:['dental materials']};
 /* common Persian clinical words -> English used in the papers */
@@ -259,11 +265,16 @@ const FA={'ایمپلنت':'implant','ایمپلنتها':'implant','زیرکو�
   'تراش':'preparation','پروتز':'prosthesis','ارتودنسی':'orthodontic','عصب':'endodontic','اندو':'endodontic',
   'پریایمپلنتیت':'peri-implantitis','پریایمپلنتایتیس':'peri-implantitis','بافت':'tissue','نرم':'soft','عرض':'width','بیولوژیک':'biological'};
 // abbreviations that name a journal only match the journal; study-design ones only title, tags and type
-const ONLY={coir:'J',jpd:'J',jcp:'J',jop:'J',ijprd:'J',ijomi:'J',cid:'J',cidrr:'J',jerd:'J',jdr:'J',jdent:'J',dentmat:'J',sr:'G',ma:'G',rct:'G'};
+const ONLY={coir:'J',jpd:'J',jcp:'J',jop:'J',ijprd:'J',ijomi:'J',jomi:'J',cid:'J',cidrr:'J',jerd:'J',jdr:'J',jdent:'J',dentmat:'J',sr:'G',ma:'G',rct:'G'};
 const JOUR={jprosthetdent:'journal of prosthetic dentistry',jclinperiodontol:'journal of clinical periodontology',
   clinoralimplantsres:'clinical oral implants research',jperiodontol:'journal of periodontology',jesthetrestordent:'esthetic restorative dentistry',
   clinimplantdentrelatres:'clinical implant dentistry',intjperiodonticsrestorativedent:'periodontics restorative dentistry',
-  intjoralmaxillofacimplants:'oral maxillofacial implants',jadentassoc:'american dental association'};
+  intjoralmaxillofacimplants:'oral maxillofacial implants',jadentassoc:'american dental association',
+  dentmater:'dental materials',perio2000:'periodontology 2000',periodontol2000:'periodontology 2000',periodontology2000:'periodontology 2000',
+  journalofprostheticdentistry:'journal of prosthetic dentistry',journalofperiodontology:'journal of periodontology',
+  journalofclinicalperiodontology:'journal of clinical periodontology',clinicaloralimplantsresearch:'clinical oral implants research'};
+// multi-word Persian terms (keys are written without spaces)
+Object.assign(FA,{'سینوسلیفت':'sinus augmentation','بالابردنسینوس':'sinus augmentation','لیفتسینوس':'sinus augmentation','پیوندبافتهمبند':'connective tissue graft','بافتهمبند':'connective tissue graft','پیوندلثه':'gingival graft','پیونداستخوان':'bone graft','عرضبیولوژیک':'biological width','پریایمپلنت':'peri-implant'});
 const STOP=new Set(['the','of','in','and','or','a','an','for','with','on','to','vs','versus','by','at','from','is','are','de','و','در','از','با','به']);
 
 // one search term: alternatives, each a list of words that must all appear in one field
@@ -273,24 +284,27 @@ function term(raw){const w=nm(raw).replace(/^-/,'');
   const main=w.match(/[-/.]/)?[w.replace(/[-/.]/g,'')]:ws;   // "e.max" -> emax, "ti-base" -> tibase
   const alts=[main];
   const key=w.replace(/[^a-z0-9]/g,'');
-  if(ABBR[key])for(const ph of ABBR[key]){const a=words(ph).filter(x=>!STOP.has(x));if(ONLY[key])a.only=ONLY[key];alts.push(a);}
+  if(ABBR[key])for(const ph of ABBR[key]){const a=ONLY[key]==='J'?plain(ph):words(ph).filter(x=>!STOP.has(x));if(ONLY[key])a.only=ONLY[key];alts.push(a);}
+  // a hyphenated word may also be written as separate words ("5-year" = "5 year")
+  if(w.match(/[-/.]/)&&plain(w).length===2)alts.push(plain(w).map(stem));
   if(ALIAS[w]||ALIAS[key])alts.push([ALIAS[w]||ALIAS[key]]);
   return alts;}
 // does a query word hit a word of the paper? whole word for short ones, prefix for longer
+const plain=s=>nm(s).match(WORD)||[];
 const hit=(qw,toks)=>qw.length<=3?toks.includes(qw):toks.some(t=>t.startsWith(qw));
-const altHit=(alt,toks)=>alt.every(x=>hit(x,toks));
+// a journal alternative is a contiguous part of the journal name, so J Periodontol is not J Clin Periodontol
+const altHit=(alt,toks,p)=>alt.only==='J'&&p?(' '+p.jn+' ').includes(' '+alt.join(' ')+' '):alt.every(x=>hit(x,toks));
 const W={T:6,G:5,A:4,J:3,P:2,X:1};
 
-function parse(){const raw=q.value.trim();if(!raw)return null;
-  let doi=raw.replace(/^(https?:\/\/(dx\.)?doi\.org\/|doi:\s*)/i,'').toLowerCase();
-  if(/^10\.\d{4,}\//.test(doi))return {doi};
+function parse(){const raw=q.value.trim();if(!/[\p{L}\p{N}]/u.test(raw))return null;
+  let doi=raw.replace(/^((https?:\/\/)?(dx\.)?doi\.org\/|doi:\s*)/i,'').replace(/[.,;]+$/,'').toLowerCase();
+  if(/^10\.\d{4,}\//.test(doi)||/^[a-z]{2,8}\.\d{3,}$/.test(doi))return {doi};
   const parts=nm(raw).split(/\s+/).filter(Boolean);
   // an abbreviated journal name typed in full ("J Prosthet Dent")
-  const jk=parts.join('').replace(/[^a-z]/g,'');
-  if(JOUR[jk]){const a=words(JOUR[jk]).filter(x=>!STOP.has(x));a.only='J';return {terms:[[a]],neg:[],years:[],phrase:''};}
+  const jk=parts.join('').replace(/[^a-z0-9]/g,'');
+  if(JOUR[jk]){const a=plain(JOUR[jk]);a.only='J';return {terms:[[a]],neg:[],years:[],phrase:''};}
   // several words that are one compound in the papers ("all on four" = all-on-4, "peri implantitis")
-  const comp=words(raw).join('');
-  if(parts.length>1&&comp.length>4&&CMP.has(comp))return {terms:[[[comp]]],neg:[],years:[],phrase:comp};
+  const comp=words(parts.filter(t=>!t.startsWith('-')).join(' ')).join('');
   // a run of Persian words may be one clinical term (پری ایمپلنتیت)
   const joinedFa=FA[parts.join('')];
   let toks=joinedFa?[joinedFa]:parts;
@@ -300,15 +314,22 @@ function parse(){const raw=q.value.trim();if(!raw)return null;
   const years=pos.filter(t=>/^(19|20)\d\d$/.test(t));
   const terms=pos.filter(t=>!years.includes(t)).map(term).filter(Boolean);
   if(!terms.length&&!years.length&&!neg.length)return null;
-  return {terms,neg,years,phrase:words(raw).join('')};}
+  const rp=parts.filter(t=>!t.startsWith('-'));
+  const cq=rp.length>1&&comp.length>4&&CMP.has(comp)?comp:'';
+  if(cq&&rp.some(t=>/^\d{1,2}$/.test(NUM[t]||t)))return {terms:[],neg,years,phrase:cq,comp:cq,only:true};
+  return {terms,neg,years,phrase:comp,comp:cq};}
 
-function score(p,Q){if(Q.doi)return p.doi.startsWith(Q.doi)||p.doi===Q.doi?1:0;
+function score(p,Q){if(Q.doi)return p.doi&&p.doi.includes(Q.doi)?1:0;
   if(Q.years.length&&!Q.years.includes(String(p.y)))return 0;
   for(const n of Q.neg)if(n.some(a=>['T','G','X'].some(f=>altHit(a,p.f[f]))))return 0;
-  let s=Q.years.length?1:0;
+  let s=1;
+  // words the papers write as one compound ("all on four", "peri implantitis") also count as a match
+  const compHit=Q.comp&&(['T','G','P'].some(f=>p.f[f].includes(Q.comp))||p.tc.includes(Q.comp));
+  if(Q.only)return compHit?20+(p.tc.includes(Q.comp)?8:0):0;
   for(const alts of Q.terms){let best=0;
-    for(const a of alts)for(const f in W)if(W[f]>best&&(!a.only||a.only===f)&&altHit(a,p.f[f]))best=W[f];
-    if(!best)return 0;s+=best;}
+    for(const a of alts)for(const f in W)if(W[f]>best&&(!a.only||a.only===f)&&altHit(a,p.f[f],p))best=W[f];
+    if(!best){if(compHit)return 20+(p.tc.includes(Q.comp)?8:0);return 0;}s+=best;}
+  if(compHit)s+=6;
   if(Q.phrase.length>3){if(p.tc.includes(Q.phrase))s+=8;else if(p.gc.includes(Q.phrase))s+=4;}
   return s;}
 
@@ -318,12 +339,16 @@ fetch(SRC).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(j
   DATA=papers.map(p=>{const tg=p.tags||[],t=p.display_title||p.real_title||p.title||"";
     const ctg=tg.filter(x=>!x.startsWith('topic:'));
     return {t,tp:p.topic||"",ty:p.type||"",tg,
-    d:p.drive_download||"",v:p.drive_view||"",j:p.journal||"",y:p.crossref_year||"",doi:(p.doi||'').toLowerCase(),
+    d:p.drive_download||"",v:p.drive_view||"",j:p.journal||"",jn:plain(p.journal).join(' '),tt:tg.filter(x=>x.startsWith('topic:')),y:p.crossref_year||"",doi:(p.doi||'').toLowerCase(),
     kf:p.key_finding||"",bl:p.clinical_bottom_line||"",ab:p.abstract||"",
     f:{T:words(t),G:[...words(ctg.join(' ')+' '+(p.type||'')),...ctg],A:words((p.authors||[]).join(' ')),J:words(p.journal),
-       P:words((p.topic_path||'').replace(/\//g,' ')),
+       P:[...words((p.topic_path||'').replace(/\//g,' ')),...(p.topic_path||'').split('/').map(x=>words(x).join(''))],
        X:words([p.key_finding,p.clinical_bottom_line,p.abstract].join(' '))},
     tc:words(t).join(''),gc:ctg.map(x=>x.replace(/-/g,'')).join(' ')};});
+  // a paper filed in several Drive folders shows under each of them in the topic filter
+  const slug=x=>nm(x).replace(/[^a-z0-9\u0600-\u06ff]+/g,'-').replace(/^-|-$/g,'');
+  const TOP={};for(const p of DATA)if(p.tp)TOP['topic:'+slug(p.tp)]=p.tp;
+  for(const p of DATA)p.tps=new Set([p.tp,...p.tt.map(x=>TOP[x]).filter(Boolean)]);
   // every compound word the library uses, so a spaced-out query can be recognised as one
   for(const p of DATA)for(const f of ['T','G','P'])for(const w of p.f[f])if(w.length>4)CMP.add(w);
   document.getElementById('total').textContent='· '+DATA.length+' papers';
@@ -346,7 +371,7 @@ function readState(){const u=new URLSearchParams(location.search);
   for(const [el,k] of [[topic,'topic'],[type,'type'],[sort,'sort']]){const v=u.get(k);if(v&&[...el.options].some(o=>o.value===v||o.textContent===v))el.value=v;}
   for(const t of u.getAll('tag'))active.add(t);}
 function writeState(){const u=new URLSearchParams();
-  if(q.value.trim())u.set('q',q.value.trim());if(topic.value)u.set('topic',topic.value);if(type.value)u.set('type',type.value);
+  if(/[\p{L}\p{N}]/u.test(q.value))u.set('q',q.value.trim());if(topic.value)u.set('topic',topic.value);if(type.value)u.set('type',type.value);
   if(sort.value!=='rel')u.set('sort',sort.value);active.forEach(t=>u.append('tag',t));
   const s=u.toString();history.replaceState(null,'',location.pathname+(s?'?'+s:''));}
 
@@ -355,15 +380,16 @@ const SORTS={t:(a,b)=>a.t.localeCompare(b.t,undefined,{sensitivity:'base'}),
   ty:(a,b)=>a.ty.localeCompare(b.ty),tp:(a,b)=>a.tp.localeCompare(b.tp,undefined,{sensitivity:'base'})};
 function compute(){const Q=parse();const res=[];
   for(const p of DATA){
-    if(topic.value&&p.tp!==topic.value)continue;if(type.value&&p.ty!==type.value)continue;
+    if(topic.value&&!p.tps.has(topic.value))continue;if(type.value&&p.ty!==type.value)continue;
     let ok=true;for(const a of active)if(!p.tg.includes(a)){ok=false;break;}if(!ok)continue;
     p.s=Q?score(p,Q):0;if(Q&&!p.s)continue;res.push(p);}
-  const by=sort.value==='rel'?(Q?(a,b)=>b.s-a.s:SORTS.new):SORTS[sort.value];
+  const by=sort.value==='rel'?(Q?(a,b)=>b.s-a.s||SORTS.new(a,b):SORTS.new):SORTS[sort.value];
   res.sort((a,b)=>by(a,b)||SORTS.t(a,b));return res;}
 
 function card(p){const d=document.createElement('div');d.className='card';
   // folder (topic:) and year tags stay searchable but are not shown as chips
-  const tags=p.tg.filter(t=>!t.startsWith('topic:')&&!/^(19|20)\d\d$/.test(t))
+  // the long title-as-tag stays searchable but is not shown as a chip
+  const tags=p.tg.filter(t=>!t.startsWith('topic:')&&!/^(19|20)\d\d$/.test(t)&&t.split('-').length<6)
     .map(t=>'<button type="button" class="tag'+(active.has(t)?' on':'')+'" data-t="'+esc(t)+'">#'+esc(t)+'</button>').join(' ');
   const dl=p.d?'<a class="dl" href="'+esc(p.d)+'" target="_blank" rel="noopener">Download</a>':'<a class="dl nolink">No link</a>';
   const vw=p.v?'<a href="'+esc(p.v)+'" target="_blank" rel="noopener">View</a>':'';
@@ -372,7 +398,8 @@ function card(p){const d=document.createElement('div');d.className='card';
   const kd=/[؀-ۿ]/.test(p.kf||p.ab)?'rtl':'ltr';
   // an abstract cut off by the source is marked as such rather than ending mid-word
   let ab=p.ab;if(ab){if(/^[a-z]/.test(ab))ab='… '+ab;if(!/[.!?)\]"”…]\s*$/.test(ab))ab+=' …';}
-  const kf=p.kf?'<details class="kf"><summary>Key finding</summary><p dir="'+kd+'">'+esc(p.kf)+'</p>'+(p.bl?'<p class="bl" dir="'+kd+'"><b>Clinical bottom line:</b> '+esc(p.bl)+'</p>':'')+'</details>'
+  const fa=kd==='rtl',L1=fa?'یافتهٔ کلیدی':'Key finding',L2=fa?'پیام بالینی:':'Clinical bottom line:';
+  const kf=p.kf?'<details class="kf"><summary>'+L1+'</summary><p dir="'+kd+'">'+esc(p.kf)+'</p>'+(p.bl?'<p class="bl" dir="'+kd+'"><b>'+L2+'</b> '+esc(p.bl)+'</p>':'')+'</details>'
     // no summary yet: show the paper's own published abstract, verbatim
     :ab?'<details class="kf"><summary>Abstract</summary><p class="ab" dir="'+kd+'">'+esc(ab)+'</p></details>':'';
   const tp=p.tp&&p.tp!=='(root)'?'<span class="badge">'+esc(p.tp)+'</span>':'';
@@ -381,15 +408,19 @@ function card(p){const d=document.createElement('div');d.className='card';
 
 function render(reset,all){const list=document.getElementById('list');
  if(reset){shown=0;list.innerHTML='';RES=compute();writeState();
-  document.getElementById('count').textContent=RES.length+' result'+(RES.length==1?'':'s');
+  const busy=parse()||topic.value||type.value||active.size;
+  document.getElementById('count').innerHTML='<span id="cnt">'+RES.length+' result'+(RES.length==1?'':'s')+'</span>'+(busy?' · <button type="button" id="clear" class="clr">clear search &amp; filters</button>':'');
+  const cb=document.getElementById('clear');if(cb)cb.onclick=()=>{q.value='';topic.value='';type.value='';active.clear();chips();render(true);q.focus();};
   if(!RES.length){const e=document.createElement('div');e.className='state';
    e.innerHTML='No papers match this search. Try fewer words, another spelling, or clear the filters.<br><span dir="rtl">مقاله‌ای پیدا نشد؛ کلمه‌های کمتر یا املای انگلیسی دیگری را امتحان کنید، یا فیلترها را پاک کنید.</span>';list.appendChild(e);}}
  const n=Math.max(0,all?RES.length-shown:Math.min(PAGE,RES.length-shown));
  const frag=document.createDocumentFragment();for(const p of RES.slice(shown,shown+n))frag.appendChild(card(p));
  for(const id of ['more','all']){const x=document.getElementById(id);if(x)x.remove();}
  list.appendChild(frag);shown+=n;
+ const cn=document.getElementById('cnt');if(cn)cn.textContent=(shown<RES.length?'showing '+shown+' of ':'')+RES.length+' result'+(RES.length==1?'':'s');
  if(shown<RES.length){const left=RES.length-shown;
-  const b=document.createElement('button');b.id='more';b.className='more';b.textContent='show more ('+left+' left)';b.onclick=()=>render(false);list.appendChild(b);
+  const b=document.createElement('button');b.id='more';b.className='more';b.textContent='show more ('+left+' left)';
+  b.onclick=()=>{render(false);const m=document.getElementById('more');if(m)m.focus();};list.appendChild(b);
   const a=document.createElement('button');a.id='all';a.className='more';a.textContent='show all';a.onclick=()=>render(false,true);list.appendChild(a);}}
 
 function chips(){const c=document.getElementById('active');c.innerHTML='';
