@@ -15,11 +15,10 @@
 //     the account, not localStorage).
 //  2. MANUAL — «راهنمای سایت» in the header person menu (logged-in), any time.
 //     On a non-home page it navigates to /?tour=1 and starts there.
-import { el, faNum, tehranDay } from './util.js?v=200';
-import { api, currentUser } from './api.js?v=200';
-import { PREMIUM_FEATURES } from './config.js?v=200';
-import { pricingHref } from './premium-cta.js?v=200';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=200';
+import { el, faNum, tehranDay } from './util.js?v=202';
+import { api, currentUser } from './api.js?v=202';
+import { pricingHref } from './premium-cta.js?v=202';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=202';
 
 const SS_PENDING = 'dcp:tour:pending'; // set before navigating home to start there
 
@@ -60,19 +59,11 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 //
 // Stops follow the DOM order of each panel, top to bottom, so the tour only
 // ever scrolls forward. `text` may be a function of the reader context
-// (`ctx.live` = premium subscriber). `premium` marks what a subscription buys:
-// 'all' (the whole stop) or 'part' (the text names which part) — the card then
-// carries an amber badge, the site's one colour for «this is what premium buys».
+// (`ctx.live` = premium subscriber, `ctx.guest` = not signed in). `premium`
+// marks what a subscription buys: 'all' (the whole stop) or 'part' (the text
+// names which part) — the card then carries an amber badge, the site's one
+// colour for «this is what premium buys».
 const q = (sel) => document.querySelector(sel);
-const featureNames = () => PREMIUM_FEATURES.map((f) => '«' + f.title + '»').join('، ');
-
-// The pillar rail has no id: it is the rail right after the «سری‌های موضوعی»
-// heading, whose «همه ←» link is the one pointing at /pillar/.
-function pillarRail() {
-  const more = q('#panel-studio .dc-home-sec a.dc-home-more[href="/pillar/"]');
-  const head = more && more.closest('.dc-home-sec');
-  return head ? [head, head.nextElementSibling] : [];
-}
 
 const STOPS = [
   // ── خانه ─────────────────────────────────────────────────────────────────
@@ -83,7 +74,9 @@ const STOPS = [
   },
   {
     key: 'account', panel: 'panel-studio', title: 'حساب شما',
-    text: 'آدمک، حسابِ شماست: «پیشخوان» (خلاصه‌ی یادگیری‌تان)، «پروفایل» (با «افتخارات» و دیوار «گواهی‌نامه‌ها»)، «اطلاعیه‌ها» — هر انتشار و خبر تازه همان لحظه آن‌جا می‌نشیند و نقطه‌ی روی آدمک خبرش را می‌دهد — و «راهنمای سایت» که همین تور را دوباره اجرا می‌کند. شعله‌ی کنارش استریک یادگیری شماست؛ هر روزی که بخوانید یا مرور کنید روشن می‌ماند.',
+    text: (ctx) => (ctx.guest
+      ? 'آدمک، درِ ورود است. با یک حساب رایگان، همین‌جا «پیشخوان» (خلاصه‌ی یادگیری‌تان)، «پروفایل» (با «افتخارات» و دیوار «گواهی‌نامه‌ها») و «اطلاعیه‌ها» باز می‌شود — هر انتشار تازه همان لحظه آن‌جا می‌نشیند — و کنار آدمک شعله‌ی استریک یادگیری‌تان روشن می‌شود.'
+      : 'آدمک، حسابِ شماست: «پیشخوان» (خلاصه‌ی یادگیری‌تان)، «پروفایل» (با «افتخارات» و دیوار «گواهی‌نامه‌ها»)، «اطلاعیه‌ها» — هر انتشار و خبر تازه همان لحظه آن‌جا می‌نشیند و نقطه‌ی روی آدمک خبرش را می‌دهد — و «راهنمای سایت» که همین تور را دوباره اجرا می‌کند. شعله‌ی کنارش استریک یادگیری شماست؛ هر روزی که بخوانید یا مرور کنید روشن می‌ماند.'),
     targets: () => [visibleOne('.dcp-flame-btn'), visibleOne('.dcp-person-btn')],
   },
   {
@@ -98,12 +91,14 @@ const STOPS = [
   },
   {
     key: 'plus_card', panel: 'panel-studio', title: 'میز کار شخصی',
-    text: 'خلاصه‌ی یادگیری شما: استریک، برگشتن به آخرین مطلبی که می‌خواندید و دسترسی به هایلایت‌ها و یادداشت‌هایتان. روی هر مقاله با «میز کار» هایلایت بزنید و یادداشت بگذارید — همه به حسابتان سنجاق می‌شود و روی هر دستگاهی همراهتان است.',
+    text: (ctx) => (ctx.guest
+      ? 'با ورودِ رایگان، دنت‌کست یادگیری‌تان را نگه می‌دارد: استریک روزانه، امتیاز و نوتیف مطلب جدید — و این کارت می‌شود خلاصه‌ی یادگیری شما. روی هر مقاله هم با «میز کار» هایلایت می‌زنید و یادداشت می‌گذارید؛ همه به حسابتان سنجاق می‌شود و روی هر دستگاهی همراهتان است.'
+      : 'خلاصه‌ی یادگیری شما: استریک، برگشتن به آخرین مطلبی که می‌خواندید و دسترسی به هایلایت‌ها و یادداشت‌هایتان. روی هر مقاله با «میز کار» هایلایت بزنید و یادداشت بگذارید — همه به حسابتان سنجاق می‌شود و روی هر دستگاهی همراهتان است.'),
     targets: () => [byId('dcPlusHomeCard')],
   },
   {
     key: 'episode_hero', panel: 'panel-studio', title: 'تازه‌ترین اپیزود',
-    text: 'تازه‌ترین قسمت پادکست دنت‌کست همیشه این‌جاست؛ با دکمه‌ی پخش همین‌جا بشنوید، یا با لمس کارت به صفحه‌ی همان قسمت بروید. اگر وسط شنیدن صفحه را عوض کنید، نوار «ادامه‌ی شنیدن» از همان ثانیه ادامه می‌دهد.',
+    text: 'تازه‌ترین قسمت پادکست دنت‌کست همیشه این‌جاست؛ با دکمه‌ی پخش همین‌جا بشنوید، یا با لمس کارت به صفحه‌ی همان قسمت بروید؛ همه‌ی اپیزودها هم در تب آرشیو است. اگر وسط شنیدن صفحه را عوض کنید، نوار «ادامه‌ی شنیدن» از همان ثانیه ادامه می‌دهد.',
     targets: () => [byId('card-episodes')],
   },
   {
@@ -122,13 +117,8 @@ const STOPS = [
   },
   {
     key: 'categories', panel: 'panel-studio', title: 'دسته‌های محتوا',
-    text: 'هر خانه دری است به یک بخش — اپیزودها، اینسایت، نوت‌کست، چیرساید، متانوت، لایت‌کست، ShareHub و سری‌های ویژه — با تعداد مطلب‌هایش.',
+    text: 'هر خانه دری است به یک بخش — اپیزودها، اینسایت، نوت‌کست، چیرساید، متانوت، لایت‌کست، ShareHub، دنت‌کست پلاس و سری‌های ویژه — با تعداد مطلب‌هایش.',
     targets: () => [q('#panel-studio .dc-exa-cats')],
-  },
-  {
-    key: 'latest_rail', panel: 'panel-studio', title: 'تازه‌های دنت‌کست',
-    text: 'جدیدترین مطلبِ هر بخش این‌جا کنار هم ردیف شده. ریل را به دو طرف بکشید و با یک لمس وارد مطلب شوید.',
-    targets: () => [byId('dcLatestRail')],
   },
   {
     key: 'bundles', panel: 'panel-studio', premium: 'all', title: 'از کجا شروع کنم؟',
@@ -141,34 +131,12 @@ const STOPS = [
     targets: () => [byId('dcPulseCard')],
   },
   {
-    key: 'plus_features', panel: 'panel-studio', premium: 'all', title: 'دنت‌کست پریمیوم',
-    text: (ctx) => (ctx.live
-      ? 'ابزارهای اشتراک شما، هر کدام با وضعیت خودتان: کارت‌های امروز، قدم مسیر، تعداد هایلایت‌ها و کالکشن‌ها و گزارش ماه. نمای کامل‌ترش را کمی بعد در تب پریمیوم می‌بینید.'
-      : 'ابزارهای اشتراک پریمیوم، هر کدام با یک کارت: ' + featureNames() + '. کمی بعد، در تب پریمیوم، می‌بینید همین‌ها برای یک مشترک چه شکلی دارند.'),
-    targets: () => [byId('dcPlusFeatures')],
-  },
-  {
-    key: 'series', panel: 'panel-studio', premium: 'part', title: 'سری‌های موضوعی',
-    text: 'هر سری همه‌ی مطالب یک حوزه — ایمپلنت، اکلوژن، سرامیک و بقیه — را یک‌جا جمع می‌کند، از تازه‌ترین. با اشتراک پریمیوم، همان صفحه با زیرموضوع‌ها و ترتیب خواندن چیده می‌شود.',
-    targets: pillarRail,
-  },
-  {
-    key: 'quick_duo', panel: 'panel-studio', title: 'یک نگاه سریع',
-    text: 'دو پیشنهاد کوتاه: یک واژه از دانشنامه‌ی تخصصی دنت‌کست، و یک مطلب تصادفی از کل آرشیو — هر بار چیز تازه‌ای.',
-    targets: () => [byId('dcQuickGloss'), byId('dcQuickBrain')],
-  },
-  {
     key: 'bottom_nav', panel: 'panel-studio', title: 'ناوبری اصلی',
     text: '«خانه» همین صفحه است، «آرشیو» درگاه همه‌ی بخش‌ها و مرجع‌های دنت‌کست، «پریمیوم» همه‌ی چیزهایی که اشتراک اضافه می‌کند — و برای مشترک‌ها، خانه‌ی ابزارهایشان — و «بیماران» صفحه‌ی ویژه‌ی مراجعان و غیردندانپزشکان (معرفی کلینیک و مطالب آموزشی ساده). حالا برویم سراغ آرشیو.',
     targets: () => [byId('dcBottomNav')],
   },
 
   // ── آرشیو ────────────────────────────────────────────────────────────────
-  {
-    key: 'episodes_card', panel: 'panel-sharehub', title: 'آرشیو پادکست',
-    text: 'همه‌ی اپیزودهای اصلی و فرعی دنت‌کست، یک‌جا و مرتب — از قسمت یک تا امروز.',
-    targets: () => [q('#panel-sharehub .dc-list-card[onclick*="episodes"]')],
-  },
   {
     key: 'upboard', panel: 'panel-sharehub', premium: 'part', title: 'up-board',
     text: 'همه‌ی مطالب سایت در دو چیدمان: «تازه‌ترین» به ترتیب انتشار، برای همه؛ و «بالاترین» به انتخاب خواننده‌ها — با قلب‌هایی که هر عضوی زیر مطالب می‌زند — ویژه‌ی پریمیوم.',
@@ -235,7 +203,7 @@ const STOPS = [
     key: 'premium_quick', panel: 'panel-premium', premium: 'all', enter: mountPremiumPreview, title: 'میان‌برها و باندل‌ها',
     text: (ctx) => (ctx.live
       ? 'چهار ابزاری که بیش از همه باز می‌کنید — دفترچه، مسیرها، دستیار کیس و کالکشن‌ها — یک لمس فاصله دارند، و زیرشان باندل‌های شروع با پیشرفت خودتان.'
-      : 'چهار ابزاری که مشترک‌ها بیش از همه باز می‌کنند — دفترچه‌ی هایلایت‌ها، مسیرها، دستیار کیس و کالکشن‌ها — یک لمس فاصله دارند، و زیرشان باندل‌های شروع با پیشرفت خودِ مشترک.'),
+      : 'چهار ابزاری که مشترک‌ها بیش از همه باز می‌کنند — دفترچه‌ی هایلایت‌ها، مسیرها، دستیار کیس و کالکشن‌ها — یک لمس فاصله دارند، و زیرشان باندل‌های شروع که برای مشترک همه باز است.'),
     targets: () => premiumTargets('.dcp-pp-quick', '.dcp-pp-bundles'),
   },
   {
@@ -249,7 +217,9 @@ const STOPS = [
 
   {
     key: 'finale', panel: 'panel-studio', title: 'تمام شد!',
-    text: 'حالا نقشه‌ی دنت‌کست دستتان است. هر وقت خواستید این تور را دوباره ببینید، روی آدمکِ هدر بزنید و «راهنمای سایت» را انتخاب کنید. یادگیری خوبی داشته باشید 🦷',
+    text: (ctx) => (ctx.guest
+      ? 'حالا نقشه‌ی دنت‌کست دستتان است. با ورودِ رایگان از آدمکِ هدر، این تور هم همیشه در منوی همان آدمک، زیر «راهنمای سایت»، در دسترس است. یادگیری خوبی داشته باشید 🦷'
+      : 'حالا نقشه‌ی دنت‌کست دستتان است. هر وقت خواستید این تور را دوباره ببینید، روی آدمکِ هدر بزنید و «راهنمای سایت» را انتخاب کنید. یادگیری خوبی داشته باشید 🦷'),
     targets: null,
   },
 ];
@@ -284,7 +254,7 @@ async function mountPremiumPreview(ctx) {
   if (preview && preview.isConnected) return;
   const host = byId('panel-premium');
   if (!host) return;
-  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=200'), samplePathway()]);
+  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=202'), samplePathway()]);
   if (!state || typeof mod.livePreview !== 'function') return;
   const node = mod.livePreview({
     tier: 'premium',
@@ -582,7 +552,7 @@ export function startTour({ manual = false } = {}) {
     clearTimeout(resizeT);
     resizeT = setTimeout(positionStop, 150);
   };
-  state = { seq: 0, idx: 0, ctx: { live: false }, els: [], lastRect: null, layer, dims, ring, card, onKey, onResize };
+  state = { seq: 0, idx: 0, ctx: { live: false, guest: true }, els: [], lastRect: null, layer, dims, ring, card, onKey, onResize };
   state.watch = setInterval(driftCheck, 250);
   document.body.appendChild(layer);
   document.documentElement.classList.add('dcp-touring');
@@ -596,6 +566,7 @@ export function startTour({ manual = false } = {}) {
   currentUser().catch(() => null).then((u) => {
     if (state !== st) return;
     st.ctx.live = !!(u && u.tier === 'premium');
+    st.ctx.guest = !u;
     showStop(0);
   });
 }
