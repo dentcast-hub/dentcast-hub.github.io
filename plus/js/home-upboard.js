@@ -15,11 +15,11 @@
 //     to drift — and no race with a script that fills the same <ul> we do.
 //
 // It is only ever the top five. The box is a doorway, not the board.
-import { api, currentUser, meStatus } from './api.js?v=210';
-import { el, faNum } from './util.js?v=210';
-import { openSheet, closeSheet, gateCard } from './sheet.js?v=210';
-import { premiumCta, guestPremiumExtras } from './premium-cta.js?v=210';
-import { openLoginModal } from './login-modal.js?v=210';
+import { api, currentUser, meStatus } from './api.js?v=211';
+import { el, faNum } from './util.js?v=211';
+import { openSheet, closeSheet, gateCard } from './sheet.js?v=211';
+import { premiumCta, guestPremiumExtras } from './premium-cta.js?v=211';
+import { openLoginModal } from './login-modal.js?v=211';
 
 const FROM = 'home-upboard';
 
@@ -50,7 +50,11 @@ function gateSheet(guest) {
     cta: guest
       ? el('button', {
         class: 'dcp-btn dcp-btn-primary', type: 'button',
-        onclick: () => { closeSheet(); openLoginModal({ returnTo: location.pathname }); },
+        onclick: async () => {
+          closeSheet();
+          const res = await openLoginModal({ returnTo: location.pathname });
+          if (res && res.user) location.reload();
+        },
       }, 'ورود')
       : premiumCta(FROM),
   });

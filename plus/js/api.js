@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import * as CFG from './config.js?v=210';
+import * as CFG from './config.js?v=211';
 
 const API_BASES = CFG.API_BASES;
 
@@ -160,7 +160,18 @@ function signalFor(ms) {
   return undefined;
 }
 
-async function pickBase() {
+// One probe at a time. Every caller that arrives while a probe is in flight
+// (Spot's apiBase(), /me, the panels' counts) shares it: each used to start
+// its own probeMirrors(), so a slow line paid two /health requests per caller
+// and every one of them could count a strike against the same silence.
+let picking = null;
+function pickBase() {
+  if (resolvedBase) return Promise.resolve(resolvedBase);
+  if (!picking) picking = pickBaseOnce().finally(() => { picking = null; });
+  return picking;
+}
+
+async function pickBaseOnce() {
   if (resolvedBase) return resolvedBase;
   const cached = ssGet(SS_BASE);
   if (cached && API_BASES.indexOf(cached) !== -1) { resolvedBase = cached; return cached; }

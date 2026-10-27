@@ -7,10 +7,10 @@
 // every assistant turn, a typing indicator while waiting, a recap trail of
 // the case + past answers) without becoming free-form chat - see
 // dcp-assist-* in plus-pages.css.
-import { el, faNum } from './util.js?v=210';
-import { api, ApiError } from './api.js?v=210';
-import { FOLDER_EN } from './content-index.js?v=210';
-import { premiumCta } from './premium-cta.js?v=210';
+import { el, faNum } from './util.js?v=211';
+import { api, ApiError } from './api.js?v=211';
+import { FOLDER_EN } from './content-index.js?v=211';
+import { premiumCta } from './premium-cta.js?v=211';
 
 // The server reads 500 characters of a case; past that it would silently drop
 // the tail, so the box stops there and counts down instead.
@@ -440,7 +440,7 @@ export function renderCaseAssistant(container) {
       if (status === 401) {
         const login = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود دوباره');
         login.addEventListener('click', async () => {
-          const { openLoginModal } = await import('./login-modal.js?v=210');
+          const { openLoginModal } = await import('./login-modal.js?v=211');
           const res = await openLoginModal({ returnTo: '/plus/assistant.html' });
           if (res && res.user) step();
         });
