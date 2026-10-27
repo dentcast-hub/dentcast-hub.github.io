@@ -40,17 +40,17 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum, streakIsActiveToday } from './util.js?v=210';
-import { currentUser, meStatus, api } from './api.js?v=210';
-import { pricingHref, premiumCta } from './premium-cta.js?v=210';
-import { openSheet, gateCard } from './sheet.js?v=210';
-import { openLoginModal } from './login-modal.js?v=210';
-import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=210';
-import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=210';
-import { armDesTool } from './des-scorer.js?v=210';
-import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=210';
-import { reportChip } from './home-features.js?v=210';
-import { getModel, freshFolders } from './content-index.js?v=210';
+import { el, faNum, streakIsActiveToday } from './util.js?v=211';
+import { currentUser, meStatus, api } from './api.js?v=211';
+import { pricingHref, premiumCta } from './premium-cta.js?v=211';
+import { openSheet, gateCard } from './sheet.js?v=211';
+import { openLoginModal } from './login-modal.js?v=211';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=211';
+import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=211';
+import { armDesTool } from './des-scorer.js?v=211';
+import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=211';
+import { reportChip } from './home-features.js?v=211';
+import { getModel, freshFolders } from './content-index.js?v=211';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -117,9 +117,13 @@ function offer() {
  */
 function guestLine() {
   const a = el('a', { class: 'dcp-pp-signin', href: '#' }, 'وارد شوید');
-  a.addEventListener('click', (e) => {
+  a.addEventListener('click', async (e) => {
     e.preventDefault();
-    openLoginModal({ returnTo: location.pathname + location.hash });
+    // Reload on success, as every other login door does: the header and the
+    // home card read /me once at boot, so without it the reader stayed grey
+    // and the sign-in looked like it had failed.
+    const res = await openLoginModal({ returnTo: location.pathname + location.hash });
+    if (res && res.user) location.reload();
   });
   return el('p', { class: 'dcp-muted dcp-pp-guest' }, ['اگر اشتراک دارید، ', a, '.']);
 }
@@ -451,16 +455,20 @@ function dashboardLink() {
   return el('a', { class: 'dcp-hf-more dcp-pp-dash', href: '/plus/' }, 'پیشخوان ›');
 }
 
-function build(me, { hasHead = false } = {}) {
-  const state = stateOf(me);
+function build(me, { hasHead = false, pending = false } = {}) {
+  // `pending` is the first paint while /me is still on its way: the 'unknown'
+  // shape (no lock, no offer, nothing that decides who the reader is) with a
+  // lead that says the answer is coming rather than that it never came.
+  const state = pending ? 'unknown' : stateOf(me);
   const anon = !me && state === 'locked';
   const live = state === 'live';
   const top = el('div', { class: 'dcp-pp-top' }, [
-    live ? statusLine(me) : el('p', { class: 'dcp-pp-lead' }, lead(state, me)),
+    live ? statusLine(me)
+      : el('p', { class: 'dcp-pp-lead' }, pending ? PENDING_LEAD : lead(state, me)),
     // Without a page head to sit in (a bare slot), the link keeps its old place.
     live && !hasHead ? dashboardLink() : null,
   ].filter(Boolean));
-  const wrap = el('div', { class: 'dcp-hf dcp-pp', 'data-dcp-state': state }, [
+  const wrap = el('div', { class: 'dcp-hf dcp-pp', 'data-dcp-state': pending ? 'pending' : state }, [
     top,
     state === 'locked' ? offer() : null,
     anon ? guestLine() : null,
@@ -722,12 +730,22 @@ function syncShellOffer(state) {
    counts the reader may have moved. */
 const REFRESH_MIN_MS = 15000;
 
+/* ── the first paint does not wait for /me ──
+   The slot used to stay `hidden` until /me answered, and /me waits on the
+   base probe (1.5s) and then its own 15s timeout: on a stalled host the tab
+   sat EMPTY for up to ~17s. Most of the tab (catalog, bundles, the DES box)
+   does not depend on who the reader is, so when /me is slower than
+   PENDING_PAINT_MS the 'unknown' shape is drawn with a «checking» lead, and the
+   real state replaces it the moment the answer lands. A fast /me skips the
+   pending paint entirely, so a subscriber on a good line never sees it. */
+const PENDING_PAINT_MS = 400;
+const PENDING_LEAD = 'در حال بررسی وضعیت حساب شما…';
+
 export async function initPremiumPanel() {
   const slots = SLOT_IDS.map((id) => document.getElementById(id)).filter(Boolean);
   if (!slots.length) return;
   let me = null;
-  try { me = await currentUser(); } catch (_) { me = null; }
-  let state = stateOf(me);
+  let state = 'pending';
   let armed = false;
   let lastAsk = Date.now();
 
@@ -741,15 +759,18 @@ export async function initPremiumPanel() {
   };
 
   function render() {
-    syncShellOffer(state);
+    const pending = state === 'pending';
+    // Pending decides nothing, so the shell's static buy row is left as shipped.
+    if (!pending) syncShellOffer(state);
     slots.forEach((slot) => {
       const head = pageHeadOf(slot);
-      const wrap = build(me, { hasHead: !!head });
+      const wrap = build(me, { hasHead: !!head, pending });
       wireCrossPanelLinks(wrap);
       slot.replaceChildren(wrap);
       slot.hidden = false;
       if (head) placeDashboardLink(head, state);
     });
+    if (pending) return; // no counts, no lazy half, until the reader is known
     if (state === 'live') fillFromMe(me);
     else if (state === 'locked') fillShowcase(me, slots);
     // Lazy half: only when a copy of the panel is actually on screen.
@@ -771,6 +792,11 @@ export async function initPremiumPanel() {
     else if (state === 'locked' && me && armed) fillSeen('locked');
   }
 
+  const early = setTimeout(() => { if (state === 'pending') render(); }, PENDING_PAINT_MS);
+  try { me = await currentUser(); } catch (_) { me = null; }
+  clearTimeout(early);
+  state = stateOf(me);
+  lastAsk = Date.now();
   render();
 
   document.addEventListener('dcp:me', (e) => refreshFrom(e.detail == null ? null : e.detail));

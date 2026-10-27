@@ -1,13 +1,13 @@
 // Login is a MODAL, never a page (spec 2.5). Two steps: phone -> OTP code.
 // Resolves with { user, return_to } on success, or null if the user cancels.
-import { el, faNum } from './util.js?v=210';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=210';
+import { el, faNum } from './util.js?v=211';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=211';
 import {
   isOrgHost, irMirrorUrl,
   telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername,
   googleLoginEnabled,
-} from './config.js?v=210';
-import { mountGoogleButton } from './google-login.js?v=210';
+} from './config.js?v=211';
+import { mountGoogleButton } from './google-login.js?v=211';
 
 let overlay = null;
 // While the mandatory nickname step is showing, every dismissal path (×,
@@ -481,6 +481,13 @@ export function openLoginModal({ returnTo = location.pathname + location.hash } 
           // on the guest header with nothing to say why.
           if (!(await sessionStuck())) {
             codeMsg.textContent = SESSION_NOT_KEPT;
+            // The server consumed this code on the way to «yes», so pressing
+            // «ورود» again with it could only answer «no code issued». Clear
+            // it and offer the resend at once: a fresh code is the next step.
+            codeInput.value = '';
+            stopResendClock();
+            resendLeft = 0;
+            paintResend();
             verifyBtn.disabled = false;
             return;
           }

@@ -4,24 +4,22 @@
 //  - person icon (SVG): gray for guests -> login modal; blue for logged-in ->
 //    a toggle that opens a small menu (پیشخوان / پروفایل), each of which opens as
 //    an OVERLAY. Clicking the person again closes whatever is open.
-import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=210';
-import { currentUser, api, meStatus } from './api.js?v=210';
-import { isOrgHost, detectContentId } from './config.js?v=210';
-import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=210';
-import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=210';
-import { renderDashboard } from './dashboard.js?v=210';
-import { renderProfile } from './profile.js?v=210';
-import { maybeShowWelcome } from './welcome.js?v=210';
-import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=210';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=210';
-import { healPushSubscription } from './push.js?v=210';
-import { maybeShowPremiumPopup } from './premium-popup.js?v=210';
-import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=210';
-import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=210';
-import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=210';
-import { installLibraryGate } from './library-gate.js?v=210';
-import { toast } from './hl-view.js?v=210';
-import { wirePageBack } from './page-back.js?v=210';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=211';
+import { currentUser, api, meStatus } from './api.js?v=211';
+import { isOrgHost, detectContentId } from './config.js?v=211';
+import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=211';
+import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=211';
+import { maybeShowWelcome } from './welcome.js?v=211';
+import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=211';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=211';
+import { healPushSubscription } from './push.js?v=211';
+import { maybeShowPremiumPopup } from './premium-popup.js?v=211';
+import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=211';
+import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=211';
+import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=211';
+import { installLibraryGate } from './library-gate.js?v=211';
+import { toast } from './hl-view.js?v=211';
+import { wirePageBack } from './page-back.js?v=211';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
 // createElement('svg')) so the parser creates properly namespaced SVG nodes;
@@ -110,6 +108,14 @@ function buildGuestPerson() {
   return btn;
 }
 
+// The dashboard and profile overlays open only on a tap, so their modules
+// (and everything they import) are fetched then, not in front of every page's
+// first paint: they were ~75KB of the homepage's eager module graph.
+const loadDashboard = () => import('./dashboard.js?v=211');
+const loadProfile = () => import('./profile.js?v=211');
+const overlayFailed = (root) => root.replaceChildren(
+  el('div', { class: 'dcp-loading' }, 'بارگذاری انجام نشد؛ دوباره تلاش کنید.'));
+
 function buildUserPerson(user) {
   const btn = personSvg('is-user');
   btn.setAttribute('aria-label', 'حساب شما');
@@ -143,7 +149,15 @@ function buildUserPerson(user) {
   // the snapshot only when the API could not be asked (never to a blank page).
   const renderFreshProfile = (root) => {
     root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
-    return currentUser({ refresh: true }).then((m) => renderProfile(root, { me: m || user }));
+    return Promise.all([currentUser({ refresh: true }), loadProfile()])
+      .then(([m, { renderProfile }]) => renderProfile(root, { me: m || user }))
+      .catch(() => overlayFailed(root));
+  };
+  const renderDashboardOverlay = (root) => {
+    root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
+    return loadDashboard()
+      .then(({ renderDashboard }) => renderDashboard(root, { me: user }))
+      .catch(() => overlayFailed(root));
   };
 
   let menu = null;
@@ -153,7 +167,7 @@ function buildUserPerson(user) {
   const openMenu = () => {
     menu = el('div', { class: 'dcp-person-menu', role: 'menu' }, [
       el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
-        onclick: () => { closeMenu(); openOverlay('dashboard', 'پیشخوان', (root) => renderDashboard(root, { me: user })); } }, 'پیشخوان'),
+        onclick: () => { closeMenu(); openOverlay('dashboard', 'پیشخوان', renderDashboardOverlay); } }, 'پیشخوان'),
       el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
         onclick: () => { closeMenu(); openOverlay('profile', 'پروفایل', renderFreshProfile); } }, 'پروفایل'),
       // اطلاعیه‌ها — an overlay, not a page: the host already exists, is

@@ -8,11 +8,11 @@
 // the DES explainer box right above it), so it paints before this module
 // arrives. Everything inside #dcDesToolPanel is built here, lazily, the
 // first time the tab opens.
-import { el, faNum } from './util.js?v=210';
-import { api, currentUser, meStatus } from './api.js?v=210';
-import { openLoginModal } from './login-modal.js?v=210';
-import { premiumCta, unreachableGate } from './premium-cta.js?v=210';
-import { sourceBlock } from './des.js?v=210';
+import { el, faNum } from './util.js?v=211';
+import { api, currentUser, meStatus } from './api.js?v=211';
+import { openLoginModal } from './login-modal.js?v=211';
+import { premiumCta, unreachableGate } from './premium-cta.js?v=211';
+import { sourceBlock } from './des.js?v=211';
 
 const FROM = 'des-tool';
 const TG_URL = 'https://t.me/dentcast_support';
@@ -95,9 +95,17 @@ function looksLikeReference(s) { return /^D-[A-Z0-9]{3}-[A-Z0-9]{3}$/.test(s || 
    closed. Two live instances would show one reader two tick counts for one
    allowance (which is why this used to build into the visible copy only);
    one instance that moves cannot, and a half-typed form travels with it. */
-const shared = { host: null, ctl: null };
-const armed = [];            // every drawer this module has wired, in order
-const armedWraps = new WeakSet();
+// Kept on `window`, not in module scope: index.html's self-load fallback
+// imports this file unstamped while plus.js imports it stamped, and on a slow
+// line both arrive. Two URLs are two module instances; with module-scoped
+// state each one built and adopted its own tool, wired the same tab twice and
+// kept its own count. One state object for every copy of the module.
+const STATE = (typeof window !== 'undefined' && window.__dcDesToolState)
+  || { shared: { host: null, ctl: null }, armed: [], armedWraps: new WeakSet() };
+if (typeof window !== 'undefined') window.__dcDesToolState = STATE;
+const shared = STATE.shared;
+const armed = STATE.armed;   // every drawer any copy has wired, in order
+const armedWraps = STATE.armedWraps;
 
 /**
  * Wire ONE .dc-destool-wrap: fill on open, adopt the shared tool if it was

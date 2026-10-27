@@ -769,3 +769,34 @@ describe('the «گزارش ماهانه» row names only a month the account has
     expect(text).not.toContain('آماده');
   });
 });
+
+describe('the first paint does not wait for /me', () => {
+  it('draws the pending shape when /me is slow, then the real state when it answers', async () => {
+    let answer!: (u: Record<string, unknown> | null) => void;
+    meImpl = () => new Promise((r) => { answer = r; });
+    document.body.innerHTML = SKELETON;
+    const { initPremiumPanel } = await import('/plus/js/premium-panel.js');
+    const done = initPremiumPanel();
+    await new Promise((r) => setTimeout(r, 450));
+    // Not an empty hidden slot: the catalog is there, deciding nothing.
+    expect(mobile().hidden).toBe(false);
+    const wrap = mobile().querySelector('.dcp-pp')!;
+    expect(wrap.getAttribute('data-dcp-state')).toBe('pending');
+    expect(cards().length).toBeGreaterThan(0);
+    expect(pricingLinks()).toHaveLength(0);
+    expect(mobile().querySelector('.dcp-pp-signin')).toBeNull();
+    // The DES box is wired even before the reader is known.
+    expect(desArmed.length).toBeGreaterThan(0);
+    answer({ tier: 'premium', display_name: 'x' });
+    await done;
+    await settle();
+    expect(mobile().querySelector('.dcp-pp')!.getAttribute('data-dcp-state')).toBe('live');
+    expect(pricingLinks()).toHaveLength(0);
+  });
+
+  it('skips the pending paint when /me answers quickly', async () => {
+    meImpl = () => Promise.resolve(null);
+    await mount();
+    expect(mobile().querySelector('.dcp-pp')!.getAttribute('data-dcp-state')).toBe('locked');
+  });
+});

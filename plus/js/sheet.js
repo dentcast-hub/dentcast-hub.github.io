@@ -1,6 +1,6 @@
-import { el } from './util.js?v=210';
-import * as apiMod from './api.js?v=210';
-import { PRICING_URL, guestPremiumExtras } from './premium-cta.js?v=210';
+import { el } from './util.js?v=211';
+import * as apiMod from './api.js?v=211';
+import { PRICING_URL, guestPremiumExtras } from './premium-cta.js?v=211';
 
 /**
  * The bottom sheet — one implementation, for every surface that needs to ask
@@ -81,8 +81,11 @@ export function gateCard({ title, sub, cta, guest, from }) {
     const login = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود');
     login.addEventListener('click', () => {
       closeSheet();
-      import('./login-modal.js?v=210')
+      import('./login-modal.js?v=211')
         .then((m) => m.openLoginModal({ returnTo: location.pathname + location.search + location.hash }))
+        // Reload on success: the gated surface and the header both read /me at
+        // boot, so a sign-in that only closed the modal looked like a failed one.
+        .then((res) => { if (res && res.user) location.reload(); })
         .catch(() => {});
     });
     return el('div', { class: 'dcp-sheet-card', role: 'dialog', 'aria-label': title }, [
