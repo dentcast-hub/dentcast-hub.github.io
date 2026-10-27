@@ -15,10 +15,10 @@
 //     the account, not localStorage).
 //  2. MANUAL — «راهنمای سایت» in the header person menu (logged-in), any time.
 //     On a non-home page it navigates to /?tour=1 and starts there.
-import { el, faNum, tehranDay } from './util.js?v=202';
-import { api, currentUser } from './api.js?v=202';
-import { pricingHref } from './premium-cta.js?v=202';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=202';
+import { el, faNum, tehranDay } from './util.js?v=203';
+import { api, currentUser } from './api.js?v=203';
+import { pricingHref } from './premium-cta.js?v=203';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=203';
 
 const SS_PENDING = 'dcp:tour:pending'; // set before navigating home to start there
 
@@ -55,7 +55,9 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 // A stop whose anchors are missing/invisible is skipped silently (some are
 // injected async by Plus itself, some only exist for one kind of reader). `panel`
 // is the mobile panel that must be active first; `enter` runs before the panel
-// switch. The final stop has no target: full dim + centered card.
+// switch; `skip(ctx)` drops a stop that cannot apply to this reader, so the
+// «N از M» counter never jumps. The final stop has no target: full dim +
+// centered card.
 //
 // Stops follow the DOM order of each panel, top to bottom, so the tour only
 // ever scrolls forward. `text` may be a function of the reader context
@@ -86,7 +88,9 @@ const STOPS = [
   },
   {
     key: 'des', panel: 'panel-studio', premium: 'part', title: 'امتیاز شواهد (DES)',
-    text: 'هر مطلب علمی دنت‌کست یک کارت «ارزیابی خودکار شواهد» دارد: منابعش روی پنج سطح از E تا A می‌نشینند — بر اساس نوع مطالعه و کیفیت روشش — و جدا از آن سنجیده می‌شود متنِ دنت‌کست چقدر با خودِ منابع مطابق است. جعبه‌ی اول همین را توضیح می‌دهد. جعبه‌ی دوم ابزار پریمیوم است: متن یا چکیده‌ی مقاله‌ی خودتان را بگذارید و با همان معیار امتیاز بگیرید.',
+    text: (ctx) => (ctx.live
+      ? 'هر مطلب علمی دنت‌کست یک کارت «ارزیابی خودکار شواهد» دارد: منابعش روی پنج سطح از E تا A می‌نشینند — بر اساس نوع مطالعه و کیفیت روشش — و جدا از آن سنجیده می‌شود متنِ دنت‌کست چقدر با خودِ منابع مطابق است. جعبه‌ی اول همین را توضیح می‌دهد. جعبه‌ی دوم هم با اشتراک شما باز است: متن یا چکیده‌ی مقاله‌ی خودتان را بگذارید و با همان معیار امتیاز بگیرید.'
+      : 'هر مطلب علمی دنت‌کست یک کارت «ارزیابی خودکار شواهد» دارد: منابعش روی پنج سطح از E تا A می‌نشینند — بر اساس نوع مطالعه و کیفیت روشش — و جدا از آن سنجیده می‌شود متنِ دنت‌کست چقدر با خودِ منابع مطابق است. جعبه‌ی اول همین را توضیح می‌دهد. جعبه‌ی دوم ابزار پریمیوم است: متن یا چکیده‌ی مقاله‌ی خودتان را بگذارید و با همان معیار امتیاز بگیرید.'),
     targets: () => [q('#panel-studio .dc-des-legend-wrap'), q('#panel-studio .dc-destool-wrap')],
   },
   {
@@ -102,9 +106,8 @@ const STOPS = [
     targets: () => [byId('card-episodes')],
   },
   {
-    // Drawn for a guest or free reader only (a subscriber has every pathway),
-    // so for a subscriber this stop skips itself.
-    key: 'pathways', panel: 'panel-studio', premium: 'part', title: 'مسیرهای یادگیری',
+    // Drawn for a guest or free reader only (a subscriber has every pathway).
+    key: 'pathways', panel: 'panel-studio', premium: 'part', skip: (ctx) => ctx.live, title: 'مسیرهای یادگیری',
     text: '«مسیرهای یادگیری» یک موضوع را از پیش‌نیاز تا پیشرفته، قدم‌به‌قدم و به ترتیب درست می‌چینند. مسیرِ «باز برای همه» را هر کسی می‌تواند شروع کند؛ بقیه با اشتراک پریمیوم باز می‌شوند و بعضی در پایان گواهی‌نامه دارند.',
     targets: () => [byId('dcPathwayShowcase')],
   },
@@ -139,12 +142,16 @@ const STOPS = [
   // ── آرشیو ────────────────────────────────────────────────────────────────
   {
     key: 'upboard', panel: 'panel-sharehub', premium: 'part', title: 'up-board',
-    text: 'همه‌ی مطالب سایت در دو چیدمان: «تازه‌ترین» به ترتیب انتشار، برای همه؛ و «بالاترین» به انتخاب خواننده‌ها — با قلب‌هایی که هر عضوی زیر مطالب می‌زند — ویژه‌ی پریمیوم.',
+    text: (ctx) => (ctx.live
+      ? 'همه‌ی مطالب سایت در دو چیدمان: «تازه‌ترین» به ترتیب انتشار، برای همه؛ و «بالاترین» به انتخاب خواننده‌ها — با قلب‌هایی که هر عضوی زیر مطالب می‌زند — که با اشتراک شما باز است.'
+      : 'همه‌ی مطالب سایت در دو چیدمان: «تازه‌ترین» به ترتیب انتشار، برای همه؛ و «بالاترین» به انتخاب خواننده‌ها — با قلب‌هایی که هر عضوی زیر مطالب می‌زند — ویژه‌ی پریمیوم.'),
     targets: () => [q('#panel-sharehub .dc-home-sec-upboard'), q('#panel-sharehub .dc-monitor-secondary')],
   },
   {
     key: 'desboard', panel: 'panel-sharehub', premium: 'part', title: 'قفسه‌ی شواهد (DES)',
-    text: 'مطالب دنت‌کست، این بار روی قفسه‌های DES: هر مطلب بر اساس سطح شواهد منابعش در قفسه‌ی خودش. صفحه و توضیحش برای همه باز است و خودِ چیدمان ویژه‌ی پریمیوم.',
+    text: (ctx) => (ctx.live
+      ? 'مطالب دنت‌کست، این بار روی قفسه‌های DES: هر مطلب بر اساس سطح شواهد منابعش در قفسه‌ی خودش. صفحه و توضیحش برای همه باز است و خودِ چیدمان با اشتراک شما.'
+      : 'مطالب دنت‌کست، این بار روی قفسه‌های DES: هر مطلب بر اساس سطح شواهد منابعش در قفسه‌ی خودش. صفحه و توضیحش برای همه باز است و خودِ چیدمان ویژه‌ی پریمیوم.'),
     targets: () => [q('#panel-sharehub .dc-ub-door')],
   },
   {
@@ -178,12 +185,16 @@ const STOPS = [
   },
   {
     key: 'references', panel: 'panel-sharehub', premium: 'part', title: 'مرجع‌های دنت‌کست',
-    text: '«فهرست موضوعی» نقشه‌ی همه‌ی محتواست، هر حوزه در یک صفحه — و برای مشترک پریمیوم با زیرموضوع‌ها و ترتیب خواندن. «دانشنامه» مفاهیم تصمیم‌سازِ دندانپزشکی را کوتاه و دقیق توضیح می‌دهد.',
+    text: (ctx) => (ctx.live
+      ? '«فهرست موضوعی» نقشه‌ی همه‌ی محتواست، هر حوزه در یک صفحه — و برای شما، با اشتراک پریمیوم، با زیرموضوع‌ها و ترتیب خواندن. «دانشنامه» مفاهیم تصمیم‌سازِ دندانپزشکی را کوتاه و دقیق توضیح می‌دهد.'
+      : '«فهرست موضوعی» نقشه‌ی همه‌ی محتواست، هر حوزه در یک صفحه — و برای مشترک پریمیوم با زیرموضوع‌ها و ترتیب خواندن. «دانشنامه» مفاهیم تصمیم‌سازِ دندانپزشکی را کوتاه و دقیق توضیح می‌دهد.'),
     targets: () => [byId('card-pillar'), byId('card-glossary')],
   },
   {
     key: 'search_engines', panel: 'panel-sharehub', premium: 'part', title: 'موتورهای جستجوی دندانپزشکی',
-    text: '«رادار» جایگزین تخصصی گوگل برای سایت‌های دندانپزشکی است، از جمله سایت شرکت‌های تجهیزات دندانپزشکی. «کتابخانه‌ی دنت‌کست» در آرشیو مقاله‌های علمیِ خودِ دنت‌کست می‌گردد — دسته‌بندی‌شده و قابل جستجو — و ویژه‌ی اعضای پریمیوم است.',
+    text: (ctx) => (ctx.live
+      ? '«رادار» جایگزین تخصصی گوگل برای سایت‌های دندانپزشکی است، از جمله سایت شرکت‌های تجهیزات دندانپزشکی. «کتابخانه‌ی دنت‌کست» در آرشیو مقاله‌های علمیِ خودِ دنت‌کست می‌گردد — دسته‌بندی‌شده و قابل جستجو — و با اشتراک شما باز است.'
+      : '«رادار» جایگزین تخصصی گوگل برای سایت‌های دندانپزشکی است، از جمله سایت شرکت‌های تجهیزات دندانپزشکی. «کتابخانه‌ی دنت‌کست» در آرشیو مقاله‌های علمیِ خودِ دنت‌کست می‌گردد — دسته‌بندی‌شده و قابل جستجو — و ویژه‌ی اعضای پریمیوم است.'),
     targets: () => [byId('btnOpenRadarMob'), byId('card-library')],
   },
 
@@ -254,7 +265,7 @@ async function mountPremiumPreview(ctx) {
   if (preview && preview.isConnected) return;
   const host = byId('panel-premium');
   if (!host) return;
-  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=202'), samplePathway()]);
+  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=203'), samplePathway()]);
   if (!state || typeof mod.livePreview !== 'function') return;
   const node = mod.livePreview({
     tier: 'premium',
@@ -459,7 +470,8 @@ function renderStop(stop, idx) {
     quit.addEventListener('click', () => endTour(false));
     foot.push(quit);
   }
-  foot.push(el('span', { class: 'dcp-tour-progress' }, faNum(idx + 1) + ' از ' + faNum(STOPS.length)));
+  const applies = STOPS.filter((s) => !(s.skip && s.skip(st.ctx)));
+  foot.push(el('span', { class: 'dcp-tour-progress' }, faNum(applies.indexOf(stop) + 1) + ' از ' + faNum(applies.length)));
   st.card.appendChild(el('div', { class: 'dcp-tour-foot' }, foot));
   positionStop();
 }
@@ -470,6 +482,7 @@ async function showStop(idx) {
   const seq = ++st.seq;
   const stop = STOPS[idx];
   st.idx = idx;
+  if (stop.skip && stop.skip(st.ctx)) { showStop(idx + 1); return; }
 
   // The premium sample lives only while the tour is on the پریمیوم tab; it is
   // built before the switch so the panel slides in already showing it.
