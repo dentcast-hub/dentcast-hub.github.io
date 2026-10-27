@@ -26,6 +26,7 @@ let cached: IndexFile | null = null;
 let cachedMtimeMs = 0;
 /** Set by content-refresh.ts once a published copy has been fetched and validated. */
 let remote: IndexFile | null = null;
+let remoteText = '';
 
 function defaultPath(): string {
   const here = dirname(fileURLToPath(import.meta.url)); // plus-api/src (or dist)
@@ -56,7 +57,14 @@ export function applyRemoteIndex(raw: unknown): boolean {
   if (!Array.isArray(idx.folders) || !Array.isArray(idx.clusters) || !Array.isArray(idx.tags)) return false;
   if (!idx.byContent || typeof idx.byContent !== 'object' || Array.isArray(idx.byContent)) return false;
   if (Object.keys(idx.byContent).length === 0) return false;
+  // The poll fetches the same file most times. Keeping the object in service
+  // when nothing changed keeps every cache keyed on it (the assistant's tag
+  // lookup, alias table, glossary map) instead of rebuilding them all on the
+  // event loop every few minutes.
+  const text = JSON.stringify(idx);
+  if (remote && text === remoteText) return true;
   remote = idx;
+  remoteText = text;
   return true;
 }
 
@@ -68,6 +76,7 @@ export function indexSource(): string {
 /** Test-only: forget the fetched copy so a case can start from the baked file. */
 export function resetRemoteIndex(): void {
   remote = null;
+  remoteText = '';
 }
 
 /**

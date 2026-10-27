@@ -3,10 +3,10 @@
 // tool, so unlike pathways.html this page never gates itself outright.
 // Only how FAR the resulting flowchart goes depends on tier — handled inside
 // wayfinder.js, not here.
-import { currentUser, meStatus } from './api.js?v=206';
-import { renderWayfinder } from './wayfinder.js?v=206';
-import { registerSW } from './pwa.js?v=206';
-import { wirePageBack } from './page-back.js?v=206';
+import { currentUser, meStatus } from './api.js?v=207';
+import { renderWayfinder } from './wayfinder.js?v=207';
+import { registerSW } from './pwa.js?v=207';
+import { wirePageBack } from './page-back.js?v=207';
 
 async function main() {
   registerSW();

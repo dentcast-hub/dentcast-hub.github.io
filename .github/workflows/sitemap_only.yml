@@ -78,7 +78,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name  "github-actions[bot]"
-          git add sitemap.xml sitemap-ir.xml plus/content-index.json plus/cabinet-papers.json service-worker.js
+          git add sitemap.xml sitemap-ir.xml plus/content-index.json plus/assistant-tags.json plus/cabinet-papers.json service-worker.js
           # The stamper rewrites every `dentcast-brain.json?v=` URL in the HTML
           # (today index.html + player.html). Staging tracked+modified HTML by
           # pattern rather than by name means a future page that fetches the

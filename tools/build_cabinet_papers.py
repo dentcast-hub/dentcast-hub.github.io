@@ -38,9 +38,51 @@ DESIGN = {
     'retrospective study': 0.2, 'case-control study': 0.2, 'cross-sectional study': 0.2,
     'in vitro study': 0.15, 'finite element analysis': 0.1, 'animal study': 0.1,
     'narrative review': 0.15, 'case series': 0.1, 'case report': 0.05, 'technique report': 0.05,
+    'other primary research': 0.2, 'thesis': 0.1, 'editorial / commentary': 0.05,
 }
-# Not papers a dentist's case should be pointed to.
+# The library leans heavily on implants: generic tags such as crown, cementation,
+# impression, splinting or provisional-restoration are mostly implant papers.
+# For a site tag about natural teeth those papers drop below the tooth ones
+# (still listed when nothing else exists). A site tag is about implants when a
+# word of its label says so, or when most of its candidate papers are implant
+# papers (then the few tooth papers must not jump above them).
+IMPLANT_WORDS = {'ایمپلنت', 'اباتمنت', 'implant', 'implants', 'abutment', 'اوردنچر', 'overdenture',
+                 'زایگوماتیک', 'سینوس', 'ساکت', 'ریج', 'استئواینتگریشن', 'آرچ', 'all-on-4'}
+IMPLANT_LIB = re.compile(r'implant|abutment|overdenture|all-on|zygomatic|pterygoid|osseointegration|ti-base|sinus-(?:lift|augmentation|floor)')
+IMPLANT_PENALTY = 1.5
+IMPLANT_POOL_SHARE = 0.5
+
+# Library tags titles spell out instead (cbct -> cone beam), for the title bonus.
+ACRONYM = {
+    'cbct': 'cone beam', 'tmd': 'temporomandibular', 'tmj': 'temporomandibular', 'dme': 'deep margin',
+    'ids': 'immediate dentin sealing', 'ios': 'intraoral scan', 'prf': 'platelet-rich fibrin',
+    'prp': 'platelet-rich plasma', 'gbr': 'guided bone', 'ctg': 'connective tissue', 'fgg': 'free gingival',
+    'mronj': 'osteonecrosis', 'vdo': 'vertical dimension', 'rbfdp': 'resin-bonded', 'fdp': 'fixed dental prosthes',
+    'ltd': 'low-temperature degradation', 'emd': 'enamel matrix', 'picn': 'polymer-infiltrated',
+}
+
+
+def title_pattern(lib):
+    """A library tag as a phrase to find in a title: its words in order, each a
+    word start (so 'post' is not 'posterior', 'all-on-4' is not 'overall'),
+    digits kept, the last word allowed an ending (crown -> crowns)."""
+    lib = ACRONYM.get(lib, lib)
+    words = [w for w in re.split(r'[-_\s]+', lib) if w]
+    if not words or (len(words) == 1 and len(words[0]) < 4):
+        return None
+    parts = [re.escape(w[:7]) if i == len(words) - 1 and len(w) > 7 else re.escape(w) for i, w in enumerate(words)]
+    return re.compile(r'\b' + r'[-\s]?'.join(parts[:-1] + [parts[-1] + r'\w*']) + r'\b' if len(parts) > 1
+                      else r'\b' + parts[0] + r'\w*')
+
+# Not papers a dentist's case should be pointed to — unless the record has a
+# DOI, which a brochure or a whole issue does not (a journal article typed
+# "other document", a published book chapter).
 SKIP_TYPES = {'journal issue', 'manufacturer document', 'other document', 'book / chapter'}
+
+
+def skipped(p):
+    return p.get('type') in SKIP_TYPES and not (p.get('doi') and p.get('type') != 'journal issue'
+                                                 and p.get('type') != 'manufacturer document')
 
 
 def load(path):
@@ -49,21 +91,37 @@ def load(path):
 
 
 def build():
-    bridge = load(BRIDGE)['map']
+    raw = load(BRIDGE)
+    bridge = raw['map']
+    # Papers a reviewer has ruled out for one site tag (a tag that is only a
+    # minor tag on them): {site key: [paper id, ...]}.
+    exclude = {k: set(v) for k, v in raw.get('exclude', {}).items()}
+    # Site tags about natural teeth whatever the library pool looks like
+    # (impressions, cements, crowns): implant papers always rank below.
+    tooth_topics = set(raw.get('tooth_topics', []))
     cat = load(CATALOG)
     site_keys = {t['key'] for t in load(INDEX)['tags']}
     aliases = cat.get('tag_aliases', {})
+    all_ids = {p['id'] for p in cat['papers']}
     canon = lambda t: aliases.get(t, t)
 
     by_lib = {}
     for p in cat['papers']:
-        if p.get('type') in SKIP_TYPES or not (p.get('drive_view') or p.get('drive_download')):
+        if skipped(p) or not (p.get('drive_view') or p.get('drive_download')):
             continue
         for t in set(canon(x) for x in p.get('tags', [])):
             by_lib.setdefault(t, []).append(p)
 
     problems = []
     by_tag, used = {}, {}
+    for key in sorted(tooth_topics - set(bridge)):
+        problems.append(f'tooth_topics names a site tag with no bridge: {key}')
+    for key, ids in sorted(exclude.items()):
+        if key not in bridge:
+            problems.append(f'exclude names a site tag with no bridge: {key}')
+        for pid in ids:
+            if pid not in all_ids:
+                problems.append(f'exclude names an unknown paper for {key}: {pid}')
     for key, libs in sorted(bridge.items()):
         if key not in site_keys:
             problems.append(f'site tag not in content-index: {key}')
@@ -78,21 +136,34 @@ def build():
                 score[p['id']] = score.get(p['id'], 0) + TAG_WEIGHT[i]
         if not score:
             continue
+        for pid in exclude.get(key, ()):
+            score.pop(pid, None)
+        if not score:
+            continue
         papers = {p['id']: p for lib in libs for p in by_lib.get(lib, [])}
+        def implant_paper(p):
+            return any(IMPLANT_LIB.search(t) for t in p.get('tags', []) if not t.startswith('topic:'))
+
+        share = sum(1 for pid in score if implant_paper(papers[pid])) / len(score)
+        implant_topic = key not in tooth_topics and (
+            bool(IMPLANT_WORDS & set(re.split(r'[\s_]+', key))) or share >= IMPLANT_POOL_SHARE)
 
         # A paper whose TITLE names the topic is about it; one that only carries
         # the tag may mention it in passing (an endocrown review tagged ferrule).
-        stems = [[w[:6] for w in re.split(r'[-_]', lib) if len(w) > 2] for lib in libs]
+        patterns = [x for x in (title_pattern(lib) for lib in libs) if x]
 
         def in_title(p):
             t = (p.get('display_title') or p.get('title') or '').lower()
-            return any(ws and all(w in t for w in ws) for ws in stems)
+            return any(rx.search(t) for rx in patterns)
 
         def rank(pid):
             p = papers[pid]
             year = int(p.get('crossref_year') or 0)
-            return (-(score[pid] + (0.8 if in_title(p) else 0) + DESIGN.get(p.get('type'), 0)
-                      + (0.1 if p.get('key_finding') else 0) + (0.15 if year >= 2018 else 0)), -year, pid)
+            off_topic = 0 if implant_topic or not implant_paper(p) else IMPLANT_PENALTY
+            total = (score[pid] + (0.8 if in_title(p) else 0) + DESIGN.get(p.get('type'), 0)
+                     + (0.1 if p.get('key_finding') else 0) + (0.15 if year >= 2018 else 0) - off_topic)
+            # rounded, so float noise (2.1999… vs 2.2) never outranks the year
+            return (-round(total, 6), -year, pid)
 
         ids = sorted(score, key=rank)[:PER_TAG]
         by_tag[key] = ids
@@ -134,7 +205,10 @@ def main():
         if current != text:
             print('plus/cabinet-papers.json is stale: run python3 tools/build_cabinet_papers.py', file=sys.stderr)
             sys.exit(1)
-        if any(p.startswith('site tag not in') for p in problems):
+        # Every problem fails the check: a renamed site tag, a bridge row that
+        # yields nothing, a stale exclusion. The build itself only warns, so the
+        # post-merge regeneration on main never stops over one of them.
+        if problems:
             sys.exit(1)
         print('OK - cabinet-papers.json matches the bridge and the library.')
         return

@@ -558,3 +558,18 @@ describe('library papers beside the result', () => {
   });
 });
 
+describe('assistant speed', () => {
+  it('the same case sent twice at once makes ONE model call', async () => {
+    await makePremium();
+    const spy = vi.spyOn(ai, 'selectTags').mockImplementation(
+      () => new Promise((r) => { setTimeout(() => r(['فرول']), 50); }));
+    const [a, b] = await Promise.all([
+      next({ description: 'یک کیس هم‌زمان دوبار' }),
+      next({ description: 'یک کیس هم‌زمان دوبار' }),
+    ]);
+    expect(a.statusCode).toBe(200);
+    expect(b.statusCode).toBe(200);
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+});
+
