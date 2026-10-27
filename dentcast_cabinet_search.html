@@ -204,7 +204,10 @@ main#list{padding:0.375rem 0 1.25rem}
 const SRC="dentcast_cabinet_full_catalog.json";
 let DATA=[],ALIAS={},active=new Set(),shown=0;const PAGE=80;
 const q=document.getElementById('q'),topic=document.getElementById('topic'),type=document.getElementById('type'),sort=document.getElementById('sort');
-const nm=s=>(s||'').toLowerCase();
+// normalise for search: case, US/UK spelling, Arabic vs Persian letters
+const nm=s=>(s||'').toLowerCase().replace(/aesth/g,'esth').replace(/ي/g,'ی').replace(/ك/g,'ک');
+// compact form: "peri-implantitis", "peri implantitis" and "periimplantitis" all meet here
+const cp=s=>nm(s).replace(/[^a-z0-9\u0600-\u06FF]+/g,'');
 const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 fetch(SRC).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(j=>{
@@ -215,8 +218,9 @@ fetch(SRC).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(j
     tp:p.topic||"",ty:p.type||"",tg:p.tags||[],
     d:p.drive_download||"",v:p.drive_view||"",j:p.journal||"",y:p.crossref_year||"",
     kf:p.key_finding||"",bl:p.clinical_bottom_line||"",ab:p.abstract||"",
-    s:nm([(p.authors||[]).join(' '),p.journal,p.doi].join(' '))
+    h:nm([p.display_title||p.real_title||p.title,(p.tags||[]).join(' '),(p.authors||[]).join(' '),p.journal,p.doi].join(' '))
   }));
+  DATA.forEach(p=>{p.hc=cp(p.h);});
   document.getElementById('total').textContent='\u00b7 '+DATA.length+' papers';
   fill(topic,[...new Set(DATA.map(p=>p.tp).filter(x=>x&&x!=='(root)'))].sort());
   fill(type,[...new Set(DATA.map(p=>p.ty).filter(Boolean))].sort());
@@ -228,15 +232,24 @@ fetch(SRC).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(j
 });
 
 function fill(sel,arr){for(const v of arr){const o=document.createElement('option');o.textContent=v;sel.appendChild(o);}}
-function match(p){const t=nm(q.value).trim();
- // a typed abbreviation/variant (e.g. "gbr") also finds its canonical tag
- const al=ALIAS[t.replace(/\s+/g,'-')];
- if(t&&!(nm(p.t).includes(t)||p.s.includes(t)||p.tg.some(x=>nm(x).includes(t)||x===al)))return false;
+// A query first matches as a whole phrase (compact form, or a tag alias such
+// as "gbr"); when no paper has the phrase, every word must match on its own.
+let Q=null;
+function query(){const raw=nm(q.value).trim();if(!raw)return null;
+ const al=ALIAS[raw.replace(/\s+/g,'-')],c=cp(raw);
+ const words=raw.split(/\s+/).map(w=>({w,c:cp(w),al:ALIAS[w]})).filter(x=>x.c);
+ const phrase=p=>(c&&p.hc.includes(c))||(al&&p.tg.includes(al));
+ return {phrase,words,usePhrase:DATA.some(phrase)};}
+function textOk(p){if(!Q)return true;if(Q.usePhrase)return Q.phrase(p);
+ return Q.words.every(x=>p.h.includes(x.w)||p.hc.includes(x.c)||(x.al&&p.tg.includes(x.al)));}
+function match(p){
+ if(!textOk(p))return false;
  if(topic.value&&p.tp!==topic.value)return false;if(type.value&&p.ty!==type.value)return false;
  for(const a of active)if(!p.tg.includes(a))return false;return true;}
-function render(reset){if(reset){shown=0;document.getElementById('list').innerHTML='';}
+function render(reset){if(reset){shown=0;document.getElementById('list').innerHTML='';Q=query();}
  const res=DATA.filter(match);res.sort((a,b)=>(a[sort.value]||'').localeCompare(b[sort.value]||''));
  document.getElementById('count').textContent=res.length+' result'+(res.length==1?'':'s');
+ if(!res.length){const e=document.createElement('div');e.className='state';e.textContent='No papers match this search. Try fewer words, another spelling, or clear the filters.';document.getElementById('list').appendChild(e);}
  const list=document.getElementById('list');
  for(const p of res.slice(shown,shown+PAGE)){const d=document.createElement('div');d.className='card';
   const tags=p.tg.map(t=>'<span class="tag" data-t="'+esc(t)+'">#'+esc(t)+'</span>').join(' ');

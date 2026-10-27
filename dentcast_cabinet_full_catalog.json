@@ -767,7 +767,11 @@
       "tags": [
         "topic:abutment",
         "dental-implant",
-        "topic:esthetic-soft-tissue"
+        "topic:esthetic-soft-tissue",
+        "soft-tissue",
+        "esthetic-dentistry",
+        "peri-implant-tissue",
+        "natural-tooth-vs-implant"
       ],
       "name_bucket": "meaningful",
       "semantic_tagged": true,
@@ -6152,7 +6156,7 @@
           "score": 0.3305
         }
       ],
-      "abstract": "Julia-Gabriela Wittneben, DMD, MMSc/Urs Brägger, DMD/Daniel Buser, DMD/Tim Joda, DMD, MSc: The objective of this study was to digitally analyze the emergence profile changes before and after soft tissue conditioning with fixed-implant provisional restorations. Impressions were taken with individualized posts to build casts for 20 patients. Optical scanning of the modulated mucosa was performed from the model situations in combination with the original healing abutments. Emergence profile extension revealed a mean volume of 41.9 mm<sup>3</sup> for central sites and 25.8 mm<sup>3</sup> for laterals. In addition, linear calculations of supraimplant mucosal profile changes presented a median enlargement of 8.2 mm in the mesial-distal and 7.2 mm in the buccal-lingual direction for central incisors and 6.8 mm (mesial-distal) and 6.5 mm (buccal-lingual) for lateral incisors. The change was more than double compared with the initial profile of the healing abutments.",
+      "abstract": "Julia-Gabriela Wittneben, DMD, MMSc/Urs Brägger, DMD/Daniel Buser, DMD/Tim Joda, DMD, MSc: The objective of this study was to digitally analyze the emergence profile changes before and after soft tissue conditioning with fixed-implant provisional restorations. Impressions were taken with individualized posts to build casts for 20 patients. Optical scanning of the modulated mucosa was performed from the model situations in combination with the original healing abutments. Emergence profile extension revealed a mean volume of 41.9 mm³ for central sites and 25.8 mm³ for laterals. In addition, linear calculations of supraimplant mucosal profile changes presented a median enlargement of 8.2 mm in the mesial-distal and 7.2 mm in the buccal-lingual direction for central incisors and 6.8 mm (mesial-distal) and 6.5 mm (buccal-lingual) for lateral incisors. The change was more than double compared with the initial profile of the healing abutments.",
       "journal": "The International Journal of Periodontics & Restorative Dentistry",
       "crossref_year": 2016,
       "real_title": "Volumetric Calculation of Supraimplant Submergence Profile After Soft Tissue Conditioning with a Provisional Restoration"
@@ -12897,7 +12901,8 @@
         "Filip Keulemans"
       ],
       "duplicate_paths": [
-        "E:\\Paper farzad\\Post & core\\Bonding\\Decoupling With Time.pdf"
+        "E:\\Paper farzad\\Post & core\\Bonding\\Decoupling With Time.pdf",
+        "E:\\Paper farzad\\biomimetic\\Bonding\\Decoupling With Time.pdf"
       ]
     },
     {
@@ -15779,52 +15784,6 @@
       ],
       "crossref_year": 2007,
       "abstract": "To compare the 24-h microtensile bond strength of a microfilled hybrid composite to the same material after mechanical and/or chemical treatment and assess the effect of oxygen inhibition on the composite-composite bond.\n\nForty composite cylinders of Gradia Direct Anterior (GC) were prepared and stored 24 h prior to the following surface treatments: 50-microm aluminum oxide air abrasion and 37% phosphoric acid etching (group 1); hydrochloric acid and 6.9% hydrofluoric acid etching (group 2); diamond bur roughening and 37% phosphoric acid etching (group 3); diamond bur roughening (group 4). In all groups, Prime & Bond NT (Dentsply De Trey) was applied and light cured in air or under a nitrogen atmosphere, prior to layering a buildup of the repairing resin composite. Microtensile bond strength measurements were performed. Data were statistically analyzed with two-way ANOVA and Tukey's test (alpha = 0.05).\n\nThe curing atmosphere did not significantly influence the interfacial strength (p < 0.05). Surface treatment significantly affected the composite-composite bond (p > 0.05). Air abrasion, regardless of curing atmosphere, resulted in the strongest bond (p < 0.05). The other treatments were comparable.\n\nAir abrasion and the application of a bonding agent offer satisfactory bond strengths for composite repair. The oxygen inhibition layer on a light-cured adhesive is not crucial to the success of the 24-h composite-composite bond."
-    },
-    {
-      "id": "P0350",
-      "title": "Decoupling With Time",
-      "file_name": "Decoupling With Time.pdf",
-      "topic": "biomimetic",
-      "topic_path": "biomimetic/Bonding",
-      "type": "narrative review",
-      "local_path": "E:\\Paper farzad\\biomimetic\\Bonding\\Decoupling With Time.pdf",
-      "file_size": 839142,
-      "key_finding": "Narrative continuing-education article on biomimetic 'decoupling with time': composite shrinks toward the most bondable surface, so immediate dentin sealing, resin coating, deep margin elevation, stress-reduced layering and fibers let the dentin hybrid layer mature (5 to 30 minutes) before thicker composite is coupled. The authors conclude this makes restoration very predictable.",
-      "clinical_bottom_line": "Expert opinion article drawing largely on laboratory studies, not comparative clinical evidence; it recommends keeping initial composite layers thin (under 1.5 mm) over the sealed dentin.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1728Ani15IwCfWf8c0vuPpuK9z0NQcwCc",
-      "drive_view": "https://drive.google.com/file/d/1728Ani15IwCfWf8c0vuPpuK9z0NQcwCc/view",
-      "drive_id": "1728Ani15IwCfWf8c0vuPpuK9z0NQcwCc",
-      "tags": [
-        "topic:biomimetic",
-        "narrative-review",
-        "immediate-dentin-sealing",
-        "polymerization-shrinkage",
-        "deep-margin-elevation",
-        "fiber-reinforced-composite",
-        "dentin-bonding",
-        "biomimetic-dentistry",
-        "decoupling-with-time"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "real_title": "Decoupling With Time",
-      "doi": "",
-      "journal": "Inside Dentistry",
-      "crossref_year": 2021,
-      "subjects": [],
-      "abstract": "Polymerization dynamics, which govern the movement of composite restoratives as they cure, dictate that shrinkage occurs in the direction of the most bondable surface or, in larger volumes, toward the center mass of the material. When polymerizing, composite shrinks toward the wall or walls of the preparation that are the most mineralized and dry and away from the walls that are the most moist and organic as dictated by the hierarchy of bondability. Immediately sealing the dentin with a dentin bonding system after preparation, applying a thin coating of resin, and allowing the developing dentin hybrid layer to mature for an appropriate amount of time improves the overall bond strength significantly and prevents the shrinkage stress created by larger overlying volumes of composite from causing debonding in a process known as decoupling with time. Additional techniques, such as deep margin elevation, stress- reduced direct composite layering, and the placement of fiber reinforcement also leverage decoupling with time to improve bond strengths. This article explores the development and use of these and other techniques to improve bond strengths to dentin, discusses the impact of the hierarchy of bondability on composite failure, and presents the biomimetic restorative dentistry protocols that incorporate this information to create restorations that possess a long-term seal to prevent reinfection, maintain pulp vitality, maximize the preservation of tooth structure, and minimize residual stresses in the tooth/restoration complex.",
-      "display_title": "Decoupling With Time",
-      "authors": [
-        "David Starr Alleman",
-        "Davey Scott Alleman",
-        "Simone Deliperi",
-        "Jorge Aravena Diaz",
-        "Leandro Martins",
-        "Filip Keulemans"
-      ]
     },
     {
       "id": "P0351",
@@ -26714,7 +26673,7 @@
       "journal": "The International Journal of Periodontics &amp; Restorative Dentistry",
       "crossref_year": 2019,
       "subjects": [],
-      "abstract": "Hom-Lay Wang, DDS, MS, PhD/Giovanni Zucchelli, DDS, PhD: The role of peri-implant soft tissue has emerged as a hot topic in implant therapy because of its ability to improve not only implant esthetics but also implant health and long-term stability. However, the need for a sufficient amount of keratinized tissue width to facilitate proper oral hygiene and long-term implant health remains controversial. The inconclusive results are likely due to the usage of a wide variety of implants. In the past, soft tissuelevel implants were more frequently used, but recently, bone-level rough-surface implants are commonly used, often leading to construction of an implant prosthesis below the mucosa. Hence, a band of keratinized mucosa is likely to benefit a patients ability to keep the implant clean and prevent further bacterial infection as long as the implant is properly placed. Roccuzzo et al found that mandibular posterior implants that lack keratinized mucosa required additional surgeries, antibiotic therapy, and procedures with free gingival graft in order to reduce discomfort and improve plaque control over a 10-year observational period.<sup>1</sup> In a 4-year follow-up study, Perussolo et al reported greater bleeding on probing, plaque accumulation, marginal bone loss, and brushing discomfort when peri-implant keratinized mucosa was < 2 mm.<sup>2</sup> A lack of keratinized mucosa impairs the surgical outcomes of peri-implantitis; thus, soft tissue augmentation prior to or during the corrective surgery should be recommended. Lastly, the absence of peri-implant keratinized mucosa has been related to lower patient esthetic satisfaction, verifying the importance of the soft tissue component for implant esthetics. The thickness of peri-implant soft tissue, however, is not necessarily related to the height of the keratinized tissue. Clinically, soft tissue thickness is measured at 1 to 1.5 mm apical to the soft tissue margin, as the horizontal dimension from the external soft tissues to the internal hard surfaces. Increasing the thickness of peri-implant soft tissue does not correspond to an increased width of keratinized mucosa. Rather, the soft tissue thickness corresponds to the soft tissue phenotype. Similar to natural teeth, a thin tissue phenotype at implant sites has been identified as a risk factor for mucosal recession. A thick soft-tissue phenotype can prevent gingival recessions around a natural tooth, but it does not automatically mean it will be thick enough to prevent a mucosal dehiscence around an implant. One could speculate that the connective tissue thickness in the transmucosal area should be at least thicker than the inflammatory infiltrate induced by subgingival plaque or toothbrushing trauma. As the inflammatory infiltrate occupies an area of approximately 1 to 2 mm, a minimum soft tissue thickness of 2 mm becomes advisable to prevent soft tissue dehiscence at the implant-supported crown. Vertical and horizontal mucosal thickness has been investigated as one of the factors affecting marginal bone loss. Linkevicius et al demonstrated that thin mucosal tissue (measured vertically) around an implant is associated with more bone loss compared to the presence of a thick peri-implant tissue phenotype.<sup>3</sup> Similarly, a thin buccal mucosa thickness (measured horizontally, on the midfacial aspect of an implant) was found to be related to greater mucosal recession and clinical attachment loss.<sup>4</sup> Thus, it does not come as a surprise that many authors/clinicians have explored the possibility of using connective tissue grafts or substitutes, such as the xenogeneic collagen matrix or acellular dermal matrices. This serves to increase the peri-implant soft tissue thickness (both horizontally and vertically), which minimizes marginal bone loss, reduces midfacial mucosal recession, and enhances flap stabilization during implant wound healing. In conclusion, one should advocate for soft tissue grafting at implant sites in order to correct alveolar ridge deficiencies, cover soft tissue dehiscence, and increase transmucosal soft tissue thickness. Furthermore, increasing keratinized mucosal width positively affects peri-implant health, while the thickness of peri-implant soft tissue plays a crucial role in preventing mucosal recession. Hom-Lay Wang, DDS, MS, PhD Ann Arbor, Michigan, USA Giovanni Zucchelli, DDS, PhD Bologna, Italy References 1. Roccuzzo M, Grasso G, Dalmasso P. Keratinized mucosa around implants in partially edentulous posterior mandible: 10-year results of a prospective comparative study. Clin Oral Implants Res 2016;27:491496. 2. Perussolo J, Souza AB, Matarazzo F, Oliveira RP, Araújo MG. Influence of the keratinized mucosa on the stability of peri-implant tissues and brushing discomfort: A 4-year follow-up study. Clin Oral Implants Res 2018;29:11771185. 3. Linkevicius T, Linkevicius R, Alkimavicius J, Linkeviciene L, Andrijauskas P, Puisys A. Influence of titanium base, lithium disilicate restoration and vertical soft tissue thickness on bone stability around triangular-shaped implants: A prospective clinical trial. Clin Oral Implants Res 2018;29:716724. 4. Mailoa J, Arnett M, Chan HL, George FM, Kaigler D, Wang HL. The association between buccal mucosa thickness and peri-implant bone loss and attachment loss: A cross-sectional study. Implant Dent 2018;27:575581.",
+      "abstract": "Hom-Lay Wang, DDS, MS, PhD/Giovanni Zucchelli, DDS, PhD: The role of peri-implant soft tissue has emerged as a hot topic in implant therapy because of its ability to improve not only implant esthetics but also implant health and long-term stability. However, the need for a sufficient amount of keratinized tissue width to facilitate proper oral hygiene and long-term implant health remains controversial. The inconclusive results are likely due to the usage of a wide variety of implants. In the past, soft tissuelevel implants were more frequently used, but recently, bone-level rough-surface implants are commonly used, often leading to construction of an implant prosthesis below the mucosa. Hence, a band of keratinized mucosa is likely to benefit a patients ability to keep the implant clean and prevent further bacterial infection as long as the implant is properly placed. Roccuzzo et al found that mandibular posterior implants that lack keratinized mucosa required additional surgeries, antibiotic therapy, and procedures with free gingival graft in order to reduce discomfort and improve plaque control over a 10-year observational period.¹ In a 4-year follow-up study, Perussolo et al reported greater bleeding on probing, plaque accumulation, marginal bone loss, and brushing discomfort when peri-implant keratinized mucosa was < 2 mm.² A lack of keratinized mucosa impairs the surgical outcomes of peri-implantitis; thus, soft tissue augmentation prior to or during the corrective surgery should be recommended. Lastly, the absence of peri-implant keratinized mucosa has been related to lower patient esthetic satisfaction, verifying the importance of the soft tissue component for implant esthetics. The thickness of peri-implant soft tissue, however, is not necessarily related to the height of the keratinized tissue. Clinically, soft tissue thickness is measured at 1 to 1.5 mm apical to the soft tissue margin, as the horizontal dimension from the external soft tissues to the internal hard surfaces. Increasing the thickness of peri-implant soft tissue does not correspond to an increased width of keratinized mucosa. Rather, the soft tissue thickness corresponds to the soft tissue phenotype. Similar to natural teeth, a thin tissue phenotype at implant sites has been identified as a risk factor for mucosal recession. A thick soft-tissue phenotype can prevent gingival recessions around a natural tooth, but it does not automatically mean it will be thick enough to prevent a mucosal dehiscence around an implant. One could speculate that the connective tissue thickness in the transmucosal area should be at least thicker than the inflammatory infiltrate induced by subgingival plaque or toothbrushing trauma. As the inflammatory infiltrate occupies an area of approximately 1 to 2 mm, a minimum soft tissue thickness of 2 mm becomes advisable to prevent soft tissue dehiscence at the implant-supported crown. Vertical and horizontal mucosal thickness has been investigated as one of the factors affecting marginal bone loss. Linkevicius et al demonstrated that thin mucosal tissue (measured vertically) around an implant is associated with more bone loss compared to the presence of a thick peri-implant tissue phenotype.³ Similarly, a thin buccal mucosa thickness (measured horizontally, on the midfacial aspect of an implant) was found to be related to greater mucosal recession and clinical attachment loss.⁴ Thus, it does not come as a surprise that many authors/clinicians have explored the possibility of using connective tissue grafts or substitutes, such as the xenogeneic collagen matrix or acellular dermal matrices. This serves to increase the peri-implant soft tissue thickness (both horizontally and vertically), which minimizes marginal bone loss, reduces midfacial mucosal recession, and enhances flap stabilization during implant wound healing. In conclusion, one should advocate for soft tissue grafting at implant sites in order to correct alveolar ridge deficiencies, cover soft tissue dehiscence, and increase transmucosal soft tissue thickness. Furthermore, increasing keratinized mucosal width positively affects peri-implant health, while the thickness of peri-implant soft tissue plays a crucial role in preventing mucosal recession. Hom-Lay Wang, DDS, MS, PhD Ann Arbor, Michigan, USA Giovanni Zucchelli, DDS, PhD Bologna, Italy References 1. Roccuzzo M, Grasso G, Dalmasso P. Keratinized mucosa around implants in partially edentulous posterior mandible: 10-year results of a prospective comparative study. Clin Oral Implants Res 2016;27:491496. 2. Perussolo J, Souza AB, Matarazzo F, Oliveira RP, Araújo MG. Influence of the keratinized mucosa on the stability of peri-implant tissues and brushing discomfort: A 4-year follow-up study. Clin Oral Implants Res 2018;29:11771185. 3. Linkevicius T, Linkevicius R, Alkimavicius J, Linkeviciene L, Andrijauskas P, Puisys A. Influence of titanium base, lithium disilicate restoration and vertical soft tissue thickness on bone stability around triangular-shaped implants: A prospective clinical trial. Clin Oral Implants Res 2018;29:716724. 4. Mailoa J, Arnett M, Chan HL, George FM, Kaigler D, Wang HL. The association between buccal mucosa thickness and peri-implant bone loss and attachment loss: A cross-sectional study. Implant Dent 2018;27:575581.",
       "resolution_method": "pdf-doi",
       "display_title": "Editorial: Significance of Peri-implant Keratinized Mucosa Width and Soft Tissue Thickness",
       "authors": [
@@ -34052,7 +34011,10 @@
       "tags": [
         "topic:covid-19",
         "topic:vaccine",
-        "covid-19"
+        "covid-19",
+        "sars-cov-2",
+        "immunology",
+        "vaccination"
       ],
       "name_bucket": "heavy",
       "semantic_tagged": true,
@@ -79050,7 +79012,10 @@
       "drive_id": "1wc_KVVefFxbfG1CaYLXO4ynyQsA430qD",
       "tags": [
         "topic:occlusion",
-        "malocclusion"
+        "malocclusion",
+        "occlusion",
+        "diet",
+        "anthropology"
       ],
       "name_bucket": "meaningful",
       "semantic_tagged": true,
@@ -100205,7 +100170,10 @@
       "drive_id": "1IiD_LP48Pd0hqpGtEfNhYQLJXm0iJv08",
       "tags": [
         "topic:research-and-reading",
-        "narrative-review"
+        "narrative-review",
+        "evidence-based-dentistry",
+        "research-methodology",
+        "critical-appraisal"
       ],
       "name_bucket": "meaningful",
       "semantic_tagged": true,
@@ -129656,7 +129624,8 @@
         "proximal-contact",
         "literature-review",
         "varthis-2019-interproximal-open-contacts",
-        "narrative-review"
+        "narrative-review",
+        "topic:connection"
       ],
       "name_bucket": "meaningful",
       "semantic_tagged": true,
@@ -129703,7 +129672,8 @@
         "cochrane-review",
         "systematic-review",
         "worthington-2021-composite-vs-amalgam",
-        "meta-analysis"
+        "meta-analysis",
+        "topic:composite"
       ],
       "name_bucket": "meaningful",
       "semantic_tagged": true,
@@ -129757,7 +129727,8 @@
         "postoperative-sensitivity",
         "meta-analysis",
         "systematic-review",
-        "al-sulimmani-2025-failure-risk-composite-amalgam"
+        "al-sulimmani-2025-failure-risk-composite-amalgam",
+        "topic:composite"
       ],
       "name_bucket": "meaningful",
       "semantic_tagged": true,
@@ -129812,7 +129783,9 @@
         "cut-off-points",
         "risk-factor",
         "consensus",
-        "lobbezoo-2018-international-consensus-bruxism"
+        "lobbezoo-2018-international-consensus-bruxism",
+        "topic:overload-resorption",
+        "topic:bruxism"
       ],
       "name_bucket": "meaningful",
       "semantic_tagged": true,
@@ -133675,7 +133648,7 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2160,
+  "total_papers": 2159,
   "tag_aliases": {
     "additive-manufacturing": "3d-printing",
     "adhesion": "bonding",
