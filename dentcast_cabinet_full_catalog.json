@@ -119381,32 +119381,6 @@
       "abstract": "When compared with subtractive fabricating methods, additive manufacturing (AM) technologies are capable of fabricating complex geometries with different material porosities. However, the manufacturing accuracy and shrinkage of the stereolithography (SLA) AM zirconia with different porosities are unclear.\n\nThe purpose of this in vitro study was to measure the manufacturing accuracy and volumetric changes of AM zirconia specimens with porosities of 0%, 20%, and 40%.\n\nA digital design of a bar (25×4×3 mm) was obtained by using an open-source software program (Blender, version 2.77a; The Blender Foundation). The standard tessellation language (STL) file was exported. Three groups were created based on the material porosity: 0% porosity (0% group), 20% porosity (20% group), and 40% porosity (40% group). The STL was used to manufacture all the specimens by using an SLA ceramic printer (CeraMaker 900; 3DCeram Co) and zirconia material (3DMix ZrOpaste; 3DCeram Co) (n=20). After manufacturing, the specimens were cleaned of the green parts by using a semiautomated cleaning station. Subsequently, debinding procedures was completed in a furnace at 600 °C. The sintering procedures varied among the groups to achieve different porosities. For the 0% group, the ZrOwas sintered in a furnace at 1450 °C, and for the 20% and 40% groups, the sintering temperature varied between 1450 °C and 1225 °C. The specimen dimensions (length, width, and height) were measured 3 times with digital calipers, and the mean value was determined. The manufacturing volume shrinkage (%) was calculated by using the digital design of the bar and the achieved AM dimensions of the specimens. The Shapiro-Wilk test revealed that the data were not normally distributed. Therefore, the data were analyzed by using the Kruskal-Wallis followed by pairwise Mann-Whitney U tests (α=.05).\n\nThe Kruskal-Wallis test demonstrated significant differences among the groups in length, width, and height (P<.001). The Mann-Whitney U test indicated significant differences in pairwise comparisons of length, width, and height among the 3 groups (P<.001). The 0% group obtained a median ±interquartile range values of 20.92 ±0.14 mm in length, 3.43 ±0.07 mm in width, and 2.39 ±0.03 mm in height; the 20% group obtained 22.81 ±0.29 mm in length, 3.74 ±0.07 mm in width, and 2.62 ±0.05 mm in height; and the 40% group presented 25.11 ±0.13 mm in length, 4.14 ±0.08 mm in width, and 2.96 ±0.02 mm in height. Significant differences in manufacturing volumetric changes were encountered among the 3 groups (P<.001). In all groups, volumetric changes in the length, width, and height were not uniform, being higher in the z-axis direction compared with the x- and y-axis. The manufacturing volumetric changes varied from -20.33 ±1.00% to +3.5 ±2.00%.\n\nThe 40%-porosity group obtained the highest manufacturing accuracy and the lowest manufacturing volume change, followed by the 20%-porosity and the 0%-porosity groups. An uneven manufacturing volume change in the x-, y-, and z-axis was observed. However, none of the groups tested were able to perfectly match the virtual design of the specimens."
     },
     {
-      "id": "P2593",
-      "title": "Mavriqi-2023-Mechanical-properties-of-translucen",
-      "file_name": "Mavriqi-2023-Mechanical-properties-of-translucen.pdf",
-      "topic": "zirconia",
-      "topic_path": "zirconia",
-      "type": "other primary research",
-      "local_path": "E:\\Paper farzad\\zirconia\\Mavriqi-2023-Mechanical-properties-of-translucen.pdf",
-      "file_size": 20758724,
-      "key_finding": "",
-      "clinical_bottom_line": "",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "unread",
-      "tags": [
-        "2023",
-        "topic:zirconia",
-        "translucency",
-        "zirconia",
-        "prosthodontics",
-        "shade-matching"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "display_title": "Mavriqi-2023-Mechanical-properties-of-translucen"
-    },
-    {
       "id": "P2594",
       "title": "Monolithic Zirconia An Update to Current Knowledge. Optical Properties, Wear, and (2)",
       "file_name": "Monolithic Zirconia An Update to Current Knowledge. Optical Properties, Wear, and (2).pdf",
@@ -123204,7 +123178,8 @@
         "zirconia",
         "prosthodontics",
         "shade-matching",
-        "topic:flexural-strength"
+        "topic:flexural-strength",
+        "2023"
       ],
       "name_bucket": "meaningful",
       "semantic_tagged": true,
@@ -123256,7 +123231,8 @@
       "journal": "Prosthesis",
       "crossref_year": 2023,
       "duplicate_paths": [
-        "E:\\Paper farzad\\zirconia\\flexural strength\\Mechanical Properties of Translucent Zirconia An In Vitro Study.pdf"
+        "E:\\Paper farzad\\zirconia\\flexural strength\\Mechanical Properties of Translucent Zirconia An In Vitro Study.pdf",
+        "E:\\Paper farzad\\zirconia\\Mavriqi-2023-Mechanical-properties-of-translucen.pdf"
       ]
     },
     {
@@ -133837,7 +133813,7 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2172,
+  "total_papers": 2171,
   "tag_aliases": {
     "additive-manufacturing": "3d-printing",
     "adhesion": "bonding",
