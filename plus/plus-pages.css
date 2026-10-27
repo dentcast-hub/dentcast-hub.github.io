@@ -2491,3 +2491,13 @@ body.dcp-page .dcp-empty > p.dcp-muted { max-width: 26ch; }
 body.dcp-page .dcp-gate:not(.is-named) > p.dcp-muted { max-width: 60ch; }
 body.dcp-page .dcp-loading { color: var(--txt3, #62779a); }
 /* =========================================================== end Plus 2.0 skin */
+
+/* «دستیار هوشمند» — QA 2026-10-27 */
+.dcp-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.dcp-assist-count { align-self: flex-end; font-size: .74rem; color: var(--txt3, #62779a); margin-top: -6px; }
+.dcp-assist-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+/* a pasted URL or a long unbroken label must wrap, not widen the page */
+.dcp-assist-recap-case, .dcp-assist-recap-answer, .dcp-assist-recap-text, .dcp-assist-opt,
+.dcp-assist-result-lead, .dcp-pw-step-title { overflow-wrap: anywhere; min-width: 0; }
+.dcp-assist-q:focus, .dcp-assist-result-lead:focus { outline: none; }
+

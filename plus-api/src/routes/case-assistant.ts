@@ -3,7 +3,7 @@ import { requireAuth } from '../middleware/auth.js';
 import { requirePremium } from '../middleware/require-premium.js';
 import { config } from '../config.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
-import { nextCaseStep } from '../services/case-assistant.js';
+import { needsModel, nextCaseStep } from '../services/case-assistant.js';
 import { recordFeedback } from '../services/assistant-learning.js';
 import { recordActivity } from '../services/activity.js';
 import type { NarrowHistoryEntry } from '../providers/ai/types.js';
@@ -18,19 +18,22 @@ export async function caseAssistantRoutes(app: FastifyInstance): Promise<void> {
   app.post('/assistant/next', async (request, reply) => {
     const userId = request.user!.id;
 
-    // Bounds real spend from a runaway/abusive client independent of maxRounds
-    // (maxRounds caps ONE description's cost; this caps how many descriptions a
-    // user can start per hour).
-    const rl = consume(`assistant:${userId}`, config.assistant.maxPerUserPerHour, HOUR_MS);
-    if (!rl.allowed) {
-      return reply.code(429).send({ error: 'rate_limited', retry_after_ms: rl.retryAfterMs });
-    }
-
     const body = request.body as { description?: unknown; history?: unknown };
     const description = typeof body.description === 'string' ? body.description.trim().slice(0, 500) : '';
     if (!description) return reply.code(400).send({ error: 'description_required' });
 
     const history = Array.isArray(body.history) ? (body.history as NarrowHistoryEntry[]) : [];
+
+    // Bounds real spend from a runaway/abusive client independent of maxRounds
+    // (maxRounds caps ONE description's cost; this caps how many model rounds a
+    // user can run per hour). Only a round that reads free text calls the
+    // model, so only that round is counted: picking an option is plain code.
+    if (needsModel(history) && history.length < config.assistant.maxRounds) {
+      const rl = consume(`assistant:${userId}`, config.assistant.maxPerUserPerHour, HOUR_MS);
+      if (!rl.allowed) {
+        return reply.code(429).send({ error: 'rate_limited', retry_after_ms: rl.retryAfterMs });
+      }
+    }
     const step = await nextCaseStep(userId, description, history);
 
     // The assistant is the only premium feature with a per-use cost, and it was

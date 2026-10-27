@@ -1,5 +1,5 @@
 import { config } from '../config.js';
-import { getAliases, getClusters, getContentInfo, getTags, type Tag } from '../content-index.js';
+import { getAliases, getAllContent, getClusters, getContentInfo, getTags, type Tag } from '../content-index.js';
 import { ai } from '../providers/registry.js';
 import type { NarrowHistoryEntry, NarrowOption } from '../providers/ai/types.js';
 import { getConsumedContentIds } from './consumption.js';
@@ -48,7 +48,10 @@ import {
  * the client resends the whole history each call.
  */
 
+// What one tag (or subtopic) resolves to: the first page is what the client
+// shows at once, the rest sits behind its «بیشتر» button.
 const ARTICLES_PER_MATCH = 4;
+const MAX_ARTICLES = 12;
 // The FINAL number of tag options ever shown to the user.
 const MAX_TAG_OPTIONS = 4;
 const TAG_PREFIX = 'tag:';
@@ -70,14 +73,70 @@ export interface CaseArticle {
 }
 
 export type CaseStep =
-  | { done: false; question: string; options: NarrowOption[]; round_id?: string | null }
+  // final_round: the next answer resolves (maxRounds), so a free-text answer
+  // would have nothing left to refine — the client hides «غیر از این‌ها».
+  | { done: false; question: string; options: NarrowOption[]; final_round?: boolean; round_id?: string | null }
   | { done: true; matched_fa: string | null; articles: CaseArticle[]; round_id?: string | null };
+
+/**
+ * What the assistant may offer. Two kinds of tag never answer a dentist's case:
+ *
+ *  - LiteCast pages. They are written for patients (best clinic, brushing,
+ *    cold sores), and four of their tags fold onto a clinical concept through
+ *    the alias table — «لمینت» onto «لمینیت سرامیکی» — so a 1-page patient
+ *    note stood in for a 24-article concept. Their content is removed from
+ *    every tag, subtopic and result; a tag left with nothing is dropped.
+ *  - Series, format and people tags (domain 'brand' in the hashtag
+ *    reference): «دنتکست» is on every episode and «جوان» names a speaker.
+ *    They say where a piece lives, not what it is about. The practice-
+ *    management topics filed under the same domain are real questions and stay.
+ *
+ * Cached against the getTags() reference, like the lookups below.
+ */
+const EXCLUDED_TYPES = new Set(['litecast']);
+const KEPT_BRAND_TAGS = new Set(['مارکتینگ دندانپزشکی', 'مدیریت مطب', 'برندینگ']);
+
+function isOfferable(contentId: string): boolean {
+  const info = getContentInfo(contentId);
+  return Boolean(info) && !EXCLUDED_TYPES.has(info!.type);
+}
+
+let catalogCacheKey: Tag[] | null = null;
+let catalogCache: Tag[] = [];
+
+export function assistantTags(): Tag[] {
+  const tags = getTags();
+  if (catalogCacheKey === tags) return catalogCache;
+  const out: Tag[] = [];
+  for (const t of tags) {
+    if (t.domain === 'brand' && !KEPT_BRAND_TAGS.has(t.key)) continue;
+    const ids = t.contentIds.filter(isOfferable);
+    if (!ids.length) continue;
+    out.push(ids.length === t.contentIds.length ? t : { ...t, contentIds: ids, contentCount: ids.length });
+  }
+  catalogCacheKey = tags;
+  catalogCache = out;
+  return out;
+}
 
 function clusterByKey(key: string) {
   return getClusters().find((c) => c.key === key) ?? null;
 }
 
+/**
+ * Subtopic option keys are `cluster/subtopic`: the bare slug is not unique —
+ * «basics» is under both bonding and ceramics, «failures» under ceramics and
+ * fixed-pros — and resolving a bare slug took the first cluster that had it,
+ * so «پروتز ثابت → شکست و عوارض» showed the ceramics failures instead. A bare
+ * key from an older client still resolves the old way.
+ */
 function subtopicOwner(key: string) {
+  const slash = key.indexOf('/');
+  if (slash !== -1) {
+    const c = clusterByKey(key.slice(0, slash));
+    const s = c?.subtopics.find((x) => x.key === key.slice(slash + 1));
+    return c && s ? { cluster: c, subtopic: s } : null;
+  }
   for (const c of getClusters()) {
     const s = c.subtopics.find((x) => x.key === key);
     if (s) return { cluster: c, subtopic: s };
@@ -86,7 +145,7 @@ function subtopicOwner(key: string) {
 }
 
 function tagByKey(key: string) {
-  return getTags().find((t) => t.key === key) ?? null;
+  return assistantTags().find((t) => t.key === key) ?? null;
 }
 
 /** The last answer that actually picked a real option (skips free-text "custom" answers). */
@@ -188,16 +247,28 @@ function aliases(): Map<string, AliasRule[]> {
   return aliasCache;
 }
 
-function normalizeFa(s: string): string {
-  const base = s
-    .replace(ZERO_WIDTH, ' ')
+/**
+ * Spelling only, no aliases: letters, digits, separators. Persian and Arabic-
+ * Indic digits fold to ASCII, so «دندان ۶» and "دندان 6" are one label.
+ * `joinZwnj` deletes a half-space instead of spacing it — a model that writes
+ * «محافظهکارانه» for «محافظه‌کارانه» must still find the tag.
+ */
+function baseFa(s: string, joinZwnj = false): string {
+  return s
+    .replace(ZERO_WIDTH, joinZwnj ? '' : ' ')
     .replace(/ك/g, 'ک')
     .replace(/ي/g, 'ی')
+    .replace(/[\u06f0-\u06f9]/g, (d) => String(d.charCodeAt(0) - 0x6f0))
+    .replace(/[\u0660-\u0669]/g, (d) => String(d.charCodeAt(0) - 0x660))
     .replace(/[#_]/g, ' ')
     .toLowerCase()
     .replace(/[^\p{L}\p{N}\s]/gu, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+function normalizeFa(s: string): string {
+  const base = baseFa(s);
 
   // One left-to-right pass over the tokens. Repeated string replacement cannot
   // be used: an alias whose replacement contains its own pattern ("پروگنوز" ->
@@ -252,25 +323,45 @@ function words(s: string): string[] {
  * builds once per deploy, not once per assistant round.
  */
 let lookupCacheKey: Tag[] | null = null;
-let lookupCache: Map<string, Tag> | null = null;
+let lookupCache: { exact: Map<string, Tag>; folded: Map<string, Tag> } | null = null;
 
-function tagLookup(): Map<string, Tag> {
-  const tags = getTags();
+/**
+ * Two maps, tried in order. `exact` folds spelling only, so a label the model
+ * copied verbatim always finds ITS tag. `folded` also applies the alias table,
+ * which rescues a synonym or an English answer ("Ferrule") — but aliases can
+ * fold two real tags onto one string, and that must never let the smaller one
+ * win: the old single map kept whichever came last, which was always the
+ * smaller tag, so «لمینیت سرامیکی» (24 pages) answered as «لمینت» (1).
+ * Within a map the label beats the key, and on a tie the bigger tag wins.
+ */
+function tagLookup(): { exact: Map<string, Tag>; folded: Map<string, Tag> } {
+  const tags = assistantTags();
   if (lookupCacheKey === tags && lookupCache) return lookupCache;
 
-  const map = new Map<string, Tag>();
+  const exact = new Map<string, Tag>();
+  const folded = new Map<string, Tag>();
+  const rank = new Map<string, number>(); // `${map}|${key}` -> 2 for a label, 1 for a key
+  const put = (map: Map<string, Tag>, name: string, k: string, t: Tag, level: number) => {
+    if (!k) return;
+    const id = name + '|' + k;
+    const cur = map.get(k);
+    const curLevel = rank.get(id) ?? 0;
+    if (!cur || level > curLevel || (level === curLevel && t.contentCount > cur.contentCount)) {
+      map.set(k, t);
+      rank.set(id, level);
+    }
+  };
   for (const t of tags) {
-    const k = normalizeFa(t.key);
-    if (k && !map.has(k)) map.set(k, t);
-  }
-  for (const t of tags) {
-    const fa = normalizeFa(t.fa);
-    if (fa) map.set(fa, t); // fa always wins over a key that folded the same way
+    for (const [s, level] of [[t.fa, 2], [t.key, 1]] as const) {
+      put(exact, 'e', baseFa(s), t, level);
+      put(exact, 'e', baseFa(s, true), t, level);
+      put(folded, 'f', normalizeFa(s), t, level);
+    }
   }
 
   lookupCacheKey = tags;
-  lookupCache = map;
-  return map;
+  lookupCache = { exact, folded };
+  return lookupCache;
 }
 
 /**
@@ -285,7 +376,7 @@ function validateTags(raw: string[]): Tag[] {
   const seen = new Set<string>();
   const out: Tag[] = [];
   for (const s of raw) {
-    const tag = lookup.get(normalizeFa(s));
+    const tag = lookup.exact.get(baseFa(s)) ?? lookup.exact.get(baseFa(s, true)) ?? lookup.folded.get(normalizeFa(s));
     if (!tag || seen.has(tag.key)) continue;
     seen.add(tag.key);
     out.push(tag);
@@ -303,15 +394,58 @@ function validateTags(raw: string[]): Tag[] {
  * function's job: the order it is handed is the model's own.
  */
 function dedupeByContentCoverage(sorted: Tag[], limit: number): Tag[] {
+  // Coverage is judged on what a pick would actually SHOW (its first page of
+  // results), not on everything it carries: «فرول» (26 pages) used to swallow
+  // «نبود فرول» (2) whose two pages were in its list but never on its screen.
   const covered = new Set<string>();
   const picked: Tag[] = [];
-  for (const t of sorted) {
+  for (const t of narrowerFirst(sorted)) {
     if (picked.length >= limit) break;
-    if (!t.contentIds.some((id) => !covered.has(id))) continue;
-    for (const id of t.contentIds) covered.add(id);
+    const shown = rankIds(t.contentIds, sorted, t).slice(0, ARTICLES_PER_MATCH);
+    if (!shown.some((id) => !covered.has(id))) continue;
+    for (const id of shown) covered.add(id);
     picked.push(t);
   }
   return picked;
+}
+
+/**
+ * A tag whose pages are a strict subset of an earlier tag's is the more
+ * precise answer to the same question, so it moves ahead of that tag
+ * («نبود فرول» before «فرول»). Otherwise the model's order stands.
+ */
+function narrowerFirst(tags: Tag[]): Tag[] {
+  const out = [...tags];
+  for (let moved = true, guard = 0; moved && guard < 64; guard += 1) {
+    moved = false;
+    for (let i = 0; i < out.length && !moved; i += 1) {
+      const wide = new Set(out[i].contentIds);
+      for (let j = i + 1; j < out.length; j += 1) {
+        const n = out[j];
+        if (n.contentIds.length < wide.size && n.contentIds.every((id) => wide.has(id))) {
+          out.splice(j, 1);
+          out.splice(i, 0, n);
+          moved = true;
+          break;
+        }
+      }
+    }
+  }
+  return out;
+}
+
+/**
+ * A tag's pages, most relevant to this case first: a page that also carries
+ * more of the case's other tags is about more of what was described. Ties keep
+ * the index order. Without this, a broad tag showed its first four pages in
+ * section order — podcast episodes first, whatever the case was about.
+ */
+function rankIds(ids: string[], context: Tag[], self?: Tag): string[] {
+  const sets = context.filter((t) => t !== self && t.key !== self?.key).map((t) => new Set(t.contentIds));
+  return ids
+    .map((id, i) => ({ id, i, s: sets.reduce((n, set) => n + (set.has(id) ? 1 : 0), 0) }))
+    .sort((a, b) => b.s - a.s || a.i - b.i)
+    .map((x) => x.id);
 }
 
 /**
@@ -343,7 +477,7 @@ const tagSelectionCache = new Map<string, { at: number; keys: string[] }>();
 
 /** Same case, typed with different spacing/casing, is the same lookup. */
 function tagSelectionCacheKey(text: string): string {
-  return text.trim().replace(/\s+/g, ' ').toLowerCase();
+  return text.split('\n').map((x) => baseFa(x)).join('\n');
 }
 
 /** The one model call, validated and memoised. Returns real tag keys, in the
@@ -361,11 +495,20 @@ async function cachedTagSelection(description: string, refinements: string[]): P
   // The model sees the site's real vocabulary and nothing else about it — just
   // the Persian labels, no counts and no definitions, which would multiply the
   // prompt for nothing.
-  const picked = await ai.selectTags({
-    description,
-    refinements,
-    catalog: getTags().map((t) => t.fa),
-  });
+  // A provider outage (every retry spent) is a round with no understanding,
+  // not an error screen: it falls through to the honest pillar fallback, and
+  // the empty answer is not cached, so the next round asks again.
+  let picked: string[];
+  try {
+    picked = await ai.selectTags({
+      description,
+      refinements,
+      catalog: assistantTags().map((t) => t.fa),
+    });
+  } catch (err) {
+    console.warn('[case-assistant] selectTags failed; using the pillar fallback:', (err as Error)?.message ?? err);
+    picked = [];
+  }
   const keys = validateTags(picked).map((t) => t.key);
 
   // Never cache an empty result: that is what a failed/degraded round looks
@@ -398,7 +541,9 @@ export function clearTagSelectionCache(): void {
  */
 async function nextRootCatalog(description: string, history: NarrowHistoryEntry[]): Promise<NarrowOption[] | null> {
   const keys = await cachedTagSelection(description, customAnswers(history));
-  const tags = keys.map(tagByKey).filter((t): t is Tag => Boolean(t));
+  // «غیر از این‌ها» means "not these": a tag already offered is not offered again.
+  const offered = offeredKeys(history);
+  const tags = keys.map(tagByKey).filter((t): t is Tag => Boolean(t) && !offered.has(TAG_PREFIX + t!.key));
 
   const options = dedupeByContentCoverage(tags, MAX_TAG_OPTIONS)
     .map((t) => ({ key: TAG_PREFIX + t.key, label: t.fa }));
@@ -411,26 +556,92 @@ async function nextRootCatalog(description: string, history: NarrowHistoryEntry[
 function nextClusterCatalog(key: string): NarrowOption[] | null {
   const cluster = clusterByKey(key);
   if (cluster) {
-    if (!cluster.subtopics.length) return null;
-    return cluster.subtopics.map((s) => ({ key: s.key, label: s.fa }));
+    const subs = cluster.subtopics.filter((s) => s.contentIds.some(isOfferable));
+    if (!subs.length) return null;
+    return subs.map((s) => ({ key: cluster.key + '/' + s.key, label: s.fa }));
   }
   return null; // a subtopic (leaf) or an unrecognized key — either way, stop here
 }
 
 function toArticle(contentId: string): CaseArticle | null {
   const info = getContentInfo(contentId);
-  if (!info) return null;
-  return { content_id: contentId, title: info.title, url: info.url, type: info.type };
+  if (!info || EXCLUDED_TYPES.has(info.type)) return null;
+  return { content_id: contentId, title: info.title.replace(/\s+/g, ' ').trim(), url: info.url, type: info.type };
+}
+
+/** Every option key shown so far, in any round. */
+function offeredKeys(history: NarrowHistoryEntry[]): Set<string> {
+  return new Set(history.flatMap((h) => (h.options || []).map((o) => o.key)));
+}
+
+/** The tags offered anywhere in this case — what the case is "about". */
+function offeredTags(history: NarrowHistoryEntry[]): Tag[] {
+  return [...offeredKeys(history)]
+    .filter((k) => k.startsWith(TAG_PREFIX))
+    .map((k) => tagByKey(k.slice(TAG_PREFIX.length)))
+    .filter((t): t is Tag => Boolean(t));
+}
+
+/**
+ * maxRounds reached with nothing picked (only «غیر از این‌ها» answers): the
+ * best thing still on the table is the first option of the latest round that
+ * had any, which is what the case was last narrowed to. Without this the
+ * forced resolution had no key and answered with an empty list.
+ */
+function fallbackKey(history: NarrowHistoryEntry[]): string | null {
+  for (let i = history.length - 1; i >= 0; i -= 1) {
+    const opts = history[i].options || [];
+    if (opts.length) return opts[0].key;
+  }
+  return null;
+}
+
+/**
+ * The دانشنامه entry that defines what was matched. Glossary terms carry no
+ * hashtags, so no tag ever led to one; when the matched label names a term,
+ * its definition leads the results. Plural endings and the English gloss in a
+ * term's title («گیر (Retention)») are ignored for the comparison.
+ */
+let glossaryCacheKey: unknown = null;
+let glossaryCache = new Map<string, string>();
+let glossaryFolded = new Map<string, string>();
+const glossaryName = (s: string) => baseFa(s.replace(/\([^)]*\)/g, ' '))
+  .split(' ').map((w) => w.replace(/(های|ها)$/, '') || w).join(' ');
+
+function glossaryFor(label: string): string | null {
+  const all = getAllContent();
+  if (glossaryCacheKey !== all) {
+    const next = new Map<string, string>();
+    const folded = new Map<string, string>();
+    for (const [id, info] of Object.entries(all)) {
+      if (info.type !== 'glossary') continue;
+      const k = glossaryName(info.title);
+      if (k && !next.has(k)) next.set(k, id);
+      const f = normalizeFa(k);
+      if (f && !folded.has(f)) folded.set(f, id);
+    }
+    glossaryCache = next;
+    glossaryFolded = folded;
+    glossaryCacheKey = all;
+  }
+  const k = glossaryName(label);
+  // Exact name first; the alias table second, so a variant spelling still finds its term.
+  return glossaryCache.get(k) ?? glossaryFolded.get(normalizeFa(k)) ?? null;
 }
 
 async function resolve(userId: string, history: NarrowHistoryEntry[]): Promise<CaseStep> {
-  const key = lastConcreteKey(history);
+  const key = lastConcreteKey(history) ?? fallbackKey(history);
   let contentIds: string[] = [];
   let matchedFa: string | null = null;
 
   if (key?.startsWith(TAG_PREFIX)) {
     const tag = tagByKey(key.slice(TAG_PREFIX.length));
-    if (tag) { contentIds = tag.contentIds; matchedFa = tag.fa; }
+    if (tag) {
+      contentIds = rankIds(tag.contentIds, offeredTags(history), tag);
+      matchedFa = tag.fa;
+      const term = glossaryFor(tag.fa);
+      if (term) contentIds = [term, ...contentIds.filter((id) => id !== term)];
+    }
   } else if (key) {
     const owner = subtopicOwner(key);
     if (owner) {
@@ -450,7 +661,7 @@ async function resolve(userId: string, history: NarrowHistoryEntry[]): Promise<C
   for (const id of pool) {
     const item = toArticle(id);
     if (item) articles.push(item);
-    if (articles.length >= ARTICLES_PER_MATCH) break;
+    if (articles.length >= MAX_ARTICLES) break;
   }
 
   return { done: true, matched_fa: matchedFa, articles };
@@ -496,28 +707,51 @@ export async function nextCaseStep(
 
   if (history.length >= config.assistant.maxRounds) return logged(await resolve(userId, history));
 
-  const key = lastConcreteKey(history);
-  // A tag is always a leaf — picking one resolves straight to its content,
-  // there is no further narrowing under a single hashtag.
-  if (key?.startsWith(TAG_PREFIX)) return logged(await resolve(userId, history));
+  const finalRound = history.length + 1 >= config.assistant.maxRounds;
+  const ask = (question: string, options: NarrowOption[]): Promise<CaseStep> =>
+    logged({ done: false, question, options, ...(finalRound ? { final_round: true } : {}) });
 
-  // A pillar was picked: show its own subtopics. Pure tree walking — a fixed
-  // list and a fixed question, so this round costs no model call at all.
-  if (key) {
-    const catalog = nextClusterCatalog(key);
-    if (!catalog) return logged(await resolve(userId, history)); // already a leaf
-    return logged({ done: false, question: DEFAULT_QUESTION, options: catalog });
+  const key = lastConcreteKey(history);
+  // A free-text answer is a new description of the case, wherever it was
+  // typed — even under a pillar, where the tree would otherwise just show the
+  // same subtopics again and ignore what the user wrote.
+  if (!lastAnswerIsCustom(history)) {
+    // A tag is always a leaf — picking one resolves straight to its content,
+    // there is no further narrowing under a single hashtag.
+    if (key?.startsWith(TAG_PREFIX)) return logged(await resolve(userId, history));
+
+    // A pillar was picked: show its own subtopics. Pure tree walking — a fixed
+    // list and a fixed question, so this round costs no model call at all.
+    if (key) {
+      const catalog = nextClusterCatalog(key);
+      if (!catalog) return logged(await resolve(userId, history)); // already a leaf
+      return ask(DEFAULT_QUESTION, catalog);
+    }
   }
 
   // The root round (or a round the user has only answered with free text).
   const options = await nextRootCatalog(description, history);
-  if (options) return logged({ done: false, question: DEFAULT_QUESTION, options });
+  if (options) return ask(DEFAULT_QUESTION, options);
 
   // Nothing the model returned was a real site tag — say that, instead of
   // dressing the broad pillar list up as a shortlist of matches.
-  return logged({
-    done: false,
-    question: FALLBACK_QUESTION,
-    options: getClusters().map((c) => ({ key: c.key, label: c.fa })),
-  });
+  return ask(FALLBACK_QUESTION, getClusters()
+    .filter((c) => c.contentIds.some(isOfferable))
+    .map((c) => ({ key: c.key, label: c.fa })));
+}
+
+function lastAnswerIsCustom(history: NarrowHistoryEntry[]): boolean {
+  const last = history[history.length - 1];
+  return Boolean(last && 'custom' in last.answer);
+}
+
+/**
+ * Does this request ask the model? Only a round that reads free text does —
+ * the first one, and one answered with «غیر از این‌ها». Picking an option walks
+ * the tree or resolves in plain code. The hourly limit is a spend guard, so the
+ * route counts only these; counting every click spent a 4-round case's worth
+ * of the quota on what cost one call.
+ */
+export function needsModel(history: NarrowHistoryEntry[]): boolean {
+  return history.length === 0 || lastAnswerIsCustom(history);
 }

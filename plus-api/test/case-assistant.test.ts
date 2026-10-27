@@ -5,7 +5,7 @@ import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
 import { getClusters, getTags } from '../src/content-index.js';
 import { ai } from '../src/providers/registry.js';
-import { DEFAULT_QUESTION, FALLBACK_QUESTION } from '../src/services/case-assistant.js';
+import { DEFAULT_QUESTION, FALLBACK_QUESTION, assistantTags } from '../src/services/case-assistant.js';
 
 let app: FastifyInstance;
 let cookie: string;
@@ -134,7 +134,7 @@ describe('POST /assistant/next', () => {
     expect(r2.statusCode).toBe(200);
     const body = r2.json();
     expect(body.done).toBe(false);
-    const subtopicKeys = new Set(CLUSTER.subtopics.map((s) => s.key));
+    const subtopicKeys = new Set(CLUSTER.subtopics.map((s) => CLUSTER.key + '/' + s.key));
     for (const o of body.options) expect(subtopicKeys.has(o.key)).toBe(true);
   });
 
@@ -166,7 +166,7 @@ describe('POST /assistant/next', () => {
     if (SUBTOPIC.contentIds.length > 1) expect(ids).not.toContain(already);
   });
 
-  it('a free-text ("custom") answer does not advance the level', async () => {
+  it('a free-text ("custom") answer at the root stays at the top level', async () => {
     await makePremium();
     const history = [{ question: 'q1', options: [], answer: { custom: 'هیچ‌کدوم دقیق نیست، بیشتر شبیه ...' } }];
     const res = await next({ description: 'شکستگی لبه‌ی دندان قدامی', history });
@@ -247,7 +247,7 @@ describe('tag round (real site hashtags)', () => {
     const input = spy.mock.calls[0][0];
     expect(input.description).toBe('یک سوال کلی درباره‌ی سمان');
     expect(input.refinements).toEqual(['در واقع منظورم زینک فسفات بود']);
-    expect(input.catalog).toHaveLength(getTags().length);
+    expect(input.catalog).toHaveLength(assistantTags().length);
     expect(input.catalog).toContain(TAG.fa);
   });
 
@@ -315,7 +315,7 @@ describe('tag round (real site hashtags)', () => {
     const body = res.json();
     expect(body.done).toBe(false);
     expect(body.question).toBe(DEFAULT_QUESTION);
-    expect(body.options.map((o: { key: string }) => o.key)).toEqual(CLUSTER.subtopics.map((s) => s.key));
+    expect(body.options.map((o: { key: string }) => o.key)).toEqual(CLUSTER.subtopics.map((s) => CLUSTER.key + '/' + s.key));
     expect(spy, 'tree rounds cost no model call').not.toHaveBeenCalled();
   });
 
@@ -404,5 +404,118 @@ describe('tag-selection cache', () => {
     const again = spySelect();
     await ask(desc);
     expect(again, 'an empty result must not be cached').toHaveBeenCalledTimes(1);
+  });
+});
+
+// QA round 2026-10-27: each case below is a path a simulated dentist actually
+// walked into a wrong or empty result.
+describe('assistant QA regressions', () => {
+  const tag = (fa: string) => getTags().find((t) => t.fa === fa)!;
+
+  it('a verbatim label reaches ITS tag, never a smaller one the alias table folds onto it', async () => {
+    // «لمینت» (one LiteCast page) folds onto «لمینیت سرامیکی» (24 pages) through
+    // an alias; the single lookup map used to keep the smaller tag.
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['لمینیت سرامیکی', 'پروتز متحرک']);
+    const body = (await next({ description: 'تراش لمینیت که مینا بمونه' })).json();
+    expect(body.options.map((o: { label: string }) => o.label)).toEqual(['لمینیت سرامیکی', 'پروتز متحرک']);
+  });
+
+  it('never offers LiteCast pages or series/people tags', async () => {
+    const catalog = assistantTags();
+    const keys = new Set(catalog.map((t) => t.key));
+    expect(keys.has('دنتکست')).toBe(false);
+    expect(keys.has('جوان')).toBe(false);
+    expect(keys.has('مدیریت مطب')).toBe(true); // a practice topic, not a series tag
+    for (const t of catalog) for (const id of t.contentIds) expect(id.startsWith('litecast/')).toBe(false);
+  });
+
+  it('a subtopic resolves under the pillar it was picked from, not the first with the same slug', async () => {
+    await makePremium();
+    const fixed = getClusters().find((c) => c.key === 'fixed-pros')!;
+    const failures = fixed.subtopics.find((s) => s.key === 'failures')!;
+    const history = [
+      { question: 'q1', options: [], answer: { key: 'fixed-pros', label: fixed.fa } },
+      { question: 'q2', options: [], answer: { key: 'fixed-pros/failures', label: failures.fa } },
+    ];
+    const body = (await next({ description: 'شکست پروتز ثابت', history })).json();
+    expect(body.done).toBe(true);
+    for (const a of body.articles) expect(failures.contentIds).toContain(a.content_id);
+  });
+
+  it('puts the narrower tag first, so its pages are not hidden behind the broad one', async () => {
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['فرول', 'نبود فرول']);
+    const body = (await next({ description: 'دندون پایه ام فرول نداره' })).json();
+    const labels = body.options.map((o: { label: string }) => o.label);
+    expect(labels[0]).toBe('نبود فرول');
+    expect(labels).toContain('فرول');
+  });
+
+  it('a provider outage falls back to the pillars instead of an error screen', async () => {
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockRejectedValue(new Error('gateway down'));
+    const res = await next({ description: 'روکش زیرکونیا شکسته' });
+    expect(res.statusCode).toBe(200);
+    expect(res.json().question).toBe(FALLBACK_QUESTION);
+  });
+
+  it('free text under a pillar asks the model again and drops what was already offered', async () => {
+    await makePremium();
+    const spy = vi.spyOn(ai, 'selectTags').mockResolvedValue(['فرول', 'افزایش طول تاج']);
+    const history = [
+      { question: 'q1', options: [{ key: 'tag:فرول', label: 'فرول' }], answer: { key: CLUSTER.key, label: CLUSTER.fa } },
+      { question: 'q2', options: [], answer: { custom: 'طول تاج کوتاهه' } },
+    ];
+    const body = (await next({ description: 'روکش قدامی', history })).json();
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(body.options.map((o: { key: string }) => o.key)).toEqual(['tag:افزایش طول تاج']);
+  });
+
+  it('maxRounds of free text still resolves to something, not an empty list', async () => {
+    await makePremium();
+    const offered = [{ key: 'tag:فرول', label: 'فرول' }];
+    const history = Array.from({ length: config.assistant.maxRounds }, () => (
+      { question: 'q', options: offered, answer: { custom: 'نه' } }));
+    const body = (await next({ description: 'روکش قدامی', history })).json();
+    expect(body.done).toBe(true);
+    expect(body.matched_fa).toBe('فرول');
+    expect(body.articles.length).toBeGreaterThan(0);
+  });
+
+  it('marks the last round so the client can hide «غیر از این‌ها»', async () => {
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['فرول']);
+    const history = Array.from({ length: config.assistant.maxRounds - 1 }, () => (
+      { question: 'q', options: [], answer: { custom: 'نه' } }));
+    const body = (await next({ description: 'روکش قدامی', history })).json();
+    expect(body.done).toBe(false);
+    expect(body.final_round).toBe(true);
+  });
+
+  it('rescues a label written without its half-space or with ASCII digits', async () => {
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['درمان محافظهکارانه', 'دندان 6']);
+    const body = (await next({ description: 'مولر اول' })).json();
+    const labels = body.options.map((o: { label: string }) => o.label);
+    expect(labels).toContain(tag('درمان محافظه\u200cکارانه').fa);
+    expect(labels).toContain(tag('دندان ۶').fa);
+  });
+
+  it('leads with the glossary entry that defines the matched tag', async () => {
+    await makePremium();
+    const history = [{ question: 'q', options: [], answer: { key: 'tag:اندوکراون', label: 'اندوکراون' } }];
+    const body = (await next({ description: 'اندوکراون مولر', history })).json();
+    expect(body.articles[0].content_id).toBe('glossary/endocrown');
+    expect(body.articles.length).toBeLessThanOrEqual(12);
+  });
+
+  it('counts only the rounds that call the model against the hourly limit', async () => {
+    await makePremium();
+    const pick = [{ question: 'q', options: [], answer: { key: CLUSTER.key, label: CLUSTER.fa } }];
+    for (let i = 0; i < config.assistant.maxPerUserPerHour + 3; i += 1) {
+      expect((await next({ description: 'شکستگی', history: pick })).statusCode).toBe(200);
+    }
+    expect((await next({ description: 'شکستگی' })).statusCode).toBe(200);
   });
 });
