@@ -84,6 +84,31 @@ def strip_global_amendment(test, path, actual, expected):
  for term in rule["terms"]:
   test.assertIn(term, block)
  return actual[:a_start] + expected[e_start:e_end] + actual[a_end:]
+# Founder-approved DES v3.5 amendment to module 08 (1405/08/04): spec pointer,
+# the v3.5 summary, the Part 2b episode carve-out and the source-marker/plan
+# rule. Applied to the legacy text as exact, single-occurrence replacements.
+DES_V35_AMENDMENTS=(
+ ('\n**Load `.dentcast/dentcast-evidence-score-v3.4.md` as the system prompt — the whole\n',
+  '\n**Load `.dentcast/dentcast-evidence-score-v3.5.md` as the system prompt — the whole\n'),
+ ('\n**v3.3 is the current spec, and its change from 3.2 is one FIDELITY rule** (F0, F2,\n',
+  "\n**v3.5 is the current spec, and its change from 3.4 is the FIDELITY pipeline\nonly** (appendix rules 10, 12–14; founder 1405/08/04). The model instruction, every\nverdict rule, F4 and the bands are 3.4's word for word, so no score and no verdict\nmoves; what changes is which sentences reach a call. `sharehub/share-42` is why:\nthe prose names its three sources in Persian («اوکیسون», «کونتی»), the tool's\nmarkers were Latin only, two sources share an author, and the founder had to\nhand-build the plan — while twenty-five sentences that named no source reached no\ncall at all. Four rules close that: (1) a page may **declare Persian markers** and,\nfor sources that share a name, **disambiguators** (the year always is one) in\n`.dentcast/des-source-markers.json`; (2) a **recorded plan**\n(`.dentcast/des-fidelity-plans/<content_id>.json`) — a founder decision or an\norphan-sweep receipt — replaces the computed assignment, and Phase F reads the same\nfile; (3) the **orphan sweep** (Part 2c step 5): every body sentence no call judged,\nor every call left silent, is read by the stronger reviewer against **every**\nsource; the reviewer only finds, never judges — a found sentence joins that\nsource's plan and is judged by the ordinary two checker runs, and a sentence found\nnowhere is listed to the founder; (4) a plan that grows, or a source text that\ngrows (a longer excerpt), re-checks only what it must instead of the whole step.\nRecords below 3.5 keep their assignment: the tool reads the sidecar and the plan\nonly when a source record is stamped 3.5 or later.\n\n**v3.3's change from 3.2 is one FIDELITY rule** (F0, F2,\n"),
+ ('\n#### Part 2b — Run the FIDELITY call (spec v2.5, v2.7, v3.1, v3.2, v3.3), once per source whose text is in hand\n',
+  '\n#### Part 2b — Run the FIDELITY call (spec v2.5, v2.7, v3.1, v3.2, v3.3, v3.5), once per source whose text is in hand\n'),
+ ('1405/07/19), the record and the publish report are. Basket 1 pages never reach this call: fidelity needs a\ncited source. No classifier decides whether the page «is a report of the paper»\n',
+  '1405/07/19), the record and the publish report are. Basket 1 pages never reach this call: fidelity needs a\ncited source. **A core audio episode (`episodes/…`) never reaches it either —\nDES only, no FIDELITY** (founder, 1405/08/04): its page is a caption, a player\nand labels, not a write-up of the paper, so the record is `scored_at` +\n`sources` with no `fidelity` key; `tools/des_fidelity_units.py` builds nothing\nfor it and Phase F fails a `fidelity` slot on one. Its NoteCast is a written\npage and keeps the call. No classifier decides whether the page «is a report of the paper»\n'),
+ ("answers saved as `out-S<n>.json`, which writes the one pooled object by spec\nF6's fold — the model never reads two papers in one call (v2.7). Each block it\n",
+  'answers saved as `out-S<n>.json`, which writes the one pooled object by spec\nF6\'s fold — the model never reads two papers in one call (v2.7).\n\n**v3.5 (appendix rule 10).** When the prose names a source in Persian, or two\nsources share an author, declare it before the first run — never fix the plan\nafterwards by hand:\n\n```json\n// .dentcast/des-source-markers.json\n{"<content_id>": {"S1": {"markers": ["اوکیسون"], "disambiguators": ["1988"]},\n                  "S2": {"markers": ["اوکیسون"], "disambiguators": ["2020", "کتاب"]}}}\n```\n\nA marker matches as a whole word in either script (Persian digits read as Latin);\nwhen a sentence names several sources, those whose disambiguator it also names\nkeep it. When the founder decides the plan outright, record it in\n`.dentcast/des-fidelity-plans/<content_id>.json`\n(`{"content_id", "origin": "founder", "decision": {"status": "confirmed", …},\n"plan": {"<source index>": ["u…", …]}}`); the tool refuses an unconfirmed\ndecision, an unknown unit or a source without a text, and Phase F reads the same\nfile. Each block it\n'),
+)
+
+DES_V35_AFTER_AMENDMENTS=(
+ ("   unit's `note`, and Part 3b shows the founder both reasons side by side.\n",
+  '   unit\'s `note`, and Part 3b shows the founder both reasons side by side.\n\n5. **Orphan sweep (spec v3.5 rule 12) — after the vote, before Part 3b.**\n   `python3 tools/des_fidelity_units.py <content_id> --orphans <dir> --texts texts.json`\n   lists every body sentence no call judged, or that every call judging it left\n   `NOT_IN_SOURCE`/`NOT_ASSESSABLE` (headings, `NOT_A_CLAIM` and `AUTHOR_VIEW`\n   are not orphans), and writes `<dir>/orphans-input.json` with those sentences\n   and the text of **every** source. The stronger reviewer reads it — all\n   sources, not only the one the sentence was assigned to — and writes\n   `<dir>/orphans.json`: `{"u…": {"found": "S<n>", "source_quote": "…", "note":\n   "…"}}` or `{"u…": {"found": null, "note": "…"}}`. **It finds; it never\n   judges:** no verdict, no `change_kind`. Then\n   `python3 tools/des_fidelity_units.py <content_id> --sweep <dir>` refuses an\n   unanswered sentence or a `source_quote` that is not verbatim in that source,\n   adds every found sentence to its source in the recorded plan (origin\n   `orphan_sweep`, with the receipt), and prints them. Judge them as a re-check:\n   `--build <dir2> --only u…`, two checker runs, a tie-break, the review of\n   anything flagged, then `--vote <dir2> --base <dir>` — the base may **grow** by\n   exactly those units (rule 13). The sentences found nowhere are reported to\n   the founder in the same message as Part 3b, as a list, never as faults: they\n   are the author\'s own reasoning or background unless the founder points to a\n   source the run did not have.\n'),
+ ('  those, run the full step again. Never patch a verdict by hand.\n',
+  '  those, run the full step again. Never patch a verdict by hand.\n- **A source text that grows** (spec v3.5 rule 14 — the founder adds pages to an\n  excerpt): pass the new `texts.json` with `--vote <dir2> --base <dir1> --texts\n  texts.json`. The tool compares it with `<dir1>/input-src<k>.json`; when the old\n  text is contained in the new one, re-check every unit of that source that was\n  not `MATCHES` (`NOT_IN_SOURCE` and `NOT_ASSESSABLE` included — the new pages may\n  speak to them) and keep the `MATCHES` units; anything else changed in the text\n  is refused, and then the full step runs again.\n'),
+ ('because that call judged the page against all its sources at once. It is omitted entirely on a record\nwritten before v2.5 or on a basket-1 page; Phase F accepts both shapes and\n',
+  'because that call judged the page against all its sources at once. It is omitted entirely on a record\nwritten before v2.5, on a basket-1 page, or on a core audio episode (Part 2b); Phase F accepts both shapes and\n'),
+)
+
 class EntrypointMigrationTests(unittest.TestCase):
  def test_progress_reporting_is_timely_without_per_command_noise(self):
   s=read(".dentcast/workflows/agent-parity.md")
@@ -154,6 +179,10 @@ class EntrypointMigrationTests(unittest.TestCase):
    a,b=item["source_lines"]; original="".join(src[a-1:b])
    self.assertEqual(hashlib.sha256(original.encode()).hexdigest(),item["source_sha256"])
    expected=original.replace("CLAUDE.md، بخش Repo conventions.","فایل فعال .dentcast/workflows/global/repo-conventions.md.")
+   # Founder-approved DES v3.5 (1405/08/04): the plus-premium spec pointer moved from v3.4 to v3.5.
+   expected=expected.replace("اسپک: `.dentcast/dentcast-evidence-score-v3.4.md`؛","اسپک: `.dentcast/dentcast-evidence-score-v3.5.md`؛")
+   expected=expected.replace("`dentcast-evidence-score-v3.3.md`، …) و آن کپ","`dentcast-evidence-score-v3.3.md`، `dentcast-evidence-score-v3.4.md`، `dentcast-evidence-score-v3.5.md`، …) و آن کپ")
+   expected=expected.replace("نسخه‌های v1.3 تا v3.3 را کنارِ","نسخه‌های v1.3 تا v3.5 را کنارِ")
    actual=strip_global_amendment(self,item["active"],unwrap(self,item["active"],read(item["active"])),expected)
    self.assertEqual(actual,expected)
    self.assertIn(item["active"],read(".dentcast/workflows/global/README.md"))
@@ -248,7 +277,13 @@ class EntrypointMigrationTests(unittest.TestCase):
      normalized_before=(normalized_before[:updated_head]+
                         expected_before[legacy_head:legacy_tail]+
                         normalized_before[updated_tail:])
+     for v35_old,v35_new in DES_V35_AMENDMENTS:
+      self.assertEqual(expected_before.count(v35_old),1,v35_old[:80])
+      expected_before=expected_before.replace(v35_old,v35_new)
      self.assertEqual(normalized_before.rstrip("\n"),expected_before.rstrip("\n"))
+     for v35_old,v35_new in DES_V35_AFTER_AMENDMENTS:
+      self.assertEqual(expected_after.count(v35_old),1,v35_old[:80])
+      expected_after=expected_after.replace(v35_old,v35_new)
      self.assertEqual(actual_after.rstrip("\n"),expected_after.rstrip("\n"))
      for required in ("independent DES and Fidelity tracks", "exact `content_id`",
       "`tools/des_fidelity_units.py`", "DO NOT rerun the DES/SOURCE/COMMENTARY model calls",
