@@ -269,25 +269,33 @@ describe('tag round (real site hashtags)', () => {
     expect(body.options.map((o: { label: string }) => o.label)).toEqual(['فرول', 'پست و کور', 'ایمپلنت']);
   });
 
-  it('drops a one-page tag that only echoes the case (the anterior-gap screenshot)', async () => {
-    // «فضای بی دندان» leads to ONE page — a crown that looks too wide next to
-    // a gap — and nothing else picked for the case touches it. Echoed from the
-    // case's own words, it took a chip from the tags that answer the question.
+  it('folds the case\'s own words «فضای بی دندان» into the hub that answers it', async () => {
+    // «فضای بی دندان» was a one-page tag (a crown that looks too wide next to
+    // a gap) echoed from the case's words; A108 made it an alias of the hub.
     await makePremium();
     vi.spyOn(ai, 'selectTags').mockResolvedValue(['فضای بی دندان', 'RBFDP', 'بریج']);
     const body = (await next({ description: 'یه فضای بی دندانی داره بیمارم در قدام پایین چیکار کنم' })).json();
     const labels = body.options.map((o: { label: string }) => o.label);
-    expect(labels).toEqual(['RBFDP', 'بریج']);
+    expect(labels).toEqual(['جایگزینی دندان', 'RBFDP', 'بریج']);
+  });
+
+  it('drops a one-page tag that only echoes the case', async () => {
+    // «تقارن قدامی» leads to ONE page and nothing else picked for the case
+    // touches it: echoed from «قدام», it would take a chip from the answers.
+    await makePremium();
+    expect(assistantTags().find((t) => t.fa === 'تقارن قدامی')!.contentIds).toHaveLength(1);
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['تقارن قدامی', 'RBFDP', 'بریج']);
+    const body = (await next({ description: 'یه فضای بی دندانی داره بیمارم در قدام پایین چیکار کنم' })).json();
+    expect(body.options.map((o: { label: string }) => o.label)).toEqual(['RBFDP', 'بریج']);
   });
 
   it('keeps a one-page tag whose page the case actually describes', async () => {
     await makePremium();
-    const one = assistantTags().find((t) => t.fa === 'فضای بی دندان')!;
-    expect(one.contentIds).toHaveLength(1);
-    vi.spyOn(ai, 'selectTags').mockResolvedValue(['فضای بی دندان', 'RBFDP', 'بریج']);
-    const title = getContentInfo(one.contentIds[0])!.title; // a crown next to a gap looks too wide
+    const one = assistantTags().find((t) => t.fa === 'تقارن قدامی')!;
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['تقارن قدامی', 'RBFDP', 'بریج']);
+    const title = getContentInfo(one.contentIds[0])!.title;
     const body = (await next({ description: title })).json();
-    expect(body.options.map((o: { label: string }) => o.label)).toContain('فضای بی دندان');
+    expect(body.options.map((o: { label: string }) => o.label)).toContain('تقارن قدامی');
   });
 
   it("keeps the model's order when a tag's pages merely sit inside another's", async () => {
