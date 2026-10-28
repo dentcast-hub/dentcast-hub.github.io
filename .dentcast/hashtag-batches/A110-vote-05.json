@@ -1,0 +1,10 @@
+{
+  "note": "A110 vote, ballot item 5 (REMOVE the clinical tags from insight-68, vote 2–1). insight-68 is one of the three challenge pages in plus/challenges.json (insight-68, insight-70, insight-71): its whole body is the question (canine implant crown, screw loose one week after delivery, what is the cause?) and the answer is kept outside public Git. A page with no answer offered as an answer is what rule 2 (tag what the page resolves) forbids, and #تداخل_اکلوزالی / #ایمپلنت_زاویه_دار are not in the body at all, so they also leak the hidden answer. Only the series tag #اینسایت is kept. insight-70 (#فلوتینگ #کانتور_باکال #اورکانتور #پروفایل_امرجنس) and insight-71 (#طرح_درمان #موک_آپ #خط_لب #شروع_نکردن_درمان) are challenge pages with the same pattern; they are reported, not changed (the vote covered insight-68 only). If A110-vote-03 ran first, insight-68's #پیچ_ایمپلنت had become #پیچ_اباتمنت; this list replaces it either way.",
+  "concepts": [],
+  "renames": {},
+  "articles": {
+    "insight/insight-68": [
+      "#اینسایت"
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "note": "A110 vote, ballot item 3 (MERGE #پیچ_ایمپلنت into #پیچ_اباتمنت, vote 2–1). #پیچ_ایمپلنت's own definition was «پیچ اباتمنت/پروتز»; its pages, read in full, are share-1 (stripped screw head in implant-supported prostheses: worn drivers, over-torque, retire the driver after 40–60 torques), meta-8 (removing a broken implant screw by seating the abutment and engaging the fractured halves), the insight-68 challenge (handled in A110-vote-05) and two litecast pages (lite-CAST10, lite-CAST17; litecast is not enforced, the rename rewrites them like every brain entry). None resolves a prosthetic screw distinct from the abutment screw, and the two concepts shared no page, so a screw question got two chips with the pages split between them. #پیچ_اباتمنت (precise definition, four pages all about that screw) survives; its definition now says the clinical «پیچ ایمپلنت»/پیچِ پروتز is the same screw. All of #پیچ_ایمپلنت's spellings become aliases (پیچ ایمپلنت، implant screw، اسکرو ایمپلنت، پیچ پروتز) plus prosthetic screw and the common پیج typo. Failure modes keep their own concepts (#شل_شدن_پیچ، #شکست_پیچ، #هرز_شدن_پیچ، #تورک_پیچ).",
+  "concepts": [
+    {
+      "tag": "#پیچ_اباتمنت",
+      "domain": "clinical",
+      "definition": "پیچی که اباتمنت (یا پروتزِ پیچ‌شونده) را به فیکسچر می‌بندد — در زبانِ بالینی «پیچ ایمپلنت» یا پیچِ پروتز — و رفتارِ مکانیکی‌اش. حالت‌های شکست برچسبِ خود را دارند: #شل_شدن_پیچ، #شکست_پیچ، #هرز_شدن_پیچ، #تورک_پیچ.",
+      "use_when": "مقاله درباره‌ی خودِ این پیچ — انتخاب، تورک، رفتار، آسیب یا خارج کردنش — تصمیم بگیرد.",
+      "aliases": [
+        "abutment screw",
+        "پیچ اباتمنت ایمپلنت",
+        "اسکرو اباتمنت",
+        "پیچ ایمپلنت",
+        "implant screw",
+        "اسکرو ایمپلنت",
+        "پیچ پروتز",
+        "پیچ پروتزی",
+        "prosthetic screw",
+        "پیچ روکش ایمپلنت",
+        "پیج اباتمنت",
+        "پیج ایمپلنت"
+      ]
+    }
+  ],
+  "renames": {
+    "#پیچ_ایمپلنت": "#پیچ_اباتمنت"
+  },
+  "articles": {}
+}

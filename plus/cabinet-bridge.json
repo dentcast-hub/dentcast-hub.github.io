@@ -358,6 +358,12 @@
    "shade-matching",
    "shade-guide"
   ],
+  "انتخاب اباتمنت": [
+   "abutment",
+   "material-selection",
+   "custom-abutment",
+   "zirconia-abutment"
+  ],
   "انتخاب سمان": [
    "resin-cement",
    "self-adhesive-resin-cement",
@@ -480,12 +486,6 @@
   "بارداری": [
    "pregnancy"
   ],
-  "بارگذاری ایمپلنت": [
-   "loading-protocol",
-   "immediate-loading",
-   "early-loading",
-   "delayed-loading"
-  ],
   "بازسازی ریشه": [
    "weakened-roots-reconstruction-protocols"
   ],
@@ -537,8 +537,8 @@
    "fixed-dental-prosthesis"
   ],
   "بریج دندان ایمپلنت": [
-   "questionable-tooth",
-   "treatment-planning"
+   "tooth-implant-connection",
+   "connecting-implants-to-teeth"
   ],
   "بزاق": [
    "saliva"
@@ -1487,9 +1487,6 @@
    "zirconia-post",
    "customized-zirconia-post"
   ],
-  "پست فلزی": [
-   "cast-post-and-core"
-  ],
   "پست و روکش": [
    "post-and-crown"
   ],
@@ -1534,10 +1531,6 @@
    "treatment-planning"
   ],
   "پیچ اباتمنت": [
-   "abutment-screw",
-   "screw-loosening"
-  ],
-  "پیچ ایمپلنت": [
    "abutment-screw",
    "screw-loosening"
   ],

@@ -128860,7 +128860,9 @@
         "topic:chee",
         "topic:مقالات-chee",
         "dental-implant",
-        "narrative-review"
+        "narrative-review",
+        "tooth-implant-connection",
+        "connecting-implants-to-teeth"
       ],
       "name_bucket": "meaningful",
       "semantic_tagged": true,
@@ -135198,7 +135200,9 @@
     "group-function": 1,
     "mandibular-movement": 1,
     "condylar-displacement": 1,
-    "impact-of-lateral-occlusion-schemes-systematic-review": 1
+    "impact-of-lateral-occlusion-schemes-systematic-review": 1,
+    "tooth-implant-connection": 1,
+    "connecting-implants-to-teeth": 1
   },
   "semantic_pass": {
     "ontology_concepts": 204,
