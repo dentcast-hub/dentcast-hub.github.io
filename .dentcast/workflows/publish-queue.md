@@ -17,8 +17,17 @@
 ## جای صف
 
 - ریپو: `dentcast-hub/dentcast-hub.github.io`، برنچ **`queue`** (برنچ یتیم، بدون
-  فایل‌های سایت). خواندن: `git fetch origin queue` و کار در یک worktree جدا،
-  مثلاً `git worktree add ../dentcast-queue origin/queue` (یا clone همین برنچ).
+  فایل‌های سایت). کلون‌های ابری معمولاً فقط main را می‌گیرند و در آن‌ها
+  `git fetch origin queue` به‌تنهایی برنچ `origin/queue` نمی‌سازد. یکی از این دو
+  (هر دو آزموده شده‌اند):
+  - کلون جدای همین برنچ:
+    `git clone --single-branch --branch queue https://github.com/dentcast-hub/dentcast-hub.github.io ../dentcast-queue`
+  - یا در کلون موجود:
+    `git config --add remote.origin.fetch '+refs/heads/queue:refs/remotes/origin/queue'`،
+    `git fetch origin`، بعد `git worktree add ../dentcast-queue queue`.
+
+  هر دو برنچ محلی `queue` را با `origin/queue` همگام می‌کنند؛ push همیشه
+  `git push origin queue`.
 - ریشهٔ برنچ: `README.md` (فقط اشاره به همین فایل) و پوشهٔ `queue/`.
 - هر مطلب یک پوشه: `queue/NN-<دسته>-<slug-لاتین>/`، مثلاً
   `queue/03-insight-gingival-level/`. NN دورقمی است و ترتیب ورود را نگه می‌دارد:
@@ -134,7 +143,7 @@ push به main.
 
 1. **پیش‌شرط انتشار جدید.** فقط وجود `.dentcast/PUBLISH-HANDOFF.md` را چک کن
    (README). اگر هست، دست نزن و بپرس آیا منظور ادامهٔ همان انتشار است.
-2. **انتخاب قدیمی‌ترین.** `git fetch origin queue`، پوشه‌های `queue/NN-*` را
+2. **انتخاب قدیمی‌ترین.** برنچ `queue` را طبق بخش «جای صف» بگیر یا به‌روز کن، پوشه‌های `queue/NN-*` را
    فهرست کن و کوچک‌ترین NN را که وضعیتش «آماده» است بردار. انتخاب شماره با
    بنیان‌گذار نیست. پوشه‌های قدیمی‌ترِ غیرآماده را در یک خط گزارش کن. پوشهٔ
    قفل‌شده به اسم ایجنت دیگر را برندار. هیچ «آماده»ای نبود: گزارش کن و متوقف شو.
