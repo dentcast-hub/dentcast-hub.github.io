@@ -31,7 +31,7 @@ async function createHighlight(overrides: Record<string, unknown> = {}): Promise
     url: '/highlights',
     headers: { cookie },
     payload: {
-      content_id: 'resin-cements-overview',
+      content_id: 'glossary/resin-cements',
       exact: 'پیوند به عاج همیشه ضعیف‌تر از پیوند به مینا است',
       ...overrides,
     },
@@ -233,7 +233,7 @@ describe('POST /review/answer', () => {
     const id = await createHighlight();
     await app.inject({
       method: 'POST', url: '/activity', headers: { cookie },
-      payload: { action: 'card_reviewed_manual', content_id: 'resin-cements-overview', meta: { highlight_id: id } },
+      payload: { action: 'card_reviewed_manual', content_id: 'glossary/resin-cements', meta: { highlight_id: id } },
     });
     // The card must be untouched: box 1, still on the schedule it was created
     // with, never answered. (It used to assert a null next_review_at — cards are
@@ -254,7 +254,7 @@ describe('GET /me due_card_count', () => {
   it('reflects the real due count for a premium user', async () => {
     await makePremium();
     await mature(await createHighlight());
-    await mature(await createHighlight({ exact: 'یک هایلایت دوم', content_id: 'resin-cements-overview' }));
+    await mature(await createHighlight({ exact: 'یک هایلایت دوم', content_id: 'glossary/resin-cements' }));
 
     const res = await app.inject({ method: 'GET', url: '/me', headers: { cookie } });
     expect(res.json().due_card_count).toBe(2);

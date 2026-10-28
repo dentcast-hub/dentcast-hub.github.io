@@ -25,7 +25,7 @@
 //   3. The reader's choice outranks the default. Someone who switches back to
 //      the date list stays there on the next pillar page too, until they say
 //      otherwise — the arrangement is a feature, not an obligation.
-import { currentUser, meStatus } from '../plus/js/api.js?v=213';
+import { currentUser, meStatus } from '../plus/js/api.js?v=214';
 
 const VIEW_KEY = 'dc:pillar-view';       // 'chain' (default) | 'flat'
 const ASSET_V = new URL(import.meta.url).search;   // carry ?v= onto the fetch
@@ -36,8 +36,16 @@ const isHub = /^\/pillar\/?$/.test(location.pathname)
 function lsGet(k) { try { return localStorage.getItem(k) || ''; } catch (_) { return ''; } }
 function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (_) { /* private mode */ } }
 
+// The sidecar sits beside the page, so it is resolved against the page's
+// DIRECTORY: /pillar/bonding/index.html used to ask for
+// /pillar/bonding/index.html/structure.json, 404, and show a premium reader
+// the upsell on the same page /pillar/bonding/ serves correctly.
+export function structureUrl(pathname) {
+  return pathname.replace(/\/index\.html$/, '/').replace(/\/?$/, '/') + 'structure.json';
+}
+
 async function structure() {
-  const base = isHub ? '/pillar/structure.json' : location.pathname.replace(/\/?$/, '/') + 'structure.json';
+  const base = isHub ? '/pillar/structure.json' : structureUrl(location.pathname);
   const res = await fetch(base + ASSET_V, { credentials: 'omit' });
   if (!res.ok) throw new Error('structure ' + res.status);
   return res.json();

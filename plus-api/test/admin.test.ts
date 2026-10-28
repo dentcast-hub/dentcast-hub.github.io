@@ -404,7 +404,7 @@ describe('admin KPIs', () => {
     // a signup that activates (creates a highlight) and thus is active today
     const cookie = await loginAs(app, '09121800001');
     await app.inject({ method: 'POST', url: '/highlights', headers: { cookie },
-      payload: { content_id: 'a/b', exact: 'متن', color: 'yellow' } });
+      payload: { content_id: 'insight/insight-1', exact: 'متن', color: 'yellow' } });
 
     const res = await app.inject({ method: 'GET', url: '/admin/kpis', headers: { authorization: basic } });
     expect(res.statusCode).toBe(200);

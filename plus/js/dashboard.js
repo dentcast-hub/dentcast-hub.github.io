@@ -1,20 +1,20 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=213';
-import { api } from './api.js?v=213';
-import { flushPendingReads } from './reading.js?v=213';
-import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=213';
-import { leagueEntryButton } from './league.js?v=213';
-import { openCollectionPicker, boardCover } from './collections.js?v=213';
-import { bundleRailCard, intentRow } from './pathways.js?v=213';
-import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=213';
-import { currentMonthKey } from './jalali-month.js?v=213';
-import { renewalBanner } from './renewal-banner.js?v=213';
-import { openPathways } from './pathway-showcase.js?v=213';
-import { premiumCta } from './premium-cta.js?v=213';
-import { maybeCelebrate } from './achievements.js?v=213';
-import { markReturnTrail } from './return-trail.js?v=213';
+import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=214';
+import { api } from './api.js?v=214';
+import { flushPendingReads } from './reading.js?v=214';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=214';
+import { leagueEntryButton } from './league.js?v=214';
+import { openCollectionPicker, boardCover } from './collections.js?v=214';
+import { bundleRailCard, intentRow } from './pathways.js?v=214';
+import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=214';
+import { currentMonthKey } from './jalali-month.js?v=214';
+import { renewalBanner } from './renewal-banner.js?v=214';
+import { openPathways } from './pathway-showcase.js?v=214';
+import { premiumCta } from './premium-cta.js?v=214';
+import { maybeCelebrate } from './achievements.js?v=214';
+import { markReturnTrail } from './return-trail.js?v=214';
 
 const returnToDashboard = () => markReturnTrail({
   url: '/plus/', eyebrow: 'پیشخوان', title: 'پیشخوان', iconId: 'icon-monitor',
@@ -253,9 +253,9 @@ async function recentBlock(model, isPremium) {
 // nothing beside it says "no" and offers nothing. Five of these sit down this
 // page, so the buy link is the quiet ghost variant — five loud buttons would
 // read as a dashboard that is mostly advertisement.
-function lockedFeatureCard(href, from) {
+function lockedFeatureCard(href, from, label = '🔒 ویژه‌ی پریمیوم') {
   return el('div', { class: 'dcp-locked-card' }, [
-    el('a', { class: 'dcp-locked-link', href }, el('span', { class: 'dcp-soon-badge' }, '🔒 ویژه‌ی پریمیوم')),
+    el('a', { class: 'dcp-locked-link', href }, el('span', { class: 'dcp-soon-badge' }, label)),
     premiumCta(from, { ghost: true }),
   ]);
 }
@@ -349,7 +349,19 @@ function pathwayBlock(me) {
   const slot = el('div');
   const paint = (s) => slot.replaceChildren(...[intentRow(s, paint, { started: done > 0 })].filter(Boolean));
   paint(state);
-  const ask = slot.firstChild ? slot : null;
+  // /me does not know about the exam, so a reader who has passed and holds
+  // the certificate was still asked «گواهی‌نامه را می‌خواهی؟ … خبرت می‌کنیم».
+  // Only a finished pathway can have been passed; ask the exam then, and say
+  // what pathway.html says. A failed read leaves the row as it was.
+  if (p.is_complete && typeof api.exam === 'function') {
+    api.exam(p.id).then((ex) => {
+      if (!ex || ex.state !== 'passed' || !ex.certificate) return;
+      slot.replaceChildren(el('a', {
+        class: 'dcp-cs-state is-on', href: ex.certificate.verify_url, 'data-pw-held': '',
+      }, '✓ گواهی‌نامهٔ این مسیر را داری — دیدن گواهی ›'));
+    }).catch(() => {});
+  }
+  const ask = (slot.firstChild || p.is_complete) ? slot : null;
   return el('div', { class: 'dcp-pw-dash' }, [
     el('a', { class: 'dcp-pw-dash-title', href: '/plus/pathway.html?id=' + encodeURIComponent(p.id) }, p.title_fa),
     el('div', { class: 'dcp-progress-track' }, el('div', { class: 'dcp-progress-fill', style: 'width:' + pct + '%' })),
@@ -359,6 +371,23 @@ function pathwayBlock(me) {
     ]),
     ask,
   ].filter(Boolean));
+}
+
+// A free reader who has not started the open pathway: a bare «🔒 ویژه‌ی
+// پریمیوم» here told them the whole section was closed, while the showcase,
+// the catalog and the pathway page all offer that pathway to every account.
+// So the open one leads, as a door, and the lock names only the rest. No
+// «رایگان» (founder: «هی رایگان رایگان نکنیم») — the verb and the
+// missing lock say it.
+function openPathwayInvite(open) {
+  const first = open && open.size ? [...open][0] : null;
+  if (!first) return null;
+  const [id, title] = first;
+  return el('div', { class: 'dcp-pw-dash' }, [
+    el('a', { class: 'dcp-pw-dash-title', href: '/plus/pathway.html?id=' + encodeURIComponent(id) }, title),
+    el('div', { class: 'dcp-muted' }, 'باز برای همه — با «شروع این مسیر» پیشرفتت همین‌جا دیده می‌شود.'),
+    lockedFeatureCard('/plus/pathways.html', 'dash-pathways', '🔒 بقیهٔ مسیرها ویژه‌ی پریمیوم'),
+  ]);
 }
 
 // Premium «از کجا شروع کنم؟» block — the bundles, in their own section so
@@ -535,8 +564,9 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   // the one surface still telling them «ویژه‌ی پریمیوم» about a pathway they
   // are walking. Openness comes from the static file, the way the showcase
   // and the gates read it; a failed read resolves empty and the lock stands.
+  const open = isPremium ? new Map() : await openPathways();
   const openActive = !isPremium && me.active_pathway && me.active_pathway.id
-    ? (await openPathways()).has(me.active_pathway.id)
+    ? open.has(me.active_pathway.id)
     : false;
 
   // Own-data sections FIRST, for every plan: a free (or even premium, no
@@ -572,7 +602,8 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   children.push(section(
     PREMIUM_FEATURES[1].title,
     PREMIUM_FEATURES[1].hint,
-    (isPremium || openActive) ? pathwayBlock(me) : lockedFeatureCard('/plus/pathways.html', 'dash-pathways'),
+    (isPremium || openActive) ? pathwayBlock(me) : openPathwayInvite(open)
+      || lockedFeatureCard('/plus/pathways.html', 'dash-pathways'),
     'دیگر لازم نیست فکر کنید چه چیزی را بعد از چه چیزی بخوانید — خودمان مسیرِ یادگیریِ هر موضوع را قدم‌به‌قدم نشانتان می‌دهیم، تا در آن موضوع کاملاً مسلط شوید و مهارتِ واقعی پیدا کنید.',
   ));
   // Bundles get their own entry right under the pathways — premium only: the

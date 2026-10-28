@@ -24,6 +24,7 @@ let opened: Array<Record<string, unknown>> = [];
 let tickets: Array<Record<string, unknown>> = [];
 let nextTicket: Record<string, unknown> = {};
 let threadTicket: Record<string, unknown> = {};
+let openFail: unknown = null;
 
 vi.mock('/plus/js/api.js', () => ({
   currentUser: () => Promise.resolve({ id: 'u1', tier: 'free' }),
@@ -39,6 +40,7 @@ vi.mock('/plus/js/api.js', () => ({
     tickets: () => Promise.resolve({ tickets }),
     ticket: () => Promise.resolve({ ticket: threadTicket, messages: [] }),
     openTicket: (body: Record<string, unknown>) => {
+      if (openFail) return Promise.reject(openFail);
       opened.push(body);
       return Promise.resolve({ ticket: nextTicket });
     },
@@ -90,6 +92,7 @@ const telegramLinks = (root: HTMLElement) =>
   [...root.querySelectorAll<HTMLAnchorElement>('a')].filter((a) => a.href.startsWith(TELEGRAM));
 
 beforeEach(() => {
+  openFail = null;
   opened = [];
   tickets = [];
   nextTicket = { id: 't1', reference: 'T-ABC-DEF', subject: 'موضوع', kind_title_fa: 'مشکل فنی' };
@@ -198,5 +201,18 @@ describe('the route chip is a door, not a kind', () => {
     chip.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     await settle();
     expect(opened).toHaveLength(0);
+  });
+});
+
+describe('a session that ends under the open page', () => {
+  it('a 401 on submit swaps the view for the login gate — the old tickets do not stay listed', async () => {
+    tickets = [{ id: 't9', subject: 'تیکت قبلی', reference: 'T-OLD-REF', kind_title_fa: 'مشکل فنی', status: 'open', message_count: 1, last_at: new Date().toISOString() }];
+    const root = await boot();
+    expect(root.textContent).toContain('T-OLD-REF');
+    openFail = Object.assign(new Error('ورود لازم است.'), { status: 401, body: { message: 'ورود لازم است.' } });
+    await submit(root, false);
+    expect(root.textContent).not.toContain('T-OLD-REF');
+    expect(root.querySelector('.dcp-gate')).not.toBeNull();
+    expect([...root.querySelectorAll('button')].some((b) => b.textContent === 'ورود')).toBe(true);
   });
 });

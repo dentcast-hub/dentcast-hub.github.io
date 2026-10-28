@@ -1,6 +1,7 @@
-import { el } from './util.js?v=213';
-import * as apiMod from './api.js?v=213';
-import { PRICING_URL, guestPremiumExtras } from './premium-cta.js?v=213';
+import { el } from './util.js?v=214';
+import * as apiMod from './api.js?v=214';
+import { PRICING_URL, guestPremiumExtras } from './premium-cta.js?v=214';
+import { trapFocus } from './focus-trap.js?v=214';
 
 /**
  * The bottom sheet — one implementation, for every surface that needs to ask
@@ -15,39 +16,50 @@ import { PRICING_URL, guestPremiumExtras } from './premium-cta.js?v=213';
  *
  * Mobile-first: slides up from the bottom, and plus-desktop.css turns it into a
  * centered dialog from tablet width up. Styles live in plus.css (.dcp-sheet*);
- * this module owns only the behaviour: one sheet at a time, Escape closes,
- * clicking the backdrop closes, and the node is removed only after the exit
+ * this module owns only the behaviour: one sheet at a time, focus moves in and
+ * stays in (focus-trap.js), Escape closes, clicking the backdrop closes, focus
+ * goes back to the opener, and the node is removed only after the exit
  * transition so it never disappears mid-slide.
  */
 
 let sheetOverlay = null;
 
-function onSheetKey(e) { if (e.key === 'Escape') closeSheet(); }
-
-export function closeSheet() {
-  if (!sheetOverlay) return;
-  const { overlay, sheet } = sheetOverlay;
+export function closeSheet({ restoreFocus = true } = {}) {
+  if (!sheetOverlay) return null;
+  const { overlay, sheet, release } = sheetOverlay;
   overlay.classList.remove('is-open');
   sheet.classList.remove('is-open');
-  document.removeEventListener('keydown', onSheetKey);
+  const opener = release({ restore: restoreFocus });
   setTimeout(() => overlay.remove(), 300);
   sheetOverlay = null;
+  return opener;
 }
 
 /** Open `card` (any element) in a sheet. Opening one closes whatever was open. */
 export function openSheet(card) {
-  closeSheet();
+  // A sheet that replaces another keeps the FIRST opener as the place focus
+  // returns to, not the sheet that is going away.
+  const prevOpener = closeSheet({ restoreFocus: false });
   const sheet = el('div', { class: 'dcp-sheet', role: 'dialog', 'aria-modal': 'true' }, [
     el('div', { class: 'dcp-sheet-handle' }),
     card,
   ]);
+  // Exactly one dialog: cards (gateCard, the clip sheet) name themselves with
+  // role=dialog + aria-label, which inside this wrapper made a dialog within a
+  // dialog. The wrapper is the dialog; it takes the card's name.
+  if (card && card.getAttribute && card.getAttribute('role') === 'dialog') {
+    const name = card.getAttribute('aria-label');
+    if (name && !sheet.hasAttribute('aria-label')) sheet.setAttribute('aria-label', name);
+    card.removeAttribute('role');
+    card.removeAttribute('aria-modal');
+  }
   const overlay = el('div', {
     class: 'dcp-sheet-overlay',
     onclick: (e) => { if (e.target === overlay) closeSheet(); },
   }, [sheet]);
   document.body.appendChild(overlay);
-  document.addEventListener('keydown', onSheetKey);
-  sheetOverlay = { overlay, sheet };
+  const release = trapFocus(sheet, { onEscape: () => closeSheet(), opener: prevOpener || undefined });
+  sheetOverlay = { overlay, sheet, release };
   requestAnimationFrame(() => { overlay.classList.add('is-open'); sheet.classList.add('is-open'); });
 }
 
@@ -81,7 +93,7 @@ export function gateCard({ title, sub, cta, guest, from }) {
     const login = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود');
     login.addEventListener('click', () => {
       closeSheet();
-      import('./login-modal.js?v=213')
+      import('./login-modal.js?v=214')
         .then((m) => m.openLoginModal({ returnTo: location.pathname + location.search + location.hash }))
         // Reload on success: the gated surface and the header both read /me at
         // boot, so a sign-in that only closed the modal looked like a failed one.

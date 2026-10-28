@@ -1,11 +1,11 @@
 // Study mode controller. A mode of the article page, not a separate page. It
 // inherits the site's typography (styles live in plus.css and reference the
 // site's own CSS variables). Never auto-enters; the caller decides when.
-import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './util.js?v=213';
-import { api } from './api.js?v=213';
-import { PALETTE, LABELS, SS_MODE } from './config.js?v=213';
-import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js?v=213';
-import { openCollectionPicker } from './collections.js?v=213';
+import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './util.js?v=214';
+import { api } from './api.js?v=214';
+import { PALETTE, LABELS, SS_MODE } from './config.js?v=214';
+import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js?v=214';
+import { openCollectionPicker } from './collections.js?v=214';
 
 /**
  * The workbench's history — undo/redo over SERVER writes.
@@ -27,6 +27,14 @@ import { openCollectionPicker } from './collections.js?v=213';
  * from, and an id-shaped promise that fails on the first press is worse
  * than an empty stack.
  */
+// A delete the server answers 404 has already happened (another tab, the
+// library): for undo/redo that is success, not a refusal that would pin the
+// stack pointer on an entry that can never run.
+async function deleteGone(id) {
+  try { await api.deleteHighlight(id); }
+  catch (e) { if (!(e && e.status === 404)) throw e; }
+}
+
 export class History {
   constructor() { this.done = []; this.undone = []; this.busy = false; }
   canUndo() { return this.done.length > 0 && !this.busy; }
@@ -127,6 +135,7 @@ export class Workbench {
     document.body.classList.remove('dcp-study');
     sessionStorage.removeItem(SS_MODE + this.contentId);
     for (const { marks } of this.items.values()) unwrapMarks(marks);
+    this._unwatchLateContent();
     this.items.clear();
     this.failed = [];
     Object.values(this.ui).forEach((n) => n && n.remove && n.remove());
@@ -470,14 +479,14 @@ export class Workbench {
       const id = highlight.id;
       this.history.push({
         label: (kind === 'underline' ? 'خط ممتد' : kind === 'cloze' ? 'نقطه‌چین' : 'هایلایت'),
-        undo: async () => { await api.deleteHighlight(id); this._dropLocal(id); },
+        undo: async () => { await deleteGone(id); this._dropLocal(id); },
         redo: async () => { const r = await api.restoreHighlight(id); this._restoreLocal(r.highlight); },
       });
       this._refreshToolbar();
       // Applying highlight / underline / cloze just marks the text — it does NOT pop
       // the note editor open. The editor is opened only by the یادداشت button.
     } catch (e) {
-      this._toast('ثبت هایلایت ناموفق بود. اتصال به سرور را بررسی کنید.');
+      this._failToast(e, 'ثبت هایلایت ناموفق بود. اتصال به سرور را بررسی کنید.');
     }
   }
 
@@ -492,6 +501,44 @@ export class Workbench {
     for (const h of list) this._renderOne(h);
     this._recountToc();
     this._renderNotes();
+    this._watchLateContent();
+  }
+
+  // Parts of the article render AFTER study mode has anchored: the DES card
+  // («ارزیابی خودکار شواهد», des.js) is fetched and inserted async, so a
+  // highlight made inside it missed its anchor on every reload and sat in
+  // `failed` for the session. While anything is unanchored, a debounced
+  // observer on the prose root retries just those — bounded in time and in
+  // tries, ignoring the mutations our own wrapping makes, gone on exit().
+  _watchLateContent() {
+    this._unwatchLateContent();
+    if (!this.failed.length || typeof MutationObserver === 'undefined') return;
+    let tries = 0;
+    const retry = debounce(() => {
+      if (!this.active || !this.failed.length) { this._unwatchLateContent(); return; }
+      tries += 1;
+      const pending = this.failed;
+      this.failed = [];
+      if (this._lateObs) this._lateObs.disconnect(); // our own wrapRange is not «late content»
+      let found = 0;
+      for (const h of pending) {
+        this.items.delete(h.id);
+        this._renderOne(h);
+        const it = this.items.get(h.id);
+        if (it && it.marks.length) found += 1;
+      }
+      if (found) { this._recountToc(); this._renderNotes(); }
+      if (!this.failed.length || tries >= 8) { this._unwatchLateContent(); return; }
+      if (this._lateObs) this._lateObs.observe(this.root, { childList: true, subtree: true });
+    }, 250);
+    this._lateObs = new MutationObserver(retry);
+    this._lateObs.observe(this.root, { childList: true, subtree: true });
+    this._lateTimer = setTimeout(() => this._unwatchLateContent(), 20000);
+  }
+
+  _unwatchLateContent() {
+    if (this._lateObs) { this._lateObs.disconnect(); this._lateObs = null; }
+    if (this._lateTimer) { clearTimeout(this._lateTimer); this._lateTimer = null; }
   }
 
   _renderOne(h) {
@@ -589,7 +636,7 @@ export class Workbench {
         this._refreshToolbar();
       }
       return highlight;
-    } catch (e) { this._toast('به‌روزرسانی ناموفق بود.'); return null; }
+    } catch (e) { this._failToast(e, 'به‌روزرسانی ناموفق بود.'); return null; }
   }
 
   async _applyPatch(id, patch) {
@@ -619,11 +666,23 @@ export class Workbench {
       this.history.push({
         label: 'حذف',
         undo: async () => { const r = await api.restoreHighlight(id); this._restoreLocal(r.highlight); },
-        redo: async () => { await api.deleteHighlight(id); this._dropLocal(id); },
+        redo: async () => { await deleteGone(id); this._dropLocal(id); },
       });
       this._refreshToolbar();
       this._toast('هایلایت حذف شد.', { action: { label: 'بازگردانی', run: () => this.undo() } });
-    } catch (e) { this._toast('حذف ناموفق بود.'); }
+    } catch (e) {
+      // 404: another tab (or the library) already deleted it. The page is the
+      // stale side, so it catches up instead of keeping a mark that no press
+      // can ever remove. Nothing goes on the stack — this tab did not delete it.
+      if (e && e.status === 404) {
+        this._dropLocal(id);
+        this._closeEditor();
+        this._refreshToolbar();
+        this._toast('این هایلایت قبلاً حذف شده بود.');
+        return;
+      }
+      this._failToast(e, 'حذف ناموفق بود.');
+    }
   }
 
   // --- table of contents ----------------------------------------------------
@@ -847,6 +906,22 @@ export class Workbench {
 
   // One toast at a time; an optional action («بازگردانی» after a delete) is
   // the only control a toast carries.
+  // A 401 is not a network problem: the session ended (expired, or logged out
+  // in another tab). Saying «اتصال به سرور» sent readers to check a connection
+  // that was fine; the way forward is signing in again, so that is the action.
+  _failToast(e, text) {
+    if (e && e.status === 401) {
+      this._toast('نشستِ ورودت تمام شده؛ دوباره وارد شو.', {
+        action: { label: 'ورود', run: async () => {
+          const { openLoginModal } = await import('./login-modal.js?v=214');
+          openLoginModal();
+        } },
+      });
+      return;
+    }
+    this._toast(text);
+  }
+
   _toast(text, { action = null } = {}) {
     if (this.ui.toast) { this.ui.toast.remove(); this.ui.toast = null; }
     const kids = [document.createTextNode(text)];

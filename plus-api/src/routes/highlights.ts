@@ -5,9 +5,37 @@ import { pool, withTransaction } from '../db.js';
 import { recordActivity } from '../services/activity.js';
 import { scheduleAchievementSync } from '../services/achievement-sync.js';
 import { intervalDaysForBox } from '../services/leitner.js';
-import { resolveTopic, folderLabel, getContentInfo, folderOf } from '../content-index.js';
+import { resolveTopic, folderLabel, getContentInfo, folderOf, getAllContent, getFolders } from '../content-index.js';
 
 const LABELS = new Set(['important', 'unclear', 'clinical_pearl']);
+
+// What the workbench can actually send (plus/js/config.js PALETTE). The
+// column was free text, so any string — «purple», «<script>» — was stored and
+// handed back to every surface that paints a swatch from it.
+export const HIGHLIGHT_COLORS = new Set(['yellow', 'green', 'blue', 'pink', 'red']);
+// Caps on what one highlight can carry. The exact text is a selection on one
+// page (6000 characters already spans several sections); the note matches the
+// clip note's 4000. A 200 KB `exact` made /plus/highlights.html 1.5M px wide.
+export const MAX_EXACT = 6000;
+export const MAX_HL_NOTE = 4000;
+
+/**
+ * A content_id this API will store a reader's work under. Never an existence
+ * check alone: the API refreshes the content index every few minutes, so a
+ * page published a moment ago would refuse its first highlight. The rule is
+ * the page's shape (folder/slug, what canonical → content_id produces) and a
+ * FOLDER the index knows — so «x», «../etc» or «gone/9» are refused while a
+ * brand-new insight/insight-99 is not.
+ */
+export function isPlausibleContentId(id: unknown): boolean {
+  if (typeof id !== 'string' || id.length > 200) return false;
+  if (getContentInfo(id)) return true;
+  if (!/^[a-z0-9][a-z0-9_-]*(?:\/[a-z0-9][a-z0-9_.-]*)+$/i.test(id) || id.includes('..')) return false;
+  const root = id.split('/')[0];
+  if (getFolders().some((f) => (f.prefix || f.key).split('/')[0] === root)) return true;
+  return Object.keys(getAllContent()).some((k) => k.startsWith(root + '/'));
+}
+
 
 interface HighlightRow {
   id: string;
@@ -169,8 +197,8 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
         type: 'object',
         required: ['content_id', 'exact'],
         properties: {
-          content_id: { type: 'string' },
-          exact: { type: 'string', minLength: 1 },
+          content_id: { type: 'string', maxLength: 200 },
+          exact: { type: 'string', minLength: 1, maxLength: MAX_EXACT },
           // Optional anchor/annotation fields: the workbench sends a consistent
           // shape with explicit nulls when a tool leaves them unset, so accept
           // null as well as the value type.
@@ -179,7 +207,7 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
           color: { type: ['string', 'null'] },
           underline: { type: 'boolean' },
           cloze_markers: { type: 'array' },
-          note: { type: ['string', 'null'] },
+          note: { type: ['string', 'null'], maxLength: MAX_HL_NOTE },
           label: { type: ['string', 'null'] },
           content_hash: { type: ['string', 'null'] },
         },
@@ -189,6 +217,16 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
     const b = request.body as Record<string, unknown>;
     if (b.label != null && !LABELS.has(String(b.label))) {
       return reply.code(400).send({ error: 'invalid_label' });
+    }
+    if (b.color != null && !HIGHLIGHT_COLORS.has(String(b.color))) {
+      return reply.code(400).send({ error: 'invalid_color' });
+    }
+    // Whitespace (including ZWNJ / zero-width) only is not a selection.
+    if (!String(b.exact).replace(/[\s\u200b-\u200f\u2060\ufeff]/g, '')) {
+      return reply.code(400).send({ error: 'invalid_exact' });
+    }
+    if (!isPlausibleContentId(b.content_id)) {
+      return reply.code(400).send({ error: 'invalid_content_id' });
     }
 
     const userId = request.user!.id;
@@ -247,9 +285,15 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
   // PATCH /highlights/:id -> edit note / label / styling / cloze (owner only)
   app.patch('/highlights/:id', async (request, reply) => {
     const { id } = request.params as { id: string };
-    const b = request.body as Record<string, unknown>;
+    const b = (request.body ?? {}) as Record<string, unknown>;
     if (b.label != null && !LABELS.has(String(b.label))) {
       return reply.code(400).send({ error: 'invalid_label' });
+    }
+    if (b.color != null && !HIGHLIGHT_COLORS.has(String(b.color))) {
+      return reply.code(400).send({ error: 'invalid_color' });
+    }
+    if (b.note != null && (typeof b.note !== 'string' || b.note.length > MAX_HL_NOTE)) {
+      return reply.code(400).send({ error: 'invalid_note' });
     }
 
     // Build a dynamic update over the editable fields only.

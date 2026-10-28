@@ -108,3 +108,21 @@ describe('the profile overlay', () => {
     expect((rendered[0] as { id: string }).id).toBe('u1');
   });
 });
+
+describe('the account menu', () => {
+  it('says whether it is open, and Escape closes it with focus back on the button', async () => {
+    meNow = user();
+    await initHeader();
+    const person = document.querySelector('.dcp-person-btn') as HTMLButtonElement;
+    expect(person.getAttribute('aria-expanded')).toBe('false');
+    person.click();
+    const menu = document.querySelector('.dcp-person-menu')!;
+    expect(menu).toBeTruthy();
+    expect(person.getAttribute('aria-expanded')).toBe('true');
+    expect(person.getAttribute('aria-controls')).toBe(menu.id);
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    expect(document.querySelector('.dcp-person-menu')).toBeNull();
+    expect(person.getAttribute('aria-expanded')).toBe('false');
+    expect(document.activeElement).toBe(person);
+  });
+});

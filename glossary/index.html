@@ -2055,8 +2055,13 @@ section[id^="sec-"]{ scroll-margin-top:160px; }
 
     const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
+    /* Arabic ي/ى/ك and ZWNJ/zero-width marks fold to the Persian spelling for
+       matching, so «ابفركشن» finds «ابفرکشن» (same fold as global-search.js). */
     function normalize(str){
-      return (str || "").toString().trim().toLowerCase().replace(/\s+/g, " ");
+      return (str || "").toString()
+        .replace(/[يى]/g, "ی").replace(/ك/g, "ک")
+        .replace(/[\u200B-\u200F\u064B-\u0652\u0640]/g, "")
+        .trim().toLowerCase().replace(/\s+/g, " ");
     }
 
     function debounce(fn, wait){
@@ -2094,9 +2099,9 @@ section[id^="sec-"]{ scroll-margin-top:160px; }
         sectionInfo.forEach(s => {
           let n = 0;
           s.terms.forEach(t => {
-            const hit = (t.dataset.en || "").includes(q)
-                     || (t.dataset.fa || "").includes(q)
-                     || (t.dataset.slug || "").includes(q);
+            const hit = normalize(t.dataset.en).includes(q)
+                     || normalize(t.dataset.fa).includes(q)
+                     || normalize(t.dataset.slug).includes(q);
             t.style.display = hit ? "" : "none";
             if (hit) n++;
           });
@@ -2194,7 +2199,7 @@ section[id^="sec-"]{ scroll-margin-top:160px; }
   </div>
   <div class="dc-results-box" id="dcResults"></div>
 </div>
-<script src="/global-search.js?v=15" defer></script>
-<script src="/dc-nav.js?v=303" defer></script>
+<script src="/global-search.js?v=16" defer></script>
+<script src="/dc-nav.js?v=304" defer></script>
 </body>
 </html>

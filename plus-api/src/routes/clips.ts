@@ -5,6 +5,7 @@ import { pool } from '../db.js';
 import { getContentInfo, folderLabel, folderOf } from '../content-index.js';
 import { config } from '../config.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
+import { isPlausibleContentId } from './highlights.js';
 import {
   resolveEpisodeAudio, httpRangeReader, cutMp3, buildClipTag, clipFileName, clock, ClipAudioError,
 } from '../services/clip-audio.js';
@@ -214,7 +215,8 @@ export async function clipRoutes(app: FastifyInstance): Promise<void> {
     if (b.label != null && !LABELS.has(String(b.label))) return reply.code(400).send({ error: 'invalid_label' });
     // A content_id is a path: folder/slug, the same shape every other table
     // stores. Anything else is not something a player could have produced.
-    if (!/^[a-z0-9][a-z0-9_-]*\/[a-z0-9][a-z0-9_./-]*$/i.test(b.content_id)) {
+    // And under a folder the content index knows (isPlausibleContentId).
+    if (!/^[a-z0-9][a-z0-9_-]*\/[a-z0-9][a-z0-9_./-]*$/i.test(b.content_id) || !isPlausibleContentId(b.content_id)) {
       return reply.code(400).send({ error: 'invalid_content_id' });
     }
     const res = await pool.query<ClipRow>(

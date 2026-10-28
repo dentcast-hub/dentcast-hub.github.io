@@ -4,22 +4,22 @@
 //  - person icon (SVG): gray for guests -> login modal; blue for logged-in ->
 //    a toggle that opens a small menu (پیشخوان / پروفایل), each of which opens as
 //    an OVERLAY. Clicking the person again closes whatever is open.
-import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=213';
-import { currentUser, api, meStatus } from './api.js?v=213';
-import { isOrgHost, detectContentId } from './config.js?v=213';
-import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=213';
-import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=213';
-import { maybeShowWelcome } from './welcome.js?v=213';
-import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=213';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=213';
-import { healPushSubscription } from './push.js?v=213';
-import { maybeShowPremiumPopup } from './premium-popup.js?v=213';
-import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=213';
-import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=213';
-import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=213';
-import { installLibraryGate } from './library-gate.js?v=213';
-import { toast } from './hl-view.js?v=213';
-import { wirePageBack } from './page-back.js?v=213';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=214';
+import { currentUser, api, meStatus } from './api.js?v=214';
+import { isOrgHost, detectContentId } from './config.js?v=214';
+import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=214';
+import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=214';
+import { maybeShowWelcome } from './welcome.js?v=214';
+import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=214';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=214';
+import { healPushSubscription } from './push.js?v=214';
+import { maybeShowPremiumPopup } from './premium-popup.js?v=214';
+import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=214';
+import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=214';
+import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=214';
+import { installLibraryGate } from './library-gate.js?v=214';
+import { toast } from './hl-view.js?v=214';
+import { wirePageBack } from './page-back.js?v=214';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
 // createElement('svg')) so the parser creates properly namespaced SVG nodes;
@@ -111,8 +111,8 @@ function buildGuestPerson() {
 // The dashboard and profile overlays open only on a tap, so their modules
 // (and everything they import) are fetched then, not in front of every page's
 // first paint: they were ~75KB of the homepage's eager module graph.
-const loadDashboard = () => import('./dashboard.js?v=213');
-const loadProfile = () => import('./profile.js?v=213');
+const loadDashboard = () => import('./dashboard.js?v=214');
+const loadProfile = () => import('./profile.js?v=214');
 const overlayFailed = (root) => root.replaceChildren(
   el('div', { class: 'dcp-loading' }, 'بارگذاری انجام نشد؛ دوباره تلاش کنید.'));
 
@@ -161,11 +161,30 @@ function buildUserPerson(user) {
   };
 
   let menu = null;
-  const closeMenu = () => { if (menu) { menu.remove(); menu = null; document.removeEventListener('click', onDoc); } };
+  // The button says what it opens and whether it is open, and Escape closes
+  // the menu with focus back on the button (it used to stay open on Escape).
+  btn.setAttribute('aria-haspopup', 'menu');
+  btn.setAttribute('aria-expanded', 'false');
+  const MENU_ID = 'dcp-person-menu';
+  const onMenuKey = (e) => {
+    if (e.key !== 'Escape' || !menu) return;
+    e.preventDefault();
+    closeMenu();
+    try { btn.focus(); } catch (_) { /* ignore */ }
+  };
+  const closeMenu = () => {
+    if (!menu) return;
+    menu.remove();
+    menu = null;
+    document.removeEventListener('click', onDoc);
+    document.removeEventListener('keydown', onMenuKey);
+    btn.setAttribute('aria-expanded', 'false');
+    btn.removeAttribute('aria-controls');
+  };
   const onDoc = (e) => { if (menu && !menu.contains(e.target) && e.target !== btn && !btn.contains(e.target)) closeMenu(); };
 
   const openMenu = () => {
-    menu = el('div', { class: 'dcp-person-menu', role: 'menu' }, [
+    menu = el('div', { class: 'dcp-person-menu', role: 'menu', id: MENU_ID }, [
       el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
         onclick: () => { closeMenu(); openOverlay('dashboard', 'پیشخوان', renderDashboardOverlay); } }, 'پیشخوان'),
       el('button', { class: 'dcp-person-item', type: 'button', role: 'menuitem',
@@ -224,6 +243,9 @@ function buildUserPerson(user) {
     ]);
     const wrap = btn.closest('.dcp-person-wrap') || btn.parentNode;
     wrap.appendChild(menu);
+    btn.setAttribute('aria-expanded', 'true');
+    btn.setAttribute('aria-controls', MENU_ID);
+    document.addEventListener('keydown', onMenuKey);
     setTimeout(() => document.addEventListener('click', onDoc), 0);
   };
 

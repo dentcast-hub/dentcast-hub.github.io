@@ -17,6 +17,7 @@ let pathways: () => Promise<unknown>;
 let pathway: (id: string) => Promise<unknown>;
 let exam: (id: string) => Promise<unknown> = () => Promise.reject(new ApiError(409));
 let examIntent: (id: string, intent: string) => Promise<unknown> = () => Promise.reject(new ApiError(409));
+let enrollPathway: (id: string) => Promise<unknown> = () => Promise.resolve({ ok: true });
 
 vi.mock('/plus/js/api.js', () => ({
   ApiError,
@@ -25,6 +26,7 @@ vi.mock('/plus/js/api.js', () => ({
     pathway: (id: string) => pathway(id),
     exam: (id: string) => exam(id),
     examIntent: (id: string, intent: string) => examIntent(id, intent),
+    enrollPathway: (id: string) => enrollPathway(id),
   },
 }));
 
@@ -131,6 +133,39 @@ describe('one pathway page', () => {
     await settle(); await settle();
     expect(root.querySelector('.dcp-pw-enrolled-tag')!.textContent).toBe('✓ این مسیر را شروع کرده‌اید');
     expect(btn()).toBeUndefined();
+  });
+
+  it('«شروع این مسیر» redraws the certificate strip — no copy about a button that is gone', async () => {
+    let enrolled = false;
+    const base = { state: 'locked', pathway_id: 'evidence-literacy', pathway_title_fa: 'ارزیابی شواهد', certifiable: true, certificate_intent: null, rules: null };
+    pathway = () => Promise.resolve(row('evidence-literacy', 'ارزیابی شواهد', { open: true, free: true, steps: [], completed_steps: 2 }));
+    exam = () => Promise.resolve({ ...base, enrolled });
+    enrollPathway = () => { enrolled = true; return Promise.resolve({ ok: true }); };
+    const { renderPathwayDetail } = await import('/plus/js/pathways.js');
+    const root = document.getElementById('root')!;
+    await renderPathwayDetail(root, 'evidence-literacy', {});
+    await settle();
+    expect(root.querySelector('.dcp-pw-exam-slot')!.textContent).toContain('«شروع این مسیر»');
+
+    Array.from(root.querySelectorAll('button')).find((b) => b.textContent === 'شروع این مسیر')!.click();
+    await settle(); await settle();
+    expect(root.querySelector('.dcp-pw-enrolled-tag')).toBeTruthy();
+    expect(root.querySelector('.dcp-pw-exam-slot')!.textContent).not.toContain('«شروع این مسیر»');
+  });
+
+  it('a failed «شروع این مسیر» says so and leaves the button usable', async () => {
+    pathway = () => Promise.resolve(row('evidence-literacy', 'ارزیابی شواهد', { open: true, free: true, steps: [] }));
+    enrollPathway = () => Promise.reject(new TypeError('Failed to fetch'));
+    const { renderPathwayDetail } = await import('/plus/js/pathways.js');
+    const root = document.getElementById('root')!;
+    await renderPathwayDetail(root, 'evidence-literacy', {});
+    const btn = Array.from(root.querySelectorAll('button')).find((b) => b.textContent === 'شروع این مسیر')!;
+    btn.click();
+    await settle(); await settle();
+    const err = root.querySelector('.dcp-pw-enroll-err') as HTMLElement;
+    expect(err.hidden).toBe(false);
+    expect(err.textContent).toContain('ثبت نشد');
+    expect(btn.disabled).toBe(false);
   });
 
   it('a 404 is still «پیدا نشد»', async () => {
