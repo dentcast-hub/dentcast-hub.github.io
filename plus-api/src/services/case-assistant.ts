@@ -73,6 +73,9 @@ export const OUTAGE_QUESTION = 'الان به موتورِ فهمِ متن دس�
 export const REPEAT_TAGS_QUESTION = 'توضیحِ تازه‌ات هم به همین هشتگ‌ها رسید؛ یکی را انتخاب کن، یا با «غیر از این‌ها» جزئیاتِ دیگری بگو.';
 // The pillar list was already shown and the new text still reached nothing.
 export const REPEAT_FALLBACK_QUESTION = 'باز هم به هشتگِ مستقیمی نرسیدم؛ با «غیر از این‌ها» بگو کدام دندان، چه درمانی شده و دقیقاً چه مشکلی هست، یا یکی از حیطه‌های کلی را انتخاب کن.';
+// The last round hides «غیر از این‌ها», so its sentences cannot point at it.
+export const REPEAT_TAGS_FINAL_QUESTION = 'توضیحِ تازه‌ات هم به همین هشتگ‌ها رسید؛ یکی را انتخاب کن.';
+export const REPEAT_FALLBACK_FINAL_QUESTION = 'باز هم به هشتگِ مستقیمی نرسیدم؛ یکی از حیطه‌های کلی را انتخاب کن.';
 
 export interface CaseArticle {
   content_id: string;
@@ -475,9 +478,13 @@ function dedupeByContentCoverage(sorted: Tag[], limit: number, caseText = ''): T
     // pages). The first two need only one new page, so an «X or Y» case keeps
     // both of its sides even when they share their articles, and so does a tag
     // the case names word for word («سلف ادهزیو کافیه؟» -> «سمان سلف ادهزیو»).
+    // A tag the case names word for word is kept even with nothing new to
+    // show: in «ایمپلنت کوتاه یا سینوس لیفت» both sides are the question, and
+    // «سینوس لیفت»'s pages all sit inside «ایمپلنت کوتاه»'s.
     const fresh = shown.filter((id) => !covered.has(id)).length;
-    const named = words(t.fa).every((w) => caseWords.has(w));
-    if (!fresh || (picked.length >= 2 && !named && fresh * 2 < shown.length)) continue;
+    const own = words(t.fa);
+    const named = own.some((w) => !GENERIC_WORDS.has(w)) && own.every((w) => caseWords.has(w));
+    if (!named && (!fresh || (picked.length >= 2 && fresh * 2 < shown.length))) continue;
     for (const id of shown) covered.add(id);
     picked.push(t);
   }
@@ -769,8 +776,11 @@ function fallbackKey(history: NarrowHistoryEntry[]): string | null {
 let glossaryCacheKey: unknown = null;
 let glossaryCache = new Map<string, string>();
 let glossaryFolded = new Map<string, string>();
+// A half-space before the plural ending becomes a space in baseFa, so
+// «سمان‌های رزینی» arrives as «سمان های رزینی»: the ending is a word of its own.
 const glossaryName = (s: string) => baseFa(s.replace(/\([^)]*\)/g, ' '))
-  .split(' ').map((w) => w.replace(/(های|ها)$/, '') || w).join(' ');
+  .split(' ').filter((w) => w !== 'ها' && w !== 'های')
+  .map((w) => w.replace(/(های|ها)$/, '') || w).join(' ');
 
 function glossaryFor(label: string): string | null {
   const all = getAllContent();
@@ -940,7 +950,10 @@ export async function nextCaseStep(
 
   // The root round (or a round the user has only answered with free text).
   const round = await nextRootCatalog(description, history);
-  if (round.options) return ask(round.repeated ? REPEAT_TAGS_QUESTION : DEFAULT_QUESTION, round.options);
+  if (round.options) {
+    const repeatText = finalRound ? REPEAT_TAGS_FINAL_QUESTION : REPEAT_TAGS_QUESTION;
+    return ask(round.repeated ? repeatText : DEFAULT_QUESTION, round.options);
+  }
 
   // Nothing the model returned was a real site tag — say that, instead of
   // dressing the broad pillar list up as a shortlist of matches. Which sentence
@@ -953,7 +966,8 @@ export async function nextCaseStep(
     return logged({ done: false, question: OUTAGE_QUESTION, options: pillars, retry: true, ...(finalRound ? { final_round: true } : {}) });
   }
   const shownBefore = pillars.some((p) => offeredKeys(history).has(p.key));
-  return ask(shownBefore ? REPEAT_FALLBACK_QUESTION : FALLBACK_QUESTION, pillars);
+  const again = finalRound ? REPEAT_FALLBACK_FINAL_QUESTION : REPEAT_FALLBACK_QUESTION;
+  return ask(shownBefore ? again : FALLBACK_QUESTION, pillars);
 }
 
 // Characters that render as nothing: zero-width, joiners, BOM and the bidi
@@ -985,7 +999,7 @@ export function cleanDescription(v: unknown): string {
  */
 export function cleanHistory(raw: unknown): NarrowHistoryEntry[] | null {
   if (raw === undefined || raw === null) return [];
-  if (!Array.isArray(raw)) return [];
+  if (!Array.isArray(raw)) return null;
   const out: NarrowHistoryEntry[] = [];
   for (const e of raw.slice(-config.assistant.maxRounds)) {
     if (!e || typeof e !== 'object') return null;

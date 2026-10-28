@@ -7,10 +7,10 @@
 // every assistant turn, a typing indicator while waiting, a recap trail of
 // the case + past answers) without becoming free-form chat - see
 // dcp-assist-* in plus-pages.css.
-import { el, faNum } from './util.js?v=212';
-import { api, ApiError } from './api.js?v=212';
-import { FOLDER_EN } from './content-index.js?v=212';
-import { premiumCta } from './premium-cta.js?v=212';
+import { el, faNum } from './util.js?v=213';
+import { api, ApiError } from './api.js?v=213';
+import { FOLDER_EN } from './content-index.js?v=213';
+import { premiumCta } from './premium-cta.js?v=213';
 
 // The server reads 500 characters of a case; past that it would silently drop
 // the tail, so the box stops there and counts down instead.
@@ -74,7 +74,9 @@ function recapTrail(description, history) {
   }
   for (const h of history) {
     wrap.appendChild(el('div', { class: 'dcp-assist-recap' }, [
-      el('span', { class: 'dcp-assist-recap-text' }, h.question),
+      // Only the sentence's first clause: the fallback questions carry long
+      // instructions that turned a few failed rounds into a wall of text.
+      el('span', { class: 'dcp-assist-recap-text' }, String(h.question || '').split('؛')[0]),
       el('span', { class: 'dcp-assist-recap-answer', dir: 'auto' }, '✓ ' + answerLabel(h.answer)),
     ]));
   }
@@ -260,7 +262,9 @@ export function renderCaseAssistant(container) {
     startScan(stream);
     const token = scanToken;
     window.setTimeout(() => {
-      if (token === scanToken && label.isConnected) label.textContent = 'کمی بیشتر از معمول طول کشید؛ هنوز دارم می‌گردم…';
+      if (token !== scanToken || !label.isConnected) return;
+      label.textContent = 'کمی بیشتر از معمول طول کشید؛ هنوز دارم می‌گردم…';
+      announce(label.textContent);
     }, SLOW_MS);
   }
 
@@ -292,11 +296,22 @@ export function renderCaseAssistant(container) {
     const { question, options } = body;
     const trail = recapTrail(description, history);
 
+    // One answer per screen: a second activation before the screen is
+    // replaced (key repeat, assistive tech) recorded the answer twice.
+    let answered = false;
+    const once = (ans) => { if (answered) return; answered = true; answer(ans, question, options); };
     const optWrap = el('div', { class: 'dcp-assist-opts' });
     for (const o of options) {
       const b = el('button', { class: 'dcp-assist-opt', type: 'button', dir: 'auto' }, o.label);
-      b.addEventListener('click', () => answer({ key: o.key, label: o.label }, question, options));
+      b.addEventListener('click', () => once({ key: o.key, label: o.label }));
       optWrap.appendChild(b);
+    }
+    // The model was not reached: the same round may well work a moment later.
+    // Right under the sentence that tells the user to press it, before the chips.
+    let retry = null;
+    if (body.retry) {
+      retry = el('button', { class: 'dcp-assist-restart', type: 'button' }, 'دوباره امتحان کن');
+      retry.addEventListener('click', step);
     }
 
     const q = el('p', { class: 'dcp-assist-q', tabindex: '-1' }, question);
@@ -304,6 +319,7 @@ export function renderCaseAssistant(container) {
       sparkAvatar(true),
       el('div', { class: 'dcp-assist-card' }, [
         q,
+        retry,
         options.length ? null : el('p', { class: 'dcp-muted' }, 'گزینه‌ای پیدا نشد؛ با «غیر از این‌ها» بیشتر توضیح بده.'),
       ].filter(Boolean)),
     ]));
@@ -321,7 +337,7 @@ export function renderCaseAssistant(container) {
       const sendCustom = () => {
         const text = customInput.value.trim();
         if (isBlank(text)) { customInput.focus(); return; }
-        answer({ custom: text }, question, options);
+        once({ custom: text });
       };
       customSend.addEventListener('click', sendCustom);
       customInput.addEventListener('keydown', (e) => {
@@ -336,18 +352,10 @@ export function renderCaseAssistant(container) {
       trail.appendChild(el('div', { class: 'dcp-assist-opts' }, moreBtn));
       trail.appendChild(customRow);
     }
-    // The model was not reached: the same round may well work a moment later.
-    const actions = [];
-    if (body.retry) {
-      const retry = el('button', { class: 'dcp-assist-restart', type: 'button' }, 'دوباره امتحان کن');
-      retry.addEventListener('click', step);
-      actions.push(retry);
-    }
     // A case typed wrong can be dropped from any screen, not only the last one.
     const restart = el('button', { class: 'dcp-assist-restart', type: 'button' }, 'شروع دوباره');
     restart.addEventListener('click', () => showIntro(false));
-    actions.push(restart);
-    trail.appendChild(el('div', { class: 'dcp-assist-opts' }, actions));
+    trail.appendChild(el('div', { class: 'dcp-assist-opts' }, restart));
     show(trail, q);
     announce(question);
   }
@@ -465,7 +473,7 @@ export function renderCaseAssistant(container) {
       sparkAvatar(true),
       el('div', { class: 'dcp-assist-card' }, [msg, code, el('div', { class: 'dcp-assist-actions' }, [...buttons, restart])].filter(Boolean)),
     ]));
-    show(trail, buttons[0]);
+    show(trail, buttons[0] || restart); // the hourly-limit screen has no retry: focus «شروع دوباره»
   }
 
   function answer(ans, question, options) {
@@ -503,7 +511,7 @@ export function renderCaseAssistant(container) {
       if (status === 401) {
         const login = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود دوباره');
         login.addEventListener('click', async () => {
-          const { openLoginModal } = await import('./login-modal.js?v=212');
+          const { openLoginModal } = await import('./login-modal.js?v=213');
           const res = await openLoginModal({ returnTo: '/plus/assistant.html' });
           if (res && res.user) step();
         });

@@ -6,7 +6,8 @@ import { config } from '../src/config.js';
 import { getClusters, getContentInfo, getTags } from '../src/content-index.js';
 import { ai } from '../src/providers/registry.js';
 import {
-  DEFAULT_QUESTION, FALLBACK_QUESTION, OUTAGE_QUESTION, REPEAT_FALLBACK_QUESTION, REPEAT_TAGS_QUESTION, assistantTags,
+  DEFAULT_QUESTION, FALLBACK_QUESTION, OUTAGE_QUESTION, REPEAT_FALLBACK_QUESTION, REPEAT_TAGS_QUESTION,
+  REPEAT_FALLBACK_FINAL_QUESTION, REPEAT_TAGS_FINAL_QUESTION, assistantTags,
 } from '../src/services/case-assistant.js';
 
 let app: FastifyInstance;
@@ -327,6 +328,36 @@ describe('tag round (real site hashtags)', () => {
     expect(second.question).toBe(REPEAT_FALLBACK_QUESTION);
   });
 
+  it('keeps both sides of an «X یا Y» case even when one side adds no new page', async () => {
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['ایمپلنت کوتاه', 'سینوس لیفت']);
+    const body = (await next({ description: 'ایمپلنت کوتاه یا سینوس لیفت در ماگزیلا خلفی' })).json();
+    expect(body.options.map((o: { label: string }) => o.label)).toEqual(['ایمپلنت کوتاه', 'سینوس لیفت']);
+  });
+
+  it('the last round never points at «غیر از این‌ها», which it hides', async () => {
+    await makePremium();
+    const spy = vi.spyOn(ai, 'selectTags').mockResolvedValue(['فرول']);
+    const shown = [{ key: 'tag:فرول', label: 'فرول' }];
+    const lead = Array.from({ length: config.assistant.maxRounds - 1 }, () => ({ question: 'q', options: shown, answer: { custom: 'نه' } }));
+    const body = (await next({ description: 'پرمولر اندو شده', history: lead })).json();
+    expect(body.final_round).toBe(true);
+    expect(body.question).toBe(REPEAT_TAGS_FINAL_QUESTION);
+    spy.mockResolvedValue([]);
+    const pillars = getClusters().map((c) => ({ key: c.key, label: c.fa }));
+    const lead2 = Array.from({ length: config.assistant.maxRounds - 1 }, () => ({ question: 'q', options: pillars, answer: { custom: 'نه هنوز' } }));
+    const body2 = (await next({ description: 'یک شرح مبهم', history: lead2 })).json();
+    expect(body2.question).toBe(REPEAT_FALLBACK_FINAL_QUESTION);
+    for (const q of [body.question, body2.question]) expect(q).not.toContain('غیر از این‌ها');
+  });
+
+  it('a plural glossary title leads for the singular tag («سمان‌های رزینی» for «سمان رزینی»)', async () => {
+    await makePremium();
+    const history = [{ question: 'q', options: [], answer: { key: 'tag:سمان رزینی', label: 'سمان رزینی' } }];
+    const body = (await next({ description: 'شرح', history })).json();
+    expect(body.articles[0].content_id).toBe('glossary/resin-cements');
+  });
+
   it('leads with the glossary entry named by an acronym or the entry slug', async () => {
     await makePremium();
     for (const [key, term] of [['tmd', 'glossary/tmd'], ['vdo', 'glossary/vertical-dimension-of-occlusion']]) {
@@ -562,6 +593,8 @@ describe('assistant QA regressions', () => {
       const res = await next({ description: 'شرح', history });
       expect(res.statusCode, JSON.stringify(history)).toBe(400);
     }
+    expect((await next({ description: 'شرح', history: 'x' })).statusCode).toBe(400);
+    expect((await next({ description: 'شرح', history: { a: 1 } })).statusCode).toBe(400);
     const nullBody = await app.inject({ method: 'POST', url: '/assistant/next', headers: { cookie, 'content-type': 'application/json' }, payload: 'null' });
     expect(nullBody.statusCode).toBe(400);
   });
