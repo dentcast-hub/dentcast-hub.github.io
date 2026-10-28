@@ -816,7 +816,7 @@ const glossaryName = (s: string) => baseFa(s.replace(/\([^)]*\)/g, ' '))
   .split(' ').filter((w) => w !== 'ها' && w !== 'های')
   .map((w) => w.replace(/(های|ها)$/, '') || w).join(' ');
 
-function glossaryFor(label: string): string | null {
+export function glossaryFor(label: string): string | null {
   const all = getAllContent();
   if (glossaryCacheKey !== all) {
     const next = new Map<string, string>();
@@ -829,12 +829,18 @@ function glossaryFor(label: string): string | null {
       if (f && !folded.has(f)) folded.set(f, id);
     }
     // Second names, after every title has claimed its own: the gloss in the
-    // title's parentheses («بعد عمودی اکلوژن (VDO)» answers «VDO») and the
-    // entry's slug (glossary/tmd answers «TMD», whose title is «اختلالات گیجگاهی‌فکی»).
+    // title's parentheses («بعد عمودی اکلوژن (VDO)» answers «VDO»), each half
+    // of a slashed title («سندبلاست / آماده‌سازی مکانیکی سطح»), the entry's
+    // slug (glossary/tmd answers «TMD», whose title is «اختلالات گیجگاهی‌فکی»),
+    // its English title and its synonyms («جراحی افزایش طول تاج» answers
+    // «افزایش طول تاج»). Exact names only: folding a synonym through the alias
+    // table let «biomimetic restorative dentistry» claim #کتاب_مانیه.
     for (const [id, info] of Object.entries(all)) {
       if (info.type !== 'glossary') continue;
       const names = [...info.title.matchAll(/\(([^)]*)\)/g)].map((m) => m[1]);
+      if (info.title.includes('/')) names.push(...info.title.split('/'));
       names.push(id.slice(id.indexOf('/') + 1).replace(/-/g, ' '));
+      names.push(...(info.names ?? []));
       for (const n of names) {
         const k = glossaryName(n);
         if (k && !next.has(k)) next.set(k, id);

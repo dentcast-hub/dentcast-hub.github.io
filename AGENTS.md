@@ -1,5 +1,7 @@
 # DentCast — shared agent entrypoint
 
+> **Publish-queue check — first, before anything else.** If the request mentions the Google Drive publish queue («صف انتشار»), e.g. «یه مقاله تو صف انتشار دارم»، «از صف انتشار منتشر کن»، «قدیمی‌ترین مقالهٔ صف رو منتشر کن»، «بذارش تو صف انتشار»، «صف انتشار چی داره؟», read `.dentcast/workflows/publish-queue.md` completely right now. Fetch what it says from Drive (for publishing: the oldest ready item), then come back and continue the normal route below with it. Otherwise ignore this note.
+
 **LIVE_MODULAR_PUBLISHING_ENABLED.** Legacy files are backup only; do not read them for execution or use them as authority.
 
 Before content changes, read `.dentcast/workflows/global/README.md`, the complete active sections selected by that router for the current edit scope, and `.dentcast/workflows/agent-parity.md`. All clients use these same rules.
@@ -27,6 +29,7 @@ For «انتشار ناقص داشتم» or an explicit request to resume a publ
 | New section | `.dentcast/workflows/new-section.md` |
 | Offline publishing | `.dentcast/offline-publish.md` |
 | External Fidelity | `.dentcast/workflows/external-fidelity.md` |
+| Drive publish queue (prepare, status, publish oldest) | `.dentcast/workflows/publish-queue.md` |
 
 Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details.md`. Read the selected specialty workflow completely. New content uses the modular sequence, including paper-only and category exceptions.
 

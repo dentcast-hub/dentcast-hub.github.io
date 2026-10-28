@@ -7,30 +7,59 @@ one file.
 
 ## 1. Why this exists
 
-The site's «دستیار هوشمند» does **not** do semantic search. Read
-`plus-api/src/services/case-assistant.ts` before anything else. The pipeline is:
+The site's «دستیار هوشمند» does **not** do semantic search over article text. Read
+`plus-api/src/services/case-assistant.ts` before anything else. The pipeline, as
+of 1405/08 (it changed once — see the history note below):
 
-1. The user's free text goes to `suggestKeywords`. Its prompt
-   (`plus-api/src/providers/ai/openai-compatible.ts:25`) asks for **at most 4
-   short Persian phrases, 1–3 words each**.
-2. The model then has **no further say in which content is found**. Plain code
-   matches those phrases against every real site hashtag.
-3. A tag scores **the fraction of ITS OWN words** present among the suggested
-   words. Threshold `0.5`.
-4. Ties break by `specificityWeight` — the **sum** of the tag's words' IDF over
-   the tag corpus — then by fewest articles.
-5. `dedupeByContentCoverage` keeps only tags bringing a **new** content_id, up
-   to a pool of 10. `narrowCase` then picks 4 of those to show the user.
+1. The user's free text goes to **one** model call (`selectTags`, prompt in
+   `plus-api/src/providers/ai/openai-compatible.ts`). The model is shown the
+   **full catalog of real site tag labels** (`plus/assistant-tags.json`: the tag
+   without `#`, `_` → space, plus the page count in parentheses) and must return
+   at most 8 labels **verbatim**. It bridges synonyms and colloquial words itself
+   («نسج» → «بافت»), is told not to echo the case's own words, to prefer the
+   specific tag over the umbrella, to skip a "(1)" tag unless it names exactly
+   the case, and to return one of a Persian/English twin.
+2. `validateTags` maps each label back to a tag (exact label, then the
+   normalized form through the **alias table**, then a loose match); anything
+   that names no real tag is dropped.
+3. `withoutStrays` drops a **one-page** tag unless its page is corroborated
+   (shares another picked tag, or its title shares a word with the case).
+4. `dedupeByContentCoverage` keeps at most 4 chips, each of which must bring
+   pages not already shown; `narrowerFirst` moves a tag whose label names a
+   narrower case of an earlier one («نبود فرول» before «فرول») ahead of it.
+5. Each chip's pages are ranked by how many of the other picked tags they also
+   carry; its **papers** come from `plus/cabinet-papers.json` (`byTag[key]`),
+   compiled by `tools/build_cabinet_papers.py` from `plus/cabinet-bridge.json`
+   (site tag key → library tags) and the paper catalog.
 
-**Consequence that drives every decision here:** a concept is reachable only
-through the literal WORDS of some tag. "Semantic" in the embedding sense does
-nothing. If the words don't overlap, the article is invisible.
+**Consequences that drive every decision here:**
 
-Root cause of the mess: nothing in `.dentcast/workflows/README.md` ever checked
-a proposed tag against the vocabulary already in use, so every publish invented
-tags from scratch. 985 of 1304 tags were used exactly once.
+- A concept is reachable only if a **label in the catalog names it** clearly
+  enough for the model to pick it, and the pages that **resolve** the question
+  carry that tag. A page tagged with what it merely *mentions* is offered as an
+  answer it does not give.
+- A page whose only tags are umbrellas (`#روکش`, `#ایمپلنت`, `#اکلوژن`) is one of
+  20–100 under each chip and sits at rank 5+ — reachable in theory, invisible in
+  practice.
+- A freshly minted **one-page** tag is nearly invisible until a second page
+  carries it (the prompt tells the model to skip it, `withoutStrays` drops it).
+- A site tag with **no row in `cabinet-bridge.json` offers no papers**, however
+  many relevant papers the library holds; a paper that lacks the library tag the
+  row names is invisible under that chip.
+- The alias table matters on the lexical path (`validateTags` folding,
+  `--simulate`), as the safety net when the model answers with a non-label
+  spelling, and in the highlights concept view — not for the model's own
+  reading, which sees labels only.
 
----
+**History.** Until 1405/07 the model emitted up to 4 free phrases and plain code
+scored tags lexically (fraction of the tag's own words present, threshold 0.5,
+IDF tie-break). `tools/hashtag_ref.py --simulate` still reproduces that lexical
+ranking and remains the right tool for spelling/alias questions; it is **not** a
+test of what the live model will pick.
+
+Root cause of the original mess: nothing in `.dentcast/workflows/README.md` ever
+checked a proposed tag against the vocabulary already in use, so every publish
+invented tags from scratch. 985 of 1304 tags were used exactly once.
 
 ## 2. What was built
 

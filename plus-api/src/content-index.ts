@@ -13,7 +13,11 @@ import { config } from './config.js';
 interface Subtopic { key: string; fa: string; contentCount: number; contentIds: string[]; }
 interface Cluster { key: string; fa: string; contentCount: number; contentIds: string[]; subtopics: Subtopic[]; }
 interface Folder { key: string; fa: string; url: string; total: number; prefix?: string; }
-interface ContentInfo { cluster: string | null; subtopic: string | null; type: string; title: string; url: string; secondary: string[]; }
+interface ContentInfo {
+  cluster: string | null; subtopic: string | null; type: string; title: string; url: string; secondary: string[];
+  /** Glossary terms only: the English title and synonyms (glossary.json). */
+  names?: string[];
+}
 /** One real site #hashtag, with every content_id that carries it. */
 export interface Tag {
   key: string; fa: string; contentCount: number; contentIds: string[];

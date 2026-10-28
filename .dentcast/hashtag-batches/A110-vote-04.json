@@ -1,0 +1,41 @@
+{
+  "note": "A110 vote, ballot item 4 (MERGE #بارگذاری_ایمپلنت into #زمان_لود_ایمپلنت, vote 3–0). #بارگذاری_ایمپلنت had no definition; its pages are episodes 26, 45 and 52 (already carrying #زمان_لود_ایمپلنت: loading time and bone loss, immediate vs early load, loading protocol for overdentures), share-13 (diabetes: no immediate loading, a longer healing period), share-35 (basal vs conventional implants: immediate/early/delayed loading protocols, the 72-hour rule, splinting) and lite-CAST13 (litecast, rewritten by the rename). Every one resolves loading TIMING/protocol, so they belong to the survivor, whose definition and use_when are confirmed from those pages and now say «پروتکل بارگذاری» explicitly; occlusal overload stays #اورلود_اکلوزالی. Aliases carried over: implant loading, بارگذاری فیکسچر, and the old tag text «بارگذاری ایمپلنت» (needed so the old form still reaches the survivor). «لود ایمپلنت» is NOT re-added: it is a contiguous part of the survivor's own words, so --sync would drop it as contained-in-target; it still reaches the survivor on its own two words (2/3). The baseline sync note «#بارگذاری_ایمپلنت: alias «لود ایمپلنت» also rewrites #زمان_لود_ایمپلنت» disappears with the merge. New spellings: بارگزاری (common misspelling), بارگذاری فوری/زودهنگام/تاخیری, لود تاخیری, delayed/early loading, زمان بارگذاری, پروتکل لود, لودینگ ایمپلنت.",
+  "concepts": [
+    {
+      "tag": "#زمان_لود_ایمپلنت",
+      "domain": "clinical",
+      "definition": "زمان‌بندی و پروتکلِ بارگذاریِ ایمپلنت — فوری، زودهنگام یا تأخیری — و اثرش بر ثبات، استخوانِ کرستال و موفقیت؛ همان «بارگذاری ایمپلنت».",
+      "use_when": "مقاله زمان یا پروتکلِ لود را انتخاب، مقایسه یا برای گروهی از بیماران (مثلاً دیابتی‌ها) محدود کند. اضافه‌بارِ اکلوزالی #اورلود_اکلوزالی است.",
+      "aliases": [
+        "loading protocol",
+        "immediate loading",
+        "لود فوری",
+        "لود زودهنگام",
+        "زمان لود",
+        "immediate load",
+        "ایمیدیت لود",
+        "early load",
+        "ارلی لود",
+        "implant loading",
+        "بارگذاری ایمپلنت",
+        "بارگذاری فیکسچر",
+        "بارگزاری ایمپلنت",
+        "زمان بارگذاری",
+        "پروتکل بارگذاری",
+        "پروتکل لود",
+        "بارگذاری فوری",
+        "بارگذاری زودهنگام",
+        "بارگذاری تاخیری",
+        "لود تاخیری",
+        "delayed loading",
+        "early loading",
+        "loading time",
+        "لودینگ ایمپلنت"
+      ]
+    }
+  ],
+  "renames": {
+    "#بارگذاری_ایمپلنت": "#زمان_لود_ایمپلنت"
+  },
+  "articles": {}
+}
