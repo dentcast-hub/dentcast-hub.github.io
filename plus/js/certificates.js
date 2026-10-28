@@ -16,10 +16,10 @@
 // A revoked certificate does NOT tick its pathway. The wall shows what stands
 // today; the record of a revoked one lives in the API's `certificates` list
 // and on its own verify page, which still answers for the code.
-import { el, faNum, icon } from './util.js?v=214';
-import { openSheet, closeSheet } from './sheet.js?v=214';
-import { certificateTerms } from './certificate-terms.js?v=214';
-import { downloadCertificate } from './certificate-image.js?v=214';
+import { el, faNum, icon } from './util.js?v=215';
+import { openSheet, closeSheet } from './sheet.js?v=215';
+import { certificateTerms } from './certificate-terms.js?v=215';
+import { downloadCertificate } from './certificate-image.js?v=215';
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' });
 const when = (iso) => { try { return FA_DATE.format(new Date(iso)); } catch (_) { return ''; } };
