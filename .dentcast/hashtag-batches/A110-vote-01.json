@@ -1,0 +1,83 @@
+{
+ "note": "A110 vote, ballot item 1 (SPLIT #انتخاب_پایه, vote 3–0). The concept's definition («انتخابِ دندان یا ایمپلنتی که بار پروتز رویش می‌افتد») mixed two decisions. Its six pages, read in full, fall into two groups with nothing in common: episodes 102, 103 and 115 resolve which implant ABUTMENT to use (types and decision criteria, stock/prefabricated vs others, titanium vs zirconia and the material's effect on soft and hard tissue; all three already carry #اباتمنت), while chairside-20 (PA of the abutment teeth of a definitive RPD, no unknowns under a loaded abutment), insight-55 (splinting two short-rooted anterior abutments only because they are matched) and chairside-26 (lateral incisors rejected as bridge abutments: span length, Ante's law, root/bone support) resolve the adequacy of NATURAL abutment teeth. The reference has no implant abutment-selection concept: #اباتمنت is the 22-page umbrella for the part itself, #اباتمنت_کاستوم (no definition, ep123-6 and insight-83) names one abutment type and neither of its pages resolves the choice, #تیتانیوم_بیس names one type. So #انتخاب_اباتمنت is minted for the three implant episodes (a strict subset of #اباتمنت, so narrowerFirst puts it first), and #انتخاب_پایه keeps the three tooth pages with a sharpened definition and use_when. The implant-flavoured aliases «abutment selection» and «انتخاب اباتمنت پایه» move to the new concept; #انتخاب_پایه gets tooth-side spellings (English, Ante's law, plural/colloquial forms). No page resolves both, so none carries both. #انتخاب_پایه also gains domain «clinical» (it was null). [Merge 2026-10-28 onto main: lists unioned with main's A107/A108 state, main renames applied, renames already done on main dropped.]",
+ "concepts": [
+  {
+   "tag": "#انتخاب_اباتمنت",
+   "domain": "clinical",
+   "definition": "انتخابِ اباتمنتِ ایمپلنت — نوع (پیش‌ساخته/استوک، کاستوم یا Ti-Base) و متریال (تیتانیوم یا زیرکونیا) — بر پایه‌ی معیارهای بالینی و اثرِ این انتخاب بر بافتِ نرم و سختِ اطرافِ ایمپلنت.",
+   "use_when": "مقاله معیارِ انتخابِ نوع یا متریالِ اباتمنتِ ایمپلنت را بدهد یا گزینه‌ها را با هم مقایسه کند. انتخابِ دندانِ پایه‌ی بریج/پارسیل #انتخاب_پایه است.",
+   "aliases": [
+    "abutment selection",
+    "implant abutment selection",
+    "abutment choice",
+    "انتخاب اباتمنت ایمپلنت",
+    "انتخاب اباتمنت پایه",
+    "انتخاب نوع اباتمنت",
+    "انتخاب ابوتمنت",
+    "انتخاب آباتمنت",
+    "اباتمنت سلکشن",
+    "کدوم اباتمنت",
+    "کدام اباتمنت",
+    "کاستوم یا استوک",
+    "استوک یا کاستوم",
+    "custom or stock abutment",
+    "stock or custom abutment",
+    "اباتمنت زیرکونیا یا تیتانیوم",
+    "اباتمنت تیتانیوم یا زیرکونیا",
+    "zirconia or titanium abutment",
+    "titanium or zirconia abutment"
+   ]
+  },
+  {
+   "tag": "#انتخاب_پایه",
+   "domain": "clinical",
+   "definition": "انتخاب و ارزیابیِ دندان‌های طبیعیِ پایه برای بریج، پارسیل یا اسپلینت — طولِ ریشه و ساپورتِ استخوانی، طولِ اسپن و قانونِ Ante، هم‌سطح بودنِ پایه‌های اسپلینت‌شده، و نبودِ مجهول زیرِ روکش یا پست‌وکورِ پایه.",
+   "use_when": "مقاله تعیین کند کدام دندان می‌تواند پایه‌ی بریج/پارسیل/اسپلینت باشد یا کفایتِ یک دندانِ پایه را بسنجد. انتخابِ اباتمنتِ ایمپلنت #انتخاب_اباتمنت است.",
+   "aliases": [
+    "ارزیابی پایه",
+    "انتخاب اباتمنت پایه",
+    "abutment selection",
+    "انتخاب دندان پایه",
+    "ارزیابی دندان پایه",
+    "انتخاب پایه ها",
+    "کفایت پایه",
+    "پایه کافی",
+    "کدوم دندان پایه",
+    "abutment tooth selection",
+    "abutment teeth selection",
+    "abutment evaluation",
+    "ante's law",
+    "ante law",
+    "antes law",
+    "قانون انته",
+    "قانون آنته"
+   ]
+  }
+ ],
+ "renames": {},
+ "articles": {
+  "episodes/episode-102": [
+   "#دنتکست",
+   "#اباتمنت",
+   "#ایمپلنت",
+   "#پروتز_ایمپلنت",
+   "#انتخاب_اباتمنت"
+  ],
+  "episodes/episode-103": [
+   "#دنتکست",
+   "#اباتمنت",
+   "#ایمپلنت",
+   "#تیتانیوم_بیس",
+   "#انتخاب_اباتمنت"
+  ],
+  "episodes/episode-115": [
+   "#دنتکست",
+   "#اباتمنت",
+   "#Zero_Bone_Loss",
+   "#متریال_پروتزی",
+   "#ایمپلنت",
+   "#کتاب_لینکویچیوس",
+   "#انتخاب_اباتمنت"
+  ]
+ }
+}

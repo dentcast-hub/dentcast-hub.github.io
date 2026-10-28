@@ -166,6 +166,43 @@ socket`, `GBR`, `periimplantitis`, `biomimetic`, with nested paths like
    This holds on the paper-only fast path too: Phase 0's «no version bump» means
    the site version stamp, not this asset cache-buster.
 
+<!-- paper-reachability-step-8:v1 -->
+8. **Reachability through the assistant (the paper must be findable from a site tag).**
+   A paper is offered to a reader only under a chip of the «دستیار هوشمند», and a
+   chip reaches papers only through `plus/cabinet-bridge.json` (`map`: site tag
+   key → library tags, closest first; `tooth_topics`; compiled into
+   `plus/cabinet-papers.json` by `tools/build_cabinet_papers.py`, see its
+   docstring). A catalog entry nobody can reach is filed, not published. So,
+   after the entry is written:
+   - **With a page being published:** take the page's canonical hashtags from
+     step 5.0 (keys = the tag without `#`, `_` → space, lowercased). The new
+     paper must be reachable from **at least one** of them: a `map` row for that
+     key exists **and** names a library tag the paper carries (after
+     `tag_aliases`), **and** after `python3 tools/build_cabinet_papers.py` the
+     paper's `id` appears in `byTag[<key>]` (ideally inside its 12). If it is not:
+     (a) the row exists but the paper lacks the library tag it names, and the
+     paper **is** about that topic → add that **existing** library tag to the
+     paper's `tags`; (b) the article's tag has no row and the library holds
+     papers on the topic → add the row (1–4 existing tags, closest first;
+     `tooth_topics` for natural-tooth topics); (c) no library tag names the
+     topic and this paper is the first of its kind → mint a kebab library tag
+     with it (1–3 English words in the style of its neighbours, e.g.
+     `tooth-implant-connection`), put it first in the row, and keep `tag_index`
+     consistent with the change (the one derived counter you touch: `+1` per
+     paper, or a new key) — never rewrite the other analytics blocks. A
+     `topic:<subfolder>` tag is never a bridge target.
+   - **Paper-only fast path (no page):** check only that the paper is reachable
+     from at least one existing row (`python3 tools/build_cabinet_papers.py`,
+     then search `plus/cabinet-papers.json` for its `id`). If it is not, do (a)
+     when an existing library tag plainly fits, otherwise **report** it as a
+     library-only paper — do not invent a site hashtag for it.
+   - Finish with `python3 tools/build_cabinet_papers.py --check` (green), and
+     commit the catalog, the bridge and `plus/cabinet-papers.json` together.
+   **Report:** the site tag key(s) the paper is reachable from, its position in
+   `byTag`, and every edit made under (a)/(b)/(c) — or the explicit
+   «library-only» line.
+<!-- /paper-reachability-step-8:v1 -->
+
 #### Part 3 — Find the DOI on the web and add a first-author → DOI credit on the page (ShareHub style)
 
 **Runs only when a page is being published** (text-bearing publish, any type). On

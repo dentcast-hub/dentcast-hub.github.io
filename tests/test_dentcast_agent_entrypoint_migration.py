@@ -208,9 +208,12 @@ class EntrypointMigrationTests(unittest.TestCase):
       '**DES (Question 4.8 + step 4.13)** — or an explicit canonical skip ("skipped — LiteCast" / "skipped — چالش" / "skipped — کاربر انتخاب کرد بدون DES منتشر شود" with valid page-bound approval / verified "unsourced_audio_caption" episode exemption)')
     if name == "01-hard-rules.md":
      # PR #920 intentionally amended scoped approval and continuing independent
-     # work. Pin that approved text exactly; the legacy snapshot predates it.
+     # work; the hashtag QA (2026-10-28) added the five step-5.0 gates as a
+     # sub-bullet of Hard Rule 15. Pin that approved text exactly; the legacy
+     # snapshot predates both.
+     self.assertIn("**Five gates, all in Phase C step 5.0", body)
      self.assertEqual(hashlib.sha256(body.rstrip("\n").encode()).hexdigest(),
-                      "faafa8f2bb732c8bdb96f426dbd9570bee426f12338a5206839c9c5abfbfc71f")
+                      "6526a432d792b2cc29f6a7cc2a46a2193c7522343e2472235d814aaf5fdadc40")
      positions.append(router.index("`modules/"+name+"`",start))
      continue
     if name == "08-des-fidelity.md":
@@ -258,6 +261,45 @@ class EntrypointMigrationTests(unittest.TestCase):
       "If the runtime does not expose independent contexts"):
       self.assertIn(required,actual_rest.split(after,1)[0])
      continue
+    if name == "06-paper-ingestion.md":
+     # Hashtag QA 2026-10-28: Part 2 step 8 (paper reachability through the
+     # assistant's bridge) is a bounded workflow addition inside the paper branch.
+     first=body.index("<!-- paper-reachability-step-8:v1 -->")
+     last=body.index("<!-- /paper-reachability-step-8:v1 -->",first)+len("<!-- /paper-reachability-step-8:v1 -->\n\n")
+     block=body[first:last]
+     for term in ("plus/cabinet-bridge.json", "build_cabinet_papers.py", "byTag", "tooth_topics",
+                  "tooth-implant-connection", "library-only", "`tag_index`", "Paper-only fast path"):
+      self.assertIn(term,block)
+     body=body[:first]+body[last:]
+    if name == "10-brain-and-pathways.md":
+     # Hashtag QA 2026-10-28: step 5.0 was rewritten (question-first reachability,
+     # composition gate, resolving sentence per tag, restricted minting with the
+     # alias checklist, bridge decision). The bounded block replaces the legacy
+     # step 5.0 text; everything else must still match the legacy extraction.
+     first=body.index("<!-- hashtag-step-5-0:v2 -->")
+     last=body.index("<!-- /hashtag-step-5-0:v2 -->",first)+len("<!-- /hashtag-step-5-0:v2 -->\n\n")
+     block=body[first:last]
+     for term in ("3–5 questions a dentist would type", "decision tag", "≤ 10 pages",
+                  "resolves", "plus/assistant-tags.json", "first 4 pages of one of the first 4 chips",
+                  "four slots", "English twin", "plus/cabinet-bridge.json", "no library equivalent",
+                  "`keywords`", "Hard Rule 15", "Hard Rule 13", "hashtag_ref.py --check"):
+      self.assertIn(term,block)
+     old_first=expected.index("### 5.0. Hashtag standardization")
+     old_last=expected.index("### 5. Brain entry",old_first)
+     body=body[:first]+expected[old_first:old_last]+body[last:]
+    if name == "12-english-notify-verify.md":
+     # Same amendment: the report rows for step 5.0 and step 4.10 Part 2 name the
+     # new evidence (questions, resolving sentences, bridge, reachability).
+     def swap_row(prefix,*terms):
+      nonlocal body
+      i=body.index(prefix); j=body.index("\n",i)
+      for term in terms: self.assertIn(term,body[i:j])
+      k=expected.index(prefix); l=expected.index("\n",k)
+      body=body[:i]+expected[k:l]+body[j:]
+     swap_row("- **Hashtag standardization (step 5.0 — Hard Rule 15):**",
+              "3–5 dentist questions", "resolving sentence", "cabinet-bridge", "assistant-tags.json")
+     swap_row("- For any publish with an attached paper file (step 4.10",
+              "Part 2 step 8", "cabinet-papers.json", "library-only")
     self.assertEqual(body.rstrip("\n"),expected.rstrip("\n"))
     positions.append(router.index("`modules/"+name+"`",start))
   self.assertEqual(positions,sorted(positions))

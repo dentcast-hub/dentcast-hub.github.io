@@ -1,0 +1,34 @@
+{
+ "note": "Prosthodontic QA 1405/08/06 (2026-10-28), orchestrator follow-up to agents A and B (A107/A108). Agent A found that «لق شدن روکش» — the phrase a dentist types for a loose crown on a natural tooth — was an alias of #شل_شدن_پیچ (implant screw loosening), so the lexical path sent a tooth-crown question to four implant pages. #افتادن_روکش (12 pages; definition: loss of retention and dislodgement of a crown from its abutment) is the concept that resolves it. The phrase moves there; #شل_شدن_پیچ keeps its screw spellings and gains the explicit «لق شدن روکش ایمپلنت» so a loose implant crown still reaches it (longest alias wins). Both lists are complete replacements of the current aliases; no other field changes. [Merge 2026-10-28 onto main: lists unioned with main's A107/A108 state, main renames applied, renames already done on main dropped.]",
+ "concepts": [
+  {
+   "tag": "#شل_شدن_پیچ",
+   "aliases": [
+    "screw loosening",
+    "لقی پیچ",
+    "شل شدن اسکرو",
+    "لق شدن روکش",
+    "لق شدن پیچ",
+    "لق شدن روکش ایمپلنت",
+    "لقی روکش ایمپلنت"
+   ]
+  },
+  {
+   "tag": "#افتادن_روکش",
+   "aliases": [
+    "loose crown",
+    "کندگی روکش",
+    "جدا شدن روکش",
+    "روکش افتاده",
+    "دباند شدن روکش",
+    "crown debonding",
+    "debonded crown",
+    "افتادن مکرر روکش",
+    "لق شدن روکش",
+    "لقی روکش",
+    "لق بودن روکش"
+   ]
+  }
+ ],
+ "articles": {}
+}

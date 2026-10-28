@@ -28,16 +28,20 @@ MODULES = WORKFLOW + 'modules/'
 # branch it omits for non-LiteCast; 04 only the always-kept capsule table; 06
 # only paper-branch text (omitted only without a paper); 12 only the kept
 # Final output summary. No boundary heading changed.
+# Re-audited 2026-10-28 (hashtag QA follow-up): 06 adds Part 2 step 8
+# (paper reachability) inside the paper branch, which is omitted only without a
+# paper; 12 edits only two rows of the always-kept Final output summary. No
+# boundary heading changed; 01 and 10 are unpinned (always read whole).
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
     '03-litecast-and-page.md': '28ab4d554f9e5631724d3133177332843cc0c900',
     '04-taxonomy-and-navigation.md': '539fd195fb90d19587ba8b243782355228a14238',
     '05-semantic-linking.md': '760dcf77dd3baff173aebb2d40492604fb096d1f',
-    '06-paper-ingestion.md': '543aa4cc50f54b55adecbd6d7826cc5aecc134dd',
+    '06-paper-ingestion.md': '1def0aa0ed464105900965a55fb78f7792d8606c',
     '08-des-fidelity.md': 'f396330bb90621fec71bc71ded2c16630c3e0f0e',
     '09-challenge.md': 'dd46a16eafabdd4b40813a0578eeca4a81dcd44d',
-    '12-english-notify-verify.md': '37a2ccdfa5f839821bdaa52063e9f6dc253ee8ba',
+    '12-english-notify-verify.md': '9cee02243c141166d0b5eca3ea20da58bd77302a',
 }
 
 REQUIRED = [
