@@ -3,11 +3,11 @@ import type { FastifyInstance } from 'fastify';
 import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
-import { getClusters, getContentInfo, getTags } from '../src/content-index.js';
+import { getAllContent, getClusters, getContentInfo, getTags } from '../src/content-index.js';
 import { ai } from '../src/providers/registry.js';
 import {
   DEFAULT_QUESTION, FALLBACK_QUESTION, OUTAGE_QUESTION, REPEAT_FALLBACK_QUESTION, REPEAT_TAGS_QUESTION,
-  REPEAT_FALLBACK_FINAL_QUESTION, REPEAT_TAGS_FINAL_QUESTION, assistantTags,
+  REPEAT_FALLBACK_FINAL_QUESTION, REPEAT_TAGS_FINAL_QUESTION, assistantTags, glossaryFor,
 } from '../src/services/case-assistant.js';
 
 let app: FastifyInstance;
@@ -364,6 +364,50 @@ describe('tag round (real site hashtags)', () => {
     const history = [{ question: 'q', options: [], answer: { key: 'tag:سمان رزینی', label: 'سمان رزینی' } }];
     const body = (await next({ description: 'شرح', history })).json();
     expect(body.articles[0].content_id).toBe('glossary/resin-cements');
+  });
+
+  it('a glossary term leads the tag it defines under another name', async () => {
+    // Synonyms and slashed titles name the term too: «جراحی افزایش طول تاج»
+    // defines #افزایش_طول_تاج, «سندبلاست / آماده‌سازی مکانیکی سطح» #سندبلاست.
+    const defines: Record<string, string> = {
+      'افزایش طول تاج': 'glossary/crown-lengthening', 'پروفایل امرجنس': 'glossary/emergence-profile',
+      'سندبلاست': 'glossary/sandblasting', 'تیتانیوم بیس': 'glossary/ti-base',
+      'رابطه مرکزی': 'glossary/centric-relation', 'اتصال پیچ شونده': 'glossary/screw-retained',
+      'کانین رایز': 'glossary/canine-guidance', 'زمان لود ایمپلنت': 'glossary/implant-loading',
+      'اچ اند رینس': 'glossary/etch-and-rinse', 'پروتکل باند': 'glossary/bonding-protocol',
+      'total occlusal convergence': 'glossary/toc', 'اسپلینت': 'glossary/occlusal-splint',
+      'سرامیک هیبرید': 'glossary/hybrid-ceramics', 'پلی کریستالین': 'glossary/polycrystalline-ceramics',
+    };
+    for (const [label, id] of Object.entries(defines)) expect(glossaryFor(label), label).toBe(id);
+    // A synonym is matched as written, never folded through the alias table:
+    // «biomimetic restorative dentistry» folds to «کتاب مانیه», a book, not the term.
+    expect(glossaryFor('کتاب مانیه')).toBeNull();
+  });
+
+  it('every glossary term is reachable from the assistant catalog', () => {
+    // Either it leads a tag it defines, or a tag it belongs under carries it
+    // (glossary.json `hashtags`: «مونومر HEMA» under #باندینگ). 42 terms
+    // were reachable by neither and never appeared in any answer.
+    const tags = assistantTags();
+    const reached = new Set<string>();
+    for (const t of tags) {
+      const g = glossaryFor(t.fa);
+      if (g) reached.add(g);
+      for (const id of t.contentIds) reached.add(id);
+    }
+    const terms = Object.keys(getAllContent()).filter((id) => getContentInfo(id)!.type === 'glossary');
+    expect(terms.length).toBeGreaterThan(100);
+    expect(terms.filter((id) => !reached.has(id))).toEqual([]);
+  });
+
+  it('a sub-concept term rises under its parent tag when the case names it', async () => {
+    await makePremium();
+    const tag = getTags().find((x) => x.fa === 'باندینگ')!;
+    const options = [{ key: 'tag:' + tag.key, label: tag.fa }];
+    const history = [{ question: DEFAULT_QUESTION, options, answer: options[0] }];
+    const body = (await next({ description: 'مونومر HEMA در باندینگ چه نقشی دارد؟', history })).json();
+    const first4 = body.articles.slice(0, 4).map((a: { content_id: string }) => a.content_id);
+    expect(first4).toContain('glossary/hema');
   });
 
   it('the anterior-gap case shows the veneer-retained bridge among the first replacement options', async () => {

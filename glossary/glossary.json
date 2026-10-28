@@ -27,6 +27,10 @@
         "سمان پلی‌کربوکسیلات",
         "conventional cements"
       ],
+      "hashtags": [
+        "#سمان_دندانی",
+        "#انتخاب_سمان"
+      ],
       "url": "/glossary/traditional-cements.html",
       "pillar": {
         "primary": "fixed-pros",
@@ -76,6 +80,10 @@
         "سمان رزینی ادهزیو",
         "bonded resin cement"
       ],
+      "hashtags": [
+        "#سمان_رزینی",
+        "#انتخاب_سمان"
+      ],
       "url": "/glossary/adhesive-resin-cements.html",
       "pillar": {
         "primary": "fixed-pros",
@@ -91,6 +99,10 @@
         "سمان رزینی زیبایی",
         "سمان رزینی استتیک",
         "esthetic cement"
+      ],
+      "hashtags": [
+        "#سمان_رزینی",
+        "#لمینیت_سرامیکی"
       ],
       "url": "/glossary/esthetic-resin-cements.html",
       "pillar": {
@@ -109,6 +121,11 @@
         "retentive form",
         "retention form"
       ],
+      "hashtags": [
+        "#گیر_مکانیکی",
+        "#اصول_تراش",
+        "#افتادن_روکش"
+      ],
       "url": "/glossary/retention.html",
       "pillar": {
         "primary": "fixed-pros",
@@ -123,7 +140,12 @@
       "synonyms": [
         "مقاومت در برابر جابجایی",
         "resistance form",
-        "structural resistance"
+        "structural resistance",
+        "فرم رزیستنس"
+      ],
+      "hashtags": [
+        "#فرم_رزیستنس",
+        "#اصول_تراش"
       ],
       "url": "/glossary/resistance.html",
       "pillar": {
@@ -156,7 +178,12 @@
         "پروتکل باندینگ",
         "مراحل باندینگ",
         "bonding procedure",
-        "adhesive protocol"
+        "adhesive protocol",
+        "پروتکل باند"
+      ],
+      "hashtags": [
+        "#پروتکل_باند",
+        "#باندینگ"
       ],
       "url": "/glossary/bonding-protocol.html",
       "pillar": {
@@ -192,6 +219,10 @@
         "لایت کیور سمان",
         "light cure cement"
       ],
+      "hashtags": [
+        "#سمان_رزینی",
+        "#لمینیت_سرامیکی"
+      ],
       "url": "/glossary/light-cure-resin-cement.html",
       "pillar": {
         "primary": "fixed-pros",
@@ -207,6 +238,9 @@
         "سمان دوال کیور",
         "دوال کیور سمان",
         "dual cure cement"
+      ],
+      "hashtags": [
+        "#سمان_رزینی"
       ],
       "url": "/glossary/dual-cure-resin-cement.html",
       "pillar": {
@@ -225,6 +259,9 @@
         "chemical cure cement",
         "auto-cure cement"
       ],
+      "hashtags": [
+        "#سمان_رزینی"
+      ],
       "url": "/glossary/self-cure-resin-cement.html",
       "pillar": {
         "primary": "fixed-pros",
@@ -242,6 +279,12 @@
         "adhesive strategy",
         "bonding approach"
       ],
+      "hashtags": [
+        "#باندینگ",
+        "#اچ_اند_رینس",
+        "#سلف_اچ",
+        "#یونیورسال_باند"
+      ],
       "url": "/glossary/bonding-strategy.html",
       "pillar": {
         "primary": "bonding",
@@ -257,7 +300,12 @@
         "توتال اچ",
         "total etch",
         "etch & rinse",
-        "total-etch technique"
+        "total-etch technique",
+        "اچ اند رینس"
+      ],
+      "hashtags": [
+        "#اچ_اند_رینس",
+        "#باندینگ"
       ],
       "url": "/glossary/etch-and-rinse.html",
       "pillar": {
@@ -290,6 +338,10 @@
         "selective enamel etch",
         "اچ انتخابی انامل",
         "enamel selective etch"
+      ],
+      "hashtags": [
+        "#باندینگ",
+        "#سلف_اچ"
       ],
       "url": "/glossary/selective-etch.html",
       "pillar": {
@@ -340,6 +392,11 @@
         "کلاژن دنتین",
         "collagen fibrils"
       ],
+      "hashtags": [
+        "#عاج",
+        "#باندینگ",
+        "#هیبرید_لیر"
+      ],
       "url": "/glossary/collagen-fibers.html",
       "pillar": {
         "primary": "bonding",
@@ -356,6 +413,11 @@
         "کلاپس شبکه کلاژن",
         "collapse of collagen network"
       ],
+      "hashtags": [
+        "#عاج",
+        "#باندینگ",
+        "#اچ_اند_رینس"
+      ],
       "url": "/glossary/collagen-collapse.html",
       "pillar": {
         "primary": "bonding",
@@ -371,6 +433,10 @@
         "توبول عاجی",
         "کانال‌های عاجی",
         "dentinal tubule"
+      ],
+      "hashtags": [
+        "#عاج",
+        "#باندینگ"
       ],
       "url": "/glossary/dentinal-tubules.html",
       "pillar": {
@@ -421,6 +487,10 @@
         "hydroxyethyl methacrylate",
         "HEMA monomer"
       ],
+      "hashtags": [
+        "#باندینگ",
+        "#ادهزیو"
+      ],
       "url": "/glossary/hema.html",
       "pillar": {
         "primary": "bonding",
@@ -452,6 +522,11 @@
         "پرایمر MDP زیرکونیا",
         "zirconia bonding primer",
         "primer for zirconia"
+      ],
+      "hashtags": [
+        "#زیرکونیا",
+        "#MDP",
+        "#سمان_رزینی"
       ],
       "url": "/glossary/zirconia-primer.html",
       "pillar": {
@@ -486,6 +561,10 @@
         "surface sandblasting",
         "mechanical surface roughening"
       ],
+      "hashtags": [
+        "#سندبلاست",
+        "#آماده_سازی_سرامیک"
+      ],
       "url": "/glossary/sandblasting.html",
       "pillar": {
         "primary": "ceramics",
@@ -502,6 +581,11 @@
         "glass ceramics",
         "silica ceramics",
         "feldspathic ceramics"
+      ],
+      "hashtags": [
+        "#سرامیک_دندانی",
+        "#گلاس_سرامیک",
+        "#اچ_سرامیک"
       ],
       "url": "/glossary/silica-based-ceramics.html",
       "pillar": {
@@ -520,6 +604,10 @@
         "adhesive acidity",
         "adhesive pH"
       ],
+      "hashtags": [
+        "#باندینگ",
+        "#سلف_اچ"
+      ],
       "url": "/glossary/ph-of-adhesive-systems.html",
       "pillar": {
         "primary": "bonding",
@@ -535,6 +623,9 @@
         "آمین نوع سوم",
         "amine co-initiator",
         "tertiary amine initiator"
+      ],
+      "hashtags": [
+        "#سمان_رزینی"
       ],
       "url": "/glossary/tertiary-amines.html",
       "pillar": {
@@ -553,6 +644,10 @@
         "self cure activator",
         "initiator activator"
       ],
+      "hashtags": [
+        "#سمان_رزینی",
+        "#باندینگ"
+      ],
       "url": "/glossary/activator.html",
       "pillar": {
         "primary": "bonding",
@@ -570,6 +665,9 @@
         "two-component adhesive",
         "primer + adhesive system"
       ],
+      "hashtags": [
+        "#باندینگ"
+      ],
       "url": "/glossary/two-bottle-adhesive-systems.html",
       "pillar": {
         "primary": "bonding",
@@ -585,6 +683,10 @@
         "آلودگی اسید فسفریک",
         "phosphoric acid residue",
         "acid contamination"
+      ],
+      "hashtags": [
+        "#باندینگ",
+        "#اچ_اند_رینس"
       ],
       "url": "/glossary/phosphoric-acid-contamination.html",
       "pillar": {
@@ -602,6 +704,11 @@
         "fresh dentin",
         "newly cut dentin"
       ],
+      "hashtags": [
+        "#IDS",
+        "#عاج",
+        "#باندینگ"
+      ],
       "url": "/glossary/freshly-cut-dentin.html",
       "pillar": {
         "primary": "bonding",
@@ -617,6 +724,10 @@
         "سیلینگ دنتین",
         "dentinal sealing",
         "dentin seal"
+      ],
+      "hashtags": [
+        "#IDS",
+        "#عاج"
       ],
       "url": "/glossary/dentin-sealing.html",
       "pillar": {
@@ -666,6 +777,11 @@
         "residual temporary cement",
         "temporary cement residue"
       ],
+      "hashtags": [
+        "#سمان_موقت",
+        "#IDS",
+        "#باندینگ"
+      ],
       "url": "/glossary/temporary-cement-contamination.html",
       "pillar": {
         "primary": "fixed-pros",
@@ -681,6 +797,10 @@
         "باندینگ سه مرحله‌ای",
         "three step bonding",
         "etch prime bond system"
+      ],
+      "hashtags": [
+        "#باندینگ",
+        "#اچ_اند_رینس"
       ],
       "url": "/glossary/three-step-adhesive-system.html",
       "pillar": {
@@ -714,6 +834,10 @@
         "bonding resin",
         "low viscosity resin"
       ],
+      "hashtags": [
+        "#باندینگ",
+        "#رزین_کوتینگ"
+      ],
       "url": "/glossary/unfilled-resin.html",
       "pillar": {
         "primary": "bonding",
@@ -730,6 +854,10 @@
         "فلو",
         "flowable composite",
         "low viscosity composite"
+      ],
+      "hashtags": [
+        "#کامپوزیت_فلو",
+        "#کامپوزیت"
       ],
       "url": "/glossary/flowable-resin.html",
       "pillar": {
@@ -748,6 +876,10 @@
         "etching acid",
         "37% phosphoric acid"
       ],
+      "hashtags": [
+        "#اچ_اند_رینس",
+        "#باندینگ"
+      ],
       "url": "/glossary/phosphoric-acid.html",
       "pillar": {
         "primary": "bonding",
@@ -763,6 +895,10 @@
         "باندینگ دو مرحله‌ای",
         "two step bonding",
         "self-etch adhesive system"
+      ],
+      "hashtags": [
+        "#باندینگ",
+        "#سلف_اچ"
       ],
       "url": "/glossary/two-step-adhesive-system.html",
       "pillar": {
@@ -812,6 +948,9 @@
         "clinical crown lengthening",
         "periodontal crown lengthening"
       ],
+      "hashtags": [
+        "#افزایش_طول_تاج"
+      ],
       "url": "/glossary/crown-lengthening.html",
       "pillar": {
         "primary": "fixed-pros",
@@ -828,6 +967,11 @@
         "margin below gingiva",
         "subgingival finish line"
       ],
+      "hashtags": [
+        "#ترمیم_ساب_جینجیوال",
+        "#DME",
+        "#فینیش_لاین"
+      ],
       "url": "/glossary/subgingival-margin.html",
       "pillar": {
         "primary": "perio",
@@ -842,6 +986,10 @@
       "synonyms": [
         "double matrix technique",
         "deep matrix technique"
+      ],
+      "hashtags": [
+        "#DME",
+        "#ترمیم_ساب_جینجیوال"
       ],
       "url": "/glossary/matrix-in-matrix.html",
       "pillar": {
@@ -875,6 +1023,10 @@
         "گیر منفی",
         "mechanical undercut"
       ],
+      "hashtags": [
+        "#اصول_تراش",
+        "#تراش_دندان"
+      ],
       "url": "/glossary/undercut.html",
       "pillar": {
         "primary": "curated",
@@ -889,7 +1041,11 @@
       "synonyms": [
         "پروفایل خروجی",
         "profile emergence",
-        "gingival emergence profile"
+        "gingival emergence profile",
+        "پروفایل امرجنس"
+      ],
+      "hashtags": [
+        "#پروفایل_امرجنس"
       ],
       "url": "/glossary/emergence-profile.html",
       "pillar": {
@@ -963,6 +1119,9 @@
         "ceramic crystalline phase",
         "crystal phase"
       ],
+      "hashtags": [
+        "#سرامیک_دندانی"
+      ],
       "url": "/glossary/crystalline-phase.html",
       "pillar": {
         "primary": "ceramics",
@@ -1034,6 +1193,10 @@
         "zirconia reinforced lithium silicate",
         "ZLS ceramic"
       ],
+      "hashtags": [
+        "#سرامیک_دندانی",
+        "#لیتیوم_دی_سیلیکات"
+      ],
       "url": "/glossary/zls.html",
       "pillar": {
         "primary": "ceramics",
@@ -1050,7 +1213,11 @@
         "Resin-Matrix Ceramics",
         "سرامیک هیبریدی",
         "رزین ماتریکس سرامیک",
-        "CAD/CAM hybrid ceramics"
+        "CAD/CAM hybrid ceramics",
+        "سرامیک هیبرید"
+      ],
+      "hashtags": [
+        "#سرامیک_هیبرید"
       ],
       "url": "/glossary/hybrid-ceramics.html",
       "pillar": {
@@ -1068,7 +1235,12 @@
         "سرامیک پلی‌کریستالین",
         "سرامیک‌های کاملاً کریستالی",
         "non-silica ceramics",
-        "polycrystalline dental ceramics"
+        "polycrystalline dental ceramics",
+        "پلی کریستالین"
+      ],
+      "hashtags": [
+        "#پلی_کریستالین",
+        "#زیرکونیا"
       ],
       "url": "/glossary/polycrystalline-ceramics.html",
       "pillar": {
@@ -1087,6 +1259,10 @@
         "bend strength",
         "bending strength",
         "modulus of rupture"
+      ],
+      "hashtags": [
+        "#سرامیک_دندانی",
+        "#زیرکونیا"
       ],
       "url": "/glossary/flexural-strength.html",
       "pillar": {
@@ -1123,6 +1299,10 @@
         "فرآیند پخت",
         "ceramic firing",
         "thermal densification"
+      ],
+      "hashtags": [
+        "#زیرکونیا",
+        "#سرامیک_دندانی"
       ],
       "url": "/glossary/sintering.html",
       "pillar": {
@@ -1176,6 +1356,9 @@
         "titanium base abutment",
         "تیتانیوم بیس",
         "ti base implant"
+      ],
+      "hashtags": [
+        "#تیتانیوم_بیس"
       ],
       "url": "/glossary/ti-base.html",
       "pillar": {
@@ -1321,6 +1504,9 @@
         "implant crown ratio",
         "biomechanical implant ratio"
       ],
+      "hashtags": [
+        "#نسبت_تاج_به_ایمپلنت"
+      ],
       "url": "/glossary/crown-to-implant-ratio.html",
       "pillar": {
         "primary": "implantology",
@@ -1337,6 +1523,9 @@
         "بیومیمتیک",
         "دندانپزشکی ترمیمی بیومیمتیک",
         "biomimetic restorative dentistry"
+      ],
+      "hashtags": [
+        "#بیومیمتیک"
       ],
       "url": "/glossary/biomimetic-dentistry.html",
       "pillar": {
@@ -1423,6 +1612,9 @@
         "رابطه‌ی سنتریک",
         "centric relation",
         "CR"
+      ],
+      "hashtags": [
+        "#رابطه_مرکزی"
       ],
       "url": "/glossary/centric-relation.html",
       "pillar": {
@@ -1564,7 +1756,12 @@
         "بارگذاری فوری ایمپلنت",
         "بارگذاری زودهنگام",
         "immediate loading",
-        "implant loading"
+        "implant loading",
+        "بارگذاری ایمپلنت",
+        "زمان لود ایمپلنت"
+      ],
+      "hashtags": [
+        "#زمان_لود_ایمپلنت"
       ],
       "url": "/glossary/implant-loading.html",
       "pillar": {
@@ -1581,7 +1778,11 @@
         "پیچ‌شونده",
         "رستوریشن پیچ‌شونده",
         "اسکرو ریتیند",
-        "screw retained"
+        "screw retained",
+        "اتصال پیچ شونده"
+      ],
+      "hashtags": [
+        "#اتصال_پیچ_شونده"
       ],
       "url": "/glossary/screw-retained.html",
       "pillar": {
@@ -1667,7 +1868,11 @@
       "synonyms": [
         "گاید کانین",
         "Canine-Protected Occlusion",
-        "راهنمای کانینی"
+        "راهنمای کانینی",
+        "کانین رایز"
+      ],
+      "hashtags": [
+        "#کانین_رایز"
       ],
       "url": "/glossary/canine-guidance.html",
       "pillar": {
@@ -1698,6 +1903,9 @@
       "synonyms": [
         "همگرایی کلی اکلوزالی",
         "Total Occlusal Convergence"
+      ],
+      "hashtags": [
+        "#total_occlusal_convergence"
       ],
       "url": "/glossary/toc.html",
       "pillar": {
@@ -1737,7 +1945,11 @@
         "اسپلینت استابیلیزیشن",
         "Stabilization Splint",
         "اسپلینت میشیگان",
-        "Michigan Splint"
+        "Michigan Splint",
+        "اسپلینت"
+      ],
+      "hashtags": [
+        "#اسپلینت"
       ],
       "url": "/glossary/occlusal-splint.html",
       "pillar": {
