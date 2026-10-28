@@ -108,8 +108,9 @@ const prettify = (s) => s.replace(/-/g, ' ');
 // of only the fixed pillar tree, so content reachable solely through a
 // niche/singleton tag (most tags are used exactly once across the site) isn't
 // stuck behind picking the "right" pillar first. Every brain/glossary entry
-// is eligible; glossary terms currently carry no hashtags, so they simply
-// contribute nothing here.
+// is eligible. A glossary term's `hashtags` name the site tags it defines or
+// belongs under (#باندینگ for «مونومر HEMA»), so the assistant reaches it
+// through them.
 const tagsByKey = new Map(); // normalizedKey -> { fa, contentIds: Set }
 // Titles as shown in the assistant and the dashboard: no stray edge or double spaces.
 const cleanTitle = (t) => (typeof t === 'string' ? t.replace(/\s+/g, ' ').trim() : '');
@@ -198,6 +199,9 @@ for (const e of glossaryTerms) {
     title: cleanTitle(e.fa_title || e.title) || contentId,
     url,
     secondary: (e.pillar && e.pillar.secondary) || [],
+    // Second names for the assistant's term lookup: «جراحی افزایش طول تاج»
+    // defines #افزایش_طول_تاج, which its title alone does not say.
+    names: [e.title, ...(e.synonyms || [])].map(cleanTitle).filter(Boolean),
   };
   addHashtags(e, contentId);
   notePrimary(primary, contentId);
