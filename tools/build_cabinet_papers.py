@@ -38,8 +38,16 @@ OUT = os.path.join(ROOT, 'plus', 'cabinet-papers.json')
 PER_TAG = 12
 KF_MAX = 320
 TAG_WEIGHT = [1.0, 0.7, 0.5, 0.4]
-# A page's own source paper outranks anything matched by tags alone.
+# A page's own source paper outranks anything matched by tags alone — when it
+# is about the hashtag (its library tags or title match the tag's bridge, or
+# the tag has no bridge to judge by). A page carries many hashtags, and its
+# sources are not about all of them: share-12's trigeminal-neuralgia
+# guidelines led #کشیدن_دندان. Those get SOURCE_NUDGE instead: listed, not first.
 SOURCE_BONUS = 10.0
+SOURCE_NUDGE = 1.0
+# NoteCast N is the written notes of episode N: a paper linked to either page
+# is the source of both (42 pairs; usually only one side was linked).
+MIRRORS = (('episodes/episode-', 'notecast/episode-'), ('notecast/episode-', 'episodes/episode-'))
 DESIGN = {
     'umbrella review': 0.7, 'network meta-analysis': 0.7, 'systematic review + meta-analysis': 0.7,
     'systematic review': 0.6, 'scoping review': 0.4, 'consensus / guideline': 0.6,
@@ -127,6 +135,10 @@ def build():
     sources = {}
     for p in cat['papers']:
         linked = set(p.get('linked_episodes') or [])
+        for page in list(linked):
+            for a, b in MIRRORS:
+                if page.startswith(a):
+                    linked.add(b + page[len(a):])
         if not linked or skipped(p) or not (p.get('drive_view') or p.get('drive_download')):
             continue
         for key, pages in pages_of.items():
@@ -156,8 +168,14 @@ def build():
             for p in by_lib.get(lib, []):
                 score[p['id']] = score.get(p['id'], 0) + TAG_WEIGHT[i]
         own = {p['id'] for p in sources.get(key, [])}
+        on_topic = {pid for pid in own if pid in score or not libs}  # bridged-tag match, or nothing to judge by
+        title_rx = [x for x in (title_pattern(lib) for lib in libs) if x]
+        for p in sources.get(key, []):
+            t = (p.get('display_title') or p.get('title') or '').lower()
+            if any(rx.search(t) for rx in title_rx):
+                on_topic.add(p['id'])
         for pid in own:
-            score[pid] = score.get(pid, 0) + SOURCE_BONUS
+            score[pid] = score.get(pid, 0) + (SOURCE_BONUS if pid in on_topic else SOURCE_NUDGE)
         if not score:
             continue
         for pid in exclude.get(key, ()):

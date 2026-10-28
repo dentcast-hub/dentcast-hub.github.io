@@ -34,10 +34,19 @@ class CabinetPapersTest(unittest.TestCase):
         # the anterior-gap case's chips they were missing or sixth.
         with open(os.path.join(ROOT, 'plus', 'cabinet-papers.json'), encoding='utf-8') as f:
             by_tag = json.load(f)['byTag']
-        self.assertEqual(by_tag['rbfdp'][:2], ['P2944', 'P2945'])
+        # dentai-7's source P0283 (anterior RBFDP review) leads with them.
+        self.assertEqual(set(by_tag['rbfdp'][:3]), {'P0283', 'P2944', 'P2945'})
         self.assertEqual(by_tag['بریج'][0], 'P2945')
-        for pid in ('P2944', 'P2945'):
-            self.assertIn(pid, by_tag['جایگزینی دندان'])
+        self.assertEqual(set(by_tag['جایگزینی دندان'][:2]), {'P0283', 'P2945'})
+        self.assertIn('P2944', by_tag['جایگزینی دندان'])
+
+    def test_off_topic_source_papers_do_not_lead_a_tag(self):
+        # share-12 was written from trigeminal-neuralgia guidelines too; they
+        # must not lead #کشیدن_دندان just because share-12 carries that tag.
+        with open(os.path.join(ROOT, 'plus', 'cabinet-papers.json'), encoding='utf-8') as f:
+            out = json.load(f)
+        for pid in out['byTag']['کشیدن دندان'][:5]:
+            self.assertNotIn('neuralgia', out['papers'][pid]['t'].lower(), pid)
 
 
 if __name__ == '__main__':
