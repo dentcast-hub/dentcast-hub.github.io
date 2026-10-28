@@ -373,6 +373,16 @@ describe('tag round (real site hashtags)', () => {
     expect(body.papers.slice(0, 3).map((p: { id: string }) => p.id)).toContain('P2945');
   });
 
+  it('«کمبود فضای عمودی» reaches the restorative-space hub, not a one-page twin', async () => {
+    // «میخوام روکش بسازم برای بیمار فضا کمه» → «فضای عمودی کمه»: the model
+    // answered the literal label of a one-page implant tag; the concept's ten
+    // pages live under «فضای رستوریتیو» (batch A107 merged the two).
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['کمبود فضای عمودی', 'افزایش VD']);
+    const body = (await next({ description: 'میخوام روکش بسازم برای بیمار فضای عمودی کمه' })).json();
+    expect(body.options[0].label).toBe('فضای رستوریتیو');
+  });
+
   it('leads with the glossary entry named by an acronym or the entry slug', async () => {
     await makePremium();
     for (const [key, term] of [['tmd', 'glossary/tmd'], ['vdo', 'glossary/vertical-dimension-of-occlusion']]) {
