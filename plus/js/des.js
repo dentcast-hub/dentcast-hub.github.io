@@ -23,7 +23,7 @@
 // is deliberately no "podcast" test in this file — an episode that DOES cite
 // papers (episodes/episode-161 cites three) is scored and shown like anything
 // else. The rule is "no record, no badge", never "no audio, no badge".
-import { el, faNum } from './util.js?v=214';
+import { el, faNum } from './util.js?v=215';
 
 /* ------------------------------------------------------------ the data -- */
 
@@ -66,6 +66,17 @@ export const QTYPE_FA = {
   DIAGNOSTIC: 'تشخیصی',
   MATERIAL: 'مواد (آزمایشگاهی)',
   ETIOLOGY: 'علت‌شناسی',
+};
+
+// The spec's COMMENTARY checklist names its four items in English, and Part 4
+// stores the spec's objects verbatim, so a record may carry either the English
+// label or the Persian one the site already uses. The card always reads Persian
+// (founder, 1405/08/06); an unknown label is shown as stored.
+const CHECKLIST_FA = {
+  'reasoning chain is explicit': 'زنجیره‌ی استدلال صریح است',
+  'relationship to published evidence is stated': 'نسبتش با شواهد منتشرشده بیان شده است',
+  'scope of the claim is bounded': 'دامنه‌ی ادعا محدود شده است',
+  'explicitly labeled as experience/opinion, not evidence': 'صریحاً تجربه/دیدگاه نامیده شده، نه شواهد',
 };
 
 // Spec v3.1 Step 1: the closed list of sources that are cited, not scored.
@@ -213,7 +224,7 @@ function calcBlock(src) {
   if (pen) rows.push(pen);
   if (src.commentary_checklist) {
     rows.push(el('ul', { class: 'dc-des-doms' }, src.commentary_checklist.map((c) => el('li', {},
-      (Number(c.points) > 0 ? '✓ ' : '× ') + c.item + ' (' + faNum(c.points) + ')'))));
+      (Number(c.points) > 0 ? '✓ ' : '× ') + (CHECKLIST_FA[c.item] || c.item) + ' (' + faNum(c.points) + ')'))));
   }
   rows.push(el('div', { class: 'dc-des-calc-final' },
     'امتیاز: ' + faNum(src.des_score) + ' از ۱۰۰ → باند ' + src.band));
