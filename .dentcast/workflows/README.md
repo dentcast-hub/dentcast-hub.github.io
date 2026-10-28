@@ -1,5 +1,7 @@
 # DentCast Publishing — modular LIVE router
 
+> **Publish-queue check — first.** If this publication was requested from the Google Drive publish queue («صف انتشار»), read `.dentcast/workflows/publish-queue.md` completely before Phase 0, fetch the oldest ready item from Drive, then continue this router with it as the founder's input.
+
 **LIVE_MODULAR_PUBLISHING_ENABLED.** The twelve active modules below are the new-publication execution contract. Legacy files are backup only; do not read them for execution, fallback, or conflict resolution. No approval, exception, scientific requirement or mandatory validation is waived.
 
 ## Connected first-cut metadata, opt-in
