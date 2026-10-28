@@ -2,17 +2,8 @@
  "version": 1,
  "about": "Site hashtag key (plus/content-index.json) -> «کتابخانهٔ دنت‌کست» tags that mean the same clinical topic, closest first. Authored and reviewed; compiled into plus/cabinet-papers.json by tools/build_cabinet_papers.py. A site tag with no exact library equivalent is left out rather than bridged loosely; study-design tags are never targets (they would pull papers on any topic).",
  "map": {
-  "3d implant positioning": [
-   "implant-position"
-  ],
   "adjacent tooth": [
    "adjacent-teeth"
-  ],
-  "augmented intelligence": [
-   "physician-ai-collaboration"
-  ],
-  "basal implant": [
-   "basal-implants"
   ],
   "bewe": [
    "basic-erosive-wear-examination"
@@ -47,23 +38,16 @@
    "tooth-preparation"
   ],
   "debonding": [
-   "debonding"
-  ],
-  "dental ai": [
-   "artificial-intelligence"
+   "debonding",
+   "retention",
+   "cementation"
   ],
   "dental implant": [
    "dental-implant"
   ],
-  "diagnostic ai": [
-   "artificial-intelligence"
-  ],
   "digital implant planning": [
    "cbct-in-implant-dentistry",
    "guided-surgery"
-  ],
-  "distortion": [
-   "ios-accuracy"
   ],
   "dme": [
    "deep-margin-elevation"
@@ -74,28 +58,8 @@
   "finish zone": [
    "finish-line"
   ],
-  "full arch implant": [
-   "full-arch-implant-prosthesis",
-   "full-arch",
-   "all-on-4"
-  ],
-  "full mouth rehabilitation": [
-   "full-mouth-rehabilitation"
-  ],
-  "generative ai": [
-   "large-language-models"
-  ],
   "ids": [
    "immediate-dentin-sealing"
-  ],
-  "implant esthetics": [
-   "esthetic-outcome",
-   "pink-esthetic-score"
-  ],
-  "implant planning": [
-   "guided-surgery",
-   "cbct-in-implant-dentistry",
-   "dynamic-navigation"
   ],
   "jumping gap": [
    "jumping-gap"
@@ -111,9 +75,6 @@
    "mdp",
    "functional-monomer"
   ],
-  "mesial drift": [
-   "tooth-migration"
-  ],
   "mronj": [
    "mronj",
    "bisphosphonate"
@@ -123,10 +84,6 @@
   ],
   "one abutment one time": [
    "one-abutment-one-time"
-  ],
-  "orthodontics": [
-   "orthodontics",
-   "orthodontic-force"
   ],
   "pdl": [
    "periodontal-ligament"
@@ -142,9 +99,6 @@
    "prf",
    "platelet-concentrates"
   ],
-  "prosthetic design": [
-   "prosthetic-design"
-  ],
   "psz": [
    "deep-caries",
    "carious-dentin"
@@ -159,14 +113,8 @@
   "reverse scan body": [
    "scan-body"
   ],
-  "saliva": [
-   "saliva"
-  ],
   "smart vent crown": [
    "residual-cement"
-  ],
-  "soft tissue management": [
-   "soft-tissue-management"
   ],
   "spt": [
    "supportive-periodontal-therapy",
@@ -189,18 +137,12 @@
   "tooth preparation": [
    "tooth-preparation"
   ],
-  "torus mandibularis": [
-   "mandibular-torus"
-  ],
   "total occlusal convergence": [
    "total-occlusal-convergence",
    "convergence-angle"
   ],
   "transformation toughening": [
    "phase-transformation"
-  ],
-  "trigeminal neuralgia": [
-   "trigeminal-neuralgia"
   ],
   "type2 diabetes": [
    "diabetes"
@@ -280,7 +222,8 @@
    "adhesive-dentistry"
   ],
   "ارتودنسی": [
-   "orthodontics"
+   "orthodontics",
+   "orthodontic-force"
   ],
   "ارتودنسی پیش از زیبایی": [
    "orthodontics"
@@ -296,6 +239,10 @@
    "osseointegration",
    "implant-surface",
    "surface-roughness"
+  ],
+  "استاپ خلفی": [
+   "shortened-dental-arch",
+   "vertical-dimension"
   ],
   "استتیک ویدث": [
    "esthetic-width"
@@ -342,9 +289,11 @@
    "tooth-preparations-complete-crowns"
   ],
   "افتادن روکش": [
-   "resistance-form",
    "retention",
-   "debonding"
+   "cementation",
+   "luting-agent",
+   "debonding",
+   "resistance-form"
   ],
   "افزایش vd": [
    "vertical-dimension",
@@ -610,8 +559,10 @@
    "critical-appraisal"
   ],
   "تحویل روکش": [
-   "crown-cementation-seating-factors",
-   "cementation"
+   "cementation",
+   "marginal-fit",
+   "luting-agent",
+   "crown-cementation-seating-factors"
   ],
   "تداخل اکلوزالی": [
    "occlusal-interference"
@@ -683,6 +634,9 @@
   "تزریق بی‌درد": [
    "local-anesthesia"
   ],
+  "تشخیص پوسیدگی": [
+   "caries-detector-dye"
+  ],
   "تصمیم درمانی": [
    "decision-making"
   ],
@@ -750,8 +704,10 @@
    "dental-amalgam"
   ],
   "جایگزینی دندان": [
-   "missing-teeth",
-   "single-tooth-replacement"
+   "single-tooth-replacement",
+   "resin-bonded-bridge",
+   "fixed-dental-prosthesis",
+   "shortened-dental-arch"
   ],
   "جراحی ایمپلنت": [
    "surgical-protocol"
@@ -761,11 +717,12 @@
   ],
   "حرکات اکسکورسیو": [
    "lateral-occlusion",
+   "canine-guidance",
+   "group-function",
    "occlusal-interference"
   ],
   "حفظ دندان": [
    "questionable-tooth",
-   "periodontal-regeneration",
    "treatment-planning"
   ],
   "حفظ ریج": [
@@ -859,6 +816,10 @@
   "دیاستم": [
    "diastema"
   ],
+  "دیواره نازک": [
+   "cuspal-coverage",
+   "cuspal-deflection"
+  ],
   "رابردم": [
    "rubber-dam"
   ],
@@ -947,9 +908,6 @@
    "esthetic-outcome",
    "pink-esthetic-score"
   ],
-  "زیبایی دندان": [
-   "esthetic-dentistry"
-  ],
   "زیبایی قدامی": [
    "esthetic-zone"
   ],
@@ -998,14 +956,6 @@
   "سلف اچ": [
    "self-etch-adhesive"
   ],
-  "سمان": [
-   "luting-agent",
-   "cementation"
-  ],
-  "سمان ادهزیو": [
-   "adhesive-luting",
-   "resin-cement"
-  ],
   "سمان ایمپلنت": [
    "residual-cement",
    "cement-retained"
@@ -1018,10 +968,12 @@
    "cementation"
   ],
   "سمان دندانی": [
-   "cementation"
+   "cementation",
+   "luting-agent"
   ],
   "سمان رزینی": [
-   "resin-cement"
+   "resin-cement",
+   "adhesive-luting"
   ],
   "سمان ریتین": [
    "cement-retained",
@@ -1030,10 +982,12 @@
   "سمان سلف ادهزیو": [
    "self-adhesive-resin-cement"
   ],
-  "سمان کردن": [
-   "cementation"
+  "سمان مجدد": [
+   "retention",
+   "cementation",
+   "luting-agent"
   ],
-  "سمنتیشن": [
+  "سمان کردن": [
    "cementation"
   ],
   "سندبلاست": [
@@ -1183,6 +1137,10 @@
   "فورکا": [
    "furcation"
   ],
+  "فیت پروتز": [
+   "marginal-fit",
+   "marginal-adaptation"
+  ],
   "فیشیال فلو": [
    "facial-flow-concept-orofacial-analysis"
   ],
@@ -1204,8 +1162,9 @@
    "impression-technique"
   ],
   "قالبگیری دو مرحله ای": [
+   "impression-technique",
    "polyvinyl-siloxane",
-   "impression-technique"
+   "impression"
   ],
   "قالب‌گیری دیجیتال": [
    "digital-impression",
@@ -1302,10 +1261,6 @@
   "ناحیه لبخند": [
    "smile-display",
    "smile-esthetics"
-  ],
-  "نایت گارد": [
-   "occlusal-splint",
-   "stabilization-splint"
   ],
   "نایف اج": [
    "vertical-preparation",
@@ -1442,9 +1397,6 @@
    "removable-partial-denture",
    "complete-denture"
   ],
-  "پروتز متکی بر ایمپلنت": [
-   "implant-prosthesis"
-  ],
   "پروتز هیبرید": [
    "hybrid-prosthesis"
   ],
@@ -1487,11 +1439,9 @@
    "zirconia-post",
    "customized-zirconia-post"
   ],
-  "پست و روکش": [
-   "post-and-crown"
-  ],
   "پست و کور": [
-   "post-and-core"
+   "post-and-core",
+   "post-and-crown"
   ],
   "پلاک پارسیل": [
    "removable-partial-denture"
@@ -1503,6 +1453,9 @@
    "guided-surgery",
    "cbct-in-implant-dentistry",
    "dynamic-navigation"
+  ],
+  "پلی کریستالین": [
+   "zirconia"
   ],
   "پوزیشن ایمپلنت": [
    "implant-position"
@@ -1603,9 +1556,6 @@
    "delayed-implant-placement",
    "fresh-socket"
   ],
-  "کمبود فضای عمودی": [
-   "restorative-space"
-  ],
   "کنترل خونریزی": [
    "hemostatic-agent",
    "exposing-gingival-margin-hemorrhage-control"
@@ -1666,23 +1616,63 @@
   ]
  },
  "exclude": {
+  "tmd": [
+   "P1712"
+  ],
+  "ایمپلنت فول آرچ": [
+   "P2929",
+   "P2930",
+   "P2881"
+  ],
   "بیس فسفونات": [
    "P1786",
    "P1742"
   ],
-  "هوش مصنوعی رادیوگرافی": [
-   "P2889"
-  ],
   "تطابق بیمار": [
    "P2948"
   ],
-  "ایمپلنت فول آرچ": [
-   "P2929",
-   "P2930"
+  "جایگزینی دندان": [
+   "P1709",
+   "P1712",
+   "P1730"
+  ],
+  "روکش": [
+   "P2922"
+  ],
+  "روکش موقت": [
+   "P1403"
+  ],
+  "سمان رزینی": [
+   "P2926",
+   "P2910",
+   "P2888"
+  ],
+  "هوش مصنوعی رادیوگرافی": [
+   "P2889"
+  ],
+  "پروتز ثابت": [
+   "P2948"
+  ],
+  "پری ایمپلنتیتیس": [
+   "P2893",
+   "P1833",
+   "P2891",
+   "P0478"
+  ],
+  "پلی کریستالین": [
+   "P1605"
+  ],
+  "کشیدن دندان": [
+   "P2934",
+   "P2935",
+   "P2936",
+   "P2937",
+   "P2938"
   ]
  },
  "tooth_topics": [
   "cad cam",
+  "debonding",
   "اسکنر داخل دهانی",
   "افتادن روکش",
   "انتخاب سمان",
@@ -1709,12 +1699,12 @@
   "روکش موقت",
   "زیرکونیا",
   "سرامیک",
-  "سمان",
   "سمان دائم",
   "سمان دندانی",
+  "سمان مجدد",
   "سمان کردن",
-  "سمنتیشن",
   "شکست پرسلن",
+  "فیت پروتز",
   "قالبگیری",
   "قالبگیری دو مرحله ای",
   "قالب‌گیری دیجیتال",

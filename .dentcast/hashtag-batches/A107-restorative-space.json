@@ -1,0 +1,26 @@
+{
+  "note": "Founder report 1405/08/06 (2026-10-28): for «میخوام روکش بسازم برای بیمار فضا کمه» → «فضای عمودی کمه» the assistant offered #کمبود_فضای_عمودی (one implant page) instead of the concept's hub. #فضای_رستوریتیو is defined as «فضای عمودیِ لازم برای بازسازی» (10 pages) and the only #کمبود_فضای_عمودی page already carries it: one concept under two labels. Merged into #فضای_رستوریتیو; every spelling of the retired label, plus the common clinical ways of saying it (فضای عمودی، فضای اینتراکلوزال، interocclusal clearance), are aliases of the survivor. #کلیرنس_دینامیک stays apart (its definition is the excursive, not the static, space).",
+  "concepts": [
+    {
+      "tag": "#فضای_رستوریتیو",
+      "aliases": [
+        "فضای بازسازی",
+        "restorative space",
+        "فضای پروتزی",
+        "فضای بین فکی",
+        "interocclusal space",
+        "کمبود فضای عمودی",
+        "فضای عمودی کم",
+        "فضای عمودی",
+        "فضای اینتراکلوزال",
+        "فضای بین اکلوزالی",
+        "فضای اکلوزالی",
+        "کمبود فضای بازسازی",
+        "interocclusal clearance"
+      ]
+    }
+  ],
+  "renames": {
+    "#کمبود_فضای_عمودی": "#فضای_رستوریتیو"
+  }
+}

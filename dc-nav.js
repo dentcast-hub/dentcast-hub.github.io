@@ -979,7 +979,22 @@
     function save(st) { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
 
     var box = null;
-    function showCard(msg, ms) {
+    /* A first visit opens the Plus welcome card (and later the premium popup
+       or the login modal) as an aria-modal dialog; this card stacked on top of
+       it and covered the floating search/support buttons for its whole run.
+       While any modal is up, wait for it to close (bounded) and show then. */
+    function modalOpen() {
+      var dl = document.querySelectorAll('[role="dialog"][aria-modal="true"]');
+      for (var i = 0; i < dl.length; i++) {
+        if (!dl[i].hidden && dl[i].getClientRects().length) return true;
+      }
+      return false;
+    }
+    function showCard(msg, ms, tries) {
+      if (modalOpen() && (tries || 0) < 120) {
+        setTimeout(function () { showCard(msg, ms, (tries || 0) + 1); }, 1000);
+        return;
+      }
       if (!document.getElementById('dc-tos-style')) {
         var st = document.createElement('style');
         st.id = 'dc-tos-style';
@@ -1020,6 +1035,7 @@
         x.addEventListener('click', function () {
           box.classList.remove('on');
           clearTimeout(box._t);
+          clearInterval(box._w);
         });
         box.appendChild(m); box.appendChild(x);
         document.body.appendChild(box);
@@ -1027,7 +1043,17 @@
       box.querySelector('.dc-tos-msg').textContent = msg;
       requestAnimationFrame(function () { box.classList.add('on'); });
       clearTimeout(box._t);
-      box._t = setTimeout(function () { box.classList.remove('on'); }, ms || 10000);
+      clearInterval(box._w);
+      box._t = setTimeout(function () { box.classList.remove('on'); clearInterval(box._w); }, ms || 10000);
+      /* A modal that opens while the card is up (the premium popup arrives a
+         few seconds in) gets the screen: the card steps aside and comes back
+         once the modal closes. */
+      box._w = setInterval(function () {
+        if (!modalOpen()) return;
+        clearInterval(box._w); clearTimeout(box._t);
+        box.classList.remove('on');
+        showCard(msg, ms, tries);
+      }, 500);
     }
 
     var DAILY = [
@@ -2270,7 +2296,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '284';
+  var V = '285';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now

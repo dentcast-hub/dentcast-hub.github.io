@@ -24,6 +24,10 @@ let patched: Array<{ id: string; patch: Row }> = [];
 let failNext: string | null = null; // name of the api call that should reject once
 let seq = 0;
 
+// The real ApiError carries `status`; the workbench branches on it (404 =
+// already gone elsewhere, 401 = signed out).
+function err(status: number): Error { return Object.assign(new Error(String(status)), { status }); }
+
 function shouldFail(name: string): boolean {
   if (failNext === name) { failNext = null; return true; }
   return false;
@@ -36,6 +40,7 @@ vi.mock('/plus/js/api.js', () => ({
     saveArticleNote: (_cid: string, note: string | null) => Promise.resolve({ note }),
     createHighlight: (h: Row) => {
       if (shouldFail('create')) return Promise.reject(new Error('500'));
+      if (shouldFail('create401')) return Promise.reject(err(401));
       const row = { id: 'h' + (++seq), created_at: '2026-09-14T10:00:00Z', ...h };
       rows.push(row); created.push(row);
       return Promise.resolve({ highlight: row });
@@ -43,21 +48,21 @@ vi.mock('/plus/js/api.js', () => ({
     updateHighlight: (id: string, patch: Row) => {
       if (shouldFail('update')) return Promise.reject(new Error('500'));
       const row = rows.find((r) => r.id === id && !r.deleted);
-      if (!row) return Promise.reject(new Error('404'));
+      if (!row) return Promise.reject(err(404));
       Object.assign(row, patch); patched.push({ id, patch });
       return Promise.resolve({ highlight: { ...row } });
     },
     deleteHighlight: (id: string) => {
       if (shouldFail('delete')) return Promise.reject(new Error('500'));
       const row = rows.find((r) => r.id === id && !r.deleted);
-      if (!row) return Promise.reject(new Error('404'));
+      if (!row) return Promise.reject(err(404));
       row.deleted = true; deleted.push(id);
       return Promise.resolve({ ok: true });
     },
     restoreHighlight: (id: string) => {
       if (shouldFail('restore')) return Promise.reject(new Error('500'));
       const row = rows.find((r) => r.id === id && r.deleted);
-      if (!row) return Promise.reject(new Error('404'));
+      if (!row) return Promise.reject(err(404));
       row.deleted = false; restored.push(id);
       const { deleted: _d, ...clean } = row;
       return Promise.resolve({ highlight: clean });
@@ -336,5 +341,54 @@ describe('exit', () => {
     wb.exit();
     expect(wb.history.done).toHaveLength(0);
     expect(document.querySelector('.dcp-toolbar')).toBeNull();
+  });
+});
+
+describe('a stale tab, a signed-out session, late content', () => {
+  it('«حذف» of a highlight another tab already deleted drops the mark instead of failing', async () => {
+    rows.push({ id: 'h7', ...quote('شمارش دیواره'), color: 'blue', underline: false, cloze_markers: [], note: null, label: null });
+    await wb._loadAndRender();
+    rows[0].deleted = true; // the other tab
+    marks()[0].click();
+    tool('حذف').click();
+    await tick(); await tick();
+    expect(marks()).toHaveLength(0);
+    expect(document.querySelector('.dcp-toast')!.textContent).toContain('قبلاً حذف شده');
+    expect(undoBtn().disabled).toBe(true); // this tab deleted nothing
+  });
+
+  it('an undo whose delete finds the row already gone still completes', async () => {
+    wb._pendingQuote = quote('ضخامت باقی‌مانده');
+    await wb._createHighlight(wb._pendingQuote, 'highlight');
+    rows[0].deleted = true; // deleted elsewhere
+    await wb.undo();
+    await tick();
+    expect(marks()).toHaveLength(0);
+    expect(redoBtn().disabled).toBe(false);
+  });
+
+  it('a 401 on create says to sign in, not to check the connection', async () => {
+    failNext = 'create401';
+    await wb._createHighlight(quote('ضخامت باقی‌مانده'), 'highlight');
+    const t = document.querySelector('.dcp-toast')!;
+    expect(t.textContent).toContain('دوباره وارد شو');
+    expect(t.textContent).not.toContain('اتصال');
+    expect((t.querySelector('.dcp-toast-act') as HTMLElement).textContent).toBe('ورود');
+  });
+
+  it('re-anchors a saved highlight whose text arrives after study mode loaded (the DES card)', async () => {
+    wb.exit();
+    const root = setProse();
+    rows.push({ id: 'h5', exact: 'ارزیابی خودکار شواهد', prefix: '', suffix: '', color: 'yellow', underline: false, cloze_markers: [], note: null, label: null });
+    wb = new Workbench({ contentId: 'insight/insight-64', proseRoot: root.parentElement as HTMLElement });
+    await wb.enter();
+    expect(marks()).toHaveLength(0);
+    expect(wb.failed).toHaveLength(1);
+    const card = document.createElement('section');
+    card.innerHTML = '<h3>ارزیابی خودکار شواهد</h3>';
+    root.after(card); // what des.js does, a moment later
+    await new Promise((r) => setTimeout(r, 400));
+    expect(marks()).toHaveLength(1);
+    expect(wb.failed).toHaveLength(0);
   });
 });

@@ -9,11 +9,11 @@
 // gateway did not answer, the payment stays pending and this page says so
 // plainly, because telling someone who has just been charged that their payment
 // failed is the single worst thing this flow can do.
-import { el } from './util.js?v=213';
-import { api, currentUser } from './api.js?v=213';
-import { registerSW } from './pwa.js?v=213';
-import { wirePageBack } from './page-back.js?v=213';
-import { paymentsNeedIrHost, paymentsIrUrl } from './config.js?v=213';
+import { el } from './util.js?v=214';
+import { api, currentUser } from './api.js?v=214';
+import { registerSW } from './pwa.js?v=214';
+import { wirePageBack } from './page-back.js?v=214';
+import { paymentsNeedIrHost, paymentsIrUrl } from './config.js?v=214';
 
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 const toFa = (s) => String(s).replace(/\d/g, (d) => FA_DIGITS[Number(d)]);
@@ -54,16 +54,22 @@ const TERM = { 1: 'یک ماه', 3: 'سه ماه', 6: 'شش ماه', 12: 'دوا
  * current subscription. `status` is the payment row's own status, not the query
  * string — 'paid' | 'pending' | 'failed' | 'canceled'.
  */
-function screen(payment, me) {
+function screen(payment, me, opts = {}) {
   const root = el('div', { class: 'dcp-pay' });
   const dashboard = el('a', { class: 'dcp-btn dcp-btn-primary', href: '/plus/' }, 'رفتن به پیشخوان');
   const retry = el('a', { class: 'dcp-btn dcp-btn-primary', href: '/plus/pricing.html' }, 'تلاش دوباره');
   const back = el('a', { class: 'dcp-btn dcp-btn-ghost', href: '/' }, 'بازگشت به سایت');
 
   if (!payment) {
+    // Opened by hand (no order, no status — nothing came back from a bank):
+    // there is nothing to look up, so say what the page is for instead of a
+    // bare «؟» over a sentence about «this order».
     root.append(
-      verdict('warn', '؟', 'پرداختی پیدا نشد',
-        'سفارشی با این مشخصات در حساب شما ثبت نشده است.'),
+      opts.bare
+        ? verdict('warn', '🧾', 'پرداختی در جریان نیست',
+          'این صفحه نتیجهٔ پرداخت را بعد از برگشت از درگاه بانک نشان می‌دهد.')
+        : verdict('warn', '🧾', 'پرداختی پیدا نشد',
+          'سفارشی با این مشخصات در حساب شما ثبت نشده است.'),
       el('div', { class: 'dcp-pay-actions' }, [retry, back]),
     );
     return root;
@@ -161,9 +167,13 @@ async function main() {
     return;
   }
 
-  // The server's record, not the query string.
-  const res = await api.payStatus(order || undefined).catch(() => null);
-  root.replaceChildren(screen(res && res.payment, me));
+  // The server's record, not the query string. A bank return always carries
+  // ?status= (and ?order= when it is known; without it the server answers
+  // with this account's latest payment). A visit with neither came from
+  // nowhere, and asking would only log a 404 for «no payment».
+  const bare = !order && !params.has('status');
+  const res = bare ? null : await api.payStatus(order || undefined).catch(() => null);
+  root.replaceChildren(screen(res && res.payment, me, { bare }));
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', main);

@@ -31,9 +31,10 @@
 // backdrop deliberately does NOT close it: on a phone the first thing a thumb
 // does to an unexpected card is try to scroll the page behind it, and dismissing
 // on that gesture means the offer is never actually read once.
-import { el, tehranDay } from './util.js?v=213';
-import { premiumBenefits } from './premium-benefits.js?v=213';
-import { premiumCta } from './premium-cta.js?v=213';
+import { el, tehranDay } from './util.js?v=214';
+import { premiumBenefits } from './premium-benefits.js?v=214';
+import { premiumCta } from './premium-cta.js?v=214';
+import { trapFocus } from './focus-trap.js?v=214';
 
 const LS_COUNT = 'dcp:prempopup:count'; // total appearances on this device
 const LS_LAST = 'dcp:prempopup:last';   // Tehran day of the last appearance
@@ -143,28 +144,26 @@ function build(onClose) {
 }
 
 function show() {
-  const prevFocus = document.activeElement;
   let overlay = null;
+  let release = null;
 
   const cleanup = () => {
     if (!overlay) return;
     overlay.remove();
     overlay = null;
-    document.removeEventListener('keydown', onKey);
     document.documentElement.classList.remove('dcp-pp-open');
     // Put the caret back where the reader left it, so a keyboard user is not
     // dropped at the top of the document by a card they did not ask for.
-    try { if (prevFocus && prevFocus.focus) prevFocus.focus(); } catch (_) { /* ignore */ }
+    if (release) { release(); release = null; }
   };
-  const onKey = (e) => { if (e.key === 'Escape') { e.stopPropagation(); cleanup(); } };
 
   const { card } = build(cleanup);
   // No backdrop click handler on purpose — see the header comment.
   overlay = el('div', { class: 'dcp-pp-overlay' }, [card]);
   document.body.appendChild(overlay);
   document.documentElement.classList.add('dcp-pp-open');
-  document.addEventListener('keydown', onKey);
-  try { card.focus(); } catch (_) { /* ignore */ }
+  // Focus lands on the card itself (see build()), and Tab stays inside it.
+  release = trapFocus(card, { initial: card, onEscape: (e) => { e.stopPropagation(); cleanup(); } });
 
   markShown();
   track('premium_popup_shown');

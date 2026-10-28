@@ -1,132 +1,134 @@
 {
-  "note": "A107 prosthodontic QA (agent A, fixed prosthodontics on natural teeth), step 1 of 2: indication decisions. 1) New concept #اندیکاسیون_پست — the question «does this endodontically treated tooth need a post at all?» had no door: its pages sat under #پست_و_کور (46 pages) and #دندان_اندوشده, where the one page that answers it word for word (insight-76, «کِی پست لازم است و کِی نه») ranked 5th or lower. Read in full and tagged because each RESOLVES the indication question: insight-76 (post only when coronal structure cannot retain the core), meta-7 («در کیس خوب نیازی به پست نیست» — fiber post is not a requirement), episode-147-7 (decision algorithm for posts in anterior ETT), episode-128 (QDT guide: biomechanics and indications of fiber posts). Not tagged: episode-129 (cementation protocol), the ferrule trilogy 47-49 (ferrule, not post need), sharehub-20 (post material comparison). No existing concept covers it (#پست_و_کور is the restoration itself, #کور_بیلدآپ is the post-free core). 2) #اندیکاسیون_روکش («when to crown vs when a restoration is enough») existed with one page (photocast-3, a child's first molar). Added to the pages that resolve exactly that decision, each read in full: chairside-22 (thin walls: a crown would shorten the tooth's life, refer for adhesive restoration), chairside-27 (crown does not add tissue; crowning postponed), chairside-29 (discoloration alone is not a crown indication), episodes 121/123/124 (posterior-restoration guideline: restoration type by remaining structure, onlay vs crown, final algorithm). Not added to episode-122 (cuspal coverage vs direct restoration — already #پوشش_کاسپ, no crown decision). Aliases added for colloquial forms (multi-word aliases that would swallow another concept's word from the dentist's text — «روکش یا ترمیم» eats «ترمیم», «اندیکاسیون فایبر پست» eats «فایبر» — were tried and dropped: they broke the named-chip rule in the simulator); none is a word of another concept (checked against every concept key) and none is another concept's alias.",
-  "concepts": [
-    {
-      "tag": "#اندیکاسیون_پست",
-      "domain": "clinical",
-      "definition": "تصمیمِ اینکه دندانِ اندوشده اصلاً پست لازم دارد یا نه: پست فقط گیرِ کور را تأمین می‌کند و ریشه را تقویت نمی‌کند، پس وقتی ساختارِ تاجیِ باقی‌مانده برای نگه‌داشتنِ کور کافی است اندیکاسیون ندارد.",
-      "use_when": "مقاله بگوید کِی پست لازم است و کِی نه، یا الگوریتمِ انتخابِ پست/بدون پست را بدهد؛ نه برای مقاله‌ای که فقط ساخت، سمان یا متریالِ پست را شرح می‌دهد.",
-      "aliases": [
-        "post indication",
-        "نیاز به پست",
-        "ضرورت پست",
-        "پست لازم",
-        "کی پست لازمه",
-        "need for a post"
-      ]
-    },
-    {
-      "tag": "#اندیکاسیون_روکش",
-      "aliases": [
-        "crown indication",
-        "اندیکاسیون کراون",
-        "چه زمان روکش",
-        "نیاز به روکش",
-        "کی روکش لازمه",
-        "when to crown",
-        "crown or filling"
-      ]
-    }
-  ],
-  "articles": {
-    "insight/insight-76": [
-      "#اینسایت",
-      "#پست_و_کور",
-      "#فرول",
-      "#دندان_اندوشده",
-      "#کور_بیلدآپ",
-      "#روکش",
-      "#حفظ_دندان",
-      "#اندیکاسیون_پست"
-    ],
-    "metanotes/meta-7": [
-      "#متانوت",
-      "#فایبر_پست",
-      "#پست_فلزی",
-      "#کور_دندانی",
-      "#اندودنتیکس_ترمیمی",
-      "#تفکر_بالینی",
-      "#پست_و_کور",
-      "#اندیکاسیون_پست"
-    ],
-    "episodes/episode-147-7": [
-      "#دنتکست",
-      "#دنتوپدیا",
-      "#فایبر_پست",
-      "#پست_و_کور",
-      "#دندان_قدامی",
-      "#فرول",
-      "#اندیکاسیون_پست"
-    ],
-    "episodes/episode-128": [
-      "#دنتکست",
-      "#فایبر_پست",
-      "#پست_و_کور",
-      "#بازسازی_ریشه",
-      "#بیومکانیک",
-      "#اندیکاسیون_پست"
-    ],
-    "chairside/chairside-22": [
-      "#چیرساید",
-      "#کیس_بالینی",
-      "#طرح_درمان",
-      "#روکش",
-      "#ترمیم_ادهزیو",
-      "#تخریب_داخلی",
-      "#دیواره_نازک",
-      "#دندان_قدامی",
-      "#ارجاع_تخصصی",
-      "#اندیکاسیون_روکش"
-    ],
-    "chairside/chairside-27": [
-      "#چیرساید",
-      "#کیس_بالینی",
-      "#دکتر_شهابیان",
-      "#فرول",
-      "#تشخیص_افتراقی",
-      "#روکش",
-      "#ترمیم_ادهزیو",
-      "#حداقل_مداخله",
-      "#اندیکاسیون_روکش"
-    ],
-    "chairside/chairside-29": [
-      "#چیرساید",
-      "#کیس_بالینی",
-      "#دکتر_شهابیان",
-      "#طرح_درمان",
-      "#تشخیص_افتراقی",
-      "#تغییر_رنگ",
-      "#اینترنال_بلیچینگ",
-      "#درمان_محافظه‌کارانه",
-      "#روکش",
-      "#ارجاع_تخصصی",
-      "#اندیکاسیون_روکش"
-    ],
-    "episodes/episode-121": [
-      "#دنتکست",
-      "#ترمیم_خلفی",
-      "#پروتز_ثابت",
-      "#گایدلاین",
-      "#طرح_درمان",
-      "#اندیکاسیون_روکش"
-    ],
-    "episodes/episode-123": [
-      "#دنتکست",
-      "#ترمیم_خلفی",
-      "#پروتز_ثابت",
-      "#بیومیمتیک",
-      "#گایدلاین",
-      "#فرم_رزیستنس",
-      "#اندیکاسیون_روکش"
-    ],
-    "episodes/episode-124": [
-      "#دنتکست",
-      "#ترمیم_خلفی",
-      "#پروتز_ثابت",
-      "#طرح_درمان",
-      "#گایدلاین",
-      "#بیومیمتیک",
-      "#اندیکاسیون_روکش"
-    ]
+ "note": "A107 prosthodontic QA (agent A, fixed prosthodontics on natural teeth), step 1 of 2: indication decisions. 1) New concept #اندیکاسیون_پست — the question «does this endodontically treated tooth need a post at all?» had no door: its pages sat under #پست_و_کور (46 pages) and #دندان_اندوشده, where the one page that answers it word for word (insight-76, «کِی پست لازم است و کِی نه») ranked 5th or lower. Read in full and tagged because each RESOLVES the indication question: insight-76 (post only when coronal structure cannot retain the core), meta-7 («در کیس خوب نیازی به پست نیست» — fiber post is not a requirement), episode-147-7 (decision algorithm for posts in anterior ETT), episode-128 (QDT guide: biomechanics and indications of fiber posts). Not tagged: episode-129 (cementation protocol), the ferrule trilogy 47-49 (ferrule, not post need), sharehub-20 (post material comparison). No existing concept covers it (#پست_و_کور is the restoration itself, #کور_بیلدآپ is the post-free core). 2) #اندیکاسیون_روکش («when to crown vs when a restoration is enough») existed with one page (photocast-3, a child's first molar). Added to the pages that resolve exactly that decision, each read in full: chairside-22 (thin walls: a crown would shorten the tooth's life, refer for adhesive restoration), chairside-27 (crown does not add tissue; crowning postponed), chairside-29 (discoloration alone is not a crown indication), episodes 121/123/124 (posterior-restoration guideline: restoration type by remaining structure, onlay vs crown, final algorithm). Not added to episode-122 (cuspal coverage vs direct restoration — already #پوشش_کاسپ, no crown decision). Aliases added for colloquial forms (multi-word aliases that would swallow another concept's word from the dentist's text — «روکش یا ترمیم» eats «ترمیم», «اندیکاسیون فایبر پست» eats «فایبر» — were tried and dropped: they broke the named-chip rule in the simulator); none is a word of another concept (checked against every concept key) and none is another concept's alias. [Merge 2026-10-28 onto main: lists unioned with main's A107/A108 state, main renames applied, renames already done on main dropped.]",
+ "concepts": [
+  {
+   "tag": "#اندیکاسیون_پست",
+   "domain": "clinical",
+   "definition": "تصمیمِ اینکه دندانِ اندوشده اصلاً پست لازم دارد یا نه: پست فقط گیرِ کور را تأمین می‌کند و ریشه را تقویت نمی‌کند، پس وقتی ساختارِ تاجیِ باقی‌مانده برای نگه‌داشتنِ کور کافی است اندیکاسیون ندارد.",
+   "use_when": "مقاله بگوید کِی پست لازم است و کِی نه، یا الگوریتمِ انتخابِ پست/بدون پست را بدهد؛ نه برای مقاله‌ای که فقط ساخت، سمان یا متریالِ پست را شرح می‌دهد.",
+   "aliases": [
+    "post indication",
+    "نیاز به پست",
+    "ضرورت پست",
+    "پست لازم",
+    "کی پست لازمه",
+    "need for a post"
+   ]
+  },
+  {
+   "tag": "#اندیکاسیون_روکش",
+   "aliases": [
+    "crown indication",
+    "اندیکاسیون کراون",
+    "چه زمان روکش",
+    "نیاز به روکش",
+    "کی روکش لازمه",
+    "when to crown",
+    "crown or filling"
+   ]
   }
+ ],
+ "articles": {
+  "insight/insight-76": [
+   "#اینسایت",
+   "#پست_و_کور",
+   "#فرول",
+   "#دندان_اندوشده",
+   "#کور_بیلدآپ",
+   "#روکش",
+   "#حفظ_دندان",
+   "#اندیکاسیون_پست"
+  ],
+  "metanotes/meta-7": [
+   "#متانوت",
+   "#فایبر_پست",
+   "#پست_فلزی",
+   "#کور_دندانی",
+   "#اندودنتیکس_ترمیمی",
+   "#تفکر_بالینی",
+   "#پست_و_کور",
+   "#اندیکاسیون_پست"
+  ],
+  "episodes/episode-147-7": [
+   "#دنتکست",
+   "#دنتوپدیا",
+   "#فایبر_پست",
+   "#پست_و_کور",
+   "#دندان_قدامی",
+   "#فرول",
+   "#اندیکاسیون_پست"
+  ],
+  "episodes/episode-128": [
+   "#دنتکست",
+   "#فایبر_پست",
+   "#پست_و_کور",
+   "#بازسازی_ریشه",
+   "#بیومکانیک",
+   "#اندیکاسیون_پست"
+  ],
+  "chairside/chairside-22": [
+   "#چیرساید",
+   "#کیس_بالینی",
+   "#طرح_درمان",
+   "#روکش",
+   "#ترمیم_ادهزیو",
+   "#تخریب_داخلی",
+   "#دیواره_نازک",
+   "#دندان_قدامی",
+   "#ارجاع_تخصصی",
+   "#اندیکاسیون_روکش"
+  ],
+  "chairside/chairside-27": [
+   "#چیرساید",
+   "#کیس_بالینی",
+   "#دکتر_شهابیان",
+   "#فرول",
+   "#تشخیص_افتراقی",
+   "#روکش",
+   "#ترمیم_ادهزیو",
+   "#حداقل_مداخله",
+   "#اندیکاسیون_روکش"
+  ],
+  "chairside/chairside-29": [
+   "#چیرساید",
+   "#کیس_بالینی",
+   "#دکتر_شهابیان",
+   "#طرح_درمان",
+   "#تشخیص_افتراقی",
+   "#تغییر_رنگ",
+   "#اینترنال_بلیچینگ",
+   "#درمان_محافظه‌کارانه",
+   "#روکش",
+   "#ارجاع_تخصصی",
+   "#اندیکاسیون_روکش"
+  ],
+  "episodes/episode-121": [
+   "#دنتکست",
+   "#ترمیم_خلفی",
+   "#پروتز_ثابت",
+   "#گایدلاین",
+   "#طرح_درمان",
+   "#پارشیال_کاوریج",
+   "#پوشش_کاسپ",
+   "#اندیکاسیون_روکش"
+  ],
+  "episodes/episode-123": [
+   "#دنتکست",
+   "#ترمیم_خلفی",
+   "#پروتز_ثابت",
+   "#بیومیمتیک",
+   "#گایدلاین",
+   "#فرم_رزیستنس",
+   "#اندیکاسیون_روکش"
+  ],
+  "episodes/episode-124": [
+   "#دنتکست",
+   "#ترمیم_خلفی",
+   "#پروتز_ثابت",
+   "#طرح_درمان",
+   "#گایدلاین",
+   "#بیومیمتیک",
+   "#اندیکاسیون_روکش"
+  ]
+ }
 }

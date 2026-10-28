@@ -1,17 +1,17 @@
 // Reusable profile renderer (spec 2.7). Used by the /plus/profile.html page and
 // the header overlay. Site design language; a clear, readable week strip. Nothing
 // here is mandatory: the pseudonym is editable, no real name is ever required.
-import { el, faNum, tehranDay, sectionIcon } from './util.js?v=213';
-import { certificatesBody } from './certificates.js?v=213';
-import { api, ApiError, currentUser } from './api.js?v=213';
-import { remindersBlock } from './reminders.js?v=213';
-import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername, googleLoginEnabled } from './config.js?v=213';
-import { mountGoogleButton } from './google-login.js?v=213';
-import { baleEnabled, baleDeepLink } from './config.js?v=213';
-import { leagueEntryButton } from './league.js?v=213';
-import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=213';
-import { subscriptionCta } from './premium-cta.js?v=213';
-import { copyToClipboard, confirmStrip, toast } from './hl-view.js?v=213';
+import { el, faNum, tehranDay, sectionIcon } from './util.js?v=214';
+import { certificatesBody } from './certificates.js?v=214';
+import { api, ApiError, currentUser } from './api.js?v=214';
+import { remindersBlock } from './reminders.js?v=214';
+import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername, googleLoginEnabled } from './config.js?v=214';
+import { mountGoogleButton } from './google-login.js?v=214';
+import { baleEnabled, baleDeepLink } from './config.js?v=214';
+import { leagueEntryButton } from './league.js?v=214';
+import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=214';
+import { subscriptionCta } from './premium-cta.js?v=214';
+import { copyToClipboard, confirmStrip, toast } from './hl-view.js?v=214';
 
 const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
   timeZone: 'Asia/Tehran', year: 'numeric', month: 'long', day: 'numeric',
@@ -41,13 +41,20 @@ function section(title, body, id) {
   return el('section', attrs, [el('h2', { class: 'dcp-dash-h2' }, title), body]);
 }
 
+// Format/invisible characters: ZW space/ZWNJ/ZWJ, bidi marks and isolates,
+// word joiner, BOM, soft hyphen, Arabic letter mark, Hangul filler.
+const INVISIBLE = /[\u00AD\u061C\u115F\u1160\u180E\u200B-\u200F\u202A-\u202E\u2060-\u206F\u3164\uFEFF\uFFA0]/g;
+
 function pseudonymBlock(me) {
   const input = el('input', { class: 'dcp-input', value: me.display_name || '', maxlength: '40' });
   const msg = el('span', { class: 'dcp-inline-msg' });
   const save = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ذخیره');
   save.addEventListener('click', async () => {
     const name = input.value.trim();
-    if (name.length < 2) { msg.textContent = 'اسم مستعار باید حداقل ۲ حرف باشد.'; return; }
+    // Count what can be SEEN: a name of only ZWNJ / zero-width / bidi marks
+    // passed the length check and printed as a blank in the header and league.
+    // ZWNJ inside a real name («علی‌رضا») is kept — only the count ignores it.
+    if (name.replace(INVISIBLE, '').trim().length < 2) { msg.textContent = 'اسم مستعار باید حداقل ۲ حرف باشد.'; return; }
     save.disabled = true;
     msg.textContent = 'در حال ذخیره...';
     try {
@@ -445,11 +452,17 @@ function referralCreateBlock(me) {
   }, 'ساخت کد');
   const confirmArea = el('div', {});
 
+  // A disabled «ساخت کد» with no word beside it reads as broken; when what is
+  // typed cannot become a code, the preview line says which rule it misses.
   const refreshPreview = () => {
     const alias = aliasInput.value.trim().toLowerCase();
     const valid = /^[a-z]{4,16}$/.test(alias);
     createBtn.disabled = !valid;
-    preview.textContent = valid ? `کد نهایی‌ات: ${alias}${digits}` : '';
+    preview.classList.toggle('is-err-text', !valid && !!alias);
+    if (valid) preview.textContent = `کد نهایی‌ات: ${alias}${digits}`;
+    else if (!alias) preview.textContent = '';
+    else if (/[^a-z]/.test(alias)) preview.textContent = 'فقط حروف انگلیسیِ a تا z — بدون عدد، فاصله یا حروف فارسی.';
+    else preview.textContent = alias.length < 4 ? 'دست‌کم ۴ حرف لازم است.' : 'حداکثر ۱۶ حرف.';
   };
   aliasInput.addEventListener('input', refreshPreview);
 

@@ -8,12 +8,20 @@
 // «پشتیبانی و مشاوره» left the form (services/support.ts FORM_KINDS — the
 // premium question path is now «گفت‌وگوی زیر مطلب», under an article), no kind
 // this form offers is ever locked, so there is nothing left to grey out here.
-import { el, faNum } from './util.js?v=213';
-import { currentUser, meStatus, api } from './api.js?v=213';
-import { unreachableGate } from './premium-cta.js?v=213';
-import { openLoginModal } from './login-modal.js?v=213';
-import { registerSW } from './pwa.js?v=213';
-import { wirePageBack } from './page-back.js?v=213';
+import { el, faNum } from './util.js?v=214';
+import { currentUser, meStatus, api } from './api.js?v=214';
+import { unreachableGate } from './premium-cta.js?v=214';
+import { openLoginModal } from './login-modal.js?v=214';
+import { registerSW } from './pwa.js?v=214';
+import { wirePageBack } from './page-back.js?v=214';
+
+// The session can end under an open page — a logout in another tab, an expiry.
+// The API then answers 401, and the page used to print «ورود لازم است.» under
+// the form while still listing the previous reader's tickets (subjects and
+// references). A 401 anywhere on this page swaps the whole view for the login
+// gate instead.
+const isSignedOut = (e) => !!e && e.status === 401;
+let onSignedOut = () => {};
 
 const FA_DATE = new Intl.DateTimeFormat('fa-IR', {
   year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit',
@@ -140,6 +148,7 @@ function newTicketForm(kinds, onDone) {
       out.textContent = '';
       onDone(r.ticket, withPhoto);
     } catch (e) {
+      if (isSignedOut(e)) { onSignedOut(); return; }
       out.textContent = (e && e.body && e.body.message) || 'ثبت نشد. دوباره تلاش کنید.';
     } finally {
       send.disabled = false;
@@ -227,7 +236,8 @@ function ticketCodeRow(ticket) {
 async function openThread(host, ticket, refresh) {
   host.replaceChildren(el('p', { class: 'dcp-muted' }, 'در حال خواندن…'));
   let data;
-  try { data = await api.ticket(ticket.id); } catch (_) {
+  try { data = await api.ticket(ticket.id); } catch (e) {
+    if (isSignedOut(e)) { onSignedOut(); return; }
     host.replaceChildren(el('p', { class: 'dcp-muted' }, 'خوانده نشد.'));
     return;
   }
@@ -258,6 +268,7 @@ async function openThread(host, ticket, refresh) {
         box.value = '';
         await openThread(host, ticket, refresh);
       } catch (e) {
+        if (isSignedOut(e)) { onSignedOut(); return; }
         out.textContent = (e && e.body && e.body.message) || 'ارسال نشد.';
       } finally { send.disabled = false; }
     });
@@ -324,7 +335,8 @@ async function render(root, justOpened) {
     const [k, list] = await Promise.all([api.ticketKinds(), api.tickets()]);
     kinds = k.kinds || [];
     tickets = list.tickets || [];
-  } catch (_) {
+  } catch (e) {
+    if (isSignedOut(e)) { onSignedOut(); return; }
     root.replaceChildren(el('p', { class: 'dcp-muted' }, 'ارتباط با سرور برقرار نشد.'));
     return;
   }
@@ -355,6 +367,18 @@ async function render(root, justOpened) {
   }
 }
 
+function loginGate(root) {
+  const btn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود');
+  btn.addEventListener('click', async () => {
+    const res = await openLoginModal({ returnTo: '/plus/support.html' });
+    if (res && res.user) location.reload();
+  });
+  root.replaceChildren(el('div', { class: 'dcp-gate' }, [
+    el('p', {}, 'برای ثبت و پیگیری درخواست پشتیبانی وارد شوید.'),
+    btn,
+  ]));
+}
+
 async function main() {
   registerSW();
   wirePageBack();
@@ -363,18 +387,8 @@ async function main() {
 
   const user = await currentUser();
   if (!user && meStatus() === 'error') { unreachableGate(root); return; }
-  if (!user) {
-    const btn = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود');
-    btn.addEventListener('click', async () => {
-      const res = await openLoginModal({ returnTo: '/plus/support.html' });
-      if (res && res.user) location.reload();
-    });
-    root.replaceChildren(el('div', { class: 'dcp-gate' }, [
-      el('p', {}, 'برای ثبت و پیگیری درخواست پشتیبانی وارد شوید.'),
-      btn,
-    ]));
-    return;
-  }
+  onSignedOut = () => loginGate(root);
+  if (!user) { loginGate(root); return; }
 
   await render(root);
 }

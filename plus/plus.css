@@ -1544,6 +1544,13 @@ body.dcp-study .dcp-toast { bottom: calc(var(--dcp-editor-dock, 96px) + 10px); }
   .dcp-toc-panel.is-open, .dcp-notes-panel.is-open { transform: translateY(0); }
   .dcp-only-mobile { display: inline-block; }
 }
+/* The rails sit in the gutters beside the centred 760px column; a fixed 260px
+   rail only fits from ~1366px, and between 1100 and 1365 it was drawn ON the
+   article. Narrow it to the gutter instead (32px covers the inset, a gap and a
+   scrollbar), so it stays visible on laptop widths without covering text. */
+@media (min-width: 1100px) and (max-width: 1365px) {
+  .dcp-toc-panel, .dcp-notes-panel { box-sizing: border-box; width: min(260px, calc((100vw - 760px) / 2 - 32px)); padding: 10px; }
+}
 @media (min-width: 1100px) {
   .dcp-only-mobile { display: none; }
 }

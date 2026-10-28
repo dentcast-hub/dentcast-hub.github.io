@@ -12701,7 +12701,9 @@
       "file_size": 453593,
       "key_finding": "Systematic review and meta-analysis of 1 RCT and 4 cohort studies (all high risk of bias) on anterior resin-bonded FDPs: single-retainer cantilever designs had lower failure than two-retainer fixed-fixed designs (OR 0.42, 95% CI 0.19-0.94), while debonding did not differ.",
       "clinical_bottom_line": "Cantilever single-retainer anterior RBFDPs appear to fail less than two-retainer designs, though evidence is high risk of bias; all-ceramic design effects remain unclear.",
-      "linked_episodes": [],
+      "linked_episodes": [
+        "dentai/dentai-7"
+      ],
       "drive_link": "",
       "status": "linked",
       "drive_download": "https://drive.google.com/uc?export=download&id=1_e63gxdG6OaXzoWf3agE99hLJMqAfrxj",
@@ -18028,7 +18030,8 @@
       "key_finding": "Technique article proposing deep margin elevation: a modified curved matrix, immediate dentin sealing and a direct composite base to raise subgingival proximal margins above the gingiva before indirect restorations. Two cases are shown with 9- and 12-year follow-up; the authors conclude more research is needed to validate it but it is a useful option and alternative to surgical crown lengthening.",
       "clinical_bottom_line": "Technique description with a few illustrative cases, not comparative evidence; the author states more research is needed to validate deep margin elevation.",
       "linked_episodes": [
-        "episodes/episode-7"
+        "episodes/episode-7",
+        "notecast/episode-7"
       ],
       "drive_link": "",
       "status": "linked",
@@ -38234,7 +38237,9 @@
       "file_size": 452229,
       "key_finding": "In vitro study of mandibular third molar endocrowns (n=12 per group) with 0, 1 or 2 mm ferrule: failure load was lower without ferrule (638.5 N) than with 1 mm (1101.0 N) or 2 mm (956.3 N), but failure stress did not differ; catastrophic failures were 10/12, 8/12 and 12/12.",
       "clinical_bottom_line": "Laboratory evidence only: ferrule raised failure load, yet all endocrowns showed high rates of catastrophic failure, at loads above normal masticatory function.",
-      "linked_episodes": [],
+      "linked_episodes": [
+        "sharehub/share-18"
+      ],
       "drive_link": "",
       "status": "linked",
       "drive_download": "https://drive.google.com/uc?export=download&id=1JzclDkS1mAku2EBr-zlzQy9onhIjZh8b",
@@ -72450,7 +72455,10 @@
       "linked_episodes": [
         "episodes/episode-9",
         "episodes/episode-10",
-        "episodes/episode-11"
+        "episodes/episode-11",
+        "notecast/episode-9",
+        "notecast/episode-10",
+        "notecast/episode-11"
       ],
       "drive_link": "",
       "status": "linked",
@@ -97140,7 +97148,9 @@
       "file_size": 879206,
       "key_finding": "PubMed-based literature review of ferrule effect components (width, partial ferrule, tooth type, lateral loads, 2 mm height rule), deriving a risk-assessment classification of teeth by achievable ferrule effectiveness.",
       "clinical_bottom_line": "Offers a ferrule-based risk classification to aid prognosis; the authors note that evidence on restoring extensively destroyed endodontically treated teeth is deficient.",
-      "linked_episodes": [],
+      "linked_episodes": [
+        "insight/insight-64"
+      ],
       "drive_link": "",
       "status": "linked",
       "drive_download": "https://drive.google.com/uc?export=download&id=1EBjjalF6jvLimmqEI-3sivbLfHZ2kahg",
@@ -130082,7 +130092,8 @@
       "key_finding": "Systematic review with meta-regression of 25 in vitro studies: load-to-fracture did not differ significantly between endocrowns and post-and-crown restorations; resin composite luting increased and oblique loading reduced load-to-fracture (p<0.05).",
       "clinical_bottom_line": "Similar fracture performance is expected for endocrowns and post-and-crown restorations, but evidence comes from in vitro studies only.",
       "linked_episodes": [
-        "dentai/dentai-27"
+        "dentai/dentai-27",
+        "sharehub/share-18"
       ],
       "drive_link": "",
       "status": "linked",
@@ -130189,7 +130200,8 @@
       "key_finding": "Review of more than 30 articles on dentin bonding for indirect restorations recommending immediate dentin sealing (applying and polymerizing the bonding agent on freshly cut dentin before impression), which appears to improve bond strength and reduce gaps, bacterial leakage and dentin sensitivity.",
       "clinical_bottom_line": "Authors recommend IDS, facilitated by filled adhesive resins, for indirect bonded restorations; based on literature review and clinical experience rather than controlled clinical trials.",
       "linked_episodes": [
-        "episodes/episode-6"
+        "episodes/episode-6",
+        "notecast/episode-6"
       ],
       "drive_link": "https://drive.google.com/file/d/1YnKy022sMa6YBAIYZxULjd9bAASiAjkH/view?usp=drivesdk",
       "status": "linked",
@@ -130577,7 +130589,8 @@
       "key_finding": "Expert working instruction (IAAD) summarizing in vitro literature on cleaning contaminated glass-ceramic bonding surfaces. Water, alcohol and acetone do not remove saliva; 35-37% phosphoric acid gel (30-60 s) or particulate cleaning paste (20 s) removes saliva or blood, while silicone residues require hydrofluoric acid re-etching, followed by silane reapplication.",
       "clinical_bottom_line": "Expert protocol based on laboratory studies, not clinical trials: use rubber dam at try-in, clean by contaminant type, re-etch after silicone, and always re-silanize before cementation.",
       "linked_episodes": [
-        "episodes/episode-12"
+        "episodes/episode-12",
+        "notecast/episode-12"
       ],
       "drive_link": "https://drive.google.com/file/d/1D4-w3UKaCndJCWGXsM-gPWsVFrBLlvG9/view",
       "status": "linked",
@@ -130621,7 +130634,8 @@
       "key_finding": "Narrative proposing an 'esthetic width' approach for porcelain-fused-to-metal restorations, based on the biologic width: positioning preparation margins, reducing the metal framework and adapting marginal design, plus pontic and interdental designs, to avoid the gray 'umbrella effect'.",
       "clinical_bottom_line": "Conceptual guidance for improving soft-tissue esthetics around metal-ceramic restorations; expert narrative, not outcome data.",
       "linked_episodes": [
-        "episodes/episode-13"
+        "episodes/episode-13",
+        "notecast/episode-13"
       ],
       "drive_link": "https://drive.google.com/file/d/1DiLrUYzxWwEhU_W-6FTWR9Y9y93GPxfU/view",
       "status": "linked",
@@ -130873,7 +130887,8 @@
       "key_finding": "Narrative description of the molar endocrown: a monolithic ceramic adhesive restoration with a butt-joint cervical margin and pulp-chamber preparation not extending into the root canals, leaving more robust remaining tooth substance.",
       "clinical_bottom_line": "Authors advocate wider use of endocrowns for severely damaged endodontically treated molars; expert narrative, not outcome data.",
       "linked_episodes": [
-        "notecast/episode-40"
+        "notecast/episode-40",
+        "episodes/episode-40"
       ],
       "drive_link": "https://drive.google.com/file/d/1mbFb1Hz1rnZnolDavVtbXMK-mejtU2MV/view",
       "status": "linked",
@@ -131131,7 +131146,8 @@
       "key_finding": "In vitro microtensile study of glass fiber posts (10 groups, n=14): silanization had a significant effect on bond strength to composite resin, highest with 5-minute phosphoric acid plus silane, whereas 30% hydrogen peroxide or 35% phosphoric acid had no significant effect.",
       "clinical_bottom_line": "Silane application improves fiber post–composite core bonding in the laboratory, while acid or peroxide pretreatment adds little; not clinical proof.",
       "linked_episodes": [
-        "episodes/episode-42"
+        "episodes/episode-42",
+        "notecast/episode-42"
       ],
       "drive_link": "https://drive.google.com/file/d/18_8RFTqrfxIDT8Ir2xOlIWkcomDQrwz8/view",
       "status": "linked",

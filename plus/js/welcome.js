@@ -4,9 +4,10 @@
 // whole page EXCEPT the header, and pulses the header person icon so the login
 // entry point is the obvious next step. Shown at most MAX_SHOWS times per device
 // (and once per session), never to a logged-in user.
-import { el } from './util.js?v=213';
-import { openLoginModal } from './login-modal.js?v=213';
-import { telegramLoginEnabled } from './config.js?v=213';
+import { el } from './util.js?v=214';
+import { openLoginModal } from './login-modal.js?v=214';
+import { telegramLoginEnabled } from './config.js?v=214';
+import { trapFocus } from './focus-trap.js?v=214';
 
 const LS_COUNT = 'dcp:welcome:count';   // total appearances on this device
 const SS_SHOWN = 'dcp:welcome:shown';   // once per browser session
@@ -54,12 +55,12 @@ export function maybeShowWelcome({ personBtn } = {}) {
     : 'با شماره موبایل وارد شو';
 
   let overlay = null;
+  let release = null;
   const cleanup = () => {
     if (personBtn) personBtn.classList.remove('dcp-person-attention');
     if (overlay) { overlay.remove(); overlay = null; }
-    document.removeEventListener('keydown', onKey);
+    if (release) { release(); release = null; }
   };
-  const onKey = (e) => { if (e.key === 'Escape') cleanup(); };
 
   const cta = el('button', { class: 'dcp-btn dcp-btn-primary dcp-welcome-cta', type: 'button' }, 'شروع رایگان');
   cta.addEventListener('click', async () => {
@@ -85,14 +86,20 @@ export function maybeShowWelcome({ personBtn } = {}) {
     cta,
   ]);
 
-  // Card + a close button BELOW it (per spec), stacked and centered.
-  const wrap = el('div', { class: 'dcp-welcome-wrap' }, [card, closeBtn]);
+  // Card + a close button BELOW it (per spec), stacked and centered. The wrap
+  // is the dialog, so «بعداً» is inside the surface keyboard focus is held in.
+  card.removeAttribute('role');
+  card.removeAttribute('aria-modal');
+  card.removeAttribute('aria-label');
+  const wrap = el('div', {
+    class: 'dcp-welcome-wrap', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'دنت‌کست پلاس',
+  }, [card, closeBtn]);
   overlay = el('div', {
     class: 'dcp-welcome-overlay',
     onclick: (e) => { if (e.target === overlay) cleanup(); },
   }, [wrap]);
   document.body.appendChild(overlay);
-  document.addEventListener('keydown', onKey);
+  release = trapFocus(wrap, { onEscape: cleanup, initial: cta });
 
   // Draw the eye to the login entry point while the box is up.
   if (personBtn) personBtn.classList.add('dcp-person-attention');

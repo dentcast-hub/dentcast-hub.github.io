@@ -1,13 +1,86 @@
 {
-  "note": "Prosthodontic hashtag QA, agent B, step 3 of 3: pages missing an existing tag they resolve, or carrying one they do not. Every page read in full; each list keeps the series/brand tag and every still-valid tag. 1) notecast-31 (screw-retained vs cement-retained vs screw-cemented implant crowns) + #اتصال_پیچ_شونده: it is the site's main answer to «پیچی یا سمانی» but carried only the cement side, so the screw chip showed the multi-unit episode and two space cases instead. 2) #ایمپلنت_قدامی (definition: the decision is specific to the anterior/esthetic zone) had one page; added to insight-10 (central implant in deep bite: PFM with metal palatal, screw-retained Ti-base, enameloplasty), episode-125-2 (immediate provisionalization and soft tissue in the esthetic zone) and episode-150 (ITI 2023 consensus on immediate implants in the esthetic zone). Not added to insight-9 (esthetic-zone abscess): its lesson is residual cement, not an anterior-specific decision. 3) insight-26 − #اسپلینت_ایمپلنت: the page resolves scan-body/library transfer errors and an unseated crown; splinting appears only as the reason the misfit was masked, so it was a wrong page under «اسپلینت کنم یا جدا؟» (A106 moved it here from #اسپلینت by elimination, not because it resolves splinting). + #نشست_ناقص, which is what its case is (crown 7 never fully seated on the abutment). 4) insight-78 + #کمبود_فضای_عمودی (definition: insufficient interocclusal space for a posterior implant restoration — exactly its question, upper 4–6). 5) insight-96 (several anterior fixtures fractured; cause: a free-end partial that gives no posterior occlusal support, or is not worn) + #اورلود_اکلوزالی and #استاپ_خلفی (definition: missing posterior support loading the anterior), so it surfaces for implant-failure/overload questions instead of sitting fifth under #شکست_ایمپلنت. 6) chairside-23 (abutment fractured after 9 years under concentrated, unbalanced load): − #شکست_ایمپلنت, whose definition is loss of the implant — this implant was kept; + #عوارض_مکانیکی (fracture of components), #اورلود_اکلوزالی (the stated cause) and #شل_شدن_پیچ (the page explains the loosening that preceded the fracture).",
-  "articles": {
-    "notecast/episode-31": ["#نوت_کست", "#ایمپلنت", "#اسکرو_سمنتد", "#پروتز_ایمپلنت", "#سمان_ریتین", "#اتصال_پیچ_شونده", "#پری_ایمپلنتیتیس", "#نوع_ریتنشن"],
-    "insight/insight-10": ["#اینسایت", "#ایمپلنت", "#ایمپلنت_قدامی", "#دیپ_بایت", "#فضای_رستوریتیو", "#دندان_قدامی", "#روکش_PFM", "#تیتانیوم_بیس", "#اتصال_پیچ_شونده", "#اناملوپلاستی", "#روکش_ایمپلنت", "#انتخاب_متریال"],
-    "episodes/episode-125-2": ["#دنتکست", "#ایمپلنت_فوری", "#ایمپلنت_قدامی", "#روکش_موقت", "#پروفایل_امرجنس", "#ناحیه_زیبایی", "#اینسایت"],
-    "episodes/episode-150": ["#دنتکست", "#ایمپلنت_فوری", "#ایمپلنت_قدامی", "#ناحیه_زیبایی", "#جراحی_ایمپلنت", "#کنسنسوس_ITI"],
-    "insight/insight-26": ["#اینسایت", "#ایمپلنت", "#اسکن_بادی", "#لایبرری_دیجیتال", "#خطای_لابراتوار", "#فیت_پروتز", "#نشست_ناقص", "#قالب‌گیری_دیجیتال", "#پروتز_ایمپلنت"],
-    "insight/insight-78": ["#اینسایت", "#فضای_رستوریتیو", "#کمبود_فضای_عمودی", "#پلان_اکلوژن", "#استئوپلاستی", "#جایگذاری_ایمپلنت", "#اتصال_پیچ_شونده", "#پروتز_ایمپلنت"],
-    "insight/insight-96": ["#اینسایت", "#شکست_ایمپلنت", "#اورلود_اکلوزالی", "#استاپ_خلفی", "#پروتز_پارسیل", "#اکلوژن"],
-    "chairside/chairside-23": ["#چیرساید", "#کیس_بالینی", "#دکتر_شهابیان", "#عوارض_مکانیکی", "#اباتمنت", "#اورلود_اکلوزالی", "#شل_شدن_پیچ", "#اکلوژن", "#بیومکانیک", "#سایش_دندان"]
-  }
+ "note": "Prosthodontic hashtag QA, agent B, step 3 of 3: pages missing an existing tag they resolve, or carrying one they do not. Every page read in full; each list keeps the series/brand tag and every still-valid tag. 1) notecast-31 (screw-retained vs cement-retained vs screw-cemented implant crowns) + #اتصال_پیچ_شونده: it is the site's main answer to «پیچی یا سمانی» but carried only the cement side, so the screw chip showed the multi-unit episode and two space cases instead. 2) #ایمپلنت_قدامی (definition: the decision is specific to the anterior/esthetic zone) had one page; added to insight-10 (central implant in deep bite: PFM with metal palatal, screw-retained Ti-base, enameloplasty), episode-125-2 (immediate provisionalization and soft tissue in the esthetic zone) and episode-150 (ITI 2023 consensus on immediate implants in the esthetic zone). Not added to insight-9 (esthetic-zone abscess): its lesson is residual cement, not an anterior-specific decision. 3) insight-26 − #اسپلینت_ایمپلنت: the page resolves scan-body/library transfer errors and an unseated crown; splinting appears only as the reason the misfit was masked, so it was a wrong page under «اسپلینت کنم یا جدا؟» (A106 moved it here from #اسپلینت by elimination, not because it resolves splinting). + #نشست_ناقص, which is what its case is (crown 7 never fully seated on the abutment). 4) insight-78 + #کمبود_فضای_عمودی (definition: insufficient interocclusal space for a posterior implant restoration — exactly its question, upper 4–6). 5) insight-96 (several anterior fixtures fractured; cause: a free-end partial that gives no posterior occlusal support, or is not worn) + #اورلود_اکلوزالی and #استاپ_خلفی (definition: missing posterior support loading the anterior), so it surfaces for implant-failure/overload questions instead of sitting fifth under #شکست_ایمپلنت. 6) chairside-23 (abutment fractured after 9 years under concentrated, unbalanced load): − #شکست_ایمپلنت, whose definition is loss of the implant — this implant was kept; + #عوارض_مکانیکی (fracture of components), #اورلود_اکلوزالی (the stated cause) and #شل_شدن_پیچ (the page explains the loosening that preceded the fracture). [Merge 2026-10-28 onto main: lists unioned with main's A107/A108 state, main renames applied, renames already done on main dropped.]",
+ "articles": {
+  "notecast/episode-31": [
+   "#نوت_کست",
+   "#ایمپلنت",
+   "#اسکرو_سمنتد",
+   "#پروتز_ایمپلنت",
+   "#سمان_ریتین",
+   "#پری_ایمپلنتیتیس",
+   "#نوع_ریتنشن",
+   "#اتصال_پیچ_شونده"
+  ],
+  "insight/insight-10": [
+   "#اینسایت",
+   "#ایمپلنت",
+   "#دیپ_بایت",
+   "#فضای_رستوریتیو",
+   "#دندان_قدامی",
+   "#روکش_PFM",
+   "#تیتانیوم_بیس",
+   "#اتصال_پیچ_شونده",
+   "#اناملوپلاستی",
+   "#روکش_ایمپلنت",
+   "#انتخاب_متریال",
+   "#ایمپلنت_قدامی"
+  ],
+  "episodes/episode-125-2": [
+   "#دنتکست",
+   "#ایمپلنت_فوری",
+   "#روکش_موقت",
+   "#پروفایل_امرجنس",
+   "#ناحیه_زیبایی",
+   "#اینسایت",
+   "#ایمپلنت_قدامی"
+  ],
+  "episodes/episode-150": [
+   "#دنتکست",
+   "#ایمپلنت_فوری",
+   "#ناحیه_زیبایی",
+   "#جراحی_ایمپلنت",
+   "#کنسنسوس_ITI",
+   "#ایمپلنت_قدامی"
+  ],
+  "insight/insight-26": [
+   "#اینسایت",
+   "#ایمپلنت",
+   "#اسکن_بادی",
+   "#لایبرری_دیجیتال",
+   "#خطای_لابراتوار",
+   "#فیت_پروتز",
+   "#قالب‌گیری_دیجیتال",
+   "#پروتز_ایمپلنت",
+   "#نشست_ناقص"
+  ],
+  "insight/insight-78": [
+   "#اینسایت",
+   "#فضای_رستوریتیو",
+   "#پلان_اکلوژن",
+   "#استئوپلاستی",
+   "#جایگذاری_ایمپلنت",
+   "#اتصال_پیچ_شونده",
+   "#پروتز_ایمپلنت"
+  ],
+  "insight/insight-96": [
+   "#اینسایت",
+   "#شکست_ایمپلنت",
+   "#پروتز_پارسیل",
+   "#اکلوژن",
+   "#اورلود_اکلوزالی",
+   "#استاپ_خلفی"
+  ],
+  "chairside/chairside-23": [
+   "#چیرساید",
+   "#کیس_بالینی",
+   "#دکتر_شهابیان",
+   "#اکلوژن",
+   "#بیومکانیک",
+   "#اباتمنت",
+   "#سایش_دندان",
+   "#عوارض_مکانیکی",
+   "#اورلود_اکلوزالی",
+   "#شل_شدن_پیچ"
+  ]
+ }
 }

@@ -18,7 +18,7 @@ afterAll(async () => {
 });
 
 const sampleHighlight = {
-  content_id: 'resin-cements-overview',
+  content_id: 'glossary/resin-cements',
   exact: 'پیوند به عاج همیشه ضعیف‌تر از پیوند به مینا است',
   prefix: 'باید توجه داشت که ',
   suffix: '.',
@@ -71,7 +71,7 @@ describe('highlights CRUD + anchoring round-trip', () => {
 
     const res = await app.inject({
       method: 'GET',
-      url: '/highlights?content_id=resin-cements-overview',
+      url: '/highlights?content_id=glossary/resin-cements',
       headers: { cookie },
     });
     expect(res.statusCode).toBe(200);
@@ -89,7 +89,7 @@ describe('highlights CRUD + anchoring round-trip', () => {
     const other = await loginAs(app, '09121200002');
     const res = await app.inject({
       method: 'GET',
-      url: '/highlights?content_id=resin-cements-overview',
+      url: '/highlights?content_id=glossary/resin-cements',
       headers: { cookie: other },
     });
     expect(res.json().highlights).toHaveLength(0);
@@ -115,7 +115,7 @@ describe('highlights CRUD + anchoring round-trip', () => {
     // intact, for the undo that the workbench can now offer.
     const cs = await pool.query('select count(*)::int as n from card_state where highlight_id = $1', [id]);
     expect(cs.rows[0].n).toBe(1);
-    const gone = await app.inject({ method: 'GET', url: '/highlights?content_id=resin-cements-overview', headers: { cookie } });
+    const gone = await app.inject({ method: 'GET', url: '/highlights?content_id=glossary/resin-cements', headers: { cookie } });
     expect(gone.json().highlights).toHaveLength(0);
   });
 
@@ -125,7 +125,7 @@ describe('highlights CRUD + anchoring round-trip', () => {
     const res = await app.inject({
       method: 'POST', url: '/highlights', headers: { cookie },
       payload: {
-        content_id: 'resin-cements-overview',
+        content_id: 'glossary/resin-cements',
         exact: 'یک هایلایت بدون برچسب',
         prefix: 'قبل ', suffix: ' بعد',
         color: 'green', underline: false, cloze_markers: [],
@@ -165,7 +165,7 @@ describe('POST /activity', () => {
 
     const res = await app.inject({
       method: 'POST', url: '/activity', headers: { cookie },
-      payload: { action: 'card_reviewed_manual', content_id: 'resin-cements-overview', meta: { highlight_id: hlId } },
+      payload: { action: 'card_reviewed_manual', content_id: 'glossary/resin-cements', meta: { highlight_id: hlId } },
     });
     expect(res.statusCode).toBe(200);
 
@@ -280,7 +280,7 @@ describe('soft delete + restore (migration 0066 — the inverse of «حذف» fo
     return res.json().highlight.id as string;
   }
   const list = async () =>
-    (await app.inject({ method: 'GET', url: '/highlights?content_id=resin-cements-overview', headers: { cookie } })).json().highlights;
+    (await app.inject({ method: 'GET', url: '/highlights?content_id=glossary/resin-cements', headers: { cookie } })).json().highlights;
 
   it('restore brings back the SAME id with its card box untouched', async () => {
     const id = await create();
@@ -384,5 +384,48 @@ describe('soft delete + restore (migration 0066 — the inverse of «حذف» fo
     await app.inject({ method: 'POST', url: `/highlights/${id}/restore`, headers: { cookie } });
     expect(await board()).toHaveLength(1);
     expect((await shelf()).item_count).toBe(1);
+  });
+});
+
+describe('what a highlight may carry (QA 2026-10-28)', () => {
+  const post = (payload: Record<string, unknown>) =>
+    app.inject({ method: 'POST', url: '/highlights', headers: { cookie }, payload });
+
+  it('refuses a whitespace-only selection, ZWNJ included', async () => {
+    expect((await post({ ...sampleHighlight, exact: '   ' })).statusCode).toBe(400);
+    expect((await post({ ...sampleHighlight, exact: '‌‌' })).json().error).toBe('invalid_exact');
+  });
+
+  it('accepts only the workbench palette as a colour', async () => {
+    expect((await post({ ...sampleHighlight, color: 'purple' })).json().error).toBe('invalid_color');
+    expect((await post({ ...sampleHighlight, color: '<script>' })).statusCode).toBe(400);
+    expect((await post({ ...sampleHighlight, color: null })).statusCode).toBe(201);
+    const id = (await post(sampleHighlight)).json().highlight.id;
+    const p = await app.inject({ method: 'PATCH', url: `/highlights/${id}`, headers: { cookie }, payload: { color: 'chartreuse' } });
+    expect(p.json().error).toBe('invalid_color');
+  });
+
+  it('caps the selection and the note', async () => {
+    expect((await post({ ...sampleHighlight, exact: 'ا'.repeat(6001) })).statusCode).toBe(400);
+    expect((await post({ ...sampleHighlight, note: 'ا'.repeat(4001) })).statusCode).toBe(400);
+    const id = (await post(sampleHighlight)).json().highlight.id;
+    const p = await app.inject({ method: 'PATCH', url: `/highlights/${id}`, headers: { cookie }, payload: { note: 'ب'.repeat(200_000) } });
+    expect(p.json().error).toBe('invalid_note');
+  });
+
+  it('stores work only under a page shape in a folder the index knows', async () => {
+    for (const bad of ['x', '../etc', 'gone/9', 'nope/x', 'a//b']) {
+      expect((await post({ ...sampleHighlight, content_id: bad })).json().error).toBe('invalid_content_id');
+    }
+    // A page the API's index has not refreshed to yet still takes highlights.
+    expect((await post({ ...sampleHighlight, content_id: 'insight/insight-9999' })).statusCode).toBe(201);
+  });
+
+  it('an empty JSON body is a 400 in the API\'s own shape, not Fastify\'s internals', async () => {
+    const res = await app.inject({
+      method: 'POST', url: '/highlights', headers: { cookie, 'content-type': 'application/json' }, payload: '',
+    });
+    expect(res.statusCode).toBe(400);
+    expect(res.json()).toEqual({ error: 'empty_body', message: 'بدنهٔ درخواست خالی است.' });
   });
 });

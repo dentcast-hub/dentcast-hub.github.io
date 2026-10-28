@@ -269,25 +269,33 @@ describe('tag round (real site hashtags)', () => {
     expect(body.options.map((o: { label: string }) => o.label)).toEqual(['فرول', 'پست و کور', 'ایمپلنت']);
   });
 
-  it('drops a one-page tag that only echoes the case (the anterior-gap screenshot)', async () => {
-    // «فضای بی دندان» leads to ONE page — a crown that looks too wide next to
-    // a gap — and nothing else picked for the case touches it. Echoed from the
-    // case's own words, it took a chip from the tags that answer the question.
+  it('folds the case\'s own words «فضای بی دندان» into the hub that answers it', async () => {
+    // «فضای بی دندان» was a one-page tag (a crown that looks too wide next to
+    // a gap) echoed from the case's words; A108 made it an alias of the hub.
     await makePremium();
     vi.spyOn(ai, 'selectTags').mockResolvedValue(['فضای بی دندان', 'RBFDP', 'بریج']);
     const body = (await next({ description: 'یه فضای بی دندانی داره بیمارم در قدام پایین چیکار کنم' })).json();
     const labels = body.options.map((o: { label: string }) => o.label);
-    expect(labels).toEqual(['RBFDP', 'بریج']);
+    expect(labels).toEqual(['جایگزینی دندان', 'RBFDP', 'بریج']);
+  });
+
+  it('drops a one-page tag that only echoes the case', async () => {
+    // «تقارن قدامی» leads to ONE page and nothing else picked for the case
+    // touches it: echoed from «قدام», it would take a chip from the answers.
+    await makePremium();
+    expect(assistantTags().find((t) => t.fa === 'تقارن قدامی')!.contentIds).toHaveLength(1);
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['تقارن قدامی', 'RBFDP', 'بریج']);
+    const body = (await next({ description: 'یه فضای بی دندانی داره بیمارم در قدام پایین چیکار کنم' })).json();
+    expect(body.options.map((o: { label: string }) => o.label)).toEqual(['RBFDP', 'بریج']);
   });
 
   it('keeps a one-page tag whose page the case actually describes', async () => {
     await makePremium();
-    const one = assistantTags().find((t) => t.fa === 'فضای بی دندان')!;
-    expect(one.contentIds).toHaveLength(1);
-    vi.spyOn(ai, 'selectTags').mockResolvedValue(['فضای بی دندان', 'RBFDP', 'بریج']);
-    const title = getContentInfo(one.contentIds[0])!.title; // a crown next to a gap looks too wide
+    const one = assistantTags().find((t) => t.fa === 'تقارن قدامی')!;
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['تقارن قدامی', 'RBFDP', 'بریج']);
+    const title = getContentInfo(one.contentIds[0])!.title;
     const body = (await next({ description: title })).json();
-    expect(body.options.map((o: { label: string }) => o.label)).toContain('فضای بی دندان');
+    expect(body.options.map((o: { label: string }) => o.label)).toContain('تقارن قدامی');
   });
 
   it("keeps the model's order when a tag's pages merely sit inside another's", async () => {
@@ -358,6 +366,31 @@ describe('tag round (real site hashtags)', () => {
     expect(body.articles[0].content_id).toBe('glossary/resin-cements');
   });
 
+  it('the anterior-gap case shows the veneer-retained bridge among the first replacement options', async () => {
+    // share-40 was added to «جایگزینی دندان» after older pages; in index order
+    // it sat fifth, behind «مطالب بیشتر». It carries two of the case's other
+    // chips (RBFDP, بریج), so it belongs on the first screen.
+    await makePremium();
+    const description = 'یه فضای بی دندانی داره بیمارم در قدام پایین چیکار کنم';
+    const options = ['جایگزینی دندان', 'RBFDP', 'بریج'].map((t) => ({ key: 'tag:' + getTags().find((x) => x.fa === t)!.key, label: t }));
+    const history = [{ question: DEFAULT_QUESTION, options, answer: options[0] }];
+    const body = (await next({ description, history })).json();
+    const first4 = body.articles.slice(0, 4).map((a: { content_id: string }) => a.content_id);
+    expect(first4).toContain('sharehub/share-40');
+    expect(first4).toContain('dentai/dentai-7');
+    expect(body.papers.slice(0, 3).map((p: { id: string }) => p.id)).toContain('P2945');
+  });
+
+  it('«کمبود فضای عمودی» reaches the restorative-space hub, not a one-page twin', async () => {
+    // «میخوام روکش بسازم برای بیمار فضا کمه» → «فضای عمودی کمه»: the model
+    // answered the literal label of a one-page implant tag; the concept's ten
+    // pages live under «فضای رستوریتیو» (batch A107 merged the two).
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['کمبود فضای عمودی', 'افزایش VD']);
+    const body = (await next({ description: 'میخوام روکش بسازم برای بیمار فضای عمودی کمه' })).json();
+    expect(body.options[0].label).toBe('فضای رستوریتیو');
+  });
+
   it('leads with the glossary entry named by an acronym or the entry slug', async () => {
     await makePremium();
     for (const [key, term] of [['tmd', 'glossary/tmd'], ['vdo', 'glossary/vertical-dimension-of-occlusion']]) {
@@ -419,7 +452,10 @@ describe('tag round (real site hashtags)', () => {
     const body = res.json();
     expect(body.done).toBe(true);
     expect(body.matched_fa).toBe(TAG.fa);
-    expect(body.articles.map((a: { content_id: string }) => a.content_id)).toEqual(TAG.contentIds.slice(0, 4));
+    const ids = body.articles.map((a: { content_id: string }) => a.content_id);
+    expect([...ids].sort()).toEqual([...TAG.contentIds].sort());
+    // the page whose title names the case («زینک فسفات») leads
+    expect(ids[0]).toBe('insight/insight-59');
     expect(spy, 'resolving costs no model call').not.toHaveBeenCalled();
   });
 

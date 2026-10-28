@@ -17,18 +17,18 @@
 //      scrolls to the mark).
 //   4. Every filter lives in the URL, so a filtered view survives a refresh,
 //      the back button, and being sent to yourself.
-import { el, faNum, debounce } from './util.js?v=213';
-import { api } from './api.js?v=213';
-import { FOLDER_EN } from './content-index.js?v=213';
-import { openCollectionPicker } from './collections.js?v=213';
-import { LABELS, PALETTE } from './config.js?v=213';
+import { el, faNum, debounce } from './util.js?v=214';
+import { api } from './api.js?v=214';
+import { FOLDER_EN } from './content-index.js?v=214';
+import { openCollectionPicker } from './collections.js?v=214';
+import { LABELS, PALETTE } from './config.js?v=214';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
-} from './hl-view.js?v=213';
+} from './hl-view.js?v=214';
 // قطعه‌های صوتی ride in the same library: a clip is a highlight in time, so it
 // sits in its episode's group beside the caption highlights (clip-view.js).
-import { clipCard, createClipPlayer, clipAsText } from './clip-view.js?v=213';
+import { clipCard, createClipPlayer, clipAsText } from './clip-view.js?v=214';
 
 // How many article groups (or flat cards) are drawn before the "load more"
 // sentinel takes over. A library of a few thousand highlights must not build a
@@ -113,6 +113,7 @@ function highlightCard(article, h, ctx) {
         if (card.querySelector('.dcp-hlib-editor')) return;
         card.appendChild(inlineEditor(h, {
           onSaved: (updated) => { Object.assign(h, updated); paint(); ctx.onUpdated(h, article); },
+          onGone: (id) => ctx.onDeleted(id),
         }));
       },
     });
@@ -124,7 +125,9 @@ function highlightCard(article, h, ctx) {
       onClick: () => {
         if (card.querySelector('.dcp-recent-confirm')) return;
         card.appendChild(confirmStrip('این هایلایت حذف شود؟', async () => {
-          await api.deleteHighlight(h.id);
+          // 404 = already deleted elsewhere; the card is what is stale.
+          try { await api.deleteHighlight(h.id); }
+          catch (e) { if (!(e && e.status === 404)) throw e; }
           ctx.onDeleted(h.id);
           toast('هایلایت حذف شد');
         }));

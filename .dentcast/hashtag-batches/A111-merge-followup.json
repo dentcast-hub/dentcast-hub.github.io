@@ -1,0 +1,20 @@
+{
+ "note": "Merge follow-up 2026-10-28 (orchestrator): after replaying A107–A110 onto main's A107/A108 state. 1) #اسکرو_سمنتد kept a co_tag to #Cement_Retained, a concept that no longer exists (merged into #سمان_ریتین earlier) — dropped again. 2) main's alias list of #شل_شدن_پیچ reintroduced «لق شدن روکش» (a loose crown on a tooth); A109 moved that phrase to #افتادن_روکش, so it is removed here again while every screw spelling stays.",
+ "concepts": [
+  {
+   "tag": "#اسکرو_سمنتد",
+   "co_tags": []
+  },
+  {
+   "tag": "#شل_شدن_پیچ",
+   "aliases": [
+    "screw loosening",
+    "لقی پیچ",
+    "شل شدن اسکرو",
+    "لق شدن پیچ",
+    "لق شدن روکش ایمپلنت",
+    "لقی روکش ایمپلنت"
+   ]
+  }
+ ]
+}

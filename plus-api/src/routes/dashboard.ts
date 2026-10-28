@@ -13,6 +13,10 @@ import {
 } from '../services/score.js';
 import { dayInTz, previousDay, nextDay, weekStartSaturday } from '../services/time.js';
 
+// Format/invisible characters: ZW space/ZWNJ/ZWJ, bidi marks and isolates,
+// word joiner, BOM, soft hyphen, Arabic letter mark, Hangul filler.
+const INVISIBLE = /[\u00AD\u061C\u115F\u1160\u180E\u200B-\u200F\u202A-\u202E\u2060-\u206F\u3164\uFEFF\uFFA0]/g;
+
 export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', requireAuth);
 
@@ -31,7 +35,16 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     const b = request.body as { display_name?: string; settings?: Record<string, unknown> };
     const sets: string[] = [];
     const vals: unknown[] = [request.user!.id];
-    if (b.display_name !== undefined) { sets.push(`display_name = $${vals.length + 1}`); vals.push(b.display_name.trim()); }
+    if (b.display_name !== undefined) {
+      const name = b.display_name.trim();
+      // A name made only of ZWNJ / zero-width / bidi marks passed minLength and
+      // printed as a blank in the header and the league. Count what can be
+      // seen; ZWNJ inside a real name («علی‌رضا») is stored untouched.
+      if (name.replace(INVISIBLE, '').trim().length < 2) {
+        return reply.code(400).send({ error: 'invalid_display_name', message: 'اسم مستعار باید حداقل ۲ حرف باشد.' });
+      }
+      sets.push(`display_name = $${vals.length + 1}`); vals.push(name);
+    }
     if (b.settings !== undefined) { sets.push(`settings = settings || $${vals.length + 1}::jsonb`); vals.push(JSON.stringify(b.settings)); }
     if (!sets.length) return reply.code(400).send({ error: 'nothing_to_update' });
     const res = await pool.query(

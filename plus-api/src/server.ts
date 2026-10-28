@@ -106,6 +106,13 @@ export async function buildServer(): Promise<FastifyInstance> {
     // with a status, already carry the right answer and a message written for
     // the caller. Those pass through untouched — tests and clients read them.
     const status = (err as { statusCode?: number }).statusCode;
+    // Except one: a POST with a JSON content-type and no body reached the
+    // caller as Fastify's raw English internals (FST_ERR_CTP_EMPTY_JSON_BODY,
+    // «Body cannot be empty…»). It is the caller's mistake, said in the
+    // shape every other 400 of this API has.
+    if ((err as { code?: string }).code === 'FST_ERR_CTP_EMPTY_JSON_BODY') {
+      return reply.code(400).send({ error: 'empty_body', message: 'بدنهٔ درخواست خالی است.' });
+    }
     if (typeof status === 'number' && status < 500) return reply.code(status).send(err);
 
     const pgCode = (err as { code?: string }).code;

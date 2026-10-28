@@ -50,8 +50,8 @@
   <link rel="manifest" href="/plus/manifest.webmanifest">
   <meta name="theme-color" content="#f0f2f5">
   <link rel="stylesheet" href="/dc-theme.css">
-  <link rel="stylesheet" href="/plus/plus.css?v=61">
-  <link rel="stylesheet" href="/plus/plus-pages.css?v=62">
+  <link rel="stylesheet" href="/plus/plus.css?v=62">
+  <link rel="stylesheet" href="/plus/plus-pages.css?v=63">
   <link rel="stylesheet" href="/plus/plus-desktop.css?v=7">
   <style>
     /* Both faces self-hosted, like Vazirmatn everywhere else on the site.
@@ -69,12 +69,16 @@
        repaint. Sized in container units so it scales as one object. */
     .dc-cert-shell { container-type: inline-size; width: 100%; }
     .dc-cert {
-      position: relative; aspect-ratio: 297 / 210; width: 100%;
+      /* border-box: the padding used to sit OUTSIDE width:100%, so the sheet
+         was 114% of its shell — a sideways scroll on every phone and a print
+         wider than A4. Every unit is the approved one divided by 1.14, and the
+         ratio is the old outer box's, so the sheet looks exactly as before. */
+      position: relative; box-sizing: border-box; aspect-ratio: 1.14 / .8151; width: 100%;
       background: #ffffff; color: #022360;
       box-shadow: 0 1px 2px rgba(2,35,96,.10), 0 22px 54px rgba(2,35,96,.14);
-      padding: 6.2cqw 7cqw 4.6cqw;
+      padding: 5.44cqw 6.14cqw 4.04cqw;
       font-family: Vazirmatn, system-ui, sans-serif;
-      font-size: 1.3cqw; line-height: 1.7;
+      font-size: 1.14cqw; line-height: 1.7;
       display: grid; grid-template-rows: auto 1fr auto auto; row-gap: 1.6em;
       direction: rtl; text-align: start;
     }
@@ -128,6 +132,8 @@
       flex: 1 1 220px; direction: ltr; text-align: center; letter-spacing: .12em;
       font-weight: 600; text-transform: uppercase;
     }
+    .dc-cert-lookup-hint { flex-basis: 100%; margin: 0; font-size: .86rem; color: #b3261e; }
+    [data-theme="dark"] .dc-cert-lookup-hint { color: #f28079; }
     .dc-cert-verdict {
       border-radius: 14px; padding: 16px 18px; display: flex; gap: 12px; align-items: flex-start;
       border: 1px solid var(--dcp-line, rgba(2,35,96,.12));
@@ -153,7 +159,7 @@
       .dcp-page-main { padding: 0 !important; margin: 0 !important; max-width: none !important; }
       .dc-cert-page { max-width: none; gap: 0; }
       .dc-cert-shell { width: 297mm; }
-      .dc-cert { box-shadow: none; width: 297mm; height: 210mm; font-size: 3.86mm; padding: 18.4mm 20.8mm 13.7mm; }
+      .dc-cert { box-shadow: none; width: 297mm; height: 210mm; font-size: 3.39mm; padding: 16.1mm 18.2mm 12mm; }
       .dc-cert.is-revoked { filter: none; opacity: 1; }
     }
   </style>
@@ -166,6 +172,6 @@
   <main class="dcp-page-main">
     <div id="dcp-root"></div>
   </main>
-  <script type="module" src="/plus/js/certificate-page.js?v=38"></script>
+  <script type="module" src="/plus/js/certificate-page.js?v=39"></script>
 </body>
 </html>
