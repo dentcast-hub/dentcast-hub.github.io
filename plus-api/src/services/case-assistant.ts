@@ -554,16 +554,50 @@ function narrowerFirst(tags: Tag[]): Tag[] {
 
 /**
  * A tag's pages, most relevant to this case first: a page that also carries
- * more of the case's other tags is about more of what was described. Ties keep
- * the index order. Without this, a broad tag showed its first four pages in
- * section order — podcast episodes first, whatever the case was about.
+ * more of the case's other tags is about more of what was described, and so is
+ * one whose title names a real word of the case («قدام» -> «RBFDPهای قدامی»).
+ * Ties keep the index order. Without this, a broad tag showed its first four
+ * pages in index order — old episodes first, and a page added to the tag later
+ * (the veneer-retained bridge under «جایگزینی دندان») behind «مطالب بیشتر».
  */
-function rankIds(ids: string[], context: Tag[], self?: Tag): string[] {
+function rankIds(ids: string[], context: Tag[], self?: Tag, caseWords?: Set<string>): string[] {
   const sets = context.filter((t) => t !== self && t.key !== self?.key).map((t) => new Set(t.contentIds));
-  return ids
-    .map((id, i) => ({ id, i, s: sets.reduce((n, set) => n + (set.has(id) ? 1 : 0), 0) }))
-    .sort(lifted)
+  const scored = ids.map((id, i) => ({ id, i, s: sets.reduce((n, set) => n + (set.has(id) ? 1 : 0), 0) + titleHits(id, caseWords) }));
+  // Without the case's words this is the chip-dedupe view (what each candidate
+  // chip would show): a nudge, as it was tuned. A full re-sort there made
+  // overlapping tags show the same pages and dropped «پست و کور» from a post
+  // question as a duplicate of «فرول».
+  if (!caseWords) return scored.sort(lifted).map((x) => x.id);
+  return scored
+    // Relevance first, index order only between equals. The index lists a
+    // tag's pages in the order they were tagged, which says nothing about this
+    // case, so a nudge on top of it (lifted, still right for the curated paper
+    // lists) left the newest page last however much of the case it covered.
+    .sort((a, b) => b.s - a.s || a.i - b.i)
     .map((x) => x.id);
+}
+
+/**
+ * How many of the case's own words a page's title names, at most two. A word
+ * matches its own inflections (قدام / قدامی, ایمپلنت / ایمپلنت‌ها), never a
+ * generic one («دندان», «بیمار») that every title shares.
+ */
+const titleWordCache = new Map<string, string[]>();
+function titleHits(id: string, caseWords?: Set<string>): number {
+  if (!caseWords || !caseWords.size) return 0;
+  let tw = titleWordCache.get(id);
+  if (!tw) { tw = words(getContentInfo(id)?.title ?? '').filter((w) => w.length > 2); titleWordCache.set(id, tw); }
+  let n = 0;
+  for (const c of caseWords) {
+    if (tw.some((w) => w === c || (c.length >= 4 && w.startsWith(c)) || (w.length >= 4 && c.startsWith(w)))) n += 1;
+    if (n === 2) break;
+  }
+  return n;
+}
+
+/** The case's meaningful words: description and refinements, no fillers, no generic dental words. */
+function caseWordSet(text: string): Set<string> {
+  return new Set(words(text).filter((w) => w.length > 2 && !GENERIC_WORDS.has(w)));
 }
 
 /**
@@ -841,7 +875,8 @@ function papersFor(tag: Tag, history: NarrowHistoryEntry[]): CasePaper[] {
   return out;
 }
 
-async function resolve(userId: string, history: NarrowHistoryEntry[]): Promise<CaseStep> {
+async function resolve(userId: string, history: NarrowHistoryEntry[], description = ''): Promise<CaseStep> {
+  const caseText = [description, ...customAnswers(history)].join('\n');
   const key = lastConcreteKey(history) ?? fallbackKey(history);
   let contentIds: string[] = [];
   let matchedFa: string | null = null;
@@ -851,7 +886,7 @@ async function resolve(userId: string, history: NarrowHistoryEntry[]): Promise<C
     const tag = tagByKey(key.slice(TAG_PREFIX.length));
     if (tag) {
       papers = papersFor(tag, history);
-      contentIds = rankIds(tag.contentIds, offeredTags(history), tag);
+      contentIds = rankIds(tag.contentIds, offeredTags(history), tag, caseWordSet(caseText));
       matchedFa = tag.fa;
       const term = glossaryFor(tag.fa);
       if (term) contentIds = [term, ...contentIds.filter((id) => id !== term)];
@@ -924,7 +959,7 @@ export async function nextCaseStep(
     return { ...step, round_id: roundId };
   };
 
-  if (history.length >= config.assistant.maxRounds) return logged(await resolve(userId, history));
+  if (history.length >= config.assistant.maxRounds) return logged(await resolve(userId, history, description));
 
   const finalRound = history.length + 1 >= config.assistant.maxRounds;
   const ask = (question: string, options: NarrowOption[]): Promise<CaseStep> =>
@@ -937,13 +972,13 @@ export async function nextCaseStep(
   if (!lastAnswerIsCustom(history)) {
     // A tag is always a leaf — picking one resolves straight to its content,
     // there is no further narrowing under a single hashtag.
-    if (key?.startsWith(TAG_PREFIX)) return logged(await resolve(userId, history));
+    if (key?.startsWith(TAG_PREFIX)) return logged(await resolve(userId, history, description));
 
     // A pillar was picked: show its own subtopics. Pure tree walking — a fixed
     // list and a fixed question, so this round costs no model call at all.
     if (key) {
       const catalog = nextClusterCatalog(key);
-      if (!catalog) return logged(await resolve(userId, history)); // already a leaf
+      if (!catalog) return logged(await resolve(userId, history, description)); // already a leaf
       return ask(DEFAULT_QUESTION, catalog);
     }
   }

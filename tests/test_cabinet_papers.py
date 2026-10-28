@@ -28,6 +28,26 @@ class CabinetPapersTest(unittest.TestCase):
                 p = out['papers'][pid]
                 self.assertTrue(p.get('v') or p.get('d'), pid)
 
+    def test_a_page_source_paper_is_listed_under_the_page_tags(self):
+        # share-40 (veneer-retained bridge) was written from P2945, share-39
+        # (occlusal-veneer bridge) from P2944 (catalog linked_episodes). Under
+        # the anterior-gap case's chips they were missing or sixth.
+        with open(os.path.join(ROOT, 'plus', 'cabinet-papers.json'), encoding='utf-8') as f:
+            by_tag = json.load(f)['byTag']
+        # dentai-7's source P0283 (anterior RBFDP review) leads with them.
+        self.assertEqual(set(by_tag['rbfdp'][:3]), {'P0283', 'P2944', 'P2945'})
+        self.assertEqual(by_tag['بریج'][0], 'P2945')
+        self.assertEqual(set(by_tag['جایگزینی دندان'][:2]), {'P0283', 'P2945'})
+        self.assertIn('P2944', by_tag['جایگزینی دندان'])
+
+    def test_off_topic_source_papers_do_not_lead_a_tag(self):
+        # share-12 was written from trigeminal-neuralgia guidelines too; they
+        # must not lead #کشیدن_دندان just because share-12 carries that tag.
+        with open(os.path.join(ROOT, 'plus', 'cabinet-papers.json'), encoding='utf-8') as f:
+            out = json.load(f)
+        for pid in out['byTag']['کشیدن دندان'][:5]:
+            self.assertNotIn('neuralgia', out['papers'][pid]['t'].lower(), pid)
+
 
 if __name__ == '__main__':
     unittest.main()

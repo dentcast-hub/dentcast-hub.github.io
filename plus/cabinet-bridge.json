@@ -46,6 +46,11 @@
    "tooth-preparations-complete-crowns",
    "tooth-preparation"
   ],
+  "debonding": [
+   "debonding",
+   "retention",
+   "cementation"
+  ],
   "dental ai": [
    "artificial-intelligence"
   ],
@@ -305,6 +310,10 @@
    "implant-surface",
    "surface-roughness"
   ],
+  "استاپ خلفی": [
+   "shortened-dental-arch",
+   "vertical-dimension"
+  ],
   "استتیک ویدث": [
    "esthetic-width"
   ],
@@ -348,6 +357,12 @@
   "اصول تراش": [
    "tooth-preparation",
    "tooth-preparations-complete-crowns"
+  ],
+  "افتادن روکش": [
+   "retention",
+   "cementation",
+   "luting-agent",
+   "debonding"
   ],
   "افزایش vd": [
    "vertical-dimension",
@@ -601,6 +616,11 @@
   "تحلیل مطالعه": [
    "critical-appraisal"
   ],
+  "تحویل روکش": [
+   "cementation",
+   "marginal-fit",
+   "luting-agent"
+  ],
   "تداخل اکلوزالی": [
    "occlusal-interference"
   ],
@@ -666,6 +686,9 @@
   ],
   "تزریق بی‌درد": [
    "local-anesthesia"
+  ],
+  "تشخیص پوسیدگی": [
+   "caries-detector-dye"
   ],
   "تصمیم درمانی": [
    "decision-making"
@@ -734,8 +757,10 @@
    "dental-amalgam"
   ],
   "جایگزینی دندان": [
-   "missing-teeth",
-   "single-tooth-replacement"
+   "single-tooth-replacement",
+   "resin-bonded-bridge",
+   "fixed-dental-prosthesis",
+   "shortened-dental-arch"
   ],
   "جراحی ایمپلنت": [
    "surgical-protocol"
@@ -743,9 +768,13 @@
   "حداقل تهاجم": [
    "minimally-invasive"
   ],
+  "حرکات اکسکورسیو": [
+   "lateral-occlusion",
+   "canine-guidance",
+   "group-function"
+  ],
   "حفظ دندان": [
    "questionable-tooth",
-   "periodontal-regeneration",
    "treatment-planning"
   ],
   "حفظ ریج": [
@@ -834,6 +863,10 @@
   ],
   "دیاستم": [
    "diastema"
+  ],
+  "دیواره نازک": [
+   "cuspal-coverage",
+   "cuspal-deflection"
   ],
   "رابردم": [
    "rubber-dam"
@@ -995,6 +1028,11 @@
   "سمان سلف ادهزیو": [
    "self-adhesive-resin-cement"
   ],
+  "سمان مجدد": [
+   "retention",
+   "cementation",
+   "luting-agent"
+  ],
   "سمان کردن": [
    "cementation"
   ],
@@ -1148,6 +1186,10 @@
   "فورکا": [
    "furcation"
   ],
+  "فیت پروتز": [
+   "marginal-fit",
+   "marginal-adaptation"
+  ],
   "فیشیال فلو": [
    "facial-flow-concept-orofacial-analysis"
   ],
@@ -1167,6 +1209,11 @@
   "قالبگیری اوپن تری": [
    "impression-coping",
    "impression-technique"
+  ],
+  "قالبگیری دو مرحله ای": [
+   "impression-technique",
+   "polyvinyl-siloxane",
+   "impression"
   ],
   "قالب‌گیری دیجیتال": [
    "digital-impression",
@@ -1467,6 +1514,9 @@
    "cbct-in-implant-dentistry",
    "dynamic-navigation"
   ],
+  "پلی کریستالین": [
+   "zirconia"
+  ],
   "پوزیشن ایمپلنت": [
    "implant-position"
   ],
@@ -1568,9 +1618,6 @@
    "delayed-implant-placement",
    "fresh-socket"
   ],
-  "کمبود فضای عمودی": [
-   "restorative-space"
-  ],
   "کنترل خونریزی": [
    "hemostatic-agent",
    "exposing-gingival-margin-hemorrhage-control"
@@ -1629,19 +1676,58 @@
   ]
  },
  "exclude": {
+  "tmd": [
+   "P1712"
+  ],
+  "ایمپلنت فول آرچ": [
+   "P2929",
+   "P2930",
+   "P2881"
+  ],
   "بیس فسفونات": [
    "P1786",
    "P1742"
   ],
-  "هوش مصنوعی رادیوگرافی": [
-   "P2889"
-  ],
   "تطابق بیمار": [
    "P2948"
   ],
-  "ایمپلنت فول آرچ": [
-   "P2929",
-   "P2930"
+  "جایگزینی دندان": [
+   "P1709",
+   "P1712",
+   "P1730"
+  ],
+  "روکش": [
+   "P2922"
+  ],
+  "روکش موقت": [
+   "P1403"
+  ],
+  "سمان رزینی": [
+   "P2926",
+   "P2910",
+   "P2888"
+  ],
+  "هوش مصنوعی رادیوگرافی": [
+   "P2889"
+  ],
+  "پروتز ثابت": [
+   "P2948"
+  ],
+  "پری ایمپلنتیتیس": [
+   "P2893",
+   "P1833",
+   "P2891",
+   "P0478"
+  ],
+  "پلی کریستالین": [
+   "P1605"
+  ],
+  "کشیدن دندان": [
+   "P2934",
+   "P2935",
+   "P2936",
+   "P2937",
+   "P2938"
   ]
  },
  "tooth_topics": [
@@ -1676,6 +1762,12 @@
   "کانتکت",
   "کانتکت سنگین",
   "کانتکت پروگزیمال",
-  "کانتی لیور"
+  "کانتی لیور",
+  "افتادن روکش",
+  "سمان مجدد",
+  "debonding",
+  "تحویل روکش",
+  "فیت پروتز",
+  "قالبگیری دو مرحله ای"
  ]
 }
