@@ -28,6 +28,17 @@ class CabinetPapersTest(unittest.TestCase):
                 p = out['papers'][pid]
                 self.assertTrue(p.get('v') or p.get('d'), pid)
 
+    def test_a_page_source_paper_is_listed_under_the_page_tags(self):
+        # share-40 (veneer-retained bridge) was written from P2945, share-39
+        # (occlusal-veneer bridge) from P2944 (catalog linked_episodes). Under
+        # the anterior-gap case's chips they were missing or sixth.
+        with open(os.path.join(ROOT, 'plus', 'cabinet-papers.json'), encoding='utf-8') as f:
+            by_tag = json.load(f)['byTag']
+        self.assertEqual(by_tag['rbfdp'][:2], ['P2944', 'P2945'])
+        self.assertEqual(by_tag['بریج'][0], 'P2945')
+        for pid in ('P2944', 'P2945'):
+            self.assertIn(pid, by_tag['جایگزینی دندان'])
+
 
 if __name__ == '__main__':
     unittest.main()

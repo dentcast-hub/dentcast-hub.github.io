@@ -358,6 +358,31 @@ describe('tag round (real site hashtags)', () => {
     expect(body.articles[0].content_id).toBe('glossary/resin-cements');
   });
 
+  it('the anterior-gap case shows the veneer-retained bridge among the first replacement options', async () => {
+    // share-40 was added to «جایگزینی دندان» after older pages; in index order
+    // it sat fifth, behind «مطالب بیشتر». It carries two of the case's other
+    // chips (RBFDP, بریج), so it belongs on the first screen.
+    await makePremium();
+    const description = 'یه فضای بی دندانی داره بیمارم در قدام پایین چیکار کنم';
+    const options = ['جایگزینی دندان', 'RBFDP', 'بریج'].map((t) => ({ key: 'tag:' + getTags().find((x) => x.fa === t)!.key, label: t }));
+    const history = [{ question: DEFAULT_QUESTION, options, answer: options[0] }];
+    const body = (await next({ description, history })).json();
+    const first4 = body.articles.slice(0, 4).map((a: { content_id: string }) => a.content_id);
+    expect(first4).toContain('sharehub/share-40');
+    expect(first4).toContain('dentai/dentai-7');
+    expect(body.papers.slice(0, 3).map((p: { id: string }) => p.id)).toContain('P2945');
+  });
+
+  it('«کمبود فضای عمودی» reaches the restorative-space hub, not a one-page twin', async () => {
+    // «میخوام روکش بسازم برای بیمار فضا کمه» → «فضای عمودی کمه»: the model
+    // answered the literal label of a one-page implant tag; the concept's ten
+    // pages live under «فضای رستوریتیو» (batch A107 merged the two).
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['کمبود فضای عمودی', 'افزایش VD']);
+    const body = (await next({ description: 'میخوام روکش بسازم برای بیمار فضای عمودی کمه' })).json();
+    expect(body.options[0].label).toBe('فضای رستوریتیو');
+  });
+
   it('leads with the glossary entry named by an acronym or the entry slug', async () => {
     await makePremium();
     for (const [key, term] of [['tmd', 'glossary/tmd'], ['vdo', 'glossary/vertical-dimension-of-occlusion']]) {
@@ -419,7 +444,10 @@ describe('tag round (real site hashtags)', () => {
     const body = res.json();
     expect(body.done).toBe(true);
     expect(body.matched_fa).toBe(TAG.fa);
-    expect(body.articles.map((a: { content_id: string }) => a.content_id)).toEqual(TAG.contentIds.slice(0, 4));
+    const ids = body.articles.map((a: { content_id: string }) => a.content_id);
+    expect([...ids].sort()).toEqual([...TAG.contentIds].sort());
+    // the page whose title names the case («زینک فسفات») leads
+    expect(ids[0]).toBe('insight/insight-59');
     expect(spy, 'resolving costs no model call').not.toHaveBeenCalled();
   });
 

@@ -17,6 +17,13 @@ counts most: it is the closest equivalent), when its design is stronger
 (reviews and trials before narrative pieces) and when it is newer. Library tag
 aliases are applied, so a library tag renamed later keeps its bridge.
 
+A paper a site page was written from (its catalog `linked_episodes` names that
+page) belongs to every hashtag the page carries and leads that tag's list,
+whatever its library tags say: the reader of the page's topic should meet the
+page's own source first. share-40 (veneer-retained bridge) was built on
+Alikhasi 2025, yet under #جایگزینی_دندان and #بریج the library offered
+unrelated papers and, under #RBFDP, ranked it sixth behind «بیشتر».
+
 Usage: python3 tools/build_cabinet_papers.py [--check]
   --check  verify the output is up to date and the bridge names only real tags
 """
@@ -31,6 +38,8 @@ OUT = os.path.join(ROOT, 'plus', 'cabinet-papers.json')
 PER_TAG = 12
 KF_MAX = 320
 TAG_WEIGHT = [1.0, 0.7, 0.5, 0.4]
+# A page's own source paper outranks anything matched by tags alone.
+SOURCE_BONUS = 10.0
 DESIGN = {
     'umbrella review': 0.7, 'network meta-analysis': 0.7, 'systematic review + meta-analysis': 0.7,
     'systematic review': 0.6, 'scoping review': 0.4, 'consensus / guideline': 0.6,
@@ -100,7 +109,9 @@ def build():
     # (impressions, cements, crowns): implant papers always rank below.
     tooth_topics = set(raw.get('tooth_topics', []))
     cat = load(CATALOG)
-    site_keys = {t['key'] for t in load(INDEX)['tags']}
+    index_tags = load(INDEX)['tags']
+    site_keys = {t['key'] for t in index_tags}
+    pages_of = {t['key']: set(t['contentIds']) for t in index_tags}
     aliases = cat.get('tag_aliases', {})
     all_ids = {p['id'] for p in cat['papers']}
     canon = lambda t: aliases.get(t, t)
@@ -112,6 +123,16 @@ def build():
         for t in set(canon(x) for x in p.get('tags', [])):
             by_lib.setdefault(t, []).append(p)
 
+    # site tag key -> papers a page carrying that tag was written from
+    sources = {}
+    for p in cat['papers']:
+        linked = set(p.get('linked_episodes') or [])
+        if not linked or skipped(p) or not (p.get('drive_view') or p.get('drive_download')):
+            continue
+        for key, pages in pages_of.items():
+            if linked & pages:
+                sources.setdefault(key, []).append(p)
+
     problems = []
     by_tag, used = {}, {}
     for key in sorted(tooth_topics - set(bridge)):
@@ -122,11 +143,11 @@ def build():
         for pid in ids:
             if pid not in all_ids:
                 problems.append(f'exclude names an unknown paper for {key}: {pid}')
-    for key, libs in sorted(bridge.items()):
-        if key not in site_keys:
+    for key in sorted(set(bridge) | set(sources)):
+        if key in bridge and key not in site_keys:
             problems.append(f'site tag not in content-index: {key}')
             continue
-        libs = [canon(x) for x in libs]
+        libs = [canon(x) for x in bridge.get(key, [])]
         for x in libs:
             if x not in by_lib:
                 problems.append(f'{key}: library tag has no papers: {x}')
@@ -134,6 +155,9 @@ def build():
         for i, lib in enumerate(libs[:len(TAG_WEIGHT)]):
             for p in by_lib.get(lib, []):
                 score[p['id']] = score.get(p['id'], 0) + TAG_WEIGHT[i]
+        own = {p['id'] for p in sources.get(key, [])}
+        for pid in own:
+            score[pid] = score.get(pid, 0) + SOURCE_BONUS
         if not score:
             continue
         for pid in exclude.get(key, ()):
@@ -141,6 +165,7 @@ def build():
         if not score:
             continue
         papers = {p['id']: p for lib in libs for p in by_lib.get(lib, [])}
+        papers.update({p['id']: p for p in sources.get(key, [])})
         def implant_paper(p):
             return any(IMPLANT_LIB.search(t) for t in p.get('tags', []) if not t.startswith('topic:'))
 
