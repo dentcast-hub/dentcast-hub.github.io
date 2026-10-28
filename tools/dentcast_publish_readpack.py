@@ -32,6 +32,11 @@ MODULES = WORKFLOW + 'modules/'
 # (paper reachability) inside the paper branch, which is omitted only without a
 # paper; 12 edits only two rows of the always-kept Final output summary. No
 # boundary heading changed; 01 and 10 are unpinned (always read whole).
+# Re-audited 2026-10-28 (DES version history split, founder 1405/08/06): 08
+# moves the Part 2 per-version notes to des-version-history.md and keeps a
+# bounded summary inside Part 2. Its only selection boundary, the
+# «Conditional path for founder-supplied results» heading, sits before Part 2
+# and did not change.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
@@ -39,7 +44,7 @@ PINNED_BLOBS = {
     '04-taxonomy-and-navigation.md': '539fd195fb90d19587ba8b243782355228a14238',
     '05-semantic-linking.md': '760dcf77dd3baff173aebb2d40492604fb096d1f',
     '06-paper-ingestion.md': '1def0aa0ed464105900965a55fb78f7792d8606c',
-    '08-des-fidelity.md': 'f396330bb90621fec71bc71ded2c16630c3e0f0e',
+    '08-des-fidelity.md': 'cc55d39e818483dd236251753f9a31e0be2e66d3',
     '09-challenge.md': 'dd46a16eafabdd4b40813a0578eeca4a81dcd44d',
     '12-english-notify-verify.md': '9cee02243c141166d0b5eca3ea20da58bd77302a',
 }
