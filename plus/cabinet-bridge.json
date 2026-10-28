@@ -46,6 +46,9 @@
    "tooth-preparations-complete-crowns",
    "tooth-preparation"
   ],
+  "debonding": [
+   "debonding"
+  ],
   "dental ai": [
    "artificial-intelligence"
   ],
@@ -93,14 +96,6 @@
    "guided-surgery",
    "cbct-in-implant-dentistry",
    "dynamic-navigation"
-  ],
-  "implant prosthetics": [
-   "implant-prosthesis",
-   "implant-supported-crowns"
-  ],
-  "implant restoration": [
-   "implant-prosthesis",
-   "implant-supported-crowns"
   ],
   "jumping gap": [
    "jumping-gap"
@@ -271,9 +266,6 @@
    "screw-retained",
    "screw-retained-vs-cement-retained"
   ],
-  "اتچمنت": [
-   "overdenture-attachment"
-  ],
   "اتچمنت اوردنچر": [
    "overdenture-attachment"
   ],
@@ -349,6 +341,11 @@
    "tooth-preparation",
    "tooth-preparations-complete-crowns"
   ],
+  "افتادن روکش": [
+   "resistance-form",
+   "retention",
+   "debonding"
+  ],
   "افزایش vd": [
    "vertical-dimension",
    "safety-increasing-vdo-systematic-review"
@@ -386,6 +383,14 @@
   "اندوکراون": [
    "endocrown"
   ],
+  "اندیکاسیون روکش": [
+   "cuspal-coverage",
+   "restoration-endodontically-treated-single-teeth"
+  ],
+  "اندیکاسیون پست": [
+   "post-free-restoration",
+   "post-and-core"
+  ],
   "اوردنچر": [
    "overdenture",
    "implant-overdenture"
@@ -399,6 +404,9 @@
   "اورکانتور": [
    "crown-contour",
    "critical-contour"
+  ],
+  "اوپکر": [
+   "masking-ability"
   ],
   "اچ اند رینس": [
    "etch-and-rinse-adhesive"
@@ -416,6 +424,10 @@
    "occlusion",
    "occlusal-scheme",
    "vertical-dimension"
+  ],
+  "اکلوژن ایمپلنت": [
+   "implant-occlusion",
+   "occlusal-overload"
   ],
   "ایزولاسیون": [
    "rubber-dam",
@@ -444,10 +456,6 @@
   "ایمپلنت فول آرچ": [
    "full-arch-implant-prosthesis",
    "all-on-4",
-   "full-arch"
-  ],
-  "ایمپلنت فول ماوس": [
-   "full-arch-implant-prosthesis",
    "full-arch"
   ],
   "ایمپلنت قدامی": [
@@ -601,8 +609,16 @@
   "تحلیل مطالعه": [
    "critical-appraisal"
   ],
+  "تحویل روکش": [
+   "crown-cementation-seating-factors",
+   "cementation"
+  ],
   "تداخل اکلوزالی": [
    "occlusal-interference"
+  ],
+  "تداخل سمت کارگر": [
+   "occlusal-interference",
+   "lateral-occlusion"
   ],
   "تراش دندان": [
    "tooth-preparation"
@@ -743,6 +759,10 @@
   "حداقل تهاجم": [
    "minimally-invasive"
   ],
+  "حرکات اکسکورسیو": [
+   "lateral-occlusion",
+   "occlusal-interference"
+  ],
   "حفظ دندان": [
    "questionable-tooth",
    "periodontal-regeneration",
@@ -828,6 +848,10 @@
    "restoration-survival",
    "longevity"
   ],
+  "دوره آزمایشی": [
+   "patient-adaptation",
+   "vertical-dimension"
+  ],
   "دیابت": [
    "diabetes",
    "implant-therapy-diabetes-mellitus-update"
@@ -843,6 +867,9 @@
   ],
   "رزین کوتینگ": [
    "immediate-dentin-sealing"
+  ],
+  "رست سیت": [
+   "removable-partial-denture"
   ],
   "رشد فک": [
    "facial-growth",
@@ -871,6 +898,11 @@
   ],
   "روکش ایمپلنت": [
    "implant-supported-crowns"
+  ],
+  "روکش دندان": [
+   "all-ceramic",
+   "metal-ceramic",
+   "monolithic-restoration"
   ],
   "روکش سرامیکی": [
    "ceramic-crown",
@@ -946,6 +978,9 @@
   ],
   "سایلان": [
    "silane"
+  ],
+  "سایه خاکستری": [
+   "masking-ability"
   ],
   "سرامیک": [
    "ceramic"
@@ -1166,6 +1201,10 @@
   ],
   "قالبگیری اوپن تری": [
    "impression-coping",
+   "impression-technique"
+  ],
+  "قالبگیری دو مرحله ای": [
+   "polyvinyl-siloxane",
    "impression-technique"
   ],
   "قالب‌گیری دیجیتال": [
@@ -1389,7 +1428,8 @@
    "premolar"
   ],
   "پروتز ایمپلنت": [
-   "implant-prosthesis"
+   "implant-prosthesis",
+   "implant-supported-crowns"
   ],
   "پروتز ثابت": [
    "fixed-dental-prosthesis",
@@ -1545,7 +1585,9 @@
    "implant-abutment-connection"
   ],
   "کانین رایز": [
-   "canine-guidance"
+   "canine-guidance",
+   "group-function",
+   "lateral-occlusion"
   ],
   "کاهش vdo": [
    "vertical-dimension"
@@ -1605,15 +1647,17 @@
   "کیور": [
    "light-curing"
   ],
+  "گاید پلین": [
+   "removable-partial-denture"
+  ],
   "گایدنس قدامی": [
    "anterior-guidance",
    "canine-guidance"
   ],
-  "گایدنس کانین": [
-   "canine-guidance"
-  ],
   "گروپ فانکشن": [
-   "group-function"
+   "group-function",
+   "canine-guidance",
+   "lateral-occlusion"
   ],
   "گلاس آینومر": [
    "glass-ionomer-cement"
@@ -1647,19 +1691,28 @@
  "tooth_topics": [
   "cad cam",
   "اسکنر داخل دهانی",
+  "افتادن روکش",
   "انتخاب سمان",
   "انتخاب متریال",
+  "اندیکاسیون روکش",
+  "اندیکاسیون پست",
   "اکلوژن",
   "بریج",
   "بقای رستوریشن",
   "بیولوژیک ویدث",
+  "تحویل روکش",
+  "تداخل سمت کارگر",
   "تراش روکش",
   "تکنیک سمان",
+  "حرکات اکسکورسیو",
   "خطای اسکن",
   "دقت اسکن",
   "دوام ترمیم",
+  "دوره آزمایشی",
+  "رست سیت",
   "روکش",
   "روکش اسپلینت",
+  "روکش دندان",
   "روکش موقت",
   "زیرکونیا",
   "سرامیک",
@@ -1670,12 +1723,14 @@
   "سمنتیشن",
   "شکست پرسلن",
   "قالبگیری",
+  "قالبگیری دو مرحله ای",
   "قالب‌گیری دیجیتال",
   "موقتی به‌عنوان مرجع",
   "پروتز ثابت",
   "کانتکت",
   "کانتکت سنگین",
   "کانتکت پروگزیمال",
-  "کانتی لیور"
+  "کانتی لیور",
+  "گاید پلین"
  ]
 }

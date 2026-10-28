@@ -1,0 +1,142 @@
+{
+  "note": "A107 prosthodontic QA (agent A), step 2 of 2: spellings a dentist types for fixed-prosthodontic concepts that reached nothing or the wrong concept in --simulate (the model normally bridges these itself; the alias table is the safety net when it answers with a non-label form, and the lexical path). Before: «سند بلاست» (two words) -> #سند_هندآف, «سایلن» (the spelling episode-136 itself uses) -> nothing, «شید» -> nothing, «تیپر» -> nothing, «فودایمپکشن» (glued) -> nothing, «cast post» -> nothing, «metal ceramic» -> #سرامیک, «temp bond»/«تمپ باند» (a temporary cement brand used as the generic word) -> #باند / #روکش_موقت instead of #سمان_موقت, «self adhesive» -> #ادهزیو, «finish line»/«شولدر»/«شمفر» -> nothing. «شولدر/شمفر/shoulder/chamfer» are the finish-line forms a dentist names when asking about finish-line design (episode-114 resolves that question under #فینیش_لاین); the existing «بدون شولدر» alias of #تراش_عمودی is longer and still wins for that phrase. «تیپر تراش»/«زاویه تراش» were tried and dropped: a multi-word alias consumes «تراش» from the dentist's text, and «تیپر تراش روکش چند درجه» then lost its named «تراش روکش» chip in the simulator; bare «تیپر» does the job. «taper» deliberately NOT added to #total_occlusal_convergence: it is a word of #Limiting_Taper and would rewrite it. «لق شدن روکش» left on #شل_شدن_پیچ (implant screw loosening, agent B's domain) — see report section 4. Every new alias was checked against every concept key (no whole-word hit) and against all existing aliases (no duplicate); --sync notes unchanged.",
+  "concepts": [
+    {
+      "tag": "#سندبلاست",
+      "aliases": [
+        "sandblast",
+        "airborne particle abrasion",
+        "ایربورن",
+        "سند بلاست",
+        "air abrasion",
+        "ایر ابریژن"
+      ]
+    },
+    {
+      "tag": "#سایلان",
+      "aliases": [
+        "silane",
+        "سیلان",
+        "silane coupling",
+        "سایلن",
+        "سیلن"
+      ]
+    },
+    {
+      "tag": "#انتخاب_shade",
+      "aliases": [
+        "shade selection",
+        "انتخاب رنگ",
+        "shade",
+        "شید",
+        "انتخاب شید",
+        "shade taking",
+        "رنگ گیری"
+      ]
+    },
+    {
+      "tag": "#فینیش_لاین",
+      "aliases": [
+        "فینیشینگ لاین",
+        "فینیش‌لاین",
+        "خط ختم",
+        "finish line",
+        "finishing line",
+        "خط خاتمه",
+        "شولدر",
+        "شمفر",
+        "shoulder",
+        "chamfer"
+      ]
+    },
+    {
+      "tag": "#گیر_غذایی",
+      "aliases": [
+        "food impaction",
+        "گیر کردن غذا",
+        "ایمپکشن غذا",
+        "فود ایمپکشن",
+        "ایمپکشن غذایی",
+        "گیر مواد غذایی",
+        "food trapping",
+        "فودایمپکشن"
+      ]
+    },
+    {
+      "tag": "#total_occlusal_convergence",
+      "aliases": [
+        "toc",
+        "زاویه همگرایی",
+        "تیپر کلی تراش",
+        "تیپر",
+        "convergence angle"
+      ]
+    },
+    {
+      "tag": "#پست_فلزی",
+      "aliases": [
+        "metal post",
+        "پست ریختگی فلزی",
+        "کست پست",
+        "cast post"
+      ]
+    },
+    {
+      "tag": "#کور_ریختگی",
+      "aliases": [
+        "cast core",
+        "کست کور",
+        "کور ریختگی فلزی",
+        "پست ریختگی",
+        "cast post and core"
+      ]
+    },
+    {
+      "tag": "#روکش_PFM",
+      "aliases": [
+        "PFM",
+        "متال سرامیک",
+        "porcelain fused to metal",
+        "پی اف ام",
+        "متال پالاتال",
+        "metal ceramic",
+        "metal ceramic crown"
+      ]
+    },
+    {
+      "tag": "#افتادن_روکش",
+      "aliases": [
+        "loose crown",
+        "کندگی روکش",
+        "جدا شدن روکش",
+        "روکش افتاده",
+        "دباند شدن روکش",
+        "crown debonding",
+        "debonded crown",
+        "افتادن مکرر روکش"
+      ]
+    },
+    {
+      "tag": "#سمان_موقت",
+      "aliases": [
+        "temporary cement",
+        "سمان تمپ",
+        "سمان آزمایشی",
+        "تمپ باند",
+        "temp bond",
+        "tempbond",
+        "temporary luting"
+      ]
+    },
+    {
+      "tag": "#سمان_سلف_ادهزیو",
+      "aliases": [
+        "self adhesive cement",
+        "سلف ادهزیو",
+        "self adhesive",
+        "self adhesive resin cement"
+      ]
+    }
+  ],
+  "articles": {}
+}

@@ -1,0 +1,72 @@
+{
+  "note": "Prosthodontic hashtag QA, agent B, step 2 of 3: implant occlusion was a missing concept. A dentist asking «اکلوژن روکش ایمپلنت رو چطور تنظیم کنم» could only be sent to the 46-page umbrella #اکلوژن, whose first pages are VD and Dahl episodes; the five pages that actually resolve how occlusion is set and why it matters on implants had no tag in common. New #اکلوژن_ایمپلنت (2 words, Persian, English/colloquial spellings as aliases; no alias is a word of another concept and --sync adds no collision note). Pages, each read in full: episode-60 (اکلوژن در درمان‌های ایمپلنت — the episode's own subject), episode-23 and notecast-23 (occlusal overload on an integrated implant: no bone loss without inflammation, but occlusion remains the cause of screw loosening, abutment and fixture fracture, so the clinical answer is how and why to adjust it), insight-47 (implant-protected occlusion: taking a buccolingually angled implant crown out of lateral contacts in group function), share-28 (§4 occlusion and bruxism on adjacent implants: no PDL, canine guidance loads posterior implants less than group function, occlusal control as part of the treatment). Not added to pages that only mention occlusion near an implant (chairside-23, insight-96: they go to #اورلود_اکلوزالی in step 3, which is what they resolve). Each page keeps its full existing list. Aliases deliberately exclude phrases that would swallow another tag's words («اکلوژن روکش ایمپلنت» would erase #روکش_ایمپلنت, «تنظیم اکلوژن ایمپلنت» #تنظیم_اکلوژن) and the ambiguous bare acronym IPO.",
+  "concepts": [
+    {
+      "tag": "#اکلوژن_ایمپلنت",
+      "domain": "clinical",
+      "definition": "طرح و تنظیمِ اکلوژن روی رستوریشن‌های ایمپلنتی (implant-protected occlusion) — ایمپلنت لیگامان پریودنتال و حسِ عمقیِ دندان را ندارد، پس شدتِ تماس، بارِ طرفی و طرحِ اکلوزال روی آن جداگانه تصمیم گرفته می‌شود؛ و نقشِ اکلوژن در عوارضِ مکانیکی (شل شدن و شکستِ پیچ، شکستِ اباتمنت و فیکسچر) و تحلیلِ استخوانِ اطرافِ ایمپلنت.",
+      "use_when": "مقاله بگوید اکلوژن روی ایمپلنت چطور طراحی یا تنظیم شود، یا اثرِ اکلوژن/اورلود را بر ایمپلنت تعیین تکلیف کند؛ نه هر مقاله‌ی ایمپلنتی که اکلوژن را فقط نام می‌برد.",
+      "aliases": [
+        "implant occlusion",
+        "implant protected occlusion",
+        "implant-protected occlusion",
+        "اکلوژن روی ایمپلنت",
+        "اکلوزن ایمپلنت",
+        "اکلوژن ایمپلنتی"
+      ]
+    }
+  ],
+  "articles": {
+    "episodes/episode-60": [
+      "#دنتکست",
+      "#ایمپلنت",
+      "#اکلوژن",
+      "#بیومکانیک",
+      "#اکلوژن_ایمپلنت"
+    ],
+    "episodes/episode-23": [
+      "#دنتکست",
+      "#ایمپلنت",
+      "#اورلود_اکلوزالی",
+      "#تحلیل_استخوان",
+      "#اکلوژن",
+      "#اکلوژن_ایمپلنت"
+    ],
+    "notecast/episode-23": [
+      "#نوت_کست",
+      "#ایمپلنت",
+      "#پری_ایمپلنتیتیس",
+      "#اکلوژن",
+      "#اورلود_اکلوزالی",
+      "#تحلیل_استخوان",
+      "#بیومکانیک",
+      "#استئواینتگریشن",
+      "#اکلوژن_ایمپلنت"
+    ],
+    "insight/insight-47": [
+      "#اینسایت",
+      "#ایمپلنت_زاویه_دار",
+      "#اباتمنت_زاویه_دار",
+      "#روکش_برگشت_پذیر",
+      "#کانال_پیچ_زاویه_دار",
+      "#شل_شدن_پیچ",
+      "#اسکرو_سمنتد",
+      "#گروپ_فانکشن",
+      "#هدایت_طرفی",
+      "#کاسپ_باکال",
+      "#روکش_ایمپلنت",
+      "#اکلوژن_ایمپلنت"
+    ],
+    "sharehub/share-28": [
+      "#Share_Hub",
+      "#Curated_Content",
+      "#اسپلینت_ایمپلنت",
+      "#تحلیل_استخوان",
+      "#عوارض_مکانیکی",
+      "#اورلود_اکلوزالی",
+      "#بهداشت_پذیری",
+      "#ایمپلنت_پتریگوئید",
+      "#اکلوژن_ایمپلنت"
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "note": "Prosthodontic hashtag QA, agent B (implant prosthodontics / removable / occlusion), step 1 of 3: duplicate concepts in the catalog the assistant model is shown. Each merge keeps every old spelling as an alias on the survivor (the retired concept's aliases are copied over by hand, since --apply does not move them), so no door closes. 1) #پیچ_شکسته_ایمپلنت (meta-8) into #شکست_پیچ: same concept by both definitions (a screw broken inside the fixture and how to get it out); the survivor's alias «پیچ شکسته» already rewrote the retired tag (sync note), and two chips for one question split three pages. 2) #گایدنس_کانین into #کانین_رایز: the definitions are the same thing (lateral guidance by the canine = canine guidance/rise); its only page, share-5 (orthodontic space correction vs keeping a class I canine relationship), does not resolve the canine-guidance-vs-group-function choice, so share-5 drops the tag instead of inheriting #کانین_رایز and keeps #رابطه_کانینی, which is what it resolves. Without this a model asked «canine guidance» could pick «گایدنس کانین (1)» and land on an orthodontic page. 3) #ایمپلنت_فول_ماوس (no definition, episode-123-4 only: full-arch zirconia on implants, veneered vs monolithic) into #ایمپلنت_فول_آرچ, whose definition covers it; also removes the sync note «فول ماوس» (#بازسازی_کامل_دهان) rewriting it. 4) #اتچمنت (no definition) into #اتچمنت_اوردنچر: its three pages (episodes 27, 50, 51) are all overdenture-attachment episodes that already carry #اتچمنت_اوردنچر; the site has no precision-attachment/RPD content, so nothing is lost, and «attachment»/«اتچمنت پروتز»/«گیره پروتز» become aliases. 5) English twins #Implant_Restoration (episodes 158, 159, both already on #پروتز_ایمپلنت) and #Implant_Prosthetics (share-1) into #پروتز_ایمپلنت, same as the A105 twin merges; their spellings become aliases. 6) Colloquial spellings for the screw- vs cement-retained pair («روکش پیچی», «اسکرو ریتیند», «روکش سمانی», «سمنت ریتین»), which --simulate showed reaching neither tag. 7) #اسکرو_سمنتد loses a dangling co_tag (#Cement_Retained was merged into #سمان_ریتین earlier and no longer exists as a concept). Kept apart on purpose: #پیچ_ایمپلنت vs #پیچ_اباتمنت (prosthetic screw vs abutment screw; see report §4), #بارگذاری_ایمپلنت vs #زمان_لود_ایمپلنت (A105 decision, see report §4), #VD/#VDO (A105 decision, still behaves: the VD questions get one VD chip set without loss).",
+  "concepts": [
+    {
+      "tag": "#شکست_پیچ",
+      "definition": "شکستنِ پیچ اباتمنت/پروتز داخل فیکسچر، علتش (شل شدنِ تدریجی یا تورکِ بیش از حد) و خارج کردنِ تکه‌ی باقی‌مانده.",
+      "use_when": "مقاله علت، پیشگیری یا روشِ خارج کردنِ پیچ شکسته را بگوید.",
+      "aliases": ["screw fracture", "پیچ شکسته", "شکستن پیچ", "fracture screw", "fractured implant screw", "پیچ شکسته داخل ایمپلنت", "خارج کردن پیچ شکسته", "پیچ شکسته ایمپلنت", "broken screw", "شکستگی پیچ"]
+    },
+    {
+      "tag": "#کانین_رایز",
+      "aliases": ["canine rise", "canine guidance", "کانین رایز", "هدایت کانین", "راهنمای نیش", "canine guided", "راهنمایی کانین", "هدایت طرفی کانین", "گایدنس کانین", "کانین گاید", "canine guide"]
+    },
+    {
+      "tag": "#ایمپلنت_فول_آرچ",
+      "aliases": ["all on 4", "all-on-4", "آل آن فور", "allon4", "ایمپلنت تمام فک", "all on 6", "all on four", "all-on-four", "allonfour", "full mouth implant", "ایمپلنت تمام دهان", "فول ماوس ایمپلنت", "ایمپلنت فول ماوس"]
+    },
+    {
+      "tag": "#اتچمنت_اوردنچر",
+      "aliases": ["overdenture attachment", "بار کلیپ", "bar clip", "بال اورینگ", "ball o ring", "لوکیتور", "locator", "attachment", "اتچمنت پروتز", "گیره پروتز"]
+    },
+    {
+      "tag": "#پروتز_ایمپلنت",
+      "aliases": ["پروتز روی ایمپلنت", "پروتز ایمپلنتی", "روکش گذاری ایمپلنت", "implant restoration", "بازسازی ایمپلنت", "رستوریشن ایمپلنت", "ترمیم روی ایمپلنت", "implant prosthetics", "ایمپلنت پراستتیکس", "implant prosthodontics"]
+    },
+    {
+      "tag": "#اتصال_پیچ_شونده",
+      "aliases": ["screw retained", "پیچ شونده", "اسکرو ریتین", "اسکرو ریتیند", "روکش پیچی", "روکش پیچ شونده", "screw-retained crown"]
+    },
+    {
+      "tag": "#سمان_ریتین",
+      "aliases": ["cement retained", "سمان شونده", "cement-retained", "روکش سمانی", "سمنت ریتین", "روکش سمان شونده"]
+    },
+    {
+      "tag": "#اسکرو_سمنتد",
+      "co_tags": []
+    }
+  ],
+  "renames": {
+    "#پیچ_شکسته_ایمپلنت": "#شکست_پیچ",
+    "#گایدنس_کانین": "#کانین_رایز",
+    "#ایمپلنت_فول_ماوس": "#ایمپلنت_فول_آرچ",
+    "#اتچمنت": "#اتچمنت_اوردنچر",
+    "#Implant_Restoration": "#پروتز_ایمپلنت",
+    "#Implant_Prosthetics": "#پروتز_ایمپلنت"
+  },
+  "articles": {
+    "sharehub/share-5": ["#Share_Hub", "#Curated_Content", "#گوران", "#رابطه_کانینی", "#کلاس_یک", "#اصلاح_فضا", "#ارتودنسی", "#Orthodontics", "#میدلاین", "#اکلوژن", "#طرح_درمان"]
+  }
+}
