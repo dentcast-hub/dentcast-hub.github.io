@@ -27,6 +27,7 @@ For «انتشار ناقص داشتم» or an explicit request to resume a publ
 | New section | `.dentcast/workflows/new-section.md` |
 | Offline publishing | `.dentcast/offline-publish.md` |
 | External Fidelity | `.dentcast/workflows/external-fidelity.md` |
+| Drive publish queue (prepare, status, publish oldest) | `.dentcast/workflows/publish-queue.md` |
 
 Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details.md`. Read the selected specialty workflow completely. New content uses the modular sequence, including paper-only and category exceptions.
 
