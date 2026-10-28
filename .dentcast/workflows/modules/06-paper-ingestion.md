@@ -78,6 +78,12 @@ socket`, `GBR`, `periimplantitis`, `biomimetic`, with nested paths like
    `C.4.10.1`, do not repeat the find/rename/move/upload: complete the step with
    evidence that references that recorded receipt. Every ask-don't-guess rule in
    this branch applies to the early run unchanged.
+   **Publish queue.** Queue preparation (`.dentcast/workflows/publish-queue.md`)
+   always does this Part 1 work early: the PDF goes to its cabinet subfolder
+   during preparation and never enters the queue. Its `drive_id`, final file
+   name and subfolder are recorded in the queue item's `04-منبع/منابع.md`. On
+   publish day, complete `C.4.10.1` with evidence that references that record
+   (no second find/rename/move); Parts 2 and 3 run as usual.
 4. **Ambiguity → ASK.** If no existing subfolder clearly fits, or two fit
    equally, **ask the user** which subfolder to use (or whether to create a new
    one). **Never create a new subfolder without explicit confirmation.**
