@@ -17515,5 +17515,30 @@
       "secondary": [],
       "subtopic": "tmd-orofacial-pain"
     }
+  },
+{
+  "type": "clinical",
+  "id": "clinical-99",
+  "title": "تراش کمتر همیشه به معنای درمان بهتر نیست!",
+  "caption": "یکی از اصول مهم در تراش دندان برای رستوریشن‌های غیرمستقیم، Structural Durability یا دوام ساختاری رستوریشن است.",
+  "hashtags": [
+    "#اینسایت",
+    "#تراش_دندان",
+    "#دوام_ترمیم"
+  ],
+  "keywords": [
+    "Structural Durability",
+    "دوام ساختاری رستوریشن",
+    "تراش دندان",
+    "ضخامت رستوریشن",
+    "دوام ترمیم",
+    "دوام رستوریشن"
+  ],
+  "page_url": "/insight/insight-99.html",
+  "pillar": {
+    "primary": "fixed-pros",
+    "secondary": [],
+    "subtopic": "preparation"
   }
+}
 ]

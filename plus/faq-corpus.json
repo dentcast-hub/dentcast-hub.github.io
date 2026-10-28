@@ -39308,6 +39308,78 @@
           ]
         }
       ]
+    },
+    "insight/insight-99": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/insight/insight-99.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا تراش کمتر دندان همیشه به معنای درمان بهتر است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ تراش باید علاوه بر حفظ بافت سالم، فضای کافی برای ضخامت و دوام رستوریشن انتخاب‌شده را تأمین کند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا مقدار فضای لازم برای تمام رستوریشن‌ها یک عدد ثابت است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ نوع ماده، طراحی رستوریشن، روش سمان کردن و شرایط اکلوژنی بیمار مقدار فضای لازم را تعیین می‌کنند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا جبران تراش ناکافی با افزایش ضخامت خارجی رستوریشن می‌تواند اورکانتور ایجاد کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ این جبران می‌تواند آناتومی طبیعی را مختل کند و مشکلات اکلوژنی یا پریودنتال ایجاد کند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا در دوام رستوریشن فقط مقدار کلی بافت برداشته‌شده اهمیت دارد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ توزیع فضای تراش، رعایت آناتومی سطح اکلوزال، فضای نواحی تحت نیرو و حذف زوایای تیز نیز مؤثرند."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/insight/insight-99.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-99.html#flashcards-c1",
+              "name": "دوام ساختاری رستوریشن (Structural Durability)",
+              "description": "دوام ساختاری به تأمین فضای لازم برای ضخامت مناسب رستوریشن وابسته است؛ مقدار این فضا با ماده، طراحی، روش سمان کردن و شرایط اکلوژنی تعیین می‌شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-99.html#flashcards-c2",
+              "name": "تراش محافظه‌کارانه",
+              "description": "تراش محافظه‌کارانه، حفظ بافت سالم همراه با ایجاد فضای لازم برای الزامات مکانیکی، بیولوژیک و عملکردی رستوریشن انتخاب‌شده است.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-99.html#flashcards-c3",
+              "name": "اورکانتور ناشی از تراش ناکافی",
+              "description": "اگر فضای تراش کافی نباشد، افزایش ضخامت رستوریشن به سمت خارج می‌تواند کانتور طبیعی را تغییر دهد و مشکلات اکلوژنی یا پریودنتال ایجاد کند.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }

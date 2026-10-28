@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "insight/insight-99"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -646,6 +646,91 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
               }
             ]
           }
+        },
+        {
+          "english": {
+            "evidence": [
+              "Final FA/EN pair reviewed on current bytes; both exact reciprocal targets exist and no clinical content added."
+            ],
+            "path": "insight/en/insight-99.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "Full ten-scope editorial close review on current prepared artifacts; all scientific, semantic, metadata and author decisions resolved before Push2."
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "plus/des-scores.json: own-text COMMENTARY15/E, exact quotes and arithmetic/band/schema validated; no Fidelity owed."
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Author submitted complete explanatory prose; no challenge markup or private answer."
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "Locked fixed-pros/preparation verified unchanged against live main taxonomy."
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Exact body anchors to Goodacre113, retention,resistance; five related capsules including2 nav and113/114/55; glossary inbound targets atcap5."
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Three canonical tags reused; author correction \u062f\u0648\u0627\u0645 \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 aliases compiled to \u062f\u0648\u0627\u0645_\u062a\u0631\u0645\u06cc\u0645; sync/check and rank1 simulation passed."
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "clinical-99 physically last in brain, same schema as98, exact author title and first-paragraph description; no en brain entry."
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "fixed-pros after video-1 and biomimetic after chairside35; approved exam r-fbae8c4d keyC, validator0errors; three bundles rejected gate1."
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "index.html: exactly7 items, title-only new item first and priorfirst6 retained."
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "insight/en/insight-99.html: ten translated paragraphs, two figures, reciprocal toggles, Englishchrome, noindex, zero hreflang, valid schema, original chrome unchanged."
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Exact supplied title and prose retained; explicit Push2 instruction, restoration-synonym correction and exact exam-question/keyC approval recorded; no pending question."
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -656,7 +741,14 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       ],
       "pending_questions": [],
       "unrelated_changes": [],
-      "validation": []
+      "validation": [
+        {
+          "evidence": [
+            "FA and EN JSON-LD parse, GA4 once perpage, two images perpage decode, no phantom toggles; Pulse7 lines, newtitle first; approved bank validator0errors."
+          ],
+          "scope": "final editorial checks before Push2"
+        }
+      ]
     },
     "external_actions": [],
     "status": "in_progress",
@@ -935,6 +1027,115 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "05-semantic-linking.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.1",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper, no Drive filing.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.2",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper, no cabinet ingestion.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.3",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper, no DOI credit.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Verified3 authored atomic cards in corpus, unique IDs and no FAQ copies; actual artifact preserved, no need regenerate unchanged definitions."
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Verified4 standalone binary questions, verdict-first answers, grounded in original article; pathway MCQ independently approved and checked at C.5.6."
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Existing own-body COMMENTARY evaluation revalidated on unchanged exact source:15/E, reasoning4+evidence0+scope3+declaration3+base5. Exact quotation/arithmetic/band/schema pass; no Fidelity owed for self-commentary. No research claims or DOI invented."
+        ],
+        "id": "C.4.13",
+        "module": "08-des-fidelity.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "Ordinary explanatory post, no Challenge.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Canonical three tags reused; author-requested \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 synonym compiled into same durability concept, search resolves rank1; no duplicate concept. Prior sync/check successful, artifacts preserved."
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Verified clinical-99 physical tail, exact same key order/shape as98, original title and author-derived description, Persian restoration keywords and canonical tags."
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Confirmed original fixed-pros/preparation unchanged and page pillar capsule consistent."
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Verified two full pathways at exact selected anchors, no third/series split; founder-approved MCQ r-fbae8c4d matches chat proposal and keyC exactly. Bank validator0 errors; three legacy warnings outside this article."
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "bundle-bonding, bundle-biomimetic and bundle-crown-prep reviewed and excluded at mechanical gate1 (Insight type); no bundle or shared asset edit."
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Verified actual title-only Pulse update:7 items, new firstline, previousfirst6 kept. Full ten-scope editorial lock recorded; English authored/reviewed with reciprocal toggles and noindex; all founder approvals and exam keyC resolved. No judgment work left for mechanical runner."
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
@@ -957,7 +1158,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: insight/insight-99.html, insight/en/insight-99.html, index.html"
+    "note": "Index-only refresh after staging delivery paths: dentcast-brain.json, dentcast-hashtag-reference.json, plus/assistant-tags.json, plus/content-index.json, plus/des-scores.json, plus/exam-questions.json, plus/faq-corpus.json, plus/pathways.json"
   },
   "schema": "publish-handoff-v3"
 }
