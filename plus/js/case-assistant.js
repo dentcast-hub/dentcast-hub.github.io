@@ -7,10 +7,10 @@
 // every assistant turn, a typing indicator while waiting, a recap trail of
 // the case + past answers) without becoming free-form chat - see
 // dcp-assist-* in plus-pages.css.
-import { el, faNum } from './util.js?v=211';
-import { api, ApiError } from './api.js?v=211';
-import { FOLDER_EN } from './content-index.js?v=211';
-import { premiumCta } from './premium-cta.js?v=211';
+import { el, faNum } from './util.js?v=213';
+import { api, ApiError } from './api.js?v=213';
+import { FOLDER_EN } from './content-index.js?v=213';
+import { premiumCta } from './premium-cta.js?v=213';
 
 // The server reads 500 characters of a case; past that it would silently drop
 // the tail, so the box stops there and counts down instead.
@@ -19,6 +19,12 @@ const MAX_CUSTOM = 200;
 // Results shown at once; the rest open with «مطالب بیشتر».
 const SHOWN = 4;
 const PAPERS_SHOWN = 3;
+// A model round normally answers in a few seconds; past this the label says so.
+const SLOW_MS = 6000;
+// Characters that render as nothing (zero-width, joiners, bidi controls): text
+// made only of these is empty, the same rule the server applies.
+const INVISIBLE = /[\u200b-\u200f\u202a-\u202e\u2060-\u2069\ufeff]/g;
+const isBlank = (text) => !text.replace(INVISIBLE, '').trim();
 
 // Just the hashtag labels for the scan line (tools/build_plus_index.mjs), not
 // the whole content index. Fetched once, as the wizard opens.
@@ -68,7 +74,9 @@ function recapTrail(description, history) {
   }
   for (const h of history) {
     wrap.appendChild(el('div', { class: 'dcp-assist-recap' }, [
-      el('span', { class: 'dcp-assist-recap-text' }, h.question),
+      // Only the sentence's first clause: the fallback questions carry long
+      // instructions that turned a few failed rounds into a wall of text.
+      el('span', { class: 'dcp-assist-recap-text' }, String(h.question || '').split('؛')[0]),
       el('span', { class: 'dcp-assist-recap-answer', dir: 'auto' }, '✓ ' + answerLabel(h.answer)),
     ]));
   }
@@ -104,7 +112,7 @@ function paperRow(p) {
     p.view_url ? el('a', { href: p.view_url, target: '_blank', rel: 'noopener' }, 'View') : null,
     p.download_url ? el('a', { href: p.download_url, target: '_blank', rel: 'noopener' }, 'Download') : null,
   ].filter(Boolean));
-  return el('div', { class: 'dcp-assist-paper', dir: 'ltr', lang: 'en' }, [
+  return el('div', { class: 'dcp-assist-paper', dir: 'ltr', lang: 'en', tabindex: '-1' }, [
     el('div', { class: 'dcp-assist-paper-title' }, p.title),
     meta ? el('div', { class: 'dcp-assist-paper-meta' }, meta) : null,
     p.key_finding ? el('details', { class: 'dcp-assist-paper-kf' }, [
@@ -116,16 +124,20 @@ function paperRow(p) {
 }
 
 /** The library section under the site's own results; absent when there is nothing to offer. */
-function papersBlock(papers) {
+function papersBlock(papers, expanded) {
   if (!papers || !papers.length) return null;
   const head = el('p', { class: 'dcp-assist-papers-lead' }, 'از کتابخانه‌ی دنت‌کست، مقاله‌هایی که ممکن است جواب سؤالت باشند:');
   const list = el('div', { class: 'dcp-assist-papers' }, papers.slice(0, PAPERS_SHOWN).map(paperRow));
-  if (papers.length > PAPERS_SHOWN) {
-    const more = el('button', { class: 'dcp-assist-more', type: 'button' },
+  if (papers.length > PAPERS_SHOWN && expanded) {
+    papers.slice(PAPERS_SHOWN).forEach((p) => list.appendChild(paperRow(p)));
+  } else if (papers.length > PAPERS_SHOWN) {
+    const more = el('button', { class: 'dcp-assist-more', type: 'button', 'data-more': 'papers' },
       'مقاله‌های بیشتر (' + faNum(papers.length - PAPERS_SHOWN) + ')');
     more.addEventListener('click', () => {
       const rows = papers.slice(PAPERS_SHOWN).map(paperRow);
       more.replaceWith(...rows);
+      // The button is gone; without this, focus fell back to the page body.
+      if (rows[0]) rows[0].focus();
     });
     list.appendChild(more);
   }
@@ -157,17 +169,28 @@ export function renderCaseAssistant(container) {
 
   // The case survives a reload, and a Back from an article it opened.
   const SS = 'dcp-assist-state';
+  // An unsent case survives a reload too, kept apart from the case state.
+  const DRAFT = 'dcp-assist-draft';
+  // Rounds already voted on: the vote is asked once, not again after a reload.
+  const VOTES = 'dcp-assist-votes';
+  const ssGet = (k) => { try { return sessionStorage.getItem(k); } catch (e) { return null; } };
+  const ssSet = (k, v) => { try { if (v === null) sessionStorage.removeItem(k); else sessionStorage.setItem(k, v); } catch (e) { /* private mode */ } };
+  const voted = () => { try { return JSON.parse(ssGet(VOTES) || '[]'); } catch (e) { return []; } };
+  // How the result screen was left when an article was opened, so Back finds
+  // it as it was: the same scroll and the same «بیشتر» lists open.
+  let view = null;
   // `waiting`: the last answer was sent but not yet answered — a reload then
   // re-asks that round instead of showing the screen it was answered from.
-  const save = (waiting = false) => {
-    try { sessionStorage.setItem(SS, JSON.stringify({ description, history, lastStep, waiting })); } catch (e) { /* private mode */ }
+  const save = (waiting = false, leaving = null) => {
+    try { sessionStorage.setItem(SS, JSON.stringify({ description, history, lastStep, waiting, view: leaving })); } catch (e) { /* private mode */ }
   };
   const forget = () => { try { sessionStorage.removeItem(SS); } catch (e) { /* ignore */ } };
 
-  function showIntro(keepText) {
+  function showIntro(keepText, restoreDraft = false) {
     stopScan();
     pending += 1;
-    const draft = keepText ? description : '';
+    if (!restoreDraft && !keepText) ssSet(DRAFT, null);
+    const draft = keepText ? description : (restoreDraft ? ssGet(DRAFT) || '' : '');
     description = '';
     history = [];
     lastStep = null;
@@ -184,12 +207,13 @@ export function renderCaseAssistant(container) {
     const syncCount = () => { counter.textContent = faNum(ta.value.length) + ' / ' + faNum(MAX_CASE); };
     syncCount();
     const err = el('p', { class: 'dcp-inline-msg', role: 'alert', hidden: 'hidden' }, 'اول شرح بیمار را بنویس.');
-    ta.addEventListener('input', () => { syncCount(); err.hidden = true; });
+    ta.addEventListener('input', () => { syncCount(); err.hidden = true; ssSet(DRAFT, ta.value || null); });
     const send = sendButton('dcp-assist-composer-send');
     const submit = () => {
       const text = ta.value.trim();
-      if (!text) { err.hidden = false; ta.focus(); return; }
+      if (isBlank(text)) { err.hidden = false; ta.focus(); return; }
       description = text;
+      ssSet(DRAFT, null);
       step();
     };
     send.addEventListener('click', submit);
@@ -204,7 +228,7 @@ export function renderCaseAssistant(container) {
       err,
       el('p', { class: 'dcp-assist-disclaimer' },
         'ⓘ نه گفتگوی آزاد، و نه تشخیص یا توصیه‌ی درمانی؛ فقط مسیر به محتوای خودِ سایت.'),
-    ]), keepText ? ta : null);
+    ]), keepText || draft ? ta : null);
   }
 
   /**
@@ -233,9 +257,15 @@ export function renderCaseAssistant(container) {
         cancel,
       ]),
     ]));
-    show(trail);
+    show(trail, cancel); // focus stays on the one control this screen has, not the page body
     announce('در حال جست‌وجو در هشتگ‌های سایت…');
     startScan(stream);
+    const token = scanToken;
+    window.setTimeout(() => {
+      if (token !== scanToken || !label.isConnected) return;
+      label.textContent = 'کمی بیشتر از معمول طول کشید؛ هنوز دارم می‌گردم…';
+      announce(label.textContent);
+    }, SLOW_MS);
   }
 
   /** Drift real tags through `node` until the answer arrives. */
@@ -262,14 +292,26 @@ export function renderCaseAssistant(container) {
 
   function optionsScreen(body) {
     stopScan();
+    view = null;
     const { question, options } = body;
     const trail = recapTrail(description, history);
 
+    // One answer per screen: a second activation before the screen is
+    // replaced (key repeat, assistive tech) recorded the answer twice.
+    let answered = false;
+    const once = (ans) => { if (answered) return; answered = true; answer(ans, question, options); };
     const optWrap = el('div', { class: 'dcp-assist-opts' });
     for (const o of options) {
       const b = el('button', { class: 'dcp-assist-opt', type: 'button', dir: 'auto' }, o.label);
-      b.addEventListener('click', () => answer({ key: o.key, label: o.label }, question, options));
+      b.addEventListener('click', () => once({ key: o.key, label: o.label }));
       optWrap.appendChild(b);
+    }
+    // The model was not reached: the same round may well work a moment later.
+    // Right under the sentence that tells the user to press it, before the chips.
+    let retry = null;
+    if (body.retry) {
+      retry = el('button', { class: 'dcp-assist-restart', type: 'button' }, 'دوباره امتحان کن');
+      retry.addEventListener('click', step);
     }
 
     const q = el('p', { class: 'dcp-assist-q', tabindex: '-1' }, question);
@@ -277,6 +319,7 @@ export function renderCaseAssistant(container) {
       sparkAvatar(true),
       el('div', { class: 'dcp-assist-card' }, [
         q,
+        retry,
         options.length ? null : el('p', { class: 'dcp-muted' }, 'گزینه‌ای پیدا نشد؛ با «غیر از این‌ها» بیشتر توضیح بده.'),
       ].filter(Boolean)),
     ]));
@@ -293,8 +336,8 @@ export function renderCaseAssistant(container) {
       const customRow = el('div', { class: 'dcp-assist-custom', hidden: 'hidden' }, [customInput, customSend]);
       const sendCustom = () => {
         const text = customInput.value.trim();
-        if (!text) { customInput.focus(); return; }
-        answer({ custom: text }, question, options);
+        if (isBlank(text)) { customInput.focus(); return; }
+        once({ custom: text });
       };
       customSend.addEventListener('click', sendCustom);
       customInput.addEventListener('keydown', (e) => {
@@ -309,12 +352,27 @@ export function renderCaseAssistant(container) {
       trail.appendChild(el('div', { class: 'dcp-assist-opts' }, moreBtn));
       trail.appendChild(customRow);
     }
+    // A case typed wrong can be dropped from any screen, not only the last one.
+    const restart = el('button', { class: 'dcp-assist-restart', type: 'button' }, 'شروع دوباره');
+    restart.addEventListener('click', () => showIntro(false));
+    trail.appendChild(el('div', { class: 'dcp-assist-opts' }, restart));
     show(trail, q);
     announce(question);
   }
 
   function doneScreen(body) {
     stopScan();
+    const back = view; // set only when coming Back from an article this screen opened
+    view = null;
+    const articleLink = (a) => {
+      const row = articleRow(a, body.round_id);
+      row.addEventListener('click', () => save(false, {
+        scrollY: window.scrollY,
+        articles: !list.querySelector('[data-more="articles"]'),
+        papers: !trail.querySelector('[data-more="papers"]'),
+      }));
+      return row;
+    };
     const trail = recapTrail(description, history);
     const restart = el('button', { class: 'dcp-assist-restart', type: 'button' }, 'شروع دوباره');
     restart.addEventListener('click', () => showIntro(false));
@@ -324,14 +382,15 @@ export function renderCaseAssistant(container) {
       body.matched_fa ? 'نزدیک‌ترین حیطه: ' + body.matched_fa : 'نتیجه‌ی روشنی پیدا نشد.');
     let list;
     if (articles.length || papers.length) {
+      const open = back && back.articles;
       list = articles.length
-        ? el('div', { class: 'dcp-pw-steps' }, articles.slice(0, SHOWN).map((a) => articleRow(a, body.round_id)))
+        ? el('div', { class: 'dcp-pw-steps' }, articles.slice(0, open ? articles.length : SHOWN).map(articleLink))
         : el('div', { class: 'dcp-muted' }, 'در مطالب سایت چیزی پیدا نشد.');
-      if (articles.length > SHOWN) {
-        const more = el('button', { class: 'dcp-assist-more', type: 'button' },
+      if (articles.length > SHOWN && !open) {
+        const more = el('button', { class: 'dcp-assist-more', type: 'button', 'data-more': 'articles' },
           'مطالب بیشتر (' + faNum(articles.length - SHOWN) + ')');
         more.addEventListener('click', () => {
-          const rows = articles.slice(SHOWN).map((a) => articleRow(a, body.round_id));
+          const rows = articles.slice(SHOWN).map(articleLink);
           more.replaceWith(...rows);
           if (rows[0]) rows[0].focus();
         });
@@ -343,12 +402,13 @@ export function renderCaseAssistant(container) {
     trail.appendChild(el('div', { class: 'dcp-assist-turn' }, [
       sparkAvatar(true),
       el('div', { class: 'dcp-assist-card' }, [
-        lead, list, papersBlock(papers),
+        lead, list, papersBlock(papers, back && back.papers),
         articles.length || papers.length ? verdictBox(body.round_id) : null, restart,
       ].filter(Boolean)),
     ]));
     show(trail, lead);
-    lead.scrollIntoView({ block: 'nearest', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    if (back) window.scrollTo(0, back.scrollY || 0);
+    else lead.scrollIntoView({ block: 'nearest', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     announce(articles.length || papers.length
       ? [articles.length ? faNum(articles.length) + ' مطلب' : '', papers.length ? faNum(papers.length) + ' مقاله‌ی کتابخانه' : '']
         .filter(Boolean).join(' و ') + ' پیدا شد'
@@ -366,10 +426,21 @@ export function renderCaseAssistant(container) {
   function verdictBox(roundId) {
     if (!roundId) return null;
     const box = el('div', { class: 'dcp-assist-verdict' });
+    const THANKS = 'ممنون — همین بازخورد دفعه‌ی بعد را دقیق‌تر می‌کند.';
+    if (voted().includes(roundId)) {
+      box.appendChild(el('span', { class: 'dcp-assist-verdict-done' }, THANKS));
+      return box;
+    }
     const ask = el('span', { class: 'dcp-assist-verdict-q' }, 'این نتیجه به کارت آمد؟');
     const send = (kind) => {
       api.assistantFeedback(roundId, kind).catch(() => {});
-      box.replaceChildren(el('span', { class: 'dcp-assist-verdict-done', role: 'status' }, 'ممنون — همین بازخورد دفعه‌ی بعد را دقیق‌تر می‌کند.'));
+      ssSet(VOTES, JSON.stringify([...voted(), roundId].slice(-50)));
+      const done = el('span', { class: 'dcp-assist-verdict-done', tabindex: '-1' }, THANKS);
+      box.replaceChildren(done);
+      // The pressed button is gone: focus the thanks, and say it through the
+      // live region, which a screen reader is already listening to.
+      done.focus({ preventScroll: true });
+      announce(THANKS);
     };
     const yes = el('button', { class: 'dcp-assist-verdict-btn', type: 'button' }, 'به کارم آمد');
     const no = el('button', { class: 'dcp-assist-verdict-btn', type: 'button' }, 'چیزی که می‌خواستم نبود');
@@ -402,7 +473,7 @@ export function renderCaseAssistant(container) {
       sparkAvatar(true),
       el('div', { class: 'dcp-assist-card' }, [msg, code, el('div', { class: 'dcp-assist-actions' }, [...buttons, restart])].filter(Boolean)),
     ]));
-    show(trail, buttons[0]);
+    show(trail, buttons[0] || restart); // the hourly-limit screen has no retry: focus «شروع دوباره»
   }
 
   function answer(ans, question, options) {
@@ -440,7 +511,7 @@ export function renderCaseAssistant(container) {
       if (status === 401) {
         const login = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود دوباره');
         login.addEventListener('click', async () => {
-          const { openLoginModal } = await import('./login-modal.js?v=211');
+          const { openLoginModal } = await import('./login-modal.js?v=213');
           const res = await openLoginModal({ returnTo: '/plus/assistant.html' });
           if (res && res.user) step();
         });
@@ -471,9 +542,10 @@ export function renderCaseAssistant(container) {
     description = saved.description;
     history = saved.history;
     lastStep = saved.lastStep || null;
+    view = saved.view || null;
     if (!saved.waiting && lastStep && (lastStep.done || Array.isArray(lastStep.options))) render(lastStep);
     else step();
   } else {
-    showIntro(false);
+    showIntro(false, true);
   }
 }
