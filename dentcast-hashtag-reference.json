@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 117,
+   "count": 118,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -377,7 +377,8 @@
     "insight/insight-95",
     "insight/insight-96",
     "insight/insight-97",
-    "insight/insight-98"
+    "insight/insight-98",
+    "insight/insight-99"
    ]
   },
   {
@@ -2748,6 +2749,43 @@
    ]
   },
   {
+   "key": "دوام_ترمیم",
+   "tag": "#دوام_ترمیم",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "دوامِ بلندمدتِ ترمیم و عواملی که آن را تعیین می‌کنند.",
+   "use_when": "مقاله بقا یا طولِ عمرِ ترمیم را بسنجد.",
+   "aliases": [
+    "دوام ترمیم",
+    "طول عمر سرامیک",
+    "دوام بلندمدت",
+    "دوام رستوریشن",
+    "دوام رستوریشن‌ها",
+    "restoration durability"
+   ],
+   "variants": [
+    "#بقای_ترمیم"
+   ],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-15",
+    "episodes/episode-41",
+    "episodes/episode-55",
+    "episodes/episode-56",
+    "episodes/episode-74",
+    "episodes/episode-89",
+    "dentai/dentai-5",
+    "notecast/episode-15",
+    "dentai/dentai-22",
+    "dentai/dentai-25",
+    "episodes/episode-159-1",
+    "metanotes/meta-14",
+    "notecast/episode-41",
+    "insight/insight-99"
+   ]
+  },
+  {
    "key": "سایش_دندان",
    "tag": "#سایش_دندان",
    "domain": "clinical",
@@ -2947,39 +2985,6 @@
     "insight/insight-66",
     "insight/insight-93",
     "sharehub/share-40"
-   ]
-  },
-  {
-   "key": "دوام_ترمیم",
-   "tag": "#دوام_ترمیم",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "دوامِ بلندمدتِ ترمیم و عواملی که آن را تعیین می‌کنند.",
-   "use_when": "مقاله بقا یا طولِ عمرِ ترمیم را بسنجد.",
-   "aliases": [
-    "دوام ترمیم",
-    "طول عمر سرامیک",
-    "دوام بلندمدت"
-   ],
-   "variants": [
-    "#بقای_ترمیم"
-   ],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-15",
-    "episodes/episode-41",
-    "episodes/episode-55",
-    "episodes/episode-56",
-    "episodes/episode-74",
-    "episodes/episode-89",
-    "dentai/dentai-5",
-    "notecast/episode-15",
-    "dentai/dentai-22",
-    "dentai/dentai-25",
-    "episodes/episode-159-1",
-    "metanotes/meta-14",
-    "notecast/episode-41"
    ]
   },
   {
@@ -4486,6 +4491,31 @@
    ]
   },
   {
+   "key": "تراش_دندان",
+   "tag": "#تراش_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "چترِ عامِ تراش دندان.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [
+    "پرپ دندان",
+    "prep دندان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-113",
+    "episodes/episode-114",
+    "episodes/episode-122-5",
+    "dentcast-plus/video-1",
+    "dentai/dentai-10",
+    "sharehub/share-18",
+    "insight/insight-81",
+    "insight/insight-99"
+   ]
+  },
+  {
    "key": "تراش_لمینیت",
    "tag": "#تراش_لمینیت",
    "domain": "clinical",
@@ -4764,30 +4794,6 @@
     "insight/insight-52",
     "insight/insight-69",
     "chairside/chairside-37"
-   ]
-  },
-  {
-   "key": "تراش_دندان",
-   "tag": "#تراش_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "چترِ عامِ تراش دندان.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
-   "aliases": [
-    "پرپ دندان",
-    "prep دندان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-113",
-    "episodes/episode-114",
-    "episodes/episode-122-5",
-    "dentcast-plus/video-1",
-    "dentai/dentai-10",
-    "sharehub/share-18",
-    "insight/insight-81"
    ]
   },
   {
@@ -21245,6 +21251,7 @@
   "oxygen inhibited layer": "لایه مهار اکسیژن",
   "peri implant mucositis": "موکوزیت پری ایمپلنت",
   "pooled effect estimate": "اثر تجمیعی",
+  "restoration durability": "دوام ترمیم",
   "self protective design": "طراحی خودمحافظ",
   "soft tissue management": "مدیریت بافت نرم",
   "step by step prompting": "شکستن کار",
@@ -21877,6 +21884,7 @@
   "درمان کانال ریشه": "درمان ریشه",
   "دست دندان ژله ای": "دندان مصنوعی ژله ای",
   "دندانپزشکی اطفال": "دندانپزشکی کودکان",
+  "دوام رستوریشن ها": "دوام ترمیم",
   "دکتر فرزاد ستایش": "ستایش",
   "دی کانتامیناسیون": "پاکسازی سرامیک",
   "دیجیتال دنتیستری": "دندانپزشکی دیجیتال",
@@ -22565,6 +22573,7 @@
   "دقت کار پروتز": "دقت پروتزی",
   "دندان های جلو": "دندان قدامی",
   "دنچر بدون لثه": "پروتز متحرک بدون فلنج",
+  "دوام رستوریشن": "دوام ترمیم",
   "دکتر شیخ فرشی": "شیخ فرشی",
   "دی سمانتاسیون": "debonding",
   "دیاگرام پوسلت": "انولوپ آو موشن",

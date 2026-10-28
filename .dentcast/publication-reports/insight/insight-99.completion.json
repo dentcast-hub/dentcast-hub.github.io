@@ -1,0 +1,1412 @@
+{
+  "schema": "publish-completion-v1",
+  "state": {
+    "publication": {
+      "blocker": null,
+      "category": "clinical",
+      "content_id": "insight/insight-99",
+      "context": {
+        "approvals": [
+          {
+            "decision": "\u062a\u0631\u0627\u0634 \u06a9\u0645\u062a\u0631 \u0647\u0645\u06cc\u0634\u0647 \u0628\u0647 \u0645\u0639\u0646\u0627\u06cc \u062f\u0631\u0645\u0627\u0646 \u0628\u0647\u062a\u0631 \u0646\u06cc\u0633\u062a!",
+            "evidence": [
+              "Author supplied exact title in current request; unchanged by landing correction."
+            ],
+            "scope": "title",
+            "status": "confirmed"
+          },
+          {
+            "decision": "Continue same publication through Push2; no merge authorized.",
+            "evidence": [
+              "Author explicitly requested \u0628\u0631\u0648 \u062a\u0627 \u067e\u0648\u0634 \u06f2 after verified Push1."
+            ],
+            "scope": "publication-scope",
+            "status": "confirmed"
+          },
+          {
+            "decision": "Proceed with proposed canonical metadata; include restoration/r\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 search synonyms. Author explicitly instructed uninterrupted execution and routine decisions for this publication.",
+            "evidence": [
+              "Author corrected Persian \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 search coverage, then explicitly directed continuation without repeated routine approval stops."
+            ],
+            "scope": "hashtags-keywords",
+            "status": "confirmed"
+          },
+          {
+            "decision": "{\"prompt_fa\": \"\u06a9\u062f\u0627\u0645 \u0631\u0648\u06cc\u06a9\u0631\u062f \u0628\u0627 \u062a\u0631\u0627\u0634 \u0645\u062d\u0627\u0641\u0638\u0647\u200c\u06a9\u0627\u0631\u0627\u0646\u0647\u0654 \u0627\u0635\u0648\u0644\u06cc \u0633\u0627\u0632\u06af\u0627\u0631 \u0627\u0633\u062a\u061f\", \"options\": [\"\u062a\u0631\u0627\u0634 \u0628\u0627 \u06cc\u06a9 \u0645\u0642\u062f\u0627\u0631 \u062b\u0627\u0628\u062a \u0628\u0631\u0627\u06cc \u0647\u0645\u0647\u0654 \u0645\u0648\u0627\u062f\", \"\u062a\u0631\u0627\u0634 \u06a9\u0645\u062a\u0631 \u0627\u0632 \u0646\u06cc\u0627\u0632 \u0628\u0631\u0627\u06cc \u062d\u0641\u0638 \u0646\u0633\u062c \u062f\u0646\u062f\u0627\u0646\", \"\u062a\u0631\u0627\u0634 \u0645\u062a\u0646\u0627\u0633\u0628 \u0628\u0627 \u0627\u0644\u0632\u0627\u0645\u0627\u062a \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 \u0645\u0646\u062a\u062e\u0628\", \"\u062a\u0631\u0627\u0634 \u0628\u06cc\u0634\u062a\u0631 \u0627\u0632 \u0646\u06cc\u0627\u0632 \u0628\u0631\u0627\u06cc \u0627\u0637\u0645\u06cc\u0646\u0627\u0646 \u0627\u0632 \u062f\u0648\u0627\u0645\"], \"correct\": 2}",
+            "evidence": [
+              "Author explicitly approved this exact question and key C in current chat: \u0627\u06cc\u0646 \u0633\u0648\u0627\u0644 \u062a\u0627\u06cc\u06cc\u062f."
+            ],
+            "scope": "exam-questions",
+            "status": "confirmed"
+          },
+          {
+            "decision": "No independent caption string supplied; unchanged author opening paragraph is reused as description.",
+            "evidence": [
+              "Original author-submitted full Clinical Insight, no separate caption request."
+            ],
+            "scope": "caption",
+            "status": "not_required"
+          }
+        ],
+        "decisions": [
+          {
+            "evidence": [
+              "First paragraph copied verbatim from author; no agent-authored lead"
+            ],
+            "kind": "first_cut_lead_provenance_v1",
+            "origin": "author_original",
+            "source_ref": "author-submitted first body paragraph"
+          },
+          {
+            "kind": "fixed_three_deliveries_v1"
+          },
+          {
+            "kind": "fixed_three_deliveries_v2"
+          },
+          {
+            "from_step": "C.2.6",
+            "kind": "dependency_invalidation_v1",
+            "reason": "Corrected landing ownership after searching actual tools: insight/index.html is hand-maintained, not builder-owned. Reexecute landing and downstream checks; standard-library body/meta checks passed after optional bs4 unavailable.",
+            "superseded": {
+              "approvals": [
+                {
+                  "decision": "\u062a\u0631\u0627\u0634 \u06a9\u0645\u062a\u0631 \u0647\u0645\u06cc\u0634\u0647 \u0628\u0647 \u0645\u0639\u0646\u0627\u06cc \u062f\u0631\u0645\u0627\u0646 \u0628\u0647\u062a\u0631 \u0646\u06cc\u0633\u062a!",
+                  "evidence": [
+                    "Author supplied title in publication request"
+                  ],
+                  "scope": "title",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "Prepare and deliver through Push 1 only; no Push 2, Actions dispatch or merge",
+                  "evidence": [
+                    "Author prior explicit scope retrieved for this same publication"
+                  ],
+                  "scope": "publication-scope",
+                  "status": "confirmed"
+                }
+              ],
+              "delivery": [],
+              "inputs": [
+                {
+                  "ref": "author-submitted Clinical Insight text and two attached JPEG diagrams"
+                }
+              ],
+              "steps": [
+                {
+                  "evidence": [
+                    "Insight landing is builder-owned: tools/build_section_indexes.py; will regenerate after brain entry at C.8, outside requested Push1 scope."
+                  ],
+                  "id": "C.2.6",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Audited title, description, canonical, OG, Twitter, JSON-LD and visible dates; predecessor date 2026-10-22 replaced by 2026-10-28, no stale predecessor identity."
+                  ],
+                  "id": "C.3",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Template insight-98 SHA256 unchanged from C.1."
+                  ],
+                  "id": "C.4",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.5",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "Clinical Insight, not NoteCast; no parent episode.",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.5-b",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "Clinical Insight, not episode/NoteCast pair; no mirrored evidence credit.",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.6",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "Clinical Insight, not Promptologist; no series prev/next.",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.7",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "started"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.7-b",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.8",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.9",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.1",
+                  "module": "06-paper-ingestion.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.2",
+                  "module": "06-paper-ingestion.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.3",
+                  "module": "06-paper-ingestion.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.11",
+                  "module": "07-flashcards-and-quiz.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.12",
+                  "module": "07-flashcards-and-quiz.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.13",
+                  "module": "08-des-fidelity.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.14",
+                  "module": "09-challenge.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.0",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.5",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.6",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.6-b",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.6",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.8",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.7",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "D",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "E",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "F",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "G",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                }
+              ],
+              "validation": []
+            }
+          },
+          {
+            "from_step": "C.2",
+            "kind": "dependency_invalidation_v1",
+            "reason": "Final mandatory English-toggle label changes decoded page text outside the unchanged author prose. Conservatively invalidate and reverify C.2 onward, preserving actual prepared bytes and original author approvals in audit; no clinical content or title changed.",
+            "superseded": {
+              "approvals": [
+                {
+                  "decision": "\u062a\u0631\u0627\u0634 \u06a9\u0645\u062a\u0631 \u0647\u0645\u06cc\u0634\u0647 \u0628\u0647 \u0645\u0639\u0646\u0627\u06cc \u062f\u0631\u0645\u0627\u0646 \u0628\u0647\u062a\u0631 \u0646\u06cc\u0633\u062a!",
+                  "evidence": [
+                    "Author supplied exact title in current request; unchanged by landing correction."
+                  ],
+                  "scope": "title",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "Continue same publication through Push2; no merge authorized.",
+                  "evidence": [
+                    "Author explicitly requested \u0628\u0631\u0648 \u062a\u0627 \u067e\u0648\u0634 \u06f2 after verified Push1."
+                  ],
+                  "scope": "publication-scope",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "Proceed with proposed canonical metadata; include restoration/r\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 search synonyms. Author explicitly instructed uninterrupted execution and routine decisions for this publication.",
+                  "evidence": [
+                    "Author corrected Persian \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 search coverage, then explicitly directed continuation without repeated routine approval stops."
+                  ],
+                  "scope": "hashtags-keywords",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "{\"prompt_fa\": \"\u06a9\u062f\u0627\u0645 \u0631\u0648\u06cc\u06a9\u0631\u062f \u0628\u0627 \u062a\u0631\u0627\u0634 \u0645\u062d\u0627\u0641\u0638\u0647\u200c\u06a9\u0627\u0631\u0627\u0646\u0647\u0654 \u0627\u0635\u0648\u0644\u06cc \u0633\u0627\u0632\u06af\u0627\u0631 \u0627\u0633\u062a\u061f\", \"options\": [\"\u062a\u0631\u0627\u0634 \u0628\u0627 \u06cc\u06a9 \u0645\u0642\u062f\u0627\u0631 \u062b\u0627\u0628\u062a \u0628\u0631\u0627\u06cc \u0647\u0645\u0647\u0654 \u0645\u0648\u0627\u062f\", \"\u062a\u0631\u0627\u0634 \u06a9\u0645\u062a\u0631 \u0627\u0632 \u0646\u06cc\u0627\u0632 \u0628\u0631\u0627\u06cc \u062d\u0641\u0638 \u0646\u0633\u062c \u062f\u0646\u062f\u0627\u0646\", \"\u062a\u0631\u0627\u0634 \u0645\u062a\u0646\u0627\u0633\u0628 \u0628\u0627 \u0627\u0644\u0632\u0627\u0645\u0627\u062a \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 \u0645\u0646\u062a\u062e\u0628\", \"\u062a\u0631\u0627\u0634 \u0628\u06cc\u0634\u062a\u0631 \u0627\u0632 \u0646\u06cc\u0627\u0632 \u0628\u0631\u0627\u06cc \u0627\u0637\u0645\u06cc\u0646\u0627\u0646 \u0627\u0632 \u062f\u0648\u0627\u0645\"], \"correct\": 2}",
+                  "evidence": [
+                    "Author explicitly approved this exact question and key C in current chat: \u0627\u06cc\u0646 \u0633\u0648\u0627\u0644 \u062a\u0627\u06cc\u06cc\u062f."
+                  ],
+                  "scope": "exam-questions",
+                  "status": "confirmed"
+                }
+              ],
+              "delivery": [],
+              "inputs": [
+                {
+                  "ref": "author-submitted Clinical Insight text and two attached JPEG diagrams"
+                }
+              ],
+              "steps": [
+                {
+                  "evidence": [
+                    "Cloned clinical-98 chrome/schema, swapped supplied title/subtitle/body verbatim, dates 2026-10-28, .org identity preserved, WebP after body paragraphs 4 and 6; no phantom English link. Exact body and JSON-LD checks pass."
+                  ],
+                  "id": "C.2",
+                  "module": "03-litecast-and-page.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.0.5",
+                  "module": "03-litecast-and-page.md",
+                  "reason": "Not LiteCast; specialist in-body links at C.4.8.",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.0.6",
+                  "module": "03-litecast-and-page.md",
+                  "reason": "Not LiteCast; specialist related links at C.4.9.",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "Clear semantic choice: fixed-pros / preparation; general preparation requirements, not specific ceramic materials or occlusal therapy."
+                  ],
+                  "id": "C.2.4",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Added exactly one related section with glossary and /pillar/fixed-pros/ nav capsules, 2 of 5 slots."
+                  ],
+                  "id": "C.2.5",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Added one link to static insight/index.html, newest first; exact author title; CRLF and other bytes preserved. Corrected earlier builder attribution."
+                  ],
+                  "id": "C.2.6",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Standard-library audit passed for title, author-derived description, OG, Twitter, canonical, all JSON-LD dates and visible dates. Old 98 identity/date removed; new 99 and 2026-10-28 consistent."
+                  ],
+                  "id": "C.3",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Original insight-98 SHA256 equals C.1 lock."
+                  ],
+                  "id": "C.4",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.5",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "Clinical Insight, not NoteCast.",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.5-b",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "Clinical Insight, not episode/NoteCast pair.",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.6",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "Clinical Insight, not Promptologist.",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "Semantic glossary review: retention/resistance substantively discussed, both pages already at five-link cap; no edits allowed. No Structural Durability glossary term; other terms too tangential."
+                  ],
+                  "id": "C.4.7",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.7-b",
+                  "module": "05-semantic-linking.md",
+                  "reason": "Not glossary publication; no new term for scoped backfill.",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "Fresh semantic pass: first body occurrence of tooth preparation\u2192episode113; first technical \u06af\u06cc\u0631\u2192retention and \u0645\u0642\u0627\u0648\u0645\u062a\u2192resistance. Only anchor wrappers changed; stripped text identical, targets exist; before/after hashes verified."
+                  ],
+                  "id": "C.4.8",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Fresh semantic related-content pass selected Goodacre episode113/114 and overlay-preparation episode55; verified targets exist, only three capsules appended, total five links; actual hashes and verbatim body verified."
+                  ],
+                  "id": "C.4.9",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.1",
+                  "module": "06-paper-ingestion.md",
+                  "reason": "No paper attached; no Drive filing.",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.2",
+                  "module": "06-paper-ingestion.md",
+                  "reason": "No paper attached; no cabinet ingestion.",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.3",
+                  "module": "06-paper-ingestion.md",
+                  "reason": "No paper attached; no DOI credit.",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "Wrote three atomic authored DefinedTerms in FAQ corpus: structural durability, conservative preparation, inadequate-reduction overcontour; unique stable IDs, definitions grounded only in supplied body."
+                  ],
+                  "id": "C.4.11",
+                  "module": "07-flashcards-and-quiz.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Wrote four self-contained binary FAQ questions with explicit verdict-first answers, grounded in original article; flashcard answers distinct. Pathway exam gate evaluated at C.5.6."
+                  ],
+                  "id": "C.4.12",
+                  "module": "07-flashcards-and-quiz.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "DES3.5 COMMENTARY from exact own body: reasoning4, evidence relationship0, bounded scope3, landing declaration3, base5 =15/E. Quotes/arithmetic/band/schema validated; self-commentary Fidelity null. Scoped byte insertion preserved mixed newline source."
+                  ],
+                  "id": "C.4.13",
+                  "module": "08-des-fidelity.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.14",
+                  "module": "09-challenge.md",
+                  "reason": "Ordinary explanatory article, not Challenge.",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "Reused canonical #\u0627\u06cc\u0646\u0633\u0627\u06cc\u062a #\u062a\u0631\u0627\u0634_\u062f\u0646\u062f\u0627\u0646 #\u062f\u0648\u0627\u0645_\u062a\u0631\u0645\u06cc\u0645; applied author-requested \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 synonyms to existing \u062f\u0648\u0627\u0645_\u062a\u0631\u0645\u06cc\u0645 concept via --say, sync compiled aliases, query \u062f\u0648\u0627\u0645 \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 resolves rank1. Keywords retain Persian \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 and Structural Durability."
+                  ],
+                  "id": "C.5.0",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Appended clinical-99 at absolute brain tail with same keys/order as clinical-98; original title and author first-paragraph caption, canonical three tags, supplied/approved restoration keywords, fixed-pros/preparation unchanged. --sync and --check pass."
+                  ],
+                  "id": "C.5",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Verified fixed-pros/preparation exactly equals locked C.2.4 decision and capsule destination. Hashtag sync/check passed; plus-index and assistant-tags changes reviewed as canonical generated outputs."
+                  ],
+                  "id": "C.5.5",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Placed in fixed-pros after dentcast-plus/video-1 and biomimetic after chairside/chairside-35, milestone false. Added one founder-approved exam MCQ r-fbae8c4d key C; exact chat approval recorded. Validator:0 errors, 3 unrelated pre-existing warnings. No third pathway, no series split."
+                  ],
+                  "id": "C.5.6",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Reviewed bundle-bonding, bundle-biomimetic, bundle-crown-prep; each rejected at mechanical gate1 because insight folder is ineligible; no bundle or shared asset changed."
+                  ],
+                  "id": "C.5.6-b",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.6",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "started"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.8",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.7",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "D",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "E",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "F",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "G",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                }
+              ],
+              "validation": [
+                {
+                  "evidence": [
+                    "Verified fixed-pros after dentcast-plus/video-1 and biomimetic after chairside/chairside-35; no third placement or split series. Exam proposal prepared from author body, 4 comparable-length options, one correct; not written without founder approval."
+                  ],
+                  "scope": "C.5.6 placements"
+                }
+              ]
+            }
+          },
+          {
+            "english": {
+              "evidence": [
+                "Final FA/EN pair reviewed on current bytes; both exact reciprocal targets exist and no clinical content added."
+              ],
+              "path": "insight/en/insight-99.html",
+              "status": "ready"
+            },
+            "evidence": [
+              "Full ten-scope editorial close review on current prepared artifacts; all scientific, semantic, metadata and author decisions resolved before Push2."
+            ],
+            "kind": "second_cut_editorial_lock_v1",
+            "scopes": [
+              {
+                "evidence": [
+                  "plus/des-scores.json: own-text COMMENTARY15/E, exact quotes and arithmetic/band/schema validated; no Fidelity owed."
+                ],
+                "scope": "scientific",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Author submitted complete explanatory prose; no challenge markup or private answer."
+                ],
+                "scope": "challenge",
+                "status": "not_applicable"
+              },
+              {
+                "evidence": [
+                  "Locked fixed-pros/preparation verified unchanged against live main taxonomy."
+                ],
+                "scope": "taxonomy",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Exact body anchors to Goodacre113, retention,resistance; five related capsules including2 nav and113/114/55; glossary inbound targets atcap5."
+                ],
+                "scope": "links",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Three canonical tags reused; author correction \u062f\u0648\u0627\u0645 \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 aliases compiled to \u062f\u0648\u0627\u0645_\u062a\u0631\u0645\u06cc\u0645; sync/check and rank1 simulation passed."
+                ],
+                "scope": "hashtags",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "clinical-99 physically last in brain, same schema as98, exact author title and first-paragraph description; no en brain entry."
+                ],
+                "scope": "content_record",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "fixed-pros after video-1 and biomimetic after chairside35; approved exam r-fbae8c4d keyC, validator0errors; three bundles rejected gate1."
+                ],
+                "scope": "pathways",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "index.html: exactly7 items, title-only new item first and priorfirst6 retained."
+                ],
+                "scope": "pulse",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "insight/en/insight-99.html: ten translated paragraphs, two figures, reciprocal toggles, Englishchrome, noindex, zero hreflang, valid schema, original chrome unchanged."
+                ],
+                "scope": "english",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Exact supplied title and prose retained; explicit Push2 instruction, restoration-synonym correction and exact exam-question/keyC approval recorded; no pending question."
+                ],
+                "scope": "author_approvals",
+                "status": "resolved"
+              }
+            ]
+          }
+        ],
+        "delivery": [
+          {
+            "evidence": [
+              "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/40657048549"
+            ],
+            "scope": "GitHub Actions post-Push-2 mechanical continuation"
+          }
+        ],
+        "inputs": [
+          {
+            "ref": "author-submitted Clinical Insight text and two attached JPEG diagrams"
+          }
+        ],
+        "pending_questions": [],
+        "unrelated_changes": [],
+        "validation": [
+          {
+            "evidence": [
+              "FA and EN JSON-LD parse, GA4 once perpage, two images perpage decode, no phantom toggles; Pulse7 lines, newtitle first; approved bank validator0errors."
+            ],
+            "scope": "final editorial checks before Push2"
+          },
+          {
+            "content_id": "insight/insight-99",
+            "exit_code": 0,
+            "expected_caption": null,
+            "expected_title": "\u062a\u0631\u0627\u0634 \u06a9\u0645\u062a\u0631 \u0647\u0645\u06cc\u0634\u0647 \u0628\u0647 \u0645\u0639\u0646\u0627\u06cc \u062f\u0631\u0645\u0627\u0646 \u0628\u0647\u062a\u0631 \u0646\u06cc\u0633\u062a!",
+            "kind": "phase_f",
+            "output_sha256": "7544ff1f61865394fabbe1991eaa17ccd0d28eef703ba77d9432684e5cd70d89",
+            "recorded_at": "2026-10-28T08:29:40+00:00",
+            "summary": "106 passed, 1 warned, 0 failed  \u2014 publish is COMPLETE"
+          }
+        ]
+      },
+      "external_actions": [],
+      "status": "in_progress",
+      "steps": [
+        {
+          "evidence": [
+            "Read active routers, global core all six pages, parity, checkpoint protocol, full modules 01\u201305; authorized scope ends at C.4.9."
+          ],
+          "id": "rules",
+          "module": "01-hard-rules.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Normal page route: supplied full text and two JPEG images; no paper attached."
+          ],
+          "id": "0",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Parsed entire flat brain; latest clinical-98, contiguous clinical 1\u201398; inspected live main PILLARS, fixed-pros preparation best fit."
+          ],
+          "id": "A",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Author explicitly requested Clinical Insight; mapped to clinical and insight/."
+          ],
+          "id": "B.1",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Verified contiguous 1\u201398 and absent insight-99; announced next identifier."
+          ],
+          "id": "B.2",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Full author-supplied title, subtitle, ten body paragraphs retained verbatim in local input."
+          ],
+          "id": "B.3",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Reviewed phrasing; clinical contrasts substantive, no genuine style change needed. Original retained."
+          ],
+          "id": "B.3.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Two attached 1536x804 diagrams converted WebP quality92, verified decode; place under insufficient-thickness paragraph and anatomical-reduction paragraph."
+          ],
+          "id": "B.4",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "No research paper attached; paper branch inapplicable."
+          ],
+          "id": "B.4.7",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Author clinical commentary, no retrievable research citation; COMMENTARY track owed after Push1."
+          ],
+          "id": "B.4.8",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Author requested publication of a complete explanatory Clinical Insight, not a question-body assessment; ordinary post, no challenge."
+          ],
+          "id": "B.4.9",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pulse proposal uses title-only precedent: \u062a\u0631\u0627\u0634 \u06a9\u0645\u062a\u0631 \u0647\u0645\u06cc\u0634\u0647 \u0628\u0647 \u0645\u0639\u0646\u0627\u06cc \u062f\u0631\u0645\u0627\u0646 \u0628\u0647\u062a\u0631 \u0646\u06cc\u0633\u062a! links to /insight/insight-99.html; deferred until authorized later cut."
+          ],
+          "id": "B.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0",
+          "module": "03-litecast-and-page.md",
+          "reason": "Clinical Insight category; LiteCast isolated track inactive.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.1",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; brain typed clinical source.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.2",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; specialist linking applies.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.3",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; clone clinical predecessor.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.4",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; general publication track.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Locked latest same-category template insight/insight-98.html; SHA256 stored for unchanged-template check."
+          ],
+          "id": "C.1",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Current page verified: exact ten original paragraphs, two decoded WebP diagrams, same-type chrome/schema, .org canonical, GA4/preconnect, final English toggle with real target. No clinical prose changed."
+          ],
+          "id": "C.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.5",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; specialist inline links apply.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.6",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; specialist related section applies.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Verified original fixed-pros/preparation choice unchanged, matches live taxonomy."
+          ],
+          "id": "C.2.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "One related section; two canonical nav capsules retained; later enrichment also reviewed."
+          ],
+          "id": "C.2.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Static Insight landing links new article once with exact supplied title; only row insertion, CRLF retained."
+          ],
+          "id": "C.2.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Rechecked metadata/OG/Twitter/JSON-LD/visible dates, identity99 and date2026-10-28; no predecessor residue."
+          ],
+          "id": "C.3",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Original template SHA256 remains unchanged from C.1."
+          ],
+          "id": "C.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Clinical Insight, not NoteCast.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5-b",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Clinical Insight, not episode/NoteCast pair.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Clinical Insight, not ordered Promptologist series.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Fresh reviewed glossary meanings: retention/resistance are exact discussed concepts; both existing glossary related sections at cap5, untouched. No Structural Durability glossary term exists."
+          ],
+          "id": "C.4.7",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.7-b",
+          "module": "05-semantic-linking.md",
+          "reason": "No new glossary term published.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Reviewed first-occurrence technical anchors for preparation, retention, resistance; body decoded text exactly original, existing real targets."
+          ],
+          "id": "C.4.8",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Reverified whole-brain semantic choice: Goodacre113/114 and overlay-preparation55; all targets real, two nav plus three related capsules, cap5."
+          ],
+          "id": "C.4.9",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.1",
+          "module": "06-paper-ingestion.md",
+          "reason": "No attached paper, no Drive filing.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.2",
+          "module": "06-paper-ingestion.md",
+          "reason": "No attached paper, no cabinet ingestion.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.3",
+          "module": "06-paper-ingestion.md",
+          "reason": "No attached paper, no DOI credit.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Verified3 authored atomic cards in corpus, unique IDs and no FAQ copies; actual artifact preserved, no need regenerate unchanged definitions."
+          ],
+          "id": "C.4.11",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Verified4 standalone binary questions, verdict-first answers, grounded in original article; pathway MCQ independently approved and checked at C.5.6."
+          ],
+          "id": "C.4.12",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Existing own-body COMMENTARY evaluation revalidated on unchanged exact source:15/E, reasoning4+evidence0+scope3+declaration3+base5. Exact quotation/arithmetic/band/schema pass; no Fidelity owed for self-commentary. No research claims or DOI invented."
+          ],
+          "id": "C.4.13",
+          "module": "08-des-fidelity.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.14",
+          "module": "09-challenge.md",
+          "reason": "Ordinary explanatory post, no Challenge.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Canonical three tags reused; author-requested \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 synonym compiled into same durability concept, search resolves rank1; no duplicate concept. Prior sync/check successful, artifacts preserved."
+          ],
+          "id": "C.5.0",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Verified clinical-99 physical tail, exact same key order/shape as98, original title and author-derived description, Persian restoration keywords and canonical tags."
+          ],
+          "id": "C.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Confirmed original fixed-pros/preparation unchanged and page pillar capsule consistent."
+          ],
+          "id": "C.5.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Verified two full pathways at exact selected anchors, no third/series split; founder-approved MCQ r-fbae8c4d matches chat proposal and keyC exactly. Bank validator0 errors; three legacy warnings outside this article."
+          ],
+          "id": "C.5.6",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "bundle-bonding, bundle-biomimetic and bundle-crown-prep reviewed and excluded at mechanical gate1 (Insight type); no bundle or shared asset edit."
+          ],
+          "id": "C.5.6-b",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Verified actual title-only Pulse update:7 items, new firstline, previousfirst6 kept. Full ten-scope editorial lock recorded; English authored/reviewed with reciprocal toggles and noindex; all founder approvals and exam keyC resolved. No judgment work left for mechanical runner."
+          ],
+          "id": "C.6",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "All applicable canonical C.8 builders passed; logs are in the recovery artifact."
+          ],
+          "id": "C.8",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "tools/stamp-version.py passed after C.8"
+          ],
+          "id": "C.7",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Technical English, noindex, hreflang, sitemap, and final version checks passed; logs are in the recovery artifact."
+          ],
+          "id": "D",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Canonical dc-notify marker present exactly once"
+          ],
+          "id": "E",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "phase_f:7544ff1f61865394fabbe1991eaa17ccd0d28eef703ba77d9432684e5cd70d89"
+          ],
+          "id": "F",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/40657048549"
+          ],
+          "id": "G",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        }
+      ],
+      "target_paths": [
+        "dentcast-brain.json",
+        "dentcast-hashtag-reference.json",
+        "glossary/glossary.json",
+        "glossary/index.html",
+        "index.html",
+        "insight/en/insight-99.html",
+        "insight/index.html",
+        "insight/insight-98.html",
+        "insight/insight-99.html",
+        "insight/insight99-1.webp",
+        "insight/insight99-2.webp",
+        "pillar/fixed-pros/index.html",
+        "pillar/fixed-pros/structure.json",
+        "pillar/index.html",
+        "pillar/structure.json",
+        "player.html",
+        "plus/assistant-tags.json",
+        "plus/content-index.json",
+        "plus/des-scores.json",
+        "plus/exam-questions.json",
+        "plus/faq-corpus.json",
+        "plus/flashcards-index.json",
+        "plus/pathways.json",
+        "plus/quiz-index.json",
+        "service-worker.js",
+        "sitemap.xml",
+        "up-board/index.json"
+      ]
+    },
+    "snapshot": {
+      "files": {
+        "dentcast-brain.json": {
+          "kind": "file",
+          "sha256": "a29170d61b7ec6cfe49ee3693c356dcc6d3c0b3b5af459156017afc3df025d89",
+          "executable": false
+        },
+        "dentcast-hashtag-reference.json": {
+          "kind": "file",
+          "sha256": "5b5e6040042ca94561cb6351f2e21e5ba668fe068aa0e2bd450624c6714f8d68",
+          "executable": false
+        },
+        "glossary/glossary.json": {
+          "kind": "file",
+          "sha256": "695560cc9c1ac49301dadfb69f7116444a9af95b51a67c0ae28e95ea362bcddd",
+          "executable": false
+        },
+        "glossary/index.html": {
+          "kind": "file",
+          "sha256": "e07e820defef0f0895b0e0061218880e46b40ccdb14d928caf74b915a2769d75",
+          "executable": false
+        },
+        "index.html": {
+          "kind": "file",
+          "sha256": "c01ca22c9b23a18a408b888dfd01f20094860a7b8754c68b5cd44888892f7041",
+          "executable": false
+        },
+        "insight/en/insight-99.html": {
+          "kind": "file",
+          "sha256": "44b0032ab29abcf72e951ab163edf0bd3484240734d8eff0640897073f454790",
+          "executable": false
+        },
+        "insight/index.html": {
+          "kind": "file",
+          "sha256": "6781daa5e02a65b1a4111bf0a4c708a7e3324b09b79615b5ccc806cb8125163b",
+          "executable": false
+        },
+        "insight/insight-98.html": {
+          "kind": "file",
+          "sha256": "d06f634d51e8eedad62de3940d41fd1837ed82c56dc28631b680efd06b0a9225",
+          "executable": false
+        },
+        "insight/insight-99.html": {
+          "kind": "file",
+          "sha256": "7ea200d52d745acf095d05621e1d0998fc6c72e7ea7524b61169a64c4774edc0",
+          "executable": false
+        },
+        "insight/insight99-1.webp": {
+          "kind": "file",
+          "sha256": "76a372917d1120c93ed625f188791fc5d66e2f55d071683493dcf83bb97aa823",
+          "executable": false
+        },
+        "insight/insight99-2.webp": {
+          "kind": "file",
+          "sha256": "9b1dd88e09e66593f69aac787b1d69525bbc416daf870db0e27982ca2d5158b4",
+          "executable": false
+        },
+        "pillar/fixed-pros/index.html": {
+          "kind": "file",
+          "sha256": "d74683558e6322353bc18ed97d03b13186b4e4d2883d58d3f8484dc14f0f9dcb",
+          "executable": false
+        },
+        "pillar/fixed-pros/structure.json": {
+          "kind": "file",
+          "sha256": "46b9e029980c8618d3690f75dc449009ebb465c366f5ed0ffe302f0efe8094dc",
+          "executable": false
+        },
+        "pillar/index.html": {
+          "kind": "file",
+          "sha256": "fe1899c00b6ebd503d8d563ffb7d9eb15321a6fd92ef5766d1c816cedfc8d8eb",
+          "executable": false
+        },
+        "pillar/structure.json": {
+          "kind": "file",
+          "sha256": "bcd7f777716ff334539dcac7920cb1f5b591aa4c73f911b9304b4a7fb78b8737",
+          "executable": false
+        },
+        "player.html": {
+          "kind": "file",
+          "sha256": "d40171eac085880712658de883130c1cd7b6ec23e35e7c9cbad339d469e1a87b",
+          "executable": false
+        },
+        "plus/assistant-tags.json": {
+          "kind": "file",
+          "sha256": "595422fc1dcd9111d89d9adac9bfe7ba58411d121ea3f6205778f5d110f23f7e",
+          "executable": false
+        },
+        "plus/content-index.json": {
+          "kind": "file",
+          "sha256": "740e3baf4538653269f58e192d3639acdf972e0e7772bb05e2ef24fb9f61d3cf",
+          "executable": false
+        },
+        "plus/des-scores.json": {
+          "kind": "file",
+          "sha256": "ab4cb12cb22b025c206f658545d6e198b34de8331fd5827ac8251eba413b01d7",
+          "executable": false
+        },
+        "plus/exam-questions.json": {
+          "kind": "file",
+          "sha256": "bba68b76917a5a761c160a01fabce71fdf5597f198a3f423c522b743b6e04047",
+          "executable": false
+        },
+        "plus/faq-corpus.json": {
+          "kind": "file",
+          "sha256": "ef89c6b8f2bda00a760f51b90337e333ffeff826a1ce3bb747f15eb585b34f31",
+          "executable": false
+        },
+        "plus/flashcards-index.json": {
+          "kind": "file",
+          "sha256": "7f04dd9f5bafb13c63a1440890676114c174f140141f6aa3974cf21414aa1e04",
+          "executable": false
+        },
+        "plus/pathways.json": {
+          "kind": "file",
+          "sha256": "b2a911d7dc321a8ba8375ee880d689c1ba912e6fdcb23279dc8a26894cd96922",
+          "executable": false
+        },
+        "plus/quiz-index.json": {
+          "kind": "file",
+          "sha256": "c49242ca0a5480d3205e211c398f3a7c7818b9ab0d8d6d073f1cd42e187ad9fd",
+          "executable": false
+        },
+        "service-worker.js": {
+          "kind": "file",
+          "sha256": "330e7ecbfd831062a6f158c9289ce5fe87794ce62fdb7bc323c0b6bfd7f94c0d",
+          "executable": false
+        },
+        "sitemap.xml": {
+          "kind": "file",
+          "sha256": "5453ae8add4d129ab7576cacd2c7d7a79295eb7b4457b9360b6c6ece66d4cd58",
+          "executable": false
+        },
+        "up-board/index.json": {
+          "kind": "file",
+          "sha256": "8b0024d992d1b6304d329bc6dd448da7215a4680e386c08dc01b7a07aba5d245",
+          "executable": false
+        }
+      },
+      "workflow": {
+        ".dentcast/workflows/README.md": "0d32353547c2d2b37762c6b80928c0fa863baec590631b540a52f08b8efdf4d4",
+        ".dentcast/workflows/agent-parity.md": "04dda6507daa1b00b0b8a59ec209a3dde70317f26f3d95c73031584785206847",
+        ".dentcast/workflows/publish-handoff.md": "50e59f0b5fd9742b1b4b91767edbe82ddfa81d8c0098ce92a56bd93981bd9eda",
+        ".dentcast/workflows/routing-details.md": "378c6ee450d701a70ebfb493eaf069f1f846cc944fc90c216d26838cd1f75c7c",
+        ".dentcast/workflows/global/README.md": "5c7495d4431acf07ad7fa0bdc05fe2ab662f2f75b99968df8744d379bd2115af",
+        ".dentcast/workflows/global/LOAD-MAP.json": "48d9ed510445b550ea0596da8ad9f6bd56437ed49564f9d2940cabaaf238e443",
+        "tools/dentcast_global_rules.py": "c92d378a875dec54ed7845015797c37f211f0acab93150f669b0f820dfd94464",
+        ".dentcast/workflows/global/repo-conventions.md": "f3187b61edd157f4bb24c9f64c70ab6068abbf0096ca9eb209b7e8f54defb0c6",
+        ".dentcast/workflows/global/plus-premium.md": "c66985d10055e1881def5c0e2060486c3838bf5fa29d26ba8a0fe9ffbab9fb9e",
+        ".dentcast/workflows/global/site-invariants.md": "c41c43b17502f6c01ef91b3e786e1bd9000b06858375f6c8c65e2e15cb6c15ca",
+        "tools/dentcast_publish_handoff.py": "ef43540d94532266c47136c514976bcccc2364c74e992972332e57582ed3dbe2",
+        "tools/dentcast_publish_lifecycle.py": "4dcde1d2500d18671b6c5f2d0d0f8223fe4901e1a93c52fe947ec9085542b966",
+        "tools/verify_publish.py": "27211def54fdeeb4e06fafbfa1ef9feabfb273dd0149f64d6e74bc25b7be79c1",
+        "tools/dentcast_text_io.py": "28af00db98df97c6062e36d2d963e6a81454f90fb91f9cd8f267ad8a9ee8863d",
+        "tools/text_io.mjs": "c6f9208e26983c8eade43d8cf3effe865e6479df903d2cee661cd0a928565536",
+        "tools/dentcast_post_cut2_runner.py": "e2b345cab35e8a3e74817ffe61187c4a7a44bd29cafca285d14544a59a89ff18",
+        ".github/workflows/post-cut2-mechanical.yml": "16095f4353f5b91934e460afcf0ad51c0d933d4f5411cdbe6fc633ad6d219525",
+        ".dentcast/workflows/publish-checkpoints.md": "ca172f67727c73c8b570212d8a6ab9468052af7260656ac3ebfb1273d3f09e04",
+        ".dentcast/workflows/modules/01-hard-rules.md": "0b5f1ef7276308a3b23ed00f3e4b95dbb9f4263079169498a8e391c10ef50427",
+        ".dentcast/workflows/modules/02-routing-intake.md": "6663d3a35a2b55f4c92d5312ebe6b8ab669238745f4547a8e21018fcaca036e5",
+        ".dentcast/workflows/modules/03-litecast-and-page.md": "b448b1996ab49a44f2b8136d759e0cc1362305ed9ed7a2ebf9baf19fd37382b2",
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "744e173ce25a8bf549f94584359dcea9851301fa892d273209ed8e25e745f1f8",
+        ".dentcast/workflows/modules/05-semantic-linking.md": "4f9949082207741b45a8be8301c1fa758d960c40fb57d3ee3d90ccc8aa0384f9",
+        ".dentcast/workflows/modules/06-paper-ingestion.md": "413ff021ae01aada1ab373c3eb5cca1e8f8a2445a427198f3093a6f29d1381a0",
+        ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "bf7c14308abb7f602bd047c671a8aa5caf8691d8e5808f49ca617b5f07c2ea13",
+        ".dentcast/workflows/modules/08-des-fidelity.md": "0b7a1c0dfd1b3521716bd3cb918b411a4ccf3a54719f1afe186d83fae62c2cf5",
+        ".dentcast/workflows/modules/09-challenge.md": "ef36cbed0344cc20b199cd0bd243c017f4444daa7032df75df18bf5290bba569",
+        ".dentcast/workflows/modules/10-brain-and-pathways.md": "d1c5faeb4be70dbadfb8a8895841f9b8fc229414cbafa55df21d60c90ccabdd8",
+        ".dentcast/workflows/modules/11-build-and-version.md": "1251769e2e81b93362d75c5f8ea395244db37d178269224be21f419904a703a0",
+        ".dentcast/workflows/modules/12-english-notify-verify.md": "0e56cb9c487c2e06c7afc620eaa5931f3ac14895c3ed25faab7582fced892a71"
+      }
+    }
+  },
+  "second_delivery_commit": "4425475205fe650947f36492a0f7ca1310dc0f10",
+  "verification": {
+    "kind": "phase_f",
+    "content_id": "insight/insight-99",
+    "expected_title": "\u062a\u0631\u0627\u0634 \u06a9\u0645\u062a\u0631 \u0647\u0645\u06cc\u0634\u0647 \u0628\u0647 \u0645\u0639\u0646\u0627\u06cc \u062f\u0631\u0645\u0627\u0646 \u0628\u0647\u062a\u0631 \u0646\u06cc\u0633\u062a!",
+    "expected_caption": null,
+    "exit_code": 0,
+    "output_sha256": "7544ff1f61865394fabbe1991eaa17ccd0d28eef703ba77d9432684e5cd70d89",
+    "summary": "106 passed, 1 warned, 0 failed  \u2014 publish is COMPLETE"
+  }
+}
