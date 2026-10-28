@@ -246,6 +246,20 @@ class EntrypointMigrationTests(unittest.TestCase):
      positions.append(router.index("`modules/"+name+"`",start))
      continue
     if name == "08-des-fidelity.md":
+     # Founder 1405/08/06: the per-version notes of Part 2 moved verbatim to
+     # des-version-history.md; module 08 keeps a bounded summary of the rules
+     # they imply. Put the moved text back in place, so every other line is
+     # still compared with the legacy contract below.
+     hist=read(".dentcast/workflows/des-version-history.md")
+     moved=hist.split("<!-- des-version-history-text:v1 -->\n",1)[1].split("<!-- /des-version-history-text:v1 -->",1)[0]
+     h_start=body.index("<!-- des-version-history:v1 -->")
+     h_end=body.index("<!-- /des-version-history:v1 -->\n",h_start)+len("<!-- /des-version-history:v1 -->\n")
+     summary=body[h_start:h_end]
+     for term in ("des-version-history.md","version-gated","re-labelled",
+                  "des-source-markers.json","des-fidelity-plans","base_points",
+                  "round_half_up","SECONDARY_REPORT","chain rule"):
+      self.assertIn(term,summary)
+     body=body[:h_start]+moved+body[h_end:]
      # Part 2c remains the original approved execution-routing amendment.
      # The explicit precomputed-result branch is a second, narrowly allowed
      # workflow addition; remove only that block before checking source parity.
