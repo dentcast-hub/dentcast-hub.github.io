@@ -11,10 +11,10 @@
 // prompt on page load: a "Block" is permanent, and a drive-by prompt on the very
 // first login would burn the channel for good (Safari refuses it without a
 // gesture, Chrome demotes it to quiet UI).
-import { el, tehranDay } from './util.js?v=211';
-import { api, currentUser } from './api.js?v=211';
-import { openOverlay } from './overlay.js?v=211';
-import { ensurePushSubscription, pushSupported } from './push.js?v=211';
+import { el, tehranDay } from './util.js?v=212';
+import { api, currentUser } from './api.js?v=212';
+import { openOverlay } from './overlay.js?v=212';
+import { ensurePushSubscription, pushSupported } from './push.js?v=212';
 
 const SS_SHOWN = 'dcp:notifprompt:shown'; // once per browser session
 const MAX = 2;                            // account-scoped, total appearances
@@ -141,7 +141,7 @@ export function maybeShowNotifPrompt(user) {
     // the refresh above has just been requested — render from its answer so the
     // reminder switches show the saved state (fall back to the snapshot only if
     // the API could not be asked).
-    openOverlay('profile', 'پروفایل', (root) => Promise.all([currentUser(), import('./profile.js?v=211')])
+    openOverlay('profile', 'پروفایل', (root) => Promise.all([currentUser(), import('./profile.js?v=212')])
       .then(([m, { renderProfile }]) => renderProfile(root, { me: m || user }))
       .catch(() => { /* the overlay stays as opened; the reader can close it */ }));
     setTimeout(() => {

@@ -65,6 +65,14 @@ export const DEFAULT_QUESTION = 'کدام‌یک به شرایط بیمار نز
 // not a shortlist of matches, and offering it under the usual wording would
 // claim a relevance nothing here has.
 export const FALLBACK_QUESTION = 'از توضیحت به هشتگ مستقیمی نرسیدم؛ نزدیک‌ترین حیطه‌ی کلی کدام است؟';
+// Each of these replaces FALLBACK_QUESTION where that sentence would be untrue.
+// The model never answered (outage, timeout): the case was not misunderstood,
+// so the user is not asked to rewrite it — the round comes with `retry`.
+export const OUTAGE_QUESTION = 'الان به موتورِ فهمِ متن دسترسی ندارم؛ «دوباره امتحان کن» را بزن، یا از یکی از حیطه‌های کلی پیش برو.';
+// A refinement led back only to tags the user was already shown.
+export const REPEAT_TAGS_QUESTION = 'توضیحِ تازه‌ات هم به همین هشتگ‌ها رسید؛ یکی را انتخاب کن، یا با «غیر از این‌ها» جزئیاتِ دیگری بگو.';
+// The pillar list was already shown and the new text still reached nothing.
+export const REPEAT_FALLBACK_QUESTION = 'باز هم به هشتگِ مستقیمی نرسیدم؛ با «غیر از این‌ها» بگو کدام دندان، چه درمانی شده و دقیقاً چه مشکلی هست، یا یکی از حیطه‌های کلی را انتخاب کن.';
 
 export interface CaseArticle {
   content_id: string;
@@ -91,7 +99,8 @@ const MAX_PAPERS = 8;
 export type CaseStep =
   // final_round: the next answer resolves (maxRounds), so a free-text answer
   // would have nothing left to refine — the client hides «غیر از این‌ها».
-  | { done: false; question: string; options: NarrowOption[]; final_round?: boolean; round_id?: string | null }
+  // retry: the model could not be reached, so re-sending the same round may do better.
+  | { done: false; question: string; options: NarrowOption[]; final_round?: boolean; retry?: boolean; round_id?: string | null }
   | { done: true; matched_fa: string | null; articles: CaseArticle[]; papers: CasePaper[]; round_id?: string | null };
 
 /**
@@ -448,7 +457,7 @@ function validateTags(raw: string[]): Tag[] {
  * can all point at the SAME small handful of articles — and four options that
  * lead to one article are one option wearing four labels. Ranking is not this
  * function's job: the order it is handed is the model's own, minus the
- * uncorroborated one-page tags (withoutStrays) and with umbrellas last.
+ * uncorroborated one-page tags (withoutStrays).
  */
 function dedupeByContentCoverage(sorted: Tag[], limit: number, caseText = ''): Tag[] {
   // Coverage is judged on what a pick would actually SHOW (its first page of
@@ -457,7 +466,7 @@ function dedupeByContentCoverage(sorted: Tag[], limit: number, caseText = ''): T
   const covered = new Set<string>();
   const picked: Tag[] = [];
   const caseWords = new Set(words(caseText));
-  for (const t of broadLast(narrowerFirst(withoutStrays(sorted, caseText)))) {
+  for (const t of narrowerFirst(withoutStrays(sorted, caseText))) {
     if (picked.length >= limit) break;
     const shown = rankIds(t.contentIds, sorted, t).slice(0, ARTICLES_PER_MATCH);
     // From the third chip on, at least half of what it shows must be new: a
@@ -500,24 +509,21 @@ function withoutStrays(tags: Tag[], caseText: string): Tag[] {
 }
 
 /**
- * Umbrella tags («ایمپلنت» 81 pages, «طرح درمان» 53) go after the specific
- * ones: their first four pages are whatever the index lists first, so as an
- * early chip they crowd out the tag that answers the case.
+ * A tag that NAMES a narrower case of an earlier tag — its label holds every
+ * word of the earlier label and its pages are a strict subset of that tag's —
+ * is the more precise answer to the same question, so it moves ahead of it
+ * («نبود فرول» before «فرول»). Otherwise the model's order stands. Page subsets
+ * alone are not enough: «سمان دائم» sits inside «سمان موقت»'s pages and jumped
+ * ahead of it in a case about temporary cement, and «سینوس لیفت» ahead of
+ * «ایمپلنت کوتاه» in «ایمپلنت کوتاه یا سینوس لیفت». A one-page tag never jumps
+ * ahead: its page is already near the top of the wider tag's results.
  */
-const BROAD_TAG_PAGES = 30;
-
-function broadLast(tags: Tag[]): Tag[] {
-  const broad = (t: Tag) => t.contentIds.length > BROAD_TAG_PAGES;
-  return [...tags.filter((t) => !broad(t)), ...tags.filter(broad)];
+function namesNarrowerCase(narrow: Tag, wide: Tag): boolean {
+  const own = new Set(words(narrow.fa));
+  const of = words(wide.fa);
+  return of.length > 0 && own.size > of.length && of.every((w) => own.has(w));
 }
 
-/**
- * A tag whose pages are a strict subset of an earlier tag's is the more
- * precise answer to the same question, so it moves ahead of that tag
- * («نبود فرول» before «فرول»). Otherwise the model's order stands. A one-page
- * tag never jumps ahead: its page is already near the top of the wider tag's
- * results, and leading with it made the thinnest chip the first one.
- */
 function narrowerFirst(tags: Tag[]): Tag[] {
   const out = [...tags];
   for (let moved = true, guard = 0; moved && guard < 64; guard += 1) {
@@ -526,7 +532,8 @@ function narrowerFirst(tags: Tag[]): Tag[] {
       const wide = new Set(out[i].contentIds);
       for (let j = i + 1; j < out.length; j += 1) {
         const n = out[j];
-        if (n.contentIds.length >= 2 && n.contentIds.length < wide.size && n.contentIds.every((id) => wide.has(id))) {
+        if (n.contentIds.length >= 2 && n.contentIds.length < wide.size && n.contentIds.every((id) => wide.has(id))
+          && namesNarrowerCase(n, out[i])) {
           out.splice(j, 1);
           out.splice(i, 0, n);
           moved = true;
@@ -588,9 +595,12 @@ function tagSelectionCacheKey(text: string): string {
  * order the model ranked them. */
 // The same case asked twice at once (a double submit, a reload while the first
 // call is still out) shares the one model call already in flight.
-const inFlight = new Map<string, Promise<string[]>>();
+// `failed`: the model was never heard from (every retry spent), as opposed to
+// answering with nothing relevant — the user is told which one happened.
+interface TagSelection { keys: string[]; failed: boolean }
+const inFlight = new Map<string, Promise<TagSelection>>();
 
-async function cachedTagSelection(description: string, refinements: string[]): Promise<string[]> {
+async function cachedTagSelection(description: string, refinements: string[]): Promise<TagSelection> {
   const cacheKey = tagSelectionCacheKey([description, ...refinements].join('\n'));
   const pending = inFlight.get(cacheKey);
   if (pending) return pending;
@@ -603,22 +613,24 @@ async function cachedTagSelection(description: string, refinements: string[]): P
   }
 }
 
-async function selectTagsUncoalesced(description: string, refinements: string[], cacheKey: string): Promise<string[]> {
+async function selectTagsUncoalesced(description: string, refinements: string[], cacheKey: string): Promise<TagSelection> {
   const hit = tagSelectionCache.get(cacheKey);
   if (hit && Date.now() - hit.at < TAG_SELECTION_TTL_MS) {
     tagSelectionCache.delete(cacheKey);
     tagSelectionCache.set(cacheKey, hit); // refresh recency
-    return hit.keys;
+    return { keys: hit.keys, failed: false };
   }
   if (hit) tagSelectionCache.delete(cacheKey); // expired
 
   // The model sees the site's real vocabulary: each Persian label with its page
   // count and nothing more. Without the count «فضای بی دندان» (1 page) and
   // «جایگزینی دندان» looked alike; definitions would multiply the prompt.
-  // A provider outage (every retry spent) is a round with no understanding,
-  // not an error screen: it falls through to the honest pillar fallback, and
-  // the empty answer is not cached, so the next round asks again.
+  // A provider outage (every retry spent) is not an error screen: the round
+  // still offers the pillars, under a sentence that says the model was not
+  // reached (not that the case was unclear) and with a retry. The empty
+  // answer is not cached, so the retry really asks again.
   let picked: string[];
+  let failed = false;
   try {
     picked = await ai.selectTags({
       description,
@@ -628,6 +640,7 @@ async function selectTagsUncoalesced(description: string, refinements: string[],
   } catch (err) {
     console.warn('[case-assistant] selectTags failed; using the pillar fallback:', (err as Error)?.message ?? err);
     picked = [];
+    failed = true;
   }
   const keys = validateTags(picked).map((t) => t.key);
 
@@ -641,7 +654,7 @@ async function selectTagsUncoalesced(description: string, refinements: string[],
       tagSelectionCache.delete(oldest);
     }
   }
-  return keys;
+  return { keys, failed };
 }
 
 /** Test/maintenance helper: forget every cached tag selection. */
@@ -656,20 +669,32 @@ export function clearTagSelectionCache(): void {
  * to be about; this module keeps only the ones that really exist and then
  * thins near-duplicates by content coverage.
  *
- * Returns null — not the pillar list — when nothing survives, so the caller
- * can say so honestly with its own question text.
+ * Returns no options — not the pillar list — when nothing survives, with the
+ * reason, so the caller can say what actually happened with its own question.
  */
-async function nextRootCatalog(description: string, history: NarrowHistoryEntry[]): Promise<NarrowOption[] | null> {
-  const keys = await cachedTagSelection(description, customAnswers(history));
+type RootRound =
+  | { options: NarrowOption[]; repeated: boolean }
+  | { options: null; reason: 'failed' | 'no_match' };
+
+async function nextRootCatalog(description: string, history: NarrowHistoryEntry[]): Promise<RootRound> {
+  const { keys, failed } = await cachedTagSelection(description, customAnswers(history));
+  if (failed) return { options: null, reason: 'failed' };
   // «غیر از این‌ها» means "not these": a tag already offered is not offered again.
   const offered = offeredKeys(history);
-  const tags = keys.map(tagByKey).filter((t): t is Tag => Boolean(t) && !offered.has(TAG_PREFIX + t!.key));
+  const all = keys.map(tagByKey).filter((t): t is Tag => Boolean(t));
+  const fresh = all.filter((t) => !offered.has(TAG_PREFIX + t.key));
 
   const caseText = [description, ...customAnswers(history)].join('\n');
-  const options = dedupeByContentCoverage(tags, MAX_TAG_OPTIONS, caseText)
+  const toOptions = (tags: Tag[]) => dedupeByContentCoverage(tags, MAX_TAG_OPTIONS, caseText)
     .map((t) => ({ key: TAG_PREFIX + t.key, label: t.fa }));
-
-  return options.length ? options : null;
+  const options = toOptions(fresh);
+  if (options.length) return { options, repeated: false };
+  // The new text led only back to tags already shown. They are still the best
+  // the site has for it, so they are offered again, under a sentence that says
+  // so, rather than the pillar list's «no tag reached».
+  const again = toOptions(all);
+  if (again.length) return { options: again, repeated: true };
+  return { options: null, reason: 'no_match' };
 }
 
 /** A pillar was already picked (the tag-search fallback path): what its next
@@ -759,6 +784,18 @@ function glossaryFor(label: string): string | null {
       const f = normalizeFa(k);
       if (f && !folded.has(f)) folded.set(f, id);
     }
+    // Second names, after every title has claimed its own: the gloss in the
+    // title's parentheses («بعد عمودی اکلوژن (VDO)» answers «VDO») and the
+    // entry's slug (glossary/tmd answers «TMD», whose title is «اختلالات گیجگاهی‌فکی»).
+    for (const [id, info] of Object.entries(all)) {
+      if (info.type !== 'glossary') continue;
+      const names = [...info.title.matchAll(/\(([^)]*)\)/g)].map((m) => m[1]);
+      names.push(id.slice(id.indexOf('/') + 1).replace(/-/g, ' '));
+      for (const n of names) {
+        const k = glossaryName(n);
+        if (k && !next.has(k)) next.set(k, id);
+      }
+    }
     glossaryCache = next;
     glossaryFolded = folded;
     glossaryCacheKey = all;
@@ -813,7 +850,8 @@ async function resolve(userId: string, history: NarrowHistoryEntry[]): Promise<C
     const owner = subtopicOwner(key);
     if (owner) {
       contentIds = owner.subtopic.contentIds;
-      matchedFa = owner.subtopic.fa;
+      // «مفاهیم پایه» alone does not say which pillar's basics these are.
+      matchedFa = `${owner.subtopic.fa} در ${owner.cluster.fa}`;
     } else {
       const cluster = clusterByKey(key);
       if (cluster) { contentIds = cluster.contentIds; matchedFa = cluster.fa; }
@@ -901,14 +939,79 @@ export async function nextCaseStep(
   }
 
   // The root round (or a round the user has only answered with free text).
-  const options = await nextRootCatalog(description, history);
-  if (options) return ask(DEFAULT_QUESTION, options);
+  const round = await nextRootCatalog(description, history);
+  if (round.options) return ask(round.repeated ? REPEAT_TAGS_QUESTION : DEFAULT_QUESTION, round.options);
 
   // Nothing the model returned was a real site tag — say that, instead of
-  // dressing the broad pillar list up as a shortlist of matches.
-  return ask(FALLBACK_QUESTION, getClusters()
+  // dressing the broad pillar list up as a shortlist of matches. Which sentence
+  // depends on why: the model unreachable, the pillars already shown once, or
+  // a first miss.
+  const pillars = getClusters()
     .filter((c) => c.contentIds.some(isOfferable))
-    .map((c) => ({ key: c.key, label: c.fa })));
+    .map((c) => ({ key: c.key, label: c.fa }));
+  if (round.reason === 'failed') {
+    return logged({ done: false, question: OUTAGE_QUESTION, options: pillars, retry: true, ...(finalRound ? { final_round: true } : {}) });
+  }
+  const shownBefore = pillars.some((p) => offeredKeys(history).has(p.key));
+  return ask(shownBefore ? REPEAT_FALLBACK_QUESTION : FALLBACK_QUESTION, pillars);
+}
+
+// Characters that render as nothing: zero-width, joiners, BOM and the bidi
+// controls. Text made only of these is empty, not a case.
+const INVISIBLE = /[\u200b-\u200f\u202a-\u202e\u2060-\u2069\ufeff]/g;
+const MAX_DESCRIPTION = 500;
+const MAX_CUSTOM = 200;   // the UI's own maxlength for «غیر از این‌ها»
+const MAX_LABEL = 120;
+const MAX_OPTIONS = 32;
+
+/** Trimmed text with invisible-only content treated as empty, cut by code point (never mid-emoji). */
+export function cleanText(v: unknown, max: number): string {
+  if (typeof v !== 'string') return '';
+  if (!v.replace(INVISIBLE, '').trim()) return '';
+  return [...v.trim()].slice(0, max).join('');
+}
+
+export function cleanDescription(v: unknown): string {
+  return cleanText(v, MAX_DESCRIPTION);
+}
+
+/**
+ * The client resends the whole history every call, so its shape is checked
+ * here before anything reads it: a malformed entry used to throw deep in the
+ * service and answer 500. Returns null when the history is not a list of
+ * well-formed rounds; otherwise a copy with every text capped — a refinement
+ * is model input, so its 200-character cap is enforced here, not only by the
+ * input's maxlength.
+ */
+export function cleanHistory(raw: unknown): NarrowHistoryEntry[] | null {
+  if (raw === undefined || raw === null) return [];
+  if (!Array.isArray(raw)) return [];
+  const out: NarrowHistoryEntry[] = [];
+  for (const e of raw.slice(-config.assistant.maxRounds)) {
+    if (!e || typeof e !== 'object') return null;
+    const { question, options, answer } = e as { question?: unknown; options?: unknown; answer?: unknown };
+    if (options !== undefined && !Array.isArray(options)) return null;
+    const opts: NarrowOption[] = [];
+    for (const o of (options as unknown[] | undefined ?? []).slice(0, MAX_OPTIONS)) {
+      if (!o || typeof o !== 'object') return null;
+      const { key, label } = o as { key?: unknown; label?: unknown };
+      if (typeof key !== 'string' || !key) return null;
+      opts.push({ key: key.slice(0, MAX_LABEL), label: cleanText(label, MAX_LABEL) });
+    }
+    if (!answer || typeof answer !== 'object') return null;
+    const a = answer as { key?: unknown; label?: unknown; custom?: unknown };
+    let ans: NarrowHistoryEntry['answer'];
+    if ('custom' in a) {
+      const custom = cleanText(a.custom, MAX_CUSTOM);
+      if (!custom) return null;
+      ans = { custom };
+    } else {
+      if (typeof a.key !== 'string' || !a.key) return null;
+      ans = { key: a.key.slice(0, MAX_LABEL), label: cleanText(a.label, MAX_LABEL) };
+    }
+    out.push({ question: cleanText(question, 300), options: opts, answer: ans });
+  }
+  return out;
 }
 
 function lastAnswerIsCustom(history: NarrowHistoryEntry[]): boolean {

@@ -5,7 +5,9 @@ import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
 import { getClusters, getContentInfo, getTags } from '../src/content-index.js';
 import { ai } from '../src/providers/registry.js';
-import { DEFAULT_QUESTION, FALLBACK_QUESTION, assistantTags } from '../src/services/case-assistant.js';
+import {
+  DEFAULT_QUESTION, FALLBACK_QUESTION, OUTAGE_QUESTION, REPEAT_FALLBACK_QUESTION, REPEAT_TAGS_QUESTION, assistantTags,
+} from '../src/services/case-assistant.js';
 
 let app: FastifyInstance;
 let cookie: string;
@@ -148,7 +150,7 @@ describe('POST /assistant/next', () => {
     expect(res.statusCode).toBe(200);
     const body = res.json();
     expect(body.done).toBe(true);
-    expect(body.matched_fa).toBe(SUBTOPIC.fa);
+    expect(body.matched_fa).toBe(`${SUBTOPIC.fa} در ${CLUSTER.fa}`); // a subtopic names its pillar
     expect(body.articles.length).toBeGreaterThan(0);
     for (const a of body.articles) expect(SUBTOPIC.contentIds).toContain(a.content_id);
   });
@@ -287,11 +289,51 @@ describe('tag round (real site hashtags)', () => {
     expect(body.options.map((o: { label: string }) => o.label)).toContain('فضای بی دندان');
   });
 
-  it('puts umbrella tags after the specific ones', async () => {
+  it("keeps the model's order when a tag's pages merely sit inside another's", async () => {
+    // «سمان دائم» was moved ahead of «سمان موقت» because its pages are a subset,
+    // in a case about temporary cement. Only a label that names a narrower case
+    // («نبود فرول» of «فرول») may jump ahead.
     await makePremium();
-    vi.spyOn(ai, 'selectTags').mockResolvedValue(['ایمپلنت', 'تحلیل استخوان کرستال']);
-    const body = (await next({ description: 'تحلیل استخوان دور ایمپلنت' })).json();
-    expect(body.options.map((o: { label: string }) => o.label)).toEqual(['تحلیل استخوان کرستال', 'ایمپلنت']);
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['سمان موقت', 'سمان مجدد', 'سمان دائم']);
+    const body = (await next({ description: 'روکش مدام میفته، سمان موقت زدم' })).json();
+    expect(body.options[0].label).toBe('سمان موقت');
+  });
+
+  it('does not push a broad tag the model ranked high out of the round', async () => {
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['فرول', 'پست و کور', 'فایبر پست', 'افزایش طول تاج', 'دندان اندوشده']);
+    const body = (await next({ description: 'پرمولر اندو شده فرول نداره، پست بزارم؟' })).json();
+    expect(body.options.map((o: { label: string }) => o.label)).toContain('پست و کور');
+  });
+
+  it('a refinement that leads only back to tags already shown re-offers them and says so', async () => {
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue(['فرول']);
+    const history = [
+      { question: 'q', options: [{ key: 'tag:فرول', label: 'فرول' }, { key: 'tag:نبود فرول', label: 'نبود فرول' }], answer: { custom: 'دیواره‌ها نازکه' } },
+    ];
+    const body = (await next({ description: 'پرمولر اندو شده', history })).json();
+    expect(body.question).toBe(REPEAT_TAGS_QUESTION);
+    expect(body.options.map((o: { key: string }) => o.key)).toEqual(['tag:فرول']);
+  });
+
+  it('a second miss after the pillars says so instead of repeating the first sentence', async () => {
+    await makePremium();
+    vi.spyOn(ai, 'selectTags').mockResolvedValue([]);
+    const first = (await next({ description: 'یک شرح مبهم دیگر' })).json();
+    expect(first.question).toBe(FALLBACK_QUESTION);
+    const history = [{ question: first.question, options: first.options, answer: { custom: 'هنوز نامشخص' } }];
+    const second = (await next({ description: 'یک شرح مبهم دیگر', history })).json();
+    expect(second.question).toBe(REPEAT_FALLBACK_QUESTION);
+  });
+
+  it('leads with the glossary entry named by an acronym or the entry slug', async () => {
+    await makePremium();
+    for (const [key, term] of [['tmd', 'glossary/tmd'], ['vdo', 'glossary/vertical-dimension-of-occlusion']]) {
+      const history = [{ question: 'q', options: [], answer: { key: 'tag:' + key, label: key } }];
+      const body = (await next({ description: 'شرح', history })).json();
+      expect(body.articles[0].content_id, key).toBe(term);
+    }
   });
 
   it("keeps the model's own ranking order", async () => {
@@ -495,12 +537,42 @@ describe('assistant QA regressions', () => {
     expect(labels).toContain('فرول');
   });
 
-  it('a provider outage falls back to the pillars instead of an error screen', async () => {
+  it('a provider outage still offers the pillars, but says the model was not reached and offers a retry', async () => {
+    // «از توضیحت به هشتگ مستقیمی نرسیدم» told a dentist with a clear case that
+    // the case was unclear, when the model had simply not answered.
     await makePremium();
-    vi.spyOn(ai, 'selectTags').mockRejectedValue(new Error('gateway down'));
+    const spy = vi.spyOn(ai, 'selectTags').mockRejectedValue(new Error('gateway down'));
     const res = await next({ description: 'روکش زیرکونیا شکسته' });
     expect(res.statusCode).toBe(200);
-    expect(res.json().question).toBe(FALLBACK_QUESTION);
+    expect(res.json().question).toBe(OUTAGE_QUESTION);
+    expect(res.json().retry).toBe(true);
+    // The failure is not cached: the retry really asks again.
+    spy.mockResolvedValue(['فرول']);
+    const again = (await next({ description: 'روکش زیرکونیا شکسته' })).json();
+    expect(again.question).toBe(DEFAULT_QUESTION);
+  });
+
+  it('answers 400, not 500, to a malformed body or history', async () => {
+    await makePremium();
+    const bad = [
+      [null], [1], ['a'], [{}], [{ answer: null }], [{ answer: 'x' }], [{ answer: { key: 5 } }],
+      [{ options: [null], answer: { custom: 'y' } }], [{ question: 'q', options: [], answer: { custom: '\u200c\u200b ' } }],
+    ];
+    for (const history of bad) {
+      const res = await next({ description: 'شرح', history });
+      expect(res.statusCode, JSON.stringify(history)).toBe(400);
+    }
+    const nullBody = await app.inject({ method: 'POST', url: '/assistant/next', headers: { cookie, 'content-type': 'application/json' }, payload: 'null' });
+    expect(nullBody.statusCode).toBe(400);
+  });
+
+  it('treats an invisible-only case as empty and caps a refinement at 200 characters', async () => {
+    await makePremium();
+    expect((await next({ description: '\u200b\u200c\u200f ' })).statusCode).toBe(400);
+    const spy = vi.spyOn(ai, 'selectTags').mockResolvedValue([]);
+    const history = [{ question: 'q', options: [], answer: { custom: 'ا'.repeat(5000) } }];
+    expect((await next({ description: 'شرح', history })).statusCode).toBe(200);
+    expect(spy.mock.calls[0][0].refinements[0]).toHaveLength(200);
   });
 
   it('free text under a pillar asks the model again and drops what was already offered', async () => {

@@ -308,6 +308,9 @@ a.dcp-progress-row:hover { text-decoration: none; }
 .dcp-assist-more:hover { border-color: var(--txt3, #62779a); color: var(--txt); }
 
 .dcp-assist-custom { display: flex; gap: 8px; margin-top: 10px; padding-inline-start: 50px; }
+/* display:flex above beats the UA [hidden] rule: without this the «غیر از این‌ها»
+   field was open from the start while its button said aria-expanded=false. */
+.dcp-assist-custom[hidden] { display: none; }
 .dcp-assist-custom input {
   flex: 1 1 auto; font: inherit; font-size: .88rem; border: 1px solid var(--border, rgba(2,35,96,.12));
   background: var(--surface, #fff); color: var(--txt); border-radius: var(--r-f, 999px); padding: 9px 16px;
@@ -329,6 +332,8 @@ a.dcp-progress-row:hover { text-decoration: none; }
   border: 0; background: transparent; color: var(--txt); padding: 12px 8px; outline: none;
 }
 .dcp-assist-composer textarea::placeholder { color: var(--txt3, #62779a); }
+/* The textarea drops its own outline to sit flush in the card, so the card shows focus instead. */
+.dcp-assist-composer:focus-within { outline: 3px solid var(--ac, #0b5fff); outline-offset: 2px; }
 .dcp-assist-composer-send {
   flex: none; width: 40px; height: 40px; margin-bottom: 6px; border-radius: 50%; border: 0;
   background: var(--ac, #0b5fff); color: #fff; cursor: pointer;
@@ -667,6 +672,7 @@ a.dcp-progress-row:hover { text-decoration: none; }
 @keyframes dcp-scan-in { from { opacity: 0; transform: translateY(3px); } to { opacity: .55; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
   .dcp-assist-scan-t { animation: none; }
+  .dcp-assist-thinking span { animation: none; opacity: .7; }
 }
 
 
