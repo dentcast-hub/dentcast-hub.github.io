@@ -128,6 +128,32 @@ describe('the lookup box', () => {
     expect(cleanCode('  dc-k4m-7qa ')).toBe('DC-K4M-7QA');
     expect(cleanCode('')).toBe('');
   });
+
+  it('forgives typographic dashes pasted from a PDF or a phone keyboard', async () => {
+    const { cleanCode } = await import('/plus/js/certificate-page.js');
+    for (const d of ['\u2010', '\u2011', '\u2012', '\u2013', '\u2014', '\u2212', '\uFE63', '\uFF0D']) {
+      expect(cleanCode(`DC${d}K4M${d}7QA`)).toBe('DC-K4M-7QA');
+    }
+  });
+
+  it('says why nothing happened on an empty submit', async () => {
+    await mount('');
+    const hint = document.querySelector('.dc-cert-lookup-hint') as HTMLElement;
+    expect(hint.hidden).toBe(true);
+    (document.querySelector('.dc-cert-lookup') as HTMLFormElement).dispatchEvent(
+      new Event('submit', { cancelable: true, bubbles: true }),
+    );
+    expect(hint.hidden).toBe(false);
+    expect(verdict()).toBeNull();
+  });
+
+  it('calls an impossible code «not registered» without asking — never «unreachable»', async () => {
+    const seen: string[] = [];
+    verifyImpl = (code) => { seen.push(code); return Promise.reject(new TypeError('Failed to fetch')); };
+    await mount('X'.repeat(300));
+    expect(seen).toEqual([]);
+    expect(verdict()!.dataset.certVerdict).toBe('missing');
+  });
 });
 
 describe('verdictFor', () => {

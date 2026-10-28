@@ -131,6 +131,8 @@ describe('POST /clips', () => {
     expect((await create({ content_id: EP, start_s: 1, end_s: 5, label: 'funny' })).json().error).toBe('invalid_label');
     expect((await create({ content_id: 'episode-101', start_s: 1, end_s: 5 })).json().error).toBe('invalid_content_id');
     expect((await create({ content_id: '../etc', start_s: 1, end_s: 5 })).json().error).toBe('invalid_content_id');
+    // A path, but under no folder the content index knows.
+    expect((await create({ content_id: 'gone/9', start_s: 1, end_s: 5 })).json().error).toBe('invalid_content_id');
   });
 
   it('a schema-invalid body is a 400, never a 500', async () => {

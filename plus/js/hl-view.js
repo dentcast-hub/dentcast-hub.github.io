@@ -6,9 +6,9 @@
 // things depending on where you found it.
 //
 // Everything here is presentational + one inline editor. No page owns a copy.
-import { el, renderNoteLines } from './util.js?v=213';
-import { api } from './api.js?v=213';
-import { LABELS, PALETTE } from './config.js?v=213';
+import { el, renderNoteLines } from './util.js?v=214';
+import { api } from './api.js?v=214';
+import { LABELS, PALETTE } from './config.js?v=214';
 
 export const labelFa = (k) => (LABELS.find((l) => l.key === k) || {}).fa || '';
 
@@ -137,7 +137,7 @@ export function confirmStrip(question, onYes, { yesText = 'حذف' } = {}) {
  * onSaved(updatedHighlight) is called with the server's copy so the caller can
  * re-render its own card and keep its in-memory model in step.
  */
-export function inlineEditor(h, { onSaved, onClose }) {
+export function inlineEditor(h, { onSaved, onClose, onGone }) {
   const ta = el('textarea', {
     class: 'dcp-hlib-ta', rows: '3', placeholder: 'یادداشتت را اینجا بنویس…',
     'aria-label': 'یادداشت هایلایت',
@@ -193,9 +193,19 @@ export function inlineEditor(h, { onSaved, onClose }) {
       box.remove();
       onSaved(highlight);
       toast('ذخیره شد');
-    } catch (_) {
+    } catch (e) {
+      // 404: deleted in another tab. «دوباره تلاش کن» would be a promise no
+      // retry can keep — say what happened and let the caller drop the card.
+      if (e && e.status === 404) {
+        box.remove();
+        if (onGone) onGone(h.id);
+        toast('این هایلایت جای دیگری حذف شده بود.');
+        return;
+      }
       save.disabled = false;
-      msg.textContent = 'ذخیره نشد؛ دوباره تلاش کن.';
+      msg.textContent = e && e.status === 401
+        ? 'نشستِ ورودت تمام شده؛ دوباره وارد شو.'
+        : 'ذخیره نشد؛ دوباره تلاش کن.';
     }
   });
   // Ctrl/⌘+Enter saves — the shortcut every note field on the web has.

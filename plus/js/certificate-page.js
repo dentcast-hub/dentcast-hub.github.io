@@ -28,11 +28,11 @@
 //                        than guessing.
 //   · anything else    → «نتوانستیم بررسی کنیم» — a dead API is not a forged
 //                        certificate, and must never be printed as one.
-import { el } from './util.js?v=213';
-import { api } from './api.js?v=213';
-import { registerSW } from './pwa.js?v=213';
-import { wirePageBack } from './page-back.js?v=213';
-import { downloadCertificate, CERT_TEXT } from './certificate-image.js?v=213';
+import { el } from './util.js?v=214';
+import { api } from './api.js?v=214';
+import { registerSW } from './pwa.js?v=214';
+import { wirePageBack } from './page-back.js?v=214';
+import { downloadCertificate, CERT_TEXT } from './certificate-image.js?v=214';
 
 const LOGO = '/logo-v2.png';
 const VERIFY_HOST = 'dentcast.ir/plus/certificate.html';
@@ -44,12 +44,19 @@ export const when = (iso) => { try { return FA_DATE.format(new Date(iso)); } cat
 
 /** Normalise what a human typed: case, spaces, a missing or doubled dash. */
 export function cleanCode(raw) {
-  const s = String(raw || '').trim().toUpperCase().replace(/[\s_]+/g, '').replace(/-+/g, '-');
+  // A code pasted from a PDF, LinkedIn or a phone keyboard often carries a
+  // typographic dash (‐ ‑ ‒ – — ― − ﹘ ﹣ －) where the ASCII one was meant.
+  const s = String(raw || '').trim().toUpperCase()
+    .replace(/[\u2010-\u2015\u2212\uFE58\uFE63\uFF0D]/g, '-')
+    .replace(/[\s_]+/g, '').replace(/-+/g, '-');
   // "DCK4M7QA" → "DC-K4M-7QA" so a code retyped without dashes still matches.
   const bare = s.replace(/-/g, '');
   if (/^[A-Z0-9]{8}$/.test(bare)) return `${bare.slice(0, 2)}-${bare.slice(2, 5)}-${bare.slice(5)}`;
   return s;
 }
+
+/** The widest shape a real code can have after cleanCode(). */
+const PLAUSIBLE_CODE = /^[A-Z0-9-]{4,24}$/;
 
 function codeFromUrl() {
   return cleanCode(new URLSearchParams(location.search).get('c') || '');
@@ -135,14 +142,17 @@ function lookupForm(initial, onGo) {
   const input = el('input', {
     id: 'certCode', class: 'dcp-input', type: 'text', placeholder: 'DC-XXX-XXX', value: initial || '',
     autocapitalize: 'characters', autocomplete: 'off', spellcheck: 'false',
-    'aria-label': 'شمارهٔ گواهی',
+    'aria-label': 'شمارهٔ گواهی', maxlength: '40',
   });
   const btn = el('button', { id: 'certGo', class: 'dcp-btn', type: 'submit' }, 'بررسی اصالت');
-  const form = el('form', { class: 'dc-cert-lookup' }, [input, btn]);
+  const hint = el('p', { class: 'dc-cert-lookup-hint', role: 'alert', hidden: '' },
+    'شمارهٔ گواهی را بنویسید؛ مثل DC-K4M-7QA.');
+  const form = el('form', { class: 'dc-cert-lookup' }, [input, btn, hint]);
   form.addEventListener('submit', (ev) => {
     ev.preventDefault();
     const code = cleanCode(input.value);
-    if (!code) return;
+    hint.hidden = !!code;
+    if (!code) { input.focus(); return; }
     onGo(code);
   });
   return form;
@@ -213,12 +223,19 @@ export async function renderCertificate(root, code) {
 
   let state = 'unreachable';
   let v = null;
-  try {
-    const res = await api.certificateVerify(code);
-    v = res.certificate;
-    state = v.revoked ? 'revoked' : 'ok';
-  } catch (e) {
-    state = e && e.status === 404 ? 'missing' : 'unreachable';
+  // Nothing that long or with those characters was ever issued. Asking the
+  // server only produced a refused request that read as «server unreachable»
+  // — an outage claim about a code that simply does not exist.
+  if (!PLAUSIBLE_CODE.test(code)) {
+    state = 'missing';
+  } else {
+    try {
+      const res = await api.certificateVerify(code);
+      v = res.certificate;
+      state = v.revoked ? 'revoked' : 'ok';
+    } catch (e) {
+      state = e && e.status === 404 ? 'missing' : 'unreachable';
+    }
   }
 
   const parts = [intro(), lookupForm(code, go), verdictBlock(verdictFor(state, v))];

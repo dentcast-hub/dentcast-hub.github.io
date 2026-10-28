@@ -1,13 +1,14 @@
 // Login is a MODAL, never a page (spec 2.5). Two steps: phone -> OTP code.
 // Resolves with { user, return_to } on success, or null if the user cancels.
-import { el, faNum } from './util.js?v=213';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=213';
+import { el, faNum } from './util.js?v=214';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=214';
 import {
   isOrgHost, irMirrorUrl,
   telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername,
   googleLoginEnabled,
-} from './config.js?v=213';
-import { mountGoogleButton } from './google-login.js?v=213';
+} from './config.js?v=214';
+import { mountGoogleButton } from './google-login.js?v=214';
+import { trapFocus } from './focus-trap.js?v=214';
 
 let overlay = null;
 // While the mandatory nickname step is showing, every dismissal path (×,
@@ -18,7 +19,21 @@ function close(resolve, value) {
   if (locked) return;
   if (overlay) { overlay.remove(); overlay = null; }
   document.removeEventListener('keydown', onKey);
+  releaseFocus();
   resolve(value);
+}
+
+// Keyboard focus is held inside whichever card is up (focus-trap.js) and goes
+// back to the opener on close. A card that replaces another (notice → login)
+// keeps the first opener. Escape stays with each card's own onKey, because the
+// name gate must ignore it.
+let releaseTrap = null;
+function holdFocus(card) {
+  const opener = releaseTrap ? releaseTrap({ restore: false }) : undefined;
+  releaseTrap = trapFocus(card, { opener });
+}
+function releaseFocus() {
+  if (releaseTrap) { releaseTrap(); releaseTrap = null; }
 }
 
 let onKey = () => {};
@@ -131,13 +146,14 @@ export function openNameGate({ user } = {}) {
     ]);
     const step = buildNameStep({
       user: user || {},
-      onSaved: (u) => { locked = false; if (overlay) { overlay.remove(); overlay = null; } document.removeEventListener('keydown', onKey); resolve(u); },
+      onSaved: (u) => { locked = false; if (overlay) { overlay.remove(); overlay = null; } document.removeEventListener('keydown', onKey); releaseFocus(); resolve(u); },
       onSessionLost: () => {
         // No session behind this gate any more: let go of the page. The header
         // re-reads /me on the next load and shows the guest icon honestly.
         locked = false;
         if (overlay) { overlay.remove(); overlay = null; }
         document.removeEventListener('keydown', onKey);
+        releaseFocus();
         resolve(user || {});
       },
     });
@@ -145,6 +161,7 @@ export function openNameGate({ user } = {}) {
 
     overlay = el('div', { class: 'dcp-modal-overlay' }, [card]); // no backdrop-close handler
     document.body.appendChild(overlay);
+    holdFocus(card);
     onKey = () => {}; // Escape does nothing while locked
     document.addEventListener('keydown', onKey);
     step.focus();
@@ -186,6 +203,7 @@ export function openOrgNotice({ source = 'login', contentId } = {}) {
 
     overlay = el('div', { class: 'dcp-modal-overlay', onclick: (e) => { if (e.target === overlay) close(resolve, null); } }, [card]);
     document.body.appendChild(overlay);
+    holdFocus(card);
     setTimeout(() => goBtn.focus(), 30);
 
     onKey = (e) => { if (e.key === 'Escape') close(resolve, null); };
@@ -313,6 +331,7 @@ export function openLoginModal({ returnTo = location.pathname + location.hash } 
 
     overlay = el('div', { class: 'dcp-modal-overlay', onclick: (e) => { if (e.target === overlay) close(resolve, null); } }, [card]);
     document.body.appendChild(overlay);
+    holdFocus(card);
     if (quick) quick.mount(); // Google measures the holder, so after it is attached
     setTimeout(() => phoneInput.focus(), 30);
 

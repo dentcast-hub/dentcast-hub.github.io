@@ -22,91 +22,111 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>جستجوی سراسری | DentCast</title>
+  <meta name="description" content="جستجو در همهٔ اپیزودها، نوت‌کست‌ها، نکات کلینیکی، متانوت‌ها و مطالب دنت‌کست.">
+  <link rel="canonical" href="https://dentcast.org/search.html">
   <style>
+    /* One box, the page's own. It is also the #dcGlobalBox the shared search
+       code drives (global-search.js reads #dcSearch/#dcResults by id), so the
+       bottom-sheet styling of global-search.css is undone here: the box sits
+       in the page, never slides away, and the keyboard lift never moves it.
+       Colours come from dc-theme.css tokens so dark mode is dark. */
     body{
       margin:0;
       font-family: "Vazirmatn", sans-serif;
-      background:#f3f5f7;
-      color:#0a1a33;
+      background:var(--bg);
+      color:var(--txt);
     }
     .wrap{
       max-width: 48.75rem;
       margin: 0 auto;
       padding: 1.125rem 0.875rem 1.75rem;
     }
-    .box{
-      background:#fff;
-      border:1px solid rgba(15,23,42,0.10);
+    body #dcGlobalBox.dc-global-filter-box.box{
+      position:relative;
+      inset:auto;
+      z-index:auto;
+      visibility:visible;
+      opacity:1;
+      transform:none !important;
+      max-height:none !important;
+      overflow:visible;
+      transition:none;
+      background:var(--card-bg);
+      border:1px solid var(--card-border);
       border-radius: 1.125rem;
-      box-shadow: 0 10px 25px rgba(2,6,23,0.08);
+      box-shadow: var(--card-sh);
       padding: 1.125rem 1rem;
     }
-    .title{
+    body #dcGlobalBox .title{
       font-weight: 900;
       font-size: 1.125rem;
       margin: 0.25rem 0 0.75rem;
-      color:#0b5fff;
+      color:var(--ac);
       text-align:center;
     }
-    .dc-search-input{
+    body #dcGlobalBox .dc-search-input{
       width:100%;
       padding: 0.75rem 0.875rem;
       border-radius: 0.875rem;
-      border: 1px solid #d5d9ea;
-      background: #f7f8fc;
+      border: 1px solid var(--card-border);
+      background: var(--surface);
+      color: var(--txt);
       font-size: 0.875rem;
       outline: none;
       box-sizing: border-box;
       margin-bottom: 0.75rem;
     }
-    .dc-filter-list{
+    body #dcGlobalBox .dc-search-input:focus-visible{ outline:2px solid var(--ac); outline-offset:1px; }
+    body #dcGlobalBox .dc-filter-list{
       display:flex;
       flex-wrap: wrap;
       gap: 0.5rem;
       justify-content: center;
       margin-bottom: 0.75rem;
     }
-    .dc-filter-btn{
+    body #dcGlobalBox .dc-filter-btn{
       padding: 0.4375rem 0.875rem;
       border-radius: 62.4375rem;
-      border: 1px solid #d3daf1;
-      background: #eef3ff;
-      color: #0b1d40;
+      border: 1px solid var(--chip-bd);
+      background: var(--chip-bg);
+      color: var(--chip-txt);
       font-size: 0.8125rem;
       cursor: pointer;
       white-space: nowrap;
     }
-    .dc-filter-btn.active{
-      background: #0b5fff;
-      color:#fff;
-      border-color:#0b5fff;
-      box-shadow: 0 4px 14px rgba(11,95,255,0.3);
+    body #dcGlobalBox .dc-filter-btn.active{
+      background: var(--ac);
+      color:var(--txt-inv);
+      border-color:var(--ac);
     }
-    .dc-results-box{
+    body #dcGlobalBox #dcResults.dc-results-box{
       margin-top: 0.625rem;
       padding: 0.625rem 0.625rem;
       border-radius: 1rem;
-      background: #f7f9ff;
-      border: 1px solid #e2e6f3;
-      display: none;
+      background: var(--surface);
+      border: 1px solid var(--card-border);
       max-height: 70vh;
       overflow:auto;
       position: relative;
     }
-    .dc-result-item{
+    body #dcGlobalBox #dcResults .dc-result-item{
       display:block;
       padding: 0.625rem 0.75rem;
-      border-bottom: 1px solid #e5e7eb;
-      color:#0b1d40;
+      border-bottom: 1px solid var(--card-border);
+      color:var(--txt);
       text-decoration:none;
       font-size:0.875rem;
+      cursor:pointer;
     }
-    .dc-result-item:hover{ background:#eef3ff; }
+    body #dcGlobalBox #dcResults .dc-result-item:hover{ background:var(--chip-bg); }
+    body #dcGlobalBox #dcResults .dc-no-results{ cursor:default; }
+    body #dcGlobalBox #dcResults .dc-no-results:hover{ background:none; }
 
-    .dc-close-results{
+    body #dcGlobalBox .dc-close-results{
       position:absolute;
       top: 0.625rem;
       left: 0.625rem;
+      right:auto;
       width: 1.75rem; height: 1.75rem;
       border:none;
       border-radius:50%;
@@ -132,7 +152,7 @@
   <meta property="og:site_name" content="DentCast">
   <meta property="og:title" content="جستجوی سراسری | DentCast">
   <meta property="og:description" content="جستجوی سراسری | DentCast">
-  <meta property="og:url" content="https://dentcast.org/">
+  <meta property="og:url" content="https://dentcast.org/search.html">
   <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -180,54 +200,26 @@
 </div>
 
   <div class="wrap">
-    <div class="box">
-      <div class="title">جستجوی سراسری دنت‌کست</div>
+    <div class="box dc-global-filter-box" id="dcGlobalBox">
+      <h1 class="title">جستجوی سراسری دنت‌کست</h1>
 
-      <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌ها…" />
+      <input id="dcSearch" class="dc-search-input" type="search" placeholder="جستجو در همهٔ بخش‌ها…" aria-label="جستجو در همهٔ بخش‌های دنت‌کست" />
 
       <div class="dc-filter-list">
         <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
         <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
         <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
-        <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
-        <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
         <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
-        <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
         <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+        <button class="dc-filter-btn active" data-type="meta">متانوت</button>
+        <button class="dc-filter-btn active" data-type="chairside">چرساید</button>
+        <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
       </div>
 
-      <div class="dc-results-box" id="dcResults">
-        <button class="dc-close-results" aria-label="بستن"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
-      </div>
+      <div class="dc-results-box" id="dcResults" aria-live="polite"></div>
     </div>
   </div>
-  <script>
-    // بستن نتایج
-    document.addEventListener("click", (e) => {
-      if (e.target.classList.contains("dc-close-results")) {
-        const box = document.getElementById("dcResults");
-        if (box) box.style.display = "none";
-      }
-    }, true);
-  </script>
-<div class="dc-global-filter-box" id="dcGlobalBox">
-  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
-  <h1 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h1>
-  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
-  <div class="dc-filter-list">
-    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
-    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
-    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
-    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
-    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
-    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
-    <button class="dc-filter-btn active" data-type="meta">metanote</button>
-    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
-    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
-  </div>
-  <div class="dc-results-box" id="dcResults"></div>
-</div>
-<script src="/global-search.js?v=15" defer></script>
-<script src="/dc-nav.js?v=303" defer></script>
+<script src="/global-search.js?v=16" defer></script>
+<script src="/dc-nav.js?v=304" defer></script>
 </body>
 </html>

@@ -1643,12 +1643,16 @@ body.dc-desktop-ui.dc-search-mode .dc-spot--search{
 }
 /* No query: do not reserve the entire reader column for an empty results pane.
    The search sponsor follows #dcGlobalBox, so it now sits immediately below
-   the filters rather than under a giant blank panel. */
-body.dc-desktop-ui.dc-search-mode #dcGlobalBox:has(#dcSearch:placeholder-shown){
+   the filters rather than under a giant blank panel. Keyed on a class the
+   input listener toggles (.dc-has-query), never :has(:placeholder-shown):
+   Chromium restyles that selector mid-edit and resets the caret to 0, so
+   every Persian word typed after its first letter came out rotated
+   («کراون» → «راونک»). */
+body.dc-desktop-ui.dc-search-mode #dcGlobalBox:not(.dc-has-query){
   flex:0 0 auto !important;
   height:auto !important;
 }
-body.dc-desktop-ui.dc-search-mode #dcGlobalBox:has(#dcSearch:placeholder-shown) #dcResults{
+body.dc-desktop-ui.dc-search-mode #dcGlobalBox:not(.dc-has-query) #dcResults{
   display:none !important;
   flex:0 0 auto !important;
 }
@@ -5400,6 +5404,12 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         .dc-wf-home-entry .dc-wf-amber-pill{ flex:none; font-size:.63rem; font-weight:800; color:var(--x-amber-ink);
           background:var(--x-amber-wash-2); border:1px solid var(--x-amber-bd);
           border-radius:999px; padding:.16rem .6rem; white-space:nowrap; }
+        /* A subscriber has every step already: the price chip is a sales line
+           they paid to stop hearing. Keyed on the premium tab's own verdict
+           (premium-panel.js paints .dcp-pp[data-dcp-state="live"] from the one
+           /me this page already makes), so it adds no request and a pending or
+           unreachable /me keeps the chip as shipped. */
+        body:has(.dcp-pp[data-dcp-state="live"]) .dc-wf-home-entry .dc-wf-amber-pill{ display:none; }
       </style>
       <div class="dc-destool-wrap">
         <button type="button" class="dc-destool-tab" id="dcDesToolTab" aria-expanded="false" aria-controls="dcDesToolPanel">
@@ -6934,7 +6944,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
     <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=7173641&Code=1JNpptoXEnQlKFUqawxi6IG65bKVLl9m'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=7173641&Code=1JNpptoXEnQlKFUqawxi6IG65bKVLl9m' alt='نماد اعتماد الکترونیکی دنت‌کست' loading='lazy' style='cursor:pointer' code='1JNpptoXEnQlKFUqawxi6IG65bKVLl9m'></a>
   </div>
   اهواز – کیانپارس، مطب دکتر فواد شهابیان<br>
-  تلفن: 33380090-061 &nbsp;|&nbsp; DentCast © 1404
+  تلفن: 33380090-061 &nbsp;|&nbsp; DentCast © 1405
 </footer>
 
 <!-- ══════════════════════════════════════════════
@@ -7201,7 +7211,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=303" defer></script>
+<script src="/dc-nav.js?v=304" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -7220,6 +7230,7 @@ scrollBody.addEventListener('touchend',e=>{
   function isMob(){return window.matchMedia('(max-width:1023px)').matches;}
 
   let _searchPushed = false;
+  let _opener = null;
 
   function openS(push=true, term=''){
     /* The desktop shell owns search via its own overlay (deskOpenSearch). On wide
@@ -7227,6 +7238,7 @@ scrollBody.addEventListener('touchend',e=>{
        bail here whenever the desktop UI is on — otherwise a stale "#search" hash
        would auto-open this mobile sheet (rendered full-screen by the desktop CSS). */
     if(!isMob() || document.body.classList.contains('dc-desktop-ui')) return;
+    _opener=document.activeElement;
     overlayBody.appendChild(globalBox);
     document.body.classList.add('dc-search-mode');
     overlay.setAttribute('aria-hidden','false');
@@ -7270,9 +7282,19 @@ scrollBody.addEventListener('touchend',e=>{
     if(e.target.closest && e.target.closest('.dcOpenSearch')) openS(true);
   });
   closeBtn&&closeBtn.addEventListener('click',()=>{ if(!document.body.classList.contains('dc-desktop-ui')) closeS(false); });
+  /* Escape closes the sheet like the × does, and hands focus back to whatever
+     opened it (the desktop shell has its own copy below). */
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Escape' || document.body.classList.contains('dc-desktop-ui') ||
+       !document.body.classList.contains('dc-search-mode')) return;
+    closeS(false);
+    if(_opener && _opener.isConnected && _opener.focus) _opener.focus();
+    _opener=null;
+  });
 
   /* آپدیت hash هنگام تایپ */
   searchInput.addEventListener('input',function(){
+    globalBox.classList.toggle('dc-has-query',!!searchInput.value);
     if(!document.body.classList.contains('dc-search-mode')) return;
     const q=searchInput.value.trim();
     history.replaceState({dcSearch:true,q},'',q?'#search:'+encodeURIComponent(q):'#search');
@@ -7323,7 +7345,7 @@ document.getElementById('tool-consult')?.addEventListener('click',()=>{window.lo
 document.getElementById('tool-about')?.addEventListener('click',()=>{window.location.href='about.html';});
 </script>
 
-<script src="/global-search.js?v=15"></script>
+<script src="/global-search.js?v=16"></script>
 <script>if('serviceWorker'in navigator){navigator.serviceWorker.register('/service-worker.js').catch(()=>{});}</script>
 
 <script>
@@ -8236,6 +8258,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     const globalBox   = document.getElementById('dcGlobalBox');
     const searchInp   = document.getElementById('dcSearch');
     if(!overlay || !overlayBody || !globalBox) return;
+    deskSearchOpener = document.activeElement;
     hostOverlayInColumn('dcSearchOverlay');
     overlayBody.appendChild(globalBox);
     document.body.classList.add('dc-search-mode');
@@ -8266,6 +8289,14 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
     if(window.location.hash.startsWith('#search'))
       history.replaceState(null,'',window.location.pathname+window.location.search);
   }
+  let deskSearchOpener = null;
+  document.addEventListener('keydown', (e) => {
+    if(e.key !== 'Escape' || !document.body.classList.contains('dc-desktop-ui') ||
+       !document.body.classList.contains('dc-search-mode')) return;
+    deskCloseSearch();
+    if(deskSearchOpener && deskSearchOpener.isConnected) deskSearchOpener.focus?.();
+    deskSearchOpener = null;
+  });
   document.getElementById('dcd-hdr-search')?.addEventListener('click', ()=>deskOpenSearch());
   /* Any .dcOpenSearch INSIDE the desktop shell — today the welcome column's
      copy of the phone's hero search box. Delegated for the same reason the

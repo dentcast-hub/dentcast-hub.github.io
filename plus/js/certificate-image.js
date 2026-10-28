@@ -154,7 +154,7 @@ function drawSheet(ctx, v, { w, h, mark, amiri, square }) {
 
   /* ---- body, vertically centred like the DOM's 1fr row ---- */
   const bodyTop = padTop + u * 5.2;
-  const bodyBottom = h - padBottom - (square ? u * 5.4 : u * 7.2);
+  const bodyBottom = h - padBottom - (square ? u * 5.4 : u * 8.2);
   const maxText = w - padX * 2;
 
   const pathLines = wrap(ctx, v.pathway_title_fa, Math.min(maxText, u * 24), `700 ${u * 1.85}px Vazirmatn, sans-serif`);
@@ -186,11 +186,15 @@ function drawSheet(ctx, v, { w, h, mark, amiri, square }) {
   const fineH = square ? 0 : u * 0.68 * 1.7 * 2;
   const footBase = h - padBottom - fineH;
 
+  // The A4 sheet's «گواهی تأییدشده» badge is centred at sigY − 2.3u, which is
+  // exactly where the rule used to run (footBase − 4.4u) — the line went
+  // through the badge. One unit higher clears its disc and its text.
+  const ruleY = footBase - u * (square ? 4.4 : 5.4);
   ctx.strokeStyle = HAIR;
   ctx.lineWidth = Math.max(1, u * 0.05);
   ctx.beginPath();
-  ctx.moveTo(left, footBase - u * 4.4);
-  ctx.lineTo(right, footBase - u * 4.4);
+  ctx.moveTo(left, ruleY);
+  ctx.lineTo(right, ruleY);
   ctx.stroke();
 
   // signature (start edge)

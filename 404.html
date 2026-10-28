@@ -23,6 +23,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>صفحه پیدا نشد | DentCast</title>
   <meta name="robots" content="noindex, follow">
+  <meta name="description" content="صفحه‌ای که دنبالش بودید در دنت‌کست پیدا نشد؛ از صفحهٔ اصلی یا جستجوی سراسری ادامه دهید.">
+  <link rel="canonical" href="https://dentcast.org/404.html">
 
 
   <style>
@@ -41,7 +43,10 @@
     h1 { font-size: 6rem; margin: 0; color: #0b5fff; line-height: 1; }
     h2 { margin-top: 0.625rem; font-size: 1.5rem; }
     p { color: #9aa1b3; margin-bottom: 1.875rem; }
-    a {
+    /* The button look is for the page's own link only — a bare `a{}` also
+       painted the topbar's logo and «دکتر فواد شهابیان» as big blue boxes. */
+    a.dc-404-home {
+      display: inline-block;
       background: #0b5fff;
       color: white;
       text-decoration: none;
@@ -50,7 +55,7 @@
       font-weight: bold;
       transition: 0.3s;
     }
-    a:hover { background: #004ecb; transform: scale(1.05); }
+    a.dc-404-home:hover { background: #004ecb; transform: scale(1.05); }
   </style>
     <link rel="stylesheet" href="/dc-theme.css?v=7">
 <link rel="stylesheet" href="/dc-nav.css?v=17">
@@ -110,7 +115,7 @@
   <h1>404</h1>
   <h2>مسیر رو اشتباه اومدی دکتر جان!</h2>
   <p>این صفحه‌ای که دنبالش می‌گردی وجود نداره یا حذف شده.</p>
-  <a href="/index.html"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> برگشت به دنت‌کست</a>
+  <a class="dc-404-home" href="/index.html"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> برگشت به دنت‌کست</a>
 <div class="dc-global-filter-box" id="dcGlobalBox">
   <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
   <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
@@ -128,7 +133,7 @@
   </div>
   <div class="dc-results-box" id="dcResults"></div>
 </div>
-<script src="/global-search.js?v=15" defer></script>
-<script src="/dc-nav.js?v=303" defer></script>
+<script src="/global-search.js?v=16" defer></script>
+<script src="/dc-nav.js?v=304" defer></script>
 </body>
 </html>

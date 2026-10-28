@@ -119,6 +119,17 @@ describe('PATCH /me', () => {
     const me = await (await app.inject({ method: 'GET', url: '/me', headers: { cookie } })).json();
     expect(me.display_name).toBe('نام تازه');
   });
+
+  it('refuses a name made only of invisible characters, keeps ZWNJ inside a real one', async () => {
+    for (const blank of ['\u200c\u200c', '\u200b\u200b\u200b', '\u200f\u2066 \u2069']) {
+      const r = await app.inject({ method: 'PATCH', url: '/me', headers: { cookie }, payload: { display_name: blank } });
+      expect(r.statusCode).toBe(400);
+      expect(r.json().error).toBe('invalid_display_name');
+    }
+    const ok = await app.inject({ method: 'PATCH', url: '/me', headers: { cookie }, payload: { display_name: 'علی\u200cرضا' } });
+    expect(ok.statusCode).toBe(200);
+    expect(ok.json().display_name).toBe('علی\u200cرضا');
+  });
 });
 
 describe('GET /profile/stats', () => {

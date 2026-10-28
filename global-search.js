@@ -13,6 +13,20 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ------------ DB --------------- */
   let DB = [];
 
+  /* Matching only, never display: Arabic ي/ى/ك typed on an Arabic keyboard
+     and ZWNJ/zero-width marks would otherwise miss the Persian spelling
+     («كراون» found nothing where «کراون» found 13). Same fold as
+     plus/js/hl-view.js foldFa. */
+  const foldFa = (s) => String(s || "")
+    .replace(/[يى]/g, "ی")
+    .replace(/ك/g, "ک")
+    .replace(/[\u200B-\u200F\u064B-\u0652\u0640]/g, "")
+    .replace(/\s+/g, " ")
+    .toLowerCase()
+    .trim();
+  const faDigits = (s) => String(s).replace(/[0-9]/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+  const escHtml = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
   /* ------------ فیلترهای فعال -------------- */
  let activeFilters = new Set([
   "dentcast",
@@ -101,6 +115,21 @@ const TYPE_MAP = {
     performSearch(searchInput.value.trim());
   });
 
+  /* Results are role=button: Enter/Space open them like a click does. */
+  resultsBox.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const item = e.target.closest && e.target.closest(".dc-result-item[role='button']");
+    if (!item) return;
+    e.preventDefault();
+    item.click();
+  });
+
+  /* /search.html?q=… arrives with the query already typed; loadDB() runs it. */
+  if (/\/search(\.html)?$/.test(location.pathname)) {
+    const qp = new URLSearchParams(location.search).get("q");
+    if (qp && !searchInput.value) searchInput.value = qp;
+  }
+
   /* ------------ Enter key --------------- */
   searchInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") performSearch(searchInput.value.trim());
@@ -135,7 +164,7 @@ const TYPE_MAP = {
     and prefixing it again printed «پرامپتولوژیست — پرامپتولوژیست — …». */
  const named = (name) => title.trim().startsWith(name) ? " " + title.trim() : " " + name + " — " + title;
  const labelMap = {
-  dentcast:      _iMic  + " دنت‌کست — اپیزود " + item.episode,
+  dentcast:      _iMic  + " دنت‌کست — اپیزود " + faDigits(item.episode) + (title.trim() ? " · " + title.trim() : ""),
   notecast:      _iNote + named("نوت‌کست"),
   clinical:      _iBulb + named("نکته کلینیکی"),
   dentcast_plus: _iPlay + named("دنت‌کست+"),
@@ -182,7 +211,7 @@ const TYPE_MAP = {
       return;
     }
 
-    const query = q.toLowerCase();
+    const query = foldFa(q);
     let results = [];
 
     for (const item of DB) {
@@ -198,10 +227,24 @@ const TYPE_MAP = {
         (item.caption || "") + " " +
         (item.keywords || []).join(" ") + " " +
         (item.hashtags || []).join(" ")
-      ).toLowerCase();
+      );
 
-      if (blob.includes(query)) results.push(item);
+      if (foldFa(blob).includes(query)) results.push(item);
     }
+
+    if (!results.length) {
+      resultsBox.style.display = "block";
+      resultsBox.innerHTML = `
+      <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+      <div class="dc-result-item dc-no-results" role="status">نتیجه‌ای برای «${escHtml(q)}» پیدا نشد.</div>
+    `;
+      resultsBox.querySelector(".dc-close-results").onclick = () => {
+        resultsBox.style.display = "none";
+        resultsBox.innerHTML = "";
+      };
+      return;
+    }
+
 
     /* --- نمایش ۳۰ تای اول --- */
     const more = results.length > 30;

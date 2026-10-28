@@ -117,7 +117,7 @@ describe('GET /review/due — ai_due', () => {
     await consumeArticle('chairside/chairside-1', '2 days');
     const hl = await app.inject({
       method: 'POST', url: '/highlights', headers: { cookie },
-      payload: { content_id: 'resin-cements-overview', exact: 'یک متن هایلایت‌شده برای تست' },
+      payload: { content_id: 'glossary/resin-cements', exact: 'یک متن هایلایت‌شده برای تست' },
     });
     const highlightId = hl.json().highlight.id as string;
     await pool.query(
@@ -246,7 +246,7 @@ describe('POST /review/answer-ai', () => {
 
     const hl = await app.inject({
       method: 'POST', url: '/highlights', headers: { cookie },
-      payload: { content_id: 'resin-cements-overview', exact: 'یک هایلایت برای پر کردن سقف' },
+      payload: { content_id: 'glossary/resin-cements', exact: 'یک هایلایت برای پر کردن سقف' },
     });
     const highlightId = hl.json().highlight.id as string;
 
