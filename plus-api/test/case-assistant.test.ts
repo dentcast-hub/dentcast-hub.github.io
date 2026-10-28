@@ -373,7 +373,7 @@ describe('tag round (real site hashtags)', () => {
       'افزایش طول تاج': 'glossary/crown-lengthening', 'پروفایل امرجنس': 'glossary/emergence-profile',
       'سندبلاست': 'glossary/sandblasting', 'تیتانیوم بیس': 'glossary/ti-base',
       'رابطه مرکزی': 'glossary/centric-relation', 'اتصال پیچ شونده': 'glossary/screw-retained',
-      'کانین رایز': 'glossary/canine-guidance', 'بارگذاری ایمپلنت': 'glossary/implant-loading',
+      'کانین رایز': 'glossary/canine-guidance', 'زمان لود ایمپلنت': 'glossary/implant-loading',
       'اچ اند رینس': 'glossary/etch-and-rinse', 'پروتکل باند': 'glossary/bonding-protocol',
       'total occlusal convergence': 'glossary/toc', 'اسپلینت': 'glossary/occlusal-splint',
       'سرامیک هیبرید': 'glossary/hybrid-ceramics', 'پلی کریستالین': 'glossary/polycrystalline-ceramics',

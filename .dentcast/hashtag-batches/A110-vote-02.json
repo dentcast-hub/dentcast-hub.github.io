@@ -1,0 +1,36 @@
+{
+  "note": "A110 vote, ballot item 2 (MERGE #پست_فلزی with #کور_ریختگی, vote 2–1; direction set by the orchestrator from the voters' reading). All seven #کور_ریختگی pages are about the metal cast post-and-core and use «پست و کور ریختگی» themselves (insight-15 removing a stuck post-core, meta-9 delivery timing, insight-28 grey shade under ceramic, meta-19 core coverage, meta-20 one-step fabrication, share-20 cast vs fiber vs zirconia, share-31 retrofit post), and share-20 calls the same object «پست فلزی». #پست_فلزی had one page, meta-7, whose «پست فلزی» is the reliable, less technique-sensitive metal post argued against fiber posts. So #پست_فلزی is renamed into #کور_ریختگی (not the reverse: that would put seven technique pages under a one-page material label). meta-7 still resolves under the survivor's definition, which now names the cast/metal post vs fiber choice; its list is rewritten by the rename only (its other tags, #فایبر_پست and #اندیکاسیون_پست, stay). Every spelling of both concepts becomes an alias on the survivor (--apply does not move them): «پست فلزی», metal post, cast post, کست پست, پست ریختگی فلزی plus the survivor's own, and colloquial/misspelt forms (پست و کور ریختگی، کور فلزی، پست ریخته گری).",
+  "concepts": [
+    {
+      "tag": "#کور_ریختگی",
+      "domain": "clinical",
+      "definition": "پست و کورِ فلزیِ ریختگیِ یکپارچه (کور ریختگی؛ در زبانِ بالینی «پست فلزی») — طراحی، ساخت (یک‌مرحله‌ای یا رتروفیت زیرِ روکشِ موجود)، تحویل، خارج‌سازی، پیامدِ زیبایی‌اش زیرِ سرامیک، و انتخابش در برابر فایبر پست.",
+      "use_when": "مقاله طراحی، ساخت، تحویل یا خارج کردنِ پست و کورِ ریختگی را تعیین کند، یا پستِ فلزی/ریختگی را در برابر فایبر پست یا پستِ دیگر انتخاب یا مقایسه کند.",
+      "aliases": [
+        "cast core",
+        "کست کور",
+        "کور ریختگی فلزی",
+        "پست ریختگی",
+        "cast post and core",
+        "پست فلزی",
+        "metal post",
+        "cast post",
+        "کست پست",
+        "پست ریختگی فلزی",
+        "پست و کور ریختگی",
+        "پست و کور فلزی",
+        "پست فلزی ریختگی",
+        "کور فلزی",
+        "cast metal post",
+        "metal post and core",
+        "کست پست اند کور",
+        "پست ریخته گری",
+        "کور ریخته گری"
+      ]
+    }
+  ],
+  "renames": {
+    "#پست_فلزی": "#کور_ریختگی"
+  },
+  "articles": {}
+}

@@ -61,10 +61,6 @@
   "ids": [
    "immediate-dentin-sealing"
   ],
-  "implant prosthetics": [
-   "implant-prosthesis",
-   "implant-supported-crowns"
-  ],
   "jumping gap": [
    "jumping-gap"
   ],
@@ -212,9 +208,6 @@
    "screw-retained",
    "screw-retained-vs-cement-retained"
   ],
-  "اتچمنت": [
-   "overdenture-attachment"
-  ],
   "اتچمنت اوردنچر": [
    "overdenture-attachment"
   ],
@@ -299,7 +292,8 @@
    "retention",
    "cementation",
    "luting-agent",
-   "debonding"
+   "debonding",
+   "resistance-form"
   ],
   "افزایش vd": [
    "vertical-dimension",
@@ -312,6 +306,12 @@
   "انتخاب shade": [
    "shade-matching",
    "shade-guide"
+  ],
+  "انتخاب اباتمنت": [
+   "abutment",
+   "material-selection",
+   "custom-abutment",
+   "zirconia-abutment"
   ],
   "انتخاب سمان": [
    "resin-cement",
@@ -338,6 +338,14 @@
   "اندوکراون": [
    "endocrown"
   ],
+  "اندیکاسیون روکش": [
+   "cuspal-coverage",
+   "restoration-endodontically-treated-single-teeth"
+  ],
+  "اندیکاسیون پست": [
+   "post-free-restoration",
+   "post-and-core"
+  ],
   "اوردنچر": [
    "overdenture",
    "implant-overdenture"
@@ -351,6 +359,9 @@
   "اورکانتور": [
    "crown-contour",
    "critical-contour"
+  ],
+  "اوپکر": [
+   "masking-ability"
   ],
   "اچ اند رینس": [
    "etch-and-rinse-adhesive"
@@ -368,6 +379,10 @@
    "occlusion",
    "occlusal-scheme",
    "vertical-dimension"
+  ],
+  "اکلوژن ایمپلنت": [
+   "implant-occlusion",
+   "occlusal-overload"
   ],
   "ایزولاسیون": [
    "rubber-dam",
@@ -420,12 +435,6 @@
   "بارداری": [
    "pregnancy"
   ],
-  "بارگذاری ایمپلنت": [
-   "loading-protocol",
-   "immediate-loading",
-   "early-loading",
-   "delayed-loading"
-  ],
   "بازسازی ریشه": [
    "weakened-roots-reconstruction-protocols"
   ],
@@ -477,8 +486,8 @@
    "fixed-dental-prosthesis"
   ],
   "بریج دندان ایمپلنت": [
-   "questionable-tooth",
-   "treatment-planning"
+   "tooth-implant-connection",
+   "connecting-implants-to-teeth"
   ],
   "بزاق": [
    "saliva"
@@ -552,10 +561,15 @@
   "تحویل روکش": [
    "cementation",
    "marginal-fit",
-   "luting-agent"
+   "luting-agent",
+   "crown-cementation-seating-factors"
   ],
   "تداخل اکلوزالی": [
    "occlusal-interference"
+  ],
+  "تداخل سمت کارگر": [
+   "occlusal-interference",
+   "lateral-occlusion"
   ],
   "تراش دندان": [
    "tooth-preparation"
@@ -704,7 +718,8 @@
   "حرکات اکسکورسیو": [
    "lateral-occlusion",
    "canine-guidance",
-   "group-function"
+   "group-function",
+   "occlusal-interference"
   ],
   "حفظ دندان": [
    "questionable-tooth",
@@ -790,6 +805,10 @@
    "restoration-survival",
    "longevity"
   ],
+  "دوره آزمایشی": [
+   "patient-adaptation",
+   "vertical-dimension"
+  ],
   "دیابت": [
    "diabetes",
    "implant-therapy-diabetes-mellitus-update"
@@ -809,6 +828,9 @@
   ],
   "رزین کوتینگ": [
    "immediate-dentin-sealing"
+  ],
+  "رست سیت": [
+   "removable-partial-denture"
   ],
   "رشد فک": [
    "facial-growth",
@@ -837,6 +859,11 @@
   ],
   "روکش ایمپلنت": [
    "implant-supported-crowns"
+  ],
+  "روکش دندان": [
+   "all-ceramic",
+   "metal-ceramic",
+   "monolithic-restoration"
   ],
   "روکش سرامیکی": [
    "ceramic-crown",
@@ -909,6 +936,9 @@
   ],
   "سایلان": [
    "silane"
+  ],
+  "سایه خاکستری": [
+   "masking-ability"
   ],
   "سرامیک": [
    "ceramic"
@@ -1409,9 +1439,6 @@
    "zirconia-post",
    "customized-zirconia-post"
   ],
-  "پست فلزی": [
-   "cast-post-and-core"
-  ],
   "پست و کور": [
    "post-and-core",
    "post-and-crown"
@@ -1460,10 +1487,6 @@
    "abutment-screw",
    "screw-loosening"
   ],
-  "پیچ ایمپلنت": [
-   "abutment-screw",
-   "screw-loosening"
-  ],
   "ژینژیوکتومی": [
    "gingivectomy"
   ],
@@ -1508,7 +1531,9 @@
    "implant-abutment-connection"
   ],
   "کانین رایز": [
-   "canine-guidance"
+   "canine-guidance",
+   "group-function",
+   "lateral-occlusion"
   ],
   "کاهش vdo": [
    "vertical-dimension"
@@ -1565,15 +1590,17 @@
   "کیور": [
    "light-curing"
   ],
+  "گاید پلین": [
+   "removable-partial-denture"
+  ],
   "گایدنس قدامی": [
    "anterior-guidance",
    "canine-guidance"
   ],
-  "گایدنس کانین": [
-   "canine-guidance"
-  ],
   "گروپ فانکشن": [
-   "group-function"
+   "group-function",
+   "canine-guidance",
+   "lateral-occlusion"
   ],
   "گلاس آینومر": [
    "glass-ionomer-cement"
@@ -1645,28 +1672,41 @@
  },
  "tooth_topics": [
   "cad cam",
+  "debonding",
   "اسکنر داخل دهانی",
+  "افتادن روکش",
   "انتخاب سمان",
   "انتخاب متریال",
+  "اندیکاسیون روکش",
+  "اندیکاسیون پست",
   "اکلوژن",
   "بریج",
   "بقای رستوریشن",
   "بیولوژیک ویدث",
+  "تحویل روکش",
+  "تداخل سمت کارگر",
   "تراش روکش",
   "تکنیک سمان",
+  "حرکات اکسکورسیو",
   "خطای اسکن",
   "دقت اسکن",
   "دوام ترمیم",
+  "دوره آزمایشی",
+  "رست سیت",
   "روکش",
   "روکش اسپلینت",
+  "روکش دندان",
   "روکش موقت",
   "زیرکونیا",
   "سرامیک",
-  "سمان دندانی",
   "سمان دائم",
+  "سمان دندانی",
+  "سمان مجدد",
   "سمان کردن",
   "شکست پرسلن",
+  "فیت پروتز",
   "قالبگیری",
+  "قالبگیری دو مرحله ای",
   "قالب‌گیری دیجیتال",
   "موقتی به‌عنوان مرجع",
   "پروتز ثابت",
@@ -1674,11 +1714,6 @@
   "کانتکت سنگین",
   "کانتکت پروگزیمال",
   "کانتی لیور",
-  "افتادن روکش",
-  "سمان مجدد",
-  "debonding",
-  "تحویل روکش",
-  "فیت پروتز",
-  "قالبگیری دو مرحله ای"
+  "گاید پلین"
  ]
 }

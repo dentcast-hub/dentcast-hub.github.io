@@ -1757,10 +1757,10 @@
         "بارگذاری زودهنگام",
         "immediate loading",
         "implant loading",
-        "بارگذاری ایمپلنت"
+        "بارگذاری ایمپلنت",
+        "زمان لود ایمپلنت"
       ],
       "hashtags": [
-        "#بارگذاری_ایمپلنت",
         "#زمان_لود_ایمپلنت"
       ],
       "url": "/glossary/implant-loading.html",
@@ -1905,7 +1905,7 @@
         "Total Occlusal Convergence"
       ],
       "hashtags": [
-        "#Total_Occlusal_Convergence"
+        "#total_occlusal_convergence"
       ],
       "url": "/glossary/toc.html",
       "pillar": {
