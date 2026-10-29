@@ -11,6 +11,7 @@ correct.
     python3 tools/verify_publish.py chairside/chairside-28
     python3 tools/verify_publish.py --last      # the newest brain entry
     python3 tools/verify_publish.py --all       # regression sweep, site-wide
+    python3 tools/verify_publish.py --des-text des.json   # step 4.13 Part 3(6)
 
 `content_id` is the page path without a leading slash and without ".html" —
 the same identifier `plus/content-index.json`, the quiz index and the
@@ -569,11 +570,89 @@ def des_fidelity_owed(s):
 
 
 def des_ge(version, target):
+    if not isinstance(version, str):
+        return False
     try:
-        major, _, minor = (version or "").partition(".")
+        major, _, minor = version.partition(".")
         return (int(major), int(minor or 0)) >= target
     except ValueError:
         return False
+
+
+# Founder vocabulary for the Persian text a DES record shows on the page
+# (founder, 1405/08/07): research literature is «منابع علمی», never «ادبیات».
+# Checked on records stamped v3.5 or later; older records keep their text.
+DES_FA_AVOID = (("ادبیات", "منابع علمی"),)
+# The Persian prose fields of a DES object; quotes and citations are not touched.
+DES_FA_FIELDS = ("fact_fa", "interpretation_fa")
+
+
+def des_fa_wording(rec, default_ver=None):
+    """Every fact_fa / interpretation_fa string in a v3.5+ DES object (one
+    source object or a whole record) that uses a word on DES_FA_AVOID:
+    [(path, word, use_instead)]. `default_ver` stands in for objects that
+    carry no des_version of their own."""
+    out = []
+
+    def walk(o, path, ver):
+        if isinstance(o, dict):
+            ver = o.get("des_version") or ver
+            for k, v in o.items():
+                p = f"{path}.{k}" if path else k
+                if isinstance(v, str) and k in DES_FA_FIELDS:
+                    if des_ge(ver, (3, 5)):
+                        out.extend((p, bad, good) for bad, good in DES_FA_AVOID if bad in v)
+                else:
+                    walk(v, p, ver)
+        elif isinstance(o, list):
+            for i, x in enumerate(o):
+                walk(x, f"{path}[{i}]", ver)
+
+    walk(rec, "", default_ver)
+    return out
+
+
+def des_fa_sentences(rec):
+    """The interpretation_fa sentences of a DES object, for the Part 3(6)
+    claim check: [(path, [sentence, ...])]."""
+    out = []
+
+    def walk(o, path):
+        if isinstance(o, dict):
+            for k, v in o.items():
+                p = f"{path}.{k}" if path else k
+                if k == "interpretation_fa" and isinstance(v, str) and v.strip():
+                    out.append((p, [x.strip() for x in re.split(r"(?<=[.!؟])\s+", v.strip()) if x.strip()]))
+                else:
+                    walk(v, p)
+        elif isinstance(o, list):
+            for i, x in enumerate(o):
+                walk(x, f"{path}[{i}]")
+
+    walk(rec, "")
+    return out
+
+
+def des_text_report(path):
+    """`--des-text FILE`: the Part 3(6) check on a DES JSON before it is
+    stored. Exit 1 when a word on DES_FA_AVOID is used."""
+    try:
+        rec = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, ValueError) as e:
+        print(f"ERROR cannot read {path}: {e}")
+        return 2
+    # a DES object checked here is about to be stored, so it is current (v3.5)
+    bad = des_fa_wording(rec, default_ver="3.5")
+    for p, word, good in bad:
+        print(f"FAIL  {p}: «{word}» → «{good}» (founder vocabulary; offer the founder the rewrite)")
+    if not bad:
+        print("ok    no word from the founder's avoid list (fact_fa / interpretation_fa)")
+    print("\nPart 3(6): each sentence below must say only what the scored text or the record itself says.")
+    for p, sents in des_fa_sentences(rec):
+        print(f"\n{p}")
+        for i, x in enumerate(sents, 1):
+            print(f"  {i}. {x}")
+    return 1 if bad else 0
 
 
 def des_norm(s):
@@ -1511,6 +1590,12 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                       f"band/content_type/question_type live INSIDE each source and a second copy "
                       f"is a second source of truth",
                       "step 4.13 Part 4 — nothing derivable is stored beside the sources")
+            _fa_bad = des_fa_wording(rec)
+            _gate(rep, sweep, not _fa_bad, "4.13 DES",
+                  "Persian DES text uses the founder's vocabulary",
+                  "Persian DES text uses a word the founder replaced: "
+                  + "; ".join(f"{p} «{w}» → «{g}»" for p, w, g in _fa_bad),
+                  "step 4.13 Part 3(6) — offer the founder the rewrite; never change a score with it")
             srcs = rec.get("sources") or []
             valid_sources = isinstance(srcs, list) and bool(srcs) and all(isinstance(s, dict) for s in srcs)
             rep.check(valid_sources, "4.13 DES", "nonempty source records present",
@@ -2229,7 +2314,12 @@ def main():
                     help="the title EXACTLY as the user wrote it — compared codepoint-for-codepoint")
     ap.add_argument("--expect-caption", metavar="STR",
                     help="the caption EXACTLY as the user wrote it — compared codepoint-for-codepoint")
+    ap.add_argument("--des-text", metavar="FILE",
+                    help="step 4.13 Part 3(6): check the Persian text of one DES JSON before it is stored")
     args = ap.parse_args()
+
+    if args.des_text:
+        return des_text_report(args.des_text)
 
     if (args.expect_title or args.expect_caption) and (args.all or not args.content_id):
         ap.error("--expect-title/--expect-caption apply to a single content_id")

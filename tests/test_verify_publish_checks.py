@@ -300,5 +300,34 @@ class SeriesNavigationTests(unittest.TestCase):
             self.assertTrue([r for r in rep.rows if r[1] in ('4.5 parent', '4.6 nav')], cid)
 
 
+class DesPersianWordingTests(unittest.TestCase):
+    """Part 3(6): founder vocabulary on v3.5+ DES text; older records untouched."""
+
+    def rec(self, ver, text):
+        return {'scored_at': 'x', 'sources': [{'des_version': ver, 'fact_fa': 'f',
+                                               'interpretation_fa': text}]}
+
+    def test_avoided_word_flagged_from_v35(self):
+        bad = vp.des_fa_wording(self.rec('3.5', 'جایگاهش نسبت به ادبیات منتشرشده روشن نیست.'))
+        self.assertEqual(bad, [('sources[0].interpretation_fa', 'ادبیات', 'منابع علمی')])
+
+    def test_older_records_and_clean_text_pass(self):
+        self.assertEqual(vp.des_fa_wording(self.rec('3.4', 'در ادبیات اکلوژن')), [])
+        self.assertEqual(vp.des_fa_wording(self.rec('3.5', 'نسبت به منابع علمی منتشرشده')), [])
+
+    def test_numeric_version_does_not_crash(self):
+        self.assertEqual(vp.des_fa_wording(self.rec(3.5, 'ادبیات')), [])
+
+    def test_only_prose_fields_and_default_version(self):
+        src = {'citation_fa': 'تاریخ ادبیات', 'interpretation_fa': 'ادبیات'}
+        self.assertEqual(vp.des_fa_wording(src), [])
+        self.assertEqual(vp.des_fa_wording(src, default_ver='3.5'),
+                         [('interpretation_fa', 'ادبیات', 'منابع علمی')])
+
+    def test_sentences_listed_for_the_claim_check(self):
+        got = vp.des_fa_sentences(self.rec('3.5', 'جمله‌ی اول. جمله‌ی دوم؟ جمله‌ی سوم.'))
+        self.assertEqual(got, [('sources[0].interpretation_fa', ['جمله‌ی اول.', 'جمله‌ی دوم؟', 'جمله‌ی سوم.'])])
+
+
 if __name__ == '__main__':
     unittest.main()
