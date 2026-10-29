@@ -200,5 +200,21 @@ class LiveRecordsUnchanged(unittest.TestCase):
             self.assertEqual({k: len(v) for k, v in plan.items()}, want, cid)
 
 
+class KnowledgeFileTests(unittest.TestCase):
+    """des-vX-knowledge.md is the system prompt: the spec cut at its appendix,
+    byte for byte, so every run's prompt digest is the same file."""
+
+    def test_knowledge_is_the_spec_without_its_appendix(self):
+        for k in sorted((ROOT / '.dentcast').glob('des-v*-knowledge.md')):
+            v = k.name[len('des-v'):-len('-knowledge.md')]
+            spec = ROOT / '.dentcast' / f'dentcast-evidence-score-v{v}.md'
+            if not spec.exists():
+                continue
+            full = spec.read_bytes()
+            cut = full.find('## Appendix — pipeline contract'.encode())
+            self.assertGreater(cut, 0, spec.name)
+            self.assertEqual(k.read_bytes(), full[:cut].rstrip(b'\n') + b'\n', k.name)
+
+
 if __name__ == '__main__':
     unittest.main()

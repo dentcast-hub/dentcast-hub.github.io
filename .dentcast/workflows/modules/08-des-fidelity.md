@@ -127,7 +127,10 @@ score built on it.
 #### Part 2 — Run the prompt file
 
 **Load `.dentcast/dentcast-evidence-score-v3.5.md` as the system prompt — the whole
-file, verbatim, minus the appendix.**
+file, verbatim, minus the appendix.** That cut already exists:
+`.dentcast/des-v3.5-knowledge.md`, byte for byte. Pass that file; never cut the
+appendix yourself (a hand cut keeps a trailing blank line, so its digest differs
+from every other run's).
 
 <!-- des-version-history:v1 -->
 **v3.5 is the current spec.** What each earlier version changed, and why, is in
