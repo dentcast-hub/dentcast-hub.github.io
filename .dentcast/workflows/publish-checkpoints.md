@@ -120,6 +120,24 @@ introductory sources already completely read in that unchanged session.
 Canonical ledger steps, durable receipts, approvals, DES/Fidelity, Phase F,
 and the three fixed pushes are identical in both reading modes.
 
+### Just-in-time module loading (founder 1405/08/06)
+
+Read up front only what the start of a run needs: the router
+(`.dentcast/workflows/README.md`), `global/README.md` with its selected
+sections, `agent-parity.md`, this file, and modules 01 and 02. Do not preload
+modules 03 to 12. After Phase B is locked, read each remaining module (or its
+readpack ranges) completely **immediately before the first ledger step whose
+checkpoint ID that module lists in its preface**, and keep it loaded for the
+rest of the run under the usual source-revision rule above. A module whose
+steps are all canonically skipped for this run (an empty readpack selection,
+or a documented category skip) is not read. A v2 run does not execute C.8
+onward locally (`post-cut2-mechanical.yml` produces delivery 3), so the C.8 and
+C.7 parts of module 11 and Phases E, F and G of module 12 are read only when
+the agent must run guarded recovery of that workflow; Phase D of module 12
+(English, closed before the second delivery) and C.6 are read as usual. Reading
+later never means reading less: every module whose step runs is still read
+completely, verbatim, before that step.
+
 ## Publication services and remote checks
 
 DentCast is served from exactly two destinations: ArvanCloud, and GitHub Pages

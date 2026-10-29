@@ -80,6 +80,9 @@ only the chosen local temporary reading/manifest files.
    - `modules/11-build-and-version.md`
    - `modules/12-english-notify-verify.md`
 
+   Read each module just before its first step, not all at the start
+   (`publish-checkpoints.md`, «Just-in-time module loading»).
+
 3. For newly initialized v2 publications, complete all authoring,
 semantic judgments, DES/Fidelity and human approvals **through C.6**
 before second Push. This includes the authored English mirror + reciprocal
