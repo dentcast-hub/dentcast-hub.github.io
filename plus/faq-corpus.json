@@ -38983,6 +38983,76 @@
         }
       ]
     },
+    "chairside/chairside-46": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/chairside/chairside-46.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا ترکیب سمان دائم با مارجین عمیق احتمال باقی ماندن سمان اضافی در ناحیه‌ای را بالا می‌برد که بدون باز کردن فلپ قابل پاک‌سازی نیست؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ سمان باقی‌مانده یکی از علت‌های شناخته‌شده‌ی التهاب و تحلیل استخوان اطراف ایمپلنت است. سمان دائم همچنین بررسی و تورک مجدد اباتمنت را بدون شکستن پروتز ممکن نمی‌کند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا قطع شدن توالی دیواره‌ی خارجی فیکسچر در سطح انتهای پیچ در گرافی PA برای قطعی کردن ترک فیکسچر کافی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ این نما فقط احتمال ترک عرضی را مطرح می‌کند و وجود ترک بعد از خارج کردن قطعات و بررسی مستقیم قطعی می‌شود."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/chairside/chairside-46.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-46.html#flashcards-c1",
+              "name": "نشست ناکامل اباتمنت",
+              "description": "وضعیتی که اباتمنت کامل روی پلتفرم فیکسچر ننشسته و پیچ در همان وضعیت بسته شده است؛ پروتز می‌تواند بی‌حرکت بماند، اما فاصله‌ای دائمی در اینترفیس باقی می‌ماند که محل تجمع باکتری و التهاب مزمن است و در گرافی به شکل فضای انتهای پیچ بزرگ‌تر از ایمپلنت مجاور دیده می‌شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-46.html#flashcards-c2",
+              "name": "سمان دائم با مارجین عمیق",
+              "description": "ترکیبی که احتمال باقی ماندن سمان اضافی را در ناحیه‌ای که بدون باز کردن فلپ قابل پاک‌سازی نیست بالا می‌برد؛ سمان باقی‌مانده علت شناخته‌شده‌ی التهاب و تحلیل استخوان اطراف ایمپلنت است.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-46.html#flashcards-c3",
+              "name": "کانتور ساب‌جینجیوال نامناسب",
+              "description": "حجم بیش از حد پروتز در بخش زیر لثه‌ای، بالای فینیش لاین؛ این بخش از پروفایل خروج روی بافت نرم فشار می‌آورد و در کنار مارجین عمیق بهداشت‌پذیری ناحیه را کم می‌کند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-46.html#flashcards-c4",
+              "name": "ترک عرضی فیکسچر در سطح انتهای پیچ",
+              "description": "نمای قطع توالی دیواره‌ی خارجی فیکسچر در دو سمت و در یک سطح افقی؛ این سطح محل شایع شکست فیکسچر است چون دیواره‌ی ایمپلنت آنجا نازک‌تر است، و قطعی شدنش به بررسی مستقیم پس از خارج کردن قطعات نیاز دارد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-46.html#flashcards-c5",
+              "name": "چرخه‌ی شل شدن پیچ",
+              "description": "شل شدن پیچ با نشست کامل اباتمنت هم رخ می‌دهد و علتش را معاینه می‌یابد: تماس‌های اکلوزالی، تورک پیچ، عدم تطابق جزئی قطعات و ترک فیکسچر که گیر رزوه‌ها و هگز را از بین می‌برد؛ این عوامل یکدیگر را تشدید می‌کنند.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
+    },
     "dentai/promptologist/prompt-append2-6": {
       "faqPages": [
         {

@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "chairside/chairside-46"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -74,6 +74,30 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           ],
           "scope": "note-box-colour",
           "status": "confirmed"
+        },
+        {
+          "decision": "Founder 15:31 Tehran: FAQ only #2 (\u0633\u0645\u0627\u0646 \u062f\u0627\u0626\u0645 \u0628\u0627 \u0645\u0627\u0631\u062c\u06cc\u0646 \u0639\u0645\u06cc\u0642) and #4 (\u0642\u0637\u0639 \u0634\u062f\u0646 \u062a\u0648\u0627\u0644\u06cc \u062f\u06cc\u0648\u0627\u0631\u0647\u200c\u06cc \u062e\u0627\u0631\u062c\u06cc \u0641\u06cc\u06a9\u0633\u0686\u0631); #1,#3,#5 rejected; all five flashcards approved as drafted",
+          "evidence": [
+            "chat 2026-10-29 15:31 Tehran relayed by coordinator, words: \u062a\u0648 \u0633\u0648\u0627\u0644\u0627\u062a \u0641\u0642\u0637 \u06f2 \u0648 \u06f4 \u062e\u0648\u0628\u0646 / \u0641\u0644\u0634 \u06a9\u0627\u0631\u062a\u0647\u0627 \u062e\u0648\u0628\u0646"
+          ],
+          "scope": "flashcards-faq",
+          "status": "confirmed"
+        },
+        {
+          "decision": "two queue-approved exam questions written verbatim from 08",
+          "evidence": [
+            "queue 04 approval 12"
+          ],
+          "scope": "exam-questions",
+          "status": "confirmed"
+        },
+        {
+          "decision": "English mirror from queue 06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md (approval 8, approval 13); lead paragraph translated faithfully from founder text incl. I did not treat or examine this patient; this analysis is based only on the history, PA radiographs and CBCT",
+          "evidence": [
+            "queue 04 approvals 8 and 13; founder 15:25 lead"
+          ],
+          "scope": "english-mirror",
+          "status": "confirmed"
         }
       ],
       "decisions": [
@@ -106,6 +130,91 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "kind": "first_cut_lead_provenance_v1",
           "origin": "author_original",
           "source_ref": "Founder-supplied opening paragraph, chat 2026-10-29 15:25 Tehran relayed by coordinator (replaces agent draft)"
+        },
+        {
+          "english": {
+            "evidence": [
+              "mirror reviewed against 06 and 01 structure before Push 2"
+            ],
+            "path": "chairside/en/chairside-46.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "current-run editorial close review: DES, FAQ/flashcards, hashtags, brain, pathways, exam, Pulse, English mirror all done locally before Push 2"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "COMMENTARY basket, founder-supplied DES record validated (sha256 of 01 equals receipt, 19/E), no paper, queue approvals 1-25"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Q4.9 answered no (queue approval 16); C.4.14 skipped"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "pillar implantology / peri-implant-health valid in live PILLARS; founder 15:12 and 15:25"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.7-C.4.9 semantic audit in cut 1: 6 glossary links, 5 capsules; founder 15:25 borderline decisions"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "hashtag_ref --simulate, --sync, --check OK; five canonical tags, no mint; queue approval 7"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "brain entry chairside-46 at array tail with chairside-45 key set; title and caption identical to queue 02; keywords verbatim from 09"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "pathway_place: implant-prosthetic STRONG placed; ASK candidates left unplaced and reported; bundle gate 1 NO for chairside; 2 exam questions written"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "index.html Pulse: approved line (queue approval 9, without \u062a\u0627\u0632\u0647 per founder 15:25) inserted at top, bottom lite-CAST42 line dropped, 7 lines"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "chairside/en/chairside-46.html built from approved 06 translation, noindex, toggles inverse"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "founder decisions 15:11, 15:12, 15:25, 15:31 and queue approvals recorded in context.approvals"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -393,6 +502,119 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "05-semantic-linking.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [
+          "Q4.7 queue approval 3: no paper attached; step 4.10 documented skip (C.4.10.1)"
+        ],
+        "id": "C.4.10.1",
+        "module": "06-paper-ingestion.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.2",
+        "module": "06-paper-ingestion.md",
+        "reason": "no paper attached (Q4.7): step 4.10 skip",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.3",
+        "module": "06-paper-ingestion.md",
+        "reason": "no paper attached (Q4.7): step 4.10 skip",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Founder 15:31 chat approved all 5 flashcards as drafted; 5 DefinedTerm (authored) written to plus/faq-corpus.json under chairside/chairside-46; build_flashcards_index.mjs run (1774 cards)"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Founder 15:31 approved only FAQ #2 and #4 (#1,#3,#5 rejected, not written); 2 yes/no questions with verdict opening, no deixis; build_quiz_index.mjs run. 4.12-b: evaluated at C.5.6"
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "DES founder-supplied path (queue 04 exception 2): sha256 01-\u0645\u062a\u0646.md equals hash in \u0627\u062c\u0631\u0627.md (43f2fc79...caad); arithmetic 5+4+4+3+3=19, band E, COMMENTARY schema, spec v3.5; quotes 1-3 substrings of 01-\u0645\u062a\u0646, quote 4 substring of chairside/index.html with note; no Fidelity (COMMENTARY); Part 3(6) receipt in \u0627\u062c\u0631\u0627.md and verify_publish --des-text ok; model not rerun; record stored verbatim in plus/des-scores.json chairside/chairside-46. Page also carries founder lead paragraph outside scored text (founder 15:25)."
+        ],
+        "id": "C.4.13",
+        "module": "08-des-fidelity.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "queue 04 07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627 Q4.9 = \u062e\u06cc\u0631"
+        ],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "Q4.9 not a challenge (queue approval 16); no challenge markup",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Hashtag step 5.0: founder approval 7 (queue) + 15:25 concepts; hashtag_ref --simulate resolved all 5 as canonical, no mint (counts: \u0686\u06cc\u0631\u0633\u0627\u06cc\u062f 45, \u0634\u06a9\u0633\u062a_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a 6, \u0634\u0644_\u0634\u062f\u0646_\u067e\u06cc\u0686 4, \u067e\u0631\u06cc_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u06cc\u062a\u06cc\u0633 11, \u0627\u0628\u0627\u062a\u0645\u0646\u062a 22); composition: series \u0686\u06cc\u0631\u0633\u0627\u06cc\u062f, decision \u0634\u06a9\u0633\u062a_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a, specific<=10 \u0634\u0644_\u0634\u062f\u0646_\u067e\u06cc\u0686 and \u0634\u06a9\u0633\u062a_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a, umbrella \u0627\u0628\u0627\u062a\u0645\u0646\u062a additive; resolving sentences per tag in queue 07; reachability test run after brain write"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Brain entry chairside-46 appended at array end with chairside-45 key set; hashtags 5 canonical (queue approval 7), keywords 5 verbatim from 09 (approval 10), pillar implantology/peri-implant-health (founder 15:12 and 15:25); hashtag_ref --sync, build_plus_index, --check OK, build_cabinet_papers --check OK; reachability: page in contentIds of \u0634\u06a9\u0633\u062a \u0627\u06cc\u0645\u067e\u0644\u0646\u062a (7 pages), \u0634\u0644 \u0634\u062f\u0646 \u067e\u06cc\u0686 (5), \u067e\u0631\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u06cc\u062a\u06cc\u0633 (12), \u0627\u0628\u0627\u062a\u0645\u0646\u062a (23); API rank within first 4 not simulable beyond membership"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "brain pillar.primary implantology, subtopic peri-implant-health valid in live PILLARS; no extra keys; capsule /pillar/implantology/ present on page"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pathway_place: implant-prosthetic STRONG (score 143), inserted after chairside/chairside-23, milestone false. Other candidates were ASK (fixed-pros 52, treatment-planning 46, implant-surgical 39, occlusion 27, ceramics 19, esthetic 18, bundle-implant-parts 18) and were NOT placed (no founder yes; reported for founder). full pathways 1.51 per item vs baseline 1.38 (pre-existing drift). 4.12-b: 2 queue-approved questions (approval 12) written verbatim, ids r-166bacac and r-dc4ffc46, validate_exam_questions 0 errors; pathways drawing them: implant-prosthetic"
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Bundle check: candidate bundle-implant-parts (continues_pathway is implant-prosthetic) rejected at GATE 1 (type chairside is NO always); no other candidates"
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Pulse line inserted at top of index.html (approved queue line without \u062a\u0627\u0632\u0647 per founder 15:25, link on whole title), bottom lite-CAST42 line dropped, 7 lines; English mirror chairside/en/chairside-46.html written (noindex, toggle both ways, no capsules); second_cut_editorial_lock_v1 recorded with ten scopes; verify_publish pre-run: 104 pass, 6 mechanical fails only (sitemap, pillar x2, version x3) owned by post-cut2 workflow"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
@@ -404,12 +626,20 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       "chairside/en/chairside-46.html",
       "chairside/index.html",
       "dentcast-brain.json",
+      "dentcast-hashtag-reference.json",
       "index.html",
-      "plus/des-scores.json"
+      "plus/assistant-tags.json",
+      "plus/content-index.json",
+      "plus/des-scores.json",
+      "plus/exam-questions.json",
+      "plus/faq-corpus.json",
+      "plus/flashcards-index.json",
+      "plus/pathways.json",
+      "plus/quiz-index.json"
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: chairside/chairside-46.html, chairside/cs46-1.webp, chairside/cs46-2.webp, chairside/cs46-3.webp, chairside/cs46-4.webp, chairside/index.html"
+    "note": "Index-only refresh after staging delivery paths: chairside/chairside-46.html, chairside/en/chairside-46.html, dentcast-brain.json, dentcast-hashtag-reference.json, index.html, plus/assistant-tags.json, plus/content-index.json, plus/des-scores.json, plus/exam-questions.json, plus/faq-corpus.json, plus/flashcards-index.json, plus/pathways.json, plus/quiz-index.json"
   },
   "schema": "publish-handoff-v3"
 }
