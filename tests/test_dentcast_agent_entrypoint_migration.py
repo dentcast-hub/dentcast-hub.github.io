@@ -324,6 +324,21 @@ class EntrypointMigrationTests(unittest.TestCase):
                   "tooth-implant-connection", "library-only", "`tag_index`", "Paper-only fast path"):
       self.assertIn(term,block)
      body=body[:first]+body[last:]
+    # Founder 1405/08/07: insight file/caption/keyword conventions are bounded
+    # additions; strip them, pin their terms, compare the rest with legacy.
+    for mod,tag,terms in (
+     ("02-routing-intake.md","insight-conventions:v1",
+      ("insight<N>-<k>.webp","1600 px","300 KB","200 characters","Hard Rule 16")),
+     ("10-brain-and-pathways.md","insight-keywords:v1",
+      ("5 to 8","does not repeat a hashtag","Hard Rule 1"))):
+     if name == mod:
+      first=body.index("<!-- "+tag+" -->")
+      last=body.index("<!-- /"+tag+" -->",first)+len("<!-- /"+tag+" -->\n")
+      for term in terms:
+       self.assertIn(term,body[first:last])
+      if body[last:last+1]=="\n":
+       last+=1
+      body=body[:first]+body[last:]
     if name == "10-brain-and-pathways.md":
      # Hashtag QA 2026-10-28: step 5.0 was rewritten (question-first reachability,
      # composition gate, resolving sentence per tag, restricted minting with the
