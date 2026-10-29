@@ -154,6 +154,21 @@ Look at the latest entry in the locked category and identify which media fields 
 
 If a field exists in previous entries but you genuinely don't know whether the user wants it this time, ask: «این بار [field] داری یا نه؟»
 
+<!-- insight-conventions:v1 -->
+**Insight images and caption (founder, 1405/08/07).** For `insight/` pages:
+
+- **Image file name:** `insight<N>-<k>.webp`, `<k>` from 1 in the order the images
+  appear, even when there is only one (`insight100-1.webp`); no slug, no other
+  pattern. The page references it by absolute path (`/insight/insight100-1.webp`).
+- **Image size:** WebP, long edge at most 1600 px, file at most 300 KB. Shrink a
+  larger image; never enlarge a smaller one.
+- **Caption you propose** (Hard Rule 1 — a proposal until confirmed): one or two
+  sentences, at most 200 characters. A caption the founder wrote is copied as is
+  (Hard Rule 16), whatever its length.
+
+Older insight pages keep their file names; this applies to new ones.
+<!-- /insight-conventions:v1 -->
+
 ### Question 4.7 — Any type: is there an accompanying article (paper) file?
 
 **Runs for EVERY type, not just DentAI** (Phase 0 routing). The attached-paper

@@ -52,6 +52,7 @@ WORKFLOW_PATHS = (
     "tools/dentcast_post_cut2_runner.py",
     ".github/workflows/post-cut2-mechanical.yml",
     ".dentcast/workflows/publish-checkpoints.md",
+    ".dentcast/workflows/publish-after-push2.md",
 ) + tuple(".dentcast/workflows/modules/" + m for m in MODULES)
 BEGIN = "<!-- dentcast-publish-state-v1 -->\n```json\n"
 END = "\n```\n<!-- /dentcast-publish-state-v1 -->\n"

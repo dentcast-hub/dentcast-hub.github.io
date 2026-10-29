@@ -98,6 +98,8 @@ DES_V35_AMENDMENTS=(
   '1405/07/19), the record and the publish report are. Basket 1 pages never reach this call: fidelity needs a\ncited source. **A core audio episode (`episodes/…`) never reaches it either —\nDES only, no FIDELITY** (founder, 1405/08/04): its page is a caption, a player\nand labels, not a write-up of the paper, so the record is `scored_at` +\n`sources` with no `fidelity` key; `tools/des_fidelity_units.py` builds nothing\nfor it and Phase F fails a `fidelity` slot on one. Its NoteCast is a written\npage and keeps the call. No classifier decides whether the page «is a report of the paper»\n'),
  ("answers saved as `out-S<n>.json`, which writes the one pooled object by spec\nF6's fold — the model never reads two papers in one call (v2.7). Each block it\n",
   'answers saved as `out-S<n>.json`, which writes the one pooled object by spec\nF6\'s fold — the model never reads two papers in one call (v2.7).\n\n**v3.5 (appendix rule 10).** When the prose names a source in Persian, or two\nsources share an author, declare it before the first run — never fix the plan\nafterwards by hand:\n\n```json\n// .dentcast/des-source-markers.json\n{"<content_id>": {"S1": {"markers": ["اوکیسون"], "disambiguators": ["1988"]},\n                  "S2": {"markers": ["اوکیسون"], "disambiguators": ["2020", "کتاب"]}}}\n```\n\nA marker matches as a whole word in either script (Persian digits read as Latin);\nwhen a sentence names several sources, those whose disambiguator it also names\nkeep it. When the founder decides the plan outright, record it in\n`.dentcast/des-fidelity-plans/<content_id>.json`\n(`{"content_id", "origin": "founder", "decision": {"status": "confirmed", …},\n"plan": {"<source index>": ["u…", …]}}`); the tool refuses an unconfirmed\ndecision, an unknown unit or a source without a text, and Phase F reads the same\nfile. Each block it\n'),
+ ('file, verbatim, minus the appendix.**\n',
+  "file, verbatim, minus the appendix.** That cut already exists:\n`.dentcast/des-v3.5-knowledge.md`, byte for byte. Pass that file; never cut the\nappendix yourself (a hand cut keeps a trailing blank line, so its digest differs\nfrom every other run's).\n"),
 )
 
 DES_V35_AFTER_AMENDMENTS=(
@@ -322,6 +324,21 @@ class EntrypointMigrationTests(unittest.TestCase):
                   "tooth-implant-connection", "library-only", "`tag_index`", "Paper-only fast path"):
       self.assertIn(term,block)
      body=body[:first]+body[last:]
+    # Founder 1405/08/07: insight file/caption/keyword conventions are bounded
+    # additions; strip them, pin their terms, compare the rest with legacy.
+    for mod,tag,terms in (
+     ("02-routing-intake.md","insight-conventions:v1",
+      ("insight<N>-<k>.webp","1600 px","300 KB","200 characters","Hard Rule 16")),
+     ("10-brain-and-pathways.md","insight-keywords:v1",
+      ("5 to 8","does not repeat a hashtag","Hard Rule 1"))):
+     if name == mod:
+      first=body.index("<!-- "+tag+" -->")
+      last=body.index("<!-- /"+tag+" -->",first)+len("<!-- /"+tag+" -->\n")
+      for term in terms:
+       self.assertIn(term,body[first:last])
+      if body[last:last+1]=="\n":
+       last+=1
+      body=body[:first]+body[last:]
     if name == "10-brain-and-pathways.md":
      # Hashtag QA 2026-10-28: step 5.0 was rewritten (question-first reachability,
      # composition gate, resolving sentence per tag, restricted minting with the

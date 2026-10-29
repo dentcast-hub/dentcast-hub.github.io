@@ -78,6 +78,14 @@ Build the new entry with **identical keys, nesting, and ordering** as the previo
 - **Episode entries carry `"type": "dentcast"` and a filled `audio_url`** (the episode's ArvanCloud URL — `tools/update-homepage-counters.py` and the `index.html` hero take the newest entry with `audio_url`). When the user picks "Episode", copy the latest `dentcast` entry's key set. Do NOT invent a `type: "episode"` field.
 - If the category's schema has a `pillar` field, fill it with the assigned pillar value only. Do NOT add reasoning, notes, justifications, or any extra commentary field. The JSON shape must remain identical to the previous entry.
 
+<!-- insight-keywords:v1 -->
+**Insight `keywords` (founder, 1405/08/07).** For an insight entry (brain `type`
+`clinical`) propose 5 to 8 keywords, each a short phrase taken from the article's
+own text, mostly Persian; an English term only where dentists write it that way.
+A keyword does not repeat a hashtag. They are proposals until the founder
+confirms them (Hard Rule 1).
+<!-- /insight-keywords:v1 -->
+
 **Append the new entry at the absolute END of the flat `dentcast-brain.json` array** — it becomes the last element of the whole file, regardless of type. This is non-negotiable — the latest-content widget reads the last 30 entries globally, so physical tail position is what makes the new entry visible.
 
 Re-read the file and confirm:

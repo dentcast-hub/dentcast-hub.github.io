@@ -776,6 +776,7 @@ def cmd_simulate(query: str) -> None:
     brain = load_brain()
     tags = brain_tag_map(brain)
     titles = {content_id(e): e.get("title", "") for e in brain}
+    concept_defs = {t: c.get("definition") for t, c in by_tag(load_ref()).items()}
 
     df = Counter()
     for t in tags:
@@ -811,6 +812,19 @@ def cmd_simulate(query: str) -> None:
         print(f"{rank:2d}. {t}   score={score:.2f} specificity={spec:.1f} "
               f"articles={-negn}")
         print(f"     -> {head}  {titles.get(head, '')[:60]}")
+        if score < 1:
+            # The engine ranks it, but only some of the tag's words were typed:
+            # «لاین انگل» reaches #فینیش_لاین through «لاین» alone. A shared
+            # word is not a shared concept, so show what matched and what the
+            # tag means before anyone reuses it.
+            tw = words(t)
+            hit = [w for w in tw if w in qwords]
+            miss = [w for w in tw if w not in qwords]
+            print(f"     partial: matched {hit}, not typed {miss} — "
+                  f"a shared word, not proof of the same concept")
+            d = (concept_defs.get(t) or "").strip()
+            if d:
+                print(f"     definition: {d[:120]}")
     if not rank:
         print("(nothing cleared the 0.5 threshold — falls back to the pillar tree)")
 
