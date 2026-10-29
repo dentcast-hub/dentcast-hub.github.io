@@ -126,3 +126,11 @@ H8. Author quiz approval and ready state: see Part 7 (queue commit 48a0d4d).
 - 06 English updated to match. 02, 07, 08, 09, 03 checked, no contradiction.
 - DES run 7: 19/E. Persian-text rule: fact_fa band label "سطح زمینه و نظر" to "سطح تجربه و نظر"; interpretation_fa last sentence "قابل تعمیم نیستند" (not in text) replaced by "تأییدشان به معاینه‌ی مستقیم بستگی دارد". des.json sha256 672dcc42d42546397d25b8aba978d0496efc76fa936625be32e80f5dda9fdf40; verify_publish --des-text ok.
 - Receipts, 00-وضعیت (row 23, hashes, history), SHA256SUMS updated and verified. Status stays «آماده».
+
+## Part 14: founder restructure of the clinical analysis (2026-10-29, 14:54 Tehran, relayed by the coordinator)
+- 01-متن.md: section order now 1 seating, 2 cement, 3 contour, 4 possible fixture crack (new heading), 5 buccal bone (renumbered), 6 screw loosening (new heading; screw-loosening paragraph, defect paragraph, aside paragraph). Sorted-line diff against the previous version shows only the three headings and the three changed sentences (changes A, B, C as given). New sha256 f72b25991978bd403d57cde72c39f23a18c3313223e7b3ecce73e35b76c5a9de.
+- Cross-references: the only numbered section reference in 01 is "(بخش‌های ۲ تا ۴)" (correct, cement, contour, crack). None wrong. Hashtag resolving sentences in 07 and keywords in 09 are still exact substrings of 01.
+- 06 English restructured the same way (headings: 4 Possible crack of the fixture, 5 Buccal bone status, 6 Screw loosening) and changes A, B, C translated; author has not read it.
+- 00-وضعیت: highlighted-note instruction now points to section 6; approval row 24, hashes and history updated.
+- DES run 8: 15/E (previous seven runs 19/E). The model gave item 2 (relationship to published evidence) 0 with an empty quote and a note; the spec allows 0 without a quote, so Part 3 passes (5+4+0+3+3=15). The sentence behind that item is unchanged in the text, so this is the model's borderline call flipping, not a content change. Not rerun to get a better score. Persian-text rule: fact_fa band label to "سطح تجربه و نظر"; interpretation_fa "از گرافی‌های دوبعدی" replaced by "شرح حال او و تصاویر رادیوگرافی". des.json sha256 860559572b0493ed7e58b06b2cc06adde5b16c6abbf2bdbcc6852e90609c315c; verify_publish --des-text ok.
+- Receipts, SHA256SUMS updated and verified. Status stays «آماده».
