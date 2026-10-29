@@ -45,6 +45,10 @@ MODULES = WORKFLOW + 'modules/'
 # Re-audited 2026-10-29 (founder decision 1405/08/07, DES Persian text independent
 # of the founder): 08 Part 3 item 6 is now an agent check, not a founder gate;
 # the boundary heading is unchanged and no skipped section's applicability moved.
+# Re-audited 2026-10-29 (founder 1405/08/07, one DES record per paper): 08 adds
+# one sentence pair to Part 2b (episode and NoteCast share the paper's record;
+# Fidelity only for the written page). It sits after the boundary heading and
+# no skipped section's applicability moved.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
@@ -52,7 +56,7 @@ PINNED_BLOBS = {
     '04-taxonomy-and-navigation.md': '539fd195fb90d19587ba8b243782355228a14238',
     '05-semantic-linking.md': '760dcf77dd3baff173aebb2d40492604fb096d1f',
     '06-paper-ingestion.md': '1def0aa0ed464105900965a55fb78f7792d8606c',
-    '08-des-fidelity.md': '67b8b0f8f6332cf8f3f06c0f1421e70db676e7b8',
+    '08-des-fidelity.md': '23c8e5a91945d4ba3806954ea57b371fb83f7413',
     '09-challenge.md': 'dd46a16eafabdd4b40813a0578eeca4a81dcd44d',
     '12-english-notify-verify.md': '9cee02243c141166d0b5eca3ea20da58bd77302a',
 }
