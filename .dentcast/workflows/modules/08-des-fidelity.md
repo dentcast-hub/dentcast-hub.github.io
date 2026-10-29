@@ -236,9 +236,9 @@ DES only, no FIDELITY** (founder, 1405/08/04): its page is a caption, a player
 and labels, not a write-up of the paper, so the record is `scored_at` +
 `sources` with no `fidelity` key; `tools/des_fidelity_units.py` builds nothing
 for it and Phase F fails a `fidelity` slot on one. Its NoteCast is a written
-page and keeps the call. **An episode and its NoteCast built on the same paper each get their own DES record**
-(one record per page, each under its own `content_id`); **FIDELITY goes only to the written page, and only when its paper
-accompanies it**; the audio episode never gets one (founder, 1405/08/07). No classifier decides whether the page «is a report of the paper»
+page and keeps the call. **DES belongs to the paper: one DES record per paper.** An episode and its NoteCast built on the same paper
+share that single record (no second record, no second scoring) and both pages carry its score; **FIDELITY goes only to
+the written page, and only when its paper accompanies it**; the audio episode never gets one (founder, 1405/08/07). No classifier decides whether the page «is a report of the paper»
 — spec F1 decides per unit, and a page that merely lists the paper in its
 references attributes fewer than three claims to it and lands on
 `INSUFFICIENT_CLAIMS` by itself (spec appendix rule 9).
