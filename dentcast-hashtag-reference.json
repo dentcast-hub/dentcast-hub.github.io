@@ -791,7 +791,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 45,
+   "count": 46,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -837,7 +837,8 @@
     "chairside/chairside-41",
     "chairside/chairside-42",
     "chairside/chairside-44",
-    "chairside/chairside-45"
+    "chairside/chairside-45",
+    "chairside/chairside-46"
    ]
   },
   {
@@ -1853,6 +1854,47 @@
    ]
   },
   {
+   "key": "اباتمنت",
+   "tag": "#اباتمنت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "قطعه‌ی واسط بین ایمپلنت و روکش.",
+   "use_when": "مقاله طراحی، انتخاب یا مشکلی از اباتمنت را تعیین تکلیف کند.",
+   "aliases": [
+    "abutment",
+    "ابوتمنت",
+    "آباتمنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 23,
+   "content_ids": [
+    "episodes/episode-80",
+    "episodes/episode-81",
+    "episodes/episode-102",
+    "episodes/episode-103",
+    "episodes/episode-104",
+    "episodes/episode-105",
+    "episodes/episode-106",
+    "episodes/episode-115",
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST18",
+    "dentcast-plus/video-4",
+    "metanotes/meta-8",
+    "dentcast-plus/video-5",
+    "insight/insight-35",
+    "episodes/episode-157",
+    "insight/insight-44",
+    "insight/insight-52",
+    "chairside/chairside-23",
+    "insight/insight-60",
+    "insight/insight-62",
+    "insight/insight-77",
+    "insight/insight-85",
+    "chairside/chairside-46"
+   ]
+  },
+  {
    "key": "سرامیک",
    "tag": "#سرامیک",
    "domain": "clinical",
@@ -1935,46 +1977,6 @@
     "dentai/promptologist/prompt7-1",
     "dentai/promptologist/prompt7-2",
     "dentai/promptologist/prompt-append2-1"
-   ]
-  },
-  {
-   "key": "اباتمنت",
-   "tag": "#اباتمنت",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "قطعه‌ی واسط بین ایمپلنت و روکش.",
-   "use_when": "مقاله طراحی، انتخاب یا مشکلی از اباتمنت را تعیین تکلیف کند.",
-   "aliases": [
-    "abutment",
-    "ابوتمنت",
-    "آباتمنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 22,
-   "content_ids": [
-    "episodes/episode-80",
-    "episodes/episode-81",
-    "episodes/episode-102",
-    "episodes/episode-103",
-    "episodes/episode-104",
-    "episodes/episode-105",
-    "episodes/episode-106",
-    "episodes/episode-115",
-    "litecast/lite-CAST10",
-    "litecast/lite-CAST18",
-    "dentcast-plus/video-4",
-    "metanotes/meta-8",
-    "dentcast-plus/video-5",
-    "insight/insight-35",
-    "episodes/episode-157",
-    "insight/insight-44",
-    "insight/insight-52",
-    "chairside/chairside-23",
-    "insight/insight-60",
-    "insight/insight-62",
-    "insight/insight-77",
-    "insight/insight-85"
    ]
   },
   {
@@ -3177,6 +3179,46 @@
    ]
   },
   {
+   "key": "پری_ایمپلنتیتیس",
+   "tag": "#پری_ایمپلنتیتیس",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "التهابِ پیشرونده‌ی بافتِ اطرافِ ایمپلنت با از دست رفتنِ استخوان.",
+   "use_when": "مقاله پری‌ایمپلنتایتیس را تشخیص، ریسک یا درمان کند.",
+   "aliases": [
+    "peri-implantitis",
+    "پری ایمپلنتایتس",
+    "پری ایمپلنتیت",
+    "پری‌ایمپلنت دیزیز",
+    "peri implant disease",
+    "peri implantitis",
+    "پری ایمپلنتایتیس"
+   ],
+   "variants": [
+    "#پری_ایمپلنتایتیس",
+    "#پری_ایمپلنتایتس",
+    "#Peri_Implantitis"
+   ],
+   "co_tags": [
+    "#Peri_Implantitis"
+   ],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-122-1",
+    "episodes/episode-122-6",
+    "episodes/episode-148-1",
+    "insight/insight-9",
+    "insight/insight-16",
+    "notecast/episode-23",
+    "sharehub/share-4",
+    "notecast/episode-31",
+    "sharehub/share-9",
+    "sharehub/share-13",
+    "chairside/chairside-36",
+    "chairside/chairside-46"
+   ]
+  },
+  {
    "key": "کور_ریختگی",
    "tag": "#کور_ریختگی",
    "domain": "clinical",
@@ -3551,45 +3593,6 @@
     "insight/insight-70",
     "insight/insight-79",
     "insight/insight-80"
-   ]
-  },
-  {
-   "key": "پری_ایمپلنتیتیس",
-   "tag": "#پری_ایمپلنتیتیس",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "التهابِ پیشرونده‌ی بافتِ اطرافِ ایمپلنت با از دست رفتنِ استخوان.",
-   "use_when": "مقاله پری‌ایمپلنتایتیس را تشخیص، ریسک یا درمان کند.",
-   "aliases": [
-    "peri-implantitis",
-    "پری ایمپلنتایتس",
-    "پری ایمپلنتیت",
-    "پری‌ایمپلنت دیزیز",
-    "peri implant disease",
-    "peri implantitis",
-    "پری ایمپلنتایتیس"
-   ],
-   "variants": [
-    "#پری_ایمپلنتایتیس",
-    "#پری_ایمپلنتایتس",
-    "#Peri_Implantitis"
-   ],
-   "co_tags": [
-    "#Peri_Implantitis"
-   ],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-122-1",
-    "episodes/episode-122-6",
-    "episodes/episode-148-1",
-    "insight/insight-9",
-    "insight/insight-16",
-    "notecast/episode-23",
-    "sharehub/share-4",
-    "notecast/episode-31",
-    "sharehub/share-9",
-    "sharehub/share-13",
-    "chairside/chairside-36"
    ]
   },
   {
@@ -5085,6 +5088,36 @@
    ]
   },
   {
+   "key": "شکست_ایمپلنت",
+   "tag": "#شکست_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتنِ ایمپلنت، بیولوژیک یا مکانیکی.",
+   "use_when": "مقاله علت یا پیشگیریِ شکست را بگوید.",
+   "aliases": [
+    "از دست رفتن ایمپلنت",
+    "فیلور ایمپلنت",
+    "ناموفق بودن ایمپلنت",
+    "Implant Failure"
+   ],
+   "variants": [
+    "#Implant_Failure"
+   ],
+   "co_tags": [
+    "#Implant_Failure"
+   ],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-130-1",
+    "sharehub/share-9",
+    "sharehub/share-11",
+    "sharehub/share-13",
+    "insight/insight-82",
+    "insight/insight-96",
+    "chairside/chairside-46"
+   ]
+  },
+  {
    "key": "فیت_پروتز",
    "tag": "#فیت_پروتز",
    "domain": "clinical",
@@ -5834,35 +5867,6 @@
    ]
   },
   {
-   "key": "شکست_ایمپلنت",
-   "tag": "#شکست_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "از دست رفتنِ ایمپلنت، بیولوژیک یا مکانیکی.",
-   "use_when": "مقاله علت یا پیشگیریِ شکست را بگوید.",
-   "aliases": [
-    "از دست رفتن ایمپلنت",
-    "فیلور ایمپلنت",
-    "ناموفق بودن ایمپلنت",
-    "Implant Failure"
-   ],
-   "variants": [
-    "#Implant_Failure"
-   ],
-   "co_tags": [
-    "#Implant_Failure"
-   ],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-130-1",
-    "sharehub/share-9",
-    "sharehub/share-11",
-    "sharehub/share-13",
-    "insight/insight-82",
-    "insight/insight-96"
-   ]
-  },
-  {
    "key": "فلدسپاتیک",
    "tag": "#فلدسپاتیک",
    "domain": null,
@@ -6408,6 +6412,32 @@
     "litecast/lite-CAST5",
     "litecast/lite-CAST19",
     "sharehub/share-7"
+   ]
+  },
+  {
+   "key": "شل_شدن_پیچ",
+   "tag": "#شل_شدن_پیچ",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "شل شدنِ تدریجیِ پیچ که مقدمه‌ی شکستِ ثانویه است.",
+   "use_when": "مقاله شل شدن را مرحله‌ی پیش از شکست بداند.",
+   "aliases": [
+    "screw loosening",
+    "لقی پیچ",
+    "شل شدن اسکرو",
+    "لق شدن پیچ",
+    "لق شدن روکش ایمپلنت",
+    "لقی روکش ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-123-6",
+    "insight/insight-22",
+    "insight/insight-47",
+    "chairside/chairside-23",
+    "chairside/chairside-46"
    ]
   },
   {
@@ -7571,31 +7601,6 @@
     "notecast/episode-18",
     "sharehub/share-20",
     "notecast/episode-43"
-   ]
-  },
-  {
-   "key": "شل_شدن_پیچ",
-   "tag": "#شل_شدن_پیچ",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "شل شدنِ تدریجیِ پیچ که مقدمه‌ی شکستِ ثانویه است.",
-   "use_when": "مقاله شل شدن را مرحله‌ی پیش از شکست بداند.",
-   "aliases": [
-    "screw loosening",
-    "لقی پیچ",
-    "شل شدن اسکرو",
-    "لق شدن پیچ",
-    "لق شدن روکش ایمپلنت",
-    "لقی روکش ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-123-6",
-    "insight/insight-22",
-    "insight/insight-47",
-    "chairside/chairside-23"
    ]
   },
   {
