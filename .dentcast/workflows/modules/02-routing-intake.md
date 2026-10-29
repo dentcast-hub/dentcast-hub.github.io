@@ -166,7 +166,8 @@ If a field exists in previous entries but you genuinely don't know whether the u
   sentences, at most 200 characters. A caption the founder wrote is copied as is
   (Hard Rule 16), whatever its length.
 
-Older insight pages keep their file names; this applies to new ones.
+Older insight pages keep their file names; this applies to new ones, a چالش
+image in `insight/` included (module 09's `insight68.webp` is an older example).
 <!-- /insight-conventions:v1 -->
 
 ### Question 4.7 — Any type: is there an accompanying article (paper) file?

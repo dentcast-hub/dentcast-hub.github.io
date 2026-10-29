@@ -47,7 +47,8 @@ python3 tools/dentcast_publish_readpack.py \
 
 Replace arguments only with verified, locked intake facts; use `unknown` if
 anything remains unsettled. Read all selected source ranges from the pack in
-bounded chunks and retain the manifest/source hashes. The selector copies
+bounded chunks, each module's ranges at the moment `publish-checkpoints.md`
+(«Just-in-time module loading») names for it, and retain the manifest/source hashes. The selector copies
 applicable source bytes verbatim, not summaries. It omits only explicitly
 category-inapplicable branches; omitted steps still require their actual
 canonical ledger SKIP reason. Changed pinned source files automatically
