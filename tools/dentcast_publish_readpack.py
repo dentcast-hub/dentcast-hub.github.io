@@ -37,6 +37,9 @@ MODULES = WORKFLOW + 'modules/'
 # bounded summary inside Part 2. Its only selection boundary, the
 # «Conditional path for founder-supplied results» heading, sits before Part 2
 # and did not change.
+# Re-audited 2026-10-29 (DES Persian text guard, founder 1405/08/07): 08 adds
+# Part 3 item 6 after the Part 3 checks; the boundary heading sits before Part 2
+# and did not change. LiteCast/challenge runs skip all of Part 3 anyway.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
@@ -44,7 +47,7 @@ PINNED_BLOBS = {
     '04-taxonomy-and-navigation.md': '539fd195fb90d19587ba8b243782355228a14238',
     '05-semantic-linking.md': '760dcf77dd3baff173aebb2d40492604fb096d1f',
     '06-paper-ingestion.md': '1def0aa0ed464105900965a55fb78f7792d8606c',
-    '08-des-fidelity.md': 'cc55d39e818483dd236251753f9a31e0be2e66d3',
+    '08-des-fidelity.md': '278ad8ac87869f495bb7fa51dd6519da36913196',
     '09-challenge.md': 'dd46a16eafabdd4b40813a0578eeca4a81dcd44d',
     '12-english-notify-verify.md': '9cee02243c141166d0b5eca3ea20da58bd77302a',
 }

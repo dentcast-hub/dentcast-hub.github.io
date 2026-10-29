@@ -443,6 +443,25 @@ here fails the publish rather than shipping. Running them yourself first is
 still the job — the gate tells you *that* something is wrong, not what the
 right score was.
 
+6. **Persian text of the record (founder, 1405/08/07) — a founder gate, not a
+   score check.** For a record that already passes (1)–(5), run
+   `python3 tools/verify_publish.py --des-text <des.json>` on every SOURCE and
+   COMMENTARY object before it is stored. It fails on a word the founder
+   replaced (today «ادبیات» → «منابع علمی»; `fact_fa` and `interpretation_fa`
+   of v3.5+ records only — older records keep their text) and lists the
+   `interpretation_fa` sentences (when non-null) one by one. Then check each
+   sentence against the scored text: **a sentence that says anything the text
+   does not say is a made-up claim.** For either problem, show the founder the
+   sentence verbatim, what is wrong, and one proposed rewrite — the message of
+   Part 3b — and change it only on that sentence's own «اصلاح کن» /
+   «خودم می‌نویسم». The score, band and quotes never change, and the model is
+   never re-run for wording. Record before/after in the run notes. FIDELITY
+   `fact_fa` / `interpretation_fa` lines are composed by
+   `tools/des_fidelity_units.py` and recomputed by every `--vote`: check them
+   after the last Part 3b re-vote, just before Part 4, and report a flagged one
+   to the founder instead of hand-editing it. Phase F enforces only the word
+   list; the claim check is yours.
+
 **Reproducibility check (appendix §6) on the first score of any new question type:**
 score the same input three times. A one- or two-point drift in the number is
 acceptable; **a band change is not** — it means the anchors were read loosely and the
