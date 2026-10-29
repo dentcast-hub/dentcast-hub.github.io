@@ -644,7 +644,7 @@ def des_text_report(path):
     # a DES object checked here is about to be stored, so it is current (v3.5)
     bad = des_fa_wording(rec, default_ver="3.5")
     for p, word, good in bad:
-        print(f"FAIL  {p}: «{word}» → «{good}» (founder vocabulary; offer the founder the rewrite)")
+        print(f"FAIL  {p}: «{word}» → «{good}» (founder vocabulary; the agent rewrites it, no founder question)")
     if not bad:
         print("ok    no word from the founder's avoid list (fact_fa / interpretation_fa)")
     print("\nPart 3(6): each sentence below must say only what the scored text or the record itself says.")
@@ -1595,7 +1595,7 @@ def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False)
                   "Persian DES text uses the founder's vocabulary",
                   "Persian DES text uses a word the founder replaced: "
                   + "; ".join(f"{p} «{w}» → «{g}»" for p, w, g in _fa_bad),
-                  "step 4.13 Part 3(6) — offer the founder the rewrite; never change a score with it")
+                  "step 4.13 Part 3(6) — the agent rewrites the sentence (no founder question); never change a score with it")
             srcs = rec.get("sources") or []
             valid_sources = isinstance(srcs, list) and bool(srcs) and all(isinstance(s, dict) for s in srcs)
             rep.check(valid_sources, "4.13 DES", "nonempty source records present",
