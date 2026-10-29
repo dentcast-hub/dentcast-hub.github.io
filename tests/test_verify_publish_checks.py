@@ -315,6 +315,15 @@ class DesPersianWordingTests(unittest.TestCase):
         self.assertEqual(vp.des_fa_wording(self.rec('3.4', 'در ادبیات اکلوژن')), [])
         self.assertEqual(vp.des_fa_wording(self.rec('3.5', 'نسبت به منابع علمی منتشرشده')), [])
 
+    def test_numeric_version_does_not_crash(self):
+        self.assertEqual(vp.des_fa_wording(self.rec(3.5, 'ادبیات')), [])
+
+    def test_only_prose_fields_and_default_version(self):
+        src = {'citation_fa': 'تاریخ ادبیات', 'interpretation_fa': 'ادبیات'}
+        self.assertEqual(vp.des_fa_wording(src), [])
+        self.assertEqual(vp.des_fa_wording(src, default_ver='3.5'),
+                         [('interpretation_fa', 'ادبیات', 'منابع علمی')])
+
     def test_sentences_listed_for_the_claim_check(self):
         got = vp.des_fa_sentences(self.rec('3.5', 'جمله‌ی اول. جمله‌ی دوم؟ جمله‌ی سوم.'))
         self.assertEqual(got, [('sources[0].interpretation_fa', ['جمله‌ی اول.', 'جمله‌ی دوم؟', 'جمله‌ی سوم.'])])

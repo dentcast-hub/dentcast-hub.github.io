@@ -570,8 +570,10 @@ def des_fidelity_owed(s):
 
 
 def des_ge(version, target):
+    if not isinstance(version, str):
+        return False
     try:
-        major, _, minor = (version or "").partition(".")
+        major, _, minor = version.partition(".")
         return (int(major), int(minor or 0)) >= target
     except ValueError:
         return False
@@ -581,19 +583,23 @@ def des_ge(version, target):
 # (founder, 1405/08/07): research literature is «منابع علمی», never «ادبیات».
 # Checked on records stamped v3.5 or later; older records keep their text.
 DES_FA_AVOID = (("ادبیات", "منابع علمی"),)
+# The Persian prose fields of a DES object; quotes and citations are not touched.
+DES_FA_FIELDS = ("fact_fa", "interpretation_fa")
 
 
-def des_fa_wording(rec):
-    """Every `*_fa` string in a v3.5+ DES object (one source object or a whole
-    record) that uses a word on DES_FA_AVOID: [(path, word, use_instead)]."""
+def des_fa_wording(rec, default_ver=None):
+    """Every fact_fa / interpretation_fa string in a v3.5+ DES object (one
+    source object or a whole record) that uses a word on DES_FA_AVOID:
+    [(path, word, use_instead)]. `default_ver` stands in for objects that
+    carry no des_version of their own."""
     out = []
 
     def walk(o, path, ver):
         if isinstance(o, dict):
-            ver = o.get("des_version", ver)
+            ver = o.get("des_version") or ver
             for k, v in o.items():
                 p = f"{path}.{k}" if path else k
-                if isinstance(v, str) and k.endswith("_fa"):
+                if isinstance(v, str) and k in DES_FA_FIELDS:
                     if des_ge(ver, (3, 5)):
                         out.extend((p, bad, good) for bad, good in DES_FA_AVOID if bad in v)
                 else:
@@ -602,7 +608,7 @@ def des_fa_wording(rec):
             for i, x in enumerate(o):
                 walk(x, f"{path}[{i}]", ver)
 
-    walk(rec, "", None)
+    walk(rec, "", default_ver)
     return out
 
 
@@ -630,12 +636,17 @@ def des_fa_sentences(rec):
 def des_text_report(path):
     """`--des-text FILE`: the Part 3(6) check on a DES JSON before it is
     stored. Exit 1 when a word on DES_FA_AVOID is used."""
-    rec = json.loads(Path(path).read_text(encoding="utf-8"))
-    bad = des_fa_wording(rec)
+    try:
+        rec = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, ValueError) as e:
+        print(f"ERROR cannot read {path}: {e}")
+        return 2
+    # a DES object checked here is about to be stored, so it is current (v3.5)
+    bad = des_fa_wording(rec, default_ver="3.5")
     for p, word, good in bad:
         print(f"FAIL  {p}: «{word}» → «{good}» (founder vocabulary; offer the founder the rewrite)")
     if not bad:
-        print("ok    no word from the founder's avoid list (v3.5+ *_fa fields)")
+        print("ok    no word from the founder's avoid list (fact_fa / interpretation_fa)")
     print("\nPart 3(6): each sentence below must say only what the scored text or the record itself says.")
     for p, sents in des_fa_sentences(rec):
         print(f"\n{p}")
