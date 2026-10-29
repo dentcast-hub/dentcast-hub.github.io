@@ -133,10 +133,34 @@ steps are all canonically skipped for this run (an empty readpack selection,
 or a documented category skip) is not read. A v2 run does not execute C.8
 onward locally (`post-cut2-mechanical.yml` produces delivery 3), so the C.8 and
 C.7 parts of module 11 and Phases E, F and G of module 12 are read only when
-the agent must run guarded recovery of that workflow; Phase D of module 12
-(English, closed before the second delivery) and C.6 are read as usual. Reading
-later never means reading less: every module whose step runs is still read
+the agent must run guarded recovery of that workflow. Reading later never means
+reading less: every part of a module whose step runs in this run is still read
 completely, verbatim, before that step.
+
+Rules that act before their module's first ledger step are read earlier, at
+the moment named here (founder 1405/08/07):
+
+- **Challenge.** When Question 4.9 answers «چالش», read module 09 completely
+  right after Phase B is locked, before C.1: its markup (the
+  `data-dc-challenge-question` body, the image path) shapes the page that
+  delivery 1 ships.
+- **LiteCast and Challenge DES skip.** These runs read the opening of module 08
+  up to `#### Conditional path for founder-supplied results` (the readpack's
+  own selection) before recording `C.4.13`, for the exact skip line and the
+  no-record rule.
+- **Founder-supplied DES or Fidelity results.** When the founder hands over a
+  DES or Fidelity JSON at intake, read module 08's opening through its
+  «Conditional path for founder-supplied results» section before answering
+  Question 4.8, so the reuse rules govern the basket answer.
+- **English (Phase D).** A v2 run writes the English mirror before C.6, not at
+  ledger step D. Read `.dentcast/workflows/en-version.md` and module 12 through
+  the end of Phase D (and module 11's C.6 part) before writing the mirror.
+
+**With the readpack.** The pack is the text source, not a preload: generate it
+after Phase B as documented, keep it, and read each module's selected ranges
+at the same moment this section names for that module. Its ranges for module
+11's C.8/C.7 part and module 12's Phases E–G are read only for recovery, as
+above.
 
 ## Publication services and remote checks
 
