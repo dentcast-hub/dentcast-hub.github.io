@@ -106,3 +106,11 @@ H8. Author quiz approval and ready state: see Part 7 (queue commit 48a0d4d).
 - 06 English updated to match 01 (author has not read it). Checked 02, 07, 08, 09, 03: no contradiction (09 keywords still substrings of 01; hashtag sentences untouched). Approval 13 (CBCT sentence) is superseded by item 5. Q3.5 not rerun (new sentences are the founder's own; Q3.5 is once).
 - DES rerun (run 4, founder asked explicitly): 19/E. Persian-text rule applied: fact_fa label "سطح زمینه یا نظر" changed to "سطح تجربه و نظر"; interpretation_fa last sentence now "...از یک بیمار، شرح حال او و تصاویر رادیوگرافی است...". des.json sha256 8dba3044043d4dedeacba614735ad2f2739f7adcae5d4fb18d6e48556542ea6c; verify_publish --des-text ok. اجرا.md updated, 00-وضعیت hashes, approval row 20 and change history updated, SHA256SUMS regenerated and verified.
 - Status stays «آماده».
+
+## Part 11: founder finding, possible transverse fixture crack (2026-10-29, 14:23 Tehran, relayed by the coordinator; founder saw the original radiograph)
+- 01-متن.md, only the three requested changes, word for word: new paragraph after the screw-loosening paragraph; diagnostic bullet now includes the fixture wall at the screw-end level (for crack); prognosis "موبیلیتی و ترک". New sha256 d894284f6433017e5f0d3c3a50c6ae2fed4d5abe179dd5b386e6033b050209f1.
+- Ambiguity flagged: the new paragraph says «در گرافی دوم»; in this text "گرافی دوم" is Figure 3 (second clinic, after the second prosthesis), while Figure 2 is the marked first-visit radiograph. Applied word for word as instructed.
+- Image captions are the author's exact strings (Hard Rule 16); left unchanged, no rule requires them to reflect findings.
+- 06 English updated to match. 07: the resolving sentence for hashtag #شکست_ایمپلنت is the prognosis sentence, so it was synced mechanically to the new text (tag list unchanged). 02, 08, 09, 03 checked, no contradiction.
+- DES run 5: 19/E. Persian-text rule: fact_fa band label "سطح زمینه‌ای و نظر" to "سطح تجربه و نظر"; interpretation_fa last sentence "قابل تعمیم پژوهشی نیستند" (not in the text) replaced with "تأییدشان به معاینه‌ی مستقیم بستگی دارد". des.json sha256 b040c55331a5ece533e84a10ff082f4c19ef0aac6ad237a85ced2289a086734c; verify_publish --des-text ok.
+- Receipts, 00-وضعیت (approval row 21, hashes, change history), SHA256SUMS updated and verified. Status stays «آماده».
