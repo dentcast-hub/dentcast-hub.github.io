@@ -45909,5 +45909,215 @@
     "fidelity": [
       null
     ]
+  },
+  "episodes/episode-80": {
+    "scored_at": "2026-10-29",
+    "sources": [
+      {
+        "des_version": "3.5",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Know your implant connections",
+          "authors": "Singla S, Kumar L, Rathee M",
+          "year": 2018,
+          "journal": "African Journal of Oral Health",
+          "doi": "10.4314/ajoh.v6i2.162380"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review of implant-abutment connection designs, with a PubMed search described but no systematic method (THERAPY narrative review row, 15)",
+          "evidence_quote": "This review aims to critically describe different options of implant abutment connections, discuss their biomechanical rationale, clinical use, advantages and drawbacks."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. بخش‌های Abstract، Introduction، Material and Method، Location of Connection، External hex connection، Internal Connection، Cone screw connection، Platform switching، Conclusion و فهرست ۳۴ منبع خوانده شد؛ هیچ اشاره‌ای به protocol، registration یا PROSPERO در متن نیست."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "A search of electronic database from 1990 to 2014 in Pubmed search engine using key words like",
+              "note": "present but fails the 3b-i threshold: فقط یک پایگاه کتاب‌شناختی جست‌وجو شده است (در بخش روش‌ها «Medline» و در چکیده «Pubmed»، که یک پایگاه حساب می‌شوند)، یعنی کمتر از آستانه‌ی دو. استراتژی جست‌وجو فقط چند کلیدواژه است."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. بخش Material and Method خوانده شد: فقط معیار کنارگذاشتن «case reports and individual product based articles» و محدودیت زبان انگلیسی گفته شده (نیمه‌ی (b))، اما هیچ گزارشی از تعداد مقاله‌های یافت‌شده، غربال‌شده، متن کامل خوانده‌شده و واردشده (نیمه‌ی (a)) و هیچ فهرستی از مطالعات کنارگذاشته‌شده در کل متن نیست."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. کل متن از Abstract تا Conclusion خوانده شد؛ هیچ ارزیابی کیفیت یا سوگیری مطالعات واردشده، و هیچ واژه‌ی quality، bias یا appraisal در متن نیست. مقاله یافته‌های مطالعات را بدون وزن‌دهی کنار هم می‌آورد."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. بخش‌های روش‌ها و بحث خوانده شد؛ مقاله مرور روایتی است و هیچ سنتز کمی یا روش ترکیب نتایج گزارش نمی‌کند و انتخاب سنتز روایی را هم توجیه نکرده است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. کل متن خوانده شد؛ هیچ اشاره‌ای به publication bias یا ارزیابی آن نیست."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "base_points": 8,
+            "points": 1,
+            "evidence_quote": "",
+            "note": "غایب است. متن از Abstract تا انتهای References خوانده شد؛ هیچ بیانیه‌ی تعارض منافع یا منبع مالی و هیچ بخش Acknowledgement یا Disclosure در متن نیست."
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مرور روایتی است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study (مرور روایتی)."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "مقاله مدت پیگیری مطالعات واردشده را در متن خودش گزارش نمی‌کند و ادعای بقا بر پایه‌ی یک پیگیری کوتاه ندارد؛ چیزی برای نقل‌قول وجود ندارد، پس این ردیف فعال نمی‌شود."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 4,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مرور روایتی در نوع سؤال درمانی (THERAPY) امتیاز 4 از ۱۰۰ و باند E گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "این مرور روایتی انواع کانکشن ایمپلنت و اباتمنت را معرفی و طبقه‌بندی می‌کند و برای آشنایی اولیه با طراحی‌ها مفید است. جست‌وجوی آن فقط در یک پایگاه بوده و پروتکل، ارزیابی کیفیت مطالعات و بیانیه‌ی تعارض منافع ندارد. خود نویسندگان هم نتیجه می‌گیرند که شواهد قطعی برای برتری یک کانکشن وجود ندارد."
+      }
+    ]
+  },
+  "episodes/episode-81": {
+    "scored_at": "2026-10-29",
+    "sources": [
+      {
+        "des_version": "3.5",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Know your implant connections",
+          "authors": "Singla S, Kumar L, Rathee M",
+          "year": 2018,
+          "journal": "African Journal of Oral Health",
+          "doi": "10.4314/ajoh.v6i2.162380"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review of implant-abutment connection designs, with a PubMed search described but no systematic method (THERAPY narrative review row, 15)",
+          "evidence_quote": "This review aims to critically describe different options of implant abutment connections, discuss their biomechanical rationale, clinical use, advantages and drawbacks."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. بخش‌های Abstract، Introduction، Material and Method، Location of Connection، External hex connection، Internal Connection، Cone screw connection، Platform switching، Conclusion و فهرست ۳۴ منبع خوانده شد؛ هیچ اشاره‌ای به protocol، registration یا PROSPERO در متن نیست."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "A search of electronic database from 1990 to 2014 in Pubmed search engine using key words like",
+              "note": "present but fails the 3b-i threshold: فقط یک پایگاه کتاب‌شناختی جست‌وجو شده است (در بخش روش‌ها «Medline» و در چکیده «Pubmed»، که یک پایگاه حساب می‌شوند)، یعنی کمتر از آستانه‌ی دو. استراتژی جست‌وجو فقط چند کلیدواژه است."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. بخش Material and Method خوانده شد: فقط معیار کنارگذاشتن «case reports and individual product based articles» و محدودیت زبان انگلیسی گفته شده (نیمه‌ی (b))، اما هیچ گزارشی از تعداد مقاله‌های یافت‌شده، غربال‌شده، متن کامل خوانده‌شده و واردشده (نیمه‌ی (a)) و هیچ فهرستی از مطالعات کنارگذاشته‌شده در کل متن نیست."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. کل متن از Abstract تا Conclusion خوانده شد؛ هیچ ارزیابی کیفیت یا سوگیری مطالعات واردشده، و هیچ واژه‌ی quality، bias یا appraisal در متن نیست. مقاله یافته‌های مطالعات را بدون وزن‌دهی کنار هم می‌آورد."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. بخش‌های روش‌ها و بحث خوانده شد؛ مقاله مرور روایتی است و هیچ سنتز کمی یا روش ترکیب نتایج گزارش نمی‌کند و انتخاب سنتز روایی را هم توجیه نکرده است."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "غایب است. کل متن خوانده شد؛ هیچ اشاره‌ای به publication bias یا ارزیابی آن نیست."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "بیانیه‌ی تعارض منافع وجود ندارد",
+            "base_points": 8,
+            "points": 1,
+            "evidence_quote": "",
+            "note": "غایب است. متن از Abstract تا انتهای References خوانده شد؛ هیچ بیانیه‌ی تعارض منافع یا منبع مالی و هیچ بخش Acknowledgement یا Disclosure در متن نیست."
+          },
+          {
+            "item": "کارآزمایی به‌صورت پیش‌نگر ثبت نشده",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "فقط برای RCT اعمال می‌شود؛ این یک مرور روایتی است."
+          },
+          {
+            "item": "توجیه حجم نمونه یا آنالیز توان وجود ندارد",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study (مرور روایتی)."
+          },
+          {
+            "item": "دوره‌ی پیگیری کوتاه‌تر از آنچه پیامد لازم دارد",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "مقاله مدت پیگیری مطالعات واردشده را در متن خودش گزارش نمی‌کند و ادعای بقا بر پایه‌ی یک پیگیری کوتاه ندارد؛ چیزی برای نقل‌قول وجود ندارد، پس این ردیف فعال نمی‌شود."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 4,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مرور روایتی در نوع سؤال درمانی (THERAPY) امتیاز 4 از ۱۰۰ و باند E گرفت، و چون متن کامل در دسترس بود امتیاز نهایی است نه مقدماتی.",
+        "interpretation_fa": "این مرور روایتی انواع کانکشن ایمپلنت و اباتمنت را معرفی و طبقه‌بندی می‌کند و برای آشنایی اولیه با طراحی‌ها مفید است. جست‌وجوی آن فقط در یک پایگاه بوده و پروتکل، ارزیابی کیفیت مطالعات و بیانیه‌ی تعارض منافع ندارد. خود نویسندگان هم نتیجه می‌گیرند که شواهد قطعی برای برتری یک کانکشن وجود ندارد."
+      }
+    ]
   }
 }
