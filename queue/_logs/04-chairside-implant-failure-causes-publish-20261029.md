@@ -21,3 +21,18 @@ P17. C.4.8: 5 inline glossary links auto-applied (dental-implant, abutment, peri
 P18. C.4.9 started, NOT completed: 3 semantic capsules inserted (insight-9, insight-96, sharehub/share-4) => 5 links total (cap). Cannot complete C.4.9 / cut 1 until founder answers lead approval (first_cut_lead_provenance_v1 + pending question gate).
 P19. STOPPED at C.4.9 awaiting founder decisions. Local state only (branch publish/chairside-46 in scratchpad/work/main-clone, nothing pushed to main/remote). Handoff file .dentcast/PUBLISH-HANDOFF.md is local, digest in scratchpad/work/sha.txt.
 Founder questions: (1) lead paragraph approval (blocking), (2) subtopic confirm, (3) 3 borderline links, (4) Pulse «تازه» wording, (5) amber vs premium-only invariant FYI.
+
+## P20+ (پس از 15:25، 2026-10-29)
+- تصمیم‌های بنیان‌گذار 15:25 اعمال شد: لید عیناً متن بنیان‌گذار، ساب‌تاپیک peri-implant-health، لینک سمان باقی‌مانده، مارجین عمیق و شل شدن پیچ بدون لینک، پالس بدون «تازه»، جعبهٔ یادداشت با توکن چیپ خنثی (جایگزین کهربایی؛ کهربایی فقط پریمیوم).
+- کامیت تحویل 1: 999a8dbb94 روی publish/chairside-46 push شد (PR هنوز نه).
+- C.4.10.1 تا .3: completed/skipped، دلیل: پیپر ندارد (تأیید 3 صف). منبع: 04-منبع/منابع.md.
+- C.4.11 و C.4.12: متوقف. دلیل: صف فلش‌کارت و FAQ ندارد و ماژول 07 تأیید بنیان‌گذار برای هر کارت را می‌خواهد (Hard Rule 13، «ask, don't guess»). پیش‌نویس در handoff/draft-flashcards-faq-04.md. نوشتن بدون تأیید انجام نشد.
+- هشتگ‌ها: hashtag_ref.py --simulate هر پنج برچسب را کانونیک پیدا کرد (چیرساید 45، شکست_ایمپلنت 6، شل_شدن_پیچ 4، پری_ایمپلنتیتیس 11، اباتمنت 22)؛ مینت لازم نیست.
+- 15:31 تصمیم بنیان‌گذار: از FAQ فقط ۲ و ۴ (سمان دائم با مارجین عمیق؛ قطع شدن توالی دیوارهٔ فیکسچر)، ۱ و ۳ و ۵ رد شد و نوشته نشد؛ هر پنج فلش‌کارت تأیید. قاعده حداقل تعداد FAQ ندارد (verify_publish فقط خالی نبودن را می‌خواهد)، پس دو پرسش کافی بود.
+- C.4.11 و C.4.12 کامل شد؛ پنج فلش‌کارت و دو FAQ در plus/faq-corpus.json، ایندکس‌های quiz و flashcards با builder بازسازی شد.
+- C.4.13 DES: مسیر founder-supplied، هش 01-متن برابر رسید، حساب 19 و باند E، اسپک 3.5، نقل‌قول‌ها، Part 3 (6) رسید داشت؛ مدل دوباره اجرا نشد؛ رکورد verbatim در plus/des-scores.json. توجه: پاراگراف افتتاحیهٔ بنیان‌گذار خارج از متن امتیازدهی‌شده است.
+- C.4.14 skipped (چالش نیست). C.5.0 هشتگ: پنج برچسب کانونیک، بدون مینت. C.5 انتری brain اضافه شد (tail). C.5.5 پیلار/ساب‌تاپیک معتبر. C.5.6: implant-prosthetic (STRONG، بعد از chairside-23)؛ بقیهٔ کاندیدها ASK بودند و جا داده نشدند (fixed-pros 52، treatment-planning 46، implant-surgical 39، occlusion 27، ceramics 19، esthetic 18، bundle-implant-parts 18). دو سؤال آزمون نوشته شد (r-166bacac، r-dc4ffc46). باندل: گیت ۱ رد (chairside).
+- C.6 پالس: خط تأییدشده بدون «تازه» بالای لیست، خط آخر (لایت‌کست 42) حذف، هفت خط. نسخهٔ انگلیسی chairside/en/chairside-46.html نوشته شد. قفل ویرایشی ده‌بخشی ثبت شد.
+- تحویل ۲: b43f2bcbd9. اجرای Actions: https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/40870838736 موفق. تحویل ۳: 8169c8006a. confirm-cleanup: publication_completed.
+- PR #1051، همهٔ چک‌ها سبز (live-contracts، check، scan، Cloudflare، Vercel)، mergeable_state clean، squash merge به main: c7ad08670a842d309b4a668cc911095a6d8f1f9f.
+- خطاها و تکرارها: advance --id C.4.10.1 بدون evidence رد شد (COMPLETION_EVIDENCE_REQUIRED) و با evidence تکرار شد؛ C.4.14 با advance رد شد (completed یعنی چالش) و با step --status skipped ثبت شد؛ rec برای des-scores DUPLICATE_TARGET داد (قبلاً در target_paths بود) و با record بدون تغییر بازسازی شد؛ gh pr create به‌خاطر GraphQL رد شد و PR با REST ساخته شد. ZWNJ در corpus ابتدا escape شده نوشته شد و به نویسهٔ خام اصلاح شد (قبل از commit).
