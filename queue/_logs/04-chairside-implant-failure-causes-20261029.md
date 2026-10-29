@@ -120,3 +120,9 @@ H8. Author quiz approval and ready state: see Part 7 (queue commit 48a0d4d).
 - 06 English updated to match. 02, 07, 08, 09, 03 checked: no contradiction.
 - DES run 6: 19/E. Persian-text rule: interpretation_fa phrase "الگوی تشخیص افتراقیِ ایمپلنت دردناک" replaced by "جدا کردن علت‌های احتمالی التهاب اطراف ایمپلنت از هم". des.json sha256 a3216c962fc9039bc76ffc21e724880726aaae30104e9cc2a61ff3e2aff69e2d; verify_publish --des-text ok.
 - Receipts, 00-وضعیت (row 22, hashes, history), SHA256SUMS updated and verified. Status stays «آماده».
+
+## Part 13: founder addition to the screw-loosening paragraph (2026-10-29, 14:31 Tehran, relayed by the coordinator)
+- 01-متن.md: two sentences appended exactly as given after "هم می‌تواند سهم داشته باشد." New sha256 b5a69037bfa81f3726e89c74fb0afecb99c49482528ad1080cbe91c8badd43ec. Nothing else changed.
+- 06 English updated to match. 02, 07, 08, 09, 03 checked, no contradiction.
+- DES run 7: 19/E. Persian-text rule: fact_fa band label "سطح زمینه و نظر" to "سطح تجربه و نظر"; interpretation_fa last sentence "قابل تعمیم نیستند" (not in text) replaced by "تأییدشان به معاینه‌ی مستقیم بستگی دارد". des.json sha256 672dcc42d42546397d25b8aba978d0496efc76fa936625be32e80f5dda9fdf40; verify_publish --des-text ok.
+- Receipts, 00-وضعیت (row 23, hashes, history), SHA256SUMS updated and verified. Status stays «آماده».
