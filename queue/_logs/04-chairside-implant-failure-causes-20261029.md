@@ -114,3 +114,9 @@ H8. Author quiz approval and ready state: see Part 7 (queue commit 48a0d4d).
 - 06 English updated to match. 07: the resolving sentence for hashtag #شکست_ایمپلنت is the prognosis sentence, so it was synced mechanically to the new text (tag list unchanged). 02, 08, 09, 03 checked, no contradiction.
 - DES run 5: 19/E. Persian-text rule: fact_fa band label "سطح زمینه‌ای و نظر" to "سطح تجربه و نظر"; interpretation_fa last sentence "قابل تعمیم پژوهشی نیستند" (not in the text) replaced with "تأییدشان به معاینه‌ی مستقیم بستگی دارد". des.json sha256 b040c55331a5ece533e84a10ff082f4c19ef0aac6ad237a85ced2289a086734c; verify_publish --des-text ok.
 - Receipts, 00-وضعیت (approval row 21, hashes, change history), SHA256SUMS updated and verified. Status stays «آماده».
+
+## Part 12: founder correction in the crack paragraph (2026-10-29, 14:28 Tehran, relayed by the coordinator)
+- 01-متن.md: one sentence replaced exactly as given (the "probable course" sentence became the first-radiograph sentence plus the new course and the two-episode inflammation sentences). New sha256 55f221d1119bca90312bbab0a41682ee73616f000d19e652f13873654006c293. Confirmed by the coordinator: «گرافی دوم» in that paragraph is Figure 3.
+- 06 English updated to match. 02, 07, 08, 09, 03 checked: no contradiction.
+- DES run 6: 19/E. Persian-text rule: interpretation_fa phrase "الگوی تشخیص افتراقیِ ایمپلنت دردناک" replaced by "جدا کردن علت‌های احتمالی التهاب اطراف ایمپلنت از هم". des.json sha256 a3216c962fc9039bc76ffc21e724880726aaae30104e9cc2a61ff3e2aff69e2d; verify_publish --des-text ok.
+- Receipts, 00-وضعیت (row 22, hashes, history), SHA256SUMS updated and verified. Status stays «آماده».
