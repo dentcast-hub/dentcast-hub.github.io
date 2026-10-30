@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 118,
+   "count": 119,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -378,7 +378,8 @@
     "insight/insight-96",
     "insight/insight-97",
     "insight/insight-98",
-    "insight/insight-99"
+    "insight/insight-99",
+    "insight/insight-100"
    ]
   },
   {
@@ -1273,7 +1274,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 33,
+   "count": 34,
    "content_ids": [
     "episodes/episode-125-1",
     "episodes/episode-139",
@@ -1307,7 +1308,8 @@
     "chairside/chairside-31",
     "insight/insight-85",
     "insight/insight-86",
-    "chairside/chairside-43"
+    "chairside/chairside-43",
+    "insight/insight-100"
    ]
   },
   {
@@ -3179,6 +3181,41 @@
    ]
   },
   {
+   "key": "تنظیم_اکلوژن",
+   "tag": "#تنظیم_اکلوژن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "حذف انتخابیِ تماس‌های ناخواسته با تراش، بدون از بین بردن هندسه‌ی فانکشنال.",
+   "use_when": "مقاله روش یا قاعده‌ی تراش تنظیمی بدهد.",
+   "aliases": [
+    "سلکتیو گرایندینگ",
+    "میزان کردن اکلوژن",
+    "تنظیم اکلوزال",
+    "occlusal equilibration"
+   ],
+   "variants": [
+    "#تنظیم_اکلوژال",
+    "#تنظیم-اکلوژن",
+    "#چکاپ_اکلوژنی"
+   ],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "insight/insight-1",
+    "photocast/episode-2",
+    "dentcast-plus/video-2",
+    "insight/insight-27",
+    "dentcast-plus/video-6",
+    "insight/insight-37",
+    "sharehub/share-6",
+    "insight/insight-44",
+    "insight/insight-54",
+    "insight/insight-56",
+    "chairside/chairside-37",
+    "insight/insight-100"
+   ]
+  },
+  {
    "key": "پری_ایمپلنتیتیس",
    "tag": "#پری_ایمپلنتیتیس",
    "domain": "clinical",
@@ -3433,40 +3470,6 @@
     "taraz/taraz1-9",
     "taraz/taraz1-10",
     "sharehub/share-35"
-   ]
-  },
-  {
-   "key": "تنظیم_اکلوژن",
-   "tag": "#تنظیم_اکلوژن",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "حذف انتخابیِ تماس‌های ناخواسته با تراش، بدون از بین بردن هندسه‌ی فانکشنال.",
-   "use_when": "مقاله روش یا قاعده‌ی تراش تنظیمی بدهد.",
-   "aliases": [
-    "سلکتیو گرایندینگ",
-    "میزان کردن اکلوژن",
-    "تنظیم اکلوزال",
-    "occlusal equilibration"
-   ],
-   "variants": [
-    "#تنظیم_اکلوژال",
-    "#تنظیم-اکلوژن",
-    "#چکاپ_اکلوژنی"
-   ],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "insight/insight-1",
-    "photocast/episode-2",
-    "dentcast-plus/video-2",
-    "insight/insight-27",
-    "dentcast-plus/video-6",
-    "insight/insight-37",
-    "sharehub/share-6",
-    "insight/insight-44",
-    "insight/insight-54",
-    "insight/insight-56",
-    "chairside/chairside-37"
    ]
   },
   {
@@ -4998,6 +5001,31 @@
    ]
   },
   {
+   "key": "سمان_ایمپلنت",
+   "tag": "#سمان_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "سمان کردنِ روکشِ ایمپلنت، با ریسکِ خاصِ باقی ماندنِ سمان.",
+   "use_when": "مقاله انتخاب یا روشِ سمان روی ایمپلنت را تعیین کند.",
+   "aliases": [
+    "سمان ایمپلنت",
+    "implant cementation",
+    "سمان روی ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-122-1",
+    "episodes/episode-122-6",
+    "insight/insight-9",
+    "sharehub/share-4",
+    "insight/insight-59",
+    "insight/insight-85",
+    "insight/insight-100"
+   ]
+  },
+  {
    "key": "سمان_دندانی",
    "tag": "#سمان_دندانی",
    "domain": "clinical",
@@ -5785,30 +5813,6 @@
     "dentai/promptologist/prompt5-3",
     "dentai/promptologist/prompt6-3",
     "dentai/promptologist/prompt7-2"
-   ]
-  },
-  {
-   "key": "سمان_ایمپلنت",
-   "tag": "#سمان_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "سمان کردنِ روکشِ ایمپلنت، با ریسکِ خاصِ باقی ماندنِ سمان.",
-   "use_when": "مقاله انتخاب یا روشِ سمان روی ایمپلنت را تعیین کند.",
-   "aliases": [
-    "سمان ایمپلنت",
-    "implant cementation",
-    "سمان روی ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-122-1",
-    "episodes/episode-122-6",
-    "insight/insight-9",
-    "sharehub/share-4",
-    "insight/insight-59",
-    "insight/insight-85"
    ]
   },
   {
@@ -6918,6 +6922,28 @@
     "episodes/episode-126",
     "episodes/episode-127",
     "dentai/dentai-5"
+   ]
+  },
+  {
+   "key": "pdl",
+   "tag": "#PDL",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "لیگامان پریودنتال — تفاوتِ بنیادیِ دندان و ایمپلنت در جذب نیرو.",
+   "use_when": "مقاله PDL را عاملِ تفاوت رفتار بداند.",
+   "aliases": [
+    "periodontal ligament",
+    "لیگامان پریودنتال",
+    "پی دی ال"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-24",
+    "metanotes/meta-17",
+    "metanotes/meta-18",
+    "insight/insight-100"
    ]
   },
   {
@@ -8168,27 +8194,6 @@
     "dentai/promptologist/prompt1-5",
     "dentai/promptologist/prompt2-1",
     "dentai/promptologist/prompt6-2"
-   ]
-  },
-  {
-   "key": "pdl",
-   "tag": "#PDL",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "لیگامان پریودنتال — تفاوتِ بنیادیِ دندان و ایمپلنت در جذب نیرو.",
-   "use_when": "مقاله PDL را عاملِ تفاوت رفتار بداند.",
-   "aliases": [
-    "periodontal ligament",
-    "لیگامان پریودنتال",
-    "پی دی ال"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-24",
-    "metanotes/meta-17",
-    "metanotes/meta-18"
    ]
   },
   {
@@ -12149,6 +12154,27 @@
    "content_ids": [
     "dentai/promptologist/prompt4-4",
     "dentai/promptologist/prompt6-5"
+   ]
+  },
+  {
+   "key": "شیم_استاک",
+   "tag": "#شیم_استاک",
+   "domain": null,
+   "words": 2,
+   "definition": "نوار ۸ میکرونیِ تأیید نهاییِ تماس.",
+   "use_when": "مقاله شیم‌استاک را ابزارِ تأیید بداند.",
+   "aliases": [
+    "shimstock",
+    "شیمستاک",
+    "شیم استاک",
+    "نوار ۸ میکرون"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-1",
+    "insight/insight-100"
    ]
   },
   {
@@ -17931,26 +17957,6 @@
    "count": 1,
    "content_ids": [
     "sharehub/share-2"
-   ]
-  },
-  {
-   "key": "شیم_استاک",
-   "tag": "#شیم_استاک",
-   "domain": null,
-   "words": 2,
-   "definition": "نوار ۸ میکرونیِ تأیید نهاییِ تماس.",
-   "use_when": "مقاله شیم‌استاک را ابزارِ تأیید بداند.",
-   "aliases": [
-    "shimstock",
-    "شیمستاک",
-    "شیم استاک",
-    "نوار ۸ میکرون"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-1"
    ]
   },
   {

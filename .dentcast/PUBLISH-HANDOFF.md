@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "insight/insight-100"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -123,6 +123,91 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "kind": "first_cut_lead_provenance_v1",
           "origin": "author_original",
           "source_ref": "queue 01-\u0645\u062a\u0646.md first paragraph written by the founder (queue 07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md '\u067e\u0627\u0631\u0627\u06af\u0631\u0627\u0641 \u0627\u0641\u062a\u062a\u0627\u062d\u06cc\u0647': \u0646\u0648\u0634\u062a\u0647\u0654 \u0646\u0648\u06cc\u0633\u0646\u062f\u0647)"
+        },
+        {
+          "english": {
+            "evidence": [
+              "source fa page and en mirror reviewed before Push 2; en text equals the founder-approved queue text"
+            ],
+            "path": "insight/en/insight-100.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "current-run editorial close review: verify_publish dry-run 104 passed, 9 failed all builder-dependent (sitemap, pillar page/structure, plus-index, flashcards, quiz, version stamp)"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "queue 01 COMMENTARY DES 15/E (spec v3.5) consumed without rerun; Part 3 checks (1)-(6) passed; stored in plus/des-scores.json insight/insight-100"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Q4.9 = not a Challenge (queue approval #7); C.4.14 skipped"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "pillar occlusion/occlusal-analysis-adjustment founder-approved (queue #4), verified in live PILLARS and in brain entry"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.7 four glossary candidates at 5-link cap, 0 additions; C.4.8 one inline glossary link; C.4.9 three related capsules; hashes recorded in ledger"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "six approved concepts resolved to existing canonical tags via hashtag_ref --simulate; --sync and --check OK; reachability test rank 1 in all three question chips"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "brain entry clinical-100 appended, keys match clinical-99; title/caption byte-equal to queue 02; keywords from queue 09; verify_publish dry-run shows no content-record failure"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "placed in implant-prosthetic and occlusion after insight-65; bundle candidates rejected at gate 1; 3 exam questions written and validated (0 errors)"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "index.html Pulse: new top line with approved sentence linking the title, oldest line removed, 7 lines"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "insight/en/insight-100.html built from founder-approved queue 06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md (approval #5), noindex, toggles inverse, no gloss duplicates"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "queue 01 approvals #1-#10 recorded in context.approvals; no pending questions"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -408,6 +493,115 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "05-semantic-linking.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.1",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper (Q4.7 = no); no Drive filing.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.2",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper; no cabinet ingestion.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.3",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper; no DOI credit.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "plus/faq-corpus.json insight/insight-100: DefinedTermSet with 5 authored DefinedTerms (#flashcards-c1..c5), each atomic and re-authored as a definition (no FAQ near-copy); 0 from faq, 5 authored; no on-page JSON-LD; additive diff only (+94 lines)"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "FAQ: 5 questions in corpus, all standalone (no article deixis); 3 binary (\u0622\u06cc\u0627 ... / answers open with \u062e\u06cc\u0631 or \u0628\u0644\u0647) -> scored bank contribution 3; 2 non-binary (\u0686\u0631\u0627\u060c \u062a\u0631\u062a\u06cc\u0628) remain reference/flashcard material; nothing asked/dropped. 4.12-\u0628 evaluated at C.5.6."
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "COMMENTARY DES consumed from queue 01 (founder-supplied path, not rerun; spec v3.5, model run 2026-10-28): 15/E. Part 3: (1) quotes 1,3 substrings of 01-\u0645\u062a\u0646.md (sha256 ff1bff2a... = \u0627\u062c\u0631\u0627.md), quote 4 = insight/index.html declaration with note; item 2 empty 0 pts; (2) 5+4+0+3+3=15; (3) band E in 5-19; (4) key set == insight-99 record; (5) n/a, fidelity [null] (basket 1); (6) verify_publish --des-text OK, interpretation_fa sentence 3 (\u00ab\u0686\u0627\u0631\u0686\u0648\u0628 \u0628\u0627\u0644\u06cc\u0646\u06cc \u0645\u0646\u0637\u0642\u06cc \u0648 \u0642\u0627\u0628\u0644\u200c\u0627\u062c\u0631\u0627\u00bb) deleted by agent as unsupported evaluative claim, score/band/quotes unchanged. Stored in plus/des-scores.json insight/insight-100, scored_at 2026-10-28. Nothing guessed."
+        ],
+        "id": "C.4.13",
+        "module": "08-des-fidelity.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "Ordinary explanatory post, not a Challenge (Q4.9 = no); no challenge markup.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "All six founder-approved concepts resolved via hashtag_ref.py --simulate to existing canonical tags (no mint, no batch): #\u0627\u06cc\u0646\u0633\u0627\u06cc\u062a(118) #\u062a\u0646\u0638\u06cc\u0645_\u0627\u06a9\u0644\u0648\u0698\u0646(11) #\u0631\u0648\u06a9\u0634_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a(33) #\u0633\u0645\u0627\u0646_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a(6) #\u0634\u06cc\u0645_\u0627\u0633\u062a\u0627\u06a9(1) #PDL(3). Composition: series #\u0627\u06cc\u0646\u0633\u0627\u06cc\u062a; decision tag #\u062a\u0646\u0638\u06cc\u0645_\u0627\u06a9\u0644\u0648\u0698\u0646; specific \u226410 pages: #\u0633\u0645\u0627\u0646_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a, #PDL, #\u0634\u06cc\u0645_\u0627\u0633\u062a\u0627\u06a9. Questions (queue 07): \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0631\u0627 \u0642\u0628\u0644 \u0627\u0632 \u0633\u0645\u0627\u0646 \u062a\u0646\u0638\u06cc\u0645 \u06a9\u0646\u0645 \u06cc\u0627 \u0628\u0639\u062f\u061f / \u0686\u0631\u0627 \u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646 \u06a9\u0648\u062a\u0627\u0647 \u0634\u062f\u061f / \u0628\u06cc\u0645\u0627\u0631 \u0631\u0648\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0686\u06cc\u0632\u06cc \u062d\u0633 \u0646\u0645\u06cc\u200c\u06a9\u0646\u062f\u060c \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0627 \u0628\u0627 \u0686\u0647 \u0645\u0639\u06cc\u0627\u0631\u06cc \u0628\u0633\u0646\u062c\u0645\u061f. Resolving sentences quoted from 01-\u0645\u062a\u0646.md for each non-series tag. --sync/--check run after brain write."
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "dentcast-brain.json: clinical-100 appended as last element (583 entries), keys identical to clinical-99 (type,id,title,caption,hashtags,keywords,page_url,pillar{primary,secondary,subtopic}); title/caption copied from queue 02; keywords from queue 09 (6, in order); hashtags 6 canonical; hashtag_ref --sync done (counts/content_ids for 6 tags), --check OK. Diff additive +28 lines CRLF."
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Verified against live PILLARS: brain pillar.primary=occlusion == step 2.4 value, subtopic occlusal-analysis-adjustment valid for occlusion, no extra keys; capsule href /pillar/occlusion/ consistent"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pathway_place.py insight/insight-100: STRONG candidates occlusion, fixed-pros, implant-prosthetic, treatment-planning, esthetic, biomimetic, implant-surgical. Placed in 2 (semantic: article is implant-crown occlusal adjustment vs cementation): implant-prosthetic after insight/insight-65 (index 52) and occlusion after insight/insight-65 (index 2), milestone=false. Not placed (judged not needed; a third full pathway would be a founder question): fixed-pros, treatment-planning, esthetic, biomimetic, implant-surgical. coverage: full pathways 1.51/item (baseline 1.38, was already 1.51 before? placements add 2 memberships). 4.12-\u0628: 3 four-option questions from queue 08 (approval #9) written to plus/exam-questions.json ids r-3ac7fd88,r-f66b36f4,r-61e77577 (keys 1,0,2); validate_exam_questions: 0 errors; both carrying pathways: implant-prosthetic, occlusion."
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Candidate bundles (continues_pathway in joined pathways): bundle-implant-parts (7 steps) -> \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1: folder insight/ is always NO); bundle-occlusion-rehab (8 steps) -> \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1: insight/). No bundle edit, home-bundles.js and asset version untouched."
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Pulse: top line \u00ab\u06cc\u06a9 \u0627\u06cc\u0646\u0633\u0627\u06cc\u062a \u0628\u0627\u0644\u06cc\u0646\u06cc \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab<title link>\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f\u00bb (queue-approved #2, title-only), oldest (chairside-44) removed, 7 lines. Ten-scope second_cut_editorial_lock_v1 recorded; English mirror insight/en/insight-100.html ready; title and caption approvals confirmed; no pending questions."
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
@@ -424,7 +618,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: insight/insight-100.html, insight/index.html"
+    "note": "Index-only refresh after staging delivery paths: insight/en/insight-100.html, insight/insight-100.html, index.html, dentcast-brain.json, dentcast-hashtag-reference.json, plus/des-scores.json, plus/exam-questions.json, plus/faq-corpus.json, plus/pathways.json"
   },
   "schema": "publish-handoff-v3"
 }
