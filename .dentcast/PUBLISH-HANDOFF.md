@@ -208,6 +208,159 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
               "status": "resolved"
             }
           ]
+        },
+        {
+          "from_step": "C.6",
+          "kind": "dependency_invalidation_v1",
+          "reason": "Post-Push-2 run failed POST_CUT2_OUT_OF_SCOPE_CHANGE:plus/assistant-tags.json (build_plus_index output not enrolled). Publication-side cause: enroll the path; only the C.6 close is redone",
+          "superseded": {
+            "approvals": [
+              {
+                "decision": "\u062a\u0646\u0638\u06cc\u0645 \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u060c \u0642\u0628\u0644 \u0627\u0632 \u0633\u0645\u0627\u0646 \u06cc\u0627 \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646\u061f",
+                "evidence": [
+                  "queue 01, approval #(title written by founder, 02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md), queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                ],
+                "scope": "title",
+                "status": "confirmed"
+              },
+              {
+                "decision": "\u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062f\u0631 \u0627\u0645\u062a\u062d\u0627\u0646 \u06a9\u0645\u06cc \u0628\u0644\u0646\u062f \u0627\u0633\u062a \u0648 \u0627\u0632 \u0646\u0634\u0633\u062a\u0646 \u06a9\u0627\u0645\u0644 \u0622\u0646 \u0645\u0637\u0645\u0626\u0646 \u0646\u06cc\u0633\u062a\u06cc\u0645\u061b \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0627 \u0647\u0645\u0627\u0646\u200c\u062c\u0627 \u062a\u0646\u0638\u06cc\u0645 \u06a9\u0646\u06cc\u0645 \u06cc\u0627 \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646\u061f",
+                "evidence": [
+                  "queue 01, approval #1, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                ],
+                "scope": "caption",
+                "status": "confirmed"
+              },
+              {
+                "decision": "\u06cc\u06a9 \u0627\u06cc\u0646\u0633\u0627\u06cc\u062a \u0628\u0627\u0644\u06cc\u0646\u06cc \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab\u062a\u0646\u0638\u06cc\u0645 \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u060c \u0642\u0628\u0644 \u0627\u0632 \u0633\u0645\u0627\u0646 \u06cc\u0627 \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646\u061f\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f",
+                "evidence": [
+                  "queue 01, approval #2, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                ],
+                "scope": "pulse",
+                "status": "confirmed"
+              },
+              {
+                "decision": "#\u0627\u06cc\u0646\u0633\u0627\u06cc\u062a #\u062a\u0646\u0638\u06cc\u0645_\u0627\u06a9\u0644\u0648\u0698\u0646 #\u0631\u0648\u06a9\u0634_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a #\u0633\u0645\u0627\u0646_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a #\u0634\u06cc\u0645_\u0627\u0633\u062a\u0627\u06a9 #PDL (canonical finalization on publication day)",
+                "evidence": [
+                  "queue 01, approval #3, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                ],
+                "scope": "hashtag-concepts",
+                "status": "confirmed"
+              },
+              {
+                "decision": "occlusion / occlusal-analysis-adjustment (option A)",
+                "evidence": [
+                  "queue 01, approval #4, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                ],
+                "scope": "pillar",
+                "status": "confirmed"
+              },
+              {
+                "decision": "06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md approved with \u00abbite down\u00bb; caption EN = translation of option A",
+                "evidence": [
+                  "queue 01, approval #5, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                ],
+                "scope": "english-text",
+                "status": "confirmed"
+              },
+              {
+                "decision": "no change needed; founder did not object",
+                "evidence": [
+                  "queue 01, approval #6, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                ],
+                "scope": "q3.5-de-ai",
+                "status": "confirmed"
+              },
+              {
+                "decision": "no image/audio/video/link; no paper; not a Challenge",
+                "evidence": [
+                  "queue 01, approval #7, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                ],
+                "scope": "media-source-challenge",
+                "status": "confirmed"
+              },
+              {
+                "decision": "Persian labels in commentary_checklist (copied from insight-99 record)",
+                "evidence": [
+                  "queue 01, approval #8, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                ],
+                "scope": "des-item-labels",
+                "status": "confirmed"
+              },
+              {
+                "decision": "three 4-option pathway-exam questions as in 08-\u0633\u0624\u0627\u0644\u200c\u0647\u0627\u06cc-\u0622\u0632\u0645\u0648\u0646.json",
+                "evidence": [
+                  "queue 01, approval #9, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                ],
+                "scope": "exam-questions",
+                "status": "confirmed"
+              },
+              {
+                "decision": "six keywords as in 09-\u06a9\u0644\u06cc\u062f\u0648\u0627\u0698\u0647\u200c\u0647\u0627.md",
+                "evidence": [
+                  "queue 01, approval #10, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                ],
+                "scope": "brain-keywords",
+                "status": "confirmed"
+              }
+            ],
+            "delivery": [],
+            "inputs": [],
+            "steps": [
+              {
+                "evidence": [
+                  "Pulse: top line \u00ab\u06cc\u06a9 \u0627\u06cc\u0646\u0633\u0627\u06cc\u062a \u0628\u0627\u0644\u06cc\u0646\u06cc \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab<title link>\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f\u00bb (queue-approved #2, title-only), oldest (chairside-44) removed, 7 lines. Ten-scope second_cut_editorial_lock_v1 recorded; English mirror insight/en/insight-100.html ready; title and caption approvals confirmed; no pending questions."
+                ],
+                "id": "C.6",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.8",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "C.7",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "D",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "E",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "F",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "G",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              }
+            ],
+            "validation": []
+          }
         }
       ],
       "delivery": [],
@@ -596,7 +749,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Pulse: top line \u00ab\u06cc\u06a9 \u0627\u06cc\u0646\u0633\u0627\u06cc\u062a \u0628\u0627\u0644\u06cc\u0646\u06cc \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab<title link>\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f\u00bb (queue-approved #2, title-only), oldest (chairside-44) removed, 7 lines. Ten-scope second_cut_editorial_lock_v1 recorded; English mirror insight/en/insight-100.html ready; title and caption approvals confirmed; no pending questions."
+          "Re-verified after invalidate recovery (cause: build_plus_index writes plus/assistant-tags.json, not enrolled). Pulse (7 lines, approved top line), English mirror, ten-scope editorial lock and the eleven queue approvals unchanged; title/caption confirmed; no pending questions."
         ],
         "id": "C.6",
         "module": "11-build-and-version.md",
@@ -611,6 +764,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       "insight/en/insight-100.html",
       "insight/index.html",
       "insight/insight-100.html",
+      "plus/assistant-tags.json",
       "plus/des-scores.json",
       "plus/exam-questions.json",
       "plus/faq-corpus.json",
@@ -618,7 +772,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: insight/en/insight-100.html, insight/insight-100.html, index.html, dentcast-brain.json, dentcast-hashtag-reference.json, plus/des-scores.json, plus/exam-questions.json, plus/faq-corpus.json, plus/pathways.json"
+    "note": "Index-only refresh after staging delivery paths: insight/insight-100.html"
   },
   "schema": "publish-handoff-v3"
 }
