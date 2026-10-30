@@ -273,7 +273,8 @@ def builder_output(path):
     return path in {
         "index.html", "player.html", "service-worker.js", "episodes.html",
         "glossary/index.html", "glossary/structure.json", "pillar/index.html",
-        "pillar/structure.json", "plus/content-index.json", "plus/flashcards-index.json",
+        "pillar/structure.json", "plus/content-index.json", "plus/assistant-tags.json",
+        "plus/flashcards-index.json",
         "plus/quiz-index.json", "plus/challenges.json", "up-board/index.json",
         "sitemap.xml", "sitemap-ir.xml",
     } or re.fullmatch(r"pillar/[a-z0-9-]+/(?:index\.html|structure\.json)", path) is not None

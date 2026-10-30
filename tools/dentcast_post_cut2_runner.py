@@ -176,7 +176,7 @@ def allowed_paths(pub: dict) -> set[str]:
         HANDOFF,
         "index.html", "player.html", "service-worker.js", "episodes.html",
         "glossary/index.html", "glossary/structure.json", "pillar/index.html",
-        "pillar/structure.json", "plus/content-index.json",
+        "pillar/structure.json", "plus/content-index.json", "plus/assistant-tags.json",
         "plus/flashcards-index.json", "plus/quiz-index.json",
         "plus/challenges.json", "up-board/index.json", "sitemap.xml",
         "sitemap-ir.xml",
