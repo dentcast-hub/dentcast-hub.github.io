@@ -322,6 +322,16 @@ class PostCut2RunnerTests(unittest.TestCase):
         self.assertIn("node tools/build_quiz_index.mjs", full)
         self.assertNotIn("node tools/build_plus_index.mjs", plan("paper-only"))
 
+    def test_build_plus_index_outputs_are_in_scope(self):
+        # insight-100 (2026-10-30): a new tag count rewrote plus/assistant-tags.json
+        # and the run stopped with POST_CUT2_OUT_OF_SCOPE_CHANGE before delivery 3.
+        builder = (Path(__file__).resolve().parents[1] / "tools" / "build_plus_index.mjs").read_text(encoding="utf-8")
+        allowed = runner.allowed_paths({"target_paths": []})
+        for name in ("content-index.json", "assistant-tags.json"):
+            self.assertIn(f"'plus', '{name}'", builder)
+            self.assertIn(f"plus/{name}", allowed)
+            self.assertTrue(runner.handoff.builder_output(f"plus/{name}"))
+
     def test_site_wide_injectors_never_rewrite_test_fixtures(self):
         repo = Path(__file__).resolve().parents[1]
         fixture = "tests/fixtures/sample/page.html"
