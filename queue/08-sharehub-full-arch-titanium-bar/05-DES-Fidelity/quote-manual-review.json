@@ -1,0 +1,26 @@
+[
+ {
+  "source": "0",
+  "unit": "u68",
+  "original_quote_sha256": "2f50c21202cff120444c307db56821376de9af394d60d8df610facc5b8d21949",
+  "new_quote": "Titanium and its alloys, but also Zirconia, were then introduced as alternative materi-\nals, in order to fabricate implant frameworks by CAD/CAM technology, with high implant\nsuccess rates (92.4–100%) [8].",
+  "verdict_unchanged": "MATCHES",
+  "reason": "Manual Part3 quote review: copy the same intended whole source sentence directly with its original PDF linebreaks; remove overlong accidental continuation after the first sentence for u52. No verdict or grade changed."
+ },
+ {
+  "source": "1",
+  "unit": "u37",
+  "original_quote_sha256": "b753ce2492522f78165c437ae4133817c944b681fbb688a88b79efd00aec3815",
+  "new_quote": "Occlusal dynamics, bone remodeling, and patient-spe­\ncific parafunction were not simulated, and only short- \nterm thermomechanical aging was applied.",
+  "verdict_unchanged": "MATCHES",
+  "reason": "Manual Part3 quote review: copy the same intended whole source sentence directly with its original PDF linebreaks; remove overlong accidental continuation after the first sentence for u52. No verdict or grade changed."
+ },
+ {
+  "source": "1",
+  "unit": "u52",
+  "original_quote_sha256": "de356610ff1958c90069d5e6ef24e2ea6dcc507770b91a914468481af6b389cd",
+  "new_quote": "In contrast, K-WB demonstrated the best marginal trueness \n(P<.05).",
+  "verdict_unchanged": "MATCHES",
+  "reason": "Manual Part3 quote review: copy the same intended whole source sentence directly with its original PDF linebreaks; remove overlong accidental continuation after the first sentence for u52. No verdict or grade changed."
+ }
+]
