@@ -1,0 +1,1003 @@
+{
+  "schema": "publish-completion-v1",
+  "state": {
+    "publication": {
+      "blocker": null,
+      "category": "clinical",
+      "content_id": "insight/insight-100",
+      "context": {
+        "approvals": [
+          {
+            "decision": "\u062a\u0646\u0638\u06cc\u0645 \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u060c \u0642\u0628\u0644 \u0627\u0632 \u0633\u0645\u0627\u0646 \u06cc\u0627 \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646\u061f",
+            "evidence": [
+              "queue 01, approval #(title written by founder, 02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md), queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+            ],
+            "scope": "title",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062f\u0631 \u0627\u0645\u062a\u062d\u0627\u0646 \u06a9\u0645\u06cc \u0628\u0644\u0646\u062f \u0627\u0633\u062a \u0648 \u0627\u0632 \u0646\u0634\u0633\u062a\u0646 \u06a9\u0627\u0645\u0644 \u0622\u0646 \u0645\u0637\u0645\u0626\u0646 \u0646\u06cc\u0633\u062a\u06cc\u0645\u061b \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0627 \u0647\u0645\u0627\u0646\u200c\u062c\u0627 \u062a\u0646\u0638\u06cc\u0645 \u06a9\u0646\u06cc\u0645 \u06cc\u0627 \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646\u061f",
+            "evidence": [
+              "queue 01, approval #1, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+            ],
+            "scope": "caption",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u06cc\u06a9 \u0627\u06cc\u0646\u0633\u0627\u06cc\u062a \u0628\u0627\u0644\u06cc\u0646\u06cc \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab\u062a\u0646\u0638\u06cc\u0645 \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u060c \u0642\u0628\u0644 \u0627\u0632 \u0633\u0645\u0627\u0646 \u06cc\u0627 \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646\u061f\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f",
+            "evidence": [
+              "queue 01, approval #2, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+            ],
+            "scope": "pulse",
+            "status": "confirmed"
+          },
+          {
+            "decision": "#\u0627\u06cc\u0646\u0633\u0627\u06cc\u062a #\u062a\u0646\u0638\u06cc\u0645_\u0627\u06a9\u0644\u0648\u0698\u0646 #\u0631\u0648\u06a9\u0634_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a #\u0633\u0645\u0627\u0646_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a #\u0634\u06cc\u0645_\u0627\u0633\u062a\u0627\u06a9 #PDL (canonical finalization on publication day)",
+            "evidence": [
+              "queue 01, approval #3, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+            ],
+            "scope": "hashtag-concepts",
+            "status": "confirmed"
+          },
+          {
+            "decision": "occlusion / occlusal-analysis-adjustment (option A)",
+            "evidence": [
+              "queue 01, approval #4, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+            ],
+            "scope": "pillar",
+            "status": "confirmed"
+          },
+          {
+            "decision": "06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md approved with \u00abbite down\u00bb; caption EN = translation of option A",
+            "evidence": [
+              "queue 01, approval #5, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+            ],
+            "scope": "english-text",
+            "status": "confirmed"
+          },
+          {
+            "decision": "no change needed; founder did not object",
+            "evidence": [
+              "queue 01, approval #6, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+            ],
+            "scope": "q3.5-de-ai",
+            "status": "confirmed"
+          },
+          {
+            "decision": "no image/audio/video/link; no paper; not a Challenge",
+            "evidence": [
+              "queue 01, approval #7, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+            ],
+            "scope": "media-source-challenge",
+            "status": "confirmed"
+          },
+          {
+            "decision": "Persian labels in commentary_checklist (copied from insight-99 record)",
+            "evidence": [
+              "queue 01, approval #8, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+            ],
+            "scope": "des-item-labels",
+            "status": "confirmed"
+          },
+          {
+            "decision": "three 4-option pathway-exam questions as in 08-\u0633\u0624\u0627\u0644\u200c\u0647\u0627\u06cc-\u0622\u0632\u0645\u0648\u0646.json",
+            "evidence": [
+              "queue 01, approval #9, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+            ],
+            "scope": "exam-questions",
+            "status": "confirmed"
+          },
+          {
+            "decision": "six keywords as in 09-\u06a9\u0644\u06cc\u062f\u0648\u0627\u0698\u0647\u200c\u0647\u0627.md",
+            "evidence": [
+              "queue 01, approval #10, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+            ],
+            "scope": "brain-keywords",
+            "status": "confirmed"
+          }
+        ],
+        "decisions": [
+          {
+            "kind": "fixed_three_deliveries_v1"
+          },
+          {
+            "kind": "fixed_three_deliveries_v2"
+          },
+          {
+            "evidence": [
+              "queue/01-insight-implant-crown-occlusion/07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md",
+              "SHA256SUMS verified"
+            ],
+            "kind": "first_cut_lead_provenance_v1",
+            "origin": "author_original",
+            "source_ref": "queue 01-\u0645\u062a\u0646.md first paragraph written by the founder (queue 07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md '\u067e\u0627\u0631\u0627\u06af\u0631\u0627\u0641 \u0627\u0641\u062a\u062a\u0627\u062d\u06cc\u0647': \u0646\u0648\u0634\u062a\u0647\u0654 \u0646\u0648\u06cc\u0633\u0646\u062f\u0647)"
+          },
+          {
+            "english": {
+              "evidence": [
+                "source fa page and en mirror reviewed before Push 2; en text equals the founder-approved queue text"
+              ],
+              "path": "insight/en/insight-100.html",
+              "status": "ready"
+            },
+            "evidence": [
+              "current-run editorial close review: verify_publish dry-run 104 passed, 9 failed all builder-dependent (sitemap, pillar page/structure, plus-index, flashcards, quiz, version stamp)"
+            ],
+            "kind": "second_cut_editorial_lock_v1",
+            "scopes": [
+              {
+                "evidence": [
+                  "queue 01 COMMENTARY DES 15/E (spec v3.5) consumed without rerun; Part 3 checks (1)-(6) passed; stored in plus/des-scores.json insight/insight-100"
+                ],
+                "scope": "scientific",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Q4.9 = not a Challenge (queue approval #7); C.4.14 skipped"
+                ],
+                "scope": "challenge",
+                "status": "not_applicable"
+              },
+              {
+                "evidence": [
+                  "pillar occlusion/occlusal-analysis-adjustment founder-approved (queue #4), verified in live PILLARS and in brain entry"
+                ],
+                "scope": "taxonomy",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.4.7 four glossary candidates at 5-link cap, 0 additions; C.4.8 one inline glossary link; C.4.9 three related capsules; hashes recorded in ledger"
+                ],
+                "scope": "links",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "six approved concepts resolved to existing canonical tags via hashtag_ref --simulate; --sync and --check OK; reachability test rank 1 in all three question chips"
+                ],
+                "scope": "hashtags",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "brain entry clinical-100 appended, keys match clinical-99; title/caption byte-equal to queue 02; keywords from queue 09; verify_publish dry-run shows no content-record failure"
+                ],
+                "scope": "content_record",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "placed in implant-prosthetic and occlusion after insight-65; bundle candidates rejected at gate 1; 3 exam questions written and validated (0 errors)"
+                ],
+                "scope": "pathways",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "index.html Pulse: new top line with approved sentence linking the title, oldest line removed, 7 lines"
+                ],
+                "scope": "pulse",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "insight/en/insight-100.html built from founder-approved queue 06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md (approval #5), noindex, toggles inverse, no gloss duplicates"
+                ],
+                "scope": "english",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "queue 01 approvals #1-#10 recorded in context.approvals; no pending questions"
+                ],
+                "scope": "author_approvals",
+                "status": "resolved"
+              }
+            ]
+          },
+          {
+            "from_step": "C.6",
+            "kind": "dependency_invalidation_v1",
+            "reason": "Post-Push-2 run failed POST_CUT2_OUT_OF_SCOPE_CHANGE:plus/assistant-tags.json (build_plus_index output not enrolled). Publication-side cause: enroll the path; only the C.6 close is redone",
+            "superseded": {
+              "approvals": [
+                {
+                  "decision": "\u062a\u0646\u0638\u06cc\u0645 \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u060c \u0642\u0628\u0644 \u0627\u0632 \u0633\u0645\u0627\u0646 \u06cc\u0627 \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646\u061f",
+                  "evidence": [
+                    "queue 01, approval #(title written by founder, 02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md), queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                  ],
+                  "scope": "title",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "\u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062f\u0631 \u0627\u0645\u062a\u062d\u0627\u0646 \u06a9\u0645\u06cc \u0628\u0644\u0646\u062f \u0627\u0633\u062a \u0648 \u0627\u0632 \u0646\u0634\u0633\u062a\u0646 \u06a9\u0627\u0645\u0644 \u0622\u0646 \u0645\u0637\u0645\u0626\u0646 \u0646\u06cc\u0633\u062a\u06cc\u0645\u061b \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0627 \u0647\u0645\u0627\u0646\u200c\u062c\u0627 \u062a\u0646\u0638\u06cc\u0645 \u06a9\u0646\u06cc\u0645 \u06cc\u0627 \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646\u061f",
+                  "evidence": [
+                    "queue 01, approval #1, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                  ],
+                  "scope": "caption",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "\u06cc\u06a9 \u0627\u06cc\u0646\u0633\u0627\u06cc\u062a \u0628\u0627\u0644\u06cc\u0646\u06cc \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab\u062a\u0646\u0638\u06cc\u0645 \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u060c \u0642\u0628\u0644 \u0627\u0632 \u0633\u0645\u0627\u0646 \u06cc\u0627 \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646\u061f\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f",
+                  "evidence": [
+                    "queue 01, approval #2, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                  ],
+                  "scope": "pulse",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "#\u0627\u06cc\u0646\u0633\u0627\u06cc\u062a #\u062a\u0646\u0638\u06cc\u0645_\u0627\u06a9\u0644\u0648\u0698\u0646 #\u0631\u0648\u06a9\u0634_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a #\u0633\u0645\u0627\u0646_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a #\u0634\u06cc\u0645_\u0627\u0633\u062a\u0627\u06a9 #PDL (canonical finalization on publication day)",
+                  "evidence": [
+                    "queue 01, approval #3, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                  ],
+                  "scope": "hashtag-concepts",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "occlusion / occlusal-analysis-adjustment (option A)",
+                  "evidence": [
+                    "queue 01, approval #4, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                  ],
+                  "scope": "pillar",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md approved with \u00abbite down\u00bb; caption EN = translation of option A",
+                  "evidence": [
+                    "queue 01, approval #5, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                  ],
+                  "scope": "english-text",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "no change needed; founder did not object",
+                  "evidence": [
+                    "queue 01, approval #6, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                  ],
+                  "scope": "q3.5-de-ai",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "no image/audio/video/link; no paper; not a Challenge",
+                  "evidence": [
+                    "queue 01, approval #7, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                  ],
+                  "scope": "media-source-challenge",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "Persian labels in commentary_checklist (copied from insight-99 record)",
+                  "evidence": [
+                    "queue 01, approval #8, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                  ],
+                  "scope": "des-item-labels",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "three 4-option pathway-exam questions as in 08-\u0633\u0624\u0627\u0644\u200c\u0647\u0627\u06cc-\u0622\u0632\u0645\u0648\u0646.json",
+                  "evidence": [
+                    "queue 01, approval #9, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                  ],
+                  "scope": "exam-questions",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "six keywords as in 09-\u06a9\u0644\u06cc\u062f\u0648\u0627\u0698\u0647\u200c\u0647\u0627.md",
+                  "evidence": [
+                    "queue 01, approval #10, queue 01-insight-implant-crown-occlusion/00-\u0648\u0636\u0639\u06cc\u062a.md, founder standing authorization 1405/08/06"
+                  ],
+                  "scope": "brain-keywords",
+                  "status": "confirmed"
+                }
+              ],
+              "delivery": [],
+              "inputs": [],
+              "steps": [
+                {
+                  "evidence": [
+                    "Pulse: top line \u00ab\u06cc\u06a9 \u0627\u06cc\u0646\u0633\u0627\u06cc\u062a \u0628\u0627\u0644\u06cc\u0646\u06cc \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab<title link>\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f\u00bb (queue-approved #2, title-only), oldest (chairside-44) removed, 7 lines. Ten-scope second_cut_editorial_lock_v1 recorded; English mirror insight/en/insight-100.html ready; title and caption approvals confirmed; no pending questions."
+                  ],
+                  "id": "C.6",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.8",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.7",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "D",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "E",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "F",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "G",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                }
+              ],
+              "validation": []
+            }
+          }
+        ],
+        "delivery": [
+          {
+            "evidence": [
+              "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/41062258704"
+            ],
+            "scope": "GitHub Actions post-Push-2 mechanical continuation"
+          }
+        ],
+        "inputs": [],
+        "pending_questions": [],
+        "unrelated_changes": [],
+        "validation": [
+          {
+            "content_id": "insight/insight-100",
+            "exit_code": 0,
+            "expected_caption": "\u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062f\u0631 \u0627\u0645\u062a\u062d\u0627\u0646 \u06a9\u0645\u06cc \u0628\u0644\u0646\u062f \u0627\u0633\u062a \u0648 \u0627\u0632 \u0646\u0634\u0633\u062a\u0646 \u06a9\u0627\u0645\u0644 \u0622\u0646 \u0645\u0637\u0645\u0626\u0646 \u0646\u06cc\u0633\u062a\u06cc\u0645\u061b \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0627 \u0647\u0645\u0627\u0646\u200c\u062c\u0627 \u062a\u0646\u0638\u06cc\u0645 \u06a9\u0646\u06cc\u0645 \u06cc\u0627 \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646\u061f",
+            "expected_title": "\u062a\u0646\u0638\u06cc\u0645 \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u060c \u0642\u0628\u0644 \u0627\u0632 \u0633\u0645\u0627\u0646 \u06cc\u0627 \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646\u061f",
+            "kind": "phase_f",
+            "output_sha256": "0a766c75ae0c5c7fc227295af16687f8e2cf40dd176d2d4a52323dd84c674d7a",
+            "recorded_at": "2026-10-30T13:20:27+00:00",
+            "summary": "114 passed, 1 warned, 0 failed  \u2014 publish is COMPLETE"
+          }
+        ]
+      },
+      "external_actions": [],
+      "status": "in_progress",
+      "steps": [
+        {
+          "evidence": [
+            "Read: router, global rules (3 pages), agent-parity, publish-checkpoints, modules 01+02, publish-queue.md"
+          ],
+          "id": "rules",
+          "module": "01-hard-rules.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Phase 0: text present (queue/01-insight-implant-crown-occlusion/01-\u0645\u062a\u0646.md), no paper file -> normal publish Phases A-D"
+          ],
+          "id": "0",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "dentcast-brain.json read end-to-end (582 entries, clinical=99 last at index 580); categories enumerated; live PILLARS read from tools/build_pillar.py on origin/main e425b416"
+          ],
+          "id": "A",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Queue 07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md Q1: insight (brain type clinical); founder queue input 1405/08/06"
+          ],
+          "id": "B.1",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Next number: insight-99 is max, no gaps -> insight-100 (Hard Rule 14, stated). content_id insight/insight-100"
+          ],
+          "id": "B.2",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Text from queue/01-insight-implant-crown-occlusion/01-\u0645\u062a\u0646.md, sha256 verified by SHA256SUMS (ff1bff2a...)"
+          ],
+          "id": "B.3",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Q3.5 done in queue preparation: no change needed, founder did not object (approval #6); not re-run on publication day per publish-queue.md"
+          ],
+          "id": "B.3.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Q4: no image/audio/video/link (queue approval #7)"
+          ],
+          "id": "B.4",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Q4.7: no attached paper (queue approval #7)"
+          ],
+          "id": "B.4.7",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Q4.8: basket 1 COMMENTARY (07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md); DES 15/E from queue des.json, hash-verified"
+          ],
+          "id": "B.4.8",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Q4.9: not a Challenge (queue approval #7)"
+          ],
+          "id": "B.4.9",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Q5 Pulse sentence from queue 07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md, founder-approved 1405/08/06 (approval #2); title-only, no spoiler"
+          ],
+          "id": "B.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0",
+          "module": "03-litecast-and-page.md",
+          "reason": "Clinical Insight category; LiteCast isolated track inactive.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.1",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; brain typed clinical source.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.2",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; specialist linking applies.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.3",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; clone clinical predecessor.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.4",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; general publication track.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Template = insight/insight-99.html (origin/main e425b416) sha256 f1a3ff9535f128f0f7b8447ce2a6fcab295a04899293f503afa6b48bb78802d3"
+          ],
+          "id": "C.1",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "insight/insight-100.html built from insight-99 clone; body = 01-\u0645\u062a\u0646.md 4 paragraphs verified identical; title/caption copied from queue 02 (Hard Rule 16); GA4 + 2 preconnect present; canonical dentcast.org"
+          ],
+          "id": "C.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.5",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; specialist inline links apply.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.6",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast; specialist related section applies.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Pillar occlusion / subtopic occlusal-analysis-adjustment: founder-approved in queue (approval 4, option A); both slugs verified live in PILLARS (origin/main e425b416)"
+          ],
+          "id": "C.2.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "dc-related-section appears once; capsules \u062f\u0627\u0646\u0634\u0646\u0627\u0645\u0647 (/glossary/) + \u0641\u0647\u0631\u0633\u062a \u0645\u0648\u0636\u0648\u0639\u06cc (/pillar/occlusion/) = 2 for typed brain; only dc-related-* classes"
+          ],
+          "id": "C.2.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "insight/index.html is hand-maintained static list; added one newest-first <li> insight-100.html with exact title; single-line diff"
+          ],
+          "id": "C.2.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Date audit: all 7 dated fields on insight-100 = 2026-10-30 (datePublished/dateModified/lastReviewed JSON-LD x3, trustline x2); today UTC 2026-10-30; STALE/DIVERGENT/MISSING none"
+          ],
+          "id": "C.3",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Template insight/insight-99.html sha256 f1a3ff95... identical to C.1 value"
+          ],
+          "id": "C.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Clinical Insight, not NoteCast.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5-b",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Clinical Insight, not episode/NoteCast pair.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Clinical Insight, not ordered Promptologist series.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Semantic review of glossary.json (109 terms). Related: implant-supported-crown, cement-retained, dental-implant, dental-cement. All four glossary pages' \u06a9\u0627\u0648\u0634 \u0628\u06cc\u0634\u062a\u0631 sections already hold 5 links (cap, Hard Rule 9) -> none edited; 0 additions, hashes unchanged. Others judged unrelated."
+          ],
+          "id": "C.4.7",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.7-b",
+          "module": "05-semantic-linking.md",
+          "reason": "No new glossary term published.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Fresh semantic analysis of body vs glossary.json + brain. Applied 1 unmistakable link: \u00ab\u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u00bb (first occurrence, p1) -> /glossary/implant-supported-crown.html. Page sha256 b58ceac2... -> 840950fd... (only diff: that anchor). Discarded as generic/borderline-junk: \u0627\u06cc\u0645\u067e\u0644\u0646\u062a, \u0633\u0645\u0627\u0646/\u0633\u0645\u0627\u0646 \u0645\u0648\u0642\u062a, \u0627\u06a9\u0644\u0648\u0698\u0646 (no precise glossary target); no episode inline candidate unmistakable (episode-60 etc. routed to 4.9)."
+          ],
+          "id": "C.4.8",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Semantic comparison vs whole brain. Section had 2 capsules; cap 5 -> added 3 strongest unmistakable: episode-60 (\u0627\u06a9\u0644\u0648\u0698\u0646 \u062f\u0631 \u062f\u0631\u0645\u0627\u0646\u200c\u0647\u0627\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a), insight-85 (\u0627\u0641\u062a\u0627\u062f\u0646 \u0645\u06a9\u0631\u0631 \u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0628\u0627 \u0633\u0645\u0627\u0646 \u0645\u0648\u0642\u062a), insight-86 (\u0645\u0627\u0646\u062f\u0646 \u0637\u0648\u0644\u0627\u0646\u06cc\u200c\u0645\u062f\u062a \u0631\u0648\u06a9\u0634 \u0628\u0627 \u0633\u0645\u0627\u0646 \u0645\u0648\u0642\u062a). Section now 5 links. Page sha256 840950fd... -> 5fed0099...; only diff: 3 capsules. Rejected as tangential: insight-96, episode-31, episode-122-1, insight-9."
+          ],
+          "id": "C.4.9",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.1",
+          "module": "06-paper-ingestion.md",
+          "reason": "No attached paper (Q4.7 = no); no Drive filing.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.2",
+          "module": "06-paper-ingestion.md",
+          "reason": "No attached paper; no cabinet ingestion.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.3",
+          "module": "06-paper-ingestion.md",
+          "reason": "No attached paper; no DOI credit.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "plus/faq-corpus.json insight/insight-100: DefinedTermSet with 5 authored DefinedTerms (#flashcards-c1..c5), each atomic and re-authored as a definition (no FAQ near-copy); 0 from faq, 5 authored; no on-page JSON-LD; additive diff only (+94 lines)"
+          ],
+          "id": "C.4.11",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "FAQ: 5 questions in corpus, all standalone (no article deixis); 3 binary (\u0622\u06cc\u0627 ... / answers open with \u062e\u06cc\u0631 or \u0628\u0644\u0647) -> scored bank contribution 3; 2 non-binary (\u0686\u0631\u0627\u060c \u062a\u0631\u062a\u06cc\u0628) remain reference/flashcard material; nothing asked/dropped. 4.12-\u0628 evaluated at C.5.6."
+          ],
+          "id": "C.4.12",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "COMMENTARY DES consumed from queue 01 (founder-supplied path, not rerun; spec v3.5, model run 2026-10-28): 15/E. Part 3: (1) quotes 1,3 substrings of 01-\u0645\u062a\u0646.md (sha256 ff1bff2a... = \u0627\u062c\u0631\u0627.md), quote 4 = insight/index.html declaration with note; item 2 empty 0 pts; (2) 5+4+0+3+3=15; (3) band E in 5-19; (4) key set == insight-99 record; (5) n/a, fidelity [null] (basket 1); (6) verify_publish --des-text OK, interpretation_fa sentence 3 (\u00ab\u0686\u0627\u0631\u0686\u0648\u0628 \u0628\u0627\u0644\u06cc\u0646\u06cc \u0645\u0646\u0637\u0642\u06cc \u0648 \u0642\u0627\u0628\u0644\u200c\u0627\u062c\u0631\u0627\u00bb) deleted by agent as unsupported evaluative claim, score/band/quotes unchanged. Stored in plus/des-scores.json insight/insight-100, scored_at 2026-10-28. Nothing guessed."
+          ],
+          "id": "C.4.13",
+          "module": "08-des-fidelity.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.14",
+          "module": "09-challenge.md",
+          "reason": "Ordinary explanatory post, not a Challenge (Q4.9 = no); no challenge markup.",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "All six founder-approved concepts resolved via hashtag_ref.py --simulate to existing canonical tags (no mint, no batch): #\u0627\u06cc\u0646\u0633\u0627\u06cc\u062a(118) #\u062a\u0646\u0638\u06cc\u0645_\u0627\u06a9\u0644\u0648\u0698\u0646(11) #\u0631\u0648\u06a9\u0634_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a(33) #\u0633\u0645\u0627\u0646_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a(6) #\u0634\u06cc\u0645_\u0627\u0633\u062a\u0627\u06a9(1) #PDL(3). Composition: series #\u0627\u06cc\u0646\u0633\u0627\u06cc\u062a; decision tag #\u062a\u0646\u0638\u06cc\u0645_\u0627\u06a9\u0644\u0648\u0698\u0646; specific \u226410 pages: #\u0633\u0645\u0627\u0646_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a, #PDL, #\u0634\u06cc\u0645_\u0627\u0633\u062a\u0627\u06a9. Questions (queue 07): \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0631\u0627 \u0642\u0628\u0644 \u0627\u0632 \u0633\u0645\u0627\u0646 \u062a\u0646\u0638\u06cc\u0645 \u06a9\u0646\u0645 \u06cc\u0627 \u0628\u0639\u062f\u061f / \u0686\u0631\u0627 \u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646 \u06a9\u0648\u062a\u0627\u0647 \u0634\u062f\u061f / \u0628\u06cc\u0645\u0627\u0631 \u0631\u0648\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0686\u06cc\u0632\u06cc \u062d\u0633 \u0646\u0645\u06cc\u200c\u06a9\u0646\u062f\u060c \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0627 \u0628\u0627 \u0686\u0647 \u0645\u0639\u06cc\u0627\u0631\u06cc \u0628\u0633\u0646\u062c\u0645\u061f. Resolving sentences quoted from 01-\u0645\u062a\u0646.md for each non-series tag. --sync/--check run after brain write."
+          ],
+          "id": "C.5.0",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "dentcast-brain.json: clinical-100 appended as last element (583 entries), keys identical to clinical-99 (type,id,title,caption,hashtags,keywords,page_url,pillar{primary,secondary,subtopic}); title/caption copied from queue 02; keywords from queue 09 (6, in order); hashtags 6 canonical; hashtag_ref --sync done (counts/content_ids for 6 tags), --check OK. Diff additive +28 lines CRLF."
+          ],
+          "id": "C.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Verified against live PILLARS: brain pillar.primary=occlusion == step 2.4 value, subtopic occlusal-analysis-adjustment valid for occlusion, no extra keys; capsule href /pillar/occlusion/ consistent"
+          ],
+          "id": "C.5.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "pathway_place.py insight/insight-100: STRONG candidates occlusion, fixed-pros, implant-prosthetic, treatment-planning, esthetic, biomimetic, implant-surgical. Placed in 2 (semantic: article is implant-crown occlusal adjustment vs cementation): implant-prosthetic after insight/insight-65 (index 52) and occlusion after insight/insight-65 (index 2), milestone=false. Not placed (judged not needed; a third full pathway would be a founder question): fixed-pros, treatment-planning, esthetic, biomimetic, implant-surgical. coverage: full pathways 1.51/item (baseline 1.38, was already 1.51 before? placements add 2 memberships). 4.12-\u0628: 3 four-option questions from queue 08 (approval #9) written to plus/exam-questions.json ids r-3ac7fd88,r-f66b36f4,r-61e77577 (keys 1,0,2); validate_exam_questions: 0 errors; both carrying pathways: implant-prosthetic, occlusion."
+          ],
+          "id": "C.5.6",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Candidate bundles (continues_pathway in joined pathways): bundle-implant-parts (7 steps) -> \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1: folder insight/ is always NO); bundle-occlusion-rehab (8 steps) -> \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1: insight/). No bundle edit, home-bundles.js and asset version untouched."
+          ],
+          "id": "C.5.6-b",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Re-verified after invalidate recovery (cause: build_plus_index writes plus/assistant-tags.json, not enrolled). Pulse (7 lines, approved top line), English mirror, ten-scope editorial lock and the eleven queue approvals unchanged; title/caption confirmed; no pending questions."
+          ],
+          "id": "C.6",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "All applicable canonical C.8 builders passed; logs are in the recovery artifact."
+          ],
+          "id": "C.8",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "tools/stamp-version.py passed after C.8"
+          ],
+          "id": "C.7",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Technical English, noindex, hreflang, sitemap, and final version checks passed; logs are in the recovery artifact."
+          ],
+          "id": "D",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Canonical dc-notify marker present exactly once"
+          ],
+          "id": "E",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "phase_f:0a766c75ae0c5c7fc227295af16687f8e2cf40dd176d2d4a52323dd84c674d7a"
+          ],
+          "id": "F",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/41062258704"
+          ],
+          "id": "G",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        }
+      ],
+      "target_paths": [
+        "dentcast-brain.json",
+        "dentcast-hashtag-reference.json",
+        "index.html",
+        "insight/en/insight-100.html",
+        "insight/index.html",
+        "insight/insight-100.html",
+        "pillar/index.html",
+        "pillar/occlusion/index.html",
+        "pillar/occlusion/structure.json",
+        "pillar/structure.json",
+        "player.html",
+        "plus/assistant-tags.json",
+        "plus/content-index.json",
+        "plus/des-scores.json",
+        "plus/exam-questions.json",
+        "plus/faq-corpus.json",
+        "plus/flashcards-index.json",
+        "plus/pathways.json",
+        "plus/quiz-index.json",
+        "service-worker.js",
+        "sitemap.xml",
+        "up-board/index.json"
+      ]
+    },
+    "snapshot": {
+      "files": {
+        "dentcast-brain.json": {
+          "kind": "file",
+          "sha256": "fe71875b211d9944978f9753efc08cda31a3ba62bf78654dcc466aeff286924a",
+          "executable": false
+        },
+        "dentcast-hashtag-reference.json": {
+          "kind": "file",
+          "sha256": "cf104dff6771afbff9137c5d47e4e504ea134746d34128f485e069c88aed8acf",
+          "executable": false
+        },
+        "index.html": {
+          "kind": "file",
+          "sha256": "6af6860535e9a22304d0b44f8aabf8b5c510d7f9f0434e3f29806951a8d6bbc5",
+          "executable": false
+        },
+        "insight/en/insight-100.html": {
+          "kind": "file",
+          "sha256": "44a4d73a2accce99b0bcbc332cf18498d506dc13fd0eab59acd762ce1c57d041",
+          "executable": false
+        },
+        "insight/index.html": {
+          "kind": "file",
+          "sha256": "9c62e495d95c20b4523989ff70d02e20d62e95a601a6e133593876d6811d56b3",
+          "executable": false
+        },
+        "insight/insight-100.html": {
+          "kind": "file",
+          "sha256": "5fed0099a72cc7c3b52cd2c5838bb608dd73273e27a83ddcb14e1fee3465ef47",
+          "executable": false
+        },
+        "pillar/index.html": {
+          "kind": "file",
+          "sha256": "ae3e9892ab9a7198b2aceb00d835aefa453037dfe7537687a8753555c98451ae",
+          "executable": false
+        },
+        "pillar/occlusion/index.html": {
+          "kind": "file",
+          "sha256": "b8d24827e18a85e04ff957ea7800ae0582d29b33591fea2030cfffeb6d64ef7e",
+          "executable": false
+        },
+        "pillar/occlusion/structure.json": {
+          "kind": "file",
+          "sha256": "944af578de97bfb0649c4837c11f55a1f941a4338133558f6abd45aaf6592077",
+          "executable": false
+        },
+        "pillar/structure.json": {
+          "kind": "file",
+          "sha256": "6b6873abc0ee42e5ec03357d6c039b6977e9821160cea29deba438163aba5352",
+          "executable": false
+        },
+        "player.html": {
+          "kind": "file",
+          "sha256": "df93e8dc142e2cd767218b59f2ac054d380933581ed571064707f97e445254ba",
+          "executable": false
+        },
+        "plus/assistant-tags.json": {
+          "kind": "file",
+          "sha256": "ae24b5e3e2e335b178aae884f49f5a7f42715c2d0b973ff12db2be99ebbed1f1",
+          "executable": false
+        },
+        "plus/content-index.json": {
+          "kind": "file",
+          "sha256": "30cb660dd6a17c89da6ae7a38630418d53fb17db6ca09be269b1e836b43c62d7",
+          "executable": false
+        },
+        "plus/des-scores.json": {
+          "kind": "file",
+          "sha256": "860dfbb1f86acd0f5f2429a554be76a4d1f59beb4f99f7ac9ce5812c5c66bf3c",
+          "executable": false
+        },
+        "plus/exam-questions.json": {
+          "kind": "file",
+          "sha256": "c79926ed2ed263dc6d012f35d9142375f73fd438118f46e0c45d39ec3c20ec3b",
+          "executable": false
+        },
+        "plus/faq-corpus.json": {
+          "kind": "file",
+          "sha256": "bd0bfb949f1e6ff15201205f0e336a41b0b609b1000904036f70da6efae7fd23",
+          "executable": false
+        },
+        "plus/flashcards-index.json": {
+          "kind": "file",
+          "sha256": "ff87571806a8c2618aee07df5ef90718e5523768c78c65250fc5544fe71ec114",
+          "executable": false
+        },
+        "plus/pathways.json": {
+          "kind": "file",
+          "sha256": "e37804fa4e1fb073947ff07e8707e421963a2a8c6fecfd2eeaba2e9ecc839a7d",
+          "executable": false
+        },
+        "plus/quiz-index.json": {
+          "kind": "file",
+          "sha256": "f351bd94f9b45339bb6500173b1ebc80b28512009d4c785cb813b31f5660e70f",
+          "executable": false
+        },
+        "service-worker.js": {
+          "kind": "file",
+          "sha256": "ffbc1ff5f982020272e8933ed120bad45f90dc8a981b004939967b71436db500",
+          "executable": false
+        },
+        "sitemap.xml": {
+          "kind": "file",
+          "sha256": "71ffe8444944ae6897a2e03a58428f68efb9b39e922e1294635876566b577abe",
+          "executable": false
+        },
+        "up-board/index.json": {
+          "kind": "file",
+          "sha256": "1d74c9268f14df9fc42ac00c9adb79ad3bcd3acb5e94d37ac35c9075ee3e7678",
+          "executable": false
+        }
+      },
+      "workflow": {
+        ".dentcast/workflows/README.md": "956eacd414bf5ef01993b1a95b61091b94ef7124b3ff5cb5f68ddb7bae3b59be",
+        ".dentcast/workflows/agent-parity.md": "04dda6507daa1b00b0b8a59ec209a3dde70317f26f3d95c73031584785206847",
+        ".dentcast/workflows/publish-handoff.md": "50e59f0b5fd9742b1b4b91767edbe82ddfa81d8c0098ce92a56bd93981bd9eda",
+        ".dentcast/workflows/routing-details.md": "0920c79a26d08a5e845db07d7893c479facbb4e7a24fbdb4f3ba0f52d176db38",
+        ".dentcast/workflows/global/README.md": "5c7495d4431acf07ad7fa0bdc05fe2ab662f2f75b99968df8744d379bd2115af",
+        ".dentcast/workflows/global/LOAD-MAP.json": "48d9ed510445b550ea0596da8ad9f6bd56437ed49564f9d2940cabaaf238e443",
+        "tools/dentcast_global_rules.py": "c92d378a875dec54ed7845015797c37f211f0acab93150f669b0f820dfd94464",
+        ".dentcast/workflows/global/repo-conventions.md": "f3187b61edd157f4bb24c9f64c70ab6068abbf0096ca9eb209b7e8f54defb0c6",
+        ".dentcast/workflows/global/plus-premium.md": "c66985d10055e1881def5c0e2060486c3838bf5fa29d26ba8a0fe9ffbab9fb9e",
+        ".dentcast/workflows/global/site-invariants.md": "c41c43b17502f6c01ef91b3e786e1bd9000b06858375f6c8c65e2e15cb6c15ca",
+        "tools/dentcast_publish_handoff.py": "53d44f91b09dd989066e0f271b3b150b4baf5e99f4e41111c830049f5ccf033d",
+        "tools/dentcast_publish_lifecycle.py": "4dcde1d2500d18671b6c5f2d0d0f8223fe4901e1a93c52fe947ec9085542b966",
+        "tools/verify_publish.py": "1db3dc95763c137fe0c441d3d28bb067349c4a47cd1127f808e6818616b3d687",
+        "tools/dentcast_text_io.py": "28af00db98df97c6062e36d2d963e6a81454f90fb91f9cd8f267ad8a9ee8863d",
+        "tools/text_io.mjs": "c6f9208e26983c8eade43d8cf3effe865e6479df903d2cee661cd0a928565536",
+        "tools/dentcast_post_cut2_runner.py": "e2b345cab35e8a3e74817ffe61187c4a7a44bd29cafca285d14544a59a89ff18",
+        ".github/workflows/post-cut2-mechanical.yml": "16095f4353f5b91934e460afcf0ad51c0d933d4f5411cdbe6fc633ad6d219525",
+        ".dentcast/workflows/publish-checkpoints.md": "620094b7a373c1196634ac1e7747fb8d2eec3b12eba35a76d5df1f089f890f49",
+        ".dentcast/workflows/publish-after-push2.md": "d6ed00bee8c5c7749f662519f3f4fe293da9faa04dfe9021c000ad31c5fa35d3",
+        ".dentcast/workflows/modules/01-hard-rules.md": "1d983d7df1550ebbcf19f83530633e019ef81a4ac0f113a0a91808f9d16391ae",
+        ".dentcast/workflows/modules/02-routing-intake.md": "1ddebc9f64df02ae111b65cf1423e69491ecba33c799f5f20497129f8632ee0c",
+        ".dentcast/workflows/modules/03-litecast-and-page.md": "b448b1996ab49a44f2b8136d759e0cc1362305ed9ed7a2ebf9baf19fd37382b2",
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "744e173ce25a8bf549f94584359dcea9851301fa892d273209ed8e25e745f1f8",
+        ".dentcast/workflows/modules/05-semantic-linking.md": "4f9949082207741b45a8be8301c1fa758d960c40fb57d3ee3d90ccc8aa0384f9",
+        ".dentcast/workflows/modules/06-paper-ingestion.md": "ea07b6101f54fd261cc8e32e52c0afbe66ab7812248b0430eb9b6f6ac798dccd",
+        ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "bf7c14308abb7f602bd047c671a8aa5caf8691d8e5808f49ca617b5f07c2ea13",
+        ".dentcast/workflows/modules/08-des-fidelity.md": "588baedf98a4ff4c8b93af5007da80a1994e056a7b1eafcda736d02772617f64",
+        ".dentcast/workflows/modules/09-challenge.md": "ef36cbed0344cc20b199cd0bd243c017f4444daa7032df75df18bf5290bba569",
+        ".dentcast/workflows/modules/10-brain-and-pathways.md": "64aec116a121f60ac009c842a7a5fc888c432048346404219677ac36c1ff146c",
+        ".dentcast/workflows/modules/11-build-and-version.md": "1251769e2e81b93362d75c5f8ea395244db37d178269224be21f419904a703a0",
+        ".dentcast/workflows/modules/12-english-notify-verify.md": "c46f40331d37d97eae84129967ce9f98f77e040159fec3bf34a492c30fa60c42"
+      }
+    }
+  },
+  "second_delivery_commit": "a5cdb8ad76934c8aab68c6b408cf37e97db6ebed",
+  "verification": {
+    "kind": "phase_f",
+    "content_id": "insight/insight-100",
+    "expected_title": "\u062a\u0646\u0638\u06cc\u0645 \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u060c \u0642\u0628\u0644 \u0627\u0632 \u0633\u0645\u0627\u0646 \u06cc\u0627 \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646\u061f",
+    "expected_caption": "\u0631\u0648\u06a9\u0634 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062f\u0631 \u0627\u0645\u062a\u062d\u0627\u0646 \u06a9\u0645\u06cc \u0628\u0644\u0646\u062f \u0627\u0633\u062a \u0648 \u0627\u0632 \u0646\u0634\u0633\u062a\u0646 \u06a9\u0627\u0645\u0644 \u0622\u0646 \u0645\u0637\u0645\u0626\u0646 \u0646\u06cc\u0633\u062a\u06cc\u0645\u061b \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0627 \u0647\u0645\u0627\u0646\u200c\u062c\u0627 \u062a\u0646\u0638\u06cc\u0645 \u06a9\u0646\u06cc\u0645 \u06cc\u0627 \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646\u061f",
+    "exit_code": 0,
+    "output_sha256": "0a766c75ae0c5c7fc227295af16687f8e2cf40dd176d2d4a52323dd84c674d7a",
+    "summary": "114 passed, 1 warned, 0 failed  \u2014 publish is COMPLETE"
+  }
+}
