@@ -39,9 +39,14 @@ jobs:
           aws s3 cp "s3://$ARVAN_BUCKET/quick-publish/ledger.json" "$mirror/quick-publish/ledger.json" \
             --endpoint-url "$ARVAN_ENDPOINT" --only-show-errors
           python3 - "$mirror" > "$RUNNER_TEMP/qp-keys.txt" <<'EOF'
-          import json, sys
+          import json, re, sys
+          # Only keys the API can write (tools/quick_publish.py checks the same before writing).
+          page = re.compile(r'^/(insight/insight|chairside/chairside|metanotes/meta|sharehub/share)-\d+\.html$')
+          media = re.compile(r'^quick-publish/media/[a-z0-9-]+\.(webp|png|jpe?g|gif)$')
           ledger = json.load(open(sys.argv[1] + '/quick-publish/ledger.json', encoding='utf-8'))
           for item in ledger['items']:
+              if not page.match(item['path']) or not all(media.match(m) for m in item.get('media', [])):
+                  sys.exit('unexpected path in ledger item ' + str(item.get('id')))
               print(item['path'].lstrip('/'))
               for m in item.get('media', []):
                   print(m)
