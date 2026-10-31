@@ -33,7 +33,10 @@ jobs:
       # founder published from /admin «انتشار حداقلی» live only on the bucket
       # until tools/quick_publish.py imports them, and the --delete sync below
       # would erase them. Refuse while the bucket ledger holds anything this
-      # commit lacks. A missing ledger passes; any other read error stops.
+      # commit lacks, or while the panel is switched on. A missing ledger means
+      # something wiped it (it has been on the bucket since the first deploy that
+      # carried it): stop, unless the repository variable
+      # QP_ALLOW_MISSING_LEDGER is 1. Any other read error stops too.
       - name: Refuse to delete minimal publications git does not have yet
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ARVAN_ACCESS_KEY }}
@@ -41,17 +44,23 @@ jobs:
           AWS_EC2_METADATA_DISABLED: "true"
           ARVAN_BUCKET: ${{ secrets.ARVAN_BUCKET }}
           ARVAN_ENDPOINT: ${{ secrets.ARVAN_ENDPOINT }}
+          QP_ALLOW_MISSING_LEDGER: ${{ vars.QP_ALLOW_MISSING_LEDGER }}
         run: |
           ledger="$RUNNER_TEMP/qp-bucket-ledger.json"
           if ! err="$(aws s3 cp "s3://$ARVAN_BUCKET/quick-publish/ledger.json" "$ledger" \
                 --endpoint-url "$ARVAN_ENDPOINT" --only-show-errors 2>&1)"; then
             case "$err" in
-              *404*|*"Not Found"*|*NoSuchKey*|*"does not exist"*) : > "$ledger" ;;
+              *404*|*"Not Found"*|*NoSuchKey*|*"does not exist"*)
+                if [ "${QP_ALLOW_MISSING_LEDGER:-}" != 1 ]; then
+                  echo "::error::quick-publish/ledger.json is missing from the bucket — something wiped it. Restore from /admin «انتشار حداقلی» first (items marked «روی سایت نیست»), or set the repository variable QP_ALLOW_MISSING_LEDGER=1 if you know why."
+                  exit 1
+                fi
+                : > "$ledger" ;;
               *) echo "::error::could not read the quick-publish ledger: $err"; exit 1 ;;
             esac
           fi
           python3 tools/quick_publish.py guard --bucket-ledger "$ledger" || {
-            echo "::error::Minimal publications on the bucket are not in git yet. Run python3 tools/quick_publish.py import, commit, push."
+            echo "::error::Stopped by the minimal-publish guard (reason above): switch the panel off, or import with Actions → «Import minimal publications into git» and merge."
             exit 1
           }
 

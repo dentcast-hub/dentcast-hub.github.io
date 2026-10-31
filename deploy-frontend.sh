@@ -160,20 +160,25 @@ export AWS_EC2_METADATA_DISABLED=true
 # Emergency minimal publish guard (.dentcast/quick-publish.md). Pages the
 # founder published from /admin «انتشار حداقلی» live only on the bucket until
 # tools/quick_publish.py imports them; the --delete sync below would erase
-# them. Refuse while the bucket ledger holds anything this tree lacks. A
-# missing ledger (feature never used) passes; any other read error stops.
+# them. Refuse while the bucket ledger holds anything this tree lacks, or while
+# the panel is switched on. The ledger has been on the bucket since the first
+# deploy that carried it, so a missing one means something wiped it: stop
+# (restore from /admin first), unless QP_ALLOW_MISSING_LEDGER=1 is set on
+# purpose. Any other read error stops too.
 # ---------------------------------------------------------------------------
 QP_LEDGER="$(mktemp)"
 if ! QP_ERR="$(aws s3 cp "s3://$ARVAN_BUCKET/quick-publish/ledger.json" "$QP_LEDGER" \
       --endpoint-url "$ARVAN_ENDPOINT" --only-show-errors 2>&1)"; then
   case "$QP_ERR" in
-    *404*|*"Not Found"*|*NoSuchKey*|*"does not exist"*) : > "$QP_LEDGER" ;;
+    *404*|*"Not Found"*|*NoSuchKey*|*"does not exist"*)
+      [ "${QP_ALLOW_MISSING_LEDGER:-}" = 1 ] || { rm -f "$QP_LEDGER"; die "quick-publish/ledger.json is missing from the bucket — something wiped it. Open /admin → «انتشار حداقلی» and press «بازگرداندن روی سایت» on every item listed «روی سایت نیست», then deploy again (or set QP_ALLOW_MISSING_LEDGER=1 if you know why it is gone)."; }
+      : > "$QP_LEDGER" ;;
     *) rm -f "$QP_LEDGER"; die "could not read the quick-publish ledger from the bucket: $QP_ERR" ;;
   esac
 fi
 python3 tools/quick_publish.py guard --bucket-ledger "$QP_LEDGER" \
   --tree-ledger "$TMPDIR/quick-publish/ledger.json" \
-  || { rm -f "$QP_LEDGER"; die "minimal publications on the bucket are not in git yet — run: python3 tools/quick_publish.py import"; }
+  || { rm -f "$QP_LEDGER"; die "deploy stopped by the minimal-publish guard — see the reason above"; }
 rm -f "$QP_LEDGER"
 
 # The cache-sensitive files go up FIRST, carrying their Cache-Control in the

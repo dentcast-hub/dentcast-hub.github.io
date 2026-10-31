@@ -8,8 +8,9 @@
 > `.dentcast/offline-publish.md`.
 >
 > **From a phone:** /admin «انتشار حداقلی (اضطراری)» performs this same path
-> (page from `quick-publish/template.html`, tail brain entry, nothing deferred
-> faked) straight onto the Arvan bucket for Insight, Chairside, MetaNote and
+> (page from `quick-publish/template.html`, tail brain entry, the section
+> landing line and the homepage Pulse line, nothing deferred faked) straight
+> onto the Arvan bucket for Insight, Chairside, MetaNote and
 > Share Hub, and records each page in `quick-publish/ledger.json` for import
 > and completion: `.dentcast/quick-publish.md`.
 
@@ -219,11 +220,19 @@ non-LiteCast, non-چالش type):
   (deferred by default in this path) — it checks the type's `index.html`
   links to the new entry.
 
-Expected **WARN** (not fatal):
+Also expected **FAIL** (verified 2026-10-31 on panel-made pages):
 
-- **`4.13 DES`** — "no DES record — confirm this is «بدون DES» or an
-  unsourced episode, not a forgotten step 4.13." Correct: you deliberately
-  skipped Question 4.8/step 4.13.
+- **`4.13 DES`** — "missing DES without a valid exemption". You deliberately
+  skipped Question 4.8/step 4.13; the gate reports it as a failure, not a warning.
+- **`E notify`**, **`8 sitemap`** — the `dc-notify` marker and the regenerated
+  sitemap belong to the full workflow. (**`6 pulse`** passes on pages made by the
+  /admin panel: it writes the Pulse line itself, `.dentcast/quick-publish.md`.)
+
+**The deferred catch-up** for a page published this way (by hand or from the
+/admin panel) is not a separate checklist: it is one full publication run with
+the fixed-address profile in `.dentcast/quick-publish.md` («بعد از وصل شدن»,
+step 2) — same number and URL, page rebuilt in place, brain entry moved to the
+tail, landing line updated in place.
 
 Your options, without implementing anything:
 

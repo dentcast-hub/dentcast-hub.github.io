@@ -8,7 +8,7 @@ import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
 import {
   QP_TYPES, signV4, renderBody, renderPage, brainEntry, appendBrainEntry, replaceBrainEntry, setSiteStore,
-  setEnabled, faNumberWords, BRAIN_KEY, LEDGER_KEY, TEMPLATE_KEY, type SiteStore, type QpType,
+  setEnabled, faNumberWords, landingFor, pulseFor, applyPulse, PULSE_LINES, BRAIN_KEY, LEDGER_KEY, TEMPLATE_KEY, type SiteStore, type QpType,
 } from '../src/services/quick-publish.js';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -30,6 +30,9 @@ function memoryStore(seed: Record<string, string>): SiteStore & { files: Map<str
     },
   };
 }
+const homeFile = () => fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const pulseList = (t: string) => (t.match(/<ul class="dc-pulse-list">[\s\S]*?<\/ul>/) ?? [''])[0];
+const pulseLis = (t: string) => pulseList(t).split('\n').filter(l => l.trim().startsWith('<li>'));
 const landingFile = (dir: string) => fs.readFileSync(path.join(repo, dir, 'index.html'), 'utf8');
 
 describe('quick publish — pure parts', () => {
@@ -102,6 +105,29 @@ describe('quick publish — pure parts', () => {
     expect(faNumberWords(20)).toBe('بیست');
   });
 
+  it('renders an image caption as figure/figcaption (escaped), and a bare img without one', () => {
+    const withCap = renderBody('متن\n\n![زیرنویس <b>&"x"</b>](/quick-publish/media/20261101-abcd1234.jpg)').html;
+    expect(withCap).toContain('<figure>\n  <img src="/quick-publish/media/20261101-abcd1234.jpg" alt="زیرنویس &lt;b&gt;&amp;&quot;x&quot;&lt;/b&gt;" loading="lazy" decoding="async">'
+      + '\n  <figcaption>زیرنویس &lt;b&gt;&amp;&quot;x&quot;&lt;/b&gt;</figcaption>\n</figure>');
+    expect(withCap).not.toContain('<b>');
+    const plain = renderBody('متن\n\n![](/quick-publish/media/20261101-abcd1234.jpg)').html;
+    expect(plain).toContain('<img src="/quick-publish/media/20261101-abcd1234.jpg" alt="" loading="lazy" decoding="async">');
+    expect(plain).not.toMatch(/<figure|<figcaption/);
+  });
+
+  it('template wraps long words and styles figcaption', () => {
+    expect(template).toContain('.glass-box { overflow-wrap: anywhere; }');
+    expect(template).toMatch(/\.glass-box figcaption\s*\{/);
+    expect(template).toContain('overflow-wrap: anywhere');
+  });
+
+  it('normalises landing labels instead of losing or doubling the number', () => {
+    expect(landingFor('chairside', 47, 'Chairside 9 — عنوان').line).toBe('<li><a href="chairside-47.html">Chairside 47 — عنوان</a></li>');
+    expect(landingFor('chairside', 47, 'عنوان ساده').line).toContain('>Chairside 47 — عنوان ساده<');
+    expect(landingFor('meta', 23, 'متانوت آزمایشی: عنوان').line).toBe('<li><a href="meta-23.html">متانوت بیست\u200cوسه: عنوان</a></li>');
+    expect(landingFor('meta', 23, 'عنوان').line).toContain('>متانوت بیست\u200cوسه: عنوان<');
+  });
+
   it('appends at the absolute tail of the real brain without touching a byte before it', () => {
     const entry = brainEntry('clinical', 101, '/insight/insight-101.html', 'ع', 'ک');
     const next = appendBrainEntry(brainText, entry);
@@ -115,6 +141,50 @@ describe('quick publish — pure parts', () => {
     const edited = brainEntry('clinical', 101, '/insight/insight-101.html', 'عنوان تازه', 'ک');
     expect(JSON.parse(replaceBrainEntry(next, entry, edited)!).at(-1)).toEqual(edited);
     expect(replaceBrainEntry(brainText, entry, edited)).toBeNull();
+  });
+});
+
+describe('quick publish — homepage Pulse', () => {
+  it('drafts the line the way the latest Pulse lines read: section, title only, link on the title, no date', () => {
+    expect(pulseFor('clinical', 101, 'عنوان').line).toBe('<li>یک اینسایت بالینی با عنوانِ «<a href="/insight/insight-101.html">عنوان</a>» منتشر شد</li>');
+    expect(pulseFor('chairside', 47, 'ع').line).toContain('یک چیرساید با عنوانِ «<a href="/chairside/chairside-47.html">');
+    expect(pulseFor('meta', 23, 'ع').line).toContain('یک متانوت با عنوانِ «<a href="/metanotes/meta-23.html">');
+    expect(pulseFor('sharehub', 43, 'ع').line).toContain('یک مطلب در Share Hub با عنوانِ «<a href="/sharehub/share-43.html">');
+    expect(pulseFor('clinical', 1, 'a <b> & "c"').line).toContain('>a &lt;b&gt; &amp; &quot;c&quot;</a>');
+    // Same shape as the newest real line on the homepage.
+    expect(pulseLis(homeFile())[0]).toMatch(/^\s*<li>یک اینسایت بالینی با عنوانِ «<a href="\/insight\/insight-\d+\.html">[^<]+<\/a>» منتشر شد<\/li>$/);
+  });
+
+  it('puts the new line at the very top, drops the bottom-most one, keeps exactly seven, touches nothing else', () => {
+    const home = homeFile();
+    const before = pulseLis(home);
+    expect(before).toHaveLength(PULSE_LINES);
+    const p = pulseFor('meta', 23, 'عنوان');
+    const out = applyPulse(home, p, true)!;
+    const after = pulseLis(out);
+    expect(after).toHaveLength(PULSE_LINES);
+    expect(after[0].trim()).toBe(p.line);
+    expect(after.slice(1)).toEqual(before.slice(0, PULSE_LINES - 1));
+    expect(out.replace(pulseList(out), '')).toBe(home.replace(pulseList(home), ''));
+    expect(applyPulse(out, p, true)).toBe(out);
+  });
+
+  it('replaces an existing line in place on an edit, and leaves a rolled-off page alone', () => {
+    const home = homeFile();
+    const out = applyPulse(home, pulseFor('meta', 23, 'عنوان'), true)!;
+    const edited = applyPulse(out, pulseFor('meta', 23, 'عنوان تازه'), false)!;
+    expect(pulseLis(edited)).toHaveLength(PULSE_LINES);
+    expect(pulseLis(edited)[0]).toContain('عنوان تازه');
+    expect((edited.match(/meta-23\.html/g) ?? []).length).toBe(1);
+    expect(applyPulse(home, pulseFor('meta', 99, 'قدیمی'), false)).toBe(home);
+    expect(applyPulse('<html>no list</html>', pulseFor('meta', 23, 'ع'), true)).toBeNull();
+  });
+
+  it('keeps CRLF when the page uses it', () => {
+    const crlf = homeFile().replace(/\n/g, '\r\n');
+    const out = applyPulse(crlf, pulseFor('chairside', 47, 'ع'), true)!;
+    expect(pulseList(out).split('\r\n').length).toBe(pulseList(crlf).split('\r\n').length);
+    expect(out.replace(/\r\n/g, '')).not.toContain('\n');
   });
 });
 
@@ -243,6 +313,9 @@ describe('quick publish — admin routes', () => {
 
     const bad = await app.inject({ method: 'PUT', url: '/admin/quick-publish/enabled', headers, payload: { enabled: 'yes' } });
     expect(bad.statusCode).toBe(400);
+    // A ledger already on the bucket (the switch never creates one); without it the answer is ledger_written:false.
+    expect((await app.inject({ method: 'PUT', url: '/admin/quick-publish/enabled', headers, payload: { enabled: true } })).json().ledger_written).toBe(false);
+    store.files.set(LEDGER_KEY, Buffer.from(JSON.stringify({ version: 1, items: [] })));
     const on = await app.inject({ method: 'PUT', url: '/admin/quick-publish/enabled', headers, payload: { enabled: true } });
     expect(on.statusCode).toBe(200);
     expect(on.json()).toEqual({ ok: true, enabled: true, ledger_written: true });
@@ -303,6 +376,8 @@ describe('quick publish — admin routes', () => {
   const input = (title: string, extra: object = {}) => ({ type: 'clinical', title, caption: 'کپشن کوتاه برای این نکته', body, ...extra });
 
   it('mirrors the switch into the bucket ledger, and every ledger write carries the current value', async () => {
+    store.files.set(LEDGER_KEY, Buffer.from(JSON.stringify({ version: 1, items: [] })));
+    await setEnabled(true);
     expect(ledger().panel_enabled).toBe(true);
     const off = await app.inject({ method: 'PUT', url: '/admin/quick-publish/enabled', headers, payload: { enabled: false } });
     expect(off.json()).toEqual({ ok: true, enabled: false, ledger_written: true });
@@ -352,9 +427,10 @@ describe('quick publish — admin routes', () => {
     expect(ledger().items).toHaveLength(1);
     expect((await pool.query('select id from quick_publications')).rows).toEqual([{ id: item.id }]);
 
+    // The retry itself finished the job (page, landing, brain), so a later restore has nothing left.
     const r = await restoreOf(item.id);
     expect(r.statusCode).toBe(200);
-    expect(r.json().restored).toEqual(expect.arrayContaining(['page', 'landing', 'brain']));
+    expect(r.json().restored).toEqual([]);
     expect(store.files.get(item.path.slice(1))!.toString()).toMatch(/<h1>[^]*?نکتهٔ نیمه‌کاره<\/h1>/);
     expect(brainOf().filter(e => e.id === item.id)).toHaveLength(1);
     expect(store.files.get('insight/index.html')!.toString()).toContain(`<a href="insight-${item.n}.html">نکتهٔ نیمه‌کاره</a>`);
@@ -364,7 +440,7 @@ describe('quick publish — admin routes', () => {
   it('answers a retried ref from the API backup even when the bucket ledger lost the item', async () => {
     const ref = 'draft-bbbb2222';
     const first = (await post(input('نکته با ref', { ref }))).json().item;
-    store.files.delete(LEDGER_KEY);
+    store.files.set(LEDGER_KEY, Buffer.from(JSON.stringify({ version: 1, items: [] })));
     const again = await post(input('نکته با ref', { ref }));
     expect(again.statusCode).toBe(200);
     expect(again.json().item.id).toBe(first.id);
@@ -460,6 +536,125 @@ describe('quick publish — admin routes', () => {
     expect(s3.items.every((i: { missing?: boolean }) => !i.missing)).toBe(true);
   });
 
+  it('finishes the job on a retry by the same ref after a failed ledger PUT (existing ledger)', async () => {
+    store.files.set('insight/index.html', Buffer.from(landingFile('insight')));
+    await post(input('نکتهٔ پیشین')); // the ledger key exists from here on
+    const ref = 'draft-cccc3333';
+    store.failOnce(LEDGER_KEY);
+    const failed = await post(input('نکتهٔ ledger-fail', { ref }));
+    expect(failed.statusCode).toBe(502);
+    expect(ledger().items).toHaveLength(1);
+    const [row] = (await pool.query(`select record from quick_publications where record->>'client_ref' = $1`, [ref])).rows;
+    const item = row.record;
+    expect(store.files.has(item.path.slice(1))).toBe(false);
+    const again = await post(input('نکتهٔ ledger-fail', { ref }));
+    expect(again.statusCode).toBe(200);
+    expect(again.json().item.id).toBe(item.id);
+    expect(store.files.get(item.path.slice(1))!.toString()).toMatch(/<h1>[^]*?نکتهٔ ledger-fail<\/h1>/);
+    expect(brainOf().filter(e => e.id === item.id)).toHaveLength(1);
+    expect(store.files.get('insight/index.html')!.toString()).toContain(`<a href="insight-${item.n}.html">`);
+    expect(ledger().items.map(i => i.id)).toContain(item.id);
+    expect(ledger().items).toHaveLength(2);
+  });
+
+  it('after a failed FIRST ledger PUT (no ledger key yet) the retry with the same ref finishes the job', async () => {
+    store.files.set('insight/index.html', Buffer.from(landingFile('insight')));
+    const ref = 'draft-dddd4444';
+    store.failOnce(LEDGER_KEY);
+    expect((await post(input('نکتهٔ اول ledger-fail', { ref }))).statusCode).toBe(502);
+    expect(store.files.has(LEDGER_KEY)).toBe(false);
+    // The draft's ref is looked up before the wiped-ledger guard, so the retry completes it.
+    const again = await post(input('نکتهٔ اول ledger-fail', { ref }));
+    expect(again.statusCode).toBe(200);
+    // Without a ref, a ledger still missing while backups exist is refused (wipe guard).
+    store.files.delete(LEDGER_KEY);
+    expect((await post(input('بدون ref'))).json()).toEqual({ error: 'ledger_missing' });
+    await restoreOf(again.json().item.id);
+    const item = (await pool.query(`select record from quick_publications where record->>'client_ref' = $1`, [ref])).rows[0].record;
+    expect((await restoreOf(item.id)).statusCode).toBe(200);
+    expect(store.files.get(item.path.slice(1))!.toString()).toContain('نکتهٔ اول ledger-fail');
+    expect(brainOf().filter(e => e.id === item.id)).toHaveLength(1);
+    expect(store.files.get('insight/index.html')!.toString()).toContain(`<a href="insight-${item.n}.html">`);
+    expect(ledger().items.map(i => i.id)).toEqual([item.id]);
+  });
+
+  it('finishes the job on a retry by the same ref after a failed brain PUT: page, brain, landing and ledger all land', async () => {
+    store.files.set('insight/index.html', Buffer.from(landingFile('insight')));
+    const ref = 'draft-eeee5555';
+    store.failOnce(BRAIN_KEY);
+    expect((await post(input('نکتهٔ brain-fail', { ref }))).statusCode).toBe(502);
+    const again = await post(input('نکتهٔ brain-fail', { ref }));
+    expect(again.statusCode).toBe(200);
+    const item = again.json().item;
+    expect(store.files.get(item.path.slice(1))!.toString()).toContain('نکتهٔ brain-fail');
+    expect(brainOf().filter(e => e.id === item.id)).toHaveLength(1);
+    expect(store.files.get('insight/index.html')!.toString()).toContain(`<a href="insight-${item.n}.html">`);
+    expect(ledger().items.map(i => i.id)).toEqual([item.id]);
+  });
+
+  it('restore re-adds the brain entry in the repo key order (top level and pillar)', async () => {
+    const repoBrain = JSON.parse(brainText) as Record<string, any>[];
+    for (const type of ['clinical', 'chairside', 'meta', 'sharehub'] as QpType[]) {
+      const { item } = (await post({ type, title: 'ترتیب کلید', caption: 'کپشن کوتاه برای ترتیب', body })).json();
+      store.files.set(BRAIN_KEY, Buffer.from(brainText)); // brain back to git's copy
+      const r = await restoreOf(item.id);
+      expect(r.json().restored).toContain('brain');
+      const tail = JSON.parse(store.files.get(BRAIN_KEY)!.toString()).at(-1);
+      expect(tail.id).toBe(item.id);
+      const latest = repoBrain.filter(e => e.type === type).at(-1)!;
+      expect(Object.keys(tail)).toEqual(Object.keys(brainEntry(type, item.n, item.path, 'ترتیب کلید', 'کپشن کوتاه برای ترتیب')));
+      expect(Object.keys(tail)).toEqual(Object.keys(latest));
+      expect(Object.keys(tail.pillar)).toEqual(['primary', 'secondary', 'subtopic']);
+    }
+    const { item } = (await post(input('کلیدها'))).json();
+    store.files.set(BRAIN_KEY, Buffer.from(brainText));
+    await restoreOf(item.id);
+    expect(Object.keys(brainOf().at(-1)!)).toEqual(['type', 'id', 'title', 'caption', 'hashtags', 'keywords', 'page_url', 'pillar']);
+  });
+
+  it('restore leaves a page git owns alone when the ledger was wiped (git_owned)', async () => {
+    const { item } = (await post(input('صفحهٔ گیت'))).json();
+    store.files.delete(LEDGER_KEY);
+    store.files.set(item.path.slice(1), Buffer.from('<html>git completed version</html>'));
+    const brainBefore = store.files.get(BRAIN_KEY)!.toString();
+    const r = await restoreOf(item.id);
+    expect(r.statusCode).toBe(200);
+    expect(r.json().restored).toEqual(['git_owned']);
+    expect(store.files.get(item.path.slice(1))!.toString()).toBe('<html>git completed version</html>');
+    expect(store.files.get(BRAIN_KEY)!.toString()).toBe(brainBefore);
+    expect(store.files.has(LEDGER_KEY)).toBe(false);
+  });
+
+  describe('wiped ledger safety', () => {
+    it('refuses to publish, never recreates the ledger on switch or status, and restore brings it back', async () => {
+      const a = (await post(input('نکتهٔ الف'))).json().item;
+      const b = (await post(input('نکتهٔ ب'))).json().item;
+      store.files.delete(LEDGER_KEY);
+
+      const refused = await post(input('نکتهٔ ج'));
+      expect(refused.statusCode).toBe(409);
+      expect(refused.json()).toEqual({ error: 'ledger_missing' });
+      expect(store.files.has(LEDGER_KEY)).toBe(false);
+
+      const sw = await app.inject({ method: 'PUT', url: '/admin/quick-publish/enabled', headers, payload: { enabled: true } });
+      expect(sw.statusCode).toBe(200);
+      expect(sw.json()).toEqual({ ok: true, enabled: true, ledger_written: false });
+      expect(store.files.has(LEDGER_KEY)).toBe(false);
+
+      const st = await getStatus();
+      expect(store.files.has(LEDGER_KEY)).toBe(false);
+      expect(st.items.map((i: { id: string }) => i.id)).toEqual([a.id, b.id]);
+      expect(st.items.every((i: { missing?: boolean }) => i.missing === true)).toBe(true);
+
+      expect((await restoreOf(a.id)).json().restored).toContain('ledger');
+      expect(store.files.has(LEDGER_KEY)).toBe(true);
+      expect(ledger().items.map(i => i.id)).toEqual([a.id]);
+      const st2 = await getStatus();
+      expect(st2.items.find((i: { id: string }) => i.id === b.id).missing).toBe(true);
+      expect(st2.items.find((i: { id: string }) => i.id === a.id).missing).toBeUndefined();
+    });
+  });
+
   describe('section landing lists', () => {
     const lineOf = (text: string, href: string) => text.split('\n').find(l => l.includes(`<a href="${href}">`))!;
     const hrefCount = (text: string, href: string) => text.split(`<a href="${href}">`).length - 1;
@@ -487,6 +682,51 @@ describe('quick publish — admin routes', () => {
       expect(hrefCount(edited, href)).toBe(1);
       expect(edited).toBe(after.replace('نکتهٔ تازهٔ فهرست', 'عنوان ویرایش‌شده'));
       expect(ed.json().item.landing.line).toContain('عنوان ویرایش‌شده');
+    });
+
+    it('puts the page on the homepage Pulse on publish, updates it in place on edit, and heals it on restore', async () => {
+      const home = homeFile();
+      store.files.set('index.html', Buffer.from(home));
+      const r = await post(input('نکتهٔ پالس'));
+      expect(r.statusCode).toBe(200);
+      const { item } = r.json();
+      expect(item.pulse).toEqual({ file: 'index.html', href: item.path, line: pulseFor('clinical', item.n, 'نکتهٔ پالس').line });
+      const after = store.files.get('index.html')!.toString();
+      const lis = pulseLis(after);
+      expect(lis).toHaveLength(PULSE_LINES);
+      expect(lis[0].trim()).toBe(item.pulse.line);
+      expect(lis.slice(1)).toEqual(pulseLis(home).slice(0, PULSE_LINES - 1));
+      expect(ledger().items[0].pulse.line).toBe(item.pulse.line);
+
+      const ed = await app.inject({ method: 'PUT', url: `/admin/quick-publish/${item.id}`, headers, payload: input('عنوان تازهٔ پالس') });
+      expect(ed.statusCode).toBe(200);
+      const edited = pulseLis(store.files.get('index.html')!.toString());
+      expect(edited).toHaveLength(PULSE_LINES);
+      expect(edited[0]).toContain('عنوان تازهٔ پالس');
+      expect(edited.filter(l => l.includes(item.path))).toHaveLength(1);
+
+      // A deploy that put git's homepage back (no Pulse line): restore puts the newest item back on top.
+      store.files.set('index.html', Buffer.from(home));
+      const rs = await restoreOf(item.id);
+      expect(rs.json().restored).toContain('pulse');
+      expect(pulseLis(store.files.get('index.html')!.toString())[0]).toContain('عنوان تازهٔ پالس');
+    });
+
+    it('does not put an older item back on the Pulse on restore, and works without a Pulse list', async () => {
+      store.files.set('index.html', Buffer.from(homeFile()));
+      const first = (await post(input('اول', { ref: 'draft-ffff6666' }))).json().item;
+      const second = (await post(input('دوم', { ref: 'draft-gggg7777' }))).json().item;
+      store.files.set('index.html', Buffer.from(homeFile()));
+      const rs = await restoreOf(first.id);
+      expect(rs.json().restored).not.toContain('pulse');
+      expect(pulseLis(store.files.get('index.html')!.toString()).some(l => l.includes(first.path))).toBe(false);
+      expect((await restoreOf(second.id)).json().restored).toContain('pulse');
+
+      store.files.set('index.html', Buffer.from('<html>no pulse</html>'));
+      const r = await post(input('بدون پالس'));
+      expect(r.statusCode).toBe(200);
+      expect(r.json().item.pulse).toBeNull();
+      expect(store.files.get('index.html')!.toString()).toBe('<html>no pulse</html>');
     });
 
     it('appends a meta item after the highest meta line, labelled «متانوت <words>: …»', async () => {
