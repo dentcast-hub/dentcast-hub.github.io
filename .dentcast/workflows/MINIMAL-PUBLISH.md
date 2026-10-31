@@ -6,6 +6,12 @@
 > `tools/publish-local.sh` then `./deploy-frontend.sh --skip-push`. Verify on
 > `dentcast.ir`. Full procedure, and the catch-up after the link returns:
 > `.dentcast/offline-publish.md`.
+>
+> **From a phone:** /admin «انتشار حداقلی (اضطراری)» performs this same path
+> (page from `quick-publish/template.html`, tail brain entry, nothing deferred
+> faked) straight onto the Arvan bucket for Insight, Chairside, MetaNote and
+> Share Hub, and records each page in `quick-publish/ledger.json` for import
+> and completion: `.dentcast/quick-publish.md`.
 
 **Use this only when `.dentcast/workflows/README.md` (the ~70-step router) is
 not executable — no agent available to run it.** This path gets one Persian

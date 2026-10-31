@@ -1,5 +1,6 @@
 import { adminMemberSpotRoutes } from './admin-member-spot.js';
 import { renderMemberSpotControls } from './admin-member-spot-ui.js';
+import { adminQuickPublishRoutes, renderQuickPublish } from './admin-quick-publish.js';
 import type { FastifyInstance, FastifyReply } from 'fastify';
 import { requireAdmin } from '../middleware/basic-auth.js';
 import { refreshOnce, contentStatus } from '../content-refresh.js';
@@ -414,6 +415,7 @@ function renderHtml(
   <p class="muted" style="margin-top:14px">KPI ها از user_activity و anon_events محاسبه می‌شوند. تبدیل KPI 1 تقریبی است چون رویدادهای ناشناس هویت‌محور نیستند.</p>
 
 ${renderMemberSpotControls()}
+${renderQuickPublish()}
   <h3 style="margin-top:26px">گزارش کاربران — پرمیوم و اشتراک</h3>
   <div class="muted">«چند ماهه» یعنی ماهِ اولین شروعِ اشتراک (started_at) — تمدید ماه شروع را عوض نمی‌کند، پس هر ردیف یک کوهورتِ واقعیِ جذب است، نه شمارشِ تمدیدها. «پرمیومِ لیگی» معمولاً فقط از premium_grants است؛ اگر برنده‌ی لیگ از قبل اشتراک پولی داشته باشد، روزهای جایزه روی همان اشتراک هم می‌نشیند.</div>
   <div id="subOut" class="muted" style="margin-top:10px">در حال خواندن…</div>
@@ -3572,6 +3574,7 @@ ${renderMemberSpotControls()}
       ] },
       { id: 'content', name: 'محتوا و چالش', icon: '🗂', tint: 't-content', items: [
         ['live', 'نسخهٔ زندهٔ فایل‌ها', 'محتوا', 'cnWaiting', 1, 'pathways content-index refresh محتوا'],
+        ['quick-publish', 'انتشار حداقلی (اضطراری)', 'انتشار حداقلی', 'qpWaiting', 1, 'انتشار سریع قطعی اینترنت گوشی مطلب جدید اضطراری'],
         ['challenge-report', 'گزارش چالش‌ها', 'گزارش چالش', 'chRepCount', 0, 'چالش آمار'],
         ['challenge-edit', 'ثبت/ویرایش چالش', 'ثبت/ویرایش', '', 0, 'چالش کلید نکته'],
         ['des-library', 'افزودن به کتابخانهٔ DES', 'افزودنِ مستقیم', '', 0, 'des کتابخانه json pmid']
@@ -3844,6 +3847,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   // unauthenticated request is read but its Authorization header.
   app.addHook('onRequest', requireAdmin);
   await app.register(adminMemberSpotRoutes);
+  await app.register(adminQuickPublishRoutes);
 
   app.get('/admin/kpis', async (_request, reply) => {
     const kpis = await computeKpis();

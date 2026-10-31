@@ -156,6 +156,26 @@ export AWS_ACCESS_KEY_ID="$ARVAN_ACCESS_KEY"
 export AWS_SECRET_ACCESS_KEY="$ARVAN_SECRET_KEY"
 export AWS_EC2_METADATA_DISABLED=true
 
+# ---------------------------------------------------------------------------
+# Emergency minimal publish guard (.dentcast/quick-publish.md). Pages the
+# founder published from /admin «انتشار حداقلی» live only on the bucket until
+# tools/quick_publish.py imports them; the --delete sync below would erase
+# them. Refuse while the bucket ledger holds anything this tree lacks. A
+# missing ledger (feature never used) passes; any other read error stops.
+# ---------------------------------------------------------------------------
+QP_LEDGER="$(mktemp)"
+if ! QP_ERR="$(aws s3 cp "s3://$ARVAN_BUCKET/quick-publish/ledger.json" "$QP_LEDGER" \
+      --endpoint-url "$ARVAN_ENDPOINT" --only-show-errors 2>&1)"; then
+  case "$QP_ERR" in
+    *404*|*"Not Found"*|*NoSuchKey*|*"does not exist"*) : > "$QP_LEDGER" ;;
+    *) rm -f "$QP_LEDGER"; die "could not read the quick-publish ledger from the bucket: $QP_ERR" ;;
+  esac
+fi
+python3 tools/quick_publish.py guard --bucket-ledger "$QP_LEDGER" \
+  --tree-ledger "$TMPDIR/quick-publish/ledger.json" \
+  || { rm -f "$QP_LEDGER"; die "minimal publications on the bucket are not in git yet — run: python3 tools/quick_publish.py import"; }
+rm -f "$QP_LEDGER"
+
 # The cache-sensitive files go up FIRST, carrying their Cache-Control in the
 # same PUT (same reasoning as deploy-arvan.yml: the metadata pass below runs
 # AFTER the upload, and in that gap the edge takes the new module under its

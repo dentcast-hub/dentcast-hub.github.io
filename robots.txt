@@ -3,6 +3,12 @@ Allow: /
 # Music player track metadata/links — keep out of search results
 Disallow: /dentcast-music.json
 
+# Emergency minimal publish (/admin «انتشار حداقلی», .dentcast/quick-publish.md):
+# the page template the API fills, and the ledger of what it published. Neither
+# is a page; the published pages and their images stay crawlable.
+Disallow: /quick-publish/template.html
+Disallow: /quick-publish/ledger.json
+
 # FAQ + flashcards corpus (feeds the premium quiz/Leitner builders) — never
 # served as page markup, same reason as the music JSON above.
 Disallow: /plus/faq-corpus.json
