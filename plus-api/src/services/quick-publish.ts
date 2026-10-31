@@ -13,12 +13,29 @@ import crypto, { randomUUID } from 'node:crypto';
 import { one, query } from '../db.js';
 
 export const QP_TYPES = {
-  clinical: { label: 'Insight — نکتهٔ کلینیکی', folder: 'insight', stem: 'insight-', id: (n: number) => `clinical-${n}`, urlKey: 'page_url', section: 'Clinical Insight' },
-  chairside: { label: 'Chairside — کیس و تصمیم بالینی', folder: 'chairside', stem: 'chairside-', id: (n: number) => `chairside-${n}`, urlKey: 'page_url', section: 'Chairside' },
-  meta: { label: 'MetaNote — متانوت', folder: 'metanotes', stem: 'meta-', id: (n: number) => `meta-${n}`, urlKey: 'page_url', section: 'Meta Note' },
-  sharehub: { label: 'Share Hub — خوانش مقاله', folder: 'sharehub', stem: 'share-', id: (n: number) => String(n), urlKey: 'url', section: 'Share Hub' },
+  // `landing`: how each section's hand-kept index.html lists its pages — newest
+  // on top, or (MetaNote) numbered in order at the bottom — and the label form
+  // its existing lines use.
+  clinical: { label: 'Insight — نکتهٔ کلینیکی', folder: 'insight', stem: 'insight-', id: (n: number) => `clinical-${n}`, urlKey: 'page_url', section: 'Clinical Insight',
+    landing: 'top', landingLabel: (_n: number, title: string) => title },
+  chairside: { label: 'Chairside — کیس و تصمیم بالینی', folder: 'chairside', stem: 'chairside-', id: (n: number) => `chairside-${n}`, urlKey: 'page_url', section: 'Chairside',
+    landing: 'top', landingLabel: (n: number, title: string) => `Chairside ${n} — ${title}` },
+  meta: { label: 'MetaNote — متانوت', folder: 'metanotes', stem: 'meta-', id: (n: number) => `meta-${n}`, urlKey: 'page_url', section: 'Meta Note',
+    landing: 'bottom', landingLabel: (n: number, title: string) => `متانوت ${faNumberWords(n)}: ${title}` },
+  sharehub: { label: 'Share Hub — خوانش مقاله', folder: 'sharehub', stem: 'share-', id: (n: number) => String(n), urlKey: 'url', section: 'Share Hub',
+    landing: 'top', landingLabel: (_n: number, title: string) => `${title} (مطلبی از دکتر فواد شهابیان)` },
 } as const;
 export type QpType = keyof typeof QP_TYPES;
+
+const FA_ONES = ['', 'یک', 'دو', 'سه', 'چهار', 'پنج', 'شش', 'هفت', 'هشت', 'نه', 'ده', 'یازده', 'دوازده', 'سیزده',
+  'چهارده', 'پانزده', 'شانزده', 'هفده', 'هجده', 'نوزده'];
+const FA_TENS = ['', '', 'بیست', 'سی', 'چهل', 'پنجاه', 'شصت', 'هفتاد', 'هشتاد', 'نود'];
+/** 1–99 the way metanotes/index.html writes them («بیست‌ودو»); digits beyond. */
+export function faNumberWords(n: number): string {
+  if (n > 0 && n < 20) return FA_ONES[n];
+  if (n >= 20 && n < 100) return FA_TENS[Math.floor(n / 10)] + (n % 10 ? '\u200cو' + FA_ONES[n % 10] : '');
+  return String(n);
+}
 export const isQpType = (t: unknown): t is QpType => typeof t === 'string' && Object.hasOwn(QP_TYPES, t);
 
 export const BRAIN_KEY = 'dentcast-brain.json';
@@ -191,11 +208,49 @@ export function replaceBrainEntry(text: string, before: object, after: object): 
   return next;
 }
 
+// ── section landing ───────────────────────────────────────────────────────
+
+export interface Landing { file: string; href: string; line: string; order: 'top' | 'bottom' }
+
+export function landingFor(type: QpType, n: number, title: string): Landing {
+  const t = QP_TYPES[type];
+  const href = `${t.stem}${n}.html`;
+  return { file: `${t.folder}/index.html`, href, line: `<li><a href="${href}">${esc(t.landingLabel(n, title))}</a></li>`, order: t.landing };
+}
+
+const reEsc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+/**
+ * Put the page's line into its section's list: replace it if the page is
+ * already listed, otherwise next to the highest-numbered page of the section
+ * (above it for newest-first lists, below it for MetaNote's numbered list),
+ * with that line's indentation and line ending. null when no such list exists.
+ * tools/quick_publish.py applies the same rule to git's copy at import.
+ */
+export function applyLanding(text: string, l: Landing): string | null {
+  const own = new RegExp(`<li><a href="${reEsc(l.href)}">[^\n]*?</li>`);
+  if (own.test(text)) return text.replace(own, () => l.line);
+  const stem = l.href.replace(/\d+\.html$/, '');
+  let best: { n: number; at: number } | null = null;
+  for (const m of text.matchAll(new RegExp(`<li><a href="${reEsc(stem)}(\\d+)\\.html">`, 'g'))) {
+    if (!best || Number(m[1]) > best.n) best = { n: Number(m[1]), at: m.index! };
+  }
+  if (!best) return null;
+  const start = text.lastIndexOf('\n', best.at) + 1;
+  const nl = text.indexOf('\n', best.at);
+  const end = nl < 0 ? text.length : nl + 1;
+  const eol = nl > 0 && text[nl - 1] === '\r' ? '\r\n' : '\n';
+  const indent = text.slice(start, best.at).match(/^[ \t]*/)![0];
+  const line = indent + l.line + eol;
+  return l.order === 'top' ? text.slice(0, start) + line + text.slice(start) : text.slice(0, end) + line + text.slice(end);
+}
+
 export interface QpItem {
   id: string; type: QpType; n: number; path: string; title: string; caption: string; date: string;
   /** Tehran date of the last edit; equal to `date` until the page is edited. */
   modified?: string;
   media: string[]; brain_entry: Record<string, unknown>; created_at: string; updated_at: string;
+  /** The line this page has in its section's index.html; null if that list could not be found. */
+  landing?: Landing | null;
   state: 'live' | 'imported' | 'completed'; imported_at: string | null; completed_at: string | null;
   /** Set only by the founder's «بفرست تو ورک‌فلو»; nothing goes to the full workflow on its own. */
   workflow_requested_at?: string | null;
@@ -297,10 +352,20 @@ async function readText(store: SiteStore, key: string, missing: string): Promise
   return b.toString('utf8');
 }
 
-async function writeLive(store: SiteStore, item: QpItem, html: string, brainText: string, ledger: Ledger): Promise<void> {
+async function writeLive(store: SiteStore, item: QpItem, html: string, brainText: string, ledger: Ledger, landingText: string | null): Promise<void> {
   await store.put(item.path.slice(1), Buffer.from(html), 'text/html; charset=utf-8');
+  if (item.landing && landingText !== null) await store.put(item.landing.file, Buffer.from(landingText), 'text/html; charset=utf-8');
   await store.put(BRAIN_KEY, Buffer.from(brainText), 'application/json; charset=utf-8');
   await store.put(LEDGER_KEY, ledgerBytes(ledger), 'application/json; charset=utf-8');
+}
+
+/** The section list with this page's line in it; marks the item landing-less when the list is not there. */
+async function withLanding(store: SiteStore, item: QpItem): Promise<string | null> {
+  const l = landingFor(item.type, item.n, item.title);
+  const current = await store.get(l.file);
+  const next = current ? applyLanding(current.toString('utf8'), l) : null;
+  item.landing = next === null ? null : l;
+  return next;
 }
 
 async function backup(item: QpItem, html: string, body: string): Promise<void> {
@@ -338,9 +403,10 @@ export function publish(input: QpInput): Promise<{ item: QpItem; url: string }> 
     if (brain.some(e => e.id === item.id && e.type === item.type)) throw new QpError('id_taken', 409);
     const html = renderPage(template, { ...item, body: rendered.html });
     brainText = appendBrainEntry(brainText, entry);
+    const landingText = await withLanding(store, item);
     ledger.items.push(item);
     await backup(item, html, v.body);
-    await writeLive(store, item, html, brainText, ledger);
+    await writeLive(store, item, html, brainText, ledger, landingText);
     return { item, url: IR_ORIGIN + path };
   });
 }
@@ -368,9 +434,10 @@ export function edit(id: string, input: QpInput): Promise<{ item: QpItem; url: s
     const item: QpItem = { ...old, title: v.title, caption: v.caption, media: rendered.media, brain_entry: entry,
       modified: tehranDate(), updated_at: new Date().toISOString() };
     const html = renderPage(template, { ...item, body: rendered.html });
+    const landingText = await withLanding(store, item);
     ledger.items[at] = item;
     await backup(item, html, v.body);
-    await writeLive(store, item, html, brainText, ledger);
+    await writeLive(store, item, html, brainText, ledger, landingText);
     return { item, url: IR_ORIGIN + item.path };
   });
 }
@@ -390,6 +457,13 @@ export function restore(id: string): Promise<{ restored: string[] }> {
       if (await store.get(m)) continue;
       const media = await one<{ content_type: string; data: Buffer }>('select content_type, data from quick_publish_media where path = $1', [m]);
       if (media) { await store.put(m, media.data, media.content_type); restored.push(m); }
+    }
+    if (item.landing) {
+      const current = (await store.get(item.landing.file))?.toString('utf8');
+      if (current !== undefined && !current.includes(`<li><a href="${item.landing.href}">`)) {
+        const next = applyLanding(current, item.landing);
+        if (next !== null) { await store.put(item.landing.file, Buffer.from(next), 'text/html; charset=utf-8'); restored.push('landing'); }
+      }
     }
     const brainText = await readText(store, BRAIN_KEY, 'brain_missing');
     const brain = JSON.parse(brainText) as Record<string, unknown>[];

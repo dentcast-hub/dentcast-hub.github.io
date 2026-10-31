@@ -29,6 +29,7 @@ import argparse
 import datetime as dt
 import json
 import os
+import re
 import sys
 import time
 import urllib.request
@@ -93,6 +94,30 @@ def replace_entry(text: str, before: dict, after: dict):
     return out
 
 
+def apply_landing(text: str, landing: dict):
+    """Same rule as applyLanding in plus-api/src/services/quick-publish.ts: replace the
+    page's own line, else place it next to the section's highest-numbered page (above
+    for newest-first lists, below for MetaNote), keeping that line's indent and ending."""
+    own = re.compile(r'<li><a href="' + re.escape(landing['href']) + r'">[^\n]*?</li>')
+    if own.search(text):
+        return own.sub(lambda _m: landing['line'], text, count=1)
+    stem = re.sub(r'\d+\.html$', '', landing['href'])
+    best = None
+    for m in re.finditer(r'<li><a href="' + re.escape(stem) + r'(\d+)\.html">', text):
+        if best is None or int(m.group(1)) > best[0]:
+            best = (int(m.group(1)), m.start())
+    if best is None:
+        return None
+    at = best[1]
+    start = text.rfind('\n', 0, at) + 1
+    nl = text.find('\n', at)
+    end = len(text) if nl < 0 else nl + 1
+    eol = '\r\n' if nl > 0 and text[nl - 1] == '\r' else '\n'
+    indent = re.match(r'[ \t]*', text[start:at]).group(0)
+    line = indent + landing['line'] + eol
+    return text[:start] + line + text[start:] if landing['order'] == 'top' else text[:end] + line + text[end:]
+
+
 class Source:
     def __init__(self, base_url=None, from_dir=None):
         self.base_url = base_url.rstrip('/') if base_url else None
@@ -121,6 +146,7 @@ def cmd_import(args) -> int:
     with open(brain_path, encoding='utf-8', newline='') as f:  # keep CRLF as CRLF
         brain_text = f.read()
     previous = {i['id']: i for i in tree['items']}
+    landing_texts = {}
     files = {}
     for item in todo:
         if not stale_content(item, tree):
@@ -145,6 +171,18 @@ def cmd_import(args) -> int:
             brain_text = swapped
         prior = previous.get(item['id'], {})
         state = prior.get('state') if prior.get('state') == 'completed' else 'imported'
+        landing = item.get('landing')
+        if landing:
+            path = ROOT / landing['file']
+            current = landing_texts.get(landing['file'])
+            if current is None and path.exists():
+                with open(path, encoding='utf-8', newline='') as f:
+                    current = f.read()
+            placed = apply_landing(current, landing) if current is not None else None
+            if placed is None:
+                print(f"  ! {item['id']}: no list in {landing['file']} to add it to — the full workflow adds the landing link")
+            else:
+                landing_texts[landing['file']] = placed
         record = dict(item, state=state, completed_at=prior.get('completed_at'), imported_at=dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds'))
         tree['items'] = [i for i in tree['items'] if i['id'] != item['id']] + [record]
         print(f"→ {item['id']}  {item['path']}  «{item['title']}»" + (f"  +{len(item.get('media', []))} image(s)" if item.get('media') else ''))
@@ -155,6 +193,9 @@ def cmd_import(args) -> int:
         out = ROOT / rel
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_bytes(data)
+    for rel, text in landing_texts.items():
+        with open(ROOT / rel, 'w', encoding='utf-8', newline='') as f:
+            f.write(text)
     with open(brain_path, 'w', encoding='utf-8', newline='') as f:
         f.write(brain_text)
     # Bucket order is publication order; keep it.
