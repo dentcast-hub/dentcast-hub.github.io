@@ -139,7 +139,8 @@ export function renderBody(src: string): { html: string; media: string[]; firstB
     if (!line) { flush(); continue; }
     let m: RegExpMatchArray | null;
     if ((m = line.match(/^(#{2,3})\s+(.+)$/))) { flush(); mark('h'); out.push(`<h${m[1].length}>${inline(m[2])}</h${m[1].length}>`); continue; }
-    if ((m = line.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/))) {
+    // The panel wraps an image line in a left-to-right isolate (U+2066…U+2069) for display only.
+    if ((m = line.replace(/^[\u2066-\u2069\u200e\u200f]+|[\u2066-\u2069\u200e\u200f]+$/g, '').match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/))) {
       flush();
       if (!MEDIA_RE.test(m[2])) throw new QpError('invalid_image_reference');
       media.push(m[2].slice(1)); mark('img');

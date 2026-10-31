@@ -75,6 +75,9 @@ describe('quick publish — pure parts', () => {
     expect(r.media).toEqual(['quick-publish/media/20261101-abcd1234.jpg']);
     expect(() => renderBody('متن\n\n![x](https://evil.example/a.jpg)')).toThrow('invalid_image_reference');
     expect(renderBody('## اول تیتر\n\nبعد').firstBlock).toBe('h');
+    // The panel's display-only direction marks around an image line are not part of it.
+    expect(renderBody('متن\n\n\u2066![x](/quick-publish/media/20261101-abcd1234.jpg)\u2069').html)
+      .toContain('<img src="/quick-publish/media/20261101-abcd1234.jpg" alt="x"');
   });
 
   it('appends at the absolute tail of the real brain without touching a byte before it', () => {

@@ -74,14 +74,15 @@ describe('quick publish panel — images', () => {
     const body = el<HTMLTextAreaElement>('qpBody');
     body.selectionStart = body.selectionEnd = 'پاراگراف اول.'.length;
     (cards[0].querySelector('button') as HTMLButtonElement).click();
-    expect(body.value).toBe('پاراگراف اول.\n\n![نمای اکلوزال](/quick-publish/media/20261101-00000001.jpg)\n\n\n\nپاراگراف دوم.');
+    // The image line is a left-to-right isolate so it reads straight in the RTL textarea.
+    expect(body.value).toBe('پاراگراف اول.\n\n\u2066![نمای اکلوزال](/quick-publish/media/20261101-00000001.jpg)\u2069\n\n\n\nپاراگراف دوم.');
     expect(JSON.parse(window.localStorage.getItem('dc-qp-draft')!)).toMatchObject({ hasImages: 'yes', images: [{ alt: 'نمای اکلوزال' }, { alt: '' }] });
 
     el('qpForm').dispatchEvent(new Event('submit', { cancelable: true })); await flush();
     const sent = JSON.parse(calls.find(c => c.url === '/admin/quick-publish' && c.opts.method === 'POST')!.opts.body);
     expect(sent.body.match(/!\[[^\]]*\]\([^)]+\)/g)).toEqual([
       '![نمای اکلوزال](/quick-publish/media/20261101-00000001.jpg)', '![](/quick-publish/media/20261101-00000002.jpg)']);
-    expect(sent.body.endsWith('![](/quick-publish/media/20261101-00000002.jpg)\n')).toBe(true);
+    expect(sent.body.endsWith('\u2066![](/quick-publish/media/20261101-00000002.jpg)\u2069\n')).toBe(true);
   });
 
   it('brings the photos back with the phone draft', async () => {
@@ -123,6 +124,10 @@ describe('quick publish panel — switch and workflow picks', () => {
     const byId = (id: string) => boxes.find(b => b.textContent!.includes(id))!;
     expect(byId('clinical-101').querySelector('input[type=checkbox]')).not.toBeNull();
     expect(byId('chairside-47').querySelector('input[type=checkbox]')).toBeNull();
+    // Restore stays reachable after import too, not only while the page is live.
+    const restoreOf = (id: string) => [...byId(id).querySelectorAll('button')].find(b => b.textContent === 'بازگرداندن روی سایت');
+    expect(restoreOf('clinical-101')).toBeTruthy();
+    expect(restoreOf('chairside-47')).toBeTruthy();
     const undo = [...byId('chairside-47').querySelectorAll('button')].find(b => b.textContent === 'پس گرفتن')!;
     expect(undo).toBeTruthy();
     expect(el('qpSendRow').hidden).toBe(true);

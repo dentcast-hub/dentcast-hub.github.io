@@ -174,7 +174,9 @@ export function renderQuickPublish(): string {
       images = Array.isArray(v.images) ? v.images : []; setHasImages(v.hasImages || ''); drawImages();
     }
     function inBody(img) { return body.value.indexOf('](' + img.path + ')') >= 0; }
-    function line(img) { return '![' + (img.alt || '').replace(/[\[\]\n]/g, ' ').trim() + '](' + img.path + ')'; }
+    // Isolated left-to-right (U+2066 … U+2069) so the image line reads straight in the right-to-left
+    // textarea instead of the path scrambled around the caption; the server ignores the two marks.
+    function line(img) { return '\u2066![' + (img.alt || '').replace(/[\[\]\n]/g, ' ').trim() + '](' + img.path + ')\u2069'; }
     function drawImages() {
       var box = el('qpImages'); box.textContent = '';
       images.forEach(function (img, i) {
@@ -299,6 +301,8 @@ export function renderQuickPublish(): string {
           }).catch(function (e) { el('qpResult').textContent = msg(e.message); });
         };
         actions.appendChild(ed);
+      }
+      if (it.state !== 'completed') {
         var rs = text('button', 'بازگرداندن روی سایت'); rs.type = 'button';
         rs.title = 'اگر دیپلوی‌ای صفحه یا ردیف brain را پاک کرده، از نسخهٔ پشتیبان API برمی‌گرداند.';
         rs.onclick = function () {
