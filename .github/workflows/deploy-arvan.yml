@@ -29,6 +29,32 @@ jobs:
           python3 -m pip install --upgrade pip
           pip install awscli
 
+      # Emergency minimal publish guard (.dentcast/quick-publish.md): pages the
+      # founder published from /admin «انتشار حداقلی» live only on the bucket
+      # until tools/quick_publish.py imports them, and the --delete sync below
+      # would erase them. Refuse while the bucket ledger holds anything this
+      # commit lacks. A missing ledger passes; any other read error stops.
+      - name: Refuse to delete minimal publications git does not have yet
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ARVAN_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.ARVAN_SECRET_KEY }}
+          AWS_EC2_METADATA_DISABLED: "true"
+          ARVAN_BUCKET: ${{ secrets.ARVAN_BUCKET }}
+          ARVAN_ENDPOINT: ${{ secrets.ARVAN_ENDPOINT }}
+        run: |
+          ledger="$RUNNER_TEMP/qp-bucket-ledger.json"
+          if ! err="$(aws s3 cp "s3://$ARVAN_BUCKET/quick-publish/ledger.json" "$ledger" \
+                --endpoint-url "$ARVAN_ENDPOINT" --only-show-errors 2>&1)"; then
+            case "$err" in
+              *404*|*"Not Found"*|*NoSuchKey*|*"does not exist"*) : > "$ledger" ;;
+              *) echo "::error::could not read the quick-publish ledger: $err"; exit 1 ;;
+            esac
+          fi
+          python3 tools/quick_publish.py guard --bucket-ledger "$ledger" || {
+            echo "::error::Minimal publications on the bucket are not in git yet. Run python3 tools/quick_publish.py import, commit, push."
+            exit 1
+          }
+
       # The cache-sensitive files go up FIRST, carrying their Cache-Control in
       # the same PUT. The stamping step further down re-applies it to every
       # object afterwards, but "afterwards" is the problem: between a plain

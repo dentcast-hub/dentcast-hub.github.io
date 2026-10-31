@@ -33,6 +33,7 @@ For «انتشار ناقص داشتم» or an explicit request to resume a publ
 | Cross-linking | `.dentcast/workflows/cross-link.md` |
 | New section | `.dentcast/workflows/new-section.md` |
 | Offline publishing | `.dentcast/offline-publish.md` |
+| Minimal publications from /admin (setup, import into git, completion) | `.dentcast/quick-publish.md` |
 | External Fidelity | `.dentcast/workflows/external-fidelity.md` |
 | Publish queue on branch `queue` (prepare, status, publish oldest) | `.dentcast/workflows/publish-queue.md` |
 
