@@ -194,7 +194,7 @@ export function renderQuickPublish(): string {
         var card = document.createElement('div'); card.className = 'qp-img';
         var t = document.createElement('img'); t.src = shown[img.path] || ('https://dentcast.ir' + img.path); t.alt = ''; card.appendChild(t);
         var main = document.createElement('div'); main.className = 'qp-img-main';
-        var alt = document.createElement('input'); alt.placeholder = 'توضیح عکس (اختیاری)'; alt.maxLength = 200; alt.value = img.alt || '';
+        var alt = document.createElement('input'); alt.placeholder = 'زیرنویس عکس (اختیاری؛ زیر عکس دیده می‌شود)'; alt.maxLength = 200; alt.value = img.alt || '';
         alt.addEventListener('input', function () { img.alt = alt.value; saveDraft(); });
         main.appendChild(alt);
         main.appendChild(text('div', inBody(img) ? 'در متن درج شده' : 'هنوز در متن نیست — اگر درج نکنی ته متن می‌آید', 'muted qp-in'));
@@ -326,7 +326,7 @@ export function renderQuickPublish(): string {
             while ((m = re.exec(s.body))) found.push({ path: m[2], alt: m[1] });
             fill({ type: s.item.type, title: s.item.title, caption: s.item.caption, body: s.body, images: found, hasImages: found.length ? 'yes' : 'no' });
             el('qpEditing').value = it.id; el('qpType').disabled = true; el('qpCancelEdit').hidden = false;
-            var banner = el('qpEditBanner'); banner.hidden = false; banner.textContent = 'در حال ویرایش ' + it.id + ' — نشانی و تاریخ عوض نمی‌شوند.';
+            var banner = el('qpEditBanner'); banner.hidden = false; banner.textContent = 'در حال ویرایش ' + it.id + ' — نشانی، شماره و تاریخ انتشار عوض نمی‌شوند؛ «آخرین بازبینی» تاریخ امروز می‌شود.';
             el('qpSubmit').textContent = 'ذخیرهٔ نسخهٔ تازه'; form.scrollIntoView({ behavior: 'smooth' });
           }).catch(function (e) { el('qpResult').textContent = msg(e.message); });
         };

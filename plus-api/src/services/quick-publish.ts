@@ -27,10 +27,10 @@ export const QP_TYPES = {
     landing: 'top', landingLabel: (_n: number, title: string) => title,
     kicker: (_n: number) => '', h1Prefix: (n: number) => `${ICON_BOOKMARK} Insight ${n} — ` },
   chairside: { label: 'Chairside — کیس و تصمیم بالینی', folder: 'chairside', stem: 'chairside-', id: (n: number) => `chairside-${n}`, urlKey: 'page_url', section: 'Chairside',
-    landing: 'top', landingLabel: (n: number, title: string) => (/^chairside\b/i.test(title) ? title : `Chairside ${n} — ${title}`),
+    landing: 'top', landingLabel: (n: number, title: string) => `Chairside ${n} — ${title.replace(/^chairside\s*\d*\s*[—–:-]?\s*/i, '') || title}`,
     kicker: (n: number) => `  <h2>Chairside ${n}</h2>\n  `, h1Prefix: (_n: number) => '' },
   meta: { label: 'MetaNote — متانوت', folder: 'metanotes', stem: 'meta-', id: (n: number) => `meta-${n}`, urlKey: 'page_url', section: 'Meta Note',
-    landing: 'bottom', landingLabel: (n: number, title: string) => (/^متانوت/.test(title) ? title : `متانوت ${faNumberWords(n)}: ${title}`),
+    landing: 'bottom', landingLabel: (n: number, title: string) => `متانوت ${faNumberWords(n)}: ${title.replace(/^متانوت[^:：]*[:：]\s*/, '') || title}`,
     kicker: (n: number) => ` <h2>${ICON_BRAIN} MetaNote ${n}</h2>\n`, h1Prefix: (_n: number) => '' },
   sharehub: { label: 'Share Hub — خوانش مقاله', folder: 'sharehub', stem: 'share-', id: (n: number) => String(n), urlKey: 'url', section: 'Share Hub',
     landing: 'top', landingLabel: (_n: number, title: string) => `${title} (مطلبی از دکتر فواد شهابیان)`,
@@ -172,7 +172,9 @@ export function renderBody(src: string): { html: string; media: string[]; firstB
       flush();
       if (!MEDIA_RE.test(m[2])) throw new QpError('invalid_image_reference');
       media.push(m[2].slice(1)); mark('img');
-      out.push(`<img src="${esc(m[2])}" alt="${esc(m[1])}" loading="lazy" decoding="async">`);
+      // A caption typed in the panel shows under the image, the way real pages do (meta-22).
+      const img = `<img src="${esc(m[2])}" alt="${esc(m[1])}" loading="lazy" decoding="async">`;
+      out.push(m[1].trim() ? `<figure>\n  ${img}\n  <figcaption>${esc(m[1].trim())}</figcaption>\n</figure>` : img);
       continue;
     }
     const ul = line.match(/^[-•*]\s+(.+)$/), ol = line.match(/^[0-9۰-۹]+[.)]\s+(.+)$/);

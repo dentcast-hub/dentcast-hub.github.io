@@ -35,7 +35,12 @@
   <link rel="stylesheet" href="/dc-article.css?v=6">
   <style>
     p { margin: 0.875rem 0; }
+    /* A long unbroken word or pasted URL must wrap, not widen the page. */
+    .glass-box { overflow-wrap: anywhere; }
     .glass-box img { display: block; max-width: 100%; height: auto; margin: 1rem auto; border-radius: 12px; }
+    .glass-box figure { margin: 1rem 0; }
+    .glass-box figure img { margin-bottom: 0.5rem; }
+    .glass-box figcaption { text-align: center; font-size: .85rem; color: var(--muted, #555); }
     /* Share Hub's section kicker above the title, as on share-NN pages */
     .sh-kicker { display: flex; align-items: center; justify-content: center; gap: 0.375rem; direction: ltr;
       color: var(--blue, #0b5fff); font-weight: 800; font-size: 0.95rem; letter-spacing: .02em; margin: 0 0 0.5rem; }
