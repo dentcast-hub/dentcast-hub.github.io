@@ -75,13 +75,19 @@ describe('quick publish — pure parts', () => {
     expect(r.media).toEqual(['quick-publish/media/20261101-abcd1234.jpg']);
     expect(() => renderBody('متن\n\n![x](https://evil.example/a.jpg)')).toThrow('invalid_image_reference');
     expect(renderBody('## اول تیتر\n\nبعد').firstBlock).toBe('h');
+    // The panel's display-only direction marks around an image line are not part of it.
+    expect(renderBody('متن\n\n\u2066![x](/quick-publish/media/20261101-abcd1234.jpg)\u2069').html)
+      .toContain('<img src="/quick-publish/media/20261101-abcd1234.jpg" alt="x"');
   });
 
   it('appends at the absolute tail of the real brain without touching a byte before it', () => {
     const entry = brainEntry('clinical', 101, '/insight/insight-101.html', 'ع', 'ک');
     const next = appendBrainEntry(brainText, entry);
     const head = brainText.slice(0, brainText.lastIndexOf(']')).replace(/\s+$/, '');
-    expect(next.startsWith(head + ',\n')).toBe(true);
+    // The brain is CRLF in git; the appended entry keeps that, so no line of it is rewritten.
+    expect(brainText.endsWith('\r\n')).toBe(true);
+    expect(next.startsWith(head + ',\r\n')).toBe(true);
+    expect(next.slice(head.length).replace(/\r\n/g, '')).not.toContain('\n');
     expect(JSON.parse(next).at(-1)).toEqual(entry);
     expect(JSON.parse(next)).toHaveLength(JSON.parse(brainText).length + 1);
     const edited = brainEntry('clinical', 101, '/insight/insight-101.html', 'عنوان تازه', 'ک');
@@ -170,6 +176,8 @@ describe('quick publish — admin routes', () => {
     expect(brain.at(-1).title).toBe('نسخهٔ دوم');
     expect(store.files.get(item.path.slice(1))!.toString()).toContain('پاراگراف تازه.');
     expect(store.files.get(item.path.slice(1))!.toString()).toContain(`datetime="${item.date}"`);
+    expect(put.json().item.modified).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(store.files.get(item.path.slice(1))!.toString()).toContain(`"dateModified": "${put.json().item.modified}"`);
 
     const ledger = JSON.parse(store.files.get(LEDGER_KEY)!.toString());
     ledger.items[0].state = 'imported';

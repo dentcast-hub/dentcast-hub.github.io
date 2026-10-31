@@ -289,7 +289,7 @@ describe('the «ادامه‌ی شنیدن» bar', () => {
   it('builds itself from the catalog when the record came from player.html', async () => {
     at('/');
     record({ episode: 162, position: 504 });
-    fetchMock.mockImplementation((u: any) => (String(u) === '/dentcast.json?v=3'
+    fetchMock.mockImplementation((u: any) => (String(u) === '/dentcast.json'
       ? Promise.resolve({ ok: true, json: () => Promise.resolve([{ episode: '162', title: '162- ' + TITLE, duration: '22:08', audio_url: SRC, page_url: '/episodes/episode-162.html' }]) })
       : Promise.reject(new Error('no'))));
     initAudioHub();

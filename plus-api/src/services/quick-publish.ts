@@ -139,7 +139,8 @@ export function renderBody(src: string): { html: string; media: string[]; firstB
     if (!line) { flush(); continue; }
     let m: RegExpMatchArray | null;
     if ((m = line.match(/^(#{2,3})\s+(.+)$/))) { flush(); mark('h'); out.push(`<h${m[1].length}>${inline(m[2])}</h${m[1].length}>`); continue; }
-    if ((m = line.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/))) {
+    // The panel wraps an image line in a left-to-right isolate (U+2066…U+2069) for display only.
+    if ((m = line.replace(/^[\u2066-\u2069\u200e\u200f]+|[\u2066-\u2069\u200e\u200f]+$/g, '').match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/))) {
       flush();
       if (!MEDIA_RE.test(m[2])) throw new QpError('invalid_image_reference');
       media.push(m[2].slice(1)); mark('img');
@@ -162,32 +163,38 @@ export function renderBody(src: string): { html: string; media: string[]; firstB
 
 // ── brain / ledger text ───────────────────────────────────────────────────
 
+/** The brain's own line ending — it is CRLF in git (the founder's checkout is Windows); never convert it. */
+export const brainEol = (text: string) => (text.endsWith('\r\n') ? '\r\n' : '\n');
 /** Serialised the way the repo's brain is: two-space JSON, entries indented by two. */
-export function serialiseEntry(entry: object): string {
-  return JSON.stringify(entry, null, 2).split('\n').map(l => '  ' + l).join('\n');
+export function serialiseEntry(entry: object, eol = '\n'): string {
+  return JSON.stringify(entry, null, 2).split('\n').map(l => '  ' + l).join(eol);
 }
 /** Append at the absolute tail without re-serialising the rest of the file. */
 export function appendBrainEntry(text: string, entry: object): string {
   const end = text.lastIndexOf(']');
   if (end < 0) throw new QpError('brain_unreadable', 502);
+  const eol = brainEol(text);
   const head = text.slice(0, end).replace(/\s+$/, '');
   const empty = head.endsWith('[');
-  const next = head + (empty ? '\n' : ',\n') + serialiseEntry(entry) + '\n]\n';
+  const next = head + (empty ? eol : ',' + eol) + serialiseEntry(entry, eol) + eol + ']' + eol;
   JSON.parse(next);
   return next;
 }
 /** Swap one of OUR entries (serialised by serialiseEntry) in place; null if it is not there verbatim. */
 export function replaceBrainEntry(text: string, before: object, after: object): string | null {
-  const old = serialiseEntry(before);
+  const eol = brainEol(text);
+  const old = serialiseEntry(before, eol);
   const at = text.indexOf(old);
   if (at < 0 || text.indexOf(old, at + 1) >= 0) return null;
-  const next = text.slice(0, at) + serialiseEntry(after) + text.slice(at + old.length);
+  const next = text.slice(0, at) + serialiseEntry(after, eol) + text.slice(at + old.length);
   JSON.parse(next);
   return next;
 }
 
 export interface QpItem {
   id: string; type: QpType; n: number; path: string; title: string; caption: string; date: string;
+  /** Tehran date of the last edit; equal to `date` until the page is edited. */
+  modified?: string;
   media: string[]; brain_entry: Record<string, unknown>; created_at: string; updated_at: string;
   state: 'live' | 'imported' | 'completed'; imported_at: string | null; completed_at: string | null;
   /** Set only by the founder's «بفرست تو ورک‌فلو»; nothing goes to the full workflow on its own. */
@@ -211,11 +218,11 @@ export function tehranDate(d = new Date()): string {
 
 const jsonStr = (s: string) => JSON.stringify(s).slice(1, -1).replace(/</g, '\\u003c');
 
-export function renderPage(template: string, o: { type: QpType; path: string; title: string; caption: string; date: string; body: string }): string {
+export function renderPage(template: string, o: { type: QpType; path: string; title: string; caption: string; date: string; modified?: string; body: string }): string {
   const t = QP_TYPES[o.type];
   const tokens: Record<string, string> = {
     TITLE: esc(o.title), TITLE_JSON: jsonStr(o.title), DESCRIPTION: esc(o.caption), DESCRIPTION_JSON: jsonStr(o.caption),
-    CANONICAL: ORG_ORIGIN + o.path, IR_URL: IR_ORIGIN + o.path, DATE: o.date,
+    CANONICAL: ORG_ORIGIN + o.path, IR_URL: IR_ORIGIN + o.path, DATE: o.date, DATE_MODIFIED: o.modified ?? o.date,
     SECTION_NAME: jsonStr(t.section), SECTION_PATH: `/${t.folder}/`, BODY: o.body,
   };
   if (!template.includes('data-qp-template') || !template.includes('{{BODY}}')) throw new QpError('template_invalid', 502);
@@ -358,7 +365,8 @@ export function edit(id: string, input: QpInput): Promise<{ item: QpItem; url: s
     const swapped = replaceBrainEntry(brainText, old.brain_entry, entry);
     if (swapped === null) throw new QpError('brain_entry_moved', 409);
     brainText = swapped;
-    const item: QpItem = { ...old, title: v.title, caption: v.caption, media: rendered.media, brain_entry: entry, updated_at: new Date().toISOString() };
+    const item: QpItem = { ...old, title: v.title, caption: v.caption, media: rendered.media, brain_entry: entry,
+      modified: tehranDate(), updated_at: new Date().toISOString() };
     const html = renderPage(template, { ...item, body: rendered.html });
     ledger.items[at] = item;
     await backup(item, html, v.body);

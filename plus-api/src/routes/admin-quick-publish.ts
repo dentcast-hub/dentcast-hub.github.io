@@ -111,6 +111,7 @@ export function renderQuickPublish(): string {
     .qp-form input,.qp-form select,.qp-form textarea{width:100%;box-sizing:border-box;font-size:16px;font-family:inherit}
     .qp-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
     .qp-row>*{flex:1 1 140px;min-height:44px}
+    .qp-row[hidden]{display:none}
     .qp-file span{display:flex;align-items:center;justify-content:center;min-height:44px;border:1px dashed currentColor;border-radius:10px;cursor:pointer}
     #qpPreview img{max-width:100%;height:auto}
     .qp-item{border:1px solid rgba(127,127,127,.35);border-radius:12px;padding:10px 12px;margin:8px 0}
@@ -173,7 +174,9 @@ export function renderQuickPublish(): string {
       images = Array.isArray(v.images) ? v.images : []; setHasImages(v.hasImages || ''); drawImages();
     }
     function inBody(img) { return body.value.indexOf('](' + img.path + ')') >= 0; }
-    function line(img) { return '![' + (img.alt || '').replace(/[\[\]\n]/g, ' ').trim() + '](' + img.path + ')'; }
+    // Isolated left-to-right (U+2066 … U+2069) so the image line reads straight in the right-to-left
+    // textarea instead of the path scrambled around the caption; the server ignores the two marks.
+    function line(img) { return '\u2066![' + (img.alt || '').replace(/[\[\]\n]/g, ' ').trim() + '](' + img.path + ')\u2069'; }
     function drawImages() {
       var box = el('qpImages'); box.textContent = '';
       images.forEach(function (img, i) {
@@ -231,7 +234,9 @@ export function renderQuickPublish(): string {
     }
     el('qpPreviewBtn').onclick = function () {
       json('POST', '/admin/quick-publish/preview', { body: finalBody() }).then(function (j) {
-        var p = el('qpPreview'); p.hidden = false; p.innerHTML = j.html;
+        // The panel is not served from dentcast.ir: point uploaded images at the phone's copy or the live site.
+        var p = el('qpPreview'); p.hidden = false;
+        p.innerHTML = j.html.replace(/src="(\/quick-publish\/media\/[^"]+)"/g, function (m, path) { return 'src="' + (shown[path] || 'https://dentcast.ir' + path) + '"'; });
         if (j.warning) p.insertBefore(text('p', msg(j.warning), 'muted'), p.firstChild);
       }).catch(function (e) { el('qpResult').textContent = msg(e.message); });
     };
@@ -271,7 +276,7 @@ export function renderQuickPublish(): string {
           var sent = document.createElement('div'); sent.className = 'qp-pick';
           sent.appendChild(text('span', 'فرستاده‌شده به ورک‌فلو — ' + new Date(it.workflow_requested_at).toLocaleDateString('fa-IR'), 'qp-chip'));
           var undo = text('button', 'پس گرفتن'); undo.type = 'button';
-          undo.onclick = function () { sendToWorkflow([it.id], false); };
+          undo.onclick = function () { if (confirm('«' + it.title + '» از ورک‌فلو پس گرفته شود؟ همان‌طور حداقلی می‌ماند.')) sendToWorkflow([it.id], false); };
           sent.appendChild(undo); box.appendChild(sent);
         } else {
           var pick = document.createElement('label'); pick.className = 'qp-pick';
@@ -296,6 +301,8 @@ export function renderQuickPublish(): string {
           }).catch(function (e) { el('qpResult').textContent = msg(e.message); });
         };
         actions.appendChild(ed);
+      }
+      if (it.state !== 'completed') {
         var rs = text('button', 'بازگرداندن روی سایت'); rs.type = 'button';
         rs.title = 'اگر دیپلوی‌ای صفحه یا ردیف brain را پاک کرده، از نسخهٔ پشتیبان API برمی‌گرداند.';
         rs.onclick = function () {
