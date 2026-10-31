@@ -1,0 +1,74 @@
+name: Import minimal publications into git
+
+# After the international link returns: brings every page the founder published
+# from /admin «انتشار حداقلی» into git (.dentcast/quick-publish.md). It reads the
+# bucket with the same secrets deploy-arvan.yml uses, so it needs neither a
+# laptop nor a session that can reach dentcast.ir. Manual only: nothing about
+# the catch-up starts by itself. The result is pushed to a new branch
+# quick-publish-import-<run>; merging it is a separate, deliberate step.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Install AWS CLI via pip
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install awscli
+
+      - name: Copy the ledger and every page and image it names from the bucket
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ARVAN_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.ARVAN_SECRET_KEY }}
+          AWS_EC2_METADATA_DISABLED: "true"
+          ARVAN_BUCKET: ${{ secrets.ARVAN_BUCKET }}
+          ARVAN_ENDPOINT: ${{ secrets.ARVAN_ENDPOINT }}
+        run: |
+          mirror="$RUNNER_TEMP/qp-bucket"
+          mkdir -p "$mirror/quick-publish"
+          aws s3 cp "s3://$ARVAN_BUCKET/quick-publish/ledger.json" "$mirror/quick-publish/ledger.json" \
+            --endpoint-url "$ARVAN_ENDPOINT" --only-show-errors
+          python3 - "$mirror" > "$RUNNER_TEMP/qp-keys.txt" <<'EOF'
+          import json, sys
+          ledger = json.load(open(sys.argv[1] + '/quick-publish/ledger.json', encoding='utf-8'))
+          for item in ledger['items']:
+              print(item['path'].lstrip('/'))
+              for m in item.get('media', []):
+                  print(m)
+          EOF
+          while IFS= read -r key; do
+            [ -n "$key" ] || continue
+            mkdir -p "$mirror/$(dirname "$key")"
+            aws s3 cp "s3://$ARVAN_BUCKET/$key" "$mirror/$key" --endpoint-url "$ARVAN_ENDPOINT" --only-show-errors
+          done < "$RUNNER_TEMP/qp-keys.txt"
+          echo "QP_MIRROR=$mirror" >> "$GITHUB_ENV"
+
+      - name: Import into the working tree
+        run: |
+          python3 tools/quick_publish.py import --from-dir "$QP_MIRROR"
+          python3 tools/quick_publish.py status
+
+      - name: Push the import to its own branch
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "::notice::Nothing to import — git already has every minimal publication."
+            exit 0
+          fi
+          branch="quick-publish-import-${{ github.run_number }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add -A
+          git commit -m "Import minimal publications from the Arvan bucket (.dentcast/quick-publish.md)"
+          git push origin "$branch"
+          echo "::notice::Pushed $branch. Open a PR from it to main and merge; until then the Arvan deploy guard holds."
