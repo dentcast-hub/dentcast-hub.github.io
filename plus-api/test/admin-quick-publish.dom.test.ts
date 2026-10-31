@@ -5,6 +5,7 @@ import { renderQuickPublish } from '../src/routes/admin-quick-publish.js';
 let calls: { url: string; opts: any }[];
 let fetcher: ReturnType<typeof vi.fn>;
 let uploads: number;
+let statusBody: Record<string, unknown>;
 const response = (body: unknown) => ({ ok: true, json: async () => body });
 const flush = async () => { for (let i = 0; i < 30; i++) await Promise.resolve(); };
 function el<T extends HTMLElement>(id: string): T { return document.getElementById(id) as T; }
@@ -26,11 +27,13 @@ function pick(...files: File[]) {
 beforeEach(() => {
   Element.prototype.scrollIntoView = vi.fn(); // jsdom has no layout
   window.localStorage.clear(); calls = []; uploads = 0;
+  statusBody = { enabled: true, configured: true, template: true, items: [], types: { clinical: 'Insight', meta: 'Meta' } };
   fetcher = vi.fn(async (url: string, opts: any = {}) => {
     calls.push({ url: String(url), opts });
-    if (url === '/admin/quick-publish' && !opts.method) return response({ configured: true, template: true, items: [], types: { clinical: 'Insight', meta: 'Meta' } });
+    if (url === '/admin/quick-publish' && !opts.method) return response(statusBody);
     if (url === '/admin/quick-publish/media') return response({ ok: true, path: `/quick-publish/media/20261101-0000000${++uploads}.jpg` });
     if (url === '/admin/quick-publish') return response({ ok: true, url: 'https://dentcast.ir/insight/insight-101.html', item: {} });
+    if (opts.method === 'PUT' || url === '/admin/quick-publish/workflow') return response({ ok: true });
     return response({ html: '', warning: null });
   });
   boot();
@@ -89,5 +92,52 @@ describe('quick publish panel — images', () => {
     expect(radio('yes').checked).toBe(true);
     expect(el('qpImageBox').hidden).toBe(false);
     expect(el('qpImages').querySelectorAll('.qp-img')).toHaveLength(1);
+  });
+});
+
+const qpItem = (o: Record<string, unknown>) => ({ type: 'clinical', n: 101, path: '/insight/insight-101.html', title: 'عنوان', caption: 'کپشن کوتاه مطلب',
+  date: '2026-11-01', media: [], ...o });
+
+describe('quick publish panel — switch and workflow picks', () => {
+  it('hides the form while off and turns it on through the switch', async () => {
+    statusBody = { ...statusBody, enabled: false };
+    document.body.replaceChildren(); boot(); await flush();
+    expect(el('qpForm').hidden).toBe(true);
+    expect(el('qpSwitch').hidden).toBe(false);
+    const btn = el<HTMLButtonElement>('qpSwitchBtn');
+    expect(btn.textContent).toContain('روشن کردن');
+    btn.click(); await flush();
+    const put = calls.find(c => c.url === '/admin/quick-publish/enabled')!;
+    expect(put.opts.method).toBe('PUT');
+    expect(JSON.parse(put.opts.body)).toEqual({ enabled: true });
+  });
+
+  it('offers a checkbox for unsent items, sends the picked ones, and lets a sent one be withdrawn', async () => {
+    statusBody = { ...statusBody, items: [
+      qpItem({ id: 'clinical-101', state: 'imported' }),
+      qpItem({ id: 'chairside-47', type: 'chairside', n: 47, path: '/chairside/chairside-47.html', state: 'live', workflow_requested_at: '2026-11-01T00:00:00Z' }),
+    ] };
+    document.body.replaceChildren(); boot(); await flush();
+    const boxes = [...el('qpList').querySelectorAll('.qp-item')];
+    expect(boxes).toHaveLength(2);
+    const byId = (id: string) => boxes.find(b => b.textContent!.includes(id))!;
+    expect(byId('clinical-101').querySelector('input[type=checkbox]')).not.toBeNull();
+    expect(byId('chairside-47').querySelector('input[type=checkbox]')).toBeNull();
+    const undo = [...byId('chairside-47').querySelectorAll('button')].find(b => b.textContent === 'پس گرفتن')!;
+    expect(undo).toBeTruthy();
+    expect(el('qpSendRow').hidden).toBe(true);
+
+    const cb = byId('clinical-101').querySelector('input[type=checkbox]') as HTMLInputElement;
+    cb.checked = true; cb.dispatchEvent(new Event('change'));
+    expect(el('qpSendRow').hidden).toBe(false);
+    el('qpSend').click(); await flush();
+    let post = calls.filter(c => c.url === '/admin/quick-publish/workflow');
+    expect(post).toHaveLength(1);
+    expect(post[0].opts.method).toBe('POST');
+    expect(JSON.parse(post[0].opts.body)).toEqual({ ids: ['clinical-101'], requested: true });
+
+    undo.click(); await flush();
+    post = calls.filter(c => c.url === '/admin/quick-publish/workflow');
+    expect(JSON.parse(post[1].opts.body)).toEqual({ ids: ['chairside-47'], requested: false });
   });
 });

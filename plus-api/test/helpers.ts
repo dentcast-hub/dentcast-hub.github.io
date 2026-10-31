@@ -42,7 +42,7 @@ export async function resetDb(): Promise<void> {
       challenge_examples, challenge_attempts, challenges,
       assistant_rounds, assistant_tag_scores,
       leagues, league_members, league_weekly_stats, league_audit_log,
-      clinic_closures, quick_publications, quick_publish_media
+      clinic_closures, quick_publications, quick_publish_media, quick_publish_settings
     restart identity cascade
   `);
   // League seed data (tiers + config) is created ONCE by the migration and must

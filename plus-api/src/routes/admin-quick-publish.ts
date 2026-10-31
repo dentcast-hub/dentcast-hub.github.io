@@ -1,5 +1,6 @@
 import type { FastifyInstance, FastifyReply } from 'fastify';
-import { QP_TYPES, QpError, MAX_QP_IMAGE_BYTES, publish, edit, restore, preview, status, source, uploadImage } from '../services/quick-publish.js';
+import { QP_TYPES, QpError, MAX_QP_IMAGE_BYTES, publish, edit, restore, preview, status, source, uploadImage,
+  setEnabled, requestWorkflow } from '../services/quick-publish.js';
 
 // Registered INSIDE adminRoutes, after its onRequest requireAdmin hook.
 // Owner doc: .dentcast/quick-publish.md
@@ -18,6 +19,19 @@ export async function adminQuickPublishRoutes(app: FastifyInstance): Promise<voi
   };
 
   app.get('/admin/quick-publish', async () => ({ ...(await status()), types: Object.fromEntries(Object.entries(QP_TYPES).map(([k, t]) => [k, t.label])) }));
+  app.put('/admin/quick-publish/enabled', async (request, reply) => {
+    const enabled = (request.body as { enabled?: unknown } | null)?.enabled;
+    if (typeof enabled !== 'boolean') return reply.code(400).send({ error: 'invalid_enabled' });
+    await setEnabled(enabled);
+    return { ok: true, enabled };
+  });
+  // Nothing reaches the full workflow on its own: only what the founder picks here.
+  app.post('/admin/quick-publish/workflow', async (request, reply) => {
+    const b = (request.body ?? {}) as { ids?: unknown; requested?: unknown };
+    if (!Array.isArray(b.ids) || !b.ids.length || b.ids.length > 200 || typeof b.requested !== 'boolean'
+      || !b.ids.every(id => typeof id === 'string' && /^[a-z0-9-]{1,40}$/.test(id))) return reply.code(400).send({ error: 'invalid_request' });
+    try { return { ok: true, ...(await requestWorkflow(b.ids as string[], b.requested)) }; } catch (err) { return fail(reply, err); }
+  });
   app.post('/admin/quick-publish/preview', async (request, reply) => {
     try { return preview((request.body as { body?: unknown } | null)?.body); } catch (err) { return fail(reply, err); }
   });
@@ -49,6 +63,10 @@ export function renderQuickPublish(): string {
   return String.raw`
   <h3 style="margin-top:26px">انتشار حداقلی (اضطراری)</h3>
   <div class="muted">برای وقتی که GitHub در دسترس نیست. مطلب مستقیم روی dentcast.ir منتشر می‌شود: صفحه، یک ردیف ته brain، و یک خط در دفتر انتشار حداقلی. بعد از وصل شدن اینترنت، هر مطلبِ این فهرست وارد گیت و ورک‌فلوی کامل می‌شود (انگلیسی، کراس‌لینک، پیلار، DES، هشتگ، Pulse …) و تا آن موقع دیپلوی‌ها جلوی پاک شدنش را می‌گیرند.</div>
+  <div id="qpSwitch" class="card qp-switch" hidden>
+    <div id="qpSwitchText"></div>
+    <button id="qpSwitchBtn" type="button"></button>
+  </div>
   <div id="qpStatus" role="status" aria-live="polite" style="margin:10px 0">در حال خواندن…</div>
   <span id="qpWaiting" hidden></span>
   <form id="qpForm" class="qp-form" hidden>
@@ -83,7 +101,11 @@ export function renderQuickPublish(): string {
     <div id="qpResult" role="status" aria-live="polite"></div>
   </form>
   <h4 style="margin-top:20px">دفتر انتشار حداقلی</h4>
+  <div class="muted">بعد از وصل شدن اینترنت هیچ چیز خودبه‌خود به ورک‌فلو نمی‌رود. مطالبی را که می‌خواهی کامل شوند تیک بزن و «بفرست تو ورک‌فلو» را بزن؛ بقیه همان‌طور حداقلی می‌مانند.</div>
   <div id="qpList"></div>
+  <div class="qp-row" id="qpSendRow" hidden>
+    <button id="qpSend" type="button">بفرست تو ورک‌فلو</button>
+  </div>
   <style>
     .qp-form label{display:block;margin-top:12px}
     .qp-form input,.qp-form select,.qp-form textarea{width:100%;box-sizing:border-box;font-size:16px;font-family:inherit}
@@ -95,6 +117,12 @@ export function renderQuickPublish(): string {
     .qp-item b{display:block}
     .qp-chip{display:inline-block;font-size:.8rem;border-radius:999px;padding:1px 8px;margin-inline-start:6px;border:1px solid currentColor}
     .qp-item .qp-row button{min-height:38px}
+    .qp-switch{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}
+    .qp-switch>div{flex:1 1 220px}
+    .qp-switch button{min-height:44px;flex:0 0 auto}
+    .qp-item.qp-on{outline:2px solid rgba(11,95,255,.5)}
+    .qp-pick{display:flex;gap:8px;align-items:center;margin-top:6px;min-height:36px}
+    .qp-pick input{width:auto}
     .qp-ask{margin-top:14px;border:1px solid rgba(127,127,127,.35);border-radius:12px;padding:8px 12px}
     .qp-ask label{display:inline-flex;gap:6px;align-items:center;margin:4px 0 4px 18px;min-height:36px}
     .qp-ask input{width:auto}
@@ -118,7 +146,8 @@ export function renderQuickPublish(): string {
       invalid_image_reference: 'یک خط تصویر به فایلی اشاره می‌کند که از این پنل آپلود نشده.', image_not_uploaded: 'تصویری که در متن هست آپلود نشده.',
       invalid_image: 'فقط WebP، PNG، JPEG یا GIF تا ۸ مگابایت.', no_free_address: 'نشانی آزادی برای صفحه پیدا نشد.', id_taken: 'این شناسه در brain هست.',
       not_found: 'پیدا نشد.', already_imported: 'این مطلب وارد گیت شده؛ ویرایشش از این‌جا ممکن نیست.', type_locked: 'بخش مطلب منتشرشده عوض نمی‌شود.',
-      brain_entry_moved: 'ردیف این مطلب در brain دست خورده؛ ویرایش از این‌جا ممکن نیست.'
+      brain_entry_moved: 'ردیف این مطلب در brain دست خورده؛ ویرایش از این‌جا ممکن نیست.',
+      disabled: 'انتشار حداقلی خاموش است. فقط در قطعی روشنش کن.', already_completed: 'این مطلب قبلاً در ورک‌فلو کامل شده.'
     };
     var STATE = { live: 'زنده — منتظر ورود به گیت', imported: 'در گیت — منتظر ورک‌فلوی کامل', completed: 'کامل شد' };
     function msg(e) { return ERR[e] || ('خطا: ' + e); }
@@ -237,10 +266,25 @@ export function renderQuickPublish(): string {
       var box = document.createElement('div'); box.className = 'qp-item';
       var b = text('b', it.title); b.appendChild(text('span', STATE[it.state] || it.state, 'qp-chip')); box.appendChild(b);
       box.appendChild(text('div', it.id + ' · ' + it.date + ' · ' + it.path, 'muted'));
+      if (it.state !== 'completed') {
+        if (it.workflow_requested_at) {
+          var sent = document.createElement('div'); sent.className = 'qp-pick';
+          sent.appendChild(text('span', 'فرستاده‌شده به ورک‌فلو — ' + new Date(it.workflow_requested_at).toLocaleDateString('fa-IR'), 'qp-chip'));
+          var undo = text('button', 'پس گرفتن'); undo.type = 'button';
+          undo.onclick = function () { sendToWorkflow([it.id], false); };
+          sent.appendChild(undo); box.appendChild(sent);
+        } else {
+          var pick = document.createElement('label'); pick.className = 'qp-pick';
+          var cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = !!picked[it.id];
+          cb.onchange = function () { picked[it.id] = cb.checked; box.className = 'qp-item' + (cb.checked ? ' qp-on' : ''); drawSend(); };
+          pick.appendChild(cb); pick.appendChild(text('span', 'انتخاب برای ورک‌فلو')); box.appendChild(pick);
+          if (cb.checked) box.className = 'qp-item qp-on';
+        }
+      }
       var actions = document.createElement('div'); actions.className = 'qp-row';
       var open = text('a', 'باز کردن'); open.href = 'https://dentcast.ir' + it.path; open.target = '_blank'; open.rel = 'noopener'; actions.appendChild(open);
       if (it.state === 'live') {
-        var ed = text('button', 'ویرایش'); ed.type = 'button';
+        var ed = text('button', 'ویرایش'); ed.type = 'button'; ed.hidden = !enabledNow;
         ed.onclick = function () {
           request('/admin/quick-publish/' + encodeURIComponent(it.id) + '/source').then(function (s) {
             var found = [], re = /!\[([^\]]*)\]\(([^)\s]+)\)/g, m;
@@ -264,6 +308,27 @@ export function renderQuickPublish(): string {
       box.appendChild(actions);
       return box;
     }
+    var picked = {}, items = [], enabledNow = false;
+    function pickedIds() { return items.filter(function (it) { return picked[it.id] && !it.workflow_requested_at && it.state !== 'completed'; }).map(function (it) { return it.id; }); }
+    function drawSend() {
+      var n = pickedIds().length;
+      el('qpSendRow').hidden = !n;
+      el('qpSend').textContent = 'بفرست تو ورک‌فلو (' + n.toLocaleString('fa-IR') + ' مطلب)';
+    }
+    function sendToWorkflow(ids, requested) {
+      if (requested && !confirm(ids.length.toLocaleString('fa-IR') + ' مطلب برای تکمیل در ورک‌فلوی کامل علامت بخورد؟\nبعد به ایجنت بگو «مطالب انتشار حداقلی که فرستادم رو کامل کن».')) return;
+      json('POST', '/admin/quick-publish/workflow', { ids: ids, requested: requested }).then(function () {
+        ids.forEach(function (id) { delete picked[id]; });
+        el('qpResult').textContent = requested ? 'علامت خورد. ورک‌فلو فقط وقتی شروع می‌شود که به ایجنت بگویی.' : 'از ورک‌فلو پس گرفته شد.';
+        load();
+      }).catch(function (e) { el('qpResult').textContent = msg(e.message); });
+    }
+    el('qpSend').onclick = function () { var ids = pickedIds(); if (ids.length) sendToWorkflow(ids, true); };
+    el('qpSwitchBtn').onclick = function () {
+      var on = el('qpSwitchBtn').getAttribute('data-on') !== '1';
+      if (on && !confirm('انتشار حداقلی فقط برای وقتی است که GitHub در دسترس نیست. روشن شود؟')) return;
+      json('PUT', '/admin/quick-publish/enabled', { enabled: on }).then(load).catch(function (e) { el('qpStatus').textContent = msg(e.message); });
+    };
     function load() {
       request('/admin/quick-publish').then(function (j) {
         var st = el('qpStatus'), sel = el('qpType');
@@ -271,16 +336,24 @@ export function renderQuickPublish(): string {
           Object.keys(j.types).forEach(function (k) { var o = text('option', j.types[k]); o.value = k; sel.appendChild(o); });
           if (!el('qpEditing').value) { try { fill(JSON.parse(localStorage.getItem(DRAFT) || '{}')); } catch (e) {} }
         }
+        var sw = el('qpSwitch'), btn = el('qpSwitchBtn');
+        sw.hidden = false; btn.setAttribute('data-on', j.enabled ? '1' : '0');
+        el('qpSwitchText').textContent = j.enabled
+          ? 'روشن — حالت قطعی. بعد از وصل شدن اینترنت خاموشش کن.'
+          : 'خاموش. در حالت عادی هر مطلب از ورک‌فلوی کامل منتشر می‌شود؛ این مسیر فقط برای قطعی است.';
+        btn.textContent = j.enabled ? 'خاموش کردن' : 'روشن کردن (فقط در قطعی)';
         if (!j.configured) st.textContent = msg('storage_not_configured');
         else if (j.error) st.textContent = msg('storage_unavailable') + ' (' + j.error + ')';
         else if (!j.template) st.textContent = msg('template_missing');
-        else st.textContent = 'آماده. هر انتشار مستقیم روی dentcast.ir می‌نشیند.';
-        form.hidden = !(j.configured && j.template && !j.error);
-        var open = j.items.filter(function (it) { return it.state !== 'completed'; });
+        else st.textContent = j.enabled ? 'آماده. هر انتشار مستقیم روی dentcast.ir می‌نشیند.' : '';
+        form.hidden = !(j.enabled && j.configured && j.template && !j.error);
+        items = j.items; enabledNow = !!j.enabled;
+        var open = j.items.filter(function (it) { return it.state !== 'completed' && !it.workflow_requested_at; });
         el('qpWaiting').textContent = String(open.length);
         var list = el('qpList'); list.textContent = '';
         if (!j.items.length) list.appendChild(text('p', 'هنوز چیزی با انتشار حداقلی منتشر نشده.', 'muted'));
         j.items.slice().reverse().forEach(function (it) { list.appendChild(row(it)); });
+        drawSend();
       }).catch(function (e) { el('qpStatus').textContent = msg(e.message); });
     }
     load();

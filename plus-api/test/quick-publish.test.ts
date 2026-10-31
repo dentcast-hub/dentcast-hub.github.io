@@ -8,7 +8,7 @@ import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
 import {
   QP_TYPES, signV4, renderBody, renderPage, brainEntry, appendBrainEntry, replaceBrainEntry, setSiteStore,
-  BRAIN_KEY, LEDGER_KEY, TEMPLATE_KEY, type SiteStore, type QpType,
+  setEnabled, BRAIN_KEY, LEDGER_KEY, TEMPLATE_KEY, type SiteStore, type QpType,
 } from '../src/services/quick-publish.js';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -100,6 +100,7 @@ describe('quick publish — admin routes', () => {
     await resetDb();
     store = memoryStore({ [BRAIN_KEY]: brainText, [TEMPLATE_KEY]: template });
     setSiteStore(store);
+    await setEnabled(true);
     if (!app) app = await makeApp();
   });
   afterAll(async () => { setSiteStore(null); await app?.close(); await pool.end(); });
@@ -109,6 +110,8 @@ describe('quick publish — admin routes', () => {
       { method: 'GET' as const, url: '/admin/quick-publish' },
       { method: 'POST' as const, url: '/admin/quick-publish', payload: {} },
       { method: 'POST' as const, url: '/admin/quick-publish/preview', payload: {} },
+      { method: 'PUT' as const, url: '/admin/quick-publish/enabled', payload: { enabled: true } },
+      { method: 'POST' as const, url: '/admin/quick-publish/workflow', payload: { ids: ['clinical-1'], requested: true } },
       { method: 'PUT' as const, url: '/admin/quick-publish/clinical-1', payload: {} },
       { method: 'POST' as const, url: '/admin/quick-publish/clinical-1/restore' },
       { method: 'POST' as const, url: '/admin/quick-publish/media', payload: PNG, headers: { 'content-type': 'image/png' } },
@@ -196,6 +199,63 @@ describe('quick publish — admin routes', () => {
     expect(store.files.get(img.slice(1))).toEqual(PNG);
     expect(JSON.parse(store.files.get(BRAIN_KEY)!.toString()).at(-1).id).toBe(item.id);
     expect((await app.inject({ method: 'POST', url: `/admin/quick-publish/${item.id}/restore`, headers })).json().restored).toEqual([]);
+  });
+
+  it('is off until switched on: publish and uploads answer 403 disabled', async () => {
+    await setEnabled(false);
+    const r = await post({ type: 'clinical', title: 'یک نکته', caption: 'کپشن کوتاه برای این نکته', body });
+    expect(r.statusCode).toBe(403);
+    expect(r.json()).toEqual({ error: 'disabled' });
+    const up = await app.inject({ method: 'POST', url: '/admin/quick-publish/media', headers: { ...headers, 'content-type': 'image/png' }, payload: PNG });
+    expect(up.statusCode).toBe(403);
+    expect(up.json()).toEqual({ error: 'disabled' });
+    expect((await app.inject({ url: '/admin/quick-publish', headers })).json()).toMatchObject({ enabled: false });
+
+    const bad = await app.inject({ method: 'PUT', url: '/admin/quick-publish/enabled', headers, payload: { enabled: 'yes' } });
+    expect(bad.statusCode).toBe(400);
+    const on = await app.inject({ method: 'PUT', url: '/admin/quick-publish/enabled', headers, payload: { enabled: true } });
+    expect(on.statusCode).toBe(200);
+    expect(on.json()).toEqual({ ok: true, enabled: true });
+    expect((await app.inject({ url: '/admin/quick-publish', headers })).json()).toMatchObject({ enabled: true });
+    expect((await post({ type: 'clinical', title: 'یک نکته', caption: 'کپشن کوتاه برای این نکته', body })).statusCode).toBe(200);
+  });
+
+  it('marks items for the full workflow without touching their content, and takes the mark back', async () => {
+    const a = (await post({ type: 'clinical', title: 'نکتهٔ اول', caption: 'کپشن کوتاه نکتهٔ اول', body })).json().item;
+    const b = (await post({ type: 'clinical', title: 'نکتهٔ دوم', caption: 'کپشن کوتاه نکتهٔ دوم', body })).json().item;
+    const wf = (payload: unknown) => app.inject({ method: 'POST', url: '/admin/quick-publish/workflow', headers, payload: payload as object });
+    const ledger = () => JSON.parse(store.files.get(LEDGER_KEY)!.toString()).items as Record<string, unknown>[];
+    const row = async (id: string) => (await pool.query(`select record->>'id' as rid, record->>'workflow_requested_at' as flag, record->'workflow_requested_at' as raw from quick_publications where id = $1`, [id])).rows[0];
+
+    const r = await wf({ ids: [a.id], requested: true });
+    expect(r.statusCode).toBe(200);
+    expect(r.json()).toEqual({ ok: true, changed: [a.id] });
+    expect(typeof ledger()[0].workflow_requested_at).toBe('string');
+    expect(ledger()[0].updated_at).toBe(a.updated_at);
+    expect(ledger()[1].workflow_requested_at ?? null).toBeNull();
+    expect((await row(a.id)).flag).toBe(ledger()[0].workflow_requested_at);
+    expect((await row(b.id)).flag).toBeNull();
+
+    expect((await wf({ ids: [a.id], requested: true })).json()).toEqual({ ok: true, changed: [] });
+
+    expect((await wf({ ids: [a.id], requested: false })).json()).toEqual({ ok: true, changed: [a.id] });
+    expect(ledger()[0].workflow_requested_at).toBeNull();
+    const cleared = await row(a.id);
+    expect(cleared.rid).toBe(a.id);
+    expect(cleared.raw).toBeNull();
+
+    const unknown = await wf({ ids: [a.id, 'clinical-99999'], requested: true });
+    expect(unknown.statusCode).toBe(404);
+    expect(ledger()[0].workflow_requested_at).toBeNull();
+
+    const items = ledger(); items[1].state = 'completed';
+    store.files.set(LEDGER_KEY, Buffer.from(JSON.stringify({ version: 1, items })));
+    const done = await wf({ ids: [b.id], requested: true });
+    expect(done.statusCode).toBe(409);
+    expect(done.json()).toEqual({ error: 'already_completed' });
+
+    for (const bad of [{}, { ids: [], requested: true }, { ids: [a.id] }, { ids: [a.id], requested: 'yes' }, { ids: [5], requested: true }, { ids: ['Bad Id'], requested: true }])
+      expect((await wf(bad)).statusCode).toBe(400);
   });
 
   it('shows the section on the admin page', async () => {

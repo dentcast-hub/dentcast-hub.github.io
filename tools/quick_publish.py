@@ -8,6 +8,7 @@ keeps the deploys from erasing them first. Owner doc: .dentcast/quick-publish.md
   python3 tools/quick_publish.py status
   python3 tools/quick_publish.py import [--base-url https://dentcast.ir | --from-dir DIR] [--dry-run]
   python3 tools/quick_publish.py guard --bucket-ledger FILE
+  python3 tools/quick_publish.py requested
   python3 tools/quick_publish.py complete <id>
 
 import   fetches the bucket ledger, and for every item git does not have (or has
@@ -17,6 +18,10 @@ import   fetches the bucket ledger, and for every item git does not have (or has
 guard    exits 1 when the bucket ledger holds an item, or a newer edit of one,
          that the repo ledger lacks. deploy-frontend.sh and deploy-arvan.yml run
          it before their `aws s3 sync --delete`.
+requested lists, in ledger order, the items the founder sent to the full
+         workflow from the panel («بفرست تو ورک‌فلو») that are not completed yet.
+         Nothing else goes to the workflow: an item without that flag stays a
+         minimal publication.
 complete marks an imported item `completed` once the full workflow has closed
          it (tools/verify_publish.py green).
 """
@@ -48,10 +53,17 @@ def write_ledger(path: Path, ledger: dict) -> None:
     path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
 
-def missing_from(bucket: dict, tree: dict) -> list:
-    """Bucket items git lacks, or holds an older edit of."""
+def stale_content(bucket_item: dict, tree: dict) -> bool:
+    """git lacks this page, or holds an older edit of it."""
     have = {i['id']: i.get('updated_at') for i in tree['items']}
-    return [i for i in bucket['items'] if i['id'] not in have or have[i['id']] != i.get('updated_at')]
+    return have.get(bucket_item['id'], object()) != bucket_item.get('updated_at')
+
+
+def missing_from(bucket: dict, tree: dict) -> list:
+    """Bucket items git lacks, holds an older edit of, or holds without the founder's latest workflow pick."""
+    flags = {i['id']: i.get('workflow_requested_at') for i in tree['items']}
+    return [i for i in bucket['items']
+            if stale_content(i, tree) or flags.get(i['id']) != i.get('workflow_requested_at')]
 
 
 def serialise_entry(entry: dict) -> str:
@@ -102,6 +114,13 @@ def cmd_import(args) -> int:
     previous = {i['id']: i for i in tree['items']}
     files = {}
     for item in todo:
+        if not stale_content(item, tree):
+            # Only the founder's workflow pick changed: carry the flag, touch nothing else.
+            for i in tree['items']:
+                if i['id'] == item['id']:
+                    i['workflow_requested_at'] = item.get('workflow_requested_at')
+            print(f"→ {item['id']}  workflow pick: {'sent' if item.get('workflow_requested_at') else 'withdrawn'}")
+            continue
         files[item['path'].lstrip('/')] = src.get(item['path'].lstrip('/'))
         for m in item.get('media', []):
             files[m] = src.get(m)
@@ -115,7 +134,9 @@ def cmd_import(args) -> int:
             if swapped is None:
                 raise SystemExit(f"✗ {item['id']}: its brain entry in git differs and is not the one this tool wrote — reconcile by hand")
             brain_text = swapped
-        record = dict(item, state='imported', imported_at=dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds'))
+        prior = previous.get(item['id'], {})
+        state = prior.get('state') if prior.get('state') == 'completed' else 'imported'
+        record = dict(item, state=state, completed_at=prior.get('completed_at'), imported_at=dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds'))
         tree['items'] = [i for i in tree['items'] if i['id'] != item['id']] + [record]
         print(f"→ {item['id']}  {item['path']}  «{item['title']}»" + (f"  +{len(item.get('media', []))} image(s)" if item.get('media') else ''))
     if args.dry_run:
@@ -169,12 +190,24 @@ def cmd_complete(args) -> int:
     raise SystemExit(f'✗ {args.id} is not in {LEDGER}')
 
 
+def cmd_requested(_args) -> int:
+    items = [i for i in read_ledger(ROOT / LEDGER)['items']
+             if i.get('workflow_requested_at') and i.get('state') != 'completed']
+    if not items:
+        print('nothing sent to the workflow from the panel')
+    for i in items:
+        note = '' if i.get('state') == 'imported' else '  (not in git yet — run import first)'
+        print(f"{i['id']:14}  {i['path']}  «{i['title']}»{note}")
+    return 0
+
+
 def cmd_status(_args) -> int:
     items = read_ledger(ROOT / LEDGER)['items']
     if not items:
         print('no minimal publications in git')
     for i in items:
-        print(f"{i.get('state', '?'):9}  {i['id']:14}  {i['path']}  «{i['title']}»")
+        sent = '  [sent to workflow]' if i.get('workflow_requested_at') and i.get('state') != 'completed' else ''
+        print(f"{i.get('state', '?'):9}  {i['id']:14}  {i['path']}  «{i['title']}»{sent}")
     return 0
 
 
@@ -192,10 +225,12 @@ def main(argv=None) -> int:
     c = sub.add_parser('complete')
     c.add_argument('id')
     sub.add_parser('status')
+    sub.add_parser('requested')
     args = p.parse_args(argv)
     if args.cmd == 'import' and args.from_dir:
         args.base_url = None
-    return {'import': cmd_import, 'guard': cmd_guard, 'complete': cmd_complete, 'status': cmd_status}[args.cmd](args)
+    return {'import': cmd_import, 'guard': cmd_guard, 'complete': cmd_complete, 'status': cmd_status,
+            'requested': cmd_requested}[args.cmd](args)
 
 
 if __name__ == '__main__':

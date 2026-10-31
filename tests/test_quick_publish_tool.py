@@ -131,6 +131,47 @@ class QuickPublishToolTest(unittest.TestCase):
         code, _ = self.run_tool('guard', '--bucket-ledger', str(self.bucket / 'quick-publish' / 'ledger.json'))
         self.assertEqual(code, 0)
 
+    def test_a_workflow_pick_reopens_the_guard_and_import_carries_only_the_flag(self):
+        page = self.bucket / 'insight' / 'insight-901.html'
+        page.write_text('v1', encoding='utf-8')
+        self.publish_to_bucket([item()], [ENTRY])
+        self.run_tool('import', '--from-dir', str(self.bucket))
+        bucket_ledger = self.bucket / 'quick-publish' / 'ledger.json'
+        code, out = self.run_tool('requested')
+        self.assertNotIn('clinical-901', out)
+
+        picked = item()
+        picked['workflow_requested_at'] = '2026-11-02T10:00:00.000Z'
+        self.publish_to_bucket([picked], [ENTRY])
+        code, out = self.run_tool('guard', '--bucket-ledger', str(bucket_ledger))
+        self.assertEqual(code, 1, out)
+        page.unlink()  # content unchanged, so the page must not be fetched again
+        code, out = self.run_tool('import', '--from-dir', str(self.bucket))
+        self.assertEqual(code, 0, out)
+        self.assertEqual((self.repo / 'insight' / 'insight-901.html').read_text(encoding='utf-8'), 'v1')
+        ledger = json.loads((self.repo / 'quick-publish' / 'ledger.json').read_text(encoding='utf-8'))
+        self.assertEqual(ledger['items'][0]['workflow_requested_at'], '2026-11-02T10:00:00.000Z')
+        self.assertEqual(ledger['items'][0]['state'], 'imported')
+        code, out = self.run_tool('guard', '--bucket-ledger', str(bucket_ledger))
+        self.assertEqual(code, 0, out)
+        code, out = self.run_tool('requested')
+        self.assertEqual(code, 0, out)
+        self.assertIn('clinical-901', out)
+
+    def test_a_completed_item_stays_completed_when_its_flag_is_withdrawn(self):
+        (self.bucket / 'insight' / 'insight-901.html').write_text('v1', encoding='utf-8')
+        picked = item()
+        picked['workflow_requested_at'] = '2026-11-02T10:00:00.000Z'
+        self.publish_to_bucket([picked], [ENTRY])
+        self.run_tool('import', '--from-dir', str(self.bucket))
+        self.assertEqual(self.run_tool('complete', 'clinical-901')[0], 0)
+        self.publish_to_bucket([item()], [ENTRY])  # flag withdrawn on the panel
+        code, out = self.run_tool('import', '--from-dir', str(self.bucket))
+        self.assertEqual(code, 0, out)
+        ledger = json.loads((self.repo / 'quick-publish' / 'ledger.json').read_text(encoding='utf-8'))
+        self.assertEqual(ledger['items'][0]['state'], 'completed')
+        self.assertNotIn('clinical-901', self.run_tool('requested')[1])
+
 
 if __name__ == '__main__':
     unittest.main()

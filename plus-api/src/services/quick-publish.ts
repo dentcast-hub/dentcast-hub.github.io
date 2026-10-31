@@ -190,6 +190,8 @@ export interface QpItem {
   id: string; type: QpType; n: number; path: string; title: string; caption: string; date: string;
   media: string[]; brain_entry: Record<string, unknown>; created_at: string; updated_at: string;
   state: 'live' | 'imported' | 'completed'; imported_at: string | null; completed_at: string | null;
+  /** Set only by the founder's «بفرست تو ورک‌فلو»; nothing goes to the full workflow on its own. */
+  workflow_requested_at?: string | null;
 }
 interface Ledger { version: 1; items: QpItem[] }
 
@@ -250,6 +252,20 @@ function serial<T>(fn: () => Promise<T>): Promise<T> {
   return run;
 }
 
+// ── on/off ────────────────────────────────────────────────────────────────
+
+/** Off by default: this path exists for a cut, not for normal publishing. */
+export async function isEnabled(): Promise<boolean> {
+  return !!(await one<{ enabled: boolean }>('select enabled from quick_publish_settings where id = true'))?.enabled;
+}
+export async function setEnabled(enabled: boolean): Promise<void> {
+  await query(`insert into quick_publish_settings (id, enabled) values (true, $1)
+    on conflict (id) do update set enabled = excluded.enabled, updated_at = now()`, [enabled]);
+}
+async function requireEnabled(): Promise<void> {
+  if (!(await isEnabled())) throw new QpError('disabled', 403);
+}
+
 export interface QpInput { type: unknown; title: unknown; caption: unknown; body: unknown }
 function validate(i: QpInput): { type: QpType; title: string; caption: string; body: string } {
   if (!isQpType(i.type)) throw new QpError('invalid_type');
@@ -291,6 +307,7 @@ export function publish(input: QpInput): Promise<{ item: QpItem; url: string }> 
   const rendered = renderBody(v.body);
   if (rendered.firstBlock !== 'p') throw new QpError('first_block_not_paragraph');
   return serial(async () => {
+    await requireEnabled();
     const store = requireStore();
     const template = await readText(store, TEMPLATE_KEY, 'template_missing');
     let brainText = await readText(store, BRAIN_KEY, 'brain_missing');
@@ -326,6 +343,7 @@ export function edit(id: string, input: QpInput): Promise<{ item: QpItem; url: s
   const rendered = renderBody(v.body);
   if (rendered.firstBlock !== 'p') throw new QpError('first_block_not_paragraph');
   return serial(async () => {
+    await requireEnabled();
     const store = requireStore();
     const template = await readText(store, TEMPLATE_KEY, 'template_missing');
     let brainText = await readText(store, BRAIN_KEY, 'brain_missing');
@@ -394,6 +412,7 @@ export function imageExtension(buffer: Buffer, contentType: string): string | nu
 export async function uploadImage(buffer: Buffer, contentType: string): Promise<string> {
   const ext = imageExtension(buffer, contentType);
   if (!ext) throw new QpError('invalid_image');
+  await requireEnabled();
   const store = requireStore();
   const key = `${MEDIA_PREFIX}${tehranDate().replace(/-/g, '')}-${randomUUID().slice(0, 8)}.${ext}`;
   await query('insert into quick_publish_media (path, content_type, data) values ($1, $2, $3)', [key, contentType, buffer]);
@@ -408,14 +427,47 @@ async function assertMedia(store: SiteStore, media: string[]): Promise<void> {
   }
 }
 
-export async function status(): Promise<{ configured: boolean; template: boolean; items: QpItem[]; error?: string }> {
+/**
+ * The founder's pick, after the link returns: which minimal publications go
+ * through the full workflow. Writes only the flag; content and updated_at stay,
+ * so an already-imported page is not re-imported, but the deploy guard still
+ * holds until git has the flag too (tools/quick_publish.py import carries it).
+ */
+export function requestWorkflow(ids: string[], requested: boolean): Promise<{ changed: string[] }> {
+  return serial(async () => {
+    const store = requireStore();
+    const ledger = parseLedger(await store.get(LEDGER_KEY));
+    const byId = new Map(ledger.items.map(x => [x.id, x]));
+    for (const id of ids) {
+      const it = byId.get(id);
+      if (!it) throw new QpError('not_found', 404);
+      if (it.state === 'completed') throw new QpError('already_completed', 409);
+    }
+    const changed: string[] = [], now = new Date().toISOString();
+    for (const id of ids) {
+      const it = byId.get(id)!;
+      if (!!it.workflow_requested_at === requested) continue;
+      it.workflow_requested_at = requested ? now : null;
+      changed.push(id);
+    }
+    if (changed.length) {
+      await store.put(LEDGER_KEY, ledgerBytes(ledger), 'application/json; charset=utf-8');
+      await query(`update quick_publications set record = jsonb_set(record, '{workflow_requested_at}', coalesce(to_jsonb($2::text), 'null'::jsonb)), updated_at = now()
+        where id = any($1)`, [changed, requested ? now : null]);
+    }
+    return { changed };
+  });
+}
+
+export async function status(): Promise<{ enabled: boolean; configured: boolean; template: boolean; items: QpItem[]; error?: string }> {
+  const enabled = await isEnabled();
   const store = siteStore();
-  if (!store) return { configured: false, template: false, items: [] };
+  if (!store) return { enabled, configured: false, template: false, items: [] };
   try {
     const [template, ledger] = await Promise.all([store.get(TEMPLATE_KEY), store.get(LEDGER_KEY)]);
-    return { configured: true, template: !!template, items: parseLedger(ledger).items };
+    return { enabled, configured: true, template: !!template, items: parseLedger(ledger).items };
   } catch (err) {
-    return { configured: true, template: false, items: [], error: (err as Error).message };
+    return { enabled, configured: true, template: false, items: [], error: (err as Error).message };
   }
 }
 
