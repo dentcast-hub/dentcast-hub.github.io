@@ -30,6 +30,11 @@ def item(entry=ENTRY, updated='2026-11-01T08:00:00.000Z', media=()):
             'imported_at': None, 'completed_at': None}
 
 
+def raw(path: Path) -> str:
+    """Text with its line endings as stored (the brain is CRLF in git)."""
+    return path.read_bytes().decode('utf-8')
+
+
 class QuickPublishToolTest(unittest.TestCase):
     def setUp(self):
         self.tmp = Path(tempfile.mkdtemp())
@@ -58,10 +63,10 @@ class QuickPublishToolTest(unittest.TestCase):
         return code, out.getvalue() + err.getvalue()
 
     def publish_to_bucket(self, items, brain_entries=()):
-        brain = (ROOT / 'dentcast-brain.json').read_text(encoding='utf-8')
+        brain = raw(ROOT / 'dentcast-brain.json')
         for e in brain_entries:
             brain = qp.append_entry(brain, e)
-        (self.bucket / 'dentcast-brain.json').write_text(brain, encoding='utf-8')
+        (self.bucket / 'dentcast-brain.json').write_bytes(brain.encode('utf-8'))
         (self.bucket / 'quick-publish' / 'ledger.json').write_text(json.dumps({'version': 1, 'items': items}), encoding='utf-8')
 
     def test_entry_serialisation_matches_the_api(self):
@@ -75,7 +80,7 @@ class QuickPublishToolTest(unittest.TestCase):
         (self.bucket / 'insight' / 'insight-901.html').write_text('<html>page</html>', encoding='utf-8')
         (self.bucket / media).write_bytes(b'\xff\xd8\xffjpeg')
         self.publish_to_bucket([item(media=[media])], [ENTRY])
-        before = (self.repo / 'dentcast-brain.json').read_text(encoding='utf-8')
+        before = raw(self.repo / 'dentcast-brain.json')
 
         code, out = self.run_tool('guard', '--bucket-ledger', str(self.bucket / 'quick-publish' / 'ledger.json'))
         self.assertEqual(code, 1, out)
@@ -85,11 +90,14 @@ class QuickPublishToolTest(unittest.TestCase):
         self.assertEqual(code, 0, out)
         self.assertEqual((self.repo / 'insight' / 'insight-901.html').read_text(encoding='utf-8'), '<html>page</html>')
         self.assertEqual((self.repo / media).read_bytes(), b'\xff\xd8\xffjpeg')
-        after = (self.repo / 'dentcast-brain.json').read_text(encoding='utf-8')
-        self.assertTrue(after.startswith(before[:before.rindex(']')].rstrip() + ',\n'))
+        after = raw(self.repo / 'dentcast-brain.json')
+        # Only the tail changes, in the file's own CRLF — no whole-file line-ending rewrite.
+        self.assertTrue(before.endswith('\r\n'))
+        self.assertTrue(after.startswith(before[:before.rindex(']')].rstrip() + ',\r\n'))
+        self.assertEqual(after.count('\n') - after.count('\r\n'), before.count('\n') - before.count('\r\n'))
         self.assertEqual(json.loads(after)[-1], ENTRY)
         # The bucket's brain (API-written) and git's (tool-written) are byte-identical.
-        self.assertEqual(after, (self.bucket / 'dentcast-brain.json').read_text(encoding='utf-8'))
+        self.assertEqual(after, raw(self.bucket / 'dentcast-brain.json'))
         ledger = json.loads((self.repo / 'quick-publish' / 'ledger.json').read_text(encoding='utf-8'))
         self.assertEqual([(i['id'], i['state']) for i in ledger['items']], [('clinical-901', 'imported')])
 

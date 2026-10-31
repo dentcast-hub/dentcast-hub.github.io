@@ -66,22 +66,29 @@ def missing_from(bucket: dict, tree: dict) -> list:
             if stale_content(i, tree) or flags.get(i['id']) != i.get('workflow_requested_at')]
 
 
-def serialise_entry(entry: dict) -> str:
-    return '\n'.join('  ' + line for line in json.dumps(entry, ensure_ascii=False, indent=2).split('\n'))
+def brain_eol(text: str) -> str:
+    """The brain's own line ending (CRLF in git); never convert it."""
+    return '\r\n' if text.endswith('\r\n') else '\n'
+
+
+def serialise_entry(entry: dict, eol: str = '\n') -> str:
+    return eol.join('  ' + line for line in json.dumps(entry, ensure_ascii=False, indent=2).split('\n'))
 
 
 def append_entry(text: str, entry: dict) -> str:
+    eol = brain_eol(text)
     head = text[:text.rindex(']')].rstrip()
-    out = head + ('\n' if head.endswith('[') else ',\n') + serialise_entry(entry) + '\n]\n'
+    out = head + (eol if head.endswith('[') else ',' + eol) + serialise_entry(entry, eol) + eol + ']' + eol
     json.loads(out)
     return out
 
 
 def replace_entry(text: str, before: dict, after: dict):
-    old = serialise_entry(before)
+    eol = brain_eol(text)
+    old = serialise_entry(before, eol)
     if text.count(old) != 1:
         return None
-    out = text.replace(old, serialise_entry(after))
+    out = text.replace(old, serialise_entry(after, eol))
     json.loads(out)
     return out
 
@@ -109,8 +116,10 @@ def cmd_import(args) -> int:
     if not todo:
         print('✓ nothing to import — git already has every minimal publication')
         return 0
+    pages = sum(1 for i in todo if stale_content(i, tree))
     brain_path = ROOT / BRAIN
-    brain_text = brain_path.read_text(encoding='utf-8')
+    with open(brain_path, encoding='utf-8', newline='') as f:  # keep CRLF as CRLF
+        brain_text = f.read()
     previous = {i['id']: i for i in tree['items']}
     files = {}
     for item in todo:
@@ -146,13 +155,15 @@ def cmd_import(args) -> int:
         out = ROOT / rel
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_bytes(data)
-    brain_path.write_text(brain_text, encoding='utf-8')
+    with open(brain_path, 'w', encoding='utf-8', newline='') as f:
+        f.write(brain_text)
     # Bucket order is publication order; keep it.
     order = {i['id']: n for n, i in enumerate(bucket['items'])}
     tree['items'].sort(key=lambda i: order.get(i['id'], -1))
     write_ledger(tree_path, tree)
-    print(f'\n✓ imported {len(todo)} item(s). Next: commit and push, then run the full workflow on each one '
-          '(.dentcast/quick-publish.md, «بعد از وصل شدن»).')
+    picks = len(todo) - pages
+    print(f'\n✓ {pages} page(s) imported, {picks} workflow pick(s) updated. Next: commit and push. '
+          'Only `requested` items go through the full workflow, and only when the founder asks (.dentcast/quick-publish.md).')
     return 0
 
 
@@ -167,11 +178,19 @@ def cmd_guard(args) -> int:
     if not todo:
         print('✓ quick-publish guard: git has every page the panel published')
         return 0
-    print('✗ the bucket holds pages published from /admin («انتشار حداقلی») that git does not have.\n'
-          '  Syncing now would delete them from dentcast.ir. Import them first:\n\n'
-          '    python3 tools/quick_publish.py import\n', file=sys.stderr)
-    for i in todo:
-        print(f"    {i['id']}  {i['path']}  «{i['title']}»", file=sys.stderr)
+    pages = [i for i in todo if stale_content(i, tree)]
+    picks = [i for i in todo if i not in pages]
+    if pages:
+        print('✗ the bucket holds pages published from /admin («انتشار حداقلی») that git does not have (or an older edit of).\n'
+              '  Syncing now would delete them from dentcast.ir. Import them first:', file=sys.stderr)
+        for i in pages:
+            print(f"    {i['id']}  {i['path']}  «{i['title']}»", file=sys.stderr)
+    if picks:
+        print('✗ the founder changed «بفرست تو ورک‌فلو» on the panel and git does not have that pick yet;\n'
+              '  syncing now would overwrite it. Import it first (only the ledger line changes):', file=sys.stderr)
+        for i in picks:
+            print(f"    {i['id']}  {'sent' if i.get('workflow_requested_at') else 'withdrawn'}  «{i['title']}»", file=sys.stderr)
+    print('\n    python3 tools/quick_publish.py import\n', file=sys.stderr)
     return 1
 
 
