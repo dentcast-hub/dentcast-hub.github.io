@@ -1,0 +1,81 @@
+{
+  "status": "proposed_pending_founder_approval",
+  "content_id": "assigned mechanically on publication day",
+  "faqPage": {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": "https://dentcast.org/insight/{content_id}.html#faq",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "در روش آنالوگ برای نشان‌دادن محل و مقدار تقریبی کمبود ارتفاع اکلوزالی به لابراتوار چه چیزی فرستاده می‌شود؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "رستوریشنِ کاملاً نشسته همراه بایت ثبت‌شده در MIP فرستاده می‌شود تا تکنسین ضخامت مادهٔ بایت را در ناحیهٔ رستوریشن بررسی کند."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "برای ارزیابی دیجیتال فاصلهٔ اکلوزالی، کدام بخش‌ها اسکن می‌شوند؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "فک حاوی رستوریشنِ کاملاً نشسته، فک مقابل و رابطهٔ اکلوزالی دو فک ثبت می‌شوند."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "آیا امکان اصلاح همهٔ رستوریشن‌های کوتاه با افزودن پرسلن یکسان است؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "خیر؛ امکان اصلاح به جنس و ساختار رستوریشن و مقدار اصلاح بستگی دارد و گاهی ساخت مجدد مناسب‌تر است."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "دقت روش ثبت دیجیتال رابطهٔ اکلوزالی به چه چیزی وابسته است؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "به نشستن کامل رستوریشن و ثبت صحیح و تکرارپذیر رابطهٔ فک‌ها وابسته است."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "آیا دقت ثبت دیجیتال فقط به نشستن کامل رستوریشن وابسته است؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "خیر؛ علاوه بر نشستن کامل رستوریشن، ثبت صحیح و تکرارپذیر رابطهٔ فک‌ها هم لازم است."
+        }
+      }
+    ]
+  },
+  "definedTermSets": [
+    {
+      "@context": "https://schema.org",
+      "@type": "DefinedTermSet",
+      "@id": "https://dentcast.org/insight/{content_id}.html#flashcards",
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://dentcast.org/insight/{content_id}.html#flashcards-c1",
+          "name": "حداکثر اینترکاسپیشن (MIP)",
+          "description": "موقعیتی که در آن دندان‌های فک بالا و پایین در بیشترین تماس بین‌کاسپی خود قرار می‌گیرند.",
+          "source": "authored"
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://dentcast.org/insight/{content_id}.html#flashcards-c2",
+          "name": "فاصلهٔ اکلوزالی (Occlusal Clearance)",
+          "description": "فضای موجود میان سطوح اکلوزالی مقابل در رابطهٔ ثبت‌شدهٔ دو فک که برای طراحی یا اصلاح رستوریشن قابل ارزیابی است.",
+          "source": "authored"
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://dentcast.org/insight/{content_id}.html#flashcards-c3",
+          "name": "ثبت بایت برای رستوریشن کوتاه",
+          "description": "رستوریشنِ کاملاً نشسته همراه رابطهٔ بایت ثبت‌شده به لابراتوار فرستاده می‌شود تا ضخامت ماده در ناحیهٔ رستوریشن محل و مقدار تقریبی کمبود ارتفاع را نشان دهد.",
+          "source": "authored"
+        }
+      ]
+    }
+  ]
+}

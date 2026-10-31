@@ -1,0 +1,51 @@
+{
+  "des_version": "3.5",
+  "content_type": "COMMENTARY",
+  "question_type": null,
+  "text_basis": "FULL_TEXT",
+  "citation": {
+    "title": "اصلاح اکلوژن رستوریشن‌های کوتاه با کمک بایت رجیستریشن و اسکن دیجیتال",
+    "authors": "",
+    "year": null,
+    "journal": "",
+    "doi": ""
+  },
+  "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+  },
+  "s_design": null,
+  "q_method": null,
+  "penalties": null,
+  "commentary_checklist": [
+    {
+      "item": "reasoning chain is explicit",
+      "points": 4,
+      "evidence_quote": "تکنسین با بررسی ضخامت مادهٔ بایت در ناحیهٔ رستوریشن، می‌توانست محل و میزان تقریبی کمبود ارتفاع اکلوزالی را تشخیص دهد",
+      "note": ""
+    },
+    {
+      "item": "relationship to published evidence is stated",
+      "points": 0,
+      "evidence_quote": "",
+      "note": "متن نسبت خود را با شواهد منتشرشده بیان نمی‌کند؛ اعلام سطح بخش برای این مورد کافی نیست."
+    },
+    {
+      "item": "scope of the claim is bounded",
+      "points": 3,
+      "evidence_quote": "امکان اصلاح به جنس و ساختار رستوریشن و میزان اصلاح وابسته است.",
+      "note": ""
+    },
+    {
+      "item": "explicitly labeled as experience/opinion, not evidence",
+      "points": 3,
+      "evidence_quote": "Insightها نکته‌های شخصی‌اند؛ مبنایشان علمی است اما به رفرنس مشخصی ارجاع نمی‌دهند، پس تجربه و تحلیل‌اند نه گزارش یک یافته‌ی پژوهشی.",
+      "note": "اعلانِ سطحِ بخش، از insight/index.html"
+    }
+  ],
+  "des_score": 15,
+  "band": "E",
+  "provisional": false,
+  "fact_fa": "این یادداشتِ Commentary امتیاز DES برابر ۱۵ و باند E دارد.",
+  "interpretation_fa": "این یادداشت تجربهٔ بالینی را به روشی برای انتقال محل و مقدار تقریبی کمبود تماس اکلوزالی به لابراتوار تبدیل می‌کند؛ کاربرد آن به نشستن کامل رستوریشن، ثبت تکرارپذیر رابطهٔ فکی و قابلیت اصلاح ماده محدود است."
+}
