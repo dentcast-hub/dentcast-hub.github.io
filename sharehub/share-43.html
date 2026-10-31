@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="dc-notify" content="true">
+
+<title>حفظ دندان یا کشیدن آن؟ سه درمان جایگزین از نگاه پروتزی | Share Hub – دنت‌کست</title>
+
+<meta name="description" content="ریشه از نظر اندو قابل نگهداری است، اما تاجی برای ساختن نمانده است. بین حفظ و کشیدن همیشه فقط دو راه نداریم، ولی انتخاب درست از جای دیگری شروع می‌شود.">
+
+<link rel="canonical" href="https://dentcast.org/sharehub/share-43.html">
+<link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/sharehub/share-43.html">
+<link rel="alternate" hreflang="fa" href="https://dentcast.org/sharehub/share-43.html">
+<link rel="alternate" hreflang="x-default" href="https://dentcast.org/sharehub/share-43.html">
+
+  <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
+  <link rel="stylesheet" href="/dc-article.css?v=6">
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --bg1:#eaf1ff;
+      --bg2:#f5f8ff;
+      --text:#111;
+      --muted:#444;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.2);
+    }
+
+    p { margin: 0.875rem 0; }
+
+
+    ul {
+      list-style: none;
+      padding-right: 0;
+      margin: 0.875rem 0;
+    }
+
+    ul li::before {
+      content: "✦ ";
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    /* summary tables — same pattern as .text-box table elsewhere on the site */
+    .glass-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .glass-box table th,
+    .glass-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:right;
+      vertical-align:top;
+    }
+    .glass-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .glass-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+    @media (max-width:768px){
+      .glass-box table{font-size:.9rem;}
+      .glass-box table th,.glass-box table td{padding:0.45rem 0.5rem;}
+    }
+
+    /* images with a visible caption */
+    .glass-box figure { max-width: 30rem; margin: 1.25rem auto; }
+    .glass-box figcaption {
+      text-align: center;
+      font-size: .85rem;
+      opacity: .75;
+      margin-top: 0.5rem;
+      line-height: 1.8;
+    }
+
+    .sh-subtitle { text-align:center; font-weight:700; color:var(--muted); margin:-0.25rem 0 1rem; }
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* section kicker above the title */
+    .sh-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      direction: ltr;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: .02em;
+      margin: 0 0 0.5rem;
+    }
+
+    /* references list */
+    .sh-refs { margin-top: 0.5rem; }
+    .sh-refs li { font-size: 0.95rem; line-height: 1.9; }
+    .sh-refs a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .sh-refs a:hover { text-decoration: underline; }
+
+    /* figure pairs and wide tables */
+    .glass-box .sh-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+    .glass-box .sh-pair figure { margin: 0; }
+    .glass-box .sh-pair img { width: 100%; height: auto; }
+    /* Keep the supplied clinical crops at their native size; shrink only on narrow screens. */
+    .glass-box figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+    .sh-scroll { overflow-x: auto; }
+    .sh-scroll img { min-width: 32rem; }
+    @media (max-width:420px){ .glass-box .sh-pair { grid-template-columns: 1fr; } }
+
+
+    /* permission chips (مجاز / با محدودیت / استفاده نکن) */
+    .chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: .05rem .55rem; border-radius: 999px; line-height: 1.7; white-space: nowrap; margin-inline-start: .25rem; }
+    .chip.ok { color: #1f7a3a; background: rgba(47,122,60,.14); }
+    .chip.warn { color: #9a6200; background: rgba(214,150,20,.16); }
+    .chip.no { color: #b3342b; background: rgba(179,52,43,.13); }
+    [data-theme="dark"] .chip.ok { color: #7fcf8a; }
+    [data-theme="dark"] .chip.warn { color: #f0bb5b; }
+    [data-theme="dark"] .chip.no { color: #f08a80; }
+
+    /* English-version toggle button */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 auto 1.125rem 0;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { line-height: 1.9;}
+    }
+  </style>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <meta name="theme-color" content="#0b5fff">
+
+  <!-- Share Hub Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://dentcast.org/sharehub/share-43.html",
+      "url": "https://dentcast.org/sharehub/share-43.html",
+      "name": "حفظ دندان یا کشیدن آن؟ سه درمان جایگزین از نگاه پروتزی",
+      "inLanguage": "fa",
+      "isPartOf": {
+        "@id": "https://dentcast.org/#website"
+      },
+      "about": {
+        "@id": "https://dentcast.org/sharehub/share-43.html#creativework"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://dentcast.org/sharehub/share-43.html#creativework",
+      "name": "حفظ دندان یا کشیدن آن؟ سه درمان جایگزین از نگاه پروتزی",
+      "headline": "حفظ دندان یا کشیدن آن؟ سه درمان جایگزین از نگاه پروتزی",
+      "description": "ریشه از نظر اندو قابل نگهداری است، اما تاجی برای ساختن نمانده است. بین حفظ و کشیدن همیشه فقط دو راه نداریم، ولی انتخاب درست از جای دیگری شروع می‌شود.",
+      "inLanguage": "fa",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "دکتر فواد شهابیان"
+        }
+      ],
+      "creator": [
+        {
+          "@type": "Person",
+          "name": "دکتر فواد شهابیان"
+        }
+      ],
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/sharehub/share-43.html"
+      },
+      "datePublished": "2026-10-31",
+      "dateModified": "2026-10-31",
+      "genre": "Dental Education",
+      "keywords": [
+        "حفظ دندان یا کشیدن آن؟ سه درمان جایگزین از نگاه پروتزی",
+        "Share_Hub",
+        "Curated_Content",
+        "TMD",
+        "داخل_کپسولی",
+        "اسپلینت",
+        "اسپلینت_ریپوزیشن"
+      ]
+    }
+  ]
+}
+</script>
+
+    <link rel="stylesheet" href="/dc-theme.css?v=7">
+<link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="حفظ دندان یا کشیدن آن؟ سه درمان جایگزین از نگاه پروتزی | Share Hub – دنت‌کست">
+  <meta property="og:description" content="ریشه از نظر اندو قابل نگهداری است، اما تاجی برای ساختن نمانده است. بین حفظ و کشیدن همیشه فقط دو راه نداریم، ولی انتخاب درست از جای دیگری شروع می‌شود.">
+  <meta property="og:url" content="https://dentcast.org/sharehub/share-43.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="حفظ دندان یا کشیدن آن؟ سه درمان جایگزین از نگاه پروتزی | Share Hub – دنت‌کست">
+  <meta name="twitter:description" content="ریشه از نظر اندو قابل نگهداری است، اما تاجی برای ساختن نمانده است. بین حفظ و کشیدن همیشه فقط دو راه نداریم، ولی انتخاب درست از جای دیگری شروع می‌شود.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "DentCast",
+      "item": "https://dentcast.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Share Hub",
+      "item": "https://dentcast.org/sharehub/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "حفظ دندان یا کشیدن آن؟ سه درمان جایگزین از نگاه پروتزی | Share Hub – دنت‌کست",
+      "item": "https://dentcast.org/sharehub/share-43.html"
+    }
+  ]
+}
+</script>
+  <meta name="robots" content="index, follow, max-image-preview:large">
+</head>
+
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<div class="sh-kicker"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 21 12 16l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Share Hub</div>
+<h1>حفظ دندان یا کشیدن آن؟ سه درمان جایگزین از نگاه پروتزی</h1>
+<p class="sh-subtitle">اکستروژن جراحی، ری‌پلنتیشن عمدی و اتوترنسپلنتیشن</p>
+
+<div class="glass-box">
+<a class="lang-btn" href="en/share-43.html" rel="noopener">English</a>
+<div class="sh-dialogue">
+<h2>مقدمه؛ تصمیم درمان از کجا شروع می‌شود؟</h2>
+<p>وقتی تاج دندان به‌شدت تخریب شده، شکستگی به زیر لثه رسیده یا درمان اندودنتیک قبلی شکست خورده است، تصمیم بین <a href="/episodes/episode-151.html">حفظ دندان و کشیدن آن</a> همیشه ساده نیست. از نگاه پروتزی، پیش از انتخاب درمان باید یک سؤال اساسی پرسید: اگر دندان حفظ شود، آیا در نهایت می‌توان رستوریشنی قابل‌اعتماد با پیش‌آگهی مناسب برای آن ساخت؟</p>
+<p>ممکن است ریشه‌ای از نظر اندودنتیک یا جراحی قابل درمان باشد، اما ساختار باقی‌مانده، حمایت استخوانی یا شرایط اکلوژن اجازه‌ی یک رستوریشن قابل‌قبول را ندهد. برعکس، دندانی که در موقعیت فعلی غیرقابل ترمیم به نظر می‌رسد، گاهی با تغییر موقعیت یا یک مداخله‌ی جراحی مناسب قابل بازسازی می‌شود.</p>
+<p>سه درمانی که در این مقاله بررسی می‌شوند، در بیماران انتخاب‌شده امکان حفظ دندان طبیعی یا جایگزینی آن با یک دندان طبیعی دیگر را فراهم می‌کنند:</p>
+<ul><li><strong>Surgical Extrusion (اکستروژن جراحی):</strong> جابه‌جا کردن ریشه به موقعیتی کرونالی‌تر در همان ساکت، تا دندانی که غیرقابل ترمیم است قابل بازسازی شود.</li><li><strong>Intentional Replantation (ری‌پلنتیشن عمدی):</strong> خارج کردن عمدی دندان، درمان مشکل ریشه در خارج از دهان و برگرداندن آن به همان موقعیت قبلی.</li><li><strong>Tooth Autotransplantation (اتوترنسپلنتیشن):</strong> انتقال یک دندان نهفته یا رویش‌یافته از یک ناحیه‌ی دهان به ناحیه‌ی دیگری در همان بیمار.</li></ul>
+<p>پروتکل این سه درمان شباهت زیادی به هم دارد: خارج کردن آتروماتیک دندان، بررسی مستقیم ریشه و قرار دادن دوباره‌ی آن در ساکت. به همین دلیل در هر سه، موفقیت درمان به حفظ سلامت لیگامان پریودنتال (PDL) وابسته است.</p>
+<h2>۱. اکستروژن جراحی؛ وقتی مشکل اصلی، قابلیت بازسازی دندان است</h2>
+<p>فرض کنید بیماری با شکستگی تاج و ریشه‌ی سانترال بالا مراجعه کرده است. لبه‌ی شکستگی در سمت لبیال در نزدیک لثه است، اما در سمت پالاتال تا زیر استخوان امتداد یافته است. در چنین وضعیتی ریشه ممکن است از نظر اندودنتیک قابل نگهداری باشد، ولی <a href="/glossary/ferrule-effect.html">فرول</a> کافی برای رستوریشن نهایی وجود ندارد.</p>
+<p>یکی از گزینه‌ها اکستروژن جراحی است. در این روش ریشه با کمترین آسیب جابه‌جا می‌شود و در موقعیتی کرونالی‌تر قرار می‌گیرد تا ساختار سالم بیشتری برای رستوریشن در دسترس باشد. پس هدف فقط بیرون آوردن بخشی از ریشه نیست؛ هدف این است که برای یک رستوریشن قابل‌اعتماد جا باز شود.</p>
+<h3>انتخاب کیس از نگاه پروتزی</h3>
+<p>اندیکاسیون اصلی اکستروژن جراحی، دندان‌های دائمی تک‌ریشه با شکستگی یا پوسیدگی تاج در نزدیکی سطح استخوان است و سن بیمار محدودیتی ایجاد نمی‌کند. پیش از تصمیم باید روشن شود که بعد از جابه‌جایی ریشه واقعاً چه شرایطی خواهیم داشت.</p>
+<p><strong>ساختار باقی‌مانده و فرول:</strong> پیش از درمان، همه‌ی عاج پوسیده باید برداشته شود تا ساختار سالم واقعی دیده شود و مقدار اکستروژن لازم مشخص شود. اگر حتی بعد از اکستروژن هم فرول مناسب به دست نیاید، درمان مشکل اصلی را حل نکرده است.</p>
+<p><strong>طول ریشه و حمایت استخوانی:</strong> با اکستروژن، بخشی از ریشه که داخل استخوان بوده به سمت کرونال می‌آید. بنابراین ریشه باید بعد از اکستروژن آن‌قدر بلند باشد که حمایت آلوئولار کافی و نسبت تاج به ریشه‌ی مناسبی داشته باشد. ایجاد فرول نباید به قیمت از دست رفتن حمایت ریشه تمام شود.</p>
+<p>با این حال، در بیماران جوان حتی اکستروژن یک ریشه‌ی کوتاه هم ممکن است موفقیت حساب شود، به شرطی که حفظ موقت دندان بتواند <a href="/glossary/dental-implant.html">ایمپلنت</a> را تا بزرگسالی به تعویق بیندازد.</p>
+<h3>چرخش ۱۸۰ درجه در دندان‌های قدامی ماگزیلا</h3>
+<p>در شکستگی‌های تاج و ریشه‌ی دندان‌های قدامی ماگزیلا، خط شکستگی الگوی مشخصی دارد: در سمت لبیال در حد لثه یا بالاتر از آن است و در سمت پالاتال اغلب تا زیر استخوان پیش می‌رود. از طرف دیگر، در همین ناحیه سطح استخوان آلوئولار در سمت پالاتال کرونالی‌تر از سمت لبیال است.</p>
+<p>به همین دلیل چرخاندن ریشه به اندازه‌ی ۱۸۰ درجه پیش از قرار دادن دوباره‌ی آن در ساکت، روش ایده‌آلی برای این دندان‌ها است. با این چرخش، لبه‌ی عمیق پالاتالی به سمت لبیال می‌رود که استخوان پایین‌تر است، و لبه‌ی سطحی لبیال به سمت پالاتال می‌آید. نتیجه این است که مارجین شکستگی در هر دو سمت با کمترین مقدار اکستروژن در دسترس قرار می‌گیرد و طول بیشتری از ریشه داخل استخوان باقی می‌ماند. در پرمولرهای ماگزیلا به نظر نمی‌رسد چرخش ۱۸۰ درجه اثری روی نتیجه‌ی درمان داشته باشد.</p>
+<figure><img src="/sharehub/share43-fig1.webp" alt="اکستروژن جراحی و چرخش ۱۸۰ درجه‌ی سانترال راست ماگزیلا با شکستگی تاج و ریشه" width="2205" height="642" loading="lazy" decoding="async"><figcaption>شکل ۱. اکستروژن جراحی سانترال راست ماگزیلا با شکستگی تاج و ریشه. ریشه خارج و پس از چرخش ۱۸۰ درجه دوباره در ساکت قرار گرفته، با کامپوزیت و سیم انعطاف‌پذیر اسپلینت شده و بعد با پست و رستوریشن نهایی درمان شده است. نمای بالینی و رادیوگرافی پیگیری شش‌ماهه. (Plotino و همکاران، ۲۰۲۲)</figcaption></figure>
+<h3>اکستروژن جراحی یا افزایش طول تاج؟</h3>
+<p>در <a href="/glossary/crown-lengthening.html">افزایش طول تاج</a> جراحی، برای رسیدن به ساختار سالم دندان معمولاً باید استخوان برداشته شود. این موضوع، به‌خصوص در ناحیه‌ی قدام، می‌تواند روی زیبایی، مارجین لثه و حمایت دندان‌های مجاور اثر بگذارد. در اکستروژن جراحی به‌جای برداشتن استخوان، خود ریشه جابه‌جا می‌شود. با این حال هیچ‌کدام از این روش‌ها برای همه‌ی بیماران بهترین انتخاب نیست و انتخاب بین اکستروژن جراحی، اکستروژن ارتودنتیک (forced eruption) و افزایش طول تاج باید با سنجش متعادل سود و خطر هر روش انجام شود.</p>
+<h3>اسپلینت، درمان ریشه و زمان درمان رستوریتیو</h3>
+<p>بعد از اکستروژن جراحی، دندان با یک اسپلینت انعطاف‌پذیر (Flexible Splint) تثبیت می‌شود، مثلاً یک سیم انعطاف‌پذیر که با کامپوزیت به دندان‌های مجاور متصل شده است. هدف بی‌حرکت کردن کامل دندان نیست؛ اسپلینت باید ضمن ایجاد ثبات کافی، اجازه‌ی حرکت فیزیولوژیک را بدهد تا خطر انکیلوز کمتر شود. چون ریشه‌ی اکسترودشده با ساکت تطابق ندارد، مدت اسپلینت ممکن است از اسپلینت دندان‌های اوالژن‌شده طولانی‌تر باشد و تا شش هفته برسد، به‌خصوص وقتی موبیلیتی ریشه زیاد است.</p>
+<p>درمان ریشه، مطابق پروتکل دندان‌های اوالژن‌شده، باید در دو هفته‌ی اول بعد از قرار دادن دوباره‌ی ریشه در ساکت شروع شود تا از تحلیل ریشه‌ی ناشی از عفونت پیشگیری شود. در هفته‌ی اول، کلسیم هیدروکساید به‌عنوان داروی داخل کانال توصیه نمی‌شود، چون ممکن است روی هیلینگ پریودنتال اثر منفی بگذارد.</p>
+<p>درمان رستوریتیو معمولاً شش تا هشت هفته بعد از اکستروژن انجام می‌شود. اگر دندان به روکش نیاز داشته باشد، تراش به روش BOPT (Biologically Oriented Preparation Technique) می‌تواند به فرم بهتر لثه و ثبات بلندمدت‌تر بافت نرم کمک کند. پیش از رستوریشن نهایی هم باید ثبات دندان، وضعیت بافت نرم و سلامت پریودنشیوم دوباره ارزیابی شود.</p>
+<h3>چه نتیجه‌ای موفقیت حساب می‌شود؟</h3>
+<p>اکستروژن جراحی وقتی موفق است که هیلینگ پریودنتال بدون تحلیل ریشه یا انکیلوز اتفاق بیفتد، سطح استخوان مارژینال ثابت بماند و موبیلیتی دندان به‌طور قابل‌توجهی افزایش پیدا نکند. در بیمارانی که رشدشان کامل شده، انکیلوز هم می‌تواند نتیجه‌ی قابل‌قبولی باشد، چون تحلیل جایگزینی در آن‌ها آهسته پیش می‌رود و اینفراپوزیشن قابل‌توجهی ایجاد نمی‌کند.</p>
+<h2>۲. ری‌پلنتیشن عمدی</h2>
+<p>در ری‌پلنتیشن عمدی (Intentional Replantation)، دندان عمداً خارج می‌شود تا مشکلی که دسترسی به آن دشوار است بیرون از دهان درمان شود، و بعد در همان سطح استخوانی قبلی به ساکت برمی‌گردد؛ یعنی برخلاف اکستروژن جراحی، موقعیت دندان تغییر نمی‌کند. اندیکاسیون اصلی آن شکست درمان اندودنتیک است وقتی درمان مجدد یا جراحی اپیکال ممکن نیست، مثلاً به دلیل نزدیکی ریشه به عصب منتال یا سینوس ماگزیلا. پرفوریشن‌ها و تحلیل‌های خارجی سرویکال غیرقابل دسترس هم از اندیکاسیون‌های دیگر هستند (شکل ۳). این روش را می‌توان با اکستروژن جراحی هم ترکیب کرد، مثل کیس شکل ۲ که در آن یک مولر بدون فرول با ری‌پلنتیشن، اکستروژن جراحی و جداسازی ریشه درمان شده است.</p>
+<figure><img src="/sharehub/share43-fig2.webp" alt="مولر اول مندیبل بدون فرول، درمان‌شده با ری‌پلنتیشن عمدی، اکستروژن جراحی و جداسازی ریشه، با روکش زیرکونیا" width="2109" height="1525" loading="lazy" decoding="async"><figcaption>شکل ۲. مولر اول مندیبل بدون فرول و با پرفوریشن کف پالپ چمبر، درمان‌شده با ری‌پلنتیشن عمدی، اکستروژن جراحی و جداسازی ریشه، و روکش زیرکونیا. پیگیری شش‌ساله. (Plotino و همکاران، ۲۰۲۲)</figcaption></figure>
+<figure><img src="/sharehub/share43-fig3.webp" alt="دندان با تحلیل خارجی سرویکال که خارج، با ماده‌ی بیوسرامیک سیل و دوباره ری‌پلنت شد" width="1251" height="2783" loading="lazy" decoding="async"><figcaption>شکل ۳. تحلیل خارجی سرویکال که با درمان ارتوگرید کنترل نشد؛ دندان خارج شد، نواحی پرفوره با ماده‌ی بیوسرامیک سیل شد و دندان ری‌پلنت شد. پیگیری دوماهه. (Plotino و همکاران، ۲۰۲۲)</figcaption></figure>
+<p>بقای دندان‌های ری‌پلنت‌شده در یک مرور نظام‌مند حدود ۹۰ درصد گزارش شده است. مهم‌ترین عامل پیش‌آگهی زمان خارج‌دهانی است و وقتی این زمان از ۱۵ دقیقه بیشتر شده، بقا کمتر بوده است؛ سطح ریشه هم در تمام این مدت باید مرطوب بماند. از نگاه پروتزی، این درمان فقط وقتی معنا دارد که مشکل ریشه تنها مانع حفظ دندان باشد و ساختار تاجی برای رستوریشن کافی باشد؛ قابل درمان بودن ضایعه با قابل بازسازی بودن دندان یکی نیست. درمان شکستگی عمودی ریشه با این روش هنوز قابل‌قبول نیست، چون نتایج بلندمدت آن نامطلوب بوده است.</p>
+<h2>۳. اتوترنسپلنتیشن</h2>
+<p>در اتوترنسپلنتیشن (Tooth Autotransplantation)، دندانی از یک ناحیه‌ی دهان به ناحیه‌ی دیگری در همان بیمار منتقل می‌شود، مثلاً مولر سوم به محل مولر دومی که قابل نگهداری نیست. مزیت اصلی آن نسبت به ایمپلنت وجود PDL است: دندان پیوندشده می‌تواند همراه با رشد و رویش دندان‌های مجاور جابه‌جا شود، در حالی که ایمپلنت در بیمار در حال رشد ثابت می‌ماند. به همین دلیل در بیماران جوان گزینه‌ی ارزشمندی است، ولی در بزرگسالان هم کاربرد دارد و در یک مرور نظام‌مند، بقای پنج‌ساله‌ی دندان‌های با ریشه‌ی کامل ۹۰٫۵ درصد گزارش شده است. دندان نابالغ ممکن است رواسکولاریزه شود، اما دندان با ریشه‌ی کامل معمولاً به درمان ریشه نیاز دارد.</p>
+<p>از نگاه پروتزی، دندان دهنده باید از نظر ابعاد تاج، موقعیت نهایی و امکان ساخت اکلوژن قابل‌قبول با فضای گیرنده هماهنگ باشد. برنامه‌ریزی با CBCT و رپلیکای سه‌بعدی به انتخاب دندان و آماده‌سازی دقیق‌تر ساکت کمک می‌کند و زمان خارج‌دهانی را کم می‌کند (شکل ۴). دندان کمی پایین‌تر از سطح اکلوژن قرار می‌گیرد، با بخیه یا اسپلینت انعطاف‌پذیر تثبیت می‌شود و درمان رستوریتیو بعد از هیلینگ انجام می‌شود. در کیس شکل ۵، رستوریشن مولر سوم پیوندشده با اورلی لیتیوم دی‌سیلیکات انجام شده است.</p>
+<figure><img src="/sharehub/share43-fig4.webp" alt="اتوترنسپلنتیشن مولر سوم نابالغ به محل مولر اول ماگزیلا با رپلیکای پرینت‌شده" width="2095" height="2589" loading="lazy" decoding="async"><figcaption>شکل ۴. اتوترنسپلنتیشن مولر سوم نابالغ به محل مولر اول ماگزیلا با برنامه‌ریزی سه‌بعدی و رپلیکای پرینت‌شده. پیگیری دوساله، با ادامه‌ی تکامل ریشه. (Plotino و همکاران، ۲۰۲۲)</figcaption></figure>
+<figure><img src="/sharehub/share43-fig5.webp" alt="اتوترنسپلنتیشن مولر سوم بالغ به محل مولر دوم مندیبل با اورلی لیتیوم دی‌سیلیکات" width="2082" height="2704" loading="lazy" decoding="async"><figcaption>شکل ۵. اتوترنسپلنتیشن مولر سوم بالغ به محل مولر دوم مندیبل، درمان ریشه و اورلی لیتیوم دی‌سیلیکات. رادیوگرافی سه‌ساله فضای PDL و لامینا دورای طبیعی را نشان می‌دهد. (Plotino و همکاران، ۲۰۲۲)</figcaption></figure>
+<h2>۴. چرا سلامت PDL تا این اندازه مهم است؟</h2>
+<p>در هر سه درمان، موفقیت به زنده ماندن سلول‌های PDL بستگی دارد. آسیب مکانیکی به سطح ریشه هنگام خارج کردن دندان، خشک شدن سطح ریشه یا طولانی شدن زمان خارج‌دهانی، احتمال تحلیل خارجی ریشه و انکیلوز را بالا می‌برد.</p>
+<p>انکیلوز در بیمار در حال رشد مشکل جدی‌تری است، چون دندان انکیلوزشده همراه با رشد استخوان و رویش دندان‌های مجاور حرکت نمی‌کند، به اینفراپوزیشن می‌رود و رشد استخوان آلوئولار را هم متوقف می‌کند. در بیماری که رشدش کامل شده، انکیلوز می‌تواند نتیجه‌ی قابل‌قبولی باشد، اما هنوز به معنای هیلینگ طبیعی پریودنتال نیست. به همین دلیل، جا افتادن دندان در ساکت پایان درمان نیست و پیگیری بالینی و رادیوگرافیک لازم است.</p>
+<h2>۵. محدودیت شواهد علمی</h2>
+<p>این سه روش دهه‌هاست در کلینیک استفاده می‌شوند، اما سطح شواهد پشتیبان آن‌ها هنوز محدود است. بسیاری از مطالعات حجم نمونه‌ی کمی دارند و پیگیری بلندمدت کافی ندارند. در زمان انتشار منبع این مقاله (۲۰۲۲)، برای مقایسه‌ی اکستروژن جراحی با اکستروژن ارتودنتیک فقط یک مطالعه‌ی حیوانی وجود داشت و مطالعات بالینی مقایسه‌ای لازم است. نقش برنامه‌ریزی با CBCT و رپلیکای سه‌بعدی، اثر نیروهای ارتودنتیک بر دندان‌های اکسترودشده یا ری‌پلنت‌شده، و روش‌های جدیدتری مثل نگهداری انجمادی دندان دهنده و استفاده از فاکتورهای رشد هم هنوز به بررسی بیشتری نیاز دارند.</p>
+<p>درصدهای بقایی که گزارش می‌شود را هم نباید بدون توجه به انتخاب بیمار، وضعیت اولیه‌ی دندان و مدت پیگیری به همه‌ی موارد تعمیم داد.</p>
+<h2>نتیجه‌گیری؛ حفظ دندان باید در خدمت طرح درمان باشد</h2>
+<p>اکستروژن جراحی، ری‌پلنتیشن عمدی و اتوترنسپلنتیشن نشان می‌دهند که برای بعضی دندان‌های به‌شدت آسیب‌دیده، گزینه‌هایی غیر از کشیدن و جایگزینی با ایمپلنت وجود دارد. اما انتخاب این درمان‌ها نباید فقط بر اساس امکان انجام جراحی یا درمان اندودنتیک باشد.</p>
+<p>از نگاه پروتزی، بهتر است اول نتیجه‌ی نهایی مشخص شود: آیا می‌توان به دندانی با حمایت پریودنتال مناسب، ساختار کافی، اکلوژن قابل‌قبول و رستوریشن قابل‌اعتماد رسید؟ بعد درمان‌های اندودنتیک، پریودنتال، ارتودنتیک یا جراحی در جهت رسیدن به همین هدف انتخاب شوند. قرار نیست دندان به هر قیمتی حفظ شود؛ درمانی ارزش دارد که از نظر بیولوژیک، مکانیکی و عملکردی پیش‌آگهی قابل‌قبولی داشته باشد.</p>
+<p><a href="https://doi.org/10.1111/iej.13723" target="_blank" rel="noopener noreferrer">doi:10.1111/iej.13723</a></p>
+</div>
+<div class="author-note">نویسنده: <a href="https://dentcast.org/about.html#person-fouad-shahabian">دکتر فواد شهابیان</a></div>
+</div>
+
+
+
+<div class="dc-related-section">
+<h2 class="dc-related-label">کاوش بیشتر</h2>
+<div class="dc-related-capsules">
+<a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
+<a href="/pillar/treatment-planning/" class="dc-related-capsule">فهرست موضوعی</a><a href="/episodes/episode-86.html" class="dc-related-capsule">TMD؛ اختلالات داخل کپسولی</a><a href="/episodes/episode-144.html" class="dc-related-capsule">داستان TMD — پاتولوژی‌های مفصل</a><a href="/episodes/episode-145.html" class="dc-related-capsule">داستان TMD — اسپلینت‌تراپی و نایت‌گارد</a>
+</div>
+</div>
+  <footer class="dc-site-footer">
+  <div style="margin-bottom:1.375rem;">
+    <a href="index.html"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> برگشت به صفحه‌ی قبل
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=16" defer></script>
+<script src="/dc-nav.js?v=305" defer></script>
+</body>
+</html>
