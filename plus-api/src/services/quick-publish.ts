@@ -12,18 +12,29 @@
 import crypto, { randomUUID } from 'node:crypto';
 import { one, query } from '../db.js';
 
+const SVG = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block">';
+const ICON_BOOKMARK = SVG + '<path d="M19 21 12 16l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>';
+const ICON_BRAIN = SVG + '<path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5.2A3.5 3.5 0 0 0 8 19h1"/><path d="M15 4a3 3 0 0 1 3 3v1a3 3 0 0 1 2 5.2A3.5 3.5 0 0 1 16 19h-1"/>'
+  + '<path d="M12 4v17"/><path d="M8 9h2"/><path d="M14 9h2"/><path d="M8 14h2"/><path d="M14 14h2"/></svg>';
+
 export const QP_TYPES = {
   // `landing`: how each section's hand-kept index.html lists its pages — newest
   // on top, or (MetaNote) numbered in order at the bottom — and the label form
   // its existing lines use.
+  // `kicker`/`h1Prefix`: the section label each section's pages carry above or
+  // inside the title (insight-100, chairside-46, meta-22, share-42).
   clinical: { label: 'Insight — نکتهٔ کلینیکی', folder: 'insight', stem: 'insight-', id: (n: number) => `clinical-${n}`, urlKey: 'page_url', section: 'Clinical Insight',
-    landing: 'top', landingLabel: (_n: number, title: string) => title },
+    landing: 'top', landingLabel: (_n: number, title: string) => title,
+    kicker: (_n: number) => '', h1Prefix: (n: number) => `${ICON_BOOKMARK} Insight ${n} — ` },
   chairside: { label: 'Chairside — کیس و تصمیم بالینی', folder: 'chairside', stem: 'chairside-', id: (n: number) => `chairside-${n}`, urlKey: 'page_url', section: 'Chairside',
-    landing: 'top', landingLabel: (n: number, title: string) => `Chairside ${n} — ${title}` },
+    landing: 'top', landingLabel: (n: number, title: string) => (/^chairside\b/i.test(title) ? title : `Chairside ${n} — ${title}`),
+    kicker: (n: number) => `  <h2>Chairside ${n}</h2>\n  `, h1Prefix: (_n: number) => '' },
   meta: { label: 'MetaNote — متانوت', folder: 'metanotes', stem: 'meta-', id: (n: number) => `meta-${n}`, urlKey: 'page_url', section: 'Meta Note',
-    landing: 'bottom', landingLabel: (n: number, title: string) => `متانوت ${faNumberWords(n)}: ${title}` },
+    landing: 'bottom', landingLabel: (n: number, title: string) => (/^متانوت/.test(title) ? title : `متانوت ${faNumberWords(n)}: ${title}`),
+    kicker: (n: number) => ` <h2>${ICON_BRAIN} MetaNote ${n}</h2>\n`, h1Prefix: (_n: number) => '' },
   sharehub: { label: 'Share Hub — خوانش مقاله', folder: 'sharehub', stem: 'share-', id: (n: number) => String(n), urlKey: 'url', section: 'Share Hub',
-    landing: 'top', landingLabel: (_n: number, title: string) => `${title} (مطلبی از دکتر فواد شهابیان)` },
+    landing: 'top', landingLabel: (_n: number, title: string) => `${title} (مطلبی از دکتر فواد شهابیان)`,
+    kicker: (_n: number) => `<div class="sh-kicker">${ICON_BOOKMARK} Share Hub</div>\n`, h1Prefix: (_n: number) => '' },
 } as const;
 export type QpType = keyof typeof QP_TYPES;
 
@@ -120,7 +131,7 @@ export class QpError extends Error {
 // ── body markup ────────────────────────────────────────────────────────────
 
 const esc = (s: string) => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
-const safeHref = (u: string) => /^(https?:\/\/|\/)[^\s"'<>]*$/.test(u) && !u.startsWith('//');
+const safeHref = (u: string) => /^(https?:\/\/|\/(?![\/\\]))[^\s"'<>]*$/.test(u);
 const MEDIA_RE = /^\/quick-publish\/media\/[a-z0-9-]+\.(?:webp|png|jpe?g|gif)$/;
 
 function inline(s: string): string {
@@ -210,6 +221,21 @@ export function replaceBrainEntry(text: string, before: object, after: object): 
 
 // ── section landing ───────────────────────────────────────────────────────
 
+/**
+ * Make the brain hold `entry` for its id: append it, or swap whatever entry the
+ * file has for that id now. Keyed on the file's current text, not on what we
+ * last wrote, so a write that failed halfway never wedges later edits. null if
+ * the current entry is not there verbatim in our serialisation (reformatted by
+ * hand) — then nothing is touched.
+ */
+export function upsertBrainEntry(text: string, entry: Record<string, unknown>): string | null {
+  const brain = JSON.parse(text) as Record<string, unknown>[];
+  const current = brain.find(e => e.id === entry.id && e.type === entry.type);
+  if (!current) return appendBrainEntry(text, entry);
+  if (JSON.stringify(current) === JSON.stringify(entry)) return text;
+  return replaceBrainEntry(text, current, entry);
+}
+
 export interface Landing { file: string; href: string; line: string; order: 'top' | 'bottom' }
 
 export function landingFor(type: QpType, n: number, title: string): Landing {
@@ -254,8 +280,16 @@ export interface QpItem {
   state: 'live' | 'imported' | 'completed'; imported_at: string | null; completed_at: string | null;
   /** Set only by the founder's «بفرست تو ورک‌فلو»; nothing goes to the full workflow on its own. */
   workflow_requested_at?: string | null;
+  /** The phone draft's id: a retried publish (lost response on a weak link) returns this item instead of a second page. */
+  client_ref?: string;
+  /** Only in status(): backed up in the API but gone from the bucket ledger (an unguarded deploy). */
+  missing?: boolean;
 }
-interface Ledger { version: 1; items: QpItem[] }
+/**
+ * `panel_enabled` mirrors the on/off switch so the deploy guard, which reads only
+ * the bucket, refuses to sync while the panel can still write.
+ */
+interface Ledger { version: 1; panel_enabled?: boolean; items: QpItem[] }
 
 function parseLedger(b: Buffer | null): Ledger {
   if (!b) return { version: 1, items: [] };
@@ -264,6 +298,10 @@ function parseLedger(b: Buffer | null): Ledger {
   return j as Ledger;
 }
 const ledgerBytes = (l: Ledger) => Buffer.from(JSON.stringify(l, null, 2) + '\n');
+async function saveLedger(store: SiteStore, l: Ledger): Promise<void> {
+  l.panel_enabled = await isEnabled();
+  await store.put(LEDGER_KEY, ledgerBytes(l), 'application/json; charset=utf-8');
+}
 
 // ── page ───────────────────────────────────────────────────────────────────
 
@@ -273,18 +311,18 @@ export function tehranDate(d = new Date()): string {
 
 const jsonStr = (s: string) => JSON.stringify(s).slice(1, -1).replace(/</g, '\\u003c');
 
-export function renderPage(template: string, o: { type: QpType; path: string; title: string; caption: string; date: string; modified?: string; body: string }): string {
+export function renderPage(template: string, o: { type: QpType; n: number; path: string; title: string; caption: string; date: string; modified?: string; body: string }): string {
   const t = QP_TYPES[o.type];
   const tokens: Record<string, string> = {
     TITLE: esc(o.title), TITLE_JSON: jsonStr(o.title), DESCRIPTION: esc(o.caption), DESCRIPTION_JSON: jsonStr(o.caption),
     CANONICAL: ORG_ORIGIN + o.path, IR_URL: IR_ORIGIN + o.path, DATE: o.date, DATE_MODIFIED: o.modified ?? o.date,
-    SECTION_NAME: jsonStr(t.section), SECTION_PATH: `/${t.folder}/`, BODY: o.body,
+    SECTION_NAME: jsonStr(t.section), SECTION_PATH: `/${t.folder}/`, BODY: o.body, KICKER: t.kicker(o.n), H1_PREFIX: t.h1Prefix(o.n),
   };
   if (!template.includes('data-qp-template') || !template.includes('{{BODY}}')) throw new QpError('template_invalid', 502);
   return template
     .replace(/<!-- qp-template:[\s\S]*?-->\n?/g, '')
     .replace(/<meta name="robots" content="noindex, nofollow" data-qp-template>/, '<meta name="robots" content="index, follow, max-image-preview:large">')
-    .replace(/\{\{([A-Z_]+)\}\}/g, (m, k: string) => (Object.hasOwn(tokens, k) ? tokens[k] : m));
+    .replace(/\{\{([A-Z0-9_]+)\}\}/g, (m, k: string) => (Object.hasOwn(tokens, k) ? tokens[k] : m));
 }
 
 /** Same key set and order as the latest entries of each type in the repo's brain (schema parity). */
@@ -320,16 +358,31 @@ function serial<T>(fn: () => Promise<T>): Promise<T> {
 export async function isEnabled(): Promise<boolean> {
   return !!(await one<{ enabled: boolean }>('select enabled from quick_publish_settings where id = true'))?.enabled;
 }
-export async function setEnabled(enabled: boolean): Promise<void> {
-  await query(`insert into quick_publish_settings (id, enabled) values (true, $1)
-    on conflict (id) do update set enabled = excluded.enabled, updated_at = now()`, [enabled]);
+/**
+ * Flip the switch and tell the bucket ledger, so deploys stop while the panel is
+ * on. `ledger_written: false` means the bucket could not be told (not configured
+ * or unreachable); the switch itself is saved either way.
+ */
+export function setEnabled(enabled: boolean): Promise<{ ledger_written: boolean }> {
+  return serial(async () => {
+    await query(`insert into quick_publish_settings (id, enabled) values (true, $1)
+      on conflict (id) do update set enabled = excluded.enabled, updated_at = now()`, [enabled]);
+    const store = siteStore();
+    if (!store) return { ledger_written: false };
+    try {
+      await saveLedger(store, parseLedger(await store.get(LEDGER_KEY)));
+      return { ledger_written: true };
+    } catch {
+      return { ledger_written: false };
+    }
+  });
 }
 async function requireEnabled(): Promise<void> {
   if (!(await isEnabled())) throw new QpError('disabled', 403);
 }
 
-export interface QpInput { type: unknown; title: unknown; caption: unknown; body: unknown }
-function validate(i: QpInput): { type: QpType; title: string; caption: string; body: string } {
+export interface QpInput { type: unknown; title: unknown; caption: unknown; body: unknown; ref?: unknown }
+function validate(i: QpInput): { type: QpType; title: string; caption: string; body: string; ref: string | null } {
   if (!isQpType(i.type)) throw new QpError('invalid_type');
   const title = typeof i.title === 'string' ? i.title.trim().replace(/\s+/g, ' ') : '';
   const caption = typeof i.caption === 'string' ? i.caption.trim().replace(/\s+/g, ' ') : '';
@@ -337,7 +390,8 @@ function validate(i: QpInput): { type: QpType; title: string; caption: string; b
   if (title.length < 3 || title.length > 200) throw new QpError('invalid_title');
   if (caption.length < 10 || caption.length > 400) throw new QpError('invalid_caption');
   if (body.trim().length < 20 || body.length > 60_000) throw new QpError('invalid_body');
-  return { type: i.type, title, caption, body };
+  if (i.ref !== undefined && i.ref !== null && (typeof i.ref !== 'string' || !/^[a-z0-9-]{8,64}$/.test(i.ref))) throw new QpError('invalid_ref');
+  return { type: i.type, title, caption, body, ref: typeof i.ref === 'string' ? i.ref : null };
 }
 
 export function preview(body: unknown): { html: string; warning: string | null } {
@@ -352,11 +406,16 @@ async function readText(store: SiteStore, key: string, missing: string): Promise
   return b.toString('utf8');
 }
 
+/**
+ * Ledger FIRST: if a later write fails, the item is still listed (so the guard
+ * holds and «بازگرداندن» finishes the job from the backup) instead of a live
+ * page nothing tracks, which the next deploy would silently delete.
+ */
 async function writeLive(store: SiteStore, item: QpItem, html: string, brainText: string, ledger: Ledger, landingText: string | null): Promise<void> {
-  await store.put(item.path.slice(1), Buffer.from(html), 'text/html; charset=utf-8');
-  if (item.landing && landingText !== null) await store.put(item.landing.file, Buffer.from(landingText), 'text/html; charset=utf-8');
+  await saveLedger(store, ledger);
   await store.put(BRAIN_KEY, Buffer.from(brainText), 'application/json; charset=utf-8');
-  await store.put(LEDGER_KEY, ledgerBytes(ledger), 'application/json; charset=utf-8');
+  if (item.landing && landingText !== null) await store.put(item.landing.file, Buffer.from(landingText), 'text/html; charset=utf-8');
+  await store.put(item.path.slice(1), Buffer.from(html), 'text/html; charset=utf-8');
 }
 
 /** The section list with this page's line in it; marks the item landing-less when the list is not there. */
@@ -385,7 +444,12 @@ export function publish(input: QpInput): Promise<{ item: QpItem; url: string }> 
     let brainText = await readText(store, BRAIN_KEY, 'brain_missing');
     const brain = JSON.parse(brainText) as Record<string, unknown>[];
     const ledger = parseLedger(await store.get(LEDGER_KEY));
-    await assertMedia(store, rendered.media);
+    if (v.ref) {
+      const again = ledger.items.find(x => x.client_ref === v.ref)
+        ?? (await one<{ record: QpItem }>(`select record from quick_publications where record->>'client_ref' = $1`, [v.ref]))?.record;
+      if (again) return { item: again, url: IR_ORIGIN + again.path };
+    }
+    await ensureMedia(store, rendered.media);
     const t = QP_TYPES[v.type];
     let n = Math.max(0, ...brain.filter(e => e.type === v.type).map(e => numberFrom(e[t.urlKey] ?? e.url ?? e.page_url, v.type)),
       ...ledger.items.filter(x => x.type === v.type).map(x => x.n)) + 1;
@@ -399,7 +463,8 @@ export function publish(input: QpInput): Promise<{ item: QpItem; url: string }> 
     const now = new Date().toISOString();
     const entry = brainEntry(v.type, n, path, v.title, v.caption);
     const item: QpItem = { id: entry.id as string, type: v.type, n, path, title: v.title, caption: v.caption, date: tehranDate(),
-      media: rendered.media, brain_entry: entry, created_at: now, updated_at: now, state: 'live', imported_at: null, completed_at: null };
+      media: rendered.media, brain_entry: entry, created_at: now, updated_at: now, state: 'live', imported_at: null, completed_at: null,
+      ...(v.ref ? { client_ref: v.ref } : {}) };
     if (brain.some(e => e.id === item.id && e.type === item.type)) throw new QpError('id_taken', 409);
     const html = renderPage(template, { ...item, body: rendered.html });
     brainText = appendBrainEntry(brainText, entry);
@@ -426,9 +491,9 @@ export function edit(id: string, input: QpInput): Promise<{ item: QpItem; url: s
     const old = ledger.items[at];
     if (old.state !== 'live') throw new QpError('already_imported', 409);
     if (old.type !== v.type) throw new QpError('type_locked');
-    await assertMedia(store, rendered.media);
+    await ensureMedia(store, rendered.media);
     const entry = brainEntry(old.type, old.n, old.path, v.title, v.caption);
-    const swapped = replaceBrainEntry(brainText, old.brain_entry, entry);
+    const swapped = upsertBrainEntry(brainText, entry);
     if (swapped === null) throw new QpError('brain_entry_moved', 409);
     brainText = swapped;
     const item: QpItem = { ...old, title: v.title, caption: v.caption, media: rendered.media, brain_entry: entry,
@@ -450,7 +515,12 @@ export function restore(id: string): Promise<{ restored: string[] }> {
     if (!row) throw new QpError('not_found', 404);
     const { body: _body, ...item } = row.record as QpItem & { body?: string };
     const restored: string[] = [];
-    if (!(await store.get(item.path.slice(1)))) {
+    // While the item is still live, the backup is the founder's last word: a page left
+    // behind by a half-failed edit is replaced too, not only a missing one. Once
+    // imported, git owns the page and only a missing one is put back.
+    const listed = parseLedger(await store.get(LEDGER_KEY)).items.find(x => x.id === item.id);
+    const onBucket = await store.get(item.path.slice(1));
+    if (!onBucket || ((!listed || listed.state === 'live') && onBucket.toString('utf8') !== row.html)) {
       await store.put(item.path.slice(1), Buffer.from(row.html), 'text/html; charset=utf-8'); restored.push('page');
     }
     for (const m of item.media) {
@@ -466,14 +536,20 @@ export function restore(id: string): Promise<{ restored: string[] }> {
       }
     }
     const brainText = await readText(store, BRAIN_KEY, 'brain_missing');
-    const brain = JSON.parse(brainText) as Record<string, unknown>[];
-    if (!brain.some(e => e.id === item.id && e.type === item.type)) {
-      await store.put(BRAIN_KEY, Buffer.from(appendBrainEntry(brainText, item.brain_entry)), 'application/json; charset=utf-8'); restored.push('brain');
+    const nextBrain = upsertBrainEntry(brainText, item.brain_entry);
+    if (nextBrain === null) throw new QpError('brain_entry_moved', 409);
+    if (nextBrain !== brainText) {
+      await store.put(BRAIN_KEY, Buffer.from(nextBrain), 'application/json; charset=utf-8'); restored.push('brain');
     }
     const ledger = parseLedger(await store.get(LEDGER_KEY));
-    if (!ledger.items.some(x => x.id === item.id)) {
+    const at = ledger.items.findIndex(x => x.id === item.id);
+    if (at < 0) {
       ledger.items.push(item);
-      await store.put(LEDGER_KEY, ledgerBytes(ledger), 'application/json; charset=utf-8'); restored.push('ledger');
+      await saveLedger(store, ledger); restored.push('ledger');
+    } else if (ledger.items[at].state === 'live' && ledger.items[at].updated_at !== item.updated_at) {
+      // A failed edit left the ledger behind the backup; the backup is the founder's last word.
+      ledger.items[at] = { ...item, workflow_requested_at: ledger.items[at].workflow_requested_at ?? null };
+      await saveLedger(store, ledger); restored.push('ledger');
     }
     return { restored };
   });
@@ -502,10 +578,13 @@ export async function uploadImage(buffer: Buffer, contentType: string): Promise<
   return '/' + key;
 }
 
-async function assertMedia(store: SiteStore, media: string[]): Promise<void> {
+/** Every image the body names is on the bucket — put back from the backup if a deploy removed it. */
+async function ensureMedia(store: SiteStore, media: string[]): Promise<void> {
   for (const m of media) {
-    const known = await one('select 1 from quick_publish_media where path = $1', [m]);
-    if (!known && !(await store.get(m))) throw new QpError('image_not_uploaded');
+    if (await store.get(m)) continue;
+    const saved = await one<{ content_type: string; data: Buffer }>('select content_type, data from quick_publish_media where path = $1', [m]);
+    if (!saved) throw new QpError('image_not_uploaded');
+    await store.put(m, saved.data, saved.content_type);
   }
 }
 
@@ -533,9 +612,10 @@ export function requestWorkflow(ids: string[], requested: boolean): Promise<{ ch
       changed.push(id);
     }
     if (changed.length) {
-      await store.put(LEDGER_KEY, ledgerBytes(ledger), 'application/json; charset=utf-8');
+      // The API's copy first: it is what status() heals the bucket ledger back to.
       await query(`update quick_publications set record = jsonb_set(record, '{workflow_requested_at}', coalesce(to_jsonb($2::text), 'null'::jsonb)), updated_at = now()
         where id = any($1)`, [changed, requested ? now : null]);
+      await saveLedger(store, ledger);
     }
     return { changed };
   });
@@ -546,8 +626,22 @@ export async function status(): Promise<{ enabled: boolean; configured: boolean;
   const store = siteStore();
   if (!store) return { enabled, configured: false, template: false, items: [] };
   try {
-    const [template, ledger] = await Promise.all([store.get(TEMPLATE_KEY), store.get(LEDGER_KEY)]);
-    return { enabled, configured: true, template: !!template, items: parseLedger(ledger).items };
+    const [template, raw] = await Promise.all([store.get(TEMPLATE_KEY), store.get(LEDGER_KEY)]);
+    const ledger = parseLedger(raw);
+    const rows = (await query<{ record: QpItem }>('select record from quick_publications order by created_at')).rows.map(r => r.record);
+    const byId = new Map(ledger.items.map(x => [x.id, x]));
+    // A deploy that overwrote the bucket ledger mid-sync can drop a pick: the API's
+    // copy is the founder's last word, so put it back (the guard then holds until git has it).
+    let heal = false;
+    for (const r of rows) {
+      const it = byId.get(r.id);
+      if (it && it.state !== 'completed' && (it.workflow_requested_at ?? null) !== (r.workflow_requested_at ?? null)) {
+        it.workflow_requested_at = r.workflow_requested_at ?? null; heal = true;
+      }
+    }
+    if (heal || (ledger.panel_enabled ?? false) !== enabled) await serial(() => saveLedger(store, ledger));
+    const missing = rows.filter(r => !byId.has(r.id)).map(({ body: _b, ...r }: QpItem & { body?: string }) => ({ ...r, missing: true }));
+    return { enabled, configured: true, template: !!template, items: [...ledger.items, ...missing] };
   } catch (err) {
     return { enabled, configured: true, template: false, items: [], error: (err as Error).message };
   }

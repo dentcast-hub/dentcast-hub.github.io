@@ -36,6 +36,9 @@
   <style>
     p { margin: 0.875rem 0; }
     .glass-box img { display: block; max-width: 100%; height: auto; margin: 1rem auto; border-radius: 12px; }
+    /* Share Hub's section kicker above the title, as on share-NN pages */
+    .sh-kicker { display: flex; align-items: center; justify-content: center; gap: 0.375rem; direction: ltr;
+      color: var(--blue, #0b5fff); font-weight: 800; font-size: 0.95rem; letter-spacing: .02em; margin: 0 0 0.5rem; }
   </style>
 
   <link rel="icon" href="/logo-v2.png" type="image/png" sizes="192x192">
@@ -144,7 +147,7 @@
 
 
 <main class="article-content-wrap">
-<h1>{{TITLE}}</h1>
+{{KICKER}}<h1>{{H1_PREFIX}}{{TITLE}}</h1>
   <div class="dc-trustline" aria-label="اطلاعات نویسنده و بازبینی">
     <span>تاریخ انتشار: <time datetime="{{DATE}}">{{DATE}}</time></span>
     <span>آخرین بازبینی: <time datetime="{{DATE_MODIFIED}}">{{DATE_MODIFIED}}</time></span>

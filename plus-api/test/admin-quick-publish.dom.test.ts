@@ -146,3 +146,76 @@ describe('quick publish panel — switch and workflow picks', () => {
     expect(JSON.parse(post[1].opts.body)).toEqual({ ids: ['chairside-47'], requested: false });
   });
 });
+
+describe('quick publish panel — retries, missing items, big uploads', () => {
+  const fillForm = () => {
+    radio('no').checked = true; radio('no').dispatchEvent(new Event('change'));
+    type('qpTitle', 'عنوان'); type('qpCaption', 'کپشن کوتاه مطلب'); type('qpBody', 'پاراگراف اول متن که به اندازه کافی بلند است.');
+  };
+  const submit = async () => { el('qpForm').dispatchEvent(new Event('submit', { cancelable: true })); await flush(); };
+  const publishBodies = () => calls.filter(c => c.url === '/admin/quick-publish' && c.opts.method === 'POST').map(c => JSON.parse(c.opts.body));
+
+  it('sends a ref with the publish, keeps it across a lost response, and takes a new one after success', async () => {
+    await flush();
+    fillForm();
+    fetcher.mockImplementationOnce(async (url: string, opts: any = {}) => { calls.push({ url: String(url), opts }); throw new TypeError('Failed to fetch'); });
+    await submit();
+    expect(el('qpSubmit').disabled).toBe(false);
+    // The draft saved on the phone carries the same ref, so a reload keeps it too.
+    expect(JSON.parse(window.localStorage.getItem('dc-qp-draft')!).ref).toBe(publishBodies()[0].ref);
+    await submit();
+    const [first, second] = publishBodies();
+    expect(typeof first.ref).toBe('string');
+    expect(first.ref).toMatch(/^[a-z0-9-]{8,64}$/);
+    expect(second.ref).toBe(first.ref);
+
+    // Success clears the draft; the next publish is a new request with a new ref.
+    fillForm();
+    await submit();
+    const third = publishBodies()[2];
+    expect(third.ref).toMatch(/^[a-z0-9-]{8,64}$/);
+    expect(third.ref).not.toBe(first.ref);
+  });
+
+  it('reuses the ref after a reload from the saved draft', async () => {
+    await flush();
+    fillForm();
+    const saved = JSON.parse(window.localStorage.getItem('dc-qp-draft')!).ref as string;
+    document.body.replaceChildren(); boot(); await flush();
+    await submit();
+    expect(publishBodies().at(-1)!.ref).toBe(saved);
+  });
+
+  it('shows a missing item as off the site, with a restore button but no pick checkbox and no edit', async () => {
+    statusBody = { ...statusBody, items: [
+      qpItem({ id: 'clinical-101', state: 'live', missing: true }),
+      qpItem({ id: 'clinical-102', n: 102, path: '/insight/insight-102.html', state: 'live' }),
+    ] };
+    document.body.replaceChildren(); boot(); await flush();
+    const boxes = [...el('qpList').querySelectorAll('.qp-item')];
+    const gone = boxes.find(b => b.textContent!.includes('clinical-101'))!;
+    const ok = boxes.find(b => b.textContent!.includes('clinical-102'))!;
+    const labels = (b: Element) => [...b.querySelectorAll('button')].map(x => x.textContent);
+    expect(gone.querySelector('.qp-chip')!.textContent).toContain('روی سایت نیست');
+    expect(labels(gone)).toContain('بازگرداندن روی سایت');
+    expect(labels(gone)).not.toContain('ویرایش');
+    expect(gone.querySelector('input[type=checkbox]')).toBeNull();
+    expect(ok.querySelector('input[type=checkbox]')).not.toBeNull();
+    expect(labels(ok)).toContain('ویرایش');
+    expect(ok.querySelector('.qp-chip')!.textContent).not.toContain('روی سایت نیست');
+  });
+
+  it('names a 413 that is not our JSON as «عکس بزرگ‌تر از ۸ مگابایت است.»', async () => {
+    await flush();
+    radio('yes').checked = true; radio('yes').dispatchEvent(new Event('change'));
+    fetcher.mockImplementationOnce(async (url: string, opts: any = {}) => {
+      calls.push({ url: String(url), opts });
+      return { ok: false, status: 413, json: async () => { throw new SyntaxError('Unexpected token < in JSON'); } };
+    });
+    pick(new File(['a'], 'big.jpg', { type: 'image/jpeg' })); await flush();
+    const note = el('qpImageBox').querySelector('.muted')!.textContent!;
+    expect(note).toContain('عکس بزرگ‌تر از ۸ مگابایت است.');
+    expect(note).toContain('big.jpg');
+    expect(el('qpImages').querySelectorAll('.qp-img')).toHaveLength(0);
+  });
+});

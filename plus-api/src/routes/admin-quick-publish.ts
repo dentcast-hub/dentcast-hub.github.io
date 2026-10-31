@@ -22,8 +22,7 @@ export async function adminQuickPublishRoutes(app: FastifyInstance): Promise<voi
   app.put('/admin/quick-publish/enabled', async (request, reply) => {
     const enabled = (request.body as { enabled?: unknown } | null)?.enabled;
     if (typeof enabled !== 'boolean') return reply.code(400).send({ error: 'invalid_enabled' });
-    await setEnabled(enabled);
-    return { ok: true, enabled };
+    return { ok: true, enabled, ...(await setEnabled(enabled)) };
   });
   // Nothing reaches the full workflow on its own: only what the founder picks here.
   app.post('/admin/quick-publish/workflow', async (request, reply) => {
@@ -148,13 +147,18 @@ export function renderQuickPublish(): string {
       invalid_image: 'فقط WebP، PNG، JPEG یا GIF تا ۸ مگابایت.', no_free_address: 'نشانی آزادی برای صفحه پیدا نشد.', id_taken: 'این شناسه در brain هست.',
       not_found: 'پیدا نشد.', already_imported: 'این مطلب وارد گیت شده؛ ویرایشش از این‌جا ممکن نیست.', type_locked: 'بخش مطلب منتشرشده عوض نمی‌شود.',
       brain_entry_moved: 'ردیف این مطلب در brain دست خورده؛ ویرایش از این‌جا ممکن نیست.',
-      disabled: 'انتشار حداقلی خاموش است. فقط در قطعی روشنش کن.', already_completed: 'این مطلب قبلاً در ورک‌فلو کامل شده.'
+      disabled: 'انتشار حداقلی خاموش است. فقط در قطعی روشنش کن.', image_too_large: 'عکس بزرگ‌تر از ۸ مگابایت است.', invalid_ref: 'شناسهٔ پیش‌نویس نامعتبر است؛ صفحه را دوباره باز کن.', already_completed: 'این مطلب قبلاً در ورک‌فلو کامل شده.'
     };
     var STATE = { live: 'زنده — منتظر ورود به گیت', imported: 'در گیت — منتظر ورک‌فلوی کامل', completed: 'کامل شد' };
     function msg(e) { return ERR[e] || ('خطا: ' + e); }
     function request(url, opts) {
       return fetch(url, Object.assign({ credentials: 'include', cache: 'no-store' }, opts || {})).then(function (r) {
-        return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || 'HTTP ' + r.status); return j; });
+        // A gateway or Fastify's own 413/415 is not our JSON: name it instead of a parse error.
+        return r.json().catch(function () { return { error: r.status === 413 ? 'image_too_large' : r.status === 415 ? 'invalid_image' : 'HTTP ' + r.status }; })
+          .then(function (j) {
+            if (!r.ok) throw new Error(j.error === 'Payload Too Large' || r.status === 413 ? 'image_too_large' : r.status === 415 ? 'invalid_image' : (j.error || 'HTTP ' + r.status));
+            return j;
+          });
       });
     }
     function json(method, url, body) { return request(url, { method: method, headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }); }
@@ -168,8 +172,12 @@ export function renderQuickPublish(): string {
       Array.prototype.forEach.call(form.querySelectorAll('input[name="qpHasImages"]'), function (r) { r.checked = r.value === v; });
       el('qpImageBox').hidden = v !== 'yes';
     }
+    // One id per draft, sent with the publish: a retry after a lost response returns the same page.
+    var ref = '';
+    function newRef() { return 'd' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10); }
     function fields() { return { type: el('qpType').value, title: el('qpTitle').value, caption: el('qpCaption').value, body: body.value }; }
     function fill(v) {
+      ref = v.ref || newRef();
       el('qpType').value = v.type || el('qpType').value; el('qpTitle').value = v.title || ''; el('qpCaption').value = v.caption || ''; body.value = v.body || '';
       images = Array.isArray(v.images) ? v.images : []; setHasImages(v.hasImages || ''); drawImages();
     }
@@ -200,7 +208,7 @@ export function renderQuickPublish(): string {
     });
     function saveDraft() {
       if (el('qpEditing').value) return;
-      try { localStorage.setItem(DRAFT, JSON.stringify(Object.assign(fields(), { images: images, hasImages: hasImages() }))); el('qpDraftNote').textContent = 'پیش‌نویس روی همین گوشی ذخیره شد.'; } catch (e) {}
+      try { localStorage.setItem(DRAFT, JSON.stringify(Object.assign(fields(), { images: images, hasImages: hasImages(), ref: ref }))); el('qpDraftNote').textContent = 'پیش‌نویس روی همین گوشی ذخیره شد.'; } catch (e) {}
     }
     ['qpType', 'qpTitle', 'qpCaption'].forEach(function (id) { el(id).addEventListener('input', saveDraft); });
     body.addEventListener('input', function () { saveDraft(); drawImages(); });
@@ -209,6 +217,20 @@ export function renderQuickPublish(): string {
       var s = body.selectionStart != null ? body.selectionStart : body.value.length, e = body.selectionEnd != null ? body.selectionEnd : s;
       body.value = body.value.slice(0, s) + snippet + body.value.slice(e);
       body.selectionStart = body.selectionEnd = s + snippet.length; saveDraft();
+    }
+    // Phone photos are often 5–15 MB, or HEIC: redraw anything big or unsupported as a JPEG
+    // at most 2000px wide before upload. Smaller files go up as they are.
+    var OK_TYPES = ['image/webp', 'image/png', 'image/jpeg', 'image/gif'];
+    function prepare(f) {
+      if (OK_TYPES.indexOf(f.type) >= 0 && f.size <= 2500000) return Promise.resolve(f);
+      if (typeof createImageBitmap !== 'function') return Promise.resolve(f);
+      return createImageBitmap(f).then(function (bmp) {
+        var scale = Math.min(1, 2000 / Math.max(bmp.width, bmp.height));
+        var c = document.createElement('canvas');
+        c.width = Math.round(bmp.width * scale); c.height = Math.round(bmp.height * scale);
+        c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+        return new Promise(function (resolve) { c.toBlob(function (b) { resolve(b || f); }, 'image/jpeg', 0.85); });
+      }).catch(function () { return f; });
     }
     el('qpImage').addEventListener('change', function () {
       var files = Array.prototype.slice.call(this.files || []); this.value = '';
@@ -222,8 +244,12 @@ export function renderQuickPublish(): string {
           return;
         }
         note.textContent = 'در حال آپلود ' + f.name + '…';
-        request('/admin/quick-publish/media', { method: 'POST', headers: { 'content-type': f.type }, body: f }).then(function (j) {
-          try { shown[j.path] = URL.createObjectURL(f); } catch (e) {}
+        prepare(f).then(function (up) {
+          return request('/admin/quick-publish/media', { method: 'POST', headers: { 'content-type': up.type }, body: up }).then(function (j) {
+            try { shown[j.path] = URL.createObjectURL(up); } catch (e) {}
+            return j;
+          });
+        }).then(function (j) {
           images.push({ path: j.path, alt: '' }); done++; saveDraft(); drawImages();
         }).catch(function (e) { failed.push(f.name + ' (' + msg(e.message) + ')'); }).then(next);
       })();
@@ -249,6 +275,7 @@ export function renderQuickPublish(): string {
     form.addEventListener('submit', function (ev) {
       ev.preventDefault();
       var editing = el('qpEditing').value, v = fields();
+      if (!editing) v.ref = ref;
       if (!hasImages()) { alert('اول بگو این مطلب عکس دارد یا نه.'); form.querySelector('.qp-ask').scrollIntoView({ behavior: 'smooth' }); return; }
       if (hasImages() === 'yes' && !images.length && !/!\[[^\]]*\]\(/.test(body.value)) {
         if (!confirm('گفتی عکس دارد ولی هنوز عکسی آپلود نشده. بدون عکس منتشر شود؟')) return;
@@ -269,9 +296,9 @@ export function renderQuickPublish(): string {
 
     function row(it) {
       var box = document.createElement('div'); box.className = 'qp-item';
-      var b = text('b', it.title); b.appendChild(text('span', STATE[it.state] || it.state, 'qp-chip')); box.appendChild(b);
+      var b = text('b', it.title); b.appendChild(text('span', it.missing ? 'روی سایت نیست — «بازگرداندن» را بزن' : (STATE[it.state] || it.state), 'qp-chip')); box.appendChild(b);
       box.appendChild(text('div', it.id + ' · ' + it.date + ' · ' + it.path, 'muted'));
-      if (it.state !== 'completed') {
+      if (it.state !== 'completed' && !it.missing) {
         if (it.workflow_requested_at) {
           var sent = document.createElement('div'); sent.className = 'qp-pick';
           sent.appendChild(text('span', 'فرستاده‌شده به ورک‌فلو — ' + new Date(it.workflow_requested_at).toLocaleDateString('fa-IR'), 'qp-chip'));
@@ -288,7 +315,7 @@ export function renderQuickPublish(): string {
       }
       var actions = document.createElement('div'); actions.className = 'qp-row';
       var open = text('a', 'باز کردن'); open.href = 'https://dentcast.ir' + it.path; open.target = '_blank'; open.rel = 'noopener'; actions.appendChild(open);
-      if (it.state === 'live') {
+      if (it.state === 'live' && !it.missing) {
         var ed = text('button', 'ویرایش'); ed.type = 'button'; ed.hidden = !enabledNow;
         ed.onclick = function () {
           request('/admin/quick-publish/' + encodeURIComponent(it.id) + '/source').then(function (s) {
@@ -334,7 +361,10 @@ export function renderQuickPublish(): string {
     el('qpSwitchBtn').onclick = function () {
       var on = el('qpSwitchBtn').getAttribute('data-on') !== '1';
       if (on && !confirm('انتشار حداقلی فقط برای وقتی است که GitHub در دسترس نیست. روشن شود؟')) return;
-      json('PUT', '/admin/quick-publish/enabled', { enabled: on }).then(load).catch(function (e) { el('qpStatus').textContent = msg(e.message); });
+      json('PUT', '/admin/quick-publish/enabled', { enabled: on }).then(function (j) {
+        if (!j.ledger_written) alert('کلید ذخیره شد ولی باکت آروان خبردار نشد؛ تا وقتی خبردار نشود، قفل دیپلوی از روشن بودن پنل خبر ندارد. چند لحظه بعد صفحه را دوباره باز کن.');
+        load();
+      }).catch(function (e) { el('qpStatus').textContent = msg(e.message); });
     };
     function load() {
       request('/admin/quick-publish').then(function (j) {

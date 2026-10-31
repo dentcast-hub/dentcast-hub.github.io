@@ -32,12 +32,28 @@ import os
 import re
 import sys
 import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LEDGER = 'quick-publish/ledger.json'
 BRAIN = 'dentcast-brain.json'
+# Only what the API can write: never trust a ledger path to land anywhere else in the repo.
+PAGE_RE = re.compile(r'^/(insight/insight|chairside/chairside|metanotes/meta|sharehub/share)-\d+\.html$')
+MEDIA_RE = re.compile(r'^quick-publish/media/[a-z0-9-]+\.(webp|png|jpe?g|gif)$')
+LANDING_FILES = {'insight/index.html', 'chairside/index.html', 'metanotes/index.html', 'sharehub/index.html'}
+
+
+def check_item(item: dict) -> None:
+    if not PAGE_RE.match(item.get('path', '')):
+        raise SystemExit(f"✗ {item.get('id')}: unexpected page path {item.get('path')!r} in the ledger — refusing to write it")
+    for m in item.get('media', []):
+        if not MEDIA_RE.match(m):
+            raise SystemExit(f"✗ {item.get('id')}: unexpected image path {m!r} in the ledger — refusing to write it")
+    landing = item.get('landing')
+    if landing and landing.get('file') not in LANDING_FILES:
+        raise SystemExit(f"✗ {item.get('id')}: unexpected landing file {landing.get('file')!r} — refusing to write it")
 
 
 def read_ledger(path: Path) -> dict:
@@ -84,6 +100,17 @@ def append_entry(text: str, entry: dict) -> str:
     return out
 
 
+def upsert_entry(text: str, entry: dict):
+    """Same rule as upsertBrainEntry in the API: append, or swap the entry the file has
+    for that id now. None if that entry is not there verbatim (reformatted by hand)."""
+    current = [e for e in json.loads(text) if e.get('id') == entry['id'] and e.get('type') == entry['type']]
+    if not current:
+        return append_entry(text, entry)
+    if current[0] == entry:
+        return text
+    return replace_entry(text, current[0], entry)
+
+
 def replace_entry(text: str, before: dict, after: dict):
     eol = brain_eol(text)
     old = serialise_entry(before, eol)
@@ -124,12 +151,16 @@ class Source:
         self.from_dir = Path(from_dir) if from_dir else None
 
     def get(self, rel: str) -> bytes:
-        if self.from_dir:
-            return (self.from_dir / rel).read_bytes()
-        url = f'{self.base_url}/{rel}?_dc={int(time.time() * 1000)}'
-        req = urllib.request.Request(url, headers={'cache-control': 'no-cache', 'user-agent': 'dentcast-quick-publish-import'})
-        with urllib.request.urlopen(req, timeout=60) as r:
-            return r.read()
+        try:
+            if self.from_dir:
+                return (self.from_dir / rel).read_bytes()
+            url = f'{self.base_url}/{rel}?_dc={int(time.time() * 1000)}'
+            req = urllib.request.Request(url, headers={'cache-control': 'no-cache', 'user-agent': 'dentcast-quick-publish-import'})
+            with urllib.request.urlopen(req, timeout=60) as r:
+                return r.read()
+        except (OSError, urllib.error.URLError) as e:
+            raise SystemExit(f'✗ could not read {rel} from the bucket ({e}). If a deploy removed it, open /admin → '
+                             '«انتشار حداقلی» and press «بازگرداندن روی سایت» on that item, then import again.')
 
 
 def cmd_import(args) -> int:
@@ -149,6 +180,7 @@ def cmd_import(args) -> int:
     landing_texts = {}
     files = {}
     for item in todo:
+        check_item(item)
         if not stale_content(item, tree):
             # Only the founder's workflow pick changed: carry the flag, touch nothing else.
             for i in tree['items']:
@@ -156,21 +188,24 @@ def cmd_import(args) -> int:
                     i['workflow_requested_at'] = item.get('workflow_requested_at')
             print(f"→ {item['id']}  workflow pick: {'sent' if item.get('workflow_requested_at') else 'withdrawn'}")
             continue
-        files[item['path'].lstrip('/')] = src.get(item['path'].lstrip('/'))
+        prior = previous.get(item['id'], {})
+        if prior.get('state') == 'completed':
+            # The full workflow has rewritten this page in git; a later panel edit must not overwrite it.
+            raise SystemExit(f"✗ {item['id']} is completed in git but the bucket holds a newer panel edit of it — "
+                             'reconcile by hand (the completed page is the one to keep)')
+        page = item['path'].lstrip('/')
+        if not prior and (ROOT / page).exists():
+            # Something else was published at this number while the link was down.
+            raise SystemExit(f"✗ {item['id']}: git already has a different page at {item['path']} — two publications took "
+                             'the same number during the cut. Reconcile by hand before importing; nothing was written.')
+        files[page] = src.get(page)
         for m in item.get('media', []):
             files[m] = src.get(m)
-        brain = json.loads(brain_text)
-        current = [e for e in brain if e.get('id') == item['id'] and e.get('type') == item['type']]
-        if not current:
-            brain_text = append_entry(brain_text, item['brain_entry'])
-        elif current[0] != item['brain_entry']:
-            old = previous.get(item['id'], {}).get('brain_entry')
-            swapped = replace_entry(brain_text, old, item['brain_entry']) if old else None
-            if swapped is None:
-                raise SystemExit(f"✗ {item['id']}: its brain entry in git differs and is not the one this tool wrote — reconcile by hand")
-            brain_text = swapped
-        prior = previous.get(item['id'], {})
-        state = prior.get('state') if prior.get('state') == 'completed' else 'imported'
+        upserted = upsert_entry(brain_text, item['brain_entry'])
+        if upserted is None:
+            raise SystemExit(f"✗ {item['id']}: its brain entry in git was reformatted by hand — reconcile by hand")
+        brain_text = upserted
+        state = 'imported'
         landing = item.get('landing')
         if landing:
             path = ROOT / landing['file']
@@ -200,7 +235,7 @@ def cmd_import(args) -> int:
         f.write(brain_text)
     # Bucket order is publication order; keep it.
     order = {i['id']: n for n, i in enumerate(bucket['items'])}
-    tree['items'].sort(key=lambda i: order.get(i['id'], -1))
+    tree['items'].sort(key=lambda i: order.get(i['id'], len(order)))
     write_ledger(tree_path, tree)
     picks = len(todo) - pages
     print(f'\n✓ {pages} page(s) imported, {picks} workflow pick(s) updated. Next: commit and push. '
@@ -214,6 +249,10 @@ def cmd_guard(args) -> int:
         print('✓ quick-publish guard: no ledger on the bucket')
         return 0
     bucket = json.loads(path.read_text(encoding='utf-8'))
+    if bucket.get('panel_enabled'):
+        print('✗ the /admin «انتشار حداقلی» panel is switched ON (internet-cut mode). A sync now could overwrite\n'
+              '  what the founder publishes while it runs. Switch it off in /admin first, then deploy.', file=sys.stderr)
+        return 1
     tree = read_ledger(Path(args.tree_ledger) if args.tree_ledger else ROOT / LEDGER)
     todo = missing_from(bucket, tree)
     if not todo:
