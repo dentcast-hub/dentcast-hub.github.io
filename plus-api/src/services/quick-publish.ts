@@ -12,18 +12,29 @@
 import crypto, { randomUUID } from 'node:crypto';
 import { one, query } from '../db.js';
 
+const SVG = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block">';
+const ICON_BOOKMARK = SVG + '<path d="M19 21 12 16l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>';
+const ICON_BRAIN = SVG + '<path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5.2A3.5 3.5 0 0 0 8 19h1"/><path d="M15 4a3 3 0 0 1 3 3v1a3 3 0 0 1 2 5.2A3.5 3.5 0 0 1 16 19h-1"/>'
+  + '<path d="M12 4v17"/><path d="M8 9h2"/><path d="M14 9h2"/><path d="M8 14h2"/><path d="M14 14h2"/></svg>';
+
 export const QP_TYPES = {
   // `landing`: how each section's hand-kept index.html lists its pages — newest
   // on top, or (MetaNote) numbered in order at the bottom — and the label form
   // its existing lines use.
+  // `kicker`/`h1Prefix`: the section label each section's pages carry above or
+  // inside the title (insight-100, chairside-46, meta-22, share-42).
   clinical: { label: 'Insight — نکتهٔ کلینیکی', folder: 'insight', stem: 'insight-', id: (n: number) => `clinical-${n}`, urlKey: 'page_url', section: 'Clinical Insight',
-    landing: 'top', landingLabel: (_n: number, title: string) => title },
+    landing: 'top', landingLabel: (_n: number, title: string) => title,
+    kicker: (_n: number) => '', h1Prefix: (n: number) => `${ICON_BOOKMARK} Insight ${n} — ` },
   chairside: { label: 'Chairside — کیس و تصمیم بالینی', folder: 'chairside', stem: 'chairside-', id: (n: number) => `chairside-${n}`, urlKey: 'page_url', section: 'Chairside',
-    landing: 'top', landingLabel: (n: number, title: string) => `Chairside ${n} — ${title}` },
+    landing: 'top', landingLabel: (n: number, title: string) => (/^chairside\b/i.test(title) ? title : `Chairside ${n} — ${title}`),
+    kicker: (n: number) => `  <h2>Chairside ${n}</h2>\n  `, h1Prefix: (_n: number) => '' },
   meta: { label: 'MetaNote — متانوت', folder: 'metanotes', stem: 'meta-', id: (n: number) => `meta-${n}`, urlKey: 'page_url', section: 'Meta Note',
-    landing: 'bottom', landingLabel: (n: number, title: string) => `متانوت ${faNumberWords(n)}: ${title}` },
+    landing: 'bottom', landingLabel: (n: number, title: string) => (/^متانوت/.test(title) ? title : `متانوت ${faNumberWords(n)}: ${title}`),
+    kicker: (n: number) => ` <h2>${ICON_BRAIN} MetaNote ${n}</h2>\n`, h1Prefix: (_n: number) => '' },
   sharehub: { label: 'Share Hub — خوانش مقاله', folder: 'sharehub', stem: 'share-', id: (n: number) => String(n), urlKey: 'url', section: 'Share Hub',
-    landing: 'top', landingLabel: (_n: number, title: string) => `${title} (مطلبی از دکتر فواد شهابیان)` },
+    landing: 'top', landingLabel: (_n: number, title: string) => `${title} (مطلبی از دکتر فواد شهابیان)`,
+    kicker: (_n: number) => `<div class="sh-kicker">${ICON_BOOKMARK} Share Hub</div>\n`, h1Prefix: (_n: number) => '' },
 } as const;
 export type QpType = keyof typeof QP_TYPES;
 
@@ -300,18 +311,18 @@ export function tehranDate(d = new Date()): string {
 
 const jsonStr = (s: string) => JSON.stringify(s).slice(1, -1).replace(/</g, '\\u003c');
 
-export function renderPage(template: string, o: { type: QpType; path: string; title: string; caption: string; date: string; modified?: string; body: string }): string {
+export function renderPage(template: string, o: { type: QpType; n: number; path: string; title: string; caption: string; date: string; modified?: string; body: string }): string {
   const t = QP_TYPES[o.type];
   const tokens: Record<string, string> = {
     TITLE: esc(o.title), TITLE_JSON: jsonStr(o.title), DESCRIPTION: esc(o.caption), DESCRIPTION_JSON: jsonStr(o.caption),
     CANONICAL: ORG_ORIGIN + o.path, IR_URL: IR_ORIGIN + o.path, DATE: o.date, DATE_MODIFIED: o.modified ?? o.date,
-    SECTION_NAME: jsonStr(t.section), SECTION_PATH: `/${t.folder}/`, BODY: o.body,
+    SECTION_NAME: jsonStr(t.section), SECTION_PATH: `/${t.folder}/`, BODY: o.body, KICKER: t.kicker(o.n), H1_PREFIX: t.h1Prefix(o.n),
   };
   if (!template.includes('data-qp-template') || !template.includes('{{BODY}}')) throw new QpError('template_invalid', 502);
   return template
     .replace(/<!-- qp-template:[\s\S]*?-->\n?/g, '')
     .replace(/<meta name="robots" content="noindex, nofollow" data-qp-template>/, '<meta name="robots" content="index, follow, max-image-preview:large">')
-    .replace(/\{\{([A-Z_]+)\}\}/g, (m, k: string) => (Object.hasOwn(tokens, k) ? tokens[k] : m));
+    .replace(/\{\{([A-Z0-9_]+)\}\}/g, (m, k: string) => (Object.hasOwn(tokens, k) ? tokens[k] : m));
 }
 
 /** Same key set and order as the latest entries of each type in the repo's brain (schema parity). */
