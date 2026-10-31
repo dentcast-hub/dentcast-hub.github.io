@@ -133098,6 +133098,58 @@
         "Jaafar Abduo",
         "Marc Tennant"
       ]
+    },
+    {
+      "id": "P2949",
+      "title": "Present status and future directions: Surgical extrusion, intentional replantation and tooth autotransplantation",
+      "file_name": "Present status and future directions: Surgical extrusion, intentional replantation and tooth autotransplantation.pdf",
+      "topic": "severe damage tooth",
+      "topic_path": "severe damage tooth",
+      "type": "narrative review",
+      "local_path": "",
+      "file_size": 2826086,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "sharehub/share-43"
+      ],
+      "drive_link": "https://drive.google.com/file/d/17x7HdcjV103MD6vsyaStrOipBN3V5f6O/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=17x7HdcjV103MD6vsyaStrOipBN3V5f6O",
+      "drive_view": "https://drive.google.com/file/d/17x7HdcjV103MD6vsyaStrOipBN3V5f6O/view",
+      "drive_id": "17x7HdcjV103MD6vsyaStrOipBN3V5f6O",
+      "tags": [
+        "surgical-extrusion",
+        "intentional-replantation",
+        "tooth-autotransplantation",
+        "tooth-replantation",
+        "tooth-extraction",
+        "tooth-preservation",
+        "periodontal-ligament",
+        "narrative-review",
+        "topic:severe-damage-tooth",
+        "present-status-and-future-directions-surgical-extrusion-intentional-replantation-and-tooth-autotransplantation"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Present status and future directions: Surgical extrusion, intentional replantation and tooth autotransplantation",
+      "doi": "10.1111/iej.13723",
+      "journal": "International Endodontic Journal",
+      "crossref_year": 2022,
+      "subjects": [
+        "Dentistry"
+      ],
+      "abstract": "Surgical extrusion, intentional replantation and tooth autotransplantation procedures are important treatment options that clinicians may consider performing in their day-to-day clinical practice. Despite compromised teeth are generally considered for extraction, clinicians must be aware that these cases could be suitable for management by these alternative predictable treatment options. Surgical extrusion, intentional replantation or tooth autotransplantation have similar treatment protocols which includes atraumatic tooth extraction, visualisation of the root portion and replantation. Surgical extrusion is defined as the 'procedure in which the remaining tooth structure is repositioned at a more coronal/supragingival position in the same socket in which the tooth was located originally'. Intentional replantation is defined as the 'deliberate extraction of a tooth and after evaluation of root surfaces, endodontic manipulation and repair, placement of the tooth back into its original position'. Tooth autotransplantation is defined as the 'transplantation of an unerupted or erupted tooth in the same individual, from one site to another extraction site or a new surgically prepared socket'. The same team previously published a narrative review (International Endodontic Journal. 2020, 53, 1636) and European Society of Endodontology position statement (International Endodontic Journal. 2020, 54, 655) on this topic in International Endodontic Journal. The aim of the current updated review was to provide the reader a complete overview and background on these procedures, to established clear clinical protocols and step-by-step for technically perform these therapies in their clinical practice and to establish future directions on the topics. The clinicians must periodically update their knowledge about these three procedures to achieve success.",
+      "display_title": "Present status and future directions: Surgical extrusion, intentional replantation and tooth autotransplantation",
+      "authors": [
+        "Gianluca Plotino",
+        "Francesc Abella Sans",
+        "Monty S. Duggal",
+        "Nicola M. Grande",
+        "Gabriel Krastl",
+        "Venkateshbabu Nagendrababu",
+        "Gianluca Gambarini"
+      ]
     }
   ],
   "drive_matched": 2849,
@@ -133142,7 +133194,7 @@
   ],
   "tag_index": {
     "dental-implant": 1011,
-    "narrative-review": 391,
+    "narrative-review": 392,
     "in-vitro": 364,
     "prosthodontics": 315,
     "zirconia": 266,
@@ -133199,7 +133251,7 @@
     "provisional-restoration": 69,
     "extraction-socket": 66,
     "connective-tissue-graft": 65,
-    "tooth-extraction": 65,
+    "tooth-extraction": 66,
     "case-series": 64,
     "complications": 64,
     "bond-strength": 63,
@@ -133824,7 +133876,7 @@
     "cuspal-deflection": 3,
     "c-factor": 3,
     "partial-crown": 3,
-    "topic:severe-damage-tooth": 3,
+    "topic:severe-damage-tooth": 4,
     "composite-repair": 3,
     "topic:sandblast": 3,
     "antiresorptive-therapy": 3,
@@ -133902,7 +133954,7 @@
     "topic:tigran": 3,
     "implant-surface-chemistry": 3,
     "topic:periodontal-ligament-implant": 3,
-    "periodontal-ligament": 3,
+    "periodontal-ligament": 4,
     "cementum": 3,
     "topic:periodontitis": 3,
     "sodium-hypochlorite": 3,
@@ -135218,7 +135270,13 @@
     "condylar-displacement": 1,
     "impact-of-lateral-occlusion-schemes-systematic-review": 1,
     "tooth-implant-connection": 1,
-    "connecting-implants-to-teeth": 1
+    "connecting-implants-to-teeth": 1,
+    "surgical-extrusion": 1,
+    "intentional-replantation": 1,
+    "tooth-autotransplantation": 1,
+    "tooth-replantation": 1,
+    "tooth-preservation": 1,
+    "present-status-and-future-directions-surgical-extrusion-intentional-replantation-and-tooth-autotransplantation": 1
   },
   "semantic_pass": {
     "ontology_concepts": 204,
@@ -135232,7 +135290,7 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2158,
+  "total_papers": 2159,
   "tag_aliases": {
     "additive-manufacturing": "3d-printing",
     "adhesion": "bonding",

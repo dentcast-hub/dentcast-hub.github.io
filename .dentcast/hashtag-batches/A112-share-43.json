@@ -1,0 +1,28 @@
+{
+  "type": "sharehub",
+  "note": "sharehub/share-43 (حفظ دندان یا کشیدن آن؟ سه درمان جایگزین از نگاه پروتزی). Founder approval 1405/08/06 (queue 02, tag proposal) names three new concepts. Questions a dentist would type: (1) دندان با شکستگی تاج و ریشه زیر لثه رو بکشم یا نگه دارم؟ اکستروژن جراحی جواب میده؟ (2) فرول کافی ندارم، افزایش طول تاج بزنم یا ریشه رو اکسترود کنم؟ (3) ری‌پلنتیشن عمدی کی اندیکاسیون داره و زمان خارج‌دهانی چقدره؟ (4) مولر سوم رو میشه جای مولر اول کشیده‌شده پیوند زد؟ Resolving sentences: #حفظ_دندان «قرار نیست دندان به هر قیمتی حفظ شود؛ درمانی ارزش دارد که از نظر بیولوژیک، مکانیکی و عملکردی پیش‌آگهی قابل‌قبولی داشته باشد.»; #فرول «اگر حتی بعد از اکستروژن هم فرول مناسب به دست نیاید، درمان مشکل اصلی را حل نکرده است.»; #افزایش_طول_تاج «انتخاب بین اکستروژن جراحی، اکستروژن ارتودنتیک (forced eruption) و افزایش طول تاج باید با سنجش متعادل سود و خطر هر روش انجام شود.»; minted tags: each section defines and weighs its procedure. Minting basis (Step 4): none of the three exists under any spelling (hashtag_ref --simulate: اکستروژن جراحی only reaches #سوپرااراپشن, a different concept; the other two return nothing); they are the named options of a decision-level question (preserve vs extract) and the founder approved minting them; no other published page resolves any of them (brain/html search), so the batch carries no articles row (article has no brain entry yet). Alias checklist per concept: English term · Finglish · misspelling · colloquial phrase, all filled. Bridge decision: catalog paper P2949 (linked_episodes sharehub/share-43) leads every hashtag of this page via build_cabinet_papers; no separate map row because the catalog holds no other library paper on these concepts (checked: no tag containing replant/transplant/extrusion existed before P2949), so «no library equivalent» beyond P2949 itself. --sync note accepted: «#سوپرااراپشن: alias «اکستروژن» also rewrites #اکستروژن_جراحی» — the alias belongs to the pre-existing supraeruption concept and was not touched (outside the founder's scope for this publish); consequence: the lexical --simulate path folds the word «اکستروژن»/extrusion to #سوپرااراپشن, so reachability of #اکستروژن_جراحی rests on its visible label in plus/assistant-tags.json and on the page's own tag list; reported to the founder as an open follow-up.",
+  "concepts": [
+    {
+      "tag": "#اکستروژن_جراحی",
+      "domain": "clinical",
+      "definition": "اکستروژن جراحی (surgical extrusion) — خارج کردن آتروماتیک ریشه و قرار دادن دوباره‌ی آن در همان ساکت در موقعیتی کرونالی‌تر، تا ساختار سالم و فرول کافی برای رستوریشن به دست آید؛ به‌جای برداشتن استخوان، خود ریشه جابه‌جا می‌شود.",
+      "use_when": "مقاله این روش را برای دندان غیرقابل ترمیم تجویز، رد یا با افزایش طول تاج و اکستروژن ارتودنتیک مقایسه کند.",
+      "aliases": ["surgical extrusion", "سرجیکال اکستروژن", "اکسترژن جراحی", "بیرون آوردن جراحی ریشه"]
+    },
+    {
+      "tag": "#ری_پلنتیشن_عمدی",
+      "domain": "clinical",
+      "definition": "ری‌پلنتیشن عمدی (intentional replantation) — خارج کردن عمدی دندان، درمان مشکل ریشه بیرون از دهان و برگرداندن آن به همان موقعیت و سطح استخوانی قبلی.",
+      "use_when": "مقاله اندیکاسیون، زمان خارج‌دهانی، بقا یا محدودیت این روش را بررسی کند.",
+      "aliases": ["intentional replantation", "اینتنشنال ری پلنتیشن", "ریپلنتیشن عمدی", "کشیدن و برگرداندن دندان"]
+    },
+    {
+      "tag": "#اتوترنسپلنتیشن",
+      "domain": "clinical",
+      "definition": "اتوترنسپلنتیشن دندان (tooth autotransplantation) — انتقال یک دندان نهفته یا رویش‌یافته از یک ناحیه‌ی دهان به ساکت دیگری در همان بیمار، مثلاً مولر سوم به محل مولر کشیده‌شده.",
+      "use_when": "مقاله این پیوند را به‌عنوان گزینه‌ی جایگزین کشیدن یا ایمپلنت، یا شرایط موفقیت آن را بررسی کند.",
+      "aliases": ["tooth autotransplantation", "autotransplantation", "اتوترانسپلنتیشن", "پیوند دندان به جای دندان کشیده"]
+    }
+  ],
+  "articles": {}
+}
