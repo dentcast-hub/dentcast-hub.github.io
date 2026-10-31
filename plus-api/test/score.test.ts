@@ -116,15 +116,18 @@ describe('per-content score', () => {
     expect((await score()) - afterFirst).toBe(POINTS_PER_CONTENT);
   });
 
-  it('an action with no content_id contributes no per-content points', async () => {
-    await app.inject({
+  // A completion names the page it completes; without one there is nothing to
+  // pay for, so the route refuses it before it reaches the log at all.
+  it('a completion with no content_id is refused and scores nothing', async () => {
+    const res = await app.inject({
       method: 'POST', url: '/activity', headers: { cookie },
       payload: { action: 'article_completed' },
     });
+    expect(res.statusCode).toBe(400);
     const b = await computeScore(pool, userId);
 
     expect(b.content_completed).toBe(0);
-    expect(b.score).toBe(POINTS_PER_ACTIVE_DAY); // the active day, and nothing else
+    expect(b.score).toBe(0);
   });
 
   // The single most consequential thing about sharing, and the one that would be

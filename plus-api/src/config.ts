@@ -487,6 +487,15 @@ export const config = {
   // this and only a loop does.
   activity: {
     maxPerUserPerHour: int('ACTIVITY_MAX_PER_USER_PER_HOUR', 300),
+    // The tighter, inner wall for the two completions that PAY per piece of
+    // content (article_completed / episode_listened, score.ts
+    // CONSUMPTION_ACTIONS). Their dwell/listen thresholds are enforced in the
+    // browser only, so the server's guarantee is a human-shaped pace: each
+    // completion takes at least 30s of reading on the page, and twenty an hour
+    // is already a glossary binge. A refusal is a 429, which the client's
+    // outbox keeps and re-sends later — a real reader is delayed, never lost.
+    maxCompletionsPerUserPerHour: int('ACTIVITY_MAX_COMPLETIONS_PER_USER_PER_HOUR', 20),
+    maxCompletionsPerUserPerDay: int('ACTIVITY_MAX_COMPLETIONS_PER_USER_PER_DAY', 60),
   },
 
   // The review engine's own ceiling (routes/review.ts). POST /review/answer

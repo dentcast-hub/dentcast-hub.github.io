@@ -3,7 +3,10 @@ import { config } from '../config.js';
 import { requireAuth } from '../middleware/auth.js';
 import { recordActivity, SERVER_MINTED_ACTIONS } from '../services/activity.js';
 import { scheduleAchievementSync } from '../services/achievement-sync.js';
-import { consume, HOUR_MS } from '../services/rate-limit.js';
+import { consume, refund, HOUR_MS } from '../services/rate-limit.js';
+import { CONSUMPTION_ACTIONS } from '../services/score.js';
+import { getContentInfo } from '../content-index.js';
+import { refreshSoon } from '../content-refresh.js';
 import {
   SPOT_EVENTS, parseSpotContentId, recordSpotEvent, hostFromHeaders,
 } from '../services/spot-stats.js';
@@ -11,6 +14,7 @@ import {
 // Permissive: the action vocabulary is deliberately open (not an enum). We only
 // guard length and character set so it stays a sane, indexable token.
 const ACTION_RE = /^[a-z0-9_.:-]{1,64}$/;
+const DAY_MS = 24 * HOUR_MS;
 
 export async function activityRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', requireAuth);
@@ -93,6 +97,40 @@ export async function activityRoutes(app: FastifyInstance): Promise<void> {
     if (!limit.allowed) {
       reply.header('retry-after', Math.ceil(limit.retryAfterMs / 1000));
       return reply.code(429).send({ error: 'rate_limited' });
+    }
+
+    // ── Paid completions: a real page, at a human pace ──────────────────────
+    // article_completed / episode_listened pay +5 per DISTINCT content_id
+    // (score.ts) and league XP per page per week, and the 30s dwell / 60s of
+    // real play that earns them is measured in the browser only. Until
+    // 2026-10-31 the id was not checked at all, so a script could post
+    // `insight/x1`, `insight/x2` … and be paid for each — up to the 300/hour
+    // wall above, ~1500 score an hour for pages that do not exist.
+    //
+    // Two checks close that. The id must be a page in the content index —
+    // every page that runs the trackers is there (canonical → content_id). An
+    // id the index does not know is a 409, not a 400: a page published since
+    // the last refresh is the honest case, the client's outbox keeps the
+    // completion and re-sends it, and refreshSoon() pulls the new index forward
+    // so that retry lands. Then a pace ceiling, the server-side stand-in for
+    // the dwell it cannot see; refused completions are likewise kept and
+    // re-sent by the outbox, so a fast reader is paid later, not never.
+    if ((CONSUMPTION_ACTIONS as readonly string[]).includes(action)) {
+      if (!content_id) return reply.code(400).send({ error: 'invalid_content_id' });
+      if (!getContentInfo(content_id)) {
+        refreshSoon();
+        return reply.code(409).send({ error: 'unknown_content' });
+      }
+      const uid = request.user!.id;
+      const perHour = consume(`completion:hour:${uid}`, config.activity.maxCompletionsPerUserPerHour, HOUR_MS);
+      const perDay = perHour.allowed
+        ? consume(`completion:day:${uid}`, config.activity.maxCompletionsPerUserPerDay, DAY_MS)
+        : perHour;
+      if (!perDay.allowed) {
+        if (perHour.allowed) refund(`completion:hour:${uid}`);
+        reply.header('retry-after', Math.ceil(perDay.retryAfterMs / 1000));
+        return reply.code(429).send({ error: 'rate_limited' });
+      }
     }
 
     // `card_reviewed_manual` counts for the streak but MUST NOT touch card_state.

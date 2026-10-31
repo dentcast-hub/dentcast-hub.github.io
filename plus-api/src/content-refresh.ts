@@ -253,6 +253,24 @@ export async function refreshOnce(): Promise<void> {
   }
 }
 
+let lastEarly = 0;
+let early: Promise<void> | null = null;
+
+/**
+ * An early pass, for a request that named a page the served index does not
+ * know yet — usually one published since the last poll. At most one a minute
+ * however many such requests arrive, and none at all when no URL is
+ * configured, so an unknown id can never be turned into a fetch loop.
+ */
+export function refreshSoon(now = Date.now()): void {
+  if (early || now - lastEarly < 60_000) return;
+  if (!FILES.some((f) => f.urls().length)) return;
+  lastEarly = now;
+  early = refreshOnce()
+    .catch(() => { /* logged inside; never throws upward */ })
+    .finally(() => { early = null; });
+}
+
 /**
  * Start polling. Returns a stop() like the other background workers.
  *
