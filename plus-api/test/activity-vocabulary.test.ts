@@ -23,6 +23,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { makeApp, resetDb, loginAs } from './helpers.js';
 import { pool } from '../src/db.js';
+import { config } from '../src/config.js';
 import { SERVER_MINTED_ACTIONS, CLIENT_ACTIONS } from '../src/services/activity.js';
 
 let app: FastifyInstance;
@@ -89,6 +90,42 @@ describe('POST /activity refuses every server-minted action', () => {
   it('leaves the vocabulary open for an inert token', async () => {
     const res = await post('some_new_client_signal', 'insight/insight-1');
     expect(res.statusCode).toBe(200);
+  });
+});
+
+// The two completions that pay per page (score.ts CONSUMPTION_ACTIONS) are
+// earned by a dwell / listen threshold the browser measures. Before 2026-10-31
+// the server took any content_id on trust, so a loop of invented ids
+// («insight/x1», «insight/x2» …) was paid +5 score and league XP for each.
+describe('POST /activity: paid completions are for real pages, at a human pace', () => {
+  it('refuses a completion for a page the content index does not know', async () => {
+    for (const action of ['article_completed', 'episode_listened']) {
+      const res = await post(action, 'insight/not-a-real-page');
+      expect(res.statusCode, action).toBe(409);
+      expect(res.json().error).toBe('unknown_content');
+    }
+    expect(await actionsLogged()).toEqual([]);
+  });
+
+  it('refuses a completion that names no page', async () => {
+    const res = await post('article_completed', null);
+    expect(res.statusCode).toBe(400);
+    expect(await actionsLogged()).toEqual([]);
+  });
+
+  it('caps completions per hour, and a refused one writes nothing', async () => {
+    const max = config.activity.maxCompletionsPerUserPerHour;
+    for (let n = 1; n <= max; n++) {
+      const res = await post('article_completed', `insight/insight-${n}`);
+      expect(res.statusCode, `completion ${n}`).toBe(200);
+    }
+    const over = await post('article_completed', `insight/insight-${max + 1}`);
+    expect(over.statusCode).toBe(429);
+    expect(Number(over.headers['retry-after'])).toBeGreaterThan(0);
+    const logged = await actionsLogged();
+    expect(logged.filter((a) => a === 'article_completed')).toHaveLength(max);
+    // The ceiling is on paid completions only; the rest of the log is unaffected.
+    expect((await post('some_new_client_signal', 'insight/insight-1')).statusCode).toBe(200);
   });
 });
 
