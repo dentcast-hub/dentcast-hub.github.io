@@ -907,6 +907,65 @@
    ]
   },
   {
+   "key": "share_hub",
+   "tag": "#Share_Hub",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
+   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
+   "aliases": [
+    "شیرهاب",
+    "شر هاب"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 42,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25",
+    "sharehub/share-26",
+    "sharehub/share-27",
+    "sharehub/share-28",
+    "sharehub/share-29",
+    "sharehub/share-30",
+    "sharehub/share-31",
+    "sharehub/share-32",
+    "sharehub/share-33",
+    "sharehub/share-34",
+    "sharehub/share-35",
+    "sharehub/share-36",
+    "sharehub/share-38",
+    "sharehub/share-39",
+    "sharehub/share-40",
+    "sharehub/share-41",
+    "sharehub/share-42",
+    "sharehub/share-43"
+   ]
+  },
+  {
    "key": "نوت_کست",
    "tag": "#نوت_کست",
    "domain": "brand",
@@ -967,15 +1026,16 @@
    ]
   },
   {
-   "key": "share_hub",
-   "tag": "#Share_Hub",
+   "key": "curated_content",
+   "tag": "#Curated_Content",
    "domain": "brand",
    "words": 2,
-   "definition": "نام سریِ Share Hub — بازنشر و مرور محتوای دیگران.",
-   "use_when": "روی هر مدخل شیرهاب، و هیچ‌جای دیگر.",
+   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
+   "use_when": "روی مدخل‌های بازنشر.",
    "aliases": [
-    "شیرهاب",
-    "شر هاب"
+    "محتوای گلچین شده",
+    "کیوریتد",
+    "بازنشر محتوا"
    ],
    "variants": [],
    "co_tags": [],
@@ -1019,67 +1079,9 @@
     "sharehub/share-36",
     "sharehub/share-38",
     "sharehub/share-39",
-    "sharehub/share-40",
     "sharehub/share-41",
-    "sharehub/share-42"
-   ]
-  },
-  {
-   "key": "curated_content",
-   "tag": "#Curated_Content",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
-   "use_when": "روی مدخل‌های بازنشر.",
-   "aliases": [
-    "محتوای گلچین شده",
-    "کیوریتد",
-    "بازنشر محتوا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 40,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24",
-    "sharehub/share-25",
-    "sharehub/share-26",
-    "sharehub/share-27",
-    "sharehub/share-28",
-    "sharehub/share-29",
-    "sharehub/share-30",
-    "sharehub/share-31",
-    "sharehub/share-32",
-    "sharehub/share-33",
-    "sharehub/share-34",
-    "sharehub/share-35",
-    "sharehub/share-36",
-    "sharehub/share-38",
-    "sharehub/share-39",
-    "sharehub/share-41",
-    "sharehub/share-42"
+    "sharehub/share-42",
+    "sharehub/share-43"
    ]
   },
   {
@@ -1670,6 +1672,49 @@
    ]
   },
   {
+   "key": "فرول",
+   "tag": "#فرول",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
+   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
+   "aliases": [
+    "ferrule"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 27,
+   "content_ids": [
+    "episodes/episode-47",
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "episodes/episode-147-7",
+    "insight/insight-4",
+    "insight/insight-7",
+    "insight/insight-13",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19",
+    "insight/insight-58",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "insight/insight-64",
+    "chairside/chairside-30",
+    "sharehub/share-18",
+    "dentai/dentai-33",
+    "insight/insight-76",
+    "sharehub/share-20",
+    "insight/insight-84",
+    "insight/insight-93",
+    "insight/insight-97",
+    "chairside/chairside-44",
+    "sharehub/share-43"
+   ]
+  },
+  {
    "key": "تصمیم_درمانی",
    "tag": "#تصمیم_درمانی",
    "domain": "clinical",
@@ -1715,48 +1760,6 @@
     "metanotes/meta-13",
     "chairside/chairside-21",
     "insight/insight-89"
-   ]
-  },
-  {
-   "key": "فرول",
-   "tag": "#فرول",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
-   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
-   "aliases": [
-    "ferrule"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 26,
-   "content_ids": [
-    "episodes/episode-47",
-    "episodes/episode-48",
-    "episodes/episode-49",
-    "episodes/episode-147-7",
-    "insight/insight-4",
-    "insight/insight-7",
-    "insight/insight-13",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-9",
-    "dentai/dentai-27",
-    "metanotes/meta-15",
-    "metanotes/meta-19",
-    "insight/insight-58",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "insight/insight-64",
-    "chairside/chairside-30",
-    "sharehub/share-18",
-    "dentai/dentai-33",
-    "insight/insight-76",
-    "sharehub/share-20",
-    "insight/insight-84",
-    "insight/insight-93",
-    "insight/insight-97",
-    "chairside/chairside-44"
    ]
   },
   {
@@ -2376,6 +2379,43 @@
    ]
   },
   {
+   "key": "افزایش_طول_تاج",
+   "tag": "#افزایش_طول_تاج",
+   "domain": null,
+   "words": 3,
+   "definition": "crown lengthening — به‌دست آوردن ساختار با جابه‌جایی لثه و استخوان.",
+   "use_when": "مقاله این جراحی را تجویز، رد، یا هزینه‌اش را بسنجد.",
+   "aliases": [
+    "کراون لنتنینگ",
+    "crown lengthening",
+    "لنتنینگ",
+    "کراون لنتنینگ زیبایی",
+    "esthetic crown lengthening",
+    "کراون لنگتنینگ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 16,
+   "content_ids": [
+    "episodes/episode-75",
+    "episodes/episode-76",
+    "episodes/episode-77",
+    "episodes/episode-78",
+    "insight/insight-7",
+    "chairside/chairside-6",
+    "chairside/chairside-16",
+    "chairside/chairside-21",
+    "insight/insight-55",
+    "insight/insight-64",
+    "chairside/chairside-30",
+    "sharehub/share-14",
+    "sharehub/share-19",
+    "sharehub/share-24",
+    "insight/insight-93",
+    "sharehub/share-43"
+   ]
+  },
+  {
    "key": "روکش_موقت",
    "tag": "#روکش_موقت",
    "domain": null,
@@ -2444,42 +2484,6 @@
     "chairside/chairside-33",
     "sharehub/share-19",
     "insight/insight-89",
-    "insight/insight-93"
-   ]
-  },
-  {
-   "key": "افزایش_طول_تاج",
-   "tag": "#افزایش_طول_تاج",
-   "domain": null,
-   "words": 3,
-   "definition": "crown lengthening — به‌دست آوردن ساختار با جابه‌جایی لثه و استخوان.",
-   "use_when": "مقاله این جراحی را تجویز، رد، یا هزینه‌اش را بسنجد.",
-   "aliases": [
-    "کراون لنتنینگ",
-    "crown lengthening",
-    "لنتنینگ",
-    "کراون لنتنینگ زیبایی",
-    "esthetic crown lengthening",
-    "کراون لنگتنینگ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 15,
-   "content_ids": [
-    "episodes/episode-75",
-    "episodes/episode-76",
-    "episodes/episode-77",
-    "episodes/episode-78",
-    "insight/insight-7",
-    "chairside/chairside-6",
-    "chairside/chairside-16",
-    "chairside/chairside-21",
-    "insight/insight-55",
-    "insight/insight-64",
-    "chairside/chairside-30",
-    "sharehub/share-14",
-    "sharehub/share-19",
-    "sharehub/share-24",
     "insight/insight-93"
    ]
   },
@@ -2687,6 +2691,40 @@
     "chairside/chairside-14",
     "insight/insight-72",
     "sharehub/share-28"
+   ]
+  },
+  {
+   "key": "حفظ_دندان",
+   "tag": "#حفظ_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نگه داشتنِ دندانِ questionable در برابر کشیدن و جایگزینی.",
+   "use_when": "مقاله بین حفظ و کشیدن تصمیم بگیرد.",
+   "aliases": [
+    "tooth preservation",
+    "نگه داشتن دندان",
+    "tooth retention"
+   ],
+   "variants": [
+    "#نگهداری_دندان"
+   ],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "metanotes/meta-6",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-4",
+    "chairside/chairside-13",
+    "chairside/chairside-16",
+    "chairside/chairside-21",
+    "chairside/chairside-30",
+    "insight/insight-76",
+    "insight/insight-93",
+    "chairside/chairside-44",
+    "sharehub/share-43"
    ]
   },
   {
@@ -2925,39 +2963,6 @@
     "insight/insight-51",
     "insight/insight-60",
     "metanotes/meta-22"
-   ]
-  },
-  {
-   "key": "حفظ_دندان",
-   "tag": "#حفظ_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نگه داشتنِ دندانِ questionable در برابر کشیدن و جایگزینی.",
-   "use_when": "مقاله بین حفظ و کشیدن تصمیم بگیرد.",
-   "aliases": [
-    "tooth preservation",
-    "نگه داشتن دندان",
-    "tooth retention"
-   ],
-   "variants": [
-    "#نگهداری_دندان"
-   ],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-150-2",
-    "episodes/episode-151",
-    "metanotes/meta-6",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "chairside/chairside-4",
-    "chairside/chairside-13",
-    "chairside/chairside-16",
-    "chairside/chairside-21",
-    "chairside/chairside-30",
-    "insight/insight-76",
-    "insight/insight-93",
-    "chairside/chairside-44"
    ]
   },
   {
@@ -14289,6 +14294,26 @@
    ]
   },
   {
+   "key": "اتوترنسپلنتیشن",
+   "tag": "#اتوترنسپلنتیشن",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "اتوترنسپلنتیشن دندان (tooth autotransplantation) — انتقال یک دندان نهفته یا رویش‌یافته از یک ناحیه‌ی دهان به ساکت دیگری در همان بیمار، مثلاً مولر سوم به محل مولر کشیده‌شده.",
+   "use_when": "مقاله این پیوند را به‌عنوان گزینه‌ی جایگزین کشیدن یا ایمپلنت، یا شرایط موفقیت آن را بررسی کند.",
+   "aliases": [
+    "tooth autotransplantation",
+    "autotransplantation",
+    "اتوترانسپلنتیشن",
+    "پیوند دندان به جای دندان کشیده"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-43"
+   ]
+  },
+  {
    "key": "اثر_آفتاب_پرست",
    "tag": "#اثر_آفتاب_پرست",
    "domain": "clinical",
@@ -14931,6 +14956,26 @@
    "count": 1,
    "content_ids": [
     "dentai/promptologist/prompt7-1"
+   ]
+  },
+  {
+   "key": "اکستروژن_جراحی",
+   "tag": "#اکستروژن_جراحی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "اکستروژن جراحی (surgical extrusion) — خارج کردن آتروماتیک ریشه و قرار دادن دوباره‌ی آن در همان ساکت در موقعیتی کرونالی‌تر، تا ساختار سالم و فرول کافی برای رستوریشن به دست آید؛ به‌جای برداشتن استخوان، خود ریشه جابه‌جا می‌شود.",
+   "use_when": "مقاله این روش را برای دندان غیرقابل ترمیم تجویز، رد یا با افزایش طول تاج و اکستروژن ارتودنتیک مقایسه کند.",
+   "aliases": [
+    "surgical extrusion",
+    "سرجیکال اکستروژن",
+    "اکسترژن جراحی",
+    "بیرون آوردن جراحی ریشه"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-43"
    ]
   },
   {
@@ -17254,6 +17299,26 @@
    "count": 1,
    "content_ids": [
     "taraz/taraz1-10"
+   ]
+  },
+  {
+   "key": "ری_پلنتیشن_عمدی",
+   "tag": "#ری_پلنتیشن_عمدی",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "ری‌پلنتیشن عمدی (intentional replantation) — خارج کردن عمدی دندان، درمان مشکل ریشه بیرون از دهان و برگرداندن آن به همان موقعیت و سطح استخوانی قبلی.",
+   "use_when": "مقاله اندیکاسیون، زمان خارج‌دهانی، بقا یا محدودیت این روش را بررسی کند.",
+   "aliases": [
+    "intentional replantation",
+    "اینتنشنال ری پلنتیشن",
+    "ریپلنتیشن عمدی",
+    "کشیدن و برگرداندن دندان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-43"
    ]
   },
   {
@@ -21140,6 +21205,7 @@
   "retrieval augmented generation": "rag",
   "supportive periodontal therapy": "spt",
   "تشخیص رادیوگرافی با هوش مصنوعی": "هوش مصنوعی رادیوگرافی",
+  "پیوند دندان به جای دندان کشیده": "اتوترنسپلنتیشن",
   "anterior repositioning splint": "اسپلینت ریپوزیشن",
   "titanium or zirconia abutment": "انتخاب اباتمنت",
   "zirconia or titanium abutment": "انتخاب اباتمنت",
@@ -21183,6 +21249,7 @@
   "prototype قبل از کار کامل": "ماکت اولیه",
   "randomized clinical trial": "کارآزمایی تصادفی",
   "statistically significant": "معنی داری آماری",
+  "tooth autotransplantation": "اتوترنسپلنتیشن",
   "vertical maxillary excess": "رشد عمودی فک بالا",
   "working side interference": "تداخل سمت کارگر",
   "دیواره کمتر از یک میلیمتر": "دیواره نازک",
@@ -21200,6 +21267,7 @@
   "immediate dentin sealing": "ids",
   "incisal edge preparation": "لبه اینسایزال",
   "information architecture": "معماری اطلاعات",
+  "intentional replantation": "ری پلنتیشن عمدی",
   "intraoral ceramic repair": "ریپر سرامیک",
   "laboratory communication": "ارتباط با لابراتوار",
   "mechanical complications": "عوارض مکانیکی",
@@ -21245,6 +21313,7 @@
   "سیستم پایدار بدون علامت": "سیستم پایدار",
   "مسیر یادگیری هوش مصنوعی": "سواد هوش مصنوعی",
   "پرسیدن سوال قبل از پاسخ": "سؤال پیش از تولید",
+  "کشیدن و برگرداندن دندان": "ری پلنتیشن عمدی",
   "3d implant positioning": "پوزیشن ایمپلنت",
   "additive manufacturing": "پرینت سه بعدی",
   "augmented intelligence": "هوش افزوده",
@@ -21277,6 +21346,7 @@
   "بات تلگرامی هوش مصنوعی": "اکانت اشتراکی",
   "باند به کامپوزیت قدیمی": "ریپیر کامپوزیت",
   "برندینگ شخصی دندانپزشک": "حضور آنلاین دندانپزشک",
+  "بیرون آوردن جراحی ریشه": "سوپرااراپشن جراحی",
   "تحلیل استخوان حاشیه ای": "تحلیل استخوان کرستال",
   "تحلیل استخوان مارژینال": "تحلیل استخوان کرستال",
   "عوامل بیولوژیک ایمپلنت": "بیولوژی ایمپلنت",
@@ -21373,6 +21443,7 @@
   "آماده سازی برای روکش": "روکش preparation",
   "اسپلینت کردن ایمپلنت": "اسپلینت ایمپلنت",
   "افزایش دایمنشن عمودی": "افزایش vd",
+  "اینتنشنال ری پلنتیشن": "ری پلنتیشن عمدی",
   "بازاریابی دندانپزشکی": "مارکتینگ دندانپزشکی",
   "بایوتایپ پری ایمپلنت": "فنوتیپ پری ایمپلنت",
   "تحلیل بشقابی استخوان": "saucerization",
@@ -21399,6 +21470,7 @@
   "گوتاپرکای باقی مانده": "سیل اپیکال",
   "abutment evaluation": "انتخاب پایه",
   "amalgam alternative": "جایگزین آمالگام",
+  "autotransplantation": "اتوترنسپلنتیشن",
   "blood contamination": "آلودگی حین باندینگ",
   "bonding generations": "نسل باندینگ",
   "brand compatibility": "سازگاری برند",
@@ -21545,6 +21617,7 @@
   "sinus augmentation": "سینوس لیفت",
   "staged cementation": "سمان مرحله ای",
   "stepwise prompting": "task decomposition",
+  "surgical extrusion": "سوپرااراپشن جراحی",
   "tooth preservation": "حفظ دندان",
   "torus mandibularis": "توروس مندیبولاریس",
   "uncontrolled study": "مطالعه بدون کنترل",
@@ -21911,6 +21984,7 @@
   "ریهبیلیتیشن دهان": "بازسازی کامل دهان",
   "زیرکونیا گرادینت": "زیرکونیا مولتی لیر",
   "سایش دندان مقابل": "سایش آنتاگونیست",
+  "سرجیکال اکستروژن": "سوپرااراپشن جراحی",
   "سلسله مراتب باند": "hob",
   "سلکتیو گرایندینگ": "تنظیم اکلوژن",
   "سمان روی ایمپلنت": "سمان ایمپلنت",
@@ -22073,6 +22147,7 @@
   "آناتومی استخوان": "معماری استخوان",
   "آگاهی به اکلوژن": "آگاهی اکلوزال",
   "اتصال مینا سمان": "cej",
+  "اتوترانسپلنتیشن": "اتوترنسپلنتیشن",
   "اتیولوژی نامشخص": "علت نامشخص",
   "اختلال مفصل فکی": "tmd",
   "از دست رفتن فضا": "فضا کجا رفته",
@@ -22362,6 +22437,7 @@
   "روکش پیچ شونده": "اتصال پیچ شونده",
   "رویش بیش از حد": "سوپرااراپشن",
   "ریشه های کوتاه": "ریشه کوتاه",
+  "ریپلنتیشن عمدی": "ری پلنتیشن عمدی",
   "زیرکونیای شفاف": "نسل زیرکونیا",
   "سؤال های بیمار": "سؤال بیمار",
   "ساپورت لب بالا": "ساپورت لب",
@@ -22543,6 +22619,7 @@
   "اعتبار بیرونی": "تعمیم پذیری",
   "افتراق تشخیصی": "تشخیص افتراقی",
   "اکس کاربازپین": "کاربامازپین",
+  "اکسترژن جراحی": "سوپرااراپشن جراحی",
   "ایمپلنت اضافه": "ایمپلنت خواب",
   "ایمپلنت تراپی": "درمان ایمپلنت",
   "ایمپلنت متحرک": "اوردنچر",
