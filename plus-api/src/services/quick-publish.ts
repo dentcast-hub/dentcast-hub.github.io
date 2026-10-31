@@ -25,16 +25,16 @@ export const QP_TYPES = {
   // inside the title (insight-100, chairside-46, meta-22, share-42).
   clinical: { label: 'Insight — نکتهٔ کلینیکی', folder: 'insight', stem: 'insight-', id: (n: number) => `clinical-${n}`, urlKey: 'page_url', section: 'Clinical Insight',
     landing: 'top', landingLabel: (_n: number, title: string) => title,
-    kicker: (_n: number) => '', h1Prefix: (n: number) => `${ICON_BOOKMARK} Insight ${n} — ` },
+    kicker: (_n: number) => '', h1Prefix: (n: number) => `${ICON_BOOKMARK} Insight ${n} — `, pulseLead: 'یک اینسایت بالینی' },
   chairside: { label: 'Chairside — کیس و تصمیم بالینی', folder: 'chairside', stem: 'chairside-', id: (n: number) => `chairside-${n}`, urlKey: 'page_url', section: 'Chairside',
     landing: 'top', landingLabel: (n: number, title: string) => `Chairside ${n} — ${title.replace(/^chairside\s*\d*\s*[—–:-]?\s*/i, '') || title}`,
-    kicker: (n: number) => `  <h2>Chairside ${n}</h2>\n  `, h1Prefix: (_n: number) => '' },
+    kicker: (n: number) => `  <h2>Chairside ${n}</h2>\n  `, h1Prefix: (_n: number) => '', pulseLead: 'یک چیرساید' },
   meta: { label: 'MetaNote — متانوت', folder: 'metanotes', stem: 'meta-', id: (n: number) => `meta-${n}`, urlKey: 'page_url', section: 'Meta Note',
     landing: 'bottom', landingLabel: (n: number, title: string) => `متانوت ${faNumberWords(n)}: ${title.replace(/^متانوت[^:：]*[:：]\s*/, '') || title}`,
-    kicker: (n: number) => ` <h2>${ICON_BRAIN} MetaNote ${n}</h2>\n`, h1Prefix: (_n: number) => '' },
+    kicker: (n: number) => ` <h2>${ICON_BRAIN} MetaNote ${n}</h2>\n`, h1Prefix: (_n: number) => '', pulseLead: 'یک متانوت' },
   sharehub: { label: 'Share Hub — خوانش مقاله', folder: 'sharehub', stem: 'share-', id: (n: number) => String(n), urlKey: 'url', section: 'Share Hub',
     landing: 'top', landingLabel: (_n: number, title: string) => `${title} (مطلبی از دکتر فواد شهابیان)`,
-    kicker: (_n: number) => `<div class="sh-kicker">${ICON_BOOKMARK} Share Hub</div>\n`, h1Prefix: (_n: number) => '' },
+    kicker: (_n: number) => `<div class="sh-kicker">${ICON_BOOKMARK} Share Hub</div>\n`, h1Prefix: (_n: number) => '', pulseLead: 'یک مطلب در Share Hub' },
 } as const;
 export type QpType = keyof typeof QP_TYPES;
 
@@ -238,6 +238,52 @@ export function upsertBrainEntry(text: string, entry: Record<string, unknown>): 
   return replaceBrainEntry(text, current, entry);
 }
 
+// ── homepage Pulse ────────────────────────────────────────────────────────
+
+/** The homepage's Pulse list always has exactly this many lines (Phase F checks it). */
+export const PULSE_LINES = 7;
+export interface Pulse { file: string; href: string; line: string }
+
+/**
+ * The announcement line, drafted the way the latest Pulse lines are: the section's
+ * name, the title in «», the title as the link, no date, no description of the
+ * piece (modules/02-routing-intake.md, question 5: the line names it, never narrates it).
+ */
+export function pulseFor(type: QpType, n: number, title: string): Pulse {
+  const t = QP_TYPES[type];
+  const href = `/${t.folder}/${t.stem}${n}.html`;
+  return { file: 'index.html', href, line: `<li>${t.pulseLead} با عنوانِ «<a href="${href}">${esc(title)}</a>» منتشر شد</li>` };
+}
+
+/**
+ * Pulse rule (modules/11-build-and-version.md, step 6): the new line goes at the
+ * absolute top of the list and the bottom-most line leaves, so the list stays at
+ * seven. A page already in the list has its line replaced in place (an edit); an
+ * edit of a page that already rolled off changes nothing. null when index.html has
+ * no Pulse list. tools/quick_publish.py applies the same rule to git's copy.
+ */
+export function applyPulse(text: string, p: Pulse, isNew: boolean): string | null {
+  const open = text.match(/<ul class="dc-pulse-list">[ \t]*\r?\n/);
+  if (!open) return null;
+  const start = open.index! + open[0].length;
+  const end = text.indexOf('</ul>', start);
+  if (end < 0) return null;
+  const eol = open[0].includes('\r\n') ? '\r\n' : '\n';
+  const lines = text.slice(start, end).split(/\r?\n/);
+  const isLi = (l: string) => l.trim().startsWith('<li>');
+  const own = lines.findIndex(l => isLi(l) && l.includes(`href="${p.href}"`));
+  const first = lines.findIndex(isLi);
+  const indent = first >= 0 ? lines[first].match(/^[ \t]*/)![0] : '          ';
+  if (own >= 0) lines[own] = lines[own].match(/^[ \t]*/)![0] + p.line;
+  else if (!isNew) return text;
+  else {
+    lines.splice(first >= 0 ? first : 0, 0, indent + p.line);
+    let count = lines.filter(isLi).length;
+    for (let i = lines.length - 1; i >= 0 && count > PULSE_LINES; i--) if (isLi(lines[i])) { lines.splice(i, 1); count--; }
+  }
+  return text.slice(0, start) + lines.join(eol) + text.slice(end);
+}
+
 export interface Landing { file: string; href: string; line: string; order: 'top' | 'bottom' }
 
 export function landingFor(type: QpType, n: number, title: string): Landing {
@@ -279,6 +325,8 @@ export interface QpItem {
   media: string[]; brain_entry: Record<string, unknown>; created_at: string; updated_at: string;
   /** The line this page has in its section's index.html; null if that list could not be found. */
   landing?: Landing | null;
+  /** The line this page has in the homepage Pulse; null if index.html has no Pulse list. */
+  pulse?: Pulse | null;
   state: 'live' | 'imported' | 'completed'; imported_at: string | null; completed_at: string | null;
   /** Set only by the founder's «بفرست تو ورک‌فلو»; nothing goes to the full workflow on its own. */
   workflow_requested_at?: string | null;
@@ -417,10 +465,11 @@ async function readText(store: SiteStore, key: string, missing: string): Promise
  * holds and «بازگرداندن» finishes the job from the backup) instead of a live
  * page nothing tracks, which the next deploy would silently delete.
  */
-async function writeLive(store: SiteStore, item: QpItem, html: string, brainText: string, ledger: Ledger, landingText: string | null): Promise<void> {
+async function writeLive(store: SiteStore, item: QpItem, html: string, brainText: string, ledger: Ledger, landingText: string | null, pulseText: string | null): Promise<void> {
   await saveLedger(store, ledger);
   await store.put(BRAIN_KEY, Buffer.from(brainText), 'application/json; charset=utf-8');
   if (item.landing && landingText !== null) await store.put(item.landing.file, Buffer.from(landingText), 'text/html; charset=utf-8');
+  if (item.pulse && pulseText !== null) await store.put(item.pulse.file, Buffer.from(pulseText), 'text/html; charset=utf-8');
   await store.put(item.path.slice(1), Buffer.from(html), 'text/html; charset=utf-8');
 }
 
@@ -430,6 +479,15 @@ async function withLanding(store: SiteStore, item: QpItem): Promise<string | nul
   const current = await store.get(l.file);
   const next = current ? applyLanding(current.toString('utf8'), l) : null;
   item.landing = next === null ? null : l;
+  return next;
+}
+
+/** index.html with this page's Pulse line in it; marks the item pulse-less when the list is not there. */
+async function withPulse(store: SiteStore, item: QpItem, isNew: boolean): Promise<string | null> {
+  const p = pulseFor(item.type, item.n, item.title);
+  const current = await store.get(p.file);
+  const next = current ? applyPulse(current.toString('utf8'), p, isNew) : null;
+  item.pulse = next === null ? null : p;
   return next;
 }
 
@@ -484,9 +542,10 @@ export function publish(input: QpInput): Promise<{ item: QpItem; url: string }> 
     const html = renderPage(template, { ...item, body: rendered.html });
     brainText = appendBrainEntry(brainText, entry);
     const landingText = await withLanding(store, item);
+    const pulseText = await withPulse(store, item, true);
     ledger.items.push(item);
     await backup(item, html, v.body);
-    await writeLive(store, item, html, brainText, ledger, landingText);
+    await writeLive(store, item, html, brainText, ledger, landingText, pulseText);
     return { item, url: IR_ORIGIN + path };
   });
 }
@@ -515,9 +574,10 @@ export function edit(id: string, input: QpInput): Promise<{ item: QpItem; url: s
       modified: tehranDate(), updated_at: new Date().toISOString() };
     const html = renderPage(template, { ...item, body: rendered.html });
     const landingText = await withLanding(store, item);
+    const pulseText = await withPulse(store, item, false);
     ledger.items[at] = item;
     await backup(item, html, v.body);
-    await writeLive(store, item, html, brainText, ledger, landingText);
+    await writeLive(store, item, html, brainText, ledger, landingText, pulseText);
     return { item, url: IR_ORIGIN + item.path };
   });
 }
@@ -558,6 +618,16 @@ async function restoreNow(id: string): Promise<{ restored: string[] }> {
       if (current !== undefined && !current.includes(`<li><a href="${item.landing.href}">`)) {
         const next = applyLanding(current, item.landing);
         if (next !== null) { await store.put(item.landing.file, Buffer.from(next), 'text/html; charset=utf-8'); restored.push('landing'); }
+      }
+    }
+    if (item.pulse) {
+      const current = (await store.get(item.pulse.file))?.toString('utf8');
+      if (current !== undefined && !current.includes(`href="${item.pulse.href}"`)) {
+        // Only the newest minimal publication goes back on top: an older one may have
+        // legitimately rolled off the seven lines, and the order would be wrong anyway.
+        const newest = await one<{ id: string }>('select id from quick_publications order by created_at desc limit 1');
+        const next = newest?.id === item.id ? applyPulse(current, item.pulse, true) : null;
+        if (next !== null) { await store.put(item.pulse.file, Buffer.from(next), 'text/html; charset=utf-8'); restored.push('pulse'); }
       }
     }
     const brainText = await readText(store, BRAIN_KEY, 'brain_missing');

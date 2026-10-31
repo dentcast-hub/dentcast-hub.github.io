@@ -8,8 +8,9 @@
 > `.dentcast/offline-publish.md`.
 >
 > **From a phone:** /admin «انتشار حداقلی (اضطراری)» performs this same path
-> (page from `quick-publish/template.html`, tail brain entry, nothing deferred
-> faked) straight onto the Arvan bucket for Insight, Chairside, MetaNote and
+> (page from `quick-publish/template.html`, tail brain entry, the section
+> landing line and the homepage Pulse line, nothing deferred faked) straight
+> onto the Arvan bucket for Insight, Chairside, MetaNote and
 > Share Hub, and records each page in `quick-publish/ledger.json` for import
 > and completion: `.dentcast/quick-publish.md`.
 
@@ -223,8 +224,9 @@ Also expected **FAIL** (verified 2026-10-31 on panel-made pages):
 
 - **`4.13 DES`** — "missing DES without a valid exemption". You deliberately
   skipped Question 4.8/step 4.13; the gate reports it as a failure, not a warning.
-- **`6 pulse`**, **`E notify`**, **`8 sitemap`** — Pulse, the `dc-notify` marker
-  and the regenerated sitemap all belong to the full workflow.
+- **`E notify`**, **`8 sitemap`** — the `dc-notify` marker and the regenerated
+  sitemap belong to the full workflow. (**`6 pulse`** passes on pages made by the
+  /admin panel: it writes the Pulse line itself, `.dentcast/quick-publish.md`.)
 
 **The deferred catch-up** for a page published this way (by hand or from the
 /admin panel) is not a separate checklist: it is one full publication run with

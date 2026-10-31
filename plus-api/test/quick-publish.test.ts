@@ -8,7 +8,7 @@ import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
 import {
   QP_TYPES, signV4, renderBody, renderPage, brainEntry, appendBrainEntry, replaceBrainEntry, setSiteStore,
-  setEnabled, faNumberWords, landingFor, BRAIN_KEY, LEDGER_KEY, TEMPLATE_KEY, type SiteStore, type QpType,
+  setEnabled, faNumberWords, landingFor, pulseFor, applyPulse, PULSE_LINES, BRAIN_KEY, LEDGER_KEY, TEMPLATE_KEY, type SiteStore, type QpType,
 } from '../src/services/quick-publish.js';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -30,6 +30,9 @@ function memoryStore(seed: Record<string, string>): SiteStore & { files: Map<str
     },
   };
 }
+const homeFile = () => fs.readFileSync(path.join(repo, 'index.html'), 'utf8');
+const pulseList = (t: string) => (t.match(/<ul class="dc-pulse-list">[\s\S]*?<\/ul>/) ?? [''])[0];
+const pulseLis = (t: string) => pulseList(t).split('\n').filter(l => l.trim().startsWith('<li>'));
 const landingFile = (dir: string) => fs.readFileSync(path.join(repo, dir, 'index.html'), 'utf8');
 
 describe('quick publish — pure parts', () => {
@@ -138,6 +141,50 @@ describe('quick publish — pure parts', () => {
     const edited = brainEntry('clinical', 101, '/insight/insight-101.html', 'عنوان تازه', 'ک');
     expect(JSON.parse(replaceBrainEntry(next, entry, edited)!).at(-1)).toEqual(edited);
     expect(replaceBrainEntry(brainText, entry, edited)).toBeNull();
+  });
+});
+
+describe('quick publish — homepage Pulse', () => {
+  it('drafts the line the way the latest Pulse lines read: section, title only, link on the title, no date', () => {
+    expect(pulseFor('clinical', 101, 'عنوان').line).toBe('<li>یک اینسایت بالینی با عنوانِ «<a href="/insight/insight-101.html">عنوان</a>» منتشر شد</li>');
+    expect(pulseFor('chairside', 47, 'ع').line).toContain('یک چیرساید با عنوانِ «<a href="/chairside/chairside-47.html">');
+    expect(pulseFor('meta', 23, 'ع').line).toContain('یک متانوت با عنوانِ «<a href="/metanotes/meta-23.html">');
+    expect(pulseFor('sharehub', 43, 'ع').line).toContain('یک مطلب در Share Hub با عنوانِ «<a href="/sharehub/share-43.html">');
+    expect(pulseFor('clinical', 1, 'a <b> & "c"').line).toContain('>a &lt;b&gt; &amp; &quot;c&quot;</a>');
+    // Same shape as the newest real line on the homepage.
+    expect(pulseLis(homeFile())[0]).toMatch(/^\s*<li>یک اینسایت بالینی با عنوانِ «<a href="\/insight\/insight-\d+\.html">[^<]+<\/a>» منتشر شد<\/li>$/);
+  });
+
+  it('puts the new line at the very top, drops the bottom-most one, keeps exactly seven, touches nothing else', () => {
+    const home = homeFile();
+    const before = pulseLis(home);
+    expect(before).toHaveLength(PULSE_LINES);
+    const p = pulseFor('meta', 23, 'عنوان');
+    const out = applyPulse(home, p, true)!;
+    const after = pulseLis(out);
+    expect(after).toHaveLength(PULSE_LINES);
+    expect(after[0].trim()).toBe(p.line);
+    expect(after.slice(1)).toEqual(before.slice(0, PULSE_LINES - 1));
+    expect(out.replace(pulseList(out), '')).toBe(home.replace(pulseList(home), ''));
+    expect(applyPulse(out, p, true)).toBe(out);
+  });
+
+  it('replaces an existing line in place on an edit, and leaves a rolled-off page alone', () => {
+    const home = homeFile();
+    const out = applyPulse(home, pulseFor('meta', 23, 'عنوان'), true)!;
+    const edited = applyPulse(out, pulseFor('meta', 23, 'عنوان تازه'), false)!;
+    expect(pulseLis(edited)).toHaveLength(PULSE_LINES);
+    expect(pulseLis(edited)[0]).toContain('عنوان تازه');
+    expect((edited.match(/meta-23\.html/g) ?? []).length).toBe(1);
+    expect(applyPulse(home, pulseFor('meta', 99, 'قدیمی'), false)).toBe(home);
+    expect(applyPulse('<html>no list</html>', pulseFor('meta', 23, 'ع'), true)).toBeNull();
+  });
+
+  it('keeps CRLF when the page uses it', () => {
+    const crlf = homeFile().replace(/\n/g, '\r\n');
+    const out = applyPulse(crlf, pulseFor('chairside', 47, 'ع'), true)!;
+    expect(pulseList(out).split('\r\n').length).toBe(pulseList(crlf).split('\r\n').length);
+    expect(out.replace(/\r\n/g, '')).not.toContain('\n');
   });
 });
 
@@ -635,6 +682,51 @@ describe('quick publish — admin routes', () => {
       expect(hrefCount(edited, href)).toBe(1);
       expect(edited).toBe(after.replace('نکتهٔ تازهٔ فهرست', 'عنوان ویرایش‌شده'));
       expect(ed.json().item.landing.line).toContain('عنوان ویرایش‌شده');
+    });
+
+    it('puts the page on the homepage Pulse on publish, updates it in place on edit, and heals it on restore', async () => {
+      const home = homeFile();
+      store.files.set('index.html', Buffer.from(home));
+      const r = await post(input('نکتهٔ پالس'));
+      expect(r.statusCode).toBe(200);
+      const { item } = r.json();
+      expect(item.pulse).toEqual({ file: 'index.html', href: item.path, line: pulseFor('clinical', item.n, 'نکتهٔ پالس').line });
+      const after = store.files.get('index.html')!.toString();
+      const lis = pulseLis(after);
+      expect(lis).toHaveLength(PULSE_LINES);
+      expect(lis[0].trim()).toBe(item.pulse.line);
+      expect(lis.slice(1)).toEqual(pulseLis(home).slice(0, PULSE_LINES - 1));
+      expect(ledger().items[0].pulse.line).toBe(item.pulse.line);
+
+      const ed = await app.inject({ method: 'PUT', url: `/admin/quick-publish/${item.id}`, headers, payload: input('عنوان تازهٔ پالس') });
+      expect(ed.statusCode).toBe(200);
+      const edited = pulseLis(store.files.get('index.html')!.toString());
+      expect(edited).toHaveLength(PULSE_LINES);
+      expect(edited[0]).toContain('عنوان تازهٔ پالس');
+      expect(edited.filter(l => l.includes(item.path))).toHaveLength(1);
+
+      // A deploy that put git's homepage back (no Pulse line): restore puts the newest item back on top.
+      store.files.set('index.html', Buffer.from(home));
+      const rs = await restoreOf(item.id);
+      expect(rs.json().restored).toContain('pulse');
+      expect(pulseLis(store.files.get('index.html')!.toString())[0]).toContain('عنوان تازهٔ پالس');
+    });
+
+    it('does not put an older item back on the Pulse on restore, and works without a Pulse list', async () => {
+      store.files.set('index.html', Buffer.from(homeFile()));
+      const first = (await post(input('اول', { ref: 'draft-ffff6666' }))).json().item;
+      const second = (await post(input('دوم', { ref: 'draft-gggg7777' }))).json().item;
+      store.files.set('index.html', Buffer.from(homeFile()));
+      const rs = await restoreOf(first.id);
+      expect(rs.json().restored).not.toContain('pulse');
+      expect(pulseLis(store.files.get('index.html')!.toString()).some(l => l.includes(first.path))).toBe(false);
+      expect((await restoreOf(second.id)).json().restored).toContain('pulse');
+
+      store.files.set('index.html', Buffer.from('<html>no pulse</html>'));
+      const r = await post(input('بدون پالس'));
+      expect(r.statusCode).toBe(200);
+      expect(r.json().item.pulse).toBeNull();
+      expect(store.files.get('index.html')!.toString()).toBe('<html>no pulse</html>');
     });
 
     it('appends a meta item after the highest meta line, labelled «متانوت <words>: …»', async () => {

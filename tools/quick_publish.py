@@ -42,6 +42,7 @@ BRAIN = 'dentcast-brain.json'
 # Only what the API can write: never trust a ledger path to land anywhere else in the repo.
 PAGE_RE = re.compile(r'^/(insight/insight|chairside/chairside|metanotes/meta|sharehub/share)-\d+\.html$')
 MEDIA_RE = re.compile(r'^quick-publish/media/[a-z0-9-]+\.(webp|png|jpe?g|gif)$')
+PULSE_LINES = 7  # the homepage Pulse list always has exactly this many lines
 LANDING_FILES = {'insight/index.html', 'chairside/index.html', 'metanotes/index.html', 'sharehub/index.html'}
 
 
@@ -54,6 +55,12 @@ def check_item(item: dict) -> None:
     landing = item.get('landing')
     if landing and landing.get('file') not in LANDING_FILES:
         raise SystemExit(f"✗ {item.get('id')}: unexpected landing file {landing.get('file')!r} — refusing to write it")
+    pulse = item.get('pulse')
+    if pulse:
+        ok = (pulse.get('file') == 'index.html' and pulse.get('href') == item['path']
+              and re.fullmatch(r'<li>[^<>]*«<a href="' + re.escape(item['path']) + r'">[^<>]*</a>»[^<>]*</li>', pulse.get('line', '')))
+        if not ok:
+            raise SystemExit(f"✗ {item.get('id')}: unexpected Pulse line in the ledger — refusing to write it")
 
 
 def read_ledger(path: Path) -> dict:
@@ -145,6 +152,40 @@ def apply_landing(text: str, landing: dict):
     return text[:start] + line + text[start:] if landing['order'] == 'top' else text[:end] + line + text[end:]
 
 
+def apply_pulse(text: str, pulse: dict, is_new: bool):
+    """Same rule as applyPulse in plus-api/src/services/quick-publish.ts (and modules/11, step 6):
+    the new line at the absolute top of the homepage Pulse list, the bottom-most line out so
+    seven remain; a page already listed has its line replaced in place; an edit of one that
+    rolled off changes nothing. None when index.html has no Pulse list."""
+    open_m = re.search(r'<ul class="dc-pulse-list">[ \t]*\r?\n', text)
+    if not open_m:
+        return None
+    start = open_m.end()
+    end = text.find('</ul>', start)
+    if end < 0:
+        return None
+    eol = '\r\n' if '\r\n' in open_m.group(0) else '\n'
+    lines = re.split(r'\r?\n', text[start:end])
+    is_li = lambda l: l.strip().startswith('<li>')
+    own = next((i for i, l in enumerate(lines) if is_li(l) and f'href="{pulse["href"]}"' in l), -1)
+    first = next((i for i, l in enumerate(lines) if is_li(l)), -1)
+    indent = re.match(r'[ \t]*', lines[first]).group(0) if first >= 0 else '          '
+    if own >= 0:
+        lines[own] = re.match(r'[ \t]*', lines[own]).group(0) + pulse['line']
+    elif not is_new:
+        return text
+    else:
+        lines.insert(first if first >= 0 else 0, indent + pulse['line'])
+        count = sum(1 for l in lines if is_li(l))
+        i = len(lines) - 1
+        while i >= 0 and count > PULSE_LINES:
+            if is_li(lines[i]):
+                del lines[i]
+                count -= 1
+            i -= 1
+    return text[:start] + eol.join(lines) + text[end:]
+
+
 class Source:
     def __init__(self, base_url=None, from_dir=None):
         self.base_url = base_url.rstrip('/') if base_url else None
@@ -218,6 +259,18 @@ def cmd_import(args) -> int:
                 print(f"  ! {item['id']}: no list in {landing['file']} to add it to — the full workflow adds the landing link")
             else:
                 landing_texts[landing['file']] = placed
+        pulse = item.get('pulse')
+        if pulse:
+            path = ROOT / pulse['file']
+            current = landing_texts.get(pulse['file'])
+            if current is None and path.exists():
+                with open(path, encoding='utf-8', newline='') as f:
+                    current = f.read()
+            placed = apply_pulse(current, pulse, is_new=not prior) if current is not None else None
+            if placed is None:
+                print(f"  ! {item['id']}: no Pulse list in {pulse['file']} — the full workflow adds the Pulse line")
+            else:
+                landing_texts[pulse['file']] = placed
         record = dict(item, state=state, completed_at=prior.get('completed_at'), imported_at=dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds'))
         tree['items'] = [i for i in tree['items'] if i['id'] != item['id']] + [record]
         print(f"→ {item['id']}  {item['path']}  «{item['title']}»" + (f"  +{len(item.get('media', []))} image(s)" if item.get('media') else ''))

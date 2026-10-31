@@ -274,6 +274,76 @@ class QuickPublishToolTest(unittest.TestCase):
         self.assertEqual(code, 0, out)
         self.assertEqual(raw(index), want.replace('عنوان «تست»', 'عنوان تازه'))
 
+    PULSE_HREF = '/insight/insight-901.html'
+
+    def pulse_of(self, title='عنوان «تست»'):
+        return {'file': 'index.html', 'href': self.PULSE_HREF,
+                'line': f'<li>یک اینسایت بالینی با عنوانِ «<a href="{self.PULSE_HREF}">{title}</a>» منتشر شد</li>'}
+
+    def seed_home(self, eol='\n'):
+        lis = ''.join(f'          <li><a href="/insight/insight-{n}.html">t{n}</a></li>{eol}' for n in range(800, 807))
+        text = f'<html>{eol}<ul class="dc-pulse-list">{eol}{lis}{eol}</ul>{eol}</html>{eol}'
+        (self.repo / 'index.html').write_bytes(text.encode('utf-8'))
+        return text
+
+    def test_pulse_line_goes_on_top_of_gits_homepage_list_and_the_bottom_one_leaves(self):
+        before = self.seed_home()
+        (self.bucket / 'insight' / 'insight-901.html').write_text('v1', encoding='utf-8')
+        self.publish_to_bucket([dict(item(), pulse=self.pulse_of())], [ENTRY])
+        code, out = self.run_tool('import', '--from-dir', str(self.bucket))
+        self.assertEqual(code, 0, out)
+        lis = [l for l in raw(self.repo / 'index.html').split('\n') if l.strip().startswith('<li>')]
+        self.assertEqual(len(lis), 7)
+        self.assertEqual(lis[0].strip(), self.pulse_of()['line'])
+        self.assertEqual(lis[1:], [l for l in before.split('\n') if l.strip().startswith('<li>')][:6])
+        # Importing again changes nothing; an edit replaces the line in place.
+        again = raw(self.repo / 'index.html')
+        self.run_tool('import', '--from-dir', str(self.bucket))
+        self.assertEqual(raw(self.repo / 'index.html'), again)
+        edited = dict(ENTRY, title='عنوان تازه')
+        (self.bucket / 'insight' / 'insight-901.html').write_text('v2', encoding='utf-8')
+        self.publish_to_bucket([dict(item(edited, updated='2026-11-01T09:00:00.000Z'), pulse=self.pulse_of('عنوان تازه'))], [edited])
+        code, out = self.run_tool('import', '--from-dir', str(self.bucket))
+        self.assertEqual(code, 0, out)
+        out_text = raw(self.repo / 'index.html')
+        self.assertEqual(out_text.count(self.PULSE_HREF), 1)
+        self.assertEqual(out_text, again.replace('عنوان «تست»', 'عنوان تازه'))
+
+    def test_pulse_keeps_crlf_and_matches_the_api_rule_byte_for_byte(self):
+        self.seed_home('\r\n')
+        text = raw(self.repo / 'index.html')
+        placed = qp.apply_pulse(text, self.pulse_of(), True)
+        self.assertEqual(placed.count('\n'), placed.count('\r\n'))
+        # Same output as plus-api's applyPulse for the same input (the API rule is tested in quick-publish.test.ts
+        # against this same repo homepage; here the same input goes through both implementations).
+        js = ("import {applyPulse} from '/home/user/dentcast-hub.github.io/plus-api/src/services/quick-publish.js';"
+              "import fs from 'node:fs';const t=fs.readFileSync(0,'utf8');"
+              "process.stdout.write(applyPulse(t,JSON.parse(process.argv[2]),true));")
+        if not (ROOT / 'plus-api' / 'node_modules' / '.bin' / 'tsx').exists():
+            return  # the API's dev dependencies are not installed in this job; the API rule has its own tests
+        (self.tmp / 'par.mts').write_text(js, encoding='utf-8')
+        r = subprocess.run(['npx', 'tsx', str(self.tmp / 'par.mts'), json.dumps(self.pulse_of(), ensure_ascii=False)],
+                           cwd=ROOT / 'plus-api', input=text.encode('utf-8'), capture_output=True)
+        self.assertEqual(r.returncode, 0, r.stderr.decode('utf-8', 'replace')[-400:])
+        self.assertEqual(r.stdout.decode('utf-8'), placed)
+
+    def test_an_edit_of_a_page_that_rolled_off_the_pulse_changes_nothing(self):
+        text = self.seed_home()
+        self.assertEqual(qp.apply_pulse(text, self.pulse_of(), False), text)
+        self.assertIsNone(qp.apply_pulse('<html></html>', self.pulse_of(), True))
+
+    def test_import_refuses_a_pulse_line_that_is_not_what_the_api_writes(self):
+        self.seed_home()
+        (self.bucket / 'insight' / 'insight-901.html').write_text('v1', encoding='utf-8')
+        for bad in [dict(self.pulse_of(), line='<li><script>x()</script></li>'),
+                    dict(self.pulse_of(), file='../index.html'),
+                    dict(self.pulse_of(), href='/insight/insight-1.html')]:
+            self.publish_to_bucket([dict(item(), pulse=bad)], [ENTRY])
+            before = raw(self.repo / 'index.html')
+            code, out = self.run_tool('import', '--from-dir', str(self.bucket))
+            self.assertNotEqual(code, 0, out)
+            self.assertEqual(raw(self.repo / 'index.html'), before)
+
     def test_a_page_missing_on_the_bucket_is_a_clean_message_pointing_at_restore(self):
         self.publish_to_bucket([item()], [ENTRY])  # ledger lists it, the page file was never there / deleted
         before = self.snapshot()
