@@ -219,11 +219,18 @@ non-LiteCast, non-چالش type):
   (deferred by default in this path) — it checks the type's `index.html`
   links to the new entry.
 
-Expected **WARN** (not fatal):
+Also expected **FAIL** (verified 2026-10-31 on panel-made pages):
 
-- **`4.13 DES`** — "no DES record — confirm this is «بدون DES» or an
-  unsourced episode, not a forgotten step 4.13." Correct: you deliberately
-  skipped Question 4.8/step 4.13.
+- **`4.13 DES`** — "missing DES without a valid exemption". You deliberately
+  skipped Question 4.8/step 4.13; the gate reports it as a failure, not a warning.
+- **`6 pulse`**, **`E notify`**, **`8 sitemap`** — Pulse, the `dc-notify` marker
+  and the regenerated sitemap all belong to the full workflow.
+
+**The deferred catch-up** for a page published this way (by hand or from the
+/admin panel) is not a separate checklist: it is one full publication run with
+the fixed-address profile in `.dentcast/quick-publish.md` («بعد از وصل شدن»,
+step 2) — same number and URL, page rebuilt in place, brain entry moved to the
+tail, landing line updated in place.
 
 Your options, without implementing anything:
 

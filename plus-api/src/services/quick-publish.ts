@@ -370,7 +370,11 @@ export function setEnabled(enabled: boolean): Promise<{ ledger_written: boolean 
     const store = siteStore();
     if (!store) return { ledger_written: false };
     try {
-      await saveLedger(store, parseLedger(await store.get(LEDGER_KEY)));
+      // Never create an empty ledger here: a missing one means a wipe, and an empty
+      // one would let the guard pass over items still waiting for «بازگرداندن».
+      const raw = await store.get(LEDGER_KEY);
+      if (!raw) return { ledger_written: false };
+      await saveLedger(store, parseLedger(raw));
       return { ledger_written: true };
     } catch {
       return { ledger_written: false };
@@ -443,11 +447,20 @@ export function publish(input: QpInput): Promise<{ item: QpItem; url: string }> 
     const template = await readText(store, TEMPLATE_KEY, 'template_missing');
     let brainText = await readText(store, BRAIN_KEY, 'brain_missing');
     const brain = JSON.parse(brainText) as Record<string, unknown>[];
-    const ledger = parseLedger(await store.get(LEDGER_KEY));
+    const rawLedger = await store.get(LEDGER_KEY);
+    // A missing ledger with backups in the API means a wipe: restore first, or a new
+    // ledger holding only this page would let the guard pass over the others.
+    if (!rawLedger && (await one('select 1 from quick_publications limit 1'))) throw new QpError('ledger_missing', 409);
+    const ledger = parseLedger(rawLedger);
     if (v.ref) {
       const again = ledger.items.find(x => x.client_ref === v.ref)
         ?? (await one<{ record: QpItem }>(`select record from quick_publications where record->>'client_ref' = $1`, [v.ref]))?.record;
-      if (again) return { item: again, url: IR_ORIGIN + again.path };
+      if (again) {
+        // The first try may have stopped halfway (lost response, failed write): finish it
+        // from the backup before saying «منتشر شد», instead of pointing at a 404.
+        await restoreNow(again.id);
+        return { item: again, url: IR_ORIGIN + again.path };
+      }
     }
     await ensureMedia(store, rendered.media);
     const t = QP_TYPES[v.type];
@@ -509,17 +522,27 @@ export function edit(id: string, input: QpInput): Promise<{ item: QpItem; url: s
 
 /** Put a backed-up record back on the bucket: page, images, brain entry, ledger line. Idempotent. */
 export function restore(id: string): Promise<{ restored: string[] }> {
-  return serial(async () => {
+  return serial(() => restoreNow(id));
+}
+
+/** restore() without taking the writer lock — for callers already holding it. */
+async function restoreNow(id: string): Promise<{ restored: string[] }> {
     const store = requireStore();
     const row = await one<{ record: QpItem; html: string }>('select record, html from quick_publications where id = $1', [id]);
     if (!row) throw new QpError('not_found', 404);
-    const { body: _body, ...item } = row.record as QpItem & { body?: string };
+    const { body: _body, ...rest } = row.record as QpItem & { body?: string };
+    // jsonb does not keep key order; the brain entry must keep the repo's (schema parity).
+    const item: QpItem = { ...rest, brain_entry: brainEntry(rest.type, rest.n, rest.path, rest.title, rest.caption) };
     const restored: string[] = [];
+    const listed = parseLedger(await store.get(LEDGER_KEY)).items.find(x => x.id === item.id);
+    const onBucket = await store.get(item.path.slice(1));
+    // Not in the ledger, yet a different page sits at the address: the ledger was wiped
+    // after this item went into git, and the page there is git's (possibly completed).
+    // Never put the minimal version back over it.
+    if (!listed && onBucket && onBucket.toString('utf8') !== row.html) return { restored: ['git_owned'] };
     // While the item is still live, the backup is the founder's last word: a page left
     // behind by a half-failed edit is replaced too, not only a missing one. Once
     // imported, git owns the page and only a missing one is put back.
-    const listed = parseLedger(await store.get(LEDGER_KEY)).items.find(x => x.id === item.id);
-    const onBucket = await store.get(item.path.slice(1));
     if (!onBucket || ((!listed || listed.state === 'live') && onBucket.toString('utf8') !== row.html)) {
       await store.put(item.path.slice(1), Buffer.from(row.html), 'text/html; charset=utf-8'); restored.push('page');
     }
@@ -552,7 +575,6 @@ export function restore(id: string): Promise<{ restored: string[] }> {
       await saveLedger(store, ledger); restored.push('ledger');
     }
     return { restored };
-  });
 }
 
 const IMAGE_TYPES: Record<string, string> = { 'image/webp': 'webp', 'image/png': 'png', 'image/jpeg': 'jpg', 'image/gif': 'gif' };
@@ -639,7 +661,7 @@ export async function status(): Promise<{ enabled: boolean; configured: boolean;
         it.workflow_requested_at = r.workflow_requested_at ?? null; heal = true;
       }
     }
-    if (heal || (ledger.panel_enabled ?? false) !== enabled) await serial(() => saveLedger(store, ledger));
+    if (raw && (heal || (ledger.panel_enabled ?? false) !== enabled)) await serial(() => saveLedger(store, ledger));
     const missing = rows.filter(r => !byId.has(r.id)).map(({ body: _b, ...r }: QpItem & { body?: string }) => ({ ...r, missing: true }));
     return { enabled, configured: true, template: !!template, items: [...ledger.items, ...missing] };
   } catch (err) {

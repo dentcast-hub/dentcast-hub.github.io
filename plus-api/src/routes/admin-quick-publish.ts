@@ -102,6 +102,9 @@ export function renderQuickPublish(): string {
   <h4 style="margin-top:20px">دفتر انتشار حداقلی</h4>
   <div class="muted">بعد از وصل شدن اینترنت هیچ چیز خودبه‌خود به ورک‌فلو نمی‌رود. مطالبی را که می‌خواهی کامل شوند تیک بزن و «بفرست تو ورک‌فلو» را بزن؛ بقیه همان‌طور حداقلی می‌مانند.</div>
   <div id="qpList"></div>
+  <div class="qp-row" id="qpRestoreAllRow" hidden>
+    <button id="qpRestoreAll" type="button">بازگرداندن همهٔ مطالبی که روی سایت نیستند</button>
+  </div>
   <div class="qp-row" id="qpSendRow" hidden>
     <button id="qpSend" type="button">بفرست تو ورک‌فلو</button>
   </div>
@@ -147,7 +150,7 @@ export function renderQuickPublish(): string {
       invalid_image: 'فقط WebP، PNG، JPEG یا GIF تا ۸ مگابایت.', no_free_address: 'نشانی آزادی برای صفحه پیدا نشد.', id_taken: 'این شناسه در brain هست.',
       not_found: 'پیدا نشد.', already_imported: 'این مطلب وارد گیت شده؛ ویرایشش از این‌جا ممکن نیست.', type_locked: 'بخش مطلب منتشرشده عوض نمی‌شود.',
       brain_entry_moved: 'ردیف این مطلب در brain دست خورده؛ ویرایش از این‌جا ممکن نیست.',
-      disabled: 'انتشار حداقلی خاموش است. فقط در قطعی روشنش کن.', image_too_large: 'عکس بزرگ‌تر از ۸ مگابایت است.', invalid_ref: 'شناسهٔ پیش‌نویس نامعتبر است؛ صفحه را دوباره باز کن.', already_completed: 'این مطلب قبلاً در ورک‌فلو کامل شده.'
+      disabled: 'انتشار حداقلی خاموش است. فقط در قطعی روشنش کن.', ledger_missing: 'دفتر انتشار حداقلی از روی سایت پاک شده؛ اول «بازگرداندن همه» را بزن.', image_too_large: 'عکس بزرگ‌تر از ۸ مگابایت است.', invalid_ref: 'شناسهٔ پیش‌نویس نامعتبر است؛ صفحه را دوباره باز کن.', already_completed: 'این مطلب قبلاً در ورک‌فلو کامل شده.'
     };
     var STATE = { live: 'زنده — منتظر ورود به گیت', imported: 'در گیت — منتظر ورک‌فلوی کامل', completed: 'کامل شد' };
     function msg(e) { return ERR[e] || ('خطا: ' + e); }
@@ -334,7 +337,10 @@ export function renderQuickPublish(): string {
         rs.title = 'اگر دیپلوی‌ای صفحه یا ردیف brain را پاک کرده، از نسخهٔ پشتیبان API برمی‌گرداند.';
         rs.onclick = function () {
           json('POST', '/admin/quick-publish/' + encodeURIComponent(it.id) + '/restore', {}).then(function (j) {
-            el('qpResult').textContent = j.restored.length ? ('برگردانده شد: ' + j.restored.join('، ')) : 'همه‌چیز سر جایش بود.';
+            el('qpResult').textContent = j.restored[0] === 'git_owned'
+              ? 'این صفحه در گیت است و نسخهٔ روی سایت از گیت آمده؛ نسخهٔ حداقلی رویش نوشته نشد.'
+              : j.restored.length ? ('برگردانده شد: ' + j.restored.join('، ')) : 'همه‌چیز سر جایش بود.';
+            load();
           }).catch(function (e) { el('qpResult').textContent = msg(e.message); });
         };
         actions.appendChild(rs);
@@ -357,6 +363,21 @@ export function renderQuickPublish(): string {
         load();
       }).catch(function (e) { el('qpResult').textContent = msg(e.message); });
     }
+    el('qpRestoreAll').onclick = function () {
+      var ids = items.filter(function (it) { return it.missing; }).map(function (it) { return it.id; });
+      if (!ids.length || !confirm(ids.length.toLocaleString('fa-IR') + ' مطلب از نسخهٔ پشتیبان روی سایت برگردد؟')) return;
+      var done = [], skipped = [];
+      (function next() {
+        var id = ids.shift();
+        if (!id) {
+          el('qpResult').textContent = 'برگشت: ' + (done.join('، ') || '—') + (skipped.length ? ' · در گیت بود و دست نخورد: ' + skipped.join('، ') : '');
+          load(); return;
+        }
+        json('POST', '/admin/quick-publish/' + encodeURIComponent(id) + '/restore', {}).then(function (j) {
+          (j.restored[0] === 'git_owned' ? skipped : done).push(id);
+        }).catch(function (e) { skipped.push(id + ' (' + msg(e.message) + ')'); }).then(next);
+      })();
+    };
     el('qpSend').onclick = function () { var ids = pickedIds(); if (ids.length) sendToWorkflow(ids, true); };
     el('qpSwitchBtn').onclick = function () {
       var on = el('qpSwitchBtn').getAttribute('data-on') !== '1';
@@ -385,6 +406,7 @@ export function renderQuickPublish(): string {
         else st.textContent = j.enabled ? 'آماده. هر انتشار مستقیم روی dentcast.ir می‌نشیند.' : '';
         form.hidden = !(j.enabled && j.configured && j.template && !j.error);
         items = j.items; enabledNow = !!j.enabled;
+        el('qpRestoreAllRow').hidden = !j.items.some(function (it) { return it.missing; });
         var open = j.items.filter(function (it) { return it.state !== 'completed' && !it.workflow_requested_at; });
         el('qpWaiting').textContent = String(open.length);
         var list = el('qpList'); list.textContent = '';
