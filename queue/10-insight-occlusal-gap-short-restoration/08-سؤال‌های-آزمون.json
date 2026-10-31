@@ -1,6 +1,6 @@
 {
-  "status": "proposed_pending_founder_approval",
-  "pathway_membership": "pending; content_id and final placement are assigned on publication day",
+  "status": "founder_approved_questions_pending_content_id",
+  "pathway_membership": "approved: occlusion; content_id and final placement are assigned on publication day",
   "questions": [
     {
       "handle": "digital-occlusal-record-validity",
@@ -29,17 +29,17 @@
       "status": "approved"
     },
     {
-      "handle": "correction-limitations",
-      "prompt_fa": "قابلیت اصلاح یک رستوریشنِ کوتاه با افزودن ماده، طبق متن به کدام عامل‌ها وابسته است؟",
+      "handle": "restoration-correction-feasibility",
+      "prompt_fa": "در روکشِ کوتاه از نظر اکلوزالی، تصمیم دربارهٔ افزودن سرامیک بر چه مبنایی گرفته می‌شود؟",
       "options": [
-        "جنس و ساختار رستوریشن و مقدار اصلاح موردنیاز",
-        "رنگ دندان مقابل و نوع اسکنر به‌کاررفته در مطب",
-        "مدت زمان ساخت و فاصلهٔ مطب تا لابراتوار",
-        "سن بیمار و تعداد دفعات ثبت رابطهٔ فکی"
+        "جنس و ساختار روکش، همراه با مقدار افزایش ارتفاع لازم",
+        "رنگ و شفافیت روکش، همراه با میزان لکه‌های سطحی",
+        "نوع اسکنر و روش ثبت، همراه با سرعت تصویربرداری",
+        "مدت زمان ساخت روکش و سن بیمار در زمان تحویل"
       ],
       "correct": 0,
-      "why": "متن قابلیت اصلاح را وابسته به جنس، ساختار و میزان اصلاح می‌داند.",
-      "status": "review"
+      "why": "امکان اصلاح به ماده و ساختار روکش و مقدار افزایش ارتفاع لازم بستگی دارد.",
+      "status": "approved"
     }
   ]
 }
