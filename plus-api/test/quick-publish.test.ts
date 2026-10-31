@@ -8,7 +8,7 @@ import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
 import {
   QP_TYPES, signV4, renderBody, renderPage, brainEntry, appendBrainEntry, replaceBrainEntry, setSiteStore,
-  setEnabled, BRAIN_KEY, LEDGER_KEY, TEMPLATE_KEY, type SiteStore, type QpType,
+  setEnabled, faNumberWords, BRAIN_KEY, LEDGER_KEY, TEMPLATE_KEY, type SiteStore, type QpType,
 } from '../src/services/quick-publish.js';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -17,10 +17,20 @@ const template = fs.readFileSync(path.join(repo, 'quick-publish/template.html'),
 const headers = { authorization: 'Basic ' + Buffer.from(`${config.admin.user}:${config.admin.password}`).toString('base64') };
 const PNG = Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), Buffer.alloc(32)]);
 
-function memoryStore(seed: Record<string, string>): SiteStore & { files: Map<string, Buffer> } {
+function memoryStore(seed: Record<string, string>): SiteStore & { files: Map<string, Buffer>; failOnce(key: string): void } {
   const files = new Map(Object.entries(seed).map(([k, v]) => [k, Buffer.from(v)]));
-  return { files, async get(k) { return files.get(k) ?? null; }, async put(k, b) { files.set(k, Buffer.from(b)); } };
+  const failing = new Set<string>();
+  return {
+    files,
+    failOnce(key) { failing.add(key); },
+    async get(k) { return files.get(k) ?? null; },
+    async put(k, b) {
+      if (failing.delete(k)) throw new Error('qp_storage_http_500');
+      files.set(k, Buffer.from(b));
+    },
+  };
 }
+const landingFile = (dir: string) => fs.readFileSync(path.join(repo, dir, 'index.html'), 'utf8');
 
 describe('quick publish — pure parts', () => {
   it('signs exactly like AWS’s published SigV4 GET-object example', () => {
@@ -44,13 +54,13 @@ describe('quick publish — pure parts', () => {
   it('fills the repo template into a complete, indexable page with valid JSON-LD', () => {
     const html = renderPage(template, { type: 'clinical', path: '/insight/insight-101.html', title: 'عنوان "نقل‌قول" <و>',
       caption: 'کپشنی برای توضیح متا', date: '2026-11-01', body: '<p>بدنه</p>' });
-    expect(html).not.toMatch(/\{\{[A-Z_]+\}\}|qp-template|noindex/);
+    expect(html).not.toMatch(/\{\{[A-Z0-9_]+\}\}|qp-template|noindex/);
     expect(html).toContain('<link rel="canonical" href="https://dentcast.org/insight/insight-101.html">');
     expect(html).toContain('<link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/insight/insight-101.html">');
     expect(html).toContain('<meta name="robots" content="index, follow, max-image-preview:large">');
     expect(html).toContain("gtag('config', 'G-GMM0WC8X3M')");
     expect(html).toContain('<link rel="preconnect" href="https://api.dentcast.ir" crossorigin>');
-    expect(html).toContain('<h1>عنوان &quot;نقل‌قول&quot; &lt;و&gt;</h1>');
+    expect(html).toMatch(/<h1>[^]*?عنوان &quot;نقل‌قول&quot; &lt;و&gt;<\/h1>/);
     expect(html).not.toContain('dc-related-section');
     expect(html).not.toContain('dc-notify');
     const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
@@ -78,6 +88,18 @@ describe('quick publish — pure parts', () => {
     // The panel's display-only direction marks around an image line are not part of it.
     expect(renderBody('متن\n\n\u2066![x](/quick-publish/media/20261101-abcd1234.jpg)\u2069').html)
       .toContain('<img src="/quick-publish/media/20261101-abcd1234.jpg" alt="x"');
+  });
+
+  it('does not turn a backslash-host link into an anchor', () => {
+    const r = renderBody('سلام [x](/\\evil.example) و [y](//evil.example)');
+    expect(r.html).not.toContain('<a');
+    expect(r.html).toContain('[x](/\\evil.example)');
+  });
+
+  it('writes Persian number words the way metanotes/index.html does', () => {
+    expect(faNumberWords(23)).toBe('بیست\u200cوسه');
+    expect(faNumberWords(7)).toBe('هفت');
+    expect(faNumberWords(20)).toBe('بیست');
   });
 
   it('appends at the absolute tail of the real brain without touching a byte before it', () => {
@@ -132,7 +154,7 @@ describe('quick publish — admin routes', () => {
     const path1 = `/insight/insight-${last + 1}.html`;
     expect(r.json()).toMatchObject({ ok: true, url: 'https://dentcast.ir' + path1, item: { id: `clinical-${last + 1}`, state: 'live' } });
     const page = store.files.get(path1.slice(1))!.toString();
-    expect(page).toContain('<h1>یک نکته</h1>');
+    expect(page).toMatch(/<h1>[^]*?یک نکته<\/h1>/);
     expect(page).toContain('<h2>تیتر</h2>');
     const nextBrain = JSON.parse(store.files.get(BRAIN_KEY)!.toString());
     expect(nextBrain.at(-1)).toEqual({ type: 'clinical', id: `clinical-${last + 1}`, title: 'یک نکته', caption: 'کپشن کوتاه برای این نکته',
@@ -223,7 +245,7 @@ describe('quick publish — admin routes', () => {
     expect(bad.statusCode).toBe(400);
     const on = await app.inject({ method: 'PUT', url: '/admin/quick-publish/enabled', headers, payload: { enabled: true } });
     expect(on.statusCode).toBe(200);
-    expect(on.json()).toEqual({ ok: true, enabled: true });
+    expect(on.json()).toEqual({ ok: true, enabled: true, ledger_written: true });
     expect((await app.inject({ url: '/admin/quick-publish', headers })).json()).toMatchObject({ enabled: true });
     expect((await post({ type: 'clinical', title: 'یک نکته', caption: 'کپشن کوتاه برای این نکته', body })).statusCode).toBe(200);
   });
@@ -270,5 +292,230 @@ describe('quick publish — admin routes', () => {
     const page = await app.inject({ url: '/admin', headers });
     expect(page.body).toContain('<h3 style="margin-top:26px">انتشار حداقلی (اضطراری)</h3>');
     expect(page.body).toContain("['quick-publish', 'انتشار حداقلی (اضطراری)', 'انتشار حداقلی', 'qpWaiting'");
+  });
+
+  describe('review-round behaviour', () => {
+  const put = (id: string, payload: object) => app.inject({ method: 'PUT', url: `/admin/quick-publish/${id}`, headers, payload });
+  const restoreOf = (id: string) => app.inject({ method: 'POST', url: `/admin/quick-publish/${id}/restore`, headers });
+  const getStatus = async () => (await app.inject({ url: '/admin/quick-publish', headers })).json();
+  const ledger = () => JSON.parse(store.files.get(LEDGER_KEY)!.toString()) as { panel_enabled?: boolean; items: Record<string, any>[] };
+  const brainOf = () => JSON.parse(store.files.get(BRAIN_KEY)!.toString()) as { id?: string; title?: string }[];
+  const input = (title: string, extra: object = {}) => ({ type: 'clinical', title, caption: 'کپشن کوتاه برای این نکته', body, ...extra });
+
+  it('mirrors the switch into the bucket ledger, and every ledger write carries the current value', async () => {
+    expect(ledger().panel_enabled).toBe(true);
+    const off = await app.inject({ method: 'PUT', url: '/admin/quick-publish/enabled', headers, payload: { enabled: false } });
+    expect(off.json()).toEqual({ ok: true, enabled: false, ledger_written: true });
+    expect(ledger().panel_enabled).toBe(false);
+    await app.inject({ method: 'PUT', url: '/admin/quick-publish/enabled', headers, payload: { enabled: true } });
+    expect(ledger().panel_enabled).toBe(true);
+    const a = (await post(input('نکتهٔ اول'))).json().item;
+    expect(ledger().panel_enabled).toBe(true);
+    const wf = await app.inject({ method: 'POST', url: '/admin/quick-publish/workflow', headers, payload: { ids: [a.id], requested: true } });
+    expect(wf.statusCode).toBe(200);
+    expect(ledger().panel_enabled).toBe(true);
+    // Edits are refused while off, but the ledger value follows the switch when status() notices drift.
+    await app.inject({ method: 'PUT', url: '/admin/quick-publish/enabled', headers, payload: { enabled: false } });
+    expect(ledger().panel_enabled).toBe(false);
+    expect(ledger().items).toHaveLength(1);
+  });
+
+  it('reports ledger_written false when the bucket is not configured', async () => {
+    setSiteStore(null);
+    const saved = { ...process.env };
+    for (const k of ['QP_S3_ENDPOINT', 'QP_S3_BUCKET', 'QP_S3_ACCESS_KEY', 'QP_S3_SECRET_KEY']) delete process.env[k];
+    try {
+      const r = await app.inject({ method: 'PUT', url: '/admin/quick-publish/enabled', headers, payload: { enabled: true } });
+      expect(r.json()).toEqual({ ok: true, enabled: true, ledger_written: false });
+    } finally { Object.assign(process.env, saved); setSiteStore(store); }
+  });
+
+  it('writes the ledger first: a failed brain write leaves a listed item that restore completes, and a retry with the same ref returns it', async () => {
+    store.files.set('insight/index.html', Buffer.from(landingFile('insight')));
+    store.failOnce(BRAIN_KEY);
+    const ref = 'draft-aaaa1111';
+    const failed = await post(input('نکتهٔ نیمه‌کاره', { ref }));
+    expect(failed.statusCode).toBe(502);
+    expect(failed.json().error).toBe('storage_unavailable');
+    const listed = ledger().items;
+    expect(listed).toHaveLength(1);
+    const item = listed[0];
+    expect(item.client_ref).toBe(ref);
+    expect(store.files.has(item.path.slice(1))).toBe(false);
+    expect(brainOf().some(e => e.id === item.id)).toBe(false);
+    expect((await getStatus()).items.map((i: { id: string }) => i.id)).toEqual([item.id]);
+
+    // The lost-response retry: same item, no second number, nothing new written.
+    const again = await post(input('نکتهٔ نیمه‌کاره', { ref }));
+    expect(again.statusCode).toBe(200);
+    expect(again.json().item.id).toBe(item.id);
+    expect(ledger().items).toHaveLength(1);
+    expect((await pool.query('select id from quick_publications')).rows).toEqual([{ id: item.id }]);
+
+    const r = await restoreOf(item.id);
+    expect(r.statusCode).toBe(200);
+    expect(r.json().restored).toEqual(expect.arrayContaining(['page', 'landing', 'brain']));
+    expect(store.files.get(item.path.slice(1))!.toString()).toMatch(/<h1>[^]*?نکتهٔ نیمه‌کاره<\/h1>/);
+    expect(brainOf().filter(e => e.id === item.id)).toHaveLength(1);
+    expect(store.files.get('insight/index.html')!.toString()).toContain(`<a href="insight-${item.n}.html">نکتهٔ نیمه‌کاره</a>`);
+    expect((await restoreOf(item.id)).json().restored).toEqual([]);
+  });
+
+  it('answers a retried ref from the API backup even when the bucket ledger lost the item', async () => {
+    const ref = 'draft-bbbb2222';
+    const first = (await post(input('نکته با ref', { ref }))).json().item;
+    store.files.delete(LEDGER_KEY);
+    const again = await post(input('نکته با ref', { ref }));
+    expect(again.statusCode).toBe(200);
+    expect(again.json().item.id).toBe(first.id);
+    expect((await pool.query('select id from quick_publications')).rowCount).toBe(1);
+  });
+
+  it('gives two publishes without a ref two items, and rejects a malformed ref', async () => {
+    const a = (await post(input('بدون ref اول'))).json().item;
+    const b = (await post(input('بدون ref اول'))).json().item;
+    expect(a.id).not.toBe(b.id);
+    expect(a.path).not.toBe(b.path);
+    const bad = await post(input('نکته', { ref: 'BAD REF' }));
+    expect(bad.statusCode).toBe(400);
+    expect(bad.json()).toEqual({ error: 'invalid_ref' });
+    expect((await post(input('نکته', { ref: 5 }))).json()).toEqual({ error: 'invalid_ref' });
+    expect(ledger().items).toHaveLength(2);
+  });
+
+  it('retries an edit after the brain was already written: one entry for the id, latest title, no brain_entry_moved', async () => {
+    const { item } = (await post(input('نسخهٔ اول'))).json();
+    const edit = (title: string) => put(item.id, { type: 'clinical', title, caption: 'کپشن کوتاه برای این نکته', body });
+    store.failOnce(item.path.slice(1)); // ledger and brain are written, the page is not
+    expect((await edit('نسخهٔ دوم')).statusCode).toBe(502);
+    expect(brainOf().filter(e => e.id === item.id).map(e => e.title)).toEqual(['نسخهٔ دوم']);
+    const retry = await edit('نسخهٔ سوم');
+    expect(retry.statusCode).toBe(200);
+    expect(retry.json().error).toBeUndefined();
+    expect(brainOf().filter(e => e.id === item.id).map(e => e.title)).toEqual(['نسخهٔ سوم']);
+    expect(store.files.get(item.path.slice(1))!.toString()).toMatch(/<h1>[^]*?نسخهٔ سوم<\/h1>/);
+    expect(ledger().items[0].title).toBe('نسخهٔ سوم');
+  });
+
+  it('after an edit whose ledger write failed, retry succeeds and restore brings the ledger line up to the backup', async () => {
+    const { item } = (await post(input('نسخهٔ اول'))).json();
+    const edit = (title: string) => put(item.id, { type: 'clinical', title, caption: 'کپشن کوتاه برای این نکته', body });
+    store.failOnce(LEDGER_KEY);
+    expect((await edit('نسخهٔ دوم')).statusCode).toBe(502);
+    expect(ledger().items[0].title).toBe('نسخهٔ اول');
+    // The backup already holds the founder's latest text.
+    expect((await app.inject({ url: `/admin/quick-publish/${item.id}/source`, headers })).json().item.title).toBe('نسخهٔ دوم');
+    const r = await restoreOf(item.id);
+    expect(r.statusCode).toBe(200);
+    // The page the half-failed edit left behind is replaced too, not only brain and ledger.
+    expect(r.json().restored).toEqual(expect.arrayContaining(['page', 'brain', 'ledger']));
+    expect(store.files.get(item.path.slice(1))!.toString()).toMatch(/<h1>[^]*?نسخهٔ دوم<\/h1>/);
+    expect(ledger().items[0]).toMatchObject({ title: 'نسخهٔ دوم', state: 'live' });
+    expect(brainOf().filter(e => e.id === item.id).map(e => e.title)).toEqual(['نسخهٔ دوم']);
+    expect((await edit('نسخهٔ سوم')).statusCode).toBe(200);
+    expect(brainOf().filter(e => e.id === item.id)).toHaveLength(1);
+  });
+
+  it('puts an uploaded image back from the DB backup at publish, and refuses one neither side has', async () => {
+    const up = await app.inject({ method: 'POST', url: '/admin/quick-publish/media', headers: { ...headers, 'content-type': 'image/png' }, payload: PNG });
+    const img = up.json().path as string;
+    store.files.delete(img.slice(1));
+    const r = await post(input('با عکس پاک‌شده', { body: body + `\n\n![x](${img})` }));
+    expect(r.statusCode).toBe(200);
+    expect(store.files.get(img.slice(1))).toEqual(PNG);
+
+    await pool.query('delete from quick_publish_media where path = $1', [img.slice(1)]);
+    store.files.delete(img.slice(1));
+    const gone = await post(input('عکس گم‌شده', { body: body + `\n\n![x](${img})` }));
+    expect(gone.statusCode).toBe(400);
+    expect(gone.json()).toEqual({ error: 'image_not_uploaded' });
+  });
+
+  it('lists an item whose ledger line is gone as missing, and heals a dropped workflow flag', async () => {
+    const a = (await post(input('نکتهٔ اول'))).json().item;
+    const b = (await post(input('نکتهٔ دوم'))).json().item;
+    await app.inject({ method: 'POST', url: '/admin/quick-publish/workflow', headers, payload: { ids: [a.id], requested: true } });
+    const flag = ledger().items[0].workflow_requested_at as string;
+    expect(typeof flag).toBe('string');
+
+    // A deploy's sync overwrote the ledger with a copy that has no flag.
+    const l = ledger(); delete l.items[0].workflow_requested_at;
+    store.files.set(LEDGER_KEY, Buffer.from(JSON.stringify(l)));
+    const s1 = await getStatus();
+    expect(s1.items.find((i: { id: string }) => i.id === a.id).workflow_requested_at).toBe(flag);
+    expect(ledger().items[0].workflow_requested_at).toBe(flag);
+
+    // The whole ledger line of b is gone, but the DB backup exists.
+    const l2 = ledger(); l2.items = l2.items.filter(i => i.id !== b.id);
+    store.files.set(LEDGER_KEY, Buffer.from(JSON.stringify(l2)));
+    const s2 = await getStatus();
+    const missing = s2.items.find((i: { id: string }) => i.id === b.id);
+    expect(missing).toMatchObject({ id: b.id, missing: true, title: 'نکتهٔ دوم' });
+    expect(missing.body).toBeUndefined();
+    expect(s2.items.find((i: { id: string }) => i.id === a.id).missing).toBeUndefined();
+
+    // Restore puts the ledger line back and the item stops being «missing».
+    expect((await restoreOf(b.id)).json().restored).toContain('ledger');
+    const s3 = await getStatus();
+    expect(s3.items.every((i: { missing?: boolean }) => !i.missing)).toBe(true);
+  });
+
+  describe('section landing lists', () => {
+    const lineOf = (text: string, href: string) => text.split('\n').find(l => l.includes(`<a href="${href}">`))!;
+    const hrefCount = (text: string, href: string) => text.split(`<a href="${href}">`).length - 1;
+
+    it('adds a clinical item directly above the previous top item, keeping its indent and line ending, and edits it in place', async () => {
+      const original = landingFile('insight');
+      store.files.set('insight/index.html', Buffer.from(original));
+      const topN = Math.max(...[...original.matchAll(/<li><a href="insight-(\d+)\.html">/g)].map(m => Number(m[1])));
+      const topLine = lineOf(original, `insight-${topN}.html`);
+      const indent = topLine.match(/^[ \t]*/)![0];
+      const eol = topLine.endsWith('\r') ? '\r\n' : '\n';
+
+      const { item } = (await post(input('نکتهٔ تازهٔ فهرست'))).json();
+      expect(item.n).toBe(topN + 1);
+      const href = `insight-${item.n}.html`;
+      expect(item.landing).toMatchObject({ file: 'insight/index.html', href, order: 'top', line: `<li><a href="${href}">نکتهٔ تازهٔ فهرست</a></li>` });
+      const after = store.files.get('insight/index.html')!.toString();
+      const newLine = `${indent}<li><a href="${href}">نکتهٔ تازهٔ فهرست</a></li>${eol}`;
+      expect(after).toContain(newLine + topLine.replace(/\r$/, '') + (eol === '\r\n' ? '\r' : ''));
+      expect(after.replace(newLine, '')).toBe(original);
+
+      const ed = await put(item.id, { type: 'clinical', title: 'عنوان ویرایش‌شده', caption: 'کپشن کوتاه برای این نکته', body });
+      expect(ed.statusCode).toBe(200);
+      const edited = store.files.get('insight/index.html')!.toString();
+      expect(hrefCount(edited, href)).toBe(1);
+      expect(edited).toBe(after.replace('نکتهٔ تازهٔ فهرست', 'عنوان ویرایش‌شده'));
+      expect(ed.json().item.landing.line).toContain('عنوان ویرایش‌شده');
+    });
+
+    it('appends a meta item after the highest meta line, labelled «متانوت <words>: …»', async () => {
+      const original = landingFile('metanotes');
+      store.files.set('metanotes/index.html', Buffer.from(original));
+      const topN = Math.max(...[...original.matchAll(/<li><a href="meta-(\d+)\.html">/g)].map(m => Number(m[1])));
+      const r = await post({ type: 'meta', title: 'عنوان متا', caption: 'کپشن کوتاه برای متا', body });
+      expect(r.statusCode).toBe(200);
+      const { item } = r.json();
+      expect(item.n).toBe(topN + 1);
+      expect(item.landing.order).toBe('bottom');
+      expect(item.landing.line).toBe(`<li><a href="meta-${item.n}.html">متانوت ${faNumberWords(item.n)}: عنوان متا</a></li>`);
+      if (item.n === 23) expect(item.landing.line).toContain('متانوت بیست‌وسه: عنوان متا');
+      const after = store.files.get('metanotes/index.html')!.toString();
+      const prevLine = lineOf(original, `meta-${topN}.html`);
+      const indent = prevLine.match(/^[ \t]*/)![0];
+      const eol = prevLine.endsWith('\r') ? '\r\n' : '\n';
+      const idx = after.indexOf(prevLine);
+      expect(after.slice(idx + prevLine.length - (eol === '\r\n' ? 1 : 0))).toMatch(
+        new RegExp('^' + eol.replace(/\r/g, '\\r').replace(/\n/g, '\\n') + indent + '<li><a href="meta-' + item.n + '\\.html">'));
+      expect(after.replace(`${indent}${item.landing.line}${eol}`, '')).toBe(original);
+    });
+
+    it('publishes fine without a landing file, with item.landing null', async () => {
+      const r = await post(input('بدون فهرست'));
+      expect(r.statusCode).toBe(200);
+      expect(r.json().item.landing).toBeNull();
+      expect(store.files.has('insight/index.html')).toBe(false);
+    });
+  });
   });
 });

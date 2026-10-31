@@ -515,7 +515,12 @@ export function restore(id: string): Promise<{ restored: string[] }> {
     if (!row) throw new QpError('not_found', 404);
     const { body: _body, ...item } = row.record as QpItem & { body?: string };
     const restored: string[] = [];
-    if (!(await store.get(item.path.slice(1)))) {
+    // While the item is still live, the backup is the founder's last word: a page left
+    // behind by a half-failed edit is replaced too, not only a missing one. Once
+    // imported, git owns the page and only a missing one is put back.
+    const listed = parseLedger(await store.get(LEDGER_KEY)).items.find(x => x.id === item.id);
+    const onBucket = await store.get(item.path.slice(1));
+    if (!onBucket || ((!listed || listed.state === 'live') && onBucket.toString('utf8') !== row.html)) {
       await store.put(item.path.slice(1), Buffer.from(row.html), 'text/html; charset=utf-8'); restored.push('page');
     }
     for (const m of item.media) {

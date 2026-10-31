@@ -181,5 +181,108 @@ class QuickPublishToolTest(unittest.TestCase):
         self.assertNotIn('clinical-901', self.run_tool('requested')[1])
 
 
+    # ---- review-round fixes -------------------------------------------------
+
+    def snapshot(self):
+        return {k: (self.repo / k).read_bytes() for k in ('dentcast-brain.json', 'quick-publish/ledger.json')}
+
+    def test_guard_refuses_while_the_panel_is_switched_on_even_without_items(self):
+        ledger = self.bucket / 'quick-publish' / 'ledger.json'
+        ledger.write_text(json.dumps({'version': 1, 'panel_enabled': True, 'items': []}), encoding='utf-8')
+        code, out = self.run_tool('guard', '--bucket-ledger', str(ledger))
+        self.assertEqual(code, 1, out)
+        self.assertIn('switched ON', out)
+        self.assertIn('Switch it off', out)
+        ledger.write_text(json.dumps({'version': 1, 'panel_enabled': False, 'items': []}), encoding='utf-8')
+        code, out = self.run_tool('guard', '--bucket-ledger', str(ledger))
+        self.assertEqual(code, 0, out)
+
+    def test_import_refuses_ledger_paths_outside_what_the_api_can_write(self):
+        good_media = 'quick-publish/media/20261101-abcd1234.jpg'
+        cases = [
+            dict(path='/../evil.html'), dict(path='/index.html'),
+            dict(media=['index.html']), dict(media=['quick-publish/media/../../evil.jpg']),
+            dict(landing={'file': 'index.html', 'href': 'insight-901.html', 'line': '<li><a href="insight-901.html">x</a></li>', 'order': 'top'}),
+        ]
+        for patch in cases:
+            with self.subTest(patch=patch):
+                it = dict(item(media=[good_media]), **patch)
+                (self.bucket / 'insight' / 'insight-901.html').write_text('p', encoding='utf-8')
+                (self.bucket / good_media).write_bytes(b'x')
+                self.publish_to_bucket([it], [ENTRY])
+                before = self.snapshot()
+                code, out = self.run_tool('import', '--from-dir', str(self.bucket))
+                self.assertNotEqual(code, 0, out)
+                self.assertIn('refusing', out)
+                self.assertEqual(self.snapshot(), before)
+                self.assertFalse((self.repo / 'insight' / 'insight-901.html').exists())
+                self.assertFalse((self.repo / 'evil.html').exists())
+                self.assertFalse((self.repo / good_media).exists())
+
+    def test_import_refuses_a_number_collision_with_a_different_page_in_git(self):
+        (self.bucket / 'insight' / 'insight-901.html').write_text('from the bucket', encoding='utf-8')
+        (self.repo / 'insight').mkdir()
+        (self.repo / 'insight' / 'insight-901.html').write_text('already in git', encoding='utf-8')
+        self.publish_to_bucket([item()], [ENTRY])
+        before = self.snapshot()
+        code, out = self.run_tool('import', '--from-dir', str(self.bucket))
+        self.assertNotEqual(code, 0, out)
+        self.assertIn('same number', out)
+        self.assertEqual((self.repo / 'insight' / 'insight-901.html').read_text(encoding='utf-8'), 'already in git')
+        self.assertEqual(self.snapshot(), before)
+
+    def test_import_will_not_overwrite_a_completed_item_with_a_newer_panel_edit(self):
+        page = self.bucket / 'insight' / 'insight-901.html'
+        page.write_text('v1', encoding='utf-8')
+        self.publish_to_bucket([item()], [ENTRY])
+        self.assertEqual(self.run_tool('import', '--from-dir', str(self.bucket))[0], 0)
+        self.assertEqual(self.run_tool('complete', 'clinical-901')[0], 0)
+        (self.repo / 'insight' / 'insight-901.html').write_text('workflow rewrote this', encoding='utf-8')
+        edited = dict(ENTRY, title='ویرایش بعد از کامل شدن')
+        page.write_text('v2', encoding='utf-8')
+        self.publish_to_bucket([item(edited, updated='2026-11-03T09:00:00.000Z')], [edited])
+        before = self.snapshot()
+        code, out = self.run_tool('import', '--from-dir', str(self.bucket))
+        self.assertNotEqual(code, 0, out)
+        self.assertIn('completed', out)
+        self.assertEqual((self.repo / 'insight' / 'insight-901.html').read_text(encoding='utf-8'), 'workflow rewrote this')
+        self.assertEqual(self.snapshot(), before)
+
+    def test_landing_line_goes_into_gits_copy_with_its_crlf_and_is_replaced_in_place_on_edit(self):
+        index = self.repo / 'insight' / 'index.html'
+        index.parent.mkdir(exist_ok=True)
+        index.write_bytes('<ul>\r\n    <li><a href="insight-899.html">old</a></li>\r\n    <li><a href="insight-900.html">top</a></li>\r\n'
+                          '    <li><a href="insight-898.html">older</a></li>\r\n</ul>\r\n'.encode('utf-8'))
+        (self.bucket / 'insight' / 'insight-901.html').write_text('v1', encoding='utf-8')
+        landing = {'file': 'insight/index.html', 'href': 'insight-901.html', 'order': 'top',
+                   'line': '<li><a href="insight-901.html">عنوان «تست»</a></li>'}
+        self.publish_to_bucket([dict(item(), landing=landing)], [ENTRY])
+        code, out = self.run_tool('import', '--from-dir', str(self.bucket))
+        self.assertEqual(code, 0, out)
+        # Directly above the highest-numbered neighbour (900), with its indent and CRLF.
+        want = ('<ul>\r\n    <li><a href="insight-899.html">old</a></li>\r\n'
+                '    <li><a href="insight-901.html">عنوان «تست»</a></li>\r\n'
+                '    <li><a href="insight-900.html">top</a></li>\r\n'
+                '    <li><a href="insight-898.html">older</a></li>\r\n</ul>\r\n')
+        self.assertEqual(raw(index), want)
+
+        edited = dict(ENTRY, title='عنوان تازه')
+        landing2 = dict(landing, line='<li><a href="insight-901.html">عنوان تازه</a></li>')
+        (self.bucket / 'insight' / 'insight-901.html').write_text('v2', encoding='utf-8')
+        self.publish_to_bucket([dict(item(edited, updated='2026-11-01T09:00:00.000Z'), landing=landing2)], [edited])
+        code, out = self.run_tool('import', '--from-dir', str(self.bucket))
+        self.assertEqual(code, 0, out)
+        self.assertEqual(raw(index), want.replace('عنوان «تست»', 'عنوان تازه'))
+
+    def test_a_page_missing_on_the_bucket_is_a_clean_message_pointing_at_restore(self):
+        self.publish_to_bucket([item()], [ENTRY])  # ledger lists it, the page file was never there / deleted
+        before = self.snapshot()
+        code, out = self.run_tool('import', '--from-dir', str(self.bucket))
+        self.assertNotEqual(code, 0, out)
+        self.assertIn('بازگرداندن', out)
+        self.assertNotIn('Traceback', out)
+        self.assertEqual(self.snapshot(), before)
+
+
 if __name__ == '__main__':
     unittest.main()
