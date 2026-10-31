@@ -219,3 +219,86 @@ describe('quick publish panel — retries, missing items, big uploads', () => {
     expect(el('qpImages').querySelectorAll('.qp-img')).toHaveLength(0);
   });
 });
+
+describe('quick publish panel — restore', () => {
+  const restoreUrl = (id: string) => `/admin/quick-publish/${id}/restore`;
+  const restorePosts = () => calls.filter(c => c.url.endsWith('/restore') && c.opts.method === 'POST').map(c => c.url);
+  const statusGets = () => calls.filter(c => c.url === '/admin/quick-publish' && !c.opts.method).length;
+  const withItems = async (items: unknown[]) => {
+    statusBody = { ...statusBody, items };
+    document.body.replaceChildren(); boot(); await flush();
+  };
+  const restoreButton = (id: string) => [...[...el('qpList').querySelectorAll('.qp-item')].find(b => b.textContent!.includes(id))!
+    .querySelectorAll('button')].find(b => b.textContent === 'بازگرداندن روی سایت') as HTMLButtonElement;
+
+  it('hides «restore all» when nothing is missing and shows it when some item is', async () => {
+    await flush();
+    expect(el('qpRestoreAllRow').hidden).toBe(true);
+    await withItems([qpItem({ id: 'clinical-101', state: 'live' })]);
+    expect(el('qpRestoreAllRow').hidden).toBe(true);
+    await withItems([qpItem({ id: 'clinical-101', state: 'live' }), qpItem({ id: 'clinical-102', n: 102, path: '/insight/insight-102.html', state: 'live', missing: true })]);
+    expect(el('qpRestoreAllRow').hidden).toBe(false);
+    expect(el('qpRestoreAll').textContent).toBe('بازگرداندن همهٔ مطالبی که روی سایت نیستند');
+  });
+
+  it('«restore all» posts a restore for each missing id in turn, then reloads the status', async () => {
+    await withItems([
+      qpItem({ id: 'clinical-101', state: 'live', missing: true }),
+      qpItem({ id: 'clinical-102', n: 102, path: '/insight/insight-102.html', state: 'live' }),
+      qpItem({ id: 'clinical-103', n: 103, path: '/insight/insight-103.html', state: 'live', missing: true }),
+    ]);
+    const before = statusGets();
+    const order: string[] = [];
+    fetcher.mockImplementation(async (url: string, opts: any = {}) => {
+      calls.push({ url: String(url), opts });
+      if (url.endsWith('/restore')) { order.push(`start ${url}`); await Promise.resolve(); order.push(`end ${url}`); return response({ ok: true, restored: ['page', 'ledger'] }); }
+      return response(statusBody);
+    });
+    el('qpRestoreAll').click(); await flush();
+    expect(restorePosts()).toEqual([restoreUrl('clinical-101'), restoreUrl('clinical-103')]);
+    // One after the other, not in parallel.
+    expect(order).toEqual([`start ${restoreUrl('clinical-101')}`, `end ${restoreUrl('clinical-101')}`, `start ${restoreUrl('clinical-103')}`, `end ${restoreUrl('clinical-103')}`]);
+    expect(statusGets()).toBe(before + 1);
+    expect(el('qpResult').textContent).toContain('clinical-101');
+    expect(el('qpResult').textContent).toContain('clinical-103');
+  });
+
+  it('«restore all» does nothing when the confirmation is declined', async () => {
+    const html = renderQuickPublish();
+    document.body.innerHTML = html.replace(/<script>[\s\S]*?<\/script>/g, '');
+    statusBody = { ...statusBody, items: [qpItem({ id: 'clinical-101', state: 'live', missing: true })] };
+    new Function('document', 'fetch', 'localStorage', 'confirm', 'alert', html.match(/<script>([\s\S]*?)<\/script>/)![1])(
+      document, fetcher, window.localStorage, () => false, vi.fn());
+    await flush();
+    el('qpRestoreAll').click(); await flush();
+    expect(restorePosts()).toEqual([]);
+  });
+
+  it('explains a git_owned answer (single: «در گیت است»; restore-all: «در گیت بود و دست نخورد») in «restore all»', async () => {
+    await withItems([qpItem({ id: 'clinical-101', state: 'live', missing: true })]);
+    fetcher.mockImplementation(async (url: string, opts: any = {}) => {
+      calls.push({ url: String(url), opts });
+      return response(url.endsWith('/restore') ? { ok: true, restored: ['git_owned'] } : statusBody);
+    });
+    restoreButton('clinical-101').click(); await flush();
+    expect(el('qpResult').textContent).toContain('این صفحه در گیت است');
+    expect(el('qpResult').textContent).toContain('نسخهٔ حداقلی رویش نوشته نشد');
+
+    el('qpRestoreAll').click(); await flush();
+    expect(el('qpResult').textContent).toContain('در گیت بود');
+    expect(el('qpResult').textContent).toContain('clinical-101');
+  });
+
+  it('the single-item restore button reloads the status after success', async () => {
+    await withItems([qpItem({ id: 'clinical-101', state: 'live', missing: true })]);
+    const before = statusGets();
+    fetcher.mockImplementation(async (url: string, opts: any = {}) => {
+      calls.push({ url: String(url), opts });
+      return response(url.endsWith('/restore') ? { ok: true, restored: ['page', 'ledger'] } : statusBody);
+    });
+    restoreButton('clinical-101').click(); await flush();
+    expect(restorePosts()).toEqual([restoreUrl('clinical-101')]);
+    expect(el('qpResult').textContent).toContain('برگردانده شد: page، ledger');
+    expect(statusGets()).toBe(before + 1);
+  });
+});

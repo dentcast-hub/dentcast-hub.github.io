@@ -450,20 +450,20 @@ export function publish(input: QpInput): Promise<{ item: QpItem; url: string }> 
     let brainText = await readText(store, BRAIN_KEY, 'brain_missing');
     const brain = JSON.parse(brainText) as Record<string, unknown>[];
     const rawLedger = await store.get(LEDGER_KEY);
-    // A missing ledger with backups in the API means a wipe: restore first, or a new
-    // ledger holding only this page would let the guard pass over the others.
-    if (!rawLedger && (await one('select 1 from quick_publications limit 1'))) throw new QpError('ledger_missing', 409);
     const ledger = parseLedger(rawLedger);
     if (v.ref) {
       const again = ledger.items.find(x => x.client_ref === v.ref)
         ?? (await one<{ record: QpItem }>(`select record from quick_publications where record->>'client_ref' = $1`, [v.ref]))?.record;
       if (again) {
-        // The first try may have stopped halfway (lost response, failed write): finish it
-        // from the backup before saying «منتشر شد», instead of pointing at a 404.
+        // The first try may have stopped halfway (lost response, failed write — even the
+        // very first ledger write): finish it from the backup before saying «منتشر شد».
         await restoreNow(again.id);
         return { item: again, url: IR_ORIGIN + again.path };
       }
     }
+    // A missing ledger with backups in the API means a wipe: restore first, or a new
+    // ledger holding only this page would let the guard pass over the others.
+    if (!rawLedger && (await one('select 1 from quick_publications limit 1'))) throw new QpError('ledger_missing', 409);
     await ensureMedia(store, rendered.media);
     const t = QP_TYPES[v.type];
     let n = Math.max(0, ...brain.filter(e => e.type === v.type).map(e => numberFrom(e[t.urlKey] ?? e.url ?? e.page_url, v.type)),
