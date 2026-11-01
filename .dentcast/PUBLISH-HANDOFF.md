@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "litecast/lite-CAST43"
 - Status: in_progress
-- Next canonical step: "C.8"
+- Next canonical step: "C.4.10.1"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -20,9 +20,9 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     "context": {
       "approvals": [
         {
-          "decision": "Use the author-approved article text, SEO, and image as supplied.",
+          "decision": "Use the approved article text and image as supplied; page title surfaces are aligned to the exact approved article title after Phase F detected the mismatch.",
           "evidence": [
-            "WORK-HANDOFF.md records final approval of the text, image, and SEO; founder instructed publication."
+            "WORK-HANDOFF.md records approval of the article text, image, and SEO; founder authorized publication. Harmonization uses the exact already-approved article title and leaves body, description, and image unchanged."
           ],
           "scope": "page-content",
           "status": "confirmed"
@@ -38,7 +38,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         {
           "decision": "\u0641\u06cc\u0644\u06cc\u067e\u0631 \u062f\u0646\u062f\u0627\u0646 \u0686\u06cc\u0633\u062a\u061f \u0622\u06cc\u0627 \u062c\u0627\u06cc\u06af\u0632\u06cc\u0646 \u0627\u0631\u0632\u0627\u0646 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0627\u0633\u062a\u061f",
           "evidence": [
-            "Exact author-approved title copied from article.md."
+            "Exact author-approved article title from the handoff and glossary; page title surfaces now contain this exact string with the existing Lite-CAST suffix."
           ],
           "scope": "title",
           "status": "confirmed"
@@ -502,7 +502,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             "status": "exempt"
           },
           "evidence": [
-            "Reviewed all ten current editorial scopes against the approved handoff, LiteCast page/glossary, founder hashtag decision and latest clarification excluding Pulse."
+            "Rechecked all ten C.6 editorial scopes against the approved handoff, corrected article title surfaces, LiteCast page/glossary, founder hashtag decision, and clarification excluding Pulse."
           ],
           "kind": "second_cut_editorial_lock_v1",
           "scopes": [
@@ -543,7 +543,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             },
             {
               "evidence": [
-                "litecast-43 is last in the 43-row glossary with exact approved title/caption and source search terms; landing index includes the title row."
+                "litecast-43 remains last in the 43-row glossary with the exact approved title/caption and source search terms; the landing row matches; article head title surfaces now exactly match the approved article title."
               ],
               "scope": "content_record",
               "status": "resolved"
@@ -571,7 +571,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             },
             {
               "evidence": [
-                "Author handoff approves text/image/SEO; founder confirmed title/caption, the four hashtags, publication, and no LiteCast Pulse announcement."
+                "Author handoff approves text/image/SEO; founder confirmed title/caption, four hashtags, publication, and exclusion from Pulse. After Phase F found a mismatch, title surfaces were harmonized to the exact founder-approved article title; body, caption, and image remain unchanged."
               ],
               "scope": "author_approvals",
               "status": "resolved"
@@ -633,6 +633,415 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
                 "module": "11-build-and-version.md",
                 "reason": null,
                 "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.8",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "C.7",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "D",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "E",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "F",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "G",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              }
+            ],
+            "validation": []
+          }
+        },
+        {
+          "from_step": "C.6",
+          "kind": "dependency_invalidation_v1",
+          "reason": "Post-Push-2 Phase F found the page <title>, og:title, and twitter:title use the SEO-title variant, while the locked brain title and H1 use the author-approved exact article title. Reconcile all title surfaces to the approved locked article title so the fixed title-sweep rule passes; retain the approved body, caption, image, glossary, hashtags, and Pulse exclusion.",
+          "superseded": {
+            "approvals": [
+              {
+                "decision": "Use the author-approved article text, SEO, and image as supplied.",
+                "evidence": [
+                  "WORK-HANDOFF.md records final approval of the text, image, and SEO; founder instructed publication."
+                ],
+                "scope": "page-content",
+                "status": "confirmed"
+              },
+              {
+                "decision": "Do not announce LiteCast items in Pulse.",
+                "evidence": [
+                  "Founder clarified: LiteCast is not introduced in Pulse."
+                ],
+                "scope": "pulse-inclusion",
+                "status": "confirmed"
+              },
+              {
+                "decision": "\u0641\u06cc\u0644\u06cc\u067e\u0631 \u062f\u0646\u062f\u0627\u0646 \u0686\u06cc\u0633\u062a\u061f \u0622\u06cc\u0627 \u062c\u0627\u06cc\u06af\u0632\u06cc\u0646 \u0627\u0631\u0632\u0627\u0646 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0627\u0633\u062a\u061f",
+                "evidence": [
+                  "Exact author-approved title copied from article.md."
+                ],
+                "scope": "title",
+                "status": "confirmed"
+              },
+              {
+                "decision": "\u0641\u06cc\u0644\u06cc\u067e\u0631 \u062f\u0646\u062f\u0627\u0646 \u0686\u06cc\u0633\u062a \u0648 \u0686\u0647 \u062a\u0641\u0627\u0648\u062a\u06cc \u0628\u0627 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062f\u0627\u0631\u062f\u061f \u062f\u0631\u0628\u0627\u0631\u0647 \u06a9\u0627\u0631\u0628\u0631\u062f\u060c \u0645\u0639\u0627\u06cc\u0628 \u0648 \u062e\u0637\u0631\u0627\u062a \u0641\u06cc\u0644\u06cc\u067e\u0631 \u06cc\u06a9\u200c\u0637\u0631\u0641\u0647 \u0648 \u0641\u0644\u06a9\u0633\u06cc\u0628\u0644 \u0628\u0647 \u0632\u0628\u0627\u0646 \u0633\u0627\u062f\u0647 \u0628\u062e\u0648\u0627\u0646\u06cc\u062f.",
+                "evidence": [
+                  "Exact author-approved meta description copied from article.md."
+                ],
+                "scope": "caption",
+                "status": "confirmed"
+              }
+            ],
+            "delivery": [],
+            "inputs": [
+              {
+                "ref": "Library: DentCast/Work-Handoff/flipper-dental-implant-litecast/article.md",
+                "sha256": "e746f0096a03387ad7c04dda4a661bc9ff55665282c91d05cec4fc8ee05fc4b0"
+              }
+            ],
+            "steps": [
+              {
+                "evidence": [
+                  "Ten-scope editorial lock rechecked after founder correction. LiteCast is not announced in Pulse; the existing seven Pulse items are preserved. Glossary/tag decision, page/index, approved text/title/caption, and English exemption are confirmed."
+                ],
+                "id": "C.6",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.8",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "C.7",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "D",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "E",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "F",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "G",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              }
+            ],
+            "validation": []
+          }
+        },
+        {
+          "from_step": "C.2",
+          "kind": "dependency_invalidation_v1",
+          "reason": "Phase F found title metadata that did not contain the exact approved article title. After harmonizing all title surfaces, the page text fingerprint changed; the ledger requires re-verifying all dependent page, semantic-linking, content-record, and C.6 checkpoints from C.2. Preserve prior evidence in the invalidation audit and redo the dependent suffix against the corrected page.",
+          "superseded": {
+            "approvals": [
+              {
+                "decision": "Use the approved article text and image as supplied; align the page title surfaces to the exact approved article title after Phase F detected the mismatch.",
+                "evidence": [
+                  "WORK-HANDOFF.md records final approval of the article text, image, and SEO; founder authorized publication. The title correction uses the already approved article title verbatim and leaves the body, description, and image unchanged."
+                ],
+                "scope": "page-content",
+                "status": "confirmed"
+              },
+              {
+                "decision": "Do not announce LiteCast items in Pulse.",
+                "evidence": [
+                  "Founder clarified: LiteCast is not introduced in Pulse."
+                ],
+                "scope": "pulse-inclusion",
+                "status": "confirmed"
+              },
+              {
+                "decision": "\u0641\u06cc\u0644\u06cc\u067e\u0631 \u062f\u0646\u062f\u0627\u0646 \u0686\u06cc\u0633\u062a\u061f \u0622\u06cc\u0627 \u062c\u0627\u06cc\u06af\u0632\u06cc\u0646 \u0627\u0631\u0632\u0627\u0646 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0627\u0633\u062a\u061f",
+                "evidence": [
+                  "Exact title from the author-approved article and glossary row; corrected <title>, og:title, and twitter:title now use this exact string with the existing Lite-CAST suffix."
+                ],
+                "scope": "title",
+                "status": "confirmed"
+              },
+              {
+                "decision": "\u0641\u06cc\u0644\u06cc\u067e\u0631 \u062f\u0646\u062f\u0627\u0646 \u0686\u06cc\u0633\u062a \u0648 \u0686\u0647 \u062a\u0641\u0627\u0648\u062a\u06cc \u0628\u0627 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062f\u0627\u0631\u062f\u061f \u062f\u0631\u0628\u0627\u0631\u0647 \u06a9\u0627\u0631\u0628\u0631\u062f\u060c \u0645\u0639\u0627\u06cc\u0628 \u0648 \u062e\u0637\u0631\u0627\u062a \u0641\u06cc\u0644\u06cc\u067e\u0631 \u06cc\u06a9\u200c\u0637\u0631\u0641\u0647 \u0648 \u0641\u0644\u06a9\u0633\u06cc\u0628\u0644 \u0628\u0647 \u0632\u0628\u0627\u0646 \u0633\u0627\u062f\u0647 \u0628\u062e\u0648\u0627\u0646\u06cc\u062f.",
+                "evidence": [
+                  "Exact author-approved meta description copied from article.md."
+                ],
+                "scope": "caption",
+                "status": "confirmed"
+              }
+            ],
+            "delivery": [],
+            "inputs": [
+              {
+                "ref": "Library: DentCast/Work-Handoff/flipper-dental-implant-litecast/article.md",
+                "sha256": "e746f0096a03387ad7c04dda4a661bc9ff55665282c91d05cec4fc8ee05fc4b0"
+              }
+            ],
+            "steps": [
+              {
+                "evidence": [
+                  "Rebuilt from untouched lite-CAST42.html with exact body HTML; root cause from initial invalidation corrected by anchoring to standalone article tags. Final page SHA d6a22fbc2983dcef211ecca5b3f27f08c9d9673692f3b12d161f06a47d0f5123. Verified .ir canonical and OG URL on the shared page served by both domains, no hreflang/e-NAMAD, GA4 exactly once, both API preconnects exactly once with crossorigin, dates all 2026-10-31, dimensions 1599x900, and one DOM article + one H1."
+                ],
+                "id": "C.2",
+                "module": "03-litecast-and-page.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Reran the semantic scan of the approved body against all existing 42 LiteCast entries; exact first-occurrence links to lite-CAST5 (comparison phrase) and lite-CAST37 (gel/flexible phrase) only. No specialist links. Hash before d6a22fbc2983dcef211ecca5b3f27f08c9d9673692f3b12d161f06a47d0f5123; after e90f864b35e239b59471c98049efaa698cd32328eac9f23f9f1f9fbc2182d11c."
+                ],
+                "id": "C.0.5",
+                "module": "03-litecast-and-page.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "After restoring the correct full page, semantic related-item audit reconfirmed LiteCast 5 and 37 as strongest candidates. Section contains only those two internal LiteCast URLs, within five-link ceiling. Hash before e90f864b35e239b59471c98049efaa698cd32328eac9f23f9f1f9fbc2182d11c; after 025c60a322cfdfa774b676b90722a5af31b5353728b51bae1e36997ecb1e7aac."
+                ],
+                "id": "C.0.6",
+                "module": "03-litecast-and-page.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.2.4",
+                "module": "04-taxonomy-and-navigation.md",
+                "reason": "LiteCast is outside the specialist pillar taxonomy; canonical exception in module 03 and module 04 \u00a72.4.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.2.5",
+                "module": "04-taxonomy-and-navigation.md",
+                "reason": "LiteCast omits specialist capsules; internal LiteCast capsules were populated and reverified in C.0.6.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [
+                  "Verified hand-maintained litecast/index.html contains exactly one lite-CAST43 first-row link with the approved exact title and retains the existing lite-CAST42 row. SHA-256 52a8517535aa9d55c2f07b960bd4dc8aeaf8ccd3de9837f87b572e146e9c07c5."
+                ],
+                "id": "C.2.6",
+                "module": "04-taxonomy-and-navigation.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Date/meta audit compared clone with final page: canonical+OG URL updated to lite-CAST43 on .ir; page/OG/Twitter titles and descriptions reflect approved values; OG/Twitter image, alt, dimensions updated; datePublished/dateModified/lastReviewed and both visible dates are 2026-10-31. All audit rows OK. Template hash unchanged at dcdc580082e873a1244fc7a1cbcc700ce0009f8a2c11bc38e7e4ddf7b0887308."
+                ],
+                "id": "C.3",
+                "module": "04-taxonomy-and-navigation.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Integrity verified: untouched template litecast/lite-CAST42.html SHA-256 dcdc580082e873a1244fc7a1cbcc700ce0009f8a2c11bc38e7e4ddf7b0887308; final lite-CAST43 structure is a clone with only approved content/metadata/media and LiteCast-only links."
+                ],
+                "id": "C.4",
+                "module": "04-taxonomy-and-navigation.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.5",
+                "module": "04-taxonomy-and-navigation.md",
+                "reason": "Only NoteCast publishes its parent episode link; this is LiteCast.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.5-b",
+                "module": "04-taxonomy-and-navigation.md",
+                "reason": "Shared episode/NoteCast evidence mirroring applies only to NoteCast or core episodes; this is LiteCast.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.6",
+                "module": "04-taxonomy-and-navigation.md",
+                "reason": "Prev/next series navigation applies only to Promptologist; this is LiteCast.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.7",
+                "module": "05-semantic-linking.md",
+                "reason": "LiteCast isolation forbids glossary backlinks; no specialist glossary section is to be edited (module 03 \u00a70.2).",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.7-b",
+                "module": "05-semantic-linking.md",
+                "reason": "Scoped cross-linking of existing bodies runs only for a glossary-term publish; this is LiteCast (module 05 \u00a74.7-b).",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.8",
+                "module": "05-semantic-linking.md",
+                "reason": "Specialist glossary/episode inline candidates are out of scope for LiteCast; LiteCast-only body links already completed in C.0.5 (module 03 \u00a70.2).",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.9",
+                "module": "05-semantic-linking.md",
+                "reason": "LiteCast must not link to specialist brain entries; LiteCast-only related capsules completed in C.0.6 per module 03 \u00a70.2.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.10.1",
+                "module": "06-paper-ingestion.md",
+                "reason": "4.10 skipped \u2014 no attached paper was supplied with this text-bearing LiteCast publish.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.10.2",
+                "module": "06-paper-ingestion.md",
+                "reason": "4.10 skipped \u2014 no attached paper was supplied with this text-bearing LiteCast publish.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.10.3",
+                "module": "06-paper-ingestion.md",
+                "reason": "4.10 skipped \u2014 no attached paper was supplied with this text-bearing LiteCast publish.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.11",
+                "module": "07-flashcards-and-quiz.md",
+                "reason": "LiteCast has no flashcard pipeline under module 03 \u00a70.2.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.12",
+                "module": "07-flashcards-and-quiz.md",
+                "reason": "LiteCast has no quiz pipeline under module 03 \u00a70.2.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.13",
+                "module": "08-des-fidelity.md",
+                "reason": "LiteCast \u2014 outside the specialist DES ecosystem (Hard Rule 10); no DES or Fidelity run and no record created.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.14",
+                "module": "09-challenge.md",
+                "reason": "Ordinary LiteCast article; this is not a Challenge.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [
+                  "Founder approved: #\u062c\u0627\u06cc\u06af\u0632\u06cc\u0646\u06cc_\u062f\u0646\u062f\u0627\u0646, #\u067e\u0631\u0648\u062a\u0632_\u0645\u062a\u062d\u0631\u06a9, #\u0627\u06cc\u0645\u067e\u0644\u0646\u062a, #\u0622\u06af\u0627\u0647\u06cc_\u062f\u0631\u0645\u0627\u0646\u06cc. Questions answered: what a flipper is (resolving concept: removable prosthesis); whether it is a permanent implant substitute (decision: no, temporary alternative only); what risks apply to unilateral flippers; whether flexible material alone proves greater safety (no). Composition includes a decision tag (#\u062c\u0627\u06cc\u06af\u0632\u06cc\u0646\u06cc_\u062f\u0646\u062f\u0627\u0646), specific tag with <=10 pages (#\u067e\u0631\u0648\u062a\u0632_\u0645\u062a\u062d\u0631\u06a9), implant umbrella in addition, and patient-education tag. No new #\u0641\u06cc\u0644\u06cc\u067e\u0631 tag minted: it would be a one-page singleton and existing removable-prosthesis concept covers the page. User approved the exact four-tag proposal."
+                ],
+                "id": "C.5.0",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Appended litecast-43 as the 43rd glossary entry with the existing seven-key schema; exact approved title/caption, the four founder-approved hashtags and seven search terms from WORK-HANDOFF.md. Baseline formatting preserved; diff adds only one 22-line record. SHA-256 daafe83959ba9304ba398e8c0f8723ea73277d43f5bb19bed9f35c2bf90d107f -> 216969b0ced551557b7637106f78c4c9ccf701c7fc1a2f13e181bf7f7a853175; JSON parses, new row is last."
+                ],
+                "id": "C.5",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.5.5",
+                "module": "10-brain-and-pathways.md",
+                "reason": "LiteCast does not write a professional brain entry or pillar assignment.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.5.6",
+                "module": "10-brain-and-pathways.md",
+                "reason": "LiteCast is explicitly excluded from professional learning pathways.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.5.6-b",
+                "module": "10-brain-and-pathways.md",
+                "reason": "LiteCast is excluded from pathway bundles.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [
+                  "Restart C.6 review after Phase F surfaced a title-surface mismatch; recheck all ten editorial scopes and harmonize page title metadata with the already approved article title before re-locking."
+                ],
+                "id": "C.6",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "started"
               },
               {
                 "evidence": [],
@@ -859,7 +1268,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Rebuilt from untouched lite-CAST42.html with exact body HTML; root cause from initial invalidation corrected by anchoring to standalone article tags. Final page SHA d6a22fbc2983dcef211ecca5b3f27f08c9d9673692f3b12d161f06a47d0f5123. Verified .ir canonical and OG URL on the shared page served by both domains, no hreflang/e-NAMAD, GA4 exactly once, both API preconnects exactly once with crossorigin, dates all 2026-10-31, dimensions 1599x900, and one DOM article + one H1."
+          "Reverified the corrected page with verify_publish: brain title/caption exact, H1 and all four title surfaces now match the approved title, .ir canonical and OG identity correct, dates and image metadata valid, and LiteCast-only semantic links preserved. Version stamp checks deferred to Actions C.7 after builders."
         ],
         "id": "C.2",
         "module": "03-litecast-and-page.md",
@@ -868,7 +1277,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Reran the semantic scan of the approved body against all existing 42 LiteCast entries; exact first-occurrence links to lite-CAST5 (comparison phrase) and lite-CAST37 (gel/flexible phrase) only. No specialist links. Hash before d6a22fbc2983dcef211ecca5b3f27f08c9d9673692f3b12d161f06a47d0f5123; after e90f864b35e239b59471c98049efaa698cd32328eac9f23f9f1f9fbc2182d11c."
+          "Rechecked the approved body semantic links: first-occurrence inline links point to LiteCast 5 and 37 only; verify_publish confirms no specialist-content links and no self-link. The body text is unchanged by the title-surface correction."
         ],
         "id": "C.0.5",
         "module": "03-litecast-and-page.md",
@@ -877,7 +1286,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "After restoring the correct full page, semantic related-item audit reconfirmed LiteCast 5 and 37 as strongest candidates. Section contains only those two internal LiteCast URLs, within five-link ceiling. Hash before e90f864b35e239b59471c98049efaa698cd32328eac9f23f9f1f9fbc2182d11c; after 025c60a322cfdfa774b676b90722a5af31b5353728b51bae1e36997ecb1e7aac."
+          "Rechecked the related capsule section: exactly LiteCast 5 and 37, both internal LiteCast pages, no specialist links, and count remains under five (verify_publish 2/5). No capsule bytes changed during title correction."
         ],
         "id": "C.0.6",
         "module": "03-litecast-and-page.md",
@@ -888,19 +1297,19 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "evidence": [],
         "id": "C.2.4",
         "module": "04-taxonomy-and-navigation.md",
-        "reason": "LiteCast is outside the specialist pillar taxonomy; canonical exception in module 03 and module 04 \u00a72.4.",
+        "reason": "LiteCast remains outside the specialist pillar taxonomy; verified against the canonical LiteCast category exception in modules 03 and 04.",
         "status": "skipped"
       },
       {
         "evidence": [],
         "id": "C.2.5",
         "module": "04-taxonomy-and-navigation.md",
-        "reason": "LiteCast omits specialist capsules; internal LiteCast capsules were populated and reverified in C.0.6.",
+        "reason": "LiteCast omits specialist pillar/glossary capsules; the semantic related section contains the two verified LiteCast links from C.0.6.",
         "status": "skipped"
       },
       {
         "evidence": [
-          "Verified hand-maintained litecast/index.html contains exactly one lite-CAST43 first-row link with the approved exact title and retains the existing lite-CAST42 row. SHA-256 52a8517535aa9d55c2f07b960bd4dc8aeaf8ccd3de9837f87b572e146e9c07c5."
+          "Rechecked the hand-maintained LiteCast index: one CAST43 first-row entry with the exact approved article title and link; CAST42 remains. verify_publish confirms the landing label carries the exact title."
         ],
         "id": "C.2.6",
         "module": "04-taxonomy-and-navigation.md",
@@ -909,7 +1318,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Date/meta audit compared clone with final page: canonical+OG URL updated to lite-CAST43 on .ir; page/OG/Twitter titles and descriptions reflect approved values; OG/Twitter image, alt, dimensions updated; datePublished/dateModified/lastReviewed and both visible dates are 2026-10-31. All audit rows OK. Template hash unchanged at dcdc580082e873a1244fc7a1cbcc700ce0009f8a2c11bc38e7e4ddf7b0887308."
+          "Rechecked page metadata after title correction with verify_publish: .ir canonical/OG URL, exact title surfaces, approved description, dates, and title sweep pass. The approved image bytes and alt/caption metadata remain as previously verified; only title strings changed."
         ],
         "id": "C.3",
         "module": "04-taxonomy-and-navigation.md",
@@ -918,7 +1327,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Integrity verified: untouched template litecast/lite-CAST42.html SHA-256 dcdc580082e873a1244fc7a1cbcc700ce0009f8a2c11bc38e7e4ddf7b0887308; final lite-CAST43 structure is a clone with only approved content/metadata/media and LiteCast-only links."
+          "Rechecked structural integrity against untouched LiteCast-42 template: template SHA-256 dcdc580082e873a1244fc7a1cbcc700ce0009f8a2c11bc38e7e4ddf7b0887308; the corrected file differs from Push 2 at exactly four approved title strings, with original CRLF bytes preserved and no other markup/body/image changes."
         ],
         "id": "C.4",
         "module": "04-taxonomy-and-navigation.md",
@@ -929,147 +1338,50 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "evidence": [],
         "id": "C.4.5",
         "module": "04-taxonomy-and-navigation.md",
-        "reason": "Only NoteCast publishes its parent episode link; this is LiteCast.",
+        "reason": "Only NoteCast links its parent episode; this publication is LiteCast.",
         "status": "skipped"
       },
       {
         "evidence": [],
         "id": "C.4.5-b",
         "module": "04-taxonomy-and-navigation.md",
-        "reason": "Shared episode/NoteCast evidence mirroring applies only to NoteCast or core episodes; this is LiteCast.",
+        "reason": "Shared episode mirroring applies to NoteCast or core episodes; this publication is LiteCast.",
         "status": "skipped"
       },
       {
         "evidence": [],
         "id": "C.4.6",
         "module": "04-taxonomy-and-navigation.md",
-        "reason": "Prev/next series navigation applies only to Promptologist; this is LiteCast.",
+        "reason": "Previous/next series navigation applies only to Promptologist; this is LiteCast.",
         "status": "skipped"
       },
       {
         "evidence": [],
         "id": "C.4.7",
         "module": "05-semantic-linking.md",
-        "reason": "LiteCast isolation forbids glossary backlinks; no specialist glossary section is to be edited (module 03 \u00a70.2).",
+        "reason": "LiteCast isolation forbids specialist glossary backlinks; no specialist glossary is edited.",
         "status": "skipped"
       },
       {
         "evidence": [],
         "id": "C.4.7-b",
         "module": "05-semantic-linking.md",
-        "reason": "Scoped cross-linking of existing bodies runs only for a glossary-term publish; this is LiteCast (module 05 \u00a74.7-b).",
+        "reason": "Scoped cross-linking of existing bodies applies to glossary-term publication; this is a LiteCast article.",
         "status": "skipped"
       },
       {
         "evidence": [],
         "id": "C.4.8",
         "module": "05-semantic-linking.md",
-        "reason": "Specialist glossary/episode inline candidates are out of scope for LiteCast; LiteCast-only body links already completed in C.0.5 (module 03 \u00a70.2).",
+        "reason": "Specialist inline candidates are out of scope for LiteCast; approved LiteCast-only links were reverified in C.0.5.",
         "status": "skipped"
       },
       {
         "evidence": [],
         "id": "C.4.9",
         "module": "05-semantic-linking.md",
-        "reason": "LiteCast must not link to specialist brain entries; LiteCast-only related capsules completed in C.0.6 per module 03 \u00a70.2.",
+        "reason": "LiteCast must not link to specialist brain entries; two verified LiteCast-only related capsules remain.",
         "status": "skipped"
-      },
-      {
-        "evidence": [],
-        "id": "C.4.10.1",
-        "module": "06-paper-ingestion.md",
-        "reason": "4.10 skipped \u2014 no attached paper was supplied with this text-bearing LiteCast publish.",
-        "status": "skipped"
-      },
-      {
-        "evidence": [],
-        "id": "C.4.10.2",
-        "module": "06-paper-ingestion.md",
-        "reason": "4.10 skipped \u2014 no attached paper was supplied with this text-bearing LiteCast publish.",
-        "status": "skipped"
-      },
-      {
-        "evidence": [],
-        "id": "C.4.10.3",
-        "module": "06-paper-ingestion.md",
-        "reason": "4.10 skipped \u2014 no attached paper was supplied with this text-bearing LiteCast publish.",
-        "status": "skipped"
-      },
-      {
-        "evidence": [],
-        "id": "C.4.11",
-        "module": "07-flashcards-and-quiz.md",
-        "reason": "LiteCast has no flashcard pipeline under module 03 \u00a70.2.",
-        "status": "skipped"
-      },
-      {
-        "evidence": [],
-        "id": "C.4.12",
-        "module": "07-flashcards-and-quiz.md",
-        "reason": "LiteCast has no quiz pipeline under module 03 \u00a70.2.",
-        "status": "skipped"
-      },
-      {
-        "evidence": [],
-        "id": "C.4.13",
-        "module": "08-des-fidelity.md",
-        "reason": "LiteCast \u2014 outside the specialist DES ecosystem (Hard Rule 10); no DES or Fidelity run and no record created.",
-        "status": "skipped"
-      },
-      {
-        "evidence": [],
-        "id": "C.4.14",
-        "module": "09-challenge.md",
-        "reason": "Ordinary LiteCast article; this is not a Challenge.",
-        "status": "skipped"
-      },
-      {
-        "evidence": [
-          "Founder approved: #\u062c\u0627\u06cc\u06af\u0632\u06cc\u0646\u06cc_\u062f\u0646\u062f\u0627\u0646, #\u067e\u0631\u0648\u062a\u0632_\u0645\u062a\u062d\u0631\u06a9, #\u0627\u06cc\u0645\u067e\u0644\u0646\u062a, #\u0622\u06af\u0627\u0647\u06cc_\u062f\u0631\u0645\u0627\u0646\u06cc. Questions answered: what a flipper is (resolving concept: removable prosthesis); whether it is a permanent implant substitute (decision: no, temporary alternative only); what risks apply to unilateral flippers; whether flexible material alone proves greater safety (no). Composition includes a decision tag (#\u062c\u0627\u06cc\u06af\u0632\u06cc\u0646\u06cc_\u062f\u0646\u062f\u0627\u0646), specific tag with <=10 pages (#\u067e\u0631\u0648\u062a\u0632_\u0645\u062a\u062d\u0631\u06a9), implant umbrella in addition, and patient-education tag. No new #\u0641\u06cc\u0644\u06cc\u067e\u0631 tag minted: it would be a one-page singleton and existing removable-prosthesis concept covers the page. User approved the exact four-tag proposal."
-        ],
-        "id": "C.5.0",
-        "module": "10-brain-and-pathways.md",
-        "reason": null,
-        "status": "completed"
-      },
-      {
-        "evidence": [
-          "Appended litecast-43 as the 43rd glossary entry with the existing seven-key schema; exact approved title/caption, the four founder-approved hashtags and seven search terms from WORK-HANDOFF.md. Baseline formatting preserved; diff adds only one 22-line record. SHA-256 daafe83959ba9304ba398e8c0f8723ea73277d43f5bb19bed9f35c2bf90d107f -> 216969b0ced551557b7637106f78c4c9ccf701c7fc1a2f13e181bf7f7a853175; JSON parses, new row is last."
-        ],
-        "id": "C.5",
-        "module": "10-brain-and-pathways.md",
-        "reason": null,
-        "status": "completed"
-      },
-      {
-        "evidence": [],
-        "id": "C.5.5",
-        "module": "10-brain-and-pathways.md",
-        "reason": "LiteCast does not write a professional brain entry or pillar assignment.",
-        "status": "skipped"
-      },
-      {
-        "evidence": [],
-        "id": "C.5.6",
-        "module": "10-brain-and-pathways.md",
-        "reason": "LiteCast is explicitly excluded from professional learning pathways.",
-        "status": "skipped"
-      },
-      {
-        "evidence": [],
-        "id": "C.5.6-b",
-        "module": "10-brain-and-pathways.md",
-        "reason": "LiteCast is excluded from pathway bundles.",
-        "status": "skipped"
-      },
-      {
-        "evidence": [
-          "Ten-scope editorial lock rechecked after founder correction. LiteCast is not announced in Pulse; the existing seven Pulse items are preserved. Glossary/tag decision, page/index, approved text/title/caption, and English exemption are confirmed."
-        ],
-        "id": "C.6",
-        "module": "11-build-and-version.md",
-        "reason": null,
-        "status": "completed"
       }
     ],
     "target_paths": [
@@ -1081,7 +1393,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: index.html, litecast/lite-glossary.json"
+    "note": "Index-only refresh after staging delivery paths: litecast/lite-CAST43.html"
   },
   "schema": "publish-handoff-v3"
 }
