@@ -925,4 +925,21 @@ if (config.isProd && config.trustProxy === true) {
   );
 }
 
+// Fail closed: a production server must never boot on the development default
+// admin password or session secret. The session cookie is a signed bare user id,
+// so a known SESSION_SECRET lets anyone forge any session; the default admin
+// password is published in this repo. A warning is too easy to miss for a
+// credential — refuse to start and name what to set.
+if (config.isProd) {
+  const insecure: string[] = [];
+  if (config.session.secret === 'dev-insecure-change-me') insecure.push('SESSION_SECRET');
+  if (config.admin.password === 'change-me-admin-password') insecure.push('ADMIN_PASSWORD');
+  if (insecure.length > 0) {
+    throw new Error(
+      `[config] refusing to start in production with the default ${insecure.join(' and ')}.`
+      + ' Set a strong, secret value via the environment.',
+    );
+  }
+}
+
 export type Config = typeof config;
