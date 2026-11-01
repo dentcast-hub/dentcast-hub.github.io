@@ -396,6 +396,33 @@ describe('GET /league — placement on first XP', () => {
     expect(await myXp(cookie)).toBe(11);
   });
 
+  it('a read from a PREVIOUS week does not make this week\'s share pay', async () => {
+    // The farm: finish an article once, ever, then share it for +xp_share every
+    // week forever without reading it again (the eligibility read was the
+    // earliest completion of all time, and the weekly cap is off). The read must
+    // be THIS week, like xp_read.
+    const cookie = await loginAs(app, '09120000077');
+    const uid = userIdFromCookie(cookie);
+    // A completion of insight/insight-5 from 60 days ago (a prior league week).
+    await pool.query(
+      `insert into user_activity (user_id, action, content_id, created_at)
+       values ($1, 'article_completed', 'insight/insight-5', now() - interval '60 days')`,
+      [uid],
+    );
+    // Establish this week's presence with a different, real read.
+    await act(cookie, 'article_completed', 'insight/insight-6'); // 5 active + 5 read
+    expect(await myXp(cookie)).toBe(10);
+
+    // Sharing the ancient read pays nothing — it was not read this week.
+    await act(cookie, 'content_shared', 'insight/insight-5');
+    expect(await myXp(cookie)).toBe(10);
+
+    // But read it again this week and the same share now pays.
+    await act(cookie, 'article_completed', 'insight/insight-5'); // +5 read (active bonus already taken)
+    await act(cookie, 'content_shared', 'insight/insight-5');    // +1
+    expect(await myXp(cookie)).toBe(16);
+  });
+
   // The shipped setting (migration 0028). Sharing is the one action that brings
   // somebody NEW here, and at the original cap of 5 a whole week of it was worth
   // one article read — a rule, not an incentive. Zero must mean NO ceiling, not

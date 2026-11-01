@@ -288,9 +288,17 @@ async function shareXp(
   if (!contentId || cfg.xp_share <= 0) return 0;
 
   // One round trip answers both counts. `eligible` is every share this reader
-  // made this week that came after finishing its article — the just-inserted row
-  // included, so `this_content` is 1 exactly when the current share is the first
-  // eligible one for this page.
+  // made this week that came after finishing its article THIS WEEK — the
+  // just-inserted row included, so `this_content` is 1 exactly when the current
+  // share is the first eligible one for this page.
+  //
+  // read_at is the earliest completion of this page WITHIN the league week, not
+  // the earliest ever. Matched against all-time completions, a single read long
+  // ago made the page shareable for +5 every week forever with no further
+  // reading: s.created_at (this week) was always >= a read from months back, and
+  // the weekly cap is off by default. Tying the read to the same week makes the
+  // share mirror xp_read — once per (content, week), and only for a page you
+  // actually engaged with this week.
   const r = await client.query<{ this_content: number; contents_paid: number }>(
     `with eligible as (
        select s.content_id
@@ -299,6 +307,7 @@ async function shareXp(
            select min(r.created_at) as read_at from user_activity r
             where r.user_id = s.user_id and r.action = 'article_completed'
               and r.content_id = s.content_id
+              and (r.created_at at time zone $3)::date between $4::date and $5::date
          ) rd on true
         where s.user_id = $1 and s.action = $2 and s.content_id is not null
           and rd.read_at is not null and s.created_at >= rd.read_at
