@@ -908,6 +908,143 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
               "status": "resolved"
             }
           ]
+        },
+        {
+          "from_step": "C.6",
+          "kind": "dependency_invalidation_v1",
+          "reason": "Post-cut2 run 41314521373 failed at finalize with INCOMPLETE_FINAL_DELIVERY_RECEIPT: the inherited external action queue-lock-push-attempt-1 (failed git push, no credentials in the Codex environment) has no external_action_reconciliation_v1 receipt. Publication content is unchanged; adding the receipt requires invalidating from C.6 and re-delivering once.",
+          "superseded": {
+            "approvals": [
+              {
+                "decision": "\u0627\u062e\u062a\u0644\u0627\u0641 \u0633\u0637\u062d \u0644\u062b\u0647 \u062f\u0631 \u062f\u0648 \u0633\u0627\u0646\u062a\u0631\u0627\u0644: \u06a9\u0648\u062a\u0627\u0647 \u0646\u0634\u0627\u0646 \u062f\u0627\u062f\u0646 \u0631\u0648\u06a9\u0634 \u0628\u0627 \u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644",
+                "evidence": [
+                  "Founder approval #1 in queue/03 00-\u0648\u0636\u0639\u06cc\u062a.md; frozen 02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md sha256 f8e98861\u2026; same string in page, brain clinical-101 and Pulse."
+                ],
+                "scope": "approved title",
+                "status": "confirmed"
+              },
+              {
+                "decision": "\u0644\u062b\u0647\u200c\u06cc \u06cc\u06a9\u06cc \u0627\u0632 \u062f\u0648 \u0633\u0627\u0646\u062a\u0631\u0627\u0644 \u0628\u0627\u0644\u0627\u062a\u0631 \u0627\u0633\u062a \u0648 \u062a\u0627\u062c \u0628\u0627\u0644\u06cc\u0646\u06cc \u0622\u0646 \u0628\u0644\u0646\u062f\u062a\u0631 \u062f\u06cc\u062f\u0647 \u0645\u06cc\u200c\u0634\u0648\u062f. \u0631\u0648\u06a9\u0634 \u0631\u0627 \u0686\u0637\u0648\u0631 \u0637\u0631\u0627\u062d\u06cc \u06a9\u0646\u06cc\u0645 \u062a\u0627 \u0627\u062e\u062a\u0644\u0627\u0641 \u0637\u0648\u0644 \u062f\u0648 \u062f\u0646\u062f\u0627\u0646 \u06a9\u0645\u062a\u0631 \u0628\u0647 \u0686\u0634\u0645 \u0628\u06cc\u0627\u06cc\u062f\u061f",
+                "evidence": [
+                  "Founder approval #2 in queue/03 00-\u0648\u0636\u0639\u06cc\u062a.md; frozen 02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md; same string in page description and brain clinical-101."
+                ],
+                "scope": "approved caption",
+                "status": "confirmed"
+              },
+              {
+                "decision": "No authored lead remains; the original queue article paragraph is the opening text, per founder instruction 1405/08/10.",
+                "evidence": [
+                  "No authored lead: the first paragraph is the original 01-\u0645\u062a\u0646.md paragraph (founder order 1405/08/10); English mirror is the founder-approved queue 06 text (approval #9)."
+                ],
+                "scope": "authored Persian opening paragraph and English mirror",
+                "status": "not_required"
+              },
+              {
+                "decision": "Keep the Episode 13 link at the first technical mention of \u00ab\u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644\u00bb in the original first paragraph.",
+                "evidence": [
+                  "Founder answered \u00ab\u0628\u0645\u0627\u0646\u062f\u00bb in this session on 1405/08/10 for the Episode 13 anchor on the first \u00ab\u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644\u00bb."
+                ],
+                "scope": "inline link to episode 13",
+                "status": "confirmed"
+              },
+              {
+                "decision": "No authored introduction remains in the article.",
+                "evidence": [
+                  "No agent-authored introduction exists; founder order 1405/08/10: first paragraph is the text own paragraph."
+                ],
+                "scope": "authored-intro",
+                "status": "not_required"
+              },
+              {
+                "decision": "\u0627\u062e\u062a\u0644\u0627\u0641 \u0633\u0637\u062d \u0644\u062b\u0647 \u062f\u0631 \u062f\u0648 \u0633\u0627\u0646\u062a\u0631\u0627\u0644: \u06a9\u0648\u062a\u0627\u0647 \u0646\u0634\u0627\u0646 \u062f\u0627\u062f\u0646 \u0631\u0648\u06a9\u0634 \u0628\u0627 \u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644",
+                "evidence": [
+                  "Founder approval #1 in queue/03 00-\u0648\u0636\u0639\u06cc\u062a.md; exact string from frozen 02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md"
+                ],
+                "scope": "title",
+                "status": "confirmed"
+              },
+              {
+                "decision": "\u0644\u062b\u0647\u200c\u06cc \u06cc\u06a9\u06cc \u0627\u0632 \u062f\u0648 \u0633\u0627\u0646\u062a\u0631\u0627\u0644 \u0628\u0627\u0644\u0627\u062a\u0631 \u0627\u0633\u062a \u0648 \u062a\u0627\u062c \u0628\u0627\u0644\u06cc\u0646\u06cc \u0622\u0646 \u0628\u0644\u0646\u062f\u062a\u0631 \u062f\u06cc\u062f\u0647 \u0645\u06cc\u200c\u0634\u0648\u062f. \u0631\u0648\u06a9\u0634 \u0631\u0627 \u0686\u0637\u0648\u0631 \u0637\u0631\u0627\u062d\u06cc \u06a9\u0646\u06cc\u0645 \u062a\u0627 \u0627\u062e\u062a\u0644\u0627\u0641 \u0637\u0648\u0644 \u062f\u0648 \u062f\u0646\u062f\u0627\u0646 \u06a9\u0645\u062a\u0631 \u0628\u0647 \u0686\u0634\u0645 \u0628\u06cc\u0627\u06cc\u062f\u061f",
+                "evidence": [
+                  "Founder approval #2 in queue/03 00-\u0648\u0636\u0639\u06cc\u062a.md; exact string from frozen 02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md"
+                ],
+                "scope": "caption",
+                "status": "confirmed"
+              }
+            ],
+            "delivery": [],
+            "inputs": [
+              {
+                "reference": "queue/03-insight-gingival-level/SHA256SUMS",
+                "validation": "all files pass sha256sum -c; title/text/media/English/DES/question/keyword assets reviewed"
+              }
+            ],
+            "steps": [
+              {
+                "evidence": [
+                  "Pulse: index.html dc-pulse-list gets the founder-approved line (queue 07 Q5, title as link) at the top, bottom-most line removed, exactly 7 lines, previous first six preserved. English mirror insight/en/insight-101.html authored from founder-approved queue 06 text (approval #9), inverse toggles, noindex, no hreflang, no gloss duplicates. second_cut_editorial_lock_v1 recorded (10 scopes). C.8/C.7/D-technical/E/F/G run in the post-cut2-mechanical workflow after Push 2."
+                ],
+                "id": "C.6",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.8",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "C.7",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "D",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "E",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "F",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "G",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              }
+            ],
+            "validation": []
+          }
+        },
+        {
+          "evidence": [
+            "queue branch read-back: item 03 00-\u0648\u0636\u0639\u06cc\u062a.md has status \u00ab\u062f\u0631 \u062d\u0627\u0644 \u0627\u0646\u062a\u0634\u0627\u0631\u00bb and lock Claude Code (commit 06fd34b on origin/queue, parent 10efaf2 Codex API lock)"
+          ],
+          "failed_id": "queue-lock-push-attempt-1",
+          "kind": "external_action_reconciliation_v1",
+          "reason": "The Codex git push failed (no credentials in that environment) but the intended outcome \u2014 queue item 03 locked as in publication \u2014 was achieved by the Codex GitHub-API commit 10efaf2 and then transferred to Claude Code by founder order (commit 06fd34b); verified by reading origin/queue.",
+          "successful_id": "queue-lock-claude-verified",
+          "target": "origin/queue: mark queue item 03 as in progress with Codex Work lock",
+          "verification_ref": "queue branch read-back: item 03 00-\u0648\u0636\u0639\u06cc\u062a.md has status \u00ab\u062f\u0631 \u062d\u0627\u0644 \u0627\u0646\u062a\u0634\u0627\u0631\u00bb and lock Claude Code (commit 06fd34b on origin/queue, parent 10efaf2 Codex API lock)"
         }
       ],
       "delivery": [],
@@ -961,6 +1098,14 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "id": "C.4.9:open-pr-attempt-2",
         "status": "completed",
         "target": "dentcast-hub/dentcast-hub.github.io: open publication PR from publish/clinical-101-insight-gingival-level to main at cut-1 SHA 253acf447126a90e75357b98e503468b32b2e847"
+      },
+      {
+        "evidence": [
+          "queue branch read-back: item 03 00-\u0648\u0636\u0639\u06cc\u062a.md has status \u00ab\u062f\u0631 \u062d\u0627\u0644 \u0627\u0646\u062a\u0634\u0627\u0631\u00bb and lock Claude Code (commit 06fd34b on origin/queue, parent 10efaf2 Codex API lock)"
+        ],
+        "id": "queue-lock-claude-verified",
+        "status": "completed",
+        "target": "origin/queue: mark queue item 03 as in progress with Codex Work lock"
       }
     ],
     "status": "in_progress",
@@ -1342,7 +1487,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Pulse: index.html dc-pulse-list gets the founder-approved line (queue 07 Q5, title as link) at the top, bottom-most line removed, exactly 7 lines, previous first six preserved. English mirror insight/en/insight-101.html authored from founder-approved queue 06 text (approval #9), inverse toggles, noindex, no hreflang, no gloss duplicates. second_cut_editorial_lock_v1 recorded (10 scopes). C.8/C.7/D-technical/E/F/G run in the post-cut2-mechanical workflow after Push 2."
+          "Content unchanged since Push 2 (338d85f): Pulse line at top with 7 lines, English mirror with inverse toggles, ten-scope editorial lock and exact title/caption approvals present. Only handoff changed: restored approvals from audit and added external_action_reconciliation_v1 for the inherited failed queue-lock push (queue-lock-push-attempt-1 -> queue-lock-claude-verified, read-back of origin/queue)."
         ],
         "id": "C.6",
         "module": "11-build-and-version.md",
@@ -1376,7 +1521,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: .dentcast/hashtag-batches/insight-101-line-angle.json, dentcast-brain.json, dentcast-hashtag-reference.json, index.html, insight/en/insight-101.html, plus/assistant-tags.json, plus/cabinet-bridge.json, plus/cabinet-papers.json, plus/content-index.json, plus/des-scores.json, plus/exam-questions.json, plus/faq-corpus.json, plus/pathways.json"
+    "note": "Index-only refresh after staging delivery paths: insight/insight-101.html"
   },
   "schema": "publish-handoff-v3"
 }
