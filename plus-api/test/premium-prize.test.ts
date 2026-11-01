@@ -181,6 +181,27 @@ describe('grantWeeklyPrizes — top of every valid group', () => {
     expect(await tierOfUser(three[0])).toBe('premium');
   });
 
+  it('crowns only one winner when several sweeps run at once (no pass-down race)', async () => {
+    // Two overlapping sweeps (a daily re-scan meeting a deploy that straddles
+    // 00:00 Tehran, or a second instance) each read zero existing winners and
+    // each granted rank 1; the per-user unique constraint stopped the duplicate
+    // row but the loser walked the pass-down to rank 2, 3… crowning a whole
+    // one-winner group. The per-group lock must serialize them to exactly one.
+    const ids = await seedGroup('acrylic', [90, 80, 70]);
+    await finalizeWeek(WEEK);
+
+    const results = await Promise.all([
+      grantWeeklyPrizes(NEAR_WEEK),
+      grantWeeklyPrizes(NEAR_WEEK),
+      grantWeeklyPrizes(NEAR_WEEK),
+    ]);
+
+    expect(results.reduce((n, r) => n + r.granted, 0)).toBe(1);
+    expect(await tierOfUser(ids[0])).toBe('premium');
+    expect(await tierOfUser(ids[1])).toBe('free');
+    expect(await tierOfUser(ids[2])).toBe('free');
+  });
+
   it('awards prize_winners_per_group when the group is big enough to carry them', async () => {
     await setPrizeCfg('prize_winners_per_group', '2');
     const g = await seedGroup('acrylic', [90, 80, 70], WEEK, 6);

@@ -120,6 +120,20 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
 
     let granted = 0;
     for (const g of groups) {
+      // Serialize concurrent sweeps on THIS group. grantWeeklyPrizes re-scans a
+      // trailing window daily and can also run from a second instance or a
+      // deploy that straddles 00:00 Tehran. Two overlapping sweeps each read the
+      // `existing` winner count below as 0, each granted rank 1, and because the
+      // per-user unique constraint only stopped the SAME user being granted
+      // twice (ins.rowCount 0 → the old code just `continue`d without counting
+      // it), the second sweep walked the pass-down to rank 2, rank 3… awarding
+      // several winners in a one-winner group. Taking the league row's lock
+      // before reading `existing` makes the later sweep wait for the first to
+      // commit and then read the real, already-granted count — so it awards
+      // nothing more. Groups are visited in a fixed `order by l.id`, so two
+      // sweeps lock them in the same order and cannot deadlock.
+      await client.query('select 1 from leagues where id = $1 for update', [g.id]);
+
       // How many winners THIS group may have. prize_winners_per_group is a
       // ceiling, not a quota: it is scaled down by how many whole
       // prize_min_group_size blocks the group actually contains.
@@ -252,7 +266,11 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
            returning id`,
           [m.user_id, weekStart, grantedAt, memberExpiresAt, extendsSubscription],
         );
-        if (!ins.rowCount) continue; // already granted for this week (idempotent re-run)
+        // Already granted for this week (idempotent re-run, or a sweep that
+        // raced us in before we took the lock): the row — and its tier
+        // projection — already exist, so count this member as a winner and move
+        // on rather than passing the prize DOWN to the next rank.
+        if (!ins.rowCount) { winnersHere += 1; continue; }
 
         // Writer 2 of the three sanctioned `profiles.tier` writers (the contract
         // is stated in full atop services/subscription.ts). Upward only: the
