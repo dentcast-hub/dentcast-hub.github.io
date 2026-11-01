@@ -349,6 +349,23 @@ describe('the cooldown', () => {
     expect(await grantRow(ids[0], WEEK2), 'but not the same person').toBeNull();
   });
 
+  it('still blocks a repeat winner exactly cooldown_weeks later (inclusive boundary)', async () => {
+    // The off-by-one: with a strict lower bound, a win exactly cooldown_weeks
+    // ago (two weeks here) fell outside the window and the same user won again
+    // — 2 prize days every 14, not the intended 21. WEEK3 is 14 days after WEEK.
+    const ids = await seedGroup('composite', [90, 80, 70]);
+    await finalizeWeek(WEEK);
+    await grantWeeklyPrizes(NEAR_WEEK); // ids[0] wins at WEEK
+
+    const WEEK3 = '2026-02-21'; // exactly two weeks after WEEK (2026-02-07)
+    await seedWinnerAgain(ids[0], WEEK3);
+    await finalizeWeek(WEEK3, NEAR_WEEK);
+    const res = await grantWeeklyPrizes(new Date('2026-02-22T00:00:00Z'));
+
+    expect(res.granted, 'the group still produces a winner').toBe(1);
+    expect(await grantRow(ids[0], WEEK3), 'but still not the two-weeks-ago winner').toBeNull();
+  });
+
   it('lets the same user win again once the cooldown has passed', async () => {
     const ids = await seedGroup('composite', [90, 80]);
     await finalizeWeek(WEEK);

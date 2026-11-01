@@ -130,9 +130,12 @@ export async function findSkippedPaidWinners(): Promise<BackfillCandidate[]> {
         )
         and not exists (
           -- Was on cooldown that week → legitimate pass-down, not a paid skip.
+          -- Inclusive lower bound, matching grantPrizeForWeek: a win exactly
+          -- cooldown_weeks ago still counts as on cooldown (a strict greater-than
+          -- let it slip out of the window and shortened the cooldown by a week).
           select 1 from premium_grants g
            where g.user_id = r1.user_id
-             and g.week_start > (r1.week_start - ($1::int * 7))
+             and g.week_start >= (r1.week_start - ($1::int * 7))
              and g.week_start < r1.week_start
         )
       order by r1.week_start, r1.league_id`,

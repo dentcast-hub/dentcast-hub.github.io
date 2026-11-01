@@ -174,12 +174,19 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
         // rather than pass the prize down to someone who earned even less.
         if (cfg.prize_min_weekly_xp > 0 && m.weekly_xp < cfg.prize_min_weekly_xp) break;
 
-        // Cooldown: won recently enough that it is somebody else's turn.
+        // Cooldown: won recently enough that it is somebody else's turn. The
+        // lower bound is INCLUSIVE (`>=`): with a strict `>`, a win exactly
+        // cooldown_weeks ago (week_start = W - cooldown*7) fell outside the
+        // window, so a winner sat out one fewer week than configured — at
+        // cooldown 2 they could win every second week (≈2 days in 14) instead
+        // of the intended 2 days in 21. `>= W - cooldown*7` blocks the last
+        // `cooldown_weeks` weeks exactly, making them eligible again the week
+        // after that.
         if (cfg.prize_cooldown_weeks > 0) {
           const recent = await client.query<{ n: number }>(
             `select count(*)::int as n from premium_grants
               where user_id = $1
-                and week_start > ($2::date - ($3::int * 7))
+                and week_start >= ($2::date - ($3::int * 7))
                 and week_start < $2::date`,
             [m.user_id, weekStart, cfg.prize_cooldown_weeks],
           );
