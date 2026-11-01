@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "litecast/lite-CAST43"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -1382,6 +1382,103 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "05-semantic-linking.md",
         "reason": "LiteCast must not link to specialist brain entries; two verified LiteCast-only related capsules remain.",
         "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.1",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper was supplied with this text-bearing LiteCast publication.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.2",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper was supplied; no paper-ingestion pathway is required.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.3",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper was supplied; no paper-derived catalogue record is in scope.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": "LiteCast has no flashcard pipeline.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": "LiteCast has no quiz pipeline.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.13",
+        "module": "08-des-fidelity.md",
+        "reason": "LiteCast is outside the specialist DES and Fidelity ecosystem under Hard Rule 10.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "Ordinary LiteCast article; this is not a Challenge.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Re-read CAST43 glossary row: exactly the four founder-approved tags (#\u062c\u0627\u06cc\u06af\u0632\u06cc\u0646\u06cc_\u062f\u0646\u062f\u0627\u0646, #\u067e\u0631\u0648\u062a\u0632_\u0645\u062a\u062d\u0631\u06a9, #\u0627\u06cc\u0645\u067e\u0644\u0646\u062a, #\u0622\u06af\u0627\u0647\u06cc_\u062f\u0631\u0645\u0627\u0646\u06cc); no singleton #\u0641\u06cc\u0644\u06cc\u067e\u0631 tag. Seven source search terms remain."
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Revalidated litecast-43 as row 43/43; existing seven-key schema and JSON parse are intact. Title, caption and four founder-approved hashtags match the source decision; landing page points to CAST43. The append-only glossary diff remains one record only."
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": "LiteCast does not write a professional brain entry or pillar assignment.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": "LiteCast is excluded from professional learning pathways.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": "LiteCast is excluded from pathway bundles.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Reclosed all ten editorial scopes after the title fix: source review still covers only small unilateral removable partial dentures; Challenge not applicable; LiteCast taxonomy and semantic links reverified; approved four hashtags, glossary row and pathways exception confirmed; Pulse explicitly not applicable with its existing seven lines preserved; English mirror exempt for LiteCast; page-content/title/caption approvals restored from the founder-approved handoff and the exact article title now passes all four title surfaces. No new author copy or #\u0641\u06cc\u0644\u06cc\u067e\u0631 tag."
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
