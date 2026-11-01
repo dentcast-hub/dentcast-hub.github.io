@@ -23,6 +23,20 @@ function bool(name: string, fallback: boolean): boolean {
   return v === 'true' || v === '1';
 }
 
+/**
+ * Which upstream proxies may set X-Forwarded-For, for Fastify's trustProxy.
+ * '' (unset) → true, the legacy blanket trust (a production warning fires);
+ * 'false' → trust nobody (request.ip is the socket peer); a bare integer → that
+ * many proxy hops; anything else → a comma-separated list of CIDRs/IPs to trust.
+ */
+function parseTrustProxy(v: string): boolean | number | string[] {
+  const s = v.trim();
+  if (s === '' || s === 'true') return true;
+  if (s === 'false') return false;
+  if (/^\d+$/.test(s)) return Number(s);
+  return s.split(',').map((x) => x.trim()).filter(Boolean);
+}
+
 function list(name: string, fallback: string[]): string[] {
   const v = process.env[name];
   if (v === undefined || v === '') return fallback;
@@ -87,6 +101,13 @@ const FROM_MONTHLY_RIAL = Math.min(...PLAN_MONTHS.map((m) => PLAN_PRICES_RIAL[m]
 export const config = {
   env: str('NODE_ENV', 'development'),
   isProd: str('NODE_ENV', 'development') === 'production',
+
+  // Who may set X-Forwarded-For (Fastify trustProxy). Behind a CDN in production
+  // this MUST be the edge's IP ranges: `true` trusts the header from ANY caller,
+  // so a client that can reach the origin directly forges request.ip and walks
+  // past the per-IP OTP limit (unlimited sybil accounts). Set TRUSTED_PROXY to
+  // the CDN CIDRs; see the production warning below.
+  trustProxy: parseTrustProxy(str('TRUSTED_PROXY', '')),
 
   databaseUrl: str('DATABASE_URL', 'postgres://dentcast:dentcast@localhost:5432/dentcast_plus'),
 
@@ -886,6 +907,21 @@ if (strayProxy.length > 0 && !config.outbound.proxyUrl) {
     `[config] ${strayProxy.join('/')} is set but is NOT used for notifications.`
     + ' Set OUTBOUND_PROXY_URL to route Telegram, WEBPUSH_PROXY_URL to route web push.'
     + ' Both are empty, so every notification channel is going direct.',
+  );
+}
+
+// Behind a CDN, `trustProxy: true` lets anyone who reaches the origin directly
+// forge X-Forwarded-For and so request.ip — the per-IP OTP limit is then no
+// limit at all. Warn (don't throw: a direct-to-origin single-box deploy may
+// legitimately want it) so a production operator sets TRUSTED_PROXY to the edge
+// ranges instead of discovering the gap from abuse.
+if (config.isProd && config.trustProxy === true) {
+  // eslint-disable-next-line no-console
+  console.warn(
+    '[config] TRUSTED_PROXY is unset, so X-Forwarded-For is trusted from ANY source:'
+    + ' request.ip is forgeable and the per-IP OTP limit can be bypassed by a client that'
+    + ' reaches the origin directly. Set TRUSTED_PROXY to the CDN edge IP ranges'
+    + ' (comma-separated CIDRs), or a proxy-hop count, or "false" for a direct-to-origin deploy.',
   );
 }
 
