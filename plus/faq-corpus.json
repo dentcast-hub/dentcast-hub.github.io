@@ -39654,6 +39654,70 @@
           ]
         }
       ]
+    },
+    "insight/insight-101": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/insight/insight-101.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا همسان‌کردن لاین انگل‌های دو سانترال اختلاف سطح لثه را از بین می‌برد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ این طراحی فقط اختلاف طول دو دندان را کمتر به چشم می‌آورد و سطح لثه را تغییر نمی‌دهد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا همسان‌کردن لاین انگل‌های سانترال ارتفاع واقعی روکش را تغییر می‌دهد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ عرض و ارتفاع واقعی روکش ثابت می‌ماند و چشم طول دندان را بر اساس سطح بین لاین انگل‌ها می‌سنجد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "در روکش سانترالی که لثه‌اش بالاتر از دندان قرینه است، ناحیهٔ سرویکال بیرون از لاین انگل‌ها چگونه طراحی می‌شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "این ناحیه کانتور متفاوتی می‌گیرد و شبیه ریشهٔ اکسپوزشدهٔ کوتاه فرم داده می‌شود؛ معمولاً استین با کرومای بالاتر نیز برای شباهت بیشتر به سطح ریشه به‌کار می‌رود."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/insight/insight-101.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-101.html#flashcards-c1",
+              "name": "سطح تعریف‌کنندهٔ طول ادراک‌شدهٔ سانترال",
+              "description": "چشم طول دندان را بر اساس سطح لبیال بین لاین انگل‌ها می‌سنجد؛ یکسان شدن این سطح در دو سانترال باعث می‌شود طول ادراک‌شدهٔ آن‌ها به هم نزدیک شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-101.html#flashcards-c2",
+              "name": "فرم ناحیهٔ سرویکال بیرون از لاین انگل‌ها",
+              "description": "این ناحیه کانتور جداگانه می‌گیرد و کوتاه شبیه ریشهٔ اکسپوزشده شکل داده می‌شود؛ استین با کرومای بالاتر می‌تواند شباهت به سطح ریشه را تقویت کند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-101.html#flashcards-c3",
+              "name": "محدودهٔ اثر همسان‌سازی لاین انگل‌ها",
+              "description": "همسان‌سازی لاین انگل‌ها ادراک طول را تغییر می‌دهد، نه ارتفاع واقعی روکش یا سطح لثه را؛ اختلاف لثه باقی می‌ماند اما کمتر به چشم می‌آید.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
