@@ -77,6 +77,49 @@ describe('POST /auth/phone/link', () => {
     expect(idn.rows[0].user_id).toBe(paId);
   });
 
+  it('preserves league standings and prize grants across a merge', async () => {
+    // Both league_members and premium_grants cascade off profiles; before the
+    // fix a merge deleted the source account's weekly standing, final rank and
+    // prize-cooldown history along with it.
+    await loginAs(app, '09121114444');
+    const paId = (await pool.query("select id from profiles where phone = '09121114444'")).rows[0].id;
+    const tgCookie = await telegramLogin(app, '70707');
+    const tId = (await pool.query('select id from profiles where telegram_id = 70707')).rows[0].id;
+
+    // A finalized week the Telegram account won; the phone account has nothing then.
+    const tier = (await pool.query("select id from league_tiers where slug = 'acrylic'")).rows[0].id;
+    const lg = (await pool.query(
+      `insert into leagues (tier_id, week_start, week_end, status, capacity_at_creation)
+       values ($1, '2026-01-03', '2026-01-03', 'finalized', 8) returning id`,
+      [tier],
+    )).rows[0].id;
+    await pool.query(
+      `insert into league_members (league_id, user_id, week_start, weekly_xp, final_rank, outcome)
+       values ($1, $2, '2026-01-03', 120, 1, 'stayed')`,
+      [lg, tId],
+    );
+    await pool.query(
+      `insert into premium_grants (user_id, week_start, expires_at) values ($1, '2026-01-03', now())`,
+      [tId],
+    );
+
+    const code = await otpCode(app, '09121114444');
+    const res = await app.inject({
+      method: 'POST', url: '/auth/phone/link',
+      headers: { cookie: tgCookie }, payload: { phone: '09121114444', code },
+    });
+    expect(res.json().merged).toBe(true);
+
+    // Both rows survived — repointed to the surviving phone account, not deleted.
+    const lm = await pool.query('select user_id, final_rank from league_members');
+    expect(lm.rowCount).toBe(1);
+    expect(lm.rows[0].user_id).toBe(paId);
+    expect(lm.rows[0].final_rank).toBe(1); // the winning standing is kept
+    const pg = await pool.query('select user_id from premium_grants');
+    expect(pg.rowCount).toBe(1);
+    expect(pg.rows[0].user_id).toBe(paId);
+  });
+
   it('attaches a brand-new phone to the current account (no merge)', async () => {
     const tgCookie = await telegramLogin(app, '80809');
     const code = await otpCode(app, '09121113333');
