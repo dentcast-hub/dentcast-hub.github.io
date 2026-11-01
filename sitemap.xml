@@ -2708,7 +2708,7 @@
   </url>
   <url>
     <loc>https://dentcast.org/insight/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -2727,6 +2727,12 @@
   <url>
     <loc>https://dentcast.org/insight/insight-100.html</loc>
     <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dentcast.org/insight/insight-101.html</loc>
+    <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -3728,7 +3734,7 @@
   </url>
   <url>
     <loc>https://dentcast.org/pillar/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3758,7 +3764,7 @@
   </url>
   <url>
     <loc>https://dentcast.org/pillar/fixed-pros/</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
