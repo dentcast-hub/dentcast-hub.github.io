@@ -112,8 +112,11 @@ describe('finalizeWeek — outcome edge rules', () => {
     expect((await memberOf(userIds[0])).final_rank).toBe(2);
   });
 
-  it('promotion needs BOTH promo-zone rank AND weekly_xp >= min (not filled → no demotions)', async () => {
-    // capacity 8, size 6 -> valid but NOT filled. promotedCount = ceil(6*0.2)=2.
+  it('promotion needs BOTH promo-zone rank AND weekly_xp >= min; a valid group demotes its bottom even when not filled', async () => {
+    // capacity 8, size 6 -> valid (size >= min_valid_group_size) but NOT filled.
+    // promotedCount = demotedCount = ceil(6*0.2)=2. Demotion no longer waits on
+    // the group filling to its full-tier capacity (that let a 6-7 member tail
+    // group escape demotion); a real competition by size demotes its bottom.
     const { userIds } = await seedGroup('amalgam', 8, [
       { xp: 50, at: T(1) },   // rank1, >=30 -> promoted
       { xp: 20, at: T(2) },   // rank2, <30  -> stays (rank alone insufficient)
@@ -121,10 +124,11 @@ describe('finalizeWeek — outcome edge rules', () => {
     ]);
     const res = await finalizeWeek(WEEK);
     expect(res.promotions).toBe(1);
-    expect(res.demotions).toBe(0); // not filled -> no demotions
+    expect(res.demotions).toBe(2); // ranks 5 and 6 (bottom 20%), not in the promo zone
     expect(await tierOf(userIds[0])).toBe('composite');   // promoted up
     expect(await tierOf(userIds[1])).toBe('amalgam');      // stayed (xp too low)
-    expect((await memberOf(userIds[5])).outcome).toBe('stayed'); // bottom, not demoted
+    expect((await memberOf(userIds[5])).outcome).toBe('demoted'); // bottom now demotes
+    expect(await tierOf(userIds[5])).toBe('acrylic');      // pushed down a tier
   });
 
   it('filled group demotes the bottom zone; promotes qualifying top', async () => {

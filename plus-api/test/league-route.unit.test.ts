@@ -10,7 +10,10 @@ vi.mock('../src/pathways.js', () => ({ getPathways: () => [] }));
 vi.mock('../src/middleware/auth.js', () => ({ requireAuth: async (request: any) => { request.user = { id: 'me' }; } }));
 
 it.each([
-  { order: 2, size: 6, capacity: 8, population: 10, promo: 20, demo: 20, expected: 0 },
+  // A VALID tail group (size >= min_valid_group_size) in a populous tier now
+  // shows real demotion risk even though it never filled to capacity — a late
+  // joiner could previously duck demotion by landing in the open tail group.
+  { order: 2, size: 6, capacity: 8, population: 10, promo: 20, demo: 20, expected: 2 },
   { order: 2, size: 8, capacity: 8, population: 10, promo: 20, demo: 20, expected: 2 },
   { order: 1, size: 8, capacity: 8, population: 10, promo: 20, demo: 20, expected: 0 },
   { order: 7, size: 2, capacity: 3, population: 2, promo: 20, demo: 20, expected: 0 },
