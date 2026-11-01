@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterAll } from 'vitest';
 import type { FastifyInstance } from 'fastify';
-import { makeApp, resetDb, loginAs } from './helpers.js';
+import { makeApp, resetDb, loginAs, seedHighlight, userIdFromCookie } from './helpers.js';
 import { pool } from '../src/db.js';
 import { dayInTz, previousDay } from '../src/services/time.js';
 import { computeStreakUpdate, streakFromDays, streakIsAlive } from '../src/services/streak.js';
@@ -133,15 +133,16 @@ describe('streakFromDays (rebuild math)', () => {
 describe('live streak via /activity', () => {
   it('card_reviewed_manual counts for the streak and is idempotent same-day', async () => {
     const cookie = await loginAs(app, '09121500001');
+    const hid = await seedHighlight(userIdFromCookie(cookie), 'x/y');
     // first manual review today -> streak 1, appends streak_kept
     await app.inject({ method: 'POST', url: '/activity', headers: { cookie },
-      payload: { action: 'card_reviewed_manual', content_id: 'x/y' } });
+      payload: { action: 'card_reviewed_manual', content_id: 'x/y', meta: { highlight_id: hid } } });
     let me = await (await app.inject({ method: 'GET', url: '/me', headers: { cookie } })).json();
     expect(me.current_streak).toBe(1);
 
-    // second manual review same day -> still 1
+    // second manual review same day -> deduped (stored as nothing), still 1
     await app.inject({ method: 'POST', url: '/activity', headers: { cookie },
-      payload: { action: 'card_reviewed_manual', content_id: 'x/y' } });
+      payload: { action: 'card_reviewed_manual', content_id: 'x/y', meta: { highlight_id: hid } } });
     me = await (await app.inject({ method: 'GET', url: '/me', headers: { cookie } })).json();
     expect(me.current_streak).toBe(1);
 
@@ -174,8 +175,9 @@ describe('streak shields save the streak live (spec: سپر استریک)', () =
       [userId, twoAgo],
     );
 
+    const hid = await seedHighlight(userId, 'x/y');
     await app.inject({ method: 'POST', url: '/activity', headers: { cookie },
-      payload: { action: 'card_reviewed_manual', content_id: 'x/y' } });
+      payload: { action: 'card_reviewed_manual', content_id: 'x/y', meta: { highlight_id: hid } } });
 
     const me = await (await app.inject({ method: 'GET', url: '/me', headers: { cookie } })).json();
     expect(me.current_streak).toBe(6); // preserved, not reset to 1
@@ -217,8 +219,9 @@ describe('display shows 0 once the run is dead (lazy cache never reaches the cli
     expect(stats.records.longest_streak).toBe(7);
 
     // The next qualifying action starts a fresh run at 1.
+    const hid = await seedHighlight(me0.id, 'x/y');
     await app.inject({ method: 'POST', url: '/activity', headers: { cookie },
-      payload: { action: 'card_reviewed_manual', content_id: 'x/y' } });
+      payload: { action: 'card_reviewed_manual', content_id: 'x/y', meta: { highlight_id: hid } } });
     const me2 = await (await app.inject({ method: 'GET', url: '/me', headers: { cookie } })).json();
     expect(me2.current_streak).toBe(1);
     expect(me2.longest_streak).toBe(7);

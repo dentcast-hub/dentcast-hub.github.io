@@ -156,6 +156,26 @@ export async function mintActivity(
   await recordActivity(userIdFromCookie(cookie), action, contentId, meta);
 }
 
+/**
+ * Insert a real, owned highlight straight into the table and return its id —
+ * the SETUP a test needs when it posts `card_reviewed_manual`, which now
+ * requires a real owned card (routes/activity.ts). Direct SQL, not POST
+ * /highlights, so it does not itself mint a `highlight_created` scoring row and
+ * pollute an exact-XP assertion. Each call is a DISTINCT card, which is what the
+ * once-per-card-per-day review rule needs to let N reviews pay.
+ */
+export async function seedHighlight(
+  userId: string,
+  contentId = 'episodes/episode-1',
+  exact = 'seeded selection',
+): Promise<string> {
+  const r = await pool.query<{ id: string }>(
+    `insert into highlights_all (user_id, content_id, exact) values ($1, $2, $3) returning id`,
+    [userId, contentId, exact],
+  );
+  return r.rows[0].id;
+}
+
 /** Full OTP login round-trip; returns the session cookie header value. */
 export async function loginAs(app: FastifyInstance, phone: string): Promise<string> {
   const req = await app.inject({

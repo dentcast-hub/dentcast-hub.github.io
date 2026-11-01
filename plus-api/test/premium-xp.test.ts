@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterAll } from 'vitest';
 import type { FastifyInstance } from 'fastify';
-import { makeApp, resetDb, loginAs, mintActivity } from './helpers.js';
+import { makeApp, resetDb, loginAs, mintActivity, seedHighlight, userIdFromCookie } from './helpers.js';
 import { pool } from '../src/db.js';
 import { getPathways } from '../src/pathways.js';
 import { getIndex } from '../src/content-index.js';
@@ -112,7 +112,11 @@ describe('the per-action prices stay plan-blind', () => {
     const prem = await reader('09131000003', { premium: true });
     await act(prem, 'article_completed', IN_PATH); // a pathway page, but not THEIR pathway
     await act(prem, 'highlight_created', IN_PATH);
-    await act(prem, 'card_reviewed_manual', IN_PATH);
+    const hid = await seedHighlight(userIdFromCookie(prem), IN_PATH);
+    await app.inject({
+      method: 'POST', url: '/activity', headers: { cookie: prem },
+      payload: { action: 'card_reviewed_manual', content_id: IN_PATH, meta: { highlight_id: hid } },
+    });
     expect(await myXp(prem)).toBe(5 + 5 + 1 + 2);
   });
 });

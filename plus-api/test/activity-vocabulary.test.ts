@@ -21,7 +21,7 @@ import type { FastifyInstance } from 'fastify';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { makeApp, resetDb, loginAs } from './helpers.js';
+import { makeApp, resetDb, loginAs, seedHighlight, userIdFromCookie } from './helpers.js';
 import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
 import { SERVER_MINTED_ACTIONS, CLIENT_ACTIONS } from '../src/services/activity.js';
@@ -41,8 +41,8 @@ afterAll(async () => {
   await pool.end();
 });
 
-const post = (action: string, content_id: string | null = null) => app.inject({
-  method: 'POST', url: '/activity', headers: { cookie }, payload: { action, content_id },
+const post = (action: string, content_id: string | null = null, meta?: Record<string, unknown>) => app.inject({
+  method: 'POST', url: '/activity', headers: { cookie }, payload: { action, content_id, meta },
 });
 
 async function actionsLogged(): Promise<string[]> {
@@ -72,7 +72,12 @@ describe('POST /activity refuses every server-minted action', () => {
 
   it('still accepts what a browser legitimately reports', async () => {
     for (const action of CLIENT_ACTIONS) {
-      const res = await post(action, 'insight/insight-1');
+      // card_reviewed_manual now requires a real owned card (routes/activity.ts);
+      // the others need nothing extra.
+      const meta = action === 'card_reviewed_manual'
+        ? { highlight_id: await seedHighlight(userIdFromCookie(cookie), 'insight/insight-1') }
+        : undefined;
+      const res = await post(action, 'insight/insight-1', meta);
       expect(res.statusCode, `action "${action}" was refused`).toBe(200);
     }
     const logged = new Set(await actionsLogged());

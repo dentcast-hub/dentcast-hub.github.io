@@ -1,6 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { config } from '../config.js';
 import { requireAuth } from '../middleware/auth.js';
+import { query } from '../db.js';
 import { recordActivity, SERVER_MINTED_ACTIONS } from '../services/activity.js';
 import { scheduleAchievementSync } from '../services/achievement-sync.js';
 import { consume, refund, HOUR_MS } from '../services/rate-limit.js';
@@ -97,6 +98,38 @@ export async function activityRoutes(app: FastifyInstance): Promise<void> {
     if (!limit.allowed) {
       reply.header('retry-after', Math.ceil(limit.retryAfterMs / 1000));
       return reply.code(429).send({ error: 'rate_limited' });
+    }
+
+    // ── Free manual review: a real card, once a day ─────────────────────────
+    // `card_reviewed_manual` is the free «مرور شد» press. The client always
+    // posts it with the reviewed highlight's id (plus/js/archive.js), but the
+    // server scored it with no check at all — so an empty or repeated POST
+    // bought league XP, all-time score (which funds streak shields) and the
+    // streak itself out of nothing (60 empty posts were +120 weekly XP). The
+    // premium path already refuses to pay for a card that is not due ("due-ness,
+    // not the press, is the unit of study", routes/review.ts); the free path is
+    // now held to the same honesty. Require a real, owned, non-deleted card, and
+    // pay at most once per card per Tehran day: a same-day repeat is accepted
+    // (the button stays idempotent for the client) but stored as nothing, so no
+    // second row reaches the streak, the score or league XP. This MUST NOT touch
+    // card_state (invariant of the free path) and it does not.
+    if (action === 'card_reviewed_manual') {
+      const hid = typeof meta?.highlight_id === 'string' ? meta.highlight_id : '';
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(hid)) {
+        return reply.code(400).send({ error: 'invalid_card' });
+      }
+      const uid = request.user!.id;
+      const owned = await query('select 1 from highlights where id = $1 and user_id = $2', [hid, uid]);
+      if (owned.rowCount === 0) return reply.code(400).send({ error: 'invalid_card' });
+      const sameDay = await query(
+        `select 1 from user_activity
+          where user_id = $1 and action = 'card_reviewed_manual'
+            and meta->>'highlight_id' = $2
+            and (created_at at time zone $3)::date = (now() at time zone $3)::date
+          limit 1`,
+        [uid, hid, config.streakTimezone],
+      );
+      if (sameDay.rowCount) return reply.send({ ok: true, deduped: true });
     }
 
     // ── Paid completions: a real page, at a human pace ──────────────────────

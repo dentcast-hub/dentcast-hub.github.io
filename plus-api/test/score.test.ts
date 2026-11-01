@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterAll } from 'vitest';
 import type { FastifyInstance } from 'fastify';
-import { makeApp, resetDb, loginAs } from './helpers.js';
+import { makeApp, resetDb, loginAs, seedHighlight } from './helpers.js';
 import { pool } from '../src/db.js';
 import {
   computeScore, POINTS_PER_ACTIVE_DAY, POINTS_PER_CONTENT, POINTS_PER_CHALLENGE,
@@ -157,9 +157,10 @@ describe('per-content score', () => {
   });
 
   it('a review or a highlight buys no per-content points', async () => {
+    const hid = await seedHighlight(userId, 'episodes/episode-1');
     await app.inject({
       method: 'POST', url: '/activity', headers: { cookie },
-      payload: { action: 'card_reviewed_manual', content_id: 'episodes/episode-1' },
+      payload: { action: 'card_reviewed_manual', content_id: 'episodes/episode-1', meta: { highlight_id: hid } },
     });
     expect((await computeScore(pool, userId)).content_completed).toBe(0);
   });

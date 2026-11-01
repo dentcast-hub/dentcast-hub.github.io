@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterAll } from 'vitest';
 import type { FastifyInstance } from 'fastify';
-import { makeApp, resetDb, loginAs } from './helpers.js';
+import { makeApp, resetDb, loginAs, seedHighlight, userIdFromCookie } from './helpers.js';
 import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
 
@@ -710,10 +710,14 @@ describe('score forensics', () => {
 
   it('breaks a score down by action, and exposes the per-minute burst', async () => {
     const cookie = await loginAs(app, '09121400002');
+    const uid = userIdFromCookie(cookie);
+    // Four distinct real cards reviewed in the same minute — card_reviewed_manual
+    // now requires a real owned card and pays once per card per day.
     for (let i = 0; i < 4; i += 1) {
+      const hid = await seedHighlight(uid, `insight/burst-${i}`);
       await app.inject({
         method: 'POST', url: '/activity', headers: { cookie },
-        payload: { action: 'card_reviewed_manual' },
+        payload: { action: 'card_reviewed_manual', content_id: `insight/burst-${i}`, meta: { highlight_id: hid } },
       });
     }
     await app.inject({
