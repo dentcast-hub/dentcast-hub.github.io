@@ -1,0 +1,34 @@
+{
+ "type": "clinical",
+ "enforce": true,
+ "note": "insight/insight-101 — «اختلاف سطح لثه در دو سانترال: کوتاه نشان دادن روکش با لاین انگل». Founder-ordered mint (queue 03 approval #5, 1405/08/06: «برای لاین انگل هم مفهوم بسازیم و بزاریم توی کتابخونه»). Questions a dentist would type (Step 1): (1) سانترال راست رو باید روکش کنم ولی لثه‌اش بالاتره و بلندتر دیده می‌شه؛ چطور اختلاف طول رو کم نشون بدم؟ (2) لاین انگل روکش سانترال رو از لابراتوار چطور بخوام؟ (3) پترن رزین لابراتوار صافه و فرم نداره؛ چی ازشون بخوام؟ (4) ناحیه‌ی سرویکال روکش رو شبیه ریشه‌ی اکسپوز بسازم یا ادامه‌ی تاج؟ (5) خطای دید توی طول دو سانترال رو چطور مدیریت کنم؟ REUSED canonical tags (resolved with --simulate and the library, no alias written as tag): #اینسایت (series), #ادراک_بصری (alias «خطای دید», 3 pages), #تقارن_قدامی (1 page), #طراحی_روکش (3 pages), #زیبایی_قدامی (10 pages), #ارتباط_با_لابراتوار (1 page). NEWLY MINTED: #لاین_انگل — --simulate «لاین انگل» only reaches #فینیش_لاین on the shared word «لاین» (partial, a different concept: finish line = preparation margin), «line angle» reaches nothing. Gate (a): no existing concept covers it under any spelling. Gate (b): a second page truly resolves it and is retagged in this batch: insight/insight-72 («کم کردن عرض ادراک‌شده با لاین انگل و شیارهای عمودی … روی سطح باکال لاین انگل‌ها و شیارهای عمودی ایجاد شد»). Alias checklist (4 slots): English term = «line angle», «line angles»; Finglish/Persian-script forms dentists type = «لاین‌انگل» (ZWNJ), «لاین انگل‌ها»; common misspelling = «لاین آنگل»; colloquial phrase = none stated (dentists say «لاین انگل» itself). Bridge decision: map row «لاین انگل» -> tooth-morphology (existing library tag; paper «Achieving natural-looking morphology and surface textures in anterior ceramic fixed rehabilitations», whose abstract describes transition angles/ridges and their effect on visual width); also added to tooth_topics (natural-teeth concept). Searched catalog tags/titles/abstracts: no catalog tag named line-angle exists, so no further target.",
+ "concepts": [
+  {
+   "tag": "#لاین_انگل",
+   "domain": "clinical",
+   "definition": "خط فرضی محل تغییر جهت سطح لبیال به سطوح پروگزیمال در دندان قدامی، که پهنا و طول ظاهری دندان را تعریف می‌کند.",
+   "use_when": "مطلب طراحی یا جابه‌جایی لاین انگل را برای تغییر اندازه‌ی ظاهری دندان یا روکش توضیح می‌دهد.",
+   "aliases": [
+    "line angle",
+    "line angles",
+    "لاین‌انگل",
+    "لاین انگل‌ها",
+    "لاین آنگل"
+   ]
+  }
+ ],
+ "articles": {
+  "insight/insight-72": [
+   "#اینسایت",
+   "#پرسلن_صورتی",
+   "#تحلیل_استخوان",
+   "#ادراک_بصری",
+   "#دیاستم",
+   "#طراحی_لبخند",
+   "#بریج",
+   "#پروتز_ایمپلنت",
+   "#ایمپلنت_قدامی",
+   "#لاین_انگل"
+  ]
+ }
+}
