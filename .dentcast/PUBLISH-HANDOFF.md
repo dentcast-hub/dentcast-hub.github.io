@@ -22,7 +22,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         {
           "decision": "\u0627\u062e\u062a\u0644\u0627\u0641 \u0633\u0637\u062d \u0644\u062b\u0647 \u062f\u0631 \u062f\u0648 \u0633\u0627\u0646\u062a\u0631\u0627\u0644: \u06a9\u0648\u062a\u0627\u0647 \u0646\u0634\u0627\u0646 \u062f\u0627\u062f\u0646 \u0631\u0648\u06a9\u0634 \u0628\u0627 \u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644",
           "evidence": [
-            "Founder approval #1 in queue/03-insight-gingival-level/00-\u0648\u0636\u0639\u06cc\u062a.md; title remains unchanged in final page."
+            "Founder approval #1 in queue/03 00-\u0648\u0636\u0639\u06cc\u062a.md; frozen 02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md sha256 f8e98861\u2026; same string in page, brain clinical-101 and Pulse."
           ],
           "scope": "approved title",
           "status": "confirmed"
@@ -30,23 +30,23 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         {
           "decision": "\u0644\u062b\u0647\u200c\u06cc \u06cc\u06a9\u06cc \u0627\u0632 \u062f\u0648 \u0633\u0627\u0646\u062a\u0631\u0627\u0644 \u0628\u0627\u0644\u0627\u062a\u0631 \u0627\u0633\u062a \u0648 \u062a\u0627\u062c \u0628\u0627\u0644\u06cc\u0646\u06cc \u0622\u0646 \u0628\u0644\u0646\u062f\u062a\u0631 \u062f\u06cc\u062f\u0647 \u0645\u06cc\u200c\u0634\u0648\u062f. \u0631\u0648\u06a9\u0634 \u0631\u0627 \u0686\u0637\u0648\u0631 \u0637\u0631\u0627\u062d\u06cc \u06a9\u0646\u06cc\u0645 \u062a\u0627 \u0627\u062e\u062a\u0644\u0627\u0641 \u0637\u0648\u0644 \u062f\u0648 \u062f\u0646\u062f\u0627\u0646 \u06a9\u0645\u062a\u0631 \u0628\u0647 \u0686\u0634\u0645 \u0628\u06cc\u0627\u06cc\u062f\u061f",
           "evidence": [
-            "Founder approval #2 in queue/03-insight-gingival-level/00-\u0648\u0636\u0639\u06cc\u062a.md; caption remains unchanged in final page metadata."
+            "Founder approval #2 in queue/03 00-\u0648\u0636\u0639\u06cc\u062a.md; frozen 02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md; same string in page description and brain clinical-101."
           ],
           "scope": "approved caption",
           "status": "confirmed"
         },
         {
-          "decision": "No authored lead remains; use the original queue article as the opening text, per founder instruction.",
+          "decision": "No authored lead remains; the original queue article paragraph is the opening text, per founder instruction 1405/08/10.",
           "evidence": [
-            "Founder instruction in current conversation to delete the added paragraph and use the original text first paragraph."
+            "No authored lead: the first paragraph is the original 01-\u0645\u062a\u0646.md paragraph (founder order 1405/08/10); English mirror is the founder-approved queue 06 text (approval #9)."
           ],
           "scope": "authored Persian opening paragraph and English mirror",
           "status": "not_required"
         },
         {
-          "decision": "Keep the approved Episode 13 link at the first technical mention of line angles in the original article.",
+          "decision": "Keep the Episode 13 link at the first technical mention of \u00ab\u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644\u00bb in the original first paragraph.",
           "evidence": [
-            "Founder approved adding the Episode 13 link; current instruction restores original article, and link now marks its first technical occurrence."
+            "Founder answered \u00ab\u0628\u0645\u0627\u0646\u062f\u00bb in this session on 1405/08/10 for the Episode 13 anchor on the first \u00ab\u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644\u00bb."
           ],
           "scope": "inline link to episode 13",
           "status": "confirmed"
@@ -54,7 +54,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         {
           "decision": "No authored introduction remains in the article.",
           "evidence": [
-            "Founder instruction in current conversation to delete the added paragraph and use the original text first paragraph."
+            "No agent-authored introduction exists; founder order 1405/08/10: first paragraph is the text own paragraph."
           ],
           "scope": "authored-intro",
           "status": "not_required"
@@ -476,6 +476,337 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
               }
             ]
           }
+        },
+        {
+          "from_step": "C.2",
+          "kind": "dependency_invalidation_v1",
+          "reason": "Clone-residue fixes on insight-101.html (JSON-LD keywords, healthCondition, related capsules episode-60/insight-85/insight-86 replaced by insight-61/72, absolute image paths); prose byte-identical to queue 01-\u0645\u062a\u0646.md. Tool requires invalidation from C.2; all work after C.2 already done in files and will be re-recorded step by step.",
+          "superseded": {
+            "approvals": [
+              {
+                "decision": "\u0627\u062e\u062a\u0644\u0627\u0641 \u0633\u0637\u062d \u0644\u062b\u0647 \u062f\u0631 \u062f\u0648 \u0633\u0627\u0646\u062a\u0631\u0627\u0644: \u06a9\u0648\u062a\u0627\u0647 \u0646\u0634\u0627\u0646 \u062f\u0627\u062f\u0646 \u0631\u0648\u06a9\u0634 \u0628\u0627 \u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644",
+                "evidence": [
+                  "Founder approval #1 in queue/03-insight-gingival-level/00-\u0648\u0636\u0639\u06cc\u062a.md; title remains unchanged in final page."
+                ],
+                "scope": "approved title",
+                "status": "confirmed"
+              },
+              {
+                "decision": "\u0644\u062b\u0647\u200c\u06cc \u06cc\u06a9\u06cc \u0627\u0632 \u062f\u0648 \u0633\u0627\u0646\u062a\u0631\u0627\u0644 \u0628\u0627\u0644\u0627\u062a\u0631 \u0627\u0633\u062a \u0648 \u062a\u0627\u062c \u0628\u0627\u0644\u06cc\u0646\u06cc \u0622\u0646 \u0628\u0644\u0646\u062f\u062a\u0631 \u062f\u06cc\u062f\u0647 \u0645\u06cc\u200c\u0634\u0648\u062f. \u0631\u0648\u06a9\u0634 \u0631\u0627 \u0686\u0637\u0648\u0631 \u0637\u0631\u0627\u062d\u06cc \u06a9\u0646\u06cc\u0645 \u062a\u0627 \u0627\u062e\u062a\u0644\u0627\u0641 \u0637\u0648\u0644 \u062f\u0648 \u062f\u0646\u062f\u0627\u0646 \u06a9\u0645\u062a\u0631 \u0628\u0647 \u0686\u0634\u0645 \u0628\u06cc\u0627\u06cc\u062f\u061f",
+                "evidence": [
+                  "Founder approval #2 in queue/03-insight-gingival-level/00-\u0648\u0636\u0639\u06cc\u062a.md; caption remains unchanged in final page metadata."
+                ],
+                "scope": "approved caption",
+                "status": "confirmed"
+              },
+              {
+                "decision": "No authored lead remains; use the original queue article as the opening text, per founder instruction.",
+                "evidence": [
+                  "Founder instruction in current conversation to delete the added paragraph and use the original text first paragraph."
+                ],
+                "scope": "authored Persian opening paragraph and English mirror",
+                "status": "not_required"
+              },
+              {
+                "decision": "Keep the approved Episode 13 link at the first technical mention of line angles in the original article.",
+                "evidence": [
+                  "Founder approved adding the Episode 13 link; current instruction restores original article, and link now marks its first technical occurrence."
+                ],
+                "scope": "inline link to episode 13",
+                "status": "confirmed"
+              },
+              {
+                "decision": "No authored introduction remains in the article.",
+                "evidence": [
+                  "Founder instruction in current conversation to delete the added paragraph and use the original text first paragraph."
+                ],
+                "scope": "authored-intro",
+                "status": "not_required"
+              }
+            ],
+            "delivery": [],
+            "inputs": [
+              {
+                "reference": "queue/03-insight-gingival-level/SHA256SUMS",
+                "validation": "all files pass sha256sum -c; title/text/media/English/DES/question/keyword assets reviewed"
+              }
+            ],
+            "steps": [
+              {
+                "evidence": [
+                  "Persian Insight page updated: removed the added intro and restored original queue text as the first paragraph; both approved images, captions, metadata, and page structure remain present."
+                ],
+                "id": "C.2",
+                "module": "03-litecast-and-page.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.0.5",
+                "module": "03-litecast-and-page.md",
+                "reason": "Not LiteCast; patient-question-specific microsite step does not apply.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.0.6",
+                "module": "03-litecast-and-page.md",
+                "reason": "Not LiteCast; LiteCast-only template gate does not apply.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [
+                  "Rechecked current live pillar taxonomy; fixed-pros / crowns-onlays remains the exact approved placement."
+                ],
+                "id": "C.2.4",
+                "module": "04-taxonomy-and-navigation.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Revalidated taxonomy identifiers and slug correspondence against the live page and pillar build configuration; no mismatch."
+                ],
+                "id": "C.2.5",
+                "module": "04-taxonomy-and-navigation.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Page and manual Insight index have the expected one-way index entry and updated ordering; reviewed with the intro removed."
+                ],
+                "id": "C.2.6",
+                "module": "04-taxonomy-and-navigation.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Re-audited the clinical page metadata and final body structure after restoring the original article opening; no new page-level discrepancy."
+                ],
+                "id": "C.3",
+                "module": "04-taxonomy-and-navigation.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Rechecked page-local required markup, image assets, metadata and IDs; intro removal did not change integrity invariants."
+                ],
+                "id": "C.4",
+                "module": "04-taxonomy-and-navigation.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.5",
+                "module": "04-taxonomy-and-navigation.md",
+                "reason": "This is an Insight page, not an episode.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.5-b",
+                "module": "04-taxonomy-and-navigation.md",
+                "reason": "This is an Insight page, not an episode.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.6",
+                "module": "04-taxonomy-and-navigation.md",
+                "reason": "Episode-only requirement; no episode artwork/player is part of this Insight.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [
+                  "Reconfirmed the 109-term glossary registry review: no new backlink fit for this article; Smile Design is at its five-link cap, and crown-lengthening/subgingival-margin entries do not match the clinical concept."
+                ],
+                "id": "C.4.7",
+                "module": "05-semantic-linking.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.7-b",
+                "module": "05-semantic-linking.md",
+                "reason": "Not a glossary publication; no glossary entry is being created.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [
+                  "Freshly rechecked the 109 glossary and 212 episode entries for the restored article body. No glossary match; the previously approved Episode 13 link now anchors the first source-text occurrence of line angles. Anchor text changes no prose, which still matches the DES source."
+                ],
+                "id": "C.4.8",
+                "module": "05-semantic-linking.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Rechecked all 584 brain entries. Strong related pages clinical-61 and clinical-72; section is at the five-link cap, so no additional related-page link is added. #\u0644\u0627\u06cc\u0646_\u0627\u0646\u06af\u0644 has a second resolving page in insight-72."
+                ],
+                "id": "C.4.9",
+                "module": "05-semantic-linking.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.10.1",
+                "module": "06-paper-ingestion.md",
+                "reason": "No attached paper: queue 03 intake Q4.7 records paperless content (04-\u0645\u0646\u0628\u0639/\u0645\u0646\u0627\u0628\u0639.md: \u067e\u06cc\u067e\u0631 \u0646\u062f\u0627\u0631\u062f\u061b founder approval #8). Module 06 documented skip (Q4.7: no paper file => step 4.10 skipped).",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.10.2",
+                "module": "06-paper-ingestion.md",
+                "reason": "No attached paper (same Q4.7 documented skip; no catalog work).",
+                "status": "skipped"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.10.3",
+                "module": "06-paper-ingestion.md",
+                "reason": "No attached paper (same Q4.7 documented skip; no page credit owed).",
+                "status": "skipped"
+              },
+              {
+                "evidence": [
+                  "plus/faq-corpus.json insight/insight-101: DefinedTermSet with 3 DefinedTerm (#flashcards-c1..c3), all source=authored (no sourceFaqIndex), unique @ids, valid JSON. Cards c2 and c3 re-authored as standalone definitions after review (near-copy of FAQ answers removed); none equals a FAQ Q or A verbatim; page JSON-LD carries no FAQ/flashcards markup. No FAQ entry skipped as comparison-shaped; builder node tools/build_flashcards_index.mjs runs in C.8 workflow."
+                ],
+                "id": "C.4.11",
+                "module": "07-flashcards-and-quiz.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "plus/faq-corpus.json insight/insight-101 FAQPage: 3 standalone questions, no article deixis (checked against forbidden list), Q1/Q2 yes/no-shaped with answers opening \u00ab\u062e\u06cc\u0631\u061b\u00bb, Q3 open procedural (excluded from scored bank by design); answers grounded in the body sentences only; edit confined to the FAQPage node; node tools/build_quiz_index.mjs runs in C.8. 4.12-b exam questions evaluated at C.5.6."
+                ],
+                "id": "C.4.12",
+                "module": "07-flashcards-and-quiz.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Founder-supplied queue DES reused WITHOUT rerun (founder order 1405/08/10: use previous DES; first paragraph is the original text so DES is valid). queue/03 05-DES-Fidelity/des.json sha256 24446c147540dafd01f697983501aea59cc6bc44f7992569f3e48e9e29045f73 (=SHA256SUMS), scored text 01-\u0645\u062a\u0646.md sha256 513cb0de26cff7a5eba349c40cf3ec20980b11276d245ef5db6daa0cb602f0dd (=SHA256SUMS); all 5 final-page paragraphs byte-equal to it, only change is the Episode 13 anchor on first \u00ab\u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644\u00bb. Part 3 passed: items 1 and 3 quotes verbatim in 01-\u0645\u062a\u0646.md, item 4 quote verbatim in insight/index.html with note; 5+4+0+3+3=15, band E, schema keyset identical to insight-100, question_type/s_design/q_method/penalties null; Part 3(6) replaced-word check ok, 3 interpretation_fa sentences each supported by the text (no edit, before=after). Fidelity: none owed (COMMENTARY basket, no external source) => slot [null] as insight-99/100. Part 3b not applicable. Part 4: record appended to plus/des-scores.json under insight/insight-101, scored_at 2026-10-28 (original scoring date), des.json bytes preserved verbatim."
+                ],
+                "id": "C.4.13",
+                "module": "08-des-fidelity.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.14",
+                "module": "09-challenge.md",
+                "reason": "Not a Challenge: queue 03 intake Q4.9 answer is no (approval #8) and the page carries no data-dc-challenge-question markup.",
+                "status": "skipped"
+              },
+              {
+                "evidence": [
+                  "Batch .dentcast/hashtag-batches/insight-101-line-angle.json applied with tools/hashtag_ref.py --apply (rc 0). Final list for the new entry (applied in C.5): #\u0627\u06cc\u0646\u0633\u0627\u06cc\u062a, #\u0644\u0627\u06cc\u0646_\u0627\u0646\u06af\u0644, #\u0627\u062f\u0631\u0627\u06a9_\u0628\u0635\u0631\u06cc, #\u062a\u0642\u0627\u0631\u0646_\u0642\u062f\u0627\u0645\u06cc, #\u0637\u0631\u0627\u062d\u06cc_\u0631\u0648\u06a9\u0634, #\u0632\u06cc\u0628\u0627\u06cc\u06cc_\u0642\u062f\u0627\u0645\u06cc, #\u0627\u0631\u062a\u0628\u0627\u0637_\u0628\u0627_\u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631 \u2014 six reused canonical (founder-approved queue 07 list, resolving sentence per tag quoted in queue/03 07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md) + one minted #\u0644\u0627\u06cc\u0646_\u0627\u0646\u06af\u0644 by explicit founder order (queue approval #5, 1405/08/06). Mint gates: (a) --simulate \u00ab\u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644\u00bb reaches only #\u0641\u06cc\u0646\u06cc\u0634_\u0644\u0627\u06cc\u0646 on shared word \u00ab\u0644\u0627\u06cc\u0646\u00bb (different concept), \u00abline angle\u00bb nothing; (b) second resolving page insight/insight-72 retagged in the same batch (brain clinical-72 gains #\u0644\u0627\u06cc\u0646_\u0627\u0646\u06af\u0644; sentence \u00ab\u06a9\u0645 \u06a9\u0631\u062f\u0646 \u0639\u0631\u0636 \u0627\u062f\u0631\u0627\u06a9\u200c\u0634\u062f\u0647 \u0628\u0627 \u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644 \u0648 \u0634\u06cc\u0627\u0631\u0647\u0627\u06cc \u0639\u0645\u0648\u062f\u06cc\u00bb). Alias slots: English line angle/line angles; Persian-script \u0644\u0627\u06cc\u0646\u200c\u0627\u0646\u06af\u0644 / \u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644\u200c\u0647\u0627; misspelling \u0644\u0627\u06cc\u0646 \u0622\u0646\u06af\u0644; colloquial none. Composition gate: series #\u0627\u06cc\u0646\u0633\u0627\u06cc\u062a; decision/specific tags #\u0637\u0631\u0627\u062d\u06cc_\u0631\u0648\u06a9\u0634(3) #\u0627\u062f\u0631\u0627\u06a9_\u0628\u0635\u0631\u06cc(3) #\u062a\u0642\u0627\u0631\u0646_\u0642\u062f\u0627\u0645\u06cc(1) #\u0644\u0627\u06cc\u0646_\u0627\u0646\u06af\u0644(2 after mint) all \u226410 pages; umbrella #\u0632\u06cc\u0628\u0627\u06cc\u06cc_\u0642\u062f\u0627\u0645\u06cc(10\u219211) only in addition. Bridge decision: plus/cabinet-bridge.json map \u00ab\u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644\u00bb->[tooth-morphology] (paper Achieving natural-looking morphology and surface textures in anterior ceramic fixed rehabilitations: transition angles/ridges -> visual width) + tooth_topics; build_cabinet_papers.py ran (warns site tag not in content-index until build_plus_index runs after the brain write). Tool refused brain write on mixed EOL; done via temporary CRLF normalization of the 25-line LF block and exact byte restore (git diff of dentcast-brain.json = only the insight-72 tag line). Step-6 sync/index/check and the question-first reachability test run after the C.5 brain write."
+                ],
+                "id": "C.5.0",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "dentcast-brain.json: entry clinical-101 appended as the LAST element (585 entries), same keys/order as clinical-100 (type,id,title,caption,hashtags,keywords,page_url,pillar), valid JSON, byte-scoped CRLF append (git diff = clinical-72 tag line + new entry only). title/caption copied codepoint-for-codepoint from queue 02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md; hashtags = 7 canonical (#\u0627\u06cc\u0646\u0633\u0627\u06cc\u062a #\u0644\u0627\u06cc\u0646_\u0627\u0646\u06af\u0644 #\u0627\u062f\u0631\u0627\u06a9_\u0628\u0635\u0631\u06cc #\u062a\u0642\u0627\u0631\u0646_\u0642\u062f\u0627\u0645\u06cc #\u0637\u0631\u0627\u062d\u06cc_\u0631\u0648\u06a9\u0634 #\u0632\u06cc\u0628\u0627\u06cc\u06cc_\u0642\u062f\u0627\u0645\u06cc #\u0627\u0631\u062a\u0628\u0627\u0637_\u0628\u0627_\u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631); keywords = the 6 founder-approved strings from queue 09 in the same order; pillar fixed-pros/crowns-onlays. After the write: hashtag_ref.py --sync, node tools/build_plus_index.mjs, hashtag_ref.py --check (OK, all enforced types canonical), build_cabinet_papers.py + --check (OK). Reachability (question-first, reasoned from plus/assistant-tags.json + plus/content-index.json; live API not called): labels in assistant list: \u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644(2 pages), \u0637\u0631\u0627\u062d\u06cc \u0631\u0648\u06a9\u0634(4), \u0627\u062f\u0631\u0627\u06a9 \u0628\u0635\u0631\u06cc(4), \u062a\u0642\u0627\u0631\u0646 \u0642\u062f\u0627\u0645\u06cc(2), \u0627\u0631\u062a\u0628\u0627\u0637 \u0628\u0627 \u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631(2), \u0632\u06cc\u0628\u0627\u06cc\u06cc \u0642\u062f\u0627\u0645\u06cc(11, umbrella); Q1 picks \u0637\u0631\u0627\u062d\u06cc \u0631\u0648\u06a9\u0634+\u0627\u062f\u0631\u0627\u06a9 \u0628\u0635\u0631\u06cc+\u062a\u0642\u0627\u0631\u0646 \u0642\u062f\u0627\u0645\u06cc+\u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644; Q2 \u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644+\u062a\u0642\u0627\u0631\u0646 \u0642\u062f\u0627\u0645\u06cc+\u0637\u0631\u0627\u062d\u06cc \u0631\u0648\u06a9\u0634; Q3 \u0627\u0631\u062a\u0628\u0627\u0637 \u0628\u0627 \u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631+\u0637\u0631\u0627\u062d\u06cc \u0631\u0648\u06a9\u0634 (\u067e\u062a\u0631\u0646 \u0631\u0632\u06cc\u0646 is not a tag of this page); Q4 \u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644+\u0637\u0631\u0627\u062d\u06cc \u0631\u0648\u06a9\u0634; Q5 \u0627\u062f\u0631\u0627\u06a9 \u0628\u0635\u0631\u06cc+\u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644 \u2014 each specific tag lists at most 4 pages and contains insight/insight-101, so the page is inside the first 4 pages of its chip for all five questions."
+                ],
+                "id": "C.5",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Verified without re-deciding: brain clinical-101 pillar = {primary:fixed-pros, secondary:[], subtopic:crowns-onlays} equals the step-2.4 decision (founder-approved queue option A, approval #4); fixed-pros is in live PILLARS and crowns-onlays is one of its subtopics (post-and-core, preparation, impression, crowns-onlays, cementation, failures); pillar object has the same 3 keys as clinical-100; page capsule links /pillar/fixed-pros/ (single pillar href). tools/build_pillar.py read from the branch, which equals origin/main 07cabf7 plus only publication files."
+                ],
+                "id": "C.5.5",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "tools/pathway_place.py insight/insight-101: two STRONG candidates placed directly (frozen-core cluster): esthetic after insight/insight-61 (index 27, milestone=false, 69 steps) and fixed-pros after insight/insight-61 (index 126, milestone=false, 136 steps); the ASK candidates (implant-prosthetic 33, treatment-planning 28, ceramics 21, biomimetic 17, post-and-core 16, removable-pros 14) were not placed (a third pathway would be a founder question; none is needed). plus/pathways.json valid JSON, diff +8 lines; coverage: full pathways 818 memberships over 541 items = 1.51 per item (was a creep already above the 1.38 baseline; this publish adds 2 memberships). 4.12-b: two founder-approved MCQs (queue approval #7 \u00ab\u0633\u0648\u0627\u0644\u0627 \u0641\u0642\u0637 \u06f2 \u0648 \u06f3\u00bb) copied verbatim from queue 08-\u0633\u0624\u0627\u0644\u200c\u0647\u0627\u06cc-\u0622\u0632\u0645\u0648\u0646.json into plus/exam-questions.json byContent[insight/insight-101] with ids r-90e65279 (key 0) and r-cd881acf (key 1) = r-+sha1(content_id|publish-n)[:8], source=publish, appended not replacing; tools/validate_exam_questions.py: 0 errors (3 pre-existing warnings on other pages); the page lands in 2 full pathways (esthetic, fixed-pros) so the pool is drawn there."
+                ],
+                "id": "C.5.6",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Bundle gate chain. Candidates = bundles whose continues_pathway is a full pathway the item just joined (esthetic, fixed-pros): bundle-laminate (continues esthetic, 8 steps) and bundle-crown-prep (continues fixed-pros, 6 steps). Verdict for both: \u00ab\u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1)\u00bb \u2014 GATE 1 (type, mechanical): the item folder is insight/, which is NO always, no judgment may override. No bundle edit, so no home-bundles.js step-count sweep or asset_version bump is owed."
+                ],
+                "id": "C.5.6-b",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.6",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "started"
+              },
+              {
+                "evidence": [],
+                "id": "C.8",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "C.7",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "D",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "E",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "F",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "G",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              }
+            ],
+            "validation": []
+          }
         }
       ],
       "delivery": [],
@@ -687,7 +1018,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Persian Insight page updated: removed the added intro and restored original queue text as the first paragraph; both approved images, captions, metadata, and page structure remain present."
+          "Page insight/insight-101.html built from clone of insight-100; body prose = 5 paragraphs byte-equal to frozen queue 01-\u0645\u062a\u0646.md (sha 513cb0de) with 2 approved images (/insight/insight101-1.webp,-2.webp, alt+figcaption from queue 03) and the approved Episode 13 anchor; clone residue removed (JSON-LD keywords, healthCondition, wrong related capsules); no authored lead."
         ],
         "id": "C.2",
         "module": "03-litecast-and-page.md",
@@ -698,19 +1029,19 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "evidence": [],
         "id": "C.0.5",
         "module": "03-litecast-and-page.md",
-        "reason": "Not LiteCast; patient-question-specific microsite step does not apply.",
+        "reason": "Not LiteCast; LiteCast-only step.",
         "status": "skipped"
       },
       {
         "evidence": [],
         "id": "C.0.6",
         "module": "03-litecast-and-page.md",
-        "reason": "Not LiteCast; LiteCast-only template gate does not apply.",
+        "reason": "Not LiteCast; LiteCast-only step.",
         "status": "skipped"
       },
       {
         "evidence": [
-          "Rechecked current live pillar taxonomy; fixed-pros / crowns-onlays remains the exact approved placement."
+          "Pillar fixed-pros / subtopic crowns-onlays: founder-approved queue option A (approval #4), re-verified against live PILLARS (fixed-pros has crowns-onlays)."
         ],
         "id": "C.2.4",
         "module": "04-taxonomy-and-navigation.md",
@@ -719,7 +1050,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Revalidated taxonomy identifiers and slug correspondence against the live page and pillar build configuration; no mismatch."
+          "Single dc-related-section with \u062f\u0627\u0646\u0634\u0646\u0627\u0645\u0647 + \u0641\u0647\u0631\u0633\u062a \u0645\u0648\u0636\u0648\u0639\u06cc (/pillar/fixed-pros/) capsules, no duplicate."
         ],
         "id": "C.2.5",
         "module": "04-taxonomy-and-navigation.md",
@@ -728,7 +1059,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Page and manual Insight index have the expected one-way index entry and updated ordering; reviewed with the intro removed."
+          "insight/index.html (hand-maintained list) already holds exactly one new newest-first link to insight-101 with the approved title."
         ],
         "id": "C.2.6",
         "module": "04-taxonomy-and-navigation.md",
@@ -737,7 +1068,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Re-audited the clinical page metadata and final body structure after restoring the original article opening; no new page-level discrepancy."
+          "Dates: published/reviewed/datePublished/dateModified = 2026-11-01 in fa page and JSON-LD; no 2026-10-30 residue; canonical/og/twitter urls insight-101."
         ],
         "id": "C.3",
         "module": "04-taxonomy-and-navigation.md",
@@ -746,7 +1077,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Rechecked page-local required markup, image assets, metadata and IDs; intro removal did not change integrity invariants."
+          "Template insight-100 is untouched (not modified in git diff vs origin/main)."
         ],
         "id": "C.4",
         "module": "04-taxonomy-and-navigation.md",
@@ -757,26 +1088,26 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "evidence": [],
         "id": "C.4.5",
         "module": "04-taxonomy-and-navigation.md",
-        "reason": "This is an Insight page, not an episode.",
+        "reason": "Insight page, not an episode.",
         "status": "skipped"
       },
       {
         "evidence": [],
         "id": "C.4.5-b",
         "module": "04-taxonomy-and-navigation.md",
-        "reason": "This is an Insight page, not an episode.",
+        "reason": "Insight page, not an episode.",
         "status": "skipped"
       },
       {
         "evidence": [],
         "id": "C.4.6",
         "module": "04-taxonomy-and-navigation.md",
-        "reason": "Episode-only requirement; no episode artwork/player is part of this Insight.",
+        "reason": "Episode-only artwork/player step.",
         "status": "skipped"
       },
       {
         "evidence": [
-          "Reconfirmed the 109-term glossary registry review: no new backlink fit for this article; Smile Design is at its five-link cap, and crown-lengthening/subgingival-margin entries do not match the clinical concept."
+          "Fresh semantic review of all 109 glossary terms against the article (line-angle crown design for a gingival-level difference): only Smile Design (\u0637\u0631\u0627\u062d\u06cc \u0644\u0628\u062e\u0646\u062f) is conceptually adjacent, judged too broad/tangential and its \u06a9\u0627\u0648\u0634 \u0628\u06cc\u0634\u062a\u0631 section is at the 5-link cap; Emergence Profile unrelated. 0 back-links added; no glossary page touched."
         ],
         "id": "C.4.7",
         "module": "05-semantic-linking.md",
@@ -787,12 +1118,12 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "evidence": [],
         "id": "C.4.7-b",
         "module": "05-semantic-linking.md",
-        "reason": "Not a glossary publication; no glossary entry is being created.",
+        "reason": "Not a glossary-term publication; scoped cross-linking inapplicable.",
         "status": "skipped"
       },
       {
         "evidence": [
-          "Freshly rechecked the 109 glossary and 212 episode entries for the restored article body. No glossary match; the previously approved Episode 13 link now anchors the first source-text occurrence of line angles. Anchor text changes no prose, which still matches the DES source."
+          "Fresh analysis of body vs 109 glossary terms and all episodes: no glossary match; one unmistakable-in-context link, founder-approved (1405/08/10): first \u00ab\u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644\u00bb (paragraph 1) -> /episodes/episode-13.html (Esthetic Width / Umbrella Effect). No other candidates. Prose unchanged; anchor is the only diff vs frozen text."
         ],
         "id": "C.4.8",
         "module": "05-semantic-linking.md",
@@ -801,7 +1132,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Rechecked all 584 brain entries. Strong related pages clinical-61 and clinical-72; section is at the five-link cap, so no additional related-page link is added. #\u0644\u0627\u06cc\u0646_\u0627\u0646\u06af\u0644 has a second resolving page in insight-72."
+          "Fresh brain read (585 entries). The \u06a9\u0627\u0648\u0634 \u0628\u06cc\u0634\u062a\u0631 section inherited three unrelated capsules from the insight-100 clone (episode-60, insight-85, insight-86 \u2014 implant-crown cement/occlusion), which cannot count as 4.9; replaced as clone residue by the two strong matches: insight-61 (\u0641\u0631\u06cc\u0628 \u062e\u0637\u0627\u06cc \u062f\u06cc\u062f \u0631\u0648\u06cc \u06a9\u0633\u062a \u062f\u0631 \u0631\u0648\u06a9\u0634 \u0633\u0627\u0646\u062a\u0631\u0627\u0644: optical illusion in a single anterior central crown) and insight-72 (\u0645\u062f\u06cc\u0631\u06cc\u062a \u0638\u0627\u0647\u0631 \u0628\u0631\u06cc\u062c \u062f\u0631 \u062a\u062d\u0644\u06cc\u0644 \u0634\u062f\u06cc\u062f \u0627\u0633\u062a\u062e\u0648\u0627\u0646: line angles to reduce perceived width). Section now 4 links (\u062f\u0627\u0646\u0634\u0646\u0627\u0645\u0647, \u0641\u0647\u0631\u0633\u062a \u0645\u0648\u0636\u0648\u0639\u06cc, 61, 72). Borderline, not added and left for founder: insight-25 (\u0631\u0648\u06a9\u0634 \u0628\u0632\u0631\u06af\u200c\u062a\u0631 \u0628\u0647 \u0646\u0638\u0631 \u0645\u06cc\u200c\u0631\u0633\u062f) and insight-53. First-cut lead provenance: author_original recorded, no authored intro."
         ],
         "id": "C.4.9",
         "module": "05-semantic-linking.md",
@@ -824,6 +1155,8 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       "pillar/fixed-pros/index.html",
       "plus/assistant-tags.json",
       "plus/cabinet-bridge.json",
+      "plus/cabinet-papers.json",
+      "plus/content-index.json",
       "plus/des-scores.json",
       "plus/exam-questions.json",
       "plus/faq-corpus.json",
@@ -833,7 +1166,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: insight/insight-101.html, plus/faq-corpus.json"
+    "note": "Index-only refresh after staging delivery paths: insight/insight-101.html"
   },
   "schema": "publish-handoff-v3"
 }
