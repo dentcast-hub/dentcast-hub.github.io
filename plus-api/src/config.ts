@@ -510,6 +510,18 @@ export const config = {
     maxPerUserPerHour: int('REVIEW_MAX_PER_USER_PER_HOUR', 200),
   },
 
+  // POST /highlights had no ceiling of any kind, and every created highlight
+  // pays league XP (xp_highlight, capped at xp_highlight_cap per content/week).
+  // A script could post highlights against a new fabricated content_id each
+  // time — the per-content weekly cap resets per id — and farm XP at the raw
+  // request rate (measured: 400 posts in 6.5s -> +300 weekly XP, rank 1). A
+  // human highlighting hard still tops out at a few a minute, so this bounds the
+  // farm without touching a real reading session. A refusal is a 429 the
+  // client's outbox re-sends later, so a fast highlighter is delayed, not lost.
+  highlights: {
+    maxPerUserPerHour: int('HIGHLIGHTS_MAX_PER_USER_PER_HOUR', 150),
+  },
+
   // up-board's own ceiling (routes/votes.ts). Deliberately TIGHT, which is the
   // opposite of the activity budget above and for the opposite reason: a heart is
   // one press per page, so an honest reader tops out at a handful an hour even
