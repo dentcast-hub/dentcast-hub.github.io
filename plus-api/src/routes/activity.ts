@@ -54,6 +54,12 @@ export async function activityRoutes(app: FastifyInstance): Promise<void> {
     if (meta !== undefined && JSON.stringify(meta).length > 8192) {
       return reply.code(400).send({ error: 'meta_too_large' });
     }
+    // Postgres text and jsonb reject U+0000; letting it through turned a bad byte
+    // into a 500. (JSON.stringify escapes a real NUL to the literal "\u0000".)
+    if ((content_id && content_id.includes('\u0000'))
+      || (meta !== undefined && JSON.stringify(meta).includes('\\u0000'))) {
+      return reply.code(400).send({ error: 'invalid_payload' });
+    }
 
     // Server-minted. `challenge_answered` was the first one guarded here, with
     // the reasoning that an open vocabulary would otherwise let a client buy

@@ -55,6 +55,10 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
       // Strip bidi overrides/isolates before storing, so a name cannot reorder
       // itself or the row next to it on the leaderboard. ZWNJ (legitimate in
       // «علی‌رضا») is NOT a bidi control and is left untouched.
+      // Postgres text rejects U+0000 — reject it as a 400 rather than 500.
+      if (b.display_name.includes('\u0000')) {
+        return reply.code(400).send({ error: 'invalid_display_name', message: 'اسم مستعار باید حداقل ۲ حرف باشد.' });
+      }
       const name = b.display_name.trim().replace(BIDI_CONTROLS, '');
       const visible = name.replace(INVISIBLE, '').trim();
       // A name made only of ZWNJ / zero-width / blank glyphs passed minLength and
@@ -75,6 +79,8 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
       // settings (reminders, notify_channels, tour_seen).
       const merged = JSON.stringify({ ...(request.user!.settings ?? {}), ...b.settings });
       if (merged.length > 8192) return reply.code(400).send({ error: 'settings_too_large' });
+      // jsonb rejects U+0000 (escaped to "\u0000" by stringify) → 400 not 500.
+      if (JSON.stringify(b.settings).includes('\\u0000')) return reply.code(400).send({ error: 'invalid_settings' });
       sets.push(`settings = settings || $${vals.length + 1}::jsonb`); vals.push(JSON.stringify(b.settings));
     }
     if (!sets.length) return reply.code(400).send({ error: 'nothing_to_update' });

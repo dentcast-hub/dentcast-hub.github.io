@@ -106,6 +106,13 @@ describe('POST /activity refuses every server-minted action', () => {
     expect(bigMeta.statusCode).toBe(400);
     expect(bigMeta.json().error).toBe('meta_too_large');
   });
+
+  it('rejects a NUL byte instead of 500ing on Postgres', async () => {
+    const inId = await post('article_viewed', 'insight/a\u0000b');
+    expect(inId.statusCode).toBe(400);
+    const inMeta = await post('some_signal', 'insight/insight-1', { note: 'x\u0000y' });
+    expect(inMeta.statusCode).toBe(400);
+  });
 });
 
 // The two completions that pay per page (score.ts CONSUMPTION_ACTIONS) are
