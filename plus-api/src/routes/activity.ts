@@ -27,9 +27,12 @@ export async function activityRoutes(app: FastifyInstance): Promise<void> {
         type: 'object',
         required: ['action'],
         properties: {
-          action: { type: 'string' },
-          content_id: { type: 'string' },
-          meta: { type: 'object', additionalProperties: true },
+          action: { type: 'string', maxLength: 64 },
+          // The log row is permanent and content_id is indexed; isPlausible
+          // contentId caps real ids at 200 too. Without this, a 200k-char
+          // content_id was stored verbatim, 300 an hour per account.
+          content_id: { type: 'string', maxLength: 200 },
+          meta: { type: 'object', additionalProperties: true, maxProperties: 50 },
           event_id: { type: 'string', maxLength: 36 },
         },
       },
@@ -43,6 +46,13 @@ export async function activityRoutes(app: FastifyInstance): Promise<void> {
     };
     if (!ACTION_RE.test(action)) {
       return reply.code(400).send({ error: 'invalid_action' });
+    }
+    // Cap the serialized meta: maxProperties bounds the key COUNT but not value
+    // sizes, and meta is stored on every permanent log row. 8 KB is far more
+    // than any real signal (a few ids and a result) and stops a ~500 KB blob
+    // being persisted 300 times an hour.
+    if (meta !== undefined && JSON.stringify(meta).length > 8192) {
+      return reply.code(400).send({ error: 'meta_too_large' });
     }
 
     // Server-minted. `challenge_answered` was the first one guarded here, with

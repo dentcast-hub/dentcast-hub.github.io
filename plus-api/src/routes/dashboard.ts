@@ -27,7 +27,7 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
         type: 'object',
         properties: {
           display_name: { type: 'string', minLength: 1, maxLength: 40 },
-          settings: { type: 'object', additionalProperties: true },
+          settings: { type: 'object', additionalProperties: true, maxProperties: 30 },
         },
       },
     },
@@ -45,7 +45,16 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
       }
       sets.push(`display_name = $${vals.length + 1}`); vals.push(name);
     }
-    if (b.settings !== undefined) { sets.push(`settings = settings || $${vals.length + 1}::jsonb`); vals.push(JSON.stringify(b.settings)); }
+    if (b.settings !== undefined) {
+      // settings is merged (never replaced) and loaded on every authenticated
+      // request, so an unbounded blob here is paid back on every call forever.
+      // maxProperties bounds the key count; this bounds the serialized size and
+      // the accumulated total after repeated merges. 8 KB dwarfs the real
+      // settings (reminders, notify_channels, tour_seen).
+      const merged = JSON.stringify({ ...(request.user!.settings ?? {}), ...b.settings });
+      if (merged.length > 8192) return reply.code(400).send({ error: 'settings_too_large' });
+      sets.push(`settings = settings || $${vals.length + 1}::jsonb`); vals.push(JSON.stringify(b.settings));
+    }
     if (!sets.length) return reply.code(400).send({ error: 'nothing_to_update' });
     const res = await pool.query(
       `update profiles set ${sets.join(', ')} where id = $1

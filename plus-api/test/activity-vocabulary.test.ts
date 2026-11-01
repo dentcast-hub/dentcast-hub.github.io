@@ -96,6 +96,16 @@ describe('POST /activity refuses every server-minted action', () => {
     const res = await post('some_new_client_signal', 'insight/insight-1');
     expect(res.statusCode).toBe(200);
   });
+
+  it('bounds the size of a permanent log row', async () => {
+    // content_id is indexed and meta is stored on every row; both were unbounded.
+    const longId = await post('article_viewed', `insight/${'x'.repeat(250)}`);
+    expect(longId.statusCode).toBe(400); // schema maxLength 200
+
+    const bigMeta = await post('some_signal', 'insight/insight-1', { blob: 'y'.repeat(9000) });
+    expect(bigMeta.statusCode).toBe(400);
+    expect(bigMeta.json().error).toBe('meta_too_large');
+  });
 });
 
 // The two completions that pay per page (score.ts CONSUMPTION_ACTIONS) are

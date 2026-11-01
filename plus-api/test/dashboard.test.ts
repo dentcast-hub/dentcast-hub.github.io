@@ -130,6 +130,21 @@ describe('PATCH /me', () => {
     expect(ok.statusCode).toBe(200);
     expect(ok.json().display_name).toBe('علی\u200cرضا');
   });
+
+  it('refuses an oversized settings blob (loaded on every request)', async () => {
+    const big = await app.inject({
+      method: 'PATCH', url: '/me', headers: { cookie },
+      payload: { settings: { junk: 'x'.repeat(9000) } },
+    });
+    expect(big.statusCode).toBe(400);
+    expect(big.json().error).toBe('settings_too_large');
+
+    const ok = await app.inject({
+      method: 'PATCH', url: '/me', headers: { cookie },
+      payload: { settings: { tour_seen: true } },
+    });
+    expect(ok.statusCode).toBe(200);
+  });
 });
 
 describe('GET /profile/stats', () => {
