@@ -1,0 +1,43 @@
+{
+  "content_id": "در روز انتشار از brain زنده تعیین شود",
+  "faqPage": {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": "https://dentcast.org/insight/insight-{content_id}.html#faq",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "آیا نبود تماس در بخشی از سطح اکلوزال، به‌تنهایی ثابت می‌کند روکش کوتاه است؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "خیر. تماس زودرس در نقطه‌ای دیگر می‌تواند مانع رسیدن فک به موقعیت نهایی شود و ظاهری شبیه روکش کوتاه ایجاد کند."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "آیا ثبت بایت با پوتی به‌تنهایی برای تشخیص تماس زودرس کافی است؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "خیر. یافته‌های ثبت بایت باید همراه با معاینهٔ بالینی تفسیر و تأیید شوند."
+        }
+      }
+    ]
+  },
+  "definedTermSets": [
+    {
+      "@context": "https://schema.org",
+      "@type": "DefinedTermSet",
+      "@id": "https://dentcast.org/insight/insight-{content_id}.html#flashcards",
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://dentcast.org/insight/insight-{content_id}.html#flashcards-c1",
+          "name": "تماس زودرس اکلوزالی چیست؟",
+          "description": "تماسی است که پیش از سایر تماس‌ها برقرار می‌شود و می‌تواند مسیر بسته‌شدن فک را منحرف کند.",
+          "source": "authored"
+        }
+      ]
+    }
+  ],
+  "note": "مفهوم تماس زودرس از محتوای مقاله استخراج شد. شناسهٔ نهایی صفحه در روز انتشار از brain زنده جایگزین می‌شود."
+}
