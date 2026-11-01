@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "insight/insight-101"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -58,6 +58,22 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           ],
           "scope": "authored-intro",
           "status": "not_required"
+        },
+        {
+          "decision": "\u0627\u062e\u062a\u0644\u0627\u0641 \u0633\u0637\u062d \u0644\u062b\u0647 \u062f\u0631 \u062f\u0648 \u0633\u0627\u0646\u062a\u0631\u0627\u0644: \u06a9\u0648\u062a\u0627\u0647 \u0646\u0634\u0627\u0646 \u062f\u0627\u062f\u0646 \u0631\u0648\u06a9\u0634 \u0628\u0627 \u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644",
+          "evidence": [
+            "Founder approval #1 in queue/03 00-\u0648\u0636\u0639\u06cc\u062a.md; exact string from frozen 02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md"
+          ],
+          "scope": "title",
+          "status": "confirmed"
+        },
+        {
+          "decision": "\u0644\u062b\u0647\u200c\u06cc \u06cc\u06a9\u06cc \u0627\u0632 \u062f\u0648 \u0633\u0627\u0646\u062a\u0631\u0627\u0644 \u0628\u0627\u0644\u0627\u062a\u0631 \u0627\u0633\u062a \u0648 \u062a\u0627\u062c \u0628\u0627\u0644\u06cc\u0646\u06cc \u0622\u0646 \u0628\u0644\u0646\u062f\u062a\u0631 \u062f\u06cc\u062f\u0647 \u0645\u06cc\u200c\u0634\u0648\u062f. \u0631\u0648\u06a9\u0634 \u0631\u0627 \u0686\u0637\u0648\u0631 \u0637\u0631\u0627\u062d\u06cc \u06a9\u0646\u06cc\u0645 \u062a\u0627 \u0627\u062e\u062a\u0644\u0627\u0641 \u0637\u0648\u0644 \u062f\u0648 \u062f\u0646\u062f\u0627\u0646 \u06a9\u0645\u062a\u0631 \u0628\u0647 \u0686\u0634\u0645 \u0628\u06cc\u0627\u06cc\u062f\u061f",
+          "evidence": [
+            "Founder approval #2 in queue/03 00-\u0648\u0636\u0639\u06cc\u062a.md; exact string from frozen 02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md"
+          ],
+          "scope": "caption",
+          "status": "confirmed"
         }
       ],
       "decisions": [
@@ -807,6 +823,91 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             ],
             "validation": []
           }
+        },
+        {
+          "english": {
+            "evidence": [
+              "mirror reviewed against queue 06 text before Push 2"
+            ],
+            "path": "insight/en/insight-101.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "editorial close review by Claude Code in this run, 1405/08/10"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "COMMENTARY DES 15/100 band E reused verbatim from queue 03 05-DES-Fidelity/des.json (sha24446c14) on explicit founder order 1405/08/10; stored in plus/des-scores.json; Part 3 checks passed; no Fidelity owed"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "queue 03 intake Q4.9: not a Challenge; no data-dc-challenge-question markup"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "pillar fixed-pros/crowns-onlays verified against live PILLARS (C.5.5); founder approval #4"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.7/C.4.8: no glossary match, approved Episode 13 inline link; C.4.9 redone in this run: clone-residue capsules (episode-60, insight-85, insight-86, implant-cement topic) replaced by insight-61 and insight-72 (strong matches); borderline insight-25 not added"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "batch insight-101-line-angle.json applied; hashtag_ref --check OK; 7 canonical tags in clinical-101"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "brain clinical-101 appended last with clinical-100 key set; title/caption/keywords from frozen queue files"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "placed in esthetic and fixed-pros after insight-61; bundles rejected at gate 1 (insight/); 2 exam questions added"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "index.html Pulse: new top line with title link, bottom line removed, 7 lines remain"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "insight/en/insight-101.html built from founder-approved queue 06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md (approval #9), toggles inverse, noindex, no hreflang"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "queue 03 approvals #1-#11 hash-verified frozen files; founder explicit orders 1405/08/10 recorded in queue 00-\u0648\u0636\u0639\u06cc\u062a.md commit 06fd34b"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -1138,6 +1239,115 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "05-semantic-linking.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.1",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper: queue 03 intake Q4.7 records paperless content (founder approval #8); module 06 documented skip.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.2",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper (same Q4.7 skip).",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.10.3",
+        "module": "06-paper-ingestion.md",
+        "reason": "No attached paper (same Q4.7 skip).",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "plus/faq-corpus.json insight/insight-101: DefinedTermSet with 3 DefinedTerm (#flashcards-c1..c3), source=authored, unique @ids, valid JSON; c2/c3 are standalone definitions (no FAQ near-copy); none equals a FAQ Q or A verbatim; page JSON-LD has no FAQ/flashcards markup; node tools/build_flashcards_index.mjs runs in the post-Push-2 workflow."
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "FAQPage in plus/faq-corpus.json: 3 standalone questions, no article deixis, Q1/Q2 yes/no with answers opening \u00ab\u062e\u06cc\u0631\u061b\u00bb, Q3 open procedural; grounded in body; quiz builder runs post-Push-2. 4.12-b evaluated at C.5.6."
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Founder-supplied queue DES reused WITHOUT rerun (founder order 1405/08/10). des.json sha256 24446c14\u2026 (=SHA256SUMS) scored 01-\u0645\u062a\u0646.md sha256 513cb0de\u2026; final page prose byte-equal (only Episode 13 anchor added). Part 3 passed (quotes verbatim in text / insight/index.html with note; 5+4+0+3+3=15; band E; schema keyset = insight-100; Part 3(6) ok, no edit). No Fidelity owed (COMMENTARY). Record stored in plus/des-scores.json under insight/insight-101, scored_at 2026-10-28, fidelity [null]."
+        ],
+        "id": "C.4.13",
+        "module": "08-des-fidelity.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "Not a Challenge (queue intake Q4.9 no; no challenge markup).",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Batch .dentcast/hashtag-batches/insight-101-line-angle.json applied (hashtag_ref --apply rc 0). Final list: #\u0627\u06cc\u0646\u0633\u0627\u06cc\u062a #\u0644\u0627\u06cc\u0646_\u0627\u0646\u06af\u0644 #\u0627\u062f\u0631\u0627\u06a9_\u0628\u0635\u0631\u06cc #\u062a\u0642\u0627\u0631\u0646_\u0642\u062f\u0627\u0645\u06cc #\u0637\u0631\u0627\u062d\u06cc_\u0631\u0648\u06a9\u0634 #\u0632\u06cc\u0628\u0627\u06cc\u06cc_\u0642\u062f\u0627\u0645\u06cc #\u0627\u0631\u062a\u0628\u0627\u0637_\u0628\u0627_\u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631 = six reused canonical (founder-approved queue 07) + #\u0644\u0627\u06cc\u0646_\u0627\u0646\u06af\u0644 minted by explicit founder order (queue approval #5). Mint gates: no existing concept (simulate reaches only #\u0641\u06cc\u0646\u06cc\u0634_\u0644\u0627\u06cc\u0646 on shared word); second resolving page insight-72 retagged in batch. Alias slots filled (English, Persian-script, misspelling; colloquial none). Composition gate met (series; decision/specific tags \u226410 pages). Bridge: plus/cabinet-bridge.json \u00ab\u0644\u0627\u06cc\u0646 \u0627\u0646\u06af\u0644\u00bb->[tooth-morphology] + tooth_topics. Tool refused brain write on mixed EOL; done via temporary CRLF normalization of the LF block and exact byte restore (git diff of brain = insight-72 tag line + new entry only)."
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "dentcast-brain.json: clinical-101 appended LAST (585 entries), same keys/order as clinical-100, valid JSON, byte-scoped CRLF append. title/caption copied from queue 02; 7 canonical hashtags; keywords = 6 founder-approved strings from queue 09; pillar fixed-pros/crowns-onlays. hashtag_ref --sync, build_plus_index.mjs, hashtag_ref --check OK, build_cabinet_papers --check OK. Reachability (reasoned from assistant-tags/content-index, live API not called): each specific tag lists \u22644 pages incl. this page for all 5 questions."
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Verified, not re-decided: brain pillar fixed-pros/crowns-onlays equals step-2.4 decision (queue approval #4); valid in live PILLARS; page capsule links /pillar/fixed-pros/; pillar object keys equal clinical-100."
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pathway_place.py: STRONG placements esthetic (after insight-61, 69 steps) and fixed-pros (after insight-61, 136 steps); ASK candidates not placed. pathways.json valid, +8 lines; coverage 1.51 per item (baseline 1.38, already above). 4.12-b: two founder-approved MCQs (queue approval #7) appended to plus/exam-questions.json byContent[insight/insight-101], ids r-90e65279 and r-cd881acf, validate_exam_questions 0 errors."
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Bundle candidates bundle-laminate (esthetic) and bundle-crown-prep (fixed-pros): both \u00ab\u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1)\u00bb \u2014 insight/ folder is NO always. No bundle edit, no mirror sweep owed."
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Pulse: index.html dc-pulse-list gets the founder-approved line (queue 07 Q5, title as link) at the top, bottom-most line removed, exactly 7 lines, previous first six preserved. English mirror insight/en/insight-101.html authored from founder-approved queue 06 text (approval #9), inverse toggles, noindex, no hreflang, no gloss duplicates. second_cut_editorial_lock_v1 recorded (10 scopes). C.8/C.7/D-technical/E/F/G run in the post-cut2-mechanical workflow after Push 2."
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
@@ -1166,7 +1376,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: insight/insight-101.html"
+    "note": "Index-only refresh after staging delivery paths: .dentcast/hashtag-batches/insight-101-line-angle.json, dentcast-brain.json, dentcast-hashtag-reference.json, index.html, insight/en/insight-101.html, plus/assistant-tags.json, plus/cabinet-bridge.json, plus/cabinet-papers.json, plus/content-index.json, plus/des-scores.json, plus/exam-questions.json, plus/faq-corpus.json, plus/pathways.json"
   },
   "schema": "publish-handoff-v3"
 }

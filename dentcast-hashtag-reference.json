@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 119,
+   "count": 120,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -379,7 +379,8 @@
     "insight/insight-97",
     "insight/insight-98",
     "insight/insight-99",
-    "insight/insight-100"
+    "insight/insight-100",
+    "insight/insight-101"
    ]
   },
   {
@@ -3478,6 +3479,34 @@
    ]
   },
   {
+   "key": "زیبایی_قدامی",
+   "tag": "#زیبایی_قدامی",
+   "domain": null,
+   "words": 2,
+   "definition": "نتیجه‌ی زیبایی در ناحیه‌ی قدام.",
+   "use_when": "مقاله تصمیمش را بر معیار زیبایی قدام بنا کند.",
+   "aliases": [
+    "استتیک قدامی",
+    "زیبایی قدام"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-13",
+    "notecast/episode-28",
+    "chairside/chairside-1",
+    "insight/insight-28",
+    "chairside/chairside-8",
+    "chairside/chairside-16",
+    "insight/insight-55",
+    "insight/insight-61",
+    "insight/insight-62",
+    "chairside/chairside-33",
+    "insight/insight-101"
+   ]
+  },
+  {
    "key": "قدرت_باند",
    "tag": "#قدرت_باند",
    "domain": null,
@@ -3815,33 +3844,6 @@
     "chairside/chairside-41",
     "chairside/chairside-42",
     "chairside/chairside-43"
-   ]
-  },
-  {
-   "key": "زیبایی_قدامی",
-   "tag": "#زیبایی_قدامی",
-   "domain": null,
-   "words": 2,
-   "definition": "نتیجه‌ی زیبایی در ناحیه‌ی قدام.",
-   "use_when": "مقاله تصمیمش را بر معیار زیبایی قدام بنا کند.",
-   "aliases": [
-    "استتیک قدامی",
-    "زیبایی قدام"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-13",
-    "notecast/episode-28",
-    "chairside/chairside-1",
-    "insight/insight-28",
-    "chairside/chairside-8",
-    "chairside/chairside-16",
-    "insight/insight-55",
-    "insight/insight-61",
-    "insight/insight-62",
-    "chairside/chairside-33"
    ]
   },
   {
@@ -7019,6 +7021,29 @@
    ]
   },
   {
+   "key": "ادراک_بصری",
+   "tag": "#ادراک_بصری",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "آنچه چشم می‌بیند، در برابر آنچه اندازه می‌گوید.",
+   "use_when": "مقاله خطای ادراکی را عاملِ شکایت یا قضاوت بداند.",
+   "aliases": [
+    "visual perception",
+    "خطای دید",
+    "ادراک دیداری",
+    "ادراک اندازه"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-25",
+    "insight/insight-61",
+    "insight/insight-72",
+    "insight/insight-101"
+   ]
+  },
+  {
    "key": "از_دست_رفتن_کانتکت",
    "tag": "#از_دست_رفتن_کانتکت",
    "domain": "clinical",
@@ -7709,6 +7734,29 @@
    ]
   },
   {
+   "key": "طراحی_روکش",
+   "tag": "#طراحی_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "طراحیِ فرم و کانتورِ تاج در نرم‌افزار یا لابراتوار.",
+   "use_when": "مقاله فرمِ طراحی‌شده را موضوعِ تصمیم قرار دهد.",
+   "aliases": [
+    "crown design",
+    "دیزاین روکش",
+    "طراحی تاج",
+    "design تاج"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-13",
+    "insight/insight-33",
+    "insight/insight-53",
+    "insight/insight-101"
+   ]
+  },
+  {
    "key": "فرم_رزیستنس",
    "tag": "#فرم_رزیستنس",
    "domain": "clinical",
@@ -8291,28 +8339,6 @@
     "dentai/promptologist/prompt4-1",
     "dentai/promptologist/prompt4-2",
     "dentai/promptologist/prompt6-4"
-   ]
-  },
-  {
-   "key": "ادراک_بصری",
-   "tag": "#ادراک_بصری",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "آنچه چشم می‌بیند، در برابر آنچه اندازه می‌گوید.",
-   "use_when": "مقاله خطای ادراکی را عاملِ شکایت یا قضاوت بداند.",
-   "aliases": [
-    "visual perception",
-    "خطای دید",
-    "ادراک دیداری",
-    "ادراک اندازه"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-25",
-    "insight/insight-61",
-    "insight/insight-72"
    ]
   },
   {
@@ -9580,28 +9606,6 @@
    ]
   },
   {
-   "key": "طراحی_روکش",
-   "tag": "#طراحی_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "طراحیِ فرم و کانتورِ تاج در نرم‌افزار یا لابراتوار.",
-   "use_when": "مقاله فرمِ طراحی‌شده را موضوعِ تصمیم قرار دهد.",
-   "aliases": [
-    "crown design",
-    "دیزاین روکش",
-    "طراحی تاج",
-    "design تاج"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-13",
-    "insight/insight-33",
-    "insight/insight-53"
-   ]
-  },
-  {
    "key": "عوارض_مکانیکی",
    "tag": "#عوارض_مکانیکی",
    "domain": "clinical",
@@ -10784,6 +10788,28 @@
    ]
   },
   {
+   "key": "ارتباط_با_لابراتوار",
+   "tag": "#ارتباط_با_لابراتوار",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتقال اطلاعاتی که تکنسین برای ساخت کار لازم دارد و خودش نمی‌تواند در بیمار ببیند، مثل رنگ، شفافیت، لکه‌ها و ویژگی‌های سطح دندان، از طریق عکس، نوشته یا مرجع مشترک.",
+   "use_when": "مقاله توضیح دهد چه اطلاعاتی و چطور باید از مطب به لابراتوار برسد.",
+   "aliases": [
+    "lab communication",
+    "laboratory communication",
+    "shade communication",
+    "ارتباط با تکنسین",
+    "ارسال رنگ به لابراتوار"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "sharehub/share-26",
+    "insight/insight-101"
+   ]
+  },
+  {
    "key": "استئوپلاستی",
    "tag": "#استئوپلاستی",
    "domain": null,
@@ -11430,6 +11456,29 @@
    "content_ids": [
     "insight/insight-35",
     "insight/insight-52"
+   ]
+  },
+  {
+   "key": "تقارن_قدامی",
+   "tag": "#تقارن_قدامی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "سنجشِ دندان‌های قدامی نسبت به قرینه‌ی خودشان به‌جای هم‌ترازی با دندان‌های مجاور — مثلاً یکسان درآوردنِ امبراژورهای اینسایزال و دیستالِ دو سانترال — تا فرمِ نهایی از عدمِ تقارنِ لترال‌ها، شیبِ لبه‌ی دندانِ مجاور یا اختلافِ سطحِ لثه مصون بماند.",
+   "use_when": "مقاله فرم، طول یا عرضِ یک رستوریشنِ قدامی را با تکیه بر قرینه‌ی مقابل تعیین کند، یا درباره‌ی انتخابِ مرجعِ درست در حضورِ نامتقارنیِ محیطی باشد.",
+   "aliases": [
+    "anterior symmetry",
+    "تقارن دندان های قدامی",
+    "تقارن سانترال",
+    "قرینه سازی قدامی",
+    "midline symmetry",
+    "symmetry of centrals"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-61",
+    "insight/insight-101"
    ]
   },
   {
@@ -12458,6 +12507,28 @@
    "content_ids": [
     "litecast/lite-CAST4",
     "dentai/dentai-34"
+   ]
+  },
+  {
+   "key": "لاین_انگل",
+   "tag": "#لاین_انگل",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "خط فرضی محل تغییر جهت سطح لبیال به سطوح پروگزیمال در دندان قدامی، که پهنا و طول ظاهری دندان را تعریف می‌کند.",
+   "use_when": "مطلب طراحی یا جابه‌جایی لاین انگل را برای تغییر اندازه‌ی ظاهری دندان یا روکش توضیح می‌دهد.",
+   "aliases": [
+    "line angle",
+    "line angles",
+    "لاین‌انگل",
+    "لاین انگل‌ها",
+    "لاین آنگل"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-72",
+    "insight/insight-101"
    ]
   },
   {
@@ -14357,27 +14428,6 @@
    ]
   },
   {
-   "key": "ارتباط_با_لابراتوار",
-   "tag": "#ارتباط_با_لابراتوار",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتقال اطلاعاتی که تکنسین برای ساخت کار لازم دارد و خودش نمی‌تواند در بیمار ببیند، مثل رنگ، شفافیت، لکه‌ها و ویژگی‌های سطح دندان، از طریق عکس، نوشته یا مرجع مشترک.",
-   "use_when": "مقاله توضیح دهد چه اطلاعاتی و چطور باید از مطب به لابراتوار برسد.",
-   "aliases": [
-    "lab communication",
-    "laboratory communication",
-    "shade communication",
-    "ارتباط با تکنسین",
-    "ارسال رنگ به لابراتوار"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "sharehub/share-26"
-   ]
-  },
-  {
    "key": "ارتباط_و_علیت",
    "tag": "#ارتباط_و_علیت",
    "domain": "clinical",
@@ -16024,28 +16074,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-23"
-   ]
-  },
-  {
-   "key": "تقارن_قدامی",
-   "tag": "#تقارن_قدامی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "سنجشِ دندان‌های قدامی نسبت به قرینه‌ی خودشان به‌جای هم‌ترازی با دندان‌های مجاور — مثلاً یکسان درآوردنِ امبراژورهای اینسایزال و دیستالِ دو سانترال — تا فرمِ نهایی از عدمِ تقارنِ لترال‌ها، شیبِ لبه‌ی دندانِ مجاور یا اختلافِ سطحِ لثه مصون بماند.",
-   "use_when": "مقاله فرم، طول یا عرضِ یک رستوریشنِ قدامی را با تکیه بر قرینه‌ی مقابل تعیین کند، یا درباره‌ی انتخابِ مرجعِ درست در حضورِ نامتقارنیِ محیطی باشد.",
-   "aliases": [
-    "anterior symmetry",
-    "تقارن دندان های قدامی",
-    "تقارن سانترال",
-    "قرینه سازی قدامی",
-    "midline symmetry",
-    "symmetry of centrals"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-61"
    ]
   },
   {
@@ -22978,6 +23006,7 @@
   "فضای بازسازی": "فضای رستوریتیو",
   "فضای بین فکی": "فضای رستوریتیو",
   "قابلیت تعمیم": "تعمیم پذیری",
+  "لاین انگل ها": "لاین انگل",
   "لایه هیبریدی": "هیبرید لیر",
   "لترال مندیبل": "لتروتروزیو",
   "لق بودن روکش": "افتادن روکش",
@@ -23088,6 +23117,7 @@
   "implant kit": "ابزار ایمپلنت",
   "implant psi": "ایمپلنت ساب پریوستئال",
   "imprecision": "فاصله اطمینان",
+  "line angles": "لاین انگل",
   "linkevicius": "کتاب لینکویچیوس",
   "lip support": "ساپورت لب",
   "loose crown": "افتادن روکش",
@@ -23375,6 +23405,7 @@
   "jaw growth": "رشد فک",
   "knife edge": "نایف اج",
   "light cure": "کیور",
+  "line angle": "لاین انگل",
   "local pack": "جستجوی محلی",
   "loss of vd": "بایت بسته",
   "metal post": "کور ریختگی",
@@ -23813,6 +23844,7 @@
   "قانون بول": "قانون bull",
   "قصد جستجو": "سؤال بیمار",
   "قوس کوتاه": "قوس دندانی کوتاه شده",
+  "لاین آنگل": "لاین انگل",
   "لایه سمان": "سمان دندانی",
   "لب پریدگی": "شکست سرامیک",
   "لبه اضافه": "اورهنگ",
