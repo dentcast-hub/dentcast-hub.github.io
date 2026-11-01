@@ -1,28 +1,29 @@
 {
-  "content_id": "در روز انتشار از brain زنده تعیین شود",
-  "faqPage": {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "@id": "https://dentcast.org/insight/insight-{content_id}.html#faq",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "آیا نبود تماس در بخشی از سطح اکلوزال، به‌تنهایی ثابت می‌کند روکش کوتاه است؟",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "خیر. تماس زودرس در نقطه‌ای دیگر می‌تواند مانع رسیدن فک به موقعیت نهایی شود و ظاهری شبیه روکش کوتاه ایجاد کند."
+  "faqPages": [
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": "https://dentcast.org/insight/insight-{content_id}.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "آیا نبود تماس در بخشی از سطح اکلوزال، به‌تنهایی ثابت می‌کند روکش کوتاه است؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "خیر. تماس زودرس در نقطه‌ای دیگر می‌تواند مانع رسیدن فک به موقعیت نهایی شود و ظاهری شبیه روکش کوتاه ایجاد کند."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "آیا ثبت بایت با پوتی به‌تنهایی برای تشخیص تماس زودرس کافی است؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "خیر. یافته‌های ثبت بایت باید همراه با معاینهٔ بالینی تفسیر و تأیید شوند."
+          }
         }
-      },
-      {
-        "@type": "Question",
-        "name": "آیا ثبت بایت با پوتی به‌تنهایی برای تشخیص تماس زودرس کافی است؟",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "خیر. یافته‌های ثبت بایت باید همراه با معاینهٔ بالینی تفسیر و تأیید شوند."
-        }
-      }
-    ]
-  },
+      ]
+    }
+  ],
   "definedTermSets": [
     {
       "@context": "https://schema.org",
@@ -39,5 +40,5 @@
       ]
     }
   ],
-  "note": "مفهوم تماس زودرس از محتوای مقاله استخراج شد. شناسهٔ نهایی صفحه در روز انتشار از brain زنده جایگزین می‌شود."
+  "_note": "جای‌نگهدار {content_id} در روز انتشار، پس از تعیین شناسه از brain زنده، در همهٔ @idها جایگزین می‌شود."
 }
