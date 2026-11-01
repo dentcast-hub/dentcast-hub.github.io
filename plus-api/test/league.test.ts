@@ -470,6 +470,13 @@ describe('POST /admin/league/config', () => {
     expect(res.statusCode).toBe(401);
   });
 
+  it('answers 401 before validating the body (no route/field disclosure)', async () => {
+    // Auth runs in onRequest, before schema validation, so an unauthenticated
+    // caller cannot probe the route by sending a bad body and reading a 400.
+    const res = await app.inject({ method: 'POST', url: '/admin/league/config', payload: {} });
+    expect(res.statusCode).toBe(401);
+  });
+
   it('changes a behavioural number and records why', async () => {
     const res = await setCfg({ key: 'promotion_min_weekly_xp', value: 25, reason: 'median came in under 30' });
 

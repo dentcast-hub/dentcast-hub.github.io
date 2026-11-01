@@ -15,7 +15,12 @@ import {
  * for abnormal situations.
  */
 export async function leagueAdminRoutes(app: FastifyInstance): Promise<void> {
-  app.addHook('preHandler', requireAdmin);
+  // onRequest, not preHandler: Fastify validates the body schema BEFORE
+  // preHandler, so admin auth as a preHandler let an UNAUTHENTICATED POST with a
+  // bad body get a 400 (revealing the route and its field names) instead of 401.
+  // onRequest runs before validation — unauthorized is answered first. (admin.ts
+  // already uses onRequest; this route was the outlier.)
+  app.addHook('onRequest', requireAdmin);
 
   // GET /admin/league — the observability dashboard as JSON.
   app.get('/admin/league', async (_request, reply) => {
