@@ -142,8 +142,8 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
       // Ranked members of this group. We walk down rather than taking the top N
       // outright: a member on cooldown passes the prize DOWN to the next one,
       // instead of the group silently awarding nothing that week.
-      const members = (await client.query<{ user_id: string }>(
-        `select lm.user_id
+      const members = (await client.query<{ user_id: string; weekly_xp: number }>(
+        `select lm.user_id, lm.weekly_xp
            from league_members lm
           where lm.league_id = $1
           order by lm.weekly_xp desc, lm.first_reached_current_xp_at asc nulls last, lm.id asc`,
@@ -165,6 +165,14 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
       let winnersHere = existing;
       for (const m of members) {
         if (winnersHere >= winnersTarget) break;
+
+        // Minimum-XP floor (0074): the prize ranked by points but had no floor,
+        // so a quiet group still crowned its top member for a handful of XP
+        // (measured: 9 and 11). Promotion needs prize_min_weekly_xp; the prize
+        // now needs it too. Members are ordered by weekly_xp desc, so the first
+        // one below the floor means everyone after is too — stop the group here
+        // rather than pass the prize down to someone who earned even less.
+        if (cfg.prize_min_weekly_xp > 0 && m.weekly_xp < cfg.prize_min_weekly_xp) break;
 
         // Cooldown: won recently enough that it is somebody else's turn.
         if (cfg.prize_cooldown_weeks > 0) {

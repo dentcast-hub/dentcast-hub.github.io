@@ -138,6 +138,33 @@ describe('grantWeeklyPrizes — top of every valid group', () => {
     expect(await tierOfUser(small[1])).toBe('free');
   });
 
+  it('mints nothing when the top of the group is below prize_min_weekly_xp', async () => {
+    // The prize ranked by points but had no floor, so a near-idle group crowned
+    // its top member for a handful of XP (0074). 20 < the seeded floor of 30.
+    const quiet = await seedGroup('acrylic', [20]);
+    await finalizeWeek(WEEK);
+
+    expect((await grantWeeklyPrizes(NEAR_WEEK)).granted).toBe(0);
+    expect(await tierOfUser(quiet[0])).toBe('free');
+  });
+
+  it('awards once the top clears prize_min_weekly_xp', async () => {
+    const earned = await seedGroup('acrylic', [30]); // exactly the floor
+    await finalizeWeek(WEEK);
+
+    expect((await grantWeeklyPrizes(NEAR_WEEK)).granted).toBe(1);
+    expect(await tierOfUser(earned[0])).toBe('premium');
+  });
+
+  it('respects prize_min_weekly_xp = 0 as an explicit no-floor opt-out', async () => {
+    await setPrizeCfg('prize_min_weekly_xp', '0');
+    const quiet = await seedGroup('acrylic', [2]);
+    await finalizeWeek(WEEK);
+
+    expect((await grantWeeklyPrizes(NEAR_WEEK)).granted).toBe(1);
+    expect(await tierOfUser(quiet[0])).toBe('premium');
+  });
+
   it('awards nothing below the prize floor — first of two is not a result', async () => {
     const tiny = await seedGroup('composite', [90, 80], WEEK, 2);
     await finalizeWeek(WEEK);
