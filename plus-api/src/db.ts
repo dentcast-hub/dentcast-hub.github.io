@@ -37,22 +37,43 @@ export async function one<T extends pg.QueryResultRow = pg.QueryResultRow>(
  * Run `fn` inside a single transaction. The streak engine relies on this: cache
  * updates and the appended `streak_kept` event must commit atomically with the
  * qualifying activity row.
+ *
+ * Retries once on a transient serialization failure: Postgres 40P01 (deadlock)
+ * and 40001 (serialization failure). lockProfileForWrite already orders the
+ * same-user scoring path so it does not deadlock, but two DIFFERENT operations
+ * touching overlapping rows (a finalize sweep meeting a live write, a detached
+ * post-response job) can still lose a lock race. Both codes mean "nobody is at
+ * fault, just try again": the losing transaction was fully rolled back, and
+ * every `fn` here writes only through its transaction client, so re-running it
+ * on a fresh connection is safe and side-effect-free. The retry is bounded so a
+ * genuine, repeatable deadlock still surfaces instead of spinning.
  */
 export async function withTransaction<T>(
   fn: (client: pg.PoolClient) => Promise<T>,
 ): Promise<T> {
-  const client = await pool.connect();
-  try {
-    await client.query('begin');
-    const result = await fn(client);
-    await client.query('commit');
-    return result;
-  } catch (err) {
-    await client.query('rollback');
-    throw err;
-  } finally {
-    client.release();
+  const RETRYABLE = new Set(['40P01', '40001']);
+  const maxAttempts = 3;
+  let lastErr: unknown;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    const client = await pool.connect();
+    try {
+      await client.query('begin');
+      const result = await fn(client);
+      await client.query('commit');
+      return result;
+    } catch (err) {
+      await client.query('rollback').catch(() => { /* connection may be aborted */ });
+      const code = (err as { code?: string } | null)?.code;
+      if (code && RETRYABLE.has(code) && attempt < maxAttempts) {
+        lastErr = err;
+        continue; // the whole fn re-runs on a fresh transaction
+      }
+      throw err;
+    } finally {
+      client.release();
+    }
   }
+  throw lastErr;
 }
 
 /**
