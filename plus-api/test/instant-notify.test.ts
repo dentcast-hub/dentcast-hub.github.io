@@ -1,5 +1,6 @@
-import { describe, it, expect, beforeEach, afterAll } from 'vitest';
+import { describe, it, expect, beforeEach, afterAll, vi } from 'vitest';
 import { resetDb } from './helpers.js';
+import { notifications } from '../src/providers/registry.js';
 import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
 import { dayInTz } from '../src/services/time.js';
@@ -130,6 +131,30 @@ describe('notifyLeagueOutcomes', () => {
     const second = await notifyLeagueOutcomes(AWAKE);
     expect(second.notified).toBe(0);
     expect(await logRows(ids[0], 'league')).toBe(1);
+  });
+
+  it('names the tier the WEEK moved them to, even after the live tier changes', async () => {
+    const ids = await sixPremium();
+    await seedAndFinalize(ids); // amalgam -> rank 1 promoted to composite (کامپوزیت)
+
+    // Simulate a later finalize (or any tier move) before the push goes out:
+    // the winner is now sitting in acrylic. The earlier week's push must still
+    // say کامپوزیت — the tier that week promoted them to — not their live tier.
+    const acrylic = await tierId('acrylic');
+    await pool.query('update profiles set current_tier_id = $2 where id = $1', [ids[0], acrylic]);
+
+    const bodies = new Map<string, string>();
+    const spy = vi.spyOn(notifications, 'send').mockImplementation(async (u, m) => {
+      bodies.set(u, m.body); return true;
+    });
+    try {
+      await notifyLeagueOutcomes(AWAKE);
+    } finally {
+      spy.mockRestore();
+    }
+    const body = bodies.get(ids[0]) ?? '';
+    expect(body).toContain('کامپوزیت'); // the week's destination tier
+    expect(body).not.toContain('آکریل'); // not the live tier
   });
 
   it('does not announce to members who merely stayed', async () => {

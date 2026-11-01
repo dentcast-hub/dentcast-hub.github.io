@@ -42,11 +42,20 @@ export async function notifyLeagueOutcomes(now: Date = new Date()): Promise<{ no
     final_rank: number | null;
     to_tier: string | null;
   }>(
-    `select m.id, m.user_id, m.outcome, m.final_rank, nt.name_fa as to_tier
+    // to_tier is the tier this WEEK's outcome moved the user to — the week's own
+    // tier (st) shifted one order up for a promotion or down for a demotion — NOT
+    // profiles.current_tier_id. The live tier is where the user is NOW, and a
+    // second finalize inside the freshness window (or a delayed sweep) moves it
+    // again, so reading it named the wrong tier in the earlier week's push.
+    // finalizeWeek promotes to byOrder(order+1) and demotes to byOrder(order-1),
+    // so order±1 matches what actually happened.
+    `select m.id, m.user_id, m.outcome, m.final_rank, dt.name_fa as to_tier
        from league_members m
        join leagues l on l.id = m.league_id
+       join league_tiers st on st.id = l.tier_id
        join profiles p on p.id = m.user_id
-       left join league_tiers nt on nt.id = p.current_tier_id
+       left join league_tiers dt
+         on dt.tier_order = st.tier_order + (case when m.outcome = 'promoted' then 1 else -1 end)
       where l.status = 'finalized'
         and l.week_end >= ($1::date - $2::int)
         and m.outcome in ('promoted', 'demoted')
