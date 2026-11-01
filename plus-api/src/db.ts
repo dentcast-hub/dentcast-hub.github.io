@@ -55,6 +55,28 @@ export async function withTransaction<T>(
   }
 }
 
+/**
+ * Serialize same-user scoring writes by taking the profile row's lock FIRST.
+ *
+ * Every scoring transaction eventually upgrades the profile row to FOR UPDATE
+ * (streak.applyStreak, league.effectiveTierId). But the domain insert that
+ * opens the transaction — user_activity, highlights, card_state, collection,
+ * user_pathways, a challenge attempt — carries an FK to profiles and so already
+ * holds FOR KEY SHARE on that row. Two concurrent same-user transactions then
+ * each hold KEY SHARE and both try to upgrade, which Postgres resolves as a
+ * deadlock (40P01): the losing request got a 500 and its activity/XP was lost.
+ *
+ * Taking FOR UPDATE as the transaction's FIRST statement removes the upgrade:
+ * the second transaction blocks here until the first commits, then proceeds and
+ * sees its committed rows. That both ends the deadlock and serializes the
+ * weekly-cap / share / collection counts that previously raced (each ran its
+ * `select count(*)` before the other committed and so both paid). Call it at
+ * the top of any transaction that will call recordActivity.
+ */
+export async function lockProfileForWrite(client: pg.PoolClient, userId: string): Promise<void> {
+  await client.query('select 1 from profiles where id = $1 for update', [userId]);
+}
+
 export async function closePool(): Promise<void> {
   await pool.end();
 }

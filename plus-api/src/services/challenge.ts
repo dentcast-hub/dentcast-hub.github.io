@@ -1,4 +1,4 @@
-import { one, query, withTransaction, type Queryable } from '../db.js';
+import { one, query, withTransaction, lockProfileForWrite, type Queryable } from '../db.js';
 import { config } from '../config.js';
 import { mintReference } from './reference.js';
 import { recordActivity } from './activity.js';
@@ -214,6 +214,7 @@ export async function awardIfCorrect(
   if (reduceVerdict(attempt.verdict)?.result !== 'full') return;
 
   const run = async (c: pg.PoolClient) => {
+    await lockProfileForWrite(c, userId); // serialize scoring; see lockProfileForWrite
     const existing = await c.query(
       `select 1 from user_activity
         where user_id = $1 and action = 'challenge_answered' and content_id = $2

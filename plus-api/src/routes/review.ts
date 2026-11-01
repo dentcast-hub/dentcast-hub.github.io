@@ -3,7 +3,7 @@ import { config } from '../config.js';
 import { requireAuth } from '../middleware/auth.js';
 import { requirePremium } from '../middleware/require-premium.js';
 import { consume, HOUR_MS } from '../services/rate-limit.js';
-import { pool, withTransaction } from '../db.js';
+import { pool, withTransaction, lockProfileForWrite } from '../db.js';
 import { recordActivity } from '../services/activity.js';
 import { scheduleAchievementSync } from '../services/achievement-sync.js';
 import { nextBox, intervalDaysForBox } from '../services/leitner.js';
@@ -214,6 +214,7 @@ export async function reviewRoutes(app: FastifyInstance): Promise<void> {
     }
 
     const updated = await withTransaction(async (client) => {
+      await lockProfileForWrite(client, userId); // serialize scoring; see lockProfileForWrite
       const cur = await client.query<{ box: number; content_id: string; was_due: boolean }>(
         `select cs.box, h.content_id,
                 (cs.next_review_at is null or cs.next_review_at <= now()) as was_due
@@ -295,6 +296,7 @@ export async function reviewRoutes(app: FastifyInstance): Promise<void> {
     if (!firstAt) return reply.code(404).send({ error: 'not_found' });
 
     const updated = await withTransaction(async (client) => {
+      await lockProfileForWrite(client, userId); // serialize scoring; see lockProfileForWrite
       const cur = await client.query<{ box: number; next_review_at: string }>(
         `select box, next_review_at from ai_card_state
           where user_id = $1 and content_id = $2 and card_id = $3
