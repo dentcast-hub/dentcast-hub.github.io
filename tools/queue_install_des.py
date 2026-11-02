@@ -120,15 +120,25 @@ DATE_RE = re.compile(r"20\d\d-\d\d-\d\d")
 
 
 def body_lines(item):
-    """The frozen text of record (01-متن.md) as plain lines: markdown bold and
-    list dashes stripped, image markers [[تصویر:NN]] dropped. A sources tail
-    (final `---` + bare DOI lines) is the credit, not body text."""
+    """The frozen text of record (01-متن.md) as plain lines: markdown bold,
+    whole-line italics and list dashes stripped, image markers [[تصویر:NN]]
+    dropped, a table row split into its cells (the page shows each cell on its
+    own; a `|---|` row shows nothing). A sources tail (final `---` + bare DOI
+    lines) is the credit, not body text."""
     p = item / "01-متن.md"
     if not p.exists():
         return []
     out = []
     body, _tail = split_sources_tail(p.read_text(encoding="utf-8"))
-    for line in body.splitlines():
+    raw = body.splitlines()
+    piped = lambda i: 0 <= i < len(raw) and "|" in raw[i] and raw[i].strip() and not raw[i].strip().startswith("[[")
+    for k, line in enumerate(raw):
+        if piped(k) and (piped(k - 1) or piped(k + 1)):
+            t = line.strip().strip("|")
+            if re.fullmatch(r"[\s:|-]*", t):
+                continue  # the `|---|` row
+            out += [norm(c) for c in (re.sub(r"\*\*", "", c).strip() for c in t.split("|")) if c]
+            continue
         t = re.sub(r"\[\[[^\]]*\]\]", "", line).strip()
         if re.fullmatch(r"(-{3,}|\*{3,}|_{3,})", t):
             continue  # markdown horizontal rule: no text on the page
@@ -137,6 +147,8 @@ def body_lines(item):
         t = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", t)  # markdown link -> its text
         t = re.sub(r"^\s*[-*]\s+", "", t)
         t = re.sub(r"^\*\*(.*)\*\*$", r"\1", t).replace("**", "")
+        t = re.sub(r"^\*(?!\*)(.+?)(?<!\*)\*$", r"\1", t)  # a whole-line italic (a figure caption)
+        t = re.sub(r"(?<![*\w])\*(?!\*)([^*]+?)(?<!\*)\*(?![*\w])", r"\1", t)  # inline italics
         if t.strip():
             out.append(norm(t))
     return out
@@ -180,8 +192,8 @@ def main():
     ap.add_argument("--no-mirror", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--show-date", action="store_true",
-                    help="print the date the frozen Fidelity was scored on (the page's own date lines); "
-                         "build the page with THAT date and nothing needs syncing")
+                    help="print the date the frozen Fidelity was scored on (the preparation date, for the report); "
+                         "the page carries the publish day and --date syncs the record's date lines")
     ap.add_argument("--check-text", action="store_true",
                     help="only check that the built page carries 01-متن.md unchanged (run right after C.2)")
     ap.add_argument("--founder-text-change", metavar="WORDS",

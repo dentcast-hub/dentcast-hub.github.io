@@ -22,11 +22,12 @@
 | `0` | پیش‌چک و قفل | `python3 tools/queue_manifest.py check <پوشه> --agent "<نام قفل>" [--supplement s.json]` |
 | `C.2` | مونتاژ کامل | `python3 tools/queue_apply.py <پوشه> <content_id> --agent "<نام قفل>" --receipt r.json [--supplement s.json]` |
 | `C.4.9` | وضعیت زندهٔ لینک‌ها (4.7 زیر سقف ۵، 4.9 فقط انتخاب منجمد) | در رسید `report` |
-| `C.5.6` | مسیر یادگیری (منجمد، وگرنه اپیزود هم‌شماره + STRONG تا سقف دو مسیر، وگرنه کاندیدای اول؛ هرگز صفر) | در رسید `pathways` |
+| `C.5.6` | مسیر یادگیری (منجمد در `07`؛ وگرنه برای نوت‌کست فقط مسیرهای اپیزود هم‌شماره، درست بعد از آن؛ وگرنه STRONG تا سقف دو مسیر؛ وگرنه کاندیدای اول؛ هرگز صفر) | در رسید `pathways` |
 | `C.6` | تنها push پیش از Action | پایین، «ledger و push» |
 | `C.8`، `C.7`، `D`، `E`، `F`، `G` | `post-cut2-mechanical.yml` | فقط پایش (`publish-after-push2.md`) |
 
-`content_id` شمارهٔ آزاد بعدی همان دسته روی همین checkout است؛ ابزار هر شمارهٔ دیگر را رد می‌کند.
+`content_id` به شکل `<section>/<slug>` است (`sharehub/share-45`، `insight/insight-102`، `notecast/episode-44`)، نه شمارهٔ خالی؛
+شمارهٔ آن شمارهٔ آزاد بعدی همان دسته روی همین checkout است و ابزار هر شمارهٔ دیگر را رد می‌کند.
 دسته‌های پشتیبانی‌شده: `sharehub`، `notecast`، `insight`، `chairside` (اینسایت و چیرساید فقط بدون کردیت پیپر). بقیه، از جمله `metanote`، را ابزار رد می‌کند و مطلب از مسیر عادی
 (`.dentcast/workflows/README.md`) منتشر می‌شود.
 
@@ -34,12 +35,16 @@
 
 `queue_manifest.py check` هر فیلدی را که از فایل‌های منجمد خوانده نمی‌شود با نامش می‌گوید
 (`missing`). فقط همان فیلدها در یک فایل JSON بیرون از ریپو نوشته می‌شوند، هر کدام
-`{"value": …, "from": "<فایل>:<خط>"}` اگر عیناً در آن خط فایل منجمد هست، یا
-`{"value": …, "from": "publish-day: <چرا>"}` اگر در صف نیست (مثل فیلدهای کاتالوگ ماژول 06
-Part 2). ابزار مقدار ادعاشده از فایل را با همان خط مقایسه می‌کند، مقدار خوانده‌شده از صف را
-اجازهٔ تغییر نمی‌دهد و هر «publish-day» را در رسید و گزارش «گام دستی» می‌نویسد. تصمیم‌هایی که در
-نثر `11` یا `00` آمده‌اند (لینک مرزیِ تأییدشده، انتخاب 4.9) با شمارهٔ خط منتقل می‌شوند؛
-`legacy_review` ثبت می‌کند که این خواندن انجام شد.
+`{"value": …, "from": "<فایل>:<خط>"}` یا `"<فایل>:<خط>-<خط>"` اگر عیناً در آن خط‌های فایل منجمد
+است؛ ابزار هر رشتهٔ مقدار را روی همان خط‌ها می‌سنجد. منشأ `{"from": "publish-day: <چرا>"}` فقط برای
+واقعیتی است که روی صفحه متن نمی‌شود؛ متنِ صفحه (عنوان، کپشن، alt، زیرنویس، بدنه، پالس،
+برچسب‌ها، کلیدواژه، هشتگ) از بیرون صف رد می‌شود (`SUPPLEMENT_TEXT_NOT_FROZEN`): ایجنت روز
+انتشار متن نمی‌نویسد و مطلب به «در حال آماده‌سازی» برمی‌گردد تا همان متن منجمد شود.
+
+آنچه صف منجمد نکرده پیش‌فرض مکانیکیِ ثبت‌شده می‌گیرد، نه انتخاب ایجنت (رسید
+`mechanical_defaults`): 4.9 و 4.7 بی انتخاب منجمد هیچ لینکی اضافه نمی‌کنند، کاتالوگ Part 2 بی
+مدخل منجمد نوشته نمی‌شود (پیگیری برای بنیان‌گذار)، و author صفحهٔ ShareHub همان author آخرین مدخل
+brain همان دسته است. پیش‌فرض فقط با مقداری که از یک خطِ صف خوانده شود عوض می‌شود.
 
 ## ledger و push
 
@@ -50,17 +55,20 @@ python3 tools/queue_ledger.py init-input <content_id> --out pub.json   # plan --
 python3 tools/dentcast_publish_handoff.py init --input pub.json
 ```
 
-بعد از `C.2` (رسید `r.json` از `queue_apply.py`):
+بعد از `C.2` (رسید `r.json` از `queue_apply.py`)، یک فرمان:
 
 ```bash
-python3 tools/queue_ledger.py cut-records r.json --item <پوشه> --out cut.json
+python3 tools/queue_ledger.py record r.json --item <پوشه>   # cut-records + ادغام + record با reconcile note
 ```
 
 `queue_apply.py` فقط وقتی handoff فعال را می‌پذیرد که ledger صفِ همین `content_id` باشد.
 `cut.json` تصمیم‌ها (`queue_approvals_v1` با هش `00-وضعیت.md` و `SHA256SUMS`، provenance
-افتتاحیه، قفل ویراستاری ده‌گانه) ، تأیید عنوان و کپشن، و `target_paths` (فایل‌های رسید + نسخهٔ انگلیسی) است؛ با `record`
-روی همان انتشار ادغام می‌شود. هر گام `step --status started` و بعد `completed` با شاهد از رسید (یا `advance`). در
-`C.6`: `stage-delivery --path …` برای هر فایل رسید و نسخهٔ انگلیسی، یک کامیت، یک push. این
+افتتاحیه، قفل ویراستاری ده‌گانه) ، تأیید عنوان و کپشن، و `target_paths` (فایل‌های رسید + نسخهٔ انگلیسی) است؛
+`queue_ledger.py record` همین‌ها را روی انتشارِ ثبت‌شده در handoff ادغام می‌کند و `record` را با
+یادداشت reconcile می‌زند (کار `queue_apply` درخت کاری را عوض کرده است؛ `cut-records` تنها برای دیدن
+است). هر گام `step --status started` و بعد `completed` با شاهد از رسید (یا `advance`). در
+`C.6`: اول `step --id C.6 --status completed`، بعد `stage-delivery --path …` برای هر فایل رسید و
+نسخهٔ انگلیسی (ابزار staging را فقط در برش ثابتِ تکمیل‌شده می‌پذیرد)، یک کامیت، یک push. این
 push برای Action همان «Push 2» است؛ بعد از آن پیام `CLAUDE.md` دربارهٔ Push 2 و پایش طبق
 `publish-after-push2.md`. تحویل دوم (پایانی) را Action می‌سازد.
 

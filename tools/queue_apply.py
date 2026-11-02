@@ -248,30 +248,69 @@ MD_LINK = re.compile(r"\[([^\]]+)\]\(([^)\s]+)\)")
 split_tail = qm.split_sources_tail
 
 
+TABLE_SEP = re.compile(r"^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\s*$")
+IMAGE_MARKER = re.compile(r"\s*\[\[(?:تصویر|Image):(\d\d)\]\]\s*")
+ITALIC_LINE = re.compile(r"\s*\*(?!\*)(.+?)(?<!\*)\*\s*")
+
+
+def table_cells(line):
+    t = line.strip()
+    t = t[1:] if t.startswith("|") else t
+    t = t[:-1] if t.endswith("|") else t
+    return [c.strip() for c in t.split("|")]
+
+
+def is_table_run(lines, k):
+    """Line k is a table row: it holds a «|» and so does a neighbouring line
+    (a frozen text writes its tables with or without outer pipes and with or
+    without a `|---|` row)."""
+    has = lambda i: 0 <= i < len(lines) and "|" in lines[i] and lines[i].strip() and not IMAGE_MARKER.fullmatch(lines[i])
+    return has(k) and (has(k - 1) or has(k + 1))
+
+
 def blocks(md):
     """Markdown subset → blocks: ('h', level, text) ('p', text) ('ul', [items])
-    ('note', [paras]) ('img', NN) ('hr',)."""
-    out, para, items, note = [], [], [], []
+    ('note', [paras]) ('img', NN, caption|None) ('table', [rows]) ('hr',).
+    An italic-only line right after an image marker is that image's caption as
+    the text writes it (it replaces the 03 caption on the page)."""
+    out, para, items, note, rows = [], [], [], [], []
 
     def flush():
-        nonlocal para, items, note
+        nonlocal para, items, note, rows
         if para:
             out.append(("p", " ".join(x.strip() for x in para)))
         if items:
             out.append(("ul", items))
         if note:
             out.append(("note", note))
-        para, items, note = [], [], []
+        if rows:
+            out.append(("table", rows))
+        para, items, note, rows = [], [], [], []
 
     lines = md.split("\n")
+    skip = set()
     for k, line in enumerate(lines):
+        if k in skip:
+            continue
         s = line.rstrip()
         if not s.strip():
             flush()
             continue
-        if m := re.fullmatch(r"\s*\[\[تصویر:(\d\d)\]\]\s*", s):
+        if m := IMAGE_MARKER.fullmatch(s):
             flush()
-            out.append(("img", m.group(1)))
+            cap = None
+            j = k + 1
+            while j < len(lines) and not lines[j].strip():
+                j += 1
+            if j < len(lines) and (c := ITALIC_LINE.fullmatch(lines[j])):
+                cap = c.group(1).strip()
+                skip.add(j)
+            out.append(("img", m.group(1), cap))
+        elif is_table_run(lines, k):
+            if para or items or note:
+                flush()
+            if not TABLE_SEP.fullmatch(s):
+                rows.append(table_cells(s))
         elif (m := re.fullmatch(r"\*\*([^*]+)\*\*", s.strip())) and nxt_is_text(lines, k):
             flush()
             out.append(("h", 4, m.group(1).strip()))
@@ -282,19 +321,34 @@ def blocks(md):
             flush()
             out.append(("hr",))
         elif m := re.fullmatch(r"\s*[-*]\s+(.+)", s):
-            if para or note:
+            if para or note or rows:
                 flush()
             items.append(m.group(1).strip())
         elif m := re.fullmatch(r"\s*>\s?(.*)", s):
-            if para or items:
+            if para or items or rows:
                 flush()
             note.append(m.group(1).strip())
         else:
-            if items or note:
+            if items or note or rows:
                 flush()
             para.append(s)
     flush()
     return out
+
+
+def render_table(rows):
+    """The site's table markup (sharehub/share-32): first row is the header."""
+    head = "".join(f"<th>{inline(c)}</th>" for c in rows[0])
+    body = "\n".join("<tr>" + "".join(f"<td>{inline(c)}</td>" for c in r) + "</tr>" for r in rows[1:])
+    return f"<table>\n<thead><tr>{head}</tr></thead>\n<tbody>\n{body}\n</tbody>\n</table>"
+
+
+def figure_caption(b, img, lang):
+    """The caption shown under a figure: the text's own italic line when it has
+    one, else the frozen 03/06 caption."""
+    if len(b) > 2 and b[2] is not None:
+        return b[2]
+    return img["caption_fa" if lang == "fa" else "caption_en"]
 
 
 def nxt_is_text(lines, k):
@@ -398,13 +452,15 @@ def render_body(md, images, img_url, linker, lang="fa", style="compact", link_cl
             if img is None:
                 refuse("IMAGE_MARKER_UNKNOWN", f"[[تصویر:{b[1]}]] has no image in 03-تصاویر")
             alt = img["alt_fa" if lang == "fa" else "alt_en"]
-            cap = img["caption_fa" if lang == "fa" else "caption_en"]
+            cap = figure_caption(b, img, lang)
             fig = (f'<figure><img src="{img_url(b[1])}" alt="{attr(alt)}" width="{img["w"]}" height="{img["h"]}" '
                    f'loading="lazy" decoding="async">')
             fig += f"<figcaption>{esc(cap)}</figcaption></figure>" if cap else "</figure>"
             out.append(fig)
         elif b[0] == "hr":
             out.append('<hr class="text-divider">')
+        elif b[0] == "table":
+            out.append(render_table(b[1]))
     return "\n".join(out)
 
 
@@ -658,9 +714,11 @@ def render_insight(md, imgs, img_url, linker, lang):
             img = imgs.get(b[1])
             if img is None:
                 refuse("IMAGE_MARKER_UNKNOWN", f"[[تصویر:{b[1]}]] has no image in 03-تصاویر")
-            cap = img["caption_fa" if lang == "fa" else "caption_en"]
+            cap = figure_caption(b, img, lang)
             out.append(INSIGHT_FIGURE.format(src=img_url(b[1]), alt=attr(img["alt_fa" if lang == "fa" else "alt_en"]),
                                              w=img["w"], h=img["h"], cap=INSIGHT_CAP.format(esc(cap)) if cap else ""))
+        elif b[0] == "table":
+            out.append(render_table(b[1]))
         else:
             refuse("INSIGHT_BLOCK", f"block «{b[0]}» has no Insight markup precedent")
     return "\n\n".join(out)
@@ -768,9 +826,11 @@ def render_chairside(md, imgs, img_url, linker, lang):
             img = imgs.get(b[1])
             if img is None:
                 refuse("IMAGE_MARKER_UNKNOWN", f"[[تصویر:{b[1]}]] has no image in 03-تصاویر")
-            cap = img["caption_fa" if lang == "fa" else "caption_en"]
+            cap = figure_caption(b, img, lang)
             out.append(CHAIRSIDE_FIGURE.format(src=img_url(b[1]), alt=attr(img["alt_fa" if lang == "fa" else "alt_en"]),
                                                w=img["w"], h=img["h"], cap=CHAIRSIDE_CAP.format(esc(cap)) if cap else ""))
+        elif b[0] == "table":
+            out.append(render_table(b[1]))
         else:
             refuse("CHAIRSIDE_BLOCK", f"block «{b[0]}» has no Chairside markup precedent")
     return "\n\n".join(out)
@@ -1108,29 +1168,34 @@ def run(cmd, check=True):
 
 
 def pathway(cid, m, cat):
-    """Frozen choice, else parent-episode pathways + STRONG, else the top
-    candidate. Never zero."""
+    """5.6, in this order (never zero, never a third automatic pathway):
+    1. the frozen choice(s) of the item;
+    2. a NoteCast/sibling page: exactly the pathways of its same-number
+       episode, right after it — the pair travels together, and a STRONG
+       candidate beside it would be a new editorial choice;
+    3. otherwise the STRONG candidates of pathway_place.py, at most two;
+    4. otherwise its top candidate."""
     import pathway_place as pp
     pw = json.loads((ROOT / "plus/pathways.json").read_text(encoding="utf-8"))
-    placed = []
     if m.get("pathway"):
-        choice = m["pathway"]
-        return [(choice["id"], choice.get("after"), "frozen choice")]
+        choice = m["pathway"] if isinstance(m["pathway"], list) else [m["pathway"]]
+        return [(x["id"], x.get("after"), "frozen choice") for x in choice]
+    parent = m.get("parent_episode")
+    if parent:
+        placed = [(p["id"], parent, "same-number episode's pathway") for p in pw
+                  if any(s_["content_id"] == parent for s_ in p["steps"])]
+        if placed:
+            return placed
     buf = io.StringIO()
     with contextlib.redirect_stdout(buf):
         pp.propose(cid)
     rows = re.findall(r"^\s+(\d+) \| (STRONG |ASK    ) \| (\S+)\s+\| after (\S+)", buf.getvalue(), re.M)
-    parent = m.get("parent_episode")
-    if parent:
-        for p in pw:
-            if any(s["content_id"] == parent for s in p["steps"]):
-                placed.append((p["id"], parent, "parent episode's pathway"))
+    placed = []
     for score, conf, pid, anchor in rows:
         if conf.strip() == "STRONG" and pid not in [x[0] for x in placed]:
             placed.append((pid, None if anchor == "(end)" else anchor, "STRONG"))
     cap = getattr(pp, "AUTO_MAX_PATHWAYS", 2)
-    if len(placed) > cap:
-        placed = placed[:cap]  # a third pathway is a founder decision: never automatic
+    placed = placed[:cap]  # a third pathway is a founder decision: never automatic
     if not placed and rows:
         score, conf, pid, anchor = rows[0]
         placed.append((pid, None if anchor == "(end)" else anchor, "top candidate (mechanical default)"))
@@ -1158,9 +1223,14 @@ def main(argv=None):
     except QueueRefusal as e:
         print(json.dumps({"status": "refused", **e.detail}, ensure_ascii=False, indent=1))
         return 2
-    print(json.dumps(receipt, ensure_ascii=False, indent=1))
+    # the receipt file first: a closed stdout (a pipe into `head`) must never
+    # leave written files without their receipt
     if a.receipt:
         Path(a.receipt).write_text(json.dumps(receipt, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    try:
+        print(json.dumps(receipt, ensure_ascii=False, indent=1))
+    except BrokenPipeError:
+        pass
     return 0
 
 
@@ -1170,13 +1240,11 @@ def assemble(a):
     cat = m["category"]
     c = CATEGORIES[cat]
     cid = a.content_id
-    defaults = []
-    # date: the frozen Fidelity's own date, else today
-    if a.date:
-        date = a.date
-    else:
-        r = run([sys.executable, "tools/queue_install_des.py", "--show-date", str(item), cid])
-        date = json.loads(r.stdout).get("prep_date") or datetime.date.today().isoformat()
+    defaults = qm.defaults_of(d)
+    # date: the publish day. A frozen Fidelity scored the page with its
+    # preparation date; queue_install_des.py --date syncs those date lines to
+    # this date (a date-only change, never a text change).
+    date = a.date or datetime.date.today().isoformat()
     w = Writes()
     builder = {"notecast": build_notecast_page, "insight": build_insight_page, "chairside": build_chairside_page}.get(cat) or (lambda *x: build_page(cat, *x))
     page, img_files, page_info = builder(n, prev, m, date, item, "fa")
@@ -1210,6 +1278,11 @@ def assemble(a):
         if drop:
             defaults.append({"rule": "hashtag not in the library and not ordered minted: dropped", "tags": drop})
             m["hashtags"] = [t for t in m["hashtags"] if t not in drop]
+    if not m.get("author") and ("author" in tentry or "source" in tentry):
+        # a site fact, not a judgment: the category's pages carry one author
+        m["author"] = {"name": tentry.get("author"), "source": tentry.get("source")}
+        defaults.append({"field": "author", "rule": f"the author/source of the latest {cat} brain entry",
+                         "value": m["author"]})
     entry = brain_entry(w, cat, n, m, tentry)
     if m.get("bridge"):
         bridge(w, m["bridge"])
@@ -1239,7 +1312,8 @@ def assemble(a):
 def finish_writes(a, w, base, item, cid, m, cat, date, report, entry, pre):
     chk = run([sys.executable, "tools/queue_install_des.py", "--check-text", str(item), cid], check=False)
     if chk.returncode != 0 and not a.founder_text_change:
-        refuse("TEXT_MOVED", "page body does not carry 01-متن.md verbatim (written files left for inspection)",
+        refuse("TEXT_MOVED", "page body does not carry 01-متن.md verbatim (every written byte was restored; "
+               "rerun with --dry-run to inspect the staged page)",
                output=json.loads(chk.stdout))
     des = [sys.executable, "tools/queue_install_des.py", str(item), cid, "--date", date]
     if a.founder_text_change:
