@@ -297,6 +297,103 @@ class LegacyFormsTests(ManifestTests):
         self.assertEqual([(x["href"], x["label"]) for x in dr["explore_49"]], [("/insight/insight-6.html", "عنوان شش")])
         self.assertEqual([(x["id"], x["after"]) for x in dr["pathway"]], [("occlusion", "insight/insight-1")])
 
+    def test_frozen_batch_orders_the_mint_and_bridge(self):
+        d = self.make_item(extra={
+            "12-batch.json": json.dumps({"concepts": [{"tag": "#نو"}], "articles": {}}),
+            "07-ورودی‌ها.md": "- فهرست: #قدیم #نو\n- bridge: کلید «نو» به library tags موجود full-arch و bar؛ شاهد.\n"})
+        dr = qm.plain(qm.draft(d))
+        self.assertEqual((dr["mint"], dr["mint_batch"]), (["#نو"], "12-batch.json"))
+        self.assertEqual(dr["bridge"], {"map": {"نو": ["full-arch", "bar"]}})
+
+
+class RenderFixesTests(unittest.TestCase):
+    def test_pipe_table_without_outer_pipes_is_a_table(self):
+        md = "نتایج:\n\nنوع| نیرو\nالف| ۹۰۰\nب| ۱۵۵۰\n\nپایان."
+        kinds = [b[0] for b in qa.blocks(md)]
+        self.assertEqual(kinds, ["p", "table", "p"])
+        html_ = qa.render_body(md, {}, None, None)
+        self.assertIn("<thead><tr><th>نوع</th><th>نیرو</th></tr></thead>", html_)
+        self.assertIn("<tr><td>ب</td><td>۱۵۵۰</td></tr>", html_)
+        md2 = "| A | B |\n|---|---|\n| 1 | 2 |"
+        self.assertEqual(qa.blocks(md2), [("table", [["A", "B"], ["1", "2"]])])
+
+    def test_italic_line_after_an_image_is_its_caption(self):
+        md = "متن.\n\n[[تصویر:01]]\n\n*تصویر: زیرنویس متن*\n\nادامه."
+        self.assertEqual(qa.blocks(md)[1], ("img", "01", "تصویر: زیرنویس متن"))
+        self.assertEqual(qa.blocks("[[Image:01]]")[0][:2], ("img", "01"))
+        imgs = {"01": {"alt_fa": "الت", "caption_fa": "زیرنویس ۰۳", "w": 1, "h": 1}}
+        out = qa.render_insight(md, imgs, lambda k: "/x.webp", None, "fa")
+        self.assertIn("تصویر: زیرنویس متن</figcaption>", out)
+        self.assertNotIn("زیرنویس ۰۳", out)
+
+    def test_text_check_reads_table_cells_and_italics(self):
+        import queue_install_des as qid
+        d = Path(tempfile.mkdtemp())
+        (d / "01-متن.md").write_text("نوع| نیرو\nالف| ۹۰۰\n\n*تصویر: زیر*\n\nیک *کج* واژه.\n", encoding="utf-8")
+        self.assertEqual(qid.body_lines(d), ["نوع", "نیرو", "الف", "۹۰۰", "تصویر: زیر", "یک کج واژه."])
+
+    def test_exam_question_without_kind(self):
+        d = Path(tempfile.mkdtemp())
+        (d / "08-سؤال‌های-آزمون.json").write_text(json.dumps({"questions": [
+            {"prompt_fa": "س", "options": ["a", "b"], "correct": 0}]}), encoding="utf-8")
+
+        class W:
+            def __init__(self):
+                self.t = json.dumps({"byContent": {}})
+
+            def text(self, rel):
+                return self.t
+
+            def put(self, rel, t):
+                self.t = t
+        w = W()
+        qa.exam(w, "insight/insight-9", d)
+        self.assertEqual(json.loads(w.t)["byContent"]["insight/insight-9"]["questions"][0]["kind"], "mcq")
+
+    def test_faq_object_and_content_id_placeholder(self):
+        d = Path(tempfile.mkdtemp())
+        (d / "10-فلش‌کارت-FAQ.json").write_text(json.dumps({"faqPage": {"@id": "https://dentcast.org/insight/insight-{content_id}.html#faq",
+                                                                     "mainEntity": [{"name": "q"}]}}), encoding="utf-8")
+
+        class W:
+            t = '{\n  "byContent": {}\n}\n'
+
+            def text(self, rel):
+                return self.t
+
+            def put(self, rel, t):
+                W.t = t
+        out = qa.faq(W(), "insight/insight-9", d, {})
+        self.assertEqual(out["faq"], 1)
+        self.assertIn("https://dentcast.org/insight/insight-9.html#faq", W.t)
+
+
+class LedgerAndTextIoTests(unittest.TestCase):
+    def test_init_input_refuses_a_bare_number(self):
+        import queue_ledger as ql
+        with self.assertRaises(qm.QueueRefusal) as e:
+            ql.init_input("45")
+        self.assertEqual(e.exception.code, "CONTENT_ID_INVALID")
+        self.assertEqual(ql.init_input("sharehub/share-45")["content_id"], "sharehub/share-45")
+
+    def test_merge_records_replaces_by_kind_and_scope(self):
+        import queue_ledger as ql
+        pub = {"target_paths": ["a"], "context": {"decisions": [{"kind": "queue_lane_v1"}, {"kind": "x", "v": 1}],
+                                                  "approvals": [{"scope": "title", "decision": "old"}]}}
+        rec = {"decisions": [{"kind": "x", "v": 2}], "approvals": [{"scope": "title", "decision": "new"}],
+               "target_paths": ["b"]}
+        out = ql.merge_records(pub, rec)
+        self.assertEqual(out["context"]["decisions"], [{"kind": "queue_lane_v1"}, {"kind": "x", "v": 2}])
+        self.assertEqual(out["context"]["approvals"], [{"scope": "title", "decision": "new"}])
+        self.assertEqual(out["target_paths"], ["a", "b"])
+
+    def test_json_replace_value_keeps_mixed_line_endings(self):
+        text = '[\r\n  {\r\n    "hashtags": [\r\n      "#x"\r\n    ]\n  },\n  {"hashtags": ["#y"]}\n]\n'
+        new = tio.json_replace_value(text, [0, "hashtags"], ["#x", "#z"])
+        self.assertEqual(new, text.replace('"#x"\r\n', '"#x",\r\n      "#z"\r\n'))
+        new = tio.json_replace_value(new, [1, "hashtags"], ["#q"])
+        self.assertTrue(new.endswith('{"hashtags": ["#q"]}\n]\n'))
+
 
 if __name__ == "__main__":
     unittest.main()

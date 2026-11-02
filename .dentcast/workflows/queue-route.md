@@ -92,6 +92,9 @@ push برای Action همان «Push 2» است؛ بعد از آن پیام `CLA
 |---|---|
 | `MANIFEST_INCOMPLETE` | فقط فیلدهای نام‌برده در supplement، با منشأ |
 | `SUPPLEMENT_NOT_VERBATIM`، `SUPPLEMENT_OVERRIDES_FROZEN` | منشأ را درست کن؛ مقدار صف را عوض نکن |
+| `SUPPLEMENT_TEXT_NOT_FROZEN` | متنِ صفحه در صف منجمد نیست (مثل alt انگلیسی یا برچسب منابع): مطلب به «در حال آماده‌سازی» برمی‌گردد؛ ایجنت روز انتشار آن را نمی‌نویسد |
+| `SUPPLEMENT_OVERRIDES_DEFAULT` | پیش‌فرض مکانیکی را فقط مقداری از یک خطِ صف عوض می‌کند، نه انتخاب روز انتشار |
+| `EXAM_SHAPE`، `FAQ_PLACEHOLDER` | فایل `08`/`10` شکل شناخته‌شده ندارد؛ گزارش کن، دستی نساز |
 | `FOREIGN_LOCK`، `NOT_READY` | مطلب را برندار؛ گزارش کن |
 | `CONTENT_ID_NOT_NEXT` | شمارهٔ گفته‌شده در پیام |
 | `TEMPLATE_RESIDUE`، `TEMPLATE_REGION`، `LANDING_ROW`، `PULSE_COUNT`، `PARENT_*` | قالب سایت عوض شده؛ گزارش کن، دستی نساز |
