@@ -361,6 +361,28 @@ def draft(item):
                 pulse = (n, "html", tpl.group(1).strip())
     d["hashtags"] = tags or V(None, "07-ورودی‌ها.md: no hashtag list line")
     d["mint"] = V([], "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)")
+    # a frozen hashtag batch (in SHA256SUMS, with «concepts») orders the mint of
+    # the approved tags it defines; its cabinet bridge is the «- bridge: کلید «…»
+    # به library tags موجود a و b» line of 07
+    sums = (item / "SHA256SUMS").read_text(encoding="utf-8") if (item / "SHA256SUMS").exists() else ""
+    for rel in re.findall(r"^[0-9a-f]{64} [ *](?:\./)?(\S+\.json)\s*$", sums, re.M):
+        try:
+            batch = json.loads((item / rel).read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        defined = [c.get("tag") for c in batch.get("concepts") or [] if isinstance(c, dict)] if isinstance(batch, dict) else []
+        ordered = [t for t in (tags["value"] if tags else []) if t in defined]
+        if ordered:
+            d["mint"] = V(ordered, f"{rel} (frozen batch; tags in the approved list)")
+            d["mint_batch"] = V(rel, "SHA256SUMS")
+            break
+    for n, l in enumerate(l07, 1):
+        m = re.match(r"^-\s*bridge:\s*کلید\s*«([^»]+)»\s*به library tags موجود\s*([^؛.]+)", l.strip())
+        if m:
+            lib = re.findall(r"[a-z][a-z0-9-]+", m.group(2))
+            if lib:
+                d["bridge"] = V({"map": {m.group(1): lib}}, f"07-ورودی‌ها.md:{n}")
+            break
     d["pillar"] = V({"primary": pillar[1], "subtopic": sub[1] if sub else None, "secondary": []},
                     f"07-ورودی‌ها.md:{pillar[0]}") if pillar else V(None, "07-ورودی‌ها.md: no pillar line")
     if pulse and len(pulse) == 3 and pulse[1] == "html" and title:
