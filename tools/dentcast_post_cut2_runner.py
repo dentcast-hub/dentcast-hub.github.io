@@ -105,9 +105,11 @@ def classify(root: Path) -> dict:
     if not lifecycle.editorial_cut_v2(pub):
         return {"continue": False, "reason": "V2_REQUIRED_FOR_AUTOMATIC_CONTINUATION"}
     boundary = lifecycle.delivery_boundary(pub)
-    if boundary != 2:
+    # The push before the Action: cut 2 (interactive v2) or the single queue-lane cut.
+    if boundary != len(lifecycle.delivery_cuts(pub)):
         return {"continue": False, "reason": "NOT_AT_V2_SECOND_DELIVERY", "boundary": boundary}
-    return {"continue": True, "reason": "V2_SECOND_DELIVERY", "boundary": boundary}
+    return {"continue": True, "reason": "QUEUE_LANE_DELIVERY" if lifecycle.queue_lane(pub) else "V2_SECOND_DELIVERY",
+            "boundary": boundary}
 
 
 def superseded_by_handoff_push(root: Path, expected_head: str, remote_head: str) -> bool:
@@ -153,11 +155,17 @@ def command_plan(root: Path, pub: dict):
     # enrolled target is the reliable trigger.
     if "dentcast.json" in pub["target_paths"] or handoff.publication_category(pub) in ("episode", "episodes", "dentcast"):
         cmds.append(["python3", "tools/build_episodes.py"])
-    if rows["C.4.11"]["status"] == "completed":
+    def done(sid):
+        # A queue-lane ledger has no C.4.11/C.4.12/C.4.14 rows: their outputs
+        # (FAQ/flashcards, exam rows) were assembled at C.2 from the frozen item.
+        if sid in rows:
+            return rows[sid]["status"] == "completed"
+        return lifecycle.queue_lane(pub) and sid in ("C.4.11", "C.4.12")
+    if done("C.4.11"):
         cmds.append(["node", "tools/build_flashcards_index.mjs"])
-    if rows["C.4.12"]["status"] == "completed":
+    if done("C.4.12"):
         cmds.append(["node", "tools/build_quiz_index.mjs"])
-    if rows["C.4.14"]["status"] == "completed":
+    if done("C.4.14"):
         cmds.append(["node", "tools/build_challenge_index.mjs"])
         # A چالش page belongs in sitemap.xml (Phase F checks it), but its
         # Phase D, which otherwise regenerates the sitemap, is skipped.
@@ -345,7 +353,7 @@ def run_phase(root: Path, artifact_dir: Path, args):
     pub, _ = publication(root)
     if not lifecycle.editorial_cut_v2(pub):
         raise RunnerError("V2_REQUIRED")
-    if lifecycle.delivery_boundary(pub) != 2:
+    if lifecycle.delivery_boundary(pub) != len(lifecycle.delivery_cuts(pub)):
         raise RunnerError("NOT_AT_V2_SECOND_DELIVERY")
     lifecycle.require_fixed_cut_readiness(pub, root)
     if any(a["status"] in ("started", "outcome_unknown") for a in pub["external_actions"]):
@@ -380,7 +388,7 @@ def run_phase(root: Path, artifact_dir: Path, args):
             pub, _ = publication(root)
             current = handoff.next_step(pub)
         if current == "D":
-            challenge = next(s for s in pub["steps"] if s["id"] == "C.4.14")
+            challenge = next((s for s in pub["steps"] if s["id"] == "C.4.14"), {"status": "absent"})
             litecast = handoff.publication_category(pub) == "litecast"
             if litecast or challenge["status"] == "completed":
                 reason = "Canonical Phase D exemption: LiteCast" if litecast else "Canonical Phase D exemption: Challenge"
@@ -571,7 +579,7 @@ def finalize_and_push(root: Path, artifact_dir: Path, expected_head: str,
             raise RunnerError("FINAL_DELIVERY_GUARD_FAILED:" + guard.stdout.strip())
         git(root, "config", "user.name", "github-actions[bot]")
         git(root, "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com")
-        git(root, "commit", "-m", f"Complete publication {expected_branch} delivery 3")
+        git(root, "commit", "-m", f"Complete publication {expected_branch} delivery {2 if lifecycle.queue_lane(pub) else 3}")
         third_sha = git(root, "rev-parse", "HEAD")
         if git(root, "rev-parse", "HEAD^") != expected_head:
             raise RunnerError("FINAL_DELIVERY_PARENT_MISMATCH")

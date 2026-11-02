@@ -66,6 +66,7 @@ def validate_session(session):
     lc.require_plan(p)
     h.require(lc.fixed_delivery(p) and p["category"] != "paper-only",
               "CONNECTED_FIRST_CUT_PAGES_ONLY")
+    h.require(not lc.queue_lane(p), "CONNECTED_NOT_FOR_QUEUE_LANE: the queue lane runs in a local checkout")
     h.require(p["content_id"] != "unassigned" and p["category"] != "pending",
               "CONNECTED_INTAKE_IDENTITY_REQUIRED")
     h.require(identity["inputs_fingerprint"] == digest(canonical(p["context"]["inputs"])),

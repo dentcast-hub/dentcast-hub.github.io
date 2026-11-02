@@ -617,7 +617,8 @@ def compact_v3_steps(steps):
 def expand_v3_steps(publication):
     """Recover the omitted canonical tail; reject gaps and retain all dynamic rows."""
     import dentcast_publish_lifecycle as lifecycle
-    required = lifecycle.plan(publication_category(publication) == "paper-only")
+    required = lifecycle.plan(publication_category(publication) == "paper-only",
+                              queue=lifecycle.queue_lane(publication))
     serialized = publication["steps"]
     require(isinstance(serialized, list), "COMPACT_STEPS_INVALID")
     rebuilt, index = [], 0
@@ -1489,6 +1490,8 @@ def main(argv=None):
                 p.add_argument("--reconcile-note")
     p = sub.add_parser("plan")
     p.add_argument("--paper-only", action="store_true")
+    p.add_argument("--queue", action="store_true",
+                   help="queue-lane ledger (publish-queue item); init input must carry the queue_lane_v1 decision")
     p = sub.add_parser('discover')
     p.add_argument('--recover-incomplete', action='store_true', help='User explicitly requested recovery of an incomplete publication')
     p.add_argument('--repository', help='GitHub owner/repo; otherwise inferred from checkout origin')
@@ -1557,7 +1560,11 @@ def main(argv=None):
         elif args.command == "delivery-plan":
             result = lifecycle.delivery_plan(root, args.base_ref, args.max_blob_bytes)
         elif args.command == "plan":
-            result = {"status": "plan_template", "steps": lifecycle.plan(args.paper_only), "publication_completed": False}
+            require(not (args.paper_only and args.queue), "PLAN_PROFILE_CONFLICT")
+            result = {"status": "plan_template", "steps": lifecycle.plan(args.paper_only, queue=args.queue),
+                      "publication_completed": False}
+            if args.queue:
+                result["decisions"] = [{"kind": lifecycle.QUEUE_LANE}]
             repo_top = text_git(Path(args.repo).resolve(), "rev-parse", "--show-toplevel", optional=True)
             warnings = tool_staleness_warnings(repo_top or None)
             if warnings:

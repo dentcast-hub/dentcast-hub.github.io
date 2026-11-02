@@ -30,6 +30,10 @@ on:
       - 'tests/test_verify_publish_checks.py'
       - 'tests/test_queue_frozen_des.py'
       - 'tools/queue_install_des.py'
+      - 'tools/queue_apply.py'
+      - 'tools/queue_manifest.py'
+      - 'tools/queue_ledger.py'
+      - 'tests/test_queue_apply.py'
       - '.dentcast/queue-frozen-des.json'
       - 'tests/fixtures/**'
       - 'scripts/**'
@@ -95,6 +99,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p test_verify_publish_checks.py -v
       - name: Check the publish-queue frozen DES/Fidelity order (founder 1405/08/11)
         run: python3 -m unittest discover -s tests -p test_queue_frozen_des.py -v
+      - name: Check the queue-lane assembler (byte-preserving writers, refusals)
+        run: python3 -m unittest discover -s tests -p test_queue_apply.py -v
       - name: Check hook adapters and shared rule routing
         run: node --test tests/publishing-hooks.test.mjs
       - name: Check prior data guards (exam bank append-only, bank files kept)
