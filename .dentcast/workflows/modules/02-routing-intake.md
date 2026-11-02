@@ -74,9 +74,9 @@ Ask:
 
 > این مطلب کدوم نوعه؟ (لیست نوع‌هایی که از brain پیدا کردی رو نشون بده)
 
-**Two types the brain still carries are CLOSED and are never offered (founder,
-1405/07/15): `dentai` and `photocast`.** Their 35 + 3 pages stay exactly where
-they are, but no new entry is ever appended to either. A single- or multi-paper
+**Two types in the brain are CLOSED and are never offered: `dentai` and
+`photocast`.** Their 35 + 3 pages stay where they are, but no new entry is ever
+appended to either. A single- or multi-paper
 reading is **`sharehub`**. If the user names one of the closed types, say so and
 ask which living section it goes to (`sharehub` for a reading) — never create
 `dentai-36` or `photocast/episode-4` (.dentcast/workflows/global/repo-conventions.md).
@@ -155,7 +155,7 @@ Look at the latest entry in the locked category and identify which media fields 
 If a field exists in previous entries but you genuinely don't know whether the user wants it this time, ask: «این بار [field] داری یا نه؟»
 
 <!-- insight-conventions:v1 -->
-**Insight images and caption (founder, 1405/08/07).** For `insight/` pages:
+**Insight images and caption.** For `insight/` pages:
 
 - **Image file name:** `insight<N>-<k>.webp`, `<k>` from 1 in the order the images
   appear, even when there is only one (`insight100-1.webp`); no slug, no other
@@ -166,8 +166,9 @@ If a field exists in previous entries but you genuinely don't know whether the u
   sentences, at most 200 characters. A caption the founder wrote is copied as is
   (Hard Rule 16), whatever its length.
 
-Older insight pages keep their file names; this applies to new ones, a چالش
-image in `insight/` included (module 09's `insight68.webp` is an older example).
+Existing insight pages keep their file names; this applies to new ones, a چالش
+image in `insight/` included (module 09's `insight68.webp` does not follow this
+pattern; do not copy it).
 <!-- /insight-conventions:v1 -->
 
 ### Question 4.7 — Any type: is there an accompanying article (paper) file?
@@ -214,19 +215,14 @@ page names **no retrievable paper**. No DOI is needed and none is asked for: the
 **content's own text is the `source_text`**, and step 4.13 runs the COMMENTARY
 track on it.
 
-**The CONTENT TYPE never decides the basket — what the page CITES does.** Until
-2026-08-15 this step said Chairside, MetaNote and ShareHub were COMMENTARY *by
-definition*, and ShareHub is the section that proves that wrong. Its fifteen pages
-are three different things: eight short practical notes with no citation at all
-(`share-1…7`, `share-15`, 1.2–3.2k chars), two carrying audio, and five that are
-literature reviews standing on real DOIs — `share-11` on **eleven**, `share-14` on
-**twelve**. Calling those five COMMENTARY scores the founder's transparency on a
-page whose actual basis is a dozen published studies, and hides all twelve from
-the reader. The same trap is waiting in every other section, which is why the rule
-is now about the page rather than the folder.
+**The CONTENT TYPE never decides the basket — what the page CITES does.** No
+section is COMMENTARY by definition. ShareHub, for example, holds short practical
+notes with no citation at all (`share-1…7`, `share-15`) alongside literature
+reviews standing on real DOIs (`share-11` on **eleven**, `share-14` on
+**twelve**); those reviews are basket 2, and scoring them as COMMENTARY would hide
+their sources from the reader.
 
-**The test is mechanical, and it is the one `episodes/episode-161` already
-passed:** does the page carry a **retrievable identifier** — a DOI, a `doi.org`
+**The test is mechanical:** does the page carry a **retrievable identifier** — a DOI, a `doi.org`
 link, a PubMed id, or a «منابع» block listing them? If yes it is basket 2, whatever
 type the page is. If no, and the متن is the author's own reasoning, it is basket 1.
 Naming a study in prose without an identifier is **not** basket 2 and does not
@@ -247,8 +243,8 @@ abstract. It qualifies when any of these holds:
   scored sources).
 
 A reference in that block with **no** DOI — a textbook, a glossary, a standard — is a
-source too (step 4.13 records it `NOT_APPRAISABLE`), and from spec v3.1 it gets a
-FIDELITY call whenever its text is in hand: the score and the fidelity are two
+source too (step 4.13 records it `NOT_APPRAISABLE`), and it gets a FIDELITY call
+whenever its text is in hand (DES spec v3.1): the score and the fidelity are two
 questions, and the gate is the text, never the score.
 
 Record the DOI(s) and carry them to step 4.13, which resolves each into its own
@@ -272,14 +268,9 @@ studies behind it with a DOI/PubMed id. If it names them, follow. If it does not
 itself with `text_basis: SECONDARY_REPORT` (spec v2.2), which rates its silences
 as `NR` rather than as absent safeguards.
 
-This was found on `dentai/dentai-29` (2026-08-16). The SSRD/SEPES/PROSEC
-consensus statement was scored as though it were the review, earning `high` on
-search strategy, risk-of-bias appraisal and excluded studies — three claims that
-are false: the two systematic reviews it summarises searched three and five
-databases and both appraised their studies independently. The tell was that the
-same class of document scored 55/C from its abstract alone and 30/D once the full
-text was read, i.e. **reading more of it made it worse**, which never happens when
-the tool fits the document.
+A warning sign that a wrapper is being scored as if it were the study: its score
+**drops as more of its text is read**, which never happens when the tool fits the
+document.
 
 **3. INDETERMINATE — research-shaped content with no identified paper. ASK.**
 The content plainly rests on the literature but no specific study is pinned down:
@@ -298,10 +289,8 @@ and ask, as a two-option menu:
   4.13 is a documented skip ("4.13: skipped — کاربر انتخاب کرد بدون DES منتشر شود").
   Record that decision as a page-bound entry in `.dentcast/des-exemptions.json`
   (`publish-checkpoints.md`; reason `unsourced_audio_caption` for a caption+audio-only
-  episode, otherwise `founder_without_des`) — without it Phase F fails. It does **not** quietly fall back to the COMMENTARY track: scoring a
-  research-derived piece as though it were the author's own opinion is a false
-  statement about what the page is, and a band E on a paper summary is worse than no
-  band at all.
+  episode, otherwise `founder_without_des`) — without it Phase F fails. It does **not** fall back to the COMMENTARY track: scoring a research-derived
+  piece as the author's own opinion misstates what the page is.
 - **There is no third option.** Do not go hunting for "probably this paper", do not
   score the caption as commentary just to have *something*, and do not defer the
   question to the final report.
@@ -324,14 +313,14 @@ supplies: copied, never re-typed.
 **Question 3.5's de-AI pass runs on the question and the answer as usual.** The key
 points are not prose a reader ever sees and are exempt.
 
-When the answer is «مطلب معمولی» (the ordinary case), proceed exactly as before —
-this question changes nothing about the rest of the publish.
+When the answer is «مطلب معمولی» (the ordinary case), proceed normally — this
+question changes nothing about the rest of the publish.
 
 ### Question 5 — Pulse sentence
 
-**No spoilers — the Pulse line names the piece, it never narrates it.** A Pulse line announces that something new was published; it is not a summary and must never reveal the content's decision, mechanism, finding, or conclusion. Reference the **title only** (verbatim or near-verbatim as the link text, optionally inside a short announcement frame like «یک اینسایت بالینی با عنوانِ «…» منتشر شد») — never a clause describing *what the piece is about* beyond its own title («درباره‌ی تصمیمِ …», «راهکاری برای …» that paraphrases the finding, etc.). If the title itself is the natural link text, that is sufficient and preferred. This applies to every category and every future publish — it is not a one-off preference.
+**No spoilers — the Pulse line names the piece, it never narrates it.** A Pulse line announces that something new was published; it is not a summary and must never reveal the content's decision, mechanism, finding, or conclusion. Reference the **title only** (verbatim or near-verbatim as the link text, optionally inside a short announcement frame like «یک اینسایت بالینی با عنوانِ «…» منتشر شد») — never a clause describing *what the piece is about* beyond its own title («درباره‌ی تصمیمِ …», «راهکاری برای …» that paraphrases the finding, etc.). If the title itself is the natural link text, that is sufficient and preferred. This applies to every category and every publish.
 
-Per **Hard Rule 14**: if this category has an established Pulse phrasing convention (previous entries of this type follow a consistent pattern), draft the sentence yourself in that pattern — including which word gets hyperlinked — and state it directly rather than asking an open question; the hyperlink target is the new content's page URL in its own category's directory. Report the drafted line plainly so the user can correct it if they want something different. **Older Pulse lines that describe content beyond the title are a backlog, not a pattern to copy forward (Hard Rule 11's spirit)** — always draft the new line to the no-spoiler standard above, even where precedent doesn't.
+Per **Hard Rule 14**: if this category has an established Pulse phrasing convention (previous entries of this type follow a consistent pattern), draft the sentence yourself in that pattern — including which word gets hyperlinked — and state it directly rather than asking an open question; the hyperlink target is the new content's page URL in its own category's directory. Report the drafted line plainly so the user can correct it if they want something different. **Existing Pulse lines that describe content beyond the title are a backlog, not a pattern to copy forward (Hard Rule 11's spirit)** — always draft the new line to the no-spoiler standard above, even where precedent doesn't.
 
 Only ask when there is genuine ambiguity — no established convention to follow, or the category's Pulse phrasing varies enough that a pick isn't obvious:
 

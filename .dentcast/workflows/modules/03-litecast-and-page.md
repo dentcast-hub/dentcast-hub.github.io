@@ -14,7 +14,7 @@ Run, in order:
 **Check the locked category first (from Phase B Question 1).** If it is **LiteCast**, this branch's rules **override** the corresponding general steps below. LiteCast is **non-specialist (general-audience)** content, deliberately kept **separate** from the rest of the site's specialist ecosystem: it has its own source of truth, its own internal link structure, and must **not** be cross-linked with specialist content. If the locked category is anything other than LiteCast, ignore this section and proceed normally from step 1.
 
 **0.1 — Source of truth is `litecast/lite-glossary.json`, not `dentcast-brain.json`.**
-- The file is a JSON **object** whose entries live under the top-level **`LightGlossary`** key — an array of LiteCast entries (despite the filename, this is LiteCast *content*, not a glossary of terms). The current entry shape is `type` (`"litecast"`), `id` (`litecast-N`), `title`, `caption`, `hashtags`, `keywords`, `page_url` (a path like `litecast/lite-CASTN.html`, e.g. `litecast/lite-CAST42.html`). There is **no** `pillar` field — confirm the live shape from the file rather than trusting this list.
+- The file is a JSON **object** whose entries live under the top-level **`LightGlossary`** key — an array of LiteCast entries (despite the filename, this is LiteCast *content*, not a glossary of terms). The entry shape is `type` (`"litecast"`), `id` (`litecast-N`), `title`, `caption`, `hashtags`, `keywords`, `page_url` (a path like `litecast/lite-CASTN.html`, e.g. `litecast/lite-CAST42.html`). There is **no** `pillar` field — confirm the live shape from the file rather than trusting this list.
 - Infer **all** LiteCast structure from `litecast/lite-glossary.json`: required fields, schema shape, directory/URL pattern, and media requirements. Read it the way Phase A reads the brain — find the **most recent** entry in `LightGlossary` and use it as both the **schema** and **structural** template.
 - The new LiteCast entry is **appended to the `LightGlossary` array** in `litecast/lite-glossary.json`, matching its format **exactly** (identical keys/nesting/ordering to the previous entry — no extra fields, no missing fields).
 - Do **NOT** add a LiteCast entry to `dentcast-brain.json`. This replaces the normal step 5 brain-entry write (and the step 2.4 pillar/subtopic determination — see 0.4).
@@ -124,8 +124,7 @@ codebases are mirrors and per-domain logic is forbidden — the unused socket is
 idle and the browser drops it); and this is a **paid-sponsor correctness**
 matter, not a micro-optimisation — the Spot card cannot render until `/me`
 answers, so without preconnect the cold DNS+TLS handshake sits directly in
-front of the sponsor's impression (measured 2.7–3.0s to first card vs.
-70–170ms warm).
+front of the sponsor's impression.
 
 **E-NAMAD seal — never clone it onto a content page.** The trust seal
 (نماد اعتماد الکترونیکی) lives on exactly three surfaces (`index.html`'s footer,
@@ -151,8 +150,8 @@ paragraph + the list) are enough: the card lands between them, in the upper half
 
 This bites the **Insight** template hardest — its house style is `h3` label + `h3`
 thesis + one `<ul>` of sections — but the requirement is type-agnostic and applies to
-any page whose body would otherwise be list-only. NoteCast and DentAI pages have
-drifted into the same shape and are equally affected.
+any page whose body would otherwise be list-only, including NoteCast and DentAI
+pages.
 
 Write a genuine 2–4 sentence lead that **adds** something — the clinical situation, the
 decision at stake, what the reader will get — never a restatement of the `h3` thesis
@@ -174,5 +173,5 @@ doubt, shorter is safer than padded.
 
 To check a page you just built:
 `node -e` against `spot/spot.js`'s `bodyBlocks()`, or simply confirm by eye that a
-paragraph precedes the first list. Pages already published that fail this are a known
-backlog, not a pattern to copy forward (**Hard Rule 11**).
+paragraph precedes the first list. Published pages that fail this are not a pattern
+to copy forward (**Hard Rule 11**).

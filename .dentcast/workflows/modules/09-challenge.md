@@ -27,18 +27,17 @@ walked back once it is in git history (RULE 2):
    brain entry, or in any committed file.
 
    **Copy insight-68's markup exactly (RULE 18, handoff §11.3) — it is the
-   reference implementation, not just the first example:**
+   reference implementation:**
    ```html
    <p data-dc-challenge-question data-dc-challenge-image="/insight/insight68.webp">
      …the question, verbatim…
    </p>
    ```
    Two things this is not allowed to drift on: **no separate `<img>` tag** —
-   the image lives only as that data-attribute value, because insight-68's
-   first draft had a real `<img>` *and* the live JS block redrawing the same
-   image, so the question and the photo both rendered twice on the page
-   before that was fixed. And the path is **site-absolute** (`/insight/
-   insight68.webp`), never a bare filename — a bare filename happens to work
+   the image lives only as that data-attribute value, because the live JS block
+   draws the image from it and a real `<img>` would render the question and
+   the photo twice. And the path is **site-absolute** (`/insight/
+   insight68.webp`), never a bare filename — a bare filename works
    on the standalone page but 404s on the desktop 3-column shell, which
    injects the article in place inside `index.html` rather than in an
    iframe. Both are enforced by `tools/build_challenge_index.mjs` (throws on
@@ -74,7 +73,7 @@ give each its own explicit verdict in the report, never a silent skip
 | 4.12 quiz-ready FAQ | **skip** — same reason (and see RULE 1: never confuse this with `quiz-index.json`) |
 | 4.13 DES | **skip, reported** — a question cites nothing and appraises nothing; write **no key** in `des-scores.json` |
 | 5.6 / 5.6-ب pathways & bundles | **skip** — a pathway step is something to read |
-| Phase D en mirror | **skip — decided** (RULE 16, the second documented exception to Hard Rule 12 alongside LiteCast) |
+| Phase D en mirror | **skip** (RULE 16, the second documented exception to Hard Rule 12 alongside LiteCast) |
 
 Steps 2.4 (pillar), 2.5 (کاوش بیشتر), 2.6 (landing page), 5.0 (hashtags), 5
 (brain entry, per RULE 15 — the folder's ordinary shape, never a new `type`),

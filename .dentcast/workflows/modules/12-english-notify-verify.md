@@ -9,7 +9,7 @@
 
 ## Phase D — English mirror & language toggle (MANDATORY; Hard Rule 12)
 
-**This phase is not optional and is not the «… رو انگلیسی کن» trigger — it runs automatically at the end of every `.org` publish.** A publish that produced a new fa page but no English counterpart + working toggle is **incomplete**. The recurring failure this prevents: shipping an insight/notecast/etc. page with **no language toggle** because the cloned template never had one. The toggle is meaningless without its target, so the en page and the toggle are produced together, here, by reusing the existing English-version machinery.
+**This phase is not optional and is not the «… رو انگلیسی کن» trigger — it runs automatically at the end of every `.org` publish.** A publish that produced a new fa page but no English counterpart + working toggle is **incomplete**, even when the cloned template had **no language toggle**. The toggle is meaningless without its target, so the en page and the toggle are produced together, here, by reusing the existing English-version machinery.
 
 **Two documented skips, and no others:** if the locked category is **LiteCast**,
 skip Phase D entirely and **say so in the report** ("Phase D: skipped — LiteCast
@@ -26,8 +26,8 @@ page missing the only thing on it"). Every other publish runs it.
    - **Body, box/section CSS classes, and JSON-LD `@type`/shape inherited from THIS page's own type** (e.g. the insight `.glass-box` structure), rendered LTR and **translated** structure-faithfully (same headings, same number of `<li>` items, nothing added or dropped).
    - **Scripts/analytics follow this type's conventions, not meta-1's extras.**
    - en page carries **no** specialist «کاوش بیشتر» capsules / glossary back-links / brain links (en pages stay out of the brain ecosystem — en-version Hard Rule 8): no brain entry, no Pulse line, no 4.7/4.8/4.9 for the en page.
-2. **Wire the toggle on BOTH sides (en-version step 4).** On the new en page: `.lang-btn` → `../{file}.html` (label «فارسی»). On the source fa page: add `.lang-btn` → `en/{file}.html` (label «English»), placed/styled per the fa-side precedent (`metanotes/meta-1.html`), and **ensure the `.lang-btn` CSS exists in the fa page's inline `<style>`** (current templates carry it, but older clones may not — adding the button without its CSS is the "missing toggle = CSS issue" failure; add both when missing). The two targets must be exact inverses and neither may point at meta-1.
-3. **noindex + hreflang enforcement (en-version step 7).** The en mirrors are unreviewed AI translations and stay OUT of search (2026-08-11 SEO audit): the new en page must carry `<meta name="robots" content="noindex, follow">`, no hreflang block, and never enters the sitemap; the fa page keeps its standard 3-line hreflang block and gains **no** `en` alternate. Run `python3 .github/scripts/inject_hreflang.py` (strips/normalizes both sides, idempotent) and `python3 tools/noindex_en_mirrors.py --check` (fails if any en page is indexable — fix by running it without `--check`). Also run `python3 .github/scripts/gen_sitemap.py` (it drops noindexed pages itself) and re-run `python tools/stamp-version.py` **last**.
+2. **Wire the toggle on BOTH sides (en-version step 4).** On the new en page: `.lang-btn` → `../{file}.html` (label «فارسی»). On the source fa page: add `.lang-btn` → `en/{file}.html` (label «English»), placed/styled per the fa-side precedent (`metanotes/meta-1.html`), and **ensure the `.lang-btn` CSS exists in the fa page's inline `<style>`** (a clone may lack it; a button without its CSS does not render as a toggle, so add both when missing). The two targets must be exact inverses and neither may point at meta-1.
+3. **noindex + hreflang enforcement (en-version step 7).** The en mirrors are unreviewed AI translations and stay OUT of search: the new en page must carry `<meta name="robots" content="noindex, follow">`, no hreflang block, and never enters the sitemap; the fa page keeps its standard 3-line hreflang block and gains **no** `en` alternate. Run `python3 .github/scripts/inject_hreflang.py` (strips/normalizes both sides, idempotent) and `python3 tools/noindex_en_mirrors.py --check` (fails if any en page is indexable — fix by running it without `--check`). Also run `python3 .github/scripts/gen_sitemap.py` (it drops noindexed pages itself) and re-run `python tools/stamp-version.py` **last**.
 4. **Verify (en-version step 9).** Confirm: en page has `<html lang="en" dir="ltr" data-dc-no-header>`, self-canonical `.org`, robots meta `noindex, follow`, **zero** hreflang lines, `inLanguage`/`lang`/`og:locale` all `en`, the same JSON-LD `@type` as this type, GA4 exactly once; both toggles are exact inverses; the chrome standard `metanotes/en/meta-1.html` is **untouched** (hash unchanged). Report the two file paths created/modified (new en page + the toggle edit on the source fa page).
 
 **Why Phase D and not a step inside Phase C:** it consumes the *finished* fa page (after all of Phase C's swaps, enrichment, and rebuild), and it deliberately reuses a **separate, already-correct workflow** rather than duplicating its logic. Keep it last so the English mirror reflects the final published state.
@@ -64,7 +64,7 @@ the rest.
 - **Glossary** — reference type, not an article. Report the skip.
 - Every other category adds the marker.
 
-**One-time go-live step (before the Action is enabled the first time):** record all
+**Go-live step (only when enabling the Action for the first time):** record all
 existing pages as already-notified so editing an old article never fires premium:
 
 ```bash
@@ -100,14 +100,10 @@ e.g. `chairside/chairside-28`. Drop the two `--expect-*` flags only when the
 user genuinely supplied neither string in their own words (Hard Rule 16).
 
 **Why this phase exists.** Everything it checks is already written above as
-prose. Prose is not enforceable: this document is ~1300 lines and roughly
-seventy separate obligations, and the recurring failure is not disagreement
-with a rule but *silently not reaching it* — the enrichment step that never
-ran, the builder that ran in the wrong order, the surface a correction missed,
-the invisible character that changed. None of those raise an error anywhere;
-each ships a live page that is quietly wrong. The gate turns that checklist
-into an exit code, so "I think I did everything" is replaced by a command that
-either passes or names the file, the exact mismatch, and the fix.
+prose, but a skipped obligation — an enrichment step that never ran, a builder
+run in the wrong order, a surface a correction missed, an invisible character
+that changed — raises no error anywhere. The gate turns that checklist into an
+exit code: it either passes or names the file, the exact mismatch, and the fix.
 
 **What it verifies** (each row names the step it belongs to, so a failure points
 straight back into this document): brain tail position and key-set parity with
@@ -172,8 +168,7 @@ silently absent.
 **Regression sweep (not part of a publish):**
 `python3 tools/verify_publish.py --all` runs the same checks over every
 published page. It exits 0 by design: its `FAIL` rows are the site's **backlog**
-(flashcards, quiz, en mirrors and the notify marker were all rolled out
-prospectively), and per **Hard Rule 11** a gap on an old page is something to
+on older pages, and per **Hard Rule 11** a gap on an old page is something to
 fix on its own, never a pattern to copy forward.
 
 ## Final output summary

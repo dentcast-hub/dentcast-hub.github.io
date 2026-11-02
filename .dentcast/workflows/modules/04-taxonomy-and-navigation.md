@@ -60,10 +60,10 @@ After the new page is cloned and field values are swapped (step 2), add the "ک�
 |---|---|
 | Typed brain entry (any entry in `dentcast-brain.json` with a `type` field — NoteCast, Insight, Clinical, Chairside, DentAI, MetaNote, PhotoCast, ShareHub, DentCast+, …) | **Both** capsules: دانشنامه + فهرست موضوعی (the فهرست موضوعی capsule points to the entry's own pillar — see below) |
 | Glossary term page (sourced from `glossary/glossary.json`, not from the brain) | **Only** the فهرست موضوعی capsule (pointing to the term's own pillar) |
-| Core podcast episode (`/episodes/episode-XX.html`; `"type": "dentcast"` since episode 154, no `type` on older entries) | **No `dc-related-section`.** Instead add the pillar link into the episode's existing «محتوای مرتبط» (`ep-section`) block using `ep-related-link` — see the **Episode branch** below. |
+| Core podcast episode (`/episodes/episode-XX.html`; `"type": "dentcast"` from episode 154 onward, no `type` on earlier entries) | **No `dc-related-section`.** Instead add the pillar link into the episode's existing «محتوای مرتبط» (`ep-section`) block using `ep-related-link` — see the **Episode branch** below. |
 | **LiteCast** (isolated track — see Phase C step 0) | **Skip the specialist capsules** (دانشنامه / فهرست موضوعی point into the specialist ecosystem; LiteCast must not link into it). The «کاوش بیشتر» section itself is **kept** and filled with **LiteCast-internal** capsule links instead — see step 0.6. |
 
-The conditional is decided by where the locked category came from. **Capsule link targets:** the دانشنامه capsule is **fixed sitewide** (`/glossary/`). The فهرست موضوعی capsule, by contrast, points to the entry's **own** pillar — `href="/pillar/<pillar.primary>/"` — using the **canonical pillar-page format**: lowercase slug, **trailing slash, no `index.html`**, matching that pillar page's own `<link rel="canonical">` (e.g. `https://dentcast.org/pillar/fixed-pros/` → internal link `/pillar/fixed-pros/`). `pillar.primary` is the value **confirmed in step 2.4**. The link targets the pillar **root**, not a subtopic anchor. **Fallback:** if `pillar.primary` is `null` (no pillar confirmed) or not a real pillar slug, the فهرست موضوعی capsule falls back to the sitewide `/pillar/` landing page. (This per-pillar target is the established site convention.)
+The conditional is decided by where the locked category came from. **Capsule link targets:** the دانشنامه capsule is **fixed sitewide** (`/glossary/`). The فهرست موضوعی capsule, by contrast, points to the entry's **own** pillar — `href="/pillar/<pillar.primary>/"` — using the **canonical pillar-page format**: lowercase slug, **trailing slash, no `index.html`**, matching that pillar page's own `<link rel="canonical">` (e.g. `https://dentcast.org/pillar/fixed-pros/` → internal link `/pillar/fixed-pros/`). `pillar.primary` is the value **confirmed in step 2.4**. The link targets the pillar **root**, not a subtopic anchor. **Fallback:** if `pillar.primary` is `null` (no pillar confirmed) or not a real pillar slug, the فهرست موضوعی capsule falls back to the sitewide `/pillar/` landing page.
 
 **Markup to inject** (use the global classes — NOT `ep-*`, which are inlined per-episode and not styled on other page types):
 
@@ -113,10 +113,7 @@ ordered series (پلاک صفر, پرامپتولوژیست, any «قسمت N» 
 **«قسمت N — <title>»**: the number first, then the title **with the series name
 stripped**. The series name is dropped on purpose — the landing page IS that
 series, so repeating it on every row spends the width that the number needs and
-tells the reader nothing. Founder decision, 2026-09-18, after four parts of
-پلاک صفر shipped as bare «پلاک صفر — <title>» rows: every row looked alike, and
-somebody arriving could not tell which part was the first, which was the newest,
-or how many there were.
+tells the reader nothing.
 
 Three things this rule depends on:
 
@@ -124,7 +121,7 @@ Three things this rule depends on:
   in Persian digits, and it is **not** invented for a series that has no
   numbering of its own.
 - **Chapters keep their own numbering, they do not flatten.** پرامپتولوژیست is
-  already correct and is not to be renumbered: its rows sit under «فصل N — …»
+  not renumbered: its rows sit under «فصل N — …»
   headings and restart at «قسمت ۱» inside each chapter, matching each page's own
   badge («فصل ۷ · قسمت ۱»). The rule is that the row carries the position, not
   that every series counts from one to twenty.
@@ -132,7 +129,7 @@ Three things this rule depends on:
   («پلاک صفر — بیمار چه تایپ می‌کند») because that is what the homepage rail,
   the pillar page, up-board and search render, where there is no surrounding
   context to supply it. So the landing row is a **second legitimate label**, the
-  same shape `episodes.html` already has — and `tools/verify_publish.py` knows
+  same shape `episodes.html` has — and `tools/verify_publish.py` knows
   it (`numbered_series_label`): the row passes when it carries a «قسمت N» marker
   **and** the brain title's own tail verbatim. A drifted title still fails, and a
   row that merely lost its number fails too, so the exception cannot be used to
@@ -198,7 +195,7 @@ core **episode**, in either direction:
 - **Publishing/editing a core episode whose cited source is already scored on
   its NoteCast** (the reverse case): copy the NoteCast's DES record into
   `episodes/episode-XX` and add the credit block to the episode page (right
-  before «محتوای مرتبط», the precedent placement — see `episodes/episode-12.html`).
+  before «محتوای مرتبط», as in `episodes/episode-12.html`).
 - **Neither side has a record yet:** run step 4.13 once, on whichever page is
   being published, then immediately mirror the result to the sibling per the
   rule above — never score the same source twice independently. Two
@@ -210,23 +207,11 @@ core **episode**, in either direction:
   or no link at all) — the same standard as step 4.10 Part 3 — and reuse that
   same answer on both pages rather than asking twice.
 
-**Found on `episodes/episode-40` / `notecast/episode-40` (2026-09-01).** The
-NoteCast was published first (basket 2, Fages & Bennasar 2013, no DOI — the
-user supplied the paper and confirmed a PubMed credit link), and got a DES
-record and credit. The parent episode, which discusses the exact same source,
-was never touched — until the user pointed out that a NoteCast and its
-episode are the same evidence claim told twice, so a reader landing on either
-page should see the same score and the same source. Nothing in steps 4.5,
-4.10, or 4.13 as originally written said to check the sibling page at all;
-each treated its own publish as the entire scope. This step closes that gap
-going forward. **This is a real gap on old pairs, not just a future rule**:
-`episodes/episode-6`/`notecast/episode-6` and `episode-7`/`notecast/episode-7`
-already had matching DES records but no credit link on the NoteCast side, and
-`episode-12`/`-13`'s NoteCasts had neither — all four were backfilled by hand
-when this rule was written and are not migrated automatically by anything.
-When touching an older episode/NoteCast pair for an unrelated reason, check
-this in passing per Hard Rule 11's spirit (a gap on an old page is something
-to fix on its own, never a pattern to copy forward) rather than leaving it.
+A reader landing on either page of the pair sees the same score and the same
+source. When touching an older episode/NoteCast pair for an unrelated reason,
+check this in passing per Hard Rule 11's spirit (a gap on an old page is
+something to fix on its own, never a pattern to copy forward) rather than
+leaving it.
 
 Verify & report: for the sibling page touched, its before/after hash (the only
 diffs allowed are the DES record's `scored_at` in `plus/des-scores.json` plus,
@@ -268,5 +253,5 @@ Match the label register to whatever the series already uses for these buttons (
 
 **Verify after write:**
 - The new page's **previous** slot links to `<prev-id>.html`, and its **next** slot is still the empty placeholder.
-- The previous page's **next** slot now links to `<new-id>.html` and no longer carries `ep-nav-empty`.
+- The previous page's **next** slot links to `<new-id>.html` and does not carry `ep-nav-empty`.
 - Both pages' `ep-nav` blocks still have **exactly two** slots, and no other diff was introduced on either page.

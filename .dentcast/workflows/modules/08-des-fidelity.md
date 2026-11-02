@@ -133,11 +133,10 @@ appendix yourself (a hand cut keeps a trailing blank line, so its digest differs
 from every other run's).
 
 <!-- des-version-history:v1 -->
-**v3.5 is the current spec.** What each earlier version changed, and why, is in
-`.dentcast/workflows/des-version-history.md` (moved there verbatim, founder
-1405/08/06). Read it when you validate, re-score or compare a record stamped
-below 3.5; a new 3.5 run does not need it. These rules from that history stay
-binding here:
+**v3.5 is the current spec.** What each earlier version changed is in
+`.dentcast/workflows/des-version-history.md`. Read it when you validate,
+re-score or compare a record stamped below 3.5; a new 3.5 run does not need it.
+These rules stay binding here:
 
 - Every record is validated under its own `des_version` stamp;
   `tools/verify_publish.py` and `tools/des_fidelity_units.py` are version-gated.
@@ -157,28 +156,25 @@ binding here:
   scores the primary studies wherever they are retrievable.
 <!-- /des-version-history:v1 -->
 
-**The determinism rules from v1.5/v1.6 are unchanged and still binding.** Two of
-them exist because a blind reproducibility run found them missing, so do not
-treat them as pedantry: **quality judgment is out of the domain rating**
+**The determinism rules are binding.** Two of them are easy to treat as
+pedantry and must not be: **quality judgment is out of the domain rating**
 (present-vs-absent, plus the closed threshold table in 3b-i — if you are arguing
 that a described method is *bad enough* to count as absent, the answer is
 `some_concerns`), and **an absence-based `high` must name the sections you
 actually read** (3b-ii). Do not decide absence by keyword search alone: a paper
 can appraise its studies without ever writing the word "quality", and a grep
 that misses that produces a confidently wrong `high`. Phase F fails any
-absence-based `high` that carries no note. Every place
-v1.3 left a decision to the scorer is now decided: one tool per design, a fixed
+absence-based `high` that carries no note. The spec leaves no decision to the
+scorer: one tool per design, a fixed
 domain list, an explicit rating rule (under `FULL_TEXT`, silence about a
 safeguard is `high`, not `NR`), routing for the designs that matched no anchor,
 a narrowed funding penalty, and round-half-up on exact decimals. Follow the
 rules even where your own judgment differs — **a score everyone reproduces is
-worth more than a slightly better score nobody can.** Any RESEARCH record still
-stamped `des_version` below `1.5` predates this and must be regenerated before its
-number is compared with a new one; v1.6 changed nothing on the RESEARCH side, so
-`1.5` and `1.6` research scores are directly comparable.
+worth more than a slightly better score nobody can.** Any RESEARCH record
+stamped `des_version` below `1.5` must be regenerated before its number is
+compared with a new one; `1.5` and `1.6` research scores are directly comparable.
 
-**The COMMENTARY track's one carve-out is why a Chairside, MetaNote or Insight
-page now scores 3 higher than it did.** Checklist item 4 («صریحاً تجربه/دیدگاه
+**The COMMENTARY track has one carve-out.** Checklist item 4 («صریحاً تجربه/دیدگاه
 نامیده شده») can be earned from the section's own published declaration rather
 than a sentence inside the page — for `chairside/`, `metanotes/` and `insight/`
 only, because those three landing pages carry such a declaration and the spec
@@ -186,13 +182,11 @@ quotes all three verbatim in a closed table. When you use it, the
 `evidence_quote` is that declaration copied from the landing page and the item's
 `note` is MANDATORY and names the file it came from.
 
-**The list is closed and has exactly one entrance, which `insight/` is the
-precedent for: the section's landing page gets an explicit declaration first,
-and the spec version bumps after.** Never add a section because it resembles one
-already listed. `insight/` did not qualify under v1.6, when its page said the
-series covers «تجربه‌های بالینی **و** یافته‌های علمی» and therefore could not
-tell a reader which of the two the page in front of them was; v1.7 added it
-because that page was rewritten to declare the section. Any COMMENTARY record in
+**The list is closed and has exactly one entrance: the section's landing page
+gets an explicit declaration first, and the spec version bumps after.** Never add
+a section because it resembles one already listed. A landing page that does not
+tell a reader whether the page in front of them is experience or research
+findings (e.g. «تجربه‌های بالینی **و** یافته‌های علمی») does not qualify. Any COMMENTARY record in
 `chairside/` or `metanotes/` stamped `des_version` below `1.6`, or in `insight/`
 below `1.7`, is scoring low by 3 and must be regenerated. The appendix says so itself ("NOT part of the
 model instruction … Do not include this appendix if the file is loaded verbatim as a
@@ -229,16 +223,15 @@ self-record (a text cannot be unfaithful to itself). A `NOT_APPRAISABLE` source
 recorded `CITATION_ONLY` (its text was sought and not found, Part 1) gets no call
 and its slot is the spec's own error object
 `{"des_version":"3.1","error":"INSUFFICIENT_TEXT"}` — never a silent `null`; the
-reader is told nothing about it (what is not there is not announced — founder,
-1405/07/19), the record and the publish report are. Basket 1 pages never reach this call: fidelity needs a
+reader is told nothing about it (what is not there is not announced), the record and the publish report are. Basket 1 pages never reach this call: fidelity needs a
 cited source. **A core audio episode (`episodes/…`) never reaches it either —
-DES only, no FIDELITY** (founder, 1405/08/04): its page is a caption, a player
+DES only, no FIDELITY**: its page is a caption, a player
 and labels, not a write-up of the paper, so the record is `scored_at` +
 `sources` with no `fidelity` key; `tools/des_fidelity_units.py` builds nothing
 for it and Phase F fails a `fidelity` slot on one. Its NoteCast is a written
 page and keeps the call. **DES belongs to the paper: one DES record per paper.** An episode and its NoteCast built on the same paper
 share that single record (no second record, no second scoring) and both pages carry its score; **FIDELITY goes only to
-the written page, and only when its paper accompanies it**; the audio episode never gets one (founder, 1405/08/07). No classifier decides whether the page «is a report of the paper»
+the written page, and only when its paper accompanies it**; the audio episode never gets one. No classifier decides whether the page «is a report of the paper»
 — spec F1 decides per unit, and a page that merely lists the paper in its
 references attributes fewer than three claims to it and lands on
 `INSUFFICIENT_CLAIMS` by itself (spec appendix rule 9).
@@ -307,9 +300,9 @@ model's**: it reads the rendered prose (title, headings and body, in order; the
 region `verify_publish.py`'s `article_region()` reads), stops at the citation
 block, splits on line breaks and sentence terminators, marks headings, and
 numbers units `u1…uN` over the whole page — so a call that received only some
-units sees ids with gaps, which is correct. Model segmentation and attribution
-were the two largest sources of run-to-run disagreement in the release tests and
-were taken out of the model's hands for exactly that reason.
+units sees ids with gaps, which is correct. Segmentation and attribution stay out
+of the model's hands because they are the largest sources of run-to-run
+disagreement.
 
 **The output** is the spec's F5 object. Validate it in Part 3(5), then store it
 in Part 4.
@@ -320,8 +313,8 @@ The FIDELITY call is an independent agent per input block, reading
 `.dentcast/des-v3.5-knowledge.md` (the spec minus its appendix) as its
 instruction and the block as its user turn. **The roles are provider-neutral:**
 choose a capable, lighter reasoning model as the **checker**, and a stronger
-reasoning model as the **reviewer/adjudicator**. Sonnet and Opus name the original
-Claude implementation, not a requirement to use Anthropic.
+reasoning model as the **reviewer/adjudicator**. Sonnet and Opus are the
+Claude examples, not a requirement to use Anthropic.
 
 | Environment | Checker: both full runs + disagreement-only third run | Stronger reviewer/adjudicator |
 |---|---|---|
@@ -354,7 +347,7 @@ Keep historical records and their provenance unchanged.
 1. **Two full runs per input block** — `<dir>/out-src<k>-1.json` and `-2.json`.
    Two, not one: a sentence one run calls `MATCHES` is otherwise never looked
    at again, and a missed firmer-than-the-source sentence is the error nobody
-   sees (share-18: «لبه‌ی نازک» was caught by some runs and missed by others).
+   sees.
 2. **Tie-break only where they differ.** `--vote <dir>` lists every unit the
    two runs answered differently (any verdict or kind, flagged or not); build
    blocks for those alone (`--build <dir2> --only u…`), run them once, save
@@ -367,8 +360,7 @@ Keep historical records and their provenance unchanged.
    source_quote, note}}}`).
 4. **The stronger reviewer reviews every unit the vote leaves `ALTERED`/`REVERSED`** — not only
    the unresolved ones. More checker votes cure random disagreement but not a
-   shared misreading (share-18: two of three runs read Saker's «internal», an
-   average of the other areas, as a third surface). The reviewer reads the
+   shared misreading. The reviewer reads the
    unit, its neighbours, the sentences the runs quoted and, where a term is
    defined there, the source's Methods, then writes
    `<dir>/review.json` (`{"src<k>": {"u…": {"agree": true|false, "reason":
@@ -399,8 +391,8 @@ Keep historical records and their provenance unchanged.
 `--vote` exits non-zero while any unit still needs a tie-break run, an
 adjudication or a review. `voted-src<k>.json` is what Part 3 validates and
 Part 4 stores — one object per source, the spec's own shape. `--vote` is for
-SOURCE scope; a POOLED page is not voted yet (it runs one call per part and
-`--merge`, as before).
+SOURCE scope; a POOLED page is not voted (it runs one call per part and
+`--merge`).
 
 #### Part 3 — Validate the output mechanically (the appendix's contract)
 
@@ -448,14 +440,14 @@ here fails the publish rather than shipping. Running them yourself first is
 still the job — the gate tells you *that* something is wrong, not what the
 right score was.
 
-6. **Persian text of the record (founder decision 1405/08/07: the DES Persian
-   text is independent of the founder) — an agent check, not a score check and
+6. **Persian text of the record (the DES Persian text is independent of the
+   founder) — an agent check, not a score check and
    not a founder gate.** For a record that already passes (1)–(5), run
    `python3 tools/verify_publish.py --des-text <des.json>` on every SOURCE and
    COMMENTARY object before it is stored. The replaced-word check is automatic:
-   it fails on a word the founder replaced (today «ادبیات» → «منابع علمی»;
-   `fact_fa` and `interpretation_fa` of v3.5+ records only — older records keep
-   their text) and lists the `interpretation_fa` sentences (when non-null) one
+   it fails on a word the founder replaced («ادبیات» → «منابع علمی»;
+   `fact_fa` and `interpretation_fa` of v3.5+ records only — records stamped
+   below 3.5 keep their text) and lists the `interpretation_fa` sentences (when non-null) one
    by one. Then check each sentence against the scored text yourself: **a
    sentence that says anything the text does not say, or is unclear, is fixed
    by the agent itself** — delete it, or rewrite it to a smaller claim the text
@@ -477,7 +469,7 @@ run is unusable.
 #### Part 3b — Offer the founder a fix for every differing sentence (founder gate, never automatic)
 
 **The fidelity grade exists to make the writing better, and the goal is
-«کاملاً مطابق»** (founder, 1405/07/17). So when a validated FIDELITY result
+«کاملاً مطابق»**. So when a validated FIDELITY result
 carries any `ALTERED` or `REVERSED` unit, the publish **stops here, before
 Part 4 stores anything**, and the founder is shown each such sentence and asked
 whether to fix it. This is a gate of `agent-parity.md` §1 (never batched into
@@ -513,7 +505,7 @@ never a «بله» to the others.
   sentence also lives on another surface (the lead used for the description,
   the brain `summary`, the Pulse line), that is a **sweep** (Hard Rule 17): every
   surface in the same commit.
-- **Re-check only the edited sentences** (founder, 1405/07/17) — the last
+- **Re-check only the edited sentences** — the last
   full run already judged every other sentence, and judging them again buys
   nothing but fresh run-to-run noise on sentences nobody touched. Build blocks
   for the edited units alone (`--build <dir2> --only u…`, same `source_text`,
@@ -550,8 +542,8 @@ SOURCE record was scored on, or the tool refuses it.
 #### Part 4 — Store the record
 
 **The score does NOT go in `dentcast-brain.json`.** Hard Rule 5 forbids adding a
-field previous same-category entries do not have, and no brain entry has ever
-carried one. It lives in its own versioned file, exactly as `plus/pathways.json` and
+field previous same-category entries do not have, and no brain entry carries
+one. It lives in its own versioned file, exactly as `plus/pathways.json` and
 `plus/badges.json` do:
 
 **`plus/des-scores.json`** — a JSON object keyed by `content_id` (the page path
@@ -574,10 +566,10 @@ without the leading `/` and without `.html` — the same id Phase F takes):
 and `null` only where no FIDELITY call was owed (Part 2b's skip cases, plus a
 source no unit of the page names). Phase F is version-gated: a fidelity object
 on a `NOT_APPRAISABLE` source must be stamped ≥ 3.1 over a `FULL_TEXT`/`EXCERPT`
-record, and a `null` on such a source in a record with no 3.1 slot is still what
-the rule then said. **Under `POOLED` scope it is the one pooled object instead of an array**,
+record, and a `null` on such a source stays valid in a record with no 3.1
+slot. **Under `POOLED` scope it is the one pooled object instead of an array**,
 because that call judged the page against all its sources at once. It is omitted entirely on a record
-written before v2.5, on a basket-1 page, or on a core audio episode (Part 2b); Phase F accepts both shapes and
+stamped below 2.5, on a basket-1 page, or on a core audio episode (Part 2b); Phase F accepts both shapes and
 rejects a `fidelity` whose length differs from `sources`. Parallel by index
 rather than keyed by DOI because the spec's output object carries no
 identifier of its own, and inventing one would be a second copy of
@@ -604,13 +596,11 @@ display contract (placements, the five discrete band blocks, the «تجربهٔ 
 commentary variant, the colour rule) lives in **.dentcast/workflows/global/plus-premium.md — DES display**.
 
 **This step's obligation ends at the record.** It writes data; it does not edit the
-page. Status as of 2026-08-14: the record format and this step are live, the shared
-renderer is not built yet — which costs nothing, because every record written now
-lights up the moment that module ships. **`fidelity` is drawn too, from spec 2.8 on
-(1405/07/17):** `plus/js/des.js` adds a second chip («تطابق با منابع: …», one
+page. The shared renderer draws every stored record. **`fidelity` is drawn too,
+from spec 2.8 on:** `plus/js/des.js` adds a second chip («تطابق با منابع: …», one
 word, never a number) beside the band chip and a «تطابق با منابع» tab in the
-card, read from the record this step writes — so a 2.8 fidelity object goes
-live the moment it is stored, and an older stamp is ignored (approved mockup
+card, read from the record this step writes — so a fidelity object stamped 2.8 or
+later goes live the moment it is stored, and an older stamp is ignored (approved mockup
 `.dentcast/des-fidelity-v28-mockup.html`; display rules in .dentcast/workflows/global/plus-premium.md — DES).
 Several per-source fidelity objects are drawn as **one** box — one tally, one
 word, each differing sentence naming its paper, a collapsed «به تفکیک منبع»

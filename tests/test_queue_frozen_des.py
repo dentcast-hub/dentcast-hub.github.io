@@ -1,6 +1,5 @@
-"""Founder standing order 1405/08/11: a publish-queue item's DES/Fidelity never
-blocks its publish (publish-queue.md «حکم دائمی DES و Fidelity صف"), while a
-record changed after installation still fails."""
+"""publish-queue.md «DES و Fidelity صف»: a publish-queue item's DES/Fidelity never
+blocks its publish, while a record changed after installation still fails."""
 from pathlib import Path
 import json
 import sys
@@ -65,7 +64,7 @@ TEXT_01 = open(ROOT / 'tests/fixtures/queue-05-text.md', encoding='utf-8').read(
 
 
 class FrozenTextTests(unittest.TestCase):
-    """Founder order 1405/08/11: on publish day the text does not move."""
+    """publish-queue.md «روز انتشار صف»: on publish day the text does not move."""
     CID = 'notecast/episode-44'
 
     def guard(self, text, synced=(), added=()):

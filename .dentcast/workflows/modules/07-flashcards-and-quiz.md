@@ -19,16 +19,14 @@ available, run this step normally (same standard as every other type). When
 it is not, and the founder declines to supply it, no cards are written and
 that is a **documented skip**, never a fabricated card standing in for real
 content (Hard Rule 13; a thin or fabricated card is worse than no card —
-see the "ask, don't guess" note below). Decided 2026-08-22 on
-`dentcast-plus/video-10`; `tools/verify_publish.py`'s `FLASHCARD_OPTIONAL_TYPES`
-enforces the same two-type exception so the gate reports a skip, not a FAIL.
+see the "ask, don't guess" note below). `tools/verify_publish.py`'s
+`FLASHCARD_OPTIONAL_TYPES` enforces the same two-type exception so the gate reports a skip, not a FAIL.
 A flashcard is **a concept, not a
 question** — so it lives in schema.org's real vocabulary for exactly that:
 `DefinedTermSet` → `hasDefinedTerm[]` of `DefinedTerm { name, description }`.
 This block is written into **`plus/faq-corpus.json`, under the new page's
-content id** — **never into the page's own JSON-LD**. FAQ/flashcards used to
-live on the page itself; that shipped hidden markup with no visible rendering
-at scale and was an SEO liability, so it was migrated into this corpus (see
+content id** — **never into the page's own JSON-LD**: on the page it is
+hidden markup with no visible rendering, an SEO liability (see
 `.dentcast/faq-schema-removal-handoff.md`). `verify_publish.py` fails any page
 whose own HTML still carries a `#flashcards`-tagged `DefinedTermSet`.
 `plus/flashcards-index.json` (the premium app's Leitner-seed catalog) is
@@ -36,9 +34,7 @@ whose own HTML still carries a `#flashcards`-tagged `DefinedTermSet`.
 `node tools/build_flashcards_index.mjs` (added to step 8's rebuild list) to
 read every content id's `DefinedTermSet` out of the corpus and regenerate it.
 **This step never touches `dentcast-brain.json`** — Hard Rule 6 (brain schema
-is sacred; never add a field absent from the previous same-category entry)
-makes the brain the wrong home for a feature being rolled out prospectively
-while older entries wait for a later, separate backfill pass.
+is sacred; never add a field absent from the previous same-category entry).
 
 **Card content must be semantic, never a mechanical FAQ dump.** Each
 `DefinedTerm` tests recall of **one concept**: `name` is a tight recall
@@ -80,9 +76,8 @@ forcing a term into existence. A thin or fabricated card is worse than no
 card.
 
 Written into `plus/faq-corpus.json`, under this content id's
-`definedTermSets` array (the node's own shape — including the `@id`
-convention below — is unchanged from the old on-page form; only its storage
-location moved):
+`definedTermSets` array, in this node shape (including the `@id`
+convention below):
 
 ```html
 <script type="application/ld+json">
@@ -113,8 +108,8 @@ location moved):
   is `"faq"`, pointing at the FAQPage `mainEntity` index the term was derived
   from, for traceability if that FAQ entry changes later.
 - No other properties beyond real `DefinedTerm`/`DefinedTermSet` fields plus
-  these two. Match this shape exactly on every future publish — this is now
-  the schema template.
+  these two. Match this shape exactly on every publish — this is the
+  schema template.
 
 **Verify:** confirm the `DefinedTermSet` node is present in
 `plus/faq-corpus.json` and is valid JSON; that every `DefinedTerm` has a
@@ -206,13 +201,11 @@ pathway — i.e. every specialist type that step 5.6 files into `plus/pathways.j
 Skipped, as a documented skip, for LiteCast, چالش, glossary terms and any
 publish whose page lands in no full pathway.** Pathway membership is decided
 only at step 5.6, so this step is **evaluated there, after placement** (module
-10 triggers it), not right after 4.12. Founder decision 1405/08/03
-(«بانک سوال مسیر دوگانه … که دیگه وقتی مطلب منتشر می‌کنیم اذیت نشیم»): the
+10 triggers it), not right after 4.12. The
 pathway certificate exam draws article questions from two sources — the
 founder's own rows in the API (`content_exam_questions`) and this repo file —
 so a question committed with the article is in every carrying pathway's pool
-the same afternoon, with no panel step and no deploy. This is the step that
-writes the repo half.
+with no panel step and no deploy. This step writes the repo half.
 
 **What to write.** One to three **four-option multiple-choice** questions for
 this page, authored from the body (and the FAQ you just finalized in 4.12),
@@ -264,8 +257,8 @@ rows. Each row:
   ordinal for this page; a later wording fix keeps the id.
 - `correct` is the 0-based index. Vary the key position across the page's
   questions; the API does not shuffle.
-- `source` is `"publish"` for a question written at publish time (the
-  1405/08/03 backfill carries `"quiz"` + `source_quiz_id`).
+- `source` is `"publish"` for a question written at publish time (rows
+  derived from the quiz bank carry `"quiz"` + `source_quiz_id`).
 
 **Existing rows are append-only** — CI, the validator and Phase F's «4.12-ب
 bank» row FAIL when any row that already exists (this page's or another's)
