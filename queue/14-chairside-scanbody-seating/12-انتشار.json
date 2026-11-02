@@ -1,0 +1,171 @@
+{
+  "schema": "dentcast-queue-manifest/1",
+  "category": {
+    "value": "chairside",
+    "from": "folder name"
+  },
+  "title_fa": {
+    "value": "اختلاف موقعیت اباتمنت روی کست و در دهان",
+    "from": "02-عنوان-کپشن.md:3"
+  },
+  "caption_fa": {
+    "value": "یک اختلاف کوچک در ارتفاع می‌تواند سرنخی از خطا در ثبت موقعیت ایمپلنت باشد.",
+    "from": "02-عنوان-کپشن.md:9"
+  },
+  "title_en": {
+    "value": "When the Abutment Position on the Printed Cast Differs from the Patient’s Mouth",
+    "from": "06-انگلیسی.md:4"
+  },
+  "caption_en": {
+    "value": "A small vertical discrepancy can be an important clue when investigating an implant crown.",
+    "from": "06-انگلیسی.md:7"
+  },
+  "body_en": {
+    "value": "A patient came in for an implant crown. The implant was from a Korean system. Before accepting the case, I checked whether a DIO impression coping was compatible with the implant connection. Once I confirmed compatibility, I scheduled the patient and scanned with a DIO scan body.\n\nWhen the restoration was ready, I noticed that the crown was about 0.5 mm short. To investigate, I compared the intraoral abutment with the abutment on the printed cast, using the marginal ridge of tooth 6 as the height reference. The intraoral abutment was about 0.5 mm shorter than the abutment on the cast—the same discrepancy seen in the crown height.\n\n[[Image:01]]\n\n[[Image:02]]\n\nThis vertical discrepancy made me suspect that the scan body might not have been fully seated. If the scan body had remained slightly above its final position during scanning, the fixture position could have been recorded more coronally and superficially. The cast and crown would then be made from that same recorded information. The original abutment, however, seats fully in the patient’s mouth and sits about 0.5 mm lower than the abutment on the cast.\n\nIn this case, the crown was screwment-retained, there was no residual cement, and the vertical discrepancy was small. We therefore did not remake the restoration; the height will be corrected with feldspathic porcelain. If the amount of porcelain needed for the correction were excessive, or if a cement-retained crown created a risk of residual cement, the restoration would need to be remade.\n\n**Clinical point:** When assessing a short crown, comparing the intraoral abutment with the one on the printed cast against a stable reference, such as the marginal ridge of an adjacent tooth, can help identify the source of the discrepancy.",
+    "from": "06-انگلیسی.md:11-24"
+  },
+  "images": {
+    "value": [
+      {
+        "n": "01",
+        "file": {
+          "value": "03-تصاویر/01-printed-cast-abutment.webp",
+          "from": "03-تصاویر/تصاویر.md:4"
+        },
+        "alt_fa": {
+          "value": "کست پرینت‌شده با اباتمنت برای مقایسهٔ ارتفاع با اباتمنت داخل دهان.",
+          "from": "03-تصاویر/تصاویر.md:5"
+        },
+        "alt_en": {
+          "value": "Printed cast with an abutment, used to compare its height with the intraoral abutment.",
+          "from": "03-تصاویر/تصاویر.md:6"
+        },
+        "caption_fa": {
+          "value": "اباتمنت روی کست پرینت‌شده، با مارجینال ریج دندان ششم به‌عنوان مرجع مقایسه.",
+          "from": "03-تصاویر/تصاویر.md:7"
+        },
+        "caption_en": {
+          "value": "The abutment on the printed cast, compared with the marginal ridge of tooth 6.",
+          "from": "06-انگلیسی.md:26"
+        }
+      },
+      {
+        "n": "02",
+        "file": {
+          "value": "03-تصاویر/02-intraoral-abutment.webp",
+          "from": "03-تصاویر/تصاویر.md:10"
+        },
+        "alt_fa": {
+          "value": "اباتمنت ایمپلنت در دهان بیمار در مجاورت دندان ششم.",
+          "from": "03-تصاویر/تصاویر.md:11"
+        },
+        "alt_en": {
+          "value": "Intraoral implant abutment next to tooth 6.",
+          "from": "03-تصاویر/تصاویر.md:12"
+        },
+        "caption_fa": {
+          "value": "نمای داخل دهان برای مقایسهٔ موقعیت اباتمنت با کست پرینت‌شده.",
+          "from": "03-تصاویر/تصاویر.md:13"
+        },
+        "caption_en": {
+          "value": "Intraoral view for comparing the abutment position with the printed cast.",
+          "from": "06-انگلیسی.md:27"
+        }
+      }
+    ],
+    "from": "03-تصاویر/تصاویر.md"
+  },
+  "credit": {
+    "value": {
+      "mode": "none"
+    },
+    "from": "04-منبع/منابع.md:3"
+  },
+  "catalog": {
+    "value": [],
+    "from": "04-منبع/منابع.md: no paper"
+  },
+  "hashtags": {
+    "value": [
+      "#چیرساید",
+      "#کیس_بالینی",
+      "#اسکن_بادی",
+      "#خطای_اسکن",
+      "#اباتمنت",
+      "#پروتز_ایمپلنت"
+    ],
+    "from": "07-ورودی‌ها.md:21-26"
+  },
+  "pillar": {
+    "value": {
+      "primary": "implantology",
+      "subtopic": "prosthetic-components",
+      "secondary": []
+    },
+    "from": "07-ورودی‌ها.md:13"
+  },
+  "pulse": {
+    "value": {
+      "html": "یک چیرساید با عنوانِ «<a href=\"{url}\">اختلاف موقعیت اباتمنت روی کست و در دهان</a>» منتشر شد.",
+      "link_phrase": "اختلاف موقعیت اباتمنت روی کست و در دهان"
+    },
+    "from": "07-ورودی‌ها.md:17"
+  },
+  "keywords": {
+    "value": [
+      "اسکن‌بادی کامل ننشسته",
+      "خطای ارتفاعی اسکن ایمپلنت",
+      "اختلاف ارتفاع اباتمنت روی کست و داخل دهان",
+      "مقایسه اباتمنت با مارجینال ریج دندان ششم",
+      "روکش ایمپلنت کوتاه",
+      "اصلاح روکش اسکروسمنت با پرسلن فلدسپاتیک",
+      "DIO scan body compatibility with Korean implant systems",
+      "implant scan body seating error",
+      "abutment height discrepancy",
+      "printed cast and intraoral abutment comparison"
+    ],
+    "from": "09-کلیدواژه‌ها.md"
+  },
+  "links_48": {
+    "value": [
+      {
+        "phrase": "اسکن‌بادی",
+        "href": "/glossary/scan-body.html",
+        "from": "11-لینک‌های-گلاسری.md:16"
+      },
+      {
+        "phrase": "اباتمنت",
+        "href": "/glossary/abutment.html",
+        "from": "11-لینک‌های-گلاسری.md:17"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md:12"
+  },
+  "explore_49": {
+    "value": [
+      {
+        "href": "/insight/insight-35.html",
+        "label": "کوتاه دیده شدن اباتمنت در دهان؛ تمایز خطای جهت از خطای ارتفاع",
+        "from": "11-لینک‌های-گلاسری.md:26"
+      },
+      {
+        "href": "/insight/insight-31.html",
+        "label": "آیا اسکن‌بادی و Ti-Base باید از یک برند باشند؟",
+        "from": "11-لینک‌های-گلاسری.md:27"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md:24"
+  },
+  "backlinks_47": {
+    "value": [],
+    "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+  },
+  "mint": {
+    "value": [],
+    "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+  },
+  "pathway": {
+    "value": null,
+    "from": "default: mechanical pathway rule"
+  }
+}
