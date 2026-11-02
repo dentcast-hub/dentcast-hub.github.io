@@ -1038,6 +1038,16 @@ def exam(w, cid, item):
         qs = []
         for k, q in enumerate(data["questions"], 1):
             row = {"id": "r-" + hashlib.sha1(f"{target}|publish-{k}".encode()).hexdigest()[:8]}
+            q = dict(q)
+            if "kind" not in q:
+                # a frozen question with options and a key index is a multiple-choice question
+                if isinstance(q.get("options"), list) and len(q["options"]) >= 2 and isinstance(q.get("correct"), int):
+                    q["kind"] = "mcq"
+                else:
+                    refuse("EXAM_SHAPE", f"08-سؤال‌های-آزمون.json question {k} has no kind and is not options + key")
+            missing = [kk for kk in ("prompt_fa", "options", "correct") if kk not in q]
+            if missing:
+                refuse("EXAM_SHAPE", f"08-سؤال‌های-آزمون.json question {k} lacks {missing}")
             row.update({kk: q[kk] for kk in ("kind", "prompt_fa", "options", "correct")})
             row["source"] = "publish"
             qs.append(row)
