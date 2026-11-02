@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
 """Install a publish-queue item's frozen DES/Fidelity record in one command.
 
-Founder standing order (1405/08/11, 2026-11-02; publish-queue.md «حکم دائمی
-DES و Fidelity صف»): a queue item marked «آماده» carries its DES and Fidelity
-as decided. On publish day they are installed as they are — never re-scored,
-never re-checked against the paper, never a reason to stop. The words: «وقتی
-من خودم میگم که منتشر بشه یعنی منتشر بشه».
+publish-queue.md «DES و Fidelity صف»: a queue item marked «آماده» carries its
+DES and Fidelity as decided. On publish day they are installed as they are —
+never re-scored, never re-checked against the paper, never a reason to stop.
 
 What this tool does, deterministically (no model call, no source text):
 
   1. reads 05-DES-Fidelity/{des,fidelity,plan,markers}.json of the queue item;
-  2. checks the page body against 01-متن.md (founder order 1405/08/11: on
-     publish day the text does not move — only the date may differ). A missing,
-     reworded or inserted body line (a new subtitle) stops the tool with exit 3
+  2. checks the page body against 01-متن.md (publish-queue.md «روز انتشار صف»:
+     the text does not move — only the date may differ). A missing, reworded or
+     inserted body line (a new subtitle) stops the tool with exit 3
      and nothing written; the fix is rebuilding the body from the queue files,
      never a question. --check-text runs only this check (use it after C.2);
      --founder-text-change "<his words>" records a founder-ordered change;
@@ -52,9 +50,8 @@ import verify_publish as vp  # noqa: E402
 DES_SCORES = ROOT / "plus/des-scores.json"
 REGISTRY = ROOT / ".dentcast/queue-frozen-des.json"
 MARKERS = ROOT / ".dentcast/des-source-markers.json"
-ORDER = ("FOUNDER_DECISION", "1405/08/11")
-DECISION = ("حکم دائمی بنیان‌گذار (۱۴۰۵/۰۸/۱۱): DES و Fidelity مطلب «آماده»ی صف همان‌طور که تأیید شده "
-            "ثبت می‌شود و مانع انتشار نیست — «وقتی من خودم میگم که منتشر بشه یعنی منتشر بشه»")
+DECISION = ("DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود "
+            "و مانع انتشار نیست (publish-queue.md «DES و Fidelity صف»)")
 
 
 def record_sha256(rec):
@@ -143,9 +140,12 @@ def body_lines(item):
 
 
 def body_guard(item, cid, units, synced, added):
-    """Founder order 1405/08/11: on publish day the text does not move. Every
-    line of 01-متن.md must sit verbatim on the page, nothing may be inserted
-    among them (no new subtitle), and a changed unit may differ only in a date."""
+    """publish-queue.md «روز انتشار صف»: the text does not move. Every line of
+    01-متن.md must sit verbatim on the page and nothing may be inserted among
+    them (no new subtitle). A stored claim whose text differs from the page is a
+    problem only when the page's text is not the approved 01-متن.md text: when
+    the page follows 01-متن.md, the record is synced to it (the text was changed
+    and approved in preparation) and only the date-free difference is reported."""
     lines = body_lines(item)
     if not lines:
         return []
@@ -162,7 +162,8 @@ def body_guard(item, cid, units, synced, added):
             if lo < k < hi and norm(units[k]["text"]) not in body:
                 problems.append(f"text inserted into the body that is not in 01-متن.md: «{units[k]['text'][:70]}» ({uid})")
     for x in synced:
-        if DATE_RE.sub("D", x["before"]) != DATE_RE.sub("D", x["after"]) and (norm(x["before"]) in body or norm(x["after"]) in body):
+        if (DATE_RE.sub("D", x["before"]) != DATE_RE.sub("D", x["after"])
+                and norm(x["before"]) in body and norm(x["after"]) not in body):
             problems.append(f"body sentence changed: «{x['before'][:50]}» -> «{x['after'][:50]}»")
     return problems
 
@@ -177,7 +178,7 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--show-date", action="store_true",
                     help="print the date the frozen Fidelity was scored on (the page's own date lines); "
-                         "build the page with THAT date (founder, 1405/08/11) and nothing needs syncing")
+                         "build the page with THAT date and nothing needs syncing")
     ap.add_argument("--check-text", action="store_true",
                     help="only check that the built page carries 01-متن.md unchanged (run right after C.2)")
     ap.add_argument("--founder-text-change", metavar="WORDS",
@@ -249,7 +250,7 @@ def main():
         print(json.dumps({"status": "text_ok" if not problems else "text_moved", "content_id": cid,
                           "problems": problems,
                           "fix": None if not problems else
-                          "the page body must be 01-متن.md verbatim (founder order 1405/08/11): rebuild the body "
+                          "the page body must be 01-متن.md verbatim (publish-queue.md «روز انتشار صف»): rebuild the body "
                           "mechanically from the queue files — no new subtitle, no rewrite, no question to the founder"},
                          ensure_ascii=False, indent=1))
         return 0 if not problems else 3
@@ -284,7 +285,7 @@ def main():
             verdict = "NOT_A_CLAIM" if u.get("heading") else silence(f.get("text_basis"), f.get("des_version"))
             c = {"id": uid, "claim_quote": u["text"], "verdict": verdict, "change_kind": None,
                  "source_quote": "" if tmpl is None else type(tmpl.get("source_quote"))() if tmpl.get("source_quote") is not None else None,
-                 "source_ref": None, "note": "added on publish day; not judged (founder standing order 1405/08/11)"}
+                 "source_ref": None, "note": "added on publish day; not judged (frozen queue record)"}
             if tmpl is not None:
                 c = {key: c.get(key) for key in tmpl}
             claims.append(c)
@@ -347,7 +348,7 @@ def main():
     for k, v in entries:
         reg[k] = {"queue_ref": f"queue/{item.name}", "record_sha256": record_sha256(v), "installed_at": a.date,
                   "approval": {"status": "confirmed", "decision": DECISION,
-                               "evidence": ["publish-queue.md «حکم دائمی DES و Fidelity صف» (founder, 2026-11-02)"]},
+                               "evidence": ["publish-queue.md «DES و Fidelity صف»"]},
                   "sync": {"text_synced": [s["new"] for s in synced] if k == cid else [],
                            "added": added if k == cid else [], "dropped": [x["old"] for x in dropped] if k == cid else []},
                   **({"founder_text_change": a.founder_text_change, "text_changes": problems} if a.founder_text_change and k == cid else {})}

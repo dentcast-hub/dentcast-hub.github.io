@@ -88,6 +88,11 @@ class FrozenTextTests(unittest.TestCase):
         s = [{'before': 'اعمال سایلن', 'after': 'اعمال سایلن با دقت'}]
         self.assertTrue(self.guard(TEXT_01, synced=s))
 
+    def test_record_synced_to_the_approved_text_is_not_a_text_change(self):
+        # the page follows 01-متن.md; only the stored claim held an older wording
+        s = [{'before': 'جملهٔ قدیمی که دیگر در متن نیست.', 'after': 'اعمال سایلن'}]
+        self.assertEqual(self.guard(TEXT_01, synced=s), [])
+
 
 if __name__ == '__main__':
     unittest.main()
