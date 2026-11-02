@@ -61,5 +61,34 @@ class QueueFrozenTests(unittest.TestCase):
         self.assertEqual([r[0] for r in rep.rows], ['FAIL', 'FAIL'])
 
 
+TEXT_01 = open(ROOT / 'tests/fixtures/queue-05-text.md', encoding='utf-8').read()
+
+
+class FrozenTextTests(unittest.TestCase):
+    """Founder order 1405/08/11: on publish day the text does not move."""
+    CID = 'notecast/episode-44'
+
+    def guard(self, text, synced=(), added=()):
+        import tempfile
+        with tempfile.TemporaryDirectory() as t:
+            Path(t, '01-متن.md').write_text(text, encoding='utf-8')
+            units = qi.U.split_page(self.CID, [{'citation': {'doi': '10.1080/23337931.2017.1301211'}}])
+            return qi.body_guard(Path(t), self.CID, units, list(synced), list(added))
+
+    def test_published_page_carries_its_frozen_text(self):
+        self.assertEqual(self.guard(TEXT_01), [])
+
+    def test_a_line_missing_from_the_page_is_reported(self):
+        self.assertTrue(self.guard(TEXT_01 + '\n\nجمله‌ای که روی صفحه نیست.'))
+
+    def test_a_date_change_is_not_a_text_change(self):
+        s = [{'before': 'تاریخ انتشار: 2026-10-29', 'after': 'تاریخ انتشار: 2026-11-02'}]
+        self.assertEqual(self.guard(TEXT_01, synced=s), [])
+
+    def test_a_reworded_body_sentence_is_reported(self):
+        s = [{'before': 'اعمال سایلن', 'after': 'اعمال سایلن با دقت'}]
+        self.assertTrue(self.guard(TEXT_01, synced=s))
+
+
 if __name__ == '__main__':
     unittest.main()

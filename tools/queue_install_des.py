@@ -10,17 +10,18 @@ never re-checked against the paper, never a reason to stop. The words: «وقت�
 What this tool does, deterministically (no model call, no source text):
 
   1. reads 05-DES-Fidelity/{des,fidelity,plan,markers}.json of the queue item;
-  2. splits the REAL page into units with tools/des_fidelity_units.py and
-     aligns them to the stored claims (difflib over the unit texts):
-       - unchanged unit            -> claim kept verbatim, id renumbered if shifted;
-       - changed text (a date line, a subtitle, an edited sentence)
-                                   -> verdict/quote/note kept, claim_quote = page text;
-       - unit new on the page      -> heading: NOT_A_CLAIM; otherwise the basis's
-                                      silence verdict (NOT_IN_SOURCE / NOT_ASSESSABLE),
-                                      which never changes the score;
-       - unit gone from the page   -> its claim is dropped;
-     counts, score, level, fact_fa/interpretation_fa are recomputed only when
-     something changed (by the same functions the vote uses);
+  2. checks the page body against 01-متن.md (founder order 1405/08/11: on
+     publish day the text does not move — only the date may differ). A missing,
+     reworded or inserted body line (a new subtitle) stops the tool with exit 3
+     and nothing written; the fix is rebuilding the body from the queue files,
+     never a question. --check-text runs only this check (use it after C.2);
+     --founder-text-change "<his words>" records a founder-ordered change;
+  2b. splits the REAL page into units with tools/des_fidelity_units.py and
+     aligns them to the stored claims: unchanged units kept verbatim (ids
+     renumbered if the template shifted them); a date line takes the page's
+     date with its verdict kept; units new in the page frame are NOT_A_CLAIM
+     or silent, never changing the score; counts, score and the Persian lines
+     are recomputed only when something changed;
   3. writes plus/des-scores.json[content_id] (and the sibling audio episode's
      DES-only mirror for a NoteCast) byte-preservingly, the recorded plan and
      source markers under the real content_id;
@@ -117,6 +118,50 @@ def recompute(f, pooled):
             "level": level, "fact_fa": fact, "interpretation_fa": interp}
 
 
+DATE_RE = re.compile(r"20\d\d-\d\d-\d\d")
+
+
+def body_lines(item):
+    """The frozen text of record (01-متن.md) as plain lines: markdown bold and
+    list dashes stripped, image markers [[تصویر:NN]] dropped."""
+    p = item / "01-متن.md"
+    if not p.exists():
+        return []
+    out = []
+    for line in p.read_text(encoding="utf-8").splitlines():
+        t = re.sub(r"\[\[[^\]]*\]\]", "", line).strip()
+        t = re.sub(r"^\s*[-*]\s+", "", t)
+        t = re.sub(r"^\*\*(.*)\*\*$", r"\1", t).replace("**", "")
+        if t.strip():
+            out.append(norm(t))
+    return out
+
+
+def body_guard(item, cid, units, synced, added):
+    """Founder order 1405/08/11: on publish day the text does not move. Every
+    line of 01-متن.md must sit verbatim on the page, nothing may be inserted
+    among them (no new subtitle), and a changed unit may differ only in a date."""
+    lines = body_lines(item)
+    if not lines:
+        return []
+    doc = (ROOT / f"{cid}.html").read_text(encoding="utf-8")
+    h1 = re.search(r"<h1[^>]*>(.*?)</h1>", doc, re.S)
+    page = norm(vp.text_of(h1.group(1)) + " " + vp.text_of(vp.article_region(doc))) if h1 else norm(vp.text_of(vp.article_region(doc)))
+    body = " \n ".join(lines)
+    problems = [f"line of 01-متن.md not on the page: «{l[:70]}»" for l in lines if l not in page]
+    in_body = [i for i, u in enumerate(units) if norm(u["text"]) and norm(u["text"]) in body]
+    if in_body:
+        lo, hi = in_body[0], in_body[-1]
+        for uid in added:
+            k = next(i for i, u in enumerate(units) if u["id"] == uid)
+            if lo < k < hi and norm(units[k]["text"]) not in body:
+                problems.append(f"text inserted into the body that is not in 01-متن.md: «{units[k]['text'][:70]}» ({uid})")
+    for x in synced:
+        if DATE_RE.sub("D", x["before"]) != DATE_RE.sub("D", x["after"]) and (norm(x["before"]) in body or norm(x["after"]) in body):
+            problems.append(f"body sentence changed: «{x['before'][:50]}» -> «{x['after'][:50]}»")
+    return problems
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("item", help="queue item folder (…/queue/NN-<category>-<slug>)")
@@ -128,6 +173,10 @@ def main():
     ap.add_argument("--show-date", action="store_true",
                     help="print the date the frozen Fidelity was scored on (the page's own date lines); "
                          "build the page with THAT date (founder, 1405/08/11) and nothing needs syncing")
+    ap.add_argument("--check-text", action="store_true",
+                    help="only check that the built page carries 01-متن.md unchanged (run right after C.2)")
+    ap.add_argument("--founder-text-change", metavar="WORDS",
+                    help="the founder's own words ordering a text change on publish day (recorded, then allowed)")
     a = ap.parse_args()
 
     item = Path(a.item).resolve()
@@ -190,6 +239,15 @@ def main():
         elif tag == "insert":
             added += [units[j]["id"] for j in range(j1, j2)]
     by_id = {u["id"]: u for u in units}
+    problems = body_guard(item, cid, units, synced, added)
+    if a.check_text or (problems and not a.founder_text_change):
+        print(json.dumps({"status": "text_ok" if not problems else "text_moved", "content_id": cid,
+                          "problems": problems,
+                          "fix": None if not problems else
+                          "the page body must be 01-متن.md verbatim (founder order 1405/08/11): rebuild the body "
+                          "mechanically from the queue files — no new subtitle, no rewrite, no question to the founder"},
+                         ensure_ascii=False, indent=1))
+        return 0 if not problems else 3
     renumbered = [o for o, n in mapping.items() if o != n]
     changed = bool(synced or added or dropped or renumbered)
 
@@ -286,7 +344,8 @@ def main():
                   "approval": {"status": "confirmed", "decision": DECISION,
                                "evidence": ["publish-queue.md «حکم دائمی DES و Fidelity صف» (founder, 2026-11-02)"]},
                   "sync": {"text_synced": [s["new"] for s in synced] if k == cid else [],
-                           "added": added if k == cid else [], "dropped": [x["old"] for x in dropped] if k == cid else []}}
+                           "added": added if k == cid else [], "dropped": [x["old"] for x in dropped] if k == cid else []},
+                  **({"founder_text_change": a.founder_text_change, "text_changes": problems} if a.founder_text_change and k == cid else {})}
 
     receipt = {"status": "dry_run" if a.dry_run else "installed", "content_id": cid, "mirror": mirror,
                "units_on_page": len(units), "renumbered": len(renumbered), "text_synced": synced,
@@ -294,7 +353,8 @@ def main():
                "counts_before": before, "counts_after": [f.get("counts") for f in out_objs],
                "levels_after": [(f.get("fidelity_score"), f.get("level")) for f in out_objs],
                "des": [(s.get("des_score"), s.get("band")) for s in sources],
-               "record_sha256": record_sha256(rec)}
+               "record_sha256": record_sha256(rec),
+               "founder_text_change": a.founder_text_change, "text_problems_overridden": problems}
     if a.dry_run:
         print(json.dumps(receipt, ensure_ascii=False, indent=1))
         return 0
