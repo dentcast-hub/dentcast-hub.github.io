@@ -130,6 +130,11 @@ def body_lines(item):
     out = []
     for line in p.read_text(encoding="utf-8").splitlines():
         t = re.sub(r"\[\[[^\]]*\]\]", "", line).strip()
+        if re.fullmatch(r"(-{3,}|\*{3,}|_{3,})", t):
+            continue  # markdown horizontal rule: no text on the page
+        t = re.sub(r"^#{1,6}\s+", "", t)  # markdown heading marker
+        t = re.sub(r"^>\s?", "", t)  # blockquote marker (note box)
+        t = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", t)  # markdown link -> its text
         t = re.sub(r"^\s*[-*]\s+", "", t)
         t = re.sub(r"^\*\*(.*)\*\*$", r"\1", t).replace("**", "")
         if t.strip():
