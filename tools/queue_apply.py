@@ -59,6 +59,16 @@ CATEGORIES = {
         "image": "share{n}-fig{k}.webp", "body_open": '<div class="sh-dialogue">',
         "landing": "sharehub/index.html", "landing_mode": "top", "style": "compact",
     },
+    "insight": {
+        "dir": "insight", "stem": "insight-", "brain_type": "clinical", "brain_id": "clinical-{n}",
+        "image": "insight{n}-{k}.webp", "body_open": None,
+        "landing": "insight/index.html", "landing_mode": "top", "style": "insight",
+    },
+    "chairside": {
+        "dir": "chairside", "stem": "chairside-", "brain_type": "chairside", "brain_id": "chairside-{n}",
+        "image": "cs{n}-{k}.webp", "body_open": None,
+        "landing": "chairside/index.html", "landing_mode": "top", "style": "chairside",
+    },
     "notecast": {
         "dir": "notecast", "stem": "episode-", "brain_type": "notecast", "brain_id": "{n}",
         "image": "notecast{n}-{k}.webp", "body_open": None,
@@ -159,7 +169,7 @@ def rollback(backup, extra=()):
             p.write_bytes(data)
 
 
-TOOL_OUTPUTS = ("plus/des-scores.json", ".dentcast/queue-frozen-des.json", ".dentcast/des-source-markers.json",
+TOOL_OUTPUTS = ("plus/des-scores.json", "dentcast-brain.json", ".dentcast/queue-frozen-des.json", ".dentcast/des-source-markers.json",
                 "plus/pathways.json", "dentcast-hashtag-reference.json", "plus/assistant-tags.json",
                 "plus/content-index.json", "plus/cabinet-papers.json")
 
@@ -217,6 +227,12 @@ def precheck(args):
             refuse("PARENT_MISSING", f"{m['parent_episode']}.html does not exist")
     if args.content_id != want:
         refuse("CONTENT_ID_NOT_NEXT", f"next free {cat} id on this checkout is {want}, not {args.content_id}")
+    body0 = blocks(split_tail((info["path"] / "01-متن.md").read_text(encoding="utf-8"))[0])
+    kinds = [b[0] for b in body0]
+    if "ul" in kinds and ("p" not in kinds or kinds.index("p") > kinds.index("ul")):
+        refuse("LEAD_PARAGRAPH_MISSING", "01-متن.md opens with a list before any paragraph: the opening paragraph "
+               "(module 03 «Opening paragraph before any list») belongs to preparation; the item goes back to "
+               "«در حال آماده‌سازی» (Phase F would fail this page)")
     if not (info["path"] / "05-DES-Fidelity" / "des.json").exists():
         refuse("DES_PACKAGE_MISSING", "05-DES-Fidelity/des.json is missing (publish-queue.md: one of the three stops)")
     return info, d, m, n, prev
@@ -425,7 +441,7 @@ def template_facts(cat, prev_n):
     cid = f"{c['dir']}/{c['stem']}{prev_n}"
     doc = (ROOT / f"{cid}.html").read_bytes().decode("utf-8")
     brain = json.loads((ROOT / "dentcast-brain.json").read_text(encoding="utf-8"))
-    entry = next((e for e in brain if e.get("type") == c["brain_type"] and str(e.get("id")) == str(prev_n)), None)
+    entry = next((e for e in brain if e.get("type") == c["brain_type"] and str(e.get("id")) == c["brain_id"].format(n=prev_n)), None)
     if entry is None:
         refuse("TEMPLATE_NOT_IN_BRAIN", f"template {cid} has no brain entry")
     return cid, doc, entry
@@ -620,6 +636,212 @@ def build_notecast_page(n, prev, m, date, item, lang="fa"):
                                        "links_not_found": pend, "explore": explore, "tail_removed": tail}
 
 
+INSIGHT_FIGURE = ('<figure style="margin:1.25rem auto;text-align:center;max-width:768px"><img src="{src}" alt="{alt}" '
+                  'width="{w}" height="{h}" loading="lazy" decoding="async" '
+                  'style="display:block;width:100%;height:auto;border-radius:14px">{cap}</figure>')
+INSIGHT_CAP = '<figcaption style="font-size:.85rem;opacity:.8;margin-top:.5rem">{}</figcaption>'
+
+
+def render_insight(md, imgs, img_url, linker, lang):
+    out = []
+    for b in blocks(md):
+        txt = (lambda t: linker.apply(t) if linker else inline(t))
+        if b[0] == "p":
+            out.append(f"<p>{txt(b[1])}</p>")
+        elif b[0] == "h":
+            out.append(f"<h{max(b[1], 3)}>{inline(b[2])}</h{max(b[1], 3)}>")
+        elif b[0] == "ul":
+            out.append("<ul>" + "".join(f"<li>{txt(i)}</li>" for i in b[1]) + "</ul>")
+        elif b[0] == "note":
+            out.append(NOTE_OPEN + "".join(f'<p style="margin:0;">{txt(x)}</p>' for x in b[1]) + "</div>")
+        elif b[0] == "img":
+            img = imgs.get(b[1])
+            if img is None:
+                refuse("IMAGE_MARKER_UNKNOWN", f"[[تصویر:{b[1]}]] has no image in 03-تصاویر")
+            cap = img["caption_fa" if lang == "fa" else "caption_en"]
+            out.append(INSIGHT_FIGURE.format(src=img_url(b[1]), alt=attr(img["alt_fa" if lang == "fa" else "alt_en"]),
+                                             w=img["w"], h=img["h"], cap=INSIGHT_CAP.format(esc(cap)) if cap else ""))
+        else:
+            refuse("INSIGHT_BLOCK", f"block «{b[0]}» has no Insight markup precedent")
+    return "\n\n".join(out)
+
+
+def article_section(pillar):
+    """Insight JSON-LD articleSection: the value most used by existing Insight
+    pages of the same pillar (a site fact, not a judgment)."""
+    from collections import Counter
+    brain = json.loads((ROOT / "dentcast-brain.json").read_text(encoding="utf-8"))
+    seen = Counter()
+    for e in brain:
+        if e.get("type") == "clinical" and (e.get("pillar") or {}).get("primary") == pillar:
+            p = ROOT / (e.get("page_url") or "").lstrip("/")
+            if p.is_file():
+                m_ = re.search(r'"articleSection": "([^"]+)"', p.read_text(encoding="utf-8"))
+                if m_:
+                    seen[m_.group(1)] += 1
+    if not seen:
+        refuse("ARTICLE_SECTION", f"no Insight page of pillar {pillar} carries an articleSection to follow")
+    return seen.most_common(1)[0][0]
+
+
+def build_insight_page(n, prev, m, date, item, lang="fa"):
+    c = CATEGORIES["insight"]
+    sub = "en/" if lang == "en" else ""
+    tdoc = (ROOT / f"insight/{sub}insight-{prev}.html").read_bytes().decode("utf-8")
+    nl = "\r\n" if "\r\n" in tdoc else "\n"
+    doc = tdoc.replace("\r\n", "\n")
+    _, _, tentry = template_facts("insight", prev)
+    if m["credit"]["mode"] != "none":
+        refuse("INSIGHT_CREDIT", "an Insight queue item with a paper credit has no page precedent; use the interactive route")
+    old_title = html.unescape(re.search(r'"headline": "([^"]*)"', doc).group(1))
+    old_desc = html.unescape(re.search(r'<meta name="description" content="([^"]*)"', doc).group(1))
+    old_topic = re.search(r'"healthCondition": \{[^}]*"name": "([^"]*)"', doc, re.S).group(1)
+    old_kw = re.search(r'"keywords": "([^"]*)"', doc).group(1)
+    old_sec = re.search(r'"articleSection": "([^"]*)"', doc).group(1)
+    title = m["title_fa"] if lang == "fa" else m["title_en"]
+    caption = m["caption_fa"] if lang == "fa" else m["caption_en"]
+    for a_, b_ in ((f"insight/insight-{prev}.html", f"insight/insight-{n}.html"),
+                   (f"insight/en/insight-{prev}.html", f"insight/en/insight-{n}.html"),
+                   (f'href="en/insight-{prev}.html"', f'href="en/insight-{n}.html"'),
+                   (f'href="../insight-{prev}.html"', f'href="../insight-{n}.html"'),
+                   (f"Insight {prev} ", f"Insight {n} ")):
+        doc = doc.replace(a_, b_)
+    for old, new in ((old_title, title), (old_desc, caption)):
+        doc = doc.replace(attr(old), attr(new)).replace(json.dumps(old, ensure_ascii=False)[1:-1],
+                                                      json.dumps(new, ensure_ascii=False)[1:-1]).replace(old, new)
+    kw = m["keywords"] if lang == "fa" else (m.get("keywords_en") or [title])
+    doc = doc.replace(f'"keywords": "{old_kw}"', '"keywords": ' + json.dumps(", ".join(kw), ensure_ascii=False))
+    doc = doc.replace(f'"articleSection": "{old_sec}"', '"articleSection": ' + json.dumps(
+        m.get("article_section") or article_section(m["pillar"]["primary"]), ensure_ascii=False))
+    doc = re.sub(r'("healthCondition": \{[^}]*"name": )"[^"]*"', lambda mm: mm.group(1) + json.dumps(
+        m.get("topic_en") or m["title_en"], ensure_ascii=False), doc, flags=re.S)
+    for k in ("datePublished", "dateModified", "lastReviewed"):
+        doc = re.sub(r'("%s": ")\d{4}-\d\d-\d\d(")' % k, r"\g<1>" + date + r"\2", doc)
+    doc = re.sub(r'<time datetime="\d{4}-\d\d-\d\d">\d{4}-\d\d-\d\d</time>', f'<time datetime="{date}">{date}</time>', doc)
+    imgs = {}
+    for img in m["images"]:
+        w_, h_ = webp_size((item / img["file"]).read_bytes())
+        imgs[img["n"]] = {**img, "w": w_, "h": h_}
+    img_url = lambda k: "/insight/" + c["image"].format(n=n, k=int(k))
+    src = (item / "01-متن.md").read_text(encoding="utf-8") if lang == "fa" else m["body_en"]
+    body_md, tail = split_tail(src)
+    linker = Linker(m["links_48"]) if lang == "fa" else None
+    body = render_insight(body_md, imgs, img_url, linker, lang)
+    doc = swap_region(doc, r'<a class="lang-btn".*?</a>\n\n', r'\n\n(<!--[^\n]*-->\n\n)?<p class="dc-disclaimer">',
+                      body, "body")
+    explore = []
+    if lang == "fa":
+        caps = [("/glossary/", "دانشنامه"), (f"/pillar/{m['pillar']['primary']}/", "فهرست موضوعی")]
+        explore = [(x["href"], x["label"]) for x in m["explore_49"]][:EXPLORE_CAP - len(caps)]
+        rows = "\n".join(f'    <a href="{attr(h)}" class="dc-related-capsule">{esc(t)}</a>' for h, t in caps + explore)
+        doc = swap_region(doc, r'<div class="dc-related-capsules">\n', r"\n  </div>\n</div>", rows, "related")
+    residue = [x for x in (old_title, old_desc, old_topic, old_kw, f"insight-{prev}.html", f"insight{prev}-",
+                           tentry.get("title"), tentry.get("caption")) if x and x in doc]
+    residue += re.findall(r"Insight %d\b|اینسایت %s(?![۰-۹])" % (prev, fa_digits(prev)), doc)
+    if residue:
+        refuse("TEMPLATE_RESIDUE", f"clone residue of insight/insight-{prev} left: {residue[:5]}")
+    files = {"insight/" + c["image"].format(n=n, k=int(k)): (item / v["file"]).read_bytes() for k, v in imgs.items()}
+    pend = [x["phrase"] for x in linker.pending] if linker else []
+    return doc.replace("\n", nl), files, {"links_done": [x["phrase"] for x in (linker.done if linker else [])],
+                                          "links_not_found": pend, "explore": explore, "tail_removed": tail}
+
+
+CHAIRSIDE_FIGURE = ('<figure>\n  <img loading="lazy" src="{src}" alt="{alt}" style="max-width:100%; border-radius:0.75rem;" '
+                    'width="{w}" height="{h}">{cap}\n</figure>')
+CHAIRSIDE_CAP = ('\n  <figcaption style="text-align:center; font-size:.85rem; color:var(--muted,#555); '
+                 'margin-top:0.5rem;">{}</figcaption>')
+
+
+def render_chairside(md, imgs, img_url, linker, lang):
+    out = []
+    txt = (lambda t: linker.apply(t) if linker else inline(t))
+    for b in blocks(md):
+        if b[0] == "p":
+            out.append(f"<p>{txt(b[1])}</p>")
+        elif b[0] == "h":
+            out.append(f"<h{b[1]}>{inline(b[2])}</h{b[1]}>")
+        elif b[0] == "ul":
+            out.append("<ul>\n" + "\n".join(f"  <li>{txt(i)}</li>" for i in b[1]) + "\n</ul>")
+        elif b[0] == "note":
+            out.append(NOTE_OPEN + "".join(f'<p style="margin:0;">{txt(x)}</p>' for x in b[1]) + "</div>")
+        elif b[0] == "img":
+            img = imgs.get(b[1])
+            if img is None:
+                refuse("IMAGE_MARKER_UNKNOWN", f"[[تصویر:{b[1]}]] has no image in 03-تصاویر")
+            cap = img["caption_fa" if lang == "fa" else "caption_en"]
+            out.append(CHAIRSIDE_FIGURE.format(src=img_url(b[1]), alt=attr(img["alt_fa" if lang == "fa" else "alt_en"]),
+                                               w=img["w"], h=img["h"], cap=CHAIRSIDE_CAP.format(esc(cap)) if cap else ""))
+        else:
+            refuse("CHAIRSIDE_BLOCK", f"block «{b[0]}» has no Chairside markup precedent")
+    return "\n\n".join(out)
+
+
+def build_chairside_page(n, prev, m, date, item, lang="fa"):
+    c = CATEGORIES["chairside"]
+    sub = "en/" if lang == "en" else ""
+    tdoc = (ROOT / f"chairside/{sub}chairside-{prev}.html").read_bytes().decode("utf-8")
+    nl = "\r\n" if "\r\n" in tdoc else "\n"
+    doc = tdoc.replace("\r\n", "\n")
+    _, _, tentry = template_facts("chairside", prev)
+    if m["credit"]["mode"] != "none":
+        refuse("CHAIRSIDE_CREDIT", "a Chairside queue item with a paper credit has no page precedent; use the interactive route")
+    old_title = html.unescape(re.search(r'"headline": "([^"]*)"', doc).group(1))
+    old_desc = html.unescape(re.search(r'<meta name="description" content="([^"]*)"', doc).group(1))
+    title = m["title_fa"] if lang == "fa" else m["title_en"]
+    caption = m["caption_fa"] if lang == "fa" else m["caption_en"]
+    for a_, b_ in ((f"chairside/chairside-{prev}.html", f"chairside/chairside-{n}.html"),
+                   (f"chairside/en/chairside-{prev}.html", f"chairside/en/chairside-{n}.html"),
+                   (f'href="en/chairside-{prev}.html"', f'href="en/chairside-{n}.html"'),
+                   (f'href="../chairside-{prev}.html"', f'href="../chairside-{n}.html"'),
+                   (f"Chairside {prev}<", f"Chairside {n}<"), (f"Chairside {prev} ", f"Chairside {n} ")):
+        doc = doc.replace(a_, b_)
+    for old, new in ((old_title, title), (old_desc, caption)):
+        doc = doc.replace(attr(old), attr(new)).replace(json.dumps(old, ensure_ascii=False)[1:-1],
+                                                      json.dumps(new, ensure_ascii=False)[1:-1]).replace(old, new)
+    kw = ", ".join(m["keywords"] if lang == "fa" else (m.get("keywords_en") or [title]))
+    doc = re.sub(r'(<meta name="keywords" content=")[^"]*(")', lambda mm: mm.group(1) + attr(kw) + mm.group(2), doc)
+    doc = re.sub(r'("keywords": )"[^"]*"', lambda mm: mm.group(1) + json.dumps(kw, ensure_ascii=False), doc)
+    for k in ("datePublished", "dateModified", "lastReviewed"):
+        doc = re.sub(r'("%s": ")\d{4}-\d\d-\d\d(")' % k, r"\g<1>" + date + r"\2", doc)
+    doc = re.sub(r'<time datetime="\d{4}-\d\d-\d\d">\d{4}-\d\d-\d\d</time>', f'<time datetime="{date}">{date}</time>', doc)
+    imgs = {}
+    for img in m["images"]:
+        w_, h_ = webp_size((item / img["file"]).read_bytes())
+        imgs[img["n"]] = {**img, "w": w_, "h": h_}
+    img_url = lambda k: "/chairside/" + c["image"].format(n=n, k=int(k))
+    # social image: the first figure, else the site cover
+    if imgs:
+        first = sorted(imgs)[0]
+        og, ow, oh = SITE + img_url(first), imgs[first]["w"], imgs[first]["h"]
+    else:
+        og, ow, oh = SITE + "/dentcast-cover.webp", 1200, 630
+    doc = re.sub(r'(<meta property="og:image" content=")[^"]*(")', lambda mm: mm.group(1) + og + mm.group(2), doc)
+    doc = re.sub(r'(<meta name="twitter:image" content=")[^"]*(")', lambda mm: mm.group(1) + og + mm.group(2), doc)
+    doc = re.sub(r'(<meta property="og:image:width" content=")\d+(")', r"\g<1>%d\2" % ow, doc)
+    doc = re.sub(r'(<meta property="og:image:height" content=")\d+(")', r"\g<1>%d\2" % oh, doc)
+    doc = re.sub(r'("image": \[\n\s*)"[^"]*"', lambda mm: mm.group(1) + json.dumps(og), doc)
+    src = (item / "01-متن.md").read_text(encoding="utf-8") if lang == "fa" else m["body_en"]
+    body_md, tail = split_tail(src)
+    linker = Linker(m["links_48"]) if lang == "fa" else None
+    body = render_chairside(body_md, imgs, img_url, linker, lang)
+    doc = swap_region(doc, r'<a class="lang-btn".*?\n  </a>\n\n', r'\n\n  <p class="dc-disclaimer">', body, "body")
+    explore = []
+    if lang == "fa":
+        caps = [("/glossary/", "دانشنامه"), (f"/pillar/{m['pillar']['primary']}/", "فهرست موضوعی")]
+        explore = [(x["href"], x["label"]) for x in m["explore_49"]][:EXPLORE_CAP - len(caps)]
+        rows = "\n".join(f'    <a href="{attr(h)}" class="dc-related-capsule">{esc(t)}</a>' for h, t in caps + explore)
+        doc = swap_region(doc, r'<div class="dc-related-capsules">\n', r"\n  </div>\n</div>", rows, "related")
+    residue = [x for x in (old_title, old_desc, f"chairside-{prev}.html", f"chairside{prev}.webp", f"cs{prev}-",
+                           tentry.get("title"), tentry.get("caption")) if x and x in doc]
+    residue += re.findall(r"Chairside %d\b" % prev, doc)
+    if residue:
+        refuse("TEMPLATE_RESIDUE", f"clone residue of chairside/chairside-{prev} left: {residue[:5]}")
+    files = {"chairside/" + c["image"].format(n=n, k=int(k)): (item / v["file"]).read_bytes() for k, v in imgs.items()}
+    pend = [x["phrase"] for x in linker.pending] if linker else []
+    return doc.replace("\n", nl), files, {"links_done": [x["phrase"] for x in (linker.done if linker else [])],
+                                          "links_not_found": pend, "explore": explore, "tail_removed": tail}
+
+
 def parent_episode(w, n, m, prev):
     """The same-number episode gets the NoteCast link in «محتوای مرتبط» and the
     paper credit, cloned from the previous NoteCast's parent episode."""
@@ -723,8 +945,15 @@ def brain_entry(w, cat, n, m, template_entry):
     return entry
 
 
-def faq(w, cid, item):
-    data = json.loads((item / "10-فلش‌کارت-FAQ.json").read_text(encoding="utf-8"))
+def faq(w, cid, item, m):
+    f10 = item / "10-فلش‌کارت-FAQ.json"
+    if f10.exists():
+        data = json.loads(f10.read_text(encoding="utf-8"))
+    elif m.get("faq"):
+        data = m["faq"]
+    else:
+        refuse("MANIFEST_INCOMPLETE", "the item has no 10-فلش‌کارت-FAQ.json; supply field «faq» (the frozen "
+               "faqPages/definedTermSets node or {\"skip\": reason}) with its origin", missing=["faq"])
     if "skip" in data:
         return {"skip": data["skip"]}
     url = f"{SITE}/{cid}.html"
@@ -834,6 +1063,43 @@ def explore_backlinks(w, cid, m):
     return out
 
 
+def mint_batch(item, m):
+    """The frozen hashtag batch of the item (module 10 step 4): its file must be
+    in SHA256SUMS; it may retag other existing pages, never this new one."""
+    rel = m.get("mint_batch")
+    if not rel:
+        refuse("MANIFEST_INCOMPLETE", "a hashtag mint is ordered but no frozen batch file is named (field «mint_batch»)",
+               missing=["mint_batch"])
+    sums = (item / "SHA256SUMS").read_text(encoding="utf-8")
+    if not re.search(r"\s(\./)?%s\s*$" % re.escape(rel), sums, re.M):
+        refuse("MINT_BATCH_NOT_FROZEN", f"{rel} is not in SHA256SUMS")
+    return json.loads((item / rel).read_text(encoding="utf-8"))
+
+
+def bridge(w, spec):
+    """Cabinet bridge decision for a minted concept: map rows and/or a sorted
+    tooth_topics entry, both frozen in the item."""
+    rel = "plus/cabinet-bridge.json"
+    text = w.text(rel)
+    data = json.loads(text)
+    for key, tags in (spec.get("map") or {}).items():
+        text = tio.json_append(text, ["map"], tags, key=key)
+    for key in spec.get("tooth_topics") or []:
+        topics = json.loads(text)["tooth_topics"]
+        if key in topics:
+            continue
+        if topics != sorted(topics):
+            text = tio.json_append(text, ["tooth_topics"], key)
+        else:
+            k = sum(1 for t in topics if t < key)
+            text = tio.json_append(text, ["tooth_topics"], key, after=k - 1) if k else _prepend(text, key)
+    w.put(rel, text)
+
+
+def _prepend(text, key):
+    refuse("BRIDGE_ORDER", f"tooth_topics entry «{key}» would sort first; no precedent for the insertion")
+
+
 def run(cmd, check=True):
     r = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
     if check and r.returncode != 0:
@@ -912,7 +1178,7 @@ def assemble(a):
         r = run([sys.executable, "tools/queue_install_des.py", "--show-date", str(item), cid])
         date = json.loads(r.stdout).get("prep_date") or datetime.date.today().isoformat()
     w = Writes()
-    builder = build_notecast_page if cat == "notecast" else (lambda *x: build_page(cat, *x))
+    builder = {"notecast": build_notecast_page, "insight": build_insight_page, "chairside": build_chairside_page}.get(cat) or (lambda *x: build_page(cat, *x))
     page, img_files, page_info = builder(n, prev, m, date, item, "fa")
     if page_info["links_not_found"]:
         defaults.append({"rule": "4.8 approved link phrase not in body", "skipped": page_info["links_not_found"]})
@@ -934,13 +1200,20 @@ def assemble(a):
         mint = set(m.get("mint") or [])
         drop = [t for t in m["hashtags"] if t not in known and t not in mint]
         if mint - known:
-            refuse("MINT_NOT_SUPPORTED", "minting a new hashtag concept needs its batch (module 10 step 4); "
-                   "not mechanical")
+            batch = mint_batch(item, m)
+            minted = {c_["tag"] for c_ in batch.get("concepts") or []}
+            if not (mint - known) <= minted:
+                refuse("MINT_BATCH_INCOMPLETE", f"ordered mint {sorted(mint - known - minted)} is not in the frozen batch")
+            if not m.get("bridge"):
+                refuse("MANIFEST_INCOMPLETE", "a minted concept needs its frozen bridge decision (field «bridge»: "
+                       "map rows or no library equivalent, tooth_topics yes/no; module 10 step 4)", missing=["bridge"])
         if drop:
             defaults.append({"rule": "hashtag not in the library and not ordered minted: dropped", "tags": drop})
             m["hashtags"] = [t for t in m["hashtags"] if t not in drop]
     entry = brain_entry(w, cat, n, m, tentry)
-    report = {"faq": faq(w, cid, item), "exam": exam(w, cid, item), "catalog": catalog(w, cid, m),
+    if m.get("bridge"):
+        bridge(w, m["bridge"])
+    report = {"faq": faq(w, cid, item, m), "exam": exam(w, cid, item), "catalog": catalog(w, cid, m),
               "backlinks_47": explore_backlinks(w, cid, m), "pulse": pulse(w, cat, cid, m),
               "explore_49": page_info["explore"], "links_48": page_info["links_done"]}
     base = {"status": "dry_run" if a.dry_run else "assembled", "content_id": cid, "queue_item": f"queue/{item.name}",
@@ -977,12 +1250,14 @@ def finish_writes(a, w, base, item, cid, m, cat, date, report, entry, pre):
         cmd = [sys.executable, "tools/pathway_place.py", "--insert", cid, "--pathway", pid]
         cmd += ["--after", after] if after else ["--at-end"]
         run(cmd)
+    if m.get("mint_batch"):
+        run([sys.executable, "tools/hashtag_ref.py", "--apply", str(item / m["mint_batch"])])
     run([sys.executable, "tools/hashtag_ref.py", "--sync"])
     run(["node", "tools/build_plus_index.mjs"])
     run([sys.executable, "tools/hashtag_ref.py", "--check"])
     if (ROOT / "tools/validate_exam_questions.py").exists():
         run([sys.executable, "tools/validate_exam_questions.py"])
-    if report["catalog"].get("entries"):
+    if report["catalog"].get("entries") or m.get("bridge"):
         run([sys.executable, "tools/build_cabinet_papers.py"])
         run([sys.executable, "tools/build_cabinet_papers.py", "--check"])
     base["des"] = {k: des_r.get(k) for k in ("status", "record_sha256", "text_synced", "added", "dropped", "mirror")}

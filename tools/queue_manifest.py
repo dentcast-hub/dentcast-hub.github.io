@@ -132,7 +132,8 @@ def section(lines, heading, level=2):
         if m:
             if inside and len(m.group(1)) <= level:
                 break
-            if len(m.group(1)) == level and m.group(2).strip() == heading:
+            h_ = m.group(2).strip()
+            if len(m.group(1)) == level and (h_ == heading or h_.startswith((heading + " (", heading + " —"))):
                 inside = True
                 continue
         if inside:
@@ -218,16 +219,25 @@ def draft(item):
         for key, head in (("title_en", "Title"), ("caption_en", "Caption")):
             sv = single_value(section(l06, head))
             d[key] = V(sv[1] if sv else None, f"06-انگلیسی.md:{sv[0]}" if sv else "06-انگلیسی.md")
-        starts = [n for n, l in enumerate(l06) if l.strip() == "## Body"]
-        ends = [n for n, l in enumerate(l06) if l.strip() == "## Figure captions"]
+        starts = [n for n, l in enumerate(l06) if l.strip() == "## Body" or l.strip().startswith("## Body (")]
+        ends = [n for n, l in enumerate(l06) if l.strip().startswith(("## Figure captions", "## Image captions"))]
         if len(starts) == 1:
             end = ends[0] if ends and ends[0] > starts[0] else len(l06)
+            # The English body has as many `## ` sections as 01-متن.md; a later
+            # `## ` (translator notes and the like) is not page text.
+            fa = lines_of(item, "01-متن.md") or []
+            k_fa = sum(1 for l in fa if re.match(r"^##\s", l))
+            heads = [n for n in range(starts[0] + 1, end) if re.match(r"^##\s", l06[n])]
+            if len(heads) > k_fa:
+                end = heads[k_fa]
             d["body_en"] = V("\n".join(l06[starts[0] + 1:end]).strip("\n"), f"06-انگلیسی.md:{starts[0] + 2}-{end}")
         else:
             d["body_en"] = V(None, "06-انگلیسی.md: no single `## Body`")
         figs = {}
-        for n, l in (section(l06, "Figure captions") or []):
-            m = re.match(r"^\s*-\s*(\d\d):\s*(.+?)\s*$", l)
+        cap_head = next((l[3:].strip() for l in l06 if l.startswith("## Figure captions")
+                         or l.startswith("## Image captions")), None)
+        for n, l in (section(l06, cap_head) if cap_head else []) or []:
+            m = re.match(r"^\s*-\s*(?:Image\s+)?(\d\d):\s*(.+?)\s*$", l)
             if m:
                 figs[m.group(1)] = (n, m.group(2))
         d["_figcaps_en"] = V(figs, "06-انگلیسی.md")
@@ -237,7 +247,8 @@ def draft(item):
 
     # 04 — on-page credit
     d["credit"] = draft_credit(item)
-    d["catalog"] = V(None, "04-منبع/منابع.md (catalog fields are not in the legacy contract)")
+    d["catalog"] = (V([], "04-منبع/منابع.md: no paper") if (d["credit"]["value"] or {}).get("mode") == "none"
+                    else V(None, "04-منبع/منابع.md (catalog fields are not in the legacy contract)"))
 
     # 07 — hashtags, pillar, pulse
     l07 = lines_of(item, "07-ورودی‌ها.md") or []
@@ -256,12 +267,17 @@ def draft(item):
         m = re.match(r"^-\s*متن دقیق:\s*«(.+)»\s*با لینک به صفحهٔ تازه", t)
         if m and pulse is None:
             pulse = (n, m.group(1))
+        m = re.match(r"^-\s*متن دقیق \(لینک روی کل عنوان\):\s*(.+?)\s*$", t)
+        if m and pulse is None:
+            pulse = (n, None, m.group(1))
     d["hashtags"] = tags or V(None, "07-ورودی‌ها.md: no «- فهرست: #…» line")
     d["mint"] = V([], "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)")
     d["pillar"] = V({"primary": pillar[1], "subtopic": sub[1] if sub else None, "secondary": []},
                     f"07-ورودی‌ها.md:{pillar[0]}") if pillar else V(None, "07-ورودی‌ها.md: no «- پیلار:» line")
     title = d["title_fa"]["value"]
-    if pulse and title and pulse[1] == title:
+    if pulse and len(pulse) == 3 and title and f"«{title}»" in pulse[2] and "<" not in pulse[2]:
+        d["pulse"] = V({"text": pulse[2], "link_phrase": title}, f"07-ورودی‌ها.md:{pulse[0]}")
+    elif pulse and len(pulse) == 2 and title and pulse[1] == title:
         d["pulse"] = V({"text": None, "link_phrase": title}, f"07-ورودی‌ها.md:{pulse[0]}")
     else:
         d["pulse"] = V(None, "07-ورودی‌ها.md: pulse text is not the plain title pattern")
@@ -359,6 +375,12 @@ def draft_credit(item):
         if items and all(i["label_fa"] and i["label_en"] and (i["href"] or "").startswith("http") for i in items):
             return V({"mode": "references", "items": items}, f"{rel}:{sec_start + 1}")
         return V(None, f"{rel}: «نمایش منابع روی صفحه» table incomplete")
+    first = next((l.strip() for l in lines if l.strip() and not l.startswith("#")), "")
+    no_paper = (first.startswith("ندارد:") or first.startswith("پیپر ندارد")
+                or any(re.match(r"^\|\s*—\s*\|(\s*—\s*\|)+\s*$", l) for l in lines))
+    if no_paper:
+        n = next(i for i, l in enumerate(lines, 1) if l.strip() and not l.startswith("#"))
+        return V({"mode": "none"}, f"{rel}:{n}")
     return V(None, f"{rel}: the on-page credit label (first author's display name) is not in the legacy contract")
 
 

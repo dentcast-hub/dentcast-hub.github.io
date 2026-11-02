@@ -27,7 +27,7 @@
 | `C.8`، `C.7`، `D`، `E`، `F`، `G` | `post-cut2-mechanical.yml` | فقط پایش (`publish-after-push2.md`) |
 
 `content_id` شمارهٔ آزاد بعدی همان دسته روی همین checkout است؛ ابزار هر شمارهٔ دیگر را رد می‌کند.
-دسته‌های پشتیبانی‌شده: `sharehub`، `notecast`. بقیه را ابزار رد می‌کند و مطلب از مسیر عادی
+دسته‌های پشتیبانی‌شده: `sharehub`، `notecast`، `insight`، `chairside` (اینسایت و چیرساید فقط بدون کردیت پیپر). بقیه، از جمله `metanote`، را ابزار رد می‌کند و مطلب از مسیر عادی
 (`.dentcast/workflows/README.md`) منتشر می‌شود.
 
 ## supplement (فقط برای مطلب بدون `12-انتشار.json`)
@@ -88,7 +88,9 @@ push برای Action همان «Push 2» است؛ بعد از آن پیام `CLA
 | `CONTENT_ID_NOT_NEXT` | شمارهٔ گفته‌شده در پیام |
 | `TEMPLATE_RESIDUE`، `TEMPLATE_REGION`، `LANDING_ROW`، `PULSE_COUNT`، `PARENT_*` | قالب سایت عوض شده؛ گزارش کن، دستی نساز |
 | `TEXT_MOVED` | بدنه با `01-متن.md` نمی‌خواند؛ گزارش کن (یا «حکم بنیان‌گذار» پایین) |
-| `PATHWAY_NONE`، `MINT_NOT_SUPPORTED`، `CATEGORY_UNSUPPORTED` | مسیر عادی برای همان گام؛ گزارش کن |
+| `LEAD_PARAGRAPH_MISSING` | بدنه با فهرست شروع می‌شود؛ مطلب به آماده‌سازی برمی‌گردد (افتتاحیه مال آماده‌سازی است) |
+| `MINT_BATCH_INCOMPLETE`، `MINT_BATCH_NOT_FROZEN`، نبودن `mint_batch` یا `bridge` | مینت فقط با batch منجمد در `SHA256SUMS` و تصمیم پل کابینت؛ وگرنه گزارش کن |
+| `PATHWAY_NONE`، `CATEGORY_UNSUPPORTED` | مسیر عادی برای همان گام؛ گزارش کن |
 | `ACTIVE_HANDOFF` | پیش‌شرط بالا |
 
 ## حکم بنیان‌گذار

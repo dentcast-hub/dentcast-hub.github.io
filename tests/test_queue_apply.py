@@ -191,9 +191,44 @@ class ManifestTests(unittest.TestCase):
         self.assertIsNone(qm.keyword_lines(["# سر", "توضیح"]))
 
 
-class PrecheckTests(unittest.TestCase):
-    def test_unsupported_category_and_handoff(self):
+class CategoryPiecesTests(unittest.TestCase):
+    def test_metanote_has_no_template_yet(self):
         self.assertNotIn("metanote", qa.CATEGORIES)
+        self.assertEqual(set(qa.CATEGORIES), {"sharehub", "notecast", "insight", "chairside"})
+
+    def test_persian_ordinals(self):
+        self.assertEqual([qa.fa_ordinal(n) for n in (3, 21, 30, 40, 44)],
+                         ["سوم", "بیست\u200cویکم", "سی\u200cام", "چهلم", "چهل\u200cوچهارم"])
+
+    def test_bold_line_heading_only_when_text_follows(self):
+        b = qa.blocks("**بخش**\nمتن بخش.\n\n**جملهٔ پررنگ مستقل**\n")
+        self.assertEqual(b[0], ("h", 4, "بخش"))
+        self.assertEqual(b[-1][0], "p")
+
+    def test_insight_and_chairside_figures(self):
+        imgs = {"01": {"alt_fa": "الت", "caption_fa": "زیر", "w": 3, "h": 4}}
+        out = qa.render_insight("[[تصویر:01]]", imgs, lambda k: "/insight/insight9-1.webp", None, "fa")
+        self.assertIn('<figure style="margin:1.25rem auto', out)
+        self.assertIn("<figcaption", out)
+        out = qa.render_chairside("- یک\n- دو", {}, None, None, "fa")
+        self.assertEqual(out, "<ul>\n  <li>یک</li>\n  <li>دو</li>\n</ul>")
+
+
+class EnglishBodyTests(ManifestTests):
+    def test_english_body_stops_after_the_persian_sections(self):
+        d = self.make_item(extra={
+            "01-متن.md": "مقدمه.\n\n## الف\n\nمتن.\n",
+            "06-انگلیسی.md": "## Title\nT\n\n## Caption\nC\n\n## Body\nIntro.\n\n## A\n\nText.\n\n## Translator notes\n- x\n"})
+        body = qm.draft(d)["body_en"]["value"]
+        self.assertIn("## A", body)
+        self.assertNotIn("Translator", body)
+
+
+class LeadParagraphTests(ManifestTests):
+    def test_body_opening_with_a_list_refuses_before_any_write(self):
+        d = self.make_item(extra={"01-متن.md": "## شرح حال\n\n- یک\n- دو\n\nپاراگراف.\n"})
+        kinds = [b[0] for b in qa.blocks(qm.split_sources_tail((d / "01-متن.md").read_text(encoding="utf-8"))[0])]
+        self.assertLess(kinds.index("ul"), kinds.index("p"))
 
 
 if __name__ == "__main__":
