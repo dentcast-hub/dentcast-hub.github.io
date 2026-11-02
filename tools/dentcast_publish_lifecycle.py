@@ -25,18 +25,31 @@ GROUPS = (
 )
 REGISTRY = {sid: h.MODULES[i] for i, group in enumerate(GROUPS) for sid in group}
 PAPER_IDS = ("rules", "0", "C.4.10.1", "C.4.10.2", "G")
+# Queue lane (publish-queue item, every judgment frozen in preparation): the
+# same canonical ids, fewer rows. 0 = queue precheck and lock, C.2 = assembly
+# (tools/queue_apply.py), C.4.9 = live link state, C.5.6 = pathway, C.6 = the
+# one push before the post-cut2 Action (C.8, C.7, D, E, F, G). Category skips
+# are implied by the profile, not recorded one by one.
+QUEUE_LANE = "queue_lane_v1"
+QUEUE_IDS = ("rules", "0", "C.2", "C.4.9", "C.5.6", "C.6", "C.8", "C.7", "D", "E", "F", "G")
 CLEANUP_NAME = "dentcast-publish-cleanup.json"  # private Git metadata, never a second repo handoff
 
 
-def plan(paper_only=False):
-    ids = PAPER_IDS if paper_only else tuple(REGISTRY)
+def queue_lane(publication):
+    return any(isinstance(d, dict) and d.get("kind") == QUEUE_LANE
+               for d in publication.get("context", {}).get("decisions", []))
+
+
+def plan(paper_only=False, queue=False):
+    ids = PAPER_IDS if paper_only else QUEUE_IDS if queue else tuple(REGISTRY)
     return [{"id": sid, "module": REGISTRY[sid], "status": "pending", "evidence": [], "reason": None}
             for sid in ids]
 
 
 def require_plan(publication):
     h.validate_publication(publication)
-    required = PAPER_IDS if h.publication_category(publication) == "paper-only" else tuple(REGISTRY)
+    required = (PAPER_IDS if h.publication_category(publication) == "paper-only"
+                else QUEUE_IDS if queue_lane(publication) else tuple(REGISTRY))
     steps = publication["steps"]
     ids = [s["id"] for s in steps]
     h.require([sid for sid in ids if sid in REGISTRY] == list(required), "CANONICAL_PLAN_REQUIRED")
@@ -244,8 +257,8 @@ def editorial_cut_receipt(publication, root=None):
               and isinstance(eng["evidence"], list) and bool(eng["evidence"])
               and all(h.nonempty(x) for x in eng["evidence"]),
               "SECOND_CUT_ENGLISH_INVALID")
-    challenge = next(x for x in publication["steps"] if x["id"] == "C.4.14")
-    exempt = h.publication_category(publication) == "litecast" or challenge["status"] == "completed"
+    challenge = next((x for x in publication["steps"] if x["id"] == "C.4.14"), None)
+    exempt = h.publication_category(publication) == "litecast" or (challenge or {}).get("status") == "completed"
     if exempt:
         h.require(eng["status"] == "exempt" and eng["path"] is None,
                   "SECOND_CUT_ENGLISH_EXCEPTION_REQUIRED")
@@ -281,10 +294,21 @@ def fixed_delivery(publication):
         for d in publication["context"]["decisions"])
 
 
+def delivery_cuts(publication):
+    if queue_lane(publication):
+        return ("C.6",)
+    return DELIVERY_CUTS_V2 if editorial_cut_v2(publication) else DELIVERY_CUTS
+
+
+def final_delivery(publication):
+    """Number of the last fixed delivery: 3 interactive, 2 queue lane."""
+    return len(delivery_cuts(publication)) + 1
+
+
 def delivery_boundary(publication):
     """Only resolved prefixes followed by pending steps are deliverable cuts."""
     rows = publication["steps"]
-    cuts = DELIVERY_CUTS_V2 if editorial_cut_v2(publication) else DELIVERY_CUTS
+    cuts = delivery_cuts(publication)
     for number, sid in enumerate(cuts, 1):
         index = next((i for i, row in enumerate(rows) if row["id"] == sid), None)
         if index is not None and all(r["status"] in ("completed", "skipped") for r in rows[:index+1]) and all(
@@ -341,6 +365,8 @@ def redelivers_first_cut(previous, publication, boundary):
     # The previous commit may sit at cut 1, or at cut 2 when a failed post-Push-2
     # continuation needed a workflow fix (e.g. a tool defect fixed on main), whose
     # mandatory invalidation from `rules` reopens the ledger before cut 1.
+    if queue_lane(publication) or queue_lane(previous):
+        return False  # queue lane: no invalidation; a hash mismatch stops the run
     return (boundary in (1, 2) and fixed_delivery(previous)
             and previous["content_id"] == publication["content_id"]
             and h.publication_category(previous) == h.publication_category(publication)
@@ -513,7 +539,8 @@ def validate_final_receipt(root, data, commit=None, own_paths=None):
               and set(state["snapshot"]["workflow"]) == inventory, "INCOMPLETE_FINAL_FINGERPRINTS")
     second = data["second_delivery_commit"]
     h.require(bool(re.fullmatch(r"[0-9a-f]{40}", second)), "INVALID_DELIVERY_COMMIT")
-    require_delivery_parent(root, publication, 3, second)
+    last = final_delivery(publication)
+    require_delivery_parent(root, publication, last, second)
     # A failed post-cut continuation may leave audited reconciliation commits
     # between the delivered second cut and this final delivery. Locate the
     # original second-cut boundary on first-parent history, then validate every
@@ -522,10 +549,11 @@ def validate_final_receipt(root, data, commit=None, own_paths=None):
     history = h.text_git(root, "rev-list", "--first-parent", second).splitlines()
     for candidate in history:
         try:
-            require_delivery_parent(root, publication, 3, candidate)
+            require_delivery_parent(root, publication, last, candidate)
             candidate_first = h.text_git(root, "rev-parse", candidate + "^")
-            require_delivery_parent(root, publication, 2, candidate_first)
-            require_delivery_parent(root, publication, 1, candidate_first + "^")
+            for number in range(last - 1, 0, -1):
+                require_delivery_parent(root, publication, number,
+                                        candidate_first + "^" * (last - 1 - number))
         except h.Blocked:
             continue
         first = candidate_first
@@ -595,11 +623,12 @@ def guard_step_transition(state, publication, root=None):
         h.require(fixed_delivery(publication), "DELIVERY_POLICY_CANNOT_BE_DROPPED")
         old_c49 = next((s for s in state["publication"]["steps"] if s["id"] == "C.4.9"), None)
         new_c49 = next((s for s in publication["steps"] if s["id"] == "C.4.9"), None)
-        if (old_c49 and new_c49 and old_c49["status"] not in ("completed", "skipped")
+        if (not queue_lane(publication) and old_c49 and new_c49 and old_c49["status"] not in ("completed", "skipped")
                 and new_c49["status"] in ("completed", "skipped")):
             # Fail at C.4.9 itself, not first at the cut-1 stop/commit guard.
             require_fixed_cut_readiness(publication, root)
-        h.require(editorial_cut_v2(state["publication"]) == editorial_cut_v2(publication),
+        h.require(editorial_cut_v2(state["publication"]) == editorial_cut_v2(publication)
+                  and queue_lane(state["publication"]) == queue_lane(publication),
                   "DELIVERY_POLICY_VERSION_CANNOT_CHANGE")
         if editorial_cut_v2(state["publication"]):
             old_c6 = next(s for s in state["publication"]["steps"] if s["id"] == "C.6")
@@ -643,7 +672,8 @@ def guard_step_transition(state, publication, root=None):
                   "delivery " + str(cut) + "; " + (
                       "after Push 2 the post-cut2 GitHub Actions run continues from this exact commit and "
                       "the frozen handoff is not recorded locally; correct it only through the documented "
-                      "invalidate recovery" if cut == 2 and editorial_cut_v2(state["publication"]) else
+                      "invalidate recovery" if cut == len(delivery_cuts(state["publication"]))
+                      and editorial_cut_v2(state["publication"]) else
                       "first start the next step (step --status started or advance --start-next), "
                       "then record this change"))
     for row in entered:
@@ -681,6 +711,9 @@ def step(root, expected, sid, status, evidence, reason, note=None):
 @h.baseline_read_session
 def invalidate(root, expected, from_step, note):
     state = state_for_update(root, expected)
+    h.require(not queue_lane(state['publication']),
+              "QUEUE_LANE_NO_INVALIDATION: the queue item is frozen; a hash mismatch stops the run and the item "
+              "returns to preparation (publish-queue.md)")
     p = h.invalidate_publication(state['publication'], from_step, note)
     h.refresh_local_inputs(root, p)
     require_plan(p)
@@ -1002,7 +1035,7 @@ def finish(root, expected):
                   "FRESH_SYNCHRONIZED_REMOTE_REQUIRED")
         fixed = fixed_delivery(p)
         if fixed:
-            require_delivery_parent(root, p, 3)
+            require_delivery_parent(root, p, final_delivery(p))
         else:
             remote_state = h.git(root, "show", remote["head"] + ":" + h.STATE_PATH, optional=True)
             h.require(remote_state is not None and h.digest(remote_state) == expected, "HANDOFF_MUST_BE_DELIVERED_FIRST")
@@ -1244,12 +1277,14 @@ def guard(root, phase):
     h.require(not pending(root), "CLEANUP_DELIVERY_PENDING")
     if fixed_delivery(state["publication"]) and phase in ("pre-commit", "ci"):
         number = delivery_boundary(state["publication"])
-        h.require(number is not None, "ONLY_THREE_FIXED_DELIVERIES_ALLOWED")
+        h.require(number is not None, "ONLY_THREE_FIXED_DELIVERIES_ALLOWED" if not queue_lane(state["publication"])
+                  else "ONLY_TWO_QUEUE_DELIVERIES_ALLOWED")
         require_fixed_cut_readiness(state["publication"], root)
         parent_revision = "HEAD^" if phase == "ci" else "HEAD"
         parent_boundary, parent = committed_boundary(root, parent_revision)
+        last_cut = len(delivery_cuts(state["publication"]))
         already_delivered_second_cut = (
-            number == 2 and parent_boundary == 2 and parent is not None
+            number == last_cut and parent_boundary == last_cut and last_cut > 1 and parent is not None
             and fixed_delivery(parent)
             and editorial_cut_v2(parent) == editorial_cut_v2(state["publication"])
             and parent["content_id"] == state["publication"]["content_id"])

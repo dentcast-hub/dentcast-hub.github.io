@@ -46,6 +46,7 @@ def validate_cut(files, *, baseline_verifier=None):
     p = state["publication"]
     lc.require_plan(p)
     need(p["category"] != "paper-only", "PAPER_ONLY_HAS_ANOTHER_ROUTE")
+    need(not lc.queue_lane(p), "QUEUE_LANE_HAS_ANOTHER_ROUTE")
     need(p["content_id"] not in ("", "unassigned")
          and p["category"] != "pending", "INTAKE_UNBOUND")
     need(lc.delivery_boundary(p) == 1, "FIRST_CUT_NOT_COMPLETE")

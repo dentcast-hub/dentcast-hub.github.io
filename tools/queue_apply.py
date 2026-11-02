@@ -184,7 +184,16 @@ def next_number(cat):
 
 def precheck(args):
     if (ROOT / HANDOFF).exists() and not args.allow_handoff:
-        refuse("ACTIVE_HANDOFF", f"{HANDOFF} exists — another publication may be in flight; nothing is written")
+        # Only this run's own queue-lane ledger may be active (init precedes step 0).
+        import dentcast_publish_handoff as h
+        import dentcast_publish_lifecycle as lc
+        try:
+            pub = h.load_state(ROOT)[0]["publication"]
+        except Exception:
+            pub = None
+        if not (pub and lc.queue_lane(pub) and pub["content_id"] == args.content_id):
+            refuse("ACTIVE_HANDOFF", f"{HANDOFF} exists and is not this content_id's queue-lane ledger — another "
+                   "publication may be in flight; nothing is written")
     info = qm.load_item(args.item, agent=args.agent)
     d = qm.draft(info["path"])
     if args.supplement:
@@ -948,13 +957,13 @@ def assemble(a):
     pre[plan_rel] = (ROOT / plan_rel).read_bytes() if (ROOT / plan_rel).exists() else None
     w.commit()
     try:
-        return finish_writes(a, w, base, item, cid, m, cat, date, report, entry)
+        return finish_writes(a, w, base, item, cid, m, cat, date, report, entry, pre)
     except BaseException:
         rollback({**pre, **w.backup})
         raise
 
 
-def finish_writes(a, w, base, item, cid, m, cat, date, report, entry):
+def finish_writes(a, w, base, item, cid, m, cat, date, report, entry, pre):
     chk = run([sys.executable, "tools/queue_install_des.py", "--check-text", str(item), cid], check=False)
     if chk.returncode != 0 and not a.founder_text_change:
         refuse("TEXT_MOVED", "page body does not carry 01-متن.md verbatim (written files left for inspection)",
@@ -978,7 +987,9 @@ def finish_writes(a, w, base, item, cid, m, cat, date, report, entry):
         run([sys.executable, "tools/build_cabinet_papers.py", "--check"])
     base["des"] = {k: des_r.get(k) for k in ("status", "record_sha256", "text_synced", "added", "dropped", "mirror")}
     base["pathways"] = [{"pathway": p, "after": a_, "why": why} for p, a_, why in placed]
-    base["files"] = [{"path": rel, "sha256": sha((ROOT / rel).read_bytes())} for rel in sorted(w.files)]
+    touched = set(w.files) | {rel for rel, old in pre.items()
+                              if ((ROOT / rel).read_bytes() if (ROOT / rel).exists() else None) != old}
+    base["files"] = [{"path": rel, "sha256": sha((ROOT / rel).read_bytes())} for rel in sorted(touched)]
     base["brain_entry"] = entry
     return base
 

@@ -483,9 +483,10 @@ def main():
     ap.add_argument("cmd", choices=("draft", "check"))
     ap.add_argument("item")
     ap.add_argument("--supplement")
+    ap.add_argument("--agent", help="the publishing agent's own lock name")
     a = ap.parse_args()
     try:
-        info = load_item(a.item, agent="*") if a.cmd == "check" else {"path": Path(a.item)}
+        info = load_item(a.item, agent=a.agent) if a.cmd == "check" else {"path": Path(a.item)}
         d = draft(info["path"])
         if a.supplement:
             d = merge_supplement(info["path"], d, json.loads(Path(a.supplement).read_text(encoding="utf-8")))

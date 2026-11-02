@@ -1,6 +1,6 @@
 # DentCast — shared agent entrypoint
 
-> **Publish-queue check — first, before anything else.** If the request mentions the publish queue («صف انتشار», branch `queue` of this repo), e.g. «یه مقاله تو صف انتشار دارم»، «از صف انتشار منتشر کن»، «قدیمی‌ترین مقالهٔ صف رو منتشر کن»، «بذارش تو صف انتشار»، «صف انتشار چی داره؟», read `.dentcast/workflows/publish-queue.md` completely right now. Fetch what it says from the `queue` branch (for publishing: the oldest ready item), then come back and continue the normal route below with it. Otherwise ignore this note.
+> **Publish-queue check — first, before anything else.** If the request mentions the publish queue («صف انتشار», branch `queue` of this repo), e.g. «یه مقاله تو صف انتشار دارم»، «از صف انتشار منتشر کن»، «قدیمی‌ترین مقالهٔ صف رو منتشر کن»، «بذارش تو صف انتشار»، «صف انتشار چی داره؟», read `.dentcast/workflows/publish-queue.md` completely right now. Fetch what it says from the `queue` branch (for publishing: the oldest ready item). Publishing an item from the queue follows `.dentcast/workflows/queue-route.md` (tool assembly, two deliveries); preparation and status stay in `publish-queue.md`. Otherwise ignore this note.
 
 **LIVE_MODULAR_PUBLISHING_ENABLED.** Legacy files are backup only; do not read them for execution or use them as authority.
 
@@ -30,7 +30,8 @@ For «انتشار ناقص داشتم» or an explicit request to resume a publ
 | Offline publishing | `.dentcast/offline-publish.md` |
 | Minimal publications from /admin (setup, import into git, completion) | `.dentcast/quick-publish.md` |
 | External Fidelity | `.dentcast/workflows/external-fidelity.md` |
-| Publish queue on branch `queue` (prepare, status, publish oldest) | `.dentcast/workflows/publish-queue.md` |
+| Publish queue on branch `queue` (prepare, status) | `.dentcast/workflows/publish-queue.md` |
+| Publish an item from the queue (publish day) | `.dentcast/workflows/queue-route.md` |
 
 Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details.md`. Read the selected specialty workflow completely. New content uses the modular sequence, including paper-only and category exceptions.
 
