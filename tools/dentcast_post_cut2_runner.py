@@ -579,7 +579,7 @@ def finalize_and_push(root: Path, artifact_dir: Path, expected_head: str,
             raise RunnerError("FINAL_DELIVERY_GUARD_FAILED:" + guard.stdout.strip())
         git(root, "config", "user.name", "github-actions[bot]")
         git(root, "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com")
-        git(root, "commit", "-m", f"Complete publication {expected_branch} delivery {lifecycle.final_delivery(pub)}")
+        git(root, "commit", "-m", f"Complete publication {expected_branch} delivery {2 if lifecycle.queue_lane(pub) else 3}")
         third_sha = git(root, "rev-parse", "HEAD")
         if git(root, "rev-parse", "HEAD^") != expected_head:
             raise RunnerError("FINAL_DELIVERY_PARENT_MISMATCH")
