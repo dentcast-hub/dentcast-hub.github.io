@@ -46,6 +46,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 import des_fidelity_units as U  # noqa: E402
 import verify_publish as vp  # noqa: E402
+from queue_manifest import split_sources_tail  # noqa: E402
 
 DES_SCORES = ROOT / "plus/des-scores.json"
 REGISTRY = ROOT / ".dentcast/queue-frozen-des.json"
@@ -120,12 +121,14 @@ DATE_RE = re.compile(r"20\d\d-\d\d-\d\d")
 
 def body_lines(item):
     """The frozen text of record (01-متن.md) as plain lines: markdown bold and
-    list dashes stripped, image markers [[تصویر:NN]] dropped."""
+    list dashes stripped, image markers [[تصویر:NN]] dropped. A sources tail
+    (final `---` + bare DOI lines) is the credit, not body text."""
     p = item / "01-متن.md"
     if not p.exists():
         return []
     out = []
-    for line in p.read_text(encoding="utf-8").splitlines():
+    body, _tail = split_sources_tail(p.read_text(encoding="utf-8"))
+    for line in body.splitlines():
         t = re.sub(r"\[\[[^\]]*\]\]", "", line).strip()
         if re.fullmatch(r"(-{3,}|\*{3,}|_{3,})", t):
             continue  # markdown horizontal rule: no text on the page
