@@ -1,0 +1,176 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "metanote",
+  "from": "07-ورودی‌ها.md:3"
+ },
+ "title_fa": {
+  "value": "فرول در پایه‌ی پارسیل: عدد بالاتر یا کیفیت بالاتر؟",
+  "from": "02-عنوان-کپشن.md:2"
+ },
+ "caption_fa": {
+  "value": "وقتی روکش دندان پایه‌ی پارسیل را درآوردیم و فرول را دیدیم، معیار ما چه باید باشد: ارتفاع بیشتر با جراحی افزایش طول تاج، یا چیز دیگری؟",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "title_en": {
+  "value": "Ferrule in a Partial Denture Abutment: A Higher Number or a Higher Quality?",
+  "from": "06-انگلیسی.md:2"
+ },
+ "caption_en": {
+  "value": "Once the old crown on a partial denture abutment is off and the ferrule is in view, what should our criterion be: more height through crown lengthening surgery, or something else?",
+  "from": "06-انگلیسی.md:5"
+ },
+ "alt_headline_en": {
+  "value": "Ferrule criteria for a partial denture abutment: no separate height figure in the literature, crown lengthening surgery that worsens the crown-to-root ratio, and a 360-degree, continuous, thick-walled ferrule instead",
+  "from": "06-انگلیسی.md:8"
+ },
+ "alt_headline_fa": {
+  "value": "معیار فرول در پایه‌ی پارسیل: منابع عدد جداگانه‌ای نداده‌اند، جراحی افزایش طول تاج نسبت تاج به ریشه را بدتر می‌کند و آنچه باید بالاتر برود فرول ۳۶۰ درجه، پیوسته و ضخیم است",
+  "from": "00-وضعیت.md (approval #3)"
+ },
+ "article_section": {
+  "value": "Fixed Prosthodontics / RPD Abutment Ferrule",
+  "from": "07-ورودی‌ها.md:16"
+ },
+ "body_en": {
+  "value": "In “[Ferrule in a Partial Denture Abutment](queue:12)” I said that this tooth works under the worst kind of oblique loading, and that a borderline ferrule that works in fixed prosthodontics may not be enough under a partial denture. The next question is what our criterion should be once we have removed the crown and seen the ferrule. The first thing that comes to mind is raising the height from 2 to 3 mm, but the scientific literature has not proposed a separate figure for partial denture abutments, and greater height is usually gained through crown lengthening, which worsens the crown-to-root ratio in a tooth that is already under lever-like loading.\n\nIn my view, what has to go up in a partial denture abutment is the quality of the ferrule, not its number. In ordinary teeth we can often work at the borderline. For example, we restore a tooth that has only two walls and argue that a particular wall, because it lies in the path of the force, matters more than the others and is enough on its own. In a partial denture abutment there is no room for such compromises. The ferrule has to be 360 degrees and continuous, its wall should be as much thicker than the 1 mm minimum as possible, and whatever remains of the coronal walls should be preserved. Alongside this, the design and seating of the partial denture itself are part of the same equation, because a loose base or a rest in the wrong place multiplies the load on that very ferrule.",
+  "from": "06-انگلیسی.md:11-15"
+ },
+ "images": {
+  "value": [],
+  "from": "03-تصاویر/تصاویر.md:1 (ندارد)"
+ },
+ "credit": {
+  "value": {
+   "mode": "none"
+  },
+  "from": "04-منبع/منابع.md:1"
+ },
+ "catalog": {
+  "value": [],
+  "from": "04-منبع/منابع.md: no paper"
+ },
+ "hashtags": {
+  "value": [
+   "#متانوت",
+   "#انتخاب_پایه",
+   "#دندان_پایه",
+   "#پروتز_پارسیل",
+   "#دیواره_نازک",
+   "#افزایش_طول_تاج",
+   "#نسبت_تاج_به_ریشه",
+   "#فرول"
+  ],
+  "from": "07-ورودی‌ها.md:17"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (بدون مینت)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "fixed-pros",
+   "subtopic": "post-and-core",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:15"
+ },
+ "pulse": {
+  "value": {
+   "html": "یک متانوت با عنوانِ «<a href=\"{url}\">فرول در پایه‌ی پارسیل: عدد بالاتر یا کیفیت بالاتر؟</a>» منتشر شد",
+   "link_phrase": "فرول در پایه‌ی پارسیل: عدد بالاتر یا کیفیت بالاتر؟"
+  },
+  "from": "07-ورودی‌ها.md:19"
+ },
+ "keywords": {
+  "value": [
+   "ferrule",
+   "removable partial denture abutment",
+   "ferrule height",
+   "circumferential ferrule",
+   "ferrule wall thickness",
+   "crown lengthening",
+   "crown-to-root ratio",
+   "RPD design"
+  ],
+  "from": "09-کلیدواژه‌ها.md:1-8"
+ },
+ "keywords_fa": {
+  "value": [
+   "فرول",
+   "دندان پایه پارسیل",
+   "ارتفاع فرول",
+   "فرول ۳۶۰ درجه",
+   "ضخامت دیواره فرول",
+   "جراحی افزایش طول تاج",
+   "نسبت تاج به ریشه",
+   "طراحی پارسیل"
+  ],
+  "from": "00-وضعیت.md (approval #13)"
+ },
+ "keywords_en": {
+  "value": [
+   "Ferrule",
+   "Removable Partial Denture Abutment",
+   "Ferrule Height",
+   "Circumferential Ferrule",
+   "Ferrule Wall Thickness",
+   "Crown Lengthening",
+   "Crown-to-Root Ratio",
+   "RPD Design"
+  ],
+  "from": "00-وضعیت.md (approval #13)"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "فرول در دندان پایه پارسیل",
+    "href": "queue:12",
+    "from": "11-لینک‌های-گلاسری.md:18"
+   },
+   {
+    "phrase": "فرول مرزی‌ای",
+    "href": "/glossary/ferrule-effect.html",
+    "from": "11-لینک‌های-گلاسری.md:19"
+   },
+   {
+    "phrase": "کراون لنتنینگ",
+    "href": "/glossary/crown-lengthening.html",
+    "from": "11-لینک‌های-گلاسری.md:20"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:14"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "queue:12",
+    "label": "فرول در دندان پایه پارسیل",
+    "from": "11-لینک‌های-گلاسری.md:28"
+   },
+   {
+    "href": "/insight/insight-58.html",
+    "label": "تعویض روکش قدیمی در دندان پایه پارسیل",
+    "from": "11-لینک‌های-گلاسری.md:29"
+   },
+   {
+    "href": "/insight/insight-64.html",
+    "label": "نگاه معکوس به فرول در افزایش طول تاج",
+    "from": "11-لینک‌های-گلاسری.md:30"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:25"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11 4.7 — both related glossary pages are over the cap; none is added"
+ },
+ "pathway": {
+  "value": null,
+  "from": "07-ورودی‌ها.md: pathway is live on publish day"
+ },
+ "author": {
+  "value": null,
+  "from": "brain meta entries carry no author"
+ }
+}

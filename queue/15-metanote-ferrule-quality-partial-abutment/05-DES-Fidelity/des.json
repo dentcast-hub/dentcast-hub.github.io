@@ -1,0 +1,48 @@
+{
+  "des_version": "3.5",
+  "content_type": "COMMENTARY",
+  "question_type": null,
+  "text_basis": "FULL_TEXT",
+  "citation": {
+    "title": "فرول در پایه‌ی پارسیل: عدد بالاتر یا کیفیت بالاتر؟",
+    "authors": "دکتر فواد شهابیان",
+    "year": 2026,
+    "journal": "",
+    "doi": ""
+  },
+  "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+  },
+  "s_design": null,
+  "q_method": null,
+  "penalties": null,
+  "commentary_checklist": [
+    {
+      "item": "زنجیره‌ی استدلال صریح است",
+      "points": 4,
+      "evidence_quote": "چون بیس لق یا رست در جای نامناسب بار روی همان فرول را چند برابر می‌کند"
+    },
+    {
+      "item": "نسبتش با شواهد منتشرشده بیان شده است",
+      "points": 2,
+      "evidence_quote": "منابع علمی برای پایه‌ی پارسیل عدد جداگانه‌ای پیشنهاد نکرده‌اند",
+      "note": "only states that the literature gives no separate number for a partial denture abutment; it does not position the claim against published findings, so +2 rather than +4"
+    },
+    {
+      "item": "دامنه‌ی ادعا محدود شده است",
+      "points": 3,
+      "evidence_quote": "در دندان‌های معمولی خیلی وقت‌ها می‌توانیم در حد مرزی کار کنیم"
+    },
+    {
+      "item": "صریحاً تجربه/دیدگاه نامیده شده، نه شواهد",
+      "points": 3,
+      "evidence_quote": "به نظر من در پایه‌ی پارسیل چیزی که باید بالاتر برود کیفیت فرول است، نه عدد آن"
+    }
+  ],
+  "des_score": 17,
+  "band": "E",
+  "provisional": false,
+  "fact_fa": "این متن به‌عنوان Commentary امتیاز ۱۷ و Band E گرفته است.",
+  "interpretation_fa": "متن یک استدلال بالینی روشن دارد: در پایه‌ی پارسیل کیفیت فرول، یعنی پیوستگی ۳۶۰ درجه و ضخامت دیواره، از افزایش ارتفاع مهم‌تر است، چون کراون لنتنینگ نسبت تاج به ریشه را بدتر می‌کند. این دیدگاه شخصی است و منابع منتشرشده برای پایه‌ی پارسیل عدد جداگانه‌ای ارائه نکرده‌اند. ارزش آن در چارچوب‌دادن به تصمیم‌گیری بالینی است، نه در ارائه‌ی یک یافته‌ی پژوهشی."
+}
