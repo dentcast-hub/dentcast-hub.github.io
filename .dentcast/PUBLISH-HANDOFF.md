@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "sharehub/share-44"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -22,7 +22,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         {
           "decision": "\u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u06cc\u06a9\u200c\u062a\u06a9\u0647 \u06cc\u0627 \u062f\u0648\u062a\u06a9\u0647 (One-Piece / Two-Piece)\u061b \u0628\u0639\u062f \u0627\u0632 \u06f1\u06f5 \u0633\u0627\u0644 \u06a9\u062f\u0627\u0645 \u0628\u0647\u062a\u0631 \u0627\u0633\u062a\u061f",
           "evidence": [
-            "queue/06-sharehub-one-piece-two-piece/02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md; founder approval #3 (1405/08/07), re-recorded after dependency invalidation"
+            "queue/06-sharehub-one-piece-two-piece/02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md; founder approval #3 (1405/08/07) via 00-\u0648\u0636\u0639\u06cc\u062a.md; standing authorization 1405/08/06 and 1405/08/11"
           ],
           "scope": "title",
           "status": "confirmed"
@@ -30,7 +30,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         {
           "decision": "\u06cc\u06a9\u200c\u062a\u06a9\u0647 \u06cc\u0627 \u062f\u0648\u062a\u06a9\u0647\u061f \u0627\u06cc\u0646 \u0645\u0637\u0627\u0644\u0639\u0647 \u0628\u0639\u062f \u0627\u0632 \u06f1\u06f5 \u062a\u0627 \u06f1\u06f7 \u0633\u0627\u0644 \u0641\u0642\u0637 \u0628\u0647 \u0628\u0642\u0627\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0646\u06af\u0627\u0647 \u0646\u06a9\u0631\u062f\u0647 \u0648 \u0627\u0633\u062a\u062e\u0648\u0627\u0646\u060c \u0628\u0627\u0641\u062a \u0627\u0637\u0631\u0627\u0641 \u0648 \u067e\u0631\u0648\u062a\u0632 \u0631\u0627 \u0647\u0645 \u06a9\u0646\u0627\u0631 \u0647\u0645 \u0633\u0646\u062c\u06cc\u062f\u0647 \u0627\u0633\u062a.",
           "evidence": [
-            "queue/06-sharehub-one-piece-two-piece/02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md; founder approval #5 (1405/08/07), re-recorded after dependency invalidation"
+            "queue/06-sharehub-one-piece-two-piece/02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md; founder approval #5 (1405/08/07) via 00-\u0648\u0636\u0639\u06cc\u062a.md; standing authorization 1405/08/06 and 1405/08/11"
           ],
           "scope": "caption",
           "status": "confirmed"
@@ -38,7 +38,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         {
           "decision": "Opening paragraph of 01-\u0645\u062a\u0646.md (agent-drafted from the founder's wording, approved by the founder: \u00ab\u0627\u0648\u06a9\u06cc \u2026 \u0628\u0633\u0627\u0632 \u0628\u0630\u0627\u0631 \u062a\u0648 \u0635\u0641 \u062a\u0645\u0648\u0645\u0634 \u06a9\u0646\u00bb)",
           "evidence": [
-            "queue/06-sharehub-one-piece-two-piece/00-\u0648\u0636\u0639\u06cc\u062a.md approval #18 (1405/08/07), re-recorded after dependency invalidation"
+            "queue/06-sharehub-one-piece-two-piece/00-\u0648\u0636\u0639\u06cc\u062a.md approval #18 (1405/08/07)"
           ],
           "scope": "authored-intro",
           "status": "confirmed"
@@ -397,6 +397,237 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             ],
             "validation": []
           }
+        },
+        {
+          "from_step": "C.5.6",
+          "kind": "dependency_invalidation_v1",
+          "reason": "Phase F gate 5.6 requires pathway membership; earlier no-placement result superseded by an implant-prosthetic placement",
+          "superseded": {
+            "approvals": [
+              {
+                "decision": "\u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u06cc\u06a9\u200c\u062a\u06a9\u0647 \u06cc\u0627 \u062f\u0648\u062a\u06a9\u0647 (One-Piece / Two-Piece)\u061b \u0628\u0639\u062f \u0627\u0632 \u06f1\u06f5 \u0633\u0627\u0644 \u06a9\u062f\u0627\u0645 \u0628\u0647\u062a\u0631 \u0627\u0633\u062a\u061f",
+                "evidence": [
+                  "queue/06-sharehub-one-piece-two-piece/02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md; founder approval #3 (1405/08/07), re-recorded after dependency invalidation"
+                ],
+                "scope": "title",
+                "status": "confirmed"
+              },
+              {
+                "decision": "\u06cc\u06a9\u200c\u062a\u06a9\u0647 \u06cc\u0627 \u062f\u0648\u062a\u06a9\u0647\u061f \u0627\u06cc\u0646 \u0645\u0637\u0627\u0644\u0639\u0647 \u0628\u0639\u062f \u0627\u0632 \u06f1\u06f5 \u062a\u0627 \u06f1\u06f7 \u0633\u0627\u0644 \u0641\u0642\u0637 \u0628\u0647 \u0628\u0642\u0627\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0646\u06af\u0627\u0647 \u0646\u06a9\u0631\u062f\u0647 \u0648 \u0627\u0633\u062a\u062e\u0648\u0627\u0646\u060c \u0628\u0627\u0641\u062a \u0627\u0637\u0631\u0627\u0641 \u0648 \u067e\u0631\u0648\u062a\u0632 \u0631\u0627 \u0647\u0645 \u06a9\u0646\u0627\u0631 \u0647\u0645 \u0633\u0646\u062c\u06cc\u062f\u0647 \u0627\u0633\u062a.",
+                "evidence": [
+                  "queue/06-sharehub-one-piece-two-piece/02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md; founder approval #5 (1405/08/07), re-recorded after dependency invalidation"
+                ],
+                "scope": "caption",
+                "status": "confirmed"
+              },
+              {
+                "decision": "Opening paragraph of 01-\u0645\u062a\u0646.md (agent-drafted from the founder's wording, approved by the founder: \u00ab\u0627\u0648\u06a9\u06cc \u2026 \u0628\u0633\u0627\u0632 \u0628\u0630\u0627\u0631 \u062a\u0648 \u0635\u0641 \u062a\u0645\u0648\u0645\u0634 \u06a9\u0646\u00bb)",
+                "evidence": [
+                  "queue/06-sharehub-one-piece-two-piece/00-\u0648\u0636\u0639\u06cc\u062a.md approval #18 (1405/08/07), re-recorded after dependency invalidation"
+                ],
+                "scope": "authored-intro",
+                "status": "confirmed"
+              }
+            ],
+            "delivery": [],
+            "inputs": [
+              {
+                "ref": "queue/06-sharehub-one-piece-two-piece/01-\u0645\u062a\u0646.md",
+                "sha256": "fb0f40a4560b97a7ffa6877e9120c734d9a9f576039e57134cc13f5a5c43dbdb"
+              },
+              {
+                "ref": "queue/06-sharehub-one-piece-two-piece/02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md",
+                "sha256": "4d626f9a5441d48ab14a5acdf9bec71425fd1e2a787e406ae29e20fcd45f15b3"
+              },
+              {
+                "ref": "queue/06-sharehub-one-piece-two-piece/06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md",
+                "sha256": "4e0114c045067b6ec9657aabb510138b16ee74caaeffa945339c26969422f817"
+              },
+              {
+                "ref": "queue/06-sharehub-one-piece-two-piece/07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md",
+                "sha256": "1861bc1aa94625eca8ede7d243dda4935e77778b348728f1f3a3791e28482ac4"
+              },
+              {
+                "ref": "queue/06-sharehub-one-piece-two-piece/05-DES-Fidelity/des.json",
+                "sha256": "ba0a013a4b13d59b703be4a39f447ce328b4af65a42b3cc97f132b3dc2aa1acb"
+              },
+              {
+                "ref": "queue/06-sharehub-one-piece-two-piece/05-DES-Fidelity/fidelity.json",
+                "sha256": "d1c8faafaa4cff8d767570214433b94283dcb3fe75e6fb12759cc15ca209dd11"
+              },
+              {
+                "ref": "queue/06-sharehub-one-piece-two-piece/08-\u0633\u0624\u0627\u0644\u200c\u0647\u0627\u06cc-\u0622\u0632\u0645\u0648\u0646.json",
+                "sha256": "2d95d6fb706fc49e59f4d21033ec2398de7fbdc02a424c5961f278898c17bc47"
+              },
+              {
+                "ref": "queue/06-sharehub-one-piece-two-piece/09-\u06a9\u0644\u06cc\u062f\u0648\u0627\u0698\u0647\u200c\u0647\u0627.md",
+                "sha256": "6a0e732a919ab89fb02704dfe3c48e72e54093bc96d6327f1f93619933d950e5"
+              },
+              {
+                "ref": "queue/06-sharehub-one-piece-two-piece/10-\u0641\u0644\u0634\u200c\u06a9\u0627\u0631\u062a-FAQ.json",
+                "sha256": "055b8ade0b791e119ac4c90bc7282e5b8e017c1c46e652458cd0aae2af579899"
+              },
+              {
+                "ref": "queue/06-sharehub-one-piece-two-piece/11-\u0644\u06cc\u0646\u06a9\u200c\u0647\u0627\u06cc-\u06af\u0644\u0627\u0633\u0631\u06cc.md",
+                "sha256": "8664bb6a7f8ef4bbe3bdf6da218f2ab60989f3d0aace5d110cc5917a424467ca"
+              }
+            ],
+            "steps": [
+              {
+                "evidence": [
+                  "pathway_place.py ran: 8 candidates, none STRONG (top ASK implant-prosthetic 52, fixed-pros 42, implant-surgical 29). Queue 07 set no pathway and no same-numbered episode exists => mechanical default 1405/08/11: ASKs dropped, no placement; page in 0 full pathways (flagged for founder). 4.12-\u0628: skipped with documented reason - page lands in no full pathway, so queue 08 exam questions (2) were NOT written to plus/exam-questions.json. plus/pathways.json unchanged"
+                ],
+                "id": "C.5.6",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Bundle check: no candidate bundles (page joined no full pathway) => \u00ab\u0628\u0627\u0646\u062f\u0644: \u0628\u062f\u0648\u0646 \u06a9\u0627\u0646\u062f\u06cc\u062f\u00bb"
+                ],
+                "id": "C.5.6-b",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.6",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "started"
+              },
+              {
+                "evidence": [],
+                "id": "C.8",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "C.7",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "D",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "E",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "F",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "G",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              }
+            ],
+            "validation": []
+          }
+        },
+        {
+          "english": {
+            "evidence": [
+              "Persian page and English mirror reviewed before Push 2 (structure counts equal, same figure, doi lines)"
+            ],
+            "path": "sharehub/en/share-44.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "current-run editorial close review by the executing agent on 2026-11-02"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "C.4.13: frozen DES 43/C + Fidelity 100/HIGH installed by tools/queue_install_des.py (record_sha256 62840dba...), standing order 1405/08/11; opening-paragraph u3/u4 text sync under founder ruling 1405/08/07 (queue 00-\u0648\u0636\u0639\u06cc\u062a)"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Q4.9: ordinary article, not a Challenge (queue 07); C.4.14 skipped"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "pillar implantology / peri-implant-health confirmed C.2.4 (queue 07) and verified C.5.5 against live PILLARS"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.7 caps full (0 back-links), C.4.8 four inline anchors from queue 11, C.4.9 three related capsules (share-35 founder #16, episode-80, episode-59) within cap 5"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5.0: 8 canonical tags from queue 07 (founder #8), all existing library concepts, no mint; hashtag_ref --check OK"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5: brain entry sharehub 44 appended with title/caption/keywords verbatim from queue; page title/meta checked"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5.6: placed in implant-prosthetic after insight/insight-33 (tool ASK, single best fit, needed for Phase F); 2 exam questions from queue 08 written; bundle-implant-parts rejected at gate 2"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.6: title-only line added at top of Pulse in index.html (share-43 precedent), bottom line (share-42) removed, 7 lines"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "sharehub/en/share-44.html built from queue 06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md (founder #13 no review), structure parity h2 8/p 11/li 5/figure 1 with the Persian page, toggle both ways"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "title #3, caption #5, authored-intro #18, link #9/#16, FAQ #10, flashcards #11, exam #12/#19, hashtags #8 recorded in queue 00-\u0648\u0636\u0639\u06cc\u062a.md; no pending question"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -735,13 +966,140 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "05-semantic-linking.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [
+          "REPLAY: completed against external action C.4.10.1:drive-move (Drive metadata verified 404063 B, parent Connection)"
+        ],
+        "id": "C.4.10.1",
+        "module": "06-paper-ingestion.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "REPLAY: catalog entry P2951 (PubMed 42126189), tag_index/total_papers updated, cabinet-papers rebuilt and --check OK; reachable via \u00ab\u0634\u0644 \u0634\u062f\u0646 \u067e\u06cc\u0686\u00bb pos 8"
+        ],
+        "id": "C.4.10.2",
+        "module": "06-paper-ingestion.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Part 3: .author credit \u00ab\u0646\u0648\u06cc\u0633\u0646\u062f\u0647: Miha Pirc\u00bb -> https://doi.org/10.1111/cid.70157 below the body (share-43 precedent); page sha 66595ffdccd18a82 -> 0912f00767ab19e8; only diff is the block"
+        ],
+        "id": "C.4.10.3",
+        "module": "06-paper-ingestion.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "plus/faq-corpus.json byContent[sharehub/share-44].definedTermSets written verbatim from queue 10 (3 authored cards, founder-approved #11; share-NN -> share-44; CRLF round-trip, +80 lines only). No FAQ Q/A copied as card. flashcards-index built by the post-Push-2 Action"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "faqPages: 5 Q/A from queue 10 (founder-approved #10), standalone (no deixis), binary questions open with \u0628\u0644\u0647/\u062e\u06cc\u0631; 4.12-\u0628 evaluated at C.5.6; quiz-index built by the Action"
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "tools/queue_install_des.py install (receipt record_sha256 62840dba9b4a40a849c346aa5c67d56b0b39d337a405890bff013f559f63255d): frozen DES 43/C (RESEARCH, FULL_TEXT, v3.5) + Fidelity 100/HIGH (38 MATCHES, 3 NOT_IN_SOURCE, 14 NOT_A_CLAIM), 55 units, 0 renumbered/added/dropped, 2 text_synced (u3,u4 opening paragraph) under the founder ruling 1405/08/07 recorded in queue 00-\u0648\u0636\u0639\u06cc\u062a (no re-score of DES/Fidelity); plan .dentcast/des-fidelity-plans/sharehub/share-44.json; registry .dentcast/queue-frozen-des.json. Standing order 1405/08/11: no model run, no founder question"
+        ],
+        "id": "C.4.13",
+        "module": "08-des-fidelity.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "Ordinary article: Question 4.9 answered not a Challenge (queue 07); page carries no data-dc-challenge-question markup; module 09 branch inactive.",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Hashtags = queue 07 list (founder #8), all 8 resolved as existing canonical concepts in dentcast-hashtag-reference.json (counts: Share_Hub 42, Curated 41, \u06a9\u0627\u0646\u06a9\u0634\u0646 3, \u062a\u062d\u0644\u06cc\u0644 \u06a9\u0631\u0633\u062a\u0627\u0644 9, \u0639\u0648\u0627\u0631\u0636 5, \u0628\u0642\u0627 2, \u067e\u0631\u06cc\u200c\u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u06cc\u062a\u06cc\u0633 12, \u0634\u0644\u200c\u0634\u062f\u0646 \u067e\u06cc\u0686 5); --simulate on \u00ab\u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u06cc\u06a9 \u062a\u06a9\u0647\u00bb only returns #\u0627\u06cc\u0645\u067e\u0644\u0646\u062a => no mint (singleton goes to keywords, per 07). No batch, no alias edits; 5 questions and resolving sentences are in queue 07. Composition gate: series + decision/specific tags <=10 pages + umbrella"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Brain entry sharehub id 44 appended as last element (CRLF tail preserved, +35 lines only); key set identical to share-43; title/caption copied from queue 02, keywords from queue 09 verbatim, hashtags = 8 canonical (queue 07); pillar implantology/peri-implant-health. After the write: hashtag_ref --sync, node build_plus_index.mjs, hashtag_ref --check OK, build_cabinet_papers rebuilt and --check OK. Reachability (index): share-44 within first 4 pages of tags \u06a9\u0627\u0646\u06a9\u0634\u0646 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a (idx3/4 pages) and \u0628\u0642\u0627\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a (idx2/3); on the others it sits later in list (13 pages for \u067e\u0631\u06cc\u200c\u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u06cc\u062a\u06cc\u0633) so surfacing there depends on API ranking - tag list not changed (queue order); paper P2951 is byTag[0] under 5 of the 6 tags"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Brain pillar.primary=implantology, subtopic=peri-implant-health equals C.2.4 decision; valid in live PILLARS; key shape unchanged; related capsule points to /pillar/implantology/"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pathway_place.py: 8 candidates, none STRONG (all ASK). Phase F gate \u00ab5.6 pathway\u00bb FAILs a page in no pathway, so the single best-fit candidate was placed: implant-prosthetic (score 52, 9 related steps) after insight/insight-33, milestone=False via --insert (index 22); other ASK candidates dropped (mechanical default); flagged to founder. 4.12-\u0628: page now in a full pathway => queue 08 questions (founder-approved #12, #19) written verbatim to plus/exam-questions.json byContent[sharehub/share-44] (ids r-<sha1(cid|publish-n)[:8]>, 2 rows, +30 lines), validate_exam_questions OK (2 live)"
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Bundle check: candidate bundle-implant-parts (continues implant-prosthetic, 7 steps): \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f2: \u0639\u0646\u0648\u0627\u0646 \u062e\u0648\u0627\u0646\u0634 \u06cc\u06a9 \u0645\u0637\u0627\u0644\u0639\u0647 \u0627\u0633\u062a\u060c \u0646\u0647 \u06cc\u06a9 \u0645\u0641\u0647\u0648\u0645 \u06a9\u0627\u0645\u0644 \u0628\u0631\u0627\u06cc \u0645\u0628\u062a\u062f\u06cc). No bundle edits"
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Pulse: title-only link line inserted at top of the Pulse list in index.html (precedent share-43), bottom line (share-42) removed, 7 lines kept; DES/Fidelity, hashtags, brain, pathways, authored English mirror and all queue approvals closed; second_cut_editorial_lock_v1 recorded; dry Phase F: 111 pass, only the 8 builder/stamp rows fail"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
+      ".dentcast/des-fidelity-plans/sharehub/share-44.json",
+      ".dentcast/queue-frozen-des.json",
       "dentcast-brain.json",
+      "dentcast-hashtag-reference.json",
       "dentcast_cabinet_full_catalog.json",
+      "index.html",
+      "plus/assistant-tags.json",
       "plus/cabinet-bridge.json",
       "plus/cabinet-papers.json",
+      "plus/content-index.json",
+      "plus/des-scores.json",
+      "plus/exam-questions.json",
+      "plus/faq-corpus.json",
+      "plus/flashcards-index.json",
+      "plus/pathways.json",
+      "plus/quiz-index.json",
       "sharehub/en/share-44.html",
       "sharehub/index.html",
       "sharehub/share-44.html",
@@ -750,7 +1108,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: sharehub/share-44.html, dentcast_cabinet_full_catalog.json, plus/cabinet-papers.json"
+    "note": "Index-only refresh after staging delivery paths: .dentcast/queue-frozen-des.json, dentcast-brain.json, dentcast-hashtag-reference.json, index.html, plus/assistant-tags.json, plus/cabinet-papers.json, plus/content-index.json, plus/des-scores.json, plus/exam-questions.json, plus/faq-corpus.json, plus/pathways.json, .dentcast/des-fidelity-plans/sharehub/share-44.json, sharehub/en/share-44.html"
   },
   "schema": "publish-handoff-v3"
 }
