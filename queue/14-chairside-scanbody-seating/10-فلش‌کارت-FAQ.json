@@ -1,0 +1,59 @@
+{
+  "faqPages": [
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": "https://dentcast.org/chairside/chairside-{content_id}.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "اگر اسکن‌بادی هنگام اسکن کامل ننشیند، چه مشکلی ممکن است ایجاد شود؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "موقعیت ایمپلنت ممکن است در مدل دیجیتال دقیق ثبت نشود و در نتیجه، موقعیت اباتمنت و روکش طراحی‌شده با وضعیت واقعی داخل دهان تفاوت داشته باشد."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "در این کیس، اباتمنت داخل دهان با چه چیزی مقایسه شد؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "با اباتمنت روی کست پرینت‌شده مقایسه شد و مارجینال ریج دندان ششم مرجع ارتفاع بود."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "چه زمانی ممکن است به‌جای اصلاح روکش، تکرار کار لازم شود؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "اگر حجم پرسلن لازم برای اصلاح زیاد باشد یا در روکش سمان‌شونده احتمال باقی‌ماندن سمان وجود داشته باشد، ممکن است لازم باشد کار تکرار شود."
+          }
+        }
+      ]
+    }
+  ],
+  "definedTermSets": [
+    {
+      "@context": "https://schema.org",
+      "@type": "DefinedTermSet",
+      "@id": "https://dentcast.org/chairside/chairside-{content_id}.html#flashcards",
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://dentcast.org/chairside/chairside-{content_id}.html#flashcards-c1",
+          "name": "مرجع ارتفاع در مقایسهٔ اباتمنت",
+          "description": "برای مقایسهٔ اباتمنت داخل دهان با اباتمنت روی کست، از یک مرجع ثابت در دندان مجاور، مثل مارجینال ریج دندان ششم، استفاده می‌شود.",
+          "source": "authored"
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://dentcast.org/chairside/chairside-{content_id}.html#flashcards-c2",
+          "name": "اثر احتمالی ننشستن کامل اسکن‌بادی",
+          "description": "اگر اسکن‌بادی کامل ننشیند، موقعیت ثبت‌شدهٔ ایمپلنت ممکن است با موقعیت واقعی آن تفاوت داشته باشد؛ در این روایت، این علت به‌عنوان احتمال مطرح شده است.",
+          "source": "authored"
+        }
+      ]
+    }
+  ],
+  "_note": "پیش‌نویس؛ FAQها و فلش‌کارت‌ها در انتظار تأیید بنیان‌گذار."
+}
