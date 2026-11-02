@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
-import { pool, withTransaction } from '../db.js';
+import { pool, withTransaction, lockProfileForWrite } from '../db.js';
 import { recordActivity } from '../services/activity.js';
 import { getConsumedContentIds } from '../services/consumption.js';
 import {
@@ -157,6 +157,7 @@ export async function pathwayRoutes(app: FastifyInstance): Promise<void> {
     const progress = computeProgress(pathway, consumed);
 
     const startedAt = await withTransaction(async (client) => {
+      await lockProfileForWrite(client, userId); // serialize scoring; see lockProfileForWrite
       const ins = await client.query<{ started_at: string }>(
         `insert into user_pathways (user_id, pathway_id, current_step, completed_at)
          values ($1, $2, $3, $4)

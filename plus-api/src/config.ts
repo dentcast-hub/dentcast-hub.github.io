@@ -23,6 +23,20 @@ function bool(name: string, fallback: boolean): boolean {
   return v === 'true' || v === '1';
 }
 
+/**
+ * Which upstream proxies may set X-Forwarded-For, for Fastify's trustProxy.
+ * '' (unset) → true, the legacy blanket trust (a production warning fires);
+ * 'false' → trust nobody (request.ip is the socket peer); a bare integer → that
+ * many proxy hops; anything else → a comma-separated list of CIDRs/IPs to trust.
+ */
+function parseTrustProxy(v: string): boolean | number | string[] {
+  const s = v.trim();
+  if (s === '' || s === 'true') return true;
+  if (s === 'false') return false;
+  if (/^\d+$/.test(s)) return Number(s);
+  return s.split(',').map((x) => x.trim()).filter(Boolean);
+}
+
 function list(name: string, fallback: string[]): string[] {
   const v = process.env[name];
   if (v === undefined || v === '') return fallback;
@@ -87,6 +101,13 @@ const FROM_MONTHLY_RIAL = Math.min(...PLAN_MONTHS.map((m) => PLAN_PRICES_RIAL[m]
 export const config = {
   env: str('NODE_ENV', 'development'),
   isProd: str('NODE_ENV', 'development') === 'production',
+
+  // Who may set X-Forwarded-For (Fastify trustProxy). Behind a CDN in production
+  // this MUST be the edge's IP ranges: `true` trusts the header from ANY caller,
+  // so a client that can reach the origin directly forges request.ip and walks
+  // past the per-IP OTP limit (unlimited sybil accounts). Set TRUSTED_PROXY to
+  // the CDN CIDRs; see the production warning below.
+  trustProxy: parseTrustProxy(str('TRUSTED_PROXY', '')),
 
   databaseUrl: str('DATABASE_URL', 'postgres://dentcast:dentcast@localhost:5432/dentcast_plus'),
 
@@ -510,6 +531,18 @@ export const config = {
     maxPerUserPerHour: int('REVIEW_MAX_PER_USER_PER_HOUR', 200),
   },
 
+  // POST /highlights had no ceiling of any kind, and every created highlight
+  // pays league XP (xp_highlight, capped at xp_highlight_cap per content/week).
+  // A script could post highlights against a new fabricated content_id each
+  // time — the per-content weekly cap resets per id — and farm XP at the raw
+  // request rate (measured: 400 posts in 6.5s -> +300 weekly XP, rank 1). A
+  // human highlighting hard still tops out at a few a minute, so this bounds the
+  // farm without touching a real reading session. A refusal is a 429 the
+  // client's outbox re-sends later, so a fast highlighter is delayed, not lost.
+  highlights: {
+    maxPerUserPerHour: int('HIGHLIGHTS_MAX_PER_USER_PER_HOUR', 150),
+  },
+
   // up-board's own ceiling (routes/votes.ts). Deliberately TIGHT, which is the
   // opposite of the activity budget above and for the opposite reason: a heart is
   // one press per page, so an honest reader tops out at a handful an hour even
@@ -875,6 +908,38 @@ if (strayProxy.length > 0 && !config.outbound.proxyUrl) {
     + ' Set OUTBOUND_PROXY_URL to route Telegram, WEBPUSH_PROXY_URL to route web push.'
     + ' Both are empty, so every notification channel is going direct.',
   );
+}
+
+// Behind a CDN, `trustProxy: true` lets anyone who reaches the origin directly
+// forge X-Forwarded-For and so request.ip — the per-IP OTP limit is then no
+// limit at all. Warn (don't throw: a direct-to-origin single-box deploy may
+// legitimately want it) so a production operator sets TRUSTED_PROXY to the edge
+// ranges instead of discovering the gap from abuse.
+if (config.isProd && config.trustProxy === true) {
+  // eslint-disable-next-line no-console
+  console.warn(
+    '[config] TRUSTED_PROXY is unset, so X-Forwarded-For is trusted from ANY source:'
+    + ' request.ip is forgeable and the per-IP OTP limit can be bypassed by a client that'
+    + ' reaches the origin directly. Set TRUSTED_PROXY to the CDN edge IP ranges'
+    + ' (comma-separated CIDRs), or a proxy-hop count, or "false" for a direct-to-origin deploy.',
+  );
+}
+
+// Fail closed: a production server must never boot on the development default
+// admin password or session secret. The session cookie is a signed bare user id,
+// so a known SESSION_SECRET lets anyone forge any session; the default admin
+// password is published in this repo. A warning is too easy to miss for a
+// credential — refuse to start and name what to set.
+if (config.isProd) {
+  const insecure: string[] = [];
+  if (config.session.secret === 'dev-insecure-change-me') insecure.push('SESSION_SECRET');
+  if (config.admin.password === 'change-me-admin-password') insecure.push('ADMIN_PASSWORD');
+  if (insecure.length > 0) {
+    throw new Error(
+      `[config] refusing to start in production with the default ${insecure.join(' and ')}.`
+      + ' Set a strong, secret value via the environment.',
+    );
+  }
 }
 
 export type Config = typeof config;

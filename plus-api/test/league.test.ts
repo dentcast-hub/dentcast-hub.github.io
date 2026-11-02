@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterAll } from 'vitest';
 import type { FastifyInstance } from 'fastify';
-import { makeApp, resetDb, loginAs, mintActivity } from './helpers.js';
+import { makeApp, resetDb, loginAs, mintActivity, seedHighlight, userIdFromCookie } from './helpers.js';
 import { pool } from '../src/db.js';
 import { finalizeWeek } from '../src/services/league-finalize.js';
 import { getLeagueConfig } from '../src/services/league-config.js';
@@ -112,8 +112,11 @@ describe('finalizeWeek — outcome edge rules', () => {
     expect((await memberOf(userIds[0])).final_rank).toBe(2);
   });
 
-  it('promotion needs BOTH promo-zone rank AND weekly_xp >= min (not filled → no demotions)', async () => {
-    // capacity 8, size 6 -> valid but NOT filled. promotedCount = ceil(6*0.2)=2.
+  it('promotion needs BOTH promo-zone rank AND weekly_xp >= min; a valid group demotes its bottom even when not filled', async () => {
+    // capacity 8, size 6 -> valid (size >= min_valid_group_size) but NOT filled.
+    // promotedCount = demotedCount = ceil(6*0.2)=2. Demotion no longer waits on
+    // the group filling to its full-tier capacity (that let a 6-7 member tail
+    // group escape demotion); a real competition by size demotes its bottom.
     const { userIds } = await seedGroup('amalgam', 8, [
       { xp: 50, at: T(1) },   // rank1, >=30 -> promoted
       { xp: 20, at: T(2) },   // rank2, <30  -> stays (rank alone insufficient)
@@ -121,10 +124,11 @@ describe('finalizeWeek — outcome edge rules', () => {
     ]);
     const res = await finalizeWeek(WEEK);
     expect(res.promotions).toBe(1);
-    expect(res.demotions).toBe(0); // not filled -> no demotions
+    expect(res.demotions).toBe(2); // ranks 5 and 6 (bottom 20%), not in the promo zone
     expect(await tierOf(userIds[0])).toBe('composite');   // promoted up
     expect(await tierOf(userIds[1])).toBe('amalgam');      // stayed (xp too low)
-    expect((await memberOf(userIds[5])).outcome).toBe('stayed'); // bottom, not demoted
+    expect((await memberOf(userIds[5])).outcome).toBe('demoted'); // bottom now demotes
+    expect(await tierOf(userIds[5])).toBe('acrylic');      // pushed down a tier
   });
 
   it('filled group demotes the bottom zone; promotes qualifying top', async () => {
@@ -392,6 +396,33 @@ describe('GET /league — placement on first XP', () => {
     expect(await myXp(cookie)).toBe(11);
   });
 
+  it('a read from a PREVIOUS week does not make this week\'s share pay', async () => {
+    // The farm: finish an article once, ever, then share it for +xp_share every
+    // week forever without reading it again (the eligibility read was the
+    // earliest completion of all time, and the weekly cap is off). The read must
+    // be THIS week, like xp_read.
+    const cookie = await loginAs(app, '09120000077');
+    const uid = userIdFromCookie(cookie);
+    // A completion of insight/insight-5 from 60 days ago (a prior league week).
+    await pool.query(
+      `insert into user_activity (user_id, action, content_id, created_at)
+       values ($1, 'article_completed', 'insight/insight-5', now() - interval '60 days')`,
+      [uid],
+    );
+    // Establish this week's presence with a different, real read.
+    await act(cookie, 'article_completed', 'insight/insight-6'); // 5 active + 5 read
+    expect(await myXp(cookie)).toBe(10);
+
+    // Sharing the ancient read pays nothing — it was not read this week.
+    await act(cookie, 'content_shared', 'insight/insight-5');
+    expect(await myXp(cookie)).toBe(10);
+
+    // But read it again this week and the same share now pays.
+    await act(cookie, 'article_completed', 'insight/insight-5'); // +5 read (active bonus already taken)
+    await act(cookie, 'content_shared', 'insight/insight-5');    // +1
+    expect(await myXp(cookie)).toBe(16);
+  });
+
   // The shipped setting (migration 0028). Sharing is the one action that brings
   // somebody NEW here, and at the original cap of 5 a whole week of it was worth
   // one article read — a rule, not an incentive. Zero must mean NO ceiling, not
@@ -436,6 +467,13 @@ describe('POST /admin/league/config', () => {
 
   it('requires admin credentials', async () => {
     const res = await app.inject({ method: 'POST', url: '/admin/league/config', payload: { key: 'x', value: 1 } });
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('answers 401 before validating the body (no route/field disclosure)', async () => {
+    // Auth runs in onRequest, before schema validation, so an unauthenticated
+    // caller cannot probe the route by sending a bad body and reading a 400.
+    const res = await app.inject({ method: 'POST', url: '/admin/league/config', payload: {} });
     expect(res.statusCode).toBe(401);
   });
 
@@ -579,6 +617,12 @@ describe('review XP cannot be farmed', () => {
     : app.inject({
       method: 'POST', url: '/activity', headers: { cookie }, payload: { action, content_id },
     }));
+  // A free manual review of a real owned card. card_reviewed_manual now requires
+  // one (routes/activity.ts), so each paying review is its own seeded card.
+  const reviewCard = (cookie: string, highlightId: string, content_id: string) => app.inject({
+    method: 'POST', url: '/activity', headers: { cookie },
+    payload: { action: 'card_reviewed_manual', content_id, meta: { highlight_id: highlightId } },
+  });
   const myXp = async (cookie: string) => (await app.inject({
     method: 'GET', url: '/league', headers: { cookie },
   })).json().my_weekly_xp;
@@ -586,8 +630,14 @@ describe('review XP cannot be farmed', () => {
   it('stops paying past the weekly ceiling, however many times it is called', async () => {
     await setConfig('xp_review_weekly_cap', '3');
     const cookie = await loginAs(app, '09120000031');
+    const uid = userIdFromCookie(cookie);
 
-    for (let i = 0; i < 20; i += 1) await act(cookie, 'card_reviewed_manual');
+    // Twenty distinct real cards, each reviewed once (once-per-card-per-day).
+    for (let i = 0; i < 20; i += 1) {
+      const cid = `insight/cap-${i}`;
+      const hid = await seedHighlight(uid, cid);
+      await reviewCard(cookie, hid, cid);
+    }
 
     // 5 active-day bonus + 3 paying reviews × 2. The other seventeen paid nothing.
     expect(await myXp(cookie)).toBe(11);
@@ -598,10 +648,13 @@ describe('review XP cannot be farmed', () => {
     // the lane for anyone holding both.
     await setConfig('xp_review_weekly_cap', '2');
     const cookie = await loginAs(app, '09120000032');
+    const uid = userIdFromCookie(cookie);
+    const h1 = await seedHighlight(uid, 'insight/share-a');
+    const h2 = await seedHighlight(uid, 'insight/share-b');
 
-    await act(cookie, 'card_reviewed_manual');
+    await reviewCard(cookie, h1, 'insight/share-a');
     await act(cookie, 'review_finished');
-    await act(cookie, 'card_reviewed_manual');
+    await reviewCard(cookie, h2, 'insight/share-b');
     await act(cookie, 'review_finished');
 
     expect(await myXp(cookie)).toBe(9); // 5 + 2 paying reviews × 2
@@ -610,8 +663,13 @@ describe('review XP cannot be farmed', () => {
   it('keeps paying uncapped when the ceiling is 0, like every other knob', async () => {
     await setConfig('xp_review_weekly_cap', '0');
     const cookie = await loginAs(app, '09120000033');
+    const uid = userIdFromCookie(cookie);
 
-    for (let i = 0; i < 6; i += 1) await act(cookie, 'card_reviewed_manual');
+    for (let i = 0; i < 6; i += 1) {
+      const cid = `insight/unc-${i}`;
+      const hid = await seedHighlight(uid, cid);
+      await reviewCard(cookie, hid, cid);
+    }
 
     expect(await myXp(cookie)).toBe(17); // 5 + 6 × 2
   });
@@ -619,12 +677,16 @@ describe('review XP cannot be farmed', () => {
   it('refuses the loop itself once the hourly activity ceiling is hit', async () => {
     // The blunt outer wall, independent of any per-action rule: whatever the
     // action, the log will not accept an unbounded stream from one account.
+    // One real card re-pressed: the first pays, the rest dedupe, but every
+    // request still spends the hourly budget.
     const cookie = await loginAs(app, '09120000034');
+    const uid = userIdFromCookie(cookie);
+    const hid = await seedHighlight(uid, 'insight/loop');
     const cap = config.activity.maxPerUserPerHour;
     config.activity.maxPerUserPerHour = 5;
     try {
       const codes: number[] = [];
-      for (let i = 0; i < 8; i += 1) codes.push((await act(cookie, 'card_reviewed_manual')).statusCode);
+      for (let i = 0; i < 8; i += 1) codes.push((await reviewCard(cookie, hid, 'insight/loop')).statusCode);
       expect(codes.filter((c) => c === 200)).toHaveLength(5);
       expect(codes.filter((c) => c === 429)).toHaveLength(3);
     } finally {

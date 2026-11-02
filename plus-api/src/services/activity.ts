@@ -1,5 +1,5 @@
 import type pg from 'pg';
-import { pool, withTransaction } from '../db.js';
+import { pool, withTransaction, lockProfileForWrite } from '../db.js';
 import { QUALIFYING_ACTIONS, applyStreak } from './streak.js';
 import { awardLeagueXp } from './league.js';
 import { dayInTz } from './time.js';
@@ -25,6 +25,15 @@ async function insertAndScore(
   contentId: string | null,
   meta: Record<string, unknown>,
 ): Promise<{ id: number }> {
+  // FIRST, before the user_activity insert takes FOR KEY SHARE on this profile
+  // via its FK: take the full FOR UPDATE lock up front so same-user scoring
+  // transactions serialize instead of deadlocking on the lock upgrade, and so
+  // the weekly-cap / share / collection counts below cannot race. Callers that
+  // open the transaction with their own profile-FK insert (highlights, review,
+  // pathways, challenge, snippets) lock at the top of THEIR transaction; here it
+  // covers every path that reaches scoring in a fresh transaction. A re-lock
+  // inside the same transaction is a harmless no-op.
+  await lockProfileForWrite(client, userId);
   // The tier is stamped ON THE ROW, now, and never revisited. `subscriptions`
   // keeps one row per user and no history (migration 0018), so this insert is
   // the only moment at which "was this earned on a paid plan" is still knowable.

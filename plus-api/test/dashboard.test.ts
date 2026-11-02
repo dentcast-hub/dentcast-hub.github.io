@@ -130,6 +130,46 @@ describe('PATCH /me', () => {
     expect(ok.statusCode).toBe(200);
     expect(ok.json().display_name).toBe('علی\u200cرضا');
   });
+
+  it('refuses an oversized settings blob (loaded on every request)', async () => {
+    const big = await app.inject({
+      method: 'PATCH', url: '/me', headers: { cookie },
+      payload: { settings: { junk: 'x'.repeat(9000) } },
+    });
+    expect(big.statusCode).toBe(400);
+    expect(big.json().error).toBe('settings_too_large');
+
+    const ok = await app.inject({
+      method: 'PATCH', url: '/me', headers: { cookie },
+      payload: { settings: { tour_seen: true } },
+    });
+    expect(ok.statusCode).toBe(200);
+  });
+
+  it('strips bidi overrides and rejects blank-glyph and reserved names', async () => {
+    // U+202E (RTL override) can reorder the name / bleed into the next row.
+    const bidi = await app.inject({
+      method: 'PATCH', url: '/me', headers: { cookie },
+      payload: { display_name: 'ali‮rezayi' },
+    });
+    expect(bidi.statusCode).toBe(200);
+    expect(bidi.json().display_name).toBe('alirezayi'); // control removed, not stored
+
+    // A name that renders blank (Braille blank U+2800) has <2 visible chars.
+    const blank = await app.inject({
+      method: 'PATCH', url: '/me', headers: { cookie },
+      payload: { display_name: '⠀⠀' },
+    });
+    expect(blank.statusCode).toBe(400);
+    expect(blank.json().error).toBe('invalid_display_name');
+
+    // Brand/role impersonation.
+    for (const name of ['DentCast Admin', 'admin', 'پشتیبانی']) {
+      const r = await app.inject({ method: 'PATCH', url: '/me', headers: { cookie }, payload: { display_name: name } });
+      expect(r.statusCode, name).toBe(400);
+      expect(r.json().error).toBe('reserved_display_name');
+    }
+  });
 });
 
 describe('GET /profile/stats', () => {

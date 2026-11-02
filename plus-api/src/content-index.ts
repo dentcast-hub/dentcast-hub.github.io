@@ -136,7 +136,14 @@ export function getAllContent(): Record<string, ContentInfo> {
 
 /** Title/url/type for a content_id (pathway steps resolve display metadata through this), or null if unknown. */
 export function getContentInfo(contentId: string): ContentInfo | null {
-  return getIndex().byContent[contentId] || null;
+  // Own-property check only. `byContent` is a plain object, so a bare
+  // `byContent[contentId]` resolves inherited keys — `__proto__` yields
+  // Object.prototype, `constructor`/`toString`/`valueOf` their functions —
+  // and every one of them is truthy. That turned a dozen JS builtin names into
+  // "real" content_ids that passed the paid-completion gate (activity.ts) and
+  // the highlight gate (isPlausibleContentId) for pages that do not exist.
+  const by = getIndex().byContent;
+  return Object.prototype.hasOwnProperty.call(by, contentId) ? by[contentId] : null;
 }
 
 /**
@@ -225,7 +232,7 @@ export function resolveTopic(topic: string): { fa: string; contentIds: string[] 
  * highlight on the landing page or on an en mirror as a part read.
  */
 function isFolderItem(cid: string, prefix: string, idx: IndexFile): boolean {
-  if (idx.byContent[cid]) return true;
+  if (Object.prototype.hasOwnProperty.call(idx.byContent, cid)) return true;
   if (!cid.startsWith(prefix + '/')) return false;
   const rest = cid.slice(prefix.length + 1);
   return rest !== '' && rest !== 'index' && !rest.includes('/');

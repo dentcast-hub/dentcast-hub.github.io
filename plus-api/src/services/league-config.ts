@@ -58,6 +58,11 @@ export interface LeagueConfig {
   /** Floor for winning a PRIZE — lower than min_valid_group_size, which is the
    *  floor for PROMOTION. See migration 0017 for why the two are separate. */
   prize_min_group_size: number;
+  /** Minimum weekly_xp a member must have earned to WIN the prize (0074). The
+   *  prize ranked by points but had no floor, so a near-idle group still crowned
+   *  someone; this is the "you actually did something this week" bar. Seeded at
+   *  promotion_min_weekly_xp but tunable apart. 0 = no floor. */
+  prize_min_weekly_xp: number;
   /** Prize length in the highest ACTIVE tier, where nothing can be promoted and
    *  the prize is therefore the entire outcome (0033). 0 = use prize_days. */
   top_tier_prize_days: number;
@@ -79,7 +84,7 @@ export const NUMERIC_KEYS: Array<keyof LeagueConfig> = [
   'xp_collection_created', 'xp_collection_created_weekly_cap',
   'xp_collection_item', 'xp_collection_item_weekly_cap',
   'prize_days', 'prize_cooldown_weeks', 'prize_winners_per_group', 'prize_min_group_size',
-  'top_tier_prize_days',
+  'prize_min_weekly_xp', 'top_tier_prize_days',
   'xp_per_active_day', 'xp_per_highlight',
 ];
 

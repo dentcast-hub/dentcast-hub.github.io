@@ -138,6 +138,31 @@ export function groupIsValid(
 }
 
 /**
+ * May this group DEMOTE its bottom ranks this week — the ONE definition, shared
+ * by finalizeWeek (who is actually demoted) and GET /league (the risk shown), so
+ * the two can never tell a reader different things in the same week.
+ *
+ * Demotion used to be gated on `filled` (size >= capacity_at_creation) alone.
+ * In a thin tier that is right: capacity is population-clamped there, so a full
+ * small tier still demotes while 0033's lone member (size below the floored
+ * capacity) never does. But capacity_at_creation is the FULL tier ceiling for a
+ * lazily-created TAIL group in a POPULOUS tier, so a valid tail group of six or
+ * seven real competitors sat below `filled` and its bottom was immune, while the
+ * sibling group that happened to fill demoted its own — a reader's demotion risk
+ * decided by which group join order dropped them into, and a late joiner could
+ * aim for the open tail group to escape demotion entirely.
+ *
+ * A group that reaches min_valid_group_size is a real competition by the same
+ * definition groupIsValid uses, so its bottom demotes whether or not it also
+ * filled. Below that floor the old `filled` gate stands — the only way a thin
+ * whole-tier championship demotes (a full tier of its whole small population)
+ * without ever demoting the lone member of 0033's tier of one.
+ */
+export function groupCanDemote(size: number, capacity: number, cfg: LeagueConfig): boolean {
+  return size >= cfg.min_valid_group_size || size >= capacity;
+}
+
+/**
  * The tier's population, raw — no floor, no ceiling. "How many people this tier
  * had to offer", as opposed to `tierCapacity`'s "how many fit in one group".
  *
@@ -263,9 +288,17 @@ async function shareXp(
   if (!contentId || cfg.xp_share <= 0) return 0;
 
   // One round trip answers both counts. `eligible` is every share this reader
-  // made this week that came after finishing its article — the just-inserted row
-  // included, so `this_content` is 1 exactly when the current share is the first
-  // eligible one for this page.
+  // made this week that came after finishing its article THIS WEEK — the
+  // just-inserted row included, so `this_content` is 1 exactly when the current
+  // share is the first eligible one for this page.
+  //
+  // read_at is the earliest completion of this page WITHIN the league week, not
+  // the earliest ever. Matched against all-time completions, a single read long
+  // ago made the page shareable for +5 every week forever with no further
+  // reading: s.created_at (this week) was always >= a read from months back, and
+  // the weekly cap is off by default. Tying the read to the same week makes the
+  // share mirror xp_read — once per (content, week), and only for a page you
+  // actually engaged with this week.
   const r = await client.query<{ this_content: number; contents_paid: number }>(
     `with eligible as (
        select s.content_id
@@ -274,6 +307,7 @@ async function shareXp(
            select min(r.created_at) as read_at from user_activity r
             where r.user_id = s.user_id and r.action = 'article_completed'
               and r.content_id = s.content_id
+              and (r.created_at at time zone $3)::date between $4::date and $5::date
          ) rd on true
         where s.user_id = $1 and s.action = $2 and s.content_id is not null
           and rd.read_at is not null and s.created_at >= rd.read_at

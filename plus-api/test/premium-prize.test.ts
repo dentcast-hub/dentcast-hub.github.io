@@ -138,6 +138,33 @@ describe('grantWeeklyPrizes — top of every valid group', () => {
     expect(await tierOfUser(small[1])).toBe('free');
   });
 
+  it('mints nothing when the top of the group is below prize_min_weekly_xp', async () => {
+    // The prize ranked by points but had no floor, so a near-idle group crowned
+    // its top member for a handful of XP (0074). 20 < the seeded floor of 30.
+    const quiet = await seedGroup('acrylic', [20]);
+    await finalizeWeek(WEEK);
+
+    expect((await grantWeeklyPrizes(NEAR_WEEK)).granted).toBe(0);
+    expect(await tierOfUser(quiet[0])).toBe('free');
+  });
+
+  it('awards once the top clears prize_min_weekly_xp', async () => {
+    const earned = await seedGroup('acrylic', [30]); // exactly the floor
+    await finalizeWeek(WEEK);
+
+    expect((await grantWeeklyPrizes(NEAR_WEEK)).granted).toBe(1);
+    expect(await tierOfUser(earned[0])).toBe('premium');
+  });
+
+  it('respects prize_min_weekly_xp = 0 as an explicit no-floor opt-out', async () => {
+    await setPrizeCfg('prize_min_weekly_xp', '0');
+    const quiet = await seedGroup('acrylic', [2]);
+    await finalizeWeek(WEEK);
+
+    expect((await grantWeeklyPrizes(NEAR_WEEK)).granted).toBe(1);
+    expect(await tierOfUser(quiet[0])).toBe('premium');
+  });
+
   it('awards nothing below the prize floor — first of two is not a result', async () => {
     const tiny = await seedGroup('composite', [90, 80], WEEK, 2);
     await finalizeWeek(WEEK);
@@ -152,6 +179,27 @@ describe('grantWeeklyPrizes — top of every valid group', () => {
 
     expect((await grantWeeklyPrizes(NEAR_WEEK)).granted).toBe(1);
     expect(await tierOfUser(three[0])).toBe('premium');
+  });
+
+  it('crowns only one winner when several sweeps run at once (no pass-down race)', async () => {
+    // Two overlapping sweeps (a daily re-scan meeting a deploy that straddles
+    // 00:00 Tehran, or a second instance) each read zero existing winners and
+    // each granted rank 1; the per-user unique constraint stopped the duplicate
+    // row but the loser walked the pass-down to rank 2, 3… crowning a whole
+    // one-winner group. The per-group lock must serialize them to exactly one.
+    const ids = await seedGroup('acrylic', [90, 80, 70]);
+    await finalizeWeek(WEEK);
+
+    const results = await Promise.all([
+      grantWeeklyPrizes(NEAR_WEEK),
+      grantWeeklyPrizes(NEAR_WEEK),
+      grantWeeklyPrizes(NEAR_WEEK),
+    ]);
+
+    expect(results.reduce((n, r) => n + r.granted, 0)).toBe(1);
+    expect(await tierOfUser(ids[0])).toBe('premium');
+    expect(await tierOfUser(ids[1])).toBe('free');
+    expect(await tierOfUser(ids[2])).toBe('free');
   });
 
   it('awards prize_winners_per_group when the group is big enough to carry them', async () => {
@@ -320,6 +368,23 @@ describe('the cooldown', () => {
 
     expect(res.granted, 'the group still produces a winner').toBe(1);
     expect(await grantRow(ids[0], WEEK2), 'but not the same person').toBeNull();
+  });
+
+  it('still blocks a repeat winner exactly cooldown_weeks later (inclusive boundary)', async () => {
+    // The off-by-one: with a strict lower bound, a win exactly cooldown_weeks
+    // ago (two weeks here) fell outside the window and the same user won again
+    // — 2 prize days every 14, not the intended 21. WEEK3 is 14 days after WEEK.
+    const ids = await seedGroup('composite', [90, 80, 70]);
+    await finalizeWeek(WEEK);
+    await grantWeeklyPrizes(NEAR_WEEK); // ids[0] wins at WEEK
+
+    const WEEK3 = '2026-02-21'; // exactly two weeks after WEEK (2026-02-07)
+    await seedWinnerAgain(ids[0], WEEK3);
+    await finalizeWeek(WEEK3, NEAR_WEEK);
+    const res = await grantWeeklyPrizes(new Date('2026-02-22T00:00:00Z'));
+
+    expect(res.granted, 'the group still produces a winner').toBe(1);
+    expect(await grantRow(ids[0], WEEK3), 'but still not the two-weeks-ago winner').toBeNull();
   });
 
   it('lets the same user win again once the cooldown has passed', async () => {

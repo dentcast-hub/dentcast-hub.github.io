@@ -21,7 +21,7 @@ import type { FastifyInstance } from 'fastify';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { makeApp, resetDb, loginAs } from './helpers.js';
+import { makeApp, resetDb, loginAs, seedHighlight, userIdFromCookie } from './helpers.js';
 import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
 import { SERVER_MINTED_ACTIONS, CLIENT_ACTIONS } from '../src/services/activity.js';
@@ -41,8 +41,8 @@ afterAll(async () => {
   await pool.end();
 });
 
-const post = (action: string, content_id: string | null = null) => app.inject({
-  method: 'POST', url: '/activity', headers: { cookie }, payload: { action, content_id },
+const post = (action: string, content_id: string | null = null, meta?: Record<string, unknown>) => app.inject({
+  method: 'POST', url: '/activity', headers: { cookie }, payload: { action, content_id, meta },
 });
 
 async function actionsLogged(): Promise<string[]> {
@@ -72,7 +72,12 @@ describe('POST /activity refuses every server-minted action', () => {
 
   it('still accepts what a browser legitimately reports', async () => {
     for (const action of CLIENT_ACTIONS) {
-      const res = await post(action, 'insight/insight-1');
+      // card_reviewed_manual now requires a real owned card (routes/activity.ts);
+      // the others need nothing extra.
+      const meta = action === 'card_reviewed_manual'
+        ? { highlight_id: await seedHighlight(userIdFromCookie(cookie), 'insight/insight-1') }
+        : undefined;
+      const res = await post(action, 'insight/insight-1', meta);
       expect(res.statusCode, `action "${action}" was refused`).toBe(200);
     }
     const logged = new Set(await actionsLogged());
@@ -90,6 +95,23 @@ describe('POST /activity refuses every server-minted action', () => {
   it('leaves the vocabulary open for an inert token', async () => {
     const res = await post('some_new_client_signal', 'insight/insight-1');
     expect(res.statusCode).toBe(200);
+  });
+
+  it('bounds the size of a permanent log row', async () => {
+    // content_id is indexed and meta is stored on every row; both were unbounded.
+    const longId = await post('article_viewed', `insight/${'x'.repeat(250)}`);
+    expect(longId.statusCode).toBe(400); // schema maxLength 200
+
+    const bigMeta = await post('some_signal', 'insight/insight-1', { blob: 'y'.repeat(9000) });
+    expect(bigMeta.statusCode).toBe(400);
+    expect(bigMeta.json().error).toBe('meta_too_large');
+  });
+
+  it('rejects a NUL byte instead of 500ing on Postgres', async () => {
+    const inId = await post('article_viewed', 'insight/a\u0000b');
+    expect(inId.statusCode).toBe(400);
+    const inMeta = await post('some_signal', 'insight/insight-1', { note: 'x\u0000y' });
+    expect(inMeta.statusCode).toBe(400);
   });
 });
 

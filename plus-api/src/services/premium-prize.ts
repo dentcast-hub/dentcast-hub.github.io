@@ -120,6 +120,20 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
 
     let granted = 0;
     for (const g of groups) {
+      // Serialize concurrent sweeps on THIS group. grantWeeklyPrizes re-scans a
+      // trailing window daily and can also run from a second instance or a
+      // deploy that straddles 00:00 Tehran. Two overlapping sweeps each read the
+      // `existing` winner count below as 0, each granted rank 1, and because the
+      // per-user unique constraint only stopped the SAME user being granted
+      // twice (ins.rowCount 0 → the old code just `continue`d without counting
+      // it), the second sweep walked the pass-down to rank 2, rank 3… awarding
+      // several winners in a one-winner group. Taking the league row's lock
+      // before reading `existing` makes the later sweep wait for the first to
+      // commit and then read the real, already-granted count — so it awards
+      // nothing more. Groups are visited in a fixed `order by l.id`, so two
+      // sweeps lock them in the same order and cannot deadlock.
+      await client.query('select 1 from leagues where id = $1 for update', [g.id]);
+
       // How many winners THIS group may have. prize_winners_per_group is a
       // ceiling, not a quota: it is scaled down by how many whole
       // prize_min_group_size blocks the group actually contains.
@@ -142,8 +156,8 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
       // Ranked members of this group. We walk down rather than taking the top N
       // outright: a member on cooldown passes the prize DOWN to the next one,
       // instead of the group silently awarding nothing that week.
-      const members = (await client.query<{ user_id: string }>(
-        `select lm.user_id
+      const members = (await client.query<{ user_id: string; weekly_xp: number }>(
+        `select lm.user_id, lm.weekly_xp
            from league_members lm
           where lm.league_id = $1
           order by lm.weekly_xp desc, lm.first_reached_current_xp_at asc nulls last, lm.id asc`,
@@ -166,12 +180,27 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
       for (const m of members) {
         if (winnersHere >= winnersTarget) break;
 
-        // Cooldown: won recently enough that it is somebody else's turn.
+        // Minimum-XP floor (0074): the prize ranked by points but had no floor,
+        // so a quiet group still crowned its top member for a handful of XP
+        // (measured: 9 and 11). Promotion needs prize_min_weekly_xp; the prize
+        // now needs it too. Members are ordered by weekly_xp desc, so the first
+        // one below the floor means everyone after is too — stop the group here
+        // rather than pass the prize down to someone who earned even less.
+        if (cfg.prize_min_weekly_xp > 0 && m.weekly_xp < cfg.prize_min_weekly_xp) break;
+
+        // Cooldown: won recently enough that it is somebody else's turn. The
+        // lower bound is INCLUSIVE (`>=`): with a strict `>`, a win exactly
+        // cooldown_weeks ago (week_start = W - cooldown*7) fell outside the
+        // window, so a winner sat out one fewer week than configured — at
+        // cooldown 2 they could win every second week (≈2 days in 14) instead
+        // of the intended 2 days in 21. `>= W - cooldown*7` blocks the last
+        // `cooldown_weeks` weeks exactly, making them eligible again the week
+        // after that.
         if (cfg.prize_cooldown_weeks > 0) {
           const recent = await client.query<{ n: number }>(
             `select count(*)::int as n from premium_grants
               where user_id = $1
-                and week_start > ($2::date - ($3::int * 7))
+                and week_start >= ($2::date - ($3::int * 7))
                 and week_start < $2::date`,
             [m.user_id, weekStart, cfg.prize_cooldown_weeks],
           );
@@ -237,7 +266,11 @@ async function grantPrizeForWeek(weekStart: string, now: Date): Promise<number> 
            returning id`,
           [m.user_id, weekStart, grantedAt, memberExpiresAt, extendsSubscription],
         );
-        if (!ins.rowCount) continue; // already granted for this week (idempotent re-run)
+        // Already granted for this week (idempotent re-run, or a sweep that
+        // raced us in before we took the lock): the row — and its tier
+        // projection — already exist, so count this member as a winner and move
+        // on rather than passing the prize DOWN to the next rank.
+        if (!ins.rowCount) { winnersHere += 1; continue; }
 
         // Writer 2 of the three sanctioned `profiles.tier` writers (the contract
         // is stated in full atop services/subscription.ts). Upward only: the

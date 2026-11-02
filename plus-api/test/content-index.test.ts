@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach } from 'vitest';
-import { folderOf, getFolders, getIndex, folderProgress, applyRemoteIndex, resetRemoteIndex } from '../src/content-index.js';
+import { folderOf, getFolders, getIndex, folderProgress, applyRemoteIndex, resetRemoteIndex, getContentInfo } from '../src/content-index.js';
 // @ts-expect-error — a browser module, driven as-is
 import { freshFolders } from '/plus/js/content-index.js';
 
@@ -9,6 +9,26 @@ import { freshFolders } from '/plus/js/content-index.js';
 // پرامپتولوژیست with a folder row in the index that nothing could ever credit,
 // so the dashboard's «پیشرفت هر پوشه» showed ٪۰ for a reader who had read all
 // of it (reported 2026-09-18).
+// getContentInfo gates the paid-completion check (routes/activity.ts) and the
+// highlight check (isPlausibleContentId). A bare `byContent[id]` read resolves
+// inherited object keys, so `__proto__`, `constructor`, `toString`, `valueOf`
+// and the rest returned a truthy builtin and passed as "real" content_ids for
+// pages that do not exist — league XP and score for nothing. The lookup must be
+// own-property only.
+describe('getContentInfo rejects prototype keys', () => {
+  it('never resolves a JS builtin name to content', () => {
+    for (const k of ['__proto__', 'constructor', 'toString', 'valueOf', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'toLocaleString']) {
+      expect(getContentInfo(k), `getContentInfo(${k}) must be null`).toBeNull();
+    }
+  });
+
+  it('still resolves a real indexed content_id', () => {
+    const real = Object.keys(getIndex().byContent)[0];
+    expect(real).toBeTruthy();
+    expect(getContentInfo(real)).not.toBeNull();
+  });
+});
+
 describe('folderOf', () => {
   it('returns the first path segment for a flat section', () => {
     expect(folderOf('notecast/episode-2')).toBe('notecast');

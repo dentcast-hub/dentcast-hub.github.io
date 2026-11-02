@@ -45,7 +45,10 @@ import { examRoutes } from './routes/exams.js';
 export async function buildServer(): Promise<FastifyInstance> {
   const app = Fastify({
     logger: config.env !== 'test',
-    trustProxy: true, // behind ArvanCloud's proxy in production; needed for request.ip
+    // Behind ArvanCloud's proxy in production; needed for request.ip. Scoped by
+    // TRUSTED_PROXY (config.trustProxy) so X-Forwarded-For is honoured only from
+    // the edge, not forged by a direct-to-origin client — see config.ts.
+    trustProxy: config.trustProxy,
   });
 
   await app.register(cookie, { secret: config.session.secret });

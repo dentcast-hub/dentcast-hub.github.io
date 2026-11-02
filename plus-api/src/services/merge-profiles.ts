@@ -90,6 +90,33 @@ export async function mergeProfiles(
   );
   await client.query('update challenge_attempts set user_id = $2 where user_id = $1', [fromId, toId]);
 
+  // لیگ (migrations 0006/0016): league_members and premium_grants both cascade
+  // off profiles, and skipping them here meant the source account's delete
+  // erased its weekly standings and final ranks AND — on premium_grants — the
+  // prize-cooldown history and the row that backs a premium tier (so the kept
+  // account could read premium with no grant behind it, and a past win could be
+  // re-granted to the next rank once the group shrank). Both carry a per-user,
+  // per-week unique key: on a week BOTH accounts were present or won, keep the
+  // target's row and drop the source's (renumbering a recorded standing would
+  // rewrite what it meant), then repoint the rest.
+  await client.query(
+    `delete from league_members m
+      where m.user_id = $1
+        and exists (select 1 from league_members k
+                     where k.user_id = $2 and k.week_start = m.week_start)`,
+    [fromId, toId],
+  );
+  await client.query('update league_members set user_id = $2 where user_id = $1', [fromId, toId]);
+
+  await client.query(
+    `delete from premium_grants g
+      where g.user_id = $1
+        and exists (select 1 from premium_grants k
+                     where k.user_id = $2 and k.week_start = g.week_start)`,
+    [fromId, toId],
+  );
+  await client.query('update premium_grants set user_id = $2 where user_id = $1', [fromId, toId]);
+
   // --- کد معرف (services/referrals.ts). Both tables cascade-delete off
   //     profiles, so skipping them here would silently erase real referral
   //     history and financial credit the moment a merge runs — see the

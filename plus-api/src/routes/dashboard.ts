@@ -13,9 +13,25 @@ import {
 } from '../services/score.js';
 import { dayInTz, previousDay, nextDay, weekStartSaturday } from '../services/time.js';
 
-// Format/invisible characters: ZW space/ZWNJ/ZWJ, bidi marks and isolates,
-// word joiner, BOM, soft hyphen, Arabic letter mark, Hangul filler.
-const INVISIBLE = /[\u00AD\u061C\u115F\u1160\u180E\u200B-\u200F\u202A-\u202E\u2060-\u206F\u3164\uFEFF\uFFA0]/g;
+// Format/invisible characters, for the "is there anything to SEE" length check:
+// ZW space/ZWNJ/ZWJ, bidi marks and isolates, word joiner, BOM, soft hyphen,
+// Arabic letter mark, Hangul fillers, and the Braille blank (U+2800) + ideographic
+// space (U+3000), which render as a blank leaderboard row but are not whitespace.
+const INVISIBLE = /[\u00AD\u061C\u115F\u1160\u180E\u200B-\u200F\u202A-\u202E\u2060-\u206F\u2800\u3000\u3164\uFEFF\uFFA0]/g;
+
+// Bidi OVERRIDES and ISOLATES (not ZWNJ, which is legitimate in Persian): these
+// reorder surrounding text, so a crafted name could read backwards or bleed into
+// the neighbouring leaderboard row. Stripped from the stored value outright.
+const BIDI_CONTROLS = /[\u061C\u200E\u200F\u202A-\u202E\u2066-\u2069]/g;
+
+// Names that impersonate the brand or a role. Compared against the visible text,
+// lowercased and whitespace-collapsed. Not a username system \u2014 real people share
+// first names \u2014 just a block on pretending to be official.
+const RESERVED_NAMES = new Set([
+  'dentcast', 'dent cast', 'dentcast admin', 'dentcast team', 'dentcast support',
+  'admin', 'administrator', 'support', 'moderator', 'official',
+  '\u062F\u0646\u062A \u06A9\u0633\u062A', '\u062F\u0646\u062A\u200C\u06A9\u0633\u062A', '\u0627\u062F\u0645\u06CC\u0646', '\u0645\u062F\u06CC\u0631', '\u067E\u0634\u062A\u06CC\u0628\u0627\u0646\u06CC', '\u067E\u0634\u062A\u06CC\u0628\u0627\u0646',
+]);
 
 export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', requireAuth);
@@ -27,7 +43,7 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
         type: 'object',
         properties: {
           display_name: { type: 'string', minLength: 1, maxLength: 40 },
-          settings: { type: 'object', additionalProperties: true },
+          settings: { type: 'object', additionalProperties: true, maxProperties: 30 },
         },
       },
     },
@@ -36,16 +52,37 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
     const sets: string[] = [];
     const vals: unknown[] = [request.user!.id];
     if (b.display_name !== undefined) {
-      const name = b.display_name.trim();
-      // A name made only of ZWNJ / zero-width / bidi marks passed minLength and
-      // printed as a blank in the header and the league. Count what can be
-      // seen; ZWNJ inside a real name («علی‌رضا») is stored untouched.
-      if (name.replace(INVISIBLE, '').trim().length < 2) {
+      // Strip bidi overrides/isolates before storing, so a name cannot reorder
+      // itself or the row next to it on the leaderboard. ZWNJ (legitimate in
+      // «علی‌رضا») is NOT a bidi control and is left untouched.
+      // Postgres text rejects U+0000 — reject it as a 400 rather than 500.
+      if (b.display_name.includes('\u0000')) {
         return reply.code(400).send({ error: 'invalid_display_name', message: 'اسم مستعار باید حداقل ۲ حرف باشد.' });
+      }
+      const name = b.display_name.trim().replace(BIDI_CONTROLS, '');
+      const visible = name.replace(INVISIBLE, '').trim();
+      // A name made only of ZWNJ / zero-width / blank glyphs passed minLength and
+      // printed as a blank row. Count what can actually be seen.
+      if (visible.length < 2) {
+        return reply.code(400).send({ error: 'invalid_display_name', message: 'اسم مستعار باید حداقل ۲ حرف باشد.' });
+      }
+      if (RESERVED_NAMES.has(visible.toLowerCase().replace(/\s+/g, ' '))) {
+        return reply.code(400).send({ error: 'reserved_display_name', message: 'این نام قابل استفاده نیست.' });
       }
       sets.push(`display_name = $${vals.length + 1}`); vals.push(name);
     }
-    if (b.settings !== undefined) { sets.push(`settings = settings || $${vals.length + 1}::jsonb`); vals.push(JSON.stringify(b.settings)); }
+    if (b.settings !== undefined) {
+      // settings is merged (never replaced) and loaded on every authenticated
+      // request, so an unbounded blob here is paid back on every call forever.
+      // maxProperties bounds the key count; this bounds the serialized size and
+      // the accumulated total after repeated merges. 8 KB dwarfs the real
+      // settings (reminders, notify_channels, tour_seen).
+      const merged = JSON.stringify({ ...(request.user!.settings ?? {}), ...b.settings });
+      if (merged.length > 8192) return reply.code(400).send({ error: 'settings_too_large' });
+      // jsonb rejects U+0000 (escaped to "\u0000" by stringify) → 400 not 500.
+      if (JSON.stringify(b.settings).includes('\\u0000')) return reply.code(400).send({ error: 'invalid_settings' });
+      sets.push(`settings = settings || $${vals.length + 1}::jsonb`); vals.push(JSON.stringify(b.settings));
+    }
     if (!sets.length) return reply.code(400).send({ error: 'nothing_to_update' });
     const res = await pool.query(
       `update profiles set ${sets.join(', ')} where id = $1

@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { requireAuth } from '../middleware/auth.js';
 import { requirePremium } from '../middleware/require-premium.js';
-import { pool, withTransaction } from '../db.js';
+import { pool, withTransaction, lockProfileForWrite } from '../db.js';
 import { recordActivity } from '../services/activity.js';
 import { scheduleAchievementSync } from '../services/achievement-sync.js';
 import { ITEM_SELECT, resolveItem, type ItemRow } from './collections.js';
@@ -124,6 +124,7 @@ export async function snippetRoutes(app: FastifyInstance): Promise<void> {
     if (col.rowCount === 0) return reply.code(404).send({ error: 'not_found' });
 
     const itemRow = await withTransaction(async (client) => {
+      await lockProfileForWrite(client, userId); // serialize scoring; see lockProfileForWrite
       const snippet = await client.query<{ id: string }>(
         `insert into snippets (user_id, kind, title, body, authors, venue, year, doi, url)
          values ($1, $2, $3, $4, $5, $6, $7, $8, $9)

@@ -1,7 +1,9 @@
 import type { FastifyInstance } from 'fastify';
+import { config } from '../config.js';
+import { consume, HOUR_MS } from '../services/rate-limit.js';
 import { requireAuth } from '../middleware/auth.js';
 import { requirePremium } from '../middleware/require-premium.js';
-import { pool, withTransaction } from '../db.js';
+import { pool, withTransaction, lockProfileForWrite } from '../db.js';
 import { recordActivity } from '../services/activity.js';
 import { scheduleAchievementSync } from '../services/achievement-sync.js';
 import { intervalDaysForBox } from '../services/leitner.js';
@@ -230,7 +232,21 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
     }
 
     const userId = request.user!.id;
+    // Pace ceiling: creating a highlight pays league XP, and the per-content
+    // weekly cap resets for each distinct content_id, so without this a script
+    // posting a fresh id each time farms XP at the raw request rate. 150/hour is
+    // far past any real reading session; a 429 is re-sent by the client outbox.
+    const limit = consume(`highlights:user:${userId}`, config.highlights.maxPerUserPerHour, HOUR_MS);
+    if (!limit.allowed) {
+      reply.header('retry-after', Math.ceil(limit.retryAfterMs / 1000));
+      return reply.code(429).send({ error: 'rate_limited' });
+    }
     const created = await withTransaction(async (client) => {
+      // Lock the profile FIRST, before the highlight/card_state inserts take
+      // FOR KEY SHARE on it — recordActivity below upgrades to FOR UPDATE, and
+      // two concurrent same-user posts would otherwise deadlock (40P01). See
+      // lockProfileForWrite.
+      await lockProfileForWrite(client, userId);
       const hl = await client.query<HighlightRow>(
         `insert into highlights
            (user_id, content_id, exact, prefix, suffix, color, underline, cloze_markers, note, label, content_hash)
@@ -352,6 +368,7 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
     const userId = request.user!.id;
 
     const deleted = await withTransaction(async (client) => {
+      await lockProfileForWrite(client, userId); // see POST /highlights
       const res = await client.query<{ content_id: string }>(
         `update highlights_all set deleted_at = now()
           where id = $1 and user_id = $2 and deleted_at is null
@@ -388,6 +405,7 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
     const userId = request.user!.id;
 
     const restored = await withTransaction(async (client) => {
+      await lockProfileForWrite(client, userId); // see POST /highlights
       const res = await client.query<HighlightRow>(
         `update highlights_all set deleted_at = null
           where id = $1 and user_id = $2 and deleted_at is not null

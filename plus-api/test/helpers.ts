@@ -27,24 +27,43 @@ export async function resetDb(): Promise<void> {
   await drainPillarWelcomes();
   await drainReferralNotifies();
   await drainAchievementSyncs();
-  await pool.query(`
-    truncate table
-      profiles, user_activity, highlights_all, card_state, audio_clips, content_votes,
-      collections, collection_items, snippets, user_pathways,
-      subscriptions, payments, gift_redemptions, certificates, pathway_exams,
-      pathway_exam_forms, pathway_exam_attempts, pathway_exam_examples, content_exam_questions, anon_events,
-      push_subscriptions, articles, auth_identities, spot_stats, spot_delivery_receipts, view_stats,
-      notification_log, achievement_announcements, notice_broadcasts, notice_reads,
-      discount_grants, discount_redemptions, badge_grants,
-      referral_codes, referrals,
-      support_tickets, ticket_messages,
-      des_requests, des_paper_keys, des_papers,
-      challenge_examples, challenge_attempts, challenges,
-      assistant_rounds, assistant_tag_scores,
-      leagues, league_members, league_weekly_stats, league_audit_log,
-      clinic_closures, quick_publications, quick_publish_media, quick_publish_settings
-    restart identity cascade
-  `);
+  // The drains above cover the detached jobs we can name, but a few fire-and
+  // -forget writes still escape them (payment.ts's capacity alert and paid-push,
+  // spot-stats' receipt sweep). Any one of those, mid-write when we truncate,
+  // takes a row lock the TRUNCATE's ACCESS EXCLUSIVE lock then deadlocks
+  // against — a rare, timing-dependent 40P01 that fails an unrelated test on the
+  // NEXT run's reset. Rather than chase every detached writer into a drain, wait
+  // it out (the file's stated approach): a detached job finishes in
+  // milliseconds, so a short retry lets the truncate land cleanly.
+  for (let attempt = 1; ; attempt += 1) {
+    try {
+      await pool.query(`
+        truncate table
+          profiles, user_activity, highlights_all, card_state, audio_clips, content_votes,
+          collections, collection_items, snippets, user_pathways,
+          subscriptions, payments, gift_redemptions, certificates, pathway_exams,
+          pathway_exam_forms, pathway_exam_attempts, pathway_exam_examples, content_exam_questions, anon_events,
+          push_subscriptions, articles, auth_identities, spot_stats, spot_delivery_receipts, view_stats,
+          notification_log, achievement_announcements, notice_broadcasts, notice_reads,
+          discount_grants, discount_redemptions, badge_grants,
+          referral_codes, referrals,
+          support_tickets, ticket_messages,
+          des_requests, des_paper_keys, des_papers,
+          challenge_examples, challenge_attempts, challenges,
+          assistant_rounds, assistant_tag_scores,
+          leagues, league_members, league_weekly_stats, league_audit_log,
+          clinic_closures, quick_publications, quick_publish_media, quick_publish_settings
+        restart identity cascade
+      `);
+      break;
+    } catch (err) {
+      if ((err as { code?: string } | null)?.code === '40P01' && attempt <= 10) {
+        await new Promise((r) => { setTimeout(r, 50 * attempt); });
+        continue;
+      }
+      throw err;
+    }
+  }
   // League seed data (tiers + config) is created ONCE by the migration and must
   // survive truncation — so reset the knobs back to their seed values, because
   // league_config is NOT truncated and a test that retunes one would otherwise
@@ -96,6 +115,7 @@ export async function resetDb(): Promise<void> {
       when 'prize_cooldown_weeks' then '2'
       when 'prize_winners_per_group' then '1'
       when 'prize_min_group_size' then '3'
+      when 'prize_min_weekly_xp' then '30'
       when 'top_tier_prize_days' then '3'
       else value end,
       locked = false, locked_at = null;
@@ -154,6 +174,26 @@ export async function mintActivity(
     throw new Error(`mintActivity is for server-minted actions; "${action}" is not one`);
   }
   await recordActivity(userIdFromCookie(cookie), action, contentId, meta);
+}
+
+/**
+ * Insert a real, owned highlight straight into the table and return its id —
+ * the SETUP a test needs when it posts `card_reviewed_manual`, which now
+ * requires a real owned card (routes/activity.ts). Direct SQL, not POST
+ * /highlights, so it does not itself mint a `highlight_created` scoring row and
+ * pollute an exact-XP assertion. Each call is a DISTINCT card, which is what the
+ * once-per-card-per-day review rule needs to let N reviews pay.
+ */
+export async function seedHighlight(
+  userId: string,
+  contentId = 'episodes/episode-1',
+  exact = 'seeded selection',
+): Promise<string> {
+  const r = await pool.query<{ id: string }>(
+    `insert into highlights_all (user_id, content_id, exact) values ($1, $2, $3) returning id`,
+    [userId, contentId, exact],
+  );
+  return r.rows[0].id;
 }
 
 /** Full OTP login round-trip; returns the session cookie header value. */

@@ -1,7 +1,7 @@
 import type pg from 'pg';
 import { pool, withTransaction } from '../db.js';
 import { dayInTz, dayDiff } from './time.js';
-import { getTiers, groupIsValid, leagueWeek, moveCurrentLeagueMembership } from './league.js';
+import { getTiers, groupIsValid, groupCanDemote, leagueWeek, moveCurrentLeagueMembership } from './league.js';
 import { getLeagueConfig, setLeagueConfig, type LeagueConfig } from './league-config.js';
 
 /**
@@ -72,7 +72,6 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
       activeUsers += members.filter((m) => m.weekly_xp > 0).length;
       if (g.capacity_at_creation > 0) fillSum += size / g.capacity_at_creation;
 
-      const filled = size >= g.capacity_at_creation;
       /**
        * Is this a real competition?
        *
@@ -153,12 +152,16 @@ export async function finalizeWeek(weekStart: string, now: Date = new Date()): P
         if (valid) {
           if (inPromoZone && up && m.weekly_xp >= cfg.promotion_min_weekly_xp) {
             outcome = 'promoted';
-          } else if (inDemoZone && !inPromoZone && filled && !isBottom) {
-            // Demotions apply ONLY when the group filled to capacity (spec 7) —
-            // the FLOORED capacity, deliberately, which is 0033's guard against
-            // demoting the sole member of a thin tier every week. 0068 moved
-            // promotion off that number and left this one exactly where it was:
-            // being ranked and being pushed down are different stakes.
+          } else if (inDemoZone && !inPromoZone && groupCanDemote(size, g.capacity_at_creation, cfg) && !isBottom) {
+            // A group demotes its bottom when it is a real competition by size
+            // (>= min_valid_group_size) OR it filled to capacity — see
+            // groupCanDemote. The bare `filled` gate this replaced made a valid
+            // tail group of 6-7 in a populous tier demotion-immune (its capacity
+            // is the full tier ceiling, not the handful it actually holds) while
+            // its full sibling demoted, so a late joiner could duck demotion by
+            // landing in the open tail group. The thin-tier guard is preserved:
+            // below min_valid_group_size only a FULL group demotes, so 0033's
+            // lone member (size below the floored capacity) still never does.
             outcome = 'demoted';
           }
         }
