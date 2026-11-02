@@ -1,0 +1,41 @@
+{
+  "notecast/episode-44": {
+    "queue_ref": "queue/05-notecast-composite-repair-silane",
+    "record_sha256": "aa6f646187888e5596fa58ecfeab07f91e787a348f45092283c03e96f34beba3",
+    "installed_at": "2026-11-02",
+    "approval": {
+      "status": "confirmed",
+      "decision": "حکم دائمی بنیان‌گذار (۱۴۰۵/۰۸/۱۱): DES و Fidelity مطلب «آماده»ی صف همان‌طور که تأیید شده ثبت می‌شود و مانع انتشار نیست — «وقتی من خودم میگم که منتشر بشه یعنی منتشر بشه»",
+      "evidence": [
+        "publish-queue.md «حکم دائمی DES و Fidelity صف» (founder, 2026-11-02)",
+        "PR #1069"
+      ]
+    },
+    "sync": {
+      "text_synced": [
+        "u2",
+        "u3"
+      ],
+      "added": [],
+      "dropped": []
+    }
+  },
+  "episodes/episode-44": {
+    "queue_ref": "queue/05-notecast-composite-repair-silane",
+    "record_sha256": "9e693579b8695fe458cda455f0ec93df69c594e805f10a9b177c91280d836361",
+    "installed_at": "2026-11-02",
+    "approval": {
+      "status": "confirmed",
+      "decision": "حکم دائمی بنیان‌گذار (۱۴۰۵/۰۸/۱۱): DES و Fidelity مطلب «آماده»ی صف همان‌طور که تأیید شده ثبت می‌شود و مانع انتشار نیست — «وقتی من خودم میگم که منتشر بشه یعنی منتشر بشه»",
+      "evidence": [
+        "publish-queue.md «حکم دائمی DES و Fidelity صف» (founder, 2026-11-02)",
+        "PR #1069"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "dropped": []
+    }
+  }
+}

@@ -1204,7 +1204,54 @@ def check_promptologist_nav(rep, content_id, doc, brain, sweep=False):
                   "(or its ep-nav does not have exactly two slots)", fix)
 
 
+QUEUE_FROZEN = ".dentcast/queue-frozen-des.json"
+
+
+def queue_frozen_sha256(rec):
+    """Same canonical form as tools/queue_install_des.record_sha256."""
+    return hashlib.sha256(json.dumps(rec, ensure_ascii=False, sort_keys=True,
+                                     separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def apply_queue_frozen(rep, content_id):
+    """Founder standing order 1405/08/11 (publish-queue.md «حکم دائمی DES و
+    Fidelity صف»): a publish-queue item's DES/Fidelity is installed as the
+    founder approved it and never blocks the publish. When this content_id was
+    installed by tools/queue_install_des.py and its record is still byte-for-byte
+    the installed one, every «4.13 DES» FAIL (a quote or sentence that no longer
+    sits verbatim on the page, a Persian-wording row) is reported as a warning.
+    Integrity is NOT relaxed: a record that changed after installation fails."""
+    if not exists(QUEUE_FROZEN):
+        return
+    entry = json.loads(read(QUEUE_FROZEN)).get(content_id)
+    if not entry:
+        return
+    des_all = json.loads(read("plus/des-scores.json")) if exists("plus/des-scores.json") else {}
+    rec = des_all.get(content_id)
+    same = rec is not None and queue_frozen_sha256(rec) == entry.get("record_sha256")
+    confirmed = (entry.get("approval") or {}).get("status") == "confirmed"
+    if not rep.check(same and confirmed, "4.13 frozen",
+                     f"frozen queue record ({entry.get('queue_ref')}) is the installed one",
+                     "the DES record differs from what tools/queue_install_des.py installed "
+                     "(or its founder approval is not confirmed)",
+                     "never hand-edit a frozen queue record — reinstall it with tools/queue_install_des.py"):
+        return
+    n = 0
+    for i, (status, step, msg, fix) in enumerate(rep.rows):
+        if status == "FAIL" and step == "4.13 DES":
+            rep.rows[i] = ("WARN", step, "frozen queue record, founder standing order 1405/08/11 — " + msg, None)
+            n += 1
+    if n:
+        rep.ok("4.13 frozen", f"{n} DES/Fidelity page-text row(s) reported as warnings by founder order")
+
+
 def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False):
+    _verify_core(content_id, rep, expect_title, expect_caption, sweep)
+    apply_queue_frozen(rep, content_id)
+    return rep
+
+
+def _verify_core(content_id, rep, expect_title=None, expect_caption=None, sweep=False):
     """`sweep` = this is a site-wide regression pass over already-published
     pages, not the gate on a publish in flight. Checks that are only meaningful
     for the newest entry (tail position in the brain, the Pulse line) are
