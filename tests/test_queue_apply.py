@@ -570,3 +570,16 @@ class QueueRefTests(unittest.TestCase):
         self.assertEqual(m["links_48"][0]["href"], "/insight/insight-101.html")
         self.assertEqual(m["explore_49"][0]["href"], "/insight/insight-101.html")
         self.assertEqual(m["body_en"], "[A](/insight/en/insight-101.html)")
+
+
+class QueueRefManifestTests(unittest.TestCase):
+    def test_legacy_11_reads_queue_targets(self):
+        d = Path(tempfile.mkdtemp()) / "15-metanote-x"
+        d.mkdir()
+        (d / "11-لینک‌های-گلاسری.md").write_text(
+            "## 4.8\n\n| # | عبارت عیناً | هدف | تصمیم |\n|---|---|---|---|\n"
+            "| 1 | الف | queue:12 | لینک |\n| 2 | ب | /glossary/x.html | لینک |\n\n"
+            "## 4.9\n1. `queue:12` — «ج» — تصمیم ثبت‌شده: لینک.\n", encoding="utf-8")
+        links = qm.draft_links(d)["value"]
+        self.assertEqual([x["href"] for x in links], ["queue:12", "/glossary/x.html"])
+        self.assertEqual(qm.draft_explore(d)["value"][0]["href"], "queue:12")
