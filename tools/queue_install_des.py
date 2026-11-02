@@ -233,18 +233,39 @@ def main():
             for k in range(i2 - i1):
                 mapping[old_ids[i1 + k]] = units[j1 + k]["id"]
         elif tag == "replace":
-            n = min(i2 - i1, j2 - j1)
-            for k in range(n):
-                mapping[old_ids[i1 + k]] = units[j1 + k]["id"]
-                synced.append({"old": old_ids[i1 + k], "new": units[j1 + k]["id"],
-                               "before": old[old_ids[i1 + k]], "after": units[j1 + k]["text"]})
-            dropped += [{"old": old_ids[i], "text": old[old_ids[i]]} for i in range(i1 + n, i2)]
-            added += [units[j]["id"] for j in range(j1 + n, j2)]
+            # pair an old claim with a page unit only when it is the same
+            # sentence (a date-only change, or clearly similar text); anything
+            # else is an old unit gone and a new unit added, never a verdict
+            # moved onto a different sentence
+            jj = j1
+            for i in range(i1, i2):
+                o = old[old_ids[i]]
+                hit = None
+                for j in range(jj, j2):
+                    t = units[j]["text"]
+                    if (DATE_RE.sub("D", norm(o)) == DATE_RE.sub("D", norm(t))
+                            or difflib.SequenceMatcher(None, norm(o), norm(t), autojunk=False).ratio() >= 0.6):
+                        hit = j
+                        break
+                if hit is None:
+                    dropped.append({"old": old_ids[i], "text": o})
+                    continue
+                added += [units[j]["id"] for j in range(jj, hit)]
+                mapping[old_ids[i]] = units[hit]["id"]
+                synced.append({"old": old_ids[i], "new": units[hit]["id"], "before": o, "after": units[hit]["text"]})
+                jj = hit + 1
+            added += [units[j]["id"] for j in range(jj, j2)]
         elif tag == "delete":
             dropped += [{"old": old_ids[i], "text": old[old_ids[i]]} for i in range(i1, i2)]
         elif tag == "insert":
             added += [units[j]["id"] for j in range(j1, j2)]
     by_id = {u["id"]: u for u in units}
+    # On a several-source page the title and headings belong to no source and are
+    # in no stored object, so the stored ids have gaps; a unit new on the page
+    # then joins no object either (it stays unassigned, as those units were).
+    covered_all = bool(old_ids) and [num(i) for i in old_ids] == list(range(1, len(old_ids) + 1))
+    unassigned = [] if covered_all else list(added)
+    joining = list(added) if covered_all else []
     problems = body_guard(item, cid, units, synced, added)
     if a.check_text or (problems and not a.founder_text_change):
         print(json.dumps({"status": "text_ok" if not problems else "text_moved", "content_id": cid,
@@ -255,7 +276,7 @@ def main():
                          ensure_ascii=False, indent=1))
         return 0 if not problems else 3
     renumbered = [o for o, n in mapping.items() if o != n]
-    changed = bool(synced or added or dropped or renumbered)
+    changed = bool(synced or joining or dropped or renumbered)
 
     def owner(uid):
         """The fidelity object a unit new on the page joins: the one holding the
@@ -278,7 +299,7 @@ def main():
                 continue
             claims.append({**c, "id": nid, "claim_quote": by_id[nid]["text"]})
         tmpl = next((c for c in f["claims"] if c["verdict"] == "NOT_A_CLAIM"), None)
-        for uid in added:
+        for uid in joining:
             if owner(uid) != k:
                 continue
             u = by_id[uid]
@@ -326,8 +347,8 @@ def main():
         new_plan = {}
         for key, ids in (plan.get("plan") or {}).items():
             new_plan[key] = sorted({mapping[i] for i in ids if i in mapping}, key=num)
-        for uid in added:
-            if not by_id[uid].get("heading") or True:
+        for uid in joining:
+            if True:
                 k = str(owner(uid)) if not pooled else next(iter(new_plan), "0")
                 new_plan.setdefault(k, [])
                 if uid not in new_plan[k]:
@@ -350,12 +371,12 @@ def main():
                   "approval": {"status": "confirmed", "decision": DECISION,
                                "evidence": ["publish-queue.md «DES و Fidelity صف»"]},
                   "sync": {"text_synced": [s["new"] for s in synced] if k == cid else [],
-                           "added": added if k == cid else [], "dropped": [x["old"] for x in dropped] if k == cid else []},
+                           "added": joining if k == cid else [], "unassigned": unassigned if k == cid else [], "dropped": [x["old"] for x in dropped] if k == cid else []},
                   **({"founder_text_change": a.founder_text_change, "text_changes": problems} if a.founder_text_change and k == cid else {})}
 
     receipt = {"status": "dry_run" if a.dry_run else "installed", "content_id": cid, "mirror": mirror,
                "units_on_page": len(units), "renumbered": len(renumbered), "text_synced": synced,
-               "added": added, "dropped": dropped,
+               "added": joining, "unassigned": unassigned, "dropped": dropped,
                "counts_before": before, "counts_after": [f.get("counts") for f in out_objs],
                "levels_after": [(f.get("fidelity_score"), f.get("level")) for f in out_objs],
                "des": [(s.get("des_score"), s.get("band")) for s in sources],
