@@ -75,7 +75,7 @@ tag it names must exist in the reference once `concepts` is merged in — that
 check is the protocol: no tag reaches the brain without a canonical entry.
 """
 
-from dentcast_text_io import write_text
+from dentcast_text_io import write_text, json_replace_value
 import argparse
 import json
 import re
@@ -379,6 +379,27 @@ def normalize_concept(c: dict) -> dict:
     return {k: c[k] for k in CONCEPT_FIELDS}
 
 
+def write_brain_hashtags(brain: list) -> None:
+    """Write only the changed `hashtags` lists, byte-preserving: the brain mixes
+    CRLF and LF lines and its tail entries are not uniformly indented, so a
+    whole-file json.dumps would rewrite (or, with mixed endings, refuse) far
+    more than the two articles a batch touches. Any change outside an entry's
+    `hashtags` is not this tool's to write and refuses."""
+    raw = BRAIN.read_bytes().decode("utf-8")
+    old = json.loads(raw)
+    if len(old) != len(brain):
+        sys.exit("refusing to write the brain — --apply never adds or removes entries")
+    text = raw
+    for i, (a, b) in enumerate(zip(old, brain)):
+        if a == b:
+            continue
+        if {k: v for k, v in a.items() if k != "hashtags"} != {k: v for k, v in b.items() if k != "hashtags"}:
+            sys.exit(f"refusing to write the brain — entry {i} changed outside `hashtags`")
+        text = json_replace_value(text, [i, "hashtags"], b["hashtags"])
+    if text != raw:
+        BRAIN.write_bytes(text.encode("utf-8"))
+
+
 def cmd_apply(path: str) -> None:
     batch = json.loads(Path(path).read_text(encoding="utf-8"))
     ref, brain = load_ref(), load_brain()
@@ -509,10 +530,7 @@ def cmd_apply(path: str) -> None:
         ref["enforced_types"].append(t)
         ref["enforced_types"].sort()
 
-    # indent=2 is the brain's existing formatting and round-trips byte-for-byte;
-    # anything else would bury a two-article change in a 12k-line diff.
-    write_text(BRAIN, json.dumps(brain, ensure_ascii=False, indent=2) + "\n",
-                     encoding="utf-8")
+    write_brain_hashtags(brain)
     synced = sync_episode_chips(brain)
     if synced:
         print(f"  chips rewritten on {synced} episode page(s).")

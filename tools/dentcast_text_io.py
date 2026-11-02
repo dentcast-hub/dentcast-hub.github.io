@@ -190,6 +190,34 @@ def json_replace_scalar(text, path, value):
     return new
 
 
+def json_replace_value(text, path, value):
+    """Replace one value (a list such as an entry's hashtags) in place, in the
+    style of the node it replaces: on one line when it was on one line, else
+    one item per line at the node's own indentation and newline. Every other
+    byte is kept; the result must parse to the expected data."""
+    data = _json.loads(text)
+    node = _find(json_tree(text), path)
+    old = text[node.start:node.end]
+    if "\n" not in old:
+        body = _json.dumps(value, ensure_ascii=False)
+    else:
+        nl = "\r\n" if "\r\n" in old else "\n"
+        ls = _line_start(text, node.start)
+        outer = text[ls:node.start]
+        outer = outer[:len(outer) - len(outer.lstrip(" \t"))]
+        inner = _re.search(r"\n([ \t]*)\S", old)
+        unit = len(inner.group(1)) - len(outer) if inner and len(inner.group(1)) > len(outer) else 2
+        body = _render(value, unit, outer, nl)
+    new = text[:node.start] + body + text[node.end:]
+    target = data
+    for k in path[:-1]:
+        target = target[k]
+    target[path[-1]] = value
+    if _json.loads(new) != data:
+        raise AssertionError("value replace mismatch")
+    return new
+
+
 def read_raw(path):
     return Path(path).read_bytes().decode("utf-8")
 
