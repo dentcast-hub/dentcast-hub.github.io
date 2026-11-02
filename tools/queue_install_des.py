@@ -1,0 +1,321 @@
+#!/usr/bin/env python3
+"""Install a publish-queue item's frozen DES/Fidelity record in one command.
+
+Founder standing order (1405/08/11, 2026-11-02; publish-queue.md «حکم دائمی
+DES و Fidelity صف»): a queue item marked «آماده» carries its DES and Fidelity
+as decided. On publish day they are installed as they are — never re-scored,
+never re-checked against the paper, never a reason to stop. The words: «وقتی
+من خودم میگم که منتشر بشه یعنی منتشر بشه».
+
+What this tool does, deterministically (no model call, no source text):
+
+  1. reads 05-DES-Fidelity/{des,fidelity,plan,markers}.json of the queue item;
+  2. splits the REAL page into units with tools/des_fidelity_units.py and
+     aligns them to the stored claims (difflib over the unit texts):
+       - unchanged unit            -> claim kept verbatim, id renumbered if shifted;
+       - changed text (a date line, a subtitle, an edited sentence)
+                                   -> verdict/quote/note kept, claim_quote = page text;
+       - unit new on the page      -> heading: NOT_A_CLAIM; otherwise the basis's
+                                      silence verdict (NOT_IN_SOURCE / NOT_ASSESSABLE),
+                                      which never changes the score;
+       - unit gone from the page   -> its claim is dropped;
+     counts, score, level, fact_fa/interpretation_fa are recomputed only when
+     something changed (by the same functions the vote uses);
+  3. writes plus/des-scores.json[content_id] (and the sibling audio episode's
+     DES-only mirror for a NoteCast) byte-preservingly, the recorded plan and
+     source markers under the real content_id;
+  4. registers the installed record in .dentcast/queue-frozen-des.json with its
+     sha256, so Phase F reports page-text drift on it as warnings, never FAILs
+     (integrity — same bytes as installed — stays a hard check).
+
+Usage:
+  python3 tools/queue_install_des.py ../dentcast-queue/queue/NN-... notecast/episode-44
+      [--date YYYY-MM-DD] [--mirror episodes/episode-44 | --no-mirror] [--dry-run]
+
+Prints one JSON receipt (what was synced, added, dropped; before/after counts).
+"""
+import argparse
+import datetime
+import difflib
+import hashlib
+import json
+import re
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+import des_fidelity_units as U  # noqa: E402
+import verify_publish as vp  # noqa: E402
+
+DES_SCORES = ROOT / "plus/des-scores.json"
+REGISTRY = ROOT / ".dentcast/queue-frozen-des.json"
+MARKERS = ROOT / ".dentcast/des-source-markers.json"
+ORDER = ("FOUNDER_DECISION", "1405/08/11")
+DECISION = ("حکم دائمی بنیان‌گذار (۱۴۰۵/۰۸/۱۱): DES و Fidelity مطلب «آماده»ی صف همان‌طور که تأیید شده "
+            "ثبت می‌شود و مانع انتشار نیست — «وقتی من خودم میگم که منتشر بشه یعنی منتشر بشه»")
+
+
+def record_sha256(rec):
+    """The hash Phase F compares (verify_publish.queue_frozen_sha256 uses the same form)."""
+    return hashlib.sha256(json.dumps(rec, ensure_ascii=False, sort_keys=True,
+                                     separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def norm(t):
+    return re.sub(r"\s+", " ", (t or "")).strip()
+
+
+def load_json(p):
+    return json.loads(Path(p).read_text(encoding="utf-8")) if Path(p).exists() else None
+
+
+def num(uid):
+    return int(str(uid)[1:])
+
+
+def append_entries(path, entries):
+    """Append top-level keys to a JSON object file, keeping every existing byte
+    and the newline/indent style of the file's tail."""
+    raw = path.read_text(encoding="utf-8", newline="") if path.exists() else "{\n}\n"
+    data = json.loads(raw)
+    for k, _ in entries:
+        if k in data:
+            sys.exit(f"{path.relative_to(ROOT)} already has {k!r} — refusing to overwrite an existing record")
+    m = re.search(r"\}(\s*)\Z", raw)
+    body = raw[:m.start()].rstrip()
+    trail = m.group(1)
+    nl = "\r\n" if raw[:m.start()].rstrip(" \t").endswith("\r\n") or "\r\n" in raw[-200:] else "\n"
+    blocks = []
+    for k, v in entries:
+        t = json.dumps(v, ensure_ascii=False, indent=2)
+        blocks.append("  " + json.dumps(k, ensure_ascii=False) + ": " + t.replace("\n", nl + "  "))
+    sep = "," if body.rstrip().endswith(("}", "]", '"')) or re.search(r"[\d\w]\Z", body) else ""
+    if body.endswith("{"):
+        sep = ""
+    new = body + sep + nl + ("," + nl).join(blocks) + nl + "}" + (trail or nl)
+    merged = json.loads(new)
+    for k, v in entries:
+        assert merged[k] == v
+    return new
+
+
+def silence(basis, version):
+    complete = basis == "FULL_TEXT" or (basis == "SECONDARY_REPORT" and vp.des_ge(version, (3, 3)))
+    return "NOT_IN_SOURCE" if complete else "NOT_ASSESSABLE"
+
+
+def recompute(f, pooled):
+    vs = [c["verdict"] for c in f["claims"]]
+    counts = {"matches": vs.count("MATCHES"), "altered": vs.count("ALTERED"), "reversed": vs.count("REVERSED"),
+              "not_in_source": vs.count("NOT_IN_SOURCE"), "not_assessable": vs.count("NOT_ASSESSABLE"),
+              "author_view": vs.count("AUTHOR_VIEW"), "not_a_claim": vs.count("NOT_A_CLAIM")}
+    ver = f.get("des_version")
+    assessable, score, level = vp.des_fidelity_recompute(counts, ver)
+    fact, interp = U.compose_fa(f["claims"], counts, assessable, level, ver, pooled=pooled)
+    return {**f, "counts": counts, "assessable": assessable, "fidelity_score": score,
+            "level": level, "fact_fa": fact, "interpretation_fa": interp}
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("item", help="queue item folder (…/queue/NN-<category>-<slug>)")
+    ap.add_argument("content_id")
+    ap.add_argument("--date", default=datetime.date.today().isoformat(), help="scored_at (default today)")
+    ap.add_argument("--mirror", help="sibling page that shares the DES record (DES only, no Fidelity)")
+    ap.add_argument("--no-mirror", action="store_true")
+    ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--show-date", action="store_true",
+                    help="print the date the frozen Fidelity was scored on (the page's own date lines); "
+                         "build the page with THAT date (founder, 1405/08/11) and nothing needs syncing")
+    a = ap.parse_args()
+
+    item = Path(a.item).resolve()
+    d = item / "05-DES-Fidelity"
+    cid = a.content_id
+    if a.show_date:
+        fr = load_json(item / "05-DES-Fidelity" / "fidelity.json")
+        objs0 = [] if fr is None else ([fr] if isinstance(fr, dict) else [f for f in fr if isinstance(f, dict)])
+        dates = sorted({m for f in objs0 for c in f.get("claims", [])[:8] if c.get("verdict") == "NOT_A_CLAIM"
+                        for m in re.findall(r"20\d\d-\d\d-\d\d", c.get("claim_quote") or "")})
+        print(json.dumps({"prep_date": dates[0] if len(dates) == 1 else None, "found": dates,
+                          "note": "no Fidelity / no date unit: use today's date" if not dates else
+                          "use this date for datePublished, dateModified, lastReviewed and the visible dates"},
+                         ensure_ascii=False))
+        return 0
+    if not (ROOT / f"{cid}.html").exists():
+        sys.exit(f"{cid}.html does not exist — build the page first (step C.2)")
+    des = load_json(d / "des.json")
+    if des is None:
+        sys.exit(f"{d}/des.json missing — nothing to install")
+    sources = des["sources"] if isinstance(des, dict) and "sources" in des else (des if isinstance(des, list) else [des])
+    fid_raw = load_json(d / "fidelity.json")
+    pooled = isinstance(fid_raw, dict) and fid_raw.get("scope") == "POOLED"
+    fid = None if fid_raw is None else (fid_raw if pooled else (fid_raw if isinstance(fid_raw, list) else [fid_raw]))
+    audio = U.is_audio_episode(cid)
+    if audio:
+        fid = None
+
+    # markers first: the unit assignment of a several-source page reads them
+    markers = load_json(d / "markers.json")
+    marker_entry = None
+    if markers:
+        vals = list(markers.values()) if all(isinstance(v, dict) and any(str(k).startswith("S") for k in v) for v in markers.values()) else [markers]
+        marker_entry = vals[0]
+
+    units = U.split_page(cid, sources)
+    new_txt = [u["text"] for u in units]
+    objs = [] if fid is None else ([fid] if pooled else [f for f in fid if isinstance(f, dict) and not f.get("error")])
+    old = {}
+    for f in objs:
+        for c in f.get("claims", []):
+            old.setdefault(c["id"], c["claim_quote"])
+    old_ids = sorted(old, key=num)
+    mapping, synced, added, dropped = {}, [], [], []
+    sm = difflib.SequenceMatcher(None, [norm(old[i]) for i in old_ids], [norm(t) for t in new_txt], autojunk=False)
+    for tag, i1, i2, j1, j2 in sm.get_opcodes():
+        if tag == "equal":
+            for k in range(i2 - i1):
+                mapping[old_ids[i1 + k]] = units[j1 + k]["id"]
+        elif tag == "replace":
+            n = min(i2 - i1, j2 - j1)
+            for k in range(n):
+                mapping[old_ids[i1 + k]] = units[j1 + k]["id"]
+                synced.append({"old": old_ids[i1 + k], "new": units[j1 + k]["id"],
+                               "before": old[old_ids[i1 + k]], "after": units[j1 + k]["text"]})
+            dropped += [{"old": old_ids[i], "text": old[old_ids[i]]} for i in range(i1 + n, i2)]
+            added += [units[j]["id"] for j in range(j1 + n, j2)]
+        elif tag == "delete":
+            dropped += [{"old": old_ids[i], "text": old[old_ids[i]]} for i in range(i1, i2)]
+        elif tag == "insert":
+            added += [units[j]["id"] for j in range(j1, j2)]
+    by_id = {u["id"]: u for u in units}
+    renumbered = [o for o, n in mapping.items() if o != n]
+    changed = bool(synced or added or dropped or renumbered)
+
+    def owner(uid):
+        """The fidelity object a unit new on the page joins: the one holding the
+        nearest preceding unit, else the first."""
+        prev = [n for n in mapping.values() if num(n) < num(uid)]
+        if prev:
+            p = max(prev, key=num)
+            for k, f in enumerate(objs):
+                if any(mapping.get(c["id"]) == p for c in f["claims"]):
+                    return k
+        return 0
+
+    before = [dict(f.get("counts") or {}) for f in objs]
+    out_objs = []
+    for k, f in enumerate(objs):
+        claims = []
+        for c in f["claims"]:
+            nid = mapping.get(c["id"])
+            if nid is None:
+                continue
+            claims.append({**c, "id": nid, "claim_quote": by_id[nid]["text"]})
+        tmpl = next((c for c in f["claims"] if c["verdict"] == "NOT_A_CLAIM"), None)
+        for uid in added:
+            if owner(uid) != k:
+                continue
+            u = by_id[uid]
+            verdict = "NOT_A_CLAIM" if u.get("heading") else silence(f.get("text_basis"), f.get("des_version"))
+            c = {"id": uid, "claim_quote": u["text"], "verdict": verdict, "change_kind": None,
+                 "source_quote": "" if tmpl is None else type(tmpl.get("source_quote"))() if tmpl.get("source_quote") is not None else None,
+                 "source_ref": None, "note": "added on publish day; not judged (founder standing order 1405/08/11)"}
+            if tmpl is not None:
+                c = {key: c.get(key) for key in tmpl}
+            claims.append(c)
+        claims.sort(key=lambda c: num(c["id"]))
+        nf = {**f, "claims": claims}
+        out_objs.append(recompute(nf, pooled) if changed else nf)
+
+    if fid is None:
+        rec_fid = None
+        if not audio and all(s.get("content_type") == "COMMENTARY" or s.get("error") for s in sources):
+            rec_fid = [None] * len(sources)
+    elif pooled:
+        rec_fid = out_objs[0]
+    else:
+        it = iter(out_objs)
+        rec_fid = [next(it) if isinstance(f, dict) and not f.get("error") else f for f in fid]
+    rec = {"scored_at": a.date, "sources": sources}
+    if rec_fid is not None:
+        rec["fidelity"] = rec_fid
+
+    entries = [(cid, rec)]
+    mirror = None
+    if not a.no_mirror:
+        mirror = a.mirror
+        m = re.fullmatch(r"notecast/episode-(\d+)", cid)
+        if mirror is None and m and (ROOT / f"episodes/episode-{m.group(1)}.html").exists():
+            mirror = f"episodes/episode-{m.group(1)}"
+        if mirror:
+            existing = json.loads(DES_SCORES.read_text(encoding="utf-8")).get(mirror)
+            if existing is None:
+                entries.append((mirror, {"scored_at": a.date, "sources": sources}))
+            else:
+                mirror = mirror + " (already has a record — left unchanged)"
+
+    plan_out = None
+    plan = load_json(d / "plan.json")
+    if plan and not audio:
+        new_plan = {}
+        for key, ids in (plan.get("plan") or {}).items():
+            new_plan[key] = sorted({mapping[i] for i in ids if i in mapping}, key=num)
+        for uid in added:
+            if not by_id[uid].get("heading") or True:
+                k = str(owner(uid)) if not pooled else next(iter(new_plan), "0")
+                new_plan.setdefault(k, [])
+                if uid not in new_plan[k]:
+                    new_plan[k] = sorted(new_plan[k] + [uid], key=num)
+        sweep = []
+        for s in plan.get("sweep") or []:
+            s = dict(s)
+            if isinstance(s.get("found"), dict):
+                s["found"] = {kk: [mapping.get(i, i) for i in v] for kk, v in s["found"].items()}
+            if isinstance(s.get("absent"), list):
+                s["absent"] = [mapping.get(i, i) for i in s["absent"]]
+            sweep.append(s)
+        plan_out = {**plan, "content_id": cid, "plan": new_plan}
+        if "sweep" in plan:
+            plan_out["sweep"] = sweep
+
+    reg = json.loads(REGISTRY.read_text(encoding="utf-8")) if REGISTRY.exists() else {}
+    for k, v in entries:
+        reg[k] = {"queue_ref": f"queue/{item.name}", "record_sha256": record_sha256(v), "installed_at": a.date,
+                  "approval": {"status": "confirmed", "decision": DECISION,
+                               "evidence": ["publish-queue.md «حکم دائمی DES و Fidelity صف» (founder, 2026-11-02)"]},
+                  "sync": {"text_synced": [s["new"] for s in synced] if k == cid else [],
+                           "added": added if k == cid else [], "dropped": [x["old"] for x in dropped] if k == cid else []}}
+
+    receipt = {"status": "dry_run" if a.dry_run else "installed", "content_id": cid, "mirror": mirror,
+               "units_on_page": len(units), "renumbered": len(renumbered), "text_synced": synced,
+               "added": added, "dropped": dropped,
+               "counts_before": before, "counts_after": [f.get("counts") for f in out_objs],
+               "levels_after": [(f.get("fidelity_score"), f.get("level")) for f in out_objs],
+               "des": [(s.get("des_score"), s.get("band")) for s in sources],
+               "record_sha256": record_sha256(rec)}
+    if a.dry_run:
+        print(json.dumps(receipt, ensure_ascii=False, indent=1))
+        return 0
+
+    DES_SCORES.write_text(append_entries(DES_SCORES, entries), encoding="utf-8", newline="")
+    if plan_out is not None:
+        p = U.plan_path(cid)
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps(plan_out, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="")
+        receipt["plan"] = str(p.relative_to(ROOT))
+    if marker_entry:
+        mk = json.loads(MARKERS.read_text(encoding="utf-8")) if MARKERS.exists() else {}
+        if cid not in mk:
+            mk[cid] = marker_entry
+            MARKERS.write_text(json.dumps(mk, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="")
+            receipt["markers"] = str(MARKERS.relative_to(ROOT))
+    REGISTRY.write_text(json.dumps(reg, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="")
+    receipt["registry"] = str(REGISTRY.relative_to(ROOT))
+    print(json.dumps(receipt, ensure_ascii=False, indent=1))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
