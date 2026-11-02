@@ -280,7 +280,18 @@ def draft(item):
 
     # 04 — on-page credit
     d["credit"] = draft_credit(item, lines_of(item, "07-ورودی‌ها.md") or [])
-    d["catalog"] = (V([], "04-منبع/منابع.md: no paper") if (d["credit"]["value"] or {}).get("mode") == "none"
+    cat_rel = "04-منبع/کاتالوگ.json"
+    if (item / cat_rel).exists():
+        sums_txt = (item / "SHA256SUMS").read_text(encoding="utf-8") if (item / "SHA256SUMS").exists() else ""
+        if not re.search(r"\s(?:\./)?%s\s*$" % re.escape(cat_rel), sums_txt, re.M):
+            raise QueueRefusal("CATALOG_NOT_FROZEN", f"{cat_rel} is not in SHA256SUMS")
+        entries = json.loads((item / cat_rel).read_text(encoding="utf-8"))
+        if not isinstance(entries, list) or not all(isinstance(e, dict) for e in entries):
+            raise QueueRefusal("CATALOG_SHAPE", f"{cat_rel} must be a list of catalog entries")
+        d["catalog"] = V(entries, cat_rel)
+    else:
+        d["catalog"] = None
+    d["catalog"] = d["catalog"] or (V([], "04-منبع/منابع.md: no paper") if (d["credit"]["value"] or {}).get("mode") == "none"
                     else V([{"skip": "catalog Part 2 fields are not frozen in the item; nothing is written to the "
                                       "catalog (a follow-up for the founder, never a publish-day guess)"}],
                            "default: 04-منبع/منابع.md holds no frozen catalog entry"))

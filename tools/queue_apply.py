@@ -588,7 +588,7 @@ def build_page(cat, n, prev_n, m, date, item, lang="fa"):
     explore = []
     if lang == "fa" and '<div class="dc-related-capsules">' in doc:
         caps = [("/glossary/", "دانشنامه"), (f"/pillar/{m['pillar']['primary']}/", "فهرست موضوعی")]
-        explore = [(x["href"], x["label"]) for x in m["explore_49"]][:EXPLORE_CAP - len(caps)]
+        explore = [(x["href"], x["label"]) for x in m["explore_49"] if (ROOT / x["href"].lstrip("/")).is_file()][:EXPLORE_CAP - len(caps)]
         rows = "\n".join(f'<a href="{attr(h)}" class="dc-related-capsule">{esc(t)}</a>' for h, t in caps + explore)
         doc = swap_region(doc, r'<div class="dc-related-capsules">\n', r"\n?</div>\n</div>", rows, "related")
     # 8. residue check
@@ -674,7 +674,7 @@ def build_notecast_page(n, prev, m, date, item, lang="fa"):
             refuse("TEMPLATE_REGION", "NoteCast template: audio-version capsule not found")
         caps = [("/glossary/", "دانشنامه"), (f"/pillar/{m['pillar']['primary']}/", "فهرست موضوعی"),
                 (f"/episodes/episode-{n}.html", html.unescape(audio_cap.group(1)))]
-        explore = [(x["href"], x["label"]) for x in m["explore_49"]][:EXPLORE_CAP - len(caps)]
+        explore = [(x["href"], x["label"]) for x in m["explore_49"] if (ROOT / x["href"].lstrip("/")).is_file()][:EXPLORE_CAP - len(caps)]
         rows = "\n".join(f'    <a href="{attr(h)}" class="dc-related-capsule">{esc(t)}</a>' for h, t in caps + explore)
         doc = swap_region(doc, r'<div class="dc-related-capsules">\n', r"\n  </div>\n</div>", rows, "related")
     residue = [x for x in (old_title, old_desc, f"episode-{prev}.html", tentry.get("title"), tentry.get("caption"),
@@ -790,7 +790,7 @@ def build_insight_page(n, prev, m, date, item, lang="fa"):
     explore = []
     if lang == "fa":
         caps = [("/glossary/", "دانشنامه"), (f"/pillar/{m['pillar']['primary']}/", "فهرست موضوعی")]
-        explore = [(x["href"], x["label"]) for x in m["explore_49"]][:EXPLORE_CAP - len(caps)]
+        explore = [(x["href"], x["label"]) for x in m["explore_49"] if (ROOT / x["href"].lstrip("/")).is_file()][:EXPLORE_CAP - len(caps)]
         rows = "\n".join(f'    <a href="{attr(h)}" class="dc-related-capsule">{esc(t)}</a>' for h, t in caps + explore)
         doc = swap_region(doc, r'<div class="dc-related-capsules">\n', r"\n  </div>\n</div>", rows, "related")
     residue = [x for x in (old_title, old_desc, old_topic, old_kw, f"insight-{prev}.html", f"insight{prev}-",
@@ -888,7 +888,7 @@ def build_chairside_page(n, prev, m, date, item, lang="fa"):
     explore = []
     if lang == "fa":
         caps = [("/glossary/", "دانشنامه"), (f"/pillar/{m['pillar']['primary']}/", "فهرست موضوعی")]
-        explore = [(x["href"], x["label"]) for x in m["explore_49"]][:EXPLORE_CAP - len(caps)]
+        explore = [(x["href"], x["label"]) for x in m["explore_49"] if (ROOT / x["href"].lstrip("/")).is_file()][:EXPLORE_CAP - len(caps)]
         rows = "\n".join(f'    <a href="{attr(h)}" class="dc-related-capsule">{esc(t)}</a>' for h, t in caps + explore)
         doc = swap_region(doc, r'<div class="dc-related-capsules">\n', r"\n  </div>\n</div>", rows, "related")
     residue = [x for x in (old_title, old_desc, f"chairside-{prev}.html", f"chairside{prev}.webp", f"cs{prev}-",
@@ -1084,8 +1084,16 @@ def catalog(w, cid, m):
             done.append({"skip": e["skip"]})
             continue
         doi = (e.get("doi") or "").lower()
-        if doi and any((p.get("doi") or "").lower() == doi for p in data["papers"]):
-            refuse("CATALOG_DUPLICATE", f"DOI {doi} is already in the catalog")
+        hit = next((k for k, p in enumerate(data["papers"]) if doi and (p.get("doi") or "").lower() == doi), None)
+        if hit is not None:
+            # the paper is already catalogued (by an earlier page): link this page to it, never a duplicate
+            if cid not in (data["papers"][hit].get("linked_episodes") or []):
+                text = tio.json_append(text, ["papers", hit, "linked_episodes"], cid)
+                data = json.loads(text)
+            done.append({"linked": data["papers"][hit]["id"]})
+            continue
+        if e.get("link_existing"):
+            refuse("CATALOG_NOT_FOUND", f"DOI {doi} was frozen as already catalogued but is not in the catalog")
         rec = dict(e)
         rec["id"] = f"P{nxt}"
         rec.setdefault("linked_episodes", [cid])
@@ -1348,7 +1356,7 @@ def finish_writes(a, w, base, item, cid, m, cat, date, report, entry, pre):
     run([sys.executable, "tools/hashtag_ref.py", "--check"])
     if (ROOT / "tools/validate_exam_questions.py").exists():
         run([sys.executable, "tools/validate_exam_questions.py"])
-    if report["catalog"].get("entries") or m.get("bridge"):
+    if any(isinstance(x, str) or "linked" in x for x in report["catalog"].get("entries") or []) or m.get("bridge"):
         run([sys.executable, "tools/build_cabinet_papers.py"])
         run([sys.executable, "tools/build_cabinet_papers.py", "--check"])
     base["des"] = {k: des_r.get(k) for k in ("status", "record_sha256", "text_synced", "added", "dropped", "mirror")}

@@ -305,6 +305,29 @@ class LegacyFormsTests(ManifestTests):
         self.assertEqual((dr["mint"], dr["mint_batch"]), (["#نو"], "12-batch.json"))
         self.assertEqual(dr["bridge"], {"map": {"نو": ["full-arch", "bar"]}})
 
+    def test_frozen_catalog_file_is_read(self):
+        d = self.make_item(extra={"04-منبع/کاتالوگ.json": json.dumps([{"doi": "10.1/x", "title": "T"}])})
+        self.assertEqual(qm.plain(qm.draft(d))["catalog"], [{"doi": "10.1/x", "title": "T"}])
+
+    def test_catalogued_doi_links_the_page_instead_of_duplicating(self):
+        text = json.dumps({"papers": [{"id": "P1", "doi": "10.1/X", "linked_episodes": ["a/b"]}],
+                           "tag_index": {}, "total_papers": 1}, indent=2)
+
+        class W:
+            t = None
+
+            def text(self, rel):
+                return W.t
+
+            def put(self, rel, t):
+                W.t = t
+        W.t = text
+        out = qa.catalog(W(), "sharehub/share-9", {"catalog": [{"doi": "10.1/x", "link_existing": True}]})
+        self.assertEqual(out["entries"], [{"linked": "P1"}])
+        data = json.loads(W.t)
+        self.assertEqual((data["papers"][0]["linked_episodes"], data["total_papers"], len(data["papers"])),
+                         (["a/b", "sharehub/share-9"], 1, 1))
+
 
 class RenderFixesTests(unittest.TestCase):
     def test_pipe_table_without_outer_pipes_is_a_table(self):
