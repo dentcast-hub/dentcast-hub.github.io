@@ -1017,8 +1017,15 @@ def faq(w, cid, item, m):
     if "skip" in data:
         return {"skip": data["skip"]}
     url = f"{SITE}/{cid}.html"
+    if "faqPages" not in data and isinstance(data.get("faqPage"), dict):
+        data = {**data, "faqPages": [data["faqPage"]]}  # one FAQPage written as an object
     raw = json.dumps({k: data[k] for k in ("faqPages", "definedTermSets") if k in data}, ensure_ascii=False)
-    raw = re.sub(r"https://dentcast\.org/[a-z]+/[A-Za-z0-9-]+-(?:NN|\d+)\.html", url, raw)
+    # the page's own URL, written in preparation with a placeholder number:
+    # …-NN.html, …-<old number>.html, {content_id}.html, …-{content_id}.html
+    sec = re.escape(cid.split("/")[0])
+    raw = re.sub(r"https://dentcast\.org/%s/(?:[A-Za-z0-9-]+-(?:NN|\d+|\{content_id\})|\{content_id\})\.html" % sec, url, raw)
+    if "{content_id}" in raw or re.search(r"-NN\.html", raw):
+        refuse("FAQ_PLACEHOLDER", "10-فلش‌کارت-FAQ.json keeps a placeholder outside the page URL")
     node = json.loads(raw)
     rel = "plus/faq-corpus.json"
     w.put(rel, tio.json_append(w.text(rel), ["byContent"], node, key=cid))
