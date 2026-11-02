@@ -43,6 +43,16 @@ CLARIFICATIONS=json.loads(read("tests/fixtures/module-clarifications-2026-10-26.
 # text]; only a single space becomes newline + continuation indent, so undoing
 # it restores the reviewed text exactly.
 REWRAPS=json.loads(read("tests/fixtures/line-rewraps-2026-10-26.json"))
+# Approved wording-only cleanup of the live modules: decision dates, incident
+# stories and before/after narration removed so each module reads as plain
+# rules. Each pair is [text before, text now]; the test restores the earlier text
+# before the legacy comparison, so any other change still fails.
+HISTORY_CLEANUP=json.loads(read("tests/fixtures/history-cleanup-2026-11-02.json"))
+def restore_cleanup(test, path, text):
+ for old,new in HISTORY_CLEANUP.get(path,()):
+  test.assertEqual(text.count(new),1,new[:80])
+  text=text.replace(new,old)
+ return text
 def unwrap(test, path, text):
  for old,new in REWRAPS.get(path,()):
   test.assertEqual(re.sub(r"\n *"," ",new),old)
@@ -200,7 +210,8 @@ class EntrypointMigrationTests(unittest.TestCase):
     for old,new in CLARIFICATIONS.get(name,()):
      self.assertEqual(expected.count(old),1,old)
      expected=expected.replace(old,new)
-    actual=unwrap(self,".dentcast/workflows/modules/"+name,read(".dentcast/workflows/modules/"+name))
+    path=".dentcast/workflows/modules/"+name
+    actual=unwrap(self,path,restore_cleanup(self,path,read(path)))
     self.assertTrue(actual.startswith("<!-- dentcast-checkpoint-protocol:v1 -->"))
     self.assertIn(".dentcast/workflows/publish-checkpoints.md",actual.split("<!-- /dentcast-checkpoint-protocol:v1 -->",1)[0])
     body=actual.split("<!-- /dentcast-checkpoint-protocol:v1 -->\n\n",1)[1]

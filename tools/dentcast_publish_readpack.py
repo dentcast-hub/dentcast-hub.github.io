@@ -49,16 +49,18 @@ MODULES = WORKFLOW + 'modules/'
 # one sentence pair to Part 2b (episode and NoteCast share the paper's record;
 # Fidelity only for the written page). It sits after the boundary heading and
 # no skipped section's applicability moved.
+# Re-audited for the wording-only history cleanup: no heading changed, every
+# route selects the same sections for the same reasons (compared HEAD vs edit).
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
-    '03-litecast-and-page.md': '28ab4d554f9e5631724d3133177332843cc0c900',
-    '04-taxonomy-and-navigation.md': '539fd195fb90d19587ba8b243782355228a14238',
-    '05-semantic-linking.md': '760dcf77dd3baff173aebb2d40492604fb096d1f',
-    '06-paper-ingestion.md': '1def0aa0ed464105900965a55fb78f7792d8606c',
-    '08-des-fidelity.md': '23c8e5a91945d4ba3806954ea57b371fb83f7413',
-    '09-challenge.md': 'dd46a16eafabdd4b40813a0578eeca4a81dcd44d',
-    '12-english-notify-verify.md': '9cee02243c141166d0b5eca3ea20da58bd77302a',
+    '03-litecast-and-page.md': '1bb05a677410ee0964e9d2c0ef322d0db93ec2dc',
+    '04-taxonomy-and-navigation.md': '681f18e360a8fbcc8ed0a14a4a93e2bfa0a9cb4f',
+    '05-semantic-linking.md': '45bfd4e5b7a5e1e05e0f1d4f76ff6316ff909fac',
+    '06-paper-ingestion.md': 'e51277cafc640eff67fb5e061f1f57fe752cd72b',
+    '08-des-fidelity.md': '4b46879d04995bd2f4c34297181a1776e64c6d1f',
+    '09-challenge.md': '0e62c230c9bd8b0264da99a3f25d9e83375f91ea',
+    '12-english-notify-verify.md': '8c78c082daf42c30996a684b9fe6ea57dd0a819d',
 }
 
 REQUIRED = [

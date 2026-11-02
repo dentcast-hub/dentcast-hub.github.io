@@ -23,7 +23,7 @@ grep -n "<word>" dentcast-hashtag-reference.json | head                         
 ```
 `--simulate` reproduces the **lexical** path (aliases, spellings); the label the model will see is in `plus/assistant-tags.json` — look there too. If a real concept already covers it → use that **canonical `#tag`** verbatim on the article. **Never invent a second spelling; never write the alias form as the tag; never mint an English twin of an existing Persian concept** (Hard Rule 15). (`--words "<tag>"` shows how the engine tokenizes something; `--backlog <type>` lists brain tags with no reference entry.)
 
-**Step 3 — Composition gate (the list must be able to surface the page).** The final list contains, in this order of priority: the series/brand tag where the type uses one; **at least one decision tag** — a canonical concept that names the question the page answers (`#اندیکاسیون_روکش`, `#جایگزینی_دندان`, `#اکلوژن_ایمپلنت`, `#زمان_لود_ایمپلنت` are the shape); **at least one specific concept tag with ≤ 10 pages** at the time of publish (its `count` in the reference, or the "(n)" in `plus/assistant-tags.json`); umbrella tags (> 20 pages) are allowed **in addition**, never alone. **A list made of the series tag plus only umbrellas is rejected — go back to Step 1.** The type's density precedent is 5–8 tags; a 3-tag list is the historical failure mode of episodes, not a target.
+**Step 3 — Composition gate (the list must be able to surface the page).** The final list contains, in this order of priority: the series/brand tag where the type uses one; **at least one decision tag** — a canonical concept that names the question the page answers (`#اندیکاسیون_روکش`, `#جایگزینی_دندان`, `#اکلوژن_ایمپلنت`, `#زمان_لود_ایمپلنت` are the shape); **at least one specific concept tag with ≤ 10 pages** at the time of publish (its `count` in the reference, or the "(n)" in `plus/assistant-tags.json`); umbrella tags (> 20 pages) are allowed **in addition**, never alone. **A list made of the series tag plus only umbrellas is rejected — go back to Step 1.** The target density is 5–8 tags; a 3-tag list is too thin.
 
 **Step 4 — Mint only what is genuinely new, and only what will recur.** A concept the library truly lacks is minted only when **both** hold: (a) no existing concept covers it under any spelling (Step 2), and (b) it is a decision-level concept, or at least one **other existing page truly resolves it** — then that page is retagged in the same batch (`articles`), so the concept is born with two pages and the engine can show it. An article-specific singleton (a brand name, a one-off finding, a case detail) goes to the entry's `keywords`, not to `hashtags`. **Script:** Persian canonical by default; a Latin-script canonical only for a concept dentists have no Persian form for (acronyms such as `#RBFDP`, `#BOPT`, `#MDP`), and never as the twin of a Persian concept — English goes in `aliases`. **Alias checklist, every new concept, four slots:** the English term · the Finglish transliteration dentists type (`سایلن`, `شید`, `تیپر`) · one common misspelling · one colloquial phrase — each slot filled, or `"none"` stated in the batch `note`. An alias that is a whole word of another concept rewrites that concept: read every `note:` line `--sync` prints and either accept it in the batch `note` or avoid the alias.
 **Bridge decision, same batch:** for every minted concept decide its paper bridge now — a `map` row in `plus/cabinet-bridge.json` (key = the label lowercased with spaces, i.e. the tag without `#`, `_` → space; 1–4 **existing** library tags from `dentcast_cabinet_full_catalog.json`, closest first, after `tag_aliases`; add the key to `tooth_topics` when the concept is about natural teeth so implant papers rank below), **or** the sentence «no library equivalent» in the batch `note` after actually searching catalog tags, titles and key findings. Never invent a library tag here (step 4.10 Part 2 owns the catalog); if a catalog paper is plainly about the concept but lacks the library tag the row names, that is a 4.10 Part 2 step 8 edit — do it there, in the same commit. Then `python3 tools/build_cabinet_papers.py && python3 tools/build_cabinet_papers.py --check`.
@@ -48,7 +48,7 @@ python3 tools/hashtag_ref.py --apply .dentcast/hashtag-batches/NNN-<short-name>.
 
 Rules for a new concept: **only non-canonical spellings go in `aliases`** — an existing canonical `#tag` is **never** filed as another concept's alias (Hard Rule 15); an alias must not equal another concept's word-set or an alias already in use (the compiler reports collisions — heed them). The guard **refuses** any tag lacking a library entry and any door-closing merge/rename — **fix what it flags, never force it** (`allow_lossy` is almost never right).
 
-**Step 5 — Evidence per tag.** For **every** tag except the series/brand tag, quote in the report the one sentence of the article that **resolves** that concept (the decision it takes, the cause it establishes, the option it rules in or out). If no sentence resolves it, the tag is a mention — drop it. This is the check that catches the three failures the QA found: a page tagged for the complication it ruled out, for the technique it only named as context, and a question page tagged as if it answered.
+**Step 5 — Evidence per tag.** For **every** tag except the series/brand tag, quote in the report the one sentence of the article that **resolves** that concept (the decision it takes, the cause it establishes, the option it rules in or out). If no sentence resolves it, the tag is a mention — drop it. This catches a page tagged for the complication it ruled out, for the technique it only named as context, and a question page tagged as if it answered.
 
 **Step 6 — Write canonical tags everywhere, then verify from the question side.** Only canonical `#tag`s reach the brain `hashtags` (step 5) and the page's visible chips. **For episodes**, `--apply` rewrites the on-page chips from the brain and `tools/build_episodes.py` (step 8) regenerates `episodes.html`; **for other types**, set the cloned page's chip markup to the canonical list by hand so page and brain agree. Then:
 ```bash
@@ -68,7 +68,7 @@ python3 tools/build_cabinet_papers.py --check   # bridge rows name real tags and
 
 **The `hashtags` field is the canonical list resolved in step 5.0 (Hard Rule 15) — do not re-invent or re-spell tags here.** Every tag written must already be a canonical concept in `dentcast-hashtag-reference.json`; if step 5.0 was skipped, go back and run it before writing this entry.
 
-**Schema templating stays category-locked, even though physical placement does not.** Match the locked category by its `type` field — or, for the core podcast episodes, by **`"type": "dentcast"`**, the shape every episode has carried since 154 (latest, 159.1–162: `type`, `episode`, `title`, `caption`, `hashtags`, `keywords`, `audio_url`, `page_url`, `pillar`). The 202 older episode entries have no `type` key; never use one as the template. Don't confuse "where to put it" (end of the whole array) with "what shape to give it" (the most recent same-category entry).
+**Schema templating stays category-locked, even though physical placement does not.** Match the locked category by its `type` field — or, for the core podcast episodes, by **`"type": "dentcast"`** (keys: `type`, `episode`, `title`, `caption`, `hashtags`, `keywords`, `audio_url`, `page_url`, `pillar`). Episode entries without a `type` key are never the template. Don't confuse "where to put it" (end of the whole array) with "what shape to give it" (the most recent same-category entry).
 
 Build the new entry with **identical keys, nesting, and ordering** as the previous same-category entry. Fill all fields based on new content + today's date + new URL — including the entire `pillar` object, using the values **confirmed in step 2.4**: `pillar.primary` (the confirmed pillar slug, or `null` if the user chose no pillar), `pillar.secondary` (matches previous entries' shape — usually `[]`), and `pillar.subtopic` (the confirmed subtopic slug for a structured pillar, otherwise `null`). The `subtopic` key is **always present** under `pillar` (that is the brain's convention — never omit it). Do **not** re-decide the pillar or subtopic here — just record exactly what step 2.4 confirmed; step 5.5 then verifies it.
 
@@ -79,7 +79,7 @@ Build the new entry with **identical keys, nesting, and ordering** as the previo
 - If the category's schema has a `pillar` field, fill it with the assigned pillar value only. Do NOT add reasoning, notes, justifications, or any extra commentary field. The JSON shape must remain identical to the previous entry.
 
 <!-- insight-keywords:v1 -->
-**Insight `keywords` (founder, 1405/08/07).** For an insight entry (brain `type`
+**Insight `keywords`.** For an insight entry (brain `type`
 `clinical`) propose 5 to 8 keywords, each a short phrase taken from the article's
 own text, mostly Persian; an English term only where dentists write it that way.
 A keyword does not repeat a hashtag. They are proposals until the founder
@@ -158,17 +158,12 @@ new content's actual subject against what a learner of each pathway needs.
    neighbour); everything thinner is **ASK**.
 
    **Three guards decide what the tool may call STRONG and where it may
-   anchor — none of them is yours to relax** (added after the 2026-09-14
-   re-curation, when the 64 items published since the July curation had
-   averaged 2.64 pathways each against 1.38 for the curated set, `fixed-pros`
-   had re-grown the post-and-core block it was deliberately split from, and
-   eight series had a stranger between part 1 and part 2):
+   anchor — none of them is yours to relax:**
    - **STRONG is measured against the pathway's frozen CORE**
      (`.dentcast/pathway-core.json` — its steps as the founder last curated
      them), never its live list. The live list ranks and supplies the anchor,
-     but cannot promote: scoring against the live list is how every placement
-     raised the score of the next similar item until `evidence-literacy`
-     ranked a post-and-core article first. A pathway with no frozen core is
+     but cannot promote, because each placement would otherwise raise the
+     score of the next similar item. A pathway with no frozen core is
      never STRONG. `--freeze-core` re-freezes every full pathway from the live
      file and is run **only after a founder curation pass** — never after a
      publish, which would re-admit exactly the drift the core measures against.
@@ -183,15 +178,9 @@ new content's actual subject against what a learner of each pathway needs.
      (`prompt6-1 → prompt6-4`) and consecutive «قسمت/بخش N» titles with one
      stem are one run; the suggested anchor is the run's **last** step, and
      `--insert --after` a step inside a run is refused without `--confirmed`.
-     The nearest neighbour of a new item is, in a series, part N — which is
-     how Biological Width part 1 came to be followed by four chairside cases
-     and then part 2.
    The scorer also ignores brand/series hashtags (`domain: brand|web` in the
    hashtag reference) and corpus-generic words (`دندان`, `ایمپلنت`, `روکش`… —
-   measured, anything in >10% of entries): «Share_Hub» made every ShareHub
-   item a neighbour of every other, and the title word «دندان» inside the
-   keyword «اسپارتینا و دندانپزشکی» made a tirzepatide note STRONG for Goodacre's
-   prep principles.
+   measured, anything in >10% of entries).
 2. Decide membership **semantically**, per **Hard Rule 14** — judged on the
    content's actual subject vs. what each pathway's learner needs, **never** on
    the item's pillar:
@@ -221,7 +210,7 @@ new content's actual subject against what a learner of each pathway needs.
    #   تراز شواهد قسمت ۱ opening evidence-literacy is the precedent) — never on a bundle's finish
    ```
    **A تراز شواهد part (`taraz/`) is never a scoring question for
-   `evidence-literacy`: it is a required step there** (founder, 1405/07/03),
+   `evidence-literacy`: it is a required step there**,
    placed `--after` the part before it so the series keeps its order; other
    pathways it may join go through the ordinary judgment above. Phase F
    enforces both membership and order (`5.6 pathway`).
@@ -242,12 +231,10 @@ builder, no rebuild, no version bump. It does **not** touch the brain, the page,
 capsules, or links (those are steps 4.7–4.9 and 5). Do not add pathway data to
 the brain entry (Hard Rule 6).
 
-**Pathways are LIVE — this edit is user-visible, it is not staging.** (The
-"pathways are inert, nothing reads them yet" note that used to sit here was
-true only before the premium Phase 3 launch; it is not true now.) `/plus/pathways.html`,
+**Pathways are LIVE — this edit is user-visible, it is not staging.** `/plus/pathways.html`,
 `/plus/pathway.html?id=`, and the «مسیر یادگیری» block on the `/plus/` dashboard
 all render this file, and `GET /me`'s `active_pathway` reads through it. It
-still needs **no API redeploy** — `plus-api/src/content-refresh.ts` re-fetches
+needs **no API redeploy** — `plus-api/src/content-refresh.ts` re-fetches
 the published `plus/pathways.json` from the live site every few minutes
 (validated, upgrade-only, last-good-copy on failure), so the baked copy is only
 a boot value. Two practical consequences: a wrong placement is visible to real

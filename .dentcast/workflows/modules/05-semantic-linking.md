@@ -46,12 +46,10 @@ as a documented skip ("4.7-ب: skipped — not a glossary publish") and moves on
 this step is about a newly published *term*, and a NoteCast or an Insight
 publishes no term.
 
-A glossary term is born with **zero** inbound in-body links, and nothing in this
-workflow would ever give it one: 4.7 links only *from glossary pages* and only
-into a «کاوش بیشتر» section, and 4.8 runs on the page in flight pointing
-outward. So a term's inbound link count is a function of how much content is
-published *after* it — which for a term published today is nothing, forever.
-This step closes that at the moment it opens.
+A glossary term starts with **zero** inbound in-body links, and no other step
+gives it one: 4.7 links only *from glossary pages* and only into a «کاوش بیشتر»
+section, and 4.8 runs on the page in flight pointing outward. This step supplies
+those inbound links at publish time.
 
 **Run `.dentcast/workflows/cross-link.md` scoped to the slug just published**, the
 same way Phase D hands the finished page to `en-version.md`:
@@ -68,8 +66,8 @@ it does not disturb the ordering of steps 5–8; run it here, before the brain
 write, so its page edits are in the same commit as the publish.
 
 **Do not run the unscoped sweep from inside a publish.** `--slug` is what keeps
-this bounded (today's `dental-implant` produced 32 candidates; the full sweep
-opens 71 pages, which this publish's gate cannot verify).
+this bounded; the full sweep opens every page in the corpus, which this
+publish's gate cannot verify.
 
 **Report:** the candidate count for the new slug, what was applied, and every ASK
 with its verdict — or the explicit "0 candidates: every tagged page already links

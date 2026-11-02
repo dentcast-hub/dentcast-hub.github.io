@@ -1214,9 +1214,8 @@ def queue_frozen_sha256(rec):
 
 
 def apply_queue_frozen(rep, content_id):
-    """Founder standing order 1405/08/11 (publish-queue.md «حکم دائمی DES و
-    Fidelity صف»): a publish-queue item's DES/Fidelity is installed as the
-    founder approved it and never blocks the publish. When this content_id was
+    """publish-queue.md «DES و Fidelity صف»: a publish-queue item's DES/Fidelity
+    is installed as the founder approved it and never blocks the publish. When this content_id was
     installed by tools/queue_install_des.py and its record is still byte-for-byte
     the installed one, every «4.13 DES» FAIL (a quote or sentence that no longer
     sits verbatim on the page, a Persian-wording row) is reported as a warning.
@@ -1239,10 +1238,10 @@ def apply_queue_frozen(rep, content_id):
     n = 0
     for i, (status, step, msg, fix) in enumerate(rep.rows):
         if status == "FAIL" and step == "4.13 DES":
-            rep.rows[i] = ("WARN", step, "frozen queue record, founder standing order 1405/08/11 — " + msg, None)
+            rep.rows[i] = ("WARN", step, "frozen queue record (publish-queue.md «DES و Fidelity صف») — " + msg, None)
             n += 1
     if n:
-        rep.ok("4.13 frozen", f"{n} DES/Fidelity page-text row(s) reported as warnings by founder order")
+        rep.ok("4.13 frozen", f"{n} DES/Fidelity page-text row(s) reported as warnings (frozen queue record)")
 
 
 def verify(content_id, rep, expect_title=None, expect_caption=None, sweep=False):

@@ -83,7 +83,7 @@ If the same read/command with the same input and error is requested again withou
 any source, digest, file or remote-state change, identify an execution loop: report
 the exact unchanged blocker and take a different diagnostic/correction step. Do
 not reread the guide or retry invalid arguments unchanged. Use `--help` once to
-resolve actual CLI schema uncertainty. `advance` is already available: prefer it
+resolve actual CLI schema uncertainty. `advance` is available: prefer it
 over separate transition calls; it records verified real work and never substitutes
 for semantic judgment, scientific independence, human approvals or Phase F.
 
@@ -120,7 +120,7 @@ introductory sources already completely read in that unchanged session.
 Canonical ledger steps, durable receipts, approvals, DES/Fidelity, Phase F,
 and the three fixed pushes are identical in both reading modes.
 
-### Just-in-time module loading (founder 1405/08/06)
+### Just-in-time module loading
 
 Read up front only what the start of a run needs: the router
 (`.dentcast/workflows/README.md`), `global/README.md` with its selected
@@ -138,7 +138,7 @@ reading less: every part of a module whose step runs in this run is still read
 completely, verbatim, before that step.
 
 Rules that act before their module's first ledger step are read earlier, at
-the moment named here (founder 1405/08/07):
+the moment named here:
 
 - **Challenge.** When Question 4.9 answers «چالش», read module 09 completely
   right after Phase B is locked, before C.1: its markup (the
@@ -166,8 +166,8 @@ above.
 
 DentCast is served from exactly two destinations: ArvanCloud, and GitHub Pages
 itself (`dentcast.org`/`www` are CNAMEs to `dentcast-hub.github.io`, proxied through
-Cloudflare DNS). Cloudflare Pages and Vercel are backup mirrors only
-(founder, 1405/08/04); neither is a DentCast publication service. Their commit
+Cloudflare DNS). Cloudflare Pages and Vercel are backup mirrors only;
+neither is a DentCast publication service. Their commit
 status, deployment, preview, failure or pending state must never be requested as
 publication evidence, polled, awaited, treated as a publishing/merge gate, or
 included in the completion criteria or routine final report. A GitHub response may
@@ -363,7 +363,7 @@ all started/completed/skipped/failed records, plus any explicitly enrolled
 dynamic substeps (even when pending). Pure trailing `pending` canonical
 rows are omitted from the file and **reconstructed from the live registry**
 when opened. A missing or reordered step inside the prefix is an error.
-Older full-length v3 files remain accepted. This is a storage format
+Full-length v3 files are also accepted. This is a storage format
 optimization, not permission to bypass a step, gate or review.
 
 ### Prefer one command per verified action
@@ -435,18 +435,18 @@ before continuing. Keep one transition per write; `advance` performs separate
 writes and returns `delivery_required` rather than crossing an undelivered cut.
 Local checkpoints are not proof that another checkout can recover the work.
 
-Every new page publication still has exactly three commit/push deliveries.
+Every new page publication has exactly three commit/push deliveries.
 **Newly initialized pages** carry `fixed_three_deliveries_v2` (alongside the
-v1 compatibility marker), whereas already-started v1-only handoffs remain
-on their original second cut; NEVER relabel or retroactively migrate their
-published first/second delivery. The new schedule is:
+v1 compatibility marker), whereas a v1-only handoff keeps its own second
+cut; NEVER relabel or retroactively migrate its published first/second
+delivery. The schedule is:
 
 | Delivery | Boundary | What is delivered |
 |---|---|---|
 | 1 | After `C.4.9`: page construction and semantic linking complete | Scoped work and latest unfinished handoff |
-| 2 — new v2 only | After `C.6`: DES/Fidelity, Challenge, hashtags, content registry, pathways, Pulse, translations and all human sign-offs completed or legitimately exempted | Scoped editorially finalized work and current handoff |
-| 2 — existing v1-only | After `C.4.13`: old scientific cut, unchanged | Historical v1 step order and handoff |
-| 3 | After all remaining steps, final bytes, real Phase F and report G | Final work and completion receipt, with the old handoff deleted in the same commit/push |
+| 2 — v2 | After `C.6`: DES/Fidelity, Challenge, hashtags, content registry, pathways, Pulse, translations and all human sign-offs completed or legitimately exempted | Scoped editorially finalized work and current handoff |
+| 2 — v1-only handoff | After `C.4.13`: the v1 scientific cut | v1 step order and handoff |
+| 3 | After all remaining steps, final bytes, real Phase F and report G | Final work and completion receipt, with the handoff deleted in the same commit/push |
 
 ### Editorial closure required before the v2 second delivery
 
@@ -506,8 +506,7 @@ Immediately after the second-delivery push is confirmed, tell the user that the 
 
 **Now read `.dentcast/workflows/publish-after-push2.md` completely** and follow it:
 monitoring the run, the `git pull --ff-only` and cleanup checks after success,
-and guarded recovery after a failure. It moved out of this file (founder
-1405/08/07) because nothing in it applies before Push 2.
+and guarded recovery after a failure. Nothing in it applies before Push 2.
 
 All editorial work (including tags, Pulse and the English writing itself)
 must be completed before the second boundary. If any mechanical operation
@@ -554,8 +553,8 @@ hooks cannot count network retries or prevent a client bypassing local hooks.
 
 The Stop guard permits consistent local progress between cuts. At a delivery cut
 it requires delivered work; during final cleanup it requires final confirmation.
-A checkpoint written in an earlier run without the policy marker retains the
-legacy cleanup path so interrupted older work remains recoverable. Paper-only
+A checkpoint without the policy marker keeps the legacy cleanup path, so such
+interrupted work remains recoverable. Paper-only
 is a separate no-page route and keeps its catalog verification/cleanup contract;
 do not invent page/DES cuts for it. Its one delivery is the completed final
 handoff, so the Stop guard permits consistent local progress until G is resolved
@@ -565,12 +564,12 @@ The v3 handoff remains semantic-only. Git reconstructs committed fingerprints;
 private same-checkout observations support local progress. Do not create commits
 to embed their own SHA. Keep private input bodies out of all public receipts.
 
-For v2 only, the cut moves *forward in the step sequence* from C.4.13 to
-C.6, **after** the judgment-dependent steps. The canonical plan's 52
-step IDs, science requirements and module order remain unchanged. C.8,
+For v2 only, the second cut sits at C.6, later in the step sequence than
+C.4.13, **after** the judgment-dependent steps. The canonical plan's 52
+step IDs, science requirements and module order are the same for both. C.8,
 C.7, D technical checks, E, real Phase F, final report G and final
-delivery run after the v2 second cut. The legacy v1 boundary retains
-C.4.13 without migration.
+delivery run after the v2 second cut. A v1-only handoff keeps its second
+cut at C.4.13 without migration.
 
 The lifecycle registry in `tools/dentcast_publish_lifecycle.py` maps every canonical phase/question/top-level action and the paper-ingestion parts to a module. Its order preserves two source dependencies: **C.8 builders before C.7 stamping**, and **LiteCast C.0.5/C.0.6 after C.2 page construction**. Canonical skip rules still come from the full source, not a guessed category map. All inventory checkpoints remain present on page publications, with explicit skips where applicable. `rules`, Phase `0`, Phase `F` and final report `G` cannot be skipped.
 
@@ -622,9 +621,10 @@ final handoff**:
    without making another commit. Reconcile actual Git/index drift and rerun
    affected checks before retry.
 
-For pre-policy interrupted runs and paper-only, compatibility retains the earlier
-exact delivered final handoff followed by a deletion-only cleanup commit and
-`confirm-cleanup`. This exception is not available to a new page run.
+For interrupted runs whose handoff lacks the policy marker, and for paper-only,
+the compatibility path delivers the exact completed final handoff, followed by a
+deletion-only cleanup commit and `confirm-cleanup`. This exception is not
+available to a new page run.
 
 The helper never commits, pushes, deploys or runs an external receipt's commands. `finish` is authorized by the publication's completion contract, not by a Boolean claiming founder consent. Its mechanical checks cannot independently prove private approvals, semantic quality, external service outcomes or that omitted approval requirements do not exist; the executing agent must verify those original gates. A stale/missing/corrupt state is not success.
 

@@ -22,13 +22,10 @@ top of whatever normal publish is running and overrides nothing.
   rest of the normal publish flow entirely (see Phase 0). Report "Part 3: skipped —
   no published page (paper-only)".
 
-**Overarching rule for this whole branch — ASK, don't guess (the user's
-explicit instruction «اگر جایی شک داشتی سوال کن عمل نکن»).** Anywhere in the
+**Overarching rule for this whole branch — ASK, don't guess.** Anywhere in the
 parts below where you are not confident — the right Drive subfolder, the correct
 topic/tags, the paper's real title, its DOI, or its first author — **stop and ask
-the user before acting.** Never invent a subfolder, a DOI, an author, or a tag. A
-wrong guess here mis-files a paper and publishes a false citation; a question
-costs nothing.
+the user before acting.** Never invent a subfolder, a DOI, an author, or a tag.
 
 Parts 1 and 2 are data operations (Drive + catalog) and **always** run when a
 paper file is present. Part 3 mutates the published page and runs **only when
@@ -111,8 +108,7 @@ socket`, `GBR`, `periimplantitis`, `biomimetic`, with nested paths like
      these fields.
    - `file_name` → the real filename; `file_size` → the file's byte size.
    - **`drive_link` / `drive_view` / `drive_download` / `drive_id` → the Drive
-     URLs/id captured in Part 1.** (Putting the paper's Drive link into the JSON
-     is the whole point of this part.)
+     URLs/id captured in Part 1.**
    - `status` → match the template (e.g. `"linked"`); `semantic_tagged` → `true`.
    - `linked_episodes` → the page being published, if any (follow the template's
      value shape) — never a LiteCast page, since nothing links to LiteCast (step
@@ -120,7 +116,7 @@ socket`, `GBR`, `periimplantitis`, `biomimetic`, with nested paths like
      as the template's empty shape (e.g. `[]`). `key_finding` /
      `clinical_bottom_line` may stay `""` as on most entries unless the content
      gives them clearly.
-4. **Hashtags (`tags`) — the user's rule: semantic + the article's own name.**
+4. **Hashtags (`tags`) — semantic + the article's own name.**
    Generate genuinely **semantic** tags describing the paper's concepts, in the
    **same lowercase-kebab style as existing `tags`** (e.g. `marginal-bone-loss`,
    `rct`, `clinical-trial`), **include the `topic:<subfolder>` tag** that the
@@ -159,7 +155,7 @@ socket`, `GBR`, `periimplantitis`, `biomimetic`, with nested paths like
    While the total is still under the next round hundred the claim stands and
    nothing changes. Once it crosses one, update **every** hit in the same
    commit — one sentence living on several surfaces, so Hard Rule 17's sweep
-   logic applies: never fix one and leave the others. One version bump is now
+   logic applies: never fix one and leave the others. One version bump is
    needed with it: `index.html`'s copy is its own, but the gate sheet's text is
    in a shared module, so run `python3 tools/asset_version.py --bump` in the same
    commit (see the cache-buster rule) or returning browsers keep the old figure.
