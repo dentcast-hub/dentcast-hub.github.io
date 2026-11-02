@@ -17666,5 +17666,37 @@
       "secondary": [],
       "subtopic": "crowns-onlays"
     }
+  },
+  {
+    "type": "notecast",
+    "id": "44",
+    "title": "ترمیم کامپوزیت قدیمی: سایلن و کیور نکردن باندینگ",
+    "caption": "خلاصه‌ای از دنت‌کست بر اساس مطالعه‌ی Eliasson و Dahl (۲۰۱۷)؛ اثر سایلن و کیور نکردن باندینگ بر استحکام باند کامپوزیت جدید به کامپوزیت قدیمی، و پروتکل پیشنهادی ترمیم.",
+    "hashtags": [
+      "#نوت_کست",
+      "#ریپیر_کامپوزیت",
+      "#کیور",
+      "#سایلان",
+      "#قدرت_باند",
+      "#باندینگ"
+    ],
+    "keywords": [
+      "composite repair",
+      "repair bond strength",
+      "silane application",
+      "uncured bonding agent",
+      "aged composite",
+      "wetting agent",
+      "bur roughening",
+      "thermocycling",
+      "microscopic surface irregularities",
+      "repair protocol"
+    ],
+    "url": "/notecast/episode-44.html",
+    "pillar": {
+      "primary": "bonding",
+      "secondary": [],
+      "subtopic": "advanced"
+    }
   }
 ]

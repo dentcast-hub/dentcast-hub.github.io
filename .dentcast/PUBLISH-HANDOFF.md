@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "notecast/episode-44"
 - Status: in_progress
-- Next canonical step: "C.4.10.1"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -66,6 +66,55 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           ],
           "scope": "audio",
           "status": "confirmed"
+        },
+        {
+          "decision": "\u062d\u06a9\u0645 \u0628\u0646\u06cc\u0627\u0646\u200c\u06af\u0630\u0627\u0631 2026-11-02 (answer chosen in chat): \u00ab\u0641\u0642\u0637 \u062a\u0627\u0631\u06cc\u062e \u062f\u0648 \u0648\u0627\u062d\u062f \u0639\u0648\u0636 \u0634\u0648\u062f\u00bb \u2014 claim_quote of NOT_A_CLAIM units u2/u3 in the stored notecast/episode-44 fidelity record updated from 2026-10-29 to 2026-11-02; verdicts, counts, score 100, level HIGH unchanged; queue fidelity.json untouched",
+          "evidence": [
+            "AskUserQuestion answer in this session 2026-11-02",
+            "queue 05 00-\u0648\u0636\u0639\u06cc\u062a.md \u0628\u062e\u0634 \u0627\u0646\u062a\u0634\u0627\u0631 (to be recorded)"
+          ],
+          "scope": "fidelity date units u2/u3",
+          "status": "confirmed"
+        },
+        {
+          "decision": "queue 05 06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md title/caption/body verbatim on notecast/en/episode-44.html",
+          "evidence": [
+            "founder approval #5 (queue 00-\u0648\u0636\u0639\u06cc\u062a.md)"
+          ],
+          "scope": "english mirror",
+          "status": "confirmed"
+        },
+        {
+          "decision": "\u06cc\u06a9 \u0646\u0648\u062a\u200c\u06a9\u0633\u062a \u062a\u0627\u0632\u0647 \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab\u062a\u0631\u0645\u06cc\u0645 \u06a9\u0627\u0645\u067e\u0648\u0632\u06cc\u062a \u0642\u062f\u06cc\u0645\u06cc: \u0633\u0627\u06cc\u0644\u0646 \u0648 \u06a9\u06cc\u0648\u0631 \u0646\u06a9\u0631\u062f\u0646 \u0628\u0627\u0646\u062f\u06cc\u0646\u06af\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f (link on whole title)",
+          "evidence": [
+            "queue 05 07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md \u00a7Q5; founder approval #5"
+          ],
+          "scope": "pulse",
+          "status": "confirmed"
+        },
+        {
+          "decision": "#\u0646\u0648\u062a_\u06a9\u0633\u062a #\u0631\u06cc\u067e\u06cc\u0631_\u06a9\u0627\u0645\u067e\u0648\u0632\u06cc\u062a #\u06a9\u06cc\u0648\u0631 #\u0633\u0627\u06cc\u0644\u0627\u0646 #\u0642\u062f\u0631\u062a_\u0628\u0627\u0646\u062f #\u0628\u0627\u0646\u062f\u06cc\u0646\u06af",
+          "evidence": [
+            "queue 05 07; founder approval #5"
+          ],
+          "scope": "hashtags",
+          "status": "confirmed"
+        },
+        {
+          "decision": "2 MCQs from queue 05 08 for notecast/episode-44 and episodes/episode-44",
+          "evidence": [
+            "founder approval #6"
+          ],
+          "scope": "exam questions",
+          "status": "confirmed"
+        },
+        {
+          "decision": "queue 05 10-\u0641\u0644\u0634\u200c\u06a9\u0627\u0631\u062a-FAQ.json verbatim",
+          "evidence": [
+            "founder approval #5"
+          ],
+          "scope": "flashcards and FAQ",
+          "status": "confirmed"
         }
       ],
       "decisions": [
@@ -90,6 +139,98 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "kind": "first_cut_lead_provenance_v1",
           "origin": "author_original",
           "source_ref": "queue/05-notecast-composite-repair-silane/01-\u0645\u062a\u0646.md first paragraph (founder text, approval #1); queue 07 \u00a7\u067e\u0627\u0631\u0627\u06af\u0631\u0627\u0641 \u0627\u0641\u062a\u062a\u0627\u062d\u06cc\u0647: no agent-authored lead"
+        },
+        {
+          "evidence": [
+            "DES reused verbatim (des.json sha256 53f1412b...), arithmetic 85x0.30=25.5->26, band D, schema/version 3.5 ok; FIDELITY reused (fidelity.json a9156ffe...) except u2/u3 date claim_quote per founder order; tool split of real page = 25 units, ids and texts equal to record; 01-\u0645\u062a\u0646.md sha256 dda5e116 equals \u0627\u062c\u0631\u0627.md; --des-text ok on both"
+          ],
+          "kind": "des_fidelity_reuse",
+          "source_ref": "queue/05 05-DES-Fidelity"
+        },
+        {
+          "english": {
+            "evidence": [
+              "source fa and en mirror reviewed before Push 2; en-version checks passed"
+            ],
+            "path": "notecast/en/episode-44.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "pre-cut verify_publish: 112 passed, only 8 builder/stamp rows pending for post-cut2 workflow"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "C.4.13: queue DES 26/D + Fidelity 100/HIGH reused, Part 3 checks and pre-cut verify_publish 4.13 rows green; u2/u3 date text per founder order 2026-11-02"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Q4.9 ordinary article; C.4.14 skipped"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "bonding/advanced in live PILLARS; brain key parity verified by verify_publish"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.7 cap audit, C.4.8 two glossary links, C.4.9 dentai-8 capsule; parent episode link"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "hashtag_ref.py --check OK after --sync; no mint"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "brain entry last element; title/caption codepoint-identical across surfaces (verify_publish 16 rows)"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "biomimetic after episodes/episode-44; bundles rejected at gate 2; exam rows validated"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "index.html pulse: new top line, bottom line removed, 7 lines"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "notecast/en/episode-44.html from approved queue 06; noindex, no hreflang, toggles inverse"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "queue 05 approvals #1-#8 recorded; founder order on fidelity date units 2026-11-02"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -393,16 +534,136 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "05-semantic-linking.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [
+          "Part 1 done early in queue preparation (publish-queue exception 1; module 06 'Doing the Drive work early'): external action C.4.10.1:drive-move completed. Re-verified 2026-11-02 via Drive metadata: file 1UujF_qsYpTAHA_-4mniRO1NItUR_vBuK, title 'Effect of curing and silanizing on composite repair bond strength using an improved micro-tensile test method.pdf', parent 10ONgzIdTLo3gnnWHEv9x5byuxvwIiUZ7 (biomimetic/Bonding), 805352 bytes. No repeat move/upload."
+        ],
+        "id": "C.4.10.1",
+        "module": "06-paper-ingestion.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Part 2: appended P2950 to dentcast_cabinet_full_catalog.json (key set = P2948 template incl. authors); topic biomimetic, topic_path biomimetic/Bonding; drive_id 1UujF_qsYpTAHA_-4mniRO1NItUR_vBuK + view/download/link; file_size 805352 (Drive metadata); doi/journal/year/abstract/authors from PubMed PMID 28642928 (Crossref host blocked by egress proxy -> subjects [] as majority shape, no guessed subject); tags all existing library tags + topic:biomimetic, topic:bonding + title tag; tag_index +1 per tag, total_papers 2159->2160 (precedent f332722d); count 2160 < 2200 so \u00ab\u0628\u06cc\u0634 \u0627\u0632 \u06f2\u06f1\u06f0\u06f0\u00bb claim unchanged. Step 8: reachable from site tags \u0631\u06cc\u067e\u06cc\u0631 \u06a9\u0627\u0645\u067e\u0648\u0632\u06cc\u062a (byTag pos 0/4), \u0628\u0627\u0646\u062f\u06cc\u0646\u06af (3/12), \u06a9\u06cc\u0648\u0631 (8/9); build_cabinet_papers.py --check OK; no bridge edits."
+        ],
+        "id": "C.4.10.2",
+        "module": "06-paper-ingestion.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Part 3: DOI 10.1080/23337931.2017.1301211 and first author Sigfus Thor Eliasson cross-checked via PubMed PMID 28642928 (title/journal/year match, same as PDF page 1 in queue 04). Credit present below body on notecast/episode-44.html in the NoteCast precedent markup (.author block \u00ab\u0645\u0646\u0628\u0639 \u0639\u0644\u0645\u06cc:\u00bb, as notecast/episode-43) linking https://doi.org/10.1080/23337931.2017.1301211; .author-note site credit untouched; template isBasedOn is the episode URL (not a CreativeWork) so unchanged. Page sha256 unchanged in this step f72676ac...44e5 (credit placed during C.2 clone swap). Mirrored to episodes/episode-44 at C.4.5-b."
+        ],
+        "id": "C.4.10.3",
+        "module": "06-paper-ingestion.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "plus/faq-corpus.json byContent['notecast/episode-44'].definedTermSets written verbatim from queue 05 10-\u0641\u0644\u0634\u200c\u06a9\u0627\u0631\u062a-FAQ.json (approved, approval #5): 3 DefinedTerms #flashcards-c1..c3, all source faq (idx 0,1,2), unique @id; check: no description equals a FAQ answer with/without verdict; FAQ idx 3 (role) and 4 (procedure) not carded. Not on page JSON-LD."
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "FAQPage (5 Q) written verbatim from queue 05 10 into faq-corpus under notecast/episode-44: no deixis in any name; 3 yes/no Qs open with verdict (\u0628\u0644\u0647\u061b \u0628\u0644\u0647\u061b \u062e\u06cc\u0631\u061b) -> 3 binary; 2 open questions. Quiz index built after Push 2 (C.8). 4.12-\u0628: evaluated at 5.6."
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Founder-supplied path + publish-queue exception 2: plus/des-scores.json notecast/episode-44 = {scored_at 2026-11-02, sources:[queue des.json verbatim], fidelity:[queue fidelity.json with u2/u3 date text updated per \u062d\u06a9\u0645 \u0628\u0646\u06cc\u0627\u0646\u200c\u06af\u0630\u0627\u0631]}; episodes/episode-44 mirror = same sources, no fidelity (module 04 4.5-\u0628; module 08 Part 2b). Plan .dentcast/des-fidelity-plans/notecast/episode-44.json = queue plan.json with content_id set. Checks: 01-\u0645\u062a\u0646 sha dda5e116 = receipt; page body = text; Part 3(2)-(4) pass (26/D, QUIN 6 domains, mult 0.3); units from des_fidelity_units.py on real page equal record ids/texts; counts/score recompute 100 HIGH; Part 3(6) receipt in \u0627\u062c\u0631\u0627.md + --des-text ok. 3b gate empty (0 ALTERED/REVERSED). No model rerun."
+        ],
+        "id": "C.4.13",
+        "module": "08-des-fidelity.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "not a Challenge (Q4.9 ordinary article)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Tags from queue 05 07 (approval #5), re-resolved live 2026-11-02 with --simulate + plus/assistant-tags.json: #\u0646\u0648\u062a_\u06a9\u0633\u062a (series), #\u0631\u06cc\u067e\u06cc\u0631_\u06a9\u0627\u0645\u067e\u0648\u0632\u06cc\u062a (decision+specific, 1 page before publish), #\u06a9\u06cc\u0648\u0631 (specific, 1), #\u0633\u0627\u06cc\u0644\u0627\u0646 (10), #\u0642\u062f\u0631\u062a_\u0628\u0627\u0646\u062f (11), #\u0628\u0627\u0646\u062f\u06cc\u0646\u06af (umbrella 29); no mint, no batch, no bridge change. Resolving sentences per tag recorded in queue 07 (verbatim substrings of 01-\u0645\u062a\u0646). 5 dentist questions in queue 07. After brain write: --sync, build_plus_index.mjs, --check OK, build_cabinet_papers --check OK."
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "dentcast-brain.json: notecast id 44 appended as last array element; keys type,id,title,caption,hashtags,keywords,url,pillar = notecast 43; title/caption copied from queue 02; keywords = queue 09 verbatim in order (10); pillar bonding/advanced/secondary []; CRLF indent style of file tail preserved"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Verified brain pillar.primary=bonding, subtopic=advanced (valid in live PILLARS), no extra keys; kavosh capsule /pillar/bonding/ consistent"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pathway_place.py: biomimetic STRONG (score 121), ceramics/fixed-pros/esthetic STRONG by tool but judged semantically tangential (composite-to-composite repair, not ceramic/fixed/esthetic learning need) -> not placed; post-and-core/operative ASK -> not proposed (weak). Inserted into biomimetic after episodes/episode-44 (episode+notecast kept as one unit, precedent fixed-pros 40/41), milestone false; json valid; coverage 1.51 per item (was 1.51-, baseline 1.38). 4.12-\u0628: 2 founder-approved MCQs (approval #6, queue 08) written verbatim to plus/exam-questions.json under notecast/episode-44 (r-fb550340, r-fa572000) and episodes/episode-44 (r-cefb756e, r-61b3ea09; founder order: same unit, ep44 in biomimetic); validate_exam_questions.py 0 errors (2 expected duplicate-prompt WARNs)."
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Bundle gate: candidates bundle-bonding, bundle-biomimetic (continues biomimetic). Gate1 pass (notecast/). Gate2 NO for both: title names a specific repair protocol/technique, not a whole beginner concept -> \u00ab\u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f2)\u00bb for each; no bundle edit, no home-bundles.js/asset bump."
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "index.html Pulse: inserted approved line (byte-equal to queue 07) at top, removed bottom plak1-10 line, 7 lines kept. Authored English mirror notecast/en/episode-44.html (en-version.md + module 12 Phase D read; chrome via notecast/en/episode-43 clone of meta-1 standard, meta-1 hash unchanged; noindex_en_mirrors --check OK). second_cut_editorial_lock_v1 recorded."
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
+      ".dentcast/des-fidelity-plans/notecast/episode-44.json",
       "dentcast-brain.json",
+      "dentcast-hashtag-reference.json",
       "dentcast_cabinet_full_catalog.json",
       "episodes/episode-44.html",
       "index.html",
       "notecast/en/episode-44.html",
       "notecast/episode-44.html",
       "notecast/index.html",
+      "plus/assistant-tags.json",
+      "plus/cabinet-papers.json",
+      "plus/content-index.json",
       "plus/des-scores.json",
       "plus/exam-questions.json",
       "plus/faq-corpus.json",
@@ -410,7 +671,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: notecast/episode-44.html, notecast/index.html, episodes/episode-44.html"
+    "note": "Index-only refresh after staging delivery paths: .dentcast/des-fidelity-plans/notecast/episode-44.json, notecast/en/episode-44.html, dentcast-brain.json, dentcast-hashtag-reference.json, dentcast_cabinet_full_catalog.json, index.html, plus/assistant-tags.json, plus/cabinet-papers.json, plus/content-index.json, plus/des-scores.json, plus/exam-questions.json, plus/faq-corpus.json, plus/pathways.json, notecast/en/episode-44.html"
   },
   "schema": "publish-handoff-v3"
 }

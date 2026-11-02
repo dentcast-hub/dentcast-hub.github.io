@@ -908,6 +908,67 @@
    ]
   },
   {
+   "key": "نوت_کست",
+   "tag": "#نوت_کست",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام سری نوت‌کست — یادداشت فشرده‌ی یک موضوع تخصصی.",
+   "use_when": "روی هر مدخل نوت‌کست، و هیچ‌جای دیگر.",
+   "aliases": [
+    "نوتکست",
+    "notecast",
+    "نوت کست"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 43,
+   "content_ids": [
+    "notecast/episode-2",
+    "notecast/episode-3",
+    "notecast/episode-4",
+    "notecast/episode-5",
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "notecast/episode-8",
+    "notecast/episode-9",
+    "notecast/episode-10",
+    "notecast/episode-11",
+    "notecast/episode-12",
+    "notecast/episode-13",
+    "notecast/episode-14",
+    "notecast/episode-15",
+    "notecast/episode-16",
+    "notecast/episode-17",
+    "notecast/episode-18",
+    "notecast/episode-19",
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "notecast/episode-22",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "notecast/episode-25",
+    "notecast/episode-26",
+    "notecast/episode-27",
+    "notecast/episode-28",
+    "notecast/episode-29",
+    "notecast/episode-30",
+    "notecast/episode-31",
+    "notecast/episode-32",
+    "notecast/episode-33",
+    "notecast/episode-34",
+    "notecast/episode-35",
+    "notecast/episode-36",
+    "notecast/episode-37",
+    "notecast/episode-38",
+    "notecast/episode-39",
+    "notecast/episode-40",
+    "notecast/episode-41",
+    "notecast/episode-42",
+    "notecast/episode-43",
+    "notecast/episode-44"
+   ]
+  },
+  {
    "key": "share_hub",
    "tag": "#Share_Hub",
    "domain": "brand",
@@ -964,66 +1025,6 @@
     "sharehub/share-41",
     "sharehub/share-42",
     "sharehub/share-43"
-   ]
-  },
-  {
-   "key": "نوت_کست",
-   "tag": "#نوت_کست",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام سری نوت‌کست — یادداشت فشرده‌ی یک موضوع تخصصی.",
-   "use_when": "روی هر مدخل نوت‌کست، و هیچ‌جای دیگر.",
-   "aliases": [
-    "نوتکست",
-    "notecast",
-    "نوت کست"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 42,
-   "content_ids": [
-    "notecast/episode-2",
-    "notecast/episode-3",
-    "notecast/episode-4",
-    "notecast/episode-5",
-    "notecast/episode-6",
-    "notecast/episode-7",
-    "notecast/episode-8",
-    "notecast/episode-9",
-    "notecast/episode-10",
-    "notecast/episode-11",
-    "notecast/episode-12",
-    "notecast/episode-13",
-    "notecast/episode-14",
-    "notecast/episode-15",
-    "notecast/episode-16",
-    "notecast/episode-17",
-    "notecast/episode-18",
-    "notecast/episode-19",
-    "notecast/episode-20",
-    "notecast/episode-21",
-    "notecast/episode-22",
-    "notecast/episode-23",
-    "notecast/episode-24",
-    "notecast/episode-25",
-    "notecast/episode-26",
-    "notecast/episode-27",
-    "notecast/episode-28",
-    "notecast/episode-29",
-    "notecast/episode-30",
-    "notecast/episode-31",
-    "notecast/episode-32",
-    "notecast/episode-33",
-    "notecast/episode-34",
-    "notecast/episode-35",
-    "notecast/episode-36",
-    "notecast/episode-37",
-    "notecast/episode-38",
-    "notecast/episode-39",
-    "notecast/episode-40",
-    "notecast/episode-41",
-    "notecast/episode-42",
-    "notecast/episode-43"
    ]
   },
   {
@@ -1368,6 +1369,52 @@
    ]
   },
   {
+   "key": "باندینگ",
+   "tag": "#باندینگ",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "bonding"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 30,
+   "content_ids": [
+    "episodes/episode-4",
+    "episodes/episode-5",
+    "episodes/episode-6",
+    "episodes/episode-11",
+    "episodes/episode-16",
+    "episodes/episode-36",
+    "episodes/episode-42",
+    "episodes/episode-43",
+    "episodes/episode-44",
+    "episodes/episode-101",
+    "dentai/dentai-4",
+    "dentai/dentai-5",
+    "notecast/episode-4",
+    "notecast/episode-5",
+    "notecast/episode-6",
+    "notecast/episode-7",
+    "notecast/episode-16",
+    "notecast/episode-18",
+    "dentai/dentai-8",
+    "dentai/dentai-9",
+    "dentai/dentai-16",
+    "insight/insight-36",
+    "dentai/dentai-17",
+    "dentai/dentai-18",
+    "dentai/dentai-19",
+    "notecast/episode-36",
+    "notecast/episode-41",
+    "notecast/episode-42",
+    "sharehub/share-23",
+    "notecast/episode-44"
+   ]
+  },
+  {
    "key": "زیبایی",
    "tag": "#زیبایی",
    "domain": "clinical",
@@ -1486,51 +1533,6 @@
     "insight/insight-92",
     "sharehub/share-40",
     "chairside/chairside-45"
-   ]
-  },
-  {
-   "key": "باندینگ",
-   "tag": "#باندینگ",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "bonding"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 29,
-   "content_ids": [
-    "episodes/episode-4",
-    "episodes/episode-5",
-    "episodes/episode-6",
-    "episodes/episode-11",
-    "episodes/episode-16",
-    "episodes/episode-36",
-    "episodes/episode-42",
-    "episodes/episode-43",
-    "episodes/episode-44",
-    "episodes/episode-101",
-    "dentai/dentai-4",
-    "dentai/dentai-5",
-    "notecast/episode-4",
-    "notecast/episode-5",
-    "notecast/episode-6",
-    "notecast/episode-7",
-    "notecast/episode-16",
-    "notecast/episode-18",
-    "dentai/dentai-8",
-    "dentai/dentai-9",
-    "dentai/dentai-16",
-    "insight/insight-36",
-    "dentai/dentai-17",
-    "dentai/dentai-18",
-    "dentai/dentai-19",
-    "notecast/episode-36",
-    "notecast/episode-41",
-    "notecast/episode-42",
-    "sharehub/share-23"
    ]
   },
   {
@@ -3222,6 +3224,36 @@
    ]
   },
   {
+   "key": "قدرت_باند",
+   "tag": "#قدرت_باند",
+   "domain": null,
+   "words": 2,
+   "definition": "استحکام اتصال رزین به بافت دندان.",
+   "use_when": "مقاله قدرت باند را بسنجد یا مقایسه کند.",
+   "aliases": [
+    "bond strength",
+    "استحکام باند",
+    "تنسایل باند"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-16",
+    "episodes/episode-36",
+    "episodes/episode-42",
+    "episodes/episode-71",
+    "episodes/episode-101",
+    "dentai/dentai-4",
+    "insight/insight-4",
+    "dentai/dentai-16",
+    "notecast/episode-42",
+    "sharehub/share-23",
+    "notecast/episode-43",
+    "notecast/episode-44"
+   ]
+  },
+  {
    "key": "پری_ایمپلنتیتیس",
    "tag": "#پری_ایمپلنتیتیس",
    "domain": "clinical",
@@ -3507,32 +3539,34 @@
    ]
   },
   {
-   "key": "قدرت_باند",
-   "tag": "#قدرت_باند",
+   "key": "سایلان",
+   "tag": "#سایلان",
    "domain": null,
-   "words": 2,
-   "definition": "استحکام اتصال رزین به بافت دندان.",
-   "use_when": "مقاله قدرت باند را بسنجد یا مقایسه کند.",
+   "words": 1,
+   "definition": "عاملِ جفت‌کننده‌ی بین سرامیک و رزین.",
+   "use_when": "مقاله نقش یا پروتکلِ سایلان را شرح دهد.",
    "aliases": [
-    "bond strength",
-    "استحکام باند",
-    "تنسایل باند"
+    "silane",
+    "سیلان",
+    "silane coupling",
+    "سایلن",
+    "سیلن"
    ],
    "variants": [],
    "co_tags": [],
    "count": 11,
    "content_ids": [
+    "episodes/episode-10",
     "episodes/episode-16",
-    "episodes/episode-36",
-    "episodes/episode-42",
-    "episodes/episode-71",
-    "episodes/episode-101",
-    "dentai/dentai-4",
-    "insight/insight-4",
-    "dentai/dentai-16",
+    "episodes/episode-136",
+    "notecast/episode-10",
+    "notecast/episode-12",
+    "notecast/episode-16",
+    "insight/insight-42",
     "notecast/episode-42",
-    "sharehub/share-23",
-    "notecast/episode-43"
+    "notecast/episode-43",
+    "sharehub/share-41",
+    "notecast/episode-44"
    ]
   },
   {
@@ -3844,36 +3878,6 @@
     "chairside/chairside-41",
     "chairside/chairside-42",
     "chairside/chairside-43"
-   ]
-  },
-  {
-   "key": "سایلان",
-   "tag": "#سایلان",
-   "domain": null,
-   "words": 1,
-   "definition": "عاملِ جفت‌کننده‌ی بین سرامیک و رزین.",
-   "use_when": "مقاله نقش یا پروتکلِ سایلان را شرح دهد.",
-   "aliases": [
-    "silane",
-    "سیلان",
-    "silane coupling",
-    "سایلن",
-    "سیلن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-10",
-    "episodes/episode-16",
-    "episodes/episode-136",
-    "notecast/episode-10",
-    "notecast/episode-12",
-    "notecast/episode-16",
-    "insight/insight-42",
-    "notecast/episode-42",
-    "notecast/episode-43",
-    "sharehub/share-41"
    ]
   },
   {
@@ -12069,6 +12073,28 @@
    ]
   },
   {
+   "key": "ریپیر_کامپوزیت",
+   "tag": "#ریپیر_کامپوزیت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ترمیمِ افزودنی روی کامپوزیتِ قدیمی — بازآوردنِ چسبندگی به سطحِ پلیمریزه‌ی کهنه به‌جای تعویضِ کاملِ ترمیم.",
+   "use_when": "مقاله باند به کامپوزیت قدیمی یا تعمیر ترمیم را موضوع داشته باشد.",
+   "aliases": [
+    "composite repair",
+    "رپیر کامپوزیت",
+    "باند به کامپوزیت قدیمی",
+    "تعمیر کامپوزیت",
+    "ترمیم کامپوزیت قدیمی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-44",
+    "notecast/episode-44"
+   ]
+  },
+  {
    "key": "زیست_سازگاری",
    "tag": "#زیست_سازگاری",
    "domain": "clinical",
@@ -13371,6 +13397,27 @@
    "content_ids": [
     "insight/insight-28",
     "sharehub/share-30"
+   ]
+  },
+  {
+   "key": "کیور",
+   "tag": "#کیور",
+   "domain": null,
+   "words": 1,
+   "definition": "پلیمریزاسیون با نور.",
+   "use_when": "مقاله زمان یا ترتیبِ کیور را مسئله بداند.",
+   "aliases": [
+    "curing",
+    "light cure",
+    "کیورینگ",
+    "پلیمریزاسیون"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-8",
+    "notecast/episode-44"
    ]
   },
   {
@@ -17394,27 +17441,6 @@
    ]
   },
   {
-   "key": "ریپیر_کامپوزیت",
-   "tag": "#ریپیر_کامپوزیت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ترمیمِ افزودنی روی کامپوزیتِ قدیمی — بازآوردنِ چسبندگی به سطحِ پلیمریزه‌ی کهنه به‌جای تعویضِ کاملِ ترمیم.",
-   "use_when": "مقاله باند به کامپوزیت قدیمی یا تعمیر ترمیم را موضوع داشته باشد.",
-   "aliases": [
-    "composite repair",
-    "رپیر کامپوزیت",
-    "باند به کامپوزیت قدیمی",
-    "تعمیر کامپوزیت",
-    "ترمیم کامپوزیت قدیمی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "episodes/episode-44"
-   ]
-  },
-  {
    "key": "ریچموند_کراون",
    "tag": "#ریچموند_کراون",
    "domain": "clinical",
@@ -20637,26 +20663,6 @@
    "count": 1,
    "content_ids": [
     "dentcast-plus/video-1"
-   ]
-  },
-  {
-   "key": "کیور",
-   "tag": "#کیور",
-   "domain": null,
-   "words": 1,
-   "definition": "پلیمریزاسیون با نور.",
-   "use_when": "مقاله زمان یا ترتیبِ کیور را مسئله بداند.",
-   "aliases": [
-    "curing",
-    "light cure",
-    "کیورینگ",
-    "پلیمریزاسیون"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "dentai/dentai-8"
    ]
   },
   {
