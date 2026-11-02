@@ -1,10 +1,10 @@
 # DentCast — Claude Code entrypoint
 
-> **Publish-queue check — first, before anything else.** If the request mentions the publish queue («صف انتشار», branch `queue` of this repo), e.g. «یه مقاله تو صف انتشار دارم»، «از صف انتشار منتشر کن»، «قدیمی‌ترین مقالهٔ صف رو منتشر کن»، «بذارش تو صف انتشار»، «صف انتشار چی داره؟», read `.dentcast/workflows/publish-queue.md` completely right now. Fetch what it says from the `queue` branch (for publishing: the oldest ready item). Publishing an item from the queue follows `.dentcast/workflows/queue-route.md` (tool assembly, two deliveries); preparation and status stay in `publish-queue.md`. Otherwise ignore this note.
+> **Publish-queue check — first, before anything else.** If the request mentions the publish queue («صف انتشار», branch `queue` of this repo), e.g. «یه مقاله تو صف انتشار دارم»، «از صف انتشار منتشر کن»، «قدیمی‌ترین مقالهٔ صف رو منتشر کن»، «بذارش تو صف انتشار»، «صف انتشار چی داره؟», then: to publish from it, read only `.dentcast/workflows/queue-route.md` and follow it (one tool per step, two deliveries; nothing else is read or done); to prepare an item or report the queue's status, read `.dentcast/workflows/publish-queue.md` completely. Otherwise ignore this note.
 
 **LIVE_MODULAR_PUBLISHING_ENABLED.** Legacy files are backup only; do not read them for execution or use them as authority.
 
-Before content changes, read `.dentcast/workflows/global/README.md`, the complete active sections selected by that router for the current edit scope, and `.dentcast/workflows/agent-parity.md`. All clients use these same rules.
+Before content changes, read `.dentcast/workflows/global/README.md`, the complete active sections selected by that router for the current edit scope, and `.dentcast/workflows/agent-parity.md`. All clients use these same rules. Exception: publishing an item from the queue reads only `.dentcast/workflows/queue-route.md`; its tools carry these rules.
 
 New publication → `.dentcast/workflows/README.md`. Read complete `modules/01-hard-rules.md` and `02-routing-intake.md`, then all applicable verbatim rules in canonical order: full modules by default, or pinned, hash-verified readpack ranges after locked Phase B under publish-checkpoints.md. No AI summaries or unverified omissions. Preserve all approvals, source-dependent DES/Fidelity, category exceptions, builders, English and final Phase F. Stage-only planning tools and synthetic receipts do not perform or authorize live publication.
 
@@ -31,7 +31,7 @@ For «انتشار ناقص داشتم» or an explicit request to resume a publ
 | Minimal publications from /admin (setup, import into git, completion) | `.dentcast/quick-publish.md` |
 | External Fidelity | `.dentcast/workflows/external-fidelity.md` |
 | Publish queue on branch `queue` (prepare, status) | `.dentcast/workflows/publish-queue.md` |
-| Publish an item from the queue (publish day) | `.dentcast/workflows/queue-route.md` |
+| Publish an item from the queue (publish day) | `.dentcast/workflows/queue-route.md` (only this) |
 
 Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details.md`. Read the selected specialty workflow completely. New content uses the modular sequence, including paper-only and category exceptions.
 

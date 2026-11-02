@@ -395,5 +395,31 @@ class LedgerAndTextIoTests(unittest.TestCase):
         self.assertTrue(new.endswith('{"hashtags": ["#q"]}\n]\n'))
 
 
+class QueuePublishTests(ManifestTests):
+    def test_pick_oldest_ready_and_lock_commits(self):
+        import subprocess
+        import queue_publish as qp
+        a = self.make_item(status="در حال آماده‌سازی")
+        b = self.make_item()
+        root = Path(tempfile.mkdtemp())
+        (root / "queue").mkdir()
+        a.rename(root / "queue" / "03-sharehub-a")
+        b.rename(root / "queue" / "05-sharehub-b")
+        for c in (["init", "-q", "-b", "queue"], ["config", "user.name", "t"], ["config", "user.email", "t@x"],
+                  ["add", "-A"], ["commit", "-qm", "init"]):
+            subprocess.run(["git", *c], cwd=root, check=True)
+        out = qp.pick(root)
+        self.assertEqual((Path(out["item"]).name, out["older_not_ready"][0]["item"]), ("05-sharehub-b", "03-sharehub-a"))
+        with self.assertRaises(qp.Stop):
+            qp.pick(root, "03")
+        qp.lock(out["item"], "Claude Code")
+        st = qm.status_fields(Path(out["item"]))
+        self.assertEqual(st["status"], "در حال انتشار")
+        self.assertTrue(st["lock"].startswith("Claude Code، "))
+        log = subprocess.run(["git", "log", "--format=%s", "-1"], cwd=root, capture_output=True, text=True).stdout
+        self.assertEqual(log.strip(), "queue: 05 lock for publishing")
+        self.assertTrue(qm.load_item(out["item"], agent="Claude Code"))
+
+
 if __name__ == "__main__":
     unittest.main()
