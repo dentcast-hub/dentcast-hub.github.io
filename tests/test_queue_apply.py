@@ -132,6 +132,7 @@ class ManifestTests(unittest.TestCase):
                  "05-DES-Fidelity/des.json": "{}"}
         files.update(extra or {})
         for rel, t in files.items():
+            (d / rel).parent.mkdir(parents=True, exist_ok=True)
             (d / rel).write_text(t, encoding="utf-8")
         (d / "00-وضعیت.md").write_text(f"- وضعیت: {status}\n- قفل: {lock}\n", encoding="utf-8")
         sums = "".join(f"{hashlib.sha256((d / r).read_bytes()).hexdigest()}  {r}\n" for r in sorted(files))
@@ -166,9 +167,12 @@ class ManifestTests(unittest.TestCase):
     def test_missing_fields_are_named_never_inferred(self):
         d = qm.draft(self.make_item())
         miss = qm.missing(d)
-        for k in ("title_en", "credit", "catalog", "hashtags", "pillar", "author", "legacy_review"):
+        for k in ("title_en", "credit", "hashtags", "pillar"):
             self.assertIn(k, miss)
         self.assertEqual(d["title_fa"]["value"], "عنوان یک")
+        # unfrozen 4.7/4.9 and the catalog fall to a recorded mechanical default, never to a guess
+        defaults = {x["field"] for x in qm.defaults_of(d)}
+        self.assertTrue({"explore_49", "backlinks_47"} <= defaults)
 
     def test_supplement_cannot_override_frozen_value(self):
         item = self.make_item()
@@ -182,8 +186,22 @@ class ManifestTests(unittest.TestCase):
         d = qm.draft(item)
         with self.assertRaises(qm.QueueRefusal):
             qm.merge_supplement(item, d, {"title_en": {"value": "Invented", "from": "02-عنوان-کپشن.md:2"}})
-        out = qm.merge_supplement(item, d, {"title_en": {"value": "Title", "from": "publish-day: translation"}})
-        self.assertEqual(out["_manual"]["value"][0]["field"], "title_en")
+        # page text never comes from publish day (the agent writes no text)
+        with self.assertRaises(qm.QueueRefusal) as e:
+            qm.merge_supplement(item, d, {"title_en": {"value": "Title", "from": "publish-day: translation"}})
+        self.assertEqual(e.exception.code, "SUPPLEMENT_TEXT_NOT_FROZEN")
+        # a non-text fact from outside the item is a recorded manual step
+        out = qm.merge_supplement(item, d, {"author": {"value": {"name": "x"}, "from": "publish-day: brain"}})
+        self.assertEqual(out["_manual"]["value"][0]["field"], "author")
+
+    def test_supplement_origin_may_be_a_line_range(self):
+        item = self.make_item()
+        (item / "07-ورودی‌ها.md").write_text("سطر\n- `#الف`\n- `#ب`\n", encoding="utf-8")
+        d = qm.draft(item)
+        out = qm.merge_supplement(item, d, {"hashtags": {"value": ["#الف", "#ب"], "from": "07-ورودی‌ها.md:2-3"}})
+        self.assertEqual(out["hashtags"]["value"], ["#الف", "#ب"])
+        with self.assertRaises(qm.QueueRefusal):
+            qm.merge_supplement(item, d, {"hashtags": {"value": ["#ج"], "from": "07-ورودی‌ها.md:2-3"}})
 
     def test_keywords_in_prose_file_only_from_list(self):
         self.assertEqual(qm.keyword_lines(["# سر", "", "توضیح", "- a", "- b"]), ["a", "b"])
@@ -229,6 +247,55 @@ class LeadParagraphTests(ManifestTests):
         d = self.make_item(extra={"01-متن.md": "## شرح حال\n\n- یک\n- دو\n\nپاراگراف.\n"})
         kinds = [b[0] for b in qa.blocks(qm.split_sources_tail((d / "01-متن.md").read_text(encoding="utf-8"))[0])]
         self.assertLess(kinds.index("ul"), kinds.index("p"))
+
+
+class LegacyFormsTests(ManifestTests):
+    """Frozen files written in the other layouts preparation agents used."""
+
+    def test_bullet_images_and_english_metadata(self):
+        d = self.make_item(extra={
+            "03-تصاویر/تصاویر.md": "## تصویر 01\n- فایل: `01-a.webp`\n- Alt فارسی: الت (عیناً از alt داک)\n"
+                                    "- زیرنویس: ندارد: داک زیرنویس نداشت.\n",
+            "06-انگلیسی.md": "# Title\nT\n\n# Caption\nC\n\n# Article\nBody.\n\n[[Image:01]]\n\n## Image metadata\n"
+                              "- Alt: An alt\n\n---\nوضعیت: تأییدشده\n"})
+        (d / "03-تصاویر" / "01-a.webp").write_bytes(b"RIFF")
+        dr = qm.draft(d)
+        img = qm.plain(dr)["images"][0]
+        self.assertEqual((img["file"], img["alt_fa"], img["alt_en"], img["caption_fa"], img["caption_en"]),
+                         ("03-تصاویر/01-a.webp", "الت", "An alt", "", ""))
+        self.assertEqual((dr["title_en"]["value"], dr["caption_en"]["value"]), ("T", "C"))
+        self.assertNotIn("وضعیت", dr["body_en"]["value"])
+        self.assertNotIn("Image metadata", dr["body_en"]["value"])
+
+    def test_image_without_a_row_is_still_supplementable(self):
+        d = self.make_item(extra={"03-تصاویر/تصاویر.md": "بدون جدول\n"})
+        (d / "03-تصاویر" / "01-a.webp").write_bytes(b"RIFF")
+        dr = qm.draft(d)
+        self.assertIn("images.01.alt_fa", qm.missing(dr))
+        (d / "03-تصاویر/تصاویر.md").write_text("الت فارسی\n", encoding="utf-8")
+        out = qm.merge_supplement(d, dr, {"images": {"01": {"alt_fa": {"value": "الت فارسی", "from": "03-تصاویر/تصاویر.md:1"}}}})
+        self.assertEqual(qm.plain(out)["images"][0]["alt_fa"], "الت فارسی")
+
+    def test_title_heading_level_one_and_provenance_line(self):
+        d = self.make_item(extra={"02-عنوان-کپشن.md": "# عنوان\n\nعنوان\n\nمنشأ: بنیان‌گذار\n\n# کپشن\n\nکپشن\n"})
+        dr = qm.draft(d)
+        self.assertEqual((dr["title_fa"]["value"], dr["caption_fa"]["value"]), ("عنوان", "کپشن"))
+
+    def test_link_pathway_explore_and_backlink_forms(self):
+        d = self.make_item(extra={
+            "11-لینک‌های-گلاسری.md": (
+                "## 4.7 — بک‌لینک\n\n- **`scanner` — `/glossary/scanner.html`: لینک.** متن لینک در «کاوش بیشتر»: «انتقال».\n\n"
+                "## 4.8 — لینک\n\n- **عبارت:** «اسکن» (اول)\n- **مقصد:** `/glossary/scanner.html`\n- **تصمیم:** لینک خودکار\n"
+                "- لینک ۲ (مرزی): نخستین «طرح» در «…» ← /episodes/episode-1.html\n\n"
+                "## 4.9 — کاوش\n\n1. `/insight/insight-6.html` — «عنوان شش». تصمیم ثبت‌شده: لینک.\n"),
+            "07-ورودی‌ها.md": "## مسیرهای یادگیری\n- انتخاب روشن: `occlusion`، درج پس از `insight/insight-1` («x»).\n"
+                              "- `digital` پیشنهاد نمی‌شود: درج پس از `insight/insight-2`.\n"})
+        dr = qm.plain(qm.draft(d))
+        self.assertEqual([(x["phrase"], x["href"]) for x in dr["links_48"]],
+                         [("اسکن", "/glossary/scanner.html"), ("طرح", "/episodes/episode-1.html")])
+        self.assertEqual([(x["term"], x["anchor"]) for x in dr["backlinks_47"]], [("scanner", "انتقال")])
+        self.assertEqual([(x["href"], x["label"]) for x in dr["explore_49"]], [("/insight/insight-6.html", "عنوان شش")])
+        self.assertEqual([(x["id"], x["after"]) for x in dr["pathway"]], [("occlusion", "insight/insight-1")])
 
 
 if __name__ == "__main__":

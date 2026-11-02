@@ -25,6 +25,7 @@ CLI:
 import argparse
 import copy
 import hashlib
+import html
 import json
 import re
 import sys
@@ -141,11 +142,21 @@ def section(lines, heading, level=2):
     return out if inside else None
 
 
+def section_any(lines, heading):
+    """`## heading`, else `# heading` (older items title their parts with `#`)."""
+    sec = section(lines, heading, 2)
+    return sec if sec is not None else section(lines, heading, 1)
+
+
+PROVENANCE_LINE = re.compile(r"^\s*(?:[-*]\s*)?(?:منشأ|Origin)\s*:")
+
+
 def single_value(sec):
-    """The one non-empty line of a section, or None when absent / several."""
+    """The one non-empty line of a section, or None when absent / several. A
+    provenance line («منشأ: …») under the value is a note, not a value."""
     if sec is None:
         return None
-    vals = [(n, t.strip()) for n, t in sec if t.strip()]
+    vals = [(n, t.strip()) for n, t in sec if t.strip() and not PROVENANCE_LINE.match(t)]
     return vals[0] if len(vals) == 1 else None
 
 
@@ -207,7 +218,7 @@ def draft(item):
     # 02 — title and caption
     l02 = lines_of(item, "02-عنوان-کپشن.md") or []
     for key, head in (("title_fa", "عنوان"), ("caption_fa", "کپشن")):
-        sv = single_value(section(l02, head))
+        sv = single_value(section_any(l02, head))
         d[key] = V(sv[1] if sv else None, f"02-عنوان-کپشن.md:{sv[0]}" if sv else "02-عنوان-کپشن.md")
 
     # 06 — English
@@ -217,12 +228,28 @@ def draft(item):
             d[k] = V(None, "06-انگلیسی.md missing")
     else:
         for key, head in (("title_en", "Title"), ("caption_en", "Caption")):
-            sv = single_value(section(l06, head))
+            sv = single_value(section_any(l06, head))
             d[key] = V(sv[1] if sv else None, f"06-انگلیسی.md:{sv[0]}" if sv else "06-انگلیسی.md")
-        starts = [n for n, l in enumerate(l06) if l.strip() == "## Body" or l.strip().startswith("## Body (")]
-        ends = [n for n, l in enumerate(l06) if l.strip().startswith(("## Figure captions", "## Image captions"))]
+        if d["title_en"]["value"] is None:
+            # `# <the title>` as the file's first line (no `Title` section)
+            first = next(((n, l) for n, l in enumerate(l06, 1) if l.strip()), None)
+            if first and re.match(r"^#\s+\S", first[1]) and not re.match(r"^#\s+English\b", first[1], re.I):
+                d["title_en"] = V(first[1][1:].strip(), f"06-انگلیسی.md:{first[0]}")
+        if d["caption_en"]["value"] is None:
+            caps = [(n, m.group(1)) for n, l in enumerate(l06, 1) if (m := re.match(r"^Caption:\s*(.+?)\s*$", l))]
+            if len(caps) == 1:
+                d["caption_en"] = V(caps[0][1], f"06-انگلیسی.md:{caps[0][0]}")
+        body_head = re.compile(r"^#{1,2}\s+(Body|Article)(\s*\(.*\))?\s*$")
+        starts = [n for n, l in enumerate(l06) if body_head.match(l.strip())]
+        ends = [n for n, l in enumerate(l06) if re.match(r"^#{1,2}\s+(Figure captions|Image captions|Image metadata)\b", l.strip())]
         if len(starts) == 1:
-            end = ends[0] if ends and ends[0] > starts[0] else len(l06)
+            end = next((e for e in ends if e > starts[0]), len(l06))
+            # a final `---` followed only by Persian notes closes the English body
+            rules = [n for n in range(starts[0] + 1, end) if re.fullmatch(r"\s*-{3,}\s*", l06[n])]
+            if rules:
+                after = [l for l in l06[rules[-1] + 1:end] if l.strip()]
+                if after and all(re.search(r"[\u0600-\u06FF]", l) for l in after):
+                    end = rules[-1]
             # The English body has as many `## ` sections as 01-متن.md; a later
             # `## ` (translator notes and the like) is not page text.
             fa = lines_of(item, "01-متن.md") or []
@@ -232,50 +259,120 @@ def draft(item):
                 end = heads[k_fa]
             d["body_en"] = V("\n".join(l06[starts[0] + 1:end]).strip("\n"), f"06-انگلیسی.md:{starts[0] + 2}-{end}")
         else:
-            d["body_en"] = V(None, "06-انگلیسی.md: no single `## Body`")
-        figs = {}
-        cap_head = next((l[3:].strip() for l in l06 if l.startswith("## Figure captions")
-                         or l.startswith("## Image captions")), None)
-        for n, l in (section(l06, cap_head) if cap_head else []) or []:
+            d["body_en"] = V(None, "06-انگلیسی.md: no single `## Body` / `# Article`")
+        figs, img_meta = {}, {}
+        cap_head = next((l.lstrip("#").strip() for l in l06 if re.match(r"^#{1,2}\s+(Figure captions|Image captions)\b", l)), None)
+        for n, l in (section_any(l06, cap_head) if cap_head else []) or []:
             m = re.match(r"^\s*-\s*(?:Image\s+)?(\d\d):\s*(.+?)\s*$", l)
             if m:
                 figs[m.group(1)] = (n, m.group(2))
+        # `## Image metadata`: «- Alt[ NN]: …» / «- Caption[ NN]: …»
+        for n, l in section_any(l06, "Image metadata") or []:
+            m = re.match(r"^\s*-\s*(Alt|Caption)(?:\s+(\d\d))?\s*:\s*(.+?)\s*$", l)
+            if m:
+                img_meta.setdefault(m.group(2) or "*", {})[m.group(1).lower()] = (n, m.group(3))
         d["_figcaps_en"] = V(figs, "06-انگلیسی.md")
+        d["_image_meta_en"] = V(img_meta, "06-انگلیسی.md")
 
     # 03 — images
-    d["images"] = draft_images(item, d.get("_figcaps_en", V({}, ""))["value"])
+    d["images"] = draft_images(item, d.get("_figcaps_en", V({}, ""))["value"],
+                               d.get("_image_meta_en", V({}, ""))["value"])
 
     # 04 — on-page credit
-    d["credit"] = draft_credit(item)
+    d["credit"] = draft_credit(item, lines_of(item, "07-ورودی‌ها.md") or [])
     d["catalog"] = (V([], "04-منبع/منابع.md: no paper") if (d["credit"]["value"] or {}).get("mode") == "none"
-                    else V(None, "04-منبع/منابع.md (catalog fields are not in the legacy contract)"))
+                    else V([{"skip": "catalog Part 2 fields are not frozen in the item; nothing is written to the "
+                                      "catalog (a follow-up for the founder, never a publish-day guess)"}],
+                           "default: 04-منبع/منابع.md holds no frozen catalog entry"))
 
-    # 07 — hashtags, pillar, pulse
+    # 07 — hashtags, pillar, pulse (each a known one-line pattern; the line is the origin)
     l07 = lines_of(item, "07-ورودی‌ها.md") or []
+    title = d["title_fa"]["value"]
     tags, pillar, sub, pulse = None, None, None, None
+    in_pulse = in_pillar = False
+    numbered = None  # a numbered hashtag list under «فهرست پیشنهادی/نهایی …»
     for n, l in enumerate(l07, 1):
         t = l.strip()
+        if t.startswith("#"):
+            in_pulse = bool(re.search(r"Pulse|پالس", t))
+            in_pillar = "پیلار" in t
+        if re.match(r"^فهرست (?:پیشنهادی|نهایی)", t) and tags is None:
+            numbered = (n, [])
+            continue
+        if numbered is not None and tags is None:
+            m = re.match(r"^\d+\.\s*`(#[^`\s]+)`", t)
+            if m:
+                numbered[1].append(m.group(1))
+                continue
+            if numbered[1]:
+                tags = V(numbered[1], f"07-ورودی‌ها.md:{numbered[0] + 1}-{n - 1}")
+            numbered = None
+        m = re.match(r"^-\s*پیشنهاد:\s*`([a-z][a-z0-9-]*)`\s*/\s*`([a-z][a-z0-9-]*)`", t)
+        if m and in_pillar and pillar is None:
+            pillar, sub = (n, m.group(1)), (n, m.group(2))
+        m = re.match(r"^`(.*«<a href=\"/[a-z]+/[a-z]+-\d+\.html\">(.+?)</a>».*منتشر شد)`$", t)
+        if m and in_pulse and pulse is None and title and m.group(2) == title:
+            pulse = (n, "html", re.sub(r'href="/[a-z]+/[a-z]+-\d+\.html"', 'href="{url}"', m.group(1)))
         m = re.match(r"^-\s*فهرست:\s*(#.+)$", t)
         if m and tags is None:
             tags = V(m.group(1).split(), f"07-ورودی‌ها.md:{n}")
-        m = re.match(r"^-\s*پیلار:\s*`?([a-z][a-z0-9-]*)`?", t)
+        m = re.match(r"^-\s*(?:فهرست نهایی تأییدشده|هشتگ‌های تأییدشده[^:]*)\s*:\s*(.+)$", t)
+        if m and tags is None:
+            # the list runs to the first sentence end; later sentences are notes
+            head = re.split(r"\.(?:\s|$)", m.group(1))[0]
+            found = re.findall(r"#[^\s`()،,.·«»]+", head)
+            if found:
+                tags = V(found, f"07-ورودی‌ها.md:{n}")
+        if tags is None and re.fullmatch(r"\[\s*\"#.*\]", t):
+            try:
+                arr = json.loads(t)
+                if all(isinstance(x, str) and x.startswith("#") for x in arr):
+                    tags = V(arr, f"07-ورودی‌ها.md:{n}")
+            except ValueError:
+                pass
+        m = re.match(r"^-\s*(?:پیلار|pillar\.primary)\s*:\s*`?([a-z][a-z0-9-]*)`?", t)
         if m and pillar is None:
             pillar = (n, m.group(1))
-        m = re.match(r"^-\s*ساب‌تاپیک:\s*`?([a-z][a-z0-9-]*)`?", t)
+        m = re.match(r"^-\s*(?:ساب‌تاپیک|pillar\.subtopic)\s*:\s*`?([a-z][a-z0-9-]*)`?", t)
         if m and sub is None:
             sub = (n, m.group(1))
+        m = re.search(r"`pillar\.primary:\s*([a-z][a-z0-9-]*)`.*`pillar\.subtopic:\s*([a-z][a-z0-9-]*)`", t)
+        if m and pillar is None:
+            pillar, sub = (n, m.group(1)), (n, m.group(2))
+        m = re.match(r"^-\s*پیلار/ساب‌تاپیک\s*:\s*([a-z][a-z0-9-]*)\s*/\s*([a-z][a-z0-9-]*)", t)
+        if m and pillar is None:
+            pillar, sub = (n, m.group(1)), (n, m.group(2))
         m = re.match(r"^-\s*متن دقیق:\s*«(.+)»\s*با لینک به صفحهٔ تازه", t)
         if m and pulse is None:
             pulse = (n, m.group(1))
         m = re.match(r"^-\s*متن دقیق \(لینک روی کل عنوان\):\s*(.+?)\s*$", t)
         if m and pulse is None:
             pulse = (n, None, m.group(1))
-    d["hashtags"] = tags or V(None, "07-ورودی‌ها.md: no «- فهرست: #…» line")
+        m = re.match(r"^-\s*پالس:\s*همان عنوان\s*«(.+?)»\s*با لینک روی کل عنوان", t)
+        if m and pulse is None:
+            pulse = (n, m.group(1))
+        m = re.match(r"^-\s*جمله:\s*«(.+)»\s*$", t)
+        if m and pulse is None and in_pulse:
+            pulse = (n, None, m.group(1))
+        m = re.search(r"«<a href=\"(/[a-z]+/[a-z]+-)\{N\}\.html\">\{عنوان تأییدشده\}</a>»", t)
+        if m and pulse is None and re.search(r"Pulse|پالس", t):
+            tpl = re.search(r":\s*([^:]*«<a href=.*?</a>»[^—]*?)\s*(?:—|$)", t)
+            if tpl:
+                pulse = (n, "html", tpl.group(1).strip())
+    d["hashtags"] = tags or V(None, "07-ورودی‌ها.md: no hashtag list line")
     d["mint"] = V([], "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)")
     d["pillar"] = V({"primary": pillar[1], "subtopic": sub[1] if sub else None, "secondary": []},
-                    f"07-ورودی‌ها.md:{pillar[0]}") if pillar else V(None, "07-ورودی‌ها.md: no «- پیلار:» line")
-    title = d["title_fa"]["value"]
-    if pulse and len(pulse) == 3 and title and f"«{title}»" in pulse[2] and "<" not in pulse[2]:
+                    f"07-ورودی‌ها.md:{pillar[0]}") if pillar else V(None, "07-ورودی‌ها.md: no pillar line")
+    if pulse and len(pulse) == 3 and pulse[1] == "html" and title:
+        html_ = re.sub(r'href="(/[a-z]+/[a-z]+-)\{N\}\.html"', 'href="{url}"', pulse[2]).replace("{عنوان تأییدشده}", html.escape(title, quote=False))
+        if f">{html.escape(title, quote=False)}</a>" not in html_:
+            html_ = ""
+        html_ = html_.strip()
+        if html_.endswith("منتشر شد") or html_.endswith("منتشر شد."):
+            d["pulse"] = V({"html": html_, "link_phrase": title}, f"07-ورودی‌ها.md:{pulse[0]}")
+        else:
+            d["pulse"] = V(None, "07-ورودی‌ها.md: pulse template not closed by «منتشر شد»")
+    elif pulse and len(pulse) == 3 and title and f"«{title}»" in pulse[2] and "<" not in pulse[2]:
         d["pulse"] = V({"text": pulse[2], "link_phrase": title}, f"07-ورودی‌ها.md:{pulse[0]}")
     elif pulse and len(pulse) == 2 and title and pulse[1] == title:
         d["pulse"] = V({"text": None, "link_phrase": title}, f"07-ورودی‌ها.md:{pulse[0]}")
@@ -288,9 +385,9 @@ def draft(item):
 
     # 11 — the in-body link table (prose decisions are NOT read: see legacy_review)
     d["links_48"] = draft_links(item)
-    for k in ("explore_49", "backlinks_47"):
-        d[k] = V(None, "11-لینک‌های-گلاسری.md (prose; legacy review)")
-    d["pathway"] = V(None, "default: mechanical pathway rule")
+    d["backlinks_47"] = draft_backlinks(item)
+    d["explore_49"] = draft_explore(item)
+    d["pathway"] = draft_pathway(l07)
     d["author"] = V(None, "not in the legacy contract")
     d["legacy_review"] = V(None, "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions")
     return d
@@ -316,16 +413,53 @@ def keyword_lines(lines):
     keywords as the one `- ` list; anything else is not read."""
     if not lines:
         return None
-    rows = [l.strip() for l in lines if l.strip()]
-    if any(r.startswith("#") for r in rows):
-        items = [r[2:].strip() for r in rows if r.startswith("- ")]
-        return items or None
+    rows = [l.strip() for l in lines if l.strip() and not PROVENANCE_LINE.match(l)]
     if any(r.startswith("- ") for r in rows):
+        if any(r.startswith("#") for r in rows):
+            items = [r[2:].strip() for r in rows if r.startswith("- ")]
+            return items or None
         return None
-    return rows
+    heads = [r for r in rows if r.startswith("#")]
+    if heads and not all("کلیدواژه" in h for h in heads):
+        return None  # prose under another heading is not a keyword list
+    rows = [r for r in rows if not r.startswith("#")]
+    return rows or None
 
 
-def draft_images(item, figcaps_en):
+PROVENANCE_PAREN = re.compile(r"\s*\((?=[^()]*(?:عیناً|تأیید|منشأ|نام روز انتشار|from the|approved))[^()]*\)\s*$")
+
+
+def clean_value(v):
+    """A bullet value as written, minus code ticks and a trailing provenance
+    note in parentheses («(عیناً از alt داک)», «(تأیید …)»): a note says where
+    the value came from, it is not part of the value."""
+    v = (v or "").strip().strip("`").strip()
+    return PROVENANCE_PAREN.sub("", v).strip()
+
+
+def image_bullets(lines):
+    """The bullet form of 03: `## تصویر NN` then «- فایل:», «- Alt فارسی:»,
+    «- Alt انگلیسی:», «- زیرنویس:». Returns {NN: {key: (lineno, value)}}."""
+    out, cur = {}, None
+    for n, l in enumerate(lines, 1):
+        m = re.match(r"^#{2,3}\s*تصویر\s*([0-9۰-۹]{2})\b", l.strip())
+        if m:
+            cur = m.group(1).translate(str.maketrans("۰۱۲۳۴۵۶۷۸۹", "0123456789"))
+            out[cur] = {}
+            continue
+        if re.match(r"^#", l):
+            cur = None
+            continue
+        m = re.match(r"^\s*-\s*([^:：]+?)\s*:\s*(.*?)\s*$", l)
+        if cur and m:
+            key = m.group(1).strip().lower()
+            k = {"فایل": "file", "alt فارسی": "alt_fa", "alt انگلیسی": "alt_en", "زیرنویس": "caption_fa"}.get(key)
+            if k and k not in out[cur]:
+                out[cur][k] = (n, m.group(2))
+    return out
+
+
+def draft_images(item, figcaps_en, meta_en=None):
     rel = "03-تصاویر/تصاویر.md"
     lines = lines_of(item, rel)
     files = sorted(p for p in (item / "03-تصاویر").glob("*") if p.suffix.lower() in (".webp", ".png", ".jpg", ".jpeg")) \
@@ -334,32 +468,72 @@ def draft_images(item, figcaps_en):
         return V([], "03-تصاویر: no image files")
     if lines is None:
         return V(None, f"{rel} missing")
+    meta_en = meta_en or {}
     header, rows = md_table(lines)
     kn = col(header, "شماره")
     kalt, kcap, kalten = col(header, "alt فارسی"), col(header, "زیرنویس"), col(header, "alt انگلیسی")
-    out = []
+    found = {}
     for n, row in rows:
         num = cell(row, kn)
         if not num or not re.fullmatch(r"\d\d", num):
             continue
         match = [p for p in files if p.name.startswith(num + "-")]
-        img = {"n": num,
-               "file": V(f"03-تصاویر/{match[0].name}" if len(match) == 1 else None, f"{rel}:{n}"),
-               "alt_fa": V(cell(row, kalt) if kalt is not None and cell(row, kalt) not in EMPTY else None, f"{rel}:{n}"),
-               "caption_fa": V(None if kcap is None else (cell(row, kcap) if cell(row, kcap) not in EMPTY else ""), f"{rel}:{n}"),
-               "alt_en": V(cell(row, kalten) if kalten is not None and cell(row, kalten) not in EMPTY else None, f"{rel}:{n}")}
-        cap_en = figcaps_en.get(num)
+        found[num] = {"n": num,
+                      "file": V(f"03-تصاویر/{match[0].name}" if len(match) == 1 else None, f"{rel}:{n}"),
+                      "alt_fa": V(cell(row, kalt) if kalt is not None and cell(row, kalt) not in EMPTY else None, f"{rel}:{n}"),
+                      "caption_fa": V(None if kcap is None else (cell(row, kcap) if cell(row, kcap) not in EMPTY else ""), f"{rel}:{n}"),
+                      "alt_en": V(cell(row, kalten) if kalten is not None and cell(row, kalten) not in EMPTY else None, f"{rel}:{n}")}
+    if not found:
+        for num, kv in image_bullets(lines).items():
+            img = {"n": num}
+            fn = kv.get("file")
+            name = re.search(r"[\w.-]+\.(?:webp|png|jpe?g)", fn[1], re.I) if fn else None
+            match = [p for p in files if name and p.name == name.group(0)]
+            img["file"] = V(f"03-تصاویر/{match[0].name}" if len(match) == 1 else None,
+                            f"{rel}:{fn[0]}" if fn else rel)
+            for k in ("alt_fa", "alt_en"):
+                v = clean_value(kv[k][1]) if k in kv else ""
+                img[k] = V(v or None, f"{rel}:{kv[k][0]}" if k in kv else rel)
+            if "caption_fa" in kv:
+                v = clean_value(kv["caption_fa"][1])
+                img["caption_fa"] = V("" if v in EMPTY or v.startswith("ندارد") else v, f"{rel}:{kv['caption_fa'][0]}")
+            else:
+                img["caption_fa"] = V(None, rel)
+            found[num] = img
+    # captions written once for all images under the table:
+    # «زیرنویس: … ۰۱ «…»؛ ۰۲ «…»» or «- زیرنویس نمایان (تازه) ندارد»
+    fa2en = str.maketrans("۰۱۲۳۴۵۶۷۸۹", "0123456789")
+    for n, l in enumerate(lines, 1):
+        t = l.strip()
+        if re.match(r"^-?\s*زیرنویس نمایان(?: تازه)? ندارد", t):
+            for img in found.values():
+                if img["caption_fa"]["value"] is None:
+                    img["caption_fa"] = V("", f"{rel}:{n}")
+        elif t.startswith("زیرنویس:"):
+            for num, cap in re.findall(r"([0-9۰-۹]{2})\s*«([^»]+)»", t):
+                img = found.get(num.translate(fa2en))
+                if img and img["caption_fa"]["value"] is None:
+                    img["caption_fa"] = V(cap, f"{rel}:{n}")
+    out = []
+    for p in files:
+        num = p.name[:2]
+        img = found.get(num) or {"n": num, "file": V(f"03-تصاویر/{p.name}", f"03-تصاویر/{p.name}"),
+                                 "alt_fa": V(None, rel), "caption_fa": V(None, rel), "alt_en": V(None, rel)}
+        one = meta_en.get(num) or (meta_en.get("*") if len(files) == 1 else None) or {}
+        if img["alt_en"]["value"] is None and "alt" in one:
+            img["alt_en"] = V(one["alt"][1], f"06-انگلیسی.md:{one['alt'][0]}")
+        cap_en = figcaps_en.get(num) or one.get("caption")
         if img["caption_fa"]["value"] == "":
-            img["caption_en"] = V("", f"{rel}:{n} (no caption)")
+            img["caption_en"] = V("", f"{img['caption_fa']['from']} (no caption)")
         else:
             img["caption_en"] = V(cap_en[1] if cap_en else None, f"06-انگلیسی.md:{cap_en[0]}" if cap_en else "06-انگلیسی.md")
         out.append(img)
-    if len(out) != len(files):
-        return V(None, f"{rel}: {len(out)} table rows for {len(files)} image files")
+    # every image file has an entry (fields the item does not give stay null and
+    # are named by `missing`, so a supplement can fill them — never a dead end)
     return V(out, rel)
 
 
-def draft_credit(item):
+def draft_credit(item, l07=()):
     rel = "04-منبع/منابع.md"
     lines = lines_of(item, rel)
     if lines is None:
@@ -381,30 +555,135 @@ def draft_credit(item):
     if no_paper:
         n = next(i for i, l in enumerate(lines, 1) if l.strip() and not l.startswith("#"))
         return V({"mode": "none"}, f"{rel}:{n}")
+    # one paper: «… نویسندهٔ اول «<name>» (…) با لینک https://doi.org/…» in 07 (module 06 Part 3)
+    for n, l in enumerate(l07, 1):
+        m = re.search(r"نویسندهٔ اول\s*«([^»]+)»[^«]*?با لینک\s*(https://doi\.org/\S+?)\.?\s*$", l.strip())
+        if m:
+            return V({"mode": "author-doi", "label_fa": m.group(1), "label_en": m.group(1), "href": m.group(2)},
+                     f"07-ورودی‌ها.md:{n}")
     return V(None, f"{rel}: the on-page credit label (first author's display name) is not in the legacy contract")
 
 
+def draft_pathway(l07):
+    """5.6 frozen choices in 07: under a `## …مسیر…` heading, bullets naming a
+    pathway id in code ticks and «درج/افزودن پس از `<content_id>`». A bullet
+    that says the pathway is not proposed («پیشنهاد نمی‌شود») is not a choice."""
+    out, inside = [], False
+    for n, l in enumerate(l07 or [], 1):
+        t = l.strip()
+        if t.startswith("#"):
+            inside = t.startswith("##") and "مسیر" in t and "آزمون" not in t
+            continue
+        if not inside or not t.startswith("-") or "پیشنهاد نمی‌شود" in t:
+            continue
+        m = re.match(r"^-\s*(?:[^`]*?:\s*)?`([a-z][a-z0-9-]*)`[^`]*?(?:درج|افزودن)\s+پس از\s+`([a-z]+/[A-Za-z0-9-]+)`", t)
+        if m:
+            out.append({"id": m.group(1), "after": m.group(2), "from": f"07-ورودی‌ها.md:{n}"})
+    if out:
+        return V(out, out[0]["from"])
+    return V(None, "default: mechanical pathway rule")
+
+
+def heading_block(lines, prefix):
+    """(start index, end index) of the `## <prefix>…` section."""
+    start = next((i for i, l in enumerate(lines) if re.match(r"^##\s*" + re.escape(prefix), l)), None)
+    if start is None:
+        return None, None
+    end = next((j for j in range(start + 1, len(lines)) if re.match(r"^#{1,2}\s", lines[j])), len(lines))
+    return start, end
+
+
 def draft_links(item):
+    """4.8: the decision table («عبارت عیناً» / «عبارت عین متن», «هدف»,
+    «تصمیم…»), or the bullet forms «- **عبارت:** «…»» + «- **مقصد:**» +
+    «- **تصمیم:** لینک…», or «- لینک N (…): نخستین «…» … ← /path.html»."""
     rel = "11-لینک‌های-گلاسری.md"
     lines = lines_of(item, rel)
     if lines is None:
         return V([], f"{rel} missing: no in-body links")
-    start = next((i for i, l in enumerate(lines) if l.startswith("## 4.8")), None)
+    start, end = heading_block(lines, "4.8")
     if start is None:
         return V(None, f"{rel}: no `## 4.8` section")
-    header, rows = md_table(lines, start)
-    kp, kt, kd = col(header, "عبارت عیناً"), col(header, "هدف"), col(header, "تصمیم")
-    if None in (kp, kt, kd):
-        return V(None, f"{rel}: 4.8 table columns not recognised")
+    header, rows = md_table(lines[:end], start)
     out = []
-    for n, r in rows:
-        if cell(r, kd) != "لینک":
+    if header:
+        kp, kt, kd = col(header, "عبارت عین"), col(header, "هدف"), col(header, "تصمیم")
+        if None in (kp, kt, kd):
+            return V(None, f"{rel}: 4.8 table columns not recognised")
+        for n, r in rows:
+            if not (cell(r, kd) or "").startswith("لینک"):
+                continue
+            href = re.search(r"(/[A-Za-z0-9_./-]+\.html)", cell(r, kt) or "")
+            if not href:
+                return V(None, f"{rel}:{n}: no target path")
+            out.append({"phrase": cell(r, kp), "href": href.group(1), "from": f"{rel}:{n}"})
+        return V(out, f"{rel}:{start + 1}")
+    cur = {}
+    for k in range(start + 1, end):
+        t, n = lines[k].strip(), k + 1
+        m = re.match(r"^-\s*\*\*عبارت:\*\*\s*«([^»]+)»", t)
+        if m:
+            cur = {"phrase": m.group(1), "from": f"{rel}:{n}"}
             continue
-        href = re.search(r"(/[A-Za-z0-9_./-]+\.html)", cell(r, kt) or "")
-        if not href:
-            return V(None, f"{rel}:{n}: no target path")
-        out.append({"phrase": cell(r, kp), "href": href.group(1), "from": f"{rel}:{n}"})
+        m = re.match(r"^-\s*\*\*مقصد:\*\*\s*`?(/[A-Za-z0-9_./-]+\.html)`?", t)
+        if m and cur:
+            cur["href"] = m.group(1)
+            continue
+        m = re.match(r"^-\s*\*\*تصمیم:\*\*\s*(.*)$", t)
+        if m and cur.get("href"):
+            if m.group(1).startswith("لینک"):
+                out.append(cur)
+            cur = {}
+            continue
+        m = re.match(r"^-\s*لینک\s*\S+\s*\([^)]*\)\s*:\s*نخستین\s*«([^»]+)».*?←\s*(/[A-Za-z0-9_./-]+\.html)", t)
+        if m:
+            out.append({"phrase": m.group(1), "href": m.group(2), "from": f"{rel}:{n}"})
+    if not out:
+        return V(None, f"{rel}: 4.8 decisions not in a known form")
     return V(out, f"{rel}:{start + 1}")
+
+
+def draft_backlinks(item):
+    """4.7 decisions with their frozen link text: a table row («اصطلاح»,
+    «هدف…» = /glossary/<term>.html, «متن لینک», «تصمیم» starting «لینک»), or
+    «- **`term` — `/glossary/term.html`: لینک.** … متن لینک در «کاوش بیشتر»: «…»».
+    Anything else is not a frozen back-link: nothing is added."""
+    rel = "11-لینک‌های-گلاسری.md"
+    lines = lines_of(item, rel) or []
+    start, end = heading_block(lines, "4.7")
+    if start is None:
+        return V([], f"default: {rel} has no 4.7 section — no back-link is added")
+    out = []
+    header, rows = md_table(lines[:end], start)
+    kt, ka, kd = col(header, "هدف"), col(header, "متن لینک"), col(header, "تصمیم")
+    if header and None not in (kt, ka, kd):
+        for n, r in rows:
+            term = re.search(r"/glossary/([a-z0-9-]+)\.html", cell(r, kt) or "")
+            if term and (cell(r, kd) or "").startswith("لینک") and cell(r, ka):
+                out.append({"term": term.group(1), "anchor": cell(r, ka), "from": f"{rel}:{n}"})
+    for k in range(start + 1, end):
+        t = lines[k].strip()
+        m = re.match(r"^-\s*\*\*`([a-z0-9-]+)`\s*—\s*`/glossary/\1\.html`:\s*لینک\.?\*\*", t)
+        a = re.search(r"متن لینک در «کاوش بیشتر»:\s*«([^»]+)»", t)
+        if m and a:
+            out.append({"term": m.group(1), "anchor": a.group(1), "from": f"{rel}:{k + 1}"})
+    return V(out, f"{rel}:{start + 1}" if out else f"default: {rel} 4.7 has no frozen back-link with its link text — none is added")
+
+
+def draft_explore(item):
+    """4.9: only a frozen selection («N. `/path.html` — «label» … تصمیم ثبت‌شده: لینک.»).
+    4.9 is otherwise live on publish day and the queue lane adds nothing."""
+    rel = "11-لینک‌های-گلاسری.md"
+    lines = lines_of(item, rel) or []
+    start, end = heading_block(lines, "4.9")
+    out = []
+    if start is not None:
+        for k in range(start + 1, end):
+            t = lines[k].strip()
+            m = re.match(r"^\d+\.\s*`(/[A-Za-z0-9_./-]+\.html)`\s*—\s*«([^»]+)»", t)
+            if m and "تصمیم ثبت‌شده: لینک" in t:
+                out.append({"href": m.group(1), "label": m.group(2), "from": f"{rel}:{k + 1}"})
+    return V(out, f"{rel}:{start + 1}" if out else "default: no frozen 4.9 selection — nothing is added (queue-route: 4.9 only a frozen choice)")
 
 
 # ------------------------------------------------------------ supplement / check
@@ -414,27 +693,66 @@ REQUIRED = ("category", "title_fa", "caption_fa", "title_en", "caption_en", "bod
             )
 
 
-def verify_origin(item, value, origin):
-    """A supplemented value that claims a frozen file must appear on that line."""
-    m = re.fullmatch(r"(.+?):(\d+)", origin or "")
-    if not m or not (Path(item) / m.group(1)).exists():
-        return None  # outside the item: a recorded manual step
-    line = (Path(item) / m.group(1)).read_text(encoding="utf-8").splitlines()[int(m.group(2)) - 1]
+# Fields whose words appear on the page: their values come from the frozen item
+# or not at all. A publish-day origin for a non-empty text here is refused —
+# the agent writes no text on publish day (queue-route.md).
+PAGE_TEXT = {"title_fa", "caption_fa", "title_en", "caption_en", "body_en", "pulse", "keywords", "hashtags",
+             "credit", "explore_49", "backlinks_47", "links_48", "alt_fa", "alt_en", "caption_fa", "caption_en"}
+# Structural keys: a fixed vocabulary of the manifest, never words on a line.
+STRUCTURAL = {"from", "mode", "n"}
+
+
+def origin_lines(item, origin):
+    """The text of `<file>:<line>` or `<file>:<a>-<b>` inside the item, else None."""
+    m = re.fullmatch(r"(.+?):(\d+)(?:-(\d+))?", origin or "")
+    if not m or not (Path(item) / m.group(1)).is_file():
+        return None
+    rows = (Path(item) / m.group(1)).read_text(encoding="utf-8").splitlines()
+    a, b = int(m.group(2)), int(m.group(3) or m.group(2))
+    if not 1 <= a <= b <= len(rows):
+        raise QueueRefusal("SUPPLEMENT_ORIGIN_RANGE", f"{origin}: no such line(s) in the item", origin=origin)
+    return "\n".join(rows[a - 1:b])
+
+
+def texts_of(value):
     if isinstance(value, str):
-        texts = [value]
-    elif isinstance(value, dict):
-        texts = [v for k, v in value.items() if isinstance(v, str) and k != "from"]
-    else:
-        texts = []
-    for t in texts:
-        if t and t not in line and not t.startswith(("/", "http")):
+        return [value]
+    if isinstance(value, list):
+        return [t for x in value for t in texts_of(x)]
+    if isinstance(value, dict):
+        return [t for k, v in value.items() if k not in STRUCTURAL for t in texts_of(v)]
+    return []
+
+
+def verify_origin(item, value, origin):
+    """A supplemented value that claims a frozen file must appear on that line
+    (or line range): every string in it, structural keys aside. Returns None
+    when the origin is outside the item (a recorded manual step)."""
+    text = origin_lines(item, origin)
+    if text is None:
+        return None
+    for t in texts_of(value):
+        if t and t not in text and not t.startswith(("/", "http")):
             raise QueueRefusal("SUPPLEMENT_NOT_VERBATIM", f"«{t[:60]}» is not on {origin}", origin=origin)
     return True
 
 
+def guard_text(field, value, origin_ok):
+    if origin_ok is None and field.split(".")[-1] in PAGE_TEXT and any(t.strip() for t in texts_of(value)):
+        raise QueueRefusal("SUPPLEMENT_TEXT_NOT_FROZEN",
+                           f"{field}: page text from outside the frozen item — the agent writes no text on publish "
+                           "day; the item goes back to «در حال آماده‌سازی» to freeze it", field=field)
+
+
+def is_default(entry):
+    return str((entry or {}).get("from", "")).startswith("default:")
+
+
 def merge_supplement(item, d, supplement):
-    """Fill null fields only. Each supplied field: {"value": …, "from": "<file:line>" | "publish-day: <why>"}.
-    Images take per-image keys: {"images": {"01": {"alt_en": {...}}}}."""
+    """Fill null fields only (or replace a mechanical default with a value read
+    from the item). Each supplied field: {"value": …, "from": "<file:line[-line]>"
+    | "publish-day: <why>"}. Images take per-image keys:
+    {"images": {"01": {"alt_en": {...}}}}."""
     d = copy.deepcopy(d)
     manual = []
     for key, spec in (supplement or {}).items():
@@ -443,37 +761,55 @@ def merge_supplement(item, d, supplement):
             for num, fields in spec.items():
                 img = next((i for i in imgs if i["n"] == num), None)
                 if img is None:
-                    raise QueueRefusal("SUPPLEMENT_IMAGE", f"no image {num} in the item")
-                for f, s in fields.items():
+                    raise QueueRefusal("SUPPLEMENT_IMAGE", f"no image {num} in the item (03-تصاویر has "
+                                       f"{[i['n'] for i in imgs]})")
+                for f, s_ in fields.items():
                     if img.get(f, {}).get("value") is not None:
                         raise QueueRefusal("SUPPLEMENT_OVERRIDES_FROZEN", f"image {num}.{f} is already read from the item")
-                    if verify_origin(item, s["value"], s.get("from")) is None:
-                        manual.append({"field": f"images.{num}.{f}", "from": s.get("from")})
-                    img[f] = {"value": s["value"], "from": s.get("from")}
+                    ok = verify_origin(item, s_["value"], s_.get("from"))
+                    guard_text(f"images.{num}.{f}", s_["value"], ok)
+                    if ok is None:
+                        manual.append({"field": f"images.{num}.{f}", "from": s_.get("from")})
+                    img[f] = {"value": s_["value"], "from": s_.get("from")}
             continue
         if not isinstance(spec, dict) or "value" not in spec or not spec.get("from"):
             raise QueueRefusal("SUPPLEMENT_SHAPE", f"supplement {key}: needs {{\"value\", \"from\"}}")
-        cur = d.get(key, {}).get("value")
-        if cur is not None and key not in ("links_48", "legacy_review", "mint"):
-            raise QueueRefusal("SUPPLEMENT_OVERRIDES_FROZEN", f"{key} is already read from the item ({d[key]['from']})")
+        cur_entry = d.get(key, {})
+        cur = cur_entry.get("value")
         if key == "links_48" and cur is not None:
             # additions only: rows the 4.8 table already holds stay as read
             have = {(x["phrase"], x["href"]) for x in cur}
             add = [x for x in spec["value"] if (x["phrase"], x["href"]) not in have]
             spec = {"value": cur + add, "from": spec["from"]}
-        if isinstance(spec["value"], list) and not any(isinstance(x, dict) and x.get("from") for x in spec["value"]):
-            if verify_origin(item, None, spec["from"]) is None:
-                manual.append({"field": key, "from": spec["from"]})
-        elif isinstance(spec["value"], list):
+        elif cur is not None and key not in ("legacy_review", "mint"):
+            if not is_default(cur_entry):
+                raise QueueRefusal("SUPPLEMENT_OVERRIDES_FROZEN", f"{key} is already read from the item ({cur_entry['from']})")
+            if origin_lines(item, spec["from"]) is None and not all(
+                    isinstance(x, dict) and origin_lines(item, x.get("from")) is not None for x in spec["value"] or [None]):
+                raise QueueRefusal("SUPPLEMENT_OVERRIDES_DEFAULT",
+                                   f"{key}: a mechanical default ({cur_entry['from']}) is replaced only by a value "
+                                   "read from the item (file:line), never by a publish-day choice")
+        if isinstance(spec["value"], list) and any(isinstance(x, dict) and x.get("from") for x in spec["value"]):
             for x in spec["value"]:
                 if isinstance(x, dict) and x.get("from"):
-                    if verify_origin(item, x, x["from"]) is None:
+                    ok = verify_origin(item, x, x["from"])
+                    guard_text(key, x, ok)
+                    if ok is None:
                         manual.append({"field": key, "from": x["from"]})
-        elif verify_origin(item, spec["value"], spec["from"]) is None:
-            manual.append({"field": key, "from": spec["from"]})
+        else:
+            ok = verify_origin(item, spec["value"], spec["from"])
+            guard_text(key, spec["value"], ok)
+            if ok is None:
+                manual.append({"field": key, "from": spec["from"]})
         d[key] = {"value": spec["value"], "from": spec["from"]}
     d["_manual"] = {"value": manual, "from": "supplement"}
     return d
+
+
+def defaults_of(d):
+    """Every field the item left to a mechanical default (receipt: mechanical_defaults)."""
+    return [{"field": k, "rule": v["from"][len("default:"):].strip(), "value": v["value"]}
+            for k, v in d.items() if isinstance(v, dict) and is_default(v)]
 
 
 def missing(d):
@@ -481,10 +817,6 @@ def missing(d):
     for img in d.get("images", {}).get("value") or []:
         out += [f"images.{img['n']}.{f}" for f in ("file", "alt_fa", "alt_en", "caption_fa", "caption_en")
                 if img.get(f, {}).get("value") is None]
-    if d.get("category", {}).get("value") == "sharehub" and d.get("author", {}).get("value") is None:
-        out.append("author")
-    if d.get("_source", {}).get("value") == "legacy" and d.get("legacy_review", {}).get("value") is None:
-        out.append("legacy_review")
     return out
 
 
