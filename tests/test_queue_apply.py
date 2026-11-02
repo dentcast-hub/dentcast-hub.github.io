@@ -210,9 +210,20 @@ class ManifestTests(unittest.TestCase):
 
 
 class CategoryPiecesTests(unittest.TestCase):
-    def test_metanote_has_no_template_yet(self):
-        self.assertNotIn("metanote", qa.CATEGORIES)
-        self.assertEqual(set(qa.CATEGORIES), {"sharehub", "notecast", "insight", "chairside"})
+    def test_enabled_categories(self):
+        self.assertEqual(set(qa.CATEGORIES), {"sharehub", "notecast", "insight", "chairside", "metanote"})
+
+    def test_metanote_requires_its_page_fields(self):
+        d = {"category": {"value": "metanote", "from": "x"}}
+        miss = qm.missing(d)
+        for k in ("alt_headline_fa", "alt_headline_en", "article_section", "keywords_fa", "keywords_en"):
+            self.assertIn(k, miss)
+        d["category"]["value"] = "insight"
+        self.assertNotIn("alt_headline_fa", qm.missing(d))
+
+    def test_persian_cardinals(self):
+        self.assertEqual([qa.fa_cardinal(n) for n in (1, 10, 19, 20, 22, 23)],
+                         ["یک", "ده", "نوزده", "بیست", "بیست\u200cودو", "بیست\u200cوسه"])
 
     def test_persian_ordinals(self):
         self.assertEqual([qa.fa_ordinal(n) for n in (3, 21, 30, 40, 44)],
@@ -446,3 +457,116 @@ class QueuePublishTests(ManifestTests):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def _md_from_metanote_body(html_body):
+    """meta-22's body back to queue markdown: <p>, <hr>, <h4>, <blockquote>, one
+    <figure>. Returns (markdown, links) with links as {phrase, href}."""
+    import re as _re
+    links = []
+    out = []
+    for blk in _re.split(r"\n\n+", html_body.strip()):
+        b = blk.strip()
+        if b.startswith("<figure>"):
+            out.append("[[تصویر:01]]")
+        elif b == "<hr>":
+            out.append("---")
+        elif m := _re.fullmatch(r"<h4>(.*)</h4>", b):
+            out.append("#### " + m.group(1))
+        elif m := _re.fullmatch(r"<blockquote>\n(.*)\n</blockquote>", b, _re.S):
+            out.append("> " + m.group(1))
+        elif m := _re.fullmatch(r"<p>\n(.*)\n</p>", b, _re.S):
+            t = m.group(1)
+            for href, phrase in _re.findall(r'<a href="([^"]+)">([^<]+)</a>', t):
+                links.append({"phrase": phrase, "href": href})
+            out.append(_re.sub(r'<a href="[^"]+">([^<]+)</a>', r"\1", t))
+        else:
+            raise AssertionError("unexpected block " + b[:40])
+    return "\n\n".join(out) + "\n", links
+
+
+class MetaNoteGoldenReplayTests(unittest.TestCase):
+    """metanotes/meta-22 (fa and en) rebuilt from meta-21 out of a queue item
+    holding meta-22's own words is byte-identical to the live page."""
+
+    def setUp(self):
+        import html as _html
+        import re as _re
+        fa = (ROOT / "metanotes/meta-22.html").read_bytes().decode("utf-8").replace("\r\n", "\n")
+        en = (ROOT / "metanotes/en/meta-22.html").read_bytes().decode("utf-8").replace("\r\n", "\n")
+        body = lambda d: d[d.index("</a>", d.index('<a class="lang-btn"')) + 4:d.index('\n  <p class="dc-disclaimer">')]
+        md_fa, links = _md_from_metanote_body(body(fa))
+        md_en = _md_from_metanote_body(_re.sub(r'<a href="([^"]+)">([^<]+)</a>', r"[\2](\1)", body(en)))[0]
+        self.item = Path(tempfile.mkdtemp()) / "15-metanote-golden"
+        (self.item / "03-تصاویر").mkdir(parents=True)
+        (self.item / "01-متن.md").write_text(md_fa, encoding="utf-8")
+        (self.item / "03-تصاویر/01.webp").write_bytes((ROOT / "metanotes/meta-22.webp").read_bytes())
+        brain = json.loads((ROOT / "dentcast-brain.json").read_text(encoding="utf-8"))
+        e = next(x for x in brain if x.get("id") == "meta-22")
+        grab = lambda d, pat: _html.unescape(_re.search(pat, d).group(1))
+        kw_fa = grab(fa, r'"keywords": "([^"]*)"').split(", ")[:-2]
+        cap = lambda d: grab(d, r'<figcaption[^>]*>([^<]*)</figcaption>')
+        alt = lambda d: grab(d, r'<img loading="lazy" src="/metanotes/meta-22.webp" alt="([^"]*)"')
+        self.m = {"category": "metanote", "title_fa": e["title"], "caption_fa": e["caption"],
+                  "title_en": grab(en, r'"headline": "([^"]*)"'),
+                  "caption_en": grab(en, r'<meta name="description" content="([^"]*)"'),
+                  "alt_headline_fa": grab(fa, r'"alternativeHeadline": "([^"]*)"'),
+                  "alt_headline_en": grab(en, r'"alternativeHeadline": "([^"]*)"'),
+                  "article_section": grab(fa, r'"articleSection": "([^"]*)"'),
+                  "keywords_fa": kw_fa, "keywords_en": json.loads(_re.search(r'"keywords": (\[.*?\])', en, _re.S).group(1)),
+                  "keywords": e["keywords"], "body_en": md_en, "credit": {"mode": "none"},
+                  "images": [{"n": "01", "file": "03-تصاویر/01.webp", "alt_fa": alt(fa), "alt_en": alt(en),
+                              "caption_fa": cap(fa), "caption_en": cap(en)}],
+                  "links_48": links, "pillar": e["pillar"],
+                  "explore_49": [{"href": h, "label": _html.unescape(t)} for h, t in _re.findall(
+                      r'<a href="([^"]+)" class="dc-related-capsule">([^<]+)</a>', fa)[2:]]}
+
+    def test_fa_page_is_byte_identical(self):
+        page, files, info = qa.build_metanote_page(22, 21, self.m, "2026-10-08", self.item, "fa")
+        self.assertEqual(page.encode("utf-8"), (ROOT / "metanotes/meta-22.html").read_bytes())
+        self.assertEqual(list(files), ["metanotes/meta-22.webp"])
+        self.assertEqual(info["links_not_found"], [])
+
+    def test_en_page_is_byte_identical(self):
+        page, _, _ = qa.build_metanote_page(22, 21, self.m, "2026-10-08", self.item, "en")
+        self.assertEqual(page.encode("utf-8"), (ROOT / "metanotes/en/meta-22.html").read_bytes())
+
+    def test_landing_row_and_itemlist(self):
+        w = qa.Writes()
+        before = (ROOT / "metanotes/index.html").read_bytes().decode("utf-8")
+        cut = before.replace(
+            before[before.index('{\r\n            "@type": "ListItem",\r\n            "position": 22,'):].split("}", 1)[0] + "}", "")
+        # rebuild the 22 row/item from the 21 ones and compare with the live landing page
+        cut = cut.replace(",\r\n          \r\n", "\r\n", 1)
+        import re as _re
+        cut = _re.sub(r"\r\n[ \t]*<li><a href=\"meta-22\.html\">[^\n]*</li>", "", cut)
+        cut = _re.sub(r'(meta-21\.html"\r\n\s*\}),\s*(\r\n\s*\])', r"\1\2", cut)
+        w.files["metanotes/index.html"] = cut.encode("utf-8")
+        qa.landing_row(w, "metanote", 22, 21, self.m["title_fa"], "رابردم موقع تراش فضای پست؛ سؤالی که کسی درست اندازه‌اش نگرفته")
+        self.assertEqual(w.files["metanotes/index.html"].decode("utf-8"), before)
+
+
+class QueueRefTests(unittest.TestCase):
+    def test_unpublished_sibling_is_not_linked(self):
+        d = Path(tempfile.mkdtemp())
+        m = {"links_48": [{"phrase": "الف", "href": "queue:12"}, {"phrase": "ب", "href": "/glossary/x.html"}],
+             "explore_49": [{"href": "queue:12", "label": "ج"}], "body_en": "see [A](queue:12) and [B](/x.html)"}
+        defaults = []
+        qa.resolve_queue_refs(d, m, defaults)
+        self.assertEqual(m["links_48"], [{"phrase": "ب", "href": "/glossary/x.html"}])
+        self.assertEqual(m["explore_49"], [])
+        self.assertEqual(m["body_en"], "see A and [B](/x.html)")
+        self.assertEqual(len(defaults), 3)
+
+    def test_published_sibling_resolves_from_the_queue_log(self):
+        import subprocess as sp
+        d = Path(tempfile.mkdtemp())
+        sp.run(["git", "init", "-q", str(d)], check=True)
+        sp.run(["git", "-C", str(d), "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "--allow-empty",
+                "-m", "queue: 12 published as insight/insight-101 (PR #1)"], check=True)
+        m = {"links_48": [{"phrase": "الف", "href": "queue:12"}], "explore_49": [{"href": "queue:12", "label": "ج"}],
+             "body_en": "[A](queue:12)"}
+        qa.resolve_queue_refs(d, m, [])
+        self.assertEqual(m["links_48"][0]["href"], "/insight/insight-101.html")
+        self.assertEqual(m["explore_49"][0]["href"], "/insight/insight-101.html")
+        self.assertEqual(m["body_en"], "[A](/insight/en/insight-101.html)")

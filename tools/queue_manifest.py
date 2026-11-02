@@ -726,11 +726,21 @@ REQUIRED = ("category", "title_fa", "caption_fa", "title_en", "caption_en", "bod
             )
 
 
+# A category whose page carries more frozen words than the common set.
+# MetaNote (metanotes/meta-<n>): the JSON-LD alternativeHeadline, the
+# articleSection, the Persian page keywords (fa) and the English page keywords
+# (en); brain «keywords» stay the 09 list.
+REQUIRED_BY_CATEGORY = {
+    "metanote": ("alt_headline_fa", "alt_headline_en", "article_section", "keywords_fa", "keywords_en"),
+}
+
+
 # Fields whose words appear on the page: their values come from the frozen item
 # or not at all. A publish-day origin for a non-empty text here is refused —
 # the agent writes no text on publish day (queue-route.md).
 PAGE_TEXT = {"title_fa", "caption_fa", "title_en", "caption_en", "body_en", "pulse", "keywords", "hashtags",
-             "credit", "explore_49", "backlinks_47", "links_48", "alt_fa", "alt_en", "caption_fa", "caption_en"}
+             "credit", "explore_49", "backlinks_47", "links_48", "alt_fa", "alt_en", "caption_fa", "caption_en",
+             "alt_headline_fa", "alt_headline_en", "article_section", "keywords_fa", "keywords_en"}
 # Structural keys: a fixed vocabulary of the manifest, never words on a line.
 STRUCTURAL = {"from", "mode", "n"}
 
@@ -846,7 +856,8 @@ def defaults_of(d):
 
 
 def missing(d):
-    out = [k for k in REQUIRED if d.get(k, {}).get("value") is None]
+    cat = (d.get("category") or {}).get("value")
+    out = [k for k in REQUIRED + REQUIRED_BY_CATEGORY.get(cat, ()) if (d.get(k) or {}).get("value") is None]
     for img in d.get("images", {}).get("value") or []:
         out += [f"images.{img['n']}.{f}" for f in ("file", "alt_fa", "alt_en", "caption_fa", "caption_en")
                 if img.get(f, {}).get("value") is None]

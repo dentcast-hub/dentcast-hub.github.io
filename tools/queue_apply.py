@@ -75,6 +75,12 @@ CATEGORIES = {
         "landing": "notecast/index.html", "landing_mode": "bottom-ordinal", "style": "indented",
         "label_fa": "نوت‌کست", "label_en": "NoteCast", "parent": "episodes/episode-{n}",
     },
+    "metanote": {
+        "dir": "metanotes", "stem": "meta-", "brain_type": "meta", "brain_id": "meta-{n}",
+        "image": "meta-{n}.webp", "body_open": None,
+        "landing": "metanotes/index.html", "landing_mode": "bottom-cardinal", "style": "metanote",
+        "label_fa": "متانوت", "label_en": "MetaNote",
+    },
 }
 
 FA_DIGITS = str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")
@@ -103,6 +109,18 @@ def fa_ordinal(n):
         return TENS[t] + "م"
     unit = {1: "یکم", 2: "دوم", 3: "سوم"}.get(u, UNITS[u] + "م")
     return TENS[t] + "\u200cو" + unit
+
+
+def fa_cardinal(n):
+    """Persian cardinal as the MetaNote landing rows write it (نوزده, بیست, بیست‌ودو)."""
+    if not 1 <= n <= 99:
+        refuse("CARDINAL_RANGE", f"no cardinal rule for {n}")
+    if n < 10:
+        return UNITS[n]
+    if n < 20:
+        return TEENS[n - 10]
+    t, u = divmod(n, 10)
+    return TENS[t] + ("\u200cو" + UNITS[u] if u else "")
 
 
 def refuse(code, message, **detail):
@@ -902,6 +920,146 @@ def build_chairside_page(n, prev, m, date, item, lang="fa"):
                                           "links_not_found": pend, "explore": explore, "tail_removed": tail}
 
 
+METANOTE_FIGURE = ('<figure>\n  <img loading="lazy" src="{src}" alt="{alt}" style="max-width:100%; border-radius:0.75rem;" '
+                   'width="{w}" height="{h}">{cap}\n</figure>')
+METANOTE_CAP = ('\n  <figcaption style="text-align:center; font-size:.85rem; color:#555; margin-top:0.5rem;">{}</figcaption>')
+METANOTE_SERIES_KW = ("MetaNote", "دکتر فواد شهابیان")
+
+
+def render_metanote(md, imgs, img_url, linker, lang):
+    """MetaNote markup (metanotes/meta-20..22): <p> text on its own line,
+    <hr> for a `---` divider, a `>` line is the closing <blockquote>."""
+    out = []
+    txt = (lambda t: linker.apply(t) if linker else inline(t))
+    for b in blocks(md):
+        if b[0] == "p":
+            out.append(f"<p>\n{txt(b[1])}\n</p>")
+        elif b[0] == "h":
+            out.append(f"<h{b[1]}>{inline(b[2])}</h{b[1]}>")
+        elif b[0] == "hr":
+            out.append("<hr>")
+        elif b[0] == "note":
+            out.append("<blockquote>\n" + "\n".join(txt(x) for x in b[1] if x) + "\n</blockquote>")
+        elif b[0] == "ul":
+            out.append("<ul>\n" + "\n".join(f"  <li>{txt(i)}</li>" for i in b[1]) + "\n</ul>")
+        elif b[0] == "img":
+            img = imgs.get(b[1])
+            if img is None:
+                refuse("IMAGE_MARKER_UNKNOWN", f"[[تصویر:{b[1]}]] has no image in 03-تصاویر")
+            cap = figure_caption(b, img, lang)
+            out.append(METANOTE_FIGURE.format(src=img_url(b[1]), alt=attr(img["alt_fa" if lang == "fa" else "alt_en"]),
+                                              w=img["w"], h=img["h"], cap=METANOTE_CAP.format(esc(cap)) if cap else ""))
+        elif b[0] == "table":
+            out.append(render_table(b[1]))
+        else:
+            refuse("METANOTE_BLOCK", f"block «{b[0]}» has no MetaNote markup precedent")
+    return "\n\n".join(out)
+
+
+def build_metanote_page(n, prev, m, date, item, lang="fa"):
+    """metanotes/meta-<n>.html (and en/) cloned from meta-<prev>: identity
+    strings, headline / alternativeHeadline / description, Persian page
+    keywords + the series suffix, dates, articleSection, body, «کاوش بیشتر»."""
+    c = CATEGORIES["metanote"]
+    sub = "en/" if lang == "en" else ""
+    tdoc = (ROOT / f"metanotes/{sub}meta-{prev}.html").read_bytes().decode("utf-8")
+    nl = "\r\n" if "\r\n" in tdoc else "\n"
+    doc = tdoc.replace("\r\n", "\n")
+    _, _, tentry = template_facts("metanote", prev)
+    if m["credit"]["mode"] != "none":
+        refuse("METANOTE_CREDIT", "a MetaNote queue item with a paper credit has no page precedent; use the interactive route")
+    for k in ("alt_headline_fa", "alt_headline_en", "article_section", "keywords_fa", "keywords_en"):
+        if not m.get(k):
+            refuse("MANIFEST_INCOMPLETE", f"a MetaNote needs the frozen field «{k}»", missing=[k])
+    imgs = {}
+    for img in m["images"]:
+        w_, h_ = webp_size((item / img["file"]).read_bytes())
+        imgs[img["n"]] = {**img, "w": w_, "h": h_}
+    if len(imgs) > 1:
+        refuse("METANOTE_IMAGES", "MetaNote pages carry one figure (metanotes/meta-<n>.webp); more has no precedent")
+    old_title = html.unescape(re.search(r'"headline": "([^"]*)"', doc).group(1))
+    old_alt = re.search(r'"alternativeHeadline": "([^"]*)"', doc).group(1)
+    old_desc = html.unescape(re.search(r'<meta name="description" content="([^"]*)"', doc).group(1))
+    title = m["title_fa"] if lang == "fa" else m["title_en"]
+    caption = m["caption_fa"] if lang == "fa" else m["caption_en"]
+    alt_head = m["alt_headline_fa"] if lang == "fa" else m["alt_headline_en"]
+    for a_, b_ in ((f"metanotes/meta-{prev}.html", f"metanotes/meta-{n}.html"),
+                   (f"metanotes/en/meta-{prev}.html", f"metanotes/en/meta-{n}.html"),
+                   (f'href="en/meta-{prev}.html"', f'href="en/meta-{n}.html"'),
+                   (f'href="../meta-{prev}.html"', f'href="../meta-{n}.html"'),
+                   (f"MetaNote {prev} ", f"MetaNote {n} "), (f"MetaNote {prev}<", f"MetaNote {n}<")):
+        doc = doc.replace(a_, b_)
+    doc = doc.replace(f'"alternativeHeadline": "{old_alt}"', '"alternativeHeadline": ' + json.dumps(alt_head, ensure_ascii=False))
+    for old, new in ((old_title, title), (old_desc, caption)):
+        doc = doc.replace(attr(old), attr(new)).replace(json.dumps(old, ensure_ascii=False)[1:-1],
+                                                      json.dumps(new, ensure_ascii=False)[1:-1]).replace(old, new)
+    if lang == "fa":
+        old_kw = re.search(r'"keywords": "([^"]*)"', doc).group(1)
+        tail = []
+        for k in reversed(old_kw.split(", ")):
+            if k not in METANOTE_SERIES_KW:
+                break
+            tail.insert(0, k)
+        doc = doc.replace(f'"keywords": "{old_kw}"', '"keywords": ' + json.dumps(", ".join(list(m["keywords_fa"]) + tail),
+                                                                                 ensure_ascii=False))
+        old_sec = re.search(r'"articleSection": "([^"]*)"', doc).group(1)
+        doc = doc.replace(f'"articleSection": "{old_sec}"', '"articleSection": ' + json.dumps(m["article_section"], ensure_ascii=False))
+        for k in ("datePublished", "dateModified", "lastReviewed"):
+            doc = re.sub(r'("%s": ")\d{4}-\d\d-\d\d(")' % k, r"\g<1>" + date + r"\2", doc)
+        doc = re.sub(r'<time datetime="\d{4}-\d\d-\d\d">\d{4}-\d\d-\d\d</time>', f'<time datetime="{date}">{date}</time>', doc)
+    else:
+        doc = json_ld_keywords(doc, m["keywords_en"], "\n")
+        for k in ("datePublished", "dateModified"):
+            doc = re.sub(r'("%s": ")\d{4}-\d\d-\d\d(T)' % k, r"\g<1>" + date + r"\2", doc)
+    img_url = lambda k: "/metanotes/" + c["image"].format(n=n)
+    default_img = SITE + ("/dentcast-cover.webp" if lang == "fa" else "/logo-v2.png")
+    doc, k = re.subn(r'("image": )"[^"]*"(,\n\s*"datePublished")',
+                     lambda mm: mm.group(1) + json.dumps(SITE + img_url("01") if imgs else default_img) + mm.group(2), doc)
+    if k != 1:
+        refuse("TEMPLATE_REGION", "MetaNote template: the article «image» before datePublished not found")
+    src = (item / "01-متن.md").read_text(encoding="utf-8") if lang == "fa" else m["body_en"]
+    body_md, tail_src = split_tail(src)
+    linker = Linker(m["links_48"]) if lang == "fa" else None
+    body = render_metanote(body_md, imgs, img_url, linker, lang)
+    doc = swap_region(doc, r'<a class="lang-btn".*?\n  </a>\n\n', r'\n  <p class="dc-disclaimer">', body, "body")
+    explore = []
+    if lang == "fa":
+        caps = [("/glossary/", "دانشنامه"), (f"/pillar/{m['pillar']['primary']}/", "فهرست موضوعی")]
+        explore = [(x["href"], x["label"]) for x in m["explore_49"] if (ROOT / x["href"].lstrip("/")).is_file()][:EXPLORE_CAP - len(caps)]
+        rows = "\n".join(f'    <a href="{attr(h)}" class="dc-related-capsule">{esc(t)}</a>' for h, t in caps + explore)
+        doc = swap_region(doc, r'<div class="dc-related-capsules">\n', r"\n  </div>\n</div>", rows, "related")
+    residue = [x for x in (old_title, old_desc, old_alt, f"meta-{prev}.html", f"meta-{prev}.webp",
+                           tentry.get("title"), tentry.get("caption")) if x and x in doc]
+    residue += re.findall(r"MetaNote %d\b" % prev, doc)
+    if residue:
+        refuse("TEMPLATE_RESIDUE", f"clone residue of metanotes/meta-{prev} left: {residue[:5]}")
+    files = {"metanotes/" + c["image"].format(n=n): (item / v["file"]).read_bytes() for v in imgs.values()}
+    pend = [x["phrase"] for x in linker.pending] if linker else []
+    return doc.replace("\n", nl), files, {"links_done": [x["phrase"] for x in (linker.done if linker else [])],
+                                          "links_not_found": pend, "explore": explore, "tail_removed": tail_src}
+
+
+def metanote_itemlist(w, n, prev_n, title):
+    """metanotes/index.html also lists every MetaNote in its ItemList JSON-LD:
+    one ListItem after the last, cloned from it."""
+    c = CATEGORIES["metanote"]
+    rel = c["landing"]
+    doc = w.text(rel)
+    mm = re.search(r'(\{(\r?\n)([ \t]*)"@type": "ListItem",\r?\n[ \t]*"position": %d,\r?\n[ \t]*"name": "[^"]*",\r?\n'
+                   r'[ \t]*"url": "https://dentcast\.org/metanotes/meta-%d\.html"\r?\n[ \t]*\})' % (prev_n, prev_n), doc)
+    if not mm:
+        refuse("LANDING_ROW", f"{rel}: ItemList entry for meta-{prev_n} not found")
+    blk = mm.group(1)
+    name = json.dumps(f"{c['label_fa']} {fa_cardinal(n)}: {title}", ensure_ascii=False)
+    new = re.sub(r'"position": %d,' % prev_n, f'"position": {n},', blk)
+    new = re.sub(r'"name": "[^"]*",', lambda _: f'"name": {name},', new)
+    new = new.replace(f"meta-{prev_n}.html", f"meta-{n}.html")
+    k = mm.end()
+    lead = re.search(r"(\r?\n[ \t]*)\{$", doc[:mm.start() + 1])
+    indent = lead.group(1) if lead else mm.group(2) + " " * 10
+    w.put(rel, doc[:k] + "," + indent + new + doc[k:])
+
+
 def parent_episode(w, n, m, prev):
     """The same-number episode gets the NoteCast link in «محتوای مرتبط» and the
     paper credit, cloned from the previous NoteCast's parent episode."""
@@ -944,6 +1102,15 @@ def landing_row(w, cat, n, prev_n, title, prev_title):
             refuse("LANDING_ROW", f"{rel}: last row for {c['stem']}{prev_n} not found in the ordinal form")
         row = f'{mm.group(1)}{mm.group(2)}<li><a href="{c["stem"]}{n}.html">{c["label_fa"]} {fa_ordinal(n)} {mm.group(3)} {esc(title)}</a></li>'
         w.put(rel, doc[:mm.end()] + row + doc[mm.end():])
+        return
+    if c["landing_mode"] == "bottom-cardinal":
+        mm = re.search(r'(\r?\n)([ \t]*)<li><a href="%s">%s %s: ([^<]*)</a></li>'
+                       % (re.escape(f"{c['stem']}{prev_n}.html"), c["label_fa"], fa_cardinal(prev_n)), doc)
+        if not mm or html.unescape(mm.group(3)) != prev_title:
+            refuse("LANDING_ROW", f"{rel}: last row for {c['stem']}{prev_n} not found in the cardinal form")
+        row = f'{mm.group(1)}{mm.group(2)}<li><a href="{c["stem"]}{n}.html">{c["label_fa"]} {fa_cardinal(n)}: {esc(title)}</a></li>'
+        w.put(rel, doc[:mm.end()] + row + doc[mm.end():])
+        metanote_itemlist(w, n, prev_n, title)
         return
     pat = re.compile(r'(\n([ \t]*)<li><a href="' + re.escape(f"{c['stem']}{prev_n}.html") + r'">)([^<]*)(</a></li>)')
     mm = pat.search(doc)
@@ -1229,6 +1396,75 @@ def pathway(cid, m, cat):
     return placed
 
 
+QUEUE_REF = re.compile(r"queue:(\d\d)")
+
+
+def published_as(item, nn):
+    """The content_id a sibling queue item was published as: the queue branch's
+    own record, the commit «queue: NN published as <content_id> (PR #n)»
+    (publish-queue.md step 7). None while it is unpublished."""
+    r = subprocess.run(["git", "-C", str(item), "log", "--format=%s", "HEAD"], capture_output=True, text=True)
+    for line in r.stdout.splitlines():
+        mm = re.match(r"queue: %s published as ([a-z]+/[A-Za-z0-9-]+) \(PR #\d+\)" % nn, line)
+        if mm:
+            return mm.group(1)
+    return None
+
+
+def resolve_queue_refs(item, m, defaults):
+    """A frozen link may name a sibling queue item (`queue:NN`) whose page number
+    did not exist in preparation. It becomes that item's live page; while the
+    item is unpublished (or its page is not on this checkout) the link is not
+    made and the receipt says so (queue-route.md mechanical defaults)."""
+    cache = {}
+
+    def target(nn, lang="fa"):
+        if nn not in cache:
+            cache[nn] = published_as(item, nn)
+        cid = cache[nn]
+        if not cid:
+            return None, f"queue item {nn} is not published yet"
+        if lang == "en":
+            d_, f_ = cid.split("/", 1)
+            cid = f"{d_}/en/{f_}"
+        if not (ROOT / f"{cid}.html").is_file():
+            return None, f"queue item {nn} → {cid}.html is not on this checkout"
+        return f"/{cid}.html", None
+
+    keep = []
+    for ln in m.get("links_48") or []:
+        mm = QUEUE_REF.fullmatch(ln["href"])
+        if not mm:
+            keep.append(ln)
+            continue
+        href, why = target(mm.group(1))
+        if href:
+            keep.append({**ln, "href": href})
+        else:
+            defaults.append({"rule": "4.8 link to a sibling queue item not made", "phrase": ln["phrase"], "why": why})
+    m["links_48"] = keep
+    keep = []
+    for x in m.get("explore_49") or []:
+        mm = QUEUE_REF.fullmatch(x["href"])
+        if not mm:
+            keep.append(x)
+            continue
+        href, why = target(mm.group(1))
+        if href:
+            keep.append({**x, "href": href})
+        else:
+            defaults.append({"rule": "4.9 capsule to a sibling queue item not added", "label": x["label"], "why": why})
+    m["explore_49"] = keep
+    if m.get("body_en"):
+        def en_link(mm):
+            href, why = target(mm.group(2), "en")
+            if href:
+                return f"[{mm.group(1)}]({href})"
+            defaults.append({"rule": "English link to a sibling queue item left as text", "text": mm.group(1), "why": why})
+            return mm.group(1)
+        m["body_en"] = re.sub(r"\[([^\]]+)\]\(queue:(\d\d)\)", en_link, m["body_en"])
+
+
 # ------------------------------------------------------------------ main
 
 def main(argv=None):
@@ -1270,8 +1506,10 @@ def assemble(a):
     # preparation date; queue_install_des.py --date syncs those date lines to
     # this date (a date-only change, never a text change).
     date = a.date or datetime.date.today().isoformat()
+    resolve_queue_refs(item, m, defaults)
     w = Writes()
-    builder = {"notecast": build_notecast_page, "insight": build_insight_page, "chairside": build_chairside_page}.get(cat) or (lambda *x: build_page(cat, *x))
+    builder = {"notecast": build_notecast_page, "insight": build_insight_page, "chairside": build_chairside_page,
+               "metanote": build_metanote_page}.get(cat) or (lambda *x: build_page(cat, *x))
     page, img_files, page_info = builder(n, prev, m, date, item, "fa")
     if page_info["links_not_found"]:
         defaults.append({"rule": "4.8 approved link phrase not in body", "skipped": page_info["links_not_found"]})

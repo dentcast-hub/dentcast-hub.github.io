@@ -29,8 +29,8 @@
    `python3 tools/queue_publish.py done <پوشه> --content-id <id> --pr <n>` و push چاپ‌شده.
 
 مسیر صف دقیقاً دو تحویل دارد (Push 2 و تحویل Action). دسته‌های پشتیبانی‌شده: `sharehub`، `notecast`،
-`insight`، `chairside` (اینسایت و چیرساید بی کردیت پیپر). بقیه (`CATEGORY_UNSUPPORTED`) از مسیر عادی
-`.dentcast/workflows/README.md`.
+`insight`، `chairside`، `metanote` (اینسایت، چیرساید و متانوت بی کردیت پیپر؛ متانوت حداکثر یک تصویر). بقیه
+(`CATEGORY_UNSUPPORTED`) از مسیر عادی `.dentcast/workflows/README.md`.
 
 ## وقتی ابزار رد می‌کند
 
@@ -44,14 +44,16 @@
 | `SUPPLEMENT_TEXT_NOT_FROZEN` | متنِ صفحه در صف منجمد نیست: مطلب به آماده‌سازی برمی‌گردد |
 | `FOREIGN_LOCK`، `NOT_READY`، `NO_READY_ITEM`، `NAMED_ITEM_NOT_READY` | مطلب برداشته نمی‌شود؛ گزارش |
 | `CATEGORY_UNSUPPORTED`، `PATHWAY_NONE` | مسیر عادی |
-| بقیه (`TEXT_MOVED`، `TEMPLATE_*`، `LANDING_ROW`، `PULSE_COUNT`، `PARENT_*`، `EXAM_SHAPE`، `FAQ_PLACEHOLDER`، `LEAD_PARAGRAPH_MISSING`، `MINT_*`) | قالب سایت یا فایل صف با ابزار نمی‌خواند؛ گزارش |
+| بقیه (`TEXT_MOVED`، `TEMPLATE_*`، `LANDING_ROW`، `PULSE_COUNT`، `PARENT_*`، `EXAM_SHAPE`، `FAQ_PLACEHOLDER`، `LEAD_PARAGRAPH_MISSING`، `MINT_*`، `METANOTE_*`) | قالب سایت یا فایل صف با ابزار نمی‌خواند؛ گزارش |
 
 **supplement** فقط برای فیلدی که ابزار `missing` می‌گوید، در یک فایل JSON بیرون از ریپو و با
 `run … --supplement f.json`: `{"<فیلد>": {"value": …, "from": "<فایل>:<خط>[-<خط>]"}}`. ابزار هر رشته را روی
 همان خط‌ها می‌سنجد. منشأ `publish-day: <چرا>` فقط برای واقعیتی که روی صفحه متن نمی‌شود؛ متنِ صفحه از بیرون
 صف رد می‌شود.
 
-**پیش‌فرض‌های مکانیکی** (نه انتخاب ایجنت؛ در خروجی): 4.7 و 4.9 بی انتخاب منجمد `11` لینکی اضافه نمی‌کنند؛
+**پیش‌فرض‌های مکانیکی** (نه انتخاب ایجنت؛ در خروجی): لینک منجمد به مطلب دیگر صف (`queue:NN`) به صفحه‌ای
+می‌رود که آن مطلب با آن منتشر شد (کامیت `queue: NN published as …` روی برنچ `queue`)؛ اگر هنوز منتشر نشده، لینک
+ساخته نمی‌شود و در انگلیسی متنِ ساده می‌ماند؛ 4.7 و 4.9 بی انتخاب منجمد `11` لینکی اضافه نمی‌کنند؛
 کاتالوگ بی `04-منبع/کاتالوگ.json` نوشته نمی‌شود (مطلب قدیمی: پیگیری بنیان‌گذار)؛ DOIِ از قبل کاتالوگ‌شده فقط به صفحه وصل می‌شود؛ author صفحهٔ ShareHub از آخرین مدخل brain همان
 دسته؛ مسیر یادگیری: انتخاب منجمد `07`، وگرنه برای نوت‌کست مسیرهای اپیزود هم‌شماره، وگرنه STRONG تا دو مسیر.
 
