@@ -1,0 +1,7 @@
+{
+  "run": "src0-1",
+  "input": "/workspace/scratch/2cf47782c4a1/recheck-S3/input-src0.json",
+  "spec": "/workspace/scratch/dentcast-main-read/.dentcast/des-v3.5-knowledge.md",
+  "units_evaluated": ["u65"],
+  "output": "/workspace/scratch/2cf47782c4a1/recheck-S3/out-src0-1.json"
+}

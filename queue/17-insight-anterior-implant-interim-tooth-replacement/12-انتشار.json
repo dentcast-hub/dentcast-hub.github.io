@@ -1,0 +1,282 @@
+{
+  "schema": "dentcast-queue-manifest/1",
+  "category": {
+    "value": "insight",
+    "from": "directory name"
+  },
+  "title_fa": {
+    "value": "بعد از کاشت ایمپلنت قدامی، جای خالی دندان را چطور پر کنیم؟",
+    "from": "02-عنوان-کپشن.md:3"
+  },
+  "caption_fa": {
+    "value": "اگر فعلاً روکش موقت را به ایمپلنت وصل نکنیم، برای جای خالی دندان قدامی چه انتخاب‌هایی داریم؟",
+    "from": "02-عنوان-کپشن.md:4"
+  },
+  "title_en": {
+    "value": "How Can We Replace an Anterior Tooth Temporarily After Implant Placement?",
+    "from": "06-انگلیسی.md:1"
+  },
+  "caption_en": {
+    "value": "If we are not connecting a provisional crown to the implant yet, what are the options for replacing an anterior tooth during healing?",
+    "from": "06-انگلیسی.md:3"
+  },
+  "body_en": {
+    "value": "## 1. Using the Patient’s Natural Crown as a Pontic\n\nWhen the implant is placed at the time of extraction and the natural crown is intact, the crown can sometimes be reused as a pontic.\n\nThe root is removed, the fitting surface of the crown is adjusted to suit the soft tissue and polished, and the crown is attached to the adjacent teeth with composite or fiber reinforcement.\n\nThe main advantage is that the patient’s own tooth preserves its natural shade, shape, translucency, and anatomy. This can be valuable in the anterior region, where matching color and form matters.\n\nThe crown must have enough sound structure, and it must be possible to attach it without creating an unfavorable occlusal contact.\n\n[[Image:01]]\n\n## 2. A Composite Pontic or a Prefabricated Tooth\n\nIf the patient’s natural crown cannot be reused, the pontic can be built directly with composite or made from a prefabricated acrylic or composite tooth.\n\nThe artificial tooth is adjusted for size, shade, and shape, then bonded to the adjacent teeth with resin. Alternatively, a pontic can be shaped directly in the mouth with composite.\n\nThese approaches are relatively quick and inexpensive, and they preserve the adjacent teeth.\n\nTheir main limitation is the strength of the bond. Debonding or fracture is more likely in patients with a deep bite or heavy anterior contacts.\n\n## 3. A Fiber-Reinforced Composite Bridge\n\nIn a fiber-reinforced composite (FRC) bridge, fiber reinforces the bridge and helps attach the pontic to the adjacent teeth.\n\nThe pontic itself may be made from composite, a prefabricated tooth, or even the patient’s natural crown. FRC describes the reinforcement and connection approach; it does not mean there is only one type of pontic.\n\nThe bridge can be made directly at chairside or indirectly.\n\nIt offers a fixed replacement that does not rely on the implant and usually requires little or no preparation of the adjacent teeth. If it fractures or debonds, repair may be possible in many cases.\n\nSuccess depends on having enough bonding surface, enough room for the fiber, and control of occlusal forces.\n\n[[Image:02]]\n\n## 4. A Temporary Resin-Bonded Bridge\n\nAnother option is a temporary bridge with resin-bonded retainers, similar to a Maryland bridge.\n\nIt may have one or two retainers bonded to the palatal surfaces of the abutment teeth. In a single-retainer design, the pontic is attached to only one tooth, so independent movement between two abutment teeth is less likely to challenge the bond.\n\nThis is a fixed option that usually requires little preparation of the adjacent teeth. It may be useful when the waiting period is expected to be longer.\n\nAdequate enamel for bonding and enough space for the retainer are important. A deep bite or heavy palatal contacts can make the design and placement difficult.\n\n[[Image:03]]\n\n## 5. An Essix Retainer with a Pontic\n\nAn Essix retainer is a clear appliance made to fit over the teeth. The missing tooth space is filled with a pontic or tooth-colored material.\n\nIt is relatively simple and inexpensive to make, and it does not require preparation or bonding of the adjacent teeth. With a suitable design, contact with the surgical site can be reduced.\n\nIt is removable, so patients usually take it out for meals. Covering the occlusal surfaces may also feel uncomfortable to some patients.\n\nThis option is useful when we want to avoid placing any resin-bonded attachment on the adjacent teeth.\n\n[[Image:04]]\n\n## 6. An Acrylic Flipper\n\nAn acrylic flipper is a common removable option for temporarily replacing an anterior tooth. It is usually made of acrylic and rests on nearby teeth and tissues to fill the space.\n\nIt is relatively simple and inexpensive to make, and it can be adjusted during healing.\n\nAfter recent implant placement, the fitting surface needs particular attention. Unwanted contact or pressure on the surgical site, healing abutment, or graft may interfere with healing.\n\nRetention and stability also matter. A small, unilateral flipper that dislodges may pose a swallowing or aspiration risk.\n\nIts design should not be based only on appearance or on making the appliance as small as possible.\n\n[[Image:05]]\n\n## How Do We Choose?\n\nThe choice depends on the adjacent teeth and available bonding surfaces, the patient’s occlusion, soft-tissue conditions, whether grafting was performed, the expected time before the definitive crown, and whether the patient prefers a fixed or removable option.\n\nIf the natural crown is intact, it may be an attractive pontic. When bonding is suitable, an FRC or resin-bonded bridge can provide a fixed, conservative option. An Essix retainer or flipper may be useful when a removable replacement is preferred.\n\nAcross all these options, the shared goal is to fill the space and maintain appearance without applying harmful pressure to the implant or healing tissues.\n\nReplacing the missing tooth does not necessarily create an appropriate emergence profile. Depending on the soft-tissue condition, an implant-supported provisional crown may still be needed after osseointegration to shape the gingival contour.",
+    "from": "06-انگلیسی.md"
+  },
+  "images": {
+    "value": [
+      {
+        "n": "01",
+        "file": {
+          "value": "03-تصاویر/01-natural-tooth-pontic.webp",
+          "from": "03-تصاویر/تصاویر.md:4"
+        },
+        "alt_fa": {
+          "value": "مراحل آماده‌سازی تاج طبیعی دندان کشیده‌شده برای استفاده به‌عنوان پونتیک",
+          "from": "03-تصاویر/تصاویر.md:5"
+        },
+        "alt_en": {
+          "value": "Preparation of the patient’s extracted natural crown for use as a pontic",
+          "from": "03-تصاویر/تصاویر.md:6"
+        },
+        "caption_fa": {
+          "value": "آماده‌سازی تاج طبیعی بیمار برای ساخت پونتیک؛ نمونهٔ تکنیکی از یک گزارش بالینی، نه لزوماً پس از کاشت ایمپلنت.",
+          "from": "03-تصاویر/تصاویر.md:7"
+        },
+        "caption_en": {
+          "value": "Preparing the patient’s natural crown as a pontic; a technical example from a clinical case report, not necessarily after implant placement.",
+          "from": "06-انگلیسی.md:105"
+        }
+      },
+      {
+        "n": "02",
+        "file": {
+          "value": "03-تصاویر/02-fiber-reinforced-pontic.webp",
+          "from": "03-تصاویر/تصاویر.md:14"
+        },
+        "alt_fa": {
+          "value": "نمای کلینیکی بریج تقویت‌شده با فایبر در ناحیه قدامی و اتصال پالاتال",
+          "from": "03-تصاویر/تصاویر.md:15"
+        },
+        "alt_en": {
+          "value": "Clinical views of an anterior fiber-reinforced composite bridge and its palatal connection",
+          "from": "03-تصاویر/تصاویر.md:16"
+        },
+        "caption_fa": {
+          "value": "نمونهٔ بریج FRC با پونتیک طبیعی؛ تصاویر مراحل اتصال و نمای نتیجه، از گزارش یک بیمار با مشکلات پریودنتال.",
+          "from": "03-تصاویر/تصاویر.md:17"
+        },
+        "caption_en": {
+          "value": "An FRC bridge with a natural-tooth pontic; connection steps and the final view from a case report involving periodontal problems.",
+          "from": "06-انگلیسی.md:107"
+        }
+      },
+      {
+        "n": "03",
+        "file": {
+          "value": "03-تصاویر/03-resin-bonded-maryland.webp",
+          "from": "03-تصاویر/تصاویر.md:24"
+        },
+        "alt_fa": {
+          "value": "نمای کلینیکی و رادیوگرافیک بریج مریلند در فضای لترال پس از قرارگیری ایمپلنت",
+          "from": "03-تصاویر/تصاویر.md:25"
+        },
+        "alt_en": {
+          "value": "Clinical and radiographic views of a Maryland bridge after implant placement",
+          "from": "03-تصاویر/تصاویر.md:26"
+        },
+        "caption_fa": {
+          "value": "بریج‌های مریلند پس از کاشت ایمپلنت مجدداً در محل قرار گرفته‌اند؛ تصویر شامل نمای داخل دهانی و رادیوگرافی است.",
+          "from": "03-تصاویر/تصاویر.md:27"
+        },
+        "caption_en": {
+          "value": "Maryland bridges were reinserted after implant placement; the figure includes an intraoral view and a radiograph.",
+          "from": "06-انگلیسی.md:109"
+        }
+      },
+      {
+        "n": "04",
+        "file": {
+          "value": "03-تصاویر/04-essix-pontic.webp",
+          "from": "03-تصاویر/تصاویر.md:34"
+        },
+        "alt_fa": {
+          "value": "پلاک شفاف Essix با پونتیک لترال و نمای آن هنگام قرارگیری داخل دهان",
+          "from": "03-تصاویر/تصاویر.md:35"
+        },
+        "alt_en": {
+          "value": "Clear Essix retainer with a lateral pontic, including its intraoral view",
+          "from": "03-تصاویر/تصاویر.md:36"
+        },
+        "caption_fa": {
+          "value": "نمونهٔ Essix دارای دو پونتیک که در دورهٔ ترمیم بافت پس از جراحی ایمپلنت استفاده شده است.",
+          "from": "03-تصاویر/تصاویر.md:37"
+        },
+        "caption_en": {
+          "value": "An Essix retainer with two pontics used during tissue healing after implant surgery.",
+          "from": "06-انگلیسی.md:111"
+        }
+      },
+      {
+        "n": "05",
+        "file": {
+          "value": "03-تصاویر/05-acrylic-flipper.webp",
+          "from": "03-تصاویر/تصاویر.md:44"
+        },
+        "alt_fa": {
+          "value": "مقایسه لبخند بدون دندان قدامی با فیلیپر آکریلی خارج دهان و پس از قرار دادن در دهان",
+          "from": "03-تصاویر/تصاویر.md:45"
+        },
+        "alt_en": {
+          "value": "Comparison of an anterior space without a tooth, an acrylic flipper outside the mouth, and the smile with the flipper in place",
+          "from": "03-تصاویر/تصاویر.md:46"
+        },
+        "caption_fa": {
+          "value": "نمونهٔ فیلیپر آکریلی متحرک، به همراه نمای فضای بی‌دندانی و نتیجهٔ زیبایی.",
+          "from": "03-تصاویر/تصاویر.md:47"
+        },
+        "caption_en": {
+          "value": "A removable acrylic flipper, with views of the edentulous space and the esthetic result.",
+          "from": "06-انگلیسی.md:113"
+        }
+      }
+    ],
+    "from": "03-تصاویر/تصاویر.md"
+  },
+  "credit": {
+    "value": {
+      "mode": "references",
+      "items": [
+        {
+          "label_fa": "گزارش بالینی پونتیک طبیعی و بریج FRC",
+          "label_en": "Natural tooth pontic and FRC bridge case report",
+          "href": "https://doi.org/10.1155/2022/9974197",
+          "from": "04-منبع/منابع.md:19"
+        },
+        {
+          "label_fa": "راهنمای ترمیم‌های موقت در درمان ایمپلنت",
+          "label_en": "Guideline on provisional restorations for implant treatment",
+          "href": "https://www.avensonline.org/fulltextarticles/JOBY-2377-987X-02-0009.html",
+          "from": "04-منبع/منابع.md:20"
+        },
+        {
+          "label_fa": "اجماع ITI دربارهٔ جایگذاری و بارگذاری فوری ایمپلنت",
+          "label_en": "ITI consensus on immediate implant placement and loading",
+          "href": "https://academy.iti.org/academy/consensus-database/consensus-statement/-/consensus/selection-criteria-for-immediate-implant-placement-and-immediate-loading-for-single-tooth-replacement-in-the-maxillary-esthetic-zone/2305",
+          "from": "04-منبع/منابع.md:21"
+        },
+        {
+          "label_fa": "مرور مدیریت بافت نرم در ترمیم‌های زیبایی ایمپلنت",
+          "label_en": "Review of soft-tissue management in esthetic implant restorations",
+          "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11872796/",
+          "from": "04-منبع/منابع.md:22"
+        }
+      ]
+    },
+    "from": "04-منبع/منابع.md:17"
+  },
+  "catalog": {
+    "value": [],
+    "from": "04-منبع/منابع.md: no attached PDF"
+  },
+  "hashtags": {
+    "value": [
+      "#ایمپلنت_قدامی",
+      "#جایگزینی_دندان",
+      "#دندان_قدامی",
+      "#پونتیک",
+      "#RBFDP",
+      "#بریج"
+    ],
+    "from": "07-ورودی‌ها.md"
+  },
+  "mint": {
+    "value": [],
+    "from": "queue legacy default"
+  },
+  "pillar": {
+    "value": {
+      "primary": "implantology",
+      "subtopic": "restoration-design",
+      "secondary": []
+    },
+    "from": "07-ورودی‌ها.md"
+  },
+  "pulse": {
+    "value": {
+      "html": "یک اینسایت با عنوانِ «<a href=\"{url}\">بعد از کاشت ایمپلنت قدامی، جای خالی دندان را چطور پر کنیم؟</a>» منتشر شد.",
+      "link_phrase": "بعد از کاشت ایمپلنت قدامی، جای خالی دندان را چطور پر کنیم؟"
+    },
+    "from": "07-ورودی‌ها.md"
+  },
+  "keywords": {
+    "value": [
+      "جایگزینی موقت دندان قدامی پس از کاشت ایمپلنت",
+      "پونتیک تاج طبیعی",
+      "بریج کامپوزیتی تقویت‌شده با فایبر (FRC)",
+      "بریج رزین‌باند مریلند",
+      "پلاک شفاف Essix با پونتیک",
+      "فیلیپر آکریلی پس از کاشت ایمپلنت",
+      "حفاظت از محل جراحی و گرافت هنگام پروویژنال‌سازی",
+      "anterior implant interim tooth replacement",
+      "natural tooth pontic",
+      "fiber-reinforced composite bridge",
+      "resin-bonded Maryland bridge",
+      "Essix retainer with pontic",
+      "acrylic flipper after implant placement"
+    ],
+    "from": "09-کلیدواژه‌ها.md"
+  },
+  "links_48": {
+    "value": [
+      {
+        "phrase": "ایمپلنت",
+        "href": "/glossary/dental-implant.html",
+        "from": "11-لینک‌های-گلاسری.md"
+      },
+      {
+        "phrase": "استئواینتگریشن",
+        "href": "/glossary/osseointegration.html",
+        "from": "11-لینک‌های-گلاسری.md"
+      },
+      {
+        "phrase": "Emergence Profile",
+        "href": "/glossary/emergence-profile.html",
+        "from": "11-لینک‌های-گلاسری.md"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md"
+  },
+  "backlinks_47": {
+    "value": [],
+    "from": "11-لینک‌های-گلاسری.md: no frozen backlink"
+  },
+  "explore_49": {
+    "value": [
+      {
+        "href": "/episodes/episode-125-2.html",
+        "label": "روکش موقت فوری و بافت نرم در ناحیهٔ زیبایی",
+        "from": "11-لینک‌های-گلاسری.md"
+      },
+      {
+        "href": "/insight/insight-81.html",
+        "label": "وقتی روکش قدیمی بیمار، خودش روکش موقت می‌شود",
+        "from": "11-لینک‌های-گلاسری.md"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md"
+  },
+  "pathway": {
+    "value": null,
+    "from": "07-ورودی‌ها.md: no pathway frozen"
+  },
+  "author": {
+    "value": null,
+    "from": "publisher resolves live author"
+  },
+  "legacy_review": {
+    "value": null,
+    "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md"
+  }
+}

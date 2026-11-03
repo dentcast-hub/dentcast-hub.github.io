@@ -1,0 +1,3 @@
+Model: GPT-6
+Reasoning setting: not exposed in this run
+Task: DentCast DES v3.5 SOURCE scoring, S3 only; text_basis ABSTRACT_ONLY

@@ -1,0 +1,11 @@
+{
+  "run": "src0-1",
+  "input": "input-src0.json",
+  "output": "out-src0-1.json",
+  "des_version": "3.5",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "units_evaluated": ["u2", "u59"],
+  "output_status": "complete"
+}

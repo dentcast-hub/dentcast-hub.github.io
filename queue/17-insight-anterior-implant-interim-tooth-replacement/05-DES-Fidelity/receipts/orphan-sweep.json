@@ -1,0 +1,49 @@
+{
+  "task": "Q17 POOLED orphan discovery sweep",
+  "reviewer_role": "Independent source-discovery reviewer",
+  "model": "GPT-6-based Codex; exact deployed model identifier not exposed to this child session",
+  "settings": {
+    "model_override": "none visible; inherited from parent",
+    "reasoning_effort": "not exposed",
+    "temperature": "not exposed"
+  },
+  "stronger_model_requirement": "Cannot independently attest a stronger-than-prior model configuration from available session metadata.",
+  "scope": "All 65 merged and deterministic body units read, including NOT_ASSESSABLE units and neighbors; all four supplied source texts read in full. Output reconciled to the final stable 33-ID NOT_ASSESSABLE set.",
+  "source_bases": {
+    "S1": "ABSTRACT_ONLY",
+    "S2": "ABSTRACT_ONLY",
+    "S3": "ABSTRACT_ONLY",
+    "S4": "EXCERPT"
+  },
+  "source_map": {
+    "S1": "10.1186/s12903-026-08156-2",
+    "S2": "10.1111/clr.14109",
+    "S3": "10.1002/cre2.70097",
+    "S4": "S4"
+  },
+  "review_policy": "Discovery only. Found means a substantive source passage was located for at least a material component or contextual proposition, not that the entire unit matches. Limits are recorded in notes; no Fidelity verdicts or change kinds assigned.",
+  "concurrent_update": "Parent updated pooled.json during review, then confirmed it stable. Final output removed u27/u62 and added u24/u43 to match the stable current NOT_ASSESSABLE IDs.",
+  "results": {
+    "reviewed": 33,
+    "found": 16,
+    "null": 17,
+    "by_source": {
+      "S1": 2,
+      "S4": 13,
+      "S3": 1
+    }
+  },
+  "checks": [
+    "Exact set of final pooled NOT_ASSESSABLE IDs",
+    "Each nonempty quote is a verbatim substring of its named source",
+    "Null entries have empty quotes",
+    "Merged claim text equals deterministic unit text",
+    "Article files and pooled.json not modified by this reviewer"
+  ],
+  "input_sha256": {
+    "final-runs/pooled.json": "7f92d2f9876167421da80846630e17860c1422d38ee705f7a60c1c4109eabc07",
+    "des-runs4/input-pooled-S1.json": "a89eaf04deb6c69ac1aa882a2926339a238e5ba64c7cf7bd24bdd62a6401636b",
+    "des-temp/texts.json": "7057cdcfafb44ca04c284cc8f5f9e75ca220a89841fadd3294af5780883427f8"
+  },
+  "output_sha256": "a8f449a184b23273b5241d9c554a847e989ad44eec278296df623280ce28a0f7"
+}

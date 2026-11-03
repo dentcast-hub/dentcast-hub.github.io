@@ -1,0 +1,8 @@
+{
+  "checker": "independent-run-2",
+  "input": "/workspace/scratch/2cf47782c4a1/recheck-S3/input-src0.json",
+  "spec": "/workspace/scratch/dentcast-main-read/.dentcast/des-v3.5-knowledge.md",
+  "output": "/workspace/scratch/2cf47782c4a1/recheck-S3/out-src0-2.json",
+  "output_sha256": "2e917ff9834a339a877135e628b0fd9e068c2ca78948393f7582edd257e8e47c",
+  "units_evaluated": ["u65"]
+}

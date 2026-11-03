@@ -1,0 +1,2 @@
+model: GPT-6 (model variant/deployment identifier not exposed to this agent)
+settings: no sampling or inference settings exposed; operating under the supplied DES v3.5 specification

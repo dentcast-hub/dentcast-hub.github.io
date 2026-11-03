@@ -1,0 +1,2 @@
+Model: GPT-6 (actual runtime model label unavailable in this delegated execution context)
+Settings: Fidelity Checker run 1, source S4 only; temperature and other sampling settings not exposed.

@@ -1,0 +1,598 @@
+{
+ "des_version": "3.5",
+ "mode": "FIDELITY",
+ "scope": "POOLED",
+ "text_basis": "EXCERPT",
+ "claims": [
+  {
+   "id": "u1",
+   "claim_quote": "بعد از کاشت ایمپلنت قدامی، جای خالی دندان را چطور پر کنیم؟",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u2",
+   "claim_quote": "فرض کنیم دندان قدامی بیمار کشیده شده و ایمپلنت هم در محل قرار گرفته است، اما به دلیل ثبات اولیه ناکافی (Primary Stability)، شرایط بافت نرم و استخوان یا ملاحظات دیگر، تصمیم داریم فعلاً روکش موقت را به ایمپلنت متصل نکنیم.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u3",
+   "claim_quote": "از طرفی، بیمار هم نمی‌خواهد چند ماه با جای خالی دندان جلوی خود زندگی کند.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u4",
+   "claim_quote": "در این شرایط چه انتخاب‌هایی داریم؟",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "question with no answer in it"
+  },
+  {
+   "id": "u5",
+   "claim_quote": "خوشبختانه روش‌های مختلفی وجود دارند که بدون اتصال به ایمپلنت، می‌توانند زیبایی بیمار را در دورهٔ استئواینتگریشن تأمین کنند.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u6",
+   "claim_quote": "۱.",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u7",
+   "claim_quote": "استفاده از تاج دندان خود بیمار (Natural Tooth Pontic)",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u8",
+   "claim_quote": "اگر ایمپلنت هم‌زمان با کشیدن دندان گذاشته شده و تاج دندان سالم باشد، می‌توان از همان تاج به‌عنوان پونتیک استفاده کرد.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Where the edentulous span is small and the provisional phase is short, bonding artificial teeth or patient’s extracted teeth to the adjacent natural teeth provide an easy and economical option.",
+   "source_ref": "S4",
+   "note": "The excerpt supports bonding the patient’s extracted tooth as an artificial tooth option."
+  },
+  {
+   "id": "u9",
+   "claim_quote": "در این روش، ریشه را حذف می‌کنیم، سطح زیرین تاج را متناسب با شرایط بافت نرم اصلاح و پولیش می‌کنیم و سپس با کامپوزیت یا فایبر به دندان‌های مجاور متصل می‌کنیم.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Where the edentulous span is small and the provisional phase is short, bonding artificial teeth or patient’s extracted teeth to the adjacent natural teeth provide an easy and economical option.",
+   "source_ref": "S4",
+   "note": "The excerpt states bonding artificial teeth or extracted teeth to adjacent natural teeth, but does not specify root removal or preparation/polishing steps."
+  },
+  {
+   "id": "u10",
+   "claim_quote": "مزیت اصلی این تکنیک، حفظ رنگ، فرم، ترنسلوسنسی و آناتومی طبیعی دندان خود بیمار است.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u11",
+   "claim_quote": "به‌خصوص در ناحیه قدامی که هماهنگی رنگ و فرم اهمیت زیادی دارد، این ویژگی ارزشمند است.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u12",
+   "claim_quote": "البته تاج باید ساختار مناسبی داشته باشد و اتصال آن به دندان‌های مجاور، بدون ایجاد تماس اکلوژنی نامناسب، امکان‌پذیر باشد.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u13",
+   "claim_quote": "۲.",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u14",
+   "claim_quote": "پونتیک کامپوزیتی یا دندان مصنوعی آماده",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u15",
+   "claim_quote": "اگر تاج طبیعی بیمار قابل‌استفاده نباشد، می‌توان پونتیک را مستقیماً با کامپوزیت ساخت یا از یک دندان مصنوعی آکریلی یا کامپوزیتی آماده استفاده کرد.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u16",
+   "claim_quote": "دندان مصنوعی را از نظر اندازه، رنگ و فرم اصلاح می‌کنیم و با استفاده از مواد رزینی به دندان‌های مجاور متصل می‌کنیم.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Where the edentulous span is small and the provisional phase is short, bonding artificial teeth or patient’s extracted teeth to the adjacent natural teeth provide an easy and economical option.",
+   "source_ref": "S4",
+   "note": "The bonding to adjacent teeth is stated; adjustment by size, color, and form is not addressed in this excerpt."
+  },
+  {
+   "id": "u17",
+   "claim_quote": "در روش مستقیم نیز می‌توان پونتیک را با کامپوزیت داخل دهان شکل داد.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u18",
+   "claim_quote": "مزیت این روش‌ها، سرعت انجام درمان، هزینهٔ نسبتاً پایین و حفظ نسج دندان‌های مجاور است.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Where the edentulous span is small and the provisional phase is short, bonding artificial teeth or patient’s extracted teeth to the adjacent natural teeth provide an easy and economical option.",
+   "source_ref": "S4",
+   "note": "The excerpt calls the bonding option easy and economical; speed and preservation of adjacent tooth structure are not addressed."
+  },
+  {
+   "id": "u19",
+   "claim_quote": "محدودیت اصلی، استحکام اتصال است.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u20",
+   "claim_quote": "به‌ویژه در بیمارانی با دیپ‌بایت یا تماس‌های سنگین قدامی، احتمال جداشدن یا شکست اتصال بیشتر می‌شود.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u21",
+   "claim_quote": "۳.",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u22",
+   "claim_quote": "بریج تقویت‌شده با فایبر (FRC Bridge)",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u23",
+   "claim_quote": "در این تکنیک، از فایبر برای تقویت ساختار بریج و اتصال پونتیک به دندان‌های مجاور استفاده می‌کنیم.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Mesh plates or fiber strips can be incorporated to reinforce the composite bridge and reduce the need for bulky interproximal composite.",
+   "source_ref": "S4"
+  },
+  {
+   "id": "u24",
+   "claim_quote": "پونتیک می‌تواند از کامپوزیت ساخته شود یا یک دندان مصنوعی آماده یا حتی تاج طبیعی بیمار باشد.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Where the edentulous span is small and the provisional phase is short, bonding artificial teeth or patient’s extracted teeth to the adjacent natural teeth provide an easy and economical option.",
+   "source_ref": "S4",
+   "note": "The excerpt supports artificial teeth and a patient's extracted tooth as options; it does not specify a natural crown or directly making the pontic from composite."
+  },
+  {
+   "id": "u25",
+   "claim_quote": "بنابراین FRC در واقع روش تقویت اتصال و ساختار است، نه الزاماً نوع خاصی از پونتیک.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Mesh plates or fiber strips can be incorporated to reinforce the composite bridge and reduce the need for bulky interproximal composite.",
+   "source_ref": "S4"
+  },
+  {
+   "id": "u26",
+   "claim_quote": "بریج را می‌توان مستقیماً در مطب ساخت یا به‌صورت غیرمستقیم آماده کرد.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "A chairside fiber reinforced composite provisional restoration used a fiber strip and flowable composite resin on adjacent teeth.",
+   "source_ref": "S4",
+   "note": "The excerpt also describes a laboratory-made resin bonded fixed partial prosthesis, supporting the indirect option."
+  },
+  {
+   "id": "u27",
+   "claim_quote": "مزیت مهم آن، ارائهٔ یک جایگزین ثابت بدون اتکا به ایمپلنت و معمولاً بدون تراش قابل‌توجه دندان‌های مجاور است.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u28",
+   "claim_quote": "همچنین در صورت شکست یا جداشدن، در بسیاری از موارد امکان تعمیر وجود دارد.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u29",
+   "claim_quote": "البته برای موفقیت درمان، وجود سطح کافی برای باندینگ، فضای مناسب برای قرارگیری فایبر و کنترل نیروهای اکلوژنی ضروری است.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u30",
+   "claim_quote": "۴.",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u31",
+   "claim_quote": "بریج موقت باندشونده (Resin-Bonded Bridge)",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u32",
+   "claim_quote": "روش دیگر، استفاده از یک بریج موقت با رتینر باندشونده به دندان‌های مجاور است؛ مشابه بریج‌های مریلند.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "When extended healing time is anticipated, cast metal reinforced resin bonded fixed partial prosthesis may be considered for their structural durability.",
+   "source_ref": "S4"
+  },
+  {
+   "id": "u33",
+   "claim_quote": "این بریج‌ها می‌توانند دارای یک یا دو رتینر باشند که به سطح پالاتال دندان‌های پایه باند می‌شوند.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u34",
+   "claim_quote": "در طراحی تک‌رتینر، پونتیک فقط به یک دندان متصل است و حرکت مستقل دندان‌های پایه مشکل کمتری برای اتصال ایجاد می‌کند.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Cantilever prostheses in the anterior region have been shown to have fewer clinical complications compared to the two-retainer prostheses.",
+   "source_ref": "S4"
+  },
+  {
+   "id": "u35",
+   "claim_quote": "مزیت این روش، ثابت بودن پروتز و نیاز محدود به تراش دندان‌های مجاور است.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Resin bonded prostheses offer a conservative option for long-term fixed provisional restorations.",
+   "source_ref": "S4",
+   "note": "The excerpt describes a conservative resin-bonded fixed provisional option; limited preparation is not specified."
+  },
+  {
+   "id": "u36",
+   "claim_quote": "به‌خصوص وقتی قرار است دورهٔ انتظار طولانی باشد، می‌تواند انتخاب مناسبی باشد.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "When extended healing time is anticipated, cast metal reinforced resin bonded fixed partial prosthesis may be considered for their structural durability.",
+   "source_ref": "S4"
+  },
+  {
+   "id": "u37",
+   "claim_quote": "اما وجود انامل کافی برای باندینگ و فضای مناسب برای رتینر اهمیت دارد.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u38",
+   "claim_quote": "در بیماران دارای دیپ‌بایت یا تماس‌های پالاتال سنگین، طراحی و اجرای آن ممکن است دشوار باشد.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "However, such prosthesis may not be possible in patients with deep overbite due to interference with the retainers.",
+   "source_ref": "S4"
+  },
+  {
+   "id": "u39",
+   "claim_quote": "۵.",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u40",
+   "claim_quote": "پلاک شفاف همراه با پونتیک (Essix Retainer)",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u41",
+   "claim_quote": "در این روش، یک پلاک شفاف روی دندان‌ها ساخته می‌شود و فضای دندان ازدست‌رفته با یک پونتیک یا مادهٔ همرنگ دندان پر می‌شود.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Vacuum-formed retainers, often referred as the Essix retainers, can be fabricated either in a commercial laboratory or in the dental office from clear thermoplastic sheets under high pressure and heat to retain pontics for missing teeth.",
+   "source_ref": "S4"
+  },
+  {
+   "id": "u42",
+   "claim_quote": "مزیت اصلی آن، ساخت ساده، هزینهٔ نسبتاً پایین و عدم نیاز به تراش یا باندینگ دندان‌های مجاور است.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "The retainers are easy and inexpensive to fabricate and they are able to protect the healing site, as they are tooth borne.",
+   "source_ref": "S4",
+   "note": "The excerpt supports easy, inexpensive fabrication; it does not address avoiding preparation or bonding."
+  },
+  {
+   "id": "u43",
+   "claim_quote": "همچنین در صورت طراحی مناسب، می‌توان تماس پلاک با ناحیه جراحی را کاهش داد.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u44",
+   "claim_quote": "البته Essix یک جایگزین متحرک است و بیمار معمولاً باید هنگام غذا خوردن آن را خارج کند.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u45",
+   "claim_quote": "علاوه بر این، پوشش سطوح اکلوژنی دندان‌ها ممکن است برای بعضی بیماران خوشایند نباشد.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "As occlusal surface of the entire arch is covered, the retainers may interfere with speech and mastication and may be aesthetically unacceptable by some patients.",
+   "source_ref": "S4"
+  },
+  {
+   "id": "u46",
+   "claim_quote": "این روش به‌خصوص زمانی کاربرد دارد که نمی‌خواهیم هیچ اتصال رزینی روی دندان‌های مجاور ایجاد کنیم.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u47",
+   "claim_quote": "۶.",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u48",
+   "claim_quote": "فیلیپر آکریلی (Acrylic Flipper)",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u49",
+   "claim_quote": "فیلیپر یکی از روش‌های رایج برای جایگزینی موقت دندان قدامی است.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u50",
+   "claim_quote": "این پروتز متحرک معمولاً از آکریل ساخته می‌شود و با تکیه بر دندان‌ها و بافت‌های اطراف، فضای بی‌دندانی را پر می‌کند.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u51",
+   "claim_quote": "مزیت آن، ساخت نسبتاً ساده، هزینهٔ کمتر و امکان اصلاح پروتز در طول دورهٔ ترمیم است.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u52",
+   "claim_quote": "اما در بیمارانی که به‌تازگی ایمپلنت گذاشته‌اند، باید به سطح زیرین فیلیپر توجه ویژه‌ای داشته باشیم.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u53",
+   "claim_quote": "تماس یا فشار نامناسب پروتز روی ناحیه جراحی، هیلینگ اباتمنت یا گرافت ممکن است روند ترمیم را مختل کند.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u54",
+   "claim_quote": "از طرف دیگر، گیر و ثبات پروتز اهمیت دارد.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u55",
+   "claim_quote": "به‌خصوص فیلیپرهای کوچک و یک‌طرفه، اگر از جای خود خارج شوند، می‌توانند خطر بلع یا آسپیراسیون داشته باشند.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u56",
+   "claim_quote": "بنابراین طراحی فیلیپر نباید صرفاً بر اساس زیبایی یا کوچک‌تر کردن ابعاد پروتز انجام شود.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u57",
+   "claim_quote": "کدام روش را انتخاب کنیم؟",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u58",
+   "claim_quote": "انتخاب روش به چند عامل بستگی دارد: وضعیت دندان‌های مجاور و امکان باندینگ، اکلوژن بیمار، شرایط بافت نرم، وجود گرافت، مدت‌زمان انتظار تا روکش نهایی و ترجیح بیمار برای داشتن پروتز ثابت یا متحرک.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Where the edentulous span is small and the provisional phase is short, bonding artificial teeth or patient’s extracted teeth to the adjacent natural teeth provide an easy and economical option.",
+   "source_ref": "S4",
+   "note": "The excerpt also addresses occlusal interference, anticipated extended healing time, and fixed versus removable restorations. Soft-tissue condition and graft presence are not addressed."
+  },
+  {
+   "id": "u59",
+   "claim_quote": "اگر تاج طبیعی بیمار سالم باشد، Natural Tooth Pontic می‌تواند از نظر زیبایی انتخاب جذابی باشد.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u60",
+   "claim_quote": "اگر امکان باندینگ مناسب وجود داشته باشد، FRC یا بریج باندشونده گزینه‌های ثابت و محافظه‌کارانه‌ای هستند.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Resin bonded prostheses offer a conservative option for long-term fixed provisional restorations.",
+   "source_ref": "S4"
+  },
+  {
+   "id": "u61",
+   "claim_quote": "در مقابل، Essix و فیلیپر زمانی کاربرد دارند که به یک جایگزین متحرک نیاز داریم.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u62",
+   "claim_quote": "اما در تمام این روش‌ها یک اصل مشترک وجود دارد:",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "signpost ending in colon; introduces following claim"
+  },
+  {
+   "id": "u63",
+   "claim_quote": "هدف، پر کردن فضای بی‌دندانی و تأمین زیبایی بیمار است، بدون اینکه فشار نامناسبی به ایمپلنت یا بافت‌های در حال ترمیم وارد شود.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "A fixed provisional restoration offers psychological benefit and convenience for the patients and protects the surgical site from transmucosal pressure.",
+   "source_ref": "S4"
+  },
+  {
+   "id": "u64",
+   "claim_quote": "نکتهٔ دیگر اینکه پر کردن فضای خالی لزوماً به معنای شکل‌دهی مناسب Emergence Profile نیست.",
+   "verdict": "NOT_ASSESSABLE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "no source addresses it: S1: NOT_ASSESSABLE, S2: NOT_ASSESSABLE, S3: NOT_ASSESSABLE, S4: NOT_ASSESSABLE"
+  },
+  {
+   "id": "u65",
+   "claim_quote": "بسته به شرایط بافت نرم، ممکن است پس از استئواینتگریشن همچنان به یک روکش موقت متصل به ایمپلنت برای شکل‌دهی کانتور لثه نیاز داشته باشیم.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "A temporary restoration phase could be beneficial to aid in rebuilding the soft tissue.",
+   "source_ref": "S3"
+  }
+ ],
+ "counts": {
+  "matches": 20,
+  "altered": 0,
+  "reversed": 0,
+  "not_in_source": 0,
+  "not_assessable": 29,
+  "author_view": 0,
+  "not_a_claim": 16
+ },
+ "assessable": 20,
+ "fidelity_score": 100,
+ "level": "HIGH",
+ "provisional": true,
+ "source_conclusion": "[S1] Conclusions: Immediate provisionalization using natural crowns with FRC splints may reduce postoperative discomfort and improve overall esthetic outcomes while maintaining comparable gingival height stability during early healing.\n[S2] Further research is required to assess esthetic and functional success with Type 1A treatments.\n[S3] After achieving the desirable level of soft tissue, several techniques are available to achieve a precise transfer of molded gingival architecture, including customized impression coping, injection of soft material around the provisional restoration in the master cast, and digital impression.\n[S4] However, such prosthesis may not be possible in patients with deep overbite due to interference with the retainers.",
+ "fact_fa": "از ۲۰ ادعایی که منابع به آن پرداخته‌اند، ۲۰ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+ "interpretation_fa": "هر ادعای قابل‌بررسی با دست‌کم یکی از منابع مطابق است."
+}

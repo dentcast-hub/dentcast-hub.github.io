@@ -1,0 +1,27 @@
+{
+  "task": "Q17 orphan discovery update after S4 adjudication",
+  "units": [
+    "u27",
+    "u61"
+  ],
+  "requested_model": "GPT-6-astra",
+  "requested_reasoning_effort": "high",
+  "requested_settings_provenance": "Parent task message",
+  "actual_model_and_settings_telemetry": "UNVERIFIED",
+  "reading_scope": "Re-read u26/u27/u28 and u60/u61/u62; re-read all four supplied source texts in full. S1/S2/S3 are ABSTRACT_ONLY and S4 is EXCERPT.",
+  "review_policy": "Discovery only; partial source coverage is identified without assigning Fidelity verdicts or change kinds.",
+  "results": {
+    "reviewed": 2,
+    "found": 2,
+    "null": 0,
+    "source": "S4"
+  },
+  "validation": [
+    "Both IDs currently NOT_ASSESSABLE",
+    "Both source quotes are exact source substrings",
+    "pooled.json unchanged"
+  ],
+  "pooled_sha256": "2f274433eb40454c56d3db6389fe68d046567b825fab490417f71dc493cb4d0b",
+  "source_texts_sha256": "7057cdcfafb44ca04c284cc8f5f9e75ca220a89841fadd3294af5780883427f8",
+  "output_sha256": "b40206396d27784a9d7b3a56bced7234d8fe908ba364d20343dbc07e86b9369b"
+}
