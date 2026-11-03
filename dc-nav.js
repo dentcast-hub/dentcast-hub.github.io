@@ -1708,6 +1708,10 @@
     });
     dcAudio.addEventListener('play',  function () {
       dcMusicLive = true;   // in use here → follows the listener to the next page
+      /* The bar appears the moment the music starts, not only on the next
+         page: the header panel lives inside the ☰ menu, so once that closes
+         the music had no visible control on this page either. */
+      dcMusicBarShow();
       syncMusicPlayPauseIcon();
       /* Exclusivity: only one audio source plays. When the music starts, the
          podcast yields — stop it (unmount + close). Safe no-op if not mounted. */
