@@ -229,11 +229,13 @@ main > h2 .dc-svg-icon {
   white-space: nowrap;
 }
 
-/* On phones the drawer has collected 8 tools (نصب، مشاوره، درباره، رادار،
-   جستجو، تم، موسیقی، مقاله‌ها — the last ones injected by dc-nav.js and
-   plus/js/header.js), so a single scrolling row clips the tail. Lay them out
-   as a 4-column grid instead: the «ابزارها» label spans the top and the tools
-   fall into two full-width rows — nothing scrolls, nothing shrinks. */
+/* On phones the drawer holds 9 tools (نصب، مشاوره، اشتراک، درباره، رادار،
+   جستجو، تم، موسیقی، کتابخانه — everything after درباره, and «اشتراک» on
+   pages whose static tray predates it, injected by dc-nav.js), so a single
+   scrolling row clips the tail. Lay them out as a grid instead, with the
+   «ابزارها» label spanning the top — nothing scrolls, nothing shrinks.
+   dc-nav.js's injected drawer CSS narrows this to 3 columns (three full
+   rows); the 4 here is only the fallback before it loads. */
 @media (max-width: 640px) {
   .dc-toolbar-drawer.open { max-height: 12rem; }
   .dc-toolbar-drawer-inner {

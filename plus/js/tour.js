@@ -15,10 +15,10 @@
 //     the account, not localStorage).
 //  2. MANUAL — «راهنمای سایت» in the header person menu (logged-in), any time.
 //     On a non-home page it navigates to /?tour=1 and starts there.
-import { el, faNum, tehranDay } from './util.js?v=215';
-import { api, currentUser } from './api.js?v=215';
-import { pricingHref } from './premium-cta.js?v=215';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=215';
+import { el, faNum, tehranDay } from './util.js?v=216';
+import { api, currentUser } from './api.js?v=216';
+import { pricingHref } from './premium-cta.js?v=216';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=216';
 
 const SS_PENDING = 'dcp:tour:pending'; // set before navigating home to start there
 
@@ -71,7 +71,7 @@ const STOPS = [
   // ── خانه ─────────────────────────────────────────────────────────────────
   {
     key: 'header', panel: 'panel-studio', title: 'هدر دنت‌کست',
-    text: 'این نوار همیشه بالای صفحه است: لوگو شما را به خانه برمی‌گرداند و ذره‌بین، جستجوی سراسری در همه‌ی بخش‌های دنت‌کست است. دکمه‌ی ☰ جعبه‌ابزار را باز می‌کند: نصب اپلیکیشن، مشاوره، اشتراک، درباره، رادار، جستجو، تغییر تم، موسیقی و کتابخانه.',
+    text: 'این نوار همیشه بالای صفحه است: لوگو شما را به خانه برمی‌گرداند و ذره‌بین، جستجوی سراسری در همه‌ی بخش‌های دنت‌کست است. دکمه‌ی ☰ منوی سایت را باز می‌کند — فهرست موضوعی، Glossary، بیماران، پلاس و پشتیبانی — و آخرین خانه‌اش، «ابزار»، جعبه‌ابزار را باز می‌کند: نصب اپلیکیشن، مشاوره، اشتراک، درباره، رادار، جستجو، تغییر تم، موسیقی و کتابخانه.',
     targets: () => [visibleOne('.dc-topbar')],
   },
   {
@@ -265,7 +265,7 @@ async function mountPremiumPreview(ctx) {
   if (preview && preview.isConnected) return;
   const host = byId('panel-premium');
   if (!host) return;
-  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=215'), samplePathway()]);
+  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=216'), samplePathway()]);
   if (!state || typeof mod.livePreview !== 'function') return;
   const node = mod.livePreview({
     tier: 'premium',

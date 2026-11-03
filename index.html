@@ -431,10 +431,12 @@ body{
 .dc-drawer-tool-seg:active{ background:rgba(var(--pr-rgb),.06); }
 .dc-drawer-tool-ico{ font-size:1.25rem; line-height:1; }
 .dc-drawer-tool-txt{ font-size:0.6875rem; font-weight:800; color:var(--txt2); white-space:nowrap; }
-/* Phones: the drawer ends up holding 8 tools at runtime (dc-nav.js injects
-   رادار/جستجو/تم and plus/js/header.js moves موسیقی/مقاله‌ها in), so one
-   scrolling row clips the tail. Grid of 4 → label on top + two full rows.
-   Mirrors the same block in dc-nav.css. */
+/* Phones: the drawer ends up holding 9 tools at runtime (the static
+   نصب/مشاوره/اشتراک/درباره plus رادار/جستجو/تم/موسیقی/کتابخانه injected by
+   dc-nav.js), so one scrolling row clips the tail. Laid out as a grid with
+   the label on top. dc-nav.js's injected drawer CSS narrows it to 3 columns
+   (9 tools → three full rows); this 4-column rule is the fallback before it
+   loads. Mirrors the same block in dc-nav.css. */
 @media (max-width:640px){
   .dc-toolbar-drawer.open{ max-height:12rem; }
   .dc-toolbar-drawer-inner{
@@ -4943,6 +4945,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 .dc-pathway-showcase .dcp-pws{ margin:.7rem 0 0; }
 .dcp-hf .dcp-pp-showcase .dcp-pws{ margin:.2rem 0 .9rem; }
   </style>
+  <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
 </head>
 <body>
 
@@ -7114,7 +7117,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=6c80672ba7',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=646fc91663',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -7215,7 +7218,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=309" defer></script>
+<script src="/dc-nav.js?v=310" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -7339,11 +7342,19 @@ document.addEventListener('click',e=>{
    The install logic lives in /dc-nav.js only (window.dcPwaInstall), which also
    owns the drawer's #tool-pwa / #tool-consult / #tool-about through its
    delegated click handler. This page used to bind those three a second time,
-   so one tap ran twice (two alerts; two mailto launches). All that stays here
-   is catching beforeinstallprompt early — dc-nav.js is deferred and may run
-   after the event — and parking it where dc-nav.js picks it up. */
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();window.__dcBip=e;});
-function handlePWAInstall(){ if(window.dcPwaInstall) window.dcPwaInstall(); }
+   so one tap ran twice (two alerts; two mailto launches). beforeinstallprompt
+   is caught early by the one-line listener at the end of <head> — the same
+   line every page carries — and parked on window.__dcBip for dc-nav.js.
+   What stays here is the desktop button's entry point, with a fallback for a
+   tap that lands before the deferred dc-nav.js has run: use a parked prompt
+   directly if there is one, otherwise say why nothing opened — never a
+   silent no-op. */
+function handlePWAInstall(){
+  if (window.dcPwaInstall) { window.dcPwaInstall(); return; }
+  var e = window.__dcBip;
+  if (e) { window.__dcBip = null; try { e.prompt(); return; } catch (_) {} }
+  alert('صفحه هنوز کامل بارگذاری نشده. چند لحظه بعد دوباره «نصب» را بزنید.');
+}
 </script>
 
 <script src="/global-search.js?v=16"></script>
@@ -7494,7 +7505,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=6c80672ba7';
+  const FEED_URL='/dentcast-brain.json?v=646fc91663';
   /* Two hosts, one per homepage shell — the same SLOT_IDS split
      plus/js/home-upboard.js uses for the «بالاترین» arrangement of this same
      box. This script owns «تازه‌ترین» and is the ONLY renderer of it (the
@@ -7781,7 +7792,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=6c80672ba7', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=646fc91663', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });

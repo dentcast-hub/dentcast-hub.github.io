@@ -98,6 +98,15 @@ PRECONNECT_SNIPPET = (
     '  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>\n'
 )
 
+# Catch Chrome's beforeinstallprompt in <head>: /dc-nav.js is deferred and owns
+# the install flow (window.dcPwaInstall), but the event can fire before it runs.
+# The early listener parks it on window.__dcBip, where dc-nav.js picks it up.
+# Byte-identical to the line on every other page that loads dc-nav.js.
+PWA_BIP_SNIPPET = (
+    "  <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */"
+    "addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>\n"
+)
+
 GA_DEFERRED_SNIPPET = (
     '  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->\n'
     '  <script>\n'
@@ -1279,6 +1288,7 @@ def render_page(slug, cfg, intro_html, flat_ordered):
         "      if(s==='dark'||(s===null&&d)) document.documentElement.setAttribute('data-theme','dark');\n"
         "    })();\n"
         "  </script>\n"
+        + PWA_BIP_SNIPPET +
         '</head>\n'
     )
 
@@ -1891,6 +1901,7 @@ def _render_index_page(pillars_info, cards_html):
         "      if(s==='dark'||(s===null&&d)) document.documentElement.setAttribute('data-theme','dark');\n"
         "    })();\n"
         "  </script>\n"
+        + PWA_BIP_SNIPPET +
         '</head>\n'
     )
 
@@ -2467,6 +2478,7 @@ section[id^="sec-"]{ scroll-margin-top:160px; }
   ]
 }
   </script>
+  <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
 </head>
 
 <body>

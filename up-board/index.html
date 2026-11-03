@@ -45,7 +45,7 @@
   <meta name="theme-color" content="#F3F5F7">
 
   <link rel="stylesheet" href="/dc-theme.css?v=7">
-  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/dc-nav.css?v=18">
   <!-- Required by the search box below: it is a fixed bottom-sheet that is
        CLOSED by default, and that closed state lives here. Ship the markup
        without this stylesheet and the box renders as a plain visible div at the
@@ -265,6 +265,7 @@
       if(s==='dark'||(s===null&&d)) document.documentElement.setAttribute('data-theme','dark');
     })();
   </script>
+  <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
 </head>
 <body class="up-board-page">
 
@@ -343,7 +344,7 @@
 
 <script src="/global-search.js?v=16"></script>
 <script src="/global-search-ui.js?v=5"></script>
-<script src="/dc-nav.js?v=309" defer></script>
+<script src="/dc-nav.js?v=310" defer></script>
 <!-- The ?v= is not decoration: the module carries its own stamp onto the
      up-board/index.json fetch (ASSET_V in upboard-page.js), so one bump
      invalidates both the code and the 443-item catalog it draws. Managed by
