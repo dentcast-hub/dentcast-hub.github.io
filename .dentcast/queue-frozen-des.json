@@ -62,5 +62,35 @@
       "body sentence changed: «وقتی ایمپلنت انتخاب می‌کنیم، معمولاً نگاهمان به اس» -> «در انتخاب ایمپلنت، معمولاً به میزان تحلیل استخوان »",
       "body sentence changed: «این مقاله یک سؤال عملی‌تر می‌پرسد: ایمپلنتی که است» -> «سؤال اصلی این مقاله این است که آیا ایمپلنتی که تحل»"
     ]
+  },
+  "sharehub/share-45": {
+    "queue_ref": "queue/07-sharehub-adjacent-implant-platform-splinting",
+    "record_sha256": "62e5fac5de895d9a9d45b57017d1bc1d0b57c39befbcd569b9b02f9945792b87",
+    "installed_at": "2026-11-03",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (publish-queue.md «DES و Fidelity صف»)",
+      "evidence": [
+        "publish-queue.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [
+        "u1",
+        "u2",
+        "u9",
+        "u18",
+        "u33",
+        "u35",
+        "u38",
+        "u45",
+        "u57",
+        "u59",
+        "u61"
+      ],
+      "dropped": []
+    }
   }
 }
