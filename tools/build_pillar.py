@@ -1110,7 +1110,7 @@ def render_page(slug, cfg, intro_html, flat_ordered):
         '  <link rel="alternate" hreflang="fa" href="https://dentcast.org/pillar/' + slug + '/">\n'
         '  <link rel="alternate" hreflang="x-default" href="https://dentcast.org/pillar/' + slug + '/">\n'
         '  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">\n'
-        '  <link rel="apple-touch-icon" href="/logo-v2.png">\n'
+        '  <link rel="apple-touch-icon" href="/apple-touch-icon.png">\n'
         '  <meta name="theme-color" content="#F3F5F7">\n'
         '  <meta property="og:type" content="website">\n'
         '  <meta property="og:locale" content="fa_IR">\n'
@@ -1853,7 +1853,7 @@ def _render_index_page(pillars_info, cards_html):
         '  <link rel="alternate" hreflang="fa" href="https://dentcast.org/pillar/">\n'
         '  <link rel="alternate" hreflang="x-default" href="https://dentcast.org/pillar/">\n'
         '  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">\n'
-        '  <link rel="apple-touch-icon" href="/logo-v2.png">\n'
+        '  <link rel="apple-touch-icon" href="/apple-touch-icon.png">\n'
         '  <meta name="theme-color" content="#F3F5F7">\n'
         '  <meta property="og:type" content="website">\n'
         '  <meta property="og:locale" content="fa_IR">\n'
@@ -2143,7 +2143,7 @@ _GLOSSARY_HEAD_TOP = """<!DOCTYPE html>
   <meta name="twitter:description" content="دانشنامهٔ دنت‌کست: مفاهیم تصمیم‌ساز در دندان‌پزشکی. جستجوی زنده + فهرست الفبایی A–Z.">
   <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
   <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
-  <link rel="apple-touch-icon" href="/logo-v2.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta name="theme-color" content="#F3F5F7">
 
   <script type="application/ld+json">

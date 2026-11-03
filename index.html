@@ -34,11 +34,14 @@
   <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
   <link rel="icon" href="/logo-v2.png" type="image/png" sizes="192x192">
   <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
-  <link rel="apple-touch-icon" href="/logo-v2.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <!-- Static on the start_url page: dc-nav.js injects this link everywhere else,
        but the homepage is the one page that must be installable even if that
        script is slow or blocked. The injector skips a page that already has it. -->
   <link rel="manifest" href="/manifest.json">
+  <meta name="apple-mobile-web-app-title" content="DentCast">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#F3F5F7">
   <link rel="canonical" href="https://dentcast.org/">
   <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/">
@@ -7212,7 +7215,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=305" defer></script>
+<script src="/dc-nav.js?v=306" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -7332,18 +7335,15 @@ document.addEventListener('click',e=>{
 </script>
 
 <script>
-/* ── PWA ── */
-let dp=null;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;});
-const isiOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
-function handlePWAInstall(){
-  if(isiOS){alert('برای نصب در آیفون: Share → Add to Home Screen');return;}
-  if(!dp){alert('امکان نصب خودکار در حال حاضر موجود نیست.');return;}
-  dp.prompt(); dp.userChoice.finally(()=>{dp=null;});
-}
-document.getElementById('tool-pwa')?.addEventListener('click',handlePWAInstall);
-document.getElementById('tool-consult')?.addEventListener('click',()=>{window.location.href='mailto:info@dentcast.ir';});
-document.getElementById('tool-about')?.addEventListener('click',()=>{window.location.href='about.html';});
+/* ── PWA ──
+   The install logic lives in /dc-nav.js only (window.dcPwaInstall), which also
+   owns the drawer's #tool-pwa / #tool-consult / #tool-about through its
+   delegated click handler. This page used to bind those three a second time,
+   so one tap ran twice (two alerts; two mailto launches). All that stays here
+   is catching beforeinstallprompt early — dc-nav.js is deferred and may run
+   after the event — and parking it where dc-nav.js picks it up. */
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();window.__dcBip=e;});
+function handlePWAInstall(){ if(window.dcPwaInstall) window.dcPwaInstall(); }
 </script>
 
 <script src="/global-search.js?v=16"></script>
