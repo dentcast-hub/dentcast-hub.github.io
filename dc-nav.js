@@ -1273,20 +1273,85 @@
   }
 
   /* ── TOOL BUTTONS ── */
-  var isiOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  var deferredPrompt = null;
+  /* PWA install. The ONE implementation on the site: the drawer's «نصب»
+     (#tool-pwa) reaches it through the delegated click handler, and the
+     homepage's desktop footer button (#dcdPwaBtn) through window.dcPwaInstall.
+     index.html used to carry its own copy bound to #tool-pwa as well, so on
+     the homepage a single tap ran both — two alerts, or two prompt() calls on
+     one single-use event.
+
+     Three facts about the device decide the answer, all from the UA:
+       · iOS has no install prompt at all — the reader adds the site by hand.
+         iPadOS 13+ Safari reports a desktop-Mac UA, so the only thing that
+         tells an iPad from a Mac is the touch-point count; without it an iPad
+         fell through to the "not available" alert with no instructions.
+       · In-app browsers (Instagram, Facebook, LinkedIn…, and on Android any
+         WebView — marked "; wv)") cannot add a site to the home screen at all,
+         so the only useful instruction is "open this in the real browser".
+       · Already running as the installed app → nothing to install (the button
+         is also hidden in that case by the PWA block at the end of this file). */
+  var dcUA = navigator.userAgent || '';
+  var isiOS = /iphone|ipad|ipod/i.test(dcUA) ||
+              (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var isiPad = isiOS && !/iphone|ipod/i.test(dcUA);
+  var isInAppBrowser =
+    /FBAN|FBAV|FB_IAB|Instagram|Line\/|LinkedInApp|Snapchat|Twitter|musical_ly|TikTok|BytedanceWebview/i.test(dcUA) ||
+    (/android/i.test(dcUA) && /; wv\)/.test(dcUA));
+  /* An early inline listener (index.html) may already have caught the event
+     before this deferred file ran — it parks it on window.__dcBip. */
+  var deferredPrompt = window.__dcBip || null;
   window.addEventListener('beforeinstallprompt', function (e) {
     e.preventDefault();
-    deferredPrompt = e;
+    deferredPrompt = window.__dcBip = e;
+  });
+  window.addEventListener('appinstalled', function () {
+    deferredPrompt = window.__dcBip = null;
   });
 
-  /* PWA install — invoked by the delegated click handler. */
-  function handlePwaInstall() {
-    if (isiOS) { alert('برای نصب در آیفون: Share → Add to Home Screen'); return; }
-    if (!deferredPrompt) { alert('امکان نصب خودکار در حال حاضر موجود نیست.'); return; }
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.finally(function () { deferredPrompt = null; });
+  function dcIsStandalone() {
+    try {
+      if (navigator.standalone === true) return true;
+      return !!(window.matchMedia &&
+        (window.matchMedia('(display-mode: standalone)').matches ||
+         window.matchMedia('(display-mode: fullscreen)').matches ||
+         window.matchMedia('(display-mode: minimal-ui)').matches));
+    } catch (_) { return false; }
   }
+
+  var PWA_MANUAL_FA =
+    'پنجرهٔ نصب الان در دسترس نیست.\n' +
+    'از منوی مرورگر (⋮ یا ⋯) گزینهٔ «Install app» (نصب برنامه) یا ' +
+    '«Add to Home screen» (افزودن به صفحهٔ اصلی) را انتخاب کنید.\n' +
+    'اگر قبلاً نصبش کرده‌اید، دنت‌کست را از صفحهٔ اصلی گوشی یا فهرست برنامه‌ها باز کنید.';
+
+  /* PWA install — invoked by the delegated click handler and dcPwaInstall. */
+  function handlePwaInstall() {
+    if (dcIsStandalone()) {
+      alert('دنت‌کست همین حالا به‌صورت برنامهٔ نصب‌شده باز است.');
+      return;
+    }
+    if (isInAppBrowser) {
+      alert('این صفحه داخل یک اپ دیگر (مثل اینستاگرام) باز شده و از این‌جا نصب نمی‌شود.\n' +
+        (isiOS
+          ? 'از منوی همین صفحه (••• یا آیکن قطب‌نما) گزینهٔ «Open in Safari» را بزنید، بعد دوباره «نصب» را لمس کنید.'
+          : 'از منوی همین صفحه (⋮) گزینهٔ «Open in Chrome» یا «باز کردن در مرورگر» را بزنید، بعد دوباره «نصب» را لمس کنید.'));
+      return;
+    }
+    if (isiOS) {
+      alert('برای نصب دنت‌کست روی ' + (isiPad ? 'آیپد' : 'آیفون') + ':\n' +
+        '۱. صفحه را در Safari باز کنید.\n' +
+        '۲. دکمهٔ اشتراک‌گذاری (مربع با فلش رو به بالا) را بزنید؛ اگر پیدا نیست، اول دکمهٔ ••• را بزنید.\n' +
+        '۳. گزینهٔ «Add to Home Screen» (افزودن به صفحهٔ اصلی) را انتخاب کنید و «Add» را بزنید.');
+      return;
+    }
+    if (!deferredPrompt) { alert(PWA_MANUAL_FA); return; }
+    /* The event is single-use: release it before prompting so a second tap
+       can never call prompt() on it again. */
+    var evt = deferredPrompt;
+    deferredPrompt = window.__dcBip = null;
+    try { evt.prompt(); } catch (_) { alert(PWA_MANUAL_FA); }
+  }
+  window.dcPwaInstall = handlePwaInstall;
 
   /* ── SEARCH OPEN — invoked by the delegated click handler ── */
   function openGlobalSearch() {
@@ -2372,11 +2437,53 @@
   try { if (window.top !== window.self) return; } catch (_) { return; }
   if (location.pathname.indexOf('/plus/') === 0) return;
 
+  var pwaHead = document.head || document.documentElement;
   if (!document.querySelector('link[rel="manifest"]')) {
     var mf = document.createElement('link');
     mf.rel = 'manifest';
     mf.href = '/manifest.json';
-    (document.head || document.documentElement).appendChild(mf);
+    pwaHead.appendChild(mf);
+  }
+
+  /* iOS «Add to Home Screen» reads the page's own head, not only the manifest:
+     without apple-mobile-web-app-title the icon is labelled with the long
+     Persian <title> (truncated), and without an apple-touch-icon link iOS
+     falls back to /apple-touch-icon.png at the root (which exists — square,
+     opaque, 180×180). Pages whose head already says something keep it. */
+  if (!document.querySelector('link[rel="apple-touch-icon"]')) {
+    var ati = document.createElement('link');
+    ati.rel = 'apple-touch-icon';
+    ati.href = '/apple-touch-icon.png';
+    pwaHead.appendChild(ati);
+  }
+  [['apple-mobile-web-app-title', 'DentCast'],
+   ['apple-mobile-web-app-capable', 'yes'],
+   ['mobile-web-app-capable', 'yes']].forEach(function (pair) {
+    if (document.querySelector('meta[name="' + pair[0] + '"]')) return;
+    var m = document.createElement('meta');
+    m.name = pair[0];
+    m.content = pair[1];
+    pwaHead.appendChild(m);
+  });
+
+  /* Already running as the installed app: there is nothing to install, so
+     the «نصب» buttons (drawer + homepage desktop footer) disappear. A class on
+     <html> plus one rule, not inline styles, because the drawer header can be
+     replaced in place after this runs. */
+  var pwaStandalone = false;
+  try {
+    pwaStandalone = navigator.standalone === true ||
+      !!(window.matchMedia &&
+         (window.matchMedia('(display-mode: standalone)').matches ||
+          window.matchMedia('(display-mode: fullscreen)').matches ||
+          window.matchMedia('(display-mode: minimal-ui)').matches));
+  } catch (_) {}
+  if (pwaStandalone) {
+    document.documentElement.classList.add('dc-standalone');
+    var sst = document.createElement('style');
+    sst.id = 'dcStandaloneCss';
+    sst.textContent = 'html.dc-standalone #tool-pwa,html.dc-standalone #dcdPwaBtn{display:none!important;}';
+    pwaHead.appendChild(sst);
   }
 
   /* The worker deliberately intercepts nothing (see service-worker.js): it is
