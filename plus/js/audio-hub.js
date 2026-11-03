@@ -32,9 +32,9 @@
 // window.dcAudioHub / window.dcAudioPending (the dcpPendingListen shape).
 // player.html keeps its own record-keeping (#dc-audio is never adopted); the
 // hub only asks it to stop when something else starts.
-import { apiBase } from './api.js?v=217';
-import { el, faNum } from './util.js?v=217';
-import { fmtClock, segmentActive } from './clip-audio.js?v=217';
+import { apiBase } from './api.js?v=218';
+import { el, faNum } from './util.js?v=218';
+import { fmtClock, segmentActive } from './clip-audio.js?v=218';
 
 export const RESUME_KEY = 'dc-resume-state';   // player.html's own record — same key, same shape
 export const META_KEY = 'dc-resume-meta';      // what the bar needs to draw it without the 500 KB catalog
@@ -541,6 +541,8 @@ export async function offerResume() {
   const meta = await metaForEpisode(ep);
   if (!meta || !meta.src || nearEnd(pos, meta.d)) return;
   if (active && !active.paused) return; // something is already playing here
+  // …or the header music carried on from the last page (dc-nav.js's music bar).
+  try { if (window.dcMusicIsPlaying && window.dcMusicIsPlaying()) return; } catch (_) { /* ignore */ }
   showBar(meta, pos, rec.speed, fresh);
 }
 
