@@ -473,7 +473,7 @@ def render_body(md, images, img_url, linker, lang="fa", style="compact", link_cl
             cap = figure_caption(b, img, lang)
             fig = (f'<figure><img src="{img_url(b[1])}" alt="{attr(alt)}" width="{img["w"]}" height="{img["h"]}" '
                    f'loading="lazy" decoding="async">')
-            fig += f"<figcaption>{esc(cap)}</figcaption></figure>" if cap else "</figure>"
+            fig += f"<figcaption>{inline(cap)}</figcaption></figure>" if cap else "</figure>"
             out.append(fig)
         elif b[0] == "hr":
             out.append('<hr class="text-divider">')
@@ -593,10 +593,20 @@ def build_page(cat, n, prev_n, m, date, item, lang="fa"):
         lis = "\n".join(f'  <li><a href="{attr(i["href"])}" target="_blank" rel="noopener noreferrer">'
                         f'{esc(i["label_fa" if lang == "fa" else "label_en"])}</a></li>' for i in credit["items"])
         body += f'\n<h3>{head}</h3>\n<ul class="sh-refs">\n{lis}\n</ul>'
-    doc = swap_region(doc, re.escape(c["body_open"]) + r"\n", r"\n</div>\n<div class=\"author\">", body, "body")
+    # the template's body ends at its paper-credit block, or — when the template
+    # page itself credited a «منابع» list and so carries no such block
+    # (sharehub/share-42, share-45) — at the founder's author-note
+    doc = swap_region(doc, re.escape(c["body_open"]) + r"\n", r"\n</div>\n<div class=\"author(?:-note)?\">", body, "body")
     # 6. credit block
     if credit["mode"] == "author-doi":
         label = credit["label_fa" if lang == "fa" else "label_en"]
+        if '<div class="author">' not in doc:
+            word = "نویسنده:" if lang == "fa" else "Author:"
+            doc, k = re.subn(r'\n<div class="author-note">',
+                             lambda mm: f'\n<div class="author">\n{word}\n<a href="#" target="_blank" rel="noopener noreferrer">x</a></div>' + mm.group(0),
+                             doc, count=1)
+            if not k:
+                refuse("TEMPLATE_REGION", "no paper-credit block and no author-note to place it before")
         doc = re.sub(r'(<div class="author">\n[^\n<]*\n)<a href="[^"]*"( target="_blank" rel="noopener noreferrer">)[^<]*(</a></div>)',
                      lambda mm: mm.group(1) + f'<a href="{attr(credit["href"])}"' + mm.group(2) + esc(label) + mm.group(3),
                      doc, count=1)
