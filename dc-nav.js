@@ -184,11 +184,19 @@
 '  </div>' +
 '</header>';
 
+  /* «اشتراک» is its own constant because the static tray that ~1075 pages
+     carry in their own markup predates it; step 3-pre adds it there at
+     runtime, right after نصب. It is the only menu door to the price list
+     for a signed-out visitor (the person menu exists only once logged in). */
+  var DC_DRAWER_SUBSCRIBE_BTN =
+'<button class="dc-drawer-tool-seg" type="button" id="tool-subscribe"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 8l4.5 3L12 5l4.5 6L21 8l-1.8 9H4.8L3 8z"/><path d="M4.8 20h14.4"/></svg></span><span class="dc-drawer-tool-txt">اشتراک</span></button>';
+
   var DC_DRAWER_HTML =
 '<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">' +
 '  <div class="dc-toolbar-drawer-inner">' +
 '    <span class="dc-toolbar-drawer-label">ابزارها</span>' +
 '    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>' +
+    DC_DRAWER_SUBSCRIBE_BTN +
 '  </div>' +
 '</div>';
 
@@ -257,14 +265,14 @@
      sat behind a last «ابزار» segment.)
 
      What it lists: destinations that are not content streams — the topic
-     index, the glossary, the patients page and support — then the tools that
-     have no other door: نصب، رادار، تم، موسیقی، کتابخانه. The content
+     index, the glossary, the patients page and support — then the tools:
+     نصب، اشتراک، رادار، تم، موسیقی، کتابخانه. The content
      sections were taken out by the founder on 1405/08/12 (they live on the
-     homepage). On 1405/08/13 the founder also took out five entries that
-     another always-visible control already opens:
+     homepage). On 1405/08/13 the founder also took out four entries that
+     another always-visible control already opens («اشتراک» was taken out
+     with them and brought back the same day — signed-out readers on an
+     article had no other direct door to the price list):
        • پلاس (/plus/ = پیشخوان) — the header person menu's «پیشخوان»;
-       • اشتراک (/plus/pricing.html) — the homepage «پریمیوم» tab, the
-         person menu, and every locked-feature prompt;
        • درباره (/about.html) — the brand line «دکتر فواد شهابیان» under the
          logo on every page;
        • مشاوره (mailto) — «پشتیبانی»;
@@ -274,8 +282,8 @@
 
      How the flat grid is built: the tools are still injected into the old
      tray (.dc-toolbar-drawer-inner) — ~1075 pages carry that tray in their
-     static markup, with نصب/مشاوره/اشتراک/درباره in it — and step 3f then
-     drops the five retired buttons and MOVES the remaining tool buttons into
+     static markup, with نصب/مشاوره/درباره (some also اشتراک) in it — and
+     step 3f then drops the retired buttons and MOVES the remaining tool buttons into
      the menu grid, removing the emptied tray. Every handler is delegated on
      document by id/class, so re-parenting changes nothing about wiring.
 
@@ -309,11 +317,10 @@
 '</div>';
 
   var DC_DRAWER_MENU_CSS =
-/* Phones: THREE columns. Four destinations + five tools = nine, a full 3×3
-   (eight in an installed app, where «نصب» hides itself). Wide screens: one
-   row of nine. */
+/* Phones: THREE columns. Four destinations + six tools = ten (nine in an
+   installed app, where «نصب» hides itself). Wide screens: one row of ten. */
 '.dc-drawer-menu-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:.125rem 0;padding:.375rem .625rem .25rem;box-sizing:border-box;}' +
-'@media (min-width:641px){.dc-drawer-menu-inner{grid-template-columns:repeat(9,1fr);}}' +
+'@media (min-width:641px){.dc-drawer-menu-inner{grid-template-columns:repeat(10,1fr);}}' +
 /* Top-aligned, not centred: one wrapped label makes its whole grid row taller,
    and a centred cell would then float its icon below its neighbours'. Anchoring
    every cell to the top keeps the icons on one line across the row and lets the
@@ -532,6 +539,17 @@
       document.body.insertAdjacentHTML('beforeend', DC_RADAR_HTML);
     }
 
+    /* 3-pre) «اشتراک» into a static tray that predates it, right after نصب
+           (at the start of the tray if نصب is missing). Idempotent. */
+    if (!document.getElementById('tool-subscribe')) {
+      var trayP = document.querySelector('#dcToolbarDrawer .dc-toolbar-drawer-inner');
+      if (trayP) {
+        var pwaP = document.getElementById('tool-pwa');
+        if (pwaP && trayP.contains(pwaP)) pwaP.insertAdjacentHTML('afterend', DC_DRAWER_SUBSCRIBE_BTN);
+        else trayP.insertAdjacentHTML('afterbegin', DC_DRAWER_SUBSCRIBE_BTN);
+      }
+    }
+
     /* 3) Place the radar trigger INSIDE the drawer (Change A). We ONLY add the
           button to the existing drawer; we never rebuild it or touch the other
           tool buttons. Idempotent via the id check. The button's delegated
@@ -595,9 +613,9 @@
            tray of pages built before 1405/08/13), then move every remaining
            tool button out of the tray and into the menu grid, after the
            destinations, and remove the emptied tray. Order follows the tray:
-           نصب، رادار، تم، موسیقی، کتابخانه. Idempotent — a second run finds
+           نصب، اشتراک، رادار، تم، موسیقی، کتابخانه. Idempotent — a second run finds
            no tray. */
-    ['tool-consult', 'tool-subscribe', 'tool-about', 'btn-search-drawer'].forEach(function (id) {
+    ['tool-consult', 'tool-about', 'btn-search-drawer'].forEach(function (id) {
       var gone = document.getElementById(id);
       if (gone && gone.closest('#dcToolbarDrawer')) gone.remove();
     });
@@ -1867,6 +1885,9 @@
     if (t.closest('#btn-podcast-toggle'))    { dcHeaderOpenerClick('podcast'); return; }
     /* Drawer tool buttons. */
     if (t.closest('#tool-pwa'))     { handlePwaInstall(); return; }
+    // The ONLY menu door to the price list a signed-out visitor can find: the
+    // header person menu carries it too, but only once logged in.
+    if (t.closest('#tool-subscribe')) { window.location.href = '/plus/pricing.html'; return; }
     /* Theme toggle moved into the drawer — reuse applyTheme, no 2nd listener. */
     if (t.closest('#btn-theme-drawer')) {
       applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
