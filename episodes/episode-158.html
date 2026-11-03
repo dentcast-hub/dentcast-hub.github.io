@@ -111,7 +111,7 @@
   <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
   <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/dc-theme.css?v=7">
-  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/dc-nav.css?v=18">
   <link rel="stylesheet" href="/global-search.css?v=5">
   <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
   <meta name="theme-color" content="#F3F5F7">
@@ -155,6 +155,7 @@ body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
 .ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
 @media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
   </style>
+  <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
 </head>
 <body>
 <header class="dc-topbar">
@@ -311,6 +312,6 @@ body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
 })();
 </script>
 <script src="/global-search.js?v=16" defer></script>
-<script src="/dc-nav.js?v=309" defer></script>
+<script src="/dc-nav.js?v=310" defer></script>
 </body>
 </html>

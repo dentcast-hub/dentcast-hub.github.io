@@ -915,7 +915,7 @@
   </script>
 
   <link rel="stylesheet" href="/dc-theme.css?v=7">
-  <link rel="stylesheet" href="/dc-nav.css?v=17">
+  <link rel="stylesheet" href="/dc-nav.css?v=18">
   <link rel="stylesheet" href="/dc-landing.css?v=2">
   <link rel="stylesheet" href="/global-search.css?v=5">
 
@@ -1171,6 +1171,7 @@
       if(s==='dark'||(s===null&&d)) document.documentElement.setAttribute('data-theme','dark');
     })();
   </script>
+  <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
 </head>
 <body data-pillar="implantology">
 
@@ -2550,7 +2551,7 @@
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
 <script src="/global-search.js?v=16"></script>
 <script src="/global-search-ui.js?v=5"></script>
-<script src="/dc-nav.js?v=309" defer></script>
+<script src="/dc-nav.js?v=310" defer></script>
 <script type="module" src="/pillar/premium-index.js?v=62"></script>
 
 </body>

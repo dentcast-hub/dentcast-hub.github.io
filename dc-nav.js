@@ -184,13 +184,21 @@
 '  </div>' +
 '</header>';
 
+  /* «اشتراک» is its own constant because two places need it: the drawer this
+     file injects (below), and the static drawer that ~1075 pages carry in their
+     own markup — built before this button existed, so it holds only
+     نصب/مشاوره/درباره. Phase 3-pre adds it there at runtime, between مشاوره
+     and درباره, the same way رادار/جستجو/تم are added — no page edit. */
+  var DC_DRAWER_SUBSCRIBE_BTN =
+'<button class="dc-drawer-tool-seg" type="button" id="tool-subscribe"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 8l4.5 3L12 5l4.5 6L21 8l-1.8 9H4.8L3 8z"/><path d="M4.8 20h14.4"/></svg></span><span class="dc-drawer-tool-txt">اشتراک</span></button>';
+
   var DC_DRAWER_HTML =
 '<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">' +
 '  <div class="dc-toolbar-drawer-inner">' +
 '    <span class="dc-toolbar-drawer-label">ابزارها</span>' +
 '    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>' +
 '    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>' +
-'    <button class="dc-drawer-tool-seg" type="button" id="tool-subscribe"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 8l4.5 3L12 5l4.5 6L21 8l-1.8 9H4.8L3 8z"/><path d="M4.8 20h14.4"/></svg></span><span class="dc-drawer-tool-txt">اشتراک</span></button>' +
+    DC_DRAWER_SUBSCRIBE_BTN +
 '    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>' +
 '  </div>' +
 '</div>';
@@ -266,35 +274,31 @@
 
   /* ── SITE MENU inside the tool drawer ─────────────
      The hamburger used to open a tray of TOOLS only, so from an article there
-     was no route to any section's landing page. It now opens the SITE: one
-     segment per section, in the same .dc-drawer-tool-seg shape and the same
-     4-column grid the tools already use — with the original tool tray folded
-     behind the last segment, «ابزار».
+     was no route anywhere else. It now opens the SITE first: one segment per
+     destination, in the same .dc-drawer-tool-seg shape and the same phone grid
+     as the tool tray — with that tray folded behind the last segment, «ابزار».
+
+     What the menu lists: destinations that are not content streams — the
+     topic index, the glossary, the patients page, Plus and support. The
+     content sections (NoteCast, Insight, Share Hub, Chairside, Meta Note,
+     LiteCast, DentCast+, episodes, پرامپتولوژیست, پلاک صفر, تراز شواهد) were
+     taken out by the founder on 1405/08/12: they all live on the homepage
+     (its section grid on the phone shell, column A on the desktop shell).
 
      Three things this deliberately does NOT do:
-       • It never rebuilds, reorders or rewrites .dc-toolbar-drawer-inner. That
-         element and every button in it (نصب/مشاوره/اشتراک/درباره + the
-         injected رادار/جستجو/تم + plus/js/header.js's موسیقی/مقاله‌ها) stay
-         byte-identical, delegated handlers included; only their visibility is
-         now gated by the fold.
+       • It never rebuilds, reorders or rewrites .dc-toolbar-drawer-inner. The
+         tray's own buttons (نصب/مشاوره/اشتراک/درباره) and the ones injected
+         into it (رادار/جستجو/تم/موسیقی/کتابخانه — and «اشتراک» on pages whose
+         static tray predates it) keep their markup and delegated handlers;
+         only their visibility is gated by the fold.
        • It never touches the desktop app shell (.dcd-app in index.html) — that
          sidebar owns its own navigation and is out of scope by design.
-       • It adds no new page: every entry points at a landing page that already
-         exists on disk.
-
-     پرامپتولوژیست lives UNDER /dentai/ on disk but stands on its own here, on
-     purpose: in this drawer a section is a destination, never a sub-menu.
-     /dentai/ itself is not listed since 1405/07/15: DentAI is a closed section
-     (its pages now list under Share Hub), and a closed section is not a
-     destination. The landing page stays on disk for inbound links.
+       • It adds no new page: every entry points at a page that already exists
+         on disk.
 
      Styling is injected from JS rather than added to dc-nav.css because
      index.html loads no shared stylesheet — the same reason DC_MUSIC_CSS and
      the skip-link styles are injected. */
-  /* Content sections (NoteCast, Insight, Share Hub, Chairside, Meta Note,
-     LiteCast, DentCast+, episodes, پرامپتولوژیست, پلاک صفر, تراز شواهد) were
-     removed from this menu by the founder on 1405/08/12 — they all live on the
-     homepage. What stays are the destinations that are not content streams. */
   var DC_DRAWER_MENU_ITEMS = [
     ['/pillar/',                   'folder',  'فهرست موضوعی'],
     ['/glossary/',                 'book',    'Glossary'],
@@ -302,7 +306,7 @@
     ['/plus/',                     'sparkle', 'پلاس'],
     /* Reaches every page's hamburger, not just index.html's — the floating
        control below only becomes a support shortcut on the homepage, and the
-       other 190-odd pages need a route to /plus/support.html too. */
+       other ~1075 pages need a route to /plus/support.html too. */
     ['/plus/support.html',         'lifebuoy', 'پشتیبانی']
   ];
 
@@ -324,10 +328,16 @@
 '</div>';
 
   var DC_DRAWER_MENU_CSS =
-/* Same 4-column grid as the tool tray on phones; on wide screens the drawer's
-   tools lay out as a scrolling row, but sixteen sections in one row would
-   clip, so the menu stays a grid there too and simply gets more columns. */
-'.dc-drawer-menu-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:.125rem 0;padding:.375rem .625rem .25rem;box-sizing:border-box;}' +
+/* Phones: THREE columns, for the menu and the tool tray alike. Six
+   destinations (5 links + «ابزار») and nine tools both divide by three, so
+   every row is full — on four columns the menu ended on a half row and the
+   tray on a single orphan («کتابخانه» alone on row three). The tray's own
+   4-column rule lives in dc-nav.css and index.html's inline mirror; the
+   #dcToolbarDrawer-scoped selector here outranks both, so one rule reaches
+   every page. On wide screens the tools are a flex row and the menu a grid
+   with spare columns, so nothing wraps there. */
+'.dc-drawer-menu-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:.125rem 0;padding:.375rem .625rem .25rem;box-sizing:border-box;}' +
+'@media (max-width:640px){#dcToolbarDrawer .dc-toolbar-drawer-inner{grid-template-columns:repeat(3,1fr);}}' +
 '@media (min-width:641px){.dc-drawer-menu-inner{grid-template-columns:repeat(8,1fr);}}' +
 '.dc-drawer-menu-label{grid-column:1 / -1;font-size:.68rem;font-weight:800;color:var(--txt3,#8a9cbe);white-space:nowrap;padding-bottom:.125rem;}' +
 /* Top-aligned, not centred: one wrapped label makes its whole grid row taller,
@@ -336,14 +346,14 @@
    second text line simply hang. */
 '.dc-drawer-menu-inner .dc-drawer-tool-seg{padding:.5rem .25rem;justify-content:flex-start;}' +
 /* Section names are not tool names: a two-word one («فهرست موضوعی») is wider
-   than a quarter of a phone, and the tools' nowrap would push it out of its
+   than a narrow cell, and the tools' nowrap would push it out of its
    cell. Let it wrap instead — the grid row grows and every cell stays centred. */
 '.dc-drawer-menu-inner .dc-drawer-tool-txt{white-space:normal;text-align:center;line-height:1.3;}' +
 /* Self-contained icon sizing: a page that loads neither dc-nav.css nor
    index.html's inline mirror still gets 1em glyphs, never full-size SVGs. */
 '.dc-drawer-menu-inner .dc-svg-icon{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}' +
 /* The fold. display:none rather than a height so the tray keeps its OWN
-   responsive layout — flex row on wide screens, 4-col grid on phones — for
+   responsive layout — flex row on wide screens, 3-col grid on phones — for
    the moment it comes back. */
 '#dcToolbarDrawer:not(.tools-open)>.dc-toolbar-drawer-inner{display:none;}' +
 '#dcToolbarDrawer.tools-open>.dc-drawer-menu-inner{border-bottom:1px solid var(--border,rgba(2,35,96,.10));padding-bottom:.375rem;}' +
@@ -551,6 +561,22 @@
     }
     if (!document.getElementById('dcRadarOverlay')) {
       document.body.insertAdjacentHTML('beforeend', DC_RADAR_HTML);
+    }
+
+    /* 3-pre) «اشتراک» into a static drawer that predates it. Its slot is the
+           one DC_DRAWER_HTML gives it — right after مشاوره (before درباره if
+           مشاوره is missing) — so every page shows the same tray order.
+           Idempotent via the id check; the delegated handler already routes
+           #tool-subscribe to /plus/pricing.html. */
+    if (!document.getElementById('tool-subscribe')) {
+      var trayP = document.querySelector('#dcToolbarDrawer .dc-toolbar-drawer-inner');
+      if (trayP) {
+        var afterP = document.getElementById('tool-consult');
+        var beforeP = document.getElementById('tool-about');
+        if (afterP && trayP.contains(afterP)) afterP.insertAdjacentHTML('afterend', DC_DRAWER_SUBSCRIBE_BTN);
+        else if (beforeP && trayP.contains(beforeP)) beforeP.insertAdjacentHTML('beforebegin', DC_DRAWER_SUBSCRIBE_BTN);
+        else trayP.insertAdjacentHTML('beforeend', DC_DRAWER_SUBSCRIBE_BTN);
+      }
     }
 
     /* 3) Place the radar trigger INSIDE the drawer (Change A). We ONLY add the
@@ -1219,7 +1245,18 @@
   function sizeToolbarDrawer() {
     var drawer = document.getElementById('dcToolbarDrawer');
     if (!drawer || !drawer.classList.contains('open')) return;
-    drawer.style.maxHeight = Math.max(80, drawer.scrollHeight) + 'px';
+    /* scrollHeight is an integer, and when the content ends on a fraction
+       (89.45px measured) it can round DOWN, so a max-height of exactly that
+       clips the last fraction of a pixel. Measure the real bottom of the
+       content and round up instead; scrollHeight stays as the floor. */
+    var top = drawer.getBoundingClientRect().top, bottom = top;
+    for (var i = 0; i < drawer.children.length; i++) {
+      var r = drawer.children[i].getBoundingClientRect();
+      if (r.height && r.bottom > bottom) bottom = r.bottom;
+    }
+    var padB = parseFloat(getComputedStyle(drawer).paddingBottom) || 0;
+    var need = Math.ceil(bottom - top + padB);
+    drawer.style.maxHeight = Math.max(80, drawer.scrollHeight, need) + 'px';
   }
 
   /* Toggle logic — invoked by the delegated click handler. Reads its
@@ -1230,9 +1267,10 @@
     if (!drawerBtn || !drawer) return;
     var isOpen = drawer.classList.contains('open');
     if (!isOpen) {
-      /* OPEN — size to the actual content: the site menu wraps into four rows
-         and the tools into two (see the drawer grids), so a fixed 80px would
-         clip them. scrollHeight is measurable even at max-height:0. */
+      /* OPEN — size to the actual content: on phones the site menu is two
+         rows and the unfolded tools three more (see the drawer grids), so a
+         fixed 80px would clip them. Layout is measurable even at
+         max-height:0. */
       drawer.classList.add('open');
       sizeToolbarDrawer();
       drawer.style.opacity   = '1';
@@ -1296,8 +1334,13 @@
     e.preventDefault();
     deferredPrompt = window.__dcBip = e;
   });
+  /* Set once the reader has actually accepted an install (prompt outcome or
+     the browser's own appinstalled). A second tap on «نصب» in the same tab then
+     says so, instead of the generic "prompt not available" instructions. */
+  var dcPwaInstalled = false;
   window.addEventListener('appinstalled', function () {
     deferredPrompt = window.__dcBip = null;
+    dcPwaInstalled = true;
   });
 
   function dcIsStandalone() {
@@ -1336,12 +1379,23 @@
         '۳. گزینهٔ «Add to Home Screen» (افزودن به صفحهٔ اصلی) را انتخاب کنید و «Add» را بزنید.');
       return;
     }
+    if (dcPwaInstalled) {
+      alert('دنت‌کست نصب شد. از صفحهٔ اصلی گوشی یا فهرست برنامه‌ها بازش کنید.');
+      return;
+    }
     if (!deferredPrompt) { alert(PWA_MANUAL_FA); return; }
     /* The event is single-use: release it before prompting so a second tap
        can never call prompt() on it again. */
     var evt = deferredPrompt;
     deferredPrompt = window.__dcBip = null;
-    try { evt.prompt(); } catch (_) { alert(PWA_MANUAL_FA); }
+    try { evt.prompt(); } catch (_) { alert(PWA_MANUAL_FA); return; }
+    try {
+      if (evt.userChoice && evt.userChoice.then) {
+        evt.userChoice.then(function (c) {
+          if (c && c.outcome === 'accepted') dcPwaInstalled = true;
+        }, function () {});
+      }
+    } catch (_) {}
   }
   window.dcPwaInstall = handlePwaInstall;
 
@@ -2353,7 +2407,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '286';
+  var V = '287';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now
