@@ -48474,5 +48474,1145 @@
         "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       }
     ]
+  },
+  "sharehub/share-45": {
+    "scored_at": "2026-11-03",
+    "sources": [
+      {
+        "des_version": "3.5",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Vertical level discrepancy of adjacent implants and marginal bone loss",
+          "authors": "Khoshkam V",
+          "year": 2017,
+          "journal": "The Explorer, Journal of USC Student Research, Vol. 9, Poster 29",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 60,
+          "anchor": "retrospective radiographic records study of adjacent implants followed from placement (retrospective cohort; ETIOLOGY case-control row, 60, via Step 2 routing)",
+          "evidence_quote": "The radiographic records of patients who had received multiple adjacent dental implants at two centers were examined."
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "NR",
+              "evidence_quote": "Pearson correlation coefficient was calculated to determine the relationship between implant proximity measurements and MBL.",
+              "note": "abstract reports only a bivariate correlation; no confounder adjustment, matching, restriction or stratification is mentioned, and under ABSTRACT_ONLY silence is NR"
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "some_concerns",
+              "evidence_quote": "Inclusion criteria consisted of: 1) multiple adjacent dental implants restored with splinted or non-splinted restorations, 2) availability of diagnostic quality radiographs at time of implant installation and at least one year post-implant placement.",
+              "note": "inclusion criteria stated, but selection depends on radiograph availability and consecutive enrolment is not described"
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "VLD between the platform of the adjacent implants, horizontal distance between the implants",
+              "note": "exposure defined as a radiographic measurement between implant platforms"
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "64 patients with the mean age of 61 having 128 implants with the mean follow up period of 51 months fulfilled the inclusion criteria.",
+              "note": "only the included number is reported; screened or excluded records and missing data are not addressed in the abstract"
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "distance between the implant platform and bone level at the first implant bone contact at the mesial and distal surfaces of the implants designated as bone level",
+              "note": "outcome definition described; examiner blinding, calibration and reliability not mentioned"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "applies to RCTs only"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "with the mean follow up period of 51 months",
+            "note": "mean 51 months is adequate for a marginal bone loss outcome"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 33,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این پوستر ۳۳ و در باند D (شواهد ضعیف) برای پرسش ETIOLOGY است و چون فقط چکیده در دست بود، مقدماتی است.",
+        "interpretation_fa": "مطالعه‌ای گذشته‌نگر روی رادیوگرافی ۶۴ بیمار که فقط همبستگی ساده‌ی Pearson را بدون کنترل عوامل مخدوش‌کننده سنجیده است. نبود همبستگی معنادار بین VLD و MBL در میانگین VLD حدود ۱.۳ میلی‌متر، درباره‌ی اختلاف‌های بیش از ۳ میلی‌متر یا فاصله‌ی افقی زیر ۳ میلی‌متر چیزی نمی‌گوید. ارزشش در حد یک نشانه‌ی اولیه است."
+      },
+      {
+        "des_version": "3.5",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "The Effect of Vertical Level Discrepancy of Adjacent Dental Implants on Marginal Bone Loss",
+          "authors": "Khoshkam V, Tavari A, Kar K, Bakhshalian N, Zadeh H",
+          "year": null,
+          "journal": "Clinical Oral Implants Research (EAO-286 / OC-PIB-004, conference abstract)",
+          "doi": "10.1111/clr.23_13855"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 60,
+          "anchor": "retrospective cohort of radiographic records (ETIOLOGY case-control row, 60, via Step 2 routing)",
+          "evidence_quote": "retrospective study"
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "some_concerns",
+              "evidence_quote": "Exclusion criteria were as following: 1) Implants that were placed in fresh socket or immediately loaded",
+              "note": "restriction through exclusion criteria and stratification by HID ≤3 mm are reported; no adjustment of the correlation for other confounders is described, so the 3b-i threshold does not apply"
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "some_concerns",
+              "evidence_quote": "Radiographic records of patients, who had received 2 or 3 adjacent implants with a minimum follow up of one year",
+              "note": "explicit inclusion/exclusion criteria from records at two centers; how many records were screened and whether selection depended on radiograph quality relative to bone level is not reported"
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "some_concerns",
+              "evidence_quote": "Vertical level discrepancy between the platforms of adjacent implants",
+              "note": "exposure is defined as platform level difference, but the measurement method for VLD and HID is not described"
+            },
+            {
+              "domain": "missing data",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not address records excluded or lost to follow-up"
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "of diagnostic quality radiographs at the time of implant placement, prosthesis installation and at least one-year post loading",
+              "note": "radiographic MBL at three time points; calibration, examiner number and blinding are not mentioned"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "Disclosure of Interest: None Declared",
+            "note": "disclosure statement present"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: RCTs only"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "mean follow up of 57.2 ± 0.3 months",
+            "note": "mean follow-up of about 4.8 years is adequate for a marginal bone level outcome"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 33,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این چکیده ۳۳ از ۱۰۰ و در باند D (شواهد ضعیف) برای سؤال از نوع ETIOLOGY است و چون فقط چکیده در دسترس بود، مقدماتی است.",
+        "interpretation_fa": "یک retrospective cohort روی ۱۵۳ ایمپلنت از ۶۵ بیمار است که ارتباط VLD با marginal bone loss اطراف ایمپلنت coronal را فقط در HID سه میلی‌متر یا کمتر نشان می‌دهد. روش اندازه‌گیری، کنترل confounding و تحلیل در سطح بیمار از چکیده روشن نیست. ارزش بالینی آن در حد یک سیگنال برای هم‌سطح بودن platform ایمپلنت‌های نزدیک به هم است، نه یک قاعده‌ی اثبات‌شده."
+      },
+      {
+        "des_version": "3.5",
+        "content_type": "RESEARCH",
+        "question_type": "ETIOLOGY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "The significance of vertical platform discrepancies and splinting on marginal bone levels for adjacent dental implants",
+          "authors": "Lin GH, Tran C, Brzyska K, Kan JY, Wang HL, Curtis DA, Kao RT",
+          "year": 2023,
+          "journal": "Clinical Implant Dentistry and Related Research",
+          "doi": "10.1111/cid.13176"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 60,
+          "anchor": "retrospective cohort, single-centre chart review (ETIOLOGY case-control row, 60, via Step 2 routing)",
+          "evidence_quote": "The aim of this retrospective study was to investigate the influence of vertical platform"
+        },
+        "q_method": {
+          "tool": "ROBINS-I",
+          "domains": [
+            {
+              "domain": "confounding",
+              "rating": "some_concerns",
+              "evidence_quote": "also recorded as potential confounders",
+              "note": "Confounders are recorded and Table 3 reports adjusted ORs, but the covariates entered into the logistic model are not listed. The Limitations state that oral hygiene status and occlusion could not be assessed."
+            },
+            {
+              "domain": "selection of participants",
+              "rating": "low",
+              "evidence_quote": "After screening the 475 consecutive electronic dental records, 156 patients with 337",
+              "note": "Consecutive records were screened against explicit inclusion and exclusion criteria."
+            },
+            {
+              "domain": "classification of interventions/exposures",
+              "rating": "low",
+              "evidence_quote": "Five types of implant-supported restorations were included: 1) two single adjacent crowns,",
+              "note": "Restoration type comes from records. Vertical platform discrepancy was measured with software by two calibrated examiners."
+            },
+            {
+              "domain": "missing data",
+              "rating": "some_concerns",
+              "evidence_quote": "short dental implants (< 8 mm long), narrow dental implants (< 3 mm diameter), or lack of",
+              "note": "This is a complete-case design. Patients lacking baseline or follow-up radiographs were excluded, and the number excluded for that reason is not reported."
+            },
+            {
+              "domain": "measurement of the outcome",
+              "rating": "some_concerns",
+              "evidence_quote": "The two examiners (CT and KB) were calibrated for intra-examiner and interexaminer error.",
+              "note": "Calibration and agreement above 90% are described. Examiner blinding is not mentioned, and the Limitations note that radiographs were not standardized."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "The authors declare no conflict of interest.",
+            "note": "A CoI statement is present and no commercial funding is reported."
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "Applies to RCTs only."
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 3,
+            "evidence_quote": "Last, a limited number of implants and restoration types were",
+            "note": "Methods and Statistical Analysis contain no sample size justification or power calculation, and the authors acknowledge a limited sample."
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "The mean follow-up period was 43.2 months, ranging from 13 months to 179",
+            "note": "The outcome is radiographic bone loss of at least 1 mm, not a survival claim. Mean follow-up of 43.2 months is not short relative to that outcome."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 30,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "امتیاز DES این مقاله ۳۰ از ۱۰۰ است، در باند D (شواهد ضعیف) برای سؤال ETIOLOGY.",
+        "interpretation_fa": "یک retrospective cohort تک‌مرکزی است که ارتباط splinting و اختلاف ارتفاع platform را با RMBL حداقل یک میلی‌متر نشان می‌دهد. با این حال oral hygiene و occlusion ثبت نشده، blinding ارزیاب‌ها گزارش نشده و حجم نمونه توجیه ندارد. یافته‌ها ارتباط‌اند نه علیت، و فاصله‌ی اطمینان ORها پهن است."
+      },
+      {
+        "des_version": "3.5",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Effect of Crestal Position on Bone-Implant Stress Interface of Three-Implant Splinted Prostheses: A Finite Element Analysis",
+          "authors": "Ceddia M, Marchioli G, Romasco T, Comuzzi L, Piattelli A, Deporter DA, Di Pietro N, Trentadue B",
+          "year": 2025,
+          "journal": "Materials",
+          "doi": "10.3390/ma18143344"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 65,
+          "anchor": "three-dimensional finite element analysis, an in-silico bench study with one deterministic model per configuration (MATERIAL in-vitro non-standard but fully described protocol row, 65)",
+          "evidence_quote": "Using the FEA software ANSYS Workbench R2023, the 3D model of the bone block and implants was discretized with tetrahedral elements."
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "The null hypothesis states that implant positioning relative to the alveolar crest does not influence the stress distribution.",
+              "note": ""
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Absence. Read Methods 2, 2.1 FEA Modeling and 2.2 Load and Boundary Conditions, plus Results 3 to 3.2. Each configuration (A to D) is a single deterministic model. The mesh sensitivity analysis concerns element size, not the number of models or specimens. No sample, replicate or power wording appears anywhere in the text."
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Absence. Read Methods 2 to 2.2 and Results. The four configurations are designed models, and no allocation or assignment procedure is described. No random or allocation wording appears anywhere in the text."
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Absence. Read Methods 2 to 2.2, Results 3 to 3.2 and Author Contributions. Neither modelling nor the reading of stress outputs is described as blinded or independently assessed. No blind or masked wording appears anywhere in the text."
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Absence. Read Methods 2 to 2.2 and Results 3 to 3.2. The outcomes are single peak von Mises values per model. No statistical test, variance, confidence interval or uncertainty/sensitivity analysis of the outputs is reported. 'Significant' appears only for mesh refinement and in cited literature."
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "low",
+              "evidence_quote": "The authors declare no conflicts of interest.",
+              "note": "A funding statement ('no external funding') is also present. Acknowledgments disclose that AoN Implants supplied implant data and that Tecnoss Dental srl co-financed a PhD scholarship."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement, or manufacturer funding of own tested product without independent-analysis statement",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "Implants were supplied by AoN Implants (AoN Implants Srl, Grisignano di Zocco, Italy)",
+            "note": "A CoI statement is present. AoN supplied the implants and their geometry data but is not stated as a funder. Tecnoss Dental srl co-financed a scholarship, but its product is not tested. The disclosure is transparent, so no penalty applies."
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "This applies to RCTs only, and this is a finite element bench study."
+          },
+          {
+            "item": "no sample size justification / specimen count per group <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "covered in Q_method"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "Not applicable. This is a static computational study with no follow-up and no survival claim."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 20,
+        "band": "D",
+        "provisional": false,
+        "fact_fa": "امتیاز DES این مقاله ۲۰ است. باند آن D (شواهد ضعیف) و نوع پرسش MATERIAL است.",
+        "interpretation_fa": "این مطالعه‌ی finite element به‌عنوان bench study در جدول MATERIAL قرار گرفت. پروتکل مدل‌سازی مفصل است، اما هر پیکربندی فقط یک مدل قطعی دارد و بارگذاری static است. آنالیز آماری انجام نشده و validation تجربی هم نشان داده نشده است. اثر ناهم‌ترازی عمودی ایمپلنت‌های splinted بر تنش کورتیکال یک فرضیه‌ی بیومکانیکی است، نه شاهد بالینی. تعریف مدل‌های C و D در چکیده با Methods یکسان نیست."
+      },
+      {
+        "des_version": "3.5",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Should the restoration of adjacent implants be splinted or nonsplinted? A systematic review and meta-analysis",
+          "authors": "de Souza Batista VE, Verri FR, Lemos CAA, Cruz RS, Oliveira HFF, Gomes JML, Pellizzer EP",
+          "year": 2019,
+          "journal": "The Journal of Prosthetic Dentistry",
+          "doi": "10.1016/j.prosdent.2018.03.004"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 100,
+          "anchor": "SR/meta-analysis; the design of the included studies is not stated in the abstract (THERAPY SR/MA row, 100)",
+          "evidence_quote": "The purpose of this systematic review and meta-analysis was to assess the marginal bone loss, implant survival rate, and prosthetic complications of splinted and nonsplinted implant restorations."
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "some_concerns",
+              "evidence_quote": "this review was registered at the International Prospective Register of Systematic Reviews (PROSPERO) (CRD42017080162)",
+              "note": "The abstract reports registration but does not say whether it happened before the review began."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "low",
+              "evidence_quote": "An electronic search in the PubMed/MEDLINE, Cochrane Library, and Scopus databases was conducted up to November 2017",
+              "note": "Three bibliographic databases were searched. PubMed/MEDLINE counts as one."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "Not addressed in the abstract. Under ABSTRACT_ONLY, silence is NR."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "The abstract mentions no quality, bias or appraisal step. Under ABSTRACT_ONLY, silence is NR."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "low",
+              "evidence_quote": "The meta-analysis was based on the Mantel-Haenszel and inverse variance methods",
+              "note": "The pooling methods are described."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "Not addressed in the abstract. Under ABSTRACT_ONLY, silence is NR."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "Applies to RCTs only. This paper is an SR/meta-analysis."
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "the mean follow-up was 87.8 months (range=12-264 months)",
+            "note": "A mean follow-up of about 7.3 years is adequate for a survival claim. The abstract does not affirmatively show that follow-up was too short."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 55,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۵۵ از ۱۰۰ است و در باند C (شواهد محدود) با نوع سؤال THERAPY قرار می‌گیرد؛ این امتیاز چون فقط بر پایه‌ی چکیده است، موقت است.",
+        "interpretation_fa": "این مرور سیستماتیک در PROSPERO ثبت شده و در سه پایگاه داده جست‌وجو کرده است. اما چکیده درباره‌ی ارزیابی risk of bias مطالعات، فهرست مطالعات حذف‌شده و publication bias چیزی نمی‌گوید و نوع مطالعات واردشده را هم مشخص نمی‌کند. یافته‌ها این است که marginal bone loss و عوارض پروتزی تفاوتی نداشتند و survival در ترمیم‌های splinted بالاتر بود. این یافته‌ها فعلاً در حد شواهد محدود قابل اتکا هستند."
+      }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.5",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "ABSTRACT_ONLY",
+        "claims": [
+          {
+            "id": "u6",
+            "claim_quote": "این اختلاف را Vertical Platform Discrepancy یا Vertical Level Discrepancy می‌نامند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The hypothesis tested was that vertical level discrepancy (VLD) of adjacent implants is associated with marginal bone loss (MBL), the effect of which increases as the horizontal position of implants decreases.",
+            "source_ref": null,
+            "note": "The source uses the name vertical level discrepancy (VLD). The alternative name Vertical Platform Discrepancy is not addressed and is not scored."
+          },
+          {
+            "id": "u10",
+            "claim_quote": "دکتر وحید خوشکام این موضوع را در پایان‌نامه‌اش در دانشگاه USC بررسی کرد.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The abstract does not mention a thesis or USC."
+          },
+          {
+            "id": "u11",
+            "claim_quote": "گزارش اولیه‌ی او در سال ۲۰۱۷ منتشر شد، یعنی چند سال پیش از آنکه نخستین مقاله‌ی کامل در این زمینه چاپ شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The abstract gives no publication year and says nothing about the timing of any full article."
+          },
+          {
+            "id": "u12",
+            "claim_quote": "او در بررسی اولیه ارتباط معنی‌داری پیدا نکرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Correlation test failed to detect significant correlation between the VLD and MBL on either distal surface of the mesial implants (P= 0.98) and the mesial surface of the distal implants (P=0.57).",
+            "source_ref": null,
+            "note": ""
+          }
+        ],
+        "counts": {
+          "matches": 2,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 0,
+          "not_assessable": 2,
+          "author_view": 0,
+          "not_a_claim": 0
+        },
+        "assessable": 2,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": true,
+        "source_conclusion": "However, investigation of a larger cohort of patients whose implants have been placed with greater VLD (>3mm) and/or with smaller horizontal proximity (<3mm) is needed to validate these findings.",
+        "fact_fa": "از ۲ ادعایی که منبع به آن پرداخته‌اند، ۲ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      },
+      {
+        "des_version": "3.5",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "ABSTRACT_ONLY",
+        "claims": [
+          {
+            "id": "u10",
+            "claim_quote": "دکتر وحید خوشکام این موضوع را در پایان‌نامه‌اش در دانشگاه USC بررسی کرد.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The abstract lists the author and USC affiliation but does not mention a thesis."
+          },
+          {
+            "id": "u11",
+            "claim_quote": "گزارش اولیه‌ی او در سال ۲۰۱۷ منتشر شد، یعنی چند سال پیش از آنکه نخستین مقاله‌ی کامل در این زمینه چاپ شود.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The abstract says nothing about an earlier report, its year, or the timing of full papers."
+          },
+          {
+            "id": "u13",
+            "claim_quote": "اما در گزارش بعدی که با نمونه‌ی بزرگ‌تری انجام داد (ابسترکت)، الگوی روشنی به دست آمد.",
+            "verdict": "NOT_ASSESSABLE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The larger sample is a comparison with an earlier report not in the source. The pattern itself is stated and judged in the following units."
+          },
+          {
+            "id": "u14",
+            "claim_quote": "وقتی فاصله‌ی افقی دو ایمپلنت ۳ میلی‌متر یا کمتر بود، ایمپلنتی که پلتفرم آن کرونالی‌تر قرار داشت تحلیل استخوان بیشتری نشان می‌داد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In sites with HID ≤3 mm, from the placement to prosthesis installation, the mean MBL for the coronal\nand apical implants were -1.53 ± 1.04 mm and -0.99 ± 0.93 mm, respectively (p=0.04).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u15",
+            "claim_quote": "اگر اختلاف ارتفاع هم از یک میلی‌متر بیشتر می‌شد، تحلیل استخوان اطراف ایمپلنت کرونالی تقریباً دو برابر ایمپلنت اپیکالی بود (حدود ۲ در برابر ۱ میلی‌متر، بر اساس ارقام همان گزارش).",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Among implants with HID ≤ 3 mm and VLD> 1 mm,\nMBL for the coronal (-2.03 ± 1.25 mm) and apical implants (-1.01 ± 0.84 mm) from implant placement to the last follow-up (p=0.004).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u16",
+            "claim_quote": "این ارتباط در فاصله‌ی افقی بیش از ۳ میلی‌متر دیده نشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This association was limited to implants with horizontal inter-implant distance of 3\nmm or less.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u17",
+            "claim_quote": "چکیده‌ی EAO",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "label only"
+          }
+        ],
+        "counts": {
+          "matches": 3,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 0,
+          "not_assessable": 3,
+          "author_view": 0,
+          "not_a_claim": 1
+        },
+        "assessable": 3,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": true,
+        "source_conclusion": "Disclosure of Interest: None Declared Keywords: bone remodeling, marginal bone loss, retrospective study",
+        "fact_fa": "از ۳ ادعایی که منبع به آن پرداخته‌اند، ۳ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      },
+      {
+        "des_version": "3.5",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u3",
+            "claim_quote": "ما معمولاً هنگام قرار دادن چند ایمپلنت در کنار هم، بیشتر به فاصله‌ی افقی آن‌ها توجه می‌کنیم و سعی می‌کنیم قانون حداقل ۳ میلی‌متر را رعایت کنیم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "first-person plural, the author's own practice"
+          },
+          {
+            "id": "u4",
+            "claim_quote": "این قانون بر اساس ایمپلنت‌هایی شکل گرفته که پلتفرمشان تقریباً هم‌سطح بوده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, this “3\nmm rule” was observed when the adjacent implants were placed at similar vertical heights.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u5",
+            "claim_quote": "اما در عمل، به دلیل ناهمواری ریج یا تفاوت عمق کارگذاری، ممکن است پلتفرم‌ها هم‌سطح نباشند و یکی از آن‌ها پایین‌تر از دیگری قرار بگیرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Additionally, the clinician is often\nfaced with patient anatomy that includes alveolar height discrepancies.",
+            "source_ref": null,
+            "note": "the source states alveolar height discrepancies; the placement-depth cause is not stated separately"
+          },
+          {
+            "id": "u7",
+            "claim_quote": "سؤال اصلی این است که این اختلاف عمودی چه اثری بر استخوان مارژینال دارد و چه نقشی در تصمیم ما برای اسپلینت کردن روکش‌ها پیدا می‌کند.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "question announcing the topic"
+          },
+          {
+            "id": "u8",
+            "claim_quote": "Lin و همکاران، ۲۰۲۳",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation label only"
+          },
+          {
+            "id": "u11",
+            "claim_quote": "گزارش اولیه‌ی او در سال ۲۰۱۷ منتشر شد، یعنی چند سال پیش از آنکه نخستین مقاله‌ی کامل در این زمینه چاپ شود.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not mention any 2017 preliminary report"
+          },
+          {
+            "id": "u19",
+            "claim_quote": "Lin و همکاران در سال ۲۰۲۳ یک قدم جلوتر رفتند و علاوه بر اختلاف ارتفاع، نوع رستوریشن را هم بررسی کردند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The aim of this retrospective study was to investigate the influence of vertical platform\ndiscrepancies for splinted and non-splinted adjacent implants on radiographic marginal\nbone loss (RMBL).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u20",
+            "claim_quote": "ارقام این بخش از همین مقاله است و وضعیت را تا زمان انتشار آن نشان می‌دهد.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "states the page's own scope"
+          },
+          {
+            "id": "u21",
+            "claim_quote": "اثر اختلاف ارتفاع: وقتی پلتفرم ایمپلنت‌های مجاور دست‌کم ۰٫۵ میلی‌متر اختلاف ارتفاع داشتند، شانس اینکه حداقل یکی از ایمپلنت‌ها یک میلی‌متر یا بیشتر تحلیل استخوان پیدا کند، حدود چهار برابر حالتی بود که پلتفرم‌ها تقریباً هم‌سطح بودند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In addition,\nprostheses with a vertical platform discrepancy ≥ 0.5 mm demonstrated a significant\n3\n\n\nassociation with the presence of ≥1 mm RMBL (OR= 4.30, 95% CI= 1.85 to 10.01, p= 0.007)\nwhen compared to prostheses with a vertical platform discrepancy < 0.5 mm.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u22",
+            "claim_quote": "اثر اسپلینت کردن: اسپلینت کردن روکش‌ها هم اثر مشابهی داشت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In general, prostheses supported by splinted adjacent implants demonstrated a significant\nassociation with the presence of ≥1 mm RMBL (OR= 2.55, 95% CI= 1.17 to 5.17, p= 0.018)\nwhen compared to prostheses supported by non-splinted adjacent implants.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u23",
+            "claim_quote": "شانس این میزان تحلیل در روکش‌های اسپلینت‌شده حدود ۲٫۵ برابر روکش‌های مستقل بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In general, prostheses supported by splinted adjacent implants demonstrated a significant\nassociation with the presence of ≥1 mm RMBL (OR= 2.55, 95% CI= 1.17 to 5.17, p= 0.018)\nwhen compared to prostheses supported by non-splinted adjacent implants.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u24",
+            "claim_quote": "ترکیب این دو عامل: وقتی این دو عامل کنار هم قرار می‌گرفتند، تفاوت چشمگیرتر می‌شد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Two or three adjacent implants placed with a vertical platform discrepancy, when splinted\ntogether, are associated with higher incidence of ≥ 1 mm RMBL than non-splinted\nrestorations.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u25",
+            "claim_quote": "در حدود ۶۰ تا ۶۷ درصد بیمارانی که پلتفرم ایمپلنت‌هایشان اختلاف ارتفاع داشت و روکش‌هایشان اسپلینت شده بود، دست‌کم یکی از ایمپلنت‌ها یک میلی‌متر یا بیشتر تحلیل استخوان نشان می‌داد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "When adjacent\nimplants had ≥ 0.5 mm vertical platform discrepancy, the majority (66.67%) of three splinted\nadjacent crowns had at least one implant with ≥ 1 mm RMBL.",
+            "source_ref": null,
+            "note": "the 58.97% figure for two splinted crowns is in the next sentence"
+          },
+          {
+            "id": "u26",
+            "claim_quote": "این رقم در بیماران با روکش‌های مستقل حدود ۲۰ تا ۲۵ درصد بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This was followed by two\nsplinted adjacent crowns (58.97%), three-unit bridge (25.93%), two single adjacent crowns\n(24.24%), and three single adjacent crowns (18.18%).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u27",
+            "claim_quote": "بریج سه‌واحدی: بریج سه‌واحدی روی دو ایمپلنت الگوی متفاوتی نشان داد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Three splinted adjacent crowns were significantly associated with ≥ 1 mm RMBL\nwhen compared to three-unit bridge (OR 6.56, 95% CI 1.59 to 27.07).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u28",
+            "claim_quote": "این بریج هم دو ایمپلنت را به هم متصل می‌کند، اما نتایجش به روکش‌های مستقل شبیه بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, this finding was not seen for three single\ncrowns (57.14%), three-unit bridges (64.29%), or two single crowns (61.90%).",
+            "source_ref": null,
+            "note": "bridge grouped with single crowns; connecting two implants is the study design"
+          },
+          {
+            "id": "u29",
+            "claim_quote": "محل تحلیل: در روکش‌های اسپلینت‌شده، تحلیل بیشتر در ایمپلنت کرونالی‌تر رخ می‌داد و سطح استخوان گاهی تا حدود ارتفاع پلتفرم ایمپلنت اپیکالی پایین می‌آمد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Furthermore, if these\nsplinted implants were placed at different platform levels, RMBL was usually seen at\nmore coronally placed implants.",
+            "source_ref": null,
+            "note": "the bone loss toward the apical platform level is also stated in the next sentence"
+          },
+          {
+            "id": "u30",
+            "claim_quote": "این الگو در روکش‌های مستقل و بریج دیده نشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, this finding was not seen for three single\ncrowns (57.14%), three-unit bridges (64.29%), or two single crowns (61.90%).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u31",
+            "claim_quote": "نویسندگان همچنین گزارش کردند که این تحلیل در چند بیمار حتی با فاصله‌ی افقی بیش از ۳ میلی‌متر هم رخ داده بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In several patients participating in the current study, this pattern of bone loss occurred\neven when the inter-implant distance is more than 3 mm.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u32",
+            "claim_quote": "Lin و همکاران، ۲۰۲۳، شکل ۳F و ۳O",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "figure citation label only"
+          },
+          {
+            "id": "u34",
+            "claim_quote": "اولین توضیح به دسترسی بهداشتی مربوط است.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost announcing the next explanation"
+          },
+          {
+            "id": "u37",
+            "claim_quote": "در نتیجه ممکن است پلاک در این ناحیه تجمع پیدا کند و بافت اطراف ایمپلنت ملتهب شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "One possible explanation for the increased\nincidence of peri-implantitis around splinted implants, especially implants placed at\ndifferent platform levels, is compromised oral hygiene access resulting in increased plaque\naccumulation.",
+            "source_ref": null,
+            "note": "Inference unit judged on its conclusion (plaque accumulation, tissue inflammation). The source states it with the same hedge level (\"possible explanation\")."
+          },
+          {
+            "id": "u39",
+            "claim_quote": "توضیح دوم مکانیکی است.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost announcing the next explanation"
+          },
+          {
+            "id": "u40",
+            "claim_quote": "هر روکش به‌تنهایی مقداری عدم تطابق در اتصال روکش و اباتمنت و در اتصال اباتمنت و ایمپلنت دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The authors further\npointed out that each single restoration has inherent inaccuracies and preload stresses\nbecause of component misfit (crown-abutment interface and abutment-implant interface).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u41",
+            "claim_quote": "وقتی چند روکش به یک سازه‌ی واحد تبدیل می‌شوند، این عدم تطابق‌ها روی هم جمع می‌شوند و تنش بیشتری را به ایمپلنت‌ها و استخوان اطرافشان منتقل می‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Therefore, when these adjacent implant crowns are splinted, there is a summation of\ninherent misfit inaccuracies, resulting in transfer of increased loads to the implants and\nsupporting structures.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u46",
+            "claim_quote": "نویسندگان مطالعه‌ی Lin پیشنهاد می‌کنند که وقتی پلتفرم‌ها اختلاف ارتفاع دارند، روکش‌ها مستقل ساخته شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Therefore, clinicians are recommended to restore these implants with single crowns\nwhen the platforms are placed at different vertical levels to minimize the risk of RMBL and\nprovide better access for hygiene.23",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u47",
+            "claim_quote": "با این حال، اسپلینت کردن به‌خودی‌خود انتخاب بدی نیست.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source says splinted restorations may be preferred in a scenario with short implants and screw loosening; it does not state that splinting itself is not a bad choice"
+          },
+          {
+            "id": "u49",
+            "claim_quote": "Lin و همکاران توضیح می‌دهند که این مرور احتمالاً به این دلیل تفاوتی در تحلیل استخوان پیدا نکرد که اختلاف ارتفاع پلتفرم‌ها را بررسی نکرده بود و بخشی از مطالعاتش هم روی ایمپلنت‌های کوتاه انجام شده بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This discrepancy could be explained by the different inclusion\ncriteria between the studies since the systematic review15 pooled the outcomes of several\npapers using short dental implants.",
+            "source_ref": null,
+            "note": "the source's hedge (could be explained) matches احتمالاً; the platform-level half is stated in the next sentence of the source"
+          },
+          {
+            "id": "u50",
+            "claim_quote": "بنابراین مشکل اصلی خودِ اسپلینت نیست، بلکه ترکیب آن با اختلاف ارتفاع پلتفرم‌هاست.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the conclusion about which factor is the main problem is not stated; the source reports a splinting association overall and a larger one with platform discrepancy"
+          },
+          {
+            "id": "u51",
+            "claim_quote": "بنابراین وقتی با ایمپلنت‌هایی روبه‌رو هستیم که در دو ارتفاع متفاوت قرار گرفته‌اند، اول باید بررسی کنیم که آیا اسپلینت کردن از نظر مکانیکی واقعاً ضرورت دارد یا روکش‌های مستقل کافی‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Therefore, clinicians are recommended to restore these implants with single crowns\nwhen the platforms are placed at different vertical levels to minimize the risk of RMBL and\nprovide better access for hygiene.",
+            "source_ref": null,
+            "note": "the source also says splinting may be preferred to limit biomechanical complications"
+          },
+          {
+            "id": "u52",
+            "claim_quote": "اگر اسپلینت لازم باشد، باید فضای بین ایمپلنت‌ها را طوری طراحی کنیم که بیمار بتواند آن را تمیز کند و امرجنس پروفایل این ناحیه را بی‌دلیل حجیم نکنیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These results highlight the importance of proper prosthetic designs that allow\naccessibility for oral hygiene around implants, as well as giving proper oral hygiene\ninstructions to patients who are rehabilitated with dental implants.",
+            "source_ref": null,
+            "note": "the emergence profile half is not addressed by the source"
+          },
+          {
+            "id": "u53",
+            "claim_quote": "ساخت پروتز موقت در این موارد فرصت خوبی است تا سلامت بافت و امکان رعایت بهداشت را پیش از ساخت پروتز نهایی بسنجیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "When treatment planning\nsplinted implants, it is important to consider fabricating a provisional restoration to ensure a\npatient can maintain tissue health before fabrication of the definitive restoration, often by\ncopy milling to ensure matching the provisional contours.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u54",
+            "claim_quote": "سپس می‌توانیم کانتوری را که در پروتز موقت جواب داده است، در پروتز نهایی تکرار کنیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "When treatment planning\nsplinted implants, it is important to consider fabricating a provisional restoration to ensure a\npatient can maintain tissue health before fabrication of the definitive restoration, often by\ncopy milling to ensure matching the provisional contours.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u56",
+            "claim_quote": "هنوز روشن نیست که آیا وجود اختلاف ارتفاع به فاصله‌ی افقی بیش از ۳ میلی‌متر نیاز دارد یا نه.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Future studies should investigate if\nthe minimal inter-implant horizontal distance may need to be greater if the adjacent implant\nplatforms are placed at different vertical levels.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u58",
+            "claim_quote": "مطالعهٔ Lin گذشته‌نگر است و پژوهشگران نتوانسته‌اند عواملی مثل بهداشت دهان و اکلوژن را در آن ارزیابی کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "First, due to the retrospective nature of\nthe study, some clinical parameters, i.e., oral hygiene status and occlusion, could not be\nassessed.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u60",
+            "claim_quote": "عدد ۰٫۵ میلی‌متر هم برای دسته‌بندی آماری به کار رفته است و نباید آن را حد مجاز یا مرز خطر در نظر گرفت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The\nvertical distance between adjacent implant platforms was further analyzed with two\nsubgroups, ≥ 0.5 mm discrepancy and ≥ 1 mm discrepancy.",
+            "source_ref": null,
+            "note": "The first half (0.5 mm used as a subgroup cut-off in the analysis) is stated. The second half (not to be read as a permissible limit or risk threshold) is not addressed by the source, so it is silent and does not decide the verdict."
+          },
+          {
+            "id": "u62",
+            "claim_quote": "فاصله‌ی افقی مناسب به‌تنهایی برای حفظ استخوان بین ایمپلنت‌ها کافی نیست و موقعیت عمودی پلتفرم‌ها هم اهمیت دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In several patients participating in the current study, this pattern of bone loss occurred\neven when the inter-implant distance is more than 3 mm.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u63",
+            "claim_quote": "شواهد فعلی نشان می‌دهد که بیشترین خطر زمانی است که اختلاف ارتفاع پلتفرم‌ها با روکش‌های اسپلینت‌شده همراه شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Two or three adjacent implants placed with a vertical platform discrepancy, when splinted\ntogether, are associated with higher incidence of ≥ 1 mm RMBL than non-splinted\nrestorations.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u64",
+            "claim_quote": "به نظر می‌رسد دسترسی بهداشتی و جمع شدن عدم تطابق‌ها در سازه‌ی یکپارچه در این میان نقش اصلی را دارند.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "hedged explanation of a finding: به نظر می‌رسد"
+          },
+          {
+            "id": "u65",
+            "claim_quote": "به همین دلیل، وقتی اختلاف ارتفاع وجود دارد، روکش مستقل انتخاب اول منطقی است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Therefore, clinicians are recommended to restore these implants with single crowns\nwhen the platforms are placed at different vertical levels to minimize the risk of RMBL and\nprovide better access for hygiene.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u66",
+            "claim_quote": "اگر اسپلینت لازم شد، طراحی پروتز باید به بیمار اجازه دهد که ناحیه‌ی بین ایمپلنت‌ها را تمیز نگه دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These results highlight the importance of proper prosthetic designs that allow\naccessibility for oral hygiene around implants, as well as giving proper oral hygiene\ninstructions to patients who are rehabilitated with dental implants.",
+            "source_ref": null,
+            "note": ""
+          }
+        ],
+        "counts": {
+          "matches": 30,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 3,
+          "not_assessable": 0,
+          "author_view": 2,
+          "not_a_claim": 6
+        },
+        "assessable": 30,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "19",
+        "fact_fa": "از ۳۰ ادعایی که منبع به آن پرداخته‌اند، ۳۰ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۳ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      },
+      {
+        "des_version": "3.5",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u36",
+            "claim_quote": "اگر روکش‌ها هم به هم متصل باشند و امرجنس پروفایل حجیم یا بیش از حد محدب طراحی شده باشد، بیمار عملاً نمی‌تواند این ناحیه را تمیز کند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "The source says poorly designed emergence profiles raise the risk of crestal bone loss, and that splinted implants with convex crown profiles have a higher risk of peri-implantitis. It never says the patient cannot clean the area, so this predicate is a neighbouring proposition and is silence."
+          },
+          {
+            "id": "u42",
+            "claim_quote": "Ceddia و همکاران در سال ۲۰۲۵ با یک مطالعه‌ی فاینایت المنت نشان دادند که آرایش عمودی سه ایمپلنت اسپلینت‌شده توزیع تنش در استخوان را تغییر می‌دهد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This study demonstrated that stress concentration was influenced by the misalignment of the prosthetic platform positions of the three-implant splinted restorations.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u43",
+            "claim_quote": "با این حال، بیشترین تنش در مدل آن‌ها اطراف ایمپلنت عمیق‌تر دیده شد، در حالی که تحلیل استخوان در بیماران در ایمپلنت کرونالی‌تر رخ داده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Figure 8 shows that model B, with the central implant positioned subcrestally relative to the two lateral implants positioned crestally, has a cortical bone stress value of about 116 MPa at the central implant.",
+            "source_ref": null,
+            "note": "Two halves, both addressed and both matching. The clinical half (more bone loss at the more crestal implant) is stated in the Discussion by the Prete sentence: 'Prete et al. [84] confirmed increased bone loss around the central implant positioned at the crestal level, whereas the two lateral implants were placed subcrestally.'"
+          },
+          {
+            "id": "u44",
+            "claim_quote": "بنابراین این مدل ساده‌شده الگوی بالینی را توضیح نمی‌دهد و ممکن است انتقال مستقیم نتایج آن به بالین محدود باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This modeling simplification may limit the extent to which the present findings can be generalized to in vivo conditions Recently, finite element (FE) models have been developed from micro-CT images that represent the specific architecture of the sample, including both cortical and trabecular bone.",
+            "source_ref": null,
+            "note": "Inference unit judged on its conclusion. The half about limited direct transfer to the clinic is stated with the same hedge (may limit). The half that the model does not explain the clinical pattern is not addressed by the source and is silent (F3), so it does not decide the verdict."
+          },
+          {
+            "id": "u55",
+            "claim_quote": "بهتر است اختلاف ارتفاع احتمالی پلتفرم‌ها را هم، علاوه بر فاصله‌ی افقی، پیش از جراحی در طرح درمان در نظر بگیریم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "These findings highlight the importance of consistent vertical alignment and appropri- ate splinting strategies during prosthetic planning.",
+            "source_ref": null,
+            "note": "The recommendation to consider vertical platform alignment at the planning stage has the same direction and strength as the source's statement. The horizontal distance part is not addressed."
+          }
+        ],
+        "counts": {
+          "matches": 4,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 1,
+          "not_assessable": 0,
+          "author_view": 0,
+          "not_a_claim": 0
+        },
+        "assessable": 4,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "These biomechanical insights offer a useful framework for guiding future implant design and clinical protocols aimed at optimizing functional and biological outcomes.",
+        "fact_fa": "از ۴ ادعایی که منبع به آن پرداخته‌اند، ۴ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۱ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      },
+      {
+        "des_version": "3.5",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "ABSTRACT_ONLY",
+        "claims": [
+          {
+            "id": "u47",
+            "claim_quote": "با این حال، اسپلینت کردن به‌خودی‌خود انتخاب بدی نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Quantitative analysis of all studies showed statistically significant higher survival rates for splinted restorations than for nonsplinted restorations.",
+            "source_ref": null,
+            "note": "Evaluative claim in the same direction as the source: splinting showed higher survival and no difference in bone loss or prosthetic complications."
+          },
+          {
+            "id": "u48",
+            "claim_quote": "یک مرور سیستماتیک (de Souza Batista و همکاران، ۲۰۱۹، ابسترکت) نشان داد که در حالت کلی، روکش‌های اسپلینت‌شده و مستقل از نظر تحلیل استخوان و عوارض پروتزی تفاوتی با هم ندارند و بقای ایمپلنت در حالت اسپلینت‌شده کمی بیشتر است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Quantitative analysis found no significant differences between splinted and nonsplinted restorations for marginal bone loss.",
+            "source_ref": null,
+            "note": "One unit with three findings, all addressed and all matching: no difference in bone loss (quoted), no difference in prosthetic complications, and higher survival with splinting (99.1% vs 96.5%, statistically significant). The word «کمی» is not a different magnitude from the reported figures."
+          }
+        ],
+        "counts": {
+          "matches": 2,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 0,
+          "not_assessable": 0,
+          "author_view": 0,
+          "not_a_claim": 0
+        },
+        "assessable": 2,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": true,
+        "source_conclusion": "However, splinted restorations were associated with decreased implant failure.",
+        "fact_fa": "از ۲ ادعایی که منبع به آن پرداخته‌اند، ۲ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
+    ]
   }
 }
