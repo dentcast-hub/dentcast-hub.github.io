@@ -55,13 +55,13 @@ function setBadge(isPremium) {
  * because "confirmed anonymous" and "could not ask" must not behave alike.
  */
 function probe() {
-  return import('/plus/js/api.js?v=216')
+  return import('/plus/js/api.js?v=217')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
 
 function openGate(from) {
-  return Promise.all([import('/plus/js/sheet.js?v=216'), import('/plus/js/premium-cta.js?v=216')])
+  return Promise.all([import('/plus/js/sheet.js?v=217'), import('/plus/js/premium-cta.js?v=217')])
     .then(([sheet, cta]) => {
       sheet.openSheet(sheet.gateCard({
         title: 'کتابخانهٔ دنت‌کست ویژه‌ی پریمیوم است',
@@ -112,7 +112,10 @@ export function installLibraryGate() {
     const a = e.target.closest && e.target.closest('a[href]');
     if (!isCabinetLink(a)) return;
     e.preventDefault();
-    openLibrary(a.closest('.dc-toolbar-drawer-inner') ? 'gate-library-drawer' : 'gate-library-header');
+    // Since 1405/08/13 the drawer is one flat grid (#dcDrawerMenu) and the old
+    // tray is gone, so the drawer itself is the signal; the tray class stays for
+    // pages served an older cached dc-nav.js.
+    openLibrary(a.closest('#dcToolbarDrawer, .dc-toolbar-drawer-inner') ? 'gate-library-drawer' : 'gate-library-header');
   }, true);
 
   // The archive card is a div[role=button], not a link, so it needs its own

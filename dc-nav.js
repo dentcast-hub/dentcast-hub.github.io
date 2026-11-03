@@ -171,8 +171,8 @@
 /* Podcast player launcher — the icon itself is the toggle (tap to open, tap to
    close) for the global slide-down player drawer that hosts the /player.html
    iframe (see DC_PLAYER_OVERLAY_HTML + the podcast-drawer block below). The
-   search trigger that used to sit here moved INTO the tool drawer
-   (DC_DRAWER_SEARCH_BTN) to make room. Idle styling is accent-tinted to draw a
+   search trigger that used to sit here moved out to make room (search is the
+   floating control, see #dc-float-search). Idle styling is accent-tinted to draw a
    little attention; the .is-playing state mirrors the music trigger exactly
    (same .dc-music-eq equalizer + dcGlow), driven by the iframe's audio and kept
    accurate even while the drawer is closed. */
@@ -184,22 +184,11 @@
 '  </div>' +
 '</header>';
 
-  /* «اشتراک» is its own constant because two places need it: the drawer this
-     file injects (below), and the static drawer that ~1075 pages carry in their
-     own markup — built before this button existed, so it holds only
-     نصب/مشاوره/درباره. Phase 3-pre adds it there at runtime, between مشاوره
-     and درباره, the same way رادار/جستجو/تم are added — no page edit. */
-  var DC_DRAWER_SUBSCRIBE_BTN =
-'<button class="dc-drawer-tool-seg" type="button" id="tool-subscribe"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 8l4.5 3L12 5l4.5 6L21 8l-1.8 9H4.8L3 8z"/><path d="M4.8 20h14.4"/></svg></span><span class="dc-drawer-tool-txt">اشتراک</span></button>';
-
   var DC_DRAWER_HTML =
 '<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">' +
 '  <div class="dc-toolbar-drawer-inner">' +
 '    <span class="dc-toolbar-drawer-label">ابزارها</span>' +
 '    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>' +
-'    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>' +
-    DC_DRAWER_SUBSCRIBE_BTN +
-'    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>' +
 '  </div>' +
 '</div>';
 
@@ -226,16 +215,6 @@
      drawer tools so it's native and RTL-correct. */
   var DC_DRAWER_RADAR_BTN =
 '<button class="dc-drawer-tool-seg" type="button" id="btn-radar-topbar" aria-label="رادار"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></span><span class="dc-drawer-tool-txt">رادار</span></button>';
-
-  /* Search trigger as a drawer tool button: the search button used to live in
-     the top bar; it now sits in the drawer to make room for the podcast
-     headphone icon. It keeps the SAME .dcOpenSearch class, so the existing
-     delegated handler (openGlobalSearch) opens the page's own #dcGlobalBox
-     untouched — only its location changed. Injected idempotently into the
-     existing drawer (same pattern as the radar button) so it appears on every
-     page regardless of which page owns the drawer markup. */
-  var DC_DRAWER_SEARCH_BTN =
-'<button class="dc-drawer-tool-seg dcOpenSearch" type="button" id="btn-search-drawer" aria-label="جستجو"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span><span class="dc-drawer-tool-txt">جستجو</span></button>';
 
   /* Theme toggle as a drawer tool button (Change 2): dark/light moved OFF the
      floating control (which is now a persistent Search trigger, see below) and
@@ -273,28 +252,35 @@
 '<a class="dc-topbar-btn dc-drawer-tool-seg" id="btn-cabinet" href="/dentcast_cabinet_search.html" aria-label="کابینت دنت‌کست" data-dcp-moved="1"><span class="dc-drawer-tool-ico">' + dcSvgIcon('article') + '</span><span class="dc-drawer-tool-txt">کتابخانه</span></a>';
 
   /* ── SITE MENU inside the tool drawer ─────────────
-     The hamburger used to open a tray of TOOLS only, so from an article there
-     was no route anywhere else. It now opens the SITE first: one segment per
-     destination, in the same .dc-drawer-tool-seg shape and the same phone grid
-     as the tool tray — with that tray folded behind the last segment, «ابزار».
+     The hamburger opens ONE flat grid: the site destinations first, then the
+     tools — every entry one tap away, no fold. (Until 1405/08/13 the tools
+     sat behind a last «ابزار» segment.)
 
-     What the menu lists: destinations that are not content streams — the
-     topic index, the glossary, the patients page, Plus and support. The
-     content sections (NoteCast, Insight, Share Hub, Chairside, Meta Note,
-     LiteCast, DentCast+, episodes, پرامپتولوژیست, پلاک صفر, تراز شواهد) were
-     taken out by the founder on 1405/08/12: they all live on the homepage
-     (its section grid on the phone shell, column A on the desktop shell).
+     What it lists: destinations that are not content streams — the topic
+     index, the glossary, the patients page and support — then the tools that
+     have no other door: نصب، رادار، تم، موسیقی، کتابخانه. The content
+     sections were taken out by the founder on 1405/08/12 (they live on the
+     homepage). On 1405/08/13 the founder also took out five entries that
+     another always-visible control already opens:
+       • پلاس (/plus/ = پیشخوان) — the header person menu's «پیشخوان»;
+       • اشتراک (/plus/pricing.html) — the homepage «پریمیوم» tab, the
+         person menu, and every locked-feature prompt;
+       • درباره (/about.html) — the brand line «دکتر فواد شهابیان» under the
+         logo on every page;
+       • مشاوره (mailto) — «پشتیبانی»;
+       • جستجو — the floating control (#dc-float-search) on every page but
+         the homepage, whose «آرشیو» tab carries its own search bar.
+     Do not re-add them here.
 
-     Three things this deliberately does NOT do:
-       • It never rebuilds, reorders or rewrites .dc-toolbar-drawer-inner. The
-         tray's own buttons (نصب/مشاوره/اشتراک/درباره) and the ones injected
-         into it (رادار/جستجو/تم/موسیقی/کتابخانه — and «اشتراک» on pages whose
-         static tray predates it) keep their markup and delegated handlers;
-         only their visibility is gated by the fold.
-       • It never touches the desktop app shell (.dcd-app in index.html) — that
-         sidebar owns its own navigation and is out of scope by design.
-       • It adds no new page: every entry points at a page that already exists
-         on disk.
+     How the flat grid is built: the tools are still injected into the old
+     tray (.dc-toolbar-drawer-inner) — ~1075 pages carry that tray in their
+     static markup, with نصب/مشاوره/اشتراک/درباره in it — and step 3f then
+     drops the five retired buttons and MOVES the remaining tool buttons into
+     the menu grid, removing the emptied tray. Every handler is delegated on
+     document by id/class, so re-parenting changes nothing about wiring.
+
+     It never touches the desktop app shell (.dcd-app in index.html) — that
+     sidebar owns its own navigation — and adds no new page.
 
      Styling is injected from JS rather than added to dc-nav.css because
      index.html loads no shared stylesheet — the same reason DC_MUSIC_CSS and
@@ -303,7 +289,6 @@
     ['/pillar/',                   'folder',  'فهرست موضوعی'],
     ['/glossary/',                 'book',    'Glossary'],
     ['/patients/cinematic.html',   'user',    'بیماران'],
-    ['/plus/',                     'sparkle', 'پلاس'],
     /* Reaches every page's hamburger, not just index.html's — the floating
        control below only becomes a support shortcut on the homepage, and the
        other ~1075 pages need a route to /plus/support.html too. */
@@ -312,7 +297,6 @@
 
   var DC_DRAWER_MENU_HTML =
 '<div class="dc-drawer-menu-inner" id="dcDrawerMenu">' +
-'  <span class="dc-drawer-menu-label">بخش‌های سایت</span>' +
      DC_DRAWER_MENU_ITEMS.map(function (it) {
        return '<a class="dc-drawer-tool-seg" href="' + it[0] + '">' +
               '<span class="dc-drawer-tool-ico">' + dcSvgIcon(it[1]) + '</span>' +
@@ -322,24 +306,14 @@
    character fixes that without forcing LTR on the Persian ones. */
               '<span class="dc-drawer-tool-txt" dir="auto">' + it[2] + '</span></a>';
      }).join('') +
-/* The last segment is the fold: it opens the tool tray underneath the menu
-   instead of navigating. Same segment shape as its neighbours. */
-'  <button class="dc-drawer-tool-seg" type="button" id="dc-drawer-tools-toggle" aria-expanded="false"><span class="dc-drawer-tool-ico">' + dcSvgIcon('sliders') + '</span><span class="dc-drawer-tool-txt">ابزار</span></button>' +
 '</div>';
 
   var DC_DRAWER_MENU_CSS =
-/* Phones: THREE columns, for the menu and the tool tray alike. Six
-   destinations (5 links + «ابزار») and nine tools both divide by three, so
-   every row is full — on four columns the menu ended on a half row and the
-   tray on a single orphan («کتابخانه» alone on row three). The tray's own
-   4-column rule lives in dc-nav.css and index.html's inline mirror; the
-   #dcToolbarDrawer-scoped selector here outranks both, so one rule reaches
-   every page. On wide screens the tools are a flex row and the menu a grid
-   with spare columns, so nothing wraps there. */
+/* Phones: THREE columns. Four destinations + five tools = nine, a full 3×3
+   (eight in an installed app, where «نصب» hides itself). Wide screens: one
+   row of nine. */
 '.dc-drawer-menu-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:.125rem 0;padding:.375rem .625rem .25rem;box-sizing:border-box;}' +
-'@media (max-width:640px){#dcToolbarDrawer .dc-toolbar-drawer-inner{grid-template-columns:repeat(3,1fr);}}' +
-'@media (min-width:641px){.dc-drawer-menu-inner{grid-template-columns:repeat(8,1fr);}}' +
-'.dc-drawer-menu-label{grid-column:1 / -1;font-size:.68rem;font-weight:800;color:var(--txt3,#8a9cbe);white-space:nowrap;padding-bottom:.125rem;}' +
+'@media (min-width:641px){.dc-drawer-menu-inner{grid-template-columns:repeat(9,1fr);}}' +
 /* Top-aligned, not centred: one wrapped label makes its whole grid row taller,
    and a centred cell would then float its icon below its neighbours'. Anchoring
    every cell to the top keeps the icons on one line across the row and lets the
@@ -352,12 +326,7 @@
 /* Self-contained icon sizing: a page that loads neither dc-nav.css nor
    index.html's inline mirror still gets 1em glyphs, never full-size SVGs. */
 '.dc-drawer-menu-inner .dc-svg-icon{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}' +
-/* The fold. display:none rather than a height so the tray keeps its OWN
-   responsive layout — flex row on wide screens, 3-col grid on phones — for
-   the moment it comes back. */
-'#dcToolbarDrawer:not(.tools-open)>.dc-toolbar-drawer-inner{display:none;}' +
-'#dcToolbarDrawer.tools-open>.dc-drawer-menu-inner{border-bottom:1px solid var(--border,rgba(2,35,96,.10));padding-bottom:.375rem;}' +
-'#dc-drawer-tools-toggle[aria-expanded="true"]{background:rgba(var(--pr-rgb,2,35,96),.08);}';
+'#dcToolbarDrawer>.dc-toolbar-drawer-inner{display:none;}';
 
   /* Floating SEARCH control styling (Change 3). The fixed bottom-left control
      that used to be the theme toggle is now a persistent SEARCH trigger
@@ -563,22 +532,6 @@
       document.body.insertAdjacentHTML('beforeend', DC_RADAR_HTML);
     }
 
-    /* 3-pre) «اشتراک» into a static drawer that predates it. Its slot is the
-           one DC_DRAWER_HTML gives it — right after مشاوره (before درباره if
-           مشاوره is missing) — so every page shows the same tray order.
-           Idempotent via the id check; the delegated handler already routes
-           #tool-subscribe to /plus/pricing.html. */
-    if (!document.getElementById('tool-subscribe')) {
-      var trayP = document.querySelector('#dcToolbarDrawer .dc-toolbar-drawer-inner');
-      if (trayP) {
-        var afterP = document.getElementById('tool-consult');
-        var beforeP = document.getElementById('tool-about');
-        if (afterP && trayP.contains(afterP)) afterP.insertAdjacentHTML('afterend', DC_DRAWER_SUBSCRIBE_BTN);
-        else if (beforeP && trayP.contains(beforeP)) beforeP.insertAdjacentHTML('beforebegin', DC_DRAWER_SUBSCRIBE_BTN);
-        else trayP.insertAdjacentHTML('beforeend', DC_DRAWER_SUBSCRIBE_BTN);
-      }
-    }
-
     /* 3) Place the radar trigger INSIDE the drawer (Change A). We ONLY add the
           button to the existing drawer; we never rebuild it or touch the other
           tool buttons. Idempotent via the id check. The button's delegated
@@ -586,14 +539,6 @@
     if (!document.getElementById('btn-radar-topbar')) {
       var drawerInner = document.querySelector('#dcToolbarDrawer .dc-toolbar-drawer-inner');
       if (drawerInner) drawerInner.insertAdjacentHTML('beforeend', DC_DRAWER_RADAR_BTN);
-    }
-
-    /* 3b) Place the search trigger INSIDE the drawer (it moved off the top bar
-           to free a slot for the headphone). Same idempotent pattern as radar;
-           keeps the .dcOpenSearch class so its delegated handler is unchanged. */
-    if (!document.getElementById('btn-search-drawer')) {
-      var drawerInnerS = document.querySelector('#dcToolbarDrawer .dc-toolbar-drawer-inner');
-      if (drawerInnerS) drawerInnerS.insertAdjacentHTML('beforeend', DC_DRAWER_SEARCH_BTN);
     }
 
     /* 3c) Place the THEME toggle INSIDE the drawer (Change 2). Idempotent, same
@@ -644,6 +589,24 @@
       mst.id = 'dc-drawer-menu-style';
       mst.textContent = DC_DRAWER_MENU_CSS;
       (document.head || document.documentElement).appendChild(mst);
+    }
+
+    /* 3f) Flatten: drop the five retired entries (still present in the static
+           tray of pages built before 1405/08/13), then move every remaining
+           tool button out of the tray and into the menu grid, after the
+           destinations, and remove the emptied tray. Order follows the tray:
+           نصب، رادار، تم، موسیقی، کتابخانه. Idempotent — a second run finds
+           no tray. */
+    ['tool-consult', 'tool-subscribe', 'tool-about', 'btn-search-drawer'].forEach(function (id) {
+      var gone = document.getElementById(id);
+      if (gone && gone.closest('#dcToolbarDrawer')) gone.remove();
+    });
+    var menuF = document.getElementById('dcDrawerMenu');
+    var trayF = document.querySelector('#dcToolbarDrawer > .dc-toolbar-drawer-inner');
+    if (menuF && trayF) {
+      var segs = trayF.querySelectorAll('.dc-drawer-tool-seg');
+      for (var si = 0; si < segs.length; si++) menuF.appendChild(segs[si]);
+      trayF.remove();
     }
 
     /* 4) Music player: inject the panel (a sibling dropdown after the drawer)
@@ -1240,8 +1203,7 @@
   })();
 
   /* Size the OPEN drawer to whatever it currently holds. Extracted from
-     toggleToolbarDrawer because the «ابزار» fold changes the content height
-     while the drawer is already open, and the height is an inline px value. */
+     toggleToolbarDrawer; the height is an inline px value. */
   function sizeToolbarDrawer() {
     var drawer = document.getElementById('dcToolbarDrawer');
     if (!drawer || !drawer.classList.contains('open')) return;
@@ -1277,29 +1239,13 @@
       drawerBtn.setAttribute('aria-expanded', 'true');
       drawer.setAttribute('aria-hidden', 'false');
     } else {
-      /* CLOSE — and refold the tools, so the drawer always reopens on the
-         site menu rather than wherever it was last left. */
-      drawer.classList.remove('open', 'tools-open');
-      var toolsBtn = document.getElementById('dc-drawer-tools-toggle');
-      if (toolsBtn) toolsBtn.setAttribute('aria-expanded', 'false');
+      /* CLOSE */
+      drawer.classList.remove('open');
       drawer.style.maxHeight = '0';
       drawer.style.opacity   = '0';
       drawerBtn.setAttribute('aria-expanded', 'false');
       drawer.setAttribute('aria-hidden', 'true');
     }
-  }
-
-  /* «ابزار» — folds the original tool tray in and out beneath the site menu.
-     It only flips a class on the drawer and re-measures: every tool button
-     keeps its own markup and its own delegated handler, untouched. */
-  function toggleDrawerTools() {
-    var drawer = document.getElementById('dcToolbarDrawer');
-    if (!drawer) return;
-    var open = !drawer.classList.contains('tools-open');
-    drawer.classList.toggle('tools-open', open);
-    var toolsBtn = document.getElementById('dc-drawer-tools-toggle');
-    if (toolsBtn) toolsBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    sizeToolbarDrawer();
   }
 
   /* ── TOOL BUTTONS ── */
@@ -1910,10 +1856,6 @@
        drawer — NOT #dcd-hdr-hamburger (desktop sidebar collapse in
        index.html). Never conflate the two. */
     if (t.closest('#btn-toolbar-toggle')) { dcHeaderOpenerClick('toolbar'); return; }
-    /* «ابزار» — the fold inside the drawer, NOT a header opener: it must not
-       go through dcHeaderOpenerClick, which would read the drawer as "already
-       open" and close it. */
-    if (t.closest('#dc-drawer-tools-toggle')) { toggleDrawerTools(); return; }
     /* Search trigger — a CLASS; the search button has no id. */
     if (t.closest('.dcOpenSearch'))       { openGlobalSearch();    return; }
     /* Music: trigger ONLY toggles the panel; play/pause is a SEPARATE control
@@ -1925,13 +1867,6 @@
     if (t.closest('#btn-podcast-toggle'))    { dcHeaderOpenerClick('podcast'); return; }
     /* Drawer tool buttons. */
     if (t.closest('#tool-pwa'))     { handlePwaInstall(); return; }
-    if (t.closest('#tool-consult')) { window.location.href = 'mailto:info@dentcast.ir'; return; }
-    // The ONLY entry to the price list that a signed-out visitor can find. The
-    // header person menu carries it too, but that menu only exists once you are
-    // logged in — which is exactly backwards for the page whose whole job is to
-    // be read before anyone has an account.
-    if (t.closest('#tool-subscribe')) { window.location.href = '/plus/pricing.html'; return; }
-    if (t.closest('#tool-about'))   { window.location.href = '/about.html'; return; }
     /* Theme toggle moved into the drawer — reuse applyTheme, no 2nd listener. */
     if (t.closest('#btn-theme-drawer')) {
       applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
@@ -2407,7 +2342,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '287';
+  var V = '288';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now
