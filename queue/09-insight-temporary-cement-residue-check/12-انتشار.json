@@ -1,0 +1,200 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "insight",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "بعد از خارج‌کردن روکش، سمان موقت را کجا بررسی کنیم؟",
+  "from": "02-عنوان-کپشن.md:2"
+ },
+ "caption_fa": {
+  "value": "وجود سمان، فیت کامل روکش را ثابت نمی‌کند و نبودنش هم گپ مارجینال را؛ الگوی سمان روی دندان و داخل روکش فقط سرنخی برای بررسی بیشتر است.",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "title_en": {
+  "value": "Where Should I Check for Temporary Cement After Removing a Crown?",
+  "from": "06-انگلیسی.md:4"
+ },
+ "caption_en": {
+  "value": "After removing a crown, where do you check for residual cement?",
+  "from": "06-انگلیسی.md:7"
+ },
+ "body_en": {
+  "value": "When I provisionally cement a crown and remove it some time later, before cleaning off the cement, I do one simple thing: **I inspect both the tooth surface and the inner surface of the crown.**\n\nSome cement may remain on the tooth and some inside the crown; it does not all have to remain on one surface. What matters to me is **the overall pattern of residual cement across both surfaces.**\n\n[[Image:01]]\n\n*Figure 1 — After removing the crown, I inspect the cement remaining on the tooth before cleaning it.*\n\nParticularly along the margins, I look for an area where **no cement remains either on the tooth or in the corresponding area inside the crown.** If I find one, I treat it as a cue for further examination.\n\n[[Image:02]]\n\n*Figure 2 — I also inspect the inside of the crown; evaluating only one of the two surfaces is not enough.*\n\n**This observation is not a definitive diagnosis of a marginal gap or incomplete crown seating.** Cement may not have been well distributed in that area from the start, may have worn away during use, or may have detached when the crown was removed. Conversely, the presence of cement alone does not prove that its thickness was appropriate or that the crown was fully seated.\n\nStill, a suspicious area is worth examining more closely. Depending on the situation, proximal contacts, the seating path, and the margin can be reassessed; a **Fit Checker or silicone wash** can be used to assess internal fit, and the recorded film thickness can be measured if needed.\n\n**Clinical note:** I do not use residual cement to *definitively confirm crown fit*; I use it as a clue to find areas that **need further examination**. For this, the tooth and the inner surface of the crown must be considered together.",
+  "from": "06-انگلیسی.md:10-29"
+ },
+ "images": {
+  "value": [
+   {
+    "n": "01",
+    "file": {
+     "value": "03-تصاویر/01-cement-on-prepared-tooth.webp",
+     "from": "03-تصاویر/تصاویر.md:7"
+    },
+    "alt_fa": {
+     "value": "نمای دندان پس از خارج‌کردن روکش؛ بخشی از سمان موقت روی دندان باقی مانده است.",
+     "from": "03-تصاویر/تصاویر.md:7"
+    },
+    "caption_fa": {
+     "value": "بعد از خارج‌کردن روکش، سمان باقی‌مانده روی دندان را پیش از تمیزکردن بررسی می‌کنم.",
+     "from": "03-تصاویر/تصاویر.md:7"
+    },
+    "alt_en": {
+     "value": "Tooth after crown removal, with some temporary cement remaining on the tooth.",
+     "from": "03-تصاویر/تصاویر.md:7"
+    },
+    "caption_en": {
+     "value": "Figure 1 — After removing the crown, I inspect the cement remaining on the tooth before cleaning it.",
+     "from": "06-انگلیسی.md:16"
+    }
+   },
+   {
+    "n": "02",
+    "file": {
+     "value": "03-تصاویر/02-cement-inside-crown.webp",
+     "from": "03-تصاویر/تصاویر.md:8"
+    },
+    "alt_fa": {
+     "value": "نمای سطح داخلی روکش پس از خارج‌کردن؛ ممکن است بخشی از سمان درون روکش باقی مانده باشد.",
+     "from": "03-تصاویر/تصاویر.md:8"
+    },
+    "caption_fa": {
+     "value": "داخل روکش را هم بررسی می‌کنم؛ ارزیابی یکی از این دو سطح به‌تنهایی کافی نیست.",
+     "from": "03-تصاویر/تصاویر.md:8"
+    },
+    "alt_en": {
+     "value": "Inner surface of the crown after removal; some cement may remain inside the crown.",
+     "from": "03-تصاویر/تصاویر.md:8"
+    },
+    "caption_en": {
+     "value": "Figure 2 — I also inspect the inside of the crown; evaluating only one of the two surfaces is not enough.",
+     "from": "06-انگلیسی.md:22"
+    }
+   }
+  ],
+  "from": "03-تصاویر/تصاویر.md"
+ },
+ "credit": {
+  "value": {
+   "mode": "none"
+  },
+  "from": "04-منبع/منابع.md:3"
+ },
+ "catalog": {
+  "value": [
+   {
+    "skip": "catalog Part 2 fields are not frozen in the item; nothing is written to the catalog (a follow-up for the founder, never a publish-day guess)"
+   }
+  ],
+  "from": "default: 04-منبع/منابع.md holds no frozen catalog entry"
+ },
+ "hashtags": {
+  "value": [
+   "#اینسایت",
+   "#تطابق_مارجینال",
+   "#نشست_روکش",
+   "#فیت_پروتز"
+  ],
+  "from": "07-ورودی‌ها.md:43"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "fixed-pros",
+   "subtopic": "cementation",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:37"
+ },
+ "pulse": {
+  "value": {
+   "text": "یک اینسایت بالینی با عنوانِ «بعد از خارج‌کردن روکش، سمان موقت را کجا بررسی کنیم؟» منتشر شد",
+   "link_phrase": "بعد از خارج‌کردن روکش، سمان موقت را کجا بررسی کنیم؟"
+  },
+  "from": "07-ورودی‌ها.md:30"
+ },
+ "keywords": {
+  "value": [
+   "سمان باقی‌مانده پس از خارج‌کردن روکش",
+   "بررسی سمان روی دندان",
+   "سطح داخلی روکش",
+   "گپ مارجینال",
+   "نشست روکش",
+   "Fit Checker",
+   "واش سیلیکونی"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "سمان موقت",
+    "href": "/glossary/temporary-cement-contamination.html",
+    "from": "11-لینک‌های-گلاسری.md:11"
+   },
+   {
+    "phrase": "سمان می‌کنم",
+    "href": "/episodes/episode-2.html",
+    "from": "11-لینک‌های-گلاسری.md:12"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:11-12"
+ },
+ "backlinks_47": {
+  "value": [
+   {
+    "term": "temporary-cement-contamination",
+    "anchor": "بررسی سمان باقی‌مانده پس از خارج‌کردن روکش",
+    "from": "11-لینک‌های-گلاسری.md:7-8"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:7-8"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "/insight/insight-14.html",
+    "label": "ارزیابی دندان پس از برداشتن روکش",
+    "from": "11-لینک‌های-گلاسری.md:17"
+   },
+   {
+    "href": "/insight/insight-86.html",
+    "label": "روکش با سمان موقت و تصمیم دربارهٔ سمان‌کردن دوباره",
+    "from": "11-لینک‌های-گلاسری.md:18"
+   },
+   {
+    "href": "/episodes/episode-2.html",
+    "label": "دسته‌بندی سمان‌ها و اصول سمان‌کردن",
+    "from": "11-لینک‌های-گلاسری.md:19"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:17-19"
+ },
+ "pathway": {
+  "value": [
+   {
+    "id": "fixed-pros",
+    "after": "insight/insight-14",
+    "from": "07-ورودی‌ها.md:47"
+   },
+   {
+    "id": "failure-troubleshooting",
+    "after": "insight/insight-14",
+    "from": "07-ورودی‌ها.md:48"
+   }
+  ],
+  "from": "07-ورودی‌ها.md:47"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
