@@ -265,10 +265,10 @@
      sat behind a last «ابزار» segment.)
 
      What it lists: destinations that are not content streams — the topic
-     index, the glossary, the patients page and support — then the tools:
+     index, the glossary and support — then the tools:
      نصب، اشتراک، رادار، تم، موسیقی، کتابخانه. The content
      sections were taken out by the founder on 1405/08/12 (they live on the
-     homepage). On 1405/08/13 the founder also took out four entries that
+     homepage). On 1405/08/13 the founder also took out five entries that
      another always-visible control already opens («اشتراک» was taken out
      with them and brought back the same day — signed-out readers on an
      article had no other direct door to the price list):
@@ -276,6 +276,8 @@
        • درباره (/about.html) — the brand line «دکتر فواد شهابیان» under the
          logo on every page;
        • مشاوره (mailto) — «پشتیبانی»;
+       • بیماران (/patients/cinematic.html) — the homepage's «بیماران» tab
+         (taken out the same day, by the founder's choice);
        • جستجو — the floating control (#dc-float-search) on every page but
          the homepage, whose «آرشیو» tab carries its own search bar.
      Do not re-add them here.
@@ -296,7 +298,6 @@
   var DC_DRAWER_MENU_ITEMS = [
     ['/pillar/',                   'folder',  'فهرست موضوعی'],
     ['/glossary/',                 'book',    'Glossary'],
-    ['/patients/cinematic.html',   'user',    'بیماران'],
     /* Reaches every page's hamburger, not just index.html's — the floating
        control below only becomes a support shortcut on the homepage, and the
        other ~1075 pages need a route to /plus/support.html too. */
@@ -317,10 +318,11 @@
 '</div>';
 
   var DC_DRAWER_MENU_CSS =
-/* Phones: THREE columns. Four destinations + six tools = ten (nine in an
-   installed app, where «نصب» hides itself). Wide screens: one row of ten. */
+/* Phones: THREE columns. Three destinations + six tools = nine, a full 3×3
+   (eight in an installed app, where «نصب» hides itself). Wide screens: one
+   row of nine. */
 '.dc-drawer-menu-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:.125rem 0;padding:.375rem .625rem .25rem;box-sizing:border-box;}' +
-'@media (min-width:641px){.dc-drawer-menu-inner{grid-template-columns:repeat(10,1fr);}}' +
+'@media (min-width:641px){.dc-drawer-menu-inner{grid-template-columns:repeat(9,1fr);}}' +
 /* Top-aligned, not centred: one wrapped label makes its whole grid row taller,
    and a centred cell would then float its icon below its neighbours'. Anchoring
    every cell to the top keeps the icons on one line across the row and lets the
