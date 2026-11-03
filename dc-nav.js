@@ -265,18 +265,49 @@
 '<a class="dc-topbar-btn dc-drawer-tool-seg" id="btn-cabinet" href="/dentcast_cabinet_search.html" aria-label="کابینت دنت‌کست" data-dcp-moved="1"><span class="dc-drawer-tool-ico">' + dcSvgIcon('article') + '</span><span class="dc-drawer-tool-txt">کتابخانه</span></a>';
 
   /* ── SUPPORT in the tool tray ─────────────────────
-     The hamburger opens the TOOLS directly (founder, 1405/08/12). It used to
-     open a 4×4 site menu — one segment per section — with this tray folded
-     behind a sixteenth «ابزار» segment, so «نصب» sat two taps deep. The
-     sections already live on the homepage (archive tab), so the menu was
-     removed and the tray is the drawer again.
-
-     «پشتیبانی» was the one menu entry that is not a content section: it is
-     the only route to /plus/support.html from the other ~190 pages (the
-     floating control turns into a support shortcut on the homepage only), so
-     it moved into the tray as a tool instead of disappearing with the menu. */
+     «پشتیبانی» was a segment of the site menu; it is the only route to
+     /plus/support.html from the other ~190 pages (the floating control turns
+     into a support shortcut on the homepage only). When the menu was trimmed
+     to one row of four it moved into the tray, where it reads as a tool. */
   var DC_DRAWER_SUPPORT_BTN =
 '<a class="dc-drawer-tool-seg" id="tool-support" href="/plus/support.html"><span class="dc-drawer-tool-ico">' + dcSvgIcon('lifebuoy') + '</span><span class="dc-drawer-tool-txt">پشتیبانی</span></a>';
+
+  /* ── SITE MENU (trimmed) ───────────────────────────
+     Above the tools sits a single row of the four destinations that are not
+     content streams: the topic index, the glossary, the patients' page and
+     Plus. The content sections themselves (NoteCast, Insight, Share Hub,
+     Chairside, Meta Note, LiteCast, episodes, the series…) were removed on the
+     founder's call, 1405/08/12 — they all live on the homepage already. With
+     four entries there is nothing left to hide, so the old «ابزار» fold is
+     gone too and the tools are visible as soon as the drawer opens.
+
+     Styling is injected from JS rather than added to dc-nav.css because
+     index.html loads no shared stylesheet. */
+  var DC_DRAWER_MENU_ITEMS = [
+    ['/pillar/',                   'folder',  'فهرست موضوعی'],
+    ['/glossary/',                 'book',    'Glossary'],
+    ['/patients/cinematic.html',   'user',    'بیماران'],
+    ['/plus/',                     'sparkle', 'پلاس']
+  ];
+
+  var DC_DRAWER_MENU_HTML =
+'<div class="dc-drawer-menu-inner" id="dcDrawerMenu">' +
+'  <span class="dc-drawer-menu-label">بخش‌های سایت</span>' +
+     DC_DRAWER_MENU_ITEMS.map(function (it) {
+       return '<a class="dc-drawer-tool-seg" href="' + it[0] + '">' +
+              '<span class="dc-drawer-tool-ico">' + dcSvgIcon(it[1]) + '</span>' +
+/* dir="auto" per label: a Latin name in an RTL document resolves its own
+   direction from its first strong character. */
+              '<span class="dc-drawer-tool-txt" dir="auto">' + it[2] + '</span></a>';
+     }).join('') +
+'</div>';
+
+  var DC_DRAWER_MENU_CSS =
+'.dc-drawer-menu-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:.125rem 0;padding:.375rem .625rem .25rem;box-sizing:border-box;border-bottom:1px solid var(--border,rgba(2,35,96,.10));}' +
+'.dc-drawer-menu-label{grid-column:1 / -1;font-size:.68rem;font-weight:800;color:var(--txt3,#8a9cbe);white-space:nowrap;padding-bottom:.125rem;}' +
+'.dc-drawer-menu-inner .dc-drawer-tool-seg{padding:.5rem .25rem;justify-content:flex-start;}' +
+'.dc-drawer-menu-inner .dc-drawer-tool-txt{white-space:normal;text-align:center;line-height:1.3;}' +
+'.dc-drawer-menu-inner .dc-svg-icon{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}';
 
   /* Floating SEARCH control styling (Change 3). The fixed bottom-left control
      that used to be the theme toggle is now a persistent SEARCH trigger
@@ -535,6 +566,20 @@
     if (!document.getElementById('tool-support')) {
       var drawerInnerSup = document.querySelector('#dcToolbarDrawer .dc-toolbar-drawer-inner');
       if (drawerInnerSup) drawerInnerSup.insertAdjacentHTML('beforeend', DC_DRAWER_SUPPORT_BTN);
+    }
+
+    /* 3f) Prepend the trimmed SITE MENU to the drawer (afterbegin on the drawer
+           itself, never inside .dc-toolbar-drawer-inner, so the radar/search/
+           theme injections above keep landing in the tray). Idempotent. */
+    if (!document.getElementById('dcDrawerMenu')) {
+      var drawerEl = document.getElementById('dcToolbarDrawer');
+      if (drawerEl) drawerEl.insertAdjacentHTML('afterbegin', DC_DRAWER_MENU_HTML);
+    }
+    if (!document.getElementById('dc-drawer-menu-style')) {
+      var mst = document.createElement('style');
+      mst.id = 'dc-drawer-menu-style';
+      mst.textContent = DC_DRAWER_MENU_CSS;
+      (document.head || document.documentElement).appendChild(mst);
     }
 
     /* 4) Music player: inject the panel (a sibling dropdown after the drawer)
@@ -1146,8 +1191,8 @@
     if (!drawerBtn || !drawer) return;
     var isOpen = drawer.classList.contains('open');
     if (!isOpen) {
-      /* OPEN — size to the actual content: on phones the tools wrap into a
-         4-column grid of several rows, so a fixed 80px would clip them.
+      /* OPEN — size to the actual content: the site-menu row plus the tools,
+         which wrap into a 4-column grid on phones, so a fixed 80px would clip.
          scrollHeight is measurable even at max-height:0. */
       drawer.classList.add('open');
       sizeToolbarDrawer();
