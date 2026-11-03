@@ -442,6 +442,26 @@
 '@keyframes dcEq{0%,100%{transform:scaleY(.35);}50%{transform:scaleY(1);}}' +
 '@keyframes dcGlow{0%,100%{box-shadow:0 0 0 0 rgba(var(--ac-rgb),0);}50%{box-shadow:0 0 9px 1px rgba(var(--ac-rgb),.45);}}' +
 '@keyframes dcMusicPop{from{opacity:.4;transform:scale(.82);}to{opacity:1;transform:scale(1);}}' +
+/* Cross-page music bar (see dcMusicBarShow): the podcast resume bar's twin —
+   same edge, same footprint — for the music that was on when the page changed.
+   When the podcast bar is also on screen, this one stacks just above it
+   (--dcp-abar-top is the podcast bar's measured top, set by audio-hub.js). */
+'.dc-mbar{position:fixed;z-index:8490;left:10px;right:10px;bottom:calc(10px + var(--dc-mbar-lift,0px) + env(safe-area-inset-bottom));display:flex;align-items:center;gap:8px;min-height:52px;box-sizing:border-box;padding:7px 10px 7px 8px;background:var(--surface2);color:var(--txt);border:1px solid var(--border);border-radius:16px;box-shadow:0 8px 24px rgba(2,35,96,.14);overflow:hidden;font-size:.84rem;line-height:1.4;}' +
+'body.dcp-has-abar .dc-mbar{bottom:calc(var(--dcp-abar-top,66px) + 8px);}' +
+'.dc-mbar-prog{position:absolute;left:0;right:0;top:0;height:3px;}' +
+'.dc-mbar-prog i{display:block;height:100%;width:0;background:var(--ac);transition:width .3s linear;}' +
+'.dc-mbar-play{flex:none;width:38px;height:38px;border-radius:50%;border:0;cursor:pointer;padding:0;background:var(--ac);color:#fff;display:grid;place-items:center;-webkit-tap-highlight-color:transparent;}' +
+'.dc-mbar-play .dc-svg-icon{width:18px;height:18px;fill:currentColor;stroke:none;}' +
+'.dc-mbar-info{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;}' +
+'.dc-mbar-kick{font-size:.7rem;color:var(--txt3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
+'.dc-mbar-ttl{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;unicode-bidi:plaintext;text-align:start;}' +
+'.dc-mbar-fwd,.dc-mbar-x{flex:none;height:32px;min-width:32px;padding:0 4px;border-radius:999px;border:0;cursor:pointer;background:transparent;color:var(--txt3);display:grid;place-items:center;font:inherit;-webkit-tap-highlight-color:transparent;}' +
+'.dc-mbar-fwd{color:var(--ac);}' +
+'.dc-mbar-fwd .dc-svg-icon{width:20px;height:20px;fill:currentColor;stroke:none;}' +
+'.dc-mbar-x{font-size:1.15rem;}' +
+'@media (min-width:900px){.dc-mbar{left:16px;right:auto;width:400px;bottom:16px;}}' +
+'body.dcp-study .dc-mbar{display:none;}' +
+'body.dc-has-mbar.dc-has-mbar #dc-float-search,body.dc-has-mbar.dc-has-mbar #dc-theme-toggle{bottom:max(76px,calc(var(--dc-mbar-top,0px) + 8px));}' +
 '@media (prefers-reduced-motion: reduce){.dc-music-trigger.is-playing .dc-music-eq i{animation:none;}.dc-music-trigger.is-playing{animation:none;}.dc-music-skip .dc-svg-icon,.dc-music-playpause .dc-svg-icon{animation:none;}.dc-music-panel{transition:none;}}';
 
   /* ── PODCAST PLAYER — global drawer markup ────────
@@ -1434,6 +1454,12 @@
     /* Equalizer indicator on the closed-state trigger icon. */
     var trigger = document.getElementById('btn-music-toggle');
     if (trigger) trigger.classList.toggle('is-playing', playing);
+    /* …and on the cross-page bar, when it is on screen. */
+    if (dcMBar) {
+      dcMBar.play.innerHTML = playing ? DC_ICON_PAUSE : DC_ICON_PLAY;
+      dcMBar.play.setAttribute('aria-label', playing ? 'مکث' : 'پخش');
+      dcMBar.root.classList.toggle('is-playing', playing);
+    }
   }
 
   /* Trigger handler — ONLY opens/closes the panel. Mirrors toggleToolbarDrawer.
@@ -1472,6 +1498,111 @@
   var DC_MUSIC_KEY = 'dc-music-state';
   var dcLastSave = 0;
 
+  /* ── cross-page music bar ──
+     The podcast's resume bar (plus/js/audio-hub.js) is what keeps an episode
+     reachable after a page change; the music had no such thing — its only
+     controls live in the header panel, so on the next page it was simply gone.
+     Same contract as the podcast bar: an MPA cannot keep sound alive across two
+     documents, so on leaving a page where the music was in use we note it in
+     THIS tab's sessionStorage, and the next page shows a bottom bar with the
+     track at the same second. If the music was playing at the moment of
+     leaving, the bar tries to carry on by itself; a browser that refuses sound
+     without a tap gets the same bar, paused, one tap away. × ends it (the
+     music stops and the bar stops following the listener). */
+  var DC_MUSIC_HANDOFF = 'dc-music-handoff';
+  var DC_MUSIC_HANDOFF_FRESH_MS = 30000;
+  var dcMBar = null;        // { root, play, ttl, kick, fill } while the bar is on screen
+  var dcMusicLive = false;  // the music is "in use" on this page → hand it to the next one
+
+  var DC_ICON_FWD = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 6v12l8.5-6zM16 6h2v12h-2z"/></svg>';
+
+  function dcMusicBarPlace() {
+    if (!dcMBar) return;
+    var nav = document.getElementById('dcBottomNav');
+    var lift = 0;
+    if (nav) {
+      var r = nav.getBoundingClientRect();
+      if (r.height && getComputedStyle(nav).display !== 'none') lift = r.height;
+    }
+    dcMBar.root.style.setProperty('--dc-mbar-lift', lift + 'px');
+    var top = dcMBar.root.getBoundingClientRect().top;
+    if (top) document.body.style.setProperty('--dc-mbar-top', Math.round(window.innerHeight - top) + 'px');
+  }
+
+  function dcMusicBarShow() {
+    if (dcMBar || !document.body) return;
+    var root = document.createElement('div');
+    root.className = 'dc-mbar';
+    root.setAttribute('role', 'region');
+    root.setAttribute('aria-label', 'موسیقی');
+    root.innerHTML =
+      '<div class="dc-mbar-prog" aria-hidden="true"><i></i></div>' +
+      '<button type="button" class="dc-mbar-play" aria-label="پخش">' + DC_ICON_PLAY + '</button>' +
+      '<span class="dc-mbar-info"><span class="dc-mbar-kick">موسیقی</span><span class="dc-mbar-ttl"></span></span>' +
+      '<button type="button" class="dc-mbar-fwd" aria-label="آهنگ بعدی (تصادفی)">' + DC_ICON_FWD + '</button>' +
+      '<button type="button" class="dc-mbar-x" aria-label="بستن">×</button>';
+    dcMBar = {
+      root: root,
+      play: root.querySelector('.dc-mbar-play'),
+      ttl:  root.querySelector('.dc-mbar-ttl'),
+      kick: root.querySelector('.dc-mbar-kick'),
+      fill: root.querySelector('.dc-mbar-prog i')
+    };
+    dcMBar.play.addEventListener('click', toggleMusicPlayPause);
+    root.querySelector('.dc-mbar-fwd').addEventListener('click', dcMusicForward);
+    root.querySelector('.dc-mbar-x').addEventListener('click', function () {
+      if (dcAudio && !dcAudio.paused) dcAudio.pause();
+      dcMusicBarHide();
+    });
+    document.body.appendChild(root);
+    document.body.classList.add('dc-has-mbar');
+    dcMusicLive = true;
+    dcSetTrackDisplay(dcTracks[dcTrackIndex] || null);
+    dcMusicBarProgress();
+    syncMusicPlayPauseIcon();
+    dcMusicBarPlace();
+    window.addEventListener('resize', dcMusicBarPlace);
+    /* The podcast bar coming or going moves this one (CSS stacks it); keep the
+       floating corner buttons' offset honest when it does. */
+    if (typeof MutationObserver !== 'undefined') {
+      dcMBar.mo = new MutationObserver(function () { requestAnimationFrame(dcMusicBarPlace); });
+      dcMBar.mo.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    }
+  }
+
+  /* Remove the bar; the music stops following the listener to the next page. */
+  function dcMusicBarHide() {
+    dcMusicLive = false;
+    try { sessionStorage.removeItem(DC_MUSIC_HANDOFF); } catch (e) {}
+    if (!dcMBar) return;
+    var b = dcMBar;
+    dcMBar = null;
+    if (b.mo) b.mo.disconnect();
+    window.removeEventListener('resize', dcMusicBarPlace);
+    b.root.remove();
+    document.body.classList.remove('dc-has-mbar');
+    document.body.style.removeProperty('--dc-mbar-top');
+  }
+
+  function dcMusicBarProgress() {
+    if (!dcMBar || !dcAudio) return;
+    var d = dcAudio.duration;
+    dcMBar.fill.style.width = (isFinite(d) && d > 0) ? Math.min(100, (dcAudio.currentTime / d) * 100) + '%' : '0%';
+  }
+
+  /* Leaving the page: hand the music to the next page of THIS tab. */
+  function dcMusicHandoff() {
+    if (!dcMusicLive || !dcAudio || !dcAudio.src || dcTrackIndex < 0 || !dcTracks[dcTrackIndex]) return;
+    try {
+      sessionStorage.setItem(DC_MUSIC_HANDOFF, JSON.stringify({
+        id: dcTracks[dcTrackIndex].id,
+        t: dcAudio.currentTime || 0,
+        playing: !dcAudio.paused && !dcAudio.ended,
+        at: Date.now()
+      }));
+    } catch (e) {}
+  }
+
   function dcMusicSave() {
     /* Only persist once a track is actually loaded (never a non-played preview). */
     if (!dcAudio || !dcAudio.src || dcTrackIndex < 0 || !dcTracks[dcTrackIndex]) return;
@@ -1490,6 +1621,10 @@
     if (t) t.textContent = track ? (track.title  || '') : 'موسیقی در دسترس نیست';
     if (a) a.textContent = track ? (track.artist || '') : '';
     if (d) d.textContent = track ? (track.description || '') : '';
+    if (dcMBar) {
+      dcMBar.ttl.textContent = track ? (track.title || '') : 'موسیقی در دسترس نیست';
+      dcMBar.kick.textContent = 'موسیقی' + (track && track.artist ? ' · ' + track.artist : '');
+    }
     /* Flag the unavailable state so CSS can dim the (disabled) controls. */
     var panel = document.getElementById('dcMusicPanel');
     if (panel) panel.classList.toggle('is-unavailable', !track);
@@ -1567,10 +1702,16 @@
     });
     /* Persist position (throttled) and keep the icon honest. */
     dcAudio.addEventListener('timeupdate', function () {
+      dcMusicBarProgress();
       var now = Date.now();
       if (now - dcLastSave > 5000) { dcLastSave = now; dcMusicSave(); }
     });
     dcAudio.addEventListener('play',  function () {
+      dcMusicLive = true;   // in use here → follows the listener to the next page
+      /* The bar appears the moment the music starts, not only on the next
+         page: the header panel lives inside the ☰ menu, so once that closes
+         the music had no visible control on this page either. */
+      dcMusicBarShow();
       syncMusicPlayPauseIcon();
       /* Exclusivity: only one audio source plays. When the music starts, the
          podcast yields — stop it (unmount + close). Safe no-op if not mounted. */
@@ -1584,10 +1725,16 @@
        announces itself with one event instead. */
     document.addEventListener('dc:audio-exclusive', function () {
       if (dcAudio && !dcAudio.paused) dcAudio.pause();
+      /* An episode took the air: the music yields entirely, bar included —
+         the mirror of the podcast bar closing when the music starts. */
+      dcMusicBarHide();
     });
     dcAudio.addEventListener('pause', syncMusicPlayPauseIcon);
     /* Final save on navigation away (resume-on-reload). */
     window.addEventListener('pagehide', dcMusicSave);
+    window.addEventListener('pagehide', dcMusicHandoff);
+    /* For the podcast resume bar: don't offer an episode over live music. */
+    window.dcMusicIsPlaying = function () { return !!(dcAudio && !dcAudio.paused && !dcAudio.ended); };
 
     /* Graceful failure: a missing/broken JSON leaves the panel usable with a
        clean "unavailable" state and no thrown errors. */
@@ -1607,9 +1754,25 @@
 
         /* Resume-on-reload: restore saved track + position, but PAUSED. We
            never call play() here — the user resumes with one tap if they want. */
+        var hand = null;
+        try {
+          hand = JSON.parse(sessionStorage.getItem(DC_MUSIC_HANDOFF) || 'null');
+          sessionStorage.removeItem(DC_MUSIC_HANDOFF);
+        } catch (e) {}
+        if (hand && hand.id) {
+          /* Arrived from a page where the music was in use: same track, same
+             second, on the bottom bar. Carry on by itself only when it was
+             playing a moment ago (play() inside dcLoadTrack; a refusal leaves
+             it paused, one tap away on the bar). */
+          var go = !!hand.playing && (Date.now() - (Number(hand.at) || 0) < DC_MUSIC_HANDOFF_FRESH_MS);
+          for (var h = 0; h < dcTracks.length; h++) {
+            if (dcTracks[h].id === hand.id) { dcLoadTrack(h, { seek: Number(hand.t) || 0, play: go }); break; }
+          }
+          if (dcTrackIndex >= 0) dcMusicBarShow();
+        }
         var saved = null;
         try { saved = JSON.parse(localStorage.getItem(DC_MUSIC_KEY) || 'null'); } catch (e) {}
-        if (saved && saved.id) {
+        if (dcTrackIndex < 0 && saved && saved.id) {
           for (var i = 0; i < dcTracks.length; i++) {
             if (dcTracks[i].id === saved.id) { dcLoadTrack(i, { seek: saved.t || 0 }); break; }
           }
@@ -1678,6 +1841,7 @@
   function dcPodOnPlay() {
     dcSetPodcastPlaying(true);
     if (dcAudio && !dcAudio.paused) dcAudio.pause();
+    dcMusicBarHide();
     try { if (window.dcAudioHub) window.dcAudioHub.pauseOwn(); } catch (e) {}
     if (typeof window.dcEpisodesInlinePause === 'function') {
       try { window.dcEpisodesInlinePause(); } catch (e) {}
@@ -2365,7 +2529,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '288';
+  var V = '289';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now

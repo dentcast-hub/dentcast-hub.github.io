@@ -1233,6 +1233,20 @@ document.addEventListener("visibilitychange", function(){
 audio.addEventListener("play",  () => listEl.classList.remove("dc-paused"));
 audio.addEventListener("pause", () => listEl.classList.add("dc-paused"));
 
+/* آیکون دکمه‌ی پخش همیشه از وضعیتِ واقعیِ صدا خوانده شود، نه فقط از کلیکِ
+   خودِ دکمه. وقتی پخش از بیرون متوقف می‌شود (پلیرِ صفحه‌ی اپیزود، نوارِ
+   «ادامه‌ی شنیدن»، صفحه‌ی قفل، هدفون)، دکمه قبلاً روی ⏸ می‌ماند. */
+function syncPlayIcon(){
+  if (audio.paused || audio.ended) {
+    playBtn.innerHTML = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></svg>';
+  } else {
+    setPlayingIcon();
+  }
+}
+audio.addEventListener("play",  syncPlayIcon);
+audio.addEventListener("pause", syncPlayIcon);
+audio.addEventListener("ended", syncPlayIcon);
+
 seek.addEventListener("input", ()=>{
   if (!audio.duration) return;
   audio.currentTime = (seek.value / 100) * audio.duration;
@@ -1472,6 +1486,6 @@ window.addEventListener("load", sendHeight);
   <div class="dc-results-box" id="dcResults"></div>
 </div>
 <script src="/global-search.js?v=16" defer></script>
-<script src="/dc-nav.js?v=314" defer></script>
+<script src="/dc-nav.js?v=316" defer></script>
 </body>
 </html>
