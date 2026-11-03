@@ -1,0 +1,141 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "insight",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "روکش کوتاه یا تماس زودرس؟",
+  "from": "02-عنوان-کپشن.md:2"
+ },
+ "caption_fa": {
+  "value": "روکش ایمپلنت کاملاً سر جایش نشسته، اما با دندان مقابل تماس کافی ندارد.\n\nآیا باید برای اصلاح ارتفاع آن را به لابراتوار برگردانیم؟\n\nگاهی بررسی دقیق‌تر اکلوژن می‌تواند مسیر درمان را تغییر بدهد.",
+  "from": "02-عنوان-کپشن.md:5-9"
+ },
+ "title_en": {
+  "value": "Short Crown or Premature Contact?",
+  "from": "06-انگلیسی.md:2"
+ },
+ "caption_en": {
+  "value": "The implant crown is fully seated, but it does not make adequate contact with the opposing tooth.\n\nShould it be sent back to the laboratory to correct its height?\n\nA closer occlusal assessment can sometimes change the treatment plan.",
+  "from": "06-انگلیسی.md:5-9"
+ },
+ "body_en": {
+  "value": "In one patient, I tried in an implant crown on the mandibular left molar. The opposing tooth also had an implant crown.\n\nAfter confirming complete seating, I noticed that the buccal cusps were separated from the opposing tooth by an estimated few tenths of a millimeter, with no occlusal contact.\n\nAt first, the crown appeared slightly short. I decided to take a putty bite registration so I could show the gap to the laboratory and have the crown adjusted.\n\nBut the putty registration revealed something else.\n\n[[Image:01]]\n\n*Clinical image: Putty bite registration from this case; contact interpretation was made together with the clinical examination.*\n\nThere was a substantially heavier contact around one of the lingual cusps than at the other sites. This raised the possibility that a premature contact was preventing the mandible from closing fully in the intended position, leaving the buccal cusps out of contact.\n\nThe discrepancy was subtle enough that I had not noticed it on the initial examination. Because both teeth were implant-supported, reduced sensitivity to subtle contacts may also have made the interference less noticeable to the patient.\n\nI made a limited adjustment to the heavy contact and reassessed the occlusion.\n\nThe buccal cusps then made contact, without adding porcelain or returning the crown to the laboratory to increase its height.\n\n## Clinical insight\n\nWhen a crown is fully seated but lacks contact in part of the occlusal surface, it is not necessarily too short.\n\nSometimes a premature contact elsewhere prevents the mandible from reaching its final closing position and creates an appearance similar to a short crown.\n\nA putty bite registration can show an occlusal gap and may also provide clues about uneven contacts; however, these findings should be confirmed clinically.\n\n**Before deciding to add to the crown height, it is worth checking whether a premature contact elsewhere explains the gap.**",
+  "from": "06-انگلیسی.md:14-43"
+ },
+ "images": {
+  "value": [
+   {
+    "n": "01",
+    "file": {
+     "value": "03-تصاویر/01-putty-bite-registration.webp",
+     "from": "03-تصاویر/تصاویر.md:2"
+    },
+    "alt_fa": {
+     "value": "ثبت بایت با پوتی در بررسی تماس‌های اکلوژنی روکش ایمپلنت.",
+     "from": "03-تصاویر/تصاویر.md:4"
+    },
+    "alt_en": {
+     "value": "Putty bite registration used to assess occlusal contacts on an implant crown.",
+     "from": "03-تصاویر/تصاویر.md:5"
+    },
+    "caption_fa": {
+     "value": "تصویر بالینی از ثبت بایت با پوتی در همین کیس؛ تفسیر تماس‌ها همراه با معاینهٔ بالینی انجام شد.",
+     "from": "03-تصاویر/تصاویر.md:6"
+    },
+    "caption_en": {
+     "value": "Clinical image: Putty bite registration from this case; contact interpretation was made together with the clinical examination.",
+     "from": "06-انگلیسی.md:25"
+    }
+   }
+  ],
+  "from": "03-تصاویر/تصاویر.md"
+ },
+ "credit": {
+  "value": {
+   "mode": "none"
+  },
+  "from": "04-منبع/منابع.md:1"
+ },
+ "catalog": {
+  "value": [],
+  "from": "04-منبع/منابع.md: no paper"
+ },
+ "hashtags": {
+  "value": [
+   "#اینسایت",
+   "#تماس_زودرس",
+   "#اکلوژن_ایمپلنت",
+   "#روکش_ایمپلنت",
+   "#اکلوژن"
+  ],
+  "from": "07-ورودی‌ها.md:16"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "occlusion",
+   "subtopic": "occlusal-analysis-adjustment",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:15"
+ },
+ "pulse": {
+  "value": {
+   "text": "یک اینسایت بالینی با عنوانِ «روکش کوتاه یا تماس زودرس؟» منتشر شد",
+   "link_phrase": "روکش کوتاه یا تماس زودرس؟"
+  },
+  "from": "07-ورودی‌ها.md:20"
+ },
+ "keywords": {
+  "value": [
+   "کاسپ‌های باکال",
+   "کاسپ‌های لینگوال",
+   "ثبت بایت با پوتی",
+   "نشستن کامل روکش",
+   "اصلاح محدود اکلوژن",
+   "کاهش حساسیت به تماس",
+   "Complete Seating"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "تماس اکلوژنی",
+    "href": "/episodes/episode-60.html",
+    "from": "11-لینک‌های-گلاسری.md:12"
+   },
+   {
+    "phrase": "روکش ایمپلنت",
+    "href": "/glossary/implant-supported-crown.html",
+    "from": "11-لینک‌های-گلاسری.md:13"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:12-13"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [],
+  "from": "default: no frozen 4.9 selection — nothing is added (queue-route: 4.9 only a frozen choice)"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
