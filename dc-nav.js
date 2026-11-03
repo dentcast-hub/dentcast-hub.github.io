@@ -291,20 +291,13 @@
      Styling is injected from JS rather than added to dc-nav.css because
      index.html loads no shared stylesheet — the same reason DC_MUSIC_CSS and
      the skip-link styles are injected. */
+  /* Content sections (NoteCast, Insight, Share Hub, Chairside, Meta Note,
+     LiteCast, DentCast+, episodes, پرامپتولوژیست, پلاک صفر, تراز شواهد) were
+     removed from this menu by the founder on 1405/08/12 — they all live on the
+     homepage. What stays are the destinations that are not content streams. */
   var DC_DRAWER_MENU_ITEMS = [
-    ['/notecast/',                 'note',    'NoteCast'],
-    ['/dentai/promptologist/',     'message', 'پرامپتولوژیست'],
-    ['/plak-sefr/',                'pin',     'پلاک صفر'],
-    ['/taraz/',                    'scale',   'تراز شواهد'],
-    ['/dentcast-plus/',            'play',    'DentCast+'],
-    ['/sharehub/',                 'link',    'Share Hub'],
-    ['/chairside/',                'tooth',   'Chairside'],
-    ['/insight/',                  'brain',   'Insight'],
-    ['/metanotes/',                'puzzle',  'Meta Note'],
-    ['/glossary/',                 'book',    'Glossary'],
     ['/pillar/',                   'folder',  'فهرست موضوعی'],
-    ['/litecast/',                 'globe',   'LiteCast'],
-    ['/episodes.html',             'mic',     'اپیزودها'],
+    ['/glossary/',                 'book',    'Glossary'],
     ['/patients/cinematic.html',   'user',    'بیماران'],
     ['/plus/',                     'sparkle', 'پلاس'],
     /* Reaches every page's hamburger, not just index.html's — the floating
@@ -325,9 +318,8 @@
    character fixes that without forcing LTR on the Persian ones. */
               '<span class="dc-drawer-tool-txt" dir="auto">' + it[2] + '</span></a>';
      }).join('') +
-/* The sixteenth segment is the fold: it opens the tool tray underneath the
-   menu instead of navigating. Same segment shape as its neighbours so the
-   grid stays a clean 4×4. */
+/* The last segment is the fold: it opens the tool tray underneath the menu
+   instead of navigating. Same segment shape as its neighbours. */
 '  <button class="dc-drawer-tool-seg" type="button" id="dc-drawer-tools-toggle" aria-expanded="false"><span class="dc-drawer-tool-ico">' + dcSvgIcon('sliders') + '</span><span class="dc-drawer-tool-txt">ابزار</span></button>' +
 '</div>';
 
