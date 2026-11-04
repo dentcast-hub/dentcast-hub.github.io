@@ -2269,12 +2269,12 @@ ${renderQuickPublish()}
         return '<tr><td><b>' + fa(r.rank) + '</b></td>'
           + '<td>' + esc(r.display_name || '—') + '<div class="muted">' + esc(r.phone || '') + '</div></td>'
           + '<td><b>' + fa(r.current_streak) + '</b> روز' + note + '</td>'
-          + '<td>' + day(r.run_start) + '</td>'
-          + '<td>' + fa(r.longest_streak) + '</td></tr>';
+          + '<td><b>' + fa(r.longest_streak) + '</b> روز</td>'
+          + '<td>' + day(r.run_start) + '</td></tr>';
       }).join('');
-      out.innerHTML = '<table style="width:100%;border-collapse:collapse"><thead><tr>'
-        + '<th>رتبه</th><th>کاربر</th><th>استریک</th><th>شروع</th><th>رکورد کل</th></tr></thead><tbody>'
-        + rows + '</tbody></table>';
+      out.innerHTML = '<div class="tblwrap"><table><thead><tr>'
+        + '<th>رتبه</th><th>کاربر</th><th>استریکِ الان</th><th>بالاترین استریک</th><th>شروعِ استریکِ الان</th></tr></thead><tbody>'
+        + rows + '</tbody></table></div>';
     }
     function load(p) {
       if (busy) return;
