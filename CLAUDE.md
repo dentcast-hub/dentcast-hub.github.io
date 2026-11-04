@@ -32,6 +32,7 @@ For «انتشار ناقص داشتم» or an explicit request to resume a publ
 | External Fidelity | `.dentcast/workflows/external-fidelity.md` |
 | Publish queue on branch `queue` (prepare, status) | `.dentcast/workflows/publish-queue.md` |
 | Publish an item from the queue (publish day) | `.dentcast/workflows/queue-route.md` (only this) |
+| Explaining, summarizing or rewriting a paper for readers (ShareHub, Telegram, any paper write-up) | `.dentcast/paper-voice.md` (voice rule) |
 
 Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details.md`. Read the selected specialty workflow completely. New content uses the modular sequence, including paper-only and category exceptions.
 
