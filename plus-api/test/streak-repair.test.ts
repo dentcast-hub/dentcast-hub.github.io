@@ -350,3 +350,47 @@ describe('GET /admin/streak + POST /admin/streak/repair', () => {
     expect(res.body).toContain("fetch('/admin/streak?user='");
   });
 });
+
+describe('رتبه‌بندی استریک‌ها — the live-streak board', () => {
+  const today = new Date().toISOString().slice(0, 10);
+
+  it('ranks live runs, drops dead caches, shares rank on ties, pages by ten', async () => {
+    const a = await reader(runBack(today, 12), { current: 12, longest: 12 }, '09150000001');
+    await reader(runBack(today, 5), { current: 5, longest: 5 }, '09150000002');
+    await reader(runBack(today, 5), { current: 5, longest: 5 }, '09150000003');
+    // A big cache whose run ended weeks ago: dead, must not be ranked.
+    const old = new Date(Date.now() - 40 * 86400000).toISOString().slice(0, 10);
+    await reader(runBack(old, 30), { current: 30, longest: 30 }, '09150000004');
+
+    const res = await app.inject({ method: 'GET', url: '/admin/streak/board', headers: { authorization: auth } });
+    expect(res.statusCode).toBe(200);
+    const j = res.json();
+    expect(j.total_alive).toBe(3);
+    expect(j.rows.map((r: { rank: number }) => r.rank)).toEqual([1, 2, 2]);
+    expect(j.rows[0].user_id).toBe(a);
+    expect(j.rows[0].current_streak).toBe(12);
+    expect(j.rows[0].run_start).toBe(runBack(today, 12)[0]);
+    expect(j.rows[0].run_days).toBe(12);
+  });
+
+  it('is ten per page and clamps an out-of-range page', async () => {
+    for (let i = 0; i < 13; i += 1) {
+      await reader(runBack(today, 3 + i), { current: 3 + i, longest: 3 + i }, `0915000${String(1000 + i)}`);
+    }
+    const p1 = (await app.inject({ method: 'GET', url: '/admin/streak/board?page=1', headers: { authorization: auth } })).json();
+    const p2 = (await app.inject({ method: 'GET', url: '/admin/streak/board?page=2', headers: { authorization: auth } })).json();
+    const p9 = (await app.inject({ method: 'GET', url: '/admin/streak/board?page=9', headers: { authorization: auth } })).json();
+    expect(p1.rows).toHaveLength(10);
+    expect(p2.rows).toHaveLength(3);
+    expect(p1.pages).toBe(2);
+    expect(p9.page).toBe(2);
+    expect(p1.rows[0].current_streak).toBe(15);
+  });
+
+  it('needs admin auth and the panel carries the block', async () => {
+    expect((await app.inject({ method: 'GET', url: '/admin/streak/board' })).statusCode).toBe(401);
+    const page = await app.inject({ method: 'GET', url: '/admin', headers: { authorization: auth } });
+    expect(page.body).toContain('رتبه‌بندی استریک‌ها');
+    expect(page.body).toContain("fetch('/admin/streak/board?page='");
+  });
+});

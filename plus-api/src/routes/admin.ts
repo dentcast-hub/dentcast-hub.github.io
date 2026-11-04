@@ -16,6 +16,7 @@ import {
 import { one, query } from '../db.js';
 import { normalizePhone } from '../services/phone.js';
 import { diagnoseStreak, repairStreak } from '../services/streak-repair.js';
+import { streakBoard } from '../services/streak-board.js';
 import {
   activateMonths, activateDays, grantLifetime, revokeSubscription, reduceSubscriptionDays, getSubscription,
   summarizeSubscription, sweepExpiredSubscriptions, subscriptionReport, neverPremiumUserIds,
@@ -2230,6 +2231,77 @@ ${renderQuickPublish()}
   })();
   </script>
 
+  <h3 style="margin-top:26px">رتبه‌بندی استریک‌ها</h3>
+  <div class="muted">بلندترین استریکِ <b>زنده</b> در همین لحظه، ده‌تا ده‌تا. زنده یعنی آخرین فعالیت امروز یا دیروز (به وقت تهران) بوده؛ استریکی که شکسته ولی هنوز در کش مانده شمرده نمی‌شود. تاریخ شروع از فعالیت‌های خودِ کاربر حساب می‌شود. فقط ۱۰۰ نفرِ اول نمایش داده می‌شود. هم‌رتبه‌ها شمارهٔ رتبهٔ یکسان دارند.</div>
+  <div class="row" style="margin-top:8px">
+    <button id="sbPrev" type="button" disabled>قبلی</button>
+    <button id="sbNext" type="button" disabled>بعدی</button>
+    <button id="sbReload" type="button">بروزرسانی</button>
+    <span id="sbInfo" class="muted"></span>
+  </div>
+  <div id="sbOut" style="margin-top:8px"></div>
+  <script>
+  (function () {
+    var out = document.getElementById('sbOut');
+    if (!out) return;
+    var prev = document.getElementById('sbPrev');
+    var next = document.getElementById('sbNext');
+    var reload = document.getElementById('sbReload');
+    var info = document.getElementById('sbInfo');
+    var page = 1, pages = 1, busy = false;
+    function esc(t) {
+      return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+    function fa(n) { return String(n).replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'.charAt(+d); }); }
+    function day(d) {
+      if (!d) return '—';
+      try {
+        return new Date(d + 'T12:00:00Z').toLocaleDateString('fa-IR-u-ca-persian', { timeZone: 'UTC' }) + ' (' + esc(d) + ')';
+      } catch (e) { return esc(d); }
+    }
+    function render(j) {
+      if (!j.rows.length) { out.textContent = 'الان هیچ استریک زنده‌ای نیست.'; return; }
+      var rows = j.rows.map(function (r) {
+        var note = (r.run_days != null && r.run_days !== r.current_streak)
+          ? '<div class="muted">ترمیم‌شده؛ دورهٔ واقعی ' + fa(r.run_days) + ' روز</div>' : '';
+        return '<tr><td><b>' + fa(r.rank) + '</b></td>'
+          + '<td>' + esc(r.display_name || '—') + '<div class="muted">' + esc(r.phone || '') + '</div></td>'
+          + '<td><b>' + fa(r.current_streak) + '</b> روز' + note + '</td>'
+          + '<td>' + day(r.run_start) + '</td>'
+          + '<td>' + fa(r.longest_streak) + '</td></tr>';
+      }).join('');
+      out.innerHTML = '<table style="width:100%;border-collapse:collapse"><thead><tr>'
+        + '<th>رتبه</th><th>کاربر</th><th>استریک</th><th>شروع</th><th>رکورد کل</th></tr></thead><tbody>'
+        + rows + '</tbody></table>';
+    }
+    function load(p) {
+      if (busy) return;
+      busy = true; prev.disabled = true; next.disabled = true;
+      out.textContent = 'در حال خواندن...';
+      fetch('/admin/streak/board?page=' + encodeURIComponent(p), { credentials: 'include' })
+        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          busy = false;
+          if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+          var j = res.j; page = j.page; pages = j.pages;
+          render(j);
+          info.textContent = 'صفحهٔ ' + fa(page) + ' از ' + fa(pages)
+            + ' · ' + fa(j.total_alive) + ' استریک زنده'
+            + (j.total_alive > j.cap ? ' (فقط ' + fa(j.cap) + ' نفر اول نمایش داده می‌شود)' : '')
+            + ' · تا ' + esc(j.as_of_day);
+          prev.disabled = page <= 1; next.disabled = page >= pages;
+        })
+        .catch(function () { busy = false; out.textContent = 'خوانده نشد.'; });
+    }
+    prev.addEventListener('click', function () { load(page - 1); });
+    next.addEventListener('click', function () { load(page + 1); });
+    reload.addEventListener('click', function () { load(page); });
+    load(1);
+  })();
+  </script>
+
   <h3 style="margin-top:26px">ترمیم استریک شکسته</h3>
   <div class="muted">دورهٔ فعلیِ خواننده را با دوره‌ای که <b>خودت انتخاب می‌کنی</b> جمع می‌کند، تا شکستن استریک چیزی از او نگیرد. دوره‌ها هیچ‌جا ذخیره نشده‌اند — از فعالیتِ خودِ کاربر حساب می‌شوند، پس اول «بررسی» را بزن. <b>انتخاب دست توست چون «دورهٔ قبلِ شکست» فقط برای کسی یک‌معنا دارد که یک بار شکسته باشد</b>؛ کسی که سه بار شکسته، دورهٔ بلافاصله‌قبلش شاید یک دورهٔ ۵ روزهٔ بی‌اهمیت باشد و آن دورهٔ بلندی که منظور توست چند تا عقب‌تر. رکورد هرگز پایین نمی‌آید (<code>max</code> گرفته می‌شود) و دوباره زدنِ دکمه بی‌اثر است. توجه: این دو عدد cache‌اند و <code>rebuild-streaks</code> از روی فعالیت بازمی‌سازدشان و این را برمی‌گرداند؛ تقویمِ روزهای «گزارش ماهانه» عوض نمی‌شود، چون log دست‌نخورده می‌ماند.</div>
   <form class="bc" id="srForm" onsubmit="return false">
@@ -3565,6 +3637,7 @@ ${renderQuickPublish()}
         ['gift-day', 'هدیهٔ روز پریمیوم به یک نفر', 'هدیه‌ی روزِ پریمیوم', '', 0, 'هدیه روز'],
         ['forever', 'پریمیوم ابدی به یک نفر', 'پریمیومِ ابدی', '', 0, 'ابدی همیشگی'],
         ['badge', 'اهدای نشان', 'اهدای نشان', '', 0, 'نشان همراه دانشجو ستون تخفیف'],
+        ['streak-board', 'رتبه‌بندی استریک‌ها', 'رتبه‌بندی استریک', '', 0, 'استریک رتبه برترین جایزه بالاترین'],
         ['streak', 'ترمیم استریک شکسته', 'ترمیم استریک', '', 0, 'استریک ترمیم']
       ] },
       { id: 'learn', name: 'مسیر، آزمون، گواهی', icon: '🎓', tint: 't-learn', items: [
@@ -5186,6 +5259,15 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
    * run history are visible at all: the profile row carries two numbers and the
    * run that BROKE is neither of them (see services/streak-repair.ts).
    */
+  /**
+   * GET /admin/streak/board?page=N — the live-streak ranking, ten rows a page,
+   * capped (services/streak-board.ts). Read-only.
+   */
+  app.get('/admin/streak/board', async (request, reply) => {
+    const q = request.query as { page?: string };
+    return reply.send({ ok: true, ...await streakBoard(Number(q.page) || 1) });
+  });
+
   app.get('/admin/streak', async (request, reply) => {
     const q = request.query as { user?: string; phone?: string };
     const who = await resolveUser(q.user ?? q.phone, reply);
