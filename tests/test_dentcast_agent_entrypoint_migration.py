@@ -261,6 +261,14 @@ class EntrypointMigrationTests(unittest.TestCase):
      positions.append(router.index("`modules/"+name+"`",start))
      continue
     if name == "08-des-fidelity.md":
+     # Bounded addition (queue retrospective 2026-11-04): Part 1 names the PDF
+     # text tool. Strip that block, pin its terms, compare the rest as before.
+     first=body.index("<!-- pdf-source-text:v1 -->")
+     last=body.index("<!-- /pdf-source-text:v1 -->",first)+len("<!-- /pdf-source-text:v1 -->\n\n")
+     for term in ("tools/pdf_source_text.py","texts.json","Downloaded from","source_conclusion",
+                  "outside the repository"):
+      self.assertIn(term,body[first:last])
+     body=body[:first]+body[last:]
      # Founder 1405/08/06: the per-version notes of Part 2 moved verbatim to
      # des-version-history.md; module 08 keeps a bounded summary of the rules
      # they imply. Put the moved text back in place, so every other line is
@@ -320,6 +328,10 @@ class EntrypointMigrationTests(unittest.TestCase):
       "separate model-run receipt is **not required for a valid DES JSON**",
       "record 4.13 as blocked", "Never silently rerun the founder's supplied result"):
       with self.subTest(required=required): self.assertIn(required,conditional)
+     tier=actual_rest.split(after,1)[0]
+     for required in ("**DES is never tiered.**","two full checker runs, always","never skipped",
+                      "multi-source page, a `POOLED` page or a long article keeps every step"):
+      self.assertIn(required,tier)
      for required in ("`gpt-6-luna`","Launch both full checker runs in parallel",
       "exact price verification is not a start gate","record it as UNVERIFIED",
       "If the runtime does not expose independent contexts"):

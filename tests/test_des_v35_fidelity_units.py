@@ -216,5 +216,70 @@ class KnowledgeFileTests(unittest.TestCase):
             self.assertEqual(k.read_bytes(), full[:cut].rstrip(b'\n') + b'\n', k.name)
 
 
+class TwoCheckerRunsTests(Tmp):
+    """Part 2c step 1: two full checker runs per block, also on a one-source page."""
+    ONE = [src('Conti', 2005, '10.1/c')]
+    BODY = [u(1, 'Title', 1, True), u(2, 'Pain fell early.', 2), u(3, 'It stayed low.', 2), u(4, 'Rest helped.', 3)]
+
+    def claims(self, verdict='MATCHES'):
+        return {'des_version': '3.5', 'mode': 'FIDELITY', 'scope': 'SOURCE', 'text_basis': 'FULL_TEXT',
+                'claims': [{'id': x['id'], 'claim_quote': x['text'], 'verdict': 'NOT_A_CLAIM' if x.get('heading') else verdict,
+                            'change_kind': None, 'source_quote': ''} for x in self.BODY]}
+
+    def vote(self, run):
+        (self.d / 'plus').mkdir(exist_ok=True)
+        (self.d / 'plus/des-scores.json').write_text(json.dumps({CID: {'sources': self.ONE}}), encoding='utf-8')
+        with patch.object(units, 'ROOT', self.d), patch.object(units, 'split_page', return_value=self.BODY), \
+                patch.object(sys, 'argv', ['x', CID, '--vote', str(run)]):
+            units.main()
+
+    def test_one_run_is_refused_even_for_a_single_source(self):
+        run = self.d / 'run'
+        run.mkdir()
+        (run / 'out-src0-1.json').write_text(json.dumps(self.claims()), encoding='utf-8')
+        with self.assertRaises(SystemExit) as e:
+            self.vote(run)
+        self.assertIn('never skipped', str(e.exception))
+        self.assertFalse((run / 'voted-src0.json').exists())
+
+    def test_two_agreeing_runs_vote_without_tiebreak_or_reviewer(self):
+        run = self.d / 'run'
+        run.mkdir()
+        for k in (1, 2):
+            (run / f'out-src0-{k}.json').write_text(json.dumps(self.claims()), encoding='utf-8')
+        self.vote(run)
+        voted = json.loads((run / 'voted-src0.json').read_text(encoding='utf-8'))
+        self.assertEqual(voted['counts']['matches'], 3)
+
+    def test_partial_second_run_is_not_a_full_run(self):
+        run = self.d / 'run'
+        run.mkdir()
+        (run / 'out-src0-1.json').write_text(json.dumps(self.claims()), encoding='utf-8')
+        part = self.claims()
+        part['claims'] = part['claims'][:2]
+        (run / 'out-src0-2.json').write_text(json.dumps(part), encoding='utf-8')
+        with self.assertRaises(SystemExit):
+            self.vote(run)
+
+
+class ConclusionTests(unittest.TestCase):
+    FOOTER = ('Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/x by Test, Wiley Online Library on '
+              '[01/01/2026]. See the Terms and Conditions on Wiley Online Library for rules of use; OA articles are '
+              'governed by the applicable Creative Commons License.')
+
+    def test_licence_footer_is_never_the_conclusion(self):
+        text = 'Background here. Results here. Splinting reduced bone loss. ' + self.FOOTER
+        self.assertEqual(units.conclusion_of(text, 'ABSTRACT_ONLY'), 'Splinting reduced bone loss.')
+
+    def test_full_text_conclusion_section_skips_footer_inside_it(self):
+        text = ('Intro. Methods. CONCLUSIONS Splinting reduced bone loss. ' + self.FOOTER +
+                ' Splinted crowns are preferred. ORCID 0000-0001')
+        self.assertEqual(units.conclusion_of(text, 'FULL_TEXT'), 'Splinted crowns are preferred.')
+
+    def test_text_without_furniture_is_unchanged(self):
+        text = 'One sentence. The last sentence.'
+        self.assertEqual(units.conclusion_of(text, 'ABSTRACT_ONLY'), units.last_sentence(text))
+
+
 if __name__ == '__main__':
     unittest.main()

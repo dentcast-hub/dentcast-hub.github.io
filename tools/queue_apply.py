@@ -25,6 +25,20 @@ Steps (all or nothing — the writes happen only after every input is checked):
      default, every skipped link with its reason, every supplemented field.
 
 Builders (C.8), stamp (C.7), Phase F stay with post-cut2-mechanical.yml.
+
+Preparation draft (never a publish):
+
+    python3 <throwaway>/tools/queue_apply.py <item> <content_id> --draft --throwaway
+
+builds only the Persian page (and its images) and the item's DES record
+(05-DES-Fidelity/des.json sources, no Fidelity; its markers/plan when present)
+in a THROWAWAY checkout, so tools/des_fidelity_units.py can split the page that
+publish day will build. Status «آماده», SHA256SUMS and the next free
+content_id are not required (a temporary id of the category's pattern is). It
+refuses unless the tool itself runs from a throwaway copy: `--throwaway`
+given, a `.dentcast-throwaway` marker at the copy's root, no `.git` there (a
+copy that cannot commit or push) and no publication handoff. queue_fidelity_prep.py
+makes such a copy.
 """
 import argparse
 import contextlib
@@ -1488,9 +1502,13 @@ def main(argv=None):
     ap.add_argument("--receipt", help="also write the receipt JSON here")
     ap.add_argument("--allow-handoff", action="store_true", help=argparse.SUPPRESS)
     ap.add_argument("--founder-text-change", metavar="WORDS")
+    ap.add_argument("--draft", action="store_true",
+                    help="preparation only: build the draft page + DES record for DES/Fidelity prep (needs --throwaway)")
+    ap.add_argument("--throwaway", action="store_true",
+                    help="with --draft: this checkout is a throwaway copy (marker file, no .git); never a publish")
     a = ap.parse_args(argv)
     try:
-        receipt = assemble(a)
+        receipt = draft_assemble(a) if a.draft else assemble(a)
     except QueueRefusal as e:
         print(json.dumps({"status": "refused", **e.detail}, ensure_ascii=False, indent=1))
         return 2
@@ -1503,6 +1521,104 @@ def main(argv=None):
     except BrokenPipeError:
         pass
     return 0
+
+
+THROWAWAY_MARKER = ".dentcast-throwaway"
+
+
+def throwaway_guard(a):
+    """--draft writes into ROOT; ROOT must be a copy that can never publish."""
+    if not a.throwaway:
+        refuse("DRAFT_NEEDS_THROWAWAY", "--draft runs only with --throwaway, from a throwaway copy of the repository "
+               "(tools/queue_fidelity_prep.py makes one); it is never a publish")
+    if not (ROOT / THROWAWAY_MARKER).is_file() or (ROOT / ".git").exists():
+        refuse("NOT_THROWAWAY", f"{ROOT} is not a throwaway copy (needs {THROWAWAY_MARKER} at its root and no .git) — "
+               "--draft never writes into a real checkout")
+    if (ROOT / HANDOFF).exists():
+        refuse("ACTIVE_HANDOFF", f"{HANDOFF} exists in the throwaway copy — a draft is never built beside a publication")
+    if a.supplement or a.founder_text_change or a.dry_run:
+        refuse("DRAFT_OPTIONS", "--draft takes no --supplement, --founder-text-change or --dry-run")
+
+
+def draft_manifest(item, cat):
+    """The manifest for a draft page: what the item already holds, and inert
+    placeholders for what preparation has not written yet. Only the Persian
+    page is built, so English, keywords and links never reach a scored unit;
+    the title is a unit (u1) and must be the item's own."""
+    d = qm.draft(item)
+    m = qm.plain(d)
+    if not m.get("title_fa"):
+        refuse("MANIFEST_INCOMPLETE", "02-عنوان-کپشن.md: the title is a FIDELITY unit (u1); the draft needs it",
+               missing=["title_fa"])
+    placeholders = []
+    for key, val in (("caption_fa", m["title_fa"]), ("keywords", [m["title_fa"]]), ("links_48", []),
+                     ("explore_49", []), ("backlinks_47", []), ("credit", {"mode": "none"}), ("images", []),
+                     ("pillar", {"primary": "draft", "subtopic": None, "secondary": []}),
+                     ("title_en", m["title_fa"]), ("caption_en", m["title_fa"]), ("body_en", "")):
+        if not m.get(key) and m.get(key) != []:
+            m[key] = val
+            placeholders.append(key)
+    for img in m["images"]:
+        for f in ("alt_fa", "alt_en", "caption_fa", "caption_en"):
+            if img.get(f) is None:
+                img[f] = ""
+                placeholders.append(f"images.{img['n']}.{f}")
+        if not img.get("file"):
+            refuse("MANIFEST_INCOMPLETE", f"image {img['n']}: no file", missing=[f"images.{img['n']}.file"])
+    m["category"] = cat
+    return m, placeholders
+
+
+def draft_assemble(a):
+    throwaway_guard(a)
+    item = Path(a.item).resolve()
+    if not item.is_dir():
+        refuse("ITEM_NOT_FOUND", f"{a.item} is not a queue item folder")
+    fm = re.fullmatch(r"\d\d-([a-z]+)-.+", item.name)
+    if not fm or fm.group(1) not in CATEGORIES:
+        refuse("CATEGORY_UNSUPPORTED", f"{item.name}: no queue template for this folder's category")
+    cat = fm.group(1)
+    c = CATEGORIES[cat]
+    im = re.fullmatch(re.escape(c["dir"]) + "/" + re.escape(c["stem"]) + r"(\d+)", a.content_id)
+    if not im:
+        refuse("DRAFT_CONTENT_ID", f"a draft content_id has the category's pattern {c['dir']}/{c['stem']}<N>")
+    n, prev = int(im.group(1)), next_number(cat)[1]
+    if (ROOT / f"{a.content_id}.html").exists():
+        refuse("DRAFT_CONTENT_ID", f"{a.content_id}.html already exists in the copy — use the next free number")
+    m, placeholders = draft_manifest(item, cat)
+    if c.get("parent"):
+        m["parent_episode"] = c["parent"].format(n=n)
+    date = a.date or datetime.date.today().isoformat()
+    w = Writes()
+    builder = {"notecast": build_notecast_page, "insight": build_insight_page, "chairside": build_chairside_page,
+               "metanote": build_metanote_page}.get(cat) or (lambda *x: build_page(cat, *x))
+    page, img_files, _info = builder(n, prev, m, date, item, "fa")
+    w.put(f"{a.content_id}.html", page)
+    for rel, data in img_files.items():
+        w.put(rel, data)
+    des_d = item / "05-DES-Fidelity"
+    des = json.loads((des_d / "des.json").read_text(encoding="utf-8")) if (des_d / "des.json").exists() else None
+    if des is not None:
+        sources = des["sources"] if isinstance(des, dict) and "sources" in des else (des if isinstance(des, list) else [des])
+        rel = "plus/des-scores.json"
+        if a.content_id in json.loads(w.text(rel)):
+            refuse("DRAFT_CONTENT_ID", f"{rel} already has {a.content_id}")
+        w.put(rel, tio.json_append(w.text(rel), [], {"scored_at": date, "sources": sources}, key=a.content_id))
+        if (des_d / "markers.json").exists():
+            mk = json.loads((des_d / "markers.json").read_text(encoding="utf-8"))
+            vals = list(mk.values()) if all(isinstance(v, dict) and any(str(k).startswith("S") for k in v)
+                                            for v in mk.values()) else [mk]
+            rel = ".dentcast/des-source-markers.json"
+            text = w.text(rel) or "{\n}\n"
+            w.put(rel, tio.json_append(text, [], vals[0], key=a.content_id))
+        if (des_d / "plan.json").exists():
+            plan = json.loads((des_d / "plan.json").read_text(encoding="utf-8"))
+            w.put(f".dentcast/des-fidelity-plans/{a.content_id}.json",
+                  json.dumps({**plan, "content_id": a.content_id}, ensure_ascii=False, indent=1) + "\n")
+    w.commit()
+    return {"status": "draft", "not_for_publish": True, "throwaway": str(ROOT), "content_id": a.content_id,
+            "queue_item": f"queue/{item.name}", "date": date, "placeholders": placeholders,
+            "des_record": des is not None, "files": [{"path": rel, "sha256": sha(data)} for rel, data in sorted(w.files.items())]}
 
 
 def assemble(a):

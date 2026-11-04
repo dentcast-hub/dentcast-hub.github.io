@@ -341,24 +341,43 @@ def last_sentence(text):
 
 
 CONCL_HEAD = re.compile(r"(?<![A-Za-z])(?<!In )(?:CONCLUSIONS?|Conclusions?)\b:?\s+(?=[A-Z])")
-BACK_MATTER = re.compile(r"(?<![A-Za-z])(?:Abbreviations|Acknowledg(?:e)?ments?|ACKNOWLEDG|Supplementary|"
+BACK_MATTER = re.compile(r"(?<![A-Za-z])(?:Abbreviations|Acknowledg(?:e)?ments?|ACKNOWLEDGE?MENTS?|ACKNOWLEDG|Supplementary|"
                          r"Funding|FUNDING|Declarations?(?: of [Ii]nterests?)?|Data availab(?:ility|le)|DATA AVAILABILITY|Authors?[’'] contributions|Author Contributions|"
                          r"AUTHOR CONTRIBUTIONS|CONFLICT OF INTEREST|Conflicts? of interest|Competing [Ii]nterests|"
                          r"ORCID|REFERENCES|References)\b")
+
+
+# Page furniture a PDF extraction carries into the text: the publisher's
+# download/licence footer («Downloaded from … Wiley Online Library … See the
+# Terms and Conditions … Creative Commons License»), copyright lines. A
+# sentence holding one of these is never the paper's conclusion.
+BOILERPLATE = re.compile(r"(?i)downloaded from\b|wiley online library|terms and conditions|creative commons licen[cs]e|"
+                         r"rules of use|oa articles are governed|this is an open access article|all rights reserved|"
+                         r"^\s*©|\bcopyright\b")
+
+
+def last_real_sentence(text):
+    """The last sentence of `text` that is not page furniture (BOILERPLATE)."""
+    parts = [p.strip() for p in TERMINATORS.split(text.replace("\n", " ")) if p.strip()]
+    real = [p for p in parts if not BOILERPLATE.search(p)]
+    return real[-1] if real else (parts[-1] if parts else "")
 
 
 def conclusion_of(text, basis):
     """source_conclusion (spec appendix rule 7). An abstract ends on its
     conclusion; a full text ends on its back matter (ORCID, declarations), so
     under FULL_TEXT it is the last sentence of the paper's last Conclusion(s)
-    section, cut at the first back-matter heading after it."""
+    section, cut at the first back-matter heading after it. A sentence that is
+    page furniture (a download or licence footer) is passed over. This only
+    shapes NEW input blocks: a stored record keeps the source_conclusion it
+    echoed (Phase F never recomputes it), so no existing record moves."""
     if basis == "FULL_TEXT":
         heads = list(CONCL_HEAD.finditer(text))
         if heads:
             body = text[heads[-1].end():]
             m = BACK_MATTER.search(body)
-            return last_sentence(body[:m.start()] if m else body)
-    return last_sentence(text)
+            return last_real_sentence(body[:m.start()] if m else body)
+    return last_real_sentence(text)
 
 
 def _squash(x):
@@ -744,6 +763,15 @@ def main():
                         if owed:
                             sys.exit(f"src{k}: the source text grew; re-check every non-MATCHES unit first: {owed}")
                 runs = rebase(base, runs, [by_id[i] for i in plan[k]], k)
+            elif not a.base:
+                # Part 2c step 1: two full checker runs per block, always — also on a
+                # one-source page. A sentence one run calls MATCHES is otherwise never
+                # looked at again; the second run is never skipped.
+                want = set(plan[k])
+                full = [r for r in runs[:2] if want <= {c["id"] for c in r.get("claims", [])}]
+                if len(full) < 2:
+                    sys.exit(f"src{k}: --vote needs two full checker runs (out-src{k}-1.json and -2.json, every unit "
+                             "of the block); the second run is never skipped (step 4.13 Part 2c)")
             if not runs:
                 continue
             out, tiebreak, unresolved, unreviewed = vote_source(runs, adj.get(f"src{k}"), rev.get(f"src{k}"))

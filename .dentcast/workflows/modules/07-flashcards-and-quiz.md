@@ -232,7 +232,15 @@ to the standard of `reports/exam-questions-from-quiz-2026-10-25.md`:
 **Ask, don't guess — the founder approves every question in chat before it is
 written** (same standard as 4.10/4.11/4.12): present stem, options and key
 with one line on why the key is right per the body; write only what was
-approved. A question the founder wants kept «for later» goes in with
+approved. **The founder is shown the full text** — the whole stem, all four
+options, the key and that one-line reason — never a summary or a count.
+Before showing them, run
+`python3 tools/validate_exam_questions.py --draft-check <draft.json>` (in the
+queue: `08-سؤال‌های-آزمون.json`): it fails a question without exactly four
+options, with lengths over 1.25×, whose key is the single longest option, with
+a «همهٔ موارد»/«هیچ‌کدام» option or an option restating the stem, warns when a
+stem word recurs only in the key (a leak), and prints the full text to show.
+Fix every ERROR and look at every leak WARN before asking. A question the founder wants kept «for later» goes in with
 `"status": "review"` and a `review_note`, which the API never draws.
 
 **Where it goes.** Under this page's `content_id` in `plus/exam-questions.json`
