@@ -50,6 +50,19 @@ Usage:
   python3 tools/validate_exam_questions.py --baseline-file OLD.json
   python3 tools/validate_exam_questions.py --row-sha256 insight/insight-63#r-0123abcd
 
+Draft pre-check (module 07 4.12-ب, before a question is shown to the founder):
+
+  python3 tools/validate_exam_questions.py --draft-check 08-سؤال‌های-آزمون.json
+
+reads {"questions": [...]} (or a bare list) of {prompt_fa, options, correct,
+reason?} and fails a question that does not have exactly four options, whose
+longest option is over 1.25× the shortest, whose key is the single longest
+option, that carries a «همهٔ موارد»/«هیچ‌کدام» option or an option restating
+the stem; it WARNs when a stem word (4+ letters, not a stopword) recurs only in
+the key (a leak). It then prints each question in full — stem, the four
+options, the key and the one-line reason — which is what the founder is shown.
+No repository file is read or compared.
+
 Exit 0 when clean, 1 on any error. Prints a one-line summary (live/review per
 content when --content is given).
 """
@@ -251,6 +264,92 @@ def guard(path: Path, content: str | None = None, allow_edit=(), ref: str | None
     return errors, warnings + more, label
 
 
+STOPWORDS = {'است', 'هستند', 'بود', 'باشد', 'شود', 'می‌شود', 'کدام', 'کدامیک', 'چیست', 'چه', 'این', 'آن',
+             'برای', 'باید', 'بیشتر', 'کمتر', 'یک', 'دارد', 'ندارد', 'کند', 'می‌کند', 'شده', 'گزینه', 'مورد',
+             'موارد', 'درست', 'صحیح', 'نادرست', 'بیمار', 'دندان', 'وقتی', 'زمانی', 'اگر', 'ولی', 'اما', 'بین',
+             'روی', 'زیر', 'بالای', 'پیش', 'پس', 'بعد', 'قبل', 'همه', 'هیچ', 'with', 'that', 'this', 'which', 'what',
+             'from', 'have', 'than', 'more', 'less', 'most', 'when', 'into'}
+WORD = re.compile(r'[\w\u200c]+')
+
+
+def _words(t: str) -> list[str]:
+    return [w.strip('\u200c').lower() for w in WORD.findall(t or '')]
+
+
+def _content(t: str) -> set[str]:
+    return {w for w in _words(t) if len(w) >= 4 and w not in STOPWORDS and not w.isdigit()}
+
+
+def draft_check(questions) -> tuple[list[str], list[str]]:
+    """Editorial pre-check of draft MCQs (module 07 4.12-ب) before the founder sees them."""
+    errors: list[str] = []
+    warnings: list[str] = []
+    for n, q in enumerate(questions, 1):
+        tag = f'q{n}'
+        if not isinstance(q, dict):
+            errors.append(f'{tag}: not an object')
+            continue
+        stem = str(q.get('prompt_fa') or '').strip()
+        opts = q.get('options')
+        c = q.get('correct')
+        if not stem:
+            errors.append(f'{tag}: empty prompt_fa')
+        if not isinstance(opts, list) or not all(isinstance(o, str) and o.strip() for o in opts):
+            errors.append(f'{tag}: options must be non-empty strings')
+            continue
+        opts = [o.strip() for o in opts]
+        if len(opts) != 4:
+            errors.append(f'{tag}: {len(opts)} options (exactly four)')
+        if len(set(opts)) != len(opts):
+            errors.append(f'{tag}: duplicate options')
+        if not isinstance(c, int) or isinstance(c, bool) or not (0 <= c < len(opts)):
+            errors.append(f'{tag}: correct must be a 0-based index into options')
+            continue
+        lens = [len(o) for o in opts]
+        if min(lens) and max(lens) / min(lens) > 1.25 + 1e-9:
+            errors.append(f'{tag}: option lengths {min(lens)}–{max(lens)} exceed 1.25×')
+        if lens[c] == max(lens) and lens.count(max(lens)) == 1:
+            errors.append(f'{tag}: the key is the single longest option')
+        for o in opts:
+            if any(o == b or o.startswith(b) for b in BANNED_OPTIONS) or 'هیچ‌کدام' in o or 'هیچکدام' in o:
+                errors.append(f'{tag}: banned option form «{o[:30]}»')
+        stem_n = ' '.join(_words(stem))
+        for k, o in enumerate(opts):
+            ow = _content(o)
+            if (' '.join(_words(o)) and ' '.join(_words(o)) in stem_n) or (len(ow) >= 2 and ow <= _content(stem)):
+                errors.append(f'{tag}: option {k + 1} restates the stem')
+        hit = [d for d in DEIXIS if d in stem]
+        if hit:
+            errors.append(f'{tag}: deixis in stem {hit}')
+        if ARABIC.search(stem) or any(ARABIC.search(o) for o in opts):
+            errors.append(f'{tag}: Arabic ي/ك')
+        others = set().union(*(_content(o) for k, o in enumerate(opts) if k != c))
+        leak = sorted((_content(stem) & _content(opts[c])) - others)
+        if leak:
+            warnings.append(f'{tag}: stem word(s) {leak} recur only in the key (possible leak)')
+        if not str(q.get('reason') or q.get('why') or '').strip():
+            warnings.append(f'{tag}: no one-line reason for the key (the founder is shown one)')
+    return errors, warnings
+
+
+def show_draft(questions) -> str:
+    """The full text the founder is shown: stem, four options, key, reason — never a summary."""
+    letters = 'الف ب ج د ه و'.split()
+    out = []
+    for n, q in enumerate(questions, 1):
+        if not isinstance(q, dict):
+            continue
+        out.append(f'سؤال {n}: {q.get("prompt_fa", "")}')
+        opts = q.get('options') if isinstance(q.get('options'), list) else []
+        for k, o in enumerate(opts):
+            out.append(f'  {letters[k] if k < len(letters) else k + 1}) {o}')
+        c = q.get('correct')
+        if isinstance(c, int) and not isinstance(c, bool) and 0 <= c < len(opts):
+            out.append(f'  کلید: {letters[c] if c < len(letters) else c + 1}) {opts[c]}')
+        out.append(f'  دلیل: {q.get("reason") or q.get("why") or "—"}')
+    return '\n'.join(out)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--content', help='check only this content_id (and report its counts)')
@@ -263,7 +362,28 @@ def main() -> int:
                          f'(repeatable); CI and Phase F need its {EDIT_APPROVALS_REL} entry')
     ap.add_argument('--row-sha256', metavar='CONTENT_ID#ID',
                     help=f'print the row_sha256 of that row in --file for its {EDIT_APPROVALS_REL} entry')
+    ap.add_argument('--draft-check', metavar='FILE',
+                    help='pre-check a draft question file (08-سؤال‌های-آزمون.json) before the founder sees it')
     args = ap.parse_args()
+
+    if args.draft_check:
+        try:
+            raw = json.loads(Path(args.draft_check).read_text(encoding='utf-8'))
+        except (OSError, ValueError) as e:
+            print(f'ERROR: cannot read {args.draft_check}: {e}')
+            return 1
+        qs = raw.get('questions') if isinstance(raw, dict) else raw
+        if not isinstance(qs, list):
+            print('ERROR: expected {"questions": [...]} or a list of questions')
+            return 1
+        errs, warns = draft_check(qs)
+        for w in warns:
+            print(f'WARN  {w}')
+        for e in errs:
+            print(f'ERROR {e}')
+        print(show_draft(qs))
+        print(f'draft: {len(qs)} question(s); {len(errs)} error(s), {len(warns)} warning(s)')
+        return 1 if errs else 0
 
     if args.row_sha256:
         cid, _, qid = args.row_sha256.rpartition('#')

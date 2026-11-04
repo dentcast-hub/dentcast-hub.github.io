@@ -200,20 +200,35 @@ def V(value, origin):
     return {"value": value, "from": origin}
 
 
+INPUTS_FILE = "07-ورودی‌ها.md"
+
+
 def draft(item):
     """The manifest from the frozen files. Fields are {"value","from"}; a field
-    whose exact pattern is absent has value None."""
+    whose exact pattern is absent has value None. The legacy path (no
+    12-انتشار.json) reads its decisions from 07-ورودی‌ها.md; without that file
+    it does not fail: every 07 field stays null, says so in its origin and is
+    named by `missing` (a preparation draft may not have written 07 yet)."""
     item = Path(item)
     mf = item / MANIFEST_FILE
     if mf.exists():
-        data = json.loads(mf.read_text(encoding="utf-8"))
-        if data.get("schema") != SCHEMA:
+        try:
+            data = json.loads(mf.read_text(encoding="utf-8"))
+        except ValueError as e:
+            raise QueueRefusal("MANIFEST_JSON", f"{MANIFEST_FILE} is not valid JSON: {e}")
+        if not isinstance(data, dict) or data.get("schema") != SCHEMA:
             raise QueueRefusal("MANIFEST_SCHEMA", f"{MANIFEST_FILE}: schema must be {SCHEMA}")
         return {k: (v if isinstance(v, dict) and "value" in v else V(v, MANIFEST_FILE))
                 for k, v in data.items() if k != "schema"} | {"_source": V("manifest", MANIFEST_FILE)}
     d = {"_source": V("legacy", "patterns")}
-    folder_cat = re.fullmatch(r"\d\d-([a-z]+)-.+", item.name).group(1)
+    fm = re.fullmatch(r"\d\d-([a-z]+)-.+", item.name)
+    if not fm:
+        raise QueueRefusal("ITEM_NAME", f"{item.name}: expected NN-<category>-<slug>")
+    folder_cat = fm.group(1)
     d["category"] = V(folder_cat if folder_cat in CATEGORIES else None, "folder name")
+    if not (item / INPUTS_FILE).is_file():
+        d["_inputs"] = V(None, f"{INPUTS_FILE} missing: hashtags, pillar, pulse, pathway and the one-paper credit "
+                               "stay null (never inferred)")
 
     # 02 — title and caption
     l02 = lines_of(item, "02-عنوان-کپشن.md") or []
