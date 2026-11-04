@@ -364,11 +364,15 @@ summary of that one paper. On such a page:
   answered differently; when they agree everywhere there is no third run.
 - **Step 4 (stronger reviewer)** runs only when the vote leaves a unit
   `ALTERED`/`REVERSED`; with none, no reviewer call is made.
-- **Step 5 (orphan sweep):** `--orphans` still runs (it is mechanical). The
-  stronger reviewer reads `orphans-input.json` only when it lists a sentence
-  that matters — one the page presents as the paper's finding. Headings and
-  the author's own framing or opinion do not; with no such sentence the sweep
-  ends there, and the listed sentences are still reported with Part 3b.
+- **Step 5 (orphan sweep) does not exist for a single-source page.** The sweep
+  only answers «which of the several sources does this sentence come from?».
+  With one source an unmatched sentence can only be absent from that one source,
+  which the vote already records as `NOT_IN_SOURCE`; searching again adds nothing
+  (the sentences the vote leaves `NOT_IN_SOURCE` are simply reported with
+  Part 3b, as the author's own reasoning). Do not run `--orphans`/`--sweep`, and
+  do not spend a reviewer call or a re-check on it. The founder's criterion is
+  the number of papers: **one paper → no sweep; two or more → the sweep below
+  runs in full.**
 
 A multi-source page, a `POOLED` page or a long article keeps every step above
 exactly as written. Record the tier and the reason in the publish report. The
