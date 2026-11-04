@@ -26,6 +26,24 @@ import validate_exam_questions as veq  # noqa: E402
 TEMPLATE = 45  # sharehub/share-45: the latest ShareHub page, the draft's template
 
 
+def _unused_sharehub_id():
+    """A draft content_id no real publication can ever hold.
+
+    The draft tests copy the live plus/des-scores.json into the throwaway
+    checkout, and queue_apply --draft rightly refuses an id that already has a
+    record. A fixed "next" number (share-46 once) collides the moment that
+    page is really published, so the id is derived from the live data at run
+    time: far above every ShareHub number in des-scores.json and on disk."""
+    scores = json.loads((ROOT / "plus/des-scores.json").read_text(encoding="utf-8"))
+    nums = [int(k.rsplit("-", 1)[1]) for k in scores if k.startswith("sharehub/share-")]
+    nums += [int(p.stem.rsplit("-", 1)[1]) for p in (ROOT / "sharehub").glob("share-*.html")
+             if p.stem.rsplit("-", 1)[1].isdigit()]
+    return f"sharehub/share-{max(nums, default=0) + 100000}"
+
+
+DRAFT_CID = _unused_sharehub_id()
+
+
 def make_item(base, name="05-sharehub-test", des=True, extra=None):
     d = Path(base) / name
     (d / "05-DES-Fidelity").mkdir(parents=True)
@@ -89,14 +107,14 @@ class DraftModeTests(unittest.TestCase):
     def test_refuses_without_throwaway_flag(self):
         with tempfile.TemporaryDirectory() as t:
             with self.assertRaises(qm.QueueRefusal) as e:
-                qa.draft_assemble(args(make_item(t), "sharehub/share-9999", throwaway=False))
+                qa.draft_assemble(args(make_item(t), DRAFT_CID, throwaway=False))
             self.assertEqual(e.exception.code, "DRAFT_NEEDS_THROWAWAY")
 
     def test_refuses_in_a_real_checkout(self):
         # this repository has .git and no marker: --draft never writes here
         with tempfile.TemporaryDirectory() as t:
             with self.assertRaises(qm.QueueRefusal) as e:
-                qa.draft_assemble(args(make_item(t), "sharehub/share-9999"))
+                qa.draft_assemble(args(make_item(t), DRAFT_CID))
             self.assertEqual(e.exception.code, "NOT_THROWAWAY")
 
     def test_refuses_a_copy_with_git(self):
@@ -104,7 +122,7 @@ class DraftModeTests(unittest.TestCase):
             c = make_throwaway(t)
             (c / ".git").mkdir()
             with patch.object(qa, "ROOT", c), self.assertRaises(qm.QueueRefusal) as e:
-                qa.draft_assemble(args(make_item(t), "sharehub/share-9999"))
+                qa.draft_assemble(args(make_item(t), DRAFT_CID))
             self.assertEqual(e.exception.code, "NOT_THROWAWAY")
 
     def test_draft_page_and_des_record_in_throwaway(self):
@@ -112,15 +130,15 @@ class DraftModeTests(unittest.TestCase):
             c = make_throwaway(t)
             item = make_item(t)   # status «در حال آماده‌سازی», no SHA256SUMS, no 07
             with patch.object(qa, "ROOT", c):
-                r = qa.draft_assemble(args(item, "sharehub/share-9999"))
+                r = qa.draft_assemble(args(item, DRAFT_CID))
             self.assertEqual(r["status"], "draft")
             self.assertTrue(r["not_for_publish"])
-            page = (c / "sharehub/share-9999.html").read_text(encoding="utf-8")
+            page = (c / f"{DRAFT_CID}.html").read_text(encoding="utf-8")
             self.assertIn("این جملهٔ نخست است.", page)
             self.assertIn("یک عنوان آزمایشی", page)
-            rec = json.loads((c / "plus/des-scores.json").read_text(encoding="utf-8"))["sharehub/share-9999"]
+            rec = json.loads((c / "plus/des-scores.json").read_text(encoding="utf-8"))[DRAFT_CID]
             self.assertEqual(set(rec), {"scored_at", "sources"})
-            self.assertFalse((ROOT / "sharehub/share-9999.html").exists())
+            self.assertFalse((ROOT / f"{DRAFT_CID}.html").exists())
 
     def test_draft_refuses_a_taken_id(self):
         with tempfile.TemporaryDirectory() as t:
@@ -144,7 +162,7 @@ class FidelityPrepTests(unittest.TestCase):
             texts = Path(t) / "texts.json"
             texts.write_text(json.dumps({doi: {"source_text": "Paper text. It ends here.",
                                                "text_basis": src["text_basis"]}}), encoding="utf-8")
-            r = self.run_prep(str(item), "--checkout", str(c), "--content-id", "sharehub/share-9999",
+            r = self.run_prep(str(item), "--checkout", str(c), "--content-id", DRAFT_CID,
                               "--texts", str(texts), "--build", str(Path(t) / "blocks"))
             self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
             out = json.loads(r.stdout)
@@ -165,7 +183,7 @@ class FidelityPrepTests(unittest.TestCase):
     def test_without_des_package_says_so(self):
         with tempfile.TemporaryDirectory() as t:
             c = make_throwaway(t)
-            r = self.run_prep(str(make_item(t, des=False)), "--checkout", str(c), "--content-id", "sharehub/share-9999")
+            r = self.run_prep(str(make_item(t, des=False)), "--checkout", str(c), "--content-id", DRAFT_CID)
             self.assertEqual(r.returncode, 2)
             self.assertEqual(json.loads(r.stdout)["code"], "DES_PACKAGE_MISSING")
 
