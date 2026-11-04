@@ -1,0 +1,224 @@
+{
+ "des_version": "3.5",
+ "mode": "FIDELITY",
+ "scope": "SOURCE",
+ "text_basis": "FULL_TEXT",
+ "claims": [
+  {
+   "id": "u1",
+   "claim_quote": "اوردنچر دندانی؛ حفظ ریشه‌ها ارزشمند است، اما یک خطر مهم وجود دارد!",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u2",
+   "claim_quote": "English",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "link label"
+  },
+  {
+   "id": "u3",
+   "claim_quote": "گاهی دندان‌هایی که به دلیل کاهش ساپورت استخوانی یا نسبت نامناسب تاج به ریشه، گزینه خوبی برای پروتز ثابت یا پارسیل نیستند، هنوز می‌توانند به‌عنوان پایه اوردنچر استفاده شوند.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "thesis or a removable partial denture can safely be used as abut-",
+   "source_ref": null,
+   "note": "text extraction interleaves columns; quoted run is the longest contiguous part of the source sentence"
+  },
+  {
+   "id": "u4",
+   "claim_quote": "حفظ این ریشه‌ها، به‌خصوص کانین‌های فک پایین، به کاهش تحلیل استخوان، افزایش ثبات پروتز و حفظ حس عمقی (Proprioception) کمک می‌کند و می‌تواند رضایت بیمار را افزایش دهد.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Within the limitations of this systematic review, ROD remain a viable\ntreatment plan, offering better denture stability and bone preservation around\nabutment teeth and high patient satisfaction.",
+   "source_ref": null
+  },
+  {
+   "id": "u5",
+   "claim_quote": "اما مهم‌ترین نگرانی درباره این درمان چیست؟",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "question with no answer in it"
+  },
+  {
+   "id": "u6",
+   "claim_quote": "در یک مرور سیستماتیک منتشرشده در سال ۲۰۲۴، نتایج ۱۱ مطالعه بالینی تصادفی درباره اوردنچرهای متکی بر دندان طبیعی (Root-Retained Overdentures) بررسی شد.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "The final selection of studies included 11 RCTs.",
+   "source_ref": null
+  },
+  {
+   "id": "u7",
+   "claim_quote": "پوسیدگی ریشه، شایع‌ترین عارضه گزارش‌شده بود.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Clinically relevant variables\nderived from this search were: Complications, with caries being the most frequently\nreported, periodontal aspects and bone changes around abutment teeth.",
+   "source_ref": null
+  },
+  {
+   "id": "u8",
+   "claim_quote": "نویسندگان تأکید می‌کنند که این پوسیدگی‌ها ممکن است حتی در مدت کوتاهی پیشرفت کنند و باعث از دست رفتن دندان پایه شوند.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "main risk of failure for abutment teeth, and it is remarkable how it can",
+   "source_ref": null,
+   "note": "source sentence interleaved with other column; the claim hedge keeps it faithful to a risk statement"
+  },
+  {
+   "id": "u9",
+   "claim_quote": "چند نکته مهم و کاربردی از مقاله:",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "signpost ending in a colon"
+  },
+  {
+   "id": "u10",
+   "claim_quote": "کوپینگ فلزی (Cast Coping): مقاله به یک مرور سیستماتیک قبلی اشاره می‌کند که میزان از دست رفتن دندان‌های پایه دارای کلاهک فلزی را کمتر از ۲ درصد در سال گزارش کرده است.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "than 2% per year of linear loss of abutment teeth in OVD with cast",
+   "source_ref": null,
+   "note": "source sentence interleaved with other column; reference 17 is a systematic review and meta-analysis"
+  },
+  {
+   "id": "u11",
+   "claim_quote": "البته این عدد مربوط به بقای دندان است و به معنای اثبات کاهش پوسیدگی توسط کلاهک فلزی نیست.",
+   "verdict": "NOT_IN_SOURCE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "the source does not say the figure concerns tooth survival rather than caries reduction by cast copings"
+  },
+  {
+   "id": "u12",
+   "claim_quote": "پیشگیری از پوسیدگی: در مطالعات بررسی‌شده، استفاده از ترکیبات فلوراید و کلرهگزیدین-فلوراید به کاهش پوسیدگی ریشه کمک کرده است.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Root caries was significantly reduced for the chlorhexidine-­fluoride group",
+   "source_ref": null
+  },
+  {
+   "id": "u13",
+   "claim_quote": "ترکیبات کلرهگزیدین نیز در کنترل پلاک و بهبود وضعیت لثه مؤثر گزارش شده‌اند.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Chlorhexidine gel can be effective in the prevention of plaque, gingivitis and\nperiodontitis in pt with OVD",
+   "source_ref": null
+  },
+  {
+   "id": "u14",
+   "claim_quote": "انتخاب ماده ترمیمی: هنوز شواهد کافی وجود ندارد که مشخص کند کدام ماده برای سیل‌کردن دهانه کانال ریشه دندان‌های پایه بهترین انتخاب است.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "The results did not point out an optimal restorative material for the seal of root\ncanal orifices of OVD ΑΒΤ",
+   "source_ref": null
+  },
+  {
+   "id": "u15",
+   "claim_quote": "در برخی مطالعات، ترمیم‌های آمالگام بیشتر به تعمیر نیاز پیدا کرده‌اند.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Amalgam restorations of abutment teeth required repairs more frequently,41 but there is yet no consensus about",
+   "source_ref": null,
+   "note": "source sentence interrupted by table symbols; quoted run is its contiguous opening"
+  },
+  {
+   "id": "u16",
+   "claim_quote": "نگهداری پروتز: بخشی از اوردنچرها در پنج سال اول به تعمیر یا تعویض نیاز پیدا می‌کنند.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "percentage of the overdentures required repair or replace-",
+   "source_ref": null,
+   "note": "source sentence interleaved with other column"
+  },
+  {
+   "id": "u17",
+   "claim_quote": "بنابراین مراقبت از خود پروتز هم به اندازه بررسی دندان‌های پایه اهمیت دارد.",
+   "verdict": "NOT_IN_SOURCE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "Inference judged on its conclusion (equal importance of prosthesis care and abutment-tooth examination). Source says only that maintenance needs are an important aspect to consider; it nowhere ranks or equates prosthesis care with abutment-tooth assessment (F2 item 3: neighbouring proposition). Silent."
+  },
+  {
+   "id": "u18",
+   "claim_quote": "معاینات دوره‌ای: نویسندگان بر بهداشت دقیق دهان و مراجعات منظم تأکید دارند و حداقل یک معاینه سالانه را توصیه می‌کنند.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Thorough oral hygiene and regular\nfollow-­ups are of utmost importance.",
+   "source_ref": null,
+   "note": "annual recall also stated: \"be included in a recall program at least once a year\""
+  },
+  {
+   "id": "u19",
+   "claim_quote": "جمع‌بندی کلینیکی",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "heading only"
+  },
+  {
+   "id": "u20",
+   "claim_quote": "اوردنچر متکی بر دندان طبیعی همچنان یک گزینه درمانی ارزشمند است، به‌ویژه برای بیمارانی که حفظ حتی چند ریشه می‌تواند به حفظ استخوان و ثبات پروتز کمک کند.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Within the limitations of this systematic review, ROD remain a viable\ntreatment plan, offering better denture stability and bone preservation around\nabutment teeth and high patient satisfaction.",
+   "source_ref": null
+  },
+  {
+   "id": "u21",
+   "claim_quote": "اما حفظ ریشه به‌تنهایی موفقیت درمان را تضمین نمی‌کند.",
+   "verdict": "NOT_IN_SOURCE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "Source reports abutment loss risk, caries as main risk factor and maintenance needs, but no sentence states that root retention alone does not guarantee treatment success. Silent."
+  },
+  {
+   "id": "u22",
+   "claim_quote": "پوسیدگی ریشه یکی از مهم‌ترین تهدیدها برای بقای دندان‌های پایه است و پیشگیری از آن باید از همان ابتدای درمان جدی گرفته شود.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Root caries remains the main risk factor for loss of abutment teeth, but without\njeopardising the integrity of the prosthesis.",
+   "source_ref": null,
+   "note": "F3: second half (prevention to be taken seriously from the start of treatment) is not stated by the source, silent, not scored"
+  },
+  {
+   "id": "u23",
+   "claim_quote": "البته شواهد این مرور محدودیت دارند؛ ۹ مطالعه از ۱۱ مطالعه ریسک سوگیری بالایی داشتند و امکان انجام متاآنالیز وجود نداشت.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "According to the risk of bias assessment,\nnine studies were considered of high risk, whereas only 2 of low risk.",
+   "source_ref": null,
+   "note": "meta-analysis not feasible also stated in the abstract"
+  }
+ ],
+ "counts": {
+  "matches": 15,
+  "altered": 0,
+  "reversed": 0,
+  "not_in_source": 3,
+  "not_assessable": 0,
+  "author_view": 0,
+  "not_a_claim": 5
+ },
+ "assessable": 15,
+ "fidelity_score": 100,
+ "level": "HIGH",
+ "provisional": false,
+ "source_conclusion": "See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License",
+ "fact_fa": "از ۱۵ ادعایی که منبع به آن پرداخته‌اند، ۱۵ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۳ جمله‌ی دیگر در منبع نیامده است.",
+ "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+}
