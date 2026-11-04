@@ -39968,6 +39968,113 @@
           ]
         }
       ]
+    },
+    "plak-sefr/plak1-11": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/plak-sefr/plak1-11.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "ریپو در گیت‌هاب چیست و فایل‌های سایت در آن چه جایگاهی دارند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "ریپو یک پوشه در گیت‌هاب است که فایل‌های یک کار در آن نگه داشته می‌شود. فایل‌های سایت هم در یک ریپو می‌مانند و گیت‌هاب از همین فایل‌ها سایت می‌سازد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "اسم ریپوی سایت روی گیت‌هاب چطور انتخاب می‌شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "اسم کاربری گیت‌هاب نوشته می‌شود و بعد از آن .github.io، همه با حروف کوچک؛ مثلاً drsamadi.github.io. این اسم یک قرار ثابت در گیت‌هاب است: ریپویی که این اسم را داشته باشد، سایتش روی همین آدرس ساخته می‌شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا برای ساختن سایت رایگان روی گیت‌هاب، ریپو باید عمومی باشد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ گیت‌هاب در حالت رایگان فقط از ریپوی عمومی سایت می‌سازد. عمومی یعنی هر کسی می‌تواند فایل‌های ریپو را ببیند. این برای سایت مشکلی نیست، چون هر چیزی که روی سایت می‌رود را به هر حال همه می‌بینند، ولی فایل شخصی، اطلاعات بیمار و رمز عبور نباید در این ریپو گذاشته شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا ساختن ریپو به‌تنهایی از گیت‌هاب سایت می‌سازد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ ریپو فقط جای نگهداری فایل‌هاست و تا تنظیم Pages روشن نشود، گیت‌هاب از آن سایت نمی‌سازد. این تنظیم در Settings و بخش Pages است: Source روی Deploy from a branch، Branch روی main و / (root)، و بعد Save."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "بعد از روشن کردن Pages در گیت‌هاب چقدر طول می‌کشد تا سایت روی اینترنت بیاید؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "چند دقیقه؛ ممکن است تا ده دقیقه طول بکشد. بعد از آن با باز کردن دوباره‌ی صفحه‌ی Pages، جمله‌ای دیده می‌شود که می‌گوید سایت روی اینترنت است، همراه با دکمه‌ی Visit site."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا آدرس github.io همان آدرسی است که باید برای بیمارها فرستاد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ این آدرس برای این است که خود دندانپزشک سایت را ببیند و اسم نهایی سایت نیست. وقتی دامنه‌ای که به اسم دندانپزشک ثبت شده به سایت وصل شود، بیمارها سایت را با همان دامنه باز می‌کنند."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/plak-sefr/plak1-11.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/plak-sefr/plak1-11.html#flashcards-c1",
+              "name": "ریپو در گیت‌هاب",
+              "description": "پوشه‌ای در گیت‌هاب که فایل‌های یک کار را نگه می‌دارد. فایل‌های سایت مطب هم در یک ریپو می‌مانند و گیت‌هاب سایت را از همین فایل‌ها می‌سازد.",
+              "source": "faq",
+              "sourceFaqIndex": 0
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/plak-sefr/plak1-11.html#flashcards-c2",
+              "name": "اسم ریپوی سایت در گیت‌هاب",
+              "description": "قرار ثابتِ گیت‌هاب برای ساختن سایت: ریپویی که اسمش «اسم کاربری + .github.io» با حروف کوچک باشد (مثل drsamadi.github.io)، سایتش روی همان آدرس ساخته می‌شود.",
+              "source": "faq",
+              "sourceFaqIndex": 1
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/plak-sefr/plak1-11.html#flashcards-c3",
+              "name": "ریپوی عمومی برای سایت رایگان",
+              "description": "شرطِ گیت‌هاب در حالت رایگان: سایت فقط از ریپوی عمومی ساخته می‌شود، یعنی فایل‌های ریپو برای همه دیدنی است. به همین دلیل فایل شخصی، اطلاعات بیمار و رمز عبور هیچ‌وقت در چنین ریپویی نگه داشته نمی‌شود.",
+              "source": "faq",
+              "sourceFaqIndex": 2
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/plak-sefr/plak1-11.html#flashcards-c4",
+              "name": "روشن کردن Pages",
+              "description": "تنظیمی در ریپو که بدون آن گیت‌هاب از فایل‌ها سایت نمی‌سازد: در Settings و بخش Pages، Source روی Deploy from a branch و Branch روی main و / (root)، و Save. فقط یک بار انجام می‌شود و بعد از آن هر تغییر فایل‌ها چند دقیقه بعد روی سایت دیده می‌شود.",
+              "source": "faq",
+              "sourceFaqIndex": 3
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/plak-sefr/plak1-11.html#flashcards-c5",
+              "name": "آدرس github.io و دامنه‌ی خود دندانپزشک",
+              "description": "آدرس github.io آدرس موقتِ سایت برای دیدن خود دندانپزشک است و اسم نهایی سایت نیست؛ بیمارها فقط وقتی دامنه‌ی ثبت‌شده به اسم دندانپزشک به سایت وصل شود، سایت را با همان دامنه باز می‌کنند.",
+              "source": "faq",
+              "sourceFaqIndex": 5
+            }
+          ]
+        }
+      ]
     }
   }
 }

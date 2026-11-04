@@ -3548,6 +3548,36 @@
    ]
   },
   {
+   "key": "حضور_آنلاین_دندانپزشک",
+   "tag": "#حضور_آنلاین_دندانپزشک",
+   "domain": "web",
+   "words": 3,
+   "definition": "مجموعه‌ی جاهایی که یک دندانپزشک از راهشان پیدا می‌شود، و اینکه کدامشان مالِ خودش است.",
+   "use_when": "مقاله موضوعش خودِ حضورِ حرفه‌ایِ آنلاین باشد — کجا پیدا می‌شوید و روی چه چیزی بنا شده.",
+   "aliases": [
+    "online presence",
+    "حضور آنلاین",
+    "برندینگ شخصی دندانپزشک",
+    "digital presence"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "plak-sefr/plak1-1",
+    "plak-sefr/plak1-2",
+    "plak-sefr/plak1-3",
+    "plak-sefr/plak1-4",
+    "plak-sefr/plak1-5",
+    "plak-sefr/plak1-6",
+    "plak-sefr/plak1-7",
+    "plak-sefr/plak1-8",
+    "plak-sefr/plak1-9",
+    "plak-sefr/plak1-10",
+    "plak-sefr/plak1-11"
+   ]
+  },
+  {
    "key": "زیبایی_قدامی",
    "tag": "#زیبایی_قدامی",
    "domain": null,
@@ -3736,6 +3766,35 @@
    ]
   },
   {
+   "key": "پلاک_صفر",
+   "tag": "#پلاک_صفر",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام سری «پلاک صفر».",
+   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
+   "aliases": [
+    "plak sefr",
+    "پلاک‌صفر",
+    "plak-e sefr"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "plak-sefr/plak1-1",
+    "plak-sefr/plak1-2",
+    "plak-sefr/plak1-3",
+    "plak-sefr/plak1-4",
+    "plak-sefr/plak1-5",
+    "plak-sefr/plak1-6",
+    "plak-sefr/plak1-7",
+    "plak-sefr/plak1-8",
+    "plak-sefr/plak1-9",
+    "plak-sefr/plak1-10",
+    "plak-sefr/plak1-11"
+   ]
+  },
+  {
    "key": "zero_bone_loss",
    "tag": "#Zero_Bone_Loss",
    "domain": "clinical",
@@ -3861,35 +3920,6 @@
    ]
   },
   {
-   "key": "حضور_آنلاین_دندانپزشک",
-   "tag": "#حضور_آنلاین_دندانپزشک",
-   "domain": "web",
-   "words": 3,
-   "definition": "مجموعه‌ی جاهایی که یک دندانپزشک از راهشان پیدا می‌شود، و اینکه کدامشان مالِ خودش است.",
-   "use_when": "مقاله موضوعش خودِ حضورِ حرفه‌ایِ آنلاین باشد — کجا پیدا می‌شوید و روی چه چیزی بنا شده.",
-   "aliases": [
-    "online presence",
-    "حضور آنلاین",
-    "برندینگ شخصی دندانپزشک",
-    "digital presence"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "plak-sefr/plak1-1",
-    "plak-sefr/plak1-2",
-    "plak-sefr/plak1-3",
-    "plak-sefr/plak1-4",
-    "plak-sefr/plak1-5",
-    "plak-sefr/plak1-6",
-    "plak-sefr/plak1-7",
-    "plak-sefr/plak1-8",
-    "plak-sefr/plak1-9",
-    "plak-sefr/plak1-10"
-   ]
-  },
-  {
    "key": "دیاستم",
    "tag": "#دیاستم",
    "domain": null,
@@ -3915,6 +3945,37 @@
     "chairside/chairside-41",
     "chairside/chairside-42",
     "chairside/chairside-43"
+   ]
+  },
+  {
+   "key": "سایت_مطب",
+   "tag": "#سایت_مطب",
+   "domain": "web",
+   "words": 2,
+   "definition": "سایتِ خودِ مطب به‌عنوان یک شیء با کارکردِ مشخص — نه کارتِ ویزیتِ کسی که از قبل تصمیم گرفته بیاید، بلکه جایی که به سؤالِ کسی جواب می‌دهد که هنوز اسمِ شما را نمی‌داند، و چیزی که تمام‌شده نیست و در جریان می‌ماند.",
+   "use_when": "مقاله موضوعش خودِ سایتِ مطب باشد — اینکه برای چه کاری ساخته شده، چه چیزی در آن اتفاق می‌افتد، یا چرا داشتنش به‌تنهایی کافی نیست.",
+   "aliases": [
+    "practice website",
+    "وب‌سایت مطب",
+    "سایت دندانپزشکی",
+    "dental practice website",
+    "سایت شخصی دندانپزشک",
+    "clinic website"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "plak-sefr/plak1-2",
+    "plak-sefr/plak1-3",
+    "plak-sefr/plak1-4",
+    "plak-sefr/plak1-5",
+    "plak-sefr/plak1-6",
+    "plak-sefr/plak1-7",
+    "plak-sefr/plak1-8",
+    "plak-sefr/plak1-9",
+    "plak-sefr/plak1-10",
+    "plak-sefr/plak1-11"
    ]
   },
   {
@@ -4014,34 +4075,6 @@
     "dentai/dentai-34",
     "sharehub/share-19",
     "dentai/dentai-35"
-   ]
-  },
-  {
-   "key": "پلاک_صفر",
-   "tag": "#پلاک_صفر",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام سری «پلاک صفر».",
-   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
-   "aliases": [
-    "plak sefr",
-    "پلاک‌صفر",
-    "plak-e sefr"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "plak-sefr/plak1-1",
-    "plak-sefr/plak1-2",
-    "plak-sefr/plak1-3",
-    "plak-sefr/plak1-4",
-    "plak-sefr/plak1-5",
-    "plak-sefr/plak1-6",
-    "plak-sefr/plak1-7",
-    "plak-sefr/plak1-8",
-    "plak-sefr/plak1-9",
-    "plak-sefr/plak1-10"
    ]
   },
   {
@@ -4277,36 +4310,6 @@
     "dentai/dentai-31",
     "insight/insight-82",
     "sharehub/share-35"
-   ]
-  },
-  {
-   "key": "سایت_مطب",
-   "tag": "#سایت_مطب",
-   "domain": "web",
-   "words": 2,
-   "definition": "سایتِ خودِ مطب به‌عنوان یک شیء با کارکردِ مشخص — نه کارتِ ویزیتِ کسی که از قبل تصمیم گرفته بیاید، بلکه جایی که به سؤالِ کسی جواب می‌دهد که هنوز اسمِ شما را نمی‌داند، و چیزی که تمام‌شده نیست و در جریان می‌ماند.",
-   "use_when": "مقاله موضوعش خودِ سایتِ مطب باشد — اینکه برای چه کاری ساخته شده، چه چیزی در آن اتفاق می‌افتد، یا چرا داشتنش به‌تنهایی کافی نیست.",
-   "aliases": [
-    "practice website",
-    "وب‌سایت مطب",
-    "سایت دندانپزشکی",
-    "dental practice website",
-    "سایت شخصی دندانپزشک",
-    "clinic website"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "plak-sefr/plak1-2",
-    "plak-sefr/plak1-3",
-    "plak-sefr/plak1-4",
-    "plak-sefr/plak1-5",
-    "plak-sefr/plak1-6",
-    "plak-sefr/plak1-7",
-    "plak-sefr/plak1-8",
-    "plak-sefr/plak1-9",
-    "plak-sefr/plak1-10"
    ]
   },
   {
@@ -4681,6 +4684,35 @@
     "insight/insight-47",
     "insight/insight-65",
     "insight/insight-87"
+   ]
+  },
+  {
+   "key": "github",
+   "tag": "#GitHub",
+   "domain": "ai",
+   "words": 1,
+   "definition": "سرویسِ آنلاینِ نگه‌داریِ فایل‌ها در ریپو (repository)، که نسخه‌های قبلیِ هر فایل را هم نگه می‌دارد؛ برای کد ساخته شده ولی برای هر فایلِ متنی کار می‌کند.",
+   "use_when": "مطلب مشخصاً به این سرویس، ریپو یا نگه‌داریِ فایل‌ها در آن بپردازد.",
+   "aliases": [
+    "گیت‌هاب",
+    "گیت هاب",
+    "github",
+    "ریپو",
+    "ریپوزیتوری",
+    "repository",
+    "git hub"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "dentai/promptologist/prompt-append2-1",
+    "dentai/promptologist/prompt-append2-2",
+    "dentai/promptologist/prompt-append2-3",
+    "dentai/promptologist/prompt-append2-4",
+    "dentai/promptologist/prompt-append2-5",
+    "dentai/promptologist/prompt-append2-6",
+    "plak-sefr/plak1-11"
    ]
   },
   {
@@ -5361,34 +5393,6 @@
     "episodes/episode-77",
     "episodes/episode-78",
     "notecast/episode-7"
-   ]
-  },
-  {
-   "key": "github",
-   "tag": "#GitHub",
-   "domain": "ai",
-   "words": 1,
-   "definition": "سرویسِ آنلاینِ نگه‌داریِ فایل‌ها در ریپو (repository)، که نسخه‌های قبلیِ هر فایل را هم نگه می‌دارد؛ برای کد ساخته شده ولی برای هر فایلِ متنی کار می‌کند.",
-   "use_when": "مطلب مشخصاً به این سرویس، ریپو یا نگه‌داریِ فایل‌ها در آن بپردازد.",
-   "aliases": [
-    "گیت‌هاب",
-    "گیت هاب",
-    "github",
-    "ریپو",
-    "ریپوزیتوری",
-    "repository",
-    "git hub"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "dentai/promptologist/prompt-append2-1",
-    "dentai/promptologist/prompt-append2-2",
-    "dentai/promptologist/prompt-append2-3",
-    "dentai/promptologist/prompt-append2-4",
-    "dentai/promptologist/prompt-append2-5",
-    "dentai/promptologist/prompt-append2-6"
    ]
   },
   {
@@ -6541,6 +6545,32 @@
     "chairside/chairside-19",
     "insight/insight-61",
     "sharehub/share-21"
+   ]
+  },
+  {
+   "key": "مالکیت_پلتفرم",
+   "tag": "#مالکیت_پلتفرم",
+   "domain": "web",
+   "words": 2,
+   "definition": "تفاوتِ داشتنِ خودِ محتوا با داشتنِ چیزی که محتوا روی آن می‌نشیند: آدرس، دسترسی و بایگانی. روی پلتفرمِ کسِ دیگر، این سه مالِ شما نیست و قانونشان را او می‌نویسد.",
+   "use_when": "مقاله به این بپردازد که کار روی پلتفرمی نگهداری می‌شود که مالکش نیستید — بسته‌شدنِ اکانت، تغییرِ الگوریتم، یا از‌دست‌رفتنِ کلِ حضور.",
+   "aliases": [
+    "platform ownership",
+    "اجاره‌نشینی دیجیتال",
+    "وابستگی به پلتفرم",
+    "مالکیت محتوا",
+    "platform dependence",
+    "own your platform"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "plak-sefr/plak1-1",
+    "plak-sefr/plak1-3",
+    "plak-sefr/plak1-9",
+    "dentai/promptologist/prompt-append2-1",
+    "plak-sefr/plak1-11"
    ]
   },
   {
@@ -7890,31 +7920,6 @@
     "episodes/episode-160",
     "metanotes/meta-17",
     "metanotes/meta-22"
-   ]
-  },
-  {
-   "key": "مالکیت_پلتفرم",
-   "tag": "#مالکیت_پلتفرم",
-   "domain": "web",
-   "words": 2,
-   "definition": "تفاوتِ داشتنِ خودِ محتوا با داشتنِ چیزی که محتوا روی آن می‌نشیند: آدرس، دسترسی و بایگانی. روی پلتفرمِ کسِ دیگر، این سه مالِ شما نیست و قانونشان را او می‌نویسد.",
-   "use_when": "مقاله به این بپردازد که کار روی پلتفرمی نگهداری می‌شود که مالکش نیستید — بسته‌شدنِ اکانت، تغییرِ الگوریتم، یا از‌دست‌رفتنِ کلِ حضور.",
-   "aliases": [
-    "platform ownership",
-    "اجاره‌نشینی دیجیتال",
-    "وابستگی به پلتفرم",
-    "مالکیت محتوا",
-    "platform dependence",
-    "own your platform"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "plak-sefr/plak1-1",
-    "plak-sefr/plak1-3",
-    "plak-sefr/plak1-9",
-    "dentai/promptologist/prompt-append2-1"
    ]
   },
   {
