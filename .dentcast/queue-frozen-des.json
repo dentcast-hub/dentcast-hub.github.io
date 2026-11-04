@@ -92,5 +92,48 @@
       ],
       "dropped": []
     }
+  },
+  "sharehub/share-46": {
+    "queue_ref": "queue/08-sharehub-full-arch-titanium-bar",
+    "record_sha256": "9fe5c202e8e5ee5cf8f2729d583486ddd0bf484b87984942ec92f9634f6879d0",
+    "installed_at": "2026-11-04",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (publish-queue.md «DES و Fidelity صف»)",
+      "evidence": [
+        "publish-queue.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [
+        "u1",
+        "u2",
+        "u10",
+        "u16",
+        "u17",
+        "u18",
+        "u28",
+        "u30",
+        "u31",
+        "u34",
+        "u35",
+        "u37",
+        "u39",
+        "u40",
+        "u45",
+        "u46",
+        "u47",
+        "u48",
+        "u49",
+        "u50",
+        "u61",
+        "u67",
+        "u71",
+        "u76"
+      ],
+      "dropped": []
+    }
   }
 }
