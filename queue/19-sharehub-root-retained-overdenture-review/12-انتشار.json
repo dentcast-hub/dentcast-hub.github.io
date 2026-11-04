@@ -1,0 +1,183 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "sharehub",
+  "from": "07-ورودی‌ها.md:3"
+ },
+ "title_fa": {
+  "value": "اوردنچر دندانی؛ حفظ ریشه‌ها ارزشمند است، اما یک خطر مهم وجود دارد!",
+  "from": "02-عنوان-کپشن.md:3"
+ },
+ "caption_fa": {
+  "value": "حفظ ریشه‌ها برای اوردنچر چه مزیتی دارد، و چرا پوسیدگی ریشه شایع‌ترین عارضهٔ این درمان است؟",
+  "from": "02-عنوان-کپشن.md:4"
+ },
+ "title_en": {
+  "value": "Root-Retained Overdentures: Preserving Roots Is Valuable, but There Is One Important Risk!",
+  "from": "06-انگلیسی.md:1"
+ },
+ "caption_en": {
+  "value": "What does keeping roots for an overdenture offer, and why is root caries the most common complication of this treatment?",
+  "from": "06-انگلیسی.md:3"
+ },
+ "body_en": {
+  "value": "Sometimes teeth that are not good candidates for a fixed or partial denture, because of reduced bone support or an unfavorable crown-to-root ratio, can still serve as abutments for an overdenture.\n\nPreserving these roots, especially mandibular canines, helps reduce bone resorption, increases denture stability and maintains proprioception, and it can increase patient satisfaction.\n\nBut what is the main concern with this treatment?\n\nA systematic review published in 2024 examined the results of 11 randomized clinical trials on overdentures supported by natural teeth (Root-Retained Overdentures).\n\nRoot caries was the most frequently reported complication. The authors emphasize that these carious lesions may progress even in a short time and lead to the loss of the abutment tooth.\n\nA few important and practical points from the article:\n\n- Cast coping: The article refers to an earlier systematic review that reported a loss rate of less than 2 percent per year for abutment teeth with metal copings. However, this figure concerns tooth survival and does not mean that metal copings have been shown to reduce caries.\n- Caries prevention: In the studies reviewed, the use of fluoride compounds and chlorhexidine-fluoride compounds helped reduce root caries. Chlorhexidine compounds have also been reported to be effective in controlling plaque and improving gingival condition.\n- Choice of restorative material: There is still not enough evidence to determine which material is best for sealing the root canal orifice of abutment teeth. In some studies, amalgam restorations needed repair more often.\n- Denture maintenance: Some overdentures need repair or replacement within the first five years. Therefore, caring for the denture itself is as important as examining the abutment teeth.\n- Periodic examinations: The authors emphasize meticulous oral hygiene and regular visits, and recommend at least one examination per year.\n\n## Clinical Takeaway\n\nThe overdenture supported by natural teeth remains a valuable treatment option, especially for patients in whom preserving even a few roots can help maintain bone and denture stability.\n\nBut preserving roots alone does not guarantee treatment success. Root caries is one of the most important threats to the survival of abutment teeth, and its prevention should be taken seriously from the very start of treatment.\n\nOf course, the evidence in this review has limitations; 9 of the 11 studies had a high risk of bias, and a meta-analysis was not possible.",
+  "from": "06-انگلیسی.md:5-end"
+ },
+ "images": {
+  "value": [],
+  "from": "03-تصاویر: ندارد، متن بدون تصویر"
+ },
+ "credit": {
+  "value": {
+   "mode": "author-doi",
+   "label_fa": "Pachiou",
+   "label_en": "Pachiou",
+   "href": "https://doi.org/10.1111/ger.12739"
+  },
+  "from": "04-منبع/منابع.md"
+ },
+ "catalog": {
+  "value": [
+   {
+    "title": "Clinical parameters that affect performance and patient satisfaction of root-retained overdentures: A systematic review of randomised controlled clinical trials",
+    "file_name": "Clinical parameters that affect performance and patient satisfaction of root-retained overdentures: A systematic review of randomised controlled clinical trials.pdf",
+    "topic": "overdenture",
+    "topic_path": "overdenture",
+    "type": "systematic review",
+    "local_path": "",
+    "file_size": 916523,
+    "key_finding": "",
+    "clinical_bottom_line": "",
+    "drive_link": "https://drive.google.com/file/d/1TZd72LLWCoKjeFafpaUi9EQ2K0wU3wdp/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=1TZd72LLWCoKjeFafpaUi9EQ2K0wU3wdp",
+    "drive_view": "https://drive.google.com/file/d/1TZd72LLWCoKjeFafpaUi9EQ2K0wU3wdp/view",
+    "drive_id": "1TZd72LLWCoKjeFafpaUi9EQ2K0wU3wdp",
+    "tags": [
+     "root-retained-overdenture",
+     "overdenture",
+     "systematic-review",
+     "randomized-controlled-trial",
+     "root-caries",
+     "abutment-teeth",
+     "patient-satisfaction",
+     "bone-preservation",
+     "topic:overdenture",
+     "clinical-parameters-affect-performance-patient-satisfaction-root-retained-overdentures-systematic-review"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Clinical parameters that affect performance and patient satisfaction of root-retained overdentures: A systematic review of randomised controlled clinical trials",
+    "doi": "10.1111/ger.12739",
+    "journal": "Gerodontology",
+    "crossref_year": 2024,
+    "subjects": [],
+    "abstract": "To evaluate clinical parameters that affect the performance of root-supported overdentures (ROD) and to identify the possible factors that may affect it. ROD still serve as an alternative and successful treatment plan nowadays for partially edentulous patients. Nonetheless, there is not yet conclusive evidence about their clinical evaluation. A search strategy was developed following a PIO (Population, Intervention, Outcome) framework including an electronic search in the following databases: PubMed, Cochrane Library and Scopus. The systematic search included only randomised controlled clinical trials (RCTs), published until January 2023 in English language and was performed by two independent reviewers. Quality assessment of the included studies was conducted according to the Cochrane Risk of Bias tool. The final selection of studies included 11 RCTs. Clinically relevant variables derived from this search were: Complications, with caries being the most frequently reported, periodontal aspects and bone changes around abutment teeth. Additionally, methods and clinical suggestions for the maintenance of these restorations and patient-related outcomes were assessed. According to the risk of bias assessment, nine studies were considered of high risk, whereas only 2 of low risk. A meta-analysis was not feasible. Within the limitations of this systematic review, ROD remain a viable treatment plan, offering better denture stability and bone preservation around abutment teeth and high patient satisfaction. Thorough oral hygiene and regular follow-ups are of utmost importance. Further well-designed RCTs are necessary for firmer conclusions.",
+    "display_title": "Clinical parameters that affect performance and patient satisfaction of root-retained overdentures: A systematic review of randomised controlled clinical trials",
+    "authors": [
+     "Aspasia Pachiou",
+     "Panagiotis Karakostas",
+     "Panagiotis Roulias",
+     "Olga Naka"
+    ]
+   }
+  ],
+  "from": "04-منبع/کاتالوگ.json"
+ },
+ "hashtags": {
+  "value": [
+   "#Share_Hub",
+   "#Curated_Content",
+   "#اوردنچر",
+   "#حفظ_دندان",
+   "#پوسیدگی",
+   "#دندان_پایه",
+   "#پروپریوسپشن"
+  ],
+  "from": "07-ورودی‌ها.md"
+ },
+ "mint": {
+  "value": [],
+  "from": "queue legacy default"
+ },
+ "pillar": {
+  "value": {
+   "primary": "treatment-planning",
+   "subtopic": "extraction-vs-preservation",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:پیلار"
+ },
+ "pulse": {
+  "value": {
+   "text": null,
+   "link_phrase": "اوردنچر دندانی؛ حفظ ریشه‌ها ارزشمند است، اما یک خطر مهم وجود دارد!"
+  },
+  "from": "07-ورودی‌ها.md"
+ },
+ "keywords": {
+  "value": [
+   "اوردنچر متکی بر ریشه دندان طبیعی",
+   "حفظ ریشه‌های باقی‌مانده به‌عنوان پایه اوردنچر",
+   "کانین فک پایین در اوردنچر",
+   "پوسیدگی ریشه دندان پایه",
+   "از دست رفتن دندان پایه اوردنچر",
+   "کوپینگ فلزی (Cast Coping)",
+   "فلوراید و کلرهگزیدین-فلوراید در پیشگیری از پوسیدگی ریشه",
+   "ماده ترمیمی دهانه کانال دندان پایه",
+   "نگهداری و تعمیر اوردنچر",
+   "معاینه دوره‌ای بیماران اوردنچر",
+   "حس عمقی (Proprioception) دندان پایه",
+   "مرور سیستماتیک Pachiou 2024",
+   "ریسک سوگیری مطالعات اوردنچر",
+   "root-retained overdenture",
+   "abutment tooth caries",
+   "root caries prevention",
+   "cast coping",
+   "systematic review of RCTs"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "اوردنچر",
+    "href": "/glossary/overdenture.html",
+    "from": "11-لینک‌های-گلاسری.md"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "11-لینک‌های-گلاسری.md: no frozen backlink"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "/sharehub/share-43.html",
+    "label": "حفظ دندان یا کشیدن آن؟ سه درمان جایگزین از نگاه پروتزی",
+    "from": "11-لینک‌های-گلاسری.md"
+   },
+   {
+    "href": "queue:18",
+    "label": "نسبت تاج به ریشه؛ چقدر می‌توان به عددهای کلاسیک اعتماد کرد؟",
+    "from": "11-لینک‌های-گلاسری.md"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md"
+ },
+ "pathway": {
+  "value": null,
+  "from": "none"
+ },
+ "author": {
+  "value": null,
+  "from": "publisher resolves live author"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "none"
+ }
+}
