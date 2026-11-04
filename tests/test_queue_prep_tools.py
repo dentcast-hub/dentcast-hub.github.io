@@ -89,14 +89,14 @@ class DraftModeTests(unittest.TestCase):
     def test_refuses_without_throwaway_flag(self):
         with tempfile.TemporaryDirectory() as t:
             with self.assertRaises(qm.QueueRefusal) as e:
-                qa.draft_assemble(args(make_item(t), "sharehub/share-46", throwaway=False))
+                qa.draft_assemble(args(make_item(t), "sharehub/share-9999", throwaway=False))
             self.assertEqual(e.exception.code, "DRAFT_NEEDS_THROWAWAY")
 
     def test_refuses_in_a_real_checkout(self):
         # this repository has .git and no marker: --draft never writes here
         with tempfile.TemporaryDirectory() as t:
             with self.assertRaises(qm.QueueRefusal) as e:
-                qa.draft_assemble(args(make_item(t), "sharehub/share-46"))
+                qa.draft_assemble(args(make_item(t), "sharehub/share-9999"))
             self.assertEqual(e.exception.code, "NOT_THROWAWAY")
 
     def test_refuses_a_copy_with_git(self):
@@ -104,7 +104,7 @@ class DraftModeTests(unittest.TestCase):
             c = make_throwaway(t)
             (c / ".git").mkdir()
             with patch.object(qa, "ROOT", c), self.assertRaises(qm.QueueRefusal) as e:
-                qa.draft_assemble(args(make_item(t), "sharehub/share-46"))
+                qa.draft_assemble(args(make_item(t), "sharehub/share-9999"))
             self.assertEqual(e.exception.code, "NOT_THROWAWAY")
 
     def test_draft_page_and_des_record_in_throwaway(self):
@@ -112,15 +112,15 @@ class DraftModeTests(unittest.TestCase):
             c = make_throwaway(t)
             item = make_item(t)   # status «در حال آماده‌سازی», no SHA256SUMS, no 07
             with patch.object(qa, "ROOT", c):
-                r = qa.draft_assemble(args(item, "sharehub/share-46"))
+                r = qa.draft_assemble(args(item, "sharehub/share-9999"))
             self.assertEqual(r["status"], "draft")
             self.assertTrue(r["not_for_publish"])
-            page = (c / "sharehub/share-46.html").read_text(encoding="utf-8")
+            page = (c / "sharehub/share-9999.html").read_text(encoding="utf-8")
             self.assertIn("این جملهٔ نخست است.", page)
             self.assertIn("یک عنوان آزمایشی", page)
-            rec = json.loads((c / "plus/des-scores.json").read_text(encoding="utf-8"))["sharehub/share-46"]
+            rec = json.loads((c / "plus/des-scores.json").read_text(encoding="utf-8"))["sharehub/share-9999"]
             self.assertEqual(set(rec), {"scored_at", "sources"})
-            self.assertFalse((ROOT / "sharehub/share-46.html").exists())
+            self.assertFalse((ROOT / "sharehub/share-9999.html").exists())
 
     def test_draft_refuses_a_taken_id(self):
         with tempfile.TemporaryDirectory() as t:
@@ -144,7 +144,7 @@ class FidelityPrepTests(unittest.TestCase):
             texts = Path(t) / "texts.json"
             texts.write_text(json.dumps({doi: {"source_text": "Paper text. It ends here.",
                                                "text_basis": src["text_basis"]}}), encoding="utf-8")
-            r = self.run_prep(str(item), "--checkout", str(c), "--content-id", "sharehub/share-46",
+            r = self.run_prep(str(item), "--checkout", str(c), "--content-id", "sharehub/share-9999",
                               "--texts", str(texts), "--build", str(Path(t) / "blocks"))
             self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
             out = json.loads(r.stdout)
@@ -165,7 +165,7 @@ class FidelityPrepTests(unittest.TestCase):
     def test_without_des_package_says_so(self):
         with tempfile.TemporaryDirectory() as t:
             c = make_throwaway(t)
-            r = self.run_prep(str(make_item(t, des=False)), "--checkout", str(c), "--content-id", "sharehub/share-46")
+            r = self.run_prep(str(make_item(t, des=False)), "--checkout", str(c), "--content-id", "sharehub/share-9999")
             self.assertEqual(r.returncode, 2)
             self.assertEqual(json.loads(r.stdout)["code"], "DES_PACKAGE_MISSING")
 
