@@ -124,6 +124,19 @@ cosmetic: `ABSTRACT_ONLY` caps the methodology multiplier at 0.75 and forces
 `provisional: true`, so labelling an abstract as full text silently inflates every
 score built on it.
 
+<!-- pdf-source-text:v1 -->
+**A paper PDF becomes `source_text` with the tool, never by copy-paste.**
+`python3 tools/pdf_source_text.py <paper.pdf> --doi <doi> --basis FULL_TEXT -o texts.json`
+reads a two-column layout column by column (full-width lines keep their place),
+drops the publisher's page furniture (the Wiley «Downloaded from … Terms and
+Conditions … Creative Commons License» footer and side banner, running heads,
+bare page numbers) and writes `texts.json` in the shape Part 2b reads; the same
+text is what the SOURCE call scores. `tools/des_fidelity_units.py` takes
+`source_conclusion` from the last Conclusion section (or the last sentence) and
+passes over such footer sentences; a stored record keeps the conclusion it
+echoed. The PDF and its text stay outside the repository and the queue branch.
+<!-- /pdf-source-text:v1 -->
+
 #### Part 2 — Run the prompt file
 
 **Load `.dentcast/dentcast-evidence-score-v3.5.md` as the system prompt — the whole
@@ -334,6 +347,34 @@ model's repeated self-review as the completed two-tier protocol.
 **Mandatory model-routing preflight (before any FIDELITY checker call).** Inspect the execution environment's *actual* model/delegation controls, not the example model names above. Resolve and record (a) the exact provider/model ID and reasoning settings for the lighter checker, (b) the exact provider/model ID and reasoning settings for the stronger reviewer/adjudicator, and (c) whether independent checker contexts and per-role model selection are actually supported. When the runtime exposes separate-agent delegation and model selection (for example, `collaboration.spawn_agent` with a model override), use those controls: launch the first two checker runs as separate agents with identical inputs and isolated contexts, using the lightest capable reasoning model and its lowest suitable reasoning setting. Launch both full checker runs in parallel. Do not ask the founder to authorize this already-required routing again. Use the stronger model only for the stronger-reviewer duties below.
 
 Check available provider pricing/usage information when it is readily available, but exact price verification is not a start gate. If exact cost cannot be verified, record it as UNVERIFIED and make no precise savings claim; still use the verified lighter-model role and reasoning setting. If the runtime does not expose independent contexts, per-role model selection, or a capable lighter model, do not simulate those capabilities: report the exact missing capability and the affected stage, then ask the founder how to proceed. Never silently run all roles on the default model, or present repeated calls to one model/context as independent agents. Record the preflight outcome and actual model IDs/settings in the publish report; if the runtime does not expose actual executed model IDs, mark them UNVERIFIED rather than claiming compliance. This routing protocol does not change DES/FIDELITY scoring rules, stored JSON, or historical records.
+
+<!-- fidelity-single-source-tier:v1 -->
+**DES is never tiered.** Every DES/SOURCE/COMMENTARY call above runs in full on
+every page, whatever its length or source count. Only the FIDELITY protocol
+below has one lighter tier, and only for a **single-source page**:
+`tools/des_fidelity_units.py` reports one source with a text, scope `SOURCE`, no
+recorded multi-source plan, and the body is a short founder-written or derived
+summary of that one paper. On such a page:
+
+- **Step 1 is unchanged: two full checker runs, always.** The second run is
+  never skipped — a sentence one run calls `MATCHES` is otherwise never looked
+  at again, and a missed firmer-than-the-source sentence is the error nobody
+  sees. `--vote` refuses fewer than two full runs.
+- **Step 2 (tie-break)** runs only when `--vote` lists a unit the two runs
+  answered differently; when they agree everywhere there is no third run.
+- **Step 4 (stronger reviewer)** runs only when the vote leaves a unit
+  `ALTERED`/`REVERSED`; with none, no reviewer call is made.
+- **Step 5 (orphan sweep):** `--orphans` still runs (it is mechanical). The
+  stronger reviewer reads `orphans-input.json` only when it lists a sentence
+  that matters — one the page presents as the paper's finding. Headings and
+  the author's own framing or opinion do not; with no such sentence the sweep
+  ends there, and the listed sentences are still reported with Part 3b.
+
+A multi-source page, a `POOLED` page or a long article keeps every step above
+exactly as written. Record the tier and the reason in the publish report. The
+stored JSON (`voted-src<k>.json`, Part 4) has the same shape on either path, so
+Phase F and `tools/queue_install_des.py` read it unchanged.
+<!-- /fidelity-single-source-tier:v1 -->
 
 **The model is part of the measurement:** freeze the same checker model/version
 and reasoning settings for runs 1, 2 and 3 of a record; the stronger reviewer is
