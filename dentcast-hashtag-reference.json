@@ -856,7 +856,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 44,
+   "count": 45,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -901,7 +901,8 @@
     "sharehub/share-42",
     "sharehub/share-43",
     "sharehub/share-44",
-    "sharehub/share-45"
+    "sharehub/share-45",
+    "sharehub/share-46"
    ]
   },
   {
@@ -2156,6 +2157,44 @@
    ]
   },
   {
+   "key": "انتخاب_متریال",
+   "tag": "#انتخاب_متریال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخاب جنس رستوریشن بر اساس شرایط کیس.",
+   "use_when": "مقاله بین متریال‌ها انتخاب کند.",
+   "aliases": [
+    "material selection",
+    "انتخاب ماده",
+    "انتخاب جنس رستوریشن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 20,
+   "content_ids": [
+    "episodes/episode-15",
+    "episodes/episode-18",
+    "episodes/episode-41",
+    "episodes/episode-69",
+    "episodes/episode-89",
+    "episodes/episode-98",
+    "episodes/episode-141",
+    "dentai/dentai-6",
+    "insight/insight-10",
+    "notecast/episode-8",
+    "notecast/episode-29",
+    "notecast/episode-30",
+    "insight/insight-27",
+    "insight/insight-42",
+    "episodes/episode-158",
+    "episodes/episode-159-1",
+    "insight/insight-57",
+    "notecast/episode-41",
+    "sharehub/share-37",
+    "sharehub/share-46"
+   ]
+  },
+  {
    "key": "تشخیص_افتراقی",
    "tag": "#تشخیص_افتراقی",
    "domain": "clinical",
@@ -2190,43 +2229,6 @@
     "sharehub/share-12",
     "chairside/chairside-29",
     "chairside/chairside-45"
-   ]
-  },
-  {
-   "key": "انتخاب_متریال",
-   "tag": "#انتخاب_متریال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتخاب جنس رستوریشن بر اساس شرایط کیس.",
-   "use_when": "مقاله بین متریال‌ها انتخاب کند.",
-   "aliases": [
-    "material selection",
-    "انتخاب ماده",
-    "انتخاب جنس رستوریشن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 19,
-   "content_ids": [
-    "episodes/episode-15",
-    "episodes/episode-18",
-    "episodes/episode-41",
-    "episodes/episode-69",
-    "episodes/episode-89",
-    "episodes/episode-98",
-    "episodes/episode-141",
-    "dentai/dentai-6",
-    "insight/insight-10",
-    "notecast/episode-8",
-    "notecast/episode-29",
-    "notecast/episode-30",
-    "insight/insight-27",
-    "insight/insight-42",
-    "episodes/episode-158",
-    "episodes/episode-159-1",
-    "insight/insight-57",
-    "notecast/episode-41",
-    "sharehub/share-37"
    ]
   },
   {
@@ -3234,6 +3236,53 @@
    ]
   },
   {
+   "key": "ایمپلنت_فول_آرچ",
+   "tag": "#ایمپلنت_فول_آرچ",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
+   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
+   "aliases": [
+    "all on 4",
+    "all-on-4",
+    "آل آن فور",
+    "allon4",
+    "ایمپلنت تمام فک",
+    "all on 6",
+    "all on four",
+    "all-on-four",
+    "allonfour",
+    "Full Arch Implant",
+    "ایمپلنت فول ماوس",
+    "full mouth implant",
+    "ایمپلنت تمام دهان",
+    "فول ماوس ایمپلنت"
+   ],
+   "variants": [
+    "#AllOn4",
+    "#Full_Arch_Implant",
+    "#ایمپلنت_فول_ماوس"
+   ],
+   "co_tags": [
+    "#Full_Arch_Implant"
+   ],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-108",
+    "episodes/episode-123-4",
+    "episodes/episode-144-1",
+    "insight/insight-51",
+    "metanotes/meta-17",
+    "sharehub/share-11",
+    "insight/insight-60",
+    "dentai/dentai-31",
+    "insight/insight-80",
+    "insight/insight-82",
+    "sharehub/share-38",
+    "sharehub/share-46"
+   ]
+  },
+  {
    "key": "تنظیم_اکلوژن",
    "tag": "#تنظیم_اکلوژن",
    "domain": "clinical",
@@ -3409,52 +3458,6 @@
     "notecast/episode-35",
     "insight/insight-77",
     "insight/insight-88"
-   ]
-  },
-  {
-   "key": "ایمپلنت_فول_آرچ",
-   "tag": "#ایمپلنت_فول_آرچ",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
-   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
-   "aliases": [
-    "all on 4",
-    "all-on-4",
-    "آل آن فور",
-    "allon4",
-    "ایمپلنت تمام فک",
-    "all on 6",
-    "all on four",
-    "all-on-four",
-    "allonfour",
-    "Full Arch Implant",
-    "ایمپلنت فول ماوس",
-    "full mouth implant",
-    "ایمپلنت تمام دهان",
-    "فول ماوس ایمپلنت"
-   ],
-   "variants": [
-    "#AllOn4",
-    "#Full_Arch_Implant",
-    "#ایمپلنت_فول_ماوس"
-   ],
-   "co_tags": [
-    "#Full_Arch_Implant"
-   ],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-108",
-    "episodes/episode-123-4",
-    "episodes/episode-144-1",
-    "insight/insight-51",
-    "metanotes/meta-17",
-    "sharehub/share-11",
-    "insight/insight-60",
-    "dentai/dentai-31",
-    "insight/insight-80",
-    "insight/insight-82",
-    "sharehub/share-38"
    ]
   },
   {
@@ -4570,6 +4573,31 @@
    ]
   },
   {
+   "key": "زیرکونیا_مونولیتیک",
+   "tag": "#زیرکونیا_مونولیتیک",
+   "domain": null,
+   "words": 2,
+   "definition": "زیرکونیای یکپارچه بدون لایه‌ی پرسلن.",
+   "use_when": "مقاله رفتار مونولیتیک را بررسی کند.",
+   "aliases": [
+    "monolithic zirconia",
+    "مونولیتیک"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-123-4",
+    "episodes/episode-125-1",
+    "notecast/episode-18",
+    "insight/insight-42",
+    "dentai/dentai-26",
+    "insight/insight-62",
+    "chairside/chairside-36",
+    "sharehub/share-46"
+   ]
+  },
+  {
    "key": "طراحی_لبخند",
    "tag": "#طراحی_لبخند",
    "domain": null,
@@ -5024,30 +5052,6 @@
     "notecast/episode-34",
     "notecast/episode-35",
     "notecast/episode-39"
-   ]
-  },
-  {
-   "key": "زیرکونیا_مونولیتیک",
-   "tag": "#زیرکونیا_مونولیتیک",
-   "domain": null,
-   "words": 2,
-   "definition": "زیرکونیای یکپارچه بدون لایه‌ی پرسلن.",
-   "use_when": "مقاله رفتار مونولیتیک را بررسی کند.",
-   "aliases": [
-    "monolithic zirconia",
-    "مونولیتیک"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-123-4",
-    "episodes/episode-125-1",
-    "notecast/episode-18",
-    "insight/insight-42",
-    "dentai/dentai-26",
-    "insight/insight-62",
-    "chairside/chairside-36"
    ]
   },
   {
@@ -5999,6 +6003,61 @@
    ]
   },
   {
+   "key": "متریال_پروتزی",
+   "tag": "#متریال_پروتزی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "موادِ ساختِ پروتز و معیارهای انتخابشان.",
+   "use_when": "مقاله جنسِ ماده‌ی پروتز را متغیرِ تصمیم قرار دهد.",
+   "aliases": [
+    "prosthetic material",
+    "متریال پروتز",
+    "مواد پروتزی",
+    "ماده پروتز"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-115",
+    "episodes/episode-139",
+    "episodes/episode-140",
+    "episodes/episode-141",
+    "episodes/episode-146",
+    "sharehub/share-46"
+   ]
+  },
+  {
+   "key": "نسل_زیرکونیا",
+   "tag": "#نسل_زیرکونیا",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نسل‌های زیرکونیا (3Y تا 5Y) — سازشِ میانِ استحکام و شفافیت.",
+   "use_when": "مقاله نسل‌ها یا زیرکونیای ترنسلوسنت را مقایسه یا معرفی کند.",
+   "aliases": [
+    "3Y",
+    "4Y",
+    "5Y",
+    "نسل زیرکونیا",
+    "زیرکونیا ترنسلوسنت",
+    "generation zirconia",
+    "زیرکونیای شفاف",
+    "زیرکونیا شفاف",
+    "translucent zirconia"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-17",
+    "episodes/episode-18",
+    "episodes/episode-88",
+    "episodes/episode-107",
+    "insight/insight-27",
+    "sharehub/share-46"
+   ]
+  },
+  {
    "key": "هوش_مصنوعی_دندانپزشکی",
    "tag": "#هوش_مصنوعی_دندانپزشکی",
    "domain": "ai",
@@ -6574,30 +6633,6 @@
    ]
   },
   {
-   "key": "متریال_پروتزی",
-   "tag": "#متریال_پروتزی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "موادِ ساختِ پروتز و معیارهای انتخابشان.",
-   "use_when": "مقاله جنسِ ماده‌ی پروتز را متغیرِ تصمیم قرار دهد.",
-   "aliases": [
-    "prosthetic material",
-    "متریال پروتز",
-    "مواد پروتزی",
-    "ماده پروتز"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-115",
-    "episodes/episode-139",
-    "episodes/episode-140",
-    "episodes/episode-141",
-    "episodes/episode-146"
-   ]
-  },
-  {
    "key": "مطالعه_مشاهده_ای",
    "tag": "#مطالعه_مشاهده‌ای",
    "domain": "clinical",
@@ -6618,35 +6653,6 @@
     "taraz/taraz1-5",
     "taraz/taraz1-6",
     "taraz/taraz1-7"
-   ]
-  },
-  {
-   "key": "نسل_زیرکونیا",
-   "tag": "#نسل_زیرکونیا",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نسل‌های زیرکونیا (3Y تا 5Y) — سازشِ میانِ استحکام و شفافیت.",
-   "use_when": "مقاله نسل‌ها یا زیرکونیای ترنسلوسنت را مقایسه یا معرفی کند.",
-   "aliases": [
-    "3Y",
-    "4Y",
-    "5Y",
-    "نسل زیرکونیا",
-    "زیرکونیا ترنسلوسنت",
-    "generation zirconia",
-    "زیرکونیای شفاف",
-    "زیرکونیا شفاف",
-    "translucent zirconia"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-17",
-    "episodes/episode-18",
-    "episodes/episode-88",
-    "episodes/episode-107",
-    "insight/insight-27"
    ]
   },
   {
@@ -9742,6 +9748,28 @@
    ]
   },
   {
+   "key": "فاز_زیرکونیا",
+   "tag": "#فاز_زیرکونیا",
+   "domain": null,
+   "words": 2,
+   "definition": "فازهای بلوریِ زیرکونیا و اثرشان بر استحکام و شفافیت.",
+   "use_when": "مقاله ترکیبِ فازی را عاملِ رفتار بداند.",
+   "aliases": [
+    "tetragonal",
+    "فاز تتراگونال",
+    "فاز مکعبی",
+    "cubic phase"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-17",
+    "notecast/episode-17",
+    "sharehub/share-46"
+   ]
+  },
+  {
    "key": "فاصله_ایمپلنت",
    "tag": "#فاصله_ایمپلنت",
    "domain": "clinical",
@@ -11546,6 +11574,30 @@
    ]
   },
   {
+   "key": "تیتانیوم_بار",
+   "tag": "#تیتانیوم_بار",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بار تیتانیومی به‌عنوان ساختار صلب یا تقویت‌کننده در پروتز متکی بر ایمپلنت.",
+   "use_when": "مقاله ضرورت، نقش، طراحی یا روش استفاده از بار تیتانیومی در ساخت یا تقویت پروتز ایمپلنتی را توضیح دهد.",
+   "aliases": [
+    "titanium bar",
+    "تایتانیوم بار",
+    "تایتانیوم‌بار",
+    "تیتانیوم‌بار",
+    "بار تیتانیومی",
+    "تیتانیم بار",
+    "بار فلزی فول آرچ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "sharehub/share-35",
+    "sharehub/share-46"
+   ]
+  },
+  {
    "key": "ثبات_قبل_از_سمان",
    "tag": "#ثبات_قبل_از_سمان",
    "domain": "clinical",
@@ -12401,27 +12453,6 @@
    "content_ids": [
     "sharehub/share-29",
     "insight/insight-98"
-   ]
-  },
-  {
-   "key": "فاز_زیرکونیا",
-   "tag": "#فاز_زیرکونیا",
-   "domain": null,
-   "words": 2,
-   "definition": "فازهای بلوریِ زیرکونیا و اثرشان بر استحکام و شفافیت.",
-   "use_when": "مقاله ترکیبِ فازی را عاملِ رفتار بداند.",
-   "aliases": [
-    "tetragonal",
-    "فاز تتراگونال",
-    "فاز مکعبی",
-    "cubic phase"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-17",
-    "notecast/episode-17"
    ]
   },
   {
@@ -21998,6 +22029,7 @@
   "ایمپلنت پتریگوید": "ایمپلنت پتریگوئید",
   "اینترفیرنس کارگر": "تداخل سمت کارگر",
   "اینترنال ایمپلنت": "کانکشن ایمپلنت",
+  "بار فلزی فول آرچ": "تیتانیوم بار",
   "بارگذاری ایمپلنت": "زمان لود ایمپلنت",
   "بارگزاری ایمپلنت": "زمان لود ایمپلنت",
   "بازتاب نور اسکنر": "اسکن سطح براق",
@@ -22679,6 +22711,7 @@
   "ایمپلنت متحرک": "اوردنچر",
   "ایمپکشن غذایی": "گیر غذایی",
   "اینفرا اکلوژن": "اینفرااکلوژن",
+  "بار تیتانیومی": "تیتانیوم بار",
   "بارگذاری فوری": "زمان لود ایمپلنت",
   "باز بودن تماس": "کانتکت باز",
   "بازآفرینی درد": "بازسازی درد",
@@ -22694,6 +22727,7 @@
   "بلیچینگ داخلی": "اینترنال بلیچینگ",
   "بند آوردن خون": "کنترل خونریزی",
   "بیلدآپ دیواره": "بازسازی دیواره",
+  "تایتانیوم بار": "تیتانیوم بار",
   "تداخل دینامیک": "تداخل فانکشنال",
   "ترتیب اباتمنت": "ترتیب ساخت اباتمنت",
   "ترمیم زیر لثه": "ترمیم ساب جینجیوال",
@@ -22901,6 +22935,7 @@
   "shade taking": "انتخاب shade",
   "smile design": "طراحی لبخند",
   "study design": "طراحی مطالعه",
+  "titanium bar": "تیتانیوم بار",
   "translucency": "ترانسلوسنسی",
   "trial period": "دوره آزمایشی",
   "uncertain vd": "vd تخمینی",
@@ -23250,6 +23285,7 @@
   "تنسایل باند": "قدرت باند",
   "تهیه اشتراک": "خرید اشتراک",
   "توالی فازها": "توالی درمان",
+  "تیتانیم بار": "تیتانیوم بار",
   "جستجوی برند": "جستجوی نام مطب",
   "جنبه قانونی": "مسئولیت حرفه ای",
   "حداقل دخالت": "حداقل مداخله",
