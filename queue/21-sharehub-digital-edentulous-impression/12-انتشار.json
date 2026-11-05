@@ -1,0 +1,199 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "sharehub",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "آیا می‌توان دهان بی‌دندان را واقعاً دیجیتال ثبت کرد؟",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "caption_fa": {
+  "value": "اسکنر داخل‌دهانی شکل مخاط بی‌دندان را خوب ثبت می‌کند، اما حرکت عضلات و حاشیه‌های فانکشنال را چه؟ دو مقالهٔ مروری نشان می‌دهند دیجیتال کجا کافی است و کجا هنوز نه.",
+  "from": "02-عنوان-کپشن.md:9"
+ },
+ "title_en": {
+  "value": "Can the Edentulous Mouth Really Be Recorded Digitally?",
+  "from": "06-انگلیسی.md:1"
+ },
+ "caption_en": {
+  "value": "The intraoral scanner records the shape of edentulous mucosa well, but what about muscle movement and the functional borders? Two review articles show where digital is enough and where it is not yet.",
+  "from": "06-انگلیسی.md:3"
+ },
+ "body_en": {
+  "value": "Suppose a patient has come to us for a complete denture. Instead of a conventional impression, we pick up the intraoral scanner and scan both jaws. A three-dimensional image of the arches appears on the monitor, and we can now continue the design and fabrication of the denture digitally.\n\nBut is the information the scanner has recorded really enough to make a complete denture?\n\nIn fixed prosthodontics, the main goal of scanning is to record precisely the geometry of the teeth and their surrounding tissues. But in a complete denture the situation is different. The prosthesis rests on a combination of fixed and movable tissues, and its function does not depend only on the fit of its inner surface to the mucosa; appropriate extension of the borders and their relationship to muscle movements also matter.\n\nFor example, in a functional impression, we use border molding to try to define the appropriate extent of the denture according to the movements of the surrounding tissues. The aim is for the border of the prosthesis to be neither so long that muscle movement displaces it nor so short that part of the support capacity and the peripheral seal is lost.\n\nIn contrast, an intraoral scanner records the shape of the mucosal surface only in its unloaded state; something close to the concept of a mucostatic impression.\n\nThe scanner records the shape of an area with adequate accuracy, but it does not give us enough information about how that same tissue behaves during function.\n\nOf course, conventional impressions have their own limitations too. Pressure control, dimensional changes in impression materials and errors in making the stone cast can all affect the result. Going digital eliminates some of these problems, but in exchange we face other limitations.\n\nOne of the most important of these is the way the scanner reconstructs the 3D model.\n\nThe scanner captures successive images, and the software builds the 3D model by joining them together, a process called stitching.\n\nIn a dentate arch, the geometric features of the teeth help the software place the images together correctly. But in a completely edentulous jaw, the mucosal surface is relatively uniform and there are fewer distinct landmarks for joining the images. For this reason, the likelihood of error accumulating during a full-arch scan increases.\n\nSaliva and soft-tissue movement complicate the problem further. For example, when scanning the vestibule we usually have to retract the lip or cheek, yet this very action may change the position of the mucosa.\n\nSo even if the captured image is accurate, we still have to ask: in what position was this tissue recorded?\n\nTo examine this question, Rasaie et al. published a systematic review in 2021 on the accuracy of intraoral scanners in recording denture-bearing areas.\n\nThe researchers examined laboratory and clinical studies, and the results showed that scanning accuracy is not the same across different parts of the arch.\n\nIn areas with relatively immobile mucosa, such as parts of the residual ridge and the hard palate, scanners showed acceptable accuracy in many studies. But in mobile areas, such as the vestibule, the soft palate and the sublingual regions, discrepancies and recording problems were greater.\n\nIn one of the studies, when the mobile peripheral areas were excluded from the evaluation, the measured error decreased sharply.\n\nThis finding shows that part of the problem with scanning the edentulous jaw relates to the characteristics of mobile tissue, and not just to the extent of the arch.\n\nIn the same review, recording the mandible was usually more difficult. The presence of the tongue, movement of the floor of the mouth and the harder control of saliva may play a role in this.\n\nHowever, in some studies, when only the immobile surfaces were evaluated, the accuracy of mandibular scans was even better than that of maxillary scans.\n\nSo we cannot say in absolute terms that the scanner is less accurate in the mandible; we have to specify which tissue and which part of the arch we are examining.\n\nThe researchers had also examined strategies such as using auxiliary markers, changing the scanning path and choosing a suitable scanner tip. Some of these changes improved accuracy, particularly in laboratory studies; but there is still no standard, reliable technique for all clinical situations.\n\nAnother limitation is that many of the studies were carried out on static models. Good accuracy on a laboratory model does not necessarily mean that the same area will be recorded successfully in the patient's mouth. In addition, patients with severely resorbed ridges or severe undercuts were not included in this review's clinical studies of completely edentulous arches.\n\nNow let us turn to the second article.\n\nIn 2025, Nguyen et al. published a scoping review that asked a different question: how is functional recording of completely edentulous arches carried out in a digital workflow?\n\nThe key finding of this review was that, among the methods examined, there was still no fully digital technique for functional recording of edentulous arches.\n\nThis finding does not mean that a digital denture cannot be made. The issue is that in many workflows the functional recording stage is still carried out conventionally or is omitted altogether.\n\nIn some methods, an intraoral scan is obtained first, but the final recording of the borders is done with a conventional impression. In other methods, a functional impression is made first and the resulting impression or cast is then digitized.\n\nWe call this combination of conventional and digital methods a hybrid workflow.\n\nThe advantage of the hybrid approach is that we can record the functional information conventionally but continue the design and fabrication of the prosthesis in the digital environment.\n\nOn the other hand, methods have also been reported in which the denture was made directly from an intraoral scan, without a functional impression.\n\nIn some case reports, particularly in the maxilla with favorable anatomic conditions, early results in terms of retention and patient satisfaction were favorable.\n\nBut this evidence is limited. A case report cannot prove the equivalence or superiority of a method, and in some cases, despite a good early result, a reline was later needed.\n\nThere is one more difference: recording the geometry of the mucosa is not the same as recording its behavior under pressure.\n\nIn a selective pressure impression, we can control the distribution of pressure across different areas. But the scanner by itself does not record such information.\n\nAs a result, when we use a direct scan alone, part of the decision-making about relief, tissue pressure and the functional extension of the borders is shifted to the design stages.\n\nSo how does this information help in clinical decision-making?\n\nFirst, we need to distinguish between using a scan for the preliminary impression and using it as the sole basis for making the definitive denture.\n\nThe evidence from the Rasaie review shows that an intraoral scan can be used for the preliminary recording of many edentulous arches. But for the final impression, in addition to the geometry of the ridge and palate, we also need sufficient information about the peripheral areas and the behavior of the tissues.\n\nFor a patient with a favorable maxilla, an adequate ridge and stable mucosa, wider use of direct scanning may be worth considering. But in more difficult situations, such as a severely resorbed ridge, mobile mucosa close to the crest or functional problems in the mandible, relying on direct scanning alone lacks sufficient support.\n\nIn such situations, a hybrid approach may be a more reasonable choice; that is, we use the scan to record the anatomy and the conventional impression for the information that depends on the movement and behavior of the tissue.\n\nHowever, we should not conclude from these two reviews that the hybrid method is superior on every clinical measure. The first review focused mainly on the accuracy of surface recording, and the second identified and categorized the existing methods.\n\nTherefore, there is still not enough evidence for a definitive conclusion about the effect of each workflow on denture longevity, the number of post-insertion visits or long-term patient satisfaction.\n\nIn the end, the main question is not whether digital scanning or the conventional impression is better.\n\nThe question is what information we need to make the prosthesis, and which part of that information each method records better.\n\nThe scanner can be a valuable tool for recording tissue geometry, but geometric accuracy alone does not guarantee that functional information is recorded.\n\nPerhaps the reasonable choice for now is, rather than insisting on digitizing every step, to use each technology where the evidence supports its capability.",
+  "from": "06-انگلیسی.md:6-97"
+ },
+ "images": {
+  "value": [],
+  "from": "03-تصاویر: no image files"
+ },
+ "credit": {
+  "value": {
+   "mode": "references",
+   "items": [
+    {
+     "label_fa": "مرور سیستماتیک دقت اسکنرهای داخل‌دهانی در ثبت نواحی دنچربیرینگ (رسایی و همکاران، ۲۰۲۱)",
+     "label_en": "Systematic review of intraoral scanner accuracy for denture-bearing areas (Rasaie et al., 2021)",
+     "href": "https://doi.org/10.1111/jopr.13345",
+     "from": "04-منبع/منابع.md:24"
+    },
+    {
+     "label_fa": "مرور قالب‌گیری فانکشنال قوس‌های بی‌دندان در گردش کار دیجیتال (نگوین و همکاران، ۲۰۲۵)",
+     "label_en": "Scoping review of functional impressions of edentulous arches in digital workflows (Nguyen et al., 2025)",
+     "href": "https://doi.org/10.1016/j.jdent.2025.105981",
+     "from": "04-منبع/منابع.md:25"
+    }
+   ]
+  },
+  "from": "04-منبع/منابع.md:20"
+ },
+ "catalog": {
+  "value": [
+   {
+    "title": "Functional impression of complete edentulous arches in a digital flow: A scoping review",
+    "file_name": "Functional Impression of Complete Edentulous Arches in a Digital Flow: A Scoping Review.pdf",
+    "topic": "complete denture",
+    "topic_path": "complete denture",
+    "type": "scoping review",
+    "local_path": "",
+    "file_size": 1475698,
+    "key_finding": "",
+    "clinical_bottom_line": "",
+    "drive_link": "https://drive.google.com/file/d/1vU1x6N7vdWlQ9IP-jBl4yeYzX--lqXio/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=1vU1x6N7vdWlQ9IP-jBl4yeYzX--lqXio",
+    "drive_view": "https://drive.google.com/file/d/1vU1x6N7vdWlQ9IP-jBl4yeYzX--lqXio/view",
+    "drive_id": "1vU1x6N7vdWlQ9IP-jBl4yeYzX--lqXio",
+    "tags": [
+     "complete-denture",
+     "edentulous",
+     "functional-impression",
+     "border-molding",
+     "intraoral-scanner",
+     "digital-workflow",
+     "hybrid-workflow",
+     "scoping-review",
+     "topic:complete-denture",
+     "functional-impression-complete-edentulous-arches-digital-flow-scoping-review"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Functional impression of complete edentulous arches in a digital flow: A scoping review",
+    "doi": "10.1016/j.jdent.2025.105981",
+    "journal": "Journal of Dentistry",
+    "crossref_year": 2025,
+    "subjects": [],
+    "abstract": "Objective: While digital workflows have significantly advanced prosthodontics, capturing functional impressions of edentulous arches remains a critical challenge, particularly in recording dynamic soft tissue movements, which are essential for optimal denture retention and stability. This scoping review aimed to summarize existing methods for recording functional impressions of completely edentulous arches within digital workflows for complete dentures, as well as the strategies used to overcome associated challenges. Methods: A comprehensive literature search was conducted across MEDLINE (PubMed), Scopus, and Dentistry & Oral Sciences Source, identifying 31 eligible studies published between 2013 and 2024. These included 12 non-randomized studies, 7 case reports, and 12 technical articles. Results: Most studies relied on hybrid workflows combining digital and conventional techniques to achieve optimal denture adaptation. In these cases, the functional impression was obtained using conventional methods, involving border molding with thermoplastic materials, followed by a definitive impression using zinc oxide eugenol or polyether materials. Other studies omitted the functional impression step, designing prostheses based solely on digital study impressions. Digital impression techniques showed promising mucostatic accuracy but consistently failed to capture mobile tissues adequately, limiting their ability to record functional borders precisely. Conclusions: No fully digital technique currently exists for recording functional impressions of completely edentulous arches. Although optical impressions can reliably capture mucostatic details, they remain insufficient for functional impressions due to their inability to register dynamic tissue movements—an essential factor for denture retention and stability. Clinical significance: To date, functional impressions for complete denture cannot be performed digitally. Full digital workflows for complete dentures either omit this step or digitalize a conventional impression.",
+    "display_title": "Functional impression of complete edentulous arches in a digital flow: A scoping review",
+    "authors": [
+     "Thanh Vivan Nguyen",
+     "Murali Srinivasan",
+     "Adrien Naveau"
+    ]
+   },
+   {
+    "doi": "10.1111/jopr.13345",
+    "link_existing": true
+   }
+  ],
+  "from": "04-منبع/کاتالوگ.json"
+ },
+ "hashtags": {
+  "value": [
+   "#Share_Hub",
+   "#Curated_Content",
+   "#قالب‌گیری_دیجیتال",
+   "#بیمار_بی_دندان",
+   "#پروتز_متحرک",
+   "#دقت_اسکن",
+   "#خطای_استیچینگ",
+   "#قالبگیری"
+  ],
+  "from": "07-ورودی‌ها.md:14"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "removable-pros",
+   "subtopic": "complete-dentures",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:8"
+ },
+ "pulse": {
+  "value": {
+   "text": null,
+   "link_phrase": "آیا می‌توان دهان بی‌دندان را واقعاً دیجیتال ثبت کرد؟"
+  },
+  "from": "07-ورودی‌ها.md:20"
+ },
+ "keywords": {
+  "value": [
+   "قالب‌گیری دیجیتال دنچر کامل",
+   "اسکن داخل‌دهانی فک کاملاً بی‌دندان",
+   "دقت اسکنر در نواحی دنچربیرینگ (Denture-Bearing Areas)",
+   "قالب‌گیری فانکشنال (Functional Impression)",
+   "بوردر مولدینگ (Border Molding)",
+   "سیل محیطی (Peripheral Seal)",
+   "قالب‌گیری موکوستاتیک (Mucostatic Impression)",
+   "قالب‌گیری با فشار انتخابی (Selective Pressure Impression)",
+   "مخاط متحرک وستیبول، کام نرم و نواحی زیرزبانی",
+   "اسکن فک پایین بی‌دندان",
+   "ورکفلوی هیبرید (Hybrid Workflow) در ساخت دنچر",
+   "ساخت دنچر از اسکن مستقیم بدون قالب‌گیری فانکشنال",
+   "مرور سیستماتیک رسایی ۲۰۲۱ و Scoping Review نگوین ۲۰۲۵",
+   "intraoral scanner accuracy in edentulous arches",
+   "denture-bearing areas",
+   "functional impression",
+   "border molding",
+   "hybrid digital workflow",
+   "digital complete denture"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "اسکنر داخل‌دهانی",
+    "from": "11-لینک‌های-گلاسری.md:10",
+    "href": "/glossary/intraoral-scanner.html"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:8"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "/insight/insight-51.html",
+    "label": "درمان دیجیتال بیمار کاملاً بی‌دندان",
+    "from": "11-لینک‌های-گلاسری.md:33"
+   },
+   {
+    "href": "/dentai/dentai-32.html",
+    "label": "عوامل مؤثر بر دقت اسکنر داخل‌دهانی",
+    "from": "11-لینک‌های-گلاسری.md:34"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:28"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
