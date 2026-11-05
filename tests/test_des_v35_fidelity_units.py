@@ -283,3 +283,20 @@ class ConclusionTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+
+class ProseTitleIsNotCitationBlock(unittest.TestCase):
+    def test_prose_naming_a_title_is_not_the_citation_block(self):
+        """A body sentence that names a paper by its title keeps the page going; a
+        reference-shaped line (year, journal, or little more than the title) still
+        ends the article."""
+        src = [{"citation": {"title": "Pre-prosthetic orthodontics", "journal": "Saudi Dental Journal",
+                             "doi": "10.1016/j.sdentj.2019.08.004", "year": 2020}}]
+        prose = ("مقاله مروری Pre-prosthetic orthodontics در بحث دیپ‌بایت پیشنهاد می‌کند لبه انسیزال پایین "
+                 "را نسبت به یک صفحه اکلوژن مرجع بسنجیم.")
+        self.assertFalse(units.stop_line(prose, src))
+        self.assertTrue(units.stop_line("Alfallaj H. Pre-prosthetic orthodontics. 2020;32:7-14.", src))
+        self.assertTrue(units.stop_line("Pre-prosthetic orthodontics — Saudi Dental Journal", src))
+        self.assertTrue(units.stop_line("Pre-prosthetic orthodontics", src))
+        self.assertTrue(units.stop_line("https://doi.org/10.1016/j.sdentj.2019.08.004", src))

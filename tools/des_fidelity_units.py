@@ -230,9 +230,25 @@ def stop_line(line, sources):
         cit = s.get("citation") or {}
         doi = (cit.get("doi") or "").lower()
         title = (cit.get("title") or "").lower().rstrip(".")
-        if (doi and doi in low) or (title and len(title) > 12 and title in low):
+        if doi and doi in low:
+            return True
+        if title and len(title) > 12 and title in low and citation_shaped(low, title, cit):
             return True
     return False
+
+
+def citation_shaped(low, title, cit):
+    """A line holding a source's title is the citation block only when it reads
+    like a reference: it names a year or the journal, or it is little more than
+    the title itself. Prose that names a paper by its title («مقاله مروری
+    Pre-prosthetic orthodontics در بحث دیپ‌بایت …») is body text, not the end
+    of the article."""
+    if re.search(r"(?<!\d)(?:19|20)\d\d(?!\d)", low.translate(FA_DIGITS)):
+        return True
+    journal = (cit.get("journal") or "").lower().strip()
+    if journal and journal in low:
+        return True
+    return len(low) <= len(title) + 40
 
 
 def is_audio_episode(content_id):
