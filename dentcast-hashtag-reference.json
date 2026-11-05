@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 120,
+   "count": 121,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -380,7 +380,8 @@
     "insight/insight-98",
     "insight/insight-99",
     "insight/insight-100",
-    "insight/insight-101"
+    "insight/insight-101",
+    "insight/insight-102"
    ]
   },
   {
@@ -4656,6 +4657,34 @@
    ]
   },
   {
+   "key": "فیت_پروتز",
+   "tag": "#فیت_پروتز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نشستنِ کاملِ کار روی تکیه‌گاه.",
+   "use_when": "مقاله فیت را بسنجد یا نبودش را علتِ شکست بداند.",
+   "aliases": [
+    "fit",
+    "پسیو فیت",
+    "passive fit",
+    "فیت روکش",
+    "misfit"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "insight/insight-26",
+    "insight/insight-31",
+    "insight/insight-35",
+    "insight/insight-44",
+    "insight/insight-52",
+    "metanotes/meta-20",
+    "dentcast-plus/video-14",
+    "insight/insight-102"
+   ]
+  },
+  {
    "key": "پرامپت_نویسی",
    "tag": "#پرامپت_نویسی",
    "domain": "ai",
@@ -5197,33 +5226,6 @@
     "insight/insight-82",
     "insight/insight-96",
     "chairside/chairside-46"
-   ]
-  },
-  {
-   "key": "فیت_پروتز",
-   "tag": "#فیت_پروتز",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نشستنِ کاملِ کار روی تکیه‌گاه.",
-   "use_when": "مقاله فیت را بسنجد یا نبودش را علتِ شکست بداند.",
-   "aliases": [
-    "fit",
-    "پسیو فیت",
-    "passive fit",
-    "فیت روکش",
-    "misfit"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "insight/insight-26",
-    "insight/insight-31",
-    "insight/insight-35",
-    "insight/insight-44",
-    "insight/insight-52",
-    "metanotes/meta-20",
-    "dentcast-plus/video-14"
    ]
   },
   {
@@ -6656,6 +6658,32 @@
    ]
   },
   {
+   "key": "نشست_روکش",
+   "tag": "#نشست_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نشستن کاملِ روکش روی تراش تا تماس مؤثر دیواره‌ها.",
+   "use_when": "مقاله دلیل ننشستن یا راه احراز نشست کامل را بگوید.",
+   "aliases": [
+    "نشستن روکش",
+    "سیت روکش",
+    "crown seating"
+   ],
+   "variants": [
+    "#نشست روکش",
+    "#نشستن_روکش"
+   ],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "dentcast-plus/video-3",
+    "insight/insight-30",
+    "insight/insight-44",
+    "sharehub/share-10",
+    "insight/insight-102"
+   ]
+  },
+  {
    "key": "نشست_ناقص",
    "tag": "#نشست_ناقص",
    "domain": "clinical",
@@ -8003,31 +8031,6 @@
    ]
   },
   {
-   "key": "نشست_روکش",
-   "tag": "#نشست_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نشستن کاملِ روکش روی تراش تا تماس مؤثر دیواره‌ها.",
-   "use_when": "مقاله دلیل ننشستن یا راه احراز نشست کامل را بگوید.",
-   "aliases": [
-    "نشستن روکش",
-    "سیت روکش",
-    "crown seating"
-   ],
-   "variants": [
-    "#نشست روکش",
-    "#نشستن_روکش"
-   ],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "dentcast-plus/video-3",
-    "insight/insight-30",
-    "insight/insight-44",
-    "sharehub/share-10"
-   ]
-  },
-  {
    "key": "نوع_ریتنشن",
    "tag": "#نوع_ریتنشن",
    "domain": "clinical",
@@ -9113,6 +9116,33 @@
     "dentai/dentai-4",
     "dentai/promptologist/prompt1-1",
     "dentai/promptologist/prompt1-2"
+   ]
+  },
+  {
+   "key": "تطابق_مارجینال",
+   "tag": "#تطابق_مارجینال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "دقتِ نشستِ لبه‌ی روکش روی خطِ ختم — فاصله‌ی مارجینال (Marginal Gap/Discrepancy).",
+   "use_when": "مقاله تطابق/گپِ مارجینال را معیارِ کیفیت قرار دهد.",
+   "aliases": [
+    "marginal fit",
+    "marginal gap",
+    "marginal discrepancy",
+    "گپ مارجینال",
+    "دقت لبه ای",
+    "تطابق لبه ای",
+    "انطباق لبه"
+   ],
+   "variants": [
+    "#تطابق_مارژینال"
+   ],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-123-1",
+    "metanotes/meta-9",
+    "insight/insight-102"
    ]
   },
   {
@@ -11481,32 +11511,6 @@
    "content_ids": [
     "notecast/episode-14",
     "episodes/episode-155"
-   ]
-  },
-  {
-   "key": "تطابق_مارجینال",
-   "tag": "#تطابق_مارجینال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "دقتِ نشستِ لبه‌ی روکش روی خطِ ختم — فاصله‌ی مارجینال (Marginal Gap/Discrepancy).",
-   "use_when": "مقاله تطابق/گپِ مارجینال را معیارِ کیفیت قرار دهد.",
-   "aliases": [
-    "marginal fit",
-    "marginal gap",
-    "marginal discrepancy",
-    "گپ مارجینال",
-    "دقت لبه ای",
-    "تطابق لبه ای",
-    "انطباق لبه"
-   ],
-   "variants": [
-    "#تطابق_مارژینال"
-   ],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-123-1",
-    "metanotes/meta-9"
    ]
   },
   {

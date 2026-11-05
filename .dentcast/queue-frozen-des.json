@@ -135,5 +135,23 @@
       ],
       "dropped": []
     }
+  },
+  "insight/insight-102": {
+    "queue_ref": "queue/09-insight-temporary-cement-residue-check",
+    "record_sha256": "af84db31fe57a8b274e560028cec68c3e4297d88384e050345e046cecbe77c91",
+    "installed_at": "2026-11-05",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (publish-queue.md «DES و Fidelity صف»)",
+      "evidence": [
+        "publish-queue.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }
