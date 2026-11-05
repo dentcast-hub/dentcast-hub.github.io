@@ -1,0 +1,435 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "sharehub",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "وقتی قدامی‌های پایین برای رستوریشن بالا فضا نمی‌گذارند، چه کنیم؟",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "caption_fa": {
+  "value": "لبه قدامی‌های پایین برای رستوریشن بالا جا نمی‌گذارد؛ تراش انسیزال کِی جزئی از طرح درمان است و کِی مشکل از OVD، رابطه فکی یا رویش جبرانی است؟",
+  "from": "02-عنوان-کپشن.md:9"
+ },
+ "title_en": {
+  "value": "When the Lower Anterior Teeth Leave No Room for Upper Restorations, What Should We Do?",
+  "from": "06-انگلیسی.md:1"
+ },
+ "caption_en": {
+  "value": "The lower incisal edges leave no room for upper restorations; when is incisal reduction part of the treatment plan, and when does the problem lie in the OVD, the jaw relationship or compensatory eruption?",
+  "from": "06-انگلیسی.md:3"
+ },
+ "body_en": {
+  "value": "Suppose we want to restore the maxillary anterior teeth, but the incisal edges of the mandibular anterior teeth leave too little space. Can we take a little off the lower incisal edges and solve the problem?\n\nSometimes yes, but before reducing anything we need to know whether the problem lies in the lower teeth themselves or in the jaw relationship and posterior support. A review article and a clinical case report help us tell these two situations apart.\n\n## First, Understand Why Anterior Space Has Been Lost\n\nIn its discussion of deep bite, the review Pre-prosthetic orthodontics suggests measuring the lower incisal edges against a reference occlusal plane. This matters because the patient's current occlusal plane may have changed with the loss of posterior support.\n\nBy the criterion quoted from Kokich, the reference line on a cephalometric radiograph is drawn from the contact of the second molars posteriorly to the level of the upper lip at rest anteriorly. The incisal edges of the mandibular anterior teeth are normally close to this line. Their sitting above it is a sign that the teeth have over-erupted (supraeruption).\n\n[[Image:01]]\n\n*Figure 1. The red line is the reference occlusal plane: from the occlusal surfaces of the second molars to the upper lip at rest. Source: Alfallaj 2020, Fig. 1*\n\nIf a tooth is worn, do not look only at its edge; the gingival margin and the position of the CEJ also matter. If the tooth is worn and the CEJ lies close to the gingival margin, we should think of compensatory eruption. But when the CEJ is clearly apical to the margin, altered passive eruption also comes into consideration. This distinction helps in choosing treatment, but on its own it is not enough for a diagnosis.\n\n[[Image:02]]\n\n*Figure 2. Worn anterior teeth with short clinical crowns and irregular gingival margins, while the posterior teeth have normal height. Source: Alfallaj 2020, Fig. 2*\n\nIn compensatory eruption, shortening the incisal edge does not return the tooth and the gingiva to the right position.\n\n## In the Case Report, Why Were the Lower Anterior Teeth Shortened?\n\nThe patient had a skeletal Class III relationship and had long since lost mandibular posterior support. The remaining teeth were severely worn, the occlusal vertical dimension (OVD) had decreased, and there was a severe anterior crossbite.\n\n[[Image:03]]\n\n*Figure 3. The patient's initial condition: severe anterior crossbite, severe tooth wear and loss of posterior support. Source: Koo et al. 2026, Fig. 1*\n\nThe clinicians first corrected the OVD and the jaw relationship; to test the new height they made a provisional overlay denture and evaluated the patient over a period of several months. The decision to reduce the incisal edges was therefore made after the new jaw relationship had been tested, not at the start of treatment.\n\nAt the new height, the mandible in centric relation sat further back than in its initial position. Along the closing path, the remaining mandibular left teeth made premature contact with the maxillary anterior teeth. The clinicians selectively adjusted the incisal edges of those teeth, with reference to the lower lip and the occlusal plane, until they matched the height of the mandibular right anterior teeth.\n\nAfter the incisal adjustment, the maxillary anterior teeth were prepared and provisional restorations were made. Provisional posterior support was then established, and at later stages, after a new diagnostic wax-up, the implants were placed and the definitive reconstruction was completed.\n\n[[Image:04]]\n\n*Figure 4. Provisional stages: an overlay denture to test the new height (A and B), the maxillary anterior provisional after the lower incisal adjustment (C) and the full-arch provisional (D). Source: Koo et al. 2026, Fig. 10*\n\nAn important point: in this case, supraeruption of the lower anterior teeth had not been diagnosed. These teeth were even shorter than the reference dimensions, and worn. The incisal reduction was done solely to remove an interference that became apparent after the jaw relationship was changed.\n\n## Why Did the Crossbite Improve?\n\nThe improvement in the anterior relationship came mainly from restoring the OVD and the backward and downward rotation of the mandible in its new position, not from shortening the teeth. The cephalometric changes also showed this shift, but they did not mean the skeletal Class III discrepancy had been resolved.\n\n[[Image:05]]\n\n*Figure 5. Initial cephalogram (A), with the provisional prosthesis (B) and their superimposition (C), showing the backward and downward rotation of the mandible. Source: Koo et al. 2026, Fig. 11*\n\nIn the end, the anterior relationship went from a severe crossbite to edge to edge. This was a compromise treatment: the authors explain that orthodontics or orthognathic surgery would have been needed to achieve normal overjet and overbite, but given the patient's systemic conditions, the cost and length of treatment, and the patient's satisfaction with the result, no further treatment was done. At the reported follow-up, no fracture or debonding of the prosthesis and no new temporomandibular joint problem was observed.\n\n[[Image:06]]\n\n*Figure 6. Definitive restorations with an edge-to-edge anterior relationship. Source: Koo et al. 2026, Fig. 17*\n\n## When Is Orthodontics the Better Choice?\n\nIf the anterior teeth have undergone compensatory eruption together with the bone and gingiva, orthodontic intrusion can correct the position of the teeth and the gingival margin and reduce the need for incisal reduction. When planning intrusion, the gingival margin relative to the adjacent teeth is a more important reference than the worn incisal edge.\n\n[[Image:07]]\n\n*Figure 7. Intrusion of the worn anterior teeth (B), using the gingival margins of the adjacent teeth as the reference, followed by restoration (C). Source: Alfallaj 2020, Fig. 3*\n\nIntrusion has its limits too: it takes time, it needs patient cooperation and a post-treatment stabilization period, and it can be accompanied by apical root resorption. So the condition of the roots and the crown-to-root ratio must also be considered in the treatment plan.\n\nIn a suitable patient, other options can also be considered: posterior reconstruction and an increase in OVD to create anterior space, surgical crown lengthening in selected cases, or the Dahl concept. The choice of approach should rest on the diagnosis and the wax-up, not only on where two teeth collide.\n\n## What Should We Check Chairside Before Deciding?\n\nBefore adjusting the incisal edges of the mandibular anterior teeth, check these: Are the posterior support, the OVD and the jaw relationship correct? Where is the incisal edge relative to the reference occlusal plane? And is there wear, compensatory eruption or a change in the gingival margin?\n\nIf, after an appropriate vertical dimension and jaw relationship have been established, only a local interference remains, selective incisal adjustment may be part of the treatment plan. But if the lack of space is caused by compensatory eruption or collapse of posterior support, shortening the tooth alone does not solve the underlying problem.\n\nLimits of the evidence: these articles do not set a specific amount of safe incisal reduction, and they do not show that this adjustment routinely replaces orthodontics.",
+  "from": "06-انگلیسی.md:6-82"
+ },
+ "images": {
+  "value": [
+   {
+    "n": "01",
+    "file": {
+     "value": "03-تصاویر/01-reference-occlusal-plane.webp",
+     "from": "03-تصاویر/تصاویر.md:6"
+    },
+    "alt_fa": {
+     "value": "صفحه اکلوژن مرجع در سفالومتری",
+     "from": "03-تصاویر/تصاویر.md:7"
+    },
+    "alt_en": {
+     "value": "Reference occlusal plane on a cephalometric tracing",
+     "from": "03-تصاویر/تصاویر.md:8"
+    },
+    "caption_fa": {
+     "value": "تصویر ۱. خط قرمز صفحه اکلوژن مرجع است: از سطح اکلوزال مولرهای دوم تا لب بالا در حالت استراحت. منبع: Alfallaj 2020، Fig. 1",
+     "from": "03-تصاویر/تصاویر.md:9"
+    },
+    "caption_en": {
+     "value": "Figure 1. The red line is the reference occlusal plane: from the occlusal surfaces of the second molars to the upper lip at rest. Source: Alfallaj 2020, Fig. 1",
+     "from": "06-انگلیسی.md:91"
+    }
+   },
+   {
+    "n": "02",
+    "file": {
+     "value": "03-تصاویر/02-worn-anteriors-compensatory-eruption.webp",
+     "from": "03-تصاویر/تصاویر.md:15"
+    },
+    "alt_fa": {
+     "value": "قدامی‌های ساییده با رویش جبرانی",
+     "from": "03-تصاویر/تصاویر.md:16"
+    },
+    "alt_en": {
+     "value": "Worn anterior teeth with compensatory eruption",
+     "from": "03-تصاویر/تصاویر.md:17"
+    },
+    "caption_fa": {
+     "value": "تصویر ۲. قدامی‌های ساییده با تاج کلینیکی کوتاه و مارجین لثه نامنظم، در حالی که دندان‌های خلفی ارتفاع طبیعی دارند. منبع: Alfallaj 2020، Fig. 2",
+     "from": "03-تصاویر/تصاویر.md:18"
+    },
+    "caption_en": {
+     "value": "Figure 2. Worn anterior teeth with short clinical crowns and irregular gingival margins, while the posterior teeth have normal height. Source: Alfallaj 2020, Fig. 2",
+     "from": "06-انگلیسی.md:93"
+    }
+   },
+   {
+    "n": "03",
+    "file": {
+     "value": "03-تصاویر/03-initial-class-iii-crossbite.webp",
+     "from": "03-تصاویر/تصاویر.md:24"
+    },
+    "alt_fa": {
+     "value": "وضعیت اولیه بیمار",
+     "from": "03-تصاویر/تصاویر.md:25"
+    },
+    "alt_en": {
+     "value": "The patient's initial condition",
+     "from": "03-تصاویر/تصاویر.md:26"
+    },
+    "caption_fa": {
+     "value": "تصویر ۳. وضعیت اولیه بیمار: کراس‌بایت شدید قدامی، سایش شدید دندان‌ها و از دست رفتن ساپورت خلفی. منبع: Koo و همکاران 2026، Fig. 1",
+     "from": "03-تصاویر/تصاویر.md:27"
+    },
+    "caption_en": {
+     "value": "Figure 3. The patient's initial condition: severe anterior crossbite, severe tooth wear and loss of posterior support. Source: Koo et al. 2026, Fig. 1",
+     "from": "06-انگلیسی.md:95"
+    }
+   },
+   {
+    "n": "04",
+    "file": {
+     "value": "03-تصاویر/04-provisional-phases.webp",
+     "from": "03-تصاویر/تصاویر.md:33"
+    },
+    "alt_fa": {
+     "value": "مراحل پروتز موقت",
+     "from": "03-تصاویر/تصاویر.md:34"
+    },
+    "alt_en": {
+     "value": "Provisional prosthesis stages",
+     "from": "03-تصاویر/تصاویر.md:35"
+    },
+    "caption_fa": {
+     "value": "تصویر ۴. مراحل موقت: اورلی دنچر برای آزمایش ارتفاع جدید (A و B)، موقت قدامی بالا بعد از اصلاح انسیزال پایین (C) و موقت کل فک (D). منبع: Koo و همکاران 2026، Fig. 10",
+     "from": "03-تصاویر/تصاویر.md:36"
+    },
+    "caption_en": {
+     "value": "Figure 4. Provisional stages: an overlay denture to test the new height (A and B), the maxillary anterior provisional after the lower incisal adjustment (C) and the full-arch provisional (D). Source: Koo et al. 2026, Fig. 10",
+     "from": "06-انگلیسی.md:97"
+    }
+   },
+   {
+    "n": "05",
+    "file": {
+     "value": "03-تصاویر/05-cephalometric-changes.webp",
+     "from": "03-تصاویر/تصاویر.md:42"
+    },
+    "alt_fa": {
+     "value": "تغییرات سفالومتری",
+     "from": "03-تصاویر/تصاویر.md:43"
+    },
+    "alt_en": {
+     "value": "Cephalometric changes",
+     "from": "03-تصاویر/تصاویر.md:44"
+    },
+    "caption_fa": {
+     "value": "تصویر ۵. سفالومتری اولیه (A)، با پروتز موقت (B) و هم‌پوشانی آن‌ها (C) که چرخش فک پایین به عقب و پایین را نشان می‌دهد. منبع: Koo و همکاران 2026، Fig. 11",
+     "from": "03-تصاویر/تصاویر.md:45"
+    },
+    "caption_en": {
+     "value": "Figure 5. Initial cephalogram (A), with the provisional prosthesis (B) and their superimposition (C), showing the backward and downward rotation of the mandible. Source: Koo et al. 2026, Fig. 11",
+     "from": "06-انگلیسی.md:99"
+    }
+   },
+   {
+    "n": "06",
+    "file": {
+     "value": "03-تصاویر/06-final-edge-to-edge.webp",
+     "from": "03-تصاویر/تصاویر.md:51"
+    },
+    "alt_fa": {
+     "value": "رستوریشن‌های نهایی لبه به لبه",
+     "from": "03-تصاویر/تصاویر.md:52"
+    },
+    "alt_en": {
+     "value": "Final restorations in an edge-to-edge relationship",
+     "from": "03-تصاویر/تصاویر.md:53"
+    },
+    "caption_fa": {
+     "value": "تصویر ۶. رستوریشن‌های نهایی با رابطه قدامی لبه به لبه (edge to edge). منبع: Koo و همکاران 2026، Fig. 17",
+     "from": "03-تصاویر/تصاویر.md:54"
+    },
+    "caption_en": {
+     "value": "Figure 6. Definitive restorations with an edge-to-edge anterior relationship. Source: Koo et al. 2026, Fig. 17",
+     "from": "06-انگلیسی.md:101"
+    }
+   },
+   {
+    "n": "07",
+    "file": {
+     "value": "03-تصاویر/07-orthodontic-intrusion.webp",
+     "from": "03-تصاویر/تصاویر.md:60"
+    },
+    "alt_fa": {
+     "value": "اینتروژن ارتودنسی قدامی‌های ساییده",
+     "from": "03-تصاویر/تصاویر.md:61"
+    },
+    "alt_en": {
+     "value": "Orthodontic intrusion of worn anterior teeth",
+     "from": "03-تصاویر/تصاویر.md:62"
+    },
+    "caption_fa": {
+     "value": "تصویر ۷. اینتروژن قدامی‌های ساییده (B) با مرجع قرار دادن مارجین لثه دندان‌های مجاور، و سپس رستوریشن (C). منبع: Alfallaj 2020، Fig. 3",
+     "from": "03-تصاویر/تصاویر.md:63"
+    },
+    "caption_en": {
+     "value": "Figure 7. Intrusion of the worn anterior teeth (B), using the gingival margins of the adjacent teeth as the reference, followed by restoration (C). Source: Alfallaj 2020, Fig. 3",
+     "from": "06-انگلیسی.md:103"
+    }
+   }
+  ],
+  "from": "03-تصاویر/تصاویر.md"
+ },
+ "credit": {
+  "value": {
+   "mode": "references",
+   "items": [
+    {
+     "label_fa": "Alfallaj، Saudi Dent J، ۲۰۲۰",
+     "label_en": "Alfallaj, Saudi Dent J, 2020",
+     "href": "https://doi.org/10.1016/j.sdentj.2019.08.004",
+     "from": "04-منبع/منابع.md:42"
+    },
+    {
+     "label_fa": "Koo و همکاران، J Korean Acad Prosthodont، ۲۰۲۶",
+     "label_en": "Koo et al., J Korean Acad Prosthodont, 2026",
+     "href": "https://doi.org/10.4047/jkap.2026.64.1.67",
+     "from": "04-منبع/منابع.md:43"
+    }
+   ]
+  },
+  "from": "04-منبع/منابع.md:38"
+ },
+ "catalog": {
+  "value": [
+   {
+    "title": "Pre-prosthetic orthodontics",
+    "file_name": "Pre-prosthetic orthodontics.pdf",
+    "topic": "Treatment plan",
+    "topic_path": "Treatment plan",
+    "type": "narrative review",
+    "local_path": "",
+    "file_size": 1030707,
+    "key_finding": "",
+    "clinical_bottom_line": "",
+    "drive_link": "https://drive.google.com/file/d/17fkdOhBMQtHe3X9CN_i-_euGMCHXMv7y/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=17fkdOhBMQtHe3X9CN_i-_euGMCHXMv7y",
+    "drive_view": "https://drive.google.com/file/d/17fkdOhBMQtHe3X9CN_i-_euGMCHXMv7y/view",
+    "drive_id": "17fkdOhBMQtHe3X9CN_i-_euGMCHXMv7y",
+    "tags": [
+     "pre-prosthetic-orthodontics",
+     "orthodontics",
+     "narrative-review",
+     "interdisciplinary-treatment",
+     "deep-bite",
+     "tooth-wear",
+     "compensatory-eruption",
+     "orthodontic-intrusion",
+     "altered-passive-eruption",
+     "crown-lengthening",
+     "forced-eruption",
+     "dahl-concept",
+     "occlusal-plane",
+     "topic:treatment-plan",
+     "pre-prosthetic-orthodontics-review"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Pre-prosthetic orthodontics",
+    "doi": "10.1016/j.sdentj.2019.08.004",
+    "journal": "Saudi Dental Journal",
+    "crossref_year": 2020,
+    "subjects": [],
+    "abstract": "For some patients, pre-prosthetic orthodontic intervention is necessary to optimize both esthetic and functional aspects of dental treatment. This review will focus on the following topics: orthodontics treatment with multiple missing teeth, correction of anterior deep vertical overlap, anterior worn dentition, up-righting of tilted teeth, and orthodontic crown lengthening. This review will aid restorative dentists in identifying which patients could benefit from orthodontic intervention, and in understanding how orthodontic treatment can be utilized to improve patient prognosis in restorative treatment.",
+    "display_title": "Pre-prosthetic orthodontics",
+    "authors": [
+     "Hayam Alfallaj"
+    ]
+   },
+   {
+    "title": "Full-mouth rehabilitation in a skeletal Class III malocclusion patient with loss of occlusal vertical dimension due to mandibular posterior edentulism and severe tooth wear: a case report",
+    "file_name": "Full-mouth rehabilitation in a skeletal Class III malocclusion patient with loss of occlusal vertical dimension due to mandibular posterior edentulism and severe tooth wear: a case report.pdf",
+    "topic": "vertical dimension",
+    "topic_path": "vertical dimension",
+    "type": "case report",
+    "local_path": "",
+    "file_size": 11360925,
+    "key_finding": "",
+    "clinical_bottom_line": "",
+    "drive_link": "https://drive.google.com/file/d/17c-WklAEBd1vbD2PJf78Wkth7sTzJ7i5/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=17c-WklAEBd1vbD2PJf78Wkth7sTzJ7i5",
+    "drive_view": "https://drive.google.com/file/d/17c-WklAEBd1vbD2PJf78Wkth7sTzJ7i5/view",
+    "drive_id": "17c-WklAEBd1vbD2PJf78Wkth7sTzJ7i5",
+    "tags": [
+     "full-mouth-rehabilitation",
+     "case-report",
+     "vertical-dimension",
+     "class-iii-malocclusion",
+     "anterior-crossbite",
+     "tooth-wear",
+     "attrition",
+     "centric-relation",
+     "provisional-restoration",
+     "implant-supported-rehabilitation",
+     "occlusal-adjustment",
+     "topic:vertical-dimension",
+     "full-mouth-rehabilitation-skeletal-class-iii-lost-ovd-case-report"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Full-mouth rehabilitation in a skeletal Class III malocclusion patient with loss of occlusal vertical dimension due to mandibular posterior edentulism and severe tooth wear: a case report",
+    "doi": "10.4047/jkap.2026.64.1.67",
+    "journal": "Journal of Korean Academy of Prosthodontics",
+    "crossref_year": 2026,
+    "subjects": [],
+    "abstract": "In this case, a patient with skeletal Class III malocclusion, loss of occlusal vertical dimension(OVD) as a result of bilateral mandibular posterior edentulism and generalized attrition of the remaining teeth, and severe anterior crossbite was treated with full-mouth prosthodontic rehabilitation to restore masticatory function and esthetics. To determine the appropriate OVD, comprehensive analyses of the temporomandibular joint (TMJ), physiologic rest position, phonetics, facial measurements, and lateral cephalometric radiographs were performed, and condyle stability in centric relation was evaluated using a CAD-CAM provisional denture. Bilateral posterior occlusion was re-established with implant-supported prostheses to recover vertical support, and the remaining teeth with severe attrition and structural damage were conservatively treated, recontoured at the cervical line, and restored with zirconia full-coverage crowns to regain function and esthetics. As a result, the severe anterior crossbite with full mandibular overlap of the maxillary anterior teeth was corrected to an edge-to-edge relationship, and mutually protected occlusion was achieved in eccentric movements. This case report demonstrates that establishing the correct centric relation and recovering an appropriate OVD are critical in alleviating abnormal anterosuperior mandibular rotation and severe anterior crossbite in patients with skeletal Class III malocclusion, along with improvements in masticatory function, phonetics, and esthetics, thereby contributing significantly to the enhancement of quality of life.",
+    "display_title": "Full-mouth rehabilitation in a skeletal Class III malocclusion patient with loss of occlusal vertical dimension due to mandibular posterior edentulism and severe tooth wear: a case report",
+    "authors": [
+     "Hyun-Jung Koo",
+     "Chang-Mo Jeong",
+     "So-Hyoun Lee"
+    ]
+   }
+  ],
+  "from": "04-منبع/کاتالوگ.json"
+ },
+ "hashtags": {
+  "value": [
+   "#Share_Hub",
+   "#Curated_Content",
+   "#فضای_رستوریتیو",
+   "#تنظیم_اکلوژن",
+   "#بعد_عمودی",
+   "#سایش_دندان",
+   "#سوپرااراپشن",
+   "#اینتروژن_ارتودنسی"
+  ],
+  "from": "07-ورودی‌ها.md:10"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "occlusion",
+   "subtopic": "vertical-dimension",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:16"
+ },
+ "pulse": {
+  "value": {
+   "text": null,
+   "link_phrase": "وقتی قدامی‌های پایین برای رستوریشن بالا فضا نمی‌گذارند، چه کنیم؟"
+  },
+  "from": "07-ورودی‌ها.md:19"
+ },
+ "keywords": {
+  "value": [
+   "کمبود فضای قدامی برای رستوریشن بالا",
+   "تراش لبه انسیزال قدامی‌های پایین",
+   "صفحه اکلوژن مرجع در سفالومتری",
+   "سوپرااراپشن قدامی‌های پایین",
+   "رویش جبرانی (Compensatory Eruption)",
+   "رویش غیرفعال تغییریافته (Altered Passive Eruption)",
+   "ارتفاع عمودی اکلوژن (OVD) و ساپورت خلفی",
+   "اورلی دنچر موقت برای آزمایش ارتفاع جدید",
+   "کراس‌بایت قدامی در کلاس III اسکلتی",
+   "رابطه لبه به لبه به‌عنوان درمان سازشی",
+   "اینتروژن ارتودنسی قدامی‌های ساییده",
+   "مارجین لثه به‌عنوان مرجع اینتروژن",
+   "ارتودنسی پیش از پروتز (Pre-prosthetic orthodontics)",
+   "lower incisal edge reduction",
+   "compensatory eruption",
+   "reference occlusal plane",
+   "skeletal Class III anterior crossbite",
+   "pre-prosthetic orthodontics",
+   "orthodontic intrusion of worn teeth"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "ارتفاع عمودی اکلوژن",
+    "from": "11-لینک‌های-گلاسری.md:10",
+    "href": "/glossary/vertical-dimension-of-occlusion.html"
+   },
+   {
+    "phrase": "سنترک ریلیشن",
+    "from": "11-لینک‌های-گلاسری.md:14",
+    "href": "/glossary/centric-relation.html"
+   },
+   {
+    "phrase": "جراحی افزایش طول تاج",
+    "from": "11-لینک‌های-گلاسری.md:18",
+    "href": "/glossary/crown-lengthening.html"
+   },
+   {
+    "phrase": "Dahl Concept",
+    "from": "11-لینک‌های-گلاسری.md:22",
+    "href": "/glossary/dahl-concept.html"
+   },
+   {
+    "phrase": "ساییده",
+    "from": "11-لینک‌های-گلاسری.md:26",
+    "href": "/glossary/tooth-wear.html"
+   },
+   {
+    "phrase": "مفصل گیجگاهی‌فکی",
+    "from": "11-لینک‌های-گلاسری.md:30",
+    "href": "/glossary/tmd.html"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:8"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "/chairside/chairside-19.html",
+    "label": "دندان مقابل و فضای بازسازی",
+    "from": "11-لینک‌های-گلاسری.md:45"
+   },
+   {
+    "href": "/insight/insight-43.html",
+    "label": "بازسازی VD بدون استاپ خلفی",
+    "from": "11-لینک‌های-گلاسری.md:46"
+   },
+   {
+    "href": "/insight/insight-10.html",
+    "label": "فضای قدامی در دیپ بایت",
+    "from": "11-لینک‌های-گلاسری.md:47"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:40"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
