@@ -276,6 +276,20 @@ class ConclusionTests(unittest.TestCase):
                 ' Splinted crowns are preferred. ORCID 0000-0001')
         self.assertEqual(units.conclusion_of(text, 'FULL_TEXT'), 'Splinted crowns are preferred.')
 
+    def test_elsevier_back_matter_ends_the_conclusion(self):
+        """Elsevier puts «Fundings» (plural) and «CRediT authorship contribution
+        statement» after the Conclusions; both are back matter, so the echoed
+        conclusion is the section's own last sentence, never an author line
+        (Nguyen 2025, J Dent, queue item 21)."""
+        text = ('Intro. Conclusions This scoping review mapped the methods. '
+                'Ongoing research is crucial for edentulous patients. '
+                'Fundings All included studies were publicly funded. '
+                'CRediT authorship contribution statement A: Writing. '
+                'B: Supervision, Conceptualization. '
+                'Declaration of competing interest The authors declare none.')
+        self.assertEqual(units.conclusion_of(text, 'FULL_TEXT'),
+                         'Ongoing research is crucial for edentulous patients.')
+
     def test_text_without_furniture_is_unchanged(self):
         text = 'One sentence. The last sentence.'
         self.assertEqual(units.conclusion_of(text, 'ABSTRACT_ONLY'), units.last_sentence(text))
