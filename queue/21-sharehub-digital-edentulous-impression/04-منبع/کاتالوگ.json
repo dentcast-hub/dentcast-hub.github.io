@@ -1,0 +1,48 @@
+[
+  {
+    "title": "Functional impression of complete edentulous arches in a digital flow: A scoping review",
+    "file_name": "Functional Impression of Complete Edentulous Arches in a Digital Flow: A Scoping Review.pdf",
+    "topic": "complete denture",
+    "topic_path": "complete denture",
+    "type": "scoping review",
+    "local_path": "",
+    "file_size": 1475698,
+    "key_finding": "",
+    "clinical_bottom_line": "",
+    "drive_link": "https://drive.google.com/file/d/1vU1x6N7vdWlQ9IP-jBl4yeYzX--lqXio/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=1vU1x6N7vdWlQ9IP-jBl4yeYzX--lqXio",
+    "drive_view": "https://drive.google.com/file/d/1vU1x6N7vdWlQ9IP-jBl4yeYzX--lqXio/view",
+    "drive_id": "1vU1x6N7vdWlQ9IP-jBl4yeYzX--lqXio",
+    "tags": [
+      "complete-denture",
+      "edentulous",
+      "functional-impression",
+      "border-molding",
+      "intraoral-scanner",
+      "digital-workflow",
+      "hybrid-workflow",
+      "scoping-review",
+      "topic:complete-denture",
+      "functional-impression-complete-edentulous-arches-digital-flow-scoping-review"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Functional impression of complete edentulous arches in a digital flow: A scoping review",
+    "doi": "10.1016/j.jdent.2025.105981",
+    "journal": "Journal of Dentistry",
+    "crossref_year": 2025,
+    "subjects": [],
+    "abstract": "Objective: While digital workflows have significantly advanced prosthodontics, capturing functional impressions of edentulous arches remains a critical challenge, particularly in recording dynamic soft tissue movements, which are essential for optimal denture retention and stability. This scoping review aimed to summarize existing methods for recording functional impressions of completely edentulous arches within digital workflows for complete dentures, as well as the strategies used to overcome associated challenges. Methods: A comprehensive literature search was conducted across MEDLINE (PubMed), Scopus, and Dentistry & Oral Sciences Source, identifying 31 eligible studies published between 2013 and 2024. These included 12 non-randomized studies, 7 case reports, and 12 technical articles. Results: Most studies relied on hybrid workflows combining digital and conventional techniques to achieve optimal denture adaptation. In these cases, the functional impression was obtained using conventional methods, involving border molding with thermoplastic materials, followed by a definitive impression using zinc oxide eugenol or polyether materials. Other studies omitted the functional impression step, designing prostheses based solely on digital study impressions. Digital impression techniques showed promising mucostatic accuracy but consistently failed to capture mobile tissues adequately, limiting their ability to record functional borders precisely. Conclusions: No fully digital technique currently exists for recording functional impressions of completely edentulous arches. Although optical impressions can reliably capture mucostatic details, they remain insufficient for functional impressions due to their inability to register dynamic tissue movements—an essential factor for denture retention and stability. Clinical significance: To date, functional impressions for complete denture cannot be performed digitally. Full digital workflows for complete dentures either omit this step or digitalize a conventional impression.",
+    "display_title": "Functional impression of complete edentulous arches in a digital flow: A scoping review",
+    "authors": [
+      "Thanh Vivan Nguyen",
+      "Murali Srinivasan",
+      "Adrien Naveau"
+    ]
+  },
+  {
+    "doi": "10.1111/jopr.13345",
+    "link_existing": true
+  }
+]
