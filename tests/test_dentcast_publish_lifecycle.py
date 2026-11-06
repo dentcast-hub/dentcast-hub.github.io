@@ -77,15 +77,24 @@ class LifecycleTests(unittest.TestCase):
         self.assert_blocked('CANONICAL_PLAN_REQUIRED',lc.require_plan,p)
 
     def test_old_order_receipt_validates_and_new_order_run_is_accepted(self):
-        # Every committed historical receipt predates ledger_order_v2 and keeps ORDER_V1.
+        # Every committed receipt validates under its own order: the 29 receipts written before
+        # ledger_order_v2 (2026-11-06) keep ORDER_V1 and carry no marker; a receipt written by a
+        # marked run (the first: plak-sefr/plak1-12) follows ORDER_V2. Neither is re-marked.
         receipts = sorted((ROOT/'.dentcast/publication-reports').rglob('*.completion.json'))
         self.assertTrue(receipts)
+        v1 = v2 = 0
         for path in receipts:
             p = json.loads(path.read_text(encoding='utf-8'))['state']['publication']
             lc.require_plan(p)
             if h.publication_category(p) != 'paper-only' and not lc.queue_lane(p):
-                self.assertFalse(lc.ledger_order_v2(p), path)
-                self.assertEqual([s['id'] for s in p['steps'] if s['id'] in lc.REGISTRY], list(lc.canonical_ids(p)))
+                marked = lc.ledger_order_v2(p)
+                v2 += marked; v1 += not marked
+                expected = lc.ORDER_V2 if marked else lc.ORDER_V1
+                self.assertEqual(list(lc.canonical_ids(p)), [sid for sid, _ in expected], path)
+                self.assertEqual([s['id'] for s in p['steps'] if s['id'] in lc.REGISTRY], list(lc.canonical_ids(p)), path)
+                self.assertEqual(lc.adopt_ledger_order(copy.deepcopy(p))['context']['decisions'],
+                                 p['context']['decisions'], path)  # a committed receipt is never re-marked
+        self.assertGreaterEqual(v1, 1)  # the historical page receipts still validate under ORDER_V1
         old = fixtures.publication() | {'steps': lc.plan(order=lc.ORDER_V1)}
         old['context']['decisions'] = [{'kind': lc.DELIVERY_POLICY}]
         lc.require_plan(old)  # no marker: the old order, v1 cuts
