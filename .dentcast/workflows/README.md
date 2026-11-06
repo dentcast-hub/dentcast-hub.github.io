@@ -48,7 +48,7 @@ python3 tools/dentcast_publish_readpack.py \
 
    File numbers are not the execution order. Execute in the ledger order of `publish-checkpoints.md` («Order, messages, text lock, deliveries»): paper ingestion (06) and DES/Fidelity (08) run before links (05) and flashcards/FAQ (07). Read each module just before its first step.
 3. Agent proposals are built, recorded and reported, never sent for confirmation; the founder gets at most three messages (M1 open facts, M3b still-flagged Part 3b sentences at C.4.13, M2 exam questions) plus the real decisions listed in `publish-checkpoints.md`; the agent's Push-2 report lists every proposal and answer.
-4. Close all authoring, semantic judgments, DES/Fidelity, the authored English mirror (unless LiteCast/Challenge) and both founder messages **through C.6**, write the ten-scope editorial lock, then Push 2. After Push 2 the runner does C.8, C.7, D, E, F, G and opens the PR; the agent monitors (`publish-after-push2.md`).
+4. Close all authoring, semantic judgments, DES/Fidelity, the authored English mirror (unless LiteCast/Challenge) and every founder message **through C.6**, write the ten-scope editorial lock, then Push 2. After Push 2 the runner does C.8, C.7, D, E, F, G and opens the PR; the agent monitors (`publish-after-push2.md`).
 5. Respect every category exception, semantic decision, founder decision, builder order, versioning and complete Phase F. A skipped module needs its canonical exemption and a recorded reason; "not loaded" is not an exemption.
 6. Use actual tools. Report a missing capability or failed gate; never substitute simulated scientific results, synthetic receipts or Boolean assertions. Staging tools are not the live handoff or publishing engine.
 7. Keep private/restricted material out of public history. No arbitrary branch merges, no inferred approval.
@@ -61,7 +61,7 @@ python3 tools/dentcast_publish_readpack.py \
 | Existing-page English | `.dentcast/workflows/en-version.md` |
 | Ads | `.dentcast/workflows/ads.md` |
 | Ad statistics | `.dentcast/workflows/spot-report.md` |
-| Glossary authoring | `.claude/skills/glossary-writer/SKILL.md` |
+| Glossary authoring | `.claude/skills/glossary-writer/SKILL.md` (Codex/GPT: the byte-identical `.agents/skills/glossary-writer/SKILL.md`) |
 | Cross-linking | `.dentcast/workflows/cross-link.md` |
 | New section | `.dentcast/workflows/new-section.md` |
 | Offline publishing | `.dentcast/offline-publish.md` |
@@ -73,4 +73,4 @@ Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details
 
 ## Checkpoints, deliveries, completion
 
-`publish-checkpoints.md`: ledger, the two founder messages, text lock, the three deliveries, hosting and merge. Hashes or checkpoints alone are not publication.
+`publish-checkpoints.md`: ledger, the founder messages, text lock, the three deliveries, hosting and merge. Hashes or checkpoints alone are not publication.

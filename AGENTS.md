@@ -20,7 +20,7 @@ After a new v2 publication's second delivery is confirmed, immediately tell the 
 | Existing-page English | `.dentcast/workflows/en-version.md` |
 | Ads | `.dentcast/workflows/ads.md` |
 | Ad statistics | `.dentcast/workflows/spot-report.md` |
-| Glossary authoring | `.claude/skills/glossary-writer/SKILL.md` |
+| Glossary authoring | `.agents/skills/glossary-writer/SKILL.md` |
 | Cross-linking | `.dentcast/workflows/cross-link.md` |
 | New section | `.dentcast/workflows/new-section.md` |
 | Offline publishing | `.dentcast/offline-publish.md` |
