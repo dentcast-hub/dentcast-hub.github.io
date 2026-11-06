@@ -33,6 +33,9 @@ on:
       - 'tools/queue_apply.py'
       - 'tools/queue_manifest.py'
       - 'tools/queue_ledger.py'
+      - 'tools/queue_publish.py'
+      - '.github/workflows/queue-publish.yml'
+      - '.github/workflows/queue-publish-done.yml'
       - 'tests/test_queue_apply.py'
       - 'tools/queue_stamp.py'
       - 'tools/queue_fidelity_prep.py'
@@ -105,7 +108,7 @@ jobs:
         run: python3 -m unittest discover -s tests -p test_verify_publish_checks.py -v
       - name: Check the publish-queue frozen DES/Fidelity order (founder 1405/08/11)
         run: python3 -m unittest discover -s tests -p test_queue_frozen_des.py -v
-      - name: Check the queue-lane assembler (byte-preserving writers, refusals)
+      - name: Check the queue-lane assembler and publish-day tool (byte-preserving writers, refusals, lock/unlock, status)
         run: python3 -m unittest discover -s tests -p test_queue_apply.py -v
       - name: Check the queue preparation tools (draft page, Fidelity prep, freeze stamp, PDF text, exam draft)
         run: python3 -m unittest discover -s tests -p test_queue_prep_tools.py -v
