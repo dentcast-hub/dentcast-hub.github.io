@@ -74,7 +74,7 @@ def check_sums(item):
             continue
         if actual != digest:
             raise QueueRefusal("SHA256_MISMATCH", f"{rel} does not match SHA256SUMS — the item goes back to "
-                               "«در حال آماده‌سازی» and nothing is rebuilt (queue-maintainer.md «انتشار از صف» step 4)",
+                               "«در حال آماده‌سازی» and nothing is rebuilt (queue-route.md «وقتی ابزار رد می‌کند»)",
                                file=rel, expected=digest, actual=actual)
         rows.append(rel)
     return {"checked": rows, "tolerated": tolerated, "sha256sums": sha256_file(sums)}
@@ -208,7 +208,7 @@ def V(value, origin):
 INPUTS_FILE = "07-ورودی‌ها.md"
 
 
-def draft(item):
+def draft(item, require_frozen_catalog=True):
     """The manifest from the frozen files. Fields are {"value","from"}; a field
     whose exact pattern is absent has value None. The legacy path (no
     12-انتشار.json) reads its decisions from 07-ورودی‌ها.md; without that file
@@ -303,7 +303,7 @@ def draft(item):
     cat_rel = "04-منبع/کاتالوگ.json"
     if (item / cat_rel).exists():
         sums_txt = (item / "SHA256SUMS").read_text(encoding="utf-8") if (item / "SHA256SUMS").exists() else ""
-        if not re.search(r"\s(?:\./)?%s\s*$" % re.escape(cat_rel), sums_txt, re.M):
+        if require_frozen_catalog and not re.search(r"\s(?:\./)?%s\s*$" % re.escape(cat_rel), sums_txt, re.M):
             raise QueueRefusal("CATALOG_NOT_FROZEN", f"{cat_rel} is not in SHA256SUMS")
         entries = json.loads((item / cat_rel).read_text(encoding="utf-8"))
         if not isinstance(entries, list) or not all(isinstance(e, dict) for e in entries):
@@ -902,18 +902,33 @@ def main():
     ap.add_argument("item")
     ap.add_argument("--supplement")
     ap.add_argument("--agent", help="the publishing agent's own lock name")
+    ap.add_argument("--write", action="store_true",
+                    help=f"draft only: write the draft as {MANIFEST_FILE} (preparation, before the first stamp; "
+                         "the catalog need not be frozen yet; refuses when the file already exists)")
     a = ap.parse_args()
     try:
+        if a.write and a.cmd != "draft":
+            raise QueueRefusal("WRITE_IS_DRAFT_ONLY", "--write belongs to `draft`")
         info = load_item(a.item, agent=a.agent) if a.cmd == "check" else {"path": Path(a.item)}
-        d = draft(info["path"])
+        if a.write and (info["path"] / MANIFEST_FILE).exists():
+            raise QueueRefusal("MANIFEST_EXISTS", f"{MANIFEST_FILE} already exists: edit it, do not re-draft over it")
+        d = draft(info["path"], require_frozen_catalog=not a.write)
         if a.supplement:
             d = merge_supplement(info["path"], d, json.loads(Path(a.supplement).read_text(encoding="utf-8")))
     except QueueRefusal as e:
         print(json.dumps({"status": "refused", **e.detail}, ensure_ascii=False, indent=1))
         return 2
     miss = missing(d)
-    print(json.dumps({"status": "complete" if not miss else "incomplete", "missing": miss, "draft": d},
-                     ensure_ascii=False, indent=1))
+    written = None
+    if a.write:
+        # the manifest keeps each field's {"value","from"} provenance; working keys (_source, _figcaps_en,
+        # _image_meta_en, _inputs …) never leave the draft
+        body = {"schema": SCHEMA} | {k: v for k, v in d.items() if not k.startswith("_")}
+        written = str(info["path"] / MANIFEST_FILE)
+        (info["path"] / MANIFEST_FILE).write_text(json.dumps(body, ensure_ascii=False, indent=1) + "\n",
+                                                   encoding="utf-8")
+    print(json.dumps({"status": "complete" if not miss else "incomplete", "missing": miss, "written": written,
+                      "draft": d}, ensure_ascii=False, indent=1))
     return 0 if not miss else 4
 
 

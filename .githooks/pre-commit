@@ -17,6 +17,18 @@
 # Override (only if certain): git commit --no-verify
 set -euo pipefail
 
+# Git for Windows usually ships `python` or `py`, macOS only `python3`: find one Python 3.
+PY=""
+for cand in python3 python py; do
+  if command -v "$cand" >/dev/null 2>&1 && "$cand" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' >/dev/null 2>&1; then
+    PY="$cand"; break
+  fi
+done
+if [ -z "$PY" ]; then
+  echo "  Commit rejected: no Python 3.9+ found (python3 / python / py). Install Python 3, or override: git commit --no-verify" >&2
+  exit 1
+fi
+
 is_text() {
   # Lower-case portably: macOS ships bash 3.2, which has no ${1,,}.
   case "$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')" in
@@ -51,15 +63,16 @@ fi
 
 # Damaged UTF-8 (a multi-byte Persian character cut in half becomes U+FFFD)
 # is invisible to the NUL check above.
-if [ -f tools/check_text_encoding.py ] && ! python3 tools/check_text_encoding.py --staged >&2; then
+if [ -f tools/check_text_encoding.py ] && ! "$PY" tools/check_text_encoding.py --staged >&2; then
   echo "  Commit rejected: regenerate or restore the damaged file(s) above." >&2
   exit 1
 fi
 
 # Live publication recovery must be current before the commit. Paused runs are
 # allowed; a stale checkpoint, unstaged state or unguarded deletion is not.
-if ! python3 tools/dentcast_publish_handoff.py guard --phase pre-commit >/dev/null; then
-  echo "Commit blocked: reconcile and stage the latest publication checkpoint." >&2
+# A worktree of another branch (e.g. the orphan `queue` branch) has no tools/: nothing to guard.
+if [ -f tools/dentcast_publish_handoff.py ] && ! "$PY" tools/dentcast_publish_handoff.py guard --phase pre-commit; then
+  echo "Commit blocked: reconcile and stage the latest publication checkpoint (the guard's JSON above names the code)." >&2
   exit 1
 fi
 

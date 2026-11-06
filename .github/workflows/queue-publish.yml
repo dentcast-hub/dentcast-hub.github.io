@@ -8,8 +8,9 @@
 # itself commits and pushes Push 2). Any failure after the lock unlocks the item
 # again (`queue_publish.py unlock`), unless Push 2 already reached GitHub.
 # Job `await-delivery-3` waits for post-cut2-mechanical.yml on the exact Push-2
-# SHA and then opens the PR to main. The merge stays the founder's decision;
-# queue-publish-done.yml removes the item from `queue` after the merge.
+# SHA and then opens the PR to main. The queue publish trigger authorizes the
+# merge once every gate is green (queue-route.md step 5; a red gate means no
+# merge); queue-publish-done.yml removes the item from `queue` after the merge.
 #
 # Repository secret QUEUE_PUBLISH_TOKEN (Settings -> Secrets and variables ->
 # Actions -> New repository secret): a fine-grained personal access token for
@@ -228,7 +229,7 @@ jobs:
           PY
 
       - name: Unlock the item after a failed run (never after Push 2)
-        if: failure() && steps.lock.outputs.locked == 'true'
+        if: (failure() || cancelled()) && steps.lock.outputs.locked == 'true'
         env:
           BRANCH: ${{ steps.branch.outputs.branch }}
           ITEM_NAME: ${{ steps.pick.outputs.item_name }}
@@ -310,7 +311,7 @@ jobs:
     needs: publish
     if: needs.publish.result == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 50
+    timeout-minutes: 65
     env:
       GH_TOKEN: ${{ secrets.QUEUE_PUBLISH_TOKEN }}
       GH_REPO: ${{ github.repository }}
@@ -326,7 +327,8 @@ jobs:
           set +e  # the job shell is bash -e: keep going so the tool's JSON is shown and rc is handled
           set -uo pipefail
           enc="$(jq -rn --arg b "$BRANCH" '$b|@uri')"
-          deadline=$(( $(date +%s) + 40 * 60 ))
+          # post-cut2-mechanical.yml's own job timeout is 60 minutes: wait at least that long.
+          deadline=$(( $(date +%s) + 60 * 60 ))
           run=""
           while :; do
             page="$(gh api "repos/$GH_REPO/actions/workflows/post-cut2-mechanical.yml/runs?branch=$enc&head_sha=$PUSH2_SHA&per_page=20" 2>/dev/null || echo '{}')"
@@ -362,7 +364,7 @@ jobs:
             echo "delivery3_sha=$head"
           } >> "$GITHUB_OUTPUT"
 
-      - name: Open the PR to main (the merge stays the founder's decision)
+      - name: Open the PR to main (merge when every gate is green)
         id: pr
         env:
           RUN_URL: ${{ steps.wait.outputs.run_url }}
@@ -387,7 +389,8 @@ jobs:
               print("- " + (d if isinstance(d, str) else json.dumps(d, ensure_ascii=False)))
           if not out.get("manual_steps"):
               print("- none")
-          print("\nMerge when every gate is green (founder's decision, queue-route.md). After the merge "
+          print("\nMerge when every gate is green: the queue publish trigger authorizes the merge "
+                "(queue-route.md step 5); a red gate means no merge. After the merge "
                 "`queue-publish-done.yml` removes the item from `queue`.")
           PY
           # REST, not `gh pr create`: the same call works where GraphQL is blocked.
@@ -397,6 +400,7 @@ jobs:
             url="$(gh api "repos/$GH_REPO/pulls?state=open&head=$owner:$BRANCH" --jq '.[0].html_url // empty')"
             [[ -n "$url" ]] || { echo "::error::the PR could not be opened"; exit 1; }
           fi
+          echo "PR: $url"
           echo "pr_url=$url" >> "$GITHUB_OUTPUT"
 
       - name: Summarize
@@ -412,7 +416,7 @@ jobs:
             printf '%s\n' "- content_id: \`$CONTENT_ID\`" "- Branch: \`$BRANCH\`" "- Push-2 SHA: \`$PUSH2_SHA\`"
             printf '%s\n' "- post-cut2-mechanical: ${OUTCOME:-unknown} ${RUN_URL:+($RUN_URL)}"
             if [[ -n "$PR_URL" ]]; then
-              printf '%s\n' "- PR: $PR_URL (merge when every gate is green; the merge is the founder's decision)"
+              printf '%s\n' "- PR: $PR_URL (merge when every gate is green: the queue publish trigger authorizes it, queue-route.md step 5)"
             else
               printf '%s\n' "- PR: not opened. Run \`python3 tools/queue_publish.py status\` and follow its next_step."
             fi

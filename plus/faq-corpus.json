@@ -40115,32 +40115,32 @@
               }
             }
           ],
-          "@id": "{{PAGE_URL}}#faq"
+          "@id": "https://dentcast.org/sharehub/share-46.html#faq"
         }
       ],
       "definedTermSets": [
         {
           "@context": "https://schema.org",
           "@type": "DefinedTermSet",
-          "@id": "{{PAGE_URL}}#flashcards",
+          "@id": "https://dentcast.org/sharehub/share-46.html#flashcards",
           "hasDefinedTerm": [
             {
               "@type": "DefinedTerm",
-              "@id": "{{PAGE_URL}}#flashcards-c1",
+              "@id": "https://dentcast.org/sharehub/share-46.html#flashcards-c1",
               "name": "مقاومت به شکست آزمایشگاهی",
               "description": "باری که نمونه در شرایط مشخص آزمون نهایی با آن می‌شکند؛ این عدد به‌تنهایی معادل طول عمر پروتز در دهان نیست.",
               "source": "authored"
             },
             {
               "@type": "DefinedTerm",
-              "@id": "{{PAGE_URL}}#flashcards-c2",
+              "@id": "https://dentcast.org/sharehub/share-46.html#flashcards-c2",
               "name": "مولتی‌لیر بودن زیرکونیا",
               "description": "ویژگی چندلایهٔ یک محصول که به‌تنهایی ترکیب ثابت 3Y، 4Y یا 5Y را مشخص نمی‌کند؛ ویژگی‌های هر بلوک باید جداگانه بررسی شود.",
               "source": "authored"
             },
             {
               "@type": "DefinedTerm",
-              "@id": "{{PAGE_URL}}#flashcards-c3",
+              "@id": "https://dentcast.org/sharehub/share-46.html#flashcards-c3",
               "name": "تقویت فول‌آرچ با تیتانیوم‌بار",
               "description": "افزودن ساختار تیتانیومی برای تقویت پروتز؛ نیاز به آن به جنس زیرکونیا، طراحی و شرایط عملکرد وابسته است.",
               "source": "authored"

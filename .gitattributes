@@ -16,3 +16,17 @@
 # adapters under scripts/ carry shebangs too and stay LF for the same reason.
 .githooks/* text eol=lf
 scripts/* text eol=lf
+# The publishing canon, its tools and the client entrypoints are hashed byte for
+# byte (readpack pins, the handoff's workflow fingerprints, the global-rule map).
+# A CRLF checkout on Windows would make every one of those checks report drift,
+# so they stay LF everywhere.
+.dentcast/workflows/** text eol=lf
+.dentcast/*.md text eol=lf
+tools/*.py text eol=lf
+tools/*.mjs text eol=lf
+.cursor/** text eol=lf
+.codex/** text eol=lf
+.claude/** text eol=lf
+.githooks/** text eol=lf
+CLAUDE.md text eol=lf
+AGENTS.md text eol=lf
