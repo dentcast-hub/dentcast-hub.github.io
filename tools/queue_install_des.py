@@ -76,7 +76,8 @@ def num(uid):
 def append_entries(path, entries):
     """Append top-level keys to a JSON object file, keeping every existing byte
     and the newline/indent style of the file's tail."""
-    raw = path.read_text(encoding="utf-8", newline="") if path.exists() else "{\n}\n"
+    # bytes, not read_text(newline=""): that keyword is Python 3.13-only and the Actions runner is 3.11
+    raw = path.read_bytes().decode("utf-8") if path.exists() else "{\n}\n"
     data = json.loads(raw)
     for k, _ in entries:
         if k in data:

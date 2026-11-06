@@ -94,5 +94,23 @@ class FrozenTextTests(unittest.TestCase):
         self.assertEqual(self.guard(TEXT_01, synced=s), [])
 
 
+class AppendEntriesRunnerPythonTests(unittest.TestCase):
+    """append_entries must run on the Actions runner's Python (3.11): it once used
+    Path.read_text(newline=...), a 3.13-only keyword, which refused every queue
+    publish on GitHub Actions while passing in 3.13 sandboxes."""
+
+    def test_append_keeps_bytes_and_crlf_on_any_python(self):
+        import tempfile
+        d = Path(tempfile.mkdtemp())
+        for nl in ("\n", "\r\n"):
+            f = d / f"scores-{len(nl)}.json"
+            f.write_bytes(('{' + nl + '  "a": {"x": 1}' + nl + '}' + nl).encode("utf-8"))
+            out = qi.append_entries(f, [("b", {"y": 2})])
+            self.assertIn('{' + nl + '  "a": {"x": 1}', out)  # existing bytes and line ends kept
+            self.assertEqual(json.loads(out), {"a": {"x": 1}, "b": {"y": 2}})
+            self.assertEqual("\r\n" in out, nl == "\r\n")
+            self.assertTrue(out.endswith(nl))
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -100,6 +100,7 @@ jobs:
           NN: ${{ steps.facts.outputs.nn }}
           CONTENT_ID: ${{ steps.facts.outputs.content_id }}
         run: |
+          set +e  # the job shell is bash -e: keep going so the tool's JSON is shown and rc is handled
           set -uo pipefail
           git -C queue-checkout config user.name "github-actions[bot]"
           git -C queue-checkout config user.email "41898282+github-actions[bot]@users.noreply.github.com"
