@@ -302,8 +302,12 @@ def draft(item):
     d["credit"] = draft_credit(item, lines_of(item, "07-ورودی‌ها.md") or [])
     cat_rel = "04-منبع/کاتالوگ.json"
     if (item / cat_rel).exists():
-        sums_txt = (item / "SHA256SUMS").read_text(encoding="utf-8") if (item / "SHA256SUMS").exists() else ""
-        if not re.search(r"\s(?:\./)?%s\s*$" % re.escape(cat_rel), sums_txt, re.M):
+        # The freeze is asserted only once the item claims to be frozen. SHA256SUMS is written by
+        # queue_stamp.py, which runs AFTER 12-انتشار.json is drafted (publish-queue.md step 7), so
+        # demanding it here refused every paper item's own draft (2026-11-06).
+        sums = item / "SHA256SUMS"
+        if sums.exists() and not re.search(r"\s(?:\./)?%s\s*$" % re.escape(cat_rel),
+                                           sums.read_text(encoding="utf-8"), re.M):
             raise QueueRefusal("CATALOG_NOT_FROZEN", f"{cat_rel} is not in SHA256SUMS")
         entries = json.loads((item / cat_rel).read_text(encoding="utf-8"))
         if not isinstance(entries, list) or not all(isinstance(e, dict) for e in entries):
@@ -902,6 +906,9 @@ def main():
     ap.add_argument("item")
     ap.add_argument("--supplement")
     ap.add_argument("--agent", help="the publishing agent's own lock name")
+    ap.add_argument("--write", action="store_true",
+                    help="draft only: write the draft into the item as " + MANIFEST_FILE
+                         + " (schema + the {value,from} fields), overwriting what is there")
     a = ap.parse_args()
     try:
         info = load_item(a.item, agent=a.agent) if a.cmd == "check" else {"path": Path(a.item)}
@@ -912,7 +919,27 @@ def main():
         print(json.dumps({"status": "refused", **e.detail}, ensure_ascii=False, indent=1))
         return 2
     miss = missing(d)
-    print(json.dumps({"status": "complete" if not miss else "incomplete", "missing": miss, "draft": d},
+    written = None
+    if a.write:
+        if a.cmd != "draft":
+            print(json.dumps({"status": "refused", "code": "WRITE_IS_DRAFT_ONLY",
+                              "message": "--write belongs to draft, not check"}, ensure_ascii=False, indent=1))
+            return 2
+        item_dir = info["path"]
+        if (item_dir / "SHA256SUMS").exists():
+            print(json.dumps({"status": "refused", "code": "ITEM_ALREADY_FROZEN",
+                              "message": MANIFEST_FILE + " is written before queue_stamp.py freezes the item; "
+                                         "a frozen item goes back to «در حال آماده‌سازی» first"},
+                             ensure_ascii=False, indent=1))
+            return 2
+        # The committed manifest carries the schema and the {value,from} fields; the helper
+        # keys draft() uses internally (every `_`-prefixed one) stay out of the file.
+        body = json.dumps({"schema": SCHEMA} | {k: v for k, v in d.items() if not k.startswith("_")},
+                          ensure_ascii=False, indent=1) + "\n"
+        (item_dir / MANIFEST_FILE).write_text(body, encoding="utf-8")
+        written = MANIFEST_FILE
+    print(json.dumps({"status": "complete" if not miss else "incomplete", "missing": miss,
+                      **({"written": written} if written else {}), "draft": d},
                      ensure_ascii=False, indent=1))
     return 0 if not miss else 4
 

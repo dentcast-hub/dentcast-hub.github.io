@@ -73,6 +73,15 @@ def make_throwaway(base):
     return c
 
 
+def qm_main(argv):
+    old = sys.argv
+    sys.argv = ["queue_manifest.py", *argv]
+    try:
+        return qm.main()
+    finally:
+        sys.argv = old
+
+
 def args(item, cid, **kw):
     base = dict(item=str(item), content_id=cid, supplement=None, date="2026-11-04", agent=None, dry_run=False,
                 receipt=None, allow_handoff=False, founder_text_change=None, draft=True, throwaway=True)
@@ -96,6 +105,47 @@ class ManifestDraftTests(unittest.TestCase):
             with self.assertRaises(qm.QueueRefusal) as e:
                 qm.draft(make_item(t, name="not-an-item"))
             self.assertEqual(e.exception.code, "ITEM_NAME")
+
+    def test_a_paper_item_can_draft_its_manifest_before_it_is_frozen(self):
+        # 2026-11-06: the catalog freeze was asserted in draft(), but SHA256SUMS is written by
+        # queue_stamp AFTER 12-انتشار.json is drafted (publish-queue.md step 7), so every paper
+        # item's own draft was refused CATALOG_NOT_FROZEN. The freeze binds a frozen item only.
+        with tempfile.TemporaryDirectory() as t:
+            item = make_item(t, extra={"04-منبع/کاتالوگ.json": json.dumps([{"title": "x"}])})
+            d = qm.draft(item)                       # no SHA256SUMS yet: allowed
+            self.assertEqual(d["catalog"]["value"], [{"title": "x"}])
+            (item / "SHA256SUMS").write_text("%s  01-متن.md\n" % hashlib.sha256(
+                (item / "01-متن.md").read_bytes()).hexdigest(), encoding="utf-8")
+            with self.assertRaises(qm.QueueRefusal) as e:   # frozen without the catalog row: refused
+                qm.draft(item)
+            self.assertEqual(e.exception.code, "CATALOG_NOT_FROZEN")
+
+    def test_draft_write_produces_the_committed_manifest_shape(self):
+        with tempfile.TemporaryDirectory() as t:
+            item = make_item(t)
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                rc = qm_main(["draft", str(item), "--write"])
+            written = json.loads((item / qm.MANIFEST_FILE).read_text(encoding="utf-8"))
+            self.assertEqual(written["schema"], qm.SCHEMA)
+            self.assertEqual(written["category"], {"value": "sharehub", "from": "folder name"})
+            self.assertFalse([k for k in written if k.startswith("_")], "helper keys stay out of the file")
+            self.assertEqual(json.loads(out.getvalue())["written"], qm.MANIFEST_FILE)
+            self.assertIn(rc, (0, 4))
+            # the file it wrote is a valid source for the next draft
+            self.assertEqual(qm.draft(item)["_source"]["value"], "manifest")
+
+    def test_draft_write_refuses_once_the_item_is_frozen(self):
+        with tempfile.TemporaryDirectory() as t:
+            item = make_item(t)
+            (item / "SHA256SUMS").write_text("%s  01-متن.md\n" % hashlib.sha256(
+                (item / "01-متن.md").read_bytes()).hexdigest(), encoding="utf-8")
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                rc = qm_main(["draft", str(item), "--write"])
+            self.assertEqual(rc, 2)
+            self.assertEqual(json.loads(out.getvalue())["code"], "ITEM_ALREADY_FROZEN")
+            self.assertFalse((item / qm.MANIFEST_FILE).exists())
 
     def test_broken_manifest_json_is_a_refusal(self):
         with tempfile.TemporaryDirectory() as t:
