@@ -133,6 +133,7 @@ jobs:
         env:
           NN: ${{ steps.inputs.outputs.nn }}
         run: |
+          set +e  # the job shell is bash -e: keep going so the tool's JSON is shown and rc is handled
           set -uo pipefail
           args=(pick "$GITHUB_WORKSPACE/queue-checkout")
           if [[ -n "$NN" ]]; then args+=(--nn "$NN"); fi
@@ -173,6 +174,7 @@ jobs:
           ITEM: ${{ steps.pick.outputs.item }}
           REQUESTED_BY: ${{ steps.inputs.outputs.requested_by }}
         run: |
+          set +e  # the job shell is bash -e: keep going so the tool's JSON is shown and rc is handled
           set -uo pipefail
           python3 site/tools/queue_publish.py lock "$ITEM" --agent "$REQUESTED_BY" > "$RUNNER_TEMP/lock.json"
           rc=$?
@@ -209,6 +211,7 @@ jobs:
           ITEM: ${{ steps.pick.outputs.item }}
           REQUESTED_BY: ${{ steps.inputs.outputs.requested_by }}
         run: |
+          set +e  # the job shell is bash -e: keep going so the tool's JSON is shown and rc is handled
           set -uo pipefail
           python3 site/tools/queue_publish.py run "$ITEM" --agent "$REQUESTED_BY" > "$RUNNER_TEMP/run.json"
           rc=$?
@@ -231,6 +234,7 @@ jobs:
           ITEM_NAME: ${{ steps.pick.outputs.item_name }}
           REQUESTED_BY: ${{ steps.inputs.outputs.requested_by }}
         run: |
+          set +e  # the job shell is bash -e: keep going so the tool's JSON is shown and rc is handled
           set -uo pipefail
           if [[ -n "$(git -C site ls-remote --heads origin "refs/heads/$BRANCH")" ]]; then
             msg="$BRANCH exists on origin: Push 2 reached GitHub, so the item stays locked. Run \`python3 tools/queue_publish.py status\` and follow its next_step."
@@ -319,6 +323,7 @@ jobs:
       - name: Wait for post-cut2-mechanical.yml on the exact Push-2 SHA
         id: wait
         run: |
+          set +e  # the job shell is bash -e: keep going so the tool's JSON is shown and rc is handled
           set -uo pipefail
           enc="$(jq -rn --arg b "$BRANCH" '$b|@uri')"
           deadline=$(( $(date +%s) + 40 * 60 ))
