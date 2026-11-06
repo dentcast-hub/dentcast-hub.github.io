@@ -58,6 +58,11 @@ MODULES = WORKFLOW + 'modules/'
 # moved (LiteCast/challenge still keep exactly the text before the boundary).
 # Re-audited again: one bullet inside that Part 2c block was reworded (no orphan
 # sweep for a single-source page); same location, no heading or boundary moved.
+# Re-audited 2026-11-06 (founder 1405/08/15, sweep first on multi-source pages):
+# 08 adds a bounded block inside Part 2c and rewrites Part 2c step 5; both sit
+# after the «Conditional path for founder-supplied results» boundary. Checked
+# against main: the boundary occurs once, the text before it is byte-identical
+# and no heading changed, so LiteCast/challenge still keep exactly that text.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
@@ -65,7 +70,7 @@ PINNED_BLOBS = {
     '04-taxonomy-and-navigation.md': '681f18e360a8fbcc8ed0a14a4a93e2bfa0a9cb4f',
     '05-semantic-linking.md': '45bfd4e5b7a5e1e05e0f1d4f76ff6316ff909fac',
     '06-paper-ingestion.md': 'e51277cafc640eff67fb5e061f1f57fe752cd72b',
-    '08-des-fidelity.md': '011267565912ea507b735849786bddb165fe39da',
+    '08-des-fidelity.md': '933f8279f7c66f4ebb5127b096f8f815a3b75d29',
     '09-challenge.md': '0e62c230c9bd8b0264da99a3f25d9e83375f91ea',
     '12-english-notify-verify.md': '8c78c082daf42c30996a684b9fe6ea57dd0a819d',
 }
