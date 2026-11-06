@@ -468,6 +468,12 @@ def tool_staleness_warnings(root=None):
     return []
 
 
+# The route's three founder messages (publish-checkpoints.md, «At most three
+# founder messages»): M1 open facts, M3b still-flagged Part 3b sentences, M2
+# exam questions. A pending question always belongs to one of them.
+FOUNDER_MESSAGES = ("M1", "M2", "M3b")
+
+
 def validate_publication(p):
     require(isinstance(p, dict) and set(p) == {
         "content_id", "category", "target_paths", "status", "blocker", "context",
@@ -497,6 +503,20 @@ def validate_publication(p):
                 "APPROVAL_DECISION_AND_EVIDENCE_REQUIRED")
         require(approval["scope"] not in scopes, "DUPLICATE_APPROVAL_SCOPE")
         scopes.add(approval["scope"])
+    # A waiting question names its founder message, the ledger step that waits,
+    # the question itself and whether it has been answered. Every delivery cut
+    # refuses a non-empty list either way: clear the record once the answer is
+    # recorded as that step's evidence or as a decision.
+    asked = set()
+    for q in p["context"]["pending_questions"]:
+        require(isinstance(q, dict) and set(q) == {"message", "step", "question", "answered"},
+                'PENDING_QUESTION_FIELDS_INVALID: each record is {"message": "M1|M2|M3b", '
+                '"step": "<ledger step id>", "question": "<text>", "answered": true|false}')
+        require(q["message"] in FOUNDER_MESSAGES, "PENDING_QUESTION_MESSAGE_INVALID:" + str(q["message"]))
+        require(nonempty(q["step"]) and nonempty(q["question"]), "PENDING_QUESTION_STEP_AND_TEXT_REQUIRED")
+        require(type(q["answered"]) is bool, "PENDING_QUESTION_ANSWERED_INVALID")
+        require((q["message"], q["question"]) not in asked, "DUPLICATE_PENDING_QUESTION")
+        asked.add((q["message"], q["question"]))
     require(isinstance(p["steps"], list) and bool(p["steps"]), "STEP_PLAN_REQUIRED")
     # Modules are non-decreasing in the run's own canonical order (v2 runs
     # place 06/08 before 05/07); a run without the marker keeps MODULES order.
@@ -1170,11 +1190,26 @@ def fastlocal_active(root):
 INVALIDATION = "dependency_invalidation_v1"
 
 
-def local_input_bindings(publication):
-    """Existing input references may bind local bytes; URLs remain operator-owned.
+# Fields that name WHERE an input is, never what it hashes to. A digest in one
+# of them binds nothing (the plak1-11 `{"ref": "<sha256>"}` misreading).
+LOCATION_FIELDS = ('ref', 'reference', 'location', 'source')
 
-    Explicit path bindings must be enrolled. Legacy {ref: enrolled-path, sha256: ...}
-    records have the same meaning. No remote source is fetched by this helper.
+
+def local_input_bindings(publication):
+    """Input bindings. Bytes are bound by digest, never copied or fetched here.
+
+    Two shapes, one rule:
+      * `{"path": "<repo-relative path>", "sha256": ...}` — a genuine repository
+        path. It must be enrolled in `target_paths`, so every tree fingerprint
+        covers it; an ignored one stays local-only (see local_only_inputs).
+        Legacy `{"ref": <enrolled path>, "sha256": ...}` means the same.
+      * `{"sha256": ...}`, optionally with an opaque out-of-repo location
+        (`ref`/`reference`/…) and other opaque metadata — a PRIVATE input that
+        is NOT a repository path: the founder's text, an attached paper in the
+        Drive cabinet. It binds by digest alone and is never enrolled, because
+        private inputs never enter public Git history. Nothing resolves it to a
+        file, so it yields no path; `save` keeps it immutable by comparing the
+        whole `context.inputs` list.
     """
     for item in publication['context']['inputs']:
         if not isinstance(item, dict):
@@ -1182,11 +1217,20 @@ def local_input_bindings(publication):
         path = item.get('path')
         if path is None and item.get('ref') in publication['target_paths']:
             path = item['ref']
-        if path is not None:
-            relative_path(path)
-            require(path in publication['target_paths'], 'INPUT_PATH_MUST_BE_ENROLLED:' + path)
-            require(valid_hash(item.get('sha256')), 'INPUT_HASH_REQUIRED:' + path)
-            yield item, path
+        if path is None:
+            for key in LOCATION_FIELDS:
+                require(not valid_hash(item.get(key)), 'INPUT_DIGEST_MUST_BE_IN_SHA256:' + key +
+                        '; bind a private input as {"sha256": "<digest>"} and keep its out-of-repo '
+                        'location as opaque metadata')
+            require('sha256' not in item or valid_hash(item['sha256']), 'INPUT_DIGEST_INVALID')
+            continue
+        relative_path(path)
+        require(path in publication['target_paths'],
+                'INPUT_PATH_MUST_BE_ENROLLED_OR_BIND_BY_DIGEST:' + path +
+                '; a repository path must be in target_paths, a private input that is not one binds '
+                'as {"sha256": "<digest>"} (location optional, never enrolled)')
+        require(valid_hash(item.get('sha256')), 'INPUT_HASH_REQUIRED:' + path)
+        yield item, path
 
 
 def require_current_inputs(root, publication, snapshot=None):
@@ -1411,8 +1455,12 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
                  "publication": publication, "snapshot": current, "previous_sha256": old_digest,
                  "reconciliation": {"note": note, "observed_changes": issues} if note else None}
         sha = write_atomic(root, state)
+        # `generation` is NOT returned: v3 does not persist it (render drops it,
+        # parse_state restores 1), so every write to an existing checkpoint
+        # reported "generation": 2 — a reset counter the caller cannot use.
+        # `sha256` is the identity a caller passes back as --expected-sha256.
         return {"status": "checkpoint_written", "path": STATE_PATH, "sha256": sha,
-                "generation": state["generation"], "next_step": next_step(publication),
+                "next_step": next_step(publication),
                 "requires_operator_review": True, "publication_completed": False}
 
 

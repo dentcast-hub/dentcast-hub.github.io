@@ -45,11 +45,13 @@ Then follow that workflow's Phases B → E unchanged (anchors only with the mech
 
 ### 4.8. Suggest in-article internal links (all content types)
 
-**MANDATORY on every publish, core episodes included (Hard Rule 11).** The **inverse** of 4.7: the new article's **own body** gains inline links **out** to existing glossary terms and episodes. For core episodes the body is the «درباره این اپیزود» (`ep-caption`) text.
+**MANDATORY on every publish, core episodes included (Hard Rule 11).** The **inverse** of 4.7: the new article's **own body** gains inline links **out** to existing pages. For core episodes the body is the «درباره این اپیزود» (`ep-caption`) text.
 
 #### Step 1 — Build the candidate target list
 
-Every glossary term (from `glossary/glossary.json`) and every episode (from the loaded brain, Hard Rule 1), each with its page URL.
+Every glossary term (from `glossary/glossary.json`) and **every brain entry with a page on disk** (the loaded brain, Hard Rule 1 — every type, core episodes and this series' own earlier parts included), each with its page URL. No type is out of scope: what separates 4.8 from 4.9 is **where** the link goes, never which pages may be linked.
+
+A **sibling part of the same series** always belongs to **4.9** (ordered first there, Hard Rule 11). 4.8 links it in the body **as well**, and only where the body itself refers back to that part («همان دامنه‌ای که در قسمت ۹ ثبت کردید») — the one place no other step can put that link; a part the body never mentions gets no inline link.
 
 #### Step 2 — Semantic analysis of the article body
 

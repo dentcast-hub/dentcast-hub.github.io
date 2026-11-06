@@ -108,7 +108,11 @@ class HandoffTests(unittest.TestCase):
         self.assert_blocked("RECONCILIATION_REQUIRED", h.save, self.root, self.p,
                             expected=initial["sha256"])
         result = h.save(self.root, self.p, expected=initial["sha256"], note="Reviewed actual changed page")
-        self.assertEqual(result["generation"], 2)
+        self.assertEqual(result["status"], "checkpoint_written")
+        self.assertNotEqual(result["sha256"], initial["sha256"])
+        # v3 does not persist a generation counter, so none is reported: every
+        # write to an existing checkpoint used to answer "generation": 2.
+        self.assertNotIn("generation", result)
         before = (self.root / h.STATE_PATH).read_bytes()
         self.assert_blocked("STALE_HANDOFF_WRITE", h.save, self.root, self.p,
                             expected=initial["sha256"], note="old writer")
@@ -162,7 +166,8 @@ class HandoffTests(unittest.TestCase):
         self.assertNotIn("EXTERNAL_OUTCOME_UNKNOWN_DO_NOT_RETRY", h.inspect(self.root)["issues"])
 
     def test_pending_questions_block_resume(self):
-        self.p["context"]["pending_questions"].append("Which pillar?")
+        self.p["context"]["pending_questions"].append(
+            {"message": "M1", "step": "C.2", "question": "Which pillar?", "answered": False})
         self.start()
         self.assertIn("PENDING_QUESTIONS", h.inspect(self.root)["issues"])
 
@@ -196,7 +201,8 @@ class HandoffTests(unittest.TestCase):
         self.assertNotIn("PENDING_OR_REJECTED_APPROVAL", h.inspect(self.root)["issues"])
 
     def test_clearing_a_known_question_requires_a_reconciliation_note(self):
-        self.p["context"]["pending_questions"] = ["Which pillar?"]
+        self.p["context"]["pending_questions"] = [
+            {"message": "M1", "step": "C.2", "question": "Which pillar?", "answered": False}]
         result = self.start()
         self.p["context"]["pending_questions"] = []
         self.assert_blocked("RECONCILIATION_REQUIRED", h.save, self.root, self.p, expected=result["sha256"])

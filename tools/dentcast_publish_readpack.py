@@ -78,14 +78,19 @@ MODULES = WORKFLOW + 'modules/'
 # and glossary and the queue-prep profile select the intended ranges. Re-pinned
 # once more after the integration review (M1/M3b wording, Push-2 report, lead
 # provenance timing); headings unchanged.
+# Re-pinned again on 2026-11-06 after the plak1-12 run's findings: module 04's
+# 4.6 gate (numbered series, not the Promptologist category — its heading keeps
+# the '### 4.6. Promptologist series' prefix the boundary matches), module 03's
+# chip rule, module 05's 4.8 candidate set, module 08's checklist-label
+# sentence. Boundaries and every omitted section re-checked for each.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
-    '03-litecast-and-page.md': '6f7c686af6b009ff4fb7e8b67edc66318d9b8e7f',
-    '04-taxonomy-and-navigation.md': '2168060033465a17099f4f0a52656064eb5b44e6',
-    '05-semantic-linking.md': '278bf29e744c82a830707c4b342c945aadf3e2cd',
+    '03-litecast-and-page.md': 'ed3062c264d3a23afed92e6aebc510ab9dcb6f3e',
+    '04-taxonomy-and-navigation.md': '041df6d0c67b772c7613525713f83dcab9cc187e',
+    '05-semantic-linking.md': '9c1abf1d48e17131436ec9920055a4cb3757410e',
     '06-paper-ingestion.md': 'c82da53ba291e98445455354ef27516f17fdc797',
-    '08-des-fidelity.md': '1c541ca7cefa24ebcf6607728e0c220587c0eab6',
+    '08-des-fidelity.md': 'b374a8d3b86fd32ee6122dffd9c70dedca5c4590',
     '09-challenge.md': 'f95917dce01098eac61f0e005ad6dc7b755ec98a',
     '12-english-notify-verify.md': '67ec15cd1ea56e081536bf89e28dda9ec2b4d1bb',
 }
@@ -169,9 +174,15 @@ def route_spans(name, lines, *, category, attached_paper, challenge):
         raise UnsafeSelection('CONFLICTING_LITECAST_CHALLENGE_INTAKE')
 
     if name == '03-litecast-and-page.md' and not lite:
-        preamble = boundary(lines, '<!-- /dentcast-checkpoint-protocol:v1 -->') + 1
+        # The preamble keeps what a non-LiteCast run still needs from the branch's head: the
+        # module's own ledger-steps line and step 0's own paragraph, which IS the canonical
+        # C.0.x skip reason ("any other category ignores it"). Cutting at the banner instead
+        # (before 2026-11-06) dropped both and forced a second read of these lines.
+        banner = boundary(lines, '<!-- /dentcast-checkpoint-protocol:v1 -->') + 1
+        first_substep = [i for i, line in enumerate(lines) if line.startswith('**0.1 ')]
+        preamble = first_substep[0] if len(first_substep) == 1 else banner
         common = boundary(lines, '### 1. Template lock & hash')
-        if common <= preamble:
+        if common <= preamble or preamble < banner:
             raise UnsafeSelection('INVALID_MODULE_03_ORDER')
         return include([(0, preamble), (common, size)], size), 'OMIT_LITECAST_ONLY_BRANCH'
 

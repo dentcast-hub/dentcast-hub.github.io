@@ -267,7 +267,8 @@ class FirstCutTests(unittest.TestCase):
     def test_pending_question_blocks_before_upload(self):
         files = fixture()
         state, _ = h.parse_state(files[h.STATE_PATH])
-        state["publication"]["context"]["pending_questions"].append("fixture:ask author")
+        state["publication"]["context"]["pending_questions"].append(
+            {"message": "M1", "step": "C.2", "question": "fixture:ask author", "answered": False})
         files[h.STATE_PATH] = h.render(state).encode()
         client = FakeGitHub()
         with self.assertRaisesRegex(ValueError, "FIRST_CUT_PENDING_QUESTIONS"):
