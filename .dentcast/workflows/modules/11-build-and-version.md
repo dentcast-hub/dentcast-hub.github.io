@@ -7,6 +7,8 @@ Ledger steps in this module: `C.6` (agent: Pulse, then the second-cut editorial 
 
 ### 6. Pulse update
 
+**This section is module 11's whole agent part (C.6); everything from the `module-11-boundary` marker below belongs to the post-Push-2 runner (C.8, then C.7 — delivery 3) and is read only for guarded recovery.**
+
 Use the Pulse sentence from Question 5 (the founder's, copied; or the agent's draft, standing acceptance). **No spoilers (Question 5): it names the piece by its title and never narrates its decision, mechanism, finding or conclusion** — a draft that describes content beyond the title is rewritten before inserting.
 
 - Locate the Pulse section in `index.html` (or its data source if data-driven).
@@ -16,6 +18,8 @@ Use the Pulse sentence from Question 5 (the founder's, copied; or the agent's dr
 - Keep exactly **7** Pulse lines. Phase F checks the count, first position, and preservation of the previous first six lines when a new URL is added against main.
 
 Glossary terms are not announced (documented skip); LiteCast follows its own convention.
+
+<!-- module-11-boundary: above = the agent's C.6 part; below = the runner's C.8/C.7 part -->
 
 ### 7. Bump the site content version (cache-bust)
 

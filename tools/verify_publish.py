@@ -1148,15 +1148,21 @@ def _classes(attrs):
     return set(m.group(1).split()) if m else set()
 
 
-def check_promptologist_nav(rep, content_id, doc, brain, sweep=False):
+# Numbered series whose page template carries the two-slot ep-nav bar (module 04, 4.6).
+SERIES_NAV_TYPES = ("promptologist", "plak_sefr", "taraz")
+
+
+def check_promptologist_nav(rep, content_id, doc, brain, sweep=False, etype="promptologist"):
     """Step 4.6: the part's ep-nav (last element in <main>, after .ep-box) has
     exactly two slots — previous part, next part — each an active
-    `<a href="/dentai/promptologist/<id>.html" class="ep-nav-btn">` or an
+    `<a href="/<the series' own directory>/<id>.html" class="ep-nav-btn">` or an
     empty `<span class="ep-nav-btn ep-nav-empty">`; the previous part's next
     slot links to this part. The series order is the brain order (appendix
-    parts sit between numbered parts and season boundaries chain on)."""
-    fix = "step 4.6 — wire the Promptologist prev/next ep-nav slots"
-    parts = [entry_url(e) for e in brain if e.get("type") == "promptologist" and entry_url(e)]
+    parts sit between numbered parts and season boundaries chain on). Every
+    numbered series whose template carries the bar is audited here, not only
+    Promptologist (module 04 step 4.6, 2026-11-06)."""
+    fix = "step 4.6 — wire the series' prev/next ep-nav slots"
+    parts = [entry_url(e) for e in brain if e.get("type") == etype and entry_url(e)]
     url = "/" + content_id + ".html"
     i = parts.index(url)
     prev = parts[i - 1] if i else None
@@ -1479,8 +1485,8 @@ def _verify_core(content_id, rep, expect_title=None, expect_caption=None, sweep=
     # ---------------- series / parent navigation (steps 4.5, 4.6) ----------------
     if etype == "notecast":
         check_notecast_parent(rep, content_id, sweep)
-    elif etype == "promptologist":
-        check_promptologist_nav(rep, content_id, doc, brain, sweep)
+    elif etype in SERIES_NAV_TYPES:
+        check_promptologist_nav(rep, content_id, doc, brain, sweep, etype)
 
     # ---------------- کاوش بیشتر ----------------
     n_sections = doc.count('<div class="dc-related-section">')

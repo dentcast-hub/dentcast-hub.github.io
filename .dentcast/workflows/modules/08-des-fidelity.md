@@ -643,6 +643,11 @@ identifier of its own, and inventing one would be a second copy of
 
 Two invariants and nothing else. **`sources` and `fidelity` hold the spec's output objects
 verbatim** — the spec owns both shapes, so never reshape, rename, reorder or trim them.
+The COMMENTARY `commentary_checklist` `item` labels are part of that: the spec's
+Transparency Checklist names them in **English**, so they are stored as the model emitted
+them and are never translated to the Persian wording older records carry — `plus/js/des.js`
+maps both forms to the Persian the card shows (`CHECKLIST_FA`; an unknown label is shown as
+stored), and no point, band or sum depends on the label's language.
 And **nothing derivable is stored beside them**: no wrapper-level `band`, no `track`,
 no display strings. `content_type`, `band`, `question_type` and `provisional` already
 live inside each object, and a second copy is a second source of truth that can drift

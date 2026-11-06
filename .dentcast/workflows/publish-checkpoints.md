@@ -52,8 +52,9 @@ reading less.
 | Before C.4.7 | module 05 |
 | — delivery 1 — | modules 06 and 08 are therefore read before cut 1 |
 | Before C.4.11 / C.4.14 / C.5.0 | modules 07 / 09 (Challenge only) / 10 |
-| Before writing the English mirror (before C.6) | `en-version.md`, module 12 through the end of Phase D, module 11's C.6 part |
-| Never in a normal run | module 11's C.8/C.7 part and module 12 Phases E–G: the runner does them; read only for guarded recovery (`publish-after-push2.md`) |
+| At C.2, for the page's chip row | Hard Rule 15 only (module 01, already read): existing canonical concepts, resolved with `hashtag_ref.py --simulate`, no mint. Step 5.0 settles the final list and corrects the row before the brain write |
+| Before writing the English mirror (before C.6) | `en-version.md`, module 12 through the end of Phase D, module 11 above its `module-11-boundary` marker (§6) |
+| Never in a normal run | module 11 below its `module-11-boundary` marker (§7–§8) and module 12 Phases E–G: the runner does them; read only for guarded recovery (`publish-after-push2.md`) |
 
 ## Order, messages, text lock, deliveries
 
