@@ -210,9 +210,10 @@ rule — no stricter and no looser:
   applied, recorded with its reason). Neither is sent to the founder: no menu of
   options, no yes/no on a proposal. Report G lists them all. **Hard Rule 13**
   still applies in full: a fact no real source answers is never guessed — it
-  goes into the single founder message **M1 at C.4.13**
-  (`.dentcast/workflows/publish-checkpoints.md`) and only the dependent action
-  waits. The only other founder message is **M2 at 4.12-ب** (exam questions),
+  goes into founder message **M1 (open facts)**, sent at the first step that
+  needs it (`.dentcast/workflows/publish-checkpoints.md`), and only the dependent
+  action waits; a glossary term has no paper, so M1 is rare, and it has no C.4.13
+  message M3b. The only other founder message is **M2 at 4.12-ب** (exam questions),
   which a glossary term skips as a documented skip (module 07).
 - Phase B **Question 2** (number/identifier) and **Question 4** (media) run as
   written: the number is stated and the run continues; media is asked only for
