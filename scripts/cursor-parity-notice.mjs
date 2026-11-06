@@ -13,7 +13,6 @@ const SKILL_COPIES = ['.claude/skills/', '.agents/skills/'];
 export function sideOf(value) {
   if (typeof value !== 'string') return null;
   const path = value.replace(/\\/g, '/');
-  if (/(^|\/)\.dentcast\/workflows\/legacy\//.test(path) || /\.legacy\.md$/.test(path)) return null;
   if (/(^|\/)(CLAUDE|AGENTS)\.md$/.test(path)) return 'entrypoint';
   if (/(^|\/)\.cursor\/rules\/[^/]+\.mdc$/.test(path)) return 'cursor';
   if (/(^|\/)\.dentcast\/workflows\/(?:global\/[^/]+|modules\/\d\d-[^/]+|[^/]+)\.md$/.test(path)) return 'canon';

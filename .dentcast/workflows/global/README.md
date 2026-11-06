@@ -49,4 +49,4 @@ files remain valid; use `--all --read` whenever their full context is required.
 
 Execution authority: `../README.md` («Authority»), stated only there. For new publication the twelve modules in `../modules/INDEX.md` are the complete instruction sequence; README routes them, not a monolithic fallback. User instructions take priority. A genuine contradiction in active instructions must be surfaced rather than resolved by loading backups.
 
-Source migration is documented in MIGRATION.json for audit only. Legacy snapshots are backup artifacts, never required reading or runtime authority. Existing references to AGENTS §6/7/8 or CLAUDE Repo conventions/Site-wide invariants resolve to these active files. Preserve scientific prompts and source-dependent DES/Fidelity exactly.
+Existing references to AGENTS §6/7/8 or CLAUDE Repo conventions/Site-wide invariants resolve to these active files. Preserve scientific prompts and source-dependent DES/Fidelity exactly.
