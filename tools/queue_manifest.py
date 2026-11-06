@@ -84,7 +84,12 @@ def status_fields(item):
     p = item / STATUS_FILE
     if not p.exists():
         raise QueueRefusal("STATUS_MISSING", f"{item.name}: {STATUS_FILE} is missing")
-    text = p.read_text(encoding="utf-8")
+    return {**status_from_text(p.read_text(encoding="utf-8")), "status_sha256": sha256_file(p)}
+
+
+def status_from_text(text):
+    """«وضعیت:» and «قفل:» of a 00-وضعیت.md text (lock None when empty, «-», «—» or «ندارد»).
+    Also used by `queue_publish.py status` on a file read straight from origin/queue."""
     status = lock = None
     for line in text.splitlines():
         t = re.sub(r"^[\s>*-]+", "", line).replace("*", "").strip()
@@ -94,7 +99,7 @@ def status_fields(item):
             lock = t.split(":", 1)[1].strip()
     if lock in (None, "", "-", "—", "ندارد"):
         lock = None
-    return {"status": status, "lock": lock, "status_sha256": sha256_file(p)}
+    return {"status": status, "lock": lock}
 
 
 def load_item(path, agent=None):

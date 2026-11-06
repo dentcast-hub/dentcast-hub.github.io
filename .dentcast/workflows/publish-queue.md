@@ -6,7 +6,8 @@
 > با ورکفلوی فعال را گزارش کن؛ ورکفلوی فعال برنده است.
 >
 > **روز انتشار** این فایل خوانده نمی‌شود: مسیرش فقط `.dentcast/workflows/queue-route.md`
-> است (ابزار `tools/queue_publish.py`، لجر `queue_lane_v1`، دو تحویل). قرارداد ابزارهای
+> است (تماماً روی GitHub Actions با `.github/workflows/queue-publish.yml` و ابزار `tools/queue_publish.py`، لجر
+> `queue_lane_v1`، دو تحویل؛ وضعیت انتشار نیمه‌کاره: `queue_publish.py status`). قرارداد ابزارهای
 > روز انتشار (نگاشت ورودی‌ها، پیش‌فرض‌های مکانیکی، نصب DES/Fidelity منجمد، دو استثنا) در
 > `.dentcast/workflows/queue-maintainer.md` است و فقط نگه‌دارندهٔ ابزار آن را می‌خواند.
 >

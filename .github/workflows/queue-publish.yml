@@ -1,0 +1,414 @@
+# Publish day of the queue lane, entirely on GitHub Actions
+# (.dentcast/workflows/queue-route.md). No agent moves file bytes between its
+# sandbox and GitHub: an agent, or the founder from the Actions tab, only
+# dispatches this workflow and monitors it.
+#
+# Job `publish` mirrors queue-route.md: pick -> lock (pushed to `queue`) ->
+# branch `queue-publish/<item folder>` fresh from origin/main -> run (the tool
+# itself commits and pushes Push 2). Any failure after the lock unlocks the item
+# again (`queue_publish.py unlock`), unless Push 2 already reached GitHub.
+# Job `await-delivery-3` waits for post-cut2-mechanical.yml on the exact Push-2
+# SHA and then opens the PR to main. The merge stays the founder's decision;
+# queue-publish-done.yml removes the item from `queue` after the merge.
+#
+# Repository secret QUEUE_PUBLISH_TOKEN (Settings -> Secrets and variables ->
+# Actions -> New repository secret): a fine-grained personal access token for
+# this repository only, with
+#   Contents: read and write      (lock/unlock on `queue`, Push 2)
+#   Pull requests: read and write (the PR to main)
+#   Actions: read                 (watching post-cut2-mechanical.yml)
+#   Metadata: read                (mandatory)
+# Why not GITHUB_TOKEN: pushes and PRs made with it do not trigger other
+# workflows, and post-cut2-mechanical.yml must be triggered by the Push-2 push
+# and the PR gates must run on the PR.
+name: Queue publish (publish day)
+run-name: "Queue publish ${{ inputs.nn || 'oldest ready' }} (${{ inputs.requested_by || 'GitHub Actions' }})"
+
+on:
+  workflow_dispatch:
+    inputs:
+      nn:
+        description: "Queue item NN (two digits). Empty: the oldest «آماده» item, like `queue_publish.py pick`."
+        required: false
+        type: string
+        default: ""
+      requested_by:
+        description: "Who asked (recorded as the lock name)"
+        required: false
+        type: string
+        default: "GitHub Actions"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: queue-publish
+  cancel-in-progress: false
+
+env:
+  # The publication date and the lock date are the founder's calendar day.
+  TZ: Asia/Tehran
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      nn: ${{ steps.pick.outputs.nn }}
+      item_name: ${{ steps.pick.outputs.item_name }}
+      branch: ${{ steps.run.outputs.branch }}
+      content_id: ${{ steps.run.outputs.content_id }}
+      push2_sha: ${{ steps.run.outputs.push2_sha }}
+      result: ${{ steps.run.outputs.result }}
+    steps:
+      - name: Require the QUEUE_PUBLISH_TOKEN secret
+        env:
+          TOKEN: ${{ secrets.QUEUE_PUBLISH_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            msg="Repository secret QUEUE_PUBLISH_TOKEN is not set (fine-grained PAT: Contents read/write, Pull requests read/write, Actions read, Metadata read). Nothing was picked or locked."
+            echo "::error::$msg"
+            { echo "## Queue publish: not started"; echo; echo "$msg"; } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
+      - name: Validate inputs
+        id: inputs
+        env:
+          NN: ${{ inputs.nn }}
+          REQUESTED_BY: ${{ inputs.requested_by }}
+        run: |
+          set -euo pipefail
+          NN="$(printf '%s' "$NN" | tr -d '[:space:]')"
+          if [[ -n "$NN" && ! "$NN" =~ ^[0-9]{2}$ ]]; then
+            echo "::error::nn must be two digits or empty, got «$NN»"; exit 1
+          fi
+          REQUESTED_BY="$(printf '%s' "$REQUESTED_BY" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+          [[ -n "$REQUESTED_BY" ]] || REQUESTED_BY="GitHub Actions"
+          if [[ "${#REQUESTED_BY}" -gt 60 ]] || printf '%s' "$REQUESTED_BY" | grep -q '[[:cntrl:]]'; then
+            echo "::error::requested_by must be one line of at most 60 characters"; exit 1
+          fi
+          {
+            echo "nn=$NN"
+            echo "requested_by=$REQUESTED_BY"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Check out the site (main)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: site
+          fetch-depth: 0
+          token: ${{ secrets.QUEUE_PUBLISH_TOKEN }}
+
+      # A sibling of site/, never inside it: `run` cleans site/ on a refusal.
+      - name: Check out the queue (branch queue)
+        uses: actions/checkout@v4
+        with:
+          ref: queue
+          path: queue-checkout
+          fetch-depth: 0
+          token: ${{ secrets.QUEUE_PUBLISH_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Configure the committer in both checkouts
+        run: |
+          set -euo pipefail
+          for d in site queue-checkout; do
+            git -C "$d" config user.name "github-actions[bot]"
+            git -C "$d" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          done
+
+      - name: Pick the item
+        id: pick
+        env:
+          NN: ${{ steps.inputs.outputs.nn }}
+        run: |
+          set -uo pipefail
+          args=(pick "$GITHUB_WORKSPACE/queue-checkout")
+          if [[ -n "$NN" ]]; then args+=(--nn "$NN"); fi
+          python3 site/tools/queue_publish.py "${args[@]}" > "$RUNNER_TEMP/pick.json"
+          rc=$?
+          cat "$RUNNER_TEMP/pick.json"
+          [[ $rc -eq 0 ]] || exit $rc
+          python3 - "$RUNNER_TEMP/pick.json" >> "$GITHUB_OUTPUT" <<'PY'
+          import json, os, sys
+          out = json.load(open(sys.argv[1], encoding="utf-8"))
+          print(f"item={out['item']}")
+          print(f"item_name={os.path.basename(out['item'])}")
+          print(f"nn={out['nn']}")
+          PY
+
+      - name: Name the publication branch and refuse one that already exists
+        id: branch
+        env:
+          ITEM_NAME: ${{ steps.pick.outputs.item_name }}
+          NN: ${{ steps.pick.outputs.nn }}
+        run: |
+          set -euo pipefail
+          # No document fixes the name; this workflow uses queue-publish/<item folder>.
+          BRANCH="queue-publish/$ITEM_NAME"
+          git check-ref-format --branch "$BRANCH" > /dev/null
+          existing="$(git -C site ls-remote --heads origin "refs/heads/queue-publish/$NN-*")"
+          if [[ -n "$existing" ]]; then
+            echo "::error::a publication branch for queue item $NN already exists; run \`python3 tools/queue_publish.py status\` and follow its next_step"
+            printf '%s\n' "$existing"
+            printf '%s\n' "{\"status\": \"refused\", \"code\": \"BRANCH_EXISTS\", \"message\": \"queue-publish/$NN-* already exists on origin; nothing was locked\"}" > "$RUNNER_TEMP/branch.json"
+            exit 1
+          fi
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: Lock the item and push the queue branch
+        id: lock
+        env:
+          ITEM: ${{ steps.pick.outputs.item }}
+          REQUESTED_BY: ${{ steps.inputs.outputs.requested_by }}
+        run: |
+          set -uo pipefail
+          python3 site/tools/queue_publish.py lock "$ITEM" --agent "$REQUESTED_BY" > "$RUNNER_TEMP/lock.json"
+          rc=$?
+          cat "$RUNNER_TEMP/lock.json"
+          [[ $rc -eq 0 ]] || exit $rc
+          for wait in 0 3 6 12; do
+            sleep "$wait"
+            if git -C queue-checkout push -q origin HEAD:refs/heads/queue; then
+              echo "locked=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            # someone else pushed to queue meanwhile: replay the one lock commit on top
+            if ! git -C queue-checkout pull -q --rebase origin queue; then
+              git -C queue-checkout rebase --abort || true
+              echo "::error::the lock commit does not rebase onto origin/queue; the item was not locked"
+              exit 1
+            fi
+          done
+          echo "::error::git push of the lock commit to queue failed; the item was not locked"
+          exit 1
+
+      - name: Create the publication branch fresh from origin/main
+        env:
+          BRANCH: ${{ steps.branch.outputs.branch }}
+        run: |
+          set -euo pipefail
+          git -C site fetch -q --no-tags origin main
+          git -C site checkout -q -b "$BRANCH" origin/main
+          test -z "$(git -C site status --porcelain)"
+
+      - name: Run the item (the tool commits and pushes Push 2)
+        id: run
+        env:
+          ITEM: ${{ steps.pick.outputs.item }}
+          REQUESTED_BY: ${{ steps.inputs.outputs.requested_by }}
+        run: |
+          set -uo pipefail
+          python3 site/tools/queue_publish.py run "$ITEM" --agent "$REQUESTED_BY" > "$RUNNER_TEMP/run.json"
+          rc=$?
+          cat "$RUNNER_TEMP/run.json"
+          [[ $rc -eq 0 ]] || exit $rc
+          python3 - "$RUNNER_TEMP/run.json" >> "$GITHUB_OUTPUT" <<'PY'
+          import json, sys
+          out = json.load(open(sys.argv[1], encoding="utf-8"))
+          assert out.get("status") == "push2_delivered", out
+          print(f"branch={out['branch']}")
+          print(f"content_id={out['content_id']}")
+          print(f"push2_sha={out['push2_sha']}")
+          print("result=" + json.dumps(out, ensure_ascii=False, separators=(",", ":")))
+          PY
+
+      - name: Unlock the item after a failed run (never after Push 2)
+        if: failure() && steps.lock.outputs.locked == 'true'
+        env:
+          BRANCH: ${{ steps.branch.outputs.branch }}
+          ITEM_NAME: ${{ steps.pick.outputs.item_name }}
+          REQUESTED_BY: ${{ steps.inputs.outputs.requested_by }}
+        run: |
+          set -uo pipefail
+          if [[ -n "$(git -C site ls-remote --heads origin "refs/heads/$BRANCH")" ]]; then
+            msg="$BRANCH exists on origin: Push 2 reached GitHub, so the item stays locked. Run \`python3 tools/queue_publish.py status\` and follow its next_step."
+            echo "::error::$msg"
+            printf '%s\n' "{\"status\": \"not_unlocked\", \"code\": \"PUSH2_ON_ORIGIN\", \"message\": \"$msg\"}" > "$RUNNER_TEMP/unlock.json"
+            exit 1
+          fi
+          git -C queue-checkout fetch -q origin queue
+          git -C queue-checkout reset -q --hard FETCH_HEAD
+          python3 site/tools/queue_publish.py unlock "$GITHUB_WORKSPACE/queue-checkout/queue/$ITEM_NAME" \
+            --agent "$REQUESTED_BY" > "$RUNNER_TEMP/unlock.json"
+          rc=$?
+          cat "$RUNNER_TEMP/unlock.json"
+          [[ $rc -eq 0 ]] || exit $rc
+          for wait in 0 3 6 12; do
+            sleep "$wait"
+            if git -C queue-checkout push -q origin HEAD:refs/heads/queue; then exit 0; fi
+            git -C queue-checkout pull -q --rebase origin queue || { git -C queue-checkout rebase --abort || true; break; }
+          done
+          echo "::error::the unlock commit could not be pushed; the item is still locked on queue (founder: unlock --force)"
+          exit 1
+
+      - name: Summarize
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+          BRANCH: ${{ steps.branch.outputs.branch }}
+          PUSH2_SHA: ${{ steps.run.outputs.push2_sha }}
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+        run: |
+          python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, os, urllib.parse
+          tmp, env = os.environ["RUNNER_TEMP"], os.environ
+          def load(name):
+              try:
+                  return open(os.path.join(tmp, name), encoding="utf-8").read().strip()
+              except OSError:
+                  return None
+          print("## Queue publish (publish day)\n")
+          print(f"- Job result: **{env['JOB_STATUS']}**")
+          run = load("run.json")
+          out = None
+          try:
+              out = json.loads(run) if run else None
+          except ValueError:
+              pass
+          if out and out.get("status") == "push2_delivered":
+              q = urllib.parse.quote(out["branch"], safe="")
+              print(f"- content_id: `{out['content_id']}`")
+              print(f"- Branch: `{out['branch']}`")
+              print(f"- Push-2 SHA: `{out['push2_sha']}`")
+              print(f"- Delivery 3: [post-cut2-mechanical runs for this branch]"
+                    f"({env['REPO_URL']}/actions/workflows/post-cut2-mechanical.yml?query=branch%3A{q})")
+              print(f"\n{out.get('message', '')}\n")
+              print("### mechanical_defaults\n")
+              for d in out.get("mechanical_defaults") or []:
+                  print("- " + json.dumps(d, ensure_ascii=False))
+              if not out.get("mechanical_defaults"):
+                  print("- none")
+              print("\n### manual_steps\n")
+              for d in out.get("manual_steps") or []:
+                  print("- " + (d if isinstance(d, str) else json.dumps(d, ensure_ascii=False)))
+              if not out.get("manual_steps"):
+                  print("- none")
+          for title, name in (("pick", "pick.json"), ("branch", "branch.json"), ("lock", "lock.json"),
+                              ("run", "run.json"), ("unlock", "unlock.json")):
+              text = load(name)
+              if text:
+                  print(f"\n### `{title}` output (verbatim)\n\n```json\n{text}\n```")
+          PY
+
+  await-delivery-3:
+    needs: publish
+    if: needs.publish.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      GH_TOKEN: ${{ secrets.QUEUE_PUBLISH_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+      BRANCH: ${{ needs.publish.outputs.branch }}
+      PUSH2_SHA: ${{ needs.publish.outputs.push2_sha }}
+      CONTENT_ID: ${{ needs.publish.outputs.content_id }}
+      NN: ${{ needs.publish.outputs.nn }}
+      RESULT: ${{ needs.publish.outputs.result }}
+    steps:
+      - name: Wait for post-cut2-mechanical.yml on the exact Push-2 SHA
+        id: wait
+        run: |
+          set -uo pipefail
+          enc="$(jq -rn --arg b "$BRANCH" '$b|@uri')"
+          deadline=$(( $(date +%s) + 40 * 60 ))
+          run=""
+          while :; do
+            page="$(gh api "repos/$GH_REPO/actions/workflows/post-cut2-mechanical.yml/runs?branch=$enc&head_sha=$PUSH2_SHA&per_page=20" 2>/dev/null || echo '{}')"
+            run="$(jq -c --arg s "$PUSH2_SHA" '[.workflow_runs[]? | select(.head_sha == $s and .event == "push")] | first // empty' <<<"$page")"
+            if [[ -n "$run" ]]; then
+              echo "run: $(jq -r '"\(.html_url) \(.status) \(.conclusion)"' <<<"$run")"
+              [[ "$(jq -r .status <<<"$run")" == "completed" ]] && break
+            else
+              echo "no post-cut2 run for $PUSH2_SHA yet"
+            fi
+            if (( $(date +%s) >= deadline )); then
+              echo "outcome=timeout" >> "$GITHUB_OUTPUT"
+              if [[ -n "$run" ]]; then echo "run_url=$(jq -r '.html_url // empty' <<<"$run")" >> "$GITHUB_OUTPUT"; fi
+              exit 1
+            fi
+            sleep 30
+          done
+          id="$(jq -r .id <<<"$run")"
+          echo "run_url=$(jq -r .html_url <<<"$run")" >> "$GITHUB_OUTPUT"
+          conclusion="$(jq -r .conclusion <<<"$run")"
+          mech="$(gh api "repos/$GH_REPO/actions/runs/$id/jobs" --jq '.jobs[] | select(.name == "mechanical-continuation") | .conclusion' || true)"
+          if [[ "$conclusion" != "success" || "$mech" != "success" ]]; then
+            echo "outcome=failure (run: $conclusion, mechanical-continuation: ${mech:-not run})" >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
+          head="$(gh api "repos/$GH_REPO/branches/$enc" --jq .commit.sha)"
+          if [[ -z "$head" || "$head" == "$PUSH2_SHA" ]] || gh api "repos/$GH_REPO/contents/.dentcast/PUBLISH-HANDOFF.md?ref=$head" > /dev/null 2>&1; then
+            echo "outcome=failure (the run succeeded but delivery 3 is not on $BRANCH: head $head)" >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
+          {
+            echo "outcome=success"
+            echo "delivery3_sha=$head"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Open the PR to main (the merge stays the founder's decision)
+        id: pr
+        env:
+          RUN_URL: ${{ steps.wait.outputs.run_url }}
+          DELIVERY3_SHA: ${{ steps.wait.outputs.delivery3_sha }}
+        run: |
+          set -euo pipefail
+          python3 - > "$RUNNER_TEMP/pr-body.md" <<'PY'
+          import json, os
+          e = os.environ
+          out = json.loads(e["RESULT"])
+          print(f"Queue item {e['NN']} published as `{e['CONTENT_ID']}` by `queue-publish.yml`.\n")
+          print(f"- Branch: `{e['BRANCH']}`")
+          print(f"- Push-2 SHA: `{e['PUSH2_SHA']}`")
+          print(f"- Delivery 3: {e['RUN_URL']} (head `{e['DELIVERY3_SHA']}`)\n")
+          print("mechanical_defaults:")
+          for d in out.get("mechanical_defaults") or []:
+              print("- " + json.dumps(d, ensure_ascii=False))
+          if not out.get("mechanical_defaults"):
+              print("- none")
+          print("\nmanual_steps:")
+          for d in out.get("manual_steps") or []:
+              print("- " + (d if isinstance(d, str) else json.dumps(d, ensure_ascii=False)))
+          if not out.get("manual_steps"):
+              print("- none")
+          print("\nMerge when every gate is green (founder's decision, queue-route.md). After the merge "
+                "`queue-publish-done.yml` removes the item from `queue`.")
+          PY
+          # REST, not `gh pr create`: the same call works where GraphQL is blocked.
+          if ! url="$(gh api "repos/$GH_REPO/pulls" -f title="$CONTENT_ID: publish queue item $NN" \
+                -f head="$BRANCH" -f base=main -F body=@"$RUNNER_TEMP/pr-body.md" --jq .html_url)"; then
+            owner="${GH_REPO%%/*}"
+            url="$(gh api "repos/$GH_REPO/pulls?state=open&head=$owner:$BRANCH" --jq '.[0].html_url // empty')"
+            [[ -n "$url" ]] || { echo "::error::the PR could not be opened"; exit 1; }
+          fi
+          echo "pr_url=$url" >> "$GITHUB_OUTPUT"
+
+      - name: Summarize
+        if: always()
+        env:
+          OUTCOME: ${{ steps.wait.outputs.outcome }}
+          RUN_URL: ${{ steps.wait.outputs.run_url }}
+          PR_URL: ${{ steps.pr.outputs.pr_url }}
+        run: |
+          {
+            echo "## Delivery 3 and the PR"
+            echo
+            printf '%s\n' "- content_id: \`$CONTENT_ID\`" "- Branch: \`$BRANCH\`" "- Push-2 SHA: \`$PUSH2_SHA\`"
+            printf '%s\n' "- post-cut2-mechanical: ${OUTCOME:-unknown} ${RUN_URL:+($RUN_URL)}"
+            if [[ -n "$PR_URL" ]]; then
+              printf '%s\n' "- PR: $PR_URL (merge when every gate is green; the merge is the founder's decision)"
+            else
+              printf '%s\n' "- PR: not opened. Run \`python3 tools/queue_publish.py status\` and follow its next_step."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

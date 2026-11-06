@@ -1,0 +1,150 @@
+# Queue cleanup after a queue-lane PR is merged (queue-route.md, last step):
+# `queue_publish.py done` removes the item folder from branch `queue` in one
+# commit `queue: NN published as <content_id> (PR #n)`, pushed with
+# QUEUE_PUBLISH_TOKEN (the same fine-grained PAT as queue-publish.yml:
+# Contents read/write, Pull requests read/write, Actions read, Metadata read).
+#
+# NN comes from the head branch `queue-publish/NN-...`; the item is the one
+# folder `queue/NN-*` (so a hand-made branch name still finds it).
+# content_id comes from the Push-2 commit subject on the merged head,
+# `<content_id>: publish queue item NN (queue lane, Push 2)`: queue_publish.py
+# run writes it itself, it is immutable history, and it survives delivery 3,
+# which deletes the handoff. It is cross-checked against the completion receipt
+# on the merge commit and, when the PR title has the queue-publish.yml shape,
+# against the title. An item that is already gone (manual `done`) is not an
+# error.
+name: Queue publish cleanup (after merge)
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: queue-publish-done
+  cancel-in-progress: false
+
+jobs:
+  done:
+    if: >-
+      github.event.pull_request.merged == true &&
+      startsWith(github.event.pull_request.head.ref, 'queue-publish/') &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ secrets.QUEUE_PUBLISH_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+      HEAD_REF: ${{ github.event.pull_request.head.ref }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      PR_TITLE: ${{ github.event.pull_request.title }}
+      MERGE_SHA: ${{ github.event.pull_request.merge_commit_sha }}
+    steps:
+      - name: Require the QUEUE_PUBLISH_TOKEN secret
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            msg="Repository secret QUEUE_PUBLISH_TOKEN is not set: the queue item was not removed. Run \`queue_publish.py done\` by hand (queue-route.md)."
+            echo "::error::$msg"
+            { echo "## Queue cleanup: not run"; echo; echo "$msg"; } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
+      - name: Derive NN and content_id from the merged PR
+        id: facts
+        run: |
+          set -euo pipefail
+          if [[ ! "$HEAD_REF" =~ ^queue-publish/([0-9]{2})- ]]; then
+            echo "::error::head branch «$HEAD_REF» is not queue-publish/NN-..."; exit 1
+          fi
+          NN="${BASH_REMATCH[1]}"
+          subjects="$(gh api --paginate "repos/$GH_REPO/pulls/$PR_NUMBER/commits?per_page=100" \
+                      --jq '.[].commit.message | split("\n")[0]')"
+          cid="$(printf '%s\n' "$subjects" | sed -nE "s#^([a-z]+/[A-Za-z0-9-]+): publish queue item $NN \(queue lane, Push 2\)\$#\1#p" | sort -u)"
+          if [[ -z "$cid" || "$(printf '%s\n' "$cid" | wc -l)" -ne 1 ]]; then
+            echo "::error::no single Push-2 commit «<content_id>: publish queue item $NN (queue lane, Push 2)» in PR #$PR_NUMBER"; exit 1
+          fi
+          if [[ "$PR_TITLE" =~ ^([a-z]+/[A-Za-z0-9-]+):\ publish\ queue\ item\ ([0-9]{2})$ ]]; then
+            if [[ "${BASH_REMATCH[1]}" != "$cid" || "${BASH_REMATCH[2]}" != "$NN" ]]; then
+              echo "::error::PR title «$PR_TITLE» disagrees with the Push-2 commit ($cid, $NN)"; exit 1
+            fi
+          fi
+          receipt=".dentcast/publication-reports/${cid%%/*}/${cid##*/}.completion.json"
+          if ! gh api "repos/$GH_REPO/contents/$receipt?ref=$MERGE_SHA" > /dev/null 2>&1; then
+            echo "::error::$receipt is not on the merge commit: the publication is not verifiably complete, the item stays in queue"; exit 1
+          fi
+          {
+            echo "nn=$NN"
+            echo "content_id=$cid"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Check out the tools (main)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: site
+          sparse-checkout: tools
+
+      - name: Check out the queue (branch queue)
+        uses: actions/checkout@v4
+        with:
+          ref: queue
+          path: queue-checkout
+          fetch-depth: 0
+          token: ${{ secrets.QUEUE_PUBLISH_TOKEN }}
+
+      - name: Remove the item from queue and push
+        id: done
+        env:
+          NN: ${{ steps.facts.outputs.nn }}
+          CONTENT_ID: ${{ steps.facts.outputs.content_id }}
+        run: |
+          set -uo pipefail
+          git -C queue-checkout config user.name "github-actions[bot]"
+          git -C queue-checkout config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          shopt -s nullglob
+          items=(queue-checkout/queue/"$NN"-*/)
+          if [[ ${#items[@]} -eq 0 ]]; then
+            echo "already=true" >> "$GITHUB_OUTPUT"
+            echo "queue item $NN is no longer on queue (removed by hand): nothing to do"
+            exit 0
+          fi
+          if [[ ${#items[@]} -ne 1 ]]; then
+            echo "::error::several folders queue/$NN-*: ${items[*]}"; exit 1
+          fi
+          python3 site/tools/queue_publish.py "done" "${items[0]%/}" --content-id "$CONTENT_ID" --pr "$PR_NUMBER" \
+            > "$RUNNER_TEMP/done.json"
+          rc=$?
+          cat "$RUNNER_TEMP/done.json"
+          [[ $rc -eq 0 ]] || exit $rc
+          for wait in 0 3 6 12; do
+            sleep "$wait"
+            if git -C queue-checkout push -q origin HEAD:refs/heads/queue; then exit 0; fi
+            git -C queue-checkout pull -q --rebase origin queue || { git -C queue-checkout rebase --abort || true; break; }
+          done
+          echo "::error::the cleanup commit could not be pushed to queue; run \`queue_publish.py done\` by hand"
+          exit 1
+
+      - name: Summarize
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+          NN: ${{ steps.facts.outputs.nn }}
+          CONTENT_ID: ${{ steps.facts.outputs.content_id }}
+          ALREADY: ${{ steps.done.outputs.already }}
+        run: |
+          {
+            echo "## Queue cleanup after PR #$PR_NUMBER"
+            echo
+            printf '%s\n' "- Head branch: \`$HEAD_REF\`" "- Queue item: ${NN:-?}" "- content_id: \`${CONTENT_ID:-?}\`"
+            if [[ "$ALREADY" == "true" ]]; then
+              echo "- The item was already removed from \`queue\` (manual \`done\`): nothing to do."
+            else
+              echo "- Job result: **$JOB_STATUS**"
+            fi
+            if [[ -f "$RUNNER_TEMP/done.json" ]]; then
+              fence='```'
+              printf '\n%sjson\n%s\n%s\n' "$fence" "$(cat "$RUNNER_TEMP/done.json")" "$fence"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

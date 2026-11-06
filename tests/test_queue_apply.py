@@ -454,6 +454,197 @@ class QueuePublishTests(ManifestTests):
         self.assertEqual(log.strip(), "queue: 05 lock for publishing")
         self.assertTrue(qm.load_item(out["item"], agent="Claude Code"))
 
+    def _queue_repo(self, *folders):
+        import subprocess
+        root = Path(tempfile.mkdtemp())
+        (root / "queue").mkdir()
+        for name, kw in folders:
+            self.make_item(**kw).rename(root / "queue" / name)
+        for c in (["init", "-q", "-b", "queue"], ["config", "user.name", "t"], ["config", "user.email", "t@x"],
+                  ["add", "-A"], ["commit", "-qm", "init"]):
+            subprocess.run(["git", *c], cwd=root, check=True)
+        return root
+
+    def _subject(self, root):
+        import subprocess
+        return subprocess.run(["git", "log", "--format=%s", "-1"], cwd=root, capture_output=True,
+                              text=True).stdout.strip()
+
+    def test_unlock_is_the_inverse_of_lock(self):
+        import queue_publish as qp
+        root = self._queue_repo(("05-sharehub-b", {}))
+        item = root / "queue" / "05-sharehub-b"
+        before = (item / "00-وضعیت.md").read_text(encoding="utf-8")
+        qp.lock(item, "GitHub Actions")
+        with self.assertRaises(qp.Stop) as e:
+            qp.pick(root)
+        self.assertEqual(e.exception.detail["code"], "NO_READY_ITEM")
+        out = qp.unlock(item, "GitHub Actions")
+        self.assertEqual((out["status"], out["forced"]), ("unlocked", False))
+        self.assertTrue(out["previous_lock"].startswith("GitHub Actions، "))
+        self.assertEqual(self._subject(root), "queue: 05 unlock (publish run aborted)")
+        st = qm.status_fields(item)
+        self.assertEqual((st["status"], st["lock"]), ("آماده", None))
+        self.assertEqual((item / "00-وضعیت.md").read_text(encoding="utf-8"),
+                         before.replace("- قفل: \n", "- قفل: ندارد\n"))
+        self.assertEqual(Path(qp.pick(root)["item"]).name, "05-sharehub-b")
+        self.assertTrue(qm.load_item(item))
+        with self.assertRaises(qp.Stop) as e:
+            qp.unlock(item, "GitHub Actions")
+        self.assertEqual(e.exception.detail["code"], "NOT_PUBLISHING")
+
+    def test_unlock_refuses_a_foreign_lock_unless_forced(self):
+        import queue_publish as qp
+        root = self._queue_repo(("05-sharehub-b", {}))
+        item = root / "queue" / "05-sharehub-b"
+        qp.lock(item, "Codex")
+        with self.assertRaises(qp.Stop) as e:
+            qp.unlock(item, "Claude Code")
+        self.assertEqual(e.exception.detail["code"], "FOREIGN_LOCK")
+        self.assertEqual(self._subject(root), "queue: 05 lock for publishing")
+        self.assertEqual(qm.status_fields(item)["status"], "در حال انتشار")
+        out = qp.unlock(item, "Founder", force=True)
+        self.assertTrue(out["forced"])
+        self.assertEqual(qm.status_fields(item)["lock"], None)
+
+
+class QueueStatusTests(ManifestTests):
+    """`queue_publish.py status` against a fake origin (bare repo) and a stubbed GitHub API."""
+    BRANCH = "queue-publish/05-sharehub-b"
+
+    def git(self, cwd, *args):
+        import subprocess
+        return subprocess.run(["git", *args], cwd=cwd, check=True, capture_output=True, text=True).stdout.strip()
+
+    def setUp(self):
+        import queue_publish as qp
+        self.qp = qp
+        self.origin = Path(tempfile.mkdtemp()) / "origin.git"
+        self.git(self.origin.parent, "init", "-q", "--bare", self.origin.name)
+        work = self.work = Path(tempfile.mkdtemp())
+        self.git(work, "init", "-q", "-b", "main")
+        self.git(work, "config", "user.name", "t")
+        self.git(work, "config", "user.email", "t@x")
+        self.git(work, "remote", "add", "origin", str(self.origin))
+        (work / "index.html").write_text("site\n", encoding="utf-8")
+        self.git(work, "add", "-A")
+        self.git(work, "commit", "-qm", "site")
+        self.git(work, "push", "-q", "origin", "main")
+        # the queue branch: one item locked by the publish run
+        self.git(work, "checkout", "-q", "--orphan", "queue")
+        self.git(work, "rm", "-rq", "--cached", ".")
+        (work / "index.html").unlink()
+        (work / "queue").mkdir()
+        self.make_item(status="در حال انتشار", lock="GitHub Actions، 2026-11-06").rename(
+            work / "queue" / "05-sharehub-b")
+        self.make_item().rename(work / "queue" / "06-sharehub-c")
+        self.git(work, "add", "-A")
+        self.git(work, "commit", "-qm", "queue")
+        self.git(work, "push", "-q", "origin", "queue")
+        self.git(work, "checkout", "-q", "main")
+        self.site = Path(tempfile.mkdtemp()) / "site"
+        self.git(self.site.parent, "clone", "-q", str(self.origin), "site")
+        self.runs, self.prs = [], []
+
+    def api(self, path):
+        if "/actions/workflows/post-cut2-mechanical.yml/runs?" in path:
+            self.assertIn("branch=queue-publish%2F05-sharehub-b", path)
+            return None if self.runs is None else {"workflow_runs": self.runs}
+        if "/pulls?" in path:
+            self.assertIn("head=o%3Aqueue-publish%2F05-sharehub-b", path)
+            return self.prs
+        raise AssertionError(path)
+
+    def push2(self):
+        w = self.work
+        self.git(w, "checkout", "-q", "-b", self.BRANCH, "main")
+        (w / ".dentcast").mkdir(exist_ok=True)
+        (w / ".dentcast" / "PUBLISH-HANDOFF.md").write_text("handoff\n", encoding="utf-8")
+        (w / "sharehub").mkdir(exist_ok=True)
+        (w / "sharehub" / "share-9.html").write_text("page\n", encoding="utf-8")
+        self.git(w, "add", "-A")
+        self.git(w, "commit", "-qm", "sharehub/share-9: publish queue item 05 (queue lane, Push 2)")
+        self.git(w, "push", "-q", "origin", self.BRANCH)
+        return self.git(w, "rev-parse", "HEAD")
+
+    def status(self):
+        return self.qp.status(repo=self.site, slug="o/r", api=self.api)
+
+    def test_idle_when_nothing_is_locked(self):
+        root = Path(tempfile.mkdtemp())
+        (root / "queue").mkdir()
+        self.make_item().rename(root / "queue" / "06-sharehub-c")
+        self.make_item(status="در حال آماده‌سازی", lock="Codex Work، 2026-11-01").rename(root / "queue" / "07-sharehub-d")
+        out = self.qp.status(root, repo=self.site, slug="o/r", api=self.api)
+        self.assertEqual((out["state"], out["items"]), ("IDLE", []))
+        self.assertEqual([x["item"] for x in out["other_locks"]], ["07-sharehub-d"])
+
+    def test_locked_without_branch(self):
+        out = self.status()
+        self.assertEqual(out["queue"]["source"], "origin/queue")
+        self.assertEqual((out["locked"], out["state"]), (1, "LOCKED_NO_BRANCH"))
+        self.assertIn("unlock queue/05-sharehub-b", out["next_step"])
+
+    def test_push2_without_run_prints_exact_dispatch_inputs(self):
+        head = self.push2()
+        out = self.status()
+        row = out["items"][0]
+        self.assertEqual(out["state"], "PUSH2_NO_RUN")
+        self.assertEqual((row["branch"], row["head"], row["push2_sha"], row["content_id"]),
+                         (self.BRANCH, head, head, "sharehub/share-9"))
+        self.assertEqual(row["dispatch"]["inputs"], {"target_branch": self.BRANCH, "expected_head": head})
+        self.assertEqual(row["dispatch"]["ref"], self.BRANCH)
+
+    def test_run_states_and_unknown_api(self):
+        head = self.push2()
+        self.runs = [{"id": 1, "head_sha": head, "status": "in_progress", "html_url": "u1"}]
+        self.assertEqual(self.status()["state"], "PUSH2_RUN_IN_PROGRESS")
+        self.runs = [{"id": 2, "head_sha": head, "status": "completed", "conclusion": "failure", "html_url": "u2"}]
+        out = self.status()
+        self.assertEqual(out["state"], "PUSH2_RUN_FAILED")
+        self.assertEqual(out["items"][0]["post_cut2"]["for_head"]["id"], 2)
+        self.runs = None
+        self.assertEqual(self.status()["state"], "PUSH2_RUN_UNKNOWN")
+
+    def test_commit_after_the_handoff_needs_reconciliation(self):
+        handoff_commit = self.push2()
+        (self.work / "index.html").write_text("repaired\n", encoding="utf-8")
+        self.git(self.work, "commit", "-qam", "repair bytes")
+        self.git(self.work, "push", "-q", "origin", self.BRANCH)
+        self.runs = [{"id": 3, "head_sha": handoff_commit, "status": "completed", "conclusion": "failure"}]
+        row = self.status()["items"][0]
+        self.assertEqual(row["state"], "PUSH2_RECONCILIATION_REQUIRED")
+        self.assertEqual(row["handoff_commit"], handoff_commit)
+        self.assertEqual(row["commits_after_handoff"], [row["head"]])
+        self.assertIn("--reconcile-note", row["next_step"])
+
+    def test_delivery3_and_pr_states(self):
+        self.push2()
+        w = self.work
+        self.git(w, "rm", "-q", ".dentcast/PUBLISH-HANDOFF.md")
+        rep = w / ".dentcast" / "publication-reports" / "sharehub"
+        rep.mkdir(parents=True)
+        (rep / "share-9.completion.json").write_text("{}\n", encoding="utf-8")
+        self.git(w, "add", "-A")
+        self.git(w, "commit", "-qm", "delivery 3")
+        self.git(w, "push", "-q", "origin", self.BRANCH)
+        self.assertEqual(self.status()["state"], "DELIVERY3_NO_PR")
+        self.prs = None
+        self.assertEqual(self.status()["state"], "PR_UNKNOWN")
+        self.prs = [{"number": 7, "state": "open", "merged_at": None}]
+        self.assertEqual(self.status()["state"], "PR_OPEN")
+        self.prs = [{"number": 7, "state": "closed", "merged_at": "2026-11-06T10:00:00Z"}]
+        out = self.status()
+        self.assertEqual(out["state"], "PR_MERGED_ITEM_IN_QUEUE")
+        self.assertIn("--content-id sharehub/share-9 --pr 7", out["next_step"])
+
+    def test_status_never_mutates_the_queue_or_branches(self):
+        self.push2()
+        before = self.git(self.site, "ls-remote", "origin")
+        self.status()
+        self.assertEqual(self.git(self.site, "ls-remote", "origin"), before)
+        self.assertEqual(self.git(self.site, "status", "--porcelain"), "")
+
 
 if __name__ == "__main__":
     unittest.main()
