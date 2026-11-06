@@ -239,6 +239,111 @@ class StampTests(unittest.TestCase):
             self.assertFalse((item / "SHA256SUMS").exists())
 
 
+DOI_A, DOI_B, DOI_C = "10.1111/jopr.14059", "10.1186/s12903-025-06214-9", "10.2186/jpr.JPR_D_25_00028"
+AUTH_A = ["Ahmed Mahrous", "David L. Botsko", "Tamer El-Gendy", "Amira Elgreatly"]
+AUTH_B = ["Mohamed Elgamal", "Abdallah Mohammed Ibrahim"]
+
+
+def checked_files(**over):
+    """A queue item whose 04/05/09/10/08/11 have the real shapes and agree with each other."""
+    refs = (f"# منابع\n\n1. Mahrous A, Botsko DL, El-Gendy T, Elgreatly A. “Enhancing digital workflows.” *J Prosthodont*. "
+            f"2026. DOI: https://doi.org/{DOI_A}\n2. Elgamal M, Ibrahim AM. “Accuracy assessment.” *BMC Oral Health*. "
+            f"2025. DOI: https://doi.org/{DOI_B}\n3. Alqutaibi AY, et al. “A systematic review.” 2026. "
+            f"DOI: https://doi.org/{DOI_C}\n")
+    catalog = [{"doi": DOI_A, "authors": AUTH_A}, {"doi": DOI_B, "authors": AUTH_B},
+               {"doi": DOI_C, "link_existing": True}]
+    des = {"sources": [{"citation": {"doi": DOI_A.lower(), "authors": ", ".join(AUTH_A)}},
+                       {"citation": {"doi": DOI_B.lower(), "authors": ", ".join(AUTH_B)}}]}
+    cards = {"definedTermSets": [{"@type": "DefinedTermSet", "@id": "{{PAGE_URL}}#flashcards", "hasDefinedTerm": [
+        {"@type": "DefinedTerm", "@id": "{{PAGE_URL}}#flashcards-c1", "name": "مسیر ورود",
+         "description": "مسیری که پروتز پارسیل در آن وارد و خارج می‌شود و جای آندرکات‌ها به آن وابسته است."}]}],
+        "faqPages": [{"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": "سوروی دیجیتال چه کمکی می‌کند؟",
+             "acceptedAnswer": {"@type": "Answer", "text": "ثبت شیب کست و طرح سوروی را برای لابراتوار نگه می‌دارد."}}]}]}
+    files = {
+        "01-متن.md": "در سوروی دیجیتال، مسیر ورود پروتز پارسیل تعیین می‌شود و آندرکات‌های قابل‌استفاده علامت می‌خورند.\n",
+        "06-انگلیسی.md": "Digital surveying sets the path of insertion of the removable partial denture.\n",
+        "04-منبع/منابع.md": refs,
+        "04-منبع/کاتالوگ.json": json.dumps(catalog, ensure_ascii=False),
+        "05-DES-Fidelity/des.json": json.dumps(des, ensure_ascii=False),
+        "09-کلیدواژه‌ها.md": "# کلیدواژه‌ها\n\n- مسیر ورود (Path of Insertion)\n- آندرکات‌های قابل‌استفاده\n"
+                             "- digital surveying for removable partial dentures\n",
+        "10-فلش‌کارت-FAQ.json": json.dumps(cards, ensure_ascii=False),
+        "08-سؤال‌های-آزمون.json": json.dumps({"questions": [{"prompt_fa": "مسیر ورود به چه وابسته است؟"}]},
+                                             ensure_ascii=False),
+        "11-لینک‌های-گلاسری.md": "# 11\n- main: {{main_sha}}\n- glossary: {{glossary_sha256}}\n- brain: {{brain_sha256}}\n",
+    }
+    for k, v in over.items():
+        files[k] = v if isinstance(v, str) else json.dumps(v, ensure_ascii=False)
+    return files
+
+
+class StampCheckTests(unittest.TestCase):
+    def item(self, t, **over):
+        return make_item(t, des=False, extra=checked_files(**over))
+
+    def test_clean_item_has_no_problems_or_warnings(self):
+        with tempfile.TemporaryDirectory() as t:
+            self.assertEqual(qs.checks(self.item(t)), {"problems": [], "warnings": []})
+
+    def test_author_order_mismatch_is_a_problem(self):
+        swapped = [AUTH_A[0], AUTH_A[2], AUTH_A[1], AUTH_A[3]]
+        with tempfile.TemporaryDirectory() as t:
+            des = {"sources": [{"citation": {"doi": DOI_A.lower(), "authors": ", ".join(swapped)}}]}
+            out = qs.checks(self.item(t, **{"05-DES-Fidelity/des.json": des}))
+            self.assertEqual(len(out["problems"]), 1, out)
+            self.assertIn(DOI_A, out["problems"][0])
+            self.assertIn("des.json", out["problems"][0])
+        with tempfile.TemporaryDirectory() as t:
+            refs = checked_files()["04-منبع/منابع.md"].replace("Botsko DL, El-Gendy T", "El-Gendy T, Botsko DL")
+            out = qs.checks(self.item(t, **{"04-منبع/منابع.md": refs}))
+            self.assertEqual(len(out["problems"]), 1, out)
+            self.assertIn("منابع.md", out["problems"][0])
+            item = Path(t) / "05-sharehub-test"
+            with contextlib.redirect_stdout(io.StringIO()) as buf:
+                self.assertEqual(qs.main([str(item), "--dry-run"]), 4)
+            self.assertEqual(json.loads(buf.getvalue())["checks"]["problems"], out["problems"])
+
+    def test_doi_missing_from_references_is_a_problem(self):
+        with tempfile.TemporaryDirectory() as t:
+            refs = "\n".join(l for l in checked_files()["04-منبع/منابع.md"].splitlines() if DOI_C not in l)
+            out = qs.checks(self.item(t, **{"04-منبع/منابع.md": refs}))
+            self.assertEqual(out["problems"], [f"P2 {DOI_C}: in 04-منبع/کاتالوگ.json but not in 04-منبع/منابع.md"])
+
+    def test_soft_findings_are_warnings_and_strict_makes_them_problems(self):
+        cards = json.loads(checked_files()["10-فلش‌کارت-FAQ.json"])
+        answer = cards["faqPages"][0]["mainEntity"][0]["acceptedAnswer"]
+        cards["definedTermSets"][0]["hasDefinedTerm"][0]["description"] = answer["text"].replace("نگه می‌دارد", "حفظ می‌کند")
+        cards["faqPages"][0]["mainEntity"].append({"@type": "Question", "name": "چرا مسیر ورود مهم است؟",
+                                                   "acceptedAnswer": {"text": "این مقاله آن را نخستین تصمیم طراحی می‌داند."}})
+        with tempfile.TemporaryDirectory() as t:
+            item = self.item(t, **{"10-فلش‌کارت-FAQ.json": cards,
+                                   "09-کلیدواژه‌ها.md": checked_files()["09-کلیدواژه‌ها.md"] + "- selective laser melting RPD\n",
+                                   "07-ورودی‌ها.md": "- pillar: x\n- hashtags: منتظر تأیید بنیان‌گذار\n"})
+            out = qs.checks(item)
+            self.assertEqual(out["problems"], [])
+            joined = "\n".join(out["warnings"])
+            for code, needle in (("W1", "selective laser melting RPD"), ("W2", "flashcards-c1"),
+                                 ("W3", "این مقاله"), ("W4", "07-ورودی‌ها.md:2")):
+                self.assertTrue(any(w.startswith(code) and needle in w for w in out["warnings"]), joined)
+            self.assertEqual(len(out["warnings"]), 4, joined)
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(qs.main([str(item), "--dry-run"]), 0)
+            with contextlib.redirect_stdout(io.StringIO()) as buf:
+                self.assertEqual(qs.main([str(item), "--dry-run", "--strict"]), 4)
+            self.assertEqual(len(json.loads(buf.getvalue())["checks"]["problems"]), 4)
+
+    def test_skip_object_and_absent_files_are_notes(self):
+        with tempfile.TemporaryDirectory() as t:
+            out = qs.checks(self.item(t, **{"10-فلش‌کارت-FAQ.json": {"skip": "no glossary terms"}}))
+            self.assertEqual(out["problems"], [])
+            self.assertEqual(out["warnings"], ["skipped: 10-فلش‌کارت-FAQ.json is a skip object"])
+        with tempfile.TemporaryDirectory() as t:
+            out = qs.checks(make_item(t))   # the minimal item: no 04, 09, 10
+            self.assertEqual(out["problems"], [])
+            self.assertTrue(out["warnings"] and all(w.startswith("skipped:") for w in out["warnings"]), out)
+
+
 def w(text, x0, top, upright=True):
     return {"text": text, "x0": x0, "x1": x0 + 6 * len(text), "top": top, "bottom": top + 9, "upright": upright}
 
@@ -278,6 +383,55 @@ class PdfSourceTextTests(unittest.TestCase):
                           f"fourth {'ijkl'[i]}", f"closing words {'wxyz'[i]}"]
         pages = [["PACHIOU et al. | 33%d" % i, *body(i)] for i in range(4)]
         self.assertEqual(pst.drop_furniture(pages), [body(i) for i in range(4)])
+
+    def test_glued_fraction_clean_vs_glued(self):
+        clean = [{"words": [w(t, 10 * i, 50) for i, t in enumerate(["the", "framework", "design", "o'clock", "well-known"])]}]
+        glued = [{"words": [w("theframeworkdesignofthestudy", 10, 50), w("and", 60, 50), w("a", 80, 50), w("b2", 90, 50),
+                            w("x" * 30, 100, 50, upright=False), w("12345678901234567890", 120, 50)]}]
+        self.assertEqual(pst.glued_fraction(clean), 0.0)
+        self.assertAlmostEqual(pst.glued_fraction(glued), 1 / 3)  # 1 of 3 alphabetic upright words
+        self.assertEqual(pst.glued_fraction([{"words": []}]), 0.0)
+
+    def run_main(self, argv):
+        with tempfile.TemporaryDirectory() as t:
+            out = Path(t) / "texts.json"
+            err = io.StringIO()
+            with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(err):
+                pst.main(["x.pdf", "--doi", "10.1/X", "-o", str(out), *argv])
+            return json.loads(out.read_text(encoding="utf-8")), err.getvalue()
+
+    def test_backend_pdftotext_skips_pdfplumber(self):
+        page = {"width": 595.0, "words": [w("Hello", 40, 50), w("world", 80, 50)]}
+        with patch.object(pst.shutil, "which", return_value="/usr/bin/pdftotext"), \
+                patch.object(pst, "words_pdftotext", return_value=[page]) as pt, \
+                patch.object(pst, "words_pdfplumber") as pl:
+            data, err = self.run_main(["--backend", "pdftotext"])
+        pt.assert_called_once()
+        pl.assert_not_called()
+        self.assertEqual(list(data), ["10.1/x"])
+        self.assertEqual(set(data["10.1/x"]), {"source_text", "text_basis"})
+        self.assertIn("backend=pdftotext", err)
+
+    def test_auto_falls_back_to_pdftotext_when_pdfplumber_glues_words(self):
+        glued = {"width": 595.0, "words": [w("theframeworkdesignofthestudy", 40, 50), w("andtheresultsofthetrial", 40, 62)]}
+        good = {"width": 595.0, "words": [w("the", 40, 50), w("framework", 70, 50)]}
+        with patch.object(pst.shutil, "which", return_value="/usr/bin/pdftotext"), \
+                patch.object(pst, "words_pdfplumber", return_value=[glued]) as pl, \
+                patch.object(pst, "words_pdftotext", return_value=[good]) as pt:
+            data, err = self.run_main([])
+        pl.assert_called_once()
+        pt.assert_called_once()
+        self.assertEqual(data["10.1/x"]["source_text"], "the framework")
+        self.assertIn("pdfplumber glued words (100.0% over 18 chars); re-read with pdftotext", err)
+        self.assertIn("backend=pdftotext", err)
+
+    def test_auto_keeps_pdfplumber_when_clean(self):
+        good = {"width": 595.0, "words": [w("the", 40, 50), w("framework", 70, 50)]}
+        with patch.object(pst, "words_pdfplumber", return_value=[good]), \
+                patch.object(pst, "words_pdftotext") as pt:
+            _, err = self.run_main([])
+        pt.assert_not_called()
+        self.assertIn("backend=pdfplumber", err)
 
     def test_real_pdf_round_trip_when_tools_exist(self):
         try:

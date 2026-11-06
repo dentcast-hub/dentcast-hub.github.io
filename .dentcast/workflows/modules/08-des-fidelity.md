@@ -427,8 +427,17 @@ Keep historical records and their provenance unchanged.
    unit, its neighbours, the sentences the runs quoted and, where a term is
    defined there, the source's Methods, then writes
    `<dir>/review.json` (`{"src<k>": {"u…": {"agree": true|false, "reason":
-   "…"}}}`). A dissent never flips the verdict: `--vote` appends it to the
-   unit's `note`, and Part 3b shows the founder both reasons side by side.
+   "…"}}}`). **A dissent settles the unit as `MATCHES`** (founder ruling
+   2026-11-06 / 1405/08/15, queue item 22, u45): the reviewer exists because
+   the lighter checkers can share a misreading, so their majority cannot
+   outrank it. On `agree: false`, `--vote` sets the verdict to `MATCHES` and
+   `change_kind` to `null`, keeps `source_quote`, and writes the majority's
+   verdict, kind and note with the reviewer's reason into `note`
+   («Checker majority: ALTERED/HEDGE_ADDED — …; overruled by the stronger
+   review: …»); counts, score, level and the Persian lines are recomputed.
+   `agree: true` keeps the flagged verdict for Part 3b. A flagged unit with
+   no review entry stays open. `--vote` prints the overruled ids; list them
+   to the founder in the report as information, never as a question.
 
 5. **Orphan sweep (spec v3.5 rule 12) — on a multi-source page it runs FIRST,
    before step 1** (the sweep-first block above).
@@ -534,7 +543,10 @@ run is unusable.
 carries any `ALTERED` or `REVERSED` unit, the publish **stops here, before
 Part 4 stores anything**, and the founder is shown each such sentence and asked
 whether to fix it. This is a gate of `agent-parity.md` §1 (never batched into
-the final report, never skipped because the grade is already high).
+the final report, never skipped because the grade is already high). Only units
+still flagged after the Part 2c step 4 review reach this gate; a unit the
+stronger review overruled is already `MATCHES` and is listed in the report as
+information, never asked.
 
 For **each** `ALTERED` / `REVERSED` unit, one block, in this order:
 
@@ -678,7 +690,8 @@ true; and the outcome of each of the five Part-3 checks. Per FIDELITY slot: the
 `level` and the word the reader will see for it («تطابق خیلی بالا», spec v2.8
 appendix rule 5), the count line («۵۰ از ۵۲ ادعایی که منابع به آن پرداخته‌اند
 مطابق است؛ ۴ جملهٔ دیگر در منابع نیامده»), every `ALTERED` and `REVERSED` unit
-with its `change_kind`, or the reason for a `null` or `INSUFFICIENT_TEXT` slot. And Part 3b's outcome: each
+with its `change_kind`, every unit the stronger review overruled to `MATCHES` (Part 2c step 4: the
+majority's verdict and the reviewer's reason, as information), or the reason for a `null` or `INSUFFICIENT_TEXT` slot. And Part 3b's outcome: each
 offered sentence with the founder's answer («اصلاح کن» / «خودم می‌نویسم» /
 «همین بماند»), and the grade before → after the re-run. For a skip, the documented
 reason line. Explicitly confirm that no DOI, abstract, or quartile was guessed.

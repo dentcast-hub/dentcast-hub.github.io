@@ -299,6 +299,91 @@ class TwoCheckerRunsTests(Tmp):
             self.vote(run)
 
 
+class StrongerReviewTests(Tmp):
+    """Part 2c step 4 (founder ruling 1405/08/15): a stronger-review dissent on an
+    ALTERED/REVERSED unit settles it as MATCHES; agreement keeps it flagged; a
+    flagged unit with no review entry stays open."""
+    ONE, BODY = TwoCheckerRunsTests.ONE, TwoCheckerRunsTests.BODY
+    claims, vote = TwoCheckerRunsTests.claims, TwoCheckerRunsTests.vote
+
+    def flagged_runs(self, verdict='ALTERED', kind='HEDGE_ADDED'):
+        runs = []
+        for _ in (1, 2):
+            r = self.claims()
+            c = r['claims'][1]
+            c.update(verdict=verdict, change_kind=kind, source_quote='Pain fell early in most patients.',
+                     note='the page drops «most»')
+            runs.append(r)
+        return runs
+
+    def test_dissent_settles_altered_as_matches_with_both_reasons(self):
+        overruled = []
+        out, tie, unres, unrev = units.vote_source(
+            self.flagged_runs(), reviewed={'u2': {'agree': False, 'reason': 'the sentence is faithful'}},
+            overruled=overruled)
+        c = out['claims'][1]
+        self.assertEqual((c['verdict'], c['change_kind']), ('MATCHES', None))
+        self.assertEqual(c['source_quote'], 'Pain fell early in most patients.')
+        self.assertEqual(c['note'], 'Checker majority: ALTERED/HEDGE_ADDED — the page drops «most»; '
+                                    'overruled by the stronger review: the sentence is faithful')
+        self.assertEqual((tie, unres, unrev), ([], [], []))
+        self.assertEqual(overruled, ['u2'])
+        self.assertEqual((out['counts']['matches'], out['counts']['altered']), (3, 0))
+        clean, *_ = units.vote_source([self.claims(), self.claims()])
+        for key in ('assessable', 'fidelity_score', 'level', 'fact_fa', 'interpretation_fa'):
+            self.assertEqual(out[key], clean[key], key)
+
+    def test_dissent_on_reversed_names_the_verdict_without_a_kind(self):
+        out, *_ = units.vote_source(self.flagged_runs('REVERSED', None),
+                                    reviewed={'u2': {'agree': False, 'reason': 'same direction'}})
+        c = out['claims'][1]
+        self.assertEqual((c['verdict'], c['change_kind']), ('MATCHES', None))
+        self.assertTrue(c['note'].startswith('Checker majority: REVERSED — '))
+        self.assertEqual(out['counts']['reversed'], 0)
+
+    def test_agreement_keeps_the_flagged_verdict(self):
+        overruled = []
+        out, tie, unres, unrev = units.vote_source(
+            self.flagged_runs(), reviewed={'u2': {'agree': True, 'reason': 'firmer than the source'}},
+            overruled=overruled)
+        c = out['claims'][1]
+        self.assertEqual((c['verdict'], c['change_kind']), ('ALTERED', 'HEDGE_ADDED'))
+        self.assertEqual(c['note'], 'the page drops «most»')
+        self.assertEqual((out['counts']['matches'], out['counts']['altered']), (2, 1))
+        self.assertEqual((tie, unres, unrev, overruled), ([], [], [], []))
+        clean, *_ = units.vote_source([self.claims(), self.claims()])
+        self.assertLess(out['fidelity_score'], clean['fidelity_score'])
+
+    def test_flagged_unit_without_review_stays_open(self):
+        out, tie, unres, unrev = units.vote_source(self.flagged_runs())
+        self.assertEqual(unrev, ['u2'])
+        self.assertEqual(out['claims'][1]['verdict'], 'ALTERED')
+        run = self.d / 'run'
+        run.mkdir()
+        for k, r in enumerate(self.flagged_runs(), 1):
+            (run / f'out-src0-{k}.json').write_text(json.dumps(r), encoding='utf-8')
+        with self.assertRaises(SystemExit) as e:
+            self.vote(run)
+        self.assertIn('1 unit(s) open', str(e.exception))
+
+    def test_cli_writes_the_settled_vote_and_prints_overruled_ids(self):
+        import contextlib
+        import io
+        run = self.d / 'run'
+        run.mkdir()
+        for k, r in enumerate(self.flagged_runs(), 1):
+            (run / f'out-src0-{k}.json').write_text(json.dumps(r), encoding='utf-8')
+        (run / 'review.json').write_text(json.dumps(
+            {'src0': {'u2': {'agree': False, 'reason': 'faithful'}}}), encoding='utf-8')
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            self.vote(run)
+        voted = json.loads((run / 'voted-src0.json').read_text(encoding='utf-8'))
+        self.assertEqual(voted['claims'][1]['verdict'], 'MATCHES')
+        self.assertIn("flagged —", buf.getvalue())
+        self.assertIn("(report, do not ask) ['u2']", buf.getvalue())
+
+
 class ConclusionTests(unittest.TestCase):
     FOOTER = ('Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/x by Test, Wiley Online Library on '
               '[01/01/2026]. See the Terms and Conditions on Wiley Online Library for rules of use; OA articles are '

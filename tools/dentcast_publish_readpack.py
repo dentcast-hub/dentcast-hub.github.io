@@ -63,6 +63,11 @@ MODULES = WORKFLOW + 'modules/'
 # after the «Conditional path for founder-supplied results» boundary. Checked
 # against main: the boundary occurs once, the text before it is byte-identical
 # and no heading changed, so LiteCast/challenge still keep exactly that text.
+# Re-audited 2026-11-06 (founder 1405/08/15, stronger review settles a flagged
+# unit): 08 rewrites Part 2c step 4, adds one sentence to Part 3b's opening and
+# one clause to the publish-report paragraph; all three sit after the
+# «Conditional path for founder-supplied results» boundary, which still occurs
+# once with byte-identical text before it; no heading changed.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
@@ -70,7 +75,7 @@ PINNED_BLOBS = {
     '04-taxonomy-and-navigation.md': '681f18e360a8fbcc8ed0a14a4a93e2bfa0a9cb4f',
     '05-semantic-linking.md': '45bfd4e5b7a5e1e05e0f1d4f76ff6316ff909fac',
     '06-paper-ingestion.md': 'e51277cafc640eff67fb5e061f1f57fe752cd72b',
-    '08-des-fidelity.md': '933f8279f7c66f4ebb5127b096f8f815a3b75d29',
+    '08-des-fidelity.md': 'c0ceb00d0ca58868aacb51f3c4c345e4039c6c7f',
     '09-challenge.md': '0e62c230c9bd8b0264da99a3f25d9e83375f91ea',
     '12-english-notify-verify.md': '8c78c082daf42c30996a684b9fe6ea57dd0a819d',
 }
@@ -279,6 +284,149 @@ def build(root, *, category, attached_paper, challenge, after_intake=False):
     return ''.join(pieces), manifest
 
 
+# Queue preparation route («فهرست خواندن آماده‌سازی» in publish-queue.md).
+# publish-queue.md itself is read first and separately, so it is never packed.
+# Each entry: (path, segments, paper_only). segments is None for the whole file,
+# otherwise a list of (start_marker, end_marker, required_inside). end_marker
+# None means end of file; NEXT_HEADING means the first Markdown heading after
+# the start (end of file if none). required_inside, when set, must occur exactly
+# once in the file and inside the slice, proving the whole block was kept.
+NEXT_HEADING = object()
+QUEUE_PREP = (
+    (MODULES + '01-hard-rules.md', None, False),
+    # Phase 0 through Question 5 is the whole module (Question 5 is its last heading).
+    (MODULES + '02-routing-intake.md', None, False),
+    (MODULES + '06-paper-ingestion.md',
+     [('#### Part 1 — File the paper into Google Drive (correct topical subfolder)',
+       '#### Part 2 —', None)], True),
+    (MODULES + '08-des-fidelity.md', None, False),
+    # Sections 5.0 (hashtags) and 5 (brain entry) are contiguous.
+    (MODULES + '10-brain-and-pathways.md',
+     [('### 5.0. Hashtag standardization', '### 5.5.', None)], False),
+    # 4.11, 4.12 and 4.12-ب run to the end of the module.
+    (MODULES + '07-flashcards-and-quiz.md', [('### 4.11.', None, None)], False),
+    (WORKFLOW + 'en-version.md', None, False),
+    (MODULES + '12-english-notify-verify.md', [('## Phase D', '## Phase E', None)], False),
+    # The «Opening paragraph before any list» block has several paragraphs,
+    # including the bold-lead «This lead paragraph is authored text» approval
+    # rule, and ends with the «To check a page you just built:» check. No
+    # unrelated bold-lead paragraph follows it, so its end marker is the next
+    # Markdown heading (today: none, i.e. end of file). The check sentence must
+    # sit inside the slice, so a truncated block blocks instead of passing.
+    (MODULES + '03-litecast-and-page.md',
+     [('**Opening paragraph before any list', NEXT_HEADING,
+       'To check a page you just built:')], False),
+    (MODULES + '04-taxonomy-and-navigation.md', [('### 2.4.', '### 2.5.', None)], False),
+    (MODULES + '11-build-and-version.md', [('### 6. Pulse update', '### 7.', None)], False),
+    (MODULES + '05-semantic-linking.md',
+     [('### 4.7.', '### 4.7-ب', None), ('### 4.8.', '### 4.9.', None)], False),
+)
+
+
+def queue_prep_spans(lines, segments):
+    spans = []
+    for start_marker, end_marker, required_inside in segments:
+        start = boundary(lines, start_marker)
+        if end_marker is None:
+            end = len(lines)
+        elif end_marker is NEXT_HEADING:
+            end = next((i for i in range(start + 1, len(lines))
+                        if lines[i].startswith('#')), len(lines))
+        else:
+            end = boundary(lines, end_marker)
+        if end <= start:
+            raise UnsafeSelection(f'SECTION_END_BEFORE_START: {start_marker!r} -> {end_marker!r}')
+        if required_inside is not None and not start < boundary(lines, required_inside) < end:
+            raise UnsafeSelection(f'SECTION_BLOCK_TRUNCATED: {required_inside!r}')
+        spans.append((start, end))
+    return include(spans, len(lines))
+
+
+def build_queue_prep(root, *, attached_paper):
+    """Assemble the queue-preparation reading list; any unsafe marker blocks all."""
+    if attached_paper not in ('yes', 'no'):
+        raise UnsafeSelection('QUEUE_PREP_NEEDS_LOCKED_PAPER_ANSWER')
+    root = Path(root).resolve(strict=True)
+    manifest = {
+        'schema': 'dentcast_publish_readpack_v1',
+        'mode': 'queue-prep',
+        'classification': {'attached_paper': attached_paper},
+        'contract': 'READING_SELECTION_ONLY_NOT_SCIENTIFIC_APPROVAL',
+        'not_included': [WORKFLOW + 'publish-queue.md (read first, separately)'],
+        'source_paths': [],
+        'segments': [],
+        'uncovered_if_unverified': [
+            'This list mirrors «فهرست خواندن آماده‌سازی» in publish-queue.md; that table is authoritative.',
+            'A task needing a module outside this list reads that whole module and says why.',
+            'Read complete cited specialty workflows and scientific prompt files as required.',
+        ],
+    }
+    pieces = []
+    raw_total = selected_total = 0
+    for path, segments, paper_only in QUEUE_PREP:
+        if paper_only and attached_paper == 'no':
+            manifest['source_paths'].append({'path': path, 'selected_bytes': 0,
+                                             'selection_reason': 'NO_ATTACHED_PAPER',
+                                             'line_ranges_inclusive': []})
+            continue
+        full = root / path
+        if full.is_symlink() or not full.is_file():
+            raise UnsafeSelection('REQUIRED_SOURCE_MISSING_OR_SYMLINK:' + path)
+        raw = full.read_bytes()
+        try:
+            decoded = raw.decode('utf-8')
+        except UnicodeError as e:
+            raise UnsafeSelection('SOURCE_NOT_UTF8:' + path) from e
+        if not raw or '\x00' in decoded:
+            raise UnsafeSelection('UNSAFE_SOURCE:' + path)
+        name = full.name
+        blob = git_blob_id(raw)
+        # A whole-file read omits nothing, so only sliced files consult pins.
+        drift = (segments is not None and name in PINNED_BLOBS
+                 and blob != PINNED_BLOBS[name])
+        lines = decoded.splitlines(keepends=True)
+        if segments is None:
+            spans, reason = [(0, len(lines))], 'FULL_REQUIRED'
+        elif drift:
+            # Same discipline as the normal route: a changed pinned source is read whole.
+            spans, reason = [(0, len(lines))], 'SOURCE_CHANGED_FULL_FALLBACK_REAUDIT_MAP'
+        else:
+            spans, reason = queue_prep_spans(lines, segments), 'QUEUE_PREP_LISTED_SECTIONS'
+        selected_total_file = 0
+        pieces.append(f'\n\n=== BEGIN SOURCE {path} SHA256 {sha256(raw)} ===\n')
+        for a, b in spans:
+            segment = ''.join(lines[a:b])
+            segment_bytes = segment.encode('utf-8')
+            if segment_bytes not in raw:
+                raise UnsafeSelection('SOURCE_EXTRACTION_MISMATCH:' + path)
+            selected_total_file += len(segment_bytes)
+            manifest['segments'].append({
+                'path': path, 'start_line': a + 1, 'end_line': b,
+                'sha256': sha256(segment_bytes), 'bytes': len(segment_bytes),
+                'git_blob_sha1': blob, 'attached_paper': attached_paper,
+                'drift': drift, 'selection_reason': reason,
+            })
+            pieces.append(f'--- SOURCE LINES {a + 1}-{b} ---\n')
+            pieces.append(segment)
+            if not lines[b - 1].endswith('\n'):
+                pieces.append('\n')
+        pieces.append(f'=== END SOURCE {path} ===\n')
+        selected = ''.join(''.join(lines[a:b]) for a, b in spans).encode('utf-8')
+        raw_total += len(raw)
+        selected_total += selected_total_file
+        manifest['source_paths'].append({
+            'path': path, 'git_blob_sha1': blob, 'source_sha256': sha256(raw),
+            'source_bytes': len(raw), 'selected_bytes': len(selected),
+            'selection_reason': reason, 'drift': drift,
+            'line_ranges_inclusive': [[a + 1, b] for a, b in spans],
+            'selected_sha256': sha256(selected),
+        })
+    manifest['source_bytes_total'] = raw_total
+    manifest['selected_bytes_total'] = selected_total
+    manifest['bytes_saved'] = raw_total - selected_total
+    return ''.join(pieces), manifest
+
+
 def atomic_write(path, text):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -297,22 +445,38 @@ def atomic_write(path, text):
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--root', type=Path, default=ROOT)
-    p.add_argument('--category', required=True, help='locked Phase B category; unknown means full files')
-    p.add_argument('--attached-paper', required=True, choices=['yes', 'no', 'unknown'],
+    p.add_argument('--queue-prep', action='store_true',
+                   help='queue preparation reading list (publish-queue.md); needs only --attached-paper')
+    p.add_argument('--category', help='locked Phase B category; unknown means full files')
+    p.add_argument('--attached-paper', choices=['yes', 'no', 'unknown'],
                    help='locked Phase B Q4.7; unknown retains complete modules')
-    p.add_argument('--challenge', required=True, choices=['yes', 'no', 'unknown'],
+    p.add_argument('--challenge', choices=['yes', 'no', 'unknown'],
                    help='locked Phase B Q4.9; unknown retains complete modules')
     p.add_argument('--after-intake', action='store_true',
                    help='omit routers + modules 01/02 already read in this same session')
     p.add_argument('--output', type=Path, required=True, help='temporary UTF-8 verbatim reading pack')
     p.add_argument('--manifest', type=Path, required=True, help='temporary provenance/coverage JSON')
     a = p.parse_args(argv)
+    if a.queue_prep:
+        if a.attached_paper not in ('yes', 'no'):
+            p.error('--queue-prep requires --attached-paper yes|no')
+        if a.category is not None or a.challenge is not None or a.after_intake:
+            p.error('--queue-prep does not take --category, --challenge or --after-intake')
+    else:
+        missing = [flag for flag, value in (('--category', a.category),
+                                            ('--attached-paper', a.attached_paper),
+                                            ('--challenge', a.challenge)) if value is None]
+        if missing:
+            p.error('the following arguments are required: ' + ', '.join(missing))
     if a.output.resolve() == a.manifest.resolve():
         p.error('--output and --manifest must differ')
     try:
-        pack, report = build(a.root, category=a.category,
-                             attached_paper=a.attached_paper, challenge=a.challenge,
-                             after_intake=a.after_intake)
+        if a.queue_prep:
+            pack, report = build_queue_prep(a.root, attached_paper=a.attached_paper)
+        else:
+            pack, report = build(a.root, category=a.category,
+                                 attached_paper=a.attached_paper, challenge=a.challenge,
+                                 after_intake=a.after_intake)
         atomic_write(a.output, pack)
         atomic_write(a.manifest, json.dumps(report, ensure_ascii=False, indent=2) + '\n')
     except (OSError, UnsafeSelection, UnicodeError) as error:

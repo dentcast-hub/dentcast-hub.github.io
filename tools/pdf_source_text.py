@@ -74,13 +74,40 @@ def words_pdftotext(path):
     return pages
 
 
-def read_words(path):
+GLUE_LEN, GLUE_MAX = 18, 0.02
+
+
+def glued_fraction(pages):
+    """Share of the alphabetic-ish upright words (letters, hyphens, apostrophes)
+    that are longer than GLUE_LEN characters: pdfplumber gluing neighbours
+    ("theframeworkdesign") makes it jump; real prose stays near zero."""
+    ws = [w["text"] for p in pages for w in p["words"] if w.get("upright", True)
+          and re.fullmatch(r"[^\W\d_]+(?:[-'\u2019][^\W\d_]+)*", w["text"])]
+    return sum(len(t) > GLUE_LEN for t in ws) / len(ws) if ws else 0.0
+
+
+def read_words(path, backend="auto"):
+    """(pages, backend used). `auto`: pdfplumber when importable, re-read with
+    pdftotext when pdfplumber glued words; else pdftotext."""
+    have_pt = bool(shutil.which("pdftotext"))
+    if backend == "pdftotext":
+        if not have_pt:
+            sys.exit("--backend pdftotext: pdftotext is not available")
+        return words_pdftotext(path), "pdftotext"
     try:
-        return words_pdfplumber(path)
+        pages = words_pdfplumber(path)
     except ImportError:
-        if not shutil.which("pdftotext"):
+        if backend == "pdfplumber":
+            sys.exit("--backend pdfplumber: pdfplumber is not importable")
+        if not have_pt:
             sys.exit("neither pdfplumber nor pdftotext is available")
-        return words_pdftotext(path)
+        return words_pdftotext(path), "pdftotext"
+    frac = glued_fraction(pages)
+    if backend == "auto" and frac > GLUE_MAX and have_pt:
+        print(f"pdf_source_text: pdfplumber glued words ({frac:.1%} over {GLUE_LEN} chars); re-read with pdftotext",
+              file=sys.stderr)
+        return words_pdftotext(path), "pdftotext"
+    return pages, "pdfplumber"
 
 
 # ------------------------------------------------------------------ layout
@@ -255,8 +282,12 @@ def main(argv=None):
     ap.add_argument("-o", "--out", help="texts.json to write")
     ap.add_argument("--append", action="store_true", help="add this source to an existing texts.json")
     ap.add_argument("--text-out", help="also write the plain text here")
+    ap.add_argument("--backend", choices=("auto", "pdfplumber", "pdftotext"), default="auto",
+                    help="word reader; auto = pdfplumber, or pdftotext when pdfplumber glues words (default)")
     a = ap.parse_args(argv)
-    text = source_text(read_words(Path(a.pdf)))
+    pages, used = read_words(Path(a.pdf), a.backend)
+    print(f"pdf_source_text: backend={used}", file=sys.stderr)
+    text = source_text(pages)
     if not text:
         sys.exit("no text extracted (a scanned PDF needs OCR first)")
     if a.text_out:

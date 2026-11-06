@@ -1,4 +1,4 @@
-"""publish-queue.md «DES و Fidelity صف»: a publish-queue item's DES/Fidelity never
+"""queue-maintainer.md «DES و Fidelity صف»: a publish-queue item's DES/Fidelity never
 blocks its publish, while a record changed after installation still fails."""
 from pathlib import Path
 import json
@@ -64,7 +64,7 @@ TEXT_01 = open(ROOT / 'tests/fixtures/queue-05-text.md', encoding='utf-8').read(
 
 
 class FrozenTextTests(unittest.TestCase):
-    """publish-queue.md «روز انتشار صف»: on publish day the text does not move."""
+    """queue-maintainer.md «روز انتشار صف»: on publish day the text does not move."""
     CID = 'notecast/episode-44'
 
     def guard(self, text, synced=(), added=()):
