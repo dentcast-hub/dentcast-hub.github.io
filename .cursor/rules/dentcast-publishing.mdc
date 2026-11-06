@@ -6,20 +6,8 @@ alwaysApply: false
 # Cursor publishing
 
 **LIVE_MODULAR_PUBLISHING_ENABLED.** Read `.dentcast/workflows/README.md`, `.dentcast/workflows/agent-parity.md` and the complete active sections selected for the current edit scope by `.dentcast/workflows/global/README.md`.
-Load complete `modules/01-hard-rules.md` and `02-routing-intake.md`, then every applicable rule in the README order: full modules by default, or byte-exact pinned readpack selections after locked Phase B under publish-checkpoints.md. Never summarize or omit an unverified rule. Preserve human approvals, source-based DES/Fidelity, category exceptions, builders, English, notification and Phase F. Staging utilities cannot replace real steps. Legacy files are backup only; do not read them for execution.
+Load complete `modules/01-hard-rules.md` and `02-routing-intake.md`, then every applicable rule in the ledger order of `publish-checkpoints.md`: full modules by default, or the verified readpack (README). Never summarize or omit an unverified rule. Preserve source-based DES/Fidelity, category exceptions, English, notification and Phase F. Staging utilities cannot replace real steps. Legacy files are backup only; do not read them for execution.
 
-## Interrupted publication
+**Interrupted publication** («انتشار ناقص داشتم»), the run state `.dentcast/PUBLISH-HANDOFF.md` and recovery through `.dentcast/workflows/publish-handoff.md`: `.dentcast/workflows/publish-checkpoints.md`, «Interrupted publication».
 
-For «انتشار ناقص داشتم» or an explicit request to resume a publication the user identifies as incomplete/interrupted, read `.dentcast/PUBLISH-HANDOFF.md` exactly once, then `.dentcast/workflows/publish-handoff.md`. A generic «ادامه بده» or «ادامه انتشار» alone does not trigger recovery. During the active run, keep state in the current session and do not reread the handoff before each step; use the latest helper digest. Before a new publication, check only whether the file exists. If it does, make no changes and ask whether the user means to resume; read it only after explicit confirmation. Never overwrite unfinished work. Update the handoff after every canonical step and before handing off; delete it only after verified completion. A missing file or unavailable work must be reported, not invented. Local commits and dirty files are not automatically available in another checkout.
-
-## Mandatory per-step checkpoints
-
-Read `.dentcast/workflows/publish-checkpoints.md`. Use the full canonical ledger from `tools/dentcast_publish_handoff.py plan`; write `started` before each action and its actual result afterward using `step`/`record`. Prefer `advance` for separate durable transitions in one call. Page publications have **exactly three deliveries**: (1) after page construction and semantic linking (`C.4.9`), (2) after `C.6`, once DES/Fidelity, Challenge, hashtags, content record, pathways, Pulse, the authored English mirror and every founder approval are closed (v1-only handoffs started earlier keep `C.4.13`), (3) after C.8 builders, C.7 stamp, technical D, E, real Phase F and report G. Deliver work plus the latest handoff at cuts 1 and 2; keep intermediate checkpoints local. For v2 runs the `post-cut2-mechanical.yml` GitHub workflow produces delivery 3 from the exact Push-2 commit: do not run C.8 onward locally; monitor that run and use its guarded recovery only if it fails. Otherwise, at cut 3 run `finish`, then commit/push final work, the completion receipt and handoff deletion together, and run `confirm-cleanup`. Never push a completed final handoff or a fourth cleanup commit. Stops, agent switches, approvals and external actions do not add deliveries. Restore locally with `restore-cleanup` if final delivery fails. Paper-only and pre-existing runs retain their documented compatibility path. Hooks supplement this contract and never certify semantic or scientific results.
-
-## Publication services and waits
-
-Follow the service and wait discipline in `publish-checkpoints.md`: the real
-destinations are ArvanCloud and GitHub Pages (proxied through Cloudflare DNS); Cloudflare Pages and
-Vercel are backups only and never supply a gate or completion criterion.
-Report the step, pending result and blocking effect of a real wait; refresh only
-relevant results while preserving fresh delivery/merge preflights and Phase F.
+Ledger, founder messages, the three fixed deliveries, hosting, waits and merge: `.dentcast/workflows/publish-checkpoints.md`.

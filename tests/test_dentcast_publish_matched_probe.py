@@ -26,7 +26,7 @@ class MatchedCheckpointProbe(unittest.TestCase):
         fixtures.HandoffTests.setUp(self)
         root = self.root
         p = copy.deepcopy(self.p)
-        p["steps"] = lc.plan()
+        p["steps"] = lc.plan(order=lc.ORDER_V1)  # v1-policy run: legacy ledger order
         p["context"]["decisions"] = [{"kind": lc.DELIVERY_POLICY}]
         counts = {
             "git_calls": 0, "file_info_calls": 0, "file_bytes_hashed_approx": 0,

@@ -1,9 +1,9 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
-> **Live publication checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision; this repeated reference never requires a reread. Read the fixed handoff exactly once only when the user explicitly says this publication is incomplete/interrupted; a request to resume counts only if it identifies the publication as incomplete/interrupted. During an active run, keep its state in the current session; do not read or inspect the handoff before each step. Use the latest digest returned by the helper, then mark each step `started` with `tools/dentcast_publish_handoff.py step`. After EACH completed/skipped/blocked/failed step, write its real evidence/reason with the same tool before continuing or handing off. Never auto-mark semantic or scientific work complete.
-> Checkpoint IDs for this module: C.4.13. Category exceptions require explicit skip reasons. The protocol defines dependency ordering (builders before final stamping; LiteCast links after page construction). Phase F completion uses the real `verify` command.
-> **Fixed page deliveries:** after `C.4.9`, then after `C.6` for new v2 editorial-locked publications (legacy v1-only publications keep `C.4.13`), then after actual Phase F + report G. Cuts 1/2 deliver work plus handoff; cut 3 delivers final work, completion receipt and handoff deletion together. All intermediate checkpoints stay local; no extra turn-end or cleanup push.
-
+> **Checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision. Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
+> **Order, founder messages and the three deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
+
+Ledger step in this module: `C.4.13` (after C.4.6 and C.4.10, before C.4.7, inside delivery 1; it closes with message M1 and starts the text lock).
 
 ### 4.13. DES — DentCast Evidence Score (run or consume the record)
 
@@ -61,8 +61,8 @@ from the paper's title, or from what you happen to know about the study.
 #### Part 1 — Resolve `source_text` (never skipped, never improvised)
 
 **COMMENTARY basket:** `source_text` is the page's **own body text** — the متن of
-record from Question 3.5 (the post-decision text, edited if rewrites were approved),
-exactly as it will ship. `text_basis` is `FULL_TEXT`. No DOI, no lookup, done.
+record from Question 3.5 (with its recorded rewrites, and the lead paragraph
+when module 03 added one), exactly as it will ship. `text_basis` is `FULL_TEXT`. No DOI, no lookup, done.
 
 **RESEARCH basket:** first confirm Question 4.8's **secondary-report** decision is
 already made — if a cited source is a consensus statement/guideline that names its
@@ -97,16 +97,15 @@ spec's own error output is the correct result, and it is what gets recorded:
 {"des_version":"2.5","error":"INSUFFICIENT_TEXT"}
 ```
 Per the capability protocol (`agent-parity.md` §2), when the blocker is a **missing
-tool** rather than a missing abstract, **ask the user to paste the abstract** —
-never downgrade the result silently.
+tool** rather than a missing abstract, the abstract is an open fact for message M1
+(the founder pastes it) — never downgrade the result silently.
 
 **A source with no method to appraise still needs its text** (spec v3.1). For a
 textbook, a glossary or a standard in the «منابع» block the ladder is: the cabinet;
 `WebFetch` for an open glossary or standard (the Glossary of Prosthodontic Terms
 is open access, so the cited entry is retrievable); and then **the founder's own
 copy** — show him the page's sentences that lean on that source and ask for the
-chapter or page range they come from, as a gate question (`agent-parity.md`
-§1), never from memory. The SOURCE call then runs on that text with
+chapter or page range they come from, in message M1, never from memory. The SOURCE call then runs on that text with
 `text_basis: EXCERPT` (a part of the work — a chapter, a page range, one entry)
 or `FULL_TEXT` (the whole cited work), returns `NOT_APPRAISABLE`, and the
 FIDELITY call (Part 2b) reads the same text. «ندارم» is a legal answer: the
@@ -356,23 +355,18 @@ below has one lighter tier, and only for a **single-source page**:
 recorded multi-source plan, and the body is a short founder-written or derived
 summary of that one paper. On such a page:
 
-- **Step 1 is unchanged: two full checker runs, always.** The second run is
-  never skipped — a sentence one run calls `MATCHES` is otherwise never looked
-  at again, and a missed firmer-than-the-source sentence is the error nobody
-  sees. `--vote` refuses fewer than two full runs.
+- **Step 1 is unchanged: two full checker runs, always** (its reason is in step
+  1 below). `--vote` refuses fewer than two full runs.
 - **Step 2 (tie-break)** runs only when `--vote` lists a unit the two runs
   answered differently; when they agree everywhere there is no third run.
 - **Step 4 (stronger reviewer)** runs only when the vote leaves a unit
   `ALTERED`/`REVERSED`; with none, no reviewer call is made.
 - **Step 5 (orphan sweep) does not exist for a single-source page.** The sweep
-  only answers «which of the several sources does this sentence come from?».
-  With one source an unmatched sentence can only be absent from that one source,
-  which the vote already records as `NOT_IN_SOURCE`; searching again adds nothing
-  (the sentences the vote leaves `NOT_IN_SOURCE` are simply reported with
-  Part 3b, as the author's own reasoning). Do not run `--orphans`/`--sweep`, and
-  do not spend a reviewer call or a re-check on it. The founder's criterion is
-  the number of papers: **one paper → no sweep; two or more → the sweep below
-  runs in full.**
+  only answers «which of the several sources does this sentence come from?»;
+  with one source the vote already records an unmatched sentence as
+  `NOT_IN_SOURCE` (reported as the author's own reasoning). Do not run
+  `--orphans`/`--sweep` or spend a reviewer call on it. **One paper → no sweep;
+  two or more → the sweep-first order below.**
 
 A multi-source page, a `POOLED` page or a long article keeps every step above
 exactly as written. Record the tier and the reason in the publish report. The
@@ -383,17 +377,14 @@ Phase F and `tools/queue_install_des.py` read it unchanged.
 <!-- fidelity-sweep-first:v1 -->
 **Sweep first, then measure (founder 1405/08/15).** On a page with two or more
 sources whose text is in hand, the orphan sweep (step 5) runs **before any
-checker run**, not after the vote. The order is fixed: the assignment (markers
-or a recorded founder plan) → `--orphans` before any vote, which hands **every
-body sentence** to the stronger reviewer with the text of every source → the
-reviewer's `orphans.json` → `--sweep` → `--build` of the full blocks → steps 1–4
-**once**. No sentence is judged before its source is settled, so the page is
-measured once instead of being measured, swept and measured again. There is
+checker run**, not after the vote. This is the only statement of the order:
+the assignment (markers or a recorded founder plan) → `--orphans`, which hands
+**every body sentence** to the stronger reviewer with the text of every source →
+the reviewer's `orphans.json` → `--sweep` → `--build` of the full blocks → steps
+1–4 **once**. No sentence is judged before its source is settled, and there is
 no second sweep after the vote: a sentence the vote leaves `NOT_IN_SOURCE` was
 already looked for in every source. `tools/queue_fidelity_prep.py` follows the
-same order on a multi-source item: it writes `orphans-input.json` and builds no
-checker block until the sweep is recorded. A one-source page has no sweep at
-all (the tier above). Records prepared under the earlier order keep their
+same order (it builds no checker block until the sweep is recorded). Records prepared under the earlier order keep their
 record; a later re-check of such a page uses the rule-13 `--vote --base`
 growth as before.
 <!-- /fidelity-sweep-first:v1 -->
@@ -442,7 +433,7 @@ Keep historical records and their provenance unchanged.
 5. **Orphan sweep (spec v3.5 rule 12) — on a multi-source page it runs FIRST,
    before step 1** (the sweep-first block above).
    `python3 tools/des_fidelity_units.py <content_id> --orphans <dir> --texts texts.json`
-   run before any checker run lists every body sentence (headings excepted) and
+   lists every body sentence (headings excepted) and
    writes `<dir>/orphans-input.json` with those sentences and the text of
    **every** source. The stronger reviewer reads it — all sources, whatever a
    marker assigned — and writes
@@ -452,11 +443,10 @@ Keep historical records and their provenance unchanged.
    `python3 tools/des_fidelity_units.py <content_id> --sweep <dir>` refuses an
    unanswered sentence or a `source_quote` that is not verbatim in that source,
    adds every found sentence to its source in the recorded plan (origin
-   `orphan_sweep`, with the receipt), and only then `--build` writes the full
-   blocks for steps 1–4. The sentences found nowhere are reported to
-   the founder in the same message as Part 3b, as a list, never as faults: they
-   are the author's own reasoning or background unless the founder points to a
-   source the run did not have.
+   `orphan_sweep`, with the receipt). The sentences found nowhere are listed
+   for the founder as information (report G, and M1 when M1 is sent), never as
+   faults: they are the author's own reasoning or background unless the founder
+   points to a source the run did not have.
 
 `--vote` exits non-zero while any unit still needs a tie-break run, an
 adjudication or a review. `voted-src<k>.json` is what Part 3 validates and
@@ -542,8 +532,9 @@ run is unusable.
 «کاملاً مطابق»**. So when a validated FIDELITY result
 carries any `ALTERED` or `REVERSED` unit, the publish **stops here, before
 Part 4 stores anything**, and the founder is shown each such sentence and asked
-whether to fix it. This is a gate of `agent-parity.md` §1 (never batched into
-the final report, never skipped because the grade is already high). Only units
+whether to fix it. These blocks are part of **message M1 at C.4.13**
+(`publish-checkpoints.md`): never deferred to the final report, never skipped
+because the grade is already high. Only units
 still flagged after the Part 2c step 4 review reach this gate; a unit the
 stronger review overruled is already `MATCHES` and is listed in the report as
 information, never asked.
@@ -573,11 +564,13 @@ never a «بله» to the others.
 
 **After any accepted edit:**
 
-- Apply it to the page body exactly as approved, and to the **same sentence in
-  the en mirror** (Phase D) — translated, nothing else touched. If the edited
-  sentence also lives on another surface (the lead used for the description,
-  the brain `summary`, the Pulse line), that is a **sweep** (Hard Rule 17): every
-  surface in the same commit.
+- Apply it to the page body exactly as approved. If the edited sentence also
+  lives on a surface **already written** — the lead used for the description;
+  and, only when they exist already, the en mirror (translated, nothing else
+  touched), the brain `summary`, the Pulse line — that is a **sweep** (Hard Rule
+  17): every such surface in the same commit. In a direct run the mirror, brain
+  entry and Pulse line are written after C.4.13 from the locked text, so they
+  start from the fixed sentence.
 - **Re-check only the edited sentences** — the last
   full run already judged every other sentence, and judging them again buys
   nothing but fresh run-to-run noise on sentences nobody touched. Build blocks
@@ -608,7 +601,7 @@ Only then go on to Part 4, which stores the **final** result.
 انطباق‌های X رو نشونم بده»): read its stored `fidelity` from
 `plus/des-scores.json`, run this same Part 3b on it, then the re-run above,
 then Part 4 (replace the record's `fidelity` and its `scored_at`), Phase F,
-and `tools/stamp-version.py` last. Resolve `source_text` again by Part 1 (the
+and the version stamp last (module 11, §7). Resolve `source_text` again by Part 1 (the
 scratch copy does not survive a session) — and from the **same** basis the
 SOURCE record was scored on, or the tool refuses it.
 

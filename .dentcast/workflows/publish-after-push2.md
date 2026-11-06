@@ -1,19 +1,66 @@
-# After Push 2 — monitoring, delivery 3 and recovery
+# After Push 2 — monitor, pull, confirm, merge
 
-Read this file completely right after the second delivery of a v2 page publication
-is confirmed (`publish-checkpoints.md`, «Agent update and wait after Push 2»).
-It is not read before Push 2. Every rule of `publish-checkpoints.md` still applies.
+Read completely right after the second delivery of a page publication is confirmed
+(`publish-checkpoints.md`, «After Push 2»). Not read before Push 2. After Push 2 nothing is the
+agent's: `post-cut2-mechanical.yml` runs C.8, C.7, D, E, Phase F and G from the exact Push-2 commit,
+pushes delivery 3 and opens the PR when the `QUEUE_PUBLISH_TOKEN` secret is set (otherwise the job
+summary says to open it by hand; a queue item's PR is opened by `queue-publish.yml`). It never merges.
+Before Phase F it refuses any regenerated page that lost or lowered a `?v=` stamp it had at Push 2
+(`ASSET_VERSION_REGRESSION`); the agent never runs `git diff -G'\?v='` by hand on this route. The agent
+monitors, reports, and merges only with authorization.
 
-Stay with the run and poll at bounded intervals until it reaches a terminal state; do not end the turn or leave the user without a status while the job is queued or running. If preflight skips or no run appears, inspect the event, branch and handoff before reporting that Actions started. If the run succeeds, verify that delivery 3 is based on the exact Push-2 SHA, the completion receipt is present, the active handoff is removed, and cleanup is confirmed before reporting publication complete. If it fails, inspect the uploaded logs/recovery artifact, diagnose and resume through the guarded recovery path where possible, and keep the user informed of the real status.
+## Monitor
 
-Delivery 3 is a commit that Actions pushes, so the local checkout still holds the Push-2 state (and the active handoff) after the run succeeds. Run `git pull --ff-only` on the publication branch first, and always before ending the session; only then does the handoff disappear locally and delivery 3, the completion receipt and cleanup can be verified: after the pull, `confirm-cleanup` checks them read-only from the pulled HEAD (no local cleanup record exists). It reruns Phase F, which needs `origin/main` for its Pulse and append-only baselines: in a checkout that tracks only the publication branch (a single-branch or depth-limited clone) it fails with `FINAL_DELIVERY_VERIFICATION_FAILED` naming that row, so run `git fetch origin +refs/heads/main:refs/remotes/origin/main` and retry. A pull that is not a fast-forward means the branch moved unexpectedly: stop and inspect instead of merging. For a v2 run never run `restore-cleanup`, and never run `confirm-cleanup` before the pull: the workflow performed the cleanup and no local cleanup is pending. Until the pull, the stop guard reports `DELIVERY_3_ON_REMOTE_PULL_REQUIRED` (delivery 3 already fetched) or `REMOTE_BRANCH_ADVANCED_NOT_FETCHED` (origin moved past this checkout); both clear with the pull, never with reset, force-push or cleanup commands. Monitoring does not need `gh`: in a cloud session without it, use the GitHub MCP tools (`actions_list` for the branch's workflow runs of `post-cut2-mechanical.yml`, `actions_get` for a run's status and conclusion, `get_job_logs` for failed jobs) or the equivalent connected GitHub reads available to the client. The logs and recovery bundle are the run artifact `post-cut2-<Push-2 SHA>` (kept 14 days); fetch it through the Actions API (list the run's artifacts, then download that artifact's zip), not from the branch, which a failed run leaves at Push 2.
+- Stay with the run until it is terminal; do not end the turn while it is queued or running. No
+  periodic status messages: one at Push 2 (already sent), one at the run's end, one at merge.
+- `gh run watch`, or without `gh` the GitHub MCP tools: `actions_list` (the branch's runs of
+  `post-cut2-mechanical.yml`), `actions_get` (status, conclusion), `get_job_logs` (failed jobs).
+- No run, or preflight skipped: inspect the event, branch and handoff before saying Actions started.
+- Logs and recovery bundle: run artifact `post-cut2-<Push-2 SHA>` (14 days), through the Actions API
+  (list the run's artifacts, download that zip), not from the branch.
 
-A failed run pushes nothing; the branch stays at the Push-2 commit. Recover from that commit:
+## Success
 
-- **Transient cause** (runner lost, network, a service outage): re-run the same commit with `workflow_dispatch` (`target_branch`, `expected_head` = the Push-2 SHA). Do not commit anything. The run uses the tools on the publication branch, so a tool defect is not transient: report it, fix it on `main` first, and bring it in under the existing workflow-change rule (invalidation from `rules`).
-- **Tool defect already fixed on `main`** (the run failed in a workflow file, e.g. `tools/verify_publish.py`, and `main` carries the fix): in the checkout at the Push-2 commit, start `git merge --no-commit origin/main`, then `invalidate --from-step rules` with the real cause. Enroll any merged non-publication paths in `target_paths` only after the invalidation is written (the writer refuses them while the workflow change is unreconciled; keep them out of the index until then and restore them from `origin/main` afterwards). Restore each still-valid approval from the `dependency_invalidation_v1` audit, re-record the ledger with evidence that each step was re-verified, and re-cross the fixed cuts in order: the merge commit is the re-delivered cut 1 (permitted once per audited invalidation even though the branch is already at cut 2), then cut 2 is delivered once more. That second push starts the workflow from the new Push-2 commit; delivery 3 accepts the audited commits between the original Push 2 and itself.
-- **Cause in the publication itself** (Phase F names a page, entry, approval or text): in the checkout at the Push-2 commit, run `invalidate --from-step <first affected step>` with the real cause (`C.6` when only a frozen approval/title/caption is wrong). Approvals return to `pending` and their earlier decisions stay in the `dependency_invalidation_v1` audit; restore each one from there with the founder's actual correction, fix any affected bytes, and redo the invalidated steps through `C.6`. Then stage the fix plus the handoff and push **one** reconciliation commit. That push starts the workflow again from the new commit; delivery 3 and the final receipt accept the audited reconciliation commit between Push 2 and delivery 3.
+1. `git pull --ff-only` on the publication branch, always before ending the session. Not a
+   fast-forward → the branch moved unexpectedly: stop and inspect, never merge, reset or force.
+   Until the pull the Stop guard reports `DELIVERY_3_ON_REMOTE_PULL_REQUIRED` or
+   `REMOTE_BRANCH_ADVANCED_NOT_FETCHED`; only the pull clears them.
+2. `python3 tools/dentcast_publish_handoff.py confirm-cleanup`: read-only check of the pulled HEAD —
+   its parent is the receipt's exact Push-2 SHA, the committed completion receipt's fingerprints match
+   the tree, the handoff is gone and HEAD is the remote head. On a v2 run it trusts the runner's
+   committed Phase F receipt (no rerun, no `origin/main` fetch); a v1 run still reruns Phase F. Never
+   run `restore-cleanup` on this route, nor `confirm-cleanup` before the pull.
+3. Message at the run's end: `content_id`, branch, Push-2 SHA, run link, PR link, Phase F summary
+   line, and the agent-proposal list of report G. Not "published" until merged.
+4. **Merge** only with authorization (`publish-checkpoints.md`, «Waiting, services, merge»): fresh
+   `check-pr`, gates green, then merge. Message at merge. A red gate means no merge.
 
-Never edit a frozen approval with `record` after Push 2, never run C.8 onward locally while the workflow can still run, and never push a new run while an earlier run of the same branch is still in progress.
+A completed PR whose `main` advanced (another publication merged) usually conflicts on Pulse, the
+homepage counters and the version stamp, so no merge ref is built and its checks do not run. Update
+it with `git merge origin/main` on the completed branch, never by rerunning the publication: keep
+both sides' entries and Pulse lines, then `python3 tools/update-homepage-counters.py` and
+`python3 tools/stamp-version.py` (last), in the merge commit or in a following commit that changes
+only those recomputed values. Until the stamp is rerun the merge gate fails on Phase F `7 version`.
 
-A completed publication PR whose `main` advanced (another publication merged) usually conflicts on the Pulse, the homepage counters and the version stamp, so GitHub builds no merge ref and the PR checks do not run. Update it with `git merge origin/main` on the completed branch, never by re-running the publication: keep both sides' entries and Pulse lines, then run `python3 tools/update-homepage-counters.py` and `python3 tools/stamp-version.py` (last) and include their output in the merge commit or in a following commit that changes only those recomputed values. Until the stamp is rerun, the merge gate fails on the Phase F `7 version` rows.
+## Failure — guarded recovery
+
+A failed run pushes nothing; the branch stays at Push 2. Read the logs/artifact, then:
+
+- **Transient** (runner lost, network, outage): `workflow_dispatch` the same commit (`target_branch`,
+  `expected_head` = Push-2 SHA). Commit nothing. A tool defect is not transient.
+- **Tool defect fixed on `main`** (e.g. `tools/verify_publish.py`): at the Push-2 commit,
+  `git merge --no-commit origin/main`, then `invalidate --from-step rules` with the real cause. Enroll
+  merged non-publication paths in `target_paths` only after the invalidation is written (keep them
+  out of the index until then, restore them from `origin/main` afterwards). Restore each still-valid
+  approval from the `dependency_invalidation_v1` audit, re-record the ledger with re-verification
+  evidence and re-cross the cuts in order: the merge commit is the re-delivered cut 1 (allowed once
+  per audited invalidation), then cut 2 once more, which starts the workflow again.
+- **Cause in the publication** (Phase F names a page, entry, approval or text): at the Push-2 commit
+  `invalidate --from-step <first affected step>` (`C.6` when only a frozen approval/title/caption is
+  wrong); restore each approval from the audit with the founder's actual correction, fix the bytes,
+  redo the steps through `C.6`, stage fix + handoff and push **one** reconciliation commit, which
+  starts the workflow again. Delivery 3 accepts the audited commits between Push 2 and itself.
+
+Never edit a frozen approval with `record` after Push 2, never run C.8 onward locally while the
+workflow can run, never start a run while another run of the same branch is in progress. A blocker
+that recovery cannot clear is reported with its exact code and the run link.

@@ -3,69 +3,69 @@
   "sources": [
     {
       "path": ".dentcast/workflows/global/repo-conventions.md",
-      "sha256": "f3187b61edd157f4bb24c9f64c70ab6068abbf0096ca9eb209b7e8f54defb0c6",
+      "sha256": "00aaeb7c9a5c111150720a695dadc592aceabef301fe42f0970975cde02e870b",
       "sections": [
         {
           "id": "repo-core",
           "lines": [
             1,
-            162
+            138
           ],
           "core": true
         },
         {
           "id": "up-board",
           "lines": [
-            163,
-            258
+            139,
+            234
           ],
           "core": false
         },
         {
           "id": "ads",
           "lines": [
-            259,
-            268
+            235,
+            244
           ],
           "core": true
         },
         {
           "id": "clinic",
           "lines": [
-            269,
-            297
+            245,
+            273
           ],
           "core": false
         },
         {
           "id": "pathway-operations",
           "lines": [
-            298,
-            827
+            274,
+            803
           ],
           "core": false
         },
         {
           "id": "premium-shell",
           "lines": [
-            828,
-            884
+            804,
+            860
           ],
           "core": false
         },
         {
           "id": "audio-hub",
           "lines": [
-            885,
-            887
+            861,
+            863
           ],
           "core": false
         },
         {
           "id": "google-auth",
           "lines": [
-            888,
-            892
+            864,
+            868
           ],
           "core": false
         }
@@ -456,7 +456,23 @@
       "sections": []
     },
     {
+      "pattern": "plus/cabinet-papers.json",
+      "sections": []
+    },
+    {
+      "pattern": "plus/cabinet-bridge.json",
+      "sections": []
+    },
+    {
+      "pattern": "plus/assistant-tags.json",
+      "sections": []
+    },
+    {
       "pattern": ".dentcast/des-exemptions.json",
+      "sections": []
+    },
+    {
+      "pattern": ".dentcast/des-fidelity-plans/*",
       "sections": []
     },
     {

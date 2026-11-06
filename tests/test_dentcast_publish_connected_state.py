@@ -67,7 +67,7 @@ class ConnectedTests(unittest.TestCase):
                                  actual_targets={PAGE: BODY, IMAGE: WEBP})
             state, d = h.parse_state(out["handoff_bytes"])
         self.assertEqual(out["sha256"], d)
-        self.assertEqual(out["next_step"], "C.4.10.1")
+        self.assertEqual(out["next_step"], "C.4.11")  # v2 order: the first step after cut 1
         self.assertEqual(state["schema"], h.SCHEMA)
         self.assertEqual(state["publication"]["steps"],
                          session["state"]["publication"]["steps"])
@@ -204,7 +204,7 @@ class ConnectedTests(unittest.TestCase):
             sha_by_path={PAGE: c.digest(BODY), IMAGE: c.digest(WEBP)},
             target_bytes={PAGE: BODY, IMAGE: WEBP})
         self.assertEqual(result["status"], "cut1_wire_and_bytes_verified")
-        self.assertEqual(result["next_step"], "C.4.10.1")
+        self.assertEqual(result["next_step"], "C.4.11")
 
     def test_compiler_lead_provenance_absent_vs_agent_approved(self):
         common = {"observed_branch": "content/connected-fixture",
@@ -233,7 +233,7 @@ class ConnectedTests(unittest.TestCase):
                         c.compile_cut1(s, c.cas(s), **common)
                 else:
                     self.assertEqual(c.compile_cut1(s, c.cas(s), **common)["next_step"],
-                                     "C.4.10.1")
+                                     "C.4.11")
 
     def test_page_and_webp_are_genuine_bytes_not_just_declared_paths(self):
         s = step_sequence(fresh())
@@ -290,7 +290,7 @@ class ConnectedTests(unittest.TestCase):
     def test_no_step_past_first_cut_even_with_status_claim(self):
         s = step_sequence(fresh())
         with self.assertRaisesRegex(h.Blocked, "CUT_DELIVERY_REQUIRED"):
-            c.update_step(s, c.cas(s), "C.4.10.1", "started")
+            c.update_step(s, c.cas(s), "C.4.11", "started")
 
     def test_schema_and_workflow_inventory_must_be_complete(self):
         with self.assertRaisesRegex(h.Blocked, "CONNECTED_WORKFLOW_FINGERPRINTS"):

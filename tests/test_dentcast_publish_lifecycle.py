@@ -37,7 +37,8 @@ class LifecycleTests(unittest.TestCase):
         run(self.root, 'add', '.')
         run(self.root, 'commit', '-m', 'fixture gate and CLI')
         self.p['content_id'] = 'note'
-        self.p['steps'] = lc.plan(paper)
+        # A class may pin the legacy ORDER_V1 (an old run without ledger_order_v2).
+        self.p['steps'] = lc.plan(paper, order=getattr(self, 'ledger_order', None))
         if paper:
             self.p['category'] = 'paper-only'
             self.p['target_paths'] = ['dentcast_cabinet_full_catalog.json']
@@ -63,16 +64,59 @@ class LifecycleTests(unittest.TestCase):
         run(self.root, 'push', 'origin', 'main')
 
     def test_full_inventory_covers_all_modules_and_preserves_dependencies(self):
-        p=fixtures.publication();p['steps']=lc.plan();lc.require_plan(p)
+        p=lc.adopt_ledger_order(fixtures.publication() | {'steps': lc.plan()});lc.require_plan(p)
         self.assertEqual({s['module'] for s in p['steps']}, set(h.MODULES))
         ids=[s['id'] for s in p['steps']]
         self.assertLess(ids.index('C.8'),ids.index('C.7'))
         self.assertLess(ids.index('C.2'),ids.index('C.0.5'))
+        # v2 (founder 2026-11-06): paper and DES/Fidelity before links, flashcards and FAQ.
+        for science in ('C.4.10.1','C.4.10.2','C.4.10.3','C.4.13'):
+            for later in ('C.4.7','C.4.9','C.4.11','C.4.12'):
+                self.assertLess(ids.index(science),ids.index(later))
         p['steps'].pop(3)
         self.assert_blocked('CANONICAL_PLAN_REQUIRED',lc.require_plan,p)
 
+    def test_old_order_receipt_validates_and_new_order_run_is_accepted(self):
+        # Every committed historical receipt predates ledger_order_v2 and keeps ORDER_V1.
+        receipts = sorted((ROOT/'.dentcast/publication-reports').rglob('*.completion.json'))
+        self.assertTrue(receipts)
+        for path in receipts:
+            p = json.loads(path.read_text(encoding='utf-8'))['state']['publication']
+            lc.require_plan(p)
+            if h.publication_category(p) != 'paper-only' and not lc.queue_lane(p):
+                self.assertFalse(lc.ledger_order_v2(p), path)
+                self.assertEqual([s['id'] for s in p['steps'] if s['id'] in lc.REGISTRY], list(lc.canonical_ids(p)))
+        old = fixtures.publication() | {'steps': lc.plan(order=lc.ORDER_V1)}
+        old['context']['decisions'] = [{'kind': lc.DELIVERY_POLICY}]
+        lc.require_plan(old)  # no marker: the old order, v1 cuts
+        self.assertEqual(lc.adopt_ledger_order(copy.deepcopy(old))['context']['decisions'],
+                         old['context']['decisions'])  # an old-order save is never re-marked
+        self.assert_blocked('MODULE_ORDER_INVALID|CANONICAL_PLAN_REQUIRED', lc.require_plan,
+                            old | {'steps': lc.plan()})  # unmarked run in the new order
+        new = lc.adopt_ledger_order(fixtures.publication() | {'steps': lc.plan()})
+        new['context']['decisions'] += [{'kind': lc.DELIVERY_POLICY}, {'kind': lc.DELIVERY_POLICY_V2}]
+        lc.require_plan(new)
+        self.assertTrue(lc.ledger_order_v2(new))
+        self.assert_blocked('MODULE_ORDER_INVALID|CANONICAL_PLAN_REQUIRED', lc.require_plan,
+                            new | {'steps': lc.plan(order=lc.ORDER_V1)})  # marked run in the old order
+        v1_cuts = copy.deepcopy(new)
+        v1_cuts['context']['decisions'].remove({'kind': lc.DELIVERY_POLICY_V2})
+        self.assert_blocked('LEDGER_ORDER_V2_REQUIRES_DELIVERY_POLICY_V2', lc.require_plan, v1_cuts)
+        # init marks every new run, so an old-order init input is refused.
+        forced = lc.adopt_ledger_order(copy.deepcopy(old) | {'context': copy.deepcopy(old['context'])}, force=True)
+        self.assert_blocked('MODULE_ORDER_INVALID|CANONICAL_PLAN_REQUIRED', lc.require_plan, forced)
+
+    def test_ledger_order_marker_cannot_change_in_flight(self):
+        self.prepare()
+        state, sha = h.load_state(self.root)
+        self.assertTrue(lc.ledger_order_v2(state['publication']))
+        p = copy.deepcopy(state['publication'])
+        p['context']['decisions'] = [d for d in p['context']['decisions'] if d.get('kind') != lc.LEDGER_ORDER_V2]
+        p['steps'] = lc.plan(order=lc.ORDER_V1)
+        self.assert_blocked('LEDGER_ORDER_CANNOT_CHANGE', h.save, self.root, p, sha, 'fixture reorder attempt')
+
     def test_dynamic_unit_steps_precede_their_aggregate(self):
-        p=fixtures.publication();p['steps']=lc.plan()
+        p=lc.adopt_ledger_order(fixtures.publication() | {'steps': lc.plan()})
         index=next(i for i,s in enumerate(p['steps']) if s['id']=='C.4.13')
         extra=copy.deepcopy(p['steps'][index]);extra['id']='C.4.13/source-1-checker-1'
         p['steps'].insert(index,extra);lc.require_plan(p)

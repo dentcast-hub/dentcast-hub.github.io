@@ -498,6 +498,10 @@ def validate_publication(p):
         require(approval["scope"] not in scopes, "DUPLICATE_APPROVAL_SCOPE")
         scopes.add(approval["scope"])
     require(isinstance(p["steps"], list) and bool(p["steps"]), "STEP_PLAN_REQUIRED")
+    # Modules are non-decreasing in the run's own canonical order (v2 runs
+    # place 06/08 before 05/07); a run without the marker keeps MODULES order.
+    import dentcast_publish_lifecycle as lifecycle
+    ranks = lifecycle.module_rank(p)
     ids, order, unfinished = set(), -1, False
     for s in p["steps"]:
         require(isinstance(s, dict) and set(s) == {"id", "module", "status", "evidence", "reason"},
@@ -505,8 +509,8 @@ def validate_publication(p):
         require(nonempty(s["id"]) and s["id"] not in ids, "DUPLICATE_OR_EMPTY_STEP")
         ids.add(s["id"])
         require(s["module"] in MODULES, "UNKNOWN_MODULE")
-        require(MODULES.index(s["module"]) >= order, "MODULE_ORDER_INVALID")
-        order = MODULES.index(s["module"])
+        require(ranks.index(s["module"]) >= order, "MODULE_ORDER_INVALID")
+        order = ranks.index(s["module"])
         require(s["status"] in ("pending", "started", "completed", "skipped", "blocked", "failed"),
                 "INVALID_STEP_STATUS")
         require(isinstance(s["evidence"], list) and all(nonempty(e) for e in s["evidence"]),
@@ -617,8 +621,7 @@ def compact_v3_steps(steps):
 def expand_v3_steps(publication):
     """Recover the omitted canonical tail; reject gaps and retain all dynamic rows."""
     import dentcast_publish_lifecycle as lifecycle
-    required = lifecycle.plan(publication_category(publication) == "paper-only",
-                              queue=lifecycle.queue_lane(publication))
+    required = lifecycle.plan_for(publication)
     serialized = publication["steps"]
     require(isinstance(serialized, list), "COMPACT_STEPS_INVALID")
     rebuilt, index = [], 0
@@ -1320,6 +1323,9 @@ def require_dependency_invalidation(root, previous, publication, current):
 
 @baseline_read_session
 def save(root, publication, expected=None, note=None, check_remote=False, initial=False, wal_materialize=False):
+    if initial:
+        import dentcast_publish_lifecycle as lifecycle
+        publication = lifecycle.adopt_ledger_order(decode_json(json.dumps(publication)))
     validate_publication(publication)
     require(note is None or nonempty(note), "RECONCILIATION_NOTE_EMPTY")
     with locked(root):
@@ -1608,6 +1614,8 @@ def main(argv=None):
             publication = decode_json(path.read_text(encoding="utf-8"))
             if args.command == "init" and isinstance(publication, dict):
                 publication["category"] = require_category_input(publication.get("category"))
+                # A new run records the current canonical ledger order (v2).
+                lifecycle.adopt_ledger_order(publication, force=True)
             lifecycle.require_plan(publication)
             if args.command == "init":
                 require(all(s["status"] == "pending" for s in publication["steps"]), "INIT_REQUIRES_PENDING_PLAN")

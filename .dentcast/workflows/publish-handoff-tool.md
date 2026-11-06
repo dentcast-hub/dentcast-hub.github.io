@@ -15,9 +15,9 @@ python3 tools/dentcast_publish_handoff.py discover --recover-incomplete --reposi
 python3 tools/dentcast_publish_handoff.py record --input /tmp/publish-input.json --expected-sha256 <digest-from-last-read>
 ```
 
-`content_id` must be `<section>/<slug>` (e.g. `insight/insight-99`; paper-only keeps its catalog id); other forms fail with `CONTENT_ID_INVALID`. On `SHALLOW_CLONE_DEEPEN_REQUIRED` run `git fetch --deepen=50 origin` and retry; on the warning `TOOL_OLDER_THAN_ORIGIN_MAIN` move the still-empty session branch onto `origin/main` before starting (`git switch -C <branch> --no-track origin/main`; see `publish-checkpoints.md`). Record `first_cut_lead_provenance_v1` before completing C.4.9; completing (or skipping) C.4.9 requires it. After a v2 run's post-cut2 Actions run succeeds, `git pull --ff-only` before stopping, then `confirm-cleanup` verifies the pulled delivery 3 read-only; never run `restore-cleanup`, nor `confirm-cleanup` before the pull; until then the stop guard reports `DELIVERY_3_ON_REMOTE_PULL_REQUIRED` or `REMOTE_BRANCH_ADVANCED_NOT_FETCHED` (see `publish-checkpoints.md`).
+`content_id` form, branch start (`--no-track`), `SHALLOW_CLONE_DEEPEN_REQUIRED`, `TOOL_OLDER_THAN_ORIGIN_MAIN`, the first-cut lead provenance and the post-Push-2 pull: `publish-checkpoints.md` and `publish-after-push2.md`.
 
-From another directory put `--repo /path/to/checkout` before the subcommand. On Windows use a suitable private input-file path instead of `/tmp`. `inspect --check-remote` reads `origin`'s branch matching the current local branch, independent of the configured upstream. The three fixed page delivery boundaries require a fresh remote observation; intermediate steps, stops and external-action receipts stay local. It uses `git ls-remote`; it does not fetch or upload. A failed observation remains unknown and blocks crossing those boundaries. Cached upstream commits are labeled separately and are never proof of delivered work. Missing remote commit objects remain unknown until the operator supplies history through their normal authorized Git workflow.
+From another directory put `--repo /path/to/checkout` before the subcommand. On Windows use a suitable private input-file path instead of `/tmp`. `inspect --check-remote` reads `origin`'s branch matching the current local branch, independent of the configured upstream. The delivery cuts require this fresh remote observation. It uses `git ls-remote`; it does not fetch or upload. A failed observation remains unknown and blocks crossing those boundaries. Cached upstream commits are labeled separately and are never proof of delivered work. Missing remote commit objects remain unknown until the operator supplies history through their normal authorized Git workflow.
 
 `init` refuses any existing state file. `record` requires the SHA-256 returned by the last successful read/write; a stale writer is rejected. Both use an advisory OS lock in Git metadata and atomic file replacement. Another cooperating writer in that checkout is rejected while the lock is held. This is not a distributed lock across clones or protection against a process bypassing the tool.
 
@@ -33,8 +33,7 @@ A reconciliation note records the operator's review; it does not prove that revi
 
 For changed bound local inputs, approved page bytes, or workflow rules use the
 explicit `invalidate` command described in `publish-checkpoints.md`; a review note
-alone cannot retain stale dependent evidence. Active WALs have their own durable
-`fastlocal.py invalidate` followed by `flush`, without deleting their history.
+alone cannot retain stale dependent evidence.
 
 ## Publication input
 
@@ -89,22 +88,16 @@ Existing structured v1 and v2 handoffs remain readable without modification. An 
 - `unknown`: the remote/history has not been verified. Offline operation is allowed in the same checkout with operator review; cached refs never become fresh remote proof.
 - `yes`: the checkpoint bytes and clean local Git snapshot are available on the freshly observed remote branch, with no detected reconciliation blocker. This does not verify private inputs, external services, semantic receipts, missing approval requirements, or publication completion. The receiving checkout must still verify its own state.
 
-A commit containing only the handoff does not invalidate itself. Uncommitted checkpoints use the private observation; committed checkpoints use their actual Git commit in either the original or receiving checkout. Expected file/workflow fingerprints, later work changes and semantic gates are still checked. Do not recursively commit solely to record the checkpoint's own SHA. For new page runs, deliver exactly after `C.4.9`, after `C.6` for v2 editorial-locked runs (`C.4.13` for v1-only handoffs), and after all remaining work, Phase F and G. Cuts 1/2 include the latest unfinished handoff. Cut 3 includes final work, a completed-only `.dentcast/publication-reports/<content-id>.completion.json` receipt and handoff deletion in one commit/push; never deliver a completed final handoff first. `init` installs the non-removable `fixed_three_deliveries_v1` decision. Intermediate progress, stops and external-action receipts remain local; `advance` returns `delivery_required` at undelivered cuts. See `publish-checkpoints.md` for the complete contract, legacy/paper-only compatibility (paper-only also stages its commit with `stage-delivery`) and recovery limits. The helper writes the checkpoint and completion receipt, never content, commits, pushes, fetches, resets or arbitrary receipt commands. `finish` reruns the fixed mechanical gate and removes the temporary state only under the guarded protocol. Its Git-metadata recovery receipt persists until the cleanup deletion is delivered and `confirm-cleanup` verifies it. Other checkpoint commands do not claim publication success.
+A commit containing only the handoff does not invalidate itself. Uncommitted checkpoints use the private observation; committed checkpoints use their actual Git commit in either the original or receiving checkout. Expected file/workflow fingerprints, later work changes and semantic gates are still checked. Do not recursively commit solely to record the checkpoint's own SHA. Delivery schedule, completion receipt and paper-only path: `publish-checkpoints.md`. `advance` returns `delivery_required` at an undelivered cut. The helper writes the checkpoint and completion receipt, never content, commits, pushes, fetches, resets or arbitrary receipt commands. `finish` reruns the fixed mechanical gate and removes the temporary state only under the guarded protocol; its Git-metadata recovery receipt persists until the deletion is delivered and `confirm-cleanup` verifies it. Other checkpoint commands do not claim publication success.
 
 Exit code 0 means the command wrote a checkpoint or found a structurally consistent checkpoint awaiting operator review. Exit code 2 means blocked/error. For init/record/inspect/step/bind/verify it never means a publication succeeded. Only `confirm-cleanup` can return verified completion of the delivered cleanup boundary. Read the result before acting; do not suppress errors with `|| true`.
 
-## Boundaries and rollout
+## Boundaries
 
 The checkpoint is a cooperative recovery aid, not signed proof of an action, a semantic validator or a crash-proof work backup. Abrupt interruption after a side effect but before its receipt remains an unknown outcome. Git hashes preserve identity, not the actual bytes of missing work. Transfer, attachment retrieval and Git delivery remain explicit authorized actions. The state is limited to 2 MiB and does not support dirty submodules or special files in its watched inventory.
 
-The Linux implementation is tested using real local Git repositories and bare remotes. Windows lock support is implemented but has not been runtime-tested here. No cross-client runtime parity claim is made. See `publish-checkpoints.md` for the mandatory protocol and `PUBLISHING-FINAL-REPORT.md` for integrated receiving-agent acceptance and actual client/live-publication limits. Do not delete the state merely because all supplied ledger rows say completed.
+The Linux implementation is tested using real local Git repositories and bare remotes. Windows lock support is implemented but has not been runtime-tested here. No cross-client runtime parity claim is made. See `publish-checkpoints.md` for the mandatory protocol. Do not delete the state merely because all supplied ledger rows say completed.
 
 ## Low-overhead progress recording
 
-Prefer `advance --id <already-started-step> --evidence <verified-result>
---start-next --expected-sha256 <digest>` when the next module is loaded and its
-action is ready. Add explicit consecutive `--skip ID=REASON` entries for canonical
-exceptions. Each transition is persisted separately; digests are passed internally.
-Omit `--start-next` at a pause or delivery boundary. `advance` never runs actions
-or replaces Phase F `verify`; see `publish-checkpoints.md` for recovery on partial
-progress. No approval or completed result is inferred.
+`advance`, `--skip` and partial-progress recovery: `publish-checkpoints.md`, «Every canonical step». `advance` never runs actions or replaces Phase F `verify`; no approval or result is inferred.

@@ -194,7 +194,10 @@ class PostCut2RunnerTests(unittest.TestCase):
                 stack.enter_context(patch.object(runner, "record_step", side_effect=record))
                 stack.enter_context(patch.object(runner, "run_command", side_effect=command))
                 stack.enter_context(patch.object(runner, "verify_scope"))
+                guard = stack.enter_context(patch.object(runner, "require_asset_versions"))
                 result = runner.run_phase(root, root / "artifacts", args)
+        # The ?v= regression guard runs after the C.8 builders and before Phase F.
+        self.assertEqual([c.args[2] for c in guard.call_args_list], ["after C.8 builders", "before Phase F"])
         self.assertEqual(result["status"], "mechanical_steps_complete")
         self.assertEqual(result["next_step"], "G")
         self.assertFalse(result["third_delivery_created"])
@@ -238,6 +241,7 @@ class PostCut2RunnerTests(unittest.TestCase):
                 stack.enter_context(patch.object(runner, "record_step", side_effect=record))
                 stack.enter_context(patch.object(runner, "run_command", side_effect=command))
                 stack.enter_context(patch.object(runner, "verify_scope"))
+                stack.enter_context(patch.object(runner, "require_asset_versions"))  # git is a fixed fixture sequence
                 runner.run_phase(root, root / "artifacts", args)
                 final = page.read_text(encoding="utf-8")
                 marker = '<meta name="dc-notify" content="true">' in final
@@ -287,6 +291,7 @@ class PostCut2RunnerTests(unittest.TestCase):
             stack.enter_context(patch.object(runner, "record_step", side_effect=record))
             stack.enter_context(patch.object(runner, "run_command", side_effect=command))
             stack.enter_context(patch.object(runner, "verify_scope"))
+            stack.enter_context(patch.object(runner, "require_asset_versions"))  # git is a fixed fixture sequence
             runner.run_phase(root, root / "artifacts", args)
             final = page.read_bytes()
         self.assertEqual(final.replace(b'<meta name="dc-notify" content="true">', b""), original)
@@ -519,6 +524,97 @@ class PostCut2RunnerTests(unittest.TestCase):
             self.assertEqual(manifest["attempted_head"], third)
             self.assertEqual(manifest["remote_head_observed"], base)
             self.assertTrue((artifact / "cleanup-record.json").is_file())
+
+
+class AssetVersionGuardTests(unittest.TestCase):
+    def repo(self, tmp):
+        root = Path(tmp)
+        for args in (["init", "-q", "-b", "main"], ["config", "user.name", "F"],
+                     ["config", "user.email", "f@example.invalid"]):
+            subprocess.run(["git", *args], cwd=root, check=True, capture_output=True)
+        page = root / "pillar/bonding/index.html"
+        page.parent.mkdir(parents=True)
+        page.write_text('<link href="/dc-nav.css?v=18"><script src="/dc-nav.js?v=316"></script>'
+                        '<a href="https://youtube.com/watch?v=abc">x</a>'
+                        '<script>fetch("/dentcast-brain.json?v=a0cc8d3ad7")</script>', encoding="utf-8")
+        subprocess.run(["git", "add", "."], cwd=root, check=True)
+        subprocess.run(["git", "commit", "-qm", "push 2"], cwd=root, check=True)
+        return root, page, runner.git(root, "rev-parse", "HEAD")
+
+    def test_lowered_or_lost_stamp_fails_closed_and_a_raise_passes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, page, base = self.repo(tmp)
+            text = page.read_text(encoding="utf-8")
+            runner.require_asset_versions(root, base, "after C.8 builders")  # unchanged
+            page.write_text(text.replace("dc-nav.js?v=316", "dc-nav.js?v=317")
+                            .replace("a0cc8d3ad7", "b1dd9e4be8")
+                            .replace("watch?v=abc", "watch?v=zzz"), encoding="utf-8")
+            runner.require_asset_versions(root, base, "before Phase F")  # raised, restamped
+            page.write_text(text.replace("dc-nav.js?v=316", "dc-nav.js?v=62"), encoding="utf-8")
+            with self.assertRaisesRegex(runner.RunnerError,
+                                        r"ASSET_VERSION_REGRESSION \(after C.8 builders\).*/dc-nav.js\?v=316->62"):
+                runner.require_asset_versions(root, base, "after C.8 builders")
+            page.write_text(text.replace("/dc-nav.css?v=18", "/dc-nav.css"), encoding="utf-8")
+            with self.assertRaisesRegex(runner.RunnerError, r"/dc-nav.css\?v=18->missing"):
+                runner.require_asset_versions(root, base, "before Phase F")
+            # A page new in delivery 3 has no earlier stamp to keep.
+            (root / "pillar/new.html").write_text("<p>no stamps</p>", encoding="utf-8")
+            page.write_text(text, encoding="utf-8")
+            self.assertEqual(runner.asset_version_regressions(root, base), [])
+
+
+class PullRequestInfoTests(unittest.TestCase):
+    def test_direct_route_pr_body_and_queue_lane_skip(self):
+        pub = sample_publication()
+        pub["context"]["decisions"] = [{"kind": "second_cut_editorial_lock_v1", "scopes": [
+            {"scope": "author_approvals", "status": "resolved",
+             "evidence": ["fixture", "mechanical defaults: {\"field\": \"hashtags\"}"]}]}]
+        info = runner.pull_request_info(pub, "b" * 40, BRANCH, "c" * 40,
+                                        "https://github.com/o/r/actions/runs/1")
+        self.assertTrue(info["open"])
+        self.assertTrue(info["title"].startswith("insight/insight100: publish"))
+        for text in ("insight/insight100", BRANCH, "b" * 40, "c" * 40,
+                     "https://github.com/o/r/actions/runs/1", '{"field": "hashtags"}', "manual_steps:\n- none"):
+            self.assertIn(text, info["body"])
+        self.assertNotIn("merge it", info["body"].lower().replace("merge when", ""))
+        pub["context"]["decisions"].append({"kind": lifecycle.QUEUE_LANE})
+        info = runner.pull_request_info(pub, "b" * 40, BRANCH, "c" * 40, "https://x/actions/runs/1")
+        self.assertFalse(info["open"])
+        self.assertIn("queue-publish.yml", info["reason"])
+
+    def test_finalization_writes_the_pr_request_for_the_workflow(self):
+        pub = sample_publication()
+        for row in pub["steps"]:
+            if row["id"] == "G":
+                break
+            row["status"] = "completed"
+        pub["context"]["delivery"], pub["context"]["decisions"] = [], []
+        base, third = "b" * 40, "c" * 40
+
+        def fake_git(_root, *args, check=True):
+            if args[:2] == ("rev-parse", "HEAD"):
+                return third
+            if args[:2] == ("rev-parse", "HEAD^"):
+                return base
+            if args and args[0] == "ls-remote":
+                return third + "\trefs/heads/automation/test"
+            return ""
+
+        completed = subprocess.CompletedProcess([], 0, stdout="ok", stderr="")
+        with tempfile.TemporaryDirectory() as tmp, \
+             patch.object(runner, "publication", return_value=(pub, "digest")), \
+             patch.object(runner, "record_step", side_effect=["g-start", "g-complete"]), \
+             patch.object(runner, "record_publication", return_value="delivery-recorded"), \
+             patch.object(runner, "git", side_effect=fake_git), \
+             patch.object(runner, "changed_paths", return_value={runner.HANDOFF}), \
+             patch.object(runner.lifecycle, "pending", return_value=False), \
+             patch.object(runner.subprocess, "run", return_value=completed):
+            result = runner.finalize_and_push(Path("/tmp/fake-post-cut2-repo"), Path(tmp), base,
+                                              "automation/test", "https://github.com/o/r/actions/runs/9")
+            info = json.loads((Path(tmp) / "pull-request.json").read_text(encoding="utf-8"))
+        self.assertTrue(result["pull_request"]["open"])
+        self.assertEqual(info["delivery3_sha"], third)
+        self.assertEqual(info["push2_sha"], base)
 
 
 if __name__ == "__main__":

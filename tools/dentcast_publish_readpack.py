@@ -68,16 +68,24 @@ MODULES = WORKFLOW + 'modules/'
 # one clause to the publish-report paragraph; all three sit after the
 # «Conditional path for founder-supplied results» boundary, which still occurs
 # once with byte-identical text before it; no heading changed.
+# Re-audited 2026-11-06 (founder: the direct route made simple, light and strong):
+# modules 01-12 were deduplicated (2957 -> 1833 lines), every heading kept
+# byte-identical, every selection boundary occurs exactly once, and module 08's
+# only change before the «Conditional path for founder-supplied results»
+# boundary is the shared two-line checkpoint banner; the DES/Fidelity text after
+# it keeps the 2026-11-06 stronger-review amendment. Routes re-run for clinical,
+# litecast, sharehub+paper, chairside+challenge, notecast, episode, promptologist
+# and glossary and the queue-prep profile select the intended ranges.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
-    '03-litecast-and-page.md': '1bb05a677410ee0964e9d2c0ef322d0db93ec2dc',
-    '04-taxonomy-and-navigation.md': '681f18e360a8fbcc8ed0a14a4a93e2bfa0a9cb4f',
-    '05-semantic-linking.md': '45bfd4e5b7a5e1e05e0f1d4f76ff6316ff909fac',
-    '06-paper-ingestion.md': 'e51277cafc640eff67fb5e061f1f57fe752cd72b',
-    '08-des-fidelity.md': 'c0ceb00d0ca58868aacb51f3c4c345e4039c6c7f',
-    '09-challenge.md': '0e62c230c9bd8b0264da99a3f25d9e83375f91ea',
-    '12-english-notify-verify.md': '8c78c082daf42c30996a684b9fe6ea57dd0a819d',
+    '03-litecast-and-page.md': '57e9c2aa4e3eb35a47b0528e2204a6d7ba194a76',
+    '04-taxonomy-and-navigation.md': 'ba517dc4eb96d1bc8ad34f34d5d93dbd5f557d8f',
+    '05-semantic-linking.md': '278bf29e744c82a830707c4b342c945aadf3e2cd',
+    '06-paper-ingestion.md': 'c82da53ba291e98445455354ef27516f17fdc797',
+    '08-des-fidelity.md': '537a67e557d72a8eb56ada8f14f7d103260e6696',
+    '09-challenge.md': 'f95917dce01098eac61f0e005ad6dc7b755ec98a',
+    '12-english-notify-verify.md': 'f5c9724f6661e214d1c12054fa52a12212fab69b',
 }
 
 REQUIRED = [
@@ -308,7 +316,7 @@ QUEUE_PREP = (
     (WORKFLOW + 'en-version.md', None, False),
     (MODULES + '12-english-notify-verify.md', [('## Phase D', '## Phase E', None)], False),
     # The «Opening paragraph before any list» block has several paragraphs,
-    # including the bold-lead «This lead paragraph is authored text» approval
+    # including the bold-lead «This lead paragraph is authored text» standing-acceptance
     # rule, and ends with the «To check a page you just built:» check. No
     # unrelated bold-lead paragraph follows it, so its end marker is the next
     # Markdown heading (today: none, i.e. end of file). The check sentence must

@@ -34,6 +34,7 @@ def fixture():
     # Synthetic only: these declarations exercise first-cut infrastructure
     # and NEVER represent clinical review or a real author approval.
     p["context"]["decisions"] = [
+        {"kind": lc.LEDGER_ORDER_V2},  # a new run: init marks the v2 ledger order
         {"kind": "first_cut_lead_provenance_v1",
          "origin": "not_applicable", "source_ref": "fixture:no-lead-in-test",
          "evidence": ["fixture:structural-only"]},
@@ -163,7 +164,7 @@ class FirstCutTests(unittest.TestCase):
             h.STATE_PATH: (folder / "handoff.md").read_bytes()
         }
         meta = fp.validate_cut(files)
-        self.assertEqual(meta["next_step"], "C.4.10.1")
+        self.assertEqual(meta["next_step"], "C.4.10.1")  # checked-in pre-2026-11-06 fixture: old ledger order
         self.assertEqual(files[asset][:4], b"RIFF")
 
     def test_atomic_first_cut_and_binary_readback(self):
@@ -171,7 +172,7 @@ class FirstCutTests(unittest.TestCase):
         files = fixture()
         result = fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
         self.assertEqual(result["delivery"], "verified-first-cut")
-        self.assertEqual(result["next_step"], "C.4.10.1")
+        self.assertEqual(result["next_step"], "C.4.11")
         self.assertEqual(client.updated, 1)
         self.assertEqual(len(client.entries), 3)
         self.assertEqual({x["path"] for x in client.entries}, set(files))
@@ -295,7 +296,7 @@ class FirstCutTests(unittest.TestCase):
             "scope": "authored-intro", "status": "confirmed",
             "decision": "approved", "evidence": ["fixture:author-message"]})
         files[h.STATE_PATH] = h.render(state).encode()
-        self.assertEqual(fp.validate_cut(files)["next_step"], "C.4.10.1")
+        self.assertEqual(fp.validate_cut(files)["next_step"], "C.4.11")
 
     def test_missing_lead_origin_declaration_is_blocked(self):
         files = fixture()
@@ -328,7 +329,7 @@ class FirstCutTests(unittest.TestCase):
                 files[h.STATE_PATH] = h.render(state).encode()
                 client = FakeGitHub()
                 if status == "confirmed":
-                    self.assertEqual(fp.validate_cut(files)["next_step"], "C.4.10.1")
+                    self.assertEqual(fp.validate_cut(files)["next_step"], "C.4.11")
                 else:
                     with self.assertRaises((h.Blocked, ValueError)):
                         fp.deliver(client, "content/test-cut", HEAD, files, 1024 * 1024)
@@ -343,7 +344,7 @@ class FirstCutTests(unittest.TestCase):
         lead["origin"] = "author_original"
         lead["source_ref"] = "fixture:original-author-paragraph"
         files[h.STATE_PATH] = h.render(state).encode()
-        self.assertEqual(fp.validate_cut(files)["next_step"], "C.4.10.1")
+        self.assertEqual(fp.validate_cut(files)["next_step"], "C.4.11")
 
     def test_undeclared_manual_landing_and_related_changed_pages_block(self):
         for changed in ("landing", "related"):
@@ -402,7 +403,7 @@ class FirstCutTests(unittest.TestCase):
 
     def test_nested_promptologist_manual_index_is_valid_and_delivered(self):
         files = nested_promptologist_fixture()
-        self.assertEqual(fp.validate_cut(files)["next_step"], "C.4.10.1")
+        self.assertEqual(fp.validate_cut(files)["next_step"], "C.4.11")
         remote = FakeGitHub()
         result = fp.deliver(remote, "content/nested-fixture", HEAD,
                             files, 1024 * 1024)
