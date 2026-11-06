@@ -47,7 +47,7 @@ python3 tools/dentcast_publish_readpack.py \
    - `modules/12-english-notify-verify.md`
 
    File numbers are not the execution order. Execute in the ledger order of `publish-checkpoints.md` («Order, messages, text lock, deliveries»): paper ingestion (06) and DES/Fidelity (08) run before links (05) and flashcards/FAQ (07). Read each module just before its first step.
-3. Agent proposals are built, recorded and reported, never sent for confirmation; the founder gets exactly two messages (M1 at C.4.13, M2 at 4.12-ب) plus the real decisions listed in `publish-checkpoints.md`.
+3. Agent proposals are built, recorded and reported, never sent for confirmation; the founder gets at most three messages (M1 open facts, M3b still-flagged Part 3b sentences at C.4.13, M2 exam questions) plus the real decisions listed in `publish-checkpoints.md`; the agent's Push-2 report lists every proposal and answer.
 4. Close all authoring, semantic judgments, DES/Fidelity, the authored English mirror (unless LiteCast/Challenge) and both founder messages **through C.6**, write the ten-scope editorial lock, then Push 2. After Push 2 the runner does C.8, C.7, D, E, F, G and opens the PR; the agent monitors (`publish-after-push2.md`).
 5. Respect every category exception, semantic decision, founder decision, builder order, versioning and complete Phase F. A skipped module needs its canonical exemption and a recorded reason; "not loaded" is not an exemption.
 6. Use actual tools. Report a missing capability or failed gate; never substitute simulated scientific results, synthetic receipts or Boolean assertions. Staging tools are not the live handoff or publishing engine.

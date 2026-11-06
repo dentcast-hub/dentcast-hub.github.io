@@ -7,7 +7,7 @@ Ledger steps in this module: `C.2.4`, `C.2.5`, `C.2.6`, `C.3`, `C.4`, `C.4.5`, `
 
 ### 2.4. Semantic pillar & subtopic determination (propose + confirm)
 
-Decide `pillar.primary` and — when that pillar is structured — `pillar.subtopic` **here, once**, before steps 2.5 and 5 consume them (Hard Rule 6). The match is semantic (Hard Rule 14). The decision is standing acceptance: applied, recorded with its reason, listed in report G; it is not sent for confirmation.
+Decide `pillar.primary` and — when that pillar is structured — `pillar.subtopic` **here, once**, before steps 2.5 and 5 consume them (Hard Rule 6). The match is semantic (Hard Rule 14). The decision is standing acceptance: applied, recorded with its reason, listed in the agent's Push-2 report; it is not sent for confirmation.
 
 **LiteCast exception:** skip this step entirely (module 03, step 0).
 

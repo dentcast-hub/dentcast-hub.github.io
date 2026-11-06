@@ -199,7 +199,11 @@ jobs:
                 -f base="$BASE_REF" -F body=@"$RUNNER_TEMP/post-cut2-pr-body.md" --jq .html_url)"; then
             owner="${GH_REPO%%/*}"
             url="$(gh api "repos/$GH_REPO/pulls?state=open&head=$owner:$TARGET_BRANCH" --jq '.[0].html_url // empty')"
-            [[ -n "$url" ]] || { echo "::error::the PR could not be opened"; exit 1; }
+            if [[ -z "$url" ]]; then
+              echo "::warning::the PR could not be opened; delivery 3 is on the branch — open the PR from $TARGET_BRANCH to $BASE_REF by hand"
+              printf '%s\n' "- PR: not opened (API error); delivery 3 is on \`$TARGET_BRANCH\`. Open the PR to \`$BASE_REF\` by hand; the merge stays the founder's decision." >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
           fi
           echo "pr_url=$url" >> "$GITHUB_OUTPUT"
           printf '%s\n' "- PR: $url (merge when every gate is green; the merge is the founder's decision)" >> "$GITHUB_STEP_SUMMARY"

@@ -3,7 +3,7 @@
 > **Order, founder messages and the three deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
-Ledger step in this module: `C.4.13` (after C.4.6 and C.4.10, before C.4.7, inside delivery 1; it closes with message M1 and starts the text lock).
+Ledger step in this module: `C.4.13` (after C.4.6 and C.4.10, before C.4.7, inside delivery 1; it closes with message M3b when a sentence is still flagged, and starts the text lock).
 
 ### 4.13. DES — DentCast Evidence Score (run or consume the record)
 
@@ -97,7 +97,7 @@ spec's own error output is the correct result, and it is what gets recorded:
 {"des_version":"2.5","error":"INSUFFICIENT_TEXT"}
 ```
 Per the capability protocol (`agent-parity.md` §2), when the blocker is a **missing
-tool** rather than a missing abstract, the abstract is an open fact for message M1
+tool** rather than a missing abstract, the abstract is an open fact asked where it arises (message M1)
 (the founder pastes it) — never downgrade the result silently.
 
 **A source with no method to appraise still needs its text** (spec v3.1). For a
@@ -105,7 +105,7 @@ textbook, a glossary or a standard in the «منابع» block the ladder is: th
 `WebFetch` for an open glossary or standard (the Glossary of Prosthodontic Terms
 is open access, so the cited entry is retrievable); and then **the founder's own
 copy** — show him the page's sentences that lean on that source and ask for the
-chapter or page range they come from, in message M1, never from memory. The SOURCE call then runs on that text with
+chapter or page range they come from, as an open fact (message M1), never from memory. The SOURCE call then runs on that text with
 `text_basis: EXCERPT` (a part of the work — a chapter, a page range, one entry)
 or `FULL_TEXT` (the whole cited work), returns `NOT_APPRAISABLE`, and the
 FIDELITY call (Part 2b) reads the same text. «ندارم» is a legal answer: the
@@ -444,7 +444,7 @@ Keep historical records and their provenance unchanged.
    unanswered sentence or a `source_quote` that is not verbatim in that source,
    adds every found sentence to its source in the recorded plan (origin
    `orphan_sweep`, with the receipt). The sentences found nowhere are listed
-   for the founder as information (report G, and M1 when M1 is sent), never as
+   for the founder as information (the agent's Push-2 report, and M3b when M3b is sent), never as
    faults: they are the author's own reasoning or background unless the founder
    points to a source the run did not have.
 
@@ -532,7 +532,7 @@ run is unusable.
 «کاملاً مطابق»**. So when a validated FIDELITY result
 carries any `ALTERED` or `REVERSED` unit, the publish **stops here, before
 Part 4 stores anything**, and the founder is shown each such sentence and asked
-whether to fix it. These blocks are part of **message M1 at C.4.13**
+whether to fix it. These blocks are **message M3b at C.4.13**
 (`publish-checkpoints.md`): never deferred to the final report, never skipped
 because the grade is already high. Only units
 still flagged after the Part 2c step 4 review reach this gate; a unit the

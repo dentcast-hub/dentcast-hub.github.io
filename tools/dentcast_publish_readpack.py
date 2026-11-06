@@ -75,17 +75,19 @@ MODULES = WORKFLOW + 'modules/'
 # boundary is the shared two-line checkpoint banner; the DES/Fidelity text after
 # it keeps the 2026-11-06 stronger-review amendment. Routes re-run for clinical,
 # litecast, sharehub+paper, chairside+challenge, notecast, episode, promptologist
-# and glossary and the queue-prep profile select the intended ranges.
+# and glossary and the queue-prep profile select the intended ranges. Re-pinned
+# once more after the integration review (M1/M3b wording, Push-2 report, lead
+# provenance timing); headings unchanged.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
-    '03-litecast-and-page.md': '57e9c2aa4e3eb35a47b0528e2204a6d7ba194a76',
-    '04-taxonomy-and-navigation.md': 'ba517dc4eb96d1bc8ad34f34d5d93dbd5f557d8f',
+    '03-litecast-and-page.md': '6f7c686af6b009ff4fb7e8b67edc66318d9b8e7f',
+    '04-taxonomy-and-navigation.md': '2168060033465a17099f4f0a52656064eb5b44e6',
     '05-semantic-linking.md': '278bf29e744c82a830707c4b342c945aadf3e2cd',
     '06-paper-ingestion.md': 'c82da53ba291e98445455354ef27516f17fdc797',
-    '08-des-fidelity.md': '537a67e557d72a8eb56ada8f14f7d103260e6696',
+    '08-des-fidelity.md': '1c541ca7cefa24ebcf6607728e0c220587c0eab6',
     '09-challenge.md': 'f95917dce01098eac61f0e005ad6dc7b755ec98a',
-    '12-english-notify-verify.md': 'f5c9724f6661e214d1c12054fa52a12212fab69b',
+    '12-english-notify-verify.md': '67ec15cd1ea56e081536bf89e28dda9ec2b4d1bb',
 }
 
 REQUIRED = [

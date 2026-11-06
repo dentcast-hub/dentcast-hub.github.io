@@ -79,7 +79,7 @@ For each genuine instance record: the exact original phrase, a rewrite with the 
 
 #### Step 3 — Confirm, then branch
 
-The rewrites are agent proposals under standing acceptance (Hard Rule 14): apply them and record each (original → rewrite → reason) in the handoff; report G lists them and the founder may revert any. Every sentence not rewritten stays byte-identical, and the founder's title and caption are never touched (Hard Rule 16).
+The rewrites are agent proposals under standing acceptance (Hard Rule 14): apply them and record each (original → rewrite → reason) in the handoff; the agent's Push-2 report lists them and the founder may revert any. Every sentence not rewritten stays byte-identical, and the founder's title and caption are never touched (Hard Rule 16).
 
 #### Constraints
 

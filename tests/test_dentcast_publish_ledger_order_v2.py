@@ -98,7 +98,7 @@ class LedgerOrderV2Tests(unittest.TestCase):
         self.assertTrue(result['publication_completed'])
         self.assertEqual(result['delivered_by'], 'remote_final_delivery')
         self.assertEqual(result['phase_f'], 'trusted_committed_receipt')
-        self.assertEqual(result['push2_commit'], push2)
+        self.assertEqual(result['second_delivery_commit'], push2)
         self.assertEqual(h.text_git(self.root, 'rev-parse', 'HEAD^'), push2)
         # The merge gate still reruns Phase F and accepts the v2-order receipt.
         self.assertEqual(merge.verify_publication_history(self.root, self.baseline, []), {'note'})

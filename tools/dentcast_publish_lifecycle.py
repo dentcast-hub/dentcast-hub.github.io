@@ -95,7 +95,7 @@ def adopt_ledger_order(publication, force=False):
             and not ledger_order_v2(publication)):
         bases = [s.get("id") for s in steps if isinstance(s, dict) and s.get("id") in REGISTRY]
         if force or bases == [sid for sid, _ in ORDER_V2]:
-            publication["context"]["decisions"].append({"kind": LEDGER_ORDER_V2})
+            publication.setdefault("context", {}).setdefault("decisions", []).append({"kind": LEDGER_ORDER_V2})
     return publication
 
 
@@ -1225,7 +1225,7 @@ def confirm_remote_final_delivery(root):
         observation.unlink()  # stale Push-2 observation of this checkout
     return {"status": "publication_completed", "publication_completed": True,
             "cleanup_commit": head, "content_id": p["content_id"], "delivered_by": "remote_final_delivery",
-            "push2_commit": final["second_delivery_commit"],
+            "second_delivery_commit": final["second_delivery_commit"],
             "phase_f": "trusted_committed_receipt" if v2 else "rerun_locally"}
 
 

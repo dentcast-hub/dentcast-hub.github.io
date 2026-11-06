@@ -62,30 +62,41 @@ B, C.0 … C.2, C.0.5, C.0.6, C.2.4, C.2.5, C.2.6, C.3, C.4, C.4.5, C.4.5-b, C.4
 C.4.10.3, C.4.13, C.4.7, C.4.7-b, C.4.8, C.4.9 **[delivery 1]**, C.4.11, C.4.12, C.4.14, C.5.0, C.5,
 C.5.5, C.5.6, C.5.6-b, C.6 **[delivery 2]**, C.8, C.7, D, E, F, G **[runner]**. A handoff started
 under the earlier order keeps it; the tools recognise it from the missing marker. `init` refuses an
-old-order plan, a marked run cannot be reordered (`LEDGER_ORDER_CANNOT_CHANGE`), and a v2-order run
-requires the v2 cut policy. Never relabel or migrate a delivered cut.
+old-order plan (`CANONICAL_PLAN_REQUIRED`), a marked run cannot be reordered
+(`LEDGER_ORDER_CANNOT_CHANGE`), and a v2-order run requires the v2 cut policy
+(`LEDGER_ORDER_V2_REQUIRES_DELIVERY_POLICY_V2`). Never relabel or migrate a delivered cut.
 
 **Standing acceptance.** Agent proposals are not sent for confirmation: title/caption the agent
 proposed, lead paragraph, Q3.5 rewrites, hashtags and mint, keywords, pillar/subtopic, borderline
-links at 4.7/4.8/4.9 (conservative default: skip), flashcard/FAQ choices, catalog tags, pathway
-borderline and third pathway, uncertain bundle, English mirror. Each is built per its module,
-recorded with evidence in the handoff and listed in report G. The founder may change any of them;
-the change follows the invalidation rules below.
+links at 4.7/4.8/4.9 (conservative default: skip), flashcard/FAQ choices, catalog tags and the Drive
+subfolder among existing ones, the Pulse line, pathway borderline and third pathway, uncertain bundle,
+English mirror. Each is built per its module, recorded with evidence in the handoff and listed in the
+**agent's Push-2 report** (below). The founder may change any of them; the change follows the
+invalidation rules below.
 
-**Exactly two founder messages:**
+**At most three founder messages**, each sent only when it has content:
 
-1. **M1 at C.4.13** — one message: facts no real source answered (DOI, first author, Drive location,
-   counters …; Hard Rule 13) and the Part 3b sentences still flagged after the stronger review, each
-   with its three named answers (module 08). Work that depends on an open fact waits; the rest
-   continues.
-2. **M2 at 4.12-ب** — the exam questions, approved one by one (module 07).
+1. **M1, open facts** — at the first step that needs a fact no real source answered (normally
+   C.4.10.1, the paper branch: DOI, first author, which Drive file, catalog counters; a NoteCast credit
+   target at C.4.5-b; Hard Rule 13). One message gathers every open fact known at that point; the
+   dependent step waits, independent work continues. A rare later fact (an abstract the tool cannot
+   fetch, module 08 Part 1) is asked where it arises. A page with no paper and no open fact has no M1.
+2. **M3b, Part 3b** — at C.4.13, only when a sentence is still `ALTERED`/`REVERSED` after the stronger
+   review: each with its three named answers (module 08). Pages without C.4.13 (LiteCast, Challenge,
+   «بدون DES») have no M3b.
+3. **M2, exam questions** — at 4.12-ب, approved one by one (module 07).
+
+M1 and M3b are closed before delivery 1: the cut refuses any unanswered `pending_questions`.
 
 Asked when they arise, because they are real decisions: a new subtopic in `PILLARS`, a new Drive
-subfolder, DES basket 3 / publish without DES, a missing Fidelity runtime capability, merge
-authorization. Founder data (text, title, any string given) is final and copied (Hard Rule 16).
+subfolder, DES basket 3 / publish without DES, a missing Fidelity runtime capability, a NoteCast pair
+where neither episode has a related-content block (4.5) or a previous Promptologist part without an
+`ep-nav` block (4.6), merge authorization. Founder data (text, title, any string given) is final and
+copied (Hard Rule 16).
 
-**Text lock.** After C.4.13 the body, title, caption and image captions are locked. Only a Part 3b
-fix changes the body (and re-measures only its units). Any other change is the existing invalidation
+**Text lock.** After C.4.13 the body text, title, caption and image captions are locked (4.7–4.9 still
+add their anchors around unchanged words). Only a Part 3b fix changes the body text (and re-measures
+only its units). Any other change is the existing invalidation
 from C.2 (`invalidate`, below).
 
 **Push is never a founder gate.** The three deliveries are the contract. Page publications have
@@ -94,7 +105,7 @@ exactly three; this table is their only home:
 | Delivery | Boundary | Contents | Who |
 |---|---|---|---|
 | 1 | after `C.4.9` | scoped work + latest handoff | agent |
-| 2 | after `C.6`: DES/Fidelity, Challenge, links, flashcards/FAQ, hashtags, content record, pathways, Pulse, English mirror and both founder messages closed | scoped work + latest handoff | agent |
+| 2 | after `C.6`: DES/Fidelity, Challenge, links, flashcards/FAQ, hashtags, content record, pathways, Pulse, English mirror and every founder message closed | scoped work + latest handoff | agent |
 | 3 | after C.8, C.7, D, E, real Phase F, G | final work + completion receipt + handoff deletion, one commit | `post-cut2-mechanical.yml` |
 
 Between cuts checkpoint locally and continue. No stop, turn end, agent switch, approval wait or
@@ -188,8 +199,9 @@ step and the Stop guard refuse with `PREVIOUS_STEP_HANDOFF_NOT_DELIVERED`: resto
 
 **What the writer validates at cut 1** (and every later cut): zero unanswered `pending_questions`,
 no unconfirmed/rejected approval, and exactly one `context.decisions` entry
-`kind="first_cut_lead_provenance_v1"` with a real `source_ref` and nonempty evidence, recorded before
-C.4.9 is completed or skipped. `origin`: `author_original` (founder's own first paragraph);
+`kind="first_cut_lead_provenance_v1"` with a real `source_ref` and nonempty evidence, recorded **after
+C.4.13 and before C.4.9** (the lead is locked text; recording it earlier makes a Part 3b fix invalidate
+the `authored-intro` approval). `origin`: `author_original` (founder's own first paragraph);
 `agent_authored` (agent's lead, plus approval `scope="authored-intro"`, `status="confirmed"`, whose
 evidence is the standing-acceptance record); `not_applicable` (reviewed exception, reason in
 `source_ref`).
@@ -224,7 +236,11 @@ PR comes from `queue-publish.yml`). Before Phase F it refuses a regenerated page
 
 Immediately after Push 2 is confirmed, one message: the agent-side work has reached Push 2, GitHub
 Actions is running the remaining mechanical delivery, the agent is monitoring it; branch, Push-2 SHA
-and run link when available. Not a completion claim. **Then read `publish-after-push2.md`
+and run link when available, **plus the agent's report**: the standing-acceptance list (what was
+applied, what was skipped and why), every M1/M3b/M2 question with its answer, the orphan sentences
+of the Fidelity sweep, and any real decision asked. Report G, written by the runner's `finish`, is
+technical only (ledger, Phase F, fingerprints) and deliberately omits approvals; the agent's Push-2
+report is the only human record of them. Not a completion claim. **Then read `publish-after-push2.md`
 completely** and follow it. Three messages in all after Push 2: at Push 2, at the run's end, at
 merge. A mechanical step that reveals a needed substantive change stops the run's path: invalidate,
 never fix silently in D or F.
@@ -237,7 +253,8 @@ Drive-link identity and the completed Drive-action receipt; the agent still veri
 folder and schema). After G record `context.delivery` (scope + evidence of the Drive filing) — else
 `DELIVERY_EVIDENCE_REQUIRED`. `stage-delivery` the catalog work and handoff, commit and push once,
 then `finish`, commit/push only the handoff deletion, `confirm-cleanup`. The Stop guard blocks between
-that push and `finish`.
+that push and `finish`. If that final delivery fails, `restore-cleanup` restores the same local handoff
+(it removes only its own unchanged receipt and report); retry the same push, never a new commit.
 
 ## Phase F, DES exemptions, completion receipt
 
@@ -275,7 +292,7 @@ the `INSUFFICIENT_TEXT` object. Missing assignment evidence fails closed. Founde
 module 08 only.
 
 `.dentcast/publication-reports/<content-id>.completion.json` (completed-only receipt: finished ledger,
-final fingerprints, the two prior delivery commits) and the technical report
+final fingerprints, the second-delivery commit) and the technical report
 `.dentcast/publication-reports/<category>-<id>.md` are written by `finish` in the runner and share
 delivery 3 with the handoff deletion. Status before `confirm-cleanup` is `cleanup_pending_delivery`,
 never success. The helper never commits, pushes or deploys; its checks cannot prove private

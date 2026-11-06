@@ -71,7 +71,7 @@ Build the entry with **identical keys, nesting and ordering** (Hard Rule 5), fil
 - **Episode entries carry `"type": "dentcast"` and a filled `audio_url`** (the ArvanCloud URL — `tools/update-homepage-counters.py` and the `index.html` hero take the newest entry with `audio_url`). Copy the latest `dentcast` entry's key set; never a `type: "episode"`.
 
 <!-- insight-keywords:v1 -->
-**Insight `keywords`.** For an insight entry (brain `type` `clinical`) write 5 to 8 keywords, each a short phrase taken from the article's own text, mostly Persian; an English term only where dentists write it that way. A keyword does not repeat a hashtag. They are agent proposals under standing acceptance (Hard Rule 14), recorded and listed in report G.
+**Insight `keywords`.** For an insight entry (brain `type` `clinical`) write 5 to 8 keywords, each a short phrase taken from the article's own text, mostly Persian; an English term only where dentists write it that way. A keyword does not repeat a hashtag. They are agent proposals under standing acceptance (Hard Rule 14), recorded and listed in the agent's Push-2 report.
 <!-- /insight-keywords:v1 -->
 
 Append the entry at the end of the array (Hard Rule 3). Phase F row `5 brain` verifies the tail position, the key-set parity, the episode `type`/`audio_url` and stale data.
@@ -98,12 +98,12 @@ The catalog and doctrine live in `plus/pathways.json` and `reports/pathways-cata
 
    **Three guards decide what the tool may call STRONG and where it may anchor — none of them is yours to relax:**
    - **STRONG is measured against the pathway's frozen CORE** (`.dentcast/pathway-core.json`, its steps as the founder last curated them), never its live list — otherwise each placement would raise the next similar item's score. A pathway with no frozen core is never STRONG. `--freeze-core` re-freezes every full pathway and is run **only after a founder curation pass**, never after a publish.
-   - **A third pathway is never the agent's.** An item already in two full pathways gets ASK for every further candidate, and `--insert` refuses a third without `--confirmed`, which records the founder's own yes to *that* placement. Bundles are outside this count (5.6-ب).
+   - **A third pathway is never the agent's.** An item already in two full pathways is never placed in a third by the agent (standing default: not placed, reported); `--insert` refuses a third without `--confirmed`, which records the founder's own yes to *that* placement. Bundles are outside this count (5.6-ب).
    - **The anchor never splits a series.** Consecutive podcast episodes (an episode and its NoteCast are one unit), chapter-style ids (`prompt6-1 → prompt6-4`) and consecutive «قسمت/بخش N» titles with one stem are one run; the suggested anchor is the run's **last** step, and `--insert --after` a step inside a run is refused without `--confirmed`.
    The scorer also ignores brand/series hashtags (`domain: brand|web`) and corpus-generic words (`دندان`, `ایمپلنت`, `روکش`… — anything in >10% of entries).
 2. Decide membership semantically, by standing acceptance (Hard Rule 14):
    - **STRONG / unmistakable homes** (a new adhesion/bonding piece into every bonded-restoration pathway, a new screw-loosening piece into the implant-prosthetic and failure pathways): **place them** and record pathway + anchor + milestone flag.
-   - **Borderline / cross-cutting** (a plausible but not obvious fit, a theme with no clear home, uncertainty about the position) and **any third full pathway**: **not placed** — the default is conservative, because pathways are live UI for real subscribers. Record each candidate with its reason in report G; the founder may ask for the placement afterwards. Use the tool's suggested anchor; never `--confirmed` on your own.
+   - **Borderline / cross-cutting** (a plausible but not obvious fit, a theme with no clear home, uncertainty about the position) and **any third full pathway**: **not placed** — the default is conservative, because pathways are live UI for real subscribers. Record each candidate with its reason in the agent's Push-2 report; the founder may ask for the placement afterwards. Use the tool's suggested anchor; never `--confirmed` on your own.
    - An item routinely belongs to **several** pathways; place it in each strong one.
 3. Apply each placement mechanically (the only writer of `plus/pathways.json`; it refuses duplicates, LiteCast, a third full pathway and an anchor inside a series — the last two only without `--confirmed`):
    ```bash

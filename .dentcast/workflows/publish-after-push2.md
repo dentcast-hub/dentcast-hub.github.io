@@ -26,12 +26,16 @@ monitors, reports, and merges only with authorization.
    Until the pull the Stop guard reports `DELIVERY_3_ON_REMOTE_PULL_REQUIRED` or
    `REMOTE_BRANCH_ADVANCED_NOT_FETCHED`; only the pull clears them.
 2. `python3 tools/dentcast_publish_handoff.py confirm-cleanup`: read-only check of the pulled HEAD —
-   its parent is the receipt's exact Push-2 SHA, the committed completion receipt's fingerprints match
-   the tree, the handoff is gone and HEAD is the remote head. On a v2 run it trusts the runner's
-   committed Phase F receipt (no rerun, no `origin/main` fetch); a v1 run still reruns Phase F. Never
+   its parent is the receipt's second-delivery commit (Push 2, or the last audited reconciliation
+   commit; else `EXTRA_DELIVERY_COMMIT_FORBIDDEN`), the committed completion receipt's fingerprints
+   match the tree (`FINAL_RECEIPT_FILE_MISMATCH`), its Phase F exit code is 0
+   (`MECHANICAL_GATE_RECEIPT_REQUIRED`), the handoff is gone and HEAD is the remote head. On a run with
+   the v2 cut policy (`fixed_three_deliveries_v2`) it trusts the runner's committed Phase F receipt (no
+   rerun, no `origin/main` fetch); a v1-policy run still reruns Phase F. Never
    run `restore-cleanup` on this route, nor `confirm-cleanup` before the pull.
-3. Message at the run's end: `content_id`, branch, Push-2 SHA, run link, PR link, Phase F summary
-   line, and the agent-proposal list of report G. Not "published" until merged.
+3. Message at the run's end: `content_id`, branch, Push-2 SHA, run link, PR link and the Phase F
+   summary line (the standing-acceptance list, the M1/M3b/M2 answers and the orphan sentences were
+   already in the agent's Push-2 report; repeat nothing). Not "published" until merged.
 4. **Merge** only with authorization (`publish-checkpoints.md`, «Waiting, services, merge»): fresh
    `check-pr`, gates green, then merge. Message at merge. A red gate means no merge.
 
@@ -44,7 +48,13 @@ only those recomputed values. Until the stamp is rerun the merge gate fails on P
 
 ## Failure — guarded recovery
 
-A failed run pushes nothing; the branch stays at Push 2. Read the logs/artifact, then:
+A run that fails **before** delivery 3 pushes nothing; the branch stays at Push 2. A failure **after**
+delivery 3 was pushed (the merge-gate verification or the PR step) leaves delivery 3 on the branch:
+pull, `confirm-cleanup`, open the PR by hand if it is missing; never re-dispatch. Read the
+logs/artifact, then:
+
+- **`ASSET_VERSION_REGRESSION`:** a builder or stamp defect, never the agent's `git diff` job; it is a
+  tool defect (next bullet but one) unless the lost stamp sits in the publication's own page edit.
 
 - **Transient** (runner lost, network, outage): `workflow_dispatch` the same commit (`target_branch`,
   `expected_head` = Push-2 SHA). Commit nothing. A tool defect is not transient.
