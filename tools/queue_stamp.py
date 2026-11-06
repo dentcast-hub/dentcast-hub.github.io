@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Stamp a publish-queue item before its freeze: provenance, SHA256SUMS, manifest.
 
-publish-queue.md «اصول» 4 and 13 and «گذر پایانی»: when the final pass and the
-independent review are closed, three mechanical things remain, always the same,
+publish-queue.md principle 4 and step 7 «گذر پایانی و انجماد»: when both independent
+reviews (principle 13) and the final sweep are closed, three mechanical things remain, always the same,
 and this tool does them in that order:
 
   1. **Provenance of 11-لینک‌های-گلاسری.md.** The full SHA of the main commit the

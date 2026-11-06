@@ -284,7 +284,7 @@ def build(root, *, category, attached_paper, challenge, after_intake=False):
     return ''.join(pieces), manifest
 
 
-# Queue preparation route («فهرست خواندن آماده‌سازی» in publish-queue.md).
+# Queue preparation route («فهرست خواندن» in publish-queue.md).
 # publish-queue.md itself is read first and separately, so it is never packed.
 # Each entry: (path, segments, paper_only). segments is None for the whole file,
 # otherwise a list of (start_marker, end_marker, required_inside). end_marker
@@ -356,7 +356,7 @@ def build_queue_prep(root, *, attached_paper):
         'source_paths': [],
         'segments': [],
         'uncovered_if_unverified': [
-            'This list mirrors «فهرست خواندن آماده‌سازی» in publish-queue.md; that table is authoritative.',
+            'This list mirrors «فهرست خواندن» in publish-queue.md; that table is authoritative.',
             'A task needing a module outside this list reads that whole module and says why.',
             'Read complete cited specialty workflows and scientific prompt files as required.',
         ],

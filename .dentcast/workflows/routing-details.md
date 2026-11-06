@@ -370,7 +370,7 @@ dentai، dentcast-plus، insight، notecast) را که اصلاً تگِ Open Gr
 تریگر: «این مقاله رو آماده کن بذار تو صف انتشار»، «صف انتشار چی داره؟»، «یه
 مقاله تو صف انتشار دارم»، «از صف انتشار منتشر کن» ⇒
 آماده‌سازی و وضعیت: `.dentcast/workflows/publish-queue.md` را کامل بخوان و طبقش پیش برو؛ برای
-آماده‌سازی، به‌علاوهٔ بستهٔ خواندن آماده‌سازی که همان فایل می‌سازد (`tools/dentcast_publish_readpack.py --queue-prep`)،
+آماده‌سازی، به‌علاوهٔ بستهٔ خواندن آماده‌سازی که ابزار `tools/dentcast_publish_readpack.py --queue-prep` می‌سازد،
 یک‌بار و کامل. انتشار از صف: فقط `.dentcast/workflows/queue-route.md`.
 
 - آماده‌سازی فقط روی برنچ `queue` می‌نویسد و انتشار شروع نمی‌کند؛ main و برنچ انتشار دست نمی‌خورند.
