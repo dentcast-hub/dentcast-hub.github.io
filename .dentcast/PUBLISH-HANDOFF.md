@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "plak-sefr/plak1-12"
 - Status: in_progress
-- Next canonical step: "C.4.11"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -34,6 +34,54 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           ],
           "scope": "caption",
           "status": "confirmed"
+        },
+        {
+          "decision": "3 MCQ rows r-d264301c, r-d725733f, r-d7c43517 for plak-sefr/plak1-12 exactly as drafted (keys 1, 3, 0)",
+          "evidence": [
+            "founder answer to M2 relayed verbatim by coordinating session 2026-11-06: \u00ab\u0647\u0631 \u0633\u0647 \u062a\u0623\u06cc\u06cc\u062f\u00bb"
+          ],
+          "scope": "exam questions",
+          "status": "confirmed"
+        },
+        {
+          "decision": "#\u067e\u0644\u0627\u06a9_\u0635\u0641\u0631 #\u0633\u0627\u06cc\u062a_\u0645\u0637\u0628 #\u0627\u0637\u0644\u0627\u0639\u0627\u062a_\u0645\u0637\u0628 #GitHub #\u0647\u0648\u0634_\u0645\u0635\u0646\u0648\u0639\u06cc (all existing canonical concepts)",
+          "evidence": [
+            "standing acceptance (publish-checkpoints \u00abStanding acceptance\u00bb, HR14), listed in the agent Push-2 report"
+          ],
+          "scope": "hashtags",
+          "status": "confirmed"
+        },
+        {
+          "decision": "7 agent-composed keyword chips (brain keywords of plak1-12)",
+          "evidence": [
+            "standing acceptance (publish-checkpoints \u00abStanding acceptance\u00bb, HR14), listed in the agent Push-2 report"
+          ],
+          "scope": "keywords",
+          "status": "confirmed"
+        },
+        {
+          "decision": "\u00ab\u067e\u0644\u0627\u06a9 \u0635\u0641\u0631\u060c \u0642\u0633\u0645\u062a \u06f1\u06f2: \u00ab\u0627\u0648\u0644\u06cc\u0646 \u0635\u0641\u062d\u0647\u200c\u06cc \u0633\u0627\u06cc\u062a \u0631\u0627 \u0628\u0633\u0627\u0632\u06cc\u0645\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f\u00bb with link on the title",
+          "evidence": [
+            "standing acceptance (publish-checkpoints \u00abStanding acceptance\u00bb, HR14), listed in the agent Push-2 report"
+          ],
+          "scope": "pulse",
+          "status": "confirmed"
+        },
+        {
+          "decision": "ai-dentistry after plak-sefr/plak1-11",
+          "evidence": [
+            "standing acceptance (publish-checkpoints \u00abStanding acceptance\u00bb, HR14), listed in the agent Push-2 report"
+          ],
+          "scope": "pathway placement",
+          "status": "confirmed"
+        },
+        {
+          "decision": "plak-sefr/en/plak1-12.html as authored (Let\u2019s Build the Site\u2019s First Page)",
+          "evidence": [
+            "standing acceptance (publish-checkpoints \u00abStanding acceptance\u00bb, HR14), listed in the agent Push-2 report"
+          ],
+          "scope": "english mirror",
+          "status": "confirmed"
         }
       ],
       "decisions": [
@@ -53,6 +101,99 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "kind": "first_cut_lead_provenance_v1",
           "origin": "author_original",
           "source_ref": "founder doc export plak12.md first body paragraph \u00ab\u0633\u0627\u06cc\u062a\u062a\u0627\u0646 \u0631\u0648\u0634\u0646 \u0627\u0633\u062a\u060c \u0648\u0644\u06cc \u0647\u0646\u0648\u0632 \u0641\u0642\u0637 \u0627\u0633\u0645 \u0631\u06cc\u067e\u0648 \u0631\u0627 \u0646\u0634\u0627\u0646 \u0645\u06cc\u200c\u062f\u0647\u062f\u2026\u00bb used verbatim as the page's opening paragraph (before the first list)"
+        },
+        {
+          "decision": "ai-dentistry, after plak-sefr/plak1-11 (index 35, 36 steps, milestone false); no other pathway (fixed-pros/implant/esthetic/... ASK scores 5-21, unrelated: not placed)",
+          "evidence": [
+            "pathway_place.py plak-sefr/plak1-12: ai-dentistry 75 ASK (10 related steps); series plak1-10/11 already end ai-dentistry; standing acceptance HR14 as the series' established home",
+            "pathway_place.py --insert \u2026 --after plak-sefr/plak1-11 (no --confirmed); --coverage 1.51 per item (baseline 1.38; was already 1.51)"
+          ],
+          "kind": "pathway_placement"
+        },
+        {
+          "english": {
+            "evidence": [
+              "structure check 40/40 blocks; gloss-duplicate grep []; GA once; inLanguage en; og:locale en_US"
+            ],
+            "path": "plak-sefr/en/plak1-12.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "current-run editorial close review 2026-11-06 before Push 2"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "plus/des-scores.json[plak-sefr/plak1-12]: COMMENTARY 12/E v3.5, Part 3 checks passed; Fidelity not owed (basket 1); no M3b"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "B.4.9 ordinary series part; C.4.14 skipped"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "practice-infrastructure/site-ownership, verified C.5.5"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.7 0 terms; C.4.8 0 anchors; C.4.9 kavosh 5/5 (plak1-11, plak1-7, prompt-append2-3)"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "5 existing canonical tags, none minted; hashtag_ref --check OK"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "brain entry last element, title/caption = confirmed approvals"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "ai-dentistry after plak1-11; bundles: no candidate; 3 exam questions written after M2 \u00ab\u0647\u0631 \u0633\u0647 \u062a\u0623\u06cc\u06cc\u062f\u00bb"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "index.html Pulse: new top line plak1-12, bottom share-44 line removed, 7 lines"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "plak-sefr/en/plak1-12.html authored from en/plak1-11 precedent, 40/40 body blocks, noindex, no hreflang, toggles inverse, meta-1 untouched"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "title (founder doc title tail) and M2 exam questions from founder; caption, keywords, hashtags, pulse, pathway, english mirror by standing acceptance"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -376,6 +517,85 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "05-semantic-linking.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [
+          "plus/faq-corpus.json byContent[\"plak-sefr/plak1-12\"].definedTermSets: 5 DefinedTerms #flashcards-c1..c5, all source=faq (sourceFaqIndex 0,1,2,3,4), each one concept, descriptions re-authored as standalone definitions (not answer near-copies); FAQ 5 (ways to convey a look) and 6 (approval before finalize) skipped as procedural; nothing in page JSON-LD; flashcards-index built by runner C.8"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "FAQPage plus/faq-corpus.json#faq: 7 standalone questions (no article deixis: no \u00ab\u0627\u06cc\u0646 \u0645\u062a\u0646/\u0627\u06cc\u0646 \u0642\u0633\u0645\u062a\u2026\u00bb), 3 binary (idx 1 \u00ab\u0628\u0644\u0647\u061b\u00bb, 4 \u00ab\u062e\u06cc\u0631\u061b\u00bb, 6 \u00ab\u062e\u06cc\u0631\u061b\u00bb) opening with the verdict; others definitional/procedural and intentionally open; answers grounded in the locked body; 4.12-\u0628 evaluated at 5.6"
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "Ordinary series part, not a challenge (Question 4.9: \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc); no data-dc-challenge-question markup; module 09 not loaded",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Questions: \u00ab\u0628\u0627 \u0647\u0648\u0634 \u0645\u0635\u0646\u0648\u0639\u06cc \u0686\u0637\u0648\u0631 \u0635\u0641\u062d\u0647\u200c\u06cc \u0627\u0637\u0644\u0627\u0639\u0627\u062a \u0645\u0637\u0628 \u0631\u0648 \u062a\u0648\u06cc \u0633\u0627\u06cc\u062a \u06af\u06cc\u062a\u200c\u0647\u0627\u0628\u0645 \u0628\u0633\u0627\u0632\u0645\u061f\u00bb / \u00ab\u0645\u062a\u0646 \u0633\u0627\u06cc\u062a \u0645\u0637\u0628 \u0628\u0627\u06cc\u062f \u062d\u0631\u0641 \u0628\u0647 \u062d\u0631\u0641 \u0645\u062b\u0644 \u0627\u0637\u0644\u0627\u0639\u0627\u062a \u0645\u0637\u0628 \u062a\u0648\u06cc \u06af\u0648\u06af\u0644 \u0628\u0627\u0634\u0647\u061f (NAP)\u00bb / \u00ab\u0622\u062f\u0631\u0633 \u0635\u0641\u062d\u0647\u200c\u06cc \u0633\u0627\u06cc\u062a \u0645\u0637\u0628 \u0631\u0648 \u0628\u0639\u062f\u0627\u064b \u0645\u06cc\u200c\u0634\u0647 \u0639\u0648\u0636 \u06a9\u0631\u062f\u061f\u00bb / \u00ab\u0638\u0627\u0647\u0631 \u0633\u0627\u06cc\u062a \u0645\u0637\u0628 \u0631\u0648 \u062e\u0648\u062f\u0645 \u0686\u0637\u0648\u0631 \u062a\u0639\u06cc\u06cc\u0646 \u06a9\u0646\u0645\u060c CSS \u0644\u0627\u0632\u0645\u0647\u061f\u00bb / \u00ab\u0627\u0648\u0644\u06cc\u0646 \u0635\u0641\u062d\u0647\u200c\u06cc \u0633\u0627\u06cc\u062a GitHub Pages \u0631\u0648 \u0686\u0637\u0648\u0631 \u0628\u0633\u0627\u0632\u0645\u061f\u00bb. All 5 tags reuse existing canonical concepts (hashtag_ref --simulate), none minted, no batch: #\u067e\u0644\u0627\u06a9_\u0635\u0641\u0631 (series), #\u0633\u0627\u06cc\u062a_\u0645\u0637\u0628 (10 pages, specific; \u00ab\u062f\u0631 \u0627\u06cc\u0646 \u0642\u0633\u0645\u062a \u0627\u0648\u0644\u06cc\u0646 \u0635\u0641\u062d\u0647\u200c\u06cc \u0648\u0627\u0642\u0639\u06cc \u0631\u0627 \u0645\u06cc\u200c\u0633\u0627\u0632\u06cc\u062f: \u0635\u0641\u062d\u0647\u200c\u0627\u06cc \u0628\u0627 \u0627\u0633\u0645\u060c \u0622\u062f\u0631\u0633\u060c \u062a\u0644\u0641\u0646 \u0648 \u0633\u0627\u0639\u062a \u06a9\u0627\u0631 \u0645\u0637\u0628\u2026\u00bb), #\u0627\u0637\u0644\u0627\u0639\u0627\u062a_\u0645\u0637\u0628 (2 pages, decision+specific tag; \u00ab\u0627\u06af\u0631 \u0686\u06cc\u0632\u06cc \u0628\u0627 \u0641\u0627\u06cc\u0644 \u06cc\u06a9\u06cc \u0646\u0628\u0648\u062f\u060c \u0628\u06af\u0648\u06cc\u06cc\u062f \u06a9\u062f\u0627\u0645 \u062e\u0637 \u0641\u0631\u0642 \u062f\u0627\u0631\u062f \u062a\u0627 \u062f\u0631\u0633\u062a\u0634 \u06a9\u0646\u062f.\u00bb), #GitHub (7; \u00ab\u0628\u0631\u0627\u06cc \u0627\u06cc\u0646 \u06a9\u0627\u0631\u060c \u0647\u0648\u0634 \u0645\u0635\u0646\u0648\u0639\u06cc \u0628\u0627\u06cc\u062f \u0628\u0647 \u062d\u0633\u0627\u0628 \u06af\u06cc\u062a\u200c\u0647\u0627\u0628 \u0634\u0645\u0627 \u0648\u0635\u0644 \u0628\u0627\u0634\u062f \u062a\u0627 \u0628\u062a\u0648\u0627\u0646\u062f \u0641\u0627\u06cc\u0644\u200c\u0647\u0627 \u0631\u0627 \u062f\u0631 \u0631\u06cc\u067e\u0648 \u0628\u0633\u0627\u0632\u062f.\u00bb), #\u0647\u0648\u0634_\u0645\u0635\u0646\u0648\u0639\u06cc (35, umbrella in addition; \u00ab\u0633\u0627\u062e\u062a\u0646\u0634 \u0631\u0627 \u0647\u0648\u0634 \u0645\u0635\u0646\u0648\u0639\u06cc \u0627\u0646\u062c\u0627\u0645 \u0645\u06cc\u200c\u062f\u0647\u062f \u0648 \u06a9\u0627\u0631 \u0634\u0645\u0627 \u0627\u06cc\u0646 \u0627\u0633\u062a \u06a9\u0647 \u0628\u06af\u0648\u06cc\u06cc\u062f \u0686\u0647 \u0645\u06cc\u200c\u062e\u0648\u0627\u0647\u06cc\u062f \u0648 \u0646\u062a\u06cc\u062c\u0647 \u0631\u0627 \u0628\u0631\u0631\u0633\u06cc \u06a9\u0646\u06cc\u062f.\u00bb). Dropped as mention-only: #\u062d\u0636\u0648\u0631_\u0622\u0646\u0644\u0627\u06cc\u0646_\u062f\u0646\u062f\u0627\u0646\u067e\u0632\u0634\u06a9, #\u0627\u06cc\u062c\u0646\u062a_\u0647\u0648\u0634_\u0645\u0635\u0646\u0648\u0639\u06cc, #\u0645\u0627\u0644\u06a9\u06cc\u062a_\u067e\u0644\u062a\u0641\u0631\u0645. CSS/\u0622\u062f\u0631\u0633 \u0635\u0641\u062d\u0647: no concept, article-specific -> keywords. Composition gate: series + decision tag + specific \u226410 + umbrella in addition = pass (5 tags). --sync / build_plus_index / --check / reachability run after the brain write (C.5), per Step 6"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "dentcast-brain.json: plak1-12 appended as the last element (594 entries), key set/order identical to plak1-11 (type,id,title,caption,hashtags,keywords,page_url,pillar{primary,secondary,subtopic}), title/caption = recorded approvals, hashtags = C.5.0 list, 7 keywords, pillar practice-infrastructure/site-ownership; scoped CRLF byte append, json.tool valid. Step 6 of 5.0 after the write: hashtag_ref --sync (counts; reference updated), node tools/build_plus_index.mjs, hashtag_ref --check OK, build_cabinet_papers --check OK. Reachability (assistant ranking rule rankIds with chosen labels): Q1 (AI+info page+GitHub) chip \u0633\u0627\u06cc\u062a \u0645\u0637\u0628 rank 1; Q2 (NAP) chip \u0627\u0637\u0644\u0627\u0639\u0627\u062a \u0645\u0637\u0628 rank 3; Q5 (first GitHub Pages page) chip GitHub rank 2; Q3 (changing page address) and Q4 (look/CSS) not reached: no canonical concept for page address/site look; mint of #\u0622\u062f\u0631\u0633_\u0635\u0641\u062d\u0647 (plak1-10 also resolves it) considered and NOT applied (borderline, conservative default, would retag another entry). Builder outputs plus/content-index.json + plus/assistant-tags.json restored after the test; regenerated by the runner C.8"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Brain pillar.primary practice-infrastructure / subtopic site-ownership = C.2.4 decision; live PILLARS subtopics include site-ownership; no extra pillar keys; kavosh capsule href /pillar/practice-infrastructure/ matches; no new subtopic"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pathway_place --insert plak-sefr/plak1-12 into ai-dentistry after plak-sefr/plak1-11 (index 35, 36 steps, milestone false; series established home, tool score 75 ASK, its suggested anchor after prompt-append2-6 would have broken series order); other candidates 5-21 ASK not placed (no conceptual home). --coverage: 1.51 per item (baseline 1.38, unchanged by this). 4.12-\u0628: 3 MCQ rows r-d264301c, r-d725733f, r-d7c43517 written to plus/exam-questions.json after M2 founder approval \u00ab\u0647\u0631 \u0633\u0647 \u062a\u0623\u06cc\u06cc\u062f\u00bb; validate_exam_questions --content plak-sefr/plak1-12: 3 live, 0 errors, 0 warnings; drawn by ai-dentistry"
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Bundle check: no starter bundle has continues_pathway = ai-dentistry (10 bundles: biomimetic\u00d72, esthetic, ceramics\u00d72, post-and-core, implant-prosthetic, implant-surgical, occlusion, fixed-pros) -> \u00ab\u0628\u0627\u0646\u062f\u0644: \u0628\u062f\u0648\u0646 \u06a9\u0627\u0646\u062f\u06cc\u062f\u00bb; no bundle edit, no home-bundles.js change"
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "index.html Pulse: new top line \u00ab\u067e\u0644\u0627\u06a9 \u0635\u0641\u0631\u060c \u0642\u0633\u0645\u062a \u06f1\u06f2: \u00ab\u0627\u0648\u0644\u06cc\u0646 \u0635\u0641\u062d\u0647\u200c\u06cc \u0633\u0627\u06cc\u062a \u0631\u0627 \u0628\u0633\u0627\u0632\u06cc\u0645\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f\u00bb (title-only, no spoiler, link on title), bottom-most share-44 line removed, exactly 7 lines; English mirror plak-sefr/en/plak1-12.html authored (en-version.md; chrome via en/plak1-11 reference page cloned from meta-1 standard), fa toggle -> en/plak1-12.html and en toggle -> ../plak1-12.html inverse; en/plak1-11 next already wired at C.4.6; second_cut_editorial_lock_v1 recorded with all ten scopes"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
@@ -398,7 +618,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: plak-sefr/plak1-12.html, plak-sefr/page-address-parts.webp, plak-sefr/same-text-two-looks.webp, plak-sefr/site-home-and-card-on-phone.webp, plak-sefr/card-page-vs-info-file.webp, plak-sefr/index.html, plak-sefr/plak1-11.html, plak-sefr/en/plak1-11.html, plus/des-scores.json"
+    "note": "Index-only refresh after staging delivery paths: dentcast-brain.json, dentcast-hashtag-reference.json, index.html, plak-sefr/en/plak1-12.html, plus/exam-questions.json, plus/faq-corpus.json, plus/pathways.json"
   },
   "schema": "publish-handoff-v3"
 }
