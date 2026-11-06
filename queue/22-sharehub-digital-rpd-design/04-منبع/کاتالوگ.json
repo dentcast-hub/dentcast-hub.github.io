@@ -1,5 +1,49 @@
 [
   {
+    "title": "Clinical performance, accuracy, and physical-mechanical properties of 3D-printed removable partial denture metal frameworks compared with conventionally and partially digitally produced frameworks: A systematic review",
+    "file_name": "Clinical Performance, Accuracy, and Physical-Mechanical Properties of 3D-Printed Removable Partial Denture Metal Frameworks Compared with Conventionally and Partially Digitally Produced Frameworks: A Systematic Review.pdf",
+    "topic": "removable partial denture",
+    "topic_path": "removable partial denture",
+    "type": "systematic review",
+    "local_path": "",
+    "file_size": 1838694,
+    "key_finding": "",
+    "clinical_bottom_line": "",
+    "drive_link": "https://drive.google.com/file/d/1eMuNvGdV4bze1llvx6yXOaZ1jRn9Xtea/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=1eMuNvGdV4bze1llvx6yXOaZ1jRn9Xtea",
+    "drive_view": "https://drive.google.com/file/d/1eMuNvGdV4bze1llvx6yXOaZ1jRn9Xtea/view",
+    "drive_id": "1eMuNvGdV4bze1llvx6yXOaZ1jRn9Xtea",
+    "tags": [
+      "removable-partial-denture",
+      "3d-printing",
+      "selective-laser-melting",
+      "additive-manufacturing",
+      "metal-framework",
+      "digital-workflow",
+      "systematic-review",
+      "topic:removable-partial-denture",
+      "clinical-performance-accuracy-physical-mechanical-properties-3d-printed-rpd-metal-frameworks-systematic-review"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Clinical performance, accuracy, and physical-mechanical properties of 3D-printed removable partial denture metal frameworks compared with conventionally and partially digitally produced frameworks: A systematic review",
+    "doi": "10.2186/jpr.JPR_D_25_00028",
+    "journal": "Journal of Prosthodontic Research",
+    "crossref_year": 2026,
+    "subjects": [],
+    "abstract": "Purpose: This systematic review evaluated the clinical performance, physical-mechanical properties, and accuracy of removable partial denture (RPD) frameworks fabricated using three-dimensional (3D) printing technologies—specifically, selective laser sintering (SLS), selective laser melting (SLM), and direct metal laser sintering (DMLS)—compared to those produced by conventional casting or methods using a partial digital workflow. Study selection: Following the Preferred Reporting Items for Systematic Reviews and Meta-Analyses 2020 guidelines, a literature search was conducted in the PubMed, Scopus, Web of Science, and Cochrane databases in October 2024. Studies were included if they compared the fit, accuracy, mechanical and physical properties, and clinical outcomes of metal RPD frameworks made using 3D printing technologies with those produced using conventional casting or partial digital methods. The risk of bias was assessed using appropriate tools (modified CONSORT, ROB2, and ROBINS-I) based on the study design and a qualitative analysis was conducted. This study received no funding and was registered with PROSPERO (#CRD42024597225). Results: Thirty studies were included: 12 compared 3D printing technologies with conventional casting, eight with partial digital methods, and 10 with both. Clinically, 3D-printed frameworks could improve retention and patient satisfaction. The laboratory results showed higher density, better mechanical properties (yield strength, surface roughness, and microhardness), and varied accuracy by component and method, with SLM and DMLS often outperforming conventional casting. The evidence was limited by methodological variability, a moderate risk of bias in many studies, and inconsistencies across the study designs and parameters. Conclusions: 3D-printed RPD metal frameworks demonstrated clinical accuracy and mechanical-physical performance comparable or superior to those of conventional and partial digital methods for RPD frameworks, with ongoing advances expected to further enhance their precision and clinical applicability.",
+    "display_title": "Clinical performance, accuracy, and physical-mechanical properties of 3D-printed removable partial denture metal frameworks compared with conventionally and partially digitally produced frameworks: A systematic review",
+    "authors": [
+      "Ahmed Yaseen Alqutaibi",
+      "Redhwan Saleh Al-Gabri",
+      "Anas Saeed Al-Zaghruri",
+      "Ahmed E. Farghal",
+      "Ahmed A. Alnazzawi",
+      "Mohammed Ahmed Alghauli"
+    ]
+  },
+  {
     "title": "Enhancing digital workflows for removable partial dentures: A novel diagnostic surveyor and designer",
     "file_name": "Enhancing Digital Workflows for Removable Partial Dentures: A Novel Diagnostic Surveyor and Designer.pdf",
     "topic": "removable partial denture",
@@ -81,50 +125,6 @@
       "Abdallah Mohammed Ibrahim",
       "Basem Tarek Fadl",
       "Nourhan Ahmed Ragheb"
-    ]
-  },
-  {
-    "title": "Clinical performance, accuracy, and physical-mechanical properties of 3D-printed removable partial denture metal frameworks compared with conventionally and partially digitally produced frameworks: A systematic review",
-    "file_name": "Clinical Performance, Accuracy, and Physical-Mechanical Properties of 3D-Printed Removable Partial Denture Metal Frameworks Compared with Conventionally and Partially Digitally Produced Frameworks: A Systematic Review.pdf",
-    "topic": "removable partial denture",
-    "topic_path": "removable partial denture",
-    "type": "systematic review",
-    "local_path": "",
-    "file_size": 1838694,
-    "key_finding": "",
-    "clinical_bottom_line": "",
-    "drive_link": "https://drive.google.com/file/d/1eMuNvGdV4bze1llvx6yXOaZ1jRn9Xtea/view",
-    "status": "linked",
-    "drive_download": "https://drive.google.com/uc?export=download&id=1eMuNvGdV4bze1llvx6yXOaZ1jRn9Xtea",
-    "drive_view": "https://drive.google.com/file/d/1eMuNvGdV4bze1llvx6yXOaZ1jRn9Xtea/view",
-    "drive_id": "1eMuNvGdV4bze1llvx6yXOaZ1jRn9Xtea",
-    "tags": [
-      "removable-partial-denture",
-      "3d-printing",
-      "selective-laser-melting",
-      "additive-manufacturing",
-      "metal-framework",
-      "digital-workflow",
-      "systematic-review",
-      "topic:removable-partial-denture",
-      "clinical-performance-accuracy-physical-mechanical-properties-3d-printed-rpd-metal-frameworks-systematic-review"
-    ],
-    "name_bucket": "meaningful",
-    "semantic_tagged": true,
-    "real_title": "Clinical performance, accuracy, and physical-mechanical properties of 3D-printed removable partial denture metal frameworks compared with conventionally and partially digitally produced frameworks: A systematic review",
-    "doi": "10.2186/jpr.JPR_D_25_00028",
-    "journal": "Journal of Prosthodontic Research",
-    "crossref_year": 2026,
-    "subjects": [],
-    "abstract": "Purpose: This systematic review evaluated the clinical performance, physical-mechanical properties, and accuracy of removable partial denture (RPD) frameworks fabricated using three-dimensional (3D) printing technologies—specifically, selective laser sintering (SLS), selective laser melting (SLM), and direct metal laser sintering (DMLS)—compared to those produced by conventional casting or methods using a partial digital workflow. Study selection: Following the Preferred Reporting Items for Systematic Reviews and Meta-Analyses 2020 guidelines, a literature search was conducted in the PubMed, Scopus, Web of Science, and Cochrane databases in October 2024. Studies were included if they compared the fit, accuracy, mechanical and physical properties, and clinical outcomes of metal RPD frameworks made using 3D printing technologies with those produced using conventional casting or partial digital methods. The risk of bias was assessed using appropriate tools (modified CONSORT, ROB2, and ROBINS-I) based on the study design and a qualitative analysis was conducted. This study received no funding and was registered with PROSPERO (#CRD42024597225). Results: Thirty studies were included: 12 compared 3D printing technologies with conventional casting, eight with partial digital methods, and 10 with both. Clinically, 3D-printed frameworks could improve retention and patient satisfaction. The laboratory results showed higher density, better mechanical properties (yield strength, surface roughness, and microhardness), and varied accuracy by component and method, with SLM and DMLS often outperforming conventional casting. The evidence was limited by methodological variability, a moderate risk of bias in many studies, and inconsistencies across the study designs and parameters. Conclusions: 3D-printed RPD metal frameworks demonstrated clinical accuracy and mechanical-physical performance comparable or superior to those of conventional and partial digital methods for RPD frameworks, with ongoing advances expected to further enhance their precision and clinical applicability.",
-    "display_title": "Clinical performance, accuracy, and physical-mechanical properties of 3D-printed removable partial denture metal frameworks compared with conventionally and partially digitally produced frameworks: A systematic review",
-    "authors": [
-      "Ahmed Yaseen Alqutaibi",
-      "Redhwan Saleh Al-Gabri",
-      "Anas Saeed Al-Zaghruri",
-      "Ahmed E. Farghal",
-      "Ahmed A. Alnazzawi",
-      "Mohammed Ahmed Alghauli"
     ]
   }
 ]
