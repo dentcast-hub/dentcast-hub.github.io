@@ -180,6 +180,43 @@ class SweepCliTests(Tmp):
         self.assertEqual(rec['sweep'][0]['absent'], ['u3'])
         self.assertEqual(units.assign(UNITS, SOURCES, CID)[1][2], ['u5', 'u6'])
 
+    def test_sweep_first_hands_every_body_unit_to_the_reviewer(self):
+        """Founder 1405/08/15: on a multi-source page the sweep runs before any
+        checker run — every body unit (headings excepted, marker-assigned ones
+        included) goes to the reviewer, and --sweep then points to a full build."""
+        self.mf.write_text(json.dumps(MARKERS, ensure_ascii=False), encoding='utf-8')
+        run = self.d / 'run'
+        run.mkdir()
+        texts = {s['citation']['doi']: {'text_basis': 'FULL_TEXT', 'source_text': f'Text of S{n}. Pain fell early.'}
+                 for n, s in enumerate(SOURCES, 1)}
+        (self.d / 'texts.json').write_text(json.dumps(texts), encoding='utf-8')
+        self.run_main('--orphans', str(run), '--texts', str(self.d / 'texts.json'))
+        blk = json.loads((run / 'orphans-input.json').read_text(encoding='utf-8'))
+        self.assertEqual(blk['phase'], 'before_runs')
+        self.assertEqual([x['id'] for x in blk['units']], ['u2', 'u3', 'u4', 'u5', 'u6'])
+        ans = {i: {'found': None, 'note': 'nowhere'} for i in ['u2', 'u3', 'u4', 'u5']}
+        ans['u6'] = {'found': 'S3', 'source_quote': 'Pain fell early.'}
+        (run / 'orphans.json').write_text(json.dumps(ans))
+        from io import StringIO
+        with patch('sys.stdout', new=StringIO()) as out:
+            self.run_main('--sweep', str(run))
+        self.assertIn('--build', out.getvalue())
+        self.assertNotIn('--vote DIR --base', out.getvalue())
+        self.assertEqual(units.assign(UNITS, SOURCES, CID)[1][2], ['u5', 'u6'])
+
+    def test_sweep_first_refused_on_a_one_source_page(self):
+        one = [SOURCES[0]]
+        rec = {CID: {'sources': one}}
+        (self.d / 'plus').mkdir(exist_ok=True)
+        (self.d / 'plus/des-scores.json').write_text(json.dumps(rec), encoding='utf-8')
+        (self.d / 'texts.json').write_text(json.dumps({'10.1/a': {'text_basis': 'FULL_TEXT', 'source_text': 'T.'}}))
+        run = self.d / 'run'
+        run.mkdir()
+        with patch.object(units, 'ROOT', self.d), patch.object(units, 'split_page', return_value=UNITS), \
+                patch.object(sys, 'argv', ['x', CID, '--orphans', str(run), '--texts', str(self.d / 'texts.json')]):
+            with self.assertRaises(SystemExit):
+                units.main()
+
     def test_sweep_refused_on_pre_35_records(self):
         old = [dict(s, des_version='3.4') for s in SOURCES]
         rec = {CID: {'sources': old}}

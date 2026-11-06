@@ -46,10 +46,14 @@ before) the assignment is completed on the caller's side:
     {"content_id", "origin": "founder"|"orphan_sweep", "plan": {"<k>": [ids]},
     "decision": {...}, "sweep": [...]} replaces the computed assignment, here
     and in Phase F (rule 10);
-  * `--orphans DIR --texts T` lists the units no call judged or every call left
-    silent and writes the stronger reviewer's block (`orphans-input.json`);
-    `--sweep DIR` checks its `orphans.json` and adds found units to the plan
-    (rule 12);
+  * `--orphans DIR --texts T` writes the stronger reviewer's block
+    (`orphans-input.json`). On a page with two or more sources it runs FIRST,
+    before any checker run (founder 1405/08/15): with no `voted-src*.json` in
+    DIR every body unit goes to the reviewer, so each sentence's source is
+    settled before anything is judged. After a vote (records prepared under
+    the earlier order) it lists the units no call judged or every call left
+    silent. `--sweep DIR` checks its `orphans.json` and adds found units to the
+    plan (rule 12);
   * `--vote --base` accepts a plan that grew (rule 13) and, with `--texts`,
     a source text that grew, when every non-MATCHES unit was re-checked
     (rule 14).
@@ -676,7 +680,10 @@ SILENT_ONLY = ("NOT_IN_SOURCE", "NOT_ASSESSABLE")
 def orphan_units(units, plan, voted):
     """Spec v3.5 rule 12: body units no call judged, or that every call
     judging them left silent. Headings and NOT_A_CLAIM/AUTHOR_VIEW are not
-    orphans — the first are labels, the others are excluded by design."""
+    orphans — the first are labels, the others are excluded by design.
+    Before any vote (`voted` empty: the sweep-first order of a multi-source
+    page) that is every body unit, the plan's own included: the reviewer
+    settles every sentence's source once, then the page is measured once."""
     seen = {}
     for k, v in voted.items():
         for c in v["claims"]:
@@ -809,14 +816,17 @@ def main():
         d = Path(a.orphans)
         voted = {int(p.stem[len("voted-src"):]): json.loads(p.read_text(encoding="utf-8"))
                  for p in d.glob("voted-src*.json")}
-        if mode != "SOURCE" or not voted:
-            sys.exit("--orphans runs after --vote of a SOURCE-scope page")
+        if mode != "SOURCE":
+            sys.exit("--orphans is for a SOURCE-scope page")
+        if not voted and sum(1 for s in sources if scorable(s)) < 2:
+            sys.exit("--orphans before a vote is the multi-source order; a one-source page has no sweep "
+                     "(module 08 Part 2c, single-source tier)")
         texts = {k.lower(): v for k, v in json.loads(Path(a.texts).read_text(encoding="utf-8")).items()}
         orph = orphan_units(units, plan, voted)
         srcs = [{"tag": f"S{n}", "text_basis": text_for(s, texts, n)["text_basis"],
                  "source_text": text_for(s, texts, n)["source_text"]}
                 for n, s in enumerate(sources, 1) if scorable(s)]
-        blk = {"mode": "ORPHAN_SWEEP", "units": [{k2: v for k2, v in u.items() if k2 != "para"} for u in orph],
+        blk = {"mode": "ORPHAN_SWEEP", "phase": "after_vote" if voted else "before_runs", "units": [{k2: v for k2, v in u.items() if k2 != "para"} for u in orph],
                "sources": srcs,
                "answer": "orphans.json: {uid: {found: 'S<n>'|null, source_quote, note}} — find, never judge"}
         (d / "orphans-input.json").write_text(json.dumps(blk, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -856,8 +866,14 @@ def main():
         if found:
             p.parent.mkdir(parents=True, exist_ok=True)
             p.write_text(json.dumps(rec, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-        for k, ids in found.items():
-            print(f"src{k}: re-check {','.join(ids)} (--build --only, two runs, --vote --base)")
+        if blk.get("phase") == "before_runs":
+            for k, ids in found.items():
+                print(f"src{k}: {len(ids)} unit(s) found")
+            print("every sentence's source is settled: --build DIR --texts T (full blocks), two checker runs "
+                  "per block, --vote DIR (module 08 Part 2c)")
+        else:
+            for k, ids in found.items():
+                print(f"src{k}: re-check {','.join(ids)} (--build --only, two runs, --vote --base)")
         print(f"found in no source (report to the founder): {absent or '—'}")
         return
     if a.build:
@@ -872,7 +888,8 @@ def main():
             print(p)
         return
     if a.json:
-        print(json.dumps({"mode": mode, "units": units, "plan": {str(k): v for k, v in plan.items()}},
+        print(json.dumps({"mode": mode, "units": units, "plan": {str(k): v for k, v in plan.items()},
+                          "sources": sum(1 for s in sources if scorable(s))},
                          ensure_ascii=False, indent=1))
         return
     print(f"{a.content_id}: {len(units)} units, scope {mode}")

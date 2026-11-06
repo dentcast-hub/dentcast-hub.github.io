@@ -380,6 +380,24 @@ stored JSON (`voted-src<k>.json`, Part 4) has the same shape on either path, so
 Phase F and `tools/queue_install_des.py` read it unchanged.
 <!-- /fidelity-single-source-tier:v1 -->
 
+<!-- fidelity-sweep-first:v1 -->
+**Sweep first, then measure (founder 1405/08/15).** On a page with two or more
+sources whose text is in hand, the orphan sweep (step 5) runs **before any
+checker run**, not after the vote. The order is fixed: the assignment (markers
+or a recorded founder plan) → `--orphans` before any vote, which hands **every
+body sentence** to the stronger reviewer with the text of every source → the
+reviewer's `orphans.json` → `--sweep` → `--build` of the full blocks → steps 1–4
+**once**. No sentence is judged before its source is settled, so the page is
+measured once instead of being measured, swept and measured again. There is
+no second sweep after the vote: a sentence the vote leaves `NOT_IN_SOURCE` was
+already looked for in every source. `tools/queue_fidelity_prep.py` follows the
+same order on a multi-source item: it writes `orphans-input.json` and builds no
+checker block until the sweep is recorded. A one-source page has no sweep at
+all (the tier above). Records prepared under the earlier order keep their
+record; a later re-check of such a page uses the rule-13 `--vote --base`
+growth as before.
+<!-- /fidelity-sweep-first:v1 -->
+
 **The model is part of the measurement:** freeze the same checker model/version
 and reasoning settings for runs 1, 2 and 3 of a record; the stronger reviewer is
 a separate role, not a third checker vote. Give the first two agents identical
@@ -412,23 +430,21 @@ Keep historical records and their provenance unchanged.
    "…"}}}`). A dissent never flips the verdict: `--vote` appends it to the
    unit's `note`, and Part 3b shows the founder both reasons side by side.
 
-5. **Orphan sweep (spec v3.5 rule 12) — after the vote, before Part 3b.**
+5. **Orphan sweep (spec v3.5 rule 12) — on a multi-source page it runs FIRST,
+   before step 1** (the sweep-first block above).
    `python3 tools/des_fidelity_units.py <content_id> --orphans <dir> --texts texts.json`
-   lists every body sentence no call judged, or that every call judging it left
-   `NOT_IN_SOURCE`/`NOT_ASSESSABLE` (headings, `NOT_A_CLAIM` and `AUTHOR_VIEW`
-   are not orphans), and writes `<dir>/orphans-input.json` with those sentences
-   and the text of **every** source. The stronger reviewer reads it — all
-   sources, not only the one the sentence was assigned to — and writes
+   run before any checker run lists every body sentence (headings excepted) and
+   writes `<dir>/orphans-input.json` with those sentences and the text of
+   **every** source. The stronger reviewer reads it — all sources, whatever a
+   marker assigned — and writes
    `<dir>/orphans.json`: `{"u…": {"found": "S<n>", "source_quote": "…", "note":
    "…"}}` or `{"u…": {"found": null, "note": "…"}}`. **It finds; it never
    judges:** no verdict, no `change_kind`. Then
    `python3 tools/des_fidelity_units.py <content_id> --sweep <dir>` refuses an
    unanswered sentence or a `source_quote` that is not verbatim in that source,
    adds every found sentence to its source in the recorded plan (origin
-   `orphan_sweep`, with the receipt), and prints them. Judge them as a re-check:
-   `--build <dir2> --only u…`, two checker runs, a tie-break, the review of
-   anything flagged, then `--vote <dir2> --base <dir>` — the base may **grow** by
-   exactly those units (rule 13). The sentences found nowhere are reported to
+   `orphan_sweep`, with the receipt), and only then `--build` writes the full
+   blocks for steps 1–4. The sentences found nowhere are reported to
    the founder in the same message as Part 3b, as a list, never as faults: they
    are the author's own reasoning or background unless the founder points to a
    source the run did not have.
