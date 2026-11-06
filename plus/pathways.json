@@ -1,2066 +1,4 @@
-[
-  {
-    "id": "occlusion",
-    "glyph": "icon-occlusion",
-    "title_fa": "Ø§Ú©Ù„ÙˆÚ˜Ù†: Ø§Ø² ØªØ­Ù„ÛŒÙ„ ØªØ§ Ø¨Ø§Ø²Ø³Ø§Ø²ÛŒ Ùˆ Ø§Ø®ØªÙ„Ø§Ù„Ø§Øª",
-    "short_fa": "Ø§Ú©Ù„ÙˆÚ˜Ù†",
-    "description_fa": "Ù…Ø³ÛŒØ± Ø¬Ø§Ù…Ø¹ Ø§Ú©Ù„ÙˆÚ˜Ù† â€” Ø§Ø² Ø§Ø¨Ø²Ø§Ø±Ù‡Ø§ÛŒ ØªØ­Ù„ÛŒÙ„ Ùˆ ØªÙ†Ø¸ÛŒÙ… Ø§Ú©Ù„ÙˆØ²Ø§Ù„ Ùˆ Ø·Ø±Ø­ Ø§Ú©Ù„ÙˆØ²Ø§Ù„ Ø¨Ø§Ø²Ø³Ø§Ø²ÛŒâ€ŒÙ‡Ø§ ØªØ§ Ø¨Ø¹Ø¯ Ø¹Ù…ÙˆØ¯ÛŒØŒ Ù…Ø¯ÛŒØ±ÛŒØª Ø³Ø§ÛŒØ´ Ø¨Ø§ Ú©Ø§Ù†Ø³Ù¾Øª Ø¯Ø§Ù„ Ùˆ Ø§Ø®ØªÙ„Ø§Ù„Ø§Øª Ù…ÙØµÙ„ Ùˆ Ù¾Ø§Ø±Ø§ÙØ§Ù†Ú©Ø´Ù†Ø› Ø§Ø² Ù¾Ø§ÛŒÙ‡ ØªØ§ Ù¾ÛŒØ´Ø±ÙØªÙ‡.",
-    "premium": true,
-    "steps": [
-      {
-        "content_id": "insight/insight-1",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-65",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-100",
-        "milestone": false
-      },
-      {
-        "content_id": "photocast/episode-2",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-123-2",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-2",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-8",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-66",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-56",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-131",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-132",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-36",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-87",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-94",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-5",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-6",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-21",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-15",
-        "milestone": true
-      },
-      {
-        "content_id": "chairside/chairside-31",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-14",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-14",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-60",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-154",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-155",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-6",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-77",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-12",
-        "milestone": true
-      },
-      {
-        "content_id": "dentai/dentai-24",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-34",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-34",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-35",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-35",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-125",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-126",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-26",
-        "milestone": true
-      },
-      {
-        "content_id": "sharehub/share-11",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-17",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-96",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-85",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-86",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-142",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-143",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-144",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-145",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-42",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-23",
-        "milestone": true
-      }
-    ],
-    "reserved": {}
-  },
-  {
-    "id": "implant-surgical",
-    "glyph": "icon-shield",
-    "title_fa": "Ø§ÛŒÙ…Ù¾Ù„Ù†Øª: Ø¨ÛŒÙˆÙ…Ú©Ø§Ù†ÛŒÚ©ØŒ Ø¨ÛŒÙˆÙ„ÙˆÚ˜ÛŒ Ùˆ Ø¨Ù‚Ø§ÛŒ Ø¨Ù„Ù†Ø¯Ù…Ø¯Øª",
-    "short_fa": "Ø¨ÛŒÙˆÙ…Ú©Ø§Ù†ÛŒÚ© Ø§ÛŒÙ…Ù¾Ù„Ù†Øª",
-    "description_fa": "Ù†ÛŒÙ…Ù‡â€ŒÛŒ Ø¨ÛŒÙˆÙ…Ú©Ø§Ù†ÛŒÚ©ÛŒ Ùˆ Ø¨ÛŒÙˆÙ„ÙˆÚ˜ÛŒÚ©Ù Ø§ÛŒÙ…Ù¾Ù„Ù†ØªÙˆÙ„ÙˆÚ˜ÛŒ Ø§Ø² Ù†Ú¯Ø§Ù‡ Ù¾Ø±ÙˆØªØ² â€” Ø§Ø² Ø²Ù…Ø§Ù† Ø¨Ø§Ø±Ú¯Ø°Ø§Ø±ÛŒ Ùˆ ØªØ­Ù„ÛŒÙ„ Ø§Ø³ØªØ®ÙˆØ§Ù† Ùˆ Ù†Ø³Ø¨Øª ØªØ§Ø¬ Ø¨Ù‡ Ø§ÛŒÙ…Ù¾Ù„Ù†Øª ØªØ§ Ø±ÛŒØ³Ú© Ø¨ÛŒÙ…Ø§Ø±ØŒ Ø§Ú©Ù„ÙˆÚ˜Ù† Ùˆ Ø´Ú©Ø³Øªâ€ŒÙ‡Ø§ÛŒ Ù¾Ø±ÛŒâ€ŒØ§ÛŒÙ…Ù¾Ù„Ù†ØªØ› Ø§Ø² Ù¾Ø§ÛŒÙ‡ ØªØ§ Ù¾ÛŒØ´Ø±ÙØªÙ‡.",
-    "premium": true,
-    "steps": [
-      {
-        "content_id": "episodes/episode-25",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-25",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-26",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-26",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-35",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-45",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-150",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-82",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-3",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-23",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-23",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-24",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-24",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-59",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-161",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-162",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-60",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-148-1",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-122-6",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-147-2",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-9",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-13",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-130-1",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-16",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-28",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-45",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-2",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-3",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-4",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-5",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-62",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-63",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-64",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-30",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-123-5",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-126-1",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-144-1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-31",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-147-5",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-147-8",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-147-9",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-156",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-157",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-60",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-11",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-158",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-24",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-38",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-10",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-17",
-        "milestone": true
-      }
-    ],
-    "reserved": {}
-  },
-  {
-    "id": "digital",
-    "glyph": "icon-scan",
-    "title_fa": "Ø¯Ù†Ø¯Ø§Ù†Ù¾Ø²Ø´Ú©ÛŒ Ø¯ÛŒØ¬ÛŒØªØ§Ù„: Ø§Ø³Ú©Ù†ØŒ CAD/CAM Ùˆ ÙˆØ±Ú©â€ŒÙÙ„Ùˆ",
-    "short_fa": "Ø¯ÛŒØ¬ÛŒØªØ§Ù„",
-    "description_fa": "Ù…Ø³ÛŒØ± Ø¯ÛŒØ¬ÛŒØªØ§Ù„ (Ø¨Ù‡â€ŒØ¬Ø² Ù‡ÙˆØ´ Ù…ØµÙ†ÙˆØ¹ÛŒ) â€” Ø§Ø² Ø§Ø³Ú©Ù† Ø¯Ø§Ø®Ù„â€ŒØ¯Ù‡Ø§Ù†ÛŒ Ùˆ Ø«Ø¨Øª Ø¯Ù‚ÛŒÙ‚ ØªØ§ Ù…ØªØ±ÛŒØ§Ù„ CAD/CAM Ùˆ ÙˆØ±Ú©â€ŒÙÙ„ÙˆÛŒ Ú©Ø§Ù…Ù„ Ø¯ÛŒØ¬ÛŒØªØ§Ù„Ø› Ø§Ø² Ù¾Ø§ÛŒÙ‡ ØªØ§ Ù¾ÛŒØ´Ø±ÙØªÙ‡.",
-    "premium": true,
-    "steps": [
-      {
-        "content_id": "episodes/episode-106-2",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-38",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-122-2",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-74",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-21",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-32",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-29",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-15",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-40",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-73",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-63",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-67",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-16",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-51",
-        "milestone": true
-      },
-      {
-        "content_id": "insight/insight-60",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-96",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-97",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-98",
-        "milestone": true
-      },
-      {
-        "content_id": "sharehub/share-37",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-149-2",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-150-1",
-        "milestone": true
-      }
-    ],
-    "reserved": {}
-  },
-  {
-    "id": "ai-dentistry",
-    "glyph": "icon-bot",
-    "title_fa": "Ù‡ÙˆØ´ Ù…ØµÙ†ÙˆØ¹ÛŒ Ùˆ Ù¾Ø±Ø§Ù…Ù¾Øªâ€ŒÙ†ÙˆÛŒØ³ÛŒ Ø¨Ø§Ù„ÛŒÙ†ÛŒ Ø¨Ø±Ø§ÛŒ Ø¯Ù†Ø¯Ø§Ù†Ù¾Ø²Ø´Ú©",
-    "short_fa": "Ù‡ÙˆØ´ Ù…ØµÙ†ÙˆØ¹ÛŒ",
-    "description_fa": "Ú†Ù‡Ø§Ø± Ù‚Ø³Ù…ØªÙ Ù…Ù‚Ø¯Ù…Ø§ØªÛŒ Ø¯Ø±Ø¨Ø§Ø±Ù‡â€ŒÛŒ Ø§ÛŒÙ†Ú©Ù‡ Ù‡ÙˆØ´ Ù…ØµÙ†ÙˆØ¹ÛŒ Ø¯Ø± Ø¯Ù†Ø¯Ø§Ù†Ù¾Ø²Ø´Ú©ÛŒ Ú†Ù‡ Ù…ÛŒâ€ŒÚ©Ù†Ø¯ØŒ Ùˆ Ø¨Ø¹Ø¯ Ú©Ù„Ù Ø¯ÙˆØ±Ù‡â€ŒÛŒ Ù¾Ø±Ø§Ù…Ù¾ØªÙˆÙ„ÙˆÚ˜ÛŒØ³Øª â€” Ø§Ø² Ù…Ø¨Ø§Ù†ÛŒ Ù…Ø¯Ù„â€ŒÙ‡Ø§ÛŒ Ø²Ø¨Ø§Ù†ÛŒ Ùˆ ØªÙˆÙ‡Ù…Ù Ù…Ø¯Ù„ ØªØ§ Ù¾Ø±Ø§Ù…Ù¾Øªâ€ŒÙ†ÙˆÛŒØ³ÛŒØŒ Ù…Ø±Ø²Ù Ú©Ø§Ø±Ø¨Ø±Ø¯Ù Ø¨Ø§Ù„ÛŒÙ†ÛŒ Ùˆ Ø´Ù†Ø§Ø®ØªÙ Ø§Ø¨Ø²Ø§Ø±Ù‡Ø§.",
-    "premium": true,
-    "steps": [
-      {
-        "content_id": "episodes/episode-109",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-28",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-149-1",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-109-2",
-        "milestone": true
-      },
-      {
-        "content_id": "dentai/promptologist/prompt1-1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt1-2",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt1-3",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt1-append1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt1-4",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt1-5",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt2-1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt3-1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt4-1",
-        "milestone": true
-      },
-      {
-        "content_id": "dentai/promptologist/prompt4-2",
-        "milestone": true
-      },
-      {
-        "content_id": "dentai/promptologist/prompt4-3",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt4-4",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-25",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt5-1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt5-2",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt5-3",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt6-1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt6-2",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt6-3",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt6-4",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt6-5",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt7-1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt7-2",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt-append2-1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt-append2-2",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt-append2-3",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt-append2-4",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt-append2-5",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/promptologist/prompt-append2-6",
-        "milestone": false
-      },
-      {
-        "content_id": "plak-sefr/plak1-10",
-        "milestone": false
-      },
-      {
-        "content_id": "plak-sefr/plak1-11",
-        "milestone": false
-      }
-    ],
-    "reserved": {}
-  },
-  {
-    "id": "failure-troubleshooting",
-    "glyph": "icon-wrench",
-    "title_fa": "Ø¹ÛŒØ¨â€ŒÛŒØ§Ø¨ÛŒ Ø¨Ø§Ù„ÛŒÙ†ÛŒ Ùˆ Ù…Ø¯ÛŒØ±ÛŒØª Ø´Ú©Ø³Øª Ø¯Ø± Ø¯Ø±Ù…Ø§Ù†â€ŒÙ‡Ø§ÛŒ ØªØ±Ù…ÛŒÙ…ÛŒ Ùˆ Ù¾Ø±ÙˆØªØ²ÛŒ",
-    "short_fa": "Ø¹ÛŒØ¨â€ŒÛŒØ§Ø¨ÛŒ",
-    "description_fa": "Ù…Ø³ÛŒØ± Ù…Ø³Ø¦Ù„Ù‡â€ŒÙ…Ø­ÙˆØ± â€” Ø´Ù†Ø§Ø®ØªØŒ ØªØ­Ù„ÛŒÙ„ Ùˆ Ù…Ø¯ÛŒØ±ÛŒØª Ø´Ú©Ø³Øªâ€ŒÙ‡Ø§ÛŒ ØªØ±Ù…ÛŒÙ…ÛŒ Ùˆ Ù¾Ø±ÙˆØªØ²ÛŒ: Ø§Ø² Ø§ÙØªØ§Ø¯Ù† Ùˆ Ù„Ù‚â€ŒØ´Ø¯Ù† Ø±ÙˆÚ©Ø´ Ùˆ Ø¯Ø±Ø¯ Ø¨Ø¹Ø¯ Ø§Ø² Ø¯Ø±Ù…Ø§Ù† ØªØ§ Ù¾Ø±ÙˆÚ¯Ù†ÙˆØ² Ù†Ø§Ù…Ø´Ø®Øµ Ùˆ ØªØµÙ…ÛŒÙ… Ø¨Ø§Ø²Ø³Ø§Ø²ÛŒâ€ŒÙ¾Ø°ÛŒØ±ÛŒ. Ø¹Ø±Ø¶ÛŒ Ø§Ø² Ú†Ù†Ø¯ Ù¾ÛŒÙ„Ø§Ø±.",
-    "premium": true,
-    "steps": [
-      {
-        "content_id": "photocast/episode-1",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-7",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-28",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-31",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-36",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-3",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-37",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-27",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-32",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-32",
-        "milestone": true
-      },
-      {
-        "content_id": "insight/insight-54",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-14",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-14",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-102",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-18",
-        "milestone": true
-      },
-      {
-        "content_id": "insight/insight-7",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-9",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-58",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-13",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-16",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-27",
-        "milestone": true
-      }
-    ],
-    "reserved": {}
-  },
-  {
-    "id": "evidence-literacy",
-    "glyph": "icon-scale",
-    "title_fa": "Ø§Ø±Ø²ÛŒØ§Ø¨ÛŒ Ø´ÙˆØ§Ù‡Ø¯ Ùˆ Ø§Ø³ØªØ¯Ù„Ø§Ù„ Ø¨Ø§Ù„ÛŒÙ†ÛŒ",
-    "short_fa": "Ø§Ø±Ø²ÛŒØ§Ø¨ÛŒ Ø´ÙˆØ§Ù‡Ø¯",
-    "description_fa": "Ù…Ø³ÛŒØ± Ù‚Ø¶Ø§ÙˆØª Ø¯Ø±Ø¨Ø§Ø±Ù‡â€ŒÛŒ Ø´ÙˆØ§Ù‡Ø¯ Ùˆ ØªØµÙ…ÛŒÙ… Ø¨Ø§Ù„ÛŒÙ†ÛŒ â€” Ø§Ø² Ù…ØªØ¯ ØªØµÙ…ÛŒÙ… Ùˆ Ø³Ù†Ø¯Ø±Ù… Ø¨ÛŒÙ…Ø§Ø± Ø¢Ø´Ù†Ø§ ØªØ§ Ù…ÙÙ‡ÙˆÙ… Success/SurvivalØŒ ØªÙˆÙ‡Ù… Ø¨Ù‚Ø§ Ø¯Ø± Ø¯Ù†Ø¯Ø§Ù†Ù¾Ø²Ø´Ú©ÛŒ Ø§Ø¯Ù‡Ø²ÛŒÙˆØŒ Ù…Ø¹ÛŒØ§Ø± Ù‚Ø¶Ø§ÙˆØª Ø§ÛŒÙ…Ù¾Ù„Ù†Øª Ø¯Ø± Ø¨Ø±Ø§Ø¨Ø± Ø¯Ù†Ø¯Ø§Ù†ØŒ Ùˆ Ø§ÛŒÙ†Ú©Ù‡ ÛŒÚ© Ù‚Ø§Ø¹Ø¯Ù‡ ØªØ§ Ú©Ø¬Ø§ Ø¨Ù‡ Ù…ÙˆÙ‚Ø¹ÛŒØª Ø¯ÛŒÚ¯Ø±ÛŒ Ù…Ù†ØªÙ‚Ù„ Ù…ÛŒâ€ŒØ´ÙˆØ¯.",
-    "premium": false,
-    "certificate_discount_percent": 20,
-    "steps": [
-      {
-        "content_id": "taraz/taraz1-1",
-        "milestone": false
-      },
-      {
-        "content_id": "taraz/taraz1-2",
-        "milestone": false
-      },
-      {
-        "content_id": "taraz/taraz1-3",
-        "milestone": false
-      },
-      {
-        "content_id": "taraz/taraz1-4",
-        "milestone": false
-      },
-      {
-        "content_id": "taraz/taraz1-5",
-        "milestone": false
-      },
-      {
-        "content_id": "taraz/taraz1-6",
-        "milestone": false
-      },
-      {
-        "content_id": "taraz/taraz1-7",
-        "milestone": false
-      },
-      {
-        "content_id": "taraz/taraz1-8",
-        "milestone": false
-      },
-      {
-        "content_id": "taraz/taraz1-9",
-        "milestone": false
-      },
-      {
-        "content_id": "taraz/taraz1-10",
-        "milestone": true
-      },
-      {
-        "content_id": "metanotes/meta-6",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-13",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-14",
-        "milestone": true
-      },
-      {
-        "content_id": "metanotes/meta-1",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-2",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-3",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-4",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-5",
-        "milestone": true
-      },
-      {
-        "content_id": "metanotes/meta-17",
-        "milestone": true
-      }
-    ],
-    "reserved": {}
-  },
-  {
-    "id": "operative-cariology",
-    "glyph": "icon-microbe",
-    "title_fa": "Ú©Ø§Ø±ÛŒÙˆÙ„ÙˆÚ˜ÛŒ Ùˆ ØªØ±Ù…ÛŒÙ… Ù…Ø³ØªÙ‚ÛŒÙ…",
-    "short_fa": "Ú©Ø§Ø±ÛŒÙˆÙ„ÙˆÚ˜ÛŒ",
-    "description_fa": "Ù…Ø³ÛŒØ± Ù¾ÙˆØ³ÛŒØ¯Ú¯ÛŒ Ùˆ ØªØ±Ù…ÛŒÙ… Ù…Ø³ØªÙ‚ÛŒÙ… â€” Ø§Ø² ØªØ´Ø®ÛŒØµ Ùˆ Ù…Ø¯ÛŒØ±ÛŒØª Ù¾ÙˆØ³ÛŒØ¯Ú¯ÛŒ Ùˆ Ù¾ÛŒØ´Ú¯ÛŒØ±ÛŒ ØªØ§ Ø¨Ø±Ø¯Ø§Ø´Øª Ù…Ø¨ØªÙ†ÛŒ Ø¨Ø± PSZ/CREØŒ ØªØ±Ù…ÛŒÙ… Ù…Ø³ØªÙ‚ÛŒÙ… Ú©Ø§Ù…Ù¾ÙˆØ²ÛŒØª Ùˆ Ù…ÙˆØ§Ø¯ØŒ Ùˆ ØªØ´Ø®ÛŒØµ ØªØ±Ú© Ø¯Ù†Ø¯Ø§Ù†Ø› Ø§Ø² Ù¾Ø§ÛŒÙ‡ ØªØ§ Ù¾ÛŒØ´Ø±ÙØªÙ‡.",
-    "premium": true,
-    "steps": [
-      {
-        "content_id": "dentai/dentai-3",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-23",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-7",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-4",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-23",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-134",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-135",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-111-1",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-99",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-65",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-66",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-67",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-11",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-12",
-        "milestone": true
-      },
-      {
-        "content_id": "dentai/dentai-6",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-128-2",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-147-4",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-147-3",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-22",
-        "milestone": true
-      },
-      {
-        "content_id": "dentai/dentai-13",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-14",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-15",
-        "milestone": true
-      }
-    ],
-    "reserved": {}
-  },
-  {
-    "id": "post-and-core",
-    "glyph": "icon-post",
-    "title_fa": "Ù¾Ø³Øª Ùˆ Ú©ÙˆØ± Ùˆ Ø¨Ø§Ø²Ø³Ø§Ø²ÛŒ Ø¯Ù†Ø¯Ø§Ù† Ø§Ù†Ø¯ÙˆØ´Ø¯Ù‡",
-    "short_fa": "Ù¾Ø³Øª Ùˆ Ú©ÙˆØ±",
-    "description_fa": "Ù…Ø³ÛŒØ± Ø¨Ø§Ø²Ø³Ø§Ø²ÛŒ Ø¯Ù†Ø¯Ø§Ù† Ø§Ù†Ø¯ÙˆØ´Ø¯Ù‡ â€” Ø§Ø² Ù…Ø¨Ø§Ù†ÛŒ Ù¾Ø³Øª Ùˆ ÙØ§ÛŒØ¨Ø±Ù¾Ø³Øª Ùˆ ÙØ±ÙˆÙ„ ØªØ§ Ø¨Ø§Ù†Ø¯ Ø¨Ù‡ Ø¹Ø§Ø¬ Ø±ÛŒØ´Ù‡ Ùˆ ØªØµÙ…ÛŒÙ…â€ŒÙ‡Ø§ Ùˆ Ø¹ÛŒØ¨â€ŒÛŒØ§Ø¨ÛŒØ› Ø§Ø² Ù¾Ø§ÛŒÙ‡ ØªØ§ Ù¾ÛŒØ´Ø±ÙØªÙ‡.",
-    "premium": true,
-    "steps": [
-      {
-        "content_id": "episodes/episode-128",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-129",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-79",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-42",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-43",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-42",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-43",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-34",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-125-3",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-20",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-30",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-31",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-33",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-88",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-76",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-10",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-12",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-13",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-14",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-147-7",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-47",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-64",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-48",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-49",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-4",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-84",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-5",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-44",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-6",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-36",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-36",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-40",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-41",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-101",
-        "milestone": true
-      },
-      {
-        "content_id": "metanotes/meta-7",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-9",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-11",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-21",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-20",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-97",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-41",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-66",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-39",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-15",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-7",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-15",
-        "milestone": true
-      },
-      {
-        "content_id": "sharehub/share-18",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-19",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-20",
-        "milestone": true
-      }
-    ],
-    "reserved": {}
-  },
-  {
-    "id": "implant-prosthetic",
-    "glyph": "icon-implant",
-    "title_fa": "Ø§ÛŒÙ…Ù¾Ù„Ù†Øª Ù¾Ø±ÙˆØªØ²ÛŒ: Ø§Ø¬Ø²Ø§ØŒ Ø§Ø³Ú©Ù† Ø¯ÛŒØ¬ÛŒØªØ§Ù„ Ùˆ Ø·Ø±Ø§Ø­ÛŒ Ø±Ø³ØªÙˆØ±ÛŒØ´Ù†",
-    "short_fa": "Ø§ÛŒÙ…Ù¾Ù„Ù†Øª Ù¾Ø±ÙˆØªØ²ÛŒ",
-    "description_fa": "Ù†ÛŒÙ…Ù‡â€ŒÛŒ Ù¾Ø±ÙˆØªØ²ÛŒÙ Ø§ÛŒÙ…Ù¾Ù„Ù†ØªÙˆÙ„ÙˆÚ˜ÛŒ â€” Ø§Ø² Ú©Ø§Ù†Ú©Ø´Ù†â€ŒÙ‡Ø§ Ùˆ Ø§Ø¨Ø§ØªÙ…Ù†Øªâ€ŒÙ‡Ø§ Ùˆ Ø§Ø³Ú©Ù† Ø¯ÛŒØ¬ÛŒØªØ§Ù„ Ø¯Ù‚ÛŒÙ‚ ØªØ§ Ø§Ú©Ù„ÙˆÚ˜Ù†Ù Ø§ÛŒÙ…Ù¾Ù„Ù†ØªØŒ Ø¹ÛŒØ¨â€ŒÛŒØ§Ø¨ÛŒ Ù¾ÛŒÚ†ØŒ Ù…Ø¯ÛŒØ±ÛŒØª Ø³Ù…Ø§Ù† Ùˆ Ø·Ø±Ø§Ø­ÛŒ Ø±Ø³ØªÙˆØ±ÛŒØ´Ù† Ø¨Ø§ Ú©Ø§Ù†Ø³Ù¾Øª Zero Bone LossØ› Ø§Ø² Ù¾Ø§ÛŒÙ‡ ØªØ§ Ù¾ÛŒØ´Ø±ÙØªÙ‡.",
-    "premium": true,
-    "steps": [
-      {
-        "content_id": "episodes/episode-80",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-81",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-82",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-83",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-84",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-38",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-102",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-103",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-104",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-105",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-106",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-108",
-        "milestone": true
-      },
-      {
-        "content_id": "dentai/dentai-31",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-82",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-60",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-133",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-144-2",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-38",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-2",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-15",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-26",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-33",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-44",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-30",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-31",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-48",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-35",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-52",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-3",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-123-6",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-1",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-22",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-8",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-12",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-23",
-        "milestone": true
-      },
-      {
-        "content_id": "chairside/chairside-46",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-96",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-31",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-60",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-23",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-23",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-24",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-24",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-161",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-162",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-28",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-45",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-36",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-131",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-132",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-31",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-31",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-122-1",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-65",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-100",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-4",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-4",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-85",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-86",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-9",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-110",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-111",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-112",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-115",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-130",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-139",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-140",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-141",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-46",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-146",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-147",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-123-4",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-125-1",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-62",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-125-2",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-148-2",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-10",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-159",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-11",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-10",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-42",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-43",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-57",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-78",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-72",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-47",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-83",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-50",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-63",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-77",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-5",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-17",
-        "milestone": true
-      }
-    ],
-    "reserved": {}
-  },
-  {
-    "id": "fixed-pros",
-    "glyph": "icon-crown",
-    "title_fa": "Ù¾Ø±ÙˆØªØ² Ø«Ø§Ø¨Øª: ØªØ±Ø§Ø´ØŒ Ù‚Ø§Ù„Ø¨ØŒ Ø³Ù…Ø§Ù† Ùˆ Ø±ÙˆÚ©Ø´",
-    "short_fa": "Ù¾Ø±ÙˆØªØ² Ø«Ø§Ø¨Øª",
-    "description_fa": "Ù†ÛŒÙ…Ù‡â€ŒÛŒ Ø±ÙˆÚ©Ø´ Ùˆ Ø±Ø³ØªÙˆØ±ÛŒØ´Ù†Ù Ù¾Ø±ÙˆØªØ² Ø«Ø§Ø¨Øª â€” Ø§Ø² Ø§ØµÙˆÙ„ ØªØ±Ø§Ø´ Ùˆ Ø¢Ù…Ø§Ø¯Ù‡â€ŒØ³Ø§Ø²ÛŒ Ùˆ Ù‚Ø§Ù„Ø¨â€ŒÚ¯ÛŒØ±ÛŒ ØªØ§ Ù…Ø¨Ø§Ù†ÛŒ Ú†Ø³Ø¨Ù†Ø¯Ú¯ÛŒ Ùˆ Ø³Ù…Ø§Ù†ØŒ Ø§Ú©Ù„ÙˆÚ˜Ù†Ù Ø¨Ø§Ø²Ø³Ø§Ø²ÛŒØŒ Ø±ÙˆÚ©Ø´/Ø§Ù†Ù„Ù‡/Ø§Ù†Ø¯ÙˆÚ©Ø±Ø§ÙˆÙ† Ùˆ Ù…Ø¯ÛŒØ±ÛŒØª Ø´Ú©Ø³ØªØ› Ø§Ø² Ù¾Ø§ÛŒÙ‡ ØªØ§ Ù¾ÛŒØ´Ø±ÙØªÙ‡.",
-    "premium": true,
-    "steps": [
-      {
-        "content_id": "episodes/episode-113",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-114",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-10",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-18",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-95",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-67",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-1",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-99",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-55",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-38",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-35",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-56",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-57",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-58",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-15",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-32",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-37",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-66",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-67",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-49",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-20",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-21",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-20",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-21",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-34",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-75",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-26",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-29",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-80",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-83",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-128-1",
-        "milestone": true
-      },
-      {
-        "content_id": "dentai/dentai-29",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-79",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-4",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-4",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-5",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-5",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-5",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-16",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-30",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-6",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-6",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-17",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-10",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-10",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-2",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-59",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-40",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-3",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-2",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-3",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-148",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-149",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-137",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-138",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-29",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-86",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-11",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-8",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-81",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-9",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-65",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-69",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-37",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-62",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-92",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-36",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-131",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-132",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-95",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-87",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-94",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-1",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-123-2",
-        "milestone": false
-      },
-      {
-        "content_id": "photocast/episode-2",
-        "milestone": true
-      },
-      {
-        "content_id": "episodes/episode-121",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-121-1",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-57",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-60",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-122",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-123",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-123-1",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-40",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-40",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-41",
-        "milestone": false
-      },
-      {
-        "content_id": "notecast/episode-41",
-        "milestone": false
-      },
-      {
-        "content_id": "episodes/episode-159-1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-25",
-        "milestone": false
-      },
-      {
-        "content_id": "dentai/dentai-7",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-39",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-40",
-        "milestone": false
-      },
-      {
-        "content_id": "metanotes/meta-12",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-2",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-17",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-21",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-88",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-25",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-72",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-27",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-34",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-41",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-19",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-17",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-41",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-32",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-42",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-26",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-43",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-44",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-85",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-63",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-74",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-73",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-15",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-53",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-55",
-        "milestone": true
-      },
-      {
-        "content_id": "sharehub/share-24",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-7",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-14",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-102",
-        "milestone": false
-      },
-      {
-        "content_id": "photocast/episode-1",
-        "milestone": false
-      },
-      {
-        "content_id": "dentcast-plus/video-3",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-7",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-28",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-29",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-32",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-61",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-101",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-9",
-        "milestone": false
-      },
-      {
-        "content_id": "insight/insight-58",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-13",
-        "milestone": false
-      },
-      {
-        "content_id": "chairside/chairside-16",
-        "milestone": false
-      },
-      {
-        "content_id": "sharehub/share-43",
+YªçŠx-®éÜj×¢ëiºÚ+Š§j[h‘éÜ¢éíßm¼í:-jZ.¶›­–)Ş³U°Ğ¢°Ğ¢&–B#¢&ö66ÇW6–öâ"ÀĞ¢&vÇ—‚#¢&–6öâÖö66ÇW6–öâ"ÀĞ¢'F—FÆUöf#¢-Š}ª˜M˜©˜c¢Š}‹"Š­Šİ˜M¸Í˜BŠ­ŠrŠŠ}‹-‹=Š}‹-¸Â˜‚Š}ŠíŠ­˜MŠ}˜MŠ}Š¢"ÀĞ¢'6†÷'Eöf#¢-Š}ª˜M˜©˜b"ÀĞ¢&FW67&—F–öåöf#¢-˜]‹=¸Í‹ŠÍŠ}˜]‹’Š}ª˜M˜©˜b(	BŠ}‹"Š}Š‹-Š}‹˜}Š}¸ÂŠ­Šİ˜M¸Í˜B˜‚Š­˜m‹¸Í˜RŠ}ª˜M˜‹-Š}˜B˜‚‹}‹ŠÒŠ}ª˜M˜‹-Š}˜BŠŠ}‹-‹=Š}‹-¸Î(Í˜}ŠrŠ­ŠrŠ‹Šò‹˜]˜Šı¸ÍˆÂ˜]Šı¸Í‹¸ÍŠ¢‹=Š}¸Í‹BŠŠrªŠ}˜m‹=›íŠ¢ŠıŠ}˜B˜‚Š}ŠíŠ­˜MŠ}˜MŠ}Š¢˜]˜‹]˜B˜‚›íŠ}‹Š}˜Š}˜mª‹M˜m‰²Š}‹"›íŠ}¸Í˜rŠ­Šr›í¸Í‹M‹˜Š­˜râ"ÀĞ¢'&VÖ—VÒ#¢G'VRÀĞ¢'7FW2#¢°Ğ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓcR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'†÷Fö67BöW—6öFRÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#2Ó""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF67B×ÇW2÷f–FVòÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓcb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓSb"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ3"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ3""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ3b"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓƒr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ“B"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF67B×ÇW2÷f–FVòÓb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ#"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓR"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓ3"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓc"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓSB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓSR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓsr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ""ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó#B"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ3B"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓ3B"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ3R"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓ3R"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#R"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#b"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó#b"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ“b"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓƒR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓƒb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓC""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓC2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓCB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓCR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓC""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó#2"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ĞĞ¢ÒÀĞ¢'&W6W'fVB#¢·ĞĞ¢ÒÀĞ¢°Ğ¢&–B#¢&–×ÆçB×7W&v–6Â"ÀĞ¢&vÇ—‚#¢&–6öâ×6†–VÆB"ÀĞ¢'F—FÆUöf#¢-Š}¸Í˜]›í˜M˜mŠ£¢Š¸Í˜˜]ªŠ}˜m¸ÍªˆÂŠ¸Í˜˜M˜©¸Â˜‚Š˜-Š}¸ÂŠ˜M˜mŠı˜]ŠıŠ¢"ÀĞ¢'6†÷'Eöf#¢-Š¸Í˜˜]ªŠ}˜m¸Íª’Š}¸Í˜]›í˜M˜mŠ¢"ÀĞ¢&FW67&—F–öåöf#¢-˜m¸Í˜]˜~(Í¸ÂŠ¸Í˜˜]ªŠ}˜m¸Íª¸Â˜‚Š¸Í˜˜M˜©¸Íª™Š}¸Í˜]›í˜M˜mŠ­˜˜M˜©¸ÂŠ}‹"˜mªıŠ}˜r›í‹˜Š­‹"(	BŠ}‹"‹-˜]Š}˜bŠŠ}‹ªı‹Š}‹¸Â˜‚Š­Šİ˜M¸Í˜BŠ}‹=Š­Ší˜Š}˜b˜‚˜m‹=ŠŠ¢Š­Š}ŠÂŠ˜rŠ}¸Í˜]›í˜M˜mŠ¢Š­Šr‹¸Í‹=ª’Š¸Í˜]Š}‹ˆÂŠ}ª˜M˜©˜b˜‚‹Mª‹=Š®(Í˜}Š}¸Â›í‹¸Î(ÍŠ}¸Í˜]›í˜M˜mŠ­‰²Š}‹"›íŠ}¸Í˜rŠ­Šr›í¸Í‹M‹˜Š­˜râ"ÀĞ¢'&VÖ—VÒ#¢G'VRÀĞ¢'7FW2#¢°Ğ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#R"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓ#R"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#b"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓ#b"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ3R"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓCR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓS"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓƒ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓ#2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#B"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓ#B"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓS’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓc"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓc""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓc"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓC‚Ó"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#"Ób"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓCrÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ3Ó"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ#‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓCR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓR"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓc""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓc2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓcB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓ3"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#2ÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#bÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓCBÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó3"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓCrÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓCrÓ‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓCrÓ’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓSb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓSr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓc"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓS‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ#B"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ3‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓr"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ĞĞ¢ÒÀĞ¢'&W6W'fVB#¢·ĞĞ¢ÒÀĞ¢°Ğ¢&–B#¢&F–v—FÂ"ÀĞ¢&vÇ—‚#¢&–6öâ×66â"ÀĞ¢'F—FÆUöf#¢-Šı˜mŠıŠ}˜m›í‹-‹Mª¸ÂŠı¸ÍŠÍ¸ÍŠ­Š}˜C¢Š}‹=ª˜mˆÂ4Bô4Ò˜‚˜‹ª(Í˜˜M˜‚"ÀĞ¢'6†÷'Eöf#¢-Šı¸ÍŠÍ¸ÍŠ­Š}˜B"ÀĞ¢&FW67&—F–öåöf#¢-˜]‹=¸Í‹Šı¸ÍŠÍ¸ÍŠ­Š}˜BŠ˜~(ÍŠÍ‹"˜}˜‹B˜]‹]˜m˜‹¸Â’(	BŠ}‹"Š}‹=ª˜bŠıŠ}Ší˜N(ÍŠı˜}Š}˜m¸Â˜‚Š½ŠŠ¢Šı˜-¸Í˜"Š­Šr˜]Š­‹¸ÍŠ}˜B4Bô4Ò˜‚˜‹ª(Í˜˜M˜¸ÂªŠ}˜]˜BŠı¸ÍŠÍ¸ÍŠ­Š}˜M‰²Š}‹"›íŠ}¸Í˜rŠ­Šr›í¸Í‹M‹˜Š­˜râ"ÀĞ¢'&VÖ—VÒ#¢G'VRÀĞ¢'7FW2#¢°Ğ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓbÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ3‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#"Ó""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓsB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó#"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó3""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó#’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓC"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓs2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓc2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓcr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓS"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓc"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ“b"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ“r"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ“‚"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ3r"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓC’Ó""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓSÓ"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ĞĞ¢ÒÀĞ¢'&W6W'fVB#¢·ĞĞ¢ÒÀĞ¢°Ğ¢&–B#¢&’ÖFVçF—7G'’"ÀĞ¢&vÇ—‚#¢&–6öâÖ&÷B"ÀĞ¢'F—FÆUöf#¢-˜}˜‹B˜]‹]˜m˜‹¸Â˜‚›í‹Š}˜]›íŠ®(Í˜m˜¸Í‹=¸ÂŠŠ}˜M¸Í˜m¸ÂŠ‹Š}¸ÂŠı˜mŠıŠ}˜m›í‹-‹Mª’"ÀĞ¢'6†÷'Eöf#¢-˜}˜‹B˜]‹]˜m˜‹¸Â"ÀĞ¢&FW67&—F–öåöf#¢-¨m˜}Š}‹˜-‹=˜]Š­™˜]˜-Šı˜]Š}Š­¸ÂŠı‹ŠŠ}‹˜~(Í¸ÂŠ}¸Í˜mª˜r˜}˜‹B˜]‹]˜m˜‹¸ÂŠı‹Šı˜mŠıŠ}˜m›í‹-‹Mª¸Â¨m˜r˜]¸Î(Íª˜mŠıˆÂ˜‚Š‹Šòª˜M™Šı˜‹˜~(Í¸Â›í‹Š}˜]›íŠ­˜˜M˜©¸Í‹=Š¢(	BŠ}‹"˜]ŠŠ}˜m¸Â˜]Šı˜N(Í˜}Š}¸Â‹-ŠŠ}˜m¸Â˜‚Š­˜˜}˜]™˜]Šı˜BŠ­Šr›í‹Š}˜]›íŠ®(Í˜m˜¸Í‹=¸ÍˆÂ˜]‹‹-™ªŠ}‹Š‹Šı™ŠŠ}˜M¸Í˜m¸Â˜‚‹M˜mŠ}ŠíŠ­™Š}Š‹-Š}‹˜}Šrâ"ÀĞ¢'&VÖ—VÒ#¢G'VRÀĞ¢'7FW2#¢°Ğ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó#‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓC’Ó"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ’Ó""ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CÖVæC"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×C"Ó"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×C2Ó"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CBÓ"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CBÓ""ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CBÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CBÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ#R"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CRÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CRÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CRÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CbÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CbÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CbÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CbÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CbÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CrÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×CrÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×BÖVæC"Ó"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×BÖVæC"Ó""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×BÖVæC"Ó2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×BÖVæC"ÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×BÖVæC"ÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’÷&ö×FöÆöv—7B÷&ö×BÖVæC"Ób"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'Æ²×6Vg"÷Æ³Ó"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'Æ²×6Vg"÷Æ³Ó"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ĞĞ¢ÒÀĞ¢'&W6W'fVB#¢·ĞĞ¢ÒÀĞ¢°Ğ¢&–B#¢&f–ÇW&R×G&÷V&ÆW6†ö÷F–ær"ÀĞ¢&vÇ—‚#¢&–6öâ×w&Væ6‚"ÀĞ¢'F—FÆUöf#¢-‹¸ÍŠ(Í¸ÍŠ}Š¸ÂŠŠ}˜M¸Í˜m¸Â˜‚˜]Šı¸Í‹¸ÍŠ¢‹Mª‹=Š¢Šı‹Šı‹˜]Š}˜n(Í˜}Š}¸ÂŠ­‹˜]¸Í˜]¸Â˜‚›í‹˜Š­‹-¸Â"ÀĞ¢'6†÷'Eöf#¢-‹¸ÍŠ(Í¸ÍŠ}Š¸Â"ÀĞ¢&FW67&—F–öåöf#¢-˜]‹=¸Í‹˜]‹=Šm˜M˜~(Í˜]Šİ˜‹(	B‹M˜mŠ}ŠíŠ­ˆÂŠ­Šİ˜M¸Í˜B˜‚˜]Šı¸Í‹¸ÍŠ¢‹Mª‹=Š®(Í˜}Š}¸ÂŠ­‹˜]¸Í˜]¸Â˜‚›í‹˜Š­‹-¸Ã¢Š}‹"Š}˜Š­Š}Šı˜b˜‚˜M˜.(Í‹MŠı˜b‹˜ª‹B˜‚Šı‹ŠòŠ‹ŠòŠ}‹"Šı‹˜]Š}˜bŠ­Šr›í‹˜ªı˜m˜‹"˜mŠ}˜]‹MŠí‹R˜‚Š­‹]˜]¸Í˜RŠŠ}‹-‹=Š}‹-¸Î(Í›í‹¸Í‹¸Ââ‹‹‹m¸ÂŠ}‹"¨m˜mŠò›í¸Í˜MŠ}‹â"ÀĞ¢'&VÖ—VÒ#¢G'VRÀĞ¢'7FW2#¢°Ğ¢°Ğ¢&6öçFVçEö–B#¢'†÷Fö67BöW—6öFRÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓ#‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓ3"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓ3b"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF67B×ÇW2÷f–FVòÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓ3r"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓ#r"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓ3""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ3""ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓSB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF67B×ÇW2÷f–FVòÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓ‚"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓ’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓS‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó#r"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ĞĞ¢ÒÀĞ¢'&W6W'fVB#¢·ĞĞ¢ÒÀĞ¢°Ğ¢&–B#¢&Wf–FVæ6RÖÆ—FW&7’"ÀĞ¢&vÇ—‚#¢&–6öâ×66ÆR"ÀĞ¢'F—FÆUöf#¢-Š}‹‹-¸ÍŠ}Š¸Â‹M˜Š}˜}Šò˜‚Š}‹=Š­Šı˜MŠ}˜BŠŠ}˜M¸Í˜m¸Â"ÀĞ¢'6†÷'Eöf#¢-Š}‹‹-¸ÍŠ}Š¸Â‹M˜Š}˜}Šò"ÀĞ¢&FW67&—F–öåöf#¢-˜]‹=¸Í‹˜-‹mŠ}˜Š¢Šı‹ŠŠ}‹˜~(Í¸Â‹M˜Š}˜}Šò˜‚Š­‹]˜]¸Í˜RŠŠ}˜M¸Í˜m¸Â(	BŠ}‹"˜]Š­ŠòŠ­‹]˜]¸Í˜R˜‚‹=˜mŠı‹˜RŠ¸Í˜]Š}‹Š-‹M˜mŠrŠ­Šr˜]˜˜}˜˜R7V66W72õ7W'f—fÍˆÂŠ­˜˜}˜RŠ˜-ŠrŠı‹Šı˜mŠıŠ}˜m›í‹-‹Mª¸ÂŠ}Šı˜}‹-¸Í˜ˆÂ˜]‹¸ÍŠ}‹˜-‹mŠ}˜Š¢Š}¸Í˜]›í˜M˜mŠ¢Šı‹Š‹Š}Š‹Šı˜mŠıŠ}˜mˆÂ˜‚Š}¸Í˜mª˜r¸Íª’˜-Š}‹Šı˜rŠ­ŠrªŠÍŠrŠ˜r˜]˜˜-‹¸ÍŠ¢Šı¸Íªı‹¸Â˜]˜mŠ­˜-˜B˜]¸Î(Í‹M˜Šòâ"ÀĞ¢'&VÖ—VÒ#¢fÇ6RÀĞ¢&6W'F–f–6FUöF—66÷VçE÷W&6VçB#¢#ÀĞ¢'7FW2#¢°Ğ¢°Ğ¢&6öçFVçEö–B#¢'F&¢÷F&£Ó"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'F&¢÷F&£Ó""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'F&¢÷F&£Ó2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'F&¢÷F&£ÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'F&¢÷F&£ÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'F&¢÷F&£Ób"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'F&¢÷F&£Ór"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'F&¢÷F&£Ó‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'F&¢÷F&£Ó’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'F&¢÷F&£Ó"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓB"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓR"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓr"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ĞĞ¢ÒÀĞ¢'&W6W'fVB#¢·ĞĞ¢ÒÀĞ¢°Ğ¢&–B#¢&÷W&F—fRÖ6&–öÆöw’"ÀĞ¢&vÇ—‚#¢&–6öâÖÖ–7&ö&R"ÀĞ¢'F—FÆUöf#¢-ªŠ}‹¸Í˜˜M˜©¸Â˜‚Š­‹˜]¸Í˜R˜]‹=Š­˜-¸Í˜R"ÀĞ¢'6†÷'Eöf#¢-ªŠ}‹¸Í˜˜M˜©¸Â"ÀĞ¢&FW67&—F–öåöf#¢-˜]‹=¸Í‹›í˜‹=¸ÍŠıªı¸Â˜‚Š­‹˜]¸Í˜R˜]‹=Š­˜-¸Í˜R(	BŠ}‹"Š­‹MŠí¸Í‹R˜‚˜]Šı¸Í‹¸ÍŠ¢›í˜‹=¸ÍŠıªı¸Â˜‚›í¸Í‹Mªı¸Í‹¸ÂŠ­ŠrŠ‹ŠıŠ}‹MŠ¢˜]ŠŠ­˜m¸ÂŠ‹5¢ô5$]ˆÂŠ­‹˜]¸Í˜R˜]‹=Š­˜-¸Í˜RªŠ}˜]›í˜‹-¸ÍŠ¢˜‚˜]˜Š}ŠıˆÂ˜‚Š­‹MŠí¸Í‹RŠ­‹ª’Šı˜mŠıŠ}˜m‰²Š}‹"›íŠ}¸Í˜rŠ­Šr›í¸Í‹M‹˜Š­˜râ"ÀĞ¢'&VÖ—VÒ#¢G'VRÀĞ¢'7FW2#¢°Ğ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ#2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’ÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ#2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ3B"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ3R"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ“’"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓcR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓcb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓcr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó""ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ób"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#‚Ó""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓCrÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓCrÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó#""ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’ÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’ÓR"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ĞĞ¢ÒÀĞ¢'&W6W'fVB#¢·ĞĞ¢ÒÀĞ¢°Ğ¢&–B#¢'÷7BÖæBÖ6÷&R"ÀĞ¢&vÇ—‚#¢&–6öâ×÷7B"ÀĞ¢'F—FÆUöf#¢-›í‹=Š¢˜‚ª˜‹˜‚ŠŠ}‹-‹=Š}‹-¸ÂŠı˜mŠıŠ}˜bŠ}˜mŠı˜‹MŠı˜r"ÀĞ¢'6†÷'Eöf#¢-›í‹=Š¢˜‚ª˜‹"ÀĞ¢&FW67&—F–öåöf#¢-˜]‹=¸Í‹ŠŠ}‹-‹=Š}‹-¸ÂŠı˜mŠıŠ}˜bŠ}˜mŠı˜‹MŠı˜r(	BŠ}‹"˜]ŠŠ}˜m¸Â›í‹=Š¢˜‚˜Š}¸ÍŠ‹›í‹=Š¢˜‚˜‹˜˜BŠ­ŠrŠŠ}˜mŠòŠ˜r‹Š}ŠÂ‹¸Í‹M˜r˜‚Š­‹]˜]¸Í˜^(Í˜}Šr˜‚‹¸ÍŠ(Í¸ÍŠ}Š¸Í‰²Š}‹"›íŠ}¸Í˜rŠ­Šr›í¸Í‹M‹˜Š­˜râ"ÀĞ¢'&VÖ—VÒ#¢G'VRÀĞ¢'7FW2#¢°Ğ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓs’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓC""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓC2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓC""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓC2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ3B"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#RÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ#"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ3"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ3"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó32"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓƒ‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓsb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF67B×ÇW2÷f–FVòÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF67B×ÇW2÷f–FVòÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF67B×ÇW2÷f–FVòÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF67B×ÇW2÷f–FVòÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓCrÓr"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓCr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓcB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓC‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓC’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓƒB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓCB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓb"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ3b"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓ3b"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓC"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓC"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓ’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓ#"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ#"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ“r"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓC"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓcb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ3’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF67B×ÇW2÷f–FVòÓr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓR"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓ’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓ#"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ĞĞ¢ÒÀĞ¢'&W6W'fVB#¢·ĞĞ¢ÒÀĞ¢°Ğ¢&–B#¢&–×ÆçB×&÷7F†WF–2"ÀĞ¢&vÇ—‚#¢&–6öâÖ–×ÆçB"ÀĞ¢'F—FÆUöf#¢-Š}¸Í˜]›í˜M˜mŠ¢›í‹˜Š­‹-¸Ã¢Š}ŠÍ‹-Š}ˆÂŠ}‹=ª˜bŠı¸ÍŠÍ¸ÍŠ­Š}˜B˜‚‹}‹Š}Šİ¸Â‹‹=Š­˜‹¸Í‹M˜b"ÀĞ¢'6†÷'Eöf#¢-Š}¸Í˜]›í˜M˜mŠ¢›í‹˜Š­‹-¸Â"ÀĞ¢&FW67&—F–öåöf#¢-˜m¸Í˜]˜~(Í¸Â›í‹˜Š­‹-¸Í™Š}¸Í˜]›í˜M˜mŠ­˜˜M˜©¸Â(	BŠ}‹"ªŠ}˜mª‹M˜n(Í˜}Šr˜‚Š}ŠŠ}Š­˜]˜mŠ®(Í˜}Šr˜‚Š}‹=ª˜bŠı¸ÍŠÍ¸ÍŠ­Š}˜BŠı˜-¸Í˜"Š­ŠrŠ}ª˜M˜©˜m™Š}¸Í˜]›í˜M˜mŠ­ˆÂ‹¸ÍŠ(Í¸ÍŠ}Š¸Â›í¸Í¨mˆÂ˜]Šı¸Í‹¸ÍŠ¢‹=˜]Š}˜b˜‚‹}‹Š}Šİ¸Â‹‹=Š­˜‹¸Í‹M˜bŠŠrªŠ}˜m‹=›íŠ¢¦W&ò&öæRÆ÷7=‰²Š}‹"›íŠ}¸Í˜rŠ­Šr›í¸Í‹M‹˜Š­˜râ"ÀĞ¢'&VÖ—VÒ#¢G'VRÀĞ¢'7FW2#¢°Ğ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓƒ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓƒ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓƒ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓƒ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓƒB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓ3‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ‚"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó3"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓƒ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓc"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ32"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓCBÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ3‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ#b"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ32"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓCB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ3"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ3"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓC‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ3R"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓS""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#2Ób"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ#""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓ‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓ#2"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓCb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ“b"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓ3"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓc"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓ#2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#B"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓ#B"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓc"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓc""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ#‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓCR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓ3b"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ3"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ3""ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ3"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓ3"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#"Ó"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓcR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF67B×ÇW2÷f–FVòÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓƒR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓƒb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ’"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ3"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ3’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓC"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓC"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓCb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓCb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓCr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#2ÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#RÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓc""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#RÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓC‚Ó""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓS’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓC""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓC2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓSr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓs‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓs""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓCr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓƒ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓS"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓc2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓsr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF67B×ÇW2÷f–FVòÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&ÖWFæ÷FW2öÖWFÓr"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ĞĞ¢ÒÀĞ¢'&W6W'fVB#¢·ĞĞ¢ÒÀĞ¢°Ğ¢&–B#¢&f—†VB×&÷2"ÀĞ¢&vÇ—‚#¢&–6öâÖ7&÷vâ"ÀĞ¢'F—FÆUöf#¢-›í‹˜Š­‹"Š½Š}ŠŠ£¢Š­‹Š}‹MˆÂ˜-Š}˜MŠˆÂ‹=˜]Š}˜b˜‚‹˜ª‹B"ÀĞ¢'6†÷'Eöf#¢-›í‹˜Š­‹"Š½Š}ŠŠ¢"ÀĞ¢&FW67&—F–öåöf#¢-˜m¸Í˜]˜~(Í¸Â‹˜ª‹B˜‚‹‹=Š­˜‹¸Í‹M˜m™›í‹˜Š­‹"Š½Š}ŠŠ¢(	BŠ}‹"Š}‹]˜˜BŠ­‹Š}‹B˜‚Š-˜]Š}Šı˜~(Í‹=Š}‹-¸Â˜‚˜-Š}˜MŠ(Íªı¸Í‹¸ÂŠ­Šr˜]ŠŠ}˜m¸Â¨m‹=Š˜mŠıªı¸Â˜‚‹=˜]Š}˜mˆÂŠ}ª˜M˜©˜m™ŠŠ}‹-‹=Š}‹-¸ÍˆÂ‹˜ª‹BıŠ}˜m˜M˜rıŠ}˜mŠı˜ª‹Š}˜˜b˜‚˜]Šı¸Í‹¸ÍŠ¢‹Mª‹=Š­‰²Š}‹"›íŠ}¸Í˜rŠ­Šr›í¸Í‹M‹˜Š­˜râ"ÀĞ¢'&VÖ—VÒ#¢G'VRÀĞ¢'7FW2#¢°Ğ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ“R"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓcr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF67B×ÇW2÷f–FVòÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ“’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓSR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓ3‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓ3R"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓSb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓSr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓS‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ3""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ3r"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓcb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓcr"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓC’"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓ#"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓ#"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ3B"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓsR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ#b"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢'6†&V‡V"÷6†&RÓ#’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓƒ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓƒ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ#‚Ó"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó#’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓs’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓB"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’ÓR"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ób"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ó3"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF’öFVçF’Ór"ÀĞ¢&Ö–ÆW7FöæR#¢G'VPĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓS’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&6†—'6–FRö6†—'6–FRÓC"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓ""ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&æ÷FV67BöW—6öFRÓ2"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓC‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓC’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ3r"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&W—6öFW2öW—6öFRÓ3‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓ#’"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓƒb"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF67B×ÇW2÷f–FVòÓ"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&FVçF67B×ÇW2÷f–FVòÓ‚"ÀĞ¢&Ö–ÆW7FöæR#¢fÇ6PĞ¢ÒÀĞ¢°Ğ¢&6öçFVçEö–B#¢&–ç6–v‡Bö–ç6–v‡BÓƒ"ÀĞ¢&Ö–Æ]¶ó»h‘éì¶»§q«^v,
         "milestone": false
       },
       {
