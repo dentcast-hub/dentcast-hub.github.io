@@ -12,9 +12,10 @@ test('nested modules and global rules are active canonical sources',()=>{
     assert.match(advisory({tool_input:{file_path:p}},'/nonexistent').hookSpecificOutput.additionalContext,/قاعدهٔ مشترک فعال/);
   }
 });
-test('backup snapshots are excluded',()=>{
-  assert.equal(sideOf('AGENTS.legacy.md'),null);
-  assert.equal(sideOf('.dentcast/workflows/legacy/cursor/dentcast-router.mdc'),null);
+test('files outside the entrypoints and the canonical sources are not advised',()=>{
+  // 2026-11-06: the legacy/staging copies were deleted, so there is no backup side to exclude.
+  assert.equal(sideOf('tools/verify_publish.py'),null);
+  assert.equal(sideOf('.dentcast/publication-reports/plak_sefr-plak1-12.md'),null);
 });
 test('Windows and POSIX entrypoint paths are recognized',()=>{
   assert.equal(sideOf('C:\\repo\\AGENTS.md'),'entrypoint');

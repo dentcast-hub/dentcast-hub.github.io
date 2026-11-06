@@ -1,8 +1,6 @@
-"""Audit active instruction routing and full global-rule migration.
-Reading backup fixtures here is an audit, never a runtime loader requirement.
+"""Audit active instruction routing: one live route per task, the same for every client.
 These tests do not launch external agent clients.
 """
-import hashlib
 import json
 from pathlib import Path
 import re
@@ -13,65 +11,6 @@ ENTRYPOINTS = ("AGENTS.md", "CLAUDE.md",
  ".cursor/rules/dentcast-operating-protocol.mdc",
  ".dentcast/workflows/README.md", ".dentcast/workflows/agent-parity.md")
 def read(p): return (ROOT/p).read_text(encoding="utf-8")
-# Approved line re-wraps (Claude-path audit 2026-10-26): lines over 2000
-# characters were split at sentence boundaries so clients that truncate long
-# lines can read them completely. Each hunk is [original line, re-wrapped
-# text]; only a single space becomes newline + continuation indent, so undoing
-# it restores the reviewed text exactly.
-REWRAPS=json.loads(read("tests/fixtures/line-rewraps-2026-10-26.json"))
-# Approved wording-only cleanup of migrated global-rule files. Each pair is
-# [text before, text now]; the test restores the earlier text before the legacy
-# comparison, so any other change still fails.
-HISTORY_CLEANUP=json.loads(read("tests/fixtures/history-cleanup-2026-11-02.json"))
-def restore_cleanup(test, path, text):
- for old,new in HISTORY_CLEANUP.get(path,()):
-  test.assertEqual(text.count(new),1,new[:80])
-  text=text.replace(new,old)
- return text
-def unwrap(test, path, text):
- for old,new in REWRAPS.get(path,()):
-  test.assertEqual(re.sub(r"\n *"," ",new),old)
-  test.assertTrue(all(len(line)<=2000 for line in new.split("\n")))
-  test.assertEqual(text.count(new),1,new[:80])
-  text=text.replace(new,old)
- return text
-
-# Approved global-rule amendments that postdate the legacy snapshot (founder
-# decision 1405/08/03, PR #994: repo-file article exam questions + auto-open at
-# twenty). Each is a bounded block: the test removes exactly that block, pins its
-# required terms, and the rest of the file must still equal the legacy text.
-GLOBAL_AMENDMENTS = {
- ".dentcast/workflows/global/repo-conventions.md": {
-  "new_start": '**سؤالِ مقاله منبعِ دومی هم در ریپو دارد',
-  "old_start": '**و آزمون هرگز از سیستمِ کوییز',
-  "end": '**آزمونِ بی\u200cسؤال آزمون نیست',
-  "terms": ("plus/exam-questions.json", "۴.۱۲-ب", "tools/validate_exam_questions.py",
-            "`r-`", "**سه** منبع", "config.exam.autoOpenMin", "بذرپاشی",
-            "`published_at`اش حرفِ آخر"),
- },
- ".dentcast/workflows/global/plus-premium.md": {
-  "row": '| Premium | سؤالِ آزمونِ مسیر (منبعِ ریپو) | `plus/exam-questions.json` زیرِ `content_id` (کلید داخلِ فایل؛ `robots.txt` می\u200cبندد) | گام ۴.۱۲-ب — هر publish تخصصی که قدمِ مسیر است (جز LiteCast/چالش/واژه\u200cنامه)؛ تأیید در چت، بدون بیلدر |\n',
-  "terms": ("plus/exam-questions.json", "۴.۱۲-ب", "LiteCast"),
- },
-}
-def strip_global_amendment(test, path, actual, expected):
- rule = GLOBAL_AMENDMENTS.get(path)
- if not rule:
-  return actual
- if "row" in rule:
-  test.assertEqual(actual.count(rule["row"]), 1)
-  for term in rule["terms"]:
-   test.assertIn(term, rule["row"])
-  return actual.replace(rule["row"], "", 1)
- a_start = actual.index(rule["new_start"]); a_end = actual.index(rule["end"], a_start)
- e_start = expected.index(rule["old_start"]); e_end = expected.index(rule["end"], e_start)
- block = actual[a_start:a_end]
- for term in rule["terms"]:
-  test.assertIn(term, block)
- return actual[:a_start] + expected[e_start:e_end] + actual[a_end:]
-# Founder-approved DES v3.5 amendment to module 08 (1405/08/04): spec pointer,
-# the v3.5 summary, the Part 2b episode carve-out and the source-marker/plan
-# rule. Applied to the legacy text as exact, single-occurrence replacements.
 class EntrypointMigrationTests(unittest.TestCase):
  def test_progress_reporting_is_timely_without_per_command_noise(self):
   s=read(".dentcast/workflows/agent-parity.md")
@@ -135,22 +74,13 @@ class EntrypointMigrationTests(unittest.TestCase):
    for route in ("en-version.md","ads.md","spot-report.md","cross-link.md","new-section.md",
     "external-fidelity.md","offline-publish.md","glossary-writer/SKILL.md","routing-details.md"):
     with self.subTest(path=p,route=route): self.assertIn(route,read(p))
- def test_complete_global_rules_migrated(self):
-  m=json.loads(read(".dentcast/workflows/global/MIGRATION.json"))
-  self.assertIs(m["execution_requires_backup_read"],False)
-  src=read(m["source_artifact"]).splitlines(keepends=True)
-  self.assertEqual([r["source_lines"] for r in m["ranges"]],[[373,1209],[1210,1440],[1441,1587]])
-  for item in m["ranges"]:
-   a,b=item["source_lines"]; original="".join(src[a-1:b])
-   self.assertEqual(hashlib.sha256(original.encode()).hexdigest(),item["source_sha256"])
-   expected=original.replace("CLAUDE.md، بخش Repo conventions.","فایل فعال .dentcast/workflows/global/repo-conventions.md.")
-   # Founder-approved DES v3.5 (1405/08/04): the plus-premium spec pointer moved from v3.4 to v3.5.
-   expected=expected.replace("اسپک: `.dentcast/dentcast-evidence-score-v3.4.md`؛","اسپک: `.dentcast/dentcast-evidence-score-v3.5.md`؛")
-   expected=expected.replace("`dentcast-evidence-score-v3.3.md`، …) و آن کپ","`dentcast-evidence-score-v3.3.md`، `dentcast-evidence-score-v3.4.md`، `dentcast-evidence-score-v3.5.md`، …) و آن کپ")
-   expected=expected.replace("نسخه‌های v1.3 تا v3.3 را کنارِ","نسخه‌های v1.3 تا v3.5 را کنارِ")
-   actual=strip_global_amendment(self,item["active"],unwrap(self,item["active"],restore_cleanup(self,item["active"],read(item["active"]))),expected)
-   self.assertEqual(actual,expected)
-   self.assertIn(item["active"],read(".dentcast/workflows/global/README.md"))
+ # The one-time migration certifications were retired by founder decision
+ # 2026-11-06 together with the legacy snapshots they compared against
+ # (AGENTS.legacy.md, README.legacy.md, the Cursor legacy copies and the whole
+ # staging scaffolding): there is one live route per task and Git history is the
+ # only place an older version lives. What guards the live files now: the
+ # parity and routing tests in this file, the readpack pins, Phase F and the
+ # publication merge gate.
  # The module-vs-README.legacy.md parity test (and its amendment tables) was
  # retired by founder decision 2026-11-06: modules 01-12 were rewritten for the
  # simplified direct publication route; readpack pins guard their boundaries.
