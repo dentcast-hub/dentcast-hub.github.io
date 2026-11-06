@@ -44,6 +44,12 @@ When the founder's request does not make the type obvious, ask:
 
 > این مطلب کدوم نوعه؟ (لیست نوع‌هایی که از brain پیدا کردی رو نشون بده)
 
+**The locked type is the brain `type`, which is not always the folder's name.** An insight page lives
+at `insight/insight-<N>.html` but its brain entry is `type: clinical` with id `clinical-<N>`; the
+handoff category is that same brain `type` (`publish-handoff-tool.md`). Phase A's «latest
+same-category entry», Question 2's next number and Hard Rule 5's key-set parity all follow the brain
+`type`, never the directory.
+
 **Two types in the brain are CLOSED and are never offered: `dentai` and `photocast`.** Their 35 + 3 pages stay, but no new entry is appended to either. A single- or multi-paper reading is **`sharehub`**. If the founder names a closed type, say so and ask which living section it goes to (`sharehub` for a reading) — never create `dentai-36` or `photocast/episode-4` (`.dentcast/workflows/global/repo-conventions.md`).
 
 Lock the category for the rest of the run.
@@ -77,7 +83,7 @@ Judge by ear, not by checklist. Typical tells:
 
 For each genuine instance record: the exact original phrase, a rewrite with the **same meaning, facts and register**, and a one-line reason. No genuine tell → record «متن طبیعی به نظر می‌رسه، تغییری لازم نیست» and continue with the text unchanged.
 
-#### Step 3 — Confirm, then branch
+#### Step 3 — Apply, record, then branch
 
 The rewrites are agent proposals under standing acceptance (Hard Rule 14): apply them and record each (original → rewrite → reason) in the handoff; the agent's Push-2 report lists them and the founder may revert any. Every sentence not rewritten stays byte-identical, and the founder's title and caption are never touched (Hard Rule 16).
 

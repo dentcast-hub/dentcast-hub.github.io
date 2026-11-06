@@ -53,7 +53,7 @@ in `CLAUDE.md`.)
    feature, not a search feature.
 8. **en pages stay OUT of the brain ecosystem.** This workflow does **not**
    append a `dentcast-brain.json` entry, does **not** add a Pulse line, and
-   does **not** run the specialist cross-linking steps (README 4.7/4.8/4.9)
+   does **not** run the specialist cross-linking steps (`modules/05-semantic-linking.md`, 4.7/4.8/4.9)
    for the en page. en pages are standalone translations, exactly as
    `/metanotes/en/meta-1..5` are today. (The en page therefore carries no
    دانشنامه/فهرست موضوعی capsules and no brain «کاوش بیشتر» links — matching
@@ -107,7 +107,7 @@ Before asking anything beyond "which page":
 ## Phase B — Intake
 
 ### Question 1 — Confirm the source
-Per README Hard Rule 14: if the trigger phrase resolves to exactly one file on disk with no ambiguity, state the resolved path directly and proceed — no need to wait for a yes:
+Per Hard Rule 14 (`modules/01-hard-rules.md`): if the trigger phrase resolves to exactly one file on disk with no ambiguity, state the resolved path directly and proceed — no need to wait for a yes:
 > منبع: `{type}/{file}.html` → خروجی: `{type}/en/{file}.html`
 
 Only ask when the trigger is genuinely ambiguous (it could match more than one file, or the resolved path doesn't obviously exist):
@@ -208,7 +208,7 @@ bar — it is part of the type's own structure (Hard rule 4), so it must not be
 dropped even under the Phase B Q2 "clean translation" default (that default
 governs the specialist «کاوش بیشتر» capsules, not the series nav). The bar
 operates **entirely within the en tier**, mirroring the fa series mechanism
-(README 4.6):
+(`modules/04-taxonomy-and-navigation.md`, 4.6):
 
 - **Targets are en counterparts.** The previous/next slots point to the en
   pages of the adjacent parts (`{type}/en/{prev-or-next-file}.html`), never to
@@ -222,7 +222,7 @@ operates **entirely within the en tier**, mirroring the fa series mechanism
 - **Wiring is reciprocal, on the sibling's publish.** When a later part is
   translated via this workflow, that run converts this page's "next"
   placeholder into a real link to the new en part, and wires the new part's
-  "previous" slot back here — exactly the README 4.6 prev/next dance, applied
+  "previous" slot back here — exactly the 4.6 prev/next dance (module 04), applied
   to the en tier. Carry the `.ep-nav*` CSS over from the source type so the
   bar renders.
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Mechanically verify one publish against the publishing workflow's invariants.
 
-This is the workflow's FINAL GATE (`.dentcast/workflows/README.md` Phase F).
+This is the workflow's FINAL GATE (`.dentcast/workflows/modules/12-english-notify-verify.md`, Phase F).
 Every rule it checks is already written in prose in that document; the point of
 this script is that prose is not enforceable and a long checklist is not
 something an agent reliably completes. Here the checklist executes, names the
@@ -557,7 +557,7 @@ def fidelity_absence_allowed(content_id, sources, index, assignment=None):
 
 
 def des_fidelity_owed(s):
-    """A source the FIDELITY call runs against (README step 4.13 Part 2b): any
+    """A source the FIDELITY call runs against (module 08, step 4.13 Part 2b): any
     scored source, and from spec v3.1 a NOT_APPRAISABLE source whose SOURCE
     call read a text (FULL_TEXT or EXCERPT) — the gate is the text, not the score."""
     if s.get("error"):
@@ -784,7 +784,7 @@ def load_entry(content_id):
     for i, e in enumerate(lite):
         if (e.get("page_url") or "").lstrip("/") == content_id + ".html":
             return e, ("litecast", i, len(lite)), brain
-    # Glossary terms live in glossary/glossary.json, not the brain (README
+    # Glossary terms live in glossary/glossary.json, not the brain (module 05
     # step 5 note: "sourced from glossary/glossary.json, not from the brain").
     # Its schema has no `type`/`caption` keys and its Persian display name is
     # `fa_title` (its own `title` is the English term name) — normalize onto

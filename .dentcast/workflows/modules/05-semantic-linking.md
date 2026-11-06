@@ -67,7 +67,7 @@ For each candidate: does this exact place in the article refer to the concept th
 
 One link per term, on its **first** qualifying occurrence in reading order.
 
-#### Step 4 — Auto-apply high-confidence matches; ask only for the rest
+#### Step 4 — Apply a strong match; a borderline one is skipped and recorded
 
 Hard Rule 14: unmistakable matches (the word clearly used in its technical sense for exactly that concept) are inserted and recorded (phrase, target, reason); borderline matches (a looser connection, a word readable either way) are not inserted and are recorded.
 
@@ -97,7 +97,7 @@ Count the section's links (the capsules count) and fill only the remaining slots
 
 The **same** capsule markup and classes as the section's existing links; only `href` (the target's page URL) and the label differ. The label is a **short, specific Persian title** derived from the target — not its raw long title, never generic.
 
-#### Step 4 — Auto-apply high-confidence matches; ask only for the rest
+#### Step 4 — Apply a strong match; a borderline one is skipped and recorded
 
 Hard Rule 14: strong relatedness is inserted strongest first and recorded (target, URL, label, reason); borderline candidates are not inserted and are recorded.
 

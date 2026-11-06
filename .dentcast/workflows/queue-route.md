@@ -43,9 +43,14 @@
    - REST: `POST repos/dentcast-hub/dentcast-hub.github.io/actions/workflows/queue-publish.yml/dispatches`
      با `{"ref": "main", "inputs": {"nn": "NN", "requested_by": "<نام>"}}` و سرآیند `Authorization: Bearer <توکن>`
      (توکنی با Actions: write؛ `QUEUE_PUBLISH_TOKEN` secret مخزن است و در دست ایجنت نیست).
-   - **هیچ‌کدام در دسترس نیست** (نه `gh`، نه MCP، نه توکن): ایجنت `nn` و `requested_by` را یک خط به
-     بنیان‌گذار می‌دهد تا خودش «Run workflow» را بزند و با لینک اجرایی که او می‌دهد از گام ۳ ادامه می‌دهد؛
-     از راه دیگری چیزی را جابه‌جا نمی‌کند.
+
+   `nn` را برای «قدیمی‌ترین آماده» **خالی بگذار یا اصلاً نده** (`gh workflow run queue-publish.yml
+   -f requested_by="<نام>"`). `requested_by` همان نامی است که قفل را می‌سازد و `unlock` با آن مقایسه
+   می‌کند، پس نامِ ثابتِ کلاینت است (`claude-code`، `cursor`، `codex`)، نه رشته‌ای تازه در هر اجرا.
+   **هیچ‌کدام در دسترس نیست** (نه `gh` احرازشده، نه MCP، نه توکن): کار **به بنیان‌گذار سپرده می‌شود**: همین
+   ورودی‌ها («Run workflow» در تب Actions، `nn` خالی، `requested_by`) در یک خط گزارش می‌شود تا خودش
+   «Run workflow» را بزند، و با لینک اجرایی که او می‌دهد از گام ۳ ادامه می‌یابد؛ هیچ راهِ جایگزینی (API با
+   curl، push از سندباکس، بازسازی فایل‌ها) اجرا نمی‌شود.
    workflow به ترتیب: `pick` ← `lock` و push برنچ `queue` ← برنچ `queue-publish/<نام پوشهٔ مطلب>` تازه از
    `origin/main` (برنچی با همین NN روی origin باشد: `BRANCH_EXISTS`، چیزی قفل نمی‌شود) ← `run`: بررسی manifest
    و اجرای آزمایشی (رد ← هیچ چیزی نوشته نمی‌شود)، ledger صف، `queue_apply.py`، رکوردهای ledger، گام‌ها تا
@@ -65,12 +70,13 @@
    لاگ گام «Run the item» (خط `result=`) و لینک PR در لاگ گام «Open the PR» (خط `PR:`) و بدنهٔ خود PR هست،
    چون API و `gh` خلاصهٔ اجرا را برنمی‌گردانند. شکست یا timeout: لینک اجرا و خروجی JSON ابزار عیناً، بعد
    `status` و `next_step` آن.
-5. **مرج.** تریگر انتشار از صف اجازهٔ مرج بعد از تکمیل است و اجازهٔ دیگری لازم نیست: وقتی تحویل سوم،
-   Phase F و گیت‌های PR سبزند (`gh pr checks <n>`، MCP `pull_request_read` با `get_status`، یا REST
-   `GET repos/…/commits/<sha>/check-runs`)، PR مرج می‌شود (`gh pr merge <n> --merge`، MCP `merge_pull_request`،
-   یا REST `PUT repos/…/pulls/<n>/merge`؛ `queue-publish-done.yml` کامیت‌های PR را از API می‌خواند، پس روش مرج
-   آزاد است)؛ گیت قرمز یعنی مرج نه. ابزار مرج در دسترس نیست: لینک PR و وضعیت گیت‌ها گزارش می‌شود و
-   بنیان‌گذار Merge را می‌زند.
+5. **مرج.** مرج تصمیم بنیان‌گذار است، همان‌جا که `queue-publish.yml` و `publish-after-push2.md` می‌گویند:
+   وقتی تحویل سوم، Phase F و گیت‌های PR سبزند (`gh pr checks <n>`، MCP `pull_request_read` با `get_status`، یا
+   REST `GET repos/…/commits/<sha>/check-runs`)، آمادگی گزارش می‌شود و PR **فقط با اجازهٔ بنیان‌گذار** مرج
+   می‌شود — یک «بعد از تکمیل مرج کن» صریح در همین درخواست یا پیش از آن کافی است و تا سبزشدن همهٔ گیت‌ها
+   معتبر می‌ماند (`gh pr merge <n> --merge`، MCP `merge_pull_request`، یا REST `PUT repos/…/pulls/<n>/merge`؛
+   `queue-publish-done.yml` کامیت‌های PR را از API می‌خواند، پس روش مرج آزاد است). گیت قرمز یعنی مرج نه.
+   ابزار مرج در دسترس نیست: لینک PR و وضعیت گیت‌ها گزارش می‌شود و بنیان‌گذار Merge را می‌زند.
 6. **پاک‌کردن صف.** خودکار: `queue-publish-done.yml` بعد از مرج پوشهٔ مطلب را با کامیت
    `queue: NN published as <content_id> (PR #n)` از `queue` برمی‌دارد. فقط اگر آن workflow شکست خورد:
    `python3 tools/queue_publish.py done <پوشه> --content-id <id> --pr <n>` در یک checkout برنچ `queue` و push چاپ‌شده.
@@ -105,9 +111,9 @@ Contents: read and write، Pull requests: read and write، Actions: read و Meta
 | `DELIVERY3_NO_PR` | PR به main با عنوان `<content_id>: publish queue item NN` و بدنهٔ Push-2 SHA + `mechanical_defaults` + `manual_steps` از خط `result=` لاگ (`gh pr create --base main --head <برنچ> --title … --body …`، MCP `create_pull_request`، یا REST `POST repos/…/pulls`؛ هیچ‌کدام: گزارش به بنیان‌گذار) |
 | `PR_OPEN` | مرج وقتی گیت‌ها سبزند (گام ۵) |
 | `PR_MERGED_ITEM_IN_QUEUE` | `done` (گام ۶) |
-| `MULTIPLE` | چند مطلب قفل‌اند: `next_step` هر ردیف `items` به ترتیب قدیمی‌ترین؛ گزارش |
+| `MULTIPLE` | چند مطلب «در حال انتشار»: هیچ انتشار تازه‌ای شروع نمی‌شود؛ `items[].next_step` هر کدام به ترتیب از قدیمی‌ترین دنبال یا گزارش می‌شود |
 | `PR_CLOSED_UNMERGED`، `BRANCH_WITHOUT_HANDOFF`، `UNKNOWN`، `*_UNKNOWN` | گزارش با شواهد خروجی؛ API در دسترس نیست یعنی تب Actions و PRهای همان برنچ |
-| رد با `QUEUE_UNAVAILABLE` | `origin/queue` fetch نشد و کپی محلی نیست: شبکه، بعد دوباره `status`؛ نشد، گزارش |
+| رد با `QUEUE_UNAVAILABLE` (خروج ۲) | `origin/queue` نه fetch شد و نه کپی محلی دارد: شبکه، بعد دوباره `status`؛ نشد، شبکه/دسترسی گزارش می‌شود و انتشار شروع نمی‌شود |
 
 ## وقتی ابزار رد می‌کند
 
@@ -116,7 +122,8 @@ Contents: read and write، Pull requests: read and write، Actions: read و Meta
 
 | کد | کار |
 |---|---|
-| `SHA256_MISMATCH`، `MANIFEST_INCOMPLETE`، `SUPPLEMENT_TEXT_NOT_FROZEN` | مطلب باید به «در حال آماده‌سازی» برگردد تا فیلد یا متن در خود مطلب منجمد شود؛ workflow ورودی supplement ندارد و فقط unlock می‌کند، پس مطلب «آماده» می‌ماند: کد و فیلد نام‌برده یک خط به بنیان‌گذار، و تا آماده‌ساز وضعیتش را عوض نکند، dispatch بعدی `nn` را صریح می‌دهد (با `nn` خالی همین مطلب دوباره برداشته می‌شود) |
+| `SHA256_MISMATCH`، `SHA256SUMS_MISSING`، `SHA256SUMS_MALFORMED`، `CATALOG_NOT_FROZEN`، `STATUS_MISSING` | انجماد مطلب سالم نیست: باید به «در حال آماده‌سازی» برگردد و دوباره منجمد شود؛ workflow فقط unlock می‌کند، پس مطلب «آماده» می‌ماند: کد یک خط به بنیان‌گذار، و تا آماده‌ساز وضعیتش را عوض نکند، dispatch بعدی `nn` را صریح می‌دهد (با `nn` خالی همین مطلب دوباره برداشته می‌شود) |
+| `MANIFEST_INCOMPLETE`، `SUPPLEMENT_TEXT_NOT_FROZEN` | فیلد یا متنِ نام‌برده باید در خود مطلب منجمد شود؛ workflow ورودی supplement ندارد و فقط unlock می‌کند: همان رفتار ردیف بالا (کد و فیلد نام‌برده یک خط به بنیان‌گذار؛ مطلب «آماده» می‌ماند تا آماده‌ساز به «در حال آماده‌سازی» برگرداند؛ `nn` صریح) |
 | `DES_PACKAGE_MISSING` | یک خط به بنیان‌گذار؛ همان رفتار ردیف بالا |
 | `FOREIGN_LOCK`، `NOT_READY`، `NO_READY_ITEM`، `NAMED_ITEM_NOT_READY` | مطلب برداشته نمی‌شود؛ گزارش |
 | `BRANCH_EXISTS` | برنچ انتشار همین NN از قبل هست: چیزی قفل نشد؛ `status` و `next_step` آن. اگر `status` `IDLE` است برنچ بازماندهٔ اجرایی پیشین است: نام برنچ به بنیان‌گذار گزارش می‌شود و فقط با حکم او حذف می‌شود |

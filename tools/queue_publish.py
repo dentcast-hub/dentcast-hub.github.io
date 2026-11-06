@@ -366,7 +366,7 @@ def item_status(repo, slug, name, st, lock, api, remote_heads, publish_run=None)
                 "checkout and push")}
         if pr.get("state") == "open":
             return {**out, "state": "PR_OPEN", "next_step": f"merge PR #{pr['number']} when every gate is green "
-                    "(the queue publish trigger authorizes the merge, queue-route.md step 5); a red gate means no merge"}
+                    "(founder's decision, queue-route.md step 5); a red gate means no merge"}
         return {**out, "state": "PR_CLOSED_UNMERGED", "next_step": f"PR #{pr['number']} was closed without merge: "
                 "report it; the founder decides (reopen, or unlock and re-dispatch)"}
     if handoff_on_head is None:

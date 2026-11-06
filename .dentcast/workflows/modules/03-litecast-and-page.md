@@ -40,7 +40,7 @@ Compare the new body with every existing LiteCast entry semantically (Hard Rule 
 
 **Hard rules for matching:** real conceptual relevance only; no junk/generic words; candidates only from `litecast/lite-glossary.json`; never the item itself; **first occurrence only**, one link per target.
 
-#### Step 2 — Auto-apply high-confidence matches; ask only for the rest
+#### Step 2 — Apply a strong match; a borderline one is skipped and recorded
 
 Hard Rule 14: an unmistakable match is applied and recorded (phrase + context, target, one-line reason); a borderline one is skipped and recorded.
 
@@ -66,7 +66,7 @@ Hard Rule 9's cap of 5. With no specialist capsules all slots are LiteCast's, bu
 
 The **same** `dc-related-section` / `dc-related-capsules` / `dc-related-capsule` markup the LiteCast template uses; only `href` (the target LiteCast page) and the label (a short Persian title of the target) differ. **Replace** the cloned specialist capsules with these.
 
-#### Step 4 — Auto-apply high-confidence matches; ask only for the rest
+#### Step 4 — Apply a strong match; a borderline one is skipped and recorded
 
 Hard Rule 14: strong relatedness is inserted and recorded (target, URL, label, reason); borderline candidates are skipped and recorded.
 

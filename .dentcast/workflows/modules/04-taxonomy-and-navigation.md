@@ -5,7 +5,7 @@
 
 Ledger steps in this module: `C.2.4`, `C.2.5`, `C.2.6`, `C.3`, `C.4`, `C.4.5`, `C.4.5-b`, `C.4.6`.
 
-### 2.4. Semantic pillar & subtopic determination (propose + confirm)
+### 2.4. Semantic pillar & subtopic determination (built and recorded, not asked)
 
 Decide `pillar.primary` and — when that pillar is structured — `pillar.subtopic` **here, once**, before steps 2.5 and 5 consume them (Hard Rule 6). The match is semantic (Hard Rule 14). The decision is standing acceptance: applied, recorded with its reason, listed in the agent's Push-2 report; it is not sent for confirmation.
 
@@ -19,7 +19,7 @@ Hard Rules 7–8: `PILLARS` in `tools/build_pillar.py`, read from a state reflec
 python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"
 ```
 
-#### Step 2 — Semantically pick the pillar (auto-apply if clear, else propose options)
+#### Step 2 — Semantically pick the pillar (clear: apply; ambiguous: closest match, recorded)
 
 Compare the content's conceptual subject with each pillar:
 
@@ -27,13 +27,13 @@ Compare the content's conceptual subject with each pillar:
 - **Ambiguous** (two or more real candidates) → the closest semantic match, with the competing candidate and the reason recorded.
 - **No pillar applies** → `pillar.primary` stays `null`; skip Step 3. The فهرست موضوعی capsule then falls back to `/pillar/`.
 
-#### Step 3 — Semantically pick the subtopic (structured pillars only; auto-apply if clear, else propose options)
+#### Step 3 — Semantically pick the subtopic (structured pillars only; clear: apply; ambiguous: closest match, recorded)
 
 - **Pillar not structured** (`pillar.primary not in PILLARS`) → `pillar.subtopic` stays `null` (the key is still present).
 - **Pillar structured** → compare against `PILLARS[primary]['subtopics']`: the clear fit, or for ambiguity the closest match with its reason; use the slug exactly as stored (no re-casing).
 - **No existing subtopic fits even loosely** → a **new subtopic is a founder decision**, asked when it arises: propose slug + `title_fa` in the siblings' style (kebab-case English slug, short Persian noun phrase), flagged **NEW**; only after the founder's yes is it added to `PILLARS[primary]['subtopics']` in `tools/build_pillar.py` with a sibling's exact shape. **A new pillar is never created here.**
 
-#### Step 4 — Hold the confirmed values
+#### Step 4 — Hold the recorded values
 
 Step 2.5 uses `pillar.primary` for the capsule `href`; step 5 writes both into the brain entry. Nothing re-decides them (Hard Rule 6).
 

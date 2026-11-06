@@ -86,14 +86,15 @@ MODULES = WORKFLOW + 'modules/'
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
-    '03-litecast-and-page.md': 'ed3062c264d3a23afed92e6aebc510ab9dcb6f3e',
-    '04-taxonomy-and-navigation.md': '041df6d0c67b772c7613525713f83dcab9cc187e',
-    '05-semantic-linking.md': '9c1abf1d48e17131436ec9920055a4cb3757410e',
+    '03-litecast-and-page.md': 'a5030debfc24b3b2f3110996db57d6878b535156',
+    '04-taxonomy-and-navigation.md': 'fb7d965207a004e1c69b502db6b1a66d0b9bb1de',
+    '05-semantic-linking.md': '3f44257f3e7ffa3b6be08e15de5fa97358b08363',
     '06-paper-ingestion.md': 'c82da53ba291e98445455354ef27516f17fdc797',
     '08-des-fidelity.md': 'b374a8d3b86fd32ee6122dffd9c70dedca5c4590',
     '09-challenge.md': 'f95917dce01098eac61f0e005ad6dc7b755ec98a',
     '11-build-and-version.md': 'd7c0e224a89238de39da5aef1f5654bd24ca06d7',
     '12-english-notify-verify.md': '67ec15cd1ea56e081536bf89e28dda9ec2b4d1bb',
+    '11-build-and-version.md': 'd7c0e224a89238de39da5aef1f5654bd24ca06d7',
 }
 
 REQUIRED = [
@@ -221,6 +222,16 @@ def route_spans(name, lines, *, category, attached_paper, challenge):
     if name == '08-des-fidelity.md' and (lite or challenge == 'yes'):
         stop = boundary(lines, '#### Conditional path for founder-supplied results')
         return include([(0, stop)], size), 'CANONICAL_LITECAST_OR_CHALLENGE_DES_SKIP_ONLY'
+
+    if name == '11-build-and-version.md':
+        # Everything below the marker is the post-Push-2 runner's C.8/C.7 part, which
+        # publish-checkpoints.md lists as never read in a normal run (2026-11-06).
+        marks = [i for i, line in enumerate(lines) if line.startswith('<!-- module-11-boundary')]
+        if len(marks) == 1:
+            agent_part = [i for i, line in enumerate(lines) if line.startswith('### 6. Pulse update')]
+            if agent_part and marks[0] <= agent_part[0]:
+                raise UnsafeSelection('INVALID_MODULE_11_ORDER')
+            return include([(0, marks[0])], size), 'OMIT_POST_PUSH2_RUNNER_PART'
 
     if name == '09-challenge.md' and challenge == 'no':
         return [], 'NOT_A_CHALLENGE_LOCKED_AT_Q4_9'

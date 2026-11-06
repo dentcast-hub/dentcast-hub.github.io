@@ -41,14 +41,15 @@ monitors, reports, and merges only with authorization. A queue item (`queue-rout
    the v2 cut policy (`fixed_three_deliveries_v2`) it trusts the runner's committed Phase F receipt (no
    rerun, no `origin/main` fetch); a v1-policy run still reruns Phase F. Never
    run `restore-cleanup` on this route, nor `confirm-cleanup` before the pull.
-2b. The job summary says the PR was not opened (no `QUEUE_PUBLISH_TOKEN`): open it from the branch to
-   `main` with the connected GitHub tool (`create_pull_request`) or
+3. The PR: the runner opens it, but only when the `QUEUE_PUBLISH_TOKEN` secret is set — its job
+   summary says so when it is not. No PR after a green run → open it from the branch to `main`
+   yourself, before the end-of-run message, with the connected GitHub tool (`create_pull_request`) or
    `gh pr create --base main --head <branch> --title "<content_id>: <title>"`; never merge in the same
-   step. Put the link in the end message.
-3. Message at the run's end: `content_id`, branch, Push-2 SHA, run link, PR link and the Phase F
+   step. Put the link in the end message and say there that the runner could not.
+4. Message at the run's end: `content_id`, branch, Push-2 SHA, run link, PR link and the Phase F
    summary line (the standing-acceptance list, the M1/M3b/M2 answers and the orphan sentences were
    already in the agent's Push-2 report; repeat nothing). Not "published" until merged.
-4. **Merge** only with authorization (`publish-checkpoints.md`, «Waiting, services, merge»): fresh
+5. **Merge** only with authorization (`publish-checkpoints.md`, «Waiting, services, merge»): fresh
    `check-pr` (`python3 tools/dentcast_publish_handoff.py check-pr --repository <owner>/<repo> --number <n>
    --expected-head <sha> --expected-base main --expected-branch <branch>`; unauthenticated works on this
    public repository), gates green, then merge (`gh pr merge <n> --merge`, the GitHub tool

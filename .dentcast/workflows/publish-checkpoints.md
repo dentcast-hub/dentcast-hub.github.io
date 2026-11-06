@@ -54,7 +54,7 @@ reading less.
 | Before C.4.11 / C.4.14 / C.5.0 | modules 07 / 09 (Challenge only) / 10 |
 | At C.2, for the page's chip row | Hard Rule 15 only (module 01, already read): existing canonical concepts, resolved with `hashtag_ref.py --simulate`, no mint. Step 5.0 settles the final list and corrects the row before the brain write |
 | Before writing the English mirror (before C.6) | `en-version.md`, module 12 through the end of Phase D, module 11 above its `module-11-boundary` marker (§6) |
-| Never in a normal run | module 11 below its `module-11-boundary` marker (§7–§8) and module 12 Phases E–G: the runner does them; read only for guarded recovery (`publish-after-push2.md`) |
+| Never in a normal run | module 11 below its `module-11-boundary` marker (§7–§8) and module 12's Phase E and Phase F: the runner does them; read only for guarded recovery (`publish-after-push2.md`). Module 12's «Final output summary» is **not** in that set: it lists what the agent's own Push-2 report must carry |
 
 ## Order, messages, text lock, deliveries
 
@@ -243,7 +243,7 @@ decision with all ten scopes, each `resolved` or `not_applicable` with a real re
             {"scope": "challenge"}, {"scope": "taxonomy"}, {"scope": "links"}, {"scope": "hashtags"},
             {"scope": "content_record"}, {"scope": "pathways"}, {"scope": "pulse"},
             {"scope": "english"}, {"scope": "author_approvals"}],
- "english": {"status": "ready", "path": "insight/en/insightNN.html", "evidence": ["…"]},
+ "english": {"status": "ready", "path": "insight/en/insight-NN.html", "evidence": ["…"]},
  "evidence": ["…"]}
 ```
 
