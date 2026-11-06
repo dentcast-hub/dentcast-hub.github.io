@@ -95,7 +95,9 @@ invalidation rules below.
    «بدون DES») have no M3b.
 3. **M2, exam questions** — at 4.12-ب, approved one by one (module 07).
 
-M1 and M3b are closed before delivery 1: the cut refuses any unanswered `pending_questions`.
+M1 and M3b are closed before delivery 1: the cut refuses a non-empty `pending_questions` list,
+answered or not — clear each record once its answer is recorded as that step's evidence or as a
+decision (record shape: `publish-handoff-tool.md`).
 
 Asked when they arise, because they are real decisions: a new subtopic in `PILLARS`, a new Drive
 subfolder, DES basket 3 / publish without DES, a missing Fidelity runtime capability, a NoteCast pair
@@ -185,8 +187,14 @@ hand-rolled byte edit. A stale or missing receipt is a current-run repair, never
 branches or to
 invent past outcomes.
 
-**Invalidation (same run, no extra delivery).** Bind each local input as `{"path": "inputs/paper-1.pdf",
-"sha256": "<sha>"}` in `context.inputs` (neutral names; bytes stay local). Changed bound bytes, a
+**Invalidation (same run, no extra delivery).** Bind every input in `context.inputs`, by digest and
+never by copy. A private input that is **not** a repository path — the founder's text, an attached
+paper, an artifact — binds as `{"ref": "drive:cabinet/paper-1.pdf", "sha256": "<sha>"}`: the location
+is opaque metadata, the digest is the whole binding, and it is **never** added to `target_paths`
+(private inputs never enter public Git history, and `inputs/text-1.md` is not even gitignored). A
+genuine repository path binds as `{"path": "<repo-relative path>", "sha256": "<sha>"}` and must be
+enrolled in `target_paths`; an ignored one stays local-only. Shapes and refusals:
+`publish-handoff-tool.md`. A replaced digest, changed bytes of an enrolled path, a
 changed workflow rule or an effective change to the primary page's text blocks writes until:
 
 ```bash
@@ -215,7 +223,7 @@ After a delivered cut the first write is starting the next step; anything else i
 step and the Stop guard refuse with `PREVIOUS_STEP_HANDOFF_NOT_DELIVERED`: restore it
 (`git restore .dentcast/PUBLISH-HANDOFF.md`), start the next step, record again.
 
-**What the writer validates at cut 1** (and every later cut): zero unanswered `pending_questions`,
+**What the writer validates at cut 1** (and every later cut): an empty `pending_questions` list (answered records included),
 no unconfirmed/rejected approval, and exactly one `context.decisions` entry
 `kind="first_cut_lead_provenance_v1"` with a real `source_ref` and nonempty evidence, recorded **after
 C.4.13 and before C.4.9** (the lead is locked text; recording it earlier makes a Part 3b fix invalidate
