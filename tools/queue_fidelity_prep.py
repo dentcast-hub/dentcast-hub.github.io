@@ -106,6 +106,21 @@ def main(argv=None):
                "scope": units["mode"], "units": len(units["units"]),
                "plan": {k: len(v) for k, v in units["plan"].items()},
                "units_tool": str(copy / "tools/des_fidelity_units.py"), "blocks": []}
+    swept = (copy / ".dentcast/des-fidelity-plans" / f"{cid}.json").exists()
+    if a.texts and units.get("sources", 1) >= 2 and units["mode"] == "SOURCE" and not swept:
+        # module 08 Part 2c: on a multi-source page the orphan sweep runs first;
+        # no checker block is built until every sentence's source is settled
+        out = Path(a.build).resolve() if a.build else work / "blocks"
+        r = subprocess.run([py, str(copy / "tools/des_fidelity_units.py"), cid, "--texts", str(Path(a.texts).resolve()),
+                            "--orphans", str(out)], cwd=copy, capture_output=True, text=True)
+        if r.returncode != 0:
+            return fail("ORPHANS_FAILED", "des_fidelity_units.py --orphans refused", stderr=r.stderr[-2000:],
+                        checkout=str(copy))
+        receipt["sweep_first"] = str(out / "orphans-input.json")
+        receipt["next"] = (f"stronger reviewer writes {out / 'orphans.json'}; then, in the checkout, "
+                           f"units_tool {cid} --sweep {out} and units_tool {cid} --texts <texts.json> --build <dir>")
+        print(json.dumps(receipt, ensure_ascii=False, indent=1))
+        return 0
     if a.texts:
         out = Path(a.build).resolve() if a.build else work / "blocks"
         r = subprocess.run([py, str(copy / "tools/des_fidelity_units.py"), cid, "--texts", str(Path(a.texts).resolve()),
