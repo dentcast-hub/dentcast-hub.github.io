@@ -120,9 +120,11 @@ class EntrypointMigrationTests(unittest.TestCase):
   for rel in claude:
    self.assertEqual((ROOT/".claude/skills"/rel).read_bytes(),(ROOT/".agents/skills"/rel).read_bytes(),str(rel))
   s=read(".claude/skills/glossary-writer/SKILL.md")
-  for term in ("Hard Rule 14","Hard Rule 13","**4.7-ب**","`6 pulse`","همین‌طوری درج کنم یا رد شم؟"):
+  for term in ("Hard Rule 14","Hard Rule 13","**4.7-ب**","`6 pulse`","M1 at C.4.13","M2 at 4.12-ب","documented skip"):
    self.assertIn(term,s)
-  self.assertNotIn("Never insert links on the user's behalf",s)
+  # Standing acceptance (Hard Rule 14, 2026-11-06): no proposal is asked, Pulse is a documented skip for glossary.
+  for gone in ("Never insert links on the user's behalf","همین‌طوری درج کنم یا رد شم؟","لینک بشه / رد شه","short menu"):
+   self.assertNotIn(gone,s)
  def test_post_push2_handoff_notice_shared(self):
   for p in ("AGENTS.md","CLAUDE.md",".cursor/rules/dentcast-router.mdc"):
    with self.subTest(path=p):
