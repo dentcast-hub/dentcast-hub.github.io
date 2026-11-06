@@ -1,0 +1,383 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "sharehub",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "طراحی RPD در عصر دیجیتال؛ چه چیزی واقعاً تغییر کرده است؟",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "caption_fa": {
+  "value": "اسکن و ساخت دیجیتال شده‌اند، اما مسیر ورود، آندرکات‌ها و طرح اجزای RPD را چه کسی تعیین می‌کند؟ سه مقاله نشان می‌دهند سوروی و طراحی دیجیتال چه چیزی را تغییر داده و چه چیزی را نه.",
+  "from": "02-عنوان-کپشن.md:9"
+ },
+ "title_en": {
+  "value": "RPD Design in the Digital Era: What Has Really Changed?",
+  "from": "06-انگلیسی.md:1"
+ },
+ "caption_en": {
+  "value": "Scanning and fabrication have gone digital, but who determines the path of insertion, the undercuts and the design of the RPD components? Three articles show what digital surveying and design have changed and what they have not.",
+  "from": "06-انگلیسی.md:3"
+ },
+ "body_en": {
+  "value": "Suppose a patient with bilateral free-end edentulism in the mandible has come to us for a removable partial denture. We can scan the patient's mouth, build a digital model and even produce the metal framework by 3D printing. But who is going to determine the path of insertion, the location of suitable undercuts, the position of the rests and the design of the clasps?\n\n[[تصویر:01]]\n\nIn fact, digitizing the fabrication steps does not mean that the design of the prosthesis has been done automatically.\n\nTo understand this, it helps to separate three stages: recording the information of the mouth, designing the prosthesis and fabricating it. Each of these stages can be carried out by a conventional or a digital method.\n\nFor example, we might take a conventional impression, scan the stone cast and continue the design and fabrication digitally. Or we might have an intraoral scan from the start, but still do the initial design by hand. This distinction is also seen in the 2026 systematic review by Alqutaibi et al., where conventional, semi-digital and digital workflows are separated from one another.\n\nBut RPD design deserves special attention. Because a 3D model records only the shape of the teeth and tissues, whereas the design must specify how we use those structures to provide support, retention and stability for the prosthesis.\n\nOne of the first decisions is the choice of the path of insertion.\n\nIn the conventional method, we place the cast on the surveyor and examine different paths of insertion by changing its tilt. Then we mark the line of greatest convexity of the tooth, the height of contour, and the usable undercuts.\n\nThe position of the usable undercuts depends on the path of insertion. By changing the tilt of the cast, we may find a more suitable undercut on one tooth, but that same change may make the guide planes or the undercuts of other teeth unsuitable.\n\nSo surveying is not just a geometric measurement; it is part of prosthetic decision-making.\n\nOn the other hand, RPD design is not limited to choosing a clasp. The rests must provide adequate support, the guide planes must direct the path of insertion and removal, and the various components of the prosthesis must be coordinated in a single design. Therefore, identifying one undercut is not enough for proper RPD design.\n\nNow let us see what digital technology has changed.\n\nIn digital surveying, instead of a physical cast we examine the 3D model in software. We can change the orientation of the model, evaluate different paths of insertion, and see the survey lines and undercuts on the model.\n\n[[تصویر:02]]\n\nBut perhaps more important than the digital display of undercuts is the ability to record and retrieve the survey information.\n\nIn the conventional method, once we have chosen a suitable path of insertion, we must be able to put the cast back in the same position; this is one of the purposes of tripoding.\n\nIn the digital environment, the selected path, the position of the undercuts and the design markings can be saved with the model so that they can be retrieved and reviewed later.\n\nThis capability becomes important in communication between the dentist and the laboratory.\n\nIf we send only the patient's scan file to the laboratory, the information about the design decisions has not necessarily been transferred with it. As a result, the laboratory may have to repeat the survey and part of the design.\n\nBut in an integrated digital workflow, the survey information and the prosthesis design can be transferred together with the model. In effect, instead of sending merely the shape of the teeth, we also send the design decisions to the laboratory.\n\nMahrous et al., in a 2026 article, drew attention to this very gap between the digital recording of information and digital RPD design.\n\nThey introduced a web-based system that makes it possible to select and save the path of insertion, identify undercuts and prepare a proposed RPD design. The dentist can modify components such as the clasps, rests and major connector, and transfer the design information to the laboratory. Even reconstructing the selected position on a physical surveyor is envisaged.\n\n[[تصویر:03]]\n\nWhat matters about this article for us is not the name of the software; it shows how diagnostic surveying and initial design can be connected to the digital workflow.\n\n[[تصویر:04]]\n\nOf course, another question arises here: when software can identify undercuts and even offer a proposed design, can prosthetic decision-making be entrusted to it as well?\n\nWe have to distinguish between geometric calculation and clinical judgment.\n\nSoftware can calculate the position of undercuts or propose a design based on specified rules. But whether that design is suitable for the patient depends on information beyond the geometry of the model, including the condition of the abutment teeth, periodontal status, the way the prosthesis is supported and occlusal considerations.\n\nThe authors of the article also stress that the software's suggestions should not replace the dentist's clinical judgment.\n\nOn the other hand, if the scan is incomplete, has artifacts or the teeth are malpositioned, automatic detection of undercuts may be erroneous. So a calculation being digital does not mean its result is definitely correct.\n\nBut what does the evidence say about the benefits of this method?\n\nThe article by Mahrous et al. is a technique-description article, not a study that has compared patient outcomes with the conventional method.\n\nThe authors put forward advantages such as saving time, reducing manual steps and improving communication with the laboratory, but they provide no comparative data to prove these advantages.\n\nTherefore, it is still not possible to conclude that using such software necessarily leads to better framework fit, greater retention or better long-term RPD success.\n\nAnother point is the independence of the different stages of a digital workflow.\n\nFor example, Elgamal et al., in a clinical study, examined two routes for obtaining the digital model: one with a conventional impression and cast scanning, and the other with direct intraoral scanning. Nevertheless, the framework design was the same in both routes.\n\nThis example shows that digital recording of information and digital design are two independent stages, and the effect of a change in each stage can be examined separately.\n\nOverall, the main change in digital RPD design is not merely the replacement of the physical surveyor with software; it is the ability to record, modify, retrieve and transfer design decisions in a digital environment.\n\nNevertheless, the principles of design have not changed. We still have to choose a suitable path of insertion, consider support and retention together, and design the components of the prosthesis according to the patient's conditions.\n\nDigital technology has provided new tools for making and recording these decisions, but the correctness of the decisions still depends on the dentist's knowledge and judgment.",
+  "from": "06-انگلیسی.md:6-86"
+ },
+ "images": {
+  "value": [
+   {
+    "n": "01",
+    "file": {
+     "value": "03-تصاویر/01-mandibular-kennedy-class-i.webp",
+     "from": "03-تصاویر/تصاویر.md:6"
+    },
+    "alt_fa": {
+     "value": "نمای اکلوزال فک پایین با بی‌دندانی انتهای آزاد دوطرفه که پرمولر اول آخرین دندان پایه است",
+     "from": "03-تصاویر/تصاویر.md:7"
+    },
+    "alt_en": {
+     "value": "Occlusal view of a mandibular arch with bilateral distal extension areas, with the first premolars as the last standing abutments",
+     "from": "03-تصاویر/تصاویر.md:8"
+    },
+    "caption_fa": {
+     "value": "قوس پایین با بی‌دندانی انتهای آزاد دوطرفه (کلاس I کندی) که پرمولر اول آخرین دندان پایه است؛ شکل ۱ مطالعهٔ Elgamal و همکاران (CC BY 4.0).",
+     "from": "03-تصاویر/تصاویر.md:9"
+    },
+    "caption_en": {
+     "value": "Figure 1. A mandibular arch with bilateral free-end edentulous areas (Kennedy Class I), the first premolars being the last standing abutments. Source: Elgamal et al. 2025, Fig. 1 (CC BY 4.0)",
+     "from": "06-انگلیسی.md:90"
+    }
+   },
+   {
+    "n": "02",
+    "file": {
+     "value": "03-تصاویر/02-digital-survey-undercut-marking.webp",
+     "from": "03-تصاویر/تصاویر.md:16"
+    },
+    "alt_fa": {
+     "value": "مدل دیجیتال سورویی‌شده با خط بزرگ‌ترین برجستگی، آندرکات‌های ۰٫۰۱ و ۰٫۰۲ اینچ و میلهٔ مسیر ورود در نرم‌افزار AiDENTAL",
+     "from": "03-تصاویر/تصاویر.md:17"
+    },
+    "alt_en": {
+     "value": "A digitally surveyed model showing the height of contour, 0.01 and 0.02 inch undercuts and the path-of-draw rod in the AiDENTAL software",
+     "from": "03-تصاویر/تصاویر.md:18"
+    },
+    "caption_fa": {
+     "value": "نمونه‌ای از سوروی دیجیتال یک مدل اسکن‌شده: خط بزرگ‌ترین برجستگی، آندرکات‌ها و مسیر انتخاب‌شده روی مدل دیده می‌شوند؛ شکل ۵ مقالهٔ Mahrous و همکاران (CC BY).",
+     "from": "03-تصاویر/تصاویر.md:19"
+    },
+    "caption_en": {
+     "value": "Figure 2. An example of digital surveying of a scanned model: the height of contour, the undercuts and the selected path are visible on the model. Source: Mahrous et al. 2026, Fig. 5 (CC BY)",
+     "from": "06-انگلیسی.md:92"
+    }
+   },
+   {
+    "n": "03",
+    "file": {
+     "value": "03-تصاویر/03-digital-rpd-design-module.webp",
+     "from": "03-تصاویر/تصاویر.md:26"
+    },
+    "alt_fa": {
+     "value": "ماژول طراحی RPD با انتخاب فلسفهٔ طراحی، نوع کلاسپ و رست و خروجی PDF طرح",
+     "from": "03-تصاویر/تصاویر.md:27"
+    },
+    "alt_en": {
+     "value": "The RPD design module with a selectable design philosophy, clasp and rest options, and the exported PDF of the design",
+     "from": "03-تصاویر/تصاویر.md:28"
+    },
+    "caption_fa": {
+     "value": "ماژول طراحی همان سیستم: دندانپزشک نوع کلاسپ، موقعیت رست‌ها و ماژور کانکتور را تغییر می‌دهد و طرح به‌صورت PDF صادر می‌شود؛ شکل ۶ مقالهٔ Mahrous و همکاران (CC BY).",
+     "from": "03-تصاویر/تصاویر.md:29"
+    },
+    "caption_en": {
+     "value": "Figure 3. The design module of the same system: the dentist changes the clasp type, the position of the rests and the major connector, and the design is exported as a PDF. Source: Mahrous et al. 2026, Fig. 6 (CC BY)",
+     "from": "06-انگلیسی.md:94"
+    }
+   },
+   {
+    "n": "04",
+    "file": {
+     "value": "03-تصاویر/04-retained-survey-tripod-physical-mounting.webp",
+     "from": "03-تصاویر/تصاویر.md:36"
+    },
+    "alt_fa": {
+     "value": "مدل صادرشده با داده‌های سوروی، طرح دیجیتال RPD و مدل پرینت‌شده روی سورویور فیزیکی در همان مسیر ورود",
+     "from": "03-تصاویر/تصاویر.md:37"
+    },
+    "alt_en": {
+     "value": "The exported model retaining survey data, the digital RPD design, and a printed model mounted on a physical surveyor at the same path of draw",
+     "from": "03-تصاویر/تصاویر.md:38"
+    },
+    "caption_fa": {
+     "value": "داده‌های سوروی همراه مدل ذخیره می‌شوند و با بارگذاری دوباره بازیابی می‌شوند؛ مدل پرینت‌شده را می‌شود با همان شیب روی سورویور فیزیکی نصب کرد؛ شکل ۷ مقالهٔ Mahrous و همکاران (CC BY).",
+     "from": "03-تصاویر/تصاویر.md:39"
+    },
+    "caption_en": {
+     "value": "Figure 4. The survey data are saved with the model and recovered when it is uploaded again; a printed model can be mounted on a physical surveyor at the same tilt. Source: Mahrous et al. 2026, Fig. 7 (CC BY)",
+     "from": "06-انگلیسی.md:96"
+    }
+   }
+  ],
+  "from": "03-تصاویر/تصاویر.md"
+ },
+ "credit": {
+  "value": {
+   "mode": "references",
+   "items": [
+    {
+     "label_fa": "مرور سیستماتیک فریم‌ورک‌های فلزی RPD چاپ‌سه‌بعدی در مقایسه با روش‌های سنتی و نیمه‌دیجیتال (Alqutaibi و همکاران، ۲۰۲۶)",
+     "label_en": "Systematic review of 3D-printed RPD metal frameworks compared with conventional and partially digital methods (Alqutaibi et al., 2026)",
+     "href": "https://doi.org/10.2186/jpr.JPR_D_25_00028",
+     "from": "04-منبع/منابع.md:28"
+    },
+    {
+     "label_fa": "معرفی یک سورویور و طراح تشخیصی دیجیتال برای پروتز پارسیل متحرک (Mahrous و همکاران، ۲۰۲۶)",
+     "label_en": "A novel digital diagnostic surveyor and designer for removable partial dentures (Mahrous et al., 2026)",
+     "href": "https://doi.org/10.1111/jopr.14059",
+     "from": "04-منبع/منابع.md:29"
+    },
+    {
+     "label_fa": "مطالعهٔ کلینیکی cross-over دقت فریم‌ورک‌های RPD ساخته‌شده با SLM در دو گردش‌کار (Elgamal و همکاران، ۲۰۲۵)",
+     "label_en": "Cross-over clinical study of the accuracy of SLM RPD frameworks made with two workflows (Elgamal et al., 2025)",
+     "href": "https://doi.org/10.1186/s12903-025-06214-9",
+     "from": "04-منبع/منابع.md:30"
+    }
+   ]
+  },
+  "from": "04-منبع/منابع.md:24"
+ },
+ "catalog": {
+  "value": [
+   {
+    "title": "Clinical performance, accuracy, and physical-mechanical properties of 3D-printed removable partial denture metal frameworks compared with conventionally and partially digitally produced frameworks: A systematic review",
+    "file_name": "Clinical Performance, Accuracy, and Physical-Mechanical Properties of 3D-Printed Removable Partial Denture Metal Frameworks Compared with Conventionally and Partially Digitally Produced Frameworks: A Systematic Review.pdf",
+    "topic": "removable partial denture",
+    "topic_path": "removable partial denture",
+    "type": "systematic review",
+    "local_path": "",
+    "file_size": 1838694,
+    "key_finding": "",
+    "clinical_bottom_line": "",
+    "drive_link": "https://drive.google.com/file/d/1eMuNvGdV4bze1llvx6yXOaZ1jRn9Xtea/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=1eMuNvGdV4bze1llvx6yXOaZ1jRn9Xtea",
+    "drive_view": "https://drive.google.com/file/d/1eMuNvGdV4bze1llvx6yXOaZ1jRn9Xtea/view",
+    "drive_id": "1eMuNvGdV4bze1llvx6yXOaZ1jRn9Xtea",
+    "tags": [
+     "removable-partial-denture",
+     "3d-printing",
+     "selective-laser-melting",
+     "additive-manufacturing",
+     "metal-framework",
+     "digital-workflow",
+     "systematic-review",
+     "topic:removable-partial-denture",
+     "clinical-performance-accuracy-physical-mechanical-properties-3d-printed-rpd-metal-frameworks-systematic-review"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Clinical performance, accuracy, and physical-mechanical properties of 3D-printed removable partial denture metal frameworks compared with conventionally and partially digitally produced frameworks: A systematic review",
+    "doi": "10.2186/jpr.JPR_D_25_00028",
+    "journal": "Journal of Prosthodontic Research",
+    "crossref_year": 2026,
+    "subjects": [],
+    "abstract": "Purpose: This systematic review evaluated the clinical performance, physical-mechanical properties, and accuracy of removable partial denture (RPD) frameworks fabricated using three-dimensional (3D) printing technologies—specifically, selective laser sintering (SLS), selective laser melting (SLM), and direct metal laser sintering (DMLS)—compared to those produced by conventional casting or methods using a partial digital workflow. Study selection: Following the Preferred Reporting Items for Systematic Reviews and Meta-Analyses 2020 guidelines, a literature search was conducted in the PubMed, Scopus, Web of Science, and Cochrane databases in October 2024. Studies were included if they compared the fit, accuracy, mechanical and physical properties, and clinical outcomes of metal RPD frameworks made using 3D printing technologies with those produced using conventional casting or partial digital methods. The risk of bias was assessed using appropriate tools (modified CONSORT, ROB2, and ROBINS-I) based on the study design and a qualitative analysis was conducted. This study received no funding and was registered with PROSPERO (#CRD42024597225). Results: Thirty studies were included: 12 compared 3D printing technologies with conventional casting, eight with partial digital methods, and 10 with both. Clinically, 3D-printed frameworks could improve retention and patient satisfaction. The laboratory results showed higher density, better mechanical properties (yield strength, surface roughness, and microhardness), and varied accuracy by component and method, with SLM and DMLS often outperforming conventional casting. The evidence was limited by methodological variability, a moderate risk of bias in many studies, and inconsistencies across the study designs and parameters. Conclusions: 3D-printed RPD metal frameworks demonstrated clinical accuracy and mechanical-physical performance comparable or superior to those of conventional and partial digital methods for RPD frameworks, with ongoing advances expected to further enhance their precision and clinical applicability.",
+    "display_title": "Clinical performance, accuracy, and physical-mechanical properties of 3D-printed removable partial denture metal frameworks compared with conventionally and partially digitally produced frameworks: A systematic review",
+    "authors": [
+     "Ahmed Yaseen Alqutaibi",
+     "Redhwan Saleh Al-Gabri",
+     "Anas Saeed Al-Zaghruri",
+     "Ahmed E. Farghal",
+     "Ahmed A. Alnazzawi",
+     "Mohammed Ahmed Alghauli"
+    ]
+   },
+   {
+    "title": "Enhancing digital workflows for removable partial dentures: A novel diagnostic surveyor and designer",
+    "file_name": "Enhancing Digital Workflows for Removable Partial Dentures: A Novel Diagnostic Surveyor and Designer.pdf",
+    "topic": "removable partial denture",
+    "topic_path": "removable partial denture",
+    "type": "technique report",
+    "local_path": "",
+    "file_size": 3020563,
+    "key_finding": "",
+    "clinical_bottom_line": "",
+    "drive_link": "https://drive.google.com/file/d/1ug6sKGDQaHLM3iBA3DiuTFIeFHRJwj95/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=1ug6sKGDQaHLM3iBA3DiuTFIeFHRJwj95",
+    "drive_view": "https://drive.google.com/file/d/1ug6sKGDQaHLM3iBA3DiuTFIeFHRJwj95/view",
+    "drive_id": "1ug6sKGDQaHLM3iBA3DiuTFIeFHRJwj95",
+    "tags": [
+     "removable-partial-denture",
+     "digital-surveying",
+     "digital-workflow",
+     "path-of-insertion",
+     "rpd-design",
+     "intraoral-scanner",
+     "technique-article",
+     "topic:removable-partial-denture",
+     "enhancing-digital-workflows-removable-partial-dentures-diagnostic-surveyor-designer"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Enhancing digital workflows for removable partial dentures: A novel diagnostic surveyor and designer",
+    "doi": "10.1111/jopr.14059",
+    "journal": "Journal of Prosthodontics",
+    "crossref_year": 2026,
+    "subjects": [],
+    "abstract": "Removable partial dentures (RPDs) are a valuable treatment option in prosthodontics, often selected due to patient-specific limitations such as financial constraints, inadequate bone support, or medical contraindications to other prosthetic solutions. Despite the advantages of digital dentistry, such as the efficiency and accuracy of various workflows, the adoption of fully digital RPD workflows has lagged due to the absence of accessible diagnostic surveying and design tools for digital models. This article introduces the AiDENTAL RPD Surveyor and Designer, a lightweight, browser-based software solution that simplifies digital surveying, streamlines design, and facilitates the export of diagnostic scans. By addressing these needs in the current digital workflow, the system aims to enhance the efficiency, accuracy, and convenience of RPD fabrication. A step-by-step description of the process highlights its potential to improve clinical outcomes and reintegrate traditional framework-based RPDs into mainstream practice.",
+    "display_title": "Enhancing digital workflows for removable partial dentures: A novel diagnostic surveyor and designer",
+    "authors": [
+     "Ahmed Mahrous",
+     "David L. Botsko",
+     "Tamer El-Gendy",
+     "Amira Elgreatly"
+    ]
+   },
+   {
+    "title": "Accuracy assessment of removable partial denture frameworks fabricated by selective laser melting using two different workflows: A cross-over clinical study",
+    "file_name": "Accuracy Assessment of Removable Partial Denture Frameworks Fabricated by Selective Laser Melting Using Two Different Workflows: A Cross-Over Clinical Study.pdf",
+    "topic": "removable partial denture",
+    "topic_path": "removable partial denture",
+    "type": "non-randomized controlled study",
+    "local_path": "",
+    "file_size": 1963766,
+    "key_finding": "",
+    "clinical_bottom_line": "",
+    "drive_link": "https://drive.google.com/file/d/1MerX9UUUKpowV6t1CPNipx9nVpTqkZRX/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=1MerX9UUUKpowV6t1CPNipx9nVpTqkZRX",
+    "drive_view": "https://drive.google.com/file/d/1MerX9UUUKpowV6t1CPNipx9nVpTqkZRX/view",
+    "drive_id": "1MerX9UUUKpowV6t1CPNipx9nVpTqkZRX",
+    "tags": [
+     "removable-partial-denture",
+     "selective-laser-melting",
+     "digital-workflow",
+     "intraoral-scanner",
+     "framework-accuracy",
+     "kennedy-class-i",
+     "clinical-trial",
+     "topic:removable-partial-denture",
+     "accuracy-removable-partial-denture-frameworks-selective-laser-melting-two-workflows-cross-over"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Accuracy assessment of removable partial denture frameworks fabricated by selective laser melting using two different workflows: A cross-over clinical study",
+    "doi": "10.1186/s12903-025-06214-9",
+    "journal": "BMC Oral Health",
+    "crossref_year": 2025,
+    "subjects": [],
+    "abstract": "Background Rapid advancements in computer-aided design and computer-aided manufacturing (CAD-CAM) have opened new pathways in the fabrication of removable partial dentures (RPDs). Digital impression serves as the first step of CAD-CAM technique, which includes two methods for data acquisition: direct intraoral scanning or indirect extraoral scanning. RPD frameworks may be considered the definitive test of accuracy for a digital workflow. This cross-over clinical study aimed to evaluate the overall accuracy of various parts for mandibular metallic RPD frameworks made by selective laser melting (SLM) using fully-digital versus combined analog-digital workflows. Methods This study was carried out on 24 participants with mandibular Kennedy class I arches. Each participant received two RPDs frameworks, one fabricated using a combined analog-digital workflow (Group I) and the other using a fully-digital workflow (Group II). In Group I, the analog steps involved taking physical impressions and creating stone casts followed by scanning the casts with a laboratory scanner to create virtual casts. In Group II, a definitive scan STL file was created using an intraoral digital scanner. Both groups used 3Shape software for digital design of the RPD framework, ensuring consistency by using the same design, and subsequent fabrication using SLM. To evaluate the accuracy, STL data analysis was performed through intra-oral digital superimposition evaluation, a color map was assessed and overall accuracy and the misfit (distance between each framework component and the reference intra-oral scan STL file) were measured at rest, proximal plate, lingual plate and I-bar retentive clasp terminal areas. The Paired t-test was utilized for statistical analysis of the data. Results In Group I: combined analog-digital workflow color map assessment revealed more gaps particularly in the lingual plate and proximal plate areas, whereas Group II: fully-digital workflow showed better accuracy. Regarding the overall accuracy in the rest, proximal plate, lingual plate, and I-bar clasp retentive terminal, Group II was significantly superior to Group I (P = 0.0125, 0.0019, < 0.001, < 0.001, and 0.0119, respectively). Conclusions Within the limitations of this study, both workflows resulted in frameworks with clinically acceptable accuracy. However, SLM RPD frameworks fabricated using the fully-digital workflow showed superior accuracy in key areas such as the rest, proximal plate, lingual plate, and I-bar clasp retentive terminal areas, when compared to the combined analog-digital workflow.",
+    "display_title": "Accuracy assessment of removable partial denture frameworks fabricated by selective laser melting using two different workflows: A cross-over clinical study",
+    "authors": [
+     "Mohamed Elgamal",
+     "Abdallah Mohammed Ibrahim",
+     "Basem Tarek Fadl",
+     "Nourhan Ahmed Ragheb"
+    ]
+   }
+  ],
+  "from": "04-منبع/کاتالوگ.json"
+ },
+ "hashtags": {
+  "value": [
+   "#Share_Hub",
+   "#Curated_Content",
+   "#پروتز_متحرک",
+   "#پروتز_پارسیل",
+   "#طراحی_پروتز",
+   "#مسیر_نشست",
+   "#گاید_پلین",
+   "#ارتباط_با_لابراتوار"
+  ],
+  "from": "07-ورودی‌ها.md:13"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "removable-pros",
+   "subtopic": null,
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:10"
+ },
+ "pulse": {
+  "value": {
+   "text": null,
+   "link_phrase": "طراحی RPD در عصر دیجیتال؛ چه چیزی واقعاً تغییر کرده است؟"
+  },
+  "from": "07-ورودی‌ها.md:20"
+ },
+ "keywords": {
+  "value": [
+   "طراحی دیجیتال پروتز پارسیل متحرک (RPD)",
+   "سوروی دیجیتال (Digital Surveying)",
+   "مسیر ورود (Path of Insertion)",
+   "آندرکات‌های قابل‌استفاده",
+   "خط بزرگ‌ترین برجستگی (Height of Contour)",
+   "سطوح راهنما (Guide Planes)",
+   "رست، کلاسپ و ماژور کانکتور",
+   "تریپادینگ (Tripoding)",
+   "ثبت و بازیابی اطلاعات سوروی",
+   "انتقال طرح سوروی و طراحی به لابراتوار",
+   "سورویور و طراح تحت وب",
+   "طرح پیشنهادی نرم‌افزار و قضاوت بالینی دندانپزشک",
+   "بی‌دندانی انتهای آزاد دوطرفه فک پایین",
+   "فریم‌ورک فلزی پرینت سه‌بعدی",
+   "گردش‌کار سنتی، نیمه‌دیجیتال و دیجیتال",
+   "اسکن داخل‌دهانی و اسکن کست گچی",
+   "مقالهٔ معرفی تکنیک سورویور دیجیتال (Mahrous ۲۰۲۶)",
+   "مطالعهٔ کلینیکی Elgamal ۲۰۲۵ و مرور سیستماتیک Alqutaibi ۲۰۲۶",
+   "digital surveyor for removable partial dentures",
+   "path of insertion",
+   "digital RPD design workflow"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "آندرکات‌های",
+    "from": "11-لینک‌های-گلاسری.md:10",
+    "href": "/glossary/undercut.html"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:8"
+ },
+ "backlinks_47": {
+  "value": [
+   {
+    "term": "undercut",
+    "anchor": "طراحی RPD در عصر دیجیتال",
+    "from": "11-لینک‌های-گلاسری.md:20"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:16"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "queue:21",
+    "label": "ثبت دیجیتال دهان بی‌دندان",
+    "from": "11-لینک‌های-گلاسری.md:29"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:24"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
