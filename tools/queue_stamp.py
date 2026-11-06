@@ -129,6 +129,7 @@ GROUNDED = 0.75
 DIGITS = str.maketrans("۰۱۲۳۴۵۶۷۸۹٠١٢٣٤٥٦٧٨٩", "0123456789" * 2)
 DEIXIS = ("این کیس", "این متن", "این مقاله", "در این مطلب", "مطلب حاضر")
 LEFTOVER = (("منتظر تأیید", False), ("borderline", True), ("pending founder", True), ("TODO", False))
+PROSE = {"01-متن.md", "02-عنوان-کپشن.md", "06-انگلیسی.md"}  # W4 skips the Latin markers in the page prose
 ALLOWED_PH = {LINKS_FILE: {"{{main_sha}}", "{{glossary_sha256}}", "{{brain_sha256}}"}, CARDS: {"{{PAGE_URL}}"}}
 STOP = {"the", "and", "for", "with", "from", "into", "its", "are", "was", "این", "برای", "های", "که", "از", "با"}
 DOI_RE = re.compile(r"DOI:\s*(?:https?://(?:dx\.)?doi\.org/)?(\S+)", re.I)
@@ -312,8 +313,10 @@ def check_leftovers(item, warnings):
             text = p.read_text(encoding="utf-8")
         except UnicodeDecodeError:
             continue
+        prose = rel in PROSE  # English words such as «borderline» are ordinary text there, not markers
         for n, line in enumerate(text.splitlines(), 1):
-            hits = [w for w, fold in LEFTOVER if (w.casefold() in line.casefold() if fold else w in line)]
+            hits = [w for w, fold in LEFTOVER if not (prose and fold)
+                    and (w.casefold() in line.casefold() if fold else w in line)]
             hits += [ph for ph in re.findall(r"\{\{[^{}]*\}\}", line) if ph not in ALLOWED_PH.get(rel, ())]
             hits += ["{{"] if "{{" in re.sub(r"\{\{[^{}]*\}\}", "", line) else []
             if hits:
