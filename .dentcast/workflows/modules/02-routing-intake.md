@@ -31,7 +31,7 @@ Before asking anything other than the type:
 3. For each category, the most recent entry defines the directory + URL pattern, the schema shape, the media fields the type uses (text, image, audio, video, external link, transcript …), and — when entries link to a page on disk — the structural HTML template.
 4. A NoteCast also touches its parent episode page in `/episodes/` (step 4.5).
 5. Read the **live structured-pillar set** from the `PILLARS` dict in `tools/build_pillar.py` (Hard Rules 7–8), never from memory:
-   `python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"`.
+   `python3 -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"`.
    Step 2.4 decides the pillar/subtopic from it (Hard Rule 6).
 
 ## Phase B — Intake

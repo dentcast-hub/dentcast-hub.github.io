@@ -92,6 +92,7 @@ PINNED_BLOBS = {
     '06-paper-ingestion.md': 'c82da53ba291e98445455354ef27516f17fdc797',
     '08-des-fidelity.md': 'b374a8d3b86fd32ee6122dffd9c70dedca5c4590',
     '09-challenge.md': 'f95917dce01098eac61f0e005ad6dc7b755ec98a',
+    '11-build-and-version.md': 'd7c0e224a89238de39da5aef1f5654bd24ca06d7',
     '12-english-notify-verify.md': '67ec15cd1ea56e081536bf89e28dda9ec2b4d1bb',
     '11-build-and-version.md': 'd7c0e224a89238de39da5aef1f5654bd24ca06d7',
 }
@@ -235,12 +236,24 @@ def route_spans(name, lines, *, category, attached_paper, challenge):
     if name == '09-challenge.md' and challenge == 'no':
         return [], 'NOT_A_CHALLENGE_LOCKED_AT_Q4_9'
 
-    if name == '12-english-notify-verify.md' and (lite or challenge == 'yes'):
-        step_start = boundary(lines, '**Steps:**')
+    # publish-checkpoints.md «Just-in-time loading», last row: module 11 below its
+    # `module-11-boundary` marker (§7–§8) and module 12 Phases E–G are the runner's
+    # (C.8, C.7, E–G) and are never read in a normal run — only for guarded recovery,
+    # which reads the full module, not a pack.
+    if name == '11-build-and-version.md':
+        marker = [i for i, line in enumerate(lines) if line.startswith('<!-- module-11-boundary')]
+        if len(marker) != 1:
+            return whole, 'FULL_REQUIRED'  # no marker: nothing is proven runner-only
+        return include([(0, marker[0])], size), 'OMIT_RUNNER_ONLY_PART_BELOW_MODULE_11_BOUNDARY'
+
+    if name == '12-english-notify-verify.md':
         phase_e = boundary(lines, '## Phase E — Mark the page')
-        if step_start >= phase_e:
-            raise UnsafeSelection('INVALID_MODULE_12_ORDER')
-        return include([(0, step_start), (phase_e, size)], size), 'OMIT_ENGLISH_IMPLEMENTATION_WHEN_CANONICALLY_SKIPPED'
+        if lite or challenge == 'yes':
+            step_start = boundary(lines, '**Steps:**')
+            if step_start >= phase_e:
+                raise UnsafeSelection('INVALID_MODULE_12_ORDER')
+            return include([(0, step_start)], size), 'OMIT_ENGLISH_IMPLEMENTATION_WHEN_CANONICALLY_SKIPPED'
+        return include([(0, phase_e)], size), 'OMIT_RUNNER_ONLY_PHASES_E_TO_G'
 
     return whole, 'FULL_REQUIRED'
 
@@ -350,8 +363,10 @@ QUEUE_PREP = (
        'To check a page you just built:')], False),
     (MODULES + '04-taxonomy-and-navigation.md', [('### 2.4.', '### 2.5.', None)], False),
     (MODULES + '11-build-and-version.md', [('### 6. Pulse update', '### 7.', None)], False),
+    # 4.7, then 4.8 and 4.9 (to the end of the module): preparation decides the
+    # «کاوش بیشتر» links of 4.9 too (publish-queue.md, file 11 and step 5).
     (MODULES + '05-semantic-linking.md',
-     [('### 4.7.', '### 4.7-ب', None), ('### 4.8.', '### 4.9.', None)], False),
+     [('### 4.7.', '### 4.7-ب', None), ('### 4.8.', None, None)], False),
 )
 
 

@@ -154,15 +154,26 @@ class ReadpackTests(unittest.TestCase):
         self.assertNotIn('DES_SCORE_AND_FIDELITY_WORK', text)
         self.assertIn('CANONICAL_LITECAST_CHALLENGE_SKIP', text)
         self.assertNotIn('ENGLISH_IMPLEMENTATION', text)
-        self.assertIn('FINAL_VERIFICATION', text)
+        # Phases E–G are the runner's (publish-checkpoints.md «Never in a normal run»)
+        self.assertNotIn('NOTIFY', text)
+        self.assertNotIn('FINAL_VERIFICATION', text)
 
-    def test_litecast_keeps_its_branch_and_final_gate(self):
+    def test_litecast_keeps_its_branch_and_drops_runner_phases(self):
         text, _ = self.pack(category='litecast')
         self.assertIn('LITE_ONLY', text)
         self.assertIn('CANONICAL EXEMPTION INTAKE', text)
         self.assertNotIn('DES_SCORE_AND_FIDELITY_WORK', text)
-        self.assertIn('FINAL_VERIFICATION', text)
+        self.assertNotIn('FINAL_VERIFICATION', text)
         self.assertNotIn('ENGLISH_IMPLEMENTATION', text)
+
+    def test_normal_run_drops_runner_only_parts_of_modules_11_and_12(self):
+        text, m = self.pack()
+        self.assertIn('CANONICAL_LITECAST_CHALLENGE_SKIP', text)
+        self.assertIn('ENGLISH_IMPLEMENTATION', text)
+        self.assertNotIn('NOTIFY', text)
+        self.assertNotIn('FINAL_VERIFICATION', text)
+        self.assertEqual(self.get(m, '12-english-notify-verify.md')['selection_reason'],
+                         'OMIT_RUNNER_ONLY_PHASES_E_TO_G')
 
     def test_unknown_intake_keeps_all_source_bytes(self):
         for args in [dict(category='unknown'), dict(paper='unknown'),
@@ -335,11 +346,11 @@ class QueuePrepTests(unittest.TestCase):
         for kept in ('HARD_RULES_ALL', 'Q5', 'DES_REST', 'HASHTAGS', 'BRAIN_ENTRY',
                      'FLASHCARDS', 'FAQ', 'EXAM', 'EN_VERSION_ALL', 'PHASE_D', 'OPENING',
                      'OPENING_APPROVAL', 'OPENING_CHECK', 'PILLAR', 'PULSE',
-                     'GLOSSARY_LINK', 'IN_ARTICLE'):
+                     'GLOSSARY_LINK', 'IN_ARTICLE', 'RELATED'):
             self.assertIn(kept, text)
         for dropped in ('BRAIN_INTRO', 'BRAIN_VERIFY', 'FLASH_INTRO', 'EN_INTRO', 'PHASE_E',
                         'PAGE_INTRO', 'SEAL', 'TAX_INTRO', 'CAPSULE', 'BUILD_INTRO', 'BUMP',
-                        'LINK_INTRO', 'GLOSSARY_ONLY', 'RELATED', 'QUEUE_FILE_ITSELF'):
+                        'LINK_INTRO', 'GLOSSARY_ONLY', 'QUEUE_FILE_ITSELF'):
             self.assertNotIn(dropped, text)
         order = [s['path'].rsplit('/', 1)[-1] for s in m['segments']]
         self.assertEqual(order, ['01-hard-rules.md', '02-routing-intake.md',

@@ -65,12 +65,20 @@ New publication → `.dentcast/workflows/README.md`: complete modules 01 and 02,
 | resolve کردن `source_text` برای DES (گام ۴.۱۳) | اول کابینتِ محلی، بعد PubMed MCP، بعد WebFetch | کابینتِ محلی + `@Web` | کابینتِ محلی + web tool؛ نبود ⇒ abstract را از کاربر بخواه |
 | آپلود در Google Drive | Google Drive MCP | معمولاً ندارد | معمولاً ندارد |
 | probe فایل صوتی | curl/ffprobe | همان | همان |
-| پایش GitHub Actions بعد از Push 2 | `gh` یا GitHub MCP | `gh` | `gh` یا ابزار GitHub |
+| پایش GitHub Actions بعد از Push 2 | `gh` یا GitHub MCP | `gh` | `gh` یا ابزار GitHub؛ هیچ‌کدام: REST با توکن (`--token-env`) یا لینک اجرا از بنیان‌گذار |
+| ایجنت یا context ایزوله (DES/Fidelity، بازبین مستقل) | Agent tool، یا `claude -p` (پایین) | subagent کرسر، یا `cursor-agent -p` اگر هست | sub-agent اگر هست، یا `codex exec` (پایین)؛ هیچ‌کدام: پروتکل «توانمندی ندارم» |
 
-**اجرای ایزوله وقتی ابزار واگذاری نیست (Claude Code).** فراخوانی DES و FIDELITY به زمینهٔ جدا و مستقل نیاز دارد (ماژول 08 بخش ۲ و ۲c). اگر محیط ابزار ساختِ ایجنت جدا را **ندارد**، شبیه‌سازی نکن و اسکیپ هم نکن: همان فایل اسپک را در یک پروسهٔ جدا و از یک پوشهٔ خالی به‌عنوان system prompt اجرا کن —
+**پیش‌بررسی توانمندی، پیش از Phase B.** پیش از هر نوشتن، در یک خط ثبت کن کدام‌یک هست: (۱) `git ls-remote origin` کار می‌کند، (۲) push به برنچی جز `main` ممکن است (دو تحویل لازم دارد)، (۳) پایش Actions (`gh`، MCP، REST با توکن) یا بنیان‌گذار لینک اجرا را می‌دهد، (۴) راهِ باز کردن PR و گرفتن اجازهٔ مرج. هرچه نیست همان اول به بنیان‌گذار گفته می‌شود (پروتکل «توانمندی ندارم»)، نه بعد از ساعت‌ها تألیف در C.4.9؛ او تصمیم می‌گیرد: خودش push یا پایش می‌کند، یا کار همین‌جا می‌ماند.
+
+**اجرای ایزوله وقتی ابزار واگذاری نیست (هر کلاینت).** فراخوانی DES و FIDELITY به زمینهٔ جدا و مستقل نیاز دارد (ماژول 08 بخش ۲ و ۲c). اگر محیط ابزار ساختِ ایجنت جدا را **ندارد**، شبیه‌سازی نکن و اسکیپ هم نکن: همان فایل اسپک را در یک پروسهٔ جدا و از یک پوشهٔ خالی به‌عنوان system prompt اجرا کن —
 ```bash
+# Claude Code
 cd "$(mktemp -d)" && claude -p --system-prompt-file <repo>/.dentcast/des-v3.5-knowledge.md   --model <مدلِ همان نقش> --disallowed-tools Bash Read Write Edit WebFetch WebSearch < block.json
+# Codex CLI (همان قرارداد: پوشهٔ خالی، اسپک به‌عنوان دستور، بی ابزار)
+cd "$(mktemp -d)" && codex exec --model <مدلِ همان نقش> --sandbox read-only "$(cat <repo>/.dentcast/des-v3.5-knowledge.md)" < block.json
+# Cursor: subagent با مدلِ همان نقش و بی ابزار، یا cursor-agent -p با همین قرارداد
 ```
+ویندوز (PowerShell): همان دستور با `$env:TEMP` به‌جای `mktemp -d`. هیچ‌کدام در دسترس نیست (مثلاً ایجنت ابری بی CLI): پروتکل «توانمندی ندارم»؛ C.4.13 شبیه‌سازی نمی‌شود.
 زمینه از اجرای جاری جداست، ابزارها خاموش‌اند و مدلِ واقعیِ اجرا (خروجی خودِ CLI) طبق بخش ۲c ثبت می‌شود. اگر خروجی در حصارِ ```json آمد، حصار برداشته و خودِ آبجکت ذخیره می‌شود؛ هیچ بایتِ دیگری عوض نمی‌شود.
 
 **FIDELITY و انتخاب مدل:** نقش‌های بررسی‌کنندهٔ سبک‌تر و بازبین/داور قوی‌تر مستقل از شرکت سازنده‌اند؛ مثال‌ها، قواعد استقلال اجراها، ثابت‌بودن مدل رأی‌دهنده و ثبت مدل واقعی در ماژول 08 بخش 2c آمده‌اند. اگر محیط ابزار واگذاری به ایجنت جدا و انتخاب مدل را دارد، دو بررسی کامل را با ورودی یکسان و زمینه‌های جداگانه هم‌زمان اجرا کن؛ برای داوری از نقش قوی‌تر استفاده کن. قیمت دقیق اگر در دسترس نیست «UNVERIFIED» ثبت می‌شود و مانع اجرا نیست؛ نبودِ خودِ ایجنت جدا، انتخاب مدل، یا مدل سبکِ توانمند باید با ذکر دقیقِ قابلیتِ موجودنبود و مرحلهٔ متأثر گزارش شود، نه با اجرای شبیه‌سازی‌شده.
@@ -103,14 +111,14 @@ ffprobe -v error -show_entries format=duration -of csv=p=0 <audio-url>
 
 ## 3. دستورهای قطعی (روی همهٔ ایجنت‌ها یکسان)
 
-همه از ریشهٔ ریپو اجرا می‌شوند. `python` و `python3` هر دو موجودند.
+همه از ریشهٔ ریپو اجرا می‌شوند. `python3` یعنی هر کدام از `python3`، `python` یا `py` که Python 3.9+ است (macOS معمولاً فقط `python3`، ویندوز معمولاً فقط `python`/`py` دارد).
 
 ```bash
 # شاهدِ ویرایش: git diff مسیرهای scope (ماژول 01، «Evidence of edits»)؛ sha256sum دستی نه
 git diff -- <file>
 
 # تاکسونومی زندهٔ پیلارها (هرگز از حافظه/هاردکد)
-python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"
+python3 -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"
 
 # اعتبارسنجی JSON قبل از commit
 python3 -m json.tool dentcast-brain.json > /dev/null
@@ -208,8 +216,16 @@ python3 -m json.tool litecast/lite-glossary.json > /dev/null
 - کامیتِ توصیفی (فارسی یا انگلیسی، هم‌سبک با تاریخچهٔ ریپو).
 - `git push -u origin <branch>` فقط در دو برش تحویل؛ در خطای شبکه تا ۴ بار با
   backoff نمایی (۲s/۴s/۸s/۱۶s). push گیتِ بنیان‌گذار نیست.
-- **PR انتشار مستقیم را runner باز می‌کند**؛ مرج فقط با اجازه. کارهای غیرانتشاری:
-  PR فقط وقتی کاربر خواسته باشد.
+- **PR انتشار مستقیم را runner باز می‌کند** وقتی secret `QUEUE_PUBLISH_TOKEN` هست، وگرنه ایجنت (ابزار
+  GitHub یا `gh pr create`) یا بنیان‌گذار؛ مرج فقط با اجازه (استثنا: مطلب صف، `queue-route.md` گام ۵). کارهای
+  غیرانتشاری: PR فقط وقتی کاربر خواسته باشد.
+- برنچ انتشار مستقیم: برنچ خالیِ خود پلتفرم (`ccr-*`، `codex/*`، …) یا `publish/<content-id>` تازه از
+  `origin/main`؛ هر نامی `post-cut2-mechanical.yml` را راه می‌اندازد (فیلتر `**`). برنچی که از قبل کامیت
+  دارد جابه‌جا نمی‌شود (`publish-checkpoints.md`، «Start and identify the run»).
+- **کلاینتی که hookهایش اجرا نمی‌شوند** (`.claude/settings.json`، `.cursor/hooks.json`، `.codex/hooks.json` فقط
+  با پشتیبانی واقعی کلاینت اجرا می‌شوند؛ `publish-maintenance.md`) همان کار را دستی می‌کند: یک‌بار
+  `git config core.hooksPath .githooks`؛ پیش از پایان هر نوبت `python3 tools/dentcast_publish_handoff.py guard --phase stop`؛
+  بعد از تحویل سوم `git pull --ff-only`.
 - قبل از هر commit: JSONها valid. بیلدرها و `git diff -G'\?v=' pillar/` کارِ runner‌اند.
 - کاری که ایجنت انجام نداده را «انجام شد» گزارش نکن. تست/بیلدِ شکست‌خورده با
   خروجی خامش گزارش می‌شود.

@@ -19,12 +19,13 @@ The only home of the readpack rules. After Phase B category, Question 4.7 (paper
 ```bash
 python3 tools/dentcast_publish_readpack.py \
   --category sharehub --attached-paper no --challenge no --after-intake \
-  --output /tmp/dentcast-readpack.txt --manifest /tmp/dentcast-readpack.json
+  --output <scratch>/dentcast-readpack.txt --manifest <scratch>/dentcast-readpack.json
 ```
 
 - Arguments are only verified, locked intake facts; anything unsettled is `unknown` (that module stays full text).
 - The pack copies applicable source bytes verbatim and omits only category-inapplicable branches; an omitted step still needs its canonical SKIP reason in the ledger.
 - Read each module's ranges completely, in bounded chunks, at the moment `publish-checkpoints.md` («Just-in-time loading») names for that module; keep the manifest and source hashes.
+- The pack keeps module 11 only above its `module-11-boundary` marker and module 12 only through Phase D: the parts below are the runner's and are never read in a normal run (`publish-checkpoints.md`, «Just-in-time loading»); guarded recovery reads the full module, not a pack. A skipped section's canonical SKIP reason is the manifest's `selection_reason` for that module.
 - `--after-intake` is legal only if this router, the global router and selected sections, agent-parity, `publish-checkpoints.md` and modules 01/02 were read completely earlier in this same session and revision; omit it for a self-contained pack.
 - A changed source reverts that module to full text; regenerate. Never reuse a pack after its source revision or locked intake changed. If the selector, provenance, revision or category is uncertain, read the original full modules.
 - The pack never loads specialty workflows, dynamic global sections or scientific prompt files; those stay separately required. It performs no step, grants no approval and writes only its two temporary files.
@@ -48,9 +49,9 @@ python3 tools/dentcast_publish_readpack.py \
 
    File numbers are not the execution order. Execute in the ledger order of `publish-checkpoints.md` («Order, messages, text lock, deliveries»): paper ingestion (06) and DES/Fidelity (08) run before links (05) and flashcards/FAQ (07). Read each module just before its first step.
 3. Agent proposals are built, recorded and reported, never sent for confirmation; the founder gets at most three messages (M1 open facts, M3b still-flagged Part 3b sentences at C.4.13, M2 exam questions) plus the real decisions listed in `publish-checkpoints.md`; the agent's Push-2 report lists every proposal and answer.
-4. Close all authoring, semantic judgments, DES/Fidelity, the authored English mirror (unless LiteCast/Challenge) and every founder message **through C.6**, write the ten-scope editorial lock, then Push 2. After Push 2 the runner does C.8, C.7, D, E, F, G and opens the PR; the agent monitors (`publish-after-push2.md`).
+4. Close all authoring, semantic judgments, DES/Fidelity, the authored English mirror (unless LiteCast/Challenge) and every founder message (M1, M3b, M2, each only when it has content) **through C.6**, write the ten-scope editorial lock, then Push 2. After Push 2 the runner does C.8, C.7, D, E, F, G and opens the PR when the `QUEUE_PUBLISH_TOKEN` secret is configured (otherwise the agent or the founder opens it by hand); the agent monitors (`publish-after-push2.md`).
 5. Respect every category exception, semantic decision, founder decision, builder order, versioning and complete Phase F. A skipped module needs its canonical exemption and a recorded reason; "not loaded" is not an exemption.
-6. Use actual tools. Report a missing capability or failed gate; never substitute simulated scientific results, synthetic receipts or Boolean assertions. Staging tools are not the live handoff or publishing engine.
+6. Use actual tools. Report a missing capability or failed gate; never substitute simulated scientific results, synthetic receipts or Boolean assertions. No staging, draft or legacy tool exists in the tree (an older version lives only in Git history and is never execution authority); the live engine is `dentcast_publish_handoff.py`, `dentcast_publish_lifecycle.py` and `dentcast_post_cut2_runner.py`.
 7. Keep private/restricted material out of public history. No arbitrary branch merges, no inferred approval.
 
 ## Routes
@@ -74,4 +75,4 @@ Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details
 
 ## Checkpoints, deliveries, completion
 
-`publish-checkpoints.md`: ledger, the founder messages, text lock, the three deliveries, hosting and merge. Hashes or checkpoints alone are not publication.
+`publish-checkpoints.md`: ledger, the founder messages (at most three), text lock, the three deliveries, hosting and merge. Hashes or checkpoints alone are not publication.

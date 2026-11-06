@@ -401,6 +401,32 @@ class RenderFixesTests(unittest.TestCase):
         self.assertEqual(out["faq"], 1)
         self.assertIn("https://dentcast.org/insight/insight-9.html#faq", W.t)
 
+    def test_faq_page_url_placeholder_is_substituted_and_leftovers_refused(self):
+        # queue_stamp.py allows {{PAGE_URL}} in 10; items 17–22 use it (share-46 once reached the corpus verbatim)
+        d = Path(tempfile.mkdtemp())
+        node = {"faqPages": [{"@id": "{{PAGE_URL}}#faq", "mainEntity": [{"name": "q"}]}],
+                "definedTermSets": [{"@id": "{{PAGE_URL}}#flashcards",
+                                     "hasDefinedTerm": [{"@id": "{{PAGE_URL}}#flashcards-c1", "name": "t"}]}]}
+        (d / "10-فلش‌کارت-FAQ.json").write_text(json.dumps(node), encoding="utf-8")
+
+        class W:
+            t = '{\n  "byContent": {}\n}\n'
+
+            def text(self, rel):
+                return self.t
+
+            def put(self, rel, t):
+                W.t = t
+        out = qa.faq(W(), "sharehub/share-46", d, {})
+        self.assertEqual((out["faq"], out["flashcards"]), (1, 1))
+        self.assertNotIn("{{", W.t)
+        self.assertIn("https://dentcast.org/sharehub/share-46.html#flashcards-c1", W.t)
+        node["definedTermSets"][0]["hasDefinedTerm"][0]["@id"] = "{{OTHER}}#x"
+        (d / "10-فلش‌کارت-FAQ.json").write_text(json.dumps(node), encoding="utf-8")
+        with self.assertRaises(qm.QueueRefusal) as e:
+            qa.faq(W(), "sharehub/share-46", d, {})
+        self.assertEqual(e.exception.code, "FAQ_PLACEHOLDER")
+
 
 class LedgerAndTextIoTests(unittest.TestCase):
     def test_init_input_refuses_a_bare_number(self):
@@ -545,8 +571,11 @@ class QueueStatusTests(ManifestTests):
         self.site = Path(tempfile.mkdtemp()) / "site"
         self.git(self.site.parent, "clone", "-q", str(self.origin), "site")
         self.runs, self.prs = [], []
+        self.publish_runs = []  # queue-publish.yml runs; None = API unavailable
 
     def api(self, path):
+        if "/actions/workflows/queue-publish.yml/runs?" in path:
+            return None if self.publish_runs is None else {"workflow_runs": self.publish_runs}
         if "/actions/workflows/post-cut2-mechanical.yml/runs?" in path:
             self.assertIn("branch=queue-publish%2F05-sharehub-b", path)
             return None if self.runs is None else {"workflow_runs": self.runs}
@@ -584,6 +613,28 @@ class QueueStatusTests(ManifestTests):
         self.assertEqual(out["queue"]["source"], "origin/queue")
         self.assertEqual((out["locked"], out["state"]), (1, "LOCKED_NO_BRANCH"))
         self.assertIn("unlock queue/05-sharehub-b", out["next_step"])
+
+    def test_live_publish_run_is_never_unlocked_or_dispatched_under(self):
+        # between the lock push and Push 2 (no branch yet) …
+        self.publish_runs = [{"id": 7, "status": "in_progress", "html_url": "qp7", "conclusion": None}]
+        out = self.status()
+        self.assertEqual(out["state"], "QUEUE_PUBLISH_RUN_IN_PROGRESS")
+        self.assertIn("qp7", out["next_step"])
+        self.assertNotIn("queue_publish.py unlock", out["next_step"])
+        # … and between Push 2 and the PR (await-delivery-3 running): wait, do not dispatch post-cut2
+        self.push2()
+        out = self.status()
+        self.assertEqual(out["state"], "QUEUE_PUBLISH_RUN_IN_PROGRESS")
+        self.assertNotIn("dispatch", out["items"][0])
+        # a completed run is not live
+        self.publish_runs = [{"id": 7, "status": "completed", "conclusion": "failure"}]
+        self.assertEqual(self.status()["state"], "PUSH2_NO_RUN")
+        # unknown API: the no-branch case keeps LOCKED_NO_BRANCH but says to check the Actions tab first
+        self.publish_runs = None
+        self.git(self.work, "push", "-q", "origin", "--delete", self.BRANCH)
+        out = self.status()
+        self.assertEqual(out["state"], "LOCKED_NO_BRANCH")
+        self.assertIn("Actions tab", out["next_step"])
 
     def test_push2_without_run_prints_exact_dispatch_inputs(self):
         head = self.push2()
