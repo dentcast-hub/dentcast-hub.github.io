@@ -19,6 +19,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 import pdf_source_text as pst  # noqa: E402
 import queue_apply as qa  # noqa: E402
+import queue_fidelity_prep as qfp  # noqa: E402
 import queue_manifest as qm  # noqa: E402
 import queue_stamp as qs  # noqa: E402
 import validate_exam_questions as veq  # noqa: E402
@@ -186,6 +187,65 @@ class FidelityPrepTests(unittest.TestCase):
             r = self.run_prep(str(make_item(t, des=False)), "--checkout", str(c), "--content-id", DRAFT_CID)
             self.assertEqual(r.returncode, 2)
             self.assertEqual(json.loads(r.stdout)["code"], "DES_PACKAGE_MISSING")
+
+
+class FidelityPrepCleanupTests(unittest.TestCase):
+    """The work directory is a full copy of the site: it is replaced on a rerun and removed by --cleanup."""
+
+    def work(self, tmp, name, item="x", marker=True, git=False):
+        d = Path(tmp) / (qfp.PREFIX + name)
+        (d / "checkout").mkdir(parents=True)
+        if marker:
+            (d / "checkout" / qa.THROWAWAY_MARKER).write_text("t\n", encoding="utf-8")
+        if git:
+            (d / "checkout" / ".git").mkdir()
+        (d / qfp.NOTE).write_text(json.dumps({"item": item}), encoding="utf-8")
+        return d
+
+    def test_cleanup_removes_only_marked_work_dirs(self):
+        with tempfile.TemporaryDirectory() as t:
+            a = self.work(t, "a")
+            b = self.work(t, "b", marker=False)
+            c = self.work(t, "c", git=True)
+            other = Path(t) / "unrelated"
+            other.mkdir()
+            with contextlib.redirect_stdout(io.StringIO()) as out:
+                rc = qfp.cleanup([str(a), str(b), str(c), str(other)])
+            self.assertEqual(rc, 2)
+            res = json.loads(out.getvalue())
+            self.assertEqual(res["removed"], [str(a)])
+            self.assertEqual([s["path"] for s in res["skipped"]], [str(b), str(c), str(other)])
+            self.assertFalse(a.exists())
+            self.assertTrue(b.exists() and c.exists() and other.exists())
+
+    def test_cleanup_without_paths_sweeps_the_temp_dir(self):
+        with tempfile.TemporaryDirectory() as t:
+            a, b = self.work(t, "a"), self.work(t, "b", marker=False)
+            with contextlib.redirect_stdout(io.StringIO()) as out:
+                rc = qfp.cleanup([], tmp=t)
+            self.assertEqual(rc, 0)
+            self.assertEqual(json.loads(out.getvalue())["removed"], [str(a)])
+            self.assertTrue(b.exists())
+
+    def test_new_run_supersedes_the_same_items_older_work_dirs_only(self):
+        with tempfile.TemporaryDirectory() as t:
+            old1, old2 = self.work(t, "o1", item="/q/12"), self.work(t, "o2", item="/q/12")
+            keep = self.work(t, "k", item="/q/13")
+            gone = qfp.supersede("/q/12", tmp=t)
+            self.assertEqual(sorted(gone), sorted([str(old1), str(old2)]))
+            self.assertFalse(old1.exists() or old2.exists())
+            self.assertTrue(keep.exists())
+
+    def test_cli_cleanup_and_item_required(self):
+        r = subprocess.run([sys.executable, str(ROOT / "tools/queue_fidelity_prep.py")], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 2)
+        self.assertEqual(json.loads(r.stdout)["code"], "ITEM_REQUIRED")
+        with tempfile.TemporaryDirectory() as t:
+            a = self.work(t, "a")
+            r = subprocess.run([sys.executable, str(ROOT / "tools/queue_fidelity_prep.py"), "--cleanup", str(a)],
+                               capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+            self.assertFalse(a.exists())
 
 
 class StampTests(unittest.TestCase):

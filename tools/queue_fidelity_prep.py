@@ -20,14 +20,25 @@ a publish (queue_apply refuses --draft anywhere else).
 
     python3 tools/queue_fidelity_prep.py ../dentcast-queue/queue/NN-sharehub-slug \\
         [--content-id sharehub/share-46] [--texts texts.json] [--checkout DIR] [--build DIR]
+    python3 tools/queue_fidelity_prep.py --cleanup [WORK_DIR ...]
+
+The work directory (`dentcast-fidelity-prep-*` under the temp dir: the copy, the
+blocks, the checker outputs) is a full copy of the site, so it is not left
+behind: a new run for the same item replaces that item's older work directories
+(a rerun means a fresh draft), and `--cleanup` removes the named work
+directories, or every one under the temp dir, once the FIDELITY record is
+stored in 05-DES-Fidelity/ (publish-queue.md, step 5). Only a directory that
+carries the throwaway marker and no `.git` is ever removed.
 
 The default content_id is the next free number of the item's category on this
 checkout (a temporary id; publish day takes the live one). texts.json is the
 shape des_fidelity_units.py reads (tools/pdf_source_text.py writes it).
 """
 import argparse
+import datetime
 import json
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -41,6 +52,49 @@ import queue_apply as qa  # noqa: E402
 def fail(code, message, **detail):
     print(json.dumps({"status": "refused", "code": code, "message": message, **detail}, ensure_ascii=False, indent=1))
     return 2
+
+
+PREFIX = "dentcast-fidelity-prep-"
+NOTE = "prep.json"
+
+
+def is_work_dir(p):
+    """A work directory this tool made: prefix, a marked copy, no .git — nothing else is ever removed."""
+    p = Path(p)
+    return (p.is_dir() and p.name.startswith(PREFIX)
+            and (p / "checkout" / qa.THROWAWAY_MARKER).is_file() and not (p / "checkout" / ".git").exists())
+
+
+def work_dirs(tmp=None):
+    return sorted(d for d in Path(tmp or tempfile.gettempdir()).glob(PREFIX + "*") if is_work_dir(d))
+
+
+def supersede(item, tmp=None):
+    """Remove this item's older work directories (a new run is a fresh draft); returns what went."""
+    gone = []
+    for d in work_dirs(tmp):
+        try:
+            note = json.loads((d / NOTE).read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        if note.get("item") == str(item):
+            shutil.rmtree(d, ignore_errors=True)
+            gone.append(str(d))
+    return gone
+
+
+def cleanup(paths, tmp=None):
+    """--cleanup: remove the named work directories, or all of them; refuse anything that is not one."""
+    removed, skipped = [], []
+    targets = [Path(p).resolve() for p in paths] if paths else work_dirs(tmp)
+    for d in targets:
+        if is_work_dir(d):
+            shutil.rmtree(d, ignore_errors=True)
+            removed.append(str(d))
+        else:
+            skipped.append({"path": str(d), "reason": "not a throwaway work directory of this tool"})
+    print(json.dumps({"status": "cleaned", "removed": removed, "skipped": skipped}, ensure_ascii=False, indent=1))
+    return 0 if not skipped else 2
 
 
 def make_copy(dest):
@@ -70,15 +124,21 @@ def run_json(cmd, cwd):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("item")
+    ap.add_argument("paths", nargs="*", help="the queue item folder; with --cleanup, work directories (none: all)")
+    ap.add_argument("--cleanup", action="store_true",
+                    help="remove throwaway work directories (after the FIDELITY record is stored in 05)")
     ap.add_argument("--content-id", help="temporary content_id (default: the next free one of the category)")
     ap.add_argument("--texts", help="texts.json for --build (DOI or S<n> → source_text, text_basis)")
     ap.add_argument("--checkout", help="an existing throwaway copy (marker, no .git) instead of a new one")
     ap.add_argument("--build", help="where the input blocks go (default: <work>/blocks)")
     a = ap.parse_args(argv)
-    item = Path(a.item).resolve()
+    if a.cleanup:
+        return cleanup(a.paths)
+    if len(a.paths) != 1:
+        return fail("ITEM_REQUIRED", "give exactly one queue item folder (or --cleanup)")
+    item = Path(a.paths[0]).resolve()
     if not item.is_dir():
-        return fail("ITEM_NOT_FOUND", f"{a.item} is not a queue item folder")
+        return fail("ITEM_NOT_FOUND", f"{a.paths[0]} is not a queue item folder")
     cid = a.content_id or default_content_id(item)
     if not cid:
         return fail("CATEGORY_UNSUPPORTED", f"{item.name}: no queue template for this folder's category")
@@ -86,8 +146,12 @@ def main(argv=None):
         copy = Path(a.checkout).resolve()
         work = copy.parent
     else:
-        work = Path(tempfile.mkdtemp(prefix="dentcast-fidelity-prep-"))
+        superseded = supersede(item)
+        work = Path(tempfile.mkdtemp(prefix=PREFIX))
         copy = make_copy(work / "checkout")
+        (work / NOTE).write_text(json.dumps({"item": str(item), "content_id": cid,
+                                             "created": datetime.datetime.now().isoformat(timespec="seconds")},
+                                            ensure_ascii=False) + "\n", encoding="utf-8")
     if not (copy / qa.THROWAWAY_MARKER).is_file() or (copy / ".git").exists():
         return fail("NOT_THROWAWAY", f"{copy} is not a throwaway copy ({qa.THROWAWAY_MARKER}, no .git)")
     py = sys.executable
@@ -101,11 +165,14 @@ def main(argv=None):
     r, units = run_json([py, str(copy / "tools/des_fidelity_units.py"), cid, "--json"], copy)
     if r.returncode != 0 or not units:
         return fail("UNITS_FAILED", "des_fidelity_units.py --json failed", stderr=r.stderr[-2000:], checkout=str(copy))
-    receipt = {"status": "prepared", "not_for_publish": True, "checkout": str(copy), "content_id": cid,
+    receipt = {"status": "prepared", "not_for_publish": True, "checkout": str(copy), "work": str(work),
+               "cleanup": f"python3 tools/queue_fidelity_prep.py --cleanup {work}  # after Part 4", "content_id": cid,
                "page": f"{copy / cid}.html", "draft_placeholders": draft.get("placeholders"),
                "scope": units["mode"], "units": len(units["units"]),
                "plan": {k: len(v) for k, v in units["plan"].items()},
                "units_tool": str(copy / "tools/des_fidelity_units.py"), "blocks": []}
+    if not a.checkout and superseded:
+        receipt["superseded_removed"] = superseded
     swept = (copy / ".dentcast/des-fidelity-plans" / f"{cid}.json").exists()
     if a.texts and units.get("sources", 1) >= 2 and units["mode"] == "SOURCE" and not swept:
         # module 08 Part 2c: on a multi-source page the orphan sweep runs first;
