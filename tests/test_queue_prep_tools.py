@@ -310,6 +310,16 @@ class StampCheckTests(unittest.TestCase):
             out = qs.checks(self.item(t, **{"04-منبع/منابع.md": refs}))
             self.assertEqual(out["problems"], [f"P2 {DOI_C}: in 04-منبع/کاتالوگ.json but not in 04-منبع/منابع.md"])
 
+    def test_latin_leftover_markers_are_ordinary_words_in_the_page_prose(self):
+        files = checked_files()
+        with tempfile.TemporaryDirectory() as t:
+            item = self.item(t, **{"06-انگلیسی.md": files["06-انگلیسی.md"] + "\nA borderline ferrule is still a ferrule.\n",
+                                   "11-لینک‌های-گلاسری.md": files.get("11-لینک‌های-گلاسری.md", "") + "\n- undercut: borderline\n"})
+            w4 = [w for w in qs.checks(item)["warnings"] if w.startswith("W4")]
+            self.assertEqual(len(w4), 1, w4)
+            self.assertIn("11-لینک‌های-گلاسری.md", w4[0])
+            self.assertNotIn("06-انگلیسی.md", "\n".join(w4))
+
     def test_soft_findings_are_warnings_and_strict_makes_them_problems(self):
         cards = json.loads(checked_files()["10-فلش‌کارت-FAQ.json"])
         answer = cards["faqPages"][0]["mainEntity"][0]["acceptedAnswer"]
