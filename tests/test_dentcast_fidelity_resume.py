@@ -139,23 +139,31 @@ class FidelityResumeTests(unittest.TestCase):
         self.assertEqual(context["focused_units_and_neighbors"][0]["previous"]["id"], "u36")
         self.assertEqual(context["focused_units_and_neighbors"][0]["next"]["id"], "u38")
         self.assertEqual(len(context["checker_verdicts_and_quoted_evidence"]), 3)
+        # founder 1405/08/15: a stronger-review dissent settles the unit as
+        # MATCHES (reported, never asked); only an agreed flag reaches the founder
         f.submit_reviewer_result(
             self.store, "sci-test", "src0", "review", OPUS,
             {"u37": {"agree": False, "reason": "Reviewer disputes scope"}},
             public_release_approval_digest=D)
-        founder = f.next_task(self.store, "sci-test", "src0")
-        self.assertEqual(founder["role"], "founder_review")
-        self.assertEqual(founder["flagged_units"], ["u37"])
-        self.assertEqual(founder["flagged_claims_with_quote_and_reason"][0]["id"], "u37")
-        self.assertIn("Stronger-model review disagrees",
-                      founder["flagged_claims_with_quote_and_reason"][0]["note"])
-        self.assertEqual(founder["status"], "awaiting_explicit_founder_decision")
+        settled = f.next_task(self.store, "sci-test", "src0")
+        self.assertEqual(settled["role"], "validate_final_vote")
+        self.assertEqual(settled["flagged_units"], [])
+        self.assertEqual(settled["status"], "ready_for_existing_vote_cli")
         _, _, runs, x = f.state_of(self.store, "sci-test", "src0")
         voted, tie, unresolved, unreviewed = f.engine.vote_source(
             [runs["checker1"][0], runs["checker2"][0], runs["checker3"][0]],
             reviewed=x["review"])
-        self.assertIn("Stronger-model review disagrees", voted["claims"][36]["note"])
+        self.assertEqual(voted["claims"][36]["verdict"], "MATCHES")
+        self.assertIsNone(voted["claims"][36]["change_kind"])
+        self.assertIn("overruled by the stronger review: Reviewer disputes scope",
+                      voted["claims"][36]["note"])
+        self.assertIn("Checker majority: ALTERED", voted["claims"][36]["note"])
         self.assertEqual((tie, unresolved, unreviewed), ([], [], []))
+        # the agreed flag is the founder's gate
+        voted_agree, _, _, _ = f.engine.vote_source(
+            [runs["checker1"][0], runs["checker2"][0], runs["checker3"][0]],
+            reviewed={"u37": {"agree": True, "reason": "Scope really is wider"}})
+        self.assertEqual(voted_agree["claims"][36]["verdict"], "ALTERED")
 
     def test_all_three_answers_different_require_stronger_adjudication(self):
         self.start()

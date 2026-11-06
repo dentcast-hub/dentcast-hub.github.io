@@ -5,7 +5,7 @@
         [--supplement f.json] [--date YYYY-MM-DD] [--agent NAME] [--dry-run]
         [--receipt out.json]
 
-publish-queue.md «روز انتشار صف»: everything that needs judgment was decided
+queue-maintainer.md «روز انتشار صف»: everything that needs judgment was decided
 and approved in preparation and frozen in the item. This tool only assembles:
 it never calls a model, never asks, never infers a missing fact. Every refusal
 exits non-zero with nothing written and names the missing field.
@@ -253,7 +253,7 @@ def precheck(args):
     n, prev = next_number(cat)
     want = f"{c['dir']}/{c['stem']}{n}"
     if c.get("parent"):
-        # the same-number episode (publish-queue.md «اپیزود هم‌شماره»): fixed by the number, never chosen
+        # the same-number episode (queue-maintainer.md «DES و Fidelity صف»): fixed by the number, never chosen
         m["parent_episode"] = c["parent"].format(n=n)
         if not (ROOT / f"{m['parent_episode']}.html").exists():
             refuse("PARENT_MISSING", f"{m['parent_episode']}.html does not exist")
@@ -266,7 +266,7 @@ def precheck(args):
                "(module 03 «Opening paragraph before any list») belongs to preparation; the item goes back to "
                "«در حال آماده‌سازی» (Phase F would fail this page)")
     if not (info["path"] / "05-DES-Fidelity" / "des.json").exists():
-        refuse("DES_PACKAGE_MISSING", "05-DES-Fidelity/des.json is missing (publish-queue.md: one of the three stops)")
+        refuse("DES_PACKAGE_MISSING", "05-DES-Fidelity/des.json is missing (queue-maintainer.md «روز انتشار صف»: one of the three stops)")
     return info, d, m, n, prev
 
 
@@ -1426,7 +1426,7 @@ QUEUE_REF = re.compile(r"queue:(\d\d)")
 def published_as(item, nn):
     """The content_id a sibling queue item was published as: the queue branch's
     own record, the commit «queue: NN published as <content_id> (PR #n)»
-    (publish-queue.md step 7). None while it is unpublished."""
+    (queue-maintainer.md «انتشار از صف» step 7). None while it is unpublished."""
     r = subprocess.run(["git", "-C", str(item), "log", "--format=%s", "HEAD"], capture_output=True, text=True)
     for line in r.stdout.splitlines():
         mm = re.match(r"queue: %s published as ([a-z]+/[A-Za-z0-9-]+) \(PR #\d+\)" % nn, line)

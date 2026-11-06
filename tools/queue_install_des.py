@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """Install a publish-queue item's frozen DES/Fidelity record in one command.
 
-publish-queue.md «DES و Fidelity صف»: a queue item marked «آماده» carries its
+queue-maintainer.md «DES و Fidelity صف»: a queue item marked «آماده» carries its
 DES and Fidelity as decided. On publish day they are installed as they are —
 never re-scored, never re-checked against the paper, never a reason to stop.
 
 What this tool does, deterministically (no model call, no source text):
 
   1. reads 05-DES-Fidelity/{des,fidelity,plan,markers}.json of the queue item;
-  2. checks the page body against 01-متن.md (publish-queue.md «روز انتشار صف»:
+  2. checks the page body against 01-متن.md (queue-maintainer.md «روز انتشار صف»:
      the text does not move — only the date may differ). A missing, reworded or
      inserted body line (a new subtitle) stops the tool with exit 3
      and nothing written; the fix is rebuilding the body from the queue files,
@@ -52,7 +52,7 @@ DES_SCORES = ROOT / "plus/des-scores.json"
 REGISTRY = ROOT / ".dentcast/queue-frozen-des.json"
 MARKERS = ROOT / ".dentcast/des-source-markers.json"
 DECISION = ("DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود "
-            "و مانع انتشار نیست (publish-queue.md «DES و Fidelity صف»)")
+            "و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)")
 
 
 def record_sha256(rec):
@@ -155,7 +155,7 @@ def body_lines(item):
 
 
 def body_guard(item, cid, units, synced, added):
-    """publish-queue.md «روز انتشار صف»: the text does not move. Every line of
+    """queue-maintainer.md «روز انتشار صف»: the text does not move. Every line of
     01-متن.md must sit verbatim on the page and nothing may be inserted among
     them (no new subtitle). A stored claim whose text differs from the page is a
     problem only when the page's text is not the approved 01-متن.md text: when
@@ -286,7 +286,7 @@ def main():
         print(json.dumps({"status": "text_ok" if not problems else "text_moved", "content_id": cid,
                           "problems": problems,
                           "fix": None if not problems else
-                          "the page body must be 01-متن.md verbatim (publish-queue.md «روز انتشار صف»): rebuild the body "
+                          "the page body must be 01-متن.md verbatim (queue-maintainer.md «روز انتشار صف»): rebuild the body "
                           "mechanically from the queue files — no new subtitle, no rewrite, no question to the founder"},
                          ensure_ascii=False, indent=1))
         return 0 if not problems else 3
@@ -384,7 +384,7 @@ def main():
     for k, v in entries:
         reg[k] = {"queue_ref": f"queue/{item.name}", "record_sha256": record_sha256(v), "installed_at": a.date,
                   "approval": {"status": "confirmed", "decision": DECISION,
-                               "evidence": ["publish-queue.md «DES و Fidelity صف»"]},
+                               "evidence": ["queue-maintainer.md «DES و Fidelity صف»"]},
                   "sync": {"text_synced": [s["new"] for s in synced] if k == cid else [],
                            "added": joining if k == cid else [], "unassigned": unassigned if k == cid else [], "dropped": [x["old"] for x in dropped] if k == cid else []},
                   **({"founder_text_change": a.founder_text_change, "text_changes": problems} if a.founder_text_change and k == cid else {})}

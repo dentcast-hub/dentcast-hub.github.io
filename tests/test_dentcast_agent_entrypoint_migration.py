@@ -123,6 +123,17 @@ DES_V35_AFTER_AMENDMENTS=(
   'still the job — the gate tells you *that* something is wrong, not what the\nright score was.\n\n6. **Persian text of the record (founder decision 1405/08/07: the DES Persian\n   text is independent of the founder) — an agent check, not a score check and\n   not a founder gate.** For a record that already passes (1)–(5), run\n   `python3 tools/verify_publish.py --des-text <des.json>` on every SOURCE and\n   COMMENTARY object before it is stored. The replaced-word check is automatic:\n   it fails on a word the founder replaced (today «ادبیات» → «منابع علمی»;\n   `fact_fa` and `interpretation_fa` of v3.5+ records only — older records keep\n   their text) and lists the `interpretation_fa` sentences (when non-null) one\n   by one. Then check each sentence against the scored text yourself: **a\n   sentence that says anything the text does not say, or is unclear, is fixed\n   by the agent itself** — delete it, or rewrite it to a smaller claim the text\n   supports (and repair any pronoun or reference the deletion leaves dangling).\n   The founder is not asked and is not shown the sentence. The score, band and\n   quotes never change, and the model is never re-run for wording. Record\n   before/after in the run notes. FIDELITY `fact_fa` / `interpretation_fa`\n   lines are composed by `tools/des_fidelity_units.py` and recomputed by every\n   `--vote`: check them after the last Part 3b re-vote, just before Part 4, and\n   fix a flagged one the same way. This does not touch Part 3b: the founder\n   gate on `ALTERED` / `REVERSED` page sentences stays. Phase F enforces only\n   the word list; the claim check is yours.\n')
 )
 
+# Founder ruling 1405/08/15 (queue item 22, u45): a stronger-review dissent settles the
+# unit as MATCHES; Part 2c step 4, the Part 3b opening and the publish-report paragraph.
+DES_STRONGER_REVIEW_AMENDMENTS=(
+ ('   "…"}}}`). A dissent never flips the verdict: `--vote` appends it to the\n   unit\'s `note`, and Part 3b shows the founder both reasons side by side.\n',
+  '   "…"}}}`). **A dissent settles the unit as `MATCHES`** (founder ruling\n   2026-11-06 / 1405/08/15, queue item 22, u45): the reviewer exists because\n   the lighter checkers can share a misreading, so their majority cannot\n   outrank it. On `agree: false`, `--vote` sets the verdict to `MATCHES` and\n   `change_kind` to `null`, keeps `source_quote`, and writes the majority\'s\n   verdict, kind and note with the reviewer\'s reason into `note`\n   («Checker majority: ALTERED/HEDGE_ADDED — …; overruled by the stronger\n   review: …»); counts, score, level and the Persian lines are recomputed.\n   `agree: true` keeps the flagged verdict for Part 3b. A flagged unit with\n   no review entry stays open. `--vote` prints the overruled ids; list them\n   to the founder in the report as information, never as a question.\n'),
+ ('the final report, never skipped because the grade is already high).\n',
+  'the final report, never skipped because the grade is already high). Only units\nstill flagged after the Part 2c step 4 review reach this gate; a unit the\nstronger review overruled is already `MATCHES` and is listed in the report as\ninformation, never asked.\n'),
+ ("with its `change_kind`, or the reason for a `null` or `INSUFFICIENT_TEXT` slot. And Part 3b's outcome: each\n",
+  "with its `change_kind`, every unit the stronger review overruled to `MATCHES` (Part 2c step 4: the\nmajority's verdict and the reviewer's reason, as information), or the reason for a `null` or `INSUFFICIENT_TEXT` slot. And Part 3b's outcome: each\n"),
+)
+
 class EntrypointMigrationTests(unittest.TestCase):
  def test_progress_reporting_is_timely_without_per_command_noise(self):
   s=read(".dentcast/workflows/agent-parity.md")
@@ -321,6 +332,9 @@ class EntrypointMigrationTests(unittest.TestCase):
      for v35_old,v35_new in DES_V35_AFTER_AMENDMENTS:
       self.assertEqual(expected_after.count(v35_old),1,v35_old[:80])
       expected_after=expected_after.replace(v35_old,v35_new)
+     for sr_old,sr_new in DES_STRONGER_REVIEW_AMENDMENTS:
+      self.assertEqual(expected_after.count(sr_old),1,sr_old[:80])
+      expected_after=expected_after.replace(sr_old,sr_new)
      self.assertEqual(actual_after.rstrip("\n"),expected_after.rstrip("\n"))
      for required in ("independent DES and Fidelity tracks", "exact `content_id`",
       "`tools/des_fidelity_units.py`", "DO NOT rerun the DES/SOURCE/COMMENTARY model calls",

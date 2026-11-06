@@ -1,6 +1,6 @@
 # DentCast Publishing — modular LIVE router
 
-> **Publish-queue check — first.** If this publication was requested from the publish queue («صف انتشار», branch `queue`), read `.dentcast/workflows/publish-queue.md` completely before Phase 0, fetch the oldest ready item from the `queue` branch, then continue this router with it as the founder's input.
+> **Publish-queue check — first.** If this publication was requested from the publish queue («صف انتشار», branch `queue`), this router is not the route: publishing an item from the queue reads only `.dentcast/workflows/queue-route.md`; preparing one or reporting the queue reads `.dentcast/workflows/publish-queue.md`. Only a category the queue tool refuses (`CATEGORY_UNSUPPORTED`) comes back here, with the item's files as the founder's input.
 
 **LIVE_MODULAR_PUBLISHING_ENABLED.** The twelve active modules below are the new-publication execution contract. Legacy files are backup only; do not read them for execution, fallback, or conflict resolution. No approval, exception, scientific requirement or mandatory validation is waived.
 
@@ -109,7 +109,8 @@ enforces it. Previous v1-only handoffs retain the original C.4.13 cut.
 | New section | `.dentcast/workflows/new-section.md` |
 | Offline publishing | `.dentcast/offline-publish.md` |
 | External Fidelity | `.dentcast/workflows/external-fidelity.md` |
-| Publish queue on branch `queue` (prepare, status, publish oldest) | `.dentcast/workflows/publish-queue.md` |
+| Publish queue on branch `queue` (prepare, status) | `.dentcast/workflows/publish-queue.md` |
+| Publish an item from the queue (publish day) | `.dentcast/workflows/queue-route.md` (only this) |
 
 Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details.md`. Read the selected specialty workflow completely. New content uses the modular sequence, including paper-only and category exceptions.
 

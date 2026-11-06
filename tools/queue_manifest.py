@@ -74,7 +74,7 @@ def check_sums(item):
             continue
         if actual != digest:
             raise QueueRefusal("SHA256_MISMATCH", f"{rel} does not match SHA256SUMS — the item goes back to "
-                               "«در حال آماده‌سازی» and nothing is rebuilt (publish-queue.md, step 4)",
+                               "«در حال آماده‌سازی» and nothing is rebuilt (queue-maintainer.md «انتشار از صف» step 4)",
                                file=rel, expected=digest, actual=actual)
         rows.append(rel)
     return {"checked": rows, "tolerated": tolerated, "sha256sums": sha256_file(sums)}

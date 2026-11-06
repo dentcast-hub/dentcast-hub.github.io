@@ -581,7 +581,7 @@ def merge_pooled(parts, basis):
 FLAGGED = ("ALTERED", "REVERSED")
 
 
-def vote_source(runs, adjudicated=None, reviewed=None):
+def vote_source(runs, adjudicated=None, reviewed=None, overruled=None):
     """Majority vote over repeated SOURCE-scope runs of ONE source (workflow
     step 4.13 Part 2c). runs[0] and runs[1] are the two FULL runs; runs[2]
     is the tie-break run over the units the two disagreed on. Per unit:
@@ -592,10 +592,16 @@ def vote_source(runs, adjudicated=None, reviewed=None):
         until `adjudicated[uid]` supplies the claim fields;
       * one vote (a re-check base that judged a unit once) → that answer.
     Every unit whose final verdict is ALTERED/REVERSED needs a stronger-model review
-    in `reviewed[uid]` = {"agree": bool, "reason": str}; a dissent never
-    flips the verdict — it is appended to `note` and shown to the founder
-    beside the majority's reason (Part 3b). Returns
-    (object, tiebreak, unresolved, unreviewed)."""
+    in `reviewed[uid]` = {"agree": bool, "reason": str}; without one it is
+    `unreviewed` and blocks. `agree: true` keeps the flagged verdict (Part 3b
+    asks the founder). `agree: false` settles the unit as MATCHES (founder,
+    1405/08/15: a lighter majority cannot outrank the reviewer that exists
+    to catch its shared misreading): `change_kind` null, `source_quote` and
+    `source_ref` kept, and `note` keeps the majority's verdict, kind and note
+    beside the reviewer's reason. Counts, score, level and the Persian lines
+    are recomputed from the settled claims. When `overruled` is a list, the
+    ids so settled are appended to it (reported to the founder as
+    information, never asked). Returns (object, tiebreak, unresolved, unreviewed)."""
     adjudicated, reviewed = adjudicated or {}, reviewed or {}
     base = runs[0]
     by_run = [{c["id"]: c for c in r["claims"]} for r in runs]
@@ -624,8 +630,13 @@ def vote_source(runs, adjudicated=None, reviewed=None):
             if r is None:
                 unreviewed.append(uid)
             elif not r.get("agree"):
-                pick = {**pick, "note": ((pick.get("note") or "").strip() + " | Stronger-model review disagrees: "
-                                         + r.get("reason", "")).strip(" |")}
+                was = pick["verdict"] + (f"/{pick['change_kind']}" if pick.get("change_kind") else "")
+                prior = (pick.get("note") or "").strip()
+                pick = {**pick, "verdict": "MATCHES", "change_kind": None,
+                        "note": f"Checker majority: {was}" + (f" — {prior}" if prior else "")
+                                + "; overruled by the stronger review: " + (r.get("reason") or "").strip()}
+                if overruled is not None:
+                    overruled.append(uid)
         claims.append(pick)
     vs = [c["verdict"] for c in claims]
     counts = {"matches": vs.count("MATCHES"), "altered": vs.count("ALTERED"), "reversed": vs.count("REVERSED"),
@@ -797,12 +808,15 @@ def main():
                              "of the block); the second run is never skipped (step 4.13 Part 2c)")
             if not runs:
                 continue
-            out, tiebreak, unresolved, unreviewed = vote_source(runs, adj.get(f"src{k}"), rev.get(f"src{k}"))
+            overruled = []
+            out, tiebreak, unresolved, unreviewed = vote_source(runs, adj.get(f"src{k}"), rev.get(f"src{k}"),
+                                                                overruled)
             (d / f"voted-src{k}.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
             flagged = [c["id"] for c in out["claims"] if c["verdict"] in FLAGGED]
             print(f"src{k}: {len(runs)} run(s) · {out['fidelity_score']} {out['level']} · "
                   f"flagged {flagged or '—'} · tie-break {tiebreak or '—'} · no majority {unresolved or '—'} · "
-                  f"awaiting stronger-model review {unreviewed or '—'}")
+                  f"awaiting stronger-model review {unreviewed or '—'} · "
+                  f"overruled by the stronger review → MATCHES (report, do not ask) {overruled or '—'}")
             open_units += len(tiebreak) + len(unresolved) + len(unreviewed)
         if open_units:
             sys.exit(f"{open_units} unit(s) open — tie-break run (--only), {adj_p} for no majority, "

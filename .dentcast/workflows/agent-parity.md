@@ -299,7 +299,7 @@ preflights, actual repository checks, Phase F and the three fixed deliveries.
 | **قاعدهٔ رفتاریِ تازه‌ای که فقط داخلِ متنِ یک گام نوشته شده** (نه Hard Rule جدید) | فقط ماژولِ کانونی + ستونِ «انجام‌شده یعنی» در بخش ۴؛ در `.mdc` کپی نمی‌شود |
 | **گامی که آرتیفکتِ Plus/Premium می‌نویسد** | جدولِ `.cursor/rules/dentcast-plus-premium.mdc` |
 | تغییر در فهرست بیلدرها یا ترتیبشان | بخش ۳ همین فایل |
-| مسیر صف (`queue-route.md`، `tools/queue_apply.py`، پروفایل `queue_lane_v1` در لجر) | `publish-queue.md` (قرارداد آماده‌سازی) + `QUEUE_IDS` در `tools/dentcast_publish_lifecycle.py` + تست‌های `test_queue_apply.py` و `test_dentcast_publish_queue_lane.py` |
+| مسیر صف (`queue-route.md`، `tools/queue_apply.py`، پروفایل `queue_lane_v1` در لجر) | `publish-queue.md` (قرارداد آماده‌سازی) + `queue-maintainer.md` (قرارداد ابزارهای روز انتشار) + `QUEUE_IDS` در `tools/dentcast_publish_lifecycle.py` + تست‌های `test_queue_apply.py` و `test_dentcast_publish_queue_lane.py` |
 | تغییر در گیت‌های تأیید یا Hard Ruleها | بخش ۱ و ۴ همین فایل |
 | ثابتِ سراسریِ تازه در `global/site-invariants.md` که یک صفحهٔ تازه می‌تواند خرابش کند | گام ۲ `README.md` (بررسیِ بقای کلون) + ردیفِ `C.2` بخش ۴ |
 
