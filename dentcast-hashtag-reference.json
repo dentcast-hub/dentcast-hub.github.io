@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 122,
+   "count": 123,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -382,7 +382,8 @@
     "insight/insight-100",
     "insight/insight-101",
     "insight/insight-102",
-    "insight/insight-103"
+    "insight/insight-103",
+    "insight/insight-104"
    ]
   },
   {
@@ -660,7 +661,7 @@
     "#Occlusion"
    ],
    "co_tags": [],
-   "count": 47,
+   "count": 48,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-23",
@@ -708,7 +709,8 @@
     "sharehub/share-36",
     "insight/insight-96",
     "chairside/chairside-44",
-    "insight/insight-103"
+    "insight/insight-103",
+    "insight/insight-104"
    ]
   },
   {
@@ -1219,6 +1221,60 @@
    ]
   },
   {
+   "key": "روکش_ایمپلنت",
+   "tag": "#روکش_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
+   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
+   "aliases": [
+    "implant crown",
+    "روکش روی ایمپلنت",
+    "روکش ایمپلنتی",
+    "کراون ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 35,
+   "content_ids": [
+    "episodes/episode-125-1",
+    "episodes/episode-139",
+    "episodes/episode-140",
+    "episodes/episode-141",
+    "episodes/episode-147",
+    "episodes/episode-148-2",
+    "insight/insight-9",
+    "insight/insight-10",
+    "litecast/lite-CAST10",
+    "litecast/lite-CAST12",
+    "litecast/lite-CAST16",
+    "litecast/lite-CAST18",
+    "dentcast-plus/video-4",
+    "sharehub/share-4",
+    "dentcast-plus/video-5",
+    "metanotes/meta-10",
+    "insight/insight-30",
+    "insight/insight-33",
+    "chairside/chairside-12",
+    "chairside/chairside-17",
+    "insight/insight-46",
+    "insight/insight-47",
+    "insight/insight-50",
+    "insight/insight-52",
+    "insight/insight-53",
+    "insight/insight-57",
+    "chairside/chairside-28",
+    "insight/insight-62",
+    "insight/insight-63",
+    "chairside/chairside-31",
+    "insight/insight-85",
+    "insight/insight-86",
+    "chairside/chairside-43",
+    "insight/insight-100",
+    "insight/insight-104"
+   ]
+  },
+  {
    "key": "هوش_مصنوعی",
    "tag": "#هوش_مصنوعی",
    "domain": "ai",
@@ -1269,59 +1325,6 @@
     "dentai/promptologist/prompt-append2-4",
     "dentai/promptologist/prompt-append2-5",
     "dentai/promptologist/prompt-append2-6"
-   ]
-  },
-  {
-   "key": "روکش_ایمپلنت",
-   "tag": "#روکش_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "روکشِ متکی بر ایمپلنت، در تمایز با روکش روی دندان طبیعی.",
-   "use_when": "مقاله تصمیمش مختص روکش ایمپلنت باشد.",
-   "aliases": [
-    "implant crown",
-    "روکش روی ایمپلنت",
-    "روکش ایمپلنتی",
-    "کراون ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 34,
-   "content_ids": [
-    "episodes/episode-125-1",
-    "episodes/episode-139",
-    "episodes/episode-140",
-    "episodes/episode-141",
-    "episodes/episode-147",
-    "episodes/episode-148-2",
-    "insight/insight-9",
-    "insight/insight-10",
-    "litecast/lite-CAST10",
-    "litecast/lite-CAST12",
-    "litecast/lite-CAST16",
-    "litecast/lite-CAST18",
-    "dentcast-plus/video-4",
-    "sharehub/share-4",
-    "dentcast-plus/video-5",
-    "metanotes/meta-10",
-    "insight/insight-30",
-    "insight/insight-33",
-    "chairside/chairside-12",
-    "chairside/chairside-17",
-    "insight/insight-46",
-    "insight/insight-47",
-    "insight/insight-50",
-    "insight/insight-52",
-    "insight/insight-53",
-    "insight/insight-57",
-    "chairside/chairside-28",
-    "insight/insight-62",
-    "insight/insight-63",
-    "chairside/chairside-31",
-    "insight/insight-85",
-    "insight/insight-86",
-    "chairside/chairside-43",
-    "insight/insight-100"
    ]
   },
   {
@@ -5549,6 +5552,33 @@
    ]
   },
   {
+   "key": "اکلوژن_ایمپلنت",
+   "tag": "#اکلوژن_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "طرح و تنظیمِ اکلوژن روی رستوریشن‌های ایمپلنتی (implant-protected occlusion) — ایمپلنت لیگامان پریودنتال و حسِ عمقیِ دندان را ندارد، پس شدتِ تماس، بارِ طرفی و طرحِ اکلوزال روی آن جداگانه تصمیم گرفته می‌شود؛ و نقشِ اکلوژن در عوارضِ مکانیکی (شل شدن و شکستِ پیچ، شکستِ اباتمنت و فیکسچر) و تحلیلِ استخوانِ اطرافِ ایمپلنت.",
+   "use_when": "مقاله بگوید اکلوژن روی ایمپلنت چطور طراحی یا تنظیم شود، یا اثرِ اکلوژن/اورلود را بر ایمپلنت تعیین تکلیف کند؛ نه هر مقاله‌ی ایمپلنتی که اکلوژن را فقط نام می‌برد.",
+   "aliases": [
+    "implant occlusion",
+    "implant protected occlusion",
+    "implant-protected occlusion",
+    "اکلوژن روی ایمپلنت",
+    "اکلوزن ایمپلنت",
+    "اکلوژن ایمپلنتی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-23",
+    "episodes/episode-60",
+    "notecast/episode-23",
+    "insight/insight-47",
+    "sharehub/share-28",
+    "insight/insight-104"
+   ]
+  },
+  {
    "key": "براکسیسم",
    "tag": "#براکسیسم",
    "domain": "clinical",
@@ -6313,32 +6343,6 @@
     "chairside/chairside-23",
     "sharehub/share-28",
     "insight/insight-96"
-   ]
-  },
-  {
-   "key": "اکلوژن_ایمپلنت",
-   "tag": "#اکلوژن_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "طرح و تنظیمِ اکلوژن روی رستوریشن‌های ایمپلنتی (implant-protected occlusion) — ایمپلنت لیگامان پریودنتال و حسِ عمقیِ دندان را ندارد، پس شدتِ تماس، بارِ طرفی و طرحِ اکلوزال روی آن جداگانه تصمیم گرفته می‌شود؛ و نقشِ اکلوژن در عوارضِ مکانیکی (شل شدن و شکستِ پیچ، شکستِ اباتمنت و فیکسچر) و تحلیلِ استخوانِ اطرافِ ایمپلنت.",
-   "use_when": "مقاله بگوید اکلوژن روی ایمپلنت چطور طراحی یا تنظیم شود، یا اثرِ اکلوژن/اورلود را بر ایمپلنت تعیین تکلیف کند؛ نه هر مقاله‌ی ایمپلنتی که اکلوژن را فقط نام می‌برد.",
-   "aliases": [
-    "implant occlusion",
-    "implant protected occlusion",
-    "implant-protected occlusion",
-    "اکلوژن روی ایمپلنت",
-    "اکلوزن ایمپلنت",
-    "اکلوژن ایمپلنتی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-23",
-    "episodes/episode-60",
-    "notecast/episode-23",
-    "insight/insight-47",
-    "sharehub/share-28"
    ]
   },
   {
@@ -9172,6 +9176,27 @@
    ]
   },
   {
+   "key": "تماس_زودرس",
+   "tag": "#تماس_زودرس",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Premature contact — تماسی که زودتر از بقیه می‌نشیند و مسیر بسته شدن فک را منحرف می‌کند.",
+   "use_when": "مقاله تماس زودرس را تشخیص بدهد یا حذفش کند.",
+   "aliases": [
+    "premature contact",
+    "تماس زودهنگام",
+    "کنتاکت زودرس"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-1",
+    "photocast/episode-2",
+    "insight/insight-104"
+   ]
+  },
+  {
    "key": "توزیع_نیرو",
    "tag": "#توزیع_نیرو",
    "domain": "clinical",
@@ -11559,26 +11584,6 @@
    "content_ids": [
     "insight/insight-61",
     "insight/insight-101"
-   ]
-  },
-  {
-   "key": "تماس_زودرس",
-   "tag": "#تماس_زودرس",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "Premature contact — تماسی که زودتر از بقیه می‌نشیند و مسیر بسته شدن فک را منحرف می‌کند.",
-   "use_when": "مقاله تماس زودرس را تشخیص بدهد یا حذفش کند.",
-   "aliases": [
-    "premature contact",
-    "تماس زودهنگام",
-    "کنتاکت زودرس"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-1",
-    "photocast/episode-2"
    ]
   },
   {

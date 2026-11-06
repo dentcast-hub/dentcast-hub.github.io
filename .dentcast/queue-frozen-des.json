@@ -171,5 +171,23 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "insight/insight-104": {
+    "queue_ref": "queue/11-insight-short-crown-or-premature-contact",
+    "record_sha256": "bc854cdd7215e852bbeb4e75c1e28ccc77d242867ecebbfb3a3b90dabed461b6",
+    "installed_at": "2026-11-06",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }
