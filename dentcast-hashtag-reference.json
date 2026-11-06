@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 121,
+   "count": 122,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -381,7 +381,8 @@
     "insight/insight-99",
     "insight/insight-100",
     "insight/insight-101",
-    "insight/insight-102"
+    "insight/insight-102",
+    "insight/insight-103"
    ]
   },
   {
@@ -659,7 +660,7 @@
     "#Occlusion"
    ],
    "co_tags": [],
-   "count": 46,
+   "count": 47,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-23",
@@ -706,7 +707,8 @@
     "insight/insight-94",
     "sharehub/share-36",
     "insight/insight-96",
-    "chairside/chairside-44"
+    "chairside/chairside-44",
+    "insight/insight-103"
    ]
   },
   {
@@ -2976,6 +2978,42 @@
    ]
   },
   {
+   "key": "تنظیم_اکلوژن",
+   "tag": "#تنظیم_اکلوژن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "حذف انتخابیِ تماس‌های ناخواسته با تراش، بدون از بین بردن هندسه‌ی فانکشنال.",
+   "use_when": "مقاله روش یا قاعده‌ی تراش تنظیمی بدهد.",
+   "aliases": [
+    "سلکتیو گرایندینگ",
+    "میزان کردن اکلوژن",
+    "تنظیم اکلوزال",
+    "occlusal equilibration"
+   ],
+   "variants": [
+    "#تنظیم_اکلوژال",
+    "#تنظیم-اکلوژن",
+    "#چکاپ_اکلوژنی"
+   ],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "insight/insight-1",
+    "photocast/episode-2",
+    "dentcast-plus/video-2",
+    "insight/insight-27",
+    "dentcast-plus/video-6",
+    "insight/insight-37",
+    "sharehub/share-6",
+    "insight/insight-44",
+    "insight/insight-54",
+    "insight/insight-56",
+    "chairside/chairside-37",
+    "insight/insight-100",
+    "insight/insight-103"
+   ]
+  },
+  {
    "key": "دندان_قدامی",
    "tag": "#دندان_قدامی",
    "domain": "clinical",
@@ -3281,41 +3319,6 @@
     "insight/insight-82",
     "sharehub/share-38",
     "sharehub/share-46"
-   ]
-  },
-  {
-   "key": "تنظیم_اکلوژن",
-   "tag": "#تنظیم_اکلوژن",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "حذف انتخابیِ تماس‌های ناخواسته با تراش، بدون از بین بردن هندسه‌ی فانکشنال.",
-   "use_when": "مقاله روش یا قاعده‌ی تراش تنظیمی بدهد.",
-   "aliases": [
-    "سلکتیو گرایندینگ",
-    "میزان کردن اکلوژن",
-    "تنظیم اکلوزال",
-    "occlusal equilibration"
-   ],
-   "variants": [
-    "#تنظیم_اکلوژال",
-    "#تنظیم-اکلوژن",
-    "#چکاپ_اکلوژنی"
-   ],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "insight/insight-1",
-    "photocast/episode-2",
-    "dentcast-plus/video-2",
-    "insight/insight-27",
-    "dentcast-plus/video-6",
-    "insight/insight-37",
-    "sharehub/share-6",
-    "insight/insight-44",
-    "insight/insight-54",
-    "insight/insight-56",
-    "chairside/chairside-37",
-    "insight/insight-100"
    ]
   },
   {
@@ -8464,6 +8467,29 @@
    ]
   },
   {
+   "key": "ارتباط_با_لابراتوار",
+   "tag": "#ارتباط_با_لابراتوار",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتقال اطلاعاتی که تکنسین برای ساخت کار لازم دارد و خودش نمی‌تواند در بیمار ببیند، مثل رنگ، شفافیت، لکه‌ها و ویژگی‌های سطح دندان، از طریق عکس، نوشته یا مرجع مشترک.",
+   "use_when": "مقاله توضیح دهد چه اطلاعاتی و چطور باید از مطب به لابراتوار برسد.",
+   "aliases": [
+    "lab communication",
+    "laboratory communication",
+    "shade communication",
+    "ارتباط با تکنسین",
+    "ارسال رنگ به لابراتوار"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "sharehub/share-26",
+    "insight/insight-101",
+    "insight/insight-103"
+   ]
+  },
+  {
    "key": "ارجاع_تخصصی",
    "tag": "#ارجاع_تخصصی",
    "domain": null,
@@ -10908,28 +10934,6 @@
    "content_ids": [
     "litecast/lite-CAST17",
     "litecast/lite-CAST18"
-   ]
-  },
-  {
-   "key": "ارتباط_با_لابراتوار",
-   "tag": "#ارتباط_با_لابراتوار",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتقال اطلاعاتی که تکنسین برای ساخت کار لازم دارد و خودش نمی‌تواند در بیمار ببیند، مثل رنگ، شفافیت، لکه‌ها و ویژگی‌های سطح دندان، از طریق عکس، نوشته یا مرجع مشترک.",
-   "use_when": "مقاله توضیح دهد چه اطلاعاتی و چطور باید از مطب به لابراتوار برسد.",
-   "aliases": [
-    "lab communication",
-    "laboratory communication",
-    "shade communication",
-    "ارتباط با تکنسین",
-    "ارسال رنگ به لابراتوار"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "sharehub/share-26",
-    "insight/insight-101"
    ]
   },
   {
