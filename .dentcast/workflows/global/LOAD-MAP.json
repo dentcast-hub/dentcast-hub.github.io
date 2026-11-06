@@ -38,9 +38,25 @@
           "core": false
         },
         {
-          "id": "pathway-operations",
+          "id": "pathway-standings",
           "lines": [
             274,
+            364
+          ],
+          "core": false
+        },
+        {
+          "id": "pathway-certificate",
+          "lines": [
+            365,
+            543
+          ],
+          "core": false
+        },
+        {
+          "id": "pathway-exam",
+          "lines": [
+            544,
             803
           ],
           "core": false
@@ -490,25 +506,27 @@
     {
       "pattern": "plus/pathways.json",
       "sections": [
-        "pathway-operations"
+        "pathway-standings",
+        "pathway-certificate"
       ]
     },
     {
       "pattern": "plus/exam-questions.json",
       "sections": [
-        "pathway-operations"
+        "pathway-exam",
+        "pathway-certificate"
       ]
     },
     {
       "pattern": "plus/bundles.json",
       "sections": [
-        "pathway-operations"
+        "pathway-certificate"
       ]
     },
     {
       "pattern": "plus/js/home-bundles.js",
       "sections": [
-        "pathway-operations"
+        "pathway-certificate"
       ]
     },
     {

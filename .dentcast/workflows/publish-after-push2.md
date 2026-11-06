@@ -15,6 +15,9 @@ monitors, reports, and merges only with authorization.
   periodic status messages: one at Push 2 (already sent), one at the run's end, one at merge.
 - `gh run watch`, or without `gh` the GitHub MCP tools: `actions_list` (the branch's runs of
   `post-cut2-mechanical.yml`), `actions_get` (status, conclusion), `get_job_logs` (failed jobs).
+  The branch normally has **more than one** run — the delivery-1 push starts one too, which skips
+  itself. The run to monitor is the one whose `head_sha` is the Push-2 SHA; never judge by position
+  or by the newest run.
 - No run, or preflight skipped: inspect the event, branch and handoff before saying Actions started.
 - Logs and recovery bundle: run artifact `post-cut2-<Push-2 SHA>` (14 days), through the Actions API
   (list the run's artifacts, download that zip), not from the branch.

@@ -32,7 +32,12 @@ class GlobalRulesTests(unittest.TestCase):
         self.assertNotIn('google-auth', self.ids(['sharehub/share-36.html', 'plus/des-scores.json']))
 
     def test_pathway_edit_loads_certificate_and_exam_constraints(self):
-        self.assertIn('pathway-operations', self.ids(['plus/pathways.json']))
+        # A step insertion can change progress derivation and certifiability, so it loads those two;
+        # the exam-bank internals are a separate section, loaded by the file they govern (2026-11-06).
+        core = {b['id'] for b in self.blocks if b['core']}
+        self.assertEqual(self.ids(['plus/pathways.json']), core | {'pathway-standings', 'pathway-certificate'})
+        self.assertEqual(self.ids(['plus/exam-questions.json']), core | {'pathway-exam', 'pathway-certificate'})
+        self.assertNotIn('pathway-exam', self.ids(['plus/pathways.json']))
 
     def test_routine_publication_paths_load_only_core(self):
         core = {b['id'] for b in self.blocks if b['core']}
@@ -42,9 +47,9 @@ class GlobalRulesTests(unittest.TestCase):
             with self.subTest(path=path):
                 self.assertEqual(self.ids([path]), core)
 
-    def test_home_bundles_loads_core_and_pathway_operations(self):
+    def test_home_bundles_loads_core_and_pathway_certificate(self):
         core = {b['id'] for b in self.blocks if b['core']}
-        self.assertEqual(self.ids(['plus/js/home-bundles.js']), core | {'pathway-operations'})
+        self.assertEqual(self.ids(['plus/js/home-bundles.js']), core | {'pathway-certificate'})
 
     def test_episode_loads_audio_constraints(self):
         self.assertIn('audio-hub', self.ids(['episodes/episode-166.html']))

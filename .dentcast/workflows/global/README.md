@@ -25,8 +25,10 @@ The map covers all lines of the three canonical sources, without summaries:
 - `.dentcast/workflows/global/plus-premium.md`
 - `.dentcast/workflows/global/site-invariants.md`
 
-Pathway data changes additionally load the complete pathway/certificate/exam
-operations section; episode/audio paths load the audio-hub rules. Routine
+Pathway data changes additionally load the complete sections that govern the
+file at hand — `plus/pathways.json` the standings/progress and certificate
+sections, `plus/exam-questions.json` the exam and certificate sections;
+episode/audio paths load the audio-hub rules. Routine
 publication data (brain, catalogs, `plus/cabinet-papers.json`,
 `plus/cabinet-bridge.json`, `plus/assistant-tags.json`, DES records and
 `.dentcast/des-fidelity-plans/`) loads only the core sections. Unknown

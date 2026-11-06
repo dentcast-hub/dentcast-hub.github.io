@@ -127,7 +127,11 @@ reaches only the last delivered cut.
    `git switch -c <branch> --no-track origin/main`. A branch that holds commits is never moved
    (`TOOL_OLDER_THAN_ORIGIN_MAIN` then names `git merge --no-edit origin/main`).
    `SHALLOW_CLONE_DEEPEN_REQUIRED` → `git fetch --deepen=50 origin` (or `--unshallow`) and retry.
-2. Check only that `.dentcast/PUBLISH-HANDOFF.md` does not exist (section above).
+2. Check only that `.dentcast/PUBLISH-HANDOFF.md` does not exist (section above). Then run the
+   global selector with every path this run will touch and read what it adds
+   (`python3 tools/dentcast_global_rules.py --path <path> … [--read]`, `global/README.md`); rerun it
+   when the scope grows. It selects per file, so a pathway step loads the standings/certificate
+   sections and not the exam internals.
 3. `python3 tools/dentcast_publish_handoff.py plan` (paper-only: `plan --paper-only`, category
    `paper-only`); its full `steps` go into the input JSON (`publish-handoff-tool.md`). `init` and
    `record` reject an incomplete ledger.
@@ -171,8 +175,13 @@ python3 tools/dentcast_publish_handoff.py advance --id <id> --evidence <receipt-
 **Scope and bytes.** Declare every source/page/data path in `target_paths`, including inputs needed
 to detect stale evidence. The writer enrolls only canonical builder outputs it sees change; a new
 unrelated dirty path is preserved and reviewed, never auto-staged or hidden. Preserve newline style
-(`dentcast_text_io.write_text` / `text_io.mjs`); mixed endings fail with a request for a scoped byte
-edit. A stale or missing receipt is a current-run repair, never permission to scan branches or to
+(`dentcast_text_io.write_text` / `text_io.mjs`). **A data file is never re-serialised whole**:
+`plus/des-scores.json` and `dentcast-brain.json` have mixed endings on purpose and a whole-file
+`json.dumps` would silently rewrite thousands of lines, so `write_text` refuses them. Insert with the
+byte-preserving editors in the same module — `read_raw`, then `json_append` (a record or array item),
+`json_replace_scalar` (a counter) or `json_replace_value` (one list), then `write_raw` — never a
+hand-rolled byte edit. A stale or missing receipt is a current-run repair, never permission to scan
+branches or to
 invent past outcomes.
 
 **Invalidation (same run, no extra delivery).** Bind each local input as `{"path": "inputs/paper-1.pdf",

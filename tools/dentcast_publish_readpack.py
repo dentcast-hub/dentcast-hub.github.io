@@ -169,9 +169,15 @@ def route_spans(name, lines, *, category, attached_paper, challenge):
         raise UnsafeSelection('CONFLICTING_LITECAST_CHALLENGE_INTAKE')
 
     if name == '03-litecast-and-page.md' and not lite:
-        preamble = boundary(lines, '<!-- /dentcast-checkpoint-protocol:v1 -->') + 1
+        # The preamble keeps what a non-LiteCast run still needs from the branch's head: the
+        # module's own ledger-steps line and step 0's own paragraph, which IS the canonical
+        # C.0.x skip reason ("any other category ignores it"). Cutting at the banner instead
+        # (before 2026-11-06) dropped both and forced a second read of these lines.
+        banner = boundary(lines, '<!-- /dentcast-checkpoint-protocol:v1 -->') + 1
+        first_substep = [i for i, line in enumerate(lines) if line.startswith('**0.1 ')]
+        preamble = first_substep[0] if len(first_substep) == 1 else banner
         common = boundary(lines, '### 1. Template lock & hash')
-        if common <= preamble:
+        if common <= preamble or preamble < banner:
             raise UnsafeSelection('INVALID_MODULE_03_ORDER')
         return include([(0, preamble), (common, size)], size), 'OMIT_LITECAST_ONLY_BRANCH'
 
