@@ -163,6 +163,51 @@ jobs:
           BASE_REF: ${{ github.event.repository.default_branch }}
         run: python3 tools/check_publish_merge_gate.py
 
+      # Founder decision 2026-11-06: after a successful delivery 3 nothing
+      # mechanical is left to the agent; this job opens the PR to the default
+      # branch itself and never merges it (the merge is the founder's
+      # decision). A queue-lane item's PR is opened by queue-publish.yml
+      # (job await-delivery-3, with the queue item details), so it is skipped
+      # here. Without the QUEUE_PUBLISH_TOKEN secret (a GITHUB_TOKEN PR would
+      # not run the PR gates) the step writes one summary line and succeeds.
+      - name: Open the PR to the default branch (never merged here)
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.QUEUE_PUBLISH_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          BASE_REF: ${{ github.event.repository.default_branch }}
+          TARGET_BRANCH: ${{ needs.preflight.outputs.target_branch }}
+          PR_INFO: ${{ runner.temp }}/dentcast-post-cut2/pull-request.json
+        run: |
+          set -euo pipefail
+          if [[ ! -f "$PR_INFO" ]]; then
+            echo "- PR: not opened — the runner wrote no pull-request.json for this delivery 3." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          if [[ "$(jq -r '.open' "$PR_INFO")" != "true" ]]; then
+            printf '%s\n' "- PR: not opened here — $(jq -r '.reason' "$PR_INFO")" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          if [[ -z "$GH_TOKEN" ]]; then
+            printf '%s\n' "- PR: not opened — repository secret QUEUE_PUBLISH_TOKEN is not set (fine-grained PAT: Pull requests read/write, Contents read). Open the PR from \`$TARGET_BRANCH\` to \`$BASE_REF\` by hand; the merge stays the founder's decision." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          title="$(jq -r '.title' "$PR_INFO")"
+          jq -r '.body' "$PR_INFO" > "$RUNNER_TEMP/post-cut2-pr-body.md"
+          # REST, not `gh pr create`: the same call works where GraphQL is blocked.
+          if ! url="$(gh api "repos/$GH_REPO/pulls" -f title="$title" -f head="$TARGET_BRANCH" \
+                -f base="$BASE_REF" -F body=@"$RUNNER_TEMP/post-cut2-pr-body.md" --jq .html_url)"; then
+            owner="${GH_REPO%%/*}"
+            url="$(gh api "repos/$GH_REPO/pulls?state=open&head=$owner:$TARGET_BRANCH" --jq '.[0].html_url // empty')"
+            if [[ -z "$url" ]]; then
+              echo "::warning::the PR could not be opened; delivery 3 is on the branch — open the PR from $TARGET_BRANCH to $BASE_REF by hand"
+              printf '%s\n' "- PR: not opened (API error); delivery 3 is on \`$TARGET_BRANCH\`. Open the PR to \`$BASE_REF\` by hand; the merge stays the founder's decision." >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+          fi
+          echo "pr_url=$url" >> "$GITHUB_OUTPUT"
+          printf '%s\n' "- PR: $url (merge when every gate is green; the merge is the founder's decision)" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Upload logs and recovery bundle
         if: always()
         uses: actions/upload-artifact@v4
@@ -186,6 +231,6 @@ jobs:
             printf '%s\n' "- Push-2 SHA: \`$EXPECTED_HEAD\`"
             echo "- Job result: **$JOB_STATUS**"
             echo "- Push 1 and pushes without a v2 second-cut handoff are skipped by the read-only preflight."
-            echo "- A successful run creates and confirms exactly delivery 3."
+            echo "- A successful run creates and confirms exactly delivery 3, then opens the PR (never merges it)."
             echo "- On failure, inspect the uploaded logs/recovery bundle before resuming."
           } >> "$GITHUB_STEP_SUMMARY"

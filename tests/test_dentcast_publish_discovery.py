@@ -69,7 +69,8 @@ class DiscoveryTests(unittest.TestCase):
         selected = result['selected']
         self.assertEqual(selected['head_sha'], 'b'*40)
         self.assertEqual(selected['branch'], 'publish/work')
-        self.assertEqual(selected['publication'], self.p)
+        # The saved run carries the init-time ledger_order_v2 marker.
+        self.assertEqual(selected['publication'], self.template['publication'])
         self.assertEqual(selected['next_step'], 'rules')
         self.assertTrue(selected['requires_checkout_verification'])
         self.assertIn('/blob/'+'b'*40+'/', selected['handoff_url'])

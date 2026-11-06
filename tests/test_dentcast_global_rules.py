@@ -36,8 +36,11 @@ class GlobalRulesTests(unittest.TestCase):
 
     def test_routine_publication_paths_load_only_core(self):
         core = {b['id'] for b in self.blocks if b['core']}
-        for path in ['.dentcast/hashtag-batches/share-41.json', '.dentcast/publication-reports/sharehub-share-41.md']:
-            self.assertEqual(self.ids([path]), core)
+        for path in ['.dentcast/hashtag-batches/share-41.json', '.dentcast/publication-reports/sharehub-share-41.md',
+                     'plus/cabinet-papers.json', 'plus/cabinet-bridge.json', 'plus/assistant-tags.json',
+                     '.dentcast/des-fidelity-plans/sharehub/share-41.json']:
+            with self.subTest(path=path):
+                self.assertEqual(self.ids([path]), core)
 
     def test_home_bundles_loads_core_and_pathway_operations(self):
         core = {b['id'] for b in self.blocks if b['core']}

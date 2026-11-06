@@ -1,6 +1,6 @@
 # Find an interrupted publication on GitHub
 
-Use this active shared procedure only after the user explicitly says a publication is incomplete/interrupted or asks to resume one while explicitly identifying it as incomplete/interrupted. A generic «ادامه بده» alone does not trigger recovery. At recovery, read an existing local `.dentcast/PUBLISH-HANDOFF.md` once and preserve dirty/local-only work; during that recovery do not reread it. If the handoff is missing, follow the discovery steps below. Discovery does not transfer local-only work.
+Recovery only: the trigger and read-once rule are in `publish-checkpoints.md`, «Interrupted publication». Preserve dirty/local-only work. Use these steps when the local handoff is missing. Discovery does not transfer local-only work.
 Do not choose the newest-named, newest-created or most recently committed branch.
 The active fixed handoff and its recorded run identity determine candidates.
 
@@ -74,7 +74,7 @@ refresh discovery/reconcile the new state rather than force-resetting work.
 Use the matching named branch so the recorded branch identity remains intact.
 In a single-branch clone (the usual cloud session) run
 `git remote set-branches --add origin <branch>`, `git fetch origin <branch>` and
-`git switch --track origin/<branch>`, then deepen a shallow clone. Continue and
+`git switch --track origin/<branch>` (a shallow-clone refusal: `publish-checkpoints.md`). Continue and
 push on that branch, not on the session's own new `ccr-*` branch. Copying the
 work to a new branch leaves the original active handoff behind as a second run.
 If the session may push only its own branch, stop and report that instead.
@@ -83,12 +83,7 @@ Run `inspect --check-remote` in that checkout. Verify file/workflow fingerprints
 required inputs, completed evidence, approvals and external outcomes. An
 ambiguous upload/notification must be reconciled before retry. Read the active
 modular workflow and continue the first unfinished canonical step only when
-its prerequisites hold. Preserve the recorded delivery policy. New page runs
-deliver exactly after `C.4.9`, then after `C.6` for new v2 editorial-locked publications (or `C.4.13` for a v1-only in-flight publication with its original order), and after
-final work, Phase F and G. Cuts 1/2 include work and latest handoff; cut 3 combines
-final work, completion receipt and handoff deletion. Intermediate progress,
-stops and external-action receipts stay local; do not add another push.
-Pre-policy interrupted runs and paper-only retain their compatibility path. Discovery never switches branches, fetches, writes a
+its prerequisites hold. Preserve the recorded delivery policy and ledger order (`publish-checkpoints.md`); do not add a push. Discovery never switches branches, fetches, writes a
 handoff, publishes, performs external actions, or certifies semantic completion.
 
 All agents use this shared procedure through `publish-handoff.md` and

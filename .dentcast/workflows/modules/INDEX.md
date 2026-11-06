@@ -4,7 +4,7 @@
 
 Legacy snapshots are backup only and are not read for execution or ambiguity resolution. Preserve source-dependent DES/Fidelity and all original gates.
 
-## Active execution order
+## Active modules (file order, not execution order)
 
 | File | Original lines |
 |---|---|
@@ -22,7 +22,7 @@ Legacy snapshots are backup only and are not read for execution or ambiguity res
 | [12-english-notify-verify.md](12-english-notify-verify.md) | 2394–2598 |
 
 
-The original line ranges document extraction provenance, not runtime reads. Each active module now has an explicit checkpoint-protocol preface; its original source body is preserved. Modules 02, 03 and 08 redirect obsolete global-rule pointers to active shared files. Scientific content and execution rules are unchanged. The earlier eight-file extraction is historical reference only (`historical/`) and is not an alternative route.
+The original line ranges document extraction provenance only. File numbers are not the execution order: since 2026-11-06 the ledger order of `../publish-checkpoints.md» («Order, messages, text lock, deliveries») runs paper ingestion (06) and DES/Fidelity (08) before links (05) and flashcards/FAQ (07), and each module's preface lists its ledger steps. The modules were deduplicated the same day (one home per rule); the scientific DES/Fidelity contract in 08 is unchanged. The earlier eight-file extraction is historical reference only (`historical/`) and is not an alternative route.
 
 ## Development records and staging tools
 

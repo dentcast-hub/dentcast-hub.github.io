@@ -1,5 +1,7 @@
 # DentCast Cross-Link Router — glossary back-links into published bodies
 
+> **Inside a publication (step 4.7-ب):** ASK-grade candidates are not applied and are recorded as skipped (standing acceptance, `publish-checkpoints.md`); only STRONG matches are linked. The question below applies to the standalone cross-link route.
+
 Fourth router, alongside `README.md` (publishing), `en-version.md` and `ads.md`.
 Those three all act on **one page in flight**. This one acts on the opposite
 direction: **N pages that already exist, pointed at a term published later.**

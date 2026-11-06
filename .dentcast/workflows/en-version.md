@@ -271,7 +271,9 @@ The fa page keeps its standard 3-line hreflang block (fa-IR/fa/x-default)
 normalizes this.
 
 ### 7. hreflang / noindex machinery
-Run both enforcement scripts as part of the publish:
+**Inside a page publication (module 12 Phase D) steps 7, 8 and the hash check of step 9 are the
+post-cut2 runner's; the agent only authors the mirror before C.6.** On the standalone English route,
+run both enforcement scripts as part of the publish:
 
 ```bash
 python3 .github/scripts/inject_hreflang.py    # en page: hreflang stripped; fa page: 3-line block, no en alternate

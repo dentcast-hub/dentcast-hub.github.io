@@ -26,7 +26,10 @@ The map covers all lines of the three canonical sources, without summaries:
 - `.dentcast/workflows/global/site-invariants.md`
 
 Pathway data changes additionally load the complete pathway/certificate/exam
-operations section; episode/audio paths load the audio-hub rules. Unknown
+operations section; episode/audio paths load the audio-hub rules. Routine
+publication data (brain, catalogs, `plus/cabinet-papers.json`,
+`plus/cabinet-bridge.json`, `plus/assistant-tags.json`, DES records and
+`.dentcast/des-fidelity-plans/`) loads only the core sections. Unknown
 paths (including API/admin, unfamiliar shared code, new categories and
 unmapped specialty tasks) load **all sections**. For non-file operations,
 external actions, uncertain scope or an explicit subsystem task, use `--all`.
@@ -42,6 +45,6 @@ update ranges and hashes and run `test_dentcast_global_rules.py`; every line
 must remain covered exactly once. Existing references to the full canonical
 files remain valid; use `--all --read` whenever their full context is required.
 
-Execution authority: applicable canonical workflow and its active modules > these global rules > agent-parity > client routing summaries. For new publication the twelve modules in `../modules/INDEX.md` are the complete instruction sequence; README routes them, not a monolithic fallback. User instructions take priority. A genuine contradiction in active instructions must be surfaced rather than resolved by loading backups.
+Execution authority: `../README.md` («Authority»), stated only there. For new publication the twelve modules in `../modules/INDEX.md` are the complete instruction sequence; README routes them, not a monolithic fallback. User instructions take priority. A genuine contradiction in active instructions must be surfaced rather than resolved by loading backups.
 
 Source migration is documented in MIGRATION.json for audit only. Legacy snapshots are backup artifacts, never required reading or runtime authority. Existing references to AGENTS §6/7/8 or CLAUDE Repo conventions/Site-wide invariants resolve to these active files. Preserve scientific prompts and source-dependent DES/Fidelity exactly.

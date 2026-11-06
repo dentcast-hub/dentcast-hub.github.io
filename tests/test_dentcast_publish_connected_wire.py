@@ -30,7 +30,8 @@ class ConnectedWireParity(unittest.TestCase):
         wire=h.render(obj)
         saved=json.loads(wire.split(h.BEGIN)[1].split(h.END)[0])
         self.assertEqual(saved["publication"]["steps"][-1]["id"],"C.4.9")
-        self.assertEqual(len(saved["publication"]["steps"]),33)
+        # v2 ledger order: cut 1 now also holds C.4.10.1-3 and C.4.13 (33 + 4).
+        self.assertEqual(len(saved["publication"]["steps"]),37)
         restored,_=h.parse_state(wire.encode())
         self.assertEqual(restored["publication"]["steps"],pub["steps"])
         script=("import {inspectCut1} from './tools/dentcast_connected_wire.mjs';"

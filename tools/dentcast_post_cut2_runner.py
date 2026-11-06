@@ -11,6 +11,7 @@ import argparse
 import json
 import os
 from pathlib import Path, PurePosixPath
+import re
 import subprocess
 import sys
 import tarfile
@@ -208,6 +209,64 @@ def verify_scope(root: Path, pub: dict):
         raise RunnerError("POST_CUT2_OUT_OF_SCOPE_CHANGE:" + name)
 
 
+# A stamped asset/data reference in a page: "/dc-nav.js?v=316",
+# "dentcast-brain.json?v=a0cc8d3ad7". The same shape check_publish_merge_gate
+# treats as recomputed, so a YouTube watch?v= id is never read as a stamp.
+ASSET_STAMP = re.compile(r"([A-Za-z0-9_./-]+\.(?:js|css|json))\?v=([0-9A-Za-z._-]+)")
+
+
+def asset_stamps(text: str) -> dict[str, set[str]]:
+    stamps: dict[str, set[str]] = {}
+    for asset, version in ASSET_STAMP.findall(text):
+        stamps.setdefault(asset, set()).add(version)
+    return stamps
+
+
+def lowered(old: set[str], new: set[str]) -> bool:
+    """Numeric stamps may only rise; a content hash may change, never vanish."""
+    if not new:
+        return True
+    if all(v.isdigit() for v in old | new):
+        return (min(int(v) for v in new) < min(int(v) for v in old)
+                or max(int(v) for v in new) < max(int(v) for v in old))
+    return False
+
+
+def asset_version_regressions(root: Path, base: str) -> list[str]:
+    """Pages changed since the Push-2 commit that lost or lowered a ?v= stamp.
+
+    The automated form of module 11's `git diff -G'\\?v=' pillar/` check: a
+    builder with a stale hardcoded suffix silently rolls asset versions back.
+    """
+    names = git(root, "diff", "--name-only", "-z", base, "--", "*.html").split("\0")
+    found = []
+    for name in sorted(n for n in names if n):
+        path = root / name
+        if not path.is_file():
+            continue
+        before = subprocess.run(["git", "show", f"{base}:{name}"], cwd=root,
+                                stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+        if before.returncode:
+            continue  # a page new in delivery 3 has no earlier stamp to keep
+        old = asset_stamps(before.stdout.decode("utf-8", "replace"))
+        new = asset_stamps(path.read_bytes().decode("utf-8", "replace"))
+        for asset in sorted(old):
+            if lowered(old[asset], new.get(asset, set())):
+                found.append(f"{name}:{asset}?v={','.join(sorted(old[asset]))}->"
+                             + (",".join(sorted(new.get(asset, ()))) or "missing"))
+    return found
+
+
+def require_asset_versions(root: Path, base: str, when: str):
+    regressions = asset_version_regressions(root, base)
+    if regressions:
+        raise RunnerError(
+            f"ASSET_VERSION_REGRESSION ({when}): " + "; ".join(regressions[:8])
+            + ("; ..." if len(regressions) > 8 else "")
+            + ". A builder emitted an older or missing ?v= stamp than the Push-2 page: bump the "
+              "builder's hardcoded suffix to the live value, then resume this run; never ship the rollback.")
+
+
 def ensure_layout(root: Path, path: Path):
     path = path.resolve()
     if path == root or root in path.parents:
@@ -368,6 +427,7 @@ def run_phase(root: Path, artifact_dir: Path, args):
             for i, command in enumerate(command_plan(root, pub), 1):
                 run_command(root, artifact_dir, f"C8-builder-{i}", command, logs)
             verify_scope(root, pub)
+            require_asset_versions(root, expected, "after C.8 builders")
             record_step(root, "C.8", "completed", [
                 "All applicable canonical C.8 builders passed; logs are in the recovery artifact."
             ], note=(
@@ -446,6 +506,9 @@ def run_phase(root: Path, artifact_dir: Path, args):
             pub, _ = publication(root)
             current = handoff.next_step(pub)
         if current == "F":
+            # Fail closed before the verifier: no page in delivery 3 may lose
+            # or lower a ?v= stamp it carried at Push 2 (C.7/D restamps included).
+            require_asset_versions(root, expected, "before Phase F")
             _, digest = publication(root)
             cmd = [sys.executable, str(root / "tools/dentcast_publish_handoff.py"),
                    "--repo", str(root), "verify", "--expected-sha256", digest]
@@ -512,6 +575,49 @@ def write_delivery_recovery(root: Path, artifact_dir: Path, base_sha: str,
     (artifact_dir / "final-delivery-recovery.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return manifest
+
+
+def editorial_notes(pub: dict) -> tuple[list[str], list[str]]:
+    """Mechanical defaults and manual notes recorded in the frozen C.6 lock."""
+    defaults, manual = [], []
+    for d in pub["context"].get("decisions", []):
+        if not (isinstance(d, dict) and d.get("kind") == "second_cut_editorial_lock_v1"):
+            continue
+        for row in d.get("scopes") or []:
+            if not isinstance(row, dict):
+                continue
+            for item in row.get("evidence") or []:
+                if isinstance(item, str) and item.startswith("mechanical defaults: "):
+                    defaults.append(item[len("mechanical defaults: "):])
+                elif isinstance(item, str) and item.startswith("publish-day manual steps: "):
+                    manual.append(item[len("publish-day manual steps: "):])
+    return defaults, manual
+
+
+def pull_request_info(pub: dict, expected_head: str, branch: str, third_sha: str,
+                      run_url: str) -> dict:
+    """Title/body of the PR the workflow opens after delivery 3 (never merged)."""
+    content_id = pub["content_id"]
+    if lifecycle.queue_lane(pub):
+        return {"open": False, "content_id": content_id, "branch": branch,
+                "reason": "queue-lane item: queue-publish.yml (job await-delivery-3) opens its PR"}
+    defaults, manual = editorial_notes(pub)
+    body = [
+        f"Publication `{content_id}` delivered by `post-cut2-mechanical.yml`.", "",
+        f"- content_id: `{content_id}`",
+        f"- Branch: `{branch}`",
+        f"- Push-2 SHA: `{expected_head}`",
+        f"- Delivery 3: `{third_sha}`",
+        f"- Run: {run_url}",
+        f"- Technical report: `{lifecycle.technical_report_path(pub)}`", "",
+        "mechanical_defaults:", *([f"- {x}" for x in defaults] or ["- none"]), "",
+        "manual_steps:", *([f"- {x}" for x in manual] or ["- none"]), "",
+        "Merge when every gate is green; the merge is the founder's decision.",
+    ]
+    return {"open": True, "content_id": content_id, "branch": branch,
+            "push2_sha": expected_head, "delivery3_sha": third_sha, "run_url": run_url,
+            "title": f"{content_id}: publish (delivery 3 by post-cut2-mechanical)",
+            "body": "\n".join(body) + "\n"}
 
 
 def finalize_and_push(root: Path, artifact_dir: Path, expected_head: str,
@@ -600,8 +706,12 @@ def finalize_and_push(root: Path, artifact_dir: Path, expected_head: str,
             # A nonzero response can still mean the remote accepted the commit;
             # exact ls-remote confirmation above is authoritative.
             pass
+        pr = pull_request_info(pub, expected_head, expected_branch, third_sha, run_url)
+        (artifact_dir / "pull-request.json").write_text(
+            json.dumps(pr, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         return {"status": "publication_completed", "third_delivery_sha": third_sha,
-                "publication_completed": True, "run_url": run_url}
+                "publication_completed": True, "run_url": run_url,
+                "pull_request": {k: pr[k] for k in ("open", "content_id", "branch")}}
     except Exception as exc:
         if lifecycle.pending(root):
             head = git(root, "rev-parse", "HEAD")

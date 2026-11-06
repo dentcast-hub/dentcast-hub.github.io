@@ -1,9 +1,9 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
-> **Live publication checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision; this repeated reference never requires a reread. Read the fixed handoff exactly once only when the user explicitly says this publication is incomplete/interrupted; a request to resume counts only if it identifies the publication as incomplete/interrupted. During an active run, keep its state in the current session; do not read or inspect the handoff before each step. Use the latest digest returned by the helper, then mark each step `started` with `tools/dentcast_publish_handoff.py step`. After EACH completed/skipped/blocked/failed step, write its real evidence/reason with the same tool before continuing or handing off. Never auto-mark semantic or scientific work complete.
-> Checkpoint IDs for this module: C.0, C.0.1, C.0.2, C.0.3, C.0.4, C.1, C.2, C.0.5, C.0.6. Category exceptions require explicit skip reasons. The protocol defines dependency ordering (builders before final stamping; LiteCast links after page construction). Phase F completion uses the real `verify` command.
-> **Fixed page deliveries:** after `C.4.9`, then after `C.6` for new v2 editorial-locked publications (legacy v1-only publications keep `C.4.13`), then after actual Phase F + report G. Cuts 1/2 deliver work plus handoff; cut 3 delivers final work, completion receipt and handoff deletion together. All intermediate checkpoints stay local; no extra turn-end or cleanup push.
-
+> **Checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision. Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
+> **Order, founder messages and the three deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
+
+Ledger steps in this module: `C.0`, `C.0.1`, `C.0.2`, `C.0.3`, `C.0.4` (LiteCast 0.1–0.4), `C.1`, `C.2`, `C.0.5`, `C.0.6` (LiteCast links, after the page is built).
 
 ## Phase C — Execute
 
@@ -11,167 +11,99 @@ Run, in order:
 
 ### 0. LiteCast branch — isolated track (overrides the general steps)
 
-**Check the locked category first (from Phase B Question 1).** If it is **LiteCast**, this branch's rules **override** the corresponding general steps below. LiteCast is **non-specialist (general-audience)** content, deliberately kept **separate** from the rest of the site's specialist ecosystem: it has its own source of truth, its own internal link structure, and must **not** be cross-linked with specialist content. If the locked category is anything other than LiteCast, ignore this section and proceed normally from step 1.
+**Check the locked category first.** If it is **LiteCast** (Hard Rule 10), this branch overrides the corresponding general steps; any other category ignores it and starts at step 1.
 
 **0.1 — Source of truth is `litecast/lite-glossary.json`, not `dentcast-brain.json`.**
-- The file is a JSON **object** whose entries live under the top-level **`LightGlossary`** key — an array of LiteCast entries (despite the filename, this is LiteCast *content*, not a glossary of terms). The entry shape is `type` (`"litecast"`), `id` (`litecast-N`), `title`, `caption`, `hashtags`, `keywords`, `page_url` (a path like `litecast/lite-CASTN.html`, e.g. `litecast/lite-CAST42.html`). There is **no** `pillar` field — confirm the live shape from the file rather than trusting this list.
-- Infer **all** LiteCast structure from `litecast/lite-glossary.json`: required fields, schema shape, directory/URL pattern, and media requirements. Read it the way Phase A reads the brain — find the **most recent** entry in `LightGlossary` and use it as both the **schema** and **structural** template.
-- The new LiteCast entry is **appended to the `LightGlossary` array** in `litecast/lite-glossary.json`, matching its format **exactly** (identical keys/nesting/ordering to the previous entry — no extra fields, no missing fields).
-- Do **NOT** add a LiteCast entry to `dentcast-brain.json`. This replaces the normal step 5 brain-entry write (and the step 2.4 pillar/subtopic determination — see 0.4).
+- A JSON **object** whose entries live under the top-level **`LightGlossary`** array (despite the filename, LiteCast *content*, not a glossary). Entry shape: `type` (`"litecast"`), `id` (`litecast-N`), `title`, `caption`, `hashtags`, `keywords`, `page_url` (`litecast/lite-CASTN.html`, e.g. `litecast/lite-CAST42.html`); **no** `pillar` field. Confirm the live shape from the file.
+- Its **most recent** entry is both the schema and the structural template (as Phase A uses the brain).
+- The new entry is **appended to `LightGlossary`** with identical keys/nesting/ordering.
+- **No** LiteCast entry goes into `dentcast-brain.json`; this replaces step 5 (and step 2.4 — see 0.4).
 
-**0.2 — Isolation: no cross-linking with specialist content.** This is the core of LiteCast's separateness. For a LiteCast publish, **skip these steps entirely**:
-- **Step 2.5** (site-wide capsule block) — do **NOT** inject the دانشنامه / فهرست موضوعی capsules on LiteCast pages; those point into the specialist ecosystem. LiteCast is a **SKIP** case for the *specialist* capsules in the step 2.5 conditional. **The «کاوش بیشتر» section itself is NOT skipped or left empty, though** — it is filled with **LiteCast-internal** capsule links instead, per **step 0.6**.
-- **Step 4.7** (glossary back-link to the new content) — do **NOT** add LiteCast links into any glossary "کاوش بیشتر" section.
-- **Step 4.8** (in-body links from the article to glossary terms / episodes) — LiteCast bodies do **NOT** get inline links to specialist content. (The LiteCast-internal in-body equivalent — inline links to *other LiteCast* items only — is **step 0.5** below.)
-- **Step 4.9** (semantic "کاوش بیشتر" links from the new page to brain entries) — do **NOT** link a LiteCast page out to specialist brain entries.
+**0.2 — Isolation: no cross-linking with specialist content.** For LiteCast **skip** step 2.5's specialist capsules (the «کاوش بیشتر» section itself stays and is filled by 0.6), step 4.7, step 4.8 (its LiteCast counterpart is 0.5) and step 4.9 (its counterpart is 0.6). Symmetric: the rest of the site never links **to** LiteCast, and LiteCast never links **out**.
 
-The rule is symmetric: the rest of the site must not link **to** LiteCast, and LiteCast must not link **out** to specialist content.
+**0.3 — LiteCast's own internal structure.** Clone the previous LiteCast page's structure exactly, including the LiteCast-to-LiteCast linking it already uses, and swap values. Never invent a new internal-linking scheme; if existing pages have none, leave it as the template has it and say so in the report.
 
-**0.3 — LiteCast's own internal structure.** LiteCast items link **only among themselves**. When building the new page, **clone the previous LiteCast page's structure exactly**, including whatever internal LiteCast-to-LiteCast linking it already uses, and swap values. Do **NOT** invent a new internal-linking scheme — derive it from how existing LiteCast pages already link to each other. If existing LiteCast pages have **no** internal-link mechanism, do not fabricate one; leave it as the template has it and note that to the user.
+**0.4 — What still runs (keyed to `litecast/lite-glossary.json` and the LiteCast directory).**
+- Steps 1 and 4 (template lock) against the previous LiteCast page; step 2 per 0.3; step 3 (dates) normally.
+- Step 2.4 is **skipped** and steps 5/5.5 are replaced by 0.1: no specialist pillar/subtopic and no `PILLARS`; a pillar-like field only if the LiteCast schema has one.
+- Step 5.0 (hashtags) against the library; step 6 (Pulse) in LiteCast's own convention.
+- 0.5 and 0.6 replace 4.8/4.9 and the specialist capsules.
+- The runner's C.8/C.7 cover LiteCast's files after Push 2.
 
-**0.4 — What still runs (keyed to `litecast/lite-glossary.json` and the LiteCast directory, not the brain).** Everything that is **not** cross-linking still applies in LiteCast-appropriate form:
-- **Step 1 & Step 4** (template lock + integrity hash) — against the previous LiteCast page.
-- **Step 2** (build the new page) — clone the previous LiteCast page; per 0.3.
-- **Step 3** (date / meta audit) — runs normally.
-- **Step 2.4 (determination) and Step 5 / 5.5** — replaced by 0.1: the entry goes to `litecast/lite-glossary.json` only, and step 2.4 is **skipped**. LiteCast lives **outside** the specialist pillar taxonomy, so do **not** assign a specialist pillar/subtopic and do **not** pull from the `PILLARS` taxonomy; fill a pillar-like field only if `litecast/lite-glossary.json`'s own schema has one, per its own convention.
-- **Step 6** (Pulse) — follow the existing Pulse convention for this type (including the «این نوع معمولاً تو پالس اعلان نمی‌شه — مطمئنی می‌خوای؟» check from Phase B Question 5 if LiteCast isn't customarily announced).
-- **Step 0.6** (LiteCast «کاوش بیشتر» internal links) — the LiteCast counterpart of step 4.9: populate the new page's «کاوش بیشتر» section with capsule links to other LiteCast items only. Replaces the skipped step 2.5 specialist capsules.
-- **Step 7** (cache-bust) and **Step 8** (rebuild) — run, keyed to LiteCast's own files.
+Rule of thumb: **anything about LiteCast's own files runs; anything that bridges LiteCast to the specialist ecosystem is skipped.**
 
-Rule of thumb: **anything about LiteCast's own files runs (including LiteCast-to-LiteCast linking); anything that bridges LiteCast to the specialist ecosystem is skipped.**
-
-**0.5 — In-body semantic linking within LiteCast (LiteCast-only; the LiteCast counterpart of step 4.8).** This is the *only* in-body linking LiteCast gets: inline links from the new item's body text out to **other LiteCast** items, drawn **exclusively** from `litecast/lite-glossary.json`. It is exclusive to LiteCast — it runs only when the locked category is LiteCast, never applies to any other type, and no other type's linking steps (4.7/4.8/4.9) apply to LiteCast. Run it after the new LiteCast page is built (0.3) and before the rebuild (step 8).
+**0.5 — In-body semantic linking within LiteCast (LiteCast-only; the counterpart of step 4.8).** Inline links from the new item's body to **other LiteCast** items only, drawn exclusively from `litecast/lite-glossary.json`. Runs after the page is built (0.3).
 
 #### Step 1 — Semantic analysis of the new body against existing LiteCast entries
 
-Read `litecast/lite-glossary.json` end-to-end. Perform a genuinely **semantic** analysis of the new LiteCast item's body text against the **existing LiteCast entries** — **not** keyword/string matching. For each existing entry the question is conceptual: where the new body text discusses something an existing LiteCast entry is about, that spot is a linking candidate.
+Compare the new body with every existing LiteCast entry semantically (Hard Rule 14): where the body discusses what an entry is about, that spot is a candidate.
 
-**Hard rules for matching:**
-- **Real conceptual relevance only** — link only where the word/phrase in context actually refers to the existing entry's concept.
-- **No junk/generic words** — never link common filler words that merely coincide with a term.
-- **When in doubt, DON'T propose it.**
-- **Candidates come ONLY from `litecast/lite-glossary.json`** — never a specialist glossary term or episode.
-- **Never link the item to itself.**
-- **First occurrence only** — link only the **first** place each matched concept appears in the body; never link the same target twice.
+**Hard rules for matching:** real conceptual relevance only; no junk/generic words; candidates only from `litecast/lite-glossary.json`; never the item itself; **first occurrence only**, one link per target.
 
 #### Step 2 — Auto-apply high-confidence matches; ask only for the rest
 
-Per **Hard Rule 14**: for a match where the word/phrase unmistakably refers to the existing entry's concept, proceed to Step 3 directly — state it plainly (matched phrase + context, target, one-line reason) rather than waiting for a yes. For a real-but-borderline match, present it in a numbered list — matched word/phrase with context, target LiteCast entry, its URL, one-line reason — and ask for confirmation before inserting. The user may approve all, a subset, or none of the presented ones.
+Hard Rule 14: an unmistakable match is applied and recorded (phrase + context, target, one-line reason); a borderline one is skipped and recorded.
 
 #### Step 3 — Insert links
 
-Insert the auto-applied matches and any user-approved matches into the new item's body, each on the **first occurrence** of its matched phrase, using the **same inline link markup/classes the LiteCast body already uses** (derive the style from how existing LiteCast bodies link — do not introduce a new link style).
+Insert each applied match on the **first occurrence** of its phrase, with the **same inline link markup/classes the LiteCast body already uses**.
 
 #### Step 4 — Hash & verify
 
-**Hash the new LiteCast page before and after this step.** The only allowed diff is the approved inline link insertions. Report before/after hashes. Do not break HTML structure (no link inside an existing link or heading).
+`git diff` of the page shows only the inserted anchors; no link inside an existing link or heading.
 
-**0.6 — LiteCast «کاوش بیشتر» internal links (LiteCast-only; the LiteCast counterpart of step 4.9).** This is the LiteCast equivalent of step 4.9. Where the general step 4.9 fills the new page's «کاوش بیشتر» section with links to semantically related **brain** entries, this step fills the **LiteCast** page's «کاوش بیشتر» section with links to semantically related **other LiteCast** items only — drawn **exclusively** from `litecast/lite-glossary.json`. It runs only when the locked category is LiteCast. **No specialist capsules (دانشنامه / فهرست موضوعی), no glossary terms, and no brain entries ever appear in a LiteCast «کاوش بیشتر» section** — it is LiteCast-to-LiteCast only. Run it after the new page is built (0.3) and the in-body pass (0.5), and before the rebuild (step 8).
+**0.6 — LiteCast «کاوش بیشتر» internal links (LiteCast-only; the counterpart of step 4.9).** Fills the page's «کاوش بیشتر» with semantically related **other LiteCast** items only — **no** دانشنامه / فهرست موضوعی capsules, glossary terms or brain entries. Runs after 0.3 and 0.5.
 
 #### Step 1 — Semantic comparison against other LiteCast items
 
-Read `litecast/lite-glossary.json` end-to-end. Perform a genuinely **semantic** comparison of the new LiteCast item against **every other LiteCast entry** — **not** keyword/string matching. Rank candidates by strength of semantic relationship; strongest first. **Never link the item to itself.** **When in doubt, DON'T propose it** — a few strong links beat a pile of weak ones.
+Compare the new item with every other LiteCast entry semantically (Hard Rule 14); rank strongest first; never the item itself.
 
 #### Step 2 — Cap
 
-The «کاوش بیشتر» section holds **at most 5** links total (consistent with Hard Rule 9's ceiling). Because LiteCast carries **no** specialist capsules, all slots are available for LiteCast-internal links — but keep the set tight (typically 2–4 strong matches); do not pad with weak ones.
+Hard Rule 9's cap of 5. With no specialist capsules all slots are LiteCast's, but keep the set tight (typically 2–4 strong matches); never pad.
 
 #### Step 3 — Markup
 
-Use the **same** `dc-related-section` / `dc-related-capsules` / `dc-related-capsule` markup the LiteCast template already uses for «کاوش بیشتر»; only the `href` (the target LiteCast page URL) and the capsule label (a short Persian title of the target LiteCast item) differ. **Replace** the cloned template's specialist capsules (دانشنامه / فهرست موضوعی) with these LiteCast-internal capsules — the section ends up containing LiteCast links only.
+The **same** `dc-related-section` / `dc-related-capsules` / `dc-related-capsule` markup the LiteCast template uses; only `href` (the target LiteCast page) and the label (a short Persian title of the target) differ. **Replace** the cloned specialist capsules with these.
 
 #### Step 4 — Auto-apply high-confidence matches; ask only for the rest
 
-Per **Hard Rule 14**: strong, unmistakable relatedness gets inserted directly (state it plainly — target, URL, label, one-line reason). Real-but-borderline candidates get presented as a numbered list — target LiteCast item, its URL, proposed short label, one-line reason — with the user asked to confirm before inserting. The user may approve all, a subset, or none of the presented ones.
+Hard Rule 14: strong relatedness is inserted and recorded (target, URL, label, reason); borderline candidates are skipped and recorded.
 
 #### Step 5 — Hash & verify
 
-**Hash the new LiteCast page before and after this step.** The only allowed diff is the «کاوش بیشتر» capsule swap (specialist capsules removed, LiteCast capsules added). Report before/after hashes. Verify the section contains **only** LiteCast links — no دانشنامه / فهرست موضوعی / glossary / brain links remain.
+`git diff` shows only the capsule swap, and the section holds **only** LiteCast links.
 
 ### 1. Template lock & hash
 
-Identify the previous same-category page on disk (if the type has on-disk pages). Compute SHA-256, store it. This is the structural template and must remain untouched at the end.
+Identify the previous same-category page on disk (if the type has on-disk pages): the structural template. It must stay byte-unchanged; step 4 checks it with `git diff --quiet -- <template>` (module 01, «Evidence of edits»).
 
 ### 2. Build the new page
 
 Clone the previous same-category page exactly — identical HTML tree, CSS classes, component order, schema scaffolding. Replace only:
-- Body text → new text from intake.
-- Meta tags (`<title>`, description, OG, Twitter, canonical) → adapted to new content.
-- JSON-LD field VALUES → adapted; schema shape stays identical.
-- Media sources (image, audio, video, etc.) → from intake.
-- All URLs/slugs → new identifier.
+- Body text → the text of record (Question 3.5).
+- Meta tags (`<title>`, description, OG, Twitter, canonical) → adapted to the new content.
+- JSON-LD field VALUES → adapted; the schema shape stays identical.
+- Media sources → from intake.
+- All URLs/slugs → the new identifier.
 
-**Identity invariant (domain follows the clone).** The page's identity **is** the cloned predecessor's domain: the clone swaps the **PATH only** and **keeps the domain** — never domain-swap during a clone. For the **LiteCast** category that domain is `https://dentcast.ir` — the full `.ir` profile (`<link rel="canonical">`, `og:url`, and every JSON-LD `/litecast/` value on `.ir`), with **NO hreflang** tags and **root-relative** internal links (`/litecast/…`). **Every other category stays on `https://dentcast.org`.** Because you clone the previous same-category page, this propagates automatically — just verify the cloned domain survived and was not rewritten. (LiteCast's hreflang-absence is additionally enforced by `.github/scripts/inject_hreflang.py`, which skips any page whose canonical is on `dentcast.ir`.)
+**Identity invariant (domain follows the clone).** The clone swaps the **PATH only** and **keeps the domain** — never domain-swap during a clone. LiteCast stays on `https://dentcast.ir` with no hreflang and root-relative links; every other category on `https://dentcast.org` (Hard Rule 10). Confirm the cloned domain survived.
 
-If the category has no on-disk page (data-only), skip this and go to step 4.
+A data-only category (no on-disk page) skips this and goes to step 4. The clone governs **structure only** (Hard Rule 11).
 
-**Scope of the clone (Hard Rule 11):** this clone fidelity governs **structure only**. It does **not** satisfy, replace, or pre-empt the semantic-enrichment steps (4.7, 4.8, 4.9). Whatever inline or related links the previous page did or didn't have is irrelevant to those steps — they run independently and mandatorily later. Do **not** treat "matched the cloned page" as having done 4.8/4.9.
+**Google Analytics tag (every page).** The deferred GA4 snippet (measurement ID `G-GMM0WC8X3M`) rides in on the clone; Phase F checks it appears exactly once. If an older template lacks it, run `python3 .github/scripts/inject_ga.py` (idempotent). It is the lazy-loaded pattern (loads `gtag.js` only on `load`) — never swap in Google's default async snippet. The `.org`/`.ir` mirrors share it; no per-domain logic. A future Content-Security-Policy must allow `script-src https://www.googletagmanager.com` and `connect-src https://*.google-analytics.com https://*.analytics.google.com`.
 
-**Google Analytics tag (every page).** The deferred GA4 snippet (measurement ID `G-GMM0WC8X3M`) must be present in the new page's `<head>`. Because you cloned the previous same-category page — which already carries it — it should come across automatically; **verify it survived the clone and appears exactly once**. If it's missing (e.g. an older template), run `python3 .github/scripts/inject_ga.py` to backfill it (idempotent — it skips pages that already have it). It is the lazy-loaded pattern (loads `gtag.js` only on the `load` event) — never swap in Google's default async snippet. The `.org`/`.ir` mirrors share this tag; no per-domain logic. If you ever introduce a Content-Security-Policy, it must allow `script-src https://www.googletagmanager.com` and `connect-src https://*.google-analytics.com https://*.analytics.google.com`.
+**API preconnect (every page).** The `<head>` opens with `<link rel="preconnect" href="https://api.dentcast.ir" crossorigin>` and the same for `https://api.dentcast.org`, at the very top, once per host. It rides in on the clone; an older template is backfilled with `python3 .github/scripts/inject_preconnect.py` (idempotent; `--check` fails on a page missing it). Never "clean up": **`crossorigin` is required** (the API is called with credentials, and an anonymous connection is not reused for a credentialed CORS request); **both hosts on every page** (the codebases are mirrors, per-domain logic is forbidden); and this is a **paid-sponsor correctness** matter — the Spot card waits for `/me`, so without preconnect the cold DNS+TLS handshake sits in front of the sponsor's impression.
 
-**API preconnect (every page).** The new page's `<head>` must open with the two
-preconnect links — `<link rel="preconnect" href="https://api.dentcast.ir" crossorigin>`
-and the same for `https://api.dentcast.org` — at the very top, before anything
-else. Like GA4 this rides in on the clone, so **verify it survived and appears
-exactly once per host**; if it's missing (older template), backfill with
-`python3 .github/scripts/inject_preconnect.py` (idempotent; `--check` fails on
-any page missing it). Three things that are not optional and are easy to
-"clean up" by mistake: **`crossorigin` is required** — the API is called with
-credentials and a connection opened anonymously is not reused for a
-credentialed CORS request, so dropping the attribute silently undoes the whole
-thing; **both hosts are listed on every page on purpose** (the `.org`/`.ir`
-codebases are mirrors and per-domain logic is forbidden — the unused socket is
-idle and the browser drops it); and this is a **paid-sponsor correctness**
-matter, not a micro-optimisation — the Spot card cannot render until `/me`
-answers, so without preconnect the cold DNS+TLS handshake sits directly in
-front of the sponsor's impression.
+**E-NAMAD seal — never clone it onto a content page.** The trust seal (نماد اعتماد الکترونیکی) lives on exactly three surfaces (`index.html`'s footer, `index.html`'s col-A sidebar row, `about.html`'s contact box). If `.dc-trustseal` markup reaches a content page, remove it. It is **the one deliberate exception to "no per-domain logic"** (issued for `dentcast.ir`, invalid off the `.org` mirror — hence the `dc-no-seal` guard and the `dc-nav.js` removal block): never "fix" that guard, never rewrite the `referrerpolicy`/`id`/`Code`/`code` attributes enamad verifies. Details in `.dentcast/workflows/global/site-invariants.md`.
 
-**E-NAMAD seal — never clone it onto a content page.** The trust seal
-(نماد اعتماد الکترونیکی) lives on exactly three surfaces (`index.html`'s footer,
-`index.html`'s col-A sidebar row, `about.html`'s contact box) and is **not** a
-per-page element. If a template or an edit ever drags `.dc-trustseal` markup
-onto a content page, remove it — every copy is a request to enamad's server for
-zero trust value on an article page. It is also **the one deliberate exception
-to "no per-domain logic"** (the seal is issued for `dentcast.ir` and renders as
-*invalid* off the `.org` mirror, which is why the `dc-no-seal` guard and the
-`dc-nav.js` removal block exist): never "fix" that guard, and never rewrite the
-`referrerpolicy`/`id`/`Code`/`code` attributes enamad verifies. Details in
-`.dentcast/workflows/global/site-invariants.md`.
+**Opening paragraph before any list (body-structure requirement).** The body must open with at least one real `<p>` of prose **before** the first `<ul>`/`<ol>`. This is load-bearing for ad placement: the in-article Spot card is positioned by counting **body blocks** (`p, ul, ol, blockquote, figure, table, pre` — headings and `.dc-disclaimer` never count; `spot/README.md`). A body that is a single `<ul>` has **no interior boundary**, so the card drops to the end of the text; an opening paragraph + the list put it in the upper half.
 
-**Opening paragraph before any list (body-structure requirement).** The body must
-open with at least one real `<p>` of prose **before** the first `<ul>`/`<ol>`. This is
-not a style preference — it is load-bearing for ad placement. The in-article Spot card
-is positioned by counting **body blocks** (`p, ul, ol, blockquote, figure, table, pre`
-— headings are labels and never count, `.dc-disclaimer` never counts; see
-`spot/README.md`). A body that is a single `<ul>` has **one** block and therefore **no
-interior boundary**, so the engine has nowhere to put the card and drops it to the end
-of the text — the position least likely to ever be seen. Two blocks (an opening
-paragraph + the list) are enough: the card lands between them, in the upper half.
+This bites the **Insight** template hardest (`h3` label + `h3` thesis + one `<ul>`), but applies to any page whose body would otherwise be list-only, NoteCast and DentAI included.
 
-This bites the **Insight** template hardest — its house style is `h3` label + `h3`
-thesis + one `<ul>` of sections — but the requirement is type-agnostic and applies to
-any page whose body would otherwise be list-only, including NoteCast and DentAI
-pages.
+Write a genuine 2–4 sentence lead that **adds** something — the clinical situation, the decision at stake, what the reader will get — never a restatement of the `h3` thesis above it. Match the register of the founder's own writing (their vocabulary for the procedure, e.g. «سمان کردن» for cementing a crown) and keep it tight; shorter is safer than padded. It is part of the body: written before C.4.13, so DES and Fidelity score it, and the English mirror carries the same paragraph (module 12).
 
-Write a genuine 2–4 sentence lead that **adds** something — the clinical situation, the
-decision at stake, what the reader will get — never a restatement of the `h3` thesis
-directly above it. Then mirror the same paragraph into the en version in Phase D (the
-en page is placed by the identical rule and has the identical problem).
-
-**This lead paragraph is authored text, not derived from the user's own words —
-it MUST be shown to the user for approval before it's written to the page,
-every time, no exceptions.** Draft it, present it plainly (fa, and the en
-mirror once translated), and wait for a yes/edit before proceeding to write
-the file. Do not fold this into a larger batched confirmation and do not
-skip it because the rest of the publish was auto-applied per Hard Rule 14 —
-unlike a title/hashtag proposal (which draws its words from the user's own
-text), this paragraph is fully self-composed prose sitting under the user's
-byline, so it gets its own explicit sign-off. Match the register of the
-user's own writing (their vocabulary for the procedure — e.g. «سمان کردن»
-for cementing a crown — not a generic paraphrase), and keep it tight; when in
-doubt, shorter is safer than padded.
+**This lead paragraph is authored text under standing acceptance (Hard Rule 14).** It is not sent for confirmation. Record its origin in the `first_cut_lead_provenance_v1` decision (`agent_authored`, with the `authored-intro` approval whose evidence is the standing-acceptance record; `author_original` when the founder's own first paragraph already opens the body) — recorded after C.4.13, before C.4.9 (`publish-checkpoints.md`, «Delivery cuts 1 and 2»). The agent's Push-2 report quotes it; the founder may change it afterwards (an approved-page edit, invalidation from C.2).
 
 To check a page you just built:
-`node -e` against `spot/spot.js`'s `bodyBlocks()`, or simply confirm by eye that a
-paragraph precedes the first list. Published pages that fail this are not a pattern
-to copy forward (**Hard Rule 11**).
+`node -e` against `spot/spot.js`'s `bodyBlocks()`, or confirm by eye that a paragraph precedes the first list (Phase F checks it). Published pages that fail this are not a pattern to copy forward (Hard Rule 11).

@@ -11,19 +11,39 @@ import tempfile
 import dentcast_publish_handoff as h
 
 # These are checkpoints into the original source, not rewritten publishing logic.
-# C.8 builders precede C.7 stamping; LiteCast links run after page construction.
-GROUPS = (
-    ("rules",),
-    ("0", "A", "B.1", "B.2", "B.3", "B.3.5", "B.4", "B.4.7", "B.4.8", "B.4.9", "B.5"),
-    ("C.0", "C.0.1", "C.0.2", "C.0.3", "C.0.4", "C.1", "C.2", "C.0.5", "C.0.6"),
-    ("C.2.4", "C.2.5", "C.2.6", "C.3", "C.4", "C.4.5", "C.4.5-b", "C.4.6"),
-    ("C.4.7", "C.4.7-b", "C.4.8", "C.4.9"),
-    ("C.4.10.1", "C.4.10.2", "C.4.10.3"),
-    ("C.4.11", "C.4.12"), ("C.4.13",), ("C.4.14",),
-    ("C.5.0", "C.5", "C.5.5", "C.5.6", "C.5.6-b"),
-    ("C.6", "C.8", "C.7"), ("D", "E", "F", "G"),
-)
-REGISTRY = {sid: h.MODULES[i] for i, group in enumerate(GROUPS) for sid in group}
+# The ledger ORDER is explicit and independent of the step->module map: each
+# row is (step, module), in canonical order. C.8 builders precede C.7
+# stamping; LiteCast links (C.0.5/C.0.6) run after page construction (C.2).
+_M = {name[:2]: name for name in h.MODULES}
+
+
+def _rows(*runs):
+    return tuple((sid, _M[module]) for module, ids in runs for sid in ids)
+
+
+_INTAKE = ("0", "A", "B.1", "B.2", "B.3", "B.3.5", "B.4", "B.4.7", "B.4.8", "B.4.9", "B.5")
+_PAGE = ("C.0", "C.0.1", "C.0.2", "C.0.3", "C.0.4", "C.1", "C.2", "C.0.5", "C.0.6")
+_TAXONOMY = ("C.2.4", "C.2.5", "C.2.6", "C.3", "C.4", "C.4.5", "C.4.5-b", "C.4.6")
+_LINKS = ("C.4.7", "C.4.7-b", "C.4.8", "C.4.9")
+_PAPER = ("C.4.10.1", "C.4.10.2", "C.4.10.3")
+_TAIL = (("09", ("C.4.14",)), ("10", ("C.5.0", "C.5", "C.5.5", "C.5.6", "C.5.6-b")),
+         ("11", ("C.6", "C.8", "C.7")), ("12", ("D", "E", "F", "G")))
+# Founder decision 2026-11-06: paper ingestion and DES/Fidelity (06, 08) run
+# before semantic links (05) and flashcards/FAQ (07). Written by `init` as the
+# ledger_order_v2 decision; a run without that marker keeps ORDER_V1.
+ORDER_V2 = _rows(("01", ("rules",)), ("02", _INTAKE), ("03", _PAGE), ("04", _TAXONOMY),
+                 ("06", _PAPER), ("08", ("C.4.13",)), ("05", _LINKS),
+                 ("07", ("C.4.11", "C.4.12")), *_TAIL)
+# Previous canonical order: every receipt and handoff created before
+# 2026-11-06 (no ledger_order_v2 decision) validates against it unchanged.
+ORDER_V1 = _rows(("01", ("rules",)), ("02", _INTAKE), ("03", _PAGE), ("04", _TAXONOMY),
+                 ("05", _LINKS), ("06", _PAPER), ("07", ("C.4.11", "C.4.12")),
+                 ("08", ("C.4.13",)), *_TAIL)
+ORDER = ORDER_V2
+LEDGER_ORDER_V2 = "ledger_order_v2"
+REGISTRY = dict(ORDER_V2)
+assert REGISTRY == dict(ORDER_V1) and len(REGISTRY) == len(ORDER_V2) == len(ORDER_V1)
+INTAKE_IDS = ("rules",) + _INTAKE  # before identity binding
 PAPER_IDS = ("rules", "0", "C.4.10.1", "C.4.10.2", "G")
 # Queue lane (publish-queue item, every judgment frozen in preparation): the
 # same canonical ids, fewer rows. 0 = queue precheck and lock, C.2 = assembly
@@ -40,19 +60,77 @@ def queue_lane(publication):
                for d in publication.get("context", {}).get("decisions", []))
 
 
-def plan(paper_only=False, queue=False):
-    ids = PAPER_IDS if paper_only else QUEUE_IDS if queue else tuple(REGISTRY)
+def ledger_order_v2(publication):
+    return any(isinstance(d, dict) and d.get("kind") == LEDGER_ORDER_V2
+               for d in publication.get("context", {}).get("decisions", []))
+
+
+def full_order(publication):
+    """The full canonical (step, module) order this run was initialized with."""
+    return ORDER_V2 if ledger_order_v2(publication) else ORDER_V1
+
+
+def module_rank(publication):
+    """Module sequence of the run's order, for the non-decreasing module check."""
+    ranks = []
+    for _, module in full_order(publication):
+        if module not in ranks:
+            ranks.append(module)
+    return ranks
+
+
+def adopt_ledger_order(publication, force=False):
+    """Record the v2 ledger order on a new canonical full-plan run.
+
+    `init` passes force=True: every new run is a v2 run, so an old-order input
+    then fails CANONICAL_PLAN_REQUIRED. A direct initial save marks the plan
+    only when it already is the v2 order, so a legacy-order fixture or handoff
+    keeps validating against ORDER_V1. Paper-only and queue-lane id lists are
+    order-independent; a noncanonical short ledger (not starting at `rules`)
+    is left as is.
+    """
+    steps = publication.get("steps")
+    if (isinstance(steps, list) and steps and isinstance(steps[0], dict) and steps[0].get("id") == "rules"
+            and h.publication_category(publication) != "paper-only" and not queue_lane(publication)
+            and not ledger_order_v2(publication)):
+        bases = [s.get("id") for s in steps if isinstance(s, dict) and s.get("id") in REGISTRY]
+        if force or bases == [sid for sid, _ in ORDER_V2]:
+            publication.setdefault("context", {}).setdefault("decisions", []).append({"kind": LEDGER_ORDER_V2})
+    return publication
+
+
+def canonical_ids(publication):
+    if h.publication_category(publication) == "paper-only":
+        return PAPER_IDS
+    if queue_lane(publication):
+        return QUEUE_IDS
+    return tuple(sid for sid, _ in full_order(publication))
+
+
+def plan(paper_only=False, queue=False, order=None):
+    ids = (PAPER_IDS if paper_only else QUEUE_IDS if queue
+           else tuple(sid for sid, _ in (order or ORDER)))
     return [{"id": sid, "module": REGISTRY[sid], "status": "pending", "evidence": [], "reason": None}
             for sid in ids]
 
 
+def plan_for(publication):
+    """The canonical pending plan of this publication's own profile and order."""
+    return [{"id": sid, "module": REGISTRY[sid], "status": "pending", "evidence": [], "reason": None}
+            for sid in canonical_ids(publication)]
+
+
 def require_plan(publication):
     h.validate_publication(publication)
-    required = (PAPER_IDS if h.publication_category(publication) == "paper-only"
-                else QUEUE_IDS if queue_lane(publication) else tuple(REGISTRY))
+    required = canonical_ids(publication)
     steps = publication["steps"]
     ids = [s["id"] for s in steps]
     h.require([sid for sid in ids if sid in REGISTRY] == list(required), "CANONICAL_PLAN_REQUIRED")
+    # The v1 cut 2 (C.4.13) precedes cut 1 (C.4.9) in the v2 order: a v2-order
+    # fixed-delivery run must carry the v2 editorial cut policy.
+    h.require(not (ledger_order_v2(publication) and required == tuple(sid for sid, _ in ORDER_V2)
+                   and fixed_delivery(publication) and not editorial_cut_v2(publication)),
+              "LEDGER_ORDER_V2_REQUIRES_DELIVERY_POLICY_V2")
     for s in steps:
         base = s["id"].split("/", 1)[0]
         h.require(base in required and s["module"] == REGISTRY[base], "UNKNOWN_CANONICAL_STEP")
@@ -510,7 +588,7 @@ def workflow_paths_at(root, commit):
     return set(paths) if isinstance(paths, tuple) and all(isinstance(x, str) for x in paths) else None
 
 
-def validate_final_receipt(root, data, commit=None, own_paths=None):
+def validate_final_receipt(root, data, commit=None, own_paths=None, rerun_phase_f=True):
     """Completed-only audit receipt, never an active recovery handoff.
 
     With a delivery commit, its delivered facts (files, workflow and the
@@ -518,6 +596,10 @@ def validate_final_receipt(root, data, commit=None, own_paths=None):
     changes cannot fail an older publication. own_paths, when given, are paths
     the PR itself changed after that commit; those stay checked in the working
     tree. Without own_paths every file is checked in the working tree.
+
+    rerun_phase_f=False (only the v2 post-Push-2 confirm path) trusts the
+    committed receipt's own passed Phase F instead of rerunning the verifier:
+    every structural, parent and fingerprint check above still applies.
     """
     h.require(data.get("schema") == "publish-completion-v1", "INVALID_FINAL_DELIVERY_RECEIPT")
     state = data["state"]
@@ -595,6 +677,11 @@ def validate_final_receipt(root, data, commit=None, own_paths=None):
     receipts = [r for r in publication["context"]["validation"] if isinstance(r, dict) and r.get("kind") == "phase_f"]
     h.require(bool(receipts) and receipts[-1].get("exit_code") == 0, "MECHANICAL_GATE_RECEIPT_REQUIRED")
     last = receipts[-1]
+    if not rerun_phase_f:
+        # finish's own real Phase F run, recorded in the committed receipt.
+        h.require(isinstance(data.get("verification"), dict) and data["verification"].get("exit_code") == 0,
+                  "MECHANICAL_GATE_RECEIPT_REQUIRED")
+        return publication["content_id"]
     result = gate(root, publication, last.get("expected_title"), last.get("expected_caption"))
     if result["exit_code"] != 0:
         # Name the verifier's own failing rows and fixes, e.g. a checkout
@@ -619,6 +706,10 @@ def challenge_markup(root, publication):
 
 
 def guard_step_transition(state, publication, root=None):
+    # A run keeps the ledger order it was initialized with; old runs finish
+    # in ORDER_V1 and are never reordered in flight.
+    h.require(ledger_order_v2(state["publication"]) == ledger_order_v2(publication),
+              "LEDGER_ORDER_CANNOT_CHANGE")
     if fixed_delivery(state["publication"]):
         h.require(fixed_delivery(publication), "DELIVERY_POLICY_CANNOT_BE_DROPPED")
         old_c49 = next((s for s in state["publication"]["steps"] if s["id"] == "C.4.9"), None)
@@ -692,7 +783,7 @@ def step(root, expected, sid, status, evidence, reason, note=None):
     p = copy.deepcopy(state["publication"])
     h.require(sid == h.next_step(p), "NOT_NEXT_CANONICAL_STEP")
     row = next(s for s in p["steps"] if s["id"] == sid)
-    h.require(sid in GROUPS[0]+GROUPS[1] or (p["content_id"] != "unassigned" and h.publication_category(p) != "pending"),
+    h.require(sid in INTAKE_IDS or (p["content_id"] != "unassigned" and h.publication_category(p) != "pending"),
               "BIND_INTAKE_IDENTITY_BEFORE_AUTHORING")
     h.require(not (sid == "F" and status == "completed"), "USE_REAL_VERIFY_FOR_PHASE_F")
     h.require(status != "completed" or row["status"] == "started", "STEP_MUST_BE_STARTED_FIRST")
@@ -773,7 +864,7 @@ def advance(root, expected, sid=None, evidence=None, skips=(), start_next=False,
     h.require(not any(a["status"] in ("started", "outcome_unknown") for a in p["external_actions"]),
               "EXTERNAL_OUTCOME_UNKNOWN_DO_NOT_RETRY")
     for op_id, _, _, _ in operations:
-        h.require(op_id in GROUPS[0]+GROUPS[1] or
+        h.require(op_id in INTAKE_IDS or
                   (p["content_id"] != "unassigned" and h.publication_category(p) != "pending"),
                   "BIND_INTAKE_IDENTITY_BEFORE_AUTHORING")
     written = []
@@ -871,7 +962,7 @@ def bind(root, expected, content_id, category, targets, evidence):
         # rename/move) may precede binding only when its outcome is settled and
         # evidenced; its receipt is carried over unchanged.
         h.require(all(a["status"] == "completed" and a["evidence"] for a in old["external_actions"])
-                  and all(s["status"] == "pending" or s["id"] in GROUPS[0]+GROUPS[1]
+                  and all(s["status"] == "pending" or s["id"] in INTAKE_IDS
                           for s in old["steps"]), "BIND_ONLY_BEFORE_AUTHORING")
         h.require(not h.differences(root, state, h.current_snapshot(root, state)), "WORK_CHANGED_BEFORE_BIND")
         p = copy.deepcopy(old)
@@ -1103,9 +1194,12 @@ def confirm_remote_final_delivery(root):
 
     After `git pull --ff-only` this checkout holds that commit but no local
     cleanup record (the runner confirmed cleanup in its own checkout). Verify
-    the same facts CI does: HEAD deletes the parent's fixed-delivery handoff,
-    its completion receipt validates, the work is committed and HEAD is the
-    freshly observed origin branch head.
+    HEAD deletes the parent's fixed-delivery handoff, HEAD's parent is the
+    receipt's Push-2 commit, the committed receipt's fingerprints match this
+    tree, the work is committed and HEAD is the freshly observed origin branch
+    head. A v2 run trusts the Action's committed Phase F receipt: the verifier
+    is not rerun here (no origin/main fetch needed); a v1/legacy fixed run
+    still reruns it.
     """
     previous = h.git(root, "show", "HEAD^:" + h.STATE_PATH, optional=True)
     h.require(previous is not None and h.git(root, "ls-tree", "HEAD", "--", h.STATE_PATH) == b"",
@@ -1117,7 +1211,11 @@ def confirm_remote_final_delivery(root):
     h.require(fixed_delivery(p), "CLEANUP_RECORD_MISSING_OR_INVALID")
     receipt = h.git(root, "show", "HEAD:" + completion_path(p), optional=True)
     h.require(receipt is not None, "FINAL_RECEIPT_NOT_IN_DELIVERY_COMMIT")
-    validate_final_receipt(root, h.decode_json(receipt.decode("utf-8")), "HEAD")
+    final = h.decode_json(receipt.decode("utf-8"))
+    v2 = editorial_cut_v2(p)
+    h.require(not v2 or h.text_git(root, "rev-parse", "HEAD^") == final.get("second_delivery_commit"),
+              "EXTRA_DELIVERY_COMMIT_FORBIDDEN")
+    validate_final_receipt(root, final, "HEAD", rerun_phase_f=not v2)
     h.require(not h.status_paths(root), "FINAL_DELIVERY_WORK_NOT_COMMITTED")
     head = h.text_git(root, "rev-parse", "HEAD")
     remote = h.remote_observation(root, head, h.branch(root), True)
@@ -1126,7 +1224,9 @@ def confirm_remote_final_delivery(root):
     if observation.exists():
         observation.unlink()  # stale Push-2 observation of this checkout
     return {"status": "publication_completed", "publication_completed": True,
-            "cleanup_commit": head, "content_id": p["content_id"], "delivered_by": "remote_final_delivery"}
+            "cleanup_commit": head, "content_id": p["content_id"], "delivered_by": "remote_final_delivery",
+            "second_delivery_commit": final["second_delivery_commit"],
+            "phase_f": "trusted_committed_receipt" if v2 else "rerun_locally"}
 
 
 def confirm_cleanup(root):

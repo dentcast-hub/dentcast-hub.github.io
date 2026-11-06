@@ -19,7 +19,8 @@ class FastLocalWALTests(unittest.TestCase):
     setUp = fixtures.HandoffTests.setUp
 
     def start(self):
-        self.p["steps"] = lc.plan()
+        # A v1-policy (cut 2 at C.4.13) run: a handoff started before 2026-11-06, old order.
+        self.p["steps"] = lc.plan(order=lc.ORDER_V1)
         self.p["context"]["decisions"].append({"kind": lc.DELIVERY_POLICY})
         # C.4.9 completion now requires the first-cut lead declaration.
         self.p["context"]["decisions"].append({

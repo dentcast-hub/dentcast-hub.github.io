@@ -31,11 +31,15 @@ def ids(plan):
     return [m["id"] for m in plan["ordered_modules"]]
 
 
-# Live publication deliberately removed the staging-only boundary this asserts.
-LIVE = "LIVE_MODULAR_PUBLISHING_ENABLED" in (Path(__file__).resolve().parents[1] / ".dentcast/workflows/README.md").read_text(encoding="utf-8")
+# Live publication deliberately removed the staging-only boundary this asserts: since 2026-11-06 the
+# live modules are no longer byte-exact slices of README.legacy.md (one home per rule, shared banner).
+LIVE = audit_module.is_live()
+HISTORICAL = ("Certifies the migration-era freeze (modules as byte-exact slices of README.legacy.md); "
+              "the live modules diverged from that backup by design on 2026-11-06. "
+              "Live invariants: test_dentcast_agent_entrypoint_migration, test_dentcast_publish_readpack.")
 
 class Stage2ContractTests(unittest.TestCase):
-    @unittest.skipIf(LIVE, "Certifies the pre-activation staging snapshot (still on refactor/publishing-modular-workflow); live repos retired that boundary on purpose. Live invariants: test_dentcast_agent_entrypoint_migration.")
+    @unittest.skipIf(LIVE, HISTORICAL)
     def test_canonical_all_rules_slices_entrypoints_and_15_modules(self):
         report = audit_module.audit()
         self.assertEqual(report["issues"], [])
@@ -47,6 +51,7 @@ class Stage2ContractTests(unittest.TestCase):
         self.assertGreaterEqual(report["canonical_headings_with_owner"], 85)
         self.assertTrue(report["not_execution_or_behavioral_parity"])
 
+    @unittest.skipIf(LIVE, HISTORICAL)  # on a live tree every slice already mismatches, so this would pass vacuously
     def test_negative_missing_slice_detected(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = self.fixture_root(tmp)
@@ -86,6 +91,13 @@ class Stage2ContractTests(unittest.TestCase):
             p.write_text(json.dumps(obj), encoding="utf-8")
             self.assertIn("PHASE_E_CANONICAL_SKIP_SET_MISMATCH",
                           audit_module.audit(root)["issues"])
+
+    def test_live_main_reports_historical_snapshot_not_failure(self):
+        # The slice freeze is historical on a live tree; the contract/registry/entrypoint checks stay live.
+        report = audit_module.audit()
+        live_issues = [i for i in report["issues"] if not audit_module.is_historical(i)]
+        self.assertEqual(live_issues, [], live_issues)
+        self.assertEqual(audit_module.is_live(), LIVE)
 
     def test_negative_entrypoint_rerouted_early_detected(self):
         with tempfile.TemporaryDirectory() as tmp:

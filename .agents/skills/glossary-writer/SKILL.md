@@ -202,27 +202,31 @@ supplies only the two intake values above (type + text). It must **not** answer,
 skip, pre-empt, or auto-confirm any other step of the workflow. Every other step
 runs exactly as the workflow specifies, with the workflow's own confirmation
 rule — no stricter and no looser:
-- **Hard Rule 14** (`.dentcast/workflows/modules/01-hard-rules.md`) decides what
-  is auto-applied and what is asked. A judgment call the workflow lets the agent
-  make at genuinely high confidence — an unambiguous identifier at Question 2, a
-  glossary-term or brain-entry link whose matched phrase unmistakably names that
-  exact concept — is applied and stated plainly in the running commentary and
-  the final summary; genuine uncertainty is asked as a short menu of named
-  options. **Hard Rule 13** still applies in full: any title, hashtag, keyword or
-  label the user did not supply, and any non-derivable fact, is always asked.
-- Phase B **Question 2** (number/identifier), **Question 4** (media) and
-  **Question 5** (Pulse) run as written. Pulse is not customary for glossary
-  terms — Phase F records `6 pulse` as skipped for glossary — so Question 5
-  takes its not-customary branch: draft the line and ask the yes/no «این نوع
-  معمولاً تو پالس اعلان نمی‌شه — همین‌طوری درج کنم یا رد شم؟». Never assume
-  either answer.
+- **Hard Rule 14** (`.dentcast/workflows/modules/01-hard-rules.md`) is standing
+  acceptance: every judgment call the workflow leaves to the agent — a link
+  candidate at 4.7/4.8/4.9, the pillar/subtopic, hashtags, flashcards and FAQ,
+  pathway placement — is built per its module and recorded with evidence. A
+  strong match is applied; a borderline one takes the conservative default (not
+  applied, recorded with its reason). Neither is sent to the founder: no menu of
+  options, no yes/no on a proposal. Report G lists them all. **Hard Rule 13**
+  still applies in full: a fact no real source answers is never guessed — it
+  goes into founder message **M1 (open facts)**, sent at the first step that
+  needs it (`.dentcast/workflows/publish-checkpoints.md`), and only the dependent
+  action waits; a glossary term has no paper, so M1 is rare, and it has no C.4.13
+  message M3b. The only other founder message is **M2 at 4.12-ب** (exam questions),
+  which a glossary term skips as a documented skip (module 07).
+- Phase B **Question 2** (number/identifier) and **Question 4** (media) run as
+  written: the number is stated and the run continues; media is asked only for
+  a field the category's latest entry populates and the request does not carry.
+  **Question 5** (Pulse): glossary terms are not announced in Pulse — a
+  documented skip (module 02, Question 5; Phase F records `6 pulse` as skipped
+  for glossary) — so no Pulse line is drafted and nothing is asked.
 - The link steps of Phase C — **4.7**, **4.7-ب** (the new term into existing
   bodies through `.dentcast/workflows/cross-link.md` scoped to this slug; it
   runs on glossary publishes only), **4.8** and **4.9** — each run their own
-  candidate analysis: high-confidence links are auto-applied under Hard Rule 14,
-  borderline ones are presented as «لینک بشه / رد شه», and the final report
-  states, per step, what was auto-applied, asked-and-confirmed or skipped and
-  why (the cross-linking completion gate of
+  candidate analysis under standing acceptance, and the final report states,
+  per step, what was applied, what was skipped and why (the cross-linking
+  completion gate of
   `.dentcast/workflows/modules/12-english-notify-verify.md`).
 
 The skill produces the scientific input and points the workflow at it; the

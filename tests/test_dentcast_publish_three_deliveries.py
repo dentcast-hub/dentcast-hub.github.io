@@ -25,6 +25,9 @@ class ThreeDeliveriesTests(unittest.TestCase):
     prepare = lifecycle_fixtures.LifecycleTests.prepare
 
     def start(self):
+        # These runs use the v1 delivery policy (cut 2 at C.4.13), i.e. handoffs
+        # started before 2026-11-06: they keep the legacy ledger order ORDER_V1.
+        self.ledger_order = lc.ORDER_V1
         (self.root/'dentcast-brain.json').write_text('[]')
         run(self.root, 'add', 'dentcast-brain.json')
         run(self.root, 'commit', '-m', 'fixture empty brain')
@@ -92,7 +95,7 @@ class ThreeDeliveriesTests(unittest.TestCase):
     def test_canonical_fixed_cut_gate_rejects_questions_and_missing_approval(self):
         p = fixtures.publication()
         p['content_id'], p['category'] = 'note', 'insight'
-        p['steps'] = lc.plan()
+        p['steps'] = lc.plan(order=lc.ORDER_V1)
         p['context']['decisions'] = [{'kind': lc.DELIVERY_POLICY}]
         with self.assertRaisesRegex(h.Blocked, 'FIRST_CUT_DECLARATION_REQUIRED'):
             lc.require_fixed_cut_readiness(p)

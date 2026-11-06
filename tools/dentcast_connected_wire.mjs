@@ -6,7 +6,14 @@ export const SCHEMA="publish-handoff-v3";
 export const POLICY="fixed_three_deliveries_v1";
 export const EDITORIAL_POLICY="fixed_three_deliveries_v2";
 const modules=["01-hard-rules.md","02-routing-intake.md","03-litecast-and-page.md","04-taxonomy-and-navigation.md","05-semantic-linking.md","06-paper-ingestion.md","07-flashcards-and-quiz.md","08-des-fidelity.md","09-challenge.md","10-brain-and-pathways.md","11-build-and-version.md","12-english-notify-verify.md"];
-const groups=[["rules"],["0","A","B.1","B.2","B.3","B.3.5","B.4","B.4.7","B.4.8","B.4.9","B.5"],["C.0","C.0.1","C.0.2","C.0.3","C.0.4","C.1","C.2","C.0.5","C.0.6"],["C.2.4","C.2.5","C.2.6","C.3","C.4","C.4.5","C.4.5-b","C.4.6"],["C.4.7","C.4.7-b","C.4.8","C.4.9"],["C.4.10.1","C.4.10.2","C.4.10.3"],["C.4.11","C.4.12"],["C.4.13"],["C.4.14"],["C.5.0","C.5","C.5.5","C.5.6","C.5.6-b"],["C.6","C.8","C.7"],["D","E","F","G"]];
+// Explicit ordered [step, module index] runs, mirroring ORDER_V2/ORDER_V1 in
+// dentcast_publish_lifecycle.py. v2 (founder 2026-11-06, decision
+// ledger_order_v2): paper ingestion and DES/Fidelity (06, 08) before links
+// (05) and flashcards/FAQ (07). A run without the marker keeps v1.
+export const LEDGER_ORDER="ledger_order_v2";
+const intake=["0","A","B.1","B.2","B.3","B.3.5","B.4","B.4.7","B.4.8","B.4.9","B.5"],page=["C.0","C.0.1","C.0.2","C.0.3","C.0.4","C.1","C.2","C.0.5","C.0.6"],taxonomy=["C.2.4","C.2.5","C.2.6","C.3","C.4","C.4.5","C.4.5-b","C.4.6"],links=["C.4.7","C.4.7-b","C.4.8","C.4.9"],paper=["C.4.10.1","C.4.10.2","C.4.10.3"],tail=[[8,["C.4.14"]],[9,["C.5.0","C.5","C.5.5","C.5.6","C.5.6-b"]],[10,["C.6","C.8","C.7"]],[11,["D","E","F","G"]]];
+const ORDER_V2=[[0,["rules"]],[1,intake],[2,page],[3,taxonomy],[5,paper],[7,["C.4.13"]],[4,links],[6,["C.4.11","C.4.12"]],...tail];
+const ORDER_V1=[[0,["rules"]],[1,intake],[2,page],[3,taxonomy],[4,links],[5,paper],[6,["C.4.11","C.4.12"]],[7,["C.4.13"]],...tail];
 const q=String.fromCharCode(96).repeat(3);
 const BEGIN="<!-- dentcast-publish-state-v1 -->\n"+q+"json\n";
 const END="\n"+q+"\n<!-- /dentcast-publish-state-v1 -->\n";
@@ -24,10 +31,15 @@ function pretty(x,n=0){
   return ascii(x);
 }
 const validPath=p=>nonempty(p)&&!p.startsWith("/")&&!p.includes("\\")&&!p.includes("\0")&&!/^[A-Za-z]:/.test(p)&&p.split("/").every(s=>s&&s!=="."&&s!=="..")&&p.split("/")[0].toLowerCase()!==".git";
-export function plan(){return groups.flatMap((g,i)=>g.map(id=>({id,module:modules[i],status:"pending",evidence:[],reason:null})));}
+const orderV2=p=>obj(p)&&obj(p.context)&&Array.isArray(p.context.decisions)&&p.context.decisions.some(x=>obj(x)&&x.kind===LEDGER_ORDER);
+const rows=order=>order.flatMap(([m,ids])=>ids.map(id=>({id,module:modules[m],status:"pending",evidence:[],reason:null})));
+export function plan(){return rows(ORDER_V2);}
+// The run's own canonical plan and module sequence (v1 without the marker).
+function planFor(p){return rows(orderV2(p)?ORDER_V2:ORDER_V1);}
+function moduleRanks(p){return [...new Set((orderV2(p)?ORDER_V2:ORDER_V1).map(([m])=>modules[m]))];}
 export function newPublication(content_id,category,target_paths,context={}){
   const p={content_id,category,target_paths:[...target_paths].sort(),status:"in_progress",blocker:null,context:{
-    inputs:context.inputs||[],decisions:[{kind:POLICY},{kind:EDITORIAL_POLICY},...(context.decisions||[])],
+    inputs:context.inputs||[],decisions:[{kind:POLICY},{kind:EDITORIAL_POLICY},{kind:LEDGER_ORDER},...(context.decisions||[])],
     approvals:context.approvals||[],pending_questions:context.pending_questions||[],
     validation:[],delivery:[],unrelated_changes:[]},steps:plan(),external_actions:[]};
   validate(p);return p;
@@ -36,15 +48,15 @@ export function newPublication(content_id,category,target_paths,context={}){
 // substeps are preserved because their presence cannot be inferred.
 function compactSteps(rows){let i=rows.length;while(i&&rows[i-1].status==="pending"&&!rows[i-1].id.includes("/"))i--;return rows.slice(0,i);}
 function expandSteps(p){
-  const base=plan(),rows=[],given=p.steps;let idx=0;
+  const base=planFor(p),out=[],given=p.steps;let idx=0;
   need(Array.isArray(given),"COMPACT_STEPS_INVALID");
   for(const step of given){
     need(obj(step)&&idx<base.length,"COMPACT_STEPS_INVALID");
-    if(step.id===base[idx].id){rows.push(step);idx++;}
-    else if(typeof step.id==="string"&&step.id.startsWith(base[idx].id+"/"))rows.push(step);
+    if(step.id===base[idx].id){out.push(step);idx++;}
+    else if(typeof step.id==="string"&&step.id.startsWith(base[idx].id+"/"))out.push(step);
     else throw new Error("COMPACT_STEPS_NONPREFIX_OR_UNKNOWN");
   }
-  return {...p,steps:[...rows,...base.slice(idx)]};
+  return {...p,steps:[...out,...base.slice(idx)]};
 }
 export function nextStep(p){return p.steps.find(s=>!["completed","skipped"].includes(s.status))?.id??null;}
 export function validate(p){
@@ -62,7 +74,7 @@ export function validate(p){
     need(a.status==="pending"||(nonempty(a.decision)&&a.evidence.length),"APPROVAL_EVIDENCE_REQUIRED");
     need(!scopes.has(a.scope),"DUPLICATE_APPROVAL");scopes.add(a.scope);
   }
-  const base=plan(),indexes=new Map(base.map((x,i)=>[x.id,{...x,i}]));
+  const base=planFor(p),ranks=moduleRanks(p),indexes=new Map(base.map((x,i)=>[x.id,{...x,i}]));
   need(Array.isArray(p.steps)&&p.steps.length>=base.length,"FULL_CANONICAL_PLAN_REQUIRED");
   const ids=new Set();let lastModule=-1,unfinished=false;
   for(const s of p.steps){
@@ -70,7 +82,7 @@ export function validate(p){
     ids.add(s.id);
     const ref=indexes.get(s.id.split("/")[0]);
     need(ref&&ref.module===s.module,"STEP_MODULE_INVALID");
-    const m=modules.indexOf(s.module);need(m>=lastModule,"MODULE_ORDER_INVALID");lastModule=m;
+    const m=ranks.indexOf(s.module);need(m>=lastModule,"MODULE_ORDER_INVALID");lastModule=m;
     need(["pending","started","completed","skipped","blocked","failed"].includes(s.status)&&Array.isArray(s.evidence)&&s.evidence.every(nonempty)&&(s.reason===null||nonempty(s.reason)),"STEP_VALUE_INVALID");
     need(s.status!=="completed"||s.evidence.length,"COMPLETION_EVIDENCE_REQUIRED");
     need(!["skipped","blocked","failed"].includes(s.status)||nonempty(s.reason),"STEP_REASON_REQUIRED");
