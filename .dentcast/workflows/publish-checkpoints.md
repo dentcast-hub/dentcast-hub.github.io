@@ -66,6 +66,14 @@ old-order plan (`CANONICAL_PLAN_REQUIRED`), a marked run cannot be reordered
 (`LEDGER_ORDER_CANNOT_CHANGE`), and a v2-order run requires the v2 cut policy
 (`LEDGER_ORDER_V2_REQUIRES_DELIVERY_POLICY_V2`). Never relabel or migrate a delivered cut.
 
+**Earlier delivery policy (compatibility).** A page handoff without the `fixed_three_deliveries_v2`
+decision keeps its own second cut at C.4.13 and its local completion: the agent runs C.8 onward,
+then `finish`, one commit with the final work, the completion receipt and the handoff deletion, one
+push, `confirm-cleanup` (which reruns Phase F locally). If that final push fails, `restore-cleanup`
+returns `final_delivery_pending`: retry the same push and confirm, with no new commit. A delivered
+cut is never relabelled, and a policy marker is never removed to claim this path; a new page run
+cannot choose it.
+
 **Standing acceptance.** Agent proposals are not sent for confirmation: title/caption the agent
 proposed, lead paragraph, Q3.5 rewrites, hashtags and mint, keywords, pillar/subtopic, borderline
 links at 4.7/4.8/4.9 (conservative default: skip), flashcard/FAQ choices, catalog tags and the Drive
