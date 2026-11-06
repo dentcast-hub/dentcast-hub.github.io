@@ -111,6 +111,7 @@ def main(argv=None):
         # module 08 Part 2c: on a multi-source page the orphan sweep runs first;
         # no checker block is built until every sentence's source is settled
         out = Path(a.build).resolve() if a.build else work / "blocks"
+        out.mkdir(parents=True, exist_ok=True)
         r = subprocess.run([py, str(copy / "tools/des_fidelity_units.py"), cid, "--texts", str(Path(a.texts).resolve()),
                             "--orphans", str(out)], cwd=copy, capture_output=True, text=True)
         if r.returncode != 0:
