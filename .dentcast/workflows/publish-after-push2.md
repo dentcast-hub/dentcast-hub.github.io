@@ -36,10 +36,13 @@ monitors, reports, and merges only with authorization.
    the v2 cut policy (`fixed_three_deliveries_v2`) it trusts the runner's committed Phase F receipt (no
    rerun, no `origin/main` fetch); a v1-policy run still reruns Phase F. Never
    run `restore-cleanup` on this route, nor `confirm-cleanup` before the pull.
-3. Message at the run's end: `content_id`, branch, Push-2 SHA, run link, PR link and the Phase F
+3. The PR: the runner opens it, but only when the `QUEUE_PUBLISH_TOKEN` secret is set — its job
+   summary says so when it is not. No PR after a green run → open it from the branch to `main`
+   yourself, before the end-of-run message, and say in that message that the runner could not.
+4. Message at the run's end: `content_id`, branch, Push-2 SHA, run link, PR link and the Phase F
    summary line (the standing-acceptance list, the M1/M3b/M2 answers and the orphan sentences were
    already in the agent's Push-2 report; repeat nothing). Not "published" until merged.
-4. **Merge** only with authorization (`publish-checkpoints.md`, «Waiting, services, merge»): fresh
+5. **Merge** only with authorization (`publish-checkpoints.md`, «Waiting, services, merge»): fresh
    `check-pr`, gates green, then merge. Message at merge. A red gate means no merge.
 
 A completed PR whose `main` advanced (another publication merged) usually conflicts on Pulse, the

@@ -47,7 +47,6 @@ class EntrypointMigrationTests(unittest.TestCase):
    *map(str,ROOT.glob(".dentcast/workflows/**/*.md"))]
   for f in files:
    rel=str(Path(f).resolve().relative_to(ROOT)) if Path(f).is_absolute() else f
-   if "/legacy/" in rel or rel.endswith(".legacy.md") or "/historical/" in rel: continue
    for n,line in enumerate(read(rel).split("\n"),1):
     if len(line)>2000:
      with self.subTest(path=rel,line=n):
@@ -127,14 +126,16 @@ class EntrypointMigrationTests(unittest.TestCase):
   self.assertIn("LiteCast/Challenge",checkpoint)
   self.assertNotIn("two documented skip lines",m12)
   self.assertIn("چالش هیچ رکورد DES ندارد",parity)
- def test_development_records_are_explicitly_historical(self):
-  for p in (ROOT/".dentcast/workflows/modules").glob("*.md"):
-   if re.match(r"\d\d-",p.name) or p.name=="INDEX.md": continue
-   with self.subTest(path=p.name):
-    s=p.read_text()
-    self.assertTrue(s.startswith("# Historical modularization development record"))
-    self.assertIn("Historical record (non-operative)",s)
-    self.assertIn(".dentcast/PUBLISH-HANDOFF.md",s)
+ def test_modules_hold_only_the_live_route(self):
+  # Founder decision 2026-11-06: one live route per task and no older copy in the tree, so the
+  # modules directory holds exactly the twelve route modules and their index — the development
+  # records, staging drafts and the superseded extraction were deleted (Git history keeps them).
+  names=sorted(p.name for p in (ROOT/".dentcast/workflows/modules").iterdir())
+  self.assertEqual(names,sorted(["INDEX.md"]+[
+   f"{i:02d}-{n}.md" for i,n in zip(range(1,13),(
+    "hard-rules","routing-intake","litecast-and-page","taxonomy-and-navigation","semantic-linking",
+    "paper-ingestion","flashcards-and-quiz","des-fidelity","challenge","brain-and-pathways",
+    "build-and-version","english-notify-verify"))]))
   self.assertIn("LIVE_MODULAR_PUBLISHING_ENABLED",read(".dentcast/workflows/modules/INDEX.md"))
  def test_no_fake_live_publication_created(self):
   fixtures=list((ROOT/"tests").rglob("PUBLISH-HANDOFF.md"))

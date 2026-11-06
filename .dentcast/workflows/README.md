@@ -65,6 +65,7 @@ python3 tools/dentcast_publish_readpack.py \
 | Cross-linking | `.dentcast/workflows/cross-link.md` |
 | New section | `.dentcast/workflows/new-section.md` |
 | Offline publishing | `.dentcast/offline-publish.md` |
+| Minimal publications from /admin (setup, import into git, completion) | `.dentcast/quick-publish.md` |
 | External Fidelity | `.dentcast/workflows/external-fidelity.md` |
 | Publish queue on branch `queue` (prepare, status) | `.dentcast/workflows/publish-queue.md` |
 | Publish an item from the queue (publish day) | `.dentcast/workflows/queue-route.md` (only this) |

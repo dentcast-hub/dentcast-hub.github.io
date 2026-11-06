@@ -31,6 +31,13 @@
    - `gh workflow run queue-publish.yml -f nn=NN -f requested_by="<نام>"`؛
    - API یا MCP گیت‌هاب: `POST repos/dentcast-hub/dentcast-hub.github.io/actions/workflows/queue-publish.yml/dispatches`
      با `{"ref": "main", "inputs": {"nn": "NN", "requested_by": "<نام>"}}` (ابزار MCP: `actions_run_trigger`).
+
+   `nn` را برای «قدیمی‌ترین آماده» **خالی بگذار یا اصلاً نده** (`gh workflow run queue-publish.yml
+   -f requested_by="<نام>"`). `requested_by` همان نامی است که قفل را می‌سازد و `unlock` با آن مقایسه
+   می‌کند، پس نامِ ثابتِ کلاینت است (`claude-code`، `cursor`، `codex`)، نه رشته‌ای تازه در هر اجرا.
+   اگر هیچ‌کدام از این سه راه در دسترس نیست (نه `gh` احراز‌شده، نه ابزار گیت‌هاب)، کار **به بنیان‌گذار
+   سپرده می‌شود**: همین ورودی‌ها («Run workflow» در تب Actions، `nn` خالی، `requested_by`) گزارش و
+   متوقف می‌شود؛ هیچ راهِ جایگزینی (API با curl، push از سندباکس، بازسازی فایل‌ها) اجرا نمی‌شود.
    workflow به ترتیب: `pick` ← `lock` و push برنچ `queue` ← برنچ `queue-publish/<نام پوشهٔ مطلب>` تازه از
    `origin/main` (برنچی با همین NN روی origin باشد: `BRANCH_EXISTS`، چیزی قفل نمی‌شود) ← `run`: بررسی manifest
    و اجرای آزمایشی (رد ← هیچ چیزی نوشته نمی‌شود)، ledger صف، `queue_apply.py`، رکوردهای ledger، گام‌ها تا
@@ -44,8 +51,10 @@
 4. **گزارش به بنیان‌گذار.** از خلاصهٔ اجرا (job summary): `content_id`، برنچ، SHA Push 2، لینک اجرای
    post-cut2، لینک PR، و `mechanical_defaults` و `manual_steps`، هر کدام یک خط. شکست یا timeout: لینک اجرا و
    خروجی JSON ابزار عیناً، بعد `status` و `next_step` آن.
-5. **مرج.** تریگر انتشار از صف اجازهٔ مرج بعد از تکمیل است: وقتی تحویل سوم، Phase F و گیت‌های PR سبزند،
-   PR مرج می‌شود؛ گیت قرمز یعنی مرج نه.
+5. **مرج.** مرج تصمیم بنیان‌گذار است، همان‌جا که `queue-publish.yml` و `publish-after-push2.md` می‌گویند:
+   وقتی تحویل سوم، Phase F و گیت‌های PR سبزند، آمادگی گزارش می‌شود و PR **فقط با اجازهٔ بنیان‌گذار** مرج
+   می‌شود — یک «بعد از تکمیل مرج کن» صریح در همین درخواست یا پیش از آن کافی است و تا سبزشدن همهٔ گیت‌ها
+   معتبر می‌ماند. گیت قرمز یعنی مرج نه.
 6. **پاک‌کردن صف.** خودکار: `queue-publish-done.yml` بعد از مرج پوشهٔ مطلب را با کامیت
    `queue: NN published as <content_id> (PR #n)` از `queue` برمی‌دارد. فقط اگر آن workflow شکست خورد:
    `python3 tools/queue_publish.py done <پوشه> --content-id <id> --pr <n>` در یک checkout برنچ `queue` و push چاپ‌شده.
@@ -74,6 +83,8 @@ Contents: read and write، Pull requests: read and write، Actions: read و Meta
 | `DELIVERY3_NO_PR` | PR به main با عنوان `<content_id>: publish queue item NN` |
 | `PR_OPEN` | مرج وقتی گیت‌ها سبزند (گام ۵) |
 | `PR_MERGED_ITEM_IN_QUEUE` | `done` (گام ۶) |
+| `MULTIPLE` | چند مطلب «در حال انتشار»: هیچ انتشار تازه‌ای شروع نمی‌شود؛ `items[].next_step` هر کدام به ترتیب از قدیمی‌ترین دنبال یا گزارش می‌شود |
+| رد `QUEUE_UNAVAILABLE` (خروج ۲) | `origin/queue` نه fetch شد و نه کپی محلی دارد: شبکه/دسترسی گزارش می‌شود و انتشار شروع نمی‌شود |
 | `PR_CLOSED_UNMERGED`، `BRANCH_WITHOUT_HANDOFF`، `UNKNOWN`، `*_UNKNOWN` | گزارش با شواهد خروجی؛ API در دسترس نیست یعنی تب Actions و PRهای همان برنچ |
 
 ## وقتی ابزار رد می‌کند
@@ -83,7 +94,7 @@ Contents: read and write، Pull requests: read and write، Actions: read و Meta
 
 | کد | کار |
 |---|---|
-| `SHA256_MISMATCH` | مطلب به «در حال آماده‌سازی» برمی‌گردد؛ یک خط به بنیان‌گذار |
+| `SHA256_MISMATCH`، `SHA256SUMS_MISSING`، `SHA256SUMS_MALFORMED`، `CATALOG_NOT_FROZEN`، `STATUS_MISSING` | انجماد مطلب سالم نیست: مطلب به «در حال آماده‌سازی» برمی‌گردد؛ یک خط به بنیان‌گذار |
 | `DES_PACKAGE_MISSING` | یک خط به بنیان‌گذار |
 | `MANIFEST_INCOMPLETE` | فیلد نام‌برده به بنیان‌گذار گزارش می‌شود؛ workflow ورودی supplement ندارد: مطلب به آماده‌سازی برمی‌گردد تا فیلد در خود مطلب منجمد شود |
 | `SUPPLEMENT_TEXT_NOT_FROZEN` | متنِ صفحه در صف منجمد نیست: مطلب به آماده‌سازی برمی‌گردد |
