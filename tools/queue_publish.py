@@ -38,7 +38,10 @@ status read-only: where the queue publication stands, from GitHub facts only
        else "unknown" (never a failure). One `state` and `next_step` per locked item:
 
          IDLE                          no item is «در حال انتشار»: nothing to resume
-         LOCKED_NO_BRANCH              Push 2 never landed: unlock, re-dispatch queue-publish.yml
+         QUEUE_PUBLISH_RUN_IN_PROGRESS a queue-publish.yml run is queued or running: wait for it,
+                                       then `status` again (never unlock or dispatch under it)
+         LOCKED_NO_BRANCH              Push 2 never landed and no queue-publish.yml run is live:
+                                       unlock, re-dispatch queue-publish.yml
          AMBIGUOUS_BRANCHES            several queue-publish/NN-* branches: founder decides
          PUSH2_NO_RUN                  dispatch post-cut2-mechanical.yml (target_branch, expected_head printed)
          PUSH2_RUN_IN_PROGRESS         wait for that run
@@ -52,6 +55,7 @@ status read-only: where the queue publication stands, from GitHub facts only
          PR_CLOSED_UNMERGED            founder decides (unlock, or reopen)
          PR_MERGED_ITEM_IN_QUEUE       run done (queue-publish-done.yml normally does it)
          PR_UNKNOWN                    the API is unavailable: look up the PR for the branch
+         MULTIPLE                      several items are locked: one row per item in `items`
 
 Every refusal prints the tool's JSON verbatim and exits non-zero. Nothing here
 writes text, asks, or chooses: the content_id is the next free number of the
@@ -117,7 +121,11 @@ def pick(queue_dir, nn=None):
     for p in items:
         if nn and not p.name.startswith(nn + "-"):
             continue
-        st = qm.status_fields(p)
+        try:
+            st = qm.status_fields(p)
+        except qm.QueueRefusal as e:  # a folder without a readable 00-وضعیت.md never blocks the queue
+            skipped.append({"item": p.name, "status": None, "lock": None, "refused": e.detail})
+            continue
         ready = (st["status"] or "").startswith("آماده") and not st["lock"]
         if ready:
             return {"status": "picked", "item": str(p), "nn": p.name[:2], "older_not_ready": skipped}
@@ -270,16 +278,41 @@ def post_cut2_dispatch(slug, branch, head):
                    + json.dumps({"ref": branch, "inputs": inputs})}
 
 
-def item_status(repo, slug, name, st, lock, api, remote_heads):
+ACTIVE_RUN = ("queued", "in_progress", "waiting", "pending", "requested")
+
+
+def active_publish_run(slug, api):
+    """The queued/running queue-publish.yml run, if any (None = none; "unknown" = API unavailable).
+    `concurrency: queue-publish` means at most one is live, and between its lock push and Push 2
+    — or between Push 2 and the PR — the item it holds looks like a dead lock to a reader of
+    `queue` alone."""
+    if not slug:
+        return "unknown"
+    runs = api(f"repos/{slug}/actions/workflows/{QUEUE_PUBLISH}/runs?per_page=10")
+    run_list = (runs or {}).get("workflow_runs") if isinstance(runs, dict) else None
+    if run_list is None:
+        return "unknown"
+    live = [r for r in run_list if r.get("status") in ACTIVE_RUN]
+    return _run_view(live[0]) if live else None
+
+
+def item_status(repo, slug, name, st, lock, api, remote_heads, publish_run=None):
     nn = name[:2]
-    out = {"item": name, "nn": nn, "queue_status": st, "lock": lock}
+    out = {"item": name, "nn": nn, "queue_status": st, "lock": lock, "queue_publish_run": publish_run}
     if remote_heads is None:
         return {**out, "state": "UNKNOWN", "next_step": "git ls-remote origin failed: retry `status` with network"}
     branches = sorted(b for b in remote_heads if b.startswith(f"{BRANCH_PREFIX}{nn}-"))
     out["branches"] = {b: remote_heads[b] for b in branches}
+    if isinstance(publish_run, dict):
+        return {**out, "state": "QUEUE_PUBLISH_RUN_IN_PROGRESS",
+                "next_step": (f"a {QUEUE_PUBLISH} run is {publish_run.get('status')}: {publish_run.get('html_url')}. "
+                              "Wait for it to finish, then run `status` again; nothing is unlocked or dispatched "
+                              "while it runs")}
     if not branches:
+        caveat = "" if publish_run is None else \
+            f" First confirm in the Actions tab that no {QUEUE_PUBLISH} run is queued or running (the API was unavailable)."
         return {**out, "state": "LOCKED_NO_BRANCH",
-                "next_step": (f"Push 2 never landed. `python3 tools/queue_publish.py unlock queue/{name} --agent "
+                "next_step": (f"Push 2 never landed.{caveat} `python3 tools/queue_publish.py unlock queue/{name} --agent "
                               f"\"<the lock's name>\"` on the queue checkout and push (the founder: --force), then "
                               f"dispatch {QUEUE_PUBLISH} with nn={nn}")}
     exact = BRANCH_PREFIX + name
@@ -333,7 +366,7 @@ def item_status(repo, slug, name, st, lock, api, remote_heads):
                 "checkout and push")}
         if pr.get("state") == "open":
             return {**out, "state": "PR_OPEN", "next_step": f"merge PR #{pr['number']} when every gate is green "
-                    "(founder's decision); a red gate means no merge"}
+                    "(the queue publish trigger authorizes the merge, queue-route.md step 5); a red gate means no merge"}
         return {**out, "state": "PR_CLOSED_UNMERGED", "next_step": f"PR #{pr['number']} was closed without merge: "
                 "report it; the founder decides (reopen, or unlock and re-dispatch)"}
     if handoff_on_head is None:
@@ -389,7 +422,8 @@ def status(queue_dir=None, repo=ROOT, slug=None, api=github_api):
             sha_, _, ref = line.partition("\t")
             if ref.startswith("refs/heads/"):
                 heads[ref[len("refs/heads/"):]] = sha_
-    rows = [item_status(repo, slug, n, s_, l_, api, heads) for n, s_, l_ in locked]
+    publish_run = active_publish_run(slug, api)
+    rows = [item_status(repo, slug, n, s_, l_, api, heads, publish_run) for n, s_, l_ in locked]
     if len(rows) == 1:
         out.update(state=rows[0]["state"], next_step=rows[0]["next_step"])
     else:

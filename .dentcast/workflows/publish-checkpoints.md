@@ -50,7 +50,7 @@ reading less.
 | Before C.4.10.1 (paper attached) | module 06 |
 | Before C.4.13 | module 08 complete; LiteCast and Challenge read its opening up to `#### Conditional path for founder-supplied results` for the skip line |
 | Before C.4.7 | module 05 |
-| — delivery 1 — | modules 06 and 08 are therefore read before cut 1 |
+| — delivery 1 — | module 08 (and module 06 when a paper is attached) is therefore read before cut 1 |
 | Before C.4.11 / C.4.14 / C.5.0 | modules 07 / 09 (Challenge only) / 10 |
 | At C.2, for the page's chip row | Hard Rule 15 only (module 01, already read): existing canonical concepts, resolved with `hashtag_ref.py --simulate`, no mint. Step 5.0 settles the final list and corrects the row before the brain write |
 | Before writing the English mirror (before C.6) | `en-version.md`, module 12 through the end of Phase D, module 11 above its `module-11-boundary` marker (§6) |
@@ -126,8 +126,9 @@ reaches only the last delivered cut.
 ## Start and identify the run
 
 1. Branch from a freshly fetched `origin/main` (`git fetch origin main`). A cloud session's own,
-   still-empty `ccr-*` branch: `git switch -C <that-branch> --no-track origin/main`; elsewhere
-   `git switch -c <branch> --no-track origin/main`. A branch that holds commits is never moved
+   still-empty platform branch (`ccr-*`, `codex/*`, …): `git switch -C <that-branch> --no-track origin/main`;
+   elsewhere `git switch -c publish/<content-id> --no-track origin/main`. Any branch name triggers
+   `post-cut2-mechanical.yml` (its push filter is `**`). A branch that holds commits is never moved
    (`TOOL_OLDER_THAN_ORIGIN_MAIN` then names `git merge --no-edit origin/main`).
    `SHALLOW_CLONE_DEEPEN_REQUIRED` → `git fetch --deepen=50 origin` (or `--unshallow`) and retry.
 2. Check only that `.dentcast/PUBLISH-HANDOFF.md` does not exist (section above). Then run the
@@ -158,7 +159,8 @@ python3 tools/dentcast_publish_handoff.py advance --id <id> --evidence <receipt-
 
 - Prefer `advance`: it saves each transition separately, passes digests internally and stops at a
   delivery cut (`delivery_required`). Omit `--start-next` at an unread-module boundary or a wait.
-  Consecutive inapplicable steps: repeated `--skip '<id>=<canonical exception>'` in order; a row an
+  Consecutive inapplicable steps: repeated `--skip '<id>=<canonical exception>'` in order (no `--id`
+  with `--skip`); a row an
   earlier `--start-next` opened may be skipped while it has no evidence, external action or change.
   `failed`/`blocked` use `step`. On a mid-sequence failure `transitions_written` and the last digest
   show what was saved; never replay a completed action.

@@ -1,9 +1,11 @@
 ---
-description: New content through the active twelve-module workflow and fixed publication handoff.
+description: New content through the active twelve-module workflow and fixed publication handoff. Triggers «منتشر کن», «متن جدید دارم», «این رو به عنوان شیرهاب/اینسایت/چیرساید/متانوت/نوت‌کست منتشر کن», an attached paper. Not for the publish queue («صف انتشار», branch `queue`), which the router's publish-queue note routes.
 alwaysApply: false
 ---
 
 # Cursor publishing
+
+Not for the publish queue («صف انتشار», branch `queue`): preparing, reporting or publishing a queue item follows the router's publish-queue note, not this file.
 
 **LIVE_MODULAR_PUBLISHING_ENABLED.** Read `.dentcast/workflows/README.md`, `.dentcast/workflows/agent-parity.md` and the complete active sections selected for the current edit scope by `.dentcast/workflows/global/README.md`.
 Load complete `modules/01-hard-rules.md` and `02-routing-intake.md`, then every applicable rule in the ledger order of `publish-checkpoints.md`: full modules by default, or the verified readpack (README). Never summarize or omit an unverified rule. Preserve source-based DES/Fidelity, category exceptions, English, notification and Phase F. Staging utilities cannot replace real steps. Legacy files are backup only; do not read them for execution.

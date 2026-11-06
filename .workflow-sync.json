@@ -1,8 +1,8 @@
 {
   "version": 2,
   "note": "Client entrypoints are maintained together. Shared canonical workflow/global/module files are read directly by every client and are not duplicated as another client side. Nested canonical edits are covered by the advisory hook and live-contract CI. This old hash baseline is a drift heuristic, not proof of semantic parity or approval.",
-  "acknowledged_at": "2026-10-28T18:40:33.506Z",
-  "acknowledged_commit": "a7d3d21f11866db0c99e67a3365ef09d5add94f6",
+  "acknowledged_at": "2026-11-06T15:37:05.145Z",
+  "acknowledged_commit": "4a324e18bec10e25ae94c98e9cb1250b74dda10c",
   "sides": {
     "claude": {
       "label": "Claude",
@@ -11,8 +11,8 @@
         "AGENTS.md"
       ],
       "files": {
-        "AGENTS.md": "1387a1df961d85a0c69881cf8c8e1fd10633fe5218f9b2800301f24e6351b756",
-        "CLAUDE.md": "bcb11b912e0a8780607baa35850a23b458007d449c87115387b75a0fdad595f2"
+        "AGENTS.md": "db057ea0fbe97ebd2a15827e9f39796003b8d142926be4ae87f7c3df68d2534e",
+        "CLAUDE.md": "2ad133a6da73307427a06dc05e3b49de59ba60b8b484e6c16836cbffed1c5826"
       }
     },
     "cursor": {
@@ -24,11 +24,11 @@
         ".cursor/rules/dentcast-ads.mdc": "317ab58086e6340f9a2ec764f2d59da0275c8ed7c24fae0327c246a4bfdfca39",
         ".cursor/rules/dentcast-cross-link.mdc": "6c3d4c89176d311d256a2ebbd7410108828373d5761d83873d956dc925773235",
         ".cursor/rules/dentcast-en-version.mdc": "7fe075657c832e35ed9e9641f21e21be45fb1bb75813ea32641d34dbda702a2d",
-        ".cursor/rules/dentcast-glossary.mdc": "d0409ad5171228fb16c0a8c5fa1d1028e647074a620fedb274a9cd50e00972b2",
-        ".cursor/rules/dentcast-operating-protocol.mdc": "6daf0bb3f6b759455f8ac1f4d05585ae56cfbb7c3ac559fbf11131b9c1d7fabd",
+        ".cursor/rules/dentcast-glossary.mdc": "218adaab5c24b53f4697299189f475f043f0c7e1bc32b1ecff5cca7f11bf91d0",
+        ".cursor/rules/dentcast-operating-protocol.mdc": "d40e63a488c30aa308faaf91baf442ada65ef603e943465b9d0a56c219ae5daa",
         ".cursor/rules/dentcast-plus-premium.mdc": "56e4d451bc3bc3d31aa6002b41d15c3c1df797847ea2573278faf553c8bcaf07",
-        ".cursor/rules/dentcast-publishing.mdc": "2c2c6987b6641a4b22b7383c815b8e16656ea600ebb028277de8207e59944df7",
-        ".cursor/rules/dentcast-router.mdc": "e22650a25e43c1965ed6268864f0a51c227d1cb4fd004cd6f23f01f342ea44ab",
+        ".cursor/rules/dentcast-publishing.mdc": "044b37ce445298ee4566b7459f787714357443963539ebb259eeb0bd5fad531c",
+        ".cursor/rules/dentcast-router.mdc": "fa2a274e01080cc71337777b0862c4f14d0c8001a9caae25e48508d3cdcfacb2",
         ".cursor/rules/dentcast-spot-report.mdc": "b61133d27dff6f963c1960b85c7eb0177b891920fd071823164d81ec91383ad7"
       }
     }

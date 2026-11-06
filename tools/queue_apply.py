@@ -266,7 +266,7 @@ def precheck(args):
                "(module 03 «Opening paragraph before any list») belongs to preparation; the item goes back to "
                "«در حال آماده‌سازی» (Phase F would fail this page)")
     if not (info["path"] / "05-DES-Fidelity" / "des.json").exists():
-        refuse("DES_PACKAGE_MISSING", "05-DES-Fidelity/des.json is missing (queue-maintainer.md «روز انتشار صف»: one of the three stops)")
+        refuse("DES_PACKAGE_MISSING", "05-DES-Fidelity/des.json is missing (queue-route.md «وقتی ابزار رد می‌کند»)")
     return info, d, m, n, prev
 
 
@@ -1212,10 +1212,12 @@ def faq(w, cid, item, m):
         data = {**data, "faqPages": [data["faqPage"]]}  # one FAQPage written as an object
     raw = json.dumps({k: data[k] for k in ("faqPages", "definedTermSets") if k in data}, ensure_ascii=False)
     # the page's own URL, written in preparation with a placeholder number:
-    # …-NN.html, …-<old number>.html, {content_id}.html, …-{content_id}.html
+    # …-NN.html, …-<old number>.html, {content_id}.html, …-{content_id}.html —
+    # or the whole URL as the {{PAGE_URL}} placeholder queue_stamp.py allows in 10.
     sec = re.escape(cid.split("/")[0])
+    raw = raw.replace("{{PAGE_URL}}", url)
     raw = re.sub(r"https://dentcast\.org/%s/(?:[A-Za-z0-9-]+-(?:NN|\d+|\{content_id\})|\{content_id\})\.html" % sec, url, raw)
-    if "{content_id}" in raw or re.search(r"-NN\.html", raw):
+    if "{content_id}" in raw or re.search(r"-NN\.html", raw) or "{{" in raw:
         refuse("FAQ_PLACEHOLDER", "10-فلش‌کارت-FAQ.json keeps a placeholder outside the page URL")
     node = json.loads(raw)
     rel = "plus/faq-corpus.json"
