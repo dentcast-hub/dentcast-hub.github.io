@@ -179,7 +179,8 @@ class ExternalReconciliationTests(unittest.TestCase):
         for case in ("question", "approval", "blocker"):
             with self.subTest(case=case):
                 s = copy.deepcopy(self.base); p = s["state"]["publication"]
-                if case == "question": p["context"]["pending_questions"].append("fixture:unanswered")
+                if case == "question": p["context"]["pending_questions"].append(
+                    {"message": "M1", "step": "C.2", "question": "fixture:unanswered", "answered": False})
                 elif case == "blocker": p["blocker"] = "fixture:blocker"
                 else: p["context"]["approvals"].append({"scope": "fixture:approval", "status": "rejected", "decision": "no", "evidence": ["fixture:no"]})
                 self.routes(s, False)

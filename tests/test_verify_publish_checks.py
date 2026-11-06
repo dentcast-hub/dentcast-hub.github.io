@@ -241,6 +241,26 @@ class SeriesNavigationTests(unittest.TestCase):
                        prompt_doc(prev_a('prompt1-append1'), EMPTY_NEXT), files)
         self.assertFalse(rep.failures, rep.render())
 
+    def test_any_numbered_series_with_the_bar_is_audited_not_only_promptologist(self):
+        # 2026-11-06: module 04 step 4.6 gates on the series' template, not the category name,
+        # so Phase F audits every type in SERIES_NAV_TYPES against that type's own brain order.
+        self.assertEqual(vp.SERIES_NAV_TYPES, ('promptologist', 'plak_sefr', 'taraz'))
+        pk = '/plak-sefr/'
+        brain = [{'type': 'plak_sefr', 'page_url': pk + 'plak1-11.html'},
+                 {'type': 'clinical', 'page_url': '/insight/insight-9.html'},
+                 {'type': 'plak_sefr', 'page_url': pk + 'plak1-12.html'}]
+        prev = f'<a href="{pk}plak1-11.html" class="ep-nav-btn">&#8592; قسمت قبلی</a>'
+        nxt = f'<a href="{pk}plak1-12.html" class="ep-nav-btn">قسمت بعدی &#8594;</a>'
+        files = {'plak-sefr/plak1-11.html': prompt_doc(EMPTY_PREV, nxt)}
+        rep = self.run_check(vp.check_promptologist_nav, files, 'plak-sefr/plak1-12',
+                             prompt_doc(prev, EMPTY_NEXT), brain, False, 'plak_sefr')
+        self.assertFalse(rep.failures, rep.render())
+        # the predecessor's dead «قسمت بعدی» placeholder is what the old category gate hid
+        stale = {'plak-sefr/plak1-11.html': prompt_doc(EMPTY_PREV, EMPTY_NEXT)}
+        rep = self.run_check(vp.check_promptologist_nav, stale, 'plak-sefr/plak1-12',
+                             prompt_doc(prev, EMPTY_NEXT), brain, False, 'plak_sefr')
+        self.assertTrue(rep.failures)
+
     def test_template_clone_with_both_slots_empty_fails(self):
         files = {'dentai/promptologist/prompt1-append1.html':
                  prompt_doc(prev_a('prompt1-1'), next_a('prompt2-1'))}

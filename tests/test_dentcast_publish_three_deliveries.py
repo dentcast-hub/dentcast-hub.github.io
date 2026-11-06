@@ -117,7 +117,9 @@ class ThreeDeliveriesTests(unittest.TestCase):
         p['context']['approvals'][0].update(status='confirmed', decision='approved',
                                              evidence=['fixture:explicit-author-yes'])
         lc.require_fixed_cut_readiness(p)
-        p['context']['pending_questions'] = ['fixture:unanswered question']
+        p['context']['pending_questions'] = [{'message': 'M1', 'step': 'C.2',
+                                              'question': 'fixture:unanswered question',
+                                              'answered': False}]
         with self.assertRaisesRegex(h.Blocked, 'DELIVERY_PENDING_QUESTIONS'):
             lc.require_fixed_cut_readiness(p)
         p['context']['pending_questions'] = []
@@ -153,7 +155,8 @@ class ThreeDeliveriesTests(unittest.TestCase):
         self.walk(sha, 'C.4.9')
         state, _ = h.load_state(self.root)
         state['publication']['context']['pending_questions'] = [
-            'fixture:unanswered intake detail']
+            {'message': 'M1', 'step': 'C.2', 'question': 'fixture:unanswered intake detail',
+             'answered': False}]
         h.write_atomic(self.root, state)
         run(self.root, 'add', h.STATE_PATH)
         self.assert_blocked('DELIVERY_PENDING_QUESTIONS',

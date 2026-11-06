@@ -40,7 +40,7 @@ Compare the new body with every existing LiteCast entry semantically (Hard Rule 
 
 **Hard rules for matching:** real conceptual relevance only; no junk/generic words; candidates only from `litecast/lite-glossary.json`; never the item itself; **first occurrence only**, one link per target.
 
-#### Step 2 — Auto-apply high-confidence matches; ask only for the rest
+#### Step 2 — Apply a strong match; a borderline one is skipped and recorded
 
 Hard Rule 14: an unmistakable match is applied and recorded (phrase + context, target, one-line reason); a borderline one is skipped and recorded.
 
@@ -66,7 +66,7 @@ Hard Rule 9's cap of 5. With no specialist capsules all slots are LiteCast's, bu
 
 The **same** `dc-related-section` / `dc-related-capsules` / `dc-related-capsule` markup the LiteCast template uses; only `href` (the target LiteCast page) and the label (a short Persian title of the target) differ. **Replace** the cloned specialist capsules with these.
 
-#### Step 4 — Auto-apply high-confidence matches; ask only for the rest
+#### Step 4 — Apply a strong match; a borderline one is skipped and recorded
 
 Hard Rule 14: strong relatedness is inserted and recorded (target, URL, label, reason); borderline candidates are skipped and recorded.
 
@@ -86,6 +86,7 @@ Clone the previous same-category page exactly — identical HTML tree, CSS class
 - JSON-LD field VALUES → adapted; the schema shape stays identical.
 - Media sources → from intake.
 - All URLs/slugs → the new identifier.
+- The hashtag chip row → tags for the new content, never the cloned part's own row. The **one** rule that binds it here is Hard Rule 15: each chip is an **existing** canonical concept of `dentcast-hashtag-reference.json`, found with `python3 tools/hashtag_ref.py --simulate "<phrase>"` and reused verbatim — no fresh spelling, no alias as a tag, and **no mint**. Which concepts, how many and any mint are settled later, by **step 5.0** (module 10), whose final list this row must equal before the brain write; it corrects the row there if it changed. `keywords` live only in the brain entry (step 5) — no page carries them.
 
 **Identity invariant (domain follows the clone).** The clone swaps the **PATH only** and **keeps the domain** — never domain-swap during a clone. LiteCast stays on `https://dentcast.ir` with no hreflang and root-relative links; every other category on `https://dentcast.org` (Hard Rule 10). Confirm the cloned domain survived.
 

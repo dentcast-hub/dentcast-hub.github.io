@@ -3,7 +3,6 @@
 This is the active, agent-neutral contract for interrupted real publications.
 The one temporary state file is **`.dentcast/PUBLISH-HANDOFF.md`**, relative to the repository root.
 Its name never includes a content ID, date, agent, or run ID. This contract is permanent; the state file exists only while a publication is unfinished.
-`modules/CROSS-AGENT-HANDOFF.md` concerns historical modularization development, not resuming a live publication.
 Legacy files are backup snapshots only: do not load them as execution instructions or use them to override the active modular workflow.
 
 ## Discovery and resume

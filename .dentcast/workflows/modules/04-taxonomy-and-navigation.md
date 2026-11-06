@@ -5,7 +5,7 @@
 
 Ledger steps in this module: `C.2.4`, `C.2.5`, `C.2.6`, `C.3`, `C.4`, `C.4.5`, `C.4.5-b`, `C.4.6`.
 
-### 2.4. Semantic pillar & subtopic determination (propose + confirm)
+### 2.4. Semantic pillar & subtopic determination (built and recorded, not asked)
 
 Decide `pillar.primary` and — when that pillar is structured — `pillar.subtopic` **here, once**, before steps 2.5 and 5 consume them (Hard Rule 6). The match is semantic (Hard Rule 14). The decision is standing acceptance: applied, recorded with its reason, listed in the agent's Push-2 report; it is not sent for confirmation.
 
@@ -19,7 +19,7 @@ Hard Rules 7–8: `PILLARS` in `tools/build_pillar.py`, read from a state reflec
 python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"
 ```
 
-#### Step 2 — Semantically pick the pillar (auto-apply if clear, else propose options)
+#### Step 2 — Semantically pick the pillar (clear: apply; ambiguous: closest match, recorded)
 
 Compare the content's conceptual subject with each pillar:
 
@@ -27,13 +27,13 @@ Compare the content's conceptual subject with each pillar:
 - **Ambiguous** (two or more real candidates) → the closest semantic match, with the competing candidate and the reason recorded.
 - **No pillar applies** → `pillar.primary` stays `null`; skip Step 3. The فهرست موضوعی capsule then falls back to `/pillar/`.
 
-#### Step 3 — Semantically pick the subtopic (structured pillars only; auto-apply if clear, else propose options)
+#### Step 3 — Semantically pick the subtopic (structured pillars only; clear: apply; ambiguous: closest match, recorded)
 
 - **Pillar not structured** (`pillar.primary not in PILLARS`) → `pillar.subtopic` stays `null` (the key is still present).
 - **Pillar structured** → compare against `PILLARS[primary]['subtopics']`: the clear fit, or for ambiguity the closest match with its reason; use the slug exactly as stored (no re-casing).
 - **No existing subtopic fits even loosely** → a **new subtopic is a founder decision**, asked when it arises: propose slug + `title_fa` in the siblings' style (kebab-case English slug, short Persian noun phrase), flagged **NEW**; only after the founder's yes is it added to `PILLARS[primary]['subtopics']` in `tools/build_pillar.py` with a sibling's exact shape. **A new pillar is never created here.**
 
-#### Step 4 — Hold the confirmed values
+#### Step 4 — Hold the recorded values
 
 Step 2.5 uses `pillar.primary` for the capsule `href`; step 5 writes both into the brain entry. Nothing re-decides them (Hard Rule 6).
 
@@ -124,11 +124,11 @@ Open the parent episode page `/episodes/episode-XX.html` (same XX) and find its 
 
 When touching an older pair for another reason, fix a gap in passing (Hard Rule 11). Evidence: `git diff` shows on the sibling only the `.author` block and its CSS rule; the mirrored `sources[]` is byte-identical to the original except `scored_at`; the credit target is the original's URL, never re-resolved.
 
-### 4.6. Promptologist series prev/next navigation (Promptologist only)
+### 4.6. Promptologist series prev/next navigation — and every numbered series carrying the same bar
 
-Only when the locked category is **Promptologist**; every other type skips it.
+**The condition is the previous part's page, not the category name.** This step runs whenever the locked category is a **numbered series** (پرامپتولوژیست `prompt<season>-<part>`, پلاک صفر `plak1-<part>`, تراز شواهد `taraz1-<part>`, any «قسمت N» run) **and the previous part's page carries an `ep-nav` block**; a type whose pages have no such bar skips it. Skipping it where the bar exists is never a choice: the previous part's «قسمت بعدی» stays a greyed placeholder and the series dead-ends there.
 
-Promptologist parts are an **ordered series** (id `prompt<season>-<part>`, page `/dentai/promptologist/<id>.html`). Each page ends with an **`ep-nav` block** — the last element inside `<main>`, after the `.ep-box`, like a core episode's bar:
+Each page of such a series ends with the **`ep-nav` block** — the last element inside `<main>`, after the `.ep-box`, like a core episode's bar:
 
 ```html
 <div class="ep-nav">
@@ -137,14 +137,14 @@ Promptologist parts are an **ordered series** (id `prompt<season>-<part>`, page 
 </div>
 ```
 
-Two slots in DOM order: **first = previous part**, **second = next part**. An active slot is `<a href="/dentai/promptologist/<id>.html" class="ep-nav-btn">…</a>`; an empty one is `<span class="ep-nav-btn ep-nav-empty">…</span>` (greyed, no pointer). The clone arrives with both slots empty, so **two pages change**:
+Two slots in DOM order: **first = previous part**, **second = next part**. An active slot is `<a href="<that part's page URL>" class="ep-nav-btn">…</a>`; an empty one is `<span class="ep-nav-btn ep-nav-empty">…</span>` (greyed, no pointer). The clone arrives with both slots empty, so **two pages change**:
 
-**A) On the NEW part's page — wire its «previous» slot** to the brain-order predecessor (usually `prompt<season>-<part − 1>`; across a season boundary or after an appendix part, e.g. `prompt2-1` → `prompt1-5`):
-  `<a href="/dentai/promptologist/<prev-id>.html" class="ep-nav-btn">&#8592; قسمت قبلی</a>`
+**A) On the NEW part's page — wire its «previous» slot** to the brain-order predecessor (usually part − 1; across a season boundary or after an appendix part, e.g. `prompt2-1` → `prompt1-5`):
+  `<a href="<the series' own directory>/<prev-id>.html" class="ep-nav-btn">&#8592; قسمت قبلی</a>`
   The **next** slot stays the placeholder `<span class="ep-nav-btn ep-nav-empty">قسمت بعدی &#8594;</span>` until a later part is published.
 
 **B) On the PREVIOUS part's page — wire its «next» slot to the new part**, in place, visible text identical:
-  `<a href="/dentai/promptologist/<new-id>.html" class="ep-nav-btn">قسمت بعدی &#8594;</a>`
+  `<a href="<the series' own directory>/<new-id>.html" class="ep-nav-btn">قسمت بعدی &#8594;</a>`
   Its own previous slot is untouched; `git diff` shows only that slot turning from the `<span … ep-nav-empty>` placeholder into the link.
 
-Match the series' label register («قسمت قبلی» / «قسمت بعدی»). A previous part with **no** `ep-nav` block (older template) → stop and ask the founder before improvising one. Both pages keep exactly two slots; Phase F checks the wiring.
+Match the series' label register («قسمت قبلی» / «قسمت بعدی»). A previous part with **no** `ep-nav` block (older template, or the series' first part) → stop and ask the founder before improvising one. Both pages keep exactly two slots. Phase F's row `4.6 nav` audits the wiring on every series it covers (`SERIES_NAV_TYPES` in `tools/verify_publish.py`: پرامپتولوژیست، پلاک صفر، تراز) against the brain order; a series the audit does not yet cover is evidenced by the two pages' scoped `git diff`.

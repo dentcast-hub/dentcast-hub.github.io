@@ -53,7 +53,7 @@ in `CLAUDE.md`.)
    feature, not a search feature.
 8. **en pages stay OUT of the brain ecosystem.** This workflow does **not**
    append a `dentcast-brain.json` entry, does **not** add a Pulse line, and
-   does **not** run the specialist cross-linking steps (README 4.7/4.8/4.9)
+   does **not** run the specialist cross-linking steps (`modules/05-semantic-linking.md`, 4.7/4.8/4.9)
    for the en page. en pages are standalone translations, exactly as
    `/metanotes/en/meta-1..5` are today. (The en page therefore carries no
    دانشنامه/فهرست موضوعی capsules and no brain «کاوش بیشتر» links — matching
@@ -66,9 +66,10 @@ in `CLAUDE.md`.)
    `plus/faq-corpus.json` from before FAQ/flashcards were removed from page
    markup (`.dentcast/faq-schema-removal-handoff.md`) are archive only —
    never re-authored, never re-added to an en page.
-9. **Two pages are mutated, both verified by before/after hash:** the **new
-   en page** (created) and the **source fa page** (toggle added, `inLanguage`
-   asymmetry fixed). No third page is touched.
+9. **Two pages are mutated, and the scoped `git diff` is the evidence** — no
+   manual `sha256sum` step anywhere in this route (`modules/01-hard-rules.md`,
+   «Evidence of edits»): the **new en page** (created) and the **source fa
+   page** (toggle added, `inLanguage` asymmetry fixed). No third page is touched.
 10. **All existing injector skip rules are preserved.** LiteCast `.ir`-only
     pages (canonical on `dentcast.ir`) still get **no** hreflang; root
     pages, section hubs, and the `about.html ↔ metanotes/en/about.html`
@@ -106,7 +107,7 @@ Before asking anything beyond "which page":
 ## Phase B — Intake
 
 ### Question 1 — Confirm the source
-Per README Hard Rule 14: if the trigger phrase resolves to exactly one file on disk with no ambiguity, state the resolved path directly and proceed — no need to wait for a yes:
+Per Hard Rule 14 (`modules/01-hard-rules.md`): if the trigger phrase resolves to exactly one file on disk with no ambiguity, state the resolved path directly and proceed — no need to wait for a yes:
 > منبع: `{type}/{file}.html` → خروجی: `{type}/en/{file}.html`
 
 Only ask when the trigger is genuinely ambiguous (it could match more than one file, or the resolved path doesn't obviously exist):
@@ -132,12 +133,14 @@ and the translation are all derivable — do not ask for them.
 
 Run, in order:
 
-### 1. Template lock & hash
-Compute and store SHA-256 of (a) the **source fa page** and (b) the
-**en chrome standard** `metanotes/en/meta-1.html`. The chrome standard must
-remain **untouched** at the end of the run (verify in step 9). Also hash any
-**reference en page of the same type** if one exists, to reuse its exact
-type-specific en rendering decisions.
+### 1. Template lock
+Name the two files that must not drift: (a) the **source fa page**, whose only
+permitted change is step 6's toggle + `inLanguage` fix, and (b) the **en chrome
+standard** `metanotes/en/meta-1.html`, which stays **byte-unchanged**. Both are
+proved by `git diff` of those paths in step 9 (`modules/01-hard-rules.md`,
+«Evidence of edits»); nothing is hashed by hand. Also read any **reference en
+page of the same type** if one exists, to reuse its exact type-specific en
+rendering decisions.
 
 ### 2. Build the new en page — chrome from meta-1, content from the source type
 Create `{type}/en/{file}.html` by composing two strictly-separated regions:
@@ -205,7 +208,7 @@ bar — it is part of the type's own structure (Hard rule 4), so it must not be
 dropped even under the Phase B Q2 "clean translation" default (that default
 governs the specialist «کاوش بیشتر» capsules, not the series nav). The bar
 operates **entirely within the en tier**, mirroring the fa series mechanism
-(README 4.6):
+(`modules/04-taxonomy-and-navigation.md`, 4.6):
 
 - **Targets are en counterparts.** The previous/next slots point to the en
   pages of the adjacent parts (`{type}/en/{prev-or-next-file}.html`), never to
@@ -219,7 +222,7 @@ operates **entirely within the en tier**, mirroring the fa series mechanism
 - **Wiring is reciprocal, on the sibling's publish.** When a later part is
   translated via this workflow, that run converts this page's "next"
   placeholder into a real link to the new en part, and wires the new part's
-  "previous" slot back here — exactly the README 4.6 prev/next dance, applied
+  "previous" slot back here — exactly the 4.6 prev/next dance (module 04), applied
   to the en tier. Carry the `.ep-nav*` CSS over from the source type so the
   bar renders.
 
@@ -271,7 +274,7 @@ The fa page keeps its standard 3-line hreflang block (fa-IR/fa/x-default)
 normalizes this.
 
 ### 7. hreflang / noindex machinery
-**Inside a page publication (module 12 Phase D) steps 7, 8 and the hash check of step 9 are the
+**Inside a page publication (module 12 Phase D) steps 7, 8 and the integrity check of step 9 are the
 post-cut2 runner's; the agent only authors the mirror before C.6.** On the standalone English route,
 run both enforcement scripts as part of the publish:
 
@@ -298,10 +301,10 @@ regeneration is required for an en page, since en pages are not brain-backed
 touched brain-derived output, which it normally does not.)
 
 ### 9. Integrity check & verify
-- Recompute SHA-256 of `metanotes/en/meta-1.html` (the chrome standard) — it
-  **must equal** step 1; the chrome standard is read-only.
-- Report before/after hash of the **source fa page**; the only allowed diff
-  is the added toggle and the `inLanguage` fix.
+- `git diff --quiet -- metanotes/en/meta-1.html` must succeed — the chrome
+  standard is read-only.
+- `git diff -- <the source fa page>` must show **only** the added toggle and
+  the `inLanguage` fix, and nothing else.
 - Confirm the new en page: `<html lang="en" dir="ltr" data-dc-no-header>`,
   GA4 present exactly once, canonical self-`.org`, robots meta
   `noindex, follow`, **no** hreflang lines, `inLanguage`/`lang`/`og:locale`
@@ -316,7 +319,7 @@ touched brain-derived output, which it normally does not.)
 
 ## Final output summary
 - Source page + computed en target path
-- Chrome standard hash (unchanged) + source fa page before/after hash
+- Chrome standard `git diff --quiet` (clean) + the source fa page's scoped `git diff`
 - Date audit table (all OK)
 - Toggle targets on both sides (exact inverses, no meta-1 hardcode)
 - SEO head confirmation (canonical, noindex, zero hreflang lines,

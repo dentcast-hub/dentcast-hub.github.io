@@ -26,12 +26,12 @@ The catalog is deliberately **kept out of search** (`robots.txt` disallows it an
 
 Before asking anything other than the type:
 
-1. Read `dentcast-brain.json` end-to-end, **once** (Hard Rule 1); later steps use this loaded copy.
+1. Load `dentcast-brain.json` **once** (Hard Rule 1) by **parsing** it and inspecting exactly what items 2–5 and Question 2 need — the category set; the latest same-category entry with its **exact key set, nesting and order** (Hard Rule 5's parity, which Phase F row `5 brain` checks); the live `PILLARS` (item 5); a numbered series' last part and its id. It is parsed, never read into context line by line. Later steps query this loaded copy.
 2. Identify every distinct content category (a `type`/`category` field, or whatever the actual schema is).
 3. For each category, the most recent entry defines the directory + URL pattern, the schema shape, the media fields the type uses (text, image, audio, video, external link, transcript …), and — when entries link to a page on disk — the structural HTML template.
 4. A NoteCast also touches its parent episode page in `/episodes/` (step 4.5).
 5. Read the **live structured-pillar set** from the `PILLARS` dict in `tools/build_pillar.py` (Hard Rules 7–8), never from memory:
-   `python -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"`.
+   `python3 -c "import sys; sys.path.insert(0,'tools'); from build_pillar import PILLARS; import json; print(json.dumps({k:[s['slug'] for s in v['subtopics']] for k,v in PILLARS.items()}, ensure_ascii=False))"`.
    Step 2.4 decides the pillar/subtopic from it (Hard Rule 6).
 
 ## Phase B — Intake
@@ -43,6 +43,12 @@ Intake collects the founder's **data**; it asks nothing about agent proposals (H
 When the founder's request does not make the type obvious, ask:
 
 > این مطلب کدوم نوعه؟ (لیست نوع‌هایی که از brain پیدا کردی رو نشون بده)
+
+**The locked type is the brain `type`, which is not always the folder's name.** An insight page lives
+at `insight/insight-<N>.html` but its brain entry is `type: clinical` with id `clinical-<N>`; the
+handoff category is that same brain `type` (`publish-handoff-tool.md`). Phase A's «latest
+same-category entry», Question 2's next number and Hard Rule 5's key-set parity all follow the brain
+`type`, never the directory.
 
 **Two types in the brain are CLOSED and are never offered: `dentai` and `photocast`.** Their 35 + 3 pages stay, but no new entry is appended to either. A single- or multi-paper reading is **`sharehub`**. If the founder names a closed type, say so and ask which living section it goes to (`sharehub` for a reading) — never create `dentai-36` or `photocast/episode-4` (`.dentcast/workflows/global/repo-conventions.md`).
 
@@ -77,7 +83,7 @@ Judge by ear, not by checklist. Typical tells:
 
 For each genuine instance record: the exact original phrase, a rewrite with the **same meaning, facts and register**, and a one-line reason. No genuine tell → record «متن طبیعی به نظر می‌رسه، تغییری لازم نیست» and continue with the text unchanged.
 
-#### Step 3 — Confirm, then branch
+#### Step 3 — Apply, record, then branch
 
 The rewrites are agent proposals under standing acceptance (Hard Rule 14): apply them and record each (original → rewrite → reason) in the handoff; the agent's Push-2 report lists them and the founder may revert any. Every sentence not rewritten stays byte-identical, and the founder's title and caption are never touched (Hard Rule 16).
 

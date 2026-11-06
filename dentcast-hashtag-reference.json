@@ -1169,6 +1169,60 @@
    ]
   },
   {
+   "key": "هوش_مصنوعی",
+   "tag": "#هوش_مصنوعی",
+   "domain": "ai",
+   "words": 2,
+   "definition": "چترِ عامِ هوش مصنوعی.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "artificial intelligence",
+    "ای آی",
+    "ماشین هوشمند"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 36,
+   "content_ids": [
+    "episodes/episode-109",
+    "episodes/episode-109-2",
+    "episodes/episode-149-1",
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "dentai/promptologist/prompt1-3",
+    "dentai/promptologist/prompt1-append1",
+    "dentai/promptologist/prompt1-4",
+    "dentai/promptologist/prompt1-5",
+    "dentai/promptologist/prompt2-1",
+    "dentai/promptologist/prompt3-1",
+    "dentai/promptologist/prompt4-1",
+    "dentai/promptologist/prompt4-2",
+    "dentai/dentai-28",
+    "dentai/promptologist/prompt4-3",
+    "dentai/promptologist/prompt4-4",
+    "sharehub/share-15",
+    "dentai/promptologist/prompt5-1",
+    "dentai/promptologist/prompt5-2",
+    "dentai/promptologist/prompt5-3",
+    "dentai/promptologist/prompt6-1",
+    "dentai/promptologist/prompt6-2",
+    "dentai/promptologist/prompt6-3",
+    "dentai/promptologist/prompt6-4",
+    "dentai/promptologist/prompt6-5",
+    "dentai/promptologist/prompt7-1",
+    "dentai/promptologist/prompt7-2",
+    "insight/insight-89",
+    "sharehub/share-25",
+    "dentai/promptologist/prompt-append2-1",
+    "dentai/promptologist/prompt-append2-2",
+    "dentai/promptologist/prompt-append2-3",
+    "dentai/promptologist/prompt-append2-4",
+    "dentai/promptologist/prompt-append2-5",
+    "dentai/promptologist/prompt-append2-6",
+    "plak-sefr/plak1-12"
+   ]
+  },
+  {
    "key": "dentai",
    "tag": "#DentAI",
    "domain": "brand",
@@ -1272,59 +1326,6 @@
     "chairside/chairside-43",
     "insight/insight-100",
     "insight/insight-104"
-   ]
-  },
-  {
-   "key": "هوش_مصنوعی",
-   "tag": "#هوش_مصنوعی",
-   "domain": "ai",
-   "words": 2,
-   "definition": "چترِ عامِ هوش مصنوعی.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "artificial intelligence",
-    "ای آی",
-    "ماشین هوشمند"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 35,
-   "content_ids": [
-    "episodes/episode-109",
-    "episodes/episode-109-2",
-    "episodes/episode-149-1",
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2",
-    "dentai/promptologist/prompt1-3",
-    "dentai/promptologist/prompt1-append1",
-    "dentai/promptologist/prompt1-4",
-    "dentai/promptologist/prompt1-5",
-    "dentai/promptologist/prompt2-1",
-    "dentai/promptologist/prompt3-1",
-    "dentai/promptologist/prompt4-1",
-    "dentai/promptologist/prompt4-2",
-    "dentai/dentai-28",
-    "dentai/promptologist/prompt4-3",
-    "dentai/promptologist/prompt4-4",
-    "sharehub/share-15",
-    "dentai/promptologist/prompt5-1",
-    "dentai/promptologist/prompt5-2",
-    "dentai/promptologist/prompt5-3",
-    "dentai/promptologist/prompt6-1",
-    "dentai/promptologist/prompt6-2",
-    "dentai/promptologist/prompt6-3",
-    "dentai/promptologist/prompt6-4",
-    "dentai/promptologist/prompt6-5",
-    "dentai/promptologist/prompt7-1",
-    "dentai/promptologist/prompt7-2",
-    "insight/insight-89",
-    "sharehub/share-25",
-    "dentai/promptologist/prompt-append2-1",
-    "dentai/promptologist/prompt-append2-2",
-    "dentai/promptologist/prompt-append2-3",
-    "dentai/promptologist/prompt-append2-4",
-    "dentai/promptologist/prompt-append2-5",
-    "dentai/promptologist/prompt-append2-6"
    ]
   },
   {
@@ -3355,6 +3356,36 @@
    ]
   },
   {
+   "key": "پلاک_صفر",
+   "tag": "#پلاک_صفر",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام سری «پلاک صفر».",
+   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
+   "aliases": [
+    "plak sefr",
+    "پلاک‌صفر",
+    "plak-e sefr"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "plak-sefr/plak1-1",
+    "plak-sefr/plak1-2",
+    "plak-sefr/plak1-3",
+    "plak-sefr/plak1-4",
+    "plak-sefr/plak1-5",
+    "plak-sefr/plak1-6",
+    "plak-sefr/plak1-7",
+    "plak-sefr/plak1-8",
+    "plak-sefr/plak1-9",
+    "plak-sefr/plak1-10",
+    "plak-sefr/plak1-11",
+    "plak-sefr/plak1-12"
+   ]
+  },
+  {
    "key": "کور_ریختگی",
    "tag": "#کور_ریختگی",
    "domain": "clinical",
@@ -3616,6 +3647,38 @@
    ]
   },
   {
+   "key": "سایت_مطب",
+   "tag": "#سایت_مطب",
+   "domain": "web",
+   "words": 2,
+   "definition": "سایتِ خودِ مطب به‌عنوان یک شیء با کارکردِ مشخص — نه کارتِ ویزیتِ کسی که از قبل تصمیم گرفته بیاید، بلکه جایی که به سؤالِ کسی جواب می‌دهد که هنوز اسمِ شما را نمی‌داند، و چیزی که تمام‌شده نیست و در جریان می‌ماند.",
+   "use_when": "مقاله موضوعش خودِ سایتِ مطب باشد — اینکه برای چه کاری ساخته شده، چه چیزی در آن اتفاق می‌افتد، یا چرا داشتنش به‌تنهایی کافی نیست.",
+   "aliases": [
+    "practice website",
+    "وب‌سایت مطب",
+    "سایت دندانپزشکی",
+    "dental practice website",
+    "سایت شخصی دندانپزشک",
+    "clinic website"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "plak-sefr/plak1-2",
+    "plak-sefr/plak1-3",
+    "plak-sefr/plak1-4",
+    "plak-sefr/plak1-5",
+    "plak-sefr/plak1-6",
+    "plak-sefr/plak1-7",
+    "plak-sefr/plak1-8",
+    "plak-sefr/plak1-9",
+    "plak-sefr/plak1-10",
+    "plak-sefr/plak1-11",
+    "plak-sefr/plak1-12"
+   ]
+  },
+  {
    "key": "سایلان",
    "tag": "#سایلان",
    "domain": null,
@@ -3776,35 +3839,6 @@
    ]
   },
   {
-   "key": "پلاک_صفر",
-   "tag": "#پلاک_صفر",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام سری «پلاک صفر».",
-   "use_when": "روی هر مدخل این سری، و هیچ‌جای دیگر.",
-   "aliases": [
-    "plak sefr",
-    "پلاک‌صفر",
-    "plak-e sefr"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "plak-sefr/plak1-1",
-    "plak-sefr/plak1-2",
-    "plak-sefr/plak1-3",
-    "plak-sefr/plak1-4",
-    "plak-sefr/plak1-5",
-    "plak-sefr/plak1-6",
-    "plak-sefr/plak1-7",
-    "plak-sefr/plak1-8",
-    "plak-sefr/plak1-9",
-    "plak-sefr/plak1-10",
-    "plak-sefr/plak1-11"
-   ]
-  },
-  {
    "key": "zero_bone_loss",
    "tag": "#Zero_Bone_Loss",
    "domain": "clinical",
@@ -3955,37 +3989,6 @@
     "chairside/chairside-41",
     "chairside/chairside-42",
     "chairside/chairside-43"
-   ]
-  },
-  {
-   "key": "سایت_مطب",
-   "tag": "#سایت_مطب",
-   "domain": "web",
-   "words": 2,
-   "definition": "سایتِ خودِ مطب به‌عنوان یک شیء با کارکردِ مشخص — نه کارتِ ویزیتِ کسی که از قبل تصمیم گرفته بیاید، بلکه جایی که به سؤالِ کسی جواب می‌دهد که هنوز اسمِ شما را نمی‌داند، و چیزی که تمام‌شده نیست و در جریان می‌ماند.",
-   "use_when": "مقاله موضوعش خودِ سایتِ مطب باشد — اینکه برای چه کاری ساخته شده، چه چیزی در آن اتفاق می‌افتد، یا چرا داشتنش به‌تنهایی کافی نیست.",
-   "aliases": [
-    "practice website",
-    "وب‌سایت مطب",
-    "سایت دندانپزشکی",
-    "dental practice website",
-    "سایت شخصی دندانپزشک",
-    "clinic website"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "plak-sefr/plak1-2",
-    "plak-sefr/plak1-3",
-    "plak-sefr/plak1-4",
-    "plak-sefr/plak1-5",
-    "plak-sefr/plak1-6",
-    "plak-sefr/plak1-7",
-    "plak-sefr/plak1-8",
-    "plak-sefr/plak1-9",
-    "plak-sefr/plak1-10",
-    "plak-sefr/plak1-11"
    ]
   },
   {
@@ -4392,6 +4395,36 @@
    ]
   },
   {
+   "key": "github",
+   "tag": "#GitHub",
+   "domain": "ai",
+   "words": 1,
+   "definition": "سرویسِ آنلاینِ نگه‌داریِ فایل‌ها در ریپو (repository)، که نسخه‌های قبلیِ هر فایل را هم نگه می‌دارد؛ برای کد ساخته شده ولی برای هر فایلِ متنی کار می‌کند.",
+   "use_when": "مطلب مشخصاً به این سرویس، ریپو یا نگه‌داریِ فایل‌ها در آن بپردازد.",
+   "aliases": [
+    "گیت‌هاب",
+    "گیت هاب",
+    "github",
+    "ریپو",
+    "ریپوزیتوری",
+    "repository",
+    "git hub"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "dentai/promptologist/prompt-append2-1",
+    "dentai/promptologist/prompt-append2-2",
+    "dentai/promptologist/prompt-append2-3",
+    "dentai/promptologist/prompt-append2-4",
+    "dentai/promptologist/prompt-append2-5",
+    "dentai/promptologist/prompt-append2-6",
+    "plak-sefr/plak1-11",
+    "plak-sefr/plak1-12"
+   ]
+  },
+  {
    "key": "ids",
    "tag": "#IDS",
    "domain": null,
@@ -4747,35 +4780,6 @@
     "insight/insight-47",
     "insight/insight-65",
     "insight/insight-87"
-   ]
-  },
-  {
-   "key": "github",
-   "tag": "#GitHub",
-   "domain": "ai",
-   "words": 1,
-   "definition": "سرویسِ آنلاینِ نگه‌داریِ فایل‌ها در ریپو (repository)، که نسخه‌های قبلیِ هر فایل را هم نگه می‌دارد؛ برای کد ساخته شده ولی برای هر فایلِ متنی کار می‌کند.",
-   "use_when": "مطلب مشخصاً به این سرویس، ریپو یا نگه‌داریِ فایل‌ها در آن بپردازد.",
-   "aliases": [
-    "گیت‌هاب",
-    "گیت هاب",
-    "github",
-    "ریپو",
-    "ریپوزیتوری",
-    "repository",
-    "git hub"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "dentai/promptologist/prompt-append2-1",
-    "dentai/promptologist/prompt-append2-2",
-    "dentai/promptologist/prompt-append2-3",
-    "dentai/promptologist/prompt-append2-4",
-    "dentai/promptologist/prompt-append2-5",
-    "dentai/promptologist/prompt-append2-6",
-    "plak-sefr/plak1-11"
    ]
   },
   {
@@ -8610,6 +8614,28 @@
    ]
   },
   {
+   "key": "اطلاعات_مطب",
+   "tag": "#اطلاعات_مطب",
+   "domain": "web",
+   "words": 2,
+   "definition": "اطلاعات پایه‌ی هویتی مطب — اسم دقیق، آدرس، تلفن و ساعت کار — که باید یک بار مکتوب شود و در همه جا (سایت، اینستاگرام، سامانه‌های نوبت‌دهی، پروفایل گوگل) یکسان بیاید؛ ناهمخوانی آن در جاهای مختلف اطمینان موتور جست‌وجو به واقعی و درست بودن مطب را کم می‌کند.",
+   "use_when": "مطلب درباره‌ی ثبت، یکسان‌سازی یا درستیِ اسم، آدرس، تلفن یا ساعت کار مطب در جاهای مختلف باشد.",
+   "aliases": [
+    "nap",
+    "name address phone",
+    "نام آدرس تلفن",
+    "یکسانی اطلاعات مطب"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "plak-sefr/plak1-7",
+    "plak-sefr/plak1-8",
+    "plak-sefr/plak1-12"
+   ]
+  },
+  {
    "key": "انتخاب_اباتمنت",
    "tag": "#انتخاب_اباتمنت",
    "domain": "clinical",
@@ -11018,27 +11044,6 @@
    "content_ids": [
     "litecast/lite-CAST8",
     "litecast/lite-CAST9"
-   ]
-  },
-  {
-   "key": "اطلاعات_مطب",
-   "tag": "#اطلاعات_مطب",
-   "domain": "web",
-   "words": 2,
-   "definition": "اطلاعات پایه‌ی هویتی مطب — اسم دقیق، آدرس، تلفن و ساعت کار — که باید یک بار مکتوب شود و در همه جا (سایت، اینستاگرام، سامانه‌های نوبت‌دهی، پروفایل گوگل) یکسان بیاید؛ ناهمخوانی آن در جاهای مختلف اطمینان موتور جست‌وجو به واقعی و درست بودن مطب را کم می‌کند.",
-   "use_when": "مطلب درباره‌ی ثبت، یکسان‌سازی یا درستیِ اسم، آدرس، تلفن یا ساعت کار مطب در جاهای مختلف باشد.",
-   "aliases": [
-    "nap",
-    "name address phone",
-    "نام آدرس تلفن",
-    "یکسانی اطلاعات مطب"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "plak-sefr/plak1-7",
-    "plak-sefr/plak1-8"
    ]
   },
   {

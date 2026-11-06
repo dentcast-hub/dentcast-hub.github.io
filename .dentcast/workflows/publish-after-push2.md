@@ -7,14 +7,22 @@ pushes delivery 3 and opens the PR when the `QUEUE_PUBLISH_TOKEN` secret is set 
 summary says to open it by hand; a queue item's PR is opened by `queue-publish.yml`). It never merges.
 Before Phase F it refuses any regenerated page that lost or lowered a `?v=` stamp it had at Push 2
 (`ASSET_VERSION_REGRESSION`); the agent never runs `git diff -G'\?v='` by hand on this route. The agent
-monitors, reports, and merges only with authorization.
+monitors, reports, and merges only with authorization. A queue item (`queue-route.md`) reads only the
+«Transient» bullet of the Failure section below: its lane forbids `invalidate` and any extra commit.
 
 ## Monitor
 
 - Stay with the run until it is terminal; do not end the turn while it is queued or running. No
   periodic status messages: one at Push 2 (already sent), one at the run's end, one at merge.
-- `gh run watch`, or without `gh` the GitHub MCP tools: `actions_list` (the branch's runs of
-  `post-cut2-mechanical.yml`), `actions_get` (status, conclusion), `get_job_logs` (failed jobs).
+- `gh run watch <id>` (`gh run list --workflow post-cut2-mechanical.yml --branch <branch> --json databaseId,headSha`
+  finds the id), or without `gh` the GitHub MCP tools: `actions_list` (the branch's runs of
+  `post-cut2-mechanical.yml`), `actions_get` (status, conclusion), `get_job_logs` (failed jobs); without
+  either, REST `GET repos/<owner>/<repo>/actions/workflows/post-cut2-mechanical.yml/runs?branch=<branch>`
+  with a token, or the run link the founder reads from the Actions tab. A client that cannot stay
+  with the run says so and hands over: «ادامه انتشار» resumes the monitoring in a later session.
+  The branch normally has **more than one** run — the delivery-1 push starts one too, which skips
+  itself. The run to monitor is the one whose `head_sha` is the Push-2 SHA; never judge by position
+  or by the newest run.
 - No run, or preflight skipped: inspect the event, branch and handoff before saying Actions started.
 - Logs and recovery bundle: run artifact `post-cut2-<Push-2 SHA>` (14 days), through the Actions API
   (list the run's artifacts, download that zip), not from the branch.
@@ -33,11 +41,21 @@ monitors, reports, and merges only with authorization.
    the v2 cut policy (`fixed_three_deliveries_v2`) it trusts the runner's committed Phase F receipt (no
    rerun, no `origin/main` fetch); a v1-policy run still reruns Phase F. Never
    run `restore-cleanup` on this route, nor `confirm-cleanup` before the pull.
-3. Message at the run's end: `content_id`, branch, Push-2 SHA, run link, PR link and the Phase F
+3. The PR: the runner opens it, but only when the `QUEUE_PUBLISH_TOKEN` secret is set — its job
+   summary says so when it is not. No PR after a green run → open it from the branch to `main`
+   yourself, before the end-of-run message, with the connected GitHub tool (`create_pull_request`) or
+   `gh pr create --base main --head <branch> --title "<content_id>: <title>"`; never merge in the same
+   step. Put the link in the end message and say there that the runner could not.
+4. Message at the run's end: `content_id`, branch, Push-2 SHA, run link, PR link and the Phase F
    summary line (the standing-acceptance list, the M1/M3b/M2 answers and the orphan sentences were
    already in the agent's Push-2 report; repeat nothing). Not "published" until merged.
-4. **Merge** only with authorization (`publish-checkpoints.md`, «Waiting, services, merge»): fresh
-   `check-pr`, gates green, then merge. Message at merge. A red gate means no merge.
+5. **Merge** only with authorization (`publish-checkpoints.md`, «Waiting, services, merge»): fresh
+   `check-pr` (`python3 tools/dentcast_publish_handoff.py check-pr --repository <owner>/<repo> --number <n>
+   --expected-head <sha> --expected-base main --expected-branch <branch>`; unauthenticated works on this
+   public repository), gates green, then merge (`gh pr merge <n> --merge`, the GitHub tool
+   `merge_pull_request`, or the founder in the web UI). Message at merge. A red gate means no merge.
+   Re-dispatch by hand: `gh workflow run post-cut2-mechanical.yml --ref <branch> -f target_branch=<branch>
+   -f expected_head=<Push-2 SHA>` (the exact inputs `queue_publish.py status` or the handoff prints).
 
 A completed PR whose `main` advanced (another publication merged) usually conflicts on Pulse, the
 homepage counters and the version stamp, so no merge ref is built and its checks do not run. Update

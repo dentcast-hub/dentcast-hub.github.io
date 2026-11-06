@@ -50,6 +50,14 @@ the nearest neighbour, which in a series is part N, not the end.
     consecutive «قسمت/بخش N» titles sharing a stem, is one unit: the suggested
     anchor moves to the run's last step, and `--insert --after` a step that is
     inside a run (not its last) is refused without `--confirmed`.
+  * A series' own home outranks the scorer. When the pathway already holds
+    parts of the item's OWN series, the anchor is that series' highest-numbered
+    sibling — never another series' run end — the candidate is listed first and
+    flagged STRONG, not ASK, so the conservative «borderline → not placed»
+    default cannot drop part N out of the pathway parts 1..N-1 are in. Added
+    after 2026-11 plak1-12, which was offered `after prompt-append2-6`, i.e.
+    ahead of parts 10 and 11. Membership stays capped: a third pathway is still
+    ASK, with the sibling anchor to present as the option.
 """
 import json, os, re, sys
 
@@ -110,23 +118,47 @@ def unit_key(cid):
     nums = tuple(int(x) for x in m.group(1).split('-')) if m else ()
     return series, nums
 
-def bound(a_cid, b_cid, a_title, b_title):
-    """True when two ADJACENT steps belong to the same series: same folder and
-    consecutive numbers (or the same number — episode + its NoteCast), or both
-    titled «… قسمت/بخش N» with the same opening word."""
+def numbered_series(a_cid, b_cid):
+    """True when two ids are parts of ONE numbered chapter: same folder-series,
+    same prefix and depth, and numbering that IS the series — podcast episodes
+    (and their NoteCasts), and chapter-style ids such as promptologist
+    prompt6-1 → prompt6-4 or plak-sefr plak1-10 → plak1-12. Two chairside cases
+    published one after the other are not parts of anything."""
     (sa, na), (sb, nb) = unit_key(a_cid), unit_key(b_cid)
-    # Consecutive numbers mean a series only where numbering IS the series:
-    # podcast episodes (and their NoteCasts), and chapter-style ids such as
-    # promptologist prompt6-1 → prompt6-4. Two chairside cases published one
-    # after the other are not parts of anything.
-    if sa == sb and na and nb and len(na) == len(nb) and (sa == 'ep' or len(na) > 1):
-        if na == nb or (na[:-1] == nb[:-1] and nb[-1] - na[-1] == 1):
-            return True
-    if PART_RE.search(a_title or '') and PART_RE.search(b_title or ''):
-        wa = [w for w in norm(a_title).split() if len(w) > 2]
-        wb = [w for w in norm(b_title).split() if len(w) > 2]
-        return bool(wa and wb and wa[0] == wb[0])
-    return False
+    return (sa == sb and bool(na) and len(na) == len(nb)
+            and (sa == 'ep' or len(na) > 1) and na[:-1] == nb[:-1])
+
+def titled_series(a_title, b_title):
+    """True when both titles are «… قسمت/بخش N» with the same opening word."""
+    if not (PART_RE.search(a_title or '') and PART_RE.search(b_title or '')):
+        return False
+    wa = [w for w in norm(a_title).split() if len(w) > 2]
+    wb = [w for w in norm(b_title).split() if len(w) > 2]
+    return bool(wa and wb and wa[0] == wb[0])
+
+def bound(a_cid, b_cid, a_title, b_title):
+    """True when two ADJACENT steps belong to the same series: consecutive
+    numbers (or the same number — episode + its NoteCast) in one numbered
+    chapter, or both titled «… قسمت/بخش N» with the same opening word."""
+    (_, na), (_, nb) = unit_key(a_cid), unit_key(b_cid)
+    if numbered_series(a_cid, b_cid) and (na == nb or nb[-1] - na[-1] == 1):
+        return True
+    return titled_series(a_title, b_title)
+
+def series_anchor(cid, steps, by_id):
+    """Where `cid` lands in a pathway its OWN series already sits in: after the
+    highest-numbered sibling of THAT series.
+
+    Series membership, not adjacency: plak1-12 belongs after plak1-11 even
+    though the nearest neighbour by score was a promptologist step, and
+    `run_end` would then have anchored it after that other series' last step —
+    i.e. before parts 10 and 11 (the 2026-11 plak1-12 placement). Returns None
+    when the pathway holds no sibling: a first-ever part is still a judgment.
+    """
+    title = lambda c: (by_id.get(c) or {}).get('title', '')
+    sibs = [(unit_key(c)[1], i, c) for i, c in enumerate(steps)
+            if numbered_series(cid, c) or titled_series(title(cid), title(c))]
+    return max(sibs)[2] if sibs else None
 
 def runs(steps, by_id):
     """Split a pathway's step ids into maximal series runs (lists of ids)."""
@@ -305,7 +337,12 @@ def propose(cid):
                 if sim >= 2:
                     core_related += 1
                 core_best = max(core_best, sim)
-        if total <= 0:
+        # The item's own series is its home: its parts belong together, in
+        # order, whatever the scorer thinks of the neighbours — and that home
+        # survives a zero score (nothing may drop part N out of the pathway
+        # parts 1..N-1 are in).
+        home = series_anchor(cid, steps, by_id)
+        if total <= 0 and home is None:
             continue
         score = total + best_sim * 2 + related
         # STRONG only when a real conceptual CLUSTER exists in the pathway's
@@ -313,26 +350,39 @@ def propose(cid):
         # item is under the membership cap, and the core exists at all.
         strong = (bool(core_ids) and core_related >= STRONG_RELATED
                   and core_best >= STRONG_BEST and not capped)
-        # The anchor never splits a series: land after the run's last step.
-        anchor = run_end(steps, by_id, best_anchor) if best_anchor else None
-        moved = anchor != best_anchor
+        if home is not None:
+            # Not ASK (unless capped): the series' own home is unmistakable. The
+            # cap still owns a third pathway — a founder decision, never relaxed.
+            anchor, moved, raw = home, False, best_anchor
+        else:
+            # The anchor never splits a series: land after the run's last step.
+            anchor = run_end(steps, by_id, best_anchor) if best_anchor else None
+            moved, raw = anchor != best_anchor, best_anchor
         ranked.append((score, p['id'], anchor, strong, related, best_sim,
-                       core_related, core_best, moved, best_anchor))
+                       core_related, core_best, moved, raw, home is not None))
 
-    ranked.sort(key=lambda x: -x[0])
+    # A series home ranks above every scored candidate; the rest by score.
+    ranked.sort(key=lambda x: (not x[10], -x[0]))
     if not ranked:
         print('No candidate pathway — genuinely orphan, or a new theme. ASK the user.')
         return
     print('candidate pathways (score | conf | pathway | suggested anchor):')
     for (score, pid, anchor, strong, related, bsim,
-         crel, cbest, moved, raw_anchor) in ranked[:8]:
-        conf = 'STRONG ' if strong else 'ASK    '
+         crel, cbest, moved, raw_anchor, home) in ranked[:8]:
+        # STRONG is the machine flag for «place it» (queue_apply reads this
+        # column); a series' own home earns it without a core cluster.
+        conf = 'STRONG ' if strong or (home and not capped) else 'ASK    '
         note = f'({related} related steps, closest {bsim}; core {crel}/{cbest})'
+        if home:
+            note += ('  series: this pathway already holds earlier parts of its own series'
+                     + (', but the membership cap makes it a founder decision' if capped else ''))
         if moved:
             note += f'  series: nearest was {raw_anchor}, moved to end of run'
         print(f'  {score:3d} | {conf} | {pid:24s} | after {anchor or "(end)"}   {note}')
-    print('\nSTRONG = a real conceptual cluster in that pathway\'s frozen CORE '
-          '(auto-place, report it). ASK = thinner/borderline, or the item is '
+    print('\nSTRONG = a real conceptual cluster in that pathway\'s frozen CORE, or '
+          'a pathway that already holds earlier parts of the item\'s own series '
+          '(anchor: its highest-numbered sibling) — auto-place, report it.\n'
+          'ASK = thinner/borderline, or the item is '
           f'already in {AUTO_MAX_PATHWAYS} pathways (present options, confirm '
           'first).\nPlacement is conceptual only — the item\'s pillar is '
           'irrelevant here.')

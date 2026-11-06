@@ -78,16 +78,23 @@ MODULES = WORKFLOW + 'modules/'
 # and glossary and the queue-prep profile select the intended ranges. Re-pinned
 # once more after the integration review (M1/M3b wording, Push-2 report, lead
 # provenance timing); headings unchanged.
+# Re-pinned again on 2026-11-06 after the plak1-12 run's findings: module 04's
+# 4.6 gate (numbered series, not the Promptologist category — its heading keeps
+# the '### 4.6. Promptologist series' prefix the boundary matches), module 03's
+# chip rule, module 05's 4.8 candidate set, module 08's checklist-label
+# sentence. Boundaries and every omitted section re-checked for each.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
-    '03-litecast-and-page.md': '6f7c686af6b009ff4fb7e8b67edc66318d9b8e7f',
-    '04-taxonomy-and-navigation.md': '2168060033465a17099f4f0a52656064eb5b44e6',
-    '05-semantic-linking.md': '278bf29e744c82a830707c4b342c945aadf3e2cd',
+    '03-litecast-and-page.md': 'a5030debfc24b3b2f3110996db57d6878b535156',
+    '04-taxonomy-and-navigation.md': 'fb7d965207a004e1c69b502db6b1a66d0b9bb1de',
+    '05-semantic-linking.md': '3f44257f3e7ffa3b6be08e15de5fa97358b08363',
     '06-paper-ingestion.md': 'c82da53ba291e98445455354ef27516f17fdc797',
-    '08-des-fidelity.md': '1c541ca7cefa24ebcf6607728e0c220587c0eab6',
+    '08-des-fidelity.md': 'b374a8d3b86fd32ee6122dffd9c70dedca5c4590',
     '09-challenge.md': 'f95917dce01098eac61f0e005ad6dc7b755ec98a',
+    '11-build-and-version.md': 'd7c0e224a89238de39da5aef1f5654bd24ca06d7',
     '12-english-notify-verify.md': '67ec15cd1ea56e081536bf89e28dda9ec2b4d1bb',
+    '11-build-and-version.md': 'd7c0e224a89238de39da5aef1f5654bd24ca06d7',
 }
 
 REQUIRED = [
@@ -169,9 +176,15 @@ def route_spans(name, lines, *, category, attached_paper, challenge):
         raise UnsafeSelection('CONFLICTING_LITECAST_CHALLENGE_INTAKE')
 
     if name == '03-litecast-and-page.md' and not lite:
-        preamble = boundary(lines, '<!-- /dentcast-checkpoint-protocol:v1 -->') + 1
+        # The preamble keeps what a non-LiteCast run still needs from the branch's head: the
+        # module's own ledger-steps line and step 0's own paragraph, which IS the canonical
+        # C.0.x skip reason ("any other category ignores it"). Cutting at the banner instead
+        # (before 2026-11-06) dropped both and forced a second read of these lines.
+        banner = boundary(lines, '<!-- /dentcast-checkpoint-protocol:v1 -->') + 1
+        first_substep = [i for i, line in enumerate(lines) if line.startswith('**0.1 ')]
+        preamble = first_substep[0] if len(first_substep) == 1 else banner
         common = boundary(lines, '### 1. Template lock & hash')
-        if common <= preamble:
+        if common <= preamble or preamble < banner:
             raise UnsafeSelection('INVALID_MODULE_03_ORDER')
         return include([(0, preamble), (common, size)], size), 'OMIT_LITECAST_ONLY_BRANCH'
 
@@ -210,15 +223,37 @@ def route_spans(name, lines, *, category, attached_paper, challenge):
         stop = boundary(lines, '#### Conditional path for founder-supplied results')
         return include([(0, stop)], size), 'CANONICAL_LITECAST_OR_CHALLENGE_DES_SKIP_ONLY'
 
+    if name == '11-build-and-version.md':
+        # Everything below the marker is the post-Push-2 runner's C.8/C.7 part, which
+        # publish-checkpoints.md lists as never read in a normal run (2026-11-06).
+        marks = [i for i, line in enumerate(lines) if line.startswith('<!-- module-11-boundary')]
+        if len(marks) == 1:
+            agent_part = [i for i, line in enumerate(lines) if line.startswith('### 6. Pulse update')]
+            if agent_part and marks[0] <= agent_part[0]:
+                raise UnsafeSelection('INVALID_MODULE_11_ORDER')
+            return include([(0, marks[0])], size), 'OMIT_POST_PUSH2_RUNNER_PART'
+
     if name == '09-challenge.md' and challenge == 'no':
         return [], 'NOT_A_CHALLENGE_LOCKED_AT_Q4_9'
 
-    if name == '12-english-notify-verify.md' and (lite or challenge == 'yes'):
-        step_start = boundary(lines, '**Steps:**')
+    # publish-checkpoints.md «Just-in-time loading», last row: module 11 below its
+    # `module-11-boundary` marker (§7–§8) and module 12 Phases E–G are the runner's
+    # (C.8, C.7, E–G) and are never read in a normal run — only for guarded recovery,
+    # which reads the full module, not a pack.
+    if name == '11-build-and-version.md':
+        marker = [i for i, line in enumerate(lines) if line.startswith('<!-- module-11-boundary')]
+        if len(marker) != 1:
+            return whole, 'FULL_REQUIRED'  # no marker: nothing is proven runner-only
+        return include([(0, marker[0])], size), 'OMIT_RUNNER_ONLY_PART_BELOW_MODULE_11_BOUNDARY'
+
+    if name == '12-english-notify-verify.md':
         phase_e = boundary(lines, '## Phase E — Mark the page')
-        if step_start >= phase_e:
-            raise UnsafeSelection('INVALID_MODULE_12_ORDER')
-        return include([(0, step_start), (phase_e, size)], size), 'OMIT_ENGLISH_IMPLEMENTATION_WHEN_CANONICALLY_SKIPPED'
+        if lite or challenge == 'yes':
+            step_start = boundary(lines, '**Steps:**')
+            if step_start >= phase_e:
+                raise UnsafeSelection('INVALID_MODULE_12_ORDER')
+            return include([(0, step_start)], size), 'OMIT_ENGLISH_IMPLEMENTATION_WHEN_CANONICALLY_SKIPPED'
+        return include([(0, phase_e)], size), 'OMIT_RUNNER_ONLY_PHASES_E_TO_G'
 
     return whole, 'FULL_REQUIRED'
 
@@ -328,8 +363,10 @@ QUEUE_PREP = (
        'To check a page you just built:')], False),
     (MODULES + '04-taxonomy-and-navigation.md', [('### 2.4.', '### 2.5.', None)], False),
     (MODULES + '11-build-and-version.md', [('### 6. Pulse update', '### 7.', None)], False),
+    # 4.7, then 4.8 and 4.9 (to the end of the module): preparation decides the
+    # «کاوش بیشتر» links of 4.9 too (publish-queue.md, file 11 and step 5).
     (MODULES + '05-semantic-linking.md',
-     [('### 4.7.', '### 4.7-ب', None), ('### 4.8.', '### 4.9.', None)], False),
+     [('### 4.7.', '### 4.7-ب', None), ('### 4.8.', None, None)], False),
 )
 
 
