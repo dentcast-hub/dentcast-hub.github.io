@@ -1,9 +1,9 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
 > **Checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision. Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
-> **Order, founder messages and the three deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
+> **Order, founder messages, the save point and the deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
-Ledger steps in this module: `C.4.7`, `C.4.7-b`, `C.4.8`, `C.4.9` (then delivery 1). They run after C.4.13, on the final body the text lock froze (any Part 3b fix is already in it). All three are mandatory and template-independent (Hard Rule 11); every match is semantic and split strong/borderline by Hard Rule 14; every «کاوش بیشتر» edit obeys Hard Rule 9.
+Ledger steps in this module: `C.4.7`, `C.4.7-b`, `C.4.8`, `C.4.9`. They run after C.4.13, on the final body the text lock froze (any Part 3b fix is already in it). All three are mandatory and template-independent (Hard Rule 11); every match is semantic and split strong/borderline by Hard Rule 14; every «کاوش بیشتر» edit obeys Hard Rule 9.
 
 ### 4.7. Semantic glossary back-linking (all content types)
 

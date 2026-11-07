@@ -1,6 +1,6 @@
 # Direct publication — checkpoints, deliveries, completion
 
-The contract around the twelve modules: order, founder messages, ledger, three deliveries, completion.
+The contract around the twelve modules: order, founder messages, ledger, save point and deliveries, completion.
 It does not rewrite authoring, category exceptions, builders or the scientific DES/Fidelity engine.
 Every client follows it; hooks are supplementary adapters, not proof a client loaded anything.
 
@@ -44,13 +44,12 @@ reading less.
 
 | When | Read |
 |---|---|
-| Phase B locked, Question 4.9 = «چالش» | module 09 complete, before C.1 (its markup shapes the page of delivery 1) |
+| Phase B locked, Question 4.9 = «چالش» | module 09 complete, before C.1 (its markup shapes the page) |
 | Founder hands over DES/Fidelity JSON at intake | module 08 opening through «Conditional path for founder-supplied results», before Question 4.8 |
 | Before C.0 … C.2 / C.2.4 … C.4.6 | modules 03 / 04 |
 | Before C.4.10.1 (paper attached) | module 06 |
 | Before C.4.13 | module 08 complete; LiteCast and Challenge read its opening up to `#### Conditional path for founder-supplied results` for the skip line |
 | Before C.4.7 | module 05 |
-| — delivery 1 — | module 08 (and module 06 when a paper is attached) is therefore read before cut 1 |
 | Before C.4.11 / C.4.14 / C.5.0 | modules 07 / 09 (Challenge only) / 10 |
 | At C.2, for the page's chip row | Hard Rule 15 only (module 01, already read): existing canonical concepts, resolved with `hashtag_ref.py --simulate`, no mint. Step 5.0 settles the final list and corrects the row before the brain write |
 | Before writing the English mirror (before C.6) | `en-version.md`, module 12 through the end of Phase D, module 11 above its `module-11-boundary` marker (§6) |
@@ -60,20 +59,11 @@ reading less.
 
 **Canonical order** (`plan` returns it; `init` marks new runs `ledger_order_v2`): `rules`, Phase 0, A,
 B, C.0 … C.2, C.0.5, C.0.6, C.2.4, C.2.5, C.2.6, C.3, C.4, C.4.5, C.4.5-b, C.4.6, C.4.10.1, C.4.10.2,
-C.4.10.3, C.4.13, C.4.7, C.4.7-b, C.4.8, C.4.9 **[delivery 1]**, C.4.11, C.4.12, C.4.14, C.5.0, C.5,
-C.5.5, C.5.6, C.5.6-b, C.6 **[delivery 2]**, C.8, C.7, D, E, F, G **[runner]**. A handoff started
-under the earlier order keeps it; the tools recognise it from the missing marker. `init` refuses an
-old-order plan (`CANONICAL_PLAN_REQUIRED`), a marked run cannot be reordered
-(`LEDGER_ORDER_CANNOT_CHANGE`), and a v2-order run requires the v2 cut policy
-(`LEDGER_ORDER_V2_REQUIRES_DELIVERY_POLICY_V2`). Never relabel or migrate a delivered cut.
-
-**Earlier delivery policy (compatibility).** A page handoff without the `fixed_three_deliveries_v2`
-decision keeps its own second cut at C.4.13 and its local completion: the agent runs C.8 onward,
-then `finish`, one commit with the final work, the completion receipt and the handoff deletion, one
-push, `confirm-cleanup` (which reruns Phase F locally). If that final push fails, `restore-cleanup`
-returns `final_delivery_pending`: retry the same push and confirm, with no new commit. A delivered
-cut is never relabelled, and a policy marker is never removed to claim this path; a new page run
-cannot choose it.
+C.4.10.3, C.4.13 **[save point]**, C.4.7, C.4.7-b, C.4.8, C.4.9, C.4.11, C.4.12, C.4.14, C.5.0, C.5,
+C.5.5, C.5.6, C.5.6-b, C.6 **[delivery 2]**, C.8, C.7, D, E, F, G **[runner]**. This is the only
+order and the only delivery model: `init` writes both markers, any other plan is refused
+(`CANONICAL_PLAN_REQUIRED`), and a handoff from the retired order or policy is refused
+(`OLD_DELIVERY_MODEL_RETIRED`) and never continued: start a new run instead.
 
 **Standing acceptance.** Agent proposals are not sent for confirmation: title/caption the agent
 proposed, lead paragraph, Q3.5 rewrites, hashtags and mint, keywords, pillar/subtopic, borderline
@@ -93,16 +83,18 @@ invalidation rules below.
 2. **M3b, Part 3b** — at C.4.13, only when a sentence is still `ALTERED`/`REVERSED` after the stronger
    review: each with its three named answers (module 08). Pages without C.4.13 (LiteCast, Challenge,
    «بدون DES») have no M3b.
-3. **M2, exam questions** — at 4.12-ب, approved one by one (module 07).
+3. **M2, exam questions** — at 4.12-ب, approved one by one (module 07). Mandatory for every page in a full
+   pathway: the agent drafts and sends them, never asks whether to.
 
-M1 and M3b are closed before delivery 1: the cut refuses a non-empty `pending_questions` list,
-answered or not — clear each record once its answer is recorded as that step's evidence or as a
-decision (record shape: `publish-handoff-tool.md`).
+M1 and M3b are closed before Push 2: completing C.6 and the cut refuse a non-empty
+`pending_questions` list, answered or not — clear each record once its answer is recorded as that
+step's evidence or as a decision (record shape: `publish-handoff-tool.md`). The save point may carry
+an open M3b; that is its purpose.
 
 Asked when they arise, because they are real decisions: a new subtopic in `PILLARS`, a new Drive
 subfolder, DES basket 3 / publish without DES, a missing Fidelity runtime capability, a NoteCast pair
 where neither episode has a related-content block (4.5) or a previous Promptologist part without an
-`ep-nav` block (4.6), merge authorization. Founder data (text, title, any string given) is final and
+`ep-nav` block (4.6). Merge is not asked (below). Founder data (text, title, any string given) is final and
 copied (Hard Rule 16).
 
 **Text lock.** After C.4.13 the body text, title, caption and image captions are locked (4.7–4.9 still
@@ -110,18 +102,23 @@ add their anchors around unchanged words). Only a Part 3b fix changes the body t
 only its units). Any other change is the existing invalidation
 from C.2 (`invalidate`, below).
 
-**Push is never a founder gate.** The three deliveries are the contract. Page publications have
-exactly three; this table is their only home:
+**Push is never a founder gate.** Page publications push at most three times; this table is
+their only home:
 
-| Delivery | Boundary | Contents | Who |
+| Push | When | Contents | Who |
 |---|---|---|---|
-| 1 | after `C.4.9` | scoped work + latest handoff | agent |
-| 2 | after `C.6`: DES/Fidelity, Challenge, links, flashcards/FAQ, hashtags, content record, pathways, Pulse, English mirror and every founder message closed | scoped work + latest handoff | agent |
-| 3 | after C.8, C.7, D, E, real Phase F, G | final work + completion receipt + handoff deletion, one commit | `post-cut2-mechanical.yml` |
+| Save point (Push 1) | once, after `C.4.13` starts: just before M3b goes out, or when C.4.13 completes if there is no M3b | scoped work + latest handoff | agent |
+| Push 2 (delivery 2) | after `C.6`: DES/Fidelity, Challenge, links, flashcards/FAQ, hashtags, content record, pathways, Pulse, English mirror and every founder message closed | scoped work + latest handoff | agent |
+| Delivery 3 | after C.8, C.7, D, E, real Phase F, G | final work + completion receipt + handoff deletion, one commit | `post-cut2-mechanical.yml` |
 
-Between cuts checkpoint locally and continue. No stop, turn end, agent switch, approval wait or
-external action adds a delivery. Interrupted between cuts: the newest work is local; remote recovery
-reaches only the last delivered cut.
+The save point exists only so DES/Fidelity is not lost with a session. It is not a delivery cut:
+nothing is validated at it, it does not hold the next step, and a failed push is reported once and
+the run continues (Push 2 carries the same commit later). LiteCast, Challenge and «بدون DES» pages
+skip C.4.13 and normally have no save. Push 2 is the only fixed cut and keeps every check below.
+
+Otherwise checkpoint locally and continue. No stop, turn end, agent switch, approval wait or
+external action adds a push. Interrupted before Push 2: the newest work is local; remote recovery
+reaches only the save point.
 
 ## Start and identify the run
 
@@ -210,25 +207,29 @@ note is not replacement evidence.
 
 ## Delivery cuts 1 and 2
 
+The save point and Push 2 use the same command:
+
 ```bash
 python3 tools/dentcast_publish_handoff.py stage-delivery --expected-sha256 <digest> --path <scoped-path>   # repeat --path
 ```
 
 `stage-delivery` stages the scoped work, refreshes the checkpoint in the index, stages the handoff
 and runs the pre-commit guard; it refuses paths outside the publication or bytes the checkpoint has
-not recorded. It never commits or pushes. Then one commit and one push, and a fresh remote read-back
-(`inspect --check-remote`). A failed push blocks the cut; retrying the same delivery is not a new
-milestone; never pretend a push succeeded or force-push.
+not recorded. It never commits or pushes. Then one commit and one push. At the save point that is
+all: no read-back, no readiness check, and the next write needs nothing. At Push 2 a fresh remote
+read-back follows (`inspect --check-remote`); a failed push blocks the cut; retrying the same
+delivery is not a new milestone; never pretend a push succeeded or force-push. A commit that holds
+the handoff is refused before C.4.13 starts (`COMMIT_ONLY_AT_SAVE_POINT_OR_PUSH_2`).
 
-After a delivered cut the first write is starting the next step; anything else is refused with
+After Push 2 the first write is starting the next step; anything else is refused with
 `RECORD_AFTER_DELIVERED_CUT_START_NEXT_STEP_FIRST`. A handoff changed after the push makes the next
 step and the Stop guard refuse with `PREVIOUS_STEP_HANDOFF_NOT_DELIVERED`: restore it
 (`git restore .dentcast/PUBLISH-HANDOFF.md`), start the next step, record again.
 
-**What the writer validates at cut 1** (and every later cut): an empty `pending_questions` list (answered records included),
+**What the writer validates at Push 2** (and at completion): an empty `pending_questions` list (answered records included),
 no unconfirmed/rejected approval, and exactly one `context.decisions` entry
 `kind="first_cut_lead_provenance_v1"` with a real `source_ref` and nonempty evidence, recorded **after
-C.4.13 and before C.4.9** (the lead is locked text; recording it earlier makes a Part 3b fix invalidate
+C.4.13 and before C.6** (the lead is locked text; recording it earlier makes a Part 3b fix invalidate
 the `authored-intro` approval). `origin`: `author_original` (founder's own first paragraph);
 `agent_authored` (agent's lead, plus approval `scope="authored-intro"`, `status="confirmed"`, whose
 evidence is the standing-acceptance record); `not_applicable` (reviewed exception, reason in
@@ -269,8 +270,8 @@ applied, what was skipped and why), every M1/M3b/M2 question with its answer, th
 of the Fidelity sweep, and any real decision asked. Report G, written by the runner's `finish`, is
 technical only (ledger, Phase F, fingerprints) and deliberately omits approvals; the agent's Push-2
 report is the only human record of them. Not a completion claim. **Then read `publish-after-push2.md`
-completely** and follow it. Three messages in all after Push 2: at Push 2, at the run's end, at
-merge. A mechanical step that reveals a needed substantive change stops the run's path: invalidate,
+completely** and follow it. Two messages in all after Push 2: at Push 2 and at the merge (or at a
+failure that stops it). A mechanical step that reveals a needed substantive change stops the run's path: invalidate,
 never fix silently in D or F.
 
 ## Paper-only (one delivery)
@@ -335,9 +336,10 @@ approvals, semantic quality or external outcomes. A stale/missing/corrupt state 
   `check-pr --repository owner/repo --number N --expected-head SHA --expected-base SHA
   --expected-branch BRANCH [--token-env NAME]` (or the same reads through connected GitHub tools).
   A moved ref or closed PR: preserve work, re-plan, never force.
-- Merge only with authorization. An explicit «بعد از تکمیل مرج کن» persists until all gates pass;
-  status requests do not revoke it. Without it, stop before merge. Distinguish prepared, verified,
-  committed, pushed, merged and live; no invented ETA.
+- Merge is the agent's, never asked (founder 2026-11-07: merge is reversible and was never refused):
+  once delivery 3, Phase F, the PR's checks and a fresh `check-pr` are green, merge. A red gate means
+  no merge. Only an explicit «مرج نکن» from the founder for that publication stops before merge.
+  Distinguish prepared, verified, committed, pushed, merged and live; no invented ETA.
 - Hosting (only home): DentCast is served from ArvanCloud and GitHub Pages (`dentcast.org`/`www` are
   CNAMEs to `dentcast-hub.github.io`, via Cloudflare DNS). Cloudflare Pages and Vercel are backup
   mirrors: their statuses are never requested, awaited, a gate or a completion criterion. A merge

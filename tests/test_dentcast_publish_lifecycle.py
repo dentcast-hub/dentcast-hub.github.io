@@ -32,13 +32,13 @@ class LifecycleTests(unittest.TestCase):
                   'print("0 passed, 0 warned, 1 failed — publish is INCOMPLETE" if fail else '
                   '"1 passed, 0 warned, 0 failed — publish is COMPLETE")\nsys.exit(1 if fail else 0)\n')
         (self.root / 'tools/verify_publish.py').write_text(script)
-        for name in ('tools/dentcast_publish_handoff.py', 'tools/dentcast_publish_lifecycle.py'):
+        for name in ('tools/dentcast_publish_handoff.py', 'tools/dentcast_publish_lifecycle.py',
+                     'tools/dentcast_connected_cut_gates.py'):
             (self.root/name).write_bytes((ROOT/name).read_bytes())
         run(self.root, 'add', '.')
         run(self.root, 'commit', '-m', 'fixture gate and CLI')
         self.p['content_id'] = 'note'
-        # A class may pin the legacy ORDER_V1 (an old run without ledger_order_v2).
-        self.p['steps'] = lc.plan(paper, order=getattr(self, 'ledger_order', None))
+        self.p['steps'] = lc.plan(paper)
         if paper:
             self.p['category'] = 'paper-only'
             self.p['target_paths'] = ['dentcast_cabinet_full_catalog.json']
@@ -50,6 +50,10 @@ class LifecycleTests(unittest.TestCase):
             run(self.root, 'commit', '-m', 'fixture catalog')
             self.p['external_actions'] = [{'id':'drive', 'target':'drive:fixture-drive',
                                           'status':'completed', 'evidence':['fixture:real-operator-reference']}]
+        if complete and not paper:
+            # The one page model: Push 2 at C.6 is committed and pushed, then the
+            # runner's C.8 onward is completed locally on top of it.
+            return LifecycleTests.complete_after_push2(self)
         if complete:
             for s in self.p['steps']:
                 s.update(status='completed', evidence=['fixture:' + s['id']])
@@ -58,7 +62,84 @@ class LifecycleTests(unittest.TestCase):
             self.p['context']['delivery'] = [{'scope':'fixture delivery', 'evidence':['fixture:delivery-observation']}]
         return h.save(self.root, self.p, initial=True)
 
+    def complete_after_push2(self):
+        import test_dentcast_publish_second_cut_editorial as editorial
+        self.p['category'] = 'litecast'  # English exempt: no mirror fixture needed
+        lc.adopt_ledger_order(self.p, force=True)
+        after = False
+        for s in self.p['steps']:
+            if after:
+                break
+            s.update(status='skipped' if s['id'] == 'C.4.14' else 'completed',
+                     evidence=[] if s['id'] == 'C.4.14' else ['fixture:' + s['id']],
+                     reason='fixture: ordinary page, no Challenge' if s['id'] == 'C.4.14' else None)
+            after = s['id'] == 'C.6'
+        self.p['context']['decisions'].extend([
+            {'kind': 'first_cut_lead_provenance_v1', 'origin': 'not_applicable',
+             'source_ref': 'fixture:page-already-has-prose', 'evidence': ['fixture:lead-review']}])
+        self.p['context']['decisions'].append(editorial.receipt(self.p))
+        self.p['context']['approvals'] = [
+            {'scope': 'title', 'status': 'confirmed', 'decision': 'literal title', 'evidence': ['fixture:title']},
+            {'scope': 'caption', 'status': 'confirmed', 'decision': 'literal caption', 'evidence': ['fixture:caption']}]
+        first = h.save(self.root, self.p, initial=True)
+        run(self.root, 'add', h.STATE_PATH)
+        run(self.root, 'commit', '-m', 'delivery 2 (fixture Push 2)')
+        run(self.root, 'push', 'origin', 'main')
+        self.push2 = True
+        state, sha = h.load_state(self.root)
+        p = state['publication']
+        for s in p['steps']:
+            if s['status'] == 'pending':
+                s.update(status='completed', evidence=['fixture:' + s['id']])
+        receipt = lc.gate(self.root, p, 'literal title', 'literal caption', None)
+        p['context']['validation'].append({k:v for k,v in receipt.items() if k!='output'})
+        p['context']['delivery'] = [{'scope':'fixture delivery', 'evidence':['fixture:delivery-observation']}]
+        # A direct full-ledger write, as the runner's own steps would leave it.
+        state['publication'] = p
+        h.write_atomic(self.root, state)
+        return {'sha256': h.load_state(self.root)[1], 'push2_sha256': first['sha256']}
+
+    def to_save_point(self):
+        """Ledger at the save point (C.4.13 started), written directly."""
+        state, _ = h.load_state(self.root)
+        for s in state['publication']['steps']:
+            if s['id'] == 'C.4.13':
+                s.update(status='started', evidence=[], reason=None)
+                break
+            s.update(status='completed', evidence=['fixture:' + s['id']], reason=None)
+        h.write_atomic(self.root, state)
+
+    def to_push2(self):
+        """Ledger at Push 2 (C.6 completed) with its frozen records, written directly."""
+        import test_dentcast_publish_second_cut_editorial as editorial
+        state, _ = h.load_state(self.root)
+        p = state['publication']
+        p['category'] = 'litecast'  # English exempt: no mirror fixture needed
+        for s in p['steps']:
+            skip = s['id'] == 'C.4.14'
+            s.update(status='skipped' if skip else 'completed', evidence=[] if skip else ['fixture:' + s['id']],
+                     reason='fixture: ordinary page, no Challenge' if skip else None)
+            if s['id'] == 'C.6':
+                break
+        p['context']['decisions'] += [
+            {'kind': 'first_cut_lead_provenance_v1', 'origin': 'not_applicable',
+             'source_ref': 'fixture:page-already-has-prose', 'evidence': ['fixture:lead-review']},
+            editorial.receipt(p)]
+        p['context']['approvals'] = [
+            {'scope': 'title', 'status': 'confirmed', 'decision': 'literal title', 'evidence': ['fixture:title']},
+            {'scope': 'caption', 'status': 'confirmed', 'decision': 'literal caption', 'evidence': ['fixture:caption']}]
+        h.write_atomic(self.root, state)
+        return {'sha256': h.load_state(self.root)[1]}
+
+    def stage_delivery3(self):
+        """Stage the runner's delivery 3: receipt, technical report, handoff deletion."""
+        p = {'content_id': self.p['content_id'], 'category': self.p['category']}
+        run(self.root, 'add', '-A', '--', h.STATE_PATH, lc.completion_path(p), lc.technical_report_path(p),
+            *self.p['target_paths'])
+
     def deliver(self):
+        if getattr(self, 'push2', False):
+            return  # complete fixtures already pushed Push 2; the runner never commits its ledger
         run(self.root, 'add', h.STATE_PATH)
         run(self.root, 'commit', '-m', 'checkpoint')
         run(self.root, 'push', 'origin', 'main')
@@ -76,44 +157,34 @@ class LifecycleTests(unittest.TestCase):
         p['steps'].pop(3)
         self.assert_blocked('CANONICAL_PLAN_REQUIRED',lc.require_plan,p)
 
-    def test_old_order_receipt_validates_and_new_order_run_is_accepted(self):
-        # Every committed receipt validates under its own order: the 29 receipts written before
-        # ledger_order_v2 (2026-11-06) keep ORDER_V1 and carry no marker; a receipt written by a
-        # marked run (the first: plak-sefr/plak1-12) follows ORDER_V2. Neither is re-marked.
+    def test_one_path_old_model_handoffs_are_refused_and_receipts_are_archives(self):
+        # Founder 2026-11-07: one route only. Committed completion receipts are
+        # archives of finished runs; the tools never execute an old one.
         receipts = sorted((ROOT/'.dentcast/publication-reports').rglob('*.completion.json'))
         self.assertTrue(receipts)
-        v1 = v2 = 0
         for path in receipts:
-            p = json.loads(path.read_text(encoding='utf-8'))['state']['publication']
-            lc.require_plan(p)
-            if h.publication_category(p) != 'paper-only' and not lc.queue_lane(p):
-                marked = lc.ledger_order_v2(p)
-                v2 += marked; v1 += not marked
-                expected = lc.ORDER_V2 if marked else lc.ORDER_V1
-                self.assertEqual(list(lc.canonical_ids(p)), [sid for sid, _ in expected], path)
-                self.assertEqual([s['id'] for s in p['steps'] if s['id'] in lc.REGISTRY], list(lc.canonical_ids(p)), path)
-                self.assertEqual(lc.adopt_ledger_order(copy.deepcopy(p))['context']['decisions'],
-                                 p['context']['decisions'], path)  # a committed receipt is never re-marked
-        self.assertGreaterEqual(v1, 1)  # the historical page receipts still validate under ORDER_V1
-        old = fixtures.publication() | {'steps': lc.plan(order=lc.ORDER_V1)}
-        old['context']['decisions'] = [{'kind': lc.DELIVERY_POLICY}]
-        lc.require_plan(old)  # no marker: the old order, v1 cuts
-        self.assertEqual(lc.adopt_ledger_order(copy.deepcopy(old))['context']['decisions'],
-                         old['context']['decisions'])  # an old-order save is never re-marked
-        self.assert_blocked('MODULE_ORDER_INVALID|CANONICAL_PLAN_REQUIRED', lc.require_plan,
-                            old | {'steps': lc.plan()})  # unmarked run in the new order
+            data = json.loads(path.read_text(encoding='utf-8'))
+            self.assertEqual(data['schema'], 'publish-completion-v1', path)
+            self.assertTrue(all(s['status'] in ('completed', 'skipped')
+                                for s in data['state']['publication']['steps']), path)
+        # A new plan gets the one order and both delivery markers from its first write.
         new = lc.adopt_ledger_order(fixtures.publication() | {'steps': lc.plan()})
-        new['context']['decisions'] += [{'kind': lc.DELIVERY_POLICY}, {'kind': lc.DELIVERY_POLICY_V2}]
         lc.require_plan(new)
-        self.assertTrue(lc.ledger_order_v2(new))
-        self.assert_blocked('MODULE_ORDER_INVALID|CANONICAL_PLAN_REQUIRED', lc.require_plan,
-                            new | {'steps': lc.plan(order=lc.ORDER_V1)})  # marked run in the old order
-        v1_cuts = copy.deepcopy(new)
-        v1_cuts['context']['decisions'].remove({'kind': lc.DELIVERY_POLICY_V2})
-        self.assert_blocked('LEDGER_ORDER_V2_REQUIRES_DELIVERY_POLICY_V2', lc.require_plan, v1_cuts)
-        # init marks every new run, so an old-order init input is refused.
-        forced = lc.adopt_ledger_order(copy.deepcopy(old) | {'context': copy.deepcopy(old['context'])}, force=True)
-        self.assert_blocked('MODULE_ORDER_INVALID|CANONICAL_PLAN_REQUIRED', lc.require_plan, forced)
+        self.assertTrue(lc.ledger_order_v2(new) and lc.editorial_cut_v2(new) and lc.fixed_delivery(new))
+        # A page run that progressed without the markers is a retired-model handoff.
+        old = fixtures.publication() | {'steps': lc.plan()}
+        old['steps'][0]['status'] = 'completed'
+        old['steps'][0]['evidence'] = ['fixture:rules']
+        old['context']['decisions'] = [{'kind': lc.DELIVERY_POLICY}]
+        self.assert_blocked('OLD_DELIVERY_MODEL_RETIRED', lc.require_plan, old)
+        old['context']['decisions'] = [{'kind': lc.LEDGER_ORDER_V2}, {'kind': lc.DELIVERY_POLICY}]
+        self.assert_blocked('OLD_DELIVERY_MODEL_RETIRED', lc.require_plan, old)
+        # The retired order itself is no longer a canonical plan.
+        moved = new | {'steps': lc.plan()}
+        ids = [s['id'] for s in moved['steps']]
+        science = moved['steps'].pop(ids.index('C.4.13'))
+        moved['steps'].append(science)
+        self.assert_blocked('MODULE_ORDER_INVALID|CANONICAL_PLAN_REQUIRED', lc.require_plan, moved)
 
     def test_ledger_order_marker_cannot_change_in_flight(self):
         self.prepare()
@@ -121,8 +192,8 @@ class LifecycleTests(unittest.TestCase):
         self.assertTrue(lc.ledger_order_v2(state['publication']))
         p = copy.deepcopy(state['publication'])
         p['context']['decisions'] = [d for d in p['context']['decisions'] if d.get('kind') != lc.LEDGER_ORDER_V2]
-        p['steps'] = lc.plan(order=lc.ORDER_V1)
-        self.assert_blocked('LEDGER_ORDER_CANNOT_CHANGE', h.save, self.root, p, sha, 'fixture reorder attempt')
+        self.assert_blocked('LEDGER_ORDER_CANNOT_CHANGE|OLD_DELIVERY_MODEL_RETIRED', h.save, self.root, p, sha,
+                            'fixture reorder attempt')
 
     def test_dynamic_unit_steps_precede_their_aggregate(self):
         p=lc.adopt_ledger_order(fixtures.publication() | {'steps': lc.plan()})
@@ -189,6 +260,7 @@ class LifecycleTests(unittest.TestCase):
 
     def test_finish_without_pushed_checkpoint_does_not_delete_it(self):
         initial=self.prepare(complete=True)
+        run(self.root,'push','-f','origin','HEAD^:main')  # origin no longer holds Push 2
         self.assert_blocked('FRESH_SYNCHRONIZED_REMOTE_REQUIRED',lc.finish,self.root,initial['sha256'])
         self.assertTrue((self.root/h.STATE_PATH).exists())
 
@@ -207,10 +279,10 @@ class LifecycleTests(unittest.TestCase):
         self.assertFalse(result['publication_completed'])
         self.assertFalse((self.root/h.STATE_PATH).exists())
         self.assertTrue(lc.pending(self.root))
-        self.assert_blocked('REMOTE_HANDOFF_NOT_REMOVED',lc.confirm_cleanup,self.root)
-        run(self.root,'add','-u',h.STATE_PATH)
+        self.assert_blocked('FINAL_DELIVERY_WORK_NOT_COMMITTED',lc.confirm_cleanup,self.root)
+        self.stage_delivery3()
         lc.guard(self.root,'pre-commit')
-        run(self.root,'commit','-m','cleanup only')
+        run(self.root,'commit','-m','delivery 3')
         self.assert_blocked('CLEANUP_NOT_DELIVERED',lc.confirm_cleanup,self.root)
         run(self.root,'push','origin','main')
         self.assertTrue(lc.confirm_cleanup(self.root)['publication_completed'])
@@ -234,10 +306,10 @@ class LifecycleTests(unittest.TestCase):
         lc.finish(self.root,initial['sha256'])
         (self.root/'unrelated.txt').write_text('unrelated')
         run(self.root,'add','unrelated.txt')
-        self.assert_blocked('CLEANUP_COMMIT_MUST_ONLY_DELETE_HANDOFF',lc.guard,self.root,'pre-commit')
+        self.assert_blocked('UNRELATED_FINAL_DELIVERY_PATH',lc.guard,self.root,'pre-commit')
 
     def test_precommit_checks_staged_checkpoint_and_actual_staged_index(self):
-        initial=self.prepare()
+        initial=self.prepare();self.to_save_point()
         self.assert_blocked('LATEST_HANDOFF_MUST_BE_STAGED',lc.guard,self.root,'pre-commit')
         run(self.root,'add',h.STATE_PATH)
         lc.guard(self.root,'pre-commit')
@@ -246,7 +318,7 @@ class LifecycleTests(unittest.TestCase):
         self.assert_blocked('CHECKPOINT_REQUIRED_BEFORE_COMMIT_OR_STOP',lc.guard,self.root,'pre-commit')
 
     def test_ci_accepts_clean_committed_checkpoint_even_on_detached_head(self):
-        self.prepare();self.deliver()
+        self.prepare();self.to_save_point();self.deliver()
         run(self.root,'switch','--detach')
         lc.guard(self.root,'ci')
 
@@ -346,7 +418,7 @@ class LifecycleTests(unittest.TestCase):
 
     def test_ci_checks_cleanup_in_a_fresh_clone_without_private_metadata(self):
         initial=self.prepare(complete=True);self.deliver();lc.finish(self.root,initial['sha256'])
-        run(self.root,'add','-u',h.STATE_PATH);run(self.root,'commit','-m','cleanup');run(self.root,'push','origin','main')
+        self.stage_delivery3();run(self.root,'commit','-m','delivery 3');run(self.root,'push','origin','main')
         other=self.base/'ci-clone'
         subprocess.run(['git','clone',str(self.remote),str(other)],check=True,capture_output=True)
         self.assertFalse(lc.pending(other))

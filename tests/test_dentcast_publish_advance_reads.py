@@ -1,4 +1,4 @@
-"""Fast Local contract: remove duplicate reads, not durable checkpoints."""
+"""Canonical advance: no duplicate reads, every checkpoint still durable."""
 import sys
 import unittest
 from pathlib import Path

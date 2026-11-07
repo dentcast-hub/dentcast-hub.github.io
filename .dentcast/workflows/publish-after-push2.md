@@ -7,20 +7,20 @@ pushes delivery 3 and opens the PR when the `QUEUE_PUBLISH_TOKEN` secret is set 
 summary says to open it by hand; a queue item's PR is opened by `queue-publish.yml`). It never merges.
 Before Phase F it refuses any regenerated page that lost or lowered a `?v=` stamp it had at Push 2
 (`ASSET_VERSION_REGRESSION`); the agent never runs `git diff -G'\?v='` by hand on this route. The agent
-monitors, reports, and merges only with authorization. A queue item (`queue-route.md`) reads only the
+monitors, merges as soon as every gate is green (never asked), and reports. A queue item (`queue-route.md`) reads only the
 «Transient» bullet of the Failure section below: its lane forbids `invalidate` and any extra commit.
 
 ## Monitor
 
 - Stay with the run until it is terminal; do not end the turn while it is queued or running. No
-  periodic status messages: one at Push 2 (already sent), one at the run's end, one at merge.
+  periodic status messages: one at Push 2 (already sent) and one at merge (or at a failure that stops it).
 - `gh run watch <id>` (`gh run list --workflow post-cut2-mechanical.yml --branch <branch> --json databaseId,headSha`
   finds the id), or without `gh` the GitHub MCP tools: `actions_list` (the branch's runs of
   `post-cut2-mechanical.yml`), `actions_get` (status, conclusion), `get_job_logs` (failed jobs); without
   either, REST `GET repos/<owner>/<repo>/actions/workflows/post-cut2-mechanical.yml/runs?branch=<branch>`
   with a token, or the run link the founder reads from the Actions tab. A client that cannot stay
   with the run says so and hands over: «ادامه انتشار» resumes the monitoring in a later session.
-  The branch normally has **more than one** run — the delivery-1 push starts one too, which skips
+  The branch may have **more than one** run — a save-point push starts one too, which skips
   itself. The run to monitor is the one whose `head_sha` is the Push-2 SHA; never judge by position
   or by the newest run.
 - No run, or preflight skipped: inspect the event, branch and handoff before saying Actions started.
@@ -37,19 +37,17 @@ monitors, reports, and merges only with authorization. A queue item (`queue-rout
    its parent is the receipt's second-delivery commit (Push 2, or the last audited reconciliation
    commit; else `EXTRA_DELIVERY_COMMIT_FORBIDDEN`), the committed completion receipt's fingerprints
    match the tree (`FINAL_RECEIPT_FILE_MISMATCH`), its Phase F exit code is 0
-   (`MECHANICAL_GATE_RECEIPT_REQUIRED`), the handoff is gone and HEAD is the remote head. On a run with
-   the v2 cut policy (`fixed_three_deliveries_v2`) it trusts the runner's committed Phase F receipt (no
-   rerun, no `origin/main` fetch); a v1-policy run still reruns Phase F. Never
+   (`MECHANICAL_GATE_RECEIPT_REQUIRED`), the handoff is gone and HEAD is the remote head. It trusts the
+   runner's committed Phase F receipt (no rerun, no `origin/main` fetch). Never
    run `restore-cleanup` on this route, nor `confirm-cleanup` before the pull.
 3. The PR: the runner opens it, but only when the `QUEUE_PUBLISH_TOKEN` secret is set — its job
    summary says so when it is not. No PR after a green run → open it from the branch to `main`
    yourself, before the end-of-run message, with the connected GitHub tool (`create_pull_request`) or
-   `gh pr create --base main --head <branch> --title "<content_id>: <title>"`; never merge in the same
-   step. Put the link in the end message and say there that the runner could not.
-4. Message at the run's end: `content_id`, branch, Push-2 SHA, run link, PR link and the Phase F
-   summary line (the standing-acceptance list, the M1/M3b/M2 answers and the orphan sentences were
+   `gh pr create --base main --head <branch> --title "<content_id>: <title>"`, then wait for its checks. Put the link in the end message and say there that the runner could not.
+4. No message here when the merge follows; its facts go into the merge message: `content_id`, branch,
+   Push-2 SHA, run link, PR link and the Phase F summary line (the standing-acceptance list, the M1/M3b/M2 answers and the orphan sentences were
    already in the agent's Push-2 report; repeat nothing). Not "published" until merged.
-5. **Merge** only with authorization (`publish-checkpoints.md`, «Waiting, services, merge»): fresh
+5. **Merge**, without asking (`publish-checkpoints.md`, «Waiting, services, merge»): fresh
    `check-pr` (`python3 tools/dentcast_publish_handoff.py check-pr --repository <owner>/<repo> --number <n>
    --expected-head <sha> --expected-base main --expected-branch <branch>`; unauthenticated works on this
    public repository), gates green, then merge (`gh pr merge <n> --merge`, the GitHub tool
@@ -81,8 +79,8 @@ logs/artifact, then:
   merged non-publication paths in `target_paths` only after the invalidation is written (keep them
   out of the index until then, restore them from `origin/main` afterwards). Restore each still-valid
   approval from the `dependency_invalidation_v1` audit, re-record the ledger with re-verification
-  evidence and re-cross the cuts in order: the merge commit is the re-delivered cut 1 (allowed once
-  per audited invalidation), then cut 2 once more, which starts the workflow again.
+  evidence and redo the steps through C.6: the merge commit may be a save (once C.4.13 has started
+  again) or Push 2 itself, which starts the workflow again.
 - **Cause in the publication** (Phase F names a page, entry, approval or text): at the Push-2 commit
   `invalidate --from-step <first affected step>` (`C.6` when only a frozen approval/title/caption is
   wrong); restore each approval from the audit with the founder's actual correction, fix the bytes,

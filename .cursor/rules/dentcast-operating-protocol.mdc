@@ -10,4 +10,4 @@ Publish-queue requests («صف انتشار») are the exception and go through 
 
 **Interrupted publication** («انتشار ناقص داشتم»), the run state `.dentcast/PUBLISH-HANDOFF.md` and recovery through `.dentcast/workflows/publish-handoff.md`: `.dentcast/workflows/publish-checkpoints.md`, «Interrupted publication».
 
-Ledger and the three fixed deliveries: `.dentcast/workflows/publish-checkpoints.md`.
+Ledger, the save point and the deliveries: `.dentcast/workflows/publish-checkpoints.md`.

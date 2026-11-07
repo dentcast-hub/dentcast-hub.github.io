@@ -55,11 +55,11 @@ class LedgerOrderV2Tests(unittest.TestCase):
     def deliver_two_v2(self):
         sha = self.walk(self.start_v2(), 'C.4.9')
         ids = [s['id'] for s in h.load_state(self.root)[0]['publication']['steps']]
-        # Cut 1 now carries the paper and DES/Fidelity checkpoints.
+        # The save carries the paper and DES/Fidelity checkpoints.
         self.assertLess(ids.index('C.4.13'), ids.index('C.4.9'))
-        self.deliver('delivery 1')
+        self.deliver('save point')
         sha = self.walk(h.load_state(self.root)[1], 'C.6')
-        self.assertEqual(lc.delivery_boundary(h.load_state(self.root)[0]['publication']), 2)
+        self.assertEqual(lc.delivery_boundary(h.load_state(self.root)[0]['publication']), 1)
         self.deliver('delivery 2')
         return h.text_git(self.root, 'rev-parse', 'HEAD')
 
@@ -113,31 +113,6 @@ class LedgerOrderV2Tests(unittest.TestCase):
             run(self.root, 'commit', '--allow-empty', '-m', 'local only')
             self.assert_blocked('CLEANUP_RECORD_MISSING_OR_INVALID', lc.confirm_cleanup, self.root)
 
-    def test_v1_remote_confirm_keeps_the_local_phase_f_rerun(self):
-        # Legacy v1 runs (old order, cut 2 at C.4.13) keep the verifier rerun.
-        r3 = __import__('test_dentcast_publish_round3_cursor').Round3CursorTests
-        r3.actions_delivers_third(self)
-        run(self.root, 'pull', '-q', '--ff-only')
-        calls = []
-        real = lc.gate
-        with patch.object(lc, 'gate', side_effect=lambda *a, **k: calls.append(1) or real(*a, **k)):
-            result = lc.confirm_cleanup(self.root)
-        self.assertEqual(result['phase_f'], 'rerun_locally')
-        self.assertTrue(calls)
-
-    clone = __import__('test_dentcast_publish_round2_fixes').Round2Tests.clone
-    complete_two = three.ThreeDeliveriesTests.complete_two
-    start = three.ThreeDeliveriesTests.start
-
-    def test_in_flight_old_order_handoff_continues_in_the_old_order(self):
-        sha = self.start()
-        p = h.load_state(self.root)[0]['publication']
-        self.assertFalse(lc.ledger_order_v2(p))
-        sha = self.walk(sha, 'C.4.9')
-        self.assertEqual(h.next_step(h.load_state(self.root)[0]['publication']), 'C.4.10.1')
-        self.deliver('delivery 1')
-        self.walk(h.load_state(self.root)[1], 'C.4.13')
-        self.assertEqual(lc.delivery_boundary(h.load_state(self.root)[0]['publication']), 2)
 
 
 class StandingAcceptanceLeadTests(unittest.TestCase):

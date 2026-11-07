@@ -1,6 +1,6 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
 > **Checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision. Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
-> **Order, founder messages and the three deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
+> **Order, founder messages, the save point and the deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
 Ledger steps in this module: `C.0`, `C.0.1`, `C.0.2`, `C.0.3`, `C.0.4` (LiteCast 0.1–0.4), `C.1`, `C.2`, `C.0.5`, `C.0.6` (LiteCast links, after the page is built).
@@ -104,7 +104,7 @@ This bites the **Insight** template hardest (`h3` label + `h3` thesis + one `<ul
 
 Write a genuine 2–4 sentence lead that **adds** something — the clinical situation, the decision at stake, what the reader will get — never a restatement of the `h3` thesis above it. Match the register of the founder's own writing (their vocabulary for the procedure, e.g. «سمان کردن» for cementing a crown) and keep it tight; shorter is safer than padded. It is part of the body: written before C.4.13, so DES and Fidelity score it, and the English mirror carries the same paragraph (module 12).
 
-**This lead paragraph is authored text under standing acceptance (Hard Rule 14).** It is not sent for confirmation. Record its origin in the `first_cut_lead_provenance_v1` decision (`agent_authored`, with the `authored-intro` approval whose evidence is the standing-acceptance record; `author_original` when the founder's own first paragraph already opens the body) — recorded after C.4.13, before C.4.9 (`publish-checkpoints.md`, «Delivery cuts 1 and 2»). The agent's Push-2 report quotes it; the founder may change it afterwards (an approved-page edit, invalidation from C.2).
+**This lead paragraph is authored text under standing acceptance (Hard Rule 14).** It is not sent for confirmation. Record its origin in the `first_cut_lead_provenance_v1` decision (`agent_authored`, with the `authored-intro` approval whose evidence is the standing-acceptance record; `author_original` when the founder's own first paragraph already opens the body) — recorded after C.4.13, before C.6 (`publish-checkpoints.md`, «Delivery cuts 1 and 2»). The agent's Push-2 report quotes it; the founder may change it afterwards (an approved-page edit, invalidation from C.2).
 
 To check a page you just built:
 `node -e` against `spot/spot.js`'s `bodyBlocks()`, or confirm by eye that a paragraph precedes the first list (Phase F checks it). Published pages that fail this are not a pattern to copy forward (Hard Rule 11).

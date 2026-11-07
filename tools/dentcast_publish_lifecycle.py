@@ -28,21 +28,17 @@ _LINKS = ("C.4.7", "C.4.7-b", "C.4.8", "C.4.9")
 _PAPER = ("C.4.10.1", "C.4.10.2", "C.4.10.3")
 _TAIL = (("09", ("C.4.14",)), ("10", ("C.5.0", "C.5", "C.5.5", "C.5.6", "C.5.6-b")),
          ("11", ("C.6", "C.8", "C.7")), ("12", ("D", "E", "F", "G")))
-# Founder decision 2026-11-06: paper ingestion and DES/Fidelity (06, 08) run
-# before semantic links (05) and flashcards/FAQ (07). Written by `init` as the
-# ledger_order_v2 decision; a run without that marker keeps ORDER_V1.
+# The one canonical order (founder 2026-11-06): paper ingestion and
+# DES/Fidelity (06, 08) run before semantic links (05) and flashcards/FAQ (07).
+# `init` records it as the ledger_order_v2 decision. The earlier order and its
+# delivery policy were retired on 2026-11-07: a page handoff without both v2
+# markers is refused (OLD_DELIVERY_MODEL_RETIRED), never continued.
 ORDER_V2 = _rows(("01", ("rules",)), ("02", _INTAKE), ("03", _PAGE), ("04", _TAXONOMY),
                  ("06", _PAPER), ("08", ("C.4.13",)), ("05", _LINKS),
                  ("07", ("C.4.11", "C.4.12")), *_TAIL)
-# Previous canonical order: every receipt and handoff created before
-# 2026-11-06 (no ledger_order_v2 decision) validates against it unchanged.
-ORDER_V1 = _rows(("01", ("rules",)), ("02", _INTAKE), ("03", _PAGE), ("04", _TAXONOMY),
-                 ("05", _LINKS), ("06", _PAPER), ("07", ("C.4.11", "C.4.12")),
-                 ("08", ("C.4.13",)), *_TAIL)
 ORDER = ORDER_V2
 LEDGER_ORDER_V2 = "ledger_order_v2"
 REGISTRY = dict(ORDER_V2)
-assert REGISTRY == dict(ORDER_V1) and len(REGISTRY) == len(ORDER_V2) == len(ORDER_V1)
 INTAKE_IDS = ("rules",) + _INTAKE  # before identity binding
 PAPER_IDS = ("rules", "0", "C.4.10.1", "C.4.10.2", "G")
 # Queue lane (publish-queue item, every judgment frozen in preparation): the
@@ -66,8 +62,8 @@ def ledger_order_v2(publication):
 
 
 def full_order(publication):
-    """The full canonical (step, module) order this run was initialized with."""
-    return ORDER_V2 if ledger_order_v2(publication) else ORDER_V1
+    """The full canonical (step, module) order (there is only one)."""
+    return ORDER_V2
 
 
 def module_rank(publication):
@@ -82,10 +78,9 @@ def module_rank(publication):
 def adopt_ledger_order(publication, force=False):
     """Record the v2 ledger order on a new canonical full-plan run.
 
-    `init` passes force=True: every new run is a v2 run, so an old-order input
-    then fails CANONICAL_PLAN_REQUIRED. A direct initial save marks the plan
-    only when it already is the v2 order, so a legacy-order fixture or handoff
-    keeps validating against ORDER_V1. Paper-only and queue-lane id lists are
+    `init` passes force=True. A direct initial save marks the plan only when it
+    already is the canonical order; anything else then fails
+    CANONICAL_PLAN_REQUIRED. Paper-only and queue-lane id lists are
     order-independent; a noncanonical short ledger (not starting at `rules`)
     is left as is.
     """
@@ -96,6 +91,14 @@ def adopt_ledger_order(publication, force=False):
         bases = [s.get("id") for s in steps if isinstance(s, dict) and s.get("id") in REGISTRY]
         if force or bases == [sid for sid, _ in ORDER_V2]:
             publication.setdefault("context", {}).setdefault("decisions", []).append({"kind": LEDGER_ORDER_V2})
+    if (ledger_order_v2(publication) and isinstance(publication.get("context"), dict)
+            and isinstance(publication["context"].get("decisions"), list)):
+        # The one delivery model travels with the one order: every new page
+        # handoff carries both policy markers from its first write.
+        decisions = publication["context"]["decisions"]
+        for kind in ("fixed_three_deliveries_v1", "fixed_three_deliveries_v2"):
+            if not any(isinstance(d, dict) and d.get("kind") == kind for d in decisions):
+                decisions.append({"kind": kind})
     return publication
 
 
@@ -107,9 +110,9 @@ def canonical_ids(publication):
     return tuple(sid for sid, _ in full_order(publication))
 
 
-def plan(paper_only=False, queue=False, order=None):
+def plan(paper_only=False, queue=False):
     ids = (PAPER_IDS if paper_only else QUEUE_IDS if queue
-           else tuple(sid for sid, _ in (order or ORDER)))
+           else tuple(sid for sid, _ in ORDER))
     return [{"id": sid, "module": REGISTRY[sid], "status": "pending", "evidence": [], "reason": None}
             for sid in ids]
 
@@ -122,15 +125,17 @@ def plan_for(publication):
 
 def require_plan(publication):
     h.validate_publication(publication)
-    required = canonical_ids(publication)
+    page = h.publication_category(publication) != "paper-only" and not queue_lane(publication)
     steps = publication["steps"]
+    # One path only (founder 2026-11-07): a page run is a v2 run. Before `init`
+    # writes its delivery markers the plan is still all pending.
+    h.require(not page or (ledger_order_v2(publication) and (
+        editorial_cut_v2(publication) or all(s.get("status") == "pending" for s in steps))),
+        "OLD_DELIVERY_MODEL_RETIRED: this handoff was made under the retired ledger order or "
+        "delivery policy and cannot be continued; start a new publication run")
+    required = canonical_ids(publication)
     ids = [s["id"] for s in steps]
     h.require([sid for sid in ids if sid in REGISTRY] == list(required), "CANONICAL_PLAN_REQUIRED")
-    # The v1 cut 2 (C.4.13) precedes cut 1 (C.4.9) in the v2 order: a v2-order
-    # fixed-delivery run must carry the v2 editorial cut policy.
-    h.require(not (ledger_order_v2(publication) and required == tuple(sid for sid, _ in ORDER_V2)
-                   and fixed_delivery(publication) and not editorial_cut_v2(publication)),
-              "LEDGER_ORDER_V2_REQUIRES_DELIVERY_POLICY_V2")
     for s in steps:
         base = s["id"].split("/", 1)[0]
         h.require(base in required and s["module"] == REGISTRY[base], "UNKNOWN_CANONICAL_STEP")
@@ -289,10 +294,15 @@ def require_step_delivery(root, state, expected):
     h.require(current['workflow'] == state['snapshot']['workflow'], 'DELIVERED_STEP_WORKFLOW_MISMATCH')
 
 
-DELIVERY_POLICY = "fixed_three_deliveries_v1"  # legacy/in-flight source of truth
-DELIVERY_POLICY_V2 = "fixed_three_deliveries_v2"  # authoring before second cut
-DELIVERY_CUTS = ("C.4.9", "C.4.13")
-DELIVERY_CUTS_V2 = ("C.4.9", "C.6")
+# Both markers are written by `init` on every page run; the names are kept
+# for the handoffs and receipts that carry them.
+DELIVERY_POLICY = "fixed_three_deliveries_v1"
+DELIVERY_POLICY_V2 = "fixed_three_deliveries_v2"
+# Founder decision 2026-11-07: Push 2 at C.6 is the only fixed cut; the
+# runner makes the final delivery. Mid-run there is one unguarded save point
+# (save_point below), not a delivery.
+DELIVERY_CUTS_V2 = ("C.6",)
+SAVE_POINT_STEP = "C.4.13"
 EDITORIAL_SCOPES = frozenset((
     "scientific", "challenge", "taxonomy", "links", "hashtags",
     "content_record", "pathways", "pulse", "english", "author_approvals"
@@ -373,9 +383,31 @@ def fixed_delivery(publication):
 
 
 def delivery_cuts(publication):
-    if queue_lane(publication):
-        return ("C.6",)
-    return DELIVERY_CUTS_V2 if editorial_cut_v2(publication) else DELIVERY_CUTS
+    """Push 2 (interactive) or the queue lane's single cut, both at C.6."""
+    return DELIVERY_CUTS_V2
+
+
+def save_point(publication):
+    """An interactive v2 run between DES/Fidelity (C.4.13 started) and Push 2.
+
+    A save is one plain commit and push of the scoped work and the handoff so
+    DES/Fidelity survives a lost session: no readiness gate, no remote
+    read-back, no hold on the next step. It is not a delivery; Push 2 keeps
+    every check.
+    """
+    if queue_lane(publication) or not editorial_cut_v2(publication) or delivery_boundary(publication):
+        return False
+    rows = {s["id"]: s["status"] for s in publication["steps"]}
+    return (rows.get(SAVE_POINT_STEP, "pending") != "pending"
+            and rows.get("C.6") not in ("completed", "skipped"))
+
+
+def same_run(previous, publication):
+    """The parent handoff is an earlier save of this same interactive v2 run."""
+    return (previous is not None and not queue_lane(previous) and not queue_lane(publication)
+            and editorial_cut_v2(previous) and editorial_cut_v2(publication)
+            and previous["content_id"] == publication["content_id"]
+            and h.publication_category(previous) == h.publication_category(publication))
 
 
 def final_delivery(publication):
@@ -439,27 +471,13 @@ def invalidation_count(publication):
                if isinstance(d, dict) and d.get("kind") == h.INVALIDATION)
 
 
-def redelivers_first_cut(previous, publication, boundary):
-    # The previous commit may sit at cut 1, or at cut 2 when a failed post-Push-2
-    # continuation needed a workflow fix (e.g. a tool defect fixed on main), whose
-    # mandatory invalidation from `rules` reopens the ledger before cut 1.
-    if queue_lane(publication) or queue_lane(previous):
-        return False  # queue lane: no invalidation; a hash mismatch stops the run
-    return (boundary in (1, 2) and fixed_delivery(previous)
-            and previous["content_id"] == publication["content_id"]
-            and h.publication_category(previous) == h.publication_category(publication)
-            and editorial_cut_v2(previous) == editorial_cut_v2(publication)
-            and invalidation_count(publication) > invalidation_count(previous))
-
-
 def require_delivery_parent(root, publication, number, revision="HEAD"):
     boundary, previous = committed_boundary(root, revision)
     if number == 1:
-        # An audited dependency invalidation after a delivered first (or
-        # second) cut may re-deliver the first cut once per invalidation: same
-        # run, previous commit at boundary 1 or 2, and strictly more
-        # invalidation receipts now.
-        h.require(previous is None or redelivers_first_cut(previous, publication, boundary),
+        # Push 2 sits on the branch base, a save of the same run, or (after
+        # an audited recovery) an earlier Push 2 of the same run. The queue
+        # lane's single cut sits on the base only.
+        h.require(previous is None or same_run(previous, publication),
                   "FIRST_DELIVERY_REQUIRES_NO_ACTIVE_REMOTE_HANDOFF")
     else:
         h.require(boundary == number-1 and previous is not None
@@ -706,18 +724,10 @@ def challenge_markup(root, publication):
 
 
 def guard_step_transition(state, publication, root=None):
-    # A run keeps the ledger order it was initialized with; old runs finish
-    # in ORDER_V1 and are never reordered in flight.
     h.require(ledger_order_v2(state["publication"]) == ledger_order_v2(publication),
               "LEDGER_ORDER_CANNOT_CHANGE")
     if fixed_delivery(state["publication"]):
         h.require(fixed_delivery(publication), "DELIVERY_POLICY_CANNOT_BE_DROPPED")
-        old_c49 = next((s for s in state["publication"]["steps"] if s["id"] == "C.4.9"), None)
-        new_c49 = next((s for s in publication["steps"] if s["id"] == "C.4.9"), None)
-        if (not queue_lane(publication) and old_c49 and new_c49 and old_c49["status"] not in ("completed", "skipped")
-                and new_c49["status"] in ("completed", "skipped")):
-            # Fail at C.4.9 itself, not first at the cut-1 stop/commit guard.
-            require_fixed_cut_readiness(publication, root)
         h.require(editorial_cut_v2(state["publication"]) == editorial_cut_v2(publication)
                   and queue_lane(state["publication"]) == queue_lane(publication),
                   "DELIVERY_POLICY_VERSION_CANNOT_CHANGE")
@@ -910,9 +920,10 @@ def stage_delivery(root, expected, paths):
     # Paper-only keeps its single delivery: the exact completed final handoff
     # (with its catalog work), followed later by the deletion-only cleanup.
     paper_final = h.publication_category(p) == "paper-only" and h.next_step(p) is None
-    h.require(paper_final or (fixed_delivery(p) and delivery_boundary(p) in (1, 2)),
+    saving = not paper_final and save_point(p)
+    h.require(paper_final or saving or (fixed_delivery(p) and delivery_boundary(p) in (1, 2)),
               "STAGE_DELIVERY_ONLY_AT_FIXED_CUT")
-    if not paper_final:
+    if not paper_final and not saving:
         # Refuse before staging or refreshing the checkpoint, not in the final guard.
         require_fixed_cut_readiness(p, root)
     stale = stale_checkout(root)
@@ -945,6 +956,8 @@ def stage_delivery(root, expected, paths):
     guard(root, "pre-commit")
     return {"status": "delivery_staged", "sha256": result["sha256"], "staged": list(paths),
             "next_action": ("Commit and push this paper-only final handoff once, then finish" if paper_final
+                            else "Commit and push this save point once; a failed push is reported, "
+                                 "never retried in a loop, and the run continues" if saving
                             else "Commit and push this fixed delivery once"), "publication_completed": False}
 
 
@@ -1212,10 +1225,9 @@ def confirm_remote_final_delivery(root):
     receipt = h.git(root, "show", "HEAD:" + completion_path(p), optional=True)
     h.require(receipt is not None, "FINAL_RECEIPT_NOT_IN_DELIVERY_COMMIT")
     final = h.decode_json(receipt.decode("utf-8"))
-    v2 = editorial_cut_v2(p)
-    h.require(not v2 or h.text_git(root, "rev-parse", "HEAD^") == final.get("second_delivery_commit"),
+    h.require(h.text_git(root, "rev-parse", "HEAD^") == final.get("second_delivery_commit"),
               "EXTRA_DELIVERY_COMMIT_FORBIDDEN")
-    validate_final_receipt(root, final, "HEAD", rerun_phase_f=not v2)
+    validate_final_receipt(root, final, "HEAD", rerun_phase_f=False)
     h.require(not h.status_paths(root), "FINAL_DELIVERY_WORK_NOT_COMMITTED")
     head = h.text_git(root, "rev-parse", "HEAD")
     remote = h.remote_observation(root, head, h.branch(root), True)
@@ -1226,7 +1238,7 @@ def confirm_remote_final_delivery(root):
     return {"status": "publication_completed", "publication_completed": True,
             "cleanup_commit": head, "content_id": p["content_id"], "delivered_by": "remote_final_delivery",
             "second_delivery_commit": final["second_delivery_commit"],
-            "phase_f": "trusted_committed_receipt" if v2 else "rerun_locally"}
+            "phase_f": "trusted_committed_receipt"}
 
 
 def confirm_cleanup(root):
@@ -1301,9 +1313,6 @@ def paper_only_before_final(publication):
 
 
 def guard(root, phase):
-    if phase == "pre-commit":
-        h.require(not h.fastlocal_active(root),
-                  "WAL_MUST_BE_MATERIALIZED_BEFORE_COMMIT")
     path = h.safe_path(root, h.STATE_PATH)
     if not path.exists():
         if pending(root):
@@ -1349,6 +1358,7 @@ def guard(root, phase):
                 require_plan(state["publication"])
                 p = state["publication"]
                 if fixed_delivery(p):
+                    h.require(h.safe_path(root, completion_path(p)).is_file(), "CI_UNFINISHED_HANDOFF_DELETION")
                     final = h.decode_json(h.safe_path(root, completion_path(p)).read_text())
                     validate_final_receipt(root, final, "HEAD")
                     return {"status": "guard_passed", "publication_completed": False}
@@ -1375,21 +1385,14 @@ def guard(root, phase):
     state, _ = h.load_state(root)
     require_plan(state["publication"])
     h.require(not pending(root), "CLEANUP_DELIVERY_PENDING")
-    if fixed_delivery(state["publication"]) and phase in ("pre-commit", "ci"):
+    if (fixed_delivery(state["publication"]) and phase in ("pre-commit", "ci")
+            and not save_point(state["publication"])):
         number = delivery_boundary(state["publication"])
-        h.require(number is not None, "ONLY_THREE_FIXED_DELIVERIES_ALLOWED" if not queue_lane(state["publication"])
+        h.require(number is not None, "COMMIT_ONLY_AT_SAVE_POINT_OR_PUSH_2" if not queue_lane(state["publication"])
                   else "ONLY_TWO_QUEUE_DELIVERIES_ALLOWED")
         require_fixed_cut_readiness(state["publication"], root)
         parent_revision = "HEAD^" if phase == "ci" else "HEAD"
-        parent_boundary, parent = committed_boundary(root, parent_revision)
-        last_cut = len(delivery_cuts(state["publication"]))
-        already_delivered_second_cut = (
-            number == last_cut and parent_boundary == last_cut and last_cut > 1 and parent is not None
-            and fixed_delivery(parent)
-            and editorial_cut_v2(parent) == editorial_cut_v2(state["publication"])
-            and parent["content_id"] == state["publication"]["content_id"])
-        if not already_delivered_second_cut:
-            require_delivery_parent(root, state["publication"], number, parent_revision)
+        require_delivery_parent(root, state["publication"], number, parent_revision)
     if phase == "ci":
         # CI is detached and the recorded index/status may predate the checkpoint commit.
         local_only = h.local_only_inputs(root, state["publication"])

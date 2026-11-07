@@ -74,7 +74,7 @@ def phase_f_expectations(pub: dict, args) -> tuple[str | None, str | None]:
 
 
 def preflight(root: Path, expected_head: str, expected_branch: str) -> dict:
-    """Read-only trigger gate; Push 1 and post-cleanup pushes are clean skips."""
+    """Read-only trigger gate; save-point (Push 1) and post-cleanup pushes are clean skips."""
     actual = git(root, "rev-parse", "HEAD").lower()
     if actual != expected_head.lower():
         raise RunnerError("EXPECTED_EVENT_SHA_MISMATCH")
@@ -612,7 +612,7 @@ def pull_request_info(pub: dict, expected_head: str, branch: str, third_sha: str
         f"- Technical report: `{lifecycle.technical_report_path(pub)}`", "",
         "mechanical_defaults:", *([f"- {x}" for x in defaults] or ["- none"]), "",
         "manual_steps:", *([f"- {x}" for x in manual] or ["- none"]), "",
-        "Merge when every gate is green; the merge is the founder's decision.",
+        "Merge when every gate is green; the monitoring agent merges it without asking.",
     ]
     return {"open": True, "content_id": content_id, "branch": branch,
             "push2_sha": expected_head, "delivery3_sha": third_sha, "run_url": run_url,

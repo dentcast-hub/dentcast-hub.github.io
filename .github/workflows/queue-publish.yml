@@ -8,8 +8,8 @@
 # itself commits and pushes Push 2). Any failure after the lock unlocks the item
 # again (`queue_publish.py unlock`), unless Push 2 already reached GitHub.
 # Job `await-delivery-3` waits for post-cut2-mechanical.yml on the exact Push-2
-# SHA and then opens the PR to main. The merge stays the founder's decision
-# (queue-route.md step 5; a red gate means no merge); queue-publish-done.yml
+# SHA and then opens the PR to main. The monitoring agent merges it once every
+# gate is green (queue-route.md step 5; a red gate means no merge); queue-publish-done.yml
 # removes the item from `queue` after the merge.
 #
 # Repository secret QUEUE_PUBLISH_TOKEN (Settings -> Secrets and variables ->
@@ -364,7 +364,7 @@ jobs:
             echo "delivery3_sha=$head"
           } >> "$GITHUB_OUTPUT"
 
-      - name: Open the PR to main (the merge stays the founder's decision)
+      - name: Open the PR to main (the monitoring agent merges it when green)
         id: pr
         env:
           RUN_URL: ${{ steps.wait.outputs.run_url }}
@@ -389,7 +389,7 @@ jobs:
               print("- " + (d if isinstance(d, str) else json.dumps(d, ensure_ascii=False)))
           if not out.get("manual_steps"):
               print("- none")
-          print("\nMerge when every gate is green (founder's decision, queue-route.md step 5); "
+          print("\nMerge when every gate is green (the monitoring agent, without asking; queue-route.md step 5); "
                 "a red gate means no merge. After the merge "
                 "`queue-publish-done.yml` removes the item from `queue`.")
           PY
@@ -416,7 +416,7 @@ jobs:
             printf '%s\n' "- content_id: \`$CONTENT_ID\`" "- Branch: \`$BRANCH\`" "- Push-2 SHA: \`$PUSH2_SHA\`"
             printf '%s\n' "- post-cut2-mechanical: ${OUTCOME:-unknown} ${RUN_URL:+($RUN_URL)}"
             if [[ -n "$PR_URL" ]]; then
-              printf '%s\n' "- PR: $PR_URL (merge when every gate is green; the merge is the founder's decision, queue-route.md step 5)"
+              printf '%s\n' "- PR: $PR_URL (merge when every gate is green, without asking; queue-route.md step 5)"
             else
               printf '%s\n' "- PR: not opened. Run \`python3 tools/queue_publish.py status\` and follow its next_step."
             fi

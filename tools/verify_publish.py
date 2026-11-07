@@ -2282,8 +2282,9 @@ def _verify_core(content_id, rep, expect_title=None, expect_caption=None, sweep=
         # 1405/08/03). Only a page that is a step of a FULL pathway feeds an
         # exam, so the row is a documented skip otherwise; where it applies,
         # the page's rows must pass the same shape the API's loader enforces
-        # (tools/validate_exam_questions.py). Writing none is allowed — the
-        # workflow records the reason — so the check is on shape, not count.
+        # (tools/validate_exam_questions.py). Founder 2026-11-07: the step is
+        # mandatory there — a new publication with no active row FAILs. The
+        # all-pages sweep only skips (older pages predate the rule).
         exam_file = json.loads(read("plus/exam-questions.json")).get("byContent", {}) if exists("plus/exam-questions.json") else {}
         in_full_pathway = any(
             p.get("kind") != "bundle" and any(st.get("content_id") == content_id for st in p.get("steps", []))
@@ -2291,8 +2292,13 @@ def _verify_core(content_id, rep, expect_title=None, expect_caption=None, sweep=
         ) if exists("plus/pathways.json") else False
         if not in_full_pathway:
             rep.skip("4.12-ب exam", "page is not a step of a full pathway — no exam draws from it")
-        elif content_id not in exam_file:
-            rep.skip("4.12-ب exam", "no exam question written for this page (step 4.12-ب records the reason)")
+        elif not any(q.get("status") != "rejected" for q in exam_file.get(content_id, {}).get("questions", [])):
+            if sweep:
+                rep.skip("4.12-ب exam", "no exam question for this page (older than the mandatory rule)")
+            else:
+                rep.fail("4.12-ب exam", "page is a step of a full pathway but has no exam question — "
+                         "step 4.12-ب is mandatory (1-3 questions approved in message M2)",
+                         "module 07 §4.12-ب: draft, --draft-check, M2, then append to plus/exam-questions.json")
         else:
             r = subprocess.run([sys.executable, str(ROOT / "tools" / "validate_exam_questions.py"), "--content", content_id],
                                capture_output=True, text=True)

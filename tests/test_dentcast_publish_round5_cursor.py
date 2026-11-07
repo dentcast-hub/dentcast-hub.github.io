@@ -80,10 +80,10 @@ class ExternalOutcomeAcrossCutTests(unittest.TestCase):
     deliver = three.ThreeDeliveriesTests.deliver
 
     def test_unresolved_external_outcome_cannot_be_committed_into_a_cut(self):
-        sha = self.walk(self.start(), 'C.4.9')
+        sha = self.walk(self.start(), 'C.6')
         state, sha = h.load_state(self.root)
         p = copy.deepcopy(state['publication'])
-        p['external_actions'].append({'id': 'C.4.9:drive-move', 'status': 'started',
+        p['external_actions'].append({'id': 'C.6:drive-move', 'status': 'started',
                                       'target': 'fixture:drive', 'evidence': []})
         sha = h.save(self.root, p, expected=sha, note='external action started')['sha256']
         # Otherwise the pushed cut strands it: recording the outcome is a record on
@@ -92,9 +92,9 @@ class ExternalOutcomeAcrossCutTests(unittest.TestCase):
         self.assert_blocked('EXTERNAL_OUTCOME_UNRESOLVED_AT_CUT', lc.stage_delivery, self.root, sha, ['note.html'])
         p['external_actions'][0].update(status='completed', evidence=['fixture:drive:observed'])
         sha = h.save(self.root, p, expected=sha, note='observed outcome')['sha256']
-        self.deliver('delivery 1')
+        self.deliver('delivery 2')
         state, sha = h.load_state(self.root)
-        self.assertEqual(lc.step(self.root, sha, 'C.4.10.1', 'started', [], None)['status'], 'checkpoint_written')
+        self.assertEqual(lc.step(self.root, sha, 'C.8', 'started', [], None)['status'], 'checkpoint_written')
 
 
 if __name__ == "__main__":

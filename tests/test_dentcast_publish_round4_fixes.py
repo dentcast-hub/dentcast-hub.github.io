@@ -22,8 +22,8 @@ class Round4Tests(unittest.TestCase):
     deliver = three.ThreeDeliveriesTests.deliver
 
     def test_record_after_pushed_cut_is_refused_before_it_strands_the_run(self):
-        sha = self.walk(self.start(), 'C.4.9')
-        self.deliver('delivery 1')
+        sha = self.walk(self.start(), 'C.6')
+        self.deliver('delivery 2')
         state, sha = h.load_state(self.root)
         before = (self.root/h.STATE_PATH).read_bytes()
         p = copy.deepcopy(state['publication'])
@@ -33,7 +33,7 @@ class Round4Tests(unittest.TestCase):
         self.assertEqual((self.root/h.STATE_PATH).read_bytes(), before)
         self.assertEqual(lc.guard(self.root, 'stop')['status'], 'guard_passed')
         # The documented order: start the next step, then record.
-        sha = lc.step(self.root, sha, 'C.4.10.1', 'started', [], None)['sha256']
+        sha = lc.step(self.root, sha, 'C.8', 'started', [], None)['sha256']
         state, _ = h.load_state(self.root)
         p = copy.deepcopy(state['publication'])
         p['context']['decisions'].append({'kind': 'fixture', 'evidence': ['fixture:late note']})
@@ -85,9 +85,12 @@ class ConfirmAfterPullTests(unittest.TestCase):
         failed = {'exit_code': 1, 'summary': '0 passed, 0 warned, 1 failed',
                   'output': ('FAIL  6 pulse   cannot verify previous Pulse: local origin/main:index.html unavailable\n'
                              '                ↳ fix: git fetch origin +refs/heads/main:refs/remotes/origin/main\n')}
+        # confirm-cleanup trusts the runner's receipt; the rerun (merge gate)
+        # names the verifier's own failing rows.
+        data = h.decode_json((self.root/lc.completion_path({'content_id': 'note'})).read_text())
         with patch.object(lc, 'gate', return_value=failed):
             self.assert_blocked(r'FINAL_DELIVERY_VERIFICATION_FAILED: FAIL 6 pulse .*refs/remotes/origin/main',
-                                lc.confirm_cleanup, self.root)
+                                lc.validate_final_receipt, self.root, data, 'HEAD')
         self.assertTrue(lc.confirm_cleanup(self.root)['publication_completed'])
 
 

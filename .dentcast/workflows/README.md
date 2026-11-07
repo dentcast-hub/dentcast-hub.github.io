@@ -75,4 +75,4 @@ Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details
 
 ## Checkpoints, deliveries, completion
 
-`publish-checkpoints.md`: ledger, the founder messages (at most three), text lock, the three deliveries, hosting and merge. Hashes or checkpoints alone are not publication.
+`publish-checkpoints.md`: ledger, the founder messages (at most three), text lock, the save point and the deliveries, hosting and merge. Hashes or checkpoints alone are not publication.

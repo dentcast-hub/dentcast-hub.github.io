@@ -12,4 +12,4 @@ Load complete `modules/01-hard-rules.md` and `02-routing-intake.md`, then every 
 
 **Interrupted publication** («انتشار ناقص داشتم»), the run state `.dentcast/PUBLISH-HANDOFF.md` and recovery through `.dentcast/workflows/publish-handoff.md`: `.dentcast/workflows/publish-checkpoints.md`, «Interrupted publication».
 
-Ledger, founder messages, the three fixed deliveries, hosting, waits and merge: `.dentcast/workflows/publish-checkpoints.md`.
+Ledger, founder messages, the save point and the deliveries, hosting, waits and merge: `.dentcast/workflows/publish-checkpoints.md`.

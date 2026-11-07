@@ -349,5 +349,23 @@ class DesPersianWordingTests(unittest.TestCase):
         self.assertEqual(got, [('sources[0].interpretation_fa', ['جمله‌ی اول.', 'جمله‌ی دوم؟', 'جمله‌ی سوم.'])])
 
 
+
+class ExamMandatoryTests(unittest.TestCase):
+    """Founder 2026-11-07: 4.12-ب is mandatory for a page in a full pathway."""
+
+    def rows(self, cid, sweep):
+        rep = vp.verify(cid, vp.Report(cid), sweep=sweep)
+        return [f for f in rep.failures if f[1] == '4.12-ب exam']
+
+    def test_new_publication_without_questions_fails(self):
+        # A live full-pathway step that predates the rule and has no questions.
+        self.assertTrue(self.rows('chairside/chairside-1', sweep=False))
+
+    def test_sweep_does_not_fail_older_pages(self):
+        self.assertFalse(self.rows('chairside/chairside-1', sweep=True))
+
+    def test_page_with_questions_passes_the_row(self):
+        self.assertFalse(self.rows('plak-sefr/plak1-12', sweep=False))
+
 if __name__ == '__main__':
     unittest.main()

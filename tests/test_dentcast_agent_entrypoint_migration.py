@@ -14,7 +14,7 @@ def read(p): return (ROOT/p).read_text(encoding="utf-8")
 class EntrypointMigrationTests(unittest.TestCase):
  def test_progress_reporting_is_timely_without_per_command_noise(self):
   s=read(".dentcast/workflows/agent-parity.md")
-  for term in ("بعد از Push 2 دقیقاً سه پیام", "برای هر دستور، فایل‌خوانی یا چکِ ریز پیام جدا نفرست",
+  for term in ("بعد از Push 2 دقیقاً دو پیام", "برای هر دستور، فایل‌خوانی یا چکِ ریز پیام جدا نفرست",
    "همان‌جا سؤال دقیق را بپرس", "نتیجه و قدم بعد"):
    with self.subTest(term=term): self.assertIn(term,s)
  def test_clients_use_active_authority(self):

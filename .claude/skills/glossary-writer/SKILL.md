@@ -236,7 +236,7 @@ inserts a link, answers a gate or marks a step done.
 **Publishing a cluster.** One publication run = one term = one `content_id` and
 one fixed `.dentcast/PUBLISH-HANDOFF.md` (`tools/dentcast_publish_handoff.py`
 cannot rebind a run to another ID). Draft the cluster together, then publish the
-terms **one after another**, each a complete run with its own three deliveries;
+terms **one after another**, each a complete run with its own deliveries;
 start the next term only after the previous run's handoff was deleted by its
 verified final delivery. GitHub Actions pushes that delivery for a v2 run, so
 first `git pull --ff-only` (the local handoff disappears only then), and start

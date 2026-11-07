@@ -41,6 +41,6 @@ alwaysApply: false
 پذیرش ایستا هستند و از بنیان‌گذار پرسیده نمی‌شوند (Hard Rule 14؛ `SKILL.md` «Hard constraint — feed the input»).
 
 **انتشارِ یک دسته:** هر ترم یک انتشارِ کامل است با `content_id` و
-`.dentcast/PUBLISH-HANDOFF.md` خودش و سه تحویلش؛ ترمِ بعدی فقط وقتی شروع می‌شود که
+`.dentcast/PUBLISH-HANDOFF.md` خودش و تحویل‌هایش؛ ترمِ بعدی فقط وقتی شروع می‌شود که
 هندآفِ قبلی با تحویلِ نهاییِ تأییدشده حذف شده باشد. چند ترم هرگز در یک هندآف نمی‌روند
 (جزئیات: بخشِ Handoff در `.claude/skills/glossary-writer/SKILL.md`).
