@@ -37,9 +37,8 @@ monitors, merges as soon as every gate is green (never asked), and reports. A qu
    its parent is the receipt's second-delivery commit (Push 2, or the last audited reconciliation
    commit; else `EXTRA_DELIVERY_COMMIT_FORBIDDEN`), the committed completion receipt's fingerprints
    match the tree (`FINAL_RECEIPT_FILE_MISMATCH`), its Phase F exit code is 0
-   (`MECHANICAL_GATE_RECEIPT_REQUIRED`), the handoff is gone and HEAD is the remote head. On a run with
-   the v2 cut policy (`fixed_three_deliveries_v2`) it trusts the runner's committed Phase F receipt (no
-   rerun, no `origin/main` fetch); a v1-policy run still reruns Phase F. Never
+   (`MECHANICAL_GATE_RECEIPT_REQUIRED`), the handoff is gone and HEAD is the remote head. It trusts the
+   runner's committed Phase F receipt (no rerun, no `origin/main` fetch). Never
    run `restore-cleanup` on this route, nor `confirm-cleanup` before the pull.
 3. The PR: the runner opens it, but only when the `QUEUE_PUBLISH_TOKEN` secret is set — its job
    summary says so when it is not. No PR after a green run → open it from the branch to `main`

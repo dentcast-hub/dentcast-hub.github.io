@@ -13,7 +13,7 @@ import dentcast_publish_handoff as h
 import dentcast_publish_lifecycle as lc
 
 
-def sample(category="litecast", second="C.6", modern=True):
+def sample(category="litecast", second="C.6"):
     p = {
         "content_id": "litecast/lite-CAST40" if category == "litecast" else "insight/insight100",
         "category": category,
@@ -26,18 +26,17 @@ def sample(category="litecast", second="C.6", modern=True):
              "source_ref": "fixture:source", "evidence": ["fixture:author-provided"]}],
             "approvals": [], "pending_questions": [],
             "validation": [], "delivery": [], "unrelated_changes": []},
-        # A legacy v1 run keeps the old ledger order; a modern run is v2 order.
-        "steps": lc.plan(order=None if modern else lc.ORDER_V1), "external_actions": []
+        "steps": lc.plan(), "external_actions": []
     }
-    if modern:
-        p["context"]["decisions"].append({"kind": lc.DELIVERY_POLICY_V2})
-        p["context"]["decisions"].append({"kind": lc.LEDGER_ORDER_V2})
-        p["context"]["approvals"] = [
-            {"scope": "title", "status": "confirmed", "decision": "fixture:exact title",
-             "evidence": ["fixture:title approved"]},
-            {"scope": "caption", "status": "not_required", "decision": "fixture:no separate caption",
-             "evidence": ["fixture:no separate caption required"]},
-        ]
+    # One page model: both markers and the frozen Push-2 approvals.
+    p["context"]["decisions"].append({"kind": lc.DELIVERY_POLICY_V2})
+    p["context"]["decisions"].append({"kind": lc.LEDGER_ORDER_V2})
+    p["context"]["approvals"] = [
+        {"scope": "title", "status": "confirmed", "decision": "fixture:exact title",
+         "evidence": ["fixture:title approved"]},
+        {"scope": "caption", "status": "not_required", "decision": "fixture:no separate caption",
+         "evidence": ["fixture:no separate caption required"]},
+    ]
     for step in p["steps"]:
         step["status"] = "completed"
         step["evidence"] = ["synthetic fixture: " + step["id"]]
@@ -70,12 +69,6 @@ class EditorialSecondCutTests(unittest.TestCase):
     def assert_blocked(self, message, fn, *args):
         with self.assertRaisesRegex(h.Blocked, message):
             fn(*args)
-
-    def test_legacy_cut_remains_at_science_step(self):
-        old = sample(second="C.4.13", modern=False)
-        self.assertEqual(lc.delivery_boundary(old), 2)
-        self.assertFalse(lc.editorial_cut_v2(old))
-        lc.require_fixed_cut_readiness(old)
 
     def test_new_cut_waits_through_all_editorial_steps(self):
         # v2 order: DES/Fidelity (C.4.13) is done before links (C.4.9) and

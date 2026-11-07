@@ -103,7 +103,7 @@ class QueueLaneTests(unittest.TestCase):
         self.assert_blocked("CANONICAL_PLAN_REQUIRED", lc.require_plan, p)
         p["steps"] = lc.plan(queue=True)
         p["context"]["decisions"] = []
-        self.assert_blocked("CANONICAL_PLAN_REQUIRED", lc.require_plan, p)  # a short plan needs the marker
+        self.assert_blocked("CANONICAL_PLAN_REQUIRED|OLD_DELIVERY_MODEL_RETIRED", lc.require_plan, p)  # a short plan needs the marker
 
     def test_interactive_profile_unchanged(self):
         p = fixtures.publication()

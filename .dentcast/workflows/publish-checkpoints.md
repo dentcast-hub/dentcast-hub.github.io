@@ -60,19 +60,10 @@ reading less.
 **Canonical order** (`plan` returns it; `init` marks new runs `ledger_order_v2`): `rules`, Phase 0, A,
 B, C.0 … C.2, C.0.5, C.0.6, C.2.4, C.2.5, C.2.6, C.3, C.4, C.4.5, C.4.5-b, C.4.6, C.4.10.1, C.4.10.2,
 C.4.10.3, C.4.13 **[save point]**, C.4.7, C.4.7-b, C.4.8, C.4.9, C.4.11, C.4.12, C.4.14, C.5.0, C.5,
-C.5.5, C.5.6, C.5.6-b, C.6 **[delivery 2]**, C.8, C.7, D, E, F, G **[runner]**. A handoff started
-under the earlier order keeps it; the tools recognise it from the missing marker. `init` refuses an
-old-order plan (`CANONICAL_PLAN_REQUIRED`), a marked run cannot be reordered
-(`LEDGER_ORDER_CANNOT_CHANGE`), and a v2-order run requires the v2 cut policy
-(`LEDGER_ORDER_V2_REQUIRES_DELIVERY_POLICY_V2`). Never relabel or migrate a delivered cut.
-
-**Earlier delivery policy (compatibility).** A page handoff without the `fixed_three_deliveries_v2`
-decision keeps its own second cut at C.4.13 and its local completion: the agent runs C.8 onward,
-then `finish`, one commit with the final work, the completion receipt and the handoff deletion, one
-push, `confirm-cleanup` (which reruns Phase F locally). If that final push fails, `restore-cleanup`
-returns `final_delivery_pending`: retry the same push and confirm, with no new commit. A delivered
-cut is never relabelled, and a policy marker is never removed to claim this path; a new page run
-cannot choose it.
+C.5.5, C.5.6, C.5.6-b, C.6 **[delivery 2]**, C.8, C.7, D, E, F, G **[runner]**. This is the only
+order and the only delivery model: `init` writes both markers, any other plan is refused
+(`CANONICAL_PLAN_REQUIRED`), and a handoff from the retired order or policy is refused
+(`OLD_DELIVERY_MODEL_RETIRED`) and never continued: start a new run instead.
 
 **Standing acceptance.** Agent proposals are not sent for confirmation: title/caption the agent
 proposed, lead paragraph, Q3.5 rewrites, hashtags and mint, keywords, pillar/subtopic, borderline
@@ -228,7 +219,7 @@ not recorded. It never commits or pushes. Then one commit and one push. At the s
 all: no read-back, no readiness check, and the next write needs nothing. At Push 2 a fresh remote
 read-back follows (`inspect --check-remote`); a failed push blocks the cut; retrying the same
 delivery is not a new milestone; never pretend a push succeeded or force-push. A commit that holds
-the handoff is refused before C.4.13 starts (`ONLY_THREE_FIXED_DELIVERIES_ALLOWED`).
+the handoff is refused before C.4.13 starts (`COMMIT_ONLY_AT_SAVE_POINT_OR_PUSH_2`).
 
 After Push 2 the first write is starting the next step; anything else is refused with
 `RECORD_AFTER_DELIVERED_CUT_START_NEXT_STEP_FIRST`. A handoff changed after the push makes the next

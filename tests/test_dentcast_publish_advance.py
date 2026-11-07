@@ -8,6 +8,7 @@ import dentcast_publish_lifecycle as lc
 class AdvanceTests(unittest.TestCase):
     setUp = fixtures.LifecycleTests.setUp
     prepare = fixtures.LifecycleTests.prepare
+    complete_after_push2 = fixtures.LifecycleTests.complete_after_push2
 
     def test_complete_and_start_are_two_durable_writes(self):
         initial = self.prepare()

@@ -55,7 +55,7 @@ class SavePointTests(unittest.TestCase):
         self.assert_blocked("STAGE_DELIVERY_ONLY_AT_FIXED_CUT", lc.stage_delivery,
                             self.root, sha, ["note.html"])
         run(self.root, "add", h.STATE_PATH)
-        self.assert_blocked("ONLY_THREE_FIXED_DELIVERIES_ALLOWED", lc.guard, self.root, "pre-commit")
+        self.assert_blocked("COMMIT_ONLY_AT_SAVE_POINT_OR_PUSH_2", lc.guard, self.root, "pre-commit")
 
     def test_save_with_open_m3b_needs_no_readiness_and_holds_nothing(self):
         sha = self.save(self.at_m3b())

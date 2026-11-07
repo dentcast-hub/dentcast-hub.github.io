@@ -12,6 +12,7 @@ run = lifecycle_fixtures.run
 class StepDeliveryTests(unittest.TestCase):
     setUp = lifecycle_fixtures.LifecycleTests.setUp
     prepare = lifecycle_fixtures.LifecycleTests.prepare
+    to_push2 = lifecycle_fixtures.LifecycleTests.to_push2
     deliver = lifecycle_fixtures.LifecycleTests.deliver
     assert_blocked = lifecycle_fixtures.LifecycleTests.assert_blocked
 
@@ -44,8 +45,11 @@ class StepDeliveryTests(unittest.TestCase):
         state, _ = h.load_state(self.root)
         self.assertEqual(state['publication']['steps'][1]['status'], 'started')
 
-    def test_stop_requires_current_checkpoint_delivered(self):
+    def test_stop_requires_push2_delivered(self):
+        # Between steps nothing is owed; at Push 2 the stop waits for the push.
         self.resolved_rules()
+        self.assertEqual(lc.guard(self.root, 'stop')['status'], 'guard_passed')
+        self.to_push2()
         self.assert_blocked('PREVIOUS_STEP_PUSH_NOT_CONFIRMED', lc.guard, self.root, 'stop')
         self.deliver()
         self.assertEqual(lc.guard(self.root, 'stop')['status'], 'guard_passed')

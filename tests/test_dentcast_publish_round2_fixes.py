@@ -58,8 +58,8 @@ class Round2Tests(unittest.TestCase):
         self.root = self.clone('actions-runner')
         try:
             state, sha = h.load_state(self.root)
-            sha = lc.step(self.root, sha, 'C.4.14', 'started', [], None)['sha256']
-            (self.root/'note.html').write_text('final fixture bytes\n')
+            sha = lc.step(self.root, sha, 'C.8', 'started', [], None)['sha256']
+            (self.root/'work.json').write_text('{"final": true}\n')
             state, _ = h.load_state(self.root)
             sha = h.save(self.root, state['publication'], expected=sha, note='Reviewed final fixture edit')['sha256']
             sha = self.walk(sha, 'G')
@@ -67,8 +67,8 @@ class Round2Tests(unittest.TestCase):
             state['publication']['context']['delivery'] = [{'scope': 'fixture', 'evidence': ['fixture:checked']}]
             sha = h.save(self.root, state['publication'], expected=sha)['sha256']
             lc.finish(self.root, sha)
-            run(self.root, 'add', '-A', 'note.html', h.STATE_PATH, lc.completion_path({'content_id': 'note'}),
-                lc.technical_report_path({'content_id': 'note', 'category': 'insight'}))
+            run(self.root, 'add', '-A', 'note.html', 'work.json', h.STATE_PATH, lc.completion_path({'content_id': 'note'}),
+                lc.technical_report_path({'content_id': 'note', 'category': 'litecast'}))
             run(self.root, 'commit', '-m', 'delivery 3 by Actions')
             run(self.root, 'push', 'origin', 'main')
             self.assertTrue(lc.confirm_cleanup(self.root)['publication_completed'])
@@ -98,8 +98,8 @@ class Round2Tests(unittest.TestCase):
         self.assertEqual(stop_hook({'cwd': str(self.root)}, self.base).stdout, '')
 
     def test_remote_without_completion_keeps_push_not_confirmed(self):
-        sha = self.walk(self.start(), 'C.4.9')
-        self.deliver('delivery 1')
+        sha = self.walk(self.start(), 'C.6')
+        self.deliver('delivery 2')
         other = self.clone('other')
         run(other, 'commit', '-q', '--allow-empty', '-m', 'unrelated remote commit')
         run(other, 'push', '-q', 'origin', 'main')
@@ -148,21 +148,6 @@ class Round2Tests(unittest.TestCase):
         self.assertEqual(calls, [3.0])
 
     # Bug 3 -----------------------------------------------------------------
-    def test_first_cut_step_requires_lead_provenance(self):
-        sha = self.walk(self.start(), 'C.4.8')
-        state, _ = h.load_state(self.root)
-        state['publication']['context']['decisions'] = [
-            d for d in state['publication']['context']['decisions']
-            if d.get('kind') != 'first_cut_lead_provenance_v1']
-        sha = h.write_atomic(self.root, state)
-        sha = lc.step(self.root, sha, 'C.4.9', 'started', [], None)['sha256']
-        self.assert_blocked('FIRST_CUT_DECLARATION_REQUIRED', lc.step, self.root, sha, 'C.4.9',
-                            'completed', ['fixture:linking'], None)
-        result = lc.advance(self.root, sha, 'C.4.9', ['fixture:linking'])
-        self.assertEqual(result['status'], 'blocked')
-        self.assertIn('FIRST_CUT_DECLARATION_REQUIRED', result['error'])
-        self.assertEqual(h.load_state(self.root)[1], sha)
-
     # Bug 4 -----------------------------------------------------------------
     def test_content_id_form_is_checked_at_bind_and_paper_only_is_exempt(self):
         for good in ('insight/insight-99', 'litecast/lite-CAST42', 'dentai/promptologist/prompt-append2-6',

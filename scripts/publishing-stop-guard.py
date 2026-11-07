@@ -81,14 +81,14 @@ ADVICE = (
      "(never start C.8 locally); otherwise inspect."),
     ("CLEANUP_", ". Interrupted local cleanup: confirm-cleanup after the cleanup push, or restore-cleanup if "
      "that delivery failed."),
-    ("FINAL_HANDOFF_DELIVERED_FINISH_REQUIRED", ": the completed final handoff (paper-only or pre-policy run) is "
+    ("FINAL_HANDOFF_DELIVERED_FINISH_REQUIRED", ": the completed final handoff (paper-only run) is "
      "delivered but the publication is not finished: run finish --expected-sha256 <digest>, commit and push only "
      "the handoff deletion, then confirm-cleanup."),
 )
 
 
 def require_finish_after_final_handoff(h, lifecycle, root):
-    """The guard allows a stop once a paper-only/pre-policy run's completed final
+    """The guard allows a stop once a paper-only run's completed final
     handoff is delivered; finish, the deletion push and confirm-cleanup are still owed."""
     if has_handoff(root):
         publication = h.load_state(root)[0]["publication"]

@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class CrossCheckoutTests(unittest.TestCase):
     setUp = lifecycle_fixtures.LifecycleTests.setUp
     prepare = lifecycle_fixtures.LifecycleTests.prepare
+    to_push2 = lifecycle_fixtures.LifecycleTests.to_push2
     deliver = lifecycle_fixtures.LifecycleTests.deliver
     assert_blocked = lifecycle_fixtures.LifecycleTests.assert_blocked
 
@@ -61,7 +62,7 @@ class CrossCheckoutTests(unittest.TestCase):
                             initial['sha256'], ['dentcast_cabinet_full_catalog.json'])
 
     def test_run_moved_to_a_new_branch_names_the_delivered_branch(self):
-        self.resolved_rules()
+        self.prepare();self.to_push2()
         run(self.root, 'add', h.STATE_PATH)
         run(self.root, 'commit', '-m', 'checkpoint')
         run(self.root, 'push', 'origin', 'HEAD:refs/heads/pub/note')
@@ -78,7 +79,7 @@ class CrossCheckoutTests(unittest.TestCase):
         self.assertEqual(lc.guard(self.root, 'stop')['status'], 'guard_passed')
 
     def test_unreachable_origin_names_the_cause_not_a_recommit(self):
-        self.resolved_rules()
+        self.prepare();self.to_push2()
         self.deliver()
         self.remote.rename(self.base / 'offline.git')
         with self.assertRaises(h.Blocked) as ctx:

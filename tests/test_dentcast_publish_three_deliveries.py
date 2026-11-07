@@ -1,4 +1,5 @@
-"""Three fixed page deliveries against real local Git remotes.
+"""The one page delivery model against real local Git remotes: an optional
+save point once C.4.13 has started, Push 2 at C.6, and delivery 3.
 
 The verifier and semantic results are explicit fixtures, not real scientific work.
 """
@@ -12,6 +13,7 @@ from unittest.mock import patch
 
 import test_dentcast_publish_handoff as fixtures
 import test_dentcast_publish_lifecycle as lifecycle_fixtures
+import test_dentcast_publish_second_cut_editorial as editorial
 import dentcast_publish_handoff as h
 import dentcast_publish_lifecycle as lc
 import check_publish_merge_gate as merge
@@ -25,22 +27,34 @@ class ThreeDeliveriesTests(unittest.TestCase):
     prepare = lifecycle_fixtures.LifecycleTests.prepare
 
     def start(self):
-        # These runs use the v1 delivery policy (cut 2 at C.4.13), i.e. handoffs
-        # started before 2026-11-06: they keep the legacy ledger order ORDER_V1.
-        self.ledger_order = lc.ORDER_V1
+        # A page run (LiteCast: no English mirror fixture needed) with its frozen
+        # Push-2 records; the order and policy markers come from the first write.
         (self.root/'dentcast-brain.json').write_text('[]')
         run(self.root, 'add', 'dentcast-brain.json')
         run(self.root, 'commit', '-m', 'fixture empty brain')
+        self.p['category'] = 'litecast'
+        # Work edits after C.2 go to a scoped data file: the page text is locked.
+        (self.root/'work.json').write_text('{}\n')
+        run(self.root, 'add', 'work.json')
+        run(self.root, 'commit', '-m', 'fixture scoped data file')
+        self.p['target_paths'].append('work.json')
         result = self.prepare()
         state, sha = h.load_state(self.root)
-        state['publication']['context']['decisions'].extend([
-            {'kind': lc.DELIVERY_POLICY},
+        p = state['publication']
+        self.assertTrue(lc.editorial_cut_v2(p) and lc.ledger_order_v2(p))
+        p['context']['decisions'].extend([
             {'kind': 'first_cut_lead_provenance_v1',
              'origin': 'not_applicable',
              'source_ref': 'fixture:page-already-has-prose',
              'evidence': ['fixture:synthetic-lead-origin-review']},
         ])
-        result = h.save(self.root, state['publication'], expected=sha)
+        p['context']['decisions'].append(editorial.receipt(p))
+        p['context']['approvals'] = [
+            {'scope': 'title', 'status': 'confirmed', 'decision': 'fixture title',
+             'evidence': ['fixture:title approved']},
+            {'scope': 'caption', 'status': 'confirmed', 'decision': 'fixture caption',
+             'evidence': ['fixture:caption approved']}]
+        result = h.save(self.root, p, expected=sha)
         run(self.root, 'push', 'origin', 'main')
         self.baseline = h.text_git(self.root, 'rev-parse', 'HEAD')
         return result['sha256']
@@ -65,7 +79,7 @@ class ThreeDeliveriesTests(unittest.TestCase):
 
     def deliver(self, label):
         state, sha = h.load_state(self.root)
-        run(self.root, 'add', 'note.html')
+        run(self.root, 'add', 'note.html', *(['work.json'] if (self.root/'work.json').exists() else []))
         result = h.save(self.root, state['publication'], expected=sha, note='Reviewed staged fixture work')
         run(self.root, 'add', h.STATE_PATH)
         lc.guard(self.root, 'pre-commit')
@@ -75,16 +89,18 @@ class ThreeDeliveriesTests(unittest.TestCase):
         return result['sha256']
 
     def complete_two(self):
+        """Save point, then Push 2."""
         sha = self.start()
         sha = self.walk(sha, 'C.4.9')
-        sha = self.deliver('delivery 1')
-        sha = self.walk(sha, 'C.4.13')
+        sha = self.deliver('save point')
+        sha = self.walk(sha, 'C.6')
         return self.deliver('delivery 2')
 
     def prepare_final(self):
+        """The runner's part, simulated in this checkout."""
         sha = self.complete_two()
-        sha = lc.step(self.root, sha, 'C.4.14', 'started', [], None)['sha256']
-        (self.root/'note.html').write_text('final fixture bytes\n')
+        sha = lc.step(self.root, sha, 'C.8', 'started', [], None)['sha256']
+        (self.root/'work.json').write_text('{"final": true}\n')
         state, _ = h.load_state(self.root)
         sha = h.save(self.root, state['publication'], expected=sha, note='Reviewed final fixture edit')['sha256']
         sha = self.walk(sha, 'G')
@@ -95,8 +111,9 @@ class ThreeDeliveriesTests(unittest.TestCase):
     def test_canonical_fixed_cut_gate_rejects_questions_and_missing_approval(self):
         p = fixtures.publication()
         p['content_id'], p['category'] = 'note', 'insight'
-        p['steps'] = lc.plan(order=lc.ORDER_V1)
-        p['context']['decisions'] = [{'kind': lc.DELIVERY_POLICY}]
+        p['steps'] = lc.plan()
+        p['context']['decisions'] = [{'kind': lc.LEDGER_ORDER_V2}, {'kind': lc.DELIVERY_POLICY},
+                                     {'kind': lc.DELIVERY_POLICY_V2}]
         with self.assertRaisesRegex(h.Blocked, 'FIRST_CUT_DECLARATION_REQUIRED'):
             lc.require_fixed_cut_readiness(p)
         lead = {'kind': 'first_cut_lead_provenance_v1',
@@ -133,9 +150,9 @@ class ThreeDeliveriesTests(unittest.TestCase):
         lead['source_ref'] = 'fixture:preexisting-prose-no-new-lead'
         lc.require_fixed_cut_readiness(p)
 
-    def test_first_cut_precommit_and_ci_fail_without_lead_provenance(self):
+    def test_push2_precommit_and_ci_fail_without_lead_provenance(self):
         sha = self.start()
-        self.walk(sha, 'C.4.9')
+        self.walk(sha, 'C.6')
         state, _ = h.load_state(self.root)
         state['publication']['context']['decisions'] = [
             d for d in state['publication']['context']['decisions']
@@ -146,13 +163,13 @@ class ThreeDeliveriesTests(unittest.TestCase):
                             lc.guard, self.root, 'pre-commit')
         # Even when the native pre-commit hook was not installed or bypassed,
         # CI must reject the same invalid committed checkpoint.
-        run(self.root, 'commit', '-m', 'fixture:unsafe first cut')
+        run(self.root, 'commit', '-m', 'fixture:unsafe Push 2')
         self.assert_blocked('FIRST_CUT_DECLARATION_REQUIRED',
                             lc.guard, self.root, 'ci')
 
-    def test_first_cut_precommit_and_ci_block_unanswered_question(self):
+    def test_push2_precommit_and_ci_block_unanswered_question(self):
         sha = self.start()
-        self.walk(sha, 'C.4.9')
+        self.walk(sha, 'C.6')
         state, _ = h.load_state(self.root)
         state['publication']['context']['pending_questions'] = [
             {'message': 'M1', 'step': 'C.2', 'question': 'fixture:unanswered intake detail',
@@ -174,10 +191,10 @@ class ThreeDeliveriesTests(unittest.TestCase):
         self.assertTrue((self.root/report).exists())
         original_report = (self.root/report).read_bytes()
         (self.root/report).write_text('{}')
-        run(self.root, 'add', 'note.html', h.STATE_PATH, report, lc.technical_report_path({'content_id': 'note', 'category': 'insight'}))
+        run(self.root, 'add', 'note.html', 'work.json', h.STATE_PATH, report, lc.technical_report_path({'content_id': 'note', 'category': 'litecast'}))
         self.assert_blocked('COMPLETION_RECEIPT_CHANGED', lc.guard, self.root, 'pre-commit')
         (self.root/report).write_bytes(original_report)
-        run(self.root, 'add', 'note.html', report, lc.technical_report_path({'content_id': 'note', 'category': 'insight'}))
+        run(self.root, 'add', 'note.html', 'work.json', report, lc.technical_report_path({'content_id': 'note', 'category': 'litecast'}))
         lc.guard(self.root, 'pre-commit')
         run(self.root, 'commit', '-m', 'delivery 3: final work, report and deletion')
         lc.guard(self.root, 'ci')
@@ -200,40 +217,40 @@ class ThreeDeliveriesTests(unittest.TestCase):
         run(other, 'commit', '--allow-empty', '-m', 'forbidden fourth delivery')
         self.assert_blocked('EXTRA_DELIVERY_COMMIT_FORBIDDEN', lc.validate_final_receipt, other, data, 'HEAD')
 
-    def at_first_cut_with_recorded_edit(self):
+    def at_save_point_with_recorded_edit(self):
         sha = self.walk(self.start(), 'C.4.9')
-        (self.root/'note.html').write_text('first cut fixture bytes\n')
+        (self.root/'work.json').write_text('{"saved": true}\n')
         state, _ = h.load_state(self.root)
-        return h.save(self.root, state['publication'], expected=sha, note='Reviewed first-cut edit')['sha256']
+        return h.save(self.root, state['publication'], expected=sha, note='Reviewed save-point edit')['sha256']
 
     def test_stage_delivery_refreshes_checkpoint_for_index_only(self):
-        sha = self.at_first_cut_with_recorded_edit()
+        sha = self.at_save_point_with_recorded_edit()
         # Without it, staging alone leaves the checkpoint stale for the guard.
-        run(self.root, 'add', 'note.html', h.STATE_PATH)
+        run(self.root, 'add', 'work.json', h.STATE_PATH)
         self.assert_blocked('CHECKPOINT_REQUIRED_BEFORE_COMMIT_OR_STOP', lc.guard, self.root, 'pre-commit')
         run(self.root, 'reset', '-q')
-        result = lc.stage_delivery(self.root, sha, ['note.html'])
+        result = lc.stage_delivery(self.root, sha, ['work.json'])
         self.assertEqual(result['status'], 'delivery_staged')
-        run(self.root, 'commit', '-m', 'delivery 1')
+        run(self.root, 'commit', '-m', 'save point')
         lc.guard(self.root, 'ci')
         run(self.root, 'push', 'origin', 'main')
         self.assertEqual(h.load_state(self.root)[1], result['sha256'])
 
     def test_stage_delivery_refuses_unrecorded_bytes_and_foreign_paths(self):
-        sha = self.at_first_cut_with_recorded_edit()
+        sha = self.at_save_point_with_recorded_edit()
         self.assert_blocked('STAGE_PATH_OUTSIDE_PUBLICATION:unrelated.md',
                             lc.stage_delivery, self.root, sha, ['unrelated.md'])
-        (self.root/'note.html').write_text('edited after the checkpoint\n')
+        (self.root/'work.json').write_text('{"edited": "after the checkpoint"}\n')
         self.assert_blocked('RECORD_WORK_CHANGES_BEFORE_STAGING',
-                            lc.stage_delivery, self.root, sha, ['note.html'])
+                            lc.stage_delivery, self.root, sha, ['work.json'])
         self.assertEqual(h.git(self.root, 'diff', '--cached', '--name-only'), b'')
 
     def complete_three(self):
         sha = self.prepare_final()
         lc.finish(self.root, sha)
         report = lc.completion_path({'content_id': 'note'})
-        tech = lc.technical_report_path({'content_id': 'note', 'category': 'insight'})
-        run(self.root, 'add', '-A', 'note.html', h.STATE_PATH, report, tech)
+        tech = lc.technical_report_path({'content_id': 'note', 'category': 'litecast'})
+        run(self.root, 'add', '-A', 'note.html', 'work.json', h.STATE_PATH, report, tech)
         run(self.root, 'commit', '-m', 'delivery 3')
         run(self.root, 'push', 'origin', 'main')
         lc.confirm_cleanup(self.root)
@@ -262,37 +279,37 @@ class ThreeDeliveriesTests(unittest.TestCase):
         sha = self.walk(self.start(), 'C.4.9')
         self.assert_blocked('LOCAL_ONLY_INPUT_IS_NEVER_DELIVERED', lc.stage_delivery,
                             self.root, sha, ['.ignored/paper.pdf'])
-        sha = self.deliver('delivery 1')
+        sha = self.deliver('save point')
         self.assertEqual(h.text_git(self.root, 'ls-tree', '-r', '--name-only', 'HEAD', '.ignored'), '')
-        # Present and unchanged after the cut: the next step may start.
-        sha = lc.step(self.root, sha, 'C.4.10.1', 'started', [], None)['sha256']
-        sha = lc.step(self.root, sha, 'C.4.10.1', 'completed', ['fixture:part-1'], None)['sha256']
+        # Present and unchanged after the save: the next step may start.
+        sha = lc.step(self.root, sha, 'C.4.11', 'started', [], None)['sha256']
+        sha = lc.step(self.root, sha, 'C.4.11', 'completed', ['fixture:cards'], None)['sha256']
         # Absent (another checkout or removed after delivery): local-only, allowed.
         pdf.unlink()
-        sha = lc.step(self.root, sha, 'C.4.10.2', 'started', [], None)['sha256']
+        sha = lc.step(self.root, sha, 'C.4.12', 'started', [], None)['sha256']
         # Present with different bytes: still caught against the bound hash.
         pdf.write_bytes(b'%PDF tampered')
         self.assert_blocked('INPUT_BYTES_CHANGED_RECONCILE:.ignored/paper.pdf', lc.step,
-                            self.root, sha, 'C.4.10.2', 'completed', ['fixture:part-2'], None)
+                            self.root, sha, 'C.4.12', 'completed', ['fixture:faq'], None)
         self.assertEqual(h.inspect(self.root)['portability_reason'], 'UNTRACKED_OR_IGNORED_REQUIRED_FILE')
 
-    def test_stage_delivery_only_at_a_fixed_cut(self):
-        sha = self.walk(self.start(), 'C.4.8')
+    def test_stage_delivery_only_at_save_point_or_push2(self):
+        sha = self.walk(self.start(), 'C.4.10.3')
         self.assert_blocked('STAGE_DELIVERY_ONLY_AT_FIXED_CUT', lc.stage_delivery, self.root, sha, ['note.html'])
 
     def test_third_delivery_may_carry_the_public_technical_report_only(self):
         sha = self.prepare_final()
         lc.finish(self.root, sha)
         receipt = lc.completion_path({'content_id': 'note'})
-        report = lc.technical_report_path({'content_id': 'note', 'category': 'insight'})
-        self.assertEqual(report, '.dentcast/publication-reports/clinical-note.md')
+        report = lc.technical_report_path({'content_id': 'note', 'category': 'litecast'})
+        self.assertEqual(report, '.dentcast/publication-reports/litecast-note.md')
         text = (self.root/report).read_text(encoding='utf-8')
         for line in ('# note — publication technical report', '- `C.4.14` skipped — fixture: ordinary page, no Challenge',
                      '- `F` completed', '**1 passed, 0 warned, 0 failed — publish is COMPLETE**',
-                     '- fixture external checks: fixture:checked', '- `note.html`', '- `' + report + '`',
+                     '- fixture external checks: fixture:checked', '- `work.json`', '- `' + report + '`',
                      '- No DES record'):
             self.assertIn(line, text)
-        run(self.root, 'add', 'note.html', h.STATE_PATH, receipt)
+        run(self.root, 'add', 'note.html', 'work.json', h.STATE_PATH, receipt)
         self.assert_blocked('FINAL_DELIVERY_MUST_BE_FULLY_STAGED', lc.guard, self.root, 'pre-commit')
         (self.root/'unrelated.md').write_text('not part of this publication\n')
         run(self.root, 'add', receipt, report, 'unrelated.md')
@@ -306,83 +323,81 @@ class ThreeDeliveriesTests(unittest.TestCase):
         self.assertTrue(lc.confirm_cleanup(self.root)['publication_completed'])
         self.assertEqual(merge.verify_publication_history(self.root, self.baseline, []), {'note'})
 
-    def test_intermediate_progress_is_local_and_cut_requires_real_push(self):
+    def test_intermediate_progress_is_local_and_push2_requires_real_push(self):
         sha = self.start()
         sha = self.walk(sha, '0')
         lc.guard(self.root, 'stop')
-        self.assert_blocked('ONLY_THREE_FIXED_DELIVERIES_ALLOWED', lc.guard, self.root, 'pre-commit')
+        self.assert_blocked('COMMIT_ONLY_AT_SAVE_POINT_OR_PUSH_2', lc.guard, self.root, 'pre-commit')
+        # The old C.4.9 cut is gone: nothing holds the next step there.
         sha = self.walk(sha, 'C.4.9')
-        self.assert_blocked('PREVIOUS_STEP_', lc.step, self.root, sha, 'C.4.10.1', 'started', [], None)
-        sha = self.deliver('delivery 1')
-        self.assertEqual(lc.step(self.root, sha, 'C.4.10.1', 'started', [], None)['next_step'], 'C.4.10.1')
+        sha = lc.step(self.root, sha, 'C.4.11', 'started', [], None)['sha256']
+        sha = self.walk(sha, 'C.6')
+        self.assert_blocked('PREVIOUS_STEP_', lc.step, self.root, sha, 'C.8', 'started', [], None)
+        sha = self.deliver('delivery 2')
+        self.assertEqual(lc.step(self.root, sha, 'C.8', 'started', [], None)['next_step'], 'C.8')
 
-    def test_advance_stops_at_cut_including_valid_scientific_skips(self):
+    def test_advance_stops_only_at_push2_including_valid_scientific_skips(self):
         sha = self.start()
-        sha = self.walk(sha, 'C.4.8')
+        sha = self.walk(sha, 'C.4.10.3')
+        result = lc.advance(self.root, sha, skips=[('C.4.13', 'fixture:lawful exception')], start_next=True)
+        self.assertNotEqual(result.get('status'), 'delivery_required')
+        sha = self.walk(h.load_state(self.root)[1], 'C.4.8')
         sha = lc.step(self.root, sha, 'C.4.9', 'started', [], None)['sha256']
         result = lc.advance(self.root, sha, 'C.4.9', ['fixture:semantic'], start_next=True)
+        self.assertNotEqual(result.get('status'), 'delivery_required')
+        sha = self.walk(h.load_state(self.root)[1], 'C.5.6-b')
+        sha = lc.step(self.root, sha, 'C.6', 'started', [], None)['sha256']
+        result = lc.advance(self.root, sha, 'C.6', ['fixture:english'], start_next=True)
         self.assertEqual(result['status'], 'delivery_required')
         self.assertEqual(result['delivery'], 1)
-        self.assertEqual(h.next_step(h.load_state(self.root)[0]['publication']), 'C.4.10.1')
-        sha = self.deliver('delivery 1')
-        sha = self.walk(sha, 'C.4.12')
-        result = lc.advance(self.root, sha, skips=[('C.4.13','fixture:lawful exception')], start_next=True)
-        self.assertEqual(result['delivery'], 2)
-        self.assertEqual(lc.delivery_boundary(h.load_state(self.root)[0]['publication']), 2)
+        self.assertEqual(lc.delivery_boundary(h.load_state(self.root)[0]['publication']), 1)
 
-    def test_policy_cannot_be_removed_and_extra_checkpoint_commit_is_rejected(self):
+    def test_policy_cannot_be_removed(self):
         sha = self.start()
         state, _ = h.load_state(self.root)
         state['publication']['context']['decisions'] = []
-        self.assert_blocked('DELIVERY_POLICY_CANNOT_BE_DROPPED', h.save, self.root, state['publication'], expected=sha)
-        sha = self.walk(sha, 'C.4.9')
-        self.deliver('delivery 1')
-        self.assert_blocked('FIRST_DELIVERY_REQUIRES_NO_ACTIVE_REMOTE_HANDOFF', lc.guard, self.root, 'pre-commit')
+        self.assert_blocked('OLD_DELIVERY_MODEL_RETIRED|DELIVERY_POLICY_CANNOT_BE_DROPPED|LEDGER_ORDER_CANNOT_CHANGE',
+                            h.save, self.root, state['publication'], expected=sha)
 
-    def test_audited_invalidation_after_first_cut_may_redeliver_it_once(self):
+    def test_invalidation_after_a_save_needs_no_recrossing_and_push2_is_frozen(self):
         sha = self.start()
         sha = self.walk(sha, 'C.4.9')
-        self.deliver('delivery 1')
+        self.deliver('save point')
         state, sha = h.load_state(self.root)
-        sha = lc.invalidate(self.root, sha, 'C.2', 'fixture reviewed post-cut page step')['sha256']
-        sha = self.walk(sha, 'C.4.9')
-        self.deliver('delivery 1 again after audited invalidation')
-        # Without a further invalidation the same cut cannot be delivered twice:
-        # a new write on the delivered cut is refused up front (round 4), and
-        # the pre-commit guard still refuses a re-delivery of cut 1.
+        sha = lc.invalidate(self.root, sha, 'C.2', 'fixture reviewed page step after the save')['sha256']
+        sha = self.walk(self.reconfirm(sha), 'C.4.9')
+        self.deliver('another save after the audited invalidation')
+        sha = self.walk(h.load_state(self.root)[1], 'C.6')
+        self.deliver('delivery 2')
+        # After Push 2 the handoff is frozen: a record on it is refused up front.
         state, sha = h.load_state(self.root)
         self.assert_blocked('RECORD_AFTER_DELIVERED_CUT_START_NEXT_STEP_FIRST', h.save, self.root,
                             state['publication'], expected=sha, note='fixture unchanged')
-        (self.root/h.STATE_PATH).write_bytes((self.root/h.STATE_PATH).read_bytes() + b'\n')
-        run(self.root, 'add', h.STATE_PATH)
-        with self.assertRaises(h.Blocked):
-            lc.guard(self.root, 'pre-commit')
 
-    def test_rules_invalidation_after_second_cut_redelivers_both_cuts_once(self):
+    def test_rules_invalidation_after_push2_redelivers_push2_and_finishes(self):
         # A failed post-Push-2 continuation whose fix changes a workflow file
         # (a tool defect fixed on main) must invalidate from `rules`; the run
-        # then re-crosses cut 1 and cut 2 once each and still finishes.
+        # then crosses Push 2 again and still finishes.
         sha = self.complete_two()
         state, sha = h.load_state(self.root)
-        sha = lc.invalidate(self.root, sha, 'rules', 'fixture reviewed workflow fix after cut 2')['sha256']
-        sha = self.walk(sha, 'C.4.9')
-        self.deliver('delivery 1 again after rules invalidation')
-        sha = self.walk(self.deliver_sha(), 'C.4.13')
-        self.deliver('delivery 2 again')
-        # Each further audited invalidation may re-open cut 1 once more.
-        state, sha = h.load_state(self.root)
-        sha = lc.invalidate(self.root, sha, 'C.2', 'fixture second page review')['sha256']
-        sha = self.walk(sha, 'C.4.9')
-        self.deliver('delivery 1 after a second invalidation is allowed')
-        sha = self.walk(self.deliver_sha(), 'C.4.13')
+        sha = lc.invalidate(self.root, sha, 'rules', 'fixture reviewed workflow fix after Push 2')['sha256']
+        sha = self.walk(self.reconfirm(sha), 'C.6')
         self.deliver('delivery 2 again')
         state, sha = h.load_state(self.root)
-        sha = lc.step(self.root, sha, 'C.4.14', 'started', [], None)['sha256']
+        sha = lc.step(self.root, sha, 'C.8', 'started', [], None)['sha256']
         sha = self.walk(sha, 'G')
         state, _ = h.load_state(self.root)
         state['publication']['context']['delivery'] = [{'scope':'fixture external checks', 'evidence':['fixture:checked']}]
         sha = h.save(self.root, state['publication'], expected=sha)['sha256']
         self.assertEqual(lc.finish(self.root, sha)['status'], 'cleanup_pending_delivery')
+
+    def reconfirm(self, sha):
+        """An invalidation returns approvals to pending; restore them with evidence."""
+        state, _ = h.load_state(self.root)
+        for a in state['publication']['context']['approvals']:
+            a.update(status='confirmed', decision='fixture ' + a['scope'],
+                     evidence=['fixture:re-verified after invalidation'])
+        return h.save(self.root, state['publication'], expected=sha, note='fixture re-verified approvals')['sha256']
 
     def deliver_sha(self):
         return h.load_state(self.root)[1]
@@ -397,17 +412,17 @@ class ThreeDeliveriesTests(unittest.TestCase):
     def test_final_receipt_and_files_are_guarded_and_restore_is_local(self):
         sha = self.prepare_final()
         lc.finish(self.root, sha)
-        (self.root/'note.html').write_text('unexpected drift')
+        (self.root/'work.json').write_text('{"unexpected": "drift"}\n')
         self.assert_blocked('WORK_CHANGED_AFTER_CLEANUP', lc.confirm_cleanup, self.root)
         lc.restore_cleanup(self.root)
         self.assertTrue((self.root/h.STATE_PATH).exists())
         self.assertFalse((self.root/lc.completion_path({'content_id':'note'})).exists())
-        self.assertFalse((self.root/lc.technical_report_path({'content_id':'note', 'category':'insight'})).exists())
+        self.assertFalse((self.root/lc.technical_report_path({'content_id':'note', 'category':'litecast'})).exists())
         self.assertEqual(h.text_git(self.root, 'rev-list', '--count', self.baseline+'..HEAD'), '2')
 
     def test_restore_refuses_an_edited_technical_report_and_removes_its_own(self):
         sha = self.prepare_final()
-        report = self.root/lc.technical_report_path({'content_id': 'note', 'category': 'insight'})
+        report = self.root/lc.technical_report_path({'content_id': 'note', 'category': 'litecast'})
         lc.finish(self.root, sha)
         original = report.read_bytes()
         report.write_text('edited by hand\n')
@@ -418,7 +433,7 @@ class ThreeDeliveriesTests(unittest.TestCase):
 
     def test_finish_never_overwrites_an_authored_technical_report(self):
         sha = self.prepare_final()
-        report = self.root/lc.technical_report_path({'content_id': 'note', 'category': 'insight'})
+        report = self.root/lc.technical_report_path({'content_id': 'note', 'category': 'litecast'})
         report.parent.mkdir(parents=True, exist_ok=True)
         report.write_text('authored report\n')
         state, _ = h.load_state(self.root)
