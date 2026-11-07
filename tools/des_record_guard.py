@@ -45,13 +45,17 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "plus" / "des-scores.json"
-KNOWLEDGE = ROOT / ".dentcast" / "des-v3.5-knowledge.md"
+# The current spec's system-prompt cut. The Part 2d audit takes Step 3 (3a–3b-ii)
+# from it verbatim, so a spec bump moves this path (v3.6: 3b-ii «What addresses a
+# domain», the reading the Elgamal record split on).
+KNOWLEDGE = ROOT / ".dentcast" / "des-v3.6-knowledge.md"
 
 # The day the rating-rule check became binding (publish-queue item 22 / the
 # Elgamal record, founder session 2026-11-07). Phase F fails a finding on a
 # source stamped >= 3.5 in a record scored on or after this day and reports
 # it as a warning on older records, which are never re-labelled or re-scored
-# by a rule that postdates them (module 08, «des-version-history»).
+# by a rule that postdates them (module 08, «des-version-history»). It stays
+# binding on every later stamp (3.6 states the rule in the spec itself, 3b-ii).
 RATING_RULE_FROM = "2026-11-07"
 RATING_RULE_VERSION = (3, 5)
 

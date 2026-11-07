@@ -77,7 +77,7 @@ It compares DOIs case-insensitively (a `https://doi.org/` prefix is ignored), re
 queue with `git show origin/queue:…` (or `--queue-dir <queue/>` on disk) and writes
 nothing. Then:
 
-- **A stored record with the same `text_basis`, stamped with the current spec (3.5), that
+- **A stored record with the same `text_basis`, stamped with the current spec (3.6), that
   passes Part 3 (including (7)) is reused verbatim** — no SOURCE call, no rerun. Copy the
   object byte for byte into this page's `sources`; record «reused from <content_id or
   queue item>, index <i>, sha256 <…>» in the run report (queue: `اجرا.md`). Part 2d's
@@ -182,21 +182,21 @@ editing the echo in the run outputs afterwards.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v3.5.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v3.6.md` as the system prompt — the whole
 file, verbatim, minus the appendix.** That cut already exists:
-`.dentcast/des-v3.5-knowledge.md`, byte for byte. Pass that file; never cut the
+`.dentcast/des-v3.6-knowledge.md`, byte for byte. Pass that file; never cut the
 appendix yourself (a hand cut keeps a trailing blank line, so its digest differs
 from every other run's).
 
 <!-- des-system-prompt-run:v1 -->
 **How the SOURCE call is run: the spec file IS the system prompt.** One fresh,
 tool-less process per input block, started in an empty directory, with
-`.dentcast/des-v3.5-knowledge.md` as its system prompt and the Step 0 block (below)
+`.dentcast/des-v3.6-knowledge.md` as its system prompt and the Step 0 block (below)
 as its only user turn. The model is the **stronger reviewer role** of Part 2c's table.
 Claude Code (flags verified with `claude --help`, CLI 2.1.319, 2026-11-07):
 
 ```bash
-cd "$(mktemp -d)" && claude -p --system-prompt-file <repo>/.dentcast/des-v3.5-knowledge.md \
+cd "$(mktemp -d)" && claude -p --system-prompt-file <repo>/.dentcast/des-v3.6-knowledge.md \
   --tools "" --model <stronger model, e.g. opus> --no-session-persistence --output-format json \
   < block.txt > out.json        # the object is out.json's "result"; the model actually used is in "modelUsage"
 ```
@@ -213,15 +213,21 @@ the «توانمندی ندارم» protocol; it is never simulated. Record in t
 The delivery alone does not make the rating right: in the controlled run that
 introduced it (Elgamal 2025, FULL_TEXT, three runs, 2026-11-07) one run rated `missing
 data` `high` (36/D) and two rated it `some_concerns` (52/C). That is why Part 3(7) and
-Part 2d follow every new record.
+Part 2d follow every new record. Spec v3.6 then closed the reading the split came from
+(3b-ii, «What addresses a domain»: results, tables, counts and design statements never
+address a domain whose safeguard they do not state): the same input under the v3.6 file,
+five runs, rated `missing data` `high` and landed on 36/D in all five.
 <!-- /des-system-prompt-run:v1 -->
 
 <!-- des-version-history:v1 -->
-**v3.5 is the current spec.** What each earlier version changed is in
+**v3.6 is the current spec.** What each earlier version changed is in
 `.dentcast/workflows/des-version-history.md`. Read it when you validate,
-re-score or compare a record stamped below 3.5; a new 3.5 run does not need it.
+re-score or compare a record stamped below 3.6; a new 3.6 run does not need it.
 These rules stay binding here:
 
+- A record stamped 3.5 stays valid under 3.5 and is never re-labelled 3.6; a
+  paper is scored under 3.6 only by a new run (Part 1: an older stamp is not
+  reused, and `compare` reports it as `not_comparable`).
 - Every record is validated under its own `des_version` stamp;
   `tools/verify_publish.py` and `tools/des_fidelity_units.py` are version-gated.
   An old record is regenerated, never re-labelled to a newer version.
@@ -402,7 +408,7 @@ in Part 4.
 #### Part 2c — How the FIDELITY call is run: two independent checker runs, a tie-break, a stronger reviewer
 
 The FIDELITY call is an independent agent per input block, reading
-`.dentcast/des-v3.5-knowledge.md` (the spec minus its appendix) as its
+`.dentcast/des-v3.6-knowledge.md` (the spec minus its appendix) as its
 instruction and the block as its user turn. **The roles are provider-neutral:**
 choose a capable, lighter reasoning model as the **checker**, and a stronger
 reasoning model as the **reviewer/adjudicator**. Sonnet and Opus are the
@@ -555,7 +561,7 @@ multiplier or edits the record.
 ```bash
 python3 tools/des_record_guard.py audit-build <des.json> --texts texts.json --out <dir>
 #   <dir>/audit-system.md        the audit instruction + the spec's Step 3 rules (3a–3b-ii), verbatim from
-#                                .dentcast/des-v3.5-knowledge.md — the system prompt
+#                                .dentcast/des-v3.6-knowledge.md — the system prompt
 #   <dir>/audit-input-src<k>.json one block per RESEARCH source (record + source_text)
 cd "$(mktemp -d)" && claude -p --system-prompt-file <dir>/audit-system.md --tools "" \
   --model <stronger model> < <dir>/audit-input-src<k>.json > <dir>/audit-src<k>.json
@@ -670,6 +676,10 @@ right score was.
      the quote does address («sequence generation described; allocation concealment
      not mentioned») is line 4 and passes. The AMSTAR-2 excluded-studies domain is
      exempt from this half (its `some_concerns` is «no list, but…», 3b-iii).
+   From spec v3.6 the rule this check approximates is stated in the spec itself (3b-ii,
+   «What addresses a domain»: a `low`/`some_concerns` quote is a sentence about that
+   domain's safeguard); the check stays a mechanical backstop, and Part 2d's audit, which
+   reads the same 3b-ii, is the full test.
    A finding makes the record invalid: rerun the SOURCE call (Part 2) and audit it
    (Part 2d); never change a rating, quote or note by hand. **Phase F runs it too**
    (rows `4.13 DES`): a finding is `FAIL` on a source stamped 3.5 or later in a record

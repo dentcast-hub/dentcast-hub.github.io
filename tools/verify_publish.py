@@ -661,8 +661,8 @@ def des_text_report(path):
     except (OSError, ValueError) as e:
         print(f"ERROR cannot read {path}: {e}")
         return 2
-    # a DES object checked here is about to be stored, so it is current (v3.5)
-    bad = des_fa_wording(rec, default_ver="3.5")
+    # a DES object checked here is about to be stored, so it is current (v3.6)
+    bad = des_fa_wording(rec, default_ver="3.6")
     for p, word, good in bad:
         print(f"FAIL  {p}: «{word}» → «{good}» (founder vocabulary; the agent rewrites it, no founder question)")
     if not bad:

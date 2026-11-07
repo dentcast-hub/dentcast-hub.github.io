@@ -278,5 +278,69 @@ class RatingAuditTests(unittest.TestCase):
                 self.assertEqual(self.apply(), 2)
 
 
+class SpecV36Tests(unittest.TestCase):
+    """DES v3.6 (3b-ii «What addresses a domain»): the current prompt file, what the
+    audit reads from it, and that the rating-rule check still binds a 3.6 record."""
+
+    def latest(self):
+        def key(p):
+            major, minor = p.name[len('des-v'):-len('-knowledge.md')].split('.')
+            return int(major), int(minor)
+        return max((ROOT / '.dentcast').glob('des-v*-knowledge.md'), key=key)
+
+    def test_guard_reads_the_newest_knowledge_cut(self):
+        self.assertEqual(guard.KNOWLEDGE, self.latest())
+        self.assertEqual(guard.KNOWLEDGE.name, 'des-v3.6-knowledge.md')
+
+    def test_spec_and_root_permalinks_exist_and_agree(self):
+        spec = ROOT / '.dentcast/dentcast-evidence-score-v3.6.md'
+        self.assertEqual((ROOT / 'dentcast-evidence-score-v3.6.md').read_bytes(), spec.read_bytes())
+        # earlier versions stay where they are (public permalinks)
+        self.assertTrue((ROOT / '.dentcast/dentcast-evidence-score-v3.5.md').exists())
+        self.assertTrue((ROOT / '.dentcast/des-v3.5-knowledge.md').exists())
+        text = spec.read_text(encoding='utf-8')
+        self.assertIn('# DentCast Evidence Score (DES) — v3.6', text)
+        self.assertIn('This is DES v3.6.', text)
+        self.assertNotIn('"des_version": "3.5"', text)
+        self.assertNotIn('{"des_version":"3.5"', text)
+
+    def test_audit_system_prompt_carries_the_addressed_rule(self):
+        step3 = guard.spec_step3()
+        self.assertIn('**What addresses a domain — closed (v3.6).**', step3)
+        self.assertIn('| RoB 2 · missing outcome data; ROBINS-I · missing data |', step3)
+        self.assertIn('| QUADAS-2 · flow and timing |', step3)
+        self.assertIn('A worked example of this trap, because it is the one that forced the rule.', step3)
+        self.assertIn('The table decides only **whether** a domain is addressed.', step3)
+        # Step 3 only: the multiplier table is not handed to the auditor
+        self.assertNotIn('### 3c', step3)
+
+    def test_nothing_paper_specific_in_the_model_instruction(self):
+        knowledge = guard.KNOWLEDGE.read_text(encoding='utf-8')
+        for word in ('Elgamal', '06214', 'selective laser melting'):
+            self.assertNotIn(word, knowledge)
+
+    def test_rating_rule_still_binds_a_3_6_record(self):
+        s = research(copy.deepcopy(WRONG_MISSING), 0.80, 52, 'C', version='3.6')
+        self.assertEqual([f['code'] for f in guard.rating_findings(s)], ['ABSENCE_NOTE'])
+        self.assertTrue(guard.rating_rule_binding(s, '2026-11-08'))
+        self.assertEqual(des_library.validate(research(dom('missing data', 'high', '', 'no statement of losses; '
+                                                           'Methods, Results read'), 0.55, 36, 'D', version='3.6')), [])
+
+    def test_a_3_5_record_is_not_comparable_to_a_3_6_run(self):
+        old = research(copy.deepcopy(WRONG_MISSING), 0.80, 52, 'C', version='3.5')
+        new = research(dom('missing data', 'high', '', 'no statement of losses'), 0.55, 36, 'D', version='3.6')
+        self.assertFalse(guard.comparable(new, old))
+
+    def test_current_pointers_name_3_6(self):
+        m08 = (ROOT / '.dentcast/workflows/modules/08-des-fidelity.md').read_text(encoding='utf-8')
+        self.assertIn('**v3.6 is the current spec.**', m08)
+        self.assertNotIn('des-v3.5-knowledge.md', m08)
+        parity = (ROOT / '.dentcast/workflows/agent-parity.md').read_text(encoding='utf-8')
+        self.assertNotIn('des-v3.5-knowledge.md', parity)
+        self.assertIn('des-v3.6-knowledge.md', parity)
+        hist = (ROOT / '.dentcast/workflows/des-version-history.md').read_text(encoding='utf-8')
+        self.assertIn('**v3.6 is the current spec', hist)
+
+
 if __name__ == '__main__':
     unittest.main()
