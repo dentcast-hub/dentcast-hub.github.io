@@ -220,6 +220,10 @@ def main():
     if des is None:
         sys.exit(f"{d}/des.json missing — nothing to install")
     sources = des["sources"] if isinstance(des, dict) and "sources" in des else (des if isinstance(des, list) else [des])
+    # an older frozen item may carry a bare SOURCE object or list: read as one
+    # source list, and said in the receipt rather than in silence
+    des_shape = ("canonical" if isinstance(des, dict) and "sources" in des
+                 else "bare_list" if isinstance(des, list) else "bare_object")
     fid_raw = load_json(d / "fidelity.json")
     pooled = isinstance(fid_raw, dict) and fid_raw.get("scope") == "POOLED"
     fid = None if fid_raw is None else (fid_raw if pooled else (fid_raw if isinstance(fid_raw, list) else [fid_raw]))
@@ -234,7 +238,8 @@ def main():
         vals = list(markers.values()) if all(isinstance(v, dict) and any(str(k).startswith("S") for k in v) for v in markers.values()) else [markers]
         marker_entry = vals[0]
 
-    units = U.split_page(cid, sources)
+    # the segmentation the frozen record was judged on (des_fidelity_units.split_for)
+    units = U.split_page(cid, sources, fidelity=fid)
     new_txt = [u["text"] for u in units]
     objs = [] if fid is None else ([fid] if pooled else [f for f in fid if isinstance(f, dict) and not f.get("error")])
     old = {}
@@ -397,6 +402,7 @@ def main():
                "levels_after": [(f.get("fidelity_score"), f.get("level")) for f in out_objs],
                "des": [(s.get("des_score"), s.get("band")) for s in sources],
                "record_sha256": record_sha256(rec),
+               **({"des_json_shape": des_shape} if des_shape != "canonical" else {}),
                "founder_text_change": a.founder_text_change, "text_problems_overridden": problems}
     if a.dry_run:
         print(json.dumps(receipt, ensure_ascii=False, indent=1))

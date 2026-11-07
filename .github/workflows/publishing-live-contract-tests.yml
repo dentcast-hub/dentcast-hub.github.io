@@ -40,6 +40,8 @@ on:
       - 'tools/des_fidelity_units.py'
       - 'tests/test_queue_prep_tools.py'
       - 'tests/test_des_v35_fidelity_units.py'
+      - 'tests/test_queue_prep_fixes.py'
+      - 'tools/related_cap.py'
       - '.dentcast/queue-frozen-des.json'
       - 'tests/fixtures/**'
       - 'scripts/**'
@@ -109,6 +111,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p test_queue_prep_tools.py -v
       - name: Check FIDELITY units, two checker runs and the source conclusion
         run: python3 -m unittest discover -s tests -p test_des_v35_fidelity_units.py -v
+      - name: Check the queue-prep fixes of item 24 (caption carry, sentence split, empty conclusion, 05 shapes, cap count, cleanup)
+        run: python3 -m unittest discover -s tests -p test_queue_prep_fixes.py -v
       - name: Check hook adapters and shared rule routing
         run: node --test tests/publishing-hooks.test.mjs
       - name: Check prior data guards (exam bank append-only, bank files kept)

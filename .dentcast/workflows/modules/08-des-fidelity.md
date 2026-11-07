@@ -134,6 +134,14 @@ text is what the SOURCE call scores. `tools/des_fidelity_units.py` takes
 `source_conclusion` from the last Conclusion section (or the last sentence) and
 passes over such footer sentences; a stored record keeps the conclusion it
 echoed. The PDF and its text stay outside the repository and the queue branch.
+**An empty `source_conclusion` is never sent to a checker.** The receipt of
+`pdf_source_text.py` shows the conclusion the blocks will carry; when a layout
+defeats the cut (a two-column page that glued «CONCLUSIONS REFERENCES» into one
+line, J Prosthet Dent, publish-queue item 24) it warns and exits 3, and
+`des_fidelity_units.py --build` refuses. Pin the paper's own last conclusion
+sentence **before the first run** — `pdf_source_text.py … --conclusion "…"`, or
+`"source_conclusion"` in `texts.json` (verbatim, or the tool refuses) — never by
+editing the echo in the run outputs afterwards.
 <!-- /pdf-source-text:v1 -->
 
 #### Part 2 — Run the prompt file
@@ -310,9 +318,17 @@ source_conclusion: <the LAST sentence of source_text (FULL_TEXT: of its last Con
 The split and the assignment are deterministic and are **the tool's, never the
 model's**: it reads the rendered prose (title, headings and body, in order; the
 region `verify_publish.py`'s `article_region()` reads), stops at the citation
-block, splits on line breaks and sentence terminators, marks headings, and
-numbers units `u1…uN` over the whole page — so a call that received only some
-units sees ids with gaps, which is correct. Segmentation and attribution stay out
+block, splits on line breaks and sentence terminators, marks headings and
+figure captions, and numbers units `u1…uN` over the whole page — so a call
+that received only some units sees ids with gaps, which is correct. A full stop
+that ends no sentence is not a cut: a caption label opening its line
+(«تصویر ۱.», «شکل 2.», «جدول ۳.», «Figure 4.», «Table 1.») stays with the
+caption sentence after it, a reference abbreviation stays with its number
+(«Fig. 1», «Tab. 3», «Eq. 4», «No. 5», «Ref. 6») and «e.g.», «i.e.», «vs.»
+stay inside their sentence (publish-queue item 24: «تصویر ۱. … منبع: … Fig. 1»
+used to fall apart into «تصویر ۱.», «… Fig.» and «1»). A record already judged
+on the earlier cut keeps it (`split_for`), as it keeps its `source_conclusion`:
+no stored id moves. Segmentation and attribution stay out
 of the model's hands because they are the largest sources of run-to-run
 disagreement.
 
@@ -595,6 +611,19 @@ never a «بله» to the others.
   page's unit ids (a sentence split or joined), when a changed unit was not
   re-checked, or when a re-check judged old text — in those cases, and only
   those, run the full step again. Never patch a verdict by hand.
+- **Figure captions added after the full run** (founder ruling 2026-11-07,
+  publish-queue item 24: «وقتی فقط کپشن اضافه شده فقط کپشن باید چک بشه، بقیه همه
+  تأییدشده»). A `<figcaption>` is page text and its sentences are units, so
+  inserting one renumbers every unit after it. Do not rerun the page:
+  `python3 tools/des_fidelity_units.py <content_id> --carry <dir1> --texts
+  texts.json --build <dir2>` matches every unit of the last full run to its new
+  id by its exact text, carries its verdict, and builds blocks for the caption
+  units alone; run those by Part 2c (two runs, a tie-break where they differ, a
+  stronger review of anything flagged), then `--vote <dir2> --base <dir1>`, which
+  applies the same mapping. Both refuse when anything but a caption moved — a
+  body sentence changed, split, joined or vanished, a new unit that is not a
+  caption, or a recorded plan in `.dentcast/des-fidelity-plans/` that names the
+  old ids — and then the full step runs again.
 - **A source text that grows** (spec v3.5 rule 14 — the founder adds pages to an
   excerpt): pass the new `texts.json` with `--vote <dir2> --base <dir1> --texts
   texts.json`. The tool compares it with `<dir1>/input-src<k>.json`; when the old

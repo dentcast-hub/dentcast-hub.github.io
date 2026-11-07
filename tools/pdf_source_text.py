@@ -21,7 +21,15 @@ two-column paper read straight across both columns (pdftotext without
     "text_basis"}}.
 
     python3 tools/pdf_source_text.py PAPER.pdf --doi 10.1111/clr.13849 \\
-        --basis FULL_TEXT -o texts.json [--append] [--text-out paper.txt]
+        --basis FULL_TEXT -o texts.json [--append] [--text-out paper.txt] \\
+        [--conclusion "The paper's own last conclusion sentence."]
+
+The receipt shows the `source_conclusion` the FIDELITY blocks will carry
+(des_fidelity_units.conclusion_of). When that comes out empty — a layout that
+glues the Conclusions heading to the next one — the receipt says so with a
+warning and exit 3: pin the sentence with --conclusion (it must be a verbatim
+substring of the text; it is stored as `source_conclusion` in texts.json)
+BEFORE the first checker run, never patched into run outputs afterwards.
 
 The PDF and its text are private (publish-queue.md principle 7): write them
 outside the repository and outside the queue branch.
@@ -284,6 +292,8 @@ def main(argv=None):
     ap.add_argument("--text-out", help="also write the plain text here")
     ap.add_argument("--backend", choices=("auto", "pdfplumber", "pdftotext"), default="auto",
                     help="word reader; auto = pdfplumber, or pdftotext when pdfplumber glues words (default)")
+    ap.add_argument("--conclusion", help="pin source_conclusion in texts.json: the paper's own last conclusion "
+                    "sentence, verbatim (needed when the receipt reports it empty)")
     a = ap.parse_args(argv)
     pages, used = read_words(Path(a.pdf), a.backend)
     print(f"pdf_source_text: backend={used}", file=sys.stderr)
@@ -292,16 +302,47 @@ def main(argv=None):
         sys.exit("no text extracted (a scanned PDF needs OCR first)")
     if a.text_out:
         Path(a.text_out).write_text(text + "\n", encoding="utf-8")
+    entry = {"source_text": text, "text_basis": a.basis}
+    if a.conclusion:
+        pin = squash(a.conclusion)
+        if pin not in squash(text):
+            sys.exit("--conclusion is not a verbatim substring of the extracted text (copy it from --text-out)")
+        entry["source_conclusion"] = pin
+        concl = pin
+    else:
+        concl = conclusion_preview(text, a.basis)
     if a.out:
         if not a.doi:
             sys.exit("-o needs --doi (or S<n>) as the texts.json key")
         out = Path(a.out)
         data = json.loads(out.read_text(encoding="utf-8")) if a.append and out.exists() else {}
-        data[a.doi.strip().lower()] = {"source_text": text, "text_basis": a.basis}
+        data[a.doi.strip().lower()] = entry
         out.write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-    print(json.dumps({"chars": len(text), "words": len(text.split()), "key": (a.doi or "").lower() or None,
-                      "text_basis": a.basis, "out": a.out}, ensure_ascii=False))
-    return 0
+    receipt = {"chars": len(text), "words": len(text.split()), "key": (a.doi or "").lower() or None,
+               "text_basis": a.basis, "out": a.out, "source_conclusion": concl,
+               "source_conclusion_pinned": bool(a.conclusion)}
+    if concl is not None and not concl.strip():
+        receipt["warning"] = ("source_conclusion is EMPTY: the layout defeated the Conclusions cut (e.g. a glued "
+                              "«CONCLUSIONS REFERENCES» heading). Find the paper's last conclusion sentence in the "
+                              "text and rerun with --conclusion \"…\" before any FIDELITY run; "
+                              "des_fidelity_units.py --build refuses until then.")
+    print(json.dumps(receipt, ensure_ascii=False))
+    return 3 if "warning" in receipt else 0
+
+
+def squash(x):
+    return re.sub(r"\s+", " ", x).strip()
+
+
+def conclusion_preview(text, basis):
+    """The source_conclusion des_fidelity_units.py will derive (None when that
+    tool is not importable next to this one)."""
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import des_fidelity_units as units  # noqa: PLC0415
+    except (ImportError, SystemExit):
+        return None
+    return units.conclusion_of(text, basis)
 
 
 if __name__ == "__main__":
