@@ -1,0 +1,310 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "sharehub",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "فریم‌ورک RPD؛ آیا پرینت سه‌بعدی فلز واقعاً بهتر از ریخته‌گری است؟",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "caption_fa": {
+  "value": "دقتِ اندازه‌گیری‌شدهٔ یک فریم‌ورک پارسیل با نشستنش در دهان یکی نیست. یک مرور سیستماتیک و یک مطالعهٔ کلینیکی نشان می‌دهند پرینت فلز و ریخته‌گری را چطور باید با هم سنجید.",
+  "from": "02-عنوان-کپشن.md:9"
+ },
+ "title_en": {
+  "value": "RPD Framework: Is 3D-Printed Metal Really Better Than Casting?",
+  "from": "06-انگلیسی.md:1"
+ },
+ "caption_en": {
+  "value": "The measured accuracy of a partial denture framework is not the same as how well it seats in the mouth. A systematic review and a clinical study show how 3D-printed metal and casting should be compared.",
+  "from": "06-انگلیسی.md:3"
+ },
+ "body_en": {
+  "value": "Imagine an RPD framework arrives from the laboratory, but at the try-in it does not seat completely. The rest does not sit well in its place, the proximal plate has a gap, or the clasps need adjustment.\n\nNow the question is: if we had made this same framework by 3D metal printing instead of conventional casting, would these problems have been fewer?\n\nTo answer, we need to separate three fabrication methods.\n\nIn the conventional method, the framework is made by the lost-wax casting technique. This method has a long history and acceptable results, but the many steps of pattern making, investing and casting can be sources of error.\n\nIn the hybrid or partial digital workflow, the design or the pattern is digitized, but the metal is still produced by casting.\n\nIn the third method, the framework is built directly from metal powder, layer by layer. Technologies such as selective laser melting (SLM) and direct metal laser sintering (DMLS) belong to this group.\n\nOf course, metal printing does not mean every step is digital; the initial data may come from an intraoral scan or from a scan of a stone cast.\n\nBut which method is more accurate?\n\nTo answer, we have to distinguish between fabrication accuracy and clinical fit.\n\nTrueness shows how close the fabricated piece is to the original reference, and precision shows how similar the results of repeating a process are to one another.\n\nBut these two concepts are not necessarily equivalent to a good fit. Fit mostly concerns the relationship of the framework with hard surfaces such as the abutment tooth, whereas adaptation is usually used for the relationship of the prosthesis with soft tissue.\n\nSo greater measurement accuracy, by itself, does not prove that the framework seats better in the mouth.\n\nIn 2026, Alqutaibi et al., in a systematic review, examined 30 studies on metal partial denture frameworks.\n\nThe results showed that, under many conditions, printed frameworks are comparable to conventional casting in accuracy and fit, and sometimes perform better.\n\nBut the results were not uniform. In some studies, the conventional or partial digital method was more accurate, and even among printed frameworks, certain areas such as the rests, guide plates and minor connectors showed more error.\n\nThis difference matters, because an error does not have the same consequence in every part of the framework. For example, a gap at the rest seat may affect seating and force transfer, whereas an error at the end of the clasp may affect retention. Of course, merely measuring a gap does not prove a functional disturbance.\n\nOn the other hand, print orientation, layer thickness, supports and post-processing steps also affect accuracy. So the quality of all SLM frameworks is not necessarily the same.\n\nBut what does the clinical evidence say?\n\nIn 2025, Elgamal et al. carried out a study on 24 patients with a mandibular Kennedy Class I. For each patient, two cobalt-chromium frameworks were made.\n\nIn the first method, a conventional impression was taken and the stone cast was scanned with a laboratory scanner. In the second method, the data were recorded directly with an intraoral scanner.\n\nBoth frameworks were made by SLM. So the study did not compare casting with metal printing; it examined two methods of recording data within the same fabrication process.\n\n[[تصویر:01]]\n\nBy superimposing the scan files, the researchers measured the distance of the framework at the rest, proximal plate, lingual plate and the terminal of the I-bar clasp.\n\n[[تصویر:02]]\n\nThe fully digital workflow was more accurate in all these areas, and the differences were statistically significant.\n\nBut the mean difference between the two methods was only about eleven microns.\n\n[[تصویر:03]]\n\nThe authors themselves stressed that this difference, despite its statistical significance, has no clinical importance, and that both methods were clinically acceptable.\n\nThis is exactly the important difference between statistical superiority and therapeutic benefit. The study showed that the fully digital workflow is more accurate, but it did not prove that this small difference improves the treatment outcome.\n\nThe more practical point of this study lies elsewhere. Both frameworks were made with the same method, so the difference probably came from the data-recording step. The authors regard this step as the weakest link of the combined workflow, because errors of impression taking, pouring the stone and scanning the cast add up. That is, if we are looking for a more accurate framework, the quality of the impression or scan matters as much as the fabrication method.\n\nNow, if fabrication accuracy is not always better, what about mechanical properties?\n\nThe Alqutaibi systematic review showed that in some studies, SLM frameworks were better than cast samples in yield strength, hardness and some other mechanical properties. Their microstructure was also sometimes finer and more uniform.\n\nBut greater surface roughness and internal porosity were among the raised concerns, and some studies also showed no important difference in fatigue resistance.\n\nThis matters especially for clasps. In the clinic, initial strength is not the only thing that counts; maintaining retention, resistance to deformation and long-term durability matter too.\n\nFor now, we do not have enough evidence to say that printed frameworks are necessarily more durable.\n\nIn some clinical studies, patient satisfaction with frameworks made by laser technology, especially in comfort, stability and cleaning of the prosthesis, was higher. But the number of these studies is limited, and most of the systematic review's evidence comes from laboratory studies.\n\nSo what conclusion do we draw for clinical decision-making?\n\n3D metal printing is no longer merely an experimental technology. With it, one can make frameworks with acceptable accuracy and performance that are sometimes equal to or even better than the conventional method. But we still do not have enough evidence to consider conventional casting obsolete.\n\nThe quality of the initial data, the framework design, control of the fabrication process and the experience of the laboratory all play a role in the result.\n\nMore importantly, being digital does not remove the need for a clinical try-in. The seating of the rests, the relationship of the proximal plates, the state of the connectors, the retention of the clasps and possible pressure on the tissues must still be checked.\n\nDigital technology has changed the way the framework is made, but it has not yet been shown that this change necessarily leads to greater clinical success or longer durability.\n\n3D metal printing is a valuable fabrication method, not a guarantee of a better framework.",
+  "from": "06-انگلیسی.md:6-90"
+ },
+ "images": {
+  "value": [
+   {
+    "n": "01",
+    "file": {
+     "value": "03-تصاویر/01-slm-framework-extraoral-intraoral.webp",
+     "from": "03-تصاویر/تصاویر.md:6"
+    },
+    "alt_fa": {
+     "value": "فریم‌ورک کبالت‌کروم ساخته‌شده با SLM، بیرون از دهان و هنگام امتحان در دهان",
+     "from": "03-تصاویر/تصاویر.md:7"
+    },
+    "alt_en": {
+     "value": "A cobalt-chromium RPD framework made by SLM, shown outside the mouth and during the intraoral try-in.",
+     "from": "06-انگلیسی.md:93"
+    },
+    "caption_fa": {
+     "value": "فریم‌ورک کبالت‌کروم ساخته‌شده با SLM: (A) بعد از فینیش و پالیش، (B) هنگام امتحان در دهان؛ شکل ۲ مطالعهٔ Elgamal و همکاران (CC BY 4.0).",
+     "from": "03-تصاویر/تصاویر.md:8"
+    },
+    "caption_en": {
+     "value": "Figure 1. Cobalt-chromium framework made by SLM: (A) after finishing and polishing, (B) during the intraoral try-in. Source: Elgamal et al. 2025, Fig. 2 (CC BY 4.0)",
+     "from": "06-انگلیسی.md:94"
+    }
+   },
+   {
+    "n": "02",
+    "file": {
+     "value": "03-تصاویر/02-colormap-combined-vs-digital.webp",
+     "from": "03-تصاویر/تصاویر.md:15"
+    },
+    "alt_fa": {
+     "value": "کالر مپ انطباق فریم‌ورک با اسکن مرجع در دو مسیر",
+     "from": "03-تصاویر/تصاویر.md:16"
+    },
+    "alt_en": {
+     "value": "Color maps of framework adaptation against the reference scan for the conventional-impression workflow and the fully digital workflow.",
+     "from": "06-انگلیسی.md:95"
+    },
+    "caption_fa": {
+     "value": "کالر مپ انطباق فریم‌ورک با اسکن مرجع: (A) مسیر قالب‌گیری سنتی و اسکن مدل، (B) مسیر کاملاً دیجیتال. سبز یعنی تماس نزدیک، زرد و نارنجی یعنی فاصله در محدودهٔ قابل قبول و قرمز یعنی فاصلهٔ بیشتر؛ شکل ۵ مطالعهٔ Elgamal و همکاران (CC BY 4.0).",
+     "from": "03-تصاویر/تصاویر.md:17"
+    },
+    "caption_en": {
+     "value": "Figure 2. Color maps of framework adaptation against the reference scan: (A) conventional impression with cast scanning, (B) fully digital workflow. Green means close contact, yellow and orange mean gaps within an acceptable range, and red means larger gaps. Source: Elgamal et al. 2025, Fig. 5 (CC BY 4.0)",
+     "from": "06-انگلیسی.md:96"
+    }
+   },
+   {
+    "n": "03",
+    "file": {
+     "value": "03-تصاویر/03-mean-gap-four-areas.webp",
+     "from": "03-تصاویر/تصاویر.md:24"
+    },
+    "alt_fa": {
+     "value": "میانگین فاصله در چهار ناحیهٔ فریم‌ورک برای دو مسیر",
+     "from": "03-تصاویر/تصاویر.md:25"
+    },
+    "alt_en": {
+     "value": "Bar chart of the mean gap at the rest, proximal plate, lingual plate and I-bar clasp terminal areas for the two workflows.",
+     "from": "06-انگلیسی.md:97"
+    },
+    "caption_fa": {
+     "value": "میانگین فاصله (میلی‌متر) در ناحیهٔ رست، پروگزیمال پلیت، لینگوال پلیت و انتهای کلاسپ آی‌بار؛ آبی مسیر قالب‌گیری و اسکن مدل، قرمز مسیر کاملاً دیجیتال. فاصلهٔ کوتاه ستون‌ها کوچکی اختلاف را نشان می‌دهد؛ شکل ۱۰ مطالعهٔ Elgamal و همکاران (CC BY 4.0).",
+     "from": "03-تصاویر/تصاویر.md:26"
+    },
+    "caption_en": {
+     "value": "Figure 3. Mean gap (mm) at the rest, proximal plate, lingual plate and I-bar clasp terminal areas; blue is the impression and cast-scan workflow, red the fully digital workflow. The small difference in bar height shows how small the difference is. Source: Elgamal et al. 2025, Fig. 10 (CC BY 4.0)",
+     "from": "06-انگلیسی.md:98"
+    }
+   }
+  ],
+  "from": "03-تصاویر/تصاویر.md"
+ },
+ "credit": {
+  "value": {
+   "mode": "references",
+   "items": [
+    {
+     "label_fa": "مرور سیستماتیک فریم‌ورک‌های فلزی RPD چاپ‌سه‌بعدی در مقایسه با روش‌های سنتی و نیمه‌دیجیتال (Alqutaibi و همکاران، ۲۰۲۶)",
+     "label_en": "Systematic review of 3D-printed RPD metal frameworks compared with conventional and partially digital methods (Alqutaibi et al., 2026)",
+     "href": "https://doi.org/10.2186/jpr.JPR_D_25_00028",
+     "from": "04-منبع/منابع.md:26"
+    },
+    {
+     "label_fa": "مطالعهٔ کلینیکی cross-over دقت فریم‌ورک‌های RPD ساخته‌شده با SLM در دو گردش‌کار (Elgamal و همکاران، ۲۰۲۵)",
+     "label_en": "Cross-over clinical study of the accuracy of SLM RPD frameworks made with two workflows (Elgamal et al., 2025)",
+     "href": "https://doi.org/10.1186/s12903-025-06214-9",
+     "from": "04-منبع/منابع.md:27"
+    }
+   ]
+  },
+  "from": "04-منبع/منابع.md:22"
+ },
+ "catalog": {
+  "value": [
+   {
+    "title": "Clinical performance, accuracy, and physical-mechanical properties of 3D-printed removable partial denture metal frameworks compared with conventionally and partially digitally produced frameworks: A systematic review",
+    "file_name": "Clinical Performance, Accuracy, and Physical-Mechanical Properties of 3D-Printed Removable Partial Denture Metal Frameworks Compared with Conventionally and Partially Digitally Produced Frameworks: A Systematic Review.pdf",
+    "topic": "removable partial denture",
+    "topic_path": "removable partial denture",
+    "type": "systematic review",
+    "local_path": "",
+    "file_size": 1838694,
+    "key_finding": "",
+    "clinical_bottom_line": "",
+    "drive_link": "https://drive.google.com/file/d/1eMuNvGdV4bze1llvx6yXOaZ1jRn9Xtea/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=1eMuNvGdV4bze1llvx6yXOaZ1jRn9Xtea",
+    "drive_view": "https://drive.google.com/file/d/1eMuNvGdV4bze1llvx6yXOaZ1jRn9Xtea/view",
+    "drive_id": "1eMuNvGdV4bze1llvx6yXOaZ1jRn9Xtea",
+    "tags": [
+     "removable-partial-denture",
+     "3d-printing",
+     "selective-laser-melting",
+     "additive-manufacturing",
+     "metal-framework",
+     "digital-workflow",
+     "systematic-review",
+     "topic:removable-partial-denture",
+     "clinical-performance-accuracy-physical-mechanical-properties-3d-printed-rpd-metal-frameworks-systematic-review"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Clinical performance, accuracy, and physical-mechanical properties of 3D-printed removable partial denture metal frameworks compared with conventionally and partially digitally produced frameworks: A systematic review",
+    "doi": "10.2186/jpr.JPR_D_25_00028",
+    "journal": "Journal of Prosthodontic Research",
+    "crossref_year": 2026,
+    "subjects": [],
+    "abstract": "Purpose: This systematic review evaluated the clinical performance, physical-mechanical properties, and accuracy of removable partial denture (RPD) frameworks fabricated using three-dimensional (3D) printing technologies—specifically, selective laser sintering (SLS), selective laser melting (SLM), and direct metal laser sintering (DMLS)—compared to those produced by conventional casting or methods using a partial digital workflow. Study selection: Following the Preferred Reporting Items for Systematic Reviews and Meta-Analyses 2020 guidelines, a literature search was conducted in the PubMed, Scopus, Web of Science, and Cochrane databases in October 2024. Studies were included if they compared the fit, accuracy, mechanical and physical properties, and clinical outcomes of metal RPD frameworks made using 3D printing technologies with those produced using conventional casting or partial digital methods. The risk of bias was assessed using appropriate tools (modified CONSORT, ROB2, and ROBINS-I) based on the study design and a qualitative analysis was conducted. This study received no funding and was registered with PROSPERO (#CRD42024597225). Results: Thirty studies were included: 12 compared 3D printing technologies with conventional casting, eight with partial digital methods, and 10 with both. Clinically, 3D-printed frameworks could improve retention and patient satisfaction. The laboratory results showed higher density, better mechanical properties (yield strength, surface roughness, and microhardness), and varied accuracy by component and method, with SLM and DMLS often outperforming conventional casting. The evidence was limited by methodological variability, a moderate risk of bias in many studies, and inconsistencies across the study designs and parameters. Conclusions: 3D-printed RPD metal frameworks demonstrated clinical accuracy and mechanical-physical performance comparable or superior to those of conventional and partial digital methods for RPD frameworks, with ongoing advances expected to further enhance their precision and clinical applicability.",
+    "display_title": "Clinical performance, accuracy, and physical-mechanical properties of 3D-printed removable partial denture metal frameworks compared with conventionally and partially digitally produced frameworks: A systematic review",
+    "authors": [
+     "Ahmed Yaseen Alqutaibi",
+     "Redhwan Saleh Al-Gabri",
+     "Anas Saeed Al-Zaghruri",
+     "Ahmed E. Farghal",
+     "Ahmed A. Alnazzawi",
+     "Mohammed Ahmed Alghauli"
+    ]
+   },
+   {
+    "title": "Accuracy assessment of removable partial denture frameworks fabricated by selective laser melting using two different workflows: A cross-over clinical study",
+    "file_name": "Accuracy Assessment of Removable Partial Denture Frameworks Fabricated by Selective Laser Melting Using Two Different Workflows: A Cross-Over Clinical Study.pdf",
+    "topic": "removable partial denture",
+    "topic_path": "removable partial denture",
+    "type": "non-randomized controlled study",
+    "local_path": "",
+    "file_size": 1963766,
+    "key_finding": "",
+    "clinical_bottom_line": "",
+    "drive_link": "https://drive.google.com/file/d/1MerX9UUUKpowV6t1CPNipx9nVpTqkZRX/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=1MerX9UUUKpowV6t1CPNipx9nVpTqkZRX",
+    "drive_view": "https://drive.google.com/file/d/1MerX9UUUKpowV6t1CPNipx9nVpTqkZRX/view",
+    "drive_id": "1MerX9UUUKpowV6t1CPNipx9nVpTqkZRX",
+    "tags": [
+     "removable-partial-denture",
+     "selective-laser-melting",
+     "digital-workflow",
+     "intraoral-scanner",
+     "framework-accuracy",
+     "kennedy-class-i",
+     "clinical-trial",
+     "topic:removable-partial-denture",
+     "accuracy-removable-partial-denture-frameworks-selective-laser-melting-two-workflows-cross-over"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Accuracy assessment of removable partial denture frameworks fabricated by selective laser melting using two different workflows: A cross-over clinical study",
+    "doi": "10.1186/s12903-025-06214-9",
+    "journal": "BMC Oral Health",
+    "crossref_year": 2025,
+    "subjects": [],
+    "abstract": "Background Rapid advancements in computer-aided design and computer-aided manufacturing (CAD-CAM) have opened new pathways in the fabrication of removable partial dentures (RPDs). Digital impression serves as the first step of CAD-CAM technique, which includes two methods for data acquisition: direct intraoral scanning or indirect extraoral scanning. RPD frameworks may be considered the definitive test of accuracy for a digital workflow. This cross-over clinical study aimed to evaluate the overall accuracy of various parts for mandibular metallic RPD frameworks made by selective laser melting (SLM) using fully-digital versus combined analog-digital workflows. Methods This study was carried out on 24 participants with mandibular Kennedy class I arches. Each participant received two RPDs frameworks, one fabricated using a combined analog-digital workflow (Group I) and the other using a fully-digital workflow (Group II). In Group I, the analog steps involved taking physical impressions and creating stone casts followed by scanning the casts with a laboratory scanner to create virtual casts. In Group II, a definitive scan STL file was created using an intraoral digital scanner. Both groups used 3Shape software for digital design of the RPD framework, ensuring consistency by using the same design, and subsequent fabrication using SLM. To evaluate the accuracy, STL data analysis was performed through intra-oral digital superimposition evaluation, a color map was assessed and overall accuracy and the misfit (distance between each framework component and the reference intra-oral scan STL file) were measured at rest, proximal plate, lingual plate and I-bar retentive clasp terminal areas. The Paired t-test was utilized for statistical analysis of the data. Results In Group I: combined analog-digital workflow color map assessment revealed more gaps particularly in the lingual plate and proximal plate areas, whereas Group II: fully-digital workflow showed better accuracy. Regarding the overall accuracy in the rest, proximal plate, lingual plate, and I-bar clasp retentive terminal, Group II was significantly superior to Group I (P = 0.0125, 0.0019, < 0.001, < 0.001, and 0.0119, respectively). Conclusions Within the limitations of this study, both workflows resulted in frameworks with clinically acceptable accuracy. However, SLM RPD frameworks fabricated using the fully-digital workflow showed superior accuracy in key areas such as the rest, proximal plate, lingual plate, and I-bar clasp retentive terminal areas, when compared to the combined analog-digital workflow.",
+    "display_title": "Accuracy assessment of removable partial denture frameworks fabricated by selective laser melting using two different workflows: A cross-over clinical study",
+    "authors": [
+     "Mohamed Elgamal",
+     "Abdallah Mohammed Ibrahim",
+     "Basem Tarek Fadl",
+     "Nourhan Ahmed Ragheb"
+    ]
+   }
+  ],
+  "from": "04-منبع/کاتالوگ.json"
+ },
+ "hashtags": {
+  "value": [
+   "#Share_Hub",
+   "#Curated_Content",
+   "#پروتز_متحرک",
+   "#پروتز_پارسیل",
+   "#پرینت_سه_بعدی",
+   "#فیت_پروتز",
+   "#دقت_اسکن",
+   "#اسکنر_داخل_دهانی"
+  ],
+  "from": "07-ورودی‌ها.md:13"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "removable-pros",
+   "subtopic": null,
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:10"
+ },
+ "pulse": {
+  "value": {
+   "text": null,
+   "link_phrase": "فریم‌ورک RPD؛ آیا پرینت سه‌بعدی فلز واقعاً بهتر از ریخته‌گری است؟"
+  },
+  "from": "07-ورودی‌ها.md:19"
+ },
+ "keywords": {
+  "value": [
+   "فریم‌ورک پارسیل متحرک (RPD Framework)",
+   "ریخته‌گری حذف موم (Lost-Wax Casting)",
+   "ذوب انتخابی با لیزر (SLM) و DMLS",
+   "گردش‌کار نیمه‌دیجیتال (Partial Digital Workflow)",
+   "ترونس و پرسیژن (Trueness and Precision)",
+   "فیت و اداپتیشن (Fit and Adaptation)",
+   "نشست رست (Rest Seat)",
+   "پروگزیمال پلیت و لینگوال پلیت",
+   "انتهای کلاسپ آی‌بار (I-bar Clasp)",
+   "ریتنشن کلاسپ",
+   "کلاس یک کندی فک پایین (Kennedy Class I)",
+   "فریم‌ورک کبالت‌کروم",
+   "اسکن داخل‌دهانی در برابر قالب‌گیری سنتی",
+   "برتری آماری و مزیت درمانی",
+   "زبری سطح و تخلخل داخلی (Porosity)",
+   "مقاومت به خستگی (Fatigue Resistance)",
+   "مرور سیستماتیک Alqutaibi ۲۰۲۶ و مطالعهٔ کلینیکی Elgamal ۲۰۲۵",
+   "3D-printed removable partial denture framework",
+   "selective laser melting RPD",
+   "lost-wax casting versus metal 3D printing"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "اسکنر داخل‌دهانی",
+    "from": "11-لینک‌های-گلاسری.md:10",
+    "href": "/glossary/intraoral-scanner.html"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:8"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "queue:22",
+    "label": "طراحی RPD در عصر دیجیتال؛ چه چیزی واقعاً تغییر کرده است؟",
+    "from": "11-لینک‌های-گلاسری.md:25"
+   },
+   {
+    "href": "queue:21",
+    "label": "ثبت دیجیتال دهان بی‌دندان",
+    "from": "11-لینک‌های-گلاسری.md:26"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:20"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
