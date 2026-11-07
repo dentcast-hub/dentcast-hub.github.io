@@ -189,5 +189,23 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "insight/insight-105": {
+    "queue_ref": "queue/12-insight-ferrule-partial-abutment",
+    "record_sha256": "df8f04b4d71abe549d584195081747109c2de7707732b1cdc4239276373dda87",
+    "installed_at": "2026-11-07",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }
