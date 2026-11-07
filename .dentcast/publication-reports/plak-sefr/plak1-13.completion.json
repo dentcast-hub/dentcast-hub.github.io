@@ -1,0 +1,830 @@
+{
+  "schema": "publish-completion-v1",
+  "state": {
+    "publication": {
+      "blocker": null,
+      "category": "plak_sefr",
+      "content_id": "plak-sefr/plak1-13",
+      "context": {
+        "approvals": [
+          {
+            "decision": "\u067e\u0644\u0627\u06a9 \u0635\u0641\u0631 \u2014 \u062f\u0641\u062a\u0631 \u0648 \u0645\u0646\u0634\u06cc \u0633\u0627\u06cc\u062a: DNS \u0648 CDN",
+            "evidence": [
+              "standing acceptance (Hard Rule 14): agent-composed, listed in the Push-2 report; founder gave no title/caption"
+            ],
+            "scope": "title",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u0642\u0633\u0645\u062a \u06f1\u06f3: \u062f\u0627\u0645\u0646\u0647\u200c\u0627\u06cc \u06a9\u0647 \u062e\u0631\u06cc\u062f\u0647\u200c\u0627\u06cc \u0647\u0646\u0648\u0632 \u0628\u0647 \u0633\u0627\u06cc\u062a\u062a \u0648\u0635\u0644 \u0646\u06cc\u0633\u062a. \u062f\u0631 \u0627\u06cc\u0646 \u0642\u0633\u0645\u062a \u0628\u0627 \u0645\u062b\u0627\u0644 \u062f\u0641\u062a\u0631 \u0648 \u0645\u0646\u0634\u06cc \u0645\u0637\u0628 \u0645\u06cc\u200c\u0641\u0647\u0645\u06cc DNS \u0648 CDN \u0686\u0647 \u06a9\u0627\u0631\u06cc \u0645\u06cc\u200c\u06a9\u0646\u0646\u062f\u060c \u0648 \u062f\u0641\u062a\u0631 \u062f\u0627\u0645\u0646\u0647 \u0631\u0627 \u062f\u0631 \u062f\u0648 \u0642\u062f\u0645 \u0627\u0632 \u0627\u06cc\u0631\u0646\u06cc\u06a9 \u0628\u0647 \u0622\u0631\u0648\u0627\u0646\u200c\u06a9\u0644\u0627\u062f \u0645\u06cc\u200c\u0633\u067e\u0627\u0631\u06cc. \u0628\u0627 \u0633\u0647 \u0646\u0634\u0627\u0646\u0647 \u0628\u0631\u0627\u06cc \u0627\u06cc\u0646\u06a9\u0647 \u0628\u0641\u0647\u0645\u06cc \u062f\u0631\u0633\u062a \u0627\u0646\u062c\u0627\u0645 \u062f\u0627\u062f\u0647\u200c\u0627\u06cc.",
+            "evidence": [
+              "standing acceptance (Hard Rule 14): agent-composed, listed in the Push-2 report; founder gave no title/caption"
+            ],
+            "scope": "caption",
+            "status": "confirmed"
+          }
+        ],
+        "decisions": [
+          {
+            "kind": "ledger_order_v2"
+          },
+          {
+            "kind": "fixed_three_deliveries_v1"
+          },
+          {
+            "kind": "fixed_three_deliveries_v2"
+          },
+          {
+            "evidence": [
+              "page plak-sefr/plak1-13.html first <p> is the doc's first paragraph byte-for-byte; recorded after C.4.13 before C.4.9"
+            ],
+            "kind": "first_cut_lead_provenance_v1",
+            "origin": "author_original",
+            "source_ref": "founder doc claude-docs:7467207d.../tab474a16c3-14b7 rev220: the founder's own opening paragraph opens the body"
+          },
+          {
+            "english": {
+              "evidence": [
+                "plak-sefr/en/plak1-13.html on disk, noindex follow, no hreflang, lang/inLanguage/og:locale en, GA once"
+              ],
+              "path": "plak-sefr/en/plak1-13.html",
+              "status": "ready"
+            },
+            "evidence": [
+              "second-cut lock recorded after all authoring and founder-message scopes closed (M1, M3b, M2 had no content)"
+            ],
+            "kind": "second_cut_editorial_lock_v1",
+            "scopes": [
+              {
+                "evidence": [
+                  "C.4.13 DES COMMENTARY basket 1, score 12 band E, Part 3 checks green; no Fidelity (basket 1)"
+                ],
+                "scope": "scientific",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Question 4.9: ordinary article, C.4.14 skipped"
+                ],
+                "scope": "challenge",
+                "status": "not_applicable"
+              },
+              {
+                "evidence": [
+                  "C.2.4 practice-infrastructure/site-ownership; no new subtopic"
+                ],
+                "scope": "taxonomy",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.4.7 0 candidates, C.4.8 0 applied, C.4.9 three sibling capsules (cap 5)"
+                ],
+                "scope": "links",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.5.0 canonical reuse only: #\u067e\u0644\u0627\u06a9_\u0635\u0641\u0631 #\u0633\u0627\u06cc\u062a_\u0645\u0637\u0628 #\u062f\u0627\u0645\u0646\u0647_\u0633\u0627\u06cc\u062a #GitHub; --check OK"
+                ],
+                "scope": "hashtags",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.5 brain entry plak1-13 at array end, key parity with plak1-12; faq-corpus entry"
+                ],
+                "scope": "content_record",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.5.6 ai-dentistry after plak1-12; 4.12-\u0628 skipped (no approved exam question); no bundle candidate"
+                ],
+                "scope": "pathways",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.6 Pulse line inserted at top of index.html, oldest line removed, 7 lines"
+                ],
+                "scope": "pulse",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "authored mirror plak-sefr/en/plak1-13.html, toggles inverse, previous en part wired"
+                ],
+                "scope": "english",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "title and caption approvals recorded under standing acceptance; lead author_original"
+                ],
+                "scope": "author_approvals",
+                "status": "resolved"
+              }
+            ]
+          }
+        ],
+        "delivery": [
+          {
+            "evidence": [
+              "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/42341853453"
+            ],
+            "scope": "GitHub Actions post-Push-2 mechanical continuation"
+          }
+        ],
+        "inputs": [
+          {
+            "note": "founder text of record for episode 13 (page prose as shipped), private doc, not in repo",
+            "ref": "claude-docs:7467207d-4e68-4989-84c5-bd41f37d528d/tab474a16c3-14b7@rev220",
+            "sha256": "0835ad859ae1633d34994d672e319211482320c7ee98146e930cfb036b35aab9"
+          }
+        ],
+        "pending_questions": [],
+        "unrelated_changes": [],
+        "validation": [
+          {
+            "content_id": "plak-sefr/plak1-13",
+            "exit_code": 0,
+            "expected_caption": "\u0642\u0633\u0645\u062a \u06f1\u06f3: \u062f\u0627\u0645\u0646\u0647\u200c\u0627\u06cc \u06a9\u0647 \u062e\u0631\u06cc\u062f\u0647\u200c\u0627\u06cc \u0647\u0646\u0648\u0632 \u0628\u0647 \u0633\u0627\u06cc\u062a\u062a \u0648\u0635\u0644 \u0646\u06cc\u0633\u062a. \u062f\u0631 \u0627\u06cc\u0646 \u0642\u0633\u0645\u062a \u0628\u0627 \u0645\u062b\u0627\u0644 \u062f\u0641\u062a\u0631 \u0648 \u0645\u0646\u0634\u06cc \u0645\u0637\u0628 \u0645\u06cc\u200c\u0641\u0647\u0645\u06cc DNS \u0648 CDN \u0686\u0647 \u06a9\u0627\u0631\u06cc \u0645\u06cc\u200c\u06a9\u0646\u0646\u062f\u060c \u0648 \u062f\u0641\u062a\u0631 \u062f\u0627\u0645\u0646\u0647 \u0631\u0627 \u062f\u0631 \u062f\u0648 \u0642\u062f\u0645 \u0627\u0632 \u0627\u06cc\u0631\u0646\u06cc\u06a9 \u0628\u0647 \u0622\u0631\u0648\u0627\u0646\u200c\u06a9\u0644\u0627\u062f \u0645\u06cc\u200c\u0633\u067e\u0627\u0631\u06cc. \u0628\u0627 \u0633\u0647 \u0646\u0634\u0627\u0646\u0647 \u0628\u0631\u0627\u06cc \u0627\u06cc\u0646\u06a9\u0647 \u0628\u0641\u0647\u0645\u06cc \u062f\u0631\u0633\u062a \u0627\u0646\u062c\u0627\u0645 \u062f\u0627\u062f\u0647\u200c\u0627\u06cc.",
+            "expected_title": "\u067e\u0644\u0627\u06a9 \u0635\u0641\u0631 \u2014 \u062f\u0641\u062a\u0631 \u0648 \u0645\u0646\u0634\u06cc \u0633\u0627\u06cc\u062a: DNS \u0648 CDN",
+            "kind": "phase_f",
+            "output_sha256": "dde830919989f5311a8e73e402d6be7742f36c5cf7479dae7272fa7bf92ed018",
+            "recorded_at": "2026-11-07T05:15:16+00:00",
+            "summary": "119 passed, 1 warned, 0 failed  \u2014 publish is COMPLETE"
+          }
+        ]
+      },
+      "external_actions": [],
+      "status": "in_progress",
+      "steps": [
+        {
+          "evidence": [
+            "read: CLAUDE.md router, workflows/README, global rules pages 1-5, agent-parity, publish-checkpoints, modules 01+02"
+          ],
+          "id": "rules",
+          "module": "01-hard-rules.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "routing: text present (founder Docs artifact, episode 13), no paper attached -> normal publish only"
+          ],
+          "id": "0",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "brain parsed once (594 entries); plak_sefr latest plak1-12 with keys type,id,title,caption,hashtags,keywords,page_url,pillar; PILLARS read live from build_pillar.py"
+          ],
+          "id": "A",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "type locked: plak_sefr (Plak Sefr series, request names it)"
+          ],
+          "id": "B.1",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "next number: plak1-13 (series plak1-1..plak1-12 contiguous, no gap)"
+          ],
+          "id": "B.2",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "text received: founder doc Claude Docs 7467207d..., tab 474a16c3-14b7, text of record taken from doc XML (rev 220)"
+          ],
+          "id": "B.3",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "de-AI pass: text reads as natural founder prose, no genuine AI tells; 0 rewrites, text unchanged"
+          ],
+          "id": "B.3.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "media: 5 webp screenshots from the doc (Arvan menu, CDN section, name servers, nic.ir panel, domain list) saved as plak-sefr/arvan-*.webp, irnic-arvan-name-servers.webp; no audio/video/image-field for this type"
+          ],
+          "id": "B.4",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "no paper file attached -> step 4.10 skipped"
+          ],
+          "id": "B.4.7",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "basket 1 COMMENTARY: authored how-to guide, no DOI/PubMed/references block; content own text is source_text"
+          ],
+          "id": "B.4.8",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "ordinary article, not a challenge"
+          ],
+          "id": "B.4.9",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pulse: \u00ab\u067e\u0644\u0627\u06a9 \u0635\u0641\u0631\u060c \u0642\u0633\u0645\u062a \u06f1\u06f3: \u00ab\u062f\u0641\u062a\u0631 \u0648 \u0645\u0646\u0634\u06cc \u0633\u0627\u06cc\u062a: DNS \u0648 CDN\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f\u00bb in the precedent title-only pattern"
+          ],
+          "id": "B.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast branch inactive: category is plak_sefr",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.1",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast branch inactive: category is plak_sefr",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.2",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast branch inactive: category is plak_sefr",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.3",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast branch inactive: category is plak_sefr",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.4",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast branch inactive: category is plak_sefr",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "template lock: previous same-category page plak-sefr/plak1-12.html (kept byte-unchanged except nav link per series precedent)"
+          ],
+          "id": "C.1",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "page plak-sefr/plak1-13.html cloned from plak1-12 (CRLF kept, domain .org kept, GA once, preconnect x2 kept, no trustseal); body = founder text of record with 5 founder images and captions; lead paragraph author_original; title/caption/keywords composed by agent under standing acceptance; chips #\u067e\u0644\u0627\u06a9_\u0635\u0641\u0631 #\u0633\u0627\u06cc\u062a_\u0645\u0637\u0628 #\u062f\u0627\u0645\u0646\u0647_\u0633\u0627\u06cc\u062a all existing canonical"
+          ],
+          "id": "C.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.5",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast branch inactive: category is plak_sefr",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.6",
+          "module": "03-litecast-and-page.md",
+          "reason": "LiteCast branch inactive: category is plak_sefr",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "pillar practice-infrastructure / subtopic site-ownership (domain, DNS, CDN = owning the site; same as plak1-11/12 precedent; competing candidate llm-tools rejected, no new subtopic)"
+          ],
+          "id": "C.2.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "typed brain entry branch: both capsules on the page: /glossary/ and /pillar/practice-infrastructure/ (semantic capsules added at C.4.9)"
+          ],
+          "id": "C.2.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "plak-sefr/index.html hand-maintained: row \u00ab\u0642\u0633\u0645\u062a \u06f1\u06f3 \u2014 \u062f\u0641\u062a\u0631 \u0648 \u0645\u0646\u0634\u06cc \u0633\u0627\u06cc\u062a: DNS \u0648 CDN\u00bb added after \u06f1\u06f2 in sibling markup, CRLF kept"
+          ],
+          "id": "C.2.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "dates: datePublished=dateModified=2026-11-07 in JSON-LD; no other visible date; all OK"
+          ],
+          "id": "C.3",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "git diff --quiet -- plak-sefr/plak1-12.html plak-sefr/en/plak1-12.html succeeded (TEMPLATE_UNCHANGED) before wiring"
+          ],
+          "id": "C.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "NoteCast only: category is plak_sefr",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5-b",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "NoteCast/episode pair only: category is plak_sefr",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "series wiring: new page previous slot -> plak1-12; plak1-12 next slot span -> link to plak1-13 (git diff shows only that slot); en/plak1-12 next slot wired with the English mirror at C.6"
+          ],
+          "id": "C.4.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.1",
+          "module": "06-paper-ingestion.md",
+          "reason": "no paper file attached (Question 4.7): paper branch inactive",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.2",
+          "module": "06-paper-ingestion.md",
+          "reason": "no paper file attached (Question 4.7): paper branch inactive",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.3",
+          "module": "06-paper-ingestion.md",
+          "reason": "no paper file attached (Question 4.7): paper branch inactive",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "DES basket 1 COMMENTARY run: isolated claude -p call (spec .dentcast/des-v3.5-knowledge.md as system prompt, tools disabled, empty cwd, model claude-sonnet-5-5), source_text = page own body text FULL_TEXT; Part 3 checks green: quotes verbatim, 5+4+0+3+0=12, band E, schema; verify_publish --des-text ok; record in plus/des-scores.json plak-sefr/plak1-13 (score 12, band E); no fidelity (basket 1), no M3b; no DOI/abstract/quartile guessed"
+          ],
+          "id": "C.4.13",
+          "module": "08-des-fidelity.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "analyzed: glossary/glossary.json has 109 dental terms; none concerns DNS, CDN, domain, hosting or GitHub; 0 qualifying candidates, 0 borderline; no term page edited"
+          ],
+          "id": "C.4.7",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.7-b",
+          "module": "05-semantic-linking.md",
+          "reason": "not a glossary publish",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "analyzed body vs glossary terms and all brain entries: 0 inline links applied. Borderline skipped: GitHub mention -> plak1-11 (generic, no back-reference to that part); domain -> plak1-9 (generic use, no back-reference); sibling parts belong to C.4.9"
+          ],
+          "id": "C.4.8",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "new page \u00ab\u06a9\u0627\u0648\u0634 \u0628\u06cc\u0634\u062a\u0631\u00bb now 5 links (cap): 2 nav capsules + sibling parts plak1-9 (domain), plak1-11 (GitHub), plak1-12 (previous part); strong, strongest first; borderline skipped: plak1-3/plak1-7 and prompt-append2-3 (budget at cap)"
+          ],
+          "id": "C.4.9",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "6 DefinedTerms written to plus/faq-corpus.json under plak-sefr/plak1-13 (#flashcards-c1..c6), source faq, sourceFaqIndex 0,1,2,3,4,6; skipped as procedural: FAQ 5 (two-step procedure) and 7 (how to check); descriptions rewritten as standalone concepts, not near-copies; build_flashcards_index.mjs runs in the runner (C.8)"
+          ],
+          "id": "C.4.11",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "8 FAQ questions authored from the locked body, standalone (no article deixis); 3 binary questions open with verdict \u062e\u06cc\u0631\u061b (idx 1,3,6); 5 definitional/procedural kept as reference; build_quiz_index.mjs in runner"
+          ],
+          "id": "C.4.12",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.14",
+          "module": "09-challenge.md",
+          "reason": "ordinary article, not a Challenge (Question 4.9): no data-dc-challenge-question markup",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Q1 questions: \u00ab\u062f\u0627\u0645\u0646\u0647\u200c\u0627\u06cc \u06a9\u0647 \u062e\u0631\u06cc\u062f\u0645 \u0631\u0648 \u0686\u0637\u0648\u0631 \u0628\u0647 \u0633\u0627\u06cc\u062a\u0645 \u0648\u0635\u0644 \u06a9\u0646\u0645\u061f\u00bb, \u00abDNS \u0648 CDN \u0686\u06cc\u0647\u061f\u00bb, \u00abName Server \u0622\u0631\u0648\u0627\u0646 \u0631\u0648 \u062a\u0648\u06cc \u0627\u06cc\u0631\u0646\u06cc\u06a9 \u06a9\u062c\u0627 \u0628\u0632\u0646\u0645\u061f\u00bb. Reused canonical tags only, no mint, no batch: #\u067e\u0644\u0627\u06a9_\u0635\u0641\u0631 (series), #\u0633\u0627\u06cc\u062a_\u0645\u0637\u0628, #\u062f\u0627\u0645\u0646\u0647_\u0633\u0627\u06cc\u062a (decision+specific, 2 pages), #GitHub. Resolving sentences: #\u0633\u0627\u06cc\u062a_\u0645\u0637\u0628 \u00ab\u0633\u0627\u06cc\u062a \u0634\u0645\u0627 \u0627\u0644\u0627\u0646 \u0631\u0648\u0634\u0646 \u0627\u0633\u062a\u060c \u0648\u0644\u06cc \u0628\u0627 \u06cc\u06a9 \u0622\u062f\u0631\u0633 \u0645\u0648\u0642\u062a \u0628\u0627\u0632 \u0645\u06cc\u200c\u0634\u0648\u062f\u2026\u00bb; #\u062f\u0627\u0645\u0646\u0647_\u0633\u0627\u06cc\u062a \u00ab\u0627\u0633\u0645\u06cc \u0647\u0645 \u06a9\u0647 \u0628\u0631\u0627\u06cc \u0633\u0627\u06cc\u062a \u062e\u0631\u06cc\u062f\u0647\u200c\u0627\u06cc\u062f\u060c \u0645\u062b\u0644\u0627\u064b drsamadi.ir\u060c \u0647\u0646\u0648\u0632 \u0628\u0647 \u062c\u0627\u06cc\u06cc \u0648\u0635\u0644 \u0646\u06cc\u0633\u062a.\u00bb; #GitHub \u00ab\u062e\u0648\u062f \u0633\u0627\u06cc\u062a \u062c\u0627\u0628\u0647\u200c\u062c\u0627 \u0646\u0645\u06cc\u200c\u0634\u0648\u062f \u0648 \u062f\u0631 \u06af\u06cc\u062a\u200c\u0647\u0627\u0628 \u0645\u06cc\u200c\u0645\u0627\u0646\u062f. \u0628\u0631\u0627\u06cc \u0647\u0645\u06cc\u0646 \u0627\u06af\u0631 \u0627\u06cc\u0646\u062a\u0631\u0646\u062a \u062e\u0627\u0631\u062c \u0642\u0637\u0639 \u0634\u0648\u062f\u060c \u0645\u0646\u0634\u06cc \u0647\u0645 \u062f\u0633\u062a\u0634 \u0628\u0647 \u0628\u0627\u06cc\u06af\u0627\u0646\u06cc \u0646\u0645\u06cc\u200c\u0631\u0633\u062f.\u00bb Four tags, below 5-8 density target: conservative, no mint (no existing page resolves DNS/CDN). hashtag_ref --sync, build_plus_index (reverted), --check OK, build_cabinet_papers --check OK; reachability: page in tags with 2, 9, 12, 13 pages, passes via #\u062f\u0627\u0645\u0646\u0647_\u0633\u0627\u06cc\u062a"
+          ],
+          "id": "C.5.0",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "brain entry appended at end of array with identical key set/order as plak1-12 (type,id,title,caption,hashtags,keywords,page_url,pillar); hashtags = canonical list of 5.0; pillar practice-infrastructure/site-ownership"
+          ],
+          "id": "C.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "recorded pillar practice-infrastructure / subtopic site-ownership = step 2.4 value; page capsule href /pillar/practice-infrastructure/ matches; no new subtopic"
+          ],
+          "id": "C.5.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "pathway_place: STRONG ai-dentistry after plak-sefr/plak1-12 (series sibling anchor) -> inserted at index 36, milestone false, pathway now 37 steps; ASK candidates not placed (conservative default, reported): fixed-pros, treatment-planning, implant-prosthetic, esthetic, failure-troubleshooting, post-and-core, biomimetic (0 related steps each); coverage: plak1-13 in 1 full pathway. 4.12-\u0628: skipped, no exam question written, M2 not sent (a question is written only after the founder approves its full text; a missing question costs nothing, pathways open on their own at twenty article questions); reported for the founder"
+          ],
+          "id": "C.5.6",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "bundle check: candidate bundles continuing ai-dentistry evaluated; GATE 1 type: folder plak-sefr is not episodes/notecast/sharehub/dentai -> \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1); no bundle edited, home-bundles.js untouched"
+          ],
+          "id": "C.5.6-b",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pulse line \u00ab\u067e\u0644\u0627\u06a9 \u0635\u0641\u0631\u060c \u0642\u0633\u0645\u062a \u06f1\u06f3: \u00ab\u062f\u0641\u062a\u0631 \u0648 \u0645\u0646\u0634\u06cc \u0633\u0627\u06cc\u062a: DNS \u0648 CDN\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f\u00bb inserted at top of index.html, oldest line (sharehub/share-45) removed, 7 lines; authored English mirror plak-sefr/en/plak1-13.html + fa toggle (inverse), en/plak1-12 next slot wired; ten-scope editorial lock recorded; title/caption approvals recorded"
+          ],
+          "id": "C.6",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "All applicable canonical C.8 builders passed; logs are in the recovery artifact."
+          ],
+          "id": "C.8",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "tools/stamp-version.py passed after C.8"
+          ],
+          "id": "C.7",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Technical English, noindex, hreflang, sitemap, and final version checks passed; logs are in the recovery artifact."
+          ],
+          "id": "D",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Canonical dc-notify marker present exactly once"
+          ],
+          "id": "E",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "phase_f:dde830919989f5311a8e73e402d6be7742f36c5cf7479dae7272fa7bf92ed018"
+          ],
+          "id": "F",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/42341853453"
+          ],
+          "id": "G",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        }
+      ],
+      "target_paths": [
+        "dentcast-brain.json",
+        "dentcast-hashtag-reference.json",
+        "index.html",
+        "pillar/index.html",
+        "pillar/practice-infrastructure/index.html",
+        "pillar/practice-infrastructure/structure.json",
+        "pillar/structure.json",
+        "plak-sefr/arvan-cdn-section.webp",
+        "plak-sefr/arvan-domain-list.webp",
+        "plak-sefr/arvan-name-servers.webp",
+        "plak-sefr/arvan-panel-menu.webp",
+        "plak-sefr/en/plak1-12.html",
+        "plak-sefr/en/plak1-13.html",
+        "plak-sefr/index.html",
+        "plak-sefr/irnic-arvan-name-servers.webp",
+        "plak-sefr/plak1-12.html",
+        "plak-sefr/plak1-13.html",
+        "player.html",
+        "plus/assistant-tags.json",
+        "plus/content-index.json",
+        "plus/des-scores.json",
+        "plus/exam-questions.json",
+        "plus/faq-corpus.json",
+        "plus/flashcards-index.json",
+        "plus/pathways.json",
+        "plus/quiz-index.json",
+        "service-worker.js",
+        "sitemap.xml",
+        "up-board/index.json"
+      ]
+    },
+    "snapshot": {
+      "files": {
+        "dentcast-brain.json": {
+          "kind": "file",
+          "sha256": "6d76ac54809013a7c27f458e629e3f4bef876d9c976dbfcbc0813842d89f8152",
+          "executable": false
+        },
+        "dentcast-hashtag-reference.json": {
+          "kind": "file",
+          "sha256": "9b27a8d5a99840c54989e8aeac4da593840279992701052d434e5e96a23eeeb2",
+          "executable": false
+        },
+        "index.html": {
+          "kind": "file",
+          "sha256": "5e9310376937c480e58805ce07710931c5bc767bc9754554837c327a12c2fefc",
+          "executable": false
+        },
+        "pillar/index.html": {
+          "kind": "file",
+          "sha256": "e0bd3ff58c3761364f1466a1f5ff86fec8d42140fd32c81e3f62809e8b155368",
+          "executable": false
+        },
+        "pillar/practice-infrastructure/index.html": {
+          "kind": "file",
+          "sha256": "4373eda4467da3bc1daa4b12c0cb31763d017545d6a1747eacee597fdd9e9a1a",
+          "executable": false
+        },
+        "pillar/practice-infrastructure/structure.json": {
+          "kind": "file",
+          "sha256": "30f41fb510324e7b4e4d28f861de55df862167c5ddac88c2bb17c0195718b38b",
+          "executable": false
+        },
+        "pillar/structure.json": {
+          "kind": "file",
+          "sha256": "fb55d7d974b6560a7386b8edf60a7966a6f6e9b485bc9ad8aee5a8043ca74480",
+          "executable": false
+        },
+        "plak-sefr/arvan-cdn-section.webp": {
+          "kind": "file",
+          "sha256": "9aff5d6c2e3b7e54d0e6ddc1b49a2c5dfe85edb69f8726e77ef4c7056ccbf835",
+          "executable": false
+        },
+        "plak-sefr/arvan-domain-list.webp": {
+          "kind": "file",
+          "sha256": "d6ec1158d67a083b106360cf22e055ddfe5bac293bbb5f0332d11c7a2f6726e0",
+          "executable": false
+        },
+        "plak-sefr/arvan-name-servers.webp": {
+          "kind": "file",
+          "sha256": "cfa3bfa8d557c99139583d593ffbdd8a5572f971a69da3b04ce4f474e56a37e8",
+          "executable": false
+        },
+        "plak-sefr/arvan-panel-menu.webp": {
+          "kind": "file",
+          "sha256": "ba2a101ab0f62a194b33ef4f9d0c829cea969b0aca4014138e9eba31c7f49a7d",
+          "executable": false
+        },
+        "plak-sefr/en/plak1-12.html": {
+          "kind": "file",
+          "sha256": "abc0cc4a00c36d7eff258e0c39cfe246ba515acde5f69e4699733e154fbbaeef",
+          "executable": false
+        },
+        "plak-sefr/en/plak1-13.html": {
+          "kind": "file",
+          "sha256": "feca6d732e5c4722d1eed59d6fcd0f05df029d897a5aeb7b304e24a394d54d36",
+          "executable": false
+        },
+        "plak-sefr/index.html": {
+          "kind": "file",
+          "sha256": "9f9838074d116d309c4e2816af22356e2b5d172e52f5ba773e2de4c22b636107",
+          "executable": false
+        },
+        "plak-sefr/irnic-arvan-name-servers.webp": {
+          "kind": "file",
+          "sha256": "901e83e66d2ba4064d314578d05b5be72cb6fd9fe9ece8d70bde0aae2dbf16a2",
+          "executable": false
+        },
+        "plak-sefr/plak1-12.html": {
+          "kind": "file",
+          "sha256": "e0e967e09c7a59c51111ea68d8aa66a8f12254ba03d184ce5264eee85b4c2cc5",
+          "executable": false
+        },
+        "plak-sefr/plak1-13.html": {
+          "kind": "file",
+          "sha256": "339a031500d0e498aa8e0d963187e62377d3a3b69190bda7e59e380b93344523",
+          "executable": false
+        },
+        "player.html": {
+          "kind": "file",
+          "sha256": "cb91ea7112fb63767cd8ca3e945d180d53da264332c0e3edf8d9672a21eee140",
+          "executable": false
+        },
+        "plus/assistant-tags.json": {
+          "kind": "file",
+          "sha256": "8db8f883d6d32fc48c570d5ee444f8e23eb10da51b6920ace8535175f400cfb7",
+          "executable": false
+        },
+        "plus/content-index.json": {
+          "kind": "file",
+          "sha256": "a4804da521bdff3a04d071d438c6d7e69abfad905e02bc96927bb7c94bf06147",
+          "executable": false
+        },
+        "plus/des-scores.json": {
+          "kind": "file",
+          "sha256": "81c3e55533fb11c7778841797ec0500e1bf09f697ce449558b01a65674a9fd64",
+          "executable": false
+        },
+        "plus/exam-questions.json": {
+          "kind": "file",
+          "sha256": "ff134c3224dbdb41b16ce14b936720114c91b4b6b047244f5803e67b89e522f4",
+          "executable": false
+        },
+        "plus/faq-corpus.json": {
+          "kind": "file",
+          "sha256": "756782ee6340e467dde4509fcd613ae503eaf6cca9dd058c2cb33116ca9f00cc",
+          "executable": false
+        },
+        "plus/flashcards-index.json": {
+          "kind": "file",
+          "sha256": "783f18f4f4d951f374cd43ef1e139dde64c51fb8efe89eab9086302d642286d2",
+          "executable": false
+        },
+        "plus/pathways.json": {
+          "kind": "file",
+          "sha256": "c22e855a32a30afe2b0a5c464358a1a42ec8a9f72a319cd61890204a0b0271b3",
+          "executable": false
+        },
+        "plus/quiz-index.json": {
+          "kind": "file",
+          "sha256": "5a267a8ceb7b7144fdb55d95eea8f291fb90cc8fd3ed0555c04535d0943cf07c",
+          "executable": false
+        },
+        "service-worker.js": {
+          "kind": "file",
+          "sha256": "cf90475bec3691ab8b1ef4f71ac6dba4a52e77388a44df2ff3ebad0e9cc6bf21",
+          "executable": false
+        },
+        "sitemap.xml": {
+          "kind": "file",
+          "sha256": "55d9c4971f4dc88b8e6c246de660746411a255c42af0730d715801377b5d7e4c",
+          "executable": false
+        },
+        "up-board/index.json": {
+          "kind": "file",
+          "sha256": "f7308d0b4e2a00bcecd29720c59704b52d2c913f2edce48c55f22da23d4877c7",
+          "executable": false
+        }
+      },
+      "workflow": {
+        ".dentcast/workflows/README.md": "52e3872c29e1b838c959442b688451757483f87afd5ac8fd1888db8a8bcc8535",
+        ".dentcast/workflows/agent-parity.md": "bbc786aa0124c53c080ec7dda33a79858d78fd8b11bd54adaf548f91a312abdd",
+        ".dentcast/workflows/publish-handoff.md": "a0f25f42be9797ef2f5424d3b1d179dcd662e4691a4c98050de6b91fd31ecf96",
+        ".dentcast/workflows/routing-details.md": "70e82a656759b6a949f84048d1d9047a2eaaca90c0f93d73d3e96857f77f394a",
+        ".dentcast/workflows/global/README.md": "5ec762efe1522eeca5841e37f8e61d938b6a1421904bffe32cecd51ddab4a39b",
+        ".dentcast/workflows/global/LOAD-MAP.json": "2a0a7fbf975cf30f12e776d8516509dad577453bd0f5b168bdb93d1b5dcd1bdf",
+        "tools/dentcast_global_rules.py": "c92d378a875dec54ed7845015797c37f211f0acab93150f669b0f820dfd94464",
+        ".dentcast/workflows/global/repo-conventions.md": "00aaeb7c9a5c111150720a695dadc592aceabef301fe42f0970975cde02e870b",
+        ".dentcast/workflows/global/plus-premium.md": "96c50bd865472c0b9323ca72aab7cf8cf12de530d88aefba67a44126ed5477fb",
+        ".dentcast/workflows/global/site-invariants.md": "c41c43b17502f6c01ef91b3e786e1bd9000b06858375f6c8c65e2e15cb6c15ca",
+        "tools/dentcast_publish_handoff.py": "369042956536502f6b15d095caf2d61f839a39fc69c046b27d79e6a0b069e886",
+        "tools/dentcast_publish_lifecycle.py": "4effb91708cc68fc74d93e3ac5f1b68aadc468109e567cba7372c067ac1aab89",
+        "tools/verify_publish.py": "5da46852e70f7b2d1a1fb93f56457e921b1a82b1d38bd139d11d3ccd8d895ec3",
+        "tools/dentcast_text_io.py": "225c0a696e8ebc5e175b5dd9739210d4624938358af96baeb777f8c4a07726d8",
+        "tools/text_io.mjs": "c6f9208e26983c8eade43d8cf3effe865e6479df903d2cee661cd0a928565536",
+        "tools/dentcast_post_cut2_runner.py": "9704db018cb13f5cd93a12feefb3112795a96c031f1d93d88bf39c439bca68cc",
+        ".github/workflows/post-cut2-mechanical.yml": "58c12decea74b5987f7beb04d459fb8208fcb84c47151599f0a56d9c1d8786ee",
+        ".dentcast/workflows/publish-checkpoints.md": "af5a1b041d4eaccada87db0ae2dbac8abadac798613fbf0fa5adcec1e177e264",
+        ".dentcast/workflows/publish-after-push2.md": "28fe2ffc99e38650d4fb1114f4844d288b7d9214f13e6de46db4b8ee4855837b",
+        ".dentcast/workflows/modules/01-hard-rules.md": "e24f938b236416592b3b85b6b702611f1dbe16d4c7f4e168a137e2b86bee6b2e",
+        ".dentcast/workflows/modules/02-routing-intake.md": "eebe74ff7e1edf5022c533c6972cc0fd7cce0bb0c0064e229a7bdd59aee02556",
+        ".dentcast/workflows/modules/03-litecast-and-page.md": "394a1d66dd151bc5395a3cebf68a30d204a0337efe5b9b80735f71b6244e4ae4",
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "397ced611dc4fc2c715a6e58a50eb2e93c05008e0f9323de42d06856720eb880",
+        ".dentcast/workflows/modules/05-semantic-linking.md": "4b5d7fc5b0afe511091be22a9d6f08991e6e1127be742d4f04d6bdd781a8dc9c",
+        ".dentcast/workflows/modules/06-paper-ingestion.md": "ce03448bb54ca2644fee10ef0b76ff4d51dd5ed05b5faff2b7fb03eb95693d74",
+        ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "4e162585a51bdd909dc0d1ed7cec9a053d77f8b2690888f987c25c3f2e172c46",
+        ".dentcast/workflows/modules/08-des-fidelity.md": "a83aef67427c0839e0f97f66100915bea37689aed17274a2f4791dd51b53ecb4",
+        ".dentcast/workflows/modules/09-challenge.md": "e8c8c185f32ab101af2e8464aa31dde6622e802bc8ca45126124f78a88a69b88",
+        ".dentcast/workflows/modules/10-brain-and-pathways.md": "e470258f174c818742b61452a3a94f4ae8964be5fcc8c5c789b06ae9e0385c23",
+        ".dentcast/workflows/modules/11-build-and-version.md": "a5cf4b580ebba3caf8d566e4a045701ed64a315deb3af022d506dd6f58ae534a",
+        ".dentcast/workflows/modules/12-english-notify-verify.md": "563c09aeaa12c824cfd34712944f54300deff73e44d30684acf87953918f2811"
+      }
+    }
+  },
+  "second_delivery_commit": "8e7e704612d787537d9132dd03edae4c332d86de",
+  "verification": {
+    "kind": "phase_f",
+    "content_id": "plak-sefr/plak1-13",
+    "expected_title": "\u067e\u0644\u0627\u06a9 \u0635\u0641\u0631 \u2014 \u062f\u0641\u062a\u0631 \u0648 \u0645\u0646\u0634\u06cc \u0633\u0627\u06cc\u062a: DNS \u0648 CDN",
+    "expected_caption": "\u0642\u0633\u0645\u062a \u06f1\u06f3: \u062f\u0627\u0645\u0646\u0647\u200c\u0627\u06cc \u06a9\u0647 \u062e\u0631\u06cc\u062f\u0647\u200c\u0627\u06cc \u0647\u0646\u0648\u0632 \u0628\u0647 \u0633\u0627\u06cc\u062a\u062a \u0648\u0635\u0644 \u0646\u06cc\u0633\u062a. \u062f\u0631 \u0627\u06cc\u0646 \u0642\u0633\u0645\u062a \u0628\u0627 \u0645\u062b\u0627\u0644 \u062f\u0641\u062a\u0631 \u0648 \u0645\u0646\u0634\u06cc \u0645\u0637\u0628 \u0645\u06cc\u200c\u0641\u0647\u0645\u06cc DNS \u0648 CDN \u0686\u0647 \u06a9\u0627\u0631\u06cc \u0645\u06cc\u200c\u06a9\u0646\u0646\u062f\u060c \u0648 \u062f\u0641\u062a\u0631 \u062f\u0627\u0645\u0646\u0647 \u0631\u0627 \u062f\u0631 \u062f\u0648 \u0642\u062f\u0645 \u0627\u0632 \u0627\u06cc\u0631\u0646\u06cc\u06a9 \u0628\u0647 \u0622\u0631\u0648\u0627\u0646\u200c\u06a9\u0644\u0627\u062f \u0645\u06cc\u200c\u0633\u067e\u0627\u0631\u06cc. \u0628\u0627 \u0633\u0647 \u0646\u0634\u0627\u0646\u0647 \u0628\u0631\u0627\u06cc \u0627\u06cc\u0646\u06a9\u0647 \u0628\u0641\u0647\u0645\u06cc \u062f\u0631\u0633\u062a \u0627\u0646\u062c\u0627\u0645 \u062f\u0627\u062f\u0647\u200c\u0627\u06cc.",
+    "exit_code": 0,
+    "output_sha256": "dde830919989f5311a8e73e402d6be7742f36c5cf7479dae7272fa7bf92ed018",
+    "summary": "119 passed, 1 warned, 0 failed  \u2014 publish is COMPLETE"
+  }
+}
