@@ -17,7 +17,8 @@ and this tool does them in that order:
      fresh sums check, the manifest draft and its missing fields, every image
      file named, and the title/caption equal to 02 when 02 reads.
   4. **Mechanical cross-file checks** (`checks`, also in --dry-run). Problems:
-     author order per DOI equal in 04-منبع/کاتالوگ.json, 05-DES-Fidelity/des.json
+     05-DES-Fidelity/des.json in its one shape {"scored_at", "sources"} and a
+     plan.json the units tool would accept (P3, P4); author order per DOI equal in 04-منبع/کاتالوگ.json, 05-DES-Fidelity/des.json
      and 04-منبع/منابع.md; every catalogue and DES DOI present in منابع.md.
      Warnings: a keyword of 09 with no token in 01/02/06; a flashcard
      description ≥ 0.75 similar to an FAQ answer; deixis («این مقاله» …) in
@@ -323,9 +324,77 @@ def check_leftovers(item, warnings):
                 warnings.append(f"W4 {rel}:{n}: {', '.join(dict.fromkeys(hits))}")
 
 
+PLAN = "05-DES-Fidelity/plan.json"
+DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
+
+
+def des_shape(des):
+    """"canonical" for {"scored_at"?, "sources": [...]}; "bare_object" / "bare_list" for the two older shapes
+    the publish-day tools still read (items 13–16 and 19 were frozen with a bare SOURCE object); else "other"."""
+    if isinstance(des, dict) and isinstance(des.get("sources"), list) and des["sources"]:
+        return "canonical"
+    if isinstance(des, dict) and "des_version" in des:
+        return "bare_object"
+    if isinstance(des, list) and des:
+        return "bare_list"
+    return "other"
+
+
+def check_des_package(item, problems, warnings=None):
+    """des.json is {"scored_at": "YYYY-MM-DD", "sources": [...]} and nothing else. W5: a bare list or a bare
+    SOURCE object (older items; the tools still read it, but a new preparation writes the canonical shape).
+    P3: any other shape, a stray key (a "fidelity" inside des.json is never read) or a bad date. P4 plan.json,
+    when present, is a plan des_fidelity_units.py accepts: origin founder (decision.status confirmed) or
+    orphan_sweep (with its sweep receipt), every key a source index. A one-source page under the current order
+    has no sweep and so no plan.json (publish-queue.md, 05-DES-Fidelity)."""
+    p = item / DES
+    if not p.is_file():
+        return
+    try:
+        des = json.loads(p.read_text(encoding="utf-8"))
+    except ValueError:
+        problems.append(f"P3 {DES}: not JSON")
+        return
+    shape = des_shape(des)
+    if shape != "canonical":
+        msg = (f"{DES}: write {{\"scored_at\": \"YYYY-MM-DD\", \"sources\": [...]}}, found "
+               + {"bare_list": "a bare list", "bare_object": "a bare SOURCE object"}.get(shape, "another shape"))
+        if shape == "other" or warnings is None:
+            problems.append("P3 " + msg)
+        else:
+            warnings.append("W5 " + msg + " (read as one source list; older frozen items keep it)")
+        return
+    extra = sorted(set(des) - {"scored_at", "sources"})
+    if extra:
+        problems.append(f"P3 {DES}: keys {extra} are not part of des.json (FIDELITY goes in fidelity.json, the plan "
+                        "in plan.json)")
+    if "scored_at" in des and not (isinstance(des["scored_at"], str) and DATE.fullmatch(des["scored_at"])):
+        problems.append(f"P3 {DES}: scored_at must be YYYY-MM-DD")
+    pp = item / PLAN
+    if not pp.is_file():
+        return
+    try:
+        plan = json.loads(pp.read_text(encoding="utf-8"))
+    except ValueError:
+        problems.append(f"P4 {PLAN}: not JSON")
+        return
+    origin = plan.get("origin") if isinstance(plan, dict) else None
+    if origin not in ("founder", "orphan_sweep"):
+        problems.append(f"P4 {PLAN}: origin must be founder or orphan_sweep")
+    elif origin == "orphan_sweep" and not plan.get("sweep"):
+        problems.append(f"P4 {PLAN}: an orphan_sweep plan needs its sweep receipt — a one-source page has no sweep "
+                        "and writes no plan.json")
+    elif origin == "founder" and (plan.get("decision") or {}).get("status") != "confirmed":
+        problems.append(f"P4 {PLAN}: a founder plan needs decision.status = confirmed")
+    bad = [k for k in ((plan or {}).get("plan") or {}) if not (str(k).isdigit() and int(k) < len(des["sources"]))]
+    if isinstance(plan, dict) and bad:
+        problems.append(f"P4 {PLAN}: {bad} are not source indexes of des.json")
+
+
 def checks(item):
     """{problems, warnings}: mechanical cross-file errors a human review would otherwise have to catch."""
     problems, warnings, notes = [], [], []
+    check_des_package(item, problems, warnings)
     check_authors(item, problems, notes)
     check_keywords(item, warnings, notes)
     check_cards(item, warnings, notes)

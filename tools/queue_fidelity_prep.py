@@ -97,6 +97,24 @@ def cleanup(paths, tmp=None):
     return 0 if not skipped else 2
 
 
+def package_warnings(item, units):
+    """publish-queue.md «محتوای هر پوشه», 05-DES-Fidelity: des.json is {"scored_at", "sources"}; plan.json exists
+    only when the units tool recorded a plan (a multi-source sweep, a founder plan). Said here, not in silence."""
+    import queue_stamp as qs  # noqa: PLC0415
+    out = []
+    qs.check_des_package(item, out, out)
+    pp = item / qs.PLAN
+    if pp.is_file() and units.get("sources", 1) < 2:
+        try:
+            plan = json.loads(pp.read_text(encoding="utf-8"))
+        except ValueError:
+            plan = {}
+        if not (isinstance(plan, dict) and plan.get("sweep")) and (plan or {}).get("origin") != "founder":
+            out.append(f"{qs.PLAN}: a one-source page has no orphan sweep (module 08, single-source tier) — "
+                       "delete plan.json; the tool gives every unit to the one source")
+    return list(dict.fromkeys(out))
+
+
 def make_copy(dest):
     dest.mkdir(parents=True, exist_ok=False)
     arch = subprocess.run(["git", "-C", str(ROOT), "archive", "--format=tar", "HEAD"], capture_output=True, check=True)
@@ -173,6 +191,9 @@ def main(argv=None):
                "units_tool": str(copy / "tools/des_fidelity_units.py"), "blocks": []}
     if not a.checkout and superseded:
         receipt["superseded_removed"] = superseded
+    warn = package_warnings(item, units)
+    if warn:
+        receipt["warnings"] = warn
     swept = (copy / ".dentcast/des-fidelity-plans" / f"{cid}.json").exists()
     if a.texts and units.get("sources", 1) >= 2 and units["mode"] == "SOURCE" and not swept:
         # module 08 Part 2c: on a multi-source page the orphan sweep runs first;

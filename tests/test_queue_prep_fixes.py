@@ -258,5 +258,53 @@ class SourceConclusionTests(Site):
                     pst.main(["x.pdf", "--doi", DOI, "-o", str(out), "--conclusion", "Something the paper never says."])
 
 
+class PackageShapeTests(unittest.TestCase):
+    """Item 4."""
+
+    def item(self, t, des, plan=None):
+        d = Path(t) / "24-sharehub-x"
+        (d / "05-DES-Fidelity").mkdir(parents=True)
+        (d / "05-DES-Fidelity/des.json").write_text(json.dumps(des), encoding="utf-8")
+        if plan is not None:
+            (d / "05-DES-Fidelity/plan.json").write_text(json.dumps(plan), encoding="utf-8")
+        return d
+
+    def run_check(self, *a, **k):
+        problems, warnings = [], []
+        with tempfile.TemporaryDirectory() as t:
+            qs.check_des_package(self.item(t, *a, **k), problems, warnings)
+        return problems, warnings
+
+    def test_canonical_is_clean(self):
+        self.assertEqual(self.run_check({"scored_at": "2026-11-07", "sources": [SRC]}), ([], []))
+
+    def test_bare_shapes_are_named_not_silent(self):
+        p, w = self.run_check(SRC)
+        self.assertEqual(p, [])
+        self.assertTrue(w and w[0].startswith("W5") and "bare SOURCE object" in w[0])
+        p, w = self.run_check([SRC])
+        self.assertTrue(w and "bare list" in w[0])
+        p, _ = self.run_check({"scored_at": "7/11", "sources": [SRC], "fidelity": []})
+        self.assertEqual(len(p), 2, p)
+
+    def test_plan_rules(self):
+        des = {"scored_at": "2026-11-07", "sources": [SRC]}
+        p, _ = self.run_check(des, {"content_id": "x", "origin": "orphan_sweep", "plan": {"0": ["u1"]}})
+        self.assertTrue(p and p[0].startswith("P4") and "sweep receipt" in p[0])
+        p, _ = self.run_check(des, {"origin": "founder", "plan": {"0": ["u1"]}})
+        self.assertTrue(p and "confirmed" in p[0])
+        p, _ = self.run_check(des, {"origin": "orphan_sweep", "sweep": [{}], "plan": {"3": ["u1"]}})
+        self.assertTrue(p and "source indexes" in p[0])
+        self.assertEqual(self.run_check(des, {"origin": "orphan_sweep", "sweep": [{}], "plan": {"0": ["u1"]}}),
+                         ([], []))
+
+    def test_prep_warns_on_a_one_source_plan_without_sweep(self):
+        with tempfile.TemporaryDirectory() as t:
+            d = self.item(t, {"scored_at": "2026-11-07", "sources": [SRC]},
+                          {"origin": "orphan_sweep", "plan": {"0": ["u1"]}})
+            w = qfp.package_warnings(d, {"sources": 1})
+        self.assertTrue(any("one-source page has no orphan sweep" in x for x in w), w)
+
+
 if __name__ == "__main__":
     unittest.main()
