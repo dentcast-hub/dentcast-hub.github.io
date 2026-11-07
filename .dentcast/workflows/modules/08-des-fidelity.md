@@ -603,6 +603,19 @@ never a «بله» to the others.
   page's unit ids (a sentence split or joined), when a changed unit was not
   re-checked, or when a re-check judged old text — in those cases, and only
   those, run the full step again. Never patch a verdict by hand.
+- **Figure captions added after the full run** (founder ruling 2026-11-07,
+  publish-queue item 24: «وقتی فقط کپشن اضافه شده فقط کپشن باید چک بشه، بقیه همه
+  تأییدشده»). A `<figcaption>` is page text and its sentences are units, so
+  inserting one renumbers every unit after it. Do not rerun the page:
+  `python3 tools/des_fidelity_units.py <content_id> --carry <dir1> --texts
+  texts.json --build <dir2>` matches every unit of the last full run to its new
+  id by its exact text, carries its verdict, and builds blocks for the caption
+  units alone; run those by Part 2c (two runs, a tie-break where they differ, a
+  stronger review of anything flagged), then `--vote <dir2> --base <dir1>`, which
+  applies the same mapping. Both refuse when anything but a caption moved — a
+  body sentence changed, split, joined or vanished, a new unit that is not a
+  caption, or a recorded plan in `.dentcast/des-fidelity-plans/` that names the
+  old ids — and then the full step runs again.
 - **A source text that grows** (spec v3.5 rule 14 — the founder adds pages to an
   excerpt): pass the new `texts.json` with `--vote <dir2> --base <dir1> --texts
   texts.json`. The tool compares it with `<dir1>/input-src<k>.json`; when the old

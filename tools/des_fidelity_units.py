@@ -63,6 +63,7 @@ A core audio episode (`episodes/…`) gets DES only, never a FIDELITY call
 write-up of the paper. The tool says so and builds nothing for it.
 """
 import argparse
+import difflib
 import html
 import json
 import re
@@ -748,6 +749,61 @@ def vote_source(runs, adjudicated=None, reviewed=None, overruled=None):
     return out, tiebreak, unresolved, unreviewed
 
 
+def caption_carry(base_claims, page_units):
+    """Founder ruling 2026-11-07 (publish queue item 24, approval 4): «وقتی فقط
+    کپشن اضافه شده فقط کپشن باید چک بشه، بقیه همه تأییدشده». Align the base's
+    claims with today's units of the same source by their exact text (the
+    claim_quote is the unit, byte for byte) and return (mapping old id → new
+    id, the new caption ids, problems). Only inserted <figcaption> units are
+    new; any base claim that is gone, changed, split or joined, and any new
+    unit that is not a caption, is a problem — then nothing is carried and the
+    full step runs again."""
+    old_t = [c.get("claim_quote") for c in base_claims]
+    new_t = [u["text"] for u in page_units]
+    mapping, new, problems = {}, [], []
+    sm = difflib.SequenceMatcher(None, old_t, new_t, autojunk=False)
+    for tag, i1, i2, j1, j2 in sm.get_opcodes():
+        if tag == "equal":
+            for d in range(i2 - i1):
+                mapping[base_claims[i1 + d]["id"]] = page_units[j1 + d]["id"]
+            continue
+        for i in range(i1, i2):
+            problems.append(f"{base_claims[i]['id']} «{(old_t[i] or '')[:60]}» is no longer a unit of the page")
+        for u in page_units[j1:j2]:
+            if u.get("caption") and tag == "insert":
+                new.append(u["id"])
+            else:
+                problems.append(f"{u['id']} «{u['text'][:60]}» is new and is not a figure caption")
+    return mapping, new, problems
+
+
+def carry_base(base, page_units, k):
+    """The base re-keyed to today's ids when captions were added (caption_carry);
+    returns (base, new caption ids). Refuses with the reason otherwise."""
+    mapping, new, problems = caption_carry(base["claims"], page_units)
+    if problems:
+        sys.exit(f"src{k}: only figure captions may be added between the base and the page — "
+                 + "; ".join(problems[:6]) + (f"; and {len(problems) - 6} more" if len(problems) > 6 else "")
+                 + " — run the full step again")
+    return {**base, "claims": [{**c, "id": mapping[c["id"]]} for c in base["claims"]]}, new
+
+
+def carried_base(content_id, base, page_units, k):
+    """--vote --base after figure captions were added to the page: the base
+    re-keyed to today's ids and the caption ids that need runs; (base, [])
+    when the ids did not move or no caption is new (the ordinary re-check
+    rules then apply, unchanged)."""
+    if [c["id"] for c in base["claims"]] == [u["id"] for u in page_units]:
+        return base, []
+    _m, new, _p = caption_carry(base["claims"], page_units)
+    if not new:
+        return base, []
+    if content_id and plan_path(content_id).exists():
+        sys.exit(f"src{k}: {plan_path(content_id).relative_to(ROOT)} names the old page's unit ids — captions added "
+                 "to a page with a recorded plan need the full step")
+    return carry_base(base, page_units, k)
+
+
 def rebase(base, runs, page_units, k):
     """Part 3b re-check: the last full voted object stands for every unit the
     founder did not edit, and the new runs cover the edited ones only. Refuse
@@ -821,6 +877,10 @@ def main():
     ap.add_argument("--base", metavar="OLD_DIR", help="with --vote: re-check only. OLD_DIR holds the voted-src<k>.json "
                     "of the last full run; DIR holds runs over the EDITED units alone (Part 3b). Every other unit "
                     "must still be on the page with the same id and text, or the tool refuses")
+    ap.add_argument("--carry", metavar="OLD_DIR", help="figure captions were added to the page after the full run "
+                    "whose voted-src<k>.json is in OLD_DIR (founder 2026-11-07): map every old unit to its new id by "
+                    "its text, list the caption units to judge now (with --texts/--build DIR: build blocks of those "
+                    "only); refuses when any text other than a caption moved")
     ap.add_argument("--vote", metavar="DIR", help="majority-vote DIR/out-src<k>-<run>.json (runs 1-2 full, run 3 the "
                     "units they disagree on) into DIR/voted-src<k>.json; DIR/review.json holds the stronger-model "
                     "review of every flagged unit; DIR/adjudicate.json "
@@ -879,6 +939,15 @@ def main():
                 base_p = None
             if base_p:
                 base = json.loads(base_p.read_text(encoding="utf-8"))
+                base, carried = carried_base(a.content_id, base, [by_id[i] for i in plan[k]], k)
+                if carried:
+                    # Part 2c step 1 for the units judged now: two runs each
+                    short = [i for i in carried if sum(i in {c["id"] for c in r["claims"]} for r in runs) < 2]
+                    if short:
+                        sys.exit(f"src{k}: captions added since the base: {short} need two checker runs each "
+                                 f"(out-src{k}-1.json and -2.json over --carry's blocks)")
+                    print(f"src{k}: captions added since the base — {len(base['claims'])} unit(s) carried with their "
+                          f"verdicts, {len(carried)} caption unit(s) judged now: {carried}")
                 if a.texts:
                     # spec v3.5 rule 14: a source text that grew since the base
                     old_p = Path(a.base) / f"input-src{k}.json"
@@ -988,6 +1057,35 @@ def main():
                 print(f"src{k}: re-check {','.join(ids)} (--build --only, two runs, --vote --base)")
         print(f"found in no source (report to the founder): {absent or '—'}")
         return
+    if a.carry:
+        # founder ruling 2026-11-07: captions added after a full run → only they are judged
+        if mode == "POOLED":
+            sys.exit("--carry is per source (scope SOURCE); a POOLED page runs its full step")
+        if plan_path(a.content_id).exists():
+            sys.exit(f"{plan_path(a.content_id).relative_to(ROOT)} names the old page's unit ids — captions added "
+                     "to a page with a recorded plan need the full step")
+        by_id = {u["id"]: u for u in units}
+        report, todo = {}, []
+        for k in sorted(plan, key=str):
+            base_p = Path(a.carry) / f"voted-src{k}.json"
+            if not base_p.exists():
+                sys.exit(f"--carry: no {base_p} (the last full run's vote)")
+            base = json.loads(base_p.read_text(encoding="utf-8"))
+            cur = [by_id[i] for i in plan[k]]
+            moved, new = carry_base(base, cur, k)
+            report[f"src{k}"] = {"carried": len(moved["claims"]),
+                                 "renumbered": sum(c["id"] != m["id"] for c, m in zip(base["claims"], moved["claims"])),
+                                 "judge_now": new}
+            todo += new
+        print(json.dumps({"carry": report, "units_on_page": len(units),
+                          "next": "two checker runs over the blocks of judge_now only, then "
+                                  f"--vote DIR --base {a.carry}" if todo else "nothing new: the base stands"},
+                         ensure_ascii=False, indent=1))
+        if not a.build:
+            return
+        if not todo:
+            return
+        a.only = ",".join(todo)
     if a.build:
         if not a.texts:
             sys.exit("--build needs --texts")

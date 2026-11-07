@@ -92,6 +92,92 @@ class Site(unittest.TestCase):
         return out.getvalue()
 
 
+class CaptionCarryTests(Site):
+    """Item 1. Reproduction: Fidelity on the page without images had 61 units; the five captions made it 76
+    under the old cut (71 under today's), `--vote --base` refused the shifted ids and the whole Fidelity
+    (two full runs) was run again."""
+
+    def base_dir(self):
+        self.write_page()
+        us = units.split_page(CID, [SRC])
+        self.assertEqual(len(us), 61)
+        base = self.d / "run1"
+        base.mkdir()
+        claims = [claim(u, "NOT_A_CLAIM" if u.get("heading") else "MATCHES") for u in us]
+        claims[7]["verdict"] = "NOT_IN_SOURCE"
+        (base / "voted-src0.json").write_text(json.dumps(fid(claims), ensure_ascii=False), encoding="utf-8")
+        return base, claims
+
+    def test_reproduction_ids_shift_and_the_old_rebase_refuses(self):
+        base, claims = self.base_dir()
+        self.write_page(CAPTIONS)
+        self.assertEqual(len(units.split_page(CID, [SRC], legacy=True)), 76)
+        now = units.split_page(CID, [SRC])
+        self.assertEqual(len(now), 71)
+        caps = [u for u in now if u.get("caption")]
+        runs = [{"claims": [claim(u) for u in caps]}] * 2
+        with self.assertRaises(SystemExit):   # what the session hit: ids shifted
+            units.rebase(fid(claims), runs, now, 0)
+
+    def test_carry_lists_only_the_captions_and_vote_keeps_every_other_verdict(self):
+        base, claims = self.base_dir()
+        self.write_page(CAPTIONS)
+        rep = json.loads(self.main("--carry", str(base)))["carry"]["src0"]
+        self.assertEqual(rep["carried"], 61)
+        caps = [u for u in units.split_page(CID, [SRC]) if u.get("caption")]
+        self.assertEqual(len(caps), 10)
+        self.assertEqual(rep["judge_now"], [u["id"] for u in caps])
+        run2 = self.d / "run2"
+        self.main("--carry", str(base), "--texts", str(self.d / "texts.json"), "--build", str(run2))
+        blk = json.loads((run2 / "input-src0.json").read_text(encoding="utf-8"))
+        self.assertEqual([u["id"] for u in blk["units"]], rep["judge_now"])
+        self.assertNotIn("caption", blk["units"][0])   # internal key never reaches the model
+        for r in (1, 2):
+            (run2 / f"out-src0-{r}.json").write_text(json.dumps(fid([claim(u) for u in blk["units"]]),
+                                                                 ensure_ascii=False), encoding="utf-8")
+        self.main("--vote", str(run2), "--base", str(base))
+        voted = json.loads((run2 / "voted-src0.json").read_text(encoding="utf-8"))
+        self.assertEqual(len(voted["claims"]), 71)
+        old = {c["claim_quote"]: c["verdict"] for c in claims}
+        for c in voted["claims"]:
+            if c["claim_quote"] in old:
+                self.assertEqual(c["verdict"], old[c["claim_quote"]], c["id"])
+        self.assertEqual(voted["counts"]["not_in_source"], 1)
+        self.assertEqual(voted["counts"]["matches"], 59 + 10)   # 60 body − 1 NOT_IN_SOURCE, + 10 captions
+
+    def test_carry_refuses_when_body_text_moved(self):
+        base, _ = self.base_dir()
+        self.write_page(CAPTIONS)
+        p = self.d / f"{CID}.html"
+        p.write_text(p.read_text(encoding="utf-8").replace("جملهٔ 2 از بند 3 است.", "جملهٔ دوم بند سوم عوض شد."),
+                     encoding="utf-8")
+        with self.assertRaises(SystemExit) as e:
+            self.main("--carry", str(base))
+        self.assertIn("not a figure caption", str(e.exception))
+
+    def test_vote_needs_two_runs_over_each_caption(self):
+        base, _ = self.base_dir()
+        self.write_page(CAPTIONS)
+        caps = [u for u in units.split_page(CID, [SRC]) if u.get("caption")]
+        run2 = self.d / "run2"
+        run2.mkdir()
+        (run2 / "out-src0-1.json").write_text(json.dumps(fid([claim(u) for u in caps]), ensure_ascii=False),
+                                              encoding="utf-8")
+        with self.assertRaises(SystemExit) as e:
+            self.main("--vote", str(run2), "--base", str(base))
+        self.assertIn("two checker runs", str(e.exception))
+
+    def test_recorded_plan_with_old_ids_is_refused(self):
+        base, _ = self.base_dir()
+        self.write_page(CAPTIONS)
+        p = units.plan_path(CID)
+        p.parent.mkdir(parents=True)
+        p.write_text(json.dumps({"content_id": CID, "origin": "orphan_sweep", "sweep": [{"found": {}}],
+                                 "plan": {"0": [f"u{i}" for i in range(1, 62)]}}), encoding="utf-8")
+        with self.assertRaises(SystemExit):
+            self.main("--carry", str(base))
+
+
 class SentenceSplitTests(Site):
     """Item 2."""
 
