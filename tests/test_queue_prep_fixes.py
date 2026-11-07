@@ -334,5 +334,40 @@ class RelatedCapTests(unittest.TestCase):
         self.assertEqual(r["count"], len(r["links"]))
 
 
+class CleanupTests(unittest.TestCase):
+    """Item 9: --cleanup without a path refuses (an empty shell variable never widens it); symlinks refused."""
+
+    def run_cli(self, *a, env=None):
+        return subprocess.run([sys.executable, str(ROOT / "tools/queue_fidelity_prep.py"), *a],
+                              capture_output=True, text=True, env=env)
+
+    def work(self, t, name):
+        d = Path(t) / (qfp.PREFIX + name)
+        (d / "checkout").mkdir(parents=True)
+        (d / "checkout" / qa.THROWAWAY_MARKER).write_text("t\n", encoding="utf-8")
+        (d / qfp.NOTE).write_text(json.dumps({"item": "x"}), encoding="utf-8")
+        return d
+
+    def test_empty_target_refused_all_is_explicit(self):
+        with tempfile.TemporaryDirectory() as t:
+            a = self.work(t, "a")
+            env = {**os.environ, "TMPDIR": t}
+            r = self.run_cli("--cleanup", env=env)
+            self.assertEqual(r.returncode, 2)
+            self.assertEqual(json.loads(r.stdout)["code"], "CLEANUP_TARGET")
+            self.assertTrue(a.exists())
+            r = self.run_cli("--cleanup", "--all", env=env)
+            self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+            self.assertFalse(a.exists())
+
+    def test_symlinked_work_dir_is_not_removed(self):
+        with tempfile.TemporaryDirectory() as t:
+            real = self.work(t, "real")
+            link = Path(t) / (qfp.PREFIX + "link")
+            link.symlink_to(real)
+            self.assertFalse(qfp.is_work_dir(link))
+            self.assertTrue(qfp.is_work_dir(real))
+
+
 if __name__ == "__main__":
     unittest.main()

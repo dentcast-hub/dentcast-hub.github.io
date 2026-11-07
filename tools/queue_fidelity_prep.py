@@ -20,15 +20,21 @@ a publish (queue_apply refuses --draft anywhere else).
 
     python3 tools/queue_fidelity_prep.py ../dentcast-queue/queue/NN-sharehub-slug \\
         [--content-id sharehub/share-46] [--texts texts.json] [--checkout DIR] [--build DIR]
-    python3 tools/queue_fidelity_prep.py --cleanup [WORK_DIR ...]
+    python3 tools/queue_fidelity_prep.py --cleanup WORK_DIR [WORK_DIR ...]   # the literal path(s) of the receipt
+    python3 tools/queue_fidelity_prep.py --cleanup --all
 
 The work directory (`dentcast-fidelity-prep-*` under the temp dir: the copy, the
 blocks, the checker outputs) is a full copy of the site, so it is not left
 behind: a new run for the same item replaces that item's older work directories
 (a rerun means a fresh draft), and `--cleanup` removes the named work
-directories, or every one under the temp dir, once the FIDELITY record is
-stored in 05-DES-Fidelity/ (publish-queue.md, step 5). Only a directory that
-carries the throwaway marker and no `.git` is ever removed.
+directories, or with `--all` every one under the temp dir, once the FIDELITY
+record is stored in 05-DES-Fidelity/ (publish-queue.md, step 5). Removal is
+Python's shutil.rmtree on a directory that passes is_work_dir(): the
+`dentcast-fidelity-prep-` prefix, this tool's prep.json, the throwaway marker
+in checkout/, no `.git`, no symlink. No shell `rm` is run, and `--cleanup`
+with no path refuses (CLEANUP_TARGET) instead of sweeping, so an empty shell
+variable never widens it. Run the receipt's `cleanup` line as printed (one
+line, literal path), not inside a multi-line script with variables.
 
 The default content_id is the next free number of the item's category on this
 checkout (a temporary id; publish day takes the live one). texts.json is the
@@ -59,10 +65,16 @@ NOTE = "prep.json"
 
 
 def is_work_dir(p):
-    """A work directory this tool made: prefix, a marked copy, no .git — nothing else is ever removed."""
+    """A work directory this tool made: prefix, a marked copy, no .git, no symlink on the way — nothing else is
+    ever removed."""
     p = Path(p)
-    return (p.is_dir() and p.name.startswith(PREFIX)
+    return (p.is_dir() and not p.is_symlink() and p.name.startswith(PREFIX) and _note_ok(p)
+            and not (p / "checkout").is_symlink()
             and (p / "checkout" / qa.THROWAWAY_MARKER).is_file() and not (p / "checkout" / ".git").exists())
+
+
+def _note_ok(p):  # the note this tool writes beside the copy (prep.json) is a plain file
+    return (p / NOTE).is_file() and not (p / NOTE).is_symlink()
 
 
 def work_dirs(tmp=None):
@@ -145,12 +157,21 @@ def main(argv=None):
     ap.add_argument("paths", nargs="*", help="the queue item folder; with --cleanup, work directories (none: all)")
     ap.add_argument("--cleanup", action="store_true",
                     help="remove throwaway work directories (after the FIDELITY record is stored in 05)")
+    ap.add_argument("--all", action="store_true",
+                    help="with --cleanup: every work directory of this tool under the temp dir")
     ap.add_argument("--content-id", help="temporary content_id (default: the next free one of the category)")
     ap.add_argument("--texts", help="texts.json for --build (DOI or S<n> → source_text, text_basis)")
     ap.add_argument("--checkout", help="an existing throwaway copy (marker, no .git) instead of a new one")
     ap.add_argument("--build", help="where the input blocks go (default: <work>/blocks)")
     a = ap.parse_args(argv)
     if a.cleanup:
+        # an empty shell variable must never widen the scope: a sweep of every
+        # work directory is asked for by name (--all), never implied by no path
+        if not a.paths and not a.all:
+            return fail("CLEANUP_TARGET", "give the work directory the receipt printed (its literal path), "
+                        "or --all for every work directory of this tool under the temp dir")
+        if a.paths and a.all:
+            return fail("CLEANUP_TARGET", "give work directories or --all, not both")
         return cleanup(a.paths)
     if len(a.paths) != 1:
         return fail("ITEM_REQUIRED", "give exactly one queue item folder (or --cleanup)")
@@ -184,7 +205,7 @@ def main(argv=None):
     if r.returncode != 0 or not units:
         return fail("UNITS_FAILED", "des_fidelity_units.py --json failed", stderr=r.stderr[-2000:], checkout=str(copy))
     receipt = {"status": "prepared", "not_for_publish": True, "checkout": str(copy), "work": str(work),
-               "cleanup": f"python3 tools/queue_fidelity_prep.py --cleanup {work}  # after Part 4", "content_id": cid,
+               "cleanup": f"python3 tools/queue_fidelity_prep.py --cleanup {work}", "cleanup_when": "after Part 4", "content_id": cid,
                "page": f"{copy / cid}.html", "draft_placeholders": draft.get("placeholders"),
                "scope": units["mode"], "units": len(units["units"]),
                "plan": {k: len(v) for k, v in units["plan"].items()},
