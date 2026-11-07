@@ -1,0 +1,321 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "sharehub",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "اسکن دیجیتال فول‌آرچ ایمپلنت؛ واقعاً چقدر می‌توانیم به آن اعتماد کنیم؟",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "caption_fa": {
+  "value": "اسکنر داخل‌دهانی می‌تواند موقعیت ایمپلنت‌های یک قوس کامل را به‌اندازهٔ قالب‌گیری متداول ثبت کند؟ مرور سیستماتیکی در JPD نشان می‌دهد پاسخ به فاصلهٔ ایمپلنت‌ها و روش اسکن بستگی دارد.",
+  "from": "02-عنوان-کپشن.md:9"
+ },
+ "title_en": {
+  "value": "Digital Full-Arch Implant Scanning: How Far Can We Really Trust It?",
+  "from": "06-انگلیسی.md:1"
+ },
+ "caption_en": {
+  "value": "Can an intraoral scanner record the position of the implants in a complete arch as well as a conventional impression? A systematic review in JPD shows that the answer depends on the implant span and the scanning method.",
+  "from": "06-انگلیسی.md:3"
+ },
+ "body_en": {
+  "value": "Suppose we have a patient with four or six implants in an edentulous jaw, and we are going to make a fixed prosthesis for them.\n\nTo make this prosthesis, the positions of the implants relative to each other have to be recorded accurately. If the distance or angulation between them is not recorded correctly, the final prosthesis may not fit properly.\n\nSo the question is: can an intraoral scanner do this as accurately as a conventional impression?\n\nA new systematic review in JPD, examining 23 studies, compared different digital scanning methods with the conventional open tray impression.\n\nThe reference method in these studies was an open tray impression with impression copings splinted together at the abutment level; that is, we tighten the impression copings onto the multi-unit abutments, splint them together with a material such as pattern resin, and then take the impression.\n\n## What Is the Main Problem with Full-Arch Scanning?\n\nWhen scanning natural teeth, cusps, fissures and tooth shape help the software recognize its position. In an edentulous jaw, these landmarks are much scarcer.\n\nOn the other hand, the scanner does not record the whole arch at once. It captures small images one after another, and the software joins them together, a process we call stitching.\n\nIf a small error occurs when any image is joined, these errors may add up along the arch. So a scan that looks perfectly clean has not necessarily recorded the implant positions accurately.\n\n[[تصویر:01]]\n\n## Does the Distance Between the Implants Matter?\n\nOne of the most important findings of the article is that the number of implants is not the only thing that matters; the distance between the terminal implants, or the implant span, also plays a decisive role.\n\nFor example, when we have four implants within the range from the right premolar to the left premolar, a regular digital scan in laboratory studies has often shown accuracy comparable to, or even better than, a conventional impression.\n\nBut when the implants extend to the molar region on both sides, the situation changes. At these long spans, the conventional splinted impression has generally given more accurate results.\n\nSo the longer the implant span, the greater our concern about the cumulative scanning error.\n\n[[تصویر:02]]\n\n## What Can We Do to Increase Scanning Accuracy?\n\nOne method is to use a scan aid. These components create more surfaces and geometric landmarks around the scan bodies.\n\nThe logic is similar to scanning an arch with natural teeth. When we have more landmarks, the software can join the images more easily, and probably less error occurs.\n\nBut the point is that the scan still depends on joining images in sequence. So a scan aid can reduce error, but it does not guarantee correction of cumulative errors, especially when the implant span is long.\n\nAnother method is to use horizontal scan bodies that extend toward the center of the arch. In this method, we try to shorten the scanning path so that cumulative errors are smaller.\n\nBut the more interesting method is calibrated intraoral scanning, or CISP.\n\nIn this technique, an auxiliary structure is attached to the scan bodies and scanned in the mouth together with them. We then scan the same auxiliary structure outside the mouth with a precise laboratory scanner as well.\n\nNow the software has the laboratory scan data as an independent reference and can use it to correct the errors of the intraoral scan.\n\nSo the difference between this method and a regular scan aid is that we do not only try to produce less error; we also try to correct the errors that have been produced.\n\nThis method has shown promising results even at long spans, but for now there are only two studies on it.\n\n[[تصویر:03]]\n\n[[تصویر:04]]\n\n## What About Photogrammetry?\n\nIn extraoral photogrammetry, the positions of the markers attached to the implants are recorded simultaneously; therefore the problem of sequential stitching, as in a regular intraoral scan, does not exist.\n\nBut the article also examined the newer method of intraoral photogrammetry, which uses special markers during the intraoral scan.\n\nFor this method, there was no study that directly compared its accuracy with the conventional splinted impression. The evidence on horizontal scan bodies is also very limited.\n\n## What Should We Decide Clinically?\n\nIf the implant span is relatively short and the scanning conditions are good, an intraoral scan can be a defensible choice.\n\nBut when the implants are at the two ends of a long arch, I do not rely merely on having a good scanner or using a scan aid. The conventional splinted impression is still a dependable option.\n\nOf course, we should also consider an important limitation of the article: of the 23 studies, only one was done on a real patient, and none of them evaluated the fit of the fabricated prosthesis in a real patient.\n\nThe conditions in the mouth also differ from a laboratory model. Movement of the mucosa and tongue, especially in the mandible, and the presence of blood and fluids during surgery can reduce scanning accuracy.\n\n[[تصویر:05]]\n\n## My Personal Approach\n\nSetting aside the results of this article, in designing fixed full-arch prostheses I prefer not to connect all the implants of the arch with a single monolithic prosthesis.\n\nFor example, instead of making a one-piece prosthesis from the right molar to the left molar, I divide it into several independent segments, even if a cantilever results in some areas.\n\nThe reason for this decision is not to increase scanning accuracy. The issue is that if there is an error in recording the implant positions, in a long monolithic prosthesis this error may affect the fit of the entire structure. In a multi-segment prosthesis, however, each segment rests on a smaller number of implants and the distance between its supports is shorter. As a result, the effect of cumulative errors can be more limited.\n\nOf course, this approach does not eliminate error, and choosing the cantilever length has its own biomechanical considerations.\n\nThis is my personal approach, not a conclusion of the article; but given the problem of cumulative errors that the article raises, its logic can be explained.\n\n## Final Word\n\nThe message of the article is not that digital scanning is good or bad; the issue is that its accuracy depends on the scanning conditions and, especially, on the distance between the implants.\n\nA scan aid can be helpful, and calibration methods are promising, but there is still not enough clinical evidence to set aside the conventional impression in all conditions.\n\nOur goal is not to digitize treatment at any cost; our goal is to record the implant positions accurately and to make a prosthesis with a proper and dependable fit.",
+  "from": "06-انگلیسی.md:6-102"
+ },
+ "images": {
+  "value": [
+   {
+    "n": "01",
+    "file": {
+     "value": "03-تصاویر/01-scan-challenges-features-and-stitching.webp",
+     "from": "03-تصاویر/تصاویر.md:8"
+    },
+    "alt_fa": {
+     "value": "کمبود نشانه‌های هندسی و خطای استیچینگ در اسکن فول‌آرچ ایمپلنت",
+     "from": "03-تصاویر/تصاویر.md:9"
+    },
+    "alt_en": {
+     "value": "Lack of geometric features and cumulative stitching error in complete-arch implant scanning",
+     "from": "03-تصاویر/تصاویر.md:10"
+    },
+    "caption_fa": {
+     "value": "تصویر ۱. دو چالش اسکن داخل‌دهانی فول‌آرچ ایمپلنت: کمبود نشانه‌های هندسی در فک بی‌دندان (بالا) و تجمع خطای استیچینگ در اسکن بلند (پایین). منبع: Li و همکاران 2026، شکل 1",
+     "from": "03-تصاویر/تصاویر.md:11"
+    },
+    "caption_en": {
+     "value": "Figure 1. The two challenges of complete-arch implant intraoral scanning: lack of geometric features in the edentulous jaw (top) and cumulative stitching error in a long-span scan (bottom). Source: Li et al. 2026, Fig. 1",
+     "from": "06-انگلیسی.md:110"
+    }
+   },
+   {
+    "n": "02",
+    "file": {
+     "value": "03-تصاویر/02-accuracy-by-implant-span.webp",
+     "from": "03-تصاویر/تصاویر.md:17"
+    },
+    "alt_fa": {
+     "value": "دقت هر روش اسکن در برابر قالب‌گیری متداول بر اساس فاصلهٔ ایمپلنت‌ها",
+     "from": "03-تصاویر/تصاویر.md:18"
+    },
+    "alt_en": {
+     "value": "Accuracy of each scanning technique versus the conventional impression by implant span",
+     "from": "03-تصاویر/تصاویر.md:19"
+    },
+    "caption_fa": {
+     "value": "تصویر ۲. مقایسهٔ دقت هر روش اسکن با قالب‌گیری متداول اسپلینت‌شده در ۲۳ مطالعه، بر اساس فاصلهٔ ایمپلنت‌ها (سبز: بهتر از قالب‌گیری متداول، آبی: تفاوت معنادار ندارد، قرمز: بدتر). منبع: Li و همکاران 2026، شکل 4",
+     "from": "03-تصاویر/تصاویر.md:20"
+    },
+    "caption_en": {
+     "value": "Figure 2. Accuracy of each scanning technique compared with the conventional splinted impression across 23 studies, by implant span (green: better than conventional, blue: no significant difference, red: worse). Source: Li et al. 2026, Fig. 4",
+     "from": "06-انگلیسی.md:112"
+    }
+   },
+   {
+    "n": "03",
+    "file": {
+     "value": "03-تصاویر/03-scan-technique-categories.webp",
+     "from": "03-تصاویر/تصاویر.md:26"
+    },
+    "alt_fa": {
+     "value": "پنج دستهٔ تکنیک اسکن فول‌آرچ ایمپلنت",
+     "from": "03-تصاویر/تصاویر.md:27"
+    },
+    "alt_en": {
+     "value": "The five categories of complete-arch implant scanning techniques",
+     "from": "03-تصاویر/تصاویر.md:28"
+    },
+    "caption_fa": {
+     "value": "تصویر ۳. پنج دستهٔ اسکن فول‌آرچ ایمپلنت: اسکن‌بادی معمولی (IOS-O)، Scan Aid (IOS-SA)، اسکن‌بادی افقی در مرکز قوس (IOS-CHS)، اسکن داخل‌دهانی کالیبره‌شده (IOS-CISP) و فوتوگرامتری داخل‌دهانی (IOS-IPG). منبع: Li و همکاران 2026، شکل 2",
+     "from": "03-تصاویر/تصاویر.md:29"
+    },
+    "caption_en": {
+     "value": "Figure 3. The five categories of complete-arch implant scanning: regular scan bodies (IOS-O), scan aids (IOS-SA), centered horizontal scan bodies (IOS-CHS), calibrated intraoral scan protocol (IOS-CISP) and intraoral photogrammetry (IOS-IPG). Source: Li et al. 2026, Fig. 2",
+     "from": "06-انگلیسی.md:114"
+    }
+   },
+   {
+    "n": "04",
+    "file": {
+     "value": "03-تصاویر/04-table-strategies.webp",
+     "from": "03-تصاویر/تصاویر.md:35"
+    },
+    "alt_fa": {
+     "value": "جدول راهکار هر دسته برای دو چالش اسکن",
+     "from": "03-تصاویر/تصاویر.md:36"
+    },
+    "alt_en": {
+     "value": "Table of each category's strategy for the two scanning challenges",
+     "from": "03-تصاویر/تصاویر.md:37"
+    },
+    "caption_fa": {
+     "value": "تصویر ۴. جدول راهکار هر دسته برای دو چالش: کمبود نشانه‌های هندسی در فک بی‌دندان و خطاهای تجمعی استیچینگ. منبع: Li و همکاران 2026، جدول 2",
+     "from": "03-تصاویر/تصاویر.md:38"
+    },
+    "caption_en": {
+     "value": "Figure 4. Table of the strategy each category uses against the two challenges: lack of geometric features in the edentulous arch and cumulative stitching errors. Source: Li et al. 2026, Table 2",
+     "from": "06-انگلیسی.md:116"
+    }
+   },
+   {
+    "n": "05",
+    "file": {
+     "value": "03-تصاویر/05-clinical-challenges-not-in-vitro.webp",
+     "from": "03-تصاویر/تصاویر.md:44"
+    },
+    "alt_fa": {
+     "value": "چالش‌های بالینی اسکن فول‌آرچ که مدل آزمایشگاهی نشان نمی‌دهد",
+     "from": "03-تصاویر/تصاویر.md:45"
+    },
+    "alt_en": {
+     "value": "Clinical challenges of complete-arch scanning that a laboratory model does not show",
+     "from": "03-تصاویر/تصاویر.md:46"
+    },
+    "caption_fa": {
+     "value": "تصویر ۵. مدل آزمایشگاهی با ساختارهای ثابت (بالا چپ)، بافت متحرک فک پایین در بیمار واقعی (بالا راست)، آلودگی با مایعات هنگام جراحی ایمپلنت (پایین چپ) و انحراف بزرگ اسکن پس از جراحی (پایین راست). منبع: Li و همکاران 2026، شکل 7",
+     "from": "03-تصاویر/تصاویر.md:47"
+    },
+    "caption_en": {
+     "value": "Figure 5. A laboratory model with fixed structures (top left), mobile tissue in a real mandible (top right), fluid contamination during implant surgery (bottom left) and a large scan deviation right after surgery (bottom right). Source: Li et al. 2026, Fig. 7",
+     "from": "06-انگلیسی.md:118"
+    }
+   }
+  ],
+  "from": "03-تصاویر/تصاویر.md"
+ },
+ "credit": {
+  "value": {
+   "mode": "references",
+   "items": [
+    {
+     "label_fa": "Li و همکاران، J Prosthet Dent، ۲۰۲۶",
+     "label_en": "Li et al., J Prosthet Dent, 2026",
+     "href": "https://doi.org/10.1016/j.prosdent.2026.09.031",
+     "from": "04-منبع/منابع.md:26"
+    }
+   ]
+  },
+  "from": "04-منبع/منابع.md:22"
+ },
+ "catalog": {
+  "value": [
+   {
+    "title": "Accuracy of complete arch implant intraoral scans: A systematic review of different technique categories compared with the conventional splinted open tray method",
+    "file_name": "Accuracy of complete arch implant intraoral scans: A systematic review of different technique categories compared with the conventional splinted open tray method.pdf",
+    "topic": "Scanning",
+    "topic_path": "Scanning",
+    "type": "systematic review + meta-analysis",
+    "local_path": "",
+    "file_size": 6487886,
+    "key_finding": "",
+    "clinical_bottom_line": "",
+    "drive_link": "https://drive.google.com/file/d/1yV5_Fd7ROqnXFKVOLUTsyDrn2nCK2qj3/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=1yV5_Fd7ROqnXFKVOLUTsyDrn2nCK2qj3",
+    "drive_view": "https://drive.google.com/file/d/1yV5_Fd7ROqnXFKVOLUTsyDrn2nCK2qj3/view",
+    "drive_id": "1yV5_Fd7ROqnXFKVOLUTsyDrn2nCK2qj3",
+    "tags": [
+     "complete-arch-implant",
+     "implant-scan",
+     "intraoral-scanner",
+     "scan-aid",
+     "stitching-error",
+     "splinted-open-tray",
+     "calibrated-scan",
+     "photogrammetry",
+     "implant-span",
+     "accuracy",
+     "trueness",
+     "precision",
+     "systematic-review",
+     "topic:scanning",
+     "accuracy-complete-arch-implant-intraoral-scans-systematic-review"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Accuracy of complete arch implant intraoral scans: A systematic review of different technique categories compared with the conventional splinted open tray method",
+    "doi": "10.1016/j.prosdent.2026.09.031",
+    "journal": "The Journal of Prosthetic Dentistry",
+    "crossref_year": 2026,
+    "subjects": [],
+    "abstract": "Statement of problem: The accuracy comparison results between a conventional impression and an intraoral scan for a complete arch implant are mixed and unclear. Purpose: The purpose of this systematic review was to compare the accuracy of different categories of complete arch implant intraoral scan techniques with the conventional abutment-level splinted open tray impression technique. Material and methods: A comprehensive search of the PubMed, EMBASE, and Web of Science databases was conducted to identify eligible studies. Complete arch implant scan techniques were classified into 5 categories: IOS-O, regular intraoral scan only; IOS-SA, intraoral scan with scan aid; IOS-CHS, intraoral scan with horizontal scan bodies oriented toward the center of the arch to reduce scan span; IOS-CISP, intraoral scan with auxiliary structures followed by calibration with a high-accuracy scan of the auxiliary structures to correct stitching errors in the intraoral scan; IOS-IPG, intraoral photogrammetry. The accuracy outcomes were extracted and analyzed using both descriptive statistics and meta-analysis. Subgroup analyses were conducted based on short implant span (span within premolar to premolar) and long implant span (span longer than premolar to premolar). Results: Twenty-three studies, including 22 in vitro studies and 1 clinical study, were included in the present systematic review. IOS-O was investigated in 22 studies, IOS-SA in 10 studies, 2 studies for IOS-CISP, 1 study for IOS-CHS, and no available study for IOS-IPG. Descriptives analysis showed that IOS-O and IOS-SA presented better accuracy than the conventional approach in short implant spans but worse accuracy in long implant spans. IOS-CISP showed better accuracy than the conventional approach in long implant spans. Meta-analysis also showed that IOS-O and IOS-SA were more accurate than the conventional technique for short spans but that the conventional technique was more accurate for long implant spans. Conclusions: In an in vitro setting, IOS-O and IOS-SA demonstrated higher accuracy than the conventional technique in short-span implant scans. In long-span implant scans, conventional techniques were more accurate than IOS-O and IOS-SA. IOS-CISP appeared to be more accurate than conventional techniques in long spans, but the evidence is limited. Studies comparing IOS-CHS and IOS-IPG with conventional approaches are insufficient.",
+    "display_title": "Accuracy of complete arch implant intraoral scans: A systematic review of different technique categories compared with the conventional splinted open tray method",
+    "authors": [
+     "Junying Li",
+     "Jiayi Lu",
+     "Zhaozhao Chen",
+     "Prajakta Shreeram Kulkarni",
+     "Yu Chun Lin",
+     "Fei Liu"
+    ]
+   }
+  ],
+  "from": "04-منبع/کاتالوگ.json"
+ },
+ "hashtags": {
+  "value": [
+   "#Share_Hub",
+   "#Curated_Content",
+   "#اسکن_فول_آرچ",
+   "#ایمپلنت_فول_آرچ",
+   "#قالب‌گیری_دیجیتال",
+   "#خطای_استیچینگ",
+   "#دقت_اسکن",
+   "#قالبگیری_اوپن_تری"
+  ],
+  "from": "07-ورودی‌ها.md:10"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "digital",
+   "subtopic": "intraoral-scanning",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:16"
+ },
+ "pulse": {
+  "value": {
+   "text": null,
+   "link_phrase": "اسکن دیجیتال فول‌آرچ ایمپلنت؛ واقعاً چقدر می‌توانیم به آن اعتماد کنیم؟"
+  },
+  "from": "07-ورودی‌ها.md:19"
+ },
+ "keywords": {
+  "value": [
+   "اسکن داخل‌دهانی ایمپلنت‌های یک قوس کامل",
+   "دقت اسکن در فاصلهٔ بلند ایمپلنت‌ها (Implant Span)",
+   "کوپینگ‌های اسپلینت‌شده با Pattern Resin",
+   "کوپینگ قالب‌گیری روی مولتی‌یونیت اباتمنت",
+   "خطای تجمعی در طول قوس",
+   "Scan Aid در اسکن ایمپلنت",
+   "اسکن داخل‌دهانی کالیبره‌شده (CISP)",
+   "اسکن‌بادی افقی با امتداد به مرکز قوس",
+   "فوتوگرامتری داخل‌دهانی و خارج‌دهانی",
+   "فیت پروتز ثابت فول‌آرچ ایمپلنتی",
+   "تقسیم پروتز فول‌آرچ به چند قطعه و کانتیلور",
+   "مرور سیستماتیک JPD دربارهٔ اسکن ایمپلنت",
+   "cumulative error in long-span scans",
+   "scan aid",
+   "calibrated intraoral scan (CISP)",
+   "intraoral photogrammetry",
+   "implant span"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "اسکنر داخل‌دهانی",
+    "from": "11-لینک‌های-گلاسری.md:10",
+    "href": "/glossary/intraoral-scanner.html"
+   },
+   {
+    "phrase": "اسکن‌بادی‌ها",
+    "from": "11-لینک‌های-گلاسری.md:14",
+    "href": "/glossary/scan-body.html"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:8"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "/sharehub/share-2.html",
+    "label": "بهینه‌سازی دقت اسکن ایمپلنت",
+    "from": "11-لینک‌های-گلاسری.md:37"
+   },
+   {
+    "href": "/episodes/episode-144-2.html",
+    "label": "فوتوگرامتری در اسکن فول آرچ",
+    "from": "11-لینک‌های-گلاسری.md:38"
+   },
+   {
+    "href": "/episodes/episode-133.html",
+    "label": "افزایش دقت اسکن با اسکن‌بادی‌ها",
+    "from": "11-لینک‌های-گلاسری.md:39"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:32"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
