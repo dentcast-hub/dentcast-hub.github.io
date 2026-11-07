@@ -98,6 +98,18 @@ MODULES = WORKFLOW + 'modules/'
 # split paragraph and a Part 3b bullet («Figure captions added after the full
 # run»), all after the «Conditional path for founder-supplied results» boundary,
 # so LiteCast/Challenge still omit them. No heading changed in either module.
+# Re-pinned 2026-11-07 (DES record guard, publish-queue item 22 / Elgamal 2025): 08 adds
+# Part 1's «one DES record per paper» lookup block, Part 2's system-prompt run method,
+# a new «#### Part 2d» rating-audit section before Part 3, Part 3 item (7) and a
+# Verify & report sentence — all after the «Conditional path for founder-supplied
+# results» boundary (unchanged, still once), so LiteCast/Challenge still omit them; the
+# queue-prep pack reads module 08 whole. No other heading changed.
+# Re-pinned 2026-11-07 (DES spec v3.6, 3b-ii «What addresses a domain»): 08 moves its
+# prompt-file references from des-v3.5-knowledge.md to des-v3.6-knowledge.md, names 3.6
+# as the current spec in Part 1, Part 2 and the des-version-history block, adds one
+# sentence to Part 2's system-prompt block and one to Part 3(7). All after the
+# «Conditional path for founder-supplied results» boundary (still once; the text before
+# it is byte-identical to HEAD) and no heading changed, so LiteCast/Challenge still omit them.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
@@ -105,7 +117,7 @@ PINNED_BLOBS = {
     '04-taxonomy-and-navigation.md': '4e5a13815daf8dfad0c1cdb8482d7d6bcbb5025a',
     '05-semantic-linking.md': '6ba95d74e28f1e423e034d31327d6c9351f85c20',
     '06-paper-ingestion.md': '226ff4a756418788e70afa2a19e4484c1734dedb',
-    '08-des-fidelity.md': '43fd93e490d1bd85cea99df3c2a13b19123fc1f9',
+    '08-des-fidelity.md': 'c063cef49872920932db3a5e8b6f66af599ffe2f',
     '09-challenge.md': '3ac5856ddb021aa9f36cbfb35d6363531ae038c8',
     '11-build-and-version.md': '4dd05364ca5f9fd5811d7de39f172af14c592b13',
     '12-english-notify-verify.md': '5c9b65ee4416fd67607e6d35ca88272832ee86ec',

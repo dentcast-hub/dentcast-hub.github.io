@@ -8,7 +8,46 @@ were moved here so a publish does not re-read them every time (founder
 compare a record stamped below the current spec version.
 
 <!-- des-version-history-text:v1 -->
-**v3.5 is the current spec, and its change from 3.4 is the FIDELITY pipeline
+**v3.6 is the current spec, and its change from 3.5 is one reading of Step 3b,
+closed** (3b-ii «What addresses a domain», Core Rule 2, 3b lines 1 and 4;
+2026-11-07). No threshold, multiplier, penalty, band, FIDELITY rule or output
+field changes, but a RESEARCH score can fall, so it is a bump and not a
+clarification: the spec's own Versioning (v2.7 entry) makes any change to its
+text a version bump, and appendix rule 6 calls a band change between runs an
+open decision that must be closed, not averaged. The case is publish-queue item
+22, Elgamal et al. 2025 (10.1186/s12903-025-06214-9, FULL_TEXT): a
+within-participant crossover in 24 participants whose results tables give a value
+for every participant and whose text never mentions losses, exclusions or numbers
+analysed. 3b line 4 («the text addresses it but partially or ambiguously») and
+the «Rate the DOMAIN» paragraph never said what text counts as addressing a
+domain, so ROBINS-I `missing data` read both as `some_concerns` (the tables as a
+partial account, 0.80, 52/C) and as `high` (silence, 0.55, 36/D): six of seven
+independent v3.5 Opus runs chose the first, the stored queue record and one run
+the second, and Core Rule 2 sent the first reading to the nearest sentence
+(«each participant in specific areas, including occlusal»). v3.6: a domain is
+addressed only by text describing the safeguard itself — never by a result, a
+table, an outcome value, a sample count or a design statement, except for the
+domain whose safeguard that statement is; the `evidence_quote` of a `low` or
+`some_concerns` domain must be a sentence about that safeguard, and a domain with
+nothing else to quote is `high` under `FULL_TEXT`. A closed table names what
+addresses missing (outcome) data, QUADAS-2 flow and timing, RoB 2 selection of
+the reported result and QUIN sample size justification, decides only whether a
+domain is addressed (never `low` against `some_concerns`), and a worked example
+describes the case abstractly. Measured with the v3.6 knowledge cut as system
+prompt (`claude -p … --model opus`, empty directory, tool-less): Elgamal five
+runs, `missing data` `high` and 36/D in all five with identical domain ratings;
+the regression control Alqutaibi et al. 2026 (10.2186/jpr.JPR_D_25_00028,
+AMSTAR-2) three runs, 55/C in all three, as stored. A first draft that also
+listed participant selection in the table moved that domain to `some_concerns`
+in four of five Elgamal runs (the column read as a checklist of elements); the
+row was dropped and the table now says it decides only whether a domain is
+addressed. Records stamped 3.5 and below stay valid under their own stamp and are
+never re-labelled; `tools/des_record_guard.py` (the Part 2d audit reads Step 3
+from `des-v3.6-knowledge.md`) and Part 1's reuse rule follow the current stamp,
+so a 3.5 record of a paper is `not_comparable` to a new 3.6 run, never reused for
+one.
+
+**v3.5's change from 3.4 is the FIDELITY pipeline
 only** (appendix rules 10, 12–14; founder 1405/08/04). The model instruction, every
 verdict rule, F4 and the bands are 3.4's word for word, so no score and no verdict
 moves; what changes is which sentences reach a call. `sharehub/share-42` is why:

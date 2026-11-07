@@ -319,6 +319,26 @@ def normalize(s):
 
 DES_BANDS = {"A": (80, 100), "B": (60, 79), "C": (40, 59), "D": (20, 39), "E": (0, 19)}
 
+# Module 08 Part 3(7): the rating-rule check lives in one place, shared with
+# the preparer's tools (des_record_guard.py check, queue_stamp.py, des_library.py).
+# Imported when a DES row needs it (a missing module then fails that row loudly),
+# not at load time, so callers that copy this file alone for other rows keep working.
+def _des_guard():
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import des_record_guard  # noqa: PLC0415
+    return des_record_guard
+
+
+def des_rating_findings(src):
+    return _des_guard().rating_findings(src)
+
+
+def des_rating_binding(src, scored_at):
+    return _des_guard().rating_rule_binding(src, scored_at)
+
+
+DES_RATING_RULE_FROM = "2026-11-07"  # = des_record_guard.RATING_RULE_FROM (a test keeps them equal)
+
 
 def des_ge_2(version):
     """True when a record was written under spec v2.0 or later.
@@ -641,12 +661,21 @@ def des_text_report(path):
     except (OSError, ValueError) as e:
         print(f"ERROR cannot read {path}: {e}")
         return 2
-    # a DES object checked here is about to be stored, so it is current (v3.5)
-    bad = des_fa_wording(rec, default_ver="3.5")
+    # a DES object checked here is about to be stored, so it is current (v3.6)
+    bad = des_fa_wording(rec, default_ver="3.6")
     for p, word, good in bad:
         print(f"FAIL  {p}: «{word}» → «{good}» (founder vocabulary; the agent rewrites it, no founder question)")
     if not bad:
         print("ok    no word from the founder's avoid list (fact_fa / interpretation_fa)")
+    # Part 3(7): the rating rule, on every object about to be stored (binding:
+    # a new record). Unlike the wording, this is never fixed by editing the
+    # record — the SOURCE call is rerun (module 08 Part 3(7)).
+    rated = [(label, f) for label, _, s in _des_guard().sources_of(rec) for f in des_rating_findings(s)]
+    for label, f in rated:
+        print(f"FAIL  {label} {f['code']}: {f['detail']} — rerun the SOURCE call, never hand-patch (module 08 Part 3(7))")
+    if not rated:
+        print("ok    rating rule (spec 3b): no EMPTY_QUOTE / ABSENCE_NOTE domain")
+    bad = bad or rated
     print("\nPart 3(6): each sentence below must say only what the scored text or the record itself says.")
     for p, sents in des_fa_sentences(rec):
         print(f"\n{p}")
@@ -1916,6 +1945,23 @@ def _verify_core(content_id, rep, expect_title=None, expect_caption=None, sweep=
                         rep.fail("4.13 DES",
                                  f"{tag} rates «{label}» {dom['rating']} with an empty quote",
                                  "Core Rule 2 — only an absence-based `high` may omit the quote")
+
+                # Rating rule (module 08 Part 3(7), spec 3b line 1 vs line 4): a
+                # FULL_TEXT `some_concerns` whose own note states absence and
+                # whose quote is not about the domain shows silence, which is
+                # `high`. FAIL on a source stamped >= 3.5 in a record scored on
+                # or after the rule's day; older records are reported as a
+                # warning, never re-labelled (the empty-quote half is the row
+                # just above, already binding on every version).
+                for f in des_rating_findings(s):
+                    if f["code"] != "ABSENCE_NOTE":
+                        continue
+                    fix = ("module 08 Part 3(7) — rerun the SOURCE call (spec as the system prompt, Part 2) "
+                           "and audit it (Part 2d); never hand-patch the rating")
+                    if des_rating_binding(s, rec.get("scored_at")):
+                        _gate(rep, sweep, False, "4.13 DES", "", f"{tag} {f['detail']}", fix)
+                    else:
+                        rep.warn("4.13 DES", f"{tag} (before {DES_RATING_RULE_FROM}, not re-scored) {f['detail']}", fix)
 
                 # 1b — the v1.6 section-level carve-out on checklist item 4.
                 # A `note` on that item is what says "this quote is not from the
