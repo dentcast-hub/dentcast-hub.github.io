@@ -259,7 +259,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 124,
+   "count": 125,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -384,7 +384,8 @@
     "insight/insight-102",
     "insight/insight-103",
     "insight/insight-104",
-    "insight/insight-105"
+    "insight/insight-105",
+    "insight/insight-106"
    ]
   },
   {
@@ -2413,7 +2414,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 16,
+   "count": 17,
    "content_ids": [
     "episodes/episode-75",
     "episodes/episode-76",
@@ -2430,7 +2431,8 @@
     "sharehub/share-19",
     "sharehub/share-24",
     "insight/insight-93",
-    "sharehub/share-43"
+    "sharehub/share-43",
+    "insight/insight-106"
    ]
   },
   {
@@ -4729,6 +4731,35 @@
    ]
   },
   {
+   "key": "مارجین_روکش",
+   "tag": "#مارجین_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "لبه‌ی رستوریشن و انطباقش با خط ختم.",
+   "use_when": "مقاله دقت یا موقعیتِ مارجین را مسئله بداند.",
+   "aliases": [
+    "مرجین",
+    "مارژین",
+    "مرجین سرامیکی",
+    "مارژین دقیق",
+    "margin",
+    "لبه روکش"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "insight/insight-32",
+    "chairside/chairside-12",
+    "chairside/chairside-18",
+    "insight/insight-50",
+    "insight/insight-63",
+    "chairside/chairside-34",
+    "sharehub/share-31",
+    "insight/insight-106"
+   ]
+  },
+  {
    "key": "پرامپت_نویسی",
    "tag": "#پرامپت_نویسی",
    "domain": "ai",
@@ -4896,6 +4927,39 @@
     "chairside/chairside-38",
     "sharehub/share-39",
     "sharehub/share-40"
+   ]
+  },
+  {
+   "key": "بیولوژیک_ویدث",
+   "tag": "#بیولوژیک_ویدث",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Biological Width — پهنای اتصالِ بیولوژیکِ اپیتلیوم و بافتِ همبند روی استخوان که مارجینِ ترمیم نباید به آن تجاوز کند.",
+   "use_when": "مقاله عرضِ بیولوژیک را در تصمیمِ ترمیم/جراحی به‌کار گیرد.",
+   "aliases": [
+    "biologic width",
+    "bw",
+    "عرض بیولوژیک",
+    "فاصله بیولوژیک",
+    "بیولوژیک ویث",
+    "biological width",
+    "بیولوژیکال ویدث"
+   ],
+   "variants": [
+    "#عرض_بیولوژیک",
+    "#BiologicalWidth",
+    "#Biological_Width"
+   ],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-75",
+    "episodes/episode-76",
+    "insight/insight-7",
+    "notecast/episode-13",
+    "insight/insight-18",
+    "chairside/chairside-7",
+    "insight/insight-106"
    ]
   },
   {
@@ -5241,34 +5305,6 @@
     "insight/insight-82",
     "insight/insight-96",
     "chairside/chairside-46"
-   ]
-  },
-  {
-   "key": "مارجین_روکش",
-   "tag": "#مارجین_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "لبه‌ی رستوریشن و انطباقش با خط ختم.",
-   "use_when": "مقاله دقت یا موقعیتِ مارجین را مسئله بداند.",
-   "aliases": [
-    "مرجین",
-    "مارژین",
-    "مرجین سرامیکی",
-    "مارژین دقیق",
-    "margin",
-    "لبه روکش"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "insight/insight-32",
-    "chairside/chairside-12",
-    "chairside/chairside-18",
-    "insight/insight-50",
-    "insight/insight-63",
-    "chairside/chairside-34",
-    "sharehub/share-31"
    ]
   },
   {
@@ -5620,38 +5656,6 @@
     "sharehub/share-11",
     "sharehub/share-17",
     "chairside/chairside-36"
-   ]
-  },
-  {
-   "key": "بیولوژیک_ویدث",
-   "tag": "#بیولوژیک_ویدث",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "Biological Width — پهنای اتصالِ بیولوژیکِ اپیتلیوم و بافتِ همبند روی استخوان که مارجینِ ترمیم نباید به آن تجاوز کند.",
-   "use_when": "مقاله عرضِ بیولوژیک را در تصمیمِ ترمیم/جراحی به‌کار گیرد.",
-   "aliases": [
-    "biologic width",
-    "bw",
-    "عرض بیولوژیک",
-    "فاصله بیولوژیک",
-    "بیولوژیک ویث",
-    "biological width",
-    "بیولوژیکال ویدث"
-   ],
-   "variants": [
-    "#عرض_بیولوژیک",
-    "#BiologicalWidth",
-    "#Biological_Width"
-   ],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-75",
-    "episodes/episode-76",
-    "insight/insight-7",
-    "notecast/episode-13",
-    "insight/insight-18",
-    "chairside/chairside-7"
    ]
   },
   {
@@ -10641,6 +10645,28 @@
    ]
   },
   {
+   "key": "cej",
+   "tag": "#CEJ",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "محل اتصال مینا و سمان روی ریشه (cemento-enamel junction)؛ نشانه‌ی مرجعی که با پروب یا اکسپلورر داخل سالکوس جست‌وجو می‌شود تا موقعیت مارجین لثه نسبت به تاج آناتومیک معلوم شود.",
+   "use_when": "مقاله CEJ را به‌عنوان لندمارک معاینه یا مبنای تشخیص (رویش غیرفعال، عرض بیولوژیک، موقعیت مارجین) به کار ببرد.",
+   "aliases": [
+    "cemento-enamel junction",
+    "cementoenamel junction",
+    "سی ای جی",
+    "محل اتصال مینا و سمان",
+    "اتصال مینا سمان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "sharehub/share-24",
+    "insight/insight-106"
+   ]
+  },
+  {
    "key": "digital_implant_planning",
    "tag": "#Digital_Implant_Planning",
    "domain": "clinical",
@@ -13304,6 +13330,27 @@
    ]
   },
   {
+   "key": "ژینژیوکتومی",
+   "tag": "#ژینژیوکتومی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "برداشتِ مستقیمِ لثه با فرز، به‌جای شکل‌دهیِ تدریجی.",
+   "use_when": "مقاله ژینژیوکتومی را جایگزینِ هفته‌ها شکل‌دهی بداند.",
+   "aliases": [
+    "gingivectomy",
+    "ژنژیوکتومی",
+    "برش لثه",
+    "برداشت لثه"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-50",
+    "insight/insight-106"
+   ]
+  },
+  {
    "key": "کاغذ_آرتیکولاسیون",
    "tag": "#کاغذ_آرتیکولاسیون",
    "domain": null,
@@ -13672,27 +13719,6 @@
    "count": 1,
    "content_ids": [
     "chairside/chairside-17"
-   ]
-  },
-  {
-   "key": "cej",
-   "tag": "#CEJ",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "محل اتصال مینا و سمان روی ریشه (cemento-enamel junction)؛ نشانه‌ی مرجعی که با پروب یا اکسپلورر داخل سالکوس جست‌وجو می‌شود تا موقعیت مارجین لثه نسبت به تاج آناتومیک معلوم شود.",
-   "use_when": "مقاله CEJ را به‌عنوان لندمارک معاینه یا مبنای تشخیص (رویش غیرفعال، عرض بیولوژیک، موقعیت مارجین) به کار ببرد.",
-   "aliases": [
-    "cemento-enamel junction",
-    "cementoenamel junction",
-    "سی ای جی",
-    "محل اتصال مینا و سمان",
-    "اتصال مینا سمان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "sharehub/share-24"
    ]
   },
   {
@@ -20235,26 +20261,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-53"
-   ]
-  },
-  {
-   "key": "ژینژیوکتومی",
-   "tag": "#ژینژیوکتومی",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "برداشتِ مستقیمِ لثه با فرز، به‌جای شکل‌دهیِ تدریجی.",
-   "use_when": "مقاله ژینژیوکتومی را جایگزینِ هفته‌ها شکل‌دهی بداند.",
-   "aliases": [
-    "gingivectomy",
-    "ژنژیوکتومی",
-    "برش لثه",
-    "برداشت لثه"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-50"
    ]
   },
   {
