@@ -165,8 +165,8 @@ jobs:
 
       # Founder decision 2026-11-06: after a successful delivery 3 nothing
       # mechanical is left to the agent; this job opens the PR to the default
-      # branch itself and never merges it (the merge is the founder's
-      # decision). A queue-lane item's PR is opened by queue-publish.yml
+      # branch itself and never merges it (the monitoring agent merges it once
+      # every gate is green, without asking: founder 2026-11-07). A queue-lane item's PR is opened by queue-publish.yml
       # (job await-delivery-3, with the queue item details), so it is skipped
       # here. Without the QUEUE_PUBLISH_TOKEN secret (a GITHUB_TOKEN PR would
       # not run the PR gates) the step writes one summary line and succeeds.
@@ -189,7 +189,7 @@ jobs:
             exit 0
           fi
           if [[ -z "$GH_TOKEN" ]]; then
-            printf '%s\n' "- PR: not opened — repository secret QUEUE_PUBLISH_TOKEN is not set (fine-grained PAT: Pull requests read/write, Contents read). Open the PR from \`$TARGET_BRANCH\` to \`$BASE_REF\` by hand; the merge stays the founder's decision." >> "$GITHUB_STEP_SUMMARY"
+            printf '%s\n' "- PR: not opened — repository secret QUEUE_PUBLISH_TOKEN is not set (fine-grained PAT: Pull requests read/write, Contents read). Open the PR from \`$TARGET_BRANCH\` to \`$BASE_REF\` by hand; the monitoring agent merges it when every gate is green." >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
           title="$(jq -r '.title' "$PR_INFO")"
@@ -201,12 +201,12 @@ jobs:
             url="$(gh api "repos/$GH_REPO/pulls?state=open&head=$owner:$TARGET_BRANCH" --jq '.[0].html_url // empty')"
             if [[ -z "$url" ]]; then
               echo "::warning::the PR could not be opened; delivery 3 is on the branch — open the PR from $TARGET_BRANCH to $BASE_REF by hand"
-              printf '%s\n' "- PR: not opened (API error); delivery 3 is on \`$TARGET_BRANCH\`. Open the PR to \`$BASE_REF\` by hand; the merge stays the founder's decision." >> "$GITHUB_STEP_SUMMARY"
+              printf '%s\n' "- PR: not opened (API error); delivery 3 is on \`$TARGET_BRANCH\`. Open the PR to \`$BASE_REF\` by hand; the monitoring agent merges it when every gate is green." >> "$GITHUB_STEP_SUMMARY"
               exit 0
             fi
           fi
           echo "pr_url=$url" >> "$GITHUB_OUTPUT"
-          printf '%s\n' "- PR: $url (merge when every gate is green; the merge is the founder's decision)" >> "$GITHUB_STEP_SUMMARY"
+          printf '%s\n' "- PR: $url (merge when every gate is green; the monitoring agent merges it without asking)" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload logs and recovery bundle
         if: always()

@@ -92,7 +92,8 @@ invalidation rules below.
 2. **M3b, Part 3b** — at C.4.13, only when a sentence is still `ALTERED`/`REVERSED` after the stronger
    review: each with its three named answers (module 08). Pages without C.4.13 (LiteCast, Challenge,
    «بدون DES») have no M3b.
-3. **M2, exam questions** — at 4.12-ب, approved one by one (module 07).
+3. **M2, exam questions** — at 4.12-ب, approved one by one (module 07). Mandatory for every page in a full
+   pathway: the agent drafts and sends them, never asks whether to.
 
 M1 and M3b are closed before Push 2: completing C.6 and the cut refuse a non-empty
 `pending_questions` list, answered or not — clear each record once its answer is recorded as that
@@ -102,7 +103,7 @@ an open M3b; that is its purpose.
 Asked when they arise, because they are real decisions: a new subtopic in `PILLARS`, a new Drive
 subfolder, DES basket 3 / publish without DES, a missing Fidelity runtime capability, a NoteCast pair
 where neither episode has a related-content block (4.5) or a previous Promptologist part without an
-`ep-nav` block (4.6), merge authorization. Founder data (text, title, any string given) is final and
+`ep-nav` block (4.6). Merge is not asked (below). Founder data (text, title, any string given) is final and
 copied (Hard Rule 16).
 
 **Text lock.** After C.4.13 the body text, title, caption and image captions are locked (4.7–4.9 still
@@ -278,8 +279,8 @@ applied, what was skipped and why), every M1/M3b/M2 question with its answer, th
 of the Fidelity sweep, and any real decision asked. Report G, written by the runner's `finish`, is
 technical only (ledger, Phase F, fingerprints) and deliberately omits approvals; the agent's Push-2
 report is the only human record of them. Not a completion claim. **Then read `publish-after-push2.md`
-completely** and follow it. Three messages in all after Push 2: at Push 2, at the run's end, at
-merge. A mechanical step that reveals a needed substantive change stops the run's path: invalidate,
+completely** and follow it. Two messages in all after Push 2: at Push 2 and at the merge (or at a
+failure that stops it). A mechanical step that reveals a needed substantive change stops the run's path: invalidate,
 never fix silently in D or F.
 
 ## Paper-only (one delivery)
@@ -344,9 +345,10 @@ approvals, semantic quality or external outcomes. A stale/missing/corrupt state 
   `check-pr --repository owner/repo --number N --expected-head SHA --expected-base SHA
   --expected-branch BRANCH [--token-env NAME]` (or the same reads through connected GitHub tools).
   A moved ref or closed PR: preserve work, re-plan, never force.
-- Merge only with authorization. An explicit «بعد از تکمیل مرج کن» persists until all gates pass;
-  status requests do not revoke it. Without it, stop before merge. Distinguish prepared, verified,
-  committed, pushed, merged and live; no invented ETA.
+- Merge is the agent's, never asked (founder 2026-11-07: merge is reversible and was never refused):
+  once delivery 3, Phase F, the PR's checks and a fresh `check-pr` are green, merge. A red gate means
+  no merge. Only an explicit «مرج نکن» from the founder for that publication stops before merge.
+  Distinguish prepared, verified, committed, pushed, merged and live; no invented ETA.
 - Hosting (only home): DentCast is served from ArvanCloud and GitHub Pages (`dentcast.org`/`www` are
   CNAMEs to `dentcast-hub.github.io`, via Cloudflare DNS). Cloudflare Pages and Vercel are backup
   mirrors: their statuses are never requested, awaited, a gate or a completion criterion. A merge

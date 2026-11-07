@@ -51,7 +51,7 @@ status read-only: where the queue publication stands, from GitHub facts only
          PUSH2_RUN_UNKNOWN             the API is unavailable: open the Actions tab for the branch
          BRANCH_WITHOUT_HANDOFF        no handoff and no completion receipt on the head: inspect
          DELIVERY3_NO_PR               delivery 3 is on the branch: open the PR to main
-         PR_OPEN                       merge when every gate is green (founder's decision)
+         PR_OPEN                       merge when every gate is green (agent, without asking)
          PR_CLOSED_UNMERGED            founder decides (unlock, or reopen)
          PR_MERGED_ITEM_IN_QUEUE       run done (queue-publish-done.yml normally does it)
          PR_UNKNOWN                    the API is unavailable: look up the PR for the branch
@@ -366,7 +366,7 @@ def item_status(repo, slug, name, st, lock, api, remote_heads, publish_run=None)
                 "checkout and push")}
         if pr.get("state") == "open":
             return {**out, "state": "PR_OPEN", "next_step": f"merge PR #{pr['number']} when every gate is green "
-                    "(founder's decision, queue-route.md step 5); a red gate means no merge"}
+                    "(without asking, queue-route.md step 5); a red gate means no merge"}
         return {**out, "state": "PR_CLOSED_UNMERGED", "next_step": f"PR #{pr['number']} was closed without merge: "
                 "report it; the founder decides (reopen, or unlock and re-dispatch)"}
     if handoff_on_head is None:

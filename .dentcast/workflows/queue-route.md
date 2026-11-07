@@ -70,11 +70,10 @@
    لاگ گام «Run the item» (خط `result=`) و لینک PR در لاگ گام «Open the PR» (خط `PR:`) و بدنهٔ خود PR هست،
    چون API و `gh` خلاصهٔ اجرا را برنمی‌گردانند. شکست یا timeout: لینک اجرا و خروجی JSON ابزار عیناً، بعد
    `status` و `next_step` آن.
-5. **مرج.** مرج تصمیم بنیان‌گذار است، همان‌جا که `queue-publish.yml` و `publish-after-push2.md` می‌گویند:
+5. **مرج.** مرج بدون پرسیدن انجام می‌شود (بنیان‌گذار ۱۴۰۵/۰۸/۱۶: برگشت‌پذیر است و تا حالا رد نشده):
    وقتی تحویل سوم، Phase F و گیت‌های PR سبزند (`gh pr checks <n>`، MCP `pull_request_read` با `get_status`، یا
-   REST `GET repos/…/commits/<sha>/check-runs`)، آمادگی گزارش می‌شود و PR **فقط با اجازهٔ بنیان‌گذار** مرج
-   می‌شود — یک «بعد از تکمیل مرج کن» صریح در همین درخواست یا پیش از آن کافی است و تا سبزشدن همهٔ گیت‌ها
-   معتبر می‌ماند (`gh pr merge <n> --merge`، MCP `merge_pull_request`، یا REST `PUT repos/…/pulls/<n>/merge`؛
+   REST `GET repos/…/commits/<sha>/check-runs`)، ایجنت همان لحظه PR را مرج می‌کند؛ فقط یک «مرج نکن» صریحِ
+   بنیان‌گذار برای همین مطلب جلوی آن را می‌گیرد (`gh pr merge <n> --merge`، MCP `merge_pull_request`، یا REST `PUT repos/…/pulls/<n>/merge`؛
    `queue-publish-done.yml` کامیت‌های PR را از API می‌خواند، پس روش مرج آزاد است). گیت قرمز یعنی مرج نه.
    ابزار مرج در دسترس نیست: لینک PR و وضعیت گیت‌ها گزارش می‌شود و بنیان‌گذار Merge را می‌زند.
 6. **پاک‌کردن صف.** خودکار: `queue-publish-done.yml` بعد از مرج پوشهٔ مطلب را با کامیت

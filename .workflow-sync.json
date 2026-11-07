@@ -1,8 +1,8 @@
 {
   "version": 2,
   "note": "Client entrypoints are maintained together. Shared canonical workflow/global/module files are read directly by every client and are not duplicated as another client side. Nested canonical edits are covered by the advisory hook and live-contract CI. This old hash baseline is a drift heuristic, not proof of semantic parity or approval.",
-  "acknowledged_at": "2026-11-07T05:39:07.795Z",
-  "acknowledged_commit": "dab3b7d6a8c046b25c5311ad2a12377714895175",
+  "acknowledged_at": "2026-11-07T05:59:48.098Z",
+  "acknowledged_commit": "28426c9c546804f9905df44ce04a11010b02cd49",
   "sides": {
     "claude": {
       "label": "Claude",
@@ -11,8 +11,8 @@
         "AGENTS.md"
       ],
       "files": {
-        "AGENTS.md": "dc1bd6120b6cb6193e025b834fc10d6423bd798fe3fe068b5d212c34f4730e41",
-        "CLAUDE.md": "a01f13da6316dca07dd38aa89f43a0bbd83773f47dd0d7bd051376ebecb56c43"
+        "AGENTS.md": "a3dfd479ab30dea281249a14ec028dbaf7e741dff74ecf95061f0ba623728e4d",
+        "CLAUDE.md": "a5b0e14877ee480277936f04b226a00641553be00e903a8860365b2dd28ffb17"
       }
     },
     "cursor": {
@@ -28,7 +28,7 @@
         ".cursor/rules/dentcast-operating-protocol.mdc": "11a747a9f8d591e4f82b7182f8f430d40c0d55b2dbba0fae1d1751c95a2cbddd",
         ".cursor/rules/dentcast-plus-premium.mdc": "1e62f2b504794392687370a4cd1a61f98b3b61f3b19e19ecb2136f3f56d9ae14",
         ".cursor/rules/dentcast-publishing.mdc": "25bce475d3b675da719035c48485708a1fc46e33c67be2bf03d99a3fb4497773",
-        ".cursor/rules/dentcast-router.mdc": "9f50fc914989a3f8083ba8d614d38a3f260d59b5a8761877e65dfd212b3fc371",
+        ".cursor/rules/dentcast-router.mdc": "bd76c9fbcba38a10123b43e015ae0b68d4b162392c73f2117023c1c196d97df3",
         ".cursor/rules/dentcast-spot-report.mdc": "b61133d27dff6f963c1960b85c7eb0177b891920fd071823164d81ec91383ad7"
       }
     }
