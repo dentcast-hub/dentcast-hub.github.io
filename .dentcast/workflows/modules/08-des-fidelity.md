@@ -310,9 +310,17 @@ source_conclusion: <the LAST sentence of source_text (FULL_TEXT: of its last Con
 The split and the assignment are deterministic and are **the tool's, never the
 model's**: it reads the rendered prose (title, headings and body, in order; the
 region `verify_publish.py`'s `article_region()` reads), stops at the citation
-block, splits on line breaks and sentence terminators, marks headings, and
-numbers units `u1…uN` over the whole page — so a call that received only some
-units sees ids with gaps, which is correct. Segmentation and attribution stay out
+block, splits on line breaks and sentence terminators, marks headings and
+figure captions, and numbers units `u1…uN` over the whole page — so a call
+that received only some units sees ids with gaps, which is correct. A full stop
+that ends no sentence is not a cut: a caption label opening its line
+(«تصویر ۱.», «شکل 2.», «جدول ۳.», «Figure 4.», «Table 1.») stays with the
+caption sentence after it, a reference abbreviation stays with its number
+(«Fig. 1», «Tab. 3», «Eq. 4», «No. 5», «Ref. 6») and «e.g.», «i.e.», «vs.»
+stay inside their sentence (publish-queue item 24: «تصویر ۱. … منبع: … Fig. 1»
+used to fall apart into «تصویر ۱.», «… Fig.» and «1»). A record already judged
+on the earlier cut keeps it (`split_for`), as it keeps its `source_conclusion`:
+no stored id moves. Segmentation and attribution stay out
 of the model's hands because they are the largest sources of run-to-run
 disagreement.
 

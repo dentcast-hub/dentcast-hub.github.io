@@ -91,6 +91,13 @@ MODULES = WORKFLOW + 'modules/'
 # text before it changed only in lines 3 and 6. No heading changed (compared
 # HEAD vs edit for all twelve modules); LiteCast/Challenge skip C.4.13 and so
 # correctly omit the new paragraph.
+# Re-pinned 2026-11-07 (publish-queue item 24 fixes): 05 adds the related_cap.py
+# counting sentence inside 4.7 Step 2 and 4.9 Step 2 (both kept by every route
+# and by the queue-prep 4.7/4.8-to-end spans; the 4.7-ب/4.8 boundaries are
+# unchanged); 08 adds sentences inside Part 1's pdf-source-text block, Part 2b's
+# split paragraph and a Part 3b bullet («Figure captions added after the full
+# run»), all after the «Conditional path for founder-supplied results» boundary,
+# so LiteCast/Challenge still omit them. No heading changed in either module.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
@@ -98,7 +105,7 @@ PINNED_BLOBS = {
     '04-taxonomy-and-navigation.md': '4e5a13815daf8dfad0c1cdb8482d7d6bcbb5025a',
     '05-semantic-linking.md': 'c9152849a723c9f9fe8789e62caf7ef6d1b9fbdf',
     '06-paper-ingestion.md': '226ff4a756418788e70afa2a19e4484c1734dedb',
-    '08-des-fidelity.md': 'e4029b1854565e55b9791bb03cb21ad73132e961',
+    '08-des-fidelity.md': 'e50c3b0a85b7b8d266b6bfc3b51011a4ca795287',
     '09-challenge.md': '3ac5856ddb021aa9f36cbfb35d6363531ae038c8',
     '11-build-and-version.md': '4dd05364ca5f9fd5811d7de39f172af14c592b13',
     '12-english-notify-verify.md': '5c9b65ee4416fd67607e6d35ca88272832ee86ec',

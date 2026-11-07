@@ -234,7 +234,8 @@ def main():
         vals = list(markers.values()) if all(isinstance(v, dict) and any(str(k).startswith("S") for k in v) for v in markers.values()) else [markers]
         marker_entry = vals[0]
 
-    units = U.split_page(cid, sources)
+    # the segmentation the frozen record was judged on (des_fidelity_units.split_for)
+    units = U.split_page(cid, sources, fidelity=fid)
     new_txt = [u["text"] for u in units]
     objs = [] if fid is None else ([fid] if pooled else [f for f in fid if isinstance(f, dict) and not f.get("error")])
     old = {}

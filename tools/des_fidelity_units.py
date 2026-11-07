@@ -260,30 +260,128 @@ def is_audio_episode(content_id):
     return content_id.startswith("episodes/")
 
 
-def split_page(content_id, sources):
+# A full stop that ends no sentence (publish-queue item 24, 2026-11-07): a
+# figure caption «تصویر ۱. … منبع: … Fig. 1» was cut into «تصویر ۱.», «… Fig.»
+# and «1». The split keeps three things whole, and nothing else changes:
+#   * a caption label opening its line — «تصویر ۱.», «شکل 2.», «جدول ۳.»,
+#     «Figure 4.», «Table 1.» — stays with the caption sentence after it;
+#   * a reference abbreviation followed by its number — «Fig. 1», «Figs. 2»,
+#     «Tab. 3», «Eq. 4», «No. 5», «Ref. 6»;
+#   * «e.g.», «i.e.», «vs.», which never end a sentence.
+CAPTION_LABEL = re.compile(r"^(?:تصویر|شکل|جدول|نمودار|Figure|Fig\.|Table|Chart)\s*[0-9۰-۹٠-٩]+[A-Za-z]?\.$", re.I)
+NUM_ABBREV = re.compile(r"(?<![A-Za-z])(?:Figs?|Tab|Eqs?|Nos?|Refs?)\.$", re.I)
+NEVER_FINAL = re.compile(r"(?<![A-Za-z])(?:e\.g|i\.e|vs)\.$", re.I)
+STARTS_NUM = re.compile(r"^[(\[]?[0-9۰-۹٠-٩]")
+
+
+def sentences(line):
+    """`line` cut at its sentence terminators (TERMINATORS), except where the
+    full stop belongs to a caption label or an abbreviation (above)."""
+    out = []
+    for t in (x.strip() for x in TERMINATORS.split(line)):
+        if not t:
+            continue
+        if out and ((len(out) == 1 and CAPTION_LABEL.match(out[0]))
+                    or NEVER_FINAL.search(out[-1])
+                    or (NUM_ABBREV.search(out[-1]) and STARTS_NUM.match(t))):
+            out[-1] = out[-1] + " " + t
+        else:
+            out.append(t)
+    return out
+
+
+CMARK = "\x02"
+INTERNAL = ("para", "caption")  # unit keys that never reach an input block
+
+
+STORED = object()  # split_page(): read the page's own record from plus/des-scores.json
+_SCORES = {}
+
+
+def stored_fidelity(content_id):
+    """The FIDELITY slot plus/des-scores.json holds for this page (None when
+    there is none), read once per file version."""
+    p = ROOT / "plus/des-scores.json"
+    try:
+        key = (str(p), p.stat().st_mtime_ns)
+    except OSError:
+        return None
+    if key not in _SCORES:
+        _SCORES.clear()
+        _SCORES[key] = json.loads(p.read_text(encoding="utf-8"))
+    return (_SCORES[key].get(content_id) or {}).get("fidelity")
+
+
+def split_page(content_id, sources, legacy=None, fidelity=STORED):
+    """The page's units in reading order. A unit cut from a <figcaption>
+    carries `caption: True` (internal, like `para`: never in an input block),
+    so a re-check after captions were added can tell them from body text
+    (`--carry`).
+
+    Which cut (`split_for`): a page whose FIDELITY record was judged on the
+    cut before `sentences()` keeps that cut, so no stored id moves — for every
+    caller (this tool, Phase F, the queue install). `fidelity` is the record to
+    fit (default: the page's own in plus/des-scores.json; the queue install
+    passes the frozen one); `legacy=True`/`False` forces a cut."""
+    if legacy is None:
+        return split_for(content_id, sources, stored_fidelity(content_id) if fidelity is STORED else fidelity)
     doc = (ROOT / f"{content_id}.html").read_text(encoding="utf-8")
     h1 = re.search(r"<h1[^>]*>(.*?)</h1>", doc, re.S)
     reg = vp.article_region(doc)
     reg = re.sub(r"(?is)<h[1-6]\b[^>]*>(.*?)</h[1-6]>",
                  lambda m: "\n" + HMARK + re.sub(r"<[^>]+>", "", m.group(1)).replace("\n", " ") + "\n", reg)
+    reg = re.sub(r"(?is)<figcaption\b[^>]*>(.*?)</figcaption>",
+                 lambda m: "\n" + CMARK + re.sub(r"<[^>]+>", "", m.group(1)).replace("\n", " ") + "\n", reg)
     reg = BLOCK_TAGS.sub("\n", reg)
     lines = ([HMARK + vp.text_of(h1.group(1))] if h1 else []) + html.unescape(re.sub(r"<[^>]+>", "", reg)).split("\n")
     units, para = [], 0
     for raw in lines:
         is_h = raw.lstrip().startswith(HMARK)
-        line = re.sub(r"[ \t\r]+", " ", raw.replace(HMARK, "")).strip()
+        is_c = raw.lstrip().startswith(CMARK)
+        line = re.sub(r"[ \t\r]+", " ", raw.replace(HMARK, "").replace(CMARK, "")).strip()
         if not line:
             continue
         if stop_line(line, sources):
             break
         para += 1
-        for t in (x.strip() for x in TERMINATORS.split(line)):
-            if t:
-                u = {"id": f"u{len(units) + 1}", "text": t, "para": para}
-                if is_h:
-                    u["heading"] = True
-                units.append(u)
+        for t in ([x.strip() for x in TERMINATORS.split(line) if x.strip()] if legacy else sentences(line)):
+            u = {"id": f"u{len(units) + 1}", "text": t, "para": para}
+            if is_h:
+                u["heading"] = True
+            if is_c:
+                u["caption"] = True
+            units.append(u)
     return units
+
+
+def judged_quotes(fidelity):
+    """Every (id, claim_quote) of a stored or frozen FIDELITY slot (array,
+    pooled object, or None)."""
+    objs = fidelity if isinstance(fidelity, list) else [fidelity]
+    return [(c.get("id"), c.get("claim_quote") or "") for f in objs if isinstance(f, dict)
+            for c in f.get("claims") or [] if c.get("claim_quote")]
+
+
+def split_for(content_id, sources, fidelity=None):
+    """The units of a page that may already carry a FIDELITY record. A record
+    keeps the segmentation it was judged on, as it keeps its source_conclusion:
+    today's cut is used only when it fits the stored claims strictly better
+    than the cut before `sentences()` did (more claims are units of it by
+    text; on a tie, by id and text); otherwise the earlier cut is returned, so
+    no published or frozen record shifts an id and a frozen queue record
+    installs exactly as it did before this rule (a date line synced on publish
+    day matches neither cut and counts for neither). A page with no record (a
+    queue draft, a new publish) always gets today's cut."""
+    units = split_page(content_id, sources, legacy=False)
+    quotes = judged_quotes(fidelity)
+    if not quotes:
+        return units
+    old = split_page(content_id, sources, legacy=True)
+
+    def fit(us):
+        texts, pairs = {u["text"] for u in us}, {(u["id"], u["text"]) for u in us}
+        return sum(q in texts for _, q in quotes), sum(q in pairs for q in quotes)
+    return units if fit(units) > fit(old) else old
 
 
 def assign(units, sources, content_id=None):
@@ -461,7 +559,7 @@ def build(content_id, sources, units, mode, plan, texts, outdir):
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     by_id = {u["id"]: u for u in units}
-    pub = lambda ids: [{k: v for k, v in by_id[i].items() if k != "para"} for i in ids]
+    pub = lambda ids: [{k: v for k, v in by_id[i].items() if k not in INTERNAL} for i in ids]
     url = f"https://dentcast.org/{content_id}.html"
     made = []
     for key, ids in plan.items():
@@ -741,7 +839,7 @@ def main():
             sys.exit("refusing to build or vote FIDELITY for an audio episode")
         return
     sources = rec["sources"]
-    units = split_page(a.content_id, sources)
+    units = split_page(a.content_id, sources)  # keeps the cut its stored record was judged on
     mode, plan = assign(units, sources, a.content_id)
     if a.merge:
         if mode != "POOLED":
@@ -840,7 +938,7 @@ def main():
         srcs = [{"tag": f"S{n}", "text_basis": text_for(s, texts, n)["text_basis"],
                  "source_text": text_for(s, texts, n)["source_text"]}
                 for n, s in enumerate(sources, 1) if scorable(s)]
-        blk = {"mode": "ORPHAN_SWEEP", "phase": "after_vote" if voted else "before_runs", "units": [{k2: v for k2, v in u.items() if k2 != "para"} for u in orph],
+        blk = {"mode": "ORPHAN_SWEEP", "phase": "after_vote" if voted else "before_runs", "units": [{k2: v for k2, v in u.items() if k2 not in INTERNAL} for u in orph],
                "sources": srcs,
                "answer": "orphans.json: {uid: {found: 'S<n>'|null, source_quote, note}} — find, never judge"}
         (d / "orphans-input.json").write_text(json.dumps(blk, ensure_ascii=False, indent=1), encoding="utf-8")
