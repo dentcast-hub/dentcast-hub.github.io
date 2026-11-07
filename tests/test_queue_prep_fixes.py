@@ -306,5 +306,33 @@ class PackageShapeTests(unittest.TestCase):
         self.assertTrue(any("one-source page has no orphan sweep" in x for x in w), w)
 
 
+class RelatedCapTests(unittest.TestCase):
+    """Item 8: nav capsules count, the about line and the footer do not."""
+
+    def setUp(self):
+        global rc
+        import related_cap as rc  # noqa: PLC0415
+
+    def test_count_matches_phase_f(self):
+        doc = ('<main><h1>t</h1><p><a href="/glossary/x.html">x</a></p>'
+               '<div class="dc-related-section">\n<h2 class="dc-related-label">کاوش بیشتر</h2>\n'
+               '<div class="dc-related-capsules">\n<a href="/glossary/" class="dc-related-capsule">دانشنامه</a>\n'
+               '<a href="/pillar/digital/" class="dc-related-capsule">فهرست موضوعی</a>\n'
+               '<a href="/sharehub/share-2.html" class="dc-related-capsule">دقت اسکن</a>\n</div>\n</div>\n'
+               '<footer><a class="btn" href="/glossary/">بازگشت</a><div class="about-link">'
+               '<a href="/about.html">درباره</a></div></footer></main>')
+        with tempfile.TemporaryDirectory() as t:
+            p = Path(t) / "p.html"
+            p.write_text(doc, encoding="utf-8")
+            r = rc.count(p)
+        self.assertEqual((r["count"], r["free"], r["status"]), (3, 2, "room"))
+        self.assertEqual([x["nav_capsule"] for x in r["links"]], ["دانشنامه", "فهرست موضوعی", None])
+
+    def test_live_glossary_page(self):
+        r = rc.count(ROOT / "glossary/scan-body.html")
+        self.assertEqual(r["section"], "dc-related-section")
+        self.assertEqual(r["count"], len(r["links"]))
+
+
 if __name__ == "__main__":
     unittest.main()

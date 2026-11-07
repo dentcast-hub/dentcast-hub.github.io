@@ -17,7 +17,7 @@ Compare the new content's conceptual subject with each term's meaning and scope.
 
 #### Step 2 — Per-term back-link (independent, per page)
 
-For each related term, independently: open its page, find its «کاوش بیشتر» section and apply Hard Rule 9 — at 5, skip that page; otherwise append a link to the new content at the **bottom** of the section's links, matching the siblings' form, classes and styling, with descriptive link text in the siblings' register (never a generic label).
+For each related term, independently: open its page, find its «کاوش بیشتر» section and apply Hard Rule 9 — count with `python3 tools/related_cap.py glossary/<slug>.html` (every link inside the section, the «فهرست موضوعی»/«دانشنامه» capsules included; the «about» line and footer links sit outside it and do not count — the same count as Phase F's «9 cap» row); at 5 or more, skip that page; otherwise append a link to the new content at the **bottom** of the section's links, matching the siblings' form, classes and styling, with descriptive link text in the siblings' register (never a generic label).
 
 #### Step 3 — Constraints
 
@@ -91,7 +91,7 @@ Compare the new content with **all** entries of the loaded brain (every type, co
 
 #### Step 2 — Apply the global cap
 
-Count the section's links (the capsules count) and fill only the remaining slots under Hard Rule 9, strongest first.
+Count the section's links (the capsules count; `python3 tools/related_cap.py <page>` counts as Phase F does) and fill only the remaining slots under Hard Rule 9, strongest first.
 
 #### Step 3 — Markup for each added link
 

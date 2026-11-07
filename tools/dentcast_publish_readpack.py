@@ -103,7 +103,7 @@ MODULES = WORKFLOW + 'modules/'
 PINNED_BLOBS = {
     '03-litecast-and-page.md': 'e82aee946648f09d7ed130b7bcdd93b3fbc14694',
     '04-taxonomy-and-navigation.md': '4e5a13815daf8dfad0c1cdb8482d7d6bcbb5025a',
-    '05-semantic-linking.md': 'c9152849a723c9f9fe8789e62caf7ef6d1b9fbdf',
+    '05-semantic-linking.md': '6ba95d74e28f1e423e034d31327d6c9351f85c20',
     '06-paper-ingestion.md': '226ff4a756418788e70afa2a19e4484c1734dedb',
     '08-des-fidelity.md': '43fd93e490d1bd85cea99df3c2a13b19123fc1f9',
     '09-challenge.md': '3ac5856ddb021aa9f36cbfb35d6363531ae038c8',
