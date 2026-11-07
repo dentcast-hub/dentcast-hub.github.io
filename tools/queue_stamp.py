@@ -18,7 +18,9 @@ and this tool does them in that order:
      file named, and the title/caption equal to 02 when 02 reads.
   4. **Mechanical cross-file checks** (`checks`, also in --dry-run). Problems:
      05-DES-Fidelity/des.json in its one shape {"scored_at", "sources"} and a
-     plan.json the units tool would accept (P3, P4); author order per DOI equal in 04-منبع/کاتالوگ.json, 05-DES-Fidelity/des.json
+     plan.json the units tool would accept (P3, P4); every RESEARCH source passes the spec-3b
+     rating rule, des_record_guard.py (P5; W6 on an item prepared before 2026-11-07);
+     author order per DOI equal in 04-منبع/کاتالوگ.json, 05-DES-Fidelity/des.json
      and 04-منبع/منابع.md; every catalogue and DES DOI present in منابع.md.
      Warnings: a keyword of 09 with no token in 01/02/06; a flashcard
      description ≥ 0.75 similar to an FAQ answer; deixis («این مقاله» …) in
@@ -370,6 +372,18 @@ def check_des_package(item, problems, warnings=None):
                         "in plan.json)")
     if "scored_at" in des and not (isinstance(des["scored_at"], str) and DATE.fullmatch(des["scored_at"])):
         problems.append(f"P3 {DES}: scored_at must be YYYY-MM-DD")
+    # P5 module 08 Part 3(7): the rating rule (spec 3b). Binding on a record
+    # prepared on or after the rule's day; an older frozen item is told (W6),
+    # never re-scored by a rule that postdates it.
+    import des_record_guard as guard  # noqa: PLC0415
+    for i, s in enumerate(des["sources"]):
+        for f in guard.rating_findings(s):
+            msg = (f"{DES} sources[{i}] {f['code']}: {f['detail']} — rerun the SOURCE call and audit it "
+                   "(module 08 Part 2d, Part 3(7)); never hand-patch the rating")
+            if guard.rating_rule_binding(s, des.get("scored_at")) or warnings is None:
+                problems.append("P5 " + msg)
+            else:
+                warnings.append("W6 " + msg)
     pp = item / PLAN
     if not pp.is_file():
         return

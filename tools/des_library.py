@@ -43,6 +43,9 @@ from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / 'tools'))
+import des_record_guard as des_guard  # noqa: E402
+
 LIB = ROOT / 'plus' / 'des-library.json'
 SITE = ROOT / 'plus' / 'des-scores.json'
 HASHTAGS = ROOT / 'dentcast-hashtag-reference.json'
@@ -256,6 +259,11 @@ def validate(rec):
             p.append('rating نامعتبر در «%s»: %r' % (d.get('domain'), d.get('rating')))
         if not d.get('evidence_quote') and not d.get('note'):
             p.append('دامنه‌ی «%s» نه نقل‌قول دارد نه note' % d.get('domain'))
+
+    # Spec 3b, the rating rule (module 08 Part 3(7)): the same check the
+    # publishing pipeline runs, so a reader submission is held to it too.
+    for f in des_guard.rating_findings(rec):
+        p.append('قاعده‌ی رتبه‌دهی (3b) — %s: %s' % (f['code'], f['detail']))
 
     # multiplier must follow from the counts (Step 3c), not from judgement
     high = sum(1 for d in doms if d.get('rating') == 'high')

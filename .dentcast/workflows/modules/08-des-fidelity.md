@@ -64,6 +64,42 @@ from the paper's title, or from what you happen to know about the study.
 record from Question 3.5 (with its recorded rewrites, and the lead paragraph
 when module 03 added one), exactly as it will ship. `text_basis` is `FULL_TEXT`. No DOI, no lookup, done.
 
+<!-- des-record-guard:v1 -->
+**RESEARCH basket, first: one DES record per paper — look the DOI up before scoring.**
+A paper's DES belongs to the paper, not to the page (Part 2b), so the same DOI is
+never scored twice by accident. Before Part 1's ladder, for **each** DOI:
+
+```bash
+python3 tools/des_record_guard.py lookup <doi>      # plus/des-scores.json + every queue item on branch `queue`
+```
+
+It compares DOIs case-insensitively (a `https://doi.org/` prefix is ignored), reads the
+queue with `git show origin/queue:…` (or `--queue-dir <queue/>` on disk) and writes
+nothing. Then:
+
+- **A stored record with the same `text_basis`, stamped with the current spec (3.5), that
+  passes Part 3 (including (7)) is reused verbatim** — no SOURCE call, no rerun. Copy the
+  object byte for byte into this page's `sources`; record «reused from <content_id or
+  queue item>, index <i>, sha256 <…>» in the run report (queue: `اجرا.md`). Part 2d's
+  audit is not repeated for a reused record. Still resolve its `source_text` by the ladder
+  below — the FIDELITY call needs it.
+- **No stored record, or only one under another `text_basis` or an older stamp** (an
+  abstract scored before the full text was in hand, a 3.2 record): score it (Part 2).
+  After Part 3, `python3 tools/des_record_guard.py compare <new des.json>` lists what
+  differs from the older records as information (`not_comparable`); it is reported, not a
+  stop. A stored record is never re-labelled or edited.
+- **A rerun of a paper that already has a comparable record** (for any reason) must come
+  out identical: `compare` exits 1 on any difference in `s_design`, `question_type`,
+  tool, a domain rating, multiplier, penalties, `des_score` or `band`. A difference
+  **stops the step**: both records go to Part 2d's audit and adjudication, the
+  difference is reported, and nothing is stored until it is settled — never the newer
+  record silently. When the audit shows the **stored** record is the wrong one, that is
+  reported to the founder as a defect of a published (or queued) record; its fix is the
+  published-page route (Part 3b «For a page already published»), never an edit here.
+- Two stored records of one DOI that already disagree with each other (`lookup` shows
+  both) are reported the same way; neither is reused until settled.
+<!-- /des-record-guard:v1 -->
+
 **RESEARCH basket:** first confirm Question 4.8's **secondary-report** decision is
 already made — if a cited source is a consensus statement/guideline that names its
 primary studies, the DOIs you resolve here are **those studies', not the
@@ -151,6 +187,34 @@ file, verbatim, minus the appendix.** That cut already exists:
 `.dentcast/des-v3.5-knowledge.md`, byte for byte. Pass that file; never cut the
 appendix yourself (a hand cut keeps a trailing blank line, so its digest differs
 from every other run's).
+
+<!-- des-system-prompt-run:v1 -->
+**How the SOURCE call is run: the spec file IS the system prompt.** One fresh,
+tool-less process per input block, started in an empty directory, with
+`.dentcast/des-v3.5-knowledge.md` as its system prompt and the Step 0 block (below)
+as its only user turn. The model is the **stronger reviewer role** of Part 2c's table.
+Claude Code (flags verified with `claude --help`, CLI 2.1.319, 2026-11-07):
+
+```bash
+cd "$(mktemp -d)" && claude -p --system-prompt-file <repo>/.dentcast/des-v3.5-knowledge.md \
+  --tools "" --model <stronger model, e.g. opus> --no-session-persistence --output-format json \
+  < block.txt > out.json        # the object is out.json's "result"; the model actually used is in "modelUsage"
+```
+
+Another provider: the same contract (empty directory, the whole file as the system
+instruction, no tools, the role's model; Codex: `agent-parity.md` «اجرای ایزوله»).
+**Never** hand the spec to an agent as a file it reads with a file tool: an agent that
+reads 1,400 lines in pieces does not hold the rules the way a system prompt does, and the
+publish-queue record that started this rule (Elgamal 2025, three in-session subagent
+runs) came from exactly that. When no such process can be started, the step stops under
+the «توانمندی ندارم» protocol; it is never simulated. Record in the run report (queue:
+`اجرا.md`) the command, the model the run reports, and the sha256 of the system-prompt file.
+
+The delivery alone does not make the rating right: in the controlled run that
+introduced it (Elgamal 2025, FULL_TEXT, three runs, 2026-11-07) one run rated `missing
+data` `high` (36/D) and two rated it `some_concerns` (52/C). That is why Part 3(7) and
+Part 2d follow every new record.
+<!-- /des-system-prompt-run:v1 -->
 
 <!-- des-version-history:v1 -->
 **v3.5 is the current spec.** What each earlier version changed is in
@@ -470,6 +534,60 @@ Part 4 stores — one object per source, the spec's own shape. `--vote` is for
 SOURCE scope; a POOLED page is not voted (it runs one call per part and
 `--merge`).
 
+<!-- des-rating-audit:v1 -->
+#### Part 2d — The DES rating audit by the stronger reviewer (every new RESEARCH record)
+
+**When.** For every RESEARCH SOURCE record scored in this run (any `text_basis`), after
+it passes Part 3 (1)–(4) and (7) and before Part 4 stores it — and for both records when
+Part 1's `compare` found a difference. A record reused verbatim under Part 1 is not
+audited again; COMMENTARY and `NOT_APPRAISABLE` records have no domains and no audit.
+**Why every new record and not only a flagged one:** Part 3(7) sees a wrong rating only
+when the record's own note says so; a scorer that writes a neutral note passes it. The
+audit costs one stronger-model call per paper, and Part 1 makes it once per paper ever.
+
+**What the reviewer does: it finds the line, it never scores.** The stronger reviewer
+role of Part 2c's table, in a fresh tool-less context (Part 2's run method), receives the
+record and the `source_text` it was scored on, and for each domain answers only **which
+line of 3b (1–5) is the first that matches**, with the sentence(s) of the text that prove
+it (an absence names the sections read instead). It never rescales, rescores, computes a
+multiplier or edits the record.
+
+```bash
+python3 tools/des_record_guard.py audit-build <des.json> --texts texts.json --out <dir>
+#   <dir>/audit-system.md        the audit instruction + the spec's Step 3 rules (3a–3b-ii), verbatim from
+#                                .dentcast/des-v3.5-knowledge.md — the system prompt
+#   <dir>/audit-input-src<k>.json one block per RESEARCH source (record + source_text)
+cd "$(mktemp -d)" && claude -p --system-prompt-file <dir>/audit-system.md --tools "" \
+  --model <stronger model> < <dir>/audit-input-src<k>.json > <dir>/audit-src<k>.json
+python3 tools/des_record_guard.py audit-apply <dir> --record <des.json> --texts texts.json
+```
+
+`audit-src<k>.json` is `{"domains": [{"domain", "line": 1–5, "quotes": […], "note"}]}`,
+the record's domains in order (a ```` ```json ```` fence is stripped). For the AMSTAR-2
+excluded-studies domain the reviewer applies 3b-iii and answers the 3b line of the same
+rating (low → 3, some_concerns → 4, high → 1). `audit-apply` refuses (exit 2) a missing
+domain, a line outside 1–5, line 5 under `FULL_TEXT`, a line 2–4 without a quote, a
+silent line 1 without a note, or a quote that is not verbatim in `source_text` (Part 3(1)'s
+normalisation); it maps the line to a rating (1, 2 → `high`; 3 → `low`; 4 →
+`some_concerns`; 5 → `NR`), compares it with the record and writes
+`<dir>/audit-receipt.json`.
+
+- **Exit 0 — every line agrees.** Record the receipt (record sha256, system-prompt sha256,
+  the model the run reports) in the run report (queue: `اجرا.md`); Part 4 stores the
+  record unchanged.
+- **Exit 1 — a line disagrees: the record is invalid.** Never hand-patch the rating.
+  Rerun the SOURCE call by Part 2 (a new context), run Part 3 and this audit on the
+  rerun. A rerun that passes Part 3 and that the audit agrees with is stored verbatim; the
+  invalid record and each audit are kept in the run report. When two reruns still
+  disagree with the audit, or the audit and a rerun disagree on the same domain in
+  opposite directions, it is **adjudicated**: a second stronger-reviewer audit in a fresh
+  context decides which reading of 3b the text supports, and only a model run whose
+  ratings match that decision is stored. If none does, nothing is stored for that source
+  and the step stops: the founder is shown the record, the audits and the reruns as a
+  real decision; a record the audit contradicts is never published.
+- **Exit 2** — the audit itself is malformed: run it again; nothing is decided by it.
+<!-- /des-rating-audit:v1 -->
+
 #### Part 3 — Validate the output mechanically (the appendix's contract)
 
 The prompt returns a single raw JSON object. Before anything is stored, run the
@@ -536,6 +654,31 @@ right score was.
    fix a flagged one the same way. This does not touch Part 3b: the founder
    gate on `ALTERED` / `REVERSED` page sentences stays. Phase F enforces only
    the word list; the claim check is yours.
+
+<!-- des-rating-rule:v1 -->
+7. **Rating rule (spec 3b) — a score check, never fixed by editing.** On every
+   RESEARCH record before it is stored, `python3 tools/des_record_guard.py check
+   <des.json>` (the same check runs inside `verify_publish.py --des-text`) fails:
+   - **EMPTY_QUOTE** — a `low` or `some_concerns` domain with an empty
+     `evidence_quote` (Core Rule 2: only an absence-based `high` omits it), any basis;
+   - **ABSENCE_NOTE** — under `FULL_TEXT`, a `some_concerns` domain whose `note`
+     states that the safeguard is absent («no statement of losses», «not reported»,
+     «never states», «ذکر نشده» …) **and** whose `evidence_quote` holds no word of that
+     domain. Line 4 needs the text to *address* the domain; a quote about something
+     else plus a note saying the rest is missing is silence, and silence under
+     `FULL_TEXT` is line 1, `high`. A note naming one missing element of a domain
+     the quote does address («sequence generation described; allocation concealment
+     not mentioned») is line 4 and passes. The AMSTAR-2 excluded-studies domain is
+     exempt from this half (its `some_concerns` is «no list, but…», 3b-iii).
+   A finding makes the record invalid: rerun the SOURCE call (Part 2) and audit it
+   (Part 2d); never change a rating, quote or note by hand. **Phase F runs it too**
+   (rows `4.13 DES`): a finding is `FAIL` on a source stamped 3.5 or later in a record
+   scored on or after 2026-11-07, and a warning on older records, which are not
+   re-labelled. The queue's freeze check runs it as `P5` (`queue_stamp.py`; `W6` on an
+   item prepared before that day), and `tools/des_library.py` holds reader submissions
+   to it. A frozen queue record's Phase F rows are warnings on publish day
+   (`queue-maintainer.md`), so for a queue item the binding gate is the freeze.
+<!-- /des-rating-rule:v1 -->
 
 **Reproducibility check (appendix §6) on the first score of any new question type:**
 score the same input three times. A one- or two-point drift in the number is
@@ -724,7 +867,10 @@ job. Do **not** compensate by inlining markup or CSS into the published page.
 Per source: the DOI (or «متنِ خودِ مطلب» for COMMENTARY); where `source_text` came
 from (cabinet hit / MCP lookup / WebFetch / pasted by the user); the `text_basis` and
 why; the resulting `des_score`, `band`, `question_type` and whether `provisional` is
-true; and the outcome of each of the five Part-3 checks. Per FIDELITY slot: the
+true; and the outcome of each of the five Part-3 checks and of Part 3(7). The Part 1
+`lookup` result (reused from where, or newly scored) and any `compare` difference; the
+run command, model and system-prompt sha256 (Part 2); the Part 2d audit receipt, or why
+none was owed. Per FIDELITY slot: the
 `level` and the word the reader will see for it («تطابق خیلی بالا», spec v2.8
 appendix rule 5), the count line («۵۰ از ۵۲ ادعایی که منابع به آن پرداخته‌اند
 مطابق است؛ ۴ جملهٔ دیگر در منابع نیامده»), every `ALTERED` and `REVERSED` unit
