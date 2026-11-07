@@ -1,0 +1,131 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "insight",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "کامپوزیت را به دندان اضافه کنیم یا به روکش؟",
+  "from": "02-عنوان-کپشن.md:2"
+ },
+ "caption_fa": {
+  "value": "برای بستن کانتکت به‌صورت چیرساید، بهتر است کامپوزیت را به سطح پرسلن فلدسپاتیک روکش اضافه کنیم: باند کمی بهتر است و آماده‌سازی بیرون دهان انجام می‌شود.",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "title_en": {
+  "value": "Add the composite to the tooth or to the crown?",
+  "from": "06-انگلیسی.md:2"
+ },
+ "caption_en": {
+  "value": "When closing a contact chairside, it is better to add the composite to the surface of the crown's feldspathic porcelain: the bond is slightly better and the preparation is done outside the mouth.",
+  "from": "06-انگلیسی.md:5"
+ },
+ "body_en": {
+  "value": "In [Managing an open proximal contact at crown delivery](https://dentcast.org/insight/insight-69.html) we wrote that if the contact stays open, composite can be added to the adjacent tooth. Now assume the crown's porcelain is feldspathic. To which surface should we add the composite, the tooth or the crown?\n\nIn terms of bond strength, both surfaces are acceptable, but the bond to porcelain etched with hydrofluoric acid and silanated is slightly higher than the bond to enamel.\n\nAnother advantage of bonding to the crown is that it is outside the mouth before cementation. We do the etching, rinsing, drying and silanation outside the patient's mouth, with no concern about saliva and blood. Bonding to the enamel of the adjacent tooth, however, is done inside the mouth, and its isolation depends on access and the patient's conditions.\n\nSo the bond is slightly better, and the preparation outside the mouth is simpler and easier to control.\n\nIf in some situation we decide to close the contact chairside, it is better to do it from the side of the crown's feldspathic porcelain.",
+  "from": "06-انگلیسی.md:8-17"
+ },
+ "images": {
+  "value": [],
+  "from": "03-تصاویر: no image files"
+ },
+ "credit": {
+  "value": {
+   "mode": "none"
+  },
+  "from": "04-منبع/منابع.md:1"
+ },
+ "catalog": {
+  "value": [],
+  "from": "04-منبع/منابع.md: no paper"
+ },
+ "hashtags": {
+  "value": [
+   "#اینسایت",
+   "#کانتکت_باز",
+   "#بستن_کانتکت",
+   "#تحویل_روکش",
+   "#فلدسپاتیک",
+   "#اچ_سرامیک",
+   "#سایلان"
+  ],
+  "from": "07-ورودی‌ها.md:14"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "bonding",
+   "subtopic": "clinical",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:11"
+ },
+ "pulse": {
+  "value": {
+   "html": "یک اینسایت بالینی با عنوانِ «<a href=\"{url}\">کامپوزیت را به دندان اضافه کنیم یا به روکش؟</a>» منتشر شد",
+   "link_phrase": "کامپوزیت را به دندان اضافه کنیم یا به روکش؟"
+  },
+  "from": "07-ورودی‌ها.md:20"
+ },
+ "keywords": {
+  "value": [
+   "کانتکت پروگزیمال",
+   "سمان کردن",
+   "پرسلن فلدسپاتیک",
+   "هیدروفلوریک اسید",
+   "باند به پرسلن",
+   "باند به مینا",
+   "ایزولاسیون",
+   "دندان مجاور"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "فلدسپاتیک (اولین وقوع، «از نوع فلدسپاتیک است»)",
+    "href": "/glossary/feldspathic-porcelain.html",
+    "from": "11-لینک‌های-گلاسری.md:14"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:8"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "/insight/insight-69.html",
+    "label": "بستن کانتکت باز در تحویل روکش",
+    "from": "11-لینک‌های-گلاسری.md:28"
+   },
+   {
+    "href": "/episodes/episode-16.html",
+    "label": "باندینگ روی پرسلن اچ‌شده",
+    "from": "11-لینک‌های-گلاسری.md:29"
+   },
+   {
+    "href": "/episodes/episode-10.html",
+    "label": "سایلان در آماده‌سازی سرامیک",
+    "from": "11-لینک‌های-گلاسری.md:30"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:24"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
