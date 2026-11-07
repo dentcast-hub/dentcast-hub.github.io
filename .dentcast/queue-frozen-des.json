@@ -207,5 +207,23 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "insight/insight-106": {
+    "queue_ref": "queue/23-insight-gingival-lift-bone-sounding",
+    "record_sha256": "f0f5c4011c31975b97368032b63603c9c282e234decda527435ae721ef356b01",
+    "installed_at": "2026-11-07",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }

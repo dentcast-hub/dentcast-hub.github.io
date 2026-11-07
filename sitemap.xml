@@ -2761,6 +2761,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://dentcast.org/insight/insight-106.html</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://dentcast.org/insight/insight-11.html</loc>
     <lastmod>2025-12-19</lastmod>
     <changefreq>monthly</changefreq>
@@ -3788,7 +3794,7 @@
   </url>
   <url>
     <loc>https://dentcast.org/pillar/esthetic/</loc>
-    <lastmod>2026-11-03</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
