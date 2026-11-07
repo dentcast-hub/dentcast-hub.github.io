@@ -40583,6 +40583,64 @@
           ]
         }
       ]
+    },
+    "insight/insight-105": {
+      "faqPages": [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/insight/insight-105.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا سال‌ها کارکرد بی‌مشکل یک روکش قدیمی نشان می‌دهد فرول زیر آن برای پایهٔ پروتز پارسیل شدن کافی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر. اهمیت فرول در نیروی مایل است و آن دندان شاید تا امروز اصلاً زیر نیروی مایل نبوده؛ وضعیت واقعی‌اش تازه وقتی پارسیل گذاشته می‌شود آشکار می‌شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا معیار فرول کافی برای دندان پایهٔ پروتز پارسیل با معیار آن در پروتز ثابت یکی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر. ممکن است در بازسازی ثابت دندانی با فرول مرزی را روکش کنیم و جواب بگیریم، اما همان فرول مرزی زیر پارسیل می‌تواند کافی نباشد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا نیروی وارد بر دندان پایهٔ پروتز پارسیل متحرک عمدتاً محوری است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر. دندان پایه از طریق رست و کلاسپ مدام زیر نیروی مایل و اهرمی است، به‌خصوص در طرح‌های انتهای آزاد که حرکت بیس روی ریج به آن گشتاور وارد می‌کند."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/insight/insight-105.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-105.html#flashcards-c1",
+              "name": "وابستگی اهمیت فرول به جهت نیرو",
+              "description": "فرول زیر بار محوری سود کمی در برابر هزینهٔ تراش دارد و وقتی نیرو مایل شود و اهرم بسازد، نقش تعیین‌کننده پیدا می‌کند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-105.html#flashcards-c2",
+              "name": "منطق اسپلینت روکش‌های مجاور روی پایه‌های پارسیل",
+              "description": "اتصال دو روکش مجاور که هر دو زیر نیروی سنگین غیرمحوری‌اند، تا بار بین دو دندان تقسیم شود و هیچ‌کدام به‌تنهایی اهرم را تحمل نکند.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }

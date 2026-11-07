@@ -1,0 +1,248 @@
+# Publication handoff
+
+Semantic progress and evidence; current Git facts are read from Git.
+- Schema: publish-handoff-v3
+- Content: "insight/insight-105"
+- Status: in_progress
+- Next canonical step: "C.8"
+- Blocker: null
+
+The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
+Git facts are reconstructed from Git and are not duplicated in this handoff.
+
+<!-- dentcast-publish-state-v1 -->
+```json
+{
+  "publication": {
+    "blocker": null,
+    "category": "clinical",
+    "content_id": "insight/insight-105",
+    "context": {
+      "approvals": [
+        {
+          "decision": "\u0641\u0631\u0648\u0644 \u062f\u0631 \u062f\u0646\u062f\u0627\u0646 \u067e\u0627\u06cc\u0647 \u067e\u0627\u0631\u0633\u06cc\u0644: \u0686\u0631\u0627 \u0631\u0648\u06a9\u0634 \u0642\u062f\u06cc\u0645\u06cc \u0631\u0627 \u0628\u0627\u06cc\u062f \u062f\u0631\u0622\u0648\u0631\u062f",
+          "evidence": [
+            "queue/12-insight-ferrule-partial-abutment/02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md",
+            "queue/12-insight-ferrule-partial-abutment/00-\u0648\u0636\u0639\u06cc\u062a.md (founder approvals table, sha256 dada38400d116bd347bc636449817102c8663613c4cb7980073b72b87dbe1765)",
+            "queue/12-insight-ferrule-partial-abutment/SHA256SUMS (frozen files, sha256 3dbee2b4738ca3aebd396469b61e37ec05c500bf76538b2342e57151b1900579)"
+          ],
+          "scope": "title",
+          "status": "confirmed"
+        },
+        {
+          "decision": "\u062f\u0646\u062f\u0627\u0646 \u067e\u0627\u06cc\u0647 \u067e\u0627\u0631\u0633\u06cc\u0644 \u0632\u06cc\u0631 \u0646\u06cc\u0631\u0648\u06cc \u0645\u0627\u06cc\u0644 \u0648 \u0627\u0647\u0631\u0645\u06cc \u06a9\u0627\u0631 \u0645\u06cc\u200c\u06a9\u0646\u062f\u061b \u0647\u0645\u0627\u0646 \u062c\u0627\u06cc\u06cc \u06a9\u0647 \u0641\u0631\u0648\u0644 \u062a\u0639\u06cc\u06cc\u0646\u200c\u06a9\u0646\u0646\u062f\u0647 \u0627\u0633\u062a. \u0631\u0648\u06a9\u0634 \u0642\u062f\u06cc\u0645\u06cc\u200c\u0627\u06cc \u06a9\u0647 \u0633\u0627\u0644\u200c\u0647\u0627 \u0628\u06cc\u200c\u0645\u0634\u06a9\u0644 \u0628\u0648\u062f\u0647\u060c \u0686\u06cc\u0632 \u0632\u06cc\u0627\u062f\u06cc \u062f\u0631\u0628\u0627\u0631\u0647\u200c\u06cc \u0641\u0631\u0648\u0644 \u0632\u06cc\u0631\u0634 \u0646\u0645\u06cc\u200c\u06af\u0648\u06cc\u062f.",
+          "evidence": [
+            "queue/12-insight-ferrule-partial-abutment/02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md",
+            "queue/12-insight-ferrule-partial-abutment/00-\u0648\u0636\u0639\u06cc\u062a.md (founder approvals table, sha256 dada38400d116bd347bc636449817102c8663613c4cb7980073b72b87dbe1765)",
+            "queue/12-insight-ferrule-partial-abutment/SHA256SUMS (frozen files, sha256 3dbee2b4738ca3aebd396469b61e37ec05c500bf76538b2342e57151b1900579)"
+          ],
+          "scope": "caption",
+          "status": "confirmed"
+        }
+      ],
+      "decisions": [
+        {
+          "kind": "queue_lane_v1"
+        },
+        {
+          "kind": "fixed_three_deliveries_v1"
+        },
+        {
+          "kind": "fixed_three_deliveries_v2"
+        },
+        {
+          "evidence": [
+            "queue/12-insight-ferrule-partial-abutment/00-\u0648\u0636\u0639\u06cc\u062a.md (founder approvals table, sha256 dada38400d116bd347bc636449817102c8663613c4cb7980073b72b87dbe1765)",
+            "queue/12-insight-ferrule-partial-abutment/SHA256SUMS (frozen files, sha256 3dbee2b4738ca3aebd396469b61e37ec05c500bf76538b2342e57151b1900579)"
+          ],
+          "kind": "queue_approvals_v1",
+          "queue_ref": "queue/12-insight-ferrule-partial-abutment",
+          "receipt_sha256": "995d0b0c564fc34dbc47ae4e6b2c4269d9b0afe5d34b262fdcd8f07ca79eafa7",
+          "sha256sums": "3dbee2b4738ca3aebd396469b61e37ec05c500bf76538b2342e57151b1900579",
+          "status_sha256": "dada38400d116bd347bc636449817102c8663613c4cb7980073b72b87dbe1765"
+        },
+        {
+          "evidence": [
+            "queue/12-insight-ferrule-partial-abutment/00-\u0648\u0636\u0639\u06cc\u062a.md (founder approvals table, sha256 dada38400d116bd347bc636449817102c8663613c4cb7980073b72b87dbe1765)",
+            "queue/12-insight-ferrule-partial-abutment/SHA256SUMS (frozen files, sha256 3dbee2b4738ca3aebd396469b61e37ec05c500bf76538b2342e57151b1900579)"
+          ],
+          "kind": "first_cut_lead_provenance_v1",
+          "origin": "author_original",
+          "source_ref": "queue/12-insight-ferrule-partial-abutment/01-\u0645\u062a\u0646.md (frozen; its opening paragraph was approved in preparation)"
+        },
+        {
+          "english": {
+            "evidence": [
+              "queue/12-insight-ferrule-partial-abutment/06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md (frozen)"
+            ],
+            "path": "insight/en/insight-105.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "generated by tools/queue_ledger.py from the frozen item (receipt 995d0b0c564fc34dbc47ae4e6b2c4269d9b0afe5d34b262fdcd8f07ca79eafa7)"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "queue/12-insight-ferrule-partial-abutment/00-\u0648\u0636\u0639\u06cc\u062a.md (founder approvals table, sha256 dada38400d116bd347bc636449817102c8663613c4cb7980073b72b87dbe1765)",
+                "queue/12-insight-ferrule-partial-abutment/SHA256SUMS (frozen files, sha256 3dbee2b4738ca3aebd396469b61e37ec05c500bf76538b2342e57151b1900579)",
+                "mechanical defaults: {\"field\": \"backlinks_47\", \"rule\": \"11-\u0644\u06cc\u0646\u06a9\u200c\u0647\u0627\u06cc-\u06af\u0644\u0627\u0633\u0631\u06cc.md 4.7 has no frozen back-link with its link text \u2014 none is added\", \"value\": []}; {\"field\": \"pathway\", \"rule\": \"mechanical pathway rule\", \"value\": null}"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "queue/12-insight-ferrule-partial-abutment/09-\u06a9\u0644\u06cc\u062f\u0648\u0627\u0698\u0647\u200c\u0647\u0627.md; brain entry None"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "queue/12-insight-ferrule-partial-abutment/06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md verbatim -> insight/en/insight-105.html"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "queue/12-insight-ferrule-partial-abutment/07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md list; hashtag_ref.py --sync/--check passed"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "queue/12-insight-ferrule-partial-abutment/11-\u0644\u06cc\u0646\u06a9\u200c\u0647\u0627\u06cc-\u06af\u0644\u0627\u0633\u0631\u06cc.md; applied ['\u0641\u0631\u0648\u0644', '\u0637\u0631\u062d\\u200c\u0647\u0627\u06cc \u0627\u0646\u062a\u0647\u0627\u06cc \u0622\u0632\u0627\u062f']; 4.7 []; 4.9 [['/sharehub/share-18.html', '\u0641\u0631\u0648\u0644 \u062f\u0631 \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646\\u200c\u0647\u0627\u06cc \u0628\u0627\u0646\u062f \u0634\u0648\u0646\u062f\u0647'], ['/insight/insight-58.html', '\u062a\u0639\u0648\u06cc\u0636 \u0631\u0648\u06a9\u0634 \u0642\u062f\u06cc\u0645\u06cc \u062f\u0631 \u062f\u0646\u062f\u0627\u0646 \u067e\u0627\u06cc\u0647 \u067e\u0627\u0631\u0633\u06cc\u0644']]"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "pathway_place.py mechanical rule: [{'pathway': 'fixed-pros', 'after': 'insight/insight-58', 'why': 'STRONG'}, {'pathway': 'treatment-planning', 'after': 'insight/insight-58', 'why': 'STRONG'}]"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "queue/12-insight-ferrule-partial-abutment/07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md Q5; seven-line rotation {'added': '\u06cc\u06a9 \u0627\u06cc\u0646\u0633\u0627\u06cc\u062a \u0628\u0627\u0644\u06cc\u0646\u06cc \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab<a href=\"/insight/insight-105.html\">\u0641\u0631\u0648\u0644 \u062f\u0631 \u062f\u0646\u062f\u0627\u0646 \u067e\u0627\u06cc\u0647 \u067e\u0627\u0631\u0633\u06cc\u0644: \u0686\u0631\u0627 \u0631\u0648\u06a9\u0634 \u0642\u062f\u06cc\u0645\u06cc \u0631\u0627 \u0628\u0627\u06cc\u062f \u062f\u0631\u0622\u0648\u0631\u062f</a>\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f', 'dropped': '<li>\u067e\u0644\u0627\u06a9 \u0635\u0641\u0631\u060c \u0642\u0633\u0645\u062a \u06f1\u06f1: \u00ab<a href=\"/plak-sefr/plak1-11.html\">\u06cc\u06a9 \u062c\u0627 \u0628\u0631\u0627\u06cc \u0633\u0627\u06cc\u062a \u062f\u0631 \u06af\u06cc\u062a\\u200c\u0647\u0627\u0628</a>\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f</li>'}"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "queue/12-insight-ferrule-partial-abutment/05-DES-Fidelity installed by queue_install_des.py (record df8f04b4d71abe549d584195081747109c2de7707732b1cdc4239276373dda87)"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "queue/12-insight-ferrule-partial-abutment/07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md pillar/subtopic (brain entry written by queue_apply)"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "queue/12-insight-ferrule-partial-abutment/07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md Q4.9: not a Challenge (the queue lane refuses Challenge items)"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            }
+          ]
+        }
+      ],
+      "delivery": [],
+      "inputs": [],
+      "pending_questions": [],
+      "unrelated_changes": [],
+      "validation": []
+    },
+    "external_actions": [],
+    "status": "in_progress",
+    "steps": [
+      {
+        "evidence": [
+          "queue-route.md read; tools/queue_publish.py run"
+        ],
+        "id": "rules",
+        "module": "01-hard-rules.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "queue_manifest check complete; dry run clean (12-insight-ferrule-partial-abutment)"
+        ],
+        "id": "0",
+        "module": "02-routing-intake.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "queue_apply receipt sha256 8bf2c8e34626ce2ae3c67ba2a866c688d75ebe30be671b7b583d3e75c0116919"
+        ],
+        "id": "C.2",
+        "module": "03-litecast-and-page.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "4.8 ['\u0641\u0631\u0648\u0644', '\u0637\u0631\u062d\\u200c\u0647\u0627\u06cc \u0627\u0646\u062a\u0647\u0627\u06cc \u0622\u0632\u0627\u062f']; 4.7 []; 4.9 [['/sharehub/share-18.html', '\u0641\u0631\u0648\u0644 \u062f\u0631 \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646\\u200c\u0647\u0627\u06cc \u0628\u0627\u0646\u062f \u0634\u0648\u0646\u062f\u0647'], ['/insight/insight-58.html', '\u062a\u0639\u0648\u06cc\u0636 \u0631\u0648\u06a9\u0634 \u0642\u062f\u06cc\u0645\u06cc \u062f\u0631 \u062f\u0646\u062f\u0627\u0646 \u067e\u0627\u06cc\u0647 \u067e\u0627\u0631\u0633\u06cc\u0644']]"
+        ],
+        "id": "C.4.9",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pathways [{'pathway': 'fixed-pros', 'after': 'insight/insight-58', 'why': 'STRONG'}, {'pathway': 'treatment-planning', 'after': 'insight/insight-58', 'why': 'STRONG'}]"
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "single delivery before the Action"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
+      }
+    ],
+    "target_paths": [
+      ".dentcast/queue-frozen-des.json",
+      "dentcast-brain.json",
+      "dentcast-hashtag-reference.json",
+      "index.html",
+      "insight/en/insight-105.html",
+      "insight/index.html",
+      "insight/insight-105.html",
+      "insight/insight105-1.webp",
+      "plus/assistant-tags.json",
+      "plus/content-index.json",
+      "plus/des-scores.json",
+      "plus/exam-questions.json",
+      "plus/faq-corpus.json",
+      "plus/pathways.json"
+    ]
+  },
+  "reconciliation": {
+    "note": "Index-only refresh after staging delivery paths: .dentcast/queue-frozen-des.json, dentcast-brain.json, dentcast-hashtag-reference.json, index.html, insight/en/insight-105.html, insight/index.html, insight/insight-105.html, insight/insight105-1.webp, plus/assistant-tags.json, plus/content-index.json, plus/des-scores.json, plus/exam-questions.json, plus/faq-corpus.json, plus/pathways.json"
+  },
+  "schema": "publish-handoff-v3"
+}
+```
+<!-- /dentcast-publish-state-v1 -->
