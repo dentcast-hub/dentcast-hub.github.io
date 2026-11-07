@@ -74,7 +74,7 @@ def phase_f_expectations(pub: dict, args) -> tuple[str | None, str | None]:
 
 
 def preflight(root: Path, expected_head: str, expected_branch: str) -> dict:
-    """Read-only trigger gate; Push 1 and post-cleanup pushes are clean skips."""
+    """Read-only trigger gate; save-point (Push 1) and post-cleanup pushes are clean skips."""
     actual = git(root, "rev-parse", "HEAD").lower()
     if actual != expected_head.lower():
         raise RunnerError("EXPECTED_EVENT_SHA_MISMATCH")

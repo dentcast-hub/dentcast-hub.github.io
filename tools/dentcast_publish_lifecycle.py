@@ -292,7 +292,12 @@ def require_step_delivery(root, state, expected):
 DELIVERY_POLICY = "fixed_three_deliveries_v1"  # legacy/in-flight source of truth
 DELIVERY_POLICY_V2 = "fixed_three_deliveries_v2"  # authoring before second cut
 DELIVERY_CUTS = ("C.4.9", "C.4.13")
-DELIVERY_CUTS_V2 = ("C.4.9", "C.6")
+# v2 (founder decision 2026-11-07): Push 2 at C.6 is the only fixed cut; the
+# runner makes the final delivery. The earlier cut 1 at C.4.9 is replaced by
+# an unguarded save point (save_point below), so a run already holding a
+# delivered C.4.9 cut simply continues: that commit counts as a save.
+DELIVERY_CUTS_V2 = ("C.6",)
+SAVE_POINT_STEP = "C.4.13"
 EDITORIAL_SCOPES = frozenset((
     "scientific", "challenge", "taxonomy", "links", "hashtags",
     "content_record", "pathways", "pulse", "english", "author_approvals"
@@ -378,6 +383,29 @@ def delivery_cuts(publication):
     return DELIVERY_CUTS_V2 if editorial_cut_v2(publication) else DELIVERY_CUTS
 
 
+def save_point(publication):
+    """An interactive v2 run between DES/Fidelity (C.4.13 started) and Push 2.
+
+    A save is one plain commit and push of the scoped work and the handoff so
+    DES/Fidelity survives a lost session: no readiness gate, no remote
+    read-back, no hold on the next step. It is not a delivery; Push 2 keeps
+    every check.
+    """
+    if queue_lane(publication) or not editorial_cut_v2(publication) or delivery_boundary(publication):
+        return False
+    rows = {s["id"]: s["status"] for s in publication["steps"]}
+    return (rows.get(SAVE_POINT_STEP, "pending") != "pending"
+            and rows.get("C.6") not in ("completed", "skipped"))
+
+
+def same_run(previous, publication):
+    """The parent handoff is an earlier save of this same interactive v2 run."""
+    return (previous is not None and not queue_lane(previous) and not queue_lane(publication)
+            and editorial_cut_v2(previous) and editorial_cut_v2(publication)
+            and previous["content_id"] == publication["content_id"]
+            and h.publication_category(previous) == h.publication_category(publication))
+
+
 def final_delivery(publication):
     """Number of the last fixed delivery: 3 interactive, 2 queue lane."""
     return len(delivery_cuts(publication)) + 1
@@ -459,7 +487,10 @@ def require_delivery_parent(root, publication, number, revision="HEAD"):
         # second) cut may re-deliver the first cut once per invalidation: same
         # run, previous commit at boundary 1 or 2, and strictly more
         # invalidation receipts now.
-        h.require(previous is None or redelivers_first_cut(previous, publication, boundary),
+        # v2: Push 2 may sit on saves (or a pre-2026-11-07 C.4.9 cut, or an
+        # earlier Push 2 with audited reconciliation) of the same run.
+        h.require(previous is None or redelivers_first_cut(previous, publication, boundary)
+                  or same_run(previous, publication),
                   "FIRST_DELIVERY_REQUIRES_NO_ACTIVE_REMOTE_HANDOFF")
     else:
         h.require(boundary == number-1 and previous is not None
@@ -714,9 +745,10 @@ def guard_step_transition(state, publication, root=None):
         h.require(fixed_delivery(publication), "DELIVERY_POLICY_CANNOT_BE_DROPPED")
         old_c49 = next((s for s in state["publication"]["steps"] if s["id"] == "C.4.9"), None)
         new_c49 = next((s for s in publication["steps"] if s["id"] == "C.4.9"), None)
-        if (not queue_lane(publication) and old_c49 and new_c49 and old_c49["status"] not in ("completed", "skipped")
+        if (not queue_lane(publication) and not editorial_cut_v2(publication)
+                and old_c49 and new_c49 and old_c49["status"] not in ("completed", "skipped")
                 and new_c49["status"] in ("completed", "skipped")):
-            # Fail at C.4.9 itself, not first at the cut-1 stop/commit guard.
+            # v1 only: fail at C.4.9 itself, not first at the cut-1 stop/commit guard.
             require_fixed_cut_readiness(publication, root)
         h.require(editorial_cut_v2(state["publication"]) == editorial_cut_v2(publication)
                   and queue_lane(state["publication"]) == queue_lane(publication),
@@ -910,9 +942,10 @@ def stage_delivery(root, expected, paths):
     # Paper-only keeps its single delivery: the exact completed final handoff
     # (with its catalog work), followed later by the deletion-only cleanup.
     paper_final = h.publication_category(p) == "paper-only" and h.next_step(p) is None
-    h.require(paper_final or (fixed_delivery(p) and delivery_boundary(p) in (1, 2)),
+    saving = not paper_final and save_point(p)
+    h.require(paper_final or saving or (fixed_delivery(p) and delivery_boundary(p) in (1, 2)),
               "STAGE_DELIVERY_ONLY_AT_FIXED_CUT")
-    if not paper_final:
+    if not paper_final and not saving:
         # Refuse before staging or refreshing the checkpoint, not in the final guard.
         require_fixed_cut_readiness(p, root)
     stale = stale_checkout(root)
@@ -945,6 +978,8 @@ def stage_delivery(root, expected, paths):
     guard(root, "pre-commit")
     return {"status": "delivery_staged", "sha256": result["sha256"], "staged": list(paths),
             "next_action": ("Commit and push this paper-only final handoff once, then finish" if paper_final
+                            else "Commit and push this save point once; a failed push is reported, "
+                                 "never retried in a loop, and the run continues" if saving
                             else "Commit and push this fixed delivery once"), "publication_completed": False}
 
 
@@ -1375,7 +1410,8 @@ def guard(root, phase):
     state, _ = h.load_state(root)
     require_plan(state["publication"])
     h.require(not pending(root), "CLEANUP_DELIVERY_PENDING")
-    if fixed_delivery(state["publication"]) and phase in ("pre-commit", "ci"):
+    if (fixed_delivery(state["publication"]) and phase in ("pre-commit", "ci")
+            and not save_point(state["publication"])):
         number = delivery_boundary(state["publication"])
         h.require(number is not None, "ONLY_THREE_FIXED_DELIVERIES_ALLOWED" if not queue_lane(state["publication"])
                   else "ONLY_TWO_QUEUE_DELIVERIES_ALLOWED")

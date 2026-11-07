@@ -83,18 +83,26 @@ MODULES = WORKFLOW + 'modules/'
 # the '### 4.6. Promptologist series' prefix the boundary matches), module 03's
 # chip rule, module 05's 4.8 candidate set, module 08's checklist-label
 # sentence. Boundaries and every omitted section re-checked for each.
+# Re-pinned 2026-11-07 (founder: cut 1 replaced by an unguarded save point):
+# every module's always-kept banner (line 3) and ledger line (line 6) changed
+# wording only; 03 changes one clause of the lead-provenance paragraph (C.4.9 ->
+# C.6); 08 adds a «Save point» paragraph inside Part 3b, after the «Conditional
+# path for founder-supplied results» boundary, which still occurs once with the
+# text before it changed only in lines 3 and 6. No heading changed (compared
+# HEAD vs edit for all twelve modules); LiteCast/Challenge skip C.4.13 and so
+# correctly omit the new paragraph.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
-    '03-litecast-and-page.md': 'a5030debfc24b3b2f3110996db57d6878b535156',
-    '04-taxonomy-and-navigation.md': 'fb7d965207a004e1c69b502db6b1a66d0b9bb1de',
-    '05-semantic-linking.md': '3f44257f3e7ffa3b6be08e15de5fa97358b08363',
-    '06-paper-ingestion.md': 'c82da53ba291e98445455354ef27516f17fdc797',
-    '08-des-fidelity.md': 'b374a8d3b86fd32ee6122dffd9c70dedca5c4590',
-    '09-challenge.md': 'f95917dce01098eac61f0e005ad6dc7b755ec98a',
-    '11-build-and-version.md': 'd7c0e224a89238de39da5aef1f5654bd24ca06d7',
-    '12-english-notify-verify.md': '67ec15cd1ea56e081536bf89e28dda9ec2b4d1bb',
-    '11-build-and-version.md': 'd7c0e224a89238de39da5aef1f5654bd24ca06d7',
+    '03-litecast-and-page.md': 'e82aee946648f09d7ed130b7bcdd93b3fbc14694',
+    '04-taxonomy-and-navigation.md': '4e5a13815daf8dfad0c1cdb8482d7d6bcbb5025a',
+    '05-semantic-linking.md': 'c9152849a723c9f9fe8789e62caf7ef6d1b9fbdf',
+    '06-paper-ingestion.md': '226ff4a756418788e70afa2a19e4484c1734dedb',
+    '08-des-fidelity.md': 'e4029b1854565e55b9791bb03cb21ad73132e961',
+    '09-challenge.md': '3ac5856ddb021aa9f36cbfb35d6363531ae038c8',
+    '11-build-and-version.md': '4dd05364ca5f9fd5811d7de39f172af14c592b13',
+    '12-english-notify-verify.md': '5c9b65ee4416fd67607e6d35ca88272832ee86ec',
+    '11-build-and-version.md': '4dd05364ca5f9fd5811d7de39f172af14c592b13',
 }
 
 REQUIRED = [

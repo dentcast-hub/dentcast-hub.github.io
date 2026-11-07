@@ -15,7 +15,7 @@ python3 tools/dentcast_publish_handoff.py discover --recover-incomplete --reposi
 python3 tools/dentcast_publish_handoff.py record --input /tmp/publish-input.json --expected-sha256 <digest-from-last-read>
 ```
 
-`content_id` form, branch start (`--no-track`), `SHALLOW_CLONE_DEEPEN_REQUIRED`, `TOOL_OLDER_THAN_ORIGIN_MAIN`, the first-cut lead provenance and the post-Push-2 pull: `publish-checkpoints.md` and `publish-after-push2.md`.
+`content_id` form, branch start (`--no-track`), `SHALLOW_CLONE_DEEPEN_REQUIRED`, `TOOL_OLDER_THAN_ORIGIN_MAIN`, the lead provenance and the post-Push-2 pull: `publish-checkpoints.md` and `publish-after-push2.md`.
 
 From another directory put `--repo /path/to/checkout` before the subcommand. On Windows use a suitable private input-file path instead of `/tmp`. `inspect --check-remote` reads `origin`'s branch matching the current local branch, independent of the configured upstream. The delivery cuts require this fresh remote observation. It uses `git ls-remote`; it does not fetch or upload. A failed observation remains unknown and blocks crossing those boundaries. Cached upstream commits are labeled separately and are never proof of delivered work. Missing remote commit objects remain unknown until the operator supplies history through their normal authorized Git workflow.
 

@@ -1,9 +1,9 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
 > **Checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision. Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
-> **Order, founder messages and the three deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
+> **Order, founder messages, the save point and the deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
-Ledger step in this module: `C.4.13` (after C.4.6 and C.4.10, before C.4.7, inside delivery 1; it closes with message M3b when a sentence is still flagged, and starts the text lock).
+Ledger step in this module: `C.4.13` (after C.4.6 and C.4.10, before C.4.7; it closes with message M3b when a sentence is still flagged, and starts the text lock). The save point (`publish-checkpoints.md`) comes here: just before sending M3b (Part 3b, «Save point») or, with no M3b, once Part 4 has stored the record, commit and push the scoped work, `plus/des-scores.json` and the handoff.
 
 ### 4.13. DES — DentCast Evidence Score (run or consume the record)
 
@@ -531,13 +531,24 @@ run is unusable.
 **The fidelity grade exists to make the writing better, and the goal is
 «کاملاً مطابق»**. So when a validated FIDELITY result
 carries any `ALTERED` or `REVERSED` unit, the publish **stops here, before
-Part 4 stores anything**, and the founder is shown each such sentence and asked
+Part 4 stores the final result**, and the founder is shown each such sentence and asked
 whether to fix it. These blocks are **message M3b at C.4.13**
 (`publish-checkpoints.md`): never deferred to the final report, never skipped
 because the grade is already high. Only units
 still flagged after the Part 2c step 4 review reach this gate; a unit the
 stronger review overruled is already `MATCHES` and is listed in the report as
 information, never asked.
+
+**Save point.** Before M3b goes out, write the validated result into
+`plus/des-scores.json` exactly as Part 4 would, commit and push it with the page
+and the handoff (C.4.13 stays `started`, M3b stays in `pending_questions`). It is
+provisional, not the gate's outcome: the re-run below replaces its `fidelity`
+and `scored_at`, as for a page already published. If the session is lost while
+M3b waits, the next session rebuilds `<dir1>/voted-src<k>.json` from the stored
+`fidelity` slots (the same shape), resolves `source_text` again by Part 1, and
+continues from the founder's answers; no checker run is repeated. A `POOLED`
+slot folds several parts and cannot be split back: on such a page the DES
+`sources` survive, the Fidelity step runs again.
 
 For **each** `ALTERED` / `REVERSED` unit, one block, in this order:
 

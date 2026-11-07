@@ -1,9 +1,9 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
 > **Checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision. Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
-> **Order, founder messages and the three deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
+> **Order, founder messages, the save point and the deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
-Ledger step in this module: `C.4.14`. Read this module before C.1 when Question 4.9 answered «چالش»: its markup shapes the page of delivery 1.
+Ledger step in this module: `C.4.14`. Read this module before C.1 when Question 4.9 answered «چالش»: its markup shapes the page.
 
 ### 4.14. چالش — public half on the page, private half in the admin queue
 

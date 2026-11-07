@@ -1,9 +1,9 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
 > **Checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision. Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
-> **Order, founder messages and the three deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
+> **Order, founder messages, the save point and the deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
-Ledger steps in this module: `C.4.11`, `C.4.12` (after delivery 1, on the text locked at C.4.13). Step 4.12-ب has no row of its own: it is evaluated at C.5.6 and recorded there.
+Ledger steps in this module: `C.4.11`, `C.4.12` (after C.4.9, on the text locked at C.4.13). Step 4.12-ب has no row of its own: it is evaluated at C.5.6 and recorded there.
 
 **Judgment calls here follow standing acceptance** (Hard Rule 14): an ambiguous case takes the conservative choice and is recorded with its reason — skip a Q/A pair whose card shape is unclear, drop a case-bound question that cannot stand alone without adding a claim, leave an answer hedged (and out of the scored bank) when a clean yes/no is not certain. A thin or fabricated card or question is worse than none. Only the pathway exam questions of 4.12-ب go to the founder (M2).
 

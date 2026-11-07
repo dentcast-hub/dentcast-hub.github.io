@@ -35,4 +35,4 @@ Update AGENTS.md, CLAUDE.md and Cursor routing together when shared routes chang
 
 ## Per-step checkpoints and delivery batches
 
-Ledger, the three fixed deliveries (after `C.4.9`, after `C.6`, delivery 3 by `post-cut2-mechanical.yml`), text lock, paper-only and completion: `.dentcast/workflows/publish-checkpoints.md`.
+Ledger, the save point (once C.4.13 starts), Push 2 (after `C.6`), delivery 3 by `post-cut2-mechanical.yml`, text lock, paper-only and completion: `.dentcast/workflows/publish-checkpoints.md`.

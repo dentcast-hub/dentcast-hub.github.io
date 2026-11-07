@@ -1,6 +1,6 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
 > **Checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision. Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
-> **Order, founder messages and the three deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
+> **Order, founder messages, the save point and the deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
 Ledger steps in this module: `C.5.0`, `C.5`, `C.5.5`, `C.5.6`, `C.5.6-b`. Every tag, metadata, pathway and bundle decision closes here, before the C.6 editorial lock and Push 2; no judgment work moves behind Push 2.

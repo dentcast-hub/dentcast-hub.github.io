@@ -109,8 +109,9 @@ class QueueLaneTests(unittest.TestCase):
         p = fixtures.publication()
         p["steps"] = lc.plan()
         p["context"]["decisions"] = [{"kind": lc.DELIVERY_POLICY}, {"kind": lc.DELIVERY_POLICY_V2}]
-        self.assertEqual(lc.delivery_cuts(p), ("C.4.9", "C.6"))
-        self.assertEqual(lc.final_delivery(p), 3)
+        # 2026-11-07: Push 2 is the only fixed cut; C.4.13 opens the save window.
+        self.assertEqual(lc.delivery_cuts(p), ("C.6",))
+        self.assertEqual(lc.final_delivery(p), 2)
 
     def test_rules_phase0_F_G_cannot_be_skipped(self):
         p = fixtures.publication()

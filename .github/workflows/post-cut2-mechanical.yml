@@ -230,7 +230,7 @@ jobs:
             echo
             printf '%s\n' "- Push-2 SHA: \`$EXPECTED_HEAD\`"
             echo "- Job result: **$JOB_STATUS**"
-            echo "- Push 1 and pushes without a v2 second-cut handoff are skipped by the read-only preflight."
+            echo "- Save-point pushes (Push 1) and pushes without a v2 Push-2 handoff are skipped by the read-only preflight."
             echo "- A successful run creates and confirms exactly delivery 3, then opens the PR (never merges it)."
             echo "- On failure, inspect the uploaded logs/recovery bundle before resuming."
           } >> "$GITHUB_STEP_SUMMARY"

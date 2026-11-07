@@ -1589,7 +1589,7 @@ def main(argv=None):
     p.add_argument("--category", required=True)
     p.add_argument("--target-path", action="append", required=True)
     p.add_argument("--evidence", required=True)
-    p = sub.add_parser("stage-delivery", help="At cut 1/2 (or the paper-only final handoff): git add reviewed paths, refresh the checkpoint, stage it, run the pre-commit guard")
+    p = sub.add_parser("stage-delivery", help="At the save point, Push 2 or a v1 cut (or the paper-only final handoff): git add reviewed paths, refresh the checkpoint, stage it, run the pre-commit guard")
     p.add_argument("--expected-sha256", required=True)
     p.add_argument("--path", action="append", required=True)
     p = sub.add_parser("finish")

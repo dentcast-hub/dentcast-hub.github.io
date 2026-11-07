@@ -55,11 +55,11 @@ class LedgerOrderV2Tests(unittest.TestCase):
     def deliver_two_v2(self):
         sha = self.walk(self.start_v2(), 'C.4.9')
         ids = [s['id'] for s in h.load_state(self.root)[0]['publication']['steps']]
-        # Cut 1 now carries the paper and DES/Fidelity checkpoints.
+        # The save carries the paper and DES/Fidelity checkpoints.
         self.assertLess(ids.index('C.4.13'), ids.index('C.4.9'))
-        self.deliver('delivery 1')
+        self.deliver('save point')
         sha = self.walk(h.load_state(self.root)[1], 'C.6')
-        self.assertEqual(lc.delivery_boundary(h.load_state(self.root)[0]['publication']), 2)
+        self.assertEqual(lc.delivery_boundary(h.load_state(self.root)[0]['publication']), 1)
         self.deliver('delivery 2')
         return h.text_git(self.root, 'rev-parse', 'HEAD')
 

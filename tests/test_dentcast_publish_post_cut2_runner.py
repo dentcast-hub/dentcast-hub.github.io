@@ -45,7 +45,8 @@ class PostCut2RunnerTests(unittest.TestCase):
         self.assertIn("tools/dentcast_post_cut2_runner.py", runner.handoff.WORKFLOW_PATHS)
         self.assertIn(".github/workflows/post-cut2-mechanical.yml", runner.handoff.WORKFLOW_PATHS)
 
-    def test_push1_preflight_is_a_noop(self):
+    def test_save_point_push_preflight_is_a_noop(self):
+        # A save-point push (v2, 2026-11-07) or a pre-change C.4.9 cut: no boundary.
         pub = sample_publication()
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -54,7 +55,7 @@ class PostCut2RunnerTests(unittest.TestCase):
             with patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]), \
                  patch.object(runner, "publication", return_value=(pub, "digest")), \
                  patch.object(lifecycle, "editorial_cut_v2", return_value=True), \
-                 patch.object(lifecycle, "delivery_boundary", return_value=1), \
+                 patch.object(lifecycle, "delivery_boundary", return_value=None), \
                  patch.object(runner, "command_plan") as commands:
                 result = runner.preflight(root, HEAD, BRANCH)
                 commands.assert_not_called()
@@ -70,10 +71,10 @@ class PostCut2RunnerTests(unittest.TestCase):
             with patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]), \
                  patch.object(runner, "publication", return_value=(pub, "digest")), \
                  patch.object(lifecycle, "editorial_cut_v2", return_value=True), \
-                 patch.object(lifecycle, "delivery_boundary", return_value=2):
+                 patch.object(lifecycle, "delivery_boundary", return_value=1):
                 result = runner.preflight(root, HEAD, BRANCH)
         self.assertTrue(result["continue"])
-        self.assertEqual(result["boundary"], 2)
+        self.assertEqual(result["boundary"], 1)
 
     def preflight_after_move(self, boundary, git_results):
         pub = sample_publication()
@@ -87,25 +88,25 @@ class PostCut2RunnerTests(unittest.TestCase):
                  patch.object(lifecycle, "delivery_boundary", return_value=boundary):
                 return runner.preflight(root, HEAD, BRANCH)
 
-    def test_superseded_push1_run_is_a_clean_skip_not_a_failure(self):
+    def test_superseded_save_point_run_is_a_clean_skip_not_a_failure(self):
         newer = "b" * 40
-        result = self.preflight_after_move(1, [newer])
+        result = self.preflight_after_move(None, [newer])
         self.assertFalse(result["continue"])
         self.assertEqual(result["reason"], "NOT_AT_V2_SECOND_DELIVERY")
         self.assertEqual(result["superseded_by"], newer)
 
     def test_moved_push2_skips_only_for_a_newer_handoff_push(self):
         newer = "b" * 40
-        result = self.preflight_after_move(2, [newer, "", runner.HANDOFF])
+        result = self.preflight_after_move(1, [newer, "", runner.HANDOFF])
         self.assertFalse(result["continue"])
         self.assertEqual(result["reason"], "SUPERSEDED_BY_NEWER_HANDOFF_PUSH")
         # No queued run would handle the newer head: still a real failure.
         with self.assertRaisesRegex(runner.RunnerError, "REMOTE_BRANCH_MOVED_OR_UNOBSERVABLE"):
-            self.preflight_after_move(2, [newer, "", ""])
+            self.preflight_after_move(1, [newer, "", ""])
         with self.assertRaisesRegex(runner.RunnerError, "REMOTE_BRANCH_MOVED_OR_UNOBSERVABLE"):
-            self.preflight_after_move(2, [newer, runner.RunnerError("not an ancestor")])
+            self.preflight_after_move(1, [newer, runner.RunnerError("not an ancestor")])
         with self.assertRaisesRegex(runner.RunnerError, "REMOTE_BRANCH_MOVED_OR_UNOBSERVABLE"):
-            self.preflight_after_move(1, [""])
+            self.preflight_after_move(None, [""])
 
     def test_phase_f_uses_frozen_handoff_approvals(self):
         pub = sample_publication()
@@ -128,7 +129,7 @@ class PostCut2RunnerTests(unittest.TestCase):
         with self.assertRaisesRegex(runner.RunnerError, "APPROVED_EXPECTED_TEXT_MISMATCH:title"):
             runner.phase_f_expectations(pub, args)
 
-    def test_first_cut_is_rejected_before_any_builder(self):
+    def test_save_point_is_rejected_before_any_builder(self):
         pub = sample_publication()
         args = type("Args", (), {
             "expected_head": HEAD, "expected_branch": BRANCH,
@@ -137,7 +138,7 @@ class PostCut2RunnerTests(unittest.TestCase):
         with patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]), \
              patch.object(runner, "publication", return_value=(pub, "digest")), \
              patch.object(lifecycle, "editorial_cut_v2", return_value=True), \
-             patch.object(lifecycle, "delivery_boundary", return_value=1), \
+             patch.object(lifecycle, "delivery_boundary", return_value=None), \
              patch.object(lifecycle, "require_fixed_cut_readiness"), \
              patch.object(runner, "command_plan") as commands:
             with self.assertRaisesRegex(runner.RunnerError, "NOT_AT_V2_SECOND_DELIVERY"):
@@ -188,7 +189,7 @@ class PostCut2RunnerTests(unittest.TestCase):
                 stack.enter_context(patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]))
                 stack.enter_context(patch.object(runner, "publication", return_value=(pub, "digest")))
                 stack.enter_context(patch.object(lifecycle, "editorial_cut_v2", return_value=True))
-                stack.enter_context(patch.object(lifecycle, "delivery_boundary", return_value=2))
+                stack.enter_context(patch.object(lifecycle, "delivery_boundary", return_value=1))
                 stack.enter_context(patch.object(lifecycle, "require_fixed_cut_readiness"))
                 stack.enter_context(patch.object(runner, "command_plan", return_value=[["python3", "builder"]]))
                 stack.enter_context(patch.object(runner, "record_step", side_effect=record))
@@ -235,7 +236,7 @@ class PostCut2RunnerTests(unittest.TestCase):
                 stack.enter_context(patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]))
                 stack.enter_context(patch.object(runner, "publication", return_value=(pub, "digest")))
                 stack.enter_context(patch.object(lifecycle, "editorial_cut_v2", return_value=True))
-                stack.enter_context(patch.object(lifecycle, "delivery_boundary", return_value=2))
+                stack.enter_context(patch.object(lifecycle, "delivery_boundary", return_value=1))
                 stack.enter_context(patch.object(lifecycle, "require_fixed_cut_readiness"))
                 stack.enter_context(patch.object(runner, "command_plan", return_value=[]))
                 stack.enter_context(patch.object(runner, "record_step", side_effect=record))
@@ -285,7 +286,7 @@ class PostCut2RunnerTests(unittest.TestCase):
             stack.enter_context(patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]))
             stack.enter_context(patch.object(runner, "publication", return_value=(pub, "digest")))
             stack.enter_context(patch.object(lifecycle, "editorial_cut_v2", return_value=True))
-            stack.enter_context(patch.object(lifecycle, "delivery_boundary", return_value=2))
+            stack.enter_context(patch.object(lifecycle, "delivery_boundary", return_value=1))
             stack.enter_context(patch.object(lifecycle, "require_fixed_cut_readiness"))
             stack.enter_context(patch.object(runner, "command_plan", return_value=[]))
             stack.enter_context(patch.object(runner, "record_step", side_effect=record))
@@ -364,7 +365,7 @@ class PostCut2RunnerTests(unittest.TestCase):
              patch.object(runner, "git", side_effect=[HEAD, BRANCH, HEAD]), \
              patch.object(runner, "publication", return_value=(pub, "digest")), \
              patch.object(lifecycle, "editorial_cut_v2", return_value=True), \
-             patch.object(lifecycle, "delivery_boundary", return_value=2), \
+             patch.object(lifecycle, "delivery_boundary", return_value=1), \
              patch.object(lifecycle, "require_fixed_cut_readiness"), \
              patch.object(runner, "command_plan", return_value=[["python3", "builder"]]), \
              patch.object(runner, "record_step"), \

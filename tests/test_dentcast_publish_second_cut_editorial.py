@@ -87,7 +87,7 @@ class EditorialSecondCutTests(unittest.TestCase):
         self.assertIsNone(lc.delivery_boundary(draft))
         self.assertEqual(h.next_step(draft), "C.4.14")
         done = sample(second="C.6")
-        self.assertEqual(lc.delivery_boundary(done), 2)
+        self.assertEqual(lc.delivery_boundary(done), 1)
         self.assert_blocked("SECOND_CUT_EDITORIAL_LOCK_REQUIRED",
                             lc.require_fixed_cut_readiness, done)
         done["context"]["decisions"].append(receipt(done))
@@ -192,12 +192,15 @@ class EditorialSecondCutTests(unittest.TestCase):
             en.write_text("<html lang='en'>fixture</html>", encoding="utf-8")
             lc.require_fixed_cut_readiness(p, Path(folder))
 
-    def test_three_boundaries_still_exactly_three(self):
+    def test_push2_is_the_only_v2_boundary_and_c49_is_a_save_point(self):
+        # 2026-11-07: the old cut 1 at C.4.9 is now inside the save window.
         p = sample(second="C.4.9")
-        self.assertEqual(lc.delivery_boundary(p), 1)
+        self.assertIsNone(lc.delivery_boundary(p))
+        self.assertTrue(lc.save_point(p))
         p = sample(second="C.6")
         p["context"]["decisions"].append(receipt(p))
-        self.assertEqual(lc.delivery_boundary(p), 2)
+        self.assertEqual(lc.delivery_boundary(p), 1)
+        self.assertFalse(lc.save_point(p))
         for step in p["steps"]:
             step["status"],step["evidence"] = "completed", ["fixture"]
         self.assertIsNone(lc.delivery_boundary(p))

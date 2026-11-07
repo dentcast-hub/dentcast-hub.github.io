@@ -1,9 +1,9 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
 > **Checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision. Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
-> **Order, founder messages and the three deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
+> **Order, founder messages, the save point and the deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
-Ledger steps in this module: `C.4.10.1` (Part 1), `C.4.10.2` (Part 2), `C.4.10.3` (Part 3). They run after C.4.6, before C.4.7 (inside delivery 1), and before C.4.13, which reuses their DOI.
+Ledger steps in this module: `C.4.10.1` (Part 1), `C.4.10.2` (Part 2), `C.4.10.3` (Part 3). They run after C.4.6, before C.4.7, and before C.4.13, which reuses their DOI.
 
 ### 4.10. Attached-paper branch (ANY type — triggered by the paper file, not the category)
 

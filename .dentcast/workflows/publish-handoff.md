@@ -42,7 +42,7 @@ A receiving checkout continues on the selected branch that holds the delivered c
 
 **Stale checkout after a switch.** When another checkout or client continued the run, the original checkout's undelivered work is superseded. Signs: `inspect --check-remote` reports `REMOTE_HISTORY_NOT_LOCAL_REVIEW_REQUIRED` or `REMOTE_BRANCH_ADVANCED_REVIEW_REQUIRED`, `stage-delivery` refuses `REMOTE_BRANCH_MOVED_STALE_CHECKOUT`, a push is rejected as non-fast-forward, or `git pull --ff-only` is refused. Do not continue steps, commit, merge, rebase or force-push there, and do not carry its approvals or exam rows into the other run. Keep it recoverable with `git stash push -u -m stale-<slug>-<date>` (plus `git branch stale/<slug>-<date>` if it has local commits), then `git pull --ff-only`. If local commits still block the fast-forward, move the branch with `git switch -C <branch> origin/<branch>` only after the founder confirms; the backup branch keeps those commits. Then inspect from the delivered state, or stop if the run is complete.
 Keep secrets, private inputs, private approval transcripts, and restricted scientific inputs out of public Git. Record safe references and availability instead; missing private inputs block dependent steps.
-Never silently publish drafts. Remote checkpoints are only the three fixed deliveries of an authorized publication.
+Never silently publish drafts. Remote checkpoints are only the save point, Push 2 and delivery 3 of an authorized publication.
 Allow one active publication in this fixed file; concurrent publication attempts must stop rather than overwrite each other's state.
 
 ## Required state template

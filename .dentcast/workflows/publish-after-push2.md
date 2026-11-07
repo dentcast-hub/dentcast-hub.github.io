@@ -20,7 +20,7 @@ monitors, reports, and merges only with authorization. A queue item (`queue-rout
   either, REST `GET repos/<owner>/<repo>/actions/workflows/post-cut2-mechanical.yml/runs?branch=<branch>`
   with a token, or the run link the founder reads from the Actions tab. A client that cannot stay
   with the run says so and hands over: «ادامه انتشار» resumes the monitoring in a later session.
-  The branch normally has **more than one** run — the delivery-1 push starts one too, which skips
+  The branch may have **more than one** run — a save-point push starts one too, which skips
   itself. The run to monitor is the one whose `head_sha` is the Push-2 SHA; never judge by position
   or by the newest run.
 - No run, or preflight skipped: inspect the event, branch and handoff before saying Actions started.
@@ -81,8 +81,8 @@ logs/artifact, then:
   merged non-publication paths in `target_paths` only after the invalidation is written (keep them
   out of the index until then, restore them from `origin/main` afterwards). Restore each still-valid
   approval from the `dependency_invalidation_v1` audit, re-record the ledger with re-verification
-  evidence and re-cross the cuts in order: the merge commit is the re-delivered cut 1 (allowed once
-  per audited invalidation), then cut 2 once more, which starts the workflow again.
+  evidence and redo the steps through C.6: the merge commit may be a save (once C.4.13 has started
+  again) or Push 2 itself, which starts the workflow again.
 - **Cause in the publication** (Phase F names a page, entry, approval or text): at the Push-2 commit
   `invalidate --from-step <first affected step>` (`C.6` when only a frozen approval/title/caption is
   wrong); restore each approval from the audit with the founder's actual correction, fix the bytes,
