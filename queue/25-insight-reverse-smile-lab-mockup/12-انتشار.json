@@ -1,0 +1,147 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "insight",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "لبخند معکوس در طراحی ماکاپ لابراتوار",
+  "from": "02-عنوان-کپشن.md:2"
+ },
+ "caption_fa": {
+  "value": "در ماکاپ لابراتوار، سانترال‌ها نسبت به کانین‌ها و دندان‌های خلفی کوتاه‌تر بودند و اسمایل آرک معکوس شد؛ علتش این بود که طول سانترال را به لابراتوار نگفته بودم.",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "title_en": {
+  "value": "Reverse Smile Arc in a Lab Mock-up Design",
+  "from": "06-انگلیسی.md:2"
+ },
+ "caption_en": {
+  "value": "In the lab's mock-up, the centrals were shorter than the canines and the posterior teeth, so the smile arc came out reversed; the reason was that I had not told the lab the central length.",
+  "from": "06-انگلیسی.md:5"
+ },
+ "body_en": {
+  "value": "## The question\n\nThe lab has sent a digital mock-up design and asked whether it is suitable for the mock-up. Is this design acceptable?\n\n[[تصویر:01]]\n\n## The answer\n\nAt first glance, this design has a reverse smile arc. In the smile arc, the curvature of the incisal edges of the maxillary anterior teeth is compared with the curvature of the lower lip during a smile. The ideal is for the two to be parallel. If the edges lie on a straight line, the arc is flat; if the curvature runs against the lower lip, it is reverse.\n\nIn the literature, the crown lengths of the central and the canine are taken to be roughly equal. Because the gingival margin of the canine sits slightly higher than that of the central in many patients, with equal lengths the canine tip falls slightly higher than the central edge, and this small difference creates the desirable curvature. In this design, the centrals are shorter than the canines and the posterior teeth, and that is why the arc is reversed.\n\nThe reason for this was clear in this patient. I had not told the lab the central length. When this length is not specified, the lab usually sets an overbite of about half a millimeter against the lower anterior teeth, because it does not know where the edge of the upper teeth should be. I knew the patient from before, and I knew the current anterior crowns were going to be replaced and the centrals needed to be longer. Since I am doing a full reconstruction, at this stage I only asked the lab to make the centrals longer.\n\nIf I had not known the patient beforehand, I would have examined the mouth first, because the problem might have been long posterior teeth rather than short centrals. In any case, this is only a mock-up. I will check and adjust the final length in the mouth and give the lab the exact number. Even so, it would have been better to specify the central length to the lab too, from the start.",
+  "from": "06-انگلیسی.md:8-24"
+ },
+ "images": {
+  "value": [
+   {
+    "n": "01",
+    "file": {
+     "value": "03-تصاویر/01-reverse-smile-lab-mockup.webp",
+     "from": "03-تصاویر/تصاویر.md:8"
+    },
+    "alt_fa": {
+     "value": "طراحی دیجیتال ماکاپ دندان‌های قدامی فک بالا از لابراتوار",
+     "from": "03-تصاویر/تصاویر.md:9"
+    },
+    "alt_en": {
+     "value": "Laboratory digital mock-up design of the maxillary anterior teeth",
+     "from": "03-تصاویر/تصاویر.md:10"
+    },
+    "caption_fa": {
+     "value": "تصویر ۱. طراحی دیجیتال ماکاپ دندان‌های قدامی فک بالا که لابراتوار فرستاد.",
+     "from": "03-تصاویر/تصاویر.md:11"
+    },
+    "caption_en": {
+     "value": "Fig. 1. Digital mock-up design of the maxillary anterior teeth sent by the laboratory.",
+     "from": "06-انگلیسی.md:28"
+    }
+   }
+  ],
+  "from": "03-تصاویر/تصاویر.md"
+ },
+ "credit": {
+  "value": {
+   "mode": "none"
+  },
+  "from": "04-منبع/منابع.md:1"
+ },
+ "catalog": {
+  "value": [],
+  "from": "04-منبع/منابع.md: no paper"
+ },
+ "hashtags": {
+  "value": [
+   "#اینسایت",
+   "#طراحی_لبخند",
+   "#خط_لب",
+   "#ارتباط_با_لابراتوار",
+   "#طراحی_روکش"
+  ],
+  "from": "07-ورودی‌ها.md:14"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "esthetic",
+   "subtopic": "smile-design",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:11"
+ },
+ "pulse": {
+  "value": {
+   "html": "یک اینسایت بالینی با عنوانِ «<a href=\"{url}\">لبخند معکوس در طراحی ماکاپ لابراتوار</a>» منتشر شد",
+   "link_phrase": "لبخند معکوس در طراحی ماکاپ لابراتوار"
+  },
+  "from": "07-ورودی‌ها.md:19"
+ },
+ "keywords": {
+  "value": [
+   "لبخند معکوس",
+   "اسمایل آرک",
+   "آرک Flat",
+   "طول سانترال",
+   "حاشیه‌ی لثه‌ی کانین",
+   "قدامی‌های پایین",
+   "اوربایت",
+   "طول تاج"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [],
+  "from": "11-لینک‌های-گلاسری.md:8"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "/insight/insight-101.html",
+    "label": "اختلاف طول دو سانترال",
+    "from": "11-لینک‌های-گلاسری.md:28"
+   },
+   {
+    "href": "/insight/insight-72.html",
+    "label": "طول سانترال‌ها بر اساس کانین",
+    "from": "11-لینک‌های-گلاسری.md:29"
+   },
+   {
+    "href": "/episodes/episode-120-1.html",
+    "label": "موقعیت لبه‌ی اینسیزال",
+    "from": "11-لینک‌های-گلاسری.md:30"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:24"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
