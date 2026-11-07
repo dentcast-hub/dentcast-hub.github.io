@@ -134,6 +134,14 @@ text is what the SOURCE call scores. `tools/des_fidelity_units.py` takes
 `source_conclusion` from the last Conclusion section (or the last sentence) and
 passes over such footer sentences; a stored record keeps the conclusion it
 echoed. The PDF and its text stay outside the repository and the queue branch.
+**An empty `source_conclusion` is never sent to a checker.** The receipt of
+`pdf_source_text.py` shows the conclusion the blocks will carry; when a layout
+defeats the cut (a two-column page that glued «CONCLUSIONS REFERENCES» into one
+line, J Prosthet Dent, publish-queue item 24) it warns and exits 3, and
+`des_fidelity_units.py --build` refuses. Pin the paper's own last conclusion
+sentence **before the first run** — `pdf_source_text.py … --conclusion "…"`, or
+`"source_conclusion"` in `texts.json` (verbatim, or the tool refuses) — never by
+editing the echo in the run outputs afterwards.
 <!-- /pdf-source-text:v1 -->
 
 #### Part 2 — Run the prompt file

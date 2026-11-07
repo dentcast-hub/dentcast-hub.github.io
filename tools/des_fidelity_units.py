@@ -514,7 +514,16 @@ def source_conclusion_for(t):
         if _squash(pin) not in _squash(t["source_text"]):
             sys.exit("texts.json: source_conclusion is not a verbatim substring of source_text")
         return _squash(pin)
-    return conclusion_of(t["source_text"], t["text_basis"])
+    got = conclusion_of(t["source_text"], t["text_basis"])
+    if not got.strip():
+        # publish-queue item 24 (J Prosthet Dent, Elsevier): a two-column page
+        # glued «CONCLUSIONS REFERENCES» into one line, the cut fell on
+        # REFERENCES and the block went out with source_conclusion "" — echoed
+        # by both checker runs. An empty conclusion is never written silently.
+        sys.exit("source_conclusion came out empty (the PDF layout defeated conclusion_of(), e.g. a glued "
+                 "«CONCLUSIONS REFERENCES» heading) — pin the paper's own last conclusion sentence as "
+                 "\"source_conclusion\" in texts.json (pdf_source_text.py --conclusion \"…\") before the first run")
+    return got
 
 
 BASIS_ORDER = ["FULL_TEXT", "SECONDARY_REPORT", "ABSTRACT_ONLY", "EXCERPT"]

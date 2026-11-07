@@ -210,5 +210,53 @@ class SentenceSplitTests(Site):
         self.assertEqual(units.split_for(CID, [SRC], None), now)        # a draft gets today's cut
 
 
+GLUED = ("Methods text. Results text.\nCONCLUSIONS REFERENCES\nBased on the findings, the following conclusions "
+         "were drawn: Current evidence remains insufficient for IOS-CHS and IOS-IPG.\n1. Smith A. A paper. "
+         "J Dent 2020;1:1-2.")
+
+
+class SourceConclusionTests(Site):
+    """Item 3. Reproduction: J Prosthet Dent two-column page, «CONCLUSIONS REFERENCES» glued."""
+
+    def test_glued_heading_gives_empty_and_build_refuses(self):
+        self.assertEqual(units.conclusion_of(GLUED, "FULL_TEXT"), "")
+        with self.assertRaises(SystemExit) as e:
+            units.source_conclusion_for({"source_text": GLUED, "text_basis": "FULL_TEXT"})
+        self.assertIn("source_conclusion", str(e.exception))
+        self.write_page()
+        (self.d / "texts.json").write_text(json.dumps({DOI: {"source_text": GLUED, "text_basis": "FULL_TEXT"}}))
+        with self.assertRaises(SystemExit):
+            self.main("--texts", str(self.d / "texts.json"), "--build", str(self.d / "b"))
+
+    def test_pin_before_the_first_run_is_used(self):
+        pin = "Current evidence remains insufficient for IOS-CHS and IOS-IPG."
+        self.assertEqual(units.source_conclusion_for({"source_text": GLUED, "text_basis": "FULL_TEXT",
+                                                      "source_conclusion": pin}), pin)
+        self.write_page()
+        (self.d / "texts.json").write_text(json.dumps({DOI: {"source_text": GLUED, "text_basis": "FULL_TEXT",
+                                                             "source_conclusion": pin}}))
+        self.main("--texts", str(self.d / "texts.json"), "--build", str(self.d / "b"))
+        blk = json.loads((self.d / "b/input-src0.json").read_text(encoding="utf-8"))
+        self.assertEqual(blk["source_conclusion"], pin)
+
+    def test_pdf_source_text_warns_and_pins(self):
+        with tempfile.TemporaryDirectory() as t:
+            out = Path(t) / "texts.json"
+            with patch.object(pst, "read_words", return_value=([], "pdftotext")), \
+                    patch.object(pst, "source_text", return_value=GLUED):
+                with contextlib.redirect_stdout(io.StringIO()) as buf:
+                    rc_ = pst.main(["x.pdf", "--doi", DOI, "-o", str(out)])
+                self.assertEqual(rc_, 3)
+                rec = json.loads(buf.getvalue())
+                self.assertEqual(rec["source_conclusion"], "")
+                self.assertIn("EMPTY", rec["warning"])
+                pin = "Current evidence remains insufficient for IOS-CHS and IOS-IPG."
+                with contextlib.redirect_stdout(io.StringIO()) as buf:
+                    self.assertEqual(pst.main(["x.pdf", "--doi", DOI, "-o", str(out), "--conclusion", pin]), 0)
+                self.assertEqual(json.loads(out.read_text())[DOI.lower()]["source_conclusion"], pin)
+                with self.assertRaises(SystemExit):   # not in the text
+                    pst.main(["x.pdf", "--doi", DOI, "-o", str(out), "--conclusion", "Something the paper never says."])
+
+
 if __name__ == "__main__":
     unittest.main()
