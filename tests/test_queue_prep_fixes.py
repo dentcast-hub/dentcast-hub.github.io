@@ -210,6 +210,31 @@ class SentenceSplitTests(Site):
         self.assertEqual(units.split_for(CID, [SRC], None), now)        # a draft gets today's cut
 
 
+class DraftKeepsFrozenCutTests(unittest.TestCase):
+    """Item 2, prep side: an item back in preparation drafts with its frozen fidelity.json in the throwaway
+    record, so split_page keeps the cut that Fidelity (and its plan.json) was judged on."""
+
+    def test_draft_record_carries_the_frozen_fidelity(self):
+        sys.path.insert(0, str(ROOT / "tests"))
+        from test_queue_prep_tools import DRAFT_CID, make_item, make_throwaway  # noqa: PLC0415
+        frozen = [fid([{"id": "u1", "claim_quote": "x", "verdict": "NOT_A_CLAIM"}])]
+        with tempfile.TemporaryDirectory() as t:
+            c = make_throwaway(t)
+            item = make_item(t, extra={"05-DES-Fidelity/fidelity.json": json.dumps(frozen)})
+            r = subprocess.run([sys.executable, str(c / "tools/queue_apply.py"), str(item), DRAFT_CID, "--draft",
+                                "--throwaway"], cwd=c, capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+            rec = json.loads((c / "plus/des-scores.json").read_text(encoding="utf-8"))[DRAFT_CID]
+            self.assertEqual(rec["fidelity"], frozen)
+        with tempfile.TemporaryDirectory() as t:   # no fidelity.json: the draft record has none (today's cut)
+            c = make_throwaway(t)
+            r = subprocess.run([sys.executable, str(c / "tools/queue_apply.py"), str(make_item(t)), DRAFT_CID,
+                                "--draft", "--throwaway"], cwd=c, capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+            rec = json.loads((c / "plus/des-scores.json").read_text(encoding="utf-8"))[DRAFT_CID]
+            self.assertNotIn("fidelity", rec)
+
+
 GLUED = ("Methods text. Results text.\nCONCLUSIONS REFERENCES\nBased on the findings, the following conclusions "
          "were drawn: Current evidence remains insufficient for IOS-CHS and IOS-IPG.\n1. Smith A. A paper. "
          "J Dent 2020;1:1-2.")

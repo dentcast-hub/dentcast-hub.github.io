@@ -1605,7 +1605,13 @@ def draft_assemble(a):
         rel = "plus/des-scores.json"
         if a.content_id in json.loads(w.text(rel)):
             refuse("DRAFT_CONTENT_ID", f"{rel} already has {a.content_id}")
-        w.put(rel, tio.json_append(w.text(rel), [], {"scored_at": date, "sources": sources}, key=a.content_id))
+        rec = {"scored_at": date, "sources": sources}
+        if (des_d / "fidelity.json").exists():
+            # an item back in preparation keeps the unit cut its frozen Fidelity
+            # (and plan.json) was judged on: des_fidelity_units.split_page fits
+            # the page's stored record (publish-queue item 24 fixes)
+            rec["fidelity"] = json.loads((des_d / "fidelity.json").read_text(encoding="utf-8"))
+        w.put(rel, tio.json_append(w.text(rel), [], rec, key=a.content_id))
         if (des_d / "markers.json").exists():
             mk = json.loads((des_d / "markers.json").read_text(encoding="utf-8"))
             vals = list(mk.values()) if all(isinstance(v, dict) and any(str(k).startswith("S") for k in v)
