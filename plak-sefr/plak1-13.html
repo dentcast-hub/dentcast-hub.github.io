@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="dc-notify" content="true">
+  <title>پلاک صفر — دفتر و منشی سایت: DNS و CDN | دنت‌کست</title>
+  <meta name="description" content="قسمت ۱۳: دامنه‌ای که خریده‌ای هنوز به سایتت وصل نیست. در این قسمت با مثال دفتر و منشی مطب می‌فهمی DNS و CDN چه کاری می‌کنند، و دفتر دامنه را در دو قدم از ایرنیک به آروان‌کلاد می‌سپاری. با سه نشانه برای اینکه بفهمی درست انجام داده‌ای.">
+  <link rel="canonical" href="https://dentcast.org/plak-sefr/plak1-13.html">
+  <link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/plak-sefr/plak1-13.html">
+  <link rel="alternate" hreflang="fa" href="https://dentcast.org/plak-sefr/plak1-13.html">
+  <link rel="alternate" hreflang="x-default" href="https://dentcast.org/plak-sefr/plak1-13.html">
+  <meta name="author" content="دکتر فواد شهابیان">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="پلاک صفر — دفتر و منشی سایت: DNS و CDN | دنت‌کست">
+  <meta property="og:description" content="قسمت ۱۳: دامنه‌ای که خریده‌ای هنوز به سایتت وصل نیست. در این قسمت با مثال دفتر و منشی مطب می‌فهمی DNS و CDN چه کاری می‌کنند، و دفتر دامنه را در دو قدم از ایرنیک به آروان‌کلاد می‌سپاری. با سه نشانه برای اینکه بفهمی درست انجام داده‌ای.">
+  <meta property="og:url" content="https://dentcast.org/plak-sefr/plak1-13.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="پلاک صفر — دفتر و منشی سایت: DNS و CDN | دنت‌کست">
+  <meta name="twitter:description" content="قسمت ۱۳: دامنه‌ای که خریده‌ای هنوز به سایتت وصل نیست. در این قسمت با مثال دفتر و منشی مطب می‌فهمی DNS و CDN چه کاری می‌کنند، و دفتر دامنه را در دو قدم از ایرنیک به آروان‌کلاد می‌سپاری. با سه نشانه برای اینکه بفهمی درست انجام داده‌ای.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/plak-sefr/plak1-13.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/plak-sefr/plak1-13.html"
+      },
+      "url": "https://dentcast.org/plak-sefr/plak1-13.html",
+      "headline": "پلاک صفر — دفتر و منشی سایت: DNS و CDN",
+      "description": "قسمت ۱۳: دامنه‌ای که خریده‌ای هنوز به سایتت وصل نیست. در این قسمت با مثال دفتر و منشی مطب می‌فهمی DNS و CDN چه کاری می‌کنند، و دفتر دامنه را در دو قدم از ایرنیک به آروان‌کلاد می‌سپاری. با سه نشانه برای اینکه بفهمی درست انجام داده‌ای.",
+      "datePublished": "2026-11-07",
+      "dateModified": "2026-11-07",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.org/dentcast-cover.webp",
+        "width": 1200,
+        "height": 630
+      },
+      "inLanguage": "fa",
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "name": "پلاک صفر",
+        "url": "https://dentcast.org/plak-sefr"
+      },
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "پلاک صفر",
+          "item": "https://dentcast.org/plak-sefr"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "دفتر و منشی سایت: DNS و CDN",
+          "item": "https://dentcast.org/plak-sefr/plak1-13.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/dc-theme.css?v=7">
+  <link rel="stylesheet" href="/dc-nav.css?v=18">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <meta name="theme-color" content="#F3F5F7">
+  <style>
+@font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-display:swap;}
+body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
+.ep-page{max-width:47.5rem;margin:0 auto;padding:2.5rem 1.25rem 5rem;}
+.ep-back{display:inline-flex;align-items:center;gap:0.375rem;font-size:.85rem;color:var(--txt3);text-decoration:none;margin-bottom:1.75rem;transition:color .15s;}
+.ep-back:hover{color:var(--ac);}
+.ep-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:1.125rem;box-shadow:var(--card-sh);overflow:hidden;margin-bottom:1.25rem;}
+.ep-box-head{padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--card-border);}
+.ep-badge{display:inline-flex;align-items:center;background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.72rem;font-weight:700;padding:0.1875rem 0.75rem;border-radius:3.125rem;margin-bottom:0.875rem;letter-spacing:.03em;}
+.ep-badge.sub{background:var(--surface2);color:var(--txt3);}
+.ep-title{font-size:1.55rem;font-weight:800;color:var(--txt);line-height:1.45;margin:0 0 0.75rem;}
+.ep-meta{display:flex;gap:1.125rem;font-size:.8rem;color:var(--txt3);flex-wrap:wrap;}
+.ep-section{padding:1.375rem 1.75rem 0;}
+.ep-section:last-child{padding-bottom:1.75rem;}
+.ep-section-label{font-size:1rem;font-weight:700;color:var(--ac);border-right:4px solid var(--ac);padding-right:0.75rem;margin-bottom:0.875rem;}
+.ep-caption{font-size:.95rem;color:var(--txt);line-height:1.9;margin:0;}
+.ep-caption p{margin:0 0 1.8rem;}
+.ep-caption p:last-child{margin-bottom:0;}
+.ep-fig{display:block;max-width:18.75rem;width:100%;height:auto;margin:1.125rem auto;border:1px solid var(--card-border);border-radius:0.875rem;box-shadow:var(--card-sh);}
+.ep-fig-wide{max-width:100%;border-radius:0.875rem;}
+.ep-figure{margin:1.5rem 0;}
+.ep-figcap{text-align:center;font-size:.85rem;color:var(--txt3);line-height:1.8;margin-top:0.5rem;}
+.ep-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-chip{background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.78rem;padding:0.25rem 0.75rem;border-radius:3.125rem;}
+.ep-chip-link{text-decoration:none;transition:background .15s,color .15s;}
+.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+.ep-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
+.ep-related-link{display:inline-flex;align-items:center;gap:0.375rem;font-size:.87rem;font-weight:600;color:var(--ac);text-decoration:none;padding:0.5rem 1rem;border:1px solid var(--ac);border-radius:0.625rem;transition:background .15s,color .15s;}
+.ep-related-link:hover{background:var(--ac);color:#fff;}
+.ep-nav{display:flex;justify-content:space-between;gap:0.75rem;margin-top:1.75rem;}
+.ep-nav-btn{flex:1;text-align:center;padding:0.75rem 1rem;border:1px solid var(--card-border);border-radius:0.75rem;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+@media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
+.lang-btn{display:flex;width:fit-content;max-width:100%;align-items:center;gap:0.375rem;margin:0 0 1.125rem auto;background:rgba(255,255,255,0.92);border:1px solid rgba(0,0,0,0.1);border-radius:0.75rem;padding:0.375rem 0.75rem;font-size:0.8125rem;font-weight:700;color:#0b5fff;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.12);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);cursor:pointer;transition:transform .18s ease,background .18s ease;}
+.lang-btn:hover{background:#fff;transform:scale(1.03);}
+  
+/* Body prose — canonical measure, shared with every article page.
+   This page does not load /dc-article.css, so the rule lives here. */
+p{ margin:0.875rem 0; font-size:1.02rem; }
+</style>
+  <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
+</head>
+<body>
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false">&#9776;</button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار">&#128225;</button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو">&#128269;</button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico">&#128241;</span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico">&#128231;</span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico">&#10024;</span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<main class="article-content-wrap ep-page">
+  <a href="/plak-sefr/" class="ep-back">&#8592; بازگشت به پلاک صفر</a>
+
+  <!-- 🌐 English Version (SEO-friendly language toggle) -->
+  <a class="lang-btn" href="en/plak1-13.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> English
+  </a>
+
+  <div class="ep-box">
+    <div class="ep-box-head">
+      <div class="ep-badge">قسمت ۱۳</div>
+      <h1 class="ep-title">دفتر و منشی سایت: DNS و CDN</h1>
+      <div class="ep-meta">
+        <span>&#9201; ۴ دقیقه مطالعه</span>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">متنِ این قسمت</h2>
+      <div class="ep-caption"><p>سایت شما الان روشن است، ولی با یک آدرس موقت باز می‌شود که گیت‌هاب داده، مثل drsamadi.github.io (مثال فرضی). اسمی هم که برای سایت خریده‌اید، مثلاً drsamadi.ir، هنوز به جایی وصل نیست. اگر کسی آن را در گوشی بزند، چیزی باز نمی‌شود. در این قسمت اولین قدم وصل کردنش را برمی‌داریم.</p><p><strong>دامنه‌ای که خریده‌اید هنوز در مغازه است</strong></p><p>بیمار وارد مطب می‌شود و می‌گوید: «رضایی هستم.» منشی دفترش را باز می‌کند و می‌بیند جلوی اسم رضایی نوشته «پرونده‌ی ۴۴۰». سراغ قفسه‌ها می‌رود و پرونده‌ی ۴۴۰ را می‌آورد. اگر این دفتر نباشد، منشی نمی‌داند پرونده‌ی هر بیمار کجاست.</p><p>سایت هم یک دفتر مثل همین دارد که اسمش <strong>DNS</strong> است. بیمار اسم سایت شما را در گوشی می‌زند. در اینترنت، DNS در دفترش نگاه می‌کند و می‌بیند جلوی این اسم نوشته «فایل‌های این سایت در گیت‌هاب است». بعد بیمار را همان‌جا می‌برد.</p><p>وقتی دامنه را، مثلاً drsamadi.ir، از ایرنیک خریدید، در واقع همین دفتر را خریدید. ولی دفتر هنوز در مغازه مانده، مثل جنسی که پولش را داده‌اید و هنوز برش نداشته‌اید. ایرنیک دفتر را نگه داشته، چون هنوز به او نگفته‌اید کجا بفرستد. تازه دفتر خالی هم هست و هیچ‌جایش ننوشته سایت شما کجاست.</p><p>پس اول باید دفتر را از مغازه بگیریم و به دست منشی بدهیم.</p><p><strong>آروان، منشی سایت</strong></p><p>آروان‌کلاد یک شرکت ایرانی است که کارهای اینترنتی سایت‌ها را انجام می‌دهد. در آن یک حساب می‌سازید و همه‌ی کارها را در یک پنل فارسی انجام می‌دهید. بعضی کارهایش پولی است و قبل از پرداخت، مبلغ را در خود پنل می‌بینید. سایت دنت‌کست را هم خودم با همین پنل اداره می‌کنم.</p><p>آروان برای ما دو کار می‌کند:</p><ul><li><strong>DNS، یعنی نگه داشتن دفتر.</strong> آروان به شما دو آدرس می‌دهد. شما این آدرس‌ها را به ایرنیک می‌دهید و انگار می‌گویید: «دفتر را بفرست اینجا.» از آن به بعد دفتر دست آروان است و هر چیزی لازم باشد، در پنل آروان داخلش می‌نویسید.</li><li><strong>CDN، یعنی منشی‌ای که کپی پرونده‌ها را دم دست دارد.</strong> فرض کنید بایگانی پرونده‌ها در یک شهر دیگر باشد. اگر منشی برای هر بیمار تا آن شهر برود، بیمار خیلی منتظر می‌ماند. منشی زرنگ از پرونده‌ها کپی می‌گیرد و پشت میزش نگه می‌دارد. سایت شما و فایل‌هایش در گیت‌هاب است، یعنی بیرون از ایران، مثل همان بایگانی دور. آروان از سایت کپی می‌گیرد و نزدیک بیمار نگه می‌دارد تا سایت زودتر باز شود. قفل کوچکی هم که کنار آدرس سایت می‌بینید، یعنی سایت امن است، و این هم کار همین منشی است.</li></ul><p>خود سایت جابه‌جا نمی‌شود و در گیت‌هاب می‌ماند. برای همین اگر اینترنت خارج قطع شود، منشی هم دستش به بایگانی نمی‌رسد. (برای قطع شدن اینترنت خارج یا ملی شدن اینترنت هم راهی داریم که بعداً توضیح می‌دهم.)</p><p>در پنل آروان یک کلید هست به اسم «استفاده از سرویس ابری». اگر روشن باشد، منشی از سایت کپی می‌گیرد و همان را به بیمار تحویل می‌دهد. اگر خاموش باشد، آروان فقط دفتر آدرس‌ها را نگه می‌دارد.</p><p>آروان کارهای زیادی انجام می‌دهد و وقتی وارد پنلش می‌شوید، یک فهرست بلند می‌بینید. کار ما فقط با یک بخش است که اسمش Content Delivery Network است، یعنی همان CDN. دفتر DNS هم داخل همین بخش است.</p><figure class="ep-figure"><img class="ep-fig" src="/plak-sefr/arvan-panel-menu.webp" alt="منوی پنل آروان‌کلاد" width="1080" height="1988" loading="lazy"><figcaption class="ep-figcap">در فهرست پنل آروان، فقط همین بخش به کار ما می‌آید</figcaption></figure><figure class="ep-figure"><img class="ep-fig" src="/plak-sefr/arvan-cdn-section.webp" alt="بخش CDN در پنل آروان" width="1080" height="2040" loading="lazy"><figcaption class="ep-figcap">داخل بخش CDN، «رکوردهای DNS» همان دفتر سایت است</figcaption></figure><p><strong>سپردن دفتر به آروان، در دو قدم</strong></p><p>تصویرهای این قسمت از پنل خود من است و پنل شما هم همین شکل را دارد.</p><p><strong>قدم اول: اضافه کردن دامنه در آروان</strong></p><p>وارد سایت آروان‌کلاد شوید و یک حساب بسازید. بعد در بخش CDN، اسم دامنه‌تان را اضافه کنید. آخر کار، آروان دو آدرس نشانتان می‌دهد که شبیه p.ns.arvancdn.ir هستند. به این دو آدرس «Name Server» (سرور نام) می‌گویند. معنی‌شان این است: «آهای ایرنیک! این دامنه را از تو خریده‌ام. دفترش را بفرست به این آدرس پیش آروان، چون قرار است از آن استفاده کنم». هر دو را کپی کنید.</p><figure class="ep-figure"><img class="ep-fig ep-fig-wide" src="/plak-sefr/arvan-name-servers.webp" alt="دو آدرس سرور نام آروان" width="1080" height="246" loading="lazy"><figcaption class="ep-figcap">دو آدرسی که آروان می‌دهد</figcaption></figure><p><strong>قدم دوم: فرستادن دفتر از ایرنیک به آروان</strong></p><p>حالا به ایرنیک می‌گوییم دفتر را کجا بفرستد. وارد پنل nic.ir شوید و دامنه‌تان را باز کنید. پایین صفحه بخشی هست به اسم «سامانه نام دامنه (DNS)». دکمه‌ی «ویرایش ردیف‌های کارگزاری نام و میزبانی دامنه» را بزنید. دو آدرسی را که از آروان کپی کردید، جای آدرس‌های قبلی بنویسید و ذخیره کنید.</p><figure class="ep-figure"><img class="ep-fig" src="/plak-sefr/irnic-arvan-name-servers.webp" alt="سرورهای نام آروان در پنل ایرنیک" width="1079" height="1117" loading="lazy"><figcaption class="ep-figcap">دو آدرس آروان در پنل ایرنیک</figcaption></figure><p>ممکن است تا ۲۴ ساعت طول بکشد تا دفتر به دست آروان برسد، ولی معمولاً زودتر می‌رسد.</p><p><strong>از کجا بفهمید کار کرده</strong></p><p>صفحه‌ی دامنه را در پنل ایرنیک دوباره باز کنید. در بخش «سامانه نام دامنه (DNS)» باید همان دو آدرس آروان را ببینید، به جای آدرس‌های قبلی.</p><p>در پنل آروان هم، در «لیست دامنه‌ها»، کنار اسم دامنه‌تان باید «فعال» نوشته شده باشد.</p><figure class="ep-figure"><img class="ep-fig ep-fig-wide" src="/plak-sefr/arvan-domain-list.webp" alt="لیست دامنه‌ها در آروان" width="2253" height="405" loading="lazy"><figcaption class="ep-figcap">دامنه در لیست دامنه‌های آروان</figcaption></figure><p>اگر حالا دامنه را در گوشی بزنید، هنوز سایتی باز نمی‌شود. نگران نباشید، چیزی خراب نشده. دفتر به دست منشی رسیده، ولی هنوز خالی است و هیچ‌جایش ننوشته سایت شما کجاست.</p><ul><li>در آروان حساب ساخته‌اید و دامنه را اضافه کرده‌اید.</li><li>دو آدرس Name Server آروان را کپی کرده‌اید.</li><li>در پنل ایرنیک، بخش «سامانه نام دامنه (DNS)» همان دو آدرس آروان را نشان می‌دهد.</li></ul></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">کلیدواژه‌ها</h2>
+      <div class="ep-chips"><span class="ep-chip">DNS دفتر سایت است: اسم سایت را به جای فایل‌هایش وصل می‌کند</span><span class="ep-chip">دامنه‌ای که خریده‌ای تا به جایی وصل نکنی هیچ صفحه‌ای باز نمی‌کند</span><span class="ep-chip">CDN از سایت کپی می‌گیرد و نزدیک بیمار نگه می‌دارد</span><span class="ep-chip">دو آدرس Name Server دفتر دامنه را از ایرنیک به آروان می‌برد</span><span class="ep-chip">رسیدن دفتر به آروان تا ۲۴ ساعت طول می‌کشد</span><span class="ep-chip">خود سایت در گیت‌هاب می‌ماند و آروان فقط کپی نگه می‌دارد</span><span class="ep-chip">بعد از وصل شدن دفتر، سایت هنوز باز نمی‌شود چون دفتر خالی است</span></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">برچسب‌ها</h2>
+      <div class="ep-tags"><span class="ep-hashtag">#پلاک_صفر</span><span class="ep-hashtag">#سایت_مطب</span><span class="ep-hashtag">#دامنه_سایت</span><span class="ep-hashtag">#GitHub</span></div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">محتوای مرتبط</h2>
+      <a href="/plak-sefr/" class="ep-related-link">بازگشت به فهرست پلاک صفر</a>
+    </div>
+
+    <div class="dc-related-section">
+      <h2 class="dc-related-label">کاوش بیشتر</h2>
+      <div class="dc-related-capsules">
+        <a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
+        <a href="/pillar/practice-infrastructure/" class="dc-related-capsule">فهرست موضوعی</a>
+        <a href="/plak-sefr/plak1-9.html" class="dc-related-capsule">قسمت ۹: دامنه</a>
+        <a href="/plak-sefr/plak1-11.html" class="dc-related-capsule">قسمت ۱۱: یک جا برای سایت در گیت‌هاب</a>
+        <a href="/plak-sefr/plak1-12.html" class="dc-related-capsule">قسمت ۱۲: اولین صفحه‌ی سایت را بسازیم</a>
+      </div>
+    </div>
+  </div>
+  <div class="ep-nav">
+    <a href="/plak-sefr/plak1-12.html" class="ep-nav-btn">&#8592; قسمت قبلی</a>
+    <span class="ep-nav-btn ep-nav-empty">قسمت بعدی &#8594;</span>
+  </div>
+</main>
+
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results">&#10006;</button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همه بخش‌های دنت‌کست...">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="plak_sefr">پلاک صفر</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=16" defer></script>
+<script src="/dc-nav.js?v=316" defer></script>
+</body>
+</html>
