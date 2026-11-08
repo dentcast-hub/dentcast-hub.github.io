@@ -1,0 +1,471 @@
+{
+  "schema": "dentcast-queue-manifest/1",
+  "category": {
+    "value": "sharehub",
+    "from": "folder name"
+  },
+  "title_fa": {
+    "value": "افزایش OVD؛ چه زمانی لازم است و چقدر می‌توانیم آن را تغییر بدهیم؟",
+    "from": "02-عنوان-کپشن.md:5"
+  },
+  "caption_fa": {
+    "value": "وقتی در بازسازی اکلوژن به تغییر ارتفاع عمودی فکر می‌کنیم، از کجا شروع کنیم؟ نگاهی به تصمیم‌های طرح درمان در مرور Calamita و همکاران.",
+    "from": "02-عنوان-کپشن.md:9"
+  },
+  "title_en": {
+    "value": "Increasing OVD: When Is It Necessary and How Much Can We Change It?",
+    "from": "06-انگلیسی.md:1"
+  },
+  "caption_en": {
+    "value": "When considering a change in vertical dimension during occlusal rehabilitation, where should we start? A look at treatment-planning decisions in the review by Calamita and colleagues.",
+    "from": "06-انگلیسی.md:3"
+  },
+  "body_en": {
+    "value": "In 2019, Calamita, Coachman, Sesma, and Kois published a paper on a longstanding question in prosthodontics: changing the occlusal vertical dimension (OVD). The paper's main point is that OVD is flexible. The masticatory system can adapt to changes in vertical dimension within a comfort zone.\n\n## Does tooth wear mean OVD has decreased?\n\nTooth wear alone does not establish a loss of OVD. As teeth wear, compensatory dentoalveolar eruption can maintain vertical dimension. A patient may therefore have severely worn anterior teeth while retaining their OVD.\n\n[[تصویر:01]]\n\nThe posterior teeth matter in this assessment. If they remain well positioned and show little wear, an actual reduction in OVD is unlikely. A true reduction is more likely in patients with posterior bite collapse.\n\n[[تصویر:02]]\n\nFor the authors, the more important question is whether changing OVD serves the patient's treatment goals. Identifying and restoring a previous vertical dimension is not necessarily the goal.\n\n## When do we increase OVD?\n\nThe paper gives three main reasons: improving dentofacial esthetics, creating adequate space for restorative materials, and improving occlusal relationships.\n\nIncreasing OVD can create room to restore worn teeth without removing more tooth structure to achieve the required material thickness. Modern materials and bonding techniques make minimally invasive, additive treatment possible for many of these patients and can reduce the need for extensive root canal treatment and posts for retention.\n\nAn increase in OVD alone may have little effect on facial appearance, especially in dentate patients.\n\n## What happens to anterior tooth relationships when we increase OVD?\n\nI find this one of the most clinically useful parts of the paper.\n\nAs OVD increases, the mandible rotates as it opens. Overbite decreases and overjet increases.\n\nIn the geometry the paper describes, opening by approximately 1 mm at the second molar reduces overbite by about 2 mm and increases overjet by about 1.3 mm. The actual relationship depends on the patient's facial morphology and jaw relationship.\n\n[[تصویر:03]]\n\nThis can be a problem in Class II patients. Anterior contacts become harder to establish, and achieving contact may require excessive bulk on the palatal surfaces of the maxillary teeth. This can affect speech, patient comfort, and function.\n\n[[تصویر:04]]\n\nIn some Class III patients, the same change can help improve the anterior relationship.\n\n[[تصویر:05]]\n\nIncreasing OVD therefore does not guarantee a better occlusion.\n\n## Does increasing OVD pose a risk to the temporomandibular joint?\n\nThe studies reviewed suggest that appropriately selected patients usually tolerate a controlled change in OVD. One review cited in the paper reported that a permanent increase of up to approximately 5 mm was safe and predictable under suitable conditions.\n\nPatients may initially experience muscle discomfort or mild symptoms, which are often transient. The evidence reviewed does not show that a permanent increase in OVD by itself causes lasting temporomandibular disorders.\n\nThe magnitude of the increase is one consideration. The clinician also needs to assess joint status, simultaneous bilateral contacts, the direction of forces on the teeth, mandibular movements, and speech.\n\n[[تصویر:06]]\n\n[[تصویر:07]]\n\n## How do we determine the new OVD?\n\nThe paper emphasizes that facial proportions, freeway space, phonetic tests, and cephalometry each have limitations when used alone.\n\nThe authors propose facially driven treatment planning.\n\nFirst, we establish the three-dimensional position of the maxillary anterior incisal edges based on the face, tooth display at rest, and the smile. Then we assess the position of the mandibular teeth and their functional relationships.\n\n[[تصویر:08]]\n\nOnce the new anterior tooth positions are established, we decide whether an increase in OVD is necessary and, if so, how much.\n\nA repeatable jaw relationship such as centric relation or adapted centric posture is important for this assessment. The authors also suggest using a deprogrammer in complex cases.\n\n[[تصویر:09]]\n\nThe palatal contours of the maxillary anterior teeth also matter. Lengthening the incisal edges can create an excessively steep or restrictive path for mandibular movement. Once the anterior relationships are established, the clinician completes the design of the posterior occlusion.\n\n[[تصویر:10]]\n\n## What should we do before definitive treatment?\n\nThe authors recommend testing the new OVD with a bonded mock-up or fixed provisional restorations. This allows a more representative assessment of esthetics, speech, comfort, and function.\n\n[[تصویر:11]]\n\nA removable splint lacks the stability and contours of natural teeth, making it less suitable for determining whether a patient tolerates the new OVD. It can still be used for deprogramming.\n\nBefore proceeding with irreversible treatment, confirm patient comfort, speech, function, and occlusal stability.\n\n[[تصویر:12]]\n\n## Conclusion\n\nOVD can be adjusted within the limits of the patient's physiology and the demands of treatment.\n\nTooth wear alone does not justify increasing OVD. First assess anterior tooth position, restorative requirements, and functional relationships. Then choose the **smallest increase necessary** to provide sufficient restorative space, improve occlusion, and minimize the adaptation required of the masticatory system.",
+    "from": "06-انگلیسی.md:6-98"
+  },
+  "images": {
+    "value": [
+      {
+        "n": "01",
+        "file": {
+          "value": "03-تصاویر/01-fig-02-dentoalveolar-compensation.webp",
+          "from": "03-تصاویر/تصاویر.md:6"
+        },
+        "alt_fa": {
+          "value": "شکل ۲: جبران سایش با رویش دنتوآلوئولار",
+          "from": "03-تصاویر/تصاویر.md:7"
+        },
+        "alt_en": {
+          "value": "Compensatory dentoalveolar eruption",
+          "from": "03-تصاویر/تصاویر.md:10"
+        },
+        "caption_fa": {
+          "value": "تصویر 1. رویش جبرانی دنتوآلوئولار می‌تواند بخشی از سایش را جبران کند. منبع: Calamita و همکاران، ۲۰۱۹، شکل 2؛ بازنشر با مجوز اعلام‌شده از سوی بنیان‌گذار.",
+          "from": "03-تصاویر/تصاویر.md:8"
+        },
+        "caption_en": {
+          "value": "Fig. 1. Compensatory dentoalveolar eruption can offset some tooth wear. Source: Calamita et al., 2019, Fig. 2; permission to reproduce reported by the founder.",
+          "from": "03-تصاویر/تصاویر.md:11"
+        }
+      },
+      {
+        "n": "02",
+        "file": {
+          "value": "03-تصاویر/02-fig-01-posterior-bite-collapse.webp",
+          "from": "03-تصاویر/تصاویر.md:15"
+        },
+        "alt_fa": {
+          "value": "شکل ۱: وضعیت طبیعی، کلاپس بایت خلفی و بی‌دندانی",
+          "from": "03-تصاویر/تصاویر.md:16"
+        },
+        "alt_en": {
+          "value": "Normal occlusion, posterior bite collapse, and edentulism",
+          "from": "03-تصاویر/تصاویر.md:19"
+        },
+        "caption_fa": {
+          "value": "تصویر 2. تفاوت شرایطی که ممکن است با کاهش واقعی OVD همراه باشند. منبع: Calamita و همکاران، ۲۰۱۹، شکل 1؛ بازنشر با مجوز اعلام‌شده از سوی بنیان‌گذار.",
+          "from": "03-تصاویر/تصاویر.md:17"
+        },
+        "caption_en": {
+          "value": "Fig. 2. Conditions that may be associated with an actual reduction in OVD. Source: Calamita et al., 2019, Fig. 1; permission to reproduce reported by the founder.",
+          "from": "03-تصاویر/تصاویر.md:20"
+        }
+      },
+      {
+        "n": "03",
+        "file": {
+          "value": "03-تصاویر/03-fig-06-overbite-overjet-geometry.webp",
+          "from": "03-تصاویر/تصاویر.md:24"
+        },
+        "alt_fa": {
+          "value": "شکل ۶: تغییرات Overbite و Overjet با افزایش OVD",
+          "from": "03-تصاویر/تصاویر.md:25"
+        },
+        "alt_en": {
+          "value": "Overbite and overjet after increasing OVD",
+          "from": "03-تصاویر/تصاویر.md:28"
+        },
+        "caption_fa": {
+          "value": "تصویر 3. نمایش هندسه تغییر Overbite و Overjet با بازکردن OVD. منبع: Calamita و همکاران، ۲۰۱۹، شکل 6؛ بازنشر با مجوز اعلام‌شده از سوی بنیان‌گذار.",
+          "from": "03-تصاویر/تصاویر.md:26"
+        },
+        "caption_en": {
+          "value": "Fig. 3. Geometry of overbite and overjet changes when OVD is increased. Source: Calamita et al., 2019, Fig. 6; permission to reproduce reported by the founder.",
+          "from": "03-تصاویر/تصاویر.md:29"
+        }
+      },
+      {
+        "n": "04",
+        "file": {
+          "value": "03-تصاویر/04-fig-07-palatal-contour-with-increasing-ovd.webp",
+          "from": "03-تصاویر/تصاویر.md:33"
+        },
+        "alt_fa": {
+          "value": "شکل ۷: تغییر کانتور پالاتال در افزایش زیاد OVD",
+          "from": "03-تصاویر/تصاویر.md:34"
+        },
+        "alt_en": {
+          "value": "Palatal contour after a large increase in OVD",
+          "from": "03-تصاویر/تصاویر.md:37"
+        },
+        "caption_fa": {
+          "value": "تصویر 4. افزایش OVD ممکن است برای برقراری تماس قدامی، کانتور لینگوال را حجیم کند. منبع: Calamita و همکاران، ۲۰۱۹، شکل 7؛ بازنشر با مجوز اعلام‌شده از سوی بنیان‌گذار.",
+          "from": "03-تصاویر/تصاویر.md:35"
+        },
+        "caption_en": {
+          "value": "Fig. 4. Reestablishing anterior contact after an OVD increase may require a bulkier palatal contour. Source: Calamita et al., 2019, Fig. 7; permission to reproduce reported by the founder.",
+          "from": "03-تصاویر/تصاویر.md:38"
+        }
+      },
+      {
+        "n": "05",
+        "file": {
+          "value": "03-تصاویر/05-fig-08-angle-class-relationship.webp",
+          "from": "03-تصاویر/تصاویر.md:42"
+        },
+        "alt_fa": {
+          "value": "شکل ۸: اثر افزایش OVD در روابط کلاس I، II و III",
+          "from": "03-تصاویر/تصاویر.md:43"
+        },
+        "alt_en": {
+          "value": "OVD increase in Angle Classes I, II, and III",
+          "from": "03-تصاویر/تصاویر.md:46"
+        },
+        "caption_fa": {
+          "value": "تصویر 5. نتیجه بازکردن بایت در کلاس‌های مختلف یکسان نیست. منبع: Calamita و همکاران، ۲۰۱۹، شکل 8؛ بازنشر با مجوز اعلام‌شده از سوی بنیان‌گذار.",
+          "from": "03-تصاویر/تصاویر.md:44"
+        },
+        "caption_en": {
+          "value": "Fig. 5. Bite opening has different effects across Angle classes. Source: Calamita et al., 2019, Fig. 8; permission to reproduce reported by the founder.",
+          "from": "03-تصاویر/تصاویر.md:47"
+        }
+      },
+      {
+        "n": "06",
+        "file": {
+          "value": "03-تصاویر/06-fig-03-bilateral-occlusal-contacts.webp",
+          "from": "03-تصاویر/تصاویر.md:51"
+        },
+        "alt_fa": {
+          "value": "شکل ۳: تماس‌های اکلوژنی پایدار و هم‌زمان",
+          "from": "03-تصاویر/تصاویر.md:52"
+        },
+        "alt_en": {
+          "value": "Stable simultaneous occlusal contacts",
+          "from": "03-تصاویر/تصاویر.md:55"
+        },
+        "caption_fa": {
+          "value": "تصویر 6. اهمیت توزیع متعادل تماس‌های اکلوژنی در OVD جدید. منبع: Calamita و همکاران، ۲۰۱۹، شکل 3؛ بازنشر با مجوز اعلام‌شده از سوی بنیان‌گذار.",
+          "from": "03-تصاویر/تصاویر.md:53"
+        },
+        "caption_en": {
+          "value": "Fig. 6. Distribution of balanced occlusal contacts at the new OVD. Source: Calamita et al., 2019, Fig. 3; permission to reproduce reported by the founder.",
+          "from": "03-تصاویر/تصاویر.md:56"
+        }
+      },
+      {
+        "n": "07",
+        "file": {
+          "value": "03-تصاویر/07-fig-04-phonetics-incisal-position.webp",
+          "from": "03-تصاویر/تصاویر.md:60"
+        },
+        "alt_fa": {
+          "value": "شکل ۴: ارتباط لبه انسیزال و فونتیک",
+          "from": "03-تصاویر/تصاویر.md:61"
+        },
+        "alt_en": {
+          "value": "Incisal edge position and phonetics",
+          "from": "03-تصاویر/تصاویر.md:64"
+        },
+        "caption_fa": {
+          "value": "تصویر 7. موقعیت قدامی دندان‌ها می‌تواند در تلفظ، به‌ویژه صدای «س»، اثرگذار باشد. منبع: Calamita و همکاران، ۲۰۱۹، شکل 4؛ بازنشر با مجوز اعلام‌شده از سوی بنیان‌گذار.",
+          "from": "03-تصاویر/تصاویر.md:62"
+        },
+        "caption_en": {
+          "value": "Fig. 7. Anterior tooth position can affect speech, particularly the /s/ sound. Source: Calamita et al., 2019, Fig. 4; permission to reproduce reported by the founder.",
+          "from": "03-تصاویر/تصاویر.md:65"
+        }
+      },
+      {
+        "n": "08",
+        "file": {
+          "value": "03-تصاویر/08-fig-11-facially-driven-planning.webp",
+          "from": "03-تصاویر/تصاویر.md:69"
+        },
+        "alt_fa": {
+          "value": "شکل ۱۱: طرح درمان هدایت‌شده بر اساس صورت",
+          "from": "03-تصاویر/تصاویر.md:70"
+        },
+        "alt_en": {
+          "value": "Facially driven treatment planning",
+          "from": "03-تصاویر/تصاویر.md:73"
+        },
+        "caption_fa": {
+          "value": "تصویر 8. موقعیت لبه‌های انسیزال و پلن اکلوژن، از صورت و لبخند بیمار شروع می‌شود. منبع: Calamita و همکاران، ۲۰۱۹، شکل 11؛ بازنشر با مجوز اعلام‌شده از سوی بنیان‌گذار.",
+          "from": "03-تصاویر/تصاویر.md:71"
+        },
+        "caption_en": {
+          "value": "Fig. 8. The patient’s face and smile guide the position of the incisal edges and occlusal plane. Source: Calamita et al., 2019, Fig. 11; permission to reproduce reported by the founder.",
+          "from": "03-تصاویر/تصاویر.md:74"
+        }
+      },
+      {
+        "n": "09",
+        "file": {
+          "value": "03-تصاویر/09-fig-09-kois-deprogrammer.webp",
+          "from": "03-تصاویر/تصاویر.md:78"
+        },
+        "alt_fa": {
+          "value": "شکل ۹: کویس دپروگرامر برای ثبت موقعیت تکرارپذیر",
+          "from": "03-تصاویر/تصاویر.md:79"
+        },
+        "alt_en": {
+          "value": "Kois Deprogrammer",
+          "from": "03-تصاویر/تصاویر.md:80"
+        },
+        "caption_fa": {
+          "value": "تصویر 9. نمونه‌ای از Kois Deprogrammer برای ثبت رابطه فکی. منبع: Calamita و همکاران، ۲۰۱۹، شکل 9؛ بازنشر با مجوز اعلام‌شده از سوی بنیان‌گذار.",
+          "from": "03-تصاویر/تصاویر.md:80"
+        },
+        "caption_en": {
+          "value": "Fig. 9. A Kois Deprogrammer used in recording the jaw relationship. Source: Calamita et al., 2019, Fig. 9; permission to reproduce reported by the founder.",
+          "from": "03-تصاویر/تصاویر.md:83"
+        }
+      },
+      {
+        "n": "10",
+        "file": {
+          "value": "03-تصاویر/10-fig-16-incisal-guidance-slope.webp",
+          "from": "03-تصاویر/تصاویر.md:87"
+        },
+        "alt_fa": {
+          "value": "شکل ۱۶: ارتباط افزایش طول لبه انسیزال و مسیر فانکشنال",
+          "from": "03-تصاویر/تصاویر.md:88"
+        },
+        "alt_en": {
+          "value": "Incisal guidance and the functional path",
+          "from": "03-تصاویر/تصاویر.md:91"
+        },
+        "caption_fa": {
+          "value": "تصویر 10. طراحی مسیر فانکشنال با شیب مناسب و بدون تداخلات غیرضروری. منبع: Calamita و همکاران، ۲۰۱۹، شکل 16؛ بازنشر با مجوز اعلام‌شده از سوی بنیان‌گذار.",
+          "from": "03-تصاویر/تصاویر.md:89"
+        },
+        "caption_en": {
+          "value": "Fig. 10. Planning the functional path with an appropriate slope and without unnecessary interferences. Source: Calamita et al., 2019, Fig. 16; permission to reproduce reported by the founder.",
+          "from": "03-تصاویر/تصاویر.md:92"
+        }
+      },
+      {
+        "n": "11",
+        "file": {
+          "value": "03-تصاویر/11-fig-19-bonded-pmma-provisionals.webp",
+          "from": "03-تصاویر/تصاویر.md:96"
+        },
+        "alt_fa": {
+          "value": "شکل ۱۹: رستوریشن‌های موقت PMMA",
+          "from": "03-تصاویر/تصاویر.md:97"
+        },
+        "alt_en": {
+          "value": "Fixed PMMA provisional restorations",
+          "from": "03-تصاویر/تصاویر.md:100"
+        },
+        "caption_fa": {
+          "value": "تصویر 11. تست OVD و طراحی پیشنهادی با پروویژن‌های PMMA ثابت. منبع: Calamita و همکاران، ۲۰۱۹، شکل 19؛ بازنشر با مجوز اعلام‌شده از سوی بنیان‌گذار.",
+          "from": "03-تصاویر/تصاویر.md:98"
+        },
+        "caption_en": {
+          "value": "Fig. 11. The proposed OVD and design can be assessed with fixed PMMA provisionals. Source: Calamita et al., 2019, Fig. 19; permission to reproduce reported by the founder.",
+          "from": "03-تصاویر/تصاویر.md:101"
+        }
+      },
+      {
+        "n": "12",
+        "file": {
+          "value": "03-تصاویر/12-fig-20-final-restorations-occlusion.webp",
+          "from": "03-تصاویر/تصاویر.md:105"
+        },
+        "alt_fa": {
+          "value": "شکل ۲۰: نتیجه ترمیم‌ها و تنظیم اکلوژن",
+          "from": "03-تصاویر/تصاویر.md:106"
+        },
+        "alt_en": {
+          "value": "Definitive restorations and occlusal adjustment",
+          "from": "03-تصاویر/تصاویر.md:109"
+        },
+        "caption_fa": {
+          "value": "تصویر 12. نتیجه نهایی ترمیم‌ها و تنظیم اکلوژن در OVD انتخاب‌شده. منبع: Calamita و همکاران، ۲۰۱۹، شکل 20؛ بازنشر با مجوز اعلام‌شده از سوی بنیان‌گذار.",
+          "from": "03-تصاویر/تصاویر.md:107"
+        },
+        "caption_en": {
+          "value": "Fig. 12. The definitive restorations after occlusal adjustment at the selected OVD. Source: Calamita et al., 2019, Fig. 20; permission to reproduce reported by the founder.",
+          "from": "03-تصاویر/تصاویر.md:110"
+        }
+      }
+    ],
+    "from": "03-تصاویر/تصاویر.md"
+  },
+  "credit": {
+    "value": {
+      "mode": "references",
+      "items": [
+        {
+          "label_fa": "Calamita و همکاران، ۲۰۱۹",
+          "label_en": "Calamita et al., 2019",
+          "href": "https://pubmed.ncbi.nlm.nih.gov/31061997/",
+          "from": "04-منبع/منابع.md:18"
+        }
+      ]
+    },
+    "from": "04-منبع/منابع.md:14"
+  },
+  "catalog": {
+    "value": [
+      {
+        "title": "Occlusal vertical dimension: treatment planning decisions and management considerations",
+        "file_name": "Occlusal vertical dimension: treatment planning decisions and management considerations.pdf",
+        "topic": "vertical dimension",
+        "topic_path": "vertical dimension",
+        "type": "narrative review",
+        "local_path": "",
+        "file_size": 1097438,
+        "key_finding": "",
+        "clinical_bottom_line": "",
+        "drive_link": "https://drive.google.com/file/d/18szK2MylWx4Mie2m_c4E8xm3XC8Z2aP-/view",
+        "status": "linked",
+        "drive_download": "https://drive.google.com/uc?export=download&id=18szK2MylWx4Mie2m_c4E8xm3XC8Z2aP-",
+        "drive_view": "https://drive.google.com/file/d/18szK2MylWx4Mie2m_c4E8xm3XC8Z2aP-/view",
+        "drive_id": "18szK2MylWx4Mie2m_c4E8xm3XC8Z2aP-",
+        "tags": [
+          "vertical-dimension",
+          "occlusion",
+          "topic:vertical dimension",
+          "occlusal-vertical-dimension-treatment-planning"
+        ],
+        "name_bucket": "meaningful",
+        "semantic_tagged": true,
+        "real_title": "Occlusal vertical dimension: treatment planning decisions and management considerations",
+        "doi": "",
+        "journal": "International Journal of Esthetic Dentistry",
+        "crossref_year": 2019,
+        "subjects": [],
+        "abstract": "",
+        "display_title": "Occlusal vertical dimension: treatment planning decisions and management considerations",
+        "authors": [
+          "Marcelo Calamita",
+          "Christian Coachman",
+          "Newton Sesma",
+          "John Kois"
+        ]
+      }
+    ],
+    "from": "04-منبع/کاتالوگ.json"
+  },
+  "hashtags": {
+    "value": [
+      "#Share_Hub",
+      "#Curated_Content",
+      "#افزایش_VD",
+      "#فضای_رستوریتیو",
+      "#بعد_عمودی",
+      "#VDO",
+      "#اکلوژن"
+    ],
+    "from": "07-ورودی‌ها.md:11"
+  },
+  "mint": {
+    "value": [],
+    "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+  },
+  "pillar": {
+    "value": {
+      "primary": "occlusion",
+      "subtopic": "vertical-dimension",
+      "secondary": []
+    },
+    "from": "07-ورودی‌ها.md:5"
+  },
+  "pulse": {
+    "value": {
+      "text": null,
+      "link_phrase": "افزایش OVD؛ چه زمانی لازم است و چقدر می‌توانیم آن را تغییر بدهیم؟"
+    },
+    "from": "07-ورودی‌ها.md:8"
+  },
+  "keywords": {
+    "value": [
+      "occlusal vertical dimension",
+      "compensatory dentoalveolar eruption",
+      "posterior bite collapse",
+      "overbite",
+      "overjet",
+      "facially driven treatment planning",
+      "centric relation",
+      "Kois Deprogrammer",
+      "palatal contour",
+      "fixed provisional restorations"
+    ],
+    "from": "09-کلیدواژه‌ها.md:1-10"
+  },
+  "links_48": {
+    "value": [
+      {
+        "phrase": "ارتفاع عمودی اکلوژن",
+        "href": "/glossary/vertical-dimension-of-occlusion.html",
+        "from": "11-لینک‌های-گلاسری.md:12"
+      },
+      {
+        "phrase": "Centric Relation",
+        "href": "/glossary/centric-relation.html",
+        "from": "11-لینک‌های-گلاسری.md:13"
+      },
+      {
+        "phrase": "اختلالات پایدار مفصل گیجگاهی‌فکی",
+        "href": "/glossary/tmd.html",
+        "from": "11-لینک‌های-گلاسری.md:14"
+      },
+      {
+        "phrase": "اسپلینت متحرک",
+        "href": "/glossary/occlusal-splint.html",
+        "from": "11-لینک‌های-گلاسری.md:15"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md:8"
+  },
+  "backlinks_47": {
+    "value": [],
+    "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+  },
+  "explore_49": {
+    "value": [
+      {
+        "href": "/notecast/episode-14.html",
+        "label": "افزایش بعد عمودی؛ شواهد و پروتکل",
+        "from": "11-لینک‌های-گلاسری.md:35"
+      },
+      {
+        "href": "/sharehub/share-36.html",
+        "label": "بازسازی اکلوژن از قدام بالا",
+        "from": "11-لینک‌های-گلاسری.md:36"
+      },
+      {
+        "href": "/insight/insight-6.html",
+        "label": "فضای بازسازی بدون استاپ خلفی",
+        "from": "11-لینک‌های-گلاسری.md:37"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md:31"
+  },
+  "pathway": {
+    "value": null,
+    "from": "default: mechanical pathway rule"
+  },
+  "author": {
+    "value": null,
+    "from": "not in the legacy contract"
+  },
+  "legacy_review": {
+    "value": null,
+    "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+  }
+}
