@@ -225,5 +225,23 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "chairside/chairside-47": {
+    "queue_ref": "queue/13-chairside-recurrent-bridge-decementation",
+    "record_sha256": "a3aa169f8ff7a08484234b55fdf2bba6cfee13dd453e654dad29c9e05df3b427",
+    "installed_at": "2026-11-08",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }
