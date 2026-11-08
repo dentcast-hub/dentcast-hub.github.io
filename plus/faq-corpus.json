@@ -40795,6 +40795,56 @@
           ]
         }
       ]
+    },
+    "chairside/chairside-48": {
+      "faqPages": [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/chairside/chairside-48.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا اسکن‌بادی که کامل ننشسته باشد می‌تواند باعث ثبت نادرست موقعیت ایمپلنت شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ اگر اسکن‌بادی هنگام اسکن در جایگاه نهایی خود نباشد، موقعیت ثبت‌شدهٔ ایمپلنت ممکن است با موقعیت واقعی آن تفاوت داشته باشد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "برای مقایسهٔ ارتفاع اباتمنت داخل دهان با اباتمنت روی کست پرینت‌شده، از چه مرجعی می‌توان استفاده کرد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "از یک مرجع ثابت در دندان مجاور، مثل مارجینال ریج دندان مجاور؛ این مقایسه می‌تواند به پیدا کردن منشأ اختلاف ارتفاع کمک کند."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/chairside/chairside-48.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-48.html#flashcards-c1",
+              "name": "مرجع ارتفاع در مقایسهٔ اباتمنت",
+              "description": "برای مقایسهٔ اباتمنت داخل دهان با اباتمنت روی کست، از یک مرجع ثابت در دندان مجاور، مثل مارجینال ریج دندان ششم، استفاده می‌شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-48.html#flashcards-c2",
+              "name": "اثر ننشستن کامل اسکن‌بادی بر ارتفاع اباتمنت در دهان",
+              "description": "اسکن‌بادی‌ای که هنگام اسکن کامل ننشسته، موقعیت فیکسچر را کرونالی‌تر ثبت می‌کند؛ کست و روکش بر همان داده ساخته می‌شوند، اما اباتمنت اصلی در دهان کامل می‌نشیند و پایین‌تر از اباتمنت روی کست قرار می‌گیرد.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }

@@ -243,5 +243,23 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "chairside/chairside-48": {
+    "queue_ref": "queue/14-chairside-scanbody-seating",
+    "record_sha256": "91f8bd98047e8ed14b1ff00b0722fffd8c4ebc1fe7360783ab97498f2c60a8b8",
+    "installed_at": "2026-11-08",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }
