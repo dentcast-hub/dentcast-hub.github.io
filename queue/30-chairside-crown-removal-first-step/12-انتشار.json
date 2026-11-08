@@ -1,0 +1,151 @@
+{
+  "schema": "dentcast-queue-manifest/1",
+  "category": {
+    "value": "chairside",
+    "from": "07-ورودی‌ها.md:1"
+  },
+  "title_fa": {
+    "value": "وقتی برداشتن روکش، قدم اول درمان است",
+    "from": "02-عنوان-کپشن.md:2"
+  },
+  "caption_fa": {
+    "value": "بیمار با شکایت گیر غذایی و بوی بد دهان ارجاع شده بود. دندان ۶ روکش داشت و دندان‌های دو طرفش هم به ترمیم نیاز داشتند. در چنین شرایطی، درمان را از کجا شروع کنیم؟",
+    "from": "02-عنوان-کپشن.md:5"
+  },
+  "title_en": {
+    "value": "When removing the crown is the first step in treatment",
+    "from": "06-انگلیسی.md:2"
+  },
+  "caption_en": {
+    "value": "The patient was referred with food trapping and bad breath. The first molar had a crown, and the teeth on either side needed restorations. Where should treatment begin?",
+    "from": "06-انگلیسی.md:5"
+  },
+  "body_en": {
+    "value": "An endodontist referred a patient to me for evaluation. The patient reported that food was getting under the crown on tooth 6 and that their breath smelled bad. Teeth 5 and 7 also needed restorations.\n\n[[تصویر:01]]\n\nI had two questions at this visit: could tooth 6 be retained, and in what order should we treat the teeth?\n\nWith the crown in place, I could not directly inspect the underlying tooth or assess the condition of its remaining walls. I made removal of the crown on tooth 6 my first step. Removing it would let me inspect the walls directly and assess the tooth’s prognosis.\n\nRemoving the crown had another advantage: it improved access to the proximal surfaces of teeth 5 and 7, making it easier to restore them well.\n\nOnce the crown was off, the remaining walls of tooth 6 were acceptable, and I judged that the tooth could be retained. I referred the patient back to the endodontist for root canal treatment with a referral letter. The definitive restoration of tooth 6 is planned after root canal treatment.\n\nTreatment sequence for this patient:\n1. Remove the crown on tooth 6 and assess the remaining walls and prognosis.\n2. Restore teeth 5 and 7 with improved access.\n3. Refer tooth 6 for root canal treatment.\n4. Place the definitive restoration on tooth 6.\n\nClinical point: When the condition of a tooth under an old crown is uncertain, removing the crown can clarify its prognosis and improve access for treating the adjacent teeth.",
+    "from": "06-انگلیسی.md:8-26"
+  },
+  "images": {
+    "value": [
+      {
+        "n": "01",
+        "file": {
+          "value": "03-تصاویر/01-crown-removal-periapical.webp",
+          "from": "03-تصاویر/01-crown-removal-periapical.webp"
+        },
+        "alt_fa": {
+          "value": "رادیوگرافی پری‌اپیکال دندان ۶ روکش‌شده و دندان‌های مجاور",
+          "from": "03-تصاویر/تصاویر.md:3"
+        },
+        "caption_fa": {
+          "value": "تصویر ۱. رادیوگرافی پری‌اپیکال دندان ۶ و دندان‌های مجاور. منبع: رادیوگرافی کیس، ارسالی دکتر فؤاد شهابیان برای انتشار این مطلب.",
+          "from": "03-تصاویر/تصاویر.md:3"
+        },
+        "alt_en": {
+          "value": "Periapical radiograph of the crowned first molar and adjacent teeth",
+          "from": "03-تصاویر/تصاویر.md:3"
+        },
+        "caption_en": {
+          "value": "Fig. 1. Periapical radiograph of the first molar and adjacent teeth. Source: case radiograph supplied by Dr. Fouad Shahabian for publication of this article.",
+          "from": "03-تصاویر/تصاویر.md:3"
+        }
+      }
+    ],
+    "from": "03-تصاویر/تصاویر.md"
+  },
+  "credit": {
+    "value": {
+      "mode": "none"
+    },
+    "from": "04-منبع/منابع.md:1"
+  },
+  "catalog": {
+    "value": [],
+    "from": "04-منبع/منابع.md:1"
+  },
+  "hashtags": {
+    "value": [
+      "#چیرساید",
+      "#برداشت_ترمیم",
+      "#پروگنوز_دندان",
+      "#توالی_درمان",
+      "#مدیریت_دسترسی"
+    ],
+    "from": "07-ورودی‌ها.md:16"
+  },
+  "mint": {
+    "value": [],
+    "from": "07-ورودی‌ها.md:17"
+  },
+  "pillar": {
+    "value": {
+      "primary": "treatment-planning",
+      "subtopic": "comprehensive-diagnosis",
+      "secondary": []
+    },
+    "from": "07-ورودی‌ها.md:10-13"
+  },
+  "pulse": {
+    "value": {
+      "html": "چیرساید تازه: «<a href=\"{url}\">وقتی برداشتن روکش، قدم اول درمان است</a>»",
+      "link_phrase": "وقتی برداشتن روکش، قدم اول درمان است"
+    },
+    "from": "07-ورودی‌ها.md:14-15"
+  },
+  "keywords": {
+    "value": [
+      "crown removal",
+      "tooth prognosis",
+      "proximal access",
+      "treatment sequence",
+      "root canal treatment",
+      "definitive restoration"
+    ],
+    "from": "09-کلیدواژه‌ها.md:1-6"
+  },
+  "links_48": {
+    "value": [
+      {
+        "phrase": "درمان‌ها باید به چه ترتیبی انجام شوند",
+        "href": "/sharehub/share-19.html",
+        "from": "11-لینک‌های-گلاسری.md:8"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md:8"
+  },
+  "backlinks_47": {
+    "value": [],
+    "from": "11-لینک‌های-گلاسری.md:11-12"
+  },
+  "explore_49": {
+    "value": [
+      {
+        "href": "/insight/insight-14.html",
+        "label": "ارزیابی دندان پس از برداشتن روکش",
+        "from": "11-لینک‌های-گلاسری.md:16"
+      },
+      {
+        "href": "/sharehub/share-19.html",
+        "label": "فازهای طرح درمان",
+        "from": "11-لینک‌های-گلاسری.md:17"
+      },
+      {
+        "href": "/insight/insight-41.html",
+        "label": "وقتی دسترسی ترتیب کار را تعیین می‌کند",
+        "from": "11-لینک‌های-گلاسری.md:18"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md:16-18"
+  },
+  "pathway": {
+    "value": null,
+    "from": "07-ورودی‌ها.md:18"
+  },
+  "author": {
+    "value": null,
+    "from": "not in the legacy contract"
+  },
+  "legacy_review": {
+    "value": null,
+    "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+  }
+}

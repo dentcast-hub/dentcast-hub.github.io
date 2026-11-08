@@ -1,0 +1,35 @@
+{
+  "definedTermSets": [
+    {
+      "@context": "https://schema.org",
+      "@type": "DefinedTermSet",
+      "@id": "{{PAGE_URL}}#flashcards",
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "@id": "{{PAGE_URL}}#flashcards-c1",
+          "name": "مزیت برداشتن روکش برای دسترسی پروگزیمال دندان مجاور",
+          "description": "با کنار رفتن روکش، فضای دسترسی به سطح پروگزیمال دندان کناری بیشتر می‌شود.",
+          "source": "authored"
+        }
+      ]
+    }
+  ],
+  "faqPages": [
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": "{{PAGE_URL}}#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "آیا برداشتن روکش قدیمی می‌تواند به ارزیابی پیش‌آگهی دندان کمک کند؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "بله. وقتی وضعیت دیواره‌های باقی‌مانده زیر روکش روشن نیست، برداشتن روکش امکان بررسی مستقیم آن‌ها را فراهم می‌کند."
+          }
+        }
+      ]
+    }
+  ]
+}
