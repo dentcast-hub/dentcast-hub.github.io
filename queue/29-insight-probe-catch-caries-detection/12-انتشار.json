@@ -1,0 +1,123 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "insight",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "سوند گیر کرد؛ یعنی دندان پوسیده است؟",
+  "from": "02-عنوان-کپشن.md:2"
+ },
+ "caption_fa": {
+  "value": "گیر کردن نوک سوند یک مشاهده مکانیکی است، نه تشخیص قطعی پوسیدگی؛ تشخیص اصلی با معاینه چشمی دقیق روی سطح تمیز و خشک دندان انجام می‌شود.",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "title_en": {
+  "value": "The probe caught; does that mean the tooth is carious?",
+  "from": "06-انگلیسی.md:2"
+ },
+ "caption_en": {
+  "value": "A probe catch is a mechanical observation, not a definitive diagnosis of caries; the main diagnosis rests on a careful visual examination of a clean, dry tooth surface.",
+  "from": "06-انگلیسی.md:5"
+ },
+ "body_en": {
+  "value": "One of the traditional criteria for detecting caries, especially in occlusal fissures, is the catching of the probe tip. We insert the probe into the fissure, and if it catches when we withdraw it, we suspect caries. But how reliable is this method, really?\n\nThe first problem is the probe itself. Probes are not identical in shape, angle and tip diameter. In addition, the force the dentist applies also varies. It is even possible for one probe to catch in a fissure while another probe does not catch in the same fissure.\n\nMore importantly, a probe catch is not necessarily a sign of caries. Some fissures are naturally narrow and deep, and the probe tip can catch in them merely because of the anatomy of the fissure.\n\nIn its 2023 position statement on caries risk assessment and prevention, the American College of Prosthodontists explicitly notes that scientific evidence has not shown that a catch of a sharp explorer, compared with visual examination of a dry tooth, increases the sensitivity or specificity of caries detection.\n\nIt is not only a matter of diagnostic error. Inserting a sharp probe with heavy pressure may damage the surface of an early, non-cavitated lesion, a lesion that might have been manageable without preparation, by controlling risk factors and remineralization.\n\n## So what is the alternative?\n\nToday, the main method is a careful visual examination of a clean, dry tooth surface. In systems such as ICDAS, the visible changes of the enamel, the clarity of the lesion after drying and the presence or absence of a cavity matter. When needed, we also use bitewing radiography.\n\nWe do not have to give up the probe either; but instead of pressing its sharp tip into the fissure, it is better to use a ball-ended probe with gentle pressure to examine the surface characteristics.\n\n## What about Caries Detector?\n\nThis solution can help assess dentin during caries removal, but it is not a substitute for the initial examination for diagnosing caries. Moreover, a dentin stain does not necessarily mean the dentin is infected or needs to be removed, and if we decide only on the basis of color, especially in deep caries, there is a risk of over-removing dentin.\n\nIn fact, we should separate two issues: diagnosing the presence of caries and deciding how much carious tissue to remove. These two have different criteria.\n\nIn short, a probe catch is a mechanical observation, not a definitive diagnosis of caries. If we are going to prepare a tooth on the basis of this finding, we need more reliable evidence for our decision.",
+  "from": "06-انگلیسی.md:8-31"
+ },
+ "images": {
+  "value": [],
+  "from": "03-تصاویر: no image files"
+ },
+ "credit": {
+  "value": {
+   "mode": "none"
+  },
+  "from": "04-منبع/منابع.md:1"
+ },
+ "catalog": {
+  "value": [],
+  "from": "04-منبع/منابع.md: no paper"
+ },
+ "hashtags": {
+  "value": [
+   "#اینسایت",
+   "#تشخیص_پوسیدگی",
+   "#پوسیدگی",
+   "#Caries_Detector",
+   "#برداشت_پوسیدگی"
+  ],
+  "from": "07-ورودی‌ها.md:14"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "operative",
+   "subtopic": "caries-management",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:11"
+ },
+ "pulse": {
+  "value": {
+   "html": "یک اینسایت بالینی با عنوانِ «<a href=\"{url}\">سوند گیر کرد؛ یعنی دندان پوسیده است؟</a>» منتشر شد",
+   "link_phrase": "سوند گیر کرد؛ یعنی دندان پوسیده است؟"
+  },
+  "from": "07-ورودی‌ها.md:20"
+ },
+ "keywords": {
+  "value": [
+   "گیر کردن نوک سوند",
+   "شیارهای اکلوزال",
+   "سوند تیز",
+   "معاینه چشمی",
+   "سطح تمیز و خشک دندان",
+   "سوند با نوک گرد",
+   "رادیوگرافی بایت‌وینگ",
+   "رنگ گرفتن دنتین"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [],
+  "from": "11-لینک‌های-گلاسری.md:8"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "/insight/insight-23.html",
+    "label": "رادیولوسنسی زیر ترمیم، پوسیدگی نیست",
+    "from": "11-لینک‌های-گلاسری.md:25"
+   },
+   {
+    "href": "/episodes/episode-134.html",
+    "label": "گایدلاین‌های درمان پوسیدگی (MID)",
+    "from": "11-لینک‌های-گلاسری.md:26"
+   },
+   {
+    "href": "/dentai/dentai-12.html",
+    "label": "کاربرد محلول‌های تشخیص پوسیدگی (CDD)",
+    "from": "11-لینک‌های-گلاسری.md:27"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:21"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
