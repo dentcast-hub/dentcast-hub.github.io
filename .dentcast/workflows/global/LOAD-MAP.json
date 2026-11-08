@@ -3,85 +3,85 @@
   "sources": [
     {
       "path": ".dentcast/workflows/global/repo-conventions.md",
-      "sha256": "05d578785b54d5fbb40d4fb2b7286e22cdcd38c83bcbc73cce1773f49c17d6e6",
+      "sha256": "b2de28cc5304d1c9fd62c96b0ca7de43b12140415c04b4b695d1efccd8a8abb5",
       "sections": [
         {
           "id": "repo-core",
           "lines": [
             1,
-            157
+            168
           ],
           "core": true
         },
         {
           "id": "up-board",
           "lines": [
-            158,
-            253
+            169,
+            264
           ],
           "core": false
         },
         {
           "id": "ads",
           "lines": [
-            254,
-            263
+            265,
+            274
           ],
           "core": true
         },
         {
           "id": "clinic",
           "lines": [
-            264,
-            292
+            275,
+            303
           ],
           "core": false
         },
         {
           "id": "pathway-standings",
           "lines": [
-            293,
-            383
+            304,
+            394
           ],
           "core": false
         },
         {
           "id": "pathway-certificate",
           "lines": [
-            384,
-            562
+            395,
+            573
           ],
           "core": false
         },
         {
           "id": "pathway-exam",
           "lines": [
-            563,
-            822
+            574,
+            833
           ],
           "core": false
         },
         {
           "id": "premium-shell",
           "lines": [
-            823,
-            879
+            834,
+            890
           ],
           "core": false
         },
         {
           "id": "audio-hub",
           "lines": [
-            880,
-            882
+            891,
+            893
           ],
           "core": false
         },
         {
           "id": "google-auth",
           "lines": [
-            883,
-            887
+            894,
+            898
           ],
           "core": false
         }

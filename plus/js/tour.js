@@ -15,10 +15,10 @@
 //     the account, not localStorage).
 //  2. MANUAL — «راهنمای سایت» in the header person menu (logged-in), any time.
 //     On a non-home page it navigates to /?tour=1 and starts there.
-import { el, faNum, tehranDay } from './util.js?v=219';
-import { api, currentUser } from './api.js?v=219';
-import { pricingHref } from './premium-cta.js?v=219';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=219';
+import { el, faNum, tehranDay } from './util.js?v=220';
+import { api, currentUser } from './api.js?v=220';
+import { pricingHref } from './premium-cta.js?v=220';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=220';
 
 const SS_PENDING = 'dcp:tour:pending'; // set before navigating home to start there
 
@@ -120,7 +120,7 @@ const STOPS = [
   },
   {
     key: 'categories', panel: 'panel-studio', title: 'دسته‌های محتوا',
-    text: 'هر خانه دری است به یک بخش — اپیزودها، نکات کلینیکی، نوت‌کست، ویزیت، متانوت، لایت‌کست، مرور منابع، دنت‌کست پلاس و سری‌های ویژه — با تعداد مطلب‌هایش.',
+    text: 'هر خانه دری است به یک بخش — اپیزودها، نکات کلینیکی، خلاصهٔ اپیزودها، ویزیت، ایده‌ها، لایت‌کست، مرور منابع، ویدیوها و سری‌های ویژه — با تعداد مطلب‌هایش.',
     targets: () => [q('#panel-studio .dc-exa-cats')],
   },
   {
@@ -156,7 +156,7 @@ const STOPS = [
   },
   {
     key: 'originals', panel: 'panel-sharehub', title: 'تولید اختصاصی دنت‌کست',
-    text: 'محتوای اورجینال دنت‌کست: نکات کلینیکی (نکته‌هایی از تجربهٔ بالینی)، ویزیت (روایت کیس‌ها از کنار یونیت)، Meta Note (ایده‌ها و مدل‌های تحلیلی) و DentCast+ (آموزش ویدیویی، برای همه).',
+    text: 'محتوای اورجینال دنت‌کست: نکات کلینیکی (نکته‌هایی از تجربهٔ بالینی)، ویزیت (روایت کیس‌ها از کنار یونیت)، ایده‌ها (مدل‌های ذهنی و چارچوب‌های تصمیم) و ویدیوها (آموزش ویدیویی، برای همه).',
     targets: () => [
       q('#panel-sharehub .dc-list-card--insight'),
       q('#panel-sharehub .dc-list-card--chairside'),
@@ -165,8 +165,8 @@ const STOPS = [
     ],
   },
   {
-    key: 'sources', panel: 'panel-sharehub', title: 'مرور منابع علمی',
-    text: 'بخش‌های مبتنی بر مقالات علمی: NoteCast خلاصه‌نویسی اپیزودها از مقالات است و مرور منابع خوانش دنت‌کست از منابع علمی — یک مقاله یا چند مقاله، همیشه با منبع.',
+    key: 'sources', panel: 'panel-sharehub', title: 'بر پایهٔ مقالات',
+    text: 'بخش‌هایی که بر پایهٔ مقاله‌اند: خلاصهٔ اپیزودها نسخهٔ نوشتاری هر اپیزود است و مرور منابع خوانش دنت‌کست از منابع علمی — یک مقاله یا چند مقاله، همیشه با منبع.',
     targets: () => [
       q('#panel-sharehub .dc-list-card[onclick*="notecast"]'),
       // Share Hub is a list card since DentAI closed (1405/07/15); the 2×2
@@ -265,7 +265,7 @@ async function mountPremiumPreview(ctx) {
   if (preview && preview.isConnected) return;
   const host = byId('panel-premium');
   if (!host) return;
-  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=219'), samplePathway()]);
+  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=220'), samplePathway()]);
   if (!state || typeof mod.livePreview !== 'function') return;
   const node = mod.livePreview({
     tier: 'premium',

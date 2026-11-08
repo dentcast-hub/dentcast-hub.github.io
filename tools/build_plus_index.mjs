@@ -26,11 +26,11 @@ const toContentId = (url) => url.replace(/^\/+/, '').replace(/\.html$/i, '');
 // counted from disk so per-folder progress is accurate.
 const FOLDER_META = [
   ['episodes', 'پادکست', '/episodes.html'],
-  ['notecast', 'نوت‌کست', '/notecast/'],
+  ['notecast', 'خلاصهٔ اپیزودها', '/notecast/'],
   ['insight', 'نکات کلینیکی', '/insight/'],
   ['dentai', 'دنت‌ای‌آی', '/sharehub/'],  // closed section (1405/07/15): its landing forwards to Share Hub
   ['chairside', 'ویزیت', '/chairside/'],
-  ['metanotes', 'متانوت', '/metanotes/'],
+  ['metanotes', 'ایده‌ها', '/metanotes/'],
   ['litecast', 'لایت‌کست', '/litecast/'],
   ['glossary', 'دانشنامه', '/glossary/'],
   ['photocast', 'فوتوکست', '/sharehub/'],  // closed section, as above

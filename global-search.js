@@ -94,11 +94,14 @@ const TYPE_MAP = {
      template in tools/build_pillar.py no longer emits it. */
   filterBtns.forEach(btn => { if (btn.dataset.type === "dentai") btn.remove(); });
   /* Section rename (founder, 1405/08/17): Share Hub reads «مرور منابع» and
-     Chairside «ویزیت» on every reader surface. The chip label sits in the static markup of every page, so
+     Chairside «ویزیت», NoteCast «خلاصهٔ اپیزودها» and MetaNote «ایده‌ها»
+     on every reader surface. The chip label sits in the static markup of every page, so
      it is renamed here at runtime for the same reason the DentAI chip is
      removed above — every article stays byte-identical. */
   filterBtns.forEach(btn => { if (btn.dataset.type === "sharehub") btn.textContent = "مرور منابع";
-    if (btn.dataset.type === "chairside") btn.textContent = "ویزیت"; });
+    if (btn.dataset.type === "chairside") btn.textContent = "ویزیت";
+    if (btn.dataset.type === "notecast") btn.textContent = "خلاصهٔ اپیزودها";
+    if (btn.dataset.type === "meta") btn.textContent = "ایده‌ها"; });
   filterBtns.forEach(btn => {
     if (!btn.isConnected) return;
     btn.addEventListener("click", () => {
@@ -171,13 +174,13 @@ const TYPE_MAP = {
  const named = (name) => title.trim().startsWith(name) ? " " + title.trim() : " " + name + " — " + title;
  const labelMap = {
   dentcast:      _iMic  + " دنت‌کست — اپیزود " + faDigits(item.episode) + (title.trim() ? " · " + title.trim() : ""),
-  notecast:      _iNote + named("نوت‌کست"),
+  notecast:      _iNote + named("خلاصهٔ اپیزود"),
   clinical:      _iBulb + named("نکتهٔ کلینیکی"),
-  dentcast_plus: _iPlay + named("دنت‌کست+"),
+  dentcast_plus: _iPlay + named("ویدیو"),
   promptologist: _iSpark + named("پرامپتولوژیست"),
   plak_sefr:     _iPin   + named("پلاک صفر"),
   taraz:         _iScale + named("تراز شواهد"),
-  meta:          _iPuzz + named("متانوت"),
+  meta:          _iPuzz + named("ایده"),
   chairside:     _iToot + named("ویزیت"),
   sharehub:      _iLink + named("مرور منابع")
 };

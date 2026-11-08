@@ -87,7 +87,7 @@ Every type has a landing page listing its entries (`/sharehub/index.html`, `/not
 - **Chapters keep their own numbering:** پرامپتولوژیست rows sit under «فصل N — …» headings and restart at «قسمت ۱» per chapter, matching each page's badge («فصل ۷ · قسمت ۱»).
 - **The brain title does not change.** It keeps the series prefix («پلاک صفر — بیمار چه تایپ می‌کند») because the homepage rail, pillar page, up-board and search render it without context. The landing row is a **second legitimate label** (as in `episodes.html`), and `tools/verify_publish.py` knows it (`numbered_series_label`): the row passes with a «قسمت N» marker **and** the brain title's own tail verbatim; a drifted title or a lost number still fails.
 
-A series whose rows already carry their number in the title (`chairside/` → «ویزیت ۰۲ — …», `metanotes/` → «متانوت نوزده: …», `notecast/` → «نوت‌کست چهلم — …») is left alone. An **unnumbered** type (`insight/`, `sharehub/`) gets no number.
+A series whose rows already carry their number in the title (`chairside/` → «ویزیت ۰۲ — …», `metanotes/` → «ایدهٔ نوزدهم: …», `notecast/` → «خلاصهٔ اپیزود چهلم — …») is left alone. An **unnumbered** type (`insight/`, `sharehub/`) gets no number.
 
 **Glossary note:** author the term page through steps 1–2 from the same-type template and register it in `glossary/glossary.json`, not the brain. `tools/build_pillar.py glossary` (part of `all`, run by the runner) generates **only** `/glossary/index.html`; never hand-edit it.
 

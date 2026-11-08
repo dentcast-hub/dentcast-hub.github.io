@@ -29,9 +29,9 @@ export const QP_TYPES = {
   chairside: { label: 'ویزیت — کیس و تصمیم بالینی', folder: 'chairside', stem: 'chairside-', id: (n: number) => `chairside-${n}`, urlKey: 'page_url', section: 'ویزیت',
     landing: 'top', landingLabel: (n: number, title: string) => `ویزیت ${faDigits(String(n).padStart(2, '0'))} — ${title.replace(/^(?:chairside|ویزیت)\s*[\d۰-۹]*\s*[—–:-]?\s*/i, '') || title}`,
     kicker: (n: number) => `  <h2>ویزیت ${faDigits(n)}</h2>\n  `, h1Prefix: (_n: number) => '', pulseLead: 'یک ویزیت' },
-  meta: { label: 'MetaNote — متانوت', folder: 'metanotes', stem: 'meta-', id: (n: number) => `meta-${n}`, urlKey: 'page_url', section: 'Meta Note',
-    landing: 'bottom', landingLabel: (n: number, title: string) => `متانوت ${faNumberWords(n)}: ${title.replace(/^متانوت[^:：]*[:：]\s*/, '') || title}`,
-    kicker: (n: number) => ` <h2>${ICON_BRAIN} MetaNote ${n}</h2>\n`, h1Prefix: (_n: number) => '', pulseLead: 'یک متانوت' },
+  meta: { label: 'ایده‌ها — MetaNote', folder: 'metanotes', stem: 'meta-', id: (n: number) => `meta-${n}`, urlKey: 'page_url', section: 'ایده‌ها',
+    landing: 'bottom', landingLabel: (n: number, title: string) => `ایدهٔ ${faOrdinalWords(n)}: ${title.replace(/^(?:متانوت|ایدهٔ)[^:：]*[:：]\s*/, '') || title}`,
+    kicker: (n: number) => ` <h2>${ICON_BRAIN} ایدهٔ ${faDigits(n)}</h2>\n`, h1Prefix: (_n: number) => '', pulseLead: 'یک ایده' },
   sharehub: { label: 'مرور منابع — خوانش مقاله', folder: 'sharehub', stem: 'share-', id: (n: number) => String(n), urlKey: 'url', section: 'مرور منابع',
     landing: 'top', landingLabel: (_n: number, title: string) => `${title} (مطلبی از دکتر فواد شهابیان)`,
     kicker: (_n: number) => `<div class="sh-kicker">${ICON_BOOKMARK} مرور منابع</div>\n`, h1Prefix: (_n: number) => '', pulseLead: 'یک مطلب در مرور منابع' },
@@ -41,15 +41,29 @@ export type QpType = keyof typeof QP_TYPES;
 const FA_ONES = ['', 'یک', 'دو', 'سه', 'چهار', 'پنج', 'شش', 'هفت', 'هشت', 'نه', 'ده', 'یازده', 'دوازده', 'سیزده',
   'چهارده', 'پانزده', 'شانزده', 'هفده', 'هجده', 'نوزده'];
 const FA_TENS = ['', '', 'بیست', 'سی', 'چهل', 'پنجاه', 'شصت', 'هفتاد', 'هشتاد', 'نود'];
-/** 1–99 the way metanotes/index.html writes them («بیست‌ودو»); digits beyond. */
 /** Persian digits, as every Persian-facing label on the site writes a number. */
 export function faDigits(n: number | string): string {
   return String(n).replace(/[0-9]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
 }
 
+/** 1–99 as cardinal words («بیست‌ودو»); digits beyond. */
 export function faNumberWords(n: number): string {
   if (n > 0 && n < 20) return FA_ONES[n];
   if (n >= 20 && n < 100) return FA_TENS[Math.floor(n / 10)] + (n % 10 ? '\u200cو' + FA_ONES[n % 10] : '');
+  return String(n);
+}
+
+/** 1–99 as ordinal words, the way metanotes/index.html writes them since 1405/08/17
+ *  («ایدهٔ بیست‌ودوم», «ایدهٔ سی‌ام»); the same rule as fa_ordinal in tools/queue_apply.py. */
+export function faOrdinalWords(n: number): string {
+  const special: Record<number, string> = { 1: 'یکم', 2: 'دوم', 3: 'سوم', 30: 'سی\u200cام' };
+  if (special[n]) return special[n];
+  if (n > 0 && n < 20) return FA_ONES[n] + 'م';
+  if (n >= 20 && n < 100) {
+    const t = Math.floor(n / 10), u = n % 10;
+    if (!u) return FA_TENS[t] + 'م';
+    return FA_TENS[t] + '\u200cو' + (({ 1: 'یکم', 2: 'دوم', 3: 'سوم' } as Record<number, string>)[u] ?? FA_ONES[u] + 'م');
+  }
   return String(n);
 }
 export const isQpType = (t: unknown): t is QpType => typeof t === 'string' && Object.hasOwn(QP_TYPES, t);

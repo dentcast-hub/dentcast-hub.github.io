@@ -87,13 +87,13 @@ CATEGORIES = {
         "dir": "notecast", "stem": "episode-", "brain_type": "notecast", "brain_id": "{n}",
         "image": "notecast{n}-{k}.webp", "body_open": None,
         "landing": "notecast/index.html", "landing_mode": "bottom-ordinal", "style": "indented",
-        "label_fa": "نوت‌کست", "label_en": "NoteCast", "parent": "episodes/episode-{n}",
+        "label_fa": "خلاصهٔ اپیزود", "label_en": "NoteCast", "parent": "episodes/episode-{n}",
     },
     "metanote": {
         "dir": "metanotes", "stem": "meta-", "brain_type": "meta", "brain_id": "meta-{n}",
         "image": "meta-{n}.webp", "body_open": None,
-        "landing": "metanotes/index.html", "landing_mode": "bottom-cardinal", "style": "metanote",
-        "label_fa": "متانوت", "label_en": "MetaNote",
+        "landing": "metanotes/index.html", "landing_mode": "bottom-ordinal-colon", "style": "metanote",
+        "label_fa": "ایدهٔ", "label_en": "MetaNote",
     },
 }
 
@@ -1013,7 +1013,8 @@ def build_metanote_page(n, prev, m, date, item, lang="fa"):
                    (f"metanotes/en/meta-{prev}.html", f"metanotes/en/meta-{n}.html"),
                    (f'href="en/meta-{prev}.html"', f'href="en/meta-{n}.html"'),
                    (f'href="../meta-{prev}.html"', f'href="../meta-{n}.html"'),
-                   (f"MetaNote {prev} ", f"MetaNote {n} "), (f"MetaNote {prev}<", f"MetaNote {n}<")):
+                   (f"MetaNote {prev} ", f"MetaNote {n} "), (f"MetaNote {prev}<", f"MetaNote {n}<"),
+                   (f"ایدهٔ {fa_digits(prev)} ", f"ایدهٔ {fa_digits(n)} "), (f"ایدهٔ {fa_digits(prev)}<", f"ایدهٔ {fa_digits(n)}<")):
         doc = doc.replace(a_, b_)
     doc = doc.replace(f'"alternativeHeadline": "{old_alt}"', '"alternativeHeadline": ' + json.dumps(alt_head, ensure_ascii=False))
     for old, new in ((old_title, title), (old_desc, caption)):
@@ -1056,7 +1057,7 @@ def build_metanote_page(n, prev, m, date, item, lang="fa"):
         doc = swap_region(doc, r'<div class="dc-related-capsules">\n', r"\n  </div>\n</div>", rows, "related")
     residue = [x for x in (old_title, old_desc, old_alt, f"meta-{prev}.html", f"meta-{prev}.webp",
                            tentry.get("title"), tentry.get("caption")) if x and x in doc]
-    residue += re.findall(r"MetaNote %d\b" % prev, doc)
+    residue += re.findall(r"MetaNote %d\b|ایدهٔ %s(?![۰-۹])" % (prev, fa_digits(prev)), doc)
     if residue:
         refuse("TEMPLATE_RESIDUE", f"clone residue of metanotes/meta-{prev} left: {residue[:5]}")
     files = {"metanotes/" + c["image"].format(n=n): (item / v["file"]).read_bytes() for v in imgs.values()}
@@ -1076,7 +1077,7 @@ def metanote_itemlist(w, n, prev_n, title):
     if not mm:
         refuse("LANDING_ROW", f"{rel}: ItemList entry for meta-{prev_n} not found")
     blk = mm.group(1)
-    name = json.dumps(f"{c['label_fa']} {fa_cardinal(n)}: {title}", ensure_ascii=False)
+    name = json.dumps(f"{c['label_fa']} {fa_ordinal(n)}: {title}", ensure_ascii=False)
     new = re.sub(r'"position": %d,' % prev_n, f'"position": {n},', blk)
     new = re.sub(r'"name": "[^"]*",', lambda _: f'"name": {name},', new)
     new = new.replace(f"meta-{prev_n}.html", f"meta-{n}.html")
@@ -1129,12 +1130,12 @@ def landing_row(w, cat, n, prev_n, title, prev_title):
         row = f'{mm.group(1)}{mm.group(2)}<li><a href="{c["stem"]}{n}.html">{c["label_fa"]} {fa_ordinal(n)} {mm.group(3)} {esc(title)}</a></li>'
         w.put(rel, doc[:mm.end()] + row + doc[mm.end():])
         return
-    if c["landing_mode"] == "bottom-cardinal":
+    if c["landing_mode"] == "bottom-ordinal-colon":  # «ایدهٔ نوزدهم: …» (was «متانوت نوزده: …» until 1405/08/17)
         mm = re.search(r'(\r?\n)([ \t]*)<li><a href="%s">%s %s: ([^<]*)</a></li>'
-                       % (re.escape(f"{c['stem']}{prev_n}.html"), c["label_fa"], fa_cardinal(prev_n)), doc)
+                       % (re.escape(f"{c['stem']}{prev_n}.html"), c["label_fa"], fa_ordinal(prev_n)), doc)
         if not mm or html.unescape(mm.group(3)) != prev_title:
-            refuse("LANDING_ROW", f"{rel}: last row for {c['stem']}{prev_n} not found in the cardinal form")
-        row = f'{mm.group(1)}{mm.group(2)}<li><a href="{c["stem"]}{n}.html">{c["label_fa"]} {fa_cardinal(n)}: {esc(title)}</a></li>'
+            refuse("LANDING_ROW", f"{rel}: last row for {c['stem']}{prev_n} not found in the «ایدهٔ <ordinal>:» form")
+        row = f'{mm.group(1)}{mm.group(2)}<li><a href="{c["stem"]}{n}.html">{c["label_fa"]} {fa_ordinal(n)}: {esc(title)}</a></li>'
         w.put(rel, doc[:mm.end()] + row + doc[mm.end():])
         metanote_itemlist(w, n, prev_n, title)
         return
