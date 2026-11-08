@@ -129,19 +129,19 @@ def folder_of(url: str) -> str:
 # the homepage and in the archive use exactly these — so a reader never meets a
 # label here that appears nowhere else.
 TYPE_FA = {
-    "notecast": "NoteCast",
-    "clinical": "نکات کلینیکی",
+    "notecast": "خلاصهٔ اپیزود",
+    "clinical": "نکتهٔ کلینیکی",
     "chairside": "ویزیت",
-    "dentai": "DentAI",
-    "meta": "MetaNote",
+    "dentai": "مرور منابع",
+    "meta": "ایده",
     "litecast": "لایت‌کست",
     "sharehub": "مرور منابع",
     "promptologist": "پرامپتولوژیست",
     "plak_sefr": "پلاک صفر",
     "taraz": "تراز شواهد",
-    "photocast": "PhotoCast",
+    "photocast": "مرور منابع",
     "dentcast": "اپیزود",
-    "dentcast_plus": "دنت‌کست پلاس",
+    "dentcast_plus": "ویدیو",
 }
 
 

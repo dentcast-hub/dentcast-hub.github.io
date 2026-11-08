@@ -8,7 +8,7 @@ import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
 import {
   QP_TYPES, signV4, renderBody, renderPage, brainEntry, appendBrainEntry, replaceBrainEntry, setSiteStore,
-  setEnabled, faNumberWords, landingFor, pulseFor, applyPulse, PULSE_LINES, BRAIN_KEY, LEDGER_KEY, TEMPLATE_KEY, type SiteStore, type QpType,
+  setEnabled, faNumberWords, faOrdinalWords, landingFor, pulseFor, applyPulse, PULSE_LINES, BRAIN_KEY, LEDGER_KEY, TEMPLATE_KEY, type SiteStore, type QpType,
 } from '../src/services/quick-publish.js';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -103,6 +103,11 @@ describe('quick publish — pure parts', () => {
     expect(faNumberWords(23)).toBe('بیست\u200cوسه');
     expect(faNumberWords(7)).toBe('هفت');
     expect(faNumberWords(20)).toBe('بیست');
+    expect(faOrdinalWords(23)).toBe('بیست\u200cوسوم');
+    expect(faOrdinalWords(1)).toBe('یکم');
+    expect(faOrdinalWords(30)).toBe('سی\u200cام');
+    expect(faOrdinalWords(40)).toBe('چهلم');
+    expect(faOrdinalWords(19)).toBe('نوزدهم');
   });
 
   it('renders an image caption as figure/figcaption (escaped), and a bare img without one', () => {
@@ -125,8 +130,8 @@ describe('quick publish — pure parts', () => {
     expect(landingFor('chairside', 47, 'Chairside 9 — عنوان').line).toBe('<li><a href="chairside-47.html">ویزیت ۴۷ — عنوان</a></li>');
     expect(landingFor('chairside', 47, 'ویزیت ۹ — عنوان').line).toBe('<li><a href="chairside-47.html">ویزیت ۴۷ — عنوان</a></li>');
     expect(landingFor('chairside', 47, 'عنوان ساده').line).toContain('>ویزیت ۴۷ — عنوان ساده<');
-    expect(landingFor('meta', 23, 'متانوت آزمایشی: عنوان').line).toBe('<li><a href="meta-23.html">متانوت بیست\u200cوسه: عنوان</a></li>');
-    expect(landingFor('meta', 23, 'عنوان').line).toContain('>متانوت بیست\u200cوسه: عنوان<');
+    expect(landingFor('meta', 23, 'متانوت آزمایشی: عنوان').line).toBe('<li><a href="meta-23.html">ایدهٔ بیست\u200cوسوم: عنوان</a></li>');
+    expect(landingFor('meta', 23, 'عنوان').line).toContain('>ایدهٔ بیست\u200cوسوم: عنوان<');
   });
 
   it('appends at the absolute tail of the real brain without touching a byte before it', () => {
@@ -149,11 +154,11 @@ describe('quick publish — homepage Pulse', () => {
   it('drafts the line the way the latest Pulse lines read: section, title only, link on the title, no date', () => {
     expect(pulseFor('clinical', 101, 'عنوان').line).toBe('<li>یک نکتهٔ کلینیکی با عنوانِ «<a href="/insight/insight-101.html">عنوان</a>» منتشر شد</li>');
     expect(pulseFor('chairside', 47, 'ع').line).toContain('یک ویزیت با عنوانِ «<a href="/chairside/chairside-47.html">');
-    expect(pulseFor('meta', 23, 'ع').line).toContain('یک متانوت با عنوانِ «<a href="/metanotes/meta-23.html">');
+    expect(pulseFor('meta', 23, 'ع').line).toContain('یک ایده با عنوانِ «<a href="/metanotes/meta-23.html">');
     expect(pulseFor('sharehub', 43, 'ع').line).toContain('یک مطلب در مرور منابع با عنوانِ «<a href="/sharehub/share-43.html">');
     expect(pulseFor('clinical', 1, 'a <b> & "c"').line).toContain('>a &lt;b&gt; &amp; &quot;c&quot;</a>');
     // Same shape as the newest real line on the homepage.
-    expect(pulseLis(homeFile())[0]).toMatch(/^\s*<li>یک (?:نکتهٔ کلینیکی|ویزیت|متانوت|مطلب در مرور منابع) با عنوانِ «<a href="\/(?:insight|chairside|metanotes|sharehub)\/[a-z]+-\d+\.html">[^<]+<\/a>» منتشر شد\.?<\/li>$/);
+    expect(pulseLis(homeFile())[0]).toMatch(/^\s*<li>یک (?:نکتهٔ کلینیکی|ویزیت|ایده|مطلب در مرور منابع) با عنوانِ «<a href="\/(?:insight|chairside|metanotes|sharehub)\/[a-z]+-\d+\.html">[^<]+<\/a>» منتشر شد\.?<\/li>$/);
   });
 
   it('puts the new line at the very top, drops the bottom-most one, keeps exactly seven, touches nothing else', () => {
@@ -730,7 +735,7 @@ describe('quick publish — admin routes', () => {
       expect(store.files.get('index.html')!.toString()).toBe('<html>no pulse</html>');
     });
 
-    it('appends a meta item after the highest meta line, labelled «متانوت <words>: …»', async () => {
+    it('appends a meta item after the highest meta line, labelled «ایدهٔ <ordinal>: …»', async () => {
       const original = landingFile('metanotes');
       store.files.set('metanotes/index.html', Buffer.from(original));
       const topN = Math.max(...[...original.matchAll(/<li><a href="meta-(\d+)\.html">/g)].map(m => Number(m[1])));
@@ -739,8 +744,8 @@ describe('quick publish — admin routes', () => {
       const { item } = r.json();
       expect(item.n).toBe(topN + 1);
       expect(item.landing.order).toBe('bottom');
-      expect(item.landing.line).toBe(`<li><a href="meta-${item.n}.html">متانوت ${faNumberWords(item.n)}: عنوان متا</a></li>`);
-      if (item.n === 23) expect(item.landing.line).toContain('متانوت بیست‌وسه: عنوان متا');
+      expect(item.landing.line).toBe(`<li><a href="meta-${item.n}.html">ایدهٔ ${faOrdinalWords(item.n)}: عنوان متا</a></li>`);
+      if (item.n === 23) expect(item.landing.line).toContain('ایدهٔ بیست‌وسوم: عنوان متا');
       const after = store.files.get('metanotes/index.html')!.toString();
       const prevLine = lineOf(original, `meta-${topN}.html`);
       const indent = prevLine.match(/^[ \t]*/)![0];

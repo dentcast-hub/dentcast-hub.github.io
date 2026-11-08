@@ -1,0 +1,38 @@
+{
+ "note": "Section rename, round 2 (founder, 1405/08/17): MetaNote → «ایده‌ها», NoteCast → «خلاصهٔ اپیزودها», DentCast+ → «ویدیوها». Display layer only — folders, URLs, content_id and brain `type` are unchanged. The three brand tags follow the reader-facing names; each old form is a variant and its spellings stay reachable through `aliases`. Brand tags never answer a clinical query, so allow_lossy only waives the word-overlap door check.",
+ "allow_lossy": true,
+ "concepts": [
+  {
+   "tag": "#ایده",
+   "domain": "brand",
+   "definition": "نام بخش ایده‌ها (پیش‌تر MetaNote / متانوت) — مدل‌های ذهنی و چارچوب‌های تصمیم.",
+   "use_when": "روی هر مدخل ایده‌ها (پوشهٔ metanotes/)، و هیچ‌جای دیگر.",
+   "aliases": ["متانوت", "metanote", "meta note", "متا نوت"],
+   "variants": ["#متانوت"],
+   "co_tags": []
+  },
+  {
+   "tag": "#خلاصه_اپیزود",
+   "domain": "brand",
+   "definition": "نام بخش خلاصهٔ اپیزودها (پیش‌تر NoteCast / نوت‌کست) — نسخهٔ نوشتاری هر اپیزود پادکست، با منبع.",
+   "use_when": "روی هر مدخل خلاصهٔ اپیزودها (پوشهٔ notecast/)، و هیچ‌جای دیگر.",
+   "aliases": ["نوت کست", "نوتکست", "notecast"],
+   "variants": ["#نوت_کست"],
+   "co_tags": []
+  },
+  {
+   "tag": "#ویدیو",
+   "domain": "brand",
+   "definition": "نام بخش ویدیوها (پیش‌تر DentCast+ / دنت‌کست پلاس) — آموزش‌های کوتاه ویدیویی دنت‌کست.",
+   "use_when": "روی هر مدخل ویدیوها (پوشهٔ dentcast-plus/)، و هیچ‌جای دیگر.",
+   "aliases": ["دنتکست پلاس", "dentcast plus"],
+   "variants": ["#دنتکست_پلاس"],
+   "co_tags": []
+  }
+ ],
+ "renames": {
+  "#متانوت": "#ایده",
+  "#نوت_کست": "#خلاصه_اپیزود",
+  "#دنتکست_پلاس": "#ویدیو"
+ }
+}

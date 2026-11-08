@@ -1047,18 +1047,20 @@
    ]
   },
   {
-   "key": "نوت_کست",
-   "tag": "#نوت_کست",
+   "key": "خلاصه_اپیزود",
+   "tag": "#خلاصه_اپیزود",
    "domain": "brand",
    "words": 2,
-   "definition": "نام سری نوت‌کست — یادداشت فشرده‌ی یک موضوع تخصصی.",
-   "use_when": "روی هر مدخل نوت‌کست، و هیچ‌جای دیگر.",
+   "definition": "نام بخش خلاصهٔ اپیزودها (پیش‌تر NoteCast / نوت‌کست) — نسخهٔ نوشتاری هر اپیزود پادکست، با منبع.",
+   "use_when": "روی هر مدخل خلاصهٔ اپیزودها (پوشهٔ notecast/)، و هیچ‌جای دیگر.",
    "aliases": [
+    "نوت کست",
     "نوتکست",
-    "notecast",
-    "نوت کست"
+    "notecast"
    ],
-   "variants": [],
+   "variants": [
+    "#نوت_کست"
+   ],
    "co_tags": [],
    "count": 43,
    "content_ids": [
@@ -2014,6 +2016,49 @@
    ]
   },
   {
+   "key": "ایده",
+   "tag": "#ایده",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام بخش ایده‌ها (پیش‌تر MetaNote / متانوت) — مدل‌های ذهنی و چارچوب‌های تصمیم.",
+   "use_when": "روی هر مدخل ایده‌ها (پوشهٔ metanotes/)، و هیچ‌جای دیگر.",
+   "aliases": [
+    "متانوت",
+    "metanote",
+    "meta note",
+    "متا نوت"
+   ],
+   "variants": [
+    "#متانوت"
+   ],
+   "co_tags": [],
+   "count": 22,
+   "content_ids": [
+    "metanotes/meta-1",
+    "metanotes/meta-2",
+    "metanotes/meta-3",
+    "metanotes/meta-4",
+    "metanotes/meta-5",
+    "metanotes/meta-6",
+    "metanotes/meta-7",
+    "metanotes/meta-8",
+    "metanotes/meta-9",
+    "metanotes/meta-10",
+    "metanotes/meta-11",
+    "metanotes/meta-12",
+    "metanotes/meta-13",
+    "metanotes/meta-14",
+    "metanotes/meta-15",
+    "metanotes/meta-16",
+    "metanotes/meta-17",
+    "metanotes/meta-18",
+    "metanotes/meta-19",
+    "metanotes/meta-20",
+    "metanotes/meta-21",
+    "metanotes/meta-22"
+   ]
+  },
+  {
    "key": "سمان_رزینی",
    "tag": "#سمان_رزینی",
    "domain": "clinical",
@@ -2056,46 +2101,6 @@
     "sharehub/share-22",
     "sharehub/share-32",
     "sharehub/share-34"
-   ]
-  },
-  {
-   "key": "متانوت",
-   "tag": "#متانوت",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام سری متانوت — یادداشت‌های تحلیلی درباره‌ی خودِ استدلال، نه صرفاً تکنیک.",
-   "use_when": "روی هر مدخل متانوت، و هیچ‌جای دیگر.",
-   "aliases": [
-    "metanote",
-    "متا نوت",
-    "meta note"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 22,
-   "content_ids": [
-    "metanotes/meta-1",
-    "metanotes/meta-2",
-    "metanotes/meta-3",
-    "metanotes/meta-4",
-    "metanotes/meta-5",
-    "metanotes/meta-6",
-    "metanotes/meta-7",
-    "metanotes/meta-8",
-    "metanotes/meta-9",
-    "metanotes/meta-10",
-    "metanotes/meta-11",
-    "metanotes/meta-12",
-    "metanotes/meta-13",
-    "metanotes/meta-14",
-    "metanotes/meta-15",
-    "metanotes/meta-16",
-    "metanotes/meta-17",
-    "metanotes/meta-18",
-    "metanotes/meta-19",
-    "metanotes/meta-20",
-    "metanotes/meta-21",
-    "metanotes/meta-22"
    ]
   },
   {
@@ -2792,36 +2797,6 @@
    ]
   },
   {
-   "key": "دنتکست_پلاس",
-   "tag": "#دنتکست_پلاس",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام سری ویدیوهای دنتکست پلاس.",
-   "use_when": "روی هر مدخل dentcast-plus، و هیچ‌جای دیگر.",
-   "aliases": [
-    "dentcast plus"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 14,
-   "content_ids": [
-    "dentcast-plus/video-1",
-    "dentcast-plus/video-2",
-    "dentcast-plus/video-3",
-    "dentcast-plus/video-4",
-    "dentcast-plus/video-5",
-    "dentcast-plus/video-6",
-    "dentcast-plus/video-7",
-    "dentcast-plus/video-8",
-    "dentcast-plus/video-9",
-    "dentcast-plus/video-10",
-    "dentcast-plus/video-11",
-    "dentcast-plus/video-12",
-    "dentcast-plus/video-13",
-    "dentcast-plus/video-14"
-   ]
-  },
-  {
    "key": "دوام_ترمیم",
    "tag": "#دوام_ترمیم",
    "domain": "clinical",
@@ -2923,6 +2898,39 @@
     "insight/insight-27",
     "dentai/dentai-25",
     "episodes/episode-159-1"
+   ]
+  },
+  {
+   "key": "ویدیو",
+   "tag": "#ویدیو",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام بخش ویدیوها (پیش‌تر DentCast+ / دنت‌کست پلاس) — آموزش‌های کوتاه ویدیویی دنت‌کست.",
+   "use_when": "روی هر مدخل ویدیوها (پوشهٔ dentcast-plus/)، و هیچ‌جای دیگر.",
+   "aliases": [
+    "دنتکست پلاس",
+    "dentcast plus"
+   ],
+   "variants": [
+    "#دنتکست_پلاس"
+   ],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "dentcast-plus/video-1",
+    "dentcast-plus/video-2",
+    "dentcast-plus/video-3",
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5",
+    "dentcast-plus/video-6",
+    "dentcast-plus/video-7",
+    "dentcast-plus/video-8",
+    "dentcast-plus/video-9",
+    "dentcast-plus/video-10",
+    "dentcast-plus/video-11",
+    "dentcast-plus/video-12",
+    "dentcast-plus/video-13",
+    "dentcast-plus/video-14"
    ]
   },
   {
@@ -22663,7 +22671,7 @@
   "deep sedation": "بیهوشی",
   "dental caries": "پوسیدگی",
   "dental cement": "سمان دندانی",
-  "dentcast plus": "دنتکست پلاس",
+  "dentcast plus": "ویدیو",
   "denture teeth": "دندان مصنوعی",
   "depth control": "کنترل عمق",
   "diagnostic ai": "هوش مصنوعی تشخیصی",
@@ -23354,6 +23362,7 @@
   "درمان زیادی": "درمان بیش از حد",
   "درمان نکردن": "عدم مداخله",
   "دلیوری روکش": "تحویل روکش",
+  "دنتکست پلاس": "ویدیو",
   "دندان جلویی": "دندان قدامی",
   "دندان قروچه": "براکسیسم",
   "دندان قرینه": "مرجع آناتومیک",
@@ -23802,7 +23811,7 @@
   "lab error": "خطای لابراتوار",
   "lightness": "ولیو",
   "local seo": "جستجوی محلی",
-  "meta note": "متانوت",
+  "meta note": "ایده",
   "mucositis": "موکوزیت پری ایمپلنت",
   "occlusion": "اکلوژن",
   "open tray": "قالبگیری اوپن تری",
@@ -24057,9 +24066,9 @@
   "hopeless": "هپلس",
   "jaw pain": "درد فکی",
   "lip line": "خط لب",
-  "metanote": "متانوت",
+  "metanote": "ایده",
   "mounjaro": "تیرزپاتاید",
-  "notecast": "نوت کست",
+  "notecast": "خلاصه اپیزود",
   "original": "سازگاری برند",
   "overhang": "اورهنگ",
   "premolar": "پرمولر",
@@ -24334,7 +24343,7 @@
   "لقی پیچ": "شل شدن پیچ",
   "لنتنینگ": "افزایش طول تاج",
   "لوکیتور": "اتچمنت اوردنچر",
-  "متا نوت": "متانوت",
+  "متا نوت": "ایده",
   "محل برش": "اسپرو",
   "محل درد": "لوکالیزیشن درد",
   "مرض قند": "دیابت",
@@ -24342,6 +24351,7 @@
   "مک لارن": "قانون مکلارن",
   "میوژنیک": "عضلات ماضغه",
   "نقش دهی": "نقش دادن",
+  "نوت کست": "خلاصه اپیزود",
   "نوع گیر": "نوع ریتنشن",
   "هم رنگی": "اثر آفتاب پرست",
   "ونت هول": "smart ونت روکش",
@@ -24437,11 +24447,12 @@
   "لوتینگ": "سمان دندانی",
   "مارژین": "مارجین روکش",
   "ماک آپ": "موک آپ",
+  "متانوت": "ایده",
   "مریلند": "rbfdp",
   "میلینگ": "cad cam",
   "نخ کشی": "کنترل لثه",
   "ننشستن": "نشست ناقص",
-  "نوتکست": "نوت کست",
+  "نوتکست": "خلاصه اپیزود",
   "هندپیس": "توربین",
   "واترجت": "سوپرفلاس",
   "پارسیل": "پارشیال",

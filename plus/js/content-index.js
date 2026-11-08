@@ -45,18 +45,18 @@ export function contentInfo(model, contentId) {
 // Falls back to the folder key itself so a new folder still renders something.
 export const FOLDER_EN = {
   episodes: 'Podcast',
-  notecast: 'NoteCast',
+  notecast: 'خلاصهٔ اپیزودها',
   insight: 'نکات کلینیکی',
   // dentai and photocast are closed sections (1405/07/15): their folders keep
   // their keys and URLs, but the name a reader sees is the section that
   // absorbed them. Keyed by folder, so the key stays and only the word moves.
   dentai: 'مرور منابع',
   chairside: 'ویزیت',
-  metanotes: 'MetaNote',
+  metanotes: 'ایده‌ها',
   glossary: 'Glossary',
   sharehub: 'مرور منابع',
   photocast: 'مرور منابع',
-  'dentcast-plus': 'DentCast+',
+  'dentcast-plus': 'ویدیوها',
   promptologist: 'Promptologist',
   'plak-sefr': 'Plak-e Sefr',
   taraz: 'Taraz-e Shavahed',

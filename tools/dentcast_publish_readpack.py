@@ -114,11 +114,13 @@ MODULES = WORKFLOW + 'modules/'
 # Clinical Insight → «نکات کلینیکی», Share Hub → «مرور منابع»): 04 changes one example
 # in the numbered-series paragraph («Chairside 02 — …» → «ویزیت ۰۲ — …»). No heading
 # moved and the §2.4–2.5 selection boundary is byte-identical.
+# Re-pinned again the same day (round 2: MetaNote → «ایده‌ها», NoteCast → «خلاصهٔ اپیزودها»):
+# the same paragraph's metanotes/notecast row examples only; no heading moved.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
     '03-litecast-and-page.md': 'e82aee946648f09d7ed130b7bcdd93b3fbc14694',
-    '04-taxonomy-and-navigation.md': 'cc1de5f75d0787986afbb0218259ebaa3e4034ab',
+    '04-taxonomy-and-navigation.md': '46bc329065fdaa0d1677b494ecc5b7cdf7359872',
     '05-semantic-linking.md': '6ba95d74e28f1e423e034d31327d6c9351f85c20',
     '06-paper-ingestion.md': '226ff4a756418788e70afa2a19e4484c1734dedb',
     '08-des-fidelity.md': 'c063cef49872920932db3a5e8b6f66af599ffe2f',

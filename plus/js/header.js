@@ -4,22 +4,22 @@
 //  - person icon (SVG): gray for guests -> login modal; blue for logged-in ->
 //    a toggle that opens a small menu (پیشخوان / پروفایل), each of which opens as
 //    an OVERLAY. Clicking the person again closes whatever is open.
-import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=219';
-import { currentUser, api, meStatus } from './api.js?v=219';
-import { isOrgHost, detectContentId } from './config.js?v=219';
-import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=219';
-import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=219';
-import { maybeShowWelcome } from './welcome.js?v=219';
-import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=219';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=219';
-import { healPushSubscription } from './push.js?v=219';
-import { maybeShowPremiumPopup } from './premium-popup.js?v=219';
-import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=219';
-import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=219';
-import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=219';
-import { installLibraryGate } from './library-gate.js?v=219';
-import { toast } from './hl-view.js?v=219';
-import { wirePageBack } from './page-back.js?v=219';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=220';
+import { currentUser, api, meStatus } from './api.js?v=220';
+import { isOrgHost, detectContentId } from './config.js?v=220';
+import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=220';
+import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=220';
+import { maybeShowWelcome } from './welcome.js?v=220';
+import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=220';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=220';
+import { healPushSubscription } from './push.js?v=220';
+import { maybeShowPremiumPopup } from './premium-popup.js?v=220';
+import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=220';
+import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=220';
+import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=220';
+import { installLibraryGate } from './library-gate.js?v=220';
+import { toast } from './hl-view.js?v=220';
+import { wirePageBack } from './page-back.js?v=220';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
 // createElement('svg')) so the parser creates properly namespaced SVG nodes;
@@ -111,8 +111,8 @@ function buildGuestPerson() {
 // The dashboard and profile overlays open only on a tap, so their modules
 // (and everything they import) are fetched then, not in front of every page's
 // first paint: they were ~75KB of the homepage's eager module graph.
-const loadDashboard = () => import('./dashboard.js?v=219');
-const loadProfile = () => import('./profile.js?v=219');
+const loadDashboard = () => import('./dashboard.js?v=220');
+const loadProfile = () => import('./profile.js?v=220');
 const overlayFailed = (root) => root.replaceChildren(
   el('div', { class: 'dcp-loading' }, 'بارگذاری انجام نشد؛ دوباره تلاش کنید.'));
 
