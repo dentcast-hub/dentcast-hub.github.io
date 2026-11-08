@@ -1,0 +1,51 @@
+{
+  "scored_at": "2026-11-08",
+  "sources": [
+    {
+      "des_version": "3.6",
+      "content_type": "COMMENTARY",
+      "question_type": null,
+      "text_basis": "FULL_TEXT",
+      "citation": {
+        "title": "وقتی برداشتن روکش، قدم اول درمان است",
+        "authors": "فؤاد شهابیان",
+        "year": null,
+        "journal": "",
+        "doi": ""
+      },
+      "journal_quartile": {"value": "NR", "source": "NR"},
+      "s_design": null,
+      "q_method": null,
+      "penalties": null,
+      "commentary_checklist": [
+        {
+          "item": "reasoning chain is explicit",
+          "points": 4,
+          "evidence_quote": "با برداشتن روکش، دیواره‌ها مستقیم دیده می‌شوند و می‌توان درباره‌ی پیش‌آگهی دندان تصمیم گرفت."
+        },
+        {
+          "item": "relationship to published evidence is stated",
+          "points": 0,
+          "evidence_quote": "",
+          "note": "متن نسبت تصمیم بالینی را با شواهد منتشرشده بیان نمی‌کند."
+        },
+        {
+          "item": "scope of the claim is bounded",
+          "points": 3,
+          "evidence_quote": "وقتی وضعیت دندان زیر یک روکش قدیمی مشخص نیست، خارج کردن روکش هم پیش‌آگهی دندان را روشن می‌کند و هم دسترسی برای درمان دندان‌های مجاور را بهتر می‌کند."
+        },
+        {
+          "item": "explicitly labeled as experience/opinion, not evidence",
+          "points": 3,
+          "evidence_quote": "Chairside متن‌های آموزشی یا کیس‌ریپورت نیستند؛ ثبت لحظه‌های واقعی و مسیر فکر بالینی‌اند.",
+          "note": "اعلانِ سطحِ بخش، از chairside/index.html"
+        }
+      ],
+      "des_score": 15,
+      "band": "E",
+      "provisional": false,
+      "fact_fa": "در این روایت بالینی، پس از برداشتن روکش دندان ۶، دیواره‌های باقی‌مانده قابل قبول ارزیابی شدند و دسترسی به سطوح پروگزیمال دندان‌های ۵ و ۷ بهتر شد.",
+      "interpretation_fa": "ترتیب درمان در این بیمار دو هدف داشت: ارزیابی مستقیم دیواره‌های دندان ۶ پیش از تصمیم به نگهداری آن و بهبود دسترسی برای ترمیم دندان‌های مجاور."
+    }
+  ]
+}
