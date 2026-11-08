@@ -716,6 +716,70 @@
    ]
   },
   {
+   "key": "چیرساید",
+   "tag": "#چیرساید",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام سری چیرساید — یادداشت کوتاه از یک ویزیت واقعی، با تصمیمی که سر یونیت گرفته شد.",
+   "use_when": "روی هر مدخل چیرساید، و هیچ‌جای دیگر.",
+   "aliases": [
+    "chairside",
+    "چیر ساید"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 47,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30",
+    "chairside/chairside-31",
+    "chairside/chairside-32",
+    "chairside/chairside-33",
+    "chairside/chairside-34",
+    "chairside/chairside-35",
+    "dentcast-plus/video-10",
+    "chairside/chairside-36",
+    "chairside/chairside-37",
+    "chairside/chairside-38",
+    "chairside/chairside-39",
+    "chairside/chairside-40",
+    "chairside/chairside-41",
+    "chairside/chairside-42",
+    "chairside/chairside-44",
+    "chairside/chairside-45",
+    "chairside/chairside-46",
+    "chairside/chairside-47"
+   ]
+  },
+  {
    "key": "پست_و_کور",
    "tag": "#پست_و_کور",
    "domain": "clinical",
@@ -785,69 +849,6 @@
     "sharehub/share-34",
     "dentcast-plus/video-14",
     "insight/insight-97"
-   ]
-  },
-  {
-   "key": "چیرساید",
-   "tag": "#چیرساید",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام سری چیرساید — یادداشت کوتاه از یک ویزیت واقعی، با تصمیمی که سر یونیت گرفته شد.",
-   "use_when": "روی هر مدخل چیرساید، و هیچ‌جای دیگر.",
-   "aliases": [
-    "chairside",
-    "چیر ساید"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 46,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-7",
-    "chairside/chairside-8",
-    "chairside/chairside-9",
-    "chairside/chairside-10",
-    "chairside/chairside-11",
-    "chairside/chairside-12",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-15",
-    "chairside/chairside-16",
-    "chairside/chairside-17",
-    "chairside/chairside-18",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "chairside/chairside-30",
-    "chairside/chairside-31",
-    "chairside/chairside-32",
-    "chairside/chairside-33",
-    "chairside/chairside-34",
-    "chairside/chairside-35",
-    "dentcast-plus/video-10",
-    "chairside/chairside-36",
-    "chairside/chairside-37",
-    "chairside/chairside-38",
-    "chairside/chairside-39",
-    "chairside/chairside-40",
-    "chairside/chairside-41",
-    "chairside/chairside-42",
-    "chairside/chairside-44",
-    "chairside/chairside-45",
-    "chairside/chairside-46"
    ]
   },
   {
@@ -928,7 +929,7 @@
     "#گزارش_کیس"
    ],
    "co_tags": [],
-   "count": 44,
+   "count": 45,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -973,7 +974,8 @@
     "chairside/chairside-41",
     "chairside/chairside-42",
     "chairside/chairside-44",
-    "chairside/chairside-45"
+    "chairside/chairside-45",
+    "chairside/chairside-47"
    ]
   },
   {
@@ -2915,6 +2917,85 @@
    ]
   },
   {
+   "key": "پروگنوز_دندان",
+   "tag": "#پروگنوز_دندان",
+   "domain": null,
+   "words": 2,
+   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
+   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
+   "aliases": [
+    "پروگنوز",
+    "prognosis",
+    "پیش آگهی دندان"
+   ],
+   "variants": [
+    "#پروگنوز",
+    "#ارزیابی_دندان"
+   ],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "insight/insight-7",
+    "insight/insight-14",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-4",
+    "chairside/chairside-9",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-21",
+    "chairside/chairside-30",
+    "insight/insight-95",
+    "chairside/chairside-47"
+   ]
+  },
+  {
+   "key": "افتادن_روکش",
+   "tag": "#افتادن_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتن گیر و جدا شدن روکش از تکیه‌گاه.",
+   "use_when": "مقاله علتِ افتادن روکش را توضیح بدهد یا پیش‌بینی کند — چه رخ داده باشد، چه مقاله بگوید چرا رخ خواهد داد.",
+   "aliases": [
+    "loose crown",
+    "کندگی روکش",
+    "جدا شدن روکش",
+    "روکش افتاده",
+    "دباند شدن روکش",
+    "crown debonding",
+    "debonded crown",
+    "افتادن مکرر روکش",
+    "لق شدن روکش",
+    "لقی روکش",
+    "لق بودن روکش"
+   ],
+   "variants": [
+    "#روکش_افتاده",
+    "#دباندینگ"
+   ],
+   "co_tags": [
+    "#debonding"
+   ],
+   "count": 13,
+   "content_ids": [
+    "notecast/episode-15",
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5",
+    "chairside/chairside-5",
+    "chairside/chairside-17",
+    "sharehub/share-8",
+    "insight/insight-54",
+    "sharehub/share-10",
+    "insight/insight-59",
+    "chairside/chairside-32",
+    "insight/insight-85",
+    "insight/insight-86",
+    "chairside/chairside-47"
+   ]
+  },
+  {
    "key": "اوردنچر",
    "tag": "#اوردنچر",
    "domain": "clinical",
@@ -3165,40 +3246,6 @@
    ]
   },
   {
-   "key": "پروگنوز_دندان",
-   "tag": "#پروگنوز_دندان",
-   "domain": null,
-   "words": 2,
-   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
-   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
-   "aliases": [
-    "پروگنوز",
-    "prognosis",
-    "پیش آگهی دندان"
-   ],
-   "variants": [
-    "#پروگنوز",
-    "#ارزیابی_دندان"
-   ],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-150-2",
-    "episodes/episode-151",
-    "insight/insight-7",
-    "insight/insight-14",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "chairside/chairside-4",
-    "chairside/chairside-9",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-21",
-    "chairside/chairside-30",
-    "insight/insight-95"
-   ]
-  },
-  {
    "key": "پری_ایمپلنتیتیس",
    "tag": "#پری_ایمپلنتیتیس",
    "domain": "clinical",
@@ -3268,49 +3315,6 @@
     "plak-sefr/plak1-11",
     "plak-sefr/plak1-12",
     "plak-sefr/plak1-13"
-   ]
-  },
-  {
-   "key": "افتادن_روکش",
-   "tag": "#افتادن_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "از دست رفتن گیر و جدا شدن روکش از تکیه‌گاه.",
-   "use_when": "مقاله علتِ افتادن روکش را توضیح بدهد یا پیش‌بینی کند — چه رخ داده باشد، چه مقاله بگوید چرا رخ خواهد داد.",
-   "aliases": [
-    "loose crown",
-    "کندگی روکش",
-    "جدا شدن روکش",
-    "روکش افتاده",
-    "دباند شدن روکش",
-    "crown debonding",
-    "debonded crown",
-    "افتادن مکرر روکش",
-    "لق شدن روکش",
-    "لقی روکش",
-    "لق بودن روکش"
-   ],
-   "variants": [
-    "#روکش_افتاده",
-    "#دباندینگ"
-   ],
-   "co_tags": [
-    "#debonding"
-   ],
-   "count": 12,
-   "content_ids": [
-    "notecast/episode-15",
-    "dentcast-plus/video-4",
-    "dentcast-plus/video-5",
-    "chairside/chairside-5",
-    "chairside/chairside-17",
-    "sharehub/share-8",
-    "insight/insight-54",
-    "sharehub/share-10",
-    "insight/insight-59",
-    "chairside/chairside-32",
-    "insight/insight-85",
-    "insight/insight-86"
    ]
   },
   {
@@ -4568,6 +4572,34 @@
    ]
   },
   {
+   "key": "بریج",
+   "tag": "#بریج",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "پروتزِ ثابتِ چندواحدی که فضای بی‌دندانی را با اتکا به دندان‌های پایه پر می‌کند (FPD).",
+   "use_when": "مقاله بریج/پروتزِ ثابتِ چندواحدی را موضوع یا گزینه‌ی درمان قرار دهد.",
+   "aliases": [
+    "bridge",
+    "FPD",
+    "بریج دندانی",
+    "fixed partial denture",
+    "پروتز ثابت چند واحدی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-119-1",
+    "chairside/chairside-34",
+    "sharehub/share-17",
+    "insight/insight-72",
+    "chairside/chairside-38",
+    "sharehub/share-39",
+    "sharehub/share-40",
+    "chairside/chairside-47"
+   ]
+  },
+  {
    "key": "تراش_دندان",
    "tag": "#تراش_دندان",
    "domain": "clinical",
@@ -4900,33 +4932,6 @@
     "episodes/episode-136",
     "notecast/episode-9",
     "notecast/episode-10"
-   ]
-  },
-  {
-   "key": "بریج",
-   "tag": "#بریج",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "پروتزِ ثابتِ چندواحدی که فضای بی‌دندانی را با اتکا به دندان‌های پایه پر می‌کند (FPD).",
-   "use_when": "مقاله بریج/پروتزِ ثابتِ چندواحدی را موضوع یا گزینه‌ی درمان قرار دهد.",
-   "aliases": [
-    "bridge",
-    "FPD",
-    "بریج دندانی",
-    "fixed partial denture",
-    "پروتز ثابت چند واحدی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-119-1",
-    "chairside/chairside-34",
-    "sharehub/share-17",
-    "insight/insight-72",
-    "chairside/chairside-38",
-    "sharehub/share-39",
-    "sharehub/share-40"
    ]
   },
   {
@@ -7654,6 +7659,29 @@
    ]
   },
   {
+   "key": "دندان_پایه",
+   "tag": "#دندان_پایه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "دندانی که بارِ پروتز رویش می‌افتد.",
+   "use_when": "مقاله سلامتِ پایه را شرطِ طرح بداند.",
+   "aliases": [
+    "abutment tooth",
+    "دندان پایه",
+    "پایه پروتز",
+    "ساپورت دندانی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-58",
+    "insight/insight-80",
+    "insight/insight-105",
+    "chairside/chairside-47"
+   ]
+  },
+  {
    "key": "رزین_کوتینگ",
    "tag": "#رزین_کوتینگ",
    "domain": null,
@@ -7844,6 +7872,29 @@
     "sharehub/share-4",
     "metanotes/meta-10",
     "notecast/episode-31"
+   ]
+  },
+  {
+   "key": "سمان_مجدد",
+   "tag": "#سمان_مجدد",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "چسباندنِ دوباره‌ی روکشِ افتاده — بی‌هدف یا پس از یافتنِ علت.",
+   "use_when": "مقاله سمانِ مجدد را مشروط به یافتنِ علت بداند.",
+   "aliases": [
+    "سمان مجدد",
+    "recementation",
+    "چسباندن مجدد",
+    "ری سمان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-54",
+    "chairside/chairside-32",
+    "insight/insight-65",
+    "chairside/chairside-47"
    ]
   },
   {
@@ -9486,28 +9537,6 @@
    ]
   },
   {
-   "key": "دندان_پایه",
-   "tag": "#دندان_پایه",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "دندانی که بارِ پروتز رویش می‌افتد.",
-   "use_when": "مقاله سلامتِ پایه را شرطِ طرح بداند.",
-   "aliases": [
-    "abutment tooth",
-    "دندان پایه",
-    "پایه پروتز",
-    "ساپورت دندانی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-58",
-    "insight/insight-80",
-    "insight/insight-105"
-   ]
-  },
-  {
    "key": "دیابت",
    "tag": "#دیابت",
    "domain": "clinical",
@@ -9746,28 +9775,6 @@
     "episodes/episode-43",
     "notecast/episode-3",
     "notecast/episode-43"
-   ]
-  },
-  {
-   "key": "سمان_مجدد",
-   "tag": "#سمان_مجدد",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "چسباندنِ دوباره‌ی روکشِ افتاده — بی‌هدف یا پس از یافتنِ علت.",
-   "use_when": "مقاله سمانِ مجدد را مشروط به یافتنِ علت بداند.",
-   "aliases": [
-    "سمان مجدد",
-    "recementation",
-    "چسباندن مجدد",
-    "ری سمان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-54",
-    "chairside/chairside-32",
-    "insight/insight-65"
    ]
   },
   {
