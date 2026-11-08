@@ -1,12 +1,12 @@
 // /plus/assistant.html — «دستیار هوشمند» (premium). Free/anonymous visitors see
 // the same premium-upsell shape pathways.html/reading-compass.html use;
 // signed-in premium users get the real wizard (case-assistant.js).
-import { el } from './util.js?v=218';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=218';
-import { currentUser, meStatus } from './api.js?v=218';
-import { renderCaseAssistant } from './case-assistant.js?v=218';
-import { registerSW } from './pwa.js?v=218';
-import { wirePageBack } from './page-back.js?v=218';
+import { el } from './util.js?v=219';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=219';
+import { currentUser, meStatus } from './api.js?v=219';
+import { renderCaseAssistant } from './case-assistant.js?v=219';
+import { registerSW } from './pwa.js?v=219';
+import { wirePageBack } from './page-back.js?v=219';
 
 function comingSoonGate(root, me) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [
@@ -35,7 +35,7 @@ async function main() {
     btn.addEventListener('click', async () => {
       // Loaded only for a signed-out visitor: a subscriber never downloads the
       // login form (and the Google sign-in it pulls in) to use the assistant.
-      const { openLoginModal } = await import('./login-modal.js?v=218');
+      const { openLoginModal } = await import('./login-modal.js?v=219');
       const res = await openLoginModal({ returnTo: '/plus/assistant.html' });
       if (res && res.user) location.reload();
     });

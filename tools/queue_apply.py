@@ -69,7 +69,7 @@ PULSE_LINES = 7
 CATEGORIES = {
     "sharehub": {
         "dir": "sharehub", "stem": "share-", "brain_type": "sharehub", "brain_id": "{n}",
-        "title_suffix": " | Share Hub – دنت‌کست", "title_suffix_en": " | Share Hub – DentCast",
+        "title_suffix": " | مرور منابع – دنت‌کست", "title_suffix_en": " | Share Hub – DentCast",
         "image": "share{n}-fig{k}.webp", "body_open": '<div class="sh-dialogue">',
         "landing": "sharehub/index.html", "landing_mode": "top", "style": "compact",
     },
@@ -804,7 +804,8 @@ def build_insight_page(n, prev, m, date, item, lang="fa"):
                    (f"insight/en/insight-{prev}.html", f"insight/en/insight-{n}.html"),
                    (f'href="en/insight-{prev}.html"', f'href="en/insight-{n}.html"'),
                    (f'href="../insight-{prev}.html"', f'href="../insight-{n}.html"'),
-                   (f"Insight {prev} ", f"Insight {n} ")):
+                   (f"Insight {prev} ", f"Insight {n} "),
+                   (f"نکتهٔ کلینیکی {fa_digits(prev)} ", f"نکتهٔ کلینیکی {fa_digits(n)} ")):
         doc = doc.replace(a_, b_)
     for old, new in ((old_title, title), (old_desc, caption)):
         doc = doc.replace(attr(old), attr(new)).replace(json.dumps(old, ensure_ascii=False)[1:-1],
@@ -837,7 +838,7 @@ def build_insight_page(n, prev, m, date, item, lang="fa"):
         doc = swap_region(doc, r'<div class="dc-related-capsules">\n', r"\n  </div>\n</div>", rows, "related")
     residue = [x for x in (old_title, old_desc, old_topic, old_kw, f"insight-{prev}.html", f"insight{prev}-",
                            tentry.get("title"), tentry.get("caption")) if x and x in doc]
-    residue += re.findall(r"Insight %d\b|اینسایت %s(?![۰-۹])" % (prev, fa_digits(prev)), doc)
+    residue += re.findall(r"Insight %d\b|(?:اینسایت|نکتهٔ کلینیکی) %s(?![۰-۹])" % (prev, fa_digits(prev)), doc)
     if residue:
         refuse("TEMPLATE_RESIDUE", f"clone residue of insight/insight-{prev} left: {residue[:5]}")
     files = {"insight/" + c["image"].format(n=n, k=int(k)): (item / v["file"]).read_bytes() for k, v in imgs.items()}
@@ -895,7 +896,8 @@ def build_chairside_page(n, prev, m, date, item, lang="fa"):
                    (f"chairside/en/chairside-{prev}.html", f"chairside/en/chairside-{n}.html"),
                    (f'href="en/chairside-{prev}.html"', f'href="en/chairside-{n}.html"'),
                    (f'href="../chairside-{prev}.html"', f'href="../chairside-{n}.html"'),
-                   (f"Chairside {prev}<", f"Chairside {n}<"), (f"Chairside {prev} ", f"Chairside {n} ")):
+                   (f"Chairside {prev}<", f"Chairside {n}<"), (f"Chairside {prev} ", f"Chairside {n} "),
+                   (f"ویزیت {fa_digits(prev)}<", f"ویزیت {fa_digits(n)}<"), (f"ویزیت {fa_digits(prev)} ", f"ویزیت {fa_digits(n)} ")):
         doc = doc.replace(a_, b_)
     for old, new in ((old_title, title), (old_desc, caption)):
         doc = doc.replace(attr(old), attr(new)).replace(json.dumps(old, ensure_ascii=False)[1:-1],
@@ -935,7 +937,7 @@ def build_chairside_page(n, prev, m, date, item, lang="fa"):
         doc = swap_region(doc, r'<div class="dc-related-capsules">\n', r"\n  </div>\n</div>", rows, "related")
     residue = [x for x in (old_title, old_desc, f"chairside-{prev}.html", f"chairside{prev}.webp", f"cs{prev}-",
                            tentry.get("title"), tentry.get("caption")) if x and x in doc]
-    residue += re.findall(r"Chairside %d\b" % prev, doc)
+    residue += re.findall(r"Chairside %d\b|ویزیت %s(?![۰-۹])" % (prev, fa_digits(prev)), doc)
     if residue:
         refuse("TEMPLATE_RESIDUE", f"clone residue of chairside/chairside-{prev} left: {residue[:5]}")
     files = {"chairside/" + c["image"].format(n=n, k=int(k)): (item / v["file"]).read_bytes() for k, v in imgs.items()}
@@ -1141,6 +1143,8 @@ def landing_row(w, cat, n, prev_n, title, prev_title):
     if not mm or prev_title not in mm.group(3):
         refuse("LANDING_ROW", f"{rel}: top row for {c['stem']}{prev_n} not found with its exact title")
     label = mm.group(3).replace(prev_title, title, 1)
+    if cat == "chairside":  # «ویزیت ۴۷ — …»: the row carries its own number
+        label = label.replace(f"ویزیت {fa_digits(str(prev_n).zfill(2))} ", f"ویزیت {fa_digits(str(n).zfill(2))} ", 1)
     nl = "\r\n" if doc[mm.start() - 1:mm.start() + 1] == "\r\n" else "\n"
     row = mm.group(1).replace(f"{c['stem']}{prev_n}.html", f"{c['stem']}{n}.html") + label + mm.group(4)
     row = row.replace("\n", nl) if nl == "\r\n" and "\r\n" not in row else row

@@ -1,0 +1,61 @@
+{
+ "note": "Section rename (founder, 1405/08/17): Clinical Insight → «نکات کلینیکی», Chairside → «ویزیت», Share Hub → «مرور منابع». Display layer only — folders, URLs, content_id and brain `type` are unchanged. The three brand tags follow the reader-facing names; each old form becomes a variant and its words stay reachable through `aliases` (old key + the old concept's own aliases), so no door closes. dentcast-plus/video-10 carried #چیرساید in its other sense (a direct chairside technique), not the series; it is retagged without the series tag. Aliases deliberately left out: «بالینی» (it also rewrote #کیس_بالینی) and «چیرساید»/«chairside» (they also rewrote the clinical #اصلاح_رنگ_چیرساید); a brand tag never answers a clinical query, so the closed door costs nothing — hence allow_lossy.",
+ "concepts": [
+  {
+   "tag": "#نکته_کلینیکی",
+   "domain": "brand",
+   "definition": "نام بخش نکات کلینیکی (پیش‌تر Clinical Insight / اینسایت) — نکته‌ای از تجربهٔ بالینی خودِ بنیان‌گذار.",
+   "use_when": "روی هر مدخل نکات کلینیکی (پوشهٔ insight/) و اپیزودهای صوتیِ «اینسایت»، و هیچ‌جای دیگر.",
+   "aliases": [
+    "اینسایت",
+    "insight",
+    "clinical insight",
+    "کلینیکال اینسایت"
+   ],
+   "variants": [
+    "#اینسایت"
+   ],
+   "co_tags": []
+  },
+  {
+   "tag": "#ویزیت",
+   "domain": "brand",
+   "definition": "نام بخش ویزیت (پیش‌تر Chairside / چیرساید) — روایت کوتاه یک کیس واقعی و تصمیمی که کنار یونیت گرفته شد.",
+   "use_when": "روی هر مدخل ویزیت (پوشهٔ chairside/)، و هیچ‌جای دیگر — نه برای تکنیک مستقیمِ «چیرساید».",
+   "aliases": [],
+   "variants": [
+    "#چیرساید"
+   ],
+   "co_tags": []
+  },
+  {
+   "tag": "#مرور_منابع",
+   "domain": "brand",
+   "definition": "نام بخش مرور منابع (پیش‌تر Share Hub / شیرهاب) — خوانش دنت‌کست از یک یا چند مقاله، همیشه با ذکر منبع.",
+   "use_when": "روی هر مدخل مرور منابع (پوشهٔ sharehub/)، و هیچ‌جای دیگر.",
+   "aliases": [
+    "share hub",
+    "share_hub",
+    "شیرهاب",
+    "شر هاب"
+   ],
+   "variants": [
+    "#Share_Hub"
+   ],
+   "co_tags": []
+  }
+ ],
+ "renames": {
+  "#اینسایت": "#نکته_کلینیکی",
+  "#چیرساید": "#ویزیت",
+  "#Share_Hub": "#مرور_منابع"
+ },
+ "articles": {
+  "dentcast-plus/video-10": [
+   "#دنتکست_پلاس",
+   "#پست_و_کور",
+   "#کور_ریختگی"
+  ]
+ },
+ "allow_lossy": true
+}

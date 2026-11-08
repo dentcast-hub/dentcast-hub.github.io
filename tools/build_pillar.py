@@ -388,14 +388,14 @@ TYPE_META = {
     "glossary":         ("گلاسری",  "icon-book"),
     "podcast":          ("پادکست",   "icon-headphones"),
     "notecast":         ("نوت‌کست",  "icon-note"),
-    "insight":          ("اینسایت",   "icon-lightbulb"),
+    "insight":          ("نکتهٔ کلینیکی",   "icon-lightbulb"),
     "dentai":           ("دنت‌AI",    "icon-bot"),
-    "chairside":        ("چِرساید", "icon-chair"),
+    "chairside":        ("ویزیت", "icon-chair"),
     "metanote":         ("متانوت",  "icon-meta"),
     "litecast":         ("لایت‌کست",  "icon-volume"),
     "photocast":        ("فوتوکست", "icon-camera"),
     "dentcast_plus":    ("دنت‌کست+",    "icon-film"),
-    "sharehub":         ("شِیر هاب",  "icon-link"),
+    "sharehub":         ("مرور منابع",  "icon-link"),
     # پرامپتولوژیست and پلاک صفر are their own sections, not DentAI articles.
     # Until this landed, detect_type() found no `promptologist` key here, fell
     # through to the /dentai/ prefix in URL_TO_TYPE, and every one of the 19

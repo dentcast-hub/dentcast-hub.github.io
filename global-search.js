@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* A brain `type` → the filter GROUP it answers to. Two types answer to a
    group that is not their own name, since 1405/07/15 (founder decision):
    DentAI and PhotoCast are closed sections — their 35 + 3 pages keep their
-   URLs and their `type`, but on every reader surface they are Share Hub now. Folding them here (rather than deleting the chip from the
+   URLs and their `type`, but on every reader surface they are Share Hub («مرور منابع») now. Folding them here (rather than deleting the chip from the
    983 pages that carry it) keeps every article byte-identical; the chip
    itself is removed at runtime below. */
 const TYPE_MAP = {
@@ -93,6 +93,12 @@ const TYPE_MAP = {
      built before the fold; its group no longer exists, so it goes. The
      template in tools/build_pillar.py no longer emits it. */
   filterBtns.forEach(btn => { if (btn.dataset.type === "dentai") btn.remove(); });
+  /* Section rename (founder, 1405/08/17): Share Hub reads «مرور منابع» and
+     Chairside «ویزیت» on every reader surface. The chip label sits in the static markup of every page, so
+     it is renamed here at runtime for the same reason the DentAI chip is
+     removed above — every article stays byte-identical. */
+  filterBtns.forEach(btn => { if (btn.dataset.type === "sharehub") btn.textContent = "مرور منابع";
+    if (btn.dataset.type === "chairside") btn.textContent = "ویزیت"; });
   filterBtns.forEach(btn => {
     if (!btn.isConnected) return;
     btn.addEventListener("click", () => {
@@ -166,14 +172,14 @@ const TYPE_MAP = {
  const labelMap = {
   dentcast:      _iMic  + " دنت‌کست — اپیزود " + faDigits(item.episode) + (title.trim() ? " · " + title.trim() : ""),
   notecast:      _iNote + named("نوت‌کست"),
-  clinical:      _iBulb + named("نکته کلینیکی"),
+  clinical:      _iBulb + named("نکتهٔ کلینیکی"),
   dentcast_plus: _iPlay + named("دنت‌کست+"),
   promptologist: _iSpark + named("پرامپتولوژیست"),
   plak_sefr:     _iPin   + named("پلاک صفر"),
   taraz:         _iScale + named("تراز شواهد"),
   meta:          _iPuzz + named("متانوت"),
-  chairside:     _iToot + named("چرساید"),
-  sharehub:      _iLink + named("Share Hub")
+  chairside:     _iToot + named("ویزیت"),
+  sharehub:      _iLink + named("مرور منابع")
 };
 
 

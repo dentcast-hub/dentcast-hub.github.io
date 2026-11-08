@@ -69,7 +69,7 @@ describe('quick publish — pure parts', () => {
     const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
     expect(blocks).toHaveLength(2);
     expect(blocks[0]['@graph'][0]).toMatchObject({ headline: 'عنوان "نقل‌قول" <و>', datePublished: '2026-11-01', dateModified: '2026-11-01' });
-    expect(blocks[1].itemListElement[1]).toMatchObject({ name: 'Clinical Insight', item: 'https://dentcast.org/insight/' });
+    expect(blocks[1].itemListElement[1]).toMatchObject({ name: 'نکات کلینیکی', item: 'https://dentcast.org/insight/' });
   });
 
   it('keeps the template itself out of search', () => {
@@ -122,8 +122,9 @@ describe('quick publish — pure parts', () => {
   });
 
   it('normalises landing labels instead of losing or doubling the number', () => {
-    expect(landingFor('chairside', 47, 'Chairside 9 — عنوان').line).toBe('<li><a href="chairside-47.html">Chairside 47 — عنوان</a></li>');
-    expect(landingFor('chairside', 47, 'عنوان ساده').line).toContain('>Chairside 47 — عنوان ساده<');
+    expect(landingFor('chairside', 47, 'Chairside 9 — عنوان').line).toBe('<li><a href="chairside-47.html">ویزیت ۴۷ — عنوان</a></li>');
+    expect(landingFor('chairside', 47, 'ویزیت ۹ — عنوان').line).toBe('<li><a href="chairside-47.html">ویزیت ۴۷ — عنوان</a></li>');
+    expect(landingFor('chairside', 47, 'عنوان ساده').line).toContain('>ویزیت ۴۷ — عنوان ساده<');
     expect(landingFor('meta', 23, 'متانوت آزمایشی: عنوان').line).toBe('<li><a href="meta-23.html">متانوت بیست\u200cوسه: عنوان</a></li>');
     expect(landingFor('meta', 23, 'عنوان').line).toContain('>متانوت بیست\u200cوسه: عنوان<');
   });
@@ -146,13 +147,13 @@ describe('quick publish — pure parts', () => {
 
 describe('quick publish — homepage Pulse', () => {
   it('drafts the line the way the latest Pulse lines read: section, title only, link on the title, no date', () => {
-    expect(pulseFor('clinical', 101, 'عنوان').line).toBe('<li>یک اینسایت بالینی با عنوانِ «<a href="/insight/insight-101.html">عنوان</a>» منتشر شد</li>');
-    expect(pulseFor('chairside', 47, 'ع').line).toContain('یک چیرساید با عنوانِ «<a href="/chairside/chairside-47.html">');
+    expect(pulseFor('clinical', 101, 'عنوان').line).toBe('<li>یک نکتهٔ کلینیکی با عنوانِ «<a href="/insight/insight-101.html">عنوان</a>» منتشر شد</li>');
+    expect(pulseFor('chairside', 47, 'ع').line).toContain('یک ویزیت با عنوانِ «<a href="/chairside/chairside-47.html">');
     expect(pulseFor('meta', 23, 'ع').line).toContain('یک متانوت با عنوانِ «<a href="/metanotes/meta-23.html">');
-    expect(pulseFor('sharehub', 43, 'ع').line).toContain('یک مطلب در Share Hub با عنوانِ «<a href="/sharehub/share-43.html">');
+    expect(pulseFor('sharehub', 43, 'ع').line).toContain('یک مطلب در مرور منابع با عنوانِ «<a href="/sharehub/share-43.html">');
     expect(pulseFor('clinical', 1, 'a <b> & "c"').line).toContain('>a &lt;b&gt; &amp; &quot;c&quot;</a>');
     // Same shape as the newest real line on the homepage.
-    expect(pulseLis(homeFile())[0]).toMatch(/^\s*<li>یک اینسایت بالینی با عنوانِ «<a href="\/insight\/insight-\d+\.html">[^<]+<\/a>» منتشر شد<\/li>$/);
+    expect(pulseLis(homeFile())[0]).toMatch(/^\s*<li>یک (?:نکتهٔ کلینیکی|ویزیت|متانوت|مطلب در مرور منابع) با عنوانِ «<a href="\/(?:insight|chairside|metanotes|sharehub)\/[a-z]+-\d+\.html">[^<]+<\/a>» منتشر شد\.?<\/li>$/);
   });
 
   it('puts the new line at the very top, drops the bottom-most one, keeps exactly seven, touches nothing else', () => {
