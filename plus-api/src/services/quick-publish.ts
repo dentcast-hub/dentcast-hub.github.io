@@ -23,18 +23,18 @@ export const QP_TYPES = {
   // its existing lines use.
   // `kicker`/`h1Prefix`: the section label each section's pages carry above or
   // inside the title (insight-100, chairside-46, meta-22, share-42).
-  clinical: { label: 'Insight — نکتهٔ کلینیکی', folder: 'insight', stem: 'insight-', id: (n: number) => `clinical-${n}`, urlKey: 'page_url', section: 'Clinical Insight',
+  clinical: { label: 'نکات کلینیکی — Insight', folder: 'insight', stem: 'insight-', id: (n: number) => `clinical-${n}`, urlKey: 'page_url', section: 'نکات کلینیکی',
     landing: 'top', landingLabel: (_n: number, title: string) => title,
-    kicker: (_n: number) => '', h1Prefix: (n: number) => `${ICON_BOOKMARK} Insight ${n} — `, pulseLead: 'یک اینسایت بالینی' },
-  chairside: { label: 'Chairside — کیس و تصمیم بالینی', folder: 'chairside', stem: 'chairside-', id: (n: number) => `chairside-${n}`, urlKey: 'page_url', section: 'Chairside',
-    landing: 'top', landingLabel: (n: number, title: string) => `Chairside ${n} — ${title.replace(/^chairside\s*\d*\s*[—–:-]?\s*/i, '') || title}`,
-    kicker: (n: number) => `  <h2>Chairside ${n}</h2>\n  `, h1Prefix: (_n: number) => '', pulseLead: 'یک چیرساید' },
+    kicker: (_n: number) => '', h1Prefix: (n: number) => `${ICON_BOOKMARK} نکتهٔ کلینیکی ${faDigits(n)} — `, pulseLead: 'یک نکتهٔ کلینیکی' },
+  chairside: { label: 'ویزیت — کیس و تصمیم بالینی', folder: 'chairside', stem: 'chairside-', id: (n: number) => `chairside-${n}`, urlKey: 'page_url', section: 'ویزیت',
+    landing: 'top', landingLabel: (n: number, title: string) => `ویزیت ${faDigits(String(n).padStart(2, '0'))} — ${title.replace(/^(?:chairside|ویزیت)\s*[\d۰-۹]*\s*[—–:-]?\s*/i, '') || title}`,
+    kicker: (n: number) => `  <h2>ویزیت ${faDigits(n)}</h2>\n  `, h1Prefix: (_n: number) => '', pulseLead: 'یک ویزیت' },
   meta: { label: 'MetaNote — متانوت', folder: 'metanotes', stem: 'meta-', id: (n: number) => `meta-${n}`, urlKey: 'page_url', section: 'Meta Note',
     landing: 'bottom', landingLabel: (n: number, title: string) => `متانوت ${faNumberWords(n)}: ${title.replace(/^متانوت[^:：]*[:：]\s*/, '') || title}`,
     kicker: (n: number) => ` <h2>${ICON_BRAIN} MetaNote ${n}</h2>\n`, h1Prefix: (_n: number) => '', pulseLead: 'یک متانوت' },
-  sharehub: { label: 'Share Hub — خوانش مقاله', folder: 'sharehub', stem: 'share-', id: (n: number) => String(n), urlKey: 'url', section: 'Share Hub',
+  sharehub: { label: 'مرور منابع — خوانش مقاله', folder: 'sharehub', stem: 'share-', id: (n: number) => String(n), urlKey: 'url', section: 'مرور منابع',
     landing: 'top', landingLabel: (_n: number, title: string) => `${title} (مطلبی از دکتر فواد شهابیان)`,
-    kicker: (_n: number) => `<div class="sh-kicker">${ICON_BOOKMARK} Share Hub</div>\n`, h1Prefix: (_n: number) => '', pulseLead: 'یک مطلب در Share Hub' },
+    kicker: (_n: number) => `<div class="sh-kicker">${ICON_BOOKMARK} مرور منابع</div>\n`, h1Prefix: (_n: number) => '', pulseLead: 'یک مطلب در مرور منابع' },
 } as const;
 export type QpType = keyof typeof QP_TYPES;
 
@@ -42,6 +42,11 @@ const FA_ONES = ['', 'یک', 'دو', 'سه', 'چهار', 'پنج', 'شش', 'هف
   'چهارده', 'پانزده', 'شانزده', 'هفده', 'هجده', 'نوزده'];
 const FA_TENS = ['', '', 'بیست', 'سی', 'چهل', 'پنجاه', 'شصت', 'هفتاد', 'هشتاد', 'نود'];
 /** 1–99 the way metanotes/index.html writes them («بیست‌ودو»); digits beyond. */
+/** Persian digits, as every Persian-facing label on the site writes a number. */
+export function faDigits(n: number | string): string {
+  return String(n).replace(/[0-9]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
+}
+
 export function faNumberWords(n: number): string {
   if (n > 0 && n < 20) return FA_ONES[n];
   if (n >= 20 && n < 100) return FA_TENS[Math.floor(n / 10)] + (n % 10 ? '\u200cو' + FA_ONES[n % 10] : '');

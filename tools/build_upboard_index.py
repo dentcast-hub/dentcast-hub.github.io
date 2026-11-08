@@ -130,12 +130,12 @@ def folder_of(url: str) -> str:
 # label here that appears nowhere else.
 TYPE_FA = {
     "notecast": "NoteCast",
-    "clinical": "Clinical Insight",
-    "chairside": "چیرساید",
+    "clinical": "نکات کلینیکی",
+    "chairside": "ویزیت",
     "dentai": "DentAI",
     "meta": "MetaNote",
     "litecast": "لایت‌کست",
-    "sharehub": "ShareHub",
+    "sharehub": "مرور منابع",
     "promptologist": "پرامپتولوژیست",
     "plak_sefr": "پلاک صفر",
     "taraz": "تراز شواهد",

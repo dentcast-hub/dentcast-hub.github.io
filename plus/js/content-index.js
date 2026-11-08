@@ -46,16 +46,16 @@ export function contentInfo(model, contentId) {
 export const FOLDER_EN = {
   episodes: 'Podcast',
   notecast: 'NoteCast',
-  insight: 'Clinical Insight',
+  insight: 'نکات کلینیکی',
   // dentai and photocast are closed sections (1405/07/15): their folders keep
   // their keys and URLs, but the name a reader sees is the section that
   // absorbed them. Keyed by folder, so the key stays and only the word moves.
-  dentai: 'ShareHub',
-  chairside: 'Chairside',
+  dentai: 'مرور منابع',
+  chairside: 'ویزیت',
   metanotes: 'MetaNote',
   glossary: 'Glossary',
-  sharehub: 'ShareHub',
-  photocast: 'ShareHub',
+  sharehub: 'مرور منابع',
+  photocast: 'مرور منابع',
   'dentcast-plus': 'DentCast+',
   promptologist: 'Promptologist',
   'plak-sefr': 'Plak-e Sefr',

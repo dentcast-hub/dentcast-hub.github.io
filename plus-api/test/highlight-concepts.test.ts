@@ -19,7 +19,7 @@ const tags = getTags();
 const CEMENT = tags.find((t) => foldName(t.key) === 'سمان رزینی')!;
 const CEMENT_PAGE = CEMENT.contentIds[0];
 const CEMENT_PAGE_2 = CEMENT.contentIds[1];
-const BRAND_PAGE = 'insight/insight-1'; // carries «اینسایت» + «اکلوژن» + …
+const BRAND_PAGE = 'insight/insight-1'; // carries «نکته_کلینیکی» (the brand tag once «اینسایت») + «اکلوژن» + …
 const tagged = new Set(tags.flatMap((t) => t.contentIds));
 // Every indexed page carries tags today, so a page OUTSIDE the index stands in
 // — legal for a highlight (the library falls back to the id as its title).
@@ -54,7 +54,7 @@ describe('the fixtures are what the test believes', () => {
     expect(CEMENT.contentIds.length).toBeGreaterThan(2);
     expect(RESIN.fa_title).toBe('سمان‌های رزینی');
     expect(UNTAGGED_PAGE).toBeTruthy();
-    expect(conceptDomain('اینسایت')).toBe('brand');
+    expect(conceptDomain('نکته_کلینیکی')).toBe('brand');
     expect(conceptDomain('اکلوژن')).not.toBe('brand');
   });
 });
@@ -95,7 +95,7 @@ describe('GET /highlights/concepts', () => {
     const body = (await get('/highlights/concepts')).json();
     const keys = body.concepts.map((c: { key: string }) => c.key);
     expect(keys).toContain('اکلوژن');
-    expect(keys).not.toContain('اینسایت');
+    expect(keys).not.toContain('نکته_کلینیکی');
     const occ = body.concepts.find((c: { key: string }) => c.key === 'اکلوژن');
     expect(occ.highlights).toBe(2);
     expect(occ.articles).toBe(1);
@@ -173,7 +173,7 @@ describe('GET /highlights/concepts/:key', () => {
     const a = (await get('/highlights/concepts/' + encodeURIComponent('سمان_رزینی'))).json();
     expect(a.concept.key).toBe(CEMENT.key);
     expect((await get('/highlights/concepts/' + encodeURIComponent('این-مفهوم-نیست'))).statusCode).toBe(404);
-    expect((await get('/highlights/concepts/' + encodeURIComponent('اینسایت'))).statusCode).toBe(404);
+    expect((await get('/highlights/concepts/' + encodeURIComponent('نکته_کلینیکی'))).statusCode).toBe(404);
   });
 });
 
