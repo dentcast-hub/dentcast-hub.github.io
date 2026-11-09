@@ -1,0 +1,653 @@
+{
+ "des_version": "3.6",
+ "mode": "FIDELITY",
+ "scope": "SOURCE",
+ "text_basis": "FULL_TEXT",
+ "claims": [
+  {
+   "id": "u1",
+   "claim_quote": "انتخاب رنگ دندان؛ VITA Classical و 3D-MASTER چه فرقی دارند؟",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "عنوان بخش است."
+  },
+  {
+   "id": "u2",
+   "claim_quote": "خیلی از ما سال‌هاست با شیدگاید VITA Classical کار می‌کنیم و رنگ‌هایی مثل A2 و A3 برامون کاملاً آشنا هستند.",
+   "verdict": "AUTHOR_VIEW",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "تجربه و آشنایی جمعی با عبارت «خیلی از ما» گزارش شده است."
+  },
+  {
+   "id": "u3",
+   "claim_quote": "اما شاید کمتر به این فکر کرده باشیم که این رنگ‌ها چطور انتخاب شده‌اند و چرا با همین شیدگاید، گاهی هرچه نمونه‌ها رو کنار دندان می‌گیریم، باز هم هیچ‌کدام دقیقاً شبیه رنگ دندان بیمار نیست.",
+   "verdict": "AUTHOR_VIEW",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "عبارت «شاید کمتر به این فکر کرده باشیم» دیدگاه اول‌شخص جمع و بیان تجربه است."
+  },
+  {
+   "id": "u4",
+   "claim_quote": "ویتا دو سیستم شناخته‌شده دارد: VITA Classical A1–D4 و VITA SYSTEM 3D-MASTER.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "VITA Easyshade® LITE enables easy and fast digital shade determination for natural teeth,\n                                                                                                                                using the proven VITA classical A1–D4 and VITA SYSTEM 3D-MASTER shade systems.",
+   "source_ref": null
+  },
+  {
+   "id": "u5",
+   "claim_quote": "تفاوتشان فقط تعداد نمونه‌های رنگی نیست؛ منطق طراحی آن‌ها با هم فرق می‌کند.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "While the shades of the VITA classical A1-D4® shade guide were compiled empirically and were unevenly distributed in a limited\ntooth shade space, the VITA SYSTEM 3D-MASTER is based on a systematic, uniform spatial arrangement of the shades.",
+   "source_ref": null,
+   "note": "نابرابری در منطق چیدمان در مقایسهٔ مستقیم دو سیستم تصریح شده است."
+  },
+  {
+   "id": "u6",
+   "claim_quote": "شناختن این تفاوت کمک می‌کند هم بهتر رنگ انتخاب کنیم و هم بدانیم محدودیت خود شیدگاید کجاست.",
+   "verdict": "NOT_IN_SOURCE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "بروشور نتیجهٔ شناخت تفاوت‌ها برای تشخیص محدودیت شیدگاید و بهتر انتخاب‌کردن را به این صورت بیان نمی‌کند."
+  },
+  {
+   "id": "u7",
+   "claim_quote": "تصویر ۱. شیدگایدهای Classical و 3D-MASTER؛ برگرفته از بروشور رسمی VITA، صفحه چاپی ۴.",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "عنوان و مشخصات تصویر"
+  },
+  {
+   "id": "u8",
+   "claim_quote": "اول سه ویژگی رنگ را بشناسیم",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "عنوان بخش است."
+  },
+  {
+   "id": "u9",
+   "claim_quote": "رنگ دندان را می‌توان با سه ویژگی توصیف کرد:",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Lightness, chroma and hue are the           LCh tooth color space                           100\n                                                                                               white\n    features that allow all natural shades      Complete Lab color space                Brighter\n    to be uniquely defined.",
+   "source_ref": null
+  },
+  {
+   "id": "u10",
+   "claim_quote": "Value یعنی میزان روشنی یا تیرگی رنگ.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Lightness (L)",
+   "source_ref": null,
+   "note": "در شکل صفحهٔ ۶، محور Lightness طیف روشن‌تر تا تیره‌تر را نشان می‌دهد."
+  },
+  {
+   "id": "u11",
+   "claim_quote": "Chroma شدت یا اشباع رنگ را نشان می‌دهد؛ مثلاً دو دندان ممکن است ته‌رنگ زرد مشابهی داشته باشند، ولی زردی یکی پررنگ‌تر باشد.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "The chroma/shade saturation describes\n                    Shade\n                  intensity            whether there is a high or low amount of\n                                       a particular hue.",
+   "source_ref": null,
+   "note": "تفاوت مقدار یک Hue در تعریف منبع آمده است. دو دندان زرد مثالی توضیحی برای همان تعریف‌اند."
+  },
+  {
+   "id": "u12",
+   "claim_quote": "Hue خود ته‌رنگ است؛ اینکه رنگ بیشتر به کدام خانواده رنگی تمایل دارد.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "The color hue dimension includes all of the\n                                       different mixtures of the primary colors\n                  Hue                  red, blue and yellow.",
+   "source_ref": null
+  },
+  {
+   "id": "u13",
+   "claim_quote": "رنگ دندان‌های طبیعی فقط بخش کوچکی از فضای رنگی را اشغال می‌کند و Hue آن‌ها عمدتاً در محدوده بین زرد و قرمز قرار می‌گیرد.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "The range of natural tooth                                        Lightness (L)\n\n    shades is included and only represents\n    a small area.",
+   "source_ref": null,
+   "note": "همان متن در صفحهٔ ۱۰ ته‌رنگ طبیعی دندان را بین زرد و قرمز قرار می‌دهد."
+  },
+  {
+   "id": "u14",
+   "claim_quote": "هر شیدگاید در واقع تلاش می‌کند این محدوده کوچک را با تعداد مشخصی نمونه رنگ پوشش دهد.",
+   "verdict": "NOT_IN_SOURCE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "بروشور چیدمان و تعداد نمونه‌های سیستم‌های VITA را توضیح می‌دهد، اما هدف طراحی هر شیدگاید را در این صورت کلی بیان نمی‌کند."
+  },
+  {
+   "id": "u15",
+   "claim_quote": "تصویر ۲. سه بُعد Lightness، Chroma و Hue در فضای رنگی LCh و محدوده کوچک رنگ دندان طبیعی؛ بروشور VITA، صفحه چاپی ۶.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "LCh tooth color space                           100\n                                                                                               white\n    features that allow all natural shades      Complete Lab color space                Brighter\n    to be uniquely defined. The entire color\n    spectrum can be represented as a\n    sphere, which is effectively a globe                                                                            Tooth color space\n    of colors. The range of natural tooth                                        Lightness (L)",
+   "source_ref": null,
+   "note": "نمودار صفحهٔ چاپی ۶ هر سه بُعد و ناحیهٔ کوچک Tooth color space را نشان می‌دهد."
+  },
+  {
+   "id": "u16",
+   "claim_quote": "VITA Classical؛ مجموعه‌ای از رنگ‌های تجربی",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "عنوان بخش است."
+  },
+  {
+   "id": "u17",
+   "claim_quote": "Classical شامل ۱۶ رنگ در چهار خانواده A تا D است.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "• Internationally established system of 16 natural, empirically                                                                                enable reliable, clinically proven\n                                         compiled tooth shades",
+   "source_ref": null,
+   "note": "عکس صفحهٔ ۴ برچسب‌های چهار گروه A تا D را نشان می‌دهد. سه رنگ Bleached در منبع افزوده و جداگانه‌اند."
+  },
+  {
+   "id": "u18",
+   "claim_quote": "در توصیف خود ویتا، خانواده A قرمز متمایل به قهوه‌ای، B قرمز متمایل به زرد، C خاکستری و D قرمز متمایل به خاکستری است.",
+   "verdict": "NOT_IN_SOURCE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "نام‌های توصیفی چهار خانوادهٔ A تا D در متن و شکل‌های بروشور ارائه نشده‌اند."
+  },
+  {
+   "id": "u19",
+   "claim_quote": "این رنگ‌ها به‌صورت تجربی انتخاب شده‌اند؛ یعنی از ابتدا قرار نبوده نمونه‌ها در فضای رنگی فاصله‌های یکسانی داشته باشند.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "While the shades of the VITA classical A1-D4® shade guide were compiled empirically and were unevenly distributed in a limited\ntooth shade space, the VITA SYSTEM 3D-MASTER is based on a systematic, uniform spatial arrangement of the shades.",
+   "source_ref": null
+  },
+  {
+   "id": "u20",
+   "claim_quote": "در نمودار ویتا می‌بینیم که بعضی رنگ‌ها خیلی نزدیک‌اند و بین بعضی دیگر فاصله بیشتری وجود دارد.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "While the shades of the VITA classical A1-D4® shade guide were compiled empirically and were unevenly distributed in a limited\ntooth shade space, the VITA SYSTEM 3D-MASTER is based on a systematic, uniform spatial arrangement of the shades.",
+   "source_ref": null,
+   "note": "شکل Classical صفحهٔ ۹ چیدمان نامنظمِ توصیف‌شده را نشان می‌دهد."
+  },
+  {
+   "id": "u21",
+   "claim_quote": "نتیجه بالینی‌اش مهم است: ممکن است نزدیک‌ترین نمونه شیدگاید را درست انتخاب کرده باشیم، اما آن نمونه باز هم دقیقاً با دندان بیمار هماهنگ نباشد.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "If no shade value is an exact match, the display indicates how strongly,\n                                                                                                                                     and in what way the nearest shade value deviates from the measured natural tooth.",
+   "source_ref": null,
+   "note": "بخش Easyshade LITE برای هر دو سیستم VITA، حالت نبود تطابق دقیق با وجود نزدیک‌ترین شید را صریحاً در نظر می‌گیرد."
+  },
+  {
+   "id": "u22",
+   "claim_quote": "اینجا الزاماً خطای تشخیص ما نیست؛ ممکن است رنگ واقعی دندان در فاصله بین نمونه‌های شیدگاید قرار گرفته باشد.",
+   "verdict": "AUTHOR_VIEW",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "توضیح احتمالی نویسنده برای عدم تطابق با عبارت «ممکن است» مطرح شده است."
+  },
+  {
+   "id": "u23",
+   "claim_quote": "مسئله دوم این است که در Classical، نمونه‌ها اساساً بر اساس خانواده‌های Hue دسته‌بندی شده‌اند، نه بر اساس یک ترتیب منظم از Value.",
+   "verdict": "NOT_IN_SOURCE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "عکس گروه‌بندی حروف را نشان می‌دهد، اما بروشور مبنای دسته‌بندی به‌عنوان خانوادهٔ Hue را تصریح نمی‌کند."
+  },
+  {
+   "id": "u24",
+   "claim_quote": "شماره‌های هر خانواده هم لزوماً معادل یک پله ثابت از روشنی یا اشباع نیستند.",
+   "verdict": "NOT_IN_SOURCE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "بروشور نامنظم بودن پراکندگی کلی را بیان می‌کند، اما تفسیر شماره‌های درون هر خانواده به‌عنوان پلهٔ ثابت Value یا Chroma را بررسی نمی‌کند."
+  },
+  {
+   "id": "u25",
+   "claim_quote": "برای همین اگر بخواهیم با Classical ابتدا Value را مقایسه کنیم، بهتر است نمونه‌ها را از روشن به تیره بچینیم.",
+   "verdict": "NOT_IN_SOURCE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "نتیجهٔ عملیِ چیدن مجدد Classical از روشن به تیره برای مقایسهٔ Value در بروشور نیامده است."
+  },
+  {
+   "id": "u26",
+   "claim_quote": "یک ترتیب آموزشی شناخته‌شده این است:",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "عبارت معرفی فهرست بعدی است."
+  },
+  {
+   "id": "u27",
+   "claim_quote": "B1، A1، B2، D2، A2، C1، C2، D4، A3، D3، B3، A3.5، B4، C3، A4، C4",
+   "verdict": "NOT_IN_SOURCE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "این ترتیب کامل آموزشیِ روشن به تیره در بروشور نیامده است."
+  },
+  {
+   "id": "u28",
+   "claim_quote": "این فهرست در خود بروشور حاضر به‌صورت متنی نیامده و از منبع آموزشی تکمیلی گرفته شده است؛ اما نمودار بروشور هم نشان می‌دهد که B1 از A1 روشن‌تر قرار گرفته است.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Brighter             B1                                                                                                 lighter 1                        1M1\n\n\n\n                                                  A1",
+   "source_ref": null,
+   "note": "شکل شماتیک B1 را بالاتر از A1 در جهت روشن‌تر نشان می‌دهد. منشأ آموزشی فهرست در این بروشور قابل بررسی نیست."
+  },
+  {
+   "id": "u29",
+   "claim_quote": "نکته جالب همین‌جاست: D2 با اینکه ته‌رنگ خاکستری دارد، در این ترتیب از A2 روشن‌تر است.",
+   "verdict": "NOT_IN_SOURCE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "مقایسهٔ روشنایی D2 و A2 در ترتیب آموزشی خارج از بروشور و ته‌رنگ خاکستری D2 در متن بروشور بیان نشده‌اند."
+  },
+  {
+   "id": "u30",
+   "claim_quote": "پس خاکستری‌تر بودن یک رنگ لزوماً به معنی پایین‌تر بودن Value نیست.",
+   "verdict": "NOT_IN_SOURCE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "بروشور نتیجه‌گیری مشخص دربارهٔ رابطهٔ خاکستری‌تر دیده‌شدن و Value پایین‌تر را بیان نمی‌کند."
+  },
+  {
+   "id": "u31",
+   "claim_quote": "(به نظر من، در انتخاب رنگ روکش‌های تکی، همین اشتباه گرفتنِ ته‌رنگ با روشنی می‌تواند ما را گمراه کند.",
+   "verdict": "AUTHOR_VIEW",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "نشانگر مستقیم دیدگاه نویسنده «به نظر من» است."
+  },
+  {
+   "id": "u32",
+   "claim_quote": "گاهی رنگی که خاکستری‌تر دیده می‌شود، از نظر Value اصلاً تیره‌تر نیست.)",
+   "verdict": "NOT_IN_SOURCE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "این واحد به‌تنهایی نشانگر نظر ندارد. بروشور مشخصاً دربارهٔ رابطهٔ خاکستری‌تر دیده‌شدن و تیرگی بحث نمی‌کند."
+  },
+  {
+   "id": "u33",
+   "claim_quote": "تصویر ۳. مقایسه شماتیک پراکندگی رنگ‌های دو سیستم در فضای رنگی؛ بروشور VITA، صفحه چاپی ۹.",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "عنوان و مشخصات تصویر"
+  },
+  {
+   "id": "u34",
+   "claim_quote": "محور عمودی نشان‌دهنده Lightness است.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Lightness (L) 3",
+   "source_ref": null,
+   "note": "در شکل صفحهٔ ۹، جهت بالا و پایین محور Lightness از ۱ روشن‌تر تا ۵ تیره‌تر است."
+  },
+  {
+   "id": "u35",
+   "claim_quote": "نمودارها شماتیک‌اند، نه نقشه اندازه‌گیری دقیق برای استخراج فاصله عددی بین شیدها.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Schematic, simplified representation",
+   "source_ref": null
+  },
+  {
+   "id": "u36",
+   "claim_quote": "3D-MASTER؛ نظم‌دادن به فضای رنگی",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "عنوان بخش است."
+  },
+  {
+   "id": "u37",
+   "claim_quote": "ویتا در طراحی 3D-MASTER مسیر دیگری را انتخاب کرده است.",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "جمله مقدمهٔ توضیح مسیر طراحی در واحد بعدی است."
+  },
+  {
+   "id": "u38",
+   "claim_quote": "به‌جای مجموعه‌ای از نمونه‌های تجربی با پراکندگی نامنظم، رنگ‌ها را با یک ساختار منظم‌تر در فضای رنگی دندان طبیعی قرار داده است.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "While the shades of the VITA classical A1-D4® shade guide were compiled empirically and were unevenly distributed in a limited\ntooth shade space, the VITA SYSTEM 3D-MASTER is based on a systematic, uniform spatial arrangement of the shades.",
+   "source_ref": null
+  },
+  {
+   "id": "u39",
+   "claim_quote": "طبق بروشور سازنده، این سیستم ۲۶ رنگ طبیعی و سه رنگ برای دندان‌های بلیچ‌شده دارد.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "• 26 natural and systematically arranged tooth shades;                                                                   for the tooth whitening process (bleaching)\n   in addition, three shades for tooth whitening                                                                       • 2 9 levels of lightness based on\n   (VITA Bleached Shades)",
+   "source_ref": null
+  },
+  {
+   "id": "u40",
+   "claim_quote": "در 3D-MASTER ابتدا پنج گروه اصلی Value داریم؛ از ۱، روشن‌ترین تا ۵، تیره‌ترین.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Lightness (L) 3",
+   "source_ref": null,
+   "note": "در شکل صفحهٔ ۹، پنج گروه شیدهای طبیعی روی محور Lightness شماره‌گذاری شده‌اند. شیدهای بلیچ جداگانه‌اند."
+  },
+  {
+   "id": "u41",
+   "claim_quote": "داخل هر گروه، Chroma از بالا به پایین افزایش پیدا می‌کند و Hue با سه حرف مشخص می‌شود: L زردتر، M میانی و R قرمزتر.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "In the VITA SYSTEM 3D-MASTER,\n                                       the middle shade M lies between a reddish\n                                       shade R and a more yellowish shade L.",
+   "source_ref": null,
+   "note": "معنای L/M/R در متن آمده است. عکس گام دوم در همان صفحه در ستون M، Chroma را از بالا به پایین با ۱، ۲، ۳ نشان می‌دهد."
+  },
+  {
+   "id": "u42",
+   "claim_quote": "مثلاً در رنگ 3M2، عدد ۳ گروه Value را نشان می‌دهد، M یعنی Hue میانی و عدد ۲ سطح Chroma است.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Three steps to the right shade",
+   "source_ref": null,
+   "note": "تصویر سه‌مرحله‌ایِ صفحهٔ ۱۰ در نمونهٔ 3M2 به ترتیب رقم ۳، رقم ۲ و حرف M را برای Value، Chroma و Hue برجسته می‌کند."
+  },
+  {
+   "id": "u43",
+   "claim_quote": "بنابراین کد هر رنگ اطلاعاتی درباره هر سه ویژگی به ما می‌دهد.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Three steps to the right shade",
+   "source_ref": null,
+   "note": "نتیجه از خود نمایش صریحِ رمزگشایی سه بخش کد 3M2 در تصویر صفحهٔ ۱۰ پشتیبانی می‌شود."
+  },
+  {
+   "id": "u44",
+   "claim_quote": "این نظم دو فایده دارد: اول اینکه برای انتخاب رنگ مسیر مشخص‌تری داریم و لازم نیست از ابتدا بین تمام نمونه‌ها سرگردان شویم.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "This scientifically based system of the VITA SYSTEM 3D-MASTER navigates you and your team through the tooth shade space\nwith high precision.",
+   "source_ref": null,
+   "note": "تصریح به ناچار نبودنِ مقایسهٔ تمام شیدها در آغاز در متن نیست. تصویر نخست تنها نمونه‌های منتخب را نشانه‌گذاری می‌کند."
+  },
+  {
+   "id": "u45",
+   "claim_quote": "دوم اینکه می‌توان رنگ‌های بینابینی را دقیق‌تر تعریف کرد و برای ساخت آن‌ها از ترکیب مناسب مواد استفاده کرد.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "• Possibility of creating intermediate shades by mixing",
+   "source_ref": null,
+   "note": "امکان ترکیب شیدها صریح است. عبارت «دقیق‌تر» در قیاس با سیستم دیگر به‌صورت رتبه‌بندی صریح نیامده و جملهٔ پیشین بروشور فقط از تعریف دقیق رنگ‌های بینابینی می‌گوید."
+  },
+  {
+   "id": "u46",
+   "claim_quote": "بروشور این امکان را مطرح می‌کند، اما برای هر دو شید دلخواه، نسبت ترکیب ثابتی مثل ۵۰–۵۰ تعیین نکرده است.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "• Possibility of creating intermediate shades by mixing",
+   "source_ref": null,
+   "note": "بروشور امکان ترکیب را بیان می‌کند و برای هر دو شید دلخواه نسبت عمومی ۵۰–۵۰ مشخص نمی‌کند."
+  },
+  {
+   "id": "u47",
+   "claim_quote": "(به نظر من، مزیت مهم 3D-MASTER فقط بیشتر بودن تعداد رنگ‌ها نیست؛ مهم‌تر این است که انتخاب رنگ را از یک مقایسه نسبتاً تجربی به فرایندی منظم‌تر تبدیل می‌کند.",
+   "verdict": "AUTHOR_VIEW",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "نشانگر مستقیم دیدگاه نویسنده «به نظر من» است."
+  },
+  {
+   "id": "u48",
+   "claim_quote": "البته این نظم به‌تنهایی تضمین نمی‌کند که هر ترمیمی حتماً تطابق نهایی بهتری داشته باشد.)",
+   "verdict": "NOT_IN_SOURCE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "بروشور دربارهٔ تضمین تطابق نهایی بهتر برای هر ترمیم صرفاً به اتکای نظم شیدگاید گزاره‌ای ندارد."
+  },
+  {
+   "id": "u49",
+   "claim_quote": "روش سه‌مرحله‌ای انتخاب رنگ با 3D-MASTER",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "عنوان بخش است."
+  },
+  {
+   "id": "u50",
+   "claim_quote": "مرحله اول: Value.",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "برچسب مرحله"
+  },
+  {
+   "id": "u51",
+   "claim_quote": "ابتدا نمونه‌های میانی (M) از گروه‌های مختلف را کنار دندان مقایسه می‌کنیم و گروهی را انتخاب می‌کنیم که از نظر روشنی نزدیک‌تر است.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "In the VITA Toothguide 3D-MASTER®,\n                              3M2      the lightest shade is always arranged\n                                       at the top section of the shade guide.",
+   "source_ref": null,
+   "note": "تصویر همراه، بالاترین نمونه‌های ستون M گروه‌های مختلف را برجسته کرده و صفحه گام اول را تعیین Lightness می‌نامد."
+  },
+  {
+   "id": "u52",
+   "claim_quote": "خود ویتا Value را مهم‌ترین بُعد در تعیین رنگ می‌داند و به همین دلیل آن را در مرحله اول قرار داده است.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "The lightness dimension is the most relevant\n                                       for determining the correct tooth shade,\n              Lightness\n                                       which is why it is determined first.",
+   "source_ref": null
+  },
+  {
+   "id": "u53",
+   "claim_quote": "مرحله دوم: Chroma.",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "برچسب مرحله"
+  },
+  {
+   "id": "u54",
+   "claim_quote": "وقتی گروه Value مشخص شد، نمونه‌های M همان گروه را مقایسه می‌کنیم تا شدت یا اشباع رنگ دندان را پیدا کنیم.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "The chroma is a gradient\n                              3M2\n                                       that goes from the top of the shade guide\n                                       to the bottom.",
+   "source_ref": null,
+   "note": "در تصویر گام دومِ صفحهٔ ۱۰ نمونه‌های M گروه انتخاب‌شده نشانه‌گذاری شده‌اند."
+  },
+  {
+   "id": "u55",
+   "claim_quote": "مرحله سوم: Hue.",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "برچسب مرحله"
+  },
+  {
+   "id": "u56",
+   "claim_quote": "در آخر، نمونه انتخاب‌شده را با رنگ‌های L و R مقایسه می‌کنیم تا ببینیم دندان نسبت به رنگ میانی زردتر است یا قرمزتر.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "In the VITA SYSTEM 3D-MASTER,\n                                       the middle shade M lies between a reddish\n                                       shade R and a more yellowish shade L.",
+   "source_ref": null,
+   "note": "در تصویر مرحلهٔ سوم، نمونه‌های L، M و R گروه انتخاب‌شده مشخص شده‌اند."
+  },
+  {
+   "id": "u57",
+   "claim_quote": "یعنی به‌جای آنکه هم‌زمان درباره روشنی، شدت و ته‌رنگ تصمیم بگیریم، هر بار یکی از آن‌ها را مشخص می‌کنیم.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Three steps to the right shade",
+   "source_ref": null,
+   "note": "تصویر سه گام جداگانه برای تعیین هر بُعد را نشان می‌دهد."
+  },
+  {
+   "id": "u58",
+   "claim_quote": "تصویر ۴. راهنمای تصویری خود ویتا: انتخاب Value، سپس Chroma و در پایان Hue؛ بروشور VITA، صفحه چاپی ۱۰.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Three steps to the right shade",
+   "source_ref": null,
+   "note": "تصویر مربوط به صفحهٔ چاپی ۱۰ است."
+  },
+  {
+   "id": "u59",
+   "claim_quote": "چند نکته که موقع انتخاب رنگ فراموش می‌کنیم",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "عنوان بخش است."
+  },
+  {
+   "id": "u60",
+   "claim_quote": "صرف‌نظر از نوع شیدگاید، شرایط انتخاب رنگ مهم است.",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "جمله صرفاً بر اهمیت شرایط تأکید دارد و هیچ شرط مشخصی بیان نمی‌کند."
+  },
+  {
+   "id": "u61",
+   "claim_quote": "ویتا توصیه می‌کند تا جای ممکن از نور استاندارد شبیه روشنایی روز (Daylight) استفاده کنیم؛ رنگ‌های اطراف خنثی باشند، رژ لب و آرایش مؤثر بر تشخیص رنگ پاک شود و لباس‌های پررنگ بیمار با پوشش خاکستری پوشانده شوند.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "W henever possible, determine the tooth shade using a standardized daylight lamp",
+   "source_ref": null,
+   "note": "در گلولهٔ بعدی همان صفحه، محیط خنثی، پاک‌کردن رژ لب و آرایش و پوشاندن لباس پررنگ با پوشش خاکستری توصیه شده‌اند."
+  },
+  {
+   "id": "u62",
+   "claim_quote": "نکته دیگر، مدت نگاه‌کردن است.",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "فقط موضوع توصیهٔ بعدی را معرفی می‌کند."
+  },
+  {
+   "id": "u63",
+   "claim_quote": "طبق بروشور ویتا، چشم بعد از حدود ۵ تا ۷ ثانیه در تشخیص رنگ خسته می‌شود؛ به همین دلیل توصیه می‌کند انتخاب را سریع انجام دهیم و وقتی مردد شدیم، به برداشت اولیه اعتماد بیشتری داشته باشیم، نه اینکه مقایسه را بی‌وقفه طول بدهیم.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "In case of doubt, trust your initial decision,\n                                                                                                                                       as the eye already tires after approx. 5 – 7 seconds",
+   "source_ref": null,
+   "note": "توصیهٔ انتخاب سریع در جملهٔ بلافاصله قبل از همین بند آمده است."
+  },
+  {
+   "id": "u64",
+   "claim_quote": "شیدگاید هم بعد از هر بار استفاده باید ضدعفونی شود.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "Disinfect the shade guide after each shade determination",
+   "source_ref": null
+  },
+  {
+   "id": "u65",
+   "claim_quote": "در نهایت کدام بهتر است؟",
+   "verdict": "NOT_A_CLAIM",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "عنوان بخش است."
+  },
+  {
+   "id": "u66",
+   "claim_quote": "Classical همچنان کاربردی است؛ به‌خصوص اگر بدانیم رنگ‌های آن با فاصله‌های منظم در فضای رنگی قرار نگرفته‌اند و برای مقایسه Value بهتر است ترتیب نمونه‌ها را تغییر بدهیم.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "While the shades of the VITA classical A1-D4® shade guide were compiled empirically and were unevenly distributed in a limited\ntooth shade space, the VITA SYSTEM 3D-MASTER is based on a systematic, uniform spatial arrangement of the shades.",
+   "source_ref": null,
+   "note": "بروشور انتخاب مستقیم Classical با مقایسهٔ سریع را هم کاربردی می‌داند. تغییر ترتیب برای مقایسهٔ Value در منبع نیامده است."
+  },
+  {
+   "id": "u67",
+   "claim_quote": "3D-MASTER هم با چیدمان منظم‌تر و روش سه‌مرحله‌ای، انتخاب رنگ و انتقال اطلاعات به لابراتوار را ساختارمندتر می‌کند.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "This scientifically based system of the VITA SYSTEM 3D-MASTER navigates you and your team through the tooth shade space\nwith high precision.",
+   "source_ref": null,
+   "note": "چیدمان نظام‌مند و کمک به تعیین شید برای کاربر و تیمش بیان شده‌اند. ساختارمندتر شدن مشخصِ انتقال اطلاعات به لابراتوار با همین شیدگاید و روش سه‌مرحله‌ای تصریح نشده است."
+  },
+  {
+   "id": "u68",
+   "claim_quote": "اما برای من مهم‌ترین پیام این مقایسه چیز دیگری است: انتخاب نزدیک‌ترین شید با انتخاب دقیقاً همان رنگ فرق دارد.",
+   "verdict": "AUTHOR_VIEW",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "نشانگر مستقیم دیدگاه نویسنده «برای من» است."
+  },
+  {
+   "id": "u69",
+   "claim_quote": "گاهی رنگ دندان بیمار دقیقاً معادل هیچ‌کدام از نمونه‌ها نیست.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "If no shade value is an exact match, the display indicates how strongly,\n                                                                                                                                     and in what way the nearest shade value deviates from the measured natural tooth.",
+   "source_ref": null
+  },
+  {
+   "id": "u70",
+   "claim_quote": "آن‌وقت اینکه بدانیم اختلاف بیشتر در Value است، Chroma یا Hue، از صرف اعلام یک کد رنگی مهم‌تر می‌شود.",
+   "verdict": "NOT_IN_SOURCE",
+   "change_kind": null,
+   "source_quote": "",
+   "source_ref": null,
+   "note": "بروشور گزارش اختلاف با نزدیک‌ترین شید را شرح می‌دهد، اما شناخت بُعد اختلاف را در قیاس با اعلام کد رتبه‌بندی نمی‌کند."
+  },
+  {
+   "id": "u71",
+   "claim_quote": "شیدگاید قرار نیست به‌جای ما رنگ را تشخیص بدهد؛ قرار است کمک کند چیزی را که می‌بینیم، بهتر توصیف کنیم و دقیق‌تر به لابراتوار منتقل کنیم.",
+   "verdict": "MATCHES",
+   "change_kind": null,
+   "source_quote": "P recise and complete communication of the correct tooth shade",
+   "source_ref": null,
+   "note": "بروشور انتقال دقیق اطلاعات رنگ را مزیت سیستم‌های VITA می‌خواند. جمله دربارهٔ جایگزین نشدن قضاوت فرد با شیدگاید در آن نیامده است."
+  }
+ ],
+ "counts": {
+  "matches": 37,
+  "altered": 0,
+  "reversed": 0,
+  "not_in_source": 12,
+  "not_assessable": 0,
+  "author_view": 6,
+  "not_a_claim": 16
+ },
+ "assessable": 37,
+ "fidelity_score": 100,
+ "level": "HIGH",
+ "provisional": false,
+ "source_conclusion": "KG                                                                                                                                                                         10114E_0525_V14     Spitalgasse 3 79713 Bad Säckingen                     Phone: +49 7761 562-0                      info@vita-zahnfabrik.com                       Follow us on Germany                                 Hotline: +49 7761 562-222                  www.vita-zahnfabrik.com                        social media!",
+ "fact_fa": "از ۳۷ ادعایی که منبع به آن پرداخته‌اند، ۳۷ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۱۲ جمله‌ی دیگر در منبع نیامده است.",
+ "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+}

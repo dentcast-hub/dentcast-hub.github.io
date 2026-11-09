@@ -1,0 +1,77 @@
+{
+  "source_pdf": "VITA_10114_10114E_Zahnfarbbestimmung_Brochure_EN_V14_iA_en.pdf",
+  "figures": [
+    {
+      "file": "01-vita-classical-and-3d-master-guides.webp",
+      "page": 2,
+      "clip": [
+        5,
+        66,
+        644,
+        380
+      ],
+      "caption": "دو شیدگاید VITA Classical و 3D-MASTER",
+      "use": "پس از مقدمه",
+      "quality": 92,
+      "width": 2014,
+      "height": 990,
+      "bytes": 168942,
+      "source_pdf_page": 3,
+      "printed_page": "۴–۵"
+    },
+    {
+      "file": "02-lch-tooth-color-space.webp",
+      "page": 3,
+      "clip": [
+        230,
+        440,
+        535,
+        745
+      ],
+      "caption": "فضای رنگی LCh؛ ارتباط Lightness، Chroma و Hue و محدوده رنگ دندان طبیعی",
+      "use": "پس از معرفی سه ویژگی رنگ",
+      "quality": 96,
+      "width": 962,
+      "height": 961,
+      "bytes": 138720,
+      "source_pdf_page": 4,
+      "printed_page": "۶–۷"
+    },
+    {
+      "file": "03-classical-versus-3d-master-color-distribution.webp",
+      "page": 4,
+      "clip": [
+        633,
+        238,
+        1131,
+        491
+      ],
+      "caption": "مقایسه شماتیک پراکندگی رنگ‌ها در VITA Classical و 3D-MASTER",
+      "use": "پس از توضیح پراکندگی نامنظم در Classical / آغاز بخش 3D-MASTER",
+      "quality": 96,
+      "width": 1570,
+      "height": 798,
+      "bytes": 111576,
+      "source_pdf_page": 5,
+      "printed_page": "۸–۹"
+    },
+    {
+      "file": "04-3d-master-three-step-shade-selection.webp",
+      "page": 5,
+      "clip": [
+        34,
+        186,
+        548,
+        697
+      ],
+      "caption": "روش سه‌مرحله‌ای انتخاب رنگ با 3D-MASTER: Value سپس Chroma و Hue",
+      "use": "پس از توضیح مراحل سه‌گانه",
+      "quality": 96,
+      "width": 1620,
+      "height": 1611,
+      "bytes": 323344,
+      "source_pdf_page": 6,
+      "printed_page": "۱۰–۱۱"
+    }
+  ]
+}
