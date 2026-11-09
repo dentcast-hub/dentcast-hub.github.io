@@ -782,6 +782,73 @@
    ]
   },
   {
+   "key": "کیس_بالینی",
+   "tag": "#کیس_بالینی",
+   "domain": "brand",
+   "words": 2,
+   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
+   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
+   "aliases": [
+    "ویزیت کلینیکی",
+    "گزارش کیس"
+   ],
+   "variants": [
+    "#ویزیت_کلینیکی",
+    "#گزارش_کیس"
+   ],
+   "co_tags": [],
+   "count": 47,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30",
+    "chairside/chairside-31",
+    "chairside/chairside-32",
+    "chairside/chairside-33",
+    "chairside/chairside-34",
+    "chairside/chairside-35",
+    "chairside/chairside-36",
+    "chairside/chairside-37",
+    "chairside/chairside-38",
+    "chairside/chairside-39",
+    "chairside/chairside-40",
+    "chairside/chairside-41",
+    "chairside/chairside-42",
+    "chairside/chairside-44",
+    "chairside/chairside-45",
+    "chairside/chairside-47",
+    "chairside/chairside-48",
+    "chairside/chairside-49"
+   ]
+  },
+  {
    "key": "پست_و_کور",
    "tag": "#پست_و_کور",
    "domain": "clinical",
@@ -851,72 +918,6 @@
     "sharehub/share-34",
     "dentcast-plus/video-14",
     "insight/insight-97"
-   ]
-  },
-  {
-   "key": "کیس_بالینی",
-   "tag": "#کیس_بالینی",
-   "domain": "brand",
-   "words": 2,
-   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
-   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
-   "aliases": [
-    "ویزیت کلینیکی",
-    "گزارش کیس"
-   ],
-   "variants": [
-    "#ویزیت_کلینیکی",
-    "#گزارش_کیس"
-   ],
-   "co_tags": [],
-   "count": 46,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-7",
-    "chairside/chairside-8",
-    "chairside/chairside-9",
-    "chairside/chairside-10",
-    "chairside/chairside-11",
-    "chairside/chairside-12",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-15",
-    "chairside/chairside-16",
-    "chairside/chairside-17",
-    "chairside/chairside-18",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "chairside/chairside-30",
-    "chairside/chairside-31",
-    "chairside/chairside-32",
-    "chairside/chairside-33",
-    "chairside/chairside-34",
-    "chairside/chairside-35",
-    "chairside/chairside-36",
-    "chairside/chairside-37",
-    "chairside/chairside-38",
-    "chairside/chairside-39",
-    "chairside/chairside-40",
-    "chairside/chairside-41",
-    "chairside/chairside-42",
-    "chairside/chairside-44",
-    "chairside/chairside-45",
-    "chairside/chairside-47",
-    "chairside/chairside-48"
    ]
   },
   {
@@ -4644,6 +4645,32 @@
    ]
   },
   {
+   "key": "تراش_روکش",
+   "tag": "#تراش_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "آماده‌سازی دندان برای روکش کامل.",
+   "use_when": "مقاله مشخصاً درباره‌ی تراشِ روکش باشد، نه لمینیت یا اینله.",
+   "aliases": [
+    "تراش برای روکش",
+    "پرپ روکش",
+    "آماده سازی روکش"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-114",
+    "dentcast-plus/video-1",
+    "insight/insight-18",
+    "insight/insight-41",
+    "insight/insight-49",
+    "insight/insight-54",
+    "sharehub/share-10",
+    "chairside/chairside-49"
+   ]
+  },
+  {
    "key": "تراش_لمینیت",
    "tag": "#تراش_لمینیت",
    "domain": "clinical",
@@ -5042,31 +5069,6 @@
    ]
   },
   {
-   "key": "تراش_روکش",
-   "tag": "#تراش_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "آماده‌سازی دندان برای روکش کامل.",
-   "use_when": "مقاله مشخصاً درباره‌ی تراشِ روکش باشد، نه لمینیت یا اینله.",
-   "aliases": [
-    "تراش برای روکش",
-    "پرپ روکش",
-    "آماده سازی روکش"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-114",
-    "dentcast-plus/video-1",
-    "insight/insight-18",
-    "insight/insight-41",
-    "insight/insight-49",
-    "insight/insight-54",
-    "sharehub/share-10"
-   ]
-  },
-  {
    "key": "ترمیم_ادهزیو",
    "tag": "#ترمیم_ادهزیو",
    "domain": null,
@@ -5188,6 +5190,32 @@
     "litecast/lite-CAST16",
     "litecast/lite-CAST17",
     "litecast/lite-CAST19"
+   ]
+  },
+  {
+   "key": "درمان_ریشه",
+   "tag": "#درمان_ریشه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "root canal",
+    "روت کانال",
+    "عصب کشی",
+    "درمان کانال ریشه"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "insight/insight-17",
+    "insight/insight-20",
+    "chairside/chairside-4",
+    "metanotes/meta-11",
+    "sharehub/share-19",
+    "metanotes/meta-21",
+    "chairside/chairside-49"
    ]
   },
   {
@@ -5838,31 +5866,6 @@
     "insight/insight-35",
     "insight/insight-52",
     "insight/insight-61"
-   ]
-  },
-  {
-   "key": "درمان_ریشه",
-   "tag": "#درمان_ریشه",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "root canal",
-    "روت کانال",
-    "عصب کشی",
-    "درمان کانال ریشه"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "insight/insight-17",
-    "insight/insight-20",
-    "chairside/chairside-4",
-    "metanotes/meta-11",
-    "sharehub/share-19",
-    "metanotes/meta-21"
    ]
   },
   {
@@ -21685,7 +21688,7 @@
   "zone of equilibrium": "نوترال زون",
   "اجاره نشینی دیجیتال": "مالکیت پلتفرم",
   "از دست رفتن ایمپلنت": "شکست ایمپلنت",
-  "انتخاب اباتمنت پایه": "انتخاب پایه",
+  "انتخاب اباتمنت پایه": "انتخاب اباتمنت",
   "انتخاب جنس رستوریشن": "انتخاب متریال",
   "اکستراکشن و ایمپلنت": "کشیدن و ایمپلنت",
   "ایمپلنت سطح استخوان": "bone level ایمپلنت",
@@ -21708,7 +21711,7 @@
   "هموگلوبین گلیکوزیله": "کنترل قند خون",
   "پرامپت نویسی با مدل": "متاپرامپت",
   "پیچ اباتمنت ایمپلنت": "پیچ اباتمنت",
-  "abutment selection": "انتخاب پایه",
+  "abutment selection": "انتخاب اباتمنت",
   "adhesion to dentin": "باند به دنتین",
   "adolescent patient": "بیمار نوجوان",
   "articulating paper": "کاغذ ارتیکولاسیون",
