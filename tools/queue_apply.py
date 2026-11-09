@@ -1153,6 +1153,13 @@ def landing_row(w, cat, n, prev_n, title, prev_title):
     w.put(rel, new)
 
 
+PULSE_RENAMED_LEADS = (
+    ("یک اینسایت بالینی", "یک نکتهٔ کلینیکی"), ("یک اینسایت", "یک نکتهٔ کلینیکی"),
+    ("یک چیرساید", "یک ویزیت"), ("یک متانوت", "یک ایده"), ("یک نوت‌کست", "یک خلاصهٔ اپیزود"),
+    ("یک مطلب در Share Hub", "یک مطلب در مرور منابع"), ("یک لایت‌کست", "یک پرسش بیمار"),
+)
+
+
 def pulse(w, cat, cid, m):
     rel = "index.html"
     doc = w.text(rel)
@@ -1165,6 +1172,12 @@ def pulse(w, cat, cid, m):
         if phrase not in text:
             refuse("PULSE_PHRASE", "pulse link phrase is not in the pulse text")
         line = esc(text).replace(esc(phrase), f'<a href="{attr(url)}">{esc(phrase)}</a>', 1)
+    # Items frozen before the section rename (founder, 1405/08/17) still open with
+    # the old series word; the line is announced under the name readers see now.
+    for old, new in PULSE_RENAMED_LEADS:
+        if line.startswith(old + " "):
+            line = new + line[len(old):]
+            break
     mm = re.search(r'(<ul class="dc-pulse-list">)(\r?\n)(.*?)(</ul>)', doc, re.S)
     if not mm:
         refuse("PULSE_LIST", "index.html: dc-pulse-list not found")
