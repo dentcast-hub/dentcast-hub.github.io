@@ -31,7 +31,7 @@ const FOLDER_META = [
   ['dentai', 'دنت‌ای‌آی', '/sharehub/'],  // closed section (1405/07/15): its landing forwards to Share Hub
   ['chairside', 'ویزیت', '/chairside/'],
   ['metanotes', 'ایده‌ها', '/metanotes/'],
-  ['litecast', 'لایت‌کست', '/litecast/'],
+  ['litecast', 'پرسش‌های بیماران', '/litecast/'],
   ['glossary', 'دانشنامه', '/glossary/'],
   ['photocast', 'فوتوکست', '/sharehub/'],  // closed section, as above
   ['sharehub', 'مرور منابع', '/sharehub/'],

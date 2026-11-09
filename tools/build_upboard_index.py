@@ -134,7 +134,7 @@ TYPE_FA = {
     "chairside": "ویزیت",
     "dentai": "مرور منابع",
     "meta": "ایده",
-    "litecast": "لایت‌کست",
+    "litecast": "پرسش بیمار",
     "sharehub": "مرور منابع",
     "promptologist": "پرامپتولوژیست",
     "plak_sefr": "پلاک صفر",

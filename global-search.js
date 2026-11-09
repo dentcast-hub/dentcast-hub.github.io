@@ -101,7 +101,8 @@ const TYPE_MAP = {
   filterBtns.forEach(btn => { if (btn.dataset.type === "sharehub") btn.textContent = "مرور منابع";
     if (btn.dataset.type === "chairside") btn.textContent = "ویزیت";
     if (btn.dataset.type === "notecast") btn.textContent = "خلاصهٔ اپیزودها";
-    if (btn.dataset.type === "meta") btn.textContent = "ایده‌ها"; });
+    if (btn.dataset.type === "meta") btn.textContent = "ایده‌ها";
+    if (btn.dataset.type === "litecast") btn.textContent = "پرسش‌های بیماران"; });
   filterBtns.forEach(btn => {
     if (!btn.isConnected) return;
     btn.addEventListener("click", () => {
