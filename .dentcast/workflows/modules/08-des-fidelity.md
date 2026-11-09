@@ -42,11 +42,61 @@ At intake and again before Part 1, check whether the founder supplied a DES scor
 
 1. **DES supplied:** Require the complete canonical SOURCE/COMMENTARY JSON object for every cited/scored source, with original `des_version`, identity/DOI, `text_basis`, evidence quotes, calculations, score and band. A `plus/des-scores.json`-shaped packet keyed by this exact `content_id`, or that structure plus explicit same-page identity, is acceptable. Obtain or reuse the actual matching `source_text` through Part 1, without executing any DES scoring, and check the correct page/source set, exact quote substrings, source basis, spec version, arithmetic and band using Part 3. When valid, **DO NOT rerun the DES/SOURCE/COMMENTARY model calls**: preserve the founder-supplied original JSON objects verbatim for Part 4. A separate model-run receipt is **not required for a valid DES JSON**; record its public-safe provenance and validation. A number without the canonical JSON is never sufficient.
 
-2. **Fidelity supplied:** This is a separate track, not a prerequisite to accepting valid DES JSON. If complete canonical Fidelity JSON is provided for all owed source/POOLED calls, check that it matches the exact final page text or generated input blocks, identifiers, `source_text`, `text_basis`, applicable spec, scope and generated `tools/des_fidelity_units.py` assignments. Validate quotes, voting, required independent checker/tie-break/strong-reviewer receipts and founder decisions under Parts 2b/2c and Part 3. When valid, **DO NOT rerun Fidelity model calls**; preserve the JSON verbatim. If Fidelity is **not supplied** but is canonically owed, run **only the missing Fidelity calls** under Parts 2b/2c, not the already accepted DES. For COMMENTARY self-records and other lawful Fidelity exceptions, record the correct `null`/error/zero-unit outcome rather than fabricating model calls.
+2. **Fidelity supplied** (by the founder, another agent or another client — Claude, Codex, Cursor, Cowork alike): This is a separate track, not a prerequisite to accepting valid DES JSON. The one test is «Acceptance is mechanical» below: `tools/des_fidelity_units.py <content_id> --texts texts.json --accept FILE` on the final page text, for all owed source/POOLED calls. **No run receipts, model ids, preflight record or proof of independent contexts are asked for**, and their absence is never a reason to refuse. When it exits 0, **DO NOT rerun Fidelity model calls**; preserve the JSON verbatim. Units it leaves `ALTERED`/`REVERSED` go to Part 3b as usual (the founder gate is unchanged); a unit the supplier's stronger review already overruled is `MATCHES` in the JSON and is not asked again. If Fidelity is **not supplied** but is canonically owed, run **only the missing Fidelity calls** under Parts 2b/2c, not the already accepted DES. For COMMENTARY self-records and other lawful Fidelity exceptions, record the correct `null`/error/zero-unit outcome rather than fabricating model calls.
 
-3. **No supplied results:** Execute the usual Parts 1–4, including all owed DES and Fidelity calls. If a supplied track's JSON is incomplete, stale, inconsistent, from another content ID, unverifiable against actual source text, or otherwise fails Part 3, **record 4.13 as blocked** with the exact mismatch and request corrected data. **Never silently rerun the founder's supplied result** to work around a bad/missing JSON; do not label the absence as a founder «بدون DES» exemption. Partial source sets are not a completed DES packet.
+3. **No supplied results:** Execute the usual Parts 1–4, including all owed DES and Fidelity calls. If a supplied track's JSON is incomplete, stale, inconsistent, from another content ID, unverifiable against actual source text, or otherwise fails Part 3 (for Fidelity: `--accept` exits non-zero), **record 4.13 as blocked** with the exact failing rows and request corrected data. **Never silently rerun the founder's supplied result** to work around a bad/missing JSON; do not label the absence as a founder «بدون DES» exemption. Partial source sets are not a completed DES packet.
 
 4. **All paths still require gates:** Perform the complete Part 3 checks, applicable Part 3b founder fixes/decisions, Part 4 storage in `plus/des-scores.json`, and Phase F. Reused results are **not a SKIP**. Record whether DES and Fidelity were reused or executed separately. Any subsequent change to the final page body, source identity/text/basis or scoring spec invalidates the affected supplied results until verified anew. Never commit private source text or approval transcripts.
+
+<!-- fidelity-mechanical-acceptance:v1 -->
+#### Acceptance is mechanical — one rule for every agent and client (founder 2026-11-09)
+
+DES and Fidelity exist so an article can be trusted, not to make a simple article
+hard to publish. A result is trustworthy when what it says can be checked against
+the page and the source; how it was produced cannot be checked from the file at all
+(a receipt is only text an agent writes about itself). So:
+
+1. **A FIDELITY result is accepted when, and only when,**
+   `python3 tools/des_fidelity_units.py <content_id> --texts texts.json --accept FILE`
+   exits 0. `FILE` is one F5 object, a list parallel to `sources`, `{"src<k>": object}`,
+   a `voted-src<k>.json` or a whole `plus/des-scores.json` record. It checks exactly what
+   makes the result this page's and true to the source: one result per call the tool
+   owes; the claim ids are the tool's units for the final text; every `claim_quote` is
+   its unit's text byte for byte; every `source_quote` is verbatim in `source_text`;
+   verdicts and `change_kind` from the closed lists; silence verdicts match the basis;
+   counts, score, level and `provisional` recompute (Phase F's own checks). A DES
+   SOURCE/COMMENTARY record is accepted by Part 3 and `des_record_guard.py check`, the
+   same way.
+2. **No agent refuses a result that passes, for any process reason** — which agent or
+   client made it, which model, how many contexts, a missing receipt or preflight, a
+   different report layout, «not standard». A refusal names the failing `--accept` (or
+   Part 3) row; anything else is not a refusal, and the result is used as it is.
+3. **Provenance is information, never a gate.** Write the models and runs in the publish
+   report when they are known, `UNVERIFIED` when they are not.
+4. **How you produce a result yourself** stays Part 2c (two independent checker runs,
+   a tie-break where they differ, the stronger review of what is still flagged). That
+   is the producer's method; the receiver checks the result, not the method.
+5. **Nothing is added to DES/Fidelity on an agent's own initiative.** A new step, gate,
+   receipt or validation rule enters only by founder decision, and only when it catches
+   a real error seen in a published or queued article. A rule that makes the process
+   heavier without making articles more reliable is removed, not kept. The bar is «the
+   reader can trust it», not a NASA document.
+6. **Handing the work to another agent — one file.** The founder tells one agent «DES و
+   Fidelity رو اجرا کن», takes the file it gives, and hands that file to another agent
+   (Codex, Cursor, Cowork…) without anything else. The producing agent, after its vote,
+   writes the file with
+   `python3 tools/des_fidelity_units.py <content_id> --texts texts.json --fidelity <vote dir or file> [--des des.json] --pack <path outside the repo>`;
+   the packet carries the DES record, the FIDELITY result and the source texts they were
+   judged on, and `--pack` refuses a result that would not pass `--accept`. The receiving
+   agent runs `python3 tools/des_fidelity_units.py <content_id> --accept <file> --install`
+   on the same final page text: exit 0 means accepted and written into
+   `plus/des-scores.json`; then Part 3b for any unit still `ALTERED`/`REVERSED`, and Phase F
+   (which repeats the DES arithmetic, band and schema checks) as always. It reruns no model
+   call and asks for nothing else. The packet holds the papers' text: it stays outside the
+   repository and is never committed. If the receiver's page text differs from the
+   producer's, `--accept` names the sentences; only those are re-checked (Part 3b's
+   `--vote --base`), never the whole step.
+<!-- /fidelity-mechanical-acceptance:v1 -->
 
 **Order matters: this runs after 4.10 on purpose.** When a paper file was attached,
 step 4.10 Part 3 has already found and cross-checked the DOI — reuse it rather than
@@ -429,17 +479,13 @@ if a Fast variant is not available, do not invent one. If separate agents or a
 stronger reviewer are unavailable, report the missing stage; never label one
 model's repeated self-review as the completed two-tier protocol.
 
-**Mandatory model-routing preflight (before any FIDELITY checker call).** Inspect the execution environment's *actual* model/delegation controls, not the example model names above. Resolve and record (a) the exact provider/model ID and reasoning settings for the lighter checker, (b) the exact provider/model ID and reasoning settings for the stronger reviewer/adjudicator, and (c) whether independent checker contexts and per-role model selection are actually supported. When the runtime exposes separate-agent delegation and model selection (for example, `collaboration.spawn_agent` with a model override), use those controls: launch the first two checker runs as separate agents with identical inputs and isolated contexts, using the lightest capable reasoning model and its lowest suitable reasoning setting. Launch both full checker runs in parallel. Do not ask the founder to authorize this already-required routing again. Use the stronger model only for the stronger-reviewer duties below.
-
-Check available provider pricing/usage information when it is readily available, but exact price verification is not a start gate. If exact cost cannot be verified, record it as UNVERIFIED and make no precise savings claim; still use the verified lighter-model role and reasoning setting. If the runtime does not expose independent contexts, per-role model selection, or a capable lighter model, do not simulate those capabilities: report the exact missing capability and the affected stage, then ask the founder how to proceed. Never silently run all roles on the default model, or present repeated calls to one model/context as independent agents. Record the preflight outcome and actual model IDs/settings in the publish report; if the runtime does not expose actual executed model IDs, mark them UNVERIFIED rather than claiming compliance. This routing protocol does not change DES/FIDELITY scoring rules, stored JSON, or historical records.
+**Model routing (before the checker runs) — a choice, not a gate.** Use the environment's real controls: the lighter capable reasoning model for the two full checker runs, launched as separate agents (or separate processes, `agent-parity.md` «اجرای ایزوله») with identical inputs and isolated contexts, in parallel; the stronger model only for the reviewer duties below. No lighter model available ⇒ the available model takes the checker role; that is not a reason to stop or to ask. Price is never a gate. Write the model ids in the publish report when the runtime shows them, `UNVERIFIED` when it does not. The one thing that cannot be replaced is independence: if the runtime gives no separate context at all (no sub-agent, no separate process), say so under «توانمندی ندارم» and never present two answers from one context as two runs. This routing never changes the scoring rules or the stored JSON, and it is never a reason for a receiver to refuse a result (`«Acceptance is mechanical»`).
 
 <!-- fidelity-single-source-tier:v1 -->
 **DES is never tiered.** Every DES/SOURCE/COMMENTARY call above runs in full on
-every page, whatever its length or source count. Only the FIDELITY protocol
-below has one lighter tier, and only for a **single-source page**:
-`tools/des_fidelity_units.py` reports one source with a text, scope `SOURCE`, no
-recorded multi-source plan, and the body is a short founder-written or derived
-summary of that one paper. On such a page:
+every page, whatever its length or source count. The FIDELITY protocol below is
+light on **every** page (founder 2026-11-09: two agreeing runs settle a sentence);
+a single-source page is simply the case with no sweep at all:
 
 - **Step 1 is unchanged: two full checker runs, always** (its reason is in step
   1 below). `--vote` refuses fewer than two full runs.
@@ -452,27 +498,28 @@ summary of that one paper. On such a page:
   with one source the vote already records an unmatched sentence as
   `NOT_IN_SOURCE` (reported as the author's own reasoning). Do not run
   `--orphans`/`--sweep` or spend a reviewer call on it. **One paper → no sweep;
-  two or more → the sweep-first order below.**
+  two or more → the sweep is optional (below).**
 
-A multi-source page, a `POOLED` page or a long article keeps every step above
-exactly as written. Record the tier and the reason in the publish report. The
+A multi-source page, a `POOLED` page or a long article follows the same three
+lines above (two full runs, a tie-break only where they differ, the stronger review
+only of what is still flagged). The
 stored JSON (`voted-src<k>.json`, Part 4) has the same shape on either path, so
 Phase F and `tools/queue_install_des.py` read it unchanged.
 <!-- /fidelity-single-source-tier:v1 -->
 
 <!-- fidelity-sweep-first:v1 -->
-**Sweep first, then measure (founder 1405/08/15).** On a page with two or more
-sources whose text is in hand, the orphan sweep (step 5) runs **before any
-checker run**, not after the vote. This is the only statement of the order:
-the assignment (markers or a recorded founder plan) → `--orphans`, which hands
-**every body sentence** to the stronger reviewer with the text of every source →
-the reviewer's `orphans.json` → `--sweep` → `--build` of the full blocks → steps
-1–4 **once**. No sentence is judged before its source is settled, and there is
-no second sweep after the vote: a sentence the vote leaves `NOT_IN_SOURCE` was
-already looked for in every source. `tools/queue_fidelity_prep.py` follows the
-same order (it builds no checker block until the sweep is recorded). Records prepared under the earlier order keep their
-record; a later re-check of such a page uses the rule-13 `--vote --base`
-growth as before.
+**The orphan sweep is optional (founder 2026-11-09; it was mandatory and first from
+1405/08/15).** On a page with two or more sources the assignment comes from the
+tool: the sources the prose names, the declared markers
+(`.dentcast/des-source-markers.json`) or a recorded founder plan. Build the blocks
+and run steps 1–4 directly. A sentence the assignment gives to no source is not
+judged and lowers nothing; list those sentences in the report as information. The
+sweep (step 5) is a tool for when the agent or the founder wants every sentence
+looked for in every source — for example many unnamed sentences on a page with
+several papers. When it is used it runs **before** the first checker run (`--orphans`
+→ the stronger reviewer's `orphans.json` → `--sweep` → `--build`;
+`tools/queue_fidelity_prep.py --sweep-first`). Not having run it is never a reason to
+refuse a result. Records prepared under the earlier order keep their record.
 <!-- /fidelity-sweep-first:v1 -->
 
 **The model is part of the measurement:** freeze the same checker model/version
@@ -516,8 +563,8 @@ Keep historical records and their provenance unchanged.
    no review entry stays open. `--vote` prints the overruled ids; list them
    to the founder in the report as information, never as a question.
 
-5. **Orphan sweep (spec v3.5 rule 12) — on a multi-source page it runs FIRST,
-   before step 1** (the sweep-first block above).
+5. **Orphan sweep (spec v3.5 rule 12) — optional; when used, on a multi-source
+   page and before step 1** (the block above).
    `python3 tools/des_fidelity_units.py <content_id> --orphans <dir> --texts texts.json`
    lists every body sentence (headings excepted) and
    writes `<dir>/orphans-input.json` with those sentences and the text of

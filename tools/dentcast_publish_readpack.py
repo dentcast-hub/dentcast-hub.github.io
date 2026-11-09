@@ -116,6 +116,13 @@ MODULES = WORKFLOW + 'modules/'
 # moved and the §2.4–2.5 selection boundary is byte-identical.
 # Re-pinned again the same day (round 2: MetaNote → «ایده‌ها», NoteCast → «خلاصهٔ اپیزودها»):
 # the same paragraph's metanotes/notecast row examples only; no heading moved.
+# Re-pinned 2026-11-09 (founder 1405/08/18, Fidelity acceptance is mechanical): 08 rewrites
+# item 2 and one clause of item 3 of the «Conditional path for founder-supplied results»,
+# adds the bounded «#### Acceptance is mechanical» block after that path, replaces Part 2c's
+# preflight paragraphs with one «Model routing» paragraph and makes the orphan sweep
+# optional (sweep block, single-source tier block, step 5), and item 6 of that block names
+# the one-file handoff (--pack / --accept --install). All after the boundary, which
+# still occurs once with byte-identical text before it, so LiteCast/Challenge still omit them.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
@@ -123,7 +130,7 @@ PINNED_BLOBS = {
     '04-taxonomy-and-navigation.md': '46bc329065fdaa0d1677b494ecc5b7cdf7359872',
     '05-semantic-linking.md': '6ba95d74e28f1e423e034d31327d6c9351f85c20',
     '06-paper-ingestion.md': '226ff4a756418788e70afa2a19e4484c1734dedb',
-    '08-des-fidelity.md': 'c063cef49872920932db3a5e8b6f66af599ffe2f',
+    '08-des-fidelity.md': 'd3866c46d6eafb8f83985c49b33361db1aac31e2',
     '09-challenge.md': '3ac5856ddb021aa9f36cbfb35d6363531ae038c8',
     '11-build-and-version.md': '4dd05364ca5f9fd5811d7de39f172af14c592b13',
     '12-english-notify-verify.md': '5c9b65ee4416fd67607e6d35ca88272832ee86ec',

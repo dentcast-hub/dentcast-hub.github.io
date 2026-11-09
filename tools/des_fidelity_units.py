@@ -874,6 +874,127 @@ def orphan_units(units, plan, voted):
     return out
 
 
+PACKET_KIND = "dentcast-des-fidelity-packet"
+
+
+def is_packet(obj):
+    return isinstance(obj, dict) and obj.get("kind") == PACKET_KIND
+
+
+def fidelity_from(path, sources):
+    """A finished FIDELITY result as stored in plus/des-scores.json: a list parallel
+    to sources (None where no call ran) or a POOLED object. PATH is a JSON file
+    (any shape accept() takes) or a directory holding voted-src<k>.json / pooled.json."""
+    p = Path(path)
+    if p.is_dir():
+        if (p / "pooled.json").exists():
+            return json.loads((p / "pooled.json").read_text(encoding="utf-8"))
+        out = [None] * len(sources)
+        for f in p.glob("voted-src*.json"):
+            out[int(f.stem[len("voted-src"):])] = json.loads(f.read_text(encoding="utf-8"))
+        return out
+    obj = json.loads(p.read_text(encoding="utf-8"))
+    if isinstance(obj, dict) and "fidelity" in obj and "sources" in obj:
+        return obj["fidelity"]
+    if isinstance(obj, dict) and obj.get("mode") == "FIDELITY":
+        if obj.get("scope") == "POOLED":
+            return obj
+        idx = [k for k, s in enumerate(sources) if scorable(s)]
+        if len(idx) != 1:
+            sys.exit("one FIDELITY object for a page with several sources: give a list or a directory")
+        out = [None] * len(sources)
+        out[idx[0]] = obj
+        return out
+    if isinstance(obj, dict):
+        out = [None] * len(sources)
+        for k, v in obj.items():
+            out[int(str(k).removeprefix("src"))] = v
+        return out
+    return obj
+
+
+def des_quote_rows(rep, sources, texts):
+    """Part 3(1) and 3(7) on the packet's DES records: every evidence_quote is in the
+    text the packet carries, and the rating rule holds. Arithmetic, band and schema are
+    Phase F's (verify_publish.py), which runs on the installed record as always."""
+    import des_record_guard as guard  # noqa: PLC0415
+    for n, s in enumerate(sources, 1):
+        tag = f"src{n - 1}"
+        if s.get("error") or s.get("text_basis") == "CITATION_ONLY":
+            continue
+        t = texts.get(text_key(s, n))
+        if not t:
+            rep.fail("accept", f"{tag}: the packet carries no source text for {text_key(s, n)}")
+            continue
+        hay = vp.des_norm(t["source_text"])
+        research = [(s.get("s_design") or {}).get("evidence_quote")] + \
+            [d.get("evidence_quote") for d in ((s.get("q_method") or {}).get("domains") or [])] + \
+            [x.get("evidence_quote") for x in (s.get("penalties") or [])]
+        bad = [q for q in research if q and vp.des_norm(q) not in hay]
+        rep.check(not bad, "accept", f"{tag} every DES evidence_quote is verbatim in the source text",
+                  f"{tag} has {len(bad)} evidence_quote(s) not in the source text, e.g. {bad[0][:60]!r}" if bad else "",
+                  "Part 3(1) — rerun the SOURCE call, never hand-patch")
+        com = [c for c in (s.get("commentary_checklist") or []) if c.get("evidence_quote")]
+        off = [c for c in com if vp.des_norm(c["evidence_quote"]) not in hay and not c.get("note")]
+        rep.check(not off, "accept", f"{tag} commentary quotes are in the text (or carry their section note)",
+                  f"{tag} has {len(off)} commentary quote(s) in neither the text nor a noted section page",
+                  "Part 3(1)")
+        for f in guard.rating_findings(s):
+            rep.fail("accept", f"{tag} {f['code']}: {f['detail']}", "Part 3(7) — rerun and audit, never hand-patch")
+
+
+def accept(content_id, sources, units, mode, plan, packet, texts):
+    """Module 08 «Acceptance is mechanical» (founder 2026-11-09): the one test a
+    Fidelity result from any agent or client must pass. It checks only what can
+    be checked — the units are this page's, in the tool's ids; every claim_quote
+    is its unit's text; every source_quote is verbatim in the source text; the
+    verdicts, kinds, counts, score and level follow the spec (Phase F's own
+    des_check_fidelity). It never asks how the result was produced: no model
+    ids, no run receipts, no preflight. Returns a verify_publish Report."""
+    rep = vp.Report(content_id)
+    by_id = {u["id"]: u for u in units}
+    if isinstance(packet, dict) and packet.get("mode") == "FIDELITY":
+        if mode != "POOLED" and len(plan) != 1:
+            rep.fail("accept", f"one FIDELITY object for a page the tool splits into {len(plan)} calls",
+                     "give {src<k>: object} or a list parallel to sources")
+            return rep
+        packet = {"pooled": packet} if mode == "POOLED" else {k: packet for k in plan}
+    if isinstance(packet, list):
+        packet = {k: f for k, f in enumerate(packet) if f is not None}
+    if isinstance(packet, dict):
+        packet = {(k if k == "pooled" else int(str(k).removeprefix("src"))): v for k, v in packet.items()}
+    else:
+        rep.fail("accept", "the packet is not a FIDELITY object, a list parallel to sources, or {src<k>: object}")
+        return rep
+    rep.check(set(packet) == set(plan), "accept", f"one result per call the tool owes ({sorted(plan, key=str)})",
+              f"the packet holds {sorted(packet, key=str)} but the tool owes {sorted(plan, key=str)}",
+              "a result for every owed call, nothing else (Part 2b)")
+    for k in sorted(set(packet) & set(plan), key=str):
+        f, ids = packet[k], plan[k]
+        tag = "fidPOOLED" if k == "pooled" else f"fid{k}"
+        got = [c.get("id") for c in (f.get("claims") or [])]
+        rep.check(got == ids, "accept", f"{tag} judges exactly the tool's units ({len(ids)})",
+                  f"{tag} ids differ from the tool's: missing {[i for i in ids if i not in got][:8]}, "
+                  f"extra {[i for i in got if i not in ids][:8]}",
+                  "units come only from des_fidelity_units.py on the final page text")
+        drift = [c.get("id") for c in f.get("claims") or []
+                 if c.get("id") in by_id and c.get("claim_quote") != by_id[c["id"]]["text"]]
+        rep.check(not drift, "accept", f"{tag} every claim_quote is its unit's text, byte for byte",
+                  f"{tag} claim_quote differs from the page on {drift[:8]} — judged on another text",
+                  "re-check only those units (Part 3b, --build --only, --vote --base)")
+        if k == "pooled":
+            ts = [text_for(s, texts, n) for n, s in enumerate(sources, 1) if scorable(s)]
+            basis = weakest([t["text_basis"] for t in ts])
+            hay = " ".join(vp.des_norm(t["source_text"]) for t in ts)
+            scope = "POOLED"
+        else:
+            t = text_for(sources[k], texts, k + 1)
+            basis, hay, scope = sources[k].get("text_basis"), vp.des_norm(t["source_text"]), "SOURCE"
+        page_hay = vp.des_norm(" ".join(by_id[i]["text"] for i in ids if i in by_id))
+        vp.des_check_fidelity(rep, tag, f, scope, basis, page_hay, hay)
+    return rep
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("content_id")
@@ -898,8 +1019,34 @@ def main():
                     "or every call left silent and write DIR/orphans-input.json (needs --texts) for the stronger reviewer")
     ap.add_argument("--sweep", metavar="DIR", help="spec v3.5 rule 12: verify DIR/orphans.json and add each found unit "
                     "to that source in the recorded plan; prints the units to re-check and the ones found nowhere")
+    ap.add_argument("--accept", metavar="FILE", help="module 08 «Acceptance is mechanical»: check a finished "
+                    "FIDELITY result (one object, a list parallel to sources, or {src<k>: object}; a voted-src<k>.json "
+                    "or a des-scores fidelity slot) against this page and --texts; exit 0 = accepted. Asks nothing "
+                    "about how it was produced")
+    ap.add_argument("--pack", metavar="OUT", help="write ONE handoff file (DES + FIDELITY + the source texts they "
+                    "were judged on) for another agent or client; needs --texts, takes --fidelity, refuses unless the "
+                    "packet passes --accept. OUT must be outside the repository (it holds the papers' text)")
+    ap.add_argument("--fidelity", metavar="FILE_OR_DIR", help="with --pack: the finished FIDELITY result (a file, or "
+                    "the vote directory with voted-src<k>.json / pooled.json); default: the stored record's")
+    ap.add_argument("--des", metavar="FILE", help="with --pack: the DES record {scored_at, sources} when it is not "
+                    "(yet) in plus/des-scores.json")
+    ap.add_argument("--install", action="store_true", help="with --accept PACKET: once accepted, write its DES and "
+                    "FIDELITY into plus/des-scores.json under content_id (Part 4); then run Phase F as always")
     a = ap.parse_args()
-    rec = json.loads((ROOT / "plus/des-scores.json").read_text(encoding="utf-8")).get(a.content_id)
+    sp = ROOT / "plus/des-scores.json"
+    store = json.loads(sp.read_text(encoding="utf-8")) if sp.exists() else {}
+    rec = store.get(a.content_id)
+    packet = None
+    if a.accept:
+        packet = json.loads(Path(a.accept).read_text(encoding="utf-8"))
+        if is_packet(packet):
+            if packet.get("content_id") != a.content_id:
+                sys.exit(f"the packet is for {packet.get('content_id')!r}, not {a.content_id!r}")
+            rec = {**packet["des"], "fidelity": packet["fidelity"]}
+        else:
+            packet = None
+    if a.pack and a.des:
+        rec = json.loads(Path(a.des).read_text(encoding="utf-8"))
     if not rec:
         sys.exit(f"no DES record for {a.content_id}")
     if is_audio_episode(a.content_id):
@@ -910,6 +1057,63 @@ def main():
     sources = rec["sources"]
     units = split_page(a.content_id, sources)  # keeps the cut its stored record was judged on
     mode, plan = assign(units, sources, a.content_id)
+    if a.pack:
+        if not a.texts:
+            sys.exit("--pack needs --texts (the packet carries the text every quote is checked against)")
+        out = Path(a.pack).resolve()
+        if ROOT.resolve() in out.parents:
+            sys.exit("--pack OUT must be outside the repository: the packet holds the papers' text, which never "
+                     "enters public Git history")
+        texts = {k.lower(): v for k, v in json.loads(Path(a.texts).read_text(encoding="utf-8")).items()}
+        fid = fidelity_from(a.fidelity, sources) if a.fidelity else rec.get("fidelity")
+        if fid is None:
+            sys.exit("no FIDELITY result: give --fidelity (the vote directory or file)")
+        want = {text_key(s, n) for n, s in enumerate(sources, 1)
+                if not s.get("error") and s.get("text_basis") != "CITATION_ONLY"}
+        packet = {"kind": PACKET_KIND, "version": 1, "content_id": a.content_id,
+                  "des": {"scored_at": rec.get("scored_at"), "sources": sources}, "fidelity": fid,
+                  "texts": {k: v for k, v in texts.items() if k in want}}
+        if a.accept is None:
+            a.accept = "(packet)"
+    if a.accept:
+        texts = packet.get("texts") if packet else None
+        if a.texts:
+            texts = {k.lower(): v for k, v in json.loads(Path(a.texts).read_text(encoding="utf-8")).items()}
+        if texts is None:
+            sys.exit("--accept needs --texts (or a packet, which carries them)")
+        if packet:
+            fid = packet["fidelity"]
+        else:
+            fid = json.loads(Path(a.accept).read_text(encoding="utf-8"))
+            if isinstance(fid, dict) and "fidelity" in fid and "sources" in fid:
+                fid = fid["fidelity"]          # a whole des-scores record
+        rep = accept(a.content_id, sources, units, mode, plan, fid, texts)
+        if packet:
+            des_quote_rows(rep, sources, texts)
+        print(rep.render())
+        if rep.failures:
+            sys.exit(f"NOT ACCEPTED — {len(rep.failures)} mechanical check(s) failed (rows above); "
+                     "nothing else is a reason to refuse")
+        if a.pack:
+            out.write_text(json.dumps(packet, ensure_ascii=False, indent=1), encoding="utf-8")
+            print(f"PACKED {out} — hand this one file over; the receiver runs: python3 tools/des_fidelity_units.py "
+                  f"{a.content_id} --accept <file> --install")
+            return
+        print("ACCEPTED — the result is this page's and checks out mechanically; no receipt, model id or "
+              "re-run is owed (module 08, «Acceptance is mechanical»)")
+        if a.install:
+            if not packet:
+                sys.exit("--install takes a packet (--pack's file)")
+            new_rec = {**packet["des"], "fidelity": packet["fidelity"]}
+            if store.get(a.content_id) == new_rec:
+                print("plus/des-scores.json already holds exactly this record — nothing to write")
+                return
+            import queue_install_des as qi  # noqa: PLC0415  (the queue's byte-preserving writer)
+            path = ROOT / "plus/des-scores.json"
+            path.write_bytes(qi.append_entries(path, [(a.content_id, new_rec)]).encode("utf-8"))
+            print(f"INSTALLED into plus/des-scores.json[{a.content_id!r}] — Part 3b for any unit still "
+                  "ALTERED/REVERSED, then Phase F (verify_publish.py) as always")
+        return
     if a.merge:
         if mode != "POOLED":
             sys.exit("--merge is for a POOLED page")

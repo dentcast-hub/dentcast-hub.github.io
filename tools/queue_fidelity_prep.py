@@ -163,6 +163,10 @@ def main(argv=None):
     ap.add_argument("--texts", help="texts.json for --build (DOI or S<n> → source_text, text_basis)")
     ap.add_argument("--checkout", help="an existing throwaway copy (marker, no .git) instead of a new one")
     ap.add_argument("--build", help="where the input blocks go (default: <work>/blocks)")
+    ap.add_argument("--sweep-first", action="store_true",
+                    help="optional on a multi-source page (module 08 Part 2c, founder 2026-11-09): hand every body "
+                         "sentence to the stronger reviewer before the checker runs; without it the blocks are built "
+                         "from the markers' assignment at once")
     a = ap.parse_args(argv)
     if a.cleanup:
         # an empty shell variable must never widen the scope: a sweep of every
@@ -216,9 +220,9 @@ def main(argv=None):
     if warn:
         receipt["warnings"] = warn
     swept = (copy / ".dentcast/des-fidelity-plans" / f"{cid}.json").exists()
-    if a.texts and units.get("sources", 1) >= 2 and units["mode"] == "SOURCE" and not swept:
-        # module 08 Part 2c: on a multi-source page the orphan sweep runs first;
-        # no checker block is built until every sentence's source is settled
+    if a.sweep_first and a.texts and units.get("sources", 1) >= 2 and units["mode"] == "SOURCE" and not swept:
+        # module 08 Part 2c: the orphan sweep is optional (founder 2026-11-09);
+        # asked for, it runs before any checker block is built
         out = Path(a.build).resolve() if a.build else work / "blocks"
         out.mkdir(parents=True, exist_ok=True)
         r = subprocess.run([py, str(copy / "tools/des_fidelity_units.py"), cid, "--texts", str(Path(a.texts).resolve()),
