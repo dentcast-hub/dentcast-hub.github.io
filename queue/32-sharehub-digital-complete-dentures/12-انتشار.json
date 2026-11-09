@@ -1,0 +1,367 @@
+{
+  "schema": "dentcast-queue-manifest/1",
+  "category": {
+    "value": "sharehub",
+    "from": "folder name"
+  },
+  "title_fa": {
+    "value": "دنچر کامل دیجیتال؛ میلینگ یا پرینت سه‌بعدی؟",
+    "from": "02-عنوان-کپشن.md:5"
+  },
+  "caption_fa": {
+    "value": "وقتی قالب‌گیری و ثبت روابط فکی را انجام داده‌ایم، انتخاب روش ساخت چه چیزی را برای بیمار تغییر می‌دهد؟ در قسمت چهارم مجموعهٔ پروتز متحرک، دو مطالعه را از زاویهٔ ریتنشن، تجربهٔ بیمار و تعداد جلسات مرور می‌کنیم.",
+    "from": "02-عنوان-کپشن.md:9"
+  },
+  "title_en": {
+    "value": "Digital Complete Dentures: Milling or 3D Printing?",
+    "from": "06-انگلیسی.md:1"
+  },
+  "caption_en": {
+    "value": "Once the impressions and jaw relations are recorded, what does the choice of fabrication method change for the patient? In part four of the removable prosthodontics series, we review two studies through the lens of retention, patient experience, and appointment count.",
+    "from": "06-انگلیسی.md:3"
+  },
+  "body_en": {
+    "value": "Suppose a patient comes in for complete dentures. We can fabricate them conventionally, mill them from a resin block, or produce them with a 3D printer. Which method should we choose?\n\nPatients generally care little about the manufacturing method. They want dentures that stay in place during speech, let them eat, look natural, and feel comfortable.\n\nThe question is whether the fabrication method makes a difference to how the denture performs and what the patient experiences.\n\nWe will look at two papers. One is a systematic review and meta-analysis comparing milled with 3D-printed dentures. The other is a clinical study comparing milled with conventional dentures.\n\nA digital denture can still involve conventional impressions and jaw relation records. The digital steps may be limited to design and fabrication.\n\nIn conventional fabrication, polymerization of the acrylic resin can cause dimensional changes that affect base adaptation.\n\nIn milling, the denture is machined from a prepolymerized resin block. This reduces polymerization-related dimensional change during fabrication, though milling has limitations when reproducing certain complex surfaces.\n\n3D printing builds the denture layer by layer and offers more flexibility in reproducing complex shapes. Final accuracy depends on printer settings and post-processing.\n\nA difference in fabrication does not necessarily translate into a difference in clinical performance.\n\nRetention is an important measure of denture performance. It describes the denture’s resistance to forces that dislodge it from its seat.\n\nRetention also depends on border extension, the peripheral seal, saliva, and denture design. Retention and stability are distinct. A well-retained denture can still move under lateral forces.\n\nIn 2025, Khorasani and colleagues published a systematic review and meta-analysis comparing milled and 3D-printed complete dentures for retention and patient satisfaction.\n\nThere is limited evidence comparing milled and 3D-printed dentures. Three studies assessed retention and two assessed patient satisfaction. When choosing a fabrication method, we should interpret each result in light of the small number of studies behind it.\n\nMean retention was slightly higher for 3D-printed dentures, but the difference was statistically nonsignificant.\n\n[[تصویر:01]]\n\nOne might expect milled dentures to have better retention because they use prepolymerized resin. The clinical evidence did not show such an advantage.\n\nThe authors suggest that 3D printing may reproduce complex denture-base surfaces more readily. This explanation was not directly tested.\n\nThere was substantial heterogeneity, and retention measurements and fabrication details varied across studies.\n\nThe available evidence shows no clear retention advantage for either approach. A statistically nonsignificant difference does not establish equivalence.\n\nPatient satisfaction adds another perspective.\n\nWhile mean retention slightly favoured 3D printing, mean patient satisfaction tended to favour milling. That difference was also statistically nonsignificant, and heterogeneity was even greater.\n\n[[تصویر:02]]\n\nThese results illustrate that higher retention does not necessarily translate into greater patient satisfaction.\n\nA patient may be happy with retention but still have difficulty speaking or be dissatisfied with tooth arrangement, lip support, or occlusion.\n\nThe authors suggest that future studies assess satisfaction in separate domains, including comfort, stability, speech, appearance, and occlusion.\n\nMost of the included studies focused on maxillary dentures. The differences in supporting area and muscular control make it difficult to generalize the findings to mandibular dentures.\n\nDirect comparisons of milling and 3D printing still provide too little evidence to establish that either approach performs better clinically.\n\nHow do digital and conventional dentures compare?\n\nIn 2026, Rechlin and colleagues conducted a randomized crossover pilot study of 15 edentulous patients. Each patient received both conventional and milled complete dentures and wore each set for three months.\n\nThe digital protocol retained conventional impressions, conventional jaw relation records, and a try-in.\n\nThe digital workflow preserved core clinical procedures. The main difference lay in design and fabrication.\n\n[[تصویر:03]]\n\n[[تصویر:04]]\n\nThe digital protocol required four fabrication appointments, compared with six for the conventional protocol. That could matter to patients who have difficulty travelling or tolerating repeated appointments.\n\nThose appointment counts apply to this study protocol. They cannot be generalized to every digital system.\n\nThe study reported improved oral health-related quality of life from baseline with both approaches.\n\nThe median questionnaire score was 16 for milled dentures and 19 for conventional dentures. A lower score means the patient reported fewer problems. The difference was not statistically significant, and it is unclear whether patients would notice a three-point difference in everyday life.\n\n[[تصویر:05]]\n\nA change in questionnaire score may not correspond to a change that patients notice in everyday life.\n\nThe researchers also assessed retention, stability, base adaptation, border extension, occlusion, appearance, and speech.\n\nBoth denture types received acceptable overall ratings, with no statistically significant difference.\n\n[[تصویر:06]]\n\nOne patient could not tolerate the conventional denture and was highly satisfied with the milled denture. This individual result cannot establish that milled dentures are generally better tolerated.\n\nBoth denture types required occlusal and pressure-spot adjustments after delivery, with a similar extent of adjustment.\n\nDigital fabrication still requires checking border extension, tissue pressure, and occlusal contacts.\n\nThis was a small pilot study with three months of wear per denture. The clinical assessor knew the fabrication method, and questionnaire data were incomplete.\n\nThe study cannot establish long-term durability or definitive equivalence.\n\nWhat do these findings mean for clinical decisions?\n\nMilling and 3D printing differ in how they manufacture dentures, while evidence for a clear advantage in retention or patient satisfaction remains insufficient.\n\nMilled dentures had short-term clinical performance comparable to conventional dentures in the Rechlin study. The digital protocol required fewer appointments, and the study detected no statistically significant difference in quality of life or overall clinical scores.\n\nRetention, stability, and patient satisfaction describe distinct outcomes. A denture that takes more force to dislodge may still be uncomfortable.\n\nA reliable digital workflow with fewer visits can be a reasonable option for patients who have difficulty travelling. For patients with severely resorbed ridges, complex tissue conditions, or limited muscular control, these two studies cannot establish that milling or printing will necessarily yield a better result.\n\nKeeping a digital file may allow the denture to be reproduced later. These studies did not evaluate the clinical impact of that capability. Fewer visits do not automatically mean lower total treatment costs.\n\nThe choice between conventional, milled, and printed dentures starts with the patient’s circumstances and a reliable workflow.\n\nImpressions, jaw relation records, base design, tooth position, and occlusal adjustment remain important regardless of the fabrication method.\n\nTechnology can change how we fabricate a denture. The evidence here has yet to show that a change in fabrication alone necessarily improves clinical outcomes.\n\n**What benefit would this technology offer my patient that the previous method would not?**",
+    "from": "06-انگلیسی.md:6-120"
+  },
+  "images": {
+    "value": [
+      {
+        "n": "01",
+        "file": {
+          "value": "03-تصاویر/01-khorasani-fig2-retention-forest.webp",
+          "from": "03-تصاویر/تصاویر.md:6"
+        },
+        "alt_fa": {
+          "value": "ریتنشن دنچرهای پرینت‌شده و میل‌شده در متاآنالیز.",
+          "from": "03-تصاویر/تصاویر.md:8"
+        },
+        "alt_en": {
+          "value": "Forest plot of retention for 3D-printed and milled dentures.",
+          "from": "03-تصاویر/تصاویر.md:9"
+        },
+        "caption_fa": {
+          "value": "تصویر 1. مقایسهٔ ریتنشن دنچرهای پرینت‌شده و میل‌شده. منبع: خراسانی و همکاران 2025، شکل 2، CC BY-NC-ND 4.0.",
+          "from": "03-تصاویر/تصاویر.md:10"
+        },
+        "caption_en": {
+          "value": "Figure 1. Comparison of retention for 3D-printed and milled dentures. Source: Khorasani et al. 2025, Fig. 2, CC BY-NC-ND 4.0.",
+          "from": "06-انگلیسی.md:123"
+        }
+      },
+      {
+        "n": "02",
+        "file": {
+          "value": "03-تصاویر/02-khorasani-fig4-satisfaction-forest.webp",
+          "from": "03-تصاویر/تصاویر.md:18"
+        },
+        "alt_fa": {
+          "value": "رضایت بیماران از دنچرهای پرینت‌شده و میل‌شده در متاآنالیز.",
+          "from": "03-تصاویر/تصاویر.md:20"
+        },
+        "alt_en": {
+          "value": "Forest plot of patient satisfaction with 3D-printed and milled dentures.",
+          "from": "03-تصاویر/تصاویر.md:21"
+        },
+        "caption_fa": {
+          "value": "تصویر 2. مقایسهٔ رضایت بیماران از دنچرهای پرینت‌شده و میل‌شده. منبع: خراسانی و همکاران 2025، شکل 4، CC BY-NC-ND 4.0.",
+          "from": "03-تصاویر/تصاویر.md:22"
+        },
+        "caption_en": {
+          "value": "Figure 2. Comparison of patient satisfaction with 3D-printed and milled dentures. Source: Khorasani et al. 2025, Fig. 4, CC BY-NC-ND 4.0.",
+          "from": "06-انگلیسی.md:124"
+        }
+      },
+      {
+        "n": "03",
+        "file": {
+          "value": "03-تصاویر/03-rechlin-fig8-conventional-dentures.webp",
+          "from": "03-تصاویر/تصاویر.md:30"
+        },
+        "alt_fa": {
+          "value": "نمونهٔ دنچر کامل سنتی.",
+          "from": "03-تصاویر/تصاویر.md:32"
+        },
+        "alt_en": {
+          "value": "Example of conventional complete dentures.",
+          "from": "03-تصاویر/تصاویر.md:33"
+        },
+        "caption_fa": {
+          "value": "تصویر 3. نمونهٔ دنچر کامل سنتی در مطالعه. منبع: Rechlin و همکاران 2026، شکل 8، CC BY 4.0.",
+          "from": "03-تصاویر/تصاویر.md:34"
+        },
+        "caption_en": {
+          "value": "Figure 3. Example of conventional complete dentures from the study. Source: Rechlin et al. 2026, Fig. 8, CC BY 4.0.",
+          "from": "06-انگلیسی.md:125"
+        }
+      },
+      {
+        "n": "04",
+        "file": {
+          "value": "03-تصاویر/04-rechlin-fig12-digital-dentures.webp",
+          "from": "03-تصاویر/تصاویر.md:42"
+        },
+        "alt_fa": {
+          "value": "نمونهٔ دنچر کامل میل‌شده.",
+          "from": "03-تصاویر/تصاویر.md:44"
+        },
+        "alt_en": {
+          "value": "Example of milled complete dentures.",
+          "from": "03-تصاویر/تصاویر.md:45"
+        },
+        "caption_fa": {
+          "value": "تصویر 4. نمونهٔ دنچر کامل میل‌شده در مطالعه. منبع: Rechlin و همکاران 2026، شکل 12، CC BY 4.0.",
+          "from": "03-تصاویر/تصاویر.md:46"
+        },
+        "caption_en": {
+          "value": "Figure 4. Example of milled complete dentures from the study. Source: Rechlin et al. 2026, Fig. 12, CC BY 4.0.",
+          "from": "06-انگلیسی.md:126"
+        }
+      },
+      {
+        "n": "05",
+        "file": {
+          "value": "03-تصاویر/05-rechlin-fig13-ohip-scores.webp",
+          "from": "03-تصاویر/تصاویر.md:54"
+        },
+        "alt_fa": {
+          "value": "توزیع امتیازهای OHIP-G49 در شکل ۱۳ مطالعه.",
+          "from": "03-تصاویر/تصاویر.md:56"
+        },
+        "alt_en": {
+          "value": "Distribution of OHIP-G49 scores in the study’s Figure 13.",
+          "from": "03-تصاویر/تصاویر.md:57"
+        },
+        "caption_fa": {
+          "value": "تصویر 5. امتیازهای OHIP-G49 طبق برچسب‌های شکل مقاله. ترتیب دریافت پروتزها در مطالعه تصادفی بود. منبع: Rechlin و همکاران 2026، شکل 13، CC BY 4.0.",
+          "from": "03-تصاویر/تصاویر.md:58"
+        },
+        "caption_en": {
+          "value": "Figure 5. OHIP-G49 scores as labelled in the source figure. The order of denture delivery was randomized. Source: Rechlin et al. 2026, Fig. 13, CC BY 4.0.",
+          "from": "06-انگلیسی.md:127"
+        }
+      },
+      {
+        "n": "06",
+        "file": {
+          "value": "03-تصاویر/06-rechlin-fig15-clinical-evaluation.webp",
+          "from": "03-تصاویر/تصاویر.md:66"
+        },
+        "alt_fa": {
+          "value": "نمودار زوجی ارزیابی کلینیکی دنچرهای سنتی و میل‌شده.",
+          "from": "03-تصاویر/تصاویر.md:68"
+        },
+        "alt_en": {
+          "value": "Paired plot of clinical scores for conventional and milled dentures.",
+          "from": "03-تصاویر/تصاویر.md:69"
+        },
+        "caption_fa": {
+          "value": "تصویر 6. ارزیابی کلینیکی دنچرهای سنتی و میل‌شده. امتیاز کمتر نشان‌دهندهٔ ارزیابی بهتر است. منبع: Rechlin و همکاران 2026، شکل 15، CC BY 4.0.",
+          "from": "03-تصاویر/تصاویر.md:70"
+        },
+        "caption_en": {
+          "value": "Figure 6. Clinical evaluation of conventional and milled dentures. Lower scores indicate better evaluations. Source: Rechlin et al. 2026, Fig. 15, CC BY 4.0.",
+          "from": "06-انگلیسی.md:128"
+        }
+      }
+    ],
+    "from": "03-تصاویر/تصاویر.md"
+  },
+  "credit": {
+    "value": {
+      "mode": "references",
+      "items": [
+        {
+          "label_fa": "مرور سیستماتیک مقایسهٔ دنچر کامل پرینت‌شده و میل‌شده (خراسانی و همکاران، ۲۰۲۵)",
+          "label_en": "Systematic review of 3D-printed versus milled complete dentures (Khorasani et al., 2025)",
+          "href": "https://doi.org/10.1016/j.identj.2024.11.007",
+          "from": "04-منبع/منابع.md:17"
+        },
+        {
+          "label_fa": "پایلوت تصادفی مقایسهٔ دنچر کامل میل‌شده و سنتی (Rechlin و همکاران، ۲۰۲۶)",
+          "label_en": "Randomized pilot comparing milled and conventional complete dentures (Rechlin et al., 2026)",
+          "href": "https://doi.org/10.3390/dj14040221",
+          "from": "04-منبع/منابع.md:18"
+        }
+      ]
+    },
+    "from": "04-منبع/منابع.md:13"
+  },
+  "catalog": {
+    "value": [
+      {
+        "title": "Are There Clinical Differences Between 3D-Printed and Milled Complete Dentures? A Systematic Review and Meta-analysis",
+        "file_name": "Are There Clinical Differences Between 3D-Printed and Milled Complete Dentures? A Systematic Review and Meta-Analysis.pdf",
+        "topic": "complete denture",
+        "topic_path": "complete denture",
+        "type": "systematic review and meta-analysis",
+        "local_path": "",
+        "file_size": 1365082,
+        "key_finding": "Pooled differences between printed and milled complete dentures were not statistically significant for retention or patient satisfaction.",
+        "clinical_bottom_line": "Sparse, heterogeneous data do not establish clinical equivalence.",
+        "drive_link": "https://drive.google.com/file/d/1B7KBsNzeO4by4kuBucaYUzpkw7pQ298o/view",
+        "status": "linked",
+        "drive_download": "https://drive.google.com/uc?export=download&id=1B7KBsNzeO4by4kuBucaYUzpkw7pQ298o",
+        "drive_view": "https://drive.google.com/file/d/1B7KBsNzeO4by4kuBucaYUzpkw7pQ298o/view",
+        "drive_id": "1B7KBsNzeO4by4kuBucaYUzpkw7pQ298o",
+        "tags": [
+          "complete-denture",
+          "3d-printing",
+          "milling",
+          "denture-retention",
+          "patient-satisfaction",
+          "systematic-review",
+          "meta-analysis",
+          "topic:complete-denture",
+          "are-there-clinical-differences-between-3d-printed-and-milled-complete-dentures-a-systematic-review-and-meta-analysis"
+        ],
+        "name_bucket": "meaningful",
+        "semantic_tagged": true,
+        "real_title": "Are There Clinical Differences Between 3D-Printed and Milled Complete Dentures? A Systematic Review and Meta-analysis",
+        "doi": "10.1016/j.identj.2024.11.007",
+        "journal": "International Dental Journal",
+        "crossref_year": 2025,
+        "subjects": [],
+        "abstract": "",
+        "display_title": "Are There Clinical Differences Between 3D-Printed and Milled Complete Dentures? A Systematic Review and Meta-analysis",
+        "authors": [
+          "Erfan Khorasani",
+          "Aida Mokhlesi",
+          "Sarah Arzani",
+          "Safoura Ghodsi",
+          "Seyed Ali Mosaddad"
+        ]
+      },
+      {
+        "title": "Clinical Performance and Patients’ Satisfaction of Digitally Versus Conventionally Fabricated Dentures: A Randomized Controlled Pilot Study",
+        "file_name": "Clinical Performance and Patients’ Satisfaction of Digitally Versus Conventionally Fabricated Dentures: A Randomized Controlled Pilot Study.pdf",
+        "topic": "complete denture",
+        "topic_path": "complete denture",
+        "type": "randomized crossover pilot trial",
+        "local_path": "",
+        "file_size": 4543200,
+        "key_finding": "In a 15-participant randomized crossover pilot, both protocols had acceptable short-term results. Fabrication required four appointments for milled dentures and six for conventional dentures.",
+        "clinical_bottom_line": "Interpret the comparative results in light of the small pilot sample and short follow-up.",
+        "drive_link": "https://drive.google.com/file/d/18nj-GJmVz4wKTeQ_KaAVGUlFKWakZQCv/view",
+        "status": "linked",
+        "drive_download": "https://drive.google.com/uc?export=download&id=18nj-GJmVz4wKTeQ_KaAVGUlFKWakZQCv",
+        "drive_view": "https://drive.google.com/file/d/18nj-GJmVz4wKTeQ_KaAVGUlFKWakZQCv/view",
+        "drive_id": "18nj-GJmVz4wKTeQ_KaAVGUlFKWakZQCv",
+        "tags": [
+          "complete-denture",
+          "digital-workflow",
+          "milling",
+          "clinical-trial",
+          "oral-health-related-quality-of-life",
+          "topic:complete-denture",
+          "clinical-performance-and-patients-satisfaction-of-digitally-versus-conventionally-fabricated-dentures-a-randomized-controlled-pilot-study"
+        ],
+        "name_bucket": "meaningful",
+        "semantic_tagged": true,
+        "real_title": "Clinical Performance and Patients’ Satisfaction of Digitally Versus Conventionally Fabricated Dentures: A Randomized Controlled Pilot Study",
+        "doi": "10.3390/dj14040221",
+        "journal": "Dentistry Journal",
+        "crossref_year": 2026,
+        "subjects": [],
+        "abstract": "Background/Objectives: Although digital workflows for complete denture fabrication are increasingly implemented in clinical practice, randomized controlled pilot trials directly comparing their clinical performance and patient satisfaction with conventional complete dentures (CCDs) remain scarce. This study aimed to compare patient satisfaction and clinical effectiveness between conventionally and digitally fabricated complete dentures (DCDs). Methods: In the present exploratory randomized controlled clinical pilot study using a cross-over design, 15 edentulous patients received both a conventionally fabricated and a digitally fabricated complete denture in randomized order. Each denture was worn for a three-month adaptation period. Patients were blinded to the fabrication method. Oral health-related quality of life was assessed using the OHIP-G49 questionnaire, and clinical performance was evaluated using standardized criteria at baseline, after three months with the first denture, and after three months with the second denture. Results: Both fabrication methods yielded satisfactory clinical outcomes in all patients. All 15 patients rated the DCDs as highly satisfactory, while 14 patients rated the CCDs equally favorably; one patient was unable to tolerate the conventional denture. DCDs demonstrated a slight but consistent advantage in oral health-related quality of life (OHRQoL) scores. Conclusions: Both conventional and digital complete dentures are clinically effective and well accepted by edentulous patients. However, DCDs offer a modest improvement in patient satisfaction and OHRQoL. Digitally fabricated complete dentures provide comparable clinical results to conventional methods while offering potential advantages in patient comfort and perceived quality of life. Given the exploratory nature of the study and the limited sample size, the results should be interpreted with caution and primarily serve to inform future, adequately powered randomized clinical trials.",
+        "display_title": "Clinical Performance and Patients’ Satisfaction of Digitally Versus Conventionally Fabricated Dentures: A Randomized Controlled Pilot Study",
+        "authors": [
+          "Jonas Rechlin",
+          "Florian Beuer",
+          "Robert Nicic",
+          "Rebecca Noetzel",
+          "Wolfgang Hannak",
+          "Elisabeth Prause"
+        ]
+      }
+    ],
+    "from": "04-منبع/کاتالوگ.json"
+  },
+  "hashtags": {
+    "value": [
+      "#مرور_منابع",
+      "#Curated_Content",
+      "#پرینت_سه_بعدی",
+      "#بیمار_بی_دندان",
+      "#پروتز_متحرک",
+      "#CAD_CAM",
+      "#تصمیم_درمانی"
+    ],
+    "from": "07-ورودی‌ها.md:13"
+  },
+  "mint": {
+    "value": [],
+    "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+  },
+  "pillar": {
+    "value": {
+      "primary": "removable-pros",
+      "subtopic": "complete-dentures",
+      "secondary": []
+    },
+    "from": "07-ورودی‌ها.md:10"
+  },
+  "pulse": {
+    "value": {
+      "text": null,
+      "link_phrase": "دنچر کامل دیجیتال؛ میلینگ یا پرینت سه‌بعدی؟"
+    },
+    "from": "07-ورودی‌ها.md:14"
+  },
+  "keywords": {
+    "value": [
+      "digital complete dentures",
+      "conventional complete dentures",
+      "milled complete dentures",
+      "3D-printed complete dentures",
+      "denture retention",
+      "denture stability",
+      "patient satisfaction",
+      "oral health-related quality of life",
+      "OHIP-G49",
+      "denture fabrication appointments",
+      "post-insertion adjustments"
+    ],
+    "from": "09-کلیدواژه‌ها.md"
+  },
+  "links_48": {
+    "value": [],
+    "from": "11-لینک‌های-گلاسری.md:12"
+  },
+  "backlinks_47": {
+    "value": [],
+    "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+  },
+  "explore_49": {
+    "value": [
+      {
+        "href": "queue:21",
+        "label": "آیا می‌توان دهان بی‌دندان را واقعاً دیجیتال ثبت کرد؟",
+        "from": "11-لینک‌های-گلاسری.md:21"
+      },
+      {
+        "href": "queue:27",
+        "label": "فریم‌ورک RPD؛ آیا پرینت سه‌بعدی فلز واقعاً بهتر از ریخته‌گری است؟",
+        "from": "11-لینک‌های-گلاسری.md:22"
+      },
+      {
+        "href": "queue:22",
+        "label": "طراحی دیجیتال پروتز پارسیل متحرک",
+        "from": "11-لینک‌های-گلاسری.md:24"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md:19"
+  },
+  "pathway": {
+    "value": null,
+    "from": "default: mechanical pathway rule"
+  },
+  "author": {
+    "value": null,
+    "from": "not in the legacy contract"
+  },
+  "legacy_review": {
+    "value": null,
+    "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+  }
+}
