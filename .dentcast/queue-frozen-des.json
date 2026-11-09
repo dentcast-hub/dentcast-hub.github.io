@@ -261,5 +261,23 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "metanotes/meta-23": {
+    "queue_ref": "queue/15-metanote-ferrule-quality-partial-abutment",
+    "record_sha256": "0f22e466e2bc72980e1bd07697767db8691627f60f06acf41857b5ddb8c269a4",
+    "installed_at": "2026-11-09",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }
