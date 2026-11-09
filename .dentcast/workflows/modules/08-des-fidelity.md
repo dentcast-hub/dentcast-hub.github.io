@@ -129,7 +129,7 @@ It compares DOIs case-insensitively (a `https://doi.org/` prefix is ignored), re
 queue with `git show origin/queue:…` (or `--queue-dir <queue/>` on disk) and writes
 nothing. Then:
 
-- **A stored record with the same `text_basis`, stamped with the current spec (3.6), that
+- **A stored record with the same `text_basis`, stamped with the current spec (3.7, or 3.6: 3.7 moved no score), that
   passes Part 3 (including (7)) is reused verbatim** — no SOURCE call, no rerun. Copy the
   object byte for byte into this page's `sources`; record «reused from <content_id or
   queue item>, index <i>, sha256 <…>» in the run report (queue: `اجرا.md`). Part 2d's
@@ -234,21 +234,21 @@ editing the echo in the run outputs afterwards.
 
 #### Part 2 — Run the prompt file
 
-**Load `.dentcast/dentcast-evidence-score-v3.6.md` as the system prompt — the whole
+**Load `.dentcast/dentcast-evidence-score-v3.7.md` as the system prompt — the whole
 file, verbatim, minus the appendix.** That cut already exists:
-`.dentcast/des-v3.6-knowledge.md`, byte for byte. Pass that file; never cut the
+`.dentcast/des-v3.7-knowledge.md`, byte for byte. Pass that file; never cut the
 appendix yourself (a hand cut keeps a trailing blank line, so its digest differs
 from every other run's).
 
 <!-- des-system-prompt-run:v1 -->
 **How the SOURCE call is run: the spec file IS the system prompt.** One fresh,
 tool-less process per input block, started in an empty directory, with
-`.dentcast/des-v3.6-knowledge.md` as its system prompt and the Step 0 block (below)
+`.dentcast/des-v3.7-knowledge.md` as its system prompt and the Step 0 block (below)
 as its only user turn. The model is the **stronger reviewer role** of Part 2c's table.
 Claude Code (flags verified with `claude --help`, CLI 2.1.319, 2026-11-07):
 
 ```bash
-cd "$(mktemp -d)" && claude -p --system-prompt-file <repo>/.dentcast/des-v3.6-knowledge.md \
+cd "$(mktemp -d)" && claude -p --system-prompt-file <repo>/.dentcast/des-v3.7-knowledge.md \
   --tools "" --model <stronger model, e.g. opus> --no-session-persistence --output-format json \
   < block.txt > out.json        # the object is out.json's "result"; the model actually used is in "modelUsage"
 ```
@@ -272,10 +272,16 @@ five runs, rated `missing data` `high` and landed on 36/D in all five.
 <!-- /des-system-prompt-run:v1 -->
 
 <!-- des-version-history:v1 -->
-**v3.6 is the current spec.** What each earlier version changed is in
+**v3.7 is the current spec.** What each earlier version changed is in
 `.dentcast/workflows/des-version-history.md`. Read it when you validate,
-re-score or compare a record stamped below 3.6; a new 3.6 run does not need it.
+re-score or compare a record stamped below 3.6; a new 3.7 run does not need it.
 These rules stay binding here:
+
+- v3.7 only adds `source_kind: "manufacturer"` (a maker's own brochure,
+  instructions for use or product guide that reports no study: `NOT_APPRAISABLE`,
+  no score, FIDELITY as usual, text in hand required). No RESEARCH score moves,
+  so a 3.6 record is the same measurement as a 3.7 one (Part 1 reuses it;
+  `compare` reads it as comparable); `"manufacturer"` is legal only on a 3.7 stamp.
 
 - A record stamped 3.5 stays valid under 3.5 and is never re-labelled 3.6; a
   paper is scored under 3.6 only by a new run (Part 1: an older stamp is not
@@ -460,7 +466,7 @@ in Part 4.
 #### Part 2c — How the FIDELITY call is run: two independent checker runs, a tie-break, a stronger reviewer
 
 The FIDELITY call is an independent agent per input block, reading
-`.dentcast/des-v3.6-knowledge.md` (the spec minus its appendix) as its
+`.dentcast/des-v3.7-knowledge.md` (the spec minus its appendix) as its
 instruction and the block as its user turn. **The roles are provider-neutral:**
 choose a capable, lighter reasoning model as the **checker**, and a stronger
 reasoning model as the **reviewer/adjudicator**. Sonnet and Opus are the
@@ -619,7 +625,7 @@ multiplier or edits the record.
 ```bash
 python3 tools/des_record_guard.py audit-build <des.json> --texts texts.json --out <dir>
 #   <dir>/audit-system.md        the audit instruction + the spec's Step 3 rules (3a–3b-ii), verbatim from
-#                                .dentcast/des-v3.6-knowledge.md — the system prompt
+#                                .dentcast/des-v3.7-knowledge.md — the system prompt
 #   <dir>/audit-input-src<k>.json one block per RESEARCH source (record + source_text)
 cd "$(mktemp -d)" && claude -p --system-prompt-file <dir>/audit-system.md --tools "" \
   --model <stronger model> < <dir>/audit-input-src<k>.json > <dir>/audit-src<k>.json
@@ -831,9 +837,14 @@ never a «بله» to the others.
   id by its exact text, carries its verdict, and builds blocks for the caption
   units alone; run those by Part 2c (two runs, a tie-break where they differ, a
   stronger review of anything flagged), then `--vote <dir2> --base <dir1>`, which
-  applies the same mapping. Both refuse when anything but a caption moved — a
-  body sentence changed, split, joined or vanished, a new unit that is not a
-  caption, or a recorded plan in `.dentcast/des-fidelity-plans/` that names the
+  applies the same mapping. The language toggle's label («English», `<a
+  class="lang-btn">` after the h1) is carried the same way: a result made on a
+  preview without it (an outside client's draft, publish-queue item 33) is one
+  id off on the final page; `--carry` re-keys the result and writes the toggle
+  as `NOT_A_CLAIM` itself (a link label is never a claim; no model call), and
+  with `--build DIR` and no caption to judge writes `DIR/voted-src<k>.json`. Both refuse when anything else moved — a body sentence changed,
+  split, joined or vanished, a new unit that is neither a caption nor the
+  toggle, or a recorded plan in `.dentcast/des-fidelity-plans/` that names the
   old ids — and then the full step runs again.
 - **A source text that grows** (spec v3.5 rule 14 — the founder adds pages to an
   excerpt): pass the new `texts.json` with `--vote <dir2> --base <dir1> --texts

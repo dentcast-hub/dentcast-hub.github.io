@@ -292,7 +292,14 @@ def sentences(line):
 
 
 CMARK = "\x02"
-INTERNAL = ("para", "caption")  # unit keys that never reach an input block
+LMARK = "\x03"
+# Site chrome inside the article region: the fa/en toggle (`<a class="lang-btn">`,
+# «English») sits after the h1 on every ShareHub-style page and becomes a unit of
+# its own. A FIDELITY result made on a preview without the toggle (an outside
+# client's draft, publish-queue item 33) is the same judgement on the same
+# sentences, one id off; `--carry` treats the toggle like an added caption.
+LANG_BTN = re.compile(r'(?is)<a\b[^>]*\bclass="[^"]*\blang-btn\b[^"]*"[^>]*>(.*?)</a>')
+INTERNAL = ("para", "caption", "chrome")  # unit keys that never reach an input block
 
 
 STORED = object()  # split_page(): read the page's own record from plus/des-scores.json
@@ -315,9 +322,10 @@ def stored_fidelity(content_id):
 
 def split_page(content_id, sources, legacy=None, fidelity=STORED):
     """The page's units in reading order. A unit cut from a <figcaption>
-    carries `caption: True` (internal, like `para`: never in an input block),
-    so a re-check after captions were added can tell them from body text
-    (`--carry`).
+    carries `caption: True`, and the language toggle's label `chrome: True`
+    (internal, like `para`: never in an input block), so a re-check after
+    captions or the toggle were added can tell them from body text (`--carry`).
+    Neither flag changes a unit's text or id.
 
     Which cut (`split_for`): a page whose FIDELITY record was judged on the
     cut before `sentences()` keeps that cut, so no stored id moves — for every
@@ -331,6 +339,7 @@ def split_page(content_id, sources, legacy=None, fidelity=STORED):
     reg = vp.article_region(doc)
     reg = re.sub(r"(?is)<h[1-6]\b[^>]*>(.*?)</h[1-6]>",
                  lambda m: "\n" + HMARK + re.sub(r"<[^>]+>", "", m.group(1)).replace("\n", " ") + "\n", reg)
+    reg = LANG_BTN.sub(lambda m: "\n" + LMARK + re.sub(r"<[^>]+>", "", m.group(1)).replace("\n", " ") + "\n", reg)
     reg = re.sub(r"(?is)<figcaption\b[^>]*>(.*?)</figcaption>",
                  lambda m: "\n" + CMARK + re.sub(r"<[^>]+>", "", m.group(1)).replace("\n", " ") + "\n", reg)
     reg = BLOCK_TAGS.sub("\n", reg)
@@ -339,7 +348,8 @@ def split_page(content_id, sources, legacy=None, fidelity=STORED):
     for raw in lines:
         is_h = raw.lstrip().startswith(HMARK)
         is_c = raw.lstrip().startswith(CMARK)
-        line = re.sub(r"[ \t\r]+", " ", raw.replace(HMARK, "").replace(CMARK, "")).strip()
+        is_l = raw.lstrip().startswith(LMARK)
+        line = re.sub(r"[ \t\r]+", " ", raw.replace(HMARK, "").replace(CMARK, "").replace(LMARK, "")).strip()
         if not line:
             continue
         if stop_line(line, sources):
@@ -351,6 +361,8 @@ def split_page(content_id, sources, legacy=None, fidelity=STORED):
                 u["heading"] = True
             if is_c:
                 u["caption"] = True
+            if is_l:
+                u["chrome"] = True
             units.append(u)
     return units
 
@@ -764,12 +776,13 @@ def caption_carry(base_claims, page_units):
     claims with today's units of the same source by their exact text (the
     claim_quote is the unit, byte for byte) and return (mapping old id → new
     id, the new caption ids, problems). Only inserted <figcaption> units are
-    new; any base claim that is gone, changed, split or joined, and any new
-    unit that is not a caption, is a problem — then nothing is carried and the
+    new — and the language toggle's label (`chrome`), which a result made on a
+    preview without it lacks (publish-queue item 33); any base claim that is
+    gone, changed, split or joined, and any new unit that is neither, is a problem — then nothing is carried and the
     full step runs again."""
     old_t = [c.get("claim_quote") for c in base_claims]
     new_t = [u["text"] for u in page_units]
-    mapping, new, problems = {}, [], []
+    mapping, new, problems, chrome = {}, [], [], []
     sm = difflib.SequenceMatcher(None, old_t, new_t, autojunk=False)
     for tag, i1, i2, j1, j2 in sm.get_opcodes():
         if tag == "equal":
@@ -781,20 +794,49 @@ def caption_carry(base_claims, page_units):
         for u in page_units[j1:j2]:
             if u.get("caption") and tag == "insert":
                 new.append(u["id"])
+            elif u.get("chrome") and tag == "insert":
+                chrome.append(u)
             else:
-                problems.append(f"{u['id']} «{u['text'][:60]}» is new and is not a figure caption")
-    return mapping, new, problems
+                problems.append(f"{u['id']} «{u['text'][:60]}» is new and is not a figure caption "
+                                "(nor the language toggle)")
+    return mapping, new, problems, chrome
+
+
+def chrome_claim(u):
+    """The language toggle's label is site chrome, not a sentence of the article: its
+    verdict is NOT_A_CLAIM by definition (every stored record says so), so --carry
+    writes it without a model call (founder 2026-11-09, publish-queue item 33)."""
+    return {"id": u["id"], "claim_quote": u["text"], "verdict": "NOT_A_CLAIM", "change_kind": None,
+            "source_quote": "", "source_ref": None, "note": "language toggle label (site chrome)"}
+
+
+def refold(base, claims):
+    """base with these claims and its counts, score, level and Persian lines recomputed."""
+    vs = [c["verdict"] for c in claims]
+    counts = {"matches": vs.count("MATCHES"), "altered": vs.count("ALTERED"), "reversed": vs.count("REVERSED"),
+              "not_in_source": vs.count("NOT_IN_SOURCE"), "not_assessable": vs.count("NOT_ASSESSABLE"),
+              "author_view": vs.count("AUTHOR_VIEW"), "not_a_claim": vs.count("NOT_A_CLAIM")}
+    version = base.get("des_version")
+    assessable, score, level = vp.des_fidelity_recompute(counts, version)
+    fact, interp = compose_fa(claims, counts, assessable, level, version, pooled=False)
+    return {**base, "claims": claims, "counts": counts, "assessable": assessable,
+            "fidelity_score": score, "level": level, "fact_fa": fact, "interpretation_fa": interp}
 
 
 def carry_base(base, page_units, k):
     """The base re-keyed to today's ids when captions were added (caption_carry);
     returns (base, new caption ids). Refuses with the reason otherwise."""
-    mapping, new, problems = caption_carry(base["claims"], page_units)
+    mapping, new, problems, chrome = caption_carry(base["claims"], page_units)
     if problems:
-        sys.exit(f"src{k}: only figure captions may be added between the base and the page — "
+        sys.exit(f"src{k}: only figure captions (and the language toggle) may be added between the base and the page — "
                  + "; ".join(problems[:6]) + (f"; and {len(problems) - 6} more" if len(problems) > 6 else "")
                  + " — run the full step again")
-    return {**base, "claims": [{**c, "id": mapping[c["id"]]} for c in base["claims"]]}, new
+    claims = [{**c, "id": mapping[c["id"]]} for c in base["claims"]]
+    if chrome:
+        order = {u["id"]: n for n, u in enumerate(page_units)}
+        claims = sorted(claims + [chrome_claim(u) for u in chrome], key=lambda c: order[c["id"]])
+        return refold(base, claims), new
+    return {**base, "claims": claims}, new
 
 
 def carried_base(content_id, base, page_units, k):
@@ -804,8 +846,8 @@ def carried_base(content_id, base, page_units, k):
     rules then apply, unchanged)."""
     if [c["id"] for c in base["claims"]] == [u["id"] for u in page_units]:
         return base, []
-    _m, new, _p = caption_carry(base["claims"], page_units)
-    if not new:
+    _m, new, _p, chrome = caption_carry(base["claims"], page_units)
+    if not new and not chrome:
         return base, []
     if content_id and plan_path(content_id).exists():
         sys.exit(f"src{k}: {plan_path(content_id).relative_to(ROOT)} names the old page's unit ids — captions added "
@@ -1320,9 +1362,19 @@ def main():
                                  "renumbered": sum(c["id"] != m["id"] for c, m in zip(base["claims"], moved["claims"])),
                                  "judge_now": new}
             todo += new
+            old_q = {c["claim_quote"] for c in base["claims"]}
+            report[f"src{k}"]["chrome_not_a_claim"] = [c["id"] for c in moved["claims"] if c["claim_quote"] not in old_q
+                                                       and c["verdict"] == "NOT_A_CLAIM" and c["id"] not in new]
+            if not new and a.build:
+                # nothing for a model to judge: the carried result is the vote
+                Path(a.build).mkdir(parents=True, exist_ok=True)
+                (Path(a.build) / f"voted-src{k}.json").write_text(json.dumps(moved, ensure_ascii=False, indent=1) + "\n",
+                                                                 encoding="utf-8")
         print(json.dumps({"carry": report, "units_on_page": len(units),
                           "next": "two checker runs over the blocks of judge_now only, then "
-                                  f"--vote DIR --base {a.carry}" if todo else "nothing new: the base stands"},
+                                  f"--vote DIR --base {a.carry}" if todo else
+                                  ("nothing to judge: --build DIR holds voted-src<k>.json" if a.build
+                                   else "nothing to judge: add --build DIR to write the carried result")},
                          ensure_ascii=False, indent=1))
         if not a.build:
             return

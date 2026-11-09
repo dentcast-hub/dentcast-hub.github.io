@@ -290,7 +290,7 @@ class SpecV36Tests(unittest.TestCase):
 
     def test_guard_reads_the_newest_knowledge_cut(self):
         self.assertEqual(guard.KNOWLEDGE, self.latest())
-        self.assertEqual(guard.KNOWLEDGE.name, 'des-v3.6-knowledge.md')
+        self.assertEqual(guard.KNOWLEDGE.name, 'des-v3.7-knowledge.md')
 
     def test_spec_and_root_permalinks_exist_and_agree(self):
         spec = ROOT / '.dentcast/dentcast-evidence-score-v3.6.md'
@@ -331,15 +331,43 @@ class SpecV36Tests(unittest.TestCase):
         new = research(dom('missing data', 'high', '', 'no statement of losses'), 0.55, 36, 'D', version='3.6')
         self.assertFalse(guard.comparable(new, old))
 
-    def test_current_pointers_name_3_6(self):
+
+
+class SpecV37Tests(unittest.TestCase):
+    """DES v3.7 (publish-queue item 33): source_kind «manufacturer» — a maker's own
+    brochure is cited, not scored; nothing else moves, so 3.6 and 3.7 compare."""
+
+    def test_spec_knowledge_and_root_permalink_agree(self):
+        spec = ROOT / '.dentcast/dentcast-evidence-score-v3.7.md'
+        self.assertEqual((ROOT / 'dentcast-evidence-score-v3.7.md').read_bytes(), spec.read_bytes())
+        text = spec.read_text(encoding='utf-8')
+        cut = text[:text.index('\n\n## Appendix — pipeline contract')] + '\n'
+        self.assertEqual((ROOT / '.dentcast/des-v3.7-knowledge.md').read_text(encoding='utf-8'), cut)
+        self.assertIn('This is DES v3.7.', text)
+        self.assertIn('"source_kind": "book, glossary, standard, consensus, or manufacturer', text)
+        self.assertNotIn('"des_version": "3.6"', text)
+        self.assertNotIn('{"des_version":"3.6"', text)
+        # v3.7 changes no rating rule: Step 3 is v3.6's, byte for byte
+        old = (ROOT / '.dentcast/des-v3.6-knowledge.md').read_text(encoding='utf-8')
+        s3 = lambda s: s[s.index('## Step 3'):s.index('## Step 4')]
+        self.assertEqual(s3(old), s3(cut))
+
+    def test_3_6_and_3_7_records_are_the_same_measurement(self):
+        a = research(dom('missing data', 'high', '', 'no statement of losses'), 0.55, 36, 'D', version='3.6')
+        b = research(dom('missing data', 'high', '', 'no statement of losses'), 0.55, 36, 'D', version='3.7')
+        self.assertTrue(guard.comparable(b, a))
+        self.assertFalse(guard.comparable(b, research(dom('missing data', 'high', '', 'x'), 0.55, 36, 'D',
+                                                      version='3.5')))
+
+    def test_current_pointers_name_3_7(self):
         m08 = (ROOT / '.dentcast/workflows/modules/08-des-fidelity.md').read_text(encoding='utf-8')
-        self.assertIn('**v3.6 is the current spec.**', m08)
-        self.assertNotIn('des-v3.5-knowledge.md', m08)
+        self.assertIn('**v3.7 is the current spec.**', m08)
+        self.assertNotIn('des-v3.6-knowledge.md', m08)
         parity = (ROOT / '.dentcast/workflows/agent-parity.md').read_text(encoding='utf-8')
-        self.assertNotIn('des-v3.5-knowledge.md', parity)
-        self.assertIn('des-v3.6-knowledge.md', parity)
+        self.assertNotIn('des-v3.6-knowledge.md', parity)
+        self.assertIn('des-v3.7-knowledge.md', parity)
         hist = (ROOT / '.dentcast/workflows/des-version-history.md').read_text(encoding='utf-8')
-        self.assertIn('**v3.6 is the current spec', hist)
+        self.assertIn('**v3.7 is the current spec', hist)
 
 
 if __name__ == '__main__':

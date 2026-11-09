@@ -23,7 +23,7 @@
 // is deliberately no "podcast" test in this file — an episode that DOES cite
 // papers (episodes/episode-161 cites three) is scored and shown like anything
 // else. The rule is "no record, no badge", never "no audio, no badge".
-import { el, faNum } from './util.js?v=221';
+import { el, faNum } from './util.js?v=223';
 
 /* ------------------------------------------------------------ the data -- */
 
@@ -79,8 +79,9 @@ const CHECKLIST_FA = {
   'explicitly labeled as experience/opinion, not evidence': 'صریحاً تجربه/دیدگاه نامیده شده، نه شواهد',
 };
 
-// Spec v3.1 Step 1: the closed list of sources that are cited, not scored.
-const SOURCE_KIND_FA = { book: 'کتاب مرجع', glossary: 'واژه‌نامه‌ی مرجع', standard: 'استاندارد', consensus: 'کانسنسوس' };
+// Spec v3.1 Step 1: the closed list of sources that are cited, not scored
+// (v3.4 consensus, v3.7 manufacturer: a maker's own document about its product).
+const SOURCE_KIND_FA = { book: 'کتاب مرجع', glossary: 'واژه‌نامه‌ی مرجع', standard: 'استاندارد', consensus: 'کانسنسوس', manufacturer: 'سند سازنده' };
 
 // Spec v3.4: a consensus statement or clinical guideline carries NO score. The
 // study-design table cannot rank a document that weighs other people's studies,
