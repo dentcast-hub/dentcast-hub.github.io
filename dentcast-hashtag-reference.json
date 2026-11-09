@@ -1607,6 +1607,51 @@
    ]
   },
   {
+   "key": "فرول",
+   "tag": "#فرول",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
+   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
+   "aliases": [
+    "ferrule"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 29,
+   "content_ids": [
+    "episodes/episode-47",
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "episodes/episode-147-7",
+    "insight/insight-4",
+    "insight/insight-7",
+    "insight/insight-13",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-9",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19",
+    "insight/insight-58",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "insight/insight-64",
+    "chairside/chairside-30",
+    "sharehub/share-18",
+    "dentai/dentai-33",
+    "insight/insight-76",
+    "sharehub/share-20",
+    "insight/insight-84",
+    "insight/insight-93",
+    "insight/insight-97",
+    "chairside/chairside-44",
+    "sharehub/share-43",
+    "insight/insight-105",
+    "metanotes/meta-23"
+   ]
+  },
+  {
    "key": "پروتز_ثابت",
    "tag": "#پروتز_ثابت",
    "domain": "clinical",
@@ -1653,50 +1698,6 @@
     "insight/insight-49",
     "insight/insight-54",
     "dentai/dentai-29"
-   ]
-  },
-  {
-   "key": "فرول",
-   "tag": "#فرول",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "حلقه‌ی دیواره‌ی سالمِ دندان که روکش رویش می‌نشیند.",
-   "use_when": "مقاله فرول را شرطِ تصمیم بداند.",
-   "aliases": [
-    "ferrule"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 28,
-   "content_ids": [
-    "episodes/episode-47",
-    "episodes/episode-48",
-    "episodes/episode-49",
-    "episodes/episode-147-7",
-    "insight/insight-4",
-    "insight/insight-7",
-    "insight/insight-13",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-9",
-    "dentai/dentai-27",
-    "metanotes/meta-15",
-    "metanotes/meta-19",
-    "insight/insight-58",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "insight/insight-64",
-    "chairside/chairside-30",
-    "sharehub/share-18",
-    "dentai/dentai-33",
-    "insight/insight-76",
-    "sharehub/share-20",
-    "insight/insight-84",
-    "insight/insight-93",
-    "insight/insight-97",
-    "chairside/chairside-44",
-    "sharehub/share-43",
-    "insight/insight-105"
    ]
   },
   {
@@ -2377,6 +2378,45 @@
    ]
   },
   {
+   "key": "افزایش_طول_تاج",
+   "tag": "#افزایش_طول_تاج",
+   "domain": null,
+   "words": 3,
+   "definition": "crown lengthening — به‌دست آوردن ساختار با جابه‌جایی لثه و استخوان.",
+   "use_when": "مقاله این جراحی را تجویز، رد، یا هزینه‌اش را بسنجد.",
+   "aliases": [
+    "کراون لنتنینگ",
+    "crown lengthening",
+    "لنتنینگ",
+    "کراون لنتنینگ زیبایی",
+    "esthetic crown lengthening",
+    "کراون لنگتنینگ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 18,
+   "content_ids": [
+    "episodes/episode-75",
+    "episodes/episode-76",
+    "episodes/episode-77",
+    "episodes/episode-78",
+    "insight/insight-7",
+    "chairside/chairside-6",
+    "chairside/chairside-16",
+    "chairside/chairside-21",
+    "insight/insight-55",
+    "insight/insight-64",
+    "chairside/chairside-30",
+    "sharehub/share-14",
+    "sharehub/share-19",
+    "sharehub/share-24",
+    "insight/insight-93",
+    "sharehub/share-43",
+    "insight/insight-106",
+    "metanotes/meta-23"
+   ]
+  },
+  {
    "key": "درمان_محافظه_کارانه",
    "tag": "#درمان_محافظه‌کارانه",
    "domain": "clinical",
@@ -2411,44 +2451,6 @@
     "notecast/episode-40",
     "sharehub/share-39",
     "sharehub/share-40"
-   ]
-  },
-  {
-   "key": "افزایش_طول_تاج",
-   "tag": "#افزایش_طول_تاج",
-   "domain": null,
-   "words": 3,
-   "definition": "crown lengthening — به‌دست آوردن ساختار با جابه‌جایی لثه و استخوان.",
-   "use_when": "مقاله این جراحی را تجویز، رد، یا هزینه‌اش را بسنجد.",
-   "aliases": [
-    "کراون لنتنینگ",
-    "crown lengthening",
-    "لنتنینگ",
-    "کراون لنتنینگ زیبایی",
-    "esthetic crown lengthening",
-    "کراون لنگتنینگ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 17,
-   "content_ids": [
-    "episodes/episode-75",
-    "episodes/episode-76",
-    "episodes/episode-77",
-    "episodes/episode-78",
-    "insight/insight-7",
-    "chairside/chairside-6",
-    "chairside/chairside-16",
-    "chairside/chairside-21",
-    "insight/insight-55",
-    "insight/insight-64",
-    "chairside/chairside-30",
-    "sharehub/share-14",
-    "sharehub/share-19",
-    "sharehub/share-24",
-    "insight/insight-93",
-    "sharehub/share-43",
-    "insight/insight-106"
    ]
   },
   {
@@ -6158,6 +6160,32 @@
    ]
   },
   {
+   "key": "پروتز_پارسیل",
+   "tag": "#پروتز_پارسیل",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پروتز پارسیل متحرک و الزاماتش روی پایه‌ها.",
+   "use_when": "مقاله طراحیِ RPD یا پایه‌هایش را موضوع کند.",
+   "aliases": [
+    "RPD",
+    "پارسیل",
+    "پروتز پارسیل متحرک",
+    "partial denture",
+    "پارسیل دفینیتیو"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-126-1",
+    "insight/insight-58",
+    "dentai/dentai-35",
+    "insight/insight-96",
+    "insight/insight-105",
+    "metanotes/meta-23"
+   ]
+  },
+  {
    "key": "کانتکت_باز",
    "tag": "#کانتکت_باز",
    "domain": "clinical",
@@ -6533,6 +6561,30 @@
    ]
   },
   {
+   "key": "دندان_پایه",
+   "tag": "#دندان_پایه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "دندانی که بارِ پروتز رویش می‌افتد.",
+   "use_when": "مقاله سلامتِ پایه را شرطِ طرح بداند.",
+   "aliases": [
+    "abutment tooth",
+    "دندان پایه",
+    "پایه پروتز",
+    "ساپورت دندانی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-58",
+    "insight/insight-80",
+    "insight/insight-105",
+    "chairside/chairside-47",
+    "metanotes/meta-23"
+   ]
+  },
+  {
    "key": "روکش_دندان",
    "tag": "#روکش_دندان",
    "domain": "clinical",
@@ -6770,31 +6822,6 @@
     "dentai/dentai-25",
     "episodes/episode-159-1",
     "metanotes/meta-14"
-   ]
-  },
-  {
-   "key": "پروتز_پارسیل",
-   "tag": "#پروتز_پارسیل",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پروتز پارسیل متحرک و الزاماتش روی پایه‌ها.",
-   "use_when": "مقاله طراحیِ RPD یا پایه‌هایش را موضوع کند.",
-   "aliases": [
-    "RPD",
-    "پارسیل",
-    "پروتز پارسیل متحرک",
-    "partial denture",
-    "پارسیل دفینیتیو"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-126-1",
-    "insight/insight-58",
-    "dentai/dentai-35",
-    "insight/insight-96",
-    "insight/insight-105"
    ]
   },
   {
@@ -7306,6 +7333,42 @@
    ]
   },
   {
+   "key": "انتخاب_پایه",
+   "tag": "#انتخاب_پایه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخاب و ارزیابیِ دندان‌های طبیعیِ پایه برای بریج، پارسیل یا اسپلینت — طولِ ریشه و ساپورتِ استخوانی، طولِ اسپن و قانونِ Ante، هم‌سطح بودنِ پایه‌های اسپلینت‌شده، و نبودِ مجهول زیرِ روکش یا پست‌وکورِ پایه.",
+   "use_when": "مقاله تعیین کند کدام دندان می‌تواند پایه‌ی بریج/پارسیل/اسپلینت باشد یا کفایتِ یک دندانِ پایه را بسنجد. انتخابِ اباتمنتِ ایمپلنت #انتخاب_اباتمنت است.",
+   "aliases": [
+    "ارزیابی پایه",
+    "انتخاب اباتمنت پایه",
+    "abutment selection",
+    "انتخاب دندان پایه",
+    "ارزیابی دندان پایه",
+    "انتخاب پایه ها",
+    "کفایت پایه",
+    "پایه کافی",
+    "کدوم دندان پایه",
+    "abutment tooth selection",
+    "abutment teeth selection",
+    "abutment evaluation",
+    "ante's law",
+    "ante law",
+    "antes law",
+    "قانون انته",
+    "قانون آنته"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "chairside/chairside-20",
+    "insight/insight-55",
+    "chairside/chairside-26",
+    "metanotes/meta-23"
+   ]
+  },
+  {
    "key": "اندیکاسیون_پست",
    "tag": "#اندیکاسیون_پست",
    "domain": "clinical",
@@ -7677,26 +7740,25 @@
    ]
   },
   {
-   "key": "دندان_پایه",
-   "tag": "#دندان_پایه",
+   "key": "دیواره_نازک",
+   "tag": "#دیواره_نازک",
    "domain": "clinical",
    "words": 2,
-   "definition": "دندانی که بارِ پروتز رویش می‌افتد.",
-   "use_when": "مقاله سلامتِ پایه را شرطِ طرح بداند.",
+   "definition": "دیواره‌ی باقی‌مانده‌ای که از حدِ کلاسیکِ فرول نازک‌تر است.",
+   "use_when": "مقاله ضخامتِ دیواره را عاملِ تصمیم بداند.",
    "aliases": [
-    "abutment tooth",
-    "دندان پایه",
-    "پایه پروتز",
-    "ساپورت دندانی"
+    "دیواره باریک",
+    "ضخامت دیواره",
+    "دیواره کمتر از یک میلیمتر"
    ],
    "variants": [],
    "co_tags": [],
    "count": 4,
    "content_ids": [
-    "insight/insight-58",
-    "insight/insight-80",
-    "insight/insight-105",
-    "chairside/chairside-47"
+    "insight/insight-4",
+    "chairside/chairside-22",
+    "insight/insight-84",
+    "metanotes/meta-23"
    ]
   },
   {
@@ -8187,6 +8249,28 @@
     "insight/insight-63",
     "insight/insight-67",
     "insight/insight-73"
+   ]
+  },
+  {
+   "key": "نسبت_تاج_به_ریشه",
+   "tag": "#نسبت_تاج_به_ریشه",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "نسبتِ اهرمیِ تاج به ریشه.",
+   "use_when": "مقاله این نسبت را معیار بداند.",
+   "aliases": [
+    "crown root ratio",
+    "نسبت تاج ریشه",
+    "c/r ratio"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-55",
+    "metanotes/meta-18",
+    "insight/insight-87",
+    "metanotes/meta-23"
    ]
   },
   {
@@ -8772,41 +8856,6 @@
     "episodes/episode-102",
     "episodes/episode-103",
     "episodes/episode-115"
-   ]
-  },
-  {
-   "key": "انتخاب_پایه",
-   "tag": "#انتخاب_پایه",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتخاب و ارزیابیِ دندان‌های طبیعیِ پایه برای بریج، پارسیل یا اسپلینت — طولِ ریشه و ساپورتِ استخوانی، طولِ اسپن و قانونِ Ante، هم‌سطح بودنِ پایه‌های اسپلینت‌شده، و نبودِ مجهول زیرِ روکش یا پست‌وکورِ پایه.",
-   "use_when": "مقاله تعیین کند کدام دندان می‌تواند پایه‌ی بریج/پارسیل/اسپلینت باشد یا کفایتِ یک دندانِ پایه را بسنجد. انتخابِ اباتمنتِ ایمپلنت #انتخاب_اباتمنت است.",
-   "aliases": [
-    "ارزیابی پایه",
-    "انتخاب اباتمنت پایه",
-    "abutment selection",
-    "انتخاب دندان پایه",
-    "ارزیابی دندان پایه",
-    "انتخاب پایه ها",
-    "کفایت پایه",
-    "پایه کافی",
-    "کدوم دندان پایه",
-    "abutment tooth selection",
-    "abutment teeth selection",
-    "abutment evaluation",
-    "ante's law",
-    "ante law",
-    "antes law",
-    "قانون انته",
-    "قانون آنته"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "chairside/chairside-20",
-    "insight/insight-55",
-    "chairside/chairside-26"
    ]
   },
   {
@@ -9603,27 +9652,6 @@
    ]
   },
   {
-   "key": "دیواره_نازک",
-   "tag": "#دیواره_نازک",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "دیواره‌ی باقی‌مانده‌ای که از حدِ کلاسیکِ فرول نازک‌تر است.",
-   "use_when": "مقاله ضخامتِ دیواره را عاملِ تصمیم بداند.",
-   "aliases": [
-    "دیواره باریک",
-    "ضخامت دیواره",
-    "دیواره کمتر از یک میلیمتر"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-4",
-    "chairside/chairside-22",
-    "insight/insight-84"
-   ]
-  },
-  {
    "key": "دیپ_بایت",
    "tag": "#دیپ_بایت",
    "domain": "clinical",
@@ -10169,27 +10197,6 @@
     "episodes/episode-125-2",
     "episodes/episode-150",
     "insight/insight-9"
-   ]
-  },
-  {
-   "key": "نسبت_تاج_به_ریشه",
-   "tag": "#نسبت_تاج_به_ریشه",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "نسبتِ اهرمیِ تاج به ریشه.",
-   "use_when": "مقاله این نسبت را معیار بداند.",
-   "aliases": [
-    "crown root ratio",
-    "نسبت تاج ریشه",
-    "c/r ratio"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-55",
-    "metanotes/meta-18",
-    "insight/insight-87"
    ]
   },
   {
