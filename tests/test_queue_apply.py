@@ -776,6 +776,13 @@ class MetaNoteGoldenReplayTests(unittest.TestCase):
     def test_landing_row_and_itemlist(self):
         w = qa.Writes()
         before = (ROOT / "metanotes/index.html").read_bytes().decode("utf-8")
+        # the landing page as it was when meta-22 was the newest MetaNote: later
+        # rows and ListItems (meta-23, queue item 15, and after) are dropped first
+        import re as _re0
+        before = _re0.sub(r',\r\n\s*\{\r\n\s*"@type": "ListItem",\r\n\s*"position": (\d+),[^}]*\}',
+                          lambda m: "" if int(m.group(1)) > 22 else m.group(0), before)
+        before = _re0.sub(r'\r\n[ \t]*<li><a href="meta-(\d+)\.html">[^\n]*</li>',
+                          lambda m: "" if int(m.group(1)) > 22 else m.group(0), before)
         cut = before.replace(
             before[before.index('{\r\n            "@type": "ListItem",\r\n            "position": 22,'):].split("}", 1)[0] + "}", "")
         # rebuild the 22 row/item from the 21 ones and compare with the live landing page

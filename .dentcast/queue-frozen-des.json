@@ -279,5 +279,23 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "chairside/chairside-49": {
+    "queue_ref": "queue/16-chairside-vital-teeth-old-crowns",
+    "record_sha256": "b8fa797380b8c3f7d50c9c6e83e44007bebc2c642f27c3dedbd70f8476c5a2c1",
+    "installed_at": "2026-11-09",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }

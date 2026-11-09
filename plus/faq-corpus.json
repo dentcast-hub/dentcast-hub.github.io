@@ -40918,6 +40918,49 @@
           ]
         }
       ]
+    },
+    "chairside/chairside-49": {
+      "faqPages": [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/chairside/chairside-49.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا زنده‌بودن پالپ به‌تنهایی نشان می‌دهد که سابقهٔ دندان در ارزیابی آن اهمیتی ندارد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ سابقهٔ پوسیدگی، ترمیم و تراش‌های قبلی نیز در کنار وضعیت فعلی پالپ اهمیت دارد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "پالپ تحت‌تنش (stressed pulp) به چه پالپی گفته می‌شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "به پالپی که با وجود زنده‌ماندن، بارها در معرض آسیب‌هایی مانند پوسیدگی، ترمیم و تراش قرار گرفته و ممکن است توان پاسخ و ترمیم کمتری داشته باشد."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/chairside/chairside-49.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-49.html#flashcards-c1",
+              "name": "پالپ تحت‌تنش (Stressed pulp)",
+              "description": "پالپی که با وجود زنده‌ماندن، به‌دلیل مواجههٔ مکرر با آسیب‌هایی مانند پوسیدگی، ترمیم و تراش ممکن است توان پاسخ و ترمیم کمتری داشته باشد.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
