@@ -8,7 +8,26 @@ were moved here so a publish does not re-read them every time (founder
 compare a record stamped below the current spec version.
 
 <!-- des-version-history-text:v1 -->
-**v3.6 is the current spec, and its change from 3.5 is one reading of Step 3b,
+**v3.7 is the current spec, and its change from 3.6 is one source kind**
+(Step 1, founder 2026-11-09): `source_kind` gains `"manufacturer"` — a document
+issued by the maker of a product about that product (a brochure, instructions
+for use, a product or technical guide) that reports no study of its own. It is
+`NOT_APPRAISABLE`: no score, no band, no number, and its FIDELITY call runs on
+its text as for any other source. Its text must be in hand (`FULL_TEXT` or
+`EXCERPT`; a reference line alone is `INSUFFICIENT_TEXT`), `fact_fa` says plainly
+that it is the maker's own document, and a maker's document that reports its own
+study is scored as that study. The case is publish-queue item 33, a ShareHub
+article written from VITA's shade-guide brochure (10114E_0525_V14): the founder
+ruled «دس هم نمی‌خواد چون بروشوره», the Fidelity record was complete
+(100/HIGH), and none of book, glossary, standard or consensus named the source,
+so the queue tools had no lawful record to install it under. No threshold,
+multiplier, penalty, band, FIDELITY rule or RESEARCH output changes, so a 3.6
+record and a 3.7 record of the same paper are the same measurement
+(`tools/des_record_guard.py`, `SAME_MEASUREMENT`); `"manufacturer"` is legal only
+on a 3.7 stamp (`tools/verify_publish.py`, `DES_NA_KINDS_37`), and the card
+labels it «سند سازنده» (`plus/js/des.js`).
+
+**v3.6's change from 3.5 is one reading of Step 3b,
 closed** (3b-ii «What addresses a domain», Core Rule 2, 3b lines 1 and 4;
 2026-11-07). No threshold, multiplier, penalty, band, FIDELITY rule or output
 field changes, but a RESEARCH score can fall, so it is a bump and not a

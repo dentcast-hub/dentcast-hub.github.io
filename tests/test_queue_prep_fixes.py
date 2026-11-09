@@ -155,6 +155,30 @@ class CaptionCarryTests(Site):
             self.main("--carry", str(base))
         self.assertIn("not a figure caption", str(e.exception))
 
+    def test_carry_takes_the_language_toggle_like_a_caption(self):
+        """Publish-queue item 33: an outside Fidelity made on a preview without the «English»
+        toggle is one id off on the queue render; --carry re-keys it and marks the toggle
+        NOT_A_CLAIM itself, with no model call."""
+        base, claims = self.base_dir()
+        p = self.d / f"{CID}.html"
+        p.write_text(p.read_text(encoding="utf-8").replace(
+            "</h1>", '</h1>\n<div class="glass-box">\n<a class="lang-btn" href="en/share-test.html" '
+                     'rel="noopener">English</a>\n</div>', 1), encoding="utf-8")
+        now = units.split_page(CID, [SRC])
+        self.assertEqual((now[1]["id"], now[1]["text"], now[1].get("chrome")), ("u2", "English", True))
+        self.assertEqual([(u["id"], u["text"]) for u in now if not u.get("chrome")][1:],
+                         [(f"u{int(c['id'][1:]) + 1}", c["claim_quote"]) for c in claims][1:])
+        rep = json.loads(self.main("--carry", str(base)))["carry"]["src0"]
+        self.assertEqual((rep["judge_now"], rep["chrome_not_a_claim"]), ([], ["u2"]))   # no model call
+        run2 = self.d / "run2"
+        self.main("--carry", str(base), "--build", str(run2))
+        voted = json.loads((run2 / "voted-src0.json").read_text(encoding="utf-8"))
+        self.assertEqual([c["id"] for c in voted["claims"]], [u["id"] for u in now])
+        self.assertEqual(voted["claims"][1]["verdict"], "NOT_A_CLAIM")
+        self.assertEqual(voted["counts"]["not_a_claim"], sum(c["verdict"] == "NOT_A_CLAIM" for c in claims) + 1)
+        old = {c["claim_quote"]: c["verdict"] for c in claims}
+        self.assertTrue(all(old[c["claim_quote"]] == c["verdict"] for c in voted["claims"] if c["id"] != "u2"))
+
     def test_vote_needs_two_runs_over_each_caption(self):
         base, _ = self.base_dir()
         self.write_page(CAPTIONS)

@@ -398,6 +398,7 @@ def des_fidelity_recompute(counts, version=None):
 
 DES_NA_KINDS_31 = ("book", "glossary", "standard")   # spec v3.1 Step 1, closed
 DES_NA_KINDS_34 = DES_NA_KINDS_31 + ("consensus",)   # spec v3.4
+DES_NA_KINDS_37 = DES_NA_KINDS_34 + ("manufacturer",)   # spec v3.7: a maker's own document
 DES_NA_BASES_31 = ("FULL_TEXT", "EXCERPT", "CITATION_ONLY")   # a NOT_APPRAISABLE object's own list
 DES_NA_ONLY_BASES = ("EXCERPT", "CITATION_ONLY")   # legal on no other content type
 
@@ -661,8 +662,8 @@ def des_text_report(path):
     except (OSError, ValueError) as e:
         print(f"ERROR cannot read {path}: {e}")
         return 2
-    # a DES object checked here is about to be stored, so it is current (v3.6)
-    bad = des_fa_wording(rec, default_ver="3.6")
+    # a DES object checked here is about to be stored, so it is current (v3.7)
+    bad = des_fa_wording(rec, default_ver="3.7")
     for p, word, good in bad:
         print(f"FAIL  {p}: «{word}» → «{good}» (founder vocabulary; the agent rewrites it, no founder question)")
     if not bad:
@@ -1781,7 +1782,8 @@ def _verify_core(content_id, rep, expect_title=None, expect_caption=None, sweep=
                               f"{tag} is NOT_APPRAISABLE but {nulls} is not null — a source with "
                               f"no method to appraise must carry no number at all",
                               "spec v1.9 — des_score/band/question_type and every track field are null")
-                    kinds = (DES_NA_KINDS_34 if des_ge(s.get("des_version"), (3, 4))
+                    kinds = (DES_NA_KINDS_37 if des_ge(s.get("des_version"), (3, 7))
+                             else DES_NA_KINDS_34 if des_ge(s.get("des_version"), (3, 4))
                              else DES_NA_KINDS_31 if des_ge(s.get("des_version"), (3, 1)) else ("book",))
                     is_cons = s.get("source_kind") == "consensus" and des_ge(s.get("des_version"), (3, 4))
                     rep.check(s.get("source_kind") in kinds, "4.13 DES",
@@ -1798,6 +1800,12 @@ def _verify_core(content_id, rep, expect_title=None, expect_caption=None, sweep=
                                   f"{tag} is NOT_APPRAISABLE (v{s.get('des_version')}) with text_basis="
                                   f"{s.get('text_basis')!r} — FULL_TEXT, EXCERPT or CITATION_ONLY, honestly",
                                   "spec v3.1 Step 1 — an abstract a book does not have is not a basis")
+                    if s.get("source_kind") == "manufacturer":
+                        rep.check(s.get("text_basis") in ("FULL_TEXT", "EXCERPT"), "4.13 DES",
+                                  f"{tag} manufacturer document was read, not just cited ({s.get('text_basis')})",
+                                  f"{tag} is a manufacturer document with text_basis={s.get('text_basis')!r} — "
+                                  f"its text must be in hand (FULL_TEXT or EXCERPT); a reference line alone is "
+                                  f"INSUFFICIENT_TEXT", "spec v3.7 Step 1")
                     if is_cons:
                         ev = s.get("evidence_basis")
                         rep.check(bool((s.get("issuing_bodies") or "").strip()) and bool((s.get("issuing_quote") or "").strip()),

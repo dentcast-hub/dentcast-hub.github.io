@@ -46,9 +46,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "plus" / "des-scores.json"
 # The current spec's system-prompt cut. The Part 2d audit takes Step 3 (3a–3b-ii)
-# from it verbatim, so a spec bump moves this path (v3.6: 3b-ii «What addresses a
+# from it verbatim, so a spec bump moves this path (v3.7: one NOT_APPRAISABLE source kind,
+# «manufacturer»; Step 3 is v3.6's word for word. v3.6: 3b-ii «What addresses a
 # domain», the reading the Elgamal record split on).
-KNOWLEDGE = ROOT / ".dentcast" / "des-v3.6-knowledge.md"
+KNOWLEDGE = ROOT / ".dentcast" / "des-v3.7-knowledge.md"
 
 # The day the rating-rule check became binding (publish-queue item 22 / the
 # Elgamal record, founder session 2026-11-07). Phase F fails a finding on a
@@ -319,9 +320,21 @@ def differences(new, old):
     return out
 
 
+# Spec versions whose change moved no RESEARCH score (a bump that only adds a
+# NOT_APPRAISABLE source kind): a record under one is the same measurement as a
+# record under the other. v3.7 added «manufacturer» and changed nothing else.
+SAME_MEASUREMENT = ({"3.6", "3.7"},)
+
+
+def same_measurement_version(a, b):
+    return a == b or any(a in grp and b in grp for grp in SAME_MEASUREMENT)
+
+
 def comparable(new, old):
-    """A stored record is the same measurement only under the same text_basis and des_version."""
-    return new.get("text_basis") == old.get("text_basis") and new.get("des_version") == old.get("des_version")
+    """A stored record is the same measurement only under the same text_basis and
+    des_version (or two versions in SAME_MEASUREMENT)."""
+    return (new.get("text_basis") == old.get("text_basis")
+            and same_measurement_version(new.get("des_version"), old.get("des_version")))
 
 
 # ── (3) the rating audit ──────────────────────────────────────────────────
