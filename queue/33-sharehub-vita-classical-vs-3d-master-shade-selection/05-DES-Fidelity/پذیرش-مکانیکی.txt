@@ -1,0 +1,22 @@
+
+── verify_publish: preview ──────────────────────────────
+  ok  accept    one result per call the tool owes ([0])
+  ok  accept    fid0 judges exactly the tool's units (71)
+  ok  accept    fid0 every claim_quote is its unit's text, byte for byte
+  ok  4.13 DES  fid0 basis EXCERPT is on a 3.1+ object
+  ok  4.13 DES  fid0 is a FIDELITY object with a version stamp
+  ok  4.13 DES  fid0 scope is SOURCE
+  ok  4.13 DES  fid0 text_basis matches its source(s) (FULL_TEXT)
+  ok  4.13 DES  fid0 claim ids are page unit ids in order
+  ok  4.13 DES  fid0 every verdict is from the closed list
+  ok  4.13 DES  fid0 silence verdicts match the text basis
+  ok  4.13 DES  fid0 change_kind is on every ALTERED and nowhere else
+  ok  4.13 DES  fid0 every MATCHES/ALTERED/REVERSED quotes the source
+  ok  4.13 DES  fid0 source_ref follows the scope
+  ok  4.13 DES  fid0 every claim_quote is verbatim from this page
+  ok  4.13 DES  fid0 all 37 source quotes are verbatim
+  ok  4.13 DES  fid0 counts equal the verdict tally
+  ok  4.13 DES  fid0 fidelity arithmetic checks out (100 · HIGH)
+  ok  4.13 DES  fid0 provisional follows text_basis
+────────────────────────────────────────────────────
+18 passed, 0 warned, 0 failed  — publish is COMPLETE

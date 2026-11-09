@@ -1,0 +1,24 @@
+
+── verify_publish: sharehub/share-47 ──────────────────────────────
+  ok  accept    one result per call the tool owes ([0])
+FAIL  accept    fid0 ids differ from the tool's: missing ['u72'], extra []
+                 ↳ fix: units come only from des_fidelity_units.py on the final page text
+FAIL  accept    fid0 claim_quote differs from the page on ['u2', 'u3', 'u4', 'u5', 'u6', 'u7', 'u8', 'u9'] — judged on another text
+                 ↳ fix: re-check only those units (Part 3b, --build --only, --vote --base)
+  ok  4.13 DES  fid0 basis EXCERPT is on a 3.1+ object
+  ok  4.13 DES  fid0 is a FIDELITY object with a version stamp
+  ok  4.13 DES  fid0 scope is SOURCE
+  ok  4.13 DES  fid0 text_basis matches its source(s) (FULL_TEXT)
+  ok  4.13 DES  fid0 claim ids are page unit ids in order
+  ok  4.13 DES  fid0 every verdict is from the closed list
+  ok  4.13 DES  fid0 silence verdicts match the text basis
+  ok  4.13 DES  fid0 change_kind is on every ALTERED and nowhere else
+  ok  4.13 DES  fid0 every MATCHES/ALTERED/REVERSED quotes the source
+  ok  4.13 DES  fid0 source_ref follows the scope
+  ok  4.13 DES  fid0 every claim_quote is verbatim from this page
+  ok  4.13 DES  fid0 all 37 source quotes are verbatim
+  ok  4.13 DES  fid0 counts equal the verdict tally
+  ok  4.13 DES  fid0 fidelity arithmetic checks out (100 · HIGH)
+  ok  4.13 DES  fid0 provisional follows text_basis
+────────────────────────────────────────────────────
+16 passed, 0 warned, 2 failed  — publish is INCOMPLETE

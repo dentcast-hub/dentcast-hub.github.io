@@ -1,0 +1,80 @@
+{
+  "definedTermSets": [
+    {
+      "@context": "https://schema.org",
+      "@type": "DefinedTermSet",
+      "@id": "{{PAGE_URL}}#flashcards",
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "@id": "{{PAGE_URL}}#flashcards-c1",
+          "name": "Value در توصیف رنگ دندان",
+          "description": "Value بُعد روشنی یا تیرگی رنگ دندان است.",
+          "source": "authored"
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "{{PAGE_URL}}#flashcards-c2",
+          "name": "Chroma در توصیف رنگ دندان",
+          "description": "Chroma میزان شدت یا اشباع یک ته‌رنگ را توصیف می‌کند.",
+          "source": "authored"
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "{{PAGE_URL}}#flashcards-c3",
+          "name": "Hue در توصیف رنگ دندان",
+          "description": "Hue خانوادهٔ رنگی یا ته‌رنگ است؛ در 3D-MASTER با حروف L، M و R مشخص می‌شود.",
+          "source": "authored"
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "{{PAGE_URL}}#flashcards-c4",
+          "name": "ساختار کد 3M2",
+          "description": "در کد 3M2، عدد نخست گروه Value، حرف میانی Hue و عدد پایانی سطح Chroma را مشخص می‌کند.",
+          "source": "authored"
+        }
+      ]
+    }
+  ],
+  "faqPages": [
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": "{{PAGE_URL}}#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "آیا خاکستری‌تر بودن یک شید الزاماً به معنی Value پایین‌تر آن است؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "خیر؛ Hue و Value ویژگی‌های متفاوت‌اند و در ترتیب آموزشی شیدهای Classical بر اساس Value، D2 از A2 روشن‌تر است."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "آیا شیدهای VITA Classical در فضای رنگی فاصله‌های یکسانی دارند؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "خیر؛ این مجموعه تجربی است و پراکندگی شیدها در فضای رنگی یکنواخت نیست."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "آیا در روش سه‌مرحله‌ای 3D-MASTER، Value پیش از Chroma و Hue تعیین می‌شود؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "بله؛ ابتدا گروه روشنی، سپس شدت رنگ در همان گروه و در پایان ته‌رنگ تعیین می‌شود."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "آیا انتخاب نزدیک‌ترین تب شیدگاید همیشه به معنی تطابق دقیق با رنگ دندان است؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "خیر؛ ممکن است رنگ دندان دقیقاً معادل هیچ‌یک از نمونه‌های شیدگاید نباشد."
+          }
+        }
+      ]
+    }
+  ]
+}

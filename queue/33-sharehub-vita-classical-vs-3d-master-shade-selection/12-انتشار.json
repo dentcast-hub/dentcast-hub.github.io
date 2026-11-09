@@ -1,0 +1,241 @@
+{
+  "schema": "dentcast-queue-manifest/1",
+  "category": {
+    "value": "sharehub",
+    "from": "folder name"
+  },
+  "title_fa": {
+    "value": "انتخاب رنگ دندان؛ VITA Classical و 3D-MASTER چه فرقی دارند؟",
+    "from": "02-عنوان-کپشن.md:3"
+  },
+  "caption_fa": {
+    "value": "مقایسهٔ VITA Classical و 3D-MASTER؛ از منطق چیدمان شیدها و سه بُعد رنگ تا مراحل انتخاب رنگ دندان.",
+    "from": "02-عنوان-کپشن.md:9"
+  },
+  "title_en": {
+    "value": "Tooth Shade Selection: How Do VITA Classical and 3D-MASTER Differ?",
+    "from": "06-انگلیسی.md:3"
+  },
+  "caption_en": {
+    "value": "A comparison of VITA Classical and 3D-MASTER, from shade arrangement and the three dimensions of color to the steps of tooth shade selection.",
+    "from": "06-انگلیسی.md:7"
+  },
+  "body_en": {
+    "value": "Many of us have worked with the **VITA Classical** shade guide for years, and shades such as A2 and A3 are very familiar. Yet we may have given less thought to how these shades were selected, or why, even after repeatedly holding the tabs beside a patient's tooth, none seems to match its color exactly.\n\nVITA has two well-known systems: **VITA Classical A1–D4** and **VITA SYSTEM 3D-MASTER**. Their difference goes beyond the number of shade tabs: their design principles differ. Understanding that difference can help us select shades better and recognize the limitations of the guide itself.\n\n[[تصویر:01]]\n\n*Figure 1. Classical and 3D-MASTER shade guides, reproduced from the official VITA brochure, printed page 4.*\n\n## First, understand the three dimensions of color\n\nTooth color can be described in three dimensions:\n\n**Value** is how light or dark a color is. **Chroma** describes its intensity or saturation; for example, two teeth may have a similar yellow hue, but one may be a more intense yellow. **Hue** is the underlying color family toward which a color tends.\n\nNatural tooth shades occupy only a small part of color space, with hues predominantly between yellow and red. Every shade guide effectively tries to cover this small range with a defined number of color samples.\n\n[[تصویر:02]]\n\n*Figure 2. Lightness, Chroma and Hue in LCh color space and the small region occupied by natural tooth shades; VITA brochure, printed page 6.*\n\n## VITA Classical: an empirically selected set of shades\n\nClassical contains **16 shades** in four families, A through D. In VITA's own description, family **A** is reddish-brownish, **B** reddish-yellowish, **C** greyish, and **D** reddish-grey.\n\nThese shades were selected empirically: they were not originally intended to be equally spaced in color space. VITA's diagram shows that some shades lie very close together, while others are separated by larger gaps.\n\nThe clinical implication matters: **we may have correctly selected the nearest shade-guide tab, yet that tab may still not match the patient's tooth exactly.** This does not necessarily mean our judgment was wrong; the actual tooth shade may lie between the guide's samples.\n\nA second issue is that Classical tabs are primarily grouped by Hue families rather than by a systematic Value sequence. The numbers within each family do not necessarily represent a fixed step in lightness or saturation either.\n\nTherefore, if we want to compare **Value** first with Classical, it is better to arrange the tabs from light to dark. One established teaching sequence is:\n\n**B1, A1, B2, D2, A2, C1, C2, D4, A3, D3, B3, A3.5, B4, C3, A4, C4**\n\nThis list is not provided as text in the brochure used here; it comes from a supplementary educational source. However, the brochure's diagram also places **B1 lighter than A1**.\n\nThe interesting point is that **D2, despite its greyish hue, is lighter than A2 in this sequence.** A greyer color does not necessarily have a lower Value.\n\n(In my view, confusing hue with lightness can mislead us when selecting the shade of a single crown. A shade that looks greyer may not actually be darker in Value.)\n\n[[تصویر:03]]\n\n*Figure 3. Schematic comparison of the two systems' shade distributions in color space; VITA brochure, printed page 9. The vertical axis represents Lightness. These are schematic diagrams, not precise measurement maps from which numerical distances between shades can be derived.*\n\n## 3D-MASTER: organizing color space\n\nVITA took a different approach in designing 3D-MASTER. Instead of an empirical set of samples with an uneven distribution, it placed shades in a more systematic arrangement within natural tooth color space. According to the manufacturer's brochure, this system has **26 natural shades** and **three shades for bleached teeth**.\n\n3D-MASTER first has five main **Value** groups, from **1, the lightest**, to **5, the darkest**. Within each group, **Chroma** increases from top to bottom, while **Hue** is identified by three letters: **L**, more yellowish; **M**, intermediate; and **R**, more reddish.\n\nFor example, in **3M2**, the number 3 identifies the Value group, M indicates the intermediate Hue, and 2 denotes the Chroma level. Each shade code therefore conveys information about all three dimensions.\n\nThis arrangement offers two benefits. First, it provides a clearer selection pathway, without having to search among all the samples from the outset. Second, **intermediate shades** can be defined more precisely and produced using suitable material mixtures. The brochure describes this possibility, but **does not specify a fixed mixing ratio, such as 50:50, for any arbitrary pair of shades**.\n\n(In my view, the main advantage of 3D-MASTER is not simply its larger number of shades. More importantly, it makes shade selection a more systematic process instead of a relatively empirical comparison. This organization alone does not guarantee a better final shade match for every restoration.)\n\n## Three-step shade selection with 3D-MASTER\n\n**Step one: Value.** First, compare the intermediate (M) tabs from different groups beside the tooth and choose the group closest in lightness. VITA itself considers Value the most relevant dimension in shade determination and therefore places it first.\n\n**Step two: Chroma.** Once the Value group has been selected, compare the M tabs within that group to determine the tooth's color intensity or saturation.\n\n**Step three: Hue.** Finally, compare the selected tab with the L and R shades to determine whether the tooth is more yellowish or reddish than the intermediate shade.\n\nInstead of deciding lightness, intensity and hue simultaneously, we determine one dimension at a time.\n\n[[تصویر:04]]\n\n*Figure 4. VITA's own illustrated guide: select Value, then Chroma, and finally Hue; VITA brochure, printed page 10.*\n\n## A few points we forget during shade selection\n\nRegardless of the shade guide, selection conditions matter. VITA recommends using standardized **daylight** illumination whenever possible, keeping surrounding colors neutral, removing lipstick and makeup that affect shade assessment, and covering brightly colored clothing with a grey drape.\n\nViewing time is another consideration. According to the VITA brochure, the eye tires after approximately **5–7 seconds** of shade assessment. It therefore recommends making the selection quickly and, when uncertain, trusting the initial impression rather than prolonging the comparison continuously. The shade guide should also be disinfected after each use.\n\n## Which is better in the end?\n\nClassical remains useful, especially if we recognize that its shades are not evenly spaced in color space and rearrange its tabs when comparing Value. With its more systematic arrangement and three-step method, 3D-MASTER also gives greater structure to shade selection and communication with the laboratory.\n\nFor me, however, the most important message is this: **choosing the nearest shade is different from choosing an exact color match.** Sometimes a patient's tooth color has no exact equivalent among the samples. In that situation, knowing whether the main difference lies in Value, Chroma or Hue becomes more important than simply reporting a shade code.\n\nA shade guide is not meant to judge color on our behalf. It is meant to help us describe what we see more clearly and communicate it to the laboratory more accurately.",
+    "from": "06-انگلیسی.md:10-94"
+  },
+  "images": {
+    "value": [
+      {
+        "n": "01",
+        "file": {
+          "value": "03-تصاویر/01-vita-classical-and-3d-master-guides.webp",
+          "from": "03-تصاویر/تصاویر.md:7"
+        },
+        "alt_fa": {
+          "value": "دو شیدگاید VITA Classical و VITA 3D-MASTER",
+          "from": "03-تصاویر/تصاویر.md:7"
+        },
+        "caption_fa": {
+          "value": "تصویر ۱. شیدگایدهای Classical و 3D-MASTER؛ برگرفته از بروشور رسمی VITA، صفحه چاپی ۴.",
+          "from": "03-تصاویر/تصاویر.md:7"
+        },
+        "alt_en": {
+          "value": "VITA Classical and VITA 3D-MASTER shade guides",
+          "from": "03-تصاویر/تصاویر.md:7"
+        },
+        "caption_en": {
+          "value": "Figure 1. Classical and 3D-MASTER shade guides, reproduced from the official VITA brochure, printed page 4.",
+          "from": "06-انگلیسی.md:97"
+        }
+      },
+      {
+        "n": "02",
+        "file": {
+          "value": "03-تصاویر/02-lch-tooth-color-space.webp",
+          "from": "03-تصاویر/تصاویر.md:8"
+        },
+        "alt_fa": {
+          "value": "نمودار LCh و محدوده رنگ دندان طبیعی",
+          "from": "03-تصاویر/تصاویر.md:8"
+        },
+        "caption_fa": {
+          "value": "تصویر ۲. سه بُعد Lightness، Chroma و Hue در فضای رنگی LCh و محدوده کوچک رنگ دندان طبیعی؛ بروشور VITA، صفحه چاپی ۶.",
+          "from": "03-تصاویر/تصاویر.md:8"
+        },
+        "alt_en": {
+          "value": "LCh diagram and the natural tooth color region",
+          "from": "03-تصاویر/تصاویر.md:8"
+        },
+        "caption_en": {
+          "value": "Figure 2. Lightness, Chroma and Hue in LCh color space and the small region occupied by natural tooth shades; VITA brochure, printed page 6.",
+          "from": "06-انگلیسی.md:98"
+        }
+      },
+      {
+        "n": "03",
+        "file": {
+          "value": "03-تصاویر/03-classical-versus-3d-master-color-distribution.webp",
+          "from": "03-تصاویر/تصاویر.md:9"
+        },
+        "alt_fa": {
+          "value": "مقایسه توزیع رنگ‌ها در Classical و 3D-MASTER",
+          "from": "03-تصاویر/تصاویر.md:9"
+        },
+        "caption_fa": {
+          "value": "تصویر ۳. مقایسه شماتیک پراکندگی رنگ‌های دو سیستم در فضای رنگی؛ بروشور VITA، صفحه چاپی ۹. محور عمودی نشان‌دهنده Lightness است. نمودارها شماتیک‌اند، نه نقشه اندازه‌گیری دقیق برای استخراج فاصله عددی بین شیدها.",
+          "from": "03-تصاویر/تصاویر.md:9"
+        },
+        "alt_en": {
+          "value": "Shade distributions in Classical and 3D-MASTER",
+          "from": "03-تصاویر/تصاویر.md:9"
+        },
+        "caption_en": {
+          "value": "Figure 3. Schematic comparison of the two systems' shade distributions in color space; VITA brochure, printed page 9. The vertical axis represents Lightness. These are schematic diagrams, not precise measurement maps from which numerical distances between shades can be derived.",
+          "from": "06-انگلیسی.md:99"
+        }
+      },
+      {
+        "n": "04",
+        "file": {
+          "value": "03-تصاویر/04-3d-master-three-step-shade-selection.webp",
+          "from": "03-تصاویر/تصاویر.md:10"
+        },
+        "alt_fa": {
+          "value": "راهنمای سه مرحله‌ای انتخاب رنگ با 3D-MASTER",
+          "from": "03-تصاویر/تصاویر.md:10"
+        },
+        "caption_fa": {
+          "value": "تصویر ۴. راهنمای تصویری خود ویتا: انتخاب Value، سپس Chroma و در پایان Hue؛ بروشور VITA، صفحه چاپی ۱۰.",
+          "from": "03-تصاویر/تصاویر.md:10"
+        },
+        "alt_en": {
+          "value": "Three-step shade selection with 3D-MASTER",
+          "from": "03-تصاویر/تصاویر.md:10"
+        },
+        "caption_en": {
+          "value": "Figure 4. VITA's own illustrated guide: select Value, then Chroma, and finally Hue; VITA brochure, printed page 10.",
+          "from": "06-انگلیسی.md:100"
+        }
+      }
+    ],
+    "from": "03-تصاویر/تصاویر.md"
+  },
+  "credit": {
+    "value": {
+      "mode": "references",
+      "items": [
+        {
+          "label_fa": "VITA Tooth Shade Determination؛ بروشور 10114E، نسخه 014، مه 2025؛ صفحات ۴، ۶ تا ۱۰",
+          "label_en": "VITA Tooth Shade Determination, 10114E, Version 014, May 2025; printed pages 4, 6–10",
+          "href": "https://www.vita-zahnfabrik.com/pdb_GG1G10G100_en.html",
+          "from": "04-منبع/منابع.md:13"
+        },
+        {
+          "label_fa": "VITA classical A1–D4؛ توصیف رسمی خانواده‌های رنگ",
+          "label_en": "VITA classical A1–D4 Shade Guide: official shade-family descriptions",
+          "href": "https://www.vita-zahnfabrik.com/pdb_GG1G10G100_en.html",
+          "from": "04-منبع/منابع.md:14"
+        },
+        {
+          "label_fa": "Dentalcare؛ ترتیب شیدهای Classical بر اساس Value",
+          "label_en": "Dentalcare: Shade Selection Using the VITA Classical Shade Guide",
+          "href": "https://www.dentalcare.com/en-us/ce-courses/ce690/shade-selection-using-the-vita-classical-shade-guide",
+          "from": "04-منبع/منابع.md:15"
+        }
+      ]
+    },
+    "from": "04-منبع/منابع.md:9"
+  },
+  "catalog": {
+    "value": [],
+    "from": "04-منبع/منابع.md:21"
+  },
+  "hashtags": {
+    "value": [
+      "#مرور_منابع",
+      "#Curated_Content",
+      "#انتخاب_shade",
+      "#ولیو",
+      "#ارتباط_با_لابراتوار"
+    ],
+    "from": "07-ورودی‌ها.md:20"
+  },
+  "mint": {
+    "value": [],
+    "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+  },
+  "pillar": {
+    "value": {
+      "primary": "esthetic",
+      "subtopic": "shade-and-whitening",
+      "secondary": []
+    },
+    "from": "07-ورودی‌ها.md:14"
+  },
+  "pulse": {
+    "value": {
+      "text": null,
+      "link_phrase": "انتخاب رنگ دندان؛ VITA Classical و 3D-MASTER چه فرقی دارند؟"
+    },
+    "from": "07-ورودی‌ها.md:36"
+  },
+  "keywords": {
+    "value": [
+      "VITA Classical",
+      "VITA SYSTEM 3D-MASTER",
+      "Chroma",
+      "Hue",
+      "3M2",
+      "شیدگاید",
+      "Daylight"
+    ],
+    "from": "09-کلیدواژه‌ها.md"
+  },
+  "links_48": {
+    "value": [
+      {
+        "phrase": "انتقال اطلاعات به لابراتوار",
+        "href": "/sharehub/share-26.html",
+        "from": "11-لینک‌های-گلاسری.md:17"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md:13"
+  },
+  "backlinks_47": {
+    "value": [],
+    "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+  },
+  "explore_49": {
+    "value": [
+      {
+        "href": "/sharehub/share-29.html",
+        "label": "خطای چشم در مقایسهٔ Value",
+        "from": "11-لینک‌های-گلاسری.md:23"
+      },
+      {
+        "href": "/sharehub/share-26.html",
+        "label": "انتقال رنگ دندان به لابراتوار",
+        "from": "11-لینک‌های-گلاسری.md:24"
+      },
+      {
+        "href": "/insight/insight-91.html",
+        "label": "یک شید، دو Value در مواد مختلف",
+        "from": "11-لینک‌های-گلاسری.md:25"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md:21"
+  },
+  "pathway": {
+    "value": null,
+    "from": "default: mechanical pathway rule"
+  },
+  "author": {
+    "value": null,
+    "from": "not in the legacy contract"
+  },
+  "legacy_review": {
+    "value": null,
+    "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+  }
+}
