@@ -71,12 +71,41 @@ on:
       - 'tools/faq_corpus_extract.py'
       - 'tools/strip_faq_schema.py'
       - 'tests/test_exam_bank_guard.py'
+      - 'tools/run_test_shard.py'
   pull_request:
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
-  live-contracts:
+  # The live checkpoint/lifecycle suite (test_dentcast_publish*.py) is ~85% of
+  # this workflow's run time, so it runs as parallel shards instead of one
+  # sequential step. Same tests, same checkout, nothing skipped:
+  # tools/run_test_shard.py assigns every discovered test to exactly one shard,
+  # and `contracts` below re-proves that partition on every run. The shard count
+  # comes from the matrix itself (strategy.job-total), so the two cannot drift.
+  publish-suite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check live checkpoint and completion lifecycle (shard ${{ matrix.shard }})
+        run: >-
+          python3 tools/run_test_shard.py --pattern 'test_dentcast_publish*.py'
+          --shards ${{ strategy.job-total }} --index ${{ strategy.job-index }}
+
+  contracts:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -100,8 +129,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p test_dentcast_global_rules.py -v
       - name: Check active entrypoints and preserved source rules
         run: python3 -m unittest discover -s tests -p test_dentcast_agent_entrypoint_migration.py -v
-      - name: Check live checkpoint and completion lifecycle
-        run: python3 -m unittest discover -s tests -p 'test_dentcast_publish*.py' -v
+      - name: Prove the lifecycle shards cover every test exactly once
+        run: python3 tools/run_test_shard.py --pattern 'test_dentcast_publish*.py' --shards 4 --check
       - name: Check session-start, Cursor and Codex hook commands
         run: python3 -m unittest discover -s tests -p test_dentcast_session_hooks.py -v
       - name: Check Phase F verifier rows
@@ -161,3 +190,20 @@ jobs:
           else
             echo "No publication or handoff files changed; checkpoint guard not applicable."
           fi
+
+  # The single gate, under the check name this workflow has always reported.
+  # Green only when every shard AND the contracts job succeeded; a failed,
+  # cancelled or skipped dependency turns it red.
+  live-contracts:
+    needs: [publish-suite, contracts]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: All shards and contract checks passed
+        env:
+          SHARDS: ${{ needs.publish-suite.result }}
+          CONTRACTS: ${{ needs.contracts.result }}
+        run: |
+          echo "publish-suite: $SHARDS  contracts: $CONTRACTS"
+          [[ "$SHARDS" == "success" && "$CONTRACTS" == "success" ]]
