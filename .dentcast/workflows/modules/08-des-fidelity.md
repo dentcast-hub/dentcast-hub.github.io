@@ -64,7 +64,9 @@ the page and the source; how it was produced cannot be checked from the file at 
    owes; the claim ids are the tool's units for the final text; every `claim_quote` is
    its unit's text byte for byte; every `source_quote` is verbatim in `source_text`;
    verdicts and `change_kind` from the closed lists; silence verdicts match the basis;
-   counts, score, level and `provisional` recompute (Phase F's own checks). A DES
+   counts, score, level and `provisional` recompute (Phase F's own checks); and, on a
+   multi-source page, no body sentence left outside every call without the sweep the
+   block below owes (Part 2c). A DES
    SOURCE/COMMENTARY record is accepted by Part 3 and `des_record_guard.py check`, the
    same way.
 2. **No agent refuses a result that passes, for any process reason** — which agent or
@@ -498,7 +500,7 @@ a single-source page is simply the case with no sweep at all:
   with one source the vote already records an unmatched sentence as
   `NOT_IN_SOURCE` (reported as the author's own reasoning). Do not run
   `--orphans`/`--sweep` or spend a reviewer call on it. **One paper → no sweep;
-  two or more → the sweep is optional (below).**
+  two or more → a sweep only when a sentence reaches no source (below).**
 
 A multi-source page, a `POOLED` page or a long article follows the same three
 lines above (two full runs, a tie-break only where they differ, the stronger review
@@ -508,18 +510,27 @@ Phase F and `tools/queue_install_des.py` read it unchanged.
 <!-- /fidelity-single-source-tier:v1 -->
 
 <!-- fidelity-sweep-first:v1 -->
-**The orphan sweep is optional (founder 2026-11-09; it was mandatory and first from
-1405/08/15).** On a page with two or more sources the assignment comes from the
-tool: the sources the prose names, the declared markers
-(`.dentcast/des-source-markers.json`) or a recorded founder plan. Build the blocks
-and run steps 1–4 directly. A sentence the assignment gives to no source is not
-judged and lowers nothing; list those sentences in the report as information. The
-sweep (step 5) is a tool for when the agent or the founder wants every sentence
-looked for in every source — for example many unnamed sentences on a page with
-several papers. When it is used it runs **before** the first checker run (`--orphans`
-→ the stronger reviewer's `orphans.json` → `--sweep` → `--build`;
-`tools/queue_fidelity_prep.py --sweep-first`). Not having run it is never a reason to
-refuse a result. Records prepared under the earlier order keep their record.
+**The orphan sweep is owed exactly when a sentence would escape the check — and the
+tool decides, not the agent (founder 2026-11-09).** On a page with two or more sources
+the assignment comes from the tool: the sources the prose names, the declared markers
+(`.dentcast/des-source-markers.json`) or a recorded plan. A body sentence it gives to
+no source would be judged by no call and would silently drop out of the grade. So:
+
+- **Every body sentence reaches a source** (named, carried from its paragraph, or a
+  recorded plan) → no sweep; build and run steps 1–4 directly.
+- **At least one body sentence reaches none** → the sweep runs **before** the first
+  checker run: `--orphans` → the stronger reviewer's `orphans.json` → `--sweep` →
+  `--build`. `tools/des_fidelity_units.py` enforces it: the plain report and `--json`
+  (`unswept`) list those sentences, and a full `--build`, `--pack` and `--accept`
+  refuse until the sweep is recorded in `.dentcast/des-fidelity-plans/`.
+  `tools/queue_fidelity_prep.py` starts the sweep by itself in that case
+  (`--sweep-first` forces it on a page that does not owe it).
+- Never owed: a one-source page, a `POOLED` page (every unit goes to every source),
+  a recorded founder plan, records stamped before 3.5, a sentence that names a cited
+  source with no text (it is about that source), and the Part 3b / caption re-checks
+  (`--build --only`, `--carry`), which keep the base run's plan.
+
+Records prepared under the earlier order keep their record.
 <!-- /fidelity-sweep-first:v1 -->
 
 **The model is part of the measurement:** freeze the same checker model/version
@@ -563,8 +574,8 @@ Keep historical records and their provenance unchanged.
    no review entry stays open. `--vote` prints the overruled ids; list them
    to the founder in the report as information, never as a question.
 
-5. **Orphan sweep (spec v3.5 rule 12) — optional; when used, on a multi-source
-   page and before step 1** (the block above).
+5. **Orphan sweep (spec v3.5 rule 12) — owed when a body sentence reaches no
+   source, and then before step 1** (the block above).
    `python3 tools/des_fidelity_units.py <content_id> --orphans <dir> --texts texts.json`
    lists every body sentence (headings excepted) and
    writes `<dir>/orphans-input.json` with those sentences and the text of

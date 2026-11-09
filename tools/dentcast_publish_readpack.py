@@ -123,6 +123,10 @@ MODULES = WORKFLOW + 'modules/'
 # optional (sweep block, single-source tier block, step 5), and item 6 of that block names
 # the one-file handoff (--pack / --accept --install). All after the boundary, which
 # still occurs once with byte-identical text before it, so LiteCast/Challenge still omit them.
+# Re-pinned again 2026-11-09 (the sweep is owed when a sentence reaches no source): 08
+# rewrites the bounded sweep block, Part 2c step 5, one line of the single-source tier
+# block and one clause of «Acceptance is mechanical» item 1; all after the boundary
+# (still once, text before it byte-identical); no heading changed.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
@@ -130,7 +134,7 @@ PINNED_BLOBS = {
     '04-taxonomy-and-navigation.md': '46bc329065fdaa0d1677b494ecc5b7cdf7359872',
     '05-semantic-linking.md': '6ba95d74e28f1e423e034d31327d6c9351f85c20',
     '06-paper-ingestion.md': '226ff4a756418788e70afa2a19e4484c1734dedb',
-    '08-des-fidelity.md': 'd3866c46d6eafb8f83985c49b33361db1aac31e2',
+    '08-des-fidelity.md': 'e7b262d5913ebf92829e2df2487ee937954a7c59',
     '09-challenge.md': '3ac5856ddb021aa9f36cbfb35d6363531ae038c8',
     '11-build-and-version.md': '4dd05364ca5f9fd5811d7de39f172af14c592b13',
     '12-english-notify-verify.md': '5c9b65ee4416fd67607e6d35ca88272832ee86ec',

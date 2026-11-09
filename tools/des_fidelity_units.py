@@ -874,6 +874,34 @@ def orphan_units(units, plan, voted):
     return out
 
 
+def unswept(content_id, units, sources, mode, plan):
+    """Module 08 Part 2c (founder 2026-11-09): the body sentences of a multi-source
+    v3.5+ page that the assignment gives to no source — no source named, none carried
+    from the paragraph. They would reach no call, so the orphan sweep is owed before
+    they are measured. Empty when the sweep is not needed: one source, POOLED (every
+    unit goes to every source), a recorded plan (sweep or founder), records older than
+    v3.5, and units that name a cited source with no text (they are about that source)."""
+    if mode != "SOURCE" or not is_v35(sources) or sum(1 for s in sources if scorable(s)) < 2:
+        return []
+    if plan_path(content_id).exists():
+        return []
+    taken = {i for ids in plan.values() for i in ids}
+    decl = declared_for(content_id)
+    textless = [markers_for(s) | set(decl.get(k, {}).get("markers", []))
+                for k, s in enumerate(sources) if not s.get("error") and not scorable(s)]
+    return [u["id"] for u in units
+            if not u.get("heading") and u["id"] not in taken and re.search(r"\w", u["text"])
+            and not any(names_v35(u["text"], m) for m in textless)]
+
+
+def refuse_unswept(content_id, units, sources, mode, plan):
+    left = unswept(content_id, units, sources, mode, plan)
+    if left:
+        sys.exit(f"{len(left)} body sentence(s) reach no source on this multi-source page: {left} — the orphan "
+                 f"sweep is owed first (module 08 Part 2c): --orphans DIR --texts T → the stronger reviewer's "
+                 f"orphans.json → --sweep DIR, then build again")
+
+
 PACKET_KIND = "dentcast-des-fidelity-packet"
 
 
@@ -1057,6 +1085,8 @@ def main():
     sources = rec["sources"]
     units = split_page(a.content_id, sources)  # keeps the cut its stored record was judged on
     mode, plan = assign(units, sources, a.content_id)
+    if a.pack or a.accept:
+        refuse_unswept(a.content_id, units, sources, mode, plan)
     if a.pack:
         if not a.texts:
             sys.exit("--pack needs --texts (the packet carries the text every quote is checked against)")
@@ -1303,6 +1333,8 @@ def main():
         if not a.texts:
             sys.exit("--build needs --texts")
         texts = {k.lower(): v for k, v in json.loads(Path(a.texts).read_text(encoding="utf-8")).items()}
+        if not a.only:
+            refuse_unswept(a.content_id, units, sources, mode, plan)
         if a.only:
             keep = set(a.only.split(","))
             plan = {k: [i for i in ids if i in keep] for k, ids in plan.items()}
@@ -1312,10 +1344,14 @@ def main():
         return
     if a.json:
         print(json.dumps({"mode": mode, "units": units, "plan": {str(k): v for k, v in plan.items()},
-                          "sources": sum(1 for s in sources if scorable(s))},
+                          "sources": sum(1 for s in sources if scorable(s)),
+                          "unswept": unswept(a.content_id, units, sources, mode, plan)},
                          ensure_ascii=False, indent=1))
         return
     print(f"{a.content_id}: {len(units)} units, scope {mode}")
+    left = unswept(a.content_id, units, sources, mode, plan)
+    if left:
+        print(f"  orphan sweep owed before the build: {len(left)} body sentence(s) reach no source {left}")
     for k, ids in plan.items():
         label = "pooled" if k == "pooled" else f"src{k} {sorted(markers_for(sources[k]))}"
         print(f"  {label}: {len(ids)} units")
