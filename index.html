@@ -4525,7 +4525,13 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 #panel-studio .dc-exa-cats,
 #dcd-welcome-feed .dc-exa-cats{ gap:.7rem; }
 #panel-studio .dc-exa-cat,
-#dcd-welcome-feed .dc-exa-cat{ padding:.9rem 3.4rem .9rem 1rem; }
+#dcd-welcome-feed .dc-exa-cat{
+  /* logical, not physical: the reserved 3.4rem must sit on the inline-END side,
+     where the chevron and seen-tick are absolutely placed (left in RTL). The
+     old `padding:.9rem 3.4rem .9rem 1rem` put it on the right and left the
+     tick only 1rem, so long names ran under it (founder report, 2026-11-09). */
+  padding-block:.9rem; padding-inline-start:1rem; padding-inline-end:3.4rem;
+}
 #panel-studio .dc-exa-cat b,
 #dcd-welcome-feed .dc-exa-cat b{ color:var(--x-ink); font-size:.88rem; }
 
