@@ -777,37 +777,16 @@ DES_TYPE_LABEL_ITEM = "صریحاً تجربه/دیدگاه نامیده شده�
 DES_TYPE_LABEL_ITEMS = (DES_TYPE_LABEL_ITEM, "explicitly labeled as experience/opinion, not evidence")
 
 
-DES_RETIRED_TEXT = ".dentcast/des-retired-text.json"
-
-
-def des_retired_text(kind, key):
-    """Exact text that WAS on a page when a stored record quoted it and was later
-    reworded by the display-layer section rename (founder, 1405/08/17). Records
-    are never hand-edited, so a quote is verbatim if it is on the page today OR
-    listed here for that page. `kind` is "section_declarations" (key: section)
-    or "pages" (key: content_id)."""
-    if not exists(DES_RETIRED_TEXT):
-        return []
-    try:
-        reg = json.loads(read(DES_RETIRED_TEXT))
-        return [str(t) for t in (reg.get(kind) or {}).get(key) or []]
-    except (ValueError, AttributeError):
-        return []
-
-
 def des_section_declaration(content_id):
     """The landing-page text a section-level item-4 quote must come from, or
-    None when this content_id's section has no such declaration. Includes the
-    declaration's retired wording (des_retired_text), which the spec's closed
-    table still quotes."""
+    None when this content_id's section has no such declaration."""
     section = content_id.split("/")[0]
     if section not in DES_TYPE_LABEL_SECTIONS:
         return None
     path = f"{section}/index.html"
     if not exists(path):
         return None
-    retired = " ".join(des_norm(t) for t in des_retired_text("section_declarations", section))
-    return des_norm(text_of(read(path))) + (" " + retired if retired else "")
+    return des_norm(text_of(read(path)))
 
 
 # --------------------------------------------------------------------------
@@ -1722,8 +1701,6 @@ def _verify_core(content_id, rep, expect_title=None, expect_caption=None, sweep=
                 # article_region() begins AFTER — so the title is added back
                 _h1 = re.search(r"<h1[^>]*>(.*?)</h1>", doc, re.S)
                 page_hay = des_norm((text_of(_h1.group(1)) + " " if _h1 else "") + text_of(article_region(doc)))
-                for _old in des_retired_text("pages", content_id):
-                    page_hay += " " + des_norm(_old)
                 if isinstance(fid, dict):
                     # spec v2.6 F6: a page naming none of its sources inline is
                     # judged ONCE against all of them — one pooled object, not
