@@ -15,10 +15,10 @@
 //     the account, not localStorage).
 //  2. MANUAL — «راهنمای سایت» in the header person menu (logged-in), any time.
 //     On a non-home page it navigates to /?tour=1 and starts there.
-import { el, faNum, tehranDay } from './util.js?v=220';
-import { api, currentUser } from './api.js?v=220';
-import { pricingHref } from './premium-cta.js?v=220';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=220';
+import { el, faNum, tehranDay } from './util.js?v=221';
+import { api, currentUser } from './api.js?v=221';
+import { pricingHref } from './premium-cta.js?v=221';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=221';
 
 const SS_PENDING = 'dcp:tour:pending'; // set before navigating home to start there
 
@@ -120,7 +120,7 @@ const STOPS = [
   },
   {
     key: 'categories', panel: 'panel-studio', title: 'دسته‌های محتوا',
-    text: 'هر خانه دری است به یک بخش — اپیزودها، نکات کلینیکی، خلاصهٔ اپیزودها، ویزیت، ایده‌ها، لایت‌کست، مرور منابع، ویدیوها و سری‌های ویژه — با تعداد مطلب‌هایش.',
+    text: 'هر خانه دری است به یک بخش — اپیزودها، نکات کلینیکی، خلاصهٔ اپیزودها، ویزیت، ایده‌ها، پرسش‌های بیماران، مرور منابع، ویدیوها و سری‌های ویژه — با تعداد مطلب‌هایش.',
     targets: () => [q('#panel-studio .dc-exa-cats')],
   },
   {
@@ -265,7 +265,7 @@ async function mountPremiumPreview(ctx) {
   if (preview && preview.isConnected) return;
   const host = byId('panel-premium');
   if (!host) return;
-  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=220'), samplePathway()]);
+  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=221'), samplePathway()]);
   if (!state || typeof mod.livePreview !== 'function') return;
   const node = mod.livePreview({
     tier: 'premium',

@@ -305,7 +305,7 @@
 
         <!-- SCENE 2: LITECAST KNOWLEDGE CARDS (no "go to LiteCast page" CTA — LiteCast lives in the middle column) -->
         <div class="pt-scene pt-scene-knowledge" id="pt-scene-knowledge">
-          <div class="pt-scene-label">آموزش · LiteCast</div>
+          <div class="pt-scene-label">آموزش · پرسش‌های بیماران</div>
           <div class="pt-lc-cards" id="pt-lc-cards"><!-- JS populated --></div>
         </div>
 
@@ -359,7 +359,7 @@
           const a=document.createElement('a');
           a.className='pt-lc-card';
           a.href='/'+(it.page_url||'litecast/');
-          a.innerHTML='<span class="pt-lc-card-cat">LiteCast · بیماران</span><span class="pt-lc-card-title">'+it.title+'</span>';
+          a.innerHTML='<span class="pt-lc-card-cat">پرسش‌های بیماران</span><span class="pt-lc-card-title">'+it.title+'</span>';
           lcBox.appendChild(a);
         });
       }

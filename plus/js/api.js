@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import * as CFG from './config.js?v=220';
+import * as CFG from './config.js?v=221';
 
 const API_BASES = CFG.API_BASES;
 

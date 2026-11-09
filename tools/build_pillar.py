@@ -392,7 +392,7 @@ TYPE_META = {
     "dentai":           ("دنت‌AI",    "icon-bot"),
     "chairside":        ("ویزیت", "icon-chair"),
     "metanote":         ("ایده",  "icon-meta"),
-    "litecast":         ("لایت‌کست",  "icon-volume"),
+    "litecast":         ("پرسش بیمار",  "icon-volume"),
     "photocast":        ("فوتوکست", "icon-camera"),
     "dentcast_plus":    ("ویدیو",    "icon-film"),
     "sharehub":         ("مرور منابع",  "icon-link"),
