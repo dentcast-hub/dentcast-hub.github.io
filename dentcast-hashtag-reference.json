@@ -666,7 +666,7 @@
     "#Occlusion"
    ],
    "co_tags": [],
-   "count": 48,
+   "count": 49,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-23",
@@ -715,7 +715,8 @@
     "insight/insight-96",
     "chairside/chairside-44",
     "insight/insight-103",
-    "insight/insight-104"
+    "insight/insight-104",
+    "sharehub/share-47"
    ]
   },
   {
@@ -849,6 +850,73 @@
    ]
   },
   {
+   "key": "مرور_منابع",
+   "tag": "#مرور_منابع",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام بخش مرور منابع (پیش‌تر Share Hub / شیرهاب) — خوانش دنت‌کست از یک یا چند مقاله، همیشه با ذکر منبع.",
+   "use_when": "روی هر مدخل مرور منابع (پوشهٔ sharehub/)، و هیچ‌جای دیگر.",
+   "aliases": [
+    "share hub",
+    "share_hub",
+    "شیرهاب",
+    "شر هاب"
+   ],
+   "variants": [
+    "#Share_Hub"
+   ],
+   "co_tags": [],
+   "count": 46,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25",
+    "sharehub/share-26",
+    "sharehub/share-27",
+    "sharehub/share-28",
+    "sharehub/share-29",
+    "sharehub/share-30",
+    "sharehub/share-31",
+    "sharehub/share-32",
+    "sharehub/share-33",
+    "sharehub/share-34",
+    "sharehub/share-35",
+    "sharehub/share-36",
+    "sharehub/share-38",
+    "sharehub/share-39",
+    "sharehub/share-40",
+    "sharehub/share-41",
+    "sharehub/share-42",
+    "sharehub/share-43",
+    "sharehub/share-44",
+    "sharehub/share-45",
+    "sharehub/share-46",
+    "sharehub/share-47"
+   ]
+  },
+  {
    "key": "پست_و_کور",
    "tag": "#پست_و_کور",
    "domain": "clinical",
@@ -918,72 +986,6 @@
     "sharehub/share-34",
     "dentcast-plus/video-14",
     "insight/insight-97"
-   ]
-  },
-  {
-   "key": "مرور_منابع",
-   "tag": "#مرور_منابع",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام بخش مرور منابع (پیش‌تر Share Hub / شیرهاب) — خوانش دنت‌کست از یک یا چند مقاله، همیشه با ذکر منبع.",
-   "use_when": "روی هر مدخل مرور منابع (پوشهٔ sharehub/)، و هیچ‌جای دیگر.",
-   "aliases": [
-    "share hub",
-    "share_hub",
-    "شیرهاب",
-    "شر هاب"
-   ],
-   "variants": [
-    "#Share_Hub"
-   ],
-   "co_tags": [],
-   "count": 45,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24",
-    "sharehub/share-25",
-    "sharehub/share-26",
-    "sharehub/share-27",
-    "sharehub/share-28",
-    "sharehub/share-29",
-    "sharehub/share-30",
-    "sharehub/share-31",
-    "sharehub/share-32",
-    "sharehub/share-33",
-    "sharehub/share-34",
-    "sharehub/share-35",
-    "sharehub/share-36",
-    "sharehub/share-38",
-    "sharehub/share-39",
-    "sharehub/share-40",
-    "sharehub/share-41",
-    "sharehub/share-42",
-    "sharehub/share-43",
-    "sharehub/share-44",
-    "sharehub/share-45",
-    "sharehub/share-46"
    ]
   },
   {
@@ -2471,7 +2473,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 16,
+   "count": 17,
    "content_ids": [
     "episodes/episode-125-2",
     "insight/insight-2",
@@ -2488,7 +2490,8 @@
     "insight/insight-81",
     "chairside/chairside-39",
     "insight/insight-88",
-    "insight/insight-95"
+    "insight/insight-95",
+    "sharehub/share-47"
    ]
   },
   {
@@ -2730,6 +2733,43 @@
     "chairside/chairside-14",
     "insight/insight-72",
     "sharehub/share-28"
+   ]
+  },
+  {
+   "key": "تنظیم_اکلوژن",
+   "tag": "#تنظیم_اکلوژن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "حذف انتخابیِ تماس‌های ناخواسته با تراش، بدون از بین بردن هندسه‌ی فانکشنال.",
+   "use_when": "مقاله روش یا قاعده‌ی تراش تنظیمی بدهد.",
+   "aliases": [
+    "سلکتیو گرایندینگ",
+    "میزان کردن اکلوژن",
+    "تنظیم اکلوزال",
+    "occlusal equilibration"
+   ],
+   "variants": [
+    "#تنظیم_اکلوژال",
+    "#تنظیم-اکلوژن",
+    "#چکاپ_اکلوژنی"
+   ],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "insight/insight-1",
+    "photocast/episode-2",
+    "dentcast-plus/video-2",
+    "insight/insight-27",
+    "dentcast-plus/video-6",
+    "insight/insight-37",
+    "sharehub/share-6",
+    "insight/insight-44",
+    "insight/insight-54",
+    "insight/insight-56",
+    "chairside/chairside-37",
+    "insight/insight-100",
+    "insight/insight-103",
+    "sharehub/share-47"
    ]
   },
   {
@@ -3084,42 +3124,6 @@
     "insight/insight-51",
     "insight/insight-60",
     "metanotes/meta-22"
-   ]
-  },
-  {
-   "key": "تنظیم_اکلوژن",
-   "tag": "#تنظیم_اکلوژن",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "حذف انتخابیِ تماس‌های ناخواسته با تراش، بدون از بین بردن هندسه‌ی فانکشنال.",
-   "use_when": "مقاله روش یا قاعده‌ی تراش تنظیمی بدهد.",
-   "aliases": [
-    "سلکتیو گرایندینگ",
-    "میزان کردن اکلوژن",
-    "تنظیم اکلوزال",
-    "occlusal equilibration"
-   ],
-   "variants": [
-    "#تنظیم_اکلوژال",
-    "#تنظیم-اکلوژن",
-    "#چکاپ_اکلوژنی"
-   ],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "insight/insight-1",
-    "photocast/episode-2",
-    "dentcast-plus/video-2",
-    "insight/insight-27",
-    "dentcast-plus/video-6",
-    "insight/insight-37",
-    "sharehub/share-6",
-    "insight/insight-44",
-    "insight/insight-54",
-    "insight/insight-56",
-    "chairside/chairside-37",
-    "insight/insight-100",
-    "insight/insight-103"
    ]
   },
   {
@@ -7219,6 +7223,30 @@
    ]
   },
   {
+   "key": "ارتباط_با_لابراتوار",
+   "tag": "#ارتباط_با_لابراتوار",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتقال اطلاعاتی که تکنسین برای ساخت کار لازم دارد و خودش نمی‌تواند در بیمار ببیند، مثل رنگ، شفافیت، لکه‌ها و ویژگی‌های سطح دندان، از طریق عکس، نوشته یا مرجع مشترک.",
+   "use_when": "مقاله توضیح دهد چه اطلاعاتی و چطور باید از مطب به لابراتوار برسد.",
+   "aliases": [
+    "lab communication",
+    "laboratory communication",
+    "shade communication",
+    "ارتباط با تکنسین",
+    "ارسال رنگ به لابراتوار"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "sharehub/share-26",
+    "insight/insight-101",
+    "insight/insight-103",
+    "sharehub/share-47"
+   ]
+  },
+  {
    "key": "از_دست_رفتن_کانتکت",
    "tag": "#از_دست_رفتن_کانتکت",
    "domain": "clinical",
@@ -7696,6 +7724,29 @@
     "insight/insight-22",
     "metanotes/meta-8",
     "dentcast-plus/video-7"
+   ]
+  },
+  {
+   "key": "ثبت_رابطه",
+   "tag": "#ثبت_رابطه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ثبتِ رابطه‌ی فکین.",
+   "use_when": "مقاله روش یا خطای ثبت رابطه را بررسی کند.",
+   "aliases": [
+    "bite registration",
+    "ثبت اکلوژن",
+    "رکورد گیری",
+    "ثبت رابطه فکین"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-2",
+    "metanotes/meta-16",
+    "insight/insight-60",
+    "sharehub/share-47"
    ]
   },
   {
@@ -8686,29 +8737,6 @@
    ]
   },
   {
-   "key": "ارتباط_با_لابراتوار",
-   "tag": "#ارتباط_با_لابراتوار",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتقال اطلاعاتی که تکنسین برای ساخت کار لازم دارد و خودش نمی‌تواند در بیمار ببیند، مثل رنگ، شفافیت، لکه‌ها و ویژگی‌های سطح دندان، از طریق عکس، نوشته یا مرجع مشترک.",
-   "use_when": "مقاله توضیح دهد چه اطلاعاتی و چطور باید از مطب به لابراتوار برسد.",
-   "aliases": [
-    "lab communication",
-    "laboratory communication",
-    "shade communication",
-    "ارتباط با تکنسین",
-    "ارسال رنگ به لابراتوار"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "sharehub/share-26",
-    "insight/insight-101",
-    "insight/insight-103"
-   ]
-  },
-  {
    "key": "ارجاع_تخصصی",
    "tag": "#ارجاع_تخصصی",
    "domain": null,
@@ -9423,28 +9451,6 @@
     "dentai/promptologist/prompt1-3",
     "dentai/promptologist/prompt1-4",
     "dentai/promptologist/prompt2-1"
-   ]
-  },
-  {
-   "key": "ثبت_رابطه",
-   "tag": "#ثبت_رابطه",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ثبتِ رابطه‌ی فکین.",
-   "use_when": "مقاله روش یا خطای ثبت رابطه را بررسی کند.",
-   "aliases": [
-    "bite registration",
-    "ثبت اکلوژن",
-    "رکورد گیری",
-    "ثبت رابطه فکین"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-2",
-    "metanotes/meta-16",
-    "insight/insight-60"
    ]
   },
   {
@@ -17519,6 +17525,27 @@
    ]
   },
   {
+   "key": "رویکرد_کانفورمتیو",
+   "tag": "#رویکرد_کانفورمتیو",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ساخت ترمیم یا روکش در هماهنگی با اکلوژن موجود بیمار، به‌گونه‌ای که تماس‌های سایر دندان‌ها و رابطهٔ فکی پس از درمان مثل قبل بماند (Conformative Approach)، در برابر بازسازی برنامه‌ریزی‌شدهٔ اکلوژن.",
+   "use_when": "مطلب تصمیم بگیرد که در یک ترمیم اکلوژن موجود بیمار حفظ شود یا تغییر کند، یا روش حفظ آن را توضیح دهد.",
+   "aliases": [
+    "conformative approach",
+    "conformative",
+    "کانفورمتیو",
+    "کانفرماتیو",
+    "حفظ اکلوژن موجود بیمار"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "sharehub/share-47"
+   ]
+  },
+  {
    "key": "ری_پلنتیشن_عمدی",
    "tag": "#ری_پلنتیشن_عمدی",
    "domain": "clinical",
@@ -21505,6 +21532,7 @@
   "بیرون آوردن جراحی ریشه": "سوپرااراپشن جراحی",
   "تحلیل استخوان حاشیه ای": "تحلیل استخوان کرستال",
   "تحلیل استخوان مارژینال": "تحلیل استخوان کرستال",
+  "حفظ اکلوژن موجود بیمار": "رویکرد کانفورمتیو",
   "عوامل بیولوژیک ایمپلنت": "بیولوژی ایمپلنت",
   "محرمانگی اطلاعات بیمار": "حریم بیمار",
   "مطالعه بدون گروه کنترل": "مطالعه بدون کنترل",
@@ -21515,6 +21543,7 @@
   "alleman deliperi rule": "قانون آلمان دلیپری",
   "cementation technique": "تکنیک سمان",
   "certainty of evidence": "رویکرد grade",
+  "conformative approach": "رویکرد کانفورمتیو",
   "cross sectional study": "مطالعه مقطعی",
   "deep margin elevation": "dme",
   "feldspathic porcelain": "فلدسپاتیک",
@@ -22947,6 +22976,7 @@
   "ceramic wing": "وینگ لمینیت",
   "cohort study": "مطالعه کوهورت",
   "cold welding": "کلد ولدینگ",
+  "conformative": "رویکرد کانفورمتیو",
   "conservative": "درمان محافظه کارانه",
   "contra angle": "کدگذاری توربین",
   "core buildup": "کور بیلدآپ",
@@ -23761,6 +23791,7 @@
   "کانسرواتیو": "درمان محافظه کارانه",
   "کانسپت دال": "dahl concept",
   "کانفبولیشن": "کانفابیولیشن",
+  "کانفرماتیو": "رویکرد کانفورمتیو",
   "کانین گاید": "کانین رایز",
   "کفایت پایه": "انتخاب پایه",
   "کلاس کانین": "رابطه کانینی",

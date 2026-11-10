@@ -50990,5 +50990,774 @@
     "fidelity": [
       null
     ]
+  },
+  "sharehub/share-47": {
+    "scored_at": "2026-11-10",
+    "sources": [
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "THERAPY",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Good occlusal practice in simple restorative dentistry",
+          "authors": "S. J. Davies, R. M. J. Gray, P. W. Smith",
+          "year": 2001,
+          "journal": "British Dental Journal",
+          "doi": "10.1038/sj.bdj.4801185"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "narrative review / expert guidance article with no Methods section (THERAPY narrative review row, 15)",
+          "evidence_quote": "In developing these guidelines the authors have unashamedly"
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "The whole text was read (introduction, Discussion, conformative approach, EDEC technique, model grooming, reorganised approach, guidelines list). It has no Methods section and contains no protocol, registration or PROSPERO wording anywhere."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "There is no search strategy anywhere in the text. No database is named and no search, keyword or date-range wording appears. References are cited ad hoc (1–18) within the narrative."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "3b-iii: neither half is present. There is no (a) screening account with counts or flow diagram, and no (b) inclusion/exclusion criteria. No list of excluded studies appears anywhere, and there is no Methods section to hold one."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "There is no appraisal step anywhere in the text. No quality, bias, appraisal or critical-assessment wording is applied to the cited works. The text itself calls the theories 'essentially untested' but appraises no study."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "No data are pooled and no statistical synthesis is described anywhere in the text. No model, heterogeneity or effect-size wording appears."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "There is no funnel plot, publication-bias test or small-study wording anywhere in the text."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement",
+            "base_points": 8,
+            "points": 1,
+            "evidence_quote": "",
+            "note": "The author affiliation block, correspondence line, 'REFEREED PAPER'/copyright block and full body were read. There is no conflict-of-interest, competing-interest, funding or declaration statement anywhere (ligature variants were checked by reading the blocks). Scaled: max(1, round_half_up(8×15÷100)) = 1."
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "applies to RCTs only"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "The source text makes no survival or success-rate claim and does not address follow-up duration."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 4,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "امتیاز DES این منبع ۴ از ۱۰۰ است، در باند E (سطح زمینه و نظر) برای سؤال از نوع THERAPY.",
+        "interpretation_fa": "این مقاله راهنمای آموزشی سه نویسنده است و بخش Methods، جست‌وجوی منابع یا ارزیابی مطالعات ندارد. خود متن هم می‌گوید فلسفه‌های اکلوژن تجربی و آزمون‌نشده‌اند. متن چارچوبی عملی ارائه می‌کند: رویکرد conformative، اصل EDEC، ثبت اکلوژن پیش از درمان و model grooming. این چارچوب بر تجربهٔ بالینی تکیه دارد، نه بر شواهد پژوهشی.",
+        "issuing_bodies": null,
+        "issuing_quote": null,
+        "evidence_basis": null,
+        "basis_quote": null
+      }
+    ],
+    "fidelity": [
+      {
+        "des_version": "3.7",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "اکلوژن در ترمیم‌های ساده؛ قبل از تراش چه چیزی را باید بدانیم؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "English",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "link label"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "ما معمولاً بعد از تمام‌شدن ترمیم یا روکش، تازه سراغ بررسی اکلوژن می‌رویم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Instead it has become customary to provide the\nrestoration and then to ‘check’ the occlusion\nafterwards.",
+            "source_ref": null
+          },
+          {
+            "id": "u4",
+            "claim_quote": "با کاغذ آرتیکولاسیون تماس‌ها را مشخص می‌کنیم و اگر جایی بلند باشد، اصلاحش می‌کنیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Instead it has become customary to provide the\nrestoration and then to ‘check’ the occlusion\nafterwards.",
+            "source_ref": null,
+            "note": "the source states the habit of checking afterwards; the paper-marking detail appears only in its Check stage"
+          },
+          {
+            "id": "u5",
+            "claim_quote": "اما نویسندگان این مقاله سؤال مهمی مطرح می‌کنند: وقتی اکلوژن بیمار را قبل از درمان بررسی نکرده‌ایم، از کجا می‌دانیم چیزی که الان اصلاح می‌کنیم چه تفاوتی با وضعیت قبلی دارد؟",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "If this is our habit, we should ask\nourselves the question what are we checking the\nocclusion of our restoration against?",
+            "source_ref": null
+          },
+          {
+            "id": "u6",
+            "claim_quote": "اصل مقاله همین‌جاست.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost"
+          },
+          {
+            "id": "u7",
+            "claim_quote": "در بیشتر رستوریشن‌های ساده قرار نیست اکلوژن جدیدی بسازیم؛ قرار است رستوریشن با اکلوژن موجود بیمار هماهنگ باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "restoration that does not alter the patient’s\nocclusion is described in restorative dentistry as\nthe ‘conformative approach’, and the vast\nmajority of restorations are provided following\nthis principle.",
+            "source_ref": null
+          },
+          {
+            "id": "u8",
+            "claim_quote": "به این رویکرد Conformative Approach می‌گویند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "restoration that does not alter the patient’s\nocclusion is described in restorative dentistry as\nthe ‘conformative approach’, and the vast\nmajority of restorations are provided following\nthis principle.",
+            "source_ref": null
+          },
+          {
+            "id": "u9",
+            "claim_quote": "در این روش، مهم‌ترین معیار این است که بعد از درمان، تماس‌های سایر دندان‌ها مثل قبل باقی بمانند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Although the principle of not changing the\npatient’s occlusion is paramount within the\nconformative approach, this, of course, refers\nto the occlusal contacts that the patient has\nbetween their teeth that are not being\npresently restored.",
+            "source_ref": null
+          },
+          {
+            "id": "u10",
+            "claim_quote": "البته لازم نیست تمام تماس‌های قبلی روی دندان ترمیم‌شده را عیناً تکرار کنیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It does not mean that the\nnew restoration should slavishly reproduce\nthe exact occlusion that the tooth in need of\nrestoration has.",
+            "source_ref": null
+          },
+          {
+            "id": "u11",
+            "claim_quote": "حتی ممکن است بتوانیم تماس نامناسب همان دندان را اصلاح کنیم، بدون اینکه رابطه اکلوژنی سایر دندان‌ها تغییر کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Within the conformative approach it is not\nonly possible, but advisable to improve the\nocclusion of the restored tooth by the elimination of incline contacts either by careful\ndesign of the occlusal platform of the new\nrestoration or by judicial alteration of the\nopposing tooth.",
+            "source_ref": null
+          },
+          {
+            "id": "u12",
+            "claim_quote": "بسیاری از بیماران اکلوژن ایده‌آلی ندارند، اما سال‌ها بدون مشکل با آن زندگی کرده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This is unusual, it is much\nmore likely that:",
+            "source_ref": null,
+            "note": "first half (many patients lack an ideal occlusion) is stated; the half about living for years without problems is not addressed and is not scored"
+          },
+          {
+            "id": "u13",
+            "claim_quote": "بنابراین قرار نیست با هر رستوریشن اکلوژن بیمار را هم اصلاح کنیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Although the principle of not changing the\npatient’s occlusion is paramount within the\nconformative approach, this, of course, refers\nto the occlusal contacts that the patient has\nbetween their teeth that are not being\npresently restored.",
+            "source_ref": null,
+            "note": "judged on the conclusion"
+          },
+          {
+            "id": "u14",
+            "claim_quote": "نویسندگان معتقدند Conformative Approach نه به این دلیل که ساده‌ترین روش است، بلکه چون احتمال مشکلات ناخواسته را کمتر می‌کند، انتخاب مناسبی برای اغلب رستوریشن‌های معمول است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The reason why the conformative approach is favoured is not because it is\nthe easiest but because it is the safest.",
+            "source_ref": null
+          },
+          {
+            "id": "u15",
+            "claim_quote": "البته همیشه نمی‌توان از این رویکرد استفاده کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Examples of an occasion where this\nwill not be possible is either if the tooth that\nis to be restored is a deflecting contact; ie it\nprovides the principal guiding contact from\nCR to CO, or if the tooth is providing a\nheavy posterior interference.",
+            "source_ref": null
+          },
+          {
+            "id": "u16",
+            "claim_quote": "مثلاً اگر دندان مورد درمان تماس هدایت‌کننده‌ای داشته باشد که فک را از CR به CO می‌برد، یا تداخل مهمی در حرکات فکی ایجاد کند، تغییر آن ممکن است رابطه فکی بیمار را هم عوض کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Examples of an occasion where this\nwill not be possible is either if the tooth that\nis to be restored is a deflecting contact; ie it\nprovides the principal guiding contact from\nCR to CO, or if the tooth is providing a\nheavy posterior interference.",
+            "source_ref": null
+          },
+          {
+            "id": "u17",
+            "claim_quote": "در این شرایط ممکن است به Reorganised Approach نیاز داشته باشیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "If modification to\nthese deflecting contact teeth is envisaged,\nthis then becomes a reorganised approach no\nmatter how few teeth are being restored.",
+            "source_ref": null
+          },
+          {
+            "id": "u18",
+            "claim_quote": "وجود اختلالات عضلات و مفصل فکی (TMD) هم باید قبل از تصمیم‌گیری بررسی شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "If there\nis, the decision must be taken whether or\nnot to treat it first, since it is possible that\nthe treatment of the TMD will result in a\nchange of the patient’s occlusion.",
+            "source_ref": null
+          },
+          {
+            "id": "u19",
+            "claim_quote": "تماس اکلوژنی را کجا قرار دهیم؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u20",
+            "claim_quote": "مقاله تأکید می‌کند که بهتر است نیروهای اکلوژنی تا حد امکان در امتداد محور طولی دندان وارد شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "On the tooth level, ideal occlusion is\ndescribed as an occlusal contact that is: ‘in line\nwith the long axis of the tooth and simultaneous with all other occlusal contacts in the\n\nmouth’.",
+            "source_ref": null
+          },
+          {
+            "id": "u21",
+            "claim_quote": "تماس روی سطوح شیب‌دار کاسپ‌ها (Incline Contacts) می‌تواند نیروهای جانبی ایجاد کند که از نظر نویسندگان، در بعضی شرایط ممکن است با حرکت نامطلوب دندان، شکستگی یا انحراف فک همراه باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Incline contacts are considered to be\npotentially harmful, because of the lateral force\nthat they may generate.",
+            "source_ref": null,
+            "note": "the consequences (fracture, jiggling, deflection) are listed in the source's Fig. 3"
+          },
+          {
+            "id": "u22",
+            "claim_quote": "بنابراین اگر بتوانیم تماس را از سطح شیب‌دار به ناحیه مناسب‌تری مثل فوسا یا مارجینال ریج منتقل کنیم، ممکن است اکلوژن همان دندان را بهتر کرده باشیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Within the conformative approach it is not\nonly possible, but advisable to improve the\nocclusion of the restored tooth by the elimination of incline contacts either by careful\ndesign of the occlusal platform of the new\nrestoration or by judicial alteration of the\nopposing tooth.",
+            "source_ref": null
+          },
+          {
+            "id": "u23",
+            "claim_quote": "اما یک مرز مهم وجود دارد: تا وقتی تماس‌های سایر دندان‌ها و رابطه فکی بیمار تغییر نکرده، همچنان در محدوده Conformative هستیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "So as long as the jaw relationship is the\nsame, it is still the conformative approach.",
+            "source_ref": null
+          },
+          {
+            "id": "u24",
+            "claim_quote": "به بهانه بهترکردن اکلوژن یک روکش، نباید بدون برنامه‌ریزی سراغ اصلاح تماس‌های دندان‌های دیگر برویم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The difficulty is to be sure\nthat one is not changing deflecting contacts,\nbecause if they are being altered then jaw relationships are being changed.",
+            "source_ref": null
+          },
+          {
+            "id": "u25",
+            "claim_quote": "یک ترتیب ساده برای کارهای روزمره",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u26",
+            "claim_quote": "نویسندگان برای مدیریت اکلوژن در ترمیم‌های مستقیم و غیرمستقیم، ترتیب چهارمرحله‌ای EDEC را پیشنهاد می‌کنند:",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The ‘EDEC principle’ that is\npresented here (Fig. 4) is a system that the\nauthors have devised to give a logical progression through the sequence of producing a\nrestoration, to the conformative approach.",
+            "source_ref": null
+          },
+          {
+            "id": "u27",
+            "claim_quote": "Examine → Design → Execute → Check",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "label only, no predicate"
+          },
+          {
+            "id": "u28",
+            "claim_quote": "یعنی اول بررسی کنیم، بعد طراحی کنیم، سپس رستوریشن را انجام دهیم و در پایان نتیجه را کنترل کنیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Examine and record the pre-existing occlusion\nDesign the restoration\nExecute the restoration\nCheck the occlusion at the fit appointment",
+            "source_ref": null
+          },
+          {
+            "id": "u29",
+            "claim_quote": "قبل از برداشتن هندپیس، تماس‌های استاتیک بیمار را در وضعیت معمول بسته‌شدن دندان‌ها (CO) با کاغذ آرتیکولاسیون یا فویل نازک ثبت می‌کنیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The\nexamination of the static occlusion in centric\nocclusion (rather than in centric relation) is\ndone by asking the patient to tap onto thin articulating paper or foil (Fig. 5).",
+            "source_ref": null
+          },
+          {
+            "id": "u30",
+            "claim_quote": "بعد با رنگ متفاوت، تماس‌های داینامیک را در حرکات طرفی و پروتروسیو بررسی می‌کنیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Next, ask the\npatient to slide from side-to-side using thin\npaper or foil of a different colour; this marks the\ncontacts of the dynamic occlusion .",
+            "source_ref": null,
+            "note": "the Examine stage names side-to-side sliding; protrusive movement appears in the source's Check stage"
+          },
+          {
+            "id": "u31",
+            "claim_quote": "این اطلاعات را می‌توان با عکس، طرح ساده یا یادداشت کوتاه ثبت کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Occlusal sketching is a user-friendly way of\nrecording the patient’s occlusion.",
+            "source_ref": null,
+            "note": "photographs and written record are also listed in the source"
+          },
+          {
+            "id": "u32",
+            "claim_quote": "مهم این است که قبل از تغییر سطح اکلوژنی دندان بدانیم کدام تماس‌ها وجود داشته‌اند و کدام باید حفظ شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Firstly, examine the occlusion before picking up\na handpiece.",
+            "source_ref": null
+          },
+          {
+            "id": "u33",
+            "claim_quote": "این موضوع حتی در یک ترمیم کامپوزیتی معمولی هم اهمیت دارد.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "importance judgment about a pointed-to topic"
+          },
+          {
+            "id": "u34",
+            "claim_quote": "وقتی محل تماس قبلی را می‌دانیم، طراحی حفره و شکل‌دادن سطح ترمیم هدفمندتر می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The existing\nocclusal marks will either be preserved by being\navoided in the preparation, or they will be\ninvolved in the design.",
+            "source_ref": null
+          },
+          {
+            "id": "u35",
+            "claim_quote": "نکته دیگر اینکه ترمیم کوتاه هم لزوماً ترمیم خوبی نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "But\nthe avoidance of a supra-occluding restoration\nby deliberately providing restorations that do\nnot contribute to the overall occlusion is not\ngood occlusal practice.",
+            "source_ref": null
+          },
+          {
+            "id": "u36",
+            "claim_quote": "گاهی برای جلوگیری از بلندشدن ترمیم، آن را طوری تنظیم می‌کنیم که عملاً از اکلوژن خارج شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Often it will be found that the previous\nrestoration is in infra occlusion, as every dentist\nis anxious to avoid the ‘high restoration’.",
+            "source_ref": null
+          },
+          {
+            "id": "u37",
+            "claim_quote": "قرار نیست برای فرار از یک تماس بلند، مشارکت طبیعی دندان ترمیم‌شده در اکلوژن را حذف کنیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "But\nthe avoidance of a supra-occluding restoration\nby deliberately providing restorations that do\nnot contribute to the overall occlusion is not\ngood occlusal practice.",
+            "source_ref": null
+          },
+          {
+            "id": "u38",
+            "claim_quote": "در کنترل نهایی هم فقط دنبال تماس بلند روی ترمیم نباشیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The occlusion of the restoration\nshould be as ideal as possible (preferably not on\nan incline) and should not prevent all the other\nteeth from touching in exactly the same way as\nthey did before.",
+            "source_ref": null
+          },
+          {
+            "id": "u39",
+            "claim_quote": "ممکن است یک تماس جدید باعث حذف تماس قبلی دندان کناری یا تغییر الگوی گایدنس شده باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In the illustrated case it can be seen that the\nocculsal contact against the mesial marginal\nridge of the restored UL4 (24) is slightly too\nheavy (Fig. 8a); this has prevented the palatal\ncusp of this tooth from occluding and has\nchanged the occlusion of the canine.",
+            "source_ref": null
+          },
+          {
+            "id": "u40",
+            "claim_quote": "در روکش‌ها، مسئولیت اکلوژن فقط با لابراتوار نیست",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u41",
+            "claim_quote": "نویسندگان تکنسین را اپراتور دوم می‌دانند، نه صرفاً اجراکننده دستورات دندانپزشک.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "We believe that it is a more accurate representation of the working relationship to consider\nthe laboratory technician to be a second operator rather than an assistant, as it makes it\nclear that the technician also has expectations\nand responsibilities",
+            "source_ref": null
+          },
+          {
+            "id": "u42",
+            "claim_quote": "اما برای طراحی صحیح اکلوژن، تکنسین باید بداند دندان‌های بیمار قبل از تراش چه تماس‌هایی داشته‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "There is a\nneed for that information to be transferred\naccurately to the laboratory technician: a record\nmust be made.",
+            "source_ref": null
+          },
+          {
+            "id": "u43",
+            "claim_quote": "قالب یا اسکن به‌تنهایی تمام این اطلاعات را منتقل نمی‌کند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source does not say that an impression alone fails to carry the occlusal information, and does not mention scans; this would be an inference"
+          },
+          {
+            "id": "u44",
+            "claim_quote": "عکس تماس‌های اکلوژنی، یک طرح ساده یا توضیح درباره گایدنس بیمار می‌تواند کمک‌کننده باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Occlusal sketching is a user-friendly way of\nrecording the patient’s occlusion.",
+            "source_ref": null,
+            "note": "photographs and written record are also listed in the source"
+          },
+          {
+            "id": "u45",
+            "claim_quote": "مقاله درباره ثبت بایت هم نکته جالبی دارد: هیچ ماده ثبت بایتی به‌تنهایی تضمین‌کننده انتقال صحیح اکلوژن نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "No particular bite registration material\nguarantees success.",
+            "source_ref": null
+          },
+          {
+            "id": "u46",
+            "claim_quote": "مثلاً اگر ماده ثبت بایت روی سطوح مخاطی امتداد پیدا کند، ممکن است هنگام نشستن روی مدل گچی، مانع قرارگیری صحیح دو مدل شود و رابطه آن‌ها را با وضعیت واقعی دهان متفاوت کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Even if the models are completely accurate\nand allow the bite registration material to\nadapt in exactly the same relationship to the\nmodels as they had to the teeth, then there is\nstill the problem that in the mouth the\nmucosal surfaces are soft and compressible,\nwhereas on the models the mucosal surfaces\nare replicated by hard incompressible material\nwhich will probably hold the bite registration\nmaterial away from its true relationship with\nthe models of the teeth.",
+            "source_ref": null
+          },
+          {
+            "id": "u47",
+            "claim_quote": "نویسندگان پیشنهاد می‌کنند در صورت امکان، ماده ثبت بایت فقط بین دندان تراش‌خورده و دندان‌های مقابل قرار بگیرد و تماس سایر دندان‌ها حفظ شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "If possible the bite registration material\nshould only be used between the prepared\ntooth and its antagonists; not used to take a\nfull arch record.",
+            "source_ref": null
+          },
+          {
+            "id": "u48",
+            "claim_quote": "همچنین رابطه مدل‌ها بهتر است با یک رکورد مستقل دوم، حتی یک طرح دوبعدی از تماس‌ها، کنترل شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Alternatively the second record may be a\ntwo dimensional one, such as occlusal sketching (Figure 13a–d).",
+            "source_ref": null
+          },
+          {
+            "id": "u49",
+            "claim_quote": "اگر اختلاف کوچک باشد، گاهی می‌توان با اصلاح محدود مدل گچی (Model Grooming)، تماس‌های واقعی بیمار را بازسازی کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "If the error is small then model grooming is\na good option.",
+            "source_ref": null
+          },
+          {
+            "id": "u50",
+            "claim_quote": "اما در اختلافات بزرگ، تکرار ثبت یا تهیه مدل منطقی‌تر است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "If the error is gross, repeating the process\n\nmay be the only option; it will be inconvenient\nto the technician, clinician and patient.",
+            "source_ref": null
+          },
+          {
+            "id": "u51",
+            "claim_quote": "بررسی صحت اکلوژن مدل‌ها همیشه لازم است، حتی اگر هیچ اصلاحی روی آن‌ها انجام ندهیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "So it follows that whereas model grooming should not be necessary, model checking is\nalways necessary.",
+            "source_ref": null
+          },
+          {
+            "id": "u52",
+            "claim_quote": "فضای کافی برای رستوریشن را از ابتدا مشخص کنیم",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u53",
+            "claim_quote": "اگر به دلیل محدودیت تراش، فضای کافی برای ضخامت مناسب ماده ترمیمی وجود نداشته باشد، بهتر است قبل از ساخت روکش مشخص شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "If, because of clinical considerations (eg\nnearness of the pulp) the clinician suspects that\nthe technician may not have sufficient room,\nfor say an adequate thickness of porcelain in a\nmetal ceramic crown, then it is much better to\ngive the technician permission to reduce the\nheight of the opposing tooth than to risk a high\ncrown.",
+            "source_ref": null
+          },
+          {
+            "id": "u54",
+            "claim_quote": "گاهی لازم است سطح دندان تراش‌خورده بیشتر اصلاح شود یا در موارد انتخاب‌شده، دندان مقابل کمی تنظیم شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "If, because of clinical considerations (eg\nnearness of the pulp) the clinician suspects that\nthe technician may not have sufficient room,\nfor say an adequate thickness of porcelain in a\nmetal ceramic crown, then it is much better to\ngive the technician permission to reduce the\nheight of the opposing tooth than to risk a high\ncrown.",
+            "source_ref": null,
+            "note": "reducing the preparation is stated in the following sentence"
+          },
+          {
+            "id": "u55",
+            "claim_quote": "این تصمیم باید از قبل با تکنسین هماهنگ و به بیمار توضیح داده شود، نه اینکه هنگام تحویل با یک روکش بلند روبه‌رو شویم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It is essential in this situation, to advise\nthe patient at the preparation appointment that\nadjustment to the opposing tooth may be necessary next time, giving reasons.",
+            "source_ref": null
+          },
+          {
+            "id": "u56",
+            "claim_quote": "مقاله همچنین روش Functionally Generated Pathway یا FGP را معرفی می‌کند که در آن مسیر حرکت دندان‌های مقابل با ماده مناسب ثبت می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A functionally generated pathway indicates\nnot only where the cusp tips of the opposing\nteeth are in centric occlusion (Fig. 15d) but also\nwhere they move relative to the proposed\ncrown (Fig. 15e).",
+            "source_ref": null
+          },
+          {
+            "id": "u57",
+            "claim_quote": "به این ترتیب تکنسین علاوه بر تماس‌های استاتیک، اطلاعاتی از مسیرهای حرکتی واقعی بیمار هم دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A functionally generated pathway indicates\nnot only where the cusp tips of the opposing\nteeth are in centric occlusion (Fig. 15d) but also\nwhere they move relative to the proposed\ncrown (Fig. 15e).",
+            "source_ref": null
+          },
+          {
+            "id": "u58",
+            "claim_quote": "نقش روکش موقت را دست‌کم نگیریم",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u59",
+            "claim_quote": "روکش موقت فقط برای پوشاندن دندان تراش‌خورده نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Consequently it is\nimperative that the patient is dismissed from\nthe preparation appointment with a temporary restoration which will maintain the same\nrelationship between the prepared tooth and\nthe adjacent and opposing teeth (Fig. 10).",
+            "source_ref": null
+          },
+          {
+            "id": "u60",
+            "claim_quote": "قرار است در فاصله تراش تا تحویل، رابطه دندان را با دندان‌های مجاور و مقابل حفظ کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Consequently it is\nimperative that the patient is dismissed from\nthe preparation appointment with a temporary restoration which will maintain the same\nrelationship between the prepared tooth and\nthe adjacent and opposing teeth (Fig. 10).",
+            "source_ref": null
+          },
+          {
+            "id": "u61",
+            "claim_quote": "بنابراین باید نشست و ثبات مناسب داشته باشد و تماس‌های اکلوژنی را هم درست برقرار کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "For this the temporary restoration\nshould: be a good fit, so that it is not going to\nmove on the tooth; provide the correct occlusion, so that the prepared tooth maintains its\nrelationships; be in the same spatial relationship\nwith adjacent and opposing teeth.",
+            "source_ref": null
+          },
+          {
+            "id": "u62",
+            "claim_quote": "اگر موقت این روابط را حفظ نکند، ممکن است وضعیت اکلوژن بیمار تا جلسه تحویل تغییر کرده باشد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "the source says the temporary must maintain the occlusion but does not state the consequence of failing to; that would be an inference"
+          },
+          {
+            "id": "u63",
+            "claim_quote": "به همین دلیل، نویسندگان ساخت روکش موقت اختصاصی و دقیق را توصیه می‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "By far the easiest way of achieving these aims is to make a custom temporary crown.",
+            "source_ref": null,
+            "note": "judged on the conclusion"
+          },
+          {
+            "id": "u64",
+            "claim_quote": "کنترل نهایی؛ قبل و بعد از سمان‌کردن",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u65",
+            "claim_quote": "اکلوژن روکش باید هم قبل از سمان‌کردن و هم بعد از آن بررسی شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This needs to be checked before\nand after cementation.",
+            "source_ref": null
+          },
+          {
+            "id": "u66",
+            "claim_quote": "فقط کافی نیست که روکش بلند نباشد؛ باید مطمئن شویم سایر دندان‌ها هنوز تماس‌های قبلی خود را دارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The occlusion of the restoration\nshould be as ideal as possible (preferably not on\nan incline) and should not prevent all the other\nteeth from touching in exactly the same way as\nthey did before.",
+            "source_ref": null
+          },
+          {
+            "id": "u67",
+            "claim_quote": "حرکات طرفی و پروتروسیو هم اهمیت دارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "If it is a posterior\nrestoration then it is unlikely to be ideal if there is\nany occlusal contact during lateral or protrusive\nexcursion.",
+            "source_ref": null
+          },
+          {
+            "id": "u68",
+            "claim_quote": "نویسندگان به‌ویژه در ترمیم‌های خلفی، تماس‌های مزاحم هنگام این حرکات را نامطلوب می‌دانند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "If it is a posterior\nrestoration then it is unlikely to be ideal if there is\nany occlusal contact during lateral or protrusive\nexcursion.",
+            "source_ref": null
+          },
+          {
+            "id": "u69",
+            "claim_quote": "بنابراین معیار ما فقط علامت روی روکش نیست؛ باید اکلوژن نهایی را با وضعیت ثبت‌شده قبل از درمان مقایسه کنیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "This is either done by referring to some\ndiagrammatic record made, or by reversing the\ncolour of the paper or foils used pre-operatively, or from memory.",
+            "source_ref": null,
+            "note": "judged on the conclusion"
+          },
+          {
+            "id": "u70",
+            "claim_quote": "در نهایت، مقاله یادآوری می‌کند که اکلوژن را نمی‌توان فقط با چند قانون مکانیکی قضاوت کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Because of this, the various theories and\nphilosophies are essentially untested and so lack the\nscientific validity necessary to make them ‘rules’.",
+            "source_ref": null
+          },
+          {
+            "id": "u71",
+            "claim_quote": "وضعیت پریودنشیوم، عضلات، مفصل فکی و ظرفیت تطابق بیمار هم اهمیت دارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The examination of the patient involves the teeth, periodontal tissues and\narticulatory system.",
+            "source_ref": null
+          },
+          {
+            "id": "u72",
+            "claim_quote": "حتی یک تماس که از نظر تئوری نامناسب است، الزاماً در همه بیماران مشکل ایجاد نمی‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "There is no such thing as an intrinsically bad occlusal contact, only an\nintolerable number of times to parafunction on it.",
+            "source_ref": null
+          },
+          {
+            "id": "u73",
+            "claim_quote": "تعداد دفعات و شدت واردشدن نیرو، به‌خصوص در پارافانکشن، هم مهم است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "There is no such thing as an intrinsically bad occlusal contact, only an\nintolerable number of times to parafunction on it.",
+            "source_ref": null,
+            "note": "number of times is stated; intensity of force is not addressed and is not scored"
+          },
+          {
+            "id": "u74",
+            "claim_quote": "جمع‌بندی من این است که در ترمیم‌های معمول، قرار نیست اکلوژن بیمار را از نو بسازیم.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "opinion marker: جمع‌بندی من"
+          },
+          {
+            "id": "u75",
+            "claim_quote": "اول باید آن را بشناسیم، تا حد امکان حفظش کنیم و اگر تغییری ایجاد می‌کنیم، بدانیم دقیقاً چه چیزی را تغییر می‌دهیم و چرا.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The patient’s occlusion shoul be recorded, before any treatment is started.",
+            "source_ref": null,
+            "note": "the preserve-as-far-as-possible part is stated in the source's conformative approach sections"
+          },
+          {
+            "id": "u76",
+            "claim_quote": "اکلوژن خوب در یک ترمیم ساده، چیزی نیست که فقط در پایان کار با کاغذ آرتیکولاسیون به دست بیاید؛ از قبل از شروع تراش شکل می‌گیرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Firstly, examine the occlusion before picking up\na handpiece.",
+            "source_ref": null
+          }
+        ],
+        "counts": {
+          "matches": 62,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 2,
+          "not_assessable": 0,
+          "author_view": 1,
+          "not_a_claim": 11
+        },
+        "assessable": 62,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "Ensuring that the occlusion conforms (to the patient’s pre-treatment state) is a product of examination, design, execution and checking (EDEC)",
+        "fact_fa": "از ۶۲ ادعایی که منبع به آن پرداخته‌اند، ۶۲ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۲ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
+    ]
   }
 }

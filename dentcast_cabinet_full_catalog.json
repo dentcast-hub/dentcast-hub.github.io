@@ -133400,6 +133400,56 @@
         "Natalia Di Pietro",
         "Bartolomeo Trentadue"
       ]
+    },
+    {
+      "id": "P2955",
+      "title": "Good occlusal practice in simple restorative dentistry",
+      "file_name": "Good occlusal practice in simple restorative dentistry.pdf",
+      "topic": "Occlusion",
+      "topic_path": "Occlusion",
+      "type": "narrative review",
+      "local_path": "",
+      "file_size": 417188,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "sharehub/share-47"
+      ],
+      "drive_link": "https://drive.google.com/file/d/14oNKMq1t1ba61b6iZhno762SA1IjRGN0/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=14oNKMq1t1ba61b6iZhno762SA1IjRGN0",
+      "drive_view": "https://drive.google.com/file/d/14oNKMq1t1ba61b6iZhno762SA1IjRGN0/view",
+      "drive_id": "14oNKMq1t1ba61b6iZhno762SA1IjRGN0",
+      "tags": [
+        "occlusion",
+        "conformative-approach",
+        "occlusal-analysis",
+        "occlusal-adjustment",
+        "centric-occlusion",
+        "jaw-relation-record",
+        "occlusal-interference",
+        "provisional-restoration",
+        "crown",
+        "narrative-review",
+        "topic:occlusion",
+        "good-occlusal-practice-simple-restorative-dentistry"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Good occlusal practice in simple restorative dentistry",
+      "doi": "10.1038/sj.bdj.4801185",
+      "journal": "British Dental Journal",
+      "crossref_year": 2001,
+      "subjects": [
+        "Dentistry"
+      ],
+      "abstract": "Many theories and philosophies of occlusion have been developed. 1-12 The difficulty in scientifically validating the various approaches to providing an occlusion is that an 'occlusion' can only be judged against the reaction it may or may not produce in a tissue system (eg dental, alveolar, periodontal or articulatory). Because of this, the various theories and philosophies are essentially untested and so lack the scientific validity necessary to make them 'rules'. Often authors will present their own firmly held opinions as 'rules'. This does not mean that these approaches are to be ignored; they are, after all, the distillation of the clinical experience of many different operators over many years. But they are empirical. In developing these guidelines the authors have unashamedly drawn on this body of perceived wisdom, but we would also like to involve and challenge the reader by asking basic questions, and by applying a common sense approach to a subject that can be submerged under a sea of dictate and dogma.",
+      "display_title": "Good occlusal practice in simple restorative dentistry",
+      "authors": [
+        "S. J. Davies",
+        "R. M. J. Gray",
+        "P. W. Smith"
+      ]
     }
   ],
   "drive_matched": 2849,
@@ -133444,7 +133494,7 @@
   ],
   "tag_index": {
     "dental-implant": 1014,
-    "narrative-review": 392,
+    "narrative-review": 393,
     "in-vitro": 365,
     "prosthodontics": 315,
     "zirconia": 266,
@@ -133466,7 +133516,7 @@
     "bonding": 131,
     "topic:abutment": 127,
     "prospective": 125,
-    "crown": 123,
+    "crown": 124,
     "biomimetic-dentistry": 121,
     "bone-loss": 118,
     "retrospective": 115,
@@ -133497,8 +133547,8 @@
     "buccal-bone": 72,
     "brochure": 72,
     "gingival-recession": 70,
-    "occlusion": 70,
-    "provisional-restoration": 69,
+    "occlusion": 71,
+    "provisional-restoration": 70,
     "extraction-socket": 66,
     "connective-tissue-graft": 65,
     "tooth-extraction": 66,
@@ -133539,7 +133589,7 @@
     "cbct": 44,
     "short-implant": 43,
     "implant-failure": 43,
-    "topic:occlusion": 43,
+    "topic:occlusion": 44,
     "single-crown": 42,
     "implant-abutment-connection": 43,
     "molar": 42,
@@ -134323,7 +134373,7 @@
     "terminology": 2,
     "lecture-notes": 2,
     "dental-arch-width": 2,
-    "occlusal-adjustment": 2,
+    "occlusal-adjustment": 3,
     "proprioception": 2,
     "indigenous-populations": 2,
     "epidemiology": 2,
@@ -134819,7 +134869,7 @@
     "celtra-duo-zls-laboratory-brochure": 1,
     "dental-operating-microscope": 1,
     "loupes-vs-microscope-cad-cam-crown-preparation": 1,
-    "jaw-relation-record": 1,
+    "jaw-relation-record": 2,
     "seated-condylar-position-two-techniques": 1,
     "lucia-jig": 1,
     "anterior-deprogrammer": 1,
@@ -134898,8 +134948,8 @@
     "nutrition-and-physical-degeneration": 1,
     "trauma-from-occlusion-lecture": 1,
     "preventive-intervention-for-bruxism": 1,
-    "occlusal-interference": 1,
-    "centric-occlusion": 1,
+    "occlusal-interference": 2,
+    "centric-occlusion": 2,
     "centric-occlusion-diagnosis-treatment-planning": 1,
     "denture-retention": 1,
     "denture-occlusal-adjustment-retention-masseter-activity": 1,
@@ -134923,7 +134973,7 @@
     "titanium-implants-and-lateral-forces": 1,
     "mechanostat": 1,
     "optimal-number-implants-fixed-reconstructions": 1,
-    "occlusal-analysis": 1,
+    "occlusal-analysis": 2,
     "bone-strain": 1,
     "incidence-diurnal-nocturnal-bruxism": 1,
     "loss-of-osseointegration-occlusal-load-monkeys": 1,
@@ -135532,7 +135582,9 @@
     "vertical-platform-discrepancy": 3,
     "effect-of-vertical-level-discrepancy-adjacent-dental-implants-marginal-bone-loss": 1,
     "significance-of-vertical-platform-discrepancies-and-splinting-on-marginal-bone-levels-adjacent-implants": 1,
-    "effect-of-crestal-position-on-bone-implant-stress-three-implant-splinted-prostheses-finite-element-analysis": 1
+    "effect-of-crestal-position-on-bone-implant-stress-three-implant-splinted-prostheses-finite-element-analysis": 1,
+    "conformative-approach": 1,
+    "good-occlusal-practice-simple-restorative-dentistry": 1
   },
   "semantic_pass": {
     "ontology_concepts": 204,
@@ -135546,7 +135598,7 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2164,
+  "total_papers": 2165,
   "tag_aliases": {
     "additive-manufacturing": "3d-printing",
     "adhesion": "bonding",
