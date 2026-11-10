@@ -358,11 +358,12 @@ class ExamMandatoryTests(unittest.TestCase):
         return [f for f in rep.failures if f[1] == '4.12-ب exam']
 
     def test_new_publication_without_questions_fails(self):
-        # A live full-pathway step that predates the rule and has no questions.
-        self.assertTrue(self.rows('chairside/chairside-1', sweep=False))
+        # A live full-pathway step that predates the rule and has no questions
+        # (insight-17 got none in the 2026-11-10 backfill: nothing gradable).
+        self.assertTrue(self.rows('insight/insight-17', sweep=False))
 
     def test_sweep_does_not_fail_older_pages(self):
-        self.assertFalse(self.rows('chairside/chairside-1', sweep=True))
+        self.assertFalse(self.rows('insight/insight-17', sweep=True))
 
     def test_page_with_questions_passes_the_row(self):
         self.assertFalse(self.rows('plak-sefr/plak1-12', sweep=False))
