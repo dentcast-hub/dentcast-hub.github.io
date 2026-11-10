@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "sharehub/share-47"
 - Status: in_progress
-- Next canonical step: "C.4.7"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -18,7 +18,24 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     "category": "sharehub",
     "content_id": "sharehub/share-47",
     "context": {
-      "approvals": [],
+      "approvals": [
+        {
+          "decision": "\u0627\u06a9\u0644\u0648\u0698\u0646 \u062f\u0631 \u062a\u0631\u0645\u06cc\u0645\u200c\u0647\u0627\u06cc \u0633\u0627\u062f\u0647\u061b \u0642\u0628\u0644 \u0627\u0632 \u062a\u0631\u0627\u0634 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0631\u0627 \u0628\u0627\u06cc\u062f \u0628\u062f\u0627\u0646\u06cc\u0645\u061f",
+          "evidence": [
+            "founder data: first line of founder message (Hard Rule 16, copied verbatim)"
+          ],
+          "scope": "title",
+          "status": "confirmed"
+        },
+        {
+          "decision": "\u0645\u0639\u0645\u0648\u0644\u0627\u064b \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0627 \u0628\u0639\u062f \u0627\u0632 \u062a\u0631\u0645\u06cc\u0645 \u0628\u0627 \u06a9\u0627\u063a\u0630 \u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646 \u0686\u06a9 \u0645\u06cc\u200c\u06a9\u0646\u06cc\u0645. \u0627\u0645\u0627 \u0648\u0642\u062a\u06cc \u0648\u0636\u0639\u06cc\u062a \u0642\u0628\u0644 \u0627\u0632 \u062a\u0631\u0627\u0634 \u0631\u0627 \u062b\u0628\u062a \u0646\u06a9\u0631\u062f\u0647\u200c\u0627\u06cc\u0645\u060c \u0646\u062a\u06cc\u062c\u0647 \u0631\u0627 \u0628\u0627 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0645\u0642\u0627\u06cc\u0633\u0647 \u0645\u06cc\u200c\u06a9\u0646\u06cc\u0645\u061f",
+          "evidence": [
+            "agent proposal under standing acceptance (Hard Rule 14); listed in Push-2 report"
+          ],
+          "scope": "caption",
+          "status": "confirmed"
+        }
+      ],
       "decisions": [
         {
           "kind": "ledger_order_v2"
@@ -28,6 +45,116 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         },
         {
           "kind": "fixed_three_deliveries_v2"
+        },
+        {
+          "decision": "Founder: crop the paper figures as WebP without captions and place them at the relevant spots; Fidelity rerun not required (founder command). 12 embedded figures (Fig 1a,1b,3,5,11,13a,14d,15e,22a,22b,24a,24b) extracted at native size (no upscaling), WebP, no figcaption, inserted after the matching paragraphs on fa page and en mirror. Text units unchanged: des_fidelity_units --accept on the stored voted result exit 0; no model rerun.",
+          "evidence": [
+            "chat:founder-message-2026-11-10",
+            "des_fidelity_units --accept exit 0 after figure insertion"
+          ],
+          "kind": "founder_instruction",
+          "scope": "add paper figures to share-47"
+        },
+        {
+          "decision": "Founder approved all 3 exam questions (\u0647\u0631 \u0633\u0647 \u0633\u0648\u0627\u0644 \u062a\u0627\u06cc\u06cc\u062f); written to plus/exam-questions.json byContent[sharehub/share-47] ids r-cbfd9fab, r-3425385d, r-6611ddee",
+          "evidence": [
+            "chat:founder-message-2026-11-10 \u00ab\u0647\u0631 \u0633\u0647 \u0633\u0648\u0627\u0644 \u062a\u0627\u06cc\u06cc\u062f\u00bb"
+          ],
+          "kind": "m2_answer",
+          "step": "C.5.6"
+        },
+        {
+          "evidence": [
+            "founder text sha256 438af9b2 opens the body; no agent lead added"
+          ],
+          "kind": "first_cut_lead_provenance_v1",
+          "origin": "author_original",
+          "source_ref": "chat:founder-text (first body paragraph \u00ab\u0645\u0627 \u0645\u0639\u0645\u0648\u0644\u0627\u064b \u0628\u0639\u062f \u0627\u0632 \u062a\u0645\u0627\u0645\u200c\u0634\u062f\u0646 \u062a\u0631\u0645\u06cc\u0645 \u06cc\u0627 \u0631\u0648\u06a9\u0634\u060c ...\u00bb)"
+        },
+        {
+          "english": {
+            "evidence": [
+              "en mirror on disk, 42 blocks = fa, 12 figures, toggle ../share-47.html"
+            ],
+            "path": "sharehub/en/share-47.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "all founder messages closed (M2 answered; no M1, no M3b)"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "C.4.13 DES 4/E + Fidelity 100 HIGH stored, accept exit 0, audit agree; no M3b"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Q4.9 \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc; C.4.14 skipped"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "C.2.4 occlusion/occlusal-analysis-adjustment; C.5.5 verified"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.7 0 backlinks (borderline), C.4.8 3 inline, C.4.9 3 capsules at cap 5/5"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5.0 7 canonical tags, 1 mint #\u0631\u0648\u06cc\u06a9\u0631\u062f_\u06a9\u0627\u0646\u0641\u0648\u0631\u0645\u062a\u06cc\u0648, --check ok"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5 brain entry appended; faq-corpus FAQ+flashcards; cabinet P2955"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5.6 fixed-pros + occlusion; 3 exam questions approved M2; C.5.6-b no bundle"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "index.html Pulse: new top line for share-47, bottom plak1-13 line removed, 7 lines"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "sharehub/en/share-47.html authored from locked text, noindex, toggles inverse"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "title founder data; caption standing acceptance; M2 approved; figures per founder instruction"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -366,13 +493,129 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "08-des-fidelity.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [
+          "C.4.7: fresh semantic review of 109 glossary terms; candidates centric-relation, tmd, canine-guidance, group-function, bruxism, occlusal-splint, tooth-wear: all borderline/tangential (article is about conforming restorations to existing occlusion; CR/TMD only named as limits of the approach) -> conservative default, 0 back-links added"
+        ],
+        "id": "C.4.7",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.7-b",
+        "module": "05-semantic-linking.md",
+        "reason": "4.7-\u0628: skipped \u2014 not a glossary publish",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "C.4.8: applied 3 inline links (first occurrence): '\u06a9\u0627\u063a\u0630 \u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646' -> /insight/insight-1.html (articulating paper itself); 'CR' -> /glossary/centric-relation.html (technical CR->CO); '\u0627\u062e\u062a\u0644\u0627\u0644\u0627\u062a \u0639\u0636\u0644\u0627\u062a \u0648 \u0645\u0641\u0635\u0644 \u0641\u06a9\u06cc' -> /glossary/tmd.html. Skipped borderline: '\u067e\u0627\u0631\u0627\u0641\u0627\u0646\u06a9\u0634\u0646'->bruxism (not identical concept), '\u062a\u0631\u0645\u06cc\u0645 \u06a9\u0648\u062a\u0627\u0647'->insight-103/104 (looser). Fidelity --accept re-run exit 0 (units unchanged)"
+        ],
+        "id": "C.4.8",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "C.4.9: section had 2/5 (capsules); added 3 strongest: insight-8 \u00ab\u062a\u062f\u0627\u062e\u0644 \u067e\u0627\u06cc\u062f\u0627\u0631 \u0628\u062f\u0648\u0646 \u0639\u0644\u0627\u0645\u062a\u00bb (leave stable occlusion alone), insight-103 \u00ab\u0627\u0635\u0644\u0627\u062d \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 \u06a9\u0648\u062a\u0627\u0647\u00bb (short restorations + bite registration + lab), insight-65 \u00ab\u0686\u06a9 \u0627\u06a9\u0644\u0648\u0698\u0646 \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646 \u0645\u062c\u062f\u062f\u00bb (check after cementation); now 5/5 at cap (related_cap.py). Not added (no slot / weaker): insight-104, insight-100, video-2, share-21, insight-94, episode-131"
+        ],
+        "id": "C.4.9",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "C.4.11: plus/faq-corpus.json byContent[sharehub/share-47].definedTermSets: 5 authored DefinedTerms #flashcards-c1..c5 (\u0631\u0648\u06cc\u06a9\u0631\u062f Conformative, Reorganised Approach, \u062a\u0631\u062a\u06cc\u0628 EDEC, Model Grooming, FGP); none copied from FAQ answers; no page JSON-LD"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "C.4.12: FAQPage #faq with 5 standalone yes/no questions (no deixis), each answer opens with verdict (4 \u062e\u06cc\u0631, 1 \u0628\u0644\u0647) -> 5 binary quiz questions; 4.12-\u0628 evaluated at 5.6"
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "Question 4.9: \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc, not a \u0686\u0627\u0644\u0634; no challenge markup",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "C.5.0: questions (5) in batch note; tags #\u0645\u0631\u0648\u0631_\u0645\u0646\u0627\u0628\u0639 (series) #\u0631\u0648\u06cc\u06a9\u0631\u062f_\u06a9\u0627\u0646\u0641\u0648\u0631\u0645\u062a\u06cc\u0648 (MINTED, decision-level, batch .dentcast/hashtag-batches/share-47-conformative.json, aliases conformative approach/conformative/\u06a9\u0627\u0646\u0641\u0631\u0645\u0627\u062a\u06cc\u0648/\u062d\u0641\u0638 \u0627\u06a9\u0644\u0648\u0698\u0646 \u0645\u0648\u062c\u0648\u062f \u0628\u06cc\u0645\u0627\u0631; '\u06a9\u0627\u0646\u0641\u0648\u0631\u0645\u062a\u06cc\u0648' auto-dropped as contained in target) #\u0627\u06a9\u0644\u0648\u0698\u0646 (umbrella) #\u062b\u0628\u062a_\u0631\u0627\u0628\u0637\u0647 #\u0627\u0631\u062a\u0628\u0627\u0637_\u0628\u0627_\u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631 #\u0631\u0648\u06a9\u0634_\u0645\u0648\u0642\u062a #\u062a\u0646\u0638\u06cc\u0645_\u0627\u06a9\u0644\u0648\u0698\u0646 (reused); composition gate ok (decision tag + specific \u226410: \u062b\u0628\u062a_\u0631\u0627\u0628\u0637\u0647 4, \u0627\u0631\u062a\u0628\u0627\u0637_\u0628\u0627_\u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631 4); resolving sentences recorded; bridge row '\u0631\u0648\u06cc\u06a9\u0631\u062f \u06a9\u0627\u0646\u0641\u0648\u0631\u0645\u062a\u06cc\u0648'->[conformative-approach, occlusion] + tooth_topics; P2955 reachable: byTag \u0631\u0648\u06cc\u06a9\u0631\u062f \u06a9\u0627\u0646\u0641\u0648\u0631\u0645\u062a\u06cc\u0648 #1, \u062b\u0628\u062a \u0631\u0627\u0628\u0637\u0647 #1, \u062a\u0646\u0638\u06cc\u0645 \u0627\u06a9\u0644\u0648\u0698\u0646 #3, \u0631\u0648\u06a9\u0634 \u0645\u0648\u0642\u062a #9; --sync ok, hashtag --check ok, build_cabinet_papers --check ok; reachability: page 4th under \u062b\u0628\u062a \u0631\u0627\u0628\u0637\u0647 and \u0627\u0631\u062a\u0628\u0627\u0637 \u0628\u0627 \u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631 (Q1,Q4 pass), only page under \u0631\u0648\u06cc\u06a9\u0631\u062f \u06a9\u0627\u0646\u0641\u0648\u0631\u0645\u062a\u06cc\u0648; content-index/assistant-tags reverted (runner C.8); sharehub pages carry no chip row"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "C.5: brain entry appended at end of array (sharehub id 47, key set/order = share-46 entry), hashtags = 5.0 list, keywords 10 (same as page JSON-LD), pillar occlusion/occlusal-analysis-adjustment"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "C.5.5: brain pillar = step 2.4 (occlusion / occlusal-analysis-adjustment); capsule /pillar/occlusion/ matches; no new subtopic"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "C.5.6: pathway_place --insert into fixed-pros (STRONG, after insight/insight-44) and occlusion (semantic unmistakable home, tool ASK, after insight/insight-103); not placed (borderline): biomimetic, esthetic, implant-prosthetic, post-and-core, treatment-planning, ceramics; coverage 1.51 per item (baseline 1.38); 4.12-\u0628: 3 MCQs approved in M2 and written (r-cbfd9fab, r-3425385d, r-6611ddee), validate_exam_questions 0 errors (9 pre-existing warnings unrelated)"
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "C.5.6-\u0628: candidates bundle-occlusion-rehab -> \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f3: rehab/VD/scheme bundle, this simple-restoration conformative piece fills no core gap; also \u06af\u06cc\u062a \u06f5: 8 steps -> 9); bundle-crown-prep -> \u0631\u062f \u0634\u062f (\u0646\u0627\u0645\u0637\u0645\u0626\u0646\u060c \u06af\u06cc\u062a \u06f2/\u06f3: title is a question not a whole-concept name; occlusion recording is not a prep/impression core gap); no bundle edit, home-bundles.js untouched"
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "C.6: Pulse line inserted at top of index.html dc-pulse-list (\u00ab\u06cc\u06a9 \u0645\u0631\u0648\u0631 \u0645\u0646\u0627\u0628\u0639 \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab\u2026\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f.\u00bb, title-only link text), bottom plak1-13 line removed; en mirror + toggles; ten-scope editorial lock recorded"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
+      ".dentcast/hashtag-batches/share-47-conformative.json",
       "dentcast-brain.json",
       "dentcast-hashtag-reference.json",
       "dentcast_cabinet_full_catalog.json",
       "index.html",
+      "plus/cabinet-bridge.json",
+      "plus/cabinet-papers.json",
       "plus/des-scores.json",
       "plus/exam-questions.json",
       "plus/faq-corpus.json",
@@ -380,11 +623,23 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       "sharehub/en/share-47.html",
       "sharehub/index.html",
       "sharehub/share-46.html",
-      "sharehub/share-47.html"
+      "sharehub/share-47.html",
+      "sharehub/share47-fig1.webp",
+      "sharehub/share47-fig10.webp",
+      "sharehub/share47-fig11.webp",
+      "sharehub/share47-fig12.webp",
+      "sharehub/share47-fig2.webp",
+      "sharehub/share47-fig3.webp",
+      "sharehub/share47-fig4.webp",
+      "sharehub/share47-fig5.webp",
+      "sharehub/share47-fig6.webp",
+      "sharehub/share47-fig7.webp",
+      "sharehub/share47-fig8.webp",
+      "sharehub/share47-fig9.webp"
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: sharehub/share-47.html, sharehub/index.html, dentcast_cabinet_full_catalog.json, plus/des-scores.json"
+    "note": "Index-only refresh after staging delivery paths: sharehub/share-47.html, sharehub/en/share-47.html, dentcast-brain.json, dentcast-hashtag-reference.json, index.html, plus/cabinet-bridge.json, plus/cabinet-papers.json, plus/exam-questions.json, plus/faq-corpus.json, plus/pathways.json, .dentcast/hashtag-batches/share-47-conformative.json, sharehub/share47-fig1.webp, sharehub/share47-fig10.webp, sharehub/share47-fig11.webp, sharehub/share47-fig12.webp, sharehub/share47-fig2.webp, sharehub/share47-fig3.webp, sharehub/share47-fig4.webp, sharehub/share47-fig5.webp, sharehub/share47-fig6.webp, sharehub/share47-fig7.webp, sharehub/share47-fig8.webp, sharehub/share47-fig9.webp"
   },
   "schema": "publish-handoff-v3"
 }

@@ -40961,6 +40961,101 @@
           ]
         }
       ]
+    },
+    "sharehub/share-47": {
+      "faqPages": [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا در ترمیم‌های ساده با رویکرد Conformative، لازم است همهٔ تماس‌های قبلی دندان ترمیم‌شده عیناً تکرار شوند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ معیار اصلی این است که تماس‌های سایر دندان‌ها بعد از درمان مثل قبل باقی بمانند و حتی ممکن است بتوان تماس نامناسب خود دندان ترمیم‌شده را اصلاح کرد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا اگر دندان مورد درمان تماس هدایت‌کننده‌ای داشته باشد که فک را از CR به CO می‌برد، تغییر آن تماس ممکن است رابطهٔ فکی بیمار را عوض کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ در این شرایط رویکرد Conformative همیشه قابل استفاده نیست و ممکن است به Reorganised Approach نیاز باشد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا ترمیمی که برای پرهیز از بلندی، عملاً از اکلوژن خارج شده، ترمیم مطلوبی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ ترمیم کوتاه لزوماً ترمیم خوبی نیست و نباید برای فرار از یک تماس بلند، مشارکت طبیعی دندان ترمیم‌شده در اکلوژن حذف شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا یک مادهٔ ثبت بایت به‌تنهایی انتقال صحیح اکلوژن به لابراتوار را تضمین می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ مثلاً اگر ماده روی سطوح مخاطی امتداد پیدا کند، ممکن است مانع قرارگیری صحیح مدل‌ها شود؛ رابطهٔ مدل‌ها بهتر است با یک رکورد مستقل دوم هم کنترل شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا بررسی اکلوژن روکش فقط پیش از سمان‌کردن کافی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ اکلوژن روکش باید هم قبل و هم بعد از سمان‌کردن بررسی شود و با وضعیت ثبت‌شدهٔ پیش از درمان مقایسه شود."
+              }
+            }
+          ],
+          "@id": "https://dentcast.org/sharehub/share-47.html#faq"
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/sharehub/share-47.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-47.html#flashcards-c1",
+              "name": "رویکرد Conformative",
+              "description": "ساخت ترمیم به‌گونه‌ای که با اکلوژن موجود بیمار هماهنگ باشد و تماس‌های سایر دندان‌ها پس از درمان مثل قبل باقی بمانند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-47.html#flashcards-c2",
+              "name": "Reorganised Approach",
+              "description": "رویکردی برای وقتی که تغییر تماس دندان مورد درمان، رابطهٔ فکی بیمار را هم عوض می‌کند؛ مثلاً وقتی آن دندان تماس هدایت‌کننده از CR به CO دارد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-47.html#flashcards-c3",
+              "name": "ترتیب EDEC",
+              "description": "Examine، Design، Execute و Check؛ یعنی بررسی اکلوژن پیش از تراش، طراحی، انجام ترمیم و در پایان کنترل نتیجه.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-47.html#flashcards-c4",
+              "name": "Model Grooming",
+              "description": "اصلاح محدود مدل گچی برای بازسازی تماس‌های واقعی بیمار وقتی اختلاف کوچک است؛ در اختلاف بزرگ، ثبت یا مدل از نو تهیه می‌شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-47.html#flashcards-c5",
+              "name": "Functionally Generated Pathway (FGP)",
+              "description": "ثبت مسیر حرکت دندان‌های مقابل با مادهٔ مناسب، تا تکنسین علاوه بر تماس‌های استاتیک، مسیرهای حرکتی واقعی بیمار را هم داشته باشد.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }

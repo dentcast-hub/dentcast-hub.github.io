@@ -1,0 +1,21 @@
+{
+ "type": "sharehub",
+ "enforce": true,
+ "note": "sharehub/share-47 — «اکلوژن در ترمیم‌های ساده؛ قبل از تراش چه چیزی را باید بدانیم؟» (Davies, Gray, Smith 2001, BDJ). Questions a dentist would type (Step 1): (1) قبل از تراش روکش اکلوژن رو چطور ثبت کنم؟ (2) بعد از ترمیم، اکلوژن رو با چی مقایسه کنم که بفهمم چیزی عوض نشده؟ (3) conformative approach چیه و کی باید اکلوژن بیمار رو عوض کنم؟ (4) بایت رجیستریشن رو چطور بگیرم که مدل‌ها تو لابراتوار درست مانت بشن؟ (5) روکش موقت چه نقشی تو حفظ اکلوژن تا تحویل داره؟ REUSED canonical tags: #مرور_منابع (series), #اکلوژن (umbrella), #ثبت_رابطه (3 pages), #ارتباط_با_لابراتوار (3), #روکش_موقت (16), #تنظیم_اکلوژن (13). NEWLY MINTED: #رویکرد_کانفورمتیو — --simulate «رویکرد کانفورمتیو» reaches only #رویکرد_GRADE on the shared word «رویکرد» (different concept), «conformative approach» reaches nothing, «حفظ اکلوژن موجود» reaches only the umbrella #اکلوژن; no page in the corpus uses the term. Gate (a): no existing concept covers it. Gate (b): decision-level concept — it names the decision the page resolves (conform the restoration to the existing occlusion vs reorganise the occlusion); no second page resolves it yet, so no articles row. Alias checklist: English «conformative approach», «conformative»; Finglish «کانفورمتیو»; misspelling «کانفرماتیو»; colloquial «حفظ اکلوژن موجود بیمار». Bridge decision: map row «رویکرد کانفورمتیو» -> conformative-approach (library tag minted with catalog paper P2955, rule (c)), occlusion; added to tooth_topics (natural-teeth restorative concept).",
+ "concepts": [
+  {
+   "tag": "#رویکرد_کانفورمتیو",
+   "domain": "clinical",
+   "definition": "ساخت ترمیم یا روکش در هماهنگی با اکلوژن موجود بیمار، به‌گونه‌ای که تماس‌های سایر دندان‌ها و رابطهٔ فکی پس از درمان مثل قبل بماند (Conformative Approach)، در برابر بازسازی برنامه‌ریزی‌شدهٔ اکلوژن.",
+   "use_when": "مطلب تصمیم بگیرد که در یک ترمیم اکلوژن موجود بیمار حفظ شود یا تغییر کند، یا روش حفظ آن را توضیح دهد.",
+   "aliases": [
+    "conformative approach",
+    "conformative",
+    "کانفورمتیو",
+    "کانفرماتیو",
+    "حفظ اکلوژن موجود بیمار"
+   ]
+  }
+ ],
+ "articles": {}
+}
