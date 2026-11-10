@@ -41056,6 +41056,56 @@
           ]
         }
       ]
+    },
+    "chairside/chairside-50": {
+      "faqPages": [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/chairside/chairside-50.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا وقتی دندان‌های دو طرف یک فضای خلفی فرم و کانتور کامل دارند، بستن آن فضا با رستوریشن انتخاب مناسبی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر. در این حالت رستوریشن فقط با اورکانتور کردن دندان‌ها فضا را پر می‌کند و هزینه‌اش امبراژور نامناسب، گیر غذایی، پوسیدگی و ظاهر نامطلوب است؛ چنین فضایی باید با درمان ارتودنسی بسته شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا اورکانتور کردن دندان‌هایی که فرم طبیعی دارند، برای بستن فضای بین آن‌ها می‌تواند زمینه‌ی گیر غذایی و پوسیدگی را فراهم کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله. اورکانتور فرم امبراژورها را به هم می‌زند و همین زمینه‌ی گیر غذایی و در ادامه پوسیدگی را فراهم می‌کند."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/chairside/chairside-50.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-50.html#flashcards-c1",
+              "name": "معیار پذیرش بستن فضای باقی‌مانده‌ی ارتودنسی با رستوریشن",
+              "description": "فرم و کانتور دندان‌های دو طرف فضا؛ پیش از پذیرفتن بستن فضا با رستوریشن بررسی می‌شود، چون دندانی که فرم و کانتور کامل دارد فقط با اورکانتور عمدی پهن می‌شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-50.html#flashcards-c2",
+              "name": "پیامد ظاهری پر کردن فضای بین پرمولرها با پهن‌کردن دندان‌ها",
+              "description": "پرمولرهایی که برای پر کردن فضا پهن شده‌اند، دندان‌هایی پهن و نازیبا می‌شوند؛ این مشکل ظاهری به پیامدهای امبراژور نامناسب اضافه می‌شود.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
