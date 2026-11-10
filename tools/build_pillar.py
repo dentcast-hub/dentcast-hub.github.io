@@ -98,6 +98,17 @@ PRECONNECT_SNIPPET = (
     '  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>\n'
 )
 
+# The author node of the pages this builder writes. The site-wide id is
+# https://dentcast.org/#person-foad (defined in full on index.html/about.html);
+# search engines do not resolve a bare {"@id": …} across pages, so the reference
+# carries its own type, name and url. Same form as the content pages.
+SITE_AUTHOR = {
+    "@type": "Person",
+    "@id": "https://dentcast.org/#person-foad",
+    "name": "Foad Shahabian",
+    "url": "https://dentcast.org/about.html",
+}
+
 # Catch Chrome's beforeinstallprompt in <head>: /dc-nav.js is deferred and owns
 # the install flow (window.dcPwaInstall), but the event can fire before it runs.
 # The early listener parks it on window.__dcBip, where dc-nav.js picks it up.
@@ -986,7 +997,7 @@ def build_jsonld(cfg, canonical, flat_ordered):
                 "description": cfg["meta_description"],
                 "inLanguage": "fa",
                 "isPartOf": {"@id": "https://dentcast.org/#website"},
-                "author": {"@id": "https://dentcast.org/about.html#person-fouad-shahabian"},
+                "author": dict(SITE_AUTHOR),
                 "mainEntity": {
                     "@type": "ItemList",
                     "numberOfItems": len(item_list_elements),
@@ -1439,7 +1450,7 @@ def build_jsonld_index(canonical, pillars_info):
                 "description": INDEX_META_DESCRIPTION,
                 "inLanguage": "fa",
                 "isPartOf": {"@id": "https://dentcast.org/#website"},
-                "author": {"@id": "https://dentcast.org/about.html#person-fouad-shahabian"},
+                "author": dict(SITE_AUTHOR),
                 "mainEntity": {
                     "@type": "ItemList",
                     "numberOfItems": len(items),
@@ -2097,7 +2108,7 @@ def _build_glossary_jsonld(terms_sorted):
         "description": "دانشنامهٔ مفاهیم تصمیم‌ساز در دندان‌پزشکی و پروتز.",
         "url": "https://dentcast.org/glossary/",
         "isPartOf": {"@id": "https://dentcast.org/#website"},
-        "about": {"@id": "https://dentcast.org/about.html#person-fouad-shahabian"},
+        "about": {"@id": SITE_AUTHOR["@id"]},
         "hasPart": {
             "@type": "DefinedTermSet",
             "name": "DentCast Glossary Terms",

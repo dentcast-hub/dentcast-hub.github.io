@@ -154,6 +154,38 @@ def attr(t):
     return html.escape(t, quote=True)
 
 
+LD_JSON_BLOCK_RE = re.compile(
+    r'(<script\b[^>]*\btype\s*=\s*["\']application/ld\+json["\'][^>]*>.*?</script>)',
+    re.IGNORECASE | re.DOTALL)
+
+
+def swap_text(doc, old, new):
+    """Swap the template's title/description `old` for `new`, by context.
+
+    Outside JSON-LD the page carries the string three ways and each is swapped
+    for its own escaping of `new`: the attribute form, the JSON form (inline
+    scripts) and the raw text. Inside a `<script type="application/ld+json">`
+    block every spelling of `old` becomes the JSON-escaped `new`, in one pass.
+    Without the split, an `old` that no escaping changes matched the attribute
+    replace everywhere, so JSON-LD received the HTML-escaped text: a caption's
+    line break landed as a raw newline inside a JSON string and a `"` as
+    `&quot;` (insight/insight-104). A page cloned from such a template is
+    repaired by the same pass, since the raw and attribute spellings match too.
+    """
+    a_old, a_new = attr(old), attr(new)
+    j_old = json.dumps(old, ensure_ascii=False)[1:-1]
+    j_new = json.dumps(new, ensure_ascii=False)[1:-1]
+    in_json = re.compile("|".join(
+        re.escape(v) for v in sorted({j_old, a_old, old}, key=len, reverse=True)))
+    parts = LD_JSON_BLOCK_RE.split(doc)
+    for i, part in enumerate(parts):
+        if i % 2:
+            parts[i] = in_json.sub(lambda _m: j_new, part)
+        else:
+            parts[i] = part.replace(a_old, a_new).replace(j_old, j_new).replace(old, new)
+    return "".join(parts)
+
+
 # ------------------------------------------------------------------ the writes
 
 class Writes:
@@ -577,9 +609,7 @@ def build_page(cat, n, prev_n, m, date, item, lang="fa"):
     doc = doc.replace(f'href="en/{c["stem"]}{prev_n}.html"', f'href="en/{c["stem"]}{n}.html"')
     doc = doc.replace(f'href="../{c["stem"]}{prev_n}.html"', f'href="../{c["stem"]}{n}.html"')
     for old, new in ((old_title, title), (old_desc, caption)):
-        doc = doc.replace(attr(old), attr(new)).replace(json.dumps(old, ensure_ascii=False)[1:-1],
-                                                      json.dumps(new, ensure_ascii=False)[1:-1])
-        doc = doc.replace(old, new)
+        doc = swap_text(doc, old, new)
     # 2. subtitle (queue pages carry none: 02 «زیرعنوان: ندارد»)
     if re.search(r'\n<p class="sh-subtitle">.*?</p>\n', doc):
         doc = re.sub(r'\n<p class="sh-subtitle">.*?</p>\n\n?', "\n", doc, count=1)
@@ -684,8 +714,7 @@ def build_notecast_page(n, prev, m, date, item, lang="fa"):
                    (f"{c['label_en']} {prev} ", f"{c['label_en']} {n} ")):
         doc = doc.replace(a_, b_)
     for old, new in ((old_title, title), (old_desc, caption)):
-        doc = doc.replace(attr(old), attr(new)).replace(json.dumps(old, ensure_ascii=False)[1:-1],
-                                                      json.dumps(new, ensure_ascii=False)[1:-1]).replace(old, new)
+        doc = swap_text(doc, old, new)
     for k in ("datePublished", "dateModified", "lastReviewed"):
         doc = re.sub(r'("%s": ")\d{4}-\d\d-\d\d(")' % k, r"\g<1>" + date + r"\2", doc)
     doc = re.sub(r'<time datetime="\d{4}-\d\d-\d\d">\d{4}-\d\d-\d\d</time>', f'<time datetime="{date}">{date}</time>', doc)
@@ -808,8 +837,7 @@ def build_insight_page(n, prev, m, date, item, lang="fa"):
                    (f"نکتهٔ کلینیکی {fa_digits(prev)} ", f"نکتهٔ کلینیکی {fa_digits(n)} ")):
         doc = doc.replace(a_, b_)
     for old, new in ((old_title, title), (old_desc, caption)):
-        doc = doc.replace(attr(old), attr(new)).replace(json.dumps(old, ensure_ascii=False)[1:-1],
-                                                      json.dumps(new, ensure_ascii=False)[1:-1]).replace(old, new)
+        doc = swap_text(doc, old, new)
     kw = m["keywords"] if lang == "fa" else (m.get("keywords_en") or [title])
     doc = doc.replace(f'"keywords": "{old_kw}"', '"keywords": ' + json.dumps(", ".join(kw), ensure_ascii=False))
     doc = doc.replace(f'"articleSection": "{old_sec}"', '"articleSection": ' + json.dumps(
@@ -900,8 +928,7 @@ def build_chairside_page(n, prev, m, date, item, lang="fa"):
                    (f"ویزیت {fa_digits(prev)}<", f"ویزیت {fa_digits(n)}<"), (f"ویزیت {fa_digits(prev)} ", f"ویزیت {fa_digits(n)} ")):
         doc = doc.replace(a_, b_)
     for old, new in ((old_title, title), (old_desc, caption)):
-        doc = doc.replace(attr(old), attr(new)).replace(json.dumps(old, ensure_ascii=False)[1:-1],
-                                                      json.dumps(new, ensure_ascii=False)[1:-1]).replace(old, new)
+        doc = swap_text(doc, old, new)
     kw = ", ".join(m["keywords"] if lang == "fa" else (m.get("keywords_en") or [title]))
     doc = re.sub(r'(<meta name="keywords" content=")[^"]*(")', lambda mm: mm.group(1) + attr(kw) + mm.group(2), doc)
     doc = re.sub(r'("keywords": )"[^"]*"', lambda mm: mm.group(1) + json.dumps(kw, ensure_ascii=False), doc)
@@ -1018,8 +1045,7 @@ def build_metanote_page(n, prev, m, date, item, lang="fa"):
         doc = doc.replace(a_, b_)
     doc = doc.replace(f'"alternativeHeadline": "{old_alt}"', '"alternativeHeadline": ' + json.dumps(alt_head, ensure_ascii=False))
     for old, new in ((old_title, title), (old_desc, caption)):
-        doc = doc.replace(attr(old), attr(new)).replace(json.dumps(old, ensure_ascii=False)[1:-1],
-                                                      json.dumps(new, ensure_ascii=False)[1:-1]).replace(old, new)
+        doc = swap_text(doc, old, new)
     if lang == "fa":
         old_kw = re.search(r'"keywords": "([^"]*)"', doc).group(1)
         tail = []

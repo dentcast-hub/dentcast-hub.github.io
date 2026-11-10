@@ -25,8 +25,12 @@ Rules (see SEO audit / task brief):
     any leftover hreflang lines from them, and fa pages no longer emit an
     `en` alternate. The fa↔en toggle is untouched (reader feature).
   - Any page that noindexes itself (its own `<meta name="robots">` says
-    noindex, e.g. /up-board/): skipped — a noindexed page must not be
-    advertised as an alternate, same reasoning as the en mirrors.
+    noindex, e.g. /up-board/): NO hreflang block — a noindexed page must not
+    be advertised as an alternate, same reasoning as the en mirrors. Running
+    this script REMOVES any leftover hreflang lines from it too.
+  - quick-publish/template.html is skipped outright: its hreflang lines are
+    `{{…}}` placeholders the API fills for the published (indexable) page,
+    and its noindex line is the template's own, swapped out on publish.
   - Default (everything else): 3-line block (fa-IR, fa, x-default)
     using the canonical path verbatim
 """
@@ -44,6 +48,10 @@ SKIP_FILES = {
     "join.html",
     "google53b100d9b9181a71.html",
     "episodes/index.html",
+    # The unfilled quick-publish skeleton: its hreflang lines are {{…}}
+    # placeholders for the page the API publishes (indexable), so the noindex
+    # rule below must not strip them (plus-api/test/quick-publish.test.ts).
+    "quick-publish/template.html",
 }
 
 
@@ -199,10 +207,12 @@ def process_file(file_path: str, rel_path: str):
     # Signal-keyed guard: a page that noindexes itself must not be advertised as
     # anyone's alternate (same reasoning as the en-mirror rule above). Keyed on
     # the page's own robots meta — never on a path or section name — so a new
-    # noindexed page needs no edit here. This only stops the injector from
-    # ADDING a block; pages that already carry one keep it until they are fixed
-    # on their own (Hard Rule 11).
-    if NOINDEX_RE.search(content):
+    # noindexed page needs no edit here. The desired block is EMPTY, exactly as
+    # for an en mirror: nothing is added, and a block the page already carries
+    # is removed by the rewrite below. A noindex page with nothing to strip is
+    # still reported as skipped.
+    noindex = bool(NOINDEX_RE.search(content))
+    if noindex and not any(HREFLANG_LINE_RE.match(ln) for ln in lines):
         return ("skipped", "page is noindex (no hreflang)")
 
     # چالش guard: no en mirror exists or ever will (RULE 16,
@@ -211,11 +221,11 @@ def process_file(file_path: str, rel_path: str):
     # either. Keyed on the page's own چالش markup, same as the noindex guard
     # above is keyed on the page's own robots meta — never on a path/section
     # name, so a چالش published into any folder needs no edit here.
-    if "data-dc-challenge-question" in content:
+    if not noindex and "data-dc-challenge-question" in content:
         return ("skipped", "چالش page — no en mirror, no hreflang (RULE 16)")
 
     # Compute desired block (lines, no trailing newline).
-    expected_block = desired_block(rel_path, canonical_path, canonical_indent)
+    expected_block = [] if noindex else desired_block(rel_path, canonical_path, canonical_indent)
 
     # Find existing hreflang lines (anywhere in the file, by line).
     existing_idxs = [i for i, ln in enumerate(lines) if HREFLANG_LINE_RE.match(ln)]

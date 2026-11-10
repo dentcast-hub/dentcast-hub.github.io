@@ -86,9 +86,3 @@ jobs:
           git add -u -- '*.html'
           git commit -m "chore: auto-generate sitemap + plus index + version stamp [skip ci]" || echo "No changes to commit"
           git push origin main
-
-      - name: 4. Ping Google Search Console
-        run: |
-          curl -s "https://www.google.com/ping?sitemap=https://dentcast.org/sitemap.xml"
-          curl -s "https://www.google.com/ping?sitemap=https://dentcast.ir/sitemap-ir.xml"
-          echo "Google notified."
