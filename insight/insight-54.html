@@ -83,14 +83,21 @@
     {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
-      "headline": "مدیریت افتادن مکرر روکش: رویکرد حذف گام‌به‌گام علل | دنت‌کست",
+      "headline": "مدیریت افتادن مکرر روکش: رویکرد حذف گام‌به‌گام علل",
       "description": "روکشی که با وجود سمان دائم می‌افتد را نباید با نگرانی یا تصمیم عجولانه پاسخ داد؛ علل را باید دسته‌بندی و قدم‌به‌قدم حذف کرد: ایرادهای حین کار (تکنیک سمان و اکلوژن) و ایرادهای ساختاری (تراش دندان و ساختار روکش).",
       "image": "https://dentcast.org/dentcast-cover.webp",
       "author": {
-        "@id": "https://dentcast.org/#person-foad"
+        "@type": "Person",
+        "@id": "https://dentcast.org/#person-foad",
+        "name": "Foad Shahabian",
+        "url": "https://dentcast.org/about.html"
       },
       "publisher": {
-        "@id": "https://dentcast.org/#org-dentcast"
+        "@type": "Organization",
+        "@id": "https://dentcast.org/#org-dentcast",
+        "name": "DentCast",
+        "url": "https://dentcast.org/",
+        "logo": {"@type": "ImageObject", "url": "https://dentcast.org/logo-v2.png"}
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
@@ -150,8 +157,8 @@
       "dateModified": "2026-07-11",
   "inLanguage": "fa",
   "isPartOf": { "@id": "https://dentcast.org/#website" },
-  "author": { "@id": "https://dentcast.org/#person-foad" },
-  "reviewedBy": { "@id": "https://dentcast.org/#person-foad" },
+  "author": { "@type": "Person", "@id": "https://dentcast.org/#person-foad", "name": "Foad Shahabian", "url": "https://dentcast.org/about.html" },
+  "reviewedBy": { "@type": "Person", "@id": "https://dentcast.org/#person-foad", "name": "Foad Shahabian", "url": "https://dentcast.org/about.html" },
   "lastReviewed": "2026-07-11",
   "audience": {
     "@type": "MedicalAudience",
@@ -305,7 +312,7 @@
 <footer class="dc-site-footer" style="text-align:center; margin-top:2.8125rem; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
 
   <div style="margin-bottom:1.375rem;">
-    <a href="index.html"
+    <a href="/insight/"
        style="
          display:inline-block;
          background:rgba(11,95,255,0.18);

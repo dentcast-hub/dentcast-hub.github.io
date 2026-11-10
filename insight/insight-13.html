@@ -106,14 +106,21 @@
     {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
-      "headline": "طرح درمان باید آینده را هم ببیند | دنت‌کست",
+      "headline": "طرح درمان باید آینده را هم ببیند",
       "description": "تحلیل استراتژیک برای حفظ یا حذف دندان کانین فاقد فرول؛ چرا پیش‌بینی شکست فانکشنال در آینده، کلید انتخاب بین روکش و ایمپلنت است. نوشته دکتر فواد شهابیان.",
       "image": "https://dentcast.org/insight/insight13.webp",
       "author": {
-        "@id": "https://dentcast.org/#person-foad"
+        "@type": "Person",
+        "@id": "https://dentcast.org/#person-foad",
+        "name": "Foad Shahabian",
+        "url": "https://dentcast.org/about.html"
       },
       "publisher": {
-        "@id": "https://dentcast.org/#org-dentcast"
+        "@type": "Organization",
+        "@id": "https://dentcast.org/#org-dentcast",
+        "name": "DentCast",
+        "url": "https://dentcast.org/",
+        "logo": {"@type": "ImageObject", "url": "https://dentcast.org/logo-v2.png"}
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
@@ -173,8 +180,8 @@
       "dateModified": "2025-12-19",
   "inLanguage": "fa",
   "isPartOf": { "@id": "https://dentcast.org/#website" },
-  "author": { "@id": "https://dentcast.org/#person-foad" },
-  "reviewedBy": { "@id": "https://dentcast.org/#person-foad" },
+  "author": { "@type": "Person", "@id": "https://dentcast.org/#person-foad", "name": "Foad Shahabian", "url": "https://dentcast.org/about.html" },
+  "reviewedBy": { "@type": "Person", "@id": "https://dentcast.org/#person-foad", "name": "Foad Shahabian", "url": "https://dentcast.org/about.html" },
   "lastReviewed": "2025-12-19",
   "audience": {
     "@type": "MedicalAudience",
@@ -333,7 +340,7 @@
 <footer class="dc-site-footer" style="text-align:center; margin-top:2.8125rem; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
 
   <div style="margin-bottom:1.375rem;">
-    <a href="index.html"
+    <a href="/insight/"
        style="
          display:inline-block;
          background:rgba(11,95,255,0.18);
