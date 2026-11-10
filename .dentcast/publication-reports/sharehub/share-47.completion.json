@@ -1,0 +1,955 @@
+{
+  "schema": "publish-completion-v1",
+  "state": {
+    "publication": {
+      "blocker": null,
+      "category": "sharehub",
+      "content_id": "sharehub/share-47",
+      "context": {
+        "approvals": [
+          {
+            "decision": "\u0627\u06a9\u0644\u0648\u0698\u0646 \u062f\u0631 \u062a\u0631\u0645\u06cc\u0645\u200c\u0647\u0627\u06cc \u0633\u0627\u062f\u0647\u061b \u0642\u0628\u0644 \u0627\u0632 \u062a\u0631\u0627\u0634 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0631\u0627 \u0628\u0627\u06cc\u062f \u0628\u062f\u0627\u0646\u06cc\u0645\u061f",
+            "evidence": [
+              "founder data: first line of founder message (Hard Rule 16, copied verbatim)"
+            ],
+            "scope": "title",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u0645\u0639\u0645\u0648\u0644\u0627\u064b \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0627 \u0628\u0639\u062f \u0627\u0632 \u062a\u0631\u0645\u06cc\u0645 \u0628\u0627 \u06a9\u0627\u063a\u0630 \u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646 \u0686\u06a9 \u0645\u06cc\u200c\u06a9\u0646\u06cc\u0645. \u0627\u0645\u0627 \u0648\u0642\u062a\u06cc \u0648\u0636\u0639\u06cc\u062a \u0642\u0628\u0644 \u0627\u0632 \u062a\u0631\u0627\u0634 \u0631\u0627 \u062b\u0628\u062a \u0646\u06a9\u0631\u062f\u0647\u200c\u0627\u06cc\u0645\u060c \u0646\u062a\u06cc\u062c\u0647 \u0631\u0627 \u0628\u0627 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0645\u0642\u0627\u06cc\u0633\u0647 \u0645\u06cc\u200c\u06a9\u0646\u06cc\u0645\u061f",
+            "evidence": [
+              "agent proposal under standing acceptance (Hard Rule 14); listed in Push-2 report"
+            ],
+            "scope": "caption",
+            "status": "confirmed"
+          }
+        ],
+        "decisions": [
+          {
+            "kind": "ledger_order_v2"
+          },
+          {
+            "kind": "fixed_three_deliveries_v1"
+          },
+          {
+            "kind": "fixed_three_deliveries_v2"
+          },
+          {
+            "decision": "Founder: crop the paper figures as WebP without captions and place them at the relevant spots; Fidelity rerun not required (founder command). 12 embedded figures (Fig 1a,1b,3,5,11,13a,14d,15e,22a,22b,24a,24b) extracted at native size (no upscaling), WebP, no figcaption, inserted after the matching paragraphs on fa page and en mirror. Text units unchanged: des_fidelity_units --accept on the stored voted result exit 0; no model rerun.",
+            "evidence": [
+              "chat:founder-message-2026-11-10",
+              "des_fidelity_units --accept exit 0 after figure insertion"
+            ],
+            "kind": "founder_instruction",
+            "scope": "add paper figures to share-47"
+          },
+          {
+            "decision": "Founder approved all 3 exam questions (\u0647\u0631 \u0633\u0647 \u0633\u0648\u0627\u0644 \u062a\u0627\u06cc\u06cc\u062f); written to plus/exam-questions.json byContent[sharehub/share-47] ids r-cbfd9fab, r-3425385d, r-6611ddee",
+            "evidence": [
+              "chat:founder-message-2026-11-10 \u00ab\u0647\u0631 \u0633\u0647 \u0633\u0648\u0627\u0644 \u062a\u0627\u06cc\u06cc\u062f\u00bb"
+            ],
+            "kind": "m2_answer",
+            "step": "C.5.6"
+          },
+          {
+            "evidence": [
+              "founder text sha256 438af9b2 opens the body; no agent lead added"
+            ],
+            "kind": "first_cut_lead_provenance_v1",
+            "origin": "author_original",
+            "source_ref": "chat:founder-text (first body paragraph \u00ab\u0645\u0627 \u0645\u0639\u0645\u0648\u0644\u0627\u064b \u0628\u0639\u062f \u0627\u0632 \u062a\u0645\u0627\u0645\u200c\u0634\u062f\u0646 \u062a\u0631\u0645\u06cc\u0645 \u06cc\u0627 \u0631\u0648\u06a9\u0634\u060c ...\u00bb)"
+          },
+          {
+            "english": {
+              "evidence": [
+                "en mirror on disk, 42 blocks = fa, 12 figures, toggle ../share-47.html"
+              ],
+              "path": "sharehub/en/share-47.html",
+              "status": "ready"
+            },
+            "evidence": [
+              "all founder messages closed (M2 answered; no M1, no M3b)"
+            ],
+            "kind": "second_cut_editorial_lock_v1",
+            "scopes": [
+              {
+                "evidence": [
+                  "C.4.13 DES 4/E + Fidelity 100 HIGH stored, accept exit 0, audit agree; no M3b"
+                ],
+                "scope": "scientific",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Q4.9 \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc; C.4.14 skipped"
+                ],
+                "scope": "challenge",
+                "status": "not_applicable"
+              },
+              {
+                "evidence": [
+                  "C.2.4 occlusion/occlusal-analysis-adjustment; C.5.5 verified"
+                ],
+                "scope": "taxonomy",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.4.7 0 backlinks (borderline), C.4.8 3 inline, C.4.9 3 capsules at cap 5/5"
+                ],
+                "scope": "links",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.5.0 7 canonical tags, 1 mint #\u0631\u0648\u06cc\u06a9\u0631\u062f_\u06a9\u0627\u0646\u0641\u0648\u0631\u0645\u062a\u06cc\u0648, --check ok"
+                ],
+                "scope": "hashtags",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.5 brain entry appended; faq-corpus FAQ+flashcards; cabinet P2955"
+                ],
+                "scope": "content_record",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.5.6 fixed-pros + occlusion; 3 exam questions approved M2; C.5.6-b no bundle"
+                ],
+                "scope": "pathways",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "index.html Pulse: new top line for share-47, bottom plak1-13 line removed, 7 lines"
+                ],
+                "scope": "pulse",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "sharehub/en/share-47.html authored from locked text, noindex, toggles inverse"
+                ],
+                "scope": "english",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "title founder data; caption standing acceptance; M2 approved; figures per founder instruction"
+                ],
+                "scope": "author_approvals",
+                "status": "resolved"
+              }
+            ]
+          }
+        ],
+        "delivery": [
+          {
+            "evidence": [
+              "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/42759782498"
+            ],
+            "scope": "GitHub Actions post-Push-2 mechanical continuation"
+          }
+        ],
+        "inputs": [
+          {
+            "note": "founder text as submitted",
+            "ref": "chat:founder-text",
+            "sha256": "438af9b2524b157cf6c7a362c7790068e3cdab7d300b3b3980e98feae6533ee9"
+          },
+          {
+            "note": "attached paper (Davies, Gray, Smith 2001 BDJ)",
+            "ref": "chat-upload:Good_occlusal_practice_in_simple_restorative_dentistry.pdf",
+            "sha256": "2092b5108aa8b13ad3dbd3aee3d0a76533cc22d5b5c65166faaa35167b5f50a7"
+          }
+        ],
+        "pending_questions": [],
+        "unrelated_changes": [],
+        "validation": [
+          {
+            "audit_2d": {
+              "exit": 0,
+              "model": "claude-opus-5-5",
+              "status": "agree",
+              "system_prompt_sha256": "948e8bf615e5687ec69ab5824b4b604a556666e6c80d03e7736a19effaa53e68"
+            },
+            "content_id": "sharehub/share-47",
+            "des": {
+              "band": "E",
+              "content_type": "RESEARCH",
+              "des_score": 4,
+              "des_version": "3.7",
+              "multiplier": 0.3,
+              "penalty": "no COI statement -1",
+              "provisional": false,
+              "question_type": "THERAPY",
+              "s_design": 15
+            },
+            "fidelity": {
+              "accept": "des_fidelity_units --accept exit 0",
+              "result": "62/62 assessable MATCHES, 2 NOT_IN_SOURCE (u43,u62), 1 AUTHOR_VIEW (u74), score 100 level HIGH",
+              "runs": "2 full checker runs claude-sonnet-5-5 (separate empty-dir processes) + 1 tie-break on u33,u43",
+              "vote": "no flagged unit; no reviewer call owed; no orphan sweep (single source)"
+            },
+            "kind": "des_fidelity_c4_13",
+            "lookup": "des_record_guard lookup: 0 records -> newly scored",
+            "m3b": "none (no ALTERED/REVERSED)",
+            "part3": "quotes/arithmetic/band/schema ok; des_record_guard check ok; verify_publish --des-text ok",
+            "part3_6": "interpretation_fa sentences 3-4 narrowed to text-supported claims (agent, before/after in run notes)",
+            "source": "10.1038/sj.bdj.4801185",
+            "source_call": {
+              "cmd": "claude -p --system-prompt-file .dentcast/des-v3.7-knowledge.md --tools \"\" --model opus (empty dir)",
+              "model": "claude-opus-5-5",
+              "spec_sha256": "709be964f19c1d5c12fada54fe3827d112d729150368dcddc3108d343a94e2e9"
+            },
+            "source_text_origin": "attached PDF via poppler pdftotext reading-order mode + page furniture/references stripped; tools/pdf_source_text.py rejected because both backends interleaved columns (~240/675 lines) on this BDJ 3-column layout; source_conclusion pinned to guideline 7 (EDEC)",
+            "text_basis": "FULL_TEXT (attached PDF per founder instruction)"
+          },
+          {
+            "content_id": "sharehub/share-47",
+            "exit_code": 0,
+            "expected_caption": "\u0645\u0639\u0645\u0648\u0644\u0627\u064b \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0627 \u0628\u0639\u062f \u0627\u0632 \u062a\u0631\u0645\u06cc\u0645 \u0628\u0627 \u06a9\u0627\u063a\u0630 \u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646 \u0686\u06a9 \u0645\u06cc\u200c\u06a9\u0646\u06cc\u0645. \u0627\u0645\u0627 \u0648\u0642\u062a\u06cc \u0648\u0636\u0639\u06cc\u062a \u0642\u0628\u0644 \u0627\u0632 \u062a\u0631\u0627\u0634 \u0631\u0627 \u062b\u0628\u062a \u0646\u06a9\u0631\u062f\u0647\u200c\u0627\u06cc\u0645\u060c \u0646\u062a\u06cc\u062c\u0647 \u0631\u0627 \u0628\u0627 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0645\u0642\u0627\u06cc\u0633\u0647 \u0645\u06cc\u200c\u06a9\u0646\u06cc\u0645\u061f",
+            "expected_title": "\u0627\u06a9\u0644\u0648\u0698\u0646 \u062f\u0631 \u062a\u0631\u0645\u06cc\u0645\u200c\u0647\u0627\u06cc \u0633\u0627\u062f\u0647\u061b \u0642\u0628\u0644 \u0627\u0632 \u062a\u0631\u0627\u0634 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0631\u0627 \u0628\u0627\u06cc\u062f \u0628\u062f\u0627\u0646\u06cc\u0645\u061f",
+            "kind": "phase_f",
+            "output_sha256": "140ddfbab31bf5825ecc6c43d6ff36cbb47de9c1ff083bc471e473ba60ee2386",
+            "recorded_at": "2026-11-10T05:05:37+00:00",
+            "summary": "131 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+          }
+        ]
+      },
+      "external_actions": [],
+      "status": "in_progress",
+      "steps": [
+        {
+          "evidence": [
+            "rules-read: README/global(3 pages)/agent-parity/publish-checkpoints/01/02 complete @4dcd8ae1; capability precheck: ls-remote OK, push to ccr-* branch expected OK, Actions monitoring+PR+merge via GitHub MCP, isolated contexts via Agent tool and claude -p present"
+          ],
+          "id": "rules",
+          "module": "01-hard-rules.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Phase0: text=yes, paper file=yes (PDF attached) -> normal publish + step 4.10 three parts"
+          ],
+          "id": "0",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "PhaseA: brain parsed (601 entries); latest sharehub id=46 /sharehub/share-46.html keys type,id,title,caption,author,source,hashtags,keywords,url,pillar; live PILLARS read from tools/build_pillar.py"
+          ],
+          "id": "A",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Q1: single-paper reading -> sharehub (repo-conventions: a single- or multi-paper reading is sharehub); locked"
+          ],
+          "id": "B.1",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Q2: next number share-47 (max 46 +1, no gap)"
+          ],
+          "id": "B.2",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Q3: full text supplied in founder message (input chat:founder-text sha 438af9b2)"
+          ],
+          "id": "B.3",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Q3.5: text reads human/natural; no AI-tell rewrites. Two orthographic fixes only (standing acceptance, listed in Push-2 report): '\u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646\u0647\u0627\u06cc' -> '\u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646\u200c\u0647\u0627\u06cc' (ZWNJ) and typo '\u0631\u06cc\u062a\u0648\u0631\u06cc\u0634\u0646\u0647\u0627\u06cc' -> '\u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646\u200c\u0647\u0627\u06cc'. All other sentences byte-identical. Founder title copied verbatim."
+          ],
+          "id": "B.3.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Q4: sharehub media = optional in-page figures (share-41 has none); founder supplied no image -> page without figures; no audio/video fields in sharehub schema"
+          ],
+          "id": "B.4",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Q4.7: paper attached (Good_occlusal_practice_in_simple_restorative_dentistry.pdf, sha 2092b510) -> step 4.10 ACTIVE; founder says paper is also in Google Drive cabinet; DOI resolved via PubMed PMID 11697598 -> 10.1038/sj.bdj.4801185"
+          ],
+          "id": "B.4.7",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Q4.8: basket 2 RESEARCH, one determinate source: attached paper DOI 10.1038/sj.bdj.4801185; founder instructs to use the attached PDF for DES and Fidelity (FULL_TEXT)"
+          ],
+          "id": "B.4.8",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Q4.9: \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc (plain article reading; not a question post)"
+          ],
+          "id": "B.4.9",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Q5: no founder Pulse sentence; agent drafts in sharehub's established pattern, title-only link (standing acceptance) at C.6"
+          ],
+          "id": "B.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0",
+          "module": "03-litecast-and-page.md",
+          "reason": "not LiteCast (locked category sharehub); module 03 step 0 applies only to LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.1",
+          "module": "03-litecast-and-page.md",
+          "reason": "not LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.2",
+          "module": "03-litecast-and-page.md",
+          "reason": "not LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.3",
+          "module": "03-litecast-and-page.md",
+          "reason": "not LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.4",
+          "module": "03-litecast-and-page.md",
+          "reason": "not LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "C.1: template = sharehub/share-46.html (previous same-category page), enrolled in target_paths"
+          ],
+          "id": "C.1",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.2: sharehub/share-47.html cloned from share-46 (structure, CSS, JSON-LD shape); body = text of record (42 blocks, 6 founder section headings as h3 per share-40 precedent); domain dentcast.org kept; GA4 once; 2 preconnect crossorigin; no trustseal; no figures (none supplied); body opens with founder's own paragraph (no list before it); refs block: Davies \u0648 \u0647\u0645\u06a9\u0627\u0631\u0627\u0646\u060c Br Dent J\u060c \u06f2\u06f0\u06f0\u06f1 -> https://doi.org/10.1038/sj.bdj.4801185 (founder: link display name to DOI); sharehub pages carry no hashtag chip row; caption agent-composed (standing acceptance)"
+          ],
+          "id": "C.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.5",
+          "module": "03-litecast-and-page.md",
+          "reason": "not LiteCast; LiteCast-only in-body linking (module 03 0.5)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.6",
+          "module": "03-litecast-and-page.md",
+          "reason": "not LiteCast; LiteCast-only related links (module 03 0.6)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "C.2.4: pillar.primary=occlusion (one clear fit: occlusal management in routine restorations); subtopic=occlusal-analysis-adjustment (examining/recording contacts before prep, checking after; closest match; competitor occlusal-scheme-guidance rejected - paper is about conforming to existing scheme, not choosing one); standing acceptance"
+          ],
+          "id": "C.2.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.2.5: dc-related-section with 2 capsules: /glossary/ + /pillar/occlusion/ (typed brain entry branch); 2/5 used"
+          ],
+          "id": "C.2.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.2.6: sharehub/index.html hand-maintained; added <li> share-47 newest-first, sibling label pattern '<title> (\u0645\u0637\u0644\u0628\u06cc \u0627\u0632 \u062f\u06a9\u062a\u0631 \u0641\u0648\u0627\u062f \u0634\u0647\u0627\u0628\u06cc\u0627\u0646)'"
+          ],
+          "id": "C.2.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.3 date audit: datePublished 2026-11-04->2026-11-10 OK, dateModified ->2026-11-10 OK; no visible body date in template; canonical/og:url/hreflang -> share-47 OK"
+          ],
+          "id": "C.3",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.4: git diff --quiet -- sharehub/share-46.html -> clean (template untouched)"
+          ],
+          "id": "C.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "not NoteCast; parent-episode update is NoteCast-only",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5-b",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "neither NoteCast nor core episode; episode/NoteCast mirror inapplicable",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "sharehub is not a numbered series; previous page has no ep-nav block",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "C.4.10.1: founder already filed the PDF in the cabinet: Drive file 14oNKMq1t1ba61b6iZhno762SA1IjRGN0 'Good occlusal practice in simple restorative dentistry.pdf' (real title already), 417188 bytes = attached upload byte size, parent = existing subfolder 'Occlusion' (1pcawf1jOJ14ZyVobSzJkbigBJbeT08U3, child of cabinet 1iDwq4Uj-y7_FO99-QW1Th0hVRN5yfk9f) = semantic best match; no rename/move/upload needed, no Drive write performed; drive:14oNKMq1t1ba61b6iZhno762SA1IjRGN0"
+          ],
+          "id": "C.4.10.1",
+          "module": "06-paper-ingestion.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.4.10.2: catalog entry P2955 appended (key set = latest entry incl. authors), topic/topic_path Occlusion, DOI 10.1038/sj.bdj.4801185 (PubMed PMID 11697598, title/journal/year cross-checked with PDF), journal British Dental Journal 2001, drive_id 14oNKMq1t1ba61b6iZhno762SA1IjRGN0, linked_episodes [sharehub/share-47]; tags occlusion, conformative-approach(new), occlusal-analysis, occlusal-adjustment, centric-occlusion, jaw-relation-record, occlusal-interference, provisional-restoration, crown, narrative-review, topic:occlusion, good-occlusal-practice-simple-restorative-dentistry(title tag); tag_index kept exact (+1/new), total_papers 2164->2165 (= len(papers)); other scan counters untouched (do not track array); paper count 2165 < 2200 so \u06f2\u06f1\u06f0\u06f0 copy unchanged; reachability deferred to step 5.0 per item 8"
+          ],
+          "id": "C.4.10.2",
+          "module": "06-paper-ingestion.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.4.10.3: first author S. J. Davies (PDF byline + PubMed) linked to https://doi.org/10.1038/sj.bdj.4801185 in .author block under body (single-paper sharehub precedent share-41/43); founder's source line rendered as this DOI credit; .author CSS present; template has no isBasedOn; site author-note kept"
+          ],
+          "id": "C.4.10.3",
+          "module": "06-paper-ingestion.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.4.13: DES record + Fidelity stored in plus/des-scores.json[sharehub/share-47] (DES 4/E RESEARCH THERAPY FULL_TEXT; Fidelity 100 HIGH, accept exit 0, audit agree); no M3b; details in context.validation des_fidelity_c4_13"
+          ],
+          "id": "C.4.13",
+          "module": "08-des-fidelity.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.4.7: fresh semantic review of 109 glossary terms; candidates centric-relation, tmd, canine-guidance, group-function, bruxism, occlusal-splint, tooth-wear: all borderline/tangential (article is about conforming restorations to existing occlusion; CR/TMD only named as limits of the approach) -> conservative default, 0 back-links added"
+          ],
+          "id": "C.4.7",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.7-b",
+          "module": "05-semantic-linking.md",
+          "reason": "4.7-\u0628: skipped \u2014 not a glossary publish",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "C.4.8: applied 3 inline links (first occurrence): '\u06a9\u0627\u063a\u0630 \u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646' -> /insight/insight-1.html (articulating paper itself); 'CR' -> /glossary/centric-relation.html (technical CR->CO); '\u0627\u062e\u062a\u0644\u0627\u0644\u0627\u062a \u0639\u0636\u0644\u0627\u062a \u0648 \u0645\u0641\u0635\u0644 \u0641\u06a9\u06cc' -> /glossary/tmd.html. Skipped borderline: '\u067e\u0627\u0631\u0627\u0641\u0627\u0646\u06a9\u0634\u0646'->bruxism (not identical concept), '\u062a\u0631\u0645\u06cc\u0645 \u06a9\u0648\u062a\u0627\u0647'->insight-103/104 (looser). Fidelity --accept re-run exit 0 (units unchanged)"
+          ],
+          "id": "C.4.8",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.4.9: section had 2/5 (capsules); added 3 strongest: insight-8 \u00ab\u062a\u062f\u0627\u062e\u0644 \u067e\u0627\u06cc\u062f\u0627\u0631 \u0628\u062f\u0648\u0646 \u0639\u0644\u0627\u0645\u062a\u00bb (leave stable occlusion alone), insight-103 \u00ab\u0627\u0635\u0644\u0627\u062d \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 \u06a9\u0648\u062a\u0627\u0647\u00bb (short restorations + bite registration + lab), insight-65 \u00ab\u0686\u06a9 \u0627\u06a9\u0644\u0648\u0698\u0646 \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646 \u0645\u062c\u062f\u062f\u00bb (check after cementation); now 5/5 at cap (related_cap.py). Not added (no slot / weaker): insight-104, insight-100, video-2, share-21, insight-94, episode-131"
+          ],
+          "id": "C.4.9",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.4.11: plus/faq-corpus.json byContent[sharehub/share-47].definedTermSets: 5 authored DefinedTerms #flashcards-c1..c5 (\u0631\u0648\u06cc\u06a9\u0631\u062f Conformative, Reorganised Approach, \u062a\u0631\u062a\u06cc\u0628 EDEC, Model Grooming, FGP); none copied from FAQ answers; no page JSON-LD"
+          ],
+          "id": "C.4.11",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.4.12: FAQPage #faq with 5 standalone yes/no questions (no deixis), each answer opens with verdict (4 \u062e\u06cc\u0631, 1 \u0628\u0644\u0647) -> 5 binary quiz questions; 4.12-\u0628 evaluated at 5.6"
+          ],
+          "id": "C.4.12",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.14",
+          "module": "09-challenge.md",
+          "reason": "Question 4.9: \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc, not a \u0686\u0627\u0644\u0634; no challenge markup",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "C.5.0: questions (5) in batch note; tags #\u0645\u0631\u0648\u0631_\u0645\u0646\u0627\u0628\u0639 (series) #\u0631\u0648\u06cc\u06a9\u0631\u062f_\u06a9\u0627\u0646\u0641\u0648\u0631\u0645\u062a\u06cc\u0648 (MINTED, decision-level, batch .dentcast/hashtag-batches/share-47-conformative.json, aliases conformative approach/conformative/\u06a9\u0627\u0646\u0641\u0631\u0645\u0627\u062a\u06cc\u0648/\u062d\u0641\u0638 \u0627\u06a9\u0644\u0648\u0698\u0646 \u0645\u0648\u062c\u0648\u062f \u0628\u06cc\u0645\u0627\u0631; '\u06a9\u0627\u0646\u0641\u0648\u0631\u0645\u062a\u06cc\u0648' auto-dropped as contained in target) #\u0627\u06a9\u0644\u0648\u0698\u0646 (umbrella) #\u062b\u0628\u062a_\u0631\u0627\u0628\u0637\u0647 #\u0627\u0631\u062a\u0628\u0627\u0637_\u0628\u0627_\u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631 #\u0631\u0648\u06a9\u0634_\u0645\u0648\u0642\u062a #\u062a\u0646\u0638\u06cc\u0645_\u0627\u06a9\u0644\u0648\u0698\u0646 (reused); composition gate ok (decision tag + specific \u226410: \u062b\u0628\u062a_\u0631\u0627\u0628\u0637\u0647 4, \u0627\u0631\u062a\u0628\u0627\u0637_\u0628\u0627_\u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631 4); resolving sentences recorded; bridge row '\u0631\u0648\u06cc\u06a9\u0631\u062f \u06a9\u0627\u0646\u0641\u0648\u0631\u0645\u062a\u06cc\u0648'->[conformative-approach, occlusion] + tooth_topics; P2955 reachable: byTag \u0631\u0648\u06cc\u06a9\u0631\u062f \u06a9\u0627\u0646\u0641\u0648\u0631\u0645\u062a\u06cc\u0648 #1, \u062b\u0628\u062a \u0631\u0627\u0628\u0637\u0647 #1, \u062a\u0646\u0638\u06cc\u0645 \u0627\u06a9\u0644\u0648\u0698\u0646 #3, \u0631\u0648\u06a9\u0634 \u0645\u0648\u0642\u062a #9; --sync ok, hashtag --check ok, build_cabinet_papers --check ok; reachability: page 4th under \u062b\u0628\u062a \u0631\u0627\u0628\u0637\u0647 and \u0627\u0631\u062a\u0628\u0627\u0637 \u0628\u0627 \u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631 (Q1,Q4 pass), only page under \u0631\u0648\u06cc\u06a9\u0631\u062f \u06a9\u0627\u0646\u0641\u0648\u0631\u0645\u062a\u06cc\u0648; content-index/assistant-tags reverted (runner C.8); sharehub pages carry no chip row"
+          ],
+          "id": "C.5.0",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.5: brain entry appended at end of array (sharehub id 47, key set/order = share-46 entry), hashtags = 5.0 list, keywords 10 (same as page JSON-LD), pillar occlusion/occlusal-analysis-adjustment"
+          ],
+          "id": "C.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.5.5: brain pillar = step 2.4 (occlusion / occlusal-analysis-adjustment); capsule /pillar/occlusion/ matches; no new subtopic"
+          ],
+          "id": "C.5.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.5.6: pathway_place --insert into fixed-pros (STRONG, after insight/insight-44) and occlusion (semantic unmistakable home, tool ASK, after insight/insight-103); not placed (borderline): biomimetic, esthetic, implant-prosthetic, post-and-core, treatment-planning, ceramics; coverage 1.51 per item (baseline 1.38); 4.12-\u0628: 3 MCQs approved in M2 and written (r-cbfd9fab, r-3425385d, r-6611ddee), validate_exam_questions 0 errors (9 pre-existing warnings unrelated)"
+          ],
+          "id": "C.5.6",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.5.6-\u0628: candidates bundle-occlusion-rehab -> \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f3: rehab/VD/scheme bundle, this simple-restoration conformative piece fills no core gap; also \u06af\u06cc\u062a \u06f5: 8 steps -> 9); bundle-crown-prep -> \u0631\u062f \u0634\u062f (\u0646\u0627\u0645\u0637\u0645\u0626\u0646\u060c \u06af\u06cc\u062a \u06f2/\u06f3: title is a question not a whole-concept name; occlusion recording is not a prep/impression core gap); no bundle edit, home-bundles.js untouched"
+          ],
+          "id": "C.5.6-b",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "C.6: Pulse line inserted at top of index.html dc-pulse-list (\u00ab\u06cc\u06a9 \u0645\u0631\u0648\u0631 \u0645\u0646\u0627\u0628\u0639 \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab\u2026\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f.\u00bb, title-only link text), bottom plak1-13 line removed; en mirror + toggles; ten-scope editorial lock recorded"
+          ],
+          "id": "C.6",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "All applicable canonical C.8 builders passed; logs are in the recovery artifact."
+          ],
+          "id": "C.8",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "tools/stamp-version.py passed after C.8"
+          ],
+          "id": "C.7",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Technical English, noindex, hreflang, sitemap, and final version checks passed; logs are in the recovery artifact."
+          ],
+          "id": "D",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Canonical dc-notify marker present exactly once"
+          ],
+          "id": "E",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "phase_f:140ddfbab31bf5825ecc6c43d6ff36cbb47de9c1ff083bc471e473ba60ee2386"
+          ],
+          "id": "F",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/42759782498"
+          ],
+          "id": "G",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        }
+      ],
+      "target_paths": [
+        ".dentcast/hashtag-batches/share-47-conformative.json",
+        "dentcast-brain.json",
+        "dentcast-hashtag-reference.json",
+        "dentcast_cabinet_full_catalog.json",
+        "index.html",
+        "pillar/index.html",
+        "pillar/occlusion/index.html",
+        "pillar/occlusion/structure.json",
+        "pillar/structure.json",
+        "player.html",
+        "plus/assistant-tags.json",
+        "plus/cabinet-bridge.json",
+        "plus/cabinet-papers.json",
+        "plus/content-index.json",
+        "plus/des-scores.json",
+        "plus/exam-questions.json",
+        "plus/faq-corpus.json",
+        "plus/flashcards-index.json",
+        "plus/pathways.json",
+        "plus/quiz-index.json",
+        "service-worker.js",
+        "sharehub/en/share-47.html",
+        "sharehub/index.html",
+        "sharehub/share-46.html",
+        "sharehub/share-47.html",
+        "sharehub/share47-fig1.webp",
+        "sharehub/share47-fig10.webp",
+        "sharehub/share47-fig11.webp",
+        "sharehub/share47-fig12.webp",
+        "sharehub/share47-fig2.webp",
+        "sharehub/share47-fig3.webp",
+        "sharehub/share47-fig4.webp",
+        "sharehub/share47-fig5.webp",
+        "sharehub/share47-fig6.webp",
+        "sharehub/share47-fig7.webp",
+        "sharehub/share47-fig8.webp",
+        "sharehub/share47-fig9.webp",
+        "sitemap.xml",
+        "up-board/index.json"
+      ]
+    },
+    "snapshot": {
+      "files": {
+        ".dentcast/hashtag-batches/share-47-conformative.json": {
+          "kind": "file",
+          "sha256": "884f5d98f9a95c5634c8f4077792e205540527694f27d980b2808c1e8658f846",
+          "executable": false
+        },
+        "dentcast-brain.json": {
+          "kind": "file",
+          "sha256": "c994f46c43ef374455b7fc497045a7916d766167e1cd0afafe408662a1b6bc29",
+          "executable": false
+        },
+        "dentcast-hashtag-reference.json": {
+          "kind": "file",
+          "sha256": "eb2a36604ade0b6d47885db76f4774876e6a519ef11ffd961e3467338f87418f",
+          "executable": false
+        },
+        "dentcast_cabinet_full_catalog.json": {
+          "kind": "file",
+          "sha256": "5e00235bf4d0c6bfe94a35b6cb913d3767b39dff16e2b866c2b85a4f9302fe90",
+          "executable": false
+        },
+        "index.html": {
+          "kind": "file",
+          "sha256": "5a2ef1f7b17c9e4efd0974d42696b081e20ad4c47740a626334927ef50b7d4d5",
+          "executable": false
+        },
+        "pillar/index.html": {
+          "kind": "file",
+          "sha256": "8350844366610d727d2b2507f527a5cff15954d3242baa964474c22d6bfa6d54",
+          "executable": false
+        },
+        "pillar/occlusion/index.html": {
+          "kind": "file",
+          "sha256": "8adacac4303705fc21baac495dba630c25ae547096be91cc460aa7805ac4c0f5",
+          "executable": false
+        },
+        "pillar/occlusion/structure.json": {
+          "kind": "file",
+          "sha256": "6944a01e456d2822804eed5997efc4c51e0abc4c8bf38fc20ac2723c52cf1333",
+          "executable": false
+        },
+        "pillar/structure.json": {
+          "kind": "file",
+          "sha256": "db87073367cc86c104422376236a50c15ac40cb6dafa99361dafae504c881f65",
+          "executable": false
+        },
+        "player.html": {
+          "kind": "file",
+          "sha256": "766a949f692b4e330f435dd292a7ec231f0994c15151c39fe699dea60a1d31be",
+          "executable": false
+        },
+        "plus/assistant-tags.json": {
+          "kind": "file",
+          "sha256": "757e47c071858e006cd8fb2c8894174577a0838f5b7264062b8679c2555f308b",
+          "executable": false
+        },
+        "plus/cabinet-bridge.json": {
+          "kind": "file",
+          "sha256": "6a970f28e6c5b3b7460b421a5330be9e555d3fe7ac1b1c6c50d950e87e3d3b69",
+          "executable": false
+        },
+        "plus/cabinet-papers.json": {
+          "kind": "file",
+          "sha256": "14806f99a887fcd943f75687f32ae1d6dd609a3b2a1f2fccb3934ddb306746f6",
+          "executable": false
+        },
+        "plus/content-index.json": {
+          "kind": "file",
+          "sha256": "f807b5c7e428518ff40da7400ce0f54963344b1bd2ff5df327d09735555d7ad4",
+          "executable": false
+        },
+        "plus/des-scores.json": {
+          "kind": "file",
+          "sha256": "aa1c55022a35c64bc639f8c933cdb6c9e94c53356e7d78081f0ecb2050c224c0",
+          "executable": false
+        },
+        "plus/exam-questions.json": {
+          "kind": "file",
+          "sha256": "b6be4a091663fe5f3b1d5065a00b96b05f6b3d94811fb73f0e0fe099661a768e",
+          "executable": false
+        },
+        "plus/faq-corpus.json": {
+          "kind": "file",
+          "sha256": "7ba612f99e7e085db67487ae64f32bb25d9e50497dbc0c8c272b8b7f010e298a",
+          "executable": false
+        },
+        "plus/flashcards-index.json": {
+          "kind": "file",
+          "sha256": "a895b4d684bfa2136ea2e9fb0d08a3dbae31555b0f15bc6d5d79c3004d567544",
+          "executable": false
+        },
+        "plus/pathways.json": {
+          "kind": "file",
+          "sha256": "65d40a3eda25e5cf55a02e34ec811174bb3addbcb36f57c3fbf3a9fdbec639fb",
+          "executable": false
+        },
+        "plus/quiz-index.json": {
+          "kind": "file",
+          "sha256": "f5e604609cd9ff9bc450775047e296d429d94726d4b2a0e662fe46c02adf9951",
+          "executable": false
+        },
+        "service-worker.js": {
+          "kind": "file",
+          "sha256": "7a8cb4940e7a64fedf99d13fe7a383cbefe126e9c4a11669aec9d332edc94ea0",
+          "executable": false
+        },
+        "sharehub/en/share-47.html": {
+          "kind": "file",
+          "sha256": "74941579281442cc9f9fced9aff6871c1e85c9a2e8cccb0ce0b8913d0670f9f1",
+          "executable": false
+        },
+        "sharehub/index.html": {
+          "kind": "file",
+          "sha256": "bf6bbc3ba88625cdb7293f991be74dfdea8c03ecbdc87376933556d226044f24",
+          "executable": false
+        },
+        "sharehub/share-46.html": {
+          "kind": "file",
+          "sha256": "d45a58f28d32ad3bbe27def91f4103f28e8b2d97d3563fc7173a611760b49b95",
+          "executable": false
+        },
+        "sharehub/share-47.html": {
+          "kind": "file",
+          "sha256": "e569ffd76dff636f4332bf75391f2a719761dea339f7fbcccaef8a0cda8fac2e",
+          "executable": false
+        },
+        "sharehub/share47-fig1.webp": {
+          "kind": "file",
+          "sha256": "5633f7079982535ffaa8f859aa6afed2cae726127e40fbdad55108e5f655b405",
+          "executable": false
+        },
+        "sharehub/share47-fig10.webp": {
+          "kind": "file",
+          "sha256": "aba05a1ce21f69b18f0026249af6c03c601c658d0983b1fb0c93450ed76ef53c",
+          "executable": false
+        },
+        "sharehub/share47-fig11.webp": {
+          "kind": "file",
+          "sha256": "810231eeef23dc574fc862370c4b26df072b73efbd37ce741f8f679eb9401bee",
+          "executable": false
+        },
+        "sharehub/share47-fig12.webp": {
+          "kind": "file",
+          "sha256": "0446355646d08c30648f2ce460ca951646e5b93fdb654a34c62ca41b3980ef1c",
+          "executable": false
+        },
+        "sharehub/share47-fig2.webp": {
+          "kind": "file",
+          "sha256": "6a34d33abd98d938dde30564086890e6ace508d1940e7437377ff97f5308e6a7",
+          "executable": false
+        },
+        "sharehub/share47-fig3.webp": {
+          "kind": "file",
+          "sha256": "fc8f5a2fb5016b12c8d913417bbce0ff9453b60febdc845b1c0bb4f21999fee9",
+          "executable": false
+        },
+        "sharehub/share47-fig4.webp": {
+          "kind": "file",
+          "sha256": "9995278ac3adf529776438917a31069f8e79ac222961921f71486bf78e421033",
+          "executable": false
+        },
+        "sharehub/share47-fig5.webp": {
+          "kind": "file",
+          "sha256": "96b73a03c55725d6c10ddab891b1fa22692230bead7996fb951116abd5f2f163",
+          "executable": false
+        },
+        "sharehub/share47-fig6.webp": {
+          "kind": "file",
+          "sha256": "67a795e87cb5cbd6ee8561bf2fb3bd80c1fc07bf6d33034dac21d8d0b3d7d8d1",
+          "executable": false
+        },
+        "sharehub/share47-fig7.webp": {
+          "kind": "file",
+          "sha256": "48eac188cf17cd54628c576c7966ac91c55c126298a2f5ee010b69716d39dd80",
+          "executable": false
+        },
+        "sharehub/share47-fig8.webp": {
+          "kind": "file",
+          "sha256": "e2b9b3f9314444d55aaf40e12c664d29c1221ce96176fb558e10e5bfac314563",
+          "executable": false
+        },
+        "sharehub/share47-fig9.webp": {
+          "kind": "file",
+          "sha256": "72e4b7dd0a0ed37f60c794c7f5c0c7058a870c509a216cb9f5f7195ca9ecb57f",
+          "executable": false
+        },
+        "sitemap.xml": {
+          "kind": "file",
+          "sha256": "83743af3eb23f8212cc1dacf79effb06013c6d1da2969ff8e4913d4d91871eec",
+          "executable": false
+        },
+        "up-board/index.json": {
+          "kind": "file",
+          "sha256": "6667421b1b5cde6ae875590022b9b278ba7bdef576d4354e2b16dfbc6dd029df",
+          "executable": false
+        }
+      },
+      "workflow": {
+        ".dentcast/workflows/README.md": "172337c6e52b1143888d1a7c43f56c71da74457ab9ed4b247db9cbd242ba81d8",
+        ".dentcast/workflows/agent-parity.md": "5996efcf0c6b4a7555cc151385605c9e423e73b9151e28b12f14f2a6a93b75c3",
+        ".dentcast/workflows/publish-handoff.md": "d58cb5472df896dc0d33c37b79340d44c65897d90348f1bfbc98a0e56badc249",
+        ".dentcast/workflows/routing-details.md": "70e82a656759b6a949f84048d1d9047a2eaaca90c0f93d73d3e96857f77f394a",
+        ".dentcast/workflows/global/README.md": "5ec762efe1522eeca5841e37f8e61d938b6a1421904bffe32cecd51ddab4a39b",
+        ".dentcast/workflows/global/LOAD-MAP.json": "b27c508ec56d54a7df2b54c698c40614972e61c12b334ab1c7bc27fc3c45eabb",
+        "tools/dentcast_global_rules.py": "c92d378a875dec54ed7845015797c37f211f0acab93150f669b0f820dfd94464",
+        ".dentcast/workflows/global/repo-conventions.md": "b2de28cc5304d1c9fd62c96b0ca7de43b12140415c04b4b695d1efccd8a8abb5",
+        ".dentcast/workflows/global/plus-premium.md": "a0cf6f1b0fc22d0ec9fed1ca5f9c0929d3259befae613513ca4de2650fcc748b",
+        ".dentcast/workflows/global/site-invariants.md": "c41c43b17502f6c01ef91b3e786e1bd9000b06858375f6c8c65e2e15cb6c15ca",
+        "tools/dentcast_publish_handoff.py": "5a7d06e06d0a9fbccb6e0574d15ce266b38509c86b8f230eb68b59dad134169c",
+        "tools/dentcast_publish_lifecycle.py": "c40548cadf6d12d5a24370a4666e8ddf16a338cf61c154627c3a8f24f7cc1932",
+        "tools/verify_publish.py": "41d939f7769ffa36078955a8a38548143bb6b180282e1a87b62ce602f519ecbb",
+        "tools/dentcast_text_io.py": "225c0a696e8ebc5e175b5dd9739210d4624938358af96baeb777f8c4a07726d8",
+        "tools/text_io.mjs": "c6f9208e26983c8eade43d8cf3effe865e6479df903d2cee661cd0a928565536",
+        "tools/dentcast_post_cut2_runner.py": "0d513de09aa2c9ca8da89c49c512c03effed190b8ccf53b56b1c705795a4eeae",
+        ".github/workflows/post-cut2-mechanical.yml": "f4c06799b68560aaa14b364e63d720ae658187962221607c862bfce42a19f106",
+        ".dentcast/workflows/publish-checkpoints.md": "610c0d260784f1c576f68244e5024d5106f5b8b7102ff1d892e8385482ad3d45",
+        ".dentcast/workflows/publish-after-push2.md": "101bf989270f0ba6d5f34dc350b94d4820f49d361ec0b99192b46854e7cea905",
+        ".dentcast/workflows/modules/01-hard-rules.md": "1cb57aa6db9c90675d90a6732e5d789ac9188977dc58906ef56b131960d83cb9",
+        ".dentcast/workflows/modules/02-routing-intake.md": "c9dc1b414dfdacf3376b4f9cb916ce911b428184550610950ef7f8e8132e9a74",
+        ".dentcast/workflows/modules/03-litecast-and-page.md": "f6bf2d4a9004e54525c698db895cfecac3d65e7090b015b634bae0bee7bc6723",
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "53a8860265c40465d8060bea1c9d4f701d24794f704de14a609b2d806c294fa9",
+        ".dentcast/workflows/modules/05-semantic-linking.md": "22379f060007b543c9544f2dd8a3aee600a930af19711fd1ee49e797ef9c7722",
+        ".dentcast/workflows/modules/06-paper-ingestion.md": "c34d0f4a17e6b1eddad13bca8e88af65a436ae7d5d41017a57660868020d6375",
+        ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "913b7e3b01038c372eaff58ab63cb91126d710a3b7051f8f9af72409631c9c98",
+        ".dentcast/workflows/modules/08-des-fidelity.md": "1f69c4d6c9d5edf3e683d41772c1c50cf981b6952793b56b8ef1f3cbc54a7aed",
+        ".dentcast/workflows/modules/09-challenge.md": "5ec2a39ce0e3f3777360a0b0c1092d34e240f6546d43103498e2d65a5a16f120",
+        ".dentcast/workflows/modules/10-brain-and-pathways.md": "5e4c5266d20e786eae7d3f410a2209c547c698781d8655d78828251c052ab66c",
+        ".dentcast/workflows/modules/11-build-and-version.md": "47b67e1420bc272b79d9d274da77f04138d46c89f02d0d3a0585d283636ccd6e",
+        ".dentcast/workflows/modules/12-english-notify-verify.md": "89230e2261966297a9c26cc9df88a37862d5b4a71c1bd7ed44f20d6cc2596552"
+      }
+    }
+  },
+  "second_delivery_commit": "b2ffb56f847313fab71075aeb1a3524b2ae7f3b5",
+  "verification": {
+    "kind": "phase_f",
+    "content_id": "sharehub/share-47",
+    "expected_title": "\u0627\u06a9\u0644\u0648\u0698\u0646 \u062f\u0631 \u062a\u0631\u0645\u06cc\u0645\u200c\u0647\u0627\u06cc \u0633\u0627\u062f\u0647\u061b \u0642\u0628\u0644 \u0627\u0632 \u062a\u0631\u0627\u0634 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0631\u0627 \u0628\u0627\u06cc\u062f \u0628\u062f\u0627\u0646\u06cc\u0645\u061f",
+    "expected_caption": "\u0645\u0639\u0645\u0648\u0644\u0627\u064b \u0627\u06a9\u0644\u0648\u0698\u0646 \u0631\u0627 \u0628\u0639\u062f \u0627\u0632 \u062a\u0631\u0645\u06cc\u0645 \u0628\u0627 \u06a9\u0627\u063a\u0630 \u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646 \u0686\u06a9 \u0645\u06cc\u200c\u06a9\u0646\u06cc\u0645. \u0627\u0645\u0627 \u0648\u0642\u062a\u06cc \u0648\u0636\u0639\u06cc\u062a \u0642\u0628\u0644 \u0627\u0632 \u062a\u0631\u0627\u0634 \u0631\u0627 \u062b\u0628\u062a \u0646\u06a9\u0631\u062f\u0647\u200c\u0627\u06cc\u0645\u060c \u0646\u062a\u06cc\u062c\u0647 \u0631\u0627 \u0628\u0627 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0645\u0642\u0627\u06cc\u0633\u0647 \u0645\u06cc\u200c\u06a9\u0646\u06cc\u0645\u061f",
+    "exit_code": 0,
+    "output_sha256": "140ddfbab31bf5825ecc6c43d6ff36cbb47de9c1ff083bc471e473ba60ee2386",
+    "summary": "131 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+  }
+}
