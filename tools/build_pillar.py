@@ -1981,7 +1981,7 @@ def _render_index_page(pillars_info, cards_html):
         '    <div class="top">\n'
         '      <div class="hero">\n'
         '        <div class="nav-back">\n'
-        '          <a href="/index.html" class="back-link" data-dc-back>بازگشت به صفحهٔ اصلی دنت‌کست</a>\n'
+        '          <a href="/" class="back-link" data-dc-back>بازگشت به صفحهٔ اصلی دنت‌کست</a>\n'
         '        </div>\n'
         '        <h1 class="title"><span class="dot" aria-hidden="true"></span>' + esc(h1_fa) + '</h1>\n'
         '        <div class="subtitle">' + esc(subtitle_fa) + '</div>\n'
@@ -2533,7 +2533,7 @@ section[id^="sec-"]{ scroll-margin-top:160px; }
     <div class="top">
       <div class="hero">
         <div class="nav-back">
-          <a href="/index.html" class="back-link">بازگشت به صفحهٔ اصلی دنت‌کست</a>
+          <a href="/" class="back-link">بازگشت به صفحهٔ اصلی دنت‌کست</a>
         </div>
         <h1 class="title"><span class="dot"></span>دانشنامهٔ دنت‌کست</h1>
         <div class="subtitle">مفاهیم کلیدی دندانپزشکی</div>
