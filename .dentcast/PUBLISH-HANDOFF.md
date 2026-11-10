@@ -22,7 +22,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         {
           "decision": "\u0628\u0631\u06cc\u062c \u0628\u062f\u0648\u0646 \u062a\u0645\u0627\u0633 \u0645\u0624\u062b\u0631",
           "evidence": [
-            "founder Claude Doc heading \u00ab\u0634\u0631\u062d \u0648\u06cc\u0632\u06cc\u062a: \u0628\u0631\u06cc\u062c \u0628\u062f\u0648\u0646 \u062a\u0645\u0627\u0633 \u0645\u0624\u062b\u0631\u00bb with the doc label \u00ab\u0634\u0631\u062d \u0648\u06cc\u0632\u06cc\u062a:\u00bb removed; founder words copied verbatim"
+            "founder Claude Doc heading \u00ab\u0634\u0631\u062d \u0648\u06cc\u0632\u06cc\u062a: \u0628\u0631\u06cc\u062c \u0628\u062f\u0648\u0646 \u062a\u0645\u0627\u0633 \u0645\u0624\u062b\u0631\u00bb without the doc label; restored from dependency_invalidation_v1 audit, unchanged"
           ],
           "scope": "title",
           "status": "confirmed"
@@ -30,7 +30,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         {
           "decision": "\u0628\u06cc\u0645\u0627\u0631 \u0627\u0632 \u0628\u0631\u06cc\u062c\u06cc \u06a9\u0647 \u062a\u0627\u0632\u0647 \u0628\u0631\u0627\u06cc\u0634 \u06af\u0630\u0627\u0634\u062a\u0647 \u0634\u062f\u0647 \u0628\u0648\u062f \u0631\u0627\u0636\u06cc \u0646\u0628\u0648\u062f \u0648 \u0645\u06cc\u200c\u06af\u0641\u062a \u0628\u0627 \u0622\u0646 \u0646\u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f \u063a\u0630\u0627 \u0631\u0627 \u0628\u062c\u0648\u062f. \u06a9\u0627\u063a\u0630 \u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0631\u0627 \u0646\u0634\u0627\u0646 \u062f\u0627\u062f \u0648 \u0686\u0631\u0627 \u06af\u06cc\u0631 \u06a9\u0631\u062f\u0646 \u06a9\u0627\u063a\u0630 \u0628\u0631\u0627\u06cc \u0642\u0636\u0627\u0648\u062a \u0627\u06a9\u0644\u0648\u0698\u0646 \u06a9\u0627\u0641\u06cc \u0646\u06cc\u0633\u062a\u061f",
           "evidence": [
-            "agent proposal under standing acceptance (Hard Rule 14), listed in the Push-2 report"
+            "agent proposal under standing acceptance (Hard Rule 14); restored from dependency_invalidation_v1 audit, unchanged"
           ],
           "scope": "caption",
           "status": "confirmed"
@@ -401,9 +401,235 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "scope": "M2 exam questions"
         },
         {
+          "from_step": "C.4.13",
+          "kind": "dependency_invalidation_v1",
+          "reason": "Post-Push-2 runner run 42814743732 failed Phase F row \u00ab4.13 DES\u00bb: COMMENTARY item 4 carries a note on an in-page quote, which verify_publish reads as a section-declaration claim not found on chairside/index.html. Record invalid; rerun SOURCE call (no hand-patch).",
+          "superseded": {
+            "approvals": [
+              {
+                "decision": "\u0628\u0631\u06cc\u062c \u0628\u062f\u0648\u0646 \u062a\u0645\u0627\u0633 \u0645\u0624\u062b\u0631",
+                "evidence": [
+                  "founder Claude Doc heading \u00ab\u0634\u0631\u062d \u0648\u06cc\u0632\u06cc\u062a: \u0628\u0631\u06cc\u062c \u0628\u062f\u0648\u0646 \u062a\u0645\u0627\u0633 \u0645\u0624\u062b\u0631\u00bb with the doc label \u00ab\u0634\u0631\u062d \u0648\u06cc\u0632\u06cc\u062a:\u00bb removed; founder words copied verbatim"
+                ],
+                "scope": "title",
+                "status": "confirmed"
+              },
+              {
+                "decision": "\u0628\u06cc\u0645\u0627\u0631 \u0627\u0632 \u0628\u0631\u06cc\u062c\u06cc \u06a9\u0647 \u062a\u0627\u0632\u0647 \u0628\u0631\u0627\u06cc\u0634 \u06af\u0630\u0627\u0634\u062a\u0647 \u0634\u062f\u0647 \u0628\u0648\u062f \u0631\u0627\u0636\u06cc \u0646\u0628\u0648\u062f \u0648 \u0645\u06cc\u200c\u06af\u0641\u062a \u0628\u0627 \u0622\u0646 \u0646\u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f \u063a\u0630\u0627 \u0631\u0627 \u0628\u062c\u0648\u062f. \u06a9\u0627\u063a\u0630 \u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0631\u0627 \u0646\u0634\u0627\u0646 \u062f\u0627\u062f \u0648 \u0686\u0631\u0627 \u06af\u06cc\u0631 \u06a9\u0631\u062f\u0646 \u06a9\u0627\u063a\u0630 \u0628\u0631\u0627\u06cc \u0642\u0636\u0627\u0648\u062a \u0627\u06a9\u0644\u0648\u0698\u0646 \u06a9\u0627\u0641\u06cc \u0646\u06cc\u0633\u062a\u061f",
+                "evidence": [
+                  "agent proposal under standing acceptance (Hard Rule 14), listed in the Push-2 report"
+                ],
+                "scope": "caption",
+                "status": "confirmed"
+              }
+            ],
+            "delivery": [],
+            "inputs": [
+              {
+                "note": "founder text, transcribed verbatim from the doc's 5 text paragraphs",
+                "ref": "artifact:claude-docs/52b29f07 (founder doc \u00ab\u0634\u0631\u062d \u0648\u06cc\u0632\u06cc\u062a: \u0628\u0631\u06cc\u062c \u0628\u062f\u0648\u0646 \u062a\u0645\u0627\u0633 \u0645\u0624\u062b\u0631\u00bb, rev 2)",
+                "sha256": "ef36963b97636f107a7475f845f0f79bedb19e2d670d96447fff7065e592065d"
+              },
+              {
+                "note": "founder clinical photo, 930x1040 webp, alt \u00ab\u062a\u0645\u0627\u0633\u200c\u0647\u0627\u06cc \u06a9\u0627\u063a\u0630 \u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646 \u0631\u0648\u06cc \u0628\u0631\u06cc\u062c\u00bb",
+                "ref": "artifact-asset:52b29f07/de7c08685eda9bbc8329499ae41d4be8.webp",
+                "sha256": "e036c1ce7b3ea908bfd1a3022cc0c35c77c95ccf532a7593e8605bd5629a0b8d"
+              }
+            ],
+            "steps": [
+              {
+                "evidence": [
+                  "plus/des-scores.json chairside/chairside-51: COMMENTARY 3.7, 15/E, fidelity [null]; Part 3 green; receipt run 2 in context.validation; no M3b"
+                ],
+                "id": "C.4.13",
+                "module": "08-des-fidelity.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "4.7 re-reviewed incl. new paragraph (grinding a marked spot): no glossary term is this concept (centric-relation borderline, skipped); 0 links"
+                ],
+                "id": "C.4.7",
+                "module": "05-semantic-linking.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.7-b",
+                "module": "05-semantic-linking.md",
+                "reason": "Not a glossary publish (scoped cross-link runs only for a new glossary term)",
+                "status": "skipped"
+              },
+              {
+                "evidence": [
+                  "4.8: \u00ab\u06a9\u0627\u063a\u0630 \u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646 \u06f2\u06f0 \u0645\u06cc\u06a9\u0631\u0648\u0646\u06cc\u00bb \u2192 /insight/insight-1.html (kept). New paragraph: \u00ab\u062a\u0631\u0627\u0634\u0634 \u062f\u0627\u062f\u00bb \u2192 insight-8/insight-104 borderline (general verb), skipped. Total 1 inline link."
+                ],
+                "id": "C.4.8",
+                "module": "05-semantic-linking.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "4.9: 5/5 \u2014 nav x2 + insight-103 (founder-requested), insight-104, share-47; at cap"
+                ],
+                "id": "C.4.9",
+                "module": "05-semantic-linking.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "flashcards c1, c2 + new c3 \u00ab\u0645\u0644\u0627\u06a9 \u0642\u0636\u0627\u0648\u062a \u062f\u0631\u0628\u0627\u0631\u0647\u200c\u06cc \u0628\u0644\u0646\u062f \u0628\u0648\u062f\u0646 \u06cc\u06a9 \u0646\u0642\u0637\u0647\u200c\u06cc \u0639\u0644\u0627\u0645\u062a\u200c\u062e\u0648\u0631\u062f\u0647\u00bb (authored, not a FAQ near-copy) in plus/faq-corpus.json"
+                ],
+                "id": "C.4.11",
+                "module": "07-flashcards-and-quiz.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "FAQ 3 standalone binary questions (new q3 \u00ab\u0622\u06cc\u0627 \u0639\u0644\u0627\u0645\u062a \u06a9\u0627\u063a\u0630 \u2026 \u0628\u0644\u0646\u062f \u0627\u0633\u062a \u0648 \u0628\u0627\u06cc\u062f \u062a\u0631\u0627\u0634 \u062f\u0627\u062f\u0647 \u0634\u0648\u062f\u061f\u00bb \u2192 \u00ab\u062e\u06cc\u0631.\u00bb); 4.12-\u0628 evaluated at 5.6"
+                ],
+                "id": "C.4.12",
+                "module": "07-flashcards-and-quiz.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.14",
+                "module": "09-challenge.md",
+                "reason": "Ordinary post (Question 4.9 \u00ab\u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc\u00bb), no challenge markup",
+                "status": "skipped"
+              },
+              {
+                "evidence": [
+                  "Final canonical list (no mint): #\u0648\u06cc\u0632\u06cc\u062a, #\u06a9\u06cc\u0633_\u0628\u0627\u0644\u06cc\u0646\u06cc, #\u06a9\u0627\u063a\u0630_\u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646 (\u00ab\u0627\u0645\u0627 \u06af\u06cc\u0631 \u06a9\u0631\u062f\u0646 \u06a9\u0627\u063a\u0630 \u0641\u0642\u0637 \u0646\u0634\u0648\u0646 \u0645\u06cc\u062f\u0647 \u06a9\u0647 \u06cc\u0647 \u062c\u0627\u06cc\u06cc \u062a\u0645\u0627\u0633 \u0648\u062c\u0648\u062f \u062f\u0627\u0631\u0647.\u00bb), #\u062a\u0646\u0638\u06cc\u0645_\u0627\u06a9\u0644\u0648\u0698\u0646 (added after new paragraph \u2014 use_when \u00abrule of adjusting\u00bb: \u00ab\u0627\u06af\u0647 \u0628\u0642\u06cc\u0647 \u0647\u0645 \u062a\u0645\u0627\u0633 \u062f\u0627\u0631\u0646 \u0648 \u0641\u0642\u0637 \u06cc\u0647 \u0648\u0627\u062d\u062f \u0627\u0632 \u0628\u0631\u06cc\u062c \u0628\u062f\u0648\u0646 \u062a\u0645\u0627\u0633\u0647\u060c \u0645\u0634\u06a9\u0644 \u0627\u0632 \u06a9\u0648\u062a\u0627\u0647 \u0628\u0648\u062f\u0646 \u0627\u0648\u0646 \u0648\u0627\u062d\u062f\u0647\u060c \u0646\u0647 \u0628\u0644\u0646\u062f \u0628\u0648\u062f\u0646 \u062c\u0627\u06cc\u06cc \u06a9\u0647 \u0639\u0644\u0627\u0645\u062a \u0627\u0641\u062a\u0627\u062f\u0647.\u00bb), #\u0628\u0631\u06cc\u062c (\u00ab\u2026\u0637\u0628\u06cc\u0639\u06cc\u0647 \u06a9\u0647 \u062d\u0633 \u06a9\u0646\u0647 \u0628\u0631\u06cc\u062c \"\u06a9\u0627\u0631 \u0646\u0645\u06cc\u200c\u06a9\u0646\u0647\".\u00bb), #\u0627\u06a9\u0644\u0648\u0698\u0646 (\u00ab\u0627\u06a9\u0644\u0648\u0698\u0646 \u06cc\u0639\u0646\u06cc \u06a9\u06cc\u0641\u06cc\u062a \u0648 \u062a\u0648\u0632\u06cc\u0639 \u062a\u0645\u0627\u0633\u200c\u0647\u0627\u060c \u0646\u0647 \u0641\u0642\u0637 \u0648\u062c\u0648\u062f \u06cc\u06a9 \u062a\u0645\u0627\u0633.\u00bb). Gate: decision tag #\u062a\u0646\u0638\u06cc\u0645_\u0627\u06a9\u0644\u0648\u0698\u0646, specific #\u06a9\u0627\u063a\u0630_\u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646 (3) + #\u0628\u0631\u06cc\u062c (9), umbrella with specifics. Dropped #\u0627\u06cc\u0646\u0641\u0631\u0627\u0627\u06a9\u0644\u0648\u0698\u0646/#\u0634\u06a9\u0627\u06cc\u062a_\u0627\u0635\u0644\u06cc/#\u0642\u062f\u0631\u062a_\u062c\u0648\u06cc\u062f\u0646 (mentions/borderline)."
+                ],
+                "id": "C.5.0",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Brain chairside-51 is last element; key parity with chairside-50; hashtags = C.5.0 list (json_replace_value). hashtag_ref --sync; build_plus_index; --check OK; cabinet --check OK. Reachability: Q2/Q4 \u2192 chip \u00ab\u06a9\u0627\u063a\u0630 \u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646\u00bb (3 pages) rank 3: PASS; \u00ab\u062a\u0646\u0638\u06cc\u0645 \u0627\u06a9\u0644\u0648\u0698\u0646\u00bb 15 pages, rank >4 (umbrella). content-index/assistant-tags reverted for runner."
+                ],
+                "id": "C.5",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "pillar occlusion/occlusal-analysis-adjustment = 2.4; capsule matches"
+                ],
+                "id": "C.5.5",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Pathways: occlusion + fixed-pros, both after insight/insight-1 (plus/pathways.json); others borderline not placed; coverage 1.51/item. 4.12-\u0628: 2 MCQs approved verbatim by founder in M2 (r-f73f66ea key index 2, r-d6534e3a key index 1), appended to plus/exam-questions.json; validate_exam_questions.py 0 errors (9 pre-existing warnings, none ours); drawn by occlusion and fixed-pros."
+                ],
+                "id": "C.5.6",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Bundles continuing occlusion/fixed-pros: rejected at GATE 1 (chairside/ folder is never a bundle type). No bundle edit."
+                ],
+                "id": "C.5.6-b",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Pulse line inserted at top of index.html dc-pulse-list, oldest (insight-106) removed, 7 lines; English mirror + toggles on disk; second_cut_editorial_lock_v1 recorded with 10 scopes; lead provenance + title/caption approvals recorded"
+                ],
+                "id": "C.6",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.8",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "C.7",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "D",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "E",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "F",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "G",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              }
+            ],
+            "validation": [
+              {
+                "checks": {
+                  "arithmetic": "ok",
+                  "audit_2d": "not owed",
+                  "band": "E ok",
+                  "fidelity": "[null] COMMENTARY",
+                  "persian_text": "verify_publish --des-text ok; interpretation_fa sentence 2: Latin \u00abocclusion\u00bb/\u00abarticulating paper\u00bb \u2192 \u00ab\u0627\u06a9\u0644\u0648\u0698\u0646\u00bb/\u00ab\u06a9\u0627\u063a\u0630 \u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646\u00bb (Part 3(6) agent wording fix, score/quotes unchanged)",
+                  "quotes": "items 1,3,4 verbatim in source_text",
+                  "rating_rule": "ok",
+                  "schema": "ok"
+                },
+                "content_id": "chairside/chairside-51",
+                "kind": "des_receipt",
+                "m3b": "none",
+                "run": 2,
+                "step": "C.4.13",
+                "stored": "plus/des-scores.json chairside/chairside-51 sources replaced via json_replace_value; fidelity [null]",
+                "summary": "Re-run after invalidation (new body paragraph). COMMENTARY, source_text = title + 5 body paragraphs + figure caption, FULL_TEXT. claude -p --system-prompt-file .dentcast/des-v3.7-knowledge.md (sha256 709be964f19c1d5c12fada54fe3827d112d729150368dcddc3108d343a94e2e9) --tools '' --model opus --no-session-persistence in a fresh empty dir; model reported claude-opus-5-5. des_version 3.7, des_score 15 = 5+4+0+3+3, band E (run 1 was 12: item 3 now earned by the new conditional sentence)."
+              }
+            ]
+          }
+        },
+        {
           "evidence": [
             "chairside/chairside-51.html first <p> = founder paragraph 1",
-            "context.inputs founder text digest ef36963b\u2026"
+            "context.inputs founder text digest ef36963b\u2026",
+            "re-recorded after the C.4.13 rerun"
           ],
           "kind": "first_cut_lead_provenance_v1",
           "origin": "author_original",
@@ -418,13 +644,13 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             "status": "ready"
           },
           "evidence": [
-            "all decisions closed before Push 2"
+            "all decisions closed before reconciliation Push 2 (runner run 42814743732 failed on 4.13 DES item 4)"
           ],
           "kind": "second_cut_editorial_lock_v1",
           "scopes": [
             {
               "evidence": [
-                "plus/des-scores.json chairside/chairside-51 COMMENTARY 15/E (receipt run 2)",
+                "plus/des-scores.json chairside/chairside-51 COMMENTARY 15/E (receipt run 3, after runner Phase F failure)",
                 "founder-approved added paragraph"
               ],
               "scope": "scientific",
@@ -514,22 +740,21 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       "validation": [
         {
           "checks": {
-            "arithmetic": "ok",
-            "audit_2d": "not owed",
-            "band": "E ok",
-            "fidelity": "[null] COMMENTARY",
-            "persian_text": "verify_publish --des-text ok; interpretation_fa sentence 2: Latin \u00abocclusion\u00bb/\u00abarticulating paper\u00bb \u2192 \u00ab\u0627\u06a9\u0644\u0648\u0698\u0646\u00bb/\u00ab\u06a9\u0627\u063a\u0630 \u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646\u00bb (Part 3(6) agent wording fix, score/quotes unchanged)",
-            "quotes": "items 1,3,4 verbatim in source_text",
+            "arithmetic": "15 = 5+4+0+3+3",
+            "band": "E",
+            "fidelity": "[null]",
+            "local_phase_f_4.13_rows": "all ok",
+            "persian_text": "verify_publish --des-text ok; interpretation sentences checked against text, kept",
+            "quotes": "items 1,3 in source_text; item 4 in chairside/index.html, note names it",
             "rating_rule": "ok",
             "schema": "ok"
           },
           "content_id": "chairside/chairside-51",
           "kind": "des_receipt",
-          "m3b": "none",
-          "run": 2,
+          "run": 3,
           "step": "C.4.13",
-          "stored": "plus/des-scores.json chairside/chairside-51 sources replaced via json_replace_value; fidelity [null]",
-          "summary": "Re-run after invalidation (new body paragraph). COMMENTARY, source_text = title + 5 body paragraphs + figure caption, FULL_TEXT. claude -p --system-prompt-file .dentcast/des-v3.7-knowledge.md (sha256 709be964f19c1d5c12fada54fe3827d112d729150368dcddc3108d343a94e2e9) --tools '' --model opus --no-session-persistence in a fresh empty dir; model reported claude-opus-5-5. des_version 3.7, des_score 15 = 5+4+0+3+3, band E (run 1 was 12: item 3 now earned by the new conditional sentence)."
+          "stored": "plus/des-scores.json chairside/chairside-51 sources replaced",
+          "summary": "Rerun after runner run 42814743732 Phase F FAIL (run-2 record: item 4 in-page quote with a note \u2192 read as section declaration). Two fresh isolated SOURCE calls (claude -p, spec des-v3.7-knowledge.md sha256 709be964\u2026, --tools '', opus; model claude-opus-5-5), same source_text (title + 5 paragraphs + caption): both 15/E, item 4 = chairside/index.html declaration with note naming it. Stored run 3 verbatim."
         }
       ]
     },
@@ -800,7 +1025,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "plus/des-scores.json chairside/chairside-51: COMMENTARY 3.7, 15/E, fidelity [null]; Part 3 green; receipt run 2 in context.validation; no M3b"
+          "plus/des-scores.json chairside/chairside-51: COMMENTARY 3.7 15/E (run 3), item 4 from chairside/index.html declaration with note; fidelity [null]; local verify_publish 4.13 rows all ok"
         ],
         "id": "C.4.13",
         "module": "08-des-fidelity.md",
@@ -809,7 +1034,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "4.7 re-reviewed incl. new paragraph (grinding a marked spot): no glossary term is this concept (centric-relation borderline, skipped); 0 links"
+          "4.7: 0 glossary terms qualify (unchanged analysis; centric-relation borderline skipped)"
         ],
         "id": "C.4.7",
         "module": "05-semantic-linking.md",
@@ -825,7 +1050,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "4.8: \u00ab\u06a9\u0627\u063a\u0630 \u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646 \u06f2\u06f0 \u0645\u06cc\u06a9\u0631\u0648\u0646\u06cc\u00bb \u2192 /insight/insight-1.html (kept). New paragraph: \u00ab\u062a\u0631\u0627\u0634\u0634 \u062f\u0627\u062f\u00bb \u2192 insight-8/insight-104 borderline (general verb), skipped. Total 1 inline link."
+          "4.8: 1 inline link \u00ab\u06a9\u0627\u063a\u0630 \u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646 \u06f2\u06f0 \u0645\u06cc\u06a9\u0631\u0648\u0646\u06cc\u00bb \u2192 /insight/insight-1.html; borderline \u00ab\u062a\u0631\u0627\u0634\u0634 \u062f\u0627\u062f\u00bb skipped"
         ],
         "id": "C.4.8",
         "module": "05-semantic-linking.md",
@@ -834,7 +1059,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "4.9: 5/5 \u2014 nav x2 + insight-103 (founder-requested), insight-104, share-47; at cap"
+          "4.9: 5/5 \u2014 nav x2 + insight-103 (founder-requested), insight-104, share-47"
         ],
         "id": "C.4.9",
         "module": "05-semantic-linking.md",
@@ -843,7 +1068,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "flashcards c1, c2 + new c3 \u00ab\u0645\u0644\u0627\u06a9 \u0642\u0636\u0627\u0648\u062a \u062f\u0631\u0628\u0627\u0631\u0647\u200c\u06cc \u0628\u0644\u0646\u062f \u0628\u0648\u062f\u0646 \u06cc\u06a9 \u0646\u0642\u0637\u0647\u200c\u06cc \u0639\u0644\u0627\u0645\u062a\u200c\u062e\u0648\u0631\u062f\u0647\u00bb (authored, not a FAQ near-copy) in plus/faq-corpus.json"
+          "flashcards c1\u2013c3 authored in plus/faq-corpus.json"
         ],
         "id": "C.4.11",
         "module": "07-flashcards-and-quiz.md",
@@ -852,7 +1077,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "FAQ 3 standalone binary questions (new q3 \u00ab\u0622\u06cc\u0627 \u0639\u0644\u0627\u0645\u062a \u06a9\u0627\u063a\u0630 \u2026 \u0628\u0644\u0646\u062f \u0627\u0633\u062a \u0648 \u0628\u0627\u06cc\u062f \u062a\u0631\u0627\u0634 \u062f\u0627\u062f\u0647 \u0634\u0648\u062f\u061f\u00bb \u2192 \u00ab\u062e\u06cc\u0631.\u00bb); 4.12-\u0628 evaluated at 5.6"
+          "FAQ 3 standalone binary questions with verdicts; 4.12-\u0628 at 5.6"
         ],
         "id": "C.4.12",
         "module": "07-flashcards-and-quiz.md",
@@ -868,7 +1093,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Final canonical list (no mint): #\u0648\u06cc\u0632\u06cc\u062a, #\u06a9\u06cc\u0633_\u0628\u0627\u0644\u06cc\u0646\u06cc, #\u06a9\u0627\u063a\u0630_\u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646 (\u00ab\u0627\u0645\u0627 \u06af\u06cc\u0631 \u06a9\u0631\u062f\u0646 \u06a9\u0627\u063a\u0630 \u0641\u0642\u0637 \u0646\u0634\u0648\u0646 \u0645\u06cc\u062f\u0647 \u06a9\u0647 \u06cc\u0647 \u062c\u0627\u06cc\u06cc \u062a\u0645\u0627\u0633 \u0648\u062c\u0648\u062f \u062f\u0627\u0631\u0647.\u00bb), #\u062a\u0646\u0638\u06cc\u0645_\u0627\u06a9\u0644\u0648\u0698\u0646 (added after new paragraph \u2014 use_when \u00abrule of adjusting\u00bb: \u00ab\u0627\u06af\u0647 \u0628\u0642\u06cc\u0647 \u0647\u0645 \u062a\u0645\u0627\u0633 \u062f\u0627\u0631\u0646 \u0648 \u0641\u0642\u0637 \u06cc\u0647 \u0648\u0627\u062d\u062f \u0627\u0632 \u0628\u0631\u06cc\u062c \u0628\u062f\u0648\u0646 \u062a\u0645\u0627\u0633\u0647\u060c \u0645\u0634\u06a9\u0644 \u0627\u0632 \u06a9\u0648\u062a\u0627\u0647 \u0628\u0648\u062f\u0646 \u0627\u0648\u0646 \u0648\u0627\u062d\u062f\u0647\u060c \u0646\u0647 \u0628\u0644\u0646\u062f \u0628\u0648\u062f\u0646 \u062c\u0627\u06cc\u06cc \u06a9\u0647 \u0639\u0644\u0627\u0645\u062a \u0627\u0641\u062a\u0627\u062f\u0647.\u00bb), #\u0628\u0631\u06cc\u062c (\u00ab\u2026\u0637\u0628\u06cc\u0639\u06cc\u0647 \u06a9\u0647 \u062d\u0633 \u06a9\u0646\u0647 \u0628\u0631\u06cc\u062c \"\u06a9\u0627\u0631 \u0646\u0645\u06cc\u200c\u06a9\u0646\u0647\".\u00bb), #\u0627\u06a9\u0644\u0648\u0698\u0646 (\u00ab\u0627\u06a9\u0644\u0648\u0698\u0646 \u06cc\u0639\u0646\u06cc \u06a9\u06cc\u0641\u06cc\u062a \u0648 \u062a\u0648\u0632\u06cc\u0639 \u062a\u0645\u0627\u0633\u200c\u0647\u0627\u060c \u0646\u0647 \u0641\u0642\u0637 \u0648\u062c\u0648\u062f \u06cc\u06a9 \u062a\u0645\u0627\u0633.\u00bb). Gate: decision tag #\u062a\u0646\u0638\u06cc\u0645_\u0627\u06a9\u0644\u0648\u0698\u0646, specific #\u06a9\u0627\u063a\u0630_\u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646 (3) + #\u0628\u0631\u06cc\u062c (9), umbrella with specifics. Dropped #\u0627\u06cc\u0646\u0641\u0631\u0627\u0627\u06a9\u0644\u0648\u0698\u0646/#\u0634\u06a9\u0627\u06cc\u062a_\u0627\u0635\u0644\u06cc/#\u0642\u062f\u0631\u062a_\u062c\u0648\u06cc\u062f\u0646 (mentions/borderline)."
+          "Canonical tags unchanged: #\u0648\u06cc\u0632\u06cc\u062a, #\u06a9\u06cc\u0633_\u0628\u0627\u0644\u06cc\u0646\u06cc, #\u06a9\u0627\u063a\u0630_\u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646, #\u062a\u0646\u0638\u06cc\u0645_\u0627\u06a9\u0644\u0648\u0698\u0646, #\u0628\u0631\u06cc\u062c, #\u0627\u06a9\u0644\u0648\u0698\u0646 (resolving sentences as recorded); --check OK"
         ],
         "id": "C.5.0",
         "module": "10-brain-and-pathways.md",
@@ -877,7 +1102,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Brain chairside-51 is last element; key parity with chairside-50; hashtags = C.5.0 list (json_replace_value). hashtag_ref --sync; build_plus_index; --check OK; cabinet --check OK. Reachability: Q2/Q4 \u2192 chip \u00ab\u06a9\u0627\u063a\u0630 \u0622\u0631\u062a\u06cc\u06a9\u0648\u0644\u0627\u0633\u06cc\u0648\u0646\u00bb (3 pages) rank 3: PASS; \u00ab\u062a\u0646\u0638\u06cc\u0645 \u0627\u06a9\u0644\u0648\u0698\u0646\u00bb 15 pages, rank >4 (umbrella). content-index/assistant-tags reverted for runner."
+          "Brain chairside-51 last element, key parity, hashtags = 5.0 list"
         ],
         "id": "C.5",
         "module": "10-brain-and-pathways.md",
@@ -886,7 +1111,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "pillar occlusion/occlusal-analysis-adjustment = 2.4; capsule matches"
+          "pillar occlusion/occlusal-analysis-adjustment matches 2.4"
         ],
         "id": "C.5.5",
         "module": "10-brain-and-pathways.md",
@@ -895,7 +1120,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Pathways: occlusion + fixed-pros, both after insight/insight-1 (plus/pathways.json); others borderline not placed; coverage 1.51/item. 4.12-\u0628: 2 MCQs approved verbatim by founder in M2 (r-f73f66ea key index 2, r-d6534e3a key index 1), appended to plus/exam-questions.json; validate_exam_questions.py 0 errors (9 pre-existing warnings, none ours); drawn by occlusion and fixed-pros."
+          "Pathways occlusion + fixed-pros after insight/insight-1; exam r-f73f66ea, r-d6534e3a approved by founder (M2), validate_exam_questions 0 errors"
         ],
         "id": "C.5.6",
         "module": "10-brain-and-pathways.md",
@@ -904,7 +1129,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Bundles continuing occlusion/fixed-pros: rejected at GATE 1 (chairside/ folder is never a bundle type). No bundle edit."
+          "Bundles: rejected at GATE 1 (chairside/)"
         ],
         "id": "C.5.6-b",
         "module": "10-brain-and-pathways.md",
@@ -913,7 +1138,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Pulse line inserted at top of index.html dc-pulse-list, oldest (insight-106) removed, 7 lines; English mirror + toggles on disk; second_cut_editorial_lock_v1 recorded with 10 scopes; lead provenance + title/caption approvals recorded"
+          "Pulse, English mirror, toggles unchanged on disk; editorial lock (10 scopes) and lead provenance re-recorded after the C.4.13 rerun; title/caption approvals restored"
         ],
         "id": "C.6",
         "module": "11-build-and-version.md",
@@ -938,7 +1163,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: chairside/chairside-51.html, chairside/en/chairside-51.html, dentcast-brain.json, dentcast-hashtag-reference.json, index.html, plus/des-scores.json, plus/exam-questions.json, plus/faq-corpus.json, plus/pathways.json"
+    "note": "Index-only refresh after staging delivery paths: plus/des-scores.json"
   },
   "schema": "publish-handoff-v3"
 }

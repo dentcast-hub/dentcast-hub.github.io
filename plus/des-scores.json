@@ -51845,33 +51845,33 @@
           {
             "item": "reasoning chain is explicit",
             "points": 4,
-            "evidence_quote": "گیر کردن کاغذ فقط نشون میده که یه جایی تماس وجود داره. نمیگه این تماس روی کدوم دندونه، روی کدوم کاسپ و فوسا، و چقدر قدرت داره.",
-            "note": "claim is tied to a stated rationale about what an articulating-paper mark does and does not show"
+            "evidence_quote": "اما گیر کردن کاغذ فقط نشون میده که یه جایی تماس وجود داره.",
+            "note": "the claim that the paper only shows contact presence is linked to a stated rationale: it does not show location, cusp/fossa or force"
           },
           {
             "item": "relationship to published evidence is stated",
             "points": 0,
             "evidence_quote": "",
-            "note": "no sentence positions the text against the literature and none states that evidence is absent"
+            "note": "text neither positions itself against the literature nor mentions evidence at all; no supporting quote"
           },
           {
             "item": "scope of the claim is bounded",
             "points": 3,
             "evidence_quote": "اگه بقیه هم تماس دارن و فقط یه واحد از بریج بدون تماسه، مشکل از کوتاه بودن اون واحده، نه بلند بودن جایی که علامت افتاده.",
-            "note": "states the condition under which the conclusion applies"
+            "note": "states the condition under which the short-unit judgment applies"
           },
           {
             "item": "explicitly labeled as experience/opinion, not evidence",
             "points": 3,
-            "evidence_quote": "به نظرم چیزی که اینجا اتفاق می‌افته خیلی رایجه.",
-            "note": "in-page opinion label, preferred over the chairside/ section declaration"
+            "evidence_quote": "Chairside متن‌های آموزشی یا کیس‌ریپورت نیستند؛ ثبت لحظه‌های واقعی و مسیر فکر بالینی‌اند.",
+            "note": "اعلانِ سطحِ بخش، از chairside/index.html"
           }
         ],
         "des_score": 15,
         "band": "E",
         "provisional": false,
-        "fact_fa": "این متن Chairside از نوع COMMENTARY است و امتیاز ۱۵ در باند E (سطح زمینه و نظر) گرفت.",
-        "interpretation_fa": "متن یک مشاهده‌ی بالینی واحد است که استدلالش روشن و شرط کاربردش مشخص است و صریحاً نظر نویسنده معرفی شده، اما نسبتش با منابع منتشرشده را بیان نمی‌کند. ارزش بالینی آن در تفکیک وجود تماس از توزیع و کیفیت تماس در اکلوژن بریج است و تفسیر علامت کاغذ آرتیکولاسیون به‌عنوان نشانه‌ی بلندی را اصلاح می‌کند."
+        "fact_fa": "امتیاز DES این متن ۱۵ از ۱۰۰ و در باند E (سطح زمینه‌ای یا نظر) است.",
+        "interpretation_fa": "این متن یک مشاهده‌ی بالینی واحد است و استدلال روشنی درباره‌ی تفاوت وجود تماس با کیفیت و توزیع تماس دارد، اما خودش را با شواهد منتشرشده مقایسه نمی‌کند. ارزش عملی آن در یادآوری خطای رایج تفسیر علامت کاغذ آرتیکولاسیون و تشخیص واحد کوتاه بریج به‌جای واحد بلند است."
       }
     ],
     "fidelity": [
