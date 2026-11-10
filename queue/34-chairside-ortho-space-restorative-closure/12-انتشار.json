@@ -1,0 +1,171 @@
+{
+  "schema": "dentcast-queue-manifest/1",
+  "category": {
+    "value": "chairside",
+    "from": "folder name"
+  },
+  "title_fa": {
+    "value": "وقتی فضای باقی‌مانده‌ی ارتودنسی به رستوریشن سپرده می‌شود",
+    "from": "02-عنوان-کپشن.md:2"
+  },
+  "caption_fa": {
+    "value": "متخصص ارتودنسی فضاهای خلفی را برای بازسازی پروتزی نگه داشته بود، اما دندان‌های دو طرف این فضاها فرم و کانتور کاملی داشتند. بستن فضا با رستوریشن در چنین شرایطی چه هزینه‌ای دارد؟",
+    "from": "02-عنوان-کپشن.md:5"
+  },
+  "title_en": {
+    "value": "When the space left after orthodontics is handed over to restorations",
+    "from": "06-انگلیسی.md:2"
+  },
+  "caption_en": {
+    "value": "The orthodontist had kept the posterior spaces for prosthetic restoration, but the teeth on both sides of these spaces had complete form and contour. What does closing a space with restorations cost in such a situation?",
+    "from": "06-انگلیسی.md:5"
+  },
+  "body_en": {
+    "value": "The patient came in with a referral letter from an orthodontist. Initially there were spaces between the anterior teeth, and the orthodontist had partly moved these spaces back: on one side between teeth 4 and 5, and on the other side between teeth 5 and 6. The letter said that, given the presence of caries and the need for restorations and possibly crowns, these spaces had been kept for prosthetic restoration, and it asked for the spaces to be closed with restorations.\n\n[[تصویر:01]]\n\nOn examination, I checked both the premolars and the molars. All of these teeth had complete form, and their contours were correct. In other words, to close the spaces with restorations, I would have had to deliberately overcontour teeth that had a natural, correct form.\n\n[[تصویر:02]]\n\nOvercontouring these teeth disrupts the form of the embrasures and sets the stage for food impaction and, in turn, caries. In the premolars an esthetic problem is added as well: if we try to fill the space by widening these teeth, we effectively end up with wide, unattractive teeth.\n\nFor this reason, I explained to the patient that these spaces should be closed with orthodontic treatment, not with restorations.\n\nClinical tip: before agreeing to close a space with restorations, check the form and contour of the teeth on both sides of the space. When the teeth already have complete form, a restoration can fill the space only by overcontouring, and the price is improper embrasures, food impaction, caries and a poor appearance.",
+    "from": "06-انگلیسی.md:8-20"
+  },
+  "images": {
+    "value": [
+      {
+        "n": "01",
+        "file": {
+          "value": "03-تصاویر/01-orthodontic-referral-letter.webp",
+          "from": "03-تصاویر/01-orthodontic-referral-letter.webp"
+        },
+        "alt_fa": {
+          "value": "نامه‌ی ارجاع متخصص ارتودنسی با نام‌های پوشانده‌شده",
+          "from": "03-تصاویر/تصاویر.md:3"
+        },
+        "caption_fa": {
+          "value": "تصویر ۱. نامه‌ی ارجاع متخصص ارتودنسی برای بازسازی فضاهای باقی‌مانده در نواحی خلفی. منبع: نامه‌ی ارجاع کیس، ارسالی دکتر فؤاد شهابیان برای انتشار این مطلب.",
+          "from": "03-تصاویر/تصاویر.md:3"
+        },
+        "alt_en": {
+          "value": "Orthodontist's referral letter with names masked",
+          "from": "03-تصاویر/تصاویر.md:3"
+        },
+        "caption_en": {
+          "value": "Fig. 1. The orthodontist's referral letter for restoring the remaining spaces in the posterior regions. Source: case referral letter supplied by Dr. Fouad Shahabian for publication of this article.",
+          "from": "03-تصاویر/تصاویر.md:3"
+        }
+      },
+      {
+        "n": "02",
+        "file": {
+          "value": "03-تصاویر/02-maxillary-occlusal-posterior-spaces.webp",
+          "from": "03-تصاویر/02-maxillary-occlusal-posterior-spaces.webp"
+        },
+        "alt_fa": {
+          "value": "نمای اکلوزال فک بالا با فضاهای خلفی",
+          "from": "03-تصاویر/تصاویر.md:4"
+        },
+        "caption_fa": {
+          "value": "تصویر ۲. نمای اکلوزال فک بالا: فضای بین ۴ و ۵ در یک سمت و بین ۵ و ۶ در سمت دیگر. منبع: عکس داخل‌دهانی کیس، ارسالی دکتر فؤاد شهابیان برای انتشار این مطلب.",
+          "from": "03-تصاویر/تصاویر.md:4"
+        },
+        "alt_en": {
+          "value": "Occlusal view of the maxilla with the posterior spaces",
+          "from": "03-تصاویر/تصاویر.md:4"
+        },
+        "caption_en": {
+          "value": "Fig. 2. Occlusal view of the maxilla: the space between teeth 4 and 5 on one side and between teeth 5 and 6 on the other. Source: intraoral photograph of the case supplied by Dr. Fouad Shahabian for publication of this article.",
+          "from": "03-تصاویر/تصاویر.md:4"
+        }
+      }
+    ],
+    "from": "03-تصاویر/تصاویر.md"
+  },
+  "credit": {
+    "value": {
+      "mode": "none"
+    },
+    "from": "04-منبع/منابع.md:1"
+  },
+  "catalog": {
+    "value": [],
+    "from": "04-منبع/منابع.md: no paper"
+  },
+  "hashtags": {
+    "value": [
+      "#ویزیت",
+      "#کیس_بالینی",
+      "#اصلاح_فضا",
+      "#فضای_ارتودنسی",
+      "#درمان_بین_رشته_ای",
+      "#اورکانتور",
+      "#امبراژور",
+      "#گیر_غذایی"
+    ],
+    "from": "07-ورودی‌ها.md:17"
+  },
+  "mint": {
+    "value": [],
+    "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+  },
+  "pillar": {
+    "value": {
+      "primary": "treatment-planning",
+      "subtopic": "comprehensive-diagnosis",
+      "secondary": []
+    },
+    "from": "07-ورودی‌ها.md:11"
+  },
+  "pulse": {
+    "value": {
+      "html": "یک ویزیت با عنوانِ «<a href=\"{url}\">وقتی فضای باقی‌مانده‌ی ارتودنسی به رستوریشن سپرده می‌شود</a>» منتشر شد.",
+      "link_phrase": "وقتی فضای باقی‌مانده‌ی ارتودنسی به رستوریشن سپرده می‌شود"
+    },
+    "from": "07-ورودی‌ها.md:15-16"
+  },
+  "keywords": {
+    "value": [
+      "بستن فضا با رستوریشن",
+      "نامه‌ی ارجاع متخصص ارتودنسی",
+      "بازسازی پروتزی",
+      "فضاهای باقی‌مانده در نواحی خلفی",
+      "فرم و کانتور دندان‌های دو طرف فضا",
+      "درمان ارتودنسی"
+    ],
+    "from": "09-کلیدواژه‌ها.md"
+  },
+  "links_48": {
+    "value": [],
+    "from": "11-لینک‌های-گلاسری.md:10"
+  },
+  "backlinks_47": {
+    "value": [],
+    "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+  },
+  "explore_49": {
+    "value": [
+      {
+        "href": "/chairside/chairside-43.html",
+        "label": "پر کردن فضای اضافه یا جابه‌جایی دندان",
+        "from": "11-لینک‌های-گلاسری.md:19"
+      },
+      {
+        "href": "/chairside/chairside-2.html",
+        "label": "فضای پرمولر در محدودیت ارتودنسی",
+        "from": "11-لینک‌های-گلاسری.md:20"
+      },
+      {
+        "href": "/insight/insight-19.html",
+        "label": "ارزیابی فضای بازسازی ارتودنسی–پروتزی",
+        "from": "11-لینک‌های-گلاسری.md:21"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md:17"
+  },
+  "pathway": {
+    "value": null,
+    "from": "default: mechanical pathway rule"
+  },
+  "author": {
+    "value": null,
+    "from": "not in the legacy contract"
+  },
+  "legacy_review": {
+    "value": null,
+    "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+  }
+}
