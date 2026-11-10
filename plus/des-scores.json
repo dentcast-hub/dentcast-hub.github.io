@@ -51818,5 +51818,64 @@
     "fidelity": [
       null
     ]
+  },
+  "chairside/chairside-51": {
+    "scored_at": "2026-11-10",
+    "sources": [
+      {
+        "des_version": "3.7",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "بریج بدون تماس مؤثر",
+          "authors": "دکتر فواد شهابیان",
+          "year": 2026,
+          "journal": "DentCast Chairside",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "اما گیر کردن کاغذ فقط نشون میده که یه جایی تماس وجود داره.",
+            "note": "ادعا به یک سازوکار وصل شده است: گیر کردن کاغذ فقط وجود تماس را نشان می‌دهد، نه محل و شدت آن"
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "متن هیچ نسبتی با شواهد منتشرشده بیان نمی‌کند و نبودِ شواهد را هم ذکر نمی‌کند"
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "«خیلی رایجه» دامنه‌ی ادعا را گسترده‌تر می‌کند و محدود نمی‌کند؛ متن نمی‌گوید ادعا کجا صدق نمی‌کند"
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "Chairside متن‌های آموزشی یا کیس‌ریپورت نیستند؛ ثبت لحظه‌های واقعی و مسیر فکر بالینی‌اند.",
+            "note": "اعلانِ سطحِ بخش، از chairside/index.html؛ «به نظرم» در متن یک جمله را نظر شخصی می‌نامد و خود متن را تجربه‌ی بالینی نمی‌نامد"
+          }
+        ],
+        "des_score": 12,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این متن Commentary با امتیاز ۱۲ در باند E (سطح زمینه و نظر) قرار می‌گیرد.",
+        "interpretation_fa": "زنجیره‌ی استدلال روشن است: گیر کردن کاغذ آرتیکولاسیون فقط وجود یک تماس را نشان می‌دهد، نه محل، توزیع و شدت آن. متن نسبت خود با شواهد منتشرشده را بیان نمی‌کند و دامنه‌ی ادعا را محدود نمی‌کند. ارزش بالینی آن یادآوری این نکته است که عملکرد جویدن با بریج به توزیع تماس‌ها روی همه‌ی واحدها وابسته است."
+      }
+    ],
+    "fidelity": [
+      null
+    ]
   }
 }
