@@ -731,7 +731,7 @@
     "#چیرساید"
    ],
    "co_tags": [],
-   "count": 47,
+   "count": 48,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -779,7 +779,8 @@
     "chairside/chairside-45",
     "chairside/chairside-46",
     "chairside/chairside-47",
-    "chairside/chairside-48"
+    "chairside/chairside-48",
+    "chairside/chairside-50"
    ]
   },
   {
@@ -798,7 +799,7 @@
     "#گزارش_کیس"
    ],
    "co_tags": [],
-   "count": 47,
+   "count": 48,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -846,7 +847,8 @@
     "chairside/chairside-45",
     "chairside/chairside-47",
     "chairside/chairside-48",
-    "chairside/chairside-49"
+    "chairside/chairside-49",
+    "chairside/chairside-50"
    ]
   },
   {
@@ -5512,6 +5514,40 @@
    ]
   },
   {
+   "key": "گیر_غذایی",
+   "tag": "#گیر_غذایی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "گیر کردنِ غذا در فضای بین‌دندانی.",
+   "use_when": "مقاله گیر غذایی را نشانه یا پیامدِ یک تصمیم بداند.",
+   "aliases": [
+    "food impaction",
+    "گیر کردن غذا",
+    "ایمپکشن غذا",
+    "فود ایمپکشن",
+    "ایمپکشن غذایی",
+    "گیر مواد غذایی",
+    "food trapping",
+    "فودایمپکشن"
+   ],
+   "variants": [
+    "#Food_Impaction"
+   ],
+   "co_tags": [
+    "#Food_Impaction"
+   ],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-121-1",
+    "insight/insight-7",
+    "episodes/episode-159",
+    "chairside/chairside-28",
+    "chairside/chairside-37",
+    "insight/insight-73",
+    "chairside/chairside-50"
+   ]
+  },
+  {
    "key": "dme",
    "tag": "#DME",
    "domain": "clinical",
@@ -5651,6 +5687,30 @@
     "notecast/episode-31",
     "insight/insight-47",
     "insight/insight-86"
+   ]
+  },
+  {
+   "key": "امبراژور",
+   "tag": "#امبراژور",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "فضای مثلثیِ زیر کانتکت، که جراحی بازترش می‌کند.",
+   "use_when": "مقاله امبراژور را عاملِ بهداشت یا گیر غذایی بداند.",
+   "aliases": [
+    "embrasure",
+    "امبرژور",
+    "فضای امبراژور"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "insight/insight-7",
+    "insight/insight-16",
+    "insight/insight-32",
+    "insight/insight-61",
+    "insight/insight-79",
+    "chairside/chairside-50"
    ]
   },
   {
@@ -6246,39 +6306,6 @@
    ]
   },
   {
-   "key": "گیر_غذایی",
-   "tag": "#گیر_غذایی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "گیر کردنِ غذا در فضای بین‌دندانی.",
-   "use_when": "مقاله گیر غذایی را نشانه یا پیامدِ یک تصمیم بداند.",
-   "aliases": [
-    "food impaction",
-    "گیر کردن غذا",
-    "ایمپکشن غذا",
-    "فود ایمپکشن",
-    "ایمپکشن غذایی",
-    "گیر مواد غذایی",
-    "food trapping",
-    "فودایمپکشن"
-   ],
-   "variants": [
-    "#Food_Impaction"
-   ],
-   "co_tags": [
-    "#Food_Impaction"
-   ],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-121-1",
-    "insight/insight-7",
-    "episodes/episode-159",
-    "chairside/chairside-28",
-    "chairside/chairside-37",
-    "insight/insight-73"
-   ]
-  },
-  {
    "key": "psz",
    "tag": "#PSZ",
    "domain": null,
@@ -6371,26 +6398,26 @@
    ]
   },
   {
-   "key": "امبراژور",
-   "tag": "#امبراژور",
+   "key": "اصلاح_فضا",
+   "tag": "#اصلاح_فضا",
    "domain": "clinical",
-   "words": 1,
-   "definition": "فضای مثلثیِ زیر کانتکت، که جراحی بازترش می‌کند.",
-   "use_when": "مقاله امبراژور را عاملِ بهداشت یا گیر غذایی بداند.",
+   "words": 2,
+   "definition": "بستن یا ایجادِ فضا با جابه‌جایی دندان.",
+   "use_when": "مقاله تصمیمِ اصلاح فضا را بررسی کند.",
    "aliases": [
-    "embrasure",
-    "امبرژور",
-    "فضای امبراژور"
+    "space management",
+    "مدیریت فضا",
+    "بستن فضا"
    ],
    "variants": [],
    "co_tags": [],
    "count": 5,
    "content_ids": [
-    "insight/insight-7",
-    "insight/insight-16",
-    "insight/insight-32",
-    "insight/insight-61",
-    "insight/insight-79"
+    "sharehub/share-5",
+    "chairside/chairside-33",
+    "chairside/chairside-42",
+    "chairside/chairside-43",
+    "chairside/chairside-50"
    ]
   },
   {
@@ -6565,6 +6592,29 @@
     "dentai/dentai-2",
     "episodes/episode-159-1",
     "chairside/chairside-35"
+   ]
+  },
+  {
+   "key": "درمان_بین_رشته_ای",
+   "tag": "#درمان_بین_رشته_ای",
+   "domain": null,
+   "words": 4,
+   "definition": "درمانی که تصمیمش بین دو تخصص تقسیم شده.",
+   "use_when": "مقاله هماهنگی بین تخصص‌ها را مسئله بداند.",
+   "aliases": [
+    "بین رشته ای",
+    "مولتی دیسیپلینری",
+    "interdisciplinary"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-19",
+    "chairside/chairside-2",
+    "insight/insight-38",
+    "chairside/chairside-39",
+    "chairside/chairside-50"
    ]
   },
   {
@@ -7320,28 +7370,6 @@
    ]
   },
   {
-   "key": "اصلاح_فضا",
-   "tag": "#اصلاح_فضا",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "بستن یا ایجادِ فضا با جابه‌جایی دندان.",
-   "use_when": "مقاله تصمیمِ اصلاح فضا را بررسی کند.",
-   "aliases": [
-    "space management",
-    "مدیریت فضا",
-    "بستن فضا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "sharehub/share-5",
-    "chairside/chairside-33",
-    "chairside/chairside-42",
-    "chairside/chairside-43"
-   ]
-  },
-  {
    "key": "اطمینان_کاذب",
    "tag": "#اطمینان_کاذب",
    "domain": "ai",
@@ -7769,28 +7797,6 @@
     "notecast/episode-38",
     "chairside/chairside-35",
     "insight/insight-79"
-   ]
-  },
-  {
-   "key": "درمان_بین_رشته_ای",
-   "tag": "#درمان_بین_رشته_ای",
-   "domain": null,
-   "words": 4,
-   "definition": "درمانی که تصمیمش بین دو تخصص تقسیم شده.",
-   "use_when": "مقاله هماهنگی بین تخصص‌ها را مسئله بداند.",
-   "aliases": [
-    "بین رشته ای",
-    "مولتی دیسیپلینری",
-    "interdisciplinary"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-19",
-    "chairside/chairside-2",
-    "insight/insight-38",
-    "chairside/chairside-39"
    ]
   },
   {
@@ -12635,6 +12641,24 @@
    "content_ids": [
     "episodes/episode-123-2",
     "dentcast-plus/video-2"
+   ]
+  },
+  {
+   "key": "فضای_ارتودنسی",
+   "tag": "#فضای_ارتودنسی",
+   "domain": null,
+   "words": 2,
+   "definition": "فضایی که ارتودنسی باز یا بسته کرده و باید پروتزی مدیریت شود.",
+   "use_when": "مقاله کفایت یا زیادیِ فضا را بسنجد.",
+   "aliases": [
+    "فضای ارتو"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-2",
+    "chairside/chairside-50"
    ]
   },
   {
@@ -18607,23 +18631,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-43"
-   ]
-  },
-  {
-   "key": "فضای_ارتودنسی",
-   "tag": "#فضای_ارتودنسی",
-   "domain": null,
-   "words": 2,
-   "definition": "فضایی که ارتودنسی باز یا بسته کرده و باید پروتزی مدیریت شود.",
-   "use_when": "مقاله کفایت یا زیادیِ فضا را بسنجد.",
-   "aliases": [
-    "فضای ارتو"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "chairside/chairside-2"
    ]
   },
   {
