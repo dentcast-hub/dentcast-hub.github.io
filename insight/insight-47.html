@@ -83,14 +83,21 @@
     {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
-      "headline": "مواجهه با ایمپلنتِ با زاویه‌ی نامناسب؛ جهتِ باکولینگوال، روکشِ برگشت‌پذیر و اکلوژنِ محافظِ ایمپلنت | دنت‌کست",
+      "headline": "مواجهه با ایمپلنتِ با زاویه‌ی نامناسب؛ جهتِ باکولینگوال، روکشِ برگشت‌پذیر و اکلوژنِ محافظِ ایمپلنت",
       "description": "روکشِ ایمپلنتِ خلفی روی فیکسچرِ زاویه‌دار به سمتِ باکولینگوال؛ چرا جهتِ زاویه از خودِ زاویه مهم‌تر است و طبق مطالعات باکولینگوال برای شل‌شدنِ پیچ بدترین جهت است. این نکتهٔ کلینیکی توضیح می‌دهد چرا باید روکش را برگشت‌پذیر ساخت (و اول با کانالِ پیچِ زاویه‌دار دسترسی را به اکلوزال برگرداند، نه سمانِ دائم) و چطور در اکلوژنِ گروپ‌فانکشن بارِ افقی را با خارج‌کردنِ نرمِ روکش از تماس‌های طرفی کم کرد، بی‌آنکه فرمِ کاسپِ باکال به‌هم بریزد.",
       "image": "https://dentcast.org/insight/insight47.webp",
       "author": {
-        "@id": "https://dentcast.org/#person-foad"
+        "@type": "Person",
+        "@id": "https://dentcast.org/#person-foad",
+        "name": "Foad Shahabian",
+        "url": "https://dentcast.org/about.html"
       },
       "publisher": {
-        "@id": "https://dentcast.org/#org-dentcast"
+        "@type": "Organization",
+        "@id": "https://dentcast.org/#org-dentcast",
+        "name": "DentCast",
+        "url": "https://dentcast.org/",
+        "logo": {"@type": "ImageObject", "url": "https://dentcast.org/logo-v2.png"}
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
@@ -121,7 +128,7 @@
 </script>
 
 
-    <link rel="stylesheet" href="/dc-theme.css?v=7">
+    <link rel="stylesheet" href="/dc-theme.css?v=8">
 <link rel="stylesheet" href="/dc-nav.css?v=18">
   <link rel="stylesheet" href="/global-search.css?v=5">
   <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
@@ -150,8 +157,8 @@
       "dateModified": "2026-06-11",
   "inLanguage": "fa",
   "isPartOf": { "@id": "https://dentcast.org/#website" },
-  "author": { "@id": "https://dentcast.org/#person-foad" },
-  "reviewedBy": { "@id": "https://dentcast.org/#person-foad" },
+  "author": { "@type": "Person", "@id": "https://dentcast.org/#person-foad", "name": "Foad Shahabian", "url": "https://dentcast.org/about.html" },
+  "reviewedBy": { "@type": "Person", "@id": "https://dentcast.org/#person-foad", "name": "Foad Shahabian", "url": "https://dentcast.org/about.html" },
   "lastReviewed": "2026-06-11",
   "audience": {
     "@type": "MedicalAudience",
@@ -323,7 +330,7 @@
 <footer class="dc-site-footer" style="text-align:center; margin-top:2.8125rem; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
 
   <div style="margin-bottom:1.375rem;">
-    <a href="index.html"
+    <a href="/insight/"
        style="
          display:inline-block;
          background:rgba(11,95,255,0.18);

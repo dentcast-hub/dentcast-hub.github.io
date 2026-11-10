@@ -1,4 +1,19 @@
+# One rule group for every crawler. The AI crawlers below are explicitly
+# allowed and named here so they share this group: under RFC 9309 a crawler
+# obeys only its most specific matching group, so a separate per-bot group
+# would exempt it from every Disallow below.
 User-agent: *
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Anthropic-AI
+User-agent: PerplexityBot
+User-agent: cohere-ai
+User-agent: Bytespider
+User-agent: CCBot
+User-agent: Google-Extended
+User-agent: YouBot
+User-agent: Applebot-Extended
 Allow: /
 # Music player track metadata/links — keep out of search results
 Disallow: /dentcast-music.json
@@ -50,40 +65,6 @@ Disallow: /dentcast_cabinet_full_catalog.enriched.json
 # to /episodes.html because the BUILT pages inherit those lines). Nothing under
 # /tools/ is a page for a reader. The cabinet search page lives at the root, not here.
 Disallow: /tools/
-
-# AI Crawlers — explicitly allowed
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: Anthropic-AI
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: cohere-ai
-Allow: /
-
-User-agent: Bytespider
-Allow: /
-
-User-agent: CCBot
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: YouBot
-Allow: /
-
-User-agent: Applebot-Extended
-Allow: /
 
 Sitemap: https://dentcast.org/sitemap.xml
 Sitemap: https://dentcast.ir/sitemap-ir.xml

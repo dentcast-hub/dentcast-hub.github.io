@@ -428,6 +428,54 @@ class RenderFixesTests(unittest.TestCase):
         self.assertEqual(e.exception.code, "FAQ_PLACEHOLDER")
 
 
+class SwapTextTests(unittest.TestCase):
+    """Title/caption swap is context-aware: JSON-LD gets JSON escaping, markup
+    gets HTML escaping (insight/insight-104 shipped a raw newline in JSON-LD)."""
+
+    OLD = "کپشن قالب بدون نویسهٔ خاص"
+    NEW = 'خط اول با "نقل قول" و & نشانه\nخط دوم <b>'
+    DOC = ('<meta name="description" content="{d}">\n'
+           '<meta property="og:description" content="{d}">\n'
+           '<script type="application/ld+json">\n{{"@type": "Article", "description": "{j}"}}\n</script>\n'
+           '<script type="application/ld+json">{{"@graph": [{{"description": "{j}"}}]}}</script>\n'
+           '<script>var d = "{j}";</script>\n<p>{t}</p>\n')
+
+    def _ld(self, doc):
+        import re as _re
+        return [json.loads(b) for b in _re.findall(
+            r'<script type="application/ld\+json">(.*?)</script>', doc, _re.S)]
+
+    def test_newline_and_quote_keep_json_ld_valid_and_meta_attribute_escaped(self):
+        import html as _html
+        doc = self.DOC.format(d=self.OLD, j=self.OLD, t=self.OLD)
+        out = qa.swap_text(doc, self.OLD, self.NEW)
+        first, second = self._ld(out)
+        self.assertEqual(first["description"], self.NEW)
+        self.assertEqual(second["@graph"][0]["description"], self.NEW)
+        esc_attr = _html.escape(self.NEW, quote=True)
+        self.assertIn(f'<meta name="description" content="{esc_attr}">', out)
+        self.assertIn(f'<meta property="og:description" content="{esc_attr}">', out)
+        self.assertNotIn("&quot;", "".join(json.dumps(x) for x in (first, second)))
+        self.assertNotIn(self.OLD, out)
+
+    def test_outside_json_ld_is_the_previous_three_replaces(self):
+        old, new = 'عنوان "قدیم" & بس', "عنوان <نو>"
+        doc = self.DOC.format(d=qa.attr(old), j=json.dumps(old, ensure_ascii=False)[1:-1], t=old)
+        out = qa.swap_text(doc, old, new)
+        legacy = doc.replace(qa.attr(old), qa.attr(new)).replace(
+            json.dumps(old, ensure_ascii=False)[1:-1], json.dumps(new, ensure_ascii=False)[1:-1]).replace(old, new)
+        self.assertEqual(out, legacy)
+        self.assertEqual(self._ld(out)[0]["description"], new)
+
+    def test_template_broken_by_the_old_swap_is_repaired(self):
+        broken = self.DOC.format(d=qa.attr(self.NEW), j=qa.attr(self.NEW), t=self.NEW)
+        with self.assertRaises(ValueError):
+            self._ld(broken)
+        out = qa.swap_text(broken, self.NEW, self.OLD)
+        self.assertEqual([x.get("description") or x["@graph"][0]["description"] for x in self._ld(out)],
+                         [self.OLD, self.OLD])
+
+
 class LedgerAndTextIoTests(unittest.TestCase):
     def test_init_input_refuses_a_bare_number(self):
         import queue_ledger as ql

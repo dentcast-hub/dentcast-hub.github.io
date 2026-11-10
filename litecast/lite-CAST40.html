@@ -294,7 +294,7 @@ body.dc-content-only div:has(> .back-btn){
 </style>
 
 
-    <link rel="stylesheet" href="/dc-theme.css?v=7">
+    <link rel="stylesheet" href="/dc-theme.css?v=8">
 <link rel="stylesheet" href="/dc-nav.css?v=18">
   <link rel="stylesheet" href="/global-search.css?v=5">
   <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
@@ -369,13 +369,23 @@ body.dc-content-only div:has(> .back-btn){
     "audienceType": "Patient"
   },
   "author": {
-    "@id": "https://dentcast.ir/#person-foad"
+    "@type": "Person",
+    "@id": "https://dentcast.ir/#person-foad",
+    "name": "Foad Shahabian",
+    "url": "https://dentcast.ir/about.html"
   },
   "reviewedBy": {
-    "@id": "https://dentcast.ir/#person-foad"
+    "@type": "Person",
+    "@id": "https://dentcast.ir/#person-foad",
+    "name": "Foad Shahabian",
+    "url": "https://dentcast.ir/about.html"
   },
   "publisher": {
-    "@id": "https://dentcast.ir/#org-dentcast"
+    "@type": "Organization",
+    "@id": "https://dentcast.ir/#org-dentcast",
+    "name": "DentCast",
+    "url": "https://dentcast.ir/",
+    "logo": {"@type": "ImageObject", "url": "https://dentcast.ir/logo-v2.png"}
   },
   "about": {
     "@type": "MedicalCondition",

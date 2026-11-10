@@ -115,8 +115,14 @@ def get_date(path, content_date=None):
     return dates.get(path, TODAY)
 
 
+# Both helpers are called with the page's FILE path ("/index.html"), not its
+# URL, so the homepage has to be recognised by that spelling: testing only "/"
+# never matched and the homepage shipped at the 0.6 catch-all.
+HOME_PATHS = ("/", "/index.html")
+
+
 def get_priority(path):
-    if path == "/":
+    if path in HOME_PATHS:
         return "1.0"
     if re.search(
         r"/(glossary|notecast|insight|litecast|chairside|dentai|"
@@ -143,7 +149,7 @@ def get_priority(path):
 
 
 def get_freq(path):
-    if path == "/" or path.endswith("index.html"):
+    if path in HOME_PATHS or path.endswith("index.html"):
         return "weekly"
     return "monthly"
 

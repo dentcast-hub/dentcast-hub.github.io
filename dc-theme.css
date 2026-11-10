@@ -5,6 +5,15 @@
    index.html has its own inline system (do not touch).
 ===================================================== */
 
+/* Vazirmatn is declared here, in the one render-blocking sheet every inner page
+   loads: without it the face first arrived via the deferred dc-nav.js and swapped
+   in late, shifting layout. Identical to the block in dc-article.css. */
+@font-face{
+  font-family:'Vazirmatn';
+  src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');
+  font-weight:100 900; font-display:swap;
+}
+
 /* =====================================================
    CONTENT-ONLY MODE (?view=content)
    When a page is loaded inside the desktop iframe viewer,

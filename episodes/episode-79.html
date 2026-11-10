@@ -76,10 +76,17 @@
         "description": "پادکست علمی دندانپزشکی به زبان فارسی"
       },
       "author": {
-        "@id": "https://dentcast.org/#person-foad"
+        "@type": "Person",
+        "@id": "https://dentcast.org/#person-foad",
+        "name": "Foad Shahabian",
+        "url": "https://dentcast.org/about.html"
       },
       "publisher": {
-        "@id": "https://dentcast.org/#org-dentcast"
+        "@type": "Organization",
+        "@id": "https://dentcast.org/#org-dentcast",
+        "name": "DentCast",
+        "url": "https://dentcast.org/",
+        "logo": {"@type": "ImageObject", "url": "https://dentcast.org/logo-v2.png"}
       }
     },
     {
@@ -110,7 +117,7 @@
 </script>
   <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
   <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/dc-theme.css?v=7">
+  <link rel="stylesheet" href="/dc-theme.css?v=8">
   <link rel="stylesheet" href="/dc-nav.css?v=18">
   <link rel="stylesheet" href="/global-search.css?v=5">
   <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
@@ -196,7 +203,7 @@ body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
 </div>
 
 <main class="article-content-wrap ep-page">
-  <a href="/episodes/" class="ep-back">&#8592; بازگشت به اپیزودها</a>
+  <a href="/episodes.html" class="ep-back">&#8592; بازگشت به اپیزودها</a>
   <div class="ep-box">
     <div class="ep-box-head">
       <div class="ep-badge">اپیزود 79</div>

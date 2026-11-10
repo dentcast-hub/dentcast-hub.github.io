@@ -142,13 +142,23 @@
       "duration": "PT25M",
       "image": "https://dentcast.org/dentcast-cover.webp",
       "author": {
-        "@id": "https://dentcast.org/#person-foad"
+        "@type": "Person",
+        "@id": "https://dentcast.org/#person-foad",
+        "name": "Foad Shahabian",
+        "url": "https://dentcast.org/about.html"
       },
       "reviewedBy": {
-        "@id": "https://dentcast.org/#person-foad"
+        "@type": "Person",
+        "@id": "https://dentcast.org/#person-foad",
+        "name": "Foad Shahabian",
+        "url": "https://dentcast.org/about.html"
       },
       "publisher": {
-        "@id": "https://dentcast.org/#org-dentcast"
+        "@type": "Organization",
+        "@id": "https://dentcast.org/#org-dentcast",
+        "name": "DentCast",
+        "url": "https://dentcast.org/",
+        "logo": {"@type": "ImageObject", "url": "https://dentcast.org/logo-v2.png"}
       },
       "partOfSeries": {
         "@type": "PodcastSeries",
@@ -165,7 +175,7 @@
 }
 </script>
 
-    <link rel="stylesheet" href="/dc-theme.css?v=7">
+    <link rel="stylesheet" href="/dc-theme.css?v=8">
 <link rel="stylesheet" href="/dc-nav.css?v=18">
   <link rel="stylesheet" href="/global-search.css?v=5">
   <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
@@ -388,7 +398,7 @@
 <footer class="dc-site-footer" style="text-align:center; margin-top:2.8125rem; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
 
   <div style="margin-bottom:1.375rem;">
-    <a href="index.html"
+    <a href="/notecast/"
        style="
          display:inline-block;
          background:rgba(11,95,255,0.18);

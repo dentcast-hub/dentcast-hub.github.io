@@ -83,14 +83,21 @@
     {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
-      "headline": "همه‌ی سیستم‌های کره‌ای یک سایز نیستند؛ تفاوتِ سایزِ گلِ پیچ و آچار در سیستم‌های ایمپلنتِ کره‌ای | دنت‌کست",
+      "headline": "همه‌ی سیستم‌های کره‌ای یک سایز نیستند؛ تفاوتِ سایزِ گلِ پیچ و آچار در سیستم‌های ایمپلنتِ کره‌ای",
       "description": "بیشترِ ما سیستم‌های کره‌ای را یک خانواده‌ی هم‌سایز فرض می‌کنیم، اما گلِ پیچشان دو گروه است: ۱.۲ میلی‌متر (مگاژن و اوستم) و ۱.۲۵ میلی‌متر (دنتیس، دنتیوم، MIS). همین اختلافِ ۰.۰۵ میلی‌متری باعث می‌شود آچار روی پیچِ سالم لق بزند یا تا ته ننشیند، و اگر گشتاور بدهی پیچِ سالم واقعاً هرز می‌شود. این نکتهٔ کلینیکی توضیح می‌دهد چطور آچار را با سیستمِ پیچ ست کنیم و در کارِ اباتمنت کاستوم منشأ پیچ را پیدا کنیم.",
       "image": "https://dentcast.org/insight/insight48.webp",
       "author": {
-        "@id": "https://dentcast.org/#person-foad"
+        "@type": "Person",
+        "@id": "https://dentcast.org/#person-foad",
+        "name": "Foad Shahabian",
+        "url": "https://dentcast.org/about.html"
       },
       "publisher": {
-        "@id": "https://dentcast.org/#org-dentcast"
+        "@type": "Organization",
+        "@id": "https://dentcast.org/#org-dentcast",
+        "name": "DentCast",
+        "url": "https://dentcast.org/",
+        "logo": {"@type": "ImageObject", "url": "https://dentcast.org/logo-v2.png"}
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
@@ -121,7 +128,7 @@
 </script>
 
 
-    <link rel="stylesheet" href="/dc-theme.css?v=7">
+    <link rel="stylesheet" href="/dc-theme.css?v=8">
 <link rel="stylesheet" href="/dc-nav.css?v=18">
   <link rel="stylesheet" href="/global-search.css?v=5">
   <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
@@ -150,8 +157,8 @@
       "dateModified": "2026-06-14",
   "inLanguage": "fa",
   "isPartOf": { "@id": "https://dentcast.org/#website" },
-  "author": { "@id": "https://dentcast.org/#person-foad" },
-  "reviewedBy": { "@id": "https://dentcast.org/#person-foad" },
+  "author": { "@type": "Person", "@id": "https://dentcast.org/#person-foad", "name": "Foad Shahabian", "url": "https://dentcast.org/about.html" },
+  "reviewedBy": { "@type": "Person", "@id": "https://dentcast.org/#person-foad", "name": "Foad Shahabian", "url": "https://dentcast.org/about.html" },
   "lastReviewed": "2026-06-14",
   "audience": {
     "@type": "MedicalAudience",
@@ -308,7 +315,7 @@
 <footer class="dc-site-footer" style="text-align:center; margin-top:2.8125rem; color:#9aa1b3; font-size:.9rem; line-height:1.8;">
 
   <div style="margin-bottom:1.375rem;">
-    <a href="index.html"
+    <a href="/insight/"
        style="
          display:inline-block;
          background:rgba(11,95,255,0.18);
