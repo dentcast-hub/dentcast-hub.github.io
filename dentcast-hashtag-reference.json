@@ -666,7 +666,7 @@
     "#Occlusion"
    ],
    "co_tags": [],
-   "count": 49,
+   "count": 50,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-23",
@@ -716,7 +716,8 @@
     "chairside/chairside-44",
     "insight/insight-103",
     "insight/insight-104",
-    "sharehub/share-47"
+    "sharehub/share-47",
+    "chairside/chairside-51"
    ]
   },
   {
@@ -731,7 +732,7 @@
     "#چیرساید"
    ],
    "co_tags": [],
-   "count": 48,
+   "count": 49,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -780,7 +781,8 @@
     "chairside/chairside-46",
     "chairside/chairside-47",
     "chairside/chairside-48",
-    "chairside/chairside-50"
+    "chairside/chairside-50",
+    "chairside/chairside-51"
    ]
   },
   {
@@ -799,7 +801,7 @@
     "#گزارش_کیس"
    ],
    "co_tags": [],
-   "count": 48,
+   "count": 49,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -848,7 +850,8 @@
     "chairside/chairside-47",
     "chairside/chairside-48",
     "chairside/chairside-49",
-    "chairside/chairside-50"
+    "chairside/chairside-50",
+    "chairside/chairside-51"
    ]
   },
   {
@@ -2532,6 +2535,44 @@
    ]
   },
   {
+   "key": "تنظیم_اکلوژن",
+   "tag": "#تنظیم_اکلوژن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "حذف انتخابیِ تماس‌های ناخواسته با تراش، بدون از بین بردن هندسه‌ی فانکشنال.",
+   "use_when": "مقاله روش یا قاعده‌ی تراش تنظیمی بدهد.",
+   "aliases": [
+    "سلکتیو گرایندینگ",
+    "میزان کردن اکلوژن",
+    "تنظیم اکلوزال",
+    "occlusal equilibration"
+   ],
+   "variants": [
+    "#تنظیم_اکلوژال",
+    "#تنظیم-اکلوژن",
+    "#چکاپ_اکلوژنی"
+   ],
+   "co_tags": [],
+   "count": 15,
+   "content_ids": [
+    "insight/insight-1",
+    "photocast/episode-2",
+    "dentcast-plus/video-2",
+    "insight/insight-27",
+    "dentcast-plus/video-6",
+    "insight/insight-37",
+    "sharehub/share-6",
+    "insight/insight-44",
+    "insight/insight-54",
+    "insight/insight-56",
+    "chairside/chairside-37",
+    "insight/insight-100",
+    "insight/insight-103",
+    "sharehub/share-47",
+    "chairside/chairside-51"
+   ]
+  },
+  {
    "key": "دندان_اندوشده",
    "tag": "#دندان_اندوشده",
    "domain": null,
@@ -2735,43 +2776,6 @@
     "chairside/chairside-14",
     "insight/insight-72",
     "sharehub/share-28"
-   ]
-  },
-  {
-   "key": "تنظیم_اکلوژن",
-   "tag": "#تنظیم_اکلوژن",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "حذف انتخابیِ تماس‌های ناخواسته با تراش، بدون از بین بردن هندسه‌ی فانکشنال.",
-   "use_when": "مقاله روش یا قاعده‌ی تراش تنظیمی بدهد.",
-   "aliases": [
-    "سلکتیو گرایندینگ",
-    "میزان کردن اکلوژن",
-    "تنظیم اکلوزال",
-    "occlusal equilibration"
-   ],
-   "variants": [
-    "#تنظیم_اکلوژال",
-    "#تنظیم-اکلوژن",
-    "#چکاپ_اکلوژنی"
-   ],
-   "co_tags": [],
-   "count": 14,
-   "content_ids": [
-    "insight/insight-1",
-    "photocast/episode-2",
-    "dentcast-plus/video-2",
-    "insight/insight-27",
-    "dentcast-plus/video-6",
-    "insight/insight-37",
-    "sharehub/share-6",
-    "insight/insight-44",
-    "insight/insight-54",
-    "insight/insight-56",
-    "chairside/chairside-37",
-    "insight/insight-100",
-    "insight/insight-103",
-    "sharehub/share-47"
    ]
   },
   {
@@ -4305,6 +4309,35 @@
    ]
   },
   {
+   "key": "بریج",
+   "tag": "#بریج",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "پروتزِ ثابتِ چندواحدی که فضای بی‌دندانی را با اتکا به دندان‌های پایه پر می‌کند (FPD).",
+   "use_when": "مقاله بریج/پروتزِ ثابتِ چندواحدی را موضوع یا گزینه‌ی درمان قرار دهد.",
+   "aliases": [
+    "bridge",
+    "FPD",
+    "بریج دندانی",
+    "fixed partial denture",
+    "پروتز ثابت چند واحدی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-119-1",
+    "chairside/chairside-34",
+    "sharehub/share-17",
+    "insight/insight-72",
+    "chairside/chairside-38",
+    "sharehub/share-39",
+    "sharehub/share-40",
+    "chairside/chairside-47",
+    "chairside/chairside-51"
+   ]
+  },
+  {
    "key": "جایگزینی_دندان",
    "tag": "#جایگزینی_دندان",
    "domain": "clinical",
@@ -4595,34 +4628,6 @@
     "episodes/episode-159-1",
     "metanotes/meta-14",
     "sharehub/share-18"
-   ]
-  },
-  {
-   "key": "بریج",
-   "tag": "#بریج",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "پروتزِ ثابتِ چندواحدی که فضای بی‌دندانی را با اتکا به دندان‌های پایه پر می‌کند (FPD).",
-   "use_when": "مقاله بریج/پروتزِ ثابتِ چندواحدی را موضوع یا گزینه‌ی درمان قرار دهد.",
-   "aliases": [
-    "bridge",
-    "FPD",
-    "بریج دندانی",
-    "fixed partial denture",
-    "پروتز ثابت چند واحدی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-119-1",
-    "chairside/chairside-34",
-    "sharehub/share-17",
-    "insight/insight-72",
-    "chairside/chairside-38",
-    "sharehub/share-39",
-    "sharehub/share-40",
-    "chairside/chairside-47"
    ]
   },
   {
@@ -10527,6 +10532,33 @@
    ]
   },
   {
+   "key": "کاغذ_آرتیکولاسیون",
+   "tag": "#کاغذ_آرتیکولاسیون",
+   "domain": null,
+   "words": 2,
+   "definition": "کاغذ ثبت تماس اکلوزالی — ضخامتش تعیین می‌کند علامتی که می‌بینی چقدر واقعی است.",
+   "use_when": "مقاله درباره‌ی خودِ کاغذ حرف بزند: ضخامت، تفسیر، یا محدودیتش.",
+   "aliases": [
+    "ضخامت کاغذ",
+    "کاغذ اکلوزال",
+    "کاربن اکلوزال",
+    "articulating paper",
+    "arti fol",
+    "آرتی فول"
+   ],
+   "variants": [
+    "#آرتیکولاسیون",
+    "#Articulation"
+   ],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-1",
+    "dentcast-plus/video-2",
+    "chairside/chairside-51"
+   ]
+  },
+  {
    "key": "کانتکت_پروگزیمال",
    "tag": "#کانتکت_پروگزیمال",
    "domain": "clinical",
@@ -13436,32 +13468,6 @@
    "content_ids": [
     "insight/insight-50",
     "insight/insight-106"
-   ]
-  },
-  {
-   "key": "کاغذ_آرتیکولاسیون",
-   "tag": "#کاغذ_آرتیکولاسیون",
-   "domain": null,
-   "words": 2,
-   "definition": "کاغذ ثبت تماس اکلوزالی — ضخامتش تعیین می‌کند علامتی که می‌بینی چقدر واقعی است.",
-   "use_when": "مقاله درباره‌ی خودِ کاغذ حرف بزند: ضخامت، تفسیر، یا محدودیتش.",
-   "aliases": [
-    "ضخامت کاغذ",
-    "کاغذ اکلوزال",
-    "کاربن اکلوزال",
-    "articulating paper",
-    "arti fol",
-    "آرتی فول"
-   ],
-   "variants": [
-    "#آرتیکولاسیون",
-    "#Articulation"
-   ],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-1",
-    "dentcast-plus/video-2"
    ]
   },
   {
