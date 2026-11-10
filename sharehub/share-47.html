@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="dc-notify" content="true">
+
+<title>اکلوژن در ترمیم‌های ساده؛ قبل از تراش چه چیزی را باید بدانیم؟ | مرور منابع – دنت‌کست</title>
+
+<meta name="description" content="معمولاً اکلوژن را بعد از ترمیم با کاغذ آرتیکولاسیون چک می‌کنیم. اما وقتی وضعیت قبل از تراش را ثبت نکرده‌ایم، نتیجه را با چه چیزی مقایسه می‌کنیم؟">
+
+<link rel="canonical" href="https://dentcast.org/sharehub/share-47.html">
+<link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/sharehub/share-47.html">
+<link rel="alternate" hreflang="fa" href="https://dentcast.org/sharehub/share-47.html">
+<link rel="alternate" hreflang="x-default" href="https://dentcast.org/sharehub/share-47.html">
+
+  <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
+  <link rel="stylesheet" href="/dc-article.css?v=6">
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --bg1:#eaf1ff;
+      --bg2:#f5f8ff;
+      --text:#111;
+      --muted:#444;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.2);
+    }
+
+    p { margin: 0.875rem 0; }
+
+
+    ul {
+      list-style: none;
+      padding-right: 0;
+      margin: 0.875rem 0;
+    }
+
+    ul li::before {
+      content: "✦ ";
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    /* summary tables — same pattern as .text-box table elsewhere on the site */
+    .glass-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .glass-box table th,
+    .glass-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:right;
+      vertical-align:top;
+    }
+    .glass-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .glass-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+    @media (max-width:768px){
+      .glass-box table{font-size:.9rem;}
+      .glass-box table th,.glass-box table td{padding:0.45rem 0.5rem;}
+    }
+
+    /* images with a visible caption */
+    .glass-box figure { max-width: 30rem; margin: 1.25rem auto; }
+    .glass-box figcaption {
+      text-align: center;
+      font-size: .85rem;
+      opacity: .75;
+      margin-top: 0.5rem;
+      line-height: 1.8;
+    }
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* section kicker above the title */
+    .sh-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      direction: ltr;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: .02em;
+      margin: 0 0 0.5rem;
+    }
+
+    /* references list */
+    .sh-refs { margin-top: 0.5rem; }
+    .sh-refs li { font-size: 0.95rem; line-height: 1.9; }
+    .sh-refs a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .sh-refs a:hover { text-decoration: underline; }
+
+    /* figure pairs and wide tables */
+    .glass-box .sh-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+    .glass-box .sh-pair figure { margin: 0; }
+    .glass-box .sh-pair img { width: 100%; height: auto; }
+    /* Keep the supplied clinical crops at their native size; shrink only on narrow screens. */
+    .glass-box figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+    .sh-scroll { overflow-x: auto; }
+    .sh-scroll img { min-width: 32rem; }
+    @media (max-width:420px){ .glass-box .sh-pair { grid-template-columns: 1fr; } }
+
+
+    /* permission chips (مجاز / با محدودیت / استفاده نکن) */
+    .chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: .05rem .55rem; border-radius: 999px; line-height: 1.7; white-space: nowrap; margin-inline-start: .25rem; }
+    .chip.ok { color: #1f7a3a; background: rgba(47,122,60,.14); }
+    .chip.warn { color: #9a6200; background: rgba(214,150,20,.16); }
+    .chip.no { color: #b3342b; background: rgba(179,52,43,.13); }
+    [data-theme="dark"] .chip.ok { color: #7fcf8a; }
+    [data-theme="dark"] .chip.warn { color: #f0bb5b; }
+    [data-theme="dark"] .chip.no { color: #f08a80; }
+
+    /* English-version toggle button */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 auto 1.125rem 0;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { line-height: 1.9;}
+    }
+  </style>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="theme-color" content="#0b5fff">
+
+  <!-- Share Hub Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://dentcast.org/sharehub/share-47.html",
+      "url": "https://dentcast.org/sharehub/share-47.html",
+      "name": "اکلوژن در ترمیم‌های ساده؛ قبل از تراش چه چیزی را باید بدانیم؟",
+      "inLanguage": "fa",
+      "isPartOf": {
+        "@id": "https://dentcast.org/#website"
+      },
+      "about": {
+        "@id": "https://dentcast.org/sharehub/share-47.html#creativework"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://dentcast.org/sharehub/share-47.html#creativework",
+      "name": "اکلوژن در ترمیم‌های ساده؛ قبل از تراش چه چیزی را باید بدانیم؟",
+      "headline": "اکلوژن در ترمیم‌های ساده؛ قبل از تراش چه چیزی را باید بدانیم؟",
+      "description": "معمولاً اکلوژن را بعد از ترمیم با کاغذ آرتیکولاسیون چک می‌کنیم. اما وقتی وضعیت قبل از تراش را ثبت نکرده‌ایم، نتیجه را با چه چیزی مقایسه می‌کنیم؟",
+      "inLanguage": "fa",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "دکتر فواد شهابیان"
+        }
+      ],
+      "creator": [
+        {
+          "@type": "Person",
+          "name": "دکتر فواد شهابیان"
+        }
+      ],
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/sharehub/share-47.html"
+      },
+      "datePublished": "2026-11-10",
+      "dateModified": "2026-11-10",
+      "genre": "Dental Education",
+      "keywords": [
+        "Conformative Approach",
+        "رویکرد کانفورمتیو",
+        "Reorganised Approach",
+        "EDEC",
+        "ثبت تماس‌های اکلوزال پیش از تراش",
+        "ثبت بایت",
+        "Model Grooming",
+        "Functionally Generated Pathway",
+        "روکش موقت",
+        "اکلوژن در ترمیم‌های ساده"
+      ]
+    }
+  ]
+}
+</script>
+
+    <link rel="stylesheet" href="/dc-theme.css?v=7">
+<link rel="stylesheet" href="/dc-nav.css?v=18">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="اکلوژن در ترمیم‌های ساده؛ قبل از تراش چه چیزی را باید بدانیم؟ | مرور منابع – دنت‌کست">
+  <meta property="og:description" content="معمولاً اکلوژن را بعد از ترمیم با کاغذ آرتیکولاسیون چک می‌کنیم. اما وقتی وضعیت قبل از تراش را ثبت نکرده‌ایم، نتیجه را با چه چیزی مقایسه می‌کنیم؟">
+  <meta property="og:url" content="https://dentcast.org/sharehub/share-47.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="اکلوژن در ترمیم‌های ساده؛ قبل از تراش چه چیزی را باید بدانیم؟ | مرور منابع – دنت‌کست">
+  <meta name="twitter:description" content="معمولاً اکلوژن را بعد از ترمیم با کاغذ آرتیکولاسیون چک می‌کنیم. اما وقتی وضعیت قبل از تراش را ثبت نکرده‌ایم، نتیجه را با چه چیزی مقایسه می‌کنیم؟">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "DentCast",
+      "item": "https://dentcast.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "مرور منابع",
+      "item": "https://dentcast.org/sharehub/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "اکلوژن در ترمیم‌های ساده؛ قبل از تراش چه چیزی را باید بدانیم؟ | مرور منابع – دنت‌کست",
+      "item": "https://dentcast.org/sharehub/share-47.html"
+    }
+  ]
+}
+</script>
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
+</head>
+
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<div class="sh-kicker"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 21 12 16l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> مرور منابع</div>
+<h1>اکلوژن در ترمیم‌های ساده؛ قبل از تراش چه چیزی را باید بدانیم؟</h1>
+<div class="glass-box">
+<a class="lang-btn" href="en/share-47.html" rel="noopener">English</a>
+<div class="sh-dialogue">
+<p>ما معمولاً بعد از تمام‌شدن ترمیم یا روکش، تازه سراغ بررسی اکلوژن می‌رویم. با کاغذ آرتیکولاسیون تماس‌ها را مشخص می‌کنیم و اگر جایی بلند باشد، اصلاحش می‌کنیم. اما نویسندگان این مقاله سؤال مهمی مطرح می‌کنند: وقتی اکلوژن بیمار را قبل از درمان بررسی نکرده‌ایم، از کجا می‌دانیم چیزی که الان اصلاح می‌کنیم چه تفاوتی با وضعیت قبلی دارد؟</p>
+<p>اصل مقاله همین‌جاست. در بیشتر رستوریشن‌های ساده قرار نیست اکلوژن جدیدی بسازیم؛ قرار است رستوریشن با اکلوژن موجود بیمار هماهنگ باشد. به این رویکرد Conformative Approach می‌گویند.</p>
+<p>در این روش، مهم‌ترین معیار این است که بعد از درمان، تماس‌های سایر دندان‌ها مثل قبل باقی بمانند. البته لازم نیست تمام تماس‌های قبلی روی دندان ترمیم‌شده را عیناً تکرار کنیم. حتی ممکن است بتوانیم تماس نامناسب همان دندان را اصلاح کنیم، بدون اینکه رابطه اکلوژنی سایر دندان‌ها تغییر کند.</p>
+<p>بسیاری از بیماران اکلوژن ایده‌آلی ندارند، اما سال‌ها بدون مشکل با آن زندگی کرده‌اند. بنابراین قرار نیست با هر رستوریشن اکلوژن بیمار را هم اصلاح کنیم. نویسندگان معتقدند Conformative Approach نه به این دلیل که ساده‌ترین روش است، بلکه چون احتمال مشکلات ناخواسته را کمتر می‌کند، انتخاب مناسبی برای اغلب رستوریشن‌های معمول است.</p>
+<p>البته همیشه نمی‌توان از این رویکرد استفاده کرد. مثلاً اگر دندان مورد درمان تماس هدایت‌کننده‌ای داشته باشد که فک را از CR به CO می‌برد، یا تداخل مهمی در حرکات فکی ایجاد کند، تغییر آن ممکن است رابطه فکی بیمار را هم عوض کند. در این شرایط ممکن است به Reorganised Approach نیاز داشته باشیم. وجود اختلالات عضلات و مفصل فکی (TMD) هم باید قبل از تصمیم‌گیری بررسی شود.</p>
+<h3>تماس اکلوژنی را کجا قرار دهیم؟</h3>
+<p>مقاله تأکید می‌کند که بهتر است نیروهای اکلوژنی تا حد امکان در امتداد محور طولی دندان وارد شوند. تماس روی سطوح شیب‌دار کاسپ‌ها (Incline Contacts) می‌تواند نیروهای جانبی ایجاد کند که از نظر نویسندگان، در بعضی شرایط ممکن است با حرکت نامطلوب دندان، شکستگی یا انحراف فک همراه باشد.</p>
+<p>بنابراین اگر بتوانیم تماس را از سطح شیب‌دار به ناحیه مناسب‌تری مثل فوسا یا مارجینال ریج منتقل کنیم، ممکن است اکلوژن همان دندان را بهتر کرده باشیم.</p>
+<p>اما یک مرز مهم وجود دارد: تا وقتی تماس‌های سایر دندان‌ها و رابطه فکی بیمار تغییر نکرده، همچنان در محدوده Conformative هستیم. به بهانه بهترکردن اکلوژن یک روکش، نباید بدون برنامه‌ریزی سراغ اصلاح تماس‌های دندان‌های دیگر برویم.</p>
+<h3>یک ترتیب ساده برای کارهای روزمره</h3>
+<p>نویسندگان برای مدیریت اکلوژن در ترمیم‌های مستقیم و غیرمستقیم، ترتیب چهارمرحله‌ای EDEC را پیشنهاد می‌کنند:</p>
+<p dir="ltr" style="text-align:center;font-weight:700;">Examine → Design → Execute → Check</p>
+<p>یعنی اول بررسی کنیم، بعد طراحی کنیم، سپس رستوریشن را انجام دهیم و در پایان نتیجه را کنترل کنیم.</p>
+<p>قبل از برداشتن هندپیس، تماس‌های استاتیک بیمار را در وضعیت معمول بسته‌شدن دندان‌ها (CO) با کاغذ آرتیکولاسیون یا فویل نازک ثبت می‌کنیم. بعد با رنگ متفاوت، تماس‌های داینامیک را در حرکات طرفی و پروتروسیو بررسی می‌کنیم.</p>
+<p>این اطلاعات را می‌توان با عکس، طرح ساده یا یادداشت کوتاه ثبت کرد. مهم این است که قبل از تغییر سطح اکلوژنی دندان بدانیم کدام تماس‌ها وجود داشته‌اند و کدام باید حفظ شوند.</p>
+<p>این موضوع حتی در یک ترمیم کامپوزیتی معمولی هم اهمیت دارد. وقتی محل تماس قبلی را می‌دانیم، طراحی حفره و شکل‌دادن سطح ترمیم هدفمندتر می‌شود.</p>
+<p>نکته دیگر اینکه ترمیم کوتاه هم لزوماً ترمیم خوبی نیست. گاهی برای جلوگیری از بلندشدن ترمیم، آن را طوری تنظیم می‌کنیم که عملاً از اکلوژن خارج شود. قرار نیست برای فرار از یک تماس بلند، مشارکت طبیعی دندان ترمیم‌شده در اکلوژن را حذف کنیم.</p>
+<p>در کنترل نهایی هم فقط دنبال تماس بلند روی ترمیم نباشیم. ممکن است یک تماس جدید باعث حذف تماس قبلی دندان کناری یا تغییر الگوی گایدنس شده باشد.</p>
+<h3>در روکش‌ها، مسئولیت اکلوژن فقط با لابراتوار نیست</h3>
+<p>نویسندگان تکنسین را اپراتور دوم می‌دانند، نه صرفاً اجراکننده دستورات دندانپزشک. اما برای طراحی صحیح اکلوژن، تکنسین باید بداند دندان‌های بیمار قبل از تراش چه تماس‌هایی داشته‌اند.</p>
+<p>قالب یا اسکن به‌تنهایی تمام این اطلاعات را منتقل نمی‌کند. عکس تماس‌های اکلوژنی، یک طرح ساده یا توضیح درباره گایدنس بیمار می‌تواند کمک‌کننده باشد.</p>
+<p>مقاله درباره ثبت بایت هم نکته جالبی دارد: هیچ ماده ثبت بایتی به‌تنهایی تضمین‌کننده انتقال صحیح اکلوژن نیست.</p>
+<p>مثلاً اگر ماده ثبت بایت روی سطوح مخاطی امتداد پیدا کند، ممکن است هنگام نشستن روی مدل گچی، مانع قرارگیری صحیح دو مدل شود و رابطه آن‌ها را با وضعیت واقعی دهان متفاوت کند.</p>
+<p>نویسندگان پیشنهاد می‌کنند در صورت امکان، ماده ثبت بایت فقط بین دندان تراش‌خورده و دندان‌های مقابل قرار بگیرد و تماس سایر دندان‌ها حفظ شود.</p>
+<p>همچنین رابطه مدل‌ها بهتر است با یک رکورد مستقل دوم، حتی یک طرح دوبعدی از تماس‌ها، کنترل شود.</p>
+<p>اگر اختلاف کوچک باشد، گاهی می‌توان با اصلاح محدود مدل گچی (Model Grooming)، تماس‌های واقعی بیمار را بازسازی کرد. اما در اختلافات بزرگ، تکرار ثبت یا تهیه مدل منطقی‌تر است.</p>
+<p>بررسی صحت اکلوژن مدل‌ها همیشه لازم است، حتی اگر هیچ اصلاحی روی آن‌ها انجام ندهیم.</p>
+<h3>فضای کافی برای رستوریشن را از ابتدا مشخص کنیم</h3>
+<p>اگر به دلیل محدودیت تراش، فضای کافی برای ضخامت مناسب ماده ترمیمی وجود نداشته باشد، بهتر است قبل از ساخت روکش مشخص شود.</p>
+<p>گاهی لازم است سطح دندان تراش‌خورده بیشتر اصلاح شود یا در موارد انتخاب‌شده، دندان مقابل کمی تنظیم شود. این تصمیم باید از قبل با تکنسین هماهنگ و به بیمار توضیح داده شود، نه اینکه هنگام تحویل با یک روکش بلند روبه‌رو شویم.</p>
+<p>مقاله همچنین روش Functionally Generated Pathway یا FGP را معرفی می‌کند که در آن مسیر حرکت دندان‌های مقابل با ماده مناسب ثبت می‌شود. به این ترتیب تکنسین علاوه بر تماس‌های استاتیک، اطلاعاتی از مسیرهای حرکتی واقعی بیمار هم دارد.</p>
+<h3>نقش روکش موقت را دست‌کم نگیریم</h3>
+<p>روکش موقت فقط برای پوشاندن دندان تراش‌خورده نیست. قرار است در فاصله تراش تا تحویل، رابطه دندان را با دندان‌های مجاور و مقابل حفظ کند.</p>
+<p>بنابراین باید نشست و ثبات مناسب داشته باشد و تماس‌های اکلوژنی را هم درست برقرار کند. اگر موقت این روابط را حفظ نکند، ممکن است وضعیت اکلوژن بیمار تا جلسه تحویل تغییر کرده باشد.</p>
+<p>به همین دلیل، نویسندگان ساخت روکش موقت اختصاصی و دقیق را توصیه می‌کنند.</p>
+<h3>کنترل نهایی؛ قبل و بعد از سمان‌کردن</h3>
+<p>اکلوژن روکش باید هم قبل از سمان‌کردن و هم بعد از آن بررسی شود.</p>
+<p>فقط کافی نیست که روکش بلند نباشد؛ باید مطمئن شویم سایر دندان‌ها هنوز تماس‌های قبلی خود را دارند. حرکات طرفی و پروتروسیو هم اهمیت دارند. نویسندگان به‌ویژه در ترمیم‌های خلفی، تماس‌های مزاحم هنگام این حرکات را نامطلوب می‌دانند.</p>
+<p>بنابراین معیار ما فقط علامت روی روکش نیست؛ باید اکلوژن نهایی را با وضعیت ثبت‌شده قبل از درمان مقایسه کنیم.</p>
+<p>در نهایت، مقاله یادآوری می‌کند که اکلوژن را نمی‌توان فقط با چند قانون مکانیکی قضاوت کرد. وضعیت پریودنشیوم، عضلات، مفصل فکی و ظرفیت تطابق بیمار هم اهمیت دارند. حتی یک تماس که از نظر تئوری نامناسب است، الزاماً در همه بیماران مشکل ایجاد نمی‌کند. تعداد دفعات و شدت واردشدن نیرو، به‌خصوص در پارافانکشن، هم مهم است.</p>
+<p>جمع‌بندی من این است که در ترمیم‌های معمول، قرار نیست اکلوژن بیمار را از نو بسازیم. اول باید آن را بشناسیم، تا حد امکان حفظش کنیم و اگر تغییری ایجاد می‌کنیم، بدانیم دقیقاً چه چیزی را تغییر می‌دهیم و چرا.</p>
+<p>اکلوژن خوب در یک ترمیم ساده، چیزی نیست که فقط در پایان کار با کاغذ آرتیکولاسیون به دست بیاید؛ از قبل از شروع تراش شکل می‌گیرد.</p>
+</div>
+<div class="author">
+نویسنده:
+<a href="https://doi.org/10.1038/sj.bdj.4801185" target="_blank" rel="noopener noreferrer">S. J. Davies</a></div>
+<div class="author-note">نویسنده: <a href="https://dentcast.org/about.html#person-fouad-shahabian">دکتر فواد شهابیان</a></div>
+</div>
+
+
+
+<div class="dc-related-section">
+<h2 class="dc-related-label">کاوش بیشتر</h2>
+<div class="dc-related-capsules">
+<a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
+<a href="/pillar/occlusion/" class="dc-related-capsule">فهرست موضوعی</a>
+</div>
+</div>
+  <footer class="dc-site-footer">
+  <div style="margin-bottom:1.375rem;">
+    <a href="index.html"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> برگشت به صفحه‌ی قبل
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=19" defer></script>
+<script src="/dc-nav.js?v=320" defer></script>
+</body>
+</html>
