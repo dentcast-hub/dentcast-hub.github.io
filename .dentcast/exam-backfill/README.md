@@ -15,4 +15,4 @@ Usage — copy this folder to a scratch directory OUTSIDE the repo first (script
 Note: prep.py copies BRIEF-drafter.md into run-<folder>/.
 Done: digital pathway, photocast, sharehub, metanotes, chairside, dentai, notecast.
 Skipped by decision: dentcast-plus (video pages, only a short description as text).
-Remaining: insight (57 pages).
+Done also: insight. Remaining: none.
