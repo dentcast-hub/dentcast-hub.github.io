@@ -1,0 +1,307 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "sharehub",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "اکلوژن را با چه ابزاری بررسی کنیم؟",
+  "from": "02-عنوان-کپشن.md:3"
+ },
+ "caption_fa": {
+  "value": "از کاغذ آرتیکولیشن تا ثبت دیجیتال حرکت فک، هر ابزار به کدام سؤال بالینی جواب می‌دهد؟",
+  "from": "02-عنوان-کپشن.md:9"
+ },
+ "title_en": {
+  "value": "Which tool should we use to assess occlusion?",
+  "from": "06-انگلیسی.md:1"
+ },
+ "caption_en": {
+  "value": "From articulating paper to digital jaw tracking, which clinical question does each tool answer?",
+  "from": "06-انگلیسی.md:3"
+ },
+ "body_en": {
+  "value": "When a patient says, “It hits here first,” after a crown is seated, we first need to decide what information we are looking for. Contact location, contact presence, contact sequence, and mandibular movement are four different questions. In the narrative review by Aljanahi and colleagues, each tool provides part of that information.\n\n## Articulating paper: Where is the contact?\n\nArticulating paper marks contact locations on teeth or restorations. Paper thickness affects the size and visibility of the marks. A large or dark mark alone cannot establish the magnitude of the force.\n\n[[تصویر:01]]\n\n## Shimstock: Is there a contact?\n\nShimstock is a thin foil. When the patient closes their teeth together, resistance to withdrawal helps confirm contact. The foil leaves no colored mark and does not measure force. Articulating paper and shimstock can therefore be used together.\n\n[[تصویر:02]]\n\n## T-Scan: In what order do contacts occur?\n\nT-Scan records contact sequence and timing, as well as relative force distribution. It shows when the first contact occurs and how the distribution changes during closure. The force output is relative and is not reported as absolute force in newtons.\n\n[[تصویر:03]]\n\n[[تصویر:04]]\n\nIn the same review, OccluSense provides a color-coded pressure map, while Accura is described as a tool for visualizing static contact distribution. Their outputs should be interpreted in light of each device's capabilities.\n\n## Intraoral scanning: How were the two arches registered?\n\nAn intraoral scanner (IOS) can show the relationship between the arches in the recorded bite and visualize areas of static contact. The scanner alone does not record contact sequence, timing, or intensity. Some studies cited in the review also found inconsistent detection of light contacts.\n\n[[تصویر:05]]\n\n## Jaw tracking: What path does the mandible follow?\n\nTools such as Modjaw and Cadiax record mandibular movement. Modjaw, for example, can capture opening, closing, and lateral movements. Motion data help assess dynamics, but do not directly measure tooth contacts.\n\n[[تصویر:06]]\n\nThe authors conclude that conventional indicators for intraoral verification and digital tools for quantitative data can complement one another. More longitudinal studies are needed to establish long-term clinical validity and to determine whether changes in the recorded measures affect patient or prosthetic outcomes.",
+  "from": "06-انگلیسی.md:6-44"
+ },
+ "images": {
+  "value": [
+   {
+    "n": "01",
+    "file": {
+     "value": "03-تصاویر/01-articulating-paper.webp",
+     "from": "03-تصاویر/تصاویر.md:5"
+    },
+    "alt_fa": {
+     "value": "کاغذ آرتیکولیشن و علامت تماس روی ترمیم",
+     "from": "03-تصاویر/تصاویر.md:5"
+    },
+    "caption_fa": {
+     "value": "تصویر ۱. کاربرد کاغذ آرتیکولیشن و علامت‌های تماس روی ونیر. منبع: Aljanahi و همکاران ۲۰۲۶، شکل ۱.",
+     "from": "03-تصاویر/تصاویر.md:5"
+    },
+    "alt_en": {
+     "value": "Articulating paper and contact marks on a restoration",
+     "from": "03-تصاویر/تصاویر.md:5"
+    },
+    "caption_en": {
+     "value": "Fig. 1. Articulating paper and contact marks on a veneer. Source: Aljanahi et al. 2026, Fig. 1.",
+     "from": "06-انگلیسی.md:47"
+    }
+   },
+   {
+    "n": "02",
+    "file": {
+     "value": "03-تصاویر/02-shimstock.webp",
+     "from": "03-تصاویر/تصاویر.md:6"
+    },
+    "alt_fa": {
+     "value": "فویل شیم‌استاک در ناحیهٔ پرمولر بالا",
+     "from": "03-تصاویر/تصاویر.md:6"
+    },
+    "caption_fa": {
+     "value": "تصویر ۲. بررسی تماس با شیم‌استاک در ناحیهٔ پرمولر بالا. منبع: Aljanahi و همکاران ۲۰۲۶، شکل ۲.",
+     "from": "03-تصاویر/تصاویر.md:6"
+    },
+    "alt_en": {
+     "value": "Shimstock foil in the maxillary premolar region",
+     "from": "03-تصاویر/تصاویر.md:6"
+    },
+    "caption_en": {
+     "value": "Fig. 2. Shimstock assessment in the maxillary premolar region. Source: Aljanahi et al. 2026, Fig. 2.",
+     "from": "06-انگلیسی.md:48"
+    }
+   },
+   {
+    "n": "03",
+    "file": {
+     "value": "03-تصاویر/03-t-scan-device.webp",
+     "from": "03-تصاویر/تصاویر.md:7"
+    },
+    "alt_fa": {
+     "value": "آنالیز دیجیتال اکلوژن با T-Scan",
+     "from": "03-تصاویر/تصاویر.md:7"
+    },
+    "caption_fa": {
+     "value": "تصویر ۳. تحلیل دیجیتال اکلوژن با T-Scan. منبع: Aljanahi و همکاران ۲۰۲۶، شکل ۴.",
+     "from": "03-تصاویر/تصاویر.md:7"
+    },
+    "alt_en": {
+     "value": "Digital occlusal analysis with T-Scan",
+     "from": "03-تصاویر/تصاویر.md:7"
+    },
+    "caption_en": {
+     "value": "Fig. 3. Digital occlusal analysis with T-Scan. Source: Aljanahi et al. 2026, Fig. 4.",
+     "from": "06-انگلیسی.md:49"
+    }
+   },
+   {
+    "n": "04",
+    "file": {
+     "value": "03-تصاویر/04-t-scan-contact-timing.webp",
+     "from": "03-تصاویر/تصاویر.md:8"
+    },
+    "alt_fa": {
+     "value": "نمایش داده‌های ثبت‌شده با T-Scan",
+     "from": "03-تصاویر/تصاویر.md:8"
+    },
+    "caption_fa": {
+     "value": "تصویر ۴. نمونهٔ نمایش و تفسیر داده‌های T-Scan. منبع: Aljanahi و همکاران ۲۰۲۶، شکل ۵.",
+     "from": "03-تصاویر/تصاویر.md:8"
+    },
+    "alt_en": {
+     "value": "Display of data recorded with T-Scan",
+     "from": "03-تصاویر/تصاویر.md:8"
+    },
+    "caption_en": {
+     "value": "Fig. 4. Example of a T-Scan display and its interpretation. Source: Aljanahi et al. 2026, Fig. 5.",
+     "from": "06-انگلیسی.md:50"
+    }
+   },
+   {
+    "n": "05",
+    "file": {
+     "value": "03-تصاویر/05-intraoral-scan-occlusion.webp",
+     "from": "03-تصاویر/تصاویر.md:9"
+    },
+    "alt_fa": {
+     "value": "نمای طرفی و روبه‌روی بایت دیجیتال",
+     "from": "03-تصاویر/تصاویر.md:9"
+    },
+    "caption_fa": {
+     "value": "تصویر ۵. نمای طرفی و روبه‌روی بایت در اسکن داخل دهانی. منبع: Aljanahi و همکاران ۲۰۲۶، شکل ۷.",
+     "from": "03-تصاویر/تصاویر.md:9"
+    },
+    "alt_en": {
+     "value": "Lateral and frontal views of the digital bite",
+     "from": "03-تصاویر/تصاویر.md:9"
+    },
+    "caption_en": {
+     "value": "Fig. 5. Lateral and frontal intraoral scan views of the bite. Source: Aljanahi et al. 2026, Fig. 7.",
+     "from": "06-انگلیسی.md:51"
+    }
+   },
+   {
+    "n": "06",
+    "file": {
+     "value": "03-تصاویر/06-modjaw-jaw-tracking.webp",
+     "from": "03-تصاویر/تصاویر.md:10"
+    },
+    "alt_fa": {
+     "value": "ردیابی مسیر حرکت فک پایین با Modjaw",
+     "from": "03-تصاویر/تصاویر.md:10"
+    },
+    "caption_fa": {
+     "value": "تصویر ۶. ثبت حرکات فک پایین با Modjaw. منبع: Aljanahi و همکاران ۲۰۲۶، شکل ۸.",
+     "from": "03-تصاویر/تصاویر.md:10"
+    },
+    "alt_en": {
+     "value": "Mandibular movement paths recorded with Modjaw",
+     "from": "03-تصاویر/تصاویر.md:10"
+    },
+    "caption_en": {
+     "value": "Fig. 6. Mandibular movements captured with Modjaw. Source: Aljanahi et al. 2026, Fig. 8.",
+     "from": "06-انگلیسی.md:52"
+    }
+   }
+  ],
+  "from": "03-تصاویر/تصاویر.md"
+ },
+ "credit": {
+  "value": {
+   "mode": "references",
+   "items": [
+    {
+     "label_fa": "مرور روایی روش‌های بررسی اکلوژن، Aljanahi و همکاران",
+     "label_en": "From Paper to Pixels—A Narrative Review of Occlusal Analysis",
+     "href": "https://doi.org/10.3390/dj14090573",
+     "from": "04-منبع/منابع.md:19"
+    }
+   ]
+  },
+  "from": "04-منبع/منابع.md:15"
+ },
+ "catalog": {
+  "value": [
+   {
+    "title": "From Paper to Pixels—A Narrative Review of Occlusal Analysis",
+    "file_name": "From Paper to Pixels—A Narrative Review of Occlusal Analysis.pdf",
+    "topic": "Occlusion",
+    "topic_path": "Occlusion",
+    "type": "narrative review",
+    "local_path": "",
+    "file_size": 12390904,
+    "key_finding": "Conventional indicators and digital analysis offer complementary data. Evidence on long-term clinical outcomes remains limited.",
+    "clinical_bottom_line": "Verify contacts intraorally and select a digital tool according to the measurement needed.",
+    "drive_link": "https://drive.google.com/file/d/1sMmcDh-jihL8K7Z_OyKJT0PT1LLlyr3A/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=1sMmcDh-jihL8K7Z_OyKJT0PT1LLlyr3A",
+    "drive_view": "https://drive.google.com/file/d/1sMmcDh-jihL8K7Z_OyKJT0PT1LLlyr3A/view",
+    "drive_id": "1sMmcDh-jihL8K7Z_OyKJT0PT1LLlyr3A",
+    "tags": [
+     "occlusion",
+     "occlusal-analysis",
+     "articulating-paper",
+     "shimstock",
+     "t-scan",
+     "intraoral-scanning",
+     "jaw-tracking",
+     "narrative-review",
+     "topic:occlusion"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "From Paper to Pixels—A Narrative Review of Occlusal Analysis",
+    "doi": "10.3390/dj14090573",
+    "journal": "Dentistry Journal",
+    "crossref_year": 2026,
+    "subjects": [
+     "Dentistry"
+    ],
+    "abstract": "Background/Objectives: Occlusal analysis plays a key role in restorative and prosthodontic treatment, influencing diagnosis, treatment planning, and long-term outcomes. This narrative review provides an overview of conventional and digital methods for occlusal analysis and their clinical applications. Methods: A literature search was conducted using PubMed/MEDLINE, Scopus, and Google Scholar to identify relevant publications on conventional and digital occlusal analysis. The retrieved literature was reviewed and synthesized narratively. Results: Conventional methods, including articulating paper, shimstock foil, films, sprays, and waxes, remain widely used because of their simplicity and accessibility but are limited by subjective interpretation and the inability to quantify occlusal forces. Digital technologies, including T-Scan, OccluSense, Accura, intraoral scanners, virtual articulators, and jaw-tracking systems, provide objective information on occlusal contacts, force distribution, timing, and mandibular movements. However, their use may be limited by cost, technical requirements, and operator training. Conclusions: Conventional methods remain valuable in daily clinical practice, while digital technologies provide objective data that can enhance occlusal assessment and treatment planning. As digital workflows continue to evolve, structured training and standardized clinical protocols will be important for their successful integration into clinical practice.",
+    "display_title": "From Paper to Pixels—A Narrative Review of Occlusal Analysis",
+    "authors": [
+     "May Aljanahi",
+     "Gerry Mckenna",
+     "Keyvan Moharamzadeh",
+     "Haitham Elbishari"
+    ]
+   }
+  ],
+  "from": "04-منبع/کاتالوگ.json"
+ },
+ "hashtags": {
+  "value": [
+   "#مرور_منابع",
+   "#Curated_Content",
+   "#اکلوژن"
+  ],
+  "from": "07-ورودی‌ها.md:20"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "occlusion",
+   "subtopic": "occlusal-analysis-adjustment",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:14"
+ },
+ "pulse": {
+  "value": {
+   "text": null,
+   "link_phrase": "اکلوژن را با چه ابزاری بررسی کنیم؟"
+  },
+  "from": "07-ورودی‌ها.md:25"
+ },
+ "keywords": {
+  "value": [
+   "occlusal analysis",
+   "articulating paper",
+   "shimstock",
+   "T-Scan",
+   "intraoral scanner",
+   "jaw tracking"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "اسکن داخل دهانی",
+    "href": "/glossary/intraoral-scanner.html",
+    "from": "11-لینک‌های-گلاسری.md:11"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:7"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "/insight/insight-1.html",
+    "label": "ضخامت کاغذ آرتیکولیشن",
+    "from": "11-لینک‌های-گلاسری.md:25"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:23"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}

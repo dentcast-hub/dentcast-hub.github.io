@@ -1,0 +1,46 @@
+[
+  {
+    "title": "From Paper to Pixels—A Narrative Review of Occlusal Analysis",
+    "file_name": "From Paper to Pixels—A Narrative Review of Occlusal Analysis.pdf",
+    "topic": "Occlusion",
+    "topic_path": "Occlusion",
+    "type": "narrative review",
+    "local_path": "",
+    "file_size": 12390904,
+    "key_finding": "Conventional indicators and digital analysis offer complementary data. Evidence on long-term clinical outcomes remains limited.",
+    "clinical_bottom_line": "Verify contacts intraorally and select a digital tool according to the measurement needed.",
+    "drive_link": "https://drive.google.com/file/d/1sMmcDh-jihL8K7Z_OyKJT0PT1LLlyr3A/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=1sMmcDh-jihL8K7Z_OyKJT0PT1LLlyr3A",
+    "drive_view": "https://drive.google.com/file/d/1sMmcDh-jihL8K7Z_OyKJT0PT1LLlyr3A/view",
+    "drive_id": "1sMmcDh-jihL8K7Z_OyKJT0PT1LLlyr3A",
+    "tags": [
+      "occlusion",
+      "occlusal-analysis",
+      "articulating-paper",
+      "shimstock",
+      "t-scan",
+      "intraoral-scanning",
+      "jaw-tracking",
+      "narrative-review",
+      "topic:occlusion"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "From Paper to Pixels—A Narrative Review of Occlusal Analysis",
+    "doi": "10.3390/dj14090573",
+    "journal": "Dentistry Journal",
+    "crossref_year": 2026,
+    "subjects": [
+      "Dentistry"
+    ],
+    "abstract": "Background/Objectives: Occlusal analysis plays a key role in restorative and prosthodontic treatment, influencing diagnosis, treatment planning, and long-term outcomes. This narrative review provides an overview of conventional and digital methods for occlusal analysis and their clinical applications. Methods: A literature search was conducted using PubMed/MEDLINE, Scopus, and Google Scholar to identify relevant publications on conventional and digital occlusal analysis. The retrieved literature was reviewed and synthesized narratively. Results: Conventional methods, including articulating paper, shimstock foil, films, sprays, and waxes, remain widely used because of their simplicity and accessibility but are limited by subjective interpretation and the inability to quantify occlusal forces. Digital technologies, including T-Scan, OccluSense, Accura, intraoral scanners, virtual articulators, and jaw-tracking systems, provide objective information on occlusal contacts, force distribution, timing, and mandibular movements. However, their use may be limited by cost, technical requirements, and operator training. Conclusions: Conventional methods remain valuable in daily clinical practice, while digital technologies provide objective data that can enhance occlusal assessment and treatment planning. As digital workflows continue to evolve, structured training and standardized clinical protocols will be important for their successful integration into clinical practice.",
+    "display_title": "From Paper to Pixels—A Narrative Review of Occlusal Analysis",
+    "authors": [
+      "May Aljanahi",
+      "Gerry Mckenna",
+      "Keyvan Moharamzadeh",
+      "Haitham Elbishari"
+    ]
+  }
+]

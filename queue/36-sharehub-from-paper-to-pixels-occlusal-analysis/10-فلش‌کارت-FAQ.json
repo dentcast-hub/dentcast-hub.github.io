@@ -1,0 +1,65 @@
+{
+  "definedTermSets": [
+    {
+      "@context": "https://schema.org",
+      "@type": "DefinedTermSet",
+      "@id": "{{PAGE_URL}}#flashcards",
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "@id": "{{PAGE_URL}}#flashcards-c1",
+          "name": "کارکرد کاغذ آرتیکولیشن",
+          "description": "نمایان کردن محل برخورد دندان‌ها روی سطح دندان یا ترمیم با یک علامت رنگی.",
+          "source": "authored"
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "{{PAGE_URL}}#flashcards-c2",
+          "name": "توزیع نسبی نیرو در T-Scan",
+          "description": "سهم تماس‌ها از بار ثبت‌شده در طول زمان، بدون بیان مقدار مطلق بر حسب نیوتن.",
+          "source": "authored"
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "{{PAGE_URL}}#flashcards-c3",
+          "name": "خروجی اصلی ردیابی حرکت فک",
+          "description": "مسیر حرکت فک پایین در باز و بسته‌شدن و حرکات طرفی.",
+          "source": "authored"
+        }
+      ]
+    }
+  ],
+  "faqPages": [
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": "{{PAGE_URL}}#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "آیا بزرگی علامت کاغذ آرتیکولیشن به‌تنهایی مقدار نیروی تماس را نشان می‌دهد؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "خیر، ضخامت کاغذ هم روی اندازه و وضوح علامت اثر می‌گذارد."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "آیا مقاومت شیم‌استاک در برابر بیرون کشیدن می‌تواند وجود تماس را تأیید کند؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "بله، وقتی دندان‌ها روی هم قرار دارند، مقاومت فویل نشانه‌ای برای تأیید تماس است."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "آیا اسکن داخل دهانی به‌تنهایی زمان تماس‌های اکلوزالی را ثبت می‌کند؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "خیر، اسکن داخل دهانی به‌تنهایی تصویر رابطهٔ استاتیک دو قوس را می‌دهد."
+          }
+        }
+      ]
+    }
+  ]
+}
