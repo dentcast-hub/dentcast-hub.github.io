@@ -31,7 +31,16 @@ const SHARE23 = (() => {
 })();
 
 let scores: Record<string, unknown> = {};
-vi.stubGlobal('fetch', vi.fn(async () => ({ ok: true, json: async () => scores })));
+// des.js asks for the page's own record, plus/des/<content_id>.json
+// (tools/build_des_records.py), never the whole store; a missing one is a 404.
+const fetchStub = vi.fn(async (url: string) => {
+  const m = /^\/plus\/des\/(.+)\.json$/.exec(String(url));
+  const rec = m ? scores[m[1]] : undefined;
+  return rec
+    ? { ok: true, status: 200, json: async () => rec }
+    : { ok: false, status: 404, json: async () => null };
+});
+vi.stubGlobal('fetch', fetchStub);
 // jsdom has no layout; the chips scroll the card into view
 Element.prototype.scrollIntoView = function () {};
 
@@ -47,6 +56,47 @@ async function mount(rec: unknown, id = 'test/page') {
 }
 
 const text = (n: Element | null) => (n ? n.textContent || '' : '');
+
+describe('DES record loading (one file per content_id)', () => {
+  beforeEach(() => { document.body.innerHTML = ''; fetchStub.mockClear(); });
+
+  it('fetches only the page\'s own record, once for the chip and the card', async () => {
+    const { ok, row, card } = await mount(SHARE23, 'sharehub/share-23');
+    expect(ok).toBe(true);
+    expect(row.querySelector('.dc-act-des')).not.toBeNull();
+    expect(card).not.toBeNull();
+    const urls = fetchStub.mock.calls.map((c) => String(c[0]));
+    expect(urls).toEqual(['/plus/des/sharehub/share-23.json']);
+    expect(urls.some((u) => u.includes('des-scores'))).toBe(false);
+  });
+
+  it('a page with no record (404) draws nothing', async () => {
+    vi.resetModules();
+    scores = {};
+    const { mountDes } = await import('/plus/js/des.js');
+    document.body.innerHTML = '<div id="row"></div><main><div id="end">متن</div></main>';
+    const ok = await mountDes(document.getElementById('row'), document.getElementById('end'), 'insight/none');
+    expect(ok).toBe(false);
+    expect(document.getElementById('row')!.children).toHaveLength(0);
+    expect(document.getElementById('dcDesCard')).toBeNull();
+  });
+
+  it('never builds a URL from something that is not a page path', async () => {
+    vi.resetModules();
+    const { mountDes } = await import('/plus/js/des.js');
+    document.body.innerHTML = '<div id="row"></div><main><div id="end">متن</div></main>';
+    const ok = await mountDes(document.getElementById('row'), document.getElementById('end'), '../des-scores');
+    expect(ok).toBe(false);
+    expect(fetchStub).not.toHaveBeenCalled();
+  });
+
+  it('every stored record has its own file, identical to the store', () => {
+    for (const [id, rec] of Object.entries(ALL)) {
+      const file = JSON.parse(readFileSync(path.join(repo, 'plus/des', id + '.json'), 'utf8'));
+      expect(file).toEqual(rec);
+    }
+  });
+});
 
 describe('DES fidelity display (spec v2.8)', () => {
   beforeEach(() => { document.body.innerHTML = ''; });

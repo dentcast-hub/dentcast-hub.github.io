@@ -133,6 +133,10 @@ MODULES = WORKFLOW + 'modules/'
 # added after the full run» bullet names the language toggle. All after the boundary, which
 # still occurs once with byte-identical text before it; no heading changed.
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
+# Re-audited 2026-11-11 (DES per-page record files): module 11 adds builder
+# item 8 (tools/build_des_records.py) and plus/des/ to the never-hand-edit list,
+# both below the module-11-boundary (the runner's C.8 part, never selected for
+# the agent); §6 and every heading are byte-identical.
 # both the selection boundaries and every skipped section's applicability.
 PINNED_BLOBS = {
     '03-litecast-and-page.md': 'e82aee946648f09d7ed130b7bcdd93b3fbc14694',
@@ -141,9 +145,9 @@ PINNED_BLOBS = {
     '06-paper-ingestion.md': '226ff4a756418788e70afa2a19e4484c1734dedb',
     '08-des-fidelity.md': '8877869f8f3b711052ef901ffa0b3efec129f882',
     '09-challenge.md': '3ac5856ddb021aa9f36cbfb35d6363531ae038c8',
-    '11-build-and-version.md': '4dd05364ca5f9fd5811d7de39f172af14c592b13',
+    '11-build-and-version.md': 'f74bf83102c57da9743127623191e686474bf74d',
     '12-english-notify-verify.md': '5c9b65ee4416fd67607e6d35ca88272832ee86ec',
-    '11-build-and-version.md': '4dd05364ca5f9fd5811d7de39f172af14c592b13',
+    '11-build-and-version.md': 'f74bf83102c57da9743127623191e686474bf74d',
 }
 
 REQUIRED = [

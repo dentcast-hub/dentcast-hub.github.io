@@ -969,3 +969,97 @@ body:has(.dc-topbar) .back:hover {
   background-position: top, 0 0;
   background-repeat: no-repeat;
 }
+
+/* =====================================================
+   ARTICLE ACTION ROW — THE SPACE IT WILL TAKE, BEFORE IT ARRIVES
+   (layout-shift fix, 2026-11-11)
+   #dcActionRow (.dc-actions) is built by script — dc-nav.js phase 7b on a
+   standalone page, ensureActionRow in plus/plus.js where that script did not
+   (audio episodes, glossary, ویدیوها, the desktop shell) — and its styles
+   arrive with plus.css, which dc-nav.js injects late. So the prose painted
+   first and was pushed down in stages as the row appeared, got its styles,
+   filled its main group and wrapped: CLS 0.08-0.17 on a throttled phone
+   (0.14-0.46 in the founder's earlier run) on every article template.
+   This is the one render-blocking sheet every inner page loads, so the
+   reservation lives here; the row's LOOK still lives in plus.css alone
+   (site-invariants, «ردیفِ کنشِ مقاله»). Three parts:
+   1. Until <html> carries .dc-actrow-seated, the first prose box (exactly
+      the element both builders insert the row before: the first of
+      .text-box/.glass-box/.content-box in <main>, else the ep-page's
+      .ep-box) — or, once an unseated row is in the DOM, whatever follows
+      it (the ToC, when dc-nav.js built one) — gets a top margin equal to
+      the gap the styled row will occupy. The unseated row is display:none,
+      so nothing half-built is ever painted. Who seats it: dc-nav.js once
+      plus.css has loaded (or failed), plus.js right after
+      injectActionRow — both, because the desktop shell strips dc-nav.js.
+   2. The gap = the row's height + K, where K is the collapsed margin
+      above it plus its own 20px below, which depends on the element in
+      front of it (measured per template, 2026-11-11; default = the
+      .dc-trustline every article carries). On phones the row is 117px when
+      the main group (میز کار › کالکشن › پسندیدم) fits one line and 159px
+      when it wraps, which happens below a 360px-wide row: a margin
+      percentage resolves against the containing block's WIDTH, which is
+      the row's width, so clamp((360px - 100%) * 1000) is a 0/42px step.
+   3. Fixed minimum heights, so the row's height no longer depends on
+      what has arrived inside it: the row itself, the main group while
+      plus.js has not filled it yet (the same 0/42px step, against the
+      row's content width of 330px), and the aux group that the DES chips
+      (plus/js/des.js) join. When a DES chip does not fit beside the reading
+      time and share chip it still opens a second aux line — the one shift
+      left here, because whether a page has a score is only known once its
+      record is fetched.
+   No page carries any of this markup; a browser without :has() keeps
+   parts 1-2 and only loses the main-group reserve.
+===================================================== */
+:root { --dc-ar-h: 64px; --dc-ar-k: 42px; }
+@media (max-width: 559px) {
+  /* A token stream until it is used: the 100% resolves inside the margin
+     below, against the reserving element's containing block. */
+  :root { --dc-ar-h: calc(117px + clamp(0px, (360px - 100%) * 1000, 42px)); }
+  /* The English labels (Workbench › Add to collection › Like) are wider:
+     one line needs a 375px row (345px of content) there. */
+  :root:lang(en) { --dc-ar-h: calc(117px + clamp(0px, (375px - 100%) * 1000, 42px)); }
+}
+:root:not(.dc-actrow-seated) #dcActionRow { display: none; }
+:root:not(.dc-actrow-seated) :is(
+  main.article-content-wrap :is(.text-box, .glass-box, .content-box):not(:is(.text-box, .glass-box, .content-box) ~ *, :is(.text-box, .glass-box, .content-box) *, #dcActionRow ~ *),
+  main.article-content-wrap.ep-page:not(:has(.text-box, .glass-box, .content-box)) .ep-box:not(.ep-box ~ *, .ep-box *, #dcActionRow ~ *),
+  #dcActionRow + *
+) {
+  margin-top: calc(var(--dc-ar-h) + var(--dc-ar-k));
+}
+/* K by the element in front of the row — or of the box, before the row exists.
+   :where() keeps them all at zero specificity, so the later, narrower one wins. */
+:where(.dc-trustline + *, .dc-trustline + #dcActionRow + *) { --dc-ar-k: 42px; }
+:where(.lang-btn + *, .lang-btn + #dcActionRow + *) { --dc-ar-k: 38px; }
+:where(.ep-back + *, .ep-back + #dcActionRow + *) { --dc-ar-k: 36px; }
+:where(.term-header + *, .term-header + #dcActionRow + *) { --dc-ar-k: 48px; }
+:where(.caption + *, .caption + #dcActionRow + *) { --dc-ar-k: 55px; }
+:where(h1 + *, h1 + #dcActionRow + *, .sh-subtitle + *, .sh-subtitle + #dcActionRow + *) { --dc-ar-k: 36px; }
+:where(figure + *, figure + #dcActionRow + *) { --dc-ar-k: 45px; }
+:where(.r1_iframe_embed + *, .r1_iframe_embed + #dcActionRow + *) { --dc-ar-k: 40px; }
+:where(h2 + h1 + *, h2 + h1 + #dcActionRow + *) { --dc-ar-k: 42px; }
+:where(.yt-container + *, .yt-container + #dcActionRow + *,
+    .yt-container + script + *, .yt-container + script + #dcActionRow + *) { --dc-ar-k: 50px; }
+
+#dcActionRow { box-sizing: border-box; min-height: 64px; }
+#dcActionRow > .dc-actions-main,
+#dcActionRow > .dc-actions-aux { min-height: 38px; }
+@media (max-width: 559px) {
+  #dcActionRow { min-height: 117px; }
+  #dcActionRow > .dc-actions-main,
+  #dcActionRow > .dc-actions-aux { min-height: 36px; }
+  /* A flex item's padding percentage resolves against the row's content
+     width: the main group keeps its second line from the start. */
+  #dcActionRow > .dc-actions-main:not(:has(.dc-act-primary)) {
+    box-sizing: content-box;
+    padding-bottom: clamp(0px, (330px - 100%) * 1000, 42px);
+  }
+  :root:lang(en) #dcActionRow > .dc-actions-main:not(:has(.dc-act-primary)) {
+    padding-bottom: clamp(0px, (345px - 100%) * 1000, 42px);
+  }
+}
+
+/* The Spot artwork's box exists before its pixels do (spot/spot.js builds
+   the <img> lazily, after /me). Every creative is drawn 2:1. */
+.dc-spot-art-img { aspect-ratio: 2 / 1; object-fit: contain; }

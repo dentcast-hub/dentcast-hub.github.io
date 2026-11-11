@@ -2,7 +2,8 @@
 //
 // The score itself is produced at publish time by workflow step 4.13 (the
 // scoring prompt in .dentcast/dentcast-evidence-score-v3.1.md) and stored in
-// plus/des-scores.json, keyed by content_id. Nothing here computes, judges, or
+// plus/des-scores.json, keyed by content_id; this module reads that record's
+// own copy, plus/des/<content_id>.json (tools/build_des_records.py). Nothing here computes, judges, or
 // re-derives anything: this module renders what that file already says.
 //
 // NO PAGE CARRIES DES MARKUP. Same rule the article action row runs on — zero
@@ -23,22 +24,28 @@
 // is deliberately no "podcast" test in this file — an episode that DOES cite
 // papers (episodes/episode-161 cites three) is scored and shown like anything
 // else. The rule is "no record, no badge", never "no audio, no badge".
-import { el, faNum } from './util.js?v=223';
+import { el, faNum } from './util.js?v=224';
 
 /* ------------------------------------------------------------ the data -- */
 
-let filePromise = null;
+// One small file per content_id, plus/des/<content_id>.json, written by
+// tools/build_des_records.py from plus/des-scores.json (the store the publish
+// workflow writes; the board and the library still read that one). Every
+// article used to download the whole ~3 MB store to draw one record. A 404 is
+// the absence rule — no record, nothing drawn — and any failure reads the same.
+// One fetch per content_id per page-load, shared by the chip and the card;
+// `no-cache` (not `no-store`) so the browser revalidates cheaply rather than
+// re-downloading, the same posture content-index.js takes for its model.
+const recordPromises = new Map();
 
-// One fetch per page-load, shared by the chip and the card. `no-cache` (not
-// `no-store`) so the browser still revalidates cheaply rather than re-downloading
-// on every article — the same posture content-index.js takes for its model.
-function loadScores() {
-  if (!filePromise) {
-    filePromise = fetch('/plus/des-scores.json', { credentials: 'omit', cache: 'no-cache' })
-      .then((r) => (r.ok ? r.json() : {}))
-      .catch(() => ({}));
+function loadRecord(contentId) {
+  if (!recordPromises.has(contentId)) {
+    recordPromises.set(contentId,
+      fetch('/plus/des/' + contentId + '.json', { credentials: 'omit', cache: 'no-cache' })
+        .then((r) => (r.ok ? r.json() : null))
+        .catch(() => null));
   }
-  return filePromise;
+  return recordPromises.get(contentId);
 }
 
 /* ----------------------------------------------------------- vocabulary -- */
@@ -705,10 +712,11 @@ function scrollToCard(target) {
  */
 export async function mountDes(row, anchor, contentId) {
   if (!contentId || (!row && !anchor)) return false;
+  // A content_id is a page path; anything else has no file to ask for.
+  if (!/^[a-z0-9][a-z0-9_-]*(\/[A-Za-z0-9][A-Za-z0-9_.-]*)*$/.test(contentId) || contentId.includes('..')) return false;
   let rec;
   try {
-    const all = await loadScores();
-    rec = all && all[contentId];
+    rec = await loadRecord(contentId);
   } catch (_) { return false; }
   if (!rec || !Array.isArray(rec.sources) || !rec.sources.length) return false;
   if (!rec.sources.some((s) => !s.error)) return false; // every source unscorable

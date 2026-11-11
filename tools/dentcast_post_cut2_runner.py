@@ -172,6 +172,10 @@ def command_plan(root: Path, pub: dict):
         # Phase D, which otherwise regenerates the sitemap, is skipped.
         cmds.append(["python3", ".github/scripts/gen_sitemap.py"])
     cmds.append(["python3", ".github/scripts/inject_img_attrs.py"])
+    # Module 11 step 8 item 8: one file per DES record (plus/des/<content_id>.json)
+    # from plus/des-scores.json — always, so a record written, re-scored or
+    # dropped at step 4.13 reaches the file des.js actually fetches.
+    cmds.append(["python3", "tools/build_des_records.py"])
     if handoff.publication_category(pub) != "paper-only":
         cmds.extend([
             ["node", "tools/build_plus_index.mjs"],
@@ -205,6 +209,8 @@ def verify_scope(root: Path, pub: dict):
         if name in allowed:
             continue
         if name.startswith("pillar/") and name.endswith(("/index.html", "/structure.json")):
+            continue
+        if handoff.builder_output(name):
             continue
         raise RunnerError("POST_CUT2_OUT_OF_SCOPE_CHANGE:" + name)
 
