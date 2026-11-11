@@ -245,6 +245,10 @@ def main(argv=None):
                         checkout=str(copy))
         receipt["blocks"] = [l for l in r.stdout.splitlines() if l.strip()]
         receipt["build_dir"] = str(out)
+        receipt["next"] = (f"module 08 Part 2c: the sweeper (strong model, fresh context) answers each "
+                           f"{out}/input-src<k>.json as {out}/out-src<k>-1.json; then, in the checkout, units_tool {cid} "
+                           f"--judge {out}; the judge (strong model, another fresh context) answers each "
+                           f"judge-input-src<k>.json as judge-src<k>.json; then units_tool {cid} --vote {out}")
     print(json.dumps(receipt, ensure_ascii=False, indent=1))
     return 0
 

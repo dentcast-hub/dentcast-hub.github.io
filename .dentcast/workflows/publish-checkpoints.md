@@ -80,8 +80,10 @@ invalidation rules below.
    target at C.4.5-b; Hard Rule 13). One message gathers every open fact known at that point; the
    dependent step waits, independent work continues. A rare later fact (an abstract the tool cannot
    fetch, module 08 Part 1) is asked where it arises. A page with no paper and no open fact has no M1.
-2. **M3b, Part 3b** — at C.4.13, only when a sentence is still `ALTERED`/`REVERSED` after the stronger
-   review: each with its three named answers (module 08). Pages without C.4.13 (LiteCast, Challenge,
+2. **M3b, Part 3b** — at C.4.13, only when a sentence is still `ALTERED`/`REVERSED` after the judge,
+   or the judge differed from the sweeper on a sentence (a doubtful unit, module 08 Part 2c step 4):
+   each flagged one with its three named answers, each doubtful one as information whose text the
+   founder may change (module 08). Pages without C.4.13 (LiteCast, Challenge,
    «بدون DES») have no M3b.
 3. **M2, exam questions** — at 4.12-ب, approved one by one (module 07). Mandatory for every page in a full
    pathway: the agent drafts and sends them, never asks whether to.
@@ -266,7 +268,7 @@ PR comes from `queue-publish.yml`). Before Phase F it refuses a regenerated page
 Immediately after Push 2 is confirmed, one message: the agent-side work has reached Push 2, GitHub
 Actions is running the remaining mechanical delivery, the agent is monitoring it; branch, Push-2 SHA
 and run link when available, **plus the agent's report**: the standing-acceptance list (what was
-applied, what was skipped and why), every M1/M3b/M2 question with its answer, the orphan sentences
+applied, what was skipped and why), every M1/M3b/M2 question with its answer, the doubtful Fidelity units, the orphan sentences
 of the Fidelity sweep, and any real decision asked. Report G, written by the runner's `finish`, is
 technical only (ledger, Phase F, fingerprints) and deliberately omits approvals; the agent's Push-2
 report is the only human record of them. Not a completion claim. **Then read `publish-after-push2.md`

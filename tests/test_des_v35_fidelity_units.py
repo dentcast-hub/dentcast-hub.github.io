@@ -276,7 +276,7 @@ class TwoCheckerRunsTests(Tmp):
         (run / 'out-src0-1.json').write_text(json.dumps(self.claims()), encoding='utf-8')
         with self.assertRaises(SystemExit) as e:
             self.vote(run)
-        self.assertIn('never skipped', str(e.exception))
+        self.assertIn('judge', str(e.exception))
         self.assertFalse((run / 'voted-src0.json').exists())
 
     def test_two_agreeing_runs_vote_without_tiebreak_or_reviewer(self):
@@ -382,6 +382,89 @@ class StrongerReviewTests(Tmp):
         self.assertEqual(voted['claims'][1]['verdict'], 'MATCHES')
         self.assertIn("flagged —", buf.getvalue())
         self.assertIn("(report, do not ask) ['u2']", buf.getvalue())
+
+
+class SweeperJudgeTests(Tmp):
+    """Part 2c (founder 2026-11-11): one sweeper run, one judge whose word is final,
+    every disagreement listed as doubtful for the founder."""
+    ONE, BODY = TwoCheckerRunsTests.ONE, TwoCheckerRunsTests.BODY
+    claims, vote = TwoCheckerRunsTests.claims, TwoCheckerRunsTests.vote
+
+    def run_dir(self, sweeper, judge):
+        run = self.d / 'run'
+        run.mkdir(exist_ok=True)
+        (run / 'out-src0-1.json').write_text(json.dumps(sweeper), encoding='utf-8')
+        if judge is not None:
+            (run / 'judge-src0.json').write_text(json.dumps(judge), encoding='utf-8')
+        return run
+
+    def all_agree(self):
+        return {x['id']: {'agree': True} for x in self.BODY}
+
+    def test_agreeing_judge_settles_one_run(self):
+        run = self.run_dir(self.claims(), self.all_agree())
+        self.vote(run)
+        voted = json.loads((run / 'voted-src0.json').read_text(encoding='utf-8'))
+        self.assertEqual(voted['counts']['matches'], 3)
+
+    def test_judge_must_answer_every_unit(self):
+        j = self.all_agree()
+        del j['u3']
+        run = self.run_dir(self.claims(), j)
+        with self.assertRaises(SystemExit) as e:
+            self.vote(run)
+        self.assertIn('1 unit(s) open', str(e.exception))
+
+    def test_judge_flags_a_unit_the_sweeper_passed(self):
+        j = self.all_agree()
+        j['u2'] = {'agree': False, 'reason': 'the source says «in most patients»', 'verdict': 'ALTERED',
+                   'change_kind': 'HEDGE_REMOVED', 'source_quote': 'Pain fell early in most patients.', 'note': 'x'}
+        out, unjudged, invalid = units.judge_source(self.claims(), j, {x['id'] for x in self.BODY},
+                                                    doubtful=(doubt := []))
+        c = out['claims'][1]
+        self.assertEqual((c['verdict'], c['change_kind']), ('ALTERED', 'HEDGE_REMOVED'))
+        self.assertEqual(c['source_quote'], 'Pain fell early in most patients.')
+        self.assertIn('judge over sweeper MATCHES', c['note'])
+        self.assertEqual((unjudged, invalid, doubt), ([], [], ['u2']))
+        self.assertEqual(out['counts']['altered'], 1)
+
+    def test_judge_dissent_on_flagged_settles_matches(self):
+        sw = self.claims()
+        sw['claims'][1].update(verdict='ALTERED', change_kind='HEDGE_ADDED', source_quote='Pain fell early.')
+        j = self.all_agree()
+        j['u2'] = {'agree': False, 'reason': 'faithful'}
+        overruled, doubt = [], []
+        out, *_ = units.judge_source(sw, j, {x['id'] for x in self.BODY}, overruled, doubt)
+        c = out['claims'][1]
+        self.assertEqual((c['verdict'], c['change_kind'], c['source_quote']), ('MATCHES', None, 'Pain fell early.'))
+        self.assertTrue(c['note'].startswith('Sweeper: ALTERED/HEDGE_ADDED'))
+        self.assertEqual((overruled, doubt), (['u2'], ['u2']))
+
+    def test_invalid_judge_verdict_blocks(self):
+        j = self.all_agree()
+        j['u2'] = {'agree': False, 'reason': 'r', 'verdict': 'ALTERED', 'change_kind': None}
+        _out, _u, invalid = units.judge_source(self.claims(), j, {x['id'] for x in self.BODY})
+        self.assertEqual(invalid, ['u2'])
+
+    def test_judge_beside_two_runs_is_refused(self):
+        run = self.run_dir(self.claims(), self.all_agree())
+        (run / 'out-src0-2.json').write_text(json.dumps(self.claims()), encoding='utf-8')
+        with self.assertRaises(SystemExit):
+            self.vote(run)
+
+    def test_judge_pack_carries_the_sweeper_answers(self):
+        run = self.run_dir(self.claims(), None)
+        blk = {'mode': 'FIDELITY', 'scope': 'SOURCE', 'source_text': 'Pain fell early.', 'text_basis': 'FULL_TEXT',
+               'units': [{'id': x['id'], 'text': x['text']} for x in self.BODY], 'source_conclusion': 'Pain fell early.'}
+        (run / 'input-src0.json').write_text(json.dumps(blk), encoding='utf-8')
+        import contextlib, io
+        with contextlib.redirect_stdout(io.StringIO()):
+            units.judge_build(run, {0: [x['id'] for x in self.BODY]})
+        ji = json.loads((run / 'judge-input-src0.json').read_text(encoding='utf-8'))
+        self.assertEqual(ji['mode'], 'FIDELITY_JUDGE')
+        self.assertEqual(ji['units'][1]['sweeper']['verdict'], 'MATCHES')
+        system = (run / 'judge-system.md').read_text(encoding='utf-8')
+        self.assertIn('## FIDELITY track', system)
 
 
 class ConclusionTests(unittest.TestCase):
