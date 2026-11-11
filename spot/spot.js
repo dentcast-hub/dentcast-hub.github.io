@@ -69,7 +69,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=224';
+import { findProseRoot } from '/plus/js/config.js?v=225';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -117,7 +117,7 @@ let viewerNow = () => 'anon';
 // Authentication refreshes via /me are NOT page views. A new document counts
 // once, and desktop-shell article navigation counts once more per new article.
 function countContentView() {
-  import('/plus/js/api.js?v=224')
+  import('/plus/js/api.js?v=225')
     .then((m) => m.apiBase())
     .then((base) => fetch(base + '/pageview', {
       method: 'POST', credentials: 'include', cache: 'no-store', keepalive: true,
@@ -193,7 +193,7 @@ function sendPending(task) {
     body: JSON.stringify({ [key]: SPOT_EVENT[task.kind],
       content_id: task.slot + ':' + task.creative, event_id: task.id }),
   });
-  import('/plus/js/api.js?v=224').then((m) => m.apiBase()).then((base) => {
+  import('/plus/js/api.js?v=225').then((m) => m.apiBase()).then((base) => {
     if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
     return post(base, '/activity', 'action')
       .then((res) => res.status === 401 ? post(base, '/anon/event', 'event') : res);
@@ -218,7 +218,7 @@ function sendPending(task) {
     task.attempts = (task.attempts || 0) + 1;
     task.nextAt = Date.now() + SPOT_RETRY[Math.min(task.attempts - 1, 3)];
     savePending();
-    import('/plus/js/api.js?v=224').then((m) => m.forgetBase()).catch(() => {});
+    import('/plus/js/api.js?v=225').then((m) => m.forgetBase()).catch(() => {});
     if (document.visibilityState === 'visible')
       setTimeout(() => sendPending(task), task.nextAt - Date.now());
   }).finally(() => { spotSending.delete(task.id); });
@@ -1033,8 +1033,36 @@ function placeArticleCard(slot, prose, card) {
     const afterLimit = (limitP.compareDocumentPosition(h) & FOLLOWING) !== 0;
     if (afterTarget && !afterLimit) { anchor = h; break; } // earliest heading in the upper window
   }
+  anchor = belowTheScreen(anchor, blocks);
+  if (!anchor) return placeEnd();
   anchor.parentNode.insertBefore(card, anchor);
   return true;
+}
+
+// The card can only be drawn after /me answers (premium sees none — the lock
+// that must never loosen), so it always lands after the text has painted.
+// Inserted ON the reader's screen, it pushes every line under it down: on a
+// short page, where "a third of the way down" is inside the first screen, that
+// was the whole layout shift (LiteCast, 2026-11-11: lite-CAST1 CLS 0.118,
+// card at y=359 on a 390px phone). So an anchor whose top is on screen moves
+// to the first body block that starts below the screen's bottom edge — still
+// a between-blocks boundary — and with none left, to the end of the body.
+// Long pages are untouched: their upper-third anchor is already off screen.
+// An anchor above the screen (the reader has scrolled past it) stays: the
+// browser's scroll anchoring keeps the visible text where it is.
+// Returns null for "the end". Without layout (no rendered box at all) there is
+// nothing to measure and the anchor stands.
+function belowTheScreen(anchor, blocks) {
+  const view = window.innerHeight || 0;
+  const top = anchor.getBoundingClientRect().top;
+  if (!view || (top === 0 && !anchor.getBoundingClientRect().height)) return anchor;
+  if (top < 0 || top >= view) return anchor;
+  const FOLLOWING = 4; // Node.DOCUMENT_POSITION_FOLLOWING
+  for (const b of blocks) {
+    if (b !== anchor && !(anchor.compareDocumentPosition(b) & FOLLOWING)) continue;
+    if (b.getBoundingClientRect().top >= view) return b;
+  }
+  return null;
 }
 
 /**
@@ -1377,7 +1405,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=224')
+  return import('/plus/js/api.js?v=225')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
@@ -1430,7 +1458,7 @@ async function main() {
   // Untouched placements retain the checked-in rotation and targeting. Only
   // explicitly saved placements have a database override. Public read, no login.
   try {
-    const { apiBase } = await import('/plus/js/api.js?v=224');
+    const { apiBase } = await import('/plus/js/api.js?v=225');
     const base = await apiBase();
     const response = await fetch(base + '/spot/config', { cache: 'no-store', signal: AbortSignal.timeout(2500) });
     if (response.ok) {
