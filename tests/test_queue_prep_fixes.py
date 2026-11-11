@@ -179,7 +179,7 @@ class CaptionCarryTests(Site):
         old = {c["claim_quote"]: c["verdict"] for c in claims}
         self.assertTrue(all(old[c["claim_quote"]] == c["verdict"] for c in voted["claims"] if c["id"] != "u2"))
 
-    def test_vote_needs_two_runs_over_each_caption(self):
+    def test_vote_needs_the_judge_over_each_caption(self):
         base, _ = self.base_dir()
         self.write_page(CAPTIONS)
         caps = [u for u in units.split_page(CID, [SRC]) if u.get("caption")]
@@ -189,7 +189,7 @@ class CaptionCarryTests(Site):
                                               encoding="utf-8")
         with self.assertRaises(SystemExit) as e:
             self.main("--vote", str(run2), "--base", str(base))
-        self.assertIn("two checker runs", str(e.exception))
+        self.assertIn("judge-src0.json", str(e.exception))
 
     def test_recorded_plan_with_old_ids_is_refused(self):
         base, _ = self.base_dir()

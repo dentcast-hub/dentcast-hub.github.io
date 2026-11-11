@@ -141,8 +141,10 @@ jobs:
         run: python3 -m unittest discover -s tests -p test_queue_apply.py -v
       - name: Check the queue preparation tools (draft page, Fidelity prep, freeze stamp, PDF text, exam draft)
         run: python3 -m unittest discover -s tests -p test_queue_prep_tools.py -v
-      - name: Check FIDELITY units, two checker runs and the source conclusion
+      - name: Check FIDELITY units, the sweeper + judge protocol and the source conclusion
         run: python3 -m unittest discover -s tests -p test_des_v35_fidelity_units.py -v
+      - name: Check the relay route for agents without an isolated context
+        run: python3 -m unittest discover -s tests -p test_relay_call.py -v
       - name: Check the queue-prep fixes of item 24 (caption carry, sentence split, empty conclusion, 05 shapes, cap count, cleanup)
         run: python3 -m unittest discover -s tests -p test_queue_prep_fixes.py -v
       - name: Check the DES rating rule, one record per paper and the rating audit (module 08 Part 2d, Part 3(7))

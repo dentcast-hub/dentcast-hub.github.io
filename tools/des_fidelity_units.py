@@ -770,6 +770,109 @@ def vote_source(runs, adjudicated=None, reviewed=None, overruled=None):
     return out, tiebreak, unresolved, unreviewed
 
 
+VERDICTS = ("MATCHES", "ALTERED", "REVERSED", "NOT_IN_SOURCE", "NOT_ASSESSABLE", "AUTHOR_VIEW", "NOT_A_CLAIM")
+
+JUDGE_INSTRUCTION = """You are the JUDGE of a DentCast FIDELITY result (module 08 Part 2c, founder 2026-11-11). This is not a fresh scoring call: one sweeper run, in a separate context, has already judged every unit by the FIDELITY track below. You read its answers against the source and decide, unit by unit, whether each one stands.
+
+The user turn is one JSON block: source_text, text_basis, source_conclusion, and units — each with its id, its text, whether it is a heading or a figure caption, and the sweeper's answer (verdict, change_kind, source_quote, note). Read the whole source_text (F2-v's duty of search applies under FULL_TEXT), each unit with its neighbours, and the sentences the sweeper quoted.
+
+Answer EVERY unit, in order, by the FIDELITY track's own rules (F1-F3), never by resemblance:
+- {"agree": true} when the sweeper's verdict and change_kind are right. A reason is optional.
+- {"agree": false, "reason": "...", "verdict": "...", "change_kind": ..., "source_quote": "...", "note": "..."} when they are not: give the verdict and change_kind you would give (the F5 vocabulary, change_kind null unless ALTERED), the one source sentence that decides it copied verbatim from source_text ("" only for NOT_IN_SOURCE, NOT_ASSESSABLE, AUTHOR_VIEW, NOT_A_CLAIM), and why the sweeper's answer is wrong.
+
+Disagree in BOTH directions: a sentence the sweeper called MATCHES that is firmer, broader, reversed or otherwise altered against the source is the error nobody else will see, and a sentence it flagged that is in fact faithful is a fault charged to the author. When unsure, decide from the text and say in reason what made it close; the founder is shown every unit you disagree on.
+
+Output a single raw JSON object and nothing else:
+{"u1": {"agree": true}, "u2": {"agree": false, "reason": "…", "verdict": "ALTERED", "change_kind": "HEDGE_REMOVED", "source_quote": "…", "note": "…"}, …}
+"""
+
+
+def fidelity_track(knowledge=ROOT / ".dentcast/des-v3.7-knowledge.md"):
+    """The spec's FIDELITY track, verbatim: from «## FIDELITY track» to the end of the knowledge file."""
+    text = Path(knowledge).read_text(encoding="utf-8")
+    a = text.find("## FIDELITY track")
+    if a < 0:
+        sys.exit(f"{knowledge}: cannot find «## FIDELITY track»")
+    return text[a:].rstrip() + "\n"
+
+
+def judge_build(d, plan):
+    """Part 2c step 2: the judge's system prompt and one input block per source, from
+    DIR/input-src<k>.json (the sweeper's own block) and DIR/out-src<k>-1.json (its answers)."""
+    d = Path(d)
+    system = JUDGE_INSTRUCTION + "\n---\n\n" + fidelity_track()
+    (d / "judge-system.md").write_text(system, encoding="utf-8")
+    made = []
+    for k in sorted(plan, key=str):
+        if k == "pooled":
+            sys.exit("--judge is per source (scope SOURCE); a POOLED page runs one call per part and --merge")
+        ip, op = d / f"input-src{k}.json", d / f"out-src{k}-1.json"
+        if not ip.exists() or not op.exists():
+            sys.exit(f"--judge needs {ip.name} (--build) and {op.name} (the sweeper's run) in {d}")
+        blk = json.loads(ip.read_text(encoding="utf-8"))
+        ans = {c["id"]: c for c in json.loads(op.read_text(encoding="utf-8")).get("claims", [])}
+        missing = [x["id"] for x in blk["units"] if x["id"] not in ans]
+        if missing:
+            sys.exit(f"src{k}: the sweeper's run does not answer {missing[:8]} — rerun it on the whole block")
+        units_j = [{**x, "sweeper": {f: ans[x["id"]].get(f) for f in ("verdict", "change_kind", "source_quote", "note")}}
+                   for x in blk["units"]]
+        out = {"mode": "FIDELITY_JUDGE", "source_text": blk["source_text"], "text_basis": blk["text_basis"],
+               "source_conclusion": blk.get("source_conclusion"), "units": units_j}
+        p = d / f"judge-input-src{k}.json"
+        p.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+        made.append(str(p))
+    import hashlib  # noqa: PLC0415
+    print(json.dumps({"status": "built", "system_prompt": str(d / "judge-system.md"),
+                      "system_prompt_sha256": hashlib.sha256(system.encode("utf-8")).hexdigest(), "blocks": made,
+                      "run": "cd \"$(mktemp -d)\" && claude -p --system-prompt-file <DIR>/judge-system.md --tools \"\" "
+                             "--model <strong model> < <DIR>/judge-input-src<k>.json > <DIR>/judge-src<k>.json"},
+                     ensure_ascii=False, indent=1))
+
+
+def judge_source(run, judged, fresh, overruled=None, doubtful=None):
+    """Part 2c (founder 2026-11-11): one sweeper run, one judge, the judge's word final.
+    `run` is the sweeper's object (on a re-check, the base with the fresh answers laid
+    over it); `fresh` the ids the sweeper judged in this directory, each of which needs a
+    judge entry in `judged[uid]`. `agree: true` keeps the sweeper's answer. `agree:
+    false` on a flagged unit with no verdict, or with MATCHES, settles it as MATCHES
+    (the earlier reviewer rule: source_quote kept, both reasons in note); otherwise the
+    judge's verdict, change_kind, source_quote and note replace the sweeper's, the
+    sweeper's answer kept in note. Every disagreement is appended to `doubtful` (shown
+    to the founder as information; the verdict stays the model's), the flagged→MATCHES
+    ones also to `overruled`. Returns (object, unjudged, invalid)."""
+    claims, unjudged, invalid = [], [], []
+    for c in run["claims"]:
+        uid = c["id"]
+        pick = c
+        if uid in fresh:
+            j = judged.get(uid)
+            if not isinstance(j, dict) or "agree" not in j:
+                unjudged.append(uid)
+            elif not j["agree"]:
+                was = c["verdict"] + (f"/{c['change_kind']}" if c.get("change_kind") else "")
+                prior = (c.get("note") or "").strip()
+                reason = (j.get("reason") or "").strip()
+                v = j.get("verdict")
+                if c["verdict"] in FLAGGED and v in (None, "MATCHES"):
+                    pick = {**c, "verdict": "MATCHES", "change_kind": None,
+                            "note": f"Sweeper: {was}" + (f" — {prior}" if prior else "")
+                                    + "; overruled by the judge: " + reason}
+                    if overruled is not None:
+                        overruled.append(uid)
+                elif v not in VERDICTS or (v == "ALTERED") != bool(j.get("change_kind")):
+                    invalid.append(uid)
+                else:
+                    note = (j.get("note") or "").strip()
+                    pick = {**c, "verdict": v, "change_kind": j.get("change_kind") if v == "ALTERED" else None,
+                            "source_quote": j.get("source_quote") or "",
+                            "note": (note + "; " if note else "") + f"judge over sweeper {was}"
+                                    + (f" ({prior})" if prior else "") + (f": {reason}" if reason else "")}
+                if doubtful is not None and uid not in invalid:
+                    doubtful.append(uid)
+        claims.append(pick)
+    return refold(run, claims), unjudged, invalid
+
+
 def caption_carry(base_claims, page_units):
     """Founder ruling 2026-11-07 (publish queue item 24, approval 4): «وقتی فقط
     کپشن اضافه شده فقط کپشن باید چک بشه، بقیه همه تأییدشده». Align the base's
@@ -1085,6 +1188,9 @@ def main():
                     "units they disagree on) into DIR/voted-src<k>.json; DIR/review.json holds the stronger-model "
                     "review of every flagged unit; DIR/adjudicate.json "
                     "{\"src<k>\": {uid: claim fields}} settles a unit with no majority")
+    ap.add_argument("--judge", metavar="DIR", help="module 08 Part 2c step 2: after the sweeper's run "
+                    "(DIR/out-src<k>-1.json over DIR/input-src<k>.json) write DIR/judge-system.md and "
+                    "DIR/judge-input-src<k>.json for the judge, whose answer is DIR/judge-src<k>.json")
     ap.add_argument("--orphans", metavar="DIR", help="spec v3.5 rule 12: after --vote DIR, list the units no call judged "
                     "or every call left silent and write DIR/orphans-input.json (needs --texts) for the stronger reviewer")
     ap.add_argument("--sweep", metavar="DIR", help="spec v3.5 rule 12: verify DIR/orphans.json and add each found unit "
@@ -1201,6 +1307,11 @@ def main():
         (d / "pooled.json").write_text(json.dumps(merged, ensure_ascii=False, indent=1), encoding="utf-8")
         print(d / "pooled.json", merged["fidelity_score"], merged["level"])
         return
+    if a.judge:
+        if mode == "POOLED":
+            sys.exit("--judge is per source (scope SOURCE); a POOLED page runs one call per part and --merge")
+        judge_build(a.judge, plan)
+        return
     if a.vote:
         d = Path(a.vote)
         adj_p = d / "adjudicate.json"
@@ -1214,6 +1325,8 @@ def main():
                 sys.exit("--vote is per source (scope SOURCE); a POOLED page votes each S<n> part, then --merge")
             runs = [json.loads(p.read_text(encoding="utf-8"))
                     for p in sorted(d.glob(f"out-src{k}-*.json"), key=lambda p: int(p.stem.rsplit("-", 1)[1]))]
+            judge_p = d / f"judge-src{k}.json"
+            this_dir_ids = [c["id"] for r in runs for c in r.get("claims", [])]
             base_p = Path(a.base) / f"voted-src{k}.json" if a.base else None
             if base_p and not base_p.exists():
                 # v3.5 rule 13: a source the sweep gave its first units has no
@@ -1227,10 +1340,11 @@ def main():
                 base, carried = carried_base(a.content_id, base, [by_id[i] for i in plan[k]], k)
                 if carried:
                     # Part 2c step 1 for the units judged now: two runs each
-                    short = [i for i in carried if sum(i in {c["id"] for c in r["claims"]} for r in runs) < 2]
+                    need = 1 if (d / f"judge-src{k}.json").exists() else 2
+                    short = [i for i in carried if sum(i in {c["id"] for c in r["claims"]} for r in runs) < need]
                     if short:
-                        sys.exit(f"src{k}: captions added since the base: {short} need two checker runs each "
-                                 f"(out-src{k}-1.json and -2.json over --carry's blocks)")
+                        sys.exit(f"src{k}: captions added since the base: {short} need the sweeper's run "
+                                 f"(out-src{k}-1.json over --carry's blocks) and the judge (judge-src{k}.json)")
                     print(f"src{k}: captions added since the base — {len(base['claims'])} unit(s) carried with their "
                           f"verdicts, {len(carried)} caption unit(s) judged now: {carried}")
                 if a.texts:
@@ -1250,15 +1364,35 @@ def main():
                             sys.exit(f"src{k}: the source text grew; re-check every non-MATCHES unit first: {owed}")
                 runs = rebase(base, runs, [by_id[i] for i in plan[k]], k)
             elif not a.base:
-                # Part 2c step 1: two full checker runs per block, always — also on a
-                # one-source page. A sentence one run calls MATCHES is otherwise never
-                # looked at again; the second run is never skipped.
                 want = set(plan[k])
                 full = [r for r in runs[:2] if want <= {c["id"] for c in r.get("claims", [])}]
-                if len(full) < 2:
-                    sys.exit(f"src{k}: --vote needs two full checker runs (out-src{k}-1.json and -2.json, every unit "
-                             "of the block); the second run is never skipped (step 4.13 Part 2c)")
+                if judge_p.exists():
+                    # Part 2c (founder 2026-11-11): one full sweeper run, then the judge
+                    if len(runs) != 1 or not full:
+                        sys.exit(f"src{k}: the sweeper protocol takes exactly one full run (out-src{k}-1.json, every "
+                                 f"unit of the block) beside {judge_p.name}; {len(runs)} run file(s) found")
+                elif len(full) < 2:
+                    # records prepared before 2026-11-11: two full checker runs, tie-break, review
+                    sys.exit(f"src{k}: --vote needs the sweeper's full run (out-src{k}-1.json) and the judge's answer "
+                             f"({judge_p.name}, from --judge) — step 4.13 Part 2c; a directory prepared under "
+                             f"the earlier two-checker protocol needs both full runs (-1 and -2)")
             if not runs:
+                continue
+            if judge_p.exists():
+                if len(runs) > 1 and not a.base:
+                    sys.exit(f"src{k}: {judge_p.name} beside {len(runs)} run files — one protocol per directory")
+                judged = json.loads(judge_p.read_text(encoding="utf-8"))
+                fresh = set(this_dir_ids)
+                overruled, doubtful = [], []
+                out, unjudged, invalid = judge_source(runs[0], judged, fresh, overruled, doubtful)
+                (d / f"voted-src{k}.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+                flagged = [c["id"] for c in out["claims"] if c["verdict"] in FLAGGED]
+                print(f"src{k}: sweeper + judge · {out['fidelity_score']} {out['level']} · "
+                      f"flagged (Part 3b) {flagged or '—'} · "
+                      f"doubtful: judge ≠ sweeper (founder sees, verdict is the judge's) {doubtful or '—'} · "
+                      f"of which flagged → MATCHES {overruled or '—'} · "
+                      f"awaiting the judge {unjudged or '—'} · judge answer invalid {invalid or '—'}")
+                open_units += len(unjudged) + len(invalid)
                 continue
             overruled = []
             out, tiebreak, unresolved, unreviewed = vote_source(runs, adj.get(f"src{k}"), rev.get(f"src{k}"),
@@ -1271,7 +1405,9 @@ def main():
                   f"overruled by the stronger review → MATCHES (report, do not ask) {overruled or '—'}")
             open_units += len(tiebreak) + len(unresolved) + len(unreviewed)
         if open_units:
-            sys.exit(f"{open_units} unit(s) open — tie-break run (--only), {adj_p} for no majority, "
+            sys.exit(f"{open_units} unit(s) open — the judge's answer (judge-src<k>.json: every unit the sweeper "
+                     "judged here, a valid verdict on every disagreement); earlier protocol: tie-break run (--only), "
+                     f"{adj_p} for no majority, "
                      f"{rev_p} for the stronger-model review of every flagged unit")
         return
     if (a.orphans or a.sweep) and not is_v35(sources):

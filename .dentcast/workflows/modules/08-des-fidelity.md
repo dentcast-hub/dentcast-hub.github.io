@@ -42,7 +42,7 @@ At intake and again before Part 1, check whether the founder supplied a DES scor
 
 1. **DES supplied:** Require the complete canonical SOURCE/COMMENTARY JSON object for every cited/scored source, with original `des_version`, identity/DOI, `text_basis`, evidence quotes, calculations, score and band. A `plus/des-scores.json`-shaped packet keyed by this exact `content_id`, or that structure plus explicit same-page identity, is acceptable. Obtain or reuse the actual matching `source_text` through Part 1, without executing any DES scoring, and check the correct page/source set, exact quote substrings, source basis, spec version, arithmetic and band using Part 3. When valid, **DO NOT rerun the DES/SOURCE/COMMENTARY model calls**: preserve the founder-supplied original JSON objects verbatim for Part 4. A separate model-run receipt is **not required for a valid DES JSON**; record its public-safe provenance and validation. A number without the canonical JSON is never sufficient.
 
-2. **Fidelity supplied** (by the founder, another agent or another client — Claude, Codex, Cursor, Cowork alike): This is a separate track, not a prerequisite to accepting valid DES JSON. The one test is «Acceptance is mechanical» below: `tools/des_fidelity_units.py <content_id> --texts texts.json --accept FILE` on the final page text, for all owed source/POOLED calls. **No run receipts, model ids, preflight record or proof of independent contexts are asked for**, and their absence is never a reason to refuse. When it exits 0, **DO NOT rerun Fidelity model calls**; preserve the JSON verbatim. Units it leaves `ALTERED`/`REVERSED` go to Part 3b as usual (the founder gate is unchanged); a unit the supplier's stronger review already overruled is `MATCHES` in the JSON and is not asked again. If Fidelity is **not supplied** but is canonically owed, run **only the missing Fidelity calls** under Parts 2b/2c, not the already accepted DES. For COMMENTARY self-records and other lawful Fidelity exceptions, record the correct `null`/error/zero-unit outcome rather than fabricating model calls.
+2. **Fidelity supplied** (by the founder, another agent or another client — Claude, Codex, Cursor, Cowork alike): This is a separate track, not a prerequisite to accepting valid DES JSON. The one test is «Acceptance is mechanical» below: `tools/des_fidelity_units.py <content_id> --texts texts.json --accept FILE` on the final page text, for all owed source/POOLED calls. **No run receipts, model ids, preflight record or proof of independent contexts are asked for**, and their absence is never a reason to refuse. When it exits 0, **DO NOT rerun Fidelity model calls**; preserve the JSON verbatim. Units it leaves `ALTERED`/`REVERSED` go to Part 3b as usual (the founder gate is unchanged); a unit the supplier's judge (or, under the earlier protocol, stronger review) already overruled is `MATCHES` in the JSON and is not asked again. If Fidelity is **not supplied** but is canonically owed, run **only the missing Fidelity calls** under Parts 2b/2c, not the already accepted DES. For COMMENTARY self-records and other lawful Fidelity exceptions, record the correct `null`/error/zero-unit outcome rather than fabricating model calls.
 
 3. **No supplied results:** Execute the usual Parts 1–4, including all owed DES and Fidelity calls. If a supplied track's JSON is incomplete, stale, inconsistent, from another content ID, unverifiable against actual source text, or otherwise fails Part 3 (for Fidelity: `--accept` exits non-zero), **record 4.13 as blocked** with the exact failing rows and request corrected data. **Never silently rerun the founder's supplied result** to work around a bad/missing JSON; do not label the absence as a founder «بدون DES» exemption. Partial source sets are not a completed DES packet.
 
@@ -75,8 +75,8 @@ the page and the source; how it was produced cannot be checked from the file at 
    Part 3) row; anything else is not a refusal, and the result is used as it is.
 3. **Provenance is information, never a gate.** Write the models and runs in the publish
    report when they are known, `UNVERIFIED` when they are not.
-4. **How you produce a result yourself** stays Part 2c (two independent checker runs,
-   a tie-break where they differ, the stronger review of what is still flagged). That
+4. **How you produce a result yourself** stays Part 2c (one sweeper run and one judge,
+   each in its own context; the founder sees the units they differed on). That
    is the producer's method; the receiver checks the result, not the method.
 5. **Nothing is added to DES/Fidelity on an agent's own initiative.** A new step, gate,
    receipt or validation rule enters only by founder decision, and only when it catches
@@ -222,7 +222,7 @@ text is what the SOURCE call scores. `tools/des_fidelity_units.py` takes
 `source_conclusion` from the last Conclusion section (or the last sentence) and
 passes over such footer sentences; a stored record keeps the conclusion it
 echoed. The PDF and its text stay outside the repository and the queue branch.
-**An empty `source_conclusion` is never sent to a checker.** The receipt of
+**An empty `source_conclusion` is never sent to a model.** The receipt of
 `pdf_source_text.py` shows the conclusion the blocks will carry; when a layout
 defeats the cut (a two-column page that glued «CONCLUSIONS REFERENCES» into one
 line, J Prosthet Dent, publish-queue item 24) it warns and exits 3, and
@@ -244,7 +244,7 @@ from every other run's).
 **How the SOURCE call is run: the spec file IS the system prompt.** One fresh,
 tool-less process per input block, started in an empty directory, with
 `.dentcast/des-v3.7-knowledge.md` as its system prompt and the Step 0 block (below)
-as its only user turn. The model is the **stronger reviewer role** of Part 2c's table.
+as its only user turn. The model is the **strong model** of Part 2c's table.
 Claude Code (flags verified with `claude --help`, CLI 2.1.319, 2026-11-07):
 
 ```bash
@@ -463,56 +463,96 @@ disagreement.
 **The output** is the spec's F5 object. Validate it in Part 3(5), then store it
 in Part 4.
 
-#### Part 2c — How the FIDELITY call is run: two independent checker runs, a tie-break, a stronger reviewer
+#### Part 2c — How the FIDELITY call is run: one sweeper run, one judge, the founder sees the doubts
 
-The FIDELITY call is an independent agent per input block, reading
-`.dentcast/des-v3.7-knowledge.md` (the spec minus its appendix) as its
-instruction and the block as its user turn. **The roles are provider-neutral:**
-choose a capable, lighter reasoning model as the **checker**, and a stronger
-reasoning model as the **reviewer/adjudicator**. Sonnet and Opus are the
-Claude examples, not a requirement to use Anthropic.
+**Founder decision 2026-11-11 (1405/08/20)** replaces the earlier protocol (two
+lighter checker runs, a tie-break where they differed, a stronger review of what
+was still flagged). Records and work directories made under it keep their record
+and their provenance; `--vote` still reads such a directory (two run files and
+`review.json`/`adjudicate.json`, no `judge-src<k>.json`). Every new run, re-check
+and caption check uses the protocol below. This changes the caller's protocol only:
+the spec, its verdict rules, F4 and the bands are untouched, and where the spec's
+appendix (rule 12) names «two checker runs, tie-break, stronger review» it means
+this Part 2c, which now reads «sweeper, judge».
 
-| Environment | Checker: both full runs + disagreement-only third run | Stronger reviewer/adjudicator |
-|---|---|---|
-| Claude / Anthropic | Sonnet | Opus |
-| ChatGPT / Codex / OpenAI | e.g. `gpt-6-luna`, when exposed by the execution environment | e.g. `gpt-6-astra`, when exposed by the execution environment |
-| Grok / xAI | an available lighter **reasoning** model, e.g. a Fast reasoning variant | the available stronger flagship reasoning model, e.g. Grok 4.7 |
-| Any future provider | a capable lighter reasoning model available to the agent | an available stronger reasoning model |
+**Two roles, both the strongest reasoning model the environment exposes, each in
+its own fresh context:**
 
-These are role examples, not fixed versions, cross-provider quality equivalences,
-or a claim that an app subscription exposes every model or multi-agent tools.
-Verify actual model IDs and delegation capabilities before starting. For Grok,
-consult the live official model list (`https://docs.x.ai/developers/models`);
-if a Fast variant is not available, do not invent one. If separate agents or a
-stronger reviewer are unavailable, report the missing stage; never label one
-model's repeated self-review as the completed two-tier protocol.
+| Environment | Sweeper and judge (the same model is fine; the contexts are separate) |
+|---|---|
+| Claude / Anthropic | Opus |
+| ChatGPT / Codex / OpenAI | the strongest reasoning model exposed, e.g. `gpt-6-astra` |
+| Grok / xAI | the strongest flagship reasoning model exposed |
+| Any future provider | the strongest available reasoning model |
 
-**Model routing (before the checker runs) — a choice, not a gate.** Use the environment's real controls: the lighter capable reasoning model for the two full checker runs, launched as separate agents (or separate processes, `agent-parity.md` «اجرای ایزوله») with identical inputs and isolated contexts, in parallel; the stronger model only for the reviewer duties below. No lighter model available ⇒ the available model takes the checker role; that is not a reason to stop or to ask. Price is never a gate. Write the model ids in the publish report when the runtime shows them, `UNVERIFIED` when it does not. The one thing that cannot be replaced is independence: if the runtime gives no separate context at all (no sub-agent, no separate process), say so under «توانمندی ندارم» and never present two answers from one context as two runs. This routing never changes the scoring rules or the stored JSON, and it is never a reason for a receiver to refuse a result (`«Acceptance is mechanical»`).
+These are role examples, not fixed versions or quality equivalences; verify the
+actual model ids before starting and write them in the publish report
+(`UNVERIFIED` when the runtime does not show them). A lighter model is never used
+for either role; no stronger model available ⇒ the available one takes both, and
+that is not a reason to stop or to ask. **Price is never a gate. The one thing
+that cannot be replaced is the separate context:** the judge must not be the
+context that made the sweep. Two sequential tool-less processes (`agent-parity.md`
+«اجرای ایزوله») are enough — no parallel agents, no multi-agent tool. If the
+runtime gives no separate context at all (ChatGPT, a cloud agent with no CLI), use
+the relay route (`agent-parity.md` «مسیر رله», `tools/relay_call.py`): the founder
+carries each call to its own fresh chat; only if the founder declines it,
+«توانمندی ندارم». Never present one context's self-review as the judge.
+
+1. **Sweeper — one full run per input block.** The spec file
+   (`.dentcast/des-v3.7-knowledge.md`) as the system prompt, the block
+   (`<dir>/input-src<k>.json` from `--build`) as the only user turn, saved as
+   `<dir>/out-src<k>-1.json`. Exactly one run file per source; it answers every
+   unit of the block.
+2. **Judge — the tool builds its input, never the agent.**
+   `python3 tools/des_fidelity_units.py <content_id> --judge <dir>` writes
+   `<dir>/judge-system.md` (the judge instruction + the spec's FIDELITY track,
+   verbatim) and `<dir>/judge-input-src<k>.json` (source text, basis, conclusion,
+   every unit with the sweeper's verdict, kind, quote and note). Run it in a fresh
+   tool-less process like the sweeper (the tool prints the command) and save the
+   answer as `<dir>/judge-src<k>.json`: **one entry for every unit the sweeper
+   judged** — `{"agree": true}`, or `{"agree": false, "reason", "verdict",
+   "change_kind", "source_quote", "note"}`. The judge disagrees in both
+   directions: a `MATCHES` that is in fact firmer, broader or reversed, and a flag
+   that is in fact faithful.
+3. **Settle**: `python3 tools/des_fidelity_units.py <content_id> --vote <dir>`.
+   **The judge's word is final** (founder ruling 1405/08/15, kept: the reviewer
+   exists to catch the sweep's misreading, so the sweep cannot outrank it).
+   `agree: true` keeps the sweeper's answer. `agree: false` on an
+   `ALTERED`/`REVERSED` unit with no verdict or `MATCHES` settles it as `MATCHES`
+   (`change_kind` null, `source_quote` kept, both reasons in `note`); any other
+   disagreement takes the judge's verdict, kind, quote and note, with the sweeper's
+   answer kept in `note`. Counts, score, level and the Persian lines are
+   recomputed; Part 3 validates the result (every quote verbatim) as always.
+   `--vote` exits non-zero while a unit the sweeper judged has no judge entry, or
+   a disagreement carries an invalid verdict (unknown verdict, `ALTERED` without a
+   kind, a kind without `ALTERED`) — then the judge runs again, never a hand patch.
+4. **The doubtful units go to the founder — as information, never as a vote.**
+   `--vote` prints every unit where the judge differed from the sweeper («موارد
+   شک‌دار»). They are listed in M3b (Part 3b) and in the Push-2 report: the page's
+   sentence, what the sweeper said, what the judge said and why. **The verdict
+   stays the model's**: the founder decides whether to change the *text*, never
+   which verdict the sentence gets — the reader-facing label is «ارزیابی خودکار»
+   and must stay true. A doubtful unit the judge settled as `ALTERED`/`REVERSED`
+   is also an ordinary Part 3b offer (fix / own wording / keep).
 
 <!-- fidelity-single-source-tier:v1 -->
 **DES is never tiered.** Every DES/SOURCE/COMMENTARY call above runs in full on
-every page, whatever its length or source count. The FIDELITY protocol below is
-light on **every** page (founder 2026-11-09: two agreeing runs settle a sentence);
-a single-source page is simply the case with no sweep at all:
+every page, whatever its length or source count. The FIDELITY protocol is the same
+two calls per source on every page; a single-source page is simply the case with no
+sweep for orphans:
 
-- **Step 1 is unchanged: two full checker runs, always** (its reason is in step
-  1 below). `--vote` refuses fewer than two full runs.
-- **Step 2 (tie-break)** runs only when `--vote` lists a unit the two runs
-  answered differently; when they agree everywhere there is no third run.
-- **Step 4 (stronger reviewer)** runs only when the vote leaves a unit
-  `ALTERED`/`REVERSED`; with none, no reviewer call is made.
-- **Step 5 (orphan sweep) does not exist for a single-source page.** The sweep
-  only answers «which of the several sources does this sentence come from?»;
-  with one source the vote already records an unmatched sentence as
-  `NOT_IN_SOURCE` (reported as the author's own reasoning). Do not run
-  `--orphans`/`--sweep` or spend a reviewer call on it. **One paper → no sweep;
-  two or more → a sweep only when a sentence reaches no source (below).**
+- **The orphan sweep (step 5) does not exist for a single-source page.** It only
+  answers «which of the several sources does this sentence come from?»; with one
+  source the sweeper already records an unmatched sentence as `NOT_IN_SOURCE`
+  (reported as the author's own reasoning). Do not run `--orphans`/`--sweep` or
+  spend a call on it. **One paper → no sweep; two or more → a sweep only when a
+  sentence reaches no source (below).**
 
-A multi-source page, a `POOLED` page or a long article follows the same three
-lines above (two full runs, a tie-break only where they differ, the stronger review
-only of what is still flagged). The
-stored JSON (`voted-src<k>.json`, Part 4) has the same shape on either path, so
-Phase F and `tools/queue_install_des.py` read it unchanged.
+A multi-source page or a long article follows the same steps 1–4, once per source
+call. A `POOLED` page runs one sweeper call per part and `--merge` (Part 2b); it is
+not judged per part and not voted. The stored JSON (`voted-src<k>.json`, Part 4)
+has the same shape on every path, so Phase F and `tools/queue_install_des.py` read
+it unchanged.
 <!-- /fidelity-single-source-tier:v1 -->
 
 <!-- fidelity-sweep-first:v1 -->
@@ -524,8 +564,8 @@ no source would be judged by no call and would silently drop out of the grade. S
 
 - **Every body sentence reaches a source** (named, carried from its paragraph, or a
   recorded plan) → no sweep; build and run steps 1–4 directly.
-- **At least one body sentence reaches none** → the sweep runs **before** the first
-  checker run: `--orphans` → the stronger reviewer's `orphans.json` → `--sweep` →
+- **At least one body sentence reaches none** → the sweep runs **before** the
+  sweeper: `--orphans` → the strong model's `orphans.json` → `--sweep` →
   `--build`. `tools/des_fidelity_units.py` enforces it: the plain report and `--json`
   (`unswept`) list those sentences, and a full `--build`, `--pack` and `--accept`
   refuse until the sweep is recorded in `.dentcast/des-fidelity-plans/`.
@@ -539,54 +579,20 @@ no source would be judged by no call and would silently drop out of the grade. S
 Records prepared under the earlier order keep their record.
 <!-- /fidelity-sweep-first:v1 -->
 
-**The model is part of the measurement:** freeze the same checker model/version
-and reasoning settings for runs 1, 2 and 3 of a record; the stronger reviewer is
-a separate role, not a third checker vote. Give the first two agents identical
-spec/source/unit inputs but separate contexts; neither sees the other's output.
-The third checker sees only the disagreement units and their source/context,
-not the earlier verdicts. Record actual provider/model IDs, reasoning settings
-and each run's role in the publish report (outside the spec's score objects).
-Keep historical records and their provenance unchanged.
-
-1. **Two full runs per input block** — `<dir>/out-src<k>-1.json` and `-2.json`.
-   Two, not one: a sentence one run calls `MATCHES` is otherwise never looked
-   at again, and a missed firmer-than-the-source sentence is the error nobody
-   sees.
-2. **Tie-break only where they differ.** `--vote <dir>` lists every unit the
-   two runs answered differently (any verdict or kind, flagged or not); build
-   blocks for those alone (`--build <dir2> --only u…`), run them once, save
-   as `out-src<k>-3.json`. Units the two runs agree on are settled.
-3. **Vote**: `python3 tools/des_fidelity_units.py <content_id> --vote <dir>`.
-   Two agreeing votes win; with three, the `(verdict, change_kind)` pair two
-   share wins, quote and note from the earliest run in it. Three different
-   answers → the designated stronger reviewer/adjudicator decides that unit in
-   `<dir>/adjudicate.json` (`{"src<k>": {"u…": {verdict, change_kind,
-   source_quote, note}}}`).
-4. **The stronger reviewer reviews every unit the vote leaves `ALTERED`/`REVERSED`** — not only
-   the unresolved ones. More checker votes cure random disagreement but not a
-   shared misreading. The reviewer reads the
-   unit, its neighbours, the sentences the runs quoted and, where a term is
-   defined there, the source's Methods, then writes
-   `<dir>/review.json` (`{"src<k>": {"u…": {"agree": true|false, "reason":
-   "…"}}}`). **A dissent settles the unit as `MATCHES`** (founder ruling
-   2026-11-06 / 1405/08/15, queue item 22, u45): the reviewer exists because
-   the lighter checkers can share a misreading, so their majority cannot
-   outrank it. On `agree: false`, `--vote` sets the verdict to `MATCHES` and
-   `change_kind` to `null`, keeps `source_quote`, and writes the majority's
-   verdict, kind and note with the reviewer's reason into `note`
-   («Checker majority: ALTERED/HEDGE_ADDED — …; overruled by the stronger
-   review: …»); counts, score, level and the Persian lines are recomputed.
-   `agree: true` keeps the flagged verdict for Part 3b. A flagged unit with
-   no review entry stays open. `--vote` prints the overruled ids; list them
-   to the founder in the report as information, never as a question.
+**The model is part of the measurement:** freeze the same model/version and
+reasoning settings for the sweeper of a record and for every re-check of it; the
+judge is a separate role and a separate context. The sweeper never sees the
+judge's output; the judge sees the sweeper's answers by design (it is reviewing
+them). Record actual provider/model ids, reasoning settings and each call's role
+in the publish report (outside the spec's score objects).
 
 5. **Orphan sweep (spec v3.5 rule 12) — owed when a body sentence reaches no
    source, and then before step 1** (the block above).
    `python3 tools/des_fidelity_units.py <content_id> --orphans <dir> --texts texts.json`
    lists every body sentence (headings excepted) and
    writes `<dir>/orphans-input.json` with those sentences and the text of
-   **every** source. The stronger reviewer reads it — all sources, whatever a
-   marker assigned — and writes
+   **every** source. The strong model, in a fresh context, reads it — all sources,
+   whatever a marker assigned — and writes
    `<dir>/orphans.json`: `{"u…": {"found": "S<n>", "source_quote": "…", "note":
    "…"}}` or `{"u…": {"found": null, "note": "…"}}`. **It finds; it never
    judges:** no verdict, no `change_kind`. Then
@@ -598,11 +604,9 @@ Keep historical records and their provenance unchanged.
    faults: they are the author's own reasoning or background unless the founder
    points to a source the run did not have.
 
-`--vote` exits non-zero while any unit still needs a tie-break run, an
-adjudication or a review. `voted-src<k>.json` is what Part 3 validates and
-Part 4 stores — one object per source, the spec's own shape. `--vote` is for
-SOURCE scope; a POOLED page is not voted (it runs one call per part and
-`--merge`).
+`voted-src<k>.json` is what Part 3 validates and Part 4 stores — one object per
+source, the spec's own shape. `--vote` is for SOURCE scope; a POOLED page is not
+voted (it runs one call per part and `--merge`).
 
 <!-- des-rating-audit:v1 -->
 #### Part 2d — The DES rating audit by the stronger reviewer (every new RESEARCH record)
@@ -615,8 +619,8 @@ audited again; COMMENTARY and `NOT_APPRAISABLE` records have no domains and no a
 when the record's own note says so; a scorer that writes a neutral note passes it. The
 audit costs one stronger-model call per paper, and Part 1 makes it once per paper ever.
 
-**What the reviewer does: it finds the line, it never scores.** The stronger reviewer
-role of Part 2c's table, in a fresh tool-less context (Part 2's run method), receives the
+**What the reviewer does: it finds the line, it never scores.** The strong model
+of Part 2c's table, in a fresh tool-less context (Part 2's run method), receives the
 record and the `source_text` it was scored on, and for each domain answers only **which
 line of 3b (1–5) is the first that matches**, with the sentence(s) of the text that prove
 it (an absence names the sections read instead). It never rescales, rescores, computes a
@@ -768,9 +772,14 @@ Part 4 stores the final result**, and the founder is shown each such sentence an
 whether to fix it. These blocks are **message M3b at C.4.13**
 (`publish-checkpoints.md`): never deferred to the final report, never skipped
 because the grade is already high. Only units
-still flagged after the Part 2c step 4 review reach this gate; a unit the
-stronger review overruled is already `MATCHES` and is listed in the report as
-information, never asked.
+still flagged after the Part 2c judge reach this gate; a unit the judge
+overruled is already `MATCHES` and is not asked. **The same message also lists
+the doubtful units** (Part 2c step 4: every unit where the judge differed from the
+sweeper) — the sentence, both answers and the judge's reason — and M3b is sent
+for them even when nothing is still flagged. A doubtful unit that is not flagged
+is information with two answers, **«همین بماند»** or **«خودم می‌نویسم»** (then it
+is re-checked like any edit below): the founder may change its text, never its
+verdict.
 
 **Save point.** Before M3b goes out, write the validated result into
 `plus/des-scores.json` exactly as Part 4 would, commit and push it with the page
@@ -779,7 +788,7 @@ provisional, not the gate's outcome: the re-run below replaces its `fidelity`
 and `scored_at`, as for a page already published. If the session is lost while
 M3b waits, the next session rebuilds `<dir1>/voted-src<k>.json` from the stored
 `fidelity` slots (the same shape), resolves `source_text` again by Part 1, and
-continues from the founder's answers; no checker run is repeated. A `POOLED`
+continues from the founder's answers; no model call is repeated. A `POOLED`
 slot folds several parts and cannot be split back: on such a page the DES
 `sources` survive, the Fidelity step runs again.
 
@@ -819,8 +828,8 @@ never a «بله» to the others.
   full run already judged every other sentence, and judging them again buys
   nothing but fresh run-to-run noise on sentences nobody touched. Build blocks
   for the edited units alone (`--build <dir2> --only u…`, same `source_text`,
-  same basis), run them by Part 2c (two runs, a tie-break where they differ, a stronger-model
-  review of anything still flagged), then
+  same basis), run them by Part 2c (the sweeper over those units, then `--judge` and
+  the judge over them), then
   `python3 tools/des_fidelity_units.py <content_id> --vote <dir2> --base <dir1>`,
   where `<dir1>` holds the `voted-src<k>.json` of the last full run. The tool
   keeps the base verdict for every unit not re-checked, recomputes counts,
@@ -835,8 +844,8 @@ never a «بله» to the others.
   `python3 tools/des_fidelity_units.py <content_id> --carry <dir1> --texts
   texts.json --build <dir2>` matches every unit of the last full run to its new
   id by its exact text, carries its verdict, and builds blocks for the caption
-  units alone; run those by Part 2c (two runs, a tie-break where they differ, a
-  stronger review of anything flagged), then `--vote <dir2> --base <dir1>`, which
+  units alone; run those by Part 2c (the sweeper over them, then `--judge` and the
+  judge), then `--vote <dir2> --base <dir1>`, which
   applies the same mapping. The language toggle's label («English», `<a
   class="lang-btn">` after the h1) is carried the same way: a result made on a
   preview without it (an outside client's draft, publish-queue item 33) is one
@@ -953,8 +962,9 @@ none was owed. Per FIDELITY slot: the
 `level` and the word the reader will see for it («تطابق خیلی بالا», spec v2.8
 appendix rule 5), the count line («۵۰ از ۵۲ ادعایی که منابع به آن پرداخته‌اند
 مطابق است؛ ۴ جملهٔ دیگر در منابع نیامده»), every `ALTERED` and `REVERSED` unit
-with its `change_kind`, every unit the stronger review overruled to `MATCHES` (Part 2c step 4: the
-majority's verdict and the reviewer's reason, as information), or the reason for a `null` or `INSUFFICIENT_TEXT` slot. And Part 3b's outcome: each
+with its `change_kind`, every doubtful unit (Part 2c step 4: the sweeper's and the judge's answer and the
+judge's reason, as information; records made under the earlier protocol: every unit
+the stronger review overruled to `MATCHES`), or the reason for a `null` or `INSUFFICIENT_TEXT` slot. And Part 3b's outcome: each
 offered sentence with the founder's answer («اصلاح کن» / «خودم می‌نویسم» /
 «همین بماند»), and the grade before → after the re-run. For a skip, the documented
 reason line. Explicitly confirm that no DOI, abstract, or quartile was guessed.
