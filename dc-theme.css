@@ -1057,6 +1057,7 @@ body:has(.dc-topbar) .back:hover {
   :root body main.article-content-wrap :is(.content-box > h2:not([class]), .content-box > section > h2:not([class])) {
     font-size: 1.1875rem;
     line-height: 2.09rem;
+    margin-top: 0.913rem;   /* was .83em of 17.6px = 14.608px; em would grow with the font */
   }
   :root body main.article-content-wrap :is(
     :is(.text-box, .glass-box, .content-box, .dc-article-box) > :is(h3, h4):not([class]),
