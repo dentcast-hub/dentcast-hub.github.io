@@ -1082,5 +1082,6 @@ body:has(.dc-topbar) .back:hover {
 }
 
 /* The Spot artwork's box exists before its pixels do (spot/spot.js builds
-   the <img> lazily, after /me). Every creative is drawn 2:1. */
+   the <img> lazily, after /me). Every creative is drawn 2:1. Mirrored in
+   index.html's inline styles, which load no shared CSS. */
 .dc-spot-art-img { aspect-ratio: 2 / 1; object-fit: contain; }

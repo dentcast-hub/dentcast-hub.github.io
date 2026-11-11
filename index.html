@@ -1107,7 +1107,18 @@ body{
 .dc-monitor-list{
   display:flex; flex-direction:column; gap:0.1875rem;
   max-height:10.8125rem; overflow-y:auto;
+  /* Its rows arrive with dentcast-brain.json (the LAST 30 UPDATES script),
+     long after first paint on a slow phone; empty, the box was 63px and
+     everything under it — the des-board door, the sections below — jumped
+     174px when it filled (archive tab, 2026-11-11). Thirty rows always
+     overflow the max-height, so reserving exactly that height is the
+     filled box's own size. */
+  min-height:10.8125rem;
 }
+/* The Spot artwork's box before its pixels (spot.js builds the <img> after
+   /me): every creative is drawn 2:1. Mirrors the rule at the end of
+   dc-theme.css, which this page does not load. */
+.dc-spot-art-img{ aspect-ratio:2/1; object-fit:contain; }
 .dc-monitor-list a{
   display:flex; align-items:center; gap:0.5rem;
   text-decoration:none;
@@ -7219,7 +7230,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=324" defer></script>
+<script src="/dc-nav.js?v=325" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
