@@ -1,14 +1,14 @@
 // Controller for the standalone /plus/profile.html page. Renders the same
 // profile the header overlay uses. Requires login.
-import { currentUser, meStatus } from './api.js?v=230';
-import { unreachableGate } from './premium-cta.js?v=230';
-import { openLoginModal } from './login-modal.js?v=230';
-import { renderProfile } from './profile.js?v=230';
-import { el } from './util.js?v=230';
-import { openSheet } from './sheet.js?v=230';
-import { certificateTerms } from './certificate-terms.js?v=230';
-import { registerSW } from './pwa.js?v=230';
-import { wirePageBack } from './page-back.js?v=230';
+import { currentUser, meStatus } from './api.js?v=231';
+import { unreachableGate } from './premium-cta.js?v=231';
+import { openLoginModal } from './login-modal.js?v=231';
+import { renderProfile } from './profile.js?v=231';
+import { el } from './util.js?v=231';
+import { openSheet } from './sheet.js?v=231';
+import { certificateTerms } from './certificate-terms.js?v=231';
+import { registerSW } from './pwa.js?v=231';
+import { wirePageBack } from './page-back.js?v=231';
 
 /**
  * A GATE THAT SAYS WHAT IS BEHIND THE DOOR.

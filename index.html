@@ -4992,6 +4992,23 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 .dc-pathway-showcase > .dcp-hf{ margin:0; }
 .dc-pathway-showcase .dcp-pws{ margin:.7rem 0 0; }
 .dcp-hf .dcp-pp-showcase .dcp-pws{ margin:.2rem 0 .9rem; }
+/* HOME, LIGHTER (founder, 2026-11-11) — three things leave the page, in both
+   shells, without leaving the document:
+   - Pulse (#dcPulseCard / #dcdPulse): the same publications «تازه‌های دنت‌کست»
+     lists a few blocks up. The markup stays because the publishing tools
+     write and verify its lines (queue_apply.py, quick_publish.py,
+     verify_publish.py, article-notify) and the desktop copy is filled from it.
+   - The premium-features section (#dcPlusFeatures / #dcdPlusFeatures, drawn
+     by plus/js/home-features.js): the premium tab carries the same rows,
+     live for a subscriber.
+   - «تازه‌ترین مطلب» under every row of the latest rail: the same two words
+     eight times. The spans stay because the tools that rewrite the rail emit
+     them.
+   Never painted, so nothing moves when their scripts fill them. */
+#dcPulseCard, #dcdPulse,
+#dcPlusFeatures, #dcdPlusFeatures{ display:none !important; }
+#dcLatestRail .dc-rail-meta, #dcdLatestRail .dc-rail-meta{ display:none; }
+
 /* MOBILE HOME REFRESH (phone shell only) */
 /* =====================================================
    Phone-shell appearance pass on the home panel (founder-approved
@@ -7377,7 +7394,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=329" defer></script>
+<script src="/dc-nav.js?v=330" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

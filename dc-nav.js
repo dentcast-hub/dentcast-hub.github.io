@@ -1105,14 +1105,12 @@
       }
       s.week = w; s.weekSec = 0;
     }
-    /* one-time activation card: instant visible proof the module is live
-       on this device (also resets expectations after the v1→v2 key reset) */
-    if (!s.hello2) {
-      s.hello2 = 1;
-      setTimeout(function () {
-        showCard('✨ همراهی‌سنج فعال شد. از امروز حواسم هست چقدر دنت‌کست می‌خونی', 8000);
-      }, 1500);
-    }
+    /* The one-time «همراهی‌سنج فعال شد» activation card was removed (founder,
+       2026-11-11): it was the first thing a first-time visitor saw, on top of
+       the content of whatever page they landed on. The meter itself and its
+       daily / weekly cards are unchanged. hello2 is still stamped so a state
+       written from here on looks the same as one that saw the card. */
+    if (!s.hello2) s.hello2 = 1;
     save(s);
 
     var TICK = 15;
@@ -2535,7 +2533,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '299';
+  var V = '300';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now

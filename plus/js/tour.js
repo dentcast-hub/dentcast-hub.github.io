@@ -15,10 +15,10 @@
 //     the account, not localStorage).
 //  2. MANUAL — «راهنمای سایت» in the header person menu (logged-in), any time.
 //     On a non-home page it navigates to /?tour=1 and starts there.
-import { el, faNum, tehranDay } from './util.js?v=230';
-import { api, currentUser } from './api.js?v=230';
-import { pricingHref } from './premium-cta.js?v=230';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=230';
+import { el, faNum, tehranDay } from './util.js?v=231';
+import { api, currentUser } from './api.js?v=231';
+import { pricingHref } from './premium-cta.js?v=231';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=231';
 
 const SS_PENDING = 'dcp:tour:pending'; // set before navigating home to start there
 
@@ -128,11 +128,6 @@ const STOPS = [
     key: 'bundles', panel: 'panel-studio', premium: 'all', title: 'از کجا شروع کنم؟',
     text: '«باندل‌های شروع»، هسته‌ی هر موضوع در پنج تا هشت قدمِ مرتب‌اند — از پایه تا نکته‌ی کلیدی، بدون حاشیه — مثلاً لمینیت، پست و کور یا انتخاب سرامیک. کارت هر باندل را لمس کنید و قدم‌به‌قدم جلو بروید.',
     targets: () => [byId('dcHomeBundles')],
-  },
-  {
-    key: 'pulse', panel: 'panel-studio', title: 'پالس · آخرین اخبار',
-    text: 'نبض سایت: هر مطلبی که در دنت‌کست منتشر می‌شود، همین‌جا با لینک مستقیم اعلام می‌شود. برای این‌که هیچ انتشار تازه‌ای را از دست ندهید، هر بار سری به پالس بزنید.',
-    targets: () => [byId('dcPulseCard')],
   },
   {
     key: 'bottom_nav', panel: 'panel-studio', title: 'ناوبری اصلی',
@@ -266,7 +261,7 @@ async function mountPremiumPreview(ctx) {
   if (preview && preview.isConnected) return;
   const host = byId('panel-premium');
   if (!host) return;
-  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=230'), samplePathway()]);
+  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=231'), samplePathway()]);
   if (!state || typeof mod.livePreview !== 'function') return;
   const node = mod.livePreview({
     tier: 'premium',
