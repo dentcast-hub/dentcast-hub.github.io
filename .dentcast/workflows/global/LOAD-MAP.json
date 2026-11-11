@@ -3,7 +3,7 @@
   "sources": [
     {
       "path": ".dentcast/workflows/global/repo-conventions.md",
-      "sha256": "b2de28cc5304d1c9fd62c96b0ca7de43b12140415c04b4b695d1efccd8a8abb5",
+      "sha256": "9594f6d63792fd6e26fe937dbcfb8ed719d0922468dfc9b944d7f2a237774052",
       "sections": [
         {
           "id": "repo-core",
@@ -127,7 +127,7 @@
     },
     {
       "path": ".dentcast/workflows/global/site-invariants.md",
-      "sha256": "6626a559203fea4c1a457cae4b984e8912b24865232c2eb8471c309bb481b43f",
+      "sha256": "bd0e966d2fb275591222e538024f32931dca47c51fe4aebb86cddbbfe5ab6e3e",
       "sections": [
         {
           "id": "site-invariants",

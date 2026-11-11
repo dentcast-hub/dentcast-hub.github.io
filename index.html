@@ -5228,37 +5228,323 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
   </style>
   <style id="dcCleanSkin">
 /* =====================================================
-   CLEAN SKIN (founder-approved mockup, 2026-11-11) — phone shell, the
-   home, archive and premium tabs. Same page, same sections, texts, numbers
+   CLEAN SKIN (founder-approved mockup, 2026-11-11) — the home, archive and
+   premium views, in BOTH shells (phone tabs; the desktop shell's column C). Same page, same sections, texts, numbers
    and colours; things come out of their boxes: white ground, no card
    shadows or gradients, flat tiles, hairline rows, a larger type scale and
    more air between sections. APPEARANCE ONLY, layered last:
-   - every rule sits inside @media(max-width:1023px) under
-     #mobile-shell #mobile-body, so the desktop shell matches none of it;
+   - one set of rules for both shells: each selector is scoped
+     :is(<phone panel>, <desktop column block>), i.e. #panel-studio /
+     #dcd-welcome-feed, #panel-sharehub / #dcd-archive, #panel-premium /
+     #dcd-premium. Geometry that belongs to one shell (the phone's gutters
+     and full-bleed band, the desktop's latest grid) sits in its own
+     media block at the end. The desktop sidebar, the list column, the
+     topbar, column widths and the reading column are not touched;
    - nothing is hidden that carries copy, nothing is moved, no JS hook is
      touched; the sponsor card (Spot) keeps its markup, its place and its
      exact box (the panels' wider gutter is given back to it);
    - the stack ABOVE the home sponsor slot does not get taller than it was
-     (the larger headline and numbers are paid for by tighter gaps), so the
-     paid card is not pushed down;
+     in either shell (the larger headline and numbers are paid for by
+     tighter gaps), so the paid card is not pushed down;
    - colours come from the existing tokens only; the dark fading grid on
-     #mobile-body is untouched — the white ground is light-theme only.
+     #mobile-body / .dcd-col-c is untouched — the white ground is
+     light-theme only.
    Kept as its own block so it can be tuned or reverted in one piece.
 ===================================================== */
-@media (max-width:1023px){
-  #mobile-shell #mobile-body{
-    --cs-tile:var(--surface2);      /* flat tile on the white ground */
-    --cs-inner:var(--surface);      /* a chip / disc that sits ON a tile */
-    --cs-navy:var(--pr);
-    --cs-blue-wash:rgba(var(--ac-rgb),.06);
-  }
-  [data-theme="dark"] #mobile-shell #mobile-body{
-    --cs-tile:var(--surface);
-    --cs-inner:var(--surface2);
-    --cs-navy:#3f74e0;              /* first stop of the dark --x-grad */
-    --cs-blue-wash:rgba(var(--ac-rgb),.10);
-  }
+#mobile-shell #mobile-body,
+#dc-desktop-root{
+  --cs-tile:var(--surface2);      /* flat tile on the white ground */
+  --cs-inner:var(--surface);      /* a chip / disc that sits ON a tile */
+  --cs-navy:var(--pr);
+  --cs-blue-wash:rgba(var(--ac-rgb),.06);
+}
+[data-theme="dark"] #mobile-shell #mobile-body,
+[data-theme="dark"] #dc-desktop-root{
+  --cs-tile:var(--surface);
+  --cs-inner:var(--surface2);
+  --cs-navy:#3f74e0;              /* first stop of the dark --x-grad */
+  --cs-blue-wash:rgba(var(--ac-rgb),.10);
+}
 
+/* ═════════════ HOME ═════════════ */
+/* headline */
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-identity-card{ padding:10px 0 0; margin-bottom:0; text-align:center; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-identity-main{
+  font-size:2.125rem; line-height:1.4; font-weight:800; text-align:center; text-wrap:balance;
+}
+
+/* search: one bordered field */
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-exa-search,
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-exa-search{
+  height:58px; box-sizing:border-box; padding:0 16px 0 8px; gap:10px;
+  background:transparent; border:1.5px solid var(--surface3, var(--border));
+  border-radius:14px; box-shadow:none;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-exa-search-ph,
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-exa-search-ph{ font-size:.9375rem; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-exa-search-go,
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-exa-search-go{
+  display:inline-flex; align-items:center; height:42px; padding:0 20px;
+  border-radius:10px; background:var(--cs-navy); box-shadow:none;
+  font-size:.875rem; font-weight:700;
+}
+/* «پرجستجو» → pills. The «·» separators are bare text nodes; font-size:0
+   collapses them (and the label, which ::before paints back — the «/ ""»
+   alt keeps a screen reader from hearing it twice). */
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-exa-pop{
+  display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
+  gap:6px 3px; margin:10px 0 0; font-size:0;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-exa-pop::before{
+  content:"پرجستجو:"; content:"پرجستجو:" / "";
+  font-size:.8125rem; color:var(--txt3); margin-inline-end:4px;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-exa-pop a{
+  position:relative; margin:0; padding:5px 10px; border-radius:999px;
+  background:var(--cs-tile); color:var(--ac); font-size:.8125rem; font-weight:700;
+  line-height:1.5; text-decoration:none;
+}
+/* 44px tap height without growing the row */
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-exa-pop a::after{
+  content:""; position:absolute; inset:-7px 0;
+}
+
+/* narrow phones: one scrolling row of pills and a smaller headline, so the
+   stack above the sponsor slot stays no taller than it was */
+@media (max-width:380px){
+  :is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-identity-main{ font-size:1.875rem; }
+  :is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-exa-pop{
+    flex-wrap:nowrap; justify-content:flex-start; overflow-x:auto; scrollbar-width:none;
+  }
+  :is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-exa-pop::-webkit-scrollbar{ display:none; }
+  :is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-exa-pop::before,
+  :is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-exa-pop a{ flex:none; }
+  :is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-exa-pop a{ padding-inline:8px; }
+  :is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .hero-stat .v{ font-size:2.375rem; }
+}
+
+/* stats: unboxed, larger numbers, hairlines between */
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .hero-stats{
+  padding:0; margin:12px 0 12px; border:0; background:none; box-shadow:none;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .hero-stat::before{ display:none; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .hero-stat + .hero-stat::after{
+  top:10%; height:80%; transform:none; width:1px; background:var(--border); opacity:1;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .hero-stat .v{
+  font-size:2.625rem; line-height:1.15; font-weight:500;
+  background:none; -webkit-background-clip:border-box; background-clip:border-box;
+  -webkit-text-fill-color:currentColor; color:var(--txt);
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .hero-stat .k{ margin-top:4px; font-size:.75rem; line-height:1.5; }
+
+/* latest episode: same compact card, flat tile */
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-home-hero{
+  background:var(--cs-tile); border:0; border-radius:20px; box-shadow:none;
+  padding:16px; margin-bottom:12px;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-home-hero-cover{ border:0; border-radius:14px; box-shadow:none; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-home-hero-badge,
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-home-hero-play{ background:var(--cs-navy); box-shadow:none; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-home-hero-row{ border-top-color:var(--border); }
+
+/* section rhythm + headings (home, archive) */
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-home-sec,
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-home-sec{ margin-top:64px; margin-bottom:16px; align-items:baseline; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-home-sec-label,
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-home-sec-label{
+  font-size:1.625rem; line-height:1.5; font-weight:800; color:var(--x-ink); letter-spacing:-.01em;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-home-more{ font-size:.875rem; font-weight:700; color:var(--ac); }
+
+/* login / streak promo: no box, centred */
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-plus-home-card{ margin:64px 0 0; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-plus-promo{
+  background:none; border:0; border-radius:0; box-shadow:none; padding:0; text-align:center;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-plus-promo-top{ flex-direction:column; gap:14px; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-plus-medal{ width:64px; height:64px; box-shadow:none; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-plus-promo-h{
+  font-size:1.625rem; line-height:1.5; font-weight:800; color:var(--x-ink);
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-plus-promo-sub{ margin-top:8px; font-size:1rem; line-height:1.9; color:var(--txt2); }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-plus-promo-rule{ display:none; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-plus-promo-bottom{ display:block; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-plus-feats{ justify-content:center; margin:20px 0 22px; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-plus-feat{
+  height:40px; box-sizing:border-box; padding:0 16px; border:0; background:var(--cs-tile);
+  font-size:.84375rem;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dcp-btn.dc-plus-cta{
+  width:100%; height:54px; justify-content:center; border:0; border-radius:12px;
+  background:var(--ac); box-shadow:none; transform:none; font-size:1rem; font-weight:800; color:#fff;
+}
+
+/* «مسیرهای یادگیری»: heading outside any box, only the open pathway tiled */
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-pathway-showcase:not([hidden]){ margin-top:64px; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-pathway-showcase .dcp-hf .dcp-pws{
+  background:none; border:0; border-radius:0; box-shadow:none; padding:0; margin:0;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-pathway-showcase .dcp-pws-head{ margin-bottom:22px; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-pathway-showcase .dcp-pws-ico{ display:none; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-pathway-showcase .dcp-pws-ht b{
+  font-size:1.625rem; line-height:1.5; font-weight:800; color:var(--x-ink);
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-pathway-showcase .dcp-hf .dcp-pws-ht span{
+  margin-top:6px; font-size:.90625rem; line-height:1.8; color:var(--txt3);
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-pathway-showcase .dcp-pws-feat{
+  background:var(--cs-blue-wash); border:0; border-radius:20px; box-shadow:none; padding:22px 20px;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-pathway-showcase .dcp-pws-disc{ background:var(--cs-inner); border:0; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-pathway-showcase .dcp-hf .dcp-pws-ft-desc{
+  margin:14px 0 16px; font-size:.875rem; line-height:1.9;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-pathway-showcase .dcp-hf .dcp-pws-cert{ background:none; border:0; padding:0; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-pathway-showcase .dcp-hf .dcp-pws-go{
+  display:inline-flex; align-items:center; height:44px; padding:0 20px; font-size:.84375rem; font-weight:800;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-pathway-showcase .dcp-hf .dcp-pws-others{ margin:28px 0 14px; font-size:.875rem; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-pathway-showcase .dcp-hf .dcp-pws-tog{
+  border-top:0; margin-top:6px; padding-top:8px; font-size:.875rem;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-pathway-showcase .dcp-pws-pg{
+  background:var(--x-amber-wash); border:0; box-shadow:none;
+}
+
+/* «مسیریاب یادگیری»: flat amber-wash tile */
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-wf-home-entry{
+  background:var(--x-amber-wash); border:0; border-radius:20px; box-shadow:none;
+  padding:22px 20px; margin:40px 0 0;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-wf-home-entry::before{ display:none; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-wf-home-entry .dc-wf-ico{ border:0; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-wf-home-entry .dc-wf-eyebrow{
+  background:var(--cs-navy); box-shadow:none; height:26px; padding:0 12px; margin-bottom:8px;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-wf-home-entry .dc-wf-ttl{ font-size:1.25rem; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-wf-home-entry .dc-wf-sub{ font-size:.90625rem; line-height:1.9; color:var(--txt2); }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-wf-home-entry .dc-wf-row{ border-top:0; padding-top:0; margin-top:18px; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-wf-home-entry .dc-wf-cta{ font-size:.9375rem; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-wf-home-entry .dc-wf-amber-pill{ background:none; padding:5px 12px; }
+
+/* «دسته‌های محتوا»: flat tiles */
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-exa-cats{ gap:10px; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-exa-cat{
+  min-height:68px; box-sizing:border-box; background:var(--cs-tile); border:0; border-radius:14px; box-shadow:none;
+  padding-block:10px; padding-inline-start:14px;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-exa-cat b{ font-size:.9375rem; }
+
+/* «تازه‌های دنت‌کست»: no outer card, hairline rows */
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) #dcLatestRail{
+  background:none; border:0; border-radius:0; box-shadow:none; padding:0; margin-top:-8px;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) #dcLatestRail .dc-rail-card{
+  padding-block:18px; border-bottom:1px solid var(--border);
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) #dcLatestRail .dc-rail-card:last-child{ border-bottom:0; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) #dcLatestRail .dc-rail-title{
+  margin-top:8px; font-size:1.0625rem; line-height:1.75; font-weight:700;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) #dcLatestRail .dc-type-chip{ border-radius:6px; }
+
+/* «از کجا شروع کنم؟»: full-bleed amber-wash band, white flat cards */
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dcb-band:not([hidden]),
+:is(#mobile-shell #mobile-body #panel-premium, #dc-desktop-root #dcd-premium) .dcb-band:not([hidden]){
+  background:var(--x-amber-wash); border:0; box-shadow:none;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dcb-band:not([hidden]){ margin-top:64px; margin-bottom:0; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dcb-band .dcb-band-title,
+:is(#mobile-shell #mobile-body #panel-premium, #dc-desktop-root #dcd-premium) .dcb-band .dcb-band-title{
+  font-size:1.625rem; line-height:1.5; font-weight:800; color:var(--x-ink); gap:10px; flex-wrap:wrap;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dcb-band .dcb-band-count,
+:is(#mobile-shell #mobile-body #panel-premium, #dc-desktop-root #dcd-premium) .dcb-band .dcb-band-count{
+  background:none; border:1px solid var(--x-amber-bd); padding:3px 10px;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dcb-band .dcb-band-hint,
+:is(#mobile-shell #mobile-body #panel-premium, #dc-desktop-root #dcd-premium) .dcb-band .dcb-band-hint{ margin-top:6px; font-size:.90625rem; line-height:1.8; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dcb-band .dcb-railcard,
+:is(#mobile-shell #mobile-body #panel-premium, #dc-desktop-root #dcd-premium) .dcb-band .dcb-railcard{
+  background:var(--cs-inner); border:0; border-radius:16px; box-shadow:none; padding:16px;
+}
+
+/* «سری‌های موضوعی»: flat tiles in a bleeding rail */
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-pillar-card{
+  background:var(--cs-tile); border:0; border-radius:16px; box-shadow:none; padding:18px 8px 14px;
+}
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-pillar-ico{ background:var(--cs-inner); border:0; width:44px; height:44px; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-pillar-name{ font-size:.84375rem; font-weight:700; color:var(--x-ink); }
+
+/* «یک نگاه سریع»: two flat tiles */
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-duo{ gap:10px; }
+:is(#mobile-shell #mobile-body #panel-studio, #dc-desktop-root #dcd-welcome-feed) .dc-duo-card{
+  background:var(--cs-tile); border:0; border-radius:16px; box-shadow:none; padding:18px 16px;
+}
+
+/* ═════════════ ARCHIVE ═════════════ */
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-home-sec-sub{ font-size:.8125rem; }
+/* list rows → flat tiles */
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-list-card{
+  background:var(--cs-tile); border:0; border-radius:14px; box-shadow:none;
+}
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-list-card:not(.featured){ min-height:68px; box-sizing:border-box; margin-bottom:10px; }
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-list-card:active{ box-shadow:none; }
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-list-card-title{ font-size:.9375rem; }
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-list-card-sub{ font-size:.8125rem; }
+/* the pair's own rules are !important (EXAMINE skin), so this is too */
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-list-card.featured{
+  background:var(--cs-tile) !important; border:0 !important; border-radius:16px;
+}
+:is(:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive), #dc-desktop-root #dcd-archive, #dc-desktop-root #dcd-welcome-feed) .dc-home-sec-upboard{ align-items:stretch; }
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-list-card .dc-chip{ background:var(--cs-inner); border:0; }
+/* up-board monitor: no outer card, hairline rows */
+:is(:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive), #dc-desktop-root #dcd-archive, #dc-desktop-root #dcd-welcome-feed) .dc-monitor{
+  background:none; border:0; border-radius:0; box-shadow:none; margin-top:0;
+}
+:is(:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive), #dc-desktop-root #dcd-archive, #dc-desktop-root #dcd-welcome-feed) .dc-monitor::before,
+:is(:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive), #dc-desktop-root #dcd-archive, #dc-desktop-root #dcd-welcome-feed) .dc-monitor::after{ display:none; }
+:is(:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive), #dc-desktop-root #dcd-archive, #dc-desktop-root #dcd-welcome-feed) .dc-monitor-inner{ padding:0; }
+:is(:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive), #dc-desktop-root #dcd-archive, #dc-desktop-root #dcd-welcome-feed) .dc-monitor-tab{ padding:6px 14px; font-size:.8125rem; }
+:is(:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive), #dc-desktop-root #dcd-archive, #dc-desktop-root #dcd-welcome-feed) .dc-monitor-all{ font-size:.875rem; }
+:is(:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive), #dc-desktop-root #dcd-archive, #dc-desktop-root #dcd-welcome-feed) .dc-monitor-list{ gap:0; }
+:is(:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive), #dc-desktop-root #dcd-archive, #dc-desktop-root #dcd-welcome-feed) .dc-monitor-list li + li{ border-top:1px solid var(--border); }
+:is(:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive), #dc-desktop-root #dcd-archive, #dc-desktop-root #dcd-welcome-feed) .dc-monitor-list a{ padding:14px 0; font-size:.9375rem; line-height:1.7; }
+/* premium doors keep amber: flat wash, no hairline */
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-ub-door{
+  background:var(--x-amber-wash); border:0; border-radius:14px; box-shadow:none; margin-top:14px; padding:14px;
+}
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-ub-door-b{ background:none; }
+/* search-engine cards */
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-radar-hero{
+  background:var(--cs-tile); border:0; border-radius:20px; box-shadow:none;
+}
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-radar-hero::before,
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-radar-hero::after{ display:none; }
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-radar-hero-ico{ background:var(--cs-inner); border:0; }
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) .dc-radar-hero-btn{ background:var(--cs-navy); box-shadow:none; }
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) #card-library{ background:var(--x-amber-wash); }
+:is(#mobile-shell #mobile-body #panel-sharehub, #dc-desktop-root #dcd-archive) #card-library .dc-radar-hero-ico{ background:var(--x-amber-wash-2); }
+
+/* ═════════════ PREMIUM (amber stays the colour of this tab) ═════════════ */
+:is(#mobile-shell #mobile-body #panel-premium, #dc-desktop-root #dcd-premium) .dcp-hf .dc-list-card.dcp-hf-card{
+  background:var(--x-amber-wash); border:0; border-radius:14px; box-shadow:none;
+}
+:is(#mobile-shell #mobile-body #panel-premium, #dc-desktop-root #dcd-premium) .dcp-hf .dcp-hf-ico{ border:0; }
+:is(#mobile-shell #mobile-body #panel-premium, #dc-desktop-root #dcd-premium) .dcp-pp-seen-demo{ background:var(--cs-inner); border:0; }
+:is(#mobile-shell #mobile-body #panel-premium, #dc-desktop-root #dcd-premium) .dcb-band.dcp-pp-bundles{ margin-bottom:24px; }
+:is(#mobile-shell #mobile-body #panel-premium, #dc-desktop-root #dcd-premium) .dc-destool-tab{
+  background:var(--x-amber-wash); border:0; border-radius:14px; box-shadow:none;
+}
+:is(#mobile-shell #mobile-body #panel-premium, #dc-desktop-root #dcd-premium) .dc-destool-tab[aria-expanded="true"]{ border-radius:14px 14px 0 0; }
+:is(#mobile-shell #mobile-body #panel-premium, #dc-desktop-root #dcd-premium) .dc-destool-tab .dc-destool-ico{ border:0; }
+:is(#mobile-shell #mobile-body #panel-premium, #dc-desktop-root #dcd-premium) .dcp-hf .dcp-pws,
+:is(#mobile-shell #mobile-body #panel-premium, #dc-desktop-root #dcd-premium) .dcp-hf .dcp-pws-feat,
+:is(#mobile-shell #mobile-body #panel-premium, #dc-desktop-root #dcd-premium) .dcp-hf .dcp-pws-pg{ box-shadow:none; }
+
+/* ── phone shell only ── */
+@media (max-width:1023px){
   /* ── ground: white on the three tabs (light theme) ── */
   html:not([data-theme="dark"]) #mobile-shell #mobile-body:has(> #panel-studio.active),
   html:not([data-theme="dark"]) #mobile-shell #mobile-body:has(> #panel-sharehub.active),
@@ -5275,290 +5561,52 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
   #mobile-shell #mobile-body #panel-sharehub > .dc-spot,
   #mobile-shell #mobile-body #panel-premium > .dc-spot{ margin-inline:-8px; }
 
-  /* ═════════════ HOME ═════════════ */
-  /* headline */
-  #mobile-shell #mobile-body #panel-studio .dc-identity-card{ padding:10px 0 0; margin-bottom:0; text-align:center; }
-  #mobile-shell #mobile-body #panel-studio .dc-identity-main{
-    font-size:2.125rem; line-height:1.4; font-weight:800; text-align:center; text-wrap:balance;
-  }
-
-  /* search: one bordered field */
-  #mobile-shell #mobile-body #panel-studio .dc-exa-search,
-  #mobile-shell #mobile-body #panel-sharehub .dc-exa-search{
-    height:58px; box-sizing:border-box; padding:0 16px 0 8px; gap:10px;
-    background:transparent; border:1.5px solid var(--surface3, var(--border));
-    border-radius:14px; box-shadow:none;
-  }
+  /* search sits a little lower under the headline / page title */
   #mobile-shell #mobile-body #panel-studio .dc-exa-search{ margin-top:14px; }
-  #mobile-shell #mobile-body #panel-studio .dc-exa-search-ph,
-  #mobile-shell #mobile-body #panel-sharehub .dc-exa-search-ph{ font-size:.9375rem; }
-  #mobile-shell #mobile-body #panel-studio .dc-exa-search-go,
-  #mobile-shell #mobile-body #panel-sharehub .dc-exa-search-go{
-    display:inline-flex; align-items:center; height:42px; padding:0 20px;
-    border-radius:10px; background:var(--cs-navy); box-shadow:none;
-    font-size:.875rem; font-weight:700;
-  }
-  /* «پرجستجو» → pills. The «·» separators are bare text nodes; font-size:0
-     collapses them (and the label, which ::before paints back — the «/ ""»
-     alt keeps a screen reader from hearing it twice). */
-  #mobile-shell #mobile-body #panel-studio .dc-exa-pop{
-    display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
-    gap:6px 3px; margin:10px 0 0; font-size:0;
-  }
-  #mobile-shell #mobile-body #panel-studio .dc-exa-pop::before{
-    content:"پرجستجو:"; content:"پرجستجو:" / "";
-    font-size:.8125rem; color:var(--txt3); margin-inline-end:4px;
-  }
-  #mobile-shell #mobile-body #panel-studio .dc-exa-pop a{
-    position:relative; margin:0; padding:5px 10px; border-radius:999px;
-    background:var(--cs-tile); color:var(--ac); font-size:.8125rem; font-weight:700;
-    line-height:1.5; text-decoration:none;
-  }
-  /* 44px tap height without growing the row */
-  #mobile-shell #mobile-body #panel-studio .dc-exa-pop a::after{
-    content:""; position:absolute; inset:-7px 0;
-  }
-
-  /* narrow phones: one scrolling row of pills and a smaller headline, so the
-     stack above the sponsor slot stays no taller than it was */
-  @media (max-width:380px){
-    #mobile-shell #mobile-body #panel-studio .dc-identity-main{ font-size:1.875rem; }
-    #mobile-shell #mobile-body #panel-studio .dc-exa-pop{
-      flex-wrap:nowrap; justify-content:flex-start; overflow-x:auto; scrollbar-width:none;
-    }
-    #mobile-shell #mobile-body #panel-studio .dc-exa-pop::-webkit-scrollbar{ display:none; }
-    #mobile-shell #mobile-body #panel-studio .dc-exa-pop::before,
-    #mobile-shell #mobile-body #panel-studio .dc-exa-pop a{ flex:none; }
-    #mobile-shell #mobile-body #panel-studio .dc-exa-pop a{ padding-inline:8px; }
-    #mobile-shell #mobile-body #panel-studio .hero-stat .v{ font-size:2.375rem; }
-  }
-
-  /* stats: unboxed, larger numbers, hairlines between */
-  #mobile-shell #mobile-body #panel-studio .hero-stats{
-    padding:0; margin:12px 0 12px; border:0; background:none; box-shadow:none;
-  }
-  #mobile-shell #mobile-body #panel-studio .hero-stat::before{ display:none; }
-  #mobile-shell #mobile-body #panel-studio .hero-stat + .hero-stat::after{
-    top:10%; height:80%; transform:none; width:1px; background:var(--border); opacity:1;
-  }
-  #mobile-shell #mobile-body #panel-studio .hero-stat .v{
-    font-size:2.625rem; line-height:1.15; font-weight:500;
-    background:none; -webkit-background-clip:border-box; background-clip:border-box;
-    -webkit-text-fill-color:currentColor; color:var(--txt);
-  }
-  #mobile-shell #mobile-body #panel-studio .hero-stat .k{ margin-top:4px; font-size:.75rem; line-height:1.5; }
-
-  /* latest episode: same compact card, flat tile */
-  #mobile-shell #mobile-body #panel-studio .dc-home-hero{
-    background:var(--cs-tile); border:0; border-radius:20px; box-shadow:none;
-    padding:16px; margin-bottom:12px;
-  }
-  #mobile-shell #mobile-body #panel-studio .dc-home-hero-cover{ border:0; border-radius:14px; box-shadow:none; }
-  #mobile-shell #mobile-body #panel-studio .dc-home-hero-badge,
-  #mobile-shell #mobile-body #panel-studio .dc-home-hero-play{ background:var(--cs-navy); box-shadow:none; }
-  #mobile-shell #mobile-body #panel-studio .dc-home-hero-row{ border-top-color:var(--border); }
-
-  /* section rhythm + headings (home, archive) */
-  #mobile-shell #mobile-body #panel-studio .dc-home-sec,
-  #mobile-shell #mobile-body #panel-sharehub .dc-home-sec{ margin-top:64px; margin-bottom:16px; align-items:baseline; }
-  #mobile-shell #mobile-body #panel-studio .dc-home-sec-label,
-  #mobile-shell #mobile-body #panel-sharehub .dc-home-sec-label{
-    font-size:1.625rem; line-height:1.5; font-weight:800; color:var(--x-ink); letter-spacing:-.01em;
-  }
-  #mobile-shell #mobile-body #panel-studio .dc-home-more{ font-size:.875rem; font-weight:700; color:var(--ac); }
-
-  /* login / streak promo: no box, centred */
-  #mobile-shell #mobile-body #panel-studio .dc-plus-home-card{ margin:64px 0 0; }
-  #mobile-shell #mobile-body #panel-studio .dc-plus-promo{
-    background:none; border:0; border-radius:0; box-shadow:none; padding:0; text-align:center;
-  }
-  #mobile-shell #mobile-body #panel-studio .dc-plus-promo-top{ flex-direction:column; gap:14px; }
-  #mobile-shell #mobile-body #panel-studio .dc-plus-medal{ width:64px; height:64px; box-shadow:none; }
-  #mobile-shell #mobile-body #panel-studio .dc-plus-promo-h{
-    font-size:1.625rem; line-height:1.5; font-weight:800; color:var(--x-ink);
-  }
-  #mobile-shell #mobile-body #panel-studio .dc-plus-promo-sub{ margin-top:8px; font-size:1rem; line-height:1.9; color:var(--txt2); }
-  #mobile-shell #mobile-body #panel-studio .dc-plus-promo-rule{ display:none; }
-  #mobile-shell #mobile-body #panel-studio .dc-plus-promo-bottom{ display:block; }
-  #mobile-shell #mobile-body #panel-studio .dc-plus-feats{ justify-content:center; margin:20px 0 22px; }
-  #mobile-shell #mobile-body #panel-studio .dc-plus-feat{
-    height:40px; box-sizing:border-box; padding:0 16px; border:0; background:var(--cs-tile);
-    font-size:.84375rem;
-  }
-  #mobile-shell #mobile-body #panel-studio .dcp-btn.dc-plus-cta{
-    width:100%; height:54px; justify-content:center; border:0; border-radius:12px;
-    background:var(--ac); box-shadow:none; transform:none; font-size:1rem; font-weight:800; color:#fff;
-  }
-
-  /* «مسیرهای یادگیری»: heading outside any box, only the open pathway tiled */
-  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase:not([hidden]){ margin-top:64px; }
-  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-hf .dcp-pws{
-    background:none; border:0; border-radius:0; box-shadow:none; padding:0; margin:0;
-  }
-  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-pws-head{ margin-bottom:22px; }
-  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-pws-ico{ display:none; }
-  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-pws-ht b{
-    font-size:1.625rem; line-height:1.5; font-weight:800; color:var(--x-ink);
-  }
-  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-hf .dcp-pws-ht span{
-    margin-top:6px; font-size:.90625rem; line-height:1.8; color:var(--txt3);
-  }
-  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-pws-feat{
-    background:var(--cs-blue-wash); border:0; border-radius:20px; box-shadow:none; padding:22px 20px;
-  }
-  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-pws-disc{ background:var(--cs-inner); border:0; }
-  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-hf .dcp-pws-ft-desc{
-    margin:14px 0 16px; font-size:.875rem; line-height:1.9;
-  }
-  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-hf .dcp-pws-cert{ background:none; border:0; padding:0; }
-  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-hf .dcp-pws-go{
-    display:inline-flex; align-items:center; height:44px; padding:0 20px; font-size:.84375rem; font-weight:800;
-  }
-  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-hf .dcp-pws-others{ margin:28px 0 14px; font-size:.875rem; }
-  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-hf .dcp-pws-tog{
-    border-top:0; margin-top:6px; padding-top:8px; font-size:.875rem;
-  }
-  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-pws-pg{
-    background:var(--x-amber-wash); border:0; box-shadow:none;
-  }
-
-  /* «مسیریاب یادگیری»: flat amber-wash tile */
-  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry{
-    background:var(--x-amber-wash); border:0; border-radius:20px; box-shadow:none;
-    padding:22px 20px; margin:40px 0 0;
-  }
-  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry::before{ display:none; }
-  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry .dc-wf-ico{ border:0; }
-  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry .dc-wf-eyebrow{
-    background:var(--cs-navy); box-shadow:none; height:26px; padding:0 12px; margin-bottom:8px;
-  }
-  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry .dc-wf-ttl{ font-size:1.25rem; }
-  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry .dc-wf-sub{ font-size:.90625rem; line-height:1.9; color:var(--txt2); }
-  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry .dc-wf-row{ border-top:0; padding-top:0; margin-top:18px; }
-  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry .dc-wf-cta{ font-size:.9375rem; }
-  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry .dc-wf-amber-pill{ background:none; padding:5px 12px; }
-
-  /* «دسته‌های محتوا»: flat tiles */
-  #mobile-shell #mobile-body #panel-studio .dc-exa-cats{ gap:10px; }
-  #mobile-shell #mobile-body #panel-studio .dc-exa-cat{
-    min-height:68px; box-sizing:border-box; background:var(--cs-tile); border:0; border-radius:14px; box-shadow:none;
-    padding-block:10px; padding-inline-start:14px;
-  }
-  #mobile-shell #mobile-body #panel-studio .dc-exa-cat b{ font-size:.9375rem; }
-
-  /* «تازه‌های دنت‌کست»: no outer card, hairline rows */
-  #mobile-shell #mobile-body #panel-studio #dcLatestRail{
-    background:none; border:0; border-radius:0; box-shadow:none; padding:0; margin-top:-8px;
-  }
-  #mobile-shell #mobile-body #panel-studio #dcLatestRail .dc-rail-card{
-    padding-block:18px; border-bottom:1px solid var(--border);
-  }
-  #mobile-shell #mobile-body #panel-studio #dcLatestRail .dc-rail-card:last-child{ border-bottom:0; }
-  #mobile-shell #mobile-body #panel-studio #dcLatestRail .dc-rail-title{
-    margin-top:8px; font-size:1.0625rem; line-height:1.75; font-weight:700;
-  }
-  #mobile-shell #mobile-body #panel-studio #dcLatestRail .dc-type-chip{ border-radius:6px; }
-
-  /* «از کجا شروع کنم؟»: full-bleed amber-wash band, white flat cards */
+  #mobile-shell #mobile-body #panel-sharehub .dc-exa-search{ margin-top:14px; }
+  /* «از کجا شروع کنم؟» is a full-bleed band on the phone */
   #mobile-shell #mobile-body #panel-studio .dcb-band:not([hidden]),
   #mobile-shell #mobile-body #panel-premium .dcb-band:not([hidden]){
-    background:var(--x-amber-wash); border:0; border-radius:0; box-shadow:none;
-    margin-inline:-20px; padding:36px 20px 30px;
+    border-radius:0; margin-inline:-20px; padding:36px 20px 30px;
   }
-  #mobile-shell #mobile-body #panel-studio .dcb-band:not([hidden]){ margin-top:64px; margin-bottom:0; }
-  #mobile-shell #mobile-body #panel-studio .dcb-band .dcb-band-title,
-  #mobile-shell #mobile-body #panel-premium .dcb-band .dcb-band-title{
-    font-size:1.625rem; line-height:1.5; font-weight:800; color:var(--x-ink); gap:10px; flex-wrap:wrap;
-  }
-  #mobile-shell #mobile-body #panel-studio .dcb-band .dcb-band-count,
-  #mobile-shell #mobile-body #panel-premium .dcb-band .dcb-band-count{
-    background:none; border:1px solid var(--x-amber-bd); padding:3px 10px;
-  }
-  #mobile-shell #mobile-body #panel-studio .dcb-band .dcb-band-hint,
-  #mobile-shell #mobile-body #panel-premium .dcb-band .dcb-band-hint{ margin-top:6px; font-size:.90625rem; line-height:1.8; }
   #mobile-shell #mobile-body #panel-studio .dcb-band .dcb-railwrap,
   #mobile-shell #mobile-body #panel-premium .dcb-band .dcb-railwrap{
     margin-inline:-20px; padding:14px 20px 6px; scroll-padding-inline:20px;
   }
-  #mobile-shell #mobile-body #panel-studio .dcb-band .dcb-railcard,
-  #mobile-shell #mobile-body #panel-premium .dcb-band .dcb-railcard{
-    background:var(--cs-inner); border:0; border-radius:16px; box-shadow:none; padding:16px;
-  }
-
-  /* «سری‌های موضوعی»: flat tiles in a bleeding rail */
+  /* «سری‌های موضوعی» rail bleeds to the screen edges */
   #mobile-shell #mobile-body #panel-studio > .dc-rail:not(#dcLatestRail){ margin-inline:-20px; padding-inline:20px; gap:12px; }
-  #mobile-shell #mobile-body #panel-studio .dc-pillar-card{
-    background:var(--cs-tile); border:0; border-radius:16px; box-shadow:none; padding:18px 8px 14px;
-  }
-  #mobile-shell #mobile-body #panel-studio .dc-pillar-ico{ background:var(--cs-inner); border:0; width:44px; height:44px; }
-  #mobile-shell #mobile-body #panel-studio .dc-pillar-name{ font-size:.84375rem; font-weight:700; color:var(--x-ink); }
+}
 
-  /* «یک نگاه سریع»: two flat tiles */
-  #mobile-shell #mobile-body #panel-studio .dc-duo{ gap:10px; }
-  #mobile-shell #mobile-body #panel-studio .dc-duo-card{
-    background:var(--cs-tile); border:0; border-radius:16px; box-shadow:none; padding:18px 16px;
+/* ── desktop shell only (column C: welcome / archive / premium) ── */
+@media (min-width:1024px){
+  /* ground: white while column C shows one of the three views; the reading
+     column (a fetched article, .has-content) and the page viewer keep theirs */
+  html:not([data-theme="dark"]) body.dc-desktop-ui .dcd-col-c:not(.is-viewer):has(> .dcd-col-c-scroll:is(:not(.has-content), .is-archive, .is-premium)){
+    background:var(--surface);
   }
-
-  /* ═════════════ ARCHIVE ═════════════ */
-  #mobile-shell #mobile-body #panel-sharehub .dc-exa-search{ margin-top:14px; }
-  #mobile-shell #mobile-body #panel-sharehub .dc-home-sec-sub{ font-size:.8125rem; }
-  /* list rows → flat tiles */
-  #mobile-shell #mobile-body #panel-sharehub .dc-list-card{
-    background:var(--cs-tile); border:0; border-radius:14px; box-shadow:none;
+  #dc-desktop-root #dcd-col-c #dcd-welcome-feed .dcb-band:not([hidden]),
+  #dc-desktop-root #dcd-col-c #dcd-premium .dcb-band:not([hidden]){
+    border-radius:20px; padding:28px 24px 20px;
   }
-  #mobile-shell #mobile-body #panel-sharehub .dc-list-card:not(.featured){ min-height:68px; box-sizing:border-box; margin-bottom:10px; }
-  #mobile-shell #mobile-body #panel-sharehub .dc-list-card:active{ box-shadow:none; }
-  #mobile-shell #mobile-body #panel-sharehub .dc-list-card-title{ font-size:.9375rem; }
-  #mobile-shell #mobile-body #panel-sharehub .dc-list-card-sub{ font-size:.8125rem; }
-  /* the pair's own rules are !important (EXAMINE skin), so this is too */
-  #mobile-shell #mobile-body #panel-sharehub .dc-list-card.featured{
-    background:var(--cs-tile) !important; border:0 !important; border-radius:16px;
+  #dc-desktop-root #dcd-col-c #dcd-welcome-feed .dcb-band:not([hidden]){ margin-top:50px; }
+  /* «آخرین مطالب دنت‌کست»: heading like the others, cards as flat tiles */
+  #dc-desktop-root #dcd-col-c #dcd-welcome-feed .dcd-latest{ margin-top:50px; }
+  #dc-desktop-root #dcd-col-c #dcd-welcome-feed .dcd-latest-head{
+    margin:0 0 16px; font-size:1.625rem; line-height:1.5; font-weight:800; letter-spacing:-.01em;
   }
-  #mobile-shell #mobile-body #panel-sharehub .dc-home-sec-upboard{ align-items:stretch; }
-  #mobile-shell #mobile-body #panel-sharehub .dc-list-card .dc-chip{ background:var(--cs-inner); border:0; }
-  /* up-board monitor: no outer card, hairline rows */
-  #mobile-shell #mobile-body #panel-sharehub .dc-monitor{
-    background:none; border:0; border-radius:0; box-shadow:none; margin-top:0;
+  #dc-desktop-root #dcd-col-c #dcd-welcome-feed .dcd-latest-dot{ display:none; }
+  #dc-desktop-root #dcd-col-c #dcd-welcome-feed .dcd-latest-card,
+  #dc-desktop-root #dcd-col-c #dcd-welcome-feed .dcd-latest-card:hover{
+    background:var(--cs-tile); border-color:transparent; border-radius:16px; box-shadow:none; transform:none;
   }
-  #mobile-shell #mobile-body #panel-sharehub .dc-monitor::before,
-  #mobile-shell #mobile-body #panel-sharehub .dc-monitor::after{ display:none; }
-  #mobile-shell #mobile-body #panel-sharehub .dc-monitor-inner{ padding:0; }
-  #mobile-shell #mobile-body #panel-sharehub .dc-monitor-tab{ padding:6px 14px; font-size:.8125rem; }
-  #mobile-shell #mobile-body #panel-sharehub .dc-monitor-all{ font-size:.875rem; }
-  #mobile-shell #mobile-body #panel-sharehub .dc-monitor-list{ gap:0; }
-  #mobile-shell #mobile-body #panel-sharehub .dc-monitor-list li + li{ border-top:1px solid var(--border); }
-  #mobile-shell #mobile-body #panel-sharehub .dc-monitor-list a{ padding:14px 0; font-size:.9375rem; line-height:1.7; }
-  /* premium doors keep amber: flat wash, no hairline */
-  #mobile-shell #mobile-body #panel-sharehub .dc-ub-door{
-    background:var(--x-amber-wash); border:0; border-radius:14px; box-shadow:none; margin-top:14px; padding:14px;
-  }
-  #mobile-shell #mobile-body #panel-sharehub .dc-ub-door-b{ background:none; }
-  /* search-engine cards */
-  #mobile-shell #mobile-body #panel-sharehub .dc-radar-hero{
-    background:var(--cs-tile); border:0; border-radius:20px; box-shadow:none;
-  }
-  #mobile-shell #mobile-body #panel-sharehub .dc-radar-hero::before,
-  #mobile-shell #mobile-body #panel-sharehub .dc-radar-hero::after{ display:none; }
-  #mobile-shell #mobile-body #panel-sharehub .dc-radar-hero-ico{ background:var(--cs-inner); border:0; }
-  #mobile-shell #mobile-body #panel-sharehub .dc-radar-hero-btn{ background:var(--cs-navy); box-shadow:none; }
-  #mobile-shell #mobile-body #panel-sharehub #card-library{ background:var(--x-amber-wash); }
-  #mobile-shell #mobile-body #panel-sharehub #card-library .dc-radar-hero-ico{ background:var(--x-amber-wash-2); }
-
-  /* ═════════════ PREMIUM (amber stays the colour of this tab) ═════════════ */
-  #mobile-shell #mobile-body #panel-premium .dcp-hf .dc-list-card.dcp-hf-card{
-    background:var(--x-amber-wash); border:0; border-radius:14px; box-shadow:none;
-  }
-  #mobile-shell #mobile-body #panel-premium .dcp-hf .dcp-hf-ico{ border:0; }
-  #mobile-shell #mobile-body #panel-premium .dcp-pp-seen-demo{ background:var(--cs-inner); border:0; }
-  #mobile-shell #mobile-body #panel-premium .dcb-band.dcp-pp-bundles{ margin-bottom:24px; }
-  #mobile-shell #mobile-body #panel-premium .dc-destool-tab{
-    background:var(--x-amber-wash); border:0; border-radius:14px; box-shadow:none;
-  }
-  #mobile-shell #mobile-body #panel-premium .dc-destool-tab[aria-expanded="true"]{ border-radius:14px 14px 0 0; }
-  #mobile-shell #mobile-body #panel-premium .dc-destool-tab .dc-destool-ico{ border:0; }
-  #mobile-shell #mobile-body #panel-premium .dcp-hf .dcp-pws,
-  #mobile-shell #mobile-body #panel-premium .dcp-hf .dcp-pws-feat,
-  #mobile-shell #mobile-body #panel-premium .dcp-hf .dcp-pws-pg{ box-shadow:none; }
+  #dc-desktop-root #dcd-col-c #dcd-welcome-feed .dcd-latest-badge{ border:0; background:var(--cs-inner); }
+  /* the column is a flex stack with its own 14px gap: 50 + 14 = the phone's 64 */
+  #dc-desktop-root #dcd-col-c #dcd-welcome-feed .dc-home-sec,
+  #dc-desktop-root #dcd-col-c #dcd-welcome-feed .dc-plus-home-card,
+  #dc-desktop-root #dcd-col-c #dcd-welcome-feed .dc-pathway-showcase:not([hidden]){ margin-top:50px; }
+  #dc-desktop-root #dcd-col-c #dcd-welcome-feed .dc-wf-home-entry{ margin-top:26px; }
+  #dc-desktop-root #dcd-col-c #dcd-welcome-feed .hero-stats{ margin:4px 0; }
+  #dc-desktop-root #dcd-col-c #dcd-welcome-feed .dc-home-hero{ margin-bottom:0; }
 }
   </style>
   <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
@@ -6126,8 +6174,10 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         </div>
       </div>
 
-      <!-- Sponsor slot, phone shell (founder, 2026-11-11: «آخرین اپیزود، بعد آگهی،
-           بعد دعوت به پلاس»). EMPTY on purpose, like #dcdSpotSidebar — no page
+      <!-- Sponsor slot, phone shell: directly under the latest episode (founder,
+           2026-11-11). What follows it is «دسته‌های محتوا» — the Plus
+           invitation, the pathways showcase and مسیریاب moved below
+           «تازه‌های دنت‌کست» the same day. EMPTY on purpose, like #dcdSpotSidebar — no page
            holds sponsor markup; spot.js renderHome() seats the card in here.
            What IS static is its PLACE: the box is reserved at the card's size
            before first paint (rules beside .dc-spot-art-img in the head), so a
@@ -6137,82 +6187,6 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
            gets no box at all — the head script puts .dc-spot-none on <html>
            before paint. -->
       <div id="dcSpotHomeSlot" class="dc-spot-slot"></div>
-
-      <!-- DentCast Plus personal card. One of exactly two anonymous invitation
-           points (spec 2.3). For guests: a quiet one-line invitation. For a
-           logged-in free user: streak + a line back into their own material +
-           one quiet premium line. No minutes target, no due-card counter.
-
-           The SIGNED-OUT state is written out statically below, byte-for-byte
-           what plus/js/home-card.js's renderAnon() builds, because that state
-           is fully deterministic — it carries no reader data at all. Painting
-           it from the HTML rather than injecting it after plus.js downloads is
-           what removes the ~288px shift this card used to push the whole page
-           down by (2026-08-12 CLS review), and it is what a crawler sees.
-           Its CSS is mirrored into <style id="dcHomeCriticalCss"> above.
-
-           plus.js still owns everything dynamic: it wires the button (the
-           login modal lives in its module graph) and replaces the whole card
-           for a signed-in reader. Keep this markup and renderAnon() in step —
-           tools/verify_home_card.py --check compares them. -->
-      <div id="dcPlusHomeCard" class="dc-plus-home-card" aria-label="یادگیری شما" data-dcp-static-anon="1">
-        <div class="dc-plus-promo">
-          <div class="dc-plus-promo-top">
-            <span class="dc-plus-medal" aria-hidden="true"><span class="dc-plus-medal-fl">🔥</span></span>
-            <div>
-              <h3 class="dc-plus-promo-h">شعله‌ی یادگیری‌ات را روشن کن</h3>
-              <p class="dc-plus-promo-sub">رایگان وارد شو؛ پیشرفتت ثبت و همه‌جا همراهت می‌ماند.</p>
-            </div>
-          </div>
-          <div class="dc-plus-promo-rule"></div>
-          <div class="dc-plus-promo-bottom">
-            <div class="dc-plus-feats">
-              <span class="dc-plus-feat"><span class="dc-plus-feat-ico t-fl" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M13 2s1 3-1.5 5.5S8 12 8 14a4 4 0 0 0 8 .3c.2-2.3-1.3-3.8-1-5.8 1.6.8 2.4 2 2.6 3.9A6.5 6.5 0 1 1 8.7 6.3 12 12 0 0 0 13 2z"/></svg></span><span>استریک روزانه</span></span>
-              <span class="dc-plus-feat"><span class="dc-plus-feat-ico t-st" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.3 6.9.7-5.1 4.7 1.4 6.8L12 17.8 5.9 21.2l1.4-6.8L2.2 9.7l6.9-.7z"/></svg></span><span>امتیاز</span></span>
-              <span class="dc-plus-feat"><span class="dc-plus-feat-ico t-bell" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 22a2.3 2.3 0 0 0 2.3-2.3H9.7A2.3 2.3 0 0 0 12 22zm7-6.3-1.7-2v-3.2a5.4 5.4 0 0 0-4.2-5.3V4.5a1.1 1.1 0 1 0-2.2 0v.7A5.4 5.4 0 0 0 6.7 10.5v3.2L5 15.7a.9.9 0 0 0 .7 1.5h12.6a.9.9 0 0 0 .7-1.5z"/></svg></span><span>نوتیف مطلب جدید</span></span>
-            </div>
-            <button class="dcp-btn dc-plus-cta" type="button"><span>شروع رایگان</span><span class="dc-plus-cta-arrow" aria-hidden="true">←</span></button>
-          </div>
-        </div>
-      </div>
-
-      <!-- مسیریاب — homepage entry point for /plus/wayfinder.html. Placed here,
-           between the episode hero and «دسته‌های محتوا», on purpose: it helps a
-           visitor find their way BEFORE they'd otherwise browse the category
-           grid manually, so it needs to be seen first, not after. This is also
-           where spot.js's homepage ad renders — carries id="dcWayfinderHome" so
-           spot.js's renderHome() anchors the ad card immediately above this
-           element instead of immediately above the «دسته‌های محتوا» heading
-           (its old anchor), keeping the ad ABOVE and this card right below it
-           without moving .dc-exa-cats or its heading (see spot/spot.js).
-           Amber throughout (2026-08-26): only «چیکاره‌ای؟» (step ۱) is free —
-           everything past persona selection needs پریمیوم (renderPersonaGate
-           in wayfinder.js) — so per the site-wide rule that amber marks what
-           a subscription buys, the card says that honestly up front instead
-           of advertising a free tool in blue. -->
-      <!-- «مسیرهای یادگیری» showcase (plus/js/pathway-showcase.js, drawn by
-           home-features.js for a guest or free reader) — directly ABOVE
-           مسیریاب, founder 1405/07/03: the pathways come first and the
-           wayfinder sits under them. spot.js's homepage ad anchors above THIS
-           slot when it is on the page, so the paid card keeps its place right
-           under the episode hero and the showcase and مسیریاب stay adjacent.
-           Empty and hidden for a subscriber (no showcase, no ad either). -->
-      <div id="dcPathwayShowcase" class="dc-pathway-showcase" aria-label="مسیرهای یادگیری" hidden></div>
-
-      <a class="dc-wf-home-entry" id="dcWayfinderHome" href="/plus/wayfinder.html" aria-label="مسیریاب یادگیری">
-        <span class="dc-wf-top">
-          <span class="dc-wf-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.2 8.8l-2 5.2-5.2 2 2-5.2 5.2-2z"/></svg></span>
-          <span class="dc-wf-body">
-            <span class="dc-wf-eyebrow">دروازه‌ی دنت‌کست</span>
-            <span class="dc-wf-ttl">مسیریاب یادگیری</span>
-            <span class="dc-wf-sub">بگو چیکاره‌ای، یه مسیر شخصی از محتوای دنت‌کست بگیر</span>
-          </span>
-        </span>
-        <span class="dc-wf-row">
-          <span class="dc-wf-cta">شروع کن <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></span>
-          <span class="dc-wf-amber-pill">۱ قدم رایگان · بقیه پریمیوم</span>
-        </span>
-      </a>
 
       <!-- Examine-style category grid — every cell is a plain link to a
            directory that already exists; counts are brain-derived (see
@@ -6282,11 +6256,88 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         </a>
       </div>
 
+      <!-- DentCast Plus personal card. One of exactly two anonymous invitation
+           points (spec 2.3). For guests: a quiet one-line invitation. For a
+           logged-in free user: streak + a line back into their own material +
+           one quiet premium line. No minutes target, no due-card counter.
+
+           The SIGNED-OUT state is written out statically below, byte-for-byte
+           what plus/js/home-card.js's renderAnon() builds, because that state
+           is fully deterministic — it carries no reader data at all. Painting
+           it from the HTML rather than injecting it after plus.js downloads is
+           what removes the ~288px shift this card used to push the whole page
+           down by (2026-08-12 CLS review), and it is what a crawler sees.
+           Its CSS is mirrored into <style id="dcHomeCriticalCss"> above.
+
+           plus.js still owns everything dynamic: it wires the button (the
+           login modal lives in its module graph) and replaces the whole card
+           for a signed-in reader. Keep this markup and renderAnon() in step —
+           tools/verify_home_card.py --check compares them. -->
+      <div id="dcPlusHomeCard" class="dc-plus-home-card" aria-label="یادگیری شما" data-dcp-static-anon="1">
+        <div class="dc-plus-promo">
+          <div class="dc-plus-promo-top">
+            <span class="dc-plus-medal" aria-hidden="true"><span class="dc-plus-medal-fl">🔥</span></span>
+            <div>
+              <h3 class="dc-plus-promo-h">شعله‌ی یادگیری‌ات را روشن کن</h3>
+              <p class="dc-plus-promo-sub">رایگان وارد شو؛ پیشرفتت ثبت و همه‌جا همراهت می‌ماند.</p>
+            </div>
+          </div>
+          <div class="dc-plus-promo-rule"></div>
+          <div class="dc-plus-promo-bottom">
+            <div class="dc-plus-feats">
+              <span class="dc-plus-feat"><span class="dc-plus-feat-ico t-fl" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M13 2s1 3-1.5 5.5S8 12 8 14a4 4 0 0 0 8 .3c.2-2.3-1.3-3.8-1-5.8 1.6.8 2.4 2 2.6 3.9A6.5 6.5 0 1 1 8.7 6.3 12 12 0 0 0 13 2z"/></svg></span><span>استریک روزانه</span></span>
+              <span class="dc-plus-feat"><span class="dc-plus-feat-ico t-st" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.3 6.9.7-5.1 4.7 1.4 6.8L12 17.8 5.9 21.2l1.4-6.8L2.2 9.7l6.9-.7z"/></svg></span><span>امتیاز</span></span>
+              <span class="dc-plus-feat"><span class="dc-plus-feat-ico t-bell" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 22a2.3 2.3 0 0 0 2.3-2.3H9.7A2.3 2.3 0 0 0 12 22zm7-6.3-1.7-2v-3.2a5.4 5.4 0 0 0-4.2-5.3V4.5a1.1 1.1 0 1 0-2.2 0v.7A5.4 5.4 0 0 0 6.7 10.5v3.2L5 15.7a.9.9 0 0 0 .7 1.5h12.6a.9.9 0 0 0 .7-1.5z"/></svg></span><span>نوتیف مطلب جدید</span></span>
+            </div>
+            <button class="dcp-btn dc-plus-cta" type="button"><span>شروع رایگان</span><span class="dc-plus-cta-arrow" aria-hidden="true">←</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- مسیریاب — homepage entry point for /plus/wayfinder.html. Third of the
+           three blocks (Plus card → pathways showcase → مسیریاب) that sit
+           AFTER «تازه‌های دنت‌کست» and BEFORE «از کجا شروع کنم؟» (founder,
+           2026-11-11: the three self-promo blocks no longer stand between the
+           sponsor card and the content; before that it sat between the
+           episode hero and «دسته‌های محتوا»). spot.js seats the home sponsor
+           in #dcSpotHomeSlot, far above; id="dcWayfinderHome" is only the
+           second link of its FALLBACK chain for a page without that host
+           (see spot/spot.js), so the sponsor card does not follow this block.
+           Amber throughout (2026-08-26): only «چیکاره‌ای؟» (step ۱) is free —
+           everything past persona selection needs پریمیوم (renderPersonaGate
+           in wayfinder.js) — so per the site-wide rule that amber marks what
+           a subscription buys, the card says that honestly up front instead
+           of advertising a free tool in blue. -->
+      <!-- «مسیرهای یادگیری» showcase (plus/js/pathway-showcase.js, drawn by
+           home-features.js for a guest or free reader) — directly ABOVE
+           مسیریاب, founder 1405/07/03: the pathways come first and the
+           wayfinder sits under them (pathway-showcase.dom.test.ts pins that
+           adjacency). The paid card no longer anchors here: it is seated in
+           #dcSpotHomeSlot under the episode hero; this host is only the first
+           link of spot.js's fallback chain for a page without that slot.
+           Empty and hidden for a subscriber (no showcase, no ad either). -->
+      <div id="dcPathwayShowcase" class="dc-pathway-showcase" aria-label="مسیرهای یادگیری" hidden></div>
+
+      <a class="dc-wf-home-entry" id="dcWayfinderHome" href="/plus/wayfinder.html" aria-label="مسیریاب یادگیری">
+        <span class="dc-wf-top">
+          <span class="dc-wf-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.2 8.8l-2 5.2-5.2 2 2-5.2 5.2-2z"/></svg></span>
+          <span class="dc-wf-body">
+            <span class="dc-wf-eyebrow">دروازه‌ی دنت‌کست</span>
+            <span class="dc-wf-ttl">مسیریاب یادگیری</span>
+            <span class="dc-wf-sub">بگو چیکاره‌ای، یه مسیر شخصی از محتوای دنت‌کست بگیر</span>
+          </span>
+        </span>
+        <span class="dc-wf-row">
+          <span class="dc-wf-cta">شروع کن <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></span>
+          <span class="dc-wf-amber-pill">۱ قدم رایگان · بقیه پریمیوم</span>
+        </span>
+      </a>
+
       <!-- Starter bundles entry point. Empty until /plus/js/home-bundles.js fills
            it — same SLOT_IDS pattern as #dcPlusFeatures above (two slots, one per
-           shell, only the visible one is ever unhidden). Placed right after
-           "تازه‌های دنت‌کست" on purpose: a visitor's eye is already in rail-scanning
-           mode there, and "از کجا شروع کنم؟" is the natural next question. See
+           shell, only the visible one is ever unhidden). It follows the three
+           blocks above (Plus card, pathways showcase, مسیریاب), which sit
+           between it and "تازه‌های دنت‌کست" since 2026-11-11. See
            .dentcast/bundles-handoff.md §4. -->
       <div id="dcHomeBundles" class="dcb-band" aria-label="باندل‌های شروع" hidden></div>
 
@@ -7027,53 +7078,15 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
           </div>
 
           <!-- Sponsor slot, desktop welcome column — the twin of the phone's
-               #dcSpotHomeSlot, and the same order now (episode → sponsor → the
-               reader's card). EMPTY: spot.js seats the card in it; its box is
+               #dcSpotHomeSlot, and the same order (episode → sponsor →
+               «دسته‌های محتوا»; the reader's card, the pathways showcase and
+               مسیریاب now come after «آخرین مطالب دنت‌کست»). EMPTY: spot.js seats the card in it; its box is
                reserved before first paint by the shared .dc-spot-slot rules.
                Measured 2026-11-11 before this: the home card arrived 129px
                wide and grew to 560, and the reader's card above the episode
                filled late and pushed the episode 205px down — together
                CLS 0.08-0.13 on a desktop home. -->
           <div id="dcdSpotHomeSlot" class="dc-spot-slot"></div>
-
-          <!-- The reader's own card, the desktop layout's copy of
-               #dcPlusHomeCard (plus/js/home-card.js, SLOT_IDS). Empty, unlike
-               the phone's: that one ships the signed-out state as static markup
-               to kill a first-paint shift for crawlers and cold visits, and
-               tools/verify_home_card.py --check compares exactly ONE static copy
-               against renderAnon(). First in the feed because that is where it
-               sits on the phone — above the pulse and above the latest rail.
-               (It used to have to stay above #dcdPulse because spot.js anchored
-               the desktop ad at that pulse's nextSibling; since 2026-09-10 that
-               ad anchors above #dcdWayfinderHome instead, like the phone's.) -->
-          <div id="dcdPlusHomeCard" class="dc-plus-home-card" aria-label="یادگیری شما" hidden></div>
-
-          <!-- مسیریاب — the desktop layout's copy. A different id
-               (#dcdWayfinderHome) because #dcWayfinderHome is spot.js's mobile
-               ad anchor and a duplicate id would be invalid; that anchor is
-               scoped `#panel-studio #dcWayfinderHome` and keeps pointing at the
-               phone's copy. Between the episode hero and «دسته‌های محتوا», the
-               position the phone gives it and for the same reason: it helps a
-               visitor find their way BEFORE they would browse the grid by hand.
-               Amber throughout, like the phone's — only «چیکاره‌ای؟» is free. -->
-          <!-- The desktop layout's copy of #dcPathwayShowcase, above مسیریاب
-               for the same reason; spot.js anchors the desktop ad above it. -->
-          <div id="dcdPathwayShowcase" class="dc-pathway-showcase" aria-label="مسیرهای یادگیری" hidden></div>
-
-          <a class="dc-wf-home-entry" id="dcdWayfinderHome" href="/plus/wayfinder.html" aria-label="مسیریاب یادگیری">
-    <span class="dc-wf-top">
-    <span class="dc-wf-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.2 8.8l-2 5.2-5.2 2 2-5.2 5.2-2z"/></svg></span>
-    <span class="dc-wf-body">
-    <span class="dc-wf-eyebrow">دروازه‌ی دنت‌کست</span>
-    <span class="dc-wf-ttl">مسیریاب یادگیری</span>
-    <span class="dc-wf-sub">بگو چیکاره‌ای، یه مسیر شخصی از محتوای دنت‌کست بگیر</span>
-    </span>
-    </span>
-    <span class="dc-wf-row">
-    <span class="dc-wf-cta">شروع کن <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></span>
-    <span class="dc-wf-amber-pill">۱ قدم رایگان · بقیه پریمیوم</span>
-    </span>
-          </a>
 
           <!-- دسته‌های محتوا — the desktop layout's copy of the phone's grid.
                Same classes and the SAME COUNTER markers: the numbers are
@@ -7120,6 +7133,43 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
             <div class="dcd-latest-head"><span class="dcd-latest-dot"></span>آخرین مطالب دنت‌کست</div>
             <div class="dcd-latest-grid" id="dcdLatest"></div>
           </div>
+
+          <!-- The reader's own card, the desktop layout's copy of
+               #dcPlusHomeCard (plus/js/home-card.js, SLOT_IDS). Empty, unlike
+               the phone's: that one ships the signed-out state as static markup
+               to kill a first-paint shift for crawlers and cold visits, and
+               tools/verify_home_card.py --check compares exactly ONE static copy
+               against renderAnon(). After «آخرین مطالب دنت‌کست» and before the
+               bundles band, where the phone has it since 2026-11-11 (founder:
+               the same order in both shells). The desktop sponsor card is
+               seated in #dcdSpotHomeSlot and does not depend on this block. -->
+          <div id="dcdPlusHomeCard" class="dc-plus-home-card" aria-label="یادگیری شما" hidden></div>
+
+          <!-- مسیریاب — the desktop layout's copy. A different id
+               (#dcdWayfinderHome) because #dcWayfinderHome is spot.js's mobile
+               ad anchor and a duplicate id would be invalid; that anchor is
+               scoped `#panel-studio #dcWayfinderHome` and keeps pointing at the
+               phone's copy. After the latest rail and before the bundles band,
+               the position the phone gives it since 2026-11-11.
+               Amber throughout, like the phone's — only «چیکاره‌ای؟» is free. -->
+          <!-- The desktop layout's copy of #dcPathwayShowcase, directly above
+               مسیریاب as on the phone; only a fallback anchor for spot.js. -->
+          <div id="dcdPathwayShowcase" class="dc-pathway-showcase" aria-label="مسیرهای یادگیری" hidden></div>
+
+          <a class="dc-wf-home-entry" id="dcdWayfinderHome" href="/plus/wayfinder.html" aria-label="مسیریاب یادگیری">
+    <span class="dc-wf-top">
+    <span class="dc-wf-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.2 8.8l-2 5.2-5.2 2 2-5.2 5.2-2z"/></svg></span>
+    <span class="dc-wf-body">
+    <span class="dc-wf-eyebrow">دروازه‌ی دنت‌کست</span>
+    <span class="dc-wf-ttl">مسیریاب یادگیری</span>
+    <span class="dc-wf-sub">بگو چیکاره‌ای، یه مسیر شخصی از محتوای دنت‌کست بگیر</span>
+    </span>
+    </span>
+    <span class="dc-wf-row">
+    <span class="dc-wf-cta">شروع کن <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></span>
+    <span class="dc-wf-amber-pill">۱ قدم رایگان · بقیه پریمیوم</span>
+    </span>
+          </a>
 
           <!-- Same slot, the desktop layout's copy — see #dcHomeBundles above. -->
           <div id="dcdHomeBundles" class="dcb-band" aria-label="باندل‌های شروع" hidden></div>
