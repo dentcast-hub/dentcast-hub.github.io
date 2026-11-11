@@ -15,10 +15,10 @@
 //     the account, not localStorage).
 //  2. MANUAL — «راهنمای سایت» in the header person menu (logged-in), any time.
 //     On a non-home page it navigates to /?tour=1 and starts there.
-import { el, faNum, tehranDay } from './util.js?v=231';
-import { api, currentUser } from './api.js?v=231';
-import { pricingHref } from './premium-cta.js?v=231';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=231';
+import { el, faNum, tehranDay } from './util.js?v=232';
+import { api, currentUser } from './api.js?v=232';
+import { pricingHref } from './premium-cta.js?v=232';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=232';
 
 const SS_PENDING = 'dcp:tour:pending'; // set before navigating home to start there
 
@@ -261,7 +261,7 @@ async function mountPremiumPreview(ctx) {
   if (preview && preview.isConnected) return;
   const host = byId('panel-premium');
   if (!host) return;
-  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=231'), samplePathway()]);
+  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=232'), samplePathway()]);
   if (!state || typeof mod.livePreview !== 'function') return;
   const node = mod.livePreview({
     tier: 'premium',

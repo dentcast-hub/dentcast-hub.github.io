@@ -83,8 +83,9 @@
       }catch(e){}
       window.addEventListener('load',function(){
         setTimeout(function(){
-          var s=document.getElementById('dcSpotHomeSlot');
-          if(s&&!s.firstElementChild) root.classList.add('dc-spot-none');
+          var s=document.querySelectorAll('.dc-spot-slot'),i,full=false;
+          for(i=0;i<s.length;i++) if(s[i].firstElementChild) full=true;
+          if(s.length&&!full) root.classList.add('dc-spot-none');
         },8000);
       });
     })();
@@ -6658,18 +6659,6 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
             </div>
           </div>
 
-          <!-- The reader's own card, the desktop layout's copy of
-               #dcPlusHomeCard (plus/js/home-card.js, SLOT_IDS). Empty, unlike
-               the phone's: that one ships the signed-out state as static markup
-               to kill a first-paint shift for crawlers and cold visits, and
-               tools/verify_home_card.py --check compares exactly ONE static copy
-               against renderAnon(). First in the feed because that is where it
-               sits on the phone — above the pulse and above the latest rail.
-               (It used to have to stay above #dcdPulse because spot.js anchored
-               the desktop ad at that pulse's nextSibling; since 2026-09-10 that
-               ad anchors above #dcdWayfinderHome instead, like the phone's.) -->
-          <div id="dcdPlusHomeCard" class="dc-plus-home-card" aria-label="یادگیری شما" hidden></div>
-
           <!-- هیروی اپیزود — the desktop layout's copy of #card-episodes.
                Same classes, so the #panel-studio rules that give it the hero
                card system reach it through their twin selectors rather than
@@ -6701,6 +6690,28 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
               <span class="dc-home-hero-prog" aria-hidden="true"></span>
             </div>
           </div>
+
+          <!-- Sponsor slot, desktop welcome column — the twin of the phone's
+               #dcSpotHomeSlot, and the same order now (episode → sponsor → the
+               reader's card). EMPTY: spot.js seats the card in it; its box is
+               reserved before first paint by the shared .dc-spot-slot rules.
+               Measured 2026-11-11 before this: the home card arrived 129px
+               wide and grew to 560, and the reader's card above the episode
+               filled late and pushed the episode 205px down — together
+               CLS 0.08-0.13 on a desktop home. -->
+          <div id="dcdSpotHomeSlot" class="dc-spot-slot"></div>
+
+          <!-- The reader's own card, the desktop layout's copy of
+               #dcPlusHomeCard (plus/js/home-card.js, SLOT_IDS). Empty, unlike
+               the phone's: that one ships the signed-out state as static markup
+               to kill a first-paint shift for crawlers and cold visits, and
+               tools/verify_home_card.py --check compares exactly ONE static copy
+               against renderAnon(). First in the feed because that is where it
+               sits on the phone — above the pulse and above the latest rail.
+               (It used to have to stay above #dcdPulse because spot.js anchored
+               the desktop ad at that pulse's nextSibling; since 2026-09-10 that
+               ad anchors above #dcdWayfinderHome instead, like the phone's.) -->
+          <div id="dcdPlusHomeCard" class="dc-plus-home-card" aria-label="یادگیری شما" hidden></div>
 
           <!-- مسیریاب — the desktop layout's copy. A different id
                (#dcdWayfinderHome) because #dcWayfinderHome is spot.js's mobile
@@ -7394,7 +7405,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=330" defer></script>
+<script src="/dc-nav.js?v=331" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

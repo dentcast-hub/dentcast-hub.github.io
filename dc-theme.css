@@ -971,7 +971,7 @@ body:has(.dc-topbar) .back:hover {
 }
 
 /* =====================================================
-   MOBILE READING SURFACE (phone only)
+   READING SURFACE (all widths; was phone only)
    (founder-approved mockup, 2026-11-11 — appearance only)
    On a phone an article read as cards on a grey ground, and its type was
    flat: section headings at 15-17.6px sat at or under a 16.3px body. This
@@ -995,7 +995,14 @@ body:has(.dc-topbar) .back:hover {
      articles, .ep-section-label, .dc-related-label), so no page keeps half.
    - Desktop (≥560px) is untouched: every rule is inside the media query.
 ===================================================== */
-@media (max-width: 559px) {
+/* 2026-11-11, later the same day: the founder asked for the same surface on
+   wider screens («برای دسکتاپ همون کار کوچیک»), so the block is no longer
+   limited to phones. Everything in it is paint, weight and colour — plus the
+   glossary heading that grows inside its old line box — so the reservations
+   below hold at every width (measured again at 768, 1024 and 1440). The
+   homepage's own reading pane (index.html, column C) loads no shared CSS and
+   keeps its look. */
+@media all {
   /* The page ground becomes the reading surface. */
   :root:has(main.article-content-wrap),
   :root body:has(main.article-content-wrap) {
@@ -1616,5 +1623,298 @@ body:has(.dc-topbar) .back:hover {
   body:not(:has(main.article-content-wrap)) #chRoot .ch-go {
     display: inline-flex; align-items: center; min-height: 2.75rem;
     font-size: 0.875rem;
+  }
+}
+
+/* =====================================================
+   LISTING SURFACE, WIDER SCREENS (560px and up) — PAINT ONLY
+   (founder, 2026-11-11: «برای دسکتاپ همون کار کوچیک»)
+   The phone block above, reduced to what cannot move anything: colours,
+   backgrounds, shadows, radii and border COLOURS. Generated from it — every
+   size, weight, leading, padding, margin and border width is left as the
+   page had it, so on these screens each element sits exactly where it did
+   (checked element by element against main at 768, 1024 and 1440) and the
+   sponsor cards and the font-swap reflow are untouched.
+===================================================== */
+@media (min-width: 560px) {
+  html:not(:has(main.article-content-wrap)):is(:has(#episodeList), :has(#alphaNav), :has(.pillar-intro), :has(main.about-page), :has(.newsletter-box), :has(.dc-404-home), :has(#ubRoot), :has(#dbRoot), :has(#chRoot), :has(body > .wrap > ul), :has(.video-grid), :has(body > .wrap > #dcGlobalBox)), body:not(:has(main.article-content-wrap)):is(:has(#episodeList), :has(#alphaNav), :has(.pillar-intro), :has(main.about-page), :has(.newsletter-box), :has(.dc-404-home), :has(#ubRoot), :has(#dbRoot), :has(#chRoot), :has(> .wrap > ul), :has(.video-grid), :has(> .wrap > #dcGlobalBox)) {
+    background-color: var(--surface);
+  }
+  body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > header h1 {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > h2 {
+    color: var(--txt);
+    border-bottom-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > .intro, body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > .intro p {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > ul > li {
+    border-bottom-color: var(--border2);
+  }
+  body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > ul > li > a {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(.video-grid) .page-header h1 {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(.video-grid) .video-card {
+    border-color: var(--border);
+    box-shadow: none;
+    background: transparent;
+  }
+  body:not(:has(main.article-content-wrap)):has(.video-grid) .video-title {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(.video-grid) .video-meta {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .featured-card {
+    box-shadow: none;
+    border-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .dc-hero h1, body:not(:has(main.article-content-wrap)):has(.pillar-intro) h1 {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .dc-listen .section-title, body:not(:has(main.article-content-wrap)):has(#episodeList) .dc-archive .section-title {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .dc-archive .count, body:not(:has(main.article-content-wrap)):has(#episodeList) .dc-listen .section-note {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .player-cell {
+    background: transparent;
+    box-shadow: none;
+    border-color: transparent;
+    border-top-color: var(--border);
+    border-radius: 0;
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .player-cell .pc-title {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .player-cell .pc-note {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .episode-list {
+    border-top-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .episode-item {
+    border-bottom-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .episode-item .ep-title {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .episode-item .ep-meta {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .top {
+    box-shadow: none;
+    border-bottom-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) h1.title {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .subtitle {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .chip {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .listWrap {
+    background: transparent;
+    border-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .sectionHeader {
+    background: transparent;
+    border-bottom-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .sectionHeader h2 {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .term {
+    background: transparent;
+    border-color: transparent;
+    border-bottom-color: var(--border2);
+    border-radius: 0;
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .term:hover {
+    background: transparent;
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .term .en {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .term .fa {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .term .arrow {
+    background: transparent;
+    border-color: transparent;
+    color: var(--txt3);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-card-row) .listWrap {
+    background: transparent;
+    border-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    border-top-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-card-row) .pillar-card-row {
+    background: transparent;
+    border-color: transparent;
+    border-bottom-color: var(--border2);
+    border-radius: 0;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-card-row) .pillar-card-row:hover {
+    background: transparent;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-card-row) .pillar-card-name {
+    border-color: transparent;
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-card-row) .pillar-card-subtitle {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-card-row) .pillar-card-arrow {
+    background: transparent;
+    border-color: transparent;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-intro) .pillar-premium-banner {
+    box-shadow: none;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-flat-head h2 {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-flat-note {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-flat-wrap {
+    background: transparent;
+    border-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    border-top-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-item {
+    border-radius: 0;
+    border-bottom-color: var(--border2);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-item:hover {
+    background: transparent;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-item-title {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-item-meta {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-cards {
+    border-top-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-card {
+    background: transparent;
+    box-shadow: none;
+    border-color: transparent;
+    border-bottom-color: var(--border);
+    border-radius: 0;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-card-summary:hover {
+    background: transparent;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-card-title {
+    color: var(--txt);
+    border-bottom-color: transparent;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-card-count {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-card-body {
+    border-top-color: var(--border2);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-card-fade {
+    background: linear-gradient(to top, var(--surface) 0%, transparent 100%);
+  }
+  body:not(:has(main.article-content-wrap)) main.about-page .about-hero {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
+  body:not(:has(main.article-content-wrap)) main.about-page .about-hero-name, body:not(:has(main.article-content-wrap)) main.about-page h1 {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)) main.about-page .about-hero-title {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)) main.about-page .content-box {
+    background: transparent;
+    box-shadow: none;
+    border-color: transparent;
+    border-top-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)) main.about-page .content-box h2 {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(> .wrap > #dcGlobalBox) .wrap > #dcGlobalBox.dc-global-filter-box.box {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
+  body:not(:has(main.article-content-wrap)):has(.newsletter-box) .container > h1 {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(.newsletter-box) .newsletter-box {
+    background: var(--surface2);
+    border-color: var(--border);
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  body:not(:has(main.article-content-wrap)):has(.newsletter-box) .newsletter-box .spam-note {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-title h1 {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-title .ub-fa {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-count {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-list > .ub-row:first-child {
+    border-top-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-row {
+    background: transparent;
+    border-color: transparent;
+    border-bottom-color: var(--border2);
+    border-radius: 0;
+  }
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-row-title {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-type, body:not(:has(main.article-content-wrap)) #ubRoot .ub-date {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)) #dbRoot .db-hero h1, body:not(:has(main.article-content-wrap)) #chRoot .ch-hero h1 {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)) #dbRoot .db-sub, body:not(:has(main.article-content-wrap)) #chRoot .ch-sub {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)) #chRoot .ch-card {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    border-bottom-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)) #chRoot .ch-media {
+    border-radius: var(--r-lg);
+  }
+  body:not(:has(main.article-content-wrap)) #chRoot .ch-meta {
+    color: var(--txt2);
   }
 }
