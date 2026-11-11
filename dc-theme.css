@@ -971,6 +971,135 @@ body:has(.dc-topbar) .back:hover {
 }
 
 /* =====================================================
+   MOBILE READING SURFACE (phone only)
+   (founder-approved mockup, 2026-11-11 — appearance only)
+   On a phone an article read as cards on a grey ground, and its type was
+   flat: section headings at 15-17.6px sat at or under a 16.3px body. This
+   block turns every `main.article-content-wrap` page into one calm
+   editorial surface below the site's 559px phone breakpoint and gives the
+   column a real hierarchy. What it may and may not touch:
+   - Colour, shadow and font-size only. Every box keeps its border WIDTHS,
+     paddings, margins and radii, so the prose column — and with it the
+     width the in-article Spot card gets — is exactly as before. Only the
+     border COLOUR goes (a hairline stays between consecutive boxes).
+   - Never the action row, the DES chips, the ToC card or anything else
+     injected late, and never the margins of what can sit in front of the
+     row: the per-template K constants below stay exact. The meta line and
+     the H1 change size, but their margins are rem, so K does not move.
+   - Prose selectors are child chains from the box (`box > p`,
+     `box > ul li`), so nothing the Spot card carries inside the prose can
+     match them, and they skip classed paragraphs (.dc-disclaimer …).
+   - Section headings lose the 4px accent bar here: hierarchy is carried by
+     size and weight alone. Every bar variant is covered (fa border-right,
+     en border-left; box h2/h3/h4, glossary sections, LiteCast/DentAI
+     articles, .ep-section-label, .dc-related-label), so no page keeps half.
+   - Desktop (≥560px) is untouched: every rule is inside the media query.
+===================================================== */
+@media (max-width: 559px) {
+  /* The page ground becomes the reading surface. */
+  :root:has(main.article-content-wrap),
+  :root body:has(main.article-content-wrap) {
+    background-color: var(--surface);
+  }
+
+  /* Prose boxes go flat: no fill, no shadow, no visible frame — geometry kept.
+     !important and (0,3,2) out-rank the dark `.text-box` card-bg !important
+     rule above (0,3,1) and every page's own box rules. */
+  :root body main.article-content-wrap :is(.text-box, .glass-box, .content-box, .ep-box, .dc-article-box, main > article) {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+  }
+  /* A hairline between two consecutive boxes, on the border that is already there. */
+  :root body main.article-content-wrap :is(.text-box, .glass-box, .content-box, .dc-article-box) + :is(.text-box, .glass-box, .content-box, .dc-article-box) {
+    border-top-color: var(--border2) !important;
+  }
+
+  /* Body prose, the H1 and the meta line keep their sizes: anything that
+     grows above the in-article Spot card pushes the sponsor further down
+     the page (measured 55-258px with a 17px body), and that is not ours to
+     spend. Only the H1 colour changes (dark took the link blue). */
+  :root body main.article-content-wrap h1 {
+    color: var(--txt);
+  }
+
+  /* Section headings: no accent bar on a phone; hierarchy is size, weight
+     and colour. */
+  :root body main.article-content-wrap :is(
+    :is(.text-box, .glass-box, .content-box, .dc-article-box) > :is(h2, h3, h4):not([class]),
+    :is(.text-box, .glass-box, .content-box, .dc-article-box) > :is(ul, ol) :is(h2, h3, h4):not([class]),
+    .content-box > section > h2:not([class]),
+    .sh-dialogue > :is(h2, h3, h4):not([class]),
+    main > article > :is(h2, h3):not([class]),
+    .ep-caption > h3.ep-sub,
+    .ep-section-label,
+    .dc-related-label
+  ) {
+    border-right: 0 none;
+    border-left: 0 none;
+    padding-right: 0;
+    padding-left: 0;
+  }
+  /* Headings change weight and colour, not size: a taller heading above
+     the Spot card is the sponsor pushed down. The one size change (glossary,
+     below) stays inside the line box the heading already had. */
+  :root body main.article-content-wrap :is(
+    :is(.text-box, .glass-box, .content-box, .dc-article-box) > h2:not([class]),
+    :is(.text-box, .glass-box, .content-box, .dc-article-box) > :is(ul, ol) h2:not([class]),
+    .content-box > section > h2:not([class]),
+    .sh-dialogue > h2:not([class]),
+    main > article > h2:not([class])
+  ) {
+    font-weight: 800;
+    color: var(--txt);
+  }
+  /* Glossary section heads: 17.6px on a 33.44px line -> 19px on the same line. */
+  :root body main.article-content-wrap :is(.content-box > h2:not([class]), .content-box > section > h2:not([class])) {
+    font-size: 1.1875rem;
+    line-height: 2.09rem;
+    margin-top: 0.913rem;   /* was .83em of 17.6px = 14.608px; em would grow with the font */
+  }
+  :root body main.article-content-wrap :is(
+    :is(.text-box, .glass-box, .content-box, .dc-article-box) > :is(h3, h4):not([class]),
+    :is(.text-box, .glass-box, .content-box, .dc-article-box) > :is(ul, ol) :is(h3, h4):not([class]),
+    .sh-dialogue > :is(h3, h4):not([class]),
+    main > article > h3:not([class]),
+    .ep-caption > h3.ep-sub,
+    .ep-section-label
+  ) {
+    font-weight: 800;
+    color: var(--pr);
+  }
+  :root[data-theme="dark"] body main.article-content-wrap :is(
+    :is(.text-box, .glass-box, .content-box, .dc-article-box) > :is(h3, h4):not([class]),
+    :is(.text-box, .glass-box, .content-box, .dc-article-box) > :is(ul, ol) :is(h3, h4):not([class]),
+    .sh-dialogue > :is(h3, h4):not([class]),
+    main > article > h3:not([class]),
+    .ep-caption > h3.ep-sub,
+    .ep-section-label
+  ) {
+    color: var(--heading);
+  }
+  /* «محتوای مرتبط» sits after the prose and after the sponsor. */
+  :root body main.article-content-wrap .dc-related-label {
+    font-weight: 800;
+    color: var(--txt);
+  }
+
+  /* Dark theme: the logo's white artwork ground and the white «English» pill. */
+  :root[data-theme="dark"] body:has(main.article-content-wrap) .dc-topbar img[src="/logo-v2.png"] {
+    filter: invert(1) hue-rotate(180deg);
+    mix-blend-mode: screen;
+  }
+  :root[data-theme="dark"] body main.article-content-wrap .lang-btn {
+    background: var(--surface2);
+    color: var(--link);
+    border-color: var(--border);
+    box-shadow: none;
+  }
+}
+
+/* =====================================================
    ARTICLE ACTION ROW — THE SPACE IT WILL TAKE, BEFORE IT ARRIVES
    (layout-shift fix, 2026-11-11)
    #dcActionRow (.dc-actions) is built by script — dc-nav.js phase 7b on a
@@ -1085,3 +1214,407 @@ body:has(.dc-topbar) .back:hover {
    the <img> lazily, after /me). Every creative is drawn 2:1. Mirrored in
    index.html's inline styles, which load no shared CSS. */
 .dc-spot-art-img { aspect-ratio: 2 / 1; object-fit: contain; }
+
+/* =====================================================
+   MOBILE LISTING SURFACE (phone only)
+   The listing / landing pages (episodes.html, the section indexes,
+   the glossary index, /pillar/ and /pillar/<slug>/, search, about,
+   privacy, join, 404, up-board, des-board, challenges) as ONE family on
+   a phone: one flat ground, a real type scale, rows divided by hairlines
+   instead of shadowed cards on grey, tap targets of 44px.
+   Appearance only, and bounded on purpose:
+   - Phone only (< 560px). Nothing here can reach a desktop or tablet.
+   - Every selector carries body:not(:has(main.article-content-wrap)) plus
+     a page anchor, so no reading page and no /plus page can match.
+   - Nothing is hidden, moved or reordered; no markup is assumed beyond
+     what the pages already ship.
+   - The sponsor card is never selected. On the pages where it sits
+     mid-page (episodes: under the featured episode; pillar hub and pillar
+     pages: under the intro; search: inside #dcGlobalBox) everything ABOVE
+     it keeps its geometry — only colour/shadow change there — so the card
+     keeps its width, its height and its offset from the top.
+   - background-COLOR only on body/html, so the dark-mode grid layer on
+     body:not(:has(main.article-content-wrap)) stays on.
+   - Script-built pieces keep their size: the premium pillar swap
+     (premium-index.js) and its state bar are left as they are, and the
+     pillar premium banner keeps its box so that swap moves nothing more.
+===================================================== */
+@media (max-width: 559px) {
+
+  /* ── 1. ground: one flat surface ─────────────────── */
+  html:not(:has(main.article-content-wrap)):is(:has(#episodeList), :has(#alphaNav), :has(.pillar-intro), :has(main.about-page), :has(.newsletter-box), :has(.dc-404-home), :has(#ubRoot), :has(#dbRoot), :has(#chRoot), :has(body > .wrap > ul), :has(.video-grid), :has(body > .wrap > #dcGlobalBox)),
+  body:not(:has(main.article-content-wrap)):is(:has(#episodeList), :has(#alphaNav), :has(.pillar-intro), :has(main.about-page), :has(.newsletter-box), :has(.dc-404-home), :has(#ubRoot), :has(#dbRoot), :has(#chRoot), :has(> .wrap > ul), :has(.video-grid), :has(> .wrap > #dcGlobalBox)) {
+    background-color: var(--surface);
+  }
+
+  /* ── 2. section indexes (insight, chairside, metanotes, notecast,
+        sharehub, litecast, taraz, plak-sefr; dc-landing.css skin) ──
+     Paint only. These pages are one long column of text and the web font
+     swaps in after first paint: any change to a size, weight, leading or
+     padding here changes which words re-wrap at that swap, and with a
+     late font it measured as MORE layout shift than before on eight of
+     them (sharehub 0.002 -> 0.241). So the text keeps its metrics and only
+     colours move onto the shared tokens. */
+  body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > header h1 {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > h2 {
+    color: var(--txt);
+    border-bottom-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > .intro,
+  body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > .intro p {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > ul > li {
+    border-bottom-color: var(--border2);
+  }
+  body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > ul > li > a {
+    color: var(--txt);
+  }
+
+  /* ویدیوها (dentcast-plus): the thumbnail keeps its frame, flat */
+  body:not(:has(main.article-content-wrap)):has(.video-grid) .page-header h1 {
+    font-size: 1.75rem; font-weight: 800; line-height: 1.6; color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(.video-grid) .video-card {
+    border-color: var(--border); box-shadow: none; background: transparent;
+  }
+  body:not(:has(main.article-content-wrap)):has(.video-grid) .video-title {
+    font-size: 1.0625rem; font-weight: 700; line-height: 1.85; color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(.video-grid) .video-meta {
+    font-size: 0.875rem; color: var(--txt2);
+  }
+
+  /* ── 3. episodes.html ─────────────────────────────
+     Above the sponsor card (hero, featured): paint only, no geometry. */
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .featured-card {
+    box-shadow: none; border-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .dc-hero h1,
+  body:not(:has(main.article-content-wrap)):has(.pillar-intro) h1 {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .dc-listen .section-title,
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .dc-archive .section-title {
+    font-size: 1.375rem; font-weight: 800; line-height: 1.6; color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .dc-archive .count,
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .dc-listen .section-note {
+    font-size: 0.875rem; color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .player-cell {
+    background: transparent; box-shadow: none;
+    border: 0; border-top: 1px solid var(--border); border-radius: 0;
+    padding: 1.25rem 0.125rem;
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .player-cell .pc-title {
+    font-size: 1.0625rem; font-weight: 700; color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .player-cell .pc-note {
+    font-size: 0.875rem; color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .archive-sort {
+    min-height: 2.75rem;
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .episode-list {
+    border-top-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .episode-item {
+    border-bottom-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .episode-item .ep-title {
+    font-size: 1.0625rem; font-weight: 700; line-height: 1.75; color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .episode-item .ep-meta {
+    font-size: 0.875rem; color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .episode-item .ep-caption {
+    font-size: 0.9375rem; line-height: 1.85;
+  }
+  body:not(:has(main.article-content-wrap)):has(#episodeList) .episode-item .ep-tag {
+    font-size: 0.75rem;
+  }
+
+  /* ── 4. glossary index (sticky head stays opaque) ── */
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .top {
+    box-shadow: none; border-bottom-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .back-link {
+    min-height: 2.75rem;
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .nav-back {
+    margin-bottom: 0;
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) h1.title {
+    font-size: 1.75rem; font-weight: 800; line-height: 1.6; color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .subtitle {
+    font-size: 0.875rem; color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .chip {
+    font-size: 0.75rem; color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .alphaBtn {
+    min-width: 2.75rem; height: 2.75rem;
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .listWrap {
+    background: transparent; border: 0; border-radius: 0; box-shadow: none;
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .sectionHeader {
+    background: transparent; padding: 1.25rem 0.125rem 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .sectionHeader h2 {
+    font-size: 1.375rem; font-weight: 800; color: var(--txt); letter-spacing: 0;
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .sectionHeader .badge {
+    font-size: 0.75rem;
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .items {
+    padding: 0;
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .term {
+    margin: 0; min-height: 2.75rem; padding: 0.75rem 0.125rem;
+    background: transparent; border: 0; border-bottom: 1px solid var(--border2);
+    border-radius: 0;
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .term:hover {
+    background: transparent; transform: none;
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .term .en {
+    font-size: 1.0625rem; font-weight: 700; color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .term .fa {
+    font-size: 0.875rem; color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(#alphaNav) .term .arrow {
+    background: transparent; border-color: transparent; color: var(--txt3);
+  }
+
+  /* ── 5. pillar hub (/pillar/) ─────────────────────
+     Hero + intro sit above the sponsor card: paint only. */
+  body:not(:has(main.article-content-wrap)):has(.pillar-card-row) .listWrap {
+    background: transparent; border: 0; border-radius: 0; box-shadow: none;
+    border-top: 1px solid var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-card-row) .pillar-card-row {
+    margin: 0; padding: 0.875rem 0.125rem; min-height: 2.75rem;
+    background: transparent; border: 0; border-bottom: 1px solid var(--border2);
+    border-radius: 0;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-card-row) .pillar-card-row:hover {
+    background: transparent; transform: none;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-card-row) .pillar-card-header {
+    align-items: center;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-card-row) .pillar-card-name {
+    margin: 0; padding: 0; border: 0;
+    font-size: 1.0625rem; font-weight: 700; line-height: 1.7; color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-card-row) .pillar-card-subtitle {
+    font-size: 0.875rem; line-height: 1.7; color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-card-row) .pillar-card-meta {
+    font-size: 0.75rem;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-card-row) .pillar-card-arrow {
+    background: transparent; border-color: transparent;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-intro) .pillar-premium-banner {
+    box-shadow: none;
+  }
+
+  /* ── 6. pillar pages (/pillar/<slug>/) ────────────
+     Header + intro sit above the sponsor card: paint only. The flat list
+     and the premium chain view (premium-index.js) both go flat. */
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-flat-head h2 {
+    font-size: 1.375rem; font-weight: 800; line-height: 1.6; color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-flat-head .count {
+    font-size: 0.875rem;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-flat-note {
+    font-size: 0.875rem; color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-flat-wrap {
+    background: transparent; border: 0; border-radius: 0; box-shadow: none;
+    border-top: 1px solid var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-flat-wrap .pillar-list {
+    padding: 0; gap: 0;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-item {
+    border-radius: 0; border-bottom: 1px solid var(--border2);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-item:hover {
+    background: transparent;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-item-link {
+    padding: 0.75rem 0.125rem;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-item-title {
+    font-size: 1.0625rem; font-weight: 700; line-height: 1.75; color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-item-meta {
+    font-size: 0.875rem; color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-item-kind {
+    font-size: 0.75rem;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-cards {
+    gap: 0; border-top: 1px solid var(--border);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-card {
+    background: transparent; box-shadow: none; border: 0;
+    border-bottom: 1px solid var(--border); border-radius: 0;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-card-summary {
+    padding: 0.875rem 0.125rem;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-card-summary:hover {
+    background: transparent;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-card-title {
+    font-size: 1.0625rem; font-weight: 800; color: var(--txt);
+    border-bottom: 0; padding-bottom: 0;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-card-count {
+    font-size: 0.875rem; color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-card-body {
+    border-top-color: var(--border2);
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-list .pillar-item-link {
+    font-size: 1rem;
+  }
+  body:not(:has(main.article-content-wrap)):has(.pillar-flat-wrap) .pillar-card-fade {
+    background: linear-gradient(to top, var(--surface) 0%, transparent 100%);
+  }
+
+  /* ── 7. about + privacy (main.about-page) ────────
+     Paint only, for the same reason as the section indexes: a long text
+     column that re-wraps when the web font swaps in. */
+  body:not(:has(main.article-content-wrap)) main.about-page .about-hero {
+    background: transparent; border-color: transparent; box-shadow: none;
+  }
+  body:not(:has(main.article-content-wrap)) main.about-page .about-hero-name,
+  body:not(:has(main.article-content-wrap)) main.about-page h1 {
+    color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)) main.about-page .about-hero-title {
+    color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)) main.about-page .content-box {
+    background: transparent; box-shadow: none; border-color: transparent;
+    border-top-color: var(--border);
+  }
+  body:not(:has(main.article-content-wrap)) main.about-page .content-box h2 {
+    color: var(--txt);
+  }
+
+  /* ── 8. search.html: the box stays the same size (the search sponsor
+        card is laid out inside it); only its card paint goes. ── */
+  body:not(:has(main.article-content-wrap)):has(> .wrap > #dcGlobalBox) .wrap > #dcGlobalBox.dc-global-filter-box.box {
+    background: transparent; border-color: transparent; box-shadow: none;
+  }
+
+  /* ── 9. join + 404 ─────────────────────────────── */
+  body:not(:has(main.article-content-wrap)):has(.newsletter-box) .container > h1 {
+    font-size: 1.75rem; color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)):has(.newsletter-box) .newsletter-box {
+    background: var(--surface2); border-color: var(--border); box-shadow: none;
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+  }
+  body:not(:has(main.article-content-wrap)):has(.newsletter-box) .newsletter-box .spam-note {
+    font-size: 0.875rem; color: var(--txt2);
+  }
+
+  /* ── 10. up-board ──────────────────────────────── */
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-back,
+  body:not(:has(main.article-content-wrap)) #dbRoot .db-back,
+  body:not(:has(main.article-content-wrap)) #chRoot .ch-back {
+    min-height: 2.75rem; margin-bottom: 0;
+  }
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-title h1 {
+    font-size: 1.75rem; font-weight: 800; color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-title .ub-fa {
+    font-size: 0.875rem; color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-sort button {
+    min-height: 2.75rem;
+  }
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-count {
+    font-size: 0.875rem; color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-list > .ub-row:first-child {
+    border-top: 1px solid var(--border);
+  }
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-row {
+    margin: 0; padding: 0.875rem 0.125rem;
+    background: transparent; border: 0; border-bottom: 1px solid var(--border2);
+    border-radius: 0;
+  }
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-row-title {
+    font-size: 1.0625rem; font-weight: 700; line-height: 1.75; color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-type,
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-date {
+    font-size: 0.875rem; color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)) #ubRoot .ub-engagement {
+    font-size: 0.75rem;
+  }
+
+  /* ── 11. des-board + challenges heads ──────────── */
+  body:not(:has(main.article-content-wrap)) #dbRoot .db-hero h1,
+  body:not(:has(main.article-content-wrap)) #chRoot .ch-hero h1 {
+    font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; color: var(--txt);
+  }
+  body:not(:has(main.article-content-wrap)) #dbRoot .db-eyebrow,
+  body:not(:has(main.article-content-wrap)) #chRoot .ch-eyebrow {
+    font-size: 0.75rem;
+  }
+  body:not(:has(main.article-content-wrap)) #dbRoot .db-sub,
+  body:not(:has(main.article-content-wrap)) #chRoot .ch-sub {
+    font-size: 0.875rem; color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)) #chRoot .ch-lead {
+    font-size: 1rem; line-height: 1.9;
+  }
+
+  /* challenges: cards → flat entries, the picture keeps its corners */
+  body:not(:has(main.article-content-wrap)) #chRoot .ch-list {
+    gap: 0;
+  }
+  body:not(:has(main.article-content-wrap)) #chRoot .ch-card {
+    background: transparent; border: 0; box-shadow: none; border-radius: 0;
+    border-bottom: 1px solid var(--border); padding: 1rem 0 0.25rem;
+  }
+  body:not(:has(main.article-content-wrap)) #chRoot .ch-media {
+    border-radius: var(--r-lg);
+  }
+  body:not(:has(main.article-content-wrap)) #chRoot .ch-main {
+    padding: 0.75rem 0.125rem 0.5rem;
+  }
+  body:not(:has(main.article-content-wrap)) #chRoot .ch-meta {
+    font-size: 0.875rem; color: var(--txt2);
+  }
+  body:not(:has(main.article-content-wrap)) #chRoot .ch-sec {
+    font-size: 0.75rem;
+  }
+  body:not(:has(main.article-content-wrap)) #chRoot .ch-title {
+    font-size: 1.0625rem; font-weight: 700;
+  }
+  body:not(:has(main.article-content-wrap)) #chRoot .ch-q {
+    font-size: 1rem; line-height: 1.9;
+  }
+  body:not(:has(main.article-content-wrap)) #chRoot .ch-go {
+    display: inline-flex; align-items: center; min-height: 2.75rem;
+    font-size: 0.875rem;
+  }
+}
