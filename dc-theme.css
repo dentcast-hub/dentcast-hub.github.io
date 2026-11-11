@@ -1015,36 +1015,16 @@ body:has(.dc-topbar) .back:hover {
     border-top-color: var(--border2) !important;
   }
 
-  /* Body prose: 17px on a 1.95 leading. */
-  :root body main.article-content-wrap :is(
-    :is(.text-box, .glass-box, .content-box, .dc-article-box) > p:not([class]),
-    :is(.text-box, .glass-box, .content-box, .dc-article-box) > :is(ul, ol):not([class]) li,
-    :is(.text-box, .glass-box, .content-box, .dc-article-box) > :is(ul, ol):not([class]) li p:not([class]),
-    :is(.text-box, .glass-box, .content-box, .dc-article-box) > blockquote:not([class]),
-    :is(.text-box, .glass-box, .content-box, .dc-article-box) > blockquote:not([class]) p:not([class]),
-    .content-box > section > p:not([class]),
-    .content-box > section > :is(ul, ol):not([class]) li,
-    .sh-dialogue > p:not([class]),
-    .sh-dialogue > :is(ul, ol):not([class]) li,
-    .ep-caption > p:not([class]),
-    .ep-caption > :is(ul, ol):not([class]) li,
-    .ep-section > .ep-caption,
-    main > article > p:not([class]),
-    main > article > :is(ul, ol):not([class]) li
-  ) {
-    font-size: 1.0625rem;
-    line-height: 1.95;
-  }
-
-  /* H1 — 28px / 800, text colour in both themes (dark took the link blue). */
+  /* Body prose, the H1 and the meta line keep their sizes: anything that
+     grows above the in-article Spot card pushes the sponsor further down
+     the page (measured 55-258px with a 17px body), and that is not ours to
+     spend. Only the H1 colour changes (dark took the link blue). */
   :root body main.article-content-wrap h1 {
-    font-size: 1.75rem;
-    font-weight: 800;
-    line-height: 1.45;
     color: var(--txt);
   }
 
-  /* Section headings: no accent bar on a phone. */
+  /* Section headings: no accent bar on a phone; hierarchy is size, weight
+     and colour. */
   :root body main.article-content-wrap :is(
     :is(.text-box, .glass-box, .content-box, .dc-article-box) > :is(h2, h3, h4):not([class]),
     :is(.text-box, .glass-box, .content-box, .dc-article-box) > :is(ul, ol) :is(h2, h3, h4):not([class]),
@@ -1060,33 +1040,33 @@ body:has(.dc-topbar) .back:hover {
     padding-right: 0;
     padding-left: 0;
   }
-  /* H2 — 22px / 800, text colour. */
+  /* Headings change weight and colour, not size: a taller heading above
+     the Spot card is the sponsor pushed down. The one size change (glossary,
+     below) stays inside the line box the heading already had. */
   :root body main.article-content-wrap :is(
     :is(.text-box, .glass-box, .content-box, .dc-article-box) > h2:not([class]),
     :is(.text-box, .glass-box, .content-box, .dc-article-box) > :is(ul, ol) h2:not([class]),
     .content-box > section > h2:not([class]),
     .sh-dialogue > h2:not([class]),
-    main > article > h2:not([class]),
-    .ep-section-label,
-    .dc-related-label
+    main > article > h2:not([class])
   ) {
-    font-size: 1.375rem;
     font-weight: 800;
-    line-height: 1.55;
     color: var(--txt);
   }
-  /* H3 (and the h4 that NoteCast / MetaNotes use as their section heads) —
-     19px / 700, the deep brand blue; the lighter heading blue in dark. */
+  /* Glossary section heads: 17.6px on a 33.44px line -> 19px on the same line. */
+  :root body main.article-content-wrap :is(.content-box > h2:not([class]), .content-box > section > h2:not([class])) {
+    font-size: 1.1875rem;
+    line-height: 2.09rem;
+  }
   :root body main.article-content-wrap :is(
     :is(.text-box, .glass-box, .content-box, .dc-article-box) > :is(h3, h4):not([class]),
     :is(.text-box, .glass-box, .content-box, .dc-article-box) > :is(ul, ol) :is(h3, h4):not([class]),
     .sh-dialogue > :is(h3, h4):not([class]),
     main > article > h3:not([class]),
-    .ep-caption > h3.ep-sub
+    .ep-caption > h3.ep-sub,
+    .ep-section-label
   ) {
-    font-size: 1.1875rem;
-    font-weight: 700;
-    line-height: 1.6;
+    font-weight: 800;
     color: var(--pr);
   }
   :root[data-theme="dark"] body main.article-content-wrap :is(
@@ -1094,17 +1074,15 @@ body:has(.dc-topbar) .back:hover {
     :is(.text-box, .glass-box, .content-box, .dc-article-box) > :is(ul, ol) :is(h3, h4):not([class]),
     .sh-dialogue > :is(h3, h4):not([class]),
     main > article > h3:not([class]),
-    .ep-caption > h3.ep-sub
+    .ep-caption > h3.ep-sub,
+    .ep-section-label
   ) {
     color: var(--heading);
   }
-
-  /* Meta: byline, dates, episode meta — 14px, never under 12px. */
-  :root body main.article-content-wrap :is(.dc-trustline, .ep-meta, .author-note, .author) {
-    font-size: 0.875rem;
-  }
-  :root body main.article-content-wrap .ep-badge {
-    font-size: 0.75rem;
+  /* «محتوای مرتبط» sits after the prose and after the sponsor. */
+  :root body main.article-content-wrap .dc-related-label {
+    font-weight: 800;
+    color: var(--txt);
   }
 
   /* Dark theme: the logo's white artwork ground and the white «English» pill. */
