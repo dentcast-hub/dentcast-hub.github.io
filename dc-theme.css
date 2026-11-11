@@ -1248,24 +1248,29 @@ body:has(.dc-topbar) .back:hover {
   }
 
   /* ── 2. section indexes (insight, chairside, metanotes, notecast,
-        sharehub, litecast, taraz, plak-sefr; dc-landing.css skin) ── */
+        sharehub, litecast, taraz, plak-sefr; dc-landing.css skin) ──
+     Paint only. These pages are one long column of text and the web font
+     swaps in after first paint: any change to a size, weight, leading or
+     padding here changes which words re-wrap at that swap, and with a
+     late font it measured as MORE layout shift than before on eight of
+     them (sharehub 0.002 -> 0.241). So the text keeps its metrics and only
+     colours move onto the shared tokens. */
   body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > header h1 {
-    font-size: 1.75rem; font-weight: 800; line-height: 1.6; color: var(--txt);
+    color: var(--txt);
   }
   body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > h2 {
-    font-size: 1.375rem; font-weight: 800; line-height: 1.6; color: var(--txt);
+    color: var(--txt);
     border-bottom-color: var(--border);
   }
   body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > .intro,
   body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > .intro p {
-    font-size: 1rem; line-height: 1.95; color: var(--txt2);
+    color: var(--txt2);
   }
   body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > ul > li {
-    padding: 0; border-bottom: 1px solid var(--border2);
+    border-bottom-color: var(--border2);
   }
   body:not(:has(main.article-content-wrap)):has(> .wrap > ul) .wrap > ul > li > a {
-    display: block; min-height: 2.75rem; padding: 0.75rem 0.125rem;
-    font-size: 1.0625rem; font-weight: 700; line-height: 1.85; color: var(--txt);
+    color: var(--txt);
   }
 
   /* ویدیوها (dentcast-plus): the thumbnail keeps its frame, flat */
@@ -1489,33 +1494,25 @@ body:has(.dc-topbar) .back:hover {
     background: linear-gradient(to top, var(--surface) 0%, transparent 100%);
   }
 
-  /* ── 7. about + privacy (main.about-page) ──────── */
+  /* ── 7. about + privacy (main.about-page) ────────
+     Paint only, for the same reason as the section indexes: a long text
+     column that re-wraps when the web font swaps in. */
   body:not(:has(main.article-content-wrap)) main.about-page .about-hero {
-    background: transparent; border: 0; box-shadow: none; border-radius: 0;
-    padding: 0.5rem 0 1.25rem; margin-bottom: 0;
+    background: transparent; border-color: transparent; box-shadow: none;
   }
   body:not(:has(main.article-content-wrap)) main.about-page .about-hero-name,
   body:not(:has(main.article-content-wrap)) main.about-page h1 {
-    font-size: 1.75rem !important; font-weight: 800; line-height: 1.6; color: var(--txt);
+    color: var(--txt);
   }
   body:not(:has(main.article-content-wrap)) main.about-page .about-hero-title {
-    font-size: 0.875rem; color: var(--txt2);
-  }
-  body:not(:has(main.article-content-wrap)) main.about-page .about-chip {
-    font-size: 0.75rem;
+    color: var(--txt2);
   }
   body:not(:has(main.article-content-wrap)) main.about-page .content-box {
-    background: transparent; box-shadow: none; border: 0; border-radius: 0;
-    border-top: 1px solid var(--border);
-    padding: 1.5rem 0.125rem; margin-bottom: 0;
+    background: transparent; box-shadow: none; border-color: transparent;
+    border-top-color: var(--border);
   }
   body:not(:has(main.article-content-wrap)) main.about-page .content-box h2 {
-    font-size: 1.375rem; font-weight: 800; line-height: 1.6; color: var(--txt);
-    border-right: 0; padding-right: 0; border-left: 0; padding-left: 0;
-  }
-  body:not(:has(main.article-content-wrap)) main.about-page .content-box p,
-  body:not(:has(main.article-content-wrap)) main.about-page .content-box li {
-    font-size: 1rem; line-height: 1.9;
+    color: var(--txt);
   }
 
   /* ── 8. search.html: the box stays the same size (the search sponsor
