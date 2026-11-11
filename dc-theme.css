@@ -1004,21 +1004,35 @@ body:has(.dc-topbar) .back:hover {
       what has arrived inside it: the row itself, the main group while
       plus.js has not filled it yet (the same 0/42px step, against the
       row's content width of 330px), and the aux group that the DES chips
-      (plus/js/des.js) join. When a DES chip does not fit beside the reading
-      time and share chip it still opens a second aux line — the one shift
-      left here, because whether a page has a score is only known once its
+      (plus/js/des.js) join. On a phone those chips always take their own
+      line, and that line is reserved on the sections whose pages all carry
+      a score (see --dc-ar-des below); elsewhere a record still opens it
+      late, because whether a page has a score is only known once its
       record is fetched.
    No page carries any of this markup; a browser without :has() keeps
    parts 1-2 and only loses the main-group reserve.
 ===================================================== */
-:root { --dc-ar-h: 64px; --dc-ar-k: 42px; }
+:root { --dc-ar-h: 64px; --dc-ar-k: 42px; --dc-ar-des: 0px; }
 @media (max-width: 559px) {
   /* A token stream until it is used: the 100% resolves inside the margin
      below, against the reserving element's containing block. */
-  :root { --dc-ar-h: calc(117px + clamp(0px, (360px - 100%) * 1000, 42px)); }
+  :root { --dc-ar-h: calc(117px + clamp(0px, (360px - 100%) * 1000, 42px) + var(--dc-ar-des)); }
   /* The English labels (Workbench › Add to collection › Like) are wider:
      one line needs a 375px row (345px of content) there. */
-  :root:lang(en) { --dc-ar-h: calc(117px + clamp(0px, (375px - 100%) * 1000, 42px)); }
+  :root:lang(en) { --dc-ar-h: calc(117px + clamp(0px, (375px - 100%) * 1000, 42px) + var(--dc-ar-des)); }
+  /* The DES chip line (founder, 1405/08/20). On a phone the chips always
+     take their own line in the aux group (plus.css), 46px = 10px + one 36px
+     chip. Reserved only where (nearly) every page has a record — measured
+     2026-11-11: insight 103/106, chairside 51/51, sharehub 47/47, metanotes
+     23/23, plak-sefr 13/13, taraz 10/10 — told apart by the page's own
+     canonical, so no page markup is involved. Elsewhere (glossary 2/109,
+     notecast 12/43, ویدیوها 4/14) a record still opens the line late; an
+     episode has no reading time and its chip fits beside share anyway. A
+     scored page whose fidelity chip wraps a second chip line (35 records)
+     still grows by one line; a page in these sections without a record
+     keeps an empty one. */
+  :root:has(link[rel="canonical"]:is([href*=".org/insight/"], [href*=".org/chairside/"], [href*=".org/sharehub/"],
+    [href*=".org/metanotes/"], [href*=".org/plak-sefr/"], [href*=".org/taraz/"])) { --dc-ar-des: 46px; }
 }
 :root:not(.dc-actrow-seated) #dcActionRow { display: none; }
 :root:not(.dc-actrow-seated) :is(
@@ -1047,8 +1061,8 @@ body:has(.dc-topbar) .back:hover {
 #dcActionRow > .dc-actions-aux { min-height: 38px; }
 @media (max-width: 559px) {
   #dcActionRow { min-height: 117px; }
-  #dcActionRow > .dc-actions-main,
-  #dcActionRow > .dc-actions-aux { min-height: 36px; }
+  #dcActionRow > .dc-actions-main { min-height: 36px; }
+  #dcActionRow > .dc-actions-aux { min-height: calc(36px + var(--dc-ar-des)); }
   /* A flex item's padding percentage resolves against the row's content
      width: the main group keeps its second line from the start. */
   #dcActionRow > .dc-actions-main:not(:has(.dc-act-primary)) {
