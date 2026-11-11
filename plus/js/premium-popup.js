@@ -1,92 +1,49 @@
-// The first-visit premium offer: one card, the full list of what premium adds,
-// a buy button, and an × to make it go away.
+// The premium offer on an article page: one quiet card at the END of the
+// article, in the page's own flow.
 //
-// WHY IT EXISTS AT ALL. Online purchase went live and every other place that
-// says «پریمیوم» on this site is a gate — you only meet it by walking into a
-// feature you cannot use. That reaches the people already deep in the product
-// and nobody else. Six to seven hundred people a day arrive, most of them
-// straight from a search result onto one article, and until now not one of them
-// was ever told the thing exists.
+// WHAT THIS REPLACES (founder, 2026-11-11). Until then this module opened a
+// modal two seconds after `load`: a card over ~85% of a phone screen, the
+// article blurred behind it, closable by the × alone. Most visitors arrive from
+// a search result straight onto one article, so that was the first thing they
+// — and Google's renderer — met: a window over the whole page before a word of
+// the content. The guest sign-up box on the homepage (welcome.js) went the same
+// day. Neither exists any more; nothing on this site opens over the page on
+// arrival.
 //
-// FOUR RULES, each of which is the reason a popup is tolerable rather than the
-// thing that makes people leave:
+// WHY THERE IS STILL AN OFFER AT ALL. Every other «پریمیوم» on the site is a
+// gate — met only by walking into a feature you cannot use. Six to seven
+// hundred people a day arrive on one article and leave; this card is the one
+// place that tells them the thing exists, after they have read what they came
+// for, without taking anything from them.
 //
-//   1. NEVER TO SOMEONE WHO HAS ALREADY PAID. A founder and a live subscriber
-//      see nothing, ever. Selling a subscription to its owner is worse than
-//      saying nothing.
-//   2. NEVER TWO MODALS IN ONE SESSION. A guest's first visit belongs to the
-//      sign-up card (welcome.js); the tour and the notification nudge own their
-//      own moments. This one waits for a session where nothing else is talking.
-//      That is also why it does not fire on the price page — arguing for a
-//      purchase on top of the purchase form is noise.
-//   3. IT DOES NOT INTERRUPT THE ARRIVAL. Held until `load` and then a beat
-//      longer, so it never competes with first paint, never lands on top of a
-//      half-drawn article, and never taxes the numbers we measure the site by.
-//   4. IT ENDS. Three appearances per device, two weeks apart, and then it is
-//      done forever. A cap of one converts nobody — the first showing catches
-//      people mid-errand — and no cap at all is how a site teaches people to
-//      close things without reading them.
+// RULES
+//   1. NEVER TO SOMEONE WHO HAS ALREADY PAID — a founder or a live subscriber
+//      gets no card.
+//   2. ONLY ON A READING PAGE (`main.article-content-wrap`), at the END of that
+//      main — below the prose, the sponsor card, the DES card, the thread and
+//      the related links, above the page's own footer when main holds one.
+//      Never the homepage, never the price page.
+//   3. IN THE FLOW. No overlay, no backdrop, no focus trap, no scroll lock, no
+//      close button — it is a section of the page, not something to dismiss.
+//   4. ONE LINK, to the price page (a real <a>, so it can be opened in a tab).
 //
-// CLOSING IS ONE BUTTON. The × in the corner, plus Escape for a keyboard. The
-// backdrop deliberately does NOT close it: on a phone the first thing a thumb
-// does to an unexpected card is try to scroll the page behind it, and dismissing
-// on that gesture means the offer is never actually read once.
-import { el, tehranDay } from './util.js?v=232';
-import { premiumBenefits } from './premium-benefits.js?v=232';
-import { premiumCta } from './premium-cta.js?v=232';
-import { trapFocus } from './focus-trap.js?v=232';
+// The exported name is kept so plus/js/header.js needs no change.
+import { el } from './util.js?v=237';
+import { premiumBenefits } from './premium-benefits.js?v=237';
+import { premiumCta } from './premium-cta.js?v=237';
 
-const LS_COUNT = 'dcp:prempopup:count'; // total appearances on this device
-const LS_LAST = 'dcp:prempopup:last';   // Tehran day of the last appearance
-const SS_SHOWN = 'dcp:prempopup:shown'; // once per browser session
-const MAX_SHOWS = 3;
-const MIN_GAP_DAYS = 14;
-const DELAY_MS = 2000;                  // after `load`, not after DOM ready
+/** Where the buy link points from here, so pricing.html can report the source. */
+const FROM = 'articleend';
 
-/** Where the buy button points from here, so pricing.html can report the source. */
-const FROM = 'firstvisit';
-
-// Session keys owned by the other two first-run cards. Read, never written —
-// this module's whole interaction with them is "if you spoke, I stay quiet".
-const SS_WELCOME = 'dcp:welcome:shown';
-const SS_NOTIF = 'dcp:notifprompt:shown';
+function onHomePage() {
+  const p = location.pathname.replace(/\/+$/, '') || '/';
+  return p === '/' || p === '/index' || p === '/index.html';
+}
 
 /** Pages where a "buy premium" card would be arguing with the page itself. */
 function onPurchaseSurface() {
   const p = location.pathname;
   return p.indexOf('/plus/pricing') === 0 || p.indexOf('/plus/pay-result') === 0;
-}
-
-// Storage may be blocked (private mode, embedded webview). Every read below
-// fails toward "already done", so a browser we cannot remember gets shown
-// nothing rather than the same card on every single page load.
-function getCount() {
-  try { return parseInt(localStorage.getItem(LS_COUNT) || '0', 10) || 0; }
-  catch (_) { return MAX_SHOWS; }
-}
-function lastDay() {
-  try { return localStorage.getItem(LS_LAST) || ''; } catch (_) { return ''; }
-}
-function markShown() {
-  try {
-    localStorage.setItem(LS_COUNT, String(getCount() + 1));
-    localStorage.setItem(LS_LAST, tehranDay());
-  } catch (_) { /* ignore */ }
-  try { sessionStorage.setItem(SS_SHOWN, '1'); } catch (_) { /* ignore */ }
-}
-function sessionBusy() {
-  try {
-    return sessionStorage.getItem(SS_SHOWN) === '1'
-      || sessionStorage.getItem(SS_WELCOME) === '1'
-      || sessionStorage.getItem(SS_NOTIF) === '1';
-  } catch (_) { return true; }
-}
-
-function daysSince(day) {
-  if (!day) return Infinity;
-  const then = Date.parse(String(day) + 'T00:00:00Z');
-  if (Number.isNaN(then)) return Infinity;
-  return Math.floor((Date.parse(tehranDay() + 'T00:00:00Z') - then) / 86400000);
 }
 
 /** A live subscriber or a founder has nothing to buy here. */
@@ -104,97 +61,59 @@ function track(event) {
   catch (_) { /* analytics is never allowed to break the card */ }
 }
 
-function build(onClose) {
-  const closeBtn = el('button', {
-    class: 'dcp-pp-close', type: 'button', 'aria-label': 'بستن',
-  }, '×');
-  closeBtn.addEventListener('click', onClose);
-
-  const list = el('ul', { class: 'dcp-pp-list' }, premiumBenefits().map((f) => el('li', {}, [
-    el('strong', {}, f.title),
-    el('span', {}, f.hint),
-  ])));
-
+function build() {
   // A LINK, not a handler: it navigates, so it must be middle-clickable and
   // long-pressable like any other link on the page.
-  const cta = premiumCta(FROM);
-  cta.classList.add('dcp-pp-cta');
-  cta.addEventListener('click', () => track('premium_popup_click'));
+  const cta = premiumCta(FROM, { label: 'اشتراک پریمیوم' });
+  cta.classList.add('dcp-endcard-cta');
+  cta.addEventListener('click', () => track('premium_endcard_click'));
 
-  // tabindex="-1" so the dialog itself can take focus on open. Focusing the ×
-  // instead would announce the dialog too, but browsers treat a programmatic
-  // focus on a freshly painted page as keyboard-driven and paint a focus ring
-  // on the close button — which reads, to a visitor who touched nothing, as the
-  // card telling them the only thing to do is dismiss it.
-  const card = el('div', {
-    class: 'dcp-pp-card', role: 'dialog', 'aria-modal': 'true',
-    'aria-labelledby': 'dcp-pp-title', tabindex: '-1',
-  }, [
-    closeBtn,
-    el('div', { class: 'dcp-pp-body' }, [
-      el('h2', { class: 'dcp-pp-title', id: 'dcp-pp-title' },
-        'امکان خرید آنلاین اشتراک پریمیوم دنت‌کست از طریق سایت فراهم شد'),
-      el('h3', { class: 'dcp-pp-sub' }, 'با پریمیوم چه چیزی اضافه می‌شود؟'),
-      list,
+  // The feature names only — the full pitch lives on the price page.
+  const all = premiumBenefits().map((f) => f.title).filter(Boolean);
+  const names = all.slice(0, 5).join('، ') + (all.length > 5 ? ' و چند امکان دیگر' : '');
+
+  return el('aside', { class: 'dcp-endcard', 'aria-labelledby': 'dcp-endcard-title' }, [
+    el('div', { class: 'dcp-endcard-body' }, [
+      el('h2', { class: 'dcp-endcard-title', id: 'dcp-endcard-title' }, 'دنت‌کست پریمیوم'),
+      el('p', { class: 'dcp-endcard-text' }, 'با اشتراک پریمیوم این‌ها هم باز می‌شود: ' + names + '.'),
     ]),
-    el('div', { class: 'dcp-pp-foot' }, [cta]),
+    cta,
   ]);
-
-  return { card, closeBtn };
-}
-
-function show() {
-  let overlay = null;
-  let release = null;
-
-  const cleanup = () => {
-    if (!overlay) return;
-    overlay.remove();
-    overlay = null;
-    document.documentElement.classList.remove('dcp-pp-open');
-    // Put the caret back where the reader left it, so a keyboard user is not
-    // dropped at the top of the document by a card they did not ask for.
-    if (release) { release(); release = null; }
-  };
-
-  const { card } = build(cleanup);
-  // No backdrop click handler on purpose — see the header comment.
-  overlay = el('div', { class: 'dcp-pp-overlay' }, [card]);
-  document.body.appendChild(overlay);
-  document.documentElement.classList.add('dcp-pp-open');
-  // Focus lands on the card itself (see build()), and Tab stays inside it.
-  release = trapFocus(card, { initial: card, onEscape: (e) => { e.stopPropagation(); cleanup(); } });
-
-  markShown();
-  track('premium_popup_shown');
 }
 
 /**
- * Show the offer if this device, this session and this visitor all allow it.
- * Safe to call on every page; it is a no-op far more often than not.
+ * Put the offer at the end of the article, if this page and this visitor
+ * allow it. Safe to call on every page; idempotent.
  *
  * `user` is the resolved /me (null for a guest). Called from the header once
  * that has settled, so the premium check is never a guess.
  */
 export function maybeShowPremiumPopup(user) {
   if (alreadyPremium(user)) return;
+  if (onHomePage()) return;
   if (onPurchaseSurface()) return;
-  if (getCount() >= MAX_SHOWS) return;
-  if (daysSince(lastDay()) < MIN_GAP_DAYS) return;
-  if (sessionBusy()) return;
+  const main = document.querySelector('main.article-content-wrap');
+  if (!main || main.querySelector('.dcp-endcard')) return;
 
-  const fire = () => setTimeout(() => {
-    // Re-checked at fire time, not at schedule time: the tour and the two other
-    // cards can start during these two seconds, and the state that matters is
-    // the one on screen when this would appear.
-    if (sessionBusy()) return;
-    if (document.documentElement.classList.contains('dcp-touring')) return;
-    if (document.querySelector('.dcp-welcome-overlay, .dcp-modal-overlay, .dcp-overlay')) return;
-    show();
-  }, DELAY_MS);
+  const card = build();
+  // Above the page's own footer (back button, copyright) when main carries one,
+  // so the card closes the article instead of trailing after the page's end.
+  // Directly before the footer, in the footer's OWN parent: on the glossary the
+  // footer sits inside the article wrapper that is main's only child, and
+  // climbing to "the child of main that holds it" put the card above the whole
+  // term (CLS 0.29, the sponsor card pushed down — caught before it shipped).
+  const feet = main.querySelectorAll('footer, .term-footer, .dc-site-footer');
+  const foot = feet.length ? feet[feet.length - 1] : null;
+  if (foot) foot.parentNode.insertBefore(card, foot);
+  else main.appendChild(card);
 
-  // `load` may already have fired — this module is imported from an async
-  // header path, so the listener alone would silently never run.
-  if (document.readyState === 'complete') fire();
-  else window.addEventListener('load', fire, { once: true });
+  // Counted when it is actually reached, not when it is inserted.
+  try {
+    const seen = new IntersectionObserver((entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      seen.disconnect();
+      track('premium_endcard_shown');
+    }, { threshold: 0.5 });
+    seen.observe(card);
+  } catch (_) { /* no IntersectionObserver: the card still renders */ }
 }

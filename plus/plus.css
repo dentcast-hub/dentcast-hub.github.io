@@ -506,6 +506,40 @@
    does not drag the article behind it once the list hits its end. */
 html.dcp-pp-open, html.dcp-pp-open body { overflow: hidden; }
 
+/* ---- premium offer at the END of an article (premium-popup.js) -----------
+   In the flow, last child of main.article-content-wrap: no overlay, nothing
+   to dismiss. The premium surface per site-invariants — a faint amber wash
+   that ends in the top 45% and an amber hairline, never a solid amber card.
+   (The .dcp-pp-overlay / .dcp-pp-card rules above belong to the modal this
+   replaced on 2026-11-11 and now match nothing.) */
+.dcp-endcard {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px;
+  width: min(100% - 2rem, 42.5rem); margin: 2rem auto; padding: 16px 18px; box-sizing: border-box;
+  border: 1px solid var(--amber-bd, rgba(154,107,21,.22)); border-radius: 16px;
+  background: linear-gradient(180deg, var(--amber-wash, rgba(201,146,43,.08)), transparent 45%);
+  color: var(--txt, #0a1a33);
+}
+.dcp-endcard-body { flex: 1 1 240px; min-width: 0; }
+.dcp-endcard-title { margin: 0 0 4px; padding: 0; border: 0; font-size: 1rem; font-weight: 800; line-height: 1.7; color: var(--amber-ink, #8a6414); }
+.dcp-endcard-text { margin: 0; font-size: .875rem; line-height: 1.9; color: var(--txt2, #4a5f85); }
+.dcp-endcard-cta { flex: 0 0 auto; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+/* dc-theme.css colours every link inside <main> with the accent — on this
+   filled button that was blue text on blue. */
+main.article-content-wrap .dcp-endcard a.dcp-endcard-cta,
+main.article-content-wrap .dcp-endcard a.dcp-endcard-cta:hover { color: var(--amber-ink, #8a6414); text-decoration: none; }
+/* Amber, not the blue primary button: amber is the one colour that means
+   «this is what a subscription buys» (site-invariants), and a solid blue
+   button inside an amber card read as a stray element (founder, 2026-11-11).
+   An outline pill in the amber ink, 5.3:1 on white and 9:1 on the dark card. */
+.dcp-endcard .dcp-endcard-cta {
+  padding: 0 20px; border-radius: 999px; box-shadow: none;
+  background: var(--amber-wash-2, rgba(201,146,43,.13));
+  border: 1px solid var(--amber-bd, rgba(154,107,21,.22));
+  font-size: .9375rem; font-weight: 800;
+}
+.dcp-endcard .dcp-endcard-cta:hover { background: var(--amber-wash, rgba(201,146,43,.08)); }
+body.dcp-study .dcp-endcard { display: none; }
+
 /* Header person icon pulse while the welcome box is up. */
 @keyframes dcp-person-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.28); } }
 .dcp-person-attention { animation: dcp-person-pulse 1.05s ease-in-out infinite; }

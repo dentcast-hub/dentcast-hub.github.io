@@ -4,22 +4,21 @@
 //  - person icon (SVG): gray for guests -> login modal; blue for logged-in ->
 //    a toggle that opens a small menu (پیشخوان / پروفایل), each of which opens as
 //    an OVERLAY. Clicking the person again closes whatever is open.
-import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=232';
-import { currentUser, api, meStatus } from './api.js?v=232';
-import { isOrgHost, detectContentId } from './config.js?v=232';
-import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=232';
-import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=232';
-import { maybeShowWelcome } from './welcome.js?v=232';
-import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=232';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=232';
-import { healPushSubscription } from './push.js?v=232';
-import { maybeShowPremiumPopup } from './premium-popup.js?v=232';
-import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=232';
-import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=232';
-import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=232';
-import { installLibraryGate } from './library-gate.js?v=232';
-import { toast } from './hl-view.js?v=232';
-import { wirePageBack } from './page-back.js?v=232';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=237';
+import { currentUser, api, meStatus } from './api.js?v=237';
+import { isOrgHost, detectContentId } from './config.js?v=237';
+import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=237';
+import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=237';
+import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=237';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=237';
+import { healPushSubscription } from './push.js?v=237';
+import { maybeShowPremiumPopup } from './premium-popup.js?v=237';
+import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=237';
+import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=237';
+import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=237';
+import { installLibraryGate } from './library-gate.js?v=237';
+import { toast } from './hl-view.js?v=237';
+import { wirePageBack } from './page-back.js?v=237';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
 // createElement('svg')) so the parser creates properly namespaced SVG nodes;
@@ -111,8 +110,8 @@ function buildGuestPerson() {
 // The dashboard and profile overlays open only on a tap, so their modules
 // (and everything they import) are fetched then, not in front of every page's
 // first paint: they were ~75KB of the homepage's eager module graph.
-const loadDashboard = () => import('./dashboard.js?v=232');
-const loadProfile = () => import('./profile.js?v=232');
+const loadDashboard = () => import('./dashboard.js?v=237');
+const loadProfile = () => import('./profile.js?v=237');
 const overlayFailed = (root) => root.replaceChildren(
   el('div', { class: 'dcp-loading' }, 'بارگذاری انجام نشد؛ دوباره تلاش کنید.'));
 
@@ -314,13 +313,11 @@ export async function initHeader() {
     // selling them premium, while they may well be a subscriber with a
     // perfectly good session, is how «login is broken» reports are made.
     if (meStatus() === 'error') return;
-    // Confirmed guest: invite them in with the first-visit welcome box (capped
-    // per device), pulsing the person icon toward the login entry point.
-    try { maybeShowWelcome({ personBtn: guestPerson }); } catch (_) { /* non-fatal */ }
-    // …and, on a session where that box did NOT speak, the premium offer. The
-    // order is deliberate: the sign-up card owns a guest's very first visit
-    // (homepage only, so a guest landing on an article gets the offer straight
-    // away), and premium-popup.js bows out of any session where welcome ran.
+    // Confirmed guest. The first-visit sign-up box (welcome.js) that used to
+    // open here on the homepage was removed (founder, 2026-11-11: it dimmed the
+    // whole page on arrival, covered the sponsor card, and said what the static
+    // Plus card on the page already says). The premium offer still runs, but
+    // never on the homepage — premium-popup.js checks that itself.
     try { maybeShowPremiumPopup(null); } catch (_) { /* non-fatal */ }
     return; // guest header is correct; nothing to upgrade
   }
