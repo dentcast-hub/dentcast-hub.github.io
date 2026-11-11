@@ -14,9 +14,11 @@
 //   1. NEVER TO SOMEONE WHO HAS ALREADY PAID. A founder and a live subscriber
 //      see nothing, ever. Selling a subscription to its owner is worse than
 //      saying nothing.
-//   2. NEVER TWO MODALS IN ONE SESSION. A guest's first visit belongs to the
-//      sign-up card (welcome.js); the tour and the notification nudge own their
-//      own moments. This one waits for a session where nothing else is talking.
+//   2. NEVER TWO MODALS IN ONE SESSION. The tour and the notification nudge own
+//      their own moments; this one waits for a session where nothing else is
+//      talking. (The guest sign-up card, welcome.js, was removed 2026-11-11; its
+//      session key is still read below so a session it spoke in stays quiet.)
+//      And NEVER ON THE HOMEPAGE — see onHomePage().
 //      That is also why it does not fire on the price page — arguing for a
 //      purchase on top of the purchase form is noise.
 //   3. IT DOES NOT INTERRUPT THE ARRIVAL. Held until `load` and then a beat
@@ -31,10 +33,10 @@
 // backdrop deliberately does NOT close it: on a phone the first thing a thumb
 // does to an unexpected card is try to scroll the page behind it, and dismissing
 // on that gesture means the offer is never actually read once.
-import { el, tehranDay } from './util.js?v=232';
-import { premiumBenefits } from './premium-benefits.js?v=232';
-import { premiumCta } from './premium-cta.js?v=232';
-import { trapFocus } from './focus-trap.js?v=232';
+import { el, tehranDay } from './util.js?v=233';
+import { premiumBenefits } from './premium-benefits.js?v=233';
+import { premiumCta } from './premium-cta.js?v=233';
+import { trapFocus } from './focus-trap.js?v=233';
 
 const LS_COUNT = 'dcp:prempopup:count'; // total appearances on this device
 const LS_LAST = 'dcp:prempopup:last';   // Tehran day of the last appearance
@@ -50,6 +52,17 @@ const FROM = 'firstvisit';
 // this module's whole interaction with them is "if you spoke, I stay quiet".
 const SS_WELCOME = 'dcp:welcome:shown';
 const SS_NOTIF = 'dcp:notifprompt:shown';
+
+/**
+ * The homepage carries no popup at all (founder, 2026-11-11): it is the page
+ * the site is judged by, the sponsor card sits in its first screen, and its
+ * own premium tab and Plus card already make the offer. This card is for the
+ * reader who lands on an article from a search result.
+ */
+function onHomePage() {
+  const p = location.pathname.replace(/\/+$/, '') || '/';
+  return p === '/' || p === '/index' || p === '/index.html';
+}
 
 /** Pages where a "buy premium" card would be arguing with the page itself. */
 function onPurchaseSurface() {
@@ -178,6 +191,7 @@ function show() {
  */
 export function maybeShowPremiumPopup(user) {
   if (alreadyPremium(user)) return;
+  if (onHomePage()) return;
   if (onPurchaseSurface()) return;
   if (getCount() >= MAX_SHOWS) return;
   if (daysSince(lastDay()) < MIN_GAP_DAYS) return;

@@ -2,14 +2,14 @@
 // visitors are asked to sign in; every signed-in reader gets the real catalog
 // (pathways.js), where a free reader finds the pathway that is open to
 // everybody live and the rest locked.
-import { el } from './util.js?v=232';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=232';
-import { currentUser, meStatus } from './api.js?v=232';
-import { openLoginModal } from './login-modal.js?v=232';
-import { renderPathwaysList } from './pathways.js?v=232';
-import { openPathways } from './pathway-showcase.js?v=232';
-import { registerSW } from './pwa.js?v=232';
-import { wirePageBack } from './page-back.js?v=232';
+import { el } from './util.js?v=233';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=233';
+import { currentUser, meStatus } from './api.js?v=233';
+import { openLoginModal } from './login-modal.js?v=233';
+import { renderPathwaysList } from './pathways.js?v=233';
+import { openPathways } from './pathway-showcase.js?v=233';
+import { registerSW } from './pwa.js?v=233';
+import { wirePageBack } from './page-back.js?v=233';
 
 function comingSoonGate(root, me) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [
