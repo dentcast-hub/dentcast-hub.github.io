@@ -1,3 +1,0 @@
-Model: GPT-6 (Codex)
-Settings: Work Mode default model settings; no explicit temperature or sampling parameters exposed.
-Task: Independent FIDELITY checker run 2, pooled source block S4 only.

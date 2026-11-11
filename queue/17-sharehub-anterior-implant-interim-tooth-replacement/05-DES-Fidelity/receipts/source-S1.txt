@@ -1,3 +1,0 @@
-Model: GPT-6.1-sol (delegated agent runtime; model label available to this agent)
-Reasoning setting: inherited/default (not separately exposed by runtime)
-Task: isolated DentCast DES v3.5 SOURCE scoring for S1 abstract only.

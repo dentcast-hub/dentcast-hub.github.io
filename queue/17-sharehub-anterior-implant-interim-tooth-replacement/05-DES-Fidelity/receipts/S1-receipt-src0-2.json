@@ -1,9 +1,0 @@
-{
-  "des_version": "3.5",
-  "mode": "FIDELITY",
-  "scope": "SOURCE",
-  "text_basis": "ABSTRACT_ONLY",
-  "input": "input-src0.json",
-  "output": "out-src0-2.json",
-  "listed_unit_ids": ["u2", "u59"]
-}

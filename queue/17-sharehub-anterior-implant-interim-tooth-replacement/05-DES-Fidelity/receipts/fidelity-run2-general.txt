@@ -1,2 +1,0 @@
-Model/reasoning setting: GPT-6 agent; the runtime did not expose a more specific model variant or reasoning-effort setting.
-Validation: All three outputs mechanically validated against input units for exact count, order, ids, byte-equal claim_quote, quote/source_ref emptiness and abstract-only verdict constraints. No validation failures.

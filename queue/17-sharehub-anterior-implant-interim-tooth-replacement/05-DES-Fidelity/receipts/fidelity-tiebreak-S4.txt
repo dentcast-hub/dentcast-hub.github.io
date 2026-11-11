@@ -1,3 +1,0 @@
-Model: GPT-6 (Work Mode model; exact serving variant not exposed)
-Settings: Default sampling/reasoning settings; no explicit temperature, seed, or other generation parameters exposed.
-Scope: Independent third-checker tie-break for S4 only; evaluated the 14 requested units against the full DES v3.5 knowledge instructions and the specified S4 excerpt, with neighboring units read for context.

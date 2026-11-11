@@ -1,3 +1,0 @@
-Model: GPT-6 (Codex)
-Reasoning setting: not exposed in this runtime; not independently verifiable from task tools.
-Task: one isolated DES v3.5 SOURCE score for S2, DOI 10.1111/clr.14109; source abstract only.

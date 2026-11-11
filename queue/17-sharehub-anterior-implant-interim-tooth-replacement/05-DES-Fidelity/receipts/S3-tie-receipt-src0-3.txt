@@ -1,6 +1,0 @@
-Actual metadata receipt
-- Read: /workspace/scratch/dentcast-main-read/.dentcast/des-v3.5-knowledge.md (full specification)
-- Evaluated: /workspace/scratch/2cf47782c4a1/recheck-S3-tie/input-src0.json
-- Source basis: ABSTRACT_ONLY; scope: SOURCE; unit: u65
-- Wrote canonical F5 object: /workspace/scratch/2cf47782c4a1/recheck-S3-tie/out-src0-3.json
-- Verdict: MATCHES; one assessable claim; fidelity_score 100; level HIGH; provisional true

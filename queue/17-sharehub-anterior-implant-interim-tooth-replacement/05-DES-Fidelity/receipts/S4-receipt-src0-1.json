@@ -1,9 +1,0 @@
-{
-  "run": "orphan-recheck-S4",
-  "checker": "independent-run-1",
-  "input": "/workspace/scratch/2cf47782c4a1/recheck-S4/input-src0.json",
-  "spec": "/workspace/scratch/dentcast-main-read/.dentcast/des-v3.5-knowledge.md",
-  "output": "/workspace/scratch/2cf47782c4a1/recheck-S4/out-src0-1.json",
-  "basis": "EXCERPT",
-  "units_evaluated": 13
-}
