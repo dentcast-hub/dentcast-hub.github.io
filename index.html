@@ -4961,6 +4961,221 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 .dc-pathway-showcase > .dcp-hf{ margin:0; }
 .dc-pathway-showcase .dcp-pws{ margin:.7rem 0 0; }
 .dcp-hf .dcp-pp-showcase .dcp-pws{ margin:.2rem 0 .9rem; }
+/* MOBILE HOME REFRESH (phone shell only) */
+/* =====================================================
+   Phone-shell appearance pass on the home panel (founder-approved
+   direction, 2026-11): one calm flat surface, a real type scale,
+   fewer competing layers. APPEARANCE ONLY, and additive:
+   - every rule sits inside @media(max-width:1023px) and under
+     #mobile-shell / #mobile-body (or the body-level phone chrome),
+     so the ≥1024px desktop shell cannot match any of it;
+   - nothing is hidden, moved or reordered; no selector touches the
+     sponsor card (Spot) and nothing above it may grow: the type
+     raised above it is paid for by tighter gaps above it, so its
+     offset in #mobile-body does not increase;
+   - no reservation is touched (counters, streak card, Pulse,
+     trust seal, images); amber stays premium-only, Pulse stays
+     blue, the dark fading grid on #mobile-body is untouched
+     (only padding is set on that element here).
+   Type floor: nothing under .75rem (12px); secondary text
+   .8125rem; card titles 1rem. Radii 12 / 16 / 999. In-flow cards
+   are flat on --surface with their existing 1px hairline; only
+   floating chrome (toast, support bubble) keeps one soft shadow.
+===================================================== */
+@media (max-width:1023px){
+  /* the one soft shadow level, for genuinely floating chrome only */
+  body:not(.dc-desktop-ui){
+    --mh-float-sh:0 8px 24px -10px rgba(9,32,74,.28);
+  }
+  [data-theme="dark"] body:not(.dc-desktop-ui){
+    --mh-float-sh:0 8px 24px -10px rgba(0,0,0,.6);
+  }
+
+  /* ── 1. Flat in-flow cards: no drop shadow, one radius, --surface ── */
+  #mobile-shell #mobile-body #panel-studio .dc-exa-search,
+  #mobile-shell #mobile-body #panel-studio .dc-des-legend,
+  #mobile-shell #mobile-body #panel-studio #dcDesPanel,
+  #mobile-shell #mobile-body #panel-studio .dc-destool-tab,
+  #mobile-shell #mobile-body #panel-studio .dc-plus-promo,
+  #mobile-shell #mobile-body #panel-studio .dc-home-hero,
+  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry,
+  #mobile-shell #mobile-body #panel-studio .dc-exa-cat,
+  #mobile-shell #mobile-body #panel-studio #dcLatestRail,
+  #mobile-shell #mobile-body #panel-studio .dc-pulse,
+  #mobile-shell #mobile-body #panel-studio .dc-pillar-card,
+  #mobile-shell #mobile-body #panel-studio .dc-duo-card,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-pws,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dc-list-card,
+  #mobile-shell #mobile-body #panel-studio .dcb-railcard{
+    box-shadow:none;
+  }
+  /* neutral cards: flat --surface (their blue/orange washes go) */
+  #mobile-shell #mobile-body #panel-studio .dc-exa-search,
+  #mobile-shell #mobile-body #panel-studio .dc-plus-promo,
+  #mobile-shell #mobile-body #panel-studio .dc-home-hero,
+  #mobile-shell #mobile-body #panel-studio .dc-exa-cat,
+  #mobile-shell #mobile-body #panel-studio #dcLatestRail,
+  #mobile-shell #mobile-body #panel-studio .dc-pulse,
+  #mobile-shell #mobile-body #panel-studio .dc-pillar-card,
+  #mobile-shell #mobile-body #panel-studio .dc-duo-card,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-pws{
+    background:var(--surface);
+  }
+  /* premium (amber) surfaces keep their amber wash + hairline; only the
+     base under the wash becomes the same --surface as everything else */
+  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dc-list-card{
+    background-color:var(--surface);
+  }
+  /* one radius for cards: 16 */
+  #mobile-shell #mobile-body #panel-studio .dc-exa-search,
+  #mobile-shell #mobile-body #panel-studio .dc-des-legend[aria-expanded="false"],
+  #mobile-shell #mobile-body #panel-studio .dc-des-legend:not([aria-expanded]),
+  #mobile-shell #mobile-body #panel-studio .dc-destool-tab,
+  #mobile-shell #mobile-body #panel-studio .dc-plus-promo,
+  #mobile-shell #mobile-body #panel-studio .dc-home-hero,
+  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry,
+  #mobile-shell #mobile-body #panel-studio .dc-exa-cat,
+  #mobile-shell #mobile-body #panel-studio #dcLatestRail,
+  #mobile-shell #mobile-body #panel-studio .dc-pulse,
+  #mobile-shell #mobile-body #panel-studio .dc-pillar-card,
+  #mobile-shell #mobile-body #panel-studio .dc-duo-card,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-pws,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dc-list-card,
+  #mobile-shell #mobile-body #panel-studio .dcb-band{
+    border-radius:16px;
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-des-legend[aria-expanded="true"]{ border-radius:16px 16px 0 0; }
+  #mobile-shell #mobile-body #panel-studio #dcDesPanel{ border-radius:0 0 16px 16px; }
+  #mobile-shell #mobile-body #panel-studio .dc-exa-search-go{ border-radius:12px; box-shadow:none; }
+  #mobile-shell #mobile-body #panel-studio .dc-home-hero-badge{ box-shadow:none; }
+
+  /* ── 2. Type scale (floor 12px). Above the sponsor card ──
+     Height-neutral everywhere: the five DES blocks are fixed 1.15rem boxes,
+     and the disclosure panel only exists after a tap. */
+  #mobile-shell #mobile-body #panel-studio .dc-des-legend .dc-des-bar-group span{ font-size:.75rem; }
+  #mobile-shell #mobile-body #panel-studio #dcDesPanel .dc-des-mini-legend div{ font-size:.75rem; }
+  #mobile-shell #mobile-body #panel-studio .dc-des-cap-b{ font-size:.75rem; }
+  /* Phones only (<600px), paid for by tighter gaps above the sponsor card
+     (net: it does not move down). Not on portrait tablets: there the
+     sponsor slot and the card under it are inside the first screen, so
+     the stack above the slot must keep its exact height or the late
+     sponsor insert shifts more of the visible card (CLS). */
+  @media (max-width:599px){
+    #mobile-shell #mobile-body #panel-studio .dc-exa-pop{ font-size:.8125rem; }
+    #mobile-shell #mobile-body #panel-studio .hero-stat .k{ font-size:.75rem; }
+    #mobile-shell #mobile-body #panel-studio .dc-destool-tab .dc-destool-ttl{ font-size:1rem; line-height:1.55; }
+    /* the DES card's title is the brand line «DentCast Evidence Score»; at
+       1rem it breaks between «Evidence» and «Score» on a 390px phone, so it
+       gets the largest size that keeps it whole (the old .82rem at 360px) */
+    #mobile-shell #mobile-body #panel-studio .dc-des-legend .dc-des-ttl{ font-size:clamp(.82rem, 3.6vw, .875rem); line-height:1.55; }
+    #mobile-shell #mobile-body #panel-studio .dc-des-legend .dc-des-sub,
+    #mobile-shell #mobile-body #panel-studio .dc-destool-tab .dc-destool-sub{ font-size:.8125rem; line-height:1.7; }
+    #mobile-shell #mobile-body #panel-studio .dc-destool-tab .dc-destool-pill{ font-size:.75rem; }
+    #mobile-shell #mobile-body #panel-studio .dc-home-hero-badge{ font-size:.75rem; }
+    #mobile-shell #mobile-body #panel-studio .dc-home-hero-cta{ font-size:.8125rem; }
+    /* the gaps that pay for it */
+    #mobile-shell #mobile-body #panel-studio .dc-identity-card{ margin-bottom:8px; }
+    #mobile-shell #mobile-body #panel-studio .hero-stats{ margin-top:10px; }
+    #mobile-shell #mobile-body #panel-studio .dc-des-legend-wrap{ margin-top:10px; margin-bottom:10px; }
+    #mobile-shell #mobile-body #panel-studio .dc-destool-wrap{ margin-top:0; margin-bottom:10px; }
+    #mobile-shell #mobile-body #panel-studio .dc-des-legend,
+    #mobile-shell #mobile-body #panel-studio .dc-destool-tab{ padding-top:10px; padding-bottom:10px; }
+  }
+
+  /* ── 3. Type scale. Below the sponsor card ── */
+  #mobile-shell #mobile-body #panel-studio .dc-home-more{ font-size:.8125rem; }
+  #mobile-shell #mobile-body #panel-studio .dc-exa-cat b{ font-size:1rem; }
+  #mobile-shell #mobile-body #panel-studio .dc-exa-cat i{ font-size:.8125rem; }
+  #mobile-shell #mobile-body #panel-studio #dcLatestRail .dc-rail-title{ font-size:1rem; }
+  #mobile-shell #mobile-body #panel-studio #dcLatestRail .dc-type-chip{ font-size:.75rem; }
+  #mobile-shell #mobile-body #panel-studio #dcLatestRail .dc-rail-meta{ font-size:.75rem; }
+  #mobile-shell #mobile-body #panel-studio .dc-duo-kicker{ font-size:.75rem; }
+  #mobile-shell #mobile-body #panel-studio .dc-duo-title{ font-size:1rem; }
+  #mobile-shell #mobile-body #panel-studio .dc-duo-sub{ font-size:.8125rem; }
+  #mobile-shell #mobile-body #panel-studio .dc-wf-eyebrow{ font-size:.75rem; }
+  #mobile-shell #mobile-body #panel-studio .dc-wf-amber-pill{ font-size:.75rem; }
+  #mobile-shell #mobile-body #panel-studio .dc-wf-sub{ font-size:.8125rem; }
+  /* pathways (premium, filled late; appears below the fold) */
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-pws-ht span,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-pws-ft-open,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-pws-cert,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-pws-pgt,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-pws-pgl,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-pws-lk{ font-size:.75rem; }
+  /* left alone: .dcp-pws-pt-name (the labels under the seven ~43px pathway
+     discs). At 12px «بیومکانیک» no longer fits its column and the existing
+     overflow-wrap:anywhere splits it mid-word; widening the strip would be
+     a layout change, so those labels keep their size. */
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-pws-ft-desc,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-pws-others,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-pws-tog,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-pws-cat{ font-size:.8125rem; }
+  /* premium features list + bundles band */
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-hf-more{ font-size:.8125rem; }
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dc-list-card-title{ font-size:1rem; }
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dc-list-card-sub{ font-size:.8125rem; }
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-hf-state{ font-size:.75rem; }
+  #mobile-shell #mobile-body #panel-studio .dcb-band .dcb-band-count,
+  #mobile-shell #mobile-body #panel-studio .dcb-band .dcb-railcard-meta{ font-size:.75rem; }
+  #mobile-shell #mobile-body #panel-studio .dcb-band .dcb-band-more{ font-size:.8125rem; }
+
+  /* ── 4. Tap targets ≥44px without changing any box in the flow:
+        inline links grow their hit box with block padding (inline
+        padding never moves a line); small blocks get an invisible
+        ::after hit area. ── */
+  #mobile-shell #mobile-body #panel-studio .dc-exa-pop a{
+    padding:13px 6px; margin:0 -6px;
+  }
+  #mobile-shell .dc-topbar-actions .dc-topbar-btn,
+  #mobile-shell #mobile-body #panel-studio .dc-home-more,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-hf-more,
+  #mobile-shell #mobile-body #panel-studio .dcb-band .dcb-band-more,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-pws-go,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-pws-cat{
+    position:relative;
+  }
+  #mobile-shell .dc-topbar-actions .dc-topbar-btn::after,
+  #mobile-shell #mobile-body #panel-studio .dc-home-more::after,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-hf-more::after,
+  #mobile-shell #mobile-body #panel-studio .dcb-band .dcb-band-more::after,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-pws-go::after,
+  #mobile-shell #mobile-body #panel-studio .dcp-hf .dcp-pws-cat::after{
+    content:""; position:absolute; left:50%; top:50%;
+    width:max(100%, 44px); height:max(100%, 44px);
+    transform:translate(-50%,-50%);
+  }
+
+  /* ── 5. Bottom chrome: four floating layers, no collisions ──
+     Order from the bottom: bottom nav (z 300, ~67px) › support bubble
+     (z 250, 76–120px) › toast (z 400) above the bubble. The scroll
+     container and the window footer get enough bottom room that the
+     last line of content clears the bubble and the nav. */
+  /* +56px under the existing 5rem of #mobile-body = 136px, which clears the
+     bubble's top edge (120px). Not on #panel-patient: its full-bleed film
+     already ends at the nav and extra room there shows as a band. */
+  #mobile-shell #mobile-body > .dc-panel:not(#panel-patient){ padding-bottom:56px; }
+  body:not(.dc-desktop-ui) > footer{ padding-bottom:calc(8.5rem + env(safe-area-inset-bottom, 0px)); }
+  #mobile-shell .dc-bn-lbl{ font-size:.75rem; }
+  #mobile-shell .dc-bn-item{ padding-bottom:.3125rem; }
+  body:not(.dc-desktop-ui) #dc-float-search{
+    height:44px; min-width:44px; box-shadow:var(--mh-float-sh);
+  }
+  body:not(.dc-desktop-ui) #dc-float-search.dc-fs-min{ width:44px; }
+  body:not(.dc-desktop-ui) #dc-float-search .dc-fs-lbl{ font-size:.8125rem; }
+  body:not(.dc-desktop-ui) #dcTosCard{
+    bottom:calc(76px + 44px + 10px + env(safe-area-inset-bottom, 0px));
+    box-shadow:var(--mh-float-sh);
+    font-size:.8125rem; line-height:1.75; padding:10px 14px;
+  }
+  body.dc-has-mbar.dc-has-mbar:not(.dc-desktop-ui) #dcTosCard{
+    bottom:calc(max(76px, calc(var(--dc-mbar-top, 0px) + 8px)) + 44px + 10px);
+  }
+  body:not(.dc-desktop-ui) #dcTosCard .dc-tos-close{ position:relative; }
+  body:not(.dc-desktop-ui) #dcTosCard .dc-tos-close::after{
+    content:""; position:absolute; inset:-8px;
+  }
+}
   </style>
   <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
 </head>
