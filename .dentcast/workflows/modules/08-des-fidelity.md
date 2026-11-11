@@ -493,8 +493,10 @@ that is not a reason to stop or to ask. **Price is never a gate. The one thing
 that cannot be replaced is the separate context:** the judge must not be the
 context that made the sweep. Two sequential tool-less processes (`agent-parity.md`
 «اجرای ایزوله») are enough — no parallel agents, no multi-agent tool. If the
-runtime gives no separate context at all, say so under «توانمندی ندارم» and never
-present one context's self-review as the judge.
+runtime gives no separate context at all (ChatGPT, a cloud agent with no CLI), use
+the relay route (`agent-parity.md` «مسیر رله», `tools/relay_call.py`): the founder
+carries each call to its own fresh chat; only if the founder declines it,
+«توانمندی ندارم». Never present one context's self-review as the judge.
 
 1. **Sweeper — one full run per input block.** The spec file
    (`.dentcast/des-v3.7-knowledge.md`) as the system prompt, the block

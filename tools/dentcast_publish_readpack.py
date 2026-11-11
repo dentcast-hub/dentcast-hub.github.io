@@ -137,7 +137,8 @@ MODULES = WORKFLOW + 'modules/'
 # «Acceptance is mechanical» item 4, Part 2, Part 2d, Part 3b and Verify & report that
 # named the old checker/tie-break/reviewer steps. All after the «Conditional path for
 # founder-supplied results» boundary, which still occurs once with byte-identical text
-# before it, so LiteCast/Challenge still omit them; no other heading changed.
+# before it, so LiteCast/Challenge still omit them; no other heading changed. Re-pinned
+# the same day for one sentence in Part 2c naming the relay route (agent-parity «مسیر رله»).
 # Editing one invalidates the routing proof. Update a pin ONLY after checking
 # Re-audited 2026-11-11 (DES per-page record files): module 11 adds builder
 # item 8 (tools/build_des_records.py) and plus/des/ to the never-hand-edit list,
@@ -149,7 +150,7 @@ PINNED_BLOBS = {
     '04-taxonomy-and-navigation.md': '46bc329065fdaa0d1677b494ecc5b7cdf7359872',
     '05-semantic-linking.md': '6ba95d74e28f1e423e034d31327d6c9351f85c20',
     '06-paper-ingestion.md': '226ff4a756418788e70afa2a19e4484c1734dedb',
-    '08-des-fidelity.md': '39699bbee32b90f77e340d3a5cedf67811737b9b',
+    '08-des-fidelity.md': 'ed27740c443f1be42e285cd0a0137f6eafd0eeb3',
     '09-challenge.md': '3ac5856ddb021aa9f36cbfb35d6363531ae038c8',
     '11-build-and-version.md': 'f74bf83102c57da9743127623191e686474bf74d',
     '12-english-notify-verify.md': '5c9b65ee4416fd67607e6d35ca88272832ee86ec',
