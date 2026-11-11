@@ -19,16 +19,16 @@
 // the premium card; premium → recording starts. Founder decision 2026-09-13,
 // argued in routes/clips.ts: audio is the one place where the value of a single
 // mark is felt in full the moment it is made, so this is gated at creation.
-import { el, faNum } from './util.js?v=227';
-import { api, currentUser } from './api.js?v=227';
-import { openLoginModal } from './login-modal.js?v=227';
-import { openSheet, closeSheet, gateCard } from './sheet.js?v=227';
-import { premiumCta } from './premium-cta.js?v=227';
-import { LABELS, pageSearch } from './config.js?v=227';
-import { toast } from './hl-view.js?v=227';
+import { el, faNum } from './util.js?v=228';
+import { api, currentUser } from './api.js?v=228';
+import { openLoginModal } from './login-modal.js?v=228';
+import { openSheet, closeSheet, gateCard } from './sheet.js?v=228';
+import { premiumCta } from './premium-cta.js?v=228';
+import { LABELS, pageSearch } from './config.js?v=228';
+import { toast } from './hl-view.js?v=228';
 import {
   fmtClock, fmtLength, episodeNumber, episodeCatalog, playSegment, stopSegment, seekWhenReady,
-} from './clip-audio.js?v=227';
+} from './clip-audio.js?v=228';
 
 /** A clip shorter than this is a mis-tap; the end press waits for it. */
 export const MIN_CLIP_S = 1;

@@ -5076,7 +5076,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
     #mobile-shell #mobile-body #panel-studio .dc-home-hero-cta{ font-size:.8125rem; }
     /* the gaps that pay for it */
     #mobile-shell #mobile-body #panel-studio .dc-identity-card{ margin-bottom:8px; }
-    #mobile-shell #mobile-body #panel-studio .hero-stats{ margin-top:10px; }
+    #mobile-shell #mobile-body #panel-studio .hero-stats{ margin-top:10px; margin-bottom:14px; } /* the Plus card follows directly now that the two DES boxes are gone */
     #mobile-shell #mobile-body #panel-studio .dc-des-legend-wrap{ margin-top:10px; margin-bottom:18px; } /* 18px: the card below is the Plus card now that the DES tool box is gone */
     #mobile-shell #mobile-body #panel-studio .dc-destool-wrap{ margin-top:0; margin-bottom:10px; }
     #mobile-shell #mobile-body #panel-studio .dc-des-legend,
@@ -5468,40 +5468,13 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
         .dc-des-cap-c{ flex:none; font-size:1rem; font-weight:900; color:var(--x-amber-ink); }
       </style>
 
-      <div class="dc-des-legend-wrap">
-        <button type="button" class="dc-des-legend" id="dcDesLegendBtn" aria-expanded="false" aria-controls="dcDesPanel">
-          <span class="dc-des-ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="2.5" y="13" width="5.5" height="8.5" rx="1.1" fill="currentColor"/>
-              <rect x="9.25" y="7" width="5.5" height="14.5" rx="1.1" fill="currentColor"/>
-              <rect x="16" y="10.5" width="5.5" height="11" rx="1.1" fill="currentColor"/>
-            </svg>
-          </span>
-          <span class="dc-des-body">
-            <span class="dc-des-ttl"><b>DentCast Evidence Score</b> چیست؟</span>
-            <span class="dc-des-sub">روشی که دنت‌کست با آن اعتبار شواهد علمی محتوا را نشان می‌دهد.</span>
-          </span>
-          <span class="dc-des-bar-group" aria-hidden="true">
-            <span class="dc-des-band-E">E</span><span class="dc-des-band-D">D</span><span class="dc-des-band-C">C</span><span class="dc-des-band-B">B</span><span class="dc-des-band-A">A</span>
-          </span>
-        </button>
-
-        <div id="dcDesPanel" hidden>
-          <span class="dc-des-capline">روشی که دنت‌کست با آن نشان می‌دهد هر مطلب علمی چقدر روی طراحی قوی و اجرای دقیق ایستاده — نه اینکه چقدر برای شما کاربردی است؛ آن قضاوت جای دیگری نوشته می‌شود.</span>
-          <span class="dc-des-capline">نتیجه یک باند است، نه یک عدد ساده:</span>
-          <div class="dc-des-mini-legend" aria-hidden="true">
-            <div style="background:#78808f">E</div><div style="background:#5f8a63">D</div><div style="background:#3f9a49">C</div><div style="background:#2f8f3f">B</div><div style="background:#1f7a34">A</div>
-          </div>
-          <span class="dc-des-capline">از E (پایه‌ترین سطح) تا A (قوی‌ترین شواهد ممکن) — و A فقط از بهترین طراحی‌ها به‌دست می‌آید، مثل مرور نظام‌مند یا کارآزمایی بالینی. طراحی‌های ضعیف‌تر، حتی در بهترین اجرا، هیچ‌وقت به A نمی‌رسند.</span>
-          <span class="dc-des-capline">یک نکته‌ی مهم: A فقط داخل یک نوع سؤال معنی دارد. A در یک مطالعه‌ی آزمایشگاهی یعنی بهترین شواهد ممکن از یک بنچ‌تست، نه اینکه همان ماده در دهان واقعی هم به همین اندازه قابل‌اعتماد است. A در یک مطالعه‌ی بالینی یعنی داده‌ی واقعی از بیمار — این دو با هم برابر نیستند.</span>
-          <span class="dc-des-capline">محتوایی که خودِ دنت‌کست نوشته، نه خلاصه‌ی یک مقاله، میله‌ی باند نمی‌گیرد؛ به‌جایش یک نشان «تجربه‌ی بالینی» با امتیاز شفافیت دارد.</span>
-          <a class="dc-des-cap" href="/des-board/">
-            <span class="dc-des-cap-t">طبقه‌بندی مطالب بر اساس قدرت شواهد</span>
-            <span class="dc-des-cap-b">پریمیوم</span>
-            <span class="dc-des-cap-c" aria-hidden="true">›</span>
-          </a>
-        </div>
-      </div>
+      <!-- The «DentCast Evidence Score چیست؟» explainer that sat here was removed
+           with the DES tool box under it (founder, 2026-11-11). DES still
+           explains itself where a reader meets it: the «ارزیابی خودکار شواهد»
+           card on each article, and /des-board/ (public), reached from the
+           archive tab's door and the premium catalogue. The .dc-des-* rules
+           and the toggle script below are left in place; with no explainer
+           on the page they match nothing. -->
 
       <script>
       (function(){
@@ -6625,49 +6598,6 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
             </div>
           </div>
 
-          <!-- توضیح DES — the desktop layout's copy of the homepage
-               explainer, so a reader meeting a band badge on an article has
-               already met the scale here too. Its own ids (#dcdDesLegendBtn /
-               #dcdDesPanel) because aria-controls has to name a real, unique
-               element; the toggle script below now pairs each button with the
-               panel its OWN aria-controls names, so neither copy can open the
-               other's. The CSS needs no twin — unlike the rest of the home
-               blocks these rules are written unscoped. -->
-          <div class="dc-des-legend-wrap">
-            <button type="button" class="dc-des-legend" id="dcdDesLegendBtn" aria-expanded="false" aria-controls="dcdDesPanel">
-              <span class="dc-des-ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="2.5" y="13" width="5.5" height="8.5" rx="1.1" fill="currentColor"/>
-                  <rect x="9.25" y="7" width="5.5" height="14.5" rx="1.1" fill="currentColor"/>
-                  <rect x="16" y="10.5" width="5.5" height="11" rx="1.1" fill="currentColor"/>
-                </svg>
-              </span>
-              <span class="dc-des-body">
-                <span class="dc-des-ttl"><b>DentCast Evidence Score</b> چیست؟</span>
-                <span class="dc-des-sub">روشی که دنت‌کست با آن اعتبار شواهد علمی محتوا را نشان می‌دهد.</span>
-              </span>
-              <span class="dc-des-bar-group" aria-hidden="true">
-                <span class="dc-des-band-E">E</span><span class="dc-des-band-D">D</span><span class="dc-des-band-C">C</span><span class="dc-des-band-B">B</span><span class="dc-des-band-A">A</span>
-              </span>
-            </button>
-
-            <div id="dcdDesPanel" hidden>
-              <span class="dc-des-capline">روشی که دنت‌کست با آن نشان می‌دهد هر مطلب علمی چقدر روی طراحی قوی و اجرای دقیق ایستاده — نه اینکه چقدر برای شما کاربردی است؛ آن قضاوت جای دیگری نوشته می‌شود.</span>
-              <span class="dc-des-capline">نتیجه یک باند است، نه یک عدد ساده:</span>
-              <div class="dc-des-mini-legend" aria-hidden="true">
-                <div style="background:#78808f">E</div><div style="background:#5f8a63">D</div><div style="background:#3f9a49">C</div><div style="background:#2f8f3f">B</div><div style="background:#1f7a34">A</div>
-              </div>
-              <span class="dc-des-capline">از E (پایه‌ترین سطح) تا A (قوی‌ترین شواهد ممکن) — و A فقط از بهترین طراحی‌ها به‌دست می‌آید، مثل مرور نظام‌مند یا کارآزمایی بالینی. طراحی‌های ضعیف‌تر، حتی در بهترین اجرا، هیچ‌وقت به A نمی‌رسند.</span>
-              <span class="dc-des-capline">یک نکته‌ی مهم: A فقط داخل یک نوع سؤال معنی دارد. A در یک مطالعه‌ی آزمایشگاهی یعنی بهترین شواهد ممکن از یک بنچ‌تست، نه اینکه همان ماده در دهان واقعی هم به همین اندازه قابل‌اعتماد است. A در یک مطالعه‌ی بالینی یعنی داده‌ی واقعی از بیمار — این دو با هم برابر نیستند.</span>
-              <span class="dc-des-capline">محتوایی که خودِ دنت‌کست نوشته، نه خلاصه‌ی یک مقاله، میله‌ی باند نمی‌گیرد؛ به‌جایش یک نشان «تجربه‌ی بالینی» با امتیاز شفافیت دارد.</span>
-              <a class="dc-des-cap" href="/des-board/">
-                <span class="dc-des-cap-t">طبقه‌بندی مطالب بر اساس قدرت شواهد</span>
-                <span class="dc-des-cap-b">پریمیوم</span>
-                <span class="dc-des-cap-c" aria-hidden="true">›</span>
-              </a>
-            </div>
-          </div>
-
           <!-- The reader's own card, the desktop layout's copy of
                #dcPlusHomeCard (plus/js/home-card.js, SLOT_IDS). Empty, unlike
                the phone's: that one ships the signed-out state as static markup
@@ -7404,7 +7334,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=326" defer></script>
+<script src="/dc-nav.js?v=327" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
