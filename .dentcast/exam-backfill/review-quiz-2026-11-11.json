@@ -1,0 +1,879 @@
+[
+ {
+  "qid": "chairside/chairside-23#r-6fcd8bd0",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "chairside/chairside-28#r-a1cae341",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [
+   3
+  ],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "گزینهٔ ۴ (ثبت‌نشدنِ درستِ کانتکتِ پروگزیمال کنارِ اورهنگ و فود ایمپکشن) در عملِ بالینی درست است و متنِ صفحه هم آن را رد نمی‌کند؛ دو پاسخِ قابلِ دفاع."
+ },
+ {
+  "qid": "chairside/chairside-31#r-84b05f88",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "chairside/chairside-33#r-c437b76e",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "chairside/chairside-33#r-b4a04a98",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "chairside/chairside-34#r-faade8bc",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "chairside/chairside-36#r-ee2d542e",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "chairside/chairside-36#r-02bdb092",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "chairside/chairside-36#r-99442721",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "chairside/chairside-38#r-3e2679ad",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "chairside/chairside-4#r-825d4022",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "chairside/chairside-40#r-4bbd11af",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "کلید از روی فرم لو می‌رود: صورتِ سؤال بر «رضایت از رنگ» تأکید دارد و فقط گزینهٔ ۴ از رنگ حرف می‌زند؛ «و رنگ» از صورتِ سؤال حذف یا گزینهٔ انحرافیِ رنگ‌محور اضافه شود."
+ },
+ {
+  "qid": "chairside/chairside-42#r-5c17ce4a",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "chairside/chairside-43#r-1bcf0844",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "«دیاستم اجباری» در صورتِ سؤال تعریف نشده و فقط برای خوانندهٔ صفحه معنا دارد؛ سه گزینهٔ دیگر با قیدهای مطلق («هیچ»، «دقیقاً»، «نه تناسب زیبایی») خودشان را حذف می‌کنند و کلید بدونِ دانش قابلِ حدس است."
+ },
+ {
+  "qid": "dentai/dentai-24#r-148dd2ab",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/dentai-25#r-68128400",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/dentai-26#r-fabb60d2",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/dentai-26#r-d74203e8",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "کلید بلندترین و تنها گزینهٔ معتدل است؛ سه گزینهٔ دیگر قیدِ مطلق دارند («هر سرامیکی»، «همواره»، «همچنان ساینده‌ترین») و گزینهٔ ۴ با خودِ عبارتِ «باورِ قدیمی» در صورتِ سؤال ناسازگار است؛ بدونِ دانش قابلِ حدس."
+ },
+ {
+  "qid": "dentai/dentai-29#r-573ca688",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/dentai-29#r-19e436f9",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/dentai-31#r-0afcb60c",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/dentai-31#r-42b7b36b",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/dentai-31#r-b6b2a8a6",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/dentai-32#r-e7985f2a",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/dentai-33#r-e0429a61",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/dentai-35#r-7b8ddb49",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/promptologist/prompt-append2-1#r-4af466e1",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/promptologist/prompt4-2#r-5ee4e273",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/promptologist/prompt5-2#r-9ff6afb7",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/promptologist/prompt6-1#r-d672196c",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/promptologist/prompt6-1#r-66232499",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/promptologist/prompt6-1#r-8f52150a",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/promptologist/prompt6-2#r-5f6a0dc6",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [
+   0
+  ],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "بدنه گزینهٔ ۲ را تأیید می‌کند، اما در عمل (مثلاً پروجکتِ کلاد یا جِم با نالجِ کم‌حجم) کلِ فایل‌ها مستقیم در کانتکست قرار می‌گیرد و RAG فقط با حجمِ زیاد فعال می‌شود؛ گزینهٔ ۱ برای کاربرِ آگاه قابلِ دفاع است. صورتِ سؤال باید به «نالجِ پرحجم» یا «طبقِ سازوکارِ بازیابی» مقید شود."
+ },
+ {
+  "qid": "dentai/promptologist/prompt6-5#r-27a18546",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [
+   1
+  ],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "صورتِ سؤال می‌گوید «به سقفِ پنجرهٔ کانتکست می‌رسد»؛ در برخی سرویس‌ها رسیدن به سقفِ سخت واقعاً با پیامِ صریح و توقفِ گفت‌وگو همراه است (گزینهٔ ۲ قابلِ دفاع). بدنه دربارهٔ افتِ تدریجیِ کیفیت در گفت‌وگوی طولانی حرف می‌زند؛ صورت باید «با طولانی‌شدنِ گفت‌وگو و نزدیک‌شدن به سقف» شود."
+ },
+ {
+  "qid": "dentai/promptologist/prompt6-5#r-9ec7ff9d",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "dentai/promptologist/prompt7-1#r-afffbb59",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "episodes/episode-161#r-12757f23",
+  "key": 0,
+  "fable_answer": null,
+  "defensible_others": [],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "بدنهٔ صفحه فقط معرفی/تیزر اپیزود است و پاسخ را بیان نمی‌کند؛ کلید از روی بدنه قابل‌تأیید نیست (سؤال به اعداد/یافته‌های مطالعه تکیه دارد)."
+ },
+ {
+  "qid": "episodes/episode-161#r-a97ec6e5",
+  "key": 3,
+  "fable_answer": null,
+  "defensible_others": [],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "بدنهٔ صفحه فقط معرفی/تیزر اپیزود است و پاسخ را بیان نمی‌کند؛ کلید از روی بدنه قابل‌تأیید نیست (سؤال به اعداد/یافته‌های مطالعه تکیه دارد)."
+ },
+ {
+  "qid": "episodes/episode-162#r-81e52f00",
+  "key": 2,
+  "fable_answer": null,
+  "defensible_others": [],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "بدنهٔ صفحه فقط معرفی/تیزر اپیزود است و پاسخ را بیان نمی‌کند؛ کلید از روی بدنه قابل‌تأیید نیست (سؤال به اعداد/یافته‌های مطالعه تکیه دارد). سه تا از چهار گزینه عیناً در کلیدواژه‌های صفحه آمده‌اند و هیچ‌کدام به «شکستِ ایمپلنت» وصل نشده."
+ },
+ {
+  "qid": "insight/insight-57#r-273e8936",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "insight/insight-59#r-49a94eba",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "گزینهٔ ۲ جملهٔ بدنه است ولی منطقاً جوابِ «چرا بیشترین گیر کافی نیست» نیست (فقط می‌گوید سمان تنها متغیرِ قابلِ تنظیم است)؛ دلیلِ واقعیِ متن یعنی امکانِ درآوردنِ روکش/کنترلِ میزانِ گیر در هیچ گزینه‌ای نیامده. پاسخ فقط با حذفِ گزینه‌ها به دست می‌آید و گمراه‌کننده است."
+ },
+ {
+  "qid": "insight/insight-61#r-4d9785c1",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [
+   3
+  ],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "بدنه «اولین قدم» تعریف نمی‌کند و خطای دید را روی کست (برای تکنسین) می‌داند، نه در دهان؛ در خودِ متن روکش نسبت به خطِ لب واقعاً کوتاه بود و نهایتاً بلندتر ساخته و در دهان تنظیم شد، پس گزینهٔ ۴ (مرجع بودنِ خطِ لب هنگامِ صحبت و بلند کردنِ روکش) هم قابلِ دفاع است."
+ },
+ {
+  "qid": "insight/insight-62#r-dec3d414",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "insight/insight-63#r-6c863cbe",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "insight/insight-63#r-18ec65a7",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "insight/insight-64#r-8565e175",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "insight/insight-64#r-cd728a66",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "insight/insight-75#r-1a85a106",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "insight/insight-80#r-5dc2e3d7",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "insight/insight-82#r-6da741f1",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "insight/insight-83#r-eee35b4e",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "insight/insight-85#r-e5953815",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "insight/insight-85#r-ee2a4142",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "insight/insight-86#r-a4269662",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "insight/insight-87#r-077b585c",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "insight/insight-95#r-639b97a8",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "metanotes/meta-12#r-366fb895",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "metanotes/meta-19#r-15b84a6c",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "metanotes/meta-19#r-2f435602",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "metanotes/meta-20#r-931789a8",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [
+   2
+  ],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "کلید نظرِ شخصیِ نویسنده است؛ خودِ صفحه می‌گوید قاعدهٔ رایجِ متخصصانِ پروتز ساختِ دومرحله‌ای برای پیشگیری از همین misfit است، پس گزینهٔ ۳ در عملِ بالینیِ متعارف قابلِ دفاع است و دندانپزشکی که صفحه را نخوانده همان را انتخاب می‌کند."
+ },
+ {
+  "qid": "metanotes/meta-22#r-e5eb41ed",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "metanotes/meta-3#r-25f22495",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [
+   2,
+   3
+  ],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "کلید موضعِ جدلیِ نویسنده است، نه تعریفِ پذیرفته‌شده؛ در پریودنتولوژی دندانِ درمان‌شده و پایدار روی پریودنشیومِ کاهش‌یافته معمولاً درمانِ موفق شمرده می‌شود (گزینهٔ ۳) و معیارهای Success/Survival اساساً در ادبیاتِ ایمپلنت تعریف شده‌اند (گزینهٔ ۴). بدونِ خواندنِ صفحه پاسخ‌پذیر نیست."
+ },
+ {
+  "qid": "metanotes/meta-7#r-78b76dca",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "notecast/episode-23#r-527d8923",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "notecast/episode-24#r-e2e9df8a",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "notecast/episode-39#r-d4e50ec3",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "notecast/episode-40#r-2060f769",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "notecast/episode-41#r-f16251ce",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "خودِ متن تصریح می‌کند این «صرفاً نظر همین مقاله» است ولی صورت سؤال آن را بدون انتساب و به‌عنوان واقعیت می‌پرسد؛ کلید تنها گزینهٔ دارای قید است و سه گزینهٔ دیگر مطلق‌اند («در هر شرایطی»، «فقط»، «هیچ اثری»)."
+ },
+ {
+  "qid": "notecast/episode-43#r-367071d8",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-11#r-a83d9bed",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-11#r-09a0abdb",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "کلید تنها گزینهٔ دارای قید است و بقیه مطلق‌اند («فقط»، «هیچ ارتباطی»، «نیازی نیست»)؛ بخشِ «احتمالِ بیشتر بروکسر نبودن» هم در متن از مثالی با اعدادِ فرضی درآمده، نه از داده."
+ },
+ {
+  "qid": "sharehub/share-13#r-fb1d51b7",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-13#r-c8ea8b0e",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-13#r-e9942547",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-13#r-d319f650",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "صورت سؤال خودش جواب را می‌دهد: «رابطهٔ علّی» فقط در گزینهٔ کلید تکرار شده و آن گزینه عملاً بازگوییِ صورت سؤال است؛ بدون دانستنِ مطلب هم قابل حدس است."
+ },
+ {
+  "qid": "sharehub/share-14#r-1bc5e0dc",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-17#r-f681491a",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-19#r-3edc07a6",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-20#r-350c5ea7",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "«لثهٔ نازک» از صورت سؤال فقط در گزینهٔ کلید تکرار شده و کلید را لو می‌دهد؛ محتوای کلید درست است (مرزی، با بازنویسیِ گزینه‌ها قابل اصلاح)."
+ },
+ {
+  "qid": "sharehub/share-21#r-24f6dece",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-22#r-db51755f",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-22#r-0155ac6e",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "کلید تنها گزینهٔ دارای قید و میانه‌رو است؛ گزینه‌های ۲ و ۳ با نفیِ عباراتِ خودِ کلید («به عاج برساند»، «کنترل رطوبت») ساخته شده‌اند و گزینهٔ ۰ مطلق است («در هر شرایطی»)؛ از روی فرم قابل حدس است."
+ },
+ {
+  "qid": "sharehub/share-23#r-7f957b65",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-25#r-451d6440",
+  "key": 0,
+  "fable_answer": 0,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-27#r-2359d05b",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-27#r-a1bbee65",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-27#r-134016d8",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "reject",
+  "outcome": "review",
+  "note": "کلید با دنبالهٔ «نه به افزودن ضخامت به‌ازای هر گام رنگ» صریحاً گزینهٔ ۲ را نفی می‌کند و تنها گزینهٔ دو‌بخشی و بلندتر است؛ جفتِ متضاد ۲/۳ کلید را لو می‌دهد. این دنباله باید حذف شود."
+ },
+ {
+  "qid": "sharehub/share-27#r-c74636a0",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-32#r-e76a59dc",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-32#r-5332eb63",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-36#r-df122b1a",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-41#r-c02a4569",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "sharehub/share-7#r-eed0d3b1",
+  "key": 1,
+  "fable_answer": 1,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "taraz/taraz1-10#r-475a309b",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "taraz/taraz1-10#r-88132b76",
+  "key": 2,
+  "fable_answer": 2,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ },
+ {
+  "qid": "taraz/taraz1-8#r-67b15035",
+  "key": 3,
+  "fable_answer": 3,
+  "defensible_others": [],
+  "verdict": "accept",
+  "outcome": "live",
+  "note": ""
+ }
+]

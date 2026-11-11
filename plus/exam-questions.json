@@ -16,9 +16,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "chairside/chairside-23#q1",
-          "status": "review",
-          "review_note": "گزینه‌های انحرافی (استئواینتگریشن، شکستِ سمان) در متن مستقیماً رد نشده‌اند و فقط با چارچوبِ مقاله ناسازگارند؛ بررسی شود که گزینهٔ ۴ از نظرِ بالینی قابلِ‌دفاع تلقی نشود."
+          "source_quiz_id": "chairside/chairside-23#q1"
         }
       ]
     },
@@ -170,9 +168,7 @@
           ],
           "correct": 0,
           "source": "quiz",
-          "source_quiz_id": "chairside/chairside-31#q2",
-          "status": "review",
-          "review_note": "مقاله جایگزین‌هایی مثلِ اینتروژنِ ارتودنسی را بررسی نکرده؛ تأیید شود که کلید در برابرِ آن گزینه‌ها همچنان برای آزمونِ مدرک قابلِ دفاع است."
+          "source_quiz_id": "chairside/chairside-31#q2"
         }
       ]
     },
@@ -222,9 +218,7 @@
           ],
           "correct": 0,
           "source": "quiz",
-          "source_quiz_id": "chairside/chairside-33#q1",
-          "status": "review",
-          "review_note": "در منابعِ اندو، جراحیِ اپیکال بدونِ پرکردگیِ رتروگراد در حضورِ پرکردگیِ ارتوگرادِ مناسب در مواردی قابل‌دفاع است؛ کلید بر مبنای روایتِ مقاله است."
+          "source_quiz_id": "chairside/chairside-33#q1"
         },
         {
           "id": "r-b4a04a98",
@@ -238,9 +232,7 @@
           ],
           "correct": 0,
           "source": "quiz",
-          "source_quiz_id": "chairside/chairside-33#q2",
-          "status": "review",
-          "review_note": "کلید استنتاجِ بیومکانیکیِ مقاله است (تقارنِ دیاستم با ضایعه‌ی یک‌طرفه سازگار نیست)؛ قابل‌دفاع بودنِ آن برای آزمون تأیید شود."
+          "source_quiz_id": "chairside/chairside-33#q2"
         }
       ]
     },
@@ -258,9 +250,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "chairside/chairside-34#q0",
-          "status": "review",
-          "review_note": "کلید بر مبنای استاندارد آناتومیک مقاله است؛ از نظر فنی می‌توان بریج را زیرِ کانتور طبیعی ساخت، بنیان‌گذار تأیید کند که گزینهٔ ۱ به‌اندازهٔ کافی نادرست تلقی می‌شود."
+          "source_quiz_id": "chairside/chairside-34#q0"
         },
         {
           "id": "r-ab67053a",
@@ -352,9 +342,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "chairside/chairside-36#q1",
-          "status": "review",
-          "review_note": "برتری طراحی یک‌سرِ فضا با کانتی‌لور بر ایمپلنت وسط‌فضا استدلال بیومکانیکی نویسنده است؛ بررسی شود که در آزمون گواهی قابل‌دفاع و بی‌مناقشه تلقی می‌شود."
+          "source_quiz_id": "chairside/chairside-36#q1"
         },
         {
           "id": "r-02bdb092",
@@ -368,9 +356,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "chairside/chairside-36#q2",
-          "status": "review",
-          "review_note": "آستانهٔ ۳۰ درجه و اثر افزایشی پروفایل convex از شواهد Katafuchi و همکاران است؛ تأیید شود که به‌عنوان مفهوم عمومی در آزمون پذیرفته است."
+          "source_quiz_id": "chairside/chairside-36#q2"
         },
         {
           "id": "r-99442721",
@@ -384,9 +370,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "chairside/chairside-36#q3",
-          "status": "review",
-          "review_note": "جمع‌بندی بر پایهٔ مرورهای کانتی‌لور تک‌ایمپلنتی است؛ بررسی شود که برای آزمون، مفهومی و غیرمطالعه‌محور تلقی می‌شود."
+          "source_quiz_id": "chairside/chairside-36#q3"
         }
       ]
     },
@@ -450,9 +434,7 @@
           ],
           "correct": 2,
           "source": "quiz",
-          "source_quiz_id": "chairside/chairside-38#q0",
-          "status": "review",
-          "review_note": "مکانیسم از یک کیسِ بالینی استخراج شده؛ تأیید شود که به‌عنوانِ قاعدهٔ عمومی برای آزمونِ مدرک قابلِ دفاع است."
+          "source_quiz_id": "chairside/chairside-38#q0"
         }
       ]
     },
@@ -488,9 +470,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "chairside/chairside-4#q1",
-          "status": "review",
-          "review_note": "مقاله «پیشرفته» را به طبقه‌بندیِ مشخصی (مثلِ Patel) ارجاع نمی‌دهد؛ بررسی شود که کلید با معیارِ قابلِ ترمیم بودن در منابعِ اندو هم‌خوان باشد."
+          "source_quiz_id": "chairside/chairside-4#q1"
         }
       ]
     },
@@ -560,9 +540,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "chairside/chairside-42#q1",
-          "status": "review",
-          "review_note": "گزینه‌های انحرافی رفرنس‌های افقی‌اند؛ اگر در منابعِ مرجعِ شما نقطهٔ میانیِ خطِ بین‌مردمکی رفرنسِ میدلاین شمرده می‌شود، آن گزینه جایگزین شود."
+          "source_quiz_id": "chairside/chairside-42#q1"
         },
         {
           "id": "r-daae4e6e",
@@ -660,9 +638,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "dentai/dentai-24#q4",
-          "status": "review",
-          "review_note": "مقاله هم تکرارِ BEWE در فواصلِ پیگیری را توصیه می‌کند؛ تمایزِ «تکرار برای ارزیابیِ ریسک» با «سنجشِ پیشرفت» ممکن است برای آزمون‌دهنده مبهم باشد."
+          "source_quiz_id": "dentai/dentai-24#q4"
         }
       ]
     },
@@ -680,9 +656,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "dentai/dentai-25#q3",
-          "status": "review",
-          "review_note": "کلید بر داده‌های متاآنالیز استوار است؛ مرور جدیدتر در زیرگروه vital/non-vital تفاوت معنادار نیافت (مقاله آن را underpowered می‌خواند). بنیان‌گذار تأیید کند که این را به‌عنوان مفهوم کلی می‌پذیرد."
+          "source_quiz_id": "dentai/dentai-25#q3"
         }
       ]
     },
@@ -700,9 +674,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "dentai/dentai-26#q1",
-          "status": "review",
-          "review_note": "کلید بر یافتهٔ یک متاآنالیز (Solá-Ruíz 2020) تکیه دارد؛ بررسی شود که نسبتِ «دو برابر» به‌عنوانِ مفهومِ عمومی قابلِ‌دفاع است یا باید از گزینه حذف شود."
+          "source_quiz_id": "dentai/dentai-26#q1"
         },
         {
           "id": "r-d74203e8",
@@ -754,9 +726,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "dentai/dentai-29#q0",
-          "status": "review",
-          "review_note": "کلید به وضعیتِ فعلیِ شواهد وابسته است؛ بررسی شود که پرسشی با پاسخِ «تفاوتِ معنادار ندارد» برای آزمونِ مدرک پذیرفتنی است."
+          "source_quiz_id": "dentai/dentai-29#q0"
         },
         {
           "id": "r-19e436f9",
@@ -770,9 +740,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "dentai/dentai-29#q3",
-          "status": "review",
-          "review_note": "کلید بر پایهٔ مرورِ شواهدِ مقاله است؛ تأیید شود که این نتیجه‌گیری با منابعِ مرجعِ شما هم‌خوان است."
+          "source_quiz_id": "dentai/dentai-29#q3"
         },
         {
           "id": "r-285ffe02",
@@ -822,9 +790,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "dentai/dentai-31#q0",
-          "status": "review",
-          "review_note": "محدودهٔ تورکِ لودِ فوری در منابعِ مختلف متفاوت است (۳۰، ۳۵ یا ۴۵ نیوتن‌سانتی‌متر)؛ کلید مطابقِ مقاله ۳۰ تا ۵۰ است."
+          "source_quiz_id": "dentai/dentai-31#q0"
         },
         {
           "id": "r-42b7b36b",
@@ -838,9 +804,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "dentai/dentai-31#q1",
-          "status": "review",
-          "review_note": "کلید از توزیعِ شکست‌ها در یک مرورِ سیستماتیک استخراج شده؛ تأیید شود که به‌عنوانِ مفهومِ کلی (غلبهٔ شکستِ زودرس) پذیرفته است."
+          "source_quiz_id": "dentai/dentai-31#q1"
         },
         {
           "id": "r-b6b2a8a6",
@@ -854,9 +818,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "dentai/dentai-31#q4",
-          "status": "review",
-          "review_note": "رتبه‌بندیِ عوارض از یک مرورِ سیستماتیک گرفته شده؛ تأیید شود که پرسشِ «شایع‌ترین» برای آزمون قابلِ دفاع است."
+          "source_quiz_id": "dentai/dentai-31#q4"
         },
         {
           "id": "r-8cc1a788",
@@ -888,9 +850,7 @@
           ],
           "correct": 2,
           "source": "quiz",
-          "source_quiz_id": "dentai/dentai-32#q0",
-          "status": "review",
-          "review_note": "رتبه‌بندی عوامل از یک متاآنالیز in vitro می‌آید؛ تأیید شود که «خشک‌کردن سطح پیش از اسکن» به‌عنوان مفهوم عمومی برای آزمون کافی است."
+          "source_quiz_id": "dentai/dentai-32#q0"
         },
         {
           "id": "r-38c48f1c",
@@ -936,9 +896,7 @@
           ],
           "correct": 2,
           "source": "quiz",
-          "source_quiz_id": "dentai/dentai-33#q4",
-          "status": "review",
-          "review_note": "شروطِ اندیکاسیون از یک گزارشِ مورد (Bansal 2016) نقل شده‌اند؛ تأیید شود که برای آزمونِ مدرک به‌عنوانِ مفهومِ عمومی پذیرفته می‌شوند."
+          "source_quiz_id": "dentai/dentai-33#q4"
         }
       ]
     },
@@ -974,9 +932,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "dentai/dentai-35#q0",
-          "status": "review",
-          "review_note": "کلید با آموزشِ کلاسیک در تضاد است و بر یک مطالعهٔ ۹۹نفری و یک بررسیِ انتقادی تکیه دارد؛ تأیید شود که برای آزمونِ گواهی‌نامه به‌عنوانِ مفهومِ عمومی پذیرفته می‌شود."
+          "source_quiz_id": "dentai/dentai-35#q0"
         }
       ]
     },
@@ -1012,9 +968,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "dentai/promptologist/prompt-append2-1#q4",
-          "status": "review",
-          "review_note": "دسترسیِ مدل به کلِ اکانت به سرویس و تنظیماتِ آن بستگی دارد؛ بررسی شود که کلید به‌عنوانِ قاعده‌ی عمومی پذیرفتنی است."
+          "source_quiz_id": "dentai/promptologist/prompt-append2-1#q4"
         },
         {
           "id": "r-fc9226be",
@@ -1262,9 +1216,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "dentai/promptologist/prompt4-2#q2",
-          "status": "review",
-          "review_note": "ادعا دربارهٔ رفتارِ مدل‌های زبانی تجربی است و خودِ مقاله آن را با «گاهی» بیان می‌کند؛ بررسی شود که گزینهٔ کلید به‌عنوانِ «امکان» (نه قطعیت) برای آزمونِ گواهی پذیرفتنی است."
+          "source_quiz_id": "dentai/promptologist/prompt4-2#q2"
         },
         {
           "id": "r-e673dd8c",
@@ -1420,9 +1372,7 @@
           ],
           "correct": 0,
           "source": "quiz",
-          "source_quiz_id": "dentai/promptologist/prompt5-2#q1",
-          "status": "review",
-          "review_note": "کلید یک موضعِ تحلیلیِ نویسنده است؛ بررسی شود که برای آزمونِ مدرک به‌عنوانِ مفهومِ پذیرفته‌شده مناسب است."
+          "source_quiz_id": "dentai/promptologist/prompt5-2#q1"
         }
       ]
     },
@@ -1486,9 +1436,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "dentai/promptologist/prompt6-1#q1",
-          "status": "review",
-          "review_note": "برخی رابط‌های کاربری هشدارِ پر شدنِ کانتکست نشان می‌دهند؛ تأیید شود که کلید به رفتارِ خودِ مدل محدود و قابلِ دفاع است."
+          "source_quiz_id": "dentai/promptologist/prompt6-1#q1"
         },
         {
           "id": "r-8b8eb4ba",
@@ -1516,9 +1464,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "dentai/promptologist/prompt6-1#q3",
-          "status": "review",
-          "review_note": "ادعای «بیشتر نمی‌فهمد» تفسیرِ نویسنده است؛ بررسی شود که برای آزمونِ مدرک قابلِ دفاع است."
+          "source_quiz_id": "dentai/promptologist/prompt6-1#q3"
         },
         {
           "id": "r-8f52150a",
@@ -1532,9 +1478,7 @@
           ],
           "correct": 0,
           "source": "quiz",
-          "source_quiz_id": "dentai/promptologist/prompt6-1#q4",
-          "status": "review",
-          "review_note": "تعمیمِ «در اکثرِ موارد» وابسته به بازارِ فعلی است؛ تأیید شود که به‌عنوانِ کلیدِ آزمون پذیرفتنی است."
+          "source_quiz_id": "dentai/promptologist/prompt6-1#q4"
         }
       ]
     },
@@ -1694,9 +1638,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "dentai/promptologist/prompt6-5#q6",
-          "status": "review",
-          "review_note": "کلید تجربه‌ی نویسنده است و نه یافته‌ای عمومی؛ گزینه‌های ۲ تا ۴ در متن مطرح نشده‌اند و فقط از نظرِ مفهومی نادرست‌اند. بنیان‌گذار صلاحیتِ آزمونی را تأیید کند."
+          "source_quiz_id": "dentai/promptologist/prompt6-5#q6"
         }
       ]
     },
@@ -1714,9 +1656,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "dentai/promptologist/prompt7-1#q1",
-          "status": "review",
-          "review_note": "شرایطِ داده‌ی پلن‌های مصرفیِ پولی بین سرویس‌ها و در زمان تغییر می‌کند؛ بنیان‌گذار تأیید کند که کلید در حدِ یک اصلِ کلی قابلِ دفاع است."
+          "source_quiz_id": "dentai/promptologist/prompt7-1#q1"
         },
         {
           "id": "r-cd54d075",
@@ -1914,9 +1854,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "insight/insight-57#q4",
-          "status": "review",
-          "review_note": "حد عملی مارجین زیرلثه‌ای در منابع مختلف بین ۱ تا ۲ میلی‌متر گزارش می‌شود؛ تأیید شود که گزینهٔ «حدود ۱٫۵ میلی‌متر» به‌عنوان پاسخ قطعی آزمون پذیرفته است."
+          "source_quiz_id": "insight/insight-57#q4"
         }
       ]
     },
@@ -2090,9 +2028,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "insight/insight-62#q2",
-          "status": "review",
-          "review_note": "پرسش به ترفندِ اختصاصیِ مقاله گره خورده؛ اگر برای آزمونِ مدرک بیش از حد مقاله‌محور است، حذف شود."
+          "source_quiz_id": "insight/insight-62#q2"
         }
       ]
     },
@@ -2110,9 +2046,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "insight/insight-63#q0",
-          "status": "review",
-          "review_note": "رویکرد از یک کیس استخراج شده است؛ فاندر تأیید کند که تعویق نخ‌گذاری و کنترل مایعات در بافت ملتهب اطراف ایمپلنت، به‌عنوان اصل قابل‌آزمون (و نه فقط تصمیم همان کیس) مناسب است."
+          "source_quiz_id": "insight/insight-63#q0"
         },
         {
           "id": "r-18ec65a7",
@@ -2126,9 +2060,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "insight/insight-63#q2",
-          "status": "review",
-          "review_note": "سناریو از همان کیس ساخته شده است؛ فاندر تأیید کند که الزام اصلاح تراش و اسکن مجدد به‌عنوان قاعدهٔ عمومی برای این شرایط قابل‌طرح است."
+          "source_quiz_id": "insight/insight-63#q2"
         }
       ]
     },
@@ -2146,9 +2078,7 @@
           ],
           "correct": 0,
           "source": "quiz",
-          "source_quiz_id": "insight/insight-64#q0",
-          "status": "review",
-          "review_note": "این یک استنتاجِ بالینیِ نویسنده از مقالهٔ Jotkowitz و Samet است، نه توصیهٔ مستقیمِ مقاله یا استانداردِ مرجع؛ تأیید شود که به‌عنوانِ مفهومِ آزمونی پذیرفته می‌شود."
+          "source_quiz_id": "insight/insight-64#q0"
         },
         {
           "id": "r-cd728a66",
@@ -2162,9 +2092,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "insight/insight-64#q3",
-          "status": "review",
-          "review_note": "قیدها از رویکردِ شخصیِ نویسنده‌اند؛ دو گزینهٔ انحرافی (تعدادِ ریشه، جنسِ روکش) در متن مطرح نشده‌اند و فقط به‌عنوانِ قیدِ نادرست رد می‌شوند."
+          "source_quiz_id": "insight/insight-64#q3"
         }
       ]
     },
@@ -2332,9 +2260,7 @@
           ],
           "correct": 2,
           "source": "quiz",
-          "source_quiz_id": "insight/insight-75#q0",
-          "status": "review",
-          "review_note": "«کش آمدن» اصطلاح لابراتواری است؛ فاندر تأیید کند که تعریف مقاله (خروج قالب پیش از ست کامل) معنای واحد و قابل‌دفاع آن است و گزینهٔ جداشدن واش از پوتی به‌عنوان نادرست مناسب است."
+          "source_quiz_id": "insight/insight-75#q0"
         },
         {
           "id": "r-1784e094",
@@ -2508,9 +2434,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "insight/insight-80#q4",
-          "status": "review",
-          "review_note": "گزینهٔ ۲ (تطبیق کلاسپ با سایش) در عمل گاهی انجام می‌شود و مقاله آن را صریحاً رد نکرده؛ بنیان‌گذار تأیید کند که به‌اندازهٔ کافی نادرست است."
+          "source_quiz_id": "insight/insight-80#q4"
         }
       ]
     },
@@ -2546,9 +2470,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "insight/insight-82#q0",
-          "status": "review",
-          "review_note": "کفایتِ شش ایمپلنتِ اینتگره برای پروتزِ ثابتِ فکِ بالا پیش‌فرضِ مقاله است؛ برای آزمون تأیید شود."
+          "source_quiz_id": "insight/insight-82#q0"
         },
         {
           "id": "r-d28e085b",
@@ -2608,9 +2530,7 @@
           ],
           "correct": 2,
           "source": "quiz",
-          "source_quiz_id": "insight/insight-83#q3",
-          "status": "review",
-          "review_note": "روشِ کیس‌محور است؛ مفهومِ کلی (مرجعِ مشترک برای مسیرِ نشست) درست است اما بنیان‌گذار تأیید کند که برای آزمونِ پث‌وی به‌اندازهٔ کافی مفهومی است."
+          "source_quiz_id": "insight/insight-83#q3"
         },
         {
           "id": "r-a18144c3",
@@ -2656,9 +2576,7 @@
           ],
           "correct": 0,
           "source": "quiz",
-          "source_quiz_id": "insight/insight-85#q3",
-          "status": "review",
-          "review_note": "سناریو از ترکیب دو بخش مقاله ساخته شده است؛ فاندر تأیید کند که با نشست کامل و ثبات بیرون از دهان، نتیجه‌گیری دربارهٔ کوتاهی و تیپر زیاد اباتمنت به‌عنوان علت افتادن قابل‌دفاع است."
+          "source_quiz_id": "insight/insight-85#q3"
         },
         {
           "id": "r-ee2a4142",
@@ -2672,9 +2590,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "insight/insight-85#q4",
-          "status": "review",
-          "review_note": "مقاله نوع سمان مناسب تای‌بیس را مشخص نمی‌کند و فقط منع سمان موقت را می‌گوید؛ فاندر گزینهٔ کلید را از این نظر و از نظر «سندبلاست بدون اجماع» بررسی کند."
+          "source_quiz_id": "insight/insight-85#q4"
         }
       ]
     },
@@ -2692,9 +2608,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "insight/insight-86#q0",
-          "status": "review",
-          "review_note": "گزینهٔ «برای روکش ایمپلنت این ضرورت نیست» در برخی منابع (شست‌وشوی سمان و تجمع پلاک زیر روکش ایمپلنت) قابل بحث است؛ فاندر تأیید کند. | validator: banned phrase in option: هیچ‌کدام نیازی به خارج‌کردن ند"
+          "source_quiz_id": "insight/insight-86#q0"
         }
       ]
     },
@@ -2712,9 +2626,7 @@
           ],
           "correct": 2,
           "source": "quiz",
-          "source_quiz_id": "insight/insight-87#q0",
-          "status": "review",
-          "review_note": "مقاله در ادامه canine guidance را در فول‌آرچ ترجیح می‌دهد؛ تأیید شود که کلید («هیچ‌کدام برتریِ قطعی ندارد») با آن ناسازگار خوانده نمی‌شود."
+          "source_quiz_id": "insight/insight-87#q0"
         }
       ]
     },
@@ -2882,9 +2794,7 @@
           ],
           "correct": 2,
           "source": "quiz",
-          "source_quiz_id": "insight/insight-95#q0",
-          "status": "review",
-          "review_note": "پاسخ برای دندانپزشک نسبتاً بدیهی است؛ بررسی شود که سطح دشواری برای آزمون گواهی کافی است."
+          "source_quiz_id": "insight/insight-95#q0"
         },
         {
           "id": "r-b2127a3d",
@@ -2980,9 +2890,7 @@
           ],
           "correct": 0,
           "source": "quiz",
-          "source_quiz_id": "metanotes/meta-12#q3",
-          "status": "review",
-          "review_note": "توضیحِ نیروی وج‌مانند تجربه‌ی بالینیِ نویسنده است، نه قاعده‌ی مستند؛ تأیید شود که برای آزمونِ مدرک مناسب است."
+          "source_quiz_id": "metanotes/meta-12#q3"
         }
       ]
     },
@@ -3032,9 +2940,7 @@
           ],
           "correct": 0,
           "source": "quiz",
-          "source_quiz_id": "metanotes/meta-19#q0",
-          "status": "review",
-          "review_note": "مقاله بازخوانی انتقادی قاعده‌ای جاافتاده است؛ تأیید شود که موضع آن برای آزمون گواهی قابل‌دفاع و بی‌مناقشه است."
+          "source_quiz_id": "metanotes/meta-19#q0"
         },
         {
           "id": "r-2f435602",
@@ -3048,9 +2954,7 @@
           ],
           "correct": 2,
           "source": "quiz",
-          "source_quiz_id": "metanotes/meta-19#q1",
-          "status": "review",
-          "review_note": "گزینه‌های نادرست بر پایهٔ منطق مقاله ساخته شده‌اند؛ بررسی شود که گزینهٔ «دیوارهٔ نازک نیاز به کوتاه‌شدن ندارد» با موضع مقاله دربارهٔ دیوارهٔ بی‌ساپورت به‌روشنی مغایر خوانده می‌شود."
+          "source_quiz_id": "metanotes/meta-19#q1"
         },
         {
           "id": "r-1623576a",
@@ -3120,9 +3024,7 @@
           ],
           "correct": 0,
           "source": "quiz",
-          "source_quiz_id": "metanotes/meta-22#q3",
-          "status": "review",
-          "review_note": "کلید ترکیب FAQ تعیین‌کنندهٔ VDO و پاسخ SDA است؛ گزینهٔ ۲ از نظر مفهومی نادرست است ولی در متن مطرح نشده. بنیان‌گذار صورت‌بندی را بازبینی کند."
+          "source_quiz_id": "metanotes/meta-22#q3"
         },
         {
           "id": "r-eb3a99e4",
@@ -3174,9 +3076,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "metanotes/meta-7#q1",
-          "status": "review",
-          "review_note": "گزینهٔ گیرِ پست برای کور در برخی منابع قابلِ‌دفاع است؛ کلید موضعِ انتقادیِ نویسنده را بازتاب می‌دهد."
+          "source_quiz_id": "metanotes/meta-7#q1"
         }
       ]
     },
@@ -3212,9 +3112,7 @@
           ],
           "correct": 0,
           "source": "quiz",
-          "source_quiz_id": "notecast/episode-23#q0",
-          "status": "review",
-          "review_note": "موضوع در ادبیات محل بحث است و شواهد عمدتاً حیوانی و مروری است؛ تأیید شود که این موضع برای آزمون گواهی به‌عنوان جمع‌بندی پذیرفته است."
+          "source_quiz_id": "notecast/episode-23#q0"
         }
       ]
     },
@@ -3232,9 +3130,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "notecast/episode-24#q0",
-          "status": "review",
-          "review_note": "کلید بر یک مرورِ سیستماتیک تکیه دارد؛ تأیید شود که با شواهدِ جدیدتر همچنان قابلِ دفاع است."
+          "source_quiz_id": "notecast/episode-24#q0"
         }
       ]
     },
@@ -3270,9 +3166,7 @@
           ],
           "correct": 2,
           "source": "quiz",
-          "source_quiz_id": "notecast/episode-39#q4",
-          "status": "review",
-          "review_note": "کلید بر یافته‌ی یک مطالعه (relapse در بازسازی‌های ناقص) تکیه دارد؛ گزینه‌های انحرافی ادعاهای عارضه‌ای‌اند که مقاله مطرح نکرده."
+          "source_quiz_id": "notecast/episode-39#q4"
         }
       ]
     },
@@ -3304,9 +3198,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "notecast/episode-40#q7",
-          "status": "review",
-          "review_note": "برتری سمان دوال‌کیور همراه با باندینگ بر سمان سلف‌ادهزیو در منابع یکدست نیست؛ گزینهٔ «سلف‌ادهزیو» در برخی مطالعات قابل‌دفاع است."
+          "source_quiz_id": "notecast/episode-40#q7"
         }
       ]
     },
@@ -3358,9 +3250,7 @@
           ],
           "correct": 0,
           "source": "quiz",
-          "source_quiz_id": "notecast/episode-43#q0",
-          "status": "review",
-          "review_note": "کلید بر پایهٔ یک مطالعهٔ آزمایشگاهی با RelyX U200 است؛ تأیید شود که به‌عنوانِ اصلِ کلی قابلِ تعمیم است."
+          "source_quiz_id": "notecast/episode-43#q0"
         }
       ]
     },
@@ -3396,9 +3286,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-11#q0",
-          "status": "review",
-          "review_note": "کلید بر «نبودِ شواهد» استوار است؛ تأیید شود که این ادعای منفی برای آزمونِ مدرک قابلِ دفاع است."
+          "source_quiz_id": "sharehub/share-11#q0"
         },
         {
           "id": "r-09a0abdb",
@@ -3534,9 +3422,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-13#q2",
-          "status": "review",
-          "review_note": "توصیهٔ پرهیز از immediate loading در منابع آمده اما سطح شواهد آن محدود است؛ تأیید شود که به‌عنوان پاسخ قطعی آزمون پذیرفته است."
+          "source_quiz_id": "sharehub/share-13#q2"
         },
         {
           "id": "r-c8ea8b0e",
@@ -3550,9 +3436,7 @@
           ],
           "correct": 0,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-13#q3",
-          "status": "review",
-          "review_note": "تمایز موکوزیت/پری‌ایمپلنتایتیس از متاآنالیزهای مشخص می‌آید؛ تأیید شود که به‌عنوان مفهوم عمومی در آزمون پذیرفته است."
+          "source_quiz_id": "sharehub/share-13#q3"
         },
         {
           "id": "r-e9942547",
@@ -3566,9 +3450,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-13#q4",
-          "status": "review",
-          "review_note": "الگوی «تا حدود شش سال بدون تفاوت» از یک مطالعهٔ مشخص است؛ تأیید شود که مفهوم «اثر دیررس دیابت» برای آزمون کافی و قابل‌دفاع است."
+          "source_quiz_id": "sharehub/share-13#q4"
         },
         {
           "id": "r-d319f650",
@@ -3658,9 +3540,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-14#q7",
-          "status": "review",
-          "review_note": "گزینه‌های نادرست بر دانشِ عمومیِ بوتاکس تکیه دارند و مقاله به‌صراحت آن‌ها را رد نکرده؛ بررسی شود که برای آزمون کافی‌اند."
+          "source_quiz_id": "sharehub/share-14#q7"
         }
       ]
     },
@@ -3678,9 +3558,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-17#q0",
-          "status": "review",
-          "review_note": "گزینهٔ کلید سه دلیل مقاله (نبود رابطهٔ مستقیم، تشدید دارویی، مالکیت تصمیم دارویی) را ترکیب می‌کند؛ فاندر لحن و کفایت آن را بررسی کند."
+          "source_quiz_id": "sharehub/share-17#q0"
         },
         {
           "id": "r-bb2c8dcb",
@@ -3786,9 +3664,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-19#q4",
-          "status": "review",
-          "review_note": "در عملِ بالینی تکمیلِ درمانِ ریشه در جلسهٔ اورژانس هم رایج است؛ کلید چارچوبِ فازبندیِ مرجع (Stefanac) را بازتاب می‌دهد، تأیید شود."
+          "source_quiz_id": "sharehub/share-19#q4"
         },
         {
           "id": "r-b741907a",
@@ -3882,9 +3758,7 @@
           ],
           "correct": 2,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-21#q1",
-          "status": "review",
-          "review_note": "گسترشِ مفهومِ نوترال زون به پروتزِ ثابت تفسیرِ مقاله است و در منابعِ کلاسیک به‌صراحت نیامده؛ بررسی شود."
+          "source_quiz_id": "sharehub/share-21#q1"
         },
         {
           "id": "r-e38db422",
@@ -3944,9 +3818,7 @@
           ],
           "correct": 2,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-22#q4",
-          "status": "review",
-          "review_note": "کلید از مطالعهٔ Gresnigt گرفته شده؛ گزینه‌های ۳ و ۴ در مقاله سنجیده نشده‌اند و فقط از جملهٔ «تنها مداخلهٔ ادهزیوِ مؤثر» نادرست شمرده می‌شوند."
+          "source_quiz_id": "sharehub/share-22#q4"
         },
         {
           "id": "r-0155ac6e",
@@ -4022,9 +3894,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-23#q6",
-          "status": "review",
-          "review_note": "مقاله مکانیزم را با «احتمالاً» بیان می‌کند؛ پذیرشِ کلید به‌عنوان توضیحِ احتمالی برای آزمون تأیید شود."
+          "source_quiz_id": "sharehub/share-23#q6"
         },
         {
           "id": "r-567203fd",
@@ -4130,9 +4000,7 @@
           ],
           "correct": 0,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-25#q0",
-          "status": "review",
-          "review_note": "اصل «یک تغییر در هر مرحله» بر تجربه‌ی گزارش‌شده با یک ابزار تکیه دارد؛ بررسی شود که به‌عنوان قاعده‌ی عام برای آزمون پذیرفتنی است."
+          "source_quiz_id": "sharehub/share-25#q0"
         },
         {
           "id": "r-4780b3cd",
@@ -4238,9 +4106,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-27#q0",
-          "status": "review",
-          "review_note": "در ونیرهای no-prep اورکانتور خفیف گاهی پذیرفته می‌شود؛ تأیید شود که موضع مقاله برای آزمون بی‌مناقشه است."
+          "source_quiz_id": "sharehub/share-27#q0"
         },
         {
           "id": "r-600446c9",
@@ -4268,9 +4134,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-27#q4",
-          "status": "review",
-          "review_note": "دستور کارخانه‌ای مشخص (e.max) است؛ تأیید شود که این‌گونه جزئیات محصول در دامنهٔ آزمون مسیر قرار می‌گیرد."
+          "source_quiz_id": "sharehub/share-27#q4"
         },
         {
           "id": "r-134016d8",
@@ -4300,9 +4164,7 @@
           ],
           "correct": 2,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-27#q7",
-          "status": "review",
-          "review_note": "ضخامت مینای سرویکال متغیر است؛ تأیید شود که گزارهٔ «۰٫۶ میلی‌متر در سرویکال از مینا بیشتر است» به‌عنوان قاعدهٔ کلی پذیرفته است."
+          "source_quiz_id": "sharehub/share-27#q7"
         }
       ]
     },
@@ -4452,9 +4314,7 @@
           ],
           "correct": 2,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-32#q0",
-          "status": "review",
-          "review_note": "اندیکاسیون‌ها از دستورالعملِ کارخانه نقل شده؛ تأیید شود که پرسشِ محصول‌محور برای آزمونِ مسیرِ سرامیک مناسب است."
+          "source_quiz_id": "sharehub/share-32#q0"
         },
         {
           "id": "r-8490e571",
@@ -4482,9 +4342,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-32#q5",
-          "status": "review",
-          "review_note": "توصیه از دستورالعملِ کارخانه است؛ قابلِ تعمیم بودنِ آن به‌عنوان مفهومِ آزمونی تأیید شود. تیبل تاپ به‌عمد در گزینه‌ها نیامده تا طولِ گزینه‌ها یکدست بماند."
+          "source_quiz_id": "sharehub/share-32#q5"
         },
         {
           "id": "r-e28a65c1",
@@ -4552,9 +4410,7 @@
           ],
           "correct": 2,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-36#q0",
-          "status": "review",
-          "review_note": "گزینه‌های ۲ تا ۴ از دانش عمومی اکلوژن نادرست‌اند ولی در متن مقاله مطرح نشده‌اند؛ بنیان‌گذار تأیید کند."
+          "source_quiz_id": "sharehub/share-36#q0"
         },
         {
           "id": "r-78860402",
@@ -4742,9 +4598,7 @@
           ],
           "correct": 2,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-41#q5",
-          "status": "review",
-          "review_note": "گزینهٔ ۱ با متن (سندبلاست + MDP برای زیرکونیا) تناقض دارد، اما ممکن است از منظرِ دوامِ بالینی قابلِ‌دفاع تلقی شود؛ بررسی شود."
+          "source_quiz_id": "sharehub/share-41#q5"
         },
         {
           "id": "r-2498a3ed",
@@ -4776,9 +4630,7 @@
           ],
           "correct": 1,
           "source": "quiz",
-          "source_quiz_id": "sharehub/share-7#q0",
-          "status": "review",
-          "review_note": "گزینهٔ ۴ ممکن است از نظرِ برخی خوانندگان (نقشِ کنترلِ قند) قابلِ‌دفاع به نظر برسد؛ متن نبودِ تفاوتِ معنادار را به تجمعی‌بودنِ DMFT نسبت می‌دهد. تأیید شود."
+          "source_quiz_id": "sharehub/share-7#q0"
         },
         {
           "id": "r-c69770e6",
@@ -4926,9 +4778,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "taraz/taraz1-10#q11",
-          "status": "review",
-          "review_note": "DES نظام اختصاصی دنت‌کست است؛ فاندر تأیید کند که این سؤال در آزمون مسیر «ارزیابی شواهد» جا دارد و با توضیح فعلی سه‌مرحله‌ای DES هم‌خوان است."
+          "source_quiz_id": "taraz/taraz1-10#q11"
         },
         {
           "id": "r-88132b76",
@@ -4942,9 +4792,7 @@
           ],
           "correct": 2,
           "source": "quiz",
-          "source_quiz_id": "taraz/taraz1-10#q12",
-          "status": "review",
-          "review_note": "DES نظام اختصاصی دنت‌کست است؛ فاندر تأیید کند که سه مؤلفهٔ ذکرشده با تعریف جاری DES کامل و هم‌خوان است."
+          "source_quiz_id": "taraz/taraz1-10#q12"
         }
       ]
     },
@@ -5224,9 +5072,7 @@
           ],
           "correct": 3,
           "source": "quiz",
-          "source_quiz_id": "taraz/taraz1-8#q6",
-          "status": "review",
-          "review_note": "در عمل چنین مطالعه‌ای ممکن است با معیار ورود حذف شود؛ تأیید شود که تمایز «مستقیم‌بودن» از «خطر بایاس» برای آزمون قابل‌دفاع است."
+          "source_quiz_id": "taraz/taraz1-8#q6"
         },
         {
           "id": "r-9a03c64e",
