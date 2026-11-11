@@ -41171,6 +41171,86 @@
           ]
         }
       ]
+    },
+    "sharehub/share-48": {
+      "faqPages": [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/sharehub/share-48.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا تاج طبیعی دندان کشیده‌شده می‌تواند به‌عنوان پونتیک موقت استفاده شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ اگر تاج ساختار مناسبی داشته باشد و بتوان آن را بدون ایجاد تماس اکلوژنی نامناسب به دندان‌های مجاور متصل کرد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا Essix برای جایگزینی موقت دندان به باندینگ دندان‌های مجاور نیاز دارد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ پلاک شفاف روی دندان‌ها قرار می‌گیرد و پونتیک یا مادهٔ همرنگ دندان، فضای ازدست‌رفته را پر می‌کند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا فشار فیلیپر آکریلی روی محل جراحی ایمپلنت می‌تواند در ترمیم اختلال ایجاد کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ تماس یا فشار نامناسب روی محل جراحی، هیلینگ اباتمنت یا گرافت ممکن است روند ترمیم را مختل کند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا پرکردن فضای بی‌دندانی به‌تنهایی شکل‌دهی مناسب Emergence Profile را تضمین می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ بسته به شرایط بافت نرم، ممکن است پس از استئواینتگریشن همچنان به روکش موقت متصل به ایمپلنت برای شکل‌دهی کانتور لثه نیاز باشد."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/sharehub/share-48.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-48.html#flashcards-c1",
+              "name": "Natural Tooth Pontic",
+              "description": "پونتیکی که از تاج طبیعی دندان کشیده‌شده ساخته می‌شود؛ تاج باید ساختار کافی داشته باشد و پس از اصلاح سطح زیرین بدون تماس اکلوژنی نامناسب به دندان‌های مجاور متصل شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-48.html#flashcards-c2",
+              "name": "بریج موقت FRC",
+              "description": "جایگزین ثابت دندان که در آن فایبر، بخش کامپوزیتی و اتصال پونتیک به دندان‌های مجاور را تقویت می‌کند؛ پونتیک می‌تواند از کامپوزیت، دندان آماده یا تاج طبیعی ساخته شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-48.html#flashcards-c3",
+              "name": "Essix دارای پونتیک",
+              "description": "پلاک شفاف متحرکی که فضای دندان ازدست‌رفته را با پونتیک یا مادهٔ همرنگ دندان پر می‌کند و بدون تراش یا باندینگ دندان‌های مجاور نگه داشته می‌شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-48.html#flashcards-c4",
+              "name": "فیت پسیو فیلیپر پس از جراحی ایمپلنت",
+              "description": "قرارگیری فیلیپر بدون فشار نامناسب روی محل جراحی، هیلینگ اباتمنت یا گرافت؛ تماس فشاری می‌تواند روند ترمیم را مختل کند.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }

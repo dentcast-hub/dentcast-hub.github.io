@@ -1007,7 +1007,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 43,
+   "count": 44,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -1051,7 +1051,8 @@
     "sharehub/share-42",
     "sharehub/share-43",
     "sharehub/share-44",
-    "sharehub/share-45"
+    "sharehub/share-45",
+    "sharehub/share-48"
    ]
   },
   {
@@ -2846,6 +2847,38 @@
    ]
   },
   {
+   "key": "دندان_قدامی",
+   "tag": "#دندان_قدامی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "anterior teeth",
+    "دندان جلویی",
+    "دندان های جلو"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-147-7",
+    "insight/insight-4",
+    "insight/insight-10",
+    "insight/insight-12",
+    "dentai/dentai-7",
+    "insight/insight-21",
+    "chairside/chairside-4",
+    "insight/insight-28",
+    "chairside/chairside-19",
+    "chairside/chairside-22",
+    "insight/insight-66",
+    "insight/insight-93",
+    "sharehub/share-40",
+    "sharehub/share-48"
+   ]
+  },
+  {
    "key": "دوام_ترمیم",
    "tag": "#دوام_ترمیم",
    "domain": "clinical",
@@ -3130,37 +3163,6 @@
     "insight/insight-51",
     "insight/insight-60",
     "metanotes/meta-22"
-   ]
-  },
-  {
-   "key": "دندان_قدامی",
-   "tag": "#دندان_قدامی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "anterior teeth",
-    "دندان جلویی",
-    "دندان های جلو"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-147-7",
-    "insight/insight-4",
-    "insight/insight-10",
-    "insight/insight-12",
-    "dentai/dentai-7",
-    "insight/insight-21",
-    "chairside/chairside-4",
-    "insight/insight-28",
-    "chairside/chairside-19",
-    "chairside/chairside-22",
-    "insight/insight-66",
-    "insight/insight-93",
-    "sharehub/share-40"
    ]
   },
   {
@@ -4004,6 +4006,75 @@
    ]
   },
   {
+   "key": "بریج",
+   "tag": "#بریج",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "پروتزِ ثابتِ چندواحدی که فضای بی‌دندانی را با اتکا به دندان‌های پایه پر می‌کند (FPD).",
+   "use_when": "مقاله بریج/پروتزِ ثابتِ چندواحدی را موضوع یا گزینه‌ی درمان قرار دهد.",
+   "aliases": [
+    "bridge",
+    "FPD",
+    "بریج دندانی",
+    "fixed partial denture",
+    "پروتز ثابت چند واحدی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-119-1",
+    "chairside/chairside-34",
+    "sharehub/share-17",
+    "insight/insight-72",
+    "chairside/chairside-38",
+    "sharehub/share-39",
+    "sharehub/share-40",
+    "chairside/chairside-47",
+    "chairside/chairside-51",
+    "sharehub/share-48"
+   ]
+  },
+  {
+   "key": "جایگزینی_دندان",
+   "tag": "#جایگزینی_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "تصمیم به جایگزین کردن دندانِ از دست رفته — و اینکه گاهی جوابش «نه» است.",
+   "use_when": "مقاله ضرورت یا عدم ضرورتِ جایگزینی را بررسی کند.",
+   "aliases": [
+    "tooth replacement",
+    "جایگزین کردن دندان",
+    "ریپلیس دندان",
+    "از دست رفتن دندان",
+    "بی دندانی موضعی",
+    "فضای بی دندان",
+    "edentulous space",
+    "فضای خالی",
+    "فقدان دندان مجاور",
+    "فضای بی دندانی",
+    "جای خالی دندان"
+   ],
+   "variants": [
+    "#فقدان_دندان",
+    "#فضای_بی_دندان"
+   ],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-119-1",
+    "episodes/episode-126-1",
+    "dentai/dentai-7",
+    "litecast/lite-CAST12",
+    "sharehub/share-3",
+    "chairside/chairside-3",
+    "episodes/episode-160",
+    "sharehub/share-39",
+    "sharehub/share-40",
+    "sharehub/share-48"
+   ]
+  },
+  {
    "key": "دیاستم",
    "tag": "#دیاستم",
    "domain": null,
@@ -4309,73 +4380,6 @@
    ]
   },
   {
-   "key": "بریج",
-   "tag": "#بریج",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "پروتزِ ثابتِ چندواحدی که فضای بی‌دندانی را با اتکا به دندان‌های پایه پر می‌کند (FPD).",
-   "use_when": "مقاله بریج/پروتزِ ثابتِ چندواحدی را موضوع یا گزینه‌ی درمان قرار دهد.",
-   "aliases": [
-    "bridge",
-    "FPD",
-    "بریج دندانی",
-    "fixed partial denture",
-    "پروتز ثابت چند واحدی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-119-1",
-    "chairside/chairside-34",
-    "sharehub/share-17",
-    "insight/insight-72",
-    "chairside/chairside-38",
-    "sharehub/share-39",
-    "sharehub/share-40",
-    "chairside/chairside-47",
-    "chairside/chairside-51"
-   ]
-  },
-  {
-   "key": "جایگزینی_دندان",
-   "tag": "#جایگزینی_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "تصمیم به جایگزین کردن دندانِ از دست رفته — و اینکه گاهی جوابش «نه» است.",
-   "use_when": "مقاله ضرورت یا عدم ضرورتِ جایگزینی را بررسی کند.",
-   "aliases": [
-    "tooth replacement",
-    "جایگزین کردن دندان",
-    "ریپلیس دندان",
-    "از دست رفتن دندان",
-    "بی دندانی موضعی",
-    "فضای بی دندان",
-    "edentulous space",
-    "فضای خالی",
-    "فقدان دندان مجاور",
-    "فضای بی دندانی",
-    "جای خالی دندان"
-   ],
-   "variants": [
-    "#فقدان_دندان",
-    "#فضای_بی_دندان"
-   ],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-119-1",
-    "episodes/episode-126-1",
-    "dentai/dentai-7",
-    "litecast/lite-CAST12",
-    "sharehub/share-3",
-    "chairside/chairside-3",
-    "episodes/episode-160",
-    "sharehub/share-39",
-    "sharehub/share-40"
-   ]
-  },
-  {
    "key": "زمان_لود_ایمپلنت",
    "tag": "#زمان_لود_ایمپلنت",
    "domain": "clinical",
@@ -4628,6 +4632,37 @@
     "episodes/episode-159-1",
     "metanotes/meta-14",
     "sharehub/share-18"
+   ]
+  },
+  {
+   "key": "ایمپلنت_قدامی",
+   "tag": "#ایمپلنت_قدامی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ایمپلنت در ناحیه‌ی قدام، با بارِ زیباییِ بالا.",
+   "use_when": "مقاله تصمیمش مختصِ ناحیه‌ی قدام باشد.",
+   "aliases": [
+    "ایمپلنت ناحیه قدام",
+    "ایمپلنت جلو",
+    "ایمپلنت زون زیبایی",
+    "Anterior Implant"
+   ],
+   "variants": [
+    "#Anterior_Implant"
+   ],
+   "co_tags": [
+    "#Anterior_Implant"
+   ],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-125-2",
+    "episodes/episode-150",
+    "insight/insight-10",
+    "sharehub/share-3",
+    "insight/insight-72",
+    "chairside/chairside-42",
+    "chairside/chairside-43",
+    "sharehub/share-48"
    ]
   },
   {
@@ -4963,36 +4998,6 @@
     "chairside/chairside-22",
     "chairside/chairside-27",
     "chairside/chairside-29"
-   ]
-  },
-  {
-   "key": "ایمپلنت_قدامی",
-   "tag": "#ایمپلنت_قدامی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ایمپلنت در ناحیه‌ی قدام، با بارِ زیباییِ بالا.",
-   "use_when": "مقاله تصمیمش مختصِ ناحیه‌ی قدام باشد.",
-   "aliases": [
-    "ایمپلنت ناحیه قدام",
-    "ایمپلنت جلو",
-    "ایمپلنت زون زیبایی",
-    "Anterior Implant"
-   ],
-   "variants": [
-    "#Anterior_Implant"
-   ],
-   "co_tags": [
-    "#Anterior_Implant"
-   ],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-125-2",
-    "episodes/episode-150",
-    "insight/insight-10",
-    "sharehub/share-3",
-    "insight/insight-72",
-    "chairside/chairside-42",
-    "chairside/chairside-43"
    ]
   },
   {
@@ -7188,6 +7193,37 @@
    ]
   },
   {
+   "key": "rbfdp",
+   "tag": "#RBFDP",
+   "domain": null,
+   "words": 1,
+   "definition": "پروتز ثابتِ متکی بر باند رزینی (مریلند).",
+   "use_when": "مقاله RBFDP را ارزیابی یا طراحی کند.",
+   "aliases": [
+    "resin bonded",
+    "مریلند",
+    "maryland bridge",
+    "رزین باندد",
+    "رزین باند",
+    "RBFPD",
+    "resin-bonded bridge",
+    "resin bonded fixed partial denture",
+    "بریج باندشونده",
+    "بریج باند شونده",
+    "بریج رزین باند",
+    "بریج چسبنده"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "dentai/dentai-7",
+    "sharehub/share-39",
+    "sharehub/share-40",
+    "sharehub/share-48"
+   ]
+  },
+  {
    "key": "snap_on_smile",
    "tag": "#Snap_On_Smile",
    "domain": null,
@@ -8674,36 +8710,6 @@
     "episodes/episode-96",
     "episodes/episode-97",
     "episodes/episode-98"
-   ]
-  },
-  {
-   "key": "rbfdp",
-   "tag": "#RBFDP",
-   "domain": null,
-   "words": 1,
-   "definition": "پروتز ثابتِ متکی بر باند رزینی (مریلند).",
-   "use_when": "مقاله RBFDP را ارزیابی یا طراحی کند.",
-   "aliases": [
-    "resin bonded",
-    "مریلند",
-    "maryland bridge",
-    "رزین باندد",
-    "رزین باند",
-    "RBFPD",
-    "resin-bonded bridge",
-    "resin bonded fixed partial denture",
-    "بریج باندشونده",
-    "بریج باند شونده",
-    "بریج رزین باند",
-    "بریج چسبنده"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "dentai/dentai-7",
-    "sharehub/share-39",
-    "sharehub/share-40"
    ]
   },
   {
@@ -13427,6 +13433,26 @@
    "content_ids": [
     "insight/insight-49",
     "chairside/chairside-32"
+   ]
+  },
+  {
+   "key": "پونتیک",
+   "tag": "#پونتیک",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "واحدِ معلقِ پروتز روی فضای بی‌دندان.",
+   "use_when": "مقاله طراحی یا اندیکاسیون پونتیک را بگوید.",
+   "aliases": [
+    "pontic",
+    "پانتیک",
+    "واحد معلق بریج"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "sharehub/share-3",
+    "sharehub/share-48"
    ]
   },
   {
@@ -20239,25 +20265,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-74"
-   ]
-  },
-  {
-   "key": "پونتیک",
-   "tag": "#پونتیک",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "واحدِ معلقِ پروتز روی فضای بی‌دندان.",
-   "use_when": "مقاله طراحی یا اندیکاسیون پونتیک را بگوید.",
-   "aliases": [
-    "pontic",
-    "پانتیک",
-    "واحد معلق بریج"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "sharehub/share-3"
    ]
   },
   {
