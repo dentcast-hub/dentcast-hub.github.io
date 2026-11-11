@@ -71,6 +71,24 @@
       if(s==='dark'||(s===null&&d)) document.documentElement.setAttribute('data-theme','dark');
     })();
   </script>
+  <!-- Home sponsor slot: decide BEFORE first paint whether its box is reserved
+       (#dcSpotHomeSlot). `dcAds.vc` is spot.js's memory of what this device was
+       last confirmed to be; `dcSpot.home0` is set by spot.js when a visit ended
+       with no home card. If spot.js never arrives, the empty box closes itself. -->
+  <script>
+    (function(){
+      var root=document.documentElement;
+      try{
+        if(localStorage.getItem('dcAds.vc')==='premium'||localStorage.getItem('dcSpot.home0')==='1') root.classList.add('dc-spot-none');
+      }catch(e){}
+      window.addEventListener('load',function(){
+        setTimeout(function(){
+          var s=document.getElementById('dcSpotHomeSlot');
+          if(s&&!s.firstElementChild) root.classList.add('dc-spot-none');
+        },8000);
+      });
+    })();
+  </script>
 
   <style>
 /* =====================================================
@@ -1119,6 +1137,19 @@ body{
    /me): every creative is drawn 2:1. Mirrors the rule at the end of
    dc-theme.css, which this page does not load. */
 .dc-spot-art-img{ aspect-ratio:2/1; object-fit:contain; }
+/* The home sponsor slot's reserved box (#dcSpotHomeSlot, phone shell). One
+   grid cell holds both the card and a ::before that is exactly as tall as an
+   art card: half its width (the 2:1 artwork; the card is capped at 560px)
+   plus 27.9px of chrome (label line, 0.5rem padding, 1px frame), inside the
+   card's own 1.25rem margins. Measured 2026-11-11: 366x210.9 at 390, 336x195.9
+   at 360, 406x230.9 at 430, 560x307.9 at 768. A text card is shorter, so it
+   stretches to the box instead of leaving a gap under it. */
+.dc-spot-slot{ display:grid; }
+.dc-spot-slot::before{ content:""; grid-area:1/1; margin:1.25rem 0; padding-top:calc(min(50%, 280px) + 27.9px); }
+.dc-spot-slot > .dc-spot{ grid-area:1/1; min-width:0; width:100%; box-sizing:border-box; } /* width:100%: an art card's auto inline margins make a grid item shrink-to-fit, so it painted 129px wide and then grew with its image */
+.dc-spot-slot > .dc-spot:not(.dc-spot--art){ display:flex; }
+.dc-spot-slot > .dc-spot:not(.dc-spot--art) > .dc-spot-link{ flex:1 1 auto; }
+.dc-spot-none .dc-spot-slot{ display:none; }
 .dc-monitor-list a{
   display:flex; align-items:center; gap:0.5rem;
   text-decoration:none;
@@ -5726,6 +5757,34 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
       })();
       </script>
 
+      <!-- HERO: latest episode (showcase) -->
+      <div class="dc-home-hero" id="card-episodes" data-href="/episodes/episode-162.html" onclick="window.location.href=this.dataset.href||'episodes.html'" role="link" tabindex="0" aria-label="رفتن به صفحه‌ی تازه‌ترین قسمت">
+        <div class="dc-home-hero-top">
+          <img class="dc-home-hero-cover" src="/dentcast-cover.webp" alt="" width="84" height="84" loading="lazy" decoding="async">
+          <div class="dc-home-hero-info">
+            <span class="dc-home-hero-badge"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg> قسمت ۱۶۲ · تازه‌ترین</span>
+            <h2 class="dc-home-hero-title">Cantilever in Implant Dentistry :part2</h2>
+          </div>
+        </div>
+        <div class="dc-home-hero-row">
+          <button class="dc-home-hero-play" id="dcHeroPlay" type="button" aria-label="پخش تازه‌ترین قسمت" data-src="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast162%20.mp3?versionId="><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button>
+          <span class="dc-home-hero-cta">شنیدن این قسمت و آرشیو کامل اپیزودها</span>
+          <span class="dc-home-hero-prog" id="dcHeroProg" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <!-- Sponsor slot, phone shell (founder, 2026-11-11: «آخرین اپیزود، بعد آگهی،
+           بعد دعوت به پلاس»). EMPTY on purpose, like #dcdSpotSidebar — no page
+           holds sponsor markup; spot.js renderHome() seats the card in here.
+           What IS static is its PLACE: the box is reserved at the card's size
+           before first paint (rules beside .dc-spot-art-img in the head), so a
+           card that arrives after /me drops into a hole that is already there
+           and nothing under it moves. A device last confirmed premium, or one
+           whose last visit ended with no home card (slot off, no creative),
+           gets no box at all — the head script puts .dc-spot-none on <html>
+           before paint. -->
+      <div id="dcSpotHomeSlot" class="dc-spot-slot"></div>
+
       <!-- DentCast Plus personal card. One of exactly two anonymous invitation
            points (spec 2.3). For guests: a quiet one-line invitation. For a
            logged-in free user: streak + a line back into their own material +
@@ -5761,22 +5820,6 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
             </div>
             <button class="dcp-btn dc-plus-cta" type="button"><span>شروع رایگان</span><span class="dc-plus-cta-arrow" aria-hidden="true">←</span></button>
           </div>
-        </div>
-      </div>
-
-      <!-- HERO: latest episode (showcase) -->
-      <div class="dc-home-hero" id="card-episodes" data-href="/episodes/episode-162.html" onclick="window.location.href=this.dataset.href||'episodes.html'" role="link" tabindex="0" aria-label="رفتن به صفحه‌ی تازه‌ترین قسمت">
-        <div class="dc-home-hero-top">
-          <img class="dc-home-hero-cover" src="/dentcast-cover.webp" alt="" width="84" height="84" loading="lazy" decoding="async">
-          <div class="dc-home-hero-info">
-            <span class="dc-home-hero-badge"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M3 14a9 9 0 0 1 18 0"/><path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z"/><path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2z"/></svg> قسمت ۱۶۲ · تازه‌ترین</span>
-            <h2 class="dc-home-hero-title">Cantilever in Implant Dentistry :part2</h2>
-          </div>
-        </div>
-        <div class="dc-home-hero-row">
-          <button class="dc-home-hero-play" id="dcHeroPlay" type="button" aria-label="پخش تازه‌ترین قسمت" data-src="https://episodes.s3.ir-thr-at1.arvanstorage.ir/dentcast162%20.mp3?versionId="><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button>
-          <span class="dc-home-hero-cta">شنیدن این قسمت و آرشیو کامل اپیزودها</span>
-          <span class="dc-home-hero-prog" id="dcHeroProg" aria-hidden="true"></span>
         </div>
       </div>
 
@@ -7334,7 +7377,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=327" defer></script>
+<script src="/dc-nav.js?v=329" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 

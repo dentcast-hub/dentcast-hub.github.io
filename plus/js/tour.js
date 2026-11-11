@@ -15,10 +15,10 @@
 //     the account, not localStorage).
 //  2. MANUAL — «راهنمای سایت» in the header person menu (logged-in), any time.
 //     On a non-home page it navigates to /?tour=1 and starts there.
-import { el, faNum, tehranDay } from './util.js?v=228';
-import { api, currentUser } from './api.js?v=228';
-import { pricingHref } from './premium-cta.js?v=228';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=228';
+import { el, faNum, tehranDay } from './util.js?v=230';
+import { api, currentUser } from './api.js?v=230';
+import { pricingHref } from './premium-cta.js?v=230';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=230';
 
 const SS_PENDING = 'dcp:tour:pending'; // set before navigating home to start there
 
@@ -95,16 +95,16 @@ const STOPS = [
     targets: () => [],
   },
   {
+    key: 'episode_hero', panel: 'panel-studio', title: 'تازه‌ترین اپیزود',
+    text: 'تازه‌ترین قسمت پادکست دنت‌کست همیشه این‌جاست؛ با دکمه‌ی پخش همین‌جا بشنوید، یا با لمس کارت به صفحه‌ی همان قسمت بروید؛ همه‌ی اپیزودها هم در تب آرشیو است. اگر وسط شنیدن صفحه را عوض کنید، نوار «ادامه‌ی شنیدن» از همان ثانیه ادامه می‌دهد.',
+    targets: () => [byId('card-episodes')],
+  },
+  {
     key: 'plus_card', panel: 'panel-studio', title: 'میز کار شخصی',
     text: (ctx) => (ctx.guest
       ? 'با ورودِ رایگان، دنت‌کست یادگیری‌تان را نگه می‌دارد: استریک روزانه، امتیاز و نوتیف مطلب جدید — و این کارت می‌شود خلاصه‌ی یادگیری شما. روی هر مقاله هم با «میز کار» هایلایت می‌زنید و یادداشت می‌گذارید؛ همه به حسابتان سنجاق می‌شود و روی هر دستگاهی همراهتان است.'
       : 'خلاصه‌ی یادگیری شما: استریک، برگشتن به آخرین مطلبی که می‌خواندید و دسترسی به هایلایت‌ها و یادداشت‌هایتان. روی هر مقاله با «میز کار» هایلایت بزنید و یادداشت بگذارید — همه به حسابتان سنجاق می‌شود و روی هر دستگاهی همراهتان است.'),
     targets: () => [byId('dcPlusHomeCard')],
-  },
-  {
-    key: 'episode_hero', panel: 'panel-studio', title: 'تازه‌ترین اپیزود',
-    text: 'تازه‌ترین قسمت پادکست دنت‌کست همیشه این‌جاست؛ با دکمه‌ی پخش همین‌جا بشنوید، یا با لمس کارت به صفحه‌ی همان قسمت بروید؛ همه‌ی اپیزودها هم در تب آرشیو است. اگر وسط شنیدن صفحه را عوض کنید، نوار «ادامه‌ی شنیدن» از همان ثانیه ادامه می‌دهد.',
-    targets: () => [byId('card-episodes')],
   },
   {
     // Drawn for a guest or free reader only (a subscriber has every pathway).
@@ -266,7 +266,7 @@ async function mountPremiumPreview(ctx) {
   if (preview && preview.isConnected) return;
   const host = byId('panel-premium');
   if (!host) return;
-  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=228'), samplePathway()]);
+  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=230'), samplePathway()]);
   if (!state || typeof mod.livePreview !== 'function') return;
   const node = mod.livePreview({
     tier: 'premium',

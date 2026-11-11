@@ -69,7 +69,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=228';
+import { findProseRoot } from '/plus/js/config.js?v=230';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -117,7 +117,7 @@ let viewerNow = () => 'anon';
 // Authentication refreshes via /me are NOT page views. A new document counts
 // once, and desktop-shell article navigation counts once more per new article.
 function countContentView() {
-  import('/plus/js/api.js?v=228')
+  import('/plus/js/api.js?v=230')
     .then((m) => m.apiBase())
     .then((base) => fetch(base + '/pageview', {
       method: 'POST', credentials: 'include', cache: 'no-store', keepalive: true,
@@ -193,7 +193,7 @@ function sendPending(task) {
     body: JSON.stringify({ [key]: SPOT_EVENT[task.kind],
       content_id: task.slot + ':' + task.creative, event_id: task.id }),
   });
-  import('/plus/js/api.js?v=228').then((m) => m.apiBase()).then((base) => {
+  import('/plus/js/api.js?v=230').then((m) => m.apiBase()).then((base) => {
     if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
     return post(base, '/activity', 'action')
       .then((res) => res.status === 401 ? post(base, '/anon/event', 'event') : res);
@@ -218,7 +218,7 @@ function sendPending(task) {
     task.attempts = (task.attempts || 0) + 1;
     task.nextAt = Date.now() + SPOT_RETRY[Math.min(task.attempts - 1, 3)];
     savePending();
-    import('/plus/js/api.js?v=228').then((m) => m.forgetBase()).catch(() => {});
+    import('/plus/js/api.js?v=230').then((m) => m.forgetBase()).catch(() => {});
     if (document.visibilityState === 'visible')
       setTimeout(() => sendPending(task), task.nextAt - Date.now());
   }).finally(() => { spotSending.delete(task.id); });
@@ -340,8 +340,24 @@ function pinnedCreative(cfg, slotName, audience) {
   return resolveStep(cfg, rotationSequence(cfg)[0], slotName, audience);
 }
 
+/**
+ * A PAID-ONLY slot (`slots.<name>.paid_only: true`) stands outside the rotation:
+ * it shows a paid sponsor on every view and never a house card, and it spends
+ * no rotation beat (see impression()). The homepage is the first (founder,
+ * 2026-11-11): its slot now sits directly above the Plus invitation, so the
+ * rotation's `premium` beat put two «دنت‌کست پلاس» invitations back to back.
+ * With several paid sponsors enabled the usual weighted cursor picks among
+ * them; with none, the slot stays empty rather than fall back to the house.
+ * An explicit `creative` saved for the slot (admin panel) still wins.
+ */
+let paidOnlySlots = [];
+function isPaidOnly(cfg, slotName) {
+  return cfg.slots?.[slotName]?.paid_only === true;
+}
+
 function pickCreative(cfg, slotName, audience) {
   if (cfg.slots?.[slotName]?.creative) return cfg.slots[slotName].creative;
+  if (isPaidOnly(cfg, slotName)) return pickSponsor(cfg, slotName, audience, (s) => !isHouse(s));
   const seq = rotationSequence(cfg);
   return resolveStep(cfg, seq[lsGet(K_TICK) % seq.length], slotName, audience);
 }
@@ -806,7 +822,7 @@ function impression(creative, slotName) {
   report('impression', slotName, creative.id);
   // The rotation step belongs to a SEEN ad, not a rendered one: a visit where
   // the visitor never scrolled to the card must not burn the campaign's turn.
-  if (PINNED_SLOTS.indexOf(slotName) === -1) advanceRotation();
+  if (PINNED_SLOTS.indexOf(slotName) === -1 && paidOnlySlots.indexOf(slotName) === -1) advanceRotation();
 }
 
 // ── viewability: an impression means SEEN, not rendered ──────────────────────
@@ -1137,7 +1153,17 @@ function renderHome(cfg, creative) {
   const wf = document.querySelector('#panel-studio #dcPathwayShowcase')
     || document.querySelector('#panel-studio #dcWayfinderHome');
   const cats = document.querySelector('#panel-studio .dc-exa-cats');
-  if (wf) {
+  // The phone shell now carries a static, EMPTY host right under the featured
+  // episode (founder, 2026-11-11: episode → sponsor → Plus invitation), with
+  // the card's box reserved before first paint (index.html, .dc-spot-slot).
+  // Seating the card in it moves nothing on the page. The anchors below stay
+  // as the fallback chain for a page without the host.
+  const slot = document.querySelector('#panel-studio #dcSpotHomeSlot');
+  if (slot) {
+    openHomeSlot();
+    slot.appendChild(buildCard(creative, 'home'));
+    placed = true;
+  } else if (wf) {
     wf.parentNode.insertBefore(buildCard(creative, 'home'), wf);
     placed = true;
   } else if (cats) {
@@ -1431,7 +1457,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=228')
+  return import('/plus/js/api.js?v=230')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
@@ -1452,6 +1478,25 @@ let adsKilled = false;
 function removeAllAds() {
   adsKilled = true; // stops overlay watchers from re-seating their cards
   document.querySelectorAll('.dc-spot').forEach((el) => el.remove());
+  closeHomeSlotIfEmpty();
+}
+
+// The home slot's reserved box (index.html #dcSpotHomeSlot). The head script
+// reads K_HOME_EMPTY before first paint and reserves nothing when the last
+// visit on this device ended without a home card — premium, slot or master
+// switch off, no creative for this audience — so "off leaves no trace" holds
+// from the second visit on, and a card that does come back un-hides the box
+// and clears the memory.
+const K_HOME_EMPTY = 'dcSpot.home0';
+function openHomeSlot() {
+  document.documentElement.classList.remove('dc-spot-none');
+  try { localStorage.removeItem(K_HOME_EMPTY); } catch (_) { /* private mode */ }
+}
+function closeHomeSlotIfEmpty() {
+  const slot = document.getElementById('dcSpotHomeSlot');
+  if (!slot || slot.querySelector('.dc-spot')) return;
+  document.documentElement.classList.add('dc-spot-none');
+  lsSetStr(K_HOME_EMPTY, '1');
 }
 
 // ── boot ─────────────────────────────────────────────────────────────────────
@@ -1484,7 +1529,7 @@ async function main() {
   // Untouched placements retain the checked-in rotation and targeting. Only
   // explicitly saved placements have a database override. Public read, no login.
   try {
-    const { apiBase } = await import('/plus/js/api.js?v=228');
+    const { apiBase } = await import('/plus/js/api.js?v=230');
     const base = await apiBase();
     const response = await fetch(base + '/spot/config', { cache: 'no-store', signal: AbortSignal.timeout(2500) });
     if (response.ok) {
@@ -1507,6 +1552,7 @@ async function main() {
     }
   } catch (_) { /* API unavailable: retain the published configuration. */ }
   if (!cfg || !cfg.enabled) return; // master off → zero trace
+  paidOnlySlots = Object.keys(cfg.slots || {}).filter((name) => isPaidOnly(cfg, name));
 
   // Decide up front whether this page view may move the rotation, and keep the
   // session heartbeat alive on every page (not just ad-showing ones), so a
@@ -1612,9 +1658,12 @@ async function main() {
   if (shellArticle) setupShellArticleSlot(cfg, audienceNow);
 }
 
+// However main() ends — card seated, premium, switched off, config unreachable —
+// an empty home slot gives its reserved box back.
+const boot = () => main().catch(() => {}).then(closeHomeSlotIfEmpty);
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => { main().catch(() => {}); }, { once: true });
+  document.addEventListener('DOMContentLoaded', boot, { once: true });
 } else {
-  main().catch(() => {});
+  boot();
 }
 
