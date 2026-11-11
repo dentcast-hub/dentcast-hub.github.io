@@ -69,7 +69,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=225';
+import { findProseRoot } from '/plus/js/config.js?v=226';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -117,7 +117,7 @@ let viewerNow = () => 'anon';
 // Authentication refreshes via /me are NOT page views. A new document counts
 // once, and desktop-shell article navigation counts once more per new article.
 function countContentView() {
-  import('/plus/js/api.js?v=225')
+  import('/plus/js/api.js?v=226')
     .then((m) => m.apiBase())
     .then((base) => fetch(base + '/pageview', {
       method: 'POST', credentials: 'include', cache: 'no-store', keepalive: true,
@@ -193,7 +193,7 @@ function sendPending(task) {
     body: JSON.stringify({ [key]: SPOT_EVENT[task.kind],
       content_id: task.slot + ':' + task.creative, event_id: task.id }),
   });
-  import('/plus/js/api.js?v=225').then((m) => m.apiBase()).then((base) => {
+  import('/plus/js/api.js?v=226').then((m) => m.apiBase()).then((base) => {
     if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
     return post(base, '/activity', 'action')
       .then((res) => res.status === 401 ? post(base, '/anon/event', 'event') : res);
@@ -218,7 +218,7 @@ function sendPending(task) {
     task.attempts = (task.attempts || 0) + 1;
     task.nextAt = Date.now() + SPOT_RETRY[Math.min(task.attempts - 1, 3)];
     savePending();
-    import('/plus/js/api.js?v=225').then((m) => m.forgetBase()).catch(() => {});
+    import('/plus/js/api.js?v=226').then((m) => m.forgetBase()).catch(() => {});
     if (document.visibilityState === 'visible')
       setTimeout(() => sendPending(task), task.nextAt - Date.now());
   }).finally(() => { spotSending.delete(task.id); });
@@ -1364,8 +1364,34 @@ function setupArchiveSlot(cfg, audienceNow) {
   const creative = pickCreative(cfg, 'archive', audienceNow());
   if (!creative) return;
   anchors.forEach((anchor) => {
-    anchor.parentNode.insertBefore(buildCard(creative, 'archive'), anchor.nextSibling);
+    const card = buildCard(creative, 'archive');
+    const before = archiveSpotOffScreen(anchor);
+    if (before === undefined) anchor.parentNode.insertBefore(card, anchor.nextSibling);
+    else if (before) before.parentNode.insertBefore(card, before);
+    else anchor.parentNode.appendChild(card);
   });
+}
+
+// The archive card usually arrives while its tab is hidden, and moves nothing.
+// But the homepage reopens the tab the reader left (a refresh, «بازگشت به تب
+// آرشیو» from an article), and then the card — drawable only after /me, the
+// premium lock — was inserted on screen and pushed up-board and every section
+// under it down ~231px (2026-11-11, mobile CLS 0.151). The rule the in-article
+// card follows (belowTheScreen): never insert ON the reader's screen. If the
+// slot's own place (right under «اپیزودهای پادکست») is visible, the card goes
+// before the first following section that starts below the screen's bottom
+// edge; with none, at the end of the tab. Returns undefined for "the usual
+// place" — a hidden tab (no box), or a place already off screen.
+function archiveSpotOffScreen(anchor) {
+  const view = window.innerHeight || 0;
+  const r = anchor.getBoundingClientRect();
+  if (!view || !r.height) return undefined;
+  if (r.bottom < 0 || r.bottom >= view) return undefined;
+  for (let n = anchor.nextElementSibling; n; n = n.nextElementSibling) {
+    const nr = n.getBoundingClientRect();
+    if (nr.height && nr.top >= view) return n;
+  }
+  return null;
 }
 
 /**
@@ -1405,7 +1431,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=225')
+  return import('/plus/js/api.js?v=226')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
@@ -1458,7 +1484,7 @@ async function main() {
   // Untouched placements retain the checked-in rotation and targeting. Only
   // explicitly saved placements have a database override. Public read, no login.
   try {
-    const { apiBase } = await import('/plus/js/api.js?v=225');
+    const { apiBase } = await import('/plus/js/api.js?v=226');
     const base = await apiBase();
     const response = await fetch(base + '/spot/config', { cache: 'no-store', signal: AbortSignal.timeout(2500) });
     if (response.ok) {
