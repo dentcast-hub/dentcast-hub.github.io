@@ -127,7 +127,7 @@
     },
     {
       "path": ".dentcast/workflows/global/site-invariants.md",
-      "sha256": "bd0e966d2fb275591222e538024f32931dca47c51fe4aebb86cddbbfe5ab6e3e",
+      "sha256": "55d4fcd8c566d55011a01eb395d04260e7ca867d78be4b1401acf36a23886feb",
       "sections": [
         {
           "id": "site-invariants",
