@@ -69,7 +69,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=231';
+import { findProseRoot } from '/plus/js/config.js?v=232';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -117,7 +117,7 @@ let viewerNow = () => 'anon';
 // Authentication refreshes via /me are NOT page views. A new document counts
 // once, and desktop-shell article navigation counts once more per new article.
 function countContentView() {
-  import('/plus/js/api.js?v=231')
+  import('/plus/js/api.js?v=232')
     .then((m) => m.apiBase())
     .then((base) => fetch(base + '/pageview', {
       method: 'POST', credentials: 'include', cache: 'no-store', keepalive: true,
@@ -193,7 +193,7 @@ function sendPending(task) {
     body: JSON.stringify({ [key]: SPOT_EVENT[task.kind],
       content_id: task.slot + ':' + task.creative, event_id: task.id }),
   });
-  import('/plus/js/api.js?v=231').then((m) => m.apiBase()).then((base) => {
+  import('/plus/js/api.js?v=232').then((m) => m.apiBase()).then((base) => {
     if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
     return post(base, '/activity', 'action')
       .then((res) => res.status === 401 ? post(base, '/anon/event', 'event') : res);
@@ -218,7 +218,7 @@ function sendPending(task) {
     task.attempts = (task.attempts || 0) + 1;
     task.nextAt = Date.now() + SPOT_RETRY[Math.min(task.attempts - 1, 3)];
     savePending();
-    import('/plus/js/api.js?v=231').then((m) => m.forgetBase()).catch(() => {});
+    import('/plus/js/api.js?v=232').then((m) => m.forgetBase()).catch(() => {});
     if (document.visibilityState === 'visible')
       setTimeout(() => sendPending(task), task.nextAt - Date.now());
   }).finally(() => { spotSending.delete(task.id); });
@@ -1199,7 +1199,13 @@ function renderHome(cfg, creative) {
     || document.querySelector('#dcd-welcome-feed #dcdWayfinderHome');
   const dCats = document.querySelector('#dcd-welcome-feed .dc-exa-cats');
   const dPulse = document.querySelector('#dcdPulse');
-  if (dWf) {
+  // The desktop column carries the same static, pre-sized host as the phone.
+  const dSlot = document.querySelector('#dcd-welcome-feed #dcdSpotHomeSlot');
+  if (dSlot) {
+    openHomeSlot();
+    dSlot.appendChild(buildCard(creative, 'home'));
+    placed = true;
+  } else if (dWf) {
     dWf.parentNode.insertBefore(buildCard(creative, 'home'), dWf);
     placed = true;
   } else if (dCats) {
@@ -1457,7 +1463,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=231')
+  return import('/plus/js/api.js?v=232')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
@@ -1493,8 +1499,9 @@ function openHomeSlot() {
   try { localStorage.removeItem(K_HOME_EMPTY); } catch (_) { /* private mode */ }
 }
 function closeHomeSlotIfEmpty() {
-  const slot = document.getElementById('dcSpotHomeSlot');
-  if (!slot || slot.querySelector('.dc-spot')) return;
+  // Two hosts, one per shell; a card is seated in both or in neither.
+  const slots = document.querySelectorAll('.dc-spot-slot');
+  if (!slots.length || Array.from(slots).some((slot) => slot.querySelector('.dc-spot'))) return;
   document.documentElement.classList.add('dc-spot-none');
   lsSetStr(K_HOME_EMPTY, '1');
 }
@@ -1529,7 +1536,7 @@ async function main() {
   // Untouched placements retain the checked-in rotation and targeting. Only
   // explicitly saved placements have a database override. Public read, no login.
   try {
-    const { apiBase } = await import('/plus/js/api.js?v=231');
+    const { apiBase } = await import('/plus/js/api.js?v=232');
     const base = await apiBase();
     const response = await fetch(base + '/spot/config', { cache: 'no-store', signal: AbortSignal.timeout(2500) });
     if (response.ok) {
