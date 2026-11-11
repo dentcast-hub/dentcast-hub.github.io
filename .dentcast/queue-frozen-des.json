@@ -315,5 +315,43 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "sharehub/share-48": {
+    "queue_ref": "queue/17-sharehub-anterior-implant-interim-tooth-replacement",
+    "record_sha256": "95ffffa3cd0c4cfbcce75100cb5ad4de8e1e7df1b2f469326afb69c332d472cb",
+    "installed_at": "2026-11-11",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [
+        "u2",
+        "u14",
+        "u15",
+        "u16",
+        "u17",
+        "u35",
+        "u36",
+        "u37",
+        "u38",
+        "u48",
+        "u49",
+        "u50",
+        "u51",
+        "u60",
+        "u61",
+        "u62",
+        "u63",
+        "u74",
+        "u75"
+      ],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }
