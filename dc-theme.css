@@ -1033,6 +1033,13 @@ body:has(.dc-topbar) .back:hover {
      keeps an empty one. */
   :root:has(link[rel="canonical"]:is([href*=".org/insight/"], [href*=".org/chairside/"], [href*=".org/sharehub/"],
     [href*=".org/metanotes/"], [href*=".org/plak-sefr/"], [href*=".org/taraz/"])) { --dc-ar-des: 46px; }
+  /* Share Hub reads papers, and a paper page also gets the fidelity chip
+     («تطابق با منابع», step 4.13 FIDELITY), which cannot share the band
+     chip's line on a phone: two chip lines. 27 of 47 had it on 2026-11-11 —
+     every page from share-28 on, so every new one; the older 20 keep an
+     empty second line. No commentary section (insight, chairside,
+     metanotes, plak-sefr, taraz) has a fidelity record. */
+  :root:has(link[rel="canonical"][href*=".org/sharehub/"]) { --dc-ar-des: 92px; }
 }
 :root:not(.dc-actrow-seated) #dcActionRow { display: none; }
 :root:not(.dc-actrow-seated) :is(
