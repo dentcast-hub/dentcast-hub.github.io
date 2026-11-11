@@ -1,0 +1,56 @@
+{
+  "scored_at": "2026-11-11",
+  "sources": [
+    {
+      "des_version": "3.7",
+      "content_type": "COMMENTARY",
+      "question_type": null,
+      "text_basis": "FULL_TEXT",
+      "citation": {
+        "title": "پارسیل روی دو دندان باقی‌مانده در یک سمت: نگه داشتن یا کشیدن؟",
+        "authors": "فؤاد شهابیان",
+        "year": 2026,
+        "journal": "DentCast Chairside",
+        "doi": ""
+      },
+      "journal_quartile": {
+        "value": "NR",
+        "source": "NR"
+      },
+      "s_design": null,
+      "q_method": null,
+      "penalties": null,
+      "commentary_checklist": [
+        {
+          "item": "reasoning chain is explicit",
+          "points": 4,
+          "evidence_quote": "هنگام جویدن، بیس در سمت بی‌دندان در بافت فرو می‌رود و حول این دو دندان می‌چرخد و نیروی اهرمی بسیار بیشتری از قبل به آن‌ها وارد می‌شود.",
+          "note": ""
+        },
+        {
+          "item": "relationship to published evidence is stated",
+          "points": 0,
+          "evidence_quote": "",
+          "note": "متن خود را نسبت به ادبیات منتشرشده جای نمی‌دهد و نبود شواهد را هم بیان نمی‌کند؛ «عوارض شناخته‌شده» ارجاع صریح به ادبیات نیست"
+        },
+        {
+          "item": "scope of the claim is bounded",
+          "points": 3,
+          "evidence_quote": "ما برای این بیمار گزینه‌ی ۴ را انتخاب کردیم",
+          "note": ""
+        },
+        {
+          "item": "explicitly labeled as experience/opinion, not evidence",
+          "points": 3,
+          "evidence_quote": "Chairside متن‌های آموزشی یا کیس‌ریپورت نیستند؛ ثبت لحظه‌های واقعی و مسیر فکر بالینی‌اند.",
+          "note": "اعلانِ سطحِ بخش، از chairside/index.html"
+        }
+      ],
+      "des_score": 15,
+      "band": "E",
+      "provisional": false,
+      "fact_fa": "این متن Chairside امتیاز DES برابر ۱۵ و باند E دارد که سطح تجربه و نظر بالینی است.",
+      "interpretation_fa": "متن زنجیره‌ی استدلال روشنی دارد. این زنجیره از مکانیک ساپورت یک‌طرفه و نیروی اهرمی شروع می‌شود و تا وزن‌دادن به سن بیمار، ریسک پوسیدگی و توان بهداشتی او در آینده می‌رسد. اما چون به شواهد منتشرشده ارجاع نمی‌دهد، تصمیم یک کیس واحد باقی می‌ماند."
+    }
+  ]
+}

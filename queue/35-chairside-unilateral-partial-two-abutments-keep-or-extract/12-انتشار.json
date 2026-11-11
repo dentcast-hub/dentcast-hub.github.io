@@ -1,0 +1,154 @@
+{
+  "schema": "dentcast-queue-manifest/1",
+  "category": {
+    "value": "chairside",
+    "from": "folder name"
+  },
+  "title_fa": {
+    "value": "پارسیل روی دو دندان باقی‌مانده در یک سمت: نگه داشتن یا کشیدن؟",
+    "from": "02-عنوان-کپشن.md:2"
+  },
+  "caption_fa": {
+    "value": "پارسیل فک پایین یک بیمار سالمند حالا فقط روی کانین و پرمولر یک سمت تکیه دارد و حول این دو دندان می‌چرخد. دندان‌ها را نگه داریم یا بکشیم، و سن بیمار در این تصمیم چه نقشی دارد؟",
+    "from": "02-عنوان-کپشن.md:5"
+  },
+  "title_en": {
+    "value": "A partial denture on the two remaining teeth on one side: keep them or extract?",
+    "from": "06-انگلیسی.md:2"
+  },
+  "caption_en": {
+    "value": "An elderly patient's mandibular partial denture now rests only on the canine and premolar of one side and rotates around these two teeth. Should the teeth be kept or extracted, and what role does the patient's age play in that decision?",
+    "from": "06-انگلیسی.md:5"
+  },
+  "body_en": {
+    "value": "**Patient history**\nThe patient is an elderly person who had used a mandibular partial denture for years. The denture rested on the canine and first premolar on both sides, and the crowns of these four teeth were not splinted together. Some time ago the canine and premolar on the left side fractured and were lost, and now only the canine and premolar on the right side remain.\n\nOn the radiograph, the premolar is root-canal treated and has a cast post, and the canine is root-canal treated but has no post. Bone loss is seen around both teeth, more at the distal of the premolar and the mesial of the canine. There is also secondary caries under the canine crown on the mesial side.\n\n[[تصویر:01]]\n\n**The main problem**\nAs long as there were four teeth on the two sides, the denture was supported from both sides. Now the denture has effectively become a complete denture with only one corner attached to teeth. During chewing, the base on the edentulous side sinks into the tissue and rotates around these two teeth, and a much greater leverage force than before is applied to them. These same leverage forces had led to the fracture of the teeth on the left side.\n\n**Treatment options**\n**1. Modifying the existing partial denture:** adding teeth in place of the lost ones and relining the base, without changing the crowns. This is the fastest and least expensive route, but it solves none of the main problems. The caries is not treated, the teeth stay unsplinted, and now the entire load of the denture is on two teeth on one side. It is quite likely that these teeth will also be lost, like the teeth on the left side.\n\n**2. New splinted crowns and a new partial denture:** removing the crowns, treating the canine caries (if it is restorable), making splinted crowns with proper rests and guide planes, and making a new framework. This option treats the caries and shares the load between two roots, but the support is still unilateral, and two roots with resorbed bone have to bear this entire load. Its cost in money and time is also considerable compared with the limited prognosis of the teeth.\n\n**3. The canine as an overdenture abutment and one implant on the left side:** extracting the premolar, shortening the canine crown and making a coping on it, placing one implant in the left canine region, and making an overdenture. This option preserves a natural tooth and makes the support bilateral, but it makes the success of the whole treatment depend on a single tooth. Root caries under an overdenture is a known complication of this treatment, and the current secondary caries shows that this patient has a high caries risk. The treatment plan also becomes more complex, because a denture on one tooth and one implant has two kinds of retentive components and two kinds of maintenance.\n\n**4. Extracting both teeth and two implants in the canine region:** extracting the right canine and premolar, placing two implants in the canine region on both sides (immediate or delayed, based on CBCT and the condition of the sockets), and making an implant-supported overdenture. During the healing period, the existing partial denture can be converted into an interim denture by adding teeth to it. This option has symmetrical support and a simple design, but it requires surgery.\n\nWe chose option 4 for this patient:\n\n**Reasons for choosing option 4**\nOptions 1 and 2 do not solve the problem of unilateral support. In choosing between options 3 and 4, the most important factor was the patient's age. The patient currently meets the conditions for implant surgery, but may not meet them a few years from now. If we keep the canine and it is lost a few years later, which is not unlikely, we may have a patient who no longer meets the conditions for surgery and whose denture rests on only one implant on one side. In that situation the same unilateral-support problem arises again: the denture rotates around the implant, the attachment wears out sooner, and the patient will have an unstable denture.\n\nOn the other hand, the ability to maintain oral hygiene usually declines with age. A coping on a natural root needs the very level of hygiene that an elderly patient gradually loses, whereas cleaning two implants is easier, and caries does not threaten them.\n\nFor these reasons, we decided to carry out the treatment now, in one go, with a simple and predictable plan.",
+    "from": "06-انگلیسی.md:8-34"
+  },
+  "images": {
+    "value": [
+      {
+        "n": "01",
+        "file": {
+          "value": "03-تصاویر/01-periapical-canine-premolar-remaining.webp",
+          "from": "03-تصاویر/01-periapical-canine-premolar-remaining.webp"
+        },
+        "alt_fa": {
+          "value": "رادیوگرافی پری‌اپیکال کانین و پرمولر باقی‌مانده با روکش و درمان ریشه",
+          "from": "03-تصاویر/تصاویر.md:3"
+        },
+        "caption_fa": {
+          "value": "تصویر ۱. رادیوگرافی کانین و پرمولر باقی‌مانده: پرمولر با پست ریختگی، کانین درمان ریشه‌شده بدون پست و تحلیل استخوان در اطراف هر دو دندان. منبع: رادیوگرافی کیس، ارسالی دکتر فؤاد شهابیان برای انتشار این مطلب.",
+          "from": "03-تصاویر/تصاویر.md:3"
+        },
+        "alt_en": {
+          "value": "Periapical radiograph of the remaining canine and premolar with crowns and root canal treatment",
+          "from": "03-تصاویر/تصاویر.md:3"
+        },
+        "caption_en": {
+          "value": "Fig. 1. Radiograph of the remaining canine and premolar: the premolar with a cast post, the root-canal-treated canine without a post, and bone loss around both teeth. Source: case radiograph supplied by Dr. Fouad Shahabian for publication of this article.",
+          "from": "03-تصاویر/تصاویر.md:3"
+        }
+      }
+    ],
+    "from": "03-تصاویر/تصاویر.md"
+  },
+  "credit": {
+    "value": {
+      "mode": "none"
+    },
+    "from": "04-منبع/منابع.md:1"
+  },
+  "catalog": {
+    "value": [],
+    "from": "04-منبع/منابع.md: no paper"
+  },
+  "hashtags": {
+    "value": [
+      "#ویزیت",
+      "#کیس_بالینی",
+      "#حفظ_دندان",
+      "#کشیدن_و_ایمپلنت",
+      "#پروتز_پارسیل",
+      "#انتخاب_پایه",
+      "#اوردنچر"
+    ],
+    "from": "07-ورودی‌ها.md:22"
+  },
+  "mint": {
+    "value": [],
+    "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+  },
+  "pillar": {
+    "value": {
+      "primary": "treatment-planning",
+      "subtopic": "extraction-vs-preservation",
+      "secondary": []
+    },
+    "from": "07-ورودی‌ها.md:16"
+  },
+  "pulse": {
+    "value": {
+      "html": "یک ویزیت با عنوانِ «<a href=\"{url}\">پارسیل روی دو دندان باقی‌مانده در یک سمت: نگه داشتن یا کشیدن؟</a>» منتشر شد.",
+      "link_phrase": "پارسیل روی دو دندان باقی‌مانده در یک سمت: نگه داشتن یا کشیدن؟"
+    },
+    "from": "07-ورودی‌ها.md:20-21"
+  },
+  "keywords": {
+    "value": [
+      "ساپورت یک‌طرفه",
+      "نیروی اهرمی",
+      "روکش‌های اسپلینت‌شده",
+      "کوپینگ روی ریشه‌ی طبیعی",
+      "پوسیدگی ثانویه",
+      "دو ایمپلنت در ناحیه‌ی کانین",
+      "سن بیمار"
+    ],
+    "from": "09-کلیدواژه‌ها.md"
+  },
+  "links_48": {
+    "value": [
+      {
+        "phrase": "اوردنچر",
+        "href": "/glossary/overdenture.html",
+        "from": "11-لینک‌های-گلاسری.md:13"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md:7"
+  },
+  "backlinks_47": {
+    "value": [],
+    "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+  },
+  "explore_49": {
+    "value": [
+      {
+        "href": "queue:19",
+        "label": "اوردنچر دندانی و خطر پوسیدگی ریشه",
+        "from": "11-لینک‌های-گلاسری.md:26"
+      },
+      {
+        "href": "/episodes/episode-147-6.html",
+        "label": "صفر تا صد اوردنچرها",
+        "from": "11-لینک‌های-گلاسری.md:27"
+      },
+      {
+        "href": "/episodes/episode-151.html",
+        "label": "کشیدن یا نگهداری دندان",
+        "from": "11-لینک‌های-گلاسری.md:28"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md:24"
+  },
+  "pathway": {
+    "value": null,
+    "from": "default: mechanical pathway rule"
+  },
+  "author": {
+    "value": null,
+    "from": "not in the legacy contract"
+  },
+  "legacy_review": {
+    "value": null,
+    "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+  }
+}
