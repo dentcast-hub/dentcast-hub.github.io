@@ -2,32 +2,32 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, rowText, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE, pageSearch } from './js/config.js?v=223';
-import { currentUser, api } from './js/api.js?v=223';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=223';
-import { openCollectionPicker } from './js/collections.js?v=223';
-import { el, faNum } from './js/util.js?v=223';
-import { initHomeCard } from './js/home-card.js?v=223';
-import { initHomeFeatures } from './js/home-features.js?v=223';
-import { initPremiumPanel } from './js/premium-panel.js?v=223';
-import { initHomeBundles } from './js/home-bundles.js?v=223';
-import { initHomeUpboard } from './js/home-upboard.js?v=223';
-import { initDesTool } from './js/des-scorer.js?v=223';
-import { initHeader } from './js/header.js?v=223';
-import { initTourAutostart } from './js/tour.js?v=223';
-import { initReadingTracker, flushPendingReads } from './js/reading.js?v=223';
-import { initListeningTracker } from './js/listening.js?v=223';
-import { initShareScoring, buildShareButton } from './js/share.js?v=223';
-import { initHeart, buildHeartChip } from './js/votes.js?v=223';
-import { mountClipControl, landOnClip } from './js/clips.js?v=223';
-import { mountArticleThreads } from './js/article-threads.js?v=223';
-import { mountChallenge } from './js/challenge.js?v=223';
-import { mountGlossaryNotes } from './js/glossary-notes.js?v=223';
-import { mountDes } from './js/des.js?v=223';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=223';
-import { initAudioHub } from './js/audio-hub.js?v=223';
-import { initAudioFallback } from './js/audio-fallback.js?v=223';
-import { getModel, freshFolders } from './js/content-index.js?v=223';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, rowText, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE, pageSearch } from './js/config.js?v=224';
+import { currentUser, api } from './js/api.js?v=224';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=224';
+import { openCollectionPicker } from './js/collections.js?v=224';
+import { el, faNum } from './js/util.js?v=224';
+import { initHomeCard } from './js/home-card.js?v=224';
+import { initHomeFeatures } from './js/home-features.js?v=224';
+import { initPremiumPanel } from './js/premium-panel.js?v=224';
+import { initHomeBundles } from './js/home-bundles.js?v=224';
+import { initHomeUpboard } from './js/home-upboard.js?v=224';
+import { initDesTool } from './js/des-scorer.js?v=224';
+import { initHeader } from './js/header.js?v=224';
+import { initTourAutostart } from './js/tour.js?v=224';
+import { initReadingTracker, flushPendingReads } from './js/reading.js?v=224';
+import { initListeningTracker } from './js/listening.js?v=224';
+import { initShareScoring, buildShareButton } from './js/share.js?v=224';
+import { initHeart, buildHeartChip } from './js/votes.js?v=224';
+import { mountClipControl, landOnClip } from './js/clips.js?v=224';
+import { mountArticleThreads } from './js/article-threads.js?v=224';
+import { mountChallenge } from './js/challenge.js?v=224';
+import { mountGlossaryNotes } from './js/glossary-notes.js?v=224';
+import { mountDes } from './js/des.js?v=224';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=224';
+import { initAudioHub } from './js/audio-hub.js?v=224';
+import { initAudioFallback } from './js/audio-fallback.js?v=224';
+import { getModel, freshFolders } from './js/content-index.js?v=224';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -37,7 +37,7 @@ import { getModel, freshFolders } from './js/content-index.js?v=223';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=223').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=224').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -155,6 +155,23 @@ function buildToc(boxes, anchorEl, scope, T) {
  * section boxes), and hanging the row off the root would put it outside <main>,
  * above the article's own title.
  */
+// Lift the space dc-theme.css reserves above the prose and show the row
+// (<html>.dc-actrow-seated, «ARTICLE ACTION ROW» there). Seated only once the
+// row can be drawn at its final size, which needs plus.css: dc-nav.js's loader
+// records that sheet's load (or failure) as __dcPlusCssDone, and a page whose
+// loader predates that flag is seated as soon as the sheet is in the CSSOM.
+// Idempotent; dc-nav.js seats a row it built itself the same way, because the
+// desktop shell strips that script and only this module is left to do it.
+function seatActionRow() {
+  const root = document.documentElement;
+  if (root.classList.contains('dc-actrow-seated')) return;
+  const seat = () => root.classList.add('dc-actrow-seated');
+  const link = document.querySelector('link[href^="/plus/plus.css"]');
+  if (window.__dcPlusCssDone || !link || link.sheet) { seat(); return; }
+  link.addEventListener('load', seat, { once: true });
+  link.addEventListener('error', seat, { once: true });
+}
+
 function ensureActionRow(anchorEl) {
   const found = document.getElementById('dcActionRow');
   if (found) {
@@ -222,6 +239,7 @@ function injectActionRow(anchorEl, contentId, shareTarget, scope) {
   main.prepend(btn, collectBtn, collectInfo);
   if (heart) main.appendChild(heart);
   row.appendChild(collectCap); // full-width, below both groups
+  seatActionRow();
   return btn;
 }
 
@@ -783,7 +801,7 @@ function folderForPath(folders) {
 }
 
 function openSeenGate() {
-  Promise.all([import('./js/sheet.js?v=223'), import('./js/premium-cta.js?v=223')])
+  Promise.all([import('./js/sheet.js?v=224'), import('./js/premium-cta.js?v=224')])
     .then(([sheet, cta]) => sheet.openSheet(sheet.gateCard({
       title: 'کدام‌ها را خوانده‌ای',
       sub: 'کنارِ هر مطلب یک نشان می‌گذارد: بازش کرده‌ای، یا تا آخر خوانده‌ای. '
@@ -1099,7 +1117,13 @@ function boot() {
   let contentId = null;
   step('detect-content-id', () => { contentId = detectContentId(); });
   step('header', () => initHeader());
-  step('article', () => initArticle());
+  // The two builders of the article action row. Whatever they end up doing —
+  // a row, or none on a page that matched neither path — the space
+  // dc-theme.css holds for one is released once BOTH are done (each bows out
+  // of the other's pages at once, so seating after either alone would lift it
+  // before the real builder had run).
+  const rowBuilders = [];
+  step('article', () => { rowBuilders.push(initArticle()); });
   step('listening', () => initListening()); // episode-page audio → episode_listened
   step('audio-hub', () => initAudioHub()); // one resume record + lock screen + «ادامه‌ی شنیدن» bar for every episode player
   step('audio-fallback', () => initAudioFallback()); // «پخش شروع نشد؟» → Acast, only after a failed play
@@ -1116,7 +1140,8 @@ function boot() {
   // shared article layer, including the episode pages initArticle() bows out
   // of, and a chip whose taps nobody listens for is worse than no chip.
   step('share-scoring', () => initShareScoring(contentId));
-  step('episode-actions', () => initEpisodeActions()); // audio episodes: the short row (قلب + اشتراک‌گذاری)
+  step('episode-actions', () => { rowBuilders.push(initEpisodeActions()); }); // audio episodes: the short row (قلب + اشتراک‌گذاری)
+  Promise.allSettled(rowBuilders).then(seatActionRow);
   // The قلب, in the article's action row above the prose. Wired at boot for
   // the same reason share is: the row exists on every page built on the shared
   // article layer, including the audio episodes initArticle() bows out of —

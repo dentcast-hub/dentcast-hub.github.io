@@ -43,6 +43,14 @@ jobs:
         # and the paper library; either changing leaves it stale.
         run: python3 tools/build_cabinet_papers.py
 
+      - name: 2b3. Rebuild the per-page DES record files
+        # plus/des/<content_id>.json, one per record of plus/des-scores.json
+        # (the file plus/js/des.js fetches). Publications build them in the
+        # runner's C.8; this net covers a record installed or re-scored outside
+        # a publication, which would otherwise show its old copy until the
+        # next publish. Writes nothing when already current.
+        run: python3 tools/build_des_records.py
+
       - name: 2c. Rebuild homepage counters and static fallbacks
         # Safety net: publication runs must build these before merging; this
         # post-merge rebuild also keeps static counters/SEO fallbacks current.
@@ -79,6 +87,7 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name  "github-actions[bot]"
           git add sitemap.xml sitemap-ir.xml plus/content-index.json plus/assistant-tags.json plus/cabinet-papers.json service-worker.js
+          git add -A -- plus/des
           # The stamper rewrites every `dentcast-brain.json?v=` URL in the HTML
           # (today index.html + player.html). Staging tracked+modified HTML by
           # pattern rather than by name means a future page that fetches the

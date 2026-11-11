@@ -89,7 +89,7 @@
     },
     {
       "path": ".dentcast/workflows/global/plus-premium.md",
-      "sha256": "a0cf6f1b0fc22d0ec9fed1ca5f9c0929d3259befae613513ca4de2650fcc748b",
+      "sha256": "18a0bea238c466f92861ccd606b7a612a2517f8b0f63c19ea88ce9952d35edd2",
       "sections": [
         {
           "id": "publication-surfaces",
@@ -127,7 +127,7 @@
     },
     {
       "path": ".dentcast/workflows/global/site-invariants.md",
-      "sha256": "c41c43b17502f6c01ef91b3e786e1bd9000b06858375f6c8c65e2e15cb6c15ca",
+      "sha256": "c83be33fffa19e0c61085430fce8018337478775a27f238e9311b965ce421b7c",
       "sections": [
         {
           "id": "site-invariants",

@@ -277,7 +277,8 @@ def builder_output(path):
         "plus/flashcards-index.json",
         "plus/quiz-index.json", "plus/challenges.json", "up-board/index.json",
         "sitemap.xml", "sitemap-ir.xml",
-    } or re.fullmatch(r"pillar/[a-z0-9-]+/(?:index\.html|structure\.json)", path) is not None
+    } or re.fullmatch(r"pillar/[a-z0-9-]+/(?:index\.html|structure\.json)", path) is not None \
+      or re.fullmatch(r"plus/des/[a-z0-9][a-z0-9_-]*(?:/[A-Za-z0-9][A-Za-z0-9_.-]*)*\.json", path) is not None
 
 
 def current_snapshot(root, state, check_remote=False):

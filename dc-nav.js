@@ -841,6 +841,12 @@
         actionAux.appendChild(shareBtn);
 
         firstBox.parentNode.insertBefore(actionRow, firstBox);
+        /* The row stays display:none and the prose keeps the space reserved
+           for it (dc-theme.css, «ARTICLE ACTION ROW») until it can show at its
+           final size, which needs plus.css: the loader at the end of this file
+           seats it the moment that sheet has loaded (or failed). */
+        window.__dcActRowBuilt = true;
+        if (window.__dcPlusCssDone) document.documentElement.classList.add('dc-actrow-seated');
       }
 
       /* 7c) Auto table of contents — long articles only (4+ sections; 3+ on
@@ -2529,7 +2535,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '293';
+  var V = '295';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now
@@ -2545,16 +2551,31 @@
   // pages, and their markup needs those styles. The classes are .dcp-* prefixed
   // and the body.dcp-page rules only apply to the standalone /plus pages, so
   // nothing bleeds onto content.
-  ['/plus/plus.css?v=' + V, '/plus/plus-pages.css?v=' + V, '/plus/plus-desktop.css?v=' + V].forEach(function (href) {
+  /* Seating the article action row: <html>.dc-actrow-seated lifts the space
+     dc-theme.css reserves above the prose and shows the row in its place.
+     Phase 7b's row is seated once plus.css (its only stylesheet) has loaded;
+     a row plus.js builds itself is seated by plus.js (seatActionRow), which
+     reads __dcPlusCssDone. The three fallbacks only stop a failed load from
+     leaving the reserved gap on screen: plus.css or plus.js failing, and a
+     last-resort timer after the page's load event. */
+  function dcSeatActionRow() { document.documentElement.classList.add('dc-actrow-seated'); }
+  function dcPlusCssDone() {
+    window.__dcPlusCssDone = true;
+    if (window.__dcActRowBuilt) dcSeatActionRow();
+  }
+  ['/plus/plus.css?v=' + V, '/plus/plus-pages.css?v=' + V, '/plus/plus-desktop.css?v=' + V].forEach(function (href, i) {
     var css = document.createElement('link');
     css.rel = 'stylesheet';
     css.href = href;
+    if (i === 0) css.onload = css.onerror = dcPlusCssDone;
     document.head.appendChild(css);
   });
   var js = document.createElement('script');
   js.type = 'module';
   js.src = '/plus/plus.js?v=' + V;
+  js.onerror = dcSeatActionRow;
   document.body.appendChild(js);
+  window.addEventListener('load', function () { setTimeout(dcSeatActionRow, 10000); });
 })();
 
 /* ── DentCast Spot loader ────────────────────────────────────────────────────
