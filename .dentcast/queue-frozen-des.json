@@ -353,5 +353,23 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "chairside/chairside-52": {
+    "queue_ref": "queue/31-chairside-implant-tooth-2-timing-teeth-3-5-6",
+    "record_sha256": "832e86faa7886d3345edf6f202f6a01455768cf88b4593202610c5e54cfce8fb",
+    "installed_at": "2026-11-11",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }

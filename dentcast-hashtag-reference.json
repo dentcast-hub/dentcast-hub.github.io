@@ -721,6 +721,76 @@
    ]
   },
   {
+   "key": "کیس_بالینی",
+   "tag": "#کیس_بالینی",
+   "domain": "brand",
+   "words": 2,
+   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
+   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
+   "aliases": [
+    "ویزیت کلینیکی",
+    "گزارش کیس"
+   ],
+   "variants": [
+    "#ویزیت_کلینیکی",
+    "#گزارش_کیس"
+   ],
+   "co_tags": [],
+   "count": 50,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30",
+    "chairside/chairside-31",
+    "chairside/chairside-32",
+    "chairside/chairside-33",
+    "chairside/chairside-34",
+    "chairside/chairside-35",
+    "chairside/chairside-36",
+    "chairside/chairside-37",
+    "chairside/chairside-38",
+    "chairside/chairside-39",
+    "chairside/chairside-40",
+    "chairside/chairside-41",
+    "chairside/chairside-42",
+    "chairside/chairside-44",
+    "chairside/chairside-45",
+    "chairside/chairside-47",
+    "chairside/chairside-48",
+    "chairside/chairside-49",
+    "chairside/chairside-50",
+    "chairside/chairside-51",
+    "chairside/chairside-52"
+   ]
+  },
+  {
    "key": "ویزیت",
    "tag": "#ویزیت",
    "domain": "brand",
@@ -781,75 +851,6 @@
     "chairside/chairside-46",
     "chairside/chairside-47",
     "chairside/chairside-48",
-    "chairside/chairside-50",
-    "chairside/chairside-51"
-   ]
-  },
-  {
-   "key": "کیس_بالینی",
-   "tag": "#کیس_بالینی",
-   "domain": "brand",
-   "words": 2,
-   "definition": "گزارش یک کیس واقعی، از شرح مراجعه تا تصمیم.",
-   "use_when": "روی مدخل‌هایی که ساختارشان گزارش کیس است.",
-   "aliases": [
-    "ویزیت کلینیکی",
-    "گزارش کیس"
-   ],
-   "variants": [
-    "#ویزیت_کلینیکی",
-    "#گزارش_کیس"
-   ],
-   "co_tags": [],
-   "count": 49,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-7",
-    "chairside/chairside-8",
-    "chairside/chairside-9",
-    "chairside/chairside-10",
-    "chairside/chairside-11",
-    "chairside/chairside-12",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-15",
-    "chairside/chairside-16",
-    "chairside/chairside-17",
-    "chairside/chairside-18",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "chairside/chairside-30",
-    "chairside/chairside-31",
-    "chairside/chairside-32",
-    "chairside/chairside-33",
-    "chairside/chairside-34",
-    "chairside/chairside-35",
-    "chairside/chairside-36",
-    "chairside/chairside-37",
-    "chairside/chairside-38",
-    "chairside/chairside-39",
-    "chairside/chairside-40",
-    "chairside/chairside-41",
-    "chairside/chairside-42",
-    "chairside/chairside-44",
-    "chairside/chairside-45",
-    "chairside/chairside-47",
-    "chairside/chairside-48",
-    "chairside/chairside-49",
     "chairside/chairside-50",
     "chairside/chairside-51"
    ]
@@ -2268,6 +2269,46 @@
    ]
   },
   {
+   "key": "افزایش_طول_تاج",
+   "tag": "#افزایش_طول_تاج",
+   "domain": null,
+   "words": 3,
+   "definition": "crown lengthening — به‌دست آوردن ساختار با جابه‌جایی لثه و استخوان.",
+   "use_when": "مقاله این جراحی را تجویز، رد، یا هزینه‌اش را بسنجد.",
+   "aliases": [
+    "کراون لنتنینگ",
+    "crown lengthening",
+    "لنتنینگ",
+    "کراون لنتنینگ زیبایی",
+    "esthetic crown lengthening",
+    "کراون لنگتنینگ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 19,
+   "content_ids": [
+    "episodes/episode-75",
+    "episodes/episode-76",
+    "episodes/episode-77",
+    "episodes/episode-78",
+    "insight/insight-7",
+    "chairside/chairside-6",
+    "chairside/chairside-16",
+    "chairside/chairside-21",
+    "insight/insight-55",
+    "insight/insight-64",
+    "chairside/chairside-30",
+    "sharehub/share-14",
+    "sharehub/share-19",
+    "sharehub/share-24",
+    "insight/insight-93",
+    "sharehub/share-43",
+    "insight/insight-106",
+    "metanotes/meta-23",
+    "chairside/chairside-52"
+   ]
+  },
+  {
    "key": "ترمیم_غیرمستقیم",
    "tag": "#ترمیم_غیرمستقیم",
    "domain": "clinical",
@@ -2384,45 +2425,6 @@
     "insight/insight-94",
     "sharehub/share-37",
     "chairside/chairside-45"
-   ]
-  },
-  {
-   "key": "افزایش_طول_تاج",
-   "tag": "#افزایش_طول_تاج",
-   "domain": null,
-   "words": 3,
-   "definition": "crown lengthening — به‌دست آوردن ساختار با جابه‌جایی لثه و استخوان.",
-   "use_when": "مقاله این جراحی را تجویز، رد، یا هزینه‌اش را بسنجد.",
-   "aliases": [
-    "کراون لنتنینگ",
-    "crown lengthening",
-    "لنتنینگ",
-    "کراون لنتنینگ زیبایی",
-    "esthetic crown lengthening",
-    "کراون لنگتنینگ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 18,
-   "content_ids": [
-    "episodes/episode-75",
-    "episodes/episode-76",
-    "episodes/episode-77",
-    "episodes/episode-78",
-    "insight/insight-7",
-    "chairside/chairside-6",
-    "chairside/chairside-16",
-    "chairside/chairside-21",
-    "insight/insight-55",
-    "insight/insight-64",
-    "chairside/chairside-30",
-    "sharehub/share-14",
-    "sharehub/share-19",
-    "sharehub/share-24",
-    "insight/insight-93",
-    "sharehub/share-43",
-    "insight/insight-106",
-    "metanotes/meta-23"
    ]
   },
   {
@@ -2640,6 +2642,42 @@
     "notecast/episode-43",
     "insight/insight-88",
     "sharehub/share-34"
+   ]
+  },
+  {
+   "key": "پروگنوز_دندان",
+   "tag": "#پروگنوز_دندان",
+   "domain": null,
+   "words": 2,
+   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
+   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
+   "aliases": [
+    "پروگنوز",
+    "prognosis",
+    "پیش آگهی دندان"
+   ],
+   "variants": [
+    "#پروگنوز",
+    "#ارزیابی_دندان"
+   ],
+   "co_tags": [],
+   "count": 15,
+   "content_ids": [
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "insight/insight-7",
+    "insight/insight-14",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-4",
+    "chairside/chairside-9",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-21",
+    "chairside/chairside-30",
+    "insight/insight-95",
+    "chairside/chairside-47",
+    "chairside/chairside-52"
    ]
   },
   {
@@ -3013,41 +3051,6 @@
     "dentcast-plus/video-12",
     "dentcast-plus/video-13",
     "dentcast-plus/video-14"
-   ]
-  },
-  {
-   "key": "پروگنوز_دندان",
-   "tag": "#پروگنوز_دندان",
-   "domain": null,
-   "words": 2,
-   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
-   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
-   "aliases": [
-    "پروگنوز",
-    "prognosis",
-    "پیش آگهی دندان"
-   ],
-   "variants": [
-    "#پروگنوز",
-    "#ارزیابی_دندان"
-   ],
-   "co_tags": [],
-   "count": 14,
-   "content_ids": [
-    "episodes/episode-150-2",
-    "episodes/episode-151",
-    "insight/insight-7",
-    "insight/insight-14",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "chairside/chairside-4",
-    "chairside/chairside-9",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-21",
-    "chairside/chairside-30",
-    "insight/insight-95",
-    "chairside/chairside-47"
    ]
   },
   {
@@ -4916,6 +4919,32 @@
    ]
   },
   {
+   "key": "کانتی_لیور",
+   "tag": "#کانتی_لیور",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "واحدِ طره‌ای که فقط از یک سمت تکیه دارد.",
+   "use_when": "مقاله کانتی‌لیور را انتخاب یا رد کند.",
+   "aliases": [
+    "کانتیلور",
+    "کانتی‌لیور",
+    "کانتیلیور"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "dentai/dentai-7",
+    "sharehub/share-3",
+    "metanotes/meta-18",
+    "episodes/episode-161",
+    "dentai/dentai-31",
+    "chairside/chairside-36",
+    "episodes/episode-162",
+    "chairside/chairside-52"
+   ]
+  },
+  {
    "key": "گروپ_فانکشن",
    "tag": "#گروپ_فانکشن",
    "domain": "clinical",
@@ -5434,31 +5463,6 @@
     "insight/insight-50",
     "insight/insight-63",
     "insight/insight-73"
-   ]
-  },
-  {
-   "key": "کانتی_لیور",
-   "tag": "#کانتی_لیور",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "واحدِ طره‌ای که فقط از یک سمت تکیه دارد.",
-   "use_when": "مقاله کانتی‌لیور را انتخاب یا رد کند.",
-   "aliases": [
-    "کانتیلور",
-    "کانتی‌لیور",
-    "کانتیلیور"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "dentai/dentai-7",
-    "sharehub/share-3",
-    "metanotes/meta-18",
-    "episodes/episode-161",
-    "dentai/dentai-31",
-    "chairside/chairside-36",
-    "episodes/episode-162"
    ]
   },
   {
@@ -6551,6 +6555,33 @@
     "insight/insight-73",
     "chairside/chairside-39",
     "chairside/chairside-41"
+   ]
+  },
+  {
+   "key": "توالی_درمان",
+   "tag": "#توالی_درمان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ترتیبی که مراحل درمان یک بیمار چندمشکلی در آن انجام می‌شوند؛ هر فاز شرایط فنیِ لازم برای فاز بعد را می‌سازد، پس جابه‌جا شدنشان کار فاز بعدی را باطل یا تکراری می‌کند.",
+   "use_when": "مقاله خودِ ترتیب یا زمان‌بندیِ مراحل را موضوع قرار دهد — کدام کار پیش از کدام، و اگر رعایت نشود چه از دست می‌رود — نه فقط محتوای یکی از مراحل.",
+   "aliases": [
+    "treatment sequencing",
+    "sequence of treatment",
+    "ترتیب درمان",
+    "فازبندی درمان",
+    "فازهای درمان",
+    "توالی فازها",
+    "مراحل درمان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "sharehub/share-19",
+    "insight/insight-77",
+    "chairside/chairside-39",
+    "insight/insight-95",
+    "chairside/chairside-52"
    ]
   },
   {
@@ -7743,32 +7774,6 @@
     "insight/insight-5",
     "chairside/chairside-29",
     "insight/insight-62"
-   ]
-  },
-  {
-   "key": "توالی_درمان",
-   "tag": "#توالی_درمان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ترتیبی که مراحل درمان یک بیمار چندمشکلی در آن انجام می‌شوند؛ هر فاز شرایط فنیِ لازم برای فاز بعد را می‌سازد، پس جابه‌جا شدنشان کار فاز بعدی را باطل یا تکراری می‌کند.",
-   "use_when": "مقاله خودِ ترتیب یا زمان‌بندیِ مراحل را موضوع قرار دهد — کدام کار پیش از کدام، و اگر رعایت نشود چه از دست می‌رود — نه فقط محتوای یکی از مراحل.",
-   "aliases": [
-    "treatment sequencing",
-    "sequence of treatment",
-    "ترتیب درمان",
-    "فازبندی درمان",
-    "فازهای درمان",
-    "توالی فازها",
-    "مراحل درمان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "sharehub/share-19",
-    "insight/insight-77",
-    "chairside/chairside-39",
-    "insight/insight-95"
    ]
   },
   {
