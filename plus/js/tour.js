@@ -15,10 +15,10 @@
 //     the account, not localStorage).
 //  2. MANUAL — «راهنمای سایت» in the header person menu (logged-in), any time.
 //     On a non-home page it navigates to /?tour=1 and starts there.
-import { el, faNum, tehranDay } from './util.js?v=226';
-import { api, currentUser } from './api.js?v=226';
-import { pricingHref } from './premium-cta.js?v=226';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=226';
+import { el, faNum, tehranDay } from './util.js?v=227';
+import { api, currentUser } from './api.js?v=227';
+import { pricingHref } from './premium-cta.js?v=227';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=227';
 
 const SS_PENDING = 'dcp:tour:pending'; // set before navigating home to start there
 
@@ -89,9 +89,9 @@ const STOPS = [
   {
     key: 'des', panel: 'panel-studio', premium: 'part', title: 'امتیاز شواهد (DES)',
     text: (ctx) => (ctx.live
-      ? 'هر مطلب علمی دنت‌کست یک کارت «ارزیابی خودکار شواهد» دارد: منابعش روی پنج سطح از E تا A می‌نشینند — بر اساس نوع مطالعه و کیفیت روشش — و جدا از آن سنجیده می‌شود متنِ دنت‌کست چقدر با خودِ منابع مطابق است. جعبه‌ی اول همین را توضیح می‌دهد. جعبه‌ی دوم هم با اشتراک شما باز است: متن یا چکیده‌ی مقاله‌ی خودتان را بگذارید و با همان معیار امتیاز بگیرید.'
-      : 'هر مطلب علمی دنت‌کست یک کارت «ارزیابی خودکار شواهد» دارد: منابعش روی پنج سطح از E تا A می‌نشینند — بر اساس نوع مطالعه و کیفیت روشش — و جدا از آن سنجیده می‌شود متنِ دنت‌کست چقدر با خودِ منابع مطابق است. جعبه‌ی اول همین را توضیح می‌دهد. جعبه‌ی دوم ابزار پریمیوم است: متن یا چکیده‌ی مقاله‌ی خودتان را بگذارید و با همان معیار امتیاز بگیرید.'),
-    targets: () => [q('#panel-studio .dc-des-legend-wrap'), q('#panel-studio .dc-destool-wrap')],
+      ? 'هر مطلب علمی دنت‌کست یک کارت «ارزیابی خودکار شواهد» دارد: منابعش روی پنج سطح از E تا A می‌نشینند — بر اساس نوع مطالعه و کیفیت روشش — و جدا از آن سنجیده می‌شود متنِ دنت‌کست چقدر با خودِ منابع مطابق است. این جعبه همین را توضیح می‌دهد. با اشتراک شما، آخرِ تب پریمیوم هم می‌توانید متن یا چکیده‌ی مقاله‌ی خودتان را بگذارید و با همان معیار امتیاز بگیرید.'
+      : 'هر مطلب علمی دنت‌کست یک کارت «ارزیابی خودکار شواهد» دارد: منابعش روی پنج سطح از E تا A می‌نشینند — بر اساس نوع مطالعه و کیفیت روشش — و جدا از آن سنجیده می‌شود متنِ دنت‌کست چقدر با خودِ منابع مطابق است. این جعبه همین را توضیح می‌دهد. آخرِ تب پریمیوم هم ابزاری هست که با اشتراک، متن یا چکیده‌ی مقاله‌ی خودتان را با همان معیار امتیاز می‌دهد.'),
+    targets: () => [q('#panel-studio .dc-des-legend-wrap')],
   },
   {
     key: 'plus_card', panel: 'panel-studio', title: 'میز کار شخصی',
@@ -265,7 +265,7 @@ async function mountPremiumPreview(ctx) {
   if (preview && preview.isConnected) return;
   const host = byId('panel-premium');
   if (!host) return;
-  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=226'), samplePathway()]);
+  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=227'), samplePathway()]);
   if (!state || typeof mod.livePreview !== 'function') return;
   const node = mod.livePreview({
     tier: 'premium',
