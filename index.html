@@ -5226,6 +5226,341 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
   }
 }
   </style>
+  <style id="dcCleanSkin">
+/* =====================================================
+   CLEAN SKIN (founder-approved mockup, 2026-11-11) — phone shell, the
+   home, archive and premium tabs. Same page, same sections, texts, numbers
+   and colours; things come out of their boxes: white ground, no card
+   shadows or gradients, flat tiles, hairline rows, a larger type scale and
+   more air between sections. APPEARANCE ONLY, layered last:
+   - every rule sits inside @media(max-width:1023px) under
+     #mobile-shell #mobile-body, so the desktop shell matches none of it;
+   - nothing is hidden that carries copy, nothing is moved, no JS hook is
+     touched; the sponsor card (Spot) keeps its markup, its place and its
+     exact box (the panels' wider gutter is given back to it);
+   - the stack ABOVE the home sponsor slot does not get taller than it was
+     (the larger headline and numbers are paid for by tighter gaps), so the
+     paid card is not pushed down;
+   - colours come from the existing tokens only; the dark fading grid on
+     #mobile-body is untouched — the white ground is light-theme only.
+   Kept as its own block so it can be tuned or reverted in one piece.
+===================================================== */
+@media (max-width:1023px){
+  #mobile-shell #mobile-body{
+    --cs-tile:var(--surface2);      /* flat tile on the white ground */
+    --cs-inner:var(--surface);      /* a chip / disc that sits ON a tile */
+    --cs-navy:var(--pr);
+    --cs-blue-wash:rgba(var(--ac-rgb),.06);
+  }
+  [data-theme="dark"] #mobile-shell #mobile-body{
+    --cs-tile:var(--surface);
+    --cs-inner:var(--surface2);
+    --cs-navy:#3f74e0;              /* first stop of the dark --x-grad */
+    --cs-blue-wash:rgba(var(--ac-rgb),.10);
+  }
+
+  /* ── ground: white on the three tabs (light theme) ── */
+  html:not([data-theme="dark"]) #mobile-shell #mobile-body:has(> #panel-studio.active),
+  html:not([data-theme="dark"]) #mobile-shell #mobile-body:has(> #panel-sharehub.active),
+  html:not([data-theme="dark"]) #mobile-shell #mobile-body:has(> #panel-premium.active){
+    background:var(--surface);
+  }
+  /* 20px gutters (12 from #mobile-body + 8 here) */
+  #mobile-shell #mobile-body #panel-studio,
+  #mobile-shell #mobile-body #panel-sharehub,
+  #mobile-shell #mobile-body #panel-premium{ padding-inline:8px; }
+  /* …given back to the sponsor card, whose box must not change */
+  #mobile-shell #mobile-body #panel-studio #dcSpotHomeSlot,
+  #mobile-shell #mobile-body #panel-studio > .dc-spot,
+  #mobile-shell #mobile-body #panel-sharehub > .dc-spot,
+  #mobile-shell #mobile-body #panel-premium > .dc-spot{ margin-inline:-8px; }
+
+  /* ═════════════ HOME ═════════════ */
+  /* headline */
+  #mobile-shell #mobile-body #panel-studio .dc-identity-card{ padding:10px 0 0; margin-bottom:0; text-align:center; }
+  #mobile-shell #mobile-body #panel-studio .dc-identity-main{
+    font-size:2.125rem; line-height:1.4; font-weight:800; text-align:center; text-wrap:balance;
+  }
+
+  /* search: one bordered field */
+  #mobile-shell #mobile-body #panel-studio .dc-exa-search,
+  #mobile-shell #mobile-body #panel-sharehub .dc-exa-search{
+    height:58px; box-sizing:border-box; padding:0 16px 0 8px; gap:10px;
+    background:transparent; border:1.5px solid var(--surface3, var(--border));
+    border-radius:14px; box-shadow:none;
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-exa-search{ margin-top:14px; }
+  #mobile-shell #mobile-body #panel-studio .dc-exa-search-ph,
+  #mobile-shell #mobile-body #panel-sharehub .dc-exa-search-ph{ font-size:.9375rem; }
+  #mobile-shell #mobile-body #panel-studio .dc-exa-search-go,
+  #mobile-shell #mobile-body #panel-sharehub .dc-exa-search-go{
+    display:inline-flex; align-items:center; height:42px; padding:0 20px;
+    border-radius:10px; background:var(--cs-navy); box-shadow:none;
+    font-size:.875rem; font-weight:700;
+  }
+  /* «پرجستجو» → pills. The «·» separators are bare text nodes; font-size:0
+     collapses them (and the label, which ::before paints back — the «/ ""»
+     alt keeps a screen reader from hearing it twice). */
+  #mobile-shell #mobile-body #panel-studio .dc-exa-pop{
+    display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
+    gap:6px 3px; margin:10px 0 0; font-size:0;
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-exa-pop::before{
+    content:"پرجستجو:"; content:"پرجستجو:" / "";
+    font-size:.8125rem; color:var(--txt3); margin-inline-end:4px;
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-exa-pop a{
+    position:relative; margin:0; padding:5px 10px; border-radius:999px;
+    background:var(--cs-tile); color:var(--ac); font-size:.8125rem; font-weight:700;
+    line-height:1.5; text-decoration:none;
+  }
+  /* 44px tap height without growing the row */
+  #mobile-shell #mobile-body #panel-studio .dc-exa-pop a::after{
+    content:""; position:absolute; inset:-7px 0;
+  }
+
+  /* narrow phones: one scrolling row of pills and a smaller headline, so the
+     stack above the sponsor slot stays no taller than it was */
+  @media (max-width:380px){
+    #mobile-shell #mobile-body #panel-studio .dc-identity-main{ font-size:1.875rem; }
+    #mobile-shell #mobile-body #panel-studio .dc-exa-pop{
+      flex-wrap:nowrap; justify-content:flex-start; overflow-x:auto; scrollbar-width:none;
+    }
+    #mobile-shell #mobile-body #panel-studio .dc-exa-pop::-webkit-scrollbar{ display:none; }
+    #mobile-shell #mobile-body #panel-studio .dc-exa-pop::before,
+    #mobile-shell #mobile-body #panel-studio .dc-exa-pop a{ flex:none; }
+    #mobile-shell #mobile-body #panel-studio .dc-exa-pop a{ padding-inline:8px; }
+    #mobile-shell #mobile-body #panel-studio .hero-stat .v{ font-size:2.375rem; }
+  }
+
+  /* stats: unboxed, larger numbers, hairlines between */
+  #mobile-shell #mobile-body #panel-studio .hero-stats{
+    padding:0; margin:12px 0 12px; border:0; background:none; box-shadow:none;
+  }
+  #mobile-shell #mobile-body #panel-studio .hero-stat::before{ display:none; }
+  #mobile-shell #mobile-body #panel-studio .hero-stat + .hero-stat::after{
+    top:10%; height:80%; transform:none; width:1px; background:var(--border); opacity:1;
+  }
+  #mobile-shell #mobile-body #panel-studio .hero-stat .v{
+    font-size:2.625rem; line-height:1.15; font-weight:500;
+    background:none; -webkit-background-clip:border-box; background-clip:border-box;
+    -webkit-text-fill-color:currentColor; color:var(--txt);
+  }
+  #mobile-shell #mobile-body #panel-studio .hero-stat .k{ margin-top:4px; font-size:.75rem; line-height:1.5; }
+
+  /* latest episode: same compact card, flat tile */
+  #mobile-shell #mobile-body #panel-studio .dc-home-hero{
+    background:var(--cs-tile); border:0; border-radius:20px; box-shadow:none;
+    padding:16px; margin-bottom:12px;
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-home-hero-cover{ border:0; border-radius:14px; box-shadow:none; }
+  #mobile-shell #mobile-body #panel-studio .dc-home-hero-badge,
+  #mobile-shell #mobile-body #panel-studio .dc-home-hero-play{ background:var(--cs-navy); box-shadow:none; }
+  #mobile-shell #mobile-body #panel-studio .dc-home-hero-row{ border-top-color:var(--border); }
+
+  /* section rhythm + headings (home, archive) */
+  #mobile-shell #mobile-body #panel-studio .dc-home-sec,
+  #mobile-shell #mobile-body #panel-sharehub .dc-home-sec{ margin-top:64px; margin-bottom:16px; align-items:baseline; }
+  #mobile-shell #mobile-body #panel-studio .dc-home-sec-label,
+  #mobile-shell #mobile-body #panel-sharehub .dc-home-sec-label{
+    font-size:1.625rem; line-height:1.5; font-weight:800; color:var(--x-ink); letter-spacing:-.01em;
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-home-more{ font-size:.875rem; font-weight:700; color:var(--ac); }
+
+  /* login / streak promo: no box, centred */
+  #mobile-shell #mobile-body #panel-studio .dc-plus-home-card{ margin:64px 0 0; }
+  #mobile-shell #mobile-body #panel-studio .dc-plus-promo{
+    background:none; border:0; border-radius:0; box-shadow:none; padding:0; text-align:center;
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-plus-promo-top{ flex-direction:column; gap:14px; }
+  #mobile-shell #mobile-body #panel-studio .dc-plus-medal{ width:64px; height:64px; box-shadow:none; }
+  #mobile-shell #mobile-body #panel-studio .dc-plus-promo-h{
+    font-size:1.625rem; line-height:1.5; font-weight:800; color:var(--x-ink);
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-plus-promo-sub{ margin-top:8px; font-size:1rem; line-height:1.9; color:var(--txt2); }
+  #mobile-shell #mobile-body #panel-studio .dc-plus-promo-rule{ display:none; }
+  #mobile-shell #mobile-body #panel-studio .dc-plus-promo-bottom{ display:block; }
+  #mobile-shell #mobile-body #panel-studio .dc-plus-feats{ justify-content:center; margin:20px 0 22px; }
+  #mobile-shell #mobile-body #panel-studio .dc-plus-feat{
+    height:40px; box-sizing:border-box; padding:0 16px; border:0; background:var(--cs-tile);
+    font-size:.84375rem;
+  }
+  #mobile-shell #mobile-body #panel-studio .dcp-btn.dc-plus-cta{
+    width:100%; height:54px; justify-content:center; border:0; border-radius:12px;
+    background:var(--ac); box-shadow:none; transform:none; font-size:1rem; font-weight:800; color:#fff;
+  }
+
+  /* «مسیرهای یادگیری»: heading outside any box, only the open pathway tiled */
+  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase:not([hidden]){ margin-top:64px; }
+  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-hf .dcp-pws{
+    background:none; border:0; border-radius:0; box-shadow:none; padding:0; margin:0;
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-pws-head{ margin-bottom:22px; }
+  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-pws-ico{ display:none; }
+  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-pws-ht b{
+    font-size:1.625rem; line-height:1.5; font-weight:800; color:var(--x-ink);
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-hf .dcp-pws-ht span{
+    margin-top:6px; font-size:.90625rem; line-height:1.8; color:var(--txt3);
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-pws-feat{
+    background:var(--cs-blue-wash); border:0; border-radius:20px; box-shadow:none; padding:22px 20px;
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-pws-disc{ background:var(--cs-inner); border:0; }
+  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-hf .dcp-pws-ft-desc{
+    margin:14px 0 16px; font-size:.875rem; line-height:1.9;
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-hf .dcp-pws-cert{ background:none; border:0; padding:0; }
+  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-hf .dcp-pws-go{
+    display:inline-flex; align-items:center; height:44px; padding:0 20px; font-size:.84375rem; font-weight:800;
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-hf .dcp-pws-others{ margin:28px 0 14px; font-size:.875rem; }
+  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-hf .dcp-pws-tog{
+    border-top:0; margin-top:6px; padding-top:8px; font-size:.875rem;
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-pathway-showcase .dcp-pws-pg{
+    background:var(--x-amber-wash); border:0; box-shadow:none;
+  }
+
+  /* «مسیریاب یادگیری»: flat amber-wash tile */
+  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry{
+    background:var(--x-amber-wash); border:0; border-radius:20px; box-shadow:none;
+    padding:22px 20px; margin:40px 0 0;
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry::before{ display:none; }
+  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry .dc-wf-ico{ border:0; }
+  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry .dc-wf-eyebrow{
+    background:var(--cs-navy); box-shadow:none; height:26px; padding:0 12px; margin-bottom:8px;
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry .dc-wf-ttl{ font-size:1.25rem; }
+  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry .dc-wf-sub{ font-size:.90625rem; line-height:1.9; color:var(--txt2); }
+  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry .dc-wf-row{ border-top:0; padding-top:0; margin-top:18px; }
+  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry .dc-wf-cta{ font-size:.9375rem; }
+  #mobile-shell #mobile-body #panel-studio .dc-wf-home-entry .dc-wf-amber-pill{ background:none; padding:5px 12px; }
+
+  /* «دسته‌های محتوا»: flat tiles */
+  #mobile-shell #mobile-body #panel-studio .dc-exa-cats{ gap:10px; }
+  #mobile-shell #mobile-body #panel-studio .dc-exa-cat{
+    min-height:68px; box-sizing:border-box; background:var(--cs-tile); border:0; border-radius:14px; box-shadow:none;
+    padding-block:10px; padding-inline-start:14px;
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-exa-cat b{ font-size:.9375rem; }
+
+  /* «تازه‌های دنت‌کست»: no outer card, hairline rows */
+  #mobile-shell #mobile-body #panel-studio #dcLatestRail{
+    background:none; border:0; border-radius:0; box-shadow:none; padding:0; margin-top:-8px;
+  }
+  #mobile-shell #mobile-body #panel-studio #dcLatestRail .dc-rail-card{
+    padding-block:18px; border-bottom:1px solid var(--border);
+  }
+  #mobile-shell #mobile-body #panel-studio #dcLatestRail .dc-rail-card:last-child{ border-bottom:0; }
+  #mobile-shell #mobile-body #panel-studio #dcLatestRail .dc-rail-title{
+    margin-top:8px; font-size:1.0625rem; line-height:1.75; font-weight:700;
+  }
+  #mobile-shell #mobile-body #panel-studio #dcLatestRail .dc-type-chip{ border-radius:6px; }
+
+  /* «از کجا شروع کنم؟»: full-bleed amber-wash band, white flat cards */
+  #mobile-shell #mobile-body #panel-studio .dcb-band:not([hidden]),
+  #mobile-shell #mobile-body #panel-premium .dcb-band:not([hidden]){
+    background:var(--x-amber-wash); border:0; border-radius:0; box-shadow:none;
+    margin-inline:-20px; padding:36px 20px 30px;
+  }
+  #mobile-shell #mobile-body #panel-studio .dcb-band:not([hidden]){ margin-top:64px; margin-bottom:0; }
+  #mobile-shell #mobile-body #panel-studio .dcb-band .dcb-band-title,
+  #mobile-shell #mobile-body #panel-premium .dcb-band .dcb-band-title{
+    font-size:1.625rem; line-height:1.5; font-weight:800; color:var(--x-ink); gap:10px; flex-wrap:wrap;
+  }
+  #mobile-shell #mobile-body #panel-studio .dcb-band .dcb-band-count,
+  #mobile-shell #mobile-body #panel-premium .dcb-band .dcb-band-count{
+    background:none; border:1px solid var(--x-amber-bd); padding:3px 10px;
+  }
+  #mobile-shell #mobile-body #panel-studio .dcb-band .dcb-band-hint,
+  #mobile-shell #mobile-body #panel-premium .dcb-band .dcb-band-hint{ margin-top:6px; font-size:.90625rem; line-height:1.8; }
+  #mobile-shell #mobile-body #panel-studio .dcb-band .dcb-railwrap,
+  #mobile-shell #mobile-body #panel-premium .dcb-band .dcb-railwrap{
+    margin-inline:-20px; padding:14px 20px 6px; scroll-padding-inline:20px;
+  }
+  #mobile-shell #mobile-body #panel-studio .dcb-band .dcb-railcard,
+  #mobile-shell #mobile-body #panel-premium .dcb-band .dcb-railcard{
+    background:var(--cs-inner); border:0; border-radius:16px; box-shadow:none; padding:16px;
+  }
+
+  /* «سری‌های موضوعی»: flat tiles in a bleeding rail */
+  #mobile-shell #mobile-body #panel-studio > .dc-rail:not(#dcLatestRail){ margin-inline:-20px; padding-inline:20px; gap:12px; }
+  #mobile-shell #mobile-body #panel-studio .dc-pillar-card{
+    background:var(--cs-tile); border:0; border-radius:16px; box-shadow:none; padding:18px 8px 14px;
+  }
+  #mobile-shell #mobile-body #panel-studio .dc-pillar-ico{ background:var(--cs-inner); border:0; width:44px; height:44px; }
+  #mobile-shell #mobile-body #panel-studio .dc-pillar-name{ font-size:.84375rem; font-weight:700; color:var(--x-ink); }
+
+  /* «یک نگاه سریع»: two flat tiles */
+  #mobile-shell #mobile-body #panel-studio .dc-duo{ gap:10px; }
+  #mobile-shell #mobile-body #panel-studio .dc-duo-card{
+    background:var(--cs-tile); border:0; border-radius:16px; box-shadow:none; padding:18px 16px;
+  }
+
+  /* ═════════════ ARCHIVE ═════════════ */
+  #mobile-shell #mobile-body #panel-sharehub .dc-exa-search{ margin-top:14px; }
+  #mobile-shell #mobile-body #panel-sharehub .dc-home-sec-sub{ font-size:.8125rem; }
+  /* list rows → flat tiles */
+  #mobile-shell #mobile-body #panel-sharehub .dc-list-card{
+    background:var(--cs-tile); border:0; border-radius:14px; box-shadow:none;
+  }
+  #mobile-shell #mobile-body #panel-sharehub .dc-list-card:not(.featured){ min-height:68px; box-sizing:border-box; margin-bottom:10px; }
+  #mobile-shell #mobile-body #panel-sharehub .dc-list-card:active{ box-shadow:none; }
+  #mobile-shell #mobile-body #panel-sharehub .dc-list-card-title{ font-size:.9375rem; }
+  #mobile-shell #mobile-body #panel-sharehub .dc-list-card-sub{ font-size:.8125rem; }
+  /* the pair's own rules are !important (EXAMINE skin), so this is too */
+  #mobile-shell #mobile-body #panel-sharehub .dc-list-card.featured{
+    background:var(--cs-tile) !important; border:0 !important; border-radius:16px;
+  }
+  #mobile-shell #mobile-body #panel-sharehub .dc-home-sec-upboard{ align-items:stretch; }
+  #mobile-shell #mobile-body #panel-sharehub .dc-list-card .dc-chip{ background:var(--cs-inner); border:0; }
+  /* up-board monitor: no outer card, hairline rows */
+  #mobile-shell #mobile-body #panel-sharehub .dc-monitor{
+    background:none; border:0; border-radius:0; box-shadow:none; margin-top:0;
+  }
+  #mobile-shell #mobile-body #panel-sharehub .dc-monitor::before,
+  #mobile-shell #mobile-body #panel-sharehub .dc-monitor::after{ display:none; }
+  #mobile-shell #mobile-body #panel-sharehub .dc-monitor-inner{ padding:0; }
+  #mobile-shell #mobile-body #panel-sharehub .dc-monitor-tab{ padding:6px 14px; font-size:.8125rem; }
+  #mobile-shell #mobile-body #panel-sharehub .dc-monitor-all{ font-size:.875rem; }
+  #mobile-shell #mobile-body #panel-sharehub .dc-monitor-list{ gap:0; }
+  #mobile-shell #mobile-body #panel-sharehub .dc-monitor-list li + li{ border-top:1px solid var(--border); }
+  #mobile-shell #mobile-body #panel-sharehub .dc-monitor-list a{ padding:14px 0; font-size:.9375rem; line-height:1.7; }
+  /* premium doors keep amber: flat wash, no hairline */
+  #mobile-shell #mobile-body #panel-sharehub .dc-ub-door{
+    background:var(--x-amber-wash); border:0; border-radius:14px; box-shadow:none; margin-top:14px; padding:14px;
+  }
+  #mobile-shell #mobile-body #panel-sharehub .dc-ub-door-b{ background:none; }
+  /* search-engine cards */
+  #mobile-shell #mobile-body #panel-sharehub .dc-radar-hero{
+    background:var(--cs-tile); border:0; border-radius:20px; box-shadow:none;
+  }
+  #mobile-shell #mobile-body #panel-sharehub .dc-radar-hero::before,
+  #mobile-shell #mobile-body #panel-sharehub .dc-radar-hero::after{ display:none; }
+  #mobile-shell #mobile-body #panel-sharehub .dc-radar-hero-ico{ background:var(--cs-inner); border:0; }
+  #mobile-shell #mobile-body #panel-sharehub .dc-radar-hero-btn{ background:var(--cs-navy); box-shadow:none; }
+  #mobile-shell #mobile-body #panel-sharehub #card-library{ background:var(--x-amber-wash); }
+  #mobile-shell #mobile-body #panel-sharehub #card-library .dc-radar-hero-ico{ background:var(--x-amber-wash-2); }
+
+  /* ═════════════ PREMIUM (amber stays the colour of this tab) ═════════════ */
+  #mobile-shell #mobile-body #panel-premium .dcp-hf .dc-list-card.dcp-hf-card{
+    background:var(--x-amber-wash); border:0; border-radius:14px; box-shadow:none;
+  }
+  #mobile-shell #mobile-body #panel-premium .dcp-hf .dcp-hf-ico{ border:0; }
+  #mobile-shell #mobile-body #panel-premium .dcp-pp-seen-demo{ background:var(--cs-inner); border:0; }
+  #mobile-shell #mobile-body #panel-premium .dcb-band.dcp-pp-bundles{ margin-bottom:24px; }
+  #mobile-shell #mobile-body #panel-premium .dc-destool-tab{
+    background:var(--x-amber-wash); border:0; border-radius:14px; box-shadow:none;
+  }
+  #mobile-shell #mobile-body #panel-premium .dc-destool-tab[aria-expanded="true"]{ border-radius:14px 14px 0 0; }
+  #mobile-shell #mobile-body #panel-premium .dc-destool-tab .dc-destool-ico{ border:0; }
+  #mobile-shell #mobile-body #panel-premium .dcp-hf .dcp-pws,
+  #mobile-shell #mobile-body #panel-premium .dcp-hf .dcp-pws-feat,
+  #mobile-shell #mobile-body #panel-premium .dcp-hf .dcp-pws-pg{ box-shadow:none; }
+}
+  </style>
   <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
 </head>
 <body>
