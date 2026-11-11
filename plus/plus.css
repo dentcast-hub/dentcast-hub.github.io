@@ -223,6 +223,10 @@
      empty full-width ::after is the line break; row-gap moves to the chips'
      own top margin so the zero-height break line costs nothing. Only beside a
      reading time: an audio episode has none, and its chip fits next to share. */
+  /* Lines stack from the top: under a reserved height (dc-theme.css) the
+     reading-time line must already sit where it will stay once chips land,
+     not centred in the empty space and then jump up. */
+  .dc-actions-aux { align-content: flex-start; }
   .dc-actions-aux:has(> .dc-act-time):has(> :is(.dc-act-des, .dc-act-cons, .dc-act-fid)) { row-gap: 0; }
   .dc-actions-aux:has(> .dc-act-time):has(> :is(.dc-act-des, .dc-act-cons, .dc-act-fid))::after {
     content: ''; flex: 0 0 100%; height: 0; order: 1;
