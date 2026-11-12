@@ -41455,6 +41455,56 @@
           ]
         }
       ]
+    },
+    "chairside/chairside-53": {
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/chairside/chairside-53.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-53.html#flashcards-c1",
+              "name": "جابه‌جایی پاتولوژیک دندان‌های قدامی",
+              "description": "به‌هم خوردن تعادل نیروهای دهانی و حمایت پریودنتال می‌تواند جای دندان‌های قدامی را به‌تدریج عوض کند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-53.html#flashcards-c2",
+              "name": "حرکت گروهی دندان‌های اسپلینت‌شده",
+              "description": "روکش‌های متصل ممکن است با دندان‌های پایه به‌صورت یک مجموعه حرکت کنند و فاصله در مرز دو مجموعه باز شود.",
+              "source": "authored"
+            }
+          ]
+        }
+      ],
+      "faqPages": [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/chairside/chairside-53.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا اسپلینت کردن روکش‌های قدامی همیشه مانع باز شدن فاصله بین دو مجموعه می‌شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر. دندان‌های پایهٔ هر مجموعه ممکن است همراه یکدیگر جابه‌جا شوند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا می‌توان علت دیاستم تدریجی بین روکش‌های قدیمی را فقط از روی نمای کلینیکی مشخص کرد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر. وضعیت پریودنتال، حمایت استخوانی، تماس‌های خلفی و قدامی و یکپارچگی روکش‌ها باید بررسی شوند."
+              }
+            }
+          ]
+        }
+      ]
     }
   }
 }
