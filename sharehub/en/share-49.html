@@ -1,0 +1,543 @@
+<!doctype html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Crown-to-Root Ratio: How Far Can We Trust the Classic Numbers? | Share Hub – DentCast</title>
+
+<meta name="description" content="Where did the crown-to-root ratio come from, how much scientific support does it have, and how far should we rely on it when choosing an abutment tooth?">
+
+<link rel="canonical" href="https://dentcast.org/sharehub/en/share-49.html">
+
+<meta name="robots" content="noindex, follow">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="DentCast">
+<meta property="og:title" content="Crown-to-Root Ratio: How Far Can We Trust the Classic Numbers? | Share Hub – DentCast">
+<meta property="og:description" content="Where did the crown-to-root ratio come from, how much scientific support does it have, and how far should we rely on it when choosing an abutment tooth?">
+<meta property="og:url" content="https://dentcast.org/sharehub/en/share-49.html">
+<meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Crown-to-Root Ratio: How Far Can We Trust the Classic Numbers? | Share Hub – DentCast">
+<meta name="twitter:description" content="Where did the crown-to-root ratio come from, how much scientific support does it have, and how far should we rely on it when choosing an abutment tooth?">
+<meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+
+  <!-- Shared design system -->
+  <link rel="stylesheet" href="/dc-theme.css?v=19">
+  <link rel="stylesheet" href="/dc-nav.css?v=18">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Theme init — no flash -->
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --radius:18px;
+    }
+
+    html,body { margin:0; padding:0; }
+
+    body {
+      font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+      direction: ltr;
+      background: #f0f2f5;
+      color: #0a1a33;
+      max-width: 47.5rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 6.25rem;line-height:1.9;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizelegibility;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0a1020;
+      font-weight: 800;
+      font-size: 1.7rem;
+      line-height: 1.35;
+      margin: 0 0 1.875rem;
+    }
+
+    .glass-box {
+      background: #fff;
+      border: 1px solid rgba(2,35,96,.09);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.875rem;
+      box-shadow: 0 10px 30px rgba(2,35,96,.06);
+    }
+
+    p { margin: 0.875rem 0; font-size: 1.02rem; text-align: left; }
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin: 1.5rem 0 0.625rem;
+      border-left: 4px solid #0b5fff;
+      padding-left: 0.75rem;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.875rem 0;
+    }
+
+    ul li::before {
+      content: "✦ ";
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    /* summary tables — LTR counterpart of the .text-box table pattern used elsewhere on the site */
+    .glass-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .glass-box table th,
+    .glass-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:left;
+      vertical-align:top;
+    }
+    .glass-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .glass-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+    @media (max-width:768px){
+      .glass-box table{font-size:.9rem;}
+      .glass-box table th,.glass-box table td{padding:0.45rem 0.5rem;}
+    }
+
+    .text-divider {
+      margin: 1.75rem 0;
+      border: 0;
+      height: 0.0625rem;
+      background-image: linear-gradient(
+        to right,
+        rgba(0,0,0,0),
+        rgba(11,95,255,0.4),
+        rgba(0,0,0,0)
+      );
+    }
+
+    /* images with a visible caption */
+    .glass-box figure { max-width: 30rem; margin: 1.25rem auto; }
+    .glass-box figcaption {
+      text-align: center;
+      font-size: .85rem;
+      opacity: .75;
+      margin-top: 0.5rem;
+      line-height: 1.7;
+    }
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: #4a5568;
+      font-weight: 600;
+    }
+
+    /* images with a visible caption */
+    .glass-box figure { max-width: 30rem; margin: 1.25rem auto; }
+    .glass-box figcaption {
+      text-align: center;
+      font-size: .85rem;
+      opacity: .75;
+      margin-top: 0.5rem;
+      line-height: 1.8;
+    }
+
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* section kicker above the title */
+    .sh-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: .02em;
+      margin: 0 0 0.5rem;
+    }
+
+    /* references list */
+    .sh-refs { margin-top: 0.5rem; }
+    .sh-refs li { font-size: 0.95rem; line-height: 1.9; }
+    .sh-refs a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .sh-refs a:hover { text-decoration: underline; }
+
+    /* figure pairs and wide tables */
+    .glass-box .sh-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+    .glass-box .sh-pair figure { margin: 0; }
+    .glass-box .sh-pair img { width: 100%; height: auto; }
+    /* Keep the supplied clinical crops at their native size; shrink only on narrow screens. */
+    .glass-box figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+    .sh-scroll { overflow-x: auto; }
+    .sh-scroll img { min-width: 32rem; }
+    @media (max-width:420px){ .glass-box .sh-pair { grid-template-columns: 1fr; } }
+
+    /* permission chips */
+    .chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: .05rem .55rem; border-radius: 999px; line-height: 1.7; white-space: nowrap; margin-inline-start: .25rem; }
+    .chip.ok { color: #1f7a3a; background: rgba(47,122,60,.14); }
+    .chip.warn { color: #9a6200; background: rgba(214,150,20,.16); }
+    .chip.no { color: #b3342b; background: rgba(179,52,43,.13); }
+    [data-theme="dark"] .chip.ok { color: #7fcf8a; }
+    [data-theme="dark"] .chip.warn { color: #f0bb5b; }
+    [data-theme="dark"] .chip.no { color: #f08a80; }
+
+    /* Persian-version toggle button */
+    .lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+
+    @media (max-width:768px){
+      h1 { font-size: 1.4rem; }
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { line-height: 1.9;}
+    }
+  
+ h2{font-size:1.2rem;color:var(--blue);border-left:4px solid #0b5fff;padding-left:.75rem;margin-top:1.75rem;}
+
+    /* figure pairs and wide tables */
+    .glass-box .sh-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+    .glass-box .sh-pair figure { margin: 0; }
+    .glass-box .sh-pair img { width: 100%; height: auto; }
+    /* Keep the supplied clinical crops at their native size; shrink only on narrow screens. */
+    .glass-box figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+    .sh-scroll { overflow-x: auto; }
+    .sh-scroll img { min-width: 32rem; }
+    @media (max-width:420px){ .glass-box .sh-pair { grid-template-columns: 1fr; } }
+
+
+    /* permission chips (مجاز / با محدودیت / استفاده نکن) */
+    .chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: .05rem .55rem; border-radius: 999px; line-height: 1.7; white-space: nowrap; margin-inline-start: .25rem; }
+    .chip.ok { color: #1f7a3a; background: rgba(47,122,60,.14); }
+    .chip.warn { color: #9a6200; background: rgba(214,150,20,.16); }
+    .chip.no { color: #b3342b; background: rgba(179,52,43,.13); }
+    [data-theme="dark"] .chip.ok { color: #7fcf8a; }
+    [data-theme="dark"] .chip.warn { color: #f0bb5b; }
+    [data-theme="dark"] .chip.no { color: #f08a80; }
+
+    /* English-version toggle button */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 auto 1.125rem 0;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { line-height: 1.9;}
+    }
+  </style>
+
+  <meta name="theme-color" content="#0b5fff">
+
+  <!-- Share Hub Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://dentcast.org/sharehub/en/share-49.html",
+      "url": "https://dentcast.org/sharehub/en/share-49.html",
+      "name": "Crown-to-Root Ratio: How Far Can We Trust the Classic Numbers?",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://dentcast.org/#website"
+      },
+      "about": {
+        "@id": "https://dentcast.org/sharehub/en/share-49.html#creativework"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://dentcast.org/sharehub/en/share-49.html#creativework",
+      "name": "Crown-to-Root Ratio: How Far Can We Trust the Classic Numbers?",
+      "headline": "Crown-to-Root Ratio: How Far Can We Trust the Classic Numbers?",
+      "description": "Where did the crown-to-root ratio come from, how much scientific support does it have, and how far should we rely on it when choosing an abutment tooth?",
+      "inLanguage": "en",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Dr. Foad Shahabian"
+        }
+      ],
+      "creator": [
+        {
+          "@type": "Person",
+          "name": "Dr. Foad Shahabian"
+        }
+      ],
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/sharehub/en/share-49.html"
+      },
+      "datePublished": "2026-11-12",
+      "dateModified": "2026-11-12",
+      "genre": "Dental Education",
+      "keywords": [
+        "Crown-to-Root Ratio: How Far Can We Trust the Classic Numbers?"
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "DentCast",
+      "item": "https://dentcast.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Share Hub",
+      "item": "https://dentcast.org/sharehub/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Crown-to-Root Ratio: How Far Can We Trust the Classic Numbers? | Share Hub – DentCast",
+      "item": "https://dentcast.org/sharehub/en/share-49.html"
+    }
+  ]
+}
+</script>
+  <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
+</head>
+
+<body>
+
+<!-- ── TOP BAR ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GLOBAL SEARCH ── -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<main class="article-content-wrap">
+<div class="sh-kicker">Share Hub</div>
+<h1>Crown-to-Root Ratio: How Far Can We Trust the Classic Numbers?</h1>
+<div class="glass-box">
+<a class="lang-btn" href="../share-49.html" rel="noopener">فارسی</a>
+<div class="sh-dialogue">
+<p>Suppose a tooth is going to serve as an abutment for a bridge or partial denture, but it has some bone loss. One of the first things we assess on the radiograph is the crown-to-root ratio. We remember its famous numbers from dental school: 1:2 is ideal, 1:1.5 is favorable, and 1:1 is the minimum acceptable.</p>
+<p>But where do these numbers come from, and how much scientific support do they have?</p>
+<p>In 2005, Grossmann and Sadan reviewed the literature on this subject to see how much the crown-to-root ratio can really help us in choosing an abutment tooth and predicting treatment success.</p>
+<h2>What Exactly Does This Ratio Measure?</h2>
+<p>The crown-to-root ratio is the ratio of the length of the part of the tooth that lies outside the bone to the length of the part of the root that is supported within the bone.</p>
+<p>The point is that the crown in this definition is neither the anatomical crown nor the clinical crown. Our reference is the bone level, not the CEJ or the gingival margin.</p>
+<p>The biomechanical logic of this ratio goes back to leverage. The center of rotation of the tooth lies approximately in the middle of the part of the root inside the bone. When bone is lost, the length of the external lever arm increases and the length of the resisting arm decreases. As a result, the tooth becomes more vulnerable to lateral forces.</p>
+<h2>Why Is Measuring Root Length Alone Not Enough?</h2>
+<p>The problem is that the tooth root is not a simple cylinder. Most roots are conical, so a reduction in bone height is not necessarily directly proportional to a reduction in periodontal attachment area.</p>
+<p>For example, in one study, loss of half the attachment height was accompanied by the loss of an average of 61.5 percent of the attachment area. In another study on mandibular canines and premolars, when only half the root length remained, only 38 percent of the original attachment area remained.</p>
+<p>In the maxillary first molar, the root trunk alone makes up about 32 percent of the total root surface on average.</p>
+<p>So on a radiograph we may assume that the tooth still has half of its root support, while the actual remaining attachment area is less than this.</p>
+<p>For this reason, the crown-to-root ratio may underestimate the severity of the loss of periodontal support.</p>
+<p>Another issue is the measurement method. The studies the authors reviewed showed that panoramic radiography, especially in limited bone loss, underestimated the extent of destruction. Therefore, periapical radiography is the more appropriate choice for assessing this ratio.</p>
+<h2>Where Do the Classic Numbers Come From?</h2>
+<p>The 1:2 ratio, which is usually presented as the ideal ratio, was derived from examining teeth with a healthy periodontium; a condition that does not exist in many teeth requiring prosthetic treatment.</p>
+<p>Even the classic prosthodontic textbooks do not agree on these numbers.</p>
+<p>For example, Shillingburg considers 1:1.5 favorable and 1:1 the minimum acceptable for a bridge abutment. But the same source notes that if the opposing tooth is a tissue-supported prosthesis, such as a denture, even a ratio less favorable than 1:1 may be acceptable because occlusal forces are reduced.</p>
+<p>Some authors also consider the 1:2 criterion excessively conservative; a criterion that may lead us to exclude from the treatment plan teeth that are still usable.</p>
+<h2>How Do Our Treatments Affect This Ratio?</h2>
+<p>It is interesting that the crown-to-root ratio is not affected only by periodontal disease. Some of the treatments we perform ourselves can also change this ratio.</p>
+<p>For example, in surgical crown lengthening, removing the supporting bone increases the length of the part outside the bone, and the crown-to-root ratio becomes less favorable.</p>
+<p>In contrast, slow orthodontic extrusion can, under suitable conditions, provide us with more tooth structure for restoration without requiring the removal of the same amount of supporting bone. The authors mention an approximate rate of 2 mm per month and, in this respect, prefer slow extrusion to surgical bone removal.</p>
+<p>Increasing the vertical dimension of occlusion (VDO) can also make the crown-to-root ratio less favorable, because as the height of the prosthetic crowns increases, the length of the lever arm increases, while the root support does not change.</p>
+<p>An interesting point is that, at the time of this review, the authors found no clinical study that examined the effect of increasing VDO on the crown-to-root ratio or on tooth mobility.</p>
+<p>In an overdenture, however, the situation is the opposite. When the crown of the abutment tooth is reduced to about 1 to 2 mm above the gingival margin, the crown-to-root ratio may change from 1:1 to 1:2 or even 1:3. This shortens the lever arm and can reduce the lateral forces applied to the periodontium.</p>
+<p>In a four-year study of overdenture abutments, half of the roots remained free of mobility, mobility was completely resolved in 25 percent of the roots that were initially mobile, and it decreased in another 25 percent. However, the authors do not attribute this improvement solely to the change in the crown-to-root ratio and consider periodontal health to be a contributing factor as well.</p>
+<h2>Can Splinting Compensate for an Unfavorable Crown-to-Root Ratio?</h2>
+<p>One of the main reasons splinting of abutment teeth was proposed is this very concern about an unfavorable crown-to-root ratio.</p>
+<p>In theory, connecting several teeth to one another can increase the stability of the unit and change how lateral forces are transmitted. But does stress decrease proportionally as the number of splinted teeth increases?</p>
+<p>Laboratory studies do not confirm such a simple relationship.</p>
+<p>For example, in one study on a cantilever bridge, occlusal forces were mainly distributed among the three teeth closest to the loading site, and adding more abutments did not produce a proportional reduction in periodontal stress.</p>
+<p>In another laboratory study on a partial denture as well, increasing the number of splinted teeth was not necessarily accompanied by a proportional reduction in maximum stress.</p>
+<p>Ultimately, the authors found no objective criterion specifying, at a given crown-to-root ratio, how many teeth should be splinted. Even the effect of splinting on the longevity of abutment teeth had not been definitively established.</p>
+<p>Therefore, the decision to splint should be made based on a set of factors, including increasing mobility, initial pocket depth, furcation involvement, the patient's ability to maintain hygiene, uncontrolled parafunction, and smoking.</p>
+<h2>Can the Crown-to-Root Ratio Really Determine a Tooth's Prognosis?</h2>
+<p>One of the most important parts of this review concerns the study by McGuire and Nunn.</p>
+<p>In that study, 2484 teeth belonging to 100 treated periodontal patients under maintenance care were followed for five years. Thirty-eight of these patients were followed for up to eight years.</p>
+<p>An unfavorable crown-to-root ratio was one of the factors that led to a poorer prognosis being assigned to a tooth at the initial evaluation.</p>
+<p>But when the actual outcomes were examined, the story was not that simple.</p>
+<p>The study's prognostic model was about 81 percent accurate overall, but none of the factors examined, including the crown-to-root ratio, showed a significant role on its own in worsening the prognosis. In addition, the prediction accuracy was not adequate for teeth that had a poorer prognosis from the start.</p>
+<p>Another important point is that in this study the crown-to-root ratio was divided only into two groups, favorable and unfavorable, and no specific numerical criterion was reported for this classification.</p>
+<p>Therefore, a definitive numerical threshold for retaining or extracting a tooth cannot be derived from these results.</p>
+<h2>In the End, How Much Importance Should We Give the Crown-to-Root Ratio?</h2>
+<p>The crown-to-root ratio is not a worthless criterion, but on its own it cannot decide the future of a tooth.</p>
+<p>When we want to select a tooth as an abutment for a bridge or partial denture, we need to consider this ratio alongside other factors, including the actual amount of bone support, tooth mobility, root shape and number, the opposing occlusion, parafunction, pulpal and endodontic status, and the amount of remaining tooth structure.</p>
+<p>The authors themselves also emphasize that assessing the total remaining bone support gives us more accurate information than a single simple linear measurement.</p>
+<p>Of course, we should note that this article is a narrative review published in 2005, and a considerable part of the sources it examined are textbooks and laboratory studies. Therefore, its conclusions mainly reflect the limits of the evidence available at the time of publication and do not necessarily represent the state of research today.</p>
+<p>The main message of the article is not that we should abandon the crown-to-root ratio, but that we should not replace clinical judgment with a single number.</p>
+<p>The crown-to-root ratio is one of the pieces of information we need for decision-making, not all of the information on which we should base our decision.</p>
+</div>
+<div class="author">Reference: <a href="https://doi.org/10.1038/sj.bdj.4801185" target="_blank" rel="noopener noreferrer">S. J. Davies</a></div>
+<div class="author-note">Author: <a href="https://dentcast.org/about.html#person-fouad-shahabian">Dr. Foad Shahabian</a></div>
+</div>
+</main>
+
+
+<script src="/global-search.js?v=19" defer></script>
+<script src="/dc-nav.js?v=338" defer></script>
+</body>
+</html>

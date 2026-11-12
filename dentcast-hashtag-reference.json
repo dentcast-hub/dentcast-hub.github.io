@@ -1008,7 +1008,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 44,
+   "count": 45,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -1053,7 +1053,8 @@
     "sharehub/share-43",
     "sharehub/share-44",
     "sharehub/share-45",
-    "sharehub/share-48"
+    "sharehub/share-48",
+    "sharehub/share-49"
    ]
   },
   {
@@ -1756,6 +1757,50 @@
    ]
   },
   {
+   "key": "بیومکانیک",
+   "tag": "#بیومکانیک",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "بایو مکانیک",
+    "بایومکانیک",
+    "بیو مکانیک"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 26,
+   "content_ids": [
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "episodes/episode-60",
+    "episodes/episode-63",
+    "episodes/episode-125-3",
+    "episodes/episode-128",
+    "episodes/episode-147-5",
+    "episodes/episode-148-1",
+    "insight/insight-13",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "notecast/episode-27",
+    "insight/insight-24",
+    "metanotes/meta-11",
+    "chairside/chairside-11",
+    "chairside/chairside-23",
+    "insight/insight-55",
+    "metanotes/meta-18",
+    "insight/insight-57",
+    "insight/insight-58",
+    "chairside/chairside-26",
+    "insight/insight-64",
+    "episodes/episode-161",
+    "chairside/chairside-33",
+    "episodes/episode-162",
+    "sharehub/share-49"
+   ]
+  },
+  {
    "key": "تصمیم_درمانی",
    "tag": "#تصمیم_درمانی",
    "domain": "clinical",
@@ -1801,49 +1846,6 @@
     "metanotes/meta-13",
     "chairside/chairside-21",
     "insight/insight-89"
-   ]
-  },
-  {
-   "key": "بیومکانیک",
-   "tag": "#بیومکانیک",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "بایو مکانیک",
-    "بایومکانیک",
-    "بیو مکانیک"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 25,
-   "content_ids": [
-    "episodes/episode-48",
-    "episodes/episode-49",
-    "episodes/episode-60",
-    "episodes/episode-63",
-    "episodes/episode-125-3",
-    "episodes/episode-128",
-    "episodes/episode-147-5",
-    "episodes/episode-148-1",
-    "insight/insight-13",
-    "notecast/episode-23",
-    "notecast/episode-24",
-    "notecast/episode-27",
-    "insight/insight-24",
-    "metanotes/meta-11",
-    "chairside/chairside-11",
-    "chairside/chairside-23",
-    "insight/insight-55",
-    "metanotes/meta-18",
-    "insight/insight-57",
-    "insight/insight-58",
-    "chairside/chairside-26",
-    "insight/insight-64",
-    "episodes/episode-161",
-    "chairside/chairside-33",
-    "episodes/episode-162"
    ]
   },
   {
@@ -2194,6 +2196,47 @@
    ]
   },
   {
+   "key": "افزایش_طول_تاج",
+   "tag": "#افزایش_طول_تاج",
+   "domain": null,
+   "words": 3,
+   "definition": "crown lengthening — به‌دست آوردن ساختار با جابه‌جایی لثه و استخوان.",
+   "use_when": "مقاله این جراحی را تجویز، رد، یا هزینه‌اش را بسنجد.",
+   "aliases": [
+    "کراون لنتنینگ",
+    "crown lengthening",
+    "لنتنینگ",
+    "کراون لنتنینگ زیبایی",
+    "esthetic crown lengthening",
+    "کراون لنگتنینگ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 20,
+   "content_ids": [
+    "episodes/episode-75",
+    "episodes/episode-76",
+    "episodes/episode-77",
+    "episodes/episode-78",
+    "insight/insight-7",
+    "chairside/chairside-6",
+    "chairside/chairside-16",
+    "chairside/chairside-21",
+    "insight/insight-55",
+    "insight/insight-64",
+    "chairside/chairside-30",
+    "sharehub/share-14",
+    "sharehub/share-19",
+    "sharehub/share-24",
+    "insight/insight-93",
+    "sharehub/share-43",
+    "insight/insight-106",
+    "metanotes/meta-23",
+    "chairside/chairside-52",
+    "sharehub/share-49"
+   ]
+  },
+  {
    "key": "انتخاب_متریال",
    "tag": "#انتخاب_متریال",
    "domain": "clinical",
@@ -2266,46 +2309,6 @@
     "sharehub/share-12",
     "chairside/chairside-29",
     "chairside/chairside-45"
-   ]
-  },
-  {
-   "key": "افزایش_طول_تاج",
-   "tag": "#افزایش_طول_تاج",
-   "domain": null,
-   "words": 3,
-   "definition": "crown lengthening — به‌دست آوردن ساختار با جابه‌جایی لثه و استخوان.",
-   "use_when": "مقاله این جراحی را تجویز، رد، یا هزینه‌اش را بسنجد.",
-   "aliases": [
-    "کراون لنتنینگ",
-    "crown lengthening",
-    "لنتنینگ",
-    "کراون لنتنینگ زیبایی",
-    "esthetic crown lengthening",
-    "کراون لنگتنینگ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 19,
-   "content_ids": [
-    "episodes/episode-75",
-    "episodes/episode-76",
-    "episodes/episode-77",
-    "episodes/episode-78",
-    "insight/insight-7",
-    "chairside/chairside-6",
-    "chairside/chairside-16",
-    "chairside/chairside-21",
-    "insight/insight-55",
-    "insight/insight-64",
-    "chairside/chairside-30",
-    "sharehub/share-14",
-    "sharehub/share-19",
-    "sharehub/share-24",
-    "insight/insight-93",
-    "sharehub/share-43",
-    "insight/insight-106",
-    "metanotes/meta-23",
-    "chairside/chairside-52"
    ]
   },
   {
@@ -2503,6 +2506,43 @@
    ]
   },
   {
+   "key": "پروگنوز_دندان",
+   "tag": "#پروگنوز_دندان",
+   "domain": null,
+   "words": 2,
+   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
+   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
+   "aliases": [
+    "پروگنوز",
+    "prognosis",
+    "پیش آگهی دندان"
+   ],
+   "variants": [
+    "#پروگنوز",
+    "#ارزیابی_دندان"
+   ],
+   "co_tags": [],
+   "count": 16,
+   "content_ids": [
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "insight/insight-7",
+    "insight/insight-14",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-4",
+    "chairside/chairside-9",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-21",
+    "chairside/chairside-30",
+    "insight/insight-95",
+    "chairside/chairside-47",
+    "chairside/chairside-52",
+    "sharehub/share-49"
+   ]
+  },
+  {
    "key": "کشیدن_دندان",
    "tag": "#کشیدن_دندان",
    "domain": null,
@@ -2642,42 +2682,6 @@
     "notecast/episode-43",
     "insight/insight-88",
     "sharehub/share-34"
-   ]
-  },
-  {
-   "key": "پروگنوز_دندان",
-   "tag": "#پروگنوز_دندان",
-   "domain": null,
-   "words": 2,
-   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
-   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
-   "aliases": [
-    "پروگنوز",
-    "prognosis",
-    "پیش آگهی دندان"
-   ],
-   "variants": [
-    "#پروگنوز",
-    "#ارزیابی_دندان"
-   ],
-   "co_tags": [],
-   "count": 15,
-   "content_ids": [
-    "episodes/episode-150-2",
-    "episodes/episode-151",
-    "insight/insight-7",
-    "insight/insight-14",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "chairside/chairside-4",
-    "chairside/chairside-9",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-21",
-    "chairside/chairside-30",
-    "insight/insight-95",
-    "chairside/chairside-47",
-    "chairside/chairside-52"
    ]
   },
   {
@@ -6412,6 +6416,30 @@
    ]
   },
   {
+   "key": "اسپلینت_پروتزی",
+   "tag": "#اسپلینت_پروتزی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "اتصالِ روکش‌ها به هم به‌عنوان استراتژیِ بیومکانیک، مشروط به هم‌سطح بودنِ پایه‌ها.",
+   "use_when": "مقاله اسپلینت را تصمیمِ بیومکانیکی بداند، نه راهِ نگه داشتنِ یک دندانِ ضعیف.",
+   "aliases": [
+    "اسپلینت پروتزی",
+    "prosthetic splinting",
+    "اتصال روکش",
+    "splinting"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-14",
+    "insight/insight-55",
+    "metanotes/meta-18",
+    "insight/insight-105",
+    "sharehub/share-49"
+   ]
+  },
+  {
    "key": "اصلاح_فضا",
    "tag": "#اصلاح_فضا",
    "domain": "clinical",
@@ -6432,6 +6460,43 @@
     "chairside/chairside-42",
     "chairside/chairside-43",
     "chairside/chairside-50"
+   ]
+  },
+  {
+   "key": "انتخاب_پایه",
+   "tag": "#انتخاب_پایه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخاب و ارزیابیِ دندان‌های طبیعیِ پایه برای بریج، پارسیل یا اسپلینت — طولِ ریشه و ساپورتِ استخوانی، طولِ اسپن و قانونِ Ante، هم‌سطح بودنِ پایه‌های اسپلینت‌شده، و نبودِ مجهول زیرِ روکش یا پست‌وکورِ پایه.",
+   "use_when": "مقاله تعیین کند کدام دندان می‌تواند پایه‌ی بریج/پارسیل/اسپلینت باشد یا کفایتِ یک دندانِ پایه را بسنجد. انتخابِ اباتمنتِ ایمپلنت #انتخاب_اباتمنت است.",
+   "aliases": [
+    "ارزیابی پایه",
+    "انتخاب اباتمنت پایه",
+    "abutment selection",
+    "انتخاب دندان پایه",
+    "ارزیابی دندان پایه",
+    "انتخاب پایه ها",
+    "کفایت پایه",
+    "پایه کافی",
+    "کدوم دندان پایه",
+    "abutment tooth selection",
+    "abutment teeth selection",
+    "abutment evaluation",
+    "ante's law",
+    "ante law",
+    "antes law",
+    "قانون انته",
+    "قانون آنته"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "chairside/chairside-20",
+    "insight/insight-55",
+    "chairside/chairside-26",
+    "metanotes/meta-23",
+    "sharehub/share-49"
    ]
   },
   {
@@ -6848,6 +6913,29 @@
     "taraz/taraz1-5",
     "taraz/taraz1-6",
     "taraz/taraz1-7"
+   ]
+  },
+  {
+   "key": "نسبت_تاج_به_ریشه",
+   "tag": "#نسبت_تاج_به_ریشه",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "نسبتِ اهرمیِ تاج به ریشه.",
+   "use_when": "مقاله این نسبت را معیار بداند.",
+   "aliases": [
+    "crown root ratio",
+    "نسبت تاج ریشه",
+    "c/r ratio"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-55",
+    "metanotes/meta-18",
+    "insight/insight-87",
+    "metanotes/meta-23",
+    "sharehub/share-49"
    ]
   },
   {
@@ -7419,29 +7507,6 @@
    ]
   },
   {
-   "key": "اسپلینت_پروتزی",
-   "tag": "#اسپلینت_پروتزی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "اتصالِ روکش‌ها به هم به‌عنوان استراتژیِ بیومکانیک، مشروط به هم‌سطح بودنِ پایه‌ها.",
-   "use_when": "مقاله اسپلینت را تصمیمِ بیومکانیکی بداند، نه راهِ نگه داشتنِ یک دندانِ ضعیف.",
-   "aliases": [
-    "اسپلینت پروتزی",
-    "prosthetic splinting",
-    "اتصال روکش",
-    "splinting"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-14",
-    "insight/insight-55",
-    "metanotes/meta-18",
-    "insight/insight-105"
-   ]
-  },
-  {
    "key": "اطمینان_کاذب",
    "tag": "#اطمینان_کاذب",
    "domain": "ai",
@@ -7461,42 +7526,6 @@
     "dentai/promptologist/prompt4-3",
     "dentai/promptologist/prompt5-3",
     "dentai/promptologist/prompt7-2"
-   ]
-  },
-  {
-   "key": "انتخاب_پایه",
-   "tag": "#انتخاب_پایه",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتخاب و ارزیابیِ دندان‌های طبیعیِ پایه برای بریج، پارسیل یا اسپلینت — طولِ ریشه و ساپورتِ استخوانی، طولِ اسپن و قانونِ Ante، هم‌سطح بودنِ پایه‌های اسپلینت‌شده، و نبودِ مجهول زیرِ روکش یا پست‌وکورِ پایه.",
-   "use_when": "مقاله تعیین کند کدام دندان می‌تواند پایه‌ی بریج/پارسیل/اسپلینت باشد یا کفایتِ یک دندانِ پایه را بسنجد. انتخابِ اباتمنتِ ایمپلنت #انتخاب_اباتمنت است.",
-   "aliases": [
-    "ارزیابی پایه",
-    "انتخاب اباتمنت پایه",
-    "abutment selection",
-    "انتخاب دندان پایه",
-    "ارزیابی دندان پایه",
-    "انتخاب پایه ها",
-    "کفایت پایه",
-    "پایه کافی",
-    "کدوم دندان پایه",
-    "abutment tooth selection",
-    "abutment teeth selection",
-    "abutment evaluation",
-    "ante's law",
-    "ante law",
-    "antes law",
-    "قانون انته",
-    "قانون آنته"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "chairside/chairside-20",
-    "insight/insight-55",
-    "chairside/chairside-26",
-    "metanotes/meta-23"
    ]
   },
   {
@@ -8355,28 +8384,6 @@
     "insight/insight-63",
     "insight/insight-67",
     "insight/insight-73"
-   ]
-  },
-  {
-   "key": "نسبت_تاج_به_ریشه",
-   "tag": "#نسبت_تاج_به_ریشه",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "نسبتِ اهرمیِ تاج به ریشه.",
-   "use_when": "مقاله این نسبت را معیار بداند.",
-   "aliases": [
-    "crown root ratio",
-    "نسبت تاج ریشه",
-    "c/r ratio"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-55",
-    "metanotes/meta-18",
-    "insight/insight-87",
-    "metanotes/meta-23"
    ]
   },
   {
