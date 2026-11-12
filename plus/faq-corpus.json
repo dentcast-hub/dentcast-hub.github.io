@@ -41455,6 +41455,32 @@
           ]
         }
       ]
+    },
+    "chairside/chairside-53": {
+      "faqPages": [{"@context": "https://schema.org", "@type": "FAQPage", "@id": "https://dentcast.org/chairside/chairside-53.html#faq", "mainEntity": [{"@type": "Question", "name": "آیا اسپلینت بودن روکش‌ها به‌تنهایی مانع جابه‌جایی دندان‌ها و ایجاد فاصله بین دو مجموعه می‌شود؟", "acceptedAnswer": {"@type": "Answer", "text": "خیر؛ دندان‌های یک مجموعه اسپلینت‌شده ممکن است همراه هم جابه‌جا شوند و بین دو مجموعه فاصله ایجاد شود."}}, {"@type": "Question", "name": "آیا می‌توان فقط از یک نمای کلینیکی، علت قطعی فاصلهٔ تدریجی بین روکش‌های قدیمی را تعیین کرد؟", "acceptedAnswer": {"@type": "Answer", "text": "خیر؛ پیش از تصمیم درمانی باید وضعیت پریودنتال، ساپورت استخوانی، تماس‌های اکلوژنی و یکپارچگی روکش‌ها بررسی شود."}}]}],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/chairside/chairside-53.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-53.html#flashcards-c1",
+              "name": "تعادل نیروها و موقعیت دندان",
+              "description": "موقعیت دندان برآیند نیروهای اکلوژنی، زبان و لب‌ها در کنار حمایت پریودنتال است؛ تغییر این تعادل می‌تواند با جابه‌جایی تدریجی دندان همراه شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-53.html#flashcards-c2",
+              "name": "حرکت مجموعهٔ دندان‌های اسپلینت‌شده",
+              "description": "اتصال روکش‌ها امکان حرکت هماهنگ دندان‌های یک مجموعه را از بین نمی‌برد؛ دو مجموعه ممکن است نسبت به هم جابه‌جا شوند و فاصله بگیرند.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
