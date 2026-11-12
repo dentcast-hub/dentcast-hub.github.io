@@ -147,6 +147,9 @@ html:not([data-theme="dark"]) body:has(main#list){ background:var(--surface); }
 #list .act a:not(.dl):hover{ background:var(--surface3); }
 .more{ border-color:transparent; background:var(--surface2); }
 .more:hover{ background:var(--surface3); }
+/* the study-type menu sized itself to its longest option (58 characters,
+   458px on a 354px row) and ran past the screen edge on phones */
+@media (max-width:600px){ .row select{ min-width:0; flex-basis:100%; } }
 </style>
   <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
 </head><body>
