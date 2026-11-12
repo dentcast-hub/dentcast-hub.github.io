@@ -5607,6 +5607,33 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
   #dc-desktop-root #dcd-col-c #dcd-welcome-feed .dc-wf-home-entry{ margin-top:26px; }
   #dc-desktop-root #dcd-col-c #dcd-welcome-feed .hero-stats{ margin:4px 0; }
   #dc-desktop-root #dcd-col-c #dcd-welcome-feed .dc-home-hero{ margin-bottom:0; }
+
+  /* ── column A, the category tree (2026-11-12) ──
+     Same language as the views beside it. Light theme: the pale-blue ground
+     (--sb #dde8f6) goes white with one hairline against column B, and the
+     active section becomes a light blue wash with blue ink instead of a solid
+     blue pill. Both themes: the subscribe row stays AMBER (it buys the
+     subscription) but as a flat amber-wash tile without the fading gradient
+     and hairline, and the three footer buttons lose their outlines and sit on
+     flat tiles. The dark sidebar's navy ground, every label, icon, size and
+     the sponsor box (.dcd-a-spot) are untouched. */
+  html:not([data-theme="dark"]) #dc-desktop-root .dcd-col-a{
+    background:var(--surface); border-left-color:var(--border);
+  }
+  html:not([data-theme="dark"]) #dc-desktop-root .dcd-col-a .dcd-group.open .dcd-group-hdr{ background:var(--cs-tile); }
+  html:not([data-theme="dark"]) #dc-desktop-root .dcd-col-a .dcd-subitem.active{
+    background:var(--cs-blue-wash); color:var(--ac);
+  }
+  html:not([data-theme="dark"]) #dc-desktop-root .dcd-col-a .dcd-subitem.active .dcd-subitem-cap{ color:var(--sb-txt-cap); }
+  #dc-desktop-root .dcd-col-a .dcd-a-subscribe a{
+    border-color:transparent; background:var(--x-amber-wash);
+  }
+  #dc-desktop-root .dcd-col-a .dcd-a-subscribe a:hover{ background:var(--x-amber-wash-2); }
+  /* the dark --cs-tile is the sidebar's own navy, so dark uses the sidebar's fills */
+  #dc-desktop-root .dcd-col-a .dcd-a-footer-btn{ border-color:transparent; background:var(--sb-fill-2); }
+  #dc-desktop-root .dcd-col-a .dcd-a-footer-btn:hover{ background:var(--sb-fill-3); color:var(--sb-txt); }
+  html:not([data-theme="dark"]) #dc-desktop-root .dcd-col-a .dcd-a-footer-btn{ background:var(--cs-tile); }
+  html:not([data-theme="dark"]) #dc-desktop-root .dcd-col-a .dcd-a-footer-btn:hover{ background:var(--surface3); }
 }
   </style>
   <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
