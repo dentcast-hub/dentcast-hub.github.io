@@ -1,0 +1,1569 @@
+{
+  "schema": "publish-completion-v1",
+  "state": {
+    "publication": {
+      "blocker": null,
+      "category": "chairside",
+      "content_id": "chairside/chairside-53",
+      "context": {
+        "approvals": [
+          {
+            "decision": "\u0686\u0631\u0627 \u0628\u06cc\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc\u06cc \u06a9\u0647 \u0642\u0628\u0644\u0627\u064b \u0628\u0647 \u0647\u0645 \u0686\u0633\u0628\u06cc\u062f\u0647 \u0628\u0648\u062f\u0646\u062f\u060c \u0641\u0627\u0635\u0644\u0647 \u0627\u06cc\u062c\u0627\u062f \u0645\u06cc\u200c\u0634\u0648\u062f\u061f",
+            "evidence": [
+              "Founder supplied exact article title"
+            ],
+            "scope": "title",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u0628\u06cc\u0645\u0627\u0631 \u0645\u06cc\u200c\u06af\u0641\u062a \u0628\u06cc\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u0642\u062f\u06cc\u0645\u06cc\u200c\u0627\u0634 \u0642\u0628\u0644\u0627\u064b \u0641\u0627\u0635\u0644\u0647\u200c\u0627\u06cc \u0646\u0628\u0648\u062f\u0647 \u0627\u0633\u062a. \u0627\u06cc\u0646 \u0648\u06cc\u0632\u06cc\u062a \u0627\u0632 \u0645\u0634\u0627\u0647\u062f\u0647\u0654 \u0641\u0627\u0635\u0644\u0647\u0654 \u062f\u0648 \u0633\u0627\u0646\u062a\u0631\u0627\u0644 \u0648 \u067e\u0631\u0633\u0634\u06cc \u062f\u0631\u0628\u0627\u0631\u0647\u0654 \u062a\u063a\u06cc\u06cc\u0631 \u062a\u062f\u0631\u06cc\u062c\u06cc \u0622\u0646 \u0634\u0631\u0648\u0639 \u0634\u062f.",
+            "evidence": [
+              "Standing acceptance Hard Rule 14, same supported caption"
+            ],
+            "scope": "caption",
+            "status": "confirmed"
+          },
+          {
+            "decision": "Public use of supplied clinical image permitted",
+            "evidence": [
+              "Founder explicitly confirmed public image permission in current conversation"
+            ],
+            "scope": "patient-image",
+            "status": "confirmed"
+          },
+          {
+            "decision": "{\"id\": \"r-a01be85f\", \"kind\": \"mcq\", \"prompt_fa\": \"\u067e\u06cc\u0634 \u0627\u0632 \u0628\u0633\u062a\u0646 \u0641\u0627\u0635\u0644\u0647\u200c\u0627\u06cc \u06a9\u0647 \u0628\u0647\u200c\u062a\u062f\u0631\u06cc\u062c \u0628\u06cc\u0646 \u062f\u0648 \u0645\u062c\u0645\u0648\u0639\u0647 \u0631\u0648\u06a9\u0634 \u0642\u062f\u0627\u0645\u06cc \u0627\u0633\u067e\u0644\u06cc\u0646\u062a\u200c\u0634\u062f\u0647 \u0627\u06cc\u062c\u0627\u062f \u0634\u062f\u0647\u060c \u06a9\u062f\u0627\u0645 \u0631\u0648\u06cc\u06a9\u0631\u062f \u0645\u0646\u0627\u0633\u0628\u200c\u062a\u0631 \u0627\u0633\u062a\u061f\", \"options\": [\"\u0628\u0631\u0631\u0633\u06cc \u067e\u0631\u06cc\u0648\u062f\u0646\u062a\u0627\u0644\u060c \u0633\u0627\u067e\u0648\u0631\u062a \u0627\u0633\u062a\u062e\u0648\u0627\u0646\u06cc\u060c \u0627\u06a9\u0644\u0648\u0698\u0646\", \"\u062a\u0639\u0648\u06cc\u0636 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u0642\u062f\u0627\u0645\u06cc\u060c \u0628\u062f\u0648\u0646 \u0627\u0631\u0632\u06cc\u0627\u0628\u06cc \u0628\u0627\u0641\u062a\u200c\u0647\u0627\u06cc \u0646\u06af\u0647\u062f\u0627\u0631\u0646\u062f\u0647\u0654 \u062f\u0646\u062f\u0627\u0646\", \"\u0628\u0633\u062a\u0646 \u0641\u0627\u0635\u0644\u0647 \u0628\u0627 \u06a9\u0627\u0645\u067e\u0648\u0632\u06cc\u062a\u060c \u0628\u062f\u0648\u0646 \u0627\u0631\u0632\u06cc\u0627\u0628\u06cc \u0645\u0648\u0642\u0639\u06cc\u062a \u062f\u0646\u062f\u0627\u0646\u200c\u0647\u0627\u06cc \u067e\u0627\u06cc\u0647\", \"\u0628\u0627\u0632\u0633\u0627\u0632\u06cc \u062a\u0645\u0627\u0633\u200c\u0647\u0627\u06cc \u0642\u062f\u0627\u0645\u06cc\u060c \u0628\u062f\u0648\u0646 \u0627\u0631\u0632\u06cc\u0627\u0628\u06cc \u0633\u0627\u067e\u0648\u0631\u062a \u0627\u0633\u062a\u062e\u0648\u0627\u0646\u06cc \u062f\u0646\u062f\u0627\u0646\u200c\u0647\u0627\"], \"correct\": 0, \"source\": \"publish\"}",
+            "evidence": [
+              "Founder approved the question and key, specifically removing \u0648 \u06cc\u06a9\u067e\u0627\u0631\u0686\u06af\u06cc \u0631\u0648\u06a9\u0634\u200c\u0647\u0627 from option A in current conversation; other options unchanged"
+            ],
+            "scope": "exam-questions",
+            "status": "confirmed"
+          }
+        ],
+        "decisions": [
+          {
+            "kind": "ledger_order_v2"
+          },
+          {
+            "kind": "fixed_three_deliveries_v1"
+          },
+          {
+            "kind": "fixed_three_deliveries_v2"
+          },
+          {
+            "evidence": [
+              "Live PILLARS from main; article concerns differential assessment before selecting a prosthetic intervention; occlusion and crown failure are contributing possibilities, not the central diagnosis"
+            ],
+            "kind": "pillar_assignment",
+            "primary": "treatment-planning",
+            "subtopic": "comprehensive-diagnosis"
+          },
+          {
+            "applied": [
+              {
+                "phrase": "\u0627\u0633\u062a\u0627\u067e\u200c\u0647\u0627\u06cc \u062e\u0644\u0641\u06cc",
+                "reason": "Natural-tooth posterior stops and occlusal changes discussed in that article",
+                "target": "/insight/insight-12.html"
+              },
+              {
+                "phrase": "\u062a\u0645\u0627\u0633\u200c\u0647\u0627\u06cc \u0627\u06a9\u0644\u0648\u0698\u0646\u06cc",
+                "reason": "Occlusal contact assessment in restorative dentistry",
+                "target": "/sharehub/share-47.html"
+              }
+            ],
+            "kind": "inline_link_review",
+            "skipped": [
+              {
+                "reason": "Implant splinting evidence is not natural-tooth migration",
+                "target": "/sharehub/share-28.html"
+              },
+              {
+                "reason": "Appliance differs from splinted crowns",
+                "target": "/glossary/occlusal-splint.html"
+              },
+              {
+                "reason": "Broad term lacks an exact treatment-plan phrase in this body",
+                "target": "/glossary/treatment-plan.html"
+              }
+            ]
+          },
+          {
+            "from_step": "C.2",
+            "kind": "dependency_invalidation_v1",
+            "reason": "Related capsule labels changed page fingerprint; image permission approval scope is conservatively treated as prose by helper. Revalidate dependent page steps; no founder body/title or image bytes changed.",
+            "superseded": {
+              "approvals": [
+                {
+                  "decision": "\u0686\u0631\u0627 \u0628\u06cc\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc\u06cc \u06a9\u0647 \u0642\u0628\u0644\u0627\u064b \u0628\u0647 \u0647\u0645 \u0686\u0633\u0628\u06cc\u062f\u0647 \u0628\u0648\u062f\u0646\u062f\u060c \u0641\u0627\u0635\u0644\u0647 \u0627\u06cc\u062c\u0627\u062f \u0645\u06cc\u200c\u0634\u0648\u062f\u061f",
+                  "evidence": [
+                    "Founder attached final article.md; exact title copied"
+                  ],
+                  "scope": "title",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "\u0628\u06cc\u0645\u0627\u0631 \u0645\u06cc\u200c\u06af\u0641\u062a \u0628\u06cc\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u0642\u062f\u06cc\u0645\u06cc\u200c\u0627\u0634 \u0642\u0628\u0644\u0627\u064b \u0641\u0627\u0635\u0644\u0647\u200c\u0627\u06cc \u0646\u0628\u0648\u062f\u0647 \u0627\u0633\u062a. \u0627\u06cc\u0646 \u0648\u06cc\u0632\u06cc\u062a \u0627\u0632 \u0645\u0634\u0627\u0647\u062f\u0647\u0654 \u0641\u0627\u0635\u0644\u0647\u0654 \u062f\u0648 \u0633\u0627\u0646\u062a\u0631\u0627\u0644 \u0648 \u067e\u0631\u0633\u0634\u06cc \u062f\u0631\u0628\u0627\u0631\u0647\u0654 \u062a\u063a\u06cc\u06cc\u0631 \u062a\u062f\u0631\u06cc\u062c\u06cc \u0622\u0646 \u0634\u0631\u0648\u0639 \u0634\u062f.",
+                  "evidence": [
+                    "Standing acceptance, Hard Rule 14; no-spoiler narrative caption"
+                  ],
+                  "scope": "caption",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "Public use of supplied clinical WebP permitted",
+                  "evidence": [
+                    "Founder confirmed image permission in current conversation"
+                  ],
+                  "scope": "patient-image",
+                  "status": "confirmed"
+                }
+              ],
+              "delivery": [],
+              "inputs": [],
+              "steps": [
+                {
+                  "evidence": [
+                    "Same-category page structure copied; exact approved body/title and image alt preserved; WebP 1536x784 measured; .org canonical; GA4 once and both crossorigin preconnects; no seal, DES markup or obsolete media"
+                  ],
+                  "id": "C.2",
+                  "module": "03-litecast-and-page.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.0.5",
+                  "module": "03-litecast-and-page.md",
+                  "reason": "Not LiteCast; specialist inline links at C.4.8",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.0.6",
+                  "module": "03-litecast-and-page.md",
+                  "reason": "Not LiteCast; related links at C.4.9",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "treatment-planning / comprehensive-diagnosis selected once, semantic diagnostic focus; recorded standing acceptance"
+                  ],
+                  "id": "C.2.4",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "One dc-related-section, glossary and canonical /pillar/treatment-planning/ capsules, 2 of 5 slots"
+                  ],
+                  "id": "C.2.5",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Chairside landing is generated by tools/build_content_landings.py during runner C.8; brain append drives it, no manual landing edit"
+                  ],
+                  "id": "C.2.6",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Date audit: template 2026-11-11 -> new 2026-11-12 for datePublished/dateModified/lastReviewed and both visible times. New canonical, OG, Twitter and JSON-LD identity/meta verified"
+                  ],
+                  "id": "C.3",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "git diff --quiet -- chairside/chairside-52.html exit 0; template unchanged"
+                  ],
+                  "id": "C.4",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.5",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "Not NoteCast",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.5-b",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "Not NoteCast or core episode; no shared sibling record",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.6",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "Chairside is not an ordered multi-part series with ep-nav",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.1",
+                  "module": "06-paper-ingestion.md",
+                  "reason": "No paper attached: no Drive filing",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.2",
+                  "module": "06-paper-ingestion.md",
+                  "reason": "No paper attached: no catalog entry",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.3",
+                  "module": "06-paper-ingestion.md",
+                  "reason": "No paper attached: authored commentary with no source credit",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "Supplied canonical JSON preserved and stored for chairside/chairside-53: FULL_TEXT v3.7, 15/E, fidelity [null]; Part 3 passed; no rerun, no source lookup or quartile guess; no Part 3b gate owed"
+                  ],
+                  "id": "C.4.13",
+                  "module": "08-des-fidelity.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Fresh semantic glossary review: no dedicated tooth migration, periodontal support, natural-tooth splinting or diastema term in current glossary. Broad treatment-plan, VDO and implant-specific terms are tangential; 0 qualifying glossary backlinks"
+                  ],
+                  "id": "C.4.7",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.7-b",
+                  "module": "05-semantic-linking.md",
+                  "reason": "Not a glossary publication; no new term to cross-link",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "Two first-occurrence anchors inserted in locked text only; no text edits, heading links, nesting or self-links; glossary-only near-matches conservatively skipped"
+                  ],
+                  "id": "C.4.8",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.9",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "started"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.11",
+                  "module": "07-flashcards-and-quiz.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.12",
+                  "module": "07-flashcards-and-quiz.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.14",
+                  "module": "09-challenge.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.0",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.5",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.6",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.5.6-b",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.6",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.8",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.7",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "D",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "E",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "F",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "G",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                }
+              ],
+              "validation": [
+                {
+                  "M3b": "No differing, doubtful or orphan Fidelity units",
+                  "audit": "COMMENTARY, not owed",
+                  "checks": [
+                    "Exact schema",
+                    "Verbatim article quotes and section declaration with note",
+                    "5+4+0+3+3=15/E",
+                    "FULL_TEXT; provisional false; null research fields",
+                    "verify_publish.py --des-text and des_record_guard.py check exit 0",
+                    "Persian interpretation supported by final text and preserved"
+                  ],
+                  "fidelity": "null for self-COMMENTARY, no call owed",
+                  "model": "Not rerun; producer UNVERIFIED",
+                  "source": "Founder canonical DES JSON v3.7",
+                  "step": "C.4.13"
+                }
+              ]
+            }
+          },
+          {
+            "composition": "Series + decision-level replacement/management + specific replacement tag count 5 before publication; no umbrella-only list",
+            "kind": "hashtag_selection",
+            "questions": [
+              "\u0686\u0631\u0627 \u0628\u06cc\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u0642\u062f\u0627\u0645\u06cc \u0642\u062f\u06cc\u0645\u06cc \u06a9\u0645\u200c\u06a9\u0645 \u0641\u0627\u0635\u0644\u0647 \u0645\u06cc\u200c\u0627\u0641\u062a\u0647\u061f",
+              "\u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u0627\u0633\u067e\u0644\u06cc\u0646\u062a\u200c\u0634\u062f\u0647 \u0647\u0645 \u0645\u0645\u06a9\u0646\u0647 \u0628\u0627 \u062f\u0646\u062f\u0627\u0646\u200c\u0647\u0627 \u062c\u0627\u0628\u0647\u200c\u062c\u0627 \u0628\u0634\u0646\u061f",
+              "\u0642\u0628\u0644 \u0627\u0632 \u062a\u0639\u0648\u06cc\u0636 \u0631\u0648\u06a9\u0634 \u0628\u0631\u0627\u06cc \u0628\u0633\u062a\u0646 \u062f\u06cc\u0627\u0633\u062a\u0645 \u0686\u06cc \u0631\u0648 \u0628\u0631\u0631\u0633\u06cc \u06a9\u0646\u0645\u061f"
+            ],
+            "resolving_quotes": {
+              "\u0627\u06a9\u0644\u0648\u0698\u0646": "\u0627\u0632 \u062f\u0633\u062a \u0631\u0641\u062a\u0646 \u0627\u0633\u062a\u0627\u067e\u200c\u0647\u0627\u06cc \u062e\u0644\u0641\u06cc \u06cc\u0627 \u062a\u063a\u06cc\u06cc\u0631 \u062a\u0645\u0627\u0633\u200c\u0647\u0627\u06cc \u0627\u06a9\u0644\u0648\u0698\u0646\u06cc \u0647\u0645 \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f \u062f\u0631 \u0628\u0639\u0636\u06cc \u0628\u06cc\u0645\u0627\u0631\u0627\u0646 \u0628\u0627\u0639\u062b \u062a\u063a\u06cc\u06cc\u0631 \u062a\u0648\u0632\u06cc\u0639 \u0646\u06cc\u0631\u0648\u0647\u0627 \u0634\u0648\u062f.",
+              "\u062a\u0639\u0648\u06cc\u0636_\u0631\u0648\u06a9\u0634": "\u0627\u0648\u0644 \u0628\u0627\u06cc\u062f \u0628\u0641\u0647\u0645\u06cc\u0645 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0628\u0627\u0639\u062b \u0634\u062f\u0647 \u0645\u0648\u0642\u0639\u06cc\u062a \u062f\u0646\u062f\u0627\u0646\u200c\u0647\u0627 \u062a\u063a\u06cc\u06cc\u0631 \u06a9\u0646\u062f.",
+              "\u062f\u06cc\u0627\u0633\u062a\u0645": "\u0648\u0642\u062a\u06cc \u0628\u06cc\u0646 \u062f\u0648 \u0631\u0648\u06a9\u0634 \u0642\u062f\u06cc\u0645\u06cc \u0628\u0647\u200c\u062a\u062f\u0631\u06cc\u062c \u0641\u0627\u0635\u0644\u0647 \u0627\u06cc\u062c\u0627\u062f \u0645\u06cc\u200c\u0634\u0648\u062f\u060c \u0646\u0628\u0627\u06cc\u062f \u0635\u0631\u0641\u0627\u064b \u0628\u0647 \u0641\u06a9\u0631 \u0628\u0633\u062a\u0646 \u0641\u0627\u0635\u0644\u0647 \u06cc\u0627 \u062a\u0639\u0648\u06cc\u0636 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627 \u0628\u0627\u0634\u06cc\u0645.",
+              "\u0637\u0631\u062d_\u062f\u0631\u0645\u0627\u0646": "\u0642\u0628\u0644 \u0627\u0632 \u0647\u0631 \u062a\u0635\u0645\u06cc\u0645 \u062f\u0631\u0645\u0627\u0646\u06cc \u0628\u0627\u06cc\u062f \u0648\u0636\u0639\u06cc\u062a \u067e\u0631\u06cc\u0648\u062f\u0646\u062a\u0627\u0644\u060c \u0633\u0627\u067e\u0648\u0631\u062a \u0627\u0633\u062a\u062e\u0648\u0627\u0646\u06cc\u060c \u062a\u0645\u0627\u0633\u200c\u0647\u0627\u06cc \u0627\u06a9\u0644\u0648\u0698\u0646\u06cc \u062e\u0644\u0641\u06cc \u0648 \u0642\u062f\u0627\u0645\u06cc \u0648 \u06cc\u06a9\u067e\u0627\u0631\u0686\u06af\u06cc \u062e\u0648\u062f \u0631\u0648\u06a9\u0634\u200c\u0647\u0627 \u0628\u0631\u0631\u0633\u06cc \u0634\u0648\u062f."
+            },
+            "reused": "All canonical, --simulate verified; no minted concepts",
+            "tags": [
+              "#\u0648\u06cc\u0632\u06cc\u062a",
+              "#\u062f\u06cc\u0627\u0633\u062a\u0645",
+              "#\u062a\u0639\u0648\u06cc\u0636_\u0631\u0648\u06a9\u0634",
+              "#\u0637\u0631\u062d_\u062f\u0631\u0645\u0627\u0646",
+              "#\u0627\u06a9\u0644\u0648\u0698\u0646"
+            ]
+          },
+          {
+            "candidates": [
+              {
+                "id": "treatment-planning",
+                "reason": "Tool ASK, frozen-core overlap 6/2, below STRONG; conservative default for short case-specific reflection",
+                "verdict": "not placed"
+              },
+              {
+                "id": "fixed-pros",
+                "reason": "Tool ASK; no technical crown design or restorative procedure taught",
+                "verdict": "not placed"
+              },
+              {
+                "id": "failure-troubleshooting",
+                "reason": "Tool ASK; mechanism remains hypothetical, no diagnosed failure",
+                "verdict": "not placed"
+              },
+              {
+                "id": "occlusion",
+                "reason": "Tool ASK; occlusal contribution considered, no occlusal treatment protocol",
+                "verdict": "not placed"
+              },
+              {
+                "id": "implant-prosthetic",
+                "reason": "Natural-tooth case, implant overlap tangential",
+                "verdict": "not placed"
+              },
+              {
+                "id": "biomimetic",
+                "reason": "No adhesive restorative technique",
+                "verdict": "not placed"
+              },
+              {
+                "id": "esthetic",
+                "reason": "Diastema etiology, not esthetic correction protocol",
+                "verdict": "not placed"
+              },
+              {
+                "id": "implant-surgical",
+                "reason": "No implant surgery",
+                "verdict": "not placed"
+              }
+            ],
+            "exam": "4.12-\u0628 skipped: no full-pathway membership, canonical module 07 exception",
+            "kind": "pathway_review"
+          },
+          {
+            "evidence": [
+              "Original patient encounter lead copied verbatim; no new introduction"
+            ],
+            "kind": "first_cut_lead_provenance_v1",
+            "origin": "author_original",
+            "source_ref": "Founder article.md first paragraph"
+          },
+          {
+            "english": {
+              "evidence": [
+                "Universal English chrome and same-category LTR style; eight paragraphs and initial clinical image translated; real toggle, noindex, no hreflang"
+              ],
+              "path": "chairside/en/chairside-53.html",
+              "status": "ready"
+            },
+            "evidence": [
+              "Remote Phase F issues repaired: hand-maintained Chairside landing linked; explicit occlusion membership and approved exam question added. Founder title/body/DES/image unchanged. No pending questions."
+            ],
+            "kind": "second_cut_editorial_lock_v1",
+            "scopes": [
+              {
+                "evidence": [
+                  "Revalidated actual canonical ledger evidence for scientific; occlusion membership and founder-approved revised exam included"
+                ],
+                "scope": "scientific",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Revalidated actual canonical ledger evidence for challenge; occlusion membership and founder-approved revised exam included"
+                ],
+                "scope": "challenge",
+                "status": "not_applicable"
+              },
+              {
+                "evidence": [
+                  "Revalidated actual canonical ledger evidence for taxonomy; occlusion membership and founder-approved revised exam included"
+                ],
+                "scope": "taxonomy",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Revalidated actual canonical ledger evidence for links; occlusion membership and founder-approved revised exam included"
+                ],
+                "scope": "links",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Revalidated actual canonical ledger evidence for hashtags; occlusion membership and founder-approved revised exam included"
+                ],
+                "scope": "hashtags",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Revalidated actual canonical ledger evidence for content_record; occlusion membership and founder-approved revised exam included"
+                ],
+                "scope": "content_record",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Revalidated actual canonical ledger evidence for pathways; occlusion membership and founder-approved revised exam included"
+                ],
+                "scope": "pathways",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Revalidated actual canonical ledger evidence for pulse; occlusion membership and founder-approved revised exam included"
+                ],
+                "scope": "pulse",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Revalidated actual canonical ledger evidence for english; occlusion membership and founder-approved revised exam included"
+                ],
+                "scope": "english",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Revalidated actual canonical ledger evidence for author_approvals; occlusion membership and founder-approved revised exam included"
+                ],
+                "scope": "author_approvals",
+                "status": "resolved"
+              }
+            ]
+          },
+          {
+            "from_step": "C.2.6",
+            "kind": "dependency_invalidation_v1",
+            "reason": "Remote Phase F: 98 passed, 2 failed: hand-maintained Chairside landing missing new link, and no pathway membership. Founder now explicitly requests occlusion pathway; exam draft is awaiting explicit approval. Revalidate publication dependencies and preserve unchanged text/DES.",
+            "superseded": {
+              "approvals": [
+                {
+                  "decision": "\u0686\u0631\u0627 \u0628\u06cc\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc\u06cc \u06a9\u0647 \u0642\u0628\u0644\u0627\u064b \u0628\u0647 \u0647\u0645 \u0686\u0633\u0628\u06cc\u062f\u0647 \u0628\u0648\u062f\u0646\u062f\u060c \u0641\u0627\u0635\u0644\u0647 \u0627\u06cc\u062c\u0627\u062f \u0645\u06cc\u200c\u0634\u0648\u062f\u061f",
+                  "evidence": [
+                    "Founder attached exact title"
+                  ],
+                  "scope": "title",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "\u0628\u06cc\u0645\u0627\u0631 \u0645\u06cc\u200c\u06af\u0641\u062a \u0628\u06cc\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u0642\u062f\u06cc\u0645\u06cc\u200c\u0627\u0634 \u0642\u0628\u0644\u0627\u064b \u0641\u0627\u0635\u0644\u0647\u200c\u0627\u06cc \u0646\u0628\u0648\u062f\u0647 \u0627\u0633\u062a. \u0627\u06cc\u0646 \u0648\u06cc\u0632\u06cc\u062a \u0627\u0632 \u0645\u0634\u0627\u0647\u062f\u0647\u0654 \u0641\u0627\u0635\u0644\u0647\u0654 \u062f\u0648 \u0633\u0627\u0646\u062a\u0631\u0627\u0644 \u0648 \u067e\u0631\u0633\u0634\u06cc \u062f\u0631\u0628\u0627\u0631\u0647\u0654 \u062a\u063a\u06cc\u06cc\u0631 \u062a\u062f\u0631\u06cc\u062c\u06cc \u0622\u0646 \u0634\u0631\u0648\u0639 \u0634\u062f.",
+                  "evidence": [
+                    "Standing acceptance Hard Rule 14; caption supported by text"
+                  ],
+                  "scope": "caption",
+                  "status": "confirmed"
+                },
+                {
+                  "decision": "Public use of supplied clinical image permitted",
+                  "evidence": [
+                    "Founder explicitly confirmed image permission in current conversation"
+                  ],
+                  "scope": "patient-image",
+                  "status": "confirmed"
+                }
+              ],
+              "delivery": [],
+              "inputs": [],
+              "steps": [
+                {
+                  "evidence": [
+                    "Landing regeneration belongs to runner tools/build_content_landings.py"
+                  ],
+                  "id": "C.2.6",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Verified all new publication/review dates 2026-11-12, unchanged title/caption metadata, 1536x784 OG dimensions"
+                  ],
+                  "id": "C.3",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Template git diff --quiet remains clean"
+                  ],
+                  "id": "C.4",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.5",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "Category chairside: not LiteCast, NoteCast, ordered ep-nav series, glossary or attached-paper branch; canonical category exception",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.5-b",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "Category chairside: not LiteCast, NoteCast, ordered ep-nav series, glossary or attached-paper branch; canonical category exception",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.6",
+                  "module": "04-taxonomy-and-navigation.md",
+                  "reason": "Category chairside: not LiteCast, NoteCast, ordered ep-nav series, glossary or attached-paper branch; canonical category exception",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.1",
+                  "module": "06-paper-ingestion.md",
+                  "reason": "Category chairside: not LiteCast, NoteCast, ordered ep-nav series, glossary or attached-paper branch; canonical category exception",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.2",
+                  "module": "06-paper-ingestion.md",
+                  "reason": "Category chairside: not LiteCast, NoteCast, ordered ep-nav series, glossary or attached-paper branch; canonical category exception",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.10.3",
+                  "module": "06-paper-ingestion.md",
+                  "reason": "Category chairside: not LiteCast, NoteCast, ordered ep-nav series, glossary or attached-paper branch; canonical category exception",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "Final body unchanged after anchors; supplied canonical DES remains valid: exact quotes, schema, FULL_TEXT, 15/E, [null] self-Fidelity. des-text and guard checks passed; no model calls owed"
+                  ],
+                  "id": "C.4.13",
+                  "module": "08-des-fidelity.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Reviewed glossary meaning/scope: no direct term for migration, periodontal support or splinted natural teeth; broad and implant terms skipped, zero qualifying backlinks"
+                  ],
+                  "id": "C.4.7",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.7-b",
+                  "module": "05-semantic-linking.md",
+                  "reason": "Category chairside: not LiteCast, NoteCast, ordered ep-nav series, glossary or attached-paper branch; canonical category exception",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "Verified first-occurrence posterior-stops anchor to insight-12 and occlusal-contact anchor to share-47; anchors only, body text identical"
+                  ],
+                  "id": "C.4.8",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Verified 5-link cap: glossary + treatment-planning + chairside-41 + chairside-43 + insight-12; all relevant and strongest-first"
+                  ],
+                  "id": "C.4.9",
+                  "module": "05-semantic-linking.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Two authored atomic concept cards in corpus, stable flashcards-c1/c2: force equilibrium and splinted-group movement; no FAQ dump or page JSON-LD"
+                  ],
+                  "id": "C.4.11",
+                  "module": "07-flashcards-and-quiz.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Two standalone binary FAQ questions, each starts with \u0622\u06cc\u0627 and answer with \u062e\u06cc\u0631; no article deixis or copied card description. 4.12-\u0628 evaluated at C.5.6"
+                  ],
+                  "id": "C.4.12",
+                  "module": "07-flashcards-and-quiz.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.4.14",
+                  "module": "09-challenge.md",
+                  "reason": "Ordinary clinical narrative, not Challenge; no challenge markup",
+                  "status": "skipped"
+                },
+                {
+                  "evidence": [
+                    "Canonical concepts resolved; 5 tags, existing decision and specific tag, no mint/bridge change; sync/check and assistant reachability follow brain write per module 10"
+                  ],
+                  "id": "C.5.0",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Appended new entry at absolute array tail using dentcast_text_io.json_append; exact same keys/nesting/order as chairside-52, no DES or pathway fields; tags/keywords/pillar recorded"
+                  ],
+                  "id": "C.5",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Entry pillar exactly matches C.2.4 and canonical related capsule; no new pillar/subtopic"
+                  ],
+                  "id": "C.5.5",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "pathway_place.py evaluated full live catalog and frozen core: every candidate ASK; conservative no placement, no full-pathway member. 4.12-\u0628 skipped: no full pathway, no M2 owed"
+                  ],
+                  "id": "C.5.6",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "No bundles continue a joined pathway; zero candidates. Chairside would in all cases fail gate 1"
+                  ],
+                  "id": "C.5.6-b",
+                  "module": "10-brain-and-pathways.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [
+                    "Pulse: new exact title first, 7 lines, old first six preserved. English mirror ready with universal chrome, all source prose translated, original image and both toggles; dates/SEO verified. Ten-scope lock and author-original lead recorded; founder image consent confirmed"
+                  ],
+                  "id": "C.6",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "completed"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.8",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "C.7",
+                  "module": "11-build-and-version.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "D",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "E",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "F",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                },
+                {
+                  "evidence": [],
+                  "id": "G",
+                  "module": "12-english-notify-verify.md",
+                  "reason": null,
+                  "status": "pending"
+                }
+              ],
+              "validation": [
+                {
+                  "builder": "build_plus_index.mjs executed for verification then both generated outputs restored; sparse workspace folder counts ignored, runner builds from full source",
+                  "canonical_tags": "hashtag_ref.py --check exit 0; --sync updated five counts with no concepts minted",
+                  "reachability": [
+                    {
+                      "labels": [
+                        "\u062f\u06cc\u0627\u0633\u062a\u0645",
+                        "\u062a\u0639\u0648\u06cc\u0636 \u0631\u0648\u06a9\u0634"
+                      ],
+                      "question": "\u0686\u0631\u0627 \u0628\u06cc\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u0642\u062f\u0627\u0645\u06cc \u0642\u062f\u06cc\u0645\u06cc \u06a9\u0645\u200c\u06a9\u0645 \u0641\u0627\u0635\u0644\u0647 \u0645\u06cc\u200c\u0627\u0641\u062a\u0647\u061f",
+                      "result": "New page is exact progressive-gap match, first semantic result of diastema chip; all existing candidate titles inspected"
+                    },
+                    {
+                      "labels": [
+                        "\u062f\u06cc\u0627\u0633\u062a\u0645",
+                        "\u062a\u0639\u0648\u06cc\u0636 \u0631\u0648\u06a9\u0634"
+                      ],
+                      "question": "\u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u0627\u0633\u067e\u0644\u06cc\u0646\u062a\u200c\u0634\u062f\u0647 \u0647\u0645 \u0645\u0645\u06a9\u0646\u0647 \u0628\u0627 \u062f\u0646\u062f\u0627\u0646\u200c\u0647\u0627 \u062c\u0627\u0628\u0647\u200c\u062c\u0627 \u0628\u0634\u0646\u061f",
+                      "result": "New page directly addresses natural-tooth group migration; first semantic result; implant-splinting tags rejected"
+                    },
+                    {
+                      "labels": [
+                        "\u062a\u0639\u0648\u06cc\u0636 \u0631\u0648\u06a9\u0634",
+                        "\u062f\u06cc\u0627\u0633\u062a\u0645",
+                        "\u0637\u0631\u062d \u062f\u0631\u0645\u0627\u0646"
+                      ],
+                      "question": "\u0642\u0628\u0644 \u0627\u0632 \u062a\u0639\u0648\u06cc\u0636 \u0631\u0648\u06a9\u0634 \u0628\u0631\u0627\u06cc \u0628\u0633\u062a\u0646 \u062f\u06cc\u0627\u0633\u062a\u0645 \u0686\u06cc \u0631\u0648 \u0628\u0631\u0631\u0633\u06cc \u06a9\u0646\u0645\u061f",
+                      "result": "Exact management context, new page and chairside-41 strongest results, within first four"
+                    }
+                  ],
+                  "step": "C.5.0"
+                },
+                {
+                  "reason": "No bridge or catalog changed; unchanged 8MB catalog exceeded connector response, sandbox proxy unavailable. Missing-data check is not green; runner has full checkout.",
+                  "scope": "cabinet bridge",
+                  "status": "pending_remote_check"
+                }
+              ]
+            }
+          },
+          {
+            "decision": "Add this article to occlusion pathway",
+            "evidence": [
+              "Founder explicitly requested occlusion membership during active publication; exact scope accepted, prior conservative exclusion superseded"
+            ],
+            "kind": "founder_pathway_decision",
+            "pathway": "occlusion"
+          },
+          {
+            "content_id": "chairside/chairside-53",
+            "correct": 0,
+            "evidence": [
+              "Explicit founder approval with this sole option edit; do not rewrite approved distractors to equalize lengths"
+            ],
+            "kind": "exam_question_founder_correction",
+            "removed_from_option_a": " \u0648 \u06cc\u06a9\u067e\u0627\u0631\u0686\u06af\u06cc \u0631\u0648\u06a9\u0634\u200c\u0647\u0627"
+          }
+        ],
+        "delivery": [
+          {
+            "evidence": [
+              "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/43192304042"
+            ],
+            "scope": "GitHub Actions post-Push-2 mechanical continuation"
+          }
+        ],
+        "inputs": [],
+        "pending_questions": [],
+        "unrelated_changes": [],
+        "validation": [
+          {
+            "coverage": "One occlusion placement, after sharehub/share-36, milestone false. 854 full memberships / 564 items = 1.51, curated baseline 1.38.",
+            "editorial_warning": "Founder-requested deletion shortened approved option A: 40\u201361 characters, above draft 1.25 ratio. Explicit founder wording takes precedence; no other options changed. Runtime bank validator accepts with warning.",
+            "exam": "validate_exam_questions.py --content chairside/chairside-53: 1 live, 0 review, 0 errors; append-only insertion",
+            "step": "C.5.6"
+          },
+          {
+            "evidence": [
+              "First runner Phase F: 98 passed, 0 warnings, 2 failures. New landing row fixes 2.6; new occlusion step fixes 5.6; approved bank question satisfies 4.12-\u0628. All other passed surfaces unchanged."
+            ],
+            "scope": "reconciliation"
+          },
+          {
+            "content_id": "chairside/chairside-53",
+            "exit_code": 0,
+            "expected_caption": "\u0628\u06cc\u0645\u0627\u0631 \u0645\u06cc\u200c\u06af\u0641\u062a \u0628\u06cc\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u0642\u062f\u06cc\u0645\u06cc\u200c\u0627\u0634 \u0642\u0628\u0644\u0627\u064b \u0641\u0627\u0635\u0644\u0647\u200c\u0627\u06cc \u0646\u0628\u0648\u062f\u0647 \u0627\u0633\u062a. \u0627\u06cc\u0646 \u0648\u06cc\u0632\u06cc\u062a \u0627\u0632 \u0645\u0634\u0627\u0647\u062f\u0647\u0654 \u0641\u0627\u0635\u0644\u0647\u0654 \u062f\u0648 \u0633\u0627\u0646\u062a\u0631\u0627\u0644 \u0648 \u067e\u0631\u0633\u0634\u06cc \u062f\u0631\u0628\u0627\u0631\u0647\u0654 \u062a\u063a\u06cc\u06cc\u0631 \u062a\u062f\u0631\u06cc\u062c\u06cc \u0622\u0646 \u0634\u0631\u0648\u0639 \u0634\u062f.",
+            "expected_title": "\u0686\u0631\u0627 \u0628\u06cc\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc\u06cc \u06a9\u0647 \u0642\u0628\u0644\u0627\u064b \u0628\u0647 \u0647\u0645 \u0686\u0633\u0628\u06cc\u062f\u0647 \u0628\u0648\u062f\u0646\u062f\u060c \u0641\u0627\u0635\u0644\u0647 \u0627\u06cc\u062c\u0627\u062f \u0645\u06cc\u200c\u0634\u0648\u062f\u061f",
+            "kind": "phase_f",
+            "output_sha256": "b17958cdd5f94ff4169220cdc9d12fdf90a7f66f9a530ce6f9fb78feff6f1705",
+            "recorded_at": "2026-11-12T09:33:20+00:00",
+            "summary": "102 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+          }
+        ]
+      },
+      "external_actions": [],
+      "status": "in_progress",
+      "steps": [
+        {
+          "evidence": [
+            "AGENTS.md; live modules 01/02, checkpoint protocol, agent parity and complete selected global core sections read; GitHub connector read/write, branch/PR/merge and Actions monitoring available; API-source validation workspace without git clone"
+          ],
+          "id": "rules",
+          "module": "01-hard-rules.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Attached approved article text and clinical WebP, no research paper: normal Chairside publication, no paper branch"
+          ],
+          "id": "0",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Parsed brain once; latest chairside-52 exact key order, chairside URL and template; live PILLARS read from main builder. Next ID chairside/chairside-53"
+          ],
+          "id": "A",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Founder packet explicitly identifies Chairside; locked type chairside"
+          ],
+          "id": "B.1",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Brain category max 52, next chairside-53 announced to founder"
+          ],
+          "id": "B.2",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "article.md final text and exact title supplied; founder requests verbatim text, no references"
+          ],
+          "id": "B.3",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Single style review: personal patient encounter and reasoning read naturally; no edits. Explicit founder instruction preserves approved article verbatim"
+          ],
+          "id": "B.3.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Attached WebP and exact Persian alt supplied. Founder explicitly confirmed public image permission in this conversation"
+          ],
+          "id": "B.4",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "No research paper attached; ZIP contains authored commentary, image, DES and handoff only"
+          ],
+          "id": "B.4.7",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Basket 1 COMMENTARY, own final body as FULL_TEXT, no cited paper. Canonical DES supplied for this exact article; validate under original 3.7 without model rerun; self-Fidelity null"
+          ],
+          "id": "B.4.8",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Ordinary narrative article, not Challenge"
+          ],
+          "id": "B.4.9",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pulse proposal: exact article title linked to /chairside/chairside-53.html, following existing Chairside announcements, no added conclusion"
+          ],
+          "id": "B.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast: chairside locked at B.1",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.1",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast: no LightGlossary write",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.2",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast: specialist track",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.3",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast: same-category Chairside template",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.4",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast: ordinary publication",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "chairside/chairside-52.html is latest same-category structural template, enrolled and preserved"
+          ],
+          "id": "C.1",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Verified new structural clone, exact article body/title and 1536x784 supplied WebP; metadata and head invariants preserved"
+          ],
+          "id": "C.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.5",
+          "module": "03-litecast-and-page.md",
+          "reason": "Category chairside: not LiteCast, NoteCast, ordered ep-nav series, glossary or attached-paper branch; canonical category exception",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.6",
+          "module": "03-litecast-and-page.md",
+          "reason": "Category chairside: not LiteCast, NoteCast, ordered ep-nav series, glossary or attached-paper branch; canonical category exception",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Revalidated recorded treatment-planning / comprehensive-diagnosis; same live taxonomy"
+          ],
+          "id": "C.2.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Verified one related section and correct canonical two navigation capsules"
+          ],
+          "id": "C.2.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Corrected discovery: Chairside landing is hand-maintained, not generated by runner. Appended new top row using exact sibling markup and exact founder title; original landing bytes otherwise preserved"
+          ],
+          "id": "C.2.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "All dates and new metadata unchanged and valid, 2026-11-12"
+          ],
+          "id": "C.3",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Template chairside-52 byte-unchanged, diff quiet"
+          ],
+          "id": "C.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Chairside ordinary article: not NoteCast, ordered ep-nav series, glossary, attached-paper branch or Challenge; canonical category exception",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5-b",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Chairside ordinary article: not NoteCast, ordered ep-nav series, glossary, attached-paper branch or Challenge; canonical category exception",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Chairside ordinary article: not NoteCast, ordered ep-nav series, glossary, attached-paper branch or Challenge; canonical category exception",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.1",
+          "module": "06-paper-ingestion.md",
+          "reason": "Chairside ordinary article: not NoteCast, ordered ep-nav series, glossary, attached-paper branch or Challenge; canonical category exception",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.2",
+          "module": "06-paper-ingestion.md",
+          "reason": "Chairside ordinary article: not NoteCast, ordered ep-nav series, glossary, attached-paper branch or Challenge; canonical category exception",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.3",
+          "module": "06-paper-ingestion.md",
+          "reason": "Chairside ordinary article: not NoteCast, ordered ep-nav series, glossary, attached-paper branch or Challenge; canonical category exception",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Revalidated unchanged supplied DES and final text: Phase F confirmed arithmetic 15, E, null fields, section-declaration note, verbatim quotes and self-Fidelity exception; no rescoring"
+          ],
+          "id": "C.4.13",
+          "module": "08-des-fidelity.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Fresh glossary review remains zero direct concepts; no false links to implant splinting or broad terms"
+          ],
+          "id": "C.4.7",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.7-b",
+          "module": "05-semantic-linking.md",
+          "reason": "Chairside ordinary article: not NoteCast, ordered ep-nav series, glossary, attached-paper branch or Challenge; canonical category exception",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Same two anchors only; source prose unchanged, first occurrence and target semantics verified"
+          ],
+          "id": "C.4.8",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Existing five capsules verified, no additions/removals; cap satisfied"
+          ],
+          "id": "C.4.9",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Same two authored concept cards; remote Phase F passed stable IDs and no FAQ copies"
+          ],
+          "id": "C.4.11",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Same two standalone binary FAQ questions; remote Phase F passed all wording/verdict gates"
+          ],
+          "id": "C.4.12",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.14",
+          "module": "09-challenge.md",
+          "reason": "Chairside ordinary article: not NoteCast, ordered ep-nav series, glossary, attached-paper branch or Challenge; canonical category exception",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Same five canonical tags, no minted concepts; sync/check and semantic reachability verified before first Push2; no dependency changed"
+          ],
+          "id": "C.5.0",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Exact same brain tail entry/key order and original founder title/caption; remote Phase F passed"
+          ],
+          "id": "C.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Original treatment-planning/comprehensive-diagnosis pillar unchanged; pathname/pillar capsule correct"
+          ],
+          "id": "C.5.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Founder-requested occlusion membership added with official pathway_place.py after sharehub/share-36. One four-option exam question r-a01be85f approved with specific removal of crown-integrity phrase; key A unchanged, canonical bank validation 0 errors, length warning disclosed in evidence. No third pathway"
+          ],
+          "id": "C.5.6",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "bundle-occlusion-rehab rejected at gate 1: Chairside folder excluded; no bundle or shared asset changes"
+          ],
+          "id": "C.5.6-b",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pulse unchanged with correct seven rows; English and both toggles unchanged and previously passed; amended ten-scope lock includes occlusion and approved revised exam, no open founder message. Reconciliation ready for runner"
+          ],
+          "id": "C.6",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "All applicable canonical C.8 builders passed; logs are in the recovery artifact."
+          ],
+          "id": "C.8",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "tools/stamp-version.py passed after C.8"
+          ],
+          "id": "C.7",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Technical English, noindex, hreflang, sitemap, and final version checks passed; logs are in the recovery artifact."
+          ],
+          "id": "D",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Canonical dc-notify marker present exactly once"
+          ],
+          "id": "E",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "phase_f:b17958cdd5f94ff4169220cdc9d12fdf90a7f66f9a530ce6f9fb78feff6f1705"
+          ],
+          "id": "F",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/43192304042"
+          ],
+          "id": "G",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        }
+      ],
+      "target_paths": [
+        "chairside/chairside-52.html",
+        "chairside/chairside-53.html",
+        "chairside/cs53-1.webp",
+        "chairside/en/chairside-53.html",
+        "chairside/index.html",
+        "dentcast-brain.json",
+        "dentcast-hashtag-reference.json",
+        "index.html",
+        "pillar/index.html",
+        "pillar/structure.json",
+        "pillar/treatment-planning/index.html",
+        "pillar/treatment-planning/structure.json",
+        "player.html",
+        "plus/assistant-tags.json",
+        "plus/content-index.json",
+        "plus/des-scores.json",
+        "plus/des/chairside/chairside-53.json",
+        "plus/exam-questions.json",
+        "plus/faq-corpus.json",
+        "plus/flashcards-index.json",
+        "plus/pathways.json",
+        "plus/quiz-index.json",
+        "service-worker.js",
+        "sitemap.xml",
+        "up-board/index.json"
+      ]
+    },
+    "snapshot": {
+      "files": {
+        "chairside/chairside-52.html": {
+          "kind": "file",
+          "sha256": "f17af0ff1c48bce3cda022679f2dbe38c3b1ccf9073e0492ac0e9b62633f18e9",
+          "executable": false
+        },
+        "chairside/chairside-53.html": {
+          "kind": "file",
+          "sha256": "9e7555c00d4649d7d2c08e80237c11eae63a3c972401257303ceeaaa2343d837",
+          "executable": false
+        },
+        "chairside/cs53-1.webp": {
+          "kind": "file",
+          "sha256": "c08cde375a2aace265b127f24df4f6fadd25d1ac87f677e41265b7d01e60b7ff",
+          "executable": false
+        },
+        "chairside/en/chairside-53.html": {
+          "kind": "file",
+          "sha256": "98e81504a5ae7fb0f2fe25a7bdc206ef85a78f5c51d4294fbdf19bdefd32ba6b",
+          "executable": false
+        },
+        "chairside/index.html": {
+          "kind": "file",
+          "sha256": "0a81820df0dc7a05fa0ecdcb2c310da6bee1bc0ee23fef726dc0326978a3675f",
+          "executable": false
+        },
+        "dentcast-brain.json": {
+          "kind": "file",
+          "sha256": "d830b7db16cd225103263e8ceda9221d3f3c88e9106c47feeaa099f0f9072fc3",
+          "executable": false
+        },
+        "dentcast-hashtag-reference.json": {
+          "kind": "file",
+          "sha256": "d4419c92bd31196e3f916f6aee0f181522e710992c46422a73c287f379268948",
+          "executable": false
+        },
+        "index.html": {
+          "kind": "file",
+          "sha256": "9c35a3ae608ffdc21b22af5643b1b718674e9042320ebec2f558afa5d7b7a1c5",
+          "executable": false
+        },
+        "pillar/index.html": {
+          "kind": "file",
+          "sha256": "79b14f1274fef38848e78a8a016434226018c778191ebad5e738d87bd1fae80c",
+          "executable": false
+        },
+        "pillar/structure.json": {
+          "kind": "file",
+          "sha256": "ed37acc58f326795abbb23b07d06ff6f5617f71fc1fbcb15a611077d826ff557",
+          "executable": false
+        },
+        "pillar/treatment-planning/index.html": {
+          "kind": "file",
+          "sha256": "784950381ec23f21fc7be717a49a1ac2aa2bc0c2080cd79b35edfc63597d23e6",
+          "executable": false
+        },
+        "pillar/treatment-planning/structure.json": {
+          "kind": "file",
+          "sha256": "ceb3a8ca3d1cc8e75678771337b8d834e02c9895d17e29105889c7a8b7634670",
+          "executable": false
+        },
+        "player.html": {
+          "kind": "file",
+          "sha256": "7762b1539a031395cfef5c81310ae73b6a86937fe36049786a64d2b8e4c6e1dd",
+          "executable": false
+        },
+        "plus/assistant-tags.json": {
+          "kind": "file",
+          "sha256": "1747812084cbd84176a10dd4e418d91f70b96e8356f35df5ca8baeba51cddce4",
+          "executable": false
+        },
+        "plus/content-index.json": {
+          "kind": "file",
+          "sha256": "3147ff0eabd237a0517338529cd63c17ecb816207976afc645d5d002cdec6b6b",
+          "executable": false
+        },
+        "plus/des-scores.json": {
+          "kind": "file",
+          "sha256": "03a6811bb8628d33e2326cfc0bd3cf9e8e433ecd67caa497d502b87a0c68a82a",
+          "executable": false
+        },
+        "plus/des/chairside/chairside-53.json": {
+          "kind": "file",
+          "sha256": "5e569e6967f5d044744f3219bcdc9e9eb8bdd26654288b60b54b0a4a636866bb",
+          "executable": false
+        },
+        "plus/exam-questions.json": {
+          "kind": "file",
+          "sha256": "3d21de078b484e2aae4501f6584db86660e005da8e4432e798b7406a3107394b",
+          "executable": false
+        },
+        "plus/faq-corpus.json": {
+          "kind": "file",
+          "sha256": "0c47bd8d12cd0ca1eee8a874c3b0fd4540bd95a5ee075116b4da742b9ba97e33",
+          "executable": false
+        },
+        "plus/flashcards-index.json": {
+          "kind": "file",
+          "sha256": "5eb8e86b743e97eee91005ae02fcb30111e645bdc75cfe55b1d0f6d838bbc1b3",
+          "executable": false
+        },
+        "plus/pathways.json": {
+          "kind": "file",
+          "sha256": "159eb7a5856d1fa0dc6505247ce0abd9408159a1cb1af81be3e0f0d7855d4438",
+          "executable": false
+        },
+        "plus/quiz-index.json": {
+          "kind": "file",
+          "sha256": "987c8328c5be2623656075997e27003963317d0b6d43af23d8296c083d291467",
+          "executable": false
+        },
+        "service-worker.js": {
+          "kind": "file",
+          "sha256": "6f50e696cc47be9896ff758f2813672b7d1e71cfd8214502fcdc2ceebb14616f",
+          "executable": false
+        },
+        "sitemap.xml": {
+          "kind": "file",
+          "sha256": "28798563b999d440a2c2b44a242d1c158c497ef706edb4d57fcf2825447072cc",
+          "executable": false
+        },
+        "up-board/index.json": {
+          "kind": "file",
+          "sha256": "8e8c5820c769b5f355d9c865c77eda632d64049a781954efa46dfaf2c00692b0",
+          "executable": false
+        }
+      },
+      "workflow": {
+        ".dentcast/workflows/README.md": "172337c6e52b1143888d1a7c43f56c71da74457ab9ed4b247db9cbd242ba81d8",
+        ".dentcast/workflows/agent-parity.md": "6f35f755ccb22111b06956ffd321f5789dcaf75f214dcfcc6bad3e87aa3e984a",
+        ".dentcast/workflows/publish-handoff.md": "d58cb5472df896dc0d33c37b79340d44c65897d90348f1bfbc98a0e56badc249",
+        ".dentcast/workflows/routing-details.md": "70e82a656759b6a949f84048d1d9047a2eaaca90c0f93d73d3e96857f77f394a",
+        ".dentcast/workflows/global/README.md": "5ec762efe1522eeca5841e37f8e61d938b6a1421904bffe32cecd51ddab4a39b",
+        ".dentcast/workflows/global/LOAD-MAP.json": "39a06ba30d7c181bf6fe9ef6014e885ceef9cbbf729d6dde1652b7e8ee81fced",
+        "tools/dentcast_global_rules.py": "c92d378a875dec54ed7845015797c37f211f0acab93150f669b0f820dfd94464",
+        ".dentcast/workflows/global/repo-conventions.md": "9594f6d63792fd6e26fe937dbcfb8ed719d0922468dfc9b944d7f2a237774052",
+        ".dentcast/workflows/global/plus-premium.md": "18a0bea238c466f92861ccd606b7a612a2517f8b0f63c19ea88ce9952d35edd2",
+        ".dentcast/workflows/global/site-invariants.md": "55d4fcd8c566d55011a01eb395d04260e7ca867d78be4b1401acf36a23886feb",
+        "tools/dentcast_publish_handoff.py": "5ac5843a3c668b71e4827d787479e9a9bab312b0c14ea881477780cb6d1814cd",
+        "tools/dentcast_publish_lifecycle.py": "c40548cadf6d12d5a24370a4666e8ddf16a338cf61c154627c3a8f24f7cc1932",
+        "tools/verify_publish.py": "41d939f7769ffa36078955a8a38548143bb6b180282e1a87b62ce602f519ecbb",
+        "tools/dentcast_text_io.py": "225c0a696e8ebc5e175b5dd9739210d4624938358af96baeb777f8c4a07726d8",
+        "tools/text_io.mjs": "c6f9208e26983c8eade43d8cf3effe865e6479df903d2cee661cd0a928565536",
+        "tools/dentcast_post_cut2_runner.py": "443494d00da1a8890a9d69f2d716358328120c562c1c24df0f8227eae3182b0e",
+        ".github/workflows/post-cut2-mechanical.yml": "f4c06799b68560aaa14b364e63d720ae658187962221607c862bfce42a19f106",
+        ".dentcast/workflows/publish-checkpoints.md": "b3d0dcad2e5f4c850a355945190be4b5d1330b696280b300971452110a2129f5",
+        ".dentcast/workflows/publish-after-push2.md": "101bf989270f0ba6d5f34dc350b94d4820f49d361ec0b99192b46854e7cea905",
+        ".dentcast/workflows/modules/01-hard-rules.md": "1cb57aa6db9c90675d90a6732e5d789ac9188977dc58906ef56b131960d83cb9",
+        ".dentcast/workflows/modules/02-routing-intake.md": "c9dc1b414dfdacf3376b4f9cb916ce911b428184550610950ef7f8e8132e9a74",
+        ".dentcast/workflows/modules/03-litecast-and-page.md": "f6bf2d4a9004e54525c698db895cfecac3d65e7090b015b634bae0bee7bc6723",
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "53a8860265c40465d8060bea1c9d4f701d24794f704de14a609b2d806c294fa9",
+        ".dentcast/workflows/modules/05-semantic-linking.md": "22379f060007b543c9544f2dd8a3aee600a930af19711fd1ee49e797ef9c7722",
+        ".dentcast/workflows/modules/06-paper-ingestion.md": "c34d0f4a17e6b1eddad13bca8e88af65a436ae7d5d41017a57660868020d6375",
+        ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "913b7e3b01038c372eaff58ab63cb91126d710a3b7051f8f9af72409631c9c98",
+        ".dentcast/workflows/modules/08-des-fidelity.md": "b9e29fff562f3fbad425a95a86dfe39c56374d30cb9971e42daf7b459f6cff7b",
+        ".dentcast/workflows/modules/09-challenge.md": "5ec2a39ce0e3f3777360a0b0c1092d34e240f6546d43103498e2d65a5a16f120",
+        ".dentcast/workflows/modules/10-brain-and-pathways.md": "5e4c5266d20e786eae7d3f410a2209c547c698781d8655d78828251c052ab66c",
+        ".dentcast/workflows/modules/11-build-and-version.md": "3b58272ec511d861e35af835f026cb91910d1ef40c1e164cbdc88f8637dcf310",
+        ".dentcast/workflows/modules/12-english-notify-verify.md": "89230e2261966297a9c26cc9df88a37862d5b4a71c1bd7ed44f20d6cc2596552"
+      }
+    }
+  },
+  "second_delivery_commit": "e8bfba7a701501d850d5b101c3b2a1f27c99527f",
+  "verification": {
+    "kind": "phase_f",
+    "content_id": "chairside/chairside-53",
+    "expected_title": "\u0686\u0631\u0627 \u0628\u06cc\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc\u06cc \u06a9\u0647 \u0642\u0628\u0644\u0627\u064b \u0628\u0647 \u0647\u0645 \u0686\u0633\u0628\u06cc\u062f\u0647 \u0628\u0648\u062f\u0646\u062f\u060c \u0641\u0627\u0635\u0644\u0647 \u0627\u06cc\u062c\u0627\u062f \u0645\u06cc\u200c\u0634\u0648\u062f\u061f",
+    "expected_caption": "\u0628\u06cc\u0645\u0627\u0631 \u0645\u06cc\u200c\u06af\u0641\u062a \u0628\u06cc\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u0642\u062f\u06cc\u0645\u06cc\u200c\u0627\u0634 \u0642\u0628\u0644\u0627\u064b \u0641\u0627\u0635\u0644\u0647\u200c\u0627\u06cc \u0646\u0628\u0648\u062f\u0647 \u0627\u0633\u062a. \u0627\u06cc\u0646 \u0648\u06cc\u0632\u06cc\u062a \u0627\u0632 \u0645\u0634\u0627\u0647\u062f\u0647\u0654 \u0641\u0627\u0635\u0644\u0647\u0654 \u062f\u0648 \u0633\u0627\u0646\u062a\u0631\u0627\u0644 \u0648 \u067e\u0631\u0633\u0634\u06cc \u062f\u0631\u0628\u0627\u0631\u0647\u0654 \u062a\u063a\u06cc\u06cc\u0631 \u062a\u062f\u0631\u06cc\u062c\u06cc \u0622\u0646 \u0634\u0631\u0648\u0639 \u0634\u062f.",
+    "exit_code": 0,
+    "output_sha256": "b17958cdd5f94ff4169220cdc9d12fdf90a7f66f9a530ce6f9fb78feff6f1705",
+    "summary": "102 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+  }
+}
