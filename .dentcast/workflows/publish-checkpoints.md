@@ -347,6 +347,16 @@ approvals, semantic quality or external outcomes. A stale/missing/corrupt state 
   mirrors: their statuses are never requested, awaited, a gate or a completion criterion. A merge
   GitHub refuses over an unrelated required check is reported as that blocker; branch protection is
   never weakened.
+- Absent is not green (2026-11-11, PRs #1170 and #1171): GitHub accepted both merges while every
+  `push`/`pull_request` run of the repository's own guards stayed `queued` with zero jobs for hours
+  (cancel 409, re-run 403), and the Pages build ended in `startup_failure`, so `dentcast.org` kept
+  the pre-merge build and `dentcast.ir` stayed behind too. A queued run with no jobs is missing from
+  the PR's check list, which then shows only the backup mirrors' previews. Before merge, read the
+  guard runs themselves for the head SHA; after merge, confirm that the Pages build (`.org`) and
+  `deploy-arvan.yml` (`.ir`) completed. Fresh `workflow_dispatch` runs started normally; what
+  recovered it was dispatching `deploy-arvan.yml`, `asset-version-guard.yml`,
+  `spot-version-guard.yml`, `publishing-live-contract-tests.yml`, `nul-guard.yml` and
+  `sitemap_only.yml` on `main`.
 
 Hooks and CI behind this protocol: `publish-maintenance.md` (only when changing hooks, CI or this
 protocol).
