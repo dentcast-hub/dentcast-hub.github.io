@@ -35905,7 +35905,9 @@
       "file_size": 87959,
       "key_finding": "Critical literature review (Medline 1966–2003 plus manual search) on crown-to-root ratio for abutment evaluation of periodontally compromised teeth; it found a dearth of evidence-based research.",
       "clinical_bottom_line": "Crown-to-root ratio may help alongside other clinical indices, but no definitive recommendations can be made from the available evidence.",
-      "linked_episodes": [],
+      "linked_episodes": [
+        "sharehub/share-49"
+      ],
       "drive_link": "",
       "status": "linked",
       "drive_download": "https://drive.google.com/uc?export=download&id=1xhdfNPZbG3ILF_NtxITyGsXquEgej_cl",

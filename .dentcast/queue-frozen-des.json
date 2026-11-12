@@ -371,5 +371,25 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "sharehub/share-49": {
+    "queue_ref": "queue/18-sharehub-crown-root-ratio",
+    "record_sha256": "0e45db8c82140e717f933887eba77aff6195ff51ea037edcaf5ae2975ccb02bf",
+    "installed_at": "2026-11-12",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [
+        "u2"
+      ],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }
