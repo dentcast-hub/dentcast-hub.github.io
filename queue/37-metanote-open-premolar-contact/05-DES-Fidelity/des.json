@@ -1,0 +1,52 @@
+{
+  "scored_at": "2026-11-12",
+  "sources": [
+    {
+      "des_version": "3.7",
+      "content_type": "COMMENTARY",
+      "question_type": null,
+      "text_basis": "FULL_TEXT",
+      "citation": {
+        "title": "وقتی در وسط قوس کانتکت باز می‌شود، فضا از کجا می‌آید؟",
+        "authors": "فواد شهابیان",
+        "year": null,
+        "journal": "",
+        "doi": ""
+      },
+      "journal_quartile": {
+        "value": "NR",
+        "source": "NR"
+      },
+      "s_design": null,
+      "q_method": null,
+      "penalties": null,
+      "commentary_checklist": [
+        {
+          "item": "reasoning chain is explicit",
+          "points": 4,
+          "evidence_quote": "بسته به شکل سطوح، همین تغییر می‌تواند بدون تغییر قابل‌توجه در طول قوس، بین دو دندان فاصله ایجاد کند."
+        },
+        {
+          "item": "relationship to published evidence is stated",
+          "points": 4,
+          "evidence_quote": "این یافته‌ها امکان تغییر تماس و حرکت در سه بعد را نشان می‌دهند. اینکه چرخش یا تغییر موقعیت باکولینگوال پرمولرها علت باز شدن تدریجی کانتکت در این موارد باشد، فرضیهٔ بالینی من است و هنوز به بررسی مستقیم نیاز دارد."
+        },
+        {
+          "item": "scope of the claim is bounded",
+          "points": 3,
+          "evidence_quote": "در هر مورد، شکل سطح تماس، سایش آن و جابه‌جایی مزیودیستالی دندان‌ها هم می‌توانند بخشی از توضیح باشند."
+        },
+        {
+          "item": "explicitly labeled as experience/opinion, not evidence",
+          "points": 3,
+          "evidence_quote": "اینکه چرخش یا تغییر موقعیت باکولینگوال پرمولرها علت باز شدن تدریجی کانتکت در این موارد باشد، فرضیهٔ بالینی من است و هنوز به بررسی مستقیم نیاز دارد."
+        }
+      ],
+      "des_score": 19,
+      "band": "E",
+      "provisional": false,
+      "fact_fa": "این یادداشت بالینی در DES امتیاز ۱۹ و باند E دارد.",
+      "interpretation_fa": "یادداشت توضیح می‌دهد که چگونه تغییر موقعیت سه‌بعدی پرمولر می‌تواند رابطهٔ سطوح تماس را عوض کند. این توضیح یک فرضیه برای بررسی بالینی کانتکت‌های دوباره بازشده است و علت باز شدن را در بیمار مشخص نمی‌کند."
+    }
+  ]
+}

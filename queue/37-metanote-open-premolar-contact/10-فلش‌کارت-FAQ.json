@@ -1,0 +1,35 @@
+{
+  "definedTermSets": [
+    {
+      "@context": "https://schema.org",
+      "@type": "DefinedTermSet",
+      "@id": "{{PAGE_URL}}#flashcards",
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "@id": "{{PAGE_URL}}#flashcards-c1",
+          "name": "چرخش دندان حول محور طولی",
+          "description": "تغییر جهت دندان به دور محور طولی خودش که می‌تواند محل روبه‌رویی سطوح پروگزیمال مجاور را تغییر دهد.",
+          "source": "authored"
+        }
+      ]
+    }
+  ],
+  "faqPages": [
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": "{{PAGE_URL}}#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "آیا باز شدن کانتکت بین دو پرمولر الزاماً به معنی افزایش طول قوس است؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "خیر. از نظر هندسی، با تغییر جهت یا موقعیت سه‌بعدی دندان‌ها ممکن است رابطهٔ سطوح تماس عوض شود و بدون تغییر قابل‌توجه در طول قوس فاصله ایجاد شود."
+          }
+        }
+      ]
+    }
+  ]
+}

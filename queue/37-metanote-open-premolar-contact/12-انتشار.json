@@ -1,0 +1,150 @@
+{
+  "schema": "dentcast-queue-manifest/1",
+  "category": {
+    "value": "metanote",
+    "from": "folder name"
+  },
+  "title_fa": {
+    "value": "وقتی در وسط قوس کانتکت باز می‌شود، فضا از کجا می‌آید؟",
+    "from": "02-عنوان-کپشن.md:4"
+  },
+  "caption_fa": {
+    "value": "موقع تحویل، کانتکت بین دو پرمولر برقرار است. چند ماه بعد همان کانتکت باز شده. وقتی هر دو دندان وسط قوس‌اند، این فضای تازه از کجا آمده؟",
+    "from": "02-عنوان-کپشن.md:7"
+  },
+  "title_en": {
+    "value": "When a contact opens in the middle of the arch, where does the space come from?",
+    "from": "06-انگلیسی.md:4"
+  },
+  "caption_en": {
+    "value": "The contact between two premolars is intact at delivery. A few months later, it is open. When both teeth sit in the middle of the arch, where did the new space come from?",
+    "from": "06-انگلیسی.md:7"
+  },
+  "body_en": {
+    "value": "Sometimes we restore or crown two premolars. Their proximal contact is intact at delivery, and the patient has no complaints. A few months later, the patient comes back and the same contact is open.\n\nThis always raises a question for me. When two teeth sit in the middle of the arch and there was no gap between them before, where did the new space come from?\n\nIf the last tooth in the arch shifts, it is easier to picture where the space came from. But when two premolars sit between other teeth, saying that one moved distally raises another question. What happened to its contact with the next tooth?\n\nMy hypothesis is that sometimes we need to think about changes in tooth position in three dimensions. One premolar might rotate slightly about its long axis or shift buccolingually. The roles of occlusal forces, periodontal status, and contact with adjacent teeth are also worth investigating.\n\nImagine that one premolar rotates slightly. The portions of the two proximal surfaces that previously faced each other may move out of alignment. Depending on the shape of those surfaces, that change alone could create a gap without substantially changing arch length.\n\nStudies show that proximal contact tightness can change over several months after a Class II composite restoration. Three-dimensional molar displacement during function has also been measured. These findings show that contact tightness can change and that teeth can move in three dimensions. Whether rotation or a buccolingual shift of premolars accounts for the gradual opening of the contact in these cases is my clinical hypothesis and still needs direct investigation.\n\nThe shape of the contact surface, wear at the contact, and mesiodistal tooth movement could also help explain individual cases. If the contact between two premolars reopens after correction, I think it is worth checking the contact and the occlusion and looking for changes in the position or orientation of the teeth relative to each other.",
+    "from": "06-انگلیسی.md:10-22"
+  },
+  "images": {
+    "value": [],
+    "from": "03-تصاویر: no image files"
+  },
+  "credit": {
+    "value": {
+      "mode": "none"
+    },
+    "from": "04-منبع/منابع.md:1"
+  },
+  "catalog": {
+    "value": [],
+    "from": "04-منبع/کاتالوگ.json"
+  },
+  "hashtags": {
+    "value": [
+      "#از_دست_رفتن_کانتکت",
+      "#کانتکت_پروگزیمال"
+    ],
+    "from": "07-ورودی‌ها.md:19"
+  },
+  "mint": {
+    "value": [],
+    "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+  },
+  "pillar": {
+    "value": {
+      "primary": "fixed-pros",
+      "subtopic": "crowns-onlays",
+      "secondary": []
+    },
+    "from": "07-ورودی‌ها.md:14"
+  },
+  "pulse": {
+    "value": {
+      "text": null,
+      "link_phrase": "وقتی در وسط قوس کانتکت باز می‌شود، فضا از کجا می‌آید؟"
+    },
+    "from": "07-ورودی‌ها.md:29"
+  },
+  "keywords": {
+    "value": [
+      "proximal contact",
+      "open proximal contact",
+      "premolar",
+      "tooth rotation",
+      "buccolingual displacement"
+    ],
+    "from": "09-کلیدواژه‌ها.md"
+  },
+  "links_48": {
+    "value": [],
+    "from": "11-لینک‌های-گلاسری.md:11"
+  },
+  "backlinks_47": {
+    "value": [],
+    "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+  },
+  "explore_49": {
+    "value": [
+      {
+        "href": "/metanotes/meta-12.html",
+        "label": "مدیریت کانتکت بین دندان‌های شش و هفت",
+        "from": "11-لینک‌های-گلاسری.md:23"
+      },
+      {
+        "href": "/insight/insight-69.html",
+        "label": "مدیریت کانتکت باز هنگام تحویل روکش",
+        "from": "11-لینک‌های-گلاسری.md:24"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md:21"
+  },
+  "pathway": {
+    "value": [
+      {
+        "id": "fixed-pros",
+        "after": "insight/insight-29",
+        "from": "07-ورودی‌ها.md:33"
+      }
+    ],
+    "from": "07-ورودی‌ها.md:33"
+  },
+  "author": {
+    "value": null,
+    "from": "not in the legacy contract"
+  },
+  "legacy_review": {
+    "value": null,
+    "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+  },
+  "alt_headline_fa": {
+    "value": "باز شدن کانتکت بین دو پرمولر بعد از ترمیم یا روکش",
+    "from": "02-عنوان-کپشن.md:12"
+  },
+  "alt_headline_en": {
+    "value": "Loss of proximal contact between two premolars after restoration or crown placement",
+    "from": "02-عنوان-کپشن.md:15"
+  },
+  "article_section": {
+    "value": "Fixed Prosthodontics / Proximal Contact",
+    "from": "02-عنوان-کپشن.md:18"
+  },
+  "keywords_fa": {
+    "value": [
+      "کانتکت پروگزیمال",
+      "باز شدن کانتکت",
+      "پرمولر",
+      "چرخش دندان",
+      "جابجایی باکولینگوال"
+    ],
+    "from": "02-عنوان-کپشن.md:21"
+  },
+  "keywords_en": {
+    "value": [
+      "proximal contact",
+      "open proximal contact",
+      "premolar",
+      "tooth rotation",
+      "buccolingual displacement"
+    ],
+    "from": "02-عنوان-کپشن.md:24"
+  }
+}
