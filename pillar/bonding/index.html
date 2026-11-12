@@ -642,12 +642,11 @@
     [data-theme="dark"] [data-pillar="practice-infrastructure"] .pillar-header-icon { color: #c07fb4; }
     :root { --dcpb-rgb: 45,106,122; --dcpb-rgb-d: 74,154,171; }
     /* ── premium referral banner ──
-       Shaped like the site's own cards: --card-bg on --card-border at the
-       same radius and shadow as a pillar row, with the accent showing only
-       on the inline-start edge and the icon chip — the same restraint
-       .pillar-subtopic-intro already uses. No gradient medallion: that one
-       is plus.css's streak object and its orange belongs to nothing else
-       on this page.
+       AMBER, because it sells the subscription — the site's one meaning
+       for that colour (2026-11-12; it wore the pillar accent before, which
+       read as one more section card). A flat amber-wash tile with the
+       crown on an amber chip, no border or shadow, as the home page's
+       premium tiles; the button stays the action blue for legibility.
 
        box-sizing is set here rather than assumed. This page has no global
        reset — body computes as content-box — so a padded element told to
@@ -657,16 +656,14 @@
     .pillar-premium-banner {
       display: flex; align-items: flex-start; gap: 0.75rem; flex-wrap: wrap;
       margin: 0 0 1rem; padding: 0.875rem 1rem;
-      background: var(--card-bg); border: 1px solid var(--card-border);
-      border-inline-start: 3px solid rgba(var(--dcpb-rgb, 45,106,122), .45);
-      border-radius: var(--r-lg, 18px); box-shadow: var(--card-sh);
+      background: var(--amber-wash, rgba(201,146,43,.08)); border: 0;
+      border-radius: var(--r-lg, 18px); box-shadow: none;
     }
     .pillar-premium-icon {
       flex: 0 0 auto; width: 2rem; height: 2rem; border-radius: var(--r-sm, 10px);
       display: grid; place-items: center;
-      color: rgb(var(--dcpb-rgb, 45,106,122));
-      background: rgba(var(--dcpb-rgb, 45,106,122), .10);
-      border: 1px solid rgba(var(--dcpb-rgb, 45,106,122), .22);
+      color: var(--amber-ink, #8a6414);
+      background: var(--amber-wash-2, rgba(201,146,43,.13)); border: 0;
     }
     .pillar-premium-icon .dc-svg-icon { width: 1.05rem; height: 1.05rem; }
     .pillar-premium-text { flex: 1 1 12rem; min-width: 0; }
@@ -681,8 +678,7 @@
       justify-content: center; gap: .375rem;
       padding: .5625rem 1rem; border-radius: var(--r-f, 999px);
       font-size: .78rem; font-weight: 800; line-height: 1.6; text-decoration: none;
-      color: #fff; background: var(--ac);
-      box-shadow: 0 2px 8px rgba(var(--ac-rgb, 11,95,255), .28);
+      color: #fff; background: var(--ac); box-shadow: none;
       transition: box-shadow var(--tr), transform var(--tr);
     }
     /* The button keeps ONE colour on every pillar — the site's own action
@@ -692,13 +688,7 @@
        this size. The accent stays where it cannot hurt legibility. */
     .pillar-premium-banner .pillar-premium-cta .dc-svg-icon { width: .875rem; height: .875rem; }
     .pillar-premium-banner .pillar-premium-cta:hover {
-      transform: translateY(-1px); box-shadow: 0 6px 16px rgba(var(--ac-rgb, 11,95,255), .38);
-    }
-    [data-theme="dark"] .pillar-premium-banner { border-inline-start-color: rgba(var(--dcpb-rgb-d, 74,154,171), .50); }
-    [data-theme="dark"] .pillar-premium-icon {
-      color: rgb(var(--dcpb-rgb-d, 74,154,171));
-      background: rgba(var(--dcpb-rgb-d, 74,154,171), .14);
-      border-color: rgba(var(--dcpb-rgb-d, 74,154,171), .30);
+      filter: brightness(1.06);
     }
     /* --ac is a LIGHT blue in dark mode, so the label flips to dark ink
        rather than staying white on it. */
