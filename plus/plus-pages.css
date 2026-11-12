@@ -2529,6 +2529,128 @@ body.dcp-page .dcp-gate:not(.is-named) > p.dcp-muted { max-width: 60ch; }
 body.dcp-page .dcp-loading { color: var(--txt3, #62779a); }
 /* =========================================================== end Plus 2.0 skin */
 
+/* =============================================================================
+   CLEAN SKIN — the /plus pages in the language of the home page (2026-11-12;
+   reference: <style id="dcCleanSkin"> in index.html). Appearance ONLY, layered
+   on Plus 2.0 and scoped to body.dcp-page like it, so the dashboard/profile
+   OVERLAY on article pages keeps its look. Things come out of their boxes:
+   white ground (light theme only — the dark ground and the dark grid stay),
+   no card shadows or gradients, sections unboxed with a larger heading and
+   more air, small inner things as flat tiles, fields as one bordered line.
+   Same markup, texts, colours (existing tokens only) and JS. Popups and sheets
+   (celebration card, bottom sheets, login) are not part of this block.
+   ========================================================================== */
+body.dcp-page {
+  --p2-sh: 0 0 #0000; --p2-inner: 0 0 #0000; --p2-hero-sh: 0 0 #0000;
+  --p2-btn: var(--p2-blue); --p2-btn-sh: 0 0 #0000;
+}
+[data-theme="dark"] body.dcp-page { --p2-btn: var(--p2-blue); }
+html:not([data-theme="dark"]) body.dcp-page { --p2-bg: var(--surface, #fff); }
+html:not([data-theme="dark"]) body.dcp-page::before { display: none; }
+
+/* header: same place and shape, no glass, no shadow */
+body.dcp-page .dcp-page-header {
+  background: var(--p2-card); border-color: transparent; box-shadow: none;
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+body.dcp-page .dcp-page-brand::before { box-shadow: none; }
+html:not([data-theme="dark"]) body.dcp-page .dcp-page-brand::before { background: var(--p2-pr); }
+
+/* sections: out of their boxes, larger heading, more air */
+body.dcp-page .dcp-dash-sec {
+  background: transparent; border: 0; border-radius: 0; box-shadow: none;
+  padding: 0; margin: 0 0 56px;
+}
+body.dcp-page .dcp-dash-h2 { font-size: 1.375rem; font-weight: 800; line-height: 1.5; margin: 0 0 8px; }
+body.dcp-page .dcp-dash-sec.is-spotlight {
+  background: color-mix(in srgb, var(--p2-blue) 6%, transparent); border-radius: 20px; padding: 18px 16px;
+}
+body.dcp-page .dcp-dash-sec.is-unexplored { background: var(--p2-chip); border-radius: 20px; padding: 18px 16px; }
+body.dcp-page .dcp-prize-banner { box-shadow: none; }
+/* the streak/record bento stays two tiles: flat ones */
+body.dcp-page .dcp-bento .dcp-dash-sec { background: var(--p2-chip); border-radius: 20px; padding: 14px 14px 12px; margin: 0; }
+body.dcp-page .dcp-bento { margin-bottom: 12px; }
+body.dcp-page .dcp-bento-hint { margin-bottom: 56px; }
+body.dcp-page .dcp-streak-num, body.dcp-page .dcp-streak-record b {
+  background: none; -webkit-background-clip: border-box; background-clip: border-box; color: var(--txt, #0a1a33);
+}
+body.dcp-page .dcp-streak-flamebig::before { background: var(--p2-chip); }
+html:not([data-theme="dark"]) body.dcp-page .dcp-streak-flamebig::before { background: var(--surface2, #f4f6fb); }
+body.dcp-page .dcp-dash-sec[data-ico="folders"] .dcp-progress-fill { background: var(--p2-blue); }
+body.dcp-page .dcp-records > div { border-color: transparent; }
+body.dcp-page .dcp-week-cell:has(.dcp-week-flame:not(:empty)) { background: var(--p2-blue-bg); border-color: transparent; }
+
+/* buttons and fields */
+body.dcp-page .dcp-btn { border-color: transparent; box-shadow: none; }
+body.dcp-page .dcp-input {
+  background: transparent; border: 1.5px solid var(--p2-track); box-shadow: none;
+}
+body.dcp-page .dcp-input:focus { border-color: var(--p2-blue); box-shadow: none; }
+body.dcp-page .dcp-field-row { background: transparent; border: 1.5px solid var(--p2-track); }
+body.dcp-page .dcp-field-row:focus-within { border-color: var(--p2-blue); box-shadow: none; }
+body.dcp-page .dcp-field-row .dcp-input { border: 0; }
+
+/* profile: avatar ring without the glow; earned badges without the blur halo */
+body.dcp-page .dcp-dash-hello[data-initial]::before { box-shadow: inset 0 0 0 3px var(--p2-bg); }
+body.dcp-page .dcp-bg-disc.is-on::after { display: none; }
+
+/* pathway page: the hero is one flat navy band; the timeline is unboxed */
+body.dcp-page .dcp-pw-detail-progress { background: #022360; box-shadow: none; }
+body.dcp-page .dcp-pw-detail-progress .dcp-progress-fill { background: #fff; box-shadow: none; }
+body.dcp-page .dcp-pw-steps { background: transparent; border: 0; border-radius: 0; box-shadow: none; padding: 4px 0; }
+body.dcp-page .dcp-pw-steps::before { inset-inline-start: 15px; }
+body.dcp-page .dcp-pw-step.is-done .dcp-pw-step-marker { box-shadow: none; }
+body.dcp-page .dcp-pw-step.is-current .dcp-pw-step-marker { box-shadow: none; }
+
+/* empty states and gates: no glass card, the glyph on one flat tile */
+body.dcp-page .dcp-empty, body.dcp-page .dcp-gate:not(.is-named) {
+  background: transparent; border: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+body.dcp-page .dcp-empty::before, body.dcp-page .dcp-gate:not(.is-named)::before {
+  background: var(--p2-chip); border: 0; box-shadow: none;
+}
+
+/* the rest of the /plus surfaces: cards become flat tiles, boxes around
+   groups go away, selected/active states keep their border as the signal */
+body.dcp-page .dcp-card,
+body.dcp-page a.dcp-pw-card,
+body.dcp-page .dcp-rv-card,
+body.dcp-page .dcp-wf-card,
+body.dcp-page .dcp-plan,
+body.dcp-page .dcp-hlib-list > .dcp-hlib-card,
+body.dcp-page .dcp-hlib-card,
+body.dcp-page .dcp-rp-hero,
+body.dcp-page .dcp-gift,
+body.dcp-page .dcp-md-row,
+body.dcp-page .dcp-lg-entry,
+body.dcp-page .dcp-messenger-provider {
+  background: var(--p2-chip); border-color: transparent; box-shadow: none;
+}
+body.dcp-page .dcp-cs { border-color: transparent; background: var(--dcp-cert-bg, rgba(31,120,80,.09)); }
+body.dcp-page .dcp-cs.is-held .dcp-cs-ico { box-shadow: none; }
+body.dcp-page .dcp-wf-card:hover { box-shadow: none; }
+body.dcp-page .dcp-wf-card.has-accent { border-inline-start-color: var(--wf-accent); }
+body.dcp-page .dcp-wf-card.is-active { border-color: var(--wf-accent, var(--amber, #c9922b)); }
+body.dcp-page .dcp-wf-card.has-accent.is-active { background: rgba(var(--wf-accent-rgb, 11,95,255), .10); }
+body.dcp-page .dcp-wf-card:not(.has-accent).is-active { background: var(--amber-wash, rgba(201,146,43,.08)); }
+body.dcp-page .dcp-plan.is-featured { background: rgba(var(--ac-rgb, 11,95,255), .06); }
+body.dcp-page .dcp-plan.is-selected,
+body.dcp-page .dcp-plan.is-featured.is-selected { border-color: rgba(var(--ac-rgb, 11,95,255), .6); box-shadow: 0 0 0 1px rgba(var(--ac-rgb, 11,95,255), .3); }
+body.dcp-page .dcp-price-notice { border-color: transparent; }
+body.dcp-page .dcp-bank-iban-row { background: transparent; }
+body.dcp-page .dcp-rp-prov { border-style: solid; border-color: transparent; background: var(--p2-chip); }
+body.dcp-page .dcp-hlib-group { background: transparent; border: 0; border-radius: 0; box-shadow: none; padding: 0; }
+body.dcp-page .dcp-hlib-group + .dcp-hlib-group { border-top: 1px solid var(--p2-hair); padding-top: 18px; }
+body.dcp-page .dcp-rv-btn-good { background: #22a06b; box-shadow: none; }
+body.dcp-page .dcp-rv-badge-dot { box-shadow: none; }
+body.dcp-page .dcp-progress-fill { background: var(--p2-blue); box-shadow: none; }
+body.dcp-page .dcp-rem-mx tr.is-premium { background: var(--dcp-gold-bg, rgba(183,121,31,.10)); }
+/* bundles: still AMBER (they are what the subscription buys) — a flat wash
+   band with plain tiles, as on the home page */
+body.dcp-page .dcb-band { background: var(--p2-gold-bg); border-color: transparent; }
+body.dcp-page a.dcb-railcard { background: var(--p2-card); border-color: transparent; box-shadow: none; }
+/* ========================================================== end clean skin */
+
 /* «دستیار هوشمند» — QA 2026-10-27 */
 .dcp-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .dcp-assist-count { align-self: flex-end; font-size: .74rem; color: var(--txt3, #62779a); margin-top: -6px; }
