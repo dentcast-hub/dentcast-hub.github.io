@@ -5635,6 +5635,48 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
   html:not([data-theme="dark"]) #dc-desktop-root .dcd-col-a .dcd-a-footer-btn{ background:var(--cs-tile); }
   html:not([data-theme="dark"]) #dc-desktop-root .dcd-col-a .dcd-a-footer-btn:hover{ background:var(--surface3); }
 }
+
+/* ═════════════ GLOBAL SEARCH + RADAR OVERLAYS (2026-11-12) ═════════════
+   Both shells: the phone overlays on <body> and the same nodes parked in
+   desktop column C. Light theme: white ground instead of --bg. Both themes:
+   the header loses its shadow, the close button its outline; the search and
+   radar fields become the home page's one bordered field; the section filters
+   are pills (active = blue wash + blue ink, off = hairline outline, so the two
+   states still read apart); results and radar hits are hairline rows instead
+   of cards, and the empty results pane is no longer a grey box. The logo
+   watermark, the sponsor card (.dc-spot--search), texts, order and JS are
+   untouched; the dark ground stays --bg. */
+html:not([data-theme="dark"]) :is(#dcSearchOverlay, #dcRadarOverlay),
+html:not([data-theme="dark"]) body.dc-desktop-ui.dc-search-mode #dcSearchOverlay{ background:var(--surface) !important; }
+:is(#dcSearchOverlay, #dcRadarOverlay){ --cs-blue-wash:rgba(var(--ac-rgb),.06); }
+[data-theme="dark"] :is(#dcSearchOverlay, #dcRadarOverlay){ --cs-blue-wash:rgba(var(--ac-rgb),.10); }
+:is(#dcSearchOverlay, #dcRadarOverlay) .dc-overlay-header{ box-shadow:none; }
+:is(#dcSearchOverlay, #dcRadarOverlay) .dc-overlay-close{ border-color:transparent; }
+#dcSearchOverlay #dcGlobalBox .dc-search-input,
+#dcRadarOverlay .dc-overlay-input{
+  height:52px; box-sizing:border-box; padding:0 16px;
+  background:transparent; border:1.5px solid var(--surface3, var(--border));
+  border-radius:14px; box-shadow:none;
+}
+#dcSearchOverlay #dcGlobalBox .dc-search-input:focus,
+#dcRadarOverlay .dc-overlay-input:focus{ border-color:rgba(var(--ac-rgb),.45); box-shadow:none; }
+#dcSearchOverlay .dc-filter-btn{
+  padding:5px 12px; border:1px solid var(--border); background:transparent;
+  color:var(--txt2); font-size:.78125rem; box-shadow:none;
+}
+#dcSearchOverlay .dc-filter-btn.active,
+[data-theme="dark"] #dcSearchOverlay .dc-filter-btn.active{
+  background:var(--cs-blue-wash); border-color:transparent;
+  color:var(--ac); font-weight:700; box-shadow:none;
+}
+#dcSearchOverlay #dcResults{ background:transparent; border:0; border-radius:0; padding-inline:0; }
+#dcSearchOverlay #dcResults .dc-result-item{ padding-block:12px; border-bottom-color:var(--border); }
+#dcRadarOverlay .radar-results{ gap:0; }
+#dcRadarOverlay .radar-result-item,
+#dcRadarOverlay .radar-result-item:hover{
+  background:transparent; border:0; border-bottom:1px solid var(--border);
+  border-radius:0; box-shadow:none; transform:none; padding:14px 0;
+}
   </style>
   <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
 </head>
