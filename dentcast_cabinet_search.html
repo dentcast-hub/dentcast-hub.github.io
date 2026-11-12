@@ -133,6 +133,20 @@ input#q{flex:3 1 18rem}
 .dc-jump.is-up svg{
   transform:rotate(180deg);
 }
+/* CLEAN SKIN (2026-11-12, the home page's language; appearance only):
+   white ground in the light theme, the search and filters as bordered fields,
+   each paper as a hairline row instead of a shadowed card, flat tiles for the
+   small badges and secondary buttons. Dark ground, texts and JS untouched. */
+html:not([data-theme="dark"]) body:has(main#list){ background:var(--surface); }
+.row input,.row select{ background:transparent; border:1.5px solid var(--surface3,var(--border)); border-radius:14px; box-shadow:none; }
+.row input:focus,.row select:focus{ border-color:var(--ac); box-shadow:none; }
+#list .card{ background:transparent; border:0; border-bottom:1px solid var(--border); border-radius:0; box-shadow:none; margin:0; padding:1.125rem 0; }
+#list .card:hover{ box-shadow:none; transform:none; }
+.badge{ border-color:transparent; }
+#list .act a:not(.dl){ border-color:transparent; background:var(--surface2); }
+#list .act a:not(.dl):hover{ background:var(--surface3); }
+.more{ border-color:transparent; background:var(--surface2); }
+.more:hover{ background:var(--surface3); }
 </style>
   <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
 </head><body>
