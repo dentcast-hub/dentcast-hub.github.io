@@ -2644,3 +2644,23 @@ body.dcp-has-abar #dc-theme-toggle { bottom: max(76px, calc(var(--dcp-abar-top, 
 .dc-audio-alt a{color:var(--dcp-accent);font-weight:700;text-decoration:none;white-space:nowrap;}
 .dc-audio-alt a:hover{text-decoration:underline;}
 .dc-audio-alt[hidden]{display:none;}
+
+/* =============================================================================
+   CLEAN SKIN — sheets and the login window (2026-11-12; reference:
+   <style id="dcCleanSkin"> in index.html). Appearance only, everywhere these
+   pop up (home, articles, /plus): the dimmed backdrop already separates them,
+   so the panels lose their shadows; fields inside are one bordered line;
+   info boxes and secondary buttons are flat tiles. Size, placement, motion,
+   texts and JS are unchanged.
+   ========================================================================== */
+.dcp-sheet { box-shadow: none; }
+.dcp-modal-card { box-shadow: none; border-radius: 20px; }
+:is(.dcp-sheet, .dcp-modal-card) .dcp-input {
+  background: transparent; border: 1.5px solid var(--surface3, var(--dcp-line)); border-radius: 14px; box-shadow: none;
+}
+:is(.dcp-sheet, .dcp-modal-card) .dcp-input:focus { border-color: var(--dcp-accent); box-shadow: none; }
+:is(.dcp-sheet, .dcp-modal-card) .dcp-btn:not(.dcp-btn-primary):not(.dcp-btn-danger) {
+  border-color: transparent; background: var(--dcp-surface-2, var(--surface2, #f4f6fb));
+}
+:is(.dcp-sheet, .dcp-modal-card) .dcp-btn { box-shadow: none; }
+:is(.dcp-sheet, .dcp-modal-card) .dcp-btn.dc-plus-cta:hover { box-shadow: none; transform: none; }
