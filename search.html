@@ -140,6 +140,16 @@
       align-items:center;
       justify-content:center;
     }
+    /* CLEAN SKIN (2026-11-12, as the global search overlay on the home page):
+       the field is one bordered line, the section filters are pills
+       (active = blue wash + blue ink, off = hairline), results are hairline
+       rows with no box around them. Appearance only. */
+    html body #dcGlobalBox .dc-search-input{ background:transparent; border:1.5px solid var(--surface3, var(--card-border)); border-radius:14px; box-shadow:none; }
+    html body #dcGlobalBox .dc-filter-btn{ background:transparent; border:1px solid var(--border, var(--card-border)); color:var(--txt2); box-shadow:none; }
+    html body #dcGlobalBox .dc-filter-btn.active{ background:rgba(var(--ac-rgb),.06); border-color:transparent; color:var(--ac); font-weight:700; box-shadow:none; }
+    html[data-theme="dark"] body #dcGlobalBox .dc-filter-btn.active{ background:rgba(var(--ac-rgb),.10); }
+    html body #dcGlobalBox #dcResults.dc-results-box{ background:transparent; border:0; border-radius:0; padding-inline:0; box-shadow:none; }
+    html body #dcGlobalBox #dcResults .dc-result-item{ padding-block:0.75rem; border-bottom-color:var(--border, var(--card-border)); }
   </style>
   <base target="_self">
 

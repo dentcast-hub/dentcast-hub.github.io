@@ -187,6 +187,12 @@
     }
 
     .ml-form-embedSubmitLoad { display: none; }
+    /* CLEAN SKIN (2026-11-12): appearance only — the round mark without its
+       glow, the newsletter box as one flat tile, the back button without its
+       outline (its colours are inline, hence !important on the border). */
+    html body .logo{ box-shadow:none; }
+    html body:has(.dc-topbar) .newsletter-box{ background:var(--surface2); border:0; box-shadow:none; backdrop-filter:none; -webkit-backdrop-filter:none; }
+    html body .btn-back{ border-color:transparent !important; box-shadow:none; }
   </style>
 
     <link rel="stylesheet" href="/dc-theme.css?v=19">

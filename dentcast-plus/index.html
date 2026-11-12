@@ -389,6 +389,14 @@ footer{
   #page-content{ padding:1rem 0.75rem 6.25rem; }
   .video-grid{ grid-template-columns:1fr; gap:0.625rem; }
 }
+/* CLEAN SKIN (2026-11-12): appearance only — each video comes out of its
+   card: the thumbnail is a rounded tile, the title and meta sit under it on
+   the ground, no border or shadow; the play disc loses its glow. */
+html body .video-card, html body .video-card:hover{ background:transparent; border:0; box-shadow:none; border-radius:0; overflow:visible; }
+html body .video-card:hover{ transform:none; }
+html body .video-card .thumb{ border-radius:var(--r-xl); overflow:hidden; }
+html body .video-card .video-info{ padding:0.75rem 0.125rem 0.5rem; }
+html body .play-icon, html body .video-card:hover .play-icon{ box-shadow:none; }
   </style>
 
   <script>window.addEventListener('load',function(){!function(t,e,n){t.yektanetAnalyticsObject=n,t[n]=t[n]||function(){t[n].q.push(arguments)},t[n].q=t[n].q||[];var a=new Date,r=a.getFullYear().toString()+"0"+a.getMonth()+"0"+a.getDate()+"0"+a.getHours(),c=e.getElementsByTagName("script")[0],s=e.createElement("script");s.id="ua-script-nzlddHSQ";s.dataset.analyticsobject=n;s.async=1;s.type="text/javascript";s.src="https://cdn.yektanet.com/rg_woebegone/scripts_v3/nzlddHSQ/rg.complete.js?v="+r,c.parentNode.insertBefore(s,c)}(window,document,"yektanet");});</script>

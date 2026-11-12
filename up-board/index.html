@@ -255,6 +255,14 @@
       .ub-page{ padding:2rem 1.5rem 5rem; }
       .ub-title h1{ font-size:1.9rem; }
     }
+    /* CLEAN SKIN (2026-11-12): appearance only. The sort switch loses its
+       outline and the selected half its shadow; the door wears the flat amber
+       wash the home page's .dc-ub-door already wears (no hairline, no shadow),
+       which keeps the two doors one shape as the note above asks. */
+    .ub-sort{ border-color:transparent; }
+    .ub-sort button[aria-selected="true"],
+    [data-theme="dark"] .ub-sort button[aria-selected="true"]{ box-shadow:none; }
+    .ub-door{ border-color:transparent; box-shadow:none; }
   </style>
 
   <!-- Theme init verbatim from metanotes/index.html -->
