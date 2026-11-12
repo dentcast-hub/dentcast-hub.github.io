@@ -53820,5 +53820,62 @@
         "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       }
     ]
+  },
+  "chairside/chairside-53": {
+    "scored_at": "2026-11-12",
+    "sources": [
+      {
+        "des_version": "3.7",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "چرا بین روکش‌هایی که قبلاً به هم چسبیده بودند، فاصله ایجاد می‌شود؟",
+          "authors": "Foad Shahabian",
+          "year": null,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "دندان‌های یک مجموعه اسپلینت‌شده ممکن است همراه هم جابه‌جا شوند و به‌تدریج بین دو مجموعه فاصله ایجاد شود."
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "متن نسبت خود را با شواهد منتشرشده بیان نمی‌کند."
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "البته از روی این نمای کلینیکی نمی‌توان علت را قطعی دانست."
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "Chairside متن‌های آموزشی یا کیس‌ریپورت نیستند؛ ثبت لحظه‌های واقعی و مسیر فکر بالینی‌اند.",
+            "note": "اعلانِ سطحِ بخش، از chairside/index.html"
+          }
+        ],
+        "des_score": 15,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این روایت بالینی امتیاز DES برابر ۱۵ و باند E دارد.",
+        "interpretation_fa": "این ویزیت نشان می‌دهد چرا باز شدن تدریجی فاصله بین دو مجموعه روکش اسپلینت‌شده، بررسی موقعیت دندان‌ها و عوامل پریودنتال و اکلوژنی را پیش از تصمیم پروتزی مطرح می‌کند."
+      }
+    ],
+    "fidelity": [
+      null
+    ]
   }
 }
