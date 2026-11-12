@@ -2465,6 +2465,13 @@ section[id^="sec-"]{ scroll-margin-top:160px; }
   transition:all var(--tr);
 }
 #dc-theme-toggle:active{ transform:scale(.86); }
+
+/* CLEAN SKIN (2026-11-12): appearance only — the search is one bordered
+   field (its icon without a box), the A–Z letters are flat tiles. */
+html body .searchWrap{ background:transparent; border:1.5px solid var(--surface3, var(--border)); border-radius:14px; box-shadow:none; }
+html body .searchWrap:focus-within{ border-color:rgba(var(--ac-rgb),.45); box-shadow:none; }
+html body .searchIcon{ border-color:transparent; }
+html body .alphaBtn{ border-color:transparent; }
   </style>
     <link rel="stylesheet" href="/dc-theme.css?v=2">
 <link rel="stylesheet" href="/dc-nav.css?v=17">
