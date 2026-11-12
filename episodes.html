@@ -689,6 +689,20 @@ body.search-open #page-content{
 .archive-sort, .ep-more{
   border-radius:62.4375rem;
 }
+/* CLEAN SKIN (2026-11-12, the home page's language): appearance only. The
+   featured episode is one flat tile like the home page's latest episode;
+   stat chips, the sort pill, the secondary player button and «more» are
+   flat tiles without outlines; no shadows on them. The players stay the
+   hairline rows dc-theme.css already makes them. */
+html body:not(:has(main.article-content-wrap)):has(#episodeList) .featured-card,
+html body:not(:has(main.article-content-wrap)):has(#episodeList) .featured-card:hover{ background:var(--surface2); border-color:transparent; box-shadow:none; transform:none; }
+html body:not(:has(main.article-content-wrap)):has(#episodeList) .featured-cover{ border-color:transparent; }
+html body:not(:has(main.article-content-wrap)):has(#episodeList) .stat-chip{ background:var(--surface2); border-color:transparent; }
+html body:not(:has(main.article-content-wrap)):has(#episodeList) #acast-btn.capsule-btn{ background:var(--surface2); border-color:transparent; }
+html body:not(:has(main.article-content-wrap)):has(#episodeList) .archive-sort{ background:var(--surface2); border-color:transparent; }
+html body:not(:has(main.article-content-wrap)):has(#episodeList) .archive-sort-ico-wrap{ box-shadow:none; }
+html body:not(:has(main.article-content-wrap)):has(#episodeList) .ep-more{ background:var(--surface2); border-color:transparent; }
+html body:not(:has(main.article-content-wrap)):has(#episodeList) .ep-more:hover{ box-shadow:none; transform:none; }
 </style>
 
   <script type="application/ld+json">
