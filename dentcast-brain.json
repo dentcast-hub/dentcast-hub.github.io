@@ -18443,5 +18443,35 @@
       "secondary": [],
       "subtopic": "comprehensive-diagnosis"
     }
+  },
+  {
+    "type": "dentcast",
+    "episode": "163",
+    "title": "Food Impaction in Dentistry: Revisited",
+    "caption": "چرا غذا بین دندان‌ها گیر می‌کند، حتی وقتی کانتکت بسته است؟\n\nدر این قسمت دنت‌کست سراغ یک مقاله مروری از سال ۲۰۲۳ رفتیم که با بررسی ۷۲ مطالعه، علت‌های مختلف گیر غذایی و روش‌های درمان اون رو مرور کرده.\n\nاز باز شدن کانتکت و حرکت دندان‌ها گرفته تا نقش اکلوژن، مورفولوژی ترمیم‌ها و وضعیت پاپیلا.\n\nنکته اصلی اینه که گیر غذایی همیشه به معنی باز بودن کانتکت نیست و برای درمان درست، اول باید علت واقعی اون رو پیدا کنیم.",
+    "hashtags": [
+      "#دنتکست",
+      "#گیر_غذایی",
+      "#تشخیص_افتراقی",
+      "#کانتکت_باز",
+      "#کانتکت_پروگزیمال",
+      "#کانتور_ترمیم",
+      "#پاپیلا",
+      "#اکلوژن"
+    ],
+    "keywords": [
+      "Food Impaction",
+      "Vertical & Horizontal Impaction",
+      "Proximal Contact Loss",
+      "Plunger Cusp",
+      "گیر غذایی با کانتکت بسته"
+    ],
+    "audio_url": "https://episodes.s3.ir-central1.arvanstorage.ir/dentcast163%20.mp3?versionId=",
+    "page_url": "/episodes/episode-163.html",
+    "pillar": {
+      "primary": "treatment-planning",
+      "secondary": [],
+      "subtopic": "comprehensive-diagnosis"
+    }
   }
 ]
