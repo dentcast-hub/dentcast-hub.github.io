@@ -391,5 +391,23 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "sharehub/share-50": {
+    "queue_ref": "queue/19-sharehub-root-retained-overdenture-review",
+    "record_sha256": "a522dbbf9dfa703fbd94493748f6f34bf27ed4ba14b5b63adb203bf5c43d9f18",
+    "installed_at": "2026-11-13",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }

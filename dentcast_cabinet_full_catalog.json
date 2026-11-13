@@ -133452,6 +133452,53 @@
         "R. M. J. Gray",
         "P. W. Smith"
       ]
+    },
+    {
+      "id": "P2956",
+      "title": "Clinical parameters that affect performance and patient satisfaction of root-retained overdentures: A systematic review of randomised controlled clinical trials",
+      "file_name": "Clinical parameters that affect performance and patient satisfaction of root-retained overdentures: A systematic review of randomised controlled clinical trials.pdf",
+      "topic": "overdenture",
+      "topic_path": "overdenture",
+      "type": "systematic review",
+      "local_path": "",
+      "file_size": 916523,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "sharehub/share-50"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1TZd72LLWCoKjeFafpaUi9EQ2K0wU3wdp/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1TZd72LLWCoKjeFafpaUi9EQ2K0wU3wdp",
+      "drive_view": "https://drive.google.com/file/d/1TZd72LLWCoKjeFafpaUi9EQ2K0wU3wdp/view",
+      "drive_id": "1TZd72LLWCoKjeFafpaUi9EQ2K0wU3wdp",
+      "tags": [
+        "root-retained-overdenture",
+        "overdenture",
+        "systematic-review",
+        "randomized-controlled-trial",
+        "root-caries",
+        "abutment-teeth",
+        "patient-satisfaction",
+        "bone-preservation",
+        "topic:overdenture",
+        "clinical-parameters-affect-performance-patient-satisfaction-root-retained-overdentures-systematic-review"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Clinical parameters that affect performance and patient satisfaction of root-retained overdentures: A systematic review of randomised controlled clinical trials",
+      "doi": "10.1111/ger.12739",
+      "journal": "Gerodontology",
+      "crossref_year": 2024,
+      "subjects": [],
+      "abstract": "To evaluate clinical parameters that affect the performance of root-supported overdentures (ROD) and to identify the possible factors that may affect it. ROD still serve as an alternative and successful treatment plan nowadays for partially edentulous patients. Nonetheless, there is not yet conclusive evidence about their clinical evaluation. A search strategy was developed following a PIO (Population, Intervention, Outcome) framework including an electronic search in the following databases: PubMed, Cochrane Library and Scopus. The systematic search included only randomised controlled clinical trials (RCTs), published until January 2023 in English language and was performed by two independent reviewers. Quality assessment of the included studies was conducted according to the Cochrane Risk of Bias tool. The final selection of studies included 11 RCTs. Clinically relevant variables derived from this search were: Complications, with caries being the most frequently reported, periodontal aspects and bone changes around abutment teeth. Additionally, methods and clinical suggestions for the maintenance of these restorations and patient-related outcomes were assessed. According to the risk of bias assessment, nine studies were considered of high risk, whereas only 2 of low risk. A meta-analysis was not feasible. Within the limitations of this systematic review, ROD remain a viable treatment plan, offering better denture stability and bone preservation around abutment teeth and high patient satisfaction. Thorough oral hygiene and regular follow-ups are of utmost importance. Further well-designed RCTs are necessary for firmer conclusions.",
+      "display_title": "Clinical parameters that affect performance and patient satisfaction of root-retained overdentures: A systematic review of randomised controlled clinical trials",
+      "authors": [
+        "Aspasia Pachiou",
+        "Panagiotis Karakostas",
+        "Panagiotis Roulias",
+        "Olga Naka"
+      ]
     }
   ],
   "drive_matched": 2849,
@@ -133500,11 +133547,11 @@
     "in-vitro": 365,
     "prosthodontics": 315,
     "zirconia": 266,
-    "systematic-review": 258,
+    "systematic-review": 259,
     "topic:fresh-socket": 224,
     "topic:zirconia": 221,
     "peri-implant-tissue": 205,
-    "randomized-controlled-trial": 198,
+    "randomized-controlled-trial": 199,
     "esthetic-dentistry": 184,
     "marginal-bone-loss": 172,
     "abutment": 164,
@@ -133637,7 +133684,7 @@
     "all-ceramic": 32,
     "flapless-surgery": 32,
     "sinus-augmentation": 32,
-    "topic:overdenture": 32,
+    "topic:overdenture": 33,
     "full-arch-implant-prosthesis": 31,
     "endocrown": 31,
     "edentulous": 30,
@@ -133645,7 +133692,7 @@
     "success": 29,
     "topic:laminate": 29,
     "disinfection": 29,
-    "overdenture": 29,
+    "overdenture": 30,
     "impression-technique": 29,
     "topic:esthetic-soft-tissue": 28,
     "topic:all-on-4": 28,
@@ -134340,7 +134387,7 @@
     "de-epithelialized-graft": 2,
     "lingual-flap": 2,
     "palatal-flap": 2,
-    "patient-satisfaction": 2,
+    "patient-satisfaction": 3,
     "periosteum": 2,
     "early-loading": 2,
     "beta-tcp": 2,
@@ -135586,7 +135633,12 @@
     "significance-of-vertical-platform-discrepancies-and-splinting-on-marginal-bone-levels-adjacent-implants": 1,
     "effect-of-crestal-position-on-bone-implant-stress-three-implant-splinted-prostheses-finite-element-analysis": 1,
     "conformative-approach": 1,
-    "good-occlusal-practice-simple-restorative-dentistry": 1
+    "good-occlusal-practice-simple-restorative-dentistry": 1,
+    "root-retained-overdenture": 1,
+    "root-caries": 1,
+    "abutment-teeth": 1,
+    "bone-preservation": 1,
+    "clinical-parameters-affect-performance-patient-satisfaction-root-retained-overdentures-systematic-review": 1
   },
   "semantic_pass": {
     "ontology_concepts": 204,
@@ -135600,7 +135652,7 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2165,
+  "total_papers": 2166,
   "tag_aliases": {
     "additive-manufacturing": "3d-printing",
     "adhesion": "bonding",
