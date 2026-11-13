@@ -3992,7 +3992,7 @@
   </url>
   <url>
     <loc>https://dentcast.org/sharehub/</loc>
-    <lastmod>2026-11-12</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -4263,6 +4263,12 @@
   <url>
     <loc>https://dentcast.org/sharehub/share-5.html</loc>
     <lastmod>2026-02-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://dentcast.org/sharehub/share-50.html</loc>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
