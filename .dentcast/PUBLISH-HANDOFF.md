@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "episodes/episode-163"
 - Status: in_progress
-- Next canonical step: "C.5.6"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -18,7 +18,24 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     "category": "dentcast",
     "content_id": "episodes/episode-163",
     "context": {
-      "approvals": [],
+      "approvals": [
+        {
+          "decision": "Food Impaction in Dentistry: Revisited",
+          "evidence": [
+            "founder answer 2026-11-13: English title = the paper title; Persian may be the same (AskUserQuestion)"
+          ],
+          "scope": "title",
+          "status": "confirmed"
+        },
+        {
+          "decision": "\u0686\u0631\u0627 \u063a\u0630\u0627 \u0628\u06cc\u0646 \u062f\u0646\u062f\u0627\u0646\u200c\u0647\u0627 \u06af\u06cc\u0631 \u0645\u06cc\u200c\u06a9\u0646\u062f\u060c \u062d\u062a\u06cc \u0648\u0642\u062a\u06cc \u06a9\u0627\u0646\u062a\u06a9\u062a \u0628\u0633\u062a\u0647 \u0627\u0633\u062a\u061f\n\n\u062f\u0631 \u0627\u06cc\u0646 \u0642\u0633\u0645\u062a \u062f\u0646\u062a\u200c\u06a9\u0633\u062a \u0633\u0631\u0627\u063a \u06cc\u06a9 \u0645\u0642\u0627\u0644\u0647 \u0645\u0631\u0648\u0631\u06cc \u0627\u0632 \u0633\u0627\u0644 \u06f2\u06f0\u06f2\u06f3 \u0631\u0641\u062a\u06cc\u0645 \u06a9\u0647 \u0628\u0627 \u0628\u0631\u0631\u0633\u06cc \u06f7\u06f2 \u0645\u0637\u0627\u0644\u0639\u0647\u060c \u0639\u0644\u062a\u200c\u0647\u0627\u06cc \u0645\u062e\u062a\u0644\u0641 \u06af\u06cc\u0631 \u063a\u0630\u0627\u06cc\u06cc \u0648 \u0631\u0648\u0634\u200c\u0647\u0627\u06cc \u062f\u0631\u0645\u0627\u0646 \u0627\u0648\u0646 \u0631\u0648 \u0645\u0631\u0648\u0631 \u06a9\u0631\u062f\u0647.\n\n\u0627\u0632 \u0628\u0627\u0632 \u0634\u062f\u0646 \u06a9\u0627\u0646\u062a\u06a9\u062a \u0648 \u062d\u0631\u06a9\u062a \u062f\u0646\u062f\u0627\u0646\u200c\u0647\u0627 \u06af\u0631\u0641\u062a\u0647 \u062a\u0627 \u0646\u0642\u0634 \u0627\u06a9\u0644\u0648\u0698\u0646\u060c \u0645\u0648\u0631\u0641\u0648\u0644\u0648\u0698\u06cc \u062a\u0631\u0645\u06cc\u0645\u200c\u0647\u0627 \u0648 \u0648\u0636\u0639\u06cc\u062a \u067e\u0627\u067e\u06cc\u0644\u0627.\n\n\u0646\u06a9\u062a\u0647 \u0627\u0635\u0644\u06cc \u0627\u06cc\u0646\u0647 \u06a9\u0647 \u06af\u06cc\u0631 \u063a\u0630\u0627\u06cc\u06cc \u0647\u0645\u06cc\u0634\u0647 \u0628\u0647 \u0645\u0639\u0646\u06cc \u0628\u0627\u0632 \u0628\u0648\u062f\u0646 \u06a9\u0627\u0646\u062a\u06a9\u062a \u0646\u06cc\u0633\u062a \u0648 \u0628\u0631\u0627\u06cc \u062f\u0631\u0645\u0627\u0646 \u062f\u0631\u0633\u062a\u060c \u0627\u0648\u0644 \u0628\u0627\u06cc\u062f \u0639\u0644\u062a \u0648\u0627\u0642\u0639\u06cc \u0627\u0648\u0646 \u0631\u0648 \u067e\u06cc\u062f\u0627 \u06a9\u0646\u06cc\u0645.",
+          "evidence": [
+            "founder message 2026-11-13 \u00ab\u0627\u06cc\u0646 \u06a9\u067e\u0634\u0646\u0634\u0647\u00bb, copied verbatim"
+          ],
+          "scope": "caption",
+          "status": "confirmed"
+        }
+      ],
       "decisions": [
         {
           "kind": "ledger_order_v2"
@@ -44,6 +61,112 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
               "pathway": "treatment-planning"
             }
           ]
+        },
+        {
+          "content_id": "episodes/episode-163",
+          "evidence": [
+            "plus/exam-questions.json byContent[episodes/episode-163]"
+          ],
+          "kind": "m2_exam_questions",
+          "rows": [
+            "r-b34db58a (key index 2)",
+            "r-78ca42a2 (key index 3)"
+          ],
+          "source_ref": "founder chat message 2026-11-13 (two MCQs with keys, founder-authored, copied verbatim)",
+          "validator": "0 errors; warnings: option length ratio >1.25x on both, stem word \u0645\u062c\u0627\u0648\u0631 recurs in q2 key; founder text kept verbatim (Hard Rule 16)"
+        },
+        {
+          "evidence": [
+            "episodes/episode-163.html p.ep-caption"
+          ],
+          "kind": "first_cut_lead_provenance_v1",
+          "origin": "author_original",
+          "source_ref": "founder caption (chat 2026-11-13) is the whole ep-caption body and opens it; no agent lead added"
+        },
+        {
+          "english": {
+            "evidence": [
+              "en mirror on disk, lang-btn ../episode-163.html; fa lang-btn en/episode-163.html"
+            ],
+            "path": "episodes/en/episode-163.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "all founder messages closed before Push 2"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "plus/des-scores.json episodes/episode-163 RESEARCH 22/D, Part 3 + Part 2d audit green; no fidelity owed (core audio episode)"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Question 4.9 \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc; C.4.14 skipped"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "pillar treatment-planning/comprehensive-diagnosis (C.2.4, C.5.5)"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.7 0, C.4.8 0, C.4.9 4 added (5/5 cap); C.4.6 ep-162 next slot"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "8 canonical tags reused, 0 minted; hashtag_ref --check OK; cabinet-papers rebuilt"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "brain entry tail + dentcast.json episode 163; plus/faq-corpus.json 3 FAQ + 3 cards"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "fixed-pros after meta-12, treatment-planning after insight-45; exam rows r-b34db58a, r-78ca42a2 (M2 founder)"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "index.html top line \u00ab\u0627\u067e\u06cc\u0632\u0648\u062f \u06f1\u06f6\u06f3 \u062f\u0646\u062a\u200c\u06a9\u0633\u062a \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00abFood Impaction in Dentistry: Revisited\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f.\u00bb, bottom chairside-51 line removed, 7 lines"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "episodes/en/episode-163.html authored from locked text; toggles inverse; noindex, no hreflang"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "title + caption confirmed (founder data); M2 answered; no M1/M3b"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -54,14 +177,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "sha256": "1b9bf735631fd581117940f71df2d0e617c614332cdf11bea5f5561eb49f7447"
         }
       ],
-      "pending_questions": [
-        {
-          "answered": false,
-          "message": "M2",
-          "question": "\u0633\u0624\u0627\u0644\u200c\u0647\u0627\u06cc \u0622\u0632\u0645\u0648\u0646 \u0645\u0633\u06cc\u0631 \u0628\u0631\u0627\u06cc episodes/episode-163 (\u0628\u0646\u06cc\u0627\u0646\u200c\u06af\u0630\u0627\u0631 \u06af\u0641\u062a\u0647 \u062e\u0648\u062f\u0634 \u0645\u06cc\u200c\u062f\u0647\u062f)",
-          "step": "C.5.6"
-        }
-      ],
+      "pending_questions": [],
       "unrelated_changes": [],
       "validation": [
         {
@@ -460,11 +576,31 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "pathway_place.py: placed in fixed-pros after metanotes/meta-12 (contact-management block) and treatment-planning after insight/insight-45 (diagnosis-by-elimination block), no milestone; others not placed (series heuristic only / third pathway). --coverage ok. 4.12-\u0628: 2 founder MCQs (M2) written to plus/exam-questions.json r-b34db58a, r-78ca42a2; validator 0 errors"
+        ],
         "id": "C.5.6",
         "module": "10-brain-and-pathways.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "candidate bundle-crown-prep (continues fixed-pros): \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f2 \u2014 food impaction is a problem/complication, not a foundational crown-prep concept; also gate 3: no hole in prep/impression core). treatment-planning: no bundle. home-bundles.js untouched"
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Pulse: new top line linking /episodes/episode-163.html (title-only, no spoiler), oldest line (chairside-51) removed, 7 lines; English mirror episodes/en/episode-163.html + toggles; second_cut_editorial_lock_v1 recorded with all ten scopes"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
@@ -485,7 +621,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: episodes/episode-163.html, episodes/en/episode-163.html, dentcast-brain.json, dentcast.json, dentcast-hashtag-reference.json, index.html, plus/cabinet-papers.json, plus/faq-corpus.json, plus/pathways.json"
+    "note": "Index-only refresh after staging delivery paths: plus/exam-questions.json"
   },
   "schema": "publish-handoff-v3"
 }
