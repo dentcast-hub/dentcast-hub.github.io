@@ -55295,21 +55295,21 @@
         "claims": [
           {
             "id": "u10",
-            "claim_quote": "به همین دلیل توصیه می‌شود خط ترک را با احتیاط برداریم و در نهایت حفره را با یک رستوریشن باندشونده مهروموم و سیل کنیم [2].",
-            "verdict": "ALTERED",
-            "change_kind": "POPULATION_OR_CONDITION_CHANGED",
+            "claim_quote": "به همین دلیل، در دندانی که پالپیت برگشت‌پذیر دارد، توصیه می‌شود خط ترک را با احتیاط برداریم و در نهایت حفره را با یک رستوریشن باندشونده مهروموم و سیل کنیم [2].",
+            "verdict": "MATCHES",
+            "change_kind": null,
             "source_quote": "If pulp status is reversible pulpitis, remove the old restoration and crack line carefully because cracks are always colonized by bacterial biofilms.",
             "source_ref": null,
-            "note": "inference judged on its conclusion (F1); the source gives this instruction only under reversible pulpitis, and the unit drops that condition; the filling half matches 'Fill the cavity with bonded direct or indirect restoration.'"
+            "note": "inference after «به همین دلیل», judged on its conclusion (F1). The source advises both actions in its own voice (F2-iii way 1). Careful removal of the crack line in reversible pulpitis is in the quoted sentence. Filling with a bonded restoration is in the next sentence: «Fill the cavity with bonded direct or indirect restoration.» Both halves match at the same strength."
           },
           {
             "id": "u40",
-            "claim_quote": "یکی از توصیه‌ها این است که دندان با روکش موقت محافظت شود و سپس نیاز به درمان ریشه دوباره ارزیابی شود [2].",
-            "verdict": "ALTERED",
-            "change_kind": "POPULATION_OR_CONDITION_CHANGED",
+            "claim_quote": "یکی از توصیه‌ها این است که اگر درد هنگام جویدن ادامه پیدا کرد، دندان با روکش موقت محافظت شود و سپس نیاز به درمان ریشه دوباره ارزیابی شود [2].",
+            "verdict": "MATCHES",
+            "change_kind": null,
             "source_quote": "If biting pain persists, then make a provisional crown and reevaluate the necessity of root canal treatment.",
             "source_ref": null,
-            "note": "the source attaches the provisional crown and reevaluation to persistent biting pain; the unit states it without that condition"
+            "note": "the source gives the action as its own advice (F2-iii way 1), with the same condition (persisting biting pain), the same order (provisional crown, then reevaluate root canal treatment) and the same strength."
           },
           {
             "id": "u46",
@@ -55349,8 +55349,8 @@
           }
         ],
         "counts": {
-          "matches": 4,
-          "altered": 2,
+          "matches": 6,
+          "altered": 0,
           "reversed": 0,
           "not_in_source": 0,
           "not_assessable": 0,
@@ -55358,12 +55358,12 @@
           "not_a_claim": 0
         },
         "assessable": 6,
-        "fidelity_score": 83,
-        "level": "MEDIUM",
+        "fidelity_score": 100,
+        "level": "HIGH",
         "provisional": false,
         "source_conclusion": "If a crack extends subgingivally and deep periodontal pocket is associated with the crack, explain the poor prognosis to the patient and decide whether to treat or extract the cracked tooth.",
-        "fact_fa": "از ۶ ادعایی که منبع به آن پرداخته‌اند، ۴ مورد مطابق است، ۲ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق متوسط.",
-        "interpretation_fa": "موارد تغییریافته یا برعکس: «به همین دلیل توصیه می‌شود خط ترک را با احتیاط بردا…» (دامنه گسترده‌تر از منبع)؛ «یکی از توصیه‌ها این است که دندان با روکش موقت محاف…» (دامنه گسترده‌تر از منبع)."
+        "fact_fa": "از ۶ ادعایی که منبع به آن پرداخته‌اند، ۶ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       },
       {
         "des_version": "3.7",
@@ -55373,12 +55373,12 @@
         "claims": [
           {
             "id": "u8",
-            "claim_quote": "ترکی که به محیط دهان راه دارد، می‌تواند محل تجمع بیوفیلم باکتریایی باشد.",
-            "verdict": "ALTERED",
-            "change_kind": "HEDGE_ADDED",
+            "claim_quote": "ترکی که به محیط دهان راه دارد، به‌مرور با بیوفیلم باکتریایی پر می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
             "source_quote": "Because dentine cracks are eventually filled with bacteria biofilms upon exposure to oral fluids, they enable rapid bacteria ingress into the dental pulp via open dentinal tubules.",
             "source_ref": null,
-            "note": "The source states that biofilm fills exposed cracks as a finding. The claim softens it to a possibility («می‌تواند … باشد» = may be).; judge over sweeper MATCHES («می‌تواند» here reads as capability («can be a site»), not as «may», so it is not a hedge under F2-ii; the source states that cracks exposed to oral fluids become filled with biofilm.): In Persian, «می‌تواند … باشد» is the ordinary way to say «may be». F2-ii lists می‌تواند as a hedge when it means *may*. The claim and the source state the same proposition: cracks open to the oral environment hold bacterial biofilm. The source states it plainly («are eventually filled with bacteria biofilms upon exposure to oral fluids»). Remove the qualifier and the unit is the source's own finding, no wider and no narrower. That is the HEDGE_ADDED test. This is not F2-ii item 1 (a hedged generalization), because the claim is not wider than the finding. This was close: the sweeper's capability reading of «می‌تواند» is possible. But the copula construction «می‌تواند … باشد» states possibility, not an observed capability."
+            "note": "«به‌مرور» restates «eventually» and «راه به محیط دهان» restates «upon exposure to oral fluids»; same direction, no hedge on either side, same scope (cracks in the tooth the review studies)."
           },
           {
             "id": "u9",
@@ -55391,8 +55391,8 @@
           }
         ],
         "counts": {
-          "matches": 1,
-          "altered": 1,
+          "matches": 2,
+          "altered": 0,
           "reversed": 0,
           "not_in_source": 0,
           "not_assessable": 0,
@@ -55400,12 +55400,12 @@
           "not_a_claim": 0
         },
         "assessable": 2,
-        "fidelity_score": 75,
+        "fidelity_score": 100,
         "level": "HIGH",
         "provisional": true,
         "source_conclusion": "Understanding the characteristics, toughening mechanism and weakening factors of tooth cracks is helpful in designing better treatment.",
-        "fact_fa": "از ۲ ادعایی که منبع به آن پرداخته‌اند، ۱ مورد مطابق است، ۱ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
-        "interpretation_fa": "موارد تغییریافته یا برعکس: «ترکی که به محیط دهان راه دارد، می‌تواند محل تجمع ب…» (محتاط‌تر از منبع)."
+        "fact_fa": "از ۲ ادعایی که منبع به آن پرداخته‌اند، ۲ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       },
       {
         "des_version": "3.7",
@@ -55442,12 +55442,12 @@
           },
           {
             "id": "u16",
-            "claim_quote": "این دندان‌ها هم با کامپوزیت ترمیم شدند و بعد از یک سال، نتیجه‌شان تفاوت معنی‌داری با بقیه‌ی دندان‌ها نداشت [4].",
-            "verdict": "ALTERED",
-            "change_kind": "GROUP_OR_COMPARATOR_CHANGED",
+            "claim_quote": "این دندان‌ها هم با کامپوزیت ترمیم شدند و بعد از یک سال، نتیجه‌شان تفاوت معنی‌داری با دندان‌هایی که در همان عمق ۲ میلی‌متری خط ترکی در کف حفره‌شان دیده نمی‌شد، نداشت [4].",
+            "verdict": "MATCHES",
+            "change_kind": null,
             "source_quote": "However, there was no significant\ndifference (p=0.388) between the treatment outcome for\nabsence or presence of crack line at the base of the cavity\nof depth 2mm into dentin.",
             "source_ref": null,
-            "note": "The source finds no significant difference between C-I and C-II only, meaning 2 mm cavities with and without a crack line at the base. It does not compare these teeth with the rest of the teeth. All 4 failures were in C-I (4 of 10, against 0 in every other group), and failure was significantly related to depth (p=0.033). The composite half matches «All the teeth were restored with light cure posterior composite resin restorative material.»"
+            "note": "The pointing word «این دندان‌ها» refers to the teeth in the previous unit, which have a crack line at the base of a 2 mm cavity (Group C-I). The composite-restoration half is also stated: «All the teeth were restored with light cure posterior composite resin restorative material.» The one-year period matches the 12-month recall in the study."
           },
           {
             "id": "u18",
@@ -55460,30 +55460,30 @@
           },
           {
             "id": "u44",
-            "claim_quote": "به بیان ساده‌تر، نکته‌ی مهم این است که کاسپ‌ها را بپوشانیم تا دو طرف ترک هنگام اعمال نیروهای جویدن، مستقل از یکدیگر حرکت نکنند.",
-            "verdict": "ALTERED",
-            "change_kind": "POPULATION_OR_CONDITION_CHANGED",
-            "source_quote": "However, some authors do not agree with this and\nrecommend that the cracked teeth with wide cavities should\nbe protected and strengthened by full cuspal coverage.",
+            "claim_quote": "به بیان ساده‌تر، از نگاه ما نکته‌ی مهم این است که کاسپ‌ها را بپوشانیم تا دو طرف ترک هنگام اعمال نیروهای جویدن، مستقل از یکدیگر حرکت نکنند.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
             "source_ref": null,
-            "note": "The source does not state cuspal coverage in its own voice. It reports that some authors recommend it, and only for wide cavities; the claim drops that condition. The source's own study avoided coverage for cavities 1 mm wide, and it writes «The composite restoration splinted and sealed the crack and prevented movement of individual cracked surfaces». The source does not state the movement mechanism for cuspal coverage."
+            "note": "opinion marker: از نگاه ما"
           }
         ],
         "counts": {
-          "matches": 4,
-          "altered": 2,
+          "matches": 5,
+          "altered": 0,
           "reversed": 0,
           "not_in_source": 0,
           "not_assessable": 0,
-          "author_view": 0,
+          "author_view": 1,
           "not_a_claim": 0
         },
-        "assessable": 6,
-        "fidelity_score": 83,
-        "level": "MEDIUM",
+        "assessable": 5,
+        "fidelity_score": 100,
+        "level": "HIGH",
         "provisional": false,
         "source_conclusion": "Posterior incomplete cracked teeth without caries or previous restoration and with a mesio-distal orientation, if is either asymptomatic or have signs and symptoms of reversible pulpitis, can be managed successfully in about 91.2% cases with direct composite resin restorative material for at least a period of 12 months.",
-        "fact_fa": "از ۶ ادعایی که منبع به آن پرداخته‌اند، ۴ مورد مطابق است، ۲ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق متوسط.",
-        "interpretation_fa": "موارد تغییریافته یا برعکس: «این دندان‌ها هم با کامپوزیت ترمیم شدند و بعد از یک…» (گروه مقایسه متفاوت)؛ «به بیان ساده‌تر، نکته‌ی مهم این است که کاسپ‌ها را …» (دامنه گسترده‌تر از منبع)."
+        "fact_fa": "از ۵ ادعایی که منبع به آن پرداخته‌اند، ۵ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       },
       {
         "des_version": "3.7",
@@ -55535,12 +55535,12 @@
         "claims": [
           {
             "id": "u48",
-            "claim_quote": "رستوریشن نهایی دندان ترک‌دار باید کاسپ‌ها را بپوشاند.",
-            "verdict": "ALTERED",
-            "change_kind": "POPULATION_OR_CONDITION_CHANGED",
+            "claim_quote": "رستوریشن نهایی دندان ترک‌دارِ علامت‌دار یا درمان ریشه‌شده باید روکش کامل باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
             "source_quote": "Full-crown restorations are strongly recommended for the CT with any symptoms and the CT-RCT.",
             "source_ref": null,
-            "note": "Instruction judged by F2-iii way 1: the source's own advice governs. The source attaches the recommendation to CT with symptoms and to CT-RCT. It also calls monitoring without restoration a possible option for asymptomatic CT. The unit applies the instruction to every cracked tooth and so drops that condition. The recommendation strength (strongly recommended / باید) is the same."
+            "note": "instruction judged by F2-iii way 1: the source recommends the action at the same strength (strongly recommended, no hedge). The earlier sentence 'Full-crown restorations are strongly recommended for the CT-RCT.' omits the symptomatic group, so it does not state the claim unchanged (F2-v step 3)."
           },
           {
             "id": "u49",
@@ -55589,17 +55589,17 @@
           },
           {
             "id": "u54",
-            "claim_quote": "احتمال کشیدن دندان‌هایی که روکش کامل نداشتند، حدود ۱۱ برابر بیشتر گزارش شد [6].",
-            "verdict": "ALTERED",
-            "change_kind": "POPULATION_OR_CONDITION_CHANGED",
+            "claim_quote": "احتمال کشیدن دندان‌های ترک‌دارِ درمان ریشه‌شده‌ای که روکش کامل نداشتند، حدود ۱۱ برابر بیشتر گزارش شد [6].",
+            "verdict": "MATCHES",
+            "change_kind": null,
             "source_quote": "The CT-RCT without full-crown restorations had an 11.3-fold higher risk of tooth extraction than the CT-RCT with full-crown restorations (p < 0.001).",
             "source_ref": null,
-            "note": "The magnitude «حدود ۱۱ برابر» matches 11.3-fold. The RCT condition the source attaches is not named in the unit, and no pointing word carries it, so the finding is widened to all teeth without full crowns.; judge over sweeper MATCHES (The condition (root-canal-treated teeth) is read through from the preceding unit. «حدود ۱۱ برابر» restates 11.3-fold.): The unit names no root-canal condition and has no pointing word such as «این» or «همین». The rule that a unit is judged on its own words therefore forbids reading CT-RCT in from u53. As written, the unit claims an ~11-fold extraction risk for cracked teeth without full crowns in general. The source reports 11.3-fold for CT-RCT only, so the unit drops the condition the source attached. This is close: a reader following the paragraph would take u53's context. But the spec allows read-through only via a pointing word."
+            "note": "'about 11-fold' restates 11.3-fold; same direction, population and comparator."
           }
         ],
         "counts": {
-          "matches": 4,
-          "altered": 2,
+          "matches": 6,
+          "altered": 0,
           "reversed": 0,
           "not_in_source": 0,
           "not_assessable": 1,
@@ -55607,12 +55607,12 @@
           "not_a_claim": 0
         },
         "assessable": 6,
-        "fidelity_score": 83,
-        "level": "MEDIUM",
+        "fidelity_score": 100,
+        "level": "HIGH",
         "provisional": true,
         "source_conclusion": "Full-crown restorations are strongly recommended for the CT with any symptoms and the CT-RCT.",
-        "fact_fa": "از ۶ ادعایی که منبع به آن پرداخته‌اند، ۴ مورد مطابق است، ۲ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق متوسط.",
-        "interpretation_fa": "موارد تغییریافته یا برعکس: «رستوریشن نهایی دندان ترک‌دار باید کاسپ‌ها را بپوشا…» (دامنه گسترده‌تر از منبع)؛ «احتمال کشیدن دندان‌هایی که روکش کامل نداشتند، حدود…» (دامنه گسترده‌تر از منبع)."
+        "fact_fa": "از ۶ ادعایی که منبع به آن پرداخته‌اند، ۶ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       },
       null,
       {

@@ -597,7 +597,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 53,
+   "count": 54,
    "content_ids": [
     "episodes/episode-6",
     "episodes/episode-7",
@@ -651,7 +651,8 @@
     "dentai/dentai-19",
     "dentai/dentai-20",
     "metanotes/meta-14",
-    "metanotes/meta-21"
+    "metanotes/meta-21",
+    "sharehub/share-51"
    ]
   },
   {
@@ -863,6 +864,74 @@
    ]
   },
   {
+   "key": "مرور_منابع",
+   "tag": "#مرور_منابع",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام بخش مرور منابع (پیش‌تر Share Hub / شیرهاب) — خوانش دنت‌کست از یک یا چند مقاله، همیشه با ذکر منبع.",
+   "use_when": "روی هر مدخل مرور منابع (پوشهٔ sharehub/)، و هیچ‌جای دیگر.",
+   "aliases": [
+    "share hub",
+    "share_hub",
+    "شیرهاب",
+    "شر هاب"
+   ],
+   "variants": [
+    "#Share_Hub"
+   ],
+   "co_tags": [],
+   "count": 47,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25",
+    "sharehub/share-26",
+    "sharehub/share-27",
+    "sharehub/share-28",
+    "sharehub/share-29",
+    "sharehub/share-30",
+    "sharehub/share-31",
+    "sharehub/share-32",
+    "sharehub/share-33",
+    "sharehub/share-34",
+    "sharehub/share-35",
+    "sharehub/share-36",
+    "sharehub/share-38",
+    "sharehub/share-39",
+    "sharehub/share-40",
+    "sharehub/share-41",
+    "sharehub/share-42",
+    "sharehub/share-43",
+    "sharehub/share-44",
+    "sharehub/share-45",
+    "sharehub/share-46",
+    "sharehub/share-47",
+    "sharehub/share-51"
+   ]
+  },
+  {
    "key": "curated_content",
    "tag": "#Curated_Content",
    "domain": "brand",
@@ -924,73 +993,6 @@
     "sharehub/share-48",
     "sharehub/share-49",
     "sharehub/share-50"
-   ]
-  },
-  {
-   "key": "مرور_منابع",
-   "tag": "#مرور_منابع",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام بخش مرور منابع (پیش‌تر Share Hub / شیرهاب) — خوانش دنت‌کست از یک یا چند مقاله، همیشه با ذکر منبع.",
-   "use_when": "روی هر مدخل مرور منابع (پوشهٔ sharehub/)، و هیچ‌جای دیگر.",
-   "aliases": [
-    "share hub",
-    "share_hub",
-    "شیرهاب",
-    "شر هاب"
-   ],
-   "variants": [
-    "#Share_Hub"
-   ],
-   "co_tags": [],
-   "count": 46,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24",
-    "sharehub/share-25",
-    "sharehub/share-26",
-    "sharehub/share-27",
-    "sharehub/share-28",
-    "sharehub/share-29",
-    "sharehub/share-30",
-    "sharehub/share-31",
-    "sharehub/share-32",
-    "sharehub/share-33",
-    "sharehub/share-34",
-    "sharehub/share-35",
-    "sharehub/share-36",
-    "sharehub/share-38",
-    "sharehub/share-39",
-    "sharehub/share-40",
-    "sharehub/share-41",
-    "sharehub/share-42",
-    "sharehub/share-43",
-    "sharehub/share-44",
-    "sharehub/share-45",
-    "sharehub/share-46",
-    "sharehub/share-47"
    ]
   },
   {
@@ -4631,6 +4633,36 @@
    ]
   },
   {
+   "key": "اندیکاسیون_روکش",
+   "tag": "#اندیکاسیون_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "معیارهای عبور از ترمیم به روکش: ضخامت دیواره، وسعت تخریب، بار اکلوزالی، ضعف ساختاری پس از اندو.",
+   "use_when": "مقاله بگوید کِی باید روکش کرد و کِی ترمیم کافی است. این تگ جای تگ‌های تک‌عاملی (بروکسیسم، اندو، ...) را می‌گیرد وقتی مقاله آن‌ها را فقط به‌عنوان معیار فهرست می‌کند.",
+   "aliases": [
+    "crown indication",
+    "اندیکاسیون کراون",
+    "چه زمان روکش",
+    "نیاز به روکش",
+    "کی روکش لازمه",
+    "when to crown",
+    "crown or filling"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-121",
+    "episodes/episode-123",
+    "episodes/episode-124",
+    "photocast/episode-3",
+    "chairside/chairside-22",
+    "chairside/chairside-27",
+    "chairside/chairside-29",
+    "sharehub/share-51"
+   ]
+  },
+  {
    "key": "اورلی",
    "tag": "#اورلی",
    "domain": null,
@@ -4762,6 +4794,33 @@
     "notecast/episode-38",
     "chairside/chairside-35",
     "sharehub/share-27"
+   ]
+  },
+  {
+   "key": "درمان_ریشه",
+   "tag": "#درمان_ریشه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "root canal",
+    "روت کانال",
+    "عصب کشی",
+    "درمان کانال ریشه"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "insight/insight-17",
+    "insight/insight-20",
+    "chairside/chairside-4",
+    "metanotes/meta-11",
+    "sharehub/share-19",
+    "metanotes/meta-21",
+    "chairside/chairside-49",
+    "sharehub/share-51"
    ]
   },
   {
@@ -5054,35 +5113,6 @@
    ]
   },
   {
-   "key": "اندیکاسیون_روکش",
-   "tag": "#اندیکاسیون_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "معیارهای عبور از ترمیم به روکش: ضخامت دیواره، وسعت تخریب، بار اکلوزالی، ضعف ساختاری پس از اندو.",
-   "use_when": "مقاله بگوید کِی باید روکش کرد و کِی ترمیم کافی است. این تگ جای تگ‌های تک‌عاملی (بروکسیسم، اندو، ...) را می‌گیرد وقتی مقاله آن‌ها را فقط به‌عنوان معیار فهرست می‌کند.",
-   "aliases": [
-    "crown indication",
-    "اندیکاسیون کراون",
-    "چه زمان روکش",
-    "نیاز به روکش",
-    "کی روکش لازمه",
-    "when to crown",
-    "crown or filling"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-121",
-    "episodes/episode-123",
-    "episodes/episode-124",
-    "photocast/episode-3",
-    "chairside/chairside-22",
-    "chairside/chairside-27",
-    "chairside/chairside-29"
-   ]
-  },
-  {
    "key": "باندینگ_سرامیک",
    "tag": "#باندینگ_سرامیک",
    "domain": "clinical",
@@ -5288,32 +5318,6 @@
     "litecast/lite-CAST16",
     "litecast/lite-CAST17",
     "litecast/lite-CAST19"
-   ]
-  },
-  {
-   "key": "درمان_ریشه",
-   "tag": "#درمان_ریشه",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "root canal",
-    "روت کانال",
-    "عصب کشی",
-    "درمان کانال ریشه"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "insight/insight-17",
-    "insight/insight-20",
-    "chairside/chairside-4",
-    "metanotes/meta-11",
-    "sharehub/share-19",
-    "metanotes/meta-21",
-    "chairside/chairside-49"
    ]
   },
   {
@@ -7824,6 +7828,29 @@
    ]
   },
   {
+   "key": "ترک_عاجی",
+   "tag": "#ترک_عاجی",
+   "domain": null,
+   "words": 2,
+   "definition": "ترکی که از مینا گذشته و وارد عاج شده.",
+   "use_when": "مقاله عمق ترک را عاملِ تصمیم بداند.",
+   "aliases": [
+    "dentin crack",
+    "ترک در عاج"
+   ],
+   "variants": [
+    "#ترک عاجی"
+   ],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "dentai/dentai-13",
+    "dentai/dentai-14",
+    "dentai/dentai-15",
+    "sharehub/share-51"
+   ]
+  },
+  {
    "key": "تغییر_رنگ",
    "tag": "#تغییر_رنگ",
    "domain": "clinical",
@@ -8521,6 +8548,29 @@
     "chairside/chairside-10",
     "episodes/episode-157",
     "sharehub/share-45"
+   ]
+  },
+  {
+   "key": "پوشش_کاسپ",
+   "tag": "#پوشش_کاسپ",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پوشاندنِ کاسپ در ترمیمِ خلفیِ وسیع برای مهارِ شکست — تصمیمِ کلیدیِ اینله در برابر آنله/روکش.",
+   "use_when": "مقاله تصمیمِ پوششِ کاسپ را موضوع داشته باشد.",
+   "aliases": [
+    "cuspal coverage",
+    "پوشش کاسپ",
+    "کاور کاسپ",
+    "cusp coverage"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-121",
+    "episodes/episode-122",
+    "sharehub/share-18",
+    "sharehub/share-51"
    ]
   },
   {
@@ -9346,28 +9396,6 @@
    ]
   },
   {
-   "key": "ترک_عاجی",
-   "tag": "#ترک_عاجی",
-   "domain": null,
-   "words": 2,
-   "definition": "ترکی که از مینا گذشته و وارد عاج شده.",
-   "use_when": "مقاله عمق ترک را عاملِ تصمیم بداند.",
-   "aliases": [
-    "dentin crack",
-    "ترک در عاج"
-   ],
-   "variants": [
-    "#ترک عاجی"
-   ],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "dentai/dentai-13",
-    "dentai/dentai-14",
-    "dentai/dentai-15"
-   ]
-  },
-  {
    "key": "تری_قالبگیری",
    "tag": "#تری_قالبگیری",
    "domain": null,
@@ -9590,6 +9618,27 @@
     "insight/insight-56",
     "insight/insight-66",
     "sharehub/share-21"
+   ]
+  },
+  {
+   "key": "حفظ_پالپ",
+   "tag": "#حفظ_پالپ",
+   "domain": null,
+   "words": 2,
+   "definition": "نگه داشتنِ حیاتِ پالپ به‌عنوان هدفِ تصمیم.",
+   "use_when": "مقاله حفظ پالپ را معیار بداند.",
+   "aliases": [
+    "pulp vitality",
+    "حیات پالپ",
+    "vital pulp"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/dentai-11",
+    "dentai/dentai-25",
+    "sharehub/share-51"
    ]
   },
   {
@@ -10567,28 +10616,6 @@
     "episodes/episode-30",
     "notecast/episode-29",
     "notecast/episode-30"
-   ]
-  },
-  {
-   "key": "پوشش_کاسپ",
-   "tag": "#پوشش_کاسپ",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پوشاندنِ کاسپ در ترمیمِ خلفیِ وسیع برای مهارِ شکست — تصمیمِ کلیدیِ اینله در برابر آنله/روکش.",
-   "use_when": "مقاله تصمیمِ پوششِ کاسپ را موضوع داشته باشد.",
-   "aliases": [
-    "cuspal coverage",
-    "پوشش کاسپ",
-    "کاور کاسپ",
-    "cusp coverage"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-121",
-    "episodes/episode-122",
-    "sharehub/share-18"
    ]
   },
   {
@@ -11958,26 +11985,6 @@
    "content_ids": [
     "insight/insight-37",
     "sharehub/share-6"
-   ]
-  },
-  {
-   "key": "حفظ_پالپ",
-   "tag": "#حفظ_پالپ",
-   "domain": null,
-   "words": 2,
-   "definition": "نگه داشتنِ حیاتِ پالپ به‌عنوان هدفِ تصمیم.",
-   "use_when": "مقاله حفظ پالپ را معیار بداند.",
-   "aliases": [
-    "pulp vitality",
-    "حیات پالپ",
-    "vital pulp"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "dentai/dentai-11",
-    "dentai/dentai-25"
    ]
   },
   {
