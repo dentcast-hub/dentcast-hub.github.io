@@ -1,0 +1,14 @@
+{
+  "episodes/episode-163#r-b34db58a": {
+    "content_id": "episodes/episode-163",
+    "question_id": "r-b34db58a",
+    "row_sha256": "42fe5292aab472f06293ca95825015bed54fcbe9a3fe0ddb4a955918198acf3f",
+    "approval": {
+      "status": "confirmed",
+      "decision": "prompt_fa: «گیر غذایی» -> «فود ایمپکشن» only (founder terminology; options and key unchanged)",
+      "evidence": [
+        "founder chat 2026-11-13: «همون فود ایمپکشن بنویسی بهتره» — founder-authored question"
+      ]
+    }
+  }
+}
