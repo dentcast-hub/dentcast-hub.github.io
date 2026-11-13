@@ -1,0 +1,823 @@
+{
+  "schema": "publish-completion-v1",
+  "state": {
+    "publication": {
+      "blocker": null,
+      "category": "chairside",
+      "content_id": "chairside/chairside-54",
+      "context": {
+        "approvals": [
+          {
+            "decision": "\u0648\u0642\u062a\u06cc \u062e\u0648\u0627\u0633\u062a\u0647\u0654 \u0628\u06cc\u0645\u0627\u0631 \u0628\u0627 \u062f\u0631\u0645\u0627\u0646 \u062f\u0631\u0633\u062a \u0647\u0645\u200c\u062e\u0648\u0627\u0646\u06cc \u0646\u062f\u0627\u0631\u062f",
+            "evidence": [
+              "founder data: first line of founder message, copied verbatim (Hard Rule 16)"
+            ],
+            "scope": "title",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u0628\u06cc\u0645\u0627\u0631 \u0646\u0645\u06cc\u200c\u062e\u0648\u0627\u0633\u062a \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u062f\u0646\u062f\u0627\u0646\u200c\u0647\u0627\u06cc \u0642\u062f\u0627\u0645\u06cc\u200c\u0627\u0634 \u0628\u0631\u062f\u0627\u0634\u062a\u0647 \u0634\u0648\u062f \u0648 \u0645\u06cc\u200c\u067e\u0631\u0633\u06cc\u062f \u0622\u06cc\u0627 \u062f\u0631\u0645\u0627\u0646 \u0645\u062c\u062f\u062f \u0631\u06cc\u0634\u0647 \u0627\u0632 \u0631\u0648\u06cc \u0647\u0645\u06cc\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627 \u0645\u0645\u06a9\u0646 \u0646\u06cc\u0633\u062a. \u0686\u0631\u0627 \u062f\u0631 \u0627\u06cc\u0646 \u06a9\u06cc\u0633 \u0628\u0631\u062f\u0627\u0634\u062a\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627 \u0628\u062e\u0634\u06cc \u0627\u0632 \u062a\u0634\u062e\u06cc\u0635 \u0628\u0648\u062f\u061f",
+            "evidence": [
+              "agent proposal under standing acceptance (publish-checkpoints.md \u00abStanding acceptance\u00bb), listed in Push-2 report"
+            ],
+            "scope": "caption",
+            "status": "confirmed"
+          }
+        ],
+        "decisions": [
+          {
+            "kind": "ledger_order_v2"
+          },
+          {
+            "kind": "fixed_three_deliveries_v1"
+          },
+          {
+            "kind": "fixed_three_deliveries_v2"
+          },
+          {
+            "evidence": [
+              "chairside/chairside-54.html first <p> equals founder paragraph 1 (C.2 evidence)"
+            ],
+            "kind": "first_cut_lead_provenance_v1",
+            "origin": "author_original",
+            "source_ref": "founder message text, first body paragraph \u00ab\u0628\u06cc\u0645\u0627\u0631\u06cc \u0628\u0631\u0627\u06cc \u062a\u0639\u06cc\u06cc\u0646 \u0637\u0631\u062d \u062f\u0631\u0645\u0627\u0646 \u062f\u0646\u062f\u0627\u0646\u200c\u0647\u0627\u06cc \u0642\u062f\u0627\u0645\u06cc \u0641\u06a9 \u0628\u0627\u0644\u0627 \u0627\u0631\u062c\u0627\u0639 \u0634\u062f\u0647 \u0628\u0648\u062f\u2026\u00bb opens the page body verbatim; no agent lead added"
+          },
+          {
+            "decision": "Founder approved both exam questions as drafted (\u00ab\u062a\u0627\u06cc\u06cc\u062f\u0646\u00bb), written as r-272f958d and r-3297533e",
+            "evidence": [
+              "founder chat reply 2026-11-13"
+            ],
+            "kind": "founder_answer_m2",
+            "step": "C.5.6"
+          },
+          {
+            "english": {
+              "evidence": [
+                "en mirror on disk; toggle ../chairside-54.html and fa toggle en/chairside-54.html"
+              ],
+              "path": "chairside/en/chairside-54.html",
+              "status": "ready"
+            },
+            "evidence": [
+              "all founder messages closed (M2 answered), no M1/M3b owed"
+            ],
+            "kind": "second_cut_editorial_lock_v1",
+            "scopes": [
+              {
+                "evidence": [
+                  "C.4.13: COMMENTARY DES 15/E stored in plus/des-scores.json; fidelity null (self-COMMENTARY); no M3b"
+                ],
+                "scope": "scientific",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "B.4.9 ordinary visit; C.4.14 skipped"
+                ],
+                "scope": "challenge",
+                "status": "not_applicable"
+              },
+              {
+                "evidence": [
+                  "C.2.4/C.5.5 treatment-planning/comprehensive-diagnosis; landing row in chairside/index.html"
+                ],
+                "scope": "taxonomy",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.4.7 0 back-links (treatment-plan at cap); C.4.8 one inline link to /glossary/treatment-plan.html; C.4.9 three capsules, related_cap 5/5"
+                ],
+                "scope": "links",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.5.0 seven reused canonical tags, no mint; --check OK"
+                ],
+                "scope": "hashtags",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.5 brain tail entry chairside-54; faq-corpus FAQ+flashcards"
+                ],
+                "scope": "content_record",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.5.6 treatment-planning after chairside-14; two approved exam questions; C.5.6-b no bundle candidate"
+                ],
+                "scope": "pathways",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "index.html Pulse: new top line for chairside-54, oldest share-47 line removed, 7 lines"
+                ],
+                "scope": "pulse",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "chairside/en/chairside-54.html authored from locked text, noindex, no hreflang, toggles inverse"
+                ],
+                "scope": "english",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "title founder data; caption standing acceptance; lead author_original; M2 approved"
+                ],
+                "scope": "author_approvals",
+                "status": "resolved"
+              }
+            ]
+          }
+        ],
+        "delivery": [
+          {
+            "evidence": [
+              "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/43395072938"
+            ],
+            "scope": "GitHub Actions post-Push-2 mechanical continuation"
+          }
+        ],
+        "inputs": [
+          {
+            "note": "founder visit text with title",
+            "ref": "chat:founder-message/text",
+            "sha256": "b99532263c5bf672c130cf0dfd0d31631c242d36ca9570125637c1c027f032f1"
+          },
+          {
+            "note": "founder radiograph image to convert to WebP",
+            "ref": "chat:founder-message/image-90711.jpg",
+            "sha256": "e157b4804d30223677c5440e0b6bff9b2ea70cb68d46c5c069301e8d0d2b339f"
+          }
+        ],
+        "pending_questions": [],
+        "unrelated_changes": [],
+        "validation": [
+          {
+            "content_id": "chairside/chairside-54",
+            "exit_code": 0,
+            "expected_caption": "\u0628\u06cc\u0645\u0627\u0631 \u0646\u0645\u06cc\u200c\u062e\u0648\u0627\u0633\u062a \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u062f\u0646\u062f\u0627\u0646\u200c\u0647\u0627\u06cc \u0642\u062f\u0627\u0645\u06cc\u200c\u0627\u0634 \u0628\u0631\u062f\u0627\u0634\u062a\u0647 \u0634\u0648\u062f \u0648 \u0645\u06cc\u200c\u067e\u0631\u0633\u06cc\u062f \u0622\u06cc\u0627 \u062f\u0631\u0645\u0627\u0646 \u0645\u062c\u062f\u062f \u0631\u06cc\u0634\u0647 \u0627\u0632 \u0631\u0648\u06cc \u0647\u0645\u06cc\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627 \u0645\u0645\u06a9\u0646 \u0646\u06cc\u0633\u062a. \u0686\u0631\u0627 \u062f\u0631 \u0627\u06cc\u0646 \u06a9\u06cc\u0633 \u0628\u0631\u062f\u0627\u0634\u062a\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627 \u0628\u062e\u0634\u06cc \u0627\u0632 \u062a\u0634\u062e\u06cc\u0635 \u0628\u0648\u062f\u061f",
+            "expected_title": "\u0648\u0642\u062a\u06cc \u062e\u0648\u0627\u0633\u062a\u0647\u0654 \u0628\u06cc\u0645\u0627\u0631 \u0628\u0627 \u062f\u0631\u0645\u0627\u0646 \u062f\u0631\u0633\u062a \u0647\u0645\u200c\u062e\u0648\u0627\u0646\u06cc \u0646\u062f\u0627\u0631\u062f",
+            "kind": "phase_f",
+            "output_sha256": "1e3469fd4550fc548c3b7a6996a60c9cf8a17a589f5963125d59317da2ea77f7",
+            "recorded_at": "2026-11-13T08:41:53+00:00",
+            "summary": "104 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+          }
+        ]
+      },
+      "external_actions": [],
+      "status": "in_progress",
+      "steps": [
+        {
+          "evidence": [
+            "CLAUDE.md, workflows/README.md, global/README.md + selected core sections (repo-core, ads, publication-surfaces, des-display, site-invariants) via dentcast_global_rules.py --read pages 1-2, agent-parity.md, publish-checkpoints.md, publish-handoff-tool.md, modules 01 and 02 read completely. Capability pre-check: git ls-remote origin works; push to non-main branch ccr-e8ffd2e6-c2sc0b; Actions monitoring and PR/merge via GitHub MCP"
+          ],
+          "id": "rules",
+          "module": "01-hard-rules.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Founder message carries visit text and one radiograph image, no research paper: normal publication, no paper branch"
+          ],
+          "id": "0",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Parsed brain once (608 entries); latest same-category chairside-53 key order type,id,title,caption,hashtags,keywords,page_url,pillar; URL /chairside/chairside-N.html, images chairside/csN-k.webp, en mirror chairside/en/; live PILLARS read from tools/build_pillar.py on fresh origin/main"
+          ],
+          "id": "A",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Founder says \u00ab\u0627\u06cc\u0646 \u0634\u0631\u062d \u0648\u06cc\u0632\u06cc\u062a\u0647\u00bb; \u0648\u06cc\u0632\u06cc\u062a is the reader-facing name of Chairside (repo-core): locked type chairside"
+          ],
+          "id": "B.1",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Brain chairside max 53, next chairside-54 (content_id chairside/chairside-54)"
+          ],
+          "id": "B.2",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Full text supplied in founder message; first line is the founder title \u00ab\u0648\u0642\u062a\u06cc \u062e\u0648\u0627\u0633\u062a\u0647\u0654 \u0628\u06cc\u0645\u0627\u0631 \u0628\u0627 \u062f\u0631\u0645\u0627\u0646 \u062f\u0631\u0633\u062a \u0647\u0645\u200c\u062e\u0648\u0627\u0646\u06cc \u0646\u062f\u0627\u0631\u062f\u00bb (Hard Rule 16 copy); bound by digest b9953226"
+          ],
+          "id": "B.3",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Single de-AI pass: first-person clinical narration with natural rhythm, no formulaic openers or clich\u00e9 filler; no rewrites, text of record unchanged"
+          ],
+          "id": "B.3.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Founder supplied one periapical radiograph image (90711.jpg, 945x619) and asked to convert to WebP and place in text: chairside/cs54-1.webp; no audio/video"
+          ],
+          "id": "B.4",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "No paper file attached; step 4.10 branch inactive"
+          ],
+          "id": "B.4.7",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Basket 1 COMMENTARY: founder's own visit narration and reasoning, no DOI/PubMed/references; page body is source_text (FULL_TEXT); fidelity null by self-COMMENTARY exception"
+          ],
+          "id": "B.4.8",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Ordinary visit narration, not a Challenge"
+          ],
+          "id": "B.4.9",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pulse: agent drafts in recent Chairside pattern \u00ab\u06cc\u06a9 \u0648\u06cc\u0632\u06cc\u062a \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab<title>\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f.\u00bb, title linked to /chairside/chairside-54.html, no spoiler (standing acceptance)"
+          ],
+          "id": "B.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast: chairside locked at B.1",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.1",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast: no LightGlossary write",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.2",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast: specialist track",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.3",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast: same-category Chairside template",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.4",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast: ordinary publication",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "chairside/chairside-53.html is latest same-category structural template, enrolled in target_paths, kept byte-unchanged"
+          ],
+          "id": "C.1",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Structural clone of chairside-53: founder title copied verbatim to title/h1/og/twitter/headline/breadcrumb; agent caption on description/og/twitter/JSON-LD; nine founder paragraphs verbatim; founder radiograph as /chairside/cs54-1.webp (945x619, 120 KB WebP) after first paragraph with agent alt; dates 2026-11-13; .org domain, two crossorigin preconnects and one GA4 snippet survived; no seal; dc-notify left to Phase E; no chip row in template; body opens with founder paragraph (lead origin author_original)"
+          ],
+          "id": "C.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.5",
+          "module": "03-litecast-and-page.md",
+          "reason": "Category chairside: not LiteCast; canonical category exception",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.6",
+          "module": "03-litecast-and-page.md",
+          "reason": "Category chairside: not LiteCast; canonical category exception",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "pillar.primary treatment-planning, subtopic comprehensive-diagnosis: the visit's subject is that crown removal is part of diagnosis/prognosis before retreatment and prosthetic planning. Competing: extraction-vs-preservation (prognosis of tooth 2 left mentioned only as an example) and fixed-pros/failures; closest semantic match is comprehensive-diagnosis (standing acceptance)"
+          ],
+          "id": "C.2.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "One dc-related-section with exactly the two canonical capsules /glossary/ and /pillar/treatment-planning/; cloned semantic capsules of chairside-53 removed from the new page (4.9 fills fresh)"
+          ],
+          "id": "C.2.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "chairside/index.html is hand-maintained: new top row \u00ab\u0648\u06cc\u0632\u06cc\u062a \u06f5\u06f4 \u2014 <founder title>\u00bb added with exact sibling markup above chairside-53; byte-preserving insert"
+          ],
+          "id": "C.2.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Dates audit: datePublished/dateModified/lastReviewed and both visible <time> = 2026-11-13; no stale 2026-11-12 left in new page"
+          ],
+          "id": "C.3",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "git diff --quiet -- chairside/chairside-53.html succeeds: template unchanged"
+          ],
+          "id": "C.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Chairside ordinary article: not NoteCast; canonical category exception",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5-b",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Chairside ordinary article: not NoteCast credit; canonical category exception",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Chairside ordinary article: not an ordered ep-nav Promptologist series; canonical category exception",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.1",
+          "module": "06-paper-ingestion.md",
+          "reason": "No paper attached (B.4.7)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.2",
+          "module": "06-paper-ingestion.md",
+          "reason": "No paper attached (B.4.7)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.3",
+          "module": "06-paper-ingestion.md",
+          "reason": "No paper attached (B.4.7)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "COMMENTARY basket: source_text = founder title + nine body paragraphs as shipped, FULL_TEXT. SOURCE run: claude -p in empty dir, system prompt .dentcast/des-v3.7-knowledge.md (sha256 709be964f19c1d5c12fada54fe3827d112d729150368dcddc3108d343a94e2e9), --tools '' --model opus, modelUsage claude-opus-5-5. Run 1 metadata lacked the section (12/E, item 4 = 0 with note that chairside/ earns +3); run 2 with section chairside/ in metadata stored: des_score 15, band E, checklist 4/0/3/3 (item 4 from chairside/index.html declaration with mandatory note). Part 3: quotes verbatim, 5+10=15, band E, COMMENTARY schema; verify_publish --des-text ok; des_record_guard check ok. Part 3(6): interpretation_fa sentence 2 narrowed by agent. Fidelity slot null (self-COMMENTARY; des_fidelity_units 0 units). Stored under chairside/chairside-54 in plus/des-scores.json via json_append. No M3b"
+          ],
+          "id": "C.4.13",
+          "module": "08-des-fidelity.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Fresh semantic review of 109 glossary terms: treatment-plan strong but glossary/treatment-plan.html at cap 5/5 (related_cap) so skipped; microleakage borderline (page concerns coronal leakage/caries under crowns into canal system, term defines microscopic interface leakage) skipped conservatively; ferrule-effect borderline (remaining sound tissue mentioned, ferrule not discussed) skipped. 0 back-links written"
+          ],
+          "id": "C.4.7",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.7-b",
+          "module": "05-semantic-linking.md",
+          "reason": "Not a glossary publish: scoped cross-link runs only on glossary publication (module 05 step 4.7-b)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Fresh analysis over glossary + brain pages: applied 1 strong inline link, first occurrence \u00ab\u0637\u0631\u062d \u062f\u0631\u0645\u0627\u0646\u00bb (paragraph 1, technical sense) -> /glossary/treatment-plan.html. Skipped borderline: \u00ab\u0646\u0634\u062a \u0645\u06cc\u06a9\u0631\u0648\u0628\u06cc \u0627\u0632 \u0633\u0645\u062a \u062a\u0627\u062c \u062f\u0646\u062f\u0627\u0646 (Coronal Leakage)\u00bb -> glossary microleakage (different scope); \u00ab\u0628\u0631\u062f\u0627\u0634\u062a\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u00bb/\u00ab\u067e\u0631\u0648\u06af\u0646\u0648\u0632\u00bb -> insight-14/chairside-9 (placed in 4.9 instead). git diff shows only the inserted anchor"
+          ],
+          "id": "C.4.8",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Section had 2 nav capsules, 3 free (Hard Rule 9). Added strongest first: /chairside/chairside-9.html \u00ab\u067e\u0631\u0648\u06af\u0646\u0648\u0632 \u0646\u0627\u0645\u0634\u062e\u0635 \u067e\u06cc\u0634 \u0627\u0632 \u062f\u0631\u0645\u0627\u0646 \u0642\u0637\u0639\u06cc\u00bb (old crown, possible retreatment, remove crown to judge sound tissue and prognosis), /insight/insight-14.html \u00ab\u0627\u0631\u0632\u06cc\u0627\u0628\u06cc \u062f\u0646\u062f\u0627\u0646 \u067e\u0633 \u0627\u0632 \u0628\u0631\u062f\u0627\u0634\u062a\u0646 \u0631\u0648\u06a9\u0634\u00bb (real assessment only after crown removal), /chairside/chairside-39.html \u00ab\u062e\u0648\u0627\u0633\u062a\u0647\u0654 \u0628\u06cc\u0645\u0627\u0631 \u0648 \u0631\u0627\u0647\u200c\u062d\u0644 \u062f\u0631\u0645\u0627\u0646\u06cc\u00bb (patient wish vs treatment). Skipped for cap/borderline: insight-58, insight-105, chairside-41, chairside-14, chairside-34, insight-20. related_cap 5/5"
+          ],
+          "id": "C.4.9",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "plus/faq-corpus.json byContent[chairside/chairside-54].definedTermSets: 2 authored DefinedTerms #flashcards-c1 (\u0646\u0634\u062a \u062a\u0627\u062c\u06cc \u0648 \u0634\u06a9\u0633\u062a \u062f\u0631\u0645\u0627\u0646 \u0631\u06cc\u0634\u0647), #flashcards-c2 (\u0628\u0631\u062f\u0627\u0634\u062a\u0646 \u0631\u0648\u06a9\u0634 \u0628\u0647\u200c\u0639\u0646\u0648\u0627\u0646 \u0645\u0631\u062d\u0644\u0647\u0654 \u062a\u0634\u062e\u06cc\u0635\u06cc); none copied from FAQ answers; nothing in page JSON-LD; flashcards-index left to runner C.8"
+          ],
+          "id": "C.4.11",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "FAQPage with 3 standalone yes/no questions (no deixis, case conditions embedded) each answer opening \u00ab\u062e\u06cc\u0631\u061b\u00bb, grounded in body; a stray build_quiz_index.mjs run counted them as binary and its output was restored (runner rebuilds at C.8). 4.12-\u0628: evaluated at 5.6"
+          ],
+          "id": "C.4.12",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.14",
+          "module": "09-challenge.md",
+          "reason": "Ordinary visit, not a Challenge (B.4.9)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Questions: \u00ab\u062f\u0631\u0645\u0627\u0646 \u0645\u062c\u062f\u062f \u0631\u06cc\u0634\u0647 \u0631\u0648 \u0645\u06cc\u0634\u0647 \u0627\u0632 \u0631\u0648\u06cc \u0631\u0648\u06a9\u0634 \u0627\u0646\u062c\u0627\u0645 \u062f\u0627\u062f\u061f\u00bb; \u00ab\u0642\u0628\u0644 \u0627\u0632 \u0631\u06cc\u062a\u0631\u0645\u0646\u062a \u0628\u0627\u06cc\u062f \u0631\u0648\u06a9\u0634 \u0631\u0648 \u062f\u0631\u0628\u06cc\u0627\u0631\u0645\u061f\u00bb; \u00ab\u067e\u0648\u0633\u06cc\u062f\u06af\u06cc \u0632\u06cc\u0631 \u0631\u0648\u06a9\u0634 \u0648 \u0636\u0627\u06cc\u0639\u0647 \u067e\u0631\u06cc\u200c\u0627\u067e\u06cc\u06a9\u0627\u0644\u061b coronal leakage\u00bb; \u00ab\u067e\u0631\u0648\u06af\u0646\u0648\u0632 \u062f\u0646\u062f\u0627\u0646 \u0631\u0648\u06a9\u0634\u200c\u062f\u0627\u0631 \u0631\u0648 \u0686\u0637\u0648\u0631 \u0628\u0641\u0647\u0645\u0645\u061f\u00bb; \u00ab\u0628\u06cc\u0645\u0627\u0631 \u0646\u0645\u06cc\u200c\u062e\u0648\u0627\u062f \u0631\u0648\u06a9\u0634\u200c\u0647\u0627 \u0631\u0648 \u062f\u0631\u0628\u06cc\u0627\u0631\u06cc\u0645\u060c \u0686\u06cc \u06a9\u0627\u0631 \u06a9\u0646\u0645\u061f\u00bb. Reused canonical, no mint: #\u0648\u06cc\u0632\u06cc\u062a (series); #\u0631\u06cc\u062a\u0631\u06cc\u062a\u0645\u0646\u062a \u00ab\u062f\u0631\u0645\u0627\u0646 \u0645\u062c\u062f\u062f \u0631\u06cc\u0634\u0647 \u0627\u0632 \u0631\u0648\u06cc \u0631\u0648\u06a9\u0634 \u062f\u0631 \u0628\u0639\u0636\u06cc \u0634\u0631\u0627\u06cc\u0637 \u0627\u0645\u06a9\u0627\u0646\u200c\u067e\u0630\u06cc\u0631 \u0627\u0633\u062a\u060c \u0627\u0645\u0627 \u0645\u0633\u0626\u0644\u0647 \u0627\u06cc\u0646 \u0628\u06cc\u0645\u0627\u0631 \u0641\u0642\u0637 \u062f\u0631\u0645\u0627\u0646 \u0631\u06cc\u0634\u0647 \u0646\u0628\u0648\u062f.\u00bb; #\u0633\u06cc\u0644_\u06a9\u0631\u0648\u0646\u0627\u0644 \u00ab\u2026\u0639\u0627\u0645\u0644 \u0646\u0634\u062a \u0647\u0645\u0686\u0646\u0627\u0646 \u0628\u0627\u0642\u06cc \u0645\u06cc\u200c\u0645\u0627\u0646\u062f \u0648 \u0627\u062d\u062a\u0645\u0627\u0644 \u0622\u0644\u0648\u062f\u06af\u06cc \u0645\u062c\u062f\u062f \u0648\u062c\u0648\u062f \u062f\u0627\u0631\u062f.\u00bb; #\u067e\u0648\u0633\u06cc\u062f\u06af\u06cc_\u062b\u0627\u0646\u0648\u06cc\u0647 \u00ab\u062f\u0631 \u0627\u06cc\u0646 \u0628\u06cc\u0645\u0627\u0631 \u0647\u0645 \u0634\u0648\u0627\u0647\u062f \u067e\u0648\u0633\u06cc\u062f\u06af\u06cc \u0632\u06cc\u0631 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u060c \u0627\u0647\u0645\u06cc\u062a \u0627\u06cc\u0646 \u0645\u0648\u0636\u0648\u0639 \u0631\u0627 \u0628\u06cc\u0634\u062a\u0631 \u0645\u06cc\u200c\u06a9\u0631\u062f.\u00bb; #\u067e\u0631\u0648\u06af\u0646\u0648\u0632_\u062f\u0646\u062f\u0627\u0646 \u00ab\u2026\u062a\u0627 \u0648\u0642\u062a\u06cc \u0631\u0648\u06a9\u0634 \u062e\u0627\u0631\u062c \u0646\u0634\u0648\u062f\u2026 \u0646\u0645\u06cc\u200c\u062a\u0648\u0627\u0646 \u0628\u0627 \u0627\u0637\u0645\u06cc\u0646\u0627\u0646 \u06af\u0641\u062a \u06a9\u0647 \u062f\u0646\u062f\u0627\u0646 \u0642\u0627\u0628\u0644 \u0646\u06af\u0647\u062f\u0627\u0631\u06cc \u0648 \u0628\u0627\u0632\u0633\u0627\u0632\u06cc \u0627\u0633\u062a \u06cc\u0627 \u0646\u0647.\u00bb; #\u062a\u0635\u0645\u06cc\u0645_\u062f\u0631\u0645\u0627\u0646\u06cc (decision) and #\u0637\u0631\u062d_\u062f\u0631\u0645\u0627\u0646 (umbrella) \u00ab\u0628\u0631\u062f\u0627\u0634\u062a\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u2026 \u0628\u062e\u0634\u06cc \u0636\u0631\u0648\u0631\u06cc \u0627\u0632 \u062a\u0634\u062e\u06cc\u0635 \u0648 \u0637\u0631\u062d \u062f\u0631\u0645\u0627\u0646 \u0628\u0648\u062f.\u00bb. Composition: series + decision + specific \u226410 (#\u0633\u06cc\u0644_\u06a9\u0631\u0648\u0646\u0627\u0644 2, #\u0631\u06cc\u062a\u0631\u06cc\u062a\u0645\u0646\u062a 4, #\u067e\u0648\u0633\u06cc\u062f\u06af\u06cc_\u062b\u0627\u0646\u0648\u06cc\u0647 6) + umbrellas. Rejected: #\u062e\u0627\u0631\u062c_\u06a9\u0631\u062f\u0646_\u0631\u0648\u06a9\u0634 (removal technique), #\u0634\u06a9\u0627\u06cc\u062a_\u0627\u0635\u0644\u06cc (chief complaint); patient-preference concept absent, mint not made (conservative). No chip row on Chairside template. --sync, --check OK, build_cabinet_papers --check OK; reachability: page in first 4 of chip \u00ab\u0631\u06cc\u062a\u0631\u06cc\u062a\u0645\u0646\u062a\u00bb (4 pages) and \u00ab\u0633\u06cc\u0644 \u06a9\u0631\u0648\u0646\u0627\u0644\u00bb (2 pages), questions 1-3 pass; builder outputs reverted"
+          ],
+          "id": "C.5.0",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Appended chairside-54 as last element of dentcast-brain.json (609 entries) via json_append, CRLF preserved; key order and pillar keys equal chairside-53; founder title verbatim, agent caption, 7 canonical hashtags, 7 keywords from the text, page_url /chairside/chairside-54.html, pillar treatment-planning/comprehensive-diagnosis; json.tool valid"
+          ],
+          "id": "C.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Brain pillar equals step 2.4 decision treatment-planning/comprehensive-diagnosis (live PILLARS); \u00ab\u0641\u0647\u0631\u0633\u062a \u0645\u0648\u0636\u0648\u0639\u06cc\u00bb capsule /pillar/treatment-planning/ matches; no new subtopic"
+          ],
+          "id": "C.5.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "pathway_place.py candidates all ASK; treatment-planning (score 90, 15 related steps; pathway described as built on real Chairside cases) judged unmistakable home, inserted --after chairside/chairside-14 (index 46, milestone false, 82 steps); fixed-pros, operative-cariology, post-and-core, failure-troubleshooting, biomimetic, evidence-literacy, implant-surgical borderline, not placed. Coverage: 1.51 per item (baseline 1.38). 4.12-\u0628: M2 sent with 2 four-option questions, founder approved both; written to plus/exam-questions.json as r-272f958d (key index 2) and r-3297533e (key index 1); draft-check 0 errors/0 warnings; validate_exam_questions.py 0 errors, no warning on this page"
+          ],
+          "id": "C.5.6",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0628\u0627\u0646\u062f\u0644: \u0628\u062f\u0648\u0646 \u06a9\u0627\u0646\u062f\u06cc\u062f \u2014 no bundle has continues_pathway treatment-planning; Chairside also fails gate 1 by folder; no bundle or home-bundles.js change"
+          ],
+          "id": "C.5.6-b",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pulse line \u00ab\u06cc\u06a9 \u0648\u06cc\u0632\u06cc\u062a \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab\u0648\u0642\u062a\u06cc \u062e\u0648\u0627\u0633\u062a\u0647\u0654 \u0628\u06cc\u0645\u0627\u0631 \u0628\u0627 \u062f\u0631\u0645\u0627\u0646 \u062f\u0631\u0633\u062a \u0647\u0645\u200c\u062e\u0648\u0627\u0646\u06cc \u0646\u062f\u0627\u0631\u062f\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f.\u00bb linked to /chairside/chairside-54.html at top, bottom share-47 line removed, 7 lines, no spoiler; English mirror chairside/en/chairside-54.html + fa toggle; metanotes/en/meta-1.html unchanged; ten-scope lock recorded; no open founder message"
+          ],
+          "id": "C.6",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "All applicable canonical C.8 builders passed; logs are in the recovery artifact."
+          ],
+          "id": "C.8",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "tools/stamp-version.py passed after C.8"
+          ],
+          "id": "C.7",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Technical English, noindex, hreflang, sitemap, and final version checks passed; logs are in the recovery artifact."
+          ],
+          "id": "D",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Canonical dc-notify marker present exactly once"
+          ],
+          "id": "E",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "phase_f:1e3469fd4550fc548c3b7a6996a60c9cf8a17a589f5963125d59317da2ea77f7"
+          ],
+          "id": "F",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/43395072938"
+          ],
+          "id": "G",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        }
+      ],
+      "target_paths": [
+        "chairside/chairside-53.html",
+        "chairside/chairside-54.html",
+        "chairside/cs54-1.webp",
+        "chairside/en/chairside-53.html",
+        "chairside/en/chairside-54.html",
+        "chairside/index.html",
+        "dentcast-brain.json",
+        "dentcast-hashtag-reference.json",
+        "index.html",
+        "pillar/index.html",
+        "pillar/structure.json",
+        "pillar/treatment-planning/index.html",
+        "pillar/treatment-planning/structure.json",
+        "player.html",
+        "plus/assistant-tags.json",
+        "plus/content-index.json",
+        "plus/des-scores.json",
+        "plus/des/chairside/chairside-54.json",
+        "plus/exam-questions.json",
+        "plus/faq-corpus.json",
+        "plus/flashcards-index.json",
+        "plus/pathways.json",
+        "plus/quiz-index.json",
+        "service-worker.js",
+        "sitemap.xml",
+        "up-board/index.json"
+      ]
+    },
+    "snapshot": {
+      "files": {
+        "chairside/chairside-53.html": {
+          "kind": "file",
+          "sha256": "9e7555c00d4649d7d2c08e80237c11eae63a3c972401257303ceeaaa2343d837",
+          "executable": false
+        },
+        "chairside/chairside-54.html": {
+          "kind": "file",
+          "sha256": "690d820ad5d216988198d880c526ae80a5f0f7f4669482cfcf6bcffff91183d0",
+          "executable": false
+        },
+        "chairside/cs54-1.webp": {
+          "kind": "file",
+          "sha256": "d32db46b0d7cc16fe2ccc126ac2ea9efe269a45aa50fe8f8891758663898594a",
+          "executable": false
+        },
+        "chairside/en/chairside-53.html": {
+          "kind": "file",
+          "sha256": "98e81504a5ae7fb0f2fe25a7bdc206ef85a78f5c51d4294fbdf19bdefd32ba6b",
+          "executable": false
+        },
+        "chairside/en/chairside-54.html": {
+          "kind": "file",
+          "sha256": "d5082faa9ce6b27bc014f3e456f9404637645d967570aa425da150856319dc59",
+          "executable": false
+        },
+        "chairside/index.html": {
+          "kind": "file",
+          "sha256": "352d57234adf21a947d922f2f7bc02709576f8e36cc006a2d2275b9294a9c171",
+          "executable": false
+        },
+        "dentcast-brain.json": {
+          "kind": "file",
+          "sha256": "723087287b4932cddbad0951befcdc68250822127eb4d452fe8d0129daf47650",
+          "executable": false
+        },
+        "dentcast-hashtag-reference.json": {
+          "kind": "file",
+          "sha256": "dd138feac4aeb59d4f7f09cec5adff755892ce22164bd40e9d1e6535dca493fe",
+          "executable": false
+        },
+        "index.html": {
+          "kind": "file",
+          "sha256": "f49e490dea4f464d05b710ea0f9643921dfeadc8d84090367b8945c9c87086a3",
+          "executable": false
+        },
+        "pillar/index.html": {
+          "kind": "file",
+          "sha256": "a73ec960588d9702633c37338b000f8e5860af03abc820485af9c2b410a788f9",
+          "executable": false
+        },
+        "pillar/structure.json": {
+          "kind": "file",
+          "sha256": "b28dd1cac7c004816162e35069be1491bac4c91cedbe5224c5e9659f0ad7a503",
+          "executable": false
+        },
+        "pillar/treatment-planning/index.html": {
+          "kind": "file",
+          "sha256": "2be18a1122e59f5e54ab9f826235ccfa1a70f12dc23946501c0f93e41fbd5e6a",
+          "executable": false
+        },
+        "pillar/treatment-planning/structure.json": {
+          "kind": "file",
+          "sha256": "2b3abda72d18df13b5eba34b00c8d2a764dafb3e94475b9d2046922f7761e152",
+          "executable": false
+        },
+        "player.html": {
+          "kind": "file",
+          "sha256": "2ece198180899c82110323474e09b10f0337ccf9610e160d3563b53717a49e01",
+          "executable": false
+        },
+        "plus/assistant-tags.json": {
+          "kind": "file",
+          "sha256": "c12fb43caa9fca865ce1127ae0216b3141835497a859b2a2e8a99fb064c938fa",
+          "executable": false
+        },
+        "plus/content-index.json": {
+          "kind": "file",
+          "sha256": "875f88825d4fff7b7583c0e41d6d836474d608f330c2dbfe132da684343c2a87",
+          "executable": false
+        },
+        "plus/des-scores.json": {
+          "kind": "file",
+          "sha256": "0ea5e9474f146968706f262e19fca5747ba189986c9c53af850171f7f3694efc",
+          "executable": false
+        },
+        "plus/des/chairside/chairside-54.json": {
+          "kind": "file",
+          "sha256": "48d8f522806442a0895831541c6c54dd0f29aee497024f6fbf31d0de4fda7a29",
+          "executable": false
+        },
+        "plus/exam-questions.json": {
+          "kind": "file",
+          "sha256": "2d2f98a1b0b8b3d3bf0e1deb636c3039ccd802c978856912791e67370ee746ed",
+          "executable": false
+        },
+        "plus/faq-corpus.json": {
+          "kind": "file",
+          "sha256": "e9a8f8296206cdc40f35bc09529f1fe2fc6f0c46589fd6613ef97f4ec9974498",
+          "executable": false
+        },
+        "plus/flashcards-index.json": {
+          "kind": "file",
+          "sha256": "ffe1e23cfbe92469cfe0a57edff02c8da9f74834531d502a460aa872396b040c",
+          "executable": false
+        },
+        "plus/pathways.json": {
+          "kind": "file",
+          "sha256": "6695c1bfdecbdd7746b632a3e94e2e9d8889a074453a7d3a78e473b039d9b833",
+          "executable": false
+        },
+        "plus/quiz-index.json": {
+          "kind": "file",
+          "sha256": "28586db895a81bec897acd801be0033174bfa11c510abb7b864e2763a68aa8fe",
+          "executable": false
+        },
+        "service-worker.js": {
+          "kind": "file",
+          "sha256": "79a52a2dcf71534b206c38f330f9b16751c626ea9ae4c05424346d1abf9da34e",
+          "executable": false
+        },
+        "sitemap.xml": {
+          "kind": "file",
+          "sha256": "d4b4a93e0eafda3e0c34605239cf5e7658e7690303c8d202d8626a369da64c71",
+          "executable": false
+        },
+        "up-board/index.json": {
+          "kind": "file",
+          "sha256": "99fc76bfe160f07790bfad871661a7f288a999953b8870ab651c64d9cc27ab4b",
+          "executable": false
+        }
+      },
+      "workflow": {
+        ".dentcast/workflows/README.md": "172337c6e52b1143888d1a7c43f56c71da74457ab9ed4b247db9cbd242ba81d8",
+        ".dentcast/workflows/agent-parity.md": "6f35f755ccb22111b06956ffd321f5789dcaf75f214dcfcc6bad3e87aa3e984a",
+        ".dentcast/workflows/publish-handoff.md": "d58cb5472df896dc0d33c37b79340d44c65897d90348f1bfbc98a0e56badc249",
+        ".dentcast/workflows/routing-details.md": "70e82a656759b6a949f84048d1d9047a2eaaca90c0f93d73d3e96857f77f394a",
+        ".dentcast/workflows/global/README.md": "5ec762efe1522eeca5841e37f8e61d938b6a1421904bffe32cecd51ddab4a39b",
+        ".dentcast/workflows/global/LOAD-MAP.json": "39a06ba30d7c181bf6fe9ef6014e885ceef9cbbf729d6dde1652b7e8ee81fced",
+        "tools/dentcast_global_rules.py": "c92d378a875dec54ed7845015797c37f211f0acab93150f669b0f820dfd94464",
+        ".dentcast/workflows/global/repo-conventions.md": "9594f6d63792fd6e26fe937dbcfb8ed719d0922468dfc9b944d7f2a237774052",
+        ".dentcast/workflows/global/plus-premium.md": "18a0bea238c466f92861ccd606b7a612a2517f8b0f63c19ea88ce9952d35edd2",
+        ".dentcast/workflows/global/site-invariants.md": "55d4fcd8c566d55011a01eb395d04260e7ca867d78be4b1401acf36a23886feb",
+        "tools/dentcast_publish_handoff.py": "5ac5843a3c668b71e4827d787479e9a9bab312b0c14ea881477780cb6d1814cd",
+        "tools/dentcast_publish_lifecycle.py": "c40548cadf6d12d5a24370a4666e8ddf16a338cf61c154627c3a8f24f7cc1932",
+        "tools/verify_publish.py": "41d939f7769ffa36078955a8a38548143bb6b180282e1a87b62ce602f519ecbb",
+        "tools/dentcast_text_io.py": "225c0a696e8ebc5e175b5dd9739210d4624938358af96baeb777f8c4a07726d8",
+        "tools/text_io.mjs": "c6f9208e26983c8eade43d8cf3effe865e6479df903d2cee661cd0a928565536",
+        "tools/dentcast_post_cut2_runner.py": "443494d00da1a8890a9d69f2d716358328120c562c1c24df0f8227eae3182b0e",
+        ".github/workflows/post-cut2-mechanical.yml": "f4c06799b68560aaa14b364e63d720ae658187962221607c862bfce42a19f106",
+        ".dentcast/workflows/publish-checkpoints.md": "b3d0dcad2e5f4c850a355945190be4b5d1330b696280b300971452110a2129f5",
+        ".dentcast/workflows/publish-after-push2.md": "101bf989270f0ba6d5f34dc350b94d4820f49d361ec0b99192b46854e7cea905",
+        ".dentcast/workflows/modules/01-hard-rules.md": "1cb57aa6db9c90675d90a6732e5d789ac9188977dc58906ef56b131960d83cb9",
+        ".dentcast/workflows/modules/02-routing-intake.md": "c9dc1b414dfdacf3376b4f9cb916ce911b428184550610950ef7f8e8132e9a74",
+        ".dentcast/workflows/modules/03-litecast-and-page.md": "f6bf2d4a9004e54525c698db895cfecac3d65e7090b015b634bae0bee7bc6723",
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "53a8860265c40465d8060bea1c9d4f701d24794f704de14a609b2d806c294fa9",
+        ".dentcast/workflows/modules/05-semantic-linking.md": "22379f060007b543c9544f2dd8a3aee600a930af19711fd1ee49e797ef9c7722",
+        ".dentcast/workflows/modules/06-paper-ingestion.md": "c34d0f4a17e6b1eddad13bca8e88af65a436ae7d5d41017a57660868020d6375",
+        ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "913b7e3b01038c372eaff58ab63cb91126d710a3b7051f8f9af72409631c9c98",
+        ".dentcast/workflows/modules/08-des-fidelity.md": "b9e29fff562f3fbad425a95a86dfe39c56374d30cb9971e42daf7b459f6cff7b",
+        ".dentcast/workflows/modules/09-challenge.md": "5ec2a39ce0e3f3777360a0b0c1092d34e240f6546d43103498e2d65a5a16f120",
+        ".dentcast/workflows/modules/10-brain-and-pathways.md": "5e4c5266d20e786eae7d3f410a2209c547c698781d8655d78828251c052ab66c",
+        ".dentcast/workflows/modules/11-build-and-version.md": "3b58272ec511d861e35af835f026cb91910d1ef40c1e164cbdc88f8637dcf310",
+        ".dentcast/workflows/modules/12-english-notify-verify.md": "89230e2261966297a9c26cc9df88a37862d5b4a71c1bd7ed44f20d6cc2596552"
+      }
+    }
+  },
+  "second_delivery_commit": "21ba445bb95f8e210f2770f100412b12568ac975",
+  "verification": {
+    "kind": "phase_f",
+    "content_id": "chairside/chairside-54",
+    "expected_title": "\u0648\u0642\u062a\u06cc \u062e\u0648\u0627\u0633\u062a\u0647\u0654 \u0628\u06cc\u0645\u0627\u0631 \u0628\u0627 \u062f\u0631\u0645\u0627\u0646 \u062f\u0631\u0633\u062a \u0647\u0645\u200c\u062e\u0648\u0627\u0646\u06cc \u0646\u062f\u0627\u0631\u062f",
+    "expected_caption": "\u0628\u06cc\u0645\u0627\u0631 \u0646\u0645\u06cc\u200c\u062e\u0648\u0627\u0633\u062a \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u062f\u0646\u062f\u0627\u0646\u200c\u0647\u0627\u06cc \u0642\u062f\u0627\u0645\u06cc\u200c\u0627\u0634 \u0628\u0631\u062f\u0627\u0634\u062a\u0647 \u0634\u0648\u062f \u0648 \u0645\u06cc\u200c\u067e\u0631\u0633\u06cc\u062f \u0622\u06cc\u0627 \u062f\u0631\u0645\u0627\u0646 \u0645\u062c\u062f\u062f \u0631\u06cc\u0634\u0647 \u0627\u0632 \u0631\u0648\u06cc \u0647\u0645\u06cc\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627 \u0645\u0645\u06a9\u0646 \u0646\u06cc\u0633\u062a. \u0686\u0631\u0627 \u062f\u0631 \u0627\u06cc\u0646 \u06a9\u06cc\u0633 \u0628\u0631\u062f\u0627\u0634\u062a\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627 \u0628\u062e\u0634\u06cc \u0627\u0632 \u062a\u0634\u062e\u06cc\u0635 \u0628\u0648\u062f\u061f",
+    "exit_code": 0,
+    "output_sha256": "1e3469fd4550fc548c3b7a6996a60c9cf8a17a589f5963125d59317da2ea77f7",
+    "summary": "104 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+  }
+}

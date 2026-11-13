@@ -522,7 +522,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 54,
+   "count": 55,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-25",
@@ -577,7 +577,8 @@
     "chairside/chairside-42",
     "chairside/chairside-43",
     "chairside/chairside-44",
-    "chairside/chairside-53"
+    "chairside/chairside-53",
+    "chairside/chairside-54"
    ]
   },
   {
@@ -734,7 +735,7 @@
     "#چیرساید"
    ],
    "co_tags": [],
-   "count": 50,
+   "count": 51,
    "content_ids": [
     "chairside/chairside-1",
     "chairside/chairside-2",
@@ -785,7 +786,8 @@
     "chairside/chairside-48",
     "chairside/chairside-50",
     "chairside/chairside-51",
-    "chairside/chairside-53"
+    "chairside/chairside-53",
+    "chairside/chairside-54"
    ]
   },
   {
@@ -1761,6 +1763,55 @@
    ]
   },
   {
+   "key": "تصمیم_درمانی",
+   "tag": "#تصمیم_درمانی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخاب بین مسیرهای درمانی در یک شرایط بالینی مشخص.",
+   "use_when": "مقاله خودِ تصمیم را موضوع کند، نه اجرای آن.",
+   "aliases": [
+    "تصمیم گیری درمانی",
+    "تصمیم بالینی",
+    "تصمیم گیری بالینی",
+    "تصمیم پروتزی"
+   ],
+   "variants": [
+    "#تصمیم_بالینی",
+    "#تصمیم_گیری_درمان"
+   ],
+   "co_tags": [],
+   "count": 27,
+   "content_ids": [
+    "insight/insight-13",
+    "insight/insight-14",
+    "metanotes/meta-1",
+    "metanotes/meta-2",
+    "metanotes/meta-3",
+    "metanotes/meta-4",
+    "metanotes/meta-5",
+    "metanotes/meta-6",
+    "litecast/lite-CAST11",
+    "insight/insight-20",
+    "metanotes/meta-8",
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "metanotes/meta-9",
+    "chairside/chairside-5",
+    "chairside/chairside-9",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "insight/insight-39",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "metanotes/meta-13",
+    "chairside/chairside-21",
+    "insight/insight-89",
+    "chairside/chairside-54"
+   ]
+  },
+  {
    "key": "بیومکانیک",
    "tag": "#بیومکانیک",
    "domain": "clinical",
@@ -1802,54 +1853,6 @@
     "chairside/chairside-33",
     "episodes/episode-162",
     "sharehub/share-49"
-   ]
-  },
-  {
-   "key": "تصمیم_درمانی",
-   "tag": "#تصمیم_درمانی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتخاب بین مسیرهای درمانی در یک شرایط بالینی مشخص.",
-   "use_when": "مقاله خودِ تصمیم را موضوع کند، نه اجرای آن.",
-   "aliases": [
-    "تصمیم گیری درمانی",
-    "تصمیم بالینی",
-    "تصمیم گیری بالینی",
-    "تصمیم پروتزی"
-   ],
-   "variants": [
-    "#تصمیم_بالینی",
-    "#تصمیم_گیری_درمان"
-   ],
-   "co_tags": [],
-   "count": 26,
-   "content_ids": [
-    "insight/insight-13",
-    "insight/insight-14",
-    "metanotes/meta-1",
-    "metanotes/meta-2",
-    "metanotes/meta-3",
-    "metanotes/meta-4",
-    "metanotes/meta-5",
-    "metanotes/meta-6",
-    "litecast/lite-CAST11",
-    "insight/insight-20",
-    "metanotes/meta-8",
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "metanotes/meta-9",
-    "chairside/chairside-5",
-    "chairside/chairside-9",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "insight/insight-39",
-    "chairside/chairside-16",
-    "chairside/chairside-17",
-    "metanotes/meta-13",
-    "chairside/chairside-21",
-    "insight/insight-89"
    ]
   },
   {
@@ -2526,7 +2529,7 @@
     "#ارزیابی_دندان"
    ],
    "co_tags": [],
-   "count": 16,
+   "count": 17,
    "content_ids": [
     "episodes/episode-150-2",
     "episodes/episode-151",
@@ -2543,7 +2546,8 @@
     "insight/insight-95",
     "chairside/chairside-47",
     "chairside/chairside-52",
-    "sharehub/share-49"
+    "sharehub/share-49",
+    "chairside/chairside-54"
    ]
   },
   {
@@ -6358,6 +6362,34 @@
    ]
   },
   {
+   "key": "پوسیدگی_ثانویه",
+   "tag": "#پوسیدگی_ثانویه",
+   "domain": null,
+   "words": 2,
+   "definition": "پوسیدگیِ برگشته در حاشیه‌ی ترمیم.",
+   "use_when": "مقاله پوسیدگی ثانویه را پیامد بسنجد.",
+   "aliases": [
+    "secondary caries",
+    "پوسیدگی ثانوی",
+    "عود پوسیدگی",
+    "recurrent caries",
+    "پوسیدگی عودکننده"
+   ],
+   "variants": [
+    "#پوسیدگی_عودکننده"
+   ],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "insight/insight-23",
+    "chairside/chairside-6",
+    "dentai/dentai-22",
+    "insight/insight-58",
+    "insight/insight-86",
+    "chairside/chairside-54"
+   ]
+  },
+  {
    "key": "کانتکت_باز",
    "tag": "#کانتکت_باز",
    "domain": "clinical",
@@ -7076,33 +7108,6 @@
     "episodes/episode-157",
     "episodes/episode-158",
     "chairside/chairside-24"
-   ]
-  },
-  {
-   "key": "پوسیدگی_ثانویه",
-   "tag": "#پوسیدگی_ثانویه",
-   "domain": null,
-   "words": 2,
-   "definition": "پوسیدگیِ برگشته در حاشیه‌ی ترمیم.",
-   "use_when": "مقاله پوسیدگی ثانویه را پیامد بسنجد.",
-   "aliases": [
-    "secondary caries",
-    "پوسیدگی ثانوی",
-    "عود پوسیدگی",
-    "recurrent caries",
-    "پوسیدگی عودکننده"
-   ],
-   "variants": [
-    "#پوسیدگی_عودکننده"
-   ],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "insight/insight-23",
-    "chairside/chairside-6",
-    "dentai/dentai-22",
-    "insight/insight-58",
-    "insight/insight-86"
    ]
   },
   {
@@ -8002,6 +8007,31 @@
     "insight/insight-28",
     "insight/insight-29",
     "insight/insight-32"
+   ]
+  },
+  {
+   "key": "ریتریتمنت",
+   "tag": "#ریتریتمنت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "درمانِ مجددِ ریشه، وقتی درمانِ اول کافی نبوده.",
+   "use_when": "مقاله ضرورت یا امکانِ ری‌تریتمنت را بسنجد.",
+   "aliases": [
+    "retreatment",
+    "ری تریتمنت",
+    "درمان مجدد ریشه",
+    "درمان ریشه مجدد"
+   ],
+   "variants": [
+    "#درمان_مجدد_ریشه"
+   ],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-20",
+    "chairside/chairside-9",
+    "chairside/chairside-39",
+    "chairside/chairside-54"
    ]
   },
   {
@@ -9779,30 +9809,6 @@
     "insight/insight-14",
     "insight/insight-88",
     "sharehub/share-31"
-   ]
-  },
-  {
-   "key": "ریتریتمنت",
-   "tag": "#ریتریتمنت",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "درمانِ مجددِ ریشه، وقتی درمانِ اول کافی نبوده.",
-   "use_when": "مقاله ضرورت یا امکانِ ری‌تریتمنت را بسنجد.",
-   "aliases": [
-    "retreatment",
-    "ری تریتمنت",
-    "درمان مجدد ریشه",
-    "درمان ریشه مجدد"
-   ],
-   "variants": [
-    "#درمان_مجدد_ریشه"
-   ],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-20",
-    "chairside/chairside-9",
-    "chairside/chairside-39"
    ]
   },
   {
@@ -12509,6 +12515,27 @@
    "content_ids": [
     "insight/insight-55",
     "metanotes/meta-18"
+   ]
+  },
+  {
+   "key": "سیل_کرونال",
+   "tag": "#سیل_کرونال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بسته بودنِ دندانِ درمان‌ریشه‌شده از سمتِ تاج در برابرِ ورودِ بزاق و باکتری به سیستمِ کانال؛ با رستوریشنِ نهایی (پست و کور، روکش، ترمیمِ باندشونده) تأمین می‌شود و شکستش نشتِ کرونال و آلودگیِ دوباره‌ی کانال را ممکن می‌کند.",
+   "use_when": "مقاله نقشِ رستوریشنِ نهایی در بستنِ سیستمِ کانال از سمتِ تاج، نشتِ کرونال یا آلودگیِ فضای پست را موضوع داشته باشد.",
+   "aliases": [
+    "coronal seal",
+    "coronal leakage",
+    "نشت کرونال",
+    "سیل تاجی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "metanotes/meta-21",
+    "chairside/chairside-54"
    ]
   },
   {
@@ -18086,26 +18113,6 @@
     "سیل انتهای کانال",
     "residual gutta-percha",
     "گوتاپرکای باقی‌مانده"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "metanotes/meta-21"
-   ]
-  },
-  {
-   "key": "سیل_کرونال",
-   "tag": "#سیل_کرونال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "بسته بودنِ دندانِ درمان‌ریشه‌شده از سمتِ تاج در برابرِ ورودِ بزاق و باکتری به سیستمِ کانال؛ با رستوریشنِ نهایی (پست و کور، روکش، ترمیمِ باندشونده) تأمین می‌شود و شکستش نشتِ کرونال و آلودگیِ دوباره‌ی کانال را ممکن می‌کند.",
-   "use_when": "مقاله نقشِ رستوریشنِ نهایی در بستنِ سیستمِ کانال از سمتِ تاج، نشتِ کرونال یا آلودگیِ فضای پست را موضوع داشته باشد.",
-   "aliases": [
-    "coronal seal",
-    "coronal leakage",
-    "نشت کرونال",
-    "سیل تاجی"
    ],
    "variants": [],
    "co_tags": [],
