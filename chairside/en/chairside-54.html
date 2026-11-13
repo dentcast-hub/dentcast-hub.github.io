@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared Persian header; use English chrome. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>When the patient's wishes do not align with the right treatment | Chairside 54 | DentCast</title>
+
+<meta name="description" content="The patient did not want the crowns on the anterior teeth removed and asked whether root canal retreatment could not be done through the existing crowns. Why was crown removal part of the diagnosis in this case?">
+
+<link rel="canonical" href="https://dentcast.org/chairside/en/chairside-54.html">
+
+  <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
+    <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --bg1:#eaf1ff;
+      --bg2:#f5f8ff;
+      --text:#111;
+      --muted:#444;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.2);
+    }
+
+    html,body { margin:0; padding:0; height:100%; }
+
+    body {
+      font-family:'vazirmatn', sans-serif;
+      background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
+      color: var(--text);
+      max-width: 56.25rem;
+      margin: 0 auto;
+      padding: 3.75rem 1.625rem 6.25rem;line-height:1.9;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizelegibility;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 1.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 1.02rem;
+      margin: 0 0 1.875rem;
+    }
+
+    .text-box {
+      background: rgba(255,255,255,0.99);
+      border: 1px solid rgba(11,95,255,0.25);
+      border-radius: var(--radius);
+      padding: 1.75rem 2.25rem;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .text-box img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      margin: 0 auto 0.625rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      border: 2px solid rgba(11,95,255,0.1);
+    }
+
+    figure { margin: 0 0 1.5rem; }
+    figcaption { text-align: center; font-size: .85rem; color: #555; margin-top: 0.5rem; }
+
+    p { margin: 0.875rem 0;font-size:1.02rem; }
+
+    ul { padding-left: 1.375rem; margin: 0.875rem 0 1.25rem; }
+    ul li { margin: 0.5rem 0; font-size: 1.05rem; }
+
+
+.text-box h2{text-align:left;color:var(--blue);font-size:1.25rem;font-weight:700;margin:1.75rem 0 .75rem;border-left:4px solid #0b5fff;padding-left:.75rem;}
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin: 1.25rem 0 0.625rem 0;
+      border-bottom: 2px solid var(--lightblue);
+      padding-bottom: 0.25rem;
+    }
+
+    .text-divider {
+      margin: 1.875rem 0;
+      border: 0;
+      height: 0.0625rem;
+      background-image: linear-gradient(
+        to right,
+        rgba(0,0,0,0),
+        rgba(11,95,255,0.4),
+        rgba(0,0,0,0)
+      );
+    }
+
+.author-note{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:0.375rem 0.625rem;
+  margin:2.5rem auto 1rem;
+  padding-top:1.25rem;
+  border-top:1px solid rgba(120,140,170,0.18);
+  color:var(--txt3);
+  font-size:.78rem;
+}
+.author-note .author-link{
+  color:var(--txt2);
+  font-weight:600;
+  text-decoration:none;
+}
+.author-note .author-link:hover{
+  color:var(--ac);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+.author-note .author-role{
+  color:var(--txt3);
+}
+
+/* English-version toggle button (top-right) */
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 0 1.125rem auto;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/chairside/en/chairside-54.html"
+      },
+      "headline": "When the patient's wishes do not align with the right treatment",
+      "description": "The patient did not want the crowns on the anterior teeth removed and asked whether root canal retreatment could not be done through the existing crowns. Why was crown removal part of the diagnosis in this case?",
+      "image": [
+        "https://dentcast.org/chairside/cs54-1.webp"
+      ],
+      "datePublished": "2026-11-13",
+      "dateModified": "2026-11-13",
+      "lastReviewed": "2026-11-13",
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "reviewedBy": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "articleSection": "Chairside",
+      "inLanguage": "en"
+    }
+  ]
+}
+</script>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="theme-color" content="#0b5fff">
+  <link rel="stylesheet" href="/dc-theme.css?v=19">
+  <link rel="stylesheet" href="/dc-nav.css?v=18">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="When the patient's wishes do not align with the right treatment | Chairside 54 | DentCast">
+  <meta property="og:description" content="The patient did not want the crowns on the anterior teeth removed and asked whether root canal retreatment could not be done through the existing crowns. Why was crown removal part of the diagnosis in this case?">
+  <meta property="og:url" content="https://dentcast.org/chairside/en/chairside-54.html">
+  <meta property="og:image" content="https://dentcast.org/chairside/cs54-1.webp">
+  <meta property="og:image:width" content="945">
+  <meta property="og:image:height" content="619">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="When the patient's wishes do not align with the right treatment | Chairside 54 | DentCast">
+  <meta name="twitter:description" content="The patient did not want the crowns on the anterior teeth removed and asked whether root canal retreatment could not be done through the existing crowns. Why was crown removal part of the diagnosis in this case?">
+  <meta name="twitter:image" content="https://dentcast.org/chairside/cs54-1.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "DentCast",
+      "item": "https://dentcast.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Chairside",
+      "item": "https://dentcast.org/chairside/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "When the patient's wishes do not align with the right treatment",
+      "item": "https://dentcast.org/chairside/en/chairside-54.html"
+    }
+  ]
+}
+</script>
+  <meta name="robots" content="noindex, follow">
+  
+  <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
+</head>
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GLOBAL SEARCH ── -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<main class="article-content-wrap">
+  <h2>Chairside 54</h2>
+  <h1>When the patient's wishes do not align with the right treatment</h1>
+  <div class="dc-trustline" aria-label="Author and review information">
+    <span>Published: <time datetime="2026-11-13">2026-11-13</time></span>
+    <span>Last reviewed: <time datetime="2026-11-13">2026-11-13</time></span>
+  </div>
+
+
+<div class="text-box">
+
+   <!-- 🌐 English Version (SEO-friendly link) -->
+  <a class="lang-btn" href="../chairside-54.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+
+<p>A patient had been referred for treatment planning of the maxillary anterior teeth. According to the history, there had previously been swelling in the area of the maxillary right lateral incisor (tooth 2), which had resolved by the time of the visit. On radiographic examination, in addition to problems with the root canal treatments, there was evidence of caries beneath the crowns.</p>
+
+<figure>
+  <img loading="lazy" src="/chairside/cs54-1.webp" alt="Two periapical radiographs of the patient's maxillary anterior teeth; crowned teeth with previous root canal treatment" style="max-width:100%; border-radius:0.75rem;" width="945" height="619">
+</figure>
+
+<p>My recommendation was to remove all the crowns first, assess the condition of the teeth and the amount of sound tooth structure remaining, and only then decide on root canal retreatment and prosthetic reconstruction.</p>
+
+<p>However, the patient was reluctant to have the crowns removed. They said these were anterior teeth and that having the crowns taken off would be difficult for them. Their question was whether the root canal retreatment could not be done through the existing crowns.</p>
+
+<p>Root canal retreatment through a crown is possible in some situations, but this patient's problem was not only the root canal treatment. When an endodontically treated tooth has a periapical lesion, we need to ask where the infection came from and why the previous treatment failed. One important possibility is microbial leakage from the coronal side of the tooth (coronal leakage).</p>
+
+<p>If the cause of the problem is caries or leakage beneath the crown, retreatment through the crown may control the infection inside the canal, but the source of the leakage remains and there is a possibility of recontamination. In this patient, the evidence of caries beneath the crowns made this issue all the more important.</p>
+
+<p>Another issue was determining the prognosis of the teeth. For example, for the maxillary left lateral incisor (tooth 2), until the crown is removed and the extent of tooth destruction is known, it is not even possible to say with confidence whether the tooth can be kept and restored.</p>
+
+<p>So in this case, removing the crowns was not merely a preliminary step toward making new crowns; it was an essential part of diagnosis and treatment planning.</p>
+
+<p>The point I want to emphasize is that the patient's wishes must certainly be taken into account in our decision-making, but that does not mean we always treat according to them. Sometimes accepting a patient's request in order to make treatment simpler means ignoring a problem that should have been addressed from the start. In such situations, going along with the patient's wishes may lead to incomplete treatment and ultimately to the patient's own detriment.</p>
+
+  <p class="dc-disclaimer">This page is intended for educational use by dentists and dental students.</p>
+</div>
+
+<div class="author-note">
+  <a href="/about.html" class="author-link">Dr. Foad Shahabian</a>
+  <span class="author-role">Prosthodontist & Implant Specialist</span>
+</div>
+
+<footer class="dc-site-footer">
+  <div style="margin-bottom:1.375rem;">
+    <a href="../index.html"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> Back to Chairside
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+    <strong style="color:#ffd46a;">Foad Shahabian</strong>
+  </div>
+</footer>
+</main>
+<script src="/global-search.js?v=19" defer></script>
+<script src="/dc-nav.js?v=338" defer></script>
+</body>
+</html>
