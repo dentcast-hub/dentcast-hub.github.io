@@ -589,6 +589,19 @@ def json_ld_keywords(doc, words, nl):
     return doc[:mm.start()] + mm.group(1) + body + mm.group(3) + doc[mm.end():]
 
 
+def own_links_out(doc, page, explore, linker, body_md):
+    """The page as the clone-residue check reads it: the new page's own links
+    to the template page (a frozen 4.8 / 4.9 choice or a body link, typically
+    a `queue:NN` that resolved to the very page this one was cloned from)
+    carry that page's title and file name by design, so they are taken out
+    before the scan; everything else of the template is still caught."""
+    hrefs = [h for h, _ in explore] + [ln["href"] for ln in (linker.done if linker else [])] \
+        + [mm.group(2) for mm in MD_LINK.finditer(body_md)]
+    for h in {h for h in hrefs if re.search(r"(?:^|/)%s(?:#[^/]*)?$" % re.escape(page), h)}:
+        doc = re.sub(r'<a href="%s"[^>]*>.*?</a>' % re.escape(attr(h)), "", doc, flags=re.S)
+    return doc
+
+
 def build_page(cat, n, prev_n, m, date, item, lang="fa"):
     c = CATEGORIES[cat]
     cid = f"{c['dir']}/{c['stem']}{n}"
@@ -664,10 +677,11 @@ def build_page(cat, n, prev_n, m, date, item, lang="fa"):
         rows = "\n".join(f'<a href="{attr(h)}" class="dc-related-capsule">{esc(t)}</a>' for h, t in caps + explore)
         doc = swap_region(doc, r'<div class="dc-related-capsules">\n', r"\n?</div>\n</div>", rows, "related")
     # 8. residue check
+    scan = own_links_out(doc, f"{c['stem']}{prev_n}.html", explore, linker, body_md)
     residue = [x for x in (old_title, old_desc, f"{c['stem']}{prev_n}.html", c["image"].format(n=prev_n, k=1),
-                           tentry.get("title"), tentry.get("caption")) if x and x in doc]
+                           tentry.get("title"), tentry.get("caption")) if x and x in scan]
     for k in tentry.get("keywords") or []:
-        if json.dumps(k, ensure_ascii=False) in doc and k not in kw and lang == "fa":
+        if json.dumps(k, ensure_ascii=False) in scan and k not in kw and lang == "fa":
             residue.append(k)
     if residue:
         refuse("TEMPLATE_RESIDUE", f"clone residue of {tcid} left in the page: {residue[:5]}")
@@ -748,13 +762,14 @@ def build_notecast_page(n, prev, m, date, item, lang="fa"):
         explore = [(x["href"], x["label"]) for x in m["explore_49"] if (ROOT / x["href"].lstrip("/")).is_file()][:EXPLORE_CAP - len(caps)]
         rows = "\n".join(f'    <a href="{attr(h)}" class="dc-related-capsule">{esc(t)}</a>' for h, t in caps + explore)
         doc = swap_region(doc, r'<div class="dc-related-capsules">\n', r"\n  </div>\n</div>", rows, "related")
+    scan = own_links_out(doc, f"episode-{prev}.html", explore, linker, body_md)
     residue = [x for x in (old_title, old_desc, f"episode-{prev}.html", tentry.get("title"), tentry.get("caption"),
                            f"{c['label_fa']} {fa_ordinal(prev)}", f"{c['label_fa']} {fa_digits(prev)}")
-               if x and x in doc]
-    residue += re.findall(r"%s %d\b" % (c["label_en"], prev), doc)
-    if re.search(r"(?<![\d۰-۹])(%d|%s)(?![\d۰-۹])" % (prev, fa_digits(prev)), re.sub(r"<svg.*?</svg>|<style.*?</style>", "", doc, flags=re.S)):
+               if x and x in scan]
+    residue += re.findall(r"%s %d\b" % (c["label_en"], prev), scan)
+    if re.search(r"(?<![\d۰-۹])(%d|%s)(?![\d۰-۹])" % (prev, fa_digits(prev)), re.sub(r"<svg.*?</svg>|<style.*?</style>", "", scan, flags=re.S)):
         stray = sorted(set(re.findall(r".{0,25}(?<![\d۰-۹])(?:%d|%s)(?![\d۰-۹]).{0,10}" % (prev, fa_digits(prev)),
-                                      re.sub(r"<svg.*?</svg>|<style.*?</style>", "", doc, flags=re.S))))
+                                      re.sub(r"<svg.*?</svg>|<style.*?</style>", "", scan, flags=re.S))))
         residue += [x for x in stray if "episode" in x or c["label_fa"] in x or c["label_en"] in x]
     if residue:
         refuse("TEMPLATE_RESIDUE", f"clone residue of notecast/episode-{prev} left: {residue[:5]}")
@@ -864,9 +879,10 @@ def build_insight_page(n, prev, m, date, item, lang="fa"):
         explore = [(x["href"], x["label"]) for x in m["explore_49"] if (ROOT / x["href"].lstrip("/")).is_file()][:EXPLORE_CAP - len(caps)]
         rows = "\n".join(f'    <a href="{attr(h)}" class="dc-related-capsule">{esc(t)}</a>' for h, t in caps + explore)
         doc = swap_region(doc, r'<div class="dc-related-capsules">\n', r"\n  </div>\n</div>", rows, "related")
+    scan = own_links_out(doc, f"insight-{prev}.html", explore, linker, body_md)
     residue = [x for x in (old_title, old_desc, old_topic, old_kw, f"insight-{prev}.html", f"insight{prev}-",
-                           tentry.get("title"), tentry.get("caption")) if x and x in doc]
-    residue += re.findall(r"Insight %d\b|(?:اینسایت|نکتهٔ کلینیکی) %s(?![۰-۹])" % (prev, fa_digits(prev)), doc)
+                           tentry.get("title"), tentry.get("caption")) if x and x in scan]
+    residue += re.findall(r"Insight %d\b|(?:اینسایت|نکتهٔ کلینیکی) %s(?![۰-۹])" % (prev, fa_digits(prev)), scan)
     if residue:
         refuse("TEMPLATE_RESIDUE", f"clone residue of insight/insight-{prev} left: {residue[:5]}")
     files = {"insight/" + c["image"].format(n=n, k=int(k)): (item / v["file"]).read_bytes() for k, v in imgs.items()}
@@ -962,9 +978,10 @@ def build_chairside_page(n, prev, m, date, item, lang="fa"):
         explore = [(x["href"], x["label"]) for x in m["explore_49"] if (ROOT / x["href"].lstrip("/")).is_file()][:EXPLORE_CAP - len(caps)]
         rows = "\n".join(f'    <a href="{attr(h)}" class="dc-related-capsule">{esc(t)}</a>' for h, t in caps + explore)
         doc = swap_region(doc, r'<div class="dc-related-capsules">\n', r"\n  </div>\n</div>", rows, "related")
+    scan = own_links_out(doc, f"chairside-{prev}.html", explore, linker, body_md)
     residue = [x for x in (old_title, old_desc, f"chairside-{prev}.html", f"chairside{prev}.webp", f"cs{prev}-",
-                           tentry.get("title"), tentry.get("caption")) if x and x in doc]
-    residue += re.findall(r"Chairside %d\b|ویزیت %s(?![۰-۹])" % (prev, fa_digits(prev)), doc)
+                           tentry.get("title"), tentry.get("caption")) if x and x in scan]
+    residue += re.findall(r"Chairside %d\b|ویزیت %s(?![۰-۹])" % (prev, fa_digits(prev)), scan)
     if residue:
         refuse("TEMPLATE_RESIDUE", f"clone residue of chairside/chairside-{prev} left: {residue[:5]}")
     files = {"chairside/" + c["image"].format(n=n, k=int(k)): (item / v["file"]).read_bytes() for k, v in imgs.items()}
@@ -1081,9 +1098,10 @@ def build_metanote_page(n, prev, m, date, item, lang="fa"):
         explore = [(x["href"], x["label"]) for x in m["explore_49"] if (ROOT / x["href"].lstrip("/")).is_file()][:EXPLORE_CAP - len(caps)]
         rows = "\n".join(f'    <a href="{attr(h)}" class="dc-related-capsule">{esc(t)}</a>' for h, t in caps + explore)
         doc = swap_region(doc, r'<div class="dc-related-capsules">\n', r"\n  </div>\n</div>", rows, "related")
+    scan = own_links_out(doc, f"meta-{prev}.html", explore, linker, body_md)
     residue = [x for x in (old_title, old_desc, old_alt, f"meta-{prev}.html", f"meta-{prev}.webp",
-                           tentry.get("title"), tentry.get("caption")) if x and x in doc]
-    residue += re.findall(r"MetaNote %d\b|ایدهٔ %s(?![۰-۹])" % (prev, fa_digits(prev)), doc)
+                           tentry.get("title"), tentry.get("caption")) if x and x in scan]
+    residue += re.findall(r"MetaNote %d\b|ایدهٔ %s(?![۰-۹])" % (prev, fa_digits(prev)), scan)
     if residue:
         refuse("TEMPLATE_RESIDUE", f"clone residue of metanotes/meta-{prev} left: {residue[:5]}")
     files = {"metanotes/" + c["image"].format(n=n): (item / v["file"]).read_bytes() for v in imgs.values()}

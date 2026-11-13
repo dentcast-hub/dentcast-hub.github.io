@@ -75,6 +75,25 @@ class TailAndRenderTests(unittest.TestCase):
         md = "الف\n\n---\n\nیک جملهٔ واقعی\n"
         self.assertEqual(qm.split_sources_tail(md), (md, []))
 
+    def test_residue_scan_skips_own_links_to_the_template_page_only(self):
+        # queue 19 → share-50 cloned from share-49 while its frozen 4.9 links to share-49
+        title = "نسبت تاج به ریشه"
+        cap = f'<a href="/sharehub/share-49.html" class="dc-related-capsule">{title}</a>'
+        doc = f'<p>متن</p>\n{cap}\n'
+        scan = qa.own_links_out(doc, "share-49.html", [("/sharehub/share-49.html", title)], None, "متن")
+        self.assertNotIn(title, scan)
+        self.assertNotIn("share-49.html", scan)
+        linker = qa.Linker([{"phrase": "متن", "href": "/sharehub/share-49.html"}])
+        body = qa.render_body("متن", {}, None, linker)
+        self.assertEqual(qa.own_links_out(body, "share-49.html", [], linker, "متن").count("share-49"), 0)
+        # a leftover the tool did not put there is still seen
+        left = f'<title>{title}</title>\n<link rel="canonical" href="https://x/sharehub/share-49.html">\n{cap}'
+        scan = qa.own_links_out(left, "share-49.html", [("/sharehub/share-49.html", title)], None, "")
+        self.assertIn(title, scan)
+        self.assertIn("share-49.html", scan)
+        # no own link to the template page: the page is read as it is
+        self.assertEqual(qa.own_links_out(doc, "share-49.html", [("/sharehub/share-43.html", "x")], None, ""), doc)
+
     def test_links_first_occurrence_not_in_heading(self):
         md = "## سایلن\n\nاول سایلن و باز سایلن.\n\n- سایلن\n"
         out = qa.render_body(md, {}, None, qa.Linker([{"phrase": "سایلن", "href": "/glossary/silane.html"}]))
