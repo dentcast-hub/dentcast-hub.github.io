@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="dc-notify" content="true">
+
+<title>پست و کور NPG؛ آیا آلیاژ NPG سمی است و پستش زود درمی‌آید؟ | مرور منابع – دنت‌کست</title>
+
+<meta name="description" content="آیا پست و کور NPG سمی است یا زود درمی‌آید؟ بررسی شواهد علمی درباره‌ی کوروژن، گیر، مقاومت به شکست، مجوز FDA و طبقه‌بندی ADA آلیاژ NPG.">
+
+<link rel="canonical" href="https://dentcast.org/sharehub/share-52.html">
+<link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/sharehub/share-52.html">
+<link rel="alternate" hreflang="fa" href="https://dentcast.org/sharehub/share-52.html">
+<link rel="alternate" hreflang="x-default" href="https://dentcast.org/sharehub/share-52.html">
+
+  <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
+  <link rel="stylesheet" href="/dc-article.css?v=6">
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --bg1:#eaf1ff;
+      --bg2:#f5f8ff;
+      --text:#111;
+      --muted:#444;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.2);
+    }
+
+    p { margin: 0.875rem 0; }
+
+
+    ul {
+      list-style: none;
+      padding-right: 0;
+      margin: 0.875rem 0;
+    }
+
+    ul li::before {
+      content: "✦ ";
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    /* summary tables — same pattern as .text-box table elsewhere on the site */
+    .glass-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .glass-box table th,
+    .glass-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:right;
+      vertical-align:top;
+    }
+    .glass-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .glass-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+    @media (max-width:768px){
+      .glass-box table{font-size:.9rem;}
+      .glass-box table th,.glass-box table td{padding:0.45rem 0.5rem;}
+    }
+
+    /* images with a visible caption */
+    .glass-box figure { max-width: 30rem; margin: 1.25rem auto; }
+    .glass-box figcaption {
+      text-align: center;
+      font-size: .85rem;
+      opacity: .75;
+      margin-top: 0.5rem;
+      line-height: 1.8;
+    }
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* section kicker above the title */
+    .sh-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      direction: ltr;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: .02em;
+      margin: 0 0 0.5rem;
+    }
+
+    /* references list */
+    .sh-refs { margin-top: 0.5rem; }
+    .sh-refs li { font-size: 0.95rem; line-height: 1.9; }
+    .sh-refs a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .sh-refs a:hover { text-decoration: underline; }
+
+    /* figure pairs and wide tables */
+    .glass-box .sh-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+    .glass-box .sh-pair figure { margin: 0; }
+    .glass-box .sh-pair img { width: 100%; height: auto; }
+    /* Keep the supplied clinical crops at their native size; shrink only on narrow screens. */
+    .glass-box figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+    .sh-scroll { overflow-x: auto; }
+    .sh-scroll img { min-width: 32rem; }
+    @media (max-width:420px){ .glass-box .sh-pair { grid-template-columns: 1fr; } }
+
+
+    /* permission chips (مجاز / با محدودیت / استفاده نکن) */
+    .chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: .05rem .55rem; border-radius: 999px; line-height: 1.7; white-space: nowrap; margin-inline-start: .25rem; }
+    .chip.ok { color: #1f7a3a; background: rgba(47,122,60,.14); }
+    .chip.warn { color: #9a6200; background: rgba(214,150,20,.16); }
+    .chip.no { color: #b3342b; background: rgba(179,52,43,.13); }
+    [data-theme="dark"] .chip.ok { color: #7fcf8a; }
+    [data-theme="dark"] .chip.warn { color: #f0bb5b; }
+    [data-theme="dark"] .chip.no { color: #f08a80; }
+
+    /* English-version toggle button */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 auto 1.125rem 0;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { line-height: 1.9;}
+    }
+  </style>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="theme-color" content="#0b5fff">
+
+  <!-- Share Hub Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://dentcast.org/sharehub/share-52.html",
+      "url": "https://dentcast.org/sharehub/share-52.html",
+      "name": "پست و کور NPG؛ آیا آلیاژ NPG سمی است و پستش زود درمی‌آید؟",
+      "inLanguage": "fa",
+      "isPartOf": {
+        "@id": "https://dentcast.org/#website"
+      },
+      "about": {
+        "@id": "https://dentcast.org/sharehub/share-52.html#creativework"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://dentcast.org/sharehub/share-52.html#creativework",
+      "name": "پست و کور NPG؛ آیا آلیاژ NPG سمی است و پستش زود درمی‌آید؟",
+      "headline": "پست و کور NPG؛ آیا آلیاژ NPG سمی است و پستش زود درمی‌آید؟",
+      "description": "آیا پست و کور NPG سمی است یا زود درمی‌آید؟ بررسی شواهد علمی درباره‌ی کوروژن، گیر، مقاومت به شکست، مجوز FDA و طبقه‌بندی ADA آلیاژ NPG.",
+      "inLanguage": "fa",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "دکتر فواد شهابیان"
+        }
+      ],
+      "creator": [
+        {
+          "@type": "Person",
+          "name": "دکتر فواد شهابیان"
+        }
+      ],
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://dentcast.org/#org-dentcast",
+        "name": "DentCast",
+        "url": "https://dentcast.org/",
+        "logo": {"@type": "ImageObject", "url": "https://dentcast.org/logo-v2.png"}
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/sharehub/share-52.html"
+      },
+      "datePublished": "2026-11-14",
+      "dateModified": "2026-11-14",
+      "genre": "Dental Education",
+      "keywords": [
+        "پست و کور NPG",
+        "آلیاژ NPG (Non-Precious Gold)",
+        "سمیت آلیاژ NPG",
+        "کوروژن آلیاژ مس‌آلومینیوم",
+        "آزادسازی یون از آلیاژ دندانی",
+        "گیر پست ریختگی",
+        "مقاومت به شکست پست و کور ریختگی",
+        "مقایسه‌ی NPG و Ni-Cr",
+        "مجوز FDA و مسیر 510(k)",
+        "طبقه‌بندی ADA آلیاژهای دندانی",
+        "استاندارد ISO 22674",
+        "مدول الاستیسیته‌ی پست",
+        "NPG post and core",
+        "copper-aluminum alloy corrosion",
+        "NPG vs Ni-Cr cast post",
+        "dental alloy cytotoxicity"
+      ]
+    }
+  ]
+}
+</script>
+
+    <link rel="stylesheet" href="/dc-theme.css?v=19">
+<link rel="stylesheet" href="/dc-nav.css?v=18">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="پست و کور NPG؛ آیا آلیاژ NPG سمی است و پستش زود درمی‌آید؟ | مرور منابع – دنت‌کست">
+  <meta property="og:description" content="آیا پست و کور NPG سمی است یا زود درمی‌آید؟ بررسی شواهد علمی درباره‌ی کوروژن، گیر، مقاومت به شکست، مجوز FDA و طبقه‌بندی ADA آلیاژ NPG.">
+  <meta property="og:url" content="https://dentcast.org/sharehub/share-52.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="پست و کور NPG؛ آیا آلیاژ NPG سمی است و پستش زود درمی‌آید؟ | مرور منابع – دنت‌کست">
+  <meta name="twitter:description" content="آیا پست و کور NPG سمی است یا زود درمی‌آید؟ بررسی شواهد علمی درباره‌ی کوروژن، گیر، مقاومت به شکست، مجوز FDA و طبقه‌بندی ADA آلیاژ NPG.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "DentCast",
+      "item": "https://dentcast.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "مرور منابع",
+      "item": "https://dentcast.org/sharehub/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "پست و کور NPG؛ آیا آلیاژ NPG سمی است و پستش زود درمی‌آید؟ | مرور منابع – دنت‌کست",
+      "item": "https://dentcast.org/sharehub/share-52.html"
+    }
+  ]
+}
+</script>
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
+</head>
+
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<div class="sh-kicker"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 21 12 16l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> مرور منابع</div>
+<h1>پست و کور NPG؛ آیا آلیاژ NPG سمی است و پستش زود درمی‌آید؟</h1>
+<div class="glass-box">
+<a class="lang-btn" href="en/share-52.html" rel="noopener">English</a>
+<div class="sh-dialogue">
+<p>این روزها در اینستاگرام پست‌های زیادی درباره‌ی <a href="/glossary/post-and-core.html">پست و کور</a> NPG دیده می‌شه. یکی می‌گه آلیاژ NPG سمیه، یکی می‌گه پستش زود درمیاد، یکی هم می‌پرسه وقتی RCT پشتش نیست چطور ازش استفاده می‌کنید. خیلی از این پست‌ها بیشتر دنبال اینن که یه حرف متفاوت بزنن و دیده بشن. ولی ما باید ببینیم حرفشون درسته یا نه، برای همین شواهد علمی موجود درباره‌ی NPG رو مرور کردم.</p>
+<h2>آلیاژ NPG چیست؟</h2>
+<p>NPG یه آلیاژ ریختگی بر پایه‌ی مسه. بیشتر از ۸۰ درصدش مسه [۱] و بقیه‌اش آلومینیوم و مقدار کمی از فلزات دیگه مثل نیکل و آهنه. کلمه‌ی Gold توی اسمش (Non-Precious Gold) فقط به رنگ طلایی‌اش برمی‌گرده. نسخه‌ی NPG+2 مقدار کمی طلا داره [۲]. در دندانپزشکی بیشتر برای ساخت پست و کور ریختگی استفاده می‌شه.</p>
+<h2>نظر ADA و FDA درباره‌ی NPG چیست؟</h2>
+<p>ADA آلیاژهای دندانی رو بر اساس مقدار فلز نجیبشون دسته‌بندی می‌کنه [۳]. NPG مثل Ni-Cr در دسته‌ی بیس متال قرار می‌گیره. سازنده در کاتالوگش نوشته که شورای مواد دندانی ADA این آلیاژ رو پذیرفته [۴]، ولی تأییدی برای این حرف از خود ADA پیدا نکردم. نظر یا توصیه‌ی دیگه‌ای هم از ADA درباره‌ی NPG ندیدم.</p>
+<p>FDA به NPG اجازه‌ی فروش در بازار آمریکا رو داده [۵]. ولی این اجازه از مسیری به اسم 510(k) گرفته شده که مسیر ساده‌تریه. توی این مسیر، سازنده فقط باید نشون بده محصولش شبیه محصولاتیه که از قبل توی بازار بودن [۲]. پس مجوز FDA یعنی فروش NPG قانونیه، ولی چیزی درباره‌ی سالم بودن یا دوام پستش به ما نمی‌گه.</p>
+<h2>آیا پست و کور NPG سمی است؟</h2>
+<p>این حرف یه بخش درست داره. مطالعات آزمایشگاهی نشون دادن NPG راحت‌تر از Ni-Cr دچار کوروژن می‌شه [۶]. در یه مطالعه روی NPG+2، آلیاژ در محیط اسیدی مقدار زیادی یون مس، آلومینیوم و نیکل آزاد کرد و محصولات کوروژنش برای سلول‌ها سمی بودن [۷]. یه مطالعه‌ی داخل دهانی هم نشون داده این آلیاژها در جاهایی از دهان که خودبه‌خود تمیز نمی‌شن بیشتر دچار کوروژن می‌شن [۸].</p>
+<p>پستی که سمان شده و کراونش خوب سیل شده با بزاق تماسی نداره. ولی اگه ریزنشت پیش بیاد، به نظر من شرایطش به همین وضعیت نزدیک می‌شه.</p>
+<p>با این حال از «کوروژن داره» تا «برای بیمار سمیه» راه زیادیه. یافته‌های سمیت همه آزمایشگاهی‌ان [۶، ۷]، و مطالعه‌ی داخل دهانی هم فقط کوروژن رو نشون داده، نه آسیب به بافت رو [۸]. در مطالعه‌ای که سه آلیاژ رو با هم مقایسه کرده، NPG از یه آلیاژ مسی دیگه سازگارتر بود، ولی به Ni-Cr نمی‌رسید و نویسنده‌ها Ni-Cr رو انتخاب اول دونستن [۶]. در جستجوی PubMed هم گزارشی از آسیب به بیمار پیدا نکردم.</p>
+<h2>آیا پست NPG زود درمی‌آید؟</h2>
+<p>برای این حرف شاهد مستقیمی پیدا نکردم. فقط یه مطالعه گیر پست NPG رو مستقیم با Ni-Cr مقایسه کرده و تفاوت معناداری ندیده [۹]. ممکنه کوروژن به‌مرور اتصال پست و سمان رو ضعیف کنه، ولی مطالعه‌ای که این رو اندازه گرفته باشه پیدا نکردم.</p>
+<h2>NPG کارآزمایی بالینی (RCT) ندارد؛ پس نباید استفاده کرد؟</h2>
+<p>سؤال به‌جاییه، ولی باید دید با همین معیار وضع بقیه‌ی مواد چطوره. در جستجوی PubMed، برای پست Ni-Cr هم RCT اختصاصی پیدا نکردم و نتایج آزمایشگاهی بودن. کارآزمایی‌های بالینی معمولاً نوع پست‌ها رو با هم مقایسه کردن، مثلاً ریختگی با <a href="/glossary/fiber-post.html">فایبر</a>، نه نوع آلیاژ رو. پس اگه RCT شرط استفاده باشه، Ni-Cr هم از این فیلتر رد نمی‌شه.</p>
+<p>ولی این به معنی برابر بودن دو آلیاژ نیست. هر آلیاژ ریختگی باید الزامات استاندارد ISO 22674 رو داشته باشه، از جمله در مقدار یونی که آزاد می‌کنه [۱۰]. شاهد مستقلی پیدا نکردم که NPG این الزام رو برآورده کنه، و داده‌های آزمایشگاهی کوروژن هم به نفعش نیست [۶، ۷]. پس مشکل NPG نداشتن RCT نیست. مشکلش اینه که همین شواهد آزمایشگاهیِ موجود، ضعفش رو در برابر کوروژن نشون می‌دن.</p>
+<h2>آیا مدول الاستیسیته‌ی NPG از ریشه محافظت می‌کند؟</h2>
+<p>این حرف طرفدارهای NPG هم ثابت نشده. مدول الاستیسیته‌ی این آلیاژها از Ni-Cr کمتره و به عاج نزدیک‌تره [۱]، ولی هنوز چند برابر عاجه [۱۱]. نتایج مقاومت به شکست هم با هم نمی‌خونن. چند مطالعه NPG رو قوی‌تر از Ni-Cr نشون دادن [۱، ۱۲، ۱۳]، یکی Ni-Cr رو قوی‌تر [۹]، و یکی هم تفاوتی بینشون ندیده [۱۴].</p>
+<h2>پست و کور NPG؛ شواهد چه می‌گویند؟</h2>
+<table>
+<thead><tr><th>ادعا</th><th>شواهد چه می‌گن</th><th>وضعیت</th></tr></thead>
+<tbody>
+<tr><td>NPG سمیه</td><td>کوروژن و آزادسازی یون در آزمایشگاه دیده شده [۶، ۷]، ولی گزارشی از آسیب به بیمار پیدا نشد</td><td>ثابت نشده</td></tr>
+<tr><td>پست NPG زود درمیاد</td><td>تنها مطالعه‌ی مقایسه‌ای تفاوتی در گیر ندیده [۹]</td><td>شاهد نداره</td></tr>
+<tr><td>RCT نداره، پس نباید استفاده کرد</td><td>برای پست Ni-Cr هم RCT اختصاصی پیدا نشد</td><td>برای Ni-Cr هم صدق می‌کنه</td></tr>
+<tr><td>مدول الاستیسیته‌اش از ریشه محافظت می‌کنه</td><td>نتایج مقاومت به شکست متناقضه [۱، ۹، ۱۲، ۱۳، ۱۴]</td><td>ثابت نشده</td></tr>
+<tr><td>NPG راحت‌تر از Ni-Cr دچار کوروژن می‌شه</td><td>مطالعه‌ی آزمایشگاهی مستقیم همین رو نشون داده [۶]</td><td>شاهد آزمایشگاهی داره</td></tr>
+</tbody>
+</table>
+<p>نه سمی بودن NPG برای بیمار ثابت شده، نه زود درآمدن پستش، نه برتری مکانیکیش. چیزی که شواهد آزمایشگاهی نشون می‌دن اینه که NPG نسبت به Ni-Cr راحت‌تر دچار کوروژن می‌شه [۶]. این برای تیتر ترسناک کافی نیست، ولی دلیل خوبیه که اگه انتخاب داریم، Ni-Cr رو ترجیح بدیم.</p>
+<h3>∆ منابع</h3>
+<p>مطالعات PubMed بر اساس ابسترکت بررسی شده‌اند.</p>
+<ol class="sh-refs">
+  <li>مقاومت به شکست سانترال با پست NPG و Ni-Cr، و ترکیب NPG (ابسترکت): <a href="https://pubmed.ncbi.nlm.nih.gov/29807967/" target="_blank" rel="noopener noreferrer">PubMed 29807967</a></li>
+  <li>مجوز FDA برای NPG+2: <a href="https://510k.innolitics.com/search/K972971" target="_blank" rel="noopener noreferrer">K972971</a></li>
+  <li>طبقه‌بندی ADA: <a href="https://www.ada.org/resources/ada-library/oral-health-topics/materials-for-indirect-restorations" target="_blank" rel="noopener noreferrer">Materials for Indirect Restorations</a></li>
+  <li>ادعای سازنده درباره‌ی پذیرش ADA: <a href="https://aalbadent.uberflip.com/i/102310/26" target="_blank" rel="noopener noreferrer">کاتالوگ Aalba Dent</a></li>
+  <li>مجوز FDA برای NPG: <a href="https://beudamed.com/fda_registrations/de514275-24c7-4636-b66f-e4d2da137448" target="_blank" rel="noopener noreferrer">K863782</a></li>
+  <li>کوروژن و سمیت سلولی، NPG در برابر Ni-Cr (ابسترکت): <a href="https://pubmed.ncbi.nlm.nih.gov/41210404/" target="_blank" rel="noopener noreferrer">PubMed 41210404</a></li>
+  <li>آزادسازی یون و سمیت NPG+2 (ابسترکت): <a href="https://pubmed.ncbi.nlm.nih.gov/18546197/" target="_blank" rel="noopener noreferrer">PubMed 18546197</a></li>
+  <li>کوروژن داخل دهانی آلیاژهای مس‌آلومینیوم (ابسترکت): <a href="https://pubmed.ncbi.nlm.nih.gov/11005911/" target="_blank" rel="noopener noreferrer">PubMed 11005911</a></li>
+  <li>گیر، و مقاومت به شکست به نفع Ni-Cr (ابسترکت): <a href="https://pubmed.ncbi.nlm.nih.gov/26046108/" target="_blank" rel="noopener noreferrer">PubMed 26046108</a></li>
+  <li>الزام ISO 22674 درباره‌ی آزادسازی یون (به نقل از مقاله، نه متن خود استاندارد): <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7241566/" target="_blank" rel="noopener noreferrer">Ion release from three different dental alloys</a></li>
+  <li>مدول الاستیسیته‌ی آلیاژهای آزمایشی مس، آلومینیوم و نیکل، نه خود NPG (ابسترکت): <a href="https://pubmed.ncbi.nlm.nih.gov/25006386/" target="_blank" rel="noopener noreferrer">PubMed 25006386</a></li>
+  <li>مقاومت به شکست پرمولر به نفع NPG (ابسترکت): <a href="https://pubmed.ncbi.nlm.nih.gov/28808455/" target="_blank" rel="noopener noreferrer">PubMed 28808455</a>، <a href="https://doi.org/10.22037/iej.v12i3.10586" target="_blank" rel="noopener noreferrer">DOI</a></li>
+  <li>مقاومت به شکست به نفع NPG (ابسترکت): <a href="https://doaj.org/article/5c4073c4f7d64e68aa15eb61a24c0844" target="_blank" rel="noopener noreferrer">Journal of Dental Biomaterial 2014</a></li>
+  <li>بدون تفاوت در مقاومت به شکست: <a href="https://jmds.mums.ac.ir/article_21936_bf539ab9899b9d435d8b5e621948c502.pdf?lang=en" target="_blank" rel="noopener noreferrer">Nodehi و همکاران، مجله‌ی دانشکده‌ی دندانپزشکی مشهد، ۲۰۲۳</a></li>
+</ol>
+</div>
+<div class="author-note">نویسنده: <a href="https://dentcast.org/#person-foad">دکتر فواد شهابیان</a></div>
+</div>
+
+
+
+<div class="dc-related-section">
+<h2 class="dc-related-label">کاوش بیشتر</h2>
+<div class="dc-related-capsules">
+<a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
+<a href="/pillar/fixed-pros/" class="dc-related-capsule">فهرست موضوعی</a>
+<a href="/episodes/episode-125-3.html" class="dc-related-capsule">توزیع استرس: پست فایبر یا فلزی؟</a>
+<a href="/sharehub/share-20.html" class="dc-related-capsule">پست و کور زیرکونیا در برابر پست ریختگی</a>
+</div>
+</div>
+  <footer class="dc-site-footer">
+  <div style="margin-bottom:1.375rem;">
+    <a href="/sharehub/"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> برگشت به صفحه‌ی قبل
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=19" defer></script>
+<script src="/dc-nav.js?v=339" defer></script>
+</body>
+</html>
