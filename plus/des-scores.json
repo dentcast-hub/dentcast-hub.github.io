@@ -55725,5 +55725,1701 @@
         "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       }
     ]
+  },
+  "sharehub/share-52": {
+    "scored_at": "2026-11-14",
+    "sources": [
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Fracture Strength of Endodontically treated Maxillary Central Incisors restored with Nickel Chromium and Nonprecious Gold Alloy Casting Post and Cores.",
+          "authors": "Khiavi HA, Habibzadeh S, Safaeian S, Eftekhar M",
+          "year": 2018,
+          "journal": "J Contemp Dent Pract 19(5):560-567",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 65,
+          "anchor": "in-vitro fracture strength study after cyclic loading, loading and test parameters fully described but no ISO standard or established method cited (MATERIAL in-vitro non-standard fully described row, 65)",
+          "evidence_quote": "Full-metal crowns were also fabricated and placed under cyclin loading in 30 N load and 45° angle, for 250,000 cycles with 2.6 Hz frequency."
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "This study aimed to compare the fracture strength of endodontically treated maxillary central incisors restored with nickel chromium (Ni-Cr) and NPG alloys.",
+              "note": ""
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no sample size calculation or stated reason for the specimen count in the abstract; n = 12 per group is the count itself, which does not address the domain (3b-ii)"
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "allocation of teeth to groups not reported in the abstract"
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no blinding wording in the abstract"
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "low",
+              "evidence_quote": "Data were analyzed using independent t-test.",
+              "note": ""
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no funding or conflict-of-interest statement in the abstract"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: in-vitro study, not an RCT"
+          },
+          {
+            "item": "no sample size justification / specimen count per group <10",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "Casting post and cores were fabricated of Ni-Cr and NPG alloys for 24 maxillary central incisors (n = 12).",
+            "note": "specimen count per group is 12, not below 10; absence of a power calculation not assessable in abstract"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: laboratory fracture test, no survival claim over time"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 36,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۳۶ از ۱۰۰ و در باند D (شواهد ضعیف) برای پرسش از نوع MATERIAL است و چون فقط بر چکیده تکیه دارد موقتی است.",
+        "interpretation_fa": "یک مطالعه‌ی in-vitro روی ۲۴ دندان با cyclic loading که به استاندارد مشخصی ارجاع نمی‌دهد و چند بخش روش‌شناسی آن در چکیده گزارش نشده است. بالاتر بودن fracture strength در گروه NPG یک مقایسه‌ی آزمایشگاهی است و دوام بالینی را نشان نمی‌دهد. شکست زیر CEJ و غیرقابل ترمیم در همه‌ی دندان‌ها، در هر دو آلیاژ، گزارش شده است."
+      },
+      {
+        "des_version": "3.7",
+        "error": "INSUFFICIENT_TEXT"
+      },
+      {
+        "des_version": "3.7",
+        "error": "INSUFFICIENT_TEXT"
+      },
+      {
+        "des_version": "3.7",
+        "error": "INSUFFICIENT_TEXT"
+      },
+      {
+        "des_version": "3.7",
+        "error": "INSUFFICIENT_TEXT"
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Corrosion Resistance and Cytotoxicity of Copper-Based and Nickel-Chromium Alloys for Cast Post and Core Fabrication.",
+          "authors": "Mohaghegh M, Kazemi M, Bidaki M, Farzin M",
+          "year": 2025,
+          "journal": "Front Dent",
+          "doi": "10.18502/fid.v22i26.19203"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 65,
+          "anchor": "in-vitro study with established methods (EIS in artificial saliva at two pH levels, MTT assay) but only 3-5 specimens per group, so it misses the 85 row's adequate specimen count (MATERIAL in-vitro row, 65)",
+          "evidence_quote": "In this in vitro study, the corrosion resistance of 9 specimens of dental casting alloys"
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "This study assessed the corrosion resistance and cytotoxicity of two copper-based alloys and one nickel-chromium (Ni-Cr) alloy used for post and core fabrication."
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "the abstract gives specimen counts (n=3, n=5) but no power calculation or stated reason for them. Under 3b-ii a specimen count alone does not address this domain. Abstract only, so silence is NR."
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "the abstract does not address how specimens were assigned to groups. Abstract only, so silence is NR."
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "the abstract does not mention blinding of operators or assessors. Abstract only, so silence is NR."
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "low",
+              "evidence_quote": "Statistical analysis was performed by one-way ANOVA (alpha=0.05)."
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "the abstract contains no funding or conflict-of-interest statement. Abstract only, so silence is NR."
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: in-vitro study, RCTs only"
+          },
+          {
+            "item": "no sample size justification / in-vitro specimen count per group <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "(n=3)",
+            "note": "not assessable in abstract: the counts per group are below 10, but a justification may exist in the full text, and the abstract's silence is not evidence that it is absent"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: laboratory corrosion and cytotoxicity outcomes, no survival or success claim"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 36,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۳۶ است، در باند D (شواهد ضعیف) برای سؤال از نوع MATERIAL، و این امتیاز موقت است چون فقط چکیده در دسترس بود.",
+        "interpretation_fa": "این مطالعه‌ی in-vitro از روش‌های شناخته‌شده‌ی EIS و MTT استفاده کرده، اما در هر گروه فقط ۳ تا ۵ نمونه دارد. از چکیده درباره‌ی توجیه حجم نمونه، تخصیص نمونه‌ها، blinding و تعارض منافع چیزی معلوم نیست. برتری Ni-Cr در مقاومت به خوردگی و biocompatibility یک سیگنال آزمایشگاهی است. توصیه‌ی مقاله به Ni-Cr به‌عنوان انتخاب اول برای cast post and core بر داده‌ی بالینی تکیه ندارد."
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Corrosion of dental nickel-aluminum bronze with a minor gold content-mechanism and biological impact.",
+          "authors": "Ardlin BI, Lindholm-Sethson B, Dahl JE",
+          "year": 2009,
+          "journal": "J Biomed Mater Res B Appl Biomater",
+          "doi": "10.1002/jbm.b.31143"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 85,
+          "anchor": "in-vitro corrosion and biocompatibility study using established methods (static immersion, open-circuit potential, polarization curves, impedance spectra, MTT, HET-CAM) (MATERIAL in-vitro validated-protocol row, 85); specimen count not reportable from abstract",
+          "evidence_quote": "Corrosion and surface reactions in saline and artificial saliva were studied by electrochemical techniques including registration of open-circuit-potentials, polarization curves and impedance spectra."
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "To study corrosion and to evaluate biological effects in vitro of corrosion products of a copper-aluminum-nickel alloy with 2% gold."
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract gives no specimen count and no sample size justification; silence under ABSTRACT_ONLY is NR"
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not describe how specimens were allocated to test conditions"
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not mention blinding of operators or assessors"
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract reports mean values only and describes no statistical analysis; a reported mean is a result, not a statement of the analysis"
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract contains no funding or conflict-of-interest statement"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement, or manufacturer funding without independent-analysis statement",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: in-vitro study, not an RCT"
+          },
+          {
+            "item": "specimen count per group <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: no survival or clinical success claim; outcomes are corrosion and in-vitro biological effects"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 47,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۴۷ از ۱۰۰ و در باند C (شواهد محدود) با نوع سؤال MATERIAL است و چون فقط چکیده در دست بود، این امتیاز موقت است.",
+        "interpretation_fa": "این مطالعه‌ی in-vitro با روش‌های شناخته‌شده‌ی corrosion و cytotoxicity انجام شده، اما چکیده درباره‌ی تعداد نمونه، آمار، blinding و تعارض منافع چیزی نمی‌گوید و همین ضریب روش را پایین آورده است. یافته‌ها نشان می‌دهند آلیاژ nickel-aluminum bronze در محیط اسیدی لایه‌ی محافظ نمی‌سازد و محصولات corrosion آن برای سلول‌ها سمی‌اند. ارزش بالینی آن هشدار درباره‌ی biocompatibility این آلیاژ است، نه اثبات رفتار آن در دهان."
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "In vitro and in vivo corrosion evaluation of nickel-chromium- and copper-aluminum-based alloys.",
+          "authors": "Benatti OF, Miranda WG, Muench A",
+          "year": 2000,
+          "journal": "J Prosthet Dent 84(3):360-3",
+          "doi": "10.1067/mpr.2000.109377"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 45,
+          "anchor": "in-vitro immersion and intraoral denture-embedded corrosion study whose protocol is incompletely described in the text in hand: no specimen count, exposure duration or corrosion assessment method stated (MATERIAL in-vitro with incomplete protocol description row, 45)",
+          "evidence_quote": "For the in vitro test, specimens were immersed in the following 3 corrosion solutions: artificial saliva, 0.9% sodium chloride, and 1.0% sodium sulfide."
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "This in vitro and in vivo study evaluated the corrosion of 2 copper-aluminum alloys (Cu-Al and Cu-Al-Zn) compared with a nickel-chromium alloy.",
+              "note": ""
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract states no specimen count, power calculation or stated reason for the count"
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not describe how specimens were allocated to solutions, test sites or dentures"
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not mention blinding of the corrosion assessment"
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract reports no statistical method or test"
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract carries no funding or conflict-of-interest statement"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding without independent-analysis statement",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: not an RCT"
+          },
+          {
+            "item": "no sample size justification / specimen count per group <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "follow-up shorter than the outcome plausibly requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract: no exposure duration stated and no survival claim is made"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 25,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۲۵ از ۱۰۰ و در باند D (شواهد ضعیف) برای نوع سؤال MATERIAL است و چون فقط بر پایه‌ی چکیده است، موقت است.",
+        "interpretation_fa": "امتیاز پایین از آن است که چکیده تعداد نمونه، مدت مواجهه و روش سنجش خوردگی را گزارش نمی‌کند و بیشتر حوزه‌های QUIN از آن قابل ارزیابی نیست. پیام کاربردی: آلیاژهای copper-aluminum در نواحی self-cleaning خوردگی چشمگیری نداشتند، اما در نواحی non-self-cleaning و محلول سولفیدی خوردگی زیادی نشان دادند. nickel-chromium تقریباً بدون خوردگی بود."
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Evaluation of Retention of two Different Cast Post-Core Systems and Fracture Resistance of the Restored Teeth.",
+          "authors": "Khaledi AA, Sheykhian S, Khodaei A",
+          "year": 2015,
+          "journal": "J Dent (Shiraz)",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 45,
+          "anchor": "in-vitro study on extracted maxillary central incisors comparing two cast post-core alloys; protocol incompletely described in the text in hand (cement, post dimensions and fracture-test loading rate not reported) (MATERIAL in-vitro incomplete-protocol row, 45)",
+          "evidence_quote": "Eighty endodontically treated maxillary central incisors were sectioned perpendicular to the long axis"
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "This study compared the retention of two different post and core systems and also the fracture resistance of teeth restored with these systems.",
+              "note": ""
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract gives specimen counts per group but no power calculation or stated reason for the count; a count alone does not address this domain (3b-ii); silence under ABSTRACT_ONLY is NR"
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "low",
+              "evidence_quote": "The restored teeth were randomly divided into two equal groups of 40.",
+              "note": ""
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no mention of operator or assessor blinding in the abstract; silence under ABSTRACT_ONLY is NR"
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "low",
+              "evidence_quote": "Statistical analyses were performed using SPSS version 19.00 and student's t-test (α=0.05).",
+              "note": ""
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no funding or conflict-of-interest statement in the abstract; silence under ABSTRACT_ONLY is NR"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: in-vitro study, RCTs only"
+          },
+          {
+            "item": "no sample size justification / specimen count per group <10",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "the specimens (n=20 per each group)",
+            "note": "in-vitro rule fires only below 10 specimens per group; 20 per group reported"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: bench study with no clinical follow-up or survival claim"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 25,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۲۵ است و در باند D (شواهد ضعیف) برای نوع سؤال MATERIAL قرار می‌گیرد.",
+        "interpretation_fa": "این یک مطالعه‌ی in-vitro روی دندان‌های کشیده است که فقط چکیده‌اش در دسترس بود؛ نوع سمان، طول پست و سرعت بارگذاری تست شکست در آن گزارش نشده و امتیاز را پایین آورده است. یافته‌ی اصلی این است که retention دو سیستم Ni-Cr و NPG تفاوت معنادار نداشت و مقاومت به شکست در گروه Ni-Cr بالاتر بود. aging یا thermocycling گزارش نشده، پس تعمیم بالینی محدود است."
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Ion release from three different dental alloys - effect of dynamic loading and toxicity of released elements.",
+          "authors": "Haugli KH, Syverud M, Samuelsen JT",
+          "year": 2020,
+          "journal": "Biomater Investig Dent 7(1):71-79",
+          "doi": "10.1080/26415275.2020.1747471"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 85,
+          "anchor": "in-vitro corrosion and cytotoxicity study using an ISO-standardized static immersion test alongside an experimental dynamic test, with defined acidic aging and loading (MATERIAL in-vitro validated-protocol row, 85); specimen count per group not stated in the abstract",
+          "evidence_quote": "a standardized static test (ISO 22674: 2016) and an experimental dynamic test"
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "The aims of thisstudy were to assess if dynamic loading increases the metal ion release of selected dental alloys and to evaluate the cytotoxicity of the released metal ions.",
+              "note": ""
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not state specimen count or any sample size justification; ABSTRACT_ONLY, so silence is NR"
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not address how specimens were allocated to the static and dynamic tests"
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract does not address blinding of operators or assessors"
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract names the measurement methods (ICP-MS, MTT assay) but no statistical analysis; ABSTRACT_ONLY, so silence is NR"
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no conflict-of-interest or funding statement in the abstract; not assessable"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding of tested product",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: in-vitro study, not an RCT"
+          },
+          {
+            "item": "specimen count per group <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract: specimen count not reported"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: laboratory corrosion and cytotoxicity study makes no survival or success claim"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 47,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "این مقاله امتیاز ۴۷ و باند C (شواهد محدود) در نوع سؤال MATERIAL گرفته و امتیاز مقدماتی و بر پایه‌ی abstract است.",
+        "interpretation_fa": "طراحی in-vitro با تست استاندارد ISO 22674 برای سؤال آزمایشگاهی مناسب است، اما abstract درباره‌ی تعداد نمونه، تخصیص، blinding و آمار چیزی نمی‌گوید و همین امتیاز را پایین آورده است. یافته‌ها نشان می‌دهند بارگذاری دینامیک آزادسازی یون آلیاژهای Pd-Ag و Co-Cr را افزایش نداده و فقط Zn و Co در غلظت‌های بالا برای سلول‌های THP-1 سمی بوده‌اند. ترجمه‌ی بالینی این غلظت‌ها به دهان بیمار از این مطالعه مستقیم برنمی‌آید."
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Properties of experimental copper-aluminium-nickel alloys for dental post-and-core applications.",
+          "authors": "Rittapai A, Urapepon S, Kajornchaiyakul J, Harniratisai C",
+          "year": 2014,
+          "journal": "J Adv Prosthodont 6(3):215-23",
+          "doi": "10.4047/jap.2014.6.3.215"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 45,
+          "anchor": "in-vitro study of experimental alloy properties; the abstract does not describe the test methods, specimen counts or test conditions (MATERIAL in-vitro with incomplete protocol description row, 45)",
+          "evidence_quote": "Their properties were tested and evaluated."
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "This study aimed to develop a copper-aluminium-nickel alloy which has properties comparable to that of dental alloys used for dental post and core applications with the reasonable cost.",
+              "note": ""
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract gives no specimen count and no sample size calculation; silence under ABSTRACT_ONLY is NR"
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "allocation of specimens not addressed in the abstract"
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "blinding not addressed in the abstract"
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "low",
+              "evidence_quote": "The data of thermal, physical, and mechanical properties were analyzed using the two-way ANOVA and Tukey's test (α=0.05).",
+              "note": ""
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no funding or disclosure statement in the abstract"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: in-vitro study, RCTs only"
+          },
+          {
+            "item": "specimen count per group <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: laboratory property study with no survival or success claim"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 25,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۲۵ است، باند D (شواهد ضعیف) برای نوع سؤال MATERIAL، و به دلیل در دست بودن فقط چکیده موقت است.",
+        "interpretation_fa": "این مطالعه in-vitro روی آلیاژهای تجربی Cu-Al-Ni است و چکیده تعداد نمونه، روش آزمون‌ها و کنترل سوگیری را گزارش نمی‌کند. یافته‌ی اصلی این است که آلیاژهای دارای ۹ درصد Al و ۲ تا ۴ درصد Ni حداقل proof strength استاندارد ISO را داشتند. نیکل بالا پاسخ سلولی شدید ایجاد کرد. ارزش آن برای post and core در حد امکان‌سنجی آزمایشگاهی است."
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Effect of Nickel-Chromium and Non-Precious Gold Color Alloy Cast Posts on Fracture Resistance of Endodontically Treated Teeth",
+          "authors": "Gholami F, Kohani P, Aalaei S",
+          "year": 2017,
+          "journal": "Iran Endod J",
+          "doi": "10.22037/iej.v12i3.10586"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 65,
+          "anchor": "in-vitro fracture-resistance study, two alloy groups, loading defined but no aging and no stated standard (MATERIAL in-vitro non-standard but fully described protocol row, 65)",
+          "evidence_quote": "Shear force was applied at 1 mm/min at 45C to the buccal cusps until root fracture occurred."
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "the aim of thisstudy was to evaluate the effect of non-precious gold color alloy (NPG) and nickel-chrome (Ni-Cr) cast posts on resistance of endodontically treated teeth",
+              "note": ""
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract gives the specimen count only, which does not address a sample size justification (3b-ii); silence under ABSTRACT_ONLY is NR"
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "low",
+              "evidence_quote": "30 freshly extracted single-rooted premolar teeth were randomly divided into two groups",
+              "note": ""
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "blinding not mentioned in the abstract"
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "low",
+              "evidence_quote": "Independent sampletest was used for data analysis by using SPSS version 21.",
+              "note": ""
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no funding or disclosure statement in the abstract"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: in-vitro study, RCTs only"
+          },
+          {
+            "item": "specimen count per group <10 with no justification (in-vitro)",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "30 freshly extracted single-rooted premolar teeth were randomly divided into two groups",
+            "note": "15 specimens per group, not below 10; row does not fire"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: static load-to-fracture laboratory test makes no survival claim"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 36,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۳۶ از ۱۰۰ و در باند D (شواهد ضعیف) برای نوع سؤال MATERIAL است و چون فقط abstract در دست بوده، موقت است.",
+        "interpretation_fa": "این مطالعه‌ی in-vitro بارگذاری را مشخص کرده اما aging ندارد و به استانداردی ارجاع نمی‌دهد. از abstract، توجیه حجم نمونه، blinding و تعارض منافع قابل ارزیابی نیست. برتری مقاومت به شکست پست ریختگی NPG نسبت به Ni-Cr فقط در بارگذاری استاتیک تا شکست، روی پرمولر تک‌ریشه و با سمان zinc phosphate نشان داده شده و نوع شکست گزارش نشده است."
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Comparison of Fracture Strength of Endodontically Treated Teeth Restored with Two Different Cast Metallic Post Systems",
+          "authors": "Borhan Haghighi Z, Pahlavanpour Fard Jahromy AM",
+          "year": 2014,
+          "journal": "Journal of Dental Biomaterials",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 45,
+          "anchor": "in-vitro fracture-strength study on extracted teeth, protocol incompletely described in the text in hand: no standard named, no loading direction or speed, no aging (MATERIAL row: in-vitro with incomplete protocol description, 45)",
+          "evidence_quote": "In this experimental study, endodontic treatment was carried out for 45 extracted maxillary premolars."
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "The purpose of this study was to: 1) compare the fracture strength of endodontically treated teeth",
+              "note": ""
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no sample size calculation or stated reason for n=15 in the abstract; the specimen count per group does not address this domain (3b-ii); ABSTRACT_ONLY, so silence is NR"
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "the abstract states the specimens were divided into 3 groups but not how they were assigned; a statement of group design does not address allocation (3b-ii); ABSTRACT_ONLY, so NR"
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no mention of operator or assessor blinding in the abstract; ABSTRACT_ONLY, so NR"
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "low",
+              "evidence_quote": "Data were analyzed using one-way analysis of variance (ANOVA), Student t-test and Tukey HSD test to compare the three groups.",
+              "note": ""
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no funding or conflict-of-interest statement in the abstract; ABSTRACT_ONLY, so NR"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: in-vitro study, not an RCT"
+          },
+          {
+            "item": "sample size: in-vitro specimen count per group <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "The specimens were divided into 3 groups (n=15).",
+            "note": "does not fire: 15 specimens per group, which is not below 10"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: single-load fracture test with no survival or longevity claim"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 25,
+        "band": "D",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۲۵ از ۱۰۰ و در باند D (شواهد ضعیف) برای سؤال از نوع MATERIAL است و چون فقط چکیده بررسی شده، موقت است.",
+        "interpretation_fa": "یک مطالعه‌ی in-vitro روی ۴۵ پره‌مولر ماگزیلا است که فقط چکیده‌اش در دست بود؛ روش بارگذاری، aging، نحوه‌ی تقسیم نمونه‌ها و blinding در آن گزارش نشده و همین امتیاز را پایین آورده است. برتری استحکام NPG بر Ni-Cr یک یافته‌ی آزمایشگاهی است و الگوی شکست ریشه‌ای در هر دو پست ریختگی، در مقابل شکست تاج در گروه آمالگام، هم گزارش شده است."
+      },
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "MATERIAL",
+        "text_basis": "ABSTRACT_ONLY",
+        "citation": {
+          "title": "Evaluation of Fracture Resistance of Endodontically Treated Maxillary Central Incisors Restored with Ni-Cr and NPG Casting Post and Core",
+          "authors": "Nodehi D, Shiezadeh M, Hemmati Farimani M",
+          "year": 2023,
+          "journal": "J Mash Dent Sch 47(1):90-7",
+          "doi": "10.22038/jmds.2023.63550.2142"
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 85,
+          "anchor": "in-vitro static fracture-resistance test on extracted teeth in a universal testing machine (established method), 10 specimens per group, defined loading rate (MATERIAL in-vitro validated-protocol row, 85)",
+          "evidence_quote": "a universal testing machine was used to measure the fracture resistance of the restored teeth with static pressure of 0.5 mm/min"
+        },
+        "q_method": {
+          "tool": "QUIN",
+          "domains": [
+            {
+              "domain": "clearly stated aims",
+              "rating": "low",
+              "evidence_quote": "the present study was conducted to evaluate the fracture resistance of endodontically treated teeth that have been restored with Nickel-Chromium (Ni-Cr) and Non-Precious Gold Color Alloy (NPG) post and core"
+            },
+            {
+              "domain": "sample size justification",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "abstract gives the specimen count per group but no sample size calculation or stated reason for it; the count alone does not address the domain (3b-ii), and silence under ABSTRACT_ONLY is NR"
+            },
+            {
+              "domain": "randomization / allocation of specimens",
+              "rating": "low",
+              "evidence_quote": "the samples were randomly divided into two groups of 10 samples"
+            },
+            {
+              "domain": "operator and assessor blinding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no mention of operator or assessor blinding in the abstract; not reportable from an abstract"
+            },
+            {
+              "domain": "appropriate statistical analysis",
+              "rating": "low",
+              "evidence_quote": "T-test analyses and SPSS software was used to compare the mean resistance"
+            },
+            {
+              "domain": "conflict of interest / funding",
+              "rating": "NR",
+              "evidence_quote": "",
+              "note": "no funding or conflict-of-interest statement in the abstract; not reportable from an abstract"
+            }
+          ],
+          "multiplier": 0.55
+        },
+        "penalties": [
+          {
+            "item": "no conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not assessable in abstract"
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: in-vitro study, RCTs only"
+          },
+          {
+            "item": "specimen count per group <10 with no justification",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "randomly divided into two groups of 10 samples",
+            "note": "10 specimens per group, threshold of <10 not met"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable: single static fracture test, no survival or longevity claim"
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 47,
+        "band": "C",
+        "provisional": true,
+        "fact_fa": "امتیاز DES این مقاله ۴۷ از ۱۰۰ و band C (شواهد محدود) در question type MATERIAL است و چون فقط بر پایه‌ی abstract محاسبه شده، مقدماتی است.",
+        "interpretation_fa": "این مطالعه‌ی in-vitro با ۱۰ نمونه در هر گروه، تفاوت معناداری بین fracture resistance دندان‌های قدامی اندو شده با cast post از جنس Ni-Cr و NPG پیدا نکرد. sample size justification، blinding و conflict of interest در abstract گزارش نشده است. بارگذاری static و تعداد کم نمونه، تعمیم یافته به شرایط fatigue دهان را محدود می‌کند."
+      }
+    ],
+    "fidelity": {
+      "des_version": "3.7",
+      "mode": "FIDELITY",
+      "scope": "POOLED",
+      "text_basis": "ABSTRACT_ONLY",
+      "claims": [
+        {
+          "id": "u1",
+          "claim_quote": "پست و کور NPG؛ آیا آلیاژ NPG سمی است و پستش زود درمی‌آید؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u2",
+          "claim_quote": "English",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "link label"
+        },
+        {
+          "id": "u3",
+          "claim_quote": "این روزها در اینستاگرام پست‌های زیادی درباره‌ی پست و کور NPG دیده می‌شه.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "about how the topic is talked about, not about the topic"
+        },
+        {
+          "id": "u4",
+          "claim_quote": "یکی می‌گه آلیاژ NPG سمیه، یکی می‌گه پستش زود درمیاد، یکی هم می‌پرسه وقتی RCT پشتش نیست چطور ازش استفاده می‌کنید.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "about how the topic is talked about, not about the topic"
+        },
+        {
+          "id": "u5",
+          "claim_quote": "خیلی از این پست‌ها بیشتر دنبال اینن که یه حرف متفاوت بزنن و دیده بشن.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "about how the topic is talked about, not about the topic"
+        },
+        {
+          "id": "u6",
+          "claim_quote": "ولی ما باید ببینیم حرفشون درسته یا نه، برای همین شواهد علمی موجود درباره‌ی NPG رو مرور کردم.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "states the page's own scope"
+        },
+        {
+          "id": "u7",
+          "claim_quote": "آلیاژ NPG چیست؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u8",
+          "claim_quote": "NPG یه آلیاژ ریختگی بر پایه‌ی مسه.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Since fiber posts are not recommended for teeth under lateral loads, a new alloy containing >80% copper (nonprecious gold or NPG) was introduced with a modulus of elasticity closer to that of dentin and easier preparation.",
+          "source_ref": "S1",
+          "note": "other sources: S6: MATCHES, S7: ALTERED"
+        },
+        {
+          "id": "u9",
+          "claim_quote": "بیشتر از ۸۰ درصدش مسه [۱] و بقیه‌اش آلومینیوم و مقدار کمی از فلزات دیگه مثل نیکل و آهنه.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Since fiber posts are not recommended for teeth under lateral loads, a new alloy containing >80% copper (nonprecious gold or NPG) was introduced with a modulus of elasticity closer to that of dentin and easier preparation.",
+          "source_ref": "S1",
+          "note": "F3: the >80% copper half matches; the half on aluminium, nickel and iron is not addressed by the abstract (NOT_ASSESSABLE); other sources: S7: ALTERED"
+        },
+        {
+          "id": "u10",
+          "claim_quote": "کلمه‌ی Gold توی اسمش (Non-Precious Gold) فقط به رنگ طلایی‌اش برمی‌گرده.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u11",
+          "claim_quote": "فقط نسخه‌ی NPG+2 مقدار کمی طلا داره [۲].",
+          "verdict": "ALTERED",
+          "change_kind": "HEDGE_REMOVED",
+          "source_quote": "The alloy NPGtrade mark+2 with the nominal composition Cu:77.3; Al:7.8; Ni:4.3; Fe:3.0; Zn:2.7; Au:2.0; and Mn:1.7 was characterized.",
+          "source_ref": "S7",
+          "note": "source states NPG+2 contains 2% gold; the absolute «فقط» (only this version) is not in the source"
+        },
+        {
+          "id": "u12",
+          "claim_quote": "در دندانپزشکی بیشتر برای ساخت پست و کور ریختگی استفاده می‌شه.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "This study assessed the corrosion resistance and cytotoxicity of two copper-based alloys and one nickel-chromium (Ni-Cr) alloy used for post and core fabrication.",
+          "source_ref": "S6",
+          "note": "the quantifier «بیشتر» (mostly) is not addressed; the use for post and core is stated"
+        },
+        {
+          "id": "u13",
+          "claim_quote": "نظر ADA و FDA درباره‌ی NPG چیست؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u14",
+          "claim_quote": "ADA آلیاژهای دندانی رو بر اساس مقدار فلز نجیبشون دسته‌بندی می‌کنه [۳].",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u15",
+          "claim_quote": "NPG مثل Ni-Cr در دسته‌ی بیس متال قرار می‌گیره.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u16",
+          "claim_quote": "سازنده در کاتالوگش نوشته که شورای مواد دندانی ADA این آلیاژ رو پذیرفته [۴]، ولی تأییدی برای این حرف از خود ADA پیدا نکردم.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: AUTHOR_VIEW, S8: AUTHOR_VIEW, S9: AUTHOR_VIEW, S10: AUTHOR_VIEW, S11: NOT_ASSESSABLE, S12: AUTHOR_VIEW, S13: AUTHOR_VIEW, S14: AUTHOR_VIEW"
+        },
+        {
+          "id": "u17",
+          "claim_quote": "نظر یا توصیه‌ی دیگه‌ای هم از ADA درباره‌ی NPG ندیدم.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: AUTHOR_VIEW, S8: AUTHOR_VIEW, S9: AUTHOR_VIEW, S10: AUTHOR_VIEW, S11: NOT_ASSESSABLE, S12: AUTHOR_VIEW, S13: AUTHOR_VIEW, S14: AUTHOR_VIEW"
+        },
+        {
+          "id": "u18",
+          "claim_quote": "FDA به NPG اجازه‌ی فروش در بازار آمریکا رو داده [۵].",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u19",
+          "claim_quote": "ولی این اجازه از مسیری به اسم 510(k) گرفته شده که مسیر ساده‌تریه.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u20",
+          "claim_quote": "توی این مسیر، سازنده فقط باید نشون بده محصولش شبیه محصولاتیه که از قبل توی بازار بودن [۲].",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u21",
+          "claim_quote": "پس مجوز FDA یعنی فروش NPG قانونیه، ولی چیزی درباره‌ی سالم بودن یا دوام پستش به ما نمی‌گه.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u22",
+          "claim_quote": "آیا پست و کور NPG سمی است؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u23",
+          "claim_quote": "این حرف یه بخش درست داره.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "signpost; the following units state the content"
+        },
+        {
+          "id": "u24",
+          "claim_quote": "مطالعات آزمایشگاهی نشون دادن NPG راحت‌تر از Ni-Cr دچار کوروژن می‌شه [۶].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Aalbadent NPG and American Dent-All alloys showed significantly lower corrosion resistance than the Ni-Cr alloy (P<0.05).",
+          "source_ref": "S6",
+          "note": "other sources: S8: ALTERED"
+        },
+        {
+          "id": "u25",
+          "claim_quote": "در یه مطالعه روی NPG+2، آلیاژ در محیط اسیدی مقدار زیادی یون مس، آلومینیوم و نیکل آزاد کرد و محصولات کوروژنش برای سلول‌ها سمی بودن [۷].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "High levels of toxic elements were found after static immersion testing, and the corrosion products had a distinct adverse effect on the biological activity.",
+          "source_ref": "S7",
+          "note": "release figures for Cu, Al, Ni and the cytotoxicity result are also stated in the Results sentences"
+        },
+        {
+          "id": "u26",
+          "claim_quote": "یه مطالعه‌ی داخل دهانی هم نشون داده این آلیاژها در جاهایی از دهان که خودبه‌خود تمیز نمی‌شن بیشتر دچار کوروژن می‌شن [۸].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "These same alloys also underwent high corrosion in non-self-cleaning sites for the in vivo test, although minimal attack was observed in self-cleaning sites.",
+          "source_ref": "S8",
+          "note": "source reports the same difference between non-self-cleaning and self-cleaning sites; it names copper-aluminum alloys, not NPG by product name"
+        },
+        {
+          "id": "u27",
+          "claim_quote": "پستی که سمان شده و کراونش خوب سیل شده با بزاق تماسی نداره.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u28",
+          "claim_quote": "ولی اگه ریزنشت پیش بیاد، به نظر من شرایطش به همین وضعیت نزدیک می‌شه.",
+          "verdict": "AUTHOR_VIEW",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "opinion marker: به نظر من"
+        },
+        {
+          "id": "u29",
+          "claim_quote": "با این حال از «کوروژن داره» تا «برای بیمار سمیه» راه زیادیه.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u30",
+          "claim_quote": "یافته‌های سمیت همه آزمایشگاهی‌ان [۶، ۷]، و مطالعه‌ی داخل دهانی هم فقط کوروژن رو نشون داده، نه آسیب به بافت رو [۸].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "These same alloys also underwent high corrosion in non-self-cleaning sites for the in vivo test, although minimal attack was observed in self-cleaning sites.",
+          "source_ref": "S8",
+          "note": "half on the in vivo study showing corrosion matches; tissue damage is not addressed by the abstract (silent half); the half on toxicity findings across [6,7] is a relation between other sources, silent here. «فقط» limits what was shown, does not strengthen the finding"
+        },
+        {
+          "id": "u31",
+          "claim_quote": "در مطالعه‌ای که سه آلیاژ رو با هم مقایسه کرده، NPG از یه آلیاژ مسی دیگه سازگارتر بود، ولی به Ni-Cr نمی‌رسید و نویسنده‌ها Ni-Cr رو انتخاب اول دونستن [۶].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Ni-Cr was the most biocompatible alloy amongst all, followed by Aalbadent NPG.",
+          "source_ref": "S6",
+          "note": "the first-choice half is also stated in the conclusion sentence"
+        },
+        {
+          "id": "u32",
+          "claim_quote": "در جستجوی PubMed هم گزارشی از آسیب به بیمار پیدا نکردم.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: AUTHOR_VIEW, S8: AUTHOR_VIEW, S9: AUTHOR_VIEW, S10: AUTHOR_VIEW, S11: NOT_ASSESSABLE, S12: AUTHOR_VIEW, S13: AUTHOR_VIEW, S14: AUTHOR_VIEW"
+        },
+        {
+          "id": "u33",
+          "claim_quote": "آیا پست NPG زود درمی‌آید؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u34",
+          "claim_quote": "برای این حرف شاهد مستقیمی پیدا نکردم.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: AUTHOR_VIEW, S8: AUTHOR_VIEW, S9: AUTHOR_VIEW, S10: AUTHOR_VIEW, S11: NOT_ASSESSABLE, S12: AUTHOR_VIEW, S13: AUTHOR_VIEW, S14: AUTHOR_VIEW"
+        },
+        {
+          "id": "u35",
+          "claim_quote": "فقط یه مطالعه گیر پست NPG رو مستقیم با Ni-Cr مقایسه کرده و تفاوت معناداری ندیده [۹].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Although retention failure load for Ni-Cr system was lower than NPG system, there was no significant difference between the two systems (p= 0.7).",
+          "source_ref": "S9",
+          "note": "the 'only one study' half is a relation between sources and is silent in a one-source call; the finding half matches"
+        },
+        {
+          "id": "u36",
+          "claim_quote": "ممکنه کوروژن به‌مرور اتصال پست و سمان رو ضعیف کنه، ولی مطالعه‌ای که این رو اندازه گرفته باشه پیدا نکردم.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: AUTHOR_VIEW, S8: AUTHOR_VIEW, S9: AUTHOR_VIEW, S10: AUTHOR_VIEW, S11: NOT_ASSESSABLE, S12: AUTHOR_VIEW, S13: AUTHOR_VIEW, S14: AUTHOR_VIEW"
+        },
+        {
+          "id": "u37",
+          "claim_quote": "NPG کارآزمایی بالینی (RCT) ندارد؛ پس نباید استفاده کرد؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u38",
+          "claim_quote": "سؤال به‌جاییه، ولی باید دید با همین معیار وضع بقیه‌ی مواد چطوره.",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "signpost; announces the comparison that follows"
+        },
+        {
+          "id": "u39",
+          "claim_quote": "در جستجوی PubMed، برای پست Ni-Cr هم RCT اختصاصی پیدا نکردم و نتایج آزمایشگاهی بودن.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: AUTHOR_VIEW, S8: AUTHOR_VIEW, S9: AUTHOR_VIEW, S10: AUTHOR_VIEW, S11: NOT_ASSESSABLE, S12: AUTHOR_VIEW, S13: AUTHOR_VIEW, S14: AUTHOR_VIEW"
+        },
+        {
+          "id": "u40",
+          "claim_quote": "کارآزمایی‌های بالینی معمولاً نوع پست‌ها رو با هم مقایسه کردن، مثلاً ریختگی با فایبر، نه نوع آلیاژ رو.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u41",
+          "claim_quote": "پس اگه RCT شرط استفاده باشه، Ni-Cr هم از این فیلتر رد نمی‌شه.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u42",
+          "claim_quote": "ولی این به معنی برابر بودن دو آلیاژ نیست.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_A_CLAIM, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u43",
+          "claim_quote": "هر آلیاژ ریختگی باید الزامات استاندارد ISO 22674 رو داشته باشه، از جمله در مقدار یونی که آزاد می‌کنه [۱۰].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "According to the threshold defined in ISO 22674, only low concentrations of released elements were observed for both corrosion tests.",
+          "source_ref": "S10",
+          "note": "stated half: ISO 22674 defines a threshold for released elements. Silent half: that every cast alloy must meet the standard is not addressed by the abstract"
+        },
+        {
+          "id": "u44",
+          "claim_quote": "شاهد مستقلی پیدا نکردم که NPG این الزام رو برآورده کنه، و داده‌های آزمایشگاهی کوروژن هم به نفعش نیست [۶، ۷].",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: AUTHOR_VIEW, S8: AUTHOR_VIEW, S9: AUTHOR_VIEW, S10: AUTHOR_VIEW, S11: NOT_ASSESSABLE, S12: AUTHOR_VIEW, S13: AUTHOR_VIEW, S14: AUTHOR_VIEW"
+        },
+        {
+          "id": "u45",
+          "claim_quote": "پس مشکل NPG نداشتن RCT نیست.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u46",
+          "claim_quote": "مشکلش اینه که همین شواهد آزمایشگاهیِ موجود، ضعفش رو در برابر کوروژن نشون می‌دن.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Aalbadent NPG and American Dent-All alloys showed significantly lower corrosion resistance than the Ni-Cr alloy (P<0.05).",
+          "source_ref": "S6",
+          "note": "other sources: S7: ALTERED, S8: MATCHES"
+        },
+        {
+          "id": "u47",
+          "claim_quote": "آیا مدول الاستیسیته‌ی NPG از ریشه محافظت می‌کند؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u48",
+          "claim_quote": "این حرف طرفدارهای NPG هم ثابت نشده.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u49",
+          "claim_quote": "مدول الاستیسیته‌ی این آلیاژها از Ni-Cr کمتره و به عاج نزدیک‌تره [۱]، ولی هنوز چند برابر عاجه [۱۱].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Since fiber posts are not recommended for teeth under lateral loads, a new alloy containing >80% copper (nonprecious gold or NPG) was introduced with a modulus of elasticity closer to that of dentin and easier preparation.",
+          "source_ref": "S1",
+          "note": "F3: closer-to-dentin half matches; lower than Ni-Cr and several times dentin halves are not addressed (NOT_ASSESSABLE)"
+        },
+        {
+          "id": "u50",
+          "claim_quote": "نتایج مقاومت به شکست هم با هم نمی‌خونن.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u51",
+          "claim_quote": "چند مطالعه NPG رو قوی‌تر از Ni-Cr نشون دادن [۱، ۱۲، ۱۳]، یکی Ni-Cr رو قوی‌تر [۹]، و یکی هم تفاوتی بینشون ندیده [۱۴].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The mean fracture strength was 731.179 ± 327.47 and 1411.89 ± 313.56 N in the Ni-Cr and NPG groups respectively; this difference was statistically significant (p < 0.001).",
+          "source_ref": "S1",
+          "note": "judged on this source's finding (NPG stronger than Ni-Cr); the findings attributed to other studies are silent here; other sources: S9: MATCHES, S12: MATCHES, S13: MATCHES, S14: MATCHES"
+        },
+        {
+          "id": "u52",
+          "claim_quote": "پست و کور NPG؛ شواهد چه می‌گویند؟",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "heading only"
+        },
+        {
+          "id": "u53",
+          "claim_quote": "ادعا",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "table column label"
+        },
+        {
+          "id": "u54",
+          "claim_quote": "شواهد چه می‌گن",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "table column label"
+        },
+        {
+          "id": "u55",
+          "claim_quote": "وضعیت",
+          "verdict": "NOT_A_CLAIM",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "table column label"
+        },
+        {
+          "id": "u56",
+          "claim_quote": "NPG سمیه",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: NOT_A_CLAIM, S10: NOT_ASSESSABLE, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM, S13: NOT_A_CLAIM, S14: NOT_A_CLAIM"
+        },
+        {
+          "id": "u57",
+          "claim_quote": "کوروژن و آزادسازی یون در آزمایشگاه دیده شده [۶، ۷]، ولی گزارشی از آسیب به بیمار پیدا نشد",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Although all groups showed higher corrosion in acidic environment, Ni-Cr showed good corrosion resistance in acidic pH.",
+          "source_ref": "S6",
+          "note": "ion release and the absence of patient-harm reports are not addressed in the abstract; other sources: S7: MATCHES, S8: MATCHES"
+        },
+        {
+          "id": "u58",
+          "claim_quote": "ثابت نشده",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_A_CLAIM, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u59",
+          "claim_quote": "پست NPG زود درمیاد",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: NOT_A_CLAIM, S10: NOT_ASSESSABLE, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM, S13: NOT_A_CLAIM, S14: NOT_A_CLAIM"
+        },
+        {
+          "id": "u60",
+          "claim_quote": "تنها مطالعه‌ی مقایسه‌ای تفاوتی در گیر ندیده [۹]",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Although retention failure load for Ni-Cr system was lower than NPG system, there was no significant difference between the two systems (p= 0.7).",
+          "source_ref": "S9",
+          "note": "'the only comparative study' is a relation between sources and is silent here; the retention finding matches"
+        },
+        {
+          "id": "u61",
+          "claim_quote": "شاهد نداره",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_A_CLAIM, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u62",
+          "claim_quote": "RCT نداره، پس نباید استفاده کرد",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: NOT_A_CLAIM, S10: NOT_ASSESSABLE, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM, S13: NOT_A_CLAIM, S14: NOT_A_CLAIM"
+        },
+        {
+          "id": "u63",
+          "claim_quote": "برای پست Ni-Cr هم RCT اختصاصی پیدا نشد",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u64",
+          "claim_quote": "برای Ni-Cr هم صدق می‌کنه",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_A_CLAIM, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u65",
+          "claim_quote": "مدول الاستیسیته‌اش از ریشه محافظت می‌کنه",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: NOT_A_CLAIM, S10: NOT_ASSESSABLE, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM, S13: NOT_A_CLAIM, S14: NOT_A_CLAIM"
+        },
+        {
+          "id": "u66",
+          "claim_quote": "نتایج مقاومت به شکست متناقضه [۱، ۹، ۱۲، ۱۳، ۱۴]",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u67",
+          "claim_quote": "ثابت نشده",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_A_CLAIM, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u68",
+          "claim_quote": "NPG راحت‌تر از Ni-Cr دچار کوروژن می‌شه",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: NOT_A_CLAIM, S10: NOT_ASSESSABLE, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM, S13: NOT_A_CLAIM, S14: NOT_A_CLAIM"
+        },
+        {
+          "id": "u69",
+          "claim_quote": "مطالعه‌ی آزمایشگاهی مستقیم همین رو نشون داده [۶]",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Aalbadent NPG and American Dent-All alloys showed significantly lower corrosion resistance than the Ni-Cr alloy (P<0.05).",
+          "source_ref": "S6",
+          "note": "pointing word «همین» read through to the row's claim (NPG corrodes more easily than Ni-Cr); other sources: S8: ALTERED"
+        },
+        {
+          "id": "u70",
+          "claim_quote": "شاهد آزمایشگاهی داره",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Aalbadent NPG and American Dent-All alloys showed significantly lower corrosion resistance than the Ni-Cr alloy (P<0.05).",
+          "source_ref": "S6",
+          "note": "read through to the row's claim; this in vitro study is that evidence; other sources: S8: NOT_A_CLAIM"
+        },
+        {
+          "id": "u71",
+          "claim_quote": "نه سمی بودن NPG برای بیمار ثابت شده، نه زود درآمدن پستش، نه برتری مکانیکیش.",
+          "verdict": "NOT_ASSESSABLE",
+          "change_kind": null,
+          "source_quote": "",
+          "source_ref": null,
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u72",
+          "claim_quote": "چیزی که شواهد آزمایشگاهی نشون می‌دن اینه که NPG نسبت به Ni-Cr راحت‌تر دچار کوروژن می‌شه [۶].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "Aalbadent NPG and American Dent-All alloys showed significantly lower corrosion resistance than the Ni-Cr alloy (P<0.05).",
+          "source_ref": "S6",
+          "note": "other sources: S8: ALTERED"
+        },
+        {
+          "id": "u73",
+          "claim_quote": "این برای تیتر ترسناک کافی نیست، ولی دلیل خوبیه که اگه انتخاب داریم، Ni-Cr رو ترجیح بدیم.",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "The findings of this study raised some concerns regarding the clinical suitability of copper-based alloys for dental treatments, and the first choice for cast post and core restorations should be Ni-Cr alloys because they are more resistant to corrosion, and are less cytotoxic.",
+          "source_ref": "S6",
+          "note": "the half about a scary headline is not addressed in the abstract; the preference for Ni-Cr is stated"
+        }
+      ],
+      "counts": {
+        "matches": 19,
+        "altered": 1,
+        "reversed": 0,
+        "not_in_source": 0,
+        "not_assessable": 34,
+        "author_view": 1,
+        "not_a_claim": 18
+      },
+      "assessable": 20,
+      "fidelity_score": 98,
+      "level": "HIGH",
+      "provisional": true,
+      "source_conclusion": "[S1] Due to proper mechanical properties, NPG post and cores seem to be a suitable choice for restoration of severely damaged anterior teeth, provided that other properties are proven to be acceptable.\n[S6] American Dent-All showed a high degree of cytotoxicity.The findings of this study raised some concerns regarding the clinical suitability of copper-based alloys for dental treatments, and the first choice for cast post and core restorations should be Ni-Cr alloys because they are more resistant to corrosion, and are less cytotoxic.\n[S7] High levels of toxic elements were found after static immersion testing, and the corrosion products had a distinct adverse effect on the biological activity.\n[S8] However, in self-cleaning sites these 2 alloys did not show substantial corrosion.\n[S9] Although significantly higher fracture thresholds were recorded for Ni-Cr post and core group, the failure loads of both systems may rarely occur clinically.\n[S10] Concentrations of 250 µM and above of Zn(II) and Co(II) showed a cytotoxic effect on THP-1 cells.\n[S11] The copper alloys fused with 9 wt% Al and 2-4 wt% Ni can be considered for a potential use as dental post and core applications.\n[S12] The fracture resistance of endodontically treated teeth with non-precious gold color alloy cast post was higher than that of endodontically treated teeth with Ni-Cr cast post.\n[S13] Also the teeth restored by NPG post had a significantly higher fracture resistance than Ni-Cr posts.\n[S14] Conclusion: The fracture resistance of endodontically treated teeth with NPG cast post was not different from that of the endodontically treated teeth with Ni-Cr cast post.",
+      "fact_fa": "از ۲۰ ادعایی که منابع به آن پرداخته‌اند، ۱۹ مورد مطابق است، ۱ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+      "interpretation_fa": "موارد تغییریافته یا برعکس: «فقط نسخه‌ی NPG+2 مقدار کمی طلا داره [۲].…» (قاطع‌تر از منبع)."
+    }
   }
 }
