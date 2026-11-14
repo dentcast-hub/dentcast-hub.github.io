@@ -1,0 +1,255 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "sharehub",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "ایمپلنت دیجیتال؛ آیا واقعاً درد و تورم نداره؟",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "caption_fa": {
+  "value": "آیا ایمپلنت دیجیتال یا جراحی گاید درد و تورم بعد از جراحی رو کم می‌کنه؟ بررسی شواهد علمی درباره‌ی نقش گاید، جراحی فلپ‌لس و درد بعد از ایمپلنت.",
+  "from": "02-عنوان-کپشن.md:9"
+ },
+ "title_en": {
+  "value": "Digital Implants: Do They Really Cause No Pain or Swelling?",
+  "from": "06-انگلیسی.md:1"
+ },
+ "caption_en": {
+  "value": "Do digital implants or guided surgery reduce pain and swelling after surgery? A look at the scientific evidence on the role of the surgical guide, flapless surgery and pain after implant placement.",
+  "from": "06-انگلیسی.md:3"
+ },
+ "body_en": {
+  "value": "These days, Instagram ads often claim that \"digital implants cause no pain or swelling.\" I saw one of these clips too, and went to the scientific evidence to see how true the claim is.\n\n## What does \"digital implant\" mean?\n\nIt usually means computer-assisted implant surgery (CAIS): the implant is planned on a CBCT and a scan, and then placed with a static guide or with dynamic navigation. But being digital does not, by itself, decide whether a flap is raised. With a guide you can raise a flap or work flapless. This difference matters a great deal for pain and swelling.\n\n## Does the guide alone reduce pain?\n\nWhen guided surgery is also done with a flap, what patients report during surgery and in the first days of tissue healing does not differ significantly from the conventional approach [2]. A systematic review that compared static guides with freehand placement also found no tangible difference in discomfort during or after surgery, though with low-quality evidence [3].\n\nIn a trial on single posterior teeth, the static guide did not reduce postoperative pain [4]. Dynamic navigation, although it placed the implant more accurately, had no effect on pain or analgesic use [5]. The abstracts of these two studies do not say whether a flap was raised, so all we can conclude from them is that the guide showed no advantage for pain here.\n\n## So where does the reported reduction in pain come from?\n\nFrom the surgery being flapless. A meta-analysis that compared flapless guided surgery with freehand surgery with a flap showed less pain in the flapless group, but the size of this reduction is unclear and the certainty of the evidence is low. The difference in swelling in the same meta-analysis was not significant either [1].\n\n[[تصویر:01]]\n\n*Figure 1. Numbers from the abstract of Romandini et al. 2022 [1] · flapless guided versus freehand with a flap; dot = mean difference, line = 95% confidence interval*\n\nThe problem is that in this comparison both the guide and the flap changed, so we cannot say which of them reduced the pain.\n\nOne study separated the two and compared three groups: conventional surgery, a bone-supported guide (which needs a flap), and a flapless mucosa-supported guide. The flapless group had less pain than both other groups and used fewer analgesics. The bone-supported guide did not have the same advantage [6].\n\nAnother review cites an older systematic review saying that the reduction in pain after guided surgery is probably due to the surgery being flapless itself. But this review's own conclusion was that, based on two trials, there was no significant difference between the two approaches and that pain reduction is still under discussion. The same review also mentions a trial in which the flapless guided group had worse results than open-flap surgery [7]. So even the advantage of flapless surgery has not been replicated everywhere.\n\n## Summary of the studies\n\nNone of these studies showed that the guide alone reduces pain. Wherever a reduction in pain was seen, it was in the flapless guided group.\n\n| Study | What was compared | Result for pain and swelling |\n| --- | --- | --- |\n| Romandini 2022 [1] | Flapless guided vs freehand with a flap (meta-analysis) | Less pain with low certainty; difference in swelling not significant |\n| Pimkhaokham 2022 [2] | Guide with a flap vs conventional approach (review) | Patient experience in the first days, when the guide was used with a flap, did not differ significantly |\n| Tattan 2020 [3] | Static guide vs freehand (systematic review) | No tangible difference in discomfort (low-quality evidence) |\n| Kunavisarut 2022 [4] | Static guide vs conventional, single posterior tooth | No significant difference in pain |\n| Jorba-García 2023 [5] | Dynamic navigation vs freehand | Similar pain and analgesic use |\n| Arısan 2010 [6] | Flapless guide, bone-supported guide (with a flap) and conventional approach | The flapless group had less pain and analgesic use than the other two groups |\n| Colombo 2017 [7] | Guide vs conventional approach (review of two trials) | Found no significant difference; considered pain reduction under discussion |\n\n## But with digital, flapless work is more likely, isn't it?\n\nThat is true. When we do not open a flap, we cannot see the bone, and in my view 3D planning and a guide help a great deal in making sure the implant ends up in bone and in the right position. A critical review said the same: the guide alone apparently does not consistently improve outcomes, but to the extent that it increases the use of flapless surgery, it can indirectly improve outcomes [2].\n\nBut two points should be kept in mind:\n\n- Not every patient is a candidate for flapless surgery. When bone width is insufficient, or bone grafting or soft-tissue management is needed, a flap has to be raised, digital or not.\n- Flapless is not painless either. Even in the study where the flapless group had the best result, patients in this group took four analgesic tablets [6].\n\n## Conclusion\n\nThe accurate statement is that minimally invasive (flapless) surgery probably reduces pain in the first days, and going digital can make it more predictable. But the claim that \"digital implants cause no pain or swelling\" does not fit the scientific evidence, neither for pain nor for swelling.",
+  "from": "06-انگلیسی.md:6-59"
+ },
+ "images": {
+  "value": [
+   {
+    "n": "01",
+    "file": {
+     "value": "03-تصاویر/01-flapless-pain-swelling-forest.webp",
+     "from": "03-تصاویر/تصاویر.md:5"
+    },
+    "alt_fa": {
+     "value": "نمودار اختلاف میانگین درد و تورم بعد از جراحی بین گاید فلپ‌لس و فری‌هند با فلپ",
+     "from": "03-تصاویر/تصاویر.md:5"
+    },
+    "caption_fa": {
+     "value": "تصویر ۱. اعداد از ابسترکت Romandini et al. 2022 [1] · گاید فلپ‌لس در برابر فری‌هند با فلپ، نقطه = اختلاف میانگین، خط = فاصله‌ی اطمینان ۹۵٪",
+     "from": "03-تصاویر/تصاویر.md:5"
+    },
+    "alt_en": {
+     "value": "Forest plot of mean differences in postoperative pain and swelling, flapless guided versus freehand flapped surgery",
+     "from": "03-تصاویر/تصاویر.md:5"
+    },
+    "caption_en": {
+     "value": "Figure 1. Numbers from the abstract of Romandini et al. 2022 [1] · flapless guided versus freehand with a flap; dot = mean difference, line = 95% confidence interval",
+     "from": "06-انگلیسی.md:62"
+    }
+   }
+  ],
+  "from": "03-تصاویر/تصاویر.md"
+ },
+ "credit": {
+  "value": {
+   "mode": "references",
+   "items": [
+    {
+     "label_fa": "Romandini و همکاران، Periodontol 2000، ۲۰۲۲",
+     "label_en": "Romandini et al., Periodontol 2000, 2022",
+     "href": "https://doi.org/10.1111/prd.12440",
+     "from": "04-منبع/منابع.md:36"
+    },
+    {
+     "label_fa": "Pimkhaokham و همکاران، Periodontol 2000، ۲۰۲۲",
+     "label_en": "Pimkhaokham et al., Periodontol 2000, 2022",
+     "href": "https://doi.org/10.1111/prd.12458",
+     "from": "04-منبع/منابع.md:37"
+    },
+    {
+     "label_fa": "Tattan و همکاران، Clin Oral Implants Res، ۲۰۲۰",
+     "label_en": "Tattan et al., Clin Oral Implants Res, 2020",
+     "href": "https://doi.org/10.1111/clr.13635",
+     "from": "04-منبع/منابع.md:38"
+    },
+    {
+     "label_fa": "Kunavisarut و همکاران، Clin Oral Implants Res، ۲۰۲۲",
+     "label_en": "Kunavisarut et al., Clin Oral Implants Res, 2022",
+     "href": "https://doi.org/10.1111/clr.13886",
+     "from": "04-منبع/منابع.md:39"
+    },
+    {
+     "label_fa": "Jorba-García و همکاران، Clin Oral Implants Res، ۲۰۲۳",
+     "label_en": "Jorba-García et al., Clin Oral Implants Res, 2023",
+     "href": "https://doi.org/10.1111/clr.14050",
+     "from": "04-منبع/منابع.md:40"
+    },
+    {
+     "label_fa": "Arısan و همکاران، Clin Oral Implants Res، ۲۰۱۰",
+     "label_en": "Arısan et al., Clin Oral Implants Res, 2010",
+     "href": "https://doi.org/10.1111/j.1600-0501.2010.01957.x",
+     "from": "04-منبع/منابع.md:41"
+    },
+    {
+     "label_fa": "Colombo و همکاران، BMC Oral Health، ۲۰۱۷",
+     "label_en": "Colombo et al., BMC Oral Health, 2017",
+     "href": "https://doi.org/10.1186/s12903-017-0441-y",
+     "from": "04-منبع/منابع.md:42"
+    }
+   ]
+  },
+  "from": "04-منبع/منابع.md:32"
+ },
+ "catalog": {
+  "value": [
+   {
+    "doi": "10.1111/prd.12440",
+    "link_existing": true
+   },
+   {
+    "doi": "10.1111/clr.13635",
+    "link_existing": true
+   },
+   {
+    "doi": "10.1111/clr.14050",
+    "link_existing": true
+   },
+   {
+    "title": "Clinical applications and effectiveness of guided implant surgery: a critical review based on randomized controlled trials",
+    "file_name": "Clinical applications and effectiveness of guided implant surgery a critical review based on randomized controlled trials.pdf",
+    "topic": "fresh socket",
+    "topic_path": "fresh socket/Guide",
+    "type": "critical review",
+    "local_path": "",
+    "file_size": 617641,
+    "key_finding": "",
+    "clinical_bottom_line": "",
+    "drive_link": "https://drive.google.com/file/d/1x3iwwojI0xXexyJXlRXMGFXHy5m1i0Fe/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=1x3iwwojI0xXexyJXlRXMGFXHy5m1i0Fe",
+    "drive_view": "https://drive.google.com/file/d/1x3iwwojI0xXexyJXlRXMGFXHy5m1i0Fe/view",
+    "drive_id": "1x3iwwojI0xXexyJXlRXMGFXHy5m1i0Fe",
+    "tags": [
+     "guided-surgery",
+     "flapless-surgery",
+     "flap-surgery",
+     "dental-implant",
+     "patient-morbidity",
+     "critical-review",
+     "systematic-review",
+     "topic:fresh-socket",
+     "topic:guide",
+     "clinical-applications-effectiveness-guided-implant-surgery-critical-review"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Clinical applications and effectiveness of guided implant surgery: a critical review based on randomized controlled trials",
+    "doi": "10.1186/s12903-017-0441-y",
+    "journal": "BMC Oral Health",
+    "crossref_year": 2017,
+    "subjects": [],
+    "abstract": "Nowadays implant placement protocols are widespread among clinicians all over the world. However, available literature, only partially analyses what can be potential benefits for the clinicians and patients, often focusing just on specific aspects, such as accuracy. The purpose of this review is to compare computer guided implant placement with conventional treatment protocols. A search strategy according to the P-I-C-O format was developed and executed using an electronic MEDLINE plus manual search from 2000 up to December 2016. This review included only randomized controlled trials (RCTs) focusing on subjects treated with digital workflow for oral implant placement compared to conventional procedures. Data were extracted from eligible papers and analysed. All kinds of outcomes were considered, even patient-related and economical outcomes. The search strategy revealed 16 articles; additional manual searches selected further 21 publications. Afterwards the evaluation of articles, only two studies could be selected for subsequent data extraction. The two identified RCTs analysed primary outcomes as prosthesis failure, implant failure, biological or prosthetic complications, and secondary outcomes as periimplant marginal bone loss. One RCT evaluated also the duration of treatment, post-surgical progress, additional treatment costs and patient satisfaction. The other RCT focused instead on evaluating eventual improvement of patient’s quality of life. In both selected studies, were not observed by the authors statistically significant differences between clinical cases treated with digital protocols and those treated with conventional ones. In one RCT, however post-surgical progress evaluation showed more patients’ self-reported pain and swelling in conventional group. Within the limitation of this review, based on only two RCTs, the only evidence was that implant survival rate and effectiveness are similar for conventional and digital implant placement procedures. This is also confirmed by many other studies with however minor scientific evidence levels. Reduction of post-operative pain, surgical time and overall costs are discussed. Authors believe that scientific research should focus more in identifying which clinical situations can get greatest benefits from implant guided surgery. This should be done with research protocols such as RCT that assess comprehensively the advantages and disadvantages of fully digital surgical protocols.",
+    "display_title": "Clinical applications and effectiveness of guided implant surgery: a critical review based on randomized controlled trials",
+    "authors": [
+     "Marco Colombo",
+     "Carlo Mangano",
+     "Eitan Mijiritsky",
+     "Mischa Krebs",
+     "Uli Hauschild",
+     "Thomas Fortin"
+    ]
+   }
+  ],
+  "from": "04-منبع/کاتالوگ.json"
+ },
+ "hashtags": {
+  "value": [
+   "#مرور_منابع",
+   "#جراحی_فلپ‌لس",
+   "#ایمپلنت_دیجیتال",
+   "#جراحی_ایمپلنت",
+   "#ایمپلنت"
+  ],
+  "from": "07-ورودی‌ها.md:14"
+ },
+ "mint": {
+  "value": [
+   "#جراحی_فلپ‌لس"
+  ],
+  "from": "hashtag-batch.json:7"
+ },
+ "bridge": {
+  "value": {
+   "map": {
+    "جراحی فلپ‌لس": [
+     "flapless-surgery",
+     "guided-surgery"
+    ]
+   }
+  },
+  "from": "07-ورودی‌ها.md:19"
+ },
+ "pillar": {
+  "value": {
+   "primary": "implantology",
+   "subtopic": "surgical-planning",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:11"
+ },
+ "pulse": {
+  "value": {
+   "text": null,
+   "link_phrase": "ایمپلنت دیجیتال؛ آیا واقعاً درد و تورم نداره؟"
+  },
+  "from": "07-ورودی‌ها.md:22"
+ },
+ "keywords": {
+  "value": [
+   "ایمپلنت دیجیتال و درد بعد از جراحی",
+   "جراحی ایمپلنت با کمک کامپیوتر (CAIS)",
+   "گاید استاتیک (Static Guide)",
+   "نویگیشن داینامیک (Dynamic Navigation)",
+   "جراحی فلپ‌لس در برابر فلپ باز",
+   "گاید متکی بر استخوان و گاید متکی بر مخاط",
+   "درد و تورم بعد از کاشت ایمپلنت",
+   "مصرف مسکن بعد از جراحی ایمپلنت",
+   "کاندید جراحی فلپ‌لس",
+   "متاآنالیز Romandini ۲۰۲۲ و مرور انتقادی Pimkhaokham ۲۰۲۲",
+   "computer-assisted implant surgery pain",
+   "flapless guided implant surgery",
+   "postoperative pain and swelling dental implant"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [],
+  "from": "11-لینک‌های-گلاسری.md:8"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [],
+  "from": "default: no frozen 4.9 selection — nothing is added (queue-route: 4.9 only a frozen choice)"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ },
+ "mint_batch": {
+  "value": "hashtag-batch.json",
+  "from": "07-ورودی‌ها.md:18"
+ }
+}
