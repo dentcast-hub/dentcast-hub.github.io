@@ -56780,7 +56780,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "about how the topic is talked about, not about the topic"
+          "note": "reports what others say about the topic, asserts nothing about it"
         },
         {
           "id": "u5",
@@ -56789,7 +56789,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "about how the topic is talked about, not about the topic"
+          "note": "about how the topic is talked about"
         },
         {
           "id": "u6",
@@ -56816,7 +56816,7 @@
           "change_kind": null,
           "source_quote": "Since fiber posts are not recommended for teeth under lateral loads, a new alloy containing >80% copper (nonprecious gold or NPG) was introduced with a modulus of elasticity closer to that of dentin and easier preparation.",
           "source_ref": "S1",
-          "note": "other sources: S6: MATCHES, S7: ALTERED"
+          "note": "copper base stated here; casting use stated in the conclusion (cast NPG post and cores); other sources: S6: MATCHES"
         },
         {
           "id": "u9",
@@ -56825,7 +56825,7 @@
           "change_kind": null,
           "source_quote": "Since fiber posts are not recommended for teeth under lateral loads, a new alloy containing >80% copper (nonprecious gold or NPG) was introduced with a modulus of elasticity closer to that of dentin and easier preparation.",
           "source_ref": "S1",
-          "note": "F3: the >80% copper half matches; the half on aluminium, nickel and iron is not addressed by the abstract (NOT_ASSESSABLE); other sources: S7: ALTERED"
+          "note": "the remaining composition (aluminum, nickel, iron) is not addressed in the abstract (NOT_ASSESSABLE half)"
         },
         {
           "id": "u10",
@@ -56838,12 +56838,12 @@
         },
         {
           "id": "u11",
-          "claim_quote": "فقط نسخه‌ی NPG+2 مقدار کمی طلا داره [۲].",
-          "verdict": "ALTERED",
-          "change_kind": "HEDGE_REMOVED",
+          "claim_quote": "نسخه‌ی NPG+2 مقدار کمی طلا داره [۲].",
+          "verdict": "MATCHES",
+          "change_kind": null,
           "source_quote": "The alloy NPGtrade mark+2 with the nominal composition Cu:77.3; Al:7.8; Ni:4.3; Fe:3.0; Zn:2.7; Au:2.0; and Mn:1.7 was characterized.",
           "source_ref": "S7",
-          "note": "source states NPG+2 contains 2% gold; the absolute «فقط» (only this version) is not in the source"
+          "note": "Au 2.0 is consistent with a small amount of gold; the sentence carries the shared token NPG"
         },
         {
           "id": "u12",
@@ -56852,7 +56852,7 @@
           "change_kind": null,
           "source_quote": "This study assessed the corrosion resistance and cytotoxicity of two copper-based alloys and one nickel-chromium (Ni-Cr) alloy used for post and core fabrication.",
           "source_ref": "S6",
-          "note": "the quantifier «بیشتر» (mostly) is not addressed; the use for post and core is stated"
+          "note": "use for post and core is stated; the quantifier «بیشتر» is not addressed (silence, not alteration)"
         },
         {
           "id": "u13",
@@ -56888,7 +56888,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: AUTHOR_VIEW, S8: AUTHOR_VIEW, S9: AUTHOR_VIEW, S10: AUTHOR_VIEW, S11: NOT_ASSESSABLE, S12: AUTHOR_VIEW, S13: AUTHOR_VIEW, S14: AUTHOR_VIEW"
+          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: NOT_ASSESSABLE, S8: AUTHOR_VIEW, S9: NOT_ASSESSABLE, S10: AUTHOR_VIEW, S11: AUTHOR_VIEW, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: AUTHOR_VIEW"
         },
         {
           "id": "u17",
@@ -56897,7 +56897,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: AUTHOR_VIEW, S8: AUTHOR_VIEW, S9: AUTHOR_VIEW, S10: AUTHOR_VIEW, S11: NOT_ASSESSABLE, S12: AUTHOR_VIEW, S13: AUTHOR_VIEW, S14: AUTHOR_VIEW"
+          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: NOT_ASSESSABLE, S8: AUTHOR_VIEW, S9: NOT_ASSESSABLE, S10: AUTHOR_VIEW, S11: AUTHOR_VIEW, S12: AUTHOR_VIEW, S13: NOT_ASSESSABLE, S14: AUTHOR_VIEW"
         },
         {
           "id": "u18",
@@ -56959,8 +56959,7 @@
           "verdict": "MATCHES",
           "change_kind": null,
           "source_quote": "Aalbadent NPG and American Dent-All alloys showed significantly lower corrosion resistance than the Ni-Cr alloy (P<0.05).",
-          "source_ref": "S6",
-          "note": "other sources: S8: ALTERED"
+          "source_ref": "S6"
         },
         {
           "id": "u25",
@@ -56969,7 +56968,7 @@
           "change_kind": null,
           "source_quote": "High levels of toxic elements were found after static immersion testing, and the corrosion products had a distinct adverse effect on the biological activity.",
           "source_ref": "S7",
-          "note": "release figures for Cu, Al, Ni and the cytotoxicity result are also stated in the Results sentences"
+          "note": "both halves stated; release figures (Cu 632, Al 210, Ni 144 µg/cm²) and the cytotoxicity of the acidic extracts are in the Results"
         },
         {
           "id": "u26",
@@ -56978,7 +56977,7 @@
           "change_kind": null,
           "source_quote": "These same alloys also underwent high corrosion in non-self-cleaning sites for the in vivo test, although minimal attack was observed in self-cleaning sites.",
           "source_ref": "S8",
-          "note": "source reports the same difference between non-self-cleaning and self-cleaning sites; it names copper-aluminum alloys, not NPG by product name"
+          "note": "source reports the same difference between non-self-cleaning and self-cleaning sites (F2-iv); «این آلیاژها» read as the copper-aluminum alloys the page discusses"
         },
         {
           "id": "u27",
@@ -57014,7 +57013,7 @@
           "change_kind": null,
           "source_quote": "These same alloys also underwent high corrosion in non-self-cleaning sites for the in vivo test, although minimal attack was observed in self-cleaning sites.",
           "source_ref": "S8",
-          "note": "half on the in vivo study showing corrosion matches; tissue damage is not addressed by the abstract (silent half); the half on toxicity findings across [6,7] is a relation between other sources, silent here. «فقط» limits what was shown, does not strengthen the finding"
+          "note": "addressed half: the in vivo test showed corrosion; silent halves: toxicity findings being all in vitro (relation across sources) and absence of tissue damage, both NOT_ASSESSABLE (F3)"
         },
         {
           "id": "u31",
@@ -57023,7 +57022,7 @@
           "change_kind": null,
           "source_quote": "Ni-Cr was the most biocompatible alloy amongst all, followed by Aalbadent NPG.",
           "source_ref": "S6",
-          "note": "the first-choice half is also stated in the conclusion sentence"
+          "note": "the first-choice half also matches the conclusion sentence (first choice should be Ni-Cr alloys)"
         },
         {
           "id": "u32",
@@ -57032,7 +57031,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: AUTHOR_VIEW, S8: AUTHOR_VIEW, S9: AUTHOR_VIEW, S10: AUTHOR_VIEW, S11: NOT_ASSESSABLE, S12: AUTHOR_VIEW, S13: AUTHOR_VIEW, S14: AUTHOR_VIEW"
+          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: NOT_ASSESSABLE, S8: AUTHOR_VIEW, S9: NOT_ASSESSABLE, S10: AUTHOR_VIEW, S11: AUTHOR_VIEW, S12: AUTHOR_VIEW, S13: NOT_ASSESSABLE, S14: AUTHOR_VIEW"
         },
         {
           "id": "u33",
@@ -57050,7 +57049,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: AUTHOR_VIEW, S8: AUTHOR_VIEW, S9: AUTHOR_VIEW, S10: AUTHOR_VIEW, S11: NOT_ASSESSABLE, S12: AUTHOR_VIEW, S13: AUTHOR_VIEW, S14: AUTHOR_VIEW"
+          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: NOT_ASSESSABLE, S8: AUTHOR_VIEW, S9: NOT_ASSESSABLE, S10: AUTHOR_VIEW, S11: AUTHOR_VIEW, S12: AUTHOR_VIEW, S13: NOT_ASSESSABLE, S14: AUTHOR_VIEW"
         },
         {
           "id": "u35",
@@ -57059,7 +57058,7 @@
           "change_kind": null,
           "source_quote": "Although retention failure load for Ni-Cr system was lower than NPG system, there was no significant difference between the two systems (p= 0.7).",
           "source_ref": "S9",
-          "note": "the 'only one study' half is a relation between sources and is silent in a one-source call; the finding half matches"
+          "note": "two halves: the no-significant-difference finding matches; «only one study» is a relation to other sources, silent in a one-source call (NOT_ASSESSABLE)"
         },
         {
           "id": "u36",
@@ -57068,7 +57067,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: AUTHOR_VIEW, S8: AUTHOR_VIEW, S9: AUTHOR_VIEW, S10: AUTHOR_VIEW, S11: NOT_ASSESSABLE, S12: AUTHOR_VIEW, S13: AUTHOR_VIEW, S14: AUTHOR_VIEW"
+          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: NOT_ASSESSABLE, S8: AUTHOR_VIEW, S9: NOT_ASSESSABLE, S10: AUTHOR_VIEW, S11: AUTHOR_VIEW, S12: AUTHOR_VIEW, S13: NOT_ASSESSABLE, S14: AUTHOR_VIEW"
         },
         {
           "id": "u37",
@@ -57086,7 +57085,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "signpost; announces the comparison that follows"
+          "note": "signpost; the following units state the content"
         },
         {
           "id": "u39",
@@ -57095,7 +57094,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: AUTHOR_VIEW, S8: AUTHOR_VIEW, S9: AUTHOR_VIEW, S10: AUTHOR_VIEW, S11: NOT_ASSESSABLE, S12: AUTHOR_VIEW, S13: AUTHOR_VIEW, S14: AUTHOR_VIEW"
+          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: NOT_ASSESSABLE, S8: AUTHOR_VIEW, S9: NOT_ASSESSABLE, S10: AUTHOR_VIEW, S11: AUTHOR_VIEW, S12: AUTHOR_VIEW, S13: NOT_ASSESSABLE, S14: AUTHOR_VIEW"
         },
         {
           "id": "u40",
@@ -57122,25 +57121,25 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_A_CLAIM, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_A_CLAIM, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
         },
         {
           "id": "u43",
           "claim_quote": "هر آلیاژ ریختگی باید الزامات استاندارد ISO 22674 رو داشته باشه، از جمله در مقدار یونی که آزاد می‌کنه [۱۰].",
-          "verdict": "MATCHES",
-          "change_kind": null,
-          "source_quote": "According to the threshold defined in ISO 22674, only low concentrations of released elements were observed for both corrosion tests.",
-          "source_ref": "S10",
-          "note": "stated half: ISO 22674 defines a threshold for released elements. Silent half: that every cast alloy must meet the standard is not addressed by the abstract"
-        },
-        {
-          "id": "u44",
-          "claim_quote": "شاهد مستقلی پیدا نکردم که NPG این الزام رو برآورده کنه، و داده‌های آزمایشگاهی کوروژن هم به نفعش نیست [۶، ۷].",
           "verdict": "NOT_ASSESSABLE",
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "no source addresses it: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S7: AUTHOR_VIEW, S8: AUTHOR_VIEW, S9: AUTHOR_VIEW, S10: AUTHOR_VIEW, S11: NOT_ASSESSABLE, S12: AUTHOR_VIEW, S13: AUTHOR_VIEW, S14: AUTHOR_VIEW"
+          "note": "no source addresses it: S1: NOT_ASSESSABLE, S6: NOT_ASSESSABLE, S7: NOT_ASSESSABLE, S8: NOT_ASSESSABLE, S9: NOT_ASSESSABLE, S10: NOT_ASSESSABLE, S11: NOT_ASSESSABLE, S12: NOT_ASSESSABLE, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
+        },
+        {
+          "id": "u44",
+          "claim_quote": "شاهد مستقلی پیدا نکردم که NPG این الزام رو برآورده کنه، و داده‌های آزمایشگاهی کوروژن هم به نفعش نیست [۶، ۷].",
+          "verdict": "MATCHES",
+          "change_kind": null,
+          "source_quote": "No protective film was formed on the surface of the alloy, as extensive corrosion was observed in both saline and artificial saliva.",
+          "source_ref": "S7",
+          "note": "judged on what this source says about the lab corrosion data; the ISO compliance half is silent in the abstract; other sources: S1: AUTHOR_VIEW, S6: AUTHOR_VIEW, S8: AUTHOR_VIEW, S10: AUTHOR_VIEW, S11: AUTHOR_VIEW, S14: AUTHOR_VIEW"
         },
         {
           "id": "u45",
@@ -57158,7 +57157,7 @@
           "change_kind": null,
           "source_quote": "Aalbadent NPG and American Dent-All alloys showed significantly lower corrosion resistance than the Ni-Cr alloy (P<0.05).",
           "source_ref": "S6",
-          "note": "other sources: S7: ALTERED, S8: MATCHES"
+          "note": "other sources: S7: MATCHES, S8: ALTERED"
         },
         {
           "id": "u47",
@@ -57185,7 +57184,7 @@
           "change_kind": null,
           "source_quote": "Since fiber posts are not recommended for teeth under lateral loads, a new alloy containing >80% copper (nonprecious gold or NPG) was introduced with a modulus of elasticity closer to that of dentin and easier preparation.",
           "source_ref": "S1",
-          "note": "F3: closer-to-dentin half matches; lower than Ni-Cr and several times dentin halves are not addressed (NOT_ASSESSABLE)"
+          "note": "closer to dentin stated; lower than Ni-Cr and several times dentin are not addressed (NOT_ASSESSABLE halves)"
         },
         {
           "id": "u50",
@@ -57203,7 +57202,7 @@
           "change_kind": null,
           "source_quote": "The mean fracture strength was 731.179 ± 327.47 and 1411.89 ± 313.56 N in the Ni-Cr and NPG groups respectively; this difference was statistically significant (p < 0.001).",
           "source_ref": "S1",
-          "note": "judged on this source's finding (NPG stronger than Ni-Cr); the findings attributed to other studies are silent here; other sources: S9: MATCHES, S12: MATCHES, S13: MATCHES, S14: MATCHES"
+          "note": "judged on this source's finding (NPG stronger than Ni-Cr); findings of the other studies are silence here; other sources: S9: MATCHES, S12: MATCHES, S13: MATCHES, S14: MATCHES"
         },
         {
           "id": "u52",
@@ -57248,7 +57247,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "no source addresses it: S1: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: NOT_A_CLAIM, S10: NOT_ASSESSABLE, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM, S13: NOT_A_CLAIM, S14: NOT_A_CLAIM"
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: NOT_A_CLAIM, S10: NOT_A_CLAIM, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
         },
         {
           "id": "u57",
@@ -57257,7 +57256,7 @@
           "change_kind": null,
           "source_quote": "Although all groups showed higher corrosion in acidic environment, Ni-Cr showed good corrosion resistance in acidic pH.",
           "source_ref": "S6",
-          "note": "ion release and the absence of patient-harm reports are not addressed in the abstract; other sources: S7: MATCHES, S8: MATCHES"
+          "note": "in vitro corrosion is stated; ion release and patient harm are not addressed in the abstract (silent); other sources: S7: MATCHES, S8: MATCHES"
         },
         {
           "id": "u58",
@@ -57275,7 +57274,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "no source addresses it: S1: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: NOT_A_CLAIM, S10: NOT_ASSESSABLE, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM, S13: NOT_A_CLAIM, S14: NOT_A_CLAIM"
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: NOT_A_CLAIM, S10: NOT_A_CLAIM, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
         },
         {
           "id": "u60",
@@ -57284,7 +57283,7 @@
           "change_kind": null,
           "source_quote": "Although retention failure load for Ni-Cr system was lower than NPG system, there was no significant difference between the two systems (p= 0.7).",
           "source_ref": "S9",
-          "note": "'the only comparative study' is a relation between sources and is silent here; the retention finding matches"
+          "note": "«تنها مطالعه» is a relation to other sources, not stated in a one-source call; the retention finding matches"
         },
         {
           "id": "u61",
@@ -57302,7 +57301,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "no source addresses it: S1: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: NOT_A_CLAIM, S10: NOT_ASSESSABLE, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM, S13: NOT_A_CLAIM, S14: NOT_A_CLAIM"
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: NOT_A_CLAIM, S10: NOT_A_CLAIM, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
         },
         {
           "id": "u63",
@@ -57329,7 +57328,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "no source addresses it: S1: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: NOT_A_CLAIM, S10: NOT_ASSESSABLE, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM, S13: NOT_A_CLAIM, S14: NOT_A_CLAIM"
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: NOT_A_CLAIM, S10: NOT_A_CLAIM, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
         },
         {
           "id": "u66",
@@ -57356,7 +57355,7 @@
           "change_kind": null,
           "source_quote": "",
           "source_ref": null,
-          "note": "no source addresses it: S1: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_A_CLAIM, S9: NOT_A_CLAIM, S10: NOT_ASSESSABLE, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM, S13: NOT_A_CLAIM, S14: NOT_A_CLAIM"
+          "note": "no source addresses it: S1: NOT_A_CLAIM, S6: NOT_A_CLAIM, S7: NOT_A_CLAIM, S8: NOT_ASSESSABLE, S9: NOT_A_CLAIM, S10: NOT_A_CLAIM, S11: NOT_A_CLAIM, S12: NOT_A_CLAIM, S13: NOT_ASSESSABLE, S14: NOT_ASSESSABLE"
         },
         {
           "id": "u69",
@@ -57365,7 +57364,7 @@
           "change_kind": null,
           "source_quote": "Aalbadent NPG and American Dent-All alloys showed significantly lower corrosion resistance than the Ni-Cr alloy (P<0.05).",
           "source_ref": "S6",
-          "note": "pointing word «همین» read through to the row's claim (NPG corrodes more easily than Ni-Cr); other sources: S8: ALTERED"
+          "note": "«همین» read through to the row's claim (u68)"
         },
         {
           "id": "u70",
@@ -57374,7 +57373,7 @@
           "change_kind": null,
           "source_quote": "Aalbadent NPG and American Dent-All alloys showed significantly lower corrosion resistance than the Ni-Cr alloy (P<0.05).",
           "source_ref": "S6",
-          "note": "read through to the row's claim; this in vitro study is that evidence; other sources: S8: NOT_A_CLAIM"
+          "note": "status of the row's claim (u68), which this in vitro study supports; other sources: S8: NOT_A_CLAIM"
         },
         {
           "id": "u71",
@@ -57391,8 +57390,7 @@
           "verdict": "MATCHES",
           "change_kind": null,
           "source_quote": "Aalbadent NPG and American Dent-All alloys showed significantly lower corrosion resistance than the Ni-Cr alloy (P<0.05).",
-          "source_ref": "S6",
-          "note": "other sources: S8: ALTERED"
+          "source_ref": "S6"
         },
         {
           "id": "u73",
@@ -57401,12 +57399,12 @@
           "change_kind": null,
           "source_quote": "The findings of this study raised some concerns regarding the clinical suitability of copper-based alloys for dental treatments, and the first choice for cast post and core restorations should be Ni-Cr alloys because they are more resistant to corrosion, and are less cytotoxic.",
           "source_ref": "S6",
-          "note": "the half about a scary headline is not addressed in the abstract; the preference for Ni-Cr is stated"
+          "note": "the preference for Ni-Cr matches; «not enough for a scary headline» is not addressed in the abstract (silent)"
         }
       ],
       "counts": {
-        "matches": 19,
-        "altered": 1,
+        "matches": 20,
+        "altered": 0,
         "reversed": 0,
         "not_in_source": 0,
         "not_assessable": 34,
@@ -57414,12 +57412,12 @@
         "not_a_claim": 18
       },
       "assessable": 20,
-      "fidelity_score": 98,
+      "fidelity_score": 100,
       "level": "HIGH",
       "provisional": true,
       "source_conclusion": "[S1] Due to proper mechanical properties, NPG post and cores seem to be a suitable choice for restoration of severely damaged anterior teeth, provided that other properties are proven to be acceptable.\n[S6] American Dent-All showed a high degree of cytotoxicity.The findings of this study raised some concerns regarding the clinical suitability of copper-based alloys for dental treatments, and the first choice for cast post and core restorations should be Ni-Cr alloys because they are more resistant to corrosion, and are less cytotoxic.\n[S7] High levels of toxic elements were found after static immersion testing, and the corrosion products had a distinct adverse effect on the biological activity.\n[S8] However, in self-cleaning sites these 2 alloys did not show substantial corrosion.\n[S9] Although significantly higher fracture thresholds were recorded for Ni-Cr post and core group, the failure loads of both systems may rarely occur clinically.\n[S10] Concentrations of 250 µM and above of Zn(II) and Co(II) showed a cytotoxic effect on THP-1 cells.\n[S11] The copper alloys fused with 9 wt% Al and 2-4 wt% Ni can be considered for a potential use as dental post and core applications.\n[S12] The fracture resistance of endodontically treated teeth with non-precious gold color alloy cast post was higher than that of endodontically treated teeth with Ni-Cr cast post.\n[S13] Also the teeth restored by NPG post had a significantly higher fracture resistance than Ni-Cr posts.\n[S14] Conclusion: The fracture resistance of endodontically treated teeth with NPG cast post was not different from that of the endodontically treated teeth with Ni-Cr cast post.",
-      "fact_fa": "از ۲۰ ادعایی که منابع به آن پرداخته‌اند، ۱۹ مورد مطابق است، ۱ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
-      "interpretation_fa": "موارد تغییریافته یا برعکس: «فقط نسخه‌ی NPG+2 مقدار کمی طلا داره [۲].…» (قاطع‌تر از منبع)."
+      "fact_fa": "از ۲۰ ادعایی که منابع به آن پرداخته‌اند، ۲۰ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+      "interpretation_fa": "هر ادعای قابل‌بررسی با دست‌کم یکی از منابع مطابق است."
     }
   }
 }

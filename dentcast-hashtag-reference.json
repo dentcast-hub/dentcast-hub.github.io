@@ -880,7 +880,7 @@
     "#Share_Hub"
    ],
    "co_tags": [],
-   "count": 47,
+   "count": 48,
    "content_ids": [
     "sharehub/share-1",
     "sharehub/share-2",
@@ -928,7 +928,81 @@
     "sharehub/share-45",
     "sharehub/share-46",
     "sharehub/share-47",
-    "sharehub/share-51"
+    "sharehub/share-51",
+    "sharehub/share-52"
+   ]
+  },
+  {
+   "key": "پست_و_کور",
+   "tag": "#پست_و_کور",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پست و کور — بازسازیِ ساختارِ ازدست‌رفته‌ی دندانِ اندوشده برای نگه‌داریِ روکش.",
+   "use_when": "مقاله پست/کور را موضوع داشته باشد.",
+   "aliases": [
+    "post and core",
+    "پست اند کور",
+    "پست کور",
+    "پست دندان",
+    "پست داخل کانال",
+    "پست و روکش",
+    "post and crown",
+    "پست و کراون"
+   ],
+   "variants": [
+    "#پست و کور",
+    "#پست_و_روکش"
+   ],
+   "co_tags": [],
+   "count": 47,
+   "content_ids": [
+    "episodes/episode-36",
+    "episodes/episode-42",
+    "episodes/episode-47",
+    "episodes/episode-48",
+    "episodes/episode-49",
+    "episodes/episode-79",
+    "episodes/episode-125-3",
+    "episodes/episode-128",
+    "episodes/episode-129",
+    "episodes/episode-147-7",
+    "insight/insight-12",
+    "insight/insight-15",
+    "insight/insight-17",
+    "insight/insight-20",
+    "metanotes/meta-7",
+    "insight/insight-21",
+    "metanotes/meta-9",
+    "insight/insight-28",
+    "metanotes/meta-11",
+    "chairside/chairside-5",
+    "insight/insight-39",
+    "insight/insight-41",
+    "notecast/episode-36",
+    "chairside/chairside-20",
+    "dentai/dentai-27",
+    "metanotes/meta-15",
+    "metanotes/meta-19",
+    "metanotes/meta-20",
+    "dentcast-plus/video-7",
+    "dentcast-plus/video-10",
+    "insight/insight-66",
+    "notecast/episode-40",
+    "dentcast-plus/video-12",
+    "dentai/dentai-33",
+    "insight/insight-76",
+    "sharehub/share-20",
+    "notecast/episode-42",
+    "chairside/chairside-39",
+    "notecast/episode-43",
+    "metanotes/meta-21",
+    "insight/insight-88",
+    "sharehub/share-30",
+    "sharehub/share-31",
+    "sharehub/share-34",
+    "dentcast-plus/video-14",
+    "insight/insight-97",
+    "sharehub/share-52"
    ]
   },
   {
@@ -993,78 +1067,6 @@
     "sharehub/share-48",
     "sharehub/share-49",
     "sharehub/share-50"
-   ]
-  },
-  {
-   "key": "پست_و_کور",
-   "tag": "#پست_و_کور",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پست و کور — بازسازیِ ساختارِ ازدست‌رفته‌ی دندانِ اندوشده برای نگه‌داریِ روکش.",
-   "use_when": "مقاله پست/کور را موضوع داشته باشد.",
-   "aliases": [
-    "post and core",
-    "پست اند کور",
-    "پست کور",
-    "پست دندان",
-    "پست داخل کانال",
-    "پست و روکش",
-    "post and crown",
-    "پست و کراون"
-   ],
-   "variants": [
-    "#پست و کور",
-    "#پست_و_روکش"
-   ],
-   "co_tags": [],
-   "count": 46,
-   "content_ids": [
-    "episodes/episode-36",
-    "episodes/episode-42",
-    "episodes/episode-47",
-    "episodes/episode-48",
-    "episodes/episode-49",
-    "episodes/episode-79",
-    "episodes/episode-125-3",
-    "episodes/episode-128",
-    "episodes/episode-129",
-    "episodes/episode-147-7",
-    "insight/insight-12",
-    "insight/insight-15",
-    "insight/insight-17",
-    "insight/insight-20",
-    "metanotes/meta-7",
-    "insight/insight-21",
-    "metanotes/meta-9",
-    "insight/insight-28",
-    "metanotes/meta-11",
-    "chairside/chairside-5",
-    "insight/insight-39",
-    "insight/insight-41",
-    "notecast/episode-36",
-    "chairside/chairside-20",
-    "dentai/dentai-27",
-    "metanotes/meta-15",
-    "metanotes/meta-19",
-    "metanotes/meta-20",
-    "dentcast-plus/video-7",
-    "dentcast-plus/video-10",
-    "insight/insight-66",
-    "notecast/episode-40",
-    "dentcast-plus/video-12",
-    "dentai/dentai-33",
-    "insight/insight-76",
-    "sharehub/share-20",
-    "notecast/episode-42",
-    "chairside/chairside-39",
-    "notecast/episode-43",
-    "metanotes/meta-21",
-    "insight/insight-88",
-    "sharehub/share-30",
-    "sharehub/share-31",
-    "sharehub/share-34",
-    "dentcast-plus/video-14",
-    "insight/insight-97"
    ]
   },
   {
@@ -3372,6 +3374,55 @@
    ]
   },
   {
+   "key": "کور_ریختگی",
+   "tag": "#کور_ریختگی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پست و کورِ فلزیِ ریختگیِ یکپارچه (کور ریختگی؛ در زبانِ بالینی «پست فلزی») — طراحی، ساخت (یک‌مرحله‌ای یا رتروفیت زیرِ روکشِ موجود)، تحویل، خارج‌سازی، پیامدِ زیبایی‌اش زیرِ سرامیک، و انتخابش در برابر فایبر پست.",
+   "use_when": "مقاله طراحی، ساخت، تحویل یا خارج کردنِ پست و کورِ ریختگی را تعیین کند، یا پستِ فلزی/ریختگی را در برابر فایبر پست یا پستِ دیگر انتخاب یا مقایسه کند.",
+   "aliases": [
+    "cast core",
+    "کست کور",
+    "کور ریختگی فلزی",
+    "پست ریختگی",
+    "cast post and core",
+    "پست فلزی",
+    "metal post",
+    "cast post",
+    "کست پست",
+    "پست ریختگی فلزی",
+    "پست و کور ریختگی",
+    "پست و کور فلزی",
+    "پست فلزی ریختگی",
+    "کور فلزی",
+    "cast metal post",
+    "metal post and core",
+    "کست پست اند کور",
+    "پست ریخته گری",
+    "کور ریخته گری"
+   ],
+   "variants": [
+    "#پست_فلزی"
+   ],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-125-3",
+    "insight/insight-15",
+    "metanotes/meta-7",
+    "metanotes/meta-9",
+    "insight/insight-28",
+    "metanotes/meta-19",
+    "metanotes/meta-20",
+    "dentcast-plus/video-10",
+    "sharehub/share-20",
+    "sharehub/share-31",
+    "dentcast-plus/video-14",
+    "insight/insight-97",
+    "sharehub/share-52"
+   ]
+  },
+  {
    "key": "ایمپلنت_فول_آرچ",
    "tag": "#ایمپلنت_فول_آرچ",
    "domain": "clinical",
@@ -3479,54 +3530,6 @@
     "sharehub/share-23",
     "notecast/episode-43",
     "notecast/episode-44"
-   ]
-  },
-  {
-   "key": "کور_ریختگی",
-   "tag": "#کور_ریختگی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پست و کورِ فلزیِ ریختگیِ یکپارچه (کور ریختگی؛ در زبانِ بالینی «پست فلزی») — طراحی، ساخت (یک‌مرحله‌ای یا رتروفیت زیرِ روکشِ موجود)، تحویل، خارج‌سازی، پیامدِ زیبایی‌اش زیرِ سرامیک، و انتخابش در برابر فایبر پست.",
-   "use_when": "مقاله طراحی، ساخت، تحویل یا خارج کردنِ پست و کورِ ریختگی را تعیین کند، یا پستِ فلزی/ریختگی را در برابر فایبر پست یا پستِ دیگر انتخاب یا مقایسه کند.",
-   "aliases": [
-    "cast core",
-    "کست کور",
-    "کور ریختگی فلزی",
-    "پست ریختگی",
-    "cast post and core",
-    "پست فلزی",
-    "metal post",
-    "cast post",
-    "کست پست",
-    "پست ریختگی فلزی",
-    "پست و کور ریختگی",
-    "پست و کور فلزی",
-    "پست فلزی ریختگی",
-    "کور فلزی",
-    "cast metal post",
-    "metal post and core",
-    "کست پست اند کور",
-    "پست ریخته گری",
-    "کور ریخته گری"
-   ],
-   "variants": [
-    "#پست_فلزی"
-   ],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-125-3",
-    "insight/insight-15",
-    "metanotes/meta-7",
-    "metanotes/meta-9",
-    "insight/insight-28",
-    "metanotes/meta-19",
-    "metanotes/meta-20",
-    "dentcast-plus/video-10",
-    "sharehub/share-20",
-    "sharehub/share-31",
-    "dentcast-plus/video-14",
-    "insight/insight-97"
    ]
   },
   {
@@ -9909,6 +9912,29 @@
    ]
   },
   {
+   "key": "زیست_سازگاری",
+   "tag": "#زیست_سازگاری",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "زیست‌سازگاریِ ماده — واکنشِ بافت به آن، شاملِ سمیتِ سلولی (سایتوتوکسیسیتی).",
+   "use_when": "مقاله زیست‌سازگاری یا سمیتِ سلولیِ ماده را ارزیابی کند.",
+   "aliases": [
+    "biocompatibility",
+    "زیست سازگاری",
+    "سایتوتوکسیسیتی",
+    "cytotoxicity",
+    "سمیت سلولی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-122-6",
+    "episodes/episode-140",
+    "sharehub/share-52"
+   ]
+  },
+  {
    "key": "سایش_آنتاگونیست",
    "tag": "#سایش_آنتاگونیست",
    "domain": null,
@@ -10264,6 +10290,27 @@
     "episodes/episode-86",
     "episodes/episode-144",
     "sharehub/share-21"
+   ]
+  },
+  {
+   "key": "مقاومت_به_شکست",
+   "tag": "#مقاومت_به_شکست",
+   "domain": null,
+   "words": 2,
+   "definition": "بارِ لازم برای شکستنِ مجموعه‌ی دندان و ترمیم.",
+   "use_when": "مقاله این مقاومت را بسنجد یا مقایسه کند.",
+   "aliases": [
+    "fracture resistance",
+    "load to fracture",
+    "استحکام شکست"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-128-2",
+    "dentai/dentai-27",
+    "sharehub/share-52"
    ]
   },
   {
@@ -12455,28 +12502,6 @@
    ]
   },
   {
-   "key": "زیست_سازگاری",
-   "tag": "#زیست_سازگاری",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "زیست‌سازگاریِ ماده — واکنشِ بافت به آن، شاملِ سمیتِ سلولی (سایتوتوکسیسیتی).",
-   "use_when": "مقاله زیست‌سازگاری یا سمیتِ سلولیِ ماده را ارزیابی کند.",
-   "aliases": [
-    "biocompatibility",
-    "زیست سازگاری",
-    "سایتوتوکسیسیتی",
-    "cytotoxicity",
-    "سمیت سلولی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-122-6",
-    "episodes/episode-140"
-   ]
-  },
-  {
    "key": "سؤال_بیمار",
    "tag": "#سؤال_بیمار",
    "domain": "web",
@@ -13042,26 +13067,6 @@
    "content_ids": [
     "episodes/episode-117",
     "metanotes/meta-22"
-   ]
-  },
-  {
-   "key": "مقاومت_به_شکست",
-   "tag": "#مقاومت_به_شکست",
-   "domain": null,
-   "words": 2,
-   "definition": "بارِ لازم برای شکستنِ مجموعه‌ی دندان و ترمیم.",
-   "use_when": "مقاله این مقاومت را بسنجد یا مقایسه کند.",
-   "aliases": [
-    "fracture resistance",
-    "load to fracture",
-    "استحکام شکست"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-128-2",
-    "dentai/dentai-27"
    ]
   },
   {
