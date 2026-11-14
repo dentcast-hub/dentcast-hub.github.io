@@ -263,7 +263,7 @@
     "#اینسایت"
    ],
    "co_tags": [],
-   "count": 125,
+   "count": 126,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -389,7 +389,8 @@
     "insight/insight-103",
     "insight/insight-104",
     "insight/insight-105",
-    "insight/insight-106"
+    "insight/insight-106",
+    "insight/insight-107"
    ]
   },
   {
@@ -1381,7 +1382,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 32,
+   "count": 33,
    "content_ids": [
     "episodes/episode-11",
     "episodes/episode-17",
@@ -1414,7 +1415,76 @@
     "insight/insight-91",
     "insight/insight-92",
     "sharehub/share-39",
-    "sharehub/share-41"
+    "sharehub/share-41",
+    "insight/insight-107"
+   ]
+  },
+  {
+   "key": "لمینیت_سرامیکی",
+   "tag": "#لمینیت_سرامیکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ونیر/لمینیتِ سرامیکی — رستوریشنِ نازکِ باندشونده‌ی زیبایی.",
+   "use_when": "مقاله لمینیتِ سرامیکی را موضوع داشته باشد.",
+   "aliases": [
+    "ceramic laminate",
+    "لامینیت",
+    "لمینت",
+    "لامینیت سرامیکی",
+    "veneer laminate",
+    "Laminate Veneer",
+    "laminate veneer",
+    "ونیر سرامیکی",
+    "ceramic veneer",
+    "ونیر سرامیک",
+    "ونیر پرسلن",
+    "veneer",
+    "ونیر دندان",
+    "روکش ونیر"
+   ],
+   "variants": [
+    "#لمینیت",
+    "#LaminateVeneer",
+    "#Laminate_Veneer",
+    "#ونیر",
+    "#ونیر_سرامیکی"
+   ],
+   "co_tags": [
+    "#Laminate_Veneer"
+   ],
+   "count": 31,
+   "content_ids": [
+    "episodes/episode-9",
+    "episodes/episode-19",
+    "episodes/episode-37",
+    "episodes/episode-38",
+    "episodes/episode-39",
+    "episodes/episode-122-3",
+    "episodes/episode-124-1",
+    "episodes/episode-148",
+    "episodes/episode-149",
+    "litecast/lite-CAST7",
+    "notecast/episode-19",
+    "metanotes/meta-1",
+    "dentai/dentai-10",
+    "chairside/chairside-1",
+    "insight/insight-36",
+    "insight/insight-37",
+    "sharehub/share-6",
+    "sharehub/share-8",
+    "notecast/episode-37",
+    "notecast/episode-38",
+    "chairside/chairside-32",
+    "dentai/dentai-29",
+    "dentai/dentai-30",
+    "chairside/chairside-35",
+    "sharehub/share-22",
+    "insight/insight-79",
+    "sharehub/share-27",
+    "insight/insight-92",
+    "sharehub/share-40",
+    "chairside/chairside-45",
+    "insight/insight-107"
    ]
   },
   {
@@ -1515,73 +1585,6 @@
     "notecast/episode-39",
     "sharehub/share-24",
     "sharehub/share-26"
-   ]
-  },
-  {
-   "key": "لمینیت_سرامیکی",
-   "tag": "#لمینیت_سرامیکی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ونیر/لمینیتِ سرامیکی — رستوریشنِ نازکِ باندشونده‌ی زیبایی.",
-   "use_when": "مقاله لمینیتِ سرامیکی را موضوع داشته باشد.",
-   "aliases": [
-    "ceramic laminate",
-    "لامینیت",
-    "لمینت",
-    "لامینیت سرامیکی",
-    "veneer laminate",
-    "Laminate Veneer",
-    "laminate veneer",
-    "ونیر سرامیکی",
-    "ceramic veneer",
-    "ونیر سرامیک",
-    "ونیر پرسلن",
-    "veneer",
-    "ونیر دندان",
-    "روکش ونیر"
-   ],
-   "variants": [
-    "#لمینیت",
-    "#LaminateVeneer",
-    "#Laminate_Veneer",
-    "#ونیر",
-    "#ونیر_سرامیکی"
-   ],
-   "co_tags": [
-    "#Laminate_Veneer"
-   ],
-   "count": 30,
-   "content_ids": [
-    "episodes/episode-9",
-    "episodes/episode-19",
-    "episodes/episode-37",
-    "episodes/episode-38",
-    "episodes/episode-39",
-    "episodes/episode-122-3",
-    "episodes/episode-124-1",
-    "episodes/episode-148",
-    "episodes/episode-149",
-    "litecast/lite-CAST7",
-    "notecast/episode-19",
-    "metanotes/meta-1",
-    "dentai/dentai-10",
-    "chairside/chairside-1",
-    "insight/insight-36",
-    "insight/insight-37",
-    "sharehub/share-6",
-    "sharehub/share-8",
-    "notecast/episode-37",
-    "notecast/episode-38",
-    "chairside/chairside-32",
-    "dentai/dentai-29",
-    "dentai/dentai-30",
-    "chairside/chairside-35",
-    "sharehub/share-22",
-    "insight/insight-79",
-    "sharehub/share-27",
-    "insight/insight-92",
-    "sharehub/share-40",
-    "chairside/chairside-45"
    ]
   },
   {
@@ -3598,6 +3601,39 @@
    ]
   },
   {
+   "key": "انتخاب_shade",
+   "tag": "#انتخاب_shade",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخابِ رنگِ کار، شامل رنگِ سمان.",
+   "use_when": "مقاله رنگ را متغیرِ تصمیم بداند.",
+   "aliases": [
+    "shade selection",
+    "انتخاب رنگ",
+    "shade",
+    "شید",
+    "انتخاب شید",
+    "shade taking",
+    "رنگ گیری"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-68",
+    "episodes/episode-147-4",
+    "insight/insight-5",
+    "insight/insight-42",
+    "sharehub/share-26",
+    "sharehub/share-29",
+    "insight/insight-91",
+    "insight/insight-92",
+    "chairside/chairside-40",
+    "insight/insight-98",
+    "insight/insight-107"
+   ]
+  },
+  {
    "key": "برداشت_پوسیدگی",
    "tag": "#برداشت_پوسیدگی",
    "domain": "clinical",
@@ -3995,38 +4031,6 @@
    ]
   },
   {
-   "key": "انتخاب_shade",
-   "tag": "#انتخاب_shade",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتخابِ رنگِ کار، شامل رنگِ سمان.",
-   "use_when": "مقاله رنگ را متغیرِ تصمیم بداند.",
-   "aliases": [
-    "shade selection",
-    "انتخاب رنگ",
-    "shade",
-    "شید",
-    "انتخاب شید",
-    "shade taking",
-    "رنگ گیری"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-68",
-    "episodes/episode-147-4",
-    "insight/insight-5",
-    "insight/insight-42",
-    "sharehub/share-26",
-    "sharehub/share-29",
-    "insight/insight-91",
-    "insight/insight-92",
-    "chairside/chairside-40",
-    "insight/insight-98"
-   ]
-  },
-  {
    "key": "اچ_سرامیک",
    "tag": "#اچ_سرامیک",
    "domain": null,
@@ -4126,6 +4130,38 @@
     "sharehub/share-39",
     "sharehub/share-40",
     "sharehub/share-48"
+   ]
+  },
+  {
+   "key": "سمان_موقت",
+   "tag": "#سمان_موقت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "سمانِ مرحله‌ی آزمایشی، که رنگش با دائم فرق دارد.",
+   "use_when": "مقاله تفاوتِ موقت و دائم را مسئله بداند.",
+   "aliases": [
+    "temporary cement",
+    "سمان تمپ",
+    "سمان آزمایشی",
+    "تمپ باند",
+    "temp bond",
+    "tempbond",
+    "temporary luting"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "insight/insight-5",
+    "insight/insight-29",
+    "insight/insight-44",
+    "insight/insight-59",
+    "insight/insight-65",
+    "insight/insight-85",
+    "insight/insight-86",
+    "chairside/chairside-40",
+    "insight/insight-97",
+    "insight/insight-107"
    ]
   },
   {
@@ -4453,37 +4489,6 @@
     "dentai/dentai-31",
     "insight/insight-82",
     "sharehub/share-35"
-   ]
-  },
-  {
-   "key": "سمان_موقت",
-   "tag": "#سمان_موقت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "سمانِ مرحله‌ی آزمایشی، که رنگش با دائم فرق دارد.",
-   "use_when": "مقاله تفاوتِ موقت و دائم را مسئله بداند.",
-   "aliases": [
-    "temporary cement",
-    "سمان تمپ",
-    "سمان آزمایشی",
-    "تمپ باند",
-    "temp bond",
-    "tempbond",
-    "temporary luting"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "insight/insight-5",
-    "insight/insight-29",
-    "insight/insight-44",
-    "insight/insight-59",
-    "insight/insight-65",
-    "insight/insight-85",
-    "insight/insight-86",
-    "chairside/chairside-40",
-    "insight/insight-97"
    ]
   },
   {
@@ -5200,6 +5205,32 @@
    ]
   },
   {
+   "key": "ترانسلوسنسی",
+   "tag": "#ترانسلوسنسی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "میزانِ عبورِ نور از رستوریشن.",
+   "use_when": "مقاله ترانسلوسنسی را عاملِ نتیجه‌ی رنگی بداند.",
+   "aliases": [
+    "translucency",
+    "شفافیت",
+    "اپسیتی",
+    "opacity"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-17",
+    "episodes/episode-18",
+    "insight/insight-5",
+    "sharehub/share-26",
+    "insight/insight-91",
+    "sharehub/share-32",
+    "insight/insight-107"
+   ]
+  },
+  {
    "key": "ترمیم_ادهزیو",
    "tag": "#ترمیم_ادهزیو",
    "domain": null,
@@ -5843,31 +5874,6 @@
     "sharehub/share-11",
     "sharehub/share-17",
     "chairside/chairside-36"
-   ]
-  },
-  {
-   "key": "ترانسلوسنسی",
-   "tag": "#ترانسلوسنسی",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "میزانِ عبورِ نور از رستوریشن.",
-   "use_when": "مقاله ترانسلوسنسی را عاملِ نتیجه‌ی رنگی بداند.",
-   "aliases": [
-    "translucency",
-    "شفافیت",
-    "اپسیتی",
-    "opacity"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-17",
-    "episodes/episode-18",
-    "insight/insight-5",
-    "sharehub/share-26",
-    "insight/insight-91",
-    "sharehub/share-32"
    ]
   },
   {
@@ -6727,6 +6733,30 @@
     "episodes/episode-123",
     "episodes/episode-124",
     "episodes/episode-147-3"
+   ]
+  },
+  {
+   "key": "تغییر_رنگ",
+   "tag": "#تغییر_رنگ",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "تغییرِ رنگِ رستوریشن یا دندان پس از درمان.",
+   "use_when": "مقاله علت یا رفعِ تغییر رنگ را بگوید.",
+   "aliases": [
+    "discoloration",
+    "دیس کالریشن",
+    "رنگ گرفتن",
+    "اختلاف رنگ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-61",
+    "insight/insight-5",
+    "chairside/chairside-29",
+    "insight/insight-62",
+    "insight/insight-107"
    ]
   },
   {
@@ -7851,29 +7881,6 @@
     "dentai/dentai-14",
     "dentai/dentai-15",
     "sharehub/share-51"
-   ]
-  },
-  {
-   "key": "تغییر_رنگ",
-   "tag": "#تغییر_رنگ",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "تغییرِ رنگِ رستوریشن یا دندان پس از درمان.",
-   "use_when": "مقاله علت یا رفعِ تغییر رنگ را بگوید.",
-   "aliases": [
-    "discoloration",
-    "دیس کالریشن",
-    "رنگ گرفتن",
-    "اختلاف رنگ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-61",
-    "insight/insight-5",
-    "chairside/chairside-29",
-    "insight/insight-62"
    ]
   },
   {

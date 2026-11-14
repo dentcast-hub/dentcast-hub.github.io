@@ -1,0 +1,486 @@
+{
+  "schema": "publish-completion-v1",
+  "state": {
+    "publication": {
+      "blocker": null,
+      "category": "clinical",
+      "content_id": "insight/insight-107",
+      "context": {
+        "approvals": [
+          {
+            "decision": "\u062a\u063a\u06cc\u06cc\u0631 \u0631\u0646\u06af \u0631\u0648\u06a9\u0634 \u0632\u06cc\u0631\u06a9\u0648\u0646\u06cc\u0627 \u0628\u0627 \u0633\u0645\u0627\u0646 \u0645\u0648\u0642\u062a\u061b \u0686\u0631\u0627 \u0631\u0646\u06af \u0631\u0648\u06a9\u0634 \u0628\u0627 \u0644\u0645\u06cc\u0646\u06cc\u062a \u0647\u0645\u0627\u0647\u0646\u06af \u0646\u06cc\u0633\u062a\u061f",
+            "evidence": [
+              "queue/38-insight-zirconia-crown-shade-temporary-cement/02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md",
+              "queue/38-insight-zirconia-crown-shade-temporary-cement/00-\u0648\u0636\u0639\u06cc\u062a.md (founder approvals table, sha256 b19a20cf772bef5f05f50708d9a6c00e8c282ebcb25c5e2e0ea1c3b98dbe571c)",
+              "queue/38-insight-zirconia-crown-shade-temporary-cement/SHA256SUMS (frozen files, sha256 533051851dc9c1f12e0c4694a71a82153bf75a76afc6eedc1508c5f7fbb58122)"
+            ],
+            "scope": "title",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u0633\u0645\u0627\u0646 \u0645\u0648\u0642\u062a \u0633\u0641\u06cc\u062f \u0648 \u06af\u0686\u06cc \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f \u0631\u0648\u06a9\u0634 \u0632\u06cc\u0631\u06a9\u0648\u0646\u06cc\u0627 \u0631\u0627 \u0631\u0648\u0634\u0646\u200c\u062a\u0631 \u0648 \u06a9\u062f\u0631\u062a\u0631 \u0646\u0634\u0627\u0646 \u062f\u0647\u062f\u061b \u0627\u0645\u062a\u062d\u0627\u0646 \u06a9\u0631\u062f\u0646 \u0631\u0648\u06a9\u0634 \u0628\u062f\u0648\u0646 \u0633\u0645\u0627\u0646 \u0646\u0634\u0627\u0646 \u0645\u06cc\u200c\u062f\u0647\u062f \u0627\u062e\u062a\u0644\u0627\u0641 \u0631\u0646\u06af \u0627\u0632 \u062e\u0648\u062f \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 \u0627\u0633\u062a \u06cc\u0627 \u0627\u0632 \u0644\u0627\u06cc\u0647\u200c\u06cc \u0633\u0645\u0627\u0646 \u0632\u06cc\u0631 \u0622\u0646.",
+            "evidence": [
+              "queue/38-insight-zirconia-crown-shade-temporary-cement/02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md",
+              "queue/38-insight-zirconia-crown-shade-temporary-cement/00-\u0648\u0636\u0639\u06cc\u062a.md (founder approvals table, sha256 b19a20cf772bef5f05f50708d9a6c00e8c282ebcb25c5e2e0ea1c3b98dbe571c)",
+              "queue/38-insight-zirconia-crown-shade-temporary-cement/SHA256SUMS (frozen files, sha256 533051851dc9c1f12e0c4694a71a82153bf75a76afc6eedc1508c5f7fbb58122)"
+            ],
+            "scope": "caption",
+            "status": "confirmed"
+          }
+        ],
+        "decisions": [
+          {
+            "kind": "queue_lane_v1"
+          },
+          {
+            "kind": "fixed_three_deliveries_v1"
+          },
+          {
+            "kind": "fixed_three_deliveries_v2"
+          },
+          {
+            "evidence": [
+              "queue/38-insight-zirconia-crown-shade-temporary-cement/00-\u0648\u0636\u0639\u06cc\u062a.md (founder approvals table, sha256 b19a20cf772bef5f05f50708d9a6c00e8c282ebcb25c5e2e0ea1c3b98dbe571c)",
+              "queue/38-insight-zirconia-crown-shade-temporary-cement/SHA256SUMS (frozen files, sha256 533051851dc9c1f12e0c4694a71a82153bf75a76afc6eedc1508c5f7fbb58122)"
+            ],
+            "kind": "queue_approvals_v1",
+            "queue_ref": "queue/38-insight-zirconia-crown-shade-temporary-cement",
+            "receipt_sha256": "0fce26d834b1c69c03b2ae6e80d9d264fa20e3183dbf22a00abb798c02ef1134",
+            "sha256sums": "533051851dc9c1f12e0c4694a71a82153bf75a76afc6eedc1508c5f7fbb58122",
+            "status_sha256": "b19a20cf772bef5f05f50708d9a6c00e8c282ebcb25c5e2e0ea1c3b98dbe571c"
+          },
+          {
+            "evidence": [
+              "queue/38-insight-zirconia-crown-shade-temporary-cement/00-\u0648\u0636\u0639\u06cc\u062a.md (founder approvals table, sha256 b19a20cf772bef5f05f50708d9a6c00e8c282ebcb25c5e2e0ea1c3b98dbe571c)",
+              "queue/38-insight-zirconia-crown-shade-temporary-cement/SHA256SUMS (frozen files, sha256 533051851dc9c1f12e0c4694a71a82153bf75a76afc6eedc1508c5f7fbb58122)"
+            ],
+            "kind": "first_cut_lead_provenance_v1",
+            "origin": "author_original",
+            "source_ref": "queue/38-insight-zirconia-crown-shade-temporary-cement/01-\u0645\u062a\u0646.md (frozen; its opening paragraph was approved in preparation)"
+          },
+          {
+            "english": {
+              "evidence": [
+                "queue/38-insight-zirconia-crown-shade-temporary-cement/06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md (frozen)"
+              ],
+              "path": "insight/en/insight-107.html",
+              "status": "ready"
+            },
+            "evidence": [
+              "generated by tools/queue_ledger.py from the frozen item (receipt 0fce26d834b1c69c03b2ae6e80d9d264fa20e3183dbf22a00abb798c02ef1134)"
+            ],
+            "kind": "second_cut_editorial_lock_v1",
+            "scopes": [
+              {
+                "evidence": [
+                  "queue/38-insight-zirconia-crown-shade-temporary-cement/00-\u0648\u0636\u0639\u06cc\u062a.md (founder approvals table, sha256 b19a20cf772bef5f05f50708d9a6c00e8c282ebcb25c5e2e0ea1c3b98dbe571c)",
+                  "queue/38-insight-zirconia-crown-shade-temporary-cement/SHA256SUMS (frozen files, sha256 533051851dc9c1f12e0c4694a71a82153bf75a76afc6eedc1508c5f7fbb58122)",
+                  "mechanical defaults: {\"field\": \"backlinks_47\", \"rule\": \"11-\u0644\u06cc\u0646\u06a9\u200c\u0647\u0627\u06cc-\u06af\u0644\u0627\u0633\u0631\u06cc.md 4.7 has no frozen back-link with its link text \u2014 none is added\", \"value\": []}; {\"field\": \"pathway\", \"rule\": \"mechanical pathway rule\", \"value\": null}; {\"rule\": \"4.8 approved link phrase not in body\", \"skipped\": [\"\u0632\u06cc\u0631\u06a9\u0648\u0646\u06cc\u0627 (\u0628\u0646\u062f \u06f1: \u00ab\u0631\u0648\u06a9\u0634 \u0632\u06cc\u0631\u06a9\u0648\u0646\u06cc\u0627\u00bb)\", \"\u0633\u0645\u0627\u0646 \u0631\u0632\u06cc\u0646\u06cc (\u0628\u0646\u062f \u06f1: \u00ab\u0628\u0627 \u0633\u0645\u0627\u0646 \u0631\u0632\u06cc\u0646\u06cc \u0633\u0645\u0627\u0646 \u06a9\u0631\u062f\u0645\u00bb)\", \"\u0633\u0631\u0627\u0645\u06cc\u06a9\u200c\u0647\u0627\u06cc \u0634\u06cc\u0634\u0647\u200c\u0627\u06cc (\u0628\u0646\u062f \u06f3)\", \"\u062a\u063a\u06cc\u06cc\u0631 \u0631\u0646\u06af \u0631\u0648\u06a9\u0634 \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646 \u062f\u0627\u0626\u0645 (\u0628\u0646\u062f \u06f6: \u00ab\u0642\u0628\u0644\u0627\u064b \u062f\u0631\u0628\u0627\u0631\u0647\u200c\u06cc \u062a\u063a\u06cc\u06cc\u0631 \u0631\u0646\u06af \u0631\u0648\u06a9\u0634 \u0628\u0639\u062f \u0627\u0632 \u0633\u0645\u0627\u0646 \u062f\u0627\u0626\u0645 \u0646\u0648\u0634\u062a\u0647 \u0628\u0648\u062f\u0645\u00bb)\"]}"
+                ],
+                "scope": "author_approvals",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "queue/38-insight-zirconia-crown-shade-temporary-cement/09-\u06a9\u0644\u06cc\u062f\u0648\u0627\u0698\u0647\u200c\u0647\u0627.md; brain entry None"
+                ],
+                "scope": "content_record",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "queue/38-insight-zirconia-crown-shade-temporary-cement/06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md verbatim -> insight/en/insight-107.html"
+                ],
+                "scope": "english",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "queue/38-insight-zirconia-crown-shade-temporary-cement/07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md list; hashtag_ref.py --sync/--check passed"
+                ],
+                "scope": "hashtags",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "queue/38-insight-zirconia-crown-shade-temporary-cement/11-\u0644\u06cc\u0646\u06a9\u200c\u0647\u0627\u06cc-\u06af\u0644\u0627\u0633\u0631\u06cc.md; applied []; 4.7 []; 4.9 [['/insight/insight-92.html', '\u062a\u0637\u0627\u0628\u0642 \u0631\u0646\u06af \u0644\u0645\u06cc\u0646\u06cc\u062a \u0648 \u0631\u0648\u06a9\u0634 \u062f\u0631 \u06cc\u06a9 \u06a9\u06cc\u0633'], ['/chairside/chairside-40.html', '\u0633\u0645\u0627\u0646 \u0645\u0648\u0642\u062a \u06cc\u0627 \u062f\u0627\u0626\u0645 \u0628\u0631\u0627\u06cc \u0647\u0645\u0627\u0647\u0646\u06af\u06cc \u0631\u0646\u06af \u0631\u0648\u06a9\u0634\\u200c\u0647\u0627'], ['/episodes/episode-68.html', '\u0639\u0648\u0627\u0645\u0644 \u0645\u0624\u062b\u0631 \u0628\u0631 \u0631\u0646\u06af \u0646\u0647\u0627\u06cc\u06cc']]"
+                ],
+                "scope": "links",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "pathway_place.py mechanical rule: [{'pathway': 'fixed-pros', 'after': 'notecast/episode-3', 'why': 'STRONG'}, {'pathway': 'ceramics', 'after': 'notecast/episode-3', 'why': 'STRONG'}]"
+                ],
+                "scope": "pathways",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "queue/38-insight-zirconia-crown-shade-temporary-cement/07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md Q5; seven-line rotation {'added': '\u06cc\u06a9 \u0646\u06a9\u062a\u0647\u0654 \u06a9\u0644\u06cc\u0646\u06cc\u06a9\u06cc \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab<a href=\"/insight/insight-107.html\">\u062a\u063a\u06cc\u06cc\u0631 \u0631\u0646\u06af \u0631\u0648\u06a9\u0634 \u0632\u06cc\u0631\u06a9\u0648\u0646\u06cc\u0627 \u0628\u0627 \u0633\u0645\u0627\u0646 \u0645\u0648\u0642\u062a\u061b \u0686\u0631\u0627 \u0631\u0646\u06af \u0631\u0648\u06a9\u0634 \u0628\u0627 \u0644\u0645\u06cc\u0646\u06cc\u062a \u0647\u0645\u0627\u0647\u0646\u06af \u0646\u06cc\u0633\u062a\u061f</a>\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f', 'dropped': '<li><a href=\"/sharehub/share-49.html\">\u0646\u0633\u0628\u062a \u062a\u0627\u062c \u0628\u0647 \u0631\u06cc\u0634\u0647\u061b \u0686\u0642\u062f\u0631 \u0645\u06cc\\u200c\u062a\u0648\u0627\u0646 \u0628\u0647 \u0639\u062f\u062f\u0647\u0627\u06cc \u06a9\u0644\u0627\u0633\u06cc\u06a9 \u0627\u0639\u062a\u0645\u0627\u062f \u06a9\u0631\u062f\u061f</a></li>'}"
+                ],
+                "scope": "pulse",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "queue/38-insight-zirconia-crown-shade-temporary-cement/05-DES-Fidelity installed by queue_install_des.py (record 06769c1167d0e100521d3080de0cb739ea1a902c697aa87eb6a92908c23ac109)"
+                ],
+                "scope": "scientific",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "queue/38-insight-zirconia-crown-shade-temporary-cement/07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md pillar/subtopic (brain entry written by queue_apply)"
+                ],
+                "scope": "taxonomy",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "queue/38-insight-zirconia-crown-shade-temporary-cement/07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md Q4.9: not a Challenge (the queue lane refuses Challenge items)"
+                ],
+                "scope": "challenge",
+                "status": "not_applicable"
+              }
+            ]
+          }
+        ],
+        "delivery": [
+          {
+            "evidence": [
+              "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/43606577582"
+            ],
+            "scope": "GitHub Actions post-Push-2 mechanical continuation"
+          }
+        ],
+        "inputs": [],
+        "pending_questions": [],
+        "unrelated_changes": [],
+        "validation": [
+          {
+            "content_id": "insight/insight-107",
+            "exit_code": 0,
+            "expected_caption": "\u0633\u0645\u0627\u0646 \u0645\u0648\u0642\u062a \u0633\u0641\u06cc\u062f \u0648 \u06af\u0686\u06cc \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f \u0631\u0648\u06a9\u0634 \u0632\u06cc\u0631\u06a9\u0648\u0646\u06cc\u0627 \u0631\u0627 \u0631\u0648\u0634\u0646\u200c\u062a\u0631 \u0648 \u06a9\u062f\u0631\u062a\u0631 \u0646\u0634\u0627\u0646 \u062f\u0647\u062f\u061b \u0627\u0645\u062a\u062d\u0627\u0646 \u06a9\u0631\u062f\u0646 \u0631\u0648\u06a9\u0634 \u0628\u062f\u0648\u0646 \u0633\u0645\u0627\u0646 \u0646\u0634\u0627\u0646 \u0645\u06cc\u200c\u062f\u0647\u062f \u0627\u062e\u062a\u0644\u0627\u0641 \u0631\u0646\u06af \u0627\u0632 \u062e\u0648\u062f \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 \u0627\u0633\u062a \u06cc\u0627 \u0627\u0632 \u0644\u0627\u06cc\u0647\u200c\u06cc \u0633\u0645\u0627\u0646 \u0632\u06cc\u0631 \u0622\u0646.",
+            "expected_title": "\u062a\u063a\u06cc\u06cc\u0631 \u0631\u0646\u06af \u0631\u0648\u06a9\u0634 \u0632\u06cc\u0631\u06a9\u0648\u0646\u06cc\u0627 \u0628\u0627 \u0633\u0645\u0627\u0646 \u0645\u0648\u0642\u062a\u061b \u0686\u0631\u0627 \u0631\u0646\u06af \u0631\u0648\u06a9\u0634 \u0628\u0627 \u0644\u0645\u06cc\u0646\u06cc\u062a \u0647\u0645\u0627\u0647\u0646\u06af \u0646\u06cc\u0633\u062a\u061f",
+            "kind": "phase_f",
+            "output_sha256": "b6ef5ea256cbb0b555f7a22c70d5691f32bea7778feffae62a11b3db309c3d6d",
+            "recorded_at": "2026-11-14T14:47:46+00:00",
+            "summary": "110 passed, 1 warned, 0 failed  \u2014 publish is COMPLETE"
+          }
+        ]
+      },
+      "external_actions": [],
+      "status": "in_progress",
+      "steps": [
+        {
+          "evidence": [
+            "queue-route.md read; tools/queue_publish.py run"
+          ],
+          "id": "rules",
+          "module": "01-hard-rules.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "queue_manifest check complete; dry run clean (38-insight-zirconia-crown-shade-temporary-cement)"
+          ],
+          "id": "0",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "queue_apply receipt sha256 aaba07e9966912a9e9d526afc34810a20bc8040463e1eb7f872f3366255527b1"
+          ],
+          "id": "C.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "4.8 []; 4.7 []; 4.9 [['/insight/insight-92.html', '\u062a\u0637\u0627\u0628\u0642 \u0631\u0646\u06af \u0644\u0645\u06cc\u0646\u06cc\u062a \u0648 \u0631\u0648\u06a9\u0634 \u062f\u0631 \u06cc\u06a9 \u06a9\u06cc\u0633'], ['/chairside/chairside-40.html', '\u0633\u0645\u0627\u0646 \u0645\u0648\u0642\u062a \u06cc\u0627 \u062f\u0627\u0626\u0645 \u0628\u0631\u0627\u06cc \u0647\u0645\u0627\u0647\u0646\u06af\u06cc \u0631\u0646\u06af \u0631\u0648\u06a9\u0634\\u200c\u0647\u0627'], ['/episodes/episode-68.html', '\u0639\u0648\u0627\u0645\u0644 \u0645\u0624\u062b\u0631 \u0628\u0631 \u0631\u0646\u06af \u0646\u0647\u0627\u06cc\u06cc']]"
+          ],
+          "id": "C.4.9",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "pathways [{'pathway': 'fixed-pros', 'after': 'notecast/episode-3', 'why': 'STRONG'}, {'pathway': 'ceramics', 'after': 'notecast/episode-3', 'why': 'STRONG'}]"
+          ],
+          "id": "C.5.6",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "single delivery before the Action"
+          ],
+          "id": "C.6",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "All applicable canonical C.8 builders passed; logs are in the recovery artifact."
+          ],
+          "id": "C.8",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "tools/stamp-version.py passed after C.8"
+          ],
+          "id": "C.7",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Technical English, noindex, hreflang, sitemap, and final version checks passed; logs are in the recovery artifact."
+          ],
+          "id": "D",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Canonical dc-notify marker present exactly once"
+          ],
+          "id": "E",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "phase_f:b6ef5ea256cbb0b555f7a22c70d5691f32bea7778feffae62a11b3db309c3d6d"
+          ],
+          "id": "F",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/43606577582"
+          ],
+          "id": "G",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        }
+      ],
+      "target_paths": [
+        ".dentcast/queue-frozen-des.json",
+        "dentcast-brain.json",
+        "dentcast-hashtag-reference.json",
+        "index.html",
+        "insight/en/insight-107.html",
+        "insight/index.html",
+        "insight/insight-107.html",
+        "insight/insight107-1.webp",
+        "pillar/esthetic/index.html",
+        "pillar/esthetic/structure.json",
+        "pillar/index.html",
+        "pillar/structure.json",
+        "player.html",
+        "plus/assistant-tags.json",
+        "plus/content-index.json",
+        "plus/des-scores.json",
+        "plus/des/insight/insight-107.json",
+        "plus/exam-questions.json",
+        "plus/faq-corpus.json",
+        "plus/flashcards-index.json",
+        "plus/pathways.json",
+        "plus/quiz-index.json",
+        "service-worker.js",
+        "sitemap.xml",
+        "up-board/index.json"
+      ]
+    },
+    "snapshot": {
+      "files": {
+        ".dentcast/queue-frozen-des.json": {
+          "kind": "file",
+          "sha256": "5980e684c433720419b46af2dc7754c1f19dbfc9428d8267a62959979266f073",
+          "executable": false
+        },
+        "dentcast-brain.json": {
+          "kind": "file",
+          "sha256": "2dfe55c6516b2468343e3efd00a6315b0d0d50b8a30bf1503ebe16240c9bd011",
+          "executable": false
+        },
+        "dentcast-hashtag-reference.json": {
+          "kind": "file",
+          "sha256": "e1d0bae58692e13d7fe8942cc18709086937f9b19ad5c8acf5d05d2361572515",
+          "executable": false
+        },
+        "index.html": {
+          "kind": "file",
+          "sha256": "46973214fc18f2b73753ee447d6019911d9e02cf05771ce863b4a2e1ca84a720",
+          "executable": false
+        },
+        "insight/en/insight-107.html": {
+          "kind": "file",
+          "sha256": "43f8abc29669374d1b5bd9538378a50bb8670f7577722971274c86c5884242b5",
+          "executable": false
+        },
+        "insight/index.html": {
+          "kind": "file",
+          "sha256": "af036a53774f74a631d1bd7a538695aff693c1530f673ff455796974b5de0476",
+          "executable": false
+        },
+        "insight/insight-107.html": {
+          "kind": "file",
+          "sha256": "6061704f9aba2efe692c74aed747eecdd56042fa30ac0fef0a9c5aa5d6ff4c23",
+          "executable": false
+        },
+        "insight/insight107-1.webp": {
+          "kind": "file",
+          "sha256": "a5cacf75530ea26b8ebe068a2179b4fd1a2f096e5540b355cb05b0f5bb8d0256",
+          "executable": false
+        },
+        "pillar/esthetic/index.html": {
+          "kind": "file",
+          "sha256": "f0700343f4f4f72bd784d4ef33f57452eafefe0f5c9c34f3d58b9bce0fc6720a",
+          "executable": false
+        },
+        "pillar/esthetic/structure.json": {
+          "kind": "file",
+          "sha256": "7dd5aeadf237a84f0658feeead663bf6d267e47f97ace317da7d7807ac0b9dcb",
+          "executable": false
+        },
+        "pillar/index.html": {
+          "kind": "file",
+          "sha256": "be6350af0bdeed2c00548d06d4a8e5e761ec6c5f75142690636d666cedd34e55",
+          "executable": false
+        },
+        "pillar/structure.json": {
+          "kind": "file",
+          "sha256": "56c078dbdfac419d037fb719af279f50b2df05e2ebc5a553efdafe980f24f303",
+          "executable": false
+        },
+        "player.html": {
+          "kind": "file",
+          "sha256": "b30cbb7713471484bb5e3d72604de8b2b7308dc98f7df189802e5b55cb834d20",
+          "executable": false
+        },
+        "plus/assistant-tags.json": {
+          "kind": "file",
+          "sha256": "14ff4ba74d905c60ce50a97606cc391a3899f47c9d513ccf81fb676e39b9e0fe",
+          "executable": false
+        },
+        "plus/content-index.json": {
+          "kind": "file",
+          "sha256": "06ef78aaa7dd14edf8ab9758c8cfe6a39e100ac9ce3c3f650350eb84cb46f5d6",
+          "executable": false
+        },
+        "plus/des-scores.json": {
+          "kind": "file",
+          "sha256": "5d29d8d82038b5195117b7429c967e1411cd67d536290cb23c45ed46dc87e4ed",
+          "executable": false
+        },
+        "plus/des/insight/insight-107.json": {
+          "kind": "file",
+          "sha256": "266d1e3ab1c68a1b45a79f36c25f8e514fe7be419e477dffb9c8e221fabe7c35",
+          "executable": false
+        },
+        "plus/exam-questions.json": {
+          "kind": "file",
+          "sha256": "33bf49ec4e766f5ca5a4d9f3c9b8ae074d2fabc41c51145a95364123eb800bae",
+          "executable": false
+        },
+        "plus/faq-corpus.json": {
+          "kind": "file",
+          "sha256": "0d3bb4c4d1a7ad9b59fdfdfd0a07452e545321f1e7ce3d6741f36499687a4d7f",
+          "executable": false
+        },
+        "plus/flashcards-index.json": {
+          "kind": "file",
+          "sha256": "e64e748bf1c8f34f583d4aaca369434d6759c4241b9a1959565d7dc57cf162e5",
+          "executable": false
+        },
+        "plus/pathways.json": {
+          "kind": "file",
+          "sha256": "fdd674213d7ddb259ab9909e5d28491183d48f1a4d38d8a280383f1feff58084",
+          "executable": false
+        },
+        "plus/quiz-index.json": {
+          "kind": "file",
+          "sha256": "5fc217eb008a1eb33325b620568592414dfe9ffc7af3a99373b274c07401dd68",
+          "executable": false
+        },
+        "service-worker.js": {
+          "kind": "file",
+          "sha256": "507029d2ae13322b8b7bb9c3e09c039f76105944e3a6ca2c30275a01d17d52a1",
+          "executable": false
+        },
+        "sitemap.xml": {
+          "kind": "file",
+          "sha256": "d1f0aeaf3e0d5ab2374cd9598c540a797c0c2c81704c848764ecff712dd80543",
+          "executable": false
+        },
+        "up-board/index.json": {
+          "kind": "file",
+          "sha256": "2d3cdbe51aa6ae732833ebfc04771151f780478ba6afc863369050e1186bdb53",
+          "executable": false
+        }
+      },
+      "workflow": {
+        ".dentcast/workflows/README.md": "172337c6e52b1143888d1a7c43f56c71da74457ab9ed4b247db9cbd242ba81d8",
+        ".dentcast/workflows/agent-parity.md": "6f35f755ccb22111b06956ffd321f5789dcaf75f214dcfcc6bad3e87aa3e984a",
+        ".dentcast/workflows/publish-handoff.md": "d58cb5472df896dc0d33c37b79340d44c65897d90348f1bfbc98a0e56badc249",
+        ".dentcast/workflows/routing-details.md": "70e82a656759b6a949f84048d1d9047a2eaaca90c0f93d73d3e96857f77f394a",
+        ".dentcast/workflows/global/README.md": "5ec762efe1522eeca5841e37f8e61d938b6a1421904bffe32cecd51ddab4a39b",
+        ".dentcast/workflows/global/LOAD-MAP.json": "39a06ba30d7c181bf6fe9ef6014e885ceef9cbbf729d6dde1652b7e8ee81fced",
+        "tools/dentcast_global_rules.py": "c92d378a875dec54ed7845015797c37f211f0acab93150f669b0f820dfd94464",
+        ".dentcast/workflows/global/repo-conventions.md": "9594f6d63792fd6e26fe937dbcfb8ed719d0922468dfc9b944d7f2a237774052",
+        ".dentcast/workflows/global/plus-premium.md": "18a0bea238c466f92861ccd606b7a612a2517f8b0f63c19ea88ce9952d35edd2",
+        ".dentcast/workflows/global/site-invariants.md": "55d4fcd8c566d55011a01eb395d04260e7ca867d78be4b1401acf36a23886feb",
+        "tools/dentcast_publish_handoff.py": "5ac5843a3c668b71e4827d787479e9a9bab312b0c14ea881477780cb6d1814cd",
+        "tools/dentcast_publish_lifecycle.py": "c40548cadf6d12d5a24370a4666e8ddf16a338cf61c154627c3a8f24f7cc1932",
+        "tools/verify_publish.py": "41d939f7769ffa36078955a8a38548143bb6b180282e1a87b62ce602f519ecbb",
+        "tools/dentcast_text_io.py": "225c0a696e8ebc5e175b5dd9739210d4624938358af96baeb777f8c4a07726d8",
+        "tools/text_io.mjs": "c6f9208e26983c8eade43d8cf3effe865e6479df903d2cee661cd0a928565536",
+        "tools/dentcast_post_cut2_runner.py": "443494d00da1a8890a9d69f2d716358328120c562c1c24df0f8227eae3182b0e",
+        ".github/workflows/post-cut2-mechanical.yml": "f4c06799b68560aaa14b364e63d720ae658187962221607c862bfce42a19f106",
+        ".dentcast/workflows/publish-checkpoints.md": "b3d0dcad2e5f4c850a355945190be4b5d1330b696280b300971452110a2129f5",
+        ".dentcast/workflows/publish-after-push2.md": "101bf989270f0ba6d5f34dc350b94d4820f49d361ec0b99192b46854e7cea905",
+        ".dentcast/workflows/modules/01-hard-rules.md": "1cb57aa6db9c90675d90a6732e5d789ac9188977dc58906ef56b131960d83cb9",
+        ".dentcast/workflows/modules/02-routing-intake.md": "c9dc1b414dfdacf3376b4f9cb916ce911b428184550610950ef7f8e8132e9a74",
+        ".dentcast/workflows/modules/03-litecast-and-page.md": "f6bf2d4a9004e54525c698db895cfecac3d65e7090b015b634bae0bee7bc6723",
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "53a8860265c40465d8060bea1c9d4f701d24794f704de14a609b2d806c294fa9",
+        ".dentcast/workflows/modules/05-semantic-linking.md": "22379f060007b543c9544f2dd8a3aee600a930af19711fd1ee49e797ef9c7722",
+        ".dentcast/workflows/modules/06-paper-ingestion.md": "c34d0f4a17e6b1eddad13bca8e88af65a436ae7d5d41017a57660868020d6375",
+        ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "913b7e3b01038c372eaff58ab63cb91126d710a3b7051f8f9af72409631c9c98",
+        ".dentcast/workflows/modules/08-des-fidelity.md": "b9e29fff562f3fbad425a95a86dfe39c56374d30cb9971e42daf7b459f6cff7b",
+        ".dentcast/workflows/modules/09-challenge.md": "5ec2a39ce0e3f3777360a0b0c1092d34e240f6546d43103498e2d65a5a16f120",
+        ".dentcast/workflows/modules/10-brain-and-pathways.md": "5e4c5266d20e786eae7d3f410a2209c547c698781d8655d78828251c052ab66c",
+        ".dentcast/workflows/modules/11-build-and-version.md": "3b58272ec511d861e35af835f026cb91910d1ef40c1e164cbdc88f8637dcf310",
+        ".dentcast/workflows/modules/12-english-notify-verify.md": "89230e2261966297a9c26cc9df88a37862d5b4a71c1bd7ed44f20d6cc2596552"
+      }
+    }
+  },
+  "second_delivery_commit": "9fd083570626a3d082b702002fde734782b1454c",
+  "verification": {
+    "kind": "phase_f",
+    "content_id": "insight/insight-107",
+    "expected_title": "\u062a\u063a\u06cc\u06cc\u0631 \u0631\u0646\u06af \u0631\u0648\u06a9\u0634 \u0632\u06cc\u0631\u06a9\u0648\u0646\u06cc\u0627 \u0628\u0627 \u0633\u0645\u0627\u0646 \u0645\u0648\u0642\u062a\u061b \u0686\u0631\u0627 \u0631\u0646\u06af \u0631\u0648\u06a9\u0634 \u0628\u0627 \u0644\u0645\u06cc\u0646\u06cc\u062a \u0647\u0645\u0627\u0647\u0646\u06af \u0646\u06cc\u0633\u062a\u061f",
+    "expected_caption": "\u0633\u0645\u0627\u0646 \u0645\u0648\u0642\u062a \u0633\u0641\u06cc\u062f \u0648 \u06af\u0686\u06cc \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f \u0631\u0648\u06a9\u0634 \u0632\u06cc\u0631\u06a9\u0648\u0646\u06cc\u0627 \u0631\u0627 \u0631\u0648\u0634\u0646\u200c\u062a\u0631 \u0648 \u06a9\u062f\u0631\u062a\u0631 \u0646\u0634\u0627\u0646 \u062f\u0647\u062f\u061b \u0627\u0645\u062a\u062d\u0627\u0646 \u06a9\u0631\u062f\u0646 \u0631\u0648\u06a9\u0634 \u0628\u062f\u0648\u0646 \u0633\u0645\u0627\u0646 \u0646\u0634\u0627\u0646 \u0645\u06cc\u200c\u062f\u0647\u062f \u0627\u062e\u062a\u0644\u0627\u0641 \u0631\u0646\u06af \u0627\u0632 \u062e\u0648\u062f \u0631\u0633\u062a\u0648\u0631\u06cc\u0634\u0646 \u0627\u0633\u062a \u06cc\u0627 \u0627\u0632 \u0644\u0627\u06cc\u0647\u200c\u06cc \u0633\u0645\u0627\u0646 \u0632\u06cc\u0631 \u0622\u0646.",
+    "exit_code": 0,
+    "output_sha256": "b6ef5ea256cbb0b555f7a22c70d5691f32bea7778feffae62a11b3db309c3d6d",
+    "summary": "110 passed, 1 warned, 0 failed  \u2014 publish is COMPLETE"
+  }
+}
