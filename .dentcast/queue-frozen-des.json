@@ -409,5 +409,23 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "insight/insight-107": {
+    "queue_ref": "queue/38-insight-zirconia-crown-shade-temporary-cement",
+    "record_sha256": "06769c1167d0e100521d3080de0cb739ea1a902c697aa87eb6a92908c23ac109",
+    "installed_at": "2026-11-14",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }
