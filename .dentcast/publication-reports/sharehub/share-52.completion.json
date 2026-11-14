@@ -1,0 +1,828 @@
+{
+  "schema": "publish-completion-v1",
+  "state": {
+    "publication": {
+      "blocker": null,
+      "category": "sharehub",
+      "content_id": "sharehub/share-52",
+      "context": {
+        "approvals": [
+          {
+            "decision": "\u067e\u0633\u062a \u0648 \u06a9\u0648\u0631 NPG\u061b \u0622\u06cc\u0627 \u0622\u0644\u06cc\u0627\u0698 NPG \u0633\u0645\u06cc \u0627\u0633\u062a \u0648 \u067e\u0633\u062a\u0634 \u0632\u0648\u062f \u062f\u0631\u0645\u06cc\u200c\u0622\u06cc\u062f\u061f",
+            "evidence": [
+              "founder data: H1 of the founder's Claude Doc, copied codepoint for codepoint (Hard Rule 16)"
+            ],
+            "scope": "title",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u0622\u06cc\u0627 \u067e\u0633\u062a \u0648 \u06a9\u0648\u0631 NPG \u0633\u0645\u06cc \u0627\u0633\u062a \u06cc\u0627 \u0632\u0648\u062f \u062f\u0631\u0645\u06cc\u200c\u0622\u06cc\u062f\u061f \u0628\u0631\u0631\u0633\u06cc \u0634\u0648\u0627\u0647\u062f \u0639\u0644\u0645\u06cc \u062f\u0631\u0628\u0627\u0631\u0647\u200c\u06cc \u06a9\u0648\u0631\u0648\u0698\u0646\u060c \u06af\u06cc\u0631\u060c \u0645\u0642\u0627\u0648\u0645\u062a \u0628\u0647 \u0634\u06a9\u0633\u062a\u060c \u0645\u062c\u0648\u0632 FDA \u0648 \u0637\u0628\u0642\u0647\u200c\u0628\u0646\u062f\u06cc ADA \u0622\u0644\u06cc\u0627\u0698 NPG.",
+            "evidence": [
+              "founder data: \u00ab\u0645\u062a\u0627 \u062f\u06cc\u0633\u06a9\u0631\u06cc\u067e\u0634\u0646\u00bb line of the founder's Claude Doc, copied verbatim (Hard Rule 16)"
+            ],
+            "scope": "caption",
+            "status": "confirmed"
+          }
+        ],
+        "decisions": [
+          {
+            "kind": "ledger_order_v2"
+          },
+          {
+            "kind": "fixed_three_deliveries_v1"
+          },
+          {
+            "kind": "fixed_three_deliveries_v2"
+          },
+          {
+            "kind": "source_resolution",
+            "note": "Part 1 ladder: cabinet miss for all; PubMed MCP abstracts for refs 1,6,7,8,9,11,12 and ref 10 (PMC7241566 -> PMID 32490402) -> ABSTRACT_ONLY; refs 2,3,4,5,13,14 hosts blocked by session network policy (curl CONNECT 403; WebFetch ENOTFOUND) -> M1. des_record_guard lookup: 0 stored records for every DOI. SOURCE: claude -p --system-prompt-file .dentcast/des-v3.7-knowledge.md (sha256 709be964\u2026) --tools '' --model opus (modelUsage claude-opus-5-5), empty dir, one block per source. S12 run 1 invalid (consensus-only keys on a RESEARCH object) -> rerun 36/D. Part 2d audits (system sha256 948e8bf6\u2026) agree on all 8 (exit 0). Part 3(6): two S1 interpretation_fa judgments trimmed."
+          },
+          {
+            "kind": "m1_answers",
+            "note": "M1 answered by founder: ref 13 abstract pasted from the DOAJ page (Borhan Haghighi & Pahlavanpour Fard Jahromy, J Dent Biomater 2014) -> ABSTRACT_ONLY, 25/D (run 1 invalid: consensus-only keys; rerun). Ref 14 PDF attached (Nodehi et al., J Mash Dent Sch 2023;47(1):90-7, DOI 10.22038/jmds.2023.63550.2142): pdf_source_text.py extracted the Persian body in reversed visual order (unusable), so the English abstract on page 1 is the source_text -> ABSTRACT_ONLY, 47/C; not a step-4.10 attached paper (supplied as source text for an existing reference). Refs 2,3,4,5: \u00ab\u0646\u062f\u0627\u0631\u0645 \u2026 \u062f\u0633 \u0647\u0645 \u0646\u0645\u06cc\u062e\u0648\u0627\u0646 \u0641\u06cc\u062f\u06cc\u0644\u06cc\u062a\u06cc \u0647\u0645 \u0646\u0645\u06cc\u062e\u0648\u0627\u0646\u00bb -> slots {des_version 3.7, error INSUFFICIENT_TEXT}, fidelity null via POOLED object (share-51 ref 9 precedent). Network change (create_environment) declined: approval not possible from phone."
+          },
+          {
+            "kind": "fidelity_run",
+            "note": "Scope POOLED (prose names no source; citations are numeric). One SOURCE-scope FIDELITY call per source with text (S1,S6-S14), each all 73 units, spec .dentcast/des-v3.7-knowledge.md as system prompt, claude -p --tools '' --model opus (modelUsage claude-opus-5-5), fresh empty dir each; --merge -> pooled 98 HIGH (19 matches, 1 altered u11 HEDGE_REMOVED S7, 34 not_assessable, 1 author_view, 18 not_a_claim). --accept exit 0 (18 checks). POOLED is not judged/voted (module 08 Part 2c), so no doubtful-unit list. Provisional record stored in plus/des-scores.json for the save point."
+          },
+          {
+            "kind": "part3b_round1",
+            "note": "M3b: founder answered \u00ab\u0627\u0635\u0644\u0627\u062d \u06a9\u0646\u00bb for u11 -> page sentence \u00ab\u0641\u0642\u0637 \u0646\u0633\u062e\u0647\u200c\u06cc NPG+2 \u0645\u0642\u062f\u0627\u0631 \u06a9\u0645\u06cc \u0637\u0644\u0627 \u062f\u0627\u0631\u0647 [\u06f2].\u00bb became \u00ab\u0646\u0633\u062e\u0647\u200c\u06cc NPG+2 \u0645\u0642\u062f\u0627\u0631 \u06a9\u0645\u06cc \u0637\u0644\u0627 \u062f\u0627\u0631\u0647 [\u06f2].\u00bb (no other surface carried it yet). POOLED has no --base re-check, so the full POOLED step was rerun on the edited page (10 calls, opus, fresh contexts) -> merge 100 HIGH (20/20 assessable match), --accept exit 0. Grade before -> after: 98 HIGH -> 100 HIGH. Stored in plus/des-scores.json (fidelity replaced)."
+          },
+          {
+            "kind": "pathway_placement",
+            "note": "pathway_place.py: post-and-core STRONG (125) -> inserted after sharehub/share-20 (index 10, no milestone). biomimetic STRONG by score (45) but semantically borderline (cast metal alloy is not a biomimetic/bonded-restoration concept) -> not placed, reported. ceramics/occlusion/fixed-pros/failure-troubleshooting/implant-surgical ASK -> not placed. Coverage 1.52 per item (baseline 1.38). Bundle check: bundle-post-core (\u00ab\u067e\u0633\u062a \u0648 \u06a9\u0648\u0631: \u0634\u0631\u0648\u0639 \u06a9\u0646\u00bb, 8 steps) -> \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f2: title is a question about one alloy, not a whole concept; also gate 5 would fail at 9 steps). English mirror sharehub/en/share-52.html authored from locked text (clone of sharehub/en/share-51.html; 7 h2, 12 body p + refs note, 5 table rows, 14 refs); Pulse line prepended in index.html, oldest (chairside-52) removed, 7 lines."
+          },
+          {
+            "kind": "m2_answers",
+            "note": "M2: founder approved both exam questions (\u00ab\u0647\u0631 \u062f\u0648 \u062a\u0623\u06cc\u06cc\u062f\u00bb): r-77fd0534 (510(k) clearance = similarity to marketed products, key index 1) and r-7ff7f20b (NPG lower corrosion resistance than Ni-Cr, key index 2), written to plus/exam-questions.json byContent[sharehub/share-52]; validate_exam_questions.py 0 errors."
+          },
+          {
+            "evidence": [
+              "sharehub/share-52.html: body opens with the founder's own prose paragraph before any table/list; no agent-authored lead"
+            ],
+            "kind": "first_cut_lead_provenance_v1",
+            "origin": "author_original",
+            "source_ref": "founder Claude Doc, first body paragraph \u00ab\u0627\u06cc\u0646 \u0631\u0648\u0632\u0647\u0627 \u062f\u0631 \u0627\u06cc\u0646\u0633\u062a\u0627\u06af\u0631\u0627\u0645 \u067e\u0633\u062a\u200c\u0647\u0627\u06cc \u0632\u06cc\u0627\u062f\u06cc\u2026\u00bb (bound input sha256 f2e9156c\u2026)"
+          },
+          {
+            "english": {
+              "evidence": [
+                "file on disk; clone of sharehub/en/share-51.html; structure-faithful translation"
+              ],
+              "path": "sharehub/en/share-52.html",
+              "status": "ready"
+            },
+            "evidence": [
+              "all founder messages closed; pending_questions empty"
+            ],
+            "kind": "second_cut_editorial_lock_v1",
+            "scopes": [
+              {
+                "evidence": [
+                  "plus/des-scores.json[sharehub/share-52]: 10 RESEARCH records + 4 INSUFFICIENT_TEXT slots; Fidelity POOLED 100 HIGH after Part 3b; --accept exit 0; Part 2d audits agree"
+                ],
+                "scope": "scientific",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Question 4.9: ordinary article; C.4.14 skipped"
+                ],
+                "scope": "challenge",
+                "status": "not_applicable"
+              },
+              {
+                "evidence": [
+                  "pillar fixed-pros/post-and-core (C.2.4), capsule /pillar/fixed-pros/, brain pillar matches (C.5.5)"
+                ],
+                "scope": "taxonomy",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.4.7 0 back-links (post-and-core glossary at cap), C.4.8 2 inline glossary links, C.4.9 2 capsules (4/5)"
+                ],
+                "scope": "links",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "5 canonical reused tags, no mint; hashtag_ref --check OK; reachability pass"
+                ],
+                "scope": "hashtags",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "dentcast-brain.json last element sharehub 52, key parity with 51; plus/faq-corpus.json FAQ 9 + 5 cards"
+                ],
+                "scope": "content_record",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "post-and-core after sharehub/share-20; bundle \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f2); exam questions r-77fd0534, r-7ff7f20b approved (M2)"
+                ],
+                "scope": "pathways",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "index.html pulse: new first line linking /sharehub/share-52.html with the title only; oldest removed; 7 lines"
+                ],
+                "scope": "pulse",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "sharehub/en/share-52.html authored from locked text; toggles inverse; noindex; no hreflang"
+                ],
+                "scope": "english",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "title/caption confirmed as founder data; M1, M3b (\u0627\u0635\u0644\u0627\u062d \u06a9\u0646 u11), M2 (\u0647\u0631 \u062f\u0648 \u062a\u0623\u06cc\u06cc\u062f) answered"
+                ],
+                "scope": "author_approvals",
+                "status": "resolved"
+              }
+            ]
+          }
+        ],
+        "delivery": [
+          {
+            "evidence": [
+              "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/43571034162"
+            ],
+            "scope": "GitHub Actions post-Push-2 mechanical continuation"
+          }
+        ],
+        "inputs": [
+          {
+            "note": "founder text, exported verbatim from the founder's Claude Doc",
+            "ref": "claude-docs:npg-post-and-core (founder doc)",
+            "sha256": "f2e9156ceed66af25d9198a8da3dc31f84579d3b09ee12f2888d2470a6e239aa"
+          }
+        ],
+        "pending_questions": [],
+        "unrelated_changes": [],
+        "validation": [
+          {
+            "content_id": "sharehub/share-52",
+            "exit_code": 0,
+            "expected_caption": "\u0622\u06cc\u0627 \u067e\u0633\u062a \u0648 \u06a9\u0648\u0631 NPG \u0633\u0645\u06cc \u0627\u0633\u062a \u06cc\u0627 \u0632\u0648\u062f \u062f\u0631\u0645\u06cc\u200c\u0622\u06cc\u062f\u061f \u0628\u0631\u0631\u0633\u06cc \u0634\u0648\u0627\u0647\u062f \u0639\u0644\u0645\u06cc \u062f\u0631\u0628\u0627\u0631\u0647\u200c\u06cc \u06a9\u0648\u0631\u0648\u0698\u0646\u060c \u06af\u06cc\u0631\u060c \u0645\u0642\u0627\u0648\u0645\u062a \u0628\u0647 \u0634\u06a9\u0633\u062a\u060c \u0645\u062c\u0648\u0632 FDA \u0648 \u0637\u0628\u0642\u0647\u200c\u0628\u0646\u062f\u06cc ADA \u0622\u0644\u06cc\u0627\u0698 NPG.",
+            "expected_title": "\u067e\u0633\u062a \u0648 \u06a9\u0648\u0631 NPG\u061b \u0622\u06cc\u0627 \u0622\u0644\u06cc\u0627\u0698 NPG \u0633\u0645\u06cc \u0627\u0633\u062a \u0648 \u067e\u0633\u062a\u0634 \u0632\u0648\u062f \u062f\u0631\u0645\u06cc\u200c\u0622\u06cc\u062f\u061f",
+            "kind": "phase_f",
+            "output_sha256": "9ff9f096b2b7f4dfb3832f6ce7ce7dc0167ba96e9dd67e2c4d7ce2fd7241f202",
+            "recorded_at": "2026-11-14T07:27:02+00:00",
+            "summary": "201 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+          }
+        ]
+      },
+      "external_actions": [],
+      "status": "in_progress",
+      "steps": [
+        {
+          "evidence": [
+            "read: README.md, global/README.md+core sections (3 pages), agent-parity.md, publish-checkpoints.md, publish-handoff-tool.md, modules/01, modules/02"
+          ],
+          "id": "rules",
+          "module": "01-hard-rules.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Phase 0: text yes (founder Claude Doc), paper file no -> normal publish, no paper branch. Capability preflight: git ls-remote origin OK; push to session branch ccr-e4172164-1fnv07 allowed; Actions monitoring + PR/merge via GitHub MCP"
+          ],
+          "id": "0",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "brain parsed once: 612 entries; latest sharehub = id 51 (/sharehub/share-51.html), key set type,id,title,caption,author,source,hashtags,keywords,url,pillar{primary,secondary,subtopic}; live PILLARS read (fixed-pros has post-and-core)"
+          ],
+          "id": "A",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "type = sharehub (founder: \u00ab\u0627\u0632 \u0646\u0648\u0639 \u0634\u06cc\u0631\u0647\u0627\u0628\u00bb)"
+          ],
+          "id": "B.1",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "next number = max(51)+1 = 52 -> sharehub/share-52; founder slug npg-post-and-core-evidence is not the sharehub URL pattern (share-N), recorded, not used as filename"
+          ],
+          "id": "B.2",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "full text received in founder Claude Doc; bound by sha256 f2e9156c\u2026 (context.inputs); founder title = doc H1, founder caption = \u00ab\u0645\u062a\u0627 \u062f\u06cc\u0633\u06a9\u0631\u06cc\u067e\u0634\u0646\u00bb line"
+          ],
+          "id": "B.3",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Q3.5 de-AI pass: \u00ab\u0645\u062a\u0646 \u0637\u0628\u06cc\u0639\u06cc \u0628\u0647 \u0646\u0638\u0631 \u0645\u06cc\u200c\u0631\u0633\u0647\u060c \u062a\u063a\u06cc\u06cc\u0631\u06cc \u0644\u0627\u0632\u0645 \u0646\u06cc\u0633\u062a\u00bb \u2014 colloquial first-person founder register, varied rhythm, no formulaic openers/clich\u00e9s/hedge stacking; zero rewrites"
+          ],
+          "id": "B.3.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "media: latest sharehub brain entry has no image/audio/video field; doc carries no image -> no media to collect"
+          ],
+          "id": "B.4",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "no paper file attached -> step 4.10 branch inactive (documented skip)"
+          ],
+          "id": "B.4.7",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "DES basket 2 (RESEARCH): page carries a \u00ab\u0645\u0646\u0627\u0628\u0639\u00bb block with PubMed ids 29807967, 41210404, 18546197, 11005911, 26046108, 25006386, 28808455 (+DOI 10.22037/iej.v12i3.10586) plus non-DOI sources (FDA 510k K972971/K863782, ADA page, manufacturer catalogue, PMC7241566 article, DOAJ 2014 article, MUMS 2023 PDF); one DES record per cited source"
+          ],
+          "id": "B.4.8",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "ordinary article (\u00ab\u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc\u00bb), not a \u0686\u0627\u0644\u0634"
+          ],
+          "id": "B.4.9",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pulse: agent drafts in sharehub precedent (title alone as link text, <li><a href=/sharehub/share-52.html>TITLE</a></li>) \u2014 standing acceptance"
+          ],
+          "id": "B.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0",
+          "module": "03-litecast-and-page.md",
+          "reason": "not LiteCast (category sharehub): LiteCast branch inactive",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.1",
+          "module": "03-litecast-and-page.md",
+          "reason": "not LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.2",
+          "module": "03-litecast-and-page.md",
+          "reason": "not LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.3",
+          "module": "03-litecast-and-page.md",
+          "reason": "not LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.4",
+          "module": "03-litecast-and-page.md",
+          "reason": "not LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "template = sharehub/share-51.html (previous same-category page), enrolled in target_paths, kept byte-unchanged"
+          ],
+          "id": "C.1",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "sharehub/share-52.html cloned structurally from share-51; body = founder text of record (Q3.5: unchanged) converted mechanically from the exported doc (no retyping); founder title/caption copied verbatim to title/h1/og/twitter/JSON-LD/breadcrumb (8 title, 4 caption surfaces); domain dentcast.org kept; GA4 once; 2 preconnect crossorigin at top of head; no trust seal; body opens with founder prose paragraph before any list/table (author_original lead); no hashtag chip row in sharehub template"
+          ],
+          "id": "C.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.5",
+          "module": "03-litecast-and-page.md",
+          "reason": "not LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.6",
+          "module": "03-litecast-and-page.md",
+          "reason": "not LiteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "pillar.primary = fixed-pros, subtopic = post-and-core (one clear fit: the piece is about cast post-and-core alloy choice; operative/ceramics rejected \u2014 not restorative-direct nor ceramic). Standing acceptance."
+          ],
+          "id": "C.2.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "dc-related-section with 2 capsules: /glossary/ + /pillar/fixed-pros/ (typed brain entry branch); budget used 2/5"
+          ],
+          "id": "C.2.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "sharehub/index.html is hand-maintained static HTML: added <li><a href=\"share-52.html\">TITLE (\u0645\u0637\u0644\u0628\u06cc \u0627\u0632 \u062f\u06a9\u062a\u0631 \u0641\u0648\u0627\u062f \u0634\u0647\u0627\u0628\u06cc\u0627\u0646)</a></li> at top, matching siblings"
+          ],
+          "id": "C.2.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "date audit: datePublished=dateModified=2026-11-14 (JSON-LD); template has no other visible/meta dates; canonical/og:url/breadcrumb/hreflang -> share-52; title/description/og/twitter match founder strings \u2014 all OK"
+          ],
+          "id": "C.3",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "git diff --quiet -- sharehub/share-51.html: exit 0 (template unchanged)"
+          ],
+          "id": "C.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "not NoteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5-b",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "not a NoteCast/episode pair",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "sharehub is not a numbered series with ep-nav",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.1",
+          "module": "06-paper-ingestion.md",
+          "reason": "no paper file attached (Question 4.7)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.2",
+          "module": "06-paper-ingestion.md",
+          "reason": "no paper file attached (Question 4.7)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.10.3",
+          "module": "06-paper-ingestion.md",
+          "reason": "no paper file attached (Question 4.7)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "DES: 14 slots in plus/des-scores.json[sharehub/share-52]: 10 RESEARCH ABSTRACT_ONLY provisional records (S1 36/D, S6 36/D, S7 47/C, S8 25/D, S9 25/D, S10 47/C, S11 25/D, S12 36/D, S13 25/D, S14 47/C), refs 2-5 INSUFFICIENT_TEXT (founder: no text, no DES/Fidelity). Part 3 (quotes, arithmetic, band, schema), 3(6), 3(7) guard check, Part 2d audits all agree. FIDELITY POOLED 100 HIGH after Part 3b; --accept exit 0. See decisions source_resolution, m1_answers, fidelity_run, part3b_round1."
+          ],
+          "id": "C.4.13",
+          "module": "08-des-fidelity.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "candidates: glossary post-and-core (strong) \u2014 at cap 6/5 (related_cap.py), skipped; fiber-post, dental-cement, dentinal-tubules, ferrule-effect \u2014 borderline/unrelated (page is about cast alloy choice), not linked. 0 back-links written."
+          ],
+          "id": "C.4.7",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.7-b",
+          "module": "05-semantic-linking.md",
+          "reason": "not a glossary publish",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "inline links (first occurrence, plain <a> as body uses): \u00ab\u067e\u0633\u062a \u0648 \u06a9\u0648\u0631\u00bb (intro) -> /glossary/post-and-core.html; \u00ab\u0641\u0627\u06cc\u0628\u0631\u00bb in \u00ab\u0631\u06cc\u062e\u062a\u06af\u06cc \u0628\u0627 \u0641\u0627\u06cc\u0628\u0631\u00bb (fiber post) -> /glossary/fiber-post.html. Skipped borderline: \u00ab\u0633\u0645\u0627\u0646\u00bb -> dental-cement (tangential), \u00ab\u0645\u062f\u0648\u0644 \u0627\u0644\u0627\u0633\u062a\u06cc\u0633\u06cc\u062a\u0647\u00bb -> episode-125-3 (used in 4.9 instead). Fidelity --accept still exit 0 (anchors only)."
+          ],
+          "id": "C.4.8",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "free slots 3 (2 nav capsules). Added strong: /episodes/episode-125-3.html \u00ab\u062a\u0648\u0632\u06cc\u0639 \u0627\u0633\u062a\u0631\u0633: \u067e\u0633\u062a \u0641\u0627\u06cc\u0628\u0631 \u06cc\u0627 \u0641\u0644\u0632\u06cc\u061f\u00bb (modulus/root-protection section); /sharehub/share-20.html \u00ab\u067e\u0633\u062a \u0648 \u06a9\u0648\u0631 \u0632\u06cc\u0631\u06a9\u0648\u0646\u06cc\u0627 \u062f\u0631 \u0628\u0631\u0627\u0628\u0631 \u067e\u0633\u062a \u0631\u06cc\u062e\u062a\u06af\u06cc\u00bb (post-material comparison incl. cast). Borderline skipped: meta-7 fiber post overrated, insight-97 temporary cementation of cast posts, dentpedia anterior posts. Section 4/5."
+          ],
+          "id": "C.4.9",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "plus/faq-corpus.json byContent[sharehub/share-52].definedTermSets: 5 authored DefinedTerms #flashcards-c1..c5 (NPG, 510(k), ADA classification, NPG corrosion weakness vs Ni-Cr, ISO 22674), none a near-copy of a FAQ answer; no page JSON-LD touched"
+          ],
+          "id": "C.4.11",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "FAQPage #faq in plus/faq-corpus.json: 9 standalone yes/no questions (no deixis), each answer opens with \u0628\u0644\u0647/\u062e\u06cc\u0631 -> 9 binary questions for the scored bank; 0 rewritten/dropped. 4.12-\u0628: evaluated at 5.6"
+          ],
+          "id": "C.4.12",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.14",
+          "module": "09-challenge.md",
+          "reason": "ordinary article, not a \u0686\u0627\u0644\u0634 (Question 4.9)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "questions: \u00ab\u067e\u0633\u062a NPG \u0633\u0645\u06cc\u0647\u061f\u00bb \u00ab\u067e\u0633\u062a \u0648 \u06a9\u0648\u0631 NPG \u0628\u0647\u062a\u0631\u0647 \u06cc\u0627 \u0646\u06cc\u06a9\u0644 \u06a9\u0631\u0648\u0645\u061f\u00bb \u00ab\u0622\u0644\u06cc\u0627\u0698 \u0645\u0633\u06cc \u0628\u0631\u0627\u06cc \u067e\u0633\u062a \u0631\u06cc\u062e\u062a\u06af\u06cc \u06a9\u0648\u0631\u0648\u0698\u0646 \u062f\u0627\u0631\u0647\u061f\u00bb \u00ab\u067e\u0633\u062a NPG \u0632\u0648\u062f \u062f\u0631\u0645\u06cc\u0627\u062f\u061f\u00bb. Reused canonical (no mint): #\u0645\u0631\u0648\u0631_\u0645\u0646\u0627\u0628\u0639 (series), #\u067e\u0633\u062a_\u0648_\u06a9\u0648\u0631 (umbrella 47), #\u06a9\u0648\u0631_\u0631\u06cc\u062e\u062a\u06af\u06cc (decision: choosing/comparing cast post alloy; \u00ab\u0627\u06af\u0647 \u0627\u0646\u062a\u062e\u0627\u0628 \u062f\u0627\u0631\u06cc\u0645\u060c Ni-Cr \u0631\u0648 \u062a\u0631\u062c\u06cc\u062d \u0628\u062f\u06cc\u0645\u00bb), #\u0632\u06cc\u0633\u062a_\u0633\u0627\u0632\u06af\u0627\u0631\u06cc (3; \u00ab\u0627\u0632 \u06a9\u0648\u0631\u0648\u0698\u0646 \u062f\u0627\u0631\u0647 \u062a\u0627 \u0628\u0631\u0627\u06cc \u0628\u06cc\u0645\u0627\u0631 \u0633\u0645\u06cc\u0647 \u0631\u0627\u0647 \u0632\u06cc\u0627\u062f\u06cc\u0647\u2026\u00bb), #\u0645\u0642\u0627\u0648\u0645\u062a_\u0628\u0647_\u0634\u06a9\u0633\u062a (3; \u00ab\u0646\u062a\u0627\u06cc\u062c \u0645\u0642\u0627\u0648\u0645\u062a \u0628\u0647 \u0634\u06a9\u0633\u062a \u0647\u0645 \u0628\u0627 \u0647\u0645 \u0646\u0645\u06cc\u200c\u062e\u0648\u0646\u0646\u2026\u00bb). Corrosion: no library concept, no second page resolves it -> keywords only. --sync done, --check OK, build_cabinet_papers --check OK; build_plus_index outputs reverted (runner C.8). Reachability: share-52 rank 3/3 under \u00ab\u0632\u06cc\u0633\u062a \u0633\u0627\u0632\u06af\u0627\u0631\u06cc\u00bb and \u00ab\u0645\u0642\u0627\u0648\u0645\u062a \u0628\u0647 \u0634\u06a9\u0633\u062a\u00bb (pass); rank 13 under \u00ab\u06a9\u0648\u0631 \u0631\u06cc\u062e\u062a\u06af\u06cc\u00bb (question 4 not surfaced, recorded)."
+          ],
+          "id": "C.5.0",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "dentcast-brain.json: sharehub id 52 appended as the last array element (json_append, byte-preserving), key set/order identical to sharehub 51; hashtags = step 5.0 list; pillar fixed-pros/post-and-core; keywords 16 (same as page JSON-LD)"
+          ],
+          "id": "C.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "pillar recorded fixed-pros/post-and-core = step 2.4 decision; capsule /pillar/fixed-pros/ matches; no new subtopic"
+          ],
+          "id": "C.5.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "plus/pathways.json: sharehub/share-52 in post-and-core after sharehub/share-20 (pathway_place.py --insert); biomimetic/ASK candidates not placed (see decision pathway_placement); coverage 1.52/item. 4.12-\u0628: 2 MCQ approved in M2 and written (r-77fd0534, r-7ff7f20b), validate_exam_questions.py 0 errors; drawn by pathway post-and-core"
+          ],
+          "id": "C.5.6",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "candidate bundle-post-core (continues post-and-core): \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f2 \u2014 title is a question about one alloy, not a whole beginner concept; gate 5 would also fail at 9 steps). home-bundles.js untouched."
+          ],
+          "id": "C.5.6-b",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pulse: index.html new top line <li><a href=\"/sharehub/share-52.html\">TITLE</a></li>, bottom line (chairside-52) removed, 7 lines; English mirror sharehub/en/share-52.html + fa toggle; second_cut_editorial_lock_v1 recorded (10 scopes)"
+          ],
+          "id": "C.6",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "All applicable canonical C.8 builders passed; logs are in the recovery artifact."
+          ],
+          "id": "C.8",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "tools/stamp-version.py passed after C.8"
+          ],
+          "id": "C.7",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Technical English, noindex, hreflang, sitemap, and final version checks passed; logs are in the recovery artifact."
+          ],
+          "id": "D",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Canonical dc-notify marker present exactly once"
+          ],
+          "id": "E",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "phase_f:9ff9f096b2b7f4dfb3832f6ce7ce7dc0167ba96e9dd67e2c4d7ce2fd7241f202"
+          ],
+          "id": "F",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/43571034162"
+          ],
+          "id": "G",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        }
+      ],
+      "target_paths": [
+        ".dentcast/des-fidelity-plans/sharehub/share-52.json",
+        "dentcast-brain.json",
+        "dentcast-hashtag-reference.json",
+        "index.html",
+        "pillar/fixed-pros/index.html",
+        "pillar/fixed-pros/structure.json",
+        "pillar/index.html",
+        "pillar/structure.json",
+        "player.html",
+        "plus/assistant-tags.json",
+        "plus/content-index.json",
+        "plus/des-scores.json",
+        "plus/des/sharehub/share-52.json",
+        "plus/exam-questions.json",
+        "plus/faq-corpus.json",
+        "plus/flashcards-index.json",
+        "plus/pathways.json",
+        "plus/quiz-index.json",
+        "service-worker.js",
+        "sharehub/en/share-52.html",
+        "sharehub/index.html",
+        "sharehub/share-51.html",
+        "sharehub/share-52.html",
+        "sitemap.xml",
+        "up-board/index.json"
+      ]
+    },
+    "snapshot": {
+      "files": {
+        ".dentcast/des-fidelity-plans/sharehub/share-52.json": {
+          "kind": "missing",
+          "sha256": null,
+          "executable": false
+        },
+        "dentcast-brain.json": {
+          "kind": "file",
+          "sha256": "208b46a8d20ccaa3e873f08cf307315929a8618ef0db34fb0305ce40648a71df",
+          "executable": false
+        },
+        "dentcast-hashtag-reference.json": {
+          "kind": "file",
+          "sha256": "b8bced93c4e394683e3948998fa9182b56b6b82b032fc9627e5a7799b96bdecc",
+          "executable": false
+        },
+        "index.html": {
+          "kind": "file",
+          "sha256": "f0e7605d85b58b5365fb77763dcb81d11992a62fb826e691fac7ffbf706af2c2",
+          "executable": false
+        },
+        "pillar/fixed-pros/index.html": {
+          "kind": "file",
+          "sha256": "b525bc518910bcdd88462f748eb81d913b60976a33b7feb2cabb5d1da632d4e2",
+          "executable": false
+        },
+        "pillar/fixed-pros/structure.json": {
+          "kind": "file",
+          "sha256": "773156d6961192eb6e782381ed289986d05899ce9a19d2e135d1308faebb8e40",
+          "executable": false
+        },
+        "pillar/index.html": {
+          "kind": "file",
+          "sha256": "c83abb68091f8f959d35fd885fe5a3a4dd0962ef04a313c1a749504f7802b5b8",
+          "executable": false
+        },
+        "pillar/structure.json": {
+          "kind": "file",
+          "sha256": "136a23c2fd95d5771cbbb05e95979bc36136ac666fbb299b1836a74c9253ea4e",
+          "executable": false
+        },
+        "player.html": {
+          "kind": "file",
+          "sha256": "c4e5b6932210123467f6d5d87eb35265a0574502748f790a25c9b02b0a38c2cf",
+          "executable": false
+        },
+        "plus/assistant-tags.json": {
+          "kind": "file",
+          "sha256": "7255551ca085934bf6f0f28dcdd937ac6b4685706874591bfbc2401635ceab1c",
+          "executable": false
+        },
+        "plus/content-index.json": {
+          "kind": "file",
+          "sha256": "0f77514bd4990818ae25819e774c855ac6df4c5358dff57ddd460dfc457090a4",
+          "executable": false
+        },
+        "plus/des-scores.json": {
+          "kind": "file",
+          "sha256": "1256eae1c2e269062ec4e4bdf78fdeb668846e56ac3b818daf01b28484ecaef9",
+          "executable": false
+        },
+        "plus/des/sharehub/share-52.json": {
+          "kind": "file",
+          "sha256": "2129f003bef21c40c02733422938c9054a741cadf76e4cbac31b58920677a68f",
+          "executable": false
+        },
+        "plus/exam-questions.json": {
+          "kind": "file",
+          "sha256": "8b435bf0cec86616967e74a81e5afa24488c608b5b2974d6d2c16803dcb7a776",
+          "executable": false
+        },
+        "plus/faq-corpus.json": {
+          "kind": "file",
+          "sha256": "c45b632c47f10784d6084048f2079c11b6c5fb64ffd035e23b6a0aa1f7146ef9",
+          "executable": false
+        },
+        "plus/flashcards-index.json": {
+          "kind": "file",
+          "sha256": "00ebe60ae35b414fff37508d6fa9292ff93d98754f7f49c667fe078633c020bd",
+          "executable": false
+        },
+        "plus/pathways.json": {
+          "kind": "file",
+          "sha256": "925d0facb36410d32a4b300bff821292fb492104c64c5e8a1b706e0445b1be59",
+          "executable": false
+        },
+        "plus/quiz-index.json": {
+          "kind": "file",
+          "sha256": "6aab1458bfb1c054b5a1eb1b6af1ac69a6c9a3f76a2e4ecc854ccf20363757d7",
+          "executable": false
+        },
+        "service-worker.js": {
+          "kind": "file",
+          "sha256": "f25a3d0738cc8ab55eeb843cd674fd630fd6264097803f1e9f05bceca0e02d3b",
+          "executable": false
+        },
+        "sharehub/en/share-52.html": {
+          "kind": "file",
+          "sha256": "ebcd8d0ee1632f88c0096b6a5a503b5c97b793db3f5241aff0a0758401d964ec",
+          "executable": false
+        },
+        "sharehub/index.html": {
+          "kind": "file",
+          "sha256": "41c02d8f1370d85b89eacd316a120372b6197aa5ec50dd5275be1b876df0e4c4",
+          "executable": false
+        },
+        "sharehub/share-51.html": {
+          "kind": "file",
+          "sha256": "9e16663ebded682d73cdcafff8144649be68060f8d8a81d3890865b7c8623380",
+          "executable": false
+        },
+        "sharehub/share-52.html": {
+          "kind": "file",
+          "sha256": "8de42cccafa186771f0591828f4eabe6d15c2f7ae40d8875780b92f2bfde612a",
+          "executable": false
+        },
+        "sitemap.xml": {
+          "kind": "file",
+          "sha256": "6ab10d3cdadf79a1d3f67200d95c0dcdb8b5847c0cc2eb94cd02305011a8a731",
+          "executable": false
+        },
+        "up-board/index.json": {
+          "kind": "file",
+          "sha256": "fddb0ea38bf78300c8cc29c66446472a9063e885b42a2084a42e4fff775632cc",
+          "executable": false
+        }
+      },
+      "workflow": {
+        ".dentcast/workflows/README.md": "172337c6e52b1143888d1a7c43f56c71da74457ab9ed4b247db9cbd242ba81d8",
+        ".dentcast/workflows/agent-parity.md": "6f35f755ccb22111b06956ffd321f5789dcaf75f214dcfcc6bad3e87aa3e984a",
+        ".dentcast/workflows/publish-handoff.md": "d58cb5472df896dc0d33c37b79340d44c65897d90348f1bfbc98a0e56badc249",
+        ".dentcast/workflows/routing-details.md": "70e82a656759b6a949f84048d1d9047a2eaaca90c0f93d73d3e96857f77f394a",
+        ".dentcast/workflows/global/README.md": "5ec762efe1522eeca5841e37f8e61d938b6a1421904bffe32cecd51ddab4a39b",
+        ".dentcast/workflows/global/LOAD-MAP.json": "39a06ba30d7c181bf6fe9ef6014e885ceef9cbbf729d6dde1652b7e8ee81fced",
+        "tools/dentcast_global_rules.py": "c92d378a875dec54ed7845015797c37f211f0acab93150f669b0f820dfd94464",
+        ".dentcast/workflows/global/repo-conventions.md": "9594f6d63792fd6e26fe937dbcfb8ed719d0922468dfc9b944d7f2a237774052",
+        ".dentcast/workflows/global/plus-premium.md": "18a0bea238c466f92861ccd606b7a612a2517f8b0f63c19ea88ce9952d35edd2",
+        ".dentcast/workflows/global/site-invariants.md": "55d4fcd8c566d55011a01eb395d04260e7ca867d78be4b1401acf36a23886feb",
+        "tools/dentcast_publish_handoff.py": "5ac5843a3c668b71e4827d787479e9a9bab312b0c14ea881477780cb6d1814cd",
+        "tools/dentcast_publish_lifecycle.py": "c40548cadf6d12d5a24370a4666e8ddf16a338cf61c154627c3a8f24f7cc1932",
+        "tools/verify_publish.py": "41d939f7769ffa36078955a8a38548143bb6b180282e1a87b62ce602f519ecbb",
+        "tools/dentcast_text_io.py": "225c0a696e8ebc5e175b5dd9739210d4624938358af96baeb777f8c4a07726d8",
+        "tools/text_io.mjs": "c6f9208e26983c8eade43d8cf3effe865e6479df903d2cee661cd0a928565536",
+        "tools/dentcast_post_cut2_runner.py": "443494d00da1a8890a9d69f2d716358328120c562c1c24df0f8227eae3182b0e",
+        ".github/workflows/post-cut2-mechanical.yml": "f4c06799b68560aaa14b364e63d720ae658187962221607c862bfce42a19f106",
+        ".dentcast/workflows/publish-checkpoints.md": "b3d0dcad2e5f4c850a355945190be4b5d1330b696280b300971452110a2129f5",
+        ".dentcast/workflows/publish-after-push2.md": "101bf989270f0ba6d5f34dc350b94d4820f49d361ec0b99192b46854e7cea905",
+        ".dentcast/workflows/modules/01-hard-rules.md": "1cb57aa6db9c90675d90a6732e5d789ac9188977dc58906ef56b131960d83cb9",
+        ".dentcast/workflows/modules/02-routing-intake.md": "c9dc1b414dfdacf3376b4f9cb916ce911b428184550610950ef7f8e8132e9a74",
+        ".dentcast/workflows/modules/03-litecast-and-page.md": "f6bf2d4a9004e54525c698db895cfecac3d65e7090b015b634bae0bee7bc6723",
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "53a8860265c40465d8060bea1c9d4f701d24794f704de14a609b2d806c294fa9",
+        ".dentcast/workflows/modules/05-semantic-linking.md": "22379f060007b543c9544f2dd8a3aee600a930af19711fd1ee49e797ef9c7722",
+        ".dentcast/workflows/modules/06-paper-ingestion.md": "c34d0f4a17e6b1eddad13bca8e88af65a436ae7d5d41017a57660868020d6375",
+        ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "913b7e3b01038c372eaff58ab63cb91126d710a3b7051f8f9af72409631c9c98",
+        ".dentcast/workflows/modules/08-des-fidelity.md": "b9e29fff562f3fbad425a95a86dfe39c56374d30cb9971e42daf7b459f6cff7b",
+        ".dentcast/workflows/modules/09-challenge.md": "5ec2a39ce0e3f3777360a0b0c1092d34e240f6546d43103498e2d65a5a16f120",
+        ".dentcast/workflows/modules/10-brain-and-pathways.md": "5e4c5266d20e786eae7d3f410a2209c547c698781d8655d78828251c052ab66c",
+        ".dentcast/workflows/modules/11-build-and-version.md": "3b58272ec511d861e35af835f026cb91910d1ef40c1e164cbdc88f8637dcf310",
+        ".dentcast/workflows/modules/12-english-notify-verify.md": "89230e2261966297a9c26cc9df88a37862d5b4a71c1bd7ed44f20d6cc2596552"
+      }
+    }
+  },
+  "second_delivery_commit": "30999f25792995c69b7eae4bc62729c2b003082d",
+  "verification": {
+    "kind": "phase_f",
+    "content_id": "sharehub/share-52",
+    "expected_title": "\u067e\u0633\u062a \u0648 \u06a9\u0648\u0631 NPG\u061b \u0622\u06cc\u0627 \u0622\u0644\u06cc\u0627\u0698 NPG \u0633\u0645\u06cc \u0627\u0633\u062a \u0648 \u067e\u0633\u062a\u0634 \u0632\u0648\u062f \u062f\u0631\u0645\u06cc\u200c\u0622\u06cc\u062f\u061f",
+    "expected_caption": "\u0622\u06cc\u0627 \u067e\u0633\u062a \u0648 \u06a9\u0648\u0631 NPG \u0633\u0645\u06cc \u0627\u0633\u062a \u06cc\u0627 \u0632\u0648\u062f \u062f\u0631\u0645\u06cc\u200c\u0622\u06cc\u062f\u061f \u0628\u0631\u0631\u0633\u06cc \u0634\u0648\u0627\u0647\u062f \u0639\u0644\u0645\u06cc \u062f\u0631\u0628\u0627\u0631\u0647\u200c\u06cc \u06a9\u0648\u0631\u0648\u0698\u0646\u060c \u06af\u06cc\u0631\u060c \u0645\u0642\u0627\u0648\u0645\u062a \u0628\u0647 \u0634\u06a9\u0633\u062a\u060c \u0645\u062c\u0648\u0632 FDA \u0648 \u0637\u0628\u0642\u0647\u200c\u0628\u0646\u062f\u06cc ADA \u0622\u0644\u06cc\u0627\u0698 NPG.",
+    "exit_code": 0,
+    "output_sha256": "9ff9f096b2b7f4dfb3832f6ce7ce7dc0167ba96e9dd67e2c4d7ce2fd7241f202",
+    "summary": "201 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+  }
+}
