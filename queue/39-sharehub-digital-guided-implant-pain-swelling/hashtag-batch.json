@@ -1,0 +1,20 @@
+{
+ "type": "sharehub",
+ "enforce": true,
+ "note": "queue 39 (sharehub) — «ایمپلنت دیجیتال؛ آیا واقعاً درد و تورم نداره؟». Questions a dentist would type (Step 1): (1) ایمپلنت با گاید واقعاً درد و تورم کمتری داره؟ (2) فلپ‌لس کار کنم درد بیمار کمتر می‌شه؟ (3) گاید جراحی بدون فلپ چه مزیتی داره؟ (4) بیمار می‌پرسه ایمپلنت دیجیتال بی‌درده، چی جواب بدم؟ (5) کی نمی‌شه فلپ‌لس کار کرد؟ REUSED canonical tags (--simulate and the library): #مرور_منابع (series), #ایمپلنت_دیجیتال (5 pages), #جراحی_ایمپلنت (6 pages), #ایمپلنت (umbrella). NEWLY MINTED: #جراحی_فلپ‌لس — --simulate «جراحی فلپ لس», «flapless», «flapless surgery», «فلپلس», «جراحی بدون فلپ» reach no concept (only a partial, unrelated #جراحی_ارتوگناتیک on the shared word «جراحی»); no library concept or alias contains «فلپ». Gate (a): no existing concept covers it under any spelling. Gate (b): decision-level concept — whether to raise a flap or place the implant flapless is a surgical decision the article resolves («از فلپ‌لس بودن جراحی.»; «وقتی پهنای استخوان کافی نیست یا پیوند استخوان یا مدیریت بافت نرم لازمه، باید فلپ باز کرد، دیجیتال باشه یا نباشه.»). No other page is retagged (dentai/dentai-31 only mentions flapless placement in passing). Alias checklist (4 slots): English term = «flapless surgery», «flapless implant placement»; Finglish / Persian-script form = «فلپ لس»; common misspelling = «فلپلس»; colloquial phrase = «جراحی بدون فلپ». Bridge decision: map row «جراحی فلپ‌لس» -> flapless-surgery (32 catalog papers, e.g. Romandini 2022 prd.12440), guided-surgery (23 papers); both existing library tags, closest first. Natural-teeth concept: no (not added to tooth_topics).",
+ "concepts": [
+  {
+   "tag": "#جراحی_فلپ‌لس",
+   "domain": "clinical",
+   "definition": "کاشت ایمپلنت بدون کنار زدن فلپ مخاطی‌پریوستی، از راه پانچ یا برش کوچک بافت نرم، معمولاً با برنامه‌ریزی سه‌بعدی و گاید.",
+   "use_when": "مطلب تصمیم میان باز کردن فلپ و کاشت فلپ‌لس، یا پیامد این انتخاب (درد، تورم، شرایط کاندید بودن) را بحث می‌کند.",
+   "aliases": [
+    "flapless surgery",
+    "flapless implant placement",
+    "فلپ لس",
+    "فلپلس",
+    "جراحی بدون فلپ"
+   ]
+  }
+ ]
+}
