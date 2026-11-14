@@ -1,0 +1,59 @@
+[
+  {
+    "doi": "10.1111/prd.12440",
+    "link_existing": true
+  },
+  {
+    "doi": "10.1111/clr.13635",
+    "link_existing": true
+  },
+  {
+    "doi": "10.1111/clr.14050",
+    "link_existing": true
+  },
+  {
+    "title": "Clinical applications and effectiveness of guided implant surgery: a critical review based on randomized controlled trials",
+    "file_name": "Clinical applications and effectiveness of guided implant surgery a critical review based on randomized controlled trials.pdf",
+    "topic": "fresh socket",
+    "topic_path": "fresh socket/Guide",
+    "type": "critical review",
+    "local_path": "",
+    "file_size": 617641,
+    "key_finding": "",
+    "clinical_bottom_line": "",
+    "drive_link": "https://drive.google.com/file/d/1x3iwwojI0xXexyJXlRXMGFXHy5m1i0Fe/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=1x3iwwojI0xXexyJXlRXMGFXHy5m1i0Fe",
+    "drive_view": "https://drive.google.com/file/d/1x3iwwojI0xXexyJXlRXMGFXHy5m1i0Fe/view",
+    "drive_id": "1x3iwwojI0xXexyJXlRXMGFXHy5m1i0Fe",
+    "tags": [
+      "guided-surgery",
+      "flapless-surgery",
+      "flap-surgery",
+      "dental-implant",
+      "patient-morbidity",
+      "critical-review",
+      "systematic-review",
+      "topic:fresh-socket",
+      "topic:guide",
+      "clinical-applications-effectiveness-guided-implant-surgery-critical-review"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Clinical applications and effectiveness of guided implant surgery: a critical review based on randomized controlled trials",
+    "doi": "10.1186/s12903-017-0441-y",
+    "journal": "BMC Oral Health",
+    "crossref_year": 2017,
+    "subjects": [],
+    "abstract": "Nowadays implant placement protocols are widespread among clinicians all over the world. However, available literature, only partially analyses what can be potential benefits for the clinicians and patients, often focusing just on specific aspects, such as accuracy. The purpose of this review is to compare computer guided implant placement with conventional treatment protocols. A search strategy according to the P-I-C-O format was developed and executed using an electronic MEDLINE plus manual search from 2000 up to December 2016. This review included only randomized controlled trials (RCTs) focusing on subjects treated with digital workflow for oral implant placement compared to conventional procedures. Data were extracted from eligible papers and analysed. All kinds of outcomes were considered, even patient-related and economical outcomes. The search strategy revealed 16 articles; additional manual searches selected further 21 publications. Afterwards the evaluation of articles, only two studies could be selected for subsequent data extraction. The two identified RCTs analysed primary outcomes as prosthesis failure, implant failure, biological or prosthetic complications, and secondary outcomes as periimplant marginal bone loss. One RCT evaluated also the duration of treatment, post-surgical progress, additional treatment costs and patient satisfaction. The other RCT focused instead on evaluating eventual improvement of patient’s quality of life. In both selected studies, were not observed by the authors statistically significant differences between clinical cases treated with digital protocols and those treated with conventional ones. In one RCT, however post-surgical progress evaluation showed more patients’ self-reported pain and swelling in conventional group. Within the limitation of this review, based on only two RCTs, the only evidence was that implant survival rate and effectiveness are similar for conventional and digital implant placement procedures. This is also confirmed by many other studies with however minor scientific evidence levels. Reduction of post-operative pain, surgical time and overall costs are discussed. Authors believe that scientific research should focus more in identifying which clinical situations can get greatest benefits from implant guided surgery. This should be done with research protocols such as RCT that assess comprehensively the advantages and disadvantages of fully digital surgical protocols.",
+    "display_title": "Clinical applications and effectiveness of guided implant surgery: a critical review based on randomized controlled trials",
+    "authors": [
+      "Marco Colombo",
+      "Carlo Mangano",
+      "Eitan Mijiritsky",
+      "Mischa Krebs",
+      "Uli Hauschild",
+      "Thomas Fortin"
+    ]
+  }
+]
