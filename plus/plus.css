@@ -838,6 +838,9 @@ body.dcp-study .dcp-endcard { display: none; }
 /* overlay card */
 .dcp-lg-card { background: var(--dcp-surface); color: var(--dcp-ink); border: 1px solid var(--dcp-line);
   border-radius: 20px; box-shadow: var(--dcp-shadow); overflow: hidden; width: min(440px, 94vw); max-height: 90vh;
+  /* mobile browsers size vh to the toolbar-hidden viewport, so 90vh can run past
+     the visible screen; dvh is the visible height, minus the overlay's 16px padding */
+  max-height: calc(100dvh - 32px); box-sizing: border-box;
   display: flex; flex-direction: column; position: relative; }
 .dcp-lg-head { display: flex; align-items: center; gap: 14px; padding: 20px 18px 16px;
   padding-inline-end: 46px; /* reserve the top corner for the × so nothing sits under it */
@@ -881,8 +884,12 @@ body.dcp-study .dcp-endcard { display: none; }
 .dcp-modal-overlay.dcp-lg-overlay { z-index: 10090; }
 
 /* finalized-outcome announcement */
-.dcp-lg-announce { align-items: center; text-align: center; padding: 26px 22px; gap: 6px; }
-.dcp-lg-announce > * { margin: 0; }
+/* the card clips (overflow:hidden), so the announcement scrolls itself: the
+   "stayed" variant with the premium teaser is taller than a phone screen, and
+   without this the «دیدم» button was cut off below the fold */
+.dcp-lg-announce { align-items: center; text-align: center; padding: 26px 22px; gap: 6px;
+  overflow-y: auto; overscroll-behavior: contain; }
+.dcp-lg-announce > * { margin: 0; flex-shrink: 0; }
 .dcp-lg-announce-face { font-size: 2.4rem; }
 .dcp-lg-announce .dcp-tier { margin: 8px auto 4px; }
 .dcp-lg-announce h3 { font-size: 1.3rem; font-weight: 800; margin: 6px 0 2px; }
@@ -893,6 +900,15 @@ body.dcp-study .dcp-endcard { display: none; }
    card's centered text, since a bullet list reads better started than centered. */
 .dcp-lg-announce .dcp-lg-stay-teaser { width: 100%; text-align: start; padding-top: 14px; margin-top: 4px; border-top: 1px dashed var(--dcp-line); }
 .dcp-lg-announce .dcp-lg-stay-line { font-weight: 700; color: var(--dcp-ink); }
+/* short screens: tighten the announcement so it usually fits without scrolling */
+@media (max-height: 760px) {
+  .dcp-lg-announce { padding: 18px 18px; gap: 4px; }
+  .dcp-lg-announce-face { font-size: 1.9rem; }
+  .dcp-lg-announce .dcp-tier { margin: 4px auto 2px; }
+  .dcp-lg-announce p { line-height: 1.65; }
+  .dcp-lg-announce .dcp-lg-stay-teaser { padding-top: 10px; }
+  .dcp-lg-announce .dcp-btn { margin-top: 10px; }
+}
 
 /* connection chips — their own line under the streak/score */
 .dc-plus-chips { flex: 1 0 100%; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
