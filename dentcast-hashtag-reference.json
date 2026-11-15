@@ -934,6 +934,71 @@
    ]
   },
   {
+   "key": "curated_content",
+   "tag": "#Curated_Content",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
+   "use_when": "روی مدخل‌های بازنشر.",
+   "aliases": [
+    "محتوای گلچین شده",
+    "کیوریتد",
+    "بازنشر محتوا"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 47,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25",
+    "sharehub/share-26",
+    "sharehub/share-27",
+    "sharehub/share-28",
+    "sharehub/share-29",
+    "sharehub/share-30",
+    "sharehub/share-31",
+    "sharehub/share-32",
+    "sharehub/share-33",
+    "sharehub/share-34",
+    "sharehub/share-35",
+    "sharehub/share-36",
+    "sharehub/share-38",
+    "sharehub/share-39",
+    "sharehub/share-41",
+    "sharehub/share-42",
+    "sharehub/share-43",
+    "sharehub/share-44",
+    "sharehub/share-45",
+    "sharehub/share-48",
+    "sharehub/share-49",
+    "sharehub/share-50",
+    "sharehub/share-53"
+   ]
+  },
+  {
    "key": "پست_و_کور",
    "tag": "#پست_و_کور",
    "domain": "clinical",
@@ -1004,70 +1069,6 @@
     "dentcast-plus/video-14",
     "insight/insight-97",
     "sharehub/share-52"
-   ]
-  },
-  {
-   "key": "curated_content",
-   "tag": "#Curated_Content",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
-   "use_when": "روی مدخل‌های بازنشر.",
-   "aliases": [
-    "محتوای گلچین شده",
-    "کیوریتد",
-    "بازنشر محتوا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 46,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24",
-    "sharehub/share-25",
-    "sharehub/share-26",
-    "sharehub/share-27",
-    "sharehub/share-28",
-    "sharehub/share-29",
-    "sharehub/share-30",
-    "sharehub/share-31",
-    "sharehub/share-32",
-    "sharehub/share-33",
-    "sharehub/share-34",
-    "sharehub/share-35",
-    "sharehub/share-36",
-    "sharehub/share-38",
-    "sharehub/share-39",
-    "sharehub/share-41",
-    "sharehub/share-42",
-    "sharehub/share-43",
-    "sharehub/share-44",
-    "sharehub/share-45",
-    "sharehub/share-48",
-    "sharehub/share-49",
-    "sharehub/share-50"
    ]
   },
   {
@@ -2561,6 +2562,45 @@
    ]
   },
   {
+   "key": "تنظیم_اکلوژن",
+   "tag": "#تنظیم_اکلوژن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "حذف انتخابیِ تماس‌های ناخواسته با تراش، بدون از بین بردن هندسه‌ی فانکشنال.",
+   "use_when": "مقاله روش یا قاعده‌ی تراش تنظیمی بدهد.",
+   "aliases": [
+    "سلکتیو گرایندینگ",
+    "میزان کردن اکلوژن",
+    "تنظیم اکلوزال",
+    "occlusal equilibration"
+   ],
+   "variants": [
+    "#تنظیم_اکلوژال",
+    "#تنظیم-اکلوژن",
+    "#چکاپ_اکلوژنی"
+   ],
+   "co_tags": [],
+   "count": 16,
+   "content_ids": [
+    "insight/insight-1",
+    "photocast/episode-2",
+    "dentcast-plus/video-2",
+    "insight/insight-27",
+    "dentcast-plus/video-6",
+    "insight/insight-37",
+    "sharehub/share-6",
+    "insight/insight-44",
+    "insight/insight-54",
+    "insight/insight-56",
+    "chairside/chairside-37",
+    "insight/insight-100",
+    "insight/insight-103",
+    "sharehub/share-47",
+    "chairside/chairside-51",
+    "sharehub/share-53"
+   ]
+  },
+  {
    "key": "کشیدن_دندان",
    "tag": "#کشیدن_دندان",
    "domain": null,
@@ -2593,44 +2633,6 @@
     "sharehub/share-19",
     "insight/insight-89",
     "insight/insight-93"
-   ]
-  },
-  {
-   "key": "تنظیم_اکلوژن",
-   "tag": "#تنظیم_اکلوژن",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "حذف انتخابیِ تماس‌های ناخواسته با تراش، بدون از بین بردن هندسه‌ی فانکشنال.",
-   "use_when": "مقاله روش یا قاعده‌ی تراش تنظیمی بدهد.",
-   "aliases": [
-    "سلکتیو گرایندینگ",
-    "میزان کردن اکلوژن",
-    "تنظیم اکلوزال",
-    "occlusal equilibration"
-   ],
-   "variants": [
-    "#تنظیم_اکلوژال",
-    "#تنظیم-اکلوژن",
-    "#چکاپ_اکلوژنی"
-   ],
-   "co_tags": [],
-   "count": 15,
-   "content_ids": [
-    "insight/insight-1",
-    "photocast/episode-2",
-    "dentcast-plus/video-2",
-    "insight/insight-27",
-    "dentcast-plus/video-6",
-    "insight/insight-37",
-    "sharehub/share-6",
-    "insight/insight-44",
-    "insight/insight-54",
-    "insight/insight-56",
-    "chairside/chairside-37",
-    "insight/insight-100",
-    "insight/insight-103",
-    "sharehub/share-47",
-    "chairside/chairside-51"
    ]
   },
   {
@@ -2699,6 +2701,41 @@
     "insight/insight-76",
     "insight/insight-84",
     "sharehub/share-30"
+   ]
+  },
+  {
+   "key": "سایش_دندان",
+   "tag": "#سایش_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتنِ ساختار در اثر نیروهای مکرر.",
+   "use_when": "مقاله سایش را بسنجد یا مدیریت کند.",
+   "aliases": [
+    "tooth wear",
+    "ساییدگی دندان",
+    "attrition",
+    "ساییدگی",
+    "اتریشن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 15,
+   "content_ids": [
+    "episodes/episode-34",
+    "episodes/episode-125",
+    "episodes/episode-127",
+    "insight/insight-6",
+    "insight/insight-11",
+    "insight/insight-43",
+    "notecast/episode-34",
+    "notecast/episode-35",
+    "dentai/dentai-24",
+    "dentai/dentai-26",
+    "chairside/chairside-23",
+    "sharehub/share-11",
+    "sharehub/share-21",
+    "sharehub/share-24",
+    "sharehub/share-53"
    ]
   },
   {
@@ -2874,6 +2911,45 @@
    ]
   },
   {
+   "key": "بعد_عمودی",
+   "tag": "#بعد_عمودی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Vertical Dimension — ارتفاع عمودی صورت در اکلوژن؛ متغیری که تغییرش کل بازسازی را جابه‌جا می‌کند.",
+   "use_when": "مقاله بعد عمودی را بسنجد، تغییر بدهد، یا درباره‌ی تغییرش تصمیم بگیرد.",
+   "aliases": [
+    "ارتفاع عمودی",
+    "دایمنشن عمودی",
+    "بعد عمودی صورت",
+    "Vertical Dimension"
+   ],
+   "variants": [
+    "#VerticalDimension",
+    "#Vertical_Dimension"
+   ],
+   "co_tags": [
+    "#Vertical_Dimension",
+    "#VDO"
+   ],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-14",
+    "insight/insight-2",
+    "insight/insight-6",
+    "insight/insight-12",
+    "notecast/episode-14",
+    "episodes/episode-154",
+    "episodes/episode-155",
+    "insight/insight-43",
+    "notecast/episode-34",
+    "notecast/episode-35",
+    "insight/insight-51",
+    "insight/insight-60",
+    "metanotes/meta-22",
+    "sharehub/share-53"
+   ]
+  },
+  {
    "key": "تحلیل_استخوان",
    "tag": "#تحلیل_استخوان",
    "domain": "clinical",
@@ -3011,40 +3087,6 @@
    ]
   },
   {
-   "key": "سایش_دندان",
-   "tag": "#سایش_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "از دست رفتنِ ساختار در اثر نیروهای مکرر.",
-   "use_when": "مقاله سایش را بسنجد یا مدیریت کند.",
-   "aliases": [
-    "tooth wear",
-    "ساییدگی دندان",
-    "attrition",
-    "ساییدگی",
-    "اتریشن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 14,
-   "content_ids": [
-    "episodes/episode-34",
-    "episodes/episode-125",
-    "episodes/episode-127",
-    "insight/insight-6",
-    "insight/insight-11",
-    "insight/insight-43",
-    "notecast/episode-34",
-    "notecast/episode-35",
-    "dentai/dentai-24",
-    "dentai/dentai-26",
-    "chairside/chairside-23",
-    "sharehub/share-11",
-    "sharehub/share-21",
-    "sharehub/share-24"
-   ]
-  },
-  {
    "key": "سرامیک_دندانی",
    "tag": "#سرامیک_دندانی",
    "domain": "clinical",
@@ -3152,44 +3194,6 @@
     "insight/insight-85",
     "insight/insight-86",
     "chairside/chairside-47"
-   ]
-  },
-  {
-   "key": "بعد_عمودی",
-   "tag": "#بعد_عمودی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "Vertical Dimension — ارتفاع عمودی صورت در اکلوژن؛ متغیری که تغییرش کل بازسازی را جابه‌جا می‌کند.",
-   "use_when": "مقاله بعد عمودی را بسنجد، تغییر بدهد، یا درباره‌ی تغییرش تصمیم بگیرد.",
-   "aliases": [
-    "ارتفاع عمودی",
-    "دایمنشن عمودی",
-    "بعد عمودی صورت",
-    "Vertical Dimension"
-   ],
-   "variants": [
-    "#VerticalDimension",
-    "#Vertical_Dimension"
-   ],
-   "co_tags": [
-    "#Vertical_Dimension",
-    "#VDO"
-   ],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-14",
-    "insight/insight-2",
-    "insight/insight-6",
-    "insight/insight-12",
-    "notecast/episode-14",
-    "episodes/episode-154",
-    "episodes/episode-155",
-    "insight/insight-43",
-    "notecast/episode-34",
-    "notecast/episode-35",
-    "insight/insight-51",
-    "insight/insight-60",
-    "metanotes/meta-22"
    ]
   },
   {
@@ -3842,6 +3846,47 @@
    ]
   },
   {
+   "key": "فضای_رستوریتیو",
+   "tag": "#فضای_رستوریتیو",
+   "domain": null,
+   "words": 2,
+   "definition": "فضای عمودیِ لازم برای بازسازی.",
+   "use_when": "مقاله کمبود یا اشغالِ این فضا را مسئله بداند.",
+   "aliases": [
+    "فضای بازسازی",
+    "restorative space",
+    "فضای پروتزی",
+    "فضای بین فکی",
+    "interocclusal space",
+    "کمبود فضای عمودی",
+    "فضای عمودی کم",
+    "فضای عمودی",
+    "فضای اینتراکلوزال",
+    "فضای بین اکلوزالی",
+    "فضای اکلوزالی",
+    "کمبود فضای بازسازی",
+    "interocclusal clearance"
+   ],
+   "variants": [
+    "#کمبود_فضای_عمودی"
+   ],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "insight/insight-6",
+    "insight/insight-10",
+    "insight/insight-19",
+    "insight/insight-43",
+    "notecast/episode-34",
+    "insight/insight-46",
+    "chairside/chairside-19",
+    "insight/insight-57",
+    "chairside/chairside-31",
+    "insight/insight-78",
+    "sharehub/share-53"
+   ]
+  },
+  {
    "key": "متاآنالیز",
    "tag": "#متاآنالیز",
    "domain": null,
@@ -4162,46 +4207,6 @@
     "chairside/chairside-40",
     "insight/insight-97",
     "insight/insight-107"
-   ]
-  },
-  {
-   "key": "فضای_رستوریتیو",
-   "tag": "#فضای_رستوریتیو",
-   "domain": null,
-   "words": 2,
-   "definition": "فضای عمودیِ لازم برای بازسازی.",
-   "use_when": "مقاله کمبود یا اشغالِ این فضا را مسئله بداند.",
-   "aliases": [
-    "فضای بازسازی",
-    "restorative space",
-    "فضای پروتزی",
-    "فضای بین فکی",
-    "interocclusal space",
-    "کمبود فضای عمودی",
-    "فضای عمودی کم",
-    "فضای عمودی",
-    "فضای اینتراکلوزال",
-    "فضای بین اکلوزالی",
-    "فضای اکلوزالی",
-    "کمبود فضای بازسازی",
-    "interocclusal clearance"
-   ],
-   "variants": [
-    "#کمبود_فضای_عمودی"
-   ],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "insight/insight-6",
-    "insight/insight-10",
-    "insight/insight-19",
-    "insight/insight-43",
-    "notecast/episode-34",
-    "insight/insight-46",
-    "chairside/chairside-19",
-    "insight/insight-57",
-    "chairside/chairside-31",
-    "insight/insight-78"
    ]
   },
   {
@@ -5468,6 +5473,32 @@
    ]
   },
   {
+   "key": "سوپرااراپشن",
+   "tag": "#سوپرااراپشن",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "رویشِ بیش‌ازحدِ دندان پس از رفتنِ آنتاگونیست.",
+   "use_when": "مقاله اشغالِ فضای رستوریتیو را مسئله بداند.",
+   "aliases": [
+    "اکستروژن",
+    "supraeruption",
+    "رویش بیش از حد",
+    "سوپرا اراپت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "insight/insight-6",
+    "insight/insight-8",
+    "insight/insight-46",
+    "chairside/chairside-19",
+    "chairside/chairside-31",
+    "sharehub/share-14",
+    "sharehub/share-53"
+   ]
+  },
+  {
    "key": "شروع_نکردن_درمان",
    "tag": "#شروع_نکردن_درمان",
    "domain": null,
@@ -6135,31 +6166,6 @@
     "insight/insight-9",
     "sharehub/share-4",
     "metanotes/meta-10"
-   ]
-  },
-  {
-   "key": "سوپرااراپشن",
-   "tag": "#سوپرااراپشن",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "رویشِ بیش‌ازحدِ دندان پس از رفتنِ آنتاگونیست.",
-   "use_when": "مقاله اشغالِ فضای رستوریتیو را مسئله بداند.",
-   "aliases": [
-    "اکستروژن",
-    "supraeruption",
-    "رویش بیش از حد",
-    "سوپرا اراپت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "insight/insight-6",
-    "insight/insight-8",
-    "insight/insight-46",
-    "chairside/chairside-19",
-    "chairside/chairside-31",
-    "sharehub/share-14"
    ]
   },
   {
@@ -11532,6 +11538,26 @@
    ]
   },
   {
+   "key": "اینتروژن_ارتودنسی",
+   "tag": "#اینتروژن_ارتودنسی",
+   "domain": null,
+   "words": 2,
+   "definition": "فرو بردنِ ارتودنتیکِ دندانِ سوپرااراپت برای بازپس‌گیریِ فضا.",
+   "use_when": "مقاله اینتروژن را راه‌حل بداند.",
+   "aliases": [
+    "اینتروژن",
+    "intrusion",
+    "فرو بردن دندان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-19",
+    "sharehub/share-53"
+   ]
+  },
+  {
    "key": "اینستاگرام",
    "tag": "#اینستاگرام",
    "domain": "web",
@@ -15613,25 +15639,6 @@
    "count": 1,
    "content_ids": [
     "dentcast-plus/video-6"
-   ]
-  },
-  {
-   "key": "اینتروژن_ارتودنسی",
-   "tag": "#اینتروژن_ارتودنسی",
-   "domain": null,
-   "words": 2,
-   "definition": "فرو بردنِ ارتودنتیکِ دندانِ سوپرااراپت برای بازپس‌گیریِ فضا.",
-   "use_when": "مقاله اینتروژن را راه‌حل بداند.",
-   "aliases": [
-    "اینتروژن",
-    "intrusion",
-    "فرو بردن دندان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "chairside/chairside-19"
    ]
   },
   {

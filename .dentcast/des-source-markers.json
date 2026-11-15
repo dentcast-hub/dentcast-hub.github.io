@@ -17,5 +17,22 @@
         "EAO"
       ]
     }
+  },
+  "sharehub/share-53": {
+    "S1": {
+      "markers": [
+        "Pre-prosthetic orthodontics",
+        "Kokich",
+        "مقاله مروری"
+      ],
+      "disambiguators": []
+    },
+    "S2": {
+      "markers": [
+        "Koo",
+        "گزارش مورد بالینی"
+      ],
+      "disambiguators": []
+    }
   }
 }
