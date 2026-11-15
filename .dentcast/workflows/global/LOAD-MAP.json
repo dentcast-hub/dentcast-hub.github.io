@@ -3,7 +3,7 @@
   "sources": [
     {
       "path": ".dentcast/workflows/global/repo-conventions.md",
-      "sha256": "9594f6d63792fd6e26fe937dbcfb8ed719d0922468dfc9b944d7f2a237774052",
+      "sha256": "89afa9b633d19b723435618abc547ea9576f5caf998256755c6b998e53a0211b",
       "sections": [
         {
           "id": "repo-core",
@@ -89,7 +89,7 @@
     },
     {
       "path": ".dentcast/workflows/global/plus-premium.md",
-      "sha256": "18a0bea238c466f92861ccd606b7a612a2517f8b0f63c19ea88ce9952d35edd2",
+      "sha256": "c4a6bdcffa7916252f9ee64e76fc73198fd9477568debd6e516e567f4a71eab9",
       "sections": [
         {
           "id": "publication-surfaces",
@@ -103,23 +103,23 @@
           "id": "badges-ai",
           "lines": [
             110,
-            135
+            118
           ],
           "core": false
         },
         {
           "id": "des-display",
           "lines": [
-            136,
-            145
+            119,
+            128
           ],
           "core": true
         },
         {
           "id": "plus-features",
           "lines": [
-            146,
-            274
+            129,
+            257
           ],
           "core": false
         }
