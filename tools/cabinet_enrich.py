@@ -292,6 +292,100 @@ def cmd_merge(a):
     print(f'{len(out)} papers merged -> {a.out}')
 
 
+# ------------------------------------------------------------------ run management
+
+RESULTS = ROOT / '.dentcast' / 'cabinet-enrichment' / 'results.jsonl'
+SITE_FILE = ROOT / 'dentcast_cabinet_enrichment.json'
+
+
+def cmd_vocab(a):
+    """vocabulary.txt + aliases.json for the proposers, from the live catalogue."""
+    work = outside_repo(a.work)
+    work.mkdir(parents=True, exist_ok=True)
+    cat = catalog()
+    cnt = Counter(t for p in cat['papers'] for t in p.get('tags', [])
+                  if not t.startswith('topic:') and not re.fullmatch(r'(19|20)\d\d', t) and len(t.split('-')) < 6)
+    with open(work / 'vocabulary.txt', 'w', encoding='utf-8') as f:
+        f.write('# library tag<TAB>papers carrying it (kebab-case; choose ONLY from this list)\n')
+        for t, c in sorted(cnt.items(), key=lambda x: (-x[1], x[0])):
+            f.write(f'{t}\t{c}\n')
+    (work / 'aliases.json').write_text(json.dumps(cat.get('tag_aliases', {}), ensure_ascii=False), encoding='utf-8')
+    print(f'{len(cnt)} tags')
+
+
+def done_ids():
+    if not RESULTS.exists():
+        return set()
+    return {json.loads(l)['id'] for l in RESULTS.read_text(encoding='utf-8').splitlines() if l.strip()}
+
+
+def cmd_todo(a):
+    """Catalogue ids not yet in results.jsonl, in catalogue order; --limit for the next slice."""
+    done = done_ids()
+    ids = [p['id'] for p in catalog()['papers'] if p['id'] not in done]
+    if a.limit:
+        ids = ids[:a.limit]
+    print(','.join(ids))
+    print(f'{len(ids)} ids ({len(done)} already done)', file=sys.stderr)
+
+
+def _val(v):
+    return v.get('value') if isinstance(v, dict) else v
+
+
+def cmd_publish(a):
+    """Merged results (merge --out) -> repo results.jsonl (no quotes, no text) -> site file."""
+    work = outside_repo(a.work)
+    cat = catalog()
+    P = {p['id']: p for p in cat['papers']}
+    doi2id = {p['doi'].lower(): i for i, p in P.items() if p.get('doi')}
+    rows = {json.loads(l)['id']: json.loads(l) for l in RESULTS.read_text(encoding='utf-8').splitlines() if l.strip()} \
+        if RESULTS.exists() else {}
+    for line in Path(a.merged).read_text(encoding='utf-8').splitlines():
+        if not line.strip():
+            continue
+        r = json.loads(line)
+        pf = work / f"paper_{r['id']}.json"
+        refs = json.loads(pf.read_text(encoding='utf-8')).get('ref_dois', []) if pf.exists() else []
+        facts = {k: ([_val(m) for m in (v or [])] if k == 'materials_brands' else _val(v))
+                 for k, v in (r.get('facts') or {}).items()}
+        rows[r['id']] = {
+            'id': r['id'], 'ft_tags': [t['tag'] for t in r['ft_tags']], 'new_tags': [t['tag'] for t in r.get('new_tags', [])],
+            'doc_class': r.get('doc_class'), 'off_topic': r.get('off_topic', False), 'off_topic_reason': r.get('off_topic_reason'),
+            'catalog_type_ok': r.get('catalog_type_ok', True), 'suggested_type': r.get('suggested_type'),
+            'text_quality': r.get('text_quality'),
+            'facts': {k: v for k, v in facts.items() if v not in (None, '', [])},
+            'cites_in_cabinet': sorted({doi2id[d] for d in refs if d in doi2id and doi2id[d] != r['id']}),
+        }
+    RESULTS.write_text(''.join(json.dumps(rows[k], ensure_ascii=False) + '\n' for k in sorted(rows)), encoding='utf-8')
+    build_site_file(rows, P)
+    print(f'{len(rows)} papers in results.jsonl; site file rebuilt')
+
+
+SITE_FACTS = ('population', 'intervention', 'comparison', 'outcomes', 'main_result', 'sample_size', 'follow_up',
+              'materials_brands', 'funding_coi', 'limitations')
+
+
+def build_site_file(rows, P):
+    """What the cabinet page reads: tags (accepted + accepted new), facts, and cited
+    papers still in the catalogue. Robots-blocked like the catalogue itself."""
+    papers = {}
+    for i, r in rows.items():
+        if i not in P:
+            continue
+        f = {k: r['facts'][k] for k in SITE_FACTS if r['facts'].get(k)}
+        e = {'t': r['ft_tags'] + r.get('new_tags', []), 'f': f, 'c': [c for c in r['cites_in_cabinet'] if c in P]}
+        papers[i] = {k: v for k, v in e.items() if v}
+    SITE_FILE.write_text(json.dumps({'version': 1, 'papers': papers}, ensure_ascii=False, separators=(',', ':')),
+                         encoding='utf-8')
+
+
+def cmd_site(a):
+    rows = {json.loads(l)['id']: json.loads(l) for l in RESULTS.read_text(encoding='utf-8').splitlines() if l.strip()}
+    build_site_file(rows, {p['id']: p for p in catalog()['papers']})
+    print('site file rebuilt')
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
     sub = ap.add_subparsers(dest='cmd', required=True)
@@ -306,8 +400,17 @@ def main(argv=None):
     m.add_argument('--work', required=True)
     m.add_argument('--judges', required=True)
     m.add_argument('--out', required=True)
+    v = sub.add_parser('vocab', help='vocabulary.txt + aliases.json into --work')
+    v.add_argument('--work', required=True)
+    t = sub.add_parser('todo', help='ids not yet in results.jsonl')
+    t.add_argument('--limit', type=int)
+    pb = sub.add_parser('publish', help='merged results -> results.jsonl + site file')
+    pb.add_argument('--work', required=True)
+    pb.add_argument('--merged', required=True)
+    sub.add_parser('site', help='rebuild dentcast_cabinet_enrichment.json from results.jsonl')
     a = ap.parse_args(argv)
-    {'prepare': cmd_prepare, 'check': cmd_check, 'merge': cmd_merge}[a.cmd](a)
+    {'prepare': cmd_prepare, 'check': cmd_check, 'merge': cmd_merge, 'vocab': cmd_vocab, 'todo': cmd_todo,
+     'publish': cmd_publish, 'site': cmd_site}[a.cmd](a)
 
 
 if __name__ == '__main__':

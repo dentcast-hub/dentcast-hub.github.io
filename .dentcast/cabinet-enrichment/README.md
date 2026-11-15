@@ -23,3 +23,29 @@ clinical_bottom_line only where the catalogue had none), `cites_in_cabinet`
 
 Coverage: 661 of 2169 papers (option 3: judge what was proposed, then decide
 on the rest). Run date 2026-11-15.
+
+## Live since 2026-11-15
+
+Founder's decision: the results are on the site. `dentcast_cabinet_enrichment.json`
+(built by `tools/cabinet_enrich.py site` / `publish`; robots-blocked and
+`X-Robots-Tag: noindex` like the catalogue) is read by the cabinet page:
+added tags (dotted chips, search field `E`, weight 4), study facts (field `M`,
+weight 2, «Study facts» on the card) and «Cites N papers in this library».
+Applied to the catalogue itself: 3 unusable documents removed (P0150 e-book
+cover, P0670 brochure, P1995 table of contents), 12 study types corrected,
+and empty key_finding / clinical_bottom_line / doi / authors / year / journal
+filled from what the paper itself says. The Covid-19 folders and two other
+off-topic papers stay (no decision yet). Seven image-only scans need OCR.
+
+## Running the next slice (any session)
+
+All instructions live here: `PROPOSE.md` (Sonnet), `JUDGE.md` (Opus),
+`workflow-propose-judge.js` (Workflow script; args `{work, batches}`).
+
+    W=<scratch dir outside the repo>
+    python3 tools/cabinet_enrich.py vocab   --work $W
+    python3 tools/cabinet_enrich.py todo    --limit 700          # next ids
+    python3 tools/cabinet_enrich.py prepare --ids <ids> --work $W   # Drive download; shard into parallel processes
+    # Workflow: batches of 10 «ok» ids (text_status) -> propose (sonnet) + check + judge (opus) -> $W/J/
+    python3 tools/cabinet_enrich.py merge   --work $W --judges J --out $W/merged.jsonl
+    python3 tools/cabinet_enrich.py publish --work $W --merged $W/merged.jsonl   # results.jsonl + site file
