@@ -59,6 +59,7 @@ Disallow: /up-board/index.json
 # crawlers reading that tag, which is what makes the noindex work.
 Disallow: /dentcast_cabinet_full_catalog.json
 Disallow: /dentcast_cabinet_full_catalog.enriched.json
+Disallow: /dentcast_cabinet_enrichment.json
 
 # Build tooling — scripts and the episode page template (tools/episodes_template.html
 # is the unfilled skeleton the builder fills; it ships "index, follow" with a canonical
