@@ -281,6 +281,9 @@
        • جستجو — the floating control (#dc-float-search) on every page but
          the homepage, whose «آرشیو» tab carries its own search bar.
      Do not re-add them here.
+     (Superseded on 2026-11-15 by the founder's side-drawer mockup: this grid is
+     now only the raw material buildSideDrawer() rearranges, and «جستجو» is
+     back in the menu as its primary action — see SIDE DRAWER below.)
 
      How the flat grid is built: the tools are still injected into the old
      tray (.dc-toolbar-drawer-inner) — ~1075 pages carry that tray in their
@@ -1246,6 +1249,377 @@
     drawer.style.opacity    = '0';
   })();
 
+  /* ── SIDE DRAWER (founder mockup, 2026-11-15) ───────────────────────
+     The hamburger no longer drops a 3×3 grid under the header; it slides a
+     panel in from the right, over a dim, in three tiers:
+       • top    — the one primary action (search) and «کاوش»: the topic
+                  index, the glossary, the episode archive, and «ابزارها ›»
+                  which opens the tools as a bottom sheet with one line each;
+       • middle — «مال من»: for a SIGNED-IN reader «ادامه بده» (the audio
+                  hub's resume record) and «اخیراً دیده‌شده» (the last pages
+                  they opened). A guest gets NOTHING saved — no history is
+                  written for them at all (founder: the empty, locked shelf is
+                  the reason to sign in) — only a faded shelf and «ورود»;
+       • bottom — تم · موسیقی · نصب · پشتیبانی, then the account row.
+     Founder decisions this supersedes: search («جستجو») is back in the
+     menu, and the episode archive is a menu door again.
+
+     Nothing is rebuilt that already works: the tool buttons the page
+     carries (#tool-pwa, #tool-subscribe, #btn-theme-drawer,
+     #btn-music-toggle, #btn-radar-topbar, #btn-cabinet) are MOVED, never
+     re-created, so every delegated handler keyed on their ids — and the
+     library gate keyed on the cabinet href — keeps working. The radar and
+     the cabinet live in #dcToolsSheet, which library-gate.js counts as the
+     drawer. Runs on whatever #dcToolbarDrawer exists (injected or the
+     homepage's static one); the desktop shell has its own sidebar and never
+     shows this one. */
+  var DC_SD_RECENT_KEY = 'dc-recent-pages';
+  var DC_SD_RECENT_MAX = 8;
+  var DC_SD_RECENT_SHOW = 3;
+  var dcSdSubBtn = null;   // #tool-subscribe, held while it is out of the document
+  function dcSdSigned() {
+    try { return localStorage.getItem('dcp:signed-in') === '1'; } catch (e) { return false; }
+  }
+  function dcSdRead(key) {
+    try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch (e) { return null; }
+  }
+  function dcSdFa(n) { return String(n).replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[+d]; }); }
+
+  /* Recording: signed-in readers only, reading pages only. A guest's visit
+     writes nothing, and a device that signed out loses the list. */
+  function dcSdRecordVisit() {
+    if (!dcSdSigned()) return;
+    if (window.self !== window.top) return;
+    var main = document.querySelector('main.article-content-wrap');
+    if (!main) return;
+    var h = main.querySelector('h1') || document.querySelector('h1');
+    var title = (h ? h.textContent : document.title.split('|')[0]).replace(/\s+/g, ' ').trim();
+    if (!title) return;
+    var path = location.pathname;
+    var list = dcSdRead(DC_SD_RECENT_KEY);
+    if (!Array.isArray(list)) list = [];
+    list = list.filter(function (x) { return x && x.u !== path; });
+    list.unshift({ u: path, t: title.slice(0, 140) });
+    try { localStorage.setItem(DC_SD_RECENT_KEY, JSON.stringify(list.slice(0, DC_SD_RECENT_MAX))); } catch (e) {}
+  }
+
+  var DC_SD_CSS =
+'html.dc-sd-lock,html.dc-sd-lock body{overflow:hidden!important;}' +
+'#dcToolbarDrawer.dc-sd{position:fixed!important;inset:0!important;top:0!important;left:0!important;right:0!important;bottom:0!important;width:auto!important;max-height:none!important;height:auto!important;opacity:1!important;overflow:visible!important;background:transparent!important;border:0!important;padding:0!important;margin:0!important;z-index:10040!important;visibility:hidden;pointer-events:none;transition:visibility 0s linear .26s!important;font-family:Vazirmatn,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;}' +
+'#dcToolbarDrawer.dc-sd.open{visibility:visible;pointer-events:auto;transition:none!important;}' +
+'.dc-sd-dim{position:absolute;inset:0;background:rgba(10,20,40,.45);opacity:0;transition:opacity .24s ease;}' +
+'#dcToolbarDrawer.dc-sd.open .dc-sd-dim{opacity:1;}' +
+'.dc-sd-panel{position:absolute;top:0;bottom:0;right:0;width:82%;max-width:340px;background:var(--surface,#fafbfd);color:var(--txt,#0a1a33);display:flex;flex-direction:column;box-shadow:-6px 0 28px rgba(0,0,0,.18);transform:translateX(102%);transition:transform .26s cubic-bezier(.4,0,.2,1);padding-top:env(safe-area-inset-top,0px);box-sizing:border-box;}' +
+'#dcToolbarDrawer.dc-sd.open .dc-sd-panel{transform:none;}' +
+'.dc-sd-head{display:flex;align-items:center;justify-content:space-between;padding:16px 16px 10px;}' +
+'.dc-sd-brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:16px;color:var(--txt,#0a1a33);text-decoration:none;direction:ltr;}' +
+'.dc-sd-brand img{width:28px;height:28px;object-fit:contain;display:block;}' +
+'.dc-sd-x{width:36px;height:36px;border-radius:50%;border:1px solid var(--border,rgba(2,35,96,.12));background:var(--card-bg,#fff);color:var(--txt2,#4a5f85);display:grid;place-items:center;cursor:pointer;padding:0;}' +
+'.dc-sd-panel .dc-svg-icon{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;}' +
+'.dc-sd-primary{display:flex;align-items:center;gap:10px;margin:2px 12px 6px;padding:12px 14px;border-radius:12px;border:0;background:var(--pr,#022360);color:#fff;font:inherit;font-weight:700;font-size:14px;cursor:pointer;text-align:right;}' +
+'[data-theme="dark"] .dc-sd-primary{background:#2b5278;}' +
+'.dc-sd-scroll{flex:1;overflow-y:auto;overscroll-behavior:contain;padding-bottom:8px;}' +
+'.dc-sd-sec{padding:12px 18px 4px;font-size:11.5px;font-weight:700;color:var(--txt3,#62779a);}' +
+'.dc-sd-it{display:flex;align-items:center;gap:12px;width:100%;box-sizing:border-box;padding:10px 18px;font:inherit;font-size:14px;color:var(--txt,#0a1a33);text-decoration:none;background:none;border:0;cursor:pointer;text-align:right;-webkit-tap-highlight-color:transparent;}' +
+'.dc-sd-it:active{background:rgba(var(--pr-rgb,2,35,96),.06);}' +
+'.dc-sd-it>.dc-svg-icon{color:var(--txt2,#4a5f85);}' +
+'.dc-sd-it .dc-sd-more{margin-right:auto;color:var(--txt3,#62779a);font-size:16px;line-height:1;}' +
+'.dc-sd-txt{min-width:0;flex:1;}' +
+'.dc-sd-txt b{display:block;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}' +
+'.dc-sd-sub{display:block;font-size:11.5px;color:var(--txt3,#62779a);margin-top:1px;}' +
+'.dc-sd-prog{display:block;height:3px;border-radius:2px;background:var(--surface3,#eaecf5);margin-top:5px;width:120px;max-width:100%;overflow:hidden;}' +
+'.dc-sd-prog i{display:block;height:100%;background:var(--ac,#0b5fff);border-radius:2px;}' +
+'.dc-sd-lockbox{margin:6px 12px;border:1px dashed rgba(var(--ac-rgb,11,95,255),.4);background:rgba(var(--ac-rgb,11,95,255),.06);border-radius:14px;padding:12px;}' +
+'.dc-sd-ghost{display:flex;align-items:center;gap:8px;padding:5px 0;color:var(--txt3,#62779a);}' +
+'.dc-sd-ghost i{flex:1;height:9px;border-radius:5px;background:rgba(var(--pr-rgb,2,35,96),.10);}' +
+'[data-theme="dark"] .dc-sd-ghost i{background:rgba(255,255,255,.10);}' +
+'.dc-sd-lockbox p{margin:8px 0 10px;font-size:12.5px;line-height:1.85;color:var(--pr,#022360);font-weight:600;}' +
+'[data-theme="dark"] .dc-sd-lockbox p{color:var(--txt,#e8eef8);}' +
+'.dc-sd-btn{display:block;width:100%;font:inherit;text-align:center;background:var(--ac,#0b5fff);color:#fff;border:0;border-radius:10px;padding:10px;font-size:13.5px;font-weight:700;cursor:pointer;}' +
+'.dc-sd-empty{padding:4px 18px 8px;font-size:12px;color:var(--txt3,#62779a);line-height:1.8;}' +
+'.dc-sd-settings{display:flex;gap:8px;padding:12px 14px 6px;}' +
+'.dc-sd-settings>*{flex:1;min-width:0;}' +
+'#dcToolbarDrawer .dc-sd-settings .dc-drawer-tool-seg{flex-direction:row!important;gap:5px!important;width:auto!important;height:auto!important;padding:9px 2px!important;border:1px solid var(--border,rgba(2,35,96,.12))!important;border-radius:10px!important;background:var(--card-bg,#fff)!important;text-decoration:none;justify-content:center;}' +
+'#dcToolbarDrawer .dc-sd-settings .dc-drawer-tool-ico{font-size:1rem;color:var(--txt2,#4a5f85);display:inline-flex;align-items:center;}' +
+'#dcToolbarDrawer .dc-sd-settings .dc-drawer-tool-ico .dc-svg-icon{width:15px;height:15px;}' +
+'#dcToolbarDrawer .dc-sd-settings .dc-drawer-tool-txt{font-size:11px;font-weight:600;color:var(--txt2,#4a5f85);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
+'.dc-sd-foot{border-top:1px solid var(--border,rgba(2,35,96,.10));padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;}' +
+'.dc-sd-acct{display:flex;align-items:center;gap:10px;flex:1;min-width:0;background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer;text-align:right;}' +
+'.dc-sd-av{width:36px;height:36px;border-radius:50%;background:var(--surface3,#eaecf5);color:var(--txt2,#4a5f85);display:grid;place-items:center;font-weight:800;font-size:15px;flex:none;}' +
+'.dc-sd-av.is-user{background:rgba(var(--ac-rgb,11,95,255),.14);color:var(--ac,#0b5fff);}' +
+'.dc-sd-acct b{display:block;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}' +
+'.dc-sd-acct small{font-size:11.5px;color:var(--txt3,#62779a);}' +
+/* Amber is what a subscription buys — the subscribe door and the
+   «subscription active» pill are the only amber things here. */
+'#dcToolbarDrawer .dc-sd-foot #tool-subscribe,.dc-sd-badge{flex:none;display:inline-flex!important;flex-direction:row!important;align-items:center;gap:4px!important;width:auto!important;height:auto!important;padding:4px 10px!important;border:1px solid #c9922b!important;border-radius:9px!important;color:#a97412!important;background:transparent!important;font:inherit;font-size:11.5px!important;font-weight:800;cursor:pointer;text-decoration:none;}' +
+'[data-theme="dark"] #dcToolbarDrawer .dc-sd-foot #tool-subscribe,[data-theme="dark"] .dc-sd-badge{border-color:#e3b849!important;color:#e3b849!important;}' +
+'#dcToolbarDrawer .dc-sd-foot #tool-subscribe .dc-drawer-tool-ico{display:none;}' +
+'#dcToolbarDrawer .dc-sd-foot #tool-subscribe .dc-drawer-tool-txt{font-size:11.5px;color:inherit;font-weight:800;}' +
+'.dc-sd-badge{cursor:default;}' +
+/* Tools bottom sheet */
+'.dc-ts-wrap{position:fixed;inset:0;z-index:10045;font-family:Vazirmatn,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;}' +
+'.dc-ts-wrap[hidden]{display:none;}' +
+'.dc-ts-dim{position:absolute;inset:0;background:rgba(10,20,40,.45);opacity:0;transition:opacity .2s ease;}' +
+'.dc-ts{position:absolute;left:0;right:0;bottom:0;max-height:84vh;max-height:84dvh;display:flex;flex-direction:column;background:var(--card-bg,#fff);color:var(--txt,#0a1a33);border-radius:22px 22px 0 0;transform:translateY(100%);transition:transform .22s cubic-bezier(.4,0,.2,1);max-width:640px;margin:0 auto;box-shadow:0 -8px 30px rgba(0,0,0,.18);}' +
+'.dc-ts-wrap.open .dc-ts-dim{opacity:1;}' +
+'.dc-ts-wrap.open .dc-ts{transform:none;}' +
+'.dc-ts-grab{width:40px;height:4px;border-radius:2px;background:var(--surface3,#eaecf5);margin:8px auto 0;}' +
+'.dc-ts-h{display:flex;justify-content:space-between;align-items:center;padding:10px 18px 12px;border-bottom:1px solid var(--border,rgba(2,35,96,.10));}' +
+'.dc-ts-h b{font-size:16px;}' +
+'.dc-ts-list{overflow-y:auto;padding:0 18px calc(14px + env(safe-area-inset-bottom,0px));}' +
+'.dc-ts .dc-ts-row{display:flex!important;flex-direction:row!important;align-items:flex-start!important;justify-content:flex-start!important;gap:12px!important;width:100%!important;height:auto!important;box-sizing:border-box;padding:13px 0!important;border:0!important;border-bottom:1px solid var(--border,rgba(2,35,96,.10))!important;border-radius:0!important;background:none!important;font:inherit;color:var(--txt,#0a1a33)!important;text-align:right;text-decoration:none;cursor:pointer;}' +
+'.dc-ts .dc-ts-row:last-child{border-bottom:0!important;}' +
+'.dc-ts-ic{width:40px;height:40px;border-radius:12px;background:var(--surface2,#f4f6fb);color:var(--pr,#022360);display:grid;place-items:center;flex:none;}' +
+'[data-theme="dark"] .dc-ts-ic{color:var(--ac,#5b9cf6);}' +
+'.dc-ts-ic .dc-svg-icon{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}' +
+'.dc-ts-t{display:flex;flex-direction:column;gap:2px;min-width:0;}' +
+'.dc-ts-t b{font-size:14px;display:flex;align-items:center;gap:6px;}' +
+'.dc-ts-t span{font-size:12.5px;line-height:1.8;color:var(--txt2,#4a5f85);font-weight:400;white-space:normal;}' +
+'.dc-ts-lock{font-size:10px;font-weight:800;color:#a97412;border:1px solid #c9922b;border-radius:6px;padding:0 6px;}' +
+'[data-theme="dark"] .dc-ts-lock{color:#e3b849;border-color:#e3b849;}' +
+'body.dc-desktop-ui .dc-sd-panel{max-width:360px;}';
+
+  function dcSdTool(icon, title, sub, lock) {
+    return '<span class="dc-ts-ic">' + dcSvgIcon(icon) + '</span>' +
+           '<span class="dc-ts-t"><b>' + title + (lock ? ' <em class="dc-ts-lock" style="font-style:normal">پریمیوم</em>' : '') +
+           '</b><span>' + sub + '</span></span>';
+  }
+
+  var DC_TOOLS_SHEET_HTML =
+'<div id="dcToolsSheet" class="dc-ts-wrap" hidden>' +
+'  <div class="dc-ts-dim"></div>' +
+'  <div class="dc-ts" role="dialog" aria-modal="true" aria-label="ابزارها">' +
+'    <div class="dc-ts-grab" aria-hidden="true"></div>' +
+'    <div class="dc-ts-h"><b>ابزارها</b><button type="button" class="dc-sd-x dc-ts-x" aria-label="بستن">' + dcSvgIcon('x') + '</button></div>' +
+'    <div class="dc-ts-list" id="dcToolsList"></div>' +
+'  </div>' +
+'</div>';
+
+  (function buildSideDrawer() {
+    var drawer = document.getElementById('dcToolbarDrawer');
+    if (!drawer || drawer.classList.contains('dc-sd')) return;
+    /* Phones and tablets only. At the desktop width (≥1024px, index.html's
+       isMob() test) the drawer stays exactly what it was — founder,
+       2026-11-15: «به دسکتاپ دست نزن». */
+    if (!window.matchMedia('(max-width:1023px)').matches) return;
+    if (!document.getElementById('dc-sd-style')) {
+      var sst = document.createElement('style');
+      sst.id = 'dc-sd-style';
+      sst.textContent = DC_SD_CSS;
+      (document.head || document.documentElement).appendChild(sst);
+    }
+    var byId = function (id) { return document.getElementById(id); };
+    var pwa = byId('tool-pwa'), sub = byId('tool-subscribe'), theme = byId('btn-theme-drawer'),
+        music = byId('btn-music-toggle'), radar = byId('btn-radar-topbar'), cab = byId('btn-cabinet');
+
+    drawer.classList.add('dc-sd');
+    drawer.style.maxHeight = '';
+    drawer.style.opacity = '';
+    drawer.style.overflow = '';
+    drawer.style.transition = '';
+    drawer.setAttribute('aria-hidden', 'true');
+
+    var panel =
+'<div class="dc-sd-dim" id="dcSdDim"></div>' +
+'<div class="dc-sd-panel" role="dialog" aria-modal="true" aria-label="منو">' +
+'  <div class="dc-sd-head"><a class="dc-sd-brand" href="/"><img src="/logo-v2.png" alt="" width="28" height="28">DentCast</a>' +
+'    <button type="button" class="dc-sd-x" id="dcSdClose" aria-label="بستن منو">' + dcSvgIcon('x') + '</button></div>' +
+'  <button type="button" class="dc-sd-primary dcOpenSearch">' + dcSvgIcon('search') + 'جستجو در دنت‌کست</button>' +
+'  <div class="dc-sd-scroll">' +
+'    <div class="dc-sd-sec">کاوش</div>' +
+'    <a class="dc-sd-it" href="/pillar/">' + dcSvgIcon('folder') + 'فهرست موضوعی</a>' +
+'    <a class="dc-sd-it" href="/glossary/">' + dcSvgIcon('book') + 'دانشنامه</a>' +
+'    <a class="dc-sd-it" href="/episodes.html">' + dcSvgIcon('headphones') + 'آرشیو اپیزودها</a>' +
+'    <button type="button" class="dc-sd-it" id="dcSdToolsBtn" aria-haspopup="dialog">' + dcSvgIcon('sliders') + 'ابزارها<span class="dc-sd-more" aria-hidden="true">‹</span></button>' +
+'    <div id="dcSdMine"></div>' +
+'    <div class="dc-sd-settings" id="dcSdSettings"></div>' +
+'  </div>' +
+'  <div class="dc-sd-foot" id="dcSdFoot"></div>' +
+'</div>';
+
+    /* Everything the drawer held before goes; the tool buttons are taken out
+       first and moved into their new places below. */
+    [pwa, sub, theme, music, radar, cab].forEach(function (b) { if (b && b.parentNode) b.parentNode.removeChild(b); });
+    drawer.innerHTML = panel;
+
+    var settings = byId('dcSdSettings');
+    if (theme) settings.appendChild(theme);
+    if (music) settings.appendChild(music);
+    if (pwa) settings.appendChild(pwa);
+    settings.insertAdjacentHTML('beforeend',
+      '<a class="dc-drawer-tool-seg" href="/plus/support.html"><span class="dc-drawer-tool-ico">' + dcSvgIcon('lifebuoy') +
+      '</span><span class="dc-drawer-tool-txt">پشتیبانی</span></a>');
+    /* «اشتراک» is drawn by the account row (dcSdRenderFoot), not here. */
+    dcSdSubBtn = sub;
+
+    /* The tools sheet: a sibling of the drawer on <body>, so it can stay open
+       after the drawer has slid away. */
+    if (!byId('dcToolsSheet')) document.body.insertAdjacentHTML('beforeend', DC_TOOLS_SHEET_HTML);
+    var list = byId('dcToolsList');
+    if (radar) {
+      radar.className = 'dc-ts-row';
+      radar.innerHTML = dcSdTool('radar', 'رادار دنت‌کست', 'جستجو بین سایت‌ها و ابزارهای دندانپزشکی؛ جایگزین گوگل برای همین حوزه.');
+      list.appendChild(radar);
+    }
+    if (cab) {
+      cab.className = 'dc-ts-row';
+      cab.innerHTML = dcSdTool('article', 'کتابخانهٔ دنت‌کست', 'جستجو بین مقاله‌هایی که پشت اپیزودها خوانده شده‌اند.', true);
+      list.appendChild(cab);
+    }
+    list.insertAdjacentHTML('beforeend',
+      '<a class="dc-ts-row" href="/taraz/">' + dcSdTool('scale', 'تراز شواهد', 'سری آموزشی: یک مقالهٔ دندانپزشکی چقدر می‌ارزد و چطور بسنجیمش.') + '</a>' +
+      '<a class="dc-ts-row" href="/des-board/">' + dcSdTool('sliders', 'تابلوی DES', 'مطالب دنت‌کست، چیده‌شده بر اساس قدرت شواهدی که پشتشان است.', true) + '</a>' +
+      '<a class="dc-ts-row" href="/challenges/">' + dcSdTool('flag', 'چالش‌ها', 'پرسش‌های کلینیکی برای سنجیدن فهم خودت.') + '</a>');
+
+    dcSdRenderMine();
+    dcSdRenderFoot();
+    dcSdRecordVisit();
+  })();
+
+  /* «مال من» — see the block comment above for who sees what. */
+  function dcSdRenderMine() {
+    var box = document.getElementById('dcSdMine');
+    if (!box) return;
+    if (!dcSdSigned()) {
+      try { localStorage.removeItem(DC_SD_RECENT_KEY); } catch (e) {}
+      box.innerHTML =
+        '<div class="dc-sd-sec">مال من</div>' +
+        '<div class="dc-sd-lockbox">' +
+        '  <div class="dc-sd-ghost" aria-hidden="true">' + dcSvgIcon('play') + '<i></i></div>' +
+        '  <div class="dc-sd-ghost" aria-hidden="true">' + dcSvgIcon('article') + '<i style="max-width:60%"></i></div>' +
+        '  <div class="dc-sd-ghost" aria-hidden="true">' + dcSvgIcon('article') + '<i style="max-width:75%"></i></div>' +
+        '  <p>با ورود، اپیزود نیمه‌کاره از همان ثانیه ادامه پیدا می‌کند و هر چه خوانده‌ای اینجا می‌ماند.</p>' +
+        '  <button type="button" class="dc-sd-btn" data-dc-sd-login="1">ورود رایگان</button>' +
+        '</div>';
+      return;
+    }
+    var html = '';
+    /* «ادامه بده»: the audio hub's own resume record (plus/js/audio-hub.js,
+       RESUME_KEY/META_KEY) — the same thing its «ادامهٔ شنیدن» bar reads. */
+    var rec = dcSdRead('dc-resume-state'), meta = dcSdRead('dc-resume-meta');
+    if (rec && meta && Number(rec.episode) === Number(meta.episode) && meta.page) {
+      var pos = Number(rec.position) || 0, dur = Number(meta.d) || 0;
+      var fresh = Date.now() - (Number(rec.t) || 0) < 7 * 24 * 3600 * 1000;
+      if (fresh && pos >= 20 && (!dur || dur - pos > 30)) {
+        var left = dur ? Math.max(1, Math.round((dur - pos) / 60)) : 0;
+        var pct = dur ? Math.min(100, Math.round(pos / dur * 100)) : 0;
+        html += '<div class="dc-sd-sec">ادامه بده</div>' +
+          '<a class="dc-sd-it" href="' + escapeHTML(meta.page) + '">' + dcSvgIcon('play') +
+          '<span class="dc-sd-txt"><b dir="auto">' + escapeHTML(meta.title || ('قسمت ' + dcSdFa(meta.episode))) + '</b>' +
+          '<span class="dc-sd-sub">قسمت ' + dcSdFa(meta.episode) + (left ? ' · ' + dcSdFa(left) + ' دقیقه مانده' : '') + '</span>' +
+          (pct ? '<span class="dc-sd-prog"><i style="width:' + pct + '%"></i></span>' : '') + '</span></a>';
+      }
+    }
+    var list = dcSdRead(DC_SD_RECENT_KEY);
+    if (!Array.isArray(list)) list = [];
+    list = list.filter(function (x) { return x && x.u && x.u !== location.pathname; }).slice(0, DC_SD_RECENT_SHOW);
+    if (list.length) {
+      html += '<div class="dc-sd-sec">اخیراً دیده‌شده</div>' + list.map(function (x) {
+        return '<a class="dc-sd-it" href="' + escapeHTML(x.u) + '">' + dcSvgIcon('article') +
+               '<span class="dc-sd-txt"><b dir="auto">' + escapeHTML(x.t) + '</b></span></a>';
+      }).join('');
+    }
+    if (!html) {
+      html = '<div class="dc-sd-sec">مال من</div>' +
+             '<div class="dc-sd-empty">هر اپیزود و مطلبی که باز کنی، از این به بعد اینجا می‌ماند.</div>';
+    }
+    box.innerHTML = html;
+  }
+
+  /* The account row. `dcp:header-user` (plus/js/header.js) brings the name
+     and the plan once /me has answered; until then the device's last
+     confirmed viewer class (spot.js's dcAds.vc) is the hint. */
+  function dcSdRenderFoot() {
+    var foot = document.getElementById('dcSdFoot');
+    if (!foot) return;
+    var sub = dcSdSubBtn || document.getElementById('tool-subscribe');
+    if (sub && sub.parentNode) sub.parentNode.removeChild(sub);
+    var me = window.dcpHeaderUser || null;
+    var signed = dcSdSigned() || !!me;
+    var vc = null;
+    try { vc = localStorage.getItem('dcAds.vc'); } catch (e) {}
+    var premium = me ? !!me.premium : vc === 'premium';
+    var acct;
+    if (!signed) {
+      acct = '<button type="button" class="dc-sd-acct" data-dc-sd-login="1"><span class="dc-sd-av">' + dcSvgIcon('user') + '</span>' +
+             '<span><b>مهمان</b><small>وارد نشده‌اید</small></span></button>';
+    } else {
+      var name = (me && me.name) || '';
+      var init = name ? escapeHTML(name.trim().charAt(0)) : dcSvgIcon('user');
+      acct = '<button type="button" class="dc-sd-acct" data-dc-sd-account="1"><span class="dc-sd-av is-user">' + init + '</span>' +
+             '<span style="min-width:0"><b dir="auto">' + (name ? escapeHTML(name) : 'حساب من') + '</b><small>حساب من</small></span></button>';
+    }
+    foot.innerHTML = acct;
+    if (signed && premium) {
+      foot.insertAdjacentHTML('beforeend', '<span class="dc-sd-badge">پریمیوم</span>');
+    } else if (sub) {
+      foot.appendChild(sub);
+    }
+  }
+  document.addEventListener('dcp:header-user', function () {
+    dcSdRenderFoot();
+    dcSdRecordVisit();
+    dcSdRenderMine();
+  });
+
+  function dcSdLock(on) {
+    document.documentElement.classList.toggle('dc-sd-lock', !!on);
+  }
+  function dcToolsSheet(open) {
+    var w = document.getElementById('dcToolsSheet');
+    if (!w) return;
+    if (open) {
+      w.hidden = false;
+      dcSdLock(true);
+      requestAnimationFrame(function () { w.classList.add('open'); });
+      var x = w.querySelector('.dc-ts-x');
+      if (x) x.focus({ preventScroll: true });
+    } else {
+      w.classList.remove('open');
+      dcSdLock(false);
+      setTimeout(function () { if (!w.classList.contains('open')) w.hidden = true; }, 220);
+    }
+  }
+  /* The person button in the header owns login and the account menu. */
+  function dcSdPerson() {
+    var btns = document.querySelectorAll('.dcp-person-btn');
+    for (var i = 0; i < btns.length; i++) if (btns[i].getClientRects().length) return btns[i];
+    return btns[0] || null;
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var drawer = document.getElementById('dcToolbarDrawer');
+    var sdOpen = drawer && drawer.classList.contains('dc-sd') && drawer.classList.contains('open');
+    if (sdOpen && (t.id === 'dcSdDim' || t.closest('#dcSdClose'))) { toggleToolbarDrawer(); return; }
+    if (t.closest('#dcSdToolsBtn')) {
+      if (sdOpen) toggleToolbarDrawer();
+      dcToolsSheet(true);
+      return;
+    }
+    if (t.closest('[data-dc-sd-login]') || t.closest('[data-dc-sd-account]')) {
+      if (sdOpen) toggleToolbarDrawer();
+      var p = dcSdPerson();
+      if (p) p.click();
+      else location.href = '/plus/';
+      return;
+    }
+    var ts = document.getElementById('dcToolsSheet');
+    if (ts && !ts.hidden) {
+      if (t.classList.contains('dc-ts-dim') || t.closest('.dc-ts-x')) { dcToolsSheet(false); return; }
+      /* A tool that opens on this page (the radar overlay, the library's premium
+       gate) closes the sheet so it is not left under it. */
+      if (t.closest('#btn-radar-topbar') || t.closest('#btn-cabinet')) dcToolsSheet(false);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    var ts = document.getElementById('dcToolsSheet');
+    if (ts && !ts.hidden) { dcToolsSheet(false); return; }
+    var d = document.getElementById('dcToolbarDrawer');
+    if (d && d.classList.contains('dc-sd') && d.classList.contains('open')) toggleToolbarDrawer();
+  });
+
   /* Size the OPEN drawer to whatever it currently holds. Extracted from
      toggleToolbarDrawer; the height is an inline px value. */
   function sizeToolbarDrawer() {
@@ -1272,6 +1646,22 @@
     var drawer    = document.getElementById('dcToolbarDrawer');
     if (!drawerBtn || !drawer) return;
     var isOpen = drawer.classList.contains('open');
+    /* The side drawer (buildSideDrawer) slides by class alone — no height
+       to measure — and locks the page scroll behind it. */
+    if (drawer.classList.contains('dc-sd')) {
+      drawer.classList.toggle('open', !isOpen);
+      drawerBtn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      drawer.setAttribute('aria-hidden', isOpen ? 'true' : 'false');
+      dcSdLock(!isOpen);
+      if (!isOpen) {
+        dcSdRenderMine();
+        var x = document.getElementById('dcSdClose');
+        if (x) x.focus({ preventScroll: true });
+      } else {
+        drawerBtn.focus({ preventScroll: true });
+      }
+      return;
+    }
     if (!isOpen) {
       /* OPEN — size to the actual content: on phones the site menu is two
          rows and the unfolded tools three more (see the drawer grids), so a
@@ -2533,7 +2923,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '312';
+  var V = '313';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now
@@ -2587,7 +2977,7 @@
 (function () {
   if (window.__dcSpotLoaded) return;
   window.__dcSpotLoaded = true;
-  var SPOT_V = '94';
+  var SPOT_V = '95';
   var js = document.createElement('script');
   js.type = 'module';
   js.src = '/spot/spot.js?v=' + SPOT_V;

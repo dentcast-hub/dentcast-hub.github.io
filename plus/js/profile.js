@@ -1,17 +1,17 @@
 // Reusable profile renderer (spec 2.7). Used by the /plus/profile.html page and
 // the header overlay. Site design language; a clear, readable week strip. Nothing
 // here is mandatory: the pseudonym is editable, no real name is ever required.
-import { el, faNum, tehranDay, sectionIcon } from './util.js?v=241';
-import { certificatesBody } from './certificates.js?v=241';
-import { api, ApiError, currentUser } from './api.js?v=241';
-import { remindersBlock } from './reminders.js?v=241';
-import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername, googleLoginEnabled } from './config.js?v=241';
-import { mountGoogleButton } from './google-login.js?v=241';
-import { baleEnabled, baleDeepLink } from './config.js?v=241';
-import { leagueEntryButton } from './league.js?v=241';
-import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=241';
-import { subscriptionCta } from './premium-cta.js?v=241';
-import { copyToClipboard, confirmStrip, toast } from './hl-view.js?v=241';
+import { el, faNum, tehranDay, sectionIcon } from './util.js?v=242';
+import { certificatesBody } from './certificates.js?v=242';
+import { api, ApiError, currentUser } from './api.js?v=242';
+import { remindersBlock } from './reminders.js?v=242';
+import { telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername, googleLoginEnabled } from './config.js?v=242';
+import { mountGoogleButton } from './google-login.js?v=242';
+import { baleEnabled, baleDeepLink } from './config.js?v=242';
+import { leagueEntryButton } from './league.js?v=242';
+import { achievementsBody, discountBody, maybeCelebrate } from './achievements.js?v=242';
+import { subscriptionCta } from './premium-cta.js?v=242';
+import { copyToClipboard, confirmStrip, toast } from './hl-view.js?v=242';
 
 const JALALI_DAY = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
   timeZone: 'Asia/Tehran', year: 'numeric', month: 'long', day: 'numeric',
