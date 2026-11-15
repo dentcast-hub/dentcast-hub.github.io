@@ -12,6 +12,7 @@ globalThis.fetch = vi.fn(() => Promise.reject(new Error('no network'))) as any;
 const calls: Array<{ op: string; args: any[] }> = [];
 let collections: any[] = [];
 let board: any = null;
+let oldTitleCap = false;
 
 vi.mock('/plus/js/api.js', () => ({
   api: {
@@ -41,6 +42,8 @@ vi.mock('/plus/js/api.js', () => ({
     },
     createSnippet: (collectionId: string, payload: any) => {
       calls.push({ op: 'createSnippet', args: [collectionId, payload] });
+      // an API image from before the 400-character title: a longer title is a 400
+      if (oldTitleCap && payload.title && payload.title.length > 200) return Promise.reject(new Error('400'));
       return Promise.resolve({
         item: {
           id: 'new-item', kind: payload.kind, snippet_id: 'new-snippet', highlight_id: null, content_id: null,
@@ -64,7 +67,7 @@ vi.mock('/plus/js/api.js', () => ({
   apiBase: () => Promise.resolve('https://api.dentcast.test'),
 }));
 
-const { renderCollectionsList, renderCollectionDetail } = await import('../../plus/js/collections.js');
+const { renderCollectionsList, renderCollectionDetail, openCollectionPicker, referencesAsRis, referencesAsBibtex } = await import('../../plus/js/collections.js');
 
 const hlItem = (over: any = {}) => ({
   id: 'i1', kind: 'highlight', highlight_id: 'hl-1', content_id: 'insight/insight-1',
@@ -764,5 +767,118 @@ describe('clip pins on a board', () => {
     chip.click();
     expect(document.querySelectorAll('.dcp-cl-pin')).toHaveLength(1);
     expect(document.querySelector('.dcp-cl-pin-clip')).not.toBeNull();
+  });
+});
+
+// A paper saved from «کتابخانه‌ی دنت‌کست» (the cabinet's «Save») is a «رفرنس»
+// pin: no new table, the board renders/edits/moves/exports it as one.
+describe('a paper saved from the cabinet', () => {
+  const paper = {
+    title: 'Full-mouth rehabilitation in a skeletal Class III malocclusion patient',
+    authors: 'Koo HJ, Jeong CM, Lee SH', venue: 'Journal of Korean Academy of Prosthodontics', year: 2026,
+    doi: '10.4047/jkap.2026.64.1.67', url: 'https://drive.google.com/file/d/abc/view',
+  };
+  const tick = () => new Promise((r) => setTimeout(r, 0));
+  async function pickFirstBoard() {
+    await tick(); await tick();
+    (document.querySelector('.dcp-cl-pick-row') as HTMLElement).click();
+    await tick(); await tick();
+  }
+  beforeEach(() => {
+    document.body.innerHTML = '<div id="root"></div>';
+    calls.length = 0;
+    oldTitleCap = false;
+    collections = [{ id: 'c1', title: 'مقالات بیومیمتیک', item_count: 0, created_at: '2026-07-01T10:00:00Z', last_item_at: null, preview: [] }];
+    board = { id: 'c1', title: 'مقالات بیومیمتیک', items: [] };
+  });
+
+  it('becomes a reference snippet on the picked board, with the PDF link as its url', async () => {
+    await openCollectionPicker({ reference: paper });
+    await pickFirstBoard();
+    const created = calls.find((c) => c.op === 'createSnippet')!;
+    expect(created.args).toEqual(['c1', { kind: 'reference', ...paper }]);
+  });
+
+  it('is not pinned twice to a board that already has the same DOI', async () => {
+    board = { ...board, items: [refItem({ doi: '10.4047/JKAP.2026.64.1.67' })] };
+    await openCollectionPicker({ reference: paper });
+    await pickFirstBoard();
+    expect(calls.filter((c) => c.op === 'createSnippet')).toHaveLength(0);
+  });
+
+  it('keeps the save when an older API refuses a title longer than 200 characters', async () => {
+    oldTitleCap = true;
+    const long = { ...paper, title: 'T'.repeat(273) };
+    await openCollectionPicker({ reference: long });
+    await pickFirstBoard();
+    const tries = calls.filter((c) => c.op === 'createSnippet');
+    expect(tries).toHaveLength(2);
+    expect(tries[1].args[1].title).toHaveLength(200);
+    expect(tries[1].args[1].title.endsWith('…')).toBe(true);
+  });
+
+  it('a reference pin takes the reader\'s note in place, and shows its PDF', async () => {
+    board = { ...board, items: [refItem({ url: paper.url })] };
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    const pin = document.querySelector('.dcp-cl-pin') as HTMLElement;
+    const pdf = actNamed('PDF', pin) as HTMLAnchorElement;
+    expect(pdf.getAttribute('href')).toBe(paper.url);
+    actNamed('یادداشت', pin).click();
+    const ta = pin.querySelector('.dcp-hlib-editor textarea') as HTMLTextAreaElement;
+    ta.value = '  نتیجه‌ی اصلی: OVD با پروویژنال تست شد  ';
+    (pin.querySelector('.dcp-hlib-editor .dcp-btn-primary') as HTMLElement).click();
+    await tick(); await tick();
+    expect(calls.find((c) => c.op === 'updateSnippet')!.args).toEqual(['sn-ref', { body: 'نتیجه‌ی اصلی: OVD با پروویژنال تست شد' }]);
+    expect(document.querySelector('.dcp-cl-pin')!.textContent).toContain('نتیجه‌ی اصلی');
+  });
+});
+
+// A board's «رفرنس» pins leave as a citation file the reader's reference
+// manager opens (Zotero, EndNote, Mendeley via RIS; LaTeX via BibTeX).
+describe('a board\'s references as RIS / BibTeX', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '<div id="root"></div>';
+    calls.length = 0;
+    collections = [{ id: 'c1', title: 'امتحان بورد', item_count: 2, created_at: '2026-07-01T10:00:00Z', last_item_at: null, preview: [] }];
+    board = { id: 'c1', title: 'امتحان بورد', created_at: '2026-07-01T10:00:00Z', items: [hlItem(), refItem()] };
+  });
+
+  it('the export sheet offers RIS and BibTeX only when the board has references', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    ([...document.querySelectorAll('button')].find((b) => b.textContent!.includes('خروجی')) as HTMLElement).click();
+    const opts = [...document.querySelectorAll('.dcp-cl-addopt')].map((o) => o.textContent);
+    expect(opts).toHaveLength(4);
+    expect(opts[2]).toContain('RIS');
+    expect(opts[3]).toContain('BibTeX');
+  });
+
+  it('RIS: one record per reference, authors split, the note and the board as a tag', () => {
+    const ris = referencesAsRis([
+      refItem({ authors: 'Koo HJ, Jeong CM, Lee SH', body: 'یادداشت\nدوخطی', url: 'https://drive.google.com/file/d/x/view' }),
+      refItem({ title: 'مقاله‌ی فارسی', authors: 'دکتر الف و همکاران', venue: null, doi: null, year: null, url: null }),
+    ], 'امتحان بورد');
+    const recs = ris.trim().split(/\r\n\r\n/);
+    expect(recs).toHaveLength(2);
+    expect(recs[0]).toContain('TY  - JOUR');
+    expect(recs[0]).toContain('AU  - Koo, H. J.');
+    expect(recs[0]).toContain('AU  - Lee, S. H.');
+    expect(recs[0]).toContain('UR  - https://doi.org/10.1016/j.dental.2017.11.005');
+    expect(recs[0]).toContain('L2  - https://drive.google.com/file/d/x/view');
+    expect(recs[0]).toContain('KW  - امتحان بورد');
+    expect(recs[0]).toContain('N1  - یادداشت دوخطی');
+    expect(recs[1]).toContain('TY  - GEN');
+    expect(recs[1], 'a hand-typed author line is kept whole').toContain('AU  - دکتر الف و همکاران');
+    expect(recs.every((r) => /ER  -\s*$/.test(r))).toBe(true);
+  });
+
+  it('BibTeX: unique keys, «et al.» dropped, braces balanced', () => {
+    const bib = referencesAsBibtex([refItem(), refItem({ body: '50% & more {x}' })], 'b');
+    const keys = [...bib.matchAll(/^@\w+\{([^,]+),/gm)].map((m) => m[1]);
+    expect(keys).toEqual(['breschi2018dentin', 'breschi2018dentina']);
+    expect(bib).toContain('author = {Breschi, L.}');
+    expect(bib).toContain('note = {50\\% \\& more \\{x\\}}');
+    let depth = 0;
+    for (let i = 0; i < bib.length; i++) { if (bib[i] === '\\') { i++; continue; } if (bib[i] === '{') depth++; if (bib[i] === '}') depth--; }
+    expect(depth).toBe(0);
   });
 });

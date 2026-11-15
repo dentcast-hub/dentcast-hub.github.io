@@ -35,6 +35,7 @@ import { desRoutes } from './routes/des.js';
 import { challengeRoutes } from './routes/challenge.js';
 import { clinicRoutes } from './routes/clinic.js';
 import { certificateRoutes } from './routes/certificates.js';
+import { cabinetRoutes } from './routes/cabinet.js';
 import { examRoutes } from './routes/exams.js';
 
 /**
@@ -173,6 +174,7 @@ export async function buildServer(): Promise<FastifyInstance> {
   await app.register(clinicRoutes);
   await app.register(certificateRoutes);
   await app.register(examRoutes);
+  await app.register(cabinetRoutes);
 
   return app;
 }

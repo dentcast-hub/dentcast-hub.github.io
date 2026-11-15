@@ -6,9 +6,9 @@
 // things depending on where you found it.
 //
 // Everything here is presentational + one inline editor. No page owns a copy.
-import { el, renderNoteLines } from './util.js?v=238';
-import { api } from './api.js?v=238';
-import { LABELS, PALETTE } from './config.js?v=238';
+import { el, renderNoteLines } from './util.js?v=241';
+import { api } from './api.js?v=241';
+import { LABELS, PALETTE } from './config.js?v=241';
 
 export const labelFa = (k) => (LABELS.find((l) => l.key === k) || {}).fa || '';
 
@@ -222,6 +222,46 @@ export function inlineEditor(h, { onSaved, onClose, onGone }) {
  * save. Same shape as inlineEditor above, but PATCHes /snippets/:id: `s` is
  * `{ id, title, body }` (the snippet's own id, not the pin's).
  */
+/**
+ * The reader's own note on a «رفرنس» pin (a saved paper): the snippet's `body`,
+ * which the pin already draws with `noteBlock`. Unlike a text pin, the body is
+ * optional here — saving it empty clears the note (the API stores '' as null).
+ */
+export function referenceNoteEditor(s, { onSaved, onClose }) {
+  const ta = el('textarea', {
+    class: 'dcp-hlib-ta', rows: '4', maxlength: '10000',
+    placeholder: 'یادداشتِ خودتان درباره‌ی این مقاله…', 'aria-label': 'یادداشت',
+  });
+  ta.value = s.body || '';
+  const msg = el('span', { class: 'dcp-hlib-msg', role: 'status' });
+  const save = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ذخیره');
+  const cancel = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'انصراف');
+  const box = el('div', { class: 'dcp-hlib-editor' }, [
+    ta,
+    el('div', { class: 'dcp-hlib-erow dcp-hlib-esave' }, [save, cancel, msg]),
+  ]);
+  cancel.addEventListener('click', () => { box.remove(); if (onClose) onClose(); });
+  save.addEventListener('click', async () => {
+    save.disabled = true;
+    msg.textContent = '';
+    try {
+      const { snippet } = await api.updateSnippet(s.id, { body: ta.value.trim() });
+      box.remove();
+      onSaved(snippet);
+      toast('ذخیره شد');
+    } catch (_) {
+      save.disabled = false;
+      msg.textContent = 'ذخیره نشد؛ دوباره تلاش کن.';
+    }
+  });
+  ta.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') save.click();
+    if (e.key === 'Escape') cancel.click();
+  });
+  setTimeout(() => ta.focus(), 0);
+  return box;
+}
+
 export function snippetInlineEditor(s, { onSaved, onClose }) {
   const titleInput = el('input', {
     type: 'text', class: 'dcp-input', maxlength: '200',

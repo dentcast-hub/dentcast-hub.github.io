@@ -453,6 +453,17 @@ describe('POST /collections/:id/snippets', () => {
     expect(res.json().item.doi).toBe('10.1016/j.dental.2017.11.005');
   });
 
+  it('keeps a long paper title whole (up to 400 characters), and 400s past it', async () => {
+    // a paper saved from the cabinet: 30 library titles run past the old 200 cap
+    await makePremium();
+    const id = await createCollection();
+    const long = await createSnippet(id, { kind: 'reference', title: 'T'.repeat(273) });
+    expect(long.statusCode).toBe(201);
+    expect(long.json().item.title).toHaveLength(273);
+    const tooLong = await createSnippet(id, { kind: 'reference', title: 'T'.repeat(401) });
+    expect(tooLong.statusCode).toBe(400);
+  });
+
   it('400s a reference with no title', async () => {
     await makePremium();
     const id = await createCollection();

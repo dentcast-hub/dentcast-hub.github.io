@@ -1,6 +1,7 @@
 import { adminMemberSpotRoutes } from './admin-member-spot.js';
 import { renderMemberSpotControls } from './admin-member-spot-ui.js';
 import { adminQuickPublishRoutes, renderQuickPublish } from './admin-quick-publish.js';
+import { adminCabinetFulltextRoutes } from './cabinet.js';
 import type { FastifyInstance, FastifyReply } from 'fastify';
 import { requireAdmin } from '../middleware/basic-auth.js';
 import { refreshOnce, contentStatus } from '../content-refresh.js';
@@ -3921,6 +3922,7 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('onRequest', requireAdmin);
   await app.register(adminMemberSpotRoutes);
   await app.register(adminQuickPublishRoutes);
+  await app.register(adminCabinetFulltextRoutes);
 
   app.get('/admin/kpis', async (_request, reply) => {
     const kpis = await computeKpis();
