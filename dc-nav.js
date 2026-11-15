@@ -1255,7 +1255,7 @@
        • top    — the one primary action (search) and «کاوش»: the topic
                   index, the glossary, the episode archive, and «ابزارها ›»
                   which opens the tools as a bottom sheet with one line each;
-       • middle — «مال من»: for a SIGNED-IN reader «ادامه بده» (the audio
+       • middle — «ردپای من»: for a SIGNED-IN reader «ادامه بده» (the audio
                   hub's resume record) and «اخیراً دیده‌شده» (the last pages
                   they opened). A guest gets NOTHING saved — no history is
                   written for them at all (founder: the empty, locked shelf is
@@ -1476,14 +1476,14 @@
     dcSdRecordVisit();
   })();
 
-  /* «مال من» — see the block comment above for who sees what. */
+  /* «ردپای من» — see the block comment above for who sees what. */
   function dcSdRenderMine() {
     var box = document.getElementById('dcSdMine');
     if (!box) return;
     if (!dcSdSigned()) {
       try { localStorage.removeItem(DC_SD_RECENT_KEY); } catch (e) {}
       box.innerHTML =
-        '<div class="dc-sd-sec">مال من</div>' +
+        '<div class="dc-sd-sec">ردپای من</div>' +
         '<div class="dc-sd-lockbox">' +
         '  <div class="dc-sd-ghost" aria-hidden="true">' + dcSvgIcon('play') + '<i></i></div>' +
         '  <div class="dc-sd-ghost" aria-hidden="true">' + dcSvgIcon('article') + '<i style="max-width:60%"></i></div>' +
@@ -1520,7 +1520,7 @@
       }).join('');
     }
     if (!html) {
-      html = '<div class="dc-sd-sec">مال من</div>' +
+      html = '<div class="dc-sd-sec">ردپای من</div>' +
              '<div class="dc-sd-empty">هر اپیزود و مطلبی که باز کنی، از این به بعد اینجا می‌ماند.</div>';
     }
     box.innerHTML = html;
