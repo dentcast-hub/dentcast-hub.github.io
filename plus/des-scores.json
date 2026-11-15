@@ -58272,5 +58272,64 @@
     "fidelity": [
       null
     ]
+  },
+  "glossary/icdas": {
+    "scored_at": "2026-11-15",
+    "sources": [
+      {
+        "des_version": "3.7",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "سیستم بین‌المللی تشخیص و ارزیابی پوسیدگی (ICDAS)",
+          "authors": "دکتر فواد شهابیان",
+          "year": 2026,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "کد ۴ حفره‌ی باز ندارد و در ظاهر از کد ۳ سالم‌تر به نظر می‌رسد، اما سایه‌ی تیره نشان می‌دهد که عاج درگیر شده و ضایعه معمولاً عمیق‌تر است.",
+            "note": "هر سوءبرداشت با یک سازوکار توضیح داده شده است، نه با ادعای صرف"
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "متن ICDAS II و ICCMS را نام می‌برد اما ادعاهای خود را در برابر هیچ مطالعه یا شواهد منتشرشده‌ای قرار نمی‌دهد و نبودِ شواهد را هم بیان نمی‌کند"
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "این سیستم فقط می‌گوید ضایعه در ظاهر تا کجا پیش رفته است و درباره‌ی فعال یا متوقف بودن آن چیزی نمی‌گوید.",
+            "note": "حدود کاربرد کد صریحاً تعیین شده و توصیه‌های درمانی با «معمولاً» و وابستگی به فعالیت و ریسک محدود شده‌اند"
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "هیچ جمله‌ای در متن آن را تجربه یا نظر شخصی معرفی نمی‌کند و بخشِ انتشار مشخص نشده است، پس اعلانِ سطحِ بخش قابل استفاده نیست"
+          }
+        ],
+        "des_score": 12,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این متن آموزشی DentCast در مسیر Commentary امتیاز ۱۲ و باند E گرفته است.",
+        "interpretation_fa": "متن کدهای ICDAS را تعریف می‌کند و مرز آن را با تصمیم درمانی، فعالیت ضایعه و رادیوگرافی مشخص می‌کند. ارزش بالینی‌اش در اصلاح سه سوءبرداشت رایج و جدا کردن شدت ضایعه از دستور درمان است. امتیاز پایین از نبودِ ارجاع به شواهد منتشرشده و برچسب نداشتنِ تجربه یا نظر می‌آید."
+      }
+    ],
+    "fidelity": [
+      null
+    ]
   }
 }
