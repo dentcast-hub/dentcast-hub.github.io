@@ -152,8 +152,8 @@ html:not([data-theme="dark"]) body:has(main#list){ background:var(--surface); }
 @media (max-width:600px){ .row select{ min-width:0; flex-basis:100%; } }
 /* citations (2026-11-15): Cite sits in the card's action row as a quiet button; its panel
    opens under the card. Export lives in the count line, as text buttons like «clear». */
-#list .act button.cite{font:inherit;font-size:.78rem;min-height:2.5rem;padding:.625rem 1rem;border:1px solid transparent;border-radius:var(--r-sm);background:var(--surface2);color:var(--txt);cursor:pointer}
-#list .act button.cite:hover,#list .act button.cite[aria-expanded="true"]{background:var(--surface3)}
+#list .act button.cite,#list .act button.save{margin-right:.5rem;font:inherit;font-size:.78rem;min-height:2.5rem;padding:.625rem 1rem;border:1px solid transparent;border-radius:var(--r-sm);background:var(--surface2);color:var(--txt);cursor:pointer}
+#list .act button.cite:hover,#list .act button.cite[aria-expanded="true"],#list .act button.save:hover{background:var(--surface3)}
 .cite-box{margin-top:.75rem;padding:.75rem .875rem;border:1px solid var(--border);border-radius:var(--r-sm);font-size:.8rem}
 .cite-row{display:grid;grid-template-columns:5.5rem 1fr auto;gap:.5rem;align-items:start;margin-bottom:.625rem}
 .cite-lbl{color:var(--txt3);font-size:.72rem;font-weight:600;padding-top:.15rem}
@@ -254,7 +254,8 @@ html:not([data-theme="dark"]) body:has(main#list){ background:var(--surface); }
   <div class="dc-results-box" id="dcResults"></div>
 </div>
 <script src="/global-search.js?v=19" defer></script>
-<script src="/dc-nav.js?v=340" defer></script>
+<script src="/dc-nav.js?v=341" defer></script>
+<script type="module" src="/plus/js/cabinet-save.js?v=2"></script>
 <script>
 // JSON lives next to this file in the repo. Relative path works on any domain.
 const SRC="dentcast_cabinet_full_catalog.json";
@@ -528,7 +529,8 @@ function card(p){const d=document.createElement('div');d.className='card';d.tabI
     :ab?'<details class="kf"><summary>Abstract</summary><p class="ab" dir="'+kd+'"'+lg+'>'+esc(ab)+'</p></details>':'';
   const tp=p.tp&&p.tp!=='(root)'?'<span class="badge">'+esc(p.tp)+'</span>':'';
   const tl=/[؀-ۿ]/.test(p.t)?' lang="fa"':'';
-  d.innerHTML='<h2 class="title" dir="auto"'+tl+'>'+esc(p.t)+'</h2>'+jr+'<div class="meta"><span class="badge">'+esc(p.ty)+'</span>'+tp+'</div>'+kf+'<div class="tags">'+tags+'</div><div class="act">'+dl+vw+'<button type="button" class="cite" data-id="'+esc(p.id)+'" aria-expanded="false">Cite</button></div>';
+  d.innerHTML='<h2 class="title" dir="auto"'+tl+'>'+esc(p.t)+'</h2>'+jr+'<div class="meta"><span class="badge">'+esc(p.ty)+'</span>'+tp+'</div>'+kf+'<div class="tags">'+tags+'</div><div class="act">'+dl+vw+'<button type="button" class="cite" data-id="'+esc(p.id)+'" aria-expanded="false">Cite</button>'
+    +'<button type="button" class="save" data-id="'+esc(p.id)+'">Save</button></div>';
   return d;}
 
 /* ---------- citations: Cite on each card, RIS / BibTeX for one paper or a whole result list ----------
@@ -651,8 +653,28 @@ async function exportResults(fmt,btn){if(EXPORTING||!RES.length)return;EXPORTING
   await crFetch(dois,(d,n)=>{if(st&&n>1)st.textContent='Looking up volume and pages… '+d+'/'+n;});
   exportPapers(ps,fmt,'dentcast-cabinet-'+ps.length+'-papers');
   if(st)st.textContent='';EXPORTING=false;}
-document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('#list .cite, #list .cite-copy, #list .cite-dl button, .exp');if(!t)return;
+/* «Save»: the paper becomes a «رفرنس» pin on one of the reader's collections (plus/js/cabinet-save.js
+   → openCollectionPicker, which also handles guest → login and free → premium gate). The pin keeps
+   the title, Vancouver authors, journal, year, DOI and the PDF's Drive page; the note is written
+   on the board. Crossref volume/pages are not stored: the board's citation is the short form. */
+function paperRef(p){const b=bib(p);
+  let au=b.au.slice(0,6).map(a=>a.lit||(a.f+(a.g?' '+initV(a.g):'')+(a.sfx?' '+a.sfx:''))).join(', ')+(b.au.length>6?', et al.':'');
+  if(au.length>300)au=au.slice(0,290).replace(/,[^,]*$/,'')+', et al.';
+  const y=parseInt(b.y,10);
+  return {title:b.t.slice(0,400),authors:au||undefined,venue:(b.j||'').slice(0,200)||undefined,
+    year:y>=1000&&y<=2200?y:undefined,doi:/^10\.\S+$/.test(b.doi)&&b.doi.length<=120?b.doi:undefined,
+    url:/^https?:\/\//.test(p.v)&&p.v.length<=300?p.v:undefined};}
+function savePaper(btn){const p=BYID.get(btn.dataset.id);if(!p)return;
+  const go=()=>window.dcCabinetSave(paperRef(p));
+  if(window.dcCabinetSave)return void go();
+  // the module is still loading (or blocked): wait for it briefly, then say so plainly
+  const was=btn.textContent;btn.textContent='…';btn.disabled=true;
+  const done=ok=>{clearTimeout(tm);btn.disabled=false;btn.textContent=ok?was:'Unavailable';if(ok)go();else setTimeout(()=>{btn.textContent=was;},2000);};
+  const tm=setTimeout(()=>done(false),6000);
+  document.addEventListener('dc:cabinet-save-ready',()=>done(true),{once:true});}
+document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('#list .cite, #list .save, #list .cite-copy, #list .cite-dl button, .exp');if(!t)return;
   if(t.classList.contains('cite'))return void toggleCite(t);
+  if(t.classList.contains('save'))return void savePaper(t);
   if(t.classList.contains('exp'))return void exportResults(t.dataset.f,t);
   const card=t.closest('.card'),btn=card&&card.querySelector('.cite'),p=btn&&BYID.get(btn.dataset.id);if(!p)return;
   if(t.classList.contains('cite-copy'))return void copyText(t.dataset.f==='v'?vancouver(p):apa(p),t);

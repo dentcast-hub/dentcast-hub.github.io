@@ -7,22 +7,22 @@
 // opens into a masonry grid of "pins." This module is shared by
 // /plus/collections.html, /plus/collection.html, the workbench's two
 // single-purpose collection buttons, and the dashboard.
-import { el, faNum } from './util.js?v=238';
-import { openSheet, closeSheet, gateCard } from './sheet.js?v=238';
-import { premiumCta } from './premium-cta.js?v=238';
-import { api, currentUser, apiBase } from './api.js?v=238';
-import { openLoginModal } from './login-modal.js?v=238';
-import { FOLDER_EN } from './content-index.js?v=238';
-import { markReturnTrail } from './return-trail.js?v=238';
-import { PALETTE } from './config.js?v=238';
+import { el, faNum } from './util.js?v=239';
+import { openSheet, closeSheet, gateCard } from './sheet.js?v=239';
+import { premiumCta } from './premium-cta.js?v=239';
+import { api, currentUser, apiBase } from './api.js?v=239';
+import { openLoginModal } from './login-modal.js?v=239';
+import { FOLDER_EN } from './content-index.js?v=239';
+import { markReturnTrail } from './return-trail.js?v=239';
+import { PALETTE } from './config.js?v=239';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
-  kindChip, snippetInlineEditor, looksLatin,
-} from './hl-view.js?v=238';
+  kindChip, snippetInlineEditor, referenceNoteEditor, looksLatin,
+} from './hl-view.js?v=239';
 // A قطعه‌ی صوتی pin draws the same playable body the دفترچه draws
 // (clip-view.js) — one vocabulary, so a clip never looks like two things.
-import { clipBody, clipInlineEditor, clipHref, clipAsText, createClipPlayer, clipDownloadBtn } from './clip-view.js?v=238';
+import { clipBody, clipInlineEditor, clipHref, clipAsText, createClipPlayer, clipDownloadBtn } from './clip-view.js?v=239';
 
 const hlColorCss = (key) => (PALETTE.find((p) => p.key === key) || {}).css || '#eaecf5';
 
@@ -519,12 +519,12 @@ function referenceComposerCard(collectionId, { onAdded }) {
  * so every call site (the two workbench buttons, the dashboard row button)
  * behaves identically without repeating the gate logic.
  */
-export async function openCollectionPicker({ highlightId, contentId, clipId } = {}) {
+export async function openCollectionPicker({ highlightId, contentId, clipId, reference } = {}) {
   const user = await currentUser();
   if (!user) {
     const res = await openLoginModal({ returnTo: location.pathname + location.search });
     if (!res || !res.user) return;
-    return openCollectionPicker({ highlightId, contentId, clipId });
+    return openCollectionPicker({ highlightId, contentId, clipId, reference });
   }
   if (user.tier !== 'premium') {
     openSheet(gateCard({
@@ -534,7 +534,50 @@ export async function openCollectionPicker({ highlightId, contentId, clipId } = 
     }));
     return;
   }
+  if (reference) {
+    openSheet(chooserCard({
+      title: 'ذخیره‌ی مقاله در کالکشن',
+      hint: PICKER_HINT,
+      okText: 'ذخیره شد',
+      onPick: (c) => addReferenceTo(c.id, reference),
+    }));
+    return;
+  }
   openSheet(pickerCard(clipId ? { clip_id: clipId } : { highlight_id: highlightId, content_id: contentId }));
+}
+
+/**
+ * A paper from «کتابخانه‌ی دنت‌کست» (the cabinet) saved to a board IS a
+ * «رفرنس» pin: the snippets table already holds exactly what a saved paper
+ * needs — title, authors, journal, year, DOI, a link (the PDF on Drive) and
+ * the reader's own note — and the board already renders, edits, moves and
+ * exports it. So the cabinet's «Save» needs no table, endpoint or migration.
+ *
+ * Saving the same paper to the same board twice keeps one pin: a snippet pin
+ * is a fresh row each time (its uniqueness is per snippet, not per paper), so
+ * the board is read first and a reference with the same DOI — or, without
+ * one, the same link — counts as already there.
+ *
+ * The API capped a reference title at 200 characters until the limit was
+ * raised to 400 (30 cabinet titles are longer, the longest 273). Against an
+ * API image from before that change the full title is refused, so the save is
+ * retried once with the title cut to fit rather than failing.
+ */
+async function addReferenceTo(collectionId, ref) {
+  const same = (it) => it.kind === 'reference'
+    && (ref.doi ? (it.doi || '').toLowerCase() === ref.doi.toLowerCase() : (ref.url && it.url === ref.url));
+  try {
+    const { items } = await api.getCollection(collectionId);
+    if ((items || []).some(same)) return;
+  } catch (_) { /* cannot read the board: save anyway, a duplicate beats a lost save */ }
+  const payload = { kind: 'reference' };
+  for (const k of ['title', 'authors', 'venue', 'year', 'doi', 'url', 'body']) if (ref[k]) payload[k] = ref[k];
+  try {
+    await api.createSnippet(collectionId, payload);
+  } catch (e) {
+    if (!payload.title || payload.title.length <= 200) throw e;
+    await api.createSnippet(collectionId, { ...payload, title: payload.title.slice(0, 199).trimEnd() + '…' });
+  }
 }
 
 // --- masonry "pin" (one saved item inside a board) --------------------------
@@ -671,12 +714,22 @@ function pinCard(item, collectionId, { onRemove, onChanged, arrange = null, coll
     ].filter(Boolean));
 
     const actions = [
+      actionBtn(item.body ? '✎ یادداشت' : '+ یادداشت', {
+        onClick: () => {
+          if (pin.querySelector('.dcp-hlib-editor')) return;
+          pin.appendChild(referenceNoteEditor({ id: item.snippet_id, body: item.body }, {
+            onSaved: (s) => { item.body = s.body; paint(); if (onChanged) onChanged(item); },
+          }));
+        },
+      }),
       actionBtn('کپی استناد', {
         onClick: (e) => copyToClipboard(vancouverCitation(), e.currentTarget, 'استناد کپی شد ✓'),
       }),
+      // a paper saved from the cabinet carries its PDF's Drive page as `url`
+      item.url ? actionBtn('PDF ›', { href: item.url }) : null,
       moveAction(),
       deleteAction(),
-    ];
+    ].filter(Boolean);
 
     pin.replaceChildren(body, arrange ? arrangeBar() : el('div', { class: 'dcp-hlib-actions dcp-cl-pin-actions' }, actions));
   }

@@ -2,32 +2,32 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, rowText, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE, pageSearch } from './js/config.js?v=238';
-import { currentUser, api } from './js/api.js?v=238';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=238';
-import { openCollectionPicker } from './js/collections.js?v=238';
-import { el, faNum } from './js/util.js?v=238';
-import { initHomeCard } from './js/home-card.js?v=238';
-import { initHomeFeatures } from './js/home-features.js?v=238';
-import { initPremiumPanel } from './js/premium-panel.js?v=238';
-import { initHomeBundles } from './js/home-bundles.js?v=238';
-import { initHomeUpboard } from './js/home-upboard.js?v=238';
-import { initDesTool } from './js/des-scorer.js?v=238';
-import { initHeader } from './js/header.js?v=238';
-import { initTourAutostart } from './js/tour.js?v=238';
-import { initReadingTracker, flushPendingReads } from './js/reading.js?v=238';
-import { initListeningTracker } from './js/listening.js?v=238';
-import { initShareScoring, buildShareButton } from './js/share.js?v=238';
-import { initHeart, buildHeartChip } from './js/votes.js?v=238';
-import { mountClipControl, landOnClip } from './js/clips.js?v=238';
-import { mountArticleThreads } from './js/article-threads.js?v=238';
-import { mountChallenge } from './js/challenge.js?v=238';
-import { mountGlossaryNotes } from './js/glossary-notes.js?v=238';
-import { mountDes } from './js/des.js?v=238';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=238';
-import { initAudioHub } from './js/audio-hub.js?v=238';
-import { initAudioFallback } from './js/audio-fallback.js?v=238';
-import { getModel, freshFolders } from './js/content-index.js?v=238';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, rowText, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE, pageSearch } from './js/config.js?v=239';
+import { currentUser, api } from './js/api.js?v=239';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=239';
+import { openCollectionPicker } from './js/collections.js?v=239';
+import { el, faNum } from './js/util.js?v=239';
+import { initHomeCard } from './js/home-card.js?v=239';
+import { initHomeFeatures } from './js/home-features.js?v=239';
+import { initPremiumPanel } from './js/premium-panel.js?v=239';
+import { initHomeBundles } from './js/home-bundles.js?v=239';
+import { initHomeUpboard } from './js/home-upboard.js?v=239';
+import { initDesTool } from './js/des-scorer.js?v=239';
+import { initHeader } from './js/header.js?v=239';
+import { initTourAutostart } from './js/tour.js?v=239';
+import { initReadingTracker, flushPendingReads } from './js/reading.js?v=239';
+import { initListeningTracker } from './js/listening.js?v=239';
+import { initShareScoring, buildShareButton } from './js/share.js?v=239';
+import { initHeart, buildHeartChip } from './js/votes.js?v=239';
+import { mountClipControl, landOnClip } from './js/clips.js?v=239';
+import { mountArticleThreads } from './js/article-threads.js?v=239';
+import { mountChallenge } from './js/challenge.js?v=239';
+import { mountGlossaryNotes } from './js/glossary-notes.js?v=239';
+import { mountDes } from './js/des.js?v=239';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=239';
+import { initAudioHub } from './js/audio-hub.js?v=239';
+import { initAudioFallback } from './js/audio-fallback.js?v=239';
+import { getModel, freshFolders } from './js/content-index.js?v=239';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -37,7 +37,7 @@ import { getModel, freshFolders } from './js/content-index.js?v=238';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=238').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=239').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -801,7 +801,7 @@ function folderForPath(folders) {
 }
 
 function openSeenGate() {
-  Promise.all([import('./js/sheet.js?v=238'), import('./js/premium-cta.js?v=238')])
+  Promise.all([import('./js/sheet.js?v=239'), import('./js/premium-cta.js?v=239')])
     .then(([sheet, cta]) => sheet.openSheet(sheet.gateCard({
       title: 'کدام‌ها را خوانده‌ای',
       sub: 'کنارِ هر مطلب یک نشان می‌گذارد: بازش کرده‌ای، یا تا آخر خوانده‌ای. '

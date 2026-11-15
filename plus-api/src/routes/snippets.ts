@@ -83,7 +83,9 @@ function prepareFields(
 }
 
 const SNIPPET_INPUT_SCHEMA = {
-  title: { type: 'string', maxLength: 200 },
+  // 400, not 200: a paper saved from the cabinet keeps its full title (30
+  // library titles run past 200 characters, the longest 273).
+  title: { type: 'string', maxLength: 400 },
   body: { type: 'string', maxLength: 10000 },
   authors: { type: 'string', maxLength: 300 },
   venue: { type: 'string', maxLength: 200 },
