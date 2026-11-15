@@ -431,7 +431,7 @@ describe('GET /admin/ai/health', () => {
 
   it('reports the stub provider as live:false and probes nothing (no spend, no network)', async () => {
     // The suite pins AI_PROVIDER=stub (vitest.config.ts), which is exactly the
-    // state this endpoint exists to make visible: the assistant answers fine,
+    // state this endpoint exists to make visible: the AI layer answers fine,
     // but from a stub — indistinguishable from the real model out in the UI.
     const res = await app.inject({
       method: 'GET', url: '/admin/ai/health', headers: { authorization: basic },
@@ -493,7 +493,7 @@ describe('GET /admin/ai/health?deep=1', () => {
     expect(res.json().deep).toBeNull();
   });
 
-  it('times one real round when asked', async () => {
+  it('times one real grading call when asked', async () => {
     // The suite pins AI_PROVIDER=stub, so this exercises the plumbing offline:
     // the stub answers instantly and the shape is what matters.
     const res = await app.inject({
@@ -506,8 +506,8 @@ describe('GET /admin/ai/health?deep=1', () => {
     expect(typeof deep.ms).toBe('number');
     // Says what it timed, so a 1ms stub result can never read as a fast model.
     expect(deep.provider).toBe('stub');
-    // How many tags came back — the stub never guesses, so zero here is right.
-    expect(deep.tags).toBe(0);
+    // How many key-point verdicts came back — the stub never guesses, so zero here is right.
+    expect(deep.points).toBe(0);
   });
 });
 

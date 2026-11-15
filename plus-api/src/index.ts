@@ -4,7 +4,7 @@ import { closePool } from './db.js';
 import {
   startArticleScheduler, startStreakReminderScheduler, startReactivationScheduler,
   startLeagueScheduler, startHeldNotificationsScheduler, startReviewReminderScheduler,
-  startAssistantLearningScheduler, startSubscriptionScheduler,
+  startSubscriptionScheduler,
   startSubscriptionReminderScheduler, startWinbackScheduler, startPaymentReconcileScheduler,
   startPathwayAlertScheduler, startMonthlyReportScheduler,
 } from './scheduler.js';
@@ -26,7 +26,6 @@ async function main(): Promise<void> {
   const stopLeague = startLeagueScheduler();
   const stopHeldNotifications = startHeldNotificationsScheduler();
   const stopReviewReminder = startReviewReminderScheduler();
-  const stopAssistantLearning = startAssistantLearningScheduler();
   // Its own timer, not chained behind the league's: the sweep is the last word
   // on who is premium and must keep running on a night league finalization dies.
   const stopSubscriptions = startSubscriptionScheduler();
@@ -56,7 +55,7 @@ async function main(): Promise<void> {
   const stopBalePolling = startBalePolling();
   // Pull the published taxonomy/pathways instead of waiting for the next image
   // build: the files are baked in at build time, so without this every article
-  // published on the static site needs a redeploy before the assistant, the
+  // published on the static site needs a redeploy before the
   // dashboard tree and the pathway pages can see it.
   const stopContentRefresh = startContentRefresh();
 
@@ -68,7 +67,6 @@ async function main(): Promise<void> {
     stopLeague();
     stopHeldNotifications();
     stopReviewReminder();
-    stopAssistantLearning();
     stopSubscriptions();
     stopSubscriptionReminders();
     stopWinback();

@@ -107,7 +107,7 @@ beforeEach(() => {
 });
 
 describe('the catalog', () => {
-  it('carries every canonical PREMIUM_FEATURES title — a tenth entry cannot go missing', async () => {
+  it('carries every canonical PREMIUM_FEATURES title — a ninth entry cannot go missing', async () => {
     const { PREMIUM_FEATURES } = await import('/plus/js/config.js');
     const { PREMIUM_ENTRIES } = await import('/plus/js/premium-catalog.js');
     const titles = PREMIUM_ENTRIES.filter((e: any) => e.feature).map((e: any) => e.title);
@@ -118,7 +118,7 @@ describe('the catalog', () => {
     }
   });
 
-  it('names more than the nine — the eleven that were on no pitch anywhere', async () => {
+  it('names more than the eight — the eleven that were on no pitch anywhere', async () => {
     const { PREMIUM_ENTRIES } = await import('/plus/js/premium-catalog.js');
     const extra = (PREMIUM_ENTRIES as any[]).filter((e) => !e.feature).map((e) => e.key);
     expect(extra).toEqual(expect.arrayContaining([
@@ -153,7 +153,7 @@ describe('a signed-out visitor', () => {
     expect(mobile().hidden).toBe(false);
     expect(mobile().querySelector('.dcp-pp')!.getAttribute('data-dcp-state')).toBe('locked');
     const all = cards();
-    expect(all.length).toBe(21);
+    expect(all.length).toBe(20);
     for (const c of all) expect(c.querySelector('.dcp-hf-state')!.textContent).toBe('🔒');
     const buy = pricingLinks();
     expect(buy).toHaveLength(1);
@@ -222,7 +222,7 @@ describe('a subscriber', () => {
     expect(mobile().querySelectorAll('.dcp-hf-state')).toHaveLength(0);
     expect(mobile().textContent).not.toContain('باز کردن');
     // every catalog entry but the hidden one is a row, in one surface per group
-    expect(rows()).toHaveLength(20);
+    expect(rows()).toHaveLength(19);
     expect(mobile().querySelectorAll('.dcp-pp-group.is-live .dcp-pp-inset')).toHaveLength(4);
     const tints = Array.from(mobile().querySelectorAll('.dcp-pp-group.is-live')).map((g) => g.className);
     expect(tints[0]).toContain('g-blue'); expect(tints[1]).toContain('g-green');
@@ -315,7 +315,7 @@ describe('a subscriber', () => {
     expect(mobile().querySelector('[data-dcp-mine="highlights"] b')!.textContent).toBe('–');
   });
 
-  it('shows the three today numbers as doors, four quick actions, and puts «پیشخوان ›» beside the page title', async () => {
+  it('shows the three today numbers as doors, three quick actions, and puts «پیشخوان ›» beside the page title', async () => {
     meImpl = () => Promise.resolve({
       tier: 'premium', due_card_count: 4, current_streak: 17, last_active_day: '2000-01-01',
       subscription: { expires_at: '2026-11-15T00:00:00Z' },
@@ -332,7 +332,7 @@ describe('a subscriber', () => {
     expect(tiles.map((t) => t.querySelector('b')!.textContent)).toEqual(['۴', '۱۷ روز', '۱۳۲']);
     expect(tiles[1].querySelector('.dcp-pp-go')!.textContent).toBe('امروز هنوز نه');
     const quick = Array.from(mobile().querySelectorAll('.dcp-pp-quick-a')).map((a) => a.getAttribute('data-dcp-quick'));
-    expect(quick).toEqual(['highlights', 'pathways', 'assistant', 'collections']);
+    expect(quick).toEqual(['highlights', 'pathways', 'collections']);
     expect(st('sms')).toBe('روشن');
     const head = document.querySelector('#panel-premium .dc-exa-pagehead')!;
     expect(head.querySelector('a.dcp-pp-dash')!.getAttribute('href')).toBe('/plus/');
@@ -642,7 +642,7 @@ describe('destinations', () => {
     meStatusImpl = () => 'user';
     await mount();
     expect(mobile().querySelector('[data-dcp-key="threads"]')).toBeNull();
-    expect(mobile().querySelectorAll('.dcp-pp-row').length).toBe(20);
+    expect(mobile().querySelectorAll('.dcp-pp-row').length).toBe(19);
   });
 
   it('sends the DES scorer row to the drawer at the END of this tab — opened, never a panel switch', async () => {

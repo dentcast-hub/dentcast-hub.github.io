@@ -15,10 +15,10 @@
 //     the account, not localStorage).
 //  2. MANUAL — «راهنمای سایت» in the header person menu (logged-in), any time.
 //     On a non-home page it navigates to /?tour=1 and starts there.
-import { el, faNum, tehranDay } from './util.js?v=237';
-import { api, currentUser } from './api.js?v=237';
-import { pricingHref } from './premium-cta.js?v=237';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=237';
+import { el, faNum, tehranDay } from './util.js?v=238';
+import { api, currentUser } from './api.js?v=238';
+import { pricingHref } from './premium-cta.js?v=238';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=238';
 
 const SS_PENDING = 'dcp:tour:pending'; // set before navigating home to start there
 
@@ -209,15 +209,15 @@ const STOPS = [
   {
     key: 'premium_quick', panel: 'panel-premium', premium: 'all', enter: mountPremiumPreview, title: 'میان‌برها و باندل‌ها',
     text: (ctx) => (ctx.live
-      ? 'چهار ابزاری که بیش از همه باز می‌کنید — دفترچه، مسیرها، دستیار کیس و کالکشن‌ها — یک لمس فاصله دارند، و زیرشان باندل‌های شروع با پیشرفت خودتان.'
-      : 'چهار ابزاری که مشترک‌ها بیش از همه باز می‌کنند — دفترچه‌ی هایلایت‌ها، مسیرها، دستیار کیس و کالکشن‌ها — یک لمس فاصله دارند، و زیرشان باندل‌های شروع که برای مشترک همه باز است.'),
+      ? 'سه ابزاری که بیش از همه باز می‌کنید — دفترچه، مسیرها و کالکشن‌ها — یک لمس فاصله دارند، و زیرشان باندل‌های شروع با پیشرفت خودتان.'
+      : 'سه ابزاری که مشترک‌ها بیش از همه باز می‌کنند — دفترچه‌ی هایلایت‌ها، مسیرها و کالکشن‌ها — یک لمس فاصله دارند، و زیرشان باندل‌های شروع که برای مشترک همه باز است.'),
     targets: () => premiumTargets('.dcp-pp-quick', '.dcp-pp-bundles'),
   },
   {
     key: 'premium_groups', panel: 'panel-premium', premium: 'all', enter: mountPremiumPreview, title: 'همه‌ی ابزارها، در چهار گروه',
     text: (ctx) => (ctx.live
       ? 'بقیه‌ی ابزارهای شما در چهار گروه، هر ردیف با وضعیت خودش: «خواندن و مرور»، «مسیر و گواهی»، «ابزار» و «گفت‌وگو و همراهی». «پیشخوان ›» بالای همین تب هم خلاصه‌ی مطالب خودتان است.'
-      : 'بقیه‌ی ابزارها در چهار گروه، هر ردیف با وضعیت خودش: «خواندن و مرور» (دفترچه، نمای موضوعی هایلایت‌ها، نشانِ خوانده و نخوانده کنار هر مطلب)، «مسیر و گواهی»، «ابزار» (مسیریاب، کتابخانه، دستیار کیس، امتیاز DES برای مقاله‌ی خودتان) و «گفت‌وگو و همراهی» (پاسخ به چالش‌ها، بدون تبلیغ در مقالات، یادآوری استریک با پیامک).'),
+      : 'بقیه‌ی ابزارها در چهار گروه، هر ردیف با وضعیت خودش: «خواندن و مرور» (دفترچه، نمای موضوعی هایلایت‌ها، نشانِ خوانده و نخوانده کنار هر مطلب)، «مسیر و گواهی»، «ابزار» (مسیریاب، کتابخانه، امتیاز DES برای مقاله‌ی خودتان) و «گفت‌وگو و همراهی» (پاسخ به چالش‌ها، بدون تبلیغ در مقالات، یادآوری استریک با پیامک).'),
     cta: true,
     targets: () => premiumTargets('.dcp-pp-group'),
   },
@@ -261,7 +261,7 @@ async function mountPremiumPreview(ctx) {
   if (preview && preview.isConnected) return;
   const host = byId('panel-premium');
   if (!host) return;
-  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=237'), samplePathway()]);
+  const [mod, pathway] = await Promise.all([import('./premium-panel.js?v=238'), samplePathway()]);
   if (!state || typeof mod.livePreview !== 'function') return;
   const node = mod.livePreview({
     tier: 'premium',

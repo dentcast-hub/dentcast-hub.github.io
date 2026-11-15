@@ -3,7 +3,7 @@
 // This copy used to live inside pricing-page.js, which was fine while the price
 // page was the only place that made the pitch. It no longer is: the first-visit
 // popup (premium-popup.js) makes the same argument to someone who has not asked
-// for it yet, and a second hand-written copy of nine sentences is a guarantee
+// for it yet, and a second hand-written copy of eight sentences is a guarantee
 // that one day the two will disagree about what the product does.
 //
 // The NAMES come from PREMIUM_FEATURES — the list the dashboard and the
@@ -16,7 +16,7 @@
 // «بریز», «بخون». That voice is right beside a button someone already paid for
 // and wrong on the page asking them for a million toman. Same features,
 // register to match the moment.
-import { PREMIUM_FEATURES } from './config.js?v=237';
+import { PREMIUM_FEATURES } from './config.js?v=238';
 
 /**
  * Keyed by title with a fallback to the shared hint, so a feature added to the
@@ -28,7 +28,6 @@ const PITCH = {
   'مسیر یادگیری': 'مسیرهای آماده، از پیش‌نیاز تا پیشرفته و به ترتیب درست؛ لازم نیست خودتان ترتیب را کشف کنید.',
   'کالکشن‌ها': 'هایلایت‌ها و مقاله‌ها را در پوشه‌های خودتان دسته‌بندی کنید — مستقل از موضوع‌بندی سایت.',
   'قطب‌نمای مطالعه': 'نشان می‌دهد در هر حوزه کجا ایستاده‌اید و کدام بخش هنوز از دیدتان دور مانده است.',
-  'دستیار هوشمند': 'شرح کیس را می‌نویسید و با چند پرسش کوتاه به مرتبط‌ترین مطالب همین‌جا می‌رسید.',
   'دفترچه‌ی هایلایت‌ها': 'همه‌ی هایلایت‌هایتان یکجا، با یادداشت‌ها و جستجو — نه فقط داخل تک‌تک مقاله‌ها.',
   'گزارش ماهانه': 'اول هر ماه یک گزارش شخصی: چه خواندید، پوشش هر پیلار قبل و بعد، و کدام حوزه یک ماه است دست‌نخورده مانده.',
   'هایلایت‌های صوتی': 'مثل هایلایت متن، برای پادکست: وسط شنیدن یک بار بزنید و آخرِ تکه دوباره؛ همان تکه با یادداشت‌تان در دفترچه می‌ماند و از همان‌جا پخش می‌شود.',

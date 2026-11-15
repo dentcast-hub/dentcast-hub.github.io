@@ -1,21 +1,21 @@
 // EVERYTHING premium buys — the full catalog, grouped, for the «پریمیوم» tab.
 //
 // WHY A SECOND LIST EXISTS. `PREMIUM_FEATURES` (config.js) is the canonical
-// NINE: addressed by index from dashboard.js and league.js, mirrored in the
+// EIGHT: addressed by index from dashboard.js and league.js, mirrored in the
 // API's `PREMIUM_FEATURE_TITLES` and held there by a test, read whole by the
 // prize banner, the price page and the first-visit popup. Growing it to twenty
 // would lengthen every one of those surfaces at once — the price page's list,
 // the popup's card, the banner's sentence — which nobody asked for. But the
-// site gates far more than nine things behind `requirePremium`, and until the
+// site gates far more than eight things behind `requirePremium`, and until the
 // tab existed eleven of them were named on no pitch anywhere: not «بدون
 // تبلیغ», not the cabinet, not the wayfinder, not «بالاترین». This file is the
 // one place that lists ALL of it.
 //
-// THE NINE ARE NOT RE-TYPED. Every entry that has a canonical row references it
+// THE EIGHT ARE NOT RE-TYPED. Every entry that has a canonical row references it
 // (`feature: F[i]`) and takes its title from there, so a rename in config.js
 // reaches this tab on the same commit. The extra entries carry their own title.
 // `premium-panel.dom.test.ts` asserts every canonical title appears in this
-// catalog, so a tenth entry appended to `PREMIUM_FEATURES` fails the day it is
+// catalog, so a ninth entry appended to `PREMIUM_FEATURES` fails the day it is
 // added rather than quietly missing from the one page that claims to be complete.
 //
 // The SENTENCES are written here rather than reused from the canonical hints,
@@ -26,12 +26,12 @@
 // GROUPS ARE INFORMATION, not decoration: they answer «what kind of thing is
 // this» for a reader who has never used any of it. Order inside a group is the
 // order a new subscriber meets them, the everyday ones first.
-import { PREMIUM_FEATURES } from './config.js?v=237';
+import { PREMIUM_FEATURES } from './config.js?v=238';
 
 const F = PREMIUM_FEATURES;
 
 // Crafted inline icons, one per entry (same reasoning as home-features.js: emoji
-// sits at a different weight than the site's own stroke icons). The nine reuse
+// sits at a different weight than the site's own stroke icons). The eight reuse
 // the rail's paths so the same feature wears the same face on both surfaces.
 const IC = {
   cards: '<rect x="3" y="6" width="13" height="13" rx="2"/><path d="M8 3h11a2 2 0 0 1 2 2v11"/>',
@@ -47,7 +47,6 @@ const IC = {
   pillar: '<path d="M3 5h18M3 12h18M3 19h18"/><path d="M7 5v14M15 5v14"/>',
   heart: '<path d="M12 21s-7-4.6-9.3-9A5.2 5.2 0 0 1 12 6.4a5.2 5.2 0 0 1 9.3 5.6C19 16.4 12 21 12 21z"/>',
   desboard: '<path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/>',
-  assistant: '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/><circle cx="12" cy="12" r="3"/>',
   wayfinder: '<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>',
   cabinet: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M12 9v12"/>',
   flask: '<path d="M9.5 3v5.2L4.8 17.4A2.4 2.4 0 0 0 6.9 21h10.2a2.4 2.4 0 0 0 2.1-3.6L14.5 8.2V3"/><path d="M8.2 3h7.6"/><path d="M7.4 14.2h9.2"/>',
@@ -86,7 +85,7 @@ export const PREMIUM_GROUPS = [
     sub: 'هایلایت، مرور، کالکشن',
     entries: [
       entry('cards', IC.cards, '/plus/cards.html', 'مرور فاصله‌دار هایلایت‌ها، پیش از فراموشی', { feature: F[0] }),
-      entry('highlights', IC.library, '/plus/highlights.html', 'همه‌ی هایلایت‌ها یک‌جا، با یادداشت و جستجو', { feature: F[5] }),
+      entry('highlights', IC.library, '/plus/highlights.html', 'همه‌ی هایلایت‌ها یک‌جا، با یادداشت و جستجو', { feature: F[4] }),
       // The seen-ticks (plus.js initSeenTicks): a ✓ beside every item on a
       // section list, hollow when opened, filled when read to the end, plus
       // «فقط نخوانده‌ها». No page of its own — the locked card carries a demo
@@ -96,7 +95,7 @@ export const PREMIUM_GROUPS = [
         title: 'کدام‌ها را خوانده‌ای', subLive: 'نشانِ کنار هر مطلب در فهرست بخش‌ها، و فیلتر «فقط نخوانده‌ها»',
       }),
       entry('concepts', IC.concepts, '/plus/highlights.html#concepts', 'هایلایت‌ها دسته‌بندی‌شده بر اساس مفهوم، فارغ از مقاله', { title: 'نمای موضوعی هایلایت‌ها' }),
-      entry('clips', IC.clip, '/plus/highlights.html?kind=clip', 'یک تکه از پادکست را نگه دارید و بعداً بشنوید', { feature: F[7] }),
+      entry('clips', IC.clip, '/plus/highlights.html?kind=clip', 'یک تکه از پادکست را نگه دارید و بعداً بشنوید', { feature: F[6] }),
       entry('collections', IC.collections, '/plus/collections.html', 'پوشه‌های شخصی از هایلایت‌ها و مقاله‌ها، با خروجی Word و PowerPoint', { feature: F[2] }),
     ],
   },
@@ -106,9 +105,9 @@ export const PREMIUM_GROUPS = [
     sub: 'مسیر یادگیری، پیشرفت، گواهی',
     entries: [
       entry('pathways', IC.pathway, '/plus/pathways.html', 'از پیش‌نیاز تا پیشرفته، به ترتیب درست', { feature: F[1] }),
-      entry('certificate', IC.certificate, '/plus/profile.html#certificates', 'ترتیب مسیر و قدم‌های مانده تا آزمون و گواهی با کد قابل استعلام', { feature: F[8] }),
+      entry('certificate', IC.certificate, '/plus/profile.html#certificates', 'ترتیب مسیر و قدم‌های مانده تا آزمون و گواهی با کد قابل استعلام', { feature: F[7] }),
       entry('compass', IC.compass, '/plus/reading-compass.html', 'چقدر از هر پیلار را خوانده‌اید و کجا جا مانده', { feature: F[3] }),
-      entry('report', IC.report, '/plus/report.html', 'گزارش ماهانه‌ی مطالعه و پیشرفت شما', { feature: F[6] }),
+      entry('report', IC.report, '/plus/report.html', 'گزارش ماهانه‌ی مطالعه و پیشرفت شما', { feature: F[5] }),
       entry('pillar', IC.pillar, '/pillar/', 'سری‌های موضوعی با زیرموضوع و ترتیب خواندن', { title: 'چیدمان موضوعی سری‌ها' }),
       entry('upboard', IC.heart, '/up-board/?sort=top', 'مطلب‌ها به ترتیب رأی خواننده‌ها', { title: '«بالاترین» در up-board' }),
       entry('desboard', IC.desboard, '/des-board/', 'مطلب‌ها مرتب‌شده بر اساس سطح شواهد', { title: 'قفسه‌ی شواهد (DES)' }),
@@ -119,7 +118,6 @@ export const PREMIUM_GROUPS = [
     title: 'ابزار',
     sub: 'جستجو و ارزیابی',
     entries: [
-      entry('assistant', IC.assistant, '/plus/assistant.html', 'شرح کیس را بنویسید و به مرتبط‌ترین مطلب برسید', { feature: F[4] }),
       entry('wayfinder', IC.wayfinder, '/plus/wayfinder.html', 'نقشه‌ی خواندن متناسب با تخصص و هدف شما', { title: 'مسیریاب' }),
       entry('cabinet', IC.cabinet, '/dentcast_cabinet_search.html', 'بیش از ۲۱۰۰ مقاله‌ی علمی، دسته‌بندی‌شده و قابل جستجو', { title: 'کتابخانه‌ی دنت‌کست' }),
       // The scorer's drawer sits at the very END of this tab (premium-panel.js

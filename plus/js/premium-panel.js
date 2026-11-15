@@ -15,7 +15,7 @@
 // buys» and this reader has bought it, and seventeen cards of equal weight give
 // the eye nowhere to stop. So a subscriber gets the app-home pattern instead:
 // ONE primary «ادامه بده» card (the active pathway; failing that today's cards;
-// failing that the دفترچه), three today numbers that are each a door, four
+// failing that the دفترچه), three today numbers that are each a door, three
 // quick actions, and the rest as inset grouped lists — one surface per group,
 // hairlines between rows, tinted from the site's own palette (brand blue,
 // certificate green, DES violet, teal). Amber survives in exactly one place,
@@ -40,17 +40,17 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum, streakIsActiveToday } from './util.js?v=237';
-import { currentUser, meStatus, api } from './api.js?v=237';
-import { pricingHref, premiumCta } from './premium-cta.js?v=237';
-import { openSheet, gateCard } from './sheet.js?v=237';
-import { openLoginModal } from './login-modal.js?v=237';
-import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=237';
-import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=237';
-import { armDesTool } from './des-scorer.js?v=237';
-import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=237';
-import { reportChip } from './home-features.js?v=237';
-import { getModel, freshFolders } from './content-index.js?v=237';
+import { el, faNum, streakIsActiveToday } from './util.js?v=238';
+import { currentUser, meStatus, api } from './api.js?v=238';
+import { pricingHref, premiumCta } from './premium-cta.js?v=238';
+import { openSheet, gateCard } from './sheet.js?v=238';
+import { openLoginModal } from './login-modal.js?v=238';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=238';
+import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=238';
+import { armDesTool } from './des-scorer.js?v=238';
+import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=238';
+import { reportChip } from './home-features.js?v=238';
+import { getModel, freshFolders } from './content-index.js?v=238';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.
@@ -309,11 +309,11 @@ function today(me) {
   ]);
 }
 
-/** Four quick actions — the tools a subscriber opens most. */
+/** Three quick actions — the tools a subscriber opens most. */
 function quick() {
   const tiles = [
     ['highlights', 'دفترچه', 'blue'], ['pathways', 'مسیرها', 'green'],
-    ['assistant', 'دستیار کیس', 'violet'], ['collections', 'کالکشن‌ها', 'teal'],
+    ['collections', 'کالکشن‌ها', 'teal'],
   ];
   return el('div', { class: 'dcp-pp-quick' }, tiles.map(([key, label, tint]) => {
     const e = byKey(key);

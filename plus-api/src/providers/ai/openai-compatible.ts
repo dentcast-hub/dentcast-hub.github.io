@@ -1,32 +1,8 @@
 import { config } from '../../config.js';
 import { outboundFetch, describeError } from '../outbound.js';
-import type { AiProvider, SelectTagsInput, MatchKeyPointsInput, PointState } from './types.js';
+import type { AiProvider, MatchKeyPointsInput, PointState } from './types.js';
 
-// The ONE model call a round ever makes. It shows the model the site's real
-// hashtag catalog and asks for nothing but a subset of it, because the thing
-// that was broken was exactly the semantic bridge between a dentist's own
-// words ("نسج") and the site's vocabulary ("بافت", "فرول") — and the thing
-// that was slow was asking the model twice. The model is told the shape it
-// must answer in; JSON mode (where the endpoint supports it) makes that a hard
-// guarantee instead of a request. Either way we never trust the parse blindly:
-// this file drops anything unusable, and services/case-assistant.ts then
-// re-validates every surviving string against the live content index, so a
-// hallucinated label can never reach a user.
-const SELECT_TAGS_SYSTEM_PROMPT = `تو نمایه‌سازِ معناییِ سایت آموزش دندانپزشکی دنت‌کست هستی، نه یک دستیار بالینی. کاربر (یک دندان‌پزشک) وضعیت یک بیمار یا موضوع مورد نظرش را با متن آزاد — اغلب محاوره‌ای و شتاب‌زده — شرح می‌دهد و فهرست کامل هشتگ‌های واقعی سایت (فیلد catalog) به تو داده می‌شود؛ عددِ داخل پرانتزِ هر قلم، تعدادِ مطالبِ سایت زیرِ آن هشتگ است.
-کارِ تو فقط این است: بفهم همکار جوابِ چه سؤالی را می‌خواهد — چه تصمیمی، چه علتی، کدام گزینه‌های درمانی — و هشتگ‌هایی را از catalog انتخاب کن که مطالبِ پاسخ‌دهنده به همان سؤال زیرشان است. مترادف‌ها و زبانِ محاوره را خودت پل بزن (مثلاً «نسج» یعنی «بافت»؛ «کمبود نسج برای روکش» یعنی مسئله‌ی فرول و طول تاج؛ دندون یعنی دندان، عصب‌کشی یعنی درمان ریشه، kraun یعنی روکش).
-قوانین سخت:
-- فقط از میان catalog انتخاب کن و هر قلم را حرف‌به‌حرف همان‌طور که در catalog آمده برگردان، بدونِ عددِ داخل پرانتز؛ هرگز هشتگ تازه نساز و هیچ قلمی را بازنویسی، جمع یا ترجمه نکن.
-- حداکثر ۸ قلم، مرتب از مرتبط‌ترین به کم‌ربط‌ترین. فقط چیزی را بیاور که واقعاً به منظور متن می‌خورد؛ هم‌ریشگیِ ظاهریِ یک کلمه (مثلاً «روکش» در متن و «تراش روکش» در catalog) به‌تنهایی ربط نیست.
-- کلمه‌های خودِ کاربر را پژواک نکن: هشتگی که فقط وضعیتِ توصیف‌شده را تکرار می‌کند (مثل «فضای بی دندان»، «دندان قدامی»، «پرمولر») جواب نیست. اگر متن پرسشِ تصمیم است («چیکار کنم»، «X یا Y»)، هشتگِ گزینه‌ها یا خودِ آن تصمیم را بیاور، و اگر همکار بین دو راه مردد است هشتگِ هر دو راه را. مثال: «فضای بی‌دندانی قدام پایین، چیکار کنم» ← «جایگزینی دندان»، «RBFDP»، «بریج»، «ایمپلنت قدامی».
-- هشتگِ تک‌مطلبی، یعنی با (1)، را فقط وقتی بیاور که دقیقاً همان مسئله را نام می‌برد. هشتگ‌های خیلی کلی (مثل «ایمپلنت»، «روکش»، «طرح درمان»، «تصمیم درمانی») را فقط وقتی بیاور که هشتگِ دقیق‌تری نبود.
-- از هشتگ‌های هم‌معنا (فارسی و انگلیسیِ یک مفهوم، مثل «زیبایی ایمپلنت» و «Implant Esthetics») فقط یکی را بیاور: ترجیحاً فارسی و پرمطلب‌تر.
-- اگر refinements آمده، یعنی گزینه‌های قبلی کافی نبود: با قیدِ تازه هشتگِ مشخص‌تر بیاور، نه هشتگِ کلی.
-- اگر متن یک مسئله‌ی بالینیِ مشخص را نام می‌برد ولی دو یا سه برداشت دارد، برای هر برداشت هشتگِ خودش را بیاور تا همکار از بین گزینه‌ها انتخاب کند؛ ابهام دلیلِ خالی برگرداندن نیست. مثال: «برای روکش فضا کمه» ← «فضای رستوریتیو» (فضای عمودیِ بین‌فکی)، «افزایش VD»، «افزایش طول تاج» (تاجِ کوتاه).
-- فقط وقتی فهرست خالی برگردان که متن هیچ مسئله‌ی دندانپزشکیِ مشخصی را نام نمی‌برد (مثل «درد داره» یا «کیس سختیه»)، یا موضوعش اصلاً آموزش دندانپزشکی نیست (مثل قیمت یا بیمه)؛ خالی برگرداندن بهتر از حدسِ بی‌ربط است.
-- هرگز تشخیص، توصیه‌ی درمانی یا نظرِ بالینی نده.
-- فقط یک شیء JSON برگردان، دقیقاً به این شکل: {"tags": ["...", "..."]}.`;
-
-// چالش grading. English, like its neighbour above (handoff §6.5) — no clinical
+// چالش grading. English (handoff §6.5) — no clinical
 // examples are added here; those come from challenge_examples at call time
 // (§6.3). The model is never shown the founder's prose answer (RULE 5): it
 // sees only the key points, the reader's answer and past examples, which is
@@ -196,8 +172,8 @@ export class OpenAiCompatibleProvider implements AiProvider {
     };
     // Claude's current models (Haiku 5.5, Sonnet 5.5, Opus 4.7+) reject any
     // non-default sampling value with a 400, and the retry loop would read that
-    // 400 as the gateway's usual hiccup: three failed calls and the pillar
-    // fallback on every round. They run at their default; other models keep 0.
+    // 400 as the gateway's usual hiccup: three failed calls on every
+    // request. They run at their default; other models keep 0.
     const temperature = samplingTemperature(config.ai.model);
     if (temperature !== null) body.temperature = temperature;
     if (useJsonMode) body.response_format = { type: 'json_object' };
@@ -242,40 +218,14 @@ export class OpenAiCompatibleProvider implements AiProvider {
     return parsed;
   }
 
-  async selectTags(input: SelectTagsInput): Promise<string[]> {
-    return this.withRetry(() => this.selectTagsAttempt(input));
-  }
-
-  private async selectTagsAttempt({ description, refinements, catalog }: SelectTagsInput): Promise<string[]> {
-    const parsed = await this.chatJson(
-      SELECT_TAGS_SYSTEM_PROMPT,
-      // The catalog first: it is the same ~5K tokens on every call, so as the
-      // leading part of the message it is a prefix a gateway can cache, which
-      // it never was behind each case's own description.
-      JSON.stringify({ catalog, description, refinements }),
-    ) as { tags?: unknown };
-
-    // Shape cleanup only. Whatever doesn't look like a short real label is just
-    // dropped, never thrown on — a malformed-but-parseable answer degrades to
-    // "no tags" (the honest pillar fallback in case-assistant.ts), not an error
-    // screen. The REAL validation — "is this actually a site hashtag?" — is the
-    // service's job, against the live index, exactly as before.
-    const raw = Array.isArray(parsed.tags) ? parsed.tags : [];
-    return raw
-      .filter((t): t is string => typeof t === 'string' && t.trim().length > 0)
-      .map((t) => t.trim().slice(0, 60))
-      .slice(0, 8);
-  }
-
   async matchKeyPoints(input: MatchKeyPointsInput): Promise<{ id: string; state: PointState }[]> {
     return this.withRetry(() => this.matchKeyPointsAttempt(input));
   }
 
-  // Shape cleanup only, same posture as selectTagsAttempt above — the REAL
+  // Shape cleanup only — the REAL
   // validation (every id present, exactly the key-point set, no extras, every
   // state one of the three) is services/challenge.ts's job against the live
-  // key-point set, same as case-assistant.ts re-validates every tag against
-  // the live content index.
+  // key-point set.
   private async matchKeyPointsAttempt({ keyPoints, answer, examples }: MatchKeyPointsInput):
   Promise<{ id: string; state: PointState }[]> {
     const parsed = await this.chatJson(

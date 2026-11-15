@@ -4513,13 +4513,13 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     });
   });
 
-  // GET /admin/ai/health - is «دستیار هوشمند» actually wired to a model RIGHT NOW?
+  // GET /admin/ai/health - is the AI layer actually wired to a model RIGHT NOW?
   // Read-only and FREE: the probe lists models (GET {base}/models), it never asks
   // for a completion, so checking costs no tokens.
   //
-  // This exists for the same reason /admin/notify/health does: from outside, an
-  // assistant answering from the `stub` provider is indistinguishable from one
-  // answering from the real model — both return a sensible question — and the
+  // This exists for the same reason /admin/notify/health does: from outside, a
+  // grader answering from the `stub` provider is indistinguishable from one
+  // answering from the real model — both return a sensible result — and the
   // route that would tell you is behind a premium session. It also separates the
   // two failures that look identical in the UI: env not set (still on stub) vs
   // env set but this container cannot reach the gateway.
@@ -4549,10 +4549,10 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       max_attempts: config.ai.maxAttempts,
     };
 
-    // ?deep=1 additionally times ONE real tag-selection round. The /models probe
+    // ?deep=1 additionally times ONE real key-point grading call. The /models probe
     // proves reachability and auth in a few hundred ms and says nothing about
     // GENERATION speed — which, on a reasoning model, is the number that decides
-    // whether the assistant is usable. Opt-in because it costs tokens, and
+    // whether the AI layer is usable. Opt-in because it costs tokens, and
     // measured HERE rather than from a laptop: this is the path and the network
     // a user's request actually takes.
     //
@@ -4562,13 +4562,13 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
       if (q.deep !== '1') return null;
       const t0 = Date.now();
       try {
-        const out = await ai.selectTags({
-          description: 'روکش بیمار مدام می‌افتد و سمان قبلی شسته شده',
-          refinements: [],
-          catalog: ['سمان', 'روکش'],
+        const out = await ai.matchKeyPoints({
+          keyPoints: [{ id: 'kp1', text: 'سمان قبلی شسته شده است' }],
+          answer: 'روکش بیمار مدام می‌افتد و سمان قبلی شسته شده',
+          examples: [],
         });
         return {
-          ok: true, provider: ai.name, ms: Date.now() - t0, tags: out.length,
+          ok: true, provider: ai.name, ms: Date.now() - t0, points: out.length,
         };
       } catch (err) {
         return { ok: false, provider: ai.name, ms: Date.now() - t0, error: describeError(err, config.ai.timeoutMs) };

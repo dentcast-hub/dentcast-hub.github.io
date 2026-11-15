@@ -31,18 +31,17 @@
 // with no coordination between the modules. When there is no ad — a premium
 // visitor, or the slot switched off — the section simply moves up under the
 // Pulse and nothing else changes.
-import { el, faNum } from './util.js?v=237';
-import { currentUser, api } from './api.js?v=237';
-import { PREMIUM_FEATURES } from './config.js?v=237';
-import { pricingHref } from './premium-cta.js?v=237';
-import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=237';
-import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=237';
+import { el, faNum } from './util.js?v=238';
+import { currentUser, api } from './api.js?v=238';
+import { PREMIUM_FEATURES } from './config.js?v=238';
+import { pricingHref } from './premium-cta.js?v=238';
+import { currentMonthKey, shiftMonth, monthName } from './jalali-month.js?v=238';
+import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=238';
 
 // Crafted inline icons, one per feature (same reasoning as home-card.js's promo
 // chips: emoji would sit at a different weight than the site's own stroke icons).
 const IC = {
   pathway: '<path d="M4 18h5l3-6 3 9 2-3h3"/><circle cx="4" cy="18" r="1.2"/>',
-  assistant: '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/><circle cx="12" cy="12" r="3"/>',
   cards: '<rect x="3" y="6" width="13" height="13" rx="2"/><path d="M8 3h11a2 2 0 0 1 2 2v11"/>',
   collections: '<path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
   compass: '<circle cx="12" cy="12" r="9"/><path d="m15 9-2 5-4 1 2-5z"/>',
@@ -64,18 +63,17 @@ const IC = {
 const F = PREMIUM_FEATURES;
 const CARDS = [
   { f: F[1], ico: IC.pathway,     href: '/plus/pathways.html',        sub: 'از پیش‌نیاز تا پیشرفته، به ترتیبِ درست' },
-  { f: F[4], ico: IC.assistant,   href: '/plus/assistant.html',       sub: 'شرح کیس را بنویسید، به مرتبط‌ترین مطلب برسید' },
   { f: F[0], ico: IC.cards,       href: '/plus/cards.html',           sub: 'هایلایت‌ها درست پیش از فراموش‌شدن برمی‌گردند' },
   { f: F[2], ico: IC.collections, href: '/plus/collections.html',     sub: 'هایلایت‌ها و مقاله‌ها در پوشه‌های خودتان' },
   { f: F[3], ico: IC.compass,     href: '/plus/reading-compass.html', sub: 'چقدر از هر پیلار را خوانده‌اید، کجا جا مانده' },
-  { f: F[5], ico: IC.library,     href: '/plus/highlights.html',      sub: 'همه‌ی هایلایت‌هایتان یکجا، با یادداشت و جستجو' },
-  { f: F[6], ico: IC.report,      href: '/plus/report.html',          sub: 'هر ماه، آنچه خواندید و کجا ایستادید' },
-  { f: F[7], ico: IC.clip,        href: '/plus/highlights.html?kind=clip', sub: 'مثل هایلایت متن، روی پادکست: تکه را نگه دارید و دوباره بشنوید' },
+  { f: F[4], ico: IC.library,     href: '/plus/highlights.html',      sub: 'همه‌ی هایلایت‌هایتان یکجا، با یادداشت و جستجو' },
+  { f: F[5], ico: IC.report,      href: '/plus/report.html',          sub: 'هر ماه، آنچه خواندید و کجا ایستادید' },
+  { f: F[6], ico: IC.clip,        href: '/plus/highlights.html?kind=clip', sub: 'مثل هایلایت متن، روی پادکست: تکه را نگه دارید و دوباره بشنوید' },
   // The wall lives in the profile, so that is where this card goes — it is
   // the only feature here whose home is not a page of its own, and sending a
   // reader to the pathway catalog instead would show them everything except
   // the thing the card names.
-  { f: F[8], ico: IC.certificate, href: '/plus/profile.html#certificates', sub: 'مسیر را به ترتیب بخوانید، ببینید چه مانده، آزمون بدهید و گواهی بگیرید' },
+  { f: F[7], ico: IC.certificate, href: '/plus/profile.html#certificates', sub: 'مسیر را به ترتیب بخوانید، ببینید چه مانده، آزمون بدهید و گواهی بگیرید' },
 ];
 
 // The two slots index.html carries — one per homepage layout. Both are filled:
@@ -145,10 +143,9 @@ function paint(title, text) {
  * never awaited, and left at «باز کردن» if they fail — a homepage must not wait
  * on a count.
  *
- * «قطب‌نمای مطالعه» and «دستیار هوشمند» deliberately carry no number: the
- * compass payload has no single overall figure (its percentages are per-pillar,
- * so a bare «٪۲۴» here would be ambiguous), and the assistant has no state at
- * all — it is a wizard you start.
+ * «قطب‌نمای مطالعه» deliberately carries no number: the compass payload has no
+ * single overall figure (its percentages are per-pillar, so a bare «٪۲۴» here
+ * would be ambiguous).
  */
 /** «{ماه} آماده» when the last completed month has a report for this reader,
  * «{ماه جاری} تا امروز» when the account is younger than that, null on error. */
@@ -176,10 +173,10 @@ function fillLive(me) {
   // reader's own (GET /report/months starts at the account's first month) — an
   // account opened this month has no such report, and the calendar alone
   // would have promised it. Fired after the render like the counts below.
-  reportChip().then((t) => { if (t) paint(F[6].title, t); });
+  reportChip().then((t) => { if (t) paint(F[5].title, t); });
 
   api.recentHighlights(1)
-    .then((d) => { if (d && d.total) paint(F[5].title, faNum(d.total) + ' هایلایت'); })
+    .then((d) => { if (d && d.total) paint(F[4].title, faNum(d.total) + ' هایلایت'); })
     .catch(() => { /* leave «باز کردن» rather than guess */ });
   api.listCollections()
     .then((d) => {

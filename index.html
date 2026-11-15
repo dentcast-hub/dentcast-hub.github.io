@@ -4781,7 +4781,7 @@ html:not([data-theme="dark"]) body:not(.dc-desktop-ui){ background:var(--x-groun
 .dcp-pp .dcp-pp-go{ display:block; color:var(--ac); font-weight:800; font-size:.64rem; margin-top:.05rem; }
 .dcp-pp .dcp-pp-go.is-quiet{ color:var(--txt3); font-weight:600; }
 /* quick actions */
-.dcp-pp .dcp-pp-quick{ display:grid; grid-template-columns:repeat(4,1fr); gap:.5rem; margin:0 0 1rem; }
+.dcp-pp .dcp-pp-quick{ display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem; margin:0 0 1rem; }
 /* the starter-bundle rail (home-bundles.js) hosted in the tab: the band's own
    amber grammar, the tab's rhythm */
 .dcp-pp .dcp-pp-bundles{ margin:0 0 .95rem; }
@@ -7758,7 +7758,7 @@ scrollBody.addEventListener('touchend',e=>{
     if(p) p.textContent=title;
     a.href=url;
   }
-  fetch('/dentcast-brain.json?v=df18ac6b5c',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  fetch('/dentcast-brain.json?v=05566162ad',{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
     if(!Array.isArray(arr)) return;
     var latest={}, pool=[];
     arr.forEach(function(e){
@@ -7859,7 +7859,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=339" defer></script>
+<script src="/dc-nav.js?v=340" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
@@ -8146,7 +8146,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 <script>
 /* ── LAST 30 UPDATES ── */
 (function(){
-  const FEED_URL='/dentcast-brain.json?v=df18ac6b5c';
+  const FEED_URL='/dentcast-brain.json?v=05566162ad';
   /* Two hosts, one per homepage shell — the same SLOT_IDS split
      plus/js/home-upboard.js uses for the «بالاترین» arrangement of this same
      box. This script owns «تازه‌ترین» and is the ONLY renderer of it (the
@@ -8433,7 +8433,7 @@ document.getElementById('btnOpenRadarMob')?.addEventListener('click',e=>{
 
   function getBrain(){
     if(brainCache) return Promise.resolve(brainCache);
-    return fetch('/dentcast-brain.json?v=df18ac6b5c', {cache:'no-store'})
+    return fetch('/dentcast-brain.json?v=05566162ad', {cache:'no-store'})
       .then(r => r.ok ? r.json() : [])
       .then(d => { brainCache = Array.isArray(d) ? d : []; return brainCache; })
       .catch(() => { brainCache = []; return []; });
