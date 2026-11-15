@@ -1,0 +1,246 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "sharehub",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "بعد از تحویل دنچر؛ آیا روش دیجیتال واقعاً دردسر کمتری دارد؟",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "caption_fa": {
+  "value": "دنچر دیجیتال در جلسهٔ تحویل تمام نمی‌شود. در قسمت پنجم مجموعهٔ پروتز متحرک، دو مرور سیستماتیک را از زاویهٔ عوارض پس از تحویل، مراجعات اصلاحی و هزینه مرور می‌کنیم.",
+  "from": "02-عنوان-کپشن.md:9"
+ },
+ "title_en": {
+  "value": "After Denture Delivery: Does the Digital Workflow Really Cause Fewer Problems?",
+  "from": "06-انگلیسی.md:1"
+ },
+ "caption_en": {
+  "value": "A digital denture is not finished at the delivery appointment. In part five of the removable prosthodontics series, we review two systematic reviews through the lens of post-insertion complications, adjustment visits and cost.",
+  "from": "06-انگلیسی.md:3"
+ },
+ "body_en": {
+  "value": "Suppose we have fabricated a digital complete denture for a patient. Treatment has gone well and the denture shows no particular problem at the delivery appointment, but a few days later the patient comes back: there is a sore spot on the ridge, they are not happy with the denture's retention, and when chewing they feel that the teeth do not meet properly.\n\nThe question now is whether these problems would have been less likely if we had made the same denture conventionally. The more important question is this: when we talk about the digital workflow being faster and more economical, have we also counted the visits and adjustments after delivery?\n\nWe have previously discussed fabricating digital dentures and the difference between milling and 3D printing. But denture quality is not limited to how accurately it is made; the function or performance of the prosthesis in the patient's mouth, and the amount of intervention needed after delivery, matter just as much.\n\nTo examine this, we have two systematic reviews, both published in 2026. One examined complications and post-insertion visits, and the other compared the costs and economic efficiency of the digital workflow with the conventional one.\n\n## Post-insertion complications\n\nLet us start with complications. Smets and colleagues, in a systematic review, examined eleven clinical studies in terms of occlusion, retention and stability, pain, and post-insertion visits.\n\nOne point needs to be clear from the outset. Although the article's title emphasizes printed dentures, the included studies were not limited to 3D printing, and in several studies milled dentures were also part of the comparison. The method of data capture also differed: some studies used direct intraoral scanning, while in others a conventional impression was made first and the resulting impression or cast was then scanned. This difference matters, because it means we cannot attribute every difference in outcome solely to the fabrication method.\n\n### Occlusion\n\nThe first topic is occlusion. One of our expectations of digital design is more precise control over tooth position and occlusal relationships. But does this precision in the software translate into better occlusion in the patient's mouth?\n\nIn the patients' own assessment of occlusion and chewing, no significant difference was reported between digital and conventional dentures. However, in one of the studies, the dentist's assessment showed that tooth arrangement and centric relation were of lower quality in dentures made with the direct digital pathway than in conventional dentures. Interestingly, this difference was seen only in the dentist's assessment, and in the studies that asked the patients themselves, there was no difference in satisfaction with occlusion and chewing.\n\nSo digital design, or the lack of it, does not by itself guarantee better occlusion, and we still need to check the occlusal relationships in the patient's mouth.\n\n### Retention and stability\n\nThe next topic is denture retention and stability, and here too the results are not uniform. Some studies reported better retention for digital dentures, while in other studies either no difference was seen or the conventional method performed better.\n\nOne of the important points of the Smets review is the difference between the direct and indirect digital pathways. In the direct pathway, the data are captured with an intraoral scan, whereas in the indirect pathway we first take an impression and then scan the resulting impression or cast. In the studies that compared these two pathways, dentures from the indirect pathway had better retention than dentures based on direct scanning.\n\nThe explanation offered for this finding is that an intraoral scanner cannot record the functional movements of the soft tissues the way a functional impression does. As a result, the denture border extension does not come out accurately and the peripheral seal is weakened, an issue that matters especially in severely resorbed ridges.\n\nSo if a digital denture lacks adequate retention, before attributing the problem to the resin or the fabrication device, we should also look at how the initial data were captured. Of course, this finding does not mean that direct scanning is unsuitable for every edentulous patient, because in one of the studies, printed dentures based on direct scanning did not differ significantly from conventional dentures.\n\nAnother point is the difference between measured retention and retention as the patient perceives it. In some studies the force needed to dislodge the denture differed between the two methods, but patients did not report a clear difference in retention and stability. Even patients' opinions were not consistent across studies: in one study the digital denture, and in another study the conventional denture, scored better.\n\nSo retention should not be judged by a single number or a single clinical impression alone, because the patient's experience, the condition of the ridge and the method of data capture also play a role.\n\n### Pain and pressure spots\n\nAnother important post-insertion problem is pain and pressure spots. Does a digital denture need fewer adjustments of the intaglio surface?\n\nIn the Smets review, only one of the studies reported a significant difference in pain and mucosal sores, in that these problems were more frequent with conventional dentures than with printed dentures. In the remaining studies, no significant difference was seen. The point is that this one study was based on patient records and had a high risk of bias. So we cannot conclude that printed dentures cause less pain or fewer sores in general.\n\nOn the other hand, relieving pressure spots is part of the routine post-insertion care of any denture. So the current evidence does not allow us to promise a patient that a denture being digital lowers the chance of sores or the need to adjust the intaglio surface.\n\n### Post-insertion visits and remakes\n\nNow to the main question: does the number of visits after delivery go down?\n\nOne of the attractions of the digital workflow is fewer fabrication steps and possibly fewer treatment sessions, but this does not necessarily mean fewer visits after delivery. The Smets review did not show an advantage here either. In three studies, the number of post-insertion visits did not differ significantly between the two methods, and in one study printed dentures needed more clinical time for adjustment than milled dentures. The authors' own summary is that the number of visits with the digital workflow, depending on the method and study design, was similar to or greater than with the conventional method.\n\nAs for remaking the denture, the results were also contradictory. One study reported more remakes for conventional dentures, while another study found no difference.\n\nOf course, the limitations of this evidence should also be kept in mind. Sample sizes were small in most studies, materials, software and assessment methods were not uniform, and follow-up was also limited. Because of this heterogeneity, the authors could not combine the results in a meta-analysis.\n\nStill, one point is clear: fewer fabrication steps do not necessarily mean fewer corrective visits after delivery.\n\n## Cost and number of treatment sessions\n\nThe economic question also remains: does the digital workflow really end up cheaper? Muehlemann and colleagues, in a systematic review and meta-analysis, examined five studies with 184 patients and found no significant difference between the digital and conventional methods in any of the four measures, namely laboratory cost, clinical cost, total cost and number of treatment sessions.\n\nThe practical point of this review is the role of experience. The results of treatments performed by prosthodontists differed from those performed by students, and in the hands of an experienced clinician, a trend toward fewer sessions was seen with the digital workflow. That is, any savings from the digital workflow may come only after getting past the learning curve, not from day one.\n\nSeveral points need to be kept in mind when interpreting these results. The absence of a significant difference should be interpreted with caution, because the studies were few, their results were heterogeneous, and the studies were also carried out in countries with different cost structures. The cost of purchasing digital equipment was not included in the calculations, and clinical costs were estimated from the time spent, not the amount the patient pays. For patient satisfaction and oral health-related quality of life, there were also not enough quantitative data for a meta-analysis.\n\n## Summary of results\n\nIf we put these two reviews side by side, the result is clear: a denture being digital has not, by itself, reduced either post-insertion complications and visits or cost. The results are summarized in the table below.\n\n| Topic | Result of comparing digital and conventional |\n| --- | --- |\n| Occlusion | Patients reported no difference. In one study, tooth arrangement and centric relation were weaker with the direct digital pathway. |\n| Retention and stability | Results are contradictory. Dentures based on direct scanning had lower retention than the indirect pathway. |\n| Pain and sores | Only one study, with a high risk of bias, favored the printed denture, and the rest showed no difference. |\n| Post-insertion visits | Similar or more with the digital workflow. |\n| Remake | Results are contradictory. |\n| Laboratory, clinical and total cost | No significant difference was seen. The cost of purchasing equipment was not counted either. |\n| Number of treatment sessions | No significant difference was seen. There was a trend toward fewer sessions in experienced hands. |\n\nThis does not mean the digital workflow is useless. A digital archive of the design files and the ability to reproduce the denture are important advantages, but they should be kept separate from the claim of fewer complications or lower cost. Also, a digital protocol may reduce the sessions needed until the prosthesis is delivered, while the patient still needs the same number of corrective visits after delivery.\n\n## Clinical points\n\nWhat does this evidence mean for clinical decision-making?\n\nFirst, we should take the method of data capture as seriously as the fabrication method. In a patient with a severely resorbed ridge, where denture retention depends on accurate recording of the border areas, we should not consider direct scanning the best choice just because we have printing or milling available. Sometimes a hybrid workflow, that is, keeping the conventional impression and using digital design and fabrication, is the more reasonable choice.\n\nSecond, we should not mistake fewer fabrication sessions for doing away with post-insertion care. A digital denture also needs checks of occlusion, retention and pressure spots, and patient follow-up.\n\nAnd third, the time and cost advantage of the digital workflow depends on the dentist's experience, and we should not expect it at the start.\n\nFinally, the digital workflow is a suitable option for fabricating complete dentures, but we cannot promise the patient less pain, fewer visits or a lower cost. Evaluating a denture does not end at the delivery appointment either, and we need to see what care the patient needs after it.",
+  "from": "06-انگلیسی.md:6-97"
+ },
+ "images": {
+  "value": [],
+  "from": "03-تصاویر: no image files"
+ },
+ "credit": {
+  "value": {
+   "mode": "references",
+   "items": [
+    {
+     "label_fa": "Smets و همکاران، J Prosthet Dent، ۲۰۲۶",
+     "label_en": "Smets et al., J Prosthet Dent, 2026",
+     "href": "https://doi.org/10.1016/j.prosdent.2025.05.019",
+     "from": "04-منبع/منابع.md:31"
+    },
+    {
+     "label_fa": "Muehlemann و همکاران، J Prosthodont، ۲۰۲۶",
+     "label_en": "Muehlemann et al., J Prosthodont, 2026",
+     "href": "https://doi.org/10.1111/jopr.70074",
+     "from": "04-منبع/منابع.md:32"
+    }
+   ]
+  },
+  "from": "04-منبع/منابع.md:27"
+ },
+ "catalog": {
+  "value": [
+   {
+    "title": "Complications of 3D printed dentures: A systematic review",
+    "file_name": "Complications of 3D Printed Dentures: A Systematic Review.pdf",
+    "topic": "complete denture",
+    "topic_path": "complete denture",
+    "type": "systematic review",
+    "local_path": "",
+    "file_size": 296619,
+    "key_finding": "Across 11 clinical studies, digital complete dentures showed a similar or greater number of postinsertion visits than conventional dentures; occlusion, retention and pain outcomes were mixed.",
+    "clinical_bottom_line": "A digital workflow does not by itself reduce postinsertion complications or adjustment visits; the impression method (direct intraoral scan versus scanned conventional impression) matters for retention.",
+    "drive_link": "https://drive.google.com/file/d/1gXjPr9YUb3BYma3OyeNbsav4521SgYZJ/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=1gXjPr9YUb3BYma3OyeNbsav4521SgYZJ",
+    "drive_view": "https://drive.google.com/file/d/1gXjPr9YUb3BYma3OyeNbsav4521SgYZJ/view",
+    "drive_id": "1gXjPr9YUb3BYma3OyeNbsav4521SgYZJ",
+    "tags": [
+     "complete-denture",
+     "cad-cam",
+     "3d-printing",
+     "digital-workflow",
+     "prosthetic-complications",
+     "denture-retention",
+     "occlusion",
+     "systematic-review",
+     "topic:complete-denture",
+     "complications-of-3d-printed-dentures-a-systematic-review"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Complications of 3D printed dentures: A systematic review",
+    "doi": "10.1016/j.prosdent.2025.05.019",
+    "journal": "The Journal of Prosthetic Dentistry",
+    "crossref_year": 2026,
+    "subjects": [],
+    "abstract": "Computer-aided manufacturing and computer-aided design (CAD-CAM) has been implemented less in complete removable prosthodontics because various factors affect the results and quality of complete dentures. Some clinical studies and systematic reviews have compared digitally fabricated complete dentures (DCDs) with conventional complete dentures (CCDs), but few have focused on the complications and number of postinsertion visits. The purpose of this systematic review was to compare CCDs and DCDs in terms of complications and postinsertion visits by evaluating outcomes that included occlusion, retention, and patient discomfort. The goal was to provide insights into the clinical implications of using digital versus conventional techniques for denture fabrication. Following the Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA), the question: \"Is there a difference in complications and postinsertion visits when CCDs are compared with digitally printed complete dentures?\" was addressed. Two independent electronic searches up to March 2024 were done in the PubMed, Google Scholar, and Embase databases. The risk of bias in each study was assessed by using the Cochrane risk of bias tool and the Newcastle-Ottawa scale. Of 63 articles, 11 were included. Outcomes were grouped into different kinds of complications: occlusion, retention or stability, pain, and number of postinsertion visits. In terms of all 4 complications, some statistically significant differences were reported. The manufacturing technique for complete dentures influenced the number and type of complications. The digital technique showed a similar or greater number of follow-up visits, depending on the method used and the study design.",
+    "display_title": "Complications of 3D printed dentures: A systematic review",
+    "authors": [
+     "Kathleen Smets",
+     "Stefan Vandeweghe",
+     "Lucas Ongenae",
+     "Rani D'haese"
+    ]
+   },
+   {
+    "title": "Cost-efficiency of digital versus conventional workflow for removable complete dentures: A systematic review and meta-analysis",
+    "file_name": "Cost-Efficiency of Digital Versus Conventional Workflow for Removable Complete Dentures: A Systematic Review and Meta-Analysis.pdf",
+    "topic": "complete denture",
+    "topic_path": "complete denture",
+    "type": "systematic review and meta-analysis",
+    "local_path": "",
+    "file_size": 1997793,
+    "key_finding": "Five studies (184 patients) showed no statistically significant difference between digital and conventional complete denture workflows in laboratory, clinical or total costs or in treatment sessions; operator experience influenced clinical costs and sessions.",
+    "clinical_bottom_line": "Evidence does not establish a cost-efficiency advantage for digital complete dentures; any session saving depends on clinician experience.",
+    "drive_link": "https://drive.google.com/file/d/18opmLsYZgjHjDZgWfUp7N-srcS5H51ON/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=18opmLsYZgjHjDZgWfUp7N-srcS5H51ON",
+    "drive_view": "https://drive.google.com/file/d/18opmLsYZgjHjDZgWfUp7N-srcS5H51ON/view",
+    "drive_id": "18opmLsYZgjHjDZgWfUp7N-srcS5H51ON",
+    "tags": [
+     "complete-denture",
+     "cad-cam",
+     "digital-workflow",
+     "cost-analysis",
+     "systematic-review",
+     "meta-analysis",
+     "topic:complete-denture",
+     "cost-efficiency-of-digital-versus-conventional-workflow-for-removable-complete-dentures-a-systematic-review-and-meta-analysis"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Cost-efficiency of digital versus conventional workflow for removable complete dentures: A systematic review and meta-analysis",
+    "doi": "10.1111/jopr.70074",
+    "journal": "Journal of Prosthodontics",
+    "crossref_year": 2026,
+    "subjects": [],
+    "abstract": "To compare the cost-efficiency of digitally designed and manufactured removable complete dentures (RCDs) with conventionally fabricated RCDs through a systematic review and meta-analysis. A comprehensive electronic and manual search was performed in PubMed, Embase, Web of Science, and Scopus up to February 10, 2025. Eligible studies included clinical trials and cohort studies comparing cost-related outcomes of digital and conventional RCD workflows. Primary outcomes were laboratory, clinical, and total costs; secondary outcomes included the number of treatment sessions. Meta-analyses were conducted using random-effects models. Risk of bias was evaluated using standardized tools. Four retrospective studies and one prospective study, including 184 patients, met the inclusion criteria. No statistically significant differences were observed between digital and conventional workflows in laboratory costs (mean difference [MD]: -239.77 (2025 USD); p = 0.1063), clinical costs (MD: 74.39 (2025 USD); p = 0.4514), total costs (MD: -357.76 (2025 USD); p = 0.2577), or treatment sessions (MD: -1.47; p = 0.3514). Operator experience significantly influenced clinical costs (p < 0.0001) and the number of sessions (p = 0.0001). Within the limitations of the available evidence, digital and conventional workflows for RCD fabrication demonstrated comparable cost-efficiency. Although digital workflows may reduce the number of sessions when performed by experienced clinicians, the current evidence is insufficient to establish a clear cost-efficiency advantage.",
+    "display_title": "Cost-efficiency of digital versus conventional workflow for removable complete dentures: A systematic review and meta-analysis",
+    "authors": [
+     "Elena Muehlemann",
+     "Aspasia Pachiou",
+     "Gustavo Sáenz-Ravello",
+     "Ronald E. Jung",
+     "Franz J. Strauss",
+     "Margherita G. Liguori"
+    ]
+   }
+  ],
+  "from": "04-منبع/کاتالوگ.json"
+ },
+ "hashtags": {
+  "value": [
+   "#مرور_منابع",
+   "#پروتز_دیجیتال",
+   "#بیمار_بی_دندان",
+   "#قالب‌گیری_دیجیتال",
+   "#تصمیم_درمانی",
+   "#پروتز_متحرک"
+  ],
+  "from": "07-ورودی‌ها.md:15"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "removable-pros",
+   "subtopic": "complete-dentures",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:12"
+ },
+ "pulse": {
+  "value": {
+   "text": null,
+   "link_phrase": "بعد از تحویل دنچر؛ آیا روش دیجیتال واقعاً دردسر کمتری دارد؟"
+  },
+  "from": "07-ورودی‌ها.md:21"
+ },
+ "keywords": {
+  "value": [
+   "عوارض پس از تحویل دنچر کامل",
+   "مراجعات پس از تحویل دنچر",
+   "دنچر کامل دیجیتال و سنتی",
+   "مسیر دیجیتال مستقیم و غیرمستقیم",
+   "ریتنشن و ثبات دنچر",
+   "نقاط فشار و اصلاح سطح داخلی",
+   "ریمیک دنچر (Remake)",
+   "هزینهٔ دنچر دیجیتال",
+   "منحنی یادگیری (Learning Curve)",
+   "گردش‌کار هیبرید دنچر",
+   "مرور سیستماتیک Smets و متاآنالیز Muehlemann",
+   "digital complete denture complications",
+   "complete denture cost-efficiency"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "تفاوت میلینگ و پرینت سه‌بعدی",
+    "href": "queue:32",
+    "from": "11-لینک‌های-گلاسری.md:12"
+   },
+   {
+    "phrase": "رابطهٔ مرکزی",
+    "href": "/glossary/centric-relation.html",
+    "from": "11-لینک‌های-گلاسری.md:13"
+   },
+   {
+    "phrase": "اسکنر داخل‌دهانی",
+    "href": "/glossary/intraoral-scanner.html",
+    "from": "11-لینک‌های-گلاسری.md:14"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:8"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "queue:32",
+    "label": "دنچر کامل دیجیتال؛ میلینگ یا پرینت سه‌بعدی؟",
+    "from": "11-لینک‌های-گلاسری.md:31"
+   },
+   {
+    "href": "queue:21",
+    "label": "ثبت دیجیتال دهان بی‌دندان",
+    "from": "11-لینک‌های-گلاسری.md:32"
+   },
+   {
+    "href": "queue:27",
+    "label": "فریم‌ورک RPD؛ پرینت یا ریخته‌گری؟",
+    "from": "11-لینک‌های-گلاسری.md:33"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:27"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
