@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "glossary/icdas"
 - Status: in_progress
-- Next canonical step: "C.4.7"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -18,7 +18,24 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     "category": "glossary",
     "content_id": "glossary/icdas",
     "context": {
-      "approvals": [],
+      "approvals": [
+        {
+          "decision": "\u0633\u06cc\u0633\u062a\u0645 \u0628\u06cc\u0646\u200c\u0627\u0644\u0645\u0644\u0644\u06cc \u062a\u0634\u062e\u06cc\u0635 \u0648 \u0627\u0631\u0632\u06cc\u0627\u0628\u06cc \u067e\u0648\u0633\u06cc\u062f\u06af\u06cc",
+          "evidence": [
+            "founder data: fa_title in the founder message, copied codepoint-for-codepoint (Hard Rule 16); h1, DefinedTerm.alternateName, glossary.json fa_title and every <title>/og/twitter/breadcrumb surface carry it"
+          ],
+          "scope": "title",
+          "status": "confirmed"
+        },
+        {
+          "decision": "Glossary entries carry no caption field (glossary.json schema); the meta/og/twitter description is an agent-composed search snippet under standing acceptance",
+          "evidence": [
+            "glossary/glossary.json latest-entry key set has no caption; verify_publish compares a glossary title only"
+          ],
+          "scope": "caption",
+          "status": "not_required"
+        }
+      ],
       "decisions": [
         {
           "kind": "ledger_order_v2"
@@ -37,6 +54,115 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             "subtopic": "caries-management"
           },
           "reason": "ICDAS is a caries detection/staging system whose stated purpose is choosing between non-invasive management, monitoring and restoration; operative is the only pillar that holds caries; caries-management is the exact subtopic (cracked-tooth and direct-restorations do not cover detection). Standing acceptance (Hard Rule 14)."
+        },
+        {
+          "evidence": [
+            "glossary/icdas.html opens its body with the founder's own first paragraph, byte-identical; no agent lead was added (body is prose, no list)"
+          ],
+          "kind": "first_cut_lead_provenance_v1",
+          "origin": "author_original",
+          "source_ref": "founder-message:glossary-entry-icdas (sha256 d90a46a5\u2026), section \u00ab\u062a\u0639\u0631\u06cc\u0641\u00bb, first paragraph"
+        },
+        {
+          "items": [
+            "Q3.5: no rewrites (text natural)",
+            "meta description / og / twitter / TechArticle headline+description / DefinedTerm description: agent-composed",
+            "glossary.json synonyms: fa_title, ICDAS, ICDAS II, International Caries Detection and Assessment System, lowercase forms",
+            "pillar operative / caries-management",
+            "4.7 applied: glossary/bewe.html back-link; skipped nccl (cap), tooth-wear, treatment-plan, microleakage (borderline/unrelated)",
+            "4.7-b: 0 candidates",
+            "4.8 applied: \u0633\u06cc\u0644\u0646\u062a\u2192episodes/episode-111-1, \u0631\u0648\u0634\u200c\u0647\u0627\u06cc \u063a\u06cc\u0631\u062a\u0647\u0627\u062c\u0645\u06cc\u2192dentai/dentai-3; skipped \u0631\u0627\u062f\u06cc\u0648\u06af\u0631\u0627\u0641\u06cc\u2192insight-23 (borderline)",
+            "4.9 applied: episode-134, episode-135, dentai-3; skipped dentai-24, insight-23, episode-111-1, episode-65/dentai-11",
+            "FAQ 7 (5 binary) + flashcards 8",
+            "DES interpretation_fa narrowed (Part 3(6))",
+            "English mirror glossary/en/icdas.html"
+          ],
+          "kind": "standing_acceptance_record_v1"
+        },
+        {
+          "english": {
+            "evidence": [
+              "file on disk, enrolled in target_paths"
+            ],
+            "path": "glossary/en/icdas.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "all founder/scientific/semantic choices closed before Push 2; pending_questions empty"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "C.4.13: COMMENTARY DES 12/E stored under glossary/icdas in plus/des-scores.json; no FIDELITY owed (self-record, fidelity [null]); no M3b"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Q4.9 \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc; C.4.14 skipped"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "pillar operative/caries-management (C.2.4, C.5.5); capsule /pillar/operative/"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.7 bewe back-link; C.4.7-b 0 candidates; C.4.8 two inline anchors; C.4.9 three capsules (4/5)"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "glossary writes no brain entry; glossary.json schema has no hashtags; C.5.0 skipped"
+              ],
+              "scope": "hashtags",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "glossary/glossary.json entry appended (C.5); plus/faq-corpus.json glossary/icdas (C.4.11/C.4.12)"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "glossary term is not a pathway step; 4.12-\u0628 skipped for glossary; C.5.6/C.5.6-b skipped"
+              ],
+              "scope": "pathways",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "glossary terms are not announced in Pulse (module 02 Q5, module 11 \u00a76)"
+              ],
+              "scope": "pulse",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "glossary/en/icdas.html authored from locked text; toggles inverse (en/icdas.html \u2194 ../icdas.html); noindex, follow; no hreflang; metanotes/en/meta-1.html unchanged"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "title confirmed (founder fa_title); caption not_required (glossary); lead author_original; no M1/M3b/M2 owed"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -324,9 +450,119 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "08-des-fidelity.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [
+          "Fresh semantic review of all 109 glossary terms against ICDAS (caries detection/staging). Applied (strong): glossary/bewe.html \u2190 \u00abICDAS \u2014 \u0633\u06cc\u0633\u062a\u0645 \u0628\u06cc\u0646\u200c\u0627\u0644\u0645\u0644\u0644\u06cc \u062a\u0634\u062e\u06cc\u0635 \u0648 \u0627\u0631\u0632\u06cc\u0627\u0628\u06cc \u067e\u0648\u0633\u06cc\u062f\u06af\u06cc\u00bb (BEWE is the wear-side sibling index and its own body draws the caries-vs-wear diagnostic border; section 3/5 \u2192 4/5, appended at bottom, sibling markup). Skipped: nccl (at cap 5/5); tooth-wear (borderline \u2014 mentions caries only as an exclusion in its definition); treatment-plan (borderline \u2014 caries only listed among active disease control); microleakage (unrelated \u2014 secondary caries, not detection); all other terms unrelated (bonding/ceramics/implant/occlusion/fixed-pros mechanics)"
+        ],
+        "id": "C.4.7",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "cross-link.md scoped: python3 tools/cross_link_candidates.py --slug icdas (run after the term was registered in glossary/glossary.json so its fa_title/synonyms are known) \u2192 0 candidates (340 skipped as episodes/litecast/en/glossary; 0 tagged pages; repo-wide grep finds no body saying ICDAS/ICCMS). Nothing applied, no ASK; no page touched, so Phase D gate/stamper not applicable"
+        ],
+        "id": "C.4.7-b",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Candidates: all 110 glossary terms + every brain entry with a page. Applied (strong, first occurrence in body, plain <a href> as the template body uses): \u00ab\u0633\u06cc\u0644\u0646\u062a\u00bb (definition, 2nd para) \u2192 /episodes/episode-111-1.html (\u062f\u0646\u062a\u0648\u067e\u062f\u06cc\u0627 \u2014 \u0641\u06cc\u0634\u0648\u0631 \u0633\u06cc\u0644\u0627\u0646\u062a); \u00ab\u0631\u0648\u0634\u200c\u0647\u0627\u06cc \u063a\u06cc\u0631\u062a\u0647\u0627\u062c\u0645\u06cc\u00bb (role section) \u2192 /dentai/dentai-3.html (ICCC consensus on caries-lesion management terminology, defines non-invasive management). Skipped borderline: \u00ab\u0631\u0627\u062f\u06cc\u0648\u06af\u0631\u0627\u0641\u06cc\u00bb \u2192 insight/insight-23 (radiolucency under restorations, not lesion depth); \u00ab\u062f\u0631\u0645\u0627\u0646 \u062a\u0631\u0645\u06cc\u0645\u06cc\u00bb/\u00ab\u067e\u0627\u06cc\u0634\u00bb \u2192 episodes 134/135 (kept for 4.9). No glossary term matches a body concept (no term for enamel/dentin/fluoride/sealant). Gate: tag-stripped text identical to HEAD; diff shows only two anchors"
+        ],
+        "id": "C.4.8",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Section held 1 capsule (\u0641\u0647\u0631\u0633\u062a \u0645\u0648\u0636\u0648\u0639\u06cc), 4 free under Hard Rule 9. Added (strong, strongest first, sibling capsule markup): /episodes/episode-134.html \u00ab\u06af\u0627\u06cc\u062f\u0644\u0627\u06cc\u0646\u200c\u0647\u0627\u06cc \u062f\u0631\u0645\u0627\u0646 \u067e\u0648\u0633\u06cc\u062f\u06af\u06cc (MID) \u2014 \u0642\u0633\u0645\u062a \u0627\u0648\u0644\u00bb, /episodes/episode-135.html \u00ab\u2026 \u2014 \u0642\u0633\u0645\u062a \u062f\u0648\u0645\u00bb (evidence-based minimal-intervention caries management \u2014 the decision ICDAS feeds), /dentai/dentai-3.html \u00ab\u0627\u0635\u0637\u0644\u0627\u062d\u0627\u062a \u0645\u062f\u06cc\u0631\u06cc\u062a \u0636\u0627\u06cc\u0639\u0627\u062a \u067e\u0648\u0633\u06cc\u062f\u06af\u06cc (ICCC)\u00bb. Now 4/5. Skipped borderline: dentai/dentai-24 (BEWE \u2014 a scoring index, but for wear), insight/insight-23 (radiolucency under restorations), episodes/episode-111-1 (sealant, already inline), episode-65/dentai-11 (caries removal endpoints, not detection)"
+        ],
+        "id": "C.4.9",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "plus/faq-corpus.json byContent[\"glossary/icdas\"].definedTermSets[0] (@id \u2026/glossary/icdas.html#flashcards): 8 DefinedTerms #flashcards-c1\u2026c8, sequential; 3 authored (c1 definition, c2 codes 0\u20136, c8 monitoring use) + 5 from FAQ (c3\u2190faq0, c4\u2190faq1, c5\u2190faq3, c6\u2190faq4, c7\u2190faq5), each rewritten as a standalone concept (no verdict-stripped near-copy). FAQ pairs not carded: faq2 (radiography \u2014 covered by c4), faq6 (decision/procedural shape). Nothing in page JSON-LD; brain untouched"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "FAQPage \u2026/glossary/icdas.html#faq in plus/faq-corpus.json: 7 questions, all standalone (no deixis), every answer grounded in the body. Binary bank: 5 (q0\u2013q4 open with \u00ab\u0622\u06cc\u0627\u00bb, answers open \u00ab\u062e\u06cc\u0631\u061b\u00bb). Open/reference (excluded from scored bank by design): q5 (ICDAS II two-digit code), q6 (management by code group). 4.12-\u0628: evaluated at 5.6 (glossary \u2192 documented skip)"
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "Not a \u0686\u0627\u0644\u0634 (Q4.9 = \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc); no data-dc-challenge-question markup",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": "Glossary publish writes no dentcast-brain.json entry (step 5.0 runs on every publish that writes a brain entry); the glossary.json schema template (latest entry implant-supported-crown) has no hashtags key and the page template has no chip row, so there is no tag list to standardize (Hard Rule 5 parity)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Glossary registration (module 04 glossary note: register in glossary/glossary.json, not the brain): entry appended as last element of glossary[] via dentcast_text_io.json_append; keys exactly slug,title,fa_title,synonyms,url,pillar in the order of the previous entry (implant-supported-crown); title=ICDAS and fa_title copied from the founder message; synonyms (agent proposal): fa_title, ICDAS, ICDAS II, the English expansion and lowercase forms; url /glossary/icdas.html; pillar operative/[]/caries-management. dentcast-brain.json untouched; JSON valid"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "glossary.json pillar = {primary: operative, secondary: [], subtopic: caries-management} = step 2.4 decision; capsule href /pillar/operative/ matches; no new subtopic"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": "Glossary term: reference type, writes no specialist brain entry and is not a pathway step (verify_publish 5.6 pathway skip); 4.12-\u0628 exam questions: documented skip for glossary terms (module 07), no M2",
+        "status": "skipped"
+      },
+      {
+        "evidence": [],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": "No full-pathway placement in 5.6 \u2192 \u0628\u0627\u0646\u062f\u0644: \u0628\u062f\u0648\u0646 \u06a9\u0627\u0646\u062f\u06cc\u062f",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Pulse: documented skip (glossary terms are not announced, module 11 \u00a76). English mirror glossary/en/icdas.html authored from the locked text (structure-faithful 2/3/2 paragraphs, chrome/type from glossary/en/treatment-plan.html, noindex/follow, no hreflang, en_US/inLanguage en, toggle ../icdas.html \u2194 fa en/icdas.html, no same-word gloss, meta-1 untouched). second_cut_editorial_lock_v1 recorded with all ten scopes; first_cut_lead_provenance_v1 author_original; title confirmed, caption not_required; pending_questions empty; JSON files valid"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
+      "glossary/bewe.html",
       "glossary/en/icdas.html",
       "glossary/glossary.json",
       "glossary/icdas.html",
@@ -336,7 +572,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: glossary/icdas.html, plus/des-scores.json"
+    "note": "Index-only refresh after staging delivery paths: glossary/icdas.html, glossary/en/icdas.html, glossary/glossary.json, glossary/bewe.html, plus/faq-corpus.json, plus/des-scores.json"
   },
   "schema": "publish-handoff-v3"
 }

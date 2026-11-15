@@ -2074,6 +2074,25 @@
         "secondary": [],
         "subtopic": "restoration-design"
       }
+    },
+    {
+      "slug": "icdas",
+      "title": "ICDAS",
+      "fa_title": "سیستم بین‌المللی تشخیص و ارزیابی پوسیدگی",
+      "synonyms": [
+        "سیستم بین‌المللی تشخیص و ارزیابی پوسیدگی",
+        "ICDAS",
+        "ICDAS II",
+        "International Caries Detection and Assessment System",
+        "icdas",
+        "international caries detection and assessment system"
+      ],
+      "url": "/glossary/icdas.html",
+      "pillar": {
+        "primary": "operative",
+        "secondary": [],
+        "subtopic": "caries-management"
+      }
     }
   ]
 }
