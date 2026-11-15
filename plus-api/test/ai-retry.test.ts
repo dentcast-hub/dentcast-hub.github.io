@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { config } from '../src/config.js';
 import { OpenAiCompatibleProvider, resetJsonMode } from '../src/providers/ai/openai-compatible.js';
-import type { SelectTagsInput } from '../src/providers/ai/types.js';
+import type { MatchKeyPointsInput } from '../src/providers/ai/types.js';
 
 /**
  * Retry behaviour of the openai-compatible provider. The ArvanCloud gateway was
@@ -14,11 +14,13 @@ import type { SelectTagsInput } from '../src/providers/ai/types.js';
  * whole thing offline: no key, no network, no spend.
  */
 
-const INPUT: SelectTagsInput = {
-  description: 'درد شبانه در مولر اول',
-  refinements: [],
-  catalog: ['دندانپزشکی ترمیمی', 'اکلوژن'],
+const INPUT: MatchKeyPointsInput = {
+  keyPoints: [{ id: 'kp1', text: 'درد شبانه' }, { id: 'kp2', text: 'مولر اول' }],
+  answer: 'درد شبانه در مولر اول',
+  examples: [],
 };
+
+const KP1 = [{ id: 'kp1', state: 'covered' }];
 
 /** A gateway response carrying the model's JSON payload. */
 function ok(payload: unknown): Response {
@@ -70,58 +72,58 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-describe('openai-compatible selectTags', () => {
-  it("returns the model's chosen labels", async () => {
-    stubFetch([ok({ tags: ['نبود فرول', 'افزایش طول تاج'] })]);
+describe('openai-compatible matchKeyPoints', () => {
+  it("returns the model's verdicts", async () => {
+    stubFetch([ok({ points: [{ id: 'kp1', state: 'covered' }, { id: 'kp2', state: 'missing' }] })]);
 
-    await expect(provider.selectTags(INPUT)).resolves.toEqual(['نبود فرول', 'افزایش طول تاج']);
+    await expect(provider.matchKeyPoints(INPUT)).resolves.toEqual([{ id: 'kp1', state: 'covered' }, { id: 'kp2', state: 'missing' }]);
   });
 
   it('retries a transient 400 and returns the successful re-roll', async () => {
     const f = stubFetch([
       status(400),
-      ok({ tags: ['اکلوژن'] }),
+      ok({ points: KP1 }),
     ]);
 
-    await expect(provider.selectTags(INPUT)).resolves.toEqual(['اکلوژن']);
+    await expect(provider.matchKeyPoints(INPUT)).resolves.toEqual(KP1);
     expect(f.calls()).toBe(2);
   });
 
   it('gives up after maxAttempts when the 400 is permanent', async () => {
     const f = stubFetch([status(400)]);
 
-    await expect(provider.selectTags(INPUT)).rejects.toThrow('http 400');
+    await expect(provider.matchKeyPoints(INPUT)).rejects.toThrow('http 400');
     expect(f.calls()).toBe(config.ai.maxAttempts);
   });
 
   it('does NOT retry a 401 — a wrong key must fail fast', async () => {
     const f = stubFetch([status(401)]);
 
-    await expect(provider.selectTags(INPUT)).rejects.toThrow('http 401');
+    await expect(provider.matchKeyPoints(INPUT)).rejects.toThrow('http 401');
     expect(f.calls()).toBe(1);
   });
 
   it('does NOT retry a 403 — a rejected key must fail fast', async () => {
     const f = stubFetch([status(403)]);
 
-    await expect(provider.selectTags(INPUT)).rejects.toThrow('http 403');
+    await expect(provider.matchKeyPoints(INPUT)).rejects.toThrow('http 403');
     expect(f.calls()).toBe(1);
   });
 
   it('does NOT retry a 404 — a wrong gateway URL must fail fast', async () => {
     const f = stubFetch([status(404)]);
 
-    await expect(provider.selectTags(INPUT)).rejects.toThrow('http 404');
+    await expect(provider.matchKeyPoints(INPUT)).rejects.toThrow('http 404');
     expect(f.calls()).toBe(1);
   });
 
   it('retries a network error / timeout', async () => {
     const f = stubFetch([
       Object.assign(new Error('fetch failed'), { name: 'TimeoutError' }),
-      ok({ tags: [] }),
+      ok({ points: [] }),
     ]);
 
-    await expect(provider.selectTags(INPUT)).resolves.toEqual([]);
+    await expect(provider.matchKeyPoints(INPUT)).resolves.toEqual([]);
     expect(f.calls()).toBe(2);
   });
 
@@ -131,10 +133,10 @@ describe('openai-compatible selectTags', () => {
       i += 1;
       return i === 1
         ? new Response(JSON.stringify({ choices: [{ message: { content: 'سلام، نه JSON' } }] }), { status: 200 })
-        : ok({ tags: ['اکلوژن'] });
+        : ok({ points: KP1 });
     }) as unknown as typeof fetch;
 
-    await expect(provider.selectTags(INPUT)).resolves.toEqual(['اکلوژن']);
+    await expect(provider.matchKeyPoints(INPUT)).resolves.toEqual(KP1);
     expect(i).toBe(2);
   });
 
@@ -144,10 +146,10 @@ describe('openai-compatible selectTags', () => {
       i += 1;
       return i === 1
         ? new Response(JSON.stringify({ choices: [] }), { status: 200 })
-        : ok({ tags: ['اکلوژن'] });
+        : ok({ points: KP1 });
     }) as unknown as typeof fetch;
 
-    await expect(provider.selectTags(INPUT)).resolves.toEqual(['اکلوژن']);
+    await expect(provider.matchKeyPoints(INPUT)).resolves.toEqual(KP1);
     expect(i).toBe(2);
   });
 
@@ -158,10 +160,10 @@ describe('openai-compatible selectTags', () => {
     globalThis.fetch = vi.fn(async (_url: unknown, init: { body?: string } = {}) => {
       const body = JSON.parse(init.body ?? '{}') as Record<string, unknown>;
       bodies.push(body);
-      return body.response_format ? status(400) : ok({ tags: ['اکلوژن'] });
+      return body.response_format ? status(400) : ok({ points: KP1 });
     }) as unknown as typeof fetch;
 
-    await expect(provider.selectTags(INPUT)).resolves.toEqual(['اکلوژن']);
+    await expect(provider.matchKeyPoints(INPUT)).resolves.toEqual(KP1);
 
     expect(bodies).toHaveLength(2);
     expect(bodies[0]).toHaveProperty('response_format');
@@ -175,12 +177,12 @@ describe('openai-compatible selectTags', () => {
     globalThis.fetch = vi.fn(async (_url: unknown, init: { body?: string } = {}) => {
       const body = JSON.parse(init.body ?? '{}') as Record<string, unknown>;
       bodies.push(body);
-      return body.response_format ? status(400) : ok({ tags: [] });
+      return body.response_format ? status(400) : ok({ points: [] });
     }) as unknown as typeof fetch;
 
-    await provider.selectTags(INPUT); // latches JSON mode off
+    await provider.matchKeyPoints(INPUT); // latches JSON mode off
     bodies.length = 0;
-    await provider.selectTags(INPUT);
+    await provider.matchKeyPoints(INPUT);
 
     expect(bodies).toHaveLength(1); // no wasted 400 on the second call
     expect(bodies[0].response_format).toBeUndefined();
@@ -189,39 +191,32 @@ describe('openai-compatible selectTags', () => {
 
   it('parses a ```json fenced answer (what a model returns without JSON mode)', async () => {
     globalThis.fetch = vi.fn(async () => new Response(JSON.stringify({
-      choices: [{ message: { content: '```json\n{"tags": ["نبود فرول"]}\n```' } }],
+      choices: [{ message: { content: '```json\n{"points": [{"id": "kp1", "state": "covered"}]}\n```' } }],
     }), { status: 200 })) as unknown as typeof fetch;
 
-    await expect(provider.selectTags(INPUT)).resolves.toEqual(['نبود فرول']);
+    await expect(provider.matchKeyPoints(INPUT)).resolves.toEqual(KP1);
   });
 
   it('parses a JSON object buried in a sentence', async () => {
     globalThis.fetch = vi.fn(async () => new Response(JSON.stringify({
-      choices: [{ message: { content: 'بله حتماً: {"tags": ["اکلوژن"]} — امیدوارم کمک کند.' } }],
+      choices: [{ message: { content: 'بله حتماً: {"points": [{"id": "kp1", "state": "covered"}]} — امیدوارم کمک کند.' } }],
     }), { status: 200 })) as unknown as typeof fetch;
 
-    await expect(provider.selectTags(INPUT)).resolves.toEqual(['اکلوژن']);
+    await expect(provider.matchKeyPoints(INPUT)).resolves.toEqual(KP1);
   });
 
   it('returns [] on a malformed-but-parseable answer instead of throwing', async () => {
-    // The degraded round must land on case-assistant.ts's honest pillar
-    // fallback, never on an error screen.
-    stubFetch([ok({ tags: 'not-an-array' })]);
+    // The caller (services/challenge.ts) treats [] as an all-`unsure` answer and
+    // queues it, never an error screen.
+    stubFetch([ok({ points: 'not-an-array' })]);
 
-    await expect(provider.selectTags(INPUT)).resolves.toEqual([]);
+    await expect(provider.matchKeyPoints(INPUT)).resolves.toEqual([]);
   });
 
-  it('drops non-string entries, trims, and caps at 8', async () => {
-    stubFetch([ok({ tags: ['  a  ', 1, null, '', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'] })]);
+  it('drops unknown ids, invalid states and non-object entries', async () => {
+    stubFetch([ok({ points: [{ id: 'kp1', state: 'covered' }, { id: 'kp9', state: 'covered' }, { id: 'kp2', state: 'maybe' }, null, 'kp2'] })]);
 
-    await expect(provider.selectTags(INPUT)).resolves.toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']);
-  });
-
-  it('caps a single over-long label at 60 chars rather than dropping it', async () => {
-    stubFetch([ok({ tags: ['ف'.repeat(80)] })]);
-
-    const out = await provider.selectTags(INPUT);
-    expect(out[0]).toHaveLength(60);
+    await expect(provider.matchKeyPoints(INPUT)).resolves.toEqual(KP1);
   });
 });
 
@@ -232,10 +227,10 @@ describe('AI_JSON_MODE default', () => {
     const bodies: Array<Record<string, unknown>> = [];
     globalThis.fetch = vi.fn(async (_url: unknown, init: { body?: string } = {}) => {
       bodies.push(JSON.parse(init.body ?? '{}') as Record<string, unknown>);
-      return ok({ tags: [] });
+      return ok({ points: [] });
     }) as unknown as typeof fetch;
 
-    await provider.selectTags(INPUT);
+    await provider.matchKeyPoints(INPUT);
 
     expect(bodies).toHaveLength(1);
     expect(bodies[0].response_format).toBeUndefined();

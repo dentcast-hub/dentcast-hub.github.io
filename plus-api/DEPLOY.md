@@ -170,12 +170,10 @@ variables** on the container:
 | `PATHWAYS_PATH` | leave unset — baked into the image at `/app/pathways.json` |
 | `BADGES_PATH` | leave unset — baked into the image at `/app/badges.json` |
 | `FLASHCARDS_PATH` | leave unset — baked into the image at `/app/flashcards-index.json` |
-| `CABINET_PAPERS_PATH` | leave unset — baked into the image at `/app/cabinet-papers.json` |
 | `CONTENT_INDEX_URL` | leave unset — the Dockerfile points it at the `.ir`/`.org` mirrors |
 | `PATHWAYS_URL` | leave unset — same |
 | `BADGES_URL` | leave unset — same |
 | `FLASHCARDS_URL` | leave unset — same |
-| `CABINET_PAPERS_URL` | leave unset — same |
 | `CONTENT_REFRESH_SECONDS` | leave unset — defaults to 300 |
 
 > **Publishing content no longer needs a redeploy** (changed 2026-08-04). All
@@ -184,7 +182,7 @@ variables** on the container:
 > and the fallback: `content-refresh.ts` re-fetches the published
 > `content-index.json` / `pathways.json` from the live site every
 > `CONTENT_REFRESH_SECONDS` (default 5 min), so an article published on the
-> static site reaches the assistant, the dashboard tree and the pathway pages on
+> static site reaches the dashboard tree and the pathway pages on
 > its own.
 >
 > A refresh can only ever be an upgrade: the payload must parse and pass a shape

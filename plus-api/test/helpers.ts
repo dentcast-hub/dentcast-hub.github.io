@@ -4,7 +4,6 @@ import { pool } from '../src/db.js';
 import { resetRateLimits } from '../src/services/rate-limit.js';
 import { clearOtpStore } from '../src/services/otp.js';
 import { clearBaleLinkStore } from '../src/services/bale-link.js';
-import { clearTagSelectionCache } from '../src/services/case-assistant.js';
 import { drainAchievementSyncs } from '../src/services/achievement-sync.js';
 import { drainPillarWelcomes } from '../src/services/pillar-notify.js';
 import { drainReferralNotifies } from '../src/services/referral-notify.js';
@@ -128,7 +127,6 @@ export async function resetDb(): Promise<void> {
   // Without this, a case that votes and then reads the board would be served the
   // PREVIOUS test's ordering — and would pass or fail depending on file order.
   resetBoardCache();
-  clearTagSelectionCache();
   clearOtpStore();
   clearBaleLinkStore();
 }

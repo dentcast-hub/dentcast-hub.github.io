@@ -66,8 +66,7 @@ export async function challengeRoutes(app: FastifyInstance): Promise<void> {
 
     const userId = request.user!.id;
 
-    // This is the second route on the site (after case-assistant.ts) that
-    // spends real model money per call.
+    // This route spends real model money per call.
     const rl = consume(`challenge:${userId}`, config.challenge.maxPerUserPerHour, HOUR_MS);
     if (!rl.allowed) {
       return reply.code(429).send({ error: 'rate_limited', retry_after_ms: rl.retryAfterMs });

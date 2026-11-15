@@ -24,7 +24,6 @@ import { collectionExportRoutes } from './routes/collection-export.js';
 import { readingCompassRoutes } from './routes/reading-compass.js';
 import { reportRoutes } from './routes/report.js';
 import { highlightConceptRoutes } from './routes/highlight-concepts.js';
-import { caseAssistantRoutes } from './routes/case-assistant.js';
 import { premiumGrantRoutes } from './routes/premium-grant.js';
 import { dashboardRoutes } from './routes/dashboard.js';
 import { supportRoutes } from './routes/support.js';
@@ -159,7 +158,6 @@ export async function buildServer(): Promise<FastifyInstance> {
   await app.register(readingCompassRoutes);
   await app.register(reportRoutes);
   await app.register(highlightConceptRoutes);
-  await app.register(caseAssistantRoutes);
   await app.register(premiumGrantRoutes);
   await app.register(dashboardRoutes);
   await app.register(supportRoutes);
