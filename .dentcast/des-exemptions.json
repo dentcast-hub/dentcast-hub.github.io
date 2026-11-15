@@ -1,0 +1,38 @@
+{
+  "glossary/treatment-plan": {
+    "content_id": "glossary/treatment-plan",
+    "page_sha256": "53f0b60abf0addbb67e84bbfaa213f633c0ca8802951ddddb1fefd07c42d7ac2",
+    "reason": "founder_without_des",
+    "approval": {
+      "status": "confirmed",
+      "decision": "Founder decision 2026-11-15: glossary terms carry no DES, so all glossary pages share one format; DES removed from the three glossary pages that had it (treatment-plan, implant-supported-crown, icdas).",
+      "evidence": [
+        "founder chat 2026-11-15 (Claude Code session 012Gx447RbmAcPCp7mJaLPV3): «گلوساری‌ها همه یه فرمت داشته باشند…» then the explicit choice «DES از هر سه برداشته شود»"
+      ]
+    }
+  },
+  "glossary/implant-supported-crown": {
+    "content_id": "glossary/implant-supported-crown",
+    "page_sha256": "5e698cc5559c5c8ed3d627da4464b612f67730ce2155b49a23620086740d7c14",
+    "reason": "founder_without_des",
+    "approval": {
+      "status": "confirmed",
+      "decision": "Founder decision 2026-11-15: glossary terms carry no DES, so all glossary pages share one format; DES removed from the three glossary pages that had it (treatment-plan, implant-supported-crown, icdas).",
+      "evidence": [
+        "founder chat 2026-11-15 (Claude Code session 012Gx447RbmAcPCp7mJaLPV3): «گلوساری‌ها همه یه فرمت داشته باشند…» then the explicit choice «DES از هر سه برداشته شود»"
+      ]
+    }
+  },
+  "glossary/icdas": {
+    "content_id": "glossary/icdas",
+    "page_sha256": "a72e4b01497c0e8304b1a0090d64dbc0ec3149579ed7289c555d240d44496747",
+    "reason": "founder_without_des",
+    "approval": {
+      "status": "confirmed",
+      "decision": "Founder decision 2026-11-15: glossary terms carry no DES, so all glossary pages share one format; DES removed from the three glossary pages that had it (treatment-plan, implant-supported-crown, icdas).",
+      "evidence": [
+        "founder chat 2026-11-15 (Claude Code session 012Gx447RbmAcPCp7mJaLPV3): «گلوساری‌ها همه یه فرمت داشته باشند…» then the explicit choice «DES از هر سه برداشته شود»"
+      ]
+    }
+  }
+}
