@@ -1275,8 +1275,9 @@
      homepage's static one); the desktop shell has its own sidebar and never
      shows this one. */
   var DC_SD_RECENT_KEY = 'dc-recent-pages';
-  var DC_SD_RECENT_MAX = 8;
+  var DC_SD_RECENT_MAX = 20;
   var DC_SD_RECENT_SHOW = 3;
+  var dcSdRecentAll = false;  // «همه» pressed: the whole list, until the drawer closes
   var dcSdSubBtn = null;   // #tool-subscribe, held while it is out of the document
   function dcSdSigned() {
     try { return localStorage.getItem('dcp:signed-in') === '1'; } catch (e) { return false; }
@@ -1337,6 +1338,7 @@
 '.dc-sd-lockbox p{margin:8px 0 10px;font-size:12.5px;line-height:1.85;color:var(--pr,#022360);font-weight:600;}' +
 '[data-theme="dark"] .dc-sd-lockbox p{color:var(--txt,#e8eef8);}' +
 '.dc-sd-btn{display:block;width:100%;font:inherit;text-align:center;background:var(--ac,#0b5fff);color:#fff;border:0;border-radius:10px;padding:10px;font-size:13.5px;font-weight:700;cursor:pointer;}' +
+'.dc-sd-all{display:block;margin:0 18px 4px;text-align:start;font:inherit;font-size:12.5px;font-weight:600;color:var(--ac,#0b5fff);background:none;border:0;padding:4px 0;cursor:pointer;}' +
 '.dc-sd-empty{padding:4px 18px 8px;font-size:12px;color:var(--txt3,#62779a);line-height:1.8;}' +
 '.dc-sd-settings{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:6px 14px 8px;}' +
 '.dc-sd-settings>*{min-width:0;}' +
@@ -1458,12 +1460,18 @@
     }
     var list = dcSdRead(DC_SD_RECENT_KEY);
     if (!Array.isArray(list)) list = [];
-    list = list.filter(function (x) { return x && x.u && x.u !== location.pathname; }).slice(0, DC_SD_RECENT_SHOW);
+    list = list.filter(function (x) { return x && x.u && x.u !== location.pathname; });
     if (list.length) {
-      html += '<div class="dc-sd-sec">اخیراً دیده‌شده</div>' + list.map(function (x) {
+      /* Three, then «همه (N)» opens the rest in place; the drawer scrolls. */
+      var shown = dcSdRecentAll ? list : list.slice(0, DC_SD_RECENT_SHOW);
+      html += '<div class="dc-sd-sec">اخیراً دیده‌شده</div>' + shown.map(function (x) {
         return '<a class="dc-sd-it" href="' + escapeHTML(x.u) + '">' + dcSvgIcon('article') +
                '<span class="dc-sd-txt"><b dir="auto">' + escapeHTML(x.t) + '</b></span></a>';
       }).join('');
+      if (list.length > DC_SD_RECENT_SHOW) {
+        html += '<button type="button" class="dc-sd-all" data-dc-sd-all="1" aria-expanded="' + dcSdRecentAll + '">' +
+                (dcSdRecentAll ? 'کمتر' : 'همه (' + dcSdFa(list.length) + ') ›') + '</button>';
+      }
     }
     if (!html) {
       html = '<div class="dc-sd-sec">ردپای من</div>' +
@@ -1493,7 +1501,7 @@
       var name = (me && me.name) || '';
       var init = name ? escapeHTML(name.trim().charAt(0)) : dcSvgIcon('user');
       acct = '<button type="button" class="dc-sd-acct" data-dc-sd-account="1"><span class="dc-sd-av is-user">' + init + '</span>' +
-             '<span style="min-width:0"><b dir="auto">' + (name ? escapeHTML(name) : 'حساب من') + '</b><small>حساب من</small></span></button>';
+             '<span style="min-width:0"><b dir="auto">' + (name ? escapeHTML(name) : 'حساب من') + '</b><small>' + (name ? 'حساب من' : 'وارد شده‌اید') + '</small></span></button>';
     }
     foot.innerHTML = acct;
     if (signed && premium) {
@@ -1526,6 +1534,7 @@
     /* A tool that opens on top of this page (the radar overlay, the library's
        premium gate) first closes the drawer so it is not left under it. */
     if (sdOpen && t.closest('#btn-radar-topbar, #btn-cabinet')) toggleToolbarDrawer();
+    if (t.closest('[data-dc-sd-all]')) { dcSdRecentAll = !dcSdRecentAll; dcSdRenderMine(); return; }
     if (t.closest('[data-dc-sd-login]') || t.closest('[data-dc-sd-account]')) {
       if (sdOpen) toggleToolbarDrawer();
       var p = dcSdPerson();
@@ -1574,6 +1583,7 @@
       drawer.setAttribute('aria-hidden', isOpen ? 'true' : 'false');
       dcSdLock(!isOpen);
       if (!isOpen) {
+        dcSdRecentAll = false;
         dcSdRenderMine();
         var x = document.getElementById('dcSdClose');
         if (x) x.focus({ preventScroll: true });
@@ -2843,7 +2853,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '313';
+  var V = '314';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now

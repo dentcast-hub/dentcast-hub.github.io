@@ -1,13 +1,13 @@
 // /plus/reading-compass.html — «قطب‌نمای مطالعه» (Phase 3, premium). Free/
 // anonymous visitors see the same premium-upsell shape pathways.html/cards.html
 // use; signed-in premium users get the real report (reading-compass.js).
-import { el } from './util.js?v=242';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=242';
-import { currentUser, meStatus } from './api.js?v=242';
-import { openLoginModal } from './login-modal.js?v=242';
-import { renderReadingCompass } from './reading-compass.js?v=242';
-import { registerSW } from './pwa.js?v=242';
-import { wirePageBack } from './page-back.js?v=242';
+import { el } from './util.js?v=243';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=243';
+import { currentUser, meStatus } from './api.js?v=243';
+import { openLoginModal } from './login-modal.js?v=243';
+import { renderReadingCompass } from './reading-compass.js?v=243';
+import { registerSW } from './pwa.js?v=243';
+import { wirePageBack } from './page-back.js?v=243';
 
 function comingSoonGate(root, me) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [
