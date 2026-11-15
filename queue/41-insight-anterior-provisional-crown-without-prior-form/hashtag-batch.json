@@ -1,0 +1,24 @@
+{
+ "type": "clinical",
+ "enforce": true,
+ "note": "queue 41 (insight) — «ساخت روکش موقت قدامی وقتی فرم قبلی دندان در دست نیست». Questions a dentist would type (Step 1): (1) از دندان قدامی بیمار قالب قبلی ندارم، روکش موقت رو چطور بسازم؟ (2) بعد از پست و کور قدامی همون جلسه موقت بدم یا بفرستم لابراتوار؟ (3) شل پیش‌ساخته رو با موقت کامپوزیتی (bis-acryl) ریلاین کنم؟ (4) بدون ماک‌آپ و ایندکس، فرم روکش موقت سانترال رو از کجا بیارم؟ (5) روکش موقت قدامی رو چیرساید چطور بسازم که فرمش خوب دربیاد؟ REUSED canonical tags (--simulate and the library): #نکته_کلینیکی (series), #روکش_موقت (17 pages), #دندان_قدامی (14 pages). NEWLY MINTED: #ساخت_روکش_موقت — --simulate «ساخت روکش موقت» reaches only #روکش_موقت, whose definition is the provisional as the reference for the final design («پروویژنالی که فقط یک مرحله‌ی گذرا نیست، بلکه مرجعِ طراحیِ نهایی است»), not how a provisional is made; no library concept or alias covers fabrication technique (shell, putty index, reline, bis-acryl). Gate (a): no existing concept covers it under any spelling. Gate (b): decision-level (how to make the provisional when no prior form, mock-up or index exists — the article resolves it: «از کل این مجموعه یک قالب پوتی گرفتم و به این ترتیب فرم بیرونی روکش موقت آماده شد.»), and two existing pages truly resolve it and are retagged here: dentcast-plus/video-8 («چند نکتهٔ کوتاه برای ساختن روکش موقت»; its brain keywords already carry «ساخت روکش موقت») and insight/insight-81 (making the provisional by relining the patient's old crown with resin). Neither page carries literal chip markup, so the brain is the only surface. Alias checklist (4 slots): English term = «provisional crown fabrication», «temporary crown fabrication»; Finglish / Persian-script form = «ساخت پروویژنال»; common misspelling = «ساخت روکش موقط»; colloquial phrase = «موقت ساختن روکش». Bridge decision: map row «ساخت روکش موقت» -> provisional-restoration (70 catalog papers), topic:temporary-crown (17 papers); both existing library tags, closest first. Natural-teeth concept: no (provisional crowns are made on implants too; not added to tooth_topics).",
+ "concepts": [
+  {
+   "tag": "#ساخت_روکش_موقت",
+   "domain": "clinical",
+   "definition": "روش ساختن روکش موقت روی دندان تراش‌خورده یا پست و کور: از کجا فرم بیرونی آن گرفته می‌شود (ماک‌آپ، ایندکس سیلیکونی یا پوتی، شل پیش‌ساخته، روکش قدیمی بیمار) و ماده‌ی موقت چطور داخل آن شکل می‌گیرد.",
+   "use_when": "مطلب تکنیک یا تصمیم ساختن روکش موقت را شرح می‌دهد (منبع فرم، ریلاین، ماده‌ی موقت، چیرساید در برابر لابراتوار)، نه فقط نقش روکش موقت در درمان.",
+   "aliases": [
+    "provisional crown fabrication",
+    "temporary crown fabrication",
+    "ساخت پروویژنال",
+    "ساخت روکش موقط",
+    "موقت ساختن روکش"
+   ]
+  }
+ ],
+ "articles": {
+  "dentcast-plus/video-8": ["#ویدیو", "#روکش_موقت", "#ساخت_روکش_موقت"],
+  "insight/insight-81": ["#نکته_کلینیکی", "#روکش_موقت", "#ساخت_روکش_موقت", "#ریلاین_روکش", "#خارج_کردن_روکش", "#تراش_دندان"]
+ }
+}
