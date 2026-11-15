@@ -4497,6 +4497,38 @@
    ]
   },
   {
+   "key": "طراحی_لبخند",
+   "tag": "#طراحی_لبخند",
+   "domain": null,
+   "words": 2,
+   "definition": "آنالیز و طراحیِ نسبت‌های لبخند.",
+   "use_when": "مقاله قاعده‌ای برای طراحی لبخند بدهد.",
+   "aliases": [
+    "smile design",
+    "دیزاین لبخند",
+    "آنالیز لبخند",
+    "DSD"
+   ],
+   "variants": [
+    "#آنالیز_لبخند",
+    "#SmileDesign",
+    "#Smile_Design"
+   ],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-28",
+    "episodes/episode-38",
+    "episodes/episode-46",
+    "episodes/episode-118",
+    "episodes/episode-150-1",
+    "litecast/lite-CAST7",
+    "notecast/episode-28",
+    "insight/insight-72",
+    "insight/insight-108"
+   ]
+  },
+  {
    "key": "پیچ_اباتمنت",
    "tag": "#پیچ_اباتمنت",
    "domain": "clinical",
@@ -4859,37 +4891,6 @@
     "insight/insight-62",
     "chairside/chairside-36",
     "sharehub/share-46"
-   ]
-  },
-  {
-   "key": "طراحی_لبخند",
-   "tag": "#طراحی_لبخند",
-   "domain": null,
-   "words": 2,
-   "definition": "آنالیز و طراحیِ نسبت‌های لبخند.",
-   "use_when": "مقاله قاعده‌ای برای طراحی لبخند بدهد.",
-   "aliases": [
-    "smile design",
-    "دیزاین لبخند",
-    "آنالیز لبخند",
-    "DSD"
-   ],
-   "variants": [
-    "#آنالیز_لبخند",
-    "#SmileDesign",
-    "#Smile_Design"
-   ],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-28",
-    "episodes/episode-38",
-    "episodes/episode-46",
-    "episodes/episode-118",
-    "episodes/episode-150-1",
-    "litecast/lite-CAST7",
-    "notecast/episode-28",
-    "insight/insight-72"
    ]
   },
   {
@@ -6536,6 +6537,31 @@
    ]
   },
   {
+   "key": "ارتباط_با_لابراتوار",
+   "tag": "#ارتباط_با_لابراتوار",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتقال اطلاعاتی که تکنسین برای ساخت کار لازم دارد و خودش نمی‌تواند در بیمار ببیند، مثل رنگ، شفافیت، لکه‌ها و ویژگی‌های سطح دندان، از طریق عکس، نوشته یا مرجع مشترک.",
+   "use_when": "مقاله توضیح دهد چه اطلاعاتی و چطور باید از مطب به لابراتوار برسد.",
+   "aliases": [
+    "lab communication",
+    "laboratory communication",
+    "shade communication",
+    "ارتباط با تکنسین",
+    "ارسال رنگ به لابراتوار"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "sharehub/share-26",
+    "insight/insight-101",
+    "insight/insight-103",
+    "sharehub/share-47",
+    "insight/insight-108"
+   ]
+  },
+  {
    "key": "استئواینتگریشن",
    "tag": "#استئواینتگریشن",
    "domain": null,
@@ -6932,6 +6958,30 @@
     "litecast/lite-CAST5",
     "litecast/lite-CAST19",
     "sharehub/share-7"
+   ]
+  },
+  {
+   "key": "طراحی_روکش",
+   "tag": "#طراحی_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "طراحیِ فرم و کانتورِ تاج در نرم‌افزار یا لابراتوار.",
+   "use_when": "مقاله فرمِ طراحی‌شده را موضوعِ تصمیم قرار دهد.",
+   "aliases": [
+    "crown design",
+    "دیزاین روکش",
+    "طراحی تاج",
+    "design تاج"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-13",
+    "insight/insight-33",
+    "insight/insight-53",
+    "insight/insight-101",
+    "insight/insight-108"
    ]
   },
   {
@@ -7517,30 +7567,6 @@
    ]
   },
   {
-   "key": "ارتباط_با_لابراتوار",
-   "tag": "#ارتباط_با_لابراتوار",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتقال اطلاعاتی که تکنسین برای ساخت کار لازم دارد و خودش نمی‌تواند در بیمار ببیند، مثل رنگ، شفافیت، لکه‌ها و ویژگی‌های سطح دندان، از طریق عکس، نوشته یا مرجع مشترک.",
-   "use_when": "مقاله توضیح دهد چه اطلاعاتی و چطور باید از مطب به لابراتوار برسد.",
-   "aliases": [
-    "lab communication",
-    "laboratory communication",
-    "shade communication",
-    "ارتباط با تکنسین",
-    "ارسال رنگ به لابراتوار"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "sharehub/share-26",
-    "insight/insight-101",
-    "insight/insight-103",
-    "sharehub/share-47"
-   ]
-  },
-  {
    "key": "از_دست_رفتن_کانتکت",
    "tag": "#از_دست_رفتن_کانتکت",
    "domain": "clinical",
@@ -7959,6 +7985,32 @@
    ]
   },
   {
+   "key": "خط_لب",
+   "tag": "#خط_لب",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "مرزی که لبِ بالا یا پایین هنگام صحبت کردن و خندیدن روی دندان‌ها می‌سازد و تعیین می‌کند چه مقدار از تاجِ دندان دیده شود؛ یک رفرنسِ داینامیکِ صورت که فقط در دهان قابل ارزیابی است و روی کستِ گچی وجود ندارد.",
+   "use_when": "مقاله طول یا نمایشِ دندانِ قدامی را نسبت به لب بسنجد — تعیینِ طولِ اینسایزال، ارزیابیِ نمایشِ دندان در گفتار یا لبخند، یا مقایسه‌ی مرجعِ داینامیک با مرجعِ استاتیکِ کست.",
+   "aliases": [
+    "lip line",
+    "خط لبخند",
+    "smile line",
+    "نمایش دندان",
+    "tooth display",
+    "خط لب بالا",
+    "high lip line"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-61",
+    "insight/insight-71",
+    "metanotes/meta-22",
+    "insight/insight-108"
+   ]
+  },
+  {
    "key": "دیواره_نازک",
    "tag": "#دیواره_نازک",
    "domain": "clinical",
@@ -8318,29 +8370,6 @@
     "dentcast-plus/video-5",
     "dentai/dentai-33",
     "insight/insight-85"
-   ]
-  },
-  {
-   "key": "طراحی_روکش",
-   "tag": "#طراحی_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "طراحیِ فرم و کانتورِ تاج در نرم‌افزار یا لابراتوار.",
-   "use_when": "مقاله فرمِ طراحی‌شده را موضوعِ تصمیم قرار دهد.",
-   "aliases": [
-    "crown design",
-    "دیزاین روکش",
-    "طراحی تاج",
-    "design تاج"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-13",
-    "insight/insight-33",
-    "insight/insight-53",
-    "insight/insight-101"
    ]
   },
   {
@@ -9655,31 +9684,6 @@
     "dentai/dentai-11",
     "dentai/dentai-25",
     "sharehub/share-51"
-   ]
-  },
-  {
-   "key": "خط_لب",
-   "tag": "#خط_لب",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "مرزی که لبِ بالا یا پایین هنگام صحبت کردن و خندیدن روی دندان‌ها می‌سازد و تعیین می‌کند چه مقدار از تاجِ دندان دیده شود؛ یک رفرنسِ داینامیکِ صورت که فقط در دهان قابل ارزیابی است و روی کستِ گچی وجود ندارد.",
-   "use_when": "مقاله طول یا نمایشِ دندانِ قدامی را نسبت به لب بسنجد — تعیینِ طولِ اینسایزال، ارزیابیِ نمایشِ دندان در گفتار یا لبخند، یا مقایسه‌ی مرجعِ داینامیک با مرجعِ استاتیکِ کست.",
-   "aliases": [
-    "lip line",
-    "خط لبخند",
-    "smile line",
-    "نمایش دندان",
-    "tooth display",
-    "خط لب بالا",
-    "high lip line"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-61",
-    "insight/insight-71",
-    "metanotes/meta-22"
    ]
   },
   {
