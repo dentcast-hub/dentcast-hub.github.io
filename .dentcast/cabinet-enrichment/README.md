@@ -1,0 +1,25 @@
+# Cabinet enrichment — staging results
+
+What a model read in each cabinet PDF (tools/cabinet_enrich.py), one line per
+paper in `results.jsonl`. **Staging only: nothing here is in
+`dentcast_cabinet_full_catalog.json` yet.** The founder reviews it first
+(removal candidates, catalogue-type corrections, a sample of tags), then a PR
+writes the accepted parts into the catalogue as separate fields.
+
+Pipeline (founder's decisions, 2026-11-15): Sonnet reads front page, abstract,
+methods, results, conclusion and funding; mechanical gates (vocabulary, no
+duplicates, low-value list, verbatim evidence for every tag and fact,
+bibliographic values present in the text); one Opus reviewer accepts or
+rejects every tag (calibrated on 50 papers against a second reviewer: 95%
+agreement). The paper's text and the verbatim quotes are not kept here.
+
+Fields: `ft_tags` (accepted library tags), `new_tags` (accepted tags the
+library does not have yet), `doc_class`, `off_topic`, `catalog_type_ok` /
+`suggested_type`, `text_quality`, `facts` (doi, authors, year, journal,
+population, intervention, comparison, outcomes, main_result, sample_size,
+follow_up, materials_brands, funding_coi, limitations; key_finding and
+clinical_bottom_line only where the catalogue had none), `cites_in_cabinet`
+(catalogue ids this paper cites, from its reference list, mechanically).
+
+Coverage: 661 of 2169 papers (option 3: judge what was proposed, then decide
+on the rest). Run date 2026-11-15.
