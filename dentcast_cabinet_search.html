@@ -59,9 +59,9 @@ main#list{padding:0.375rem 0 1.25rem}
 .kf p{margin:0.375rem 0 0;line-height:1.55}
 .kf p.ab{white-space:pre-line}
 .kf .bl b{color:var(--txt)}
-#list .tag{font:inherit;font-size:.74rem;color:var(--ac);cursor:pointer;background:none;border:0;padding:0}
-#list .tag:hover,#list .tag.on{text-decoration:underline}
-#list .tag:focus-visible,.chip.x:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+#list .tag,#ft-extra .tag{font:inherit;font-size:.74rem;color:var(--ac);cursor:pointer;background:none;border:0;padding:0}
+#list .tag:hover,#list .tag.on,#ft-extra .tag:hover,#ft-extra .tag.on{text-decoration:underline}
+#list .tag:focus-visible,.chip.x:focus-visible,#ft-extra .tag:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .chip.x{font-family:inherit}
 .row select{flex:1 1 9rem}
 main#list{padding-bottom:4.5rem}
@@ -69,28 +69,28 @@ main#list{padding-bottom:4.5rem}
 /* 16px fields: iOS does not zoom into them */
 .row input,.row select{font-size:1rem}
 /* comfortable tap targets */
-#list .tag{padding:.375rem .125rem;min-height:2rem}
+#list .tag,#ft-extra .tag{padding:.375rem .125rem;min-height:2rem}
 .tags{gap:0 .5rem}
 .kf summary{padding:.375rem 0}
-#list .act a{padding:.625rem 1rem;min-height:2.5rem;box-sizing:border-box}
+#list .act a,#ft-extra .act a{padding:.625rem 1rem;min-height:2.5rem;box-sizing:border-box}
 .chip.x{min-height:2rem}
 .card:focus{outline:2px solid var(--ac);outline-offset:2px}
 .card:focus:not(:focus-visible){outline:none}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 /* dark theme: light accent needs dark text for contrast */
-[data-theme="dark"] #list .act a.dl{color:#0b1220}
+[data-theme="dark"] #list .act a.dl,[data-theme="dark"] #ft-extra .act a.dl{color:#0b1220}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
 input#q{flex:3 1 18rem}
 /* #list-scoped so these win over dc-theme's .card a / main a link rules */
-#list .act a{display:inline-block;font-size:.78rem;text-decoration:none;border:1px solid var(--border);border-radius:var(--r-sm);padding:0.375rem 0.875rem;margin-right:0.5rem;color:var(--txt);background:var(--surface);transition:all var(--tr)}
-#list .act a:hover{background:var(--surface2);text-decoration:none}
-#list .act a.dl{background:var(--ac);color:#fff;border-color:var(--ac)}
-#list .act a.dl:hover{background:var(--ac);opacity:.9}
-#list .act a.nolink{opacity:.4;pointer-events:none}
+#list .act a,#ft-extra .act a{display:inline-block;font-size:.78rem;text-decoration:none;border:1px solid var(--border);border-radius:var(--r-sm);padding:0.375rem 0.875rem;margin-right:0.5rem;color:var(--txt);background:var(--surface);transition:all var(--tr)}
+#list .act a:hover,#ft-extra .act a:hover{background:var(--surface2);text-decoration:none}
+#list .act a.dl,#ft-extra .act a.dl{background:var(--ac);color:#fff;border-color:var(--ac)}
+#list .act a.dl:hover,#ft-extra .act a.dl:hover{background:var(--ac);opacity:.9}
+#list .act a.nolink,#ft-extra .act a.nolink{opacity:.4;pointer-events:none}
 .more{display:block;margin:1.25rem auto;background:var(--surface);border:1px solid var(--border);color:var(--txt2);border-radius:var(--r-sm);padding:0.5625rem 1.125rem;cursor:pointer;font-family:inherit;font-size:.82rem}
 .more:hover{background:var(--surface2)}
 .state{padding:2.5rem 0;color:var(--txt3);text-align:center}
-#list .state a{color:var(--ac)}
+#list .state a,#ft-extra .state a{color:var(--ac)}
 .nav-back{ margin-bottom:0.5rem; }
 .back-link{
   display:inline-flex; align-items:center; gap:0.25rem;
@@ -140,11 +140,11 @@ input#q{flex:3 1 18rem}
 html:not([data-theme="dark"]) body:has(main#list){ background:var(--surface); }
 .row input,.row select{ background:transparent; border:1.5px solid var(--surface3,var(--border)); border-radius:14px; box-shadow:none; }
 .row input:focus,.row select:focus{ border-color:var(--ac); box-shadow:none; }
-#list .card{ background:transparent; border:0; border-bottom:1px solid var(--border); border-radius:0; box-shadow:none; margin:0; padding:1.125rem 0; }
-#list .card:hover{ box-shadow:none; transform:none; }
+#list .card,#ft-extra .card{ background:transparent; border:0; border-bottom:1px solid var(--border); border-radius:0; box-shadow:none; margin:0; padding:1.125rem 0; }
+#list .card:hover,#ft-extra .card:hover{ box-shadow:none; transform:none; }
 .badge{ border-color:transparent; }
-#list .act a:not(.dl){ border-color:transparent; background:var(--surface2); }
-#list .act a:not(.dl):hover{ background:var(--surface3); }
+#list .act a:not(.dl),#ft-extra .act a:not(.dl){ border-color:transparent; background:var(--surface2); }
+#list .act a:not(.dl):hover,#ft-extra .act a:not(.dl):hover{ background:var(--surface3); }
 .more{ border-color:transparent; background:var(--surface2); }
 .more:hover{ background:var(--surface3); }
 /* the study-type menu sized itself to its longest option (58 characters,
@@ -152,8 +152,8 @@ html:not([data-theme="dark"]) body:has(main#list){ background:var(--surface); }
 @media (max-width:600px){ .row select{ min-width:0; flex-basis:100%; } }
 /* citations (2026-11-15): Cite sits in the card's action row as a quiet button; its panel
    opens under the card. Export lives in the count line, as text buttons like «clear». */
-#list .act button.cite,#list .act button.save{margin-right:.5rem;font:inherit;font-size:.78rem;min-height:2.5rem;padding:.625rem 1rem;border:1px solid transparent;border-radius:var(--r-sm);background:var(--surface2);color:var(--txt);cursor:pointer}
-#list .act button.cite:hover,#list .act button.cite[aria-expanded="true"],#list .act button.save:hover{background:var(--surface3)}
+#list .act button.cite,#list .act button.save,#ft-extra .act button.cite,#ft-extra .act button.save{margin-right:.5rem;font:inherit;font-size:.78rem;min-height:2.5rem;padding:.625rem 1rem;border:1px solid transparent;border-radius:var(--r-sm);background:var(--surface2);color:var(--txt);cursor:pointer}
+#list .act button.cite:hover,#list .act button.cite[aria-expanded="true"],#list .act button.save:hover,#ft-extra .act button.cite:hover,#ft-extra .act button.cite[aria-expanded="true"],#ft-extra .act button.save:hover{background:var(--surface3)}
 .cite-box{margin-top:.75rem;padding:.75rem .875rem;border:1px solid var(--border);border-radius:var(--r-sm);font-size:.8rem}
 .cite-row{display:grid;grid-template-columns:5.5rem 1fr auto;gap:.5rem;align-items:start;margin-bottom:.625rem}
 .cite-lbl{color:var(--txt3);font-size:.72rem;font-weight:600;padding-top:.15rem}
@@ -167,6 +167,13 @@ html:not([data-theme="dark"]) body:has(main#list){ background:var(--surface); }
 .exp-bar .clr{padding:.375rem .25rem}
 #exp-state{color:var(--txt3)}
 @media (max-width:600px){ .cite-row{grid-template-columns:1fr auto} .cite-lbl{grid-column:1/-1;padding:0} }
+/* full text (premium): the fragment on a card, and the «only inside the PDFs» section */
+.ft-hit{margin:0 0 .625rem;font-size:.8rem;line-height:1.55;color:var(--txt2)}
+.ft-hit mark{background:rgba(var(--ac-rgb),.16);color:var(--txt);border-radius:3px;padding:0 .1em}
+.ft-lbl{display:inline-block;font-size:.68rem;font-weight:700;color:var(--ac);margin-right:.25rem}
+.ft-extra{border-top:2px solid var(--border);margin-top:.5rem;padding-top:.75rem}
+.ft-head{font-size:.95rem;font-weight:700;margin:0 0 .25rem}
+.ft-note{font-size:.76rem;color:var(--txt3);margin:0 0 .25rem}
 </style>
   <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
 </head><body>
@@ -218,6 +225,7 @@ html:not([data-theme="dark"]) body:has(main#list){ background:var(--surface); }
   </div>
   <div class="count" id="count" role="status" aria-live="polite"></div>
   <main id="list"><div class="state" id="state">Loading catalog...</div></main>
+  <section id="ft-extra" class="ft-extra" hidden></section>
 </div>
 <div id="dc-list-end"></div>
 
@@ -254,8 +262,8 @@ html:not([data-theme="dark"]) body:has(main#list){ background:var(--surface); }
   <div class="dc-results-box" id="dcResults"></div>
 </div>
 <script src="/global-search.js?v=19" defer></script>
-<script src="/dc-nav.js?v=342" defer></script>
-<script type="module" src="/plus/js/cabinet-save.js?v=3"></script>
+<script src="/dc-nav.js?v=343" defer></script>
+<script type="module" src="/plus/js/cabinet-save.js?v=4"></script>
 <script>
 // JSON lives next to this file in the repo. Relative path works on any domain.
 const SRC="dentcast_cabinet_full_catalog.json";
@@ -494,11 +502,12 @@ const REVIEWS=new Set(['systematic review','systematic review + meta-analysis','
 const SORTS={t:(a,b)=>a.t.localeCompare(b.t,undefined,{sensitivity:'base'}),
   new:(a,b)=>(b.y||0)-(a.y||0),old:(a,b)=>(a.y||9999)-(b.y||9999),
   ty:(a,b)=>a.ty.localeCompare(b.ty),tp:(a,b)=>a.tp.localeCompare(b.tp,undefined,{sensitivity:'base'})};
-function compute(){const Q=parse();NOTE='';
-  const pool=DATA.filter(p=>{
+function inPool(p){
     if(topic.value&&!p.tps.has(topic.value))return false;
     if(type.value&&(type.value==='*reviews'?!REVIEWS.has(p.ty):p.ty!==type.value))return false;
-    for(const a of active)if(!p.tg.includes(a))return false;return true;});
+    for(const a of active)if(!p.tg.includes(a))return false;return true;}
+function compute(){const Q=parse();NOTE='';
+  const pool=DATA.filter(inPool);
   let res=[];
   if(!Q)res=pool.slice();
   else{for(const p of pool){p.s=score(p,Q,0);if(p.s)res.push(p);}
@@ -512,7 +521,7 @@ function compute(){const Q=parse();NOTE='';
   const by=sort.value==='rel'?(Q?(a,b)=>b.s-a.s||SORTS.new(a,b):SORTS.new):SORTS[sort.value];
   res.sort((a,b)=>by(a,b)||SORTS.t(a,b));return res;}
 
-function card(p){const d=document.createElement('div');d.className='card';d.tabIndex=-1;
+function card(p){const d=document.createElement('div');d.className='card';d.tabIndex=-1;d.dataset.id=p.id;
   // folder (topic:), year and the long title-as-tag stay searchable but are not shown as chips
   const tags=p.tg.filter(t=>!t.startsWith('topic:')&&!/^(19|20)\d\d$/.test(t)&&t.split('-').length<6)
     .map(t=>'<button type="button" class="tag'+(active.has(t)?' on':'')+'" aria-pressed="'+active.has(t)+'" data-t="'+esc(t)+'">#'+esc(t)+'</button>').join(' ');
@@ -529,10 +538,51 @@ function card(p){const d=document.createElement('div');d.className='card';d.tabI
     :ab?'<details class="kf"><summary>Abstract</summary><p class="ab" dir="'+kd+'"'+lg+'>'+esc(ab)+'</p></details>':'';
   const tp=p.tp&&p.tp!=='(root)'?'<span class="badge">'+esc(p.tp)+'</span>':'';
   const tl=/[؀-ۿ]/.test(p.t)?' lang="fa"':'';
-  d.innerHTML='<h2 class="title" dir="auto"'+tl+'>'+esc(p.t)+'</h2>'+jr+'<div class="meta"><span class="badge">'+esc(p.ty)+'</span>'+tp+'</div>'+kf+'<div class="tags">'+tags+'</div><div class="act">'+dl+vw+'<button type="button" class="cite" data-id="'+esc(p.id)+'" aria-expanded="false">Cite</button>'
+  d.innerHTML='<h2 class="title" dir="auto"'+tl+'>'+esc(p.t)+'</h2>'+jr+'<div class="meta"><span class="badge">'+esc(p.ty)+'</span>'+tp+'</div>'+kf+(FTMAP.has(p.id)?ftLine(FTMAP.get(p.id)):'')+'<div class="tags">'+tags+'</div><div class="act">'+dl+vw+'<button type="button" class="cite" data-id="'+esc(p.id)+'" aria-expanded="false">Cite</button>'
     +'<button type="button" class="save" data-id="'+esc(p.id)+'">Save</button></div>';
   return d;}
 
+/* ---------- full text (premium): what the PDFs themselves say ----------
+   The catalogue search above reads titles, tags, abstracts and summaries. For a subscriber the page
+   also asks the Plus API (GET /cabinet/fulltext, via plus/js/cabinet-save.js), which searches the
+   text extracted from each PDF and answers with paper ids and a ~30-word fragment around the match.
+   A card that matched both ways shows the fragment; papers found ONLY inside a PDF get their own
+   section under the list, filtered by the same topic / type / #tag filters. A guest, a free reader
+   or an unreachable API gets null: no full-text part at all, never an error or an upsell here. */
+const FTMAP=new Map();let FT=null,FTQ='',ftTimer=0,ftSeq=0;
+// the reader's words for the PDF index: Persian clinical terms and the abbreviations a clinician
+// types become the papers' own English words (the same PH / ABBR tables the catalogue search uses)
+function ftQueryOf(){const raw=q.value.trim();const Q=parse();if(!Q||Q.doi||Q.journal||raw.length<3)return '';
+  return raw.replace(/[«»“”]/g,'"').split(/\s+/).map(t=>{const bare=t.replace(/^[-"]+|"+$/g,''),k=nm(bare);
+    if(PH[k])return '"'+PH[k].split('|')[0]+'"';
+    if(ABBR[k]&&!JOURNAL.has(k)&&!DESIGN.has(k))return '"'+ABBR[k].split('|')[0]+'"';return t;}).join(' ');}
+function ftLine(snip){const h=esc(snip).replace(/\u0002/g,'<mark>').replace(/\u0003/g,'</mark>').replace(/[\u0000-\u001f]/g,'');
+  return '<p class="ft-hit"><span class="ft-lbl">In the full text</span> … '+h+' …</p>';}
+function scheduleFulltext(){clearTimeout(ftTimer);const fq=ftQueryOf();
+  if(fq===FTQ){paintFulltext();return;}
+  FTQ=fq;FT=null;FTMAP.clear();ftSeq++;paintFulltext();
+  if(!fq)return;
+  ftTimer=setTimeout(async()=>{const seq=++ftSeq,ask=window.dcCabinetFulltext;if(!ask)return;
+    const st=document.getElementById('ft-state');if(st)st.textContent=' · searching inside the PDFs…';
+    const r=await ask(fq);if(seq!==ftSeq)return;
+    const st2=document.getElementById('ft-state');if(st2)st2.textContent='';
+    FT=r;if(r&&Array.isArray(r.results))for(const h of r.results)FTMAP.set(h.id,h.snippet);
+    // cards already on screen get their fragment in place
+    document.querySelectorAll('#list .card').forEach(c=>{if(!FTMAP.has(c.dataset.id)||c.querySelector('.ft-hit'))return;
+      const tags=c.querySelector('.tags');if(tags)tags.insertAdjacentHTML('beforebegin',ftLine(FTMAP.get(c.dataset.id)));});
+    paintFulltext();},450);}
+function paintFulltext(){const box=document.getElementById('ft-extra'),st=document.getElementById('ft-state');
+  if(!box)return;
+  if(!FT||!FTQ){box.hidden=true;box.innerHTML='';return;}
+  const inRes=new Set(RES.map(p=>p.id));
+  const extra=FT.results.map(h=>BYID.get(h.id)).filter(p=>p&&!inRes.has(p.id)&&inPool(p));
+  if(st)st.textContent=FT.results.length?' · full text: '+FT.results.length+' paper'+(FT.results.length==1?'':'s')+(extra.length?' ('+extra.length+' only inside the PDFs ↓)':''):' · full text: no match in '+FT.indexed+' indexed PDFs';
+  box.innerHTML='';box.hidden=!extra.length;if(!extra.length)return;
+  const h=document.createElement('h2');h.className='ft-head';
+  h.textContent='Found only inside the PDFs · '+extra.length;
+  const note=document.createElement('p');note.className='ft-note';
+  note.textContent='Their titles and summaries do not say it; the text of the paper does.';
+  box.append(h,note);for(const p of extra)box.appendChild(card(p));}
 /* ---------- citations: Cite on each card, RIS / BibTeX for one paper or a whole result list ----------
    Built from the catalogue. Volume, issue and pages are not in it, so for a paper with a DOI they
    come from Crossref IN THE READER'S BROWSER (api.crossref.org is CORS-open — the same route the
@@ -672,7 +722,7 @@ function savePaper(btn){const p=BYID.get(btn.dataset.id);if(!p)return;
   const done=ok=>{clearTimeout(tm);btn.disabled=false;btn.textContent=ok?was:'Unavailable';if(ok)go();else setTimeout(()=>{btn.textContent=was;},2000);};
   const tm=setTimeout(()=>done(false),6000);
   document.addEventListener('dc:cabinet-save-ready',()=>done(true),{once:true});}
-document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('#list .cite, #list .save, #list .cite-copy, #list .cite-dl button, .exp');if(!t)return;
+document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('.card .cite, .card .save, .card .cite-copy, .card .cite-dl button, .exp');if(!t)return;
   if(t.classList.contains('cite'))return void toggleCite(t);
   if(t.classList.contains('save'))return void savePaper(t);
   if(t.classList.contains('exp'))return void exportResults(t.dataset.f,t);
@@ -685,7 +735,9 @@ function render(reset,all,noHistory){const list=document.getElementById('list');
   const busy=parse()||topic.value||type.value||active.size;
   document.getElementById('count').innerHTML='<span id="cnt"></span>'+(busy?' · <button type="button" id="clear" class="clr">clear search &amp; filters</button>':'')
    +(RES.length?'<span class="exp-bar">export '+(RES.length===1?'this result':(busy?'these ':'all ')+RES.length+' results')+': <button type="button" class="clr exp" data-f="ris">RIS</button> · <button type="button" class="clr exp" data-f="bib">BibTeX</button> <span id="exp-state" role="status"></span></span>':'')
+   +'<span id="ft-state" class="ft-state" role="status"></span>'
    +(NOTE?'<span class="note">'+esc(NOTE)+'</span>':'');
+  scheduleFulltext();
   const cb=document.getElementById('clear');if(cb)cb.onclick=()=>{q.value='';topic.value='';type.value='';active.clear();chips();render(true);q.focus();};
   if(!RES.length){const e=document.createElement('div');e.className='state';
    e.innerHTML='No papers match this search. Try fewer words, another spelling, or clear the filters.<br><span dir="rtl" lang="fa">مقاله‌ای پیدا نشد؛ کلمه‌های کمتر یا املای انگلیسی دیگری را امتحان کنید، یا فیلترها را پاک کنید.</span>';list.appendChild(e);}}
@@ -709,7 +761,7 @@ function chips(){const c=document.getElementById('active');c.innerHTML='';
 function toFilters(){const h=document.querySelector('.dc-topbar');const off=(h?h.getBoundingClientRect().height:0)+8;
   const top=document.querySelector('.cab-head').getBoundingClientRect().top+scrollY-off;scrollTo({top:Math.max(0,top),behavior:calm?'auto':'smooth'});}
 // clicking a #tag toggles it as a filter; focus lands on its chip so keyboard users keep their place
-document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('#list .tag');if(!t)return;
+document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('#list .tag, #ft-extra .tag');if(!t)return;
   const v=t.dataset.t;active.has(v)?active.delete(v):active.add(v);chips();render(true);toFilters();
   const chip=[...document.querySelectorAll('#active .chip')].find(c=>c.textContent.startsWith('#'+v+' '));
   (chip||q).focus({preventScroll:true});});

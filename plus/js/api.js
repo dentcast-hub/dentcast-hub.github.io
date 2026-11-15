@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import * as CFG from './config.js?v=240';
+import * as CFG from './config.js?v=241';
 
 const API_BASES = CFG.API_BASES;
 
@@ -561,6 +561,8 @@ export const api = {
   // Collection pins: «متن خودم» / «رفرنس». Creating one pins it to the board in
   // the same call; editing/deleting a snippet is by its own id (independent of
   // which board(s) it is pinned to).
+  // premium: which cabinet papers say this, inside their PDFs (routes/cabinet.ts)
+  cabinetFulltext: (q) => request('/cabinet/fulltext', { query: { q } }),
   createSnippet: (collectionId, payload) =>
     request('/collections/' + encodeURIComponent(collectionId) + '/snippets', { method: 'POST', body: payload }),
   updateSnippet: (id, patch) => request('/snippets/' + encodeURIComponent(id), { method: 'PATCH', body: patch }),
