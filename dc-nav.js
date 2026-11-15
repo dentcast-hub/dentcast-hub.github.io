@@ -1359,6 +1359,7 @@
 '#dcToolbarDrawer .dc-sd-foot #tool-subscribe .dc-drawer-tool-ico{display:none;}' +
 '#dcToolbarDrawer .dc-sd-foot #tool-subscribe .dc-drawer-tool-txt{font-size:11.5px;color:inherit;font-weight:800;}' +
 '.dc-sd-badge{cursor:default;}' +
+'.dc-sd-login{flex:none;font:inherit;font-size:11.5px;font-weight:800;padding:5px 12px;border-radius:9px;border:0;background:var(--ac,#0b5fff);color:#fff;cursor:pointer;}' +
 'body.dc-desktop-ui .dc-sd-panel{max-width:360px;}';
 
   (function buildSideDrawer() {
@@ -1504,6 +1505,10 @@
              '<span style="min-width:0"><b dir="auto">' + (name ? escapeHTML(name) : 'حساب من') + '</b><small>' + (name ? 'حساب من' : 'وارد شده‌اید') + '</small></span></button>';
     }
     foot.innerHTML = acct;
+    /* A guest's row reads as a label, not a control — so «ورود» is said as a
+       real button too (founder, 2026-11-15). Brand blue: signing in is free;
+       amber stays the subscribe door's alone. */
+    if (!signed) foot.insertAdjacentHTML('beforeend', '<button type="button" class="dc-sd-login" data-dc-sd-login="1">ورود</button>');
     if (signed && premium) {
       foot.insertAdjacentHTML('beforeend', '<span class="dc-sd-badge">پریمیوم</span>');
     } else if (sub) {
