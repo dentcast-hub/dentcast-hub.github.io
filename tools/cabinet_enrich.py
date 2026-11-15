@@ -197,6 +197,7 @@ def cmd_prepare(a):
 def norm(s):
     s = s.replace('­', '').replace('‐', '-').replace('‑', '-')
     s = re.sub(r'-\s*\n\s*', '', s)
+    s = re.sub(r'(?<=[a-z])- (?=[a-z])', '', s)   # «envi- ronmental»: a line-break hyphen copied with a space
     return re.sub(r'\s+', ' ', s).strip().lower()
 
 
@@ -212,7 +213,10 @@ def cmd_check(a):
     vocab = {t for p in cat['papers'] for t in p.get('tags', [])
              if not t.startswith('topic:') and not re.fullmatch(r'(19|20)\d\d', t) and len(t.split('-')) < 6}
     stats = Counter()
+    only = set(a.ids.split(',')) if a.ids else None
     for f in sorted(work.glob('proposal_*.json')):
+        if only and f.stem.split('_', 1)[1] not in only:
+            continue
         r = json.loads(f.read_text(encoding='utf-8'))
         p = json.loads((work / f"paper_{r['id']}.json").read_text(encoding='utf-8'))
         tn = norm(p.get('text', ''))
@@ -228,11 +232,24 @@ def cmd_check(a):
                 tags.append({**t, 'tag': tag})
         r['ft_tags'] = tags[:8]
         r['new_tag_candidates'] = [c for c in r.get('new_tag_candidates', []) if quoted(c.get('evidence'), tn)][:2]
-        facts = r.get('facts', {})
+        facts = r.get('facts', {}) or {}
         for k, v in list(facts.items()):  # a fact with a quote stands or falls by it
-            if isinstance(v, dict) and 'evidence' in v and not quoted(v['evidence'], tn):
+            if isinstance(v, dict) and 'evidence' in v and v.get('value') not in (None, '', []) \
+                    and not quoted(v['evidence'], tn):
                 facts[k] = None
                 stats['fact_dropped'] += 1
+        mb = facts.get('materials_brands')
+        if isinstance(mb, list):
+            facts['materials_brands'] = [m for m in mb if not isinstance(m, dict) or quoted(m.get('evidence'), tn)]
+        # Bibliographic facts are read, never reconstructed: the value itself must be in the text.
+        for k, ok in (('doi', lambda v: norm(str(v)) in tn),
+                      ('year', lambda v: str(v) in tn),
+                      ('authors', lambda v: isinstance(v, list) and v and all(
+                          norm(n.split()[-1]) in tn for n in v if isinstance(n, str) and n.split()))):
+            v = facts.get(k)
+            if isinstance(v, dict) and v.get('value') not in (None, '', []) and not ok(v['value']):
+                facts[k] = None
+                stats['biblio_dropped'] += 1
         r['facts'] = facts
         (work / f"checked_{r['id']}.json").write_text(json.dumps(r, ensure_ascii=False, indent=1), encoding='utf-8')
     print(json.dumps(stats))
@@ -256,9 +273,21 @@ def cmd_merge(a):
             if all(v == 'accept' for v in votes):
                 accepted.append({'tag': t['tag'], 'evidence': t.get('evidence', '')})
         classes = [v.get('doc_class') for v in verdicts]
+        new_ok = {n['tag'] for n in verdicts[0].get('new_tags', []) if n.get('verdict') == 'accept'}
+        for v in verdicts[1:]:
+            new_ok &= {n['tag'] for n in v.get('new_tags', []) if n.get('verdict') == 'accept'}
+        v0 = verdicts[0]
         out.append({'id': r['id'], 'ft_tags': accepted,
+                    'rejected': [{'tag': t['tag'], 'basis': t.get('basis'), 'reason': t.get('reason')}
+                                 for t in v0.get('tags', []) if t.get('verdict') != 'accept'],
                     'doc_class': classes[0] if len(set(classes)) == 1 else None, 'doc_class_votes': classes,
-                    'facts': r.get('facts', {}), 'new_tag_candidates': r.get('new_tag_candidates', [])})
+                    'off_topic': any(v.get('off_topic') for v in verdicts),
+                    'off_topic_reason': next((v.get('off_topic_reason') for v in verdicts if v.get('off_topic')), None),
+                    'catalog_type_ok': all(v.get('catalog_type_ok', True) for v in verdicts),
+                    'suggested_type': next((v.get('suggested_type') for v in verdicts if not v.get('catalog_type_ok', True)), None),
+                    'text_quality': v0.get('text_quality'),
+                    'facts': r.get('facts', {}),
+                    'new_tags': [c for c in r.get('new_tag_candidates', []) if c.get('tag') in new_ok]})
     Path(a.out).write_text(''.join(json.dumps(x, ensure_ascii=False) + '\n' for x in out), encoding='utf-8')
     print(f'{len(out)} papers merged -> {a.out}')
 
@@ -272,6 +301,7 @@ def main(argv=None):
     p.add_argument('--keep-pdf', action='store_true')
     c = sub.add_parser('check')
     c.add_argument('--work', required=True)
+    c.add_argument('--ids', help='comma-separated catalogue ids (default: every proposal in --work)')
     m = sub.add_parser('merge')
     m.add_argument('--work', required=True)
     m.add_argument('--judges', required=True)
