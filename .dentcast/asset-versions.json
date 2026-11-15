@@ -12,8 +12,8 @@
     "hash": "6cddfb4bade90d11"
   },
   "/dc-nav.js": {
-    "v": 343,
-    "hash": "a92006ec3627f0f6"
+    "v": 344,
+    "hash": "87af89efb587729c"
   },
   "/dc-theme.css": {
     "v": 19,
@@ -28,8 +28,8 @@
     "hash": "7d9f3519179bc480"
   },
   "/global-search.js": {
-    "v": 19,
-    "hash": "ee981f12155890a9"
+    "v": 22,
+    "hash": "6b7605cbded49f99"
   },
   "/pillar/premium-index.js": {
     "v": 64,
@@ -132,15 +132,15 @@
     "hash": "543be29b756088f7"
   },
   "dc-nav.js:V": {
-    "v": 312,
-    "hash": "720e6ff9e5ae2606"
+    "v": 313,
+    "hash": "a7429efee3c93bf1"
   },
   "modules:M": {
-    "v": 241,
-    "hash": "f28540c769d176a4"
+    "v": 242,
+    "hash": "3c558c770a660904"
   },
   "spot.js:SPOT_V": {
-    "v": 94,
-    "hash": "38357f57b324c8bd"
+    "v": 95,
+    "hash": "81da449ce80ccb39"
   }
 }

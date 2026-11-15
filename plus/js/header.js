@@ -4,21 +4,21 @@
 //  - person icon (SVG): gray for guests -> login modal; blue for logged-in ->
 //    a toggle that opens a small menu (پیشخوان / پروفایل), each of which opens as
 //    an OVERLAY. Clicking the person again closes whatever is open.
-import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=241';
-import { currentUser, api, meStatus } from './api.js?v=241';
-import { isOrgHost, detectContentId } from './config.js?v=241';
-import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=241';
-import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=241';
-import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=241';
-import { maybeShowNotifPrompt } from './notif-prompt.js?v=241';
-import { healPushSubscription } from './push.js?v=241';
-import { maybeShowPremiumPopup } from './premium-popup.js?v=241';
-import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=241';
-import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=241';
-import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=241';
-import { installLibraryGate } from './library-gate.js?v=241';
-import { toast } from './hl-view.js?v=241';
-import { wirePageBack } from './page-back.js?v=241';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=242';
+import { currentUser, api, meStatus } from './api.js?v=242';
+import { isOrgHost, detectContentId } from './config.js?v=242';
+import { openLoginModal, openOrgNotice, openNameGate, nameIsChosen } from './login-modal.js?v=242';
+import { openOverlay, closeOverlay, overlayOpen } from './overlay.js?v=242';
+import { startTour, maybeOfferTour, tourMenuAvailable, initTourAutostart } from './tour.js?v=242';
+import { maybeShowNotifPrompt } from './notif-prompt.js?v=242';
+import { healPushSubscription } from './push.js?v=242';
+import { maybeShowPremiumPopup } from './premium-popup.js?v=242';
+import { renderNotices, NOTICES_SEEN_EVENT } from './notices.js?v=242';
+import { maybeCelebrate, ACHIEVEMENTS_SEEN_EVENT } from './achievements.js?v=242';
+import { subscriptionMenuLabel, pricingHref } from './premium-cta.js?v=242';
+import { installLibraryGate } from './library-gate.js?v=242';
+import { toast } from './hl-view.js?v=242';
+import { wirePageBack } from './page-back.js?v=242';
 
 // Inlined so it can never 404. Built via innerHTML on an HTML button (not
 // createElement('svg')) so the parser creates properly namespaced SVG nodes;
@@ -110,8 +110,8 @@ function buildGuestPerson() {
 // The dashboard and profile overlays open only on a tap, so their modules
 // (and everything they import) are fetched then, not in front of every page's
 // first paint: they were ~75KB of the homepage's eager module graph.
-const loadDashboard = () => import('./dashboard.js?v=241');
-const loadProfile = () => import('./profile.js?v=241');
+const loadDashboard = () => import('./dashboard.js?v=242');
+const loadProfile = () => import('./profile.js?v=242');
 const overlayFailed = (root) => root.replaceChildren(
   el('div', { class: 'dcp-loading' }, 'بارگذاری انجام نشد؛ دوباره تلاش کنید.'));
 
@@ -346,6 +346,12 @@ export async function initHeader() {
     const userPerson = buildUserPerson(user);
     if (guestPerson && guestPerson.parentNode === actions) actions.replaceChild(userPerson, guestPerson);
     else actions.appendChild(userPerson);
+    // The side drawer's account row (dc-nav.js, a classic script that cannot
+    // import this module) draws the name and the plan from this.
+    try {
+      window.dcpHeaderUser = { name: user.display_name || '', premium: user.tier === 'premium' };
+      document.dispatchEvent(new CustomEvent('dcp:header-user'));
+    } catch (_) { /* non-fatal */ }
   } catch (e) {
     if (window.console) console.warn('[plus header] upgrade failed', e);
   }

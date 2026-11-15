@@ -4,12 +4,12 @@
 // complete" button here. "شروع مسیر" only starts the API tracking a
 // current_step cache so GET /me can headline it on the dashboard; browsing a
 // pathway before that still shows real credit for content already consumed.
-import { el, faNum, icon } from './util.js?v=241';
-import { api, ApiError } from './api.js?v=241';
-import { FOLDER_EN } from './content-index.js?v=241';
-import { markReturnTrail } from './return-trail.js?v=241';
-import { openSheet, closeSheet } from './sheet.js?v=241';
-import { certificateTerms } from './certificate-terms.js?v=241';
+import { el, faNum, icon } from './util.js?v=242';
+import { api, ApiError } from './api.js?v=242';
+import { FOLDER_EN } from './content-index.js?v=242';
+import { markReturnTrail } from './return-trail.js?v=242';
+import { openSheet, closeSheet } from './sheet.js?v=242';
+import { certificateTerms } from './certificate-terms.js?v=242';
 
 /** A "lightning + label" chip — a leading icon from the shared sprite
  * (assets/icons/icons.svg), never a raw emoji. Used for every .dcb-chip
