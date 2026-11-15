@@ -427,52 +427,5 @@
       "unassigned": [],
       "dropped": []
     }
-  },
-  "sharehub/share-53": {
-    "queue_ref": "queue/20-sharehub-lower-incisal-reduction-anterior-space",
-    "record_sha256": "74deaa373b9d99c412e6635baeb16cfe4628ea18e1ed2ee179189e47f3cf6fd7",
-    "installed_at": "2026-11-15",
-    "approval": {
-      "status": "confirmed",
-      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
-      "evidence": [
-        "queue-maintainer.md «DES و Fidelity صف»"
-      ]
-    },
-    "sync": {
-      "text_synced": [],
-      "added": [],
-      "unassigned": [
-        "u1",
-        "u2",
-        "u3",
-        "u4",
-        "u5",
-        "u7",
-        "u13",
-        "u17",
-        "u20",
-        "u21",
-        "u25",
-        "u26",
-        "u29",
-        "u34",
-        "u40",
-        "u44",
-        "u47",
-        "u50",
-        "u57",
-        "u61",
-        "u64",
-        "u72",
-        "u73",
-        "u74",
-        "u75",
-        "u76",
-        "u77",
-        "u78"
-      ],
-      "dropped": []
-    }
   }
 }
