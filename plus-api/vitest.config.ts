@@ -43,7 +43,7 @@ export default defineConfig({
       BALE_WEBHOOK_SECRET: 'test-bale-webhook-secret',
       // Force the deterministic, offline AI provider. Without this, a developer
       // who has the real AI_PROVIDER/AI_API_KEY in .env (as production does)
-      // would have the assistant suite call the live gateway on every run —
+      // would have the AI-graded suites call the live gateway on every run —
       // real money, real latency, and assertions that depend on a model's mood.
       AI_PROVIDER: 'stub',
     },

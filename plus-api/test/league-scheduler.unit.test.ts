@@ -24,7 +24,7 @@ beforeEach(() => {
     'article-notify': ['runFreeDigest', 'runPremiumBacklog'],
     broadcast: ['releaseHeldBroadcastPushes'], 'streak-reminder': ['runStreakReminders'],
     reactivation: ['runReactivationNudges'], 'review-notify': ['runReviewReminders'],
-    'assistant-learning': ['attributeStrongSignals'], subscription: ['sweepExpiredSubscriptions'],
+    subscription: ['sweepExpiredSubscriptions'],
     'payment-cap-alert': ['checkCapacityAlert'],
     'subscription-reminder': ['runSubscriptionReminders', 'runWinbackReminders'],
     'payment-reconcile': ['reconcilePendingPayments'], 'pathway-standings': ['runPathwayAlerts'],

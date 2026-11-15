@@ -8,7 +8,6 @@ import { notifyLeagueOutcomes } from './services/league-notify.js';
 import { grantWeeklyPrizes, expirePremiumPrizes } from './services/premium-prize.js';
 import { notifyPremiumPrizes } from './services/premium-prize-notify.js';
 import { runReviewReminders } from './services/review-notify.js';
-import { attributeStrongSignals } from './services/assistant-learning.js';
 import { sweepExpiredSubscriptions } from './services/subscription.js';
 import { checkCapacityAlert } from './services/payment-cap-alert.js';
 import { runSubscriptionReminders, runWinbackReminders } from './services/subscription-reminder.js';
@@ -481,38 +480,6 @@ export function startPaymentReconcileScheduler(): () => void {
     timer = setTimeout(() => {
       void run().finally(tick);
     }, config.payments.reconcileEveryMinutes * 60 * 1000);
-    if (typeof timer.unref === 'function') timer.unref();
-  };
-
-  tick();
-  return () => clearTimeout(timer);
-}
-
-/**
- * Credit the assistant's strong outcome signals (a recommended article that got
- * read, highlighted or turned into a review card) to the round that suggested
- * it. Hourly, not daily: attribution only needs the 30-minute window to have
- * closed, and running it often keeps each pass small and the learned scores
- * roughly current. Idempotent — every round is marked as counted exactly once.
- */
-export function startAssistantLearningScheduler(): () => void {
-  let timer: NodeJS.Timeout;
-
-  const tick = () => {
-    timer = setTimeout(() => {
-      void attributeStrongSignals(new Date())
-        .then((r) => {
-          if (r.credited > 0) {
-            // eslint-disable-next-line no-console
-            console.log(`[assistant-learning] credited ${r.credited}/${r.rounds} resolved round(s)`);
-          }
-        })
-        .catch((err) => {
-          // eslint-disable-next-line no-console
-          console.error('[assistant-learning] attribution run failed', err);
-        })
-        .finally(tick);
-    }, 60 * 60 * 1000);
     if (typeof timer.unref === 'function') timer.unref();
   };
 

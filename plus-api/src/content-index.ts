@@ -49,7 +49,7 @@ function defaultPath(): string {
  *
  * The empty-index check is the important one: a valid-but-empty file would be
  * accepted by every structural test and would silently blank the dashboard tree
- * and the assistant's whole catalog. A publish never empties this file, so an
+ * and the whole hashtag catalog. A publish never empties this file, so an
  * empty one means something upstream broke, and "keep yesterday's taxonomy" is
  * always the better answer than "serve nothing".
  *
@@ -62,8 +62,8 @@ export function applyRemoteIndex(raw: unknown): boolean {
   if (!idx.byContent || typeof idx.byContent !== 'object' || Array.isArray(idx.byContent)) return false;
   if (Object.keys(idx.byContent).length === 0) return false;
   // The poll fetches the same file most times. Keeping the object in service
-  // when nothing changed keeps every cache keyed on it (the assistant's tag
-  // lookup, alias table, glossary map) instead of rebuilding them all on the
+  // when nothing changed keeps every cache keyed on it (the concept lookup in
+  // services/highlight-concepts.ts) instead of rebuilding them all on the
   // event loop every few minutes.
   const text = JSON.stringify(idx);
   if (remote && text === remoteText) return true;
@@ -114,19 +114,9 @@ export function getClusters(): Cluster[] {
   return getIndex().clusters || [];
 }
 
-/** Every real site #hashtag, each with its own content_ids — the case-assistant's keyword-search catalog. */
+/** Every real site #hashtag, each with its own content_ids. */
 export function getTags(): Tag[] {
   return getIndex().tags || [];
-}
-
-/**
- * Orthographic variants of one word (بایومیمتیک -> بیومیمتیک), authored in
- * dentcast-hashtag-reference.json. case-assistant.ts folds these into both the
- * tag and the query before tokenizing, so a concept stays reachable through
- * every spelling without carrying every spelling on every article.
- */
-export function getAliases(): Record<string, string> {
-  return getIndex().aliases || {};
 }
 
 /** Every content_id with its metadata — for lookups that have to scan by title or type. */

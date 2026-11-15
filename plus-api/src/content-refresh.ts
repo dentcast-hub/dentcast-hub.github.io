@@ -6,7 +6,6 @@ import { applyRemoteExamQuestions, examQuestionsSource } from './exam-questions.
 import { applyRemoteFlashcards, flashcardsSource } from './flashcards.js';
 import { applyRemoteGlossary, glossarySource } from './glossary.js';
 import { applyRemoteHashtagRef, hashtagRefSource } from './hashtag-ref.js';
-import { applyRemoteCabinet, cabinetSource } from './cabinet.js';
 
 /**
  * Keeps the taxonomy index and the pathway definitions current WITHOUT a
@@ -15,7 +14,7 @@ import { applyRemoteCabinet, cabinetSource } from './cabinet.js';
  * Both files are generated in the site repo and shipped as static assets, but
  * the API reads them from `/app/*.json` baked into the image at build time. That
  * made every publish a deploy: the article itself went live on the static site
- * immediately, while the case assistant, reading compass, dashboard tree and
+ * immediately, while the reading compass, dashboard tree and
  * pathway pages kept serving whatever taxonomy the image was built with. At
  * three or four articles a day that is three or four image builds a day, purely
  * to hand the API a JSON file it could have fetched itself.
@@ -106,7 +105,7 @@ async function fetchJson(
  * instead of waiting out the interval.
  */
 export interface ContentFileStatus {
-  key: 'content-index' | 'pathways' | 'badges' | 'exam-questions' | 'flashcards' | 'glossary' | 'hashtag-ref' | 'cabinet';
+  key: 'content-index' | 'pathways' | 'badges' | 'exam-questions' | 'flashcards' | 'glossary' | 'hashtag-ref';
   /** The env var that turns the refresh on for this file. */
   env: string;
   configured: boolean;
@@ -141,9 +140,6 @@ const FILES: Array<{
   // publishes and builds nothing.
   { key: 'glossary', env: 'GLOSSARY_URL', urls: () => config.content.glossaryUrls, apply: applyRemoteGlossary, source: glossarySource },
   { key: 'hashtag-ref', env: 'HASHTAG_REF_URL', urls: () => config.content.hashtagRefUrls, apply: applyRemoteHashtagRef, source: hashtagRefSource },
-  // The case assistant's library-paper suggestions: rebuilt on main whenever
-  // the site's hashtags or the paper library change.
-  { key: 'cabinet', env: 'CABINET_PAPERS_URL', urls: () => config.content.cabinetUrls, apply: applyRemoteCabinet, source: cabinetSource },
 ];
 
 type FileState = {

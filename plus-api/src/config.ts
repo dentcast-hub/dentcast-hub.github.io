@@ -756,10 +756,9 @@ export const config = {
     timeoutMs: int('ZIBAL_TIMEOUT_MS', 25_000),
   },
 
-  // «دستیار هوشمند» (premium, spec's later AI phase): a narrow classifier, not a
-  // chatbot — it turns a free-text case description into a short multiple-choice
-  // narrowing round, options always drawn from our own taxonomy (never invented),
-  // until it can point at real DentCast articles. AI_PROVIDER=stub (default) costs
+  // The AI layer: a narrow classifier, not a chatbot — it grades a free-text
+  // answer against a fixed set of key points (چالش and the pathway exams' free
+  // questions), never writing the answer itself. AI_PROVIDER=stub (default) costs
   // nothing and needs no key — see providers/ai/. Only 'openai-compatible' (Arvan's
   // OpenAI-compatible endpoint) spends real money, and only when explicitly configured.
   ai: {
@@ -801,22 +800,14 @@ export const config = {
     timeoutMs: int('AI_TIMEOUT_MS', 10_000),
   },
 
-  // Bounds on the case-assistant's own cost: rounds per session (never more than
-  // this many AI calls before it is forced to resolve) and requests per user per
-  // hour (abuse/runaway-click guard, same shape as anon.maxPerIpPerHour).
-  assistant: {
-    maxRounds: int('ASSISTANT_MAX_ROUNDS', 4),
-    maxPerUserPerHour: int('ASSISTANT_MAX_PER_USER_PER_HOUR', 20),
-  },
-
-  // چالش — the second route on the site (after the assistant) that spends
+  // چالش — a route that spends
   // real model money per call. maxAnswerChars/minAnswerChars bound the model
   // input and what counts as an answer worth grading; maxExamples caps how
   // many founder rulings ride along in the prompt (§6.3) — unbounded would
   // grow the prompt without bound on the most popular چالش, exactly where
   // cost matters most. Same provider/model/timeout/retry budget as
-  // config.ai — this is a closed classification, the same shape as
-  // selectTags with a smaller catalog, so it needs no AI config of its own.
+  // config.ai — this is a closed classification, so it needs no AI config
+  // of its own.
   challenge: {
     maxPerUserPerHour: int('CHALLENGE_MAX_PER_USER_PER_HOUR', 10),
     maxAnswerChars: int('CHALLENGE_MAX_ANSWER_CHARS', 1500),
@@ -858,11 +849,6 @@ export const config = {
   glossaryPath: process.env.GLOSSARY_PATH || '',
   hashtagRefPath: process.env.HASHTAG_REF_PATH || '',
 
-  // Path to plus/cabinet-papers.json — the library papers the case assistant
-  // suggests beside a site hashtag (tools/build_cabinet_papers.py). Same story:
-  // repo default in dev, explicit in the container.
-  cabinetPath: process.env.CABINET_PAPERS_PATH || '',
-
   // Where to re-fetch those files from at runtime (content-refresh.ts).
   // The paths above are the boot value and the permanent fallback; these URLs
   // are what stop every publish from needing an image rebuild. Comma-separated
@@ -876,7 +862,6 @@ export const config = {
     flashcardsUrls: list('FLASHCARDS_URL', []),
     glossaryUrls: list('GLOSSARY_URL', []),
     hashtagRefUrls: list('HASHTAG_REF_URL', []),
-    cabinetUrls: list('CABINET_PAPERS_URL', []),
     refreshSeconds: int('CONTENT_REFRESH_SECONDS', 300),
   },
 

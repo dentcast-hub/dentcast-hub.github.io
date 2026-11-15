@@ -93,6 +93,7 @@ async function insertAndScore(
  * which side of the line it is on.
  */
 export const SERVER_MINTED_ACTIONS: ReadonlySet<string> = new Set([
+  // Historical: nothing mints it any more; kept so old rows stay server-owned.
   'assistant_step',
   'certificate_wish_alerted',
   'exam_open_told',
