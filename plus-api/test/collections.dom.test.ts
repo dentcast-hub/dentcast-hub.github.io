@@ -67,7 +67,7 @@ vi.mock('/plus/js/api.js', () => ({
   apiBase: () => Promise.resolve('https://api.dentcast.test'),
 }));
 
-const { renderCollectionsList, renderCollectionDetail, openCollectionPicker } = await import('../../plus/js/collections.js');
+const { renderCollectionsList, renderCollectionDetail, openCollectionPicker, referencesAsRis, referencesAsBibtex } = await import('../../plus/js/collections.js');
 
 const hlItem = (over: any = {}) => ({
   id: 'i1', kind: 'highlight', highlight_id: 'hl-1', content_id: 'insight/insight-1',
@@ -830,5 +830,55 @@ describe('a paper saved from the cabinet', () => {
     await tick(); await tick();
     expect(calls.find((c) => c.op === 'updateSnippet')!.args).toEqual(['sn-ref', { body: 'نتیجه‌ی اصلی: OVD با پروویژنال تست شد' }]);
     expect(document.querySelector('.dcp-cl-pin')!.textContent).toContain('نتیجه‌ی اصلی');
+  });
+});
+
+// A board's «رفرنس» pins leave as a citation file the reader's reference
+// manager opens (Zotero, EndNote, Mendeley via RIS; LaTeX via BibTeX).
+describe('a board\'s references as RIS / BibTeX', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '<div id="root"></div>';
+    calls.length = 0;
+    collections = [{ id: 'c1', title: 'امتحان بورد', item_count: 2, created_at: '2026-07-01T10:00:00Z', last_item_at: null, preview: [] }];
+    board = { id: 'c1', title: 'امتحان بورد', created_at: '2026-07-01T10:00:00Z', items: [hlItem(), refItem()] };
+  });
+
+  it('the export sheet offers RIS and BibTeX only when the board has references', async () => {
+    await renderCollectionDetail(document.getElementById('root')!, 'c1');
+    ([...document.querySelectorAll('button')].find((b) => b.textContent!.includes('خروجی')) as HTMLElement).click();
+    const opts = [...document.querySelectorAll('.dcp-cl-addopt')].map((o) => o.textContent);
+    expect(opts).toHaveLength(4);
+    expect(opts[2]).toContain('RIS');
+    expect(opts[3]).toContain('BibTeX');
+  });
+
+  it('RIS: one record per reference, authors split, the note and the board as a tag', () => {
+    const ris = referencesAsRis([
+      refItem({ authors: 'Koo HJ, Jeong CM, Lee SH', body: 'یادداشت\nدوخطی', url: 'https://drive.google.com/file/d/x/view' }),
+      refItem({ title: 'مقاله‌ی فارسی', authors: 'دکتر الف و همکاران', venue: null, doi: null, year: null, url: null }),
+    ], 'امتحان بورد');
+    const recs = ris.trim().split(/\r\n\r\n/);
+    expect(recs).toHaveLength(2);
+    expect(recs[0]).toContain('TY  - JOUR');
+    expect(recs[0]).toContain('AU  - Koo, H. J.');
+    expect(recs[0]).toContain('AU  - Lee, S. H.');
+    expect(recs[0]).toContain('UR  - https://doi.org/10.1016/j.dental.2017.11.005');
+    expect(recs[0]).toContain('L2  - https://drive.google.com/file/d/x/view');
+    expect(recs[0]).toContain('KW  - امتحان بورد');
+    expect(recs[0]).toContain('N1  - یادداشت دوخطی');
+    expect(recs[1]).toContain('TY  - GEN');
+    expect(recs[1], 'a hand-typed author line is kept whole').toContain('AU  - دکتر الف و همکاران');
+    expect(recs.every((r) => /ER  -\s*$/.test(r))).toBe(true);
+  });
+
+  it('BibTeX: unique keys, «et al.» dropped, braces balanced', () => {
+    const bib = referencesAsBibtex([refItem(), refItem({ body: '50% & more {x}' })], 'b');
+    const keys = [...bib.matchAll(/^@\w+\{([^,]+),/gm)].map((m) => m[1]);
+    expect(keys).toEqual(['breschi2018dentin', 'breschi2018dentina']);
+    expect(bib).toContain('author = {Breschi, L.}');
+    expect(bib).toContain('note = {50\\% \\& more \\{x\\}}');
+    let depth = 0;
+    for (let i = 0; i < bib.length; i++) { if (bib[i] === '\\') { i++; continue; } if (bib[i] === '{') depth++; if (bib[i] === '}') depth--; }
+    expect(depth).toBe(0);
   });
 });

@@ -7,22 +7,22 @@
 // opens into a masonry grid of "pins." This module is shared by
 // /plus/collections.html, /plus/collection.html, the workbench's two
 // single-purpose collection buttons, and the dashboard.
-import { el, faNum } from './util.js?v=239';
-import { openSheet, closeSheet, gateCard } from './sheet.js?v=239';
-import { premiumCta } from './premium-cta.js?v=239';
-import { api, currentUser, apiBase } from './api.js?v=239';
-import { openLoginModal } from './login-modal.js?v=239';
-import { FOLDER_EN } from './content-index.js?v=239';
-import { markReturnTrail } from './return-trail.js?v=239';
-import { PALETTE } from './config.js?v=239';
+import { el, faNum } from './util.js?v=240';
+import { openSheet, closeSheet, gateCard } from './sheet.js?v=240';
+import { premiumCta } from './premium-cta.js?v=240';
+import { api, currentUser, apiBase } from './api.js?v=240';
+import { openLoginModal } from './login-modal.js?v=240';
+import { FOLDER_EN } from './content-index.js?v=240';
+import { markReturnTrail } from './return-trail.js?v=240';
+import { PALETTE } from './config.js?v=240';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
   kindChip, snippetInlineEditor, referenceNoteEditor, looksLatin,
-} from './hl-view.js?v=239';
+} from './hl-view.js?v=240';
 // A قطعه‌ی صوتی pin draws the same playable body the دفترچه draws
 // (clip-view.js) — one vocabulary, so a clip never looks like two things.
-import { clipBody, clipInlineEditor, clipHref, clipAsText, createClipPlayer, clipDownloadBtn } from './clip-view.js?v=239';
+import { clipBody, clipInlineEditor, clipHref, clipAsText, createClipPlayer, clipDownloadBtn } from './clip-view.js?v=240';
 
 const hlColorCss = (key) => (PALETTE.find((p) => p.key === key) || {}).css || '#eaecf5';
 
@@ -245,7 +245,75 @@ export function openCollectionMove(item, fromCollectionId, removeFromHere) {
  * prod), and the browser's own download UI takes it from there — there is no
  * download-complete event to hook, so the sheet just closes on click.
  */
-function exportSheetCard(collectionId, itemCount) {
+// --- a board's references as RIS / BibTeX -----------------------------------
+// A reference pin keeps its authors as one line, the way the board shows them:
+// «Koo HJ, Jeong CM, Lee SH», «Breschi L, et al.», or whatever the reader typed
+// by hand. Each comma part that reads «Family INITIALS» becomes a structured
+// author; anything else (a Persian line, an organisation) is kept whole, so
+// nothing the reader wrote is dropped or invented.
+function splitAuthors(line) {
+  const parts = String(line || '').split(/,\s*/).map((s) => s.trim()).filter((s) => s && !/^et\.? al\.?$/i.test(s));
+  const structured = parts.map((s) => {
+    const m = s.match(/^(.+?)\s+([A-Z]{1,4})(?:\s+(Jr|Sr|II|III|IV))?\.?$/);
+    return m ? { family: m[1], given: m[2].split('').join('. ') + '.', suffix: m[3] || '' } : null;
+  });
+  if (parts.length && structured.every(Boolean)) return structured;
+  return line && String(line).trim() ? [{ literal: String(line).trim() }] : [];
+}
+const oneLine = (s) => String(s == null ? '' : s).replace(/\s*\n\s*/g, ' ').trim();
+
+export function referencesAsRis(refs, boardTitle) {
+  return refs.map((r) => {
+    const L = [];
+    const add = (k, v) => { const t = oneLine(v); if (t) L.push(k + '  - ' + t); };
+    add('TY', r.venue ? 'JOUR' : 'GEN');
+    for (const a of splitAuthors(r.authors)) add('AU', a.literal || (a.family + ', ' + a.given + (a.suffix ? ', ' + a.suffix : '')));
+    add('TI', r.title); add('T2', r.venue); add('PY', r.year); add('DO', r.doi);
+    add('UR', r.doi ? 'https://doi.org/' + r.doi : r.url);
+    if (r.doi && r.url) add('L2', r.url);
+    add('KW', boardTitle);
+    add('N1', r.body);
+    L.push('ER  - ');
+    return L.join('\r\n');
+  }).join('\r\n\r\n') + '\r\n';
+}
+
+const texEsc = (s) => oneLine(s).replace(/\\/g, '\\textbackslash{}').replace(/([{}%&#_$])/g, '\\$1')
+  .replace(/~/g, '\\textasciitilde{}').replace(/\^/g, '\\textasciicircum{}');
+export function referencesAsBibtex(refs, boardTitle) {
+  const used = new Set();
+  return refs.map((r) => {
+    const au = splitAuthors(r.authors);
+    const fam = ((au[0] && (au[0].family || au[0].literal)) || 'ref').normalize('NFD').replace(/[^A-Za-z]/g, '').toLowerCase() || 'ref';
+    const word = ((oneLine(r.title).normalize('NFD').toLowerCase().match(/[a-z]{4,}/g)) || ['paper'])[0];
+    const base = fam + (r.year || 'nd') + word;
+    let key = base; let n = 0;
+    while (used.has(key)) key = base + String.fromCharCode(97 + (n++ % 26)) + (n > 26 ? n : '');
+    used.add(key);
+    const F = [];
+    const add = (f, v, raw = false) => { const t = raw ? v : texEsc(v); if (t) F.push('  ' + f + ' = {' + t + '}'); };
+    add('author', au.map((a) => (a.literal ? '{' + texEsc(a.literal) + '}' : texEsc(a.family + (a.suffix ? ', ' + a.suffix : '') + ', ' + a.given))).join(' and '), true);
+    add('title', r.title ? '{' + texEsc(r.title) + '}' : '', true);
+    add(r.venue ? 'journal' : 'howpublished', r.venue);
+    add('year', r.year); add('doi', r.doi); add('url', r.url);
+    add('keywords', boardTitle); add('note', r.body);
+    return '@' + (r.venue ? 'article' : 'misc') + '{' + key + ',\n' + F.join(',\n') + '\n}';
+  }).join('\n\n') + '\n';
+}
+
+// a board title as a file name: Persian kept, path characters out
+const fileStem = (t) => (oneLine(t).replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 80) || 'collection');
+// Blob download; revoked a tick later (Firefox cancels a download revoked synchronously)
+function downloadText(name, text, type) {
+  const url = URL.createObjectURL(new Blob([text], { type: type + ';charset=utf-8' }));
+  const a = el('a', { href: url, download: name });
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
+
+function exportSheetCard(collectionId, itemCount, board = null) {
   function formatOption(format, ico, icoClass, name, desc) {
     const opt = el('button', { class: 'dcp-cl-addopt', type: 'button' }, [
       el('span', { class: 'dcp-cl-addopt-ico ' + icoClass }, ico),
@@ -259,6 +327,23 @@ function exportSheetCard(collectionId, itemCount) {
     });
     return opt;
   }
+  // RIS / BibTeX: only the board's «رفرنس» pins are citations, so these two
+  // appear only when the board has some. Built in the browser from the pins
+  // already on screen (no endpoint), in the board's own order.
+  const refs = board ? board.items.filter((it) => it.kind === 'reference') : [];
+  function citeOption(format, ico, name, desc) {
+    const opt = el('button', { class: 'dcp-cl-addopt', type: 'button' }, [
+      el('span', { class: 'dcp-cl-addopt-ico blue' }, ico),
+      el('span', { class: 'dcp-cl-addopt-txt' }, [el('b', {}, name), el('small', {}, desc)]),
+    ]);
+    opt.addEventListener('click', () => {
+      downloadText(fileStem(board.title) + (format === 'ris' ? '.ris' : '.bib'),
+        format === 'ris' ? referencesAsRis(refs, board.title) : referencesAsBibtex(refs, board.title),
+        format === 'ris' ? 'application/x-research-info-systems' : 'application/x-bibtex');
+      closeSheet();
+    });
+    return opt;
+  }
 
   return el('div', { class: 'dcp-sheet-card' }, [
     el('div', { class: 'dcp-sheet-top' }, [el('h2', { class: 'dcp-sheet-title' }, '⬇ خروجی از این برد')]),
@@ -267,6 +352,10 @@ function exportSheetCard(collectionId, itemCount) {
       'هایلایت‌ها با یادداشت‌هایشان، متن‌های خودتان، و فهرست منابع در انتها — آماده‌ی ویرایش.'),
     formatOption('pptx', '🎞', 'gold', 'اسکلت اسلاید (pptx)',
       'هر پین یک اسلاید: تیتر + متن. طراحی و عکس با خودتان — ساختار با ما.'),
+    refs.length ? citeOption('ris', '📚', 'منابع برای Zotero / EndNote (RIS)',
+      faNum(refs.length) + ' رفرنسِ این برد، با یادداشت‌هایتان؛ نامِ برد به‌عنوان تگ.') : null,
+    refs.length ? citeOption('bib', '{ }', 'منابع برای LaTeX (BibTeX)',
+      faNum(refs.length) + ' رفرنسِ این برد، برای BibTeX یا Overleaf.') : null,
     el('div', { class: 'dcp-cl-order-note' }, [
       el('span', { 'aria-hidden': 'true' }, '⇅'),
       el('span', {}, 'ترتیب خروجی = چیدمانِ دستی برد. قبل از خروجی، برد را همان‌طور بچینید که می‌خواهید ارائه پیش برود.'),
@@ -980,7 +1069,7 @@ export async function renderCollectionDetail(container, id) {
     },
   })));
   const exportBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, '⬇ خروجی');
-  exportBtn.addEventListener('click', () => openSheet(exportSheetCard(id, data.items.length)));
+  exportBtn.addEventListener('click', () => openSheet(exportSheetCard(id, data.items.length, { items: data.items, title: data.title })));
   const editBtn = el('button', { class: 'dcp-btn dcp-btn-ghost', type: 'button' }, 'ویرایشِ کالکشن');
   const deleteBtn = el('button', { class: 'dcp-btn dcp-btn-danger', type: 'button' }, 'حذفِ کالکشن');
   const titleWrap = el('div', { class: 'dcp-cl-title-wrap' }, [titleEl, descEl]);

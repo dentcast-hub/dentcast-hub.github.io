@@ -40,17 +40,17 @@
 // chips need (highlight total, collection count) wait behind an
 // IntersectionObserver — the pattern article-threads.js uses. Everything /me already carries (active pathway, due
 // cards, the report month) is painted at render for free.
-import { el, faNum, streakIsActiveToday } from './util.js?v=239';
-import { currentUser, meStatus, api } from './api.js?v=239';
-import { pricingHref, premiumCta } from './premium-cta.js?v=239';
-import { openSheet, gateCard } from './sheet.js?v=239';
-import { openLoginModal } from './login-modal.js?v=239';
-import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=239';
-import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=239';
-import { armDesTool } from './des-scorer.js?v=239';
-import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=239';
-import { reportChip } from './home-features.js?v=239';
-import { getModel, freshFolders } from './content-index.js?v=239';
+import { el, faNum, streakIsActiveToday } from './util.js?v=240';
+import { currentUser, meStatus, api } from './api.js?v=240';
+import { pricingHref, premiumCta } from './premium-cta.js?v=240';
+import { openSheet, gateCard } from './sheet.js?v=240';
+import { openLoginModal } from './login-modal.js?v=240';
+import { PREMIUM_GROUPS, PREMIUM_ENTRIES } from './premium-catalog.js?v=240';
+import { bundleRail, installTapGate, fillBundlesLive, BUNDLES_HREF } from './home-bundles.js?v=240';
+import { armDesTool } from './des-scorer.js?v=240';
+import { loadShowcase, pathwayShowcase } from './pathway-showcase.js?v=240';
+import { reportChip } from './home-features.js?v=240';
+import { getModel, freshFolders } from './content-index.js?v=240';
 
 // The two slots index.html carries — one per homepage layout — same shape as
 // home-features.js's SLOT_IDS. Both are filled; only the displayed one shows.

@@ -5,7 +5,7 @@
 // pin (see addReferenceTo in collections.js), which also owns the three
 // states: a guest is asked to log in, a free reader sees the premium gate, a
 // subscriber picks (or makes) a board.
-import { openCollectionPicker } from './collections.js?v=239';
+import { openCollectionPicker } from './collections.js?v=240';
 
 window.dcCabinetSave = (paper) => openCollectionPicker({ reference: paper });
 document.dispatchEvent(new CustomEvent('dc:cabinet-save-ready'));
