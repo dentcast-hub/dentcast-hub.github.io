@@ -1253,14 +1253,17 @@
      The hamburger no longer drops a 3×3 grid under the header; it slides a
      panel in from the right, over a dim, in three tiers:
        • top    — the one primary action (search) and «کاوش»: the topic
-                  index, the glossary, the episode archive, and «ابزارها ›»
-                  which opens the tools as a bottom sheet with one line each;
+                  index, the glossary and the episode archive;
        • middle — «ردپای من»: for a SIGNED-IN reader «ادامه بده» (the audio
                   hub's resume record) and «اخیراً دیده‌شده» (the last pages
                   they opened). A guest gets NOTHING saved — no history is
                   written for them at all (founder: the empty, locked shelf is
                   the reason to sign in) — only a faded shelf and «ورود»;
-       • bottom — تم · موسیقی · نصب · پشتیبانی, then the account row.
+       • bottom — the tools as one 3×2 grid (تم · موسیقی · رادار /
+                  کتابخانه · پشتیبانی · نصب), then the account row. The
+                  tools bottom sheet of the first version is gone (founder,
+                  2026-11-15): taraz is content, and the DES board and
+                  challenges have their own doors.
      Founder decisions this supersedes: search («جستجو») is back in the
      menu, and the episode archive is a menu door again.
 
@@ -1268,9 +1271,7 @@
      carries (#tool-pwa, #tool-subscribe, #btn-theme-drawer,
      #btn-music-toggle, #btn-radar-topbar, #btn-cabinet) are MOVED, never
      re-created, so every delegated handler keyed on their ids — and the
-     library gate keyed on the cabinet href — keeps working. The radar and
-     the cabinet live in #dcToolsSheet, which library-gate.js counts as the
-     drawer. Runs on whatever #dcToolbarDrawer exists (injected or the
+     library gate keyed on the cabinet href — keeps working. Runs on whatever #dcToolbarDrawer exists (injected or the
      homepage's static one); the desktop shell has its own sidebar and never
      shows this one. */
   var DC_SD_RECENT_KEY = 'dc-recent-pages';
@@ -1337,8 +1338,8 @@
 '[data-theme="dark"] .dc-sd-lockbox p{color:var(--txt,#e8eef8);}' +
 '.dc-sd-btn{display:block;width:100%;font:inherit;text-align:center;background:var(--ac,#0b5fff);color:#fff;border:0;border-radius:10px;padding:10px;font-size:13.5px;font-weight:700;cursor:pointer;}' +
 '.dc-sd-empty{padding:4px 18px 8px;font-size:12px;color:var(--txt3,#62779a);line-height:1.8;}' +
-'.dc-sd-settings{display:flex;gap:8px;padding:12px 14px 6px;}' +
-'.dc-sd-settings>*{flex:1;min-width:0;}' +
+'.dc-sd-settings{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:6px 14px 8px;}' +
+'.dc-sd-settings>*{min-width:0;}' +
 '#dcToolbarDrawer .dc-sd-settings .dc-drawer-tool-seg{flex-direction:row!important;gap:5px!important;width:auto!important;height:auto!important;padding:9px 2px!important;border:1px solid var(--border,rgba(2,35,96,.12))!important;border-radius:10px!important;background:var(--card-bg,#fff)!important;text-decoration:none;justify-content:center;}' +
 '#dcToolbarDrawer .dc-sd-settings .dc-drawer-tool-ico{font-size:1rem;color:var(--txt2,#4a5f85);display:inline-flex;align-items:center;}' +
 '#dcToolbarDrawer .dc-sd-settings .dc-drawer-tool-ico .dc-svg-icon{width:15px;height:15px;}' +
@@ -1356,44 +1357,7 @@
 '#dcToolbarDrawer .dc-sd-foot #tool-subscribe .dc-drawer-tool-ico{display:none;}' +
 '#dcToolbarDrawer .dc-sd-foot #tool-subscribe .dc-drawer-tool-txt{font-size:11.5px;color:inherit;font-weight:800;}' +
 '.dc-sd-badge{cursor:default;}' +
-/* Tools bottom sheet */
-'.dc-ts-wrap{position:fixed;inset:0;z-index:10045;font-family:Vazirmatn,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;}' +
-'.dc-ts-wrap[hidden]{display:none;}' +
-'.dc-ts-dim{position:absolute;inset:0;background:rgba(10,20,40,.45);opacity:0;transition:opacity .2s ease;}' +
-'.dc-ts{position:absolute;left:0;right:0;bottom:0;max-height:84vh;max-height:84dvh;display:flex;flex-direction:column;background:var(--card-bg,#fff);color:var(--txt,#0a1a33);border-radius:22px 22px 0 0;transform:translateY(100%);transition:transform .22s cubic-bezier(.4,0,.2,1);max-width:640px;margin:0 auto;box-shadow:0 -8px 30px rgba(0,0,0,.18);}' +
-'.dc-ts-wrap.open .dc-ts-dim{opacity:1;}' +
-'.dc-ts-wrap.open .dc-ts{transform:none;}' +
-'.dc-ts-grab{width:40px;height:4px;border-radius:2px;background:var(--surface3,#eaecf5);margin:8px auto 0;}' +
-'.dc-ts-h{display:flex;justify-content:space-between;align-items:center;padding:10px 18px 12px;border-bottom:1px solid var(--border,rgba(2,35,96,.10));}' +
-'.dc-ts-h b{font-size:16px;}' +
-'.dc-ts-list{overflow-y:auto;padding:0 18px calc(14px + env(safe-area-inset-bottom,0px));}' +
-'.dc-ts .dc-ts-row{display:flex!important;flex-direction:row!important;align-items:flex-start!important;justify-content:flex-start!important;gap:12px!important;width:100%!important;height:auto!important;box-sizing:border-box;padding:13px 0!important;border:0!important;border-bottom:1px solid var(--border,rgba(2,35,96,.10))!important;border-radius:0!important;background:none!important;font:inherit;color:var(--txt,#0a1a33)!important;text-align:right;text-decoration:none;cursor:pointer;}' +
-'.dc-ts .dc-ts-row:last-child{border-bottom:0!important;}' +
-'.dc-ts-ic{width:40px;height:40px;border-radius:12px;background:var(--surface2,#f4f6fb);color:var(--pr,#022360);display:grid;place-items:center;flex:none;}' +
-'[data-theme="dark"] .dc-ts-ic{color:var(--ac,#5b9cf6);}' +
-'.dc-ts-ic .dc-svg-icon{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}' +
-'.dc-ts-t{display:flex;flex-direction:column;gap:2px;min-width:0;}' +
-'.dc-ts-t b{font-size:14px;display:flex;align-items:center;gap:6px;}' +
-'.dc-ts-t span{font-size:12.5px;line-height:1.8;color:var(--txt2,#4a5f85);font-weight:400;white-space:normal;}' +
-'.dc-ts-lock{font-size:10px;font-weight:800;color:#a97412;border:1px solid #c9922b;border-radius:6px;padding:0 6px;}' +
-'[data-theme="dark"] .dc-ts-lock{color:#e3b849;border-color:#e3b849;}' +
 'body.dc-desktop-ui .dc-sd-panel{max-width:360px;}';
-
-  function dcSdTool(icon, title, sub, lock) {
-    return '<span class="dc-ts-ic">' + dcSvgIcon(icon) + '</span>' +
-           '<span class="dc-ts-t"><b>' + title + (lock ? ' <em class="dc-ts-lock" style="font-style:normal">پریمیوم</em>' : '') +
-           '</b><span>' + sub + '</span></span>';
-  }
-
-  var DC_TOOLS_SHEET_HTML =
-'<div id="dcToolsSheet" class="dc-ts-wrap" hidden>' +
-'  <div class="dc-ts-dim"></div>' +
-'  <div class="dc-ts" role="dialog" aria-modal="true" aria-label="ابزارها">' +
-'    <div class="dc-ts-grab" aria-hidden="true"></div>' +
-'    <div class="dc-ts-h"><b>ابزارها</b><button type="button" class="dc-sd-x dc-ts-x" aria-label="بستن">' + dcSvgIcon('x') + '</button></div>' +
-'    <div class="dc-ts-list" id="dcToolsList"></div>' +
-'  </div>' +
-'</div>';
 
   (function buildSideDrawer() {
     var drawer = document.getElementById('dcToolbarDrawer');
@@ -1430,7 +1394,6 @@
 '    <a class="dc-sd-it" href="/pillar/">' + dcSvgIcon('folder') + 'فهرست موضوعی</a>' +
 '    <a class="dc-sd-it" href="/glossary/">' + dcSvgIcon('book') + 'دانشنامه</a>' +
 '    <a class="dc-sd-it" href="/episodes.html">' + dcSvgIcon('headphones') + 'آرشیو اپیزودها</a>' +
-'    <button type="button" class="dc-sd-it" id="dcSdToolsBtn" aria-haspopup="dialog">' + dcSvgIcon('sliders') + 'ابزارها<span class="dc-sd-more" aria-hidden="true">‹</span></button>' +
 '    <div id="dcSdMine"></div>' +
 '    <div class="dc-sd-settings" id="dcSdSettings"></div>' +
 '  </div>' +
@@ -1442,34 +1405,17 @@
     [pwa, sub, theme, music, radar, cab].forEach(function (b) { if (b && b.parentNode) b.parentNode.removeChild(b); });
     drawer.innerHTML = panel;
 
+    /* «ابزارها»: the drawer's tools in one 3×2 grid (founder, 2026-11-15 —
+       «ابزارها همین پایین صفحه هستن»). Install goes last: an installed app
+       hides it, and the gap then falls at the very end of the grid. */
     var settings = byId('dcSdSettings');
-    if (theme) settings.appendChild(theme);
-    if (music) settings.appendChild(music);
-    if (pwa) settings.appendChild(pwa);
+    [theme, music, radar, cab].forEach(function (b) { if (b) settings.appendChild(b); });
     settings.insertAdjacentHTML('beforeend',
       '<a class="dc-drawer-tool-seg" href="/plus/support.html"><span class="dc-drawer-tool-ico">' + dcSvgIcon('lifebuoy') +
       '</span><span class="dc-drawer-tool-txt">پشتیبانی</span></a>');
+    if (pwa) settings.appendChild(pwa);
     /* «اشتراک» is drawn by the account row (dcSdRenderFoot), not here. */
     dcSdSubBtn = sub;
-
-    /* The tools sheet: a sibling of the drawer on <body>, so it can stay open
-       after the drawer has slid away. */
-    if (!byId('dcToolsSheet')) document.body.insertAdjacentHTML('beforeend', DC_TOOLS_SHEET_HTML);
-    var list = byId('dcToolsList');
-    if (radar) {
-      radar.className = 'dc-ts-row';
-      radar.innerHTML = dcSdTool('radar', 'رادار دنت‌کست', 'جستجو بین سایت‌ها و ابزارهای دندانپزشکی؛ جایگزین گوگل برای همین حوزه.');
-      list.appendChild(radar);
-    }
-    if (cab) {
-      cab.className = 'dc-ts-row';
-      cab.innerHTML = dcSdTool('article', 'کتابخانهٔ دنت‌کست', 'جستجو بین مقاله‌هایی که پشت اپیزودها خوانده شده‌اند.', true);
-      list.appendChild(cab);
-    }
-    list.insertAdjacentHTML('beforeend',
-      '<a class="dc-ts-row" href="/taraz/">' + dcSdTool('scale', 'تراز شواهد', 'سری آموزشی: یک مقالهٔ دندانپزشکی چقدر می‌ارزد و چطور بسنجیمش.') + '</a>' +
-      '<a class="dc-ts-row" href="/des-board/">' + dcSdTool('sliders', 'تابلوی DES', 'مطالب دنت‌کست، چیده‌شده بر اساس قدرت شواهدی که پشتشان است.', true) + '</a>' +
-      '<a class="dc-ts-row" href="/challenges/">' + dcSdTool('flag', 'چالش‌ها', 'پرسش‌های کلینیکی برای سنجیدن فهم خودت.') + '</a>');
 
     dcSdRenderMine();
     dcSdRenderFoot();
@@ -1565,21 +1511,6 @@
   function dcSdLock(on) {
     document.documentElement.classList.toggle('dc-sd-lock', !!on);
   }
-  function dcToolsSheet(open) {
-    var w = document.getElementById('dcToolsSheet');
-    if (!w) return;
-    if (open) {
-      w.hidden = false;
-      dcSdLock(true);
-      requestAnimationFrame(function () { w.classList.add('open'); });
-      var x = w.querySelector('.dc-ts-x');
-      if (x) x.focus({ preventScroll: true });
-    } else {
-      w.classList.remove('open');
-      dcSdLock(false);
-      setTimeout(function () { if (!w.classList.contains('open')) w.hidden = true; }, 220);
-    }
-  }
   /* The person button in the header owns login and the account menu. */
   function dcSdPerson() {
     var btns = document.querySelectorAll('.dcp-person-btn');
@@ -1592,11 +1523,9 @@
     var drawer = document.getElementById('dcToolbarDrawer');
     var sdOpen = drawer && drawer.classList.contains('dc-sd') && drawer.classList.contains('open');
     if (sdOpen && (t.id === 'dcSdDim' || t.closest('#dcSdClose'))) { toggleToolbarDrawer(); return; }
-    if (t.closest('#dcSdToolsBtn')) {
-      if (sdOpen) toggleToolbarDrawer();
-      dcToolsSheet(true);
-      return;
-    }
+    /* A tool that opens on top of this page (the radar overlay, the library's
+       premium gate) first closes the drawer so it is not left under it. */
+    if (sdOpen && t.closest('#btn-radar-topbar, #btn-cabinet')) toggleToolbarDrawer();
     if (t.closest('[data-dc-sd-login]') || t.closest('[data-dc-sd-account]')) {
       if (sdOpen) toggleToolbarDrawer();
       var p = dcSdPerson();
@@ -1604,18 +1533,9 @@
       else location.href = '/plus/';
       return;
     }
-    var ts = document.getElementById('dcToolsSheet');
-    if (ts && !ts.hidden) {
-      if (t.classList.contains('dc-ts-dim') || t.closest('.dc-ts-x')) { dcToolsSheet(false); return; }
-      /* A tool that opens on this page (the radar overlay, the library's premium
-       gate) closes the sheet so it is not left under it. */
-      if (t.closest('#btn-radar-topbar') || t.closest('#btn-cabinet')) dcToolsSheet(false);
-    }
   });
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
-    var ts = document.getElementById('dcToolsSheet');
-    if (ts && !ts.hidden) { dcToolsSheet(false); return; }
     var d = document.getElementById('dcToolbarDrawer');
     if (d && d.classList.contains('dc-sd') && d.classList.contains('open')) toggleToolbarDrawer();
   });
