@@ -566,7 +566,7 @@ export function rowText(contentId) {
 }
 
 // --- premium features (shared) -----------------------------------------------
-// The five LIVE premium features' title + short hint. One place to edit so the
+// The LIVE premium features' title + short hint. One place to edit so the
 // dashboard's own sections, the "you won a week of premium" banner, and the
 // league "stayed" teaser (league.js) never drift apart.
 export const PREMIUM_FEATURES = [
@@ -574,25 +574,24 @@ export const PREMIUM_FEATURES = [
   { title: 'مسیر یادگیری', hint: 'مسیرهای آماده، از پایه تا پیشرفته؛ فقط بخون.' },
   { title: 'کالکشن‌ها', hint: 'هایلایت‌ها و مقاله‌هاتو تو پوشه‌های دلخواهِ خودت بریز.' },
   { title: 'قطب‌نمای مطالعه', hint: 'وضعیت خواندن‌هایتان را نسبت به کل محتوای سایت و مسیرهای یادگیری می‌سنجد.' },
-  { title: 'دستیار هوشمند', hint: 'شرایط بیمار را شرح بده؛ با چند گزینه به نزدیک‌ترین مقاله می‌رسیم.' },
-  // Appended at the END on purpose: dashboard.js addresses entries 0..4 by
+  // Appended at the END on purpose: dashboard.js addresses entries 0..3 and 5 by
   // index and league.js shows slice(0, 3), so a new feature only ever goes
   // last. This one has no section of its own — it lives in the dashboard's
   // «هایلایت‌های اخیر» footer — but it belongs in every "what premium gives
   // you" list (the prize banner reads the whole array).
   { title: 'دفترچه‌ی هایلایت‌ها', hint: 'همه‌ی هایلایت‌هایت یکجا، با یادداشت‌ها و جستجو.' },
-  // Index 6 — «گزارش ماهانه» (/plus/report.html). Appended last for the same
+  // Index 5 — «گزارش ماهانه» (/plus/report.html). Appended last for the same
   // reason as the entry above.
   { title: 'گزارش ماهانه', hint: 'اول هر ماه: چی خوندی، کجای هر پیلار ایستادی، کدوم حوزه یک ماهه دست‌نخورده مونده.' },
-  // Index 7 — «هایلایت‌های صوتی» (the clip button under every episode player,
+  // Index 6 — «هایلایت‌های صوتی» (the clip button under every episode player,
   // played back from the دفترچه). Appended last, same reason as above.
   { title: 'هایلایت‌های صوتی', hint: 'مثل هایلایت متن، ولی روی پادکست: تکه‌ای که به کارت اومد رو نگه دار، بعداً از دفترچه پخشش کن.' },
-  // Index 8 — «مسیرِ منظم تا گواهی‌نامه» (founder, 1405/06/29; renamed
+  // Index 7 — «مسیرِ منظم تا گواهی‌نامه» (founder, 1405/06/29; renamed
   // 1405/07/03). Appended last for the same reason as the two above. It was
   // «گواهی‌نامهٔ تکمیل مسیر» while EARNING one was premium; since the exam
   // opens to whoever finished a pathway with their own reading, what premium
   // buys is the road — the order, the progress, which step is left — so the
   // title names that. It has no dashboard section of its own (the wall lives in
-  // the profile, under «افتخارات»), which is the same shape index 5 has.
+  // the profile, under «افتخارات»), which is the same shape index 4 has.
   { title: 'مسیرِ منظم تا گواهی‌نامه', hint: 'مسیر را به ترتیب درست بخوان، ببین کدام قدم مانده، و در پایان آزمون بده؛ گواهی به نام خودت با کد یکتا.' },
 ];

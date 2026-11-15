@@ -1,20 +1,20 @@
 // Reusable dashboard renderer. Used by the /plus/ page AND the header overlay, so
 // the dashboard opens the same way from anywhere. Site design language (light),
 // not a separate dark theme (prototype-feedback override).
-import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=237';
-import { api } from './api.js?v=237';
-import { flushPendingReads } from './reading.js?v=237';
-import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=237';
-import { leagueEntryButton } from './league.js?v=237';
-import { openCollectionPicker, boardCover } from './collections.js?v=237';
-import { bundleRailCard, intentRow } from './pathways.js?v=237';
-import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=237';
-import { currentMonthKey } from './jalali-month.js?v=237';
-import { renewalBanner } from './renewal-banner.js?v=237';
-import { openPathways } from './pathway-showcase.js?v=237';
-import { premiumCta } from './premium-cta.js?v=237';
-import { maybeCelebrate } from './achievements.js?v=237';
-import { markReturnTrail } from './return-trail.js?v=237';
+import { el, faNum, sectionIcon, streakIsActiveToday } from './util.js?v=238';
+import { api } from './api.js?v=238';
+import { flushPendingReads } from './reading.js?v=238';
+import { getModel, contentInfo, FOLDER_EN } from './content-index.js?v=238';
+import { leagueEntryButton } from './league.js?v=238';
+import { openCollectionPicker, boardCover } from './collections.js?v=238';
+import { bundleRailCard, intentRow } from './pathways.js?v=238';
+import { LABELS, PALETTE, PREMIUM_FEATURES, PROGRESS_EXCLUDE } from './config.js?v=238';
+import { currentMonthKey } from './jalali-month.js?v=238';
+import { renewalBanner } from './renewal-banner.js?v=238';
+import { openPathways } from './pathway-showcase.js?v=238';
+import { premiumCta } from './premium-cta.js?v=238';
+import { maybeCelebrate } from './achievements.js?v=238';
+import { markReturnTrail } from './return-trail.js?v=238';
 
 const returnToDashboard = () => markReturnTrail({
   url: '/plus/', eyebrow: 'پیشخوان', title: 'پیشخوان', iconId: 'icon-monitor',
@@ -514,12 +514,6 @@ async function reportBlock() {
   ].filter(Boolean));
 }
 
-// Premium «دستیار هوشمند» entry point. The wizard itself is multi-step, so the
-// dashboard only carries a CTA into its own page — see case-assistant.js.
-function assistantBlock() {
-  return el('a', { class: 'dcp-btn dcp-btn-primary', href: '/plus/assistant.html' }, 'شروع دستیار');
-}
-
 export async function renderDashboard(root, { me: preMe } = {}) {
   root.replaceChildren(el('div', { class: 'dcp-loading' }, 'در حال بارگذاری...'));
   // Always fetch fresh when the dashboard opens: /me and /progress are never
@@ -573,7 +567,7 @@ export async function renderDashboard(root, { me: preMe } = {}) {
   // difference in cost) visitor should see proof the site/their account is
   // alive — streak, what they're reading, real progress — before a wall of
   // locked premium teasers. With five live premium sections now (review due,
-  // pathway, collections, compass, assistant), stacking all of them above
+  // pathway, collections, compass, report), stacking all of them above
   // this reads as "the site is broken" for a free user (founder feedback,
   // 2026-07-31). One shared order for both plans, deliberately — it costs
   // nothing for premium (their content further down is still live) and keeps
@@ -629,16 +623,10 @@ export async function renderDashboard(root, { me: preMe } = {}) {
     'نه حدسِ سلیقه، بلکه آمارِ واقعیِ خواندن‌ها: چند درصد از هر پیلار را پوشش داده‌اید و بیشترین مطالعه‌تان کجا بوده. بر همین اساس دو دسته پیشنهاد می‌دهد: مطالبِ نخوانده‌ی همان حیطه برای ادامه، و حوزه‌هایی که هنوز اصلاً سراغشان نرفته‌اید برای کاوش.',
   ));
   children.push(section(
-    PREMIUM_FEATURES[6].title,
-    PREMIUM_FEATURES[6].hint,
+    PREMIUM_FEATURES[5].title,
+    PREMIUM_FEATURES[5].hint,
     isPremium ? reportWrap : lockedFeatureCard('/plus/report.html', 'dash-report'),
     'اول هر ماه یک گزارش شخصی می‌گیرید: چند مقاله و اپیزود، پوشش هر پیلار قبل و بعد، کدام حوزه یک ماه است دست‌نخورده مانده، مسیرها، لیگ و نشان‌ها — از همان رویدادهایی که امتیاز می‌گیرند، نه از زمانِ خواندن.',
-  ));
-  children.push(section(
-    PREMIUM_FEATURES[4].title,
-    PREMIUM_FEATURES[4].hint,
-    isPremium ? assistantBlock() : lockedFeatureCard('/plus/assistant.html', 'dash-assistant'),
-    'فقط از بین چند گزینه انتخاب می‌کنی — نه گفتگوی آزاد. هوش مصنوعی هیچ تشخیص یا توصیه‌ی درمانی نمی‌دهد؛ فقط توضیحِ تو را به دسته‌بندی‌های خودِ سایت نگاشت می‌کند تا به مقاله‌ی مرتبط برسیم.',
   ));
 
   // Support is NOT a premium feature block — it is a door, and the reader most
