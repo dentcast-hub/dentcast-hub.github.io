@@ -1,0 +1,191 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "insight",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "ساخت روکش موقت قدامی وقتی فرم قبلی دندان در دست نیست",
+  "from": "02-عنوان-کپشن.md:2"
+ },
+ "caption_fa": {
+  "value": "وقتی از فرم قبلی دندان قدامی چیزی در دست نیست، می‌توان با یک شل پیش‌ساخته و قالب پوتی فرم بیرونی را ساخت و روکش موقت کامپوزیتی را همان جلسه تحویل داد.",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "title_en": {
+  "value": "Making an Anterior Provisional Crown When the Tooth's Previous Form Is Not Available",
+  "from": "06-انگلیسی.md:2"
+ },
+ "caption_en": {
+  "value": "When nothing of the anterior tooth's previous form is available, a prefabricated shell and a putty impression can be used to build the outer form, and a composite provisional crown can be delivered in the same visit.",
+  "from": "06-انگلیسی.md:5"
+ },
+ "body_en": {
+  "value": "The patient came in with an empty maxillary central incisor space and, after the post and core was bonded, wanted a provisional crown in the same visit. Nothing of the tooth's previous form or of the patient's crown was available to take an impression from, and sending the work to the lab would have meant a gap of a day or two, which was not acceptable to the patient in the anterior region.\n\nThe provisional material I use in the office is composite-based. I had also had a number of prefabricated shells for years, but since switching to composite provisional material I had stopped using them, because the two do not bond well to each other. In this patient I did not use the shell as the provisional crown itself; I only used it to help build the outer form.\n\nI took a central shell from the box and adjusted it on the tooth and the post and core so that its height and margin were roughly similar to those of the adjacent teeth. Then I placed temporary dressing material inside the shell and pressed it onto the tooth so that it would stay in place. I took a putty impression of the whole assembly, and in this way the outer form of the provisional crown was ready.\n\n[[تصویر:01]]\n\nFor the inner form, I removed the shell and the dressing and cleaned the tooth. I placed the composite provisional material in the putty impression and seated the impression on the tooth so that the inner surface of the crown would conform to the tooth structure. Finally, I removed the excess, adjusted the crown and delivered it to the patient in the same visit.\n\n[[تصویر:02]]",
+  "from": "06-انگلیسی.md:8-20"
+ },
+ "images": {
+  "value": [
+   {
+    "n": "01",
+    "file": {
+     "value": "03-تصاویر/01-prefabricated-crown-shells-box.webp",
+     "from": "03-تصاویر/تصاویر.md:10"
+    },
+    "alt_fa": {
+     "value": "جعبه‌ی شل‌های پیش‌ساخته",
+     "from": "03-تصاویر/تصاویر.md:12"
+    },
+    "alt_en": {
+     "value": "Box of prefabricated crown shells",
+     "from": "03-تصاویر/تصاویر.md:13"
+    },
+    "caption_fa": {
+     "value": "",
+     "from": "03-تصاویر/تصاویر.md:14"
+    },
+    "caption_en": {
+     "value": "",
+     "from": "03-تصاویر/تصاویر.md:14 (no caption)"
+    }
+   },
+   {
+    "n": "02",
+    "file": {
+     "value": "03-تصاویر/02-anterior-provisional-crown-on-tooth.webp",
+     "from": "03-تصاویر/تصاویر.md:19"
+    },
+    "alt_fa": {
+     "value": "روکش موقت روی دندان قدامی فک بالا",
+     "from": "03-تصاویر/تصاویر.md:21"
+    },
+    "alt_en": {
+     "value": "Provisional crown on a maxillary anterior tooth",
+     "from": "03-تصاویر/تصاویر.md:22"
+    },
+    "caption_fa": {
+     "value": "",
+     "from": "03-تصاویر/تصاویر.md:23"
+    },
+    "caption_en": {
+     "value": "",
+     "from": "03-تصاویر/تصاویر.md:23 (no caption)"
+    }
+   }
+  ],
+  "from": "03-تصاویر/تصاویر.md"
+ },
+ "credit": {
+  "value": {
+   "mode": "none"
+  },
+  "from": "04-منبع/منابع.md:1"
+ },
+ "catalog": {
+  "value": [],
+  "from": "04-منبع/منابع.md: no paper"
+ },
+ "hashtags": {
+  "value": [
+   "#نکته_کلینیکی",
+   "#ساخت_روکش_موقت",
+   "#روکش_موقت",
+   "#دندان_قدامی"
+  ],
+  "from": "07-ورودی‌ها.md:14"
+ },
+ "mint": {
+  "value": [
+   "#ساخت_روکش_موقت"
+  ],
+  "from": "hashtag-batch.json:7"
+ },
+ "bridge": {
+  "value": {
+   "map": {
+    "ساخت روکش موقت": [
+     "provisional-restoration"
+    ]
+   }
+  },
+  "from": "07-ورودی‌ها.md:21"
+ },
+ "pillar": {
+  "value": {
+   "primary": "fixed-pros",
+   "subtopic": "crowns-onlays",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:11"
+ },
+ "pulse": {
+  "value": {
+   "html": "یک اینسایت بالینی با عنوانِ «<a href=\"{url}\">ساخت روکش موقت قدامی وقتی فرم قبلی دندان در دست نیست</a>» منتشر شد",
+   "link_phrase": "ساخت روکش موقت قدامی وقتی فرم قبلی دندان در دست نیست"
+  },
+  "from": "07-ورودی‌ها.md:25"
+ },
+ "keywords": {
+  "value": [
+   "شل پیش‌ساخته",
+   "قالب پوتی",
+   "ماده‌ی موقت کامپوزیتی",
+   "فرم بیرونی",
+   "فرم درونی",
+   "پست و کور",
+   "پانسمان موقت",
+   "سانترال فک بالا"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "پست و کور",
+    "href": "/glossary/post-and-core.html",
+    "from": "11-لینک‌های-گلاسری.md:12"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:8"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "/dentcast-plus/video-8.html",
+    "label": "نکته‌های ساخت روکش موقت",
+    "from": "11-لینک‌های-گلاسری.md:25"
+   },
+   {
+    "href": "/insight/insight-81.html",
+    "label": "روکش قدیمی بیمار به‌عنوان روکش موقت",
+    "from": "11-لینک‌های-گلاسری.md:26"
+   },
+   {
+    "href": "/insight/insight-88.html",
+    "label": "اسکن روکش موقت روی پست‌های سمان‌نشده",
+    "from": "11-لینک‌های-گلاسری.md:27"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:21"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ },
+ "mint_batch": {
+  "value": "hashtag-batch.json",
+  "from": "07-ورودی‌ها.md:20"
+ }
+}
