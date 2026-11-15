@@ -32,6 +32,7 @@
    ============================================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
+  if (!window.matchMedia("(max-width:1023px)").matches) { dcLegacySearch(); return; }
 
   /* ------------ DOM ------------- */
   const globalBox   = document.getElementById("dcGlobalBox");
@@ -678,6 +679,305 @@ document.addEventListener("DOMContentLoaded", () => {
     (document.head || document.documentElement).appendChild(st);
   }
 });
+
+/* ============================================================
+   DESKTOP (≥1024px): the previous engine, byte-for-byte in behaviour —
+   scope chips, plain result lines, sponsor above the results. The founder
+   asked that the desktop stay exactly as it was (2026-11-15); the v6 UI
+   below runs only at the site's mobile width (max-width:1023px, the same
+   test index.html's isMob() uses to decide the desktop shell).
+   ============================================================ */
+
+function dcLegacySearch() {
+
+  /* ------------ DOM ------------- */
+  const searchInput = document.getElementById("dcSearch");
+  const resultsBox  = document.getElementById("dcResults");
+  const filterBtns  = document.querySelectorAll(".dc-filter-btn");
+
+  /* ------------ DB --------------- */
+  let DB = [];
+
+  /* Matching only, never display: Arabic ي/ى/ك typed on an Arabic keyboard
+     and ZWNJ/zero-width marks would otherwise miss the Persian spelling
+     («كراون» found nothing where «کراون» found 13). Same fold as
+     plus/js/hl-view.js foldFa. */
+  const foldFa = (s) => String(s || "")
+    .replace(/[يى]/g, "ی")
+    .replace(/ك/g, "ک")
+    .replace(/[\u200B-\u200F\u064B-\u0652\u0640]/g, "")
+    .replace(/\s+/g, " ")
+    .toLowerCase()
+    .trim();
+  const faDigits = (s) => String(s).replace(/[0-9]/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+  const escHtml = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  /* ------------ فیلترهای فعال -------------- */
+ let activeFilters = new Set([
+  "dentcast",
+  "notecast",
+  "clinical",
+  "dentcast_plus",
+  "promptologist",
+  "plak_sefr",
+  "taraz",
+  "meta",
+  "chairside",
+  "sharehub"
+]);
+
+
+  /* ------------ مپ نوع‌ها --------------- */
+/* A brain `type` → the filter GROUP it answers to. Two types answer to a
+   group that is not their own name, since 1405/07/15 (founder decision):
+   DentAI and PhotoCast are closed sections — their 35 + 3 pages keep their
+   URLs and their `type`, but on every reader surface they are Share Hub («مرور منابع») now. Folding them here (rather than deleting the chip from the
+   983 pages that carry it) keeps every article byte-identical; the chip
+   itself is removed at runtime below. */
+const TYPE_MAP = {
+  notecast:       "notecast",
+  clinical:       "clinical",
+  dentcast_plus:  "dentcast_plus",
+  dentai:         "sharehub",
+  photocast:      "sharehub",
+  promptologist:  "promptologist",
+  plak_sefr:      "plak_sefr",
+  taraz:          "taraz",
+  meta:           "meta",
+  chairside:      "chairside",
+  sharehub:       "sharehub"
+};
+
+
+  /* ------------ لود دیتابیس ---------------- */
+  async function loadDB() {
+    try {
+      const res = await fetch("/dentcast-brain.json", { cache: "no-store" });
+      if (!res.ok) throw new Error("Search index HTTP " + res.status);
+      const data = await res.json();
+      if (!Array.isArray(data)) throw new Error("Invalid search index");
+      DB = data;
+      /* اگه کاربر قبل از لود دیتابیس سرچ کرده بود (مثلاً از URL) */
+      if (searchInput.value.trim()) {
+        performSearch(searchInput.value.trim());
+      } else {
+        /* DB خیلی سریع لود شد (مثلاً Chrome) — صبر کن شاید openS هنوز نرسیده */
+        setTimeout(() => {
+          if (searchInput.value.trim()) performSearch(searchInput.value.trim());
+        }, 150);
+      }
+    } catch (err) {
+      console.error("Error loading dentcast-brain.json", err);
+      resultsBox.style.display = "block";
+      resultsBox.textContent = "بارگذاری اطلاعات جست‌وجو ناموفق بود. صفحه را دوباره بارگذاری کنید.";
+    }
+  }
+
+  /* ------------ مدیریت فیلترها -------------- */
+  /* The «مقالات» (dentai) chip is still in the static markup of every page
+     built before the fold; its group no longer exists, so it goes. The
+     template in tools/build_pillar.py no longer emits it. */
+  filterBtns.forEach(btn => { if (btn.dataset.type === "dentai") btn.remove(); });
+  /* Section rename (founder, 1405/08/17): Share Hub reads «مرور منابع» and
+     Chairside «ویزیت», NoteCast «خلاصهٔ اپیزودها» and MetaNote «ایده‌ها»
+     on every reader surface. The chip label sits in the static markup of every page, so
+     it is renamed here at runtime for the same reason the DentAI chip is
+     removed above — every article stays byte-identical. */
+  filterBtns.forEach(btn => { if (btn.dataset.type === "sharehub") btn.textContent = "مرور منابع";
+    if (btn.dataset.type === "chairside") btn.textContent = "ویزیت";
+    if (btn.dataset.type === "notecast") btn.textContent = "خلاصهٔ اپیزودها";
+    if (btn.dataset.type === "meta") btn.textContent = "ایده‌ها";
+    if (btn.dataset.type === "litecast") btn.textContent = "پرسش‌های بیماران"; });
+  filterBtns.forEach(btn => {
+    if (!btn.isConnected) return;
+    btn.addEventListener("click", () => {
+      const key = btn.dataset.type;
+
+      if (btn.classList.contains("active")) {
+        btn.classList.remove("active");
+        activeFilters.delete(key);
+      } else {
+        btn.classList.add("active");
+        activeFilters.add(key);
+      }
+
+      performSearch(searchInput.value.trim());
+    });
+  });
+
+  /* ------------ سرچ زنده ----------------- */
+  searchInput.addEventListener("input", () => {
+    performSearch(searchInput.value.trim());
+  });
+
+  /* Results are role=button: Enter/Space open them like a click does. */
+  resultsBox.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const item = e.target.closest && e.target.closest(".dc-result-item[role='button']");
+    if (!item) return;
+    e.preventDefault();
+    item.click();
+  });
+
+  /* /search.html?q=… arrives with the query already typed; loadDB() runs it. */
+  if (/\/search(\.html)?$/.test(location.pathname)) {
+    const qp = new URLSearchParams(location.search).get("q");
+    if (qp && !searchInput.value) searchInput.value = qp;
+  }
+
+  /* ------------ Enter key --------------- */
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") performSearch(searchInput.value.trim());
+  });
+
+  /* ------------ تشخیص گروه ---------------- */
+  function detectGroup(item) {
+    if (item.episode && !item.type) return "dentcast";
+    if (item.type && TYPE_MAP[item.type]) return TYPE_MAP[item.type];
+    return null;
+  }
+
+  /* ------------ ساخت یک آیتم HTML ---------- */
+  function buildItem(item) {
+  const group = item._group;
+  const title = item.title || "";
+
+ const _ic = (p) => '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block">' + p + '</svg>';
+ const _iMic  = _ic('<path d="M12 14a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v4a4 4 0 0 0 4 4z"/><path d="M19 10a7 7 0 0 1-14 0"/><path d="M12 17v4"/><path d="M8 21h8"/>');
+ const _iNote = _ic('<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/>');
+ const _iBulb = _ic('<path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.8.8 1 1.5 1 2.3h6c0-.8.2-1.5 1-2.3A7 7 0 0 0 12 2z"/>');
+ const _iPlay = _ic('<circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/>');
+ const _iBook = _ic('<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/>');
+ const _iPuzz = _ic('<path d="M8 3h4v4h3a2 2 0 1 1 0 4h-3v3h3a2 2 0 1 1 0 4h-3v3H8v-3H5a2 2 0 1 1 0-4h3v-3H5a2 2 0 1 1 0-4h3z"/>');
+ const _iToot = _ic('<path d="M8.5 3.5c1.2 0 2 .6 3.5.6s2.3-.6 3.5-.6c2 0 3.5 1.6 3.5 4 0 2.8-1.5 4.4-2.2 7.4-.7 3-1.4 5.6-3 5.6-1.2 0-1.1-3.5-1.8-3.5s-.6 3.5-1.8 3.5c-1.6 0-2.3-2.6-3-5.6C6.5 11.9 5 10.3 5 7.5c0-2.4 1.5-4 3.5-4z"/>');
+ const _iLink = _ic('<path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1"/>');
+ const _iSpark = _ic('<path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/>');
+ const _iPin = _ic('<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/>');
+ const _iScale = _ic('<path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>');
+ /* «بخش — عنوان», unless the title already opens with the section's own name:
+    every پرامپتولوژیست, پلاک صفر and تراز شواهد title is written «سری — قسمت»,
+    and prefixing it again printed «پرامپتولوژیست — پرامپتولوژیست — …». */
+ const named = (name) => title.trim().startsWith(name) ? " " + title.trim() : " " + name + " — " + title;
+ const labelMap = {
+  dentcast:      _iMic  + " دنت‌کست — اپیزود " + faDigits(item.episode) + (title.trim() ? " · " + title.trim() : ""),
+  notecast:      _iNote + named("خلاصهٔ اپیزود"),
+  clinical:      _iBulb + named("نکتهٔ کلینیکی"),
+  dentcast_plus: _iPlay + named("ویدیو"),
+  promptologist: _iSpark + named("پرامپتولوژیست"),
+  plak_sefr:     _iPin   + named("پلاک صفر"),
+  taraz:         _iScale + named("تراز شواهد"),
+  meta:          _iPuzz + named("ایده"),
+  chairside:     _iToot + named("ویزیت"),
+  sharehub:      _iLink + named("مرور منابع")
+};
+
+
+  let url = item.page_url || item.url || "";
+  if (!url && group === "dentcast" && item.episode) {
+    const slug = String(item.episode).replace(".", "-");
+    url = `/episodes/episode-${slug}.html`;
+  }
+  if (!url.startsWith("http")) url = location.origin + url;
+
+  /* On the desktop shell, open content in col-C via dcdOpen (which also dismisses
+     the search overlay); on mobile navigate directly. Keyed off the actual UI
+     mode (body.dc-desktop-ui) instead of a raw px threshold so every desktop
+     width routes through dcdOpen, not just ≥1024px. */
+  const escapedTitle = title.replace(/'/g, "\\'");
+  const clickHandler = `(document.body.classList.contains('dc-desktop-ui')&&window.dcdOpen ? window.dcdOpen('${url}','${escapedTitle}') : (window.location.href='${url}'))`;
+
+  return `
+    <div class="dc-result-item"
+         role="button"
+         tabindex="0"
+         onclick="${clickHandler}">
+      ${labelMap[group] || title}
+    </div>
+  `;
+}
+
+
+  /* ------------ الگوریتم اصلی سرچ ------------ */
+  function performSearch(q) {
+
+    if (q.length < 2) {
+      resultsBox.style.display = "none";
+      resultsBox.innerHTML = "";
+      return;
+    }
+
+    const query = foldFa(q);
+    let results = [];
+
+    for (const item of DB) {
+      const group = detectGroup(item);
+      if (!group) continue;
+
+      item._group = group;
+
+      if (!activeFilters.has(group)) continue;
+
+      const blob = (
+        (item.title || "") + " " +
+        (item.caption || "") + " " +
+        (item.keywords || []).join(" ") + " " +
+        (item.hashtags || []).join(" ")
+      );
+
+      if (foldFa(blob).includes(query)) results.push(item);
+    }
+
+    if (!results.length) {
+      resultsBox.style.display = "block";
+      resultsBox.innerHTML = `
+      <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+      <div class="dc-result-item dc-no-results" role="status">نتیجه‌ای برای «${escHtml(q)}» پیدا نشد.</div>
+    `;
+      resultsBox.querySelector(".dc-close-results").onclick = () => {
+        resultsBox.style.display = "none";
+        resultsBox.innerHTML = "";
+      };
+      return;
+    }
+
+
+    /* --- نمایش ۳۰ تای اول --- */
+    const more = results.length > 30;
+    const visible = results.slice(0, 30);
+
+    resultsBox.style.display = "block";
+    resultsBox.innerHTML = `
+      <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+      ${visible.map(buildItem).join("")}
+      ${more ? `<div class="dc-more-btn">مشاهده ادامه نتایج… (${results.length})</div>` : ""}
+    `;
+
+    /* ------------ بستن نتایج ------------- */
+    resultsBox.querySelector(".dc-close-results").onclick = () => {
+      resultsBox.style.display = "none";
+      resultsBox.innerHTML = "";
+    };
+
+    /* ------------ دکمه ادامه نتایج ----------- */
+    const moreBtn = resultsBox.querySelector(".dc-more-btn");
+    if (moreBtn) {
+      moreBtn.onclick = () => {
+        resultsBox.innerHTML =
+          `<button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>` +
+          results.map(buildItem).join("");
+
+        resultsBox.querySelector(".dc-close-results").onclick = () => {
+          resultsBox.style.display = "none";
+          resultsBox.innerHTML = "";
+        };
+      };
+    }
+  }
+
+  /* ------------ اجرای سیستم ---------------- */
+  loadDB();
+
+}
 
 /* ============================================================
    BOTTOM-SHEET KEYBOARD HANDLING — visualViewport (Issue 2)

@@ -1398,6 +1398,10 @@
   (function buildSideDrawer() {
     var drawer = document.getElementById('dcToolbarDrawer');
     if (!drawer || drawer.classList.contains('dc-sd')) return;
+    /* Phones and tablets only. At the desktop width (≥1024px, index.html's
+       isMob() test) the drawer stays exactly what it was — founder,
+       2026-11-15: «به دسکتاپ دست نزن». */
+    if (!window.matchMedia('(max-width:1023px)').matches) return;
     if (!document.getElementById('dc-sd-style')) {
       var sst = document.createElement('style');
       sst.id = 'dc-sd-style';
