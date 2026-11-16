@@ -25,15 +25,19 @@
    file leaves an empty .dc-gs-spot-anchor there on every render and
    announces it with the `dc:search-rendered` event.
 
-   Papers from the library («کتابخانهٔ دنت‌کست») — premium only (founder,
-   1405/08/26). The library is a premium surface, so its rows join the
-   results only after /me confirms a premium reader; nobody else ever
-   fetches plus/cabinet-search.json, and nothing here sells the library
-   (no lock, no teaser). A Persian query reaches the English papers through
-   the site hashtags it names (`fa`, built by tools/build_cabinet_papers.py
-   with the assistant's own ranking); an English one through the paper's
-   title, tags, journal and authors. A paper opens the cabinet page on its
-   title. Papers come after site content in «همه».
+   Papers from the library («کتابخانهٔ دنت‌کست») — a PREMIUM button
+   (founder, 1405/08/26). Next to the filter button sits «مقاله‌ها»: amber
+   with a lock for anyone not confirmed premium (the button itself is the
+   showcase); a tap asks /me — premium toggles the papers on/off (off by
+   default, remembered per device), anyone else gets the library's own gate
+   card, and an unreachable /me does nothing (never an offer). Only a
+   premium reader with the button ON fetches plus/cabinet-search.json. With
+   it off, a premium reader sees one quiet row under the results that turns
+   it on. A Persian query reaches the English papers through the site
+   hashtags it names (`fa`, built by tools/build_cabinet_papers.py); an
+   English one through the paper's title, tags, journal and authors. A
+   paper opens the cabinet page on its title. Papers come after site
+   content in «همه».
 
    Deliberately NOT here: a DES filter. Bands are comparable only
    inside one question_type and are never shown apart from it
@@ -134,6 +138,14 @@ document.addEventListener("DOMContentLoaded", () => {
   fbtn.setAttribute("aria-label", "فیلتر");
   fbtn.innerHTML = svg('<path d="M3 5h18"/><path d="M6 12h12"/><path d="M10 19h4"/>') + '<em class="dc-gs-fcount" hidden></em>';
   row.appendChild(fbtn);
+  const pbtn = document.createElement("button");
+  pbtn.type = "button";
+  pbtn.className = "dc-gs-pbtn";
+  pbtn.setAttribute("aria-pressed", "false");
+  pbtn.innerHTML = svg('<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/>') +
+    "<span>مقاله‌ها</span>" + '<em class="dc-gs-plock" aria-hidden="true">🔒</em>';
+  pbtn.title = "جستجو در مقاله‌های کتابخانه (پریمیوم)";
+  row.appendChild(pbtn);
 
   const tabs = document.createElement("div");
   tabs.className = "dc-gs-tabs";
@@ -270,14 +282,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }, "glossary"));
       });
       DB = out;
-      /* Premium only: the library's papers join the index once /me says so. */
-      dcPaperLibrary().then((data) => {
-        if (!data) return;
-        const lib = dcPaperRows(data, foldFa);
-        LIB_FA = lib.fa;
-        DB = DB.concat(lib.items);
-        if (searchInput.value.trim()) performSearch(searchInput.value.trim());
-      });
       /* اگه کاربر قبل از لود دیتابیس سرچ کرده بود (مثلاً از URL) */
       if (searchInput.value.trim()) {
         performSearch(searchInput.value.trim());
@@ -294,8 +298,66 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /* ------------ the pipeline ------------ */
+  /* ------------ the library's papers (premium button) ------------ */
   let LIB_FA = [];
+  let papersOn = false;     // the button is ON and the papers are loaded
+  let libLoaded = false;
+  let isPremium = dcPremiumHint() ? null : false;   // null = hint says premium, not yet confirmed
+  function paintPbtn() {
+    pbtn.classList.toggle("on", papersOn);
+    pbtn.setAttribute("aria-pressed", String(papersOn));
+    pbtn.querySelector(".dc-gs-plock").hidden = isPremium !== false;
+  }
+  paintPbtn();
+  function papersOnNow() {
+    return dcPaperLibrary().then((data) => {
+      if (!data) return;
+      if (!libLoaded) {
+        const lib = dcPaperRows(data, foldFa);
+        LIB_FA = lib.fa;
+        DB = DB.concat(lib.items);
+        libLoaded = true;
+      }
+      papersOn = true;
+      dcPapersSetWanted(true);
+      paintPbtn();
+      performSearch(searchInput.value.trim());
+    });
+  }
+  function papersOff() {
+    papersOn = false;
+    dcPapersSetWanted(false);
+    if (state.tab === "library") state.tab = "all";
+    paintPbtn();
+    performSearch(searchInput.value.trim());
+  }
+  let meAsked = null;
+  function askMe() {
+    if (!meAsked) {
+      meAsked = dcMe().then((r) => {
+        if (r.status !== "error") isPremium = !!(r.u && r.u.tier === "premium");
+        paintPbtn();
+        if (isPremium && dcPapersWanted() && !papersOn) papersOnNow();
+        else if (isPremium && searchInput.value.trim()) performSearch(searchInput.value.trim());   // the hint row
+        return r;
+      });
+    }
+    return meAsked;
+  }
+  function tapPapers() {
+    if (papersOn) { papersOff(); return; }
+    dcMe().then((r) => {
+      if (r.u && r.u.tier === "premium") { isPremium = true; papersOnNow(); return; }
+      if (r.status === "error") return;          // could not ask: never an offer
+      isPremium = false;
+      paintPbtn();
+      dcPaperGate();
+    });
+  }
+  pbtn.addEventListener("click", tapPapers);
+  if (dcPapersWanted()) askMe();
+
+  /* ------------ the pipeline ------------ */
   function score(item, q) {
     let s = 0;
     if (item._t.includes(q)) s += item._t.startsWith(q) ? 4 : 3;
@@ -313,6 +375,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const fa = dcPaperHits(LIB_FA, q);
     for (const item of DB) {
+      if (item._pid && !papersOn) continue;
       const sc = score(item, q) + (item._pid ? fa.get(item._pid) || 0 : 0);
       if (!sc) continue;
       if (state.pillars.size && !state.pillars.has(item._p)) continue;
@@ -425,6 +488,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    askMe();
     const query = foldFa(q);
     const base = baseMatches(query);
     const counts = {};
@@ -438,9 +502,12 @@ document.addEventListener("DOMContentLoaded", () => {
     meta.querySelector(".dc-gs-count").textContent = faDigits(results.length) + " نتیجه";
 
     resultsBox.style.display = "block";
+    /* A premium reader with the button off: one quiet way to turn it on. */
+    const hint = isPremium === true && !papersOn
+      ? '<div class="dc-result-item dc-gs-phint" role="button" tabindex="0">جستجو در مقاله‌های کتابخانه ›</div>' : "";
     if (!results.length) {
       resultsBox.innerHTML = CLOSE_BTN +
-        '<div class="dc-result-item dc-no-results" role="status">نتیجه‌ای برای «' + escHtml(q) + "» پیدا نشد.</div>";
+        '<div class="dc-result-item dc-no-results" role="status">نتیجه‌ای برای «' + escHtml(q) + "» پیدا نشد.</div>" + hint;
       announce();
       return;
     }
@@ -448,7 +515,7 @@ document.addEventListener("DOMContentLoaded", () => {
     /* --- نمایش ۳۰ تای اول --- */
     const more = results.length > 30;
     resultsBox.innerHTML = CLOSE_BTN + listHtml(results.slice(0, 30), q) +
-      (more ? '<div class="dc-more-btn" role="button" tabindex="0">مشاهده ادامه نتایج… (' + faDigits(results.length) + ")</div>" : "");
+      (more ? '<div class="dc-more-btn" role="button" tabindex="0">مشاهده ادامه نتایج… (' + faDigits(results.length) + ")</div>" : "") + hint;
     announce();
   }
 
@@ -493,6 +560,7 @@ document.addEventListener("DOMContentLoaded", () => {
       announce();
       return;
     }
+    if (t.closest(".dc-gs-phint")) { papersOnNow(); return; }
     const item = t.closest(".dc-gs-res");
     if (item) openResult(item);
   });
@@ -502,6 +570,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const t = e.target;
     if (!t || !t.closest) return;
     if (t.closest(".dc-more-btn")) { e.preventDefault(); t.closest(".dc-more-btn").click(); return; }
+    if (t.closest(".dc-gs-phint")) { e.preventDefault(); papersOnNow(); return; }
     const item = t.closest(".dc-gs-res");
     if (!item) return;
     e.preventDefault();
@@ -642,6 +711,15 @@ document.addEventListener("DOMContentLoaded", () => {
       "#dcGlobalBox .dc-gs-fbtn{position:relative;flex:none;width:44px;height:44px;border-radius:12px;border:1px solid var(--border,rgba(2,35,96,.12));background:var(--card-bg,#fff);color:var(--pr,#022360);display:grid;place-items:center;cursor:pointer;padding:0;}",
       "#dcGlobalBox .dc-gs-fbtn .dc-svg-icon{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;}",
       "#dcGlobalBox .dc-gs-fbtn.on{border-color:var(--ac,#0b5fff);color:var(--ac,#0b5fff);}",
+      /* «مقاله‌ها»: amber, the colour of what a subscription buys. */
+      "#dcGlobalBox .dc-gs-pbtn{flex:none;height:44px;display:inline-flex;align-items:center;gap:5px;padding:0 11px;border-radius:12px;border:1px solid rgba(201,146,43,.55);background:rgba(201,146,43,.08);color:#8a6414;font:inherit;font-size:13px;font-weight:600;cursor:pointer;}",
+      "#dcGlobalBox .dc-gs-pbtn .dc-svg-icon{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;}",
+      "#dcGlobalBox .dc-gs-pbtn em{font-style:normal;font-size:11px;}",
+      "#dcGlobalBox .dc-gs-pbtn.on{background:#c9922b;border-color:#c9922b;color:#fff;}",
+      "[data-theme=\"dark\"] #dcGlobalBox .dc-gs-pbtn{color:#e3b849;border-color:rgba(227,184,73,.5);background:rgba(227,184,73,.08);}",
+      "[data-theme=\"dark\"] #dcGlobalBox .dc-gs-pbtn.on{background:#e3b849;border-color:#e3b849;color:#1b1406;}",
+      "#dcGlobalBox .dc-gs-phint{color:#8a6414;font-size:13px;text-align:center;}",
+      "[data-theme=\"dark\"] #dcGlobalBox .dc-gs-phint{color:#e3b849;}",
       "#dcGlobalBox .dc-gs-fcount{position:absolute;top:-6px;left:-6px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:var(--ac,#0b5fff);color:#fff;font-style:normal;font-size:10px;font-weight:800;display:grid;place-items:center;line-height:1;}",
       "#dcGlobalBox .dc-gs-fcount[hidden]{display:none;}",
       "#dcGlobalBox .dc-gs-tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 0 8px;margin:0 0 2px;-webkit-overflow-scrolling:touch;}",
@@ -719,15 +797,41 @@ document.addEventListener("DOMContentLoaded", () => {
    and only a confirmed premium reader fetches plus/cabinet-search.json
    (an unreachable API means no papers, never a lock or an offer).
 ============================================================ */
+const DC_PAPERS_KEY = "dc-gs-papers";
+function dcPapersWanted() { try { return localStorage.getItem(DC_PAPERS_KEY) === "1"; } catch (_) { return false; } }
+function dcPapersSetWanted(on) {
+  try { if (on) localStorage.setItem(DC_PAPERS_KEY, "1"); else localStorage.removeItem(DC_PAPERS_KEY); } catch (_) { /* no storage */ }
+}
+/* The badge only: spot.js stores this device's last CONFIRMED viewer class. */
+function dcPremiumHint() { try { return localStorage.getItem("dcAds.vc") === "premium"; } catch (_) { return false; } }
+/* The answer AND why: "confirmed not premium" and "could not ask" differ. */
+function dcMe() {
+  return import('/plus/js/api.js?v=246')
+    .then((m) => m.currentUser().then((u) => ({ u, status: m.meStatus() })))
+    .catch(() => ({ u: null, status: "error" }));
+}
+/* The library's own gate card (plus/js/library-gate.js), with its own ?from=. */
+function dcPaperGate() {
+  return Promise.all([import('/plus/js/sheet.js?v=246'), import('/plus/js/premium-cta.js?v=246')])
+    .then(([sheet, cta]) => {
+      sheet.openSheet(sheet.gateCard({
+        title: "جستجو در مقاله‌های کتابخانه ویژه‌ی پریمیوم است",
+        sub: "با «مقاله‌ها» نتیجه‌ی جستجو مقاله‌های کتابخانهٔ دنت‌کست را هم می‌آورد — بیش از ۲۱۰۰ مقالهٔ دندان‌پزشکی، با جستجوی فارسی و انگلیسی.",
+        cta: cta.premiumCta("gate-search-papers"),
+      }));
+    })
+    .catch(() => { window.location.href = "/plus/pricing.html?from=gate-search-papers"; });
+}
+/* Fetched only for a confirmed premium reader who turned the button on. */
 function dcPaperLibrary() {
   if (!dcPaperLibrary.p) {
-    dcPaperLibrary.p = import('/plus/js/api.js?v=244')
-      .then((m) => m.currentUser())
-      .then((u) => (u && u.tier === "premium"
-        ? fetch("/plus/cabinet-search.json").then((r) => (r.ok ? r.json() : null))
+    dcPaperLibrary.p = dcMe()
+      .then((r) => (r.u && r.u.tier === "premium"
+        ? fetch("/plus/cabinet-search.json").then((res) => (res.ok ? res.json() : null))
         : null))
       .then((d) => (d && d.p && d.fa ? d : null))
       .catch(() => null);
+    dcPaperLibrary.p.then((d) => { if (!d) dcPaperLibrary.p = null; });
   }
   return dcPaperLibrary.p;
 }
@@ -830,12 +934,6 @@ const TYPE_MAP = {
       const data = await res.json();
       if (!Array.isArray(data)) throw new Error("Invalid search index");
       DB = data;
-      dcPaperLibrary().then((lib) => {
-        if (!lib) return;
-        const rows = dcPaperRows(lib, foldFa);
-        LIB = rows.items; LIB_FA = rows.fa;
-        if (searchInput.value.trim()) performSearch(searchInput.value.trim());
-      });
       /* اگه کاربر قبل از لود دیتابیس سرچ کرده بود (مثلاً از URL) */
       if (searchInput.value.trim()) {
         performSearch(searchInput.value.trim());
@@ -883,6 +981,61 @@ const TYPE_MAP = {
       performSearch(searchInput.value.trim());
     });
   });
+
+  /* ------------ «مقاله‌ها»: the premium button (see the mobile engine) ------------ */
+  let papersOn = false;
+  let isPremium = dcPremiumHint() ? null : false;
+  const pbtn = document.createElement("button");
+  pbtn.type = "button";
+  pbtn.className = "dc-filter-btn dc-gs-pbtn-d";
+  pbtn.setAttribute("aria-pressed", "false");
+  pbtn.title = "جستجو در مقاله‌های کتابخانه (پریمیوم)";
+  const host = filterBtns.length && filterBtns[0].parentNode;
+  if (host) host.appendChild(pbtn);
+  else if (searchInput && searchInput.parentNode) searchInput.after(pbtn);
+  function paintPbtn() {
+    pbtn.textContent = "مقاله‌ها" + (isPremium === false ? " 🔒" : "");
+    pbtn.setAttribute("aria-pressed", String(papersOn));
+    const on = papersOn;
+    pbtn.style.cssText = "border:1px solid #c9922b;color:" + (on ? "#fff" : "#8a6414") + ";background:" + (on ? "#c9922b" : "rgba(201,146,43,.08)") + ";";
+  }
+  paintPbtn();
+  function papersOnNow() {
+    return dcPaperLibrary().then((lib) => {
+      if (!lib) return;
+      if (!LIB.length) { const rows = dcPaperRows(lib, foldFa); LIB = rows.items; LIB_FA = rows.fa; }
+      papersOn = true;
+      dcPapersSetWanted(true);
+      paintPbtn();
+      performSearch(searchInput.value.trim());
+    });
+  }
+  let meAsked = null;
+  function askMe() {
+    if (!meAsked) {
+      meAsked = dcMe().then((r) => {
+        if (r.status !== "error") isPremium = !!(r.u && r.u.tier === "premium");
+        paintPbtn();
+        if (isPremium && dcPapersWanted() && !papersOn) papersOnNow();
+        else if (isPremium && searchInput.value.trim()) performSearch(searchInput.value.trim());   // the hint row
+      });
+    }
+    return meAsked;
+  }
+  pbtn.addEventListener("click", () => {
+    if (papersOn) {
+      papersOn = false; dcPapersSetWanted(false); paintPbtn();
+      performSearch(searchInput.value.trim());
+      return;
+    }
+    dcMe().then((r) => {
+      if (r.u && r.u.tier === "premium") { isPremium = true; papersOnNow(); return; }
+      if (r.status === "error") return;
+      isPremium = false; paintPbtn();
+      dcPaperGate();
+    });
+  });
+  if (dcPapersWanted()) askMe();
 
   /* ------------ سرچ زنده ----------------- */
   searchInput.addEventListener("input", () => {
@@ -1006,23 +1159,26 @@ const TYPE_MAP = {
       if (foldFa(blob).includes(query)) results.push(item);
     }
 
-    /* The library's papers, after site content (premium only). */
+    /* The library's papers, after site content (premium, button on). */
+    askMe();
     const faHits = dcPaperHits(LIB_FA, query);
     const papers = [];
-    for (const it of LIB) {
+    for (const it of (papersOn ? LIB : [])) {
       const sc = (it._t.includes(query) ? 4 : 0) + (it._k.includes(query) ? 2 : 0) + (faHits.get(it._pid) || 0);
       if (sc) papers.push([sc, it]);
     }
     papers.sort((a, b) => b[0] - a[0]);
     const paperRow = (it) => '<div class="dc-result-item" role="button" tabindex="0" dir="auto" onclick="window.location.href=\'' + it._url + '\'">' +
       _lib + " مقاله — " + escHtml(it.title) + (it._year ? " (" + it._year + ")" : "") + "</div>";
-    const papersHtml = papers.length
+    const papersHtml = isPremium === true && !papersOn
+      ? '<div class="dc-result-item" role="button" tabindex="0" style="color:#8a6414;text-align:center" onclick="this.closest(\'#dcResults\') && document.querySelector(\'.dc-gs-pbtn-d\').click()">جستجو در مقاله‌های کتابخانه ›</div>'
+      : papers.length
       ? '<div class="dc-result-item dc-no-results" role="presentation">کتابخانه — ' + faDigits(papers.length) + " مقاله</div>" +
         papers.slice(0, 30).map((x) => paperRow(x[1])).join("") +
         (papers.length > 30 ? '<div class="dc-result-item" role="button" tabindex="0" onclick="window.location.href=\'/dentcast_cabinet_search.html?q=' + encodeURIComponent(q).replace(/'/g, "%27") + '\'">همهٔ مقاله‌ها در کتابخانه ›</div>' : "")
       : "";
 
-    if (!results.length && !papers.length) {
+    if (!results.length && !papers.length && !papersHtml) {
       resultsBox.style.display = "block";
       resultsBox.innerHTML = `
       <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
