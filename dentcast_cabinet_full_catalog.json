@@ -30310,196 +30310,6 @@
       ]
     },
     {
-      "id": "P0653",
-      "title": "4 5855052696700061604",
-      "file_name": "4_5855052696700061604.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19",
-      "type": "other document",
-      "local_path": "E:\\Paper farzad\\Covid-19\\4_5855052696700061604.pdf",
-      "file_size": 82282,
-      "key_finding": "This ASTM standard defines minimum performance requirements and test methods for medical face mask materials, classifying them into Level 1, 2 and 3 barrier classes by bacterial filtration, differential pressure, sub-micron particle filtration, synthetic blood penetration resistance and flammability.",
-      "clinical_bottom_line": "Choose fluid-resistant, higher-level masks when exposure to blood or body fluids is likely, but note that a medical mask rated under this standard is not a respirator and does not assess facial fit.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1kcX4kBHElchqt8JBfXHhUA_NFu2d1n-D",
-      "drive_view": "https://drive.google.com/file/d/1kcX4kBHElchqt8JBfXHhUA_NFu2d1n-D/view",
-      "drive_id": "1kcX4kBHElchqt8JBfXHhUA_NFu2d1n-D",
-      "tags": [
-        "topic:covid-19",
-        "infection-control",
-        "face-mask"
-      ],
-      "name_bucket": "heavy",
-      "semantic_tagged": true,
-      "real_title": "Standard Specification for Performance of Materials Used in Medical Face Masks (ASTM F2100-19ε1)",
-      "doi": "10.1520/f2100-19e01",
-      "journal": "ASTM International",
-      "crossref_year": 2019,
-      "subjects": [],
-      "abstract": "This specification covers the classifications, performance requirements, and test methods for the materials used in the construction of medical face masks that are used in health care services such as surgery and patient care. Medical face mask material performance is based on testing for bacterial filtration efficiency, differential pressure, sub-micron particulate filtration efficiency, resistance to penetration by synthetic blood, and flammability. This specification does not address all aspects of medical face mask design and performance, the effectiveness of medical face mask designs as related to the barrier and breathability properties, and respiratory protection, which may be necessary for some health care services.",
-      "resolution_method": "pdf-doi",
-      "display_title": "Standard Specification for Performance of Materials Used in Medical Face Masks (ASTM F2100-19ε1)",
-      "authors": [
-        "F23 Committee"
-      ],
-      "concepts": [
-        {
-          "name": "Filtration (mathematics)",
-          "score": 0.5429
-        },
-        {
-          "name": "Differential pressure",
-          "score": 0.526
-        },
-        {
-          "name": "Health care",
-          "score": 0.5245
-        },
-        {
-          "name": "Face (sociological concept)",
-          "score": 0.5224
-        },
-        {
-          "name": "Face masks",
-          "score": 0.4638
-        },
-        {
-          "name": "Respirator",
-          "score": 0.4598
-        },
-        {
-          "name": "Materials science",
-          "score": 0.4303
-        },
-        {
-          "name": "Computer science",
-          "score": 0.3608
-        },
-        {
-          "name": "Process engineering",
-          "score": 0.3474
-        }
-      ]
-    },
-    {
-      "id": "P0654",
-      "title": "4 5855052696700061607",
-      "file_name": "4_5855052696700061607.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19",
-      "type": "other document",
-      "local_path": "E:\\Paper farzad\\Covid-19\\4_5855052696700061607.pdf",
-      "file_size": 1158980,
-      "key_finding": "ASTM F1862/F1862M-17 is a standard laboratory test that projects a small volume of synthetic blood at a medical face mask at set velocities (450, 500, 635 cm/s) and rates it pass/fail by visible penetration to the inner face.",
-      "clinical_bottom_line": "A mask's rating reflects only splash and splatter penetration resistance, not filtration, fit or airborne protection.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1vHURGmQFEpwVcdPihQkSXjgKIbkHG9D5",
-      "drive_view": "https://drive.google.com/file/d/1vHURGmQFEpwVcdPihQkSXjgKIbkHG9D5/view",
-      "drive_id": "1vHURGmQFEpwVcdPihQkSXjgKIbkHG9D5",
-      "tags": [
-        "topic:covid-19",
-        "infection-control",
-        "face-mask"
-      ],
-      "name_bucket": "heavy",
-      "semantic_tagged": true,
-      "real_title": "Standard Test Method for Resistance of Medical Face Masks to Penetration by Synthetic Blood (Horizontal Projection of Fixed Volume at a Known Velocity) (ASTM F1862/F1862M-17)",
-      "doi": "10.1520/f1862_f1862m-17",
-      "journal": "ASTM International",
-      "crossref_year": 2017,
-      "subjects": [],
-      "abstract": "Significance and Use 5.1 This test method offers a procedure for evaluating medical face mask resistance to synthetic blood penetration that is useful in establishing claims for penetration resistance performance of medical face masks and ranking their pe",
-      "resolution_method": "pdf-doi",
-      "display_title": "Standard Test Method for Resistance of Medical Face Masks to Penetration by Synthetic Blood (Horizontal Projection of Fixed Volume at a Known Velocity) (ASTM F1862/F1862M-17)",
-      "authors": [
-        "F23 Committee"
-      ],
-      "concepts": [
-        {
-          "name": "Volume (thermodynamics)",
-          "score": 0.5528
-        },
-        {
-          "name": "Projection (relational algebra)",
-          "score": 0.5488
-        },
-        {
-          "name": "Face (sociological concept)",
-          "score": 0.5046
-        },
-        {
-          "name": "Penetration (warfare)",
-          "score": 0.4829
-        },
-        {
-          "name": "Face masks",
-          "score": 0.4402
-        },
-        {
-          "name": "Mathematics",
-          "score": 0.3933
-        },
-        {
-          "name": "Biomedical engineering",
-          "score": 0.3849
-        },
-        {
-          "name": "Materials science",
-          "score": 0.3336
-        },
-        {
-          "name": "Computer science",
-          "score": 0.3225
-        }
-      ]
-    },
-    {
-      "id": "P0655",
-      "title": "A Fast Track to Zero Environmental Pathogens Using Novel Ionized Hydrogen Peroxide Technology",
-      "file_name": "4_5902062174611703634.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19",
-      "type": "other document",
-      "local_path": "E:\\Paper farzad\\Covid-19\\4_5902062174611703634.pdf",
-      "file_size": 1726790,
-      "key_finding": "The article argues that hydrogen peroxide fogging, including ionized hydrogen peroxide (iHP), can disinfect all room surfaces and cut healthcare-associated pathogens, with iHP reported at a 99.98 percent reduction in 1 to 1.5 hours.",
-      "clinical_bottom_line": "Hydrogen peroxide fogging is presented as an option for room decontamination, though the author notes more investigation is needed across pathogens.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1kBaR8ZZGwlSv8NoZmA-Py_2FTJEDbOGM",
-      "drive_view": "https://drive.google.com/file/d/1kBaR8ZZGwlSv8NoZmA-Py_2FTJEDbOGM/view",
-      "drive_id": "1kBaR8ZZGwlSv8NoZmA-Py_2FTJEDbOGM",
-      "tags": [
-        "topic:covid-19",
-        "topic:zirconia",
-        "hydrogen-peroxide",
-        "infection-control",
-        "disinfection",
-        "environmental-decontamination",
-        "ionized-hydrogen-peroxide-environmental-pathogens"
-      ],
-      "name_bucket": "heavy",
-      "semantic_tagged": true,
-      "real_title": "A Fast Track to Zero Environmental Pathogens Using Novel Ionized Hydrogen Peroxide Technology",
-      "doi": "",
-      "journal": "",
-      "crossref_year": 2011,
-      "subjects": [],
-      "abstract": "",
-      "display_title": "A Fast Track to Zero Environmental Pathogens Using Novel Ionized Hydrogen Peroxide Technology",
-      "authors": [
-        "Rod Webb"
-      ],
-      "duplicate_paths": [
-        "E:\\Paper farzad\\zirconia\\flexural strength\\Safari.pdf"
-      ]
-    },
-    {
       "id": "P0656",
       "title": "4 5958666137016207407",
       "file_name": "4_5958666137016207407.pdf",
@@ -30619,87 +30429,6 @@
       "abstract": "",
       "display_title": "ADA Return to Work Interim Guidance Toolkit",
       "authors": []
-    },
-    {
-      "id": "P0658",
-      "title": "Choosing Safer Activities",
-      "file_name": "choosingsaferact.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19",
-      "type": "consensus / guideline",
-      "local_path": "E:\\Paper farzad\\Covid-19\\choosingsaferact.pdf",
-      "file_size": 113783,
-      "key_finding": "A one-page CDC chart that rates everyday outdoor and indoor activities by COVID-19 risk for unvaccinated and fully vaccinated people, with fully vaccinated people needing no prevention measures for most outdoor activities.",
-      "clinical_bottom_line": "General public guidance with no dental or clinical content; it assumes recommended prevention measures are followed and cannot give a risk level for every activity.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1SPQijt6ROgeoofzeiheyKavhzB7k-3g3",
-      "drive_view": "https://drive.google.com/file/d/1SPQijt6ROgeoofzeiheyKavhzB7k-3g3/view",
-      "drive_id": "1SPQijt6ROgeoofzeiheyKavhzB7k-3g3",
-      "tags": [
-        "topic:covid-19",
-        "covid-19",
-        "public-health-guidance",
-        "vaccination",
-        "cdc",
-        "brochure",
-        "cdc-choosing-safer-activities",
-        "consensus"
-      ],
-      "name_bucket": "heavy",
-      "semantic_tagged": true,
-      "real_title": "Choosing Safer Activities",
-      "doi": "",
-      "journal": "Centers for Disease Control and Prevention",
-      "crossref_year": 2021,
-      "subjects": [],
-      "abstract": "",
-      "display_title": "Choosing Safer Activities",
-      "authors": []
-    },
-    {
-      "id": "P0659",
-      "title": "COVID-19: The CIDRAP Viewpoint. Part 1: The Future of the COVID-19 Pandemic: Lessons Learned from Pandemic Influenza",
-      "file_name": "cidrap-covid19-viewpoint-part1_0.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19",
-      "type": "editorial / commentary",
-      "local_path": "E:\\Paper farzad\\Covid-19\\cidrap-covid19-viewpoint-part1_0.pdf",
-      "file_size": 4173919,
-      "key_finding": "Using past influenza pandemics as a model, the authors expect the COVID-19 pandemic to last 18 to 24 months and not end until 60% to 70% of the population is immune, and they outline three possible wave scenarios.",
-      "clinical_bottom_line": "Planners should prepare for the worst case of a larger fall-winter wave, including reinstituting mitigation measures and ensuring protection for healthcare workers.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1QGAPyvGtExOlf6aDGMyjZZOZD4CilocQ",
-      "drive_view": "https://drive.google.com/file/d/1QGAPyvGtExOlf6aDGMyjZZOZD4CilocQ/view",
-      "drive_id": "1QGAPyvGtExOlf6aDGMyjZZOZD4CilocQ",
-      "tags": [
-        "topic:covid-19",
-        "covid-19",
-        "pandemic-influenza",
-        "public-health",
-        "cidrap",
-        "cidrap-future-covid-19-pandemic",
-        "influenza",
-        "editorial"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "real_title": "COVID-19: The CIDRAP Viewpoint. Part 1: The Future of the COVID-19 Pandemic: Lessons Learned from Pandemic Influenza",
-      "doi": "",
-      "journal": "Center for Infectious Disease Research and Policy (CIDRAP), University of Minnesota",
-      "crossref_year": 2020,
-      "subjects": [],
-      "abstract": "",
-      "display_title": "COVID-19: The CIDRAP Viewpoint. Part 1: The Future of the COVID-19 Pandemic: Lessons Learned from Pandemic Influenza",
-      "authors": [
-        "Kristine A Moore",
-        "Marc Lipsitch",
-        "John M Barry",
-        "Michael T Osterholm"
-      ]
     },
     {
       "id": "P0660",
@@ -31189,72 +30918,6 @@
       ]
     },
     {
-      "id": "P0668",
-      "title": "Kampf-2020-Persistence-of-coronaviruses-on-ina",
-      "file_name": "Kampf-2020-Persistence-of-coronaviruses-on-ina.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19",
-      "type": "narrative review",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Kampf-2020-Persistence-of-coronaviruses-on-ina.pdf",
-      "file_size": 281718,
-      "key_finding": "Review of 22 studies showing human coronaviruses (SARS, MERS, HCoV) can persist on metal, glass or plastic for up to 9 days but are inactivated within 1 minute by 62-71% ethanol, 0.5% hydrogen peroxide or 0.1% sodium hypochlorite.",
-      "clinical_bottom_line": "Surface disinfection with ethanol, hydrogen peroxide or hypochlorite at these concentrations is supported for coronaviruses; benzalkonium chloride and 0.02% chlorhexidine were less effective (laboratory data).",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=121inRr4Z9O-mi73j_AiRvOuQ0pV12tLV",
-      "drive_view": "https://drive.google.com/file/d/121inRr4Z9O-mi73j_AiRvOuQ0pV12tLV/view",
-      "drive_id": "121inRr4Z9O-mi73j_AiRvOuQ0pV12tLV",
-      "tags": [
-        "topic:covid-19",
-        "covid-19",
-        "narrative-review",
-        "disinfection",
-        "infection-control"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "real_title": "Persistence of coronaviruses on inanimate surfaces and their inactivation with biocidal agents",
-      "doi": "10.1016/j.jhin.2020.01.022",
-      "journal": "Journal of Hospital Infection",
-      "crossref_year": 2020,
-      "subjects": [],
-      "abstract": "Currently, the emergence of a novel human coronavirus, SARS-CoV-2, has become a global health concern causing severe respiratory tract infections in humans. Human-to-human transmissions have been described with incubation times between 2-10 days, facilitating its spread via droplets, contaminated hands or surfaces. We therefore reviewed the literature on all available information about the persistence of human and veterinary coronaviruses on inanimate surfaces as well as inactivation strategies with biocidal agents used for chemical disinfection, e.g. in healthcare facilities. The analysis of 22 studies reveals that human coronaviruses such as Severe Acute Respiratory Syndrome (SARS) coronavirus, Middle East Respiratory Syndrome (MERS) coronavirus or endemic human coronaviruses (HCoV) can persist on inanimate surfaces like metal, glass or plastic for up to 9 days, but can be efficiently inactivated by surface disinfection procedures with 62-71% ethanol, 0.5% hydrogen peroxide or 0.1% sodium hypochlorite within 1 minute. Other biocidal agents such as 0.05-0.2% benzalkonium chloride or 0.02% chlorhexidine digluconate are less effective. As no specific therapies are available for SARS-CoV-2, early containment and prevention of further spread will be crucial to stop the ongoing outbreak and to control this novel infectious thread.",
-      "resolution_method": "pdf-doi",
-      "display_title": "Persistence of coronaviruses on inanimate surfaces and their inactivation with biocidal agents",
-      "authors": [
-        "Günter Kampf",
-        "Daniel Tödt",
-        "Stephanie Pfaender",
-        "Eike Steinmann"
-      ],
-      "concepts": [
-        {
-          "name": "Persistence (discontinuity)",
-          "score": 0.8318
-        },
-        {
-          "name": "Virology",
-          "score": 0.5897
-        },
-        {
-          "name": "Coronavirus disease 2019 (COVID-19)",
-          "score": 0.5187
-        },
-        {
-          "name": "Coronavirus",
-          "score": 0.5031
-        },
-        {
-          "name": "Biology",
-          "score": 0.4005
-        }
-      ],
-      "duplicate_paths": [
-        "E:\\Paper farzad\\Covid-19\\PIIS0195670120300463.pdf"
-      ]
-    },
-    {
       "id": "P0669",
       "title": "Kosmac et al 1999, sandblasting and grinding of zirconiaخخیلی مهم",
       "file_name": "Kosmac et al 1999, sandblasting and grinding of zirconiaخخیلی مهم.pdf",
@@ -31306,176 +30969,6 @@
       "abstract": "This study was conducted to evaluate the effect of grinding and sandblasting on the microstructure, biaxial flexural strength and reliability of two yttria stabilized tetragonal zirconia (Y-TZP) ceramics.\n\nTwo Y-TZP powders were used to produce fine grained and coarse grained microstructures. Sixty discs from each material were randomly divided into six groups of ten. For each group, a different surface treatment was applied: dry grinding, wet grinding, sandblasting, dry grinding + sandblasting, sandblasting + dry grinding and a control group. Biaxial flexural strength was determined and data were analyzed using one-way ANOVA, followed by Tukey's HSD test (p < 0.05). In addition, Weibull statistics was used to analyze the variability of flexural strength. The relative amount of transformed monoclinic zirconia, corresponding transformed zone depth (TZD) and the mean critical defect size Ccr were calculated.\n\nThere was no difference in mean strength between the as sintered fine and coarse grained Y-TZP. Significant differences (p < 0.05) were found between the control group and ground fine grained material for both wet and dry grinding. Sandblasting significantly increased the strength in fine and coarse grained materials. All surface treatment procedures reduced the Weibull modulus of Y-TZP. For both materials, the highest amount of the monoclinic phase and the largest TZD was found after sandblasting. Lower amounts of the monoclinic phase were obtained after both grinding procedures, where the highest mean critical defect size Ccr was also calculated.\n\nOur results indicate that sandblasting may provide a powerful technique for strengthening Y-TZP in clinical practice. In contrast, grinding may lead to substantial strength degradation and reduced reliability of prefabricated zirconia elements, therefore, sandblasting of ground surfaces is suggested."
     },
     {
-      "id": "P0672",
-      "title": "rutala2019 disinfection invironment",
-      "file_name": "rutala2019 disinfection invironment.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19",
-      "type": "narrative review",
-      "local_path": "E:\\Paper farzad\\Covid-19\\rutala2019 disinfection invironment.pdf",
-      "file_size": 506953,
-      "key_finding": "Review proposing a five-component bundle for cleaning and disinfecting noncritical surfaces and equipment: evidence-based policies, appropriate products, staff education, compliance monitoring with feedback, and no-touch room decontamination for patients on contact or enteric precautions.",
-      "clinical_bottom_line": "Supports a bundled, monitored approach to environmental surface disinfection in health care facilities; narrative synthesis rather than new trial data.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1a23CXKpZQau2oD22wAhFU7FZ9xVOQ8AX",
-      "drive_view": "https://drive.google.com/file/d/1a23CXKpZQau2oD22wAhFU7FZ9xVOQ8AX/view",
-      "drive_id": "1a23CXKpZQau2oD22wAhFU7FZ9xVOQ8AX",
-      "tags": [
-        "topic:covid-19",
-        "narrative-review",
-        "disinfection",
-        "infection-control"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "real_title": "Best practices for disinfection of noncritical environmental surfaces and equipment in health care facilities: A bundle approach",
-      "doi": "10.1016/j.ajic.2019.01.014",
-      "journal": "American Journal of Infection Control",
-      "crossref_year": 2019,
-      "subjects": [],
-      "abstract": "Over the past decade, there is excellent evidence in the scientific literature that contaminated environmental surfaces and noncritical patient care items play an important role in the transmission of several key health care-associated pathogens including methicillin-resistant Staphylococcus aureus, vancomycin-resistant enterococci, Acinetobacter, norovirus, and Clostridium difficile. Thus, surface disinfection of noncritical environmental surfaces and medical devices is one of the infection prevention strategies to prevent pathogen transmission. This article will discuss a bundle approach to facilitate effective surface cleaning and disinfection in health care facilities. A bundle is a set of evidence-based practices, generally 3-5, that when performed collectively and reliably have been proven to improve patient outcomes. This bundle has 5 components and the science associated with each component will be addressed. These components are: creating evidence-based policies and procedures; selection of appropriate cleaning and disinfecting products; educating staff to include environmental services, patient equipment, and nursing; monitoring compliance (eg, thoroughness of cleaning, product use) with feedback (ie, just in time coaching); and implementing a \"no touch\" room decontamination technology and to ensure compliance for patients on contact and enteric precautions. This article will also discuss new technologies (eg, continuous room decontamination technology) that may enhance our infection prevention strategies in the future.",
-      "resolution_method": "pdf-doi",
-      "display_title": "Best practices for disinfection of noncritical environmental surfaces and equipment in health care facilities: A bundle approach",
-      "authors": [
-        "William A. Rutala",
-        "David J. Weber"
-      ],
-      "concepts": [
-        {
-          "name": "Medicine",
-          "score": 0.7666
-        },
-        {
-          "name": "Norovirus",
-          "score": 0.7099
-        },
-        {
-          "name": "Infection control",
-          "score": 0.6832
-        },
-        {
-          "name": "Transmission (telecommunications)",
-          "score": 0.5529
-        },
-        {
-          "name": "Hygiene",
-          "score": 0.509
-        },
-        {
-          "name": "Clostridium difficile",
-          "score": 0.506
-        },
-        {
-          "name": "Health care",
-          "score": 0.4979
-        },
-        {
-          "name": "Intensive care medicine",
-          "score": 0.4788
-        },
-        {
-          "name": "Medical emergency",
-          "score": 0.4361
-        },
-        {
-          "name": "Best practice",
-          "score": 0.4192
-        },
-        {
-          "name": "Human decontamination",
-          "score": 0.4146
-        },
-        {
-          "name": "Patient safety",
-          "score": 0.4115
-        },
-        {
-          "name": "Nursing",
-          "score": 0.3337
-        }
-      ]
-    },
-    {
-      "id": "P0673",
-      "title": "silver as disinfactant",
-      "file_name": "silver as disinfactant.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19",
-      "type": "narrative review",
-      "local_path": "E:\\Paper farzad\\Covid-19\\silver as disinfactant.pdf",
-      "file_size": 160643,
-      "key_finding": "Review of silver as a disinfectant in water treatment, supplements, medical applications and antimicrobial coatings; antibacterial mechanisms are described but antiviral and antiprotozoal mechanisms are not well understood, and microbial tolerance and resistance have been reported.",
-      "clinical_bottom_line": "Silver is a plausible alternative disinfectant, but its efficacy in new applications and effects of long-term use need further research.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1bCstHwj1Ln9NY3AxIZArClKATG1kQabR",
-      "drive_view": "https://drive.google.com/file/d/1bCstHwj1Ln9NY3AxIZArClKATG1kQabR/view",
-      "drive_id": "1bCstHwj1Ln9NY3AxIZArClKATG1kQabR",
-      "tags": [
-        "topic:covid-19",
-        "narrative-review",
-        "disinfection",
-        "silver"
-      ],
-      "name_bucket": "heavy",
-      "semantic_tagged": true,
-      "real_title": "Silver as a Disinfectant",
-      "doi": "10.1007/978-0-387-69163-3_2",
-      "journal": "Reviews of Environmental Contamination and Toxicology",
-      "crossref_year": 2007,
-      "subjects": [],
-      "abstract": "Silver has been used as an antimicrobial for thousands of years. Over the past several decades, it has been introduced into numerous new venues such as in the treatment of water, in dietary supplements, in medical applications, and to produce antimicrobial coatings and products. Silver is often used as an alternative disinfectant in applications in which the use of traditional disinfectants such as chlorine may result in the formation of toxic by-products or cause corrosion of surfaces. Silver has also been demonstrated to produce a synergistic effect in combination with several other disinfectants. Many mechanisms of the antibacterial effect of silver have been described, but its antiviral and antiprotozoal mechanisms are not well understood. Both microbial tolerance and resistance to silver have been reported; however, the effect of silver has been observed against a wide variety of microorganisms over a period of years. Further research is needed to determine the antimicrobial efficacy of silver in these new applications and the effects of its long-term usage.",
-      "resolution_method": "pdf-doi",
-      "display_title": "Silver as a Disinfectant",
-      "authors": [
-        "Nadia Silvestry-Rodriguez",
-        "Enue E Sicairos-Ruelas",
-        "Charles P Gerba",
-        "Kelly R Bright"
-      ]
-    },
-    {
-      "id": "P0674",
-      "title": "Effective Disinfection with Thermal Fogging (White Paper)",
-      "file_name": "thermal-fogging-for-disinfection-1862.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19",
-      "type": "manufacturer document",
-      "local_path": "E:\\Paper farzad\\Covid-19\\thermal-fogging-for-disinfection-1862.pdf",
-      "file_size": 1385295,
-      "key_finding": "White paper from a thermal-fogger manufacturer arguing that thermal fogging after cleaning improves disinfection of livestock buildings; it is about farms, not dentistry.",
-      "clinical_bottom_line": "No dental relevance; the evidence cited is veterinary and from the manufacturer.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1AzSbSbOmqlqglihFkG6x7y8EzrNTYhwA",
-      "drive_view": "https://drive.google.com/file/d/1AzSbSbOmqlqglihFkG6x7y8EzrNTYhwA/view",
-      "drive_id": "1AzSbSbOmqlqglihFkG6x7y8EzrNTYhwA",
-      "tags": [
-        "topic:covid-19",
-        "disinfection",
-        "thermal-fogging",
-        "infection-control",
-        "brochure",
-        "manufacturer-document",
-        "dramm",
-        "effective-disinfection-thermal-fogging"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "real_title": "Effective Disinfection with Thermal Fogging (White Paper)",
-      "doi": "",
-      "journal": "Dramm Corporation",
-      "crossref_year": null,
-      "subjects": [],
-      "abstract": "",
-      "display_title": "Effective Disinfection with Thermal Fogging (White Paper)",
-      "authors": []
-    },
-    {
       "id": "P0675",
       "title": "Persian-language guide to dental practice during the COVID-19 epidemic (update 1, 'In memory of Dr. Albert Bruce Sabin')",
       "file_name": "update1 in memory of dr.albert bruce sabin.pdf",
@@ -31509,80 +31002,6 @@
       "subjects": [],
       "abstract": "",
       "display_title": "Persian-language guide to dental practice during the COVID-19 epidemic (update 1, 'In memory of Dr. Albert Bruce Sabin')",
-      "authors": []
-    },
-    {
-      "id": "P0676",
-      "title": "Vapor Fogging Treatment (VFT) for Vapor Phase Sulfides (Technical Bulletin)",
-      "file_name": "Vapor_Fogging_Treatment_VFT.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19",
-      "type": "manufacturer document",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Vapor_Fogging_Treatment_VFT.pdf",
-      "file_size": 385211,
-      "key_finding": "A US Peroxide technical bulletin describing a proprietary system that fogs dilute hydrogen peroxide and sodium hydroxide into enclosed vapor spaces to oxidize hydrogen sulfide odors, claiming removal above 90%.",
-      "clinical_bottom_line": "No clinical dental content; an industrial odor-control product sheet.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1gMwIea28ni5PQPkWscA1zLA_ShoPBPo7",
-      "drive_view": "https://drive.google.com/file/d/1gMwIea28ni5PQPkWscA1zLA_ShoPBPo7/view",
-      "drive_id": "1gMwIea28ni5PQPkWscA1zLA_ShoPBPo7",
-      "tags": [
-        "topic:covid-19",
-        "hydrogen-peroxide",
-        "vapor-fogging",
-        "brochure",
-        "manufacturer-document",
-        "us-peroxide",
-        "vapor-fogging-treatment-vapor-phase-sulfides"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "real_title": "Vapor Fogging Treatment (VFT) for Vapor Phase Sulfides (Technical Bulletin)",
-      "doi": "",
-      "journal": "US Peroxide",
-      "crossref_year": null,
-      "subjects": [],
-      "abstract": "",
-      "display_title": "Vapor Fogging Treatment (VFT) for Vapor Phase Sulfides (Technical Bulletin)",
-      "authors": []
-    },
-    {
-      "id": "P0677",
-      "title": "Inactivation (disinfection) processes (Chapter 3 of Water Treatment and Pathogen Control)",
-      "file_name": "watreatpath3.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19",
-      "type": "book / chapter",
-      "local_path": "E:\\Paper farzad\\Covid-19\\watreatpath3.pdf",
-      "file_size": 399878,
-      "key_finding": "The chapter reviews drinking-water disinfection processes (pretreatment oxidation, primary and secondary disinfection) and the factors governing efficiency: disinfectant concentration, contact time, temperature and pH.",
-      "clinical_bottom_line": "No direct dental application; background on disinfectant kinetics and the CT concept.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=12gfx2tIhJDt5sHUe2aC2rVTbEcPfbhL6",
-      "drive_view": "https://drive.google.com/file/d/12gfx2tIhJDt5sHUe2aC2rVTbEcPfbhL6/view",
-      "drive_id": "12gfx2tIhJDt5sHUe2aC2rVTbEcPfbhL6",
-      "tags": [
-        "topic:covid-19",
-        "disinfection",
-        "water-treatment",
-        "pathogen-inactivation",
-        "who",
-        "who-inactivation-disinfection-processes",
-        "textbook"
-      ],
-      "name_bucket": "heavy",
-      "semantic_tagged": true,
-      "real_title": "Inactivation (disinfection) processes (Chapter 3 of Water Treatment and Pathogen Control)",
-      "doi": "",
-      "journal": "World Health Organization",
-      "crossref_year": 2004,
-      "subjects": [],
-      "abstract": "",
-      "display_title": "Inactivation (disinfection) processes (Chapter 3 of Water Treatment and Pathogen Control)",
       "authors": []
     },
     {
@@ -31989,309 +31408,6 @@
       ]
     },
     {
-      "id": "P0684",
-      "title": "bartels2008",
-      "file_name": "bartels2008.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hydrogen peroxide",
-      "type": "other primary research",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hydrogen peroxide\\bartels2008.pdf",
-      "file_size": 208824,
-      "key_finding": "Experimental and field evaluation of dry-mist hydrogen peroxide (Sterinis) against MRSA; it eliminated epidemic strains in an experimental hospital setting and on upholstered chairs, but not in the home of a heavily colonised family.",
-      "clinical_bottom_line": "Dry-mist hydrogen peroxide was effective against environmental MRSA in hospital settings but failed in a heavily colonised home; small-scale evaluation.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1NFNOgp_lgePr7QTkv-Qc-IMAhDB1X-Hj",
-      "drive_view": "https://drive.google.com/file/d/1NFNOgp_lgePr7QTkv-Qc-IMAhDB1X-Hj/view",
-      "drive_id": "1NFNOgp_lgePr7QTkv-Qc-IMAhDB1X-Hj",
-      "tags": [
-        "topic:covid-19",
-        "topic:hydrogen-peroxide",
-        "hydrogen-peroxide",
-        "disinfection",
-        "infection-control"
-      ],
-      "name_bucket": "author_year",
-      "semantic_tagged": true,
-      "real_title": "Environmental meticillin-resistant Staphylococcus aureus (MRSA) disinfection using dry-mist-generated hydrogen peroxide",
-      "doi": "10.1016/j.jhin.2008.05.018",
-      "journal": "Journal of Hospital Infection",
-      "crossref_year": 2008,
-      "subjects": [],
-      "abstract": "Meticillin-resistant Staphylococcus aureus (MRSA) is a major problem in hospitals worldwide. Hand hygiene is recognised as crucial in limiting the spread of MRSA but less is known about the role of MRSA reservoirs in the inanimate hospital environment. We evaluated the effect of hydrogen peroxide vapour diffused by Sterinis((R)) against MRSA in two experimental hospital settings and in two field trials. Dipslides were used for MRSA detection and quantification before and after using the Sterinis disinfection process. In the first experimental hospital setting, four epidemic MRSA strains were placed at five locations and left for one week. All strains survived the week but not the disinfection process. In field trial one 14 upholstered chairs from a department with many MRSA positive patients were left for one month in a closed room prior to disinfection. MRSA was found on the upholstery of four of the 14 chairs. Three chairs became MRSA negative immediately after the disinfection, the fourth 24h later. The second field trial was in the private home of a MRSA positive family of four individuals. One location was found MRSA positive, remaining so after the Sterinis cycles. We found Sterinis to be effective against MRSA in the experimental hospital setting and upholstered chairs, but not in the private home of heavily colonised MRSA patients.",
-      "resolution_method": "pdf-doi",
-      "display_title": "Environmental meticillin-resistant Staphylococcus aureus (MRSA) disinfection using dry-mist-generated hydrogen peroxide",
-      "authors": [
-        "Mette Damkjær Bartels",
-        "K. Kristoffersen",
-        "T. Slotsbjerg",
-        "Susanne Mie Rohde",
-        "Bettina Lundgren",
-        "Henrik Westh"
-      ],
-      "concepts": [
-        {
-          "name": "Medicine",
-          "score": 0.8468
-        },
-        {
-          "name": "Staphylococcus aureus",
-          "score": 0.6512
-        },
-        {
-          "name": "Methicillin-resistant Staphylococcus aureus",
-          "score": 0.6292
-        },
-        {
-          "name": "Meticillin",
-          "score": 0.5994
-        },
-        {
-          "name": "Hygiene",
-          "score": 0.502
-        },
-        {
-          "name": "Micrococcaceae",
-          "score": 0.444
-        },
-        {
-          "name": "Microbiology",
-          "score": 0.4385
-        },
-        {
-          "name": "Staphylococcal infections",
-          "score": 0.431
-        }
-      ]
-    },
-    {
-      "id": "P0685",
-      "title": "bates2005",
-      "file_name": "bates2005.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hydrogen peroxide",
-      "type": "case report",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hydrogen peroxide\\bates2005.pdf",
-      "file_size": 64658,
-      "key_finding": "Case report of a 72-year-old man with aerodigestive tract chemical injury attributed to probable residual Cidex OPA (ortho-phthalaldehyde) on a transesophageal echocardiography probe used during general anesthesia.",
-      "clinical_bottom_line": "Single case highlighting the need for strict adherence to manufacturers' instructions when reprocessing devices with chemical disinfectants.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1zV4m9SOUs1ICLG3-cLkmr8id9WKocveZ",
-      "drive_view": "https://drive.google.com/file/d/1zV4m9SOUs1ICLG3-cLkmr8id9WKocveZ/view",
-      "drive_id": "1zV4m9SOUs1ICLG3-cLkmr8id9WKocveZ",
-      "tags": [
-        "topic:covid-19",
-        "topic:hydrogen-peroxide",
-        "case-report",
-        "disinfection"
-      ],
-      "name_bucket": "author_year",
-      "semantic_tagged": true,
-      "real_title": "Chemical Burn Injury Secondary to Intraoperative Transesophageal Echocardiography",
-      "doi": "10.1213/01.ane.0000083641.58267.0c",
-      "journal": "Anesthesia & Analgesia",
-      "crossref_year": 2003,
-      "subjects": [],
-      "abstract": "UNLABELLED: We describe a case of a 72-yr-old male who suffered aerodigestive tract chemical injury resulting from a probable post-processing residual of the high-level disinfectant solution Cidex OPA (ortho-phthalaldehyde) used to disinfect the transesophageal echocardiogram probe used for cardiac monitoring during general anesthesia. This case highlights the need for strict adherence to manufacturers' instructions when using chemical disinfectants for transesophageal echocardiogram probe reprocessing. IMPLICATIONS: We describe a case of aerodigestive tract chemical injury resulting from a probable post-processing residual of the high level disinfectant solution Cidex OPA (ortho-phthalaldehyde) used to disinfect the transesophageal echocardiogram probe used during general anesthesia.",
-      "resolution_method": "pdf-doi",
-      "display_title": "Chemical Burn Injury Secondary to Intraoperative Transesophageal Echocardiography",
-      "authors": [
-        "Steven G. Venticinque",
-        "Vikram S. Kashyap",
-        "Robert Connell"
-      ],
-      "concepts": [
-        {
-          "name": "Transesophageal echocardiogram",
-          "score": 0.6934
-        },
-        {
-          "name": "Medicine",
-          "score": 0.6615
-        },
-        {
-          "name": "Disinfectant",
-          "score": 0.6469
-        },
-        {
-          "name": "Anesthesia",
-          "score": 0.3867
-        }
-      ]
-    },
-    {
-      "id": "P0686",
-      "title": "Impact of Hydrogen Peroxide Vapor Room Decontamination on Clostridium difficile Environmental Contamination and Transmission in a Healthcare Setting",
-      "file_name": "boyce2008.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hydrogen peroxide",
-      "type": "other primary research",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hydrogen peroxide\\boyce2008.pdf",
-      "file_size": 206714,
-      "key_finding": "Prospective before-after study of hydrogen peroxide vapor decontamination in a hospital with epidemic C. difficile; positive surface cultures fell from 11/43 (25.6%) to 0/37, and nosocomial CDAD on high-incidence wards fell from 2.28 to 1.28 per 1,000 patient-days.",
-      "clinical_bottom_line": "Hydrogen peroxide vapor room decontamination was associated with reduced C. difficile contamination and transmission; before-after design without concurrent control limits causal inference.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1Uasle9I3DdZzee7jnkLPbRBSlJJhfegk",
-      "drive_view": "https://drive.google.com/file/d/1Uasle9I3DdZzee7jnkLPbRBSlJJhfegk/view",
-      "drive_id": "1Uasle9I3DdZzee7jnkLPbRBSlJJhfegk",
-      "tags": [
-        "prospective",
-        "topic:covid-19",
-        "topic:hydrogen-peroxide",
-        "hydrogen-peroxide",
-        "disinfection",
-        "cohort",
-        "infection-control"
-      ],
-      "name_bucket": "author_year",
-      "semantic_tagged": true,
-      "real_title": "Impact of Hydrogen Peroxide Vapor Room Decontamination on Clostridium difficile Environmental Contamination and Transmission in a Healthcare Setting",
-      "doi": "10.1086/589906",
-      "journal": "Infection Control & Hospital Epidemiology",
-      "crossref_year": 2008,
-      "subjects": [],
-      "abstract": "Objective. To determine whether hydrogen peroxide vapor (HPV) decontamination can reduce environmental contamination with and nosocomial transmission of Clostridium difficile. Design. A prospective before-after intervention study. Setting. A hospital affected by an epidemic strain of C. difficile. Intervention. Intensive HPV decontamination of 5 high-incidence wards followed by hospital-wide decontamination of rooms vacated by patients with C. difficile -associated disease (CDAD). The preintervention period was June 2004 through March 2005, and the intervention period was June 2005 through March 2006. Results. Eleven (25.6%) of 43 cultures of samples collected by sponge from surfaces before HPV decontamination yielded C. difficile, compared with 0 of 37 cultures of samples obtained after HPV decontamination ( P < .001). On 5 high-incidence wards, the incidence of nosocomial CDAD was significantly lower during the intervention period than during the preintervention period (1.28 vs 2.28 cases per 1,000 patient-days; P = .047). The hospital-wide CDAD incidence was lower during the intervention period than during the preintervention period (0.84 vs 1.36 cases per 1,000 patient-days; P ",
-      "resolution_method": "pdf-doi",
-      "display_title": "Impact of Hydrogen Peroxide Vapor Room Decontamination on Clostridium difficile Environmental Contamination and Transmission in a Healthcare Setting",
-      "authors": [
-        "John M. Boyce",
-        "Nancy L. Havill",
-        "Jonathan A. Otter",
-        "L. Clifford McDonald",
-        "Nicholas M. Adams",
-        "Timothea Cooper",
-        "Angela Thompson",
-        "L S Wiggs",
-        "George Killgore",
-        "Allison Tauman",
-        "Judith Noble‐Wang"
-      ],
-      "concepts": [
-        {
-          "name": "Clostridium difficile",
-          "score": 0.7806
-        },
-        {
-          "name": "Medicine",
-          "score": 0.7719
-        },
-        {
-          "name": "Human decontamination",
-          "score": 0.7579
-        },
-        {
-          "name": "Incidence (geometry)",
-          "score": 0.6946
-        },
-        {
-          "name": "Infection control",
-          "score": 0.4908
-        },
-        {
-          "name": "Emergency medicine",
-          "score": 0.3572
-        }
-      ]
-    },
-    {
-      "id": "P0687",
-      "title": "dembinski2014",
-      "file_name": "dembinski2014.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hydrogen peroxide",
-      "type": "in vitro study",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hydrogen peroxide\\dembinski2014.pdf",
-      "file_size": 1401890,
-      "key_finding": "Laboratory study inactivating three influenza strains with hydrogen peroxide; inactivated viruses (no replication in MDCK cells) gave ex vivo humoral and cellular immune responses comparable to live viruses in ELISpot, Multiplex and ELISA assays.",
-      "clinical_bottom_line": "Laboratory evidence only: H2O2-inactivated influenza retains immunogenicity, which may reduce the need to handle live virus; no clinical implication for dental practice.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1zdedZEeEvKwkVUBW6eFEIEVRxY1DrwPA",
-      "drive_view": "https://drive.google.com/file/d/1zdedZEeEvKwkVUBW6eFEIEVRxY1DrwPA/view",
-      "drive_id": "1zdedZEeEvKwkVUBW6eFEIEVRxY1DrwPA",
-      "tags": [
-        "topic:covid-19",
-        "topic:hydrogen-peroxide",
-        "in-vitro",
-        "hydrogen-peroxide",
-        "influenza"
-      ],
-      "name_bucket": "author_year",
-      "semantic_tagged": true,
-      "real_title": "Hydrogen peroxide inactivation of influenza virus preserves antigenic structure and immunogenicity",
-      "doi": "10.1016/j.jviromet.2014.07.003",
-      "journal": "Journal of Virological Methods",
-      "crossref_year": 2014,
-      "subjects": [],
-      "abstract": "The use of live virus in the laboratory requires additional precautions, such as personnel training and special equipment, in order to limit the transmission risk. This is a requirement which not all laboratories can fulfill. In this study, a viral inactivation method is introduced using hydrogen peroxide (H2O2), which maintains antigenicity. Three strains of influenza viruses were inactivated and the ex vivo cellular and humoral immune responses were further analyzed, by comparing them to live viruses, in ELISpot, Multiplex and ELISA assays. In all assays, the H2O2 inactivated viruses displayed comparable responses to the live viruses, suggesting that the inactivated viruses still elicited immunogenic responses even though inactivation was confirmed by lack of viral replication in MDCK cells. Taken together, this study demonstrates that influenza viruses inactivated with H2O2 retain immunogenicity and are able to both detect humoral and elicit cellular immune responses in vitro, which could reduce the need to handle live viruses in the laboratory.",
-      "resolution_method": "pdf-doi",
-      "display_title": "Hydrogen peroxide inactivation of influenza virus preserves antigenic structure and immunogenicity",
-      "authors": [
-        "Jennifer L. Dembinski",
-        "Olav Hungnes",
-        "Anna Germundsson Hauge",
-        "Anne-Cathrine Kristoffersen",
-        "Bjørn Haneberg",
-        "Siri Mjaaland"
-      ],
-      "concepts": [
-        {
-          "name": "Immunogenicity",
-          "score": 0.8635
-        },
-        {
-          "name": "Biology",
-          "score": 0.7849
-        },
-        {
-          "name": "Virology",
-          "score": 0.7475
-        },
-        {
-          "name": "Antigenicity",
-          "score": 0.6302
-        },
-        {
-          "name": "ELISPOT",
-          "score": 0.573
-        },
-        {
-          "name": "Immune system",
-          "score": 0.5421
-        },
-        {
-          "name": "Virus",
-          "score": 0.5359
-        },
-        {
-          "name": "Microbiology",
-          "score": 0.5256
-        },
-        {
-          "name": "Antigen",
-          "score": 0.5056
-        },
-        {
-          "name": "Orthomyxoviridae",
-          "score": 0.447
-        },
-        {
-          "name": "Influenza A virus",
-          "score": 0.4456
-        },
-        {
-          "name": "Viral replication",
-          "score": 0.4204
-        }
-      ]
-    },
-    {
       "id": "P0688",
       "title": "Evaluation of the effect of hydrogen peroxide as a",
       "file_name": "Evaluation_of_the_effect_of_hydrogen_peroxide_as_a.pdf",
@@ -32375,337 +31491,6 @@
         {
           "name": "Analysis of variance",
           "score": 0.4339
-        }
-      ]
-    },
-    {
-      "id": "P0689",
-      "title": "falagas2011air born peroxide",
-      "file_name": "falagas2011air born peroxide.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hydrogen peroxide",
-      "type": "systematic review",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hydrogen peroxide\\falagas2011air born peroxide.pdf",
-      "file_size": 158355,
-      "key_finding": "Systematic review of ten studies on airborne hydrogen peroxide (vapour or dry mist) for hospital disinfection; contaminated sites fell from 39.0% before cleaning to 28.3% after terminal cleaning and 2.2% after airborne hydrogen peroxide.",
-      "clinical_bottom_line": "Airborne hydrogen peroxide markedly reduced environmental pathogen contamination and was associated with outbreak control in a few studies; the evidence base is small.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1n2DCRzoFZTkg0WZ3RHXh8iTsbCTEwRgf",
-      "drive_view": "https://drive.google.com/file/d/1n2DCRzoFZTkg0WZ3RHXh8iTsbCTEwRgf/view",
-      "drive_id": "1n2DCRzoFZTkg0WZ3RHXh8iTsbCTEwRgf",
-      "tags": [
-        "systematic-review",
-        "topic:covid-19",
-        "topic:hydrogen-peroxide",
-        "hydrogen-peroxide",
-        "disinfection",
-        "infection-control"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "real_title": "Airborne hydrogen peroxide for disinfection of the hospital environment and infection control: a systematic review",
-      "doi": "10.1016/j.jhin.2010.12.006",
-      "journal": "Journal of Hospital Infection",
-      "crossref_year": 2011,
-      "subjects": [],
-      "abstract": "We reviewed the effectiveness of airborne hydrogen peroxide as an environmental disinfectant and infection control measure in clinical settings. Systematic review identified ten studies as eligible for inclusion. Hydrogen peroxide was delivered in the form of vapour and dry mist in seven and three studies, respectively. Pathogens evaluated included meticillin-resistant Staphylococcus aureus (MRSA), Clostridium difficile and multiple bacterial types, in five, three, and two studies, respectively. Before the application of any cleaning intervention, 187/480 (39.0%; range: 18.9-81.0%) of all sampled environmental sites were found to be contaminated by the studied pathogens in nine studies that reported specific relevant data. After application of terminal cleaning and airborne hydrogen peroxide, 178/630 (28.3%; range: 11.9-66.1%) of the sampled sites in six studies and 15/682 (2.2%; range: 0-4.0%) of the sampled sites in ten studies, respectively, remained contaminated. Four studies evaluated the use of hydrogen peroxide vapour for infection control. This was associated with control of a nosocomial outbreak in two studies, eradication of persistent environmental contamination with MRSA and decrease in C. difficile infection in each of the remaining two studies.",
-      "resolution_method": "pdf-doi",
-      "display_title": "Airborne hydrogen peroxide for disinfection of the hospital environment and infection control: a systematic review",
-      "authors": [
-        "Matthew E. Falagas",
-        "Pavlos C. Thomaidis",
-        "Ioannis Kotsantis",
-        "Konstantinos Sgouros",
-        "George Samonis",
-        "Drosos E. Karageorgopoulos"
-      ],
-      "concepts": [
-        {
-          "name": "Medicine",
-          "score": 0.9274
-        },
-        {
-          "name": "Hydrogen peroxide",
-          "score": 0.7217
-        },
-        {
-          "name": "Infection control",
-          "score": 0.5848
-        },
-        {
-          "name": "Cross infection",
-          "score": 0.5098
-        },
-        {
-          "name": "Intensive care medicine",
-          "score": 0.412
-        }
-      ]
-    },
-    {
-      "id": "P0690",
-      "title": "Fogging of Chlorine-Based Sporicidal Liquids for the Inactivation of Bacillus anthracis Surrogate Spores (EPA/600/R-17/134)",
-      "file_name": "FOGGING OF CHLORINATED DECONTAMINANTS UPDATED.PDF",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hydrogen peroxide",
-      "type": "other document",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hydrogen peroxide\\FOGGING OF CHLORINATED DECONTAMINANTS UPDATED.PDF",
-      "file_size": 2069349,
-      "key_finding": "Fogging chlorine-based sporicides (pH-adjusted bleach, diluted bleach, dichlor, chlorine dioxide) in a mock office gave about 5 to 6 log spore reduction at best. Nonporous surfaces were decontaminated much more easily than porous ones such as carpet, ceiling tile and wood.",
-      "clinical_bottom_line": "Chlorine fogging should not be relied on to decontaminate porous surfaces; it works mainly on nonporous ones.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1PW25bjfbguGtWlgO2cC68MgOKciQageA",
-      "drive_view": "https://drive.google.com/file/d/1PW25bjfbguGtWlgO2cC68MgOKciQageA/view",
-      "drive_id": "1PW25bjfbguGtWlgO2cC68MgOKciQageA",
-      "tags": [
-        "topic:covid-19",
-        "disinfection",
-        "fogging",
-        "sporicidal",
-        "chlorine",
-        "epa",
-        "fogging-chlorine-sporicidal-bacillus-anthracis-spores"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "real_title": "Fogging of Chlorine-Based Sporicidal Liquids for the Inactivation of Bacillus anthracis Surrogate Spores (EPA/600/R-17/134)",
-      "doi": "",
-      "journal": "U.S. Environmental Protection Agency, Office of Research and Development, National Homeland Security Research Center",
-      "crossref_year": 2017,
-      "subjects": [],
-      "abstract": "",
-      "display_title": "Fogging of Chlorine-Based Sporicidal Liquids for the Inactivation of Bacillus anthracis Surrogate Spores (EPA/600/R-17/134)",
-      "authors": []
-    },
-    {
-      "id": "P0691",
-      "title": "Goyal-2014-Evaluating-the-virucidal-efficacy-o (1)",
-      "file_name": "Goyal-2014-Evaluating-the-virucidal-efficacy-o (1).pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hydrogen peroxide",
-      "type": "in vitro study",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hydrogen peroxide\\Goyal-2014-Evaluating-the-virucidal-efficacy-o (1).pdf",
-      "file_size": 213886,
-      "key_finding": "In vitro test of hydrogen peroxide vapour on five viruses (including TGEV, a SARS-CoV surrogate) dried on stainless steel discs in a 0.2-m³ chamber; no viable viruses remained, with >4-log reduction at 25 mL for most viruses.",
-      "clinical_bottom_line": "Laboratory evidence that hydrogen peroxide vapour can be considered for disinfecting virus-contaminated surfaces; not proof of reduced clinical transmission.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1yp--v8NxRXdA4Zsr0fpMbjjWOjJrdI_2",
-      "drive_view": "https://drive.google.com/file/d/1yp--v8NxRXdA4Zsr0fpMbjjWOjJrdI_2/view",
-      "drive_id": "1yp--v8NxRXdA4Zsr0fpMbjjWOjJrdI_2",
-      "tags": [
-        "topic:covid-19",
-        "topic:hydrogen-peroxide",
-        "in-vitro",
-        "hydrogen-peroxide",
-        "disinfection"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "real_title": "Evaluating the virucidal efficacy of hydrogen peroxide vapour",
-      "doi": "10.1016/j.jhin.2014.02.003",
-      "journal": "Journal of Hospital Infection",
-      "crossref_year": 2014,
-      "subjects": [],
-      "abstract": "Surface contamination has been implicated in the transmission of certain viruses, and surface disinfection can be an effective measure to interrupt the spread of these agents.\n\nTo evaluate the in-vitro efficacy of hydrogen peroxide vapour (HPV), a vapour-phase disinfection method, for the inactivation of a number of structurally distinct viruses of importance in the healthcare, veterinary and public sectors. The viruses studied were: feline calicivirus (FCV, a norovirus surrogate); human adenovirus type 1; transmissible gastroenteritis coronavirus of pigs (TGEV, a severe acute respiratory syndrome coronavirus [SARS-CoV] surrogate); avian influenza virus (AIV); and swine influenza virus (SwIV).\n\nThe viruses were dried on stainless steel discs in 20- or 40-μL aliquots and exposed to HPV produced by a Clarus L generator (Bioquell, Horsham, PA, USA) in a 0.2-m(3) environmental chamber. Three vaporized volumes of hydrogen peroxide were tested in triplicate for each virus: 25, 27 and 33 mL.\n\nNo viable viruses were identified after HPV exposure at any of the vaporized volumes tested. HPV was virucidal (>4-log reduction) against FCV, adenovirus, TGEV and AIV at the lowest vaporized volume tested (25 mL). For SwIV, due to low virus titre on the control discs, >3.8-log reduction was shown for the 25-mL vaporized volume and >4-log reduction was shown for the 27-mL and 33-mL vaporized volumes.\n\nHPV was virucidal for structurally distinct viruses dried on surfaces, suggesting that HPV can be considered for the disinfection of virus-contaminated surfaces.",
-      "resolution_method": "pdf-doi",
-      "display_title": "Evaluating the virucidal efficacy of hydrogen peroxide vapour",
-      "authors": [
-        "Sagar M. Goyal",
-        "Yogesh Chander",
-        "Saber Yezli",
-        "Jonathan A. Otter"
-      ],
-      "concepts": [
-        {
-          "name": "Medicine",
-          "score": 0.9112
-        },
-        {
-          "name": "Hydrogen peroxide",
-          "score": 0.7994
-        },
-        {
-          "name": "Microbiology",
-          "score": 0.4159
-        },
-        {
-          "name": "Virology",
-          "score": 0.328
-        }
-      ],
-      "duplicate_paths": [
-        "E:\\Paper farzad\\Covid-19\\Hydrogen peroxide\\Goyal-2014-Evaluating-the-virucidal-efficacy-o.pdf"
-      ]
-    },
-    {
-      "id": "P0693",
-      "title": "Havill-2012-Comparison-of-the-microbiological-e (1)",
-      "file_name": "Havill-2012-Comparison-of-the-microbiological-e (1).pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hydrogen peroxide",
-      "type": "other primary research",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hydrogen peroxide\\Havill-2012-Comparison-of-the-microbiological-e (1).pdf",
-      "file_size": 300248,
-      "key_finding": "Prospective comparison of hydrogen peroxide vapor and UVC decontamination in 15 hospital rooms; 93% vs 52% of contaminated sites became culture-negative, mean C. difficile log reduction was >6 vs ~2, and UVC was less effective out of direct line of sight.",
-      "clinical_bottom_line": "Hydrogen peroxide vapor achieved substantially greater microbiological room decontamination than UVC; microbiological outcomes only, not infection rates.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1FMlD8yLDSuv9r74P2800E9fnxwv1IMT0",
-      "drive_view": "https://drive.google.com/file/d/1FMlD8yLDSuv9r74P2800E9fnxwv1IMT0/view",
-      "drive_id": "1FMlD8yLDSuv9r74P2800E9fnxwv1IMT0",
-      "tags": [
-        "prospective",
-        "topic:covid-19",
-        "topic:hydrogen-peroxide",
-        "hydrogen-peroxide",
-        "disinfection",
-        "infection-control"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "real_title": "Comparison of the Microbiological Efficacy of Hydrogen Peroxide Vapor and Ultraviolet Light Processes for Room Decontamination",
-      "doi": "10.1086/665326",
-      "journal": "Infection Control & Hospital Epidemiology",
-      "crossref_year": 2012,
-      "subjects": [],
-      "abstract": "Objective. To compare the microbiological efficacy of hydrogen peroxide vapor (HPV) and ultraviolet radiation (UVC) for room decontamination. Design. Prospective observational study. Setting. 500-bed teaching hospital. Methods. HPV and UVC processes were performed in 15 patient rooms. Five high-touch sites were sampled before and after the processes and aerobic colony counts (ACCs) were determined. Carrier disks with ~10 6 Clostridium difficile (CD) spores and biological indicators (BIs) with 10 4 and 10 6 Geobacillus stearothermophilus spores were placed in 5 sites before decontamination. After decontamination, CD log reductions were determined and BIs were recorded as growth or no growth. Results. 93% of ACC samples that had growth before HPV did not have growth after HPV, whereas 52% of sites that had growth before UVC did not have growth after UVC ( P < .0001). The mean CD log reduction was >6 for HPV and ~2 for UVC. After HPV 100% of the 10 4 BIs did not grow, and 22% did not grow after UVC, with a range of 7%–53% for the 5 sites. For the 10 6 BIs, 99% did not grow after HPV and 0% did not grow after UVC. Sites out of direct line of sight were significantly more likely to show",
-      "resolution_method": "pdf-doi",
-      "display_title": "Comparison of the Microbiological Efficacy of Hydrogen Peroxide Vapor and Ultraviolet Light Processes for Room Decontamination",
-      "authors": [
-        "Nancy L. Havill",
-        "Brent A. Moore",
-        "John M. Boyce"
-      ],
-      "concepts": [
-        {
-          "name": "Human decontamination",
-          "score": 0.8602
-        },
-        {
-          "name": "Spore",
-          "score": 0.7773
-        },
-        {
-          "name": "Hydrogen peroxide",
-          "score": 0.6314
-        },
-        {
-          "name": "Microbiology",
-          "score": 0.4935
-        },
-        {
-          "name": "Geobacillus stearothermophilus",
-          "score": 0.493
-        },
-        {
-          "name": "Contamination",
-          "score": 0.4566
-        },
-        {
-          "name": "Medicine",
-          "score": 0.4248
-        },
-        {
-          "name": "Chemistry",
-          "score": 0.3488
-        }
-      ],
-      "duplicate_paths": [
-        "E:\\Paper farzad\\Covid-19\\Hydrogen peroxide\\Havill-2012-Comparison-of-the-microbiological-e.pdf"
-      ]
-    },
-    {
-      "id": "P0695",
-      "title": "lemmen2015",
-      "file_name": "lemmen2015.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hydrogen peroxide",
-      "type": "other primary research",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hydrogen peroxide\\lemmen2015.pdf",
-      "file_size": 213489,
-      "key_finding": "Operating-room experiment (repeated 3 times) exposing stainless steel and cotton carriers with MRSA, VRE or MDR A. baumannii plus spore indicators to hydrogen peroxide vapor; all spore indicators were inactivated (>6 log10) and no test bacteria were recovered.",
-      "clinical_bottom_line": "Hydrogen peroxide vapor effectively decontaminated porous and nonporous surfaces in an experimental OR setting; infection outcomes were not measured.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1XqApyTE80oeALTMvcVXGPpsK9vuBWhnK",
-      "drive_view": "https://drive.google.com/file/d/1XqApyTE80oeALTMvcVXGPpsK9vuBWhnK/view",
-      "drive_id": "1XqApyTE80oeALTMvcVXGPpsK9vuBWhnK",
-      "tags": [
-        "topic:covid-19",
-        "topic:hydrogen-peroxide",
-        "hydrogen-peroxide",
-        "disinfection"
-      ],
-      "name_bucket": "author_year",
-      "semantic_tagged": true,
-      "real_title": "Evaluation of hydrogen peroxide vapor for the inactivation of nosocomial pathogens on porous and nonporous surfaces",
-      "doi": "10.1016/j.ajic.2014.10.007",
-      "journal": "American Journal of Infection Control",
-      "crossref_year": 2015,
-      "subjects": [],
-      "abstract": "Clostridium difficile spores and multidrug-resistant (MDR) organisms, such as methicillin-resistant Staphylococcus aureus (MRSA), vancomycin-resistant Enterococcus (VRE), and MDR Acinetobacter baumannii, are important nosocomial pathogens that are difficult to eliminate from the hospital environment. We evaluated the efficacy of hydrogen peroxide vapor (HPV), a no-touch automated room decontamination system, for the inactivation of a range of pathogens dried onto hard nonporous and porous surfaces in an operating room (OR).\n\nStainless steel and cotton carriers containing >4 log10 viable MRSA, VRE, or MDR A baumannii were placed at 4 locations in the OR along with 7 pouched 6 log10Geobacillus stearothermophilus spore biologic indicators (BIs). HPV was then used to decontaminate the OR. The experiment was repeated 3 times.\n\nHPV inactivated all spore BIs (>6 log10 reduction), and no MRSA, VRE, or MDR A baumannii were recovered from the stainless steel and cotton carriers (>4-5 log10 reduction, depending on the starting inoculum). HPV was equally effective at all carrier locations. We did not identify any difference in efficacy for microbes dried onto stainless steel or cotton surfaces, indicating that HPV may have a role in the decontamination of both porous and nonporous surfaces.\n\nHPV is an effective way to decontaminate clinical areas where contamination with bacterial spores and MDR organisms is suspected.",
-      "resolution_method": "pdf-doi",
-      "display_title": "Evaluation of hydrogen peroxide vapor for the inactivation of nosocomial pathogens on porous and nonporous surfaces",
-      "authors": [
-        "Sebastian Lemmen",
-        "Simone Scheithauer",
-        "H. Häfner",
-        "Saber Yezli",
-        "Michael Möhr",
-        "Jonathan A. Otter"
-      ],
-      "concepts": [
-        {
-          "name": "Acinetobacter baumannii",
-          "score": 0.8089
-        },
-        {
-          "name": "Human decontamination",
-          "score": 0.7948
-        },
-        {
-          "name": "Microbiology",
-          "score": 0.6966
-        },
-        {
-          "name": "Staphylococcus aureus",
-          "score": 0.58
-        },
-        {
-          "name": "Medicine",
-          "score": 0.5596
-        },
-        {
-          "name": "Clostridium difficile",
-          "score": 0.5474
-        },
-        {
-          "name": "Spore",
-          "score": 0.5328
-        },
-        {
-          "name": "Hydrogen peroxide",
-          "score": 0.4961
-        },
-        {
-          "name": "Enterococcus",
-          "score": 0.4763
-        },
-        {
-          "name": "Vancomycin",
-          "score": 0.4146
-        },
-        {
-          "name": "Antibiotics",
-          "score": 0.3152
         }
       ]
     },
@@ -32804,77 +31589,6 @@
         {
           "name": "Mechanical ventilation",
           "score": 0.3339
-        }
-      ]
-    },
-    {
-      "id": "P0697",
-      "title": "otter2013",
-      "file_name": "otter2013.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hydrogen peroxide",
-      "type": "other primary research",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hydrogen peroxide\\otter2013.pdf",
-      "file_size": 208596,
-      "key_finding": "Before-after study in 40 rooms of patients with VRE or other MDROs sampling paired unused packaged supply items with and without hydrogen peroxide vapor exposure; 7% of 100 items were VRE-contaminated in the pilot and 9% of 100 MDRO-contaminated in follow-up.",
-      "clinical_bottom_line": "Unused packaged supplies in isolation rooms can be contaminated; the abstract excerpt suggests HPV decontamination as a cost-saving alternative to discarding, though conclusions are truncated.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1x49BhszbvNrJ6I7nsWiDZ_isb5nwf69E",
-      "drive_view": "https://drive.google.com/file/d/1x49BhszbvNrJ6I7nsWiDZ_isb5nwf69E/view",
-      "drive_id": "1x49BhszbvNrJ6I7nsWiDZ_isb5nwf69E",
-      "tags": [
-        "topic:covid-19",
-        "topic:hydrogen-peroxide",
-        "hydrogen-peroxide",
-        "disinfection"
-      ],
-      "name_bucket": "author_year",
-      "semantic_tagged": true,
-      "real_title": "Saving Costs through the Decontamination of the Packaging of Unused Medical Supplies Using Hydrogen Peroxide Vapor",
-      "doi": "10.1086/670210",
-      "journal": "Infection Control & Hospital Epidemiology",
-      "crossref_year": 2013,
-      "subjects": [],
-      "abstract": "Objective. Individually packaged sterile supply items may become contaminated and act as vectors for nosocomial transmission of multidrug-resistant organisms (MDROs). Thus, many hospitals have a policy to dispose of these unused, packaged supply items at patient discharge from the hospital, which has considerable cost implications. We evaluated the frequency of contamination of these items, the efficacy of hydrogen peroxide vapor (HPV) in disinfecting them, and costs associated with discarded supplies. Design. Before-after study. Methods. A pilot study was performed in the rooms of 20 patients known to be colonized or infected with vancomycin-resistant enterococci (VRE), and a follow-up study was performed in an additional 20 rooms of patients under precautions for various MDROs in 6 high-risk units. Five pairs of supply items were selected. One item of each pair was sampled without exposure to HPV, and the other was sampled after HPV exposure. The cost of discarded supplies was calculated by examining stock lists of supplies stored on the study units. Results. Seven (7%) of 100 items were contaminated with VRE in the pilot study, and 9 (9%) of 100 items were contaminated with MDRO",
-      "resolution_method": "pdf-doi",
-      "display_title": "Saving Costs through the Decontamination of the Packaging of Unused Medical Supplies Using Hydrogen Peroxide Vapor",
-      "authors": [
-        "Jonathan A. Otter",
-        "Elaine Nowakowski",
-        "James A. G. Salkeld",
-        "Mike Duclos",
-        "Catherine Passaretti",
-        "Saber Yezli",
-        "Tracy Ross",
-        "Karen C. Carroll",
-        "Trish M. Perl"
-      ],
-      "concepts": [
-        {
-          "name": "Dispose pattern",
-          "score": 0.6466
-        },
-        {
-          "name": "Contamination",
-          "score": 0.6149
-        },
-        {
-          "name": "Medicine",
-          "score": 0.6082
-        },
-        {
-          "name": "Human decontamination",
-          "score": 0.5367
-        },
-        {
-          "name": "Waste management",
-          "score": 0.4826
-        },
-        {
-          "name": "Environmental science",
-          "score": 0.3306
         }
       ]
     },
@@ -33012,617 +31726,6 @@
       ]
     },
     {
-      "id": "P0700",
-      "title": "Disinfectants and Disinfection By-Products (WHO Seminar Pack for Drinking-Water Quality)",
-      "file_name": "4_5915662781259975236.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hypochlorous acid",
-      "type": "other document",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hypochlorous acid\\4_5915662781259975236.pdf",
-      "file_size": 3077232,
-      "key_finding": "WHO seminar material on drinking-water disinfectants (free chlorine, chloramines, chlorine dioxide, ozone) comparing their Ct values and the disinfection by-products they form, such as trihalomethanes.",
-      "clinical_bottom_line": "No direct dental application; it only explains that HOCl is a more efficient disinfectant than hypochlorite ion and that disinfection should be at pH below 8.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1Zf9qJoHzbU8YR0S_rUhspK1xQMaQKY35",
-      "drive_view": "https://drive.google.com/file/d/1Zf9qJoHzbU8YR0S_rUhspK1xQMaQKY35/view",
-      "drive_id": "1Zf9qJoHzbU8YR0S_rUhspK1xQMaQKY35",
-      "tags": [
-        "topic:covid-19",
-        "disinfection",
-        "disinfection-by-products",
-        "drinking-water",
-        "who",
-        "who-disinfectants-disinfection-by-products"
-      ],
-      "name_bucket": "heavy",
-      "semantic_tagged": true,
-      "real_title": "Disinfectants and Disinfection By-Products (WHO Seminar Pack for Drinking-Water Quality)",
-      "doi": "",
-      "journal": "World Health Organization",
-      "crossref_year": null,
-      "subjects": [],
-      "abstract": "",
-      "display_title": "Disinfectants and Disinfection By-Products (WHO Seminar Pack for Drinking-Water Quality)",
-      "authors": []
-    },
-    {
-      "id": "P0701",
-      "title": "Antiviral Effect of Chlorine Dioxide against Influenza Virus and Its Application for Infection Control",
-      "file_name": "4_5974198469630363315.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hypochlorous acid",
-      "type": "narrative review",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hypochlorous acid\\4_5974198469630363315.pdf",
-      "file_size": 149582,
-      "key_finding": "Review by a manufacturer's authors of chlorine dioxide against influenza: in vitro, 10 ppm solution gave 99.999% or greater inactivation in 1% serum; in mice, 0.03 ppm gas lowered lung virus titre and mortality was 0/10 versus 7/10 in controls (P=0.002).",
-      "clinical_bottom_line": "Mostly laboratory and animal evidence from company-affiliated authors; authors suggest ClO2 solution and low-concentration gas could be part of influenza infection control, not established clinically.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1hAdERilmZuQGNS9v3sUqnztXgmadtRhd",
-      "drive_view": "https://drive.google.com/file/d/1hAdERilmZuQGNS9v3sUqnztXgmadtRhd/view",
-      "drive_id": "1hAdERilmZuQGNS9v3sUqnztXgmadtRhd",
-      "tags": [
-        "topic:covid-19",
-        "chlorine-dioxide",
-        "influenza",
-        "antiviral",
-        "disinfection",
-        "infection-control",
-        "chlorine-dioxide-antiviral-influenza"
-      ],
-      "name_bucket": "heavy",
-      "semantic_tagged": true,
-      "real_title": "Antiviral Effect of Chlorine Dioxide against Influenza Virus and Its Application for Infection Control",
-      "doi": "",
-      "journal": "The Open Antimicrobial Agents Journal",
-      "crossref_year": 2010,
-      "subjects": [],
-      "abstract": "Influenza is a respiratory tract infection, causing pandemic outbreaks. Spanish flu (A/H1N1), a pandemic occurred between 1918 and 1919, tolled patients and fatalities of 500 million and 50 million, respectively. Recently, human infection with highly pathogenic avian influenza A/H5N1 and swine influenza [Pandemic (H1N1) 2009] was reported. Because of the population explosion and busy global aircraft traffics, Pandemic (H1N1) 2009 is rapidly spreading worldwide. In addition, it is seriously concerned that H5N1 influenza pandemic would emerge in the very near future. The pandemic will cause the freeze of social activity and the crisis of business continuity, having a serious impact on the global economy consequently. It is fervently desired that efficient methods of infection control against influenza pandemic be developed.\n\nChlorine dioxide (ClO2) has a strong antiviral effect, and can disinfect the surface of object and the air in space. In recent study on interaction between ClO2 and protein, ClO2 oxidatively modified tyrosine and tryptophan residues, and the protein was structurally denatured. Since hemagglutinin and neuraminidase of influenza virus A/H1N1 were inactivated by the reaction with ClO2, it is likely that denaturation of the proteins caused inactivation of the virus. A low concentration (0.03 ppm) of ClO2 gas, where people can stay for a long period of time without any harmful effect, prevented the death of mice caused by infection of influenza virus delivered as aerosol. We review current information based on the efficiency of ClO2 solution and gas, and also discuss the application of ClO2 against influenza pandemics outbreak.",
-      "display_title": "Antiviral Effect of Chlorine Dioxide against Influenza Virus and Its Application for Infection Control",
-      "authors": [
-        "Takanori Miura",
-        "Takashi Shibata"
-      ]
-    },
-    {
-      "id": "P0702",
-      "title": "Evaluation of sprayed hypochlorous acid solutions for their virucidal activity against avian influenza virus through in vitro experiments",
-      "file_name": "Hakim-2015-Evaluation-of-sprayed-hypochlorous-مهمKind of coronavirus.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hypochlorous acid",
-      "type": "in vitro study",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hypochlorous acid\\Hakim-2015-Evaluation-of-sprayed-hypochlorous-مهمKind of coronavirus.pdf",
-      "file_size": 547216,
-      "key_finding": "In vitro study of 50, 100 and 200 ppm hypochlorous acid solutions, liquid or sprayed, against avian influenza H7N1; sprayed solutions reduced titre over 1,000-fold within 5 sec without organic material but lost activity with 5% FBS, and direct spraying of 100–200 ppm inactivated virus immediately.",
-      "clinical_bottom_line": "Laboratory evidence only: sprayed HOCl can inactivate avian influenza virus, but organic material abolishes its activity; not clinical proof.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1FDOJO9L66Q4EkUbDLBJdlXVUal2UK_K8",
-      "drive_view": "https://drive.google.com/file/d/1FDOJO9L66Q4EkUbDLBJdlXVUal2UK_K8/view",
-      "drive_id": "1FDOJO9L66Q4EkUbDLBJdlXVUal2UK_K8",
-      "tags": [
-        "2015",
-        "topic:covid-19",
-        "in-vitro",
-        "hypochlorous-acid",
-        "influenza",
-        "virucidal",
-        "disinfection",
-        "sprayed-hypochlorous-acid-avian-influenza"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "real_title": "Evaluation of sprayed hypochlorous acid solutions for their virucidal activity against avian influenza virus through in vitro experiments",
-      "doi": "10.1292/jvms.14-0413",
-      "journal": "The Journal of Veterinary Medical Science",
-      "crossref_year": 2015,
-      "subjects": [],
-      "abstract": "Hypochlorous acid (HOCl) solutions were evaluated for their virucidal ability against a low pathogenic avian influenza virus (AIV), H7N1. HOCl solutions containing 50, 100 and 200 ppm chlorine (pH 6) or their sprayed solutions (harvested in dishes placed at 1 or 30 cm distance between the spray nozzle and dish) were mixed with the virus with or without organic materials (5% fetal bovine serum: FBS). Under plain diluent conditions (without FBS), harvested solutions of HOCl after spraying could decrease the AIV titer by more than 1,000 times, to an undetectable level (< 2.5 log10TCID50/ml) within 5 sec, with the exception of the 50 ppm solution harvested after spraying at the distance of 30 cm. Under the dirty conditions (in the presence of 5% FBS), they lost their virucidal activity. When HOCl solutions were sprayed directly on the virus on rayon sheets for 10 sec, the solutions of 100 and 200 ppm could inactivate AIV immediately after spraying, while 50 ppm solution required at least 3 min of contact time. In the indirect spray form, after 10 sec of spraying, the lids of the dishes were opened to expose the virus on rayon sheets to HOCl. In this form, the 200 ppm solution inactivated AIV within 10 min of contact, while 50 and 100 ppm could not inactivate it. These data suggest that HOCl can be used in spray form to inactivate AIV at the farm level.",
-      "display_title": "Evaluation of sprayed hypochlorous acid solutions for their virucidal activity against avian influenza virus through in vitro experiments",
-      "authors": [
-        "Hakimullah Hakim",
-        "Chanathip Thammakarn",
-        "Atsushi Suguro",
-        "Yuki Ishida",
-        "Akinobu Kawamura",
-        "Miho Tamura",
-        "Keisuke Satoh",
-        "Misato Tsujimura",
-        "Tomomi Hasegawa",
-        "Kazuaki Takehara"
-      ]
-    },
-    {
-      "id": "P0703",
-      "title": "Hypochlorous Acid - an overview (ScienceDirect Topics)",
-      "file_name": "hypochlorous acid in body.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hypochlorous acid",
-      "type": "other document",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hypochlorous acid\\hypochlorous acid in body.pdf",
-      "file_size": 213084,
-      "key_finding": "Compilation of encyclopedia excerpts on hypochlorous acid: a reactive oxidant that oxidizes proteins and kills microbes, produces advanced oxidation protein products, and has been used on venous leg ulcers.",
-      "clinical_bottom_line": "Background reference only; no dental-specific guidance.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1xBOZVriQ7XlaR8L3s9_xcV4-qyN4aUfi",
-      "drive_view": "https://drive.google.com/file/d/1xBOZVriQ7XlaR8L3s9_xcV4-qyN4aUfi/view",
-      "drive_id": "1xBOZVriQ7XlaR8L3s9_xcV4-qyN4aUfi",
-      "tags": [
-        "topic:covid-19",
-        "hypochlorous-acid",
-        "disinfection",
-        "overview",
-        "hypochlorous-acid-overview"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "real_title": "Hypochlorous Acid - an overview (ScienceDirect Topics)",
-      "doi": "",
-      "journal": "ScienceDirect Topics (Elsevier)",
-      "crossref_year": null,
-      "subjects": [],
-      "abstract": "",
-      "display_title": "Hypochlorous Acid - an overview (ScienceDirect Topics)",
-      "authors": []
-    },
-    {
-      "id": "P0704",
-      "title": "Park-2007-Evaluation-of-liquid--and-fog-based",
-      "file_name": "Park-2007-Evaluation-of-liquid--and-fog-based.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hypochlorous acid",
-      "type": "in vitro study",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hypochlorous acid\\Park-2007-Evaluation-of-liquid--and-fog-based.pdf",
-      "file_size": 125428,
-      "key_finding": "Laboratory evaluation of Sterilox hypochlorous acid solution against human norovirus and surrogates (MS2, murine NV) in suspension, on ceramic tile and stainless steel carriers, and as a fog; 20 to 200 ppm HOCl on carriers gave ≥99.9% (≥3 log10) reductions.",
-      "clinical_bottom_line": "Laboratory evidence only that hypochlorous acid, as liquid or fog, can inactivate norovirus on surfaces; not proof of reduced clinical transmission.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1LmnXfWeaLF_JdHT0widI0jEGcx7GY4OX",
-      "drive_view": "https://drive.google.com/file/d/1LmnXfWeaLF_JdHT0widI0jEGcx7GY4OX/view",
-      "drive_id": "1LmnXfWeaLF_JdHT0widI0jEGcx7GY4OX",
-      "tags": [
-        "topic:covid-19",
-        "topic:hypochlorous-acid",
-        "in-vitro",
-        "hypochlorous-acid",
-        "disinfection",
-        "fogging"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "real_title": "Evaluation of Liquid- and Fog-Based Application of Sterilox Hypochlorous Acid Solution for Surface Inactivation of Human Norovirus",
-      "doi": "10.1128/aem.02839-06",
-      "journal": "Applied and Environmental Microbiology",
-      "crossref_year": 2007,
-      "subjects": [],
-      "abstract": "Noroviruses (NVs) are the most frequent cause of outbreaks of gastroenteritis in common settings, with surface-mediated transfer via contact with fecally contaminated surfaces implicated in exposure. NVs are environmentally stable and persistent and have a low infectious dose. Several disinfectants have been evaluated for efficacy to control viruses on surfaces, but the toxicity and potential damage to treated materials limits their applicability. Sterilox hypochlorous acid (HOCl) solution (HAS) has shown broad-spectrum antimicrobial activity while being suitable for general use. The objectives of this study were to evaluate the efficacy of HAS to reduce NV both in aqueous suspensions and on inanimate carriers. HOCl was further tested as a fog to decontaminate large spaces. HOCl effectiveness was evaluated using nonculturable human NV measured by reverse transcriptase PCR (RT-PCR) and two surrogate viruses, coliphage MS2 and murine NV, that were detected by both infectivity and RT-PCR. Exposing virus-contaminated carriers of ceramic tile (porous) and stainless steel (nonporous) to 20 to 200 ppm of HOCl solution resulted in ≥99.9% (≥3 log 10 ) reductions of both infectivity",
-      "resolution_method": "pdf-doi",
-      "display_title": "Evaluation of Liquid- and Fog-Based Application of Sterilox Hypochlorous Acid Solution for Surface Inactivation of Human Norovirus",
-      "authors": [
-        "Geun Woo Park",
-        "Deyanna M. Boston",
-        "Julie A. Kase",
-        "Mark N. Sampson",
-        "Mark D. Sobsey"
-      ],
-      "concepts": [
-        {
-          "name": "Infectivity",
-          "score": 0.8599
-        },
-        {
-          "name": "Murine norovirus",
-          "score": 0.8278
-        },
-        {
-          "name": "Hypochlorous acid",
-          "score": 0.8171
-        },
-        {
-          "name": "Chemistry",
-          "score": 0.5993
-        },
-        {
-          "name": "Norovirus",
-          "score": 0.5961
-        },
-        {
-          "name": "Disinfectant",
-          "score": 0.5888
-        },
-        {
-          "name": "Virology",
-          "score": 0.5735
-        },
-        {
-          "name": "Microbiology",
-          "score": 0.5539
-        },
-        {
-          "name": "Titer",
-          "score": 0.4961
-        },
-        {
-          "name": "Aqueous solution",
-          "score": 0.4746
-        },
-        {
-          "name": "Virus",
-          "score": 0.3291
-        }
-      ]
-    },
-    {
-      "id": "P0705",
-      "title": "Proposal for the Coronavirus measures (DND Electronics Co. Ltd.)",
-      "file_name": "Proposal for coronavirus hocl korean co مهم.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hypochlorous acid",
-      "type": "manufacturer document",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hypochlorous acid\\Proposal for coronavirus hocl korean co مهم.pdf",
-      "file_size": 3930022,
-      "key_finding": "Manufacturer proposal promoting an electrolyzed-water disinfectant generator (NaOCl or HOCl) for hand sterilization against coronavirus and other pathogens, citing Korean test reports of 99.99% bacterial reduction.",
-      "clinical_bottom_line": "Promotional document with no independent clinical evidence; not a basis for practice.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=18mdUN6lWXlzAPKZh1DzgTwMbPqa-Vi33",
-      "drive_view": "https://drive.google.com/file/d/18mdUN6lWXlzAPKZh1DzgTwMbPqa-Vi33/view",
-      "drive_id": "18mdUN6lWXlzAPKZh1DzgTwMbPqa-Vi33",
-      "tags": [
-        "topic:covid-19",
-        "covid-19",
-        "infection-control",
-        "disinfection",
-        "brochure",
-        "manufacturer-document",
-        "dnd-electronics",
-        "dnd-proposal-coronavirus-measures"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "real_title": "Proposal for the Coronavirus measures (DND Electronics Co. Ltd.)",
-      "doi": "",
-      "journal": "DND Electronics Co. Ltd.",
-      "crossref_year": null,
-      "subjects": [],
-      "abstract": "",
-      "display_title": "Proposal for the Coronavirus measures (DND Electronics Co. Ltd.)",
-      "authors": []
-    },
-    {
-      "id": "P0706",
-      "title": "Living with a killer: the effects of hypochlorous acid on mammalian cells",
-      "file_name": "Pullar-2001-Living-with-a-killer-the-effects-of.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hypochlorous acid",
-      "type": "narrative review",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hypochlorous acid\\Pullar-2001-Living-with-a-killer-the-effects-of.pdf",
-      "file_size": 382664,
-      "key_finding": "Review of how hypochlorous acid produced by phagocytes interacts with mammalian cells; higher doses cause necrosis and lower doses apoptosis or growth arrest, with glutathione and protein thiols as preferred targets of sublethal amounts.",
-      "clinical_bottom_line": "Narrative review explaining dose-dependent HOCl toxicity to host cells and its role in inflammation; mechanistic background, not clinical guidance.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1tjHZAYxFhDK_bS7pvAGfw0NWWZmkRh_b",
-      "drive_view": "https://drive.google.com/file/d/1tjHZAYxFhDK_bS7pvAGfw0NWWZmkRh_b/view",
-      "drive_id": "1tjHZAYxFhDK_bS7pvAGfw0NWWZmkRh_b",
-      "tags": [
-        "topic:covid-19",
-        "narrative-review",
-        "hypochlorous-acid",
-        "oxidative-stress",
-        "inflammation",
-        "cytotoxicity",
-        "hypochlorous-acid-effects-mammalian-cells",
-        "2000"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "real_title": "Living with a killer: the effects of hypochlorous acid on mammalian cells",
-      "doi": "10.1080/713803731",
-      "journal": "IUBMB Life",
-      "crossref_year": 2000,
-      "subjects": [],
-      "abstract": "The production of hypochlorous acid (HOCl) by the myeloperoxidase-H2O2-Cl- system of phagocytes plays a vital role in the ability of these cells to kill a wide range of pathogens. However, the generation of a potent oxidant is not without risk to the host, and there is evidence that HOCl contributes to the tissue injury associated with inflammation. In this review, we discuss the biological reactivity of HOCl, and detail what is known of how it interacts with mammalian cells. The outcome of exposure is dependent on the dose of oxidant, with higher doses causing necrosis, and apoptosis or growth arrest occurring with lower amounts. Glutathione (GSH) and protein thiols are easily oxidized, and are preferred targets with low, sublethal amounts of HOCl. Thiol enzymes vary in their sensitivity to HOCl, with glyceraldehyde-3-phosphate dehydrogenase being most susceptible. Indeed, loss of activity occurred before GSH oxidation. The products of these reactions and the ability of cells to regenerate oxidized thiols are discussed. Recent reports have indicated that HOCl can activate cell signaling pathways, and these studies may provide important information on the role of this oxidant in inflammation.",
-      "display_title": "Living with a killer: the effects of hypochlorous acid on mammalian cells",
-      "authors": [
-        "Juliet M Pullar",
-        "Margret C M Vissers",
-        "Christine C Winterbourn"
-      ]
-    },
-    {
-      "id": "P0707",
-      "title": "Wu-2018-Antibacterial-effect-of-hypochlorou",
-      "file_name": "Wu-2018-Antibacterial-effect-of-hypochlorou.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Hypochlorous acid",
-      "type": "in vitro study",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Hypochlorous acid\\Wu-2018-Antibacterial-effect-of-hypochlorou.pdf",
-      "file_size": 1545046,
-      "key_finding": "Ex vivo study of middle meatus swabs from chronic rhinosinusitis patients soaked in HOCl, saline, 75% alcohol or povidone-iodine; after 5 minutes bacteria grew from 14 of 32 HOCl specimens vs 3 with alcohol, similar to untreated controls.",
-      "clinical_bottom_line": "Laboratory evidence that HOCl solution did not exert an antibacterial effect on nasal secretions within 5 minutes; not clinical proof.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1PPixWnw_a2Wld0OQCe3lgzD6HXc7JR_2",
-      "drive_view": "https://drive.google.com/file/d/1PPixWnw_a2Wld0OQCe3lgzD6HXc7JR_2/view",
-      "drive_id": "1PPixWnw_a2Wld0OQCe3lgzD6HXc7JR_2",
-      "tags": [
-        "topic:covid-19",
-        "topic:hypochlorous-acid",
-        "in-vitro",
-        "hypochlorous-acid"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "real_title": "Antibacterial Effect of Hypochlorous Acid Solution on Nasal Discharge from Patients with Chronic Rhinosinusitis",
-      "doi": "10.1155/2018/8568694",
-      "journal": "International Journal of Otolaryngology",
-      "crossref_year": 2018,
-      "subjects": [],
-      "abstract": "Purpose . The antibacterial effect of hypochlorous acid (HOCl) solution on nasal secretion of patients with chronic rhinosinusitis (CRS) was investigated. Materials and Methods . Five swab specimens were collected from the middle meatus of CRS patients. The first one was placed directly in a Thanswab tube while all of the others were placed randomly into 4 glass tubes containing either HOCl solution, normal saline (NS), 75% alcohol, or povidone-iodine (PVPI) solution for one minute in the first part and for 5 minutes in the second part of the study before transfer to a Thanswab tube. Results . Bacteria were cultured from 27 of 50 specimens when they were put directly in a Thanswab tube and from 26 after soaking in HOCl solution, 27 in NS, 13 in 75% alcohol, and 25 in PVPI solution for one minute. In the second part of the study, bacteria were cultured from 14 of 32 specimens when they were put directly in a Thanswab tube and from 14 after soaking in HOCl solution, 13 in NS, 3 in 75% alcohol, and 11 in PVPI solution for 5 minutes. Conclusions . This study showed that HOCL solution did not exert an antibacterial effect on nasal secretion from CRS patients within 5 minutes.",
-      "resolution_method": "pdf-doi",
-      "display_title": "Antibacterial Effect of Hypochlorous Acid Solution on Nasal Discharge from Patients with Chronic Rhinosinusitis",
-      "authors": [
-        "Shang‐Heng Wu",
-        "Jen-Fu Lin",
-        "Rong‐San Jiang"
-      ],
-      "concepts": [
-        {
-          "name": "Hypochlorous acid",
-          "score": 0.9472
-        },
-        {
-          "name": "Medicine",
-          "score": 0.905
-        },
-        {
-          "name": "Chronic rhinosinusitis",
-          "score": 0.7188
-        },
-        {
-          "name": "Nasal discharge",
-          "score": 0.5093
-        },
-        {
-          "name": "Sinusitis",
-          "score": 0.4685
-        },
-        {
-          "name": "Dermatology",
-          "score": 0.3442
-        }
-      ]
-    },
-    {
-      "id": "P0708",
-      "title": "4 5855052696700061604",
-      "file_name": "4_5855052696700061604.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Mask",
-      "type": "other primary research",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Mask\\4_5855052696700061604.pdf",
-      "file_size": 4650654,
-      "key_finding": "Particle image velocimetry experiments simulating face-to-face interaction tested five snug-fit masks (N-95, surgical, cloth PM 2.5, cloth, wetted cloth PM 2.5); all except N-95 showed leakage of airborne droplets for both wearer-protection and source-control configurations.",
-      "clinical_bottom_line": "Laboratory flow data indicate only N-95 masks prevented droplet leakage in close face-to-face contact; other masks offer incomplete protection.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1S5Dg9iFAA08zNS9cfmUgFUaF-2MXwGu0",
-      "drive_view": "https://drive.google.com/file/d/1S5Dg9iFAA08zNS9cfmUgFUaF-2MXwGu0/view",
-      "drive_id": "1S5Dg9iFAA08zNS9cfmUgFUaF-2MXwGu0",
-      "tags": [
-        "topic:covid-19",
-        "topic:mask",
-        "covid-19",
-        "face-mask",
-        "aerosol",
-        "infection-control"
-      ],
-      "name_bucket": "heavy",
-      "semantic_tagged": true,
-      "real_title": "Can face masks offer protection from airborne sneeze and cough droplets in close-up, face-to-face human interactions?—A quantitative study",
-      "doi": "10.1063/5.0035072",
-      "journal": "Physics of Fluids",
-      "crossref_year": 2020,
-      "subjects": [],
-      "abstract": "Day-to-day observations reveal numerous medical and social situations where maintaining physical distancing is either not feasible or not practiced during the time of a viral pandemic, such as, the coronavirus disease 2019 (COVID-19). During these close-up, face-to-face interactions, a common belief is that a susceptible person wearing a face mask is safe, at least to a large extent, from foreign airborne sneeze and cough droplets. This study, for the first time, quantitatively verifies this notion. Droplet flow visualization experiments of a simulated face-to-face interaction with a mask in place were conducted using the particle image velocimetry setup. Five masks were tested in a snug-fit configuration (i.e., with no leakage around the edges): N-95, surgical, cloth PM 2.5, cloth, and wetted cloth PM 2.5. Except for the N-95 mask, the findings showed leakage of airborne droplets through all the face masks in both the configurations of (1) a susceptible person wearing a mask for protection and (2) a virus carrier wearing a mask to prevent the spreading of the virus. When the leakage percentages of these airborne droplets were expressed in terms of the number of virus particles, it",
-      "resolution_method": "pdf-doi",
-      "display_title": "Can face masks offer protection from airborne sneeze and cough droplets in close-up, face-to-face human interactions?—A quantitative study",
-      "authors": [
-        "Javed Akhtar",
-        "Abner Luna Garcia",
-        "Leonardo Saenz",
-        "Sarada Kuravi",
-        "Fangjun Shu",
-        "Krishna Kota"
-      ],
-      "concepts": [
-        {
-          "name": "Face masks",
-          "score": 0.8541
-        },
-        {
-          "name": "Coronavirus disease 2019 (COVID-19)",
-          "score": 0.5427
-        },
-        {
-          "name": "Face (sociological concept)",
-          "score": 0.4714
-        },
-        {
-          "name": "Distancing",
-          "score": 0.4679
-        },
-        {
-          "name": "Physics",
-          "score": 0.4553
-        },
-        {
-          "name": "Face-to-face",
-          "score": 0.4489
-        },
-        {
-          "name": "Social distance",
-          "score": 0.4469
-        },
-        {
-          "name": "Leakage (economics)",
-          "score": 0.4151
-        },
-        {
-          "name": "Computer science",
-          "score": 0.3814
-        },
-        {
-          "name": "Simulation",
-          "score": 0.3237
-        }
-      ]
-    },
-    {
-      "id": "P0709",
-      "title": "bessesen2015",
-      "file_name": "bessesen2015.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Mask",
-      "type": "other primary research",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Mask\\bessesen2015.pdf",
-      "file_size": 1071168,
-      "key_finding": "Feasibility study at a Veterans Affairs medical center in which health care workers disinfected reusable elastomeric respirators; all made multiple errors using manufacturers' instructions, whereas naïve workers using newly developed SOPs made zero errors.",
-      "clinical_bottom_line": "Reusable respirators can be disinfected by health care workers with minimal training when clear standard operating procedures are used.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1LSe417UUobxd9bWPlVk1okO2lb974QD5",
-      "drive_view": "https://drive.google.com/file/d/1LSe417UUobxd9bWPlVk1okO2lb974QD5/view",
-      "drive_id": "1LSe417UUobxd9bWPlVk1okO2lb974QD5",
-      "tags": [
-        "topic:covid-19",
-        "topic:mask",
-        "infection-control",
-        "disinfection",
-        "respirator"
-      ],
-      "name_bucket": "author_year",
-      "semantic_tagged": true,
-      "real_title": "Disinfection of reusable elastomeric respirators by health care workers: A feasibility study and development of standard operating procedures",
-      "doi": "10.1016/j.ajic.2015.02.009",
-      "journal": "American Journal of Infection Control",
-      "crossref_year": 2015,
-      "subjects": [],
-      "abstract": "•Reusable face masks may be needed during a respiratory illness pandemic.•An easily deployed, reliable mask disinfection procedure is needed.•We developed standard operating procedures for mask disinfection.•Health care workers following manufacturers' instructions made multiple errors.•Health care workers following the standard operating procedures made no errors when disinfecting masks. BackgroundThis was a feasibility study in a Department of Veterans Affairs Medical Center to develop a standard operating procedure (SOP) to be used by health care workers to disinfect reusable elastomeric respirators under pandemic conditions. Registered and licensed practical nurses, nurse practitioners, aides, clinical technicians, and physicians took part in the study.MethodsHealth care worker volunteers were provided with manufacturers' cleaning and disinfection instructions and all necessary supplies. They were observed and filmed. SOPs were developed, based on these observations, and tested on naïve volunteer health care workers. Error rates using manufacturers' instructions and SOPs were compared.ResultsWhen using respirator manufacturers' cleaning and disinfection instructions, without specific training or supervision, all subjects made multiple errors. When using the SOPs developed in the study, without specific training or guidance, naïve health care workers disinfected respirators with zero errors.ConclusionReusable facial protective equipment may be disinfected by health care workers with minimal training using SOPs. This was a feasibility study in a Department of Veterans Affairs Medical Center to develop a standard operating procedure (SOP) to be used by health care workers to disinfect reusable elastomeric respirators under pandemic conditions. Registered and licensed practical nurses, nurse practitioners, aides, clinical technicians, and physicians took part in the study. Health care worker volunteers were provided with manufacturers' cleaning and disinfection instructions and all necessary supplies. They were observed and filmed. SOPs were developed, based on these observations, and tested on naïve volunteer health care workers. Error rates using manufacturers' instructions and SOPs were compared. When using respirator manufacturers' cleaning and disinfection instructions, without specific training or supervision, all subjects made multiple errors. When using the SOPs developed in the study, without specific training or guidance, naïve health care workers disinfected respirators with zero errors. Reusable facial protective equipment may be disinfected by health care workers with minimal training using SOPs.",
-      "resolution_method": "pdf-doi",
-      "display_title": "Disinfection of reusable elastomeric respirators by health care workers: A feasibility study and development of standard operating procedures",
-      "authors": [
-        "Mary Bessesen",
-        "Jill Adams",
-        "Lewis J. Radonovich",
-        "Judith Anderson"
-      ],
-      "concepts": [
-        {
-          "name": "Respirator",
-          "score": 0.8838
-        },
-        {
-          "name": "Medicine",
-          "score": 0.8059
-        },
-        {
-          "name": "Standard operating procedure",
-          "score": 0.7808
-        },
-        {
-          "name": "Personal protective equipment",
-          "score": 0.682
-        },
-        {
-          "name": "Veterans Affairs",
-          "score": 0.6266
-        },
-        {
-          "name": "Health care",
-          "score": 0.6219
-        },
-        {
-          "name": "Medical emergency",
-          "score": 0.5473
-        },
-        {
-          "name": "Infection control",
-          "score": 0.4624
-        },
-        {
-          "name": "Medical equipment",
-          "score": 0.4276
-        },
-        {
-          "name": "Coronavirus disease 2019 (COVID-19)",
-          "score": 0.3662
-        },
-        {
-          "name": "Nursing",
-          "score": 0.3235
-        }
-      ]
-    },
-    {
-      "id": "P0710",
-      "title": "Cleaning and Disinfecting 3M Reusable Elastomeric Half and Full Facepiece Respirators following Potential Exposure to Coronaviruses (Technical Bulletin, Revision 4)",
-      "file_name": "multimedia.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Mask",
-      "type": "manufacturer document",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Mask\\multimedia.pdf",
-      "file_size": 1320232,
-      "key_finding": "A 3M technical bulletin describes how to clean and disinfect reusable elastomeric half and full facepiece respirators after potential coronavirus exposure, using warm-water cleaning followed by sodium hypochlorite, 70% isopropanol or an EPA-registered disinfectant. 3M states it did not evaluate virus inactivation itself and relies on CDC and EPA guidance.",
-      "clinical_bottom_line": "Reusable respirator facepieces can be cleaned after each use and disinfected with approved agents, but filter media must not be cleaned and repeated isopropanol soaking can damage inhalation valves.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1t2N9H54HfOy8Hnlwe9yV-0v8hYaHEPlx",
-      "drive_view": "https://drive.google.com/file/d/1t2N9H54HfOy8Hnlwe9yV-0v8hYaHEPlx/view",
-      "drive_id": "1t2N9H54HfOy8Hnlwe9yV-0v8hYaHEPlx",
-      "tags": [
-        "topic:covid-19",
-        "covid-19",
-        "respirator",
-        "disinfection",
-        "infection-control",
-        "brochure",
-        "manufacturer-document",
-        "3m",
-        "3m-cleaning-reusable-elastomeric-respirators",
-        "topic:zirconia",
-        "cleaning-3m-reusable-respirators"
-      ],
-      "name_bucket": "heavy",
-      "semantic_tagged": true,
-      "real_title": "Cleaning and Disinfecting 3M Reusable Elastomeric Half and Full Facepiece Respirators following Potential Exposure to Coronaviruses (Technical Bulletin, Revision 4)",
-      "doi": "",
-      "journal": "3M",
-      "crossref_year": 2020,
-      "subjects": [],
-      "abstract": "",
-      "display_title": "Cleaning and Disinfecting 3M Reusable Elastomeric Half and Full Facepiece Respirators following Potential Exposure to Coronaviruses (Technical Bulletin, Revision 4)",
-      "authors": [],
-      "duplicate_paths": [
-        "E:\\Paper farzad\\zirconia\\flexural strength\\Cleaning and Disinfecting 3M Reusable Elastomeric Half and Full Facepiece Respirators following Potential Exposure to Coronaviruses.pdf"
-      ]
-    },
-    {
       "id": "P0711",
       "title": "Eggers-2018-In-vitro-bactericidal-and-virucidal",
       "file_name": "Eggers-2018-In-vitro-bactericidal-and-virucidal.pdf",
@@ -33704,380 +31807,6 @@
         "J Combes",
         "V S Sunkaraneni",
         "S J Challacombe"
-      ]
-    },
-    {
-      "id": "P0714",
-      "title": "Investigation of gaseous ozone for MRSA decontamination of hospital side-rooms",
-      "file_name": "berrington1998.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/Ozone",
-      "type": "other primary research",
-      "local_path": "E:\\Paper farzad\\Covid-19\\Ozone\\berrington1998.pdf",
-      "file_size": 502335,
-      "key_finding": "Experimental evaluation of a domestic gaseous ozone generator in a hospital side-room for 4 and 7 h against MSSA and MRSA contamination models; ozone reached 0.14 ppm and reduced counts near the generator, but effects elsewhere were at best limited, with MRSA more resistant.",
-      "clinical_bottom_line": "The tested ozone device was judged inadequate for decontaminating hospital side-rooms, while reaching concentrations sufficient to cause mild pulmonary toxicity.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=16bzNWYc67zM-YQX9aJFVbT9Jc5gUmgxl",
-      "drive_view": "https://drive.google.com/file/d/16bzNWYc67zM-YQX9aJFVbT9Jc5gUmgxl/view",
-      "drive_id": "16bzNWYc67zM-YQX9aJFVbT9Jc5gUmgxl",
-      "tags": [
-        "1998",
-        "topic:covid-19",
-        "ozone",
-        "mrsa",
-        "disinfection",
-        "infection-control",
-        "gaseous-ozone-mrsa-decontamination"
-      ],
-      "name_bucket": "author_year",
-      "semantic_tagged": true,
-      "real_title": "Investigation of gaseous ozone for MRSA decontamination of hospital side-rooms",
-      "doi": "10.1016/s0195-6701(98)90026-3",
-      "journal": "Journal of Hospital Infection",
-      "crossref_year": 1998,
-      "subjects": [],
-      "abstract": "A domestic, gaseous ozone generator was investigated for use in the decontamination of hospital side-rooms that have housed patients colonized with methicillin-resistant Staphylococcus aureus (MRSA). Three models of bacterial contamination were used. These were exposed to ozone generation in a standard hospital side-room for 4 and 7 h. A methicillin-sensitive and a methicillin-resistant strain of S. aureus were compared. Ozone concentrations of 0.14 ppm were reached, levels which are sufficient to cause mild pulmonary toxicity. Bacterial counts were reduced in the vicinity of the gas generator in most instances, but the effect elsewhere in the room was, at best, limited. MRSA appeared more resistant to the effects of ozone than methicillin-sensitive S. aureus. We conclude that the device tested would be inadequate for the decontamination of such hospital side-rooms.",
-      "display_title": "Investigation of gaseous ozone for MRSA decontamination of hospital side-rooms",
-      "authors": [
-        "A W Berrington",
-        "S J Pedler"
-      ]
-    },
-    {
-      "id": "P0715",
-      "title": "1 5096082244070539581",
-      "file_name": "1_5096082244070539581.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/vaccine",
-      "type": "editorial / commentary",
-      "local_path": "E:\\Paper farzad\\Covid-19\\vaccine\\1_5096082244070539581.pdf",
-      "file_size": 345332,
-      "key_finding": "This NEJM editorial comments on the phase 3 BNT162b2 mRNA vaccine trial, noting 95% efficacy (8 versus 162 cases) and mostly mild transient reactions, and calls the result a triumph while listing open questions on duration, asymptomatic infection and cold storage.",
-      "clinical_bottom_line": "The editorial presents the mRNA vaccine as highly effective and acceptably safe in early data, with longer-term safety and durability still unknown.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1yZnVy8q26Y1QWExAxrlNs0onPaRGpyCY",
-      "drive_view": "https://drive.google.com/file/d/1yZnVy8q26Y1QWExAxrlNs0onPaRGpyCY/view",
-      "drive_id": "1yZnVy8q26Y1QWExAxrlNs0onPaRGpyCY",
-      "tags": [
-        "topic:covid-19",
-        "topic:vaccine",
-        "covid-19",
-        "editorial",
-        "vaccination"
-      ],
-      "name_bucket": "heavy",
-      "semantic_tagged": true,
-      "real_title": "SARS-CoV-2 Vaccination — An Ounce (Actually, Much Less) of Prevention",
-      "doi": "10.1056/nejme2034717",
-      "journal": "New England Journal of Medicine",
-      "crossref_year": 2020,
-      "subjects": [],
-      "abstract": "The Covid-19 epidemic continues to rage, especially in countries that have been unable or unwilling to institute strong public health measures. A return to normality has increasingly come to rely o...",
-      "resolution_method": "pdf-doi",
-      "display_title": "SARS-CoV-2 Vaccination — An Ounce (Actually, Much Less) of Prevention",
-      "authors": [
-        "Eric J. Rubin",
-        "Dan L. Longo"
-      ],
-      "concepts": [
-        {
-          "name": "Fluid ounce (US)",
-          "score": 0.9208
-        },
-        {
-          "name": "Coronavirus disease 2019 (COVID-19)",
-          "score": 0.6281
-        },
-        {
-          "name": "Vaccination",
-          "score": 0.6273
-        },
-        {
-          "name": "Public health",
-          "score": 0.5912
-        },
-        {
-          "name": "Severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2)",
-          "score": 0.5581
-        },
-        {
-          "name": "2019-20 coronavirus outbreak",
-          "score": 0.5181
-        },
-        {
-          "name": "Normality",
-          "score": 0.5079
-        },
-        {
-          "name": "Environmental health",
-          "score": 0.4543
-        },
-        {
-          "name": "Rage (emotion)",
-          "score": 0.4492
-        },
-        {
-          "name": "Virology",
-          "score": 0.4338
-        },
-        {
-          "name": "Pandemic",
-          "score": 0.4192
-        },
-        {
-          "name": "Medicine",
-          "score": 0.3908
-        }
-      ]
-    },
-    {
-      "id": "P0716",
-      "title": "1 5096082244070539582",
-      "file_name": "1_5096082244070539582.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/vaccine",
-      "type": "randomized controlled trial",
-      "local_path": "E:\\Paper farzad\\Covid-19\\vaccine\\1_5096082244070539582.pdf",
-      "file_size": 772232,
-      "key_finding": "Multinational placebo-controlled, observer-blinded RCT of 43,548 persons aged ≥16 years randomized to two doses of BNT162b2 or placebo; 8 vs 162 Covid-19 cases occurred from 7 days after dose 2, giving 95% efficacy (95% credible interval, 90.3 to 97.6).",
-      "clinical_bottom_line": "Two-dose BNT162b2 conferred 95% protection against Covid-19, with short-term safety over a median 2 months similar to other viral vaccines.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1XtOrYxycyVa4Uo96jYX91AdE-dHIfHQR",
-      "drive_view": "https://drive.google.com/file/d/1XtOrYxycyVa4Uo96jYX91AdE-dHIfHQR/view",
-      "drive_id": "1XtOrYxycyVa4Uo96jYX91AdE-dHIfHQR",
-      "tags": [
-        "topic:covid-19",
-        "topic:vaccine",
-        "covid-19",
-        "randomized-controlled-trial",
-        "vaccination",
-        "mrna-vaccine"
-      ],
-      "name_bucket": "heavy",
-      "semantic_tagged": true,
-      "real_title": "Safety and Efficacy of the BNT162b2 mRNA Covid-19 Vaccine",
-      "doi": "10.1056/nejmoa2034577",
-      "journal": "New England Journal of Medicine",
-      "crossref_year": 2020,
-      "subjects": [],
-      "abstract": "BACKGROUND: Severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) infection and the resulting coronavirus disease 2019 (Covid-19) have afflicted tens of millions of people in a worldwide pandemic. Safe and effective vaccines are needed urgently. METHODS: In an ongoing multinational, placebo-controlled, observer-blinded, pivotal efficacy trial, we randomly assigned persons 16 years of age or older in a 1:1 ratio to receive two doses, 21 days apart, of either placebo or the BNT162b2 vaccine candidate (30 μg per dose). BNT162b2 is a lipid nanoparticle-formulated, nucleoside-modified RNA vaccine that encodes a prefusion stabilized, membrane-anchored SARS-CoV-2 full-length spike protein. The primary end points were efficacy of the vaccine against laboratory-confirmed Covid-19 and safety. RESULTS: A total of 43,548 participants underwent randomization, of whom 43,448 received injections: 21,720 with BNT162b2 and 21,728 with placebo. There were 8 cases of Covid-19 with onset at least 7 days after the second dose among participants assigned to receive BNT162b2 and 162 cases among those assigned to placebo; BNT162b2 was 95% effective in preventing Covid-19 (95% credible interval, 90.3 to 97.6). Similar vaccine efficacy (generally 90 to 100%) was observed across subgroups defined by age, sex, race, ethnicity, baseline body-mass index, and the presence of coexisting conditions. Among 10 cases of severe Covid-19 with onset after the first dose, 9 occurred in placebo recipients and 1 in a BNT162b2 recipient. The safety profile of BNT162b2 was characterized by short-term, mild-to-moderate pain at the injection site, fatigue, and headache. The incidence of serious adverse events was low and was similar in the vaccine and placebo groups. CONCLUSIONS: A two-dose regimen of BNT162b2 conferred 95% protection against Covid-19 in persons 16 years of age or older. Safety over a median of 2 months was similar to that of other viral vaccines. (Funded by BioNTech and Pfizer; ClinicalTrials.gov number, NCT04368728.).",
-      "resolution_method": "pdf-doi",
-      "display_title": "Safety and Efficacy of the BNT162b2 mRNA Covid-19 Vaccine",
-      "authors": [
-        "Fernando P. Polack",
-        "Stephen J. Thomas",
-        "Nicholas Kitchin",
-        "Judith Absalon",
-        "Alejandra Gurtman",
-        "Stephen Lockhart",
-        "John L. Perez",
-        "Gonzalo Pérez Marc",
-        "Edson Duarte Moreira",
-        "Cristiano A. F. Zerbini",
-        "Ruth Bailey",
-        "Kena A. Swanson",
-        "Satrajit Roychoudhury",
-        "Kenneth Koury",
-        "Ping Li",
-        "Warren V. Kalina",
-        "David Cooper",
-        "Robert W. Frenck",
-        "Laura L Hammitt",
-        "Özlem Türeci",
-        "Haylene Nell",
-        "Axel Schaefer",
-        "Serhat Ünal",
-        "Dina B Tresnan",
-        "Susan Mather",
-        "Philip R. Dormitzer",
-        "Uğur Şahin",
-        "Kathrin U. Jansen",
-        "William C. Gruber"
-      ],
-      "concepts": [
-        {
-          "name": "Coronavirus disease 2019 (COVID-19)",
-          "score": 0.7877
-        },
-        {
-          "name": "Severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2)",
-          "score": 0.6601
-        },
-        {
-          "name": "2019-20 coronavirus outbreak",
-          "score": 0.5977
-        },
-        {
-          "name": "Virology",
-          "score": 0.5813
-        },
-        {
-          "name": "Business",
-          "score": 0.3979
-        },
-        {
-          "name": "Medicine",
-          "score": 0.354
-        }
-      ]
-    },
-    {
-      "id": "P0717",
-      "title": "4 5799956740262855278",
-      "file_name": "4_5799956740262855278.pdf",
-      "topic": "Covid-19",
-      "topic_path": "Covid-19/vaccine",
-      "type": "other primary research",
-      "local_path": "E:\\Paper farzad\\Covid-19\\vaccine\\4_5799956740262855278.pdf",
-      "file_size": 16685575,
-      "key_finding": "Whole-blood single-cell analysis of COVID-19 patients; mild disease showed coordinated interferon-stimulated gene expression across cell populations, absent in severe disease, where patients had high antibody titres that functionally blocked production of ISG-expressing cells.",
-      "clinical_bottom_line": "Mechanistic immunology findings suggesting potential immunotherapy targets in severe COVID-19; no direct clinical or dental application.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1OcTqY8jW-I4S78R8RkbpPT8EqMX83-gn",
-      "drive_view": "https://drive.google.com/file/d/1OcTqY8jW-I4S78R8RkbpPT8EqMX83-gn/view",
-      "drive_id": "1OcTqY8jW-I4S78R8RkbpPT8EqMX83-gn",
-      "tags": [
-        "topic:covid-19",
-        "topic:vaccine",
-        "covid-19",
-        "sars-cov-2",
-        "immunology"
-      ],
-      "name_bucket": "heavy",
-      "semantic_tagged": true,
-      "real_title": "Global absence and targeting of protective immune states in severe COVID-19",
-      "doi": "10.1038/s41586-021-03234-7",
-      "journal": "Nature",
-      "crossref_year": 2021,
-      "subjects": [],
-      "abstract": "Although infection with severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) has pleiotropic and systemic effects in some individuals, many others experience milder symptoms. Here, to gain a more comprehensive understanding of the distinction between severe and mild phenotypes in the pathology of coronavirus disease 2019 (COVID-19) and its origins, we performed a whole-blood-preserving single-cell analysis protocol to integrate contributions from all major immune cell types of the blood-including neutrophils, monocytes, platelets, lymphocytes and the contents of the serum. Patients with mild COVID-19 exhibit a coordinated pattern of expression of interferon-stimulated genes (ISGs)across every cell population, whereas these ISG-expressing cells are systemically absent in patients with severe disease. Paradoxically, individuals with severe COVID-19 produce very high titres of anti-SARS-CoV-2 antibodies and have a lower viral load compared to individuals with mild disease. Examination of the serum from patients with severe COVID-19 shows that these patients uniquely produce antibodies that functionally block the production of the ISG-expressing cells associated with mild disease, by activating conserved signalling circuits that dampen cellular responses to interferons. Overzealous antibody responses pit the immune system against itself in many patients with COVID-19, and perhaps also in individuals with other viral infections. Our findings reveal potential targets for immunotherapies in patients with severe COVID-19 to re-engage viral defence.",
-      "resolution_method": "pdf-doi",
-      "display_title": "Global absence and targeting of protective immune states in severe COVID-19",
-      "authors": [
-        "Alexis J. Combes",
-        "Tristan Courau",
-        "Nicholas F. Kuhn",
-        "Kenneth H. Hu",
-        "Arja Ray",
-        "William S. Chen",
-        "Nayvin W. Chew",
-        "Simon J. Cleary",
-        "Divyashree Kushnoor",
-        "Gabriella C. Reeder",
-        "Alan Shen",
-        "Jessica Tsui",
-        "Kamir J. Hiam-Galvez",
-        "Priscila Muñoz-Sandoval",
-        "Wandi S. Zhu",
-        "David Lee",
-        "Yang Sun",
-        "Ran You",
-        "Mélia Magnen",
-        "Lauren Rodriguez",
-        "K. W. Im",
-        "Nina K. Serwas",
-        "Aleksandra Leligdowicz",
-        "Colin R. Zamecnik",
-        "Rita P. Loudermilk",
-        "Michael R. Wilson",
-        "Chun Ye",
-        "Gabriela K. Fragiadakis",
-        "Mark R. Looney",
-        "Vincent Chan",
-        "Alyssa Ward",
-        "Sidney Carrillo",
-        "Cathy Cai",
-        "Jenny Zhan",
-        "Bushra Samad",
-        "Suzanna Chak",
-        "Rajani Ghale",
-        "Jeremy Giberson",
-        "Ana Gonzalez",
-        "Alejandra Jáuregui",
-        "Deanna Lee",
-        "Nguyễn Hoàng Việt",
-        "Kimberly Yee",
-        "Yumiko Abe‐Jones",
-        "Logan Pierce",
-        "Priya Prasad",
-        "Pratik Sinha",
-        "Alexander J. Beagle",
-        "Tasha Lea",
-        "Armond Esmalii",
-        "Austin Sigman",
-        "Gabriel M. Ortiz",
-        "Kattie Raffel",
-        "Chayse Jones",
-        "Kathleen D. Liu",
-        "Walter L. Eckalbar",
-        "Michael A. Matthay",
-        "David J. Erle",
-        "Prescott G. Woodruff",
-        "Charles Langelier",
-        "Kirsten N. Kangelaris",
-        "Carolyn M. Hendrickson",
-        "Carolyn S. Calfee",
-        "Arjun A. Rao",
-        "Matthew F. Krummel"
-      ],
-      "concepts": [
-        {
-          "name": "Immune system",
-          "score": 0.7362
-        },
-        {
-          "name": "Immunology",
-          "score": 0.728
-        },
-        {
-          "name": "Antibody",
-          "score": 0.6953
-        },
-        {
-          "name": "Disease",
-          "score": 0.6198
-        },
-        {
-          "name": "Population",
-          "score": 0.5475
-        },
-        {
-          "name": "Interferon",
-          "score": 0.4605
-        },
-        {
-          "name": "Phenotype",
-          "score": 0.4564
-        },
-        {
-          "name": "Coronavirus disease 2019 (COVID-19)",
-          "score": 0.4325
-        },
-        {
-          "name": "Medicine",
-          "score": 0.431
-        },
-        {
-          "name": "Coronavirus",
-          "score": 0.429
-        },
-        {
-          "name": "Biology",
-          "score": 0.4266
-        },
-        {
-          "name": "Virology",
-          "score": 0.3813
-        }
       ]
     },
     {
@@ -76415,42 +74144,6 @@
       ]
     },
     {
-      "id": "P1658",
-      "title": "Your guide to the contraceptive implant",
-      "file_name": "contraceptive-implant-your-guide.pdf",
-      "topic": "Megagen",
-      "topic_path": "Megagen/Anyridge",
-      "type": "other document",
-      "local_path": "E:\\Paper farzad\\Megagen\\Anyridge\\contraceptive-implant-your-guide.pdf",
-      "file_size": 250473,
-      "key_finding": "A patient leaflet explaining the progestogen contraceptive implant placed under the skin of the upper arm, including effectiveness, advantages, risks, insertion and removal. It is not about dental implants.",
-      "clinical_bottom_line": "Not relevant to dentistry; it concerns hormonal contraception.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1km3cRGzq7CFij1A-XeRKgTtwezTU5v2c",
-      "drive_view": "https://drive.google.com/file/d/1km3cRGzq7CFij1A-XeRKgTtwezTU5v2c/view",
-      "drive_id": "1km3cRGzq7CFij1A-XeRKgTtwezTU5v2c",
-      "tags": [
-        "topic:megagen",
-        "contraceptive-implant",
-        "contraception",
-        "patient-information",
-        "brochure",
-        "guide-to-contraceptive-implant"
-      ],
-      "name_bucket": "meaningful",
-      "semantic_tagged": true,
-      "real_title": "Your guide to the contraceptive implant",
-      "doi": "",
-      "journal": "",
-      "crossref_year": null,
-      "subjects": [],
-      "abstract": "",
-      "display_title": "Your guide to the contraceptive implant",
-      "authors": []
-    },
-    {
       "id": "P1660",
       "title": "55522",
       "file_name": "55522.pdf",
@@ -77086,44 +74779,6 @@
           "score": 0.3717
         }
       ]
-    },
-    {
-      "id": "P1677",
-      "title": "MACOR Machinable Glass Ceramic for Industrial Applications (Corning product brochure)",
-      "file_name": "71759a443535431395eb34ebead091cb.pdf",
-      "topic": "MICA glass ceramic",
-      "topic_path": "MICA glass ceramic",
-      "type": "manufacturer document",
-      "local_path": "E:\\Paper farzad\\MICA glass ceramic\\71759a443535431395eb34ebead091cb.pdf",
-      "file_size": 2241416,
-      "key_finding": "Corning industrial brochure for MACOR machinable glass ceramic, a material of 55% fluorophlogopite mica and 45% borosilicate glass, listing its thermal, mechanical, electrical and chemical properties and industrial applications.",
-      "clinical_bottom_line": "No clinical or dental content: it is an industrial product brochure.",
-      "linked_episodes": [],
-      "drive_link": "",
-      "status": "linked",
-      "drive_download": "https://drive.google.com/uc?export=download&id=1ruubTk6yEEjLx5WQkhWq9xOBeuyqaUru",
-      "drive_view": "https://drive.google.com/file/d/1ruubTk6yEEjLx5WQkhWq9xOBeuyqaUru/view",
-      "drive_id": "1ruubTk6yEEjLx5WQkhWq9xOBeuyqaUru",
-      "tags": [
-        "topic:mica-glass-ceramic",
-        "macor",
-        "machinable-glass-ceramic",
-        "corning",
-        "glass-ceramic",
-        "brochure",
-        "manufacturer-document",
-        "macor-machinable-glass-ceramic-brochure"
-      ],
-      "name_bucket": "heavy",
-      "semantic_tagged": true,
-      "real_title": "MACOR Machinable Glass Ceramic for Industrial Applications (Corning product brochure)",
-      "doi": "",
-      "journal": "Corning",
-      "crossref_year": null,
-      "subjects": [],
-      "abstract": "",
-      "display_title": "MACOR Machinable Glass Ceramic for Industrial Applications (Corning product brochure)",
-      "authors": []
     },
     {
       "id": "P1678",
@@ -133614,29 +131269,29 @@
   ],
   "tag_index": {
     "dental-implant": 1012,
-    "narrative-review": 395,
-    "in-vitro": 365,
+    "narrative-review": 391,
+    "in-vitro": 360,
     "prosthodontics": 315,
     "zirconia": 266,
-    "systematic-review": 259,
+    "systematic-review": 258,
     "topic:fresh-socket": 224,
-    "topic:zirconia": 221,
+    "topic:zirconia": 219,
     "peri-implant-tissue": 205,
-    "randomized-controlled-trial": 199,
+    "randomized-controlled-trial": 198,
     "esthetic-dentistry": 184,
     "marginal-bone-loss": 172,
     "abutment": 164,
     "fresh-socket": 158,
     "periodontology": 149,
-    "immediate-implant": 148,
     "topic:biomimetic": 149,
+    "immediate-implant": 148,
     "meta-analysis": 142,
     "ceramic": 141,
     "maxilla": 139,
     "bonding": 131,
     "topic:abutment": 127,
-    "prospective": 125,
     "crown": 124,
+    "prospective": 123,
     "biomimetic-dentistry": 121,
     "bone-loss": 118,
     "retrospective": 115,
@@ -133651,13 +131306,13 @@
     "cad-cam": 95,
     "peri-implant-disease": 94,
     "topic:gbr": 94,
-    "manufacturer-document": 90,
     "technique-article": 90,
     "anterior-region": 89,
     "bone-graft": 89,
     "survival": 89,
     "barrier-membrane": 87,
-    "cohort": 85,
+    "manufacturer-document": 85,
+    "cohort": 84,
     "fixed-dental-prosthesis": 83,
     "lithium-disilicate": 80,
     "osseointegration": 76,
@@ -133665,20 +131320,19 @@
     "titanium": 74,
     "topic:overload-resorption": 74,
     "buccal-bone": 72,
-    "brochure": 70,
-    "gingival-recession": 70,
     "occlusion": 71,
     "provisional-restoration": 71,
+    "gingival-recession": 70,
     "extraction-socket": 66,
-    "connective-tissue-graft": 65,
     "tooth-extraction": 66,
+    "connective-tissue-graft": 65,
     "case-series": 64,
     "complications": 64,
     "bond-strength": 64,
-    "alveolar-ridge": 63,
     "crestal-bone-loss": 64,
+    "brochure": 63,
+    "alveolar-ridge": 63,
     "endodontically-treated-teeth": 62,
-    "topic:covid-19": 61,
     "impression": 60,
     "composite-resin": 59,
     "cementation": 57,
@@ -133696,7 +131350,7 @@
     "dentin": 50,
     "soft-tissue-augmentation": 50,
     "fracture-resistance": 49,
-    "case-report": 50,
+    "case-report": 49,
     "single-implant": 49,
     "biological-width": 48,
     "fracture": 48,
@@ -133707,67 +131361,65 @@
     "resin-cement": 47,
     "keratinized-mucosa": 46,
     "cbct": 44,
+    "topic:occlusion": 44,
     "short-implant": 43,
     "implant-failure": 43,
-    "topic:occlusion": 44,
-    "single-crown": 42,
     "implant-abutment-connection": 43,
+    "single-crown": 42,
     "molar": 42,
     "topic:endocrown": 42,
+    "interdental-papilla": 42,
     "emergence-profile": 41,
     "topic:biological-width": 41,
-    "interdental-papilla": 42,
     "endodontics": 41,
     "post-and-core": 41,
     "translucency": 41,
-    "monolithic-restoration": 40,
-    "consensus": 40,
     "topic:bonding": 41,
+    "monolithic-restoration": 40,
     "tooth-preparation": 40,
     "monolithic-zirconia": 40,
     "root-coverage": 40,
     "ridge-preservation": 40,
     "topic:lithium-disilicate": 40,
-    "glass-ceramic": 39,
+    "consensus": 39,
     "topic:short-implant": 39,
+    "glass-ceramic": 38,
     "esthetic-outcome": 38,
     "topic:platform-switch": 38,
     "topic:papilla": 38,
     "topic:post-core": 38,
     "airborne-abrasion": 38,
     "vertical-augmentation": 38,
-    "soft-tissue-thickness": 37,
     "treatment-planning": 38,
-    "infection-control": 36,
+    "tooth-wear": 38,
+    "soft-tissue-thickness": 37,
     "surface-treatment": 36,
     "gingival-tissue": 36,
     "buccal-aspect": 36,
-    "tooth-wear": 38,
     "ridge-augmentation": 36,
-    "full-arch": 34,
     "premolar": 35,
     "veneer": 35,
     "porcelain": 35,
     "flexural-strength": 35,
+    "full-arch": 34,
     "split-mouth": 34,
+    "topic:overdenture": 33,
     "2017": 32,
     "topic:bonding-layering": 32,
     "all-ceramic": 32,
     "flapless-surgery": 32,
     "sinus-augmentation": 32,
-    "topic:overdenture": 33,
     "full-arch-implant-prosthesis": 31,
     "endocrown": 31,
     "edentulous": 30,
     "ridge-dimensional-change": 30,
+    "overdenture": 30,
     "success": 29,
     "topic:laminate": 29,
-    "disinfection": 28,
-    "overdenture": 30,
     "impression-technique": 29,
+    "periodontitis": 29,
     "topic:esthetic-soft-tissue": 28,
     "topic:all-on-4": 27,
-    "periodontitis": 29,
     "biofilm": 27,
     "cantilever": 27,
     "fiber-post": 27,
@@ -133776,18 +131428,19 @@
     "minimally-invasive": 26,
     "root-canal-treatment": 26,
     "shear-bond-strength": 26,
+    "crown-lengthening": 26,
+    "topic:covid-19": 25,
     "conical-connection": 25,
     "microleakage": 25,
     "histomorphometry": 25,
     "smile-esthetics": 25,
     "onlay": 25,
-    "crown-lengthening": 26,
     "topic:bond-primer-resin": 25,
     "complete-denture": 25,
     "intraoral-scanner": 25,
+    "subcrestal-placement": 25,
     "topic:periodontology-2000-2017": 24,
     "multicenter-study": 24,
-    "subcrestal-placement": 25,
     "surface-roughness": 24,
     "enamel": 24,
     "allograft": 24,
@@ -133795,28 +131448,28 @@
     "ferrule": 24,
     "veneering-porcelain": 24,
     "digital-impression": 24,
+    "vertical-dimension": 24,
     "in-vivo": 23,
     "metal-ceramic": 23,
     "guideline": 23,
-    "vertical-dimension": 24,
     "topic:change-after-extraction": 23,
     "horizontal-augmentation": 23,
     "guided-surgery": 23,
-    "covid-19": 23,
-    "textbook": 22,
     "finite-element-analysis": 23,
+    "topic:treatment-plan": 23,
     "topic:soft-tissue": 22,
     "dbbm": 22,
     "free-gingival-graft": 22,
+    "textbook": 21,
     "peri-implant-mucositis": 21,
     "design-geometry": 21,
     "self-etch-adhesive": 21,
-    "topic:treatment-plan": 23,
     "incisor": 21,
     "topic:cement": 21,
     "coronally-advanced-flap": 21,
     "topic:root-coverage": 21,
     "intrabony-defect": 21,
+    "infection-control": 20,
     "digital-workflow": 20,
     "loading-protocol": 20,
     "topic:biomaterial-and-membrane": 20,
@@ -133833,14 +131486,15 @@
     "regenerative-surgery": 19,
     "implant-surface": 19,
     "topic:connection": 19,
+    "adjacent-implants": 19,
     "fatigue-behavior": 18,
     "bone-remodeling": 18,
     "topic:ceramics": 18,
     "etching": 18,
     "topic:flap": 18,
     "implant-overdenture": 18,
+    "implant-position": 18,
     "pilot-study": 17,
-    "2015": 17,
     "framework-design": 17,
     "smile-design": 17,
     "prom": 17,
@@ -133851,16 +131505,18 @@
     "inlay": 17,
     "topic:porcelain": 17,
     "implant-stability": 17,
-    "adjacent-implants": 19,
     "finish-line": 17,
     "topic:temporary-crown": 17,
     "resorbable-membrane": 17,
     "topic:tooth-preparation": 17,
     "vita": 17,
-    "screw-retained": 16,
     "crown-contour": 17,
-    "smoking": 16,
     "adhesive-systems": 17,
+    "topic:vertical-dimension": 17,
+    "splinting": 17,
+    "2015": 16,
+    "screw-retained": 16,
+    "smoking": 16,
     "periodontal-regeneration": 16,
     "2016": 16,
     "zirconia-reinforced-lithium-silicate": 16,
@@ -133868,30 +131524,27 @@
     "topic:cantilever": 16,
     "3y-tzp": 16,
     "topic:crown-length": 16,
-    "topic:vertical-dimension": 17,
     "topic:fgg": 16,
     "mandibular-overdenture": 16,
-    "journal-issue": 14,
+    "silane": 16,
     "3d-printing": 15,
     "2019": 15,
-    "silane": 16,
     "impression-coping": 15,
-    "implant-position": 18,
     "immediate-dentin-sealing": 15,
     "dehiscence-defect": 15,
     "partially-edentulous": 15,
     "topic:ctg": 15,
-    "hydrogen-peroxide": 15,
     "topic:flexural-strength": 15,
     "early-implant-placement": 15,
     "nonresorbable-membrane": 15,
-    "splinting": 17,
     "topic:immediate-loading": 15,
     "topic:chee": 15,
     "topic:مقالات-chee": 15,
     "topic:wear": 15,
     "topic:zirconia-cement": 15,
     "topic:3y-4y-5y": 15,
+    "covid-19": 14,
+    "journal-issue": 14,
     "tissue-level-implant": 14,
     "insertion-torque": 14,
     "milling": 14,
@@ -133910,6 +131563,7 @@
     "occlusal-scheme": 14,
     "topic:tooth-wear": 14,
     "multilayer-zirconia": 14,
+    "implant-supported-crowns": 14,
     "2023": 13,
     "external-connection": 13,
     "soft-tissue-substitute": 13,
@@ -133920,36 +131574,35 @@
     "diagnosis": 13,
     "2014": 13,
     "primary-stability": 13,
-    "implant-supported-crowns": 14,
     "gingival-phenotype": 13,
     "topic:fresh-socket-present": 13,
-    "aerosol": 13,
     "topic:loup-microscope": 13,
     "bruxism": 13,
     "overdenture-attachment": 13,
     "veneered-zirconia": 13,
     "topic:socket-shield": 13,
+    "full-mouth-rehabilitation": 13,
+    "aerosol": 12,
     "2011": 12,
     "abutment-height": 12,
     "mdp": 12,
-    "full-mouth-rehabilitation": 13,
     "mechanical-properties": 12,
     "crown-to-implant-ratio": 12,
     "feldspathic-porcelain": 12,
     "risk-factor": 12,
-    "topic:hydrogen-peroxide": 12,
     "topic:read": 12,
     "straumann": 12,
     "katana-zirconia": 12,
     "instructions-for-use": 12,
     "topic:ridge-split": 12,
     "sintering": 12,
+    "screw-loosening": 12,
+    "stress-distribution": 12,
+    "prosthetic-complications": 12,
     "bone-level-implant": 11,
     "metal-alloy": 11,
     "restoration-survival": 11,
-    "screw-loosening": 12,
     "thesis": 11,
-    "stress-distribution": 12,
     "luting-agent": 11,
     "universal-adhesive": 11,
     "implant-prosthesis": 11,
@@ -133960,7 +131613,6 @@
     "topic:flap-or-flapless": 11,
     "fiber-reinforced-composite": 11,
     "topic:cadcam": 11,
-    "prosthetic-complications": 12,
     "2012": 11,
     "topic:failure": 11,
     "vita-yz": 11,
@@ -133985,6 +131637,7 @@
     "removable-partial-denture": 10,
     "chipping": 10,
     "sandwich-osteotomy": 10,
+    "thermocycling": 10,
     "topic:scanning": 9,
     "healing-abutment": 9,
     "ti-base": 9,
@@ -133992,7 +131645,6 @@
     "peri-implant-health": 9,
     "surface-topography": 9,
     "tightening-torque": 9,
-    "overview": 9,
     "volumetric-analysis": 9,
     "edentulous-mandible": 9,
     "posterior-restoration": 9,
@@ -134001,9 +131653,7 @@
     "scanning-electron-microscopy": 9,
     "self-adhesive-resin-cement": 9,
     "hydrofluoric-acid-etching": 9,
-    "thermocycling": 10,
     "resonance-frequency-analysis": 9,
-    "editorial": 9,
     "topic:bopt": 9,
     "prosthetic-design": 9,
     "topic:temporary-restoration": 9,
@@ -134016,11 +131666,16 @@
     "topic:increase-vd": 9,
     "topic:zls": 9,
     "polishing": 9,
-    "topic:megagen": 9,
     "tmd": 9,
     "cast-post-and-core": 9,
     "topic:shortened-dental-arch": 9,
     "topic:vestibular-depth": 9,
+    "inter-implant-distance": 9,
+    "light-curing": 9,
+    "altered-passive-eruption": 9,
+    "post-free-restoration": 9,
+    "overview": 8,
+    "topic:megagen": 8,
     "custom-abutment": 8,
     "topic:emergence-profile": 8,
     "network-meta-analysis": 8,
@@ -134033,15 +131688,12 @@
     "topic:anterior-teeth-proportion-and-esthetic": 8,
     "topic:antibiotic": 8,
     "implant-complications": 8,
-    "inter-implant-distance": 9,
     "class-ii-restoration": 8,
     "2013": 8,
-    "light-curing": 9,
     "topic:ids": 8,
     "critical-review": 8,
     "case-control": 8,
     "topic:corrosion": 8,
-    "altered-passive-eruption": 9,
     "gummy-smile": 8,
     "diabetes": 8,
     "mucogingival-surgery": 8,
@@ -134052,6 +131704,7 @@
     "electromyography": 8,
     "megagen": 8,
     "anyridge": 8,
+    "editorial": 7,
     "one-abutment-one-time": 7,
     "topic:surface-and-soft-tissue": 7,
     "topic:marginal-bone-resorption": 7,
@@ -134085,15 +131738,16 @@
     "shortened-dental-arch": 7,
     "topic:esthetic-translucency": 7,
     "topic:multilayer": 7,
+    "orthodontics": 7,
+    "proximal-contact": 7,
+    "topic:splint-or-not": 7,
     "emergence-angle": 6,
     "2020": 6,
     "cobalt-chromium": 6,
     "topic:place-of-insertion": 6,
     "occlusal-splint": 6,
-    "orthodontics": 7,
     "golden-proportion": 6,
     "topic:dimension-of-bone-and-soft-tissue": 6,
-    "proximal-contact": 7,
     "topic:linkevicius": 6,
     "incremental-layering": 6,
     "topic:maryland-bridge": 6,
@@ -134112,7 +131766,6 @@
     "white-esthetic-score": 6,
     "submerged-healing": 6,
     "eao-consensus": 6,
-    "hypochlorous-acid": 6,
     "2010": 6,
     "implant-timing": 6,
     "patient-morbidity": 6,
@@ -134137,12 +131790,12 @@
     "yttria-content": 6,
     "cubic-zirconia": 6,
     "saliva-contamination": 6,
+    "hydrogen-peroxide": 5,
     "topic:pitch": 5,
     "screw-retained-vs-cement-retained": 5,
     "micro-ct": 5,
     "topic:adhesive-dentistry": 5,
     "2003": 5,
-    "all-on-4": 4,
     "bruxzir": 5,
     "topic:gtr": 5,
     "indirect-bonded-restorations": 5,
@@ -134158,7 +131811,6 @@
     "radiographic-analysis": 5,
     "marginal-design": 5,
     "platinum-foil-technique": 5,
-    "influenza": 5,
     "ultrasonic-scaling": 5,
     "drilling-protocol": 5,
     "leucite-reinforced-ceramic": 5,
@@ -134182,21 +131834,25 @@
     "2008": 5,
     "5y-psz": 5,
     "optical-properties": 5,
-    "topic:mica-glass-ceramic": 5,
     "topic:nice-straumann": 5,
     "straumann-nice": 5,
     "risk-assessment": 5,
     "parafunction": 5,
     "trauma-from-occlusion": 5,
     "microbiome": 5,
-    "topic:splint-or-not": 7,
     "topic:albrektson": 5,
     "pontic": 5,
     "topic:tisseel": 5,
     "kuraray-noritake": 5,
     "restoration-failure": 5,
     "trigeminal-neuralgia": 5,
-    "2000": 4,
+    "one-piece-implant": 5,
+    "topic:implant-position": 5,
+    "centric-relation": 5,
+    "occlusal-adjustment": 5,
+    "disinfection": 4,
+    "all-on-4": 4,
+    "topic:mica-glass-ceramic": 4,
     "multi-unit-abutment": 4,
     "butt-joint": 4,
     "zirconia-abutment": 4,
@@ -134208,7 +131864,6 @@
     "nobel-biocare": 4,
     "topic:aloderm": 4,
     "antimicrobial": 4,
-    "one-piece-implant": 5,
     "furcation": 4,
     "occlusal-veneer": 4,
     "2005": 4,
@@ -134225,7 +131880,6 @@
     "digital-photography": 4,
     "implant-diameter": 4,
     "bone-density": 4,
-    "topic:implant-position": 5,
     "topic:diabetes": 4,
     "glycemic-control": 4,
     "topic:drilling": 4,
@@ -134250,7 +131904,6 @@
     "glazing": 4,
     "chairside": 4,
     "diamond-bur": 4,
-    "centric-relation": 5,
     "temporomandibular-joint": 4,
     "mandible-flexure": 4,
     "topic:mandible-flexure": 4,
@@ -134273,6 +131926,13 @@
     "cleaning-protocol": 4,
     "rapid-layer-technology": 4,
     "topic:laminate-and-rubber-dam": 4,
+    "interproximal-contact-loss": 4,
+    "topic:severe-damage-tooth": 4,
+    "composite-repair": 4,
+    "tooth-migration": 4,
+    "periodontal-ligament": 4,
+    "topic:hydrogen-peroxide": 3,
+    "2000": 3,
     "2025": 3,
     "transmucosal-profile": 3,
     "1996": 3,
@@ -134290,14 +131950,11 @@
     "canine-guidance": 3,
     "local-anesthesia": 3,
     "topic:anesthesia": 3,
-    "interproximal-contact-loss": 4,
     "maryland-bridge": 3,
     "tooth-fracture": 3,
     "cuspal-deflection": 3,
     "c-factor": 3,
     "partial-crown": 3,
-    "topic:severe-damage-tooth": 4,
-    "composite-repair": 4,
     "topic:sandblast": 3,
     "antiresorptive-therapy": 3,
     "cortical-bone": 3,
@@ -134312,14 +131969,10 @@
     "2001": 3,
     "topic:soft-tissue-consensus": 3,
     "osteology-foundation": 3,
-    "face-mask": 3,
-    "vaccination": 3,
     "1999": 3,
     "topic:aerosol": 3,
     "1997": 3,
-    "topic:hypochlorous-acid": 3,
     "povidone-iodine": 3,
-    "topic:vaccine": 3,
     "literature-review": 3,
     "topic:disease-diabetes": 3,
     "topic:drug": 3,
@@ -134336,7 +131989,6 @@
     "biocompatibility": 3,
     "ridge-split": 3,
     "quality-of-life": 3,
-    "tooth-migration": 4,
     "2002": 3,
     "aluminum-chloride": 3,
     "prosthetic-components": 3,
@@ -134348,8 +132000,6 @@
     "condylar-position": 3,
     "topic:materials": 3,
     "polycaprolactone": 3,
-    "macor": 3,
-    "machinable-glass-ceramic": 3,
     "cutting-efficiency": 3,
     "carbide-bur": 3,
     "topic:noble-active": 3,
@@ -134374,7 +132024,6 @@
     "topic:tigran": 3,
     "implant-surface-chemistry": 3,
     "topic:periodontal-ligament-implant": 3,
-    "periodontal-ligament": 4,
     "cementum": 3,
     "topic:periodontitis": 3,
     "sodium-hypochlorite": 3,
@@ -134392,7 +132041,15 @@
     "topic:2020-05-15-vita-mam-downloads": 3,
     "topic:vita": 3,
     "topic:cigar-and-implant": 3,
-    "1998": 2,
+    "topic:complete-denture": 3,
+    "interdisciplinary-treatment": 3,
+    "patient-satisfaction": 3,
+    "retention": 3,
+    "two-piece-implant": 3,
+    "implant-occlusion": 3,
+    "vertical-platform-discrepancy": 3,
+    "macor": 2,
+    "machinable-glass-ceramic": 2,
     "topic:internal-vs-external-hex": 2,
     "angulated-screw-channel": 2,
     "hydrophilic-surface": 2,
@@ -134408,7 +132065,6 @@
     "osteocyte": 2,
     "1994": 2,
     "bonding-protocol": 2,
-    "post-free-restoration": 9,
     "dentin-enamel-junction": 2,
     "matrix-metalloproteinases": 2,
     "marginal-integrity": 2,
@@ -134431,26 +132087,15 @@
     "porosity": 2,
     "ultrasonography": 2,
     "topic:color": 2,
-    "topic:complete-denture": 3,
     "palatal-donor-site": 2,
     "noninferiority-trial": 2,
     "topic:consensus": 2,
-    "cdc": 2,
     "sterilization": 2,
-    "who": 2,
     "high-volume-evacuation": 2,
-    "fogging": 2,
-    "antiviral": 2,
-    "inflammation": 2,
-    "cytotoxicity": 2,
-    "topic:mask": 2,
-    "respirator": 2,
-    "3m": 2,
     "topic:depth-of-implant": 2,
     "mandibular-molar": 2,
     "facial-esthetics": 2,
     "dental-education": 2,
-    "interdisciplinary-treatment": 3,
     "photoshop": 2,
     "dynamic-compression-technique": 2,
     "surface-contamination": 2,
@@ -134458,7 +132103,6 @@
     "de-epithelialized-graft": 2,
     "lingual-flap": 2,
     "palatal-flap": 2,
-    "patient-satisfaction": 3,
     "periosteum": 2,
     "early-loading": 2,
     "beta-tcp": 2,
@@ -134493,7 +132137,6 @@
     "terminology": 2,
     "lecture-notes": 2,
     "dental-arch-width": 2,
-    "occlusal-adjustment": 5,
     "proprioception": 2,
     "indigenous-populations": 2,
     "epidemiology": 2,
@@ -134543,7 +132186,6 @@
     "questionable-tooth": 2,
     "muscle-activity": 2,
     "attached-gingiva": 2,
-    "retention": 3,
     "surface-grinding": 2,
     "spark-plasma-sintering": 2,
     "grain-size": 2,
@@ -134553,7 +132195,6 @@
     "zinc-phosphate-cement": 2,
     "champions-implants": 2,
     "biowin": 2,
-    "two-piece-implant": 3,
     "secondary-caries": 2,
     "basic-erosive-wear-examination": 2,
     "tirzepatide": 2,
@@ -134570,6 +132211,26 @@
     "microvascular-decompression": 2,
     "felypressin": 2,
     "pregnancy": 2,
+    "cuspal-coverage": 2,
+    "jaw-relation-record": 2,
+    "class-iii-malocclusion": 2,
+    "occlusal-plane": 2,
+    "occlusal-interference": 2,
+    "centric-occlusion": 2,
+    "occlusal-analysis": 2,
+    "forced-eruption": 2,
+    "tensile-bond-strength": 2,
+    "implant-supported-rehabilitation": 2,
+    "attrition": 2,
+    "hypochlorous-acid": 1,
+    "influenza": 1,
+    "topic:hypochlorous-acid": 1,
+    "1998": 1,
+    "cdc": 1,
+    "antiviral": 1,
+    "inflammation": 1,
+    "cytotoxicity": 1,
+    "3m": 1,
     "journal-of-cosmetic-dentistry-summer-2011": 1,
     "profile-angle-cad-cam-abutment-marginal-bone-loss": 1,
     "mucosal-attachment-different-abutments-dogs": 1,
@@ -134622,7 +132283,6 @@
     "decoupling-with-time": 1,
     "preheated-composite": 1,
     "preheated-composite-luting-adaptation-fdp": 1,
-    "cuspal-coverage": 2,
     "bonded-inlays-onlays-cavity-preparation-guidelines": 1,
     "preparation-design-ceramic-thickness-premolar-restorations": 1,
     "diagnostic-wax-up": 1,
@@ -134719,63 +132379,21 @@
     "occupational-health": 1,
     "niosh": 1,
     "niosh-influenza-viruses-dental-practices-ohio": 1,
-    "environmental-decontamination": 1,
-    "ionized-hydrogen-peroxide-environmental-pathogens": 1,
     "ada": 1,
     "return-to-work": 1,
     "ada-return-to-work-interim-guidance": 1,
-    "public-health-guidance": 1,
-    "cdc-choosing-safer-activities": 1,
-    "pandemic-influenza": 1,
-    "public-health": 1,
-    "cidrap": 1,
-    "cidrap-future-covid-19-pandemic": 1,
     "cdc-guideline-disinfection-sterilization-healthcare": 1,
-    "silver": 1,
-    "thermal-fogging": 1,
-    "dramm": 1,
-    "effective-disinfection-thermal-fogging": 1,
     "persian-language": 1,
     "persian-guide-dental-practice-covid-19": 1,
-    "vapor-fogging": 1,
-    "us-peroxide": 1,
-    "vapor-fogging-treatment-vapor-phase-sulfides": 1,
-    "water-treatment": 1,
-    "pathogen-inactivation": 1,
-    "who-inactivation-disinfection-processes": 1,
     "extraoral-vacuum-aspirator": 1,
     "modified-extra-oral-vacuum-aspirator-aerosols": 1,
     "high-volume-evacuator-aerosol-reduction": 1,
     "aerosol-reduction-device-ultrasonic-scalers": 1,
-    "sporicidal": 1,
-    "chlorine": 1,
-    "epa": 1,
-    "fogging-chlorine-sporicidal-bacillus-anthracis-spores": 1,
     "bleaching": 1,
-    "disinfection-by-products": 1,
-    "drinking-water": 1,
-    "who-disinfectants-disinfection-by-products": 1,
-    "chlorine-dioxide": 1,
-    "chlorine-dioxide-antiviral-influenza": 1,
-    "virucidal": 1,
-    "sprayed-hypochlorous-acid-avian-influenza": 1,
-    "hypochlorous-acid-overview": 1,
-    "dnd-electronics": 1,
-    "dnd-proposal-coronavirus-measures": 1,
-    "oxidative-stress": 1,
-    "hypochlorous-acid-effects-mammalian-cells": 1,
-    "3m-cleaning-reusable-elastomeric-respirators": 1,
-    "cleaning-3m-reusable-respirators": 1,
     "topic:mouth-wash": 1,
     "nasal-spray": 1,
     "preprint": 1,
     "povidone-iodine-nasal-spray-mouthwash-covid-19": 1,
-    "ozone": 1,
-    "mrsa": 1,
-    "gaseous-ozone-mrsa-decontamination": 1,
-    "mrna-vaccine": 1,
-    "sars-cov-2": 1,
-    "immunology": 1,
     "gingivectomy": 1,
     "digitally-guided-dual-technique-crown-lengthening": 1,
     "early-restorative-phase-after-crown-lengthening": 1,
@@ -134987,7 +132605,6 @@
     "celtra-duo-zls-laboratory-brochure": 1,
     "dental-operating-microscope": 1,
     "loupes-vs-microscope-cad-cam-crown-preparation": 1,
-    "jaw-relation-record": 2,
     "seated-condylar-position-two-techniques": 1,
     "lucia-jig": 1,
     "anterior-deprogrammer": 1,
@@ -135006,13 +132623,7 @@
     "anyridge-implant-system-product-catalog": 1,
     "piezosurgery": 1,
     "anyridge-clinical-case-report-farronato": 1,
-    "contraceptive-implant": 1,
-    "contraception": 1,
-    "patient-information": 1,
-    "guide-to-contraceptive-implant": 1,
     "stem-cells": 1,
-    "corning": 1,
-    "macor-machinable-glass-ceramic-brochure": 1,
     "dental-cutting-mica-apatite-machinable-glass-ceramics": 1,
     "handpiece-coolant": 1,
     "enhanced-dental-cutting-chemomechanical-effects": 1,
@@ -135034,7 +132645,6 @@
     "nobelactive-new-direction-for-implants": 1,
     "topic:non-surgical": 1,
     "nonsurgical-periodontal-therapy": 1,
-    "class-iii-malocclusion": 2,
     "anterior-guidance": 1,
     "interocclusal-distance": 1,
     "occlusion-class-iii-jaw-relations": 1,
@@ -135057,17 +132667,13 @@
     "articular-eminence": 1,
     "cervical-posture": 1,
     "cephalometry": 1,
-    "occlusal-plane": 2,
     "unilateral-posterior-missing-teeth-tmj-atlas": 1,
     "malocclusion-modern-alaskan-eskimo": 1,
-    "implant-occlusion": 3,
     "evidence-based-removable-implant-occlusion-review": 1,
     "anthropology": 1,
     "nutrition-and-physical-degeneration": 1,
     "trauma-from-occlusion-lecture": 1,
     "preventive-intervention-for-bruxism": 1,
-    "occlusal-interference": 2,
-    "centric-occlusion": 2,
     "centric-occlusion-diagnosis-treatment-planning": 1,
     "denture-retention": 1,
     "denture-occlusal-adjustment-retention-masseter-activity": 1,
@@ -135091,7 +132697,6 @@
     "titanium-implants-and-lateral-forces": 1,
     "mechanostat": 1,
     "optimal-number-implants-fixed-reconstructions": 1,
-    "occlusal-analysis": 2,
     "bone-strain": 1,
     "incidence-diurnal-nocturnal-bruxism": 1,
     "loss-of-osseointegration-occlusal-load-monkeys": 1,
@@ -135169,7 +132774,6 @@
     "restoration-endodontically-treated-single-teeth": 1,
     "prefabricated-post": 1,
     "vertical-root-fracture": 1,
-    "forced-eruption": 2,
     "post-and-cores-past-to-present": 1,
     "weakened-roots-reconstruction-protocols": 1,
     "topic:post-surgery": 1,
@@ -135457,7 +133061,6 @@
     "glass-ceramic-cemented-to-zirconia": 1,
     "universal-primer": 1,
     "silica-coating": 1,
-    "tensile-bond-strength": 2,
     "universal-primer-zirconia-bonding": 1,
     "champions-biowin-ceramic-implants": 1,
     "champions-basic-rules-biowin-implants": 1,
@@ -135629,9 +133232,7 @@
     "ultrasound-analysis-of-the-masseter-and-anterior-temporalis-muscles-in-edentulou": 1,
     "electromyographic-evaluation-of-muscle-activity-in-patients-rehabilitated-with-f": 1,
     "bruxism-and-dental-implants-a-systematic-review-and-meta-analysis": 1,
-    "implant-supported-rehabilitation": 2,
     "bruxism-in-implant-supported-rehabilitations-a-narrative-review-of-clinical-comp": 1,
-    "attrition": 2,
     "sleep-bruxism-in-individuals-with-and-without-attrition-type-tooth-wear-an-explo": 1,
     "european-academy-of-neurology": 1,
     "mri": 1,
@@ -135695,7 +133296,6 @@
     "present-status-and-future-directions-surgical-extrusion-intentional-replantation-and-tooth-autotransplantation": 1,
     "effect-of-curing-and-silanizing-on-composite-repair-bond-strength-using-an-improved-micro-tensile-test-method": 1,
     "outcomes-of-one-piece-and-two-piece-dental-implants-after-15-17-years-follow-up-randomized-clinical-trial": 1,
-    "vertical-platform-discrepancy": 3,
     "effect-of-vertical-level-discrepancy-adjacent-dental-implants-marginal-bone-loss": 1,
     "significance-of-vertical-platform-discrepancies-and-splinting-on-marginal-bone-levels-adjacent-implants": 1,
     "effect-of-crestal-position-on-bone-implant-stress-three-implant-splinted-prostheses-finite-element-analysis": 1,
@@ -135729,7 +133329,7 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2166,
+  "total_papers": 2128,
   "tag_aliases": {
     "additive-manufacturing": "3d-printing",
     "adhesion": "bonding",
