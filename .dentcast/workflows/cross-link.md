@@ -68,9 +68,8 @@ their body and none linked the term published that morning.
    spelling is found) **or** a `keywords` entry that matches it. The tag is the
    author saying *this page is about X*; only then do we look for X in the
    prose. Scanning 447 bodies for 107 term strings without that gate is how you
-   get a link farm. (Founder decision 1405/06/10: hashtags **and** keywords
-   **and** aliases. On the first run, keywords alone contributed 5 of 85 — small,
-   but they reach eleven terms the hashtag vocabulary has no concept for.)
+   get a link farm. Hashtags **and** keywords **and** aliases all count: keywords
+   reach terms the hashtag vocabulary has no concept for.
 
 3. **The body is the type's own boxes and nothing else** — `ep-caption`,
    `glass-box`, `text-box`, `content-box`. This is not a detail. The first draft
@@ -104,7 +103,7 @@ their body and none linked the term published that morning.
 
 7. **Out of scope, and each for its own reason.** `episodes/` — the body is the
    «درباره این اپیزود» caption, median **13 words**, where one link is ~77 per
-   1000 (founder decision 1405/06/10; episodes get their links through 4.9's
+   1000 (episodes get their links through 4.9's
    «محتوای مرتبط» block instead). `litecast/` — isolated track, never
    cross-linked with specialist content (publishing Hard Rule 10). `glossary/`
    — no self-links, and glossary→glossary is already the densest corner of the

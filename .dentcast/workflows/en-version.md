@@ -40,9 +40,8 @@ in `CLAUDE.md`.)
    nothing added, nothing dropped, same number of sections/list-items as the
    source (Phase C step 5).
 7. **en pages are noindexed and OUT of the hreflang cluster.** The en
-   mirrors are AI-generated translations without editorial review — at
-   ~170 pages that is the "scaled, unreviewed content" pattern Google's
-   2026 spam updates target (2026-08-11 SEO audit) — so every en page
+   mirrors are AI-generated translations without editorial review — the
+   "scaled, unreviewed content" pattern search spam rules target — so every en page
    carries `<meta name="robots" content="noindex, follow">`, carries **no**
    hreflang block, and stays out of `sitemap.xml`. fa pages emit **no**
    `en` alternate. Enforced by `tools/noindex_en_mirrors.py` (`--check` in
@@ -331,40 +330,3 @@ touched brain-derived output, which it normally does not.)
   over from the fa source's parenthetical English glosses (step 5 / step 9)
 - List of modified/created file paths (exactly two: new en page + source fa
   page)
-
----
-
-## Appendix — Dry-run (illustrative; NOT executed)
-
-### (a) A normal source page — «پرامپتولوژیست ۱ رو انگلیسی کن»
-- **Phase A:** resolve source `dentai/promptologist/prompt1-1.html`
-  (`{type}=dentai/promptologist`, `{file}=prompt1-1.html`); en target
-  `dentai/promptologist/en/prompt1-1.html`. Read the source (its episode-/
-  prompt-style body, `.ep-box`/schema `@type`, its own analytics set); read
-  meta-1 chrome; confirm en target does not already exist.
-- **Phase C:** create the en page with **meta-1's English chrome** wrapping a
-  **Promptologist-shaped, LTR, translated body** (same JSON-LD `@type` as the
-  source, `inLanguage: "en"`, canonical
-  `https://dentcast.org/dentai/promptologist/en/prompt1-1.html`, robots
-  `noindex, follow`, no hreflang, scripts/analytics copied from the *source*
-  not meta-1).
-  Add the toggle on the en page → `../prompt1-1.html` («فارسی») and on the
-  source fa page → `en/prompt1-1.html` («English»); add `inLanguage:"fa"` to
-  the fa JSON-LD. Run `inject_hreflang.py` (fa page keeps its 3-line block,
-  en page gets none) and `noindex_en_mirrors.py --check`. Two files touched:
-  the new en page + `prompt1-1.html`.
-- **Series nav (step 4.5):** the bottom `ep-nav` prev/next bar is kept (it is
-  type structure). Part 1 has no previous; "next" stays a disabled placeholder
-  until `en/prompt1-2.html` exists, at which point translating part 2 wires
-  both slots within the en tier.
-- **Not done:** no brain entry, no Pulse, no glossary back-links.
-
-### (b) meta-6 — the phantom pair (historical)
-- This entry documented how disk-discovered *hreflang pairing* once made a
-  dangling `en`→404 alternate on `metanotes/meta-6.html` self-resolve. It
-  is now moot: since the en mirrors went noindex (Hard rule 7), **no** fa
-  page carries an `en` alternate at all — the injector's default 3-line
-  block covers meta-6 and every other fa page identically, en file on disk
-  or not. The disk-discovery rule survives only for the **toggle**: a
-  toggle is added exactly when this workflow actually produces the en
-  counterpart, never speculatively.

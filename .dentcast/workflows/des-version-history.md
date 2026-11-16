@@ -1,11 +1,32 @@
 # DES spec version history (moved from module 08)
 
-This file holds, verbatim, the version-by-version notes that module 08
-(`.dentcast/workflows/modules/08-des-fidelity.md`, Part 2) used to carry. They
-were moved here so a publish does not re-read them every time (founder
-1405/08/06). The binding rules they imply are restated in module 08 between the
-`des-version-history:v1` markers. Read this file when you validate, re-score or
-compare a record stamped below the current spec version.
+This file holds the version-by-version notes of the DES spec and the rules that
+bind records stamped below the current version. Module 08
+(`.dentcast/workflows/modules/08-des-fidelity.md`) keeps only what a new run needs.
+Read this file when you validate, re-score or compare a record stamped below the
+current spec version.
+
+## Binding rules for older stamps
+
+- A record stamped 3.5 stays valid under 3.5 and is never re-labelled 3.6; a
+  paper is scored under 3.6 or 3.7 only by a new run (module 08 Part 1: an older
+  stamp is not reused, and `compare` reports it as `not_comparable`).
+- `tools/verify_publish.py` and `tools/des_fidelity_units.py` are version-gated:
+  every record is checked under its own `des_version`.
+- The v3.5 source markers (`.dentcast/des-source-markers.json`) and recorded
+  plans (`.dentcast/des-fidelity-plans/<content_id>.json`) apply only to a
+  source record stamped 3.5 or later.
+- A 2.7 record is re-scored by recomputing F4 from its stored verdicts and
+  re-stamped 2.8, with no model call. A 2.8 record is re-run under 2.9, never
+  re-labelled.
+- Records stamped 1.x keep validating against the flat penalty table they were
+  written under; scaled penalties (`base_points` and `points`) apply from 2.0.
+- A RESEARCH record stamped below 1.5 is regenerated before its number is
+  compared with a new one; 1.5 and 1.6 research scores are directly comparable.
+- A COMMENTARY record in `chairside/` or `metanotes/` stamped below 1.6, or in
+  `insight/` below 1.7, scores low by 3 and is regenerated.
+
+## Version notes
 
 <!-- des-version-history-text:v1 -->
 **v3.7 is the current spec, and its change from 3.6 is one source kind**

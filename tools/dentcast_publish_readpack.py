@@ -21,140 +21,20 @@ from dentcast_publish_handoff import canonical_category  # noqa: E402
 WORKFLOW = '.dentcast/workflows/'
 MODULES = WORKFLOW + 'modules/'
 
-# These blobs were independently inspected at main c16554c (PR #971) and
-# re-audited after the v2 checkpoint-preface update: only the always-kept
-# preface changed; every boundary and omitted section is byte-identical.
-# Re-audited 2026-10-26 (doc-contradiction fixes): 03 edits only the LiteCast
-# branch it omits for non-LiteCast; 04 only the always-kept capsule table; 06
-# only paper-branch text (omitted only without a paper); 12 only the kept
-# Final output summary. No boundary heading changed.
-# Re-audited 2026-10-28 (hashtag QA follow-up): 06 adds Part 2 step 8
-# (paper reachability) inside the paper branch, which is omitted only without a
-# paper; 12 edits only two rows of the always-kept Final output summary. No
-# boundary heading changed; 01 and 10 are unpinned (always read whole).
-# Re-audited 2026-10-28 (DES version history split, founder 1405/08/06): 08
-# moves the Part 2 per-version notes to des-version-history.md and keeps a
-# bounded summary inside Part 2. Its only selection boundary, the
-# «Conditional path for founder-supplied results» heading, sits before Part 2
-# and did not change.
-# Re-audited 2026-10-29 (DES Persian text guard, founder 1405/08/07): 08 adds
-# Part 3 item 6 after the Part 3 checks; the boundary heading sits before Part 2
-# and did not change. LiteCast/challenge runs skip all of Part 3 anyway.
-# Re-audited 2026-10-29 (DES prompt file): 08 adds two sentences to Part 2 naming
-# des-v3.5-knowledge.md as the cut prompt; Part 2 is after the boundary.
-# Re-audited 2026-10-29 (founder decision 1405/08/07, DES Persian text independent
-# of the founder): 08 Part 3 item 6 is now an agent check, not a founder gate;
-# the boundary heading is unchanged and no skipped section's applicability moved.
-# Re-audited 2026-10-29 (founder 1405/08/07, one DES record per paper): 08 adds
-# one sentence pair to Part 2b (episode and NoteCast share the paper's record;
-# Fidelity only for the written page). It sits after the boundary heading and
-# no skipped section's applicability moved.
-# Re-audited for the wording-only history cleanup: no heading changed, every
-# route selects the same sections for the same reasons (compared HEAD vs edit).
-# Re-audited 2026-11-04 (queue retrospective): 08 adds two bounded blocks, the
-# PDF source-text tool at the end of Part 1 and the single-source FIDELITY tier
-# inside Part 2c; both sit after the «Conditional path for founder-supplied
-# results» boundary, no heading changed and no skipped section's applicability
-# moved (LiteCast/challenge still keep exactly the text before the boundary).
-# Re-audited again: one bullet inside that Part 2c block was reworded (no orphan
-# sweep for a single-source page); same location, no heading or boundary moved.
-# Re-audited 2026-11-06 (founder 1405/08/15, sweep first on multi-source pages):
-# 08 adds a bounded block inside Part 2c and rewrites Part 2c step 5; both sit
-# after the «Conditional path for founder-supplied results» boundary. Checked
-# against main: the boundary occurs once, the text before it is byte-identical
-# and no heading changed, so LiteCast/challenge still keep exactly that text.
-# Re-audited 2026-11-06 (founder 1405/08/15, stronger review settles a flagged
-# unit): 08 rewrites Part 2c step 4, adds one sentence to Part 3b's opening and
-# one clause to the publish-report paragraph; all three sit after the
-# «Conditional path for founder-supplied results» boundary, which still occurs
-# once with byte-identical text before it; no heading changed.
-# Re-audited 2026-11-06 (founder: the direct route made simple, light and strong):
-# modules 01-12 were deduplicated (2957 -> 1833 lines), every heading kept
-# byte-identical, every selection boundary occurs exactly once, and module 08's
-# only change before the «Conditional path for founder-supplied results»
-# boundary is the shared two-line checkpoint banner; the DES/Fidelity text after
-# it keeps the 2026-11-06 stronger-review amendment. Routes re-run for clinical,
-# litecast, sharehub+paper, chairside+challenge, notecast, episode, promptologist
-# and glossary and the queue-prep profile select the intended ranges. Re-pinned
-# once more after the integration review (M1/M3b wording, Push-2 report, lead
-# provenance timing); headings unchanged.
-# Re-pinned again on 2026-11-06 after the plak1-12 run's findings: module 04's
-# 4.6 gate (numbered series, not the Promptologist category — its heading keeps
-# the '### 4.6. Promptologist series' prefix the boundary matches), module 03's
-# chip rule, module 05's 4.8 candidate set, module 08's checklist-label
-# sentence. Boundaries and every omitted section re-checked for each.
-# Re-pinned 2026-11-07 (founder: cut 1 replaced by an unguarded save point):
-# every module's always-kept banner (line 3) and ledger line (line 6) changed
-# wording only; 03 changes one clause of the lead-provenance paragraph (C.4.9 ->
-# C.6); 08 adds a «Save point» paragraph inside Part 3b, after the «Conditional
-# path for founder-supplied results» boundary, which still occurs once with the
-# text before it changed only in lines 3 and 6. No heading changed (compared
-# HEAD vs edit for all twelve modules); LiteCast/Challenge skip C.4.13 and so
-# correctly omit the new paragraph.
-# Re-pinned 2026-11-07 (publish-queue item 24 fixes): 05 adds the related_cap.py
-# counting sentence inside 4.7 Step 2 and 4.9 Step 2 (both kept by every route
-# and by the queue-prep 4.7/4.8-to-end spans; the 4.7-ب/4.8 boundaries are
-# unchanged); 08 adds sentences inside Part 1's pdf-source-text block, Part 2b's
-# split paragraph and a Part 3b bullet («Figure captions added after the full
-# run»), all after the «Conditional path for founder-supplied results» boundary,
-# so LiteCast/Challenge still omit them. No heading changed in either module.
-# Re-pinned 2026-11-07 (DES record guard, publish-queue item 22 / Elgamal 2025): 08 adds
-# Part 1's «one DES record per paper» lookup block, Part 2's system-prompt run method,
-# a new «#### Part 2d» rating-audit section before Part 3, Part 3 item (7) and a
-# Verify & report sentence — all after the «Conditional path for founder-supplied
-# results» boundary (unchanged, still once), so LiteCast/Challenge still omit them; the
-# queue-prep pack reads module 08 whole. No other heading changed.
-# Re-pinned 2026-11-07 (DES spec v3.6, 3b-ii «What addresses a domain»): 08 moves its
-# prompt-file references from des-v3.5-knowledge.md to des-v3.6-knowledge.md, names 3.6
-# as the current spec in Part 1, Part 2 and the des-version-history block, adds one
-# sentence to Part 2's system-prompt block and one to Part 3(7). All after the
-# «Conditional path for founder-supplied results» boundary (still once; the text before
-# it is byte-identical to HEAD) and no heading changed, so LiteCast/Challenge still omit them.
-# Re-pinned 2026-11-08 (section rename, founder 1405/08/17: Chairside → «ویزیت»,
-# Clinical Insight → «نکات کلینیکی», Share Hub → «مرور منابع»): 04 changes one example
-# in the numbered-series paragraph («Chairside 02 — …» → «ویزیت ۰۲ — …»). No heading
-# moved and the §2.4–2.5 selection boundary is byte-identical.
-# Re-pinned again the same day (round 2: MetaNote → «ایده‌ها», NoteCast → «خلاصهٔ اپیزودها»):
-# the same paragraph's metanotes/notecast row examples only; no heading moved.
-# Re-pinned 2026-11-09 (founder 1405/08/18, Fidelity acceptance is mechanical): 08 rewrites
-# item 2 and one clause of item 3 of the «Conditional path for founder-supplied results»,
-# adds the bounded «#### Acceptance is mechanical» block after that path, replaces Part 2c's
-# preflight paragraphs with one «Model routing» paragraph and makes the orphan sweep
-# optional (sweep block, single-source tier block, step 5), and item 6 of that block names
-# the one-file handoff (--pack / --accept --install). All after the boundary, which
-# still occurs once with byte-identical text before it, so LiteCast/Challenge still omit them.
-# Re-pinned again 2026-11-09 (the sweep is owed when a sentence reaches no source): 08
-# rewrites the bounded sweep block, Part 2c step 5, one line of the single-source tier
-# block and one clause of «Acceptance is mechanical» item 1; all after the boundary
-# (still once, text before it byte-identical); no heading changed.
-# Re-pinned 2026-11-09 (DES spec v3.7, source_kind «manufacturer»; publish-queue item 33): 08
-# moves its prompt-file references to des-v3.7-knowledge.md, names 3.7 as the current spec in
-# Part 1 and the des-version-history block (one added bullet), and Part 3b's «Figure captions
-# added after the full run» bullet names the language toggle. All after the boundary, which
-# still occurs once with byte-identical text before it; no heading changed.
-# Re-pinned 2026-11-11 (founder 1405/08/20, Fidelity = one sweeper run + one judge): 08
-# rewrites Part 2c (heading text included; it is no selection boundary) and the wording of
-# «Acceptance is mechanical» item 4, Part 2, Part 2d, Part 3b and Verify & report that
-# named the old checker/tie-break/reviewer steps. All after the «Conditional path for
-# founder-supplied results» boundary, which still occurs once with byte-identical text
-# before it, so LiteCast/Challenge still omit them; no other heading changed. Re-pinned
-# the same day for one sentence in Part 2c naming the relay route (agent-parity «مسیر رله»).
-# Editing one invalidates the routing proof. Update a pin ONLY after checking
-# Re-audited 2026-11-11 (DES per-page record files): module 11 adds builder
-# item 8 (tools/build_des_records.py) and plus/des/ to the never-hand-edit list,
-# both below the module-11-boundary (the runner's C.8 part, never selected for
-# the agent); §6 and every heading are byte-identical.
-# both the selection boundaries and every skipped section's applicability.
+# Selectively sliced modules are pinned to their Git blob IDs. A changed pinned
+# module is read whole (SOURCE_CHANGED_FULL_FALLBACK_REAUDIT_MAP) until its pin is
+# updated. Update a pin only after checking that every selection boundary still
+# occurs exactly once and that no skipped section changed its applicability; the
+# reason for each re-pin belongs in the commit message, not here.
 PINNED_BLOBS = {
     '03-litecast-and-page.md': 'e82aee946648f09d7ed130b7bcdd93b3fbc14694',
     '04-taxonomy-and-navigation.md': '46bc329065fdaa0d1677b494ecc5b7cdf7359872',
     '05-semantic-linking.md': '6ba95d74e28f1e423e034d31327d6c9351f85c20',
-    '06-paper-ingestion.md': '1130ebee2237379db99f5397c287093d6986c851',
-    '08-des-fidelity.md': 'ed27740c443f1be42e285cd0a0137f6eafd0eeb3',
+    '06-paper-ingestion.md': 'df1a8937caf22097162b3f5d9975c8553dc047bb',
+    '08-des-fidelity.md': '30fb30e1f0f4134cac151d956a96aa3d761ef402',
     '09-challenge.md': '3ac5856ddb021aa9f36cbfb35d6363531ae038c8',
     '11-build-and-version.md': 'f74bf83102c57da9743127623191e686474bf74d',
     '12-english-notify-verify.md': '5c9b65ee4416fd67607e6d35ca88272832ee86ec',
-    '11-build-and-version.md': 'f74bf83102c57da9743127623191e686474bf74d',
 }
 
 REQUIRED = [
@@ -398,19 +278,23 @@ def build(root, *, category, attached_paper, challenge, after_intake=False):
 # once in the file and inside the slice, proving the whole block was kept.
 NEXT_HEADING = object()
 QUEUE_PREP = (
-    (MODULES + '01-hard-rules.md', None, False),
-    # Phase 0 through Question 5 is the whole module (Question 5 is its last heading).
-    (MODULES + '02-routing-intake.md', None, False),
+    # The checkpoint banner and ledger line at the top of 01, 02 and 08 belong to the
+    # direct publication route; the queue reads each module from its first rule heading.
+    (MODULES + '01-hard-rules.md', [('# DentCast Publishing Router', None, None)], False),
+    # Phase 0 through Question 5 (its last heading) runs to the end of the module.
+    (MODULES + '02-routing-intake.md', [('## Phase 0', None, None)], False),
     (MODULES + '06-paper-ingestion.md',
      [('#### Part 1 — File the paper into Google Drive (correct topical subfolder)',
        '#### Part 2 —', None)], True),
-    (MODULES + '08-des-fidelity.md', None, False),
+    (MODULES + '08-des-fidelity.md', [('### 4.13. DES', None, None)], False),
     # Sections 5.0 (hashtags) and 5 (brain entry) are contiguous.
     (MODULES + '10-brain-and-pathways.md',
      [('### 5.0. Hashtag standardization', '### 5.5.', None)], False),
     # 4.11, 4.12 and 4.12-ب run to the end of the module.
     (MODULES + '07-flashcards-and-quiz.md', [('### 4.11.', None, None)], False),
-    (WORKFLOW + 'en-version.md', None, False),
+    # The queue writes the English text only: the hard rules and the translation step.
+    (WORKFLOW + 'en-version.md', [('## Hard rules', '## Phase A', None),
+                                  ('### 5. Translation', '### 6. SEO head', None)], False),
     (MODULES + '12-english-notify-verify.md', [('## Phase D', '## Phase E', None)], False),
     # The «Opening paragraph before any list» block has several paragraphs,
     # including the bold-lead «This lead paragraph is authored text» standing-acceptance

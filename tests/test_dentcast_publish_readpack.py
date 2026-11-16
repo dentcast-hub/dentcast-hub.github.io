@@ -268,14 +268,14 @@ class LiveReadpackPinTests(unittest.TestCase):
 
 
 QUEUE_FIXTURES = {
-    'modules/01-hard-rules.md': 'HARD_RULES_ALL\n',
-    'modules/02-routing-intake.md': '## Phase 0\nPHASE0\n### Question 5 — Pulse sentence\nQ5\n',
+    'modules/01-hard-rules.md': 'BANNER_01\n# DentCast Publishing Router\nHARD_RULES_ALL\n',
+    'modules/02-routing-intake.md': 'BANNER_02\n## Phase 0\nPHASE0\n### Question 5 — Pulse sentence\nQ5\n',
     'modules/06-paper-ingestion.md': (
         'PAPER_INTRO\n'
         '#### Part 1 — File the paper into Google Drive (correct topical subfolder)\n'
         'PAPER_PART1\n#### Part 2 — Enrich the catalog\nPAPER_PART2\n'),
     'modules/08-des-fidelity.md': (
-        'DES_ALL\n#### Conditional path for founder-supplied results\nDES_REST\n'),
+        'BANNER_08\n### 4.13. DES — score\nDES_ALL\n#### Conditional path for founder-supplied results\nDES_REST\n'),
     'modules/10-brain-and-pathways.md': (
         'BRAIN_INTRO\n### 5.0. Hashtag standardization against the reference library\n'
         'HASHTAGS\n### 5. Brain entry\nBRAIN_ENTRY\n### 5.5. Verify the recorded pillar\n'
@@ -284,7 +284,8 @@ QUEUE_FIXTURES = {
     'modules/07-flashcards-and-quiz.md': (
         'FLASH_INTRO\n### 4.11. Flashcards\nFLASHCARDS\n### 4.12. Quiz-ready FAQ\nFAQ\n'
         '### 4.12-ب. سؤال آزمون\nEXAM'),
-    'en-version.md': 'EN_VERSION_ALL\n',
+    'en-version.md': ('# EN\nEN_TITLE\n## Hard rules\nEN_HARD\n## Phase A — Discover\nEN_PHASE_A\n'
+                      '### 5. Translation\nEN_TRANSLATION\n### 6. SEO head — x\nEN_SEO\n'),
     'modules/12-english-notify-verify.md': (
         'EN_INTRO\n## Phase D — English mirror\nPHASE_D\n## Phase E — Mark the page\nPHASE_E\n'),
     'modules/03-litecast-and-page.md': (
@@ -343,20 +344,21 @@ class QueuePrepTests(unittest.TestCase):
 
     def test_selects_exactly_the_listed_sections_in_order(self):
         text, m = self.pack()
-        for kept in ('HARD_RULES_ALL', 'Q5', 'DES_REST', 'HASHTAGS', 'BRAIN_ENTRY',
-                     'FLASHCARDS', 'FAQ', 'EXAM', 'EN_VERSION_ALL', 'PHASE_D', 'OPENING',
+        for kept in ('HARD_RULES_ALL', 'Q5', 'DES_ALL', 'DES_REST', 'HASHTAGS', 'BRAIN_ENTRY',
+                     'FLASHCARDS', 'FAQ', 'EXAM', 'EN_HARD', 'EN_TRANSLATION', 'PHASE_D', 'OPENING',
                      'OPENING_APPROVAL', 'OPENING_CHECK', 'PILLAR', 'PULSE',
                      'GLOSSARY_LINK', 'IN_ARTICLE', 'RELATED'):
             self.assertIn(kept, text)
         for dropped in ('BRAIN_INTRO', 'BRAIN_VERIFY', 'FLASH_INTRO', 'EN_INTRO', 'PHASE_E',
                         'PAGE_INTRO', 'SEAL', 'TAX_INTRO', 'CAPSULE', 'BUILD_INTRO', 'BUMP',
-                        'LINK_INTRO', 'GLOSSARY_ONLY', 'QUEUE_FILE_ITSELF'):
+                        'LINK_INTRO', 'GLOSSARY_ONLY', 'QUEUE_FILE_ITSELF', 'BANNER_01',
+                        'BANNER_02', 'BANNER_08', 'EN_TITLE', 'EN_PHASE_A', 'EN_SEO'):
             self.assertNotIn(dropped, text)
         order = [s['path'].rsplit('/', 1)[-1] for s in m['segments']]
         self.assertEqual(order, ['01-hard-rules.md', '02-routing-intake.md',
                                  '06-paper-ingestion.md', '08-des-fidelity.md',
                                  '10-brain-and-pathways.md', '07-flashcards-and-quiz.md',
-                                 'en-version.md', '12-english-notify-verify.md',
+                                 'en-version.md', 'en-version.md', '12-english-notify-verify.md',
                                  '03-litecast-and-page.md', '04-taxonomy-and-navigation.md',
                                  '11-build-and-version.md', '05-semantic-linking.md',
                                  '05-semantic-linking.md'])
@@ -427,11 +429,12 @@ class QueuePrepTests(unittest.TestCase):
         seg = next(s for s in m['segments'] if s['path'].endswith('04-taxonomy-and-navigation.md'))
         self.assertTrue(seg['drift'])
         self.assertEqual(seg['selection_reason'], 'SOURCE_CHANGED_FULL_FALLBACK_REAUDIT_MAP')
-        # A whole-file read omits nothing, so its pin cannot cause drift.
+        # Module 08 is sliced after its banner, so a drifted pin reads it whole again.
         rp.PINNED_BLOBS['08-des-fidelity.md'] = '0' * 40
-        _, m = self.pack()
+        text, m = self.pack()
         seg = next(s for s in m['segments'] if s['path'].endswith('08-des-fidelity.md'))
-        self.assertFalse(seg['drift'])
+        self.assertTrue(seg['drift'])
+        self.assertIn('BANNER_08', text)
 
     def test_cli_argument_validation(self):
         out, manifest = self.root / 'qp.txt', self.root / 'qp.json'

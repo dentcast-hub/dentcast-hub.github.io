@@ -49,7 +49,7 @@ At intake and again before Part 1, check whether the founder supplied a DES scor
 4. **All paths still require gates:** Perform the complete Part 3 checks, applicable Part 3b founder fixes/decisions, Part 4 storage in `plus/des-scores.json`, and Phase F. Reused results are **not a SKIP**. Record whether DES and Fidelity were reused or executed separately. Any subsequent change to the final page body, source identity/text/basis or scoring spec invalidates the affected supplied results until verified anew. Never commit private source text or approval transcripts.
 
 <!-- fidelity-mechanical-acceptance:v1 -->
-#### Acceptance is mechanical — one rule for every agent and client (founder 2026-11-09)
+#### Acceptance is mechanical — one rule for every agent and client
 
 DES and Fidelity exist so an article can be trusted, not to make a simple article
 hard to publish. A result is trustworthy when what it says can be checked against
@@ -225,7 +225,7 @@ echoed. The PDF and its text stay outside the repository and the queue branch.
 **An empty `source_conclusion` is never sent to a model.** The receipt of
 `pdf_source_text.py` shows the conclusion the blocks will carry; when a layout
 defeats the cut (a two-column page that glued «CONCLUSIONS REFERENCES» into one
-line, J Prosthet Dent, publish-queue item 24) it warns and exits 3, and
+line) it warns and exits 3, and
 `des_fidelity_units.py --build` refuses. Pin the paper's own last conclusion
 sentence **before the first run** — `pdf_source_text.py … --conclusion "…"`, or
 `"source_conclusion"` in `texts.json` (verbatim, or the tool refuses) — never by
@@ -245,7 +245,7 @@ from every other run's).
 tool-less process per input block, started in an empty directory, with
 `.dentcast/des-v3.7-knowledge.md` as its system prompt and the Step 0 block (below)
 as its only user turn. The model is the **strong model** of Part 2c's table.
-Claude Code (flags verified with `claude --help`, CLI 2.1.319, 2026-11-07):
+Claude Code (flags as in `claude --help`):
 
 ```bash
 cd "$(mktemp -d)" && claude -p --system-prompt-file <repo>/.dentcast/des-v3.7-knowledge.md \
@@ -256,49 +256,30 @@ cd "$(mktemp -d)" && claude -p --system-prompt-file <repo>/.dentcast/des-v3.7-kn
 Another provider: the same contract (empty directory, the whole file as the system
 instruction, no tools, the role's model; Codex: `agent-parity.md` «اجرای ایزوله»).
 **Never** hand the spec to an agent as a file it reads with a file tool: an agent that
-reads 1,400 lines in pieces does not hold the rules the way a system prompt does, and the
-publish-queue record that started this rule (Elgamal 2025, three in-session subagent
-runs) came from exactly that. When no such process can be started, the step stops under
+reads 1,400 lines in pieces does not hold the rules the way a system prompt does. When no such process can be started, the step stops under
 the «توانمندی ندارم» protocol; it is never simulated. Record in the run report (queue:
 `اجرا.md`) the command, the model the run reports, and the sha256 of the system-prompt file.
 
-The delivery alone does not make the rating right: in the controlled run that
-introduced it (Elgamal 2025, FULL_TEXT, three runs, 2026-11-07) one run rated `missing
-data` `high` (36/D) and two rated it `some_concerns` (52/C). That is why Part 3(7) and
-Part 2d follow every new record. Spec v3.6 then closed the reading the split came from
-(3b-ii, «What addresses a domain»: results, tables, counts and design statements never
-address a domain whose safeguard they do not state): the same input under the v3.6 file,
-five runs, rated `missing data` `high` and landed on 36/D in all five.
+The delivery alone does not make the rating right, which is why Part 3(7) and Part 2d
+follow every new record.
 <!-- /des-system-prompt-run:v1 -->
 
 <!-- des-version-history:v1 -->
 **v3.7 is the current spec.** What each earlier version changed is in
 `.dentcast/workflows/des-version-history.md`. Read it when you validate,
-re-score or compare a record stamped below 3.6; a new 3.7 run does not need it.
-These rules stay binding here:
+re-score or compare a record stamped below 3.6 (it also holds the binding rules for
+older stamps); a new 3.7 run does not need it. These rules stay binding here:
 
 - v3.7 only adds `source_kind: "manufacturer"` (a maker's own brochure,
   instructions for use or product guide that reports no study: `NOT_APPRAISABLE`,
   no score, FIDELITY as usual, text in hand required). No RESEARCH score moves,
   so a 3.6 record is the same measurement as a 3.7 one (Part 1 reuses it;
   `compare` reads it as comparable); `"manufacturer"` is legal only on a 3.7 stamp.
-
-- A record stamped 3.5 stays valid under 3.5 and is never re-labelled 3.6; a
-  paper is scored under 3.6 only by a new run (Part 1: an older stamp is not
-  reused, and `compare` reports it as `not_comparable`).
-- Every record is validated under its own `des_version` stamp;
-  `tools/verify_publish.py` and `tools/des_fidelity_units.py` are version-gated.
-  An old record is regenerated, never re-labelled to a newer version.
-- The v3.5 source markers (`.dentcast/des-source-markers.json`) and recorded
-  plans (`.dentcast/des-fidelity-plans/<content_id>.json`) apply only to a
-  source record stamped 3.5 or later (Part 2b, Part 2c step 5).
-- A 2.7 record is re-scored by recomputing F4 from its stored verdicts and
-  re-stamped 2.8, with no model call. A 2.8 record is re-run under 2.9, never
-  re-labelled.
-- From 2.0 a penalty object carries both `base_points` (the row weight, 8/5/5/3)
-  and `points` = `max(1, round_half_up(base_points × S_design ÷ 100))`; Phase F
-  recomputes the pair and fails a mismatch. Records stamped 1.x keep validating
-  against the flat table they were written under.
+- Every record is validated under its own `des_version` stamp; an old record is
+  regenerated, never re-labelled to a newer version.
+- A penalty object carries both `base_points` (the row weight, 8/5/5/3) and
+  `points` = `max(1, round_half_up(base_points × S_design ÷ 100))`; Phase F
+  recomputes the pair and fails a mismatch.
 - `text_basis: SECONDARY_REPORT` is the fallback for a wrapper whose primary
   studies cannot be retrieved, never the default: Question 4.8's chain rule
   scores the primary studies wherever they are retrievable.
@@ -318,9 +299,7 @@ domain list, an explicit rating rule (under `FULL_TEXT`, silence about a
 safeguard is `high`, not `NR`), routing for the designs that matched no anchor,
 a narrowed funding penalty, and round-half-up on exact decimals. Follow the
 rules even where your own judgment differs — **a score everyone reproduces is
-worth more than a slightly better score nobody can.** Any RESEARCH record
-stamped `des_version` below `1.5` must be regenerated before its number is
-compared with a new one; `1.5` and `1.6` research scores are directly comparable.
+worth more than a slightly better score nobody can.**
 
 **The COMMENTARY track has one carve-out.** Checklist item 4 («صریحاً تجربه/دیدگاه
 نامیده شده») can be earned from the section's own published declaration rather
@@ -334,9 +313,7 @@ quotes all three verbatim in a closed table. When you use it, the
 gets an explicit declaration first, and the spec version bumps after.** Never add
 a section because it resembles one already listed. A landing page that does not
 tell a reader whether the page in front of them is experience or research
-findings (e.g. «تجربه‌های بالینی **و** یافته‌های علمی») does not qualify. Any COMMENTARY record in
-`chairside/` or `metanotes/` stamped `des_version` below `1.6`, or in `insight/`
-below `1.7`, is scoring low by 3 and must be regenerated. The appendix says so itself ("NOT part of the
+findings (e.g. «تجربه‌های بالینی **و** یافته‌های علمی») does not qualify. The appendix says so itself ("NOT part of the
 model instruction … Do not include this appendix if the file is loaded verbatim as a
 system prompt"): those checks are yours to run in Part 3, not the model's.
 
@@ -453,8 +430,7 @@ that ends no sentence is not a cut: a caption label opening its line
 («تصویر ۱.», «شکل 2.», «جدول ۳.», «Figure 4.», «Table 1.») stays with the
 caption sentence after it, a reference abbreviation stays with its number
 («Fig. 1», «Tab. 3», «Eq. 4», «No. 5», «Ref. 6») and «e.g.», «i.e.», «vs.»
-stay inside their sentence (publish-queue item 24: «تصویر ۱. … منبع: … Fig. 1»
-used to fall apart into «تصویر ۱.», «… Fig.» and «1»). A record already judged
+stay inside their sentence. A record already judged
 on the earlier cut keeps it (`split_for`), as it keeps its `source_conclusion`:
 no stored id moves. Segmentation and attribution stay out
 of the model's hands because they are the largest sources of run-to-run
@@ -465,12 +441,11 @@ in Part 4.
 
 #### Part 2c — How the FIDELITY call is run: one sweeper run, one judge, the founder sees the doubts
 
-**Founder decision 2026-11-11 (1405/08/20)** replaces the earlier protocol (two
-lighter checker runs, a tie-break where they differed, a stronger review of what
-was still flagged). Records and work directories made under it keep their record
-and their provenance; `--vote` still reads such a directory (two run files and
-`review.json`/`adjudicate.json`, no `judge-src<k>.json`). Every new run, re-check
-and caption check uses the protocol below. This changes the caller's protocol only:
+Records and work directories made under the earlier protocol (two checker runs, a
+tie-break, a stronger review) keep their record; `--vote` still reads such a
+directory (two run files and `review.json`/`adjudicate.json`, no
+`judge-src<k>.json`). Every new run, re-check and caption check uses the protocol
+below. This changes the caller's protocol only:
 the spec, its verdict rules, F4 and the bands are untouched, and where the spec's
 appendix (rule 12) names «two checker runs, tie-break, stronger review» it means
 this Part 2c, which now reads «sweeper, judge».
@@ -515,8 +490,8 @@ carries each call to its own fresh chat; only if the founder declines it,
    directions: a `MATCHES` that is in fact firmer, broader or reversed, and a flag
    that is in fact faithful.
 3. **Settle**: `python3 tools/des_fidelity_units.py <content_id> --vote <dir>`.
-   **The judge's word is final** (founder ruling 1405/08/15, kept: the reviewer
-   exists to catch the sweep's misreading, so the sweep cannot outrank it).
+   **The judge's word is final** (the judge exists to catch the sweep's misreading,
+   so the sweep cannot outrank it).
    `agree: true` keeps the sweeper's answer. `agree: false` on an
    `ALTERED`/`REVERSED` unit with no verdict or `MATCHES` settles it as `MATCHES`
    (`change_kind` null, `source_quote` kept, both reasons in `note`); any other
@@ -557,7 +532,7 @@ it unchanged.
 
 <!-- fidelity-sweep-first:v1 -->
 **The orphan sweep is owed exactly when a sentence would escape the check — and the
-tool decides, not the agent (founder 2026-11-09).** On a page with two or more sources
+tool decides, not the agent.** On a page with two or more sources
 the assignment comes from the tool: the sources the prose names, the declared markers
 (`.dentcast/des-source-markers.json`) or a recorded plan. A body sentence it gives to
 no source would be judged by no call and would silently drop out of the grade. So:
@@ -744,10 +719,10 @@ right score was.
      the quote does address («sequence generation described; allocation concealment
      not mentioned») is line 4 and passes. The AMSTAR-2 excluded-studies domain is
      exempt from this half (its `some_concerns` is «no list, but…», 3b-iii).
-   From spec v3.6 the rule this check approximates is stated in the spec itself (3b-ii,
-   «What addresses a domain»: a `low`/`some_concerns` quote is a sentence about that
-   domain's safeguard); the check stays a mechanical backstop, and Part 2d's audit, which
-   reads the same 3b-ii, is the full test.
+   The spec states the rule this check approximates (3b-ii, «What addresses a domain»:
+   a `low`/`some_concerns` quote is a sentence about that domain's safeguard); the check
+   is a mechanical backstop, and Part 2d's audit, which reads the same 3b-ii, is the full
+   test.
    A finding makes the record invalid: rerun the SOURCE call (Part 2) and audit it
    (Part 2d); never change a rating, quote or note by hand. **Phase F runs it too**
    (rows `4.13 DES`): a finding is `FAIL` on a source stamped 3.5 or later in a record
@@ -837,9 +812,8 @@ never a «بله» to the others.
   page's unit ids (a sentence split or joined), when a changed unit was not
   re-checked, or when a re-check judged old text — in those cases, and only
   those, run the full step again. Never patch a verdict by hand.
-- **Figure captions added after the full run** (founder ruling 2026-11-07,
-  publish-queue item 24: «وقتی فقط کپشن اضافه شده فقط کپشن باید چک بشه، بقیه همه
-  تأییدشده»). A `<figcaption>` is page text and its sentences are units, so
+- **Figure captions added after the full run** — only the captions are checked;
+  every other verdict stands. A `<figcaption>` is page text and its sentences are units, so
   inserting one renumbers every unit after it. Do not rerun the page:
   `python3 tools/des_fidelity_units.py <content_id> --carry <dir1> --texts
   texts.json --build <dir2>` matches every unit of the last full run to its new
@@ -848,7 +822,7 @@ never a «بله» to the others.
   judge), then `--vote <dir2> --base <dir1>`, which
   applies the same mapping. The language toggle's label («English», `<a
   class="lang-btn">` after the h1) is carried the same way: a result made on a
-  preview without it (an outside client's draft, publish-queue item 33) is one
+  preview without it (for example an outside client's draft) is one
   id off on the final page; `--carry` re-keys the result and writes the toggle
   as `NOT_A_CLAIM` itself (a link label is never a claim; no model call), and
   with `--build DIR` and no caption to judge writes `DIR/voted-src<k>.json`. Both refuse when anything else moved — a body sentence changed,

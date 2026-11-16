@@ -70,7 +70,7 @@
    لاگ گام «Run the item» (خط `result=`) و لینک PR در لاگ گام «Open the PR» (خط `PR:`) و بدنهٔ خود PR هست،
    چون API و `gh` خلاصهٔ اجرا را برنمی‌گردانند. شکست یا timeout: لینک اجرا و خروجی JSON ابزار عیناً، بعد
    `status` و `next_step` آن.
-5. **مرج.** مرج بدون پرسیدن انجام می‌شود (بنیان‌گذار ۱۴۰۵/۰۸/۱۶: برگشت‌پذیر است و تا حالا رد نشده):
+5. **مرج.** مرج بدون پرسیدن انجام می‌شود (برگشت‌پذیر است):
    وقتی تحویل سوم، Phase F و گیت‌های PR سبزند (`gh pr checks <n>`، MCP `pull_request_read` با `get_status`، یا
    REST `GET repos/…/commits/<sha>/check-runs`)، ایجنت همان لحظه PR را مرج می‌کند؛ فقط یک «مرج نکن» صریحِ
    بنیان‌گذار برای همین مطلب جلوی آن را می‌گیرد (`gh pr merge <n> --merge`، MCP `merge_pull_request`، یا REST `PUT repos/…/pulls/<n>/merge`؛
