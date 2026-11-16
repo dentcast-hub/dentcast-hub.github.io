@@ -43,7 +43,9 @@
    alias or a variant of a hashtag concept in dentcast-hashtag-reference.json
    («تریتمنت پلن», «اکلوزیون», «occlusion») also finds what carries that
    hashtag — site content for everyone, and (button on) the papers mapped to
-   it. The reference is fetched once, on the first query. No model involved.
+   it. A name inside a longer query, or a query inside a longer name, counts
+   only where it starts a word. The reference is fetched once, on the first
+   query. No model involved.
 
    Deliberately NOT here: a DES filter. Bands are comparable only
    inside one question_type and are never shown apart from it
@@ -820,13 +822,13 @@ function dcPapersSetWanted(on) {
 function dcPremiumHint() { try { return localStorage.getItem("dcAds.vc") === "premium"; } catch (_) { return false; } }
 /* The answer AND why: "confirmed not premium" and "could not ask" differ. */
 function dcMe() {
-  return import('/plus/js/api.js?v=247')
+  return import('/plus/js/api.js?v=248')
     .then((m) => m.currentUser().then((u) => ({ u, status: m.meStatus() })))
     .catch(() => ({ u: null, status: "error" }));
 }
 /* The library's own gate card (plus/js/library-gate.js), with its own ?from=. */
 function dcPaperGate() {
-  return Promise.all([import('/plus/js/sheet.js?v=247'), import('/plus/js/premium-cta.js?v=247')])
+  return Promise.all([import('/plus/js/sheet.js?v=248'), import('/plus/js/premium-cta.js?v=248')])
     .then(([sheet, cta]) => {
       sheet.openSheet(sheet.gateCard({
         title: "جستجو در مقاله‌های کتابخانه ویژه‌ی پریمیوم است",
@@ -864,7 +866,11 @@ function dcPaperRows(data, fold) {
   return { items, fa };
 }
 /* Hashtag concepts by every name they answer to: [folded form, folded key
-   with spaces]. The reference is the single source of the vocabulary. */
+   with spaces]. The reference is the single source of the vocabulary. The
+   key is built from the concept's `tag` exactly as dcItemTags builds an
+   item's tags: the reference's `key` turns ZWNJ into a space while the fold
+   deletes it, so a key from `key` never met «#درمان_محافظه‌کارانه» on a page.
+   Variants are stored with their leading `#`, which comes off here. */
 function dcAliasForms(fold) {
   if (!dcAliasForms.p) {
     dcAliasForms.p = fetch("/dentcast-hashtag-reference.json")
@@ -873,9 +879,9 @@ function dcAliasForms(fold) {
         const out = [];
         ((j && j.concepts) || []).forEach((c) => {
           if (!c || !c.key) return;
-          const k = fold(String(c.key).replace(/_/g, " "));
-          [c.key].concat(c.aliases || [], c.variants || []).forEach((n) => {
-            const f = fold(String(n).replace(/_/g, " "));
+          const k = fold(String(c.tag || c.key).replace(/^#/, "").replace(/_/g, " "));
+          [c.key, c.tag].concat(c.aliases || [], c.variants || []).forEach((n) => {
+            const f = fold(String(n || "").replace(/^#/, "").replace(/_/g, " "));
             if (f.length >= 2) out.push([f, k]);
           });
         });
@@ -885,15 +891,26 @@ function dcAliasForms(fold) {
   }
   return dcAliasForms.p;
 }
-/* The concepts a query names: exactly, as part of a longer name (4+ letters),
-   or as a name inside a longer query. */
+/* The concepts a query names: exactly, as the start of a word in a longer
+   name (4+ letters), or as a name starting a word inside a longer query.
+   Never mid-word: «اپیزود» does not name پیزو, «اطمینان» not مینای دندان. */
 function dcAliasKeys(forms, q) {
   const keys = new Set();
   if (!forms || !forms.length || !q) return keys;
   for (const [f, k] of forms) {
-    if (f === q || (q.length >= 4 && f.includes(q)) || (f.length >= 4 && q.includes(f))) keys.add(k);
+    if (f === q || (q.length >= 4 && dcWordStart(f, q)) || (f.length >= 4 && dcWordStart(q, f))) keys.add(k);
   }
   return keys;
+}
+/* `needle` occurs in `hay` starting at a word boundary (the end is free, so
+   «ایمپلنتی» and "implants" still match). */
+function dcWordStart(hay, needle) {
+  let i = hay.indexOf(needle);
+  while (i !== -1) {
+    if (i === 0 || !/[\p{L}\p{N}]/u.test(hay[i - 1])) return true;
+    i = hay.indexOf(needle, i + 1);
+  }
+  return false;
 }
 /* An item's own hashtags, folded the same way as the keys. */
 function dcItemTags(item, fold) {
