@@ -445,5 +445,44 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "sharehub/share-54": {
+    "queue_ref": "queue/21-sharehub-digital-edentulous-impression",
+    "record_sha256": "0add5f7edf7933ee4bda6b7a7df012ebbb913e3a116c722795784bbc9e102e04",
+    "installed_at": "2026-11-16",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [
+        "u1",
+        "u2",
+        "u3",
+        "u4",
+        "u5",
+        "u6",
+        "u7",
+        "u8",
+        "u17",
+        "u18",
+        "u19",
+        "u24",
+        "u34",
+        "u43",
+        "u51",
+        "u57",
+        "u64",
+        "u67",
+        "u68",
+        "u70"
+      ],
+      "dropped": []
+    }
   }
 }

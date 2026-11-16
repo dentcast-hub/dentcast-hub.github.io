@@ -887,6 +887,72 @@
    ]
   },
   {
+   "key": "curated_content",
+   "tag": "#Curated_Content",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
+   "use_when": "روی مدخل‌های بازنشر.",
+   "aliases": [
+    "محتوای گلچین شده",
+    "کیوریتد",
+    "بازنشر محتوا"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 48,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25",
+    "sharehub/share-26",
+    "sharehub/share-27",
+    "sharehub/share-28",
+    "sharehub/share-29",
+    "sharehub/share-30",
+    "sharehub/share-31",
+    "sharehub/share-32",
+    "sharehub/share-33",
+    "sharehub/share-34",
+    "sharehub/share-35",
+    "sharehub/share-36",
+    "sharehub/share-38",
+    "sharehub/share-39",
+    "sharehub/share-41",
+    "sharehub/share-42",
+    "sharehub/share-43",
+    "sharehub/share-44",
+    "sharehub/share-45",
+    "sharehub/share-48",
+    "sharehub/share-49",
+    "sharehub/share-50",
+    "sharehub/share-53",
+    "sharehub/share-54"
+   ]
+  },
+  {
    "key": "مرور_منابع",
    "tag": "#مرور_منابع",
    "domain": "brand",
@@ -953,71 +1019,6 @@
     "sharehub/share-47",
     "sharehub/share-51",
     "sharehub/share-52"
-   ]
-  },
-  {
-   "key": "curated_content",
-   "tag": "#Curated_Content",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
-   "use_when": "روی مدخل‌های بازنشر.",
-   "aliases": [
-    "محتوای گلچین شده",
-    "کیوریتد",
-    "بازنشر محتوا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 47,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24",
-    "sharehub/share-25",
-    "sharehub/share-26",
-    "sharehub/share-27",
-    "sharehub/share-28",
-    "sharehub/share-29",
-    "sharehub/share-30",
-    "sharehub/share-31",
-    "sharehub/share-32",
-    "sharehub/share-33",
-    "sharehub/share-34",
-    "sharehub/share-35",
-    "sharehub/share-36",
-    "sharehub/share-38",
-    "sharehub/share-39",
-    "sharehub/share-41",
-    "sharehub/share-42",
-    "sharehub/share-43",
-    "sharehub/share-44",
-    "sharehub/share-45",
-    "sharehub/share-48",
-    "sharehub/share-49",
-    "sharehub/share-50",
-    "sharehub/share-53"
    ]
   },
   {
@@ -2756,6 +2757,41 @@
    ]
   },
   {
+   "key": "دقت_اسکن",
+   "tag": "#دقت_اسکن",
+   "domain": null,
+   "words": 2,
+   "definition": "دقتِ نهاییِ اسکن و آنچه آن را خراب می‌کند.",
+   "use_when": "مقاله دقت را بسنجد یا بهبود دهد.",
+   "aliases": [
+    "scanning accuracy",
+    "trueness",
+    "صحت اسکن",
+    "scan accuracy",
+    "دقت اسکنر"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 15,
+   "content_ids": [
+    "episodes/episode-122-2",
+    "episodes/episode-128-1",
+    "episodes/episode-133",
+    "episodes/episode-144-2",
+    "sharehub/share-2",
+    "insight/insight-33",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "insight/insight-51",
+    "metanotes/meta-16",
+    "sharehub/share-15",
+    "dentai/dentai-29",
+    "dentai/dentai-32",
+    "insight/insight-74",
+    "sharehub/share-54"
+   ]
+  },
+  {
    "key": "دندان_اندوشده",
    "tag": "#دندان_اندوشده",
    "domain": null,
@@ -3096,40 +3132,6 @@
    ]
   },
   {
-   "key": "دقت_اسکن",
-   "tag": "#دقت_اسکن",
-   "domain": null,
-   "words": 2,
-   "definition": "دقتِ نهاییِ اسکن و آنچه آن را خراب می‌کند.",
-   "use_when": "مقاله دقت را بسنجد یا بهبود دهد.",
-   "aliases": [
-    "scanning accuracy",
-    "trueness",
-    "صحت اسکن",
-    "scan accuracy",
-    "دقت اسکنر"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 14,
-   "content_ids": [
-    "episodes/episode-122-2",
-    "episodes/episode-128-1",
-    "episodes/episode-133",
-    "episodes/episode-144-2",
-    "sharehub/share-2",
-    "insight/insight-33",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "insight/insight-51",
-    "metanotes/meta-16",
-    "sharehub/share-15",
-    "dentai/dentai-29",
-    "dentai/dentai-32",
-    "insight/insight-74"
-   ]
-  },
-  {
    "key": "دندان_قدامی",
    "tag": "#دندان_قدامی",
    "domain": "clinical",
@@ -3235,6 +3237,42 @@
     "insight/insight-27",
     "dentai/dentai-25",
     "episodes/episode-159-1"
+   ]
+  },
+  {
+   "key": "قالب_گیری_دیجیتال",
+   "tag": "#قالب‌گیری_دیجیتال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ثبتِ دیجیتالِ آرچ با اسکنر، به‌جای قالب سنتی.",
+   "use_when": "مقاله دقت یا پروتکلِ ثبت دیجیتال را بررسی کند.",
+   "aliases": [
+    "قالب گیری دیجیتال",
+    "digital impression",
+    "اسکن دیجیتال",
+    "digital scan",
+    "دیجیتال اسکن"
+   ],
+   "variants": [
+    "#اسکن_دیجیتال"
+   ],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "insight/insight-3",
+    "insight/insight-19",
+    "litecast/lite-CAST14",
+    "insight/insight-26",
+    "insight/insight-31",
+    "insight/insight-33",
+    "insight/insight-38",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "insight/insight-51",
+    "sharehub/share-15",
+    "insight/insight-67",
+    "dentai/dentai-32",
+    "sharehub/share-54"
    ]
   },
   {
@@ -3353,41 +3391,6 @@
     "dentcast-plus/video-11",
     "insight/insight-73",
     "insight/insight-85"
-   ]
-  },
-  {
-   "key": "قالب_گیری_دیجیتال",
-   "tag": "#قالب‌گیری_دیجیتال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ثبتِ دیجیتالِ آرچ با اسکنر، به‌جای قالب سنتی.",
-   "use_when": "مقاله دقت یا پروتکلِ ثبت دیجیتال را بررسی کند.",
-   "aliases": [
-    "قالب گیری دیجیتال",
-    "digital impression",
-    "اسکن دیجیتال",
-    "digital scan",
-    "دیجیتال اسکن"
-   ],
-   "variants": [
-    "#اسکن_دیجیتال"
-   ],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "insight/insight-3",
-    "insight/insight-19",
-    "litecast/lite-CAST14",
-    "insight/insight-26",
-    "insight/insight-31",
-    "insight/insight-33",
-    "insight/insight-38",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "insight/insight-51",
-    "sharehub/share-15",
-    "insight/insight-67",
-    "dentai/dentai-32"
    ]
   },
   {
@@ -4048,6 +4051,35 @@
    ]
   },
   {
+   "key": "قالبگیری",
+   "tag": "#قالبگیری",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "ثبتِ وضعیتِ دهان برای ساختِ کار — چترِ عامِ قالب‌گیری.",
+   "use_when": "همراه تگ مشخص‌ترِ تکنیک بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "impression",
+    "ایمپرشن",
+    "قالب گیری"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-20",
+    "episodes/episode-21",
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "metanotes/meta-9",
+    "insight/insight-34",
+    "dentai/dentai-20",
+    "insight/insight-75",
+    "insight/insight-80",
+    "insight/insight-83",
+    "sharehub/share-54"
+   ]
+  },
+  {
    "key": "متاآنالیز",
    "tag": "#متاآنالیز",
    "domain": null,
@@ -4077,6 +4109,43 @@
     "dentai/dentai-32",
     "taraz/taraz1-8",
     "taraz/taraz1-10"
+   ]
+  },
+  {
+   "key": "پروتز_متحرک",
+   "tag": "#پروتز_متحرک",
+   "domain": null,
+   "words": 2,
+   "definition": "دنچر و پروتزهای برداشتنی.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [
+    "دنچر",
+    "denture",
+    "پروتز کامل",
+    "دست دندان",
+    "removable prosthesis",
+    "removable denture",
+    "complete denture",
+    "دنچر کامل",
+    "removable prosthodontics"
+   ],
+   "variants": [
+    "#دنچر"
+   ],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-118-1",
+    "episodes/episode-147-1",
+    "litecast/lite-CAST2",
+    "notecast/episode-32",
+    "chairside/chairside-8",
+    "notecast/episode-33",
+    "episodes/episode-160",
+    "dentai/dentai-34",
+    "sharehub/share-19",
+    "dentai/dentai-35",
+    "sharehub/share-54"
    ]
   },
   {
@@ -4391,70 +4460,6 @@
     "chairside/chairside-40",
     "insight/insight-97",
     "insight/insight-107"
-   ]
-  },
-  {
-   "key": "قالبگیری",
-   "tag": "#قالبگیری",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "ثبتِ وضعیتِ دهان برای ساختِ کار — چترِ عامِ قالب‌گیری.",
-   "use_when": "همراه تگ مشخص‌ترِ تکنیک بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "impression",
-    "ایمپرشن",
-    "قالب گیری"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-20",
-    "episodes/episode-21",
-    "notecast/episode-20",
-    "notecast/episode-21",
-    "metanotes/meta-9",
-    "insight/insight-34",
-    "dentai/dentai-20",
-    "insight/insight-75",
-    "insight/insight-80",
-    "insight/insight-83"
-   ]
-  },
-  {
-   "key": "پروتز_متحرک",
-   "tag": "#پروتز_متحرک",
-   "domain": null,
-   "words": 2,
-   "definition": "دنچر و پروتزهای برداشتنی.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
-   "aliases": [
-    "دنچر",
-    "denture",
-    "پروتز کامل",
-    "دست دندان",
-    "removable prosthesis",
-    "removable denture",
-    "complete denture",
-    "دنچر کامل",
-    "removable prosthodontics"
-   ],
-   "variants": [
-    "#دنچر"
-   ],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-118-1",
-    "episodes/episode-147-1",
-    "litecast/lite-CAST2",
-    "notecast/episode-32",
-    "chairside/chairside-8",
-    "notecast/episode-33",
-    "episodes/episode-160",
-    "dentai/dentai-34",
-    "sharehub/share-19",
-    "dentai/dentai-35"
    ]
   },
   {
@@ -7134,6 +7139,34 @@
    ]
   },
   {
+   "key": "بیمار_بی_دندان",
+   "tag": "#بیمار_بی_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بیمارِ کاملاً بی‌دندان و درمانِ فول‌آرچش.",
+   "use_when": "مقاله تصمیمش را برای قوسِ کاملاً بی‌دندان بگیرد.",
+   "aliases": [
+    "edentulous",
+    "بی دندان",
+    "بی دندانی کامل",
+    "edentulism",
+    "ادنچولوس",
+    "ادنتولوس",
+    "فک بی دندان",
+    "بیمار بدون دندان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "chairside/chairside-8",
+    "insight/insight-51",
+    "dentai/dentai-35",
+    "sharehub/share-35",
+    "sharehub/share-54"
+   ]
+  },
+  {
    "key": "ترمیم_خلفی",
    "tag": "#ترمیم_خلفی",
    "domain": "clinical",
@@ -8326,33 +8359,6 @@
     "insight/insight-32",
     "sharehub/share-28",
     "sharehub/share-45"
-   ]
-  },
-  {
-   "key": "بیمار_بی_دندان",
-   "tag": "#بیمار_بی_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "بیمارِ کاملاً بی‌دندان و درمانِ فول‌آرچش.",
-   "use_when": "مقاله تصمیمش را برای قوسِ کاملاً بی‌دندان بگیرد.",
-   "aliases": [
-    "edentulous",
-    "بی دندان",
-    "بی دندانی کامل",
-    "edentulism",
-    "ادنچولوس",
-    "ادنتولوس",
-    "فک بی دندان",
-    "بیمار بدون دندان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "chairside/chairside-8",
-    "insight/insight-51",
-    "dentai/dentai-35",
-    "sharehub/share-35"
    ]
   },
   {
@@ -10629,6 +10635,29 @@
     "dentai/dentai-11",
     "dentai/dentai-25",
     "sharehub/share-51"
+   ]
+  },
+  {
+   "key": "خطای_استیچینگ",
+   "tag": "#خطای_استیچینگ",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "خطایی که با بزرگ‌تر شدنِ محدوده‌ی اسکن انباشته می‌شود.",
+   "use_when": "مقاله وسعتِ اسکن را عاملِ افتِ دقت بداند.",
+   "aliases": [
+    "stitching",
+    "استیچینگ",
+    "خطای دوخت",
+    "stitching error",
+    "خطای استیچ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-33",
+    "insight/insight-51",
+    "sharehub/share-54"
    ]
   },
   {
@@ -13270,28 +13299,6 @@
    "content_ids": [
     "dentcast-plus/video-9",
     "insight/insight-81"
-   ]
-  },
-  {
-   "key": "خطای_استیچینگ",
-   "tag": "#خطای_استیچینگ",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "خطایی که با بزرگ‌تر شدنِ محدوده‌ی اسکن انباشته می‌شود.",
-   "use_when": "مقاله وسعتِ اسکن را عاملِ افتِ دقت بداند.",
-   "aliases": [
-    "stitching",
-    "استیچینگ",
-    "خطای دوخت",
-    "stitching error",
-    "خطای استیچ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-33",
-    "insight/insight-51"
    ]
   },
   {

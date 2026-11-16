@@ -99660,7 +99660,9 @@
       "file_size": 1673301,
       "key_finding": "Systematic review of 18 studies (8 clinical, the rest laboratory) on intraoral scanner accuracy for denture-bearing areas: accuracy differed among scanners, with influencing factors including artificial markers, scanner head size, scanning strategy and operator experience.",
       "clinical_bottom_line": "Intraoral scanners appear comparable to conventional impressions for bony structures with attached mucosa; the abstract excerpt does not report the conclusion for mobile peripheral tissues.",
-      "linked_episodes": [],
+      "linked_episodes": [
+        "sharehub/share-54"
+      ],
       "drive_link": "https://drive.google.com/file/d/151mKlf2SCjsC3SeS2lxE-5-KMULKu-LL/view",
       "status": "linked",
       "drive_download": "https://drive.google.com/uc?export=download&id=151mKlf2SCjsC3SeS2lxE-5-KMULKu-LL",
@@ -131036,6 +131038,52 @@
         "Chang-Mo Jeong",
         "So-Hyoun Lee"
       ]
+    },
+    {
+      "id": "P2960",
+      "title": "Functional impression of complete edentulous arches in a digital flow: A scoping review",
+      "file_name": "Functional Impression of Complete Edentulous Arches in a Digital Flow: A Scoping Review.pdf",
+      "topic": "complete denture",
+      "topic_path": "complete denture",
+      "type": "scoping review",
+      "local_path": "",
+      "file_size": 1475698,
+      "key_finding": "",
+      "clinical_bottom_line": "",
+      "linked_episodes": [
+        "sharehub/share-54"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1vU1x6N7vdWlQ9IP-jBl4yeYzX--lqXio/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1vU1x6N7vdWlQ9IP-jBl4yeYzX--lqXio",
+      "drive_view": "https://drive.google.com/file/d/1vU1x6N7vdWlQ9IP-jBl4yeYzX--lqXio/view",
+      "drive_id": "1vU1x6N7vdWlQ9IP-jBl4yeYzX--lqXio",
+      "tags": [
+        "complete-denture",
+        "edentulous",
+        "functional-impression",
+        "border-molding",
+        "intraoral-scanner",
+        "digital-workflow",
+        "hybrid-workflow",
+        "scoping-review",
+        "topic:complete-denture",
+        "functional-impression-complete-edentulous-arches-digital-flow-scoping-review"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Functional impression of complete edentulous arches in a digital flow: A scoping review",
+      "doi": "10.1016/j.jdent.2025.105981",
+      "journal": "Journal of Dentistry",
+      "crossref_year": 2025,
+      "subjects": [],
+      "abstract": "Objective: While digital workflows have significantly advanced prosthodontics, capturing functional impressions of edentulous arches remains a critical challenge, particularly in recording dynamic soft tissue movements, which are essential for optimal denture retention and stability. This scoping review aimed to summarize existing methods for recording functional impressions of completely edentulous arches within digital workflows for complete dentures, as well as the strategies used to overcome associated challenges. Methods: A comprehensive literature search was conducted across MEDLINE (PubMed), Scopus, and Dentistry & Oral Sciences Source, identifying 31 eligible studies published between 2013 and 2024. These included 12 non-randomized studies, 7 case reports, and 12 technical articles. Results: Most studies relied on hybrid workflows combining digital and conventional techniques to achieve optimal denture adaptation. In these cases, the functional impression was obtained using conventional methods, involving border molding with thermoplastic materials, followed by a definitive impression using zinc oxide eugenol or polyether materials. Other studies omitted the functional impression step, designing prostheses based solely on digital study impressions. Digital impression techniques showed promising mucostatic accuracy but consistently failed to capture mobile tissues adequately, limiting their ability to record functional borders precisely. Conclusions: No fully digital technique currently exists for recording functional impressions of completely edentulous arches. Although optical impressions can reliably capture mucostatic details, they remain insufficient for functional impressions due to their inability to register dynamic tissue movements—an essential factor for denture retention and stability. Clinical significance: To date, functional impressions for complete denture cannot be performed digitally. Full digital workflows for complete dentures either omit this step or digitalize a conventional impression.",
+      "display_title": "Functional impression of complete edentulous arches in a digital flow: A scoping review",
+      "authors": [
+        "Thanh Vivan Nguyen",
+        "Murali Srinivasan",
+        "Adrien Naveau"
+      ]
     }
   ],
   "drive_matched": 2849,
@@ -131222,7 +131270,7 @@
     "topic:bonding-layering": 31,
     "full-arch-implant-prosthesis": 31,
     "endocrown": 31,
-    "edentulous": 30,
+    "edentulous": 31,
     "ridge-dimensional-change": 30,
     "overdenture": 30,
     "success": 29,
@@ -131247,8 +131295,8 @@
     "smile-esthetics": 25,
     "onlay": 25,
     "topic:bond-primer-resin": 25,
-    "complete-denture": 25,
-    "intraoral-scanner": 25,
+    "complete-denture": 26,
+    "intraoral-scanner": 26,
     "subcrestal-placement": 25,
     "topic:periodontology-2000-2017": 24,
     "multicenter-study": 24,
@@ -131281,7 +131329,7 @@
     "topic:root-coverage": 21,
     "intrabony-defect": 21,
     "infection-control": 20,
-    "digital-workflow": 20,
+    "digital-workflow": 21,
     "loading-protocol": 20,
     "topic:biomaterial-and-membrane": 20,
     "wear": 20,
@@ -131565,7 +131613,7 @@
     "hybrid-layer": 6,
     "direct-restoration": 6,
     "partial-coverage-restoration": 6,
-    "scoping-review": 6,
+    "scoping-review": 7,
     "adhesive-dentistry": 6,
     "acid-base-resistant-zone": 6,
     "adhesive-luting": 6,
@@ -131851,7 +131899,7 @@
     "topic:2020-05-15-vita-mam-downloads": 3,
     "topic:vita": 3,
     "topic:cigar-and-implant": 3,
-    "topic:complete-denture": 3,
+    "topic:complete-denture": 4,
     "interdisciplinary-treatment": 3,
     "patient-satisfaction": 3,
     "retention": 3,
@@ -133117,7 +133165,11 @@
     "dahl-concept": 1,
     "pre-prosthetic-orthodontics-review": 1,
     "anterior-crossbite": 1,
-    "full-mouth-rehabilitation-skeletal-class-iii-lost-ovd-case-report": 1
+    "full-mouth-rehabilitation-skeletal-class-iii-lost-ovd-case-report": 1,
+    "functional-impression": 1,
+    "border-molding": 1,
+    "hybrid-workflow": 1,
+    "functional-impression-complete-edentulous-arches-digital-flow-scoping-review": 1
   },
   "semantic_pass": {
     "ontology_concepts": 204,
@@ -133131,7 +133183,7 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2124,
+  "total_papers": 2125,
   "tag_aliases": {
     "additive-manufacturing": "3d-printing",
     "adhesion": "bonding",
