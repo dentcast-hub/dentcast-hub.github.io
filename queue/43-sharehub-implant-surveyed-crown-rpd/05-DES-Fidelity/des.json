@@ -8,7 +8,7 @@
    "text_basis": "FULL_TEXT",
    "citation": {
     "title": "Clinical performance of implant-assisted removable partial dentures using implant surveyed crowns: a systematic review and meta-analysis",
-    "authors": "Kim SY, Cho YE, Hong SJ, Huh JB, Pyo SW, Yi Y, Yoo SY",
+    "authors": "So-Yeun Kim, Young-Eun Cho, Seoung-Jin Hong, Jung-Bo Huh, Se-Wook Pyo, Yuseung Yi, Soo-Yeon Yoo",
     "year": 2024,
     "journal": "The Journal of Advanced Prosthodontics",
     "doi": "10.4047/jap.2024.16.4.255"
@@ -19,8 +19,8 @@
    },
    "s_design": {
     "value": 100,
-    "anchor": "Systematic review of retrospective studies and case reports with no pooled analysis performed (THERAPY SR/MA row, 100, via Step 2 routing)",
-    "evidence_quote": "This systematic review was conducted according to"
+    "anchor": "Systematic review of retrospective studies and case reports, self-described as a meta-analysis with no pooling performed (THERAPY SR/MA row, 100, via Step 2 routing)",
+    "evidence_quote": "Therefore, this systematic review and meta-analysis"
    },
    "q_method": {
     "tool": "AMSTAR-2",
@@ -29,55 +29,55 @@
       "domain": "protocol registered before commencement",
       "rating": "high",
       "evidence_quote": "",
-      "note": "Absent. Read Methods (PRISMA/PICO, study selection, databases, inclusion criteria, search string, data extraction) and the front matter. No protocol, PROSPERO or registration wording anywhere in the text."
+      "note": "Absence. Read the Introduction, the Materials and Methods (PRISMA statement, PICO, search, eligibility, data extraction) and the funding line. No protocol, PROSPERO or registration number appears anywhere. Searched for the wording register/registration/protocol/PROSPERO."
      },
      {
       "domain": "adequacy of the literature search",
       "rating": "low",
       "evidence_quote": "PubMed, Cochrane Library, Web of Science, and Korea",
-      "note": "At least 2 bibliographic databases were searched (MEDLINE/PubMed, Cochrane, Web of Science, KCI). The full search string is given in Table 1, and reference lists were also hand-checked."
+      "note": "Three bibliographic databases are searched: MEDLINE/PubMed counted as one, Cochrane, Web of Science and KCI. The full Boolean string is reported in Table 1, and reference lists were hand-searched."
      },
      {
       "domain": "justification for excluding individual studies",
       "rating": "some_concerns",
-      "evidence_quote": "A total of 214 articles were obtained.",
-      "note": "There is no per-study list of excluded full texts. The review reports (a) a screening account with counts and a flowchart (Fig. 1) and (b) explicit inclusion criteria, so the rating is some_concerns under 3b-iii."
+      "evidence_quote": "A total of 214 articles were obtained. After checking",
+      "note": "There is no per-study list of excluded full texts. The review does report (a) a screening account with counts (214 obtained, exclusions by reason, 84 abstracts evaluated, 31 eligible, Fig. 1 flowchart) and (b) explicit inclusion criteria."
      },
      {
       "domain": "risk of bias assessment of included studies",
       "rating": "high",
       "evidence_quote": "",
-      "note": "Absent. The text states that no appraisal was done: 'Scoping reviews do not examine the possibility of bias or heterogeneity of included studies, hence no quality assessments were undertaken'. Results and Discussion contain no appraisal tool or quality wording."
+      "note": "Absence, and the text says so directly. Materials and Methods states that quality assessments were not undertaken ('no quality assessments were undertak-en'), justified by citing scoping-review convention. No appraisal tool is named and no quality or bias appraisal appears in Methods, Results, Discussion or the tables."
      },
      {
       "domain": "appropriateness of meta-analytical methods",
       "rating": "high",
       "evidence_quote": "",
-      "note": "Absent. Despite the title, Methods (selection → search → data extraction) and Results describe no pooling, effect model, heterogeneity test or statistical analysis of any kind. Findings are only listed narratively by study."
+      "note": "Absence. Despite the title, Methods describes no pooling: no statistical model, no effect measure, no heterogeneity test and no software. Results and tables report each study's figures narratively. Searched for pooled/random/fixed effect/heterogeneity/forest/I2 and found none."
      },
      {
       "domain": "assessment of publication bias",
       "rating": "high",
       "evidence_quote": "",
-      "note": "Absent. Methods, Results and Discussion contain no funnel plot, Egger test or publication/small-study bias wording."
+      "note": "Absence. Read Methods, Results and Discussion. There is no funnel plot, no Egger or Begg test and no publication or small-study bias wording anywhere."
      }
     ],
     "multiplier": 0.3
    },
    "penalties": [
     {
-     "item": "no conflict-of-interest statement / manufacturer funding",
+     "item": "conflict-of-interest statement / manufacturer funding",
      "base_points": 8,
      "points": 8,
-     "evidence_quote": "This research was performed with",
-     "note": "The only declaration in the text is a funding line naming the Korean Academy of Prosthodontics, which is an academic society and not a manufacturer. I searched the full text for a conflict-of-interest or competing-interest statement, including ligature variants, and none appears."
+     "evidence_quote": "",
+     "note": "There is no conflict-of-interest declaration anywhere in the text. Checked the first-page footer, the funding line, the end of the Conclusion and the block before References, and looked for ligature variants. The funder is named (partial support of the Korean Academy of Prosthodontics), but it is an academic society, not a manufacturer. The row fires only on the missing CoI statement."
     },
     {
      "item": "clinical trial not prospectively registered",
      "base_points": 5,
      "points": 0,
      "evidence_quote": "",
-     "note": "not applicable: not an RCT"
+     "note": "Applies to RCTs only; this is a systematic review."
     },
     {
      "item": "no sample size justification / power analysis",
@@ -87,19 +87,19 @@
      "note": "not applicable to a secondary study"
     },
     {
-     "item": "follow-up shorter than the outcome plausibly requires",
+     "item": "follow-up shorter than the outcome requires",
      "base_points": 3,
      "points": 3,
      "evidence_quote": "at least one year.",
-     "note": "The conclusion presents ICRPD as effective as a long-term treatment strategy. The 100% survival figures it summarises rest on implants observed for at least one year, which is short relative to that long-term survival claim."
+     "note": "The Conclusion claims ICRPD is 'expected to be effective as a long-term treatment strategy' on survival/success grounds. However, the 100% survival figures it reports rest on implants observed for at least one year, and Table 2 records an included study concluding that evidence is inadequate to ensure long-term prognosis. This is not covered by any Q_method domain."
     }
    ],
    "commentary_checklist": null,
    "des_score": 19,
    "band": "E",
    "provisional": false,
-   "fact_fa": "امتیاز DES این مقاله ۱۹ و باند آن E (سطح زمینه/نظر) برای پرسش از نوع THERAPY است.",
-   "interpretation_fa": "عنوان مقاله meta-analysis است، اما هیچ تحلیل تجمیعی در آن انجام نشده است. کیفیت مطالعات واردشده هم ارزیابی نشده و ثبت پروتکلی گزارش نشده است. شواهد آن به مطالعات retrospective و case reportهای عمدتاً کره‌ای محدود است. ارزش بالینی آن در حد نقشه‌ای از تجربه‌های موجود درباره‌ی ICRPD است، نه شاهدی برای برتری یا دوام طولانی‌مدت آن."
+   "fact_fa": "امتیاز DES این مقاله ۱۹ از ۱۰۰ است و برای پرسش THERAPY در باند E (سطح پس‌زمینه و نظر) قرار می‌گیرد.",
+   "interpretation_fa": "این مرور چهار پایگاه داده را جستجو کرده، اما ثبت پروتکلی گزارش نکرده، کیفیت مطالعات واردشده را ارزیابی نکرده و با وجود عنوان، هیچ meta-analysis واقعی انجام نداده است. داده‌ها از نه مطالعه‌ی retrospective و تعدادی case report کره‌ای می‌آیند. نرخ بقای ۹۵ تا ۱۰۰ درصد ICRPD نشانه‌ای امیدوارکننده ولی کوتاه‌مدت است، نه شاهدی محکم برای اثربخشی بلندمدت."
   }
  ]
 }
