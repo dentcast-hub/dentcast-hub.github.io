@@ -21,8 +21,10 @@ follow_up, materials_brands, funding_coi, limitations; key_finding and
 clinical_bottom_line only where the catalogue had none), `cites_in_cabinet`
 (catalogue ids this paper cites, from its reference list, mechanically).
 
-Coverage: 661 of 2169 papers (option 3: judge what was proposed, then decide
-on the rest). Run date 2026-11-15.
+Coverage: 1342 papers in `results.jsonl` (slice 1: 661, 2026-11-15; slice 2:
+681, 2026-11-16). 808 catalogue papers not read yet, plus 19 that could not be
+read (16 image-only scans needing OCR, 3 PDFs Drive would not serve: P0034,
+P0478, P0679); `todo` lists them again at the front of every slice.
 
 ## Live since 2026-11-15
 
@@ -36,6 +38,14 @@ cover, P0670 brochure, P1995 table of contents), 12 study types corrected,
 and empty key_finding / clinical_bottom_line / doi / authors / year / journal
 filled from what the paper itself says. The Covid-19 folders and two other
 off-topic papers stay (no decision yet). Seven image-only scans need OCR.
+
+Slice 2 (2026-11-16): no document removed (P1533, judged «front matter only»,
+has clinical chapters as images; the off-topic ones are in the Covid-19 folder
+or the founder's own MICA folder), 17 study types corrected, 63 empty
+key_finding / clinical_bottom_line and a few year / doi / authors / journal
+filled. P0309's file does not match its catalogue authors/journal (nothing
+filled there). Text not readable without OCR: P0360 (font codes), P1414
+(image scan behind a ResearchGate cover).
 
 ## Running the next slice (any session)
 
