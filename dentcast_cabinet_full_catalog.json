@@ -119483,7 +119483,9 @@
       "subjects": [],
       "abstract": "",
       "display_title": "بخش سوم: انواع زیرکونیا",
-      "authors": []
+      "authors": [
+        "مرتضی اتابک"
+      ]
     },
     {
       "id": "P2662",
@@ -119555,7 +119557,9 @@
       "subjects": [],
       "abstract": "",
       "display_title": "بخش پنجم: مروری بر طرز کار دستگاه CAD-CAM",
-      "authors": []
+      "authors": [
+        "مرتضی اتابک"
+      ]
     },
     {
       "id": "P2664",
@@ -124287,8 +124291,8 @@
       "type": "manufacturer document",
       "local_path": "E:\\Paper farzad\\zirconia\\vita\\rapid layer\\2020-05-15-VITA-MAM-Downloads\\VITA_994_994E_CADCAM_Kompendium_EN_V06_screen_en.pdf",
       "file_size": 7768547,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "Manufacturer catalog presenting VITA's CAD/CAM block and disc materials (feldspar ceramic, hybrid ceramic, glass ceramic, zirconia, temporary composites) and their indications.",
+      "clinical_bottom_line": "Product catalog only; use it to look up indications and material families, not as clinical evidence.",
       "linked_episodes": [],
       "drive_link": "",
       "status": "linked",
@@ -124329,8 +124333,8 @@
       "type": "manufacturer document",
       "local_path": "E:\\Paper farzad\\zirconia\\vita\\Yz-HT\\2020-05-15-VITA-MAM-Downloads\\VITA_10155_10155E_YZ_HT_PS_EN_V03_screen_en.pdf",
       "file_size": 240506,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "Product sheet for VITA YZ HT highly translucent zirconia, listing indications (monolithic bridges), shades, geometries and system components.",
+      "clinical_bottom_line": "Manufacturer product information; check the working instructions for processing and do not treat the strength claim as independent evidence.",
       "linked_episodes": [],
       "drive_link": "",
       "status": "linked",
@@ -124408,8 +124412,8 @@
       "type": "manufacturer document",
       "local_path": "E:\\Paper farzad\\zirconia\\vita\\Yz-HT\\2020-05-15-VITA-MAM-Downloads\\VITA_10413_10413E_YZ_SOLUTIONS_Produktinfo_EN_V3_en.pdf",
       "file_size": 1222540,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "Four-page facts sheet comparing the VITA YZ T, HT, ST and XT zirconia grades by translucency, shades, geometries and recommended indications.",
+      "clinical_bottom_line": "Manufacturer comparison of VITA YZ grades; useful for choosing a grade by indication, not as clinical evidence.",
       "linked_episodes": [],
       "drive_link": "",
       "status": "linked",
@@ -124451,8 +124455,8 @@
       "type": "manufacturer document",
       "local_path": "E:\\Paper farzad\\zirconia\\vita\\Yz-HT\\2020-05-15-VITA-MAM-Downloads\\VITA_10446M_1_YZ_SOLUTIONS_VA_V02_screen_ML.pdf",
       "file_size": 366594,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "Multilingual instructions for use for VITA YZ zirconia blanks covering indications, contraindications, minimum wall thickness, connector size, milling, sintering and cementation.",
+      "clinical_bottom_line": "Follow the stated minimum wall thickness and connector cross-sections, mill ST and XT dry, and avoid cantilever or parafunction cases for veneered work.",
       "linked_episodes": [],
       "drive_link": "",
       "status": "linked",
@@ -124495,8 +124499,8 @@
       "type": "manufacturer document",
       "local_path": "E:\\Paper farzad\\zirconia\\vita\\Yz-HT\\2020-05-15-VITA-MAM-Downloads\\VITA_10446_10446E_YZ_SOLUTIONS_VA_EN_V01_en.pdf",
       "file_size": 6392050,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "Seventy-page working instructions for the VITA YZ zirconia system covering design parameters, milling, coloring, sintering, monolithic, partially and fully veneered workflows.",
+      "clinical_bottom_line": "Use as a laboratory protocol reference for VITA YZ; observe minimum wall and connector dimensions and the sintering support rules.",
       "linked_episodes": [],
       "drive_link": "",
       "status": "linked",
@@ -124538,8 +124542,8 @@
       "type": "manufacturer document",
       "local_path": "E:\\Paper farzad\\zirconia\\vita\\Yz-HT\\2020-05-15-VITA-MAM-Downloads\\VITA_10447_10447E_YZ_SOLUTIONS_Konzeptprospekt_EN_V04_en.pdf",
       "file_size": 7143001,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "Concept brochure for the VITA YZ SOLUTIONS zirconia system describing four translucency grades, restoration concepts, and manufacturer test claims on translucency, edge stability and flexural strength.",
+      "clinical_bottom_line": "Brochure with internal manufacturer data; treat the performance claims as marketing rather than independent evidence.",
       "linked_episodes": [],
       "drive_link": "",
       "status": "linked",
@@ -124581,8 +124585,8 @@
       "type": "manufacturer document",
       "local_path": "E:\\Paper farzad\\zirconia\\vita\\Yz-HT\\2020-05-15-VITA-MAM-Downloads\\VITA_10537_10537E_YZ_milling_screen_en.pdf",
       "file_size": 502238,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "Manufacturer milling recommendation for VITA YZ in CNC machines: dry milling with air cooling, tool diameters, machining strategy and feed and speed parameters.",
+      "clinical_bottom_line": "Machine-specific milling parameters are recommendations that must be adapted to the laboratory's own CNC setup.",
       "linked_episodes": [],
       "drive_link": "",
       "status": "linked",
@@ -124624,8 +124628,8 @@
       "type": "journal issue",
       "local_path": "E:\\Paper farzad\\zirconia\\vita\\Yz-HT\\2020-05-15-VITA-MAM-Downloads\\VITA_1911E_9_DentalVisionist_EN_V01_screen_en.pdf",
       "file_size": 10348340,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "Issue of VITA's customer magazine with case reports on shade determination, veneering and monolithic crowns plus manufacturer interviews on hybrid ceramic bonding and zirconia blanks.",
+      "clinical_bottom_line": "Company magazine with promotional content; the bonding and zirconia data are internal manufacturer tests and not independent evidence.",
       "linked_episodes": [],
       "drive_link": "",
       "status": "linked",
@@ -124665,8 +124669,8 @@
       "type": "manufacturer document",
       "local_path": "E:\\Paper farzad\\zirconia\\vita\\Yz-HT\\2020-05-15-VITA-MAM-Downloads\\VITA_EN-Info-VITA-YZ_screen_en.pdf",
       "file_size": 45149,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "One-page note on which Sirona inLab and CEREC software versions can mill or grind VITA YZ HT and YZ T blocks.",
+      "clinical_bottom_line": "Check the CAD/CAM software version before milling VITA YZ blocks; older versions need the VITA In-Ceram YZ program.",
       "linked_episodes": [],
       "drive_link": "",
       "status": "linked",
@@ -124707,8 +124711,8 @@
       "type": "manufacturer document",
       "local_path": "E:\\Paper farzad\\zirconia\\vita\\yz-T\\2020-05-15-VITA-MAM-Downloads (1)\\VITA_10187_10187E_YZ_T_PS_EN_V02_screen_en.pdf",
       "file_size": 245922,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "Product information sheet for VITA YZ T, a translucent zirconia of about 1,200 MPa strength for anterior and posterior crown and bridge substructures, with block and disc geometries, shades, coloring liquids and CAD/CAM system compatibility.",
+      "clinical_bottom_line": "A manufacturer data sheet only: it lists indications, shades and compatible systems but gives no independent clinical evidence.",
       "linked_episodes": [],
       "drive_link": "",
       "status": "linked",
@@ -125002,8 +125006,8 @@
       "type": "other document",
       "local_path": "E:\\Paper farzad\\zirconia\\تراش\\20200411142907.pdf.pdf",
       "file_size": 274589,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "A one-page Persian patient consent form for emergency dental treatment during the COVID-19 pandemic; no research content.",
+      "clinical_bottom_line": "An administrative consent template only, with no evidence or clinical guidance to extract.",
       "linked_episodes": [],
       "drive_link": "",
       "status": "linked",
@@ -125414,7 +125418,7 @@
       "semantic_tagged": true,
       "real_title": "Bond strength of glass-ceramic cemented to a zirconia structure: influence of adhesive cementation strategy",
       "doi": "10.1590/1981-863720160002000033111",
-      "journal": "",
+      "journal": "RGO - Revista Gaúcha de Odontologia",
       "crossref_year": 2016,
       "subjects": [],
       "abstract": "Objective This study evaluated the shear bond strength (SBS) of lithium disilicate glass (LDG) ceramic bonded to a zirconia (Y-TZP), using different cementation strategies.\n\nMethods LDG ceramic cylinders were cemented to Y-TZP structure according to the following adhesive system (AS)/resin cement (RC) (n = 15): U- self- adhesive dual-cure RC; AMBAR- AS containing phosphate monomers (PM) + dual-cure RC; group SBU: PM+Silane/AS + light-cure RC; group ALLB: PM/AS + dual-cure RC. Specimens were subjected to SBS in a universal testing machine (0.5 mm/min). Data (MPa) were subjected to one-way ANOVA and Tukey’s test (α = 0,05).\n\nResults The groups SBU and ALLB had significantly higher SBS than those provided by the group U, in which the lowest values were observed. For the AMBAR group, intermediate SBS values were found, which did not differ significantly from the values observed in the other groups.\n\nConclusion Regardless of resins cement, the use of adhesives containing phosphate monomers provided superior bond strength than self-adhesive cement.",
@@ -125886,8 +125890,8 @@
       "type": "manufacturer document",
       "local_path": "E:\\Paper farzad\\Zirconia implant\\biowin_broschuere _3_en_ansicht_doppelseiten.pdf",
       "file_size": 845892,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "Manufacturer brochure for the Champions BioWin! one- and two-piece zirconia implants (0.25% alumina, 6 to 13 mm lengths, rough surface by a patented process, two-piece version with a glass fiber post and no micro-gap), citing a 95.8% osseointegration success rate since 2004.",
+      "clinical_bottom_line": "The claims are the manufacturer's own; the brochure cites a 2-year study (Prof. Becker) for the 95.8% figure.",
       "linked_episodes": [],
       "drive_link": "",
       "status": "linked",
@@ -126111,8 +126115,8 @@
       "type": "manufacturer document",
       "local_path": "E:\\Paper farzad\\Zirconia implant\\grundregeln_2019_biowin_en.pdf",
       "file_size": 4465742,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "Manufacturer's quick guide for placing Champions BioWin! ceramic implants: primary stability of about 20 Ncm and a maximum insertion torque of 30 Ncm, flapless (MIMI) or flap placement, bone-density-specific drilling and condenser sequences, and immediate restoration or loading when 30 Ncm stability is reached.",
+      "clinical_bottom_line": "A product-specific protocol from the manufacturer without clinical data, useful as a technique reference for this implant system only.",
       "linked_episodes": [],
       "drive_link": "",
       "status": "linked",
@@ -127886,8 +127890,8 @@
       "type": "manufacturer document",
       "local_path": "",
       "file_size": 2012899,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "Prescribing information for Zepbound (tirzepatide), a once-weekly subcutaneous GIP/GLP-1 receptor agonist for weight reduction in adults with obesity or overweight and for moderate to severe obstructive sleep apnea in adults with obesity. It carries a boxed warning for thyroid C-cell tumors and warns of severe gastrointestinal reactions, delayed gastric emptying and pulmonary aspiration during general anesthesia or deep sedation.",
+      "clinical_bottom_line": "For dental care under sedation or general anesthesia, patients on Zepbound should be identified, since the label reports pulmonary aspiration risk and asks patients to tell providers about planned procedures.",
       "linked_episodes": [
         "sharehub/share-16"
       ],
@@ -127913,7 +127917,7 @@
         "Eli Lilly and Company"
       ],
       "journal": "",
-      "crossref_year": null,
+      "crossref_year": 2024,
       "abstract": "ZEPBOUND (tirzepatide) injection, for subcutaneous use, Initial U.S. Approval: 2022. Revised 12/2024. Boxed warning: risk of thyroid C-cell tumors observed in rats; human relevance not determined; contraindicated in personal/family history of medullary thyroid carcinoma or MEN 2. Warnings and precautions include severe gastrointestinal adverse reactions, acute kidney injury, acute gallbladder disease, acute pancreatitis, hypersensitivity reactions, hypoglycemia (with insulin or insulin secretagogues), diabetic retinopathy complications, suicidal behavior and ideation, and pulmonary aspiration during general anesthesia or deep sedation. Most common adverse reactions (>=5%): nausea, diarrhea, vomiting, constipation, abdominal pain, dyspepsia, injection site reactions, fatigue, hypersensitivity reactions, eructation, hair loss, gastroesophageal reflux disease. Drug interactions: delays gastric emptying, may impact absorption of concomitant oral medications.",
       "drive_id": "1TQdfO9qDJlt_Pf0PJPnqVLc1zwFegMjS",
       "drive_view": "https://drive.google.com/file/d/1TQdfO9qDJlt_Pf0PJPnqVLc1zwFegMjS/view",
@@ -127971,7 +127975,7 @@
       "file_name": "Protocol for Removal of Clinically Relevant Contaminants from Glass Ceramic-based Restorations.pdf",
       "topic": "Ceramics",
       "topic_path": "Ceramics",
-      "type": "in vitro study",
+      "type": "technique report",
       "local_path": "",
       "file_size": 58006,
       "key_finding": "Expert working instruction (IAAD) summarizing in vitro literature on cleaning contaminated glass-ceramic bonding surfaces. Water, alcohol and acetone do not remove saliva; 35-37% phosphoric acid gel (30-60 s) or particulate cleaning paste (20 s) removes saliva or blood, while silicone residues require hydrofluoric acid re-etching, followed by silane reapplication.",
@@ -129256,8 +129260,8 @@
       "type": "manufacturer document",
       "local_path": "",
       "file_size": 1705985,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "Manufacturer instructions for VITA ENAMIC, a hybrid ceramic with a dual-network structure (86% by weight feldspar ceramic, 14% polymer) for single-tooth CAD/CAM restorations. They give minimum layer thicknesses (for example 1.0 mm occlusal and 0.8 mm circumferential for crowns), polishing, staining, layering and adhesive bonding protocols.",
+      "clinical_bottom_line": "Use it only for adhesively bonded single-tooth restorations, follow the minimum thicknesses, never fire it, avoid tungsten carbide burs, and avoid it for bridges and bruxists.",
       "linked_episodes": [
         "sharehub/share-32"
       ],
@@ -130497,8 +130501,8 @@
       "type": "narrative review",
       "local_path": "",
       "file_size": 2826086,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "The review gives definitions, indications and step-by-step protocols for surgical extrusion, intentional replantation and tooth autotransplantation. Reported survival is about 90% for intentional replantation and 80-100% for autotransplanted teeth.",
+      "clinical_bottom_line": "Teeth that would normally be extracted can often be saved by these procedures, provided the periodontal ligament is protected during atraumatic extraction, but the evidence base is still limited.",
       "linked_episodes": [
         "sharehub/share-43"
       ],
@@ -130549,8 +130553,8 @@
       "type": "in vitro study",
       "local_path": "",
       "file_size": 805352,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "Applying fresh silane to aged composite and leaving the adhesive uncured before placing the repair composite gave the highest micro-tensile repair strength for all five adhesives. Even the best repair stayed below the strength of unrepaired composite.",
+      "clinical_bottom_line": "After roughening, etching and silane application, squeeze the repair composite into the uncured thin adhesive layer and then light-cure.",
       "linked_episodes": [
         "notecast/episode-44",
         "episodes/episode-44"
@@ -130598,8 +130602,8 @@
       "type": "randomized controlled trial",
       "local_path": "",
       "file_size": 404063,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "At 15-17 years both one-piece and two-piece implants showed high survival (95% overall). The one-piece system kept marginal bone more stable but had a higher rate of technical complications, and peri-implant mucositis and peri-implantitis were frequent in both groups.",
+      "clinical_bottom_line": "Both designs are reliable long term, but the one-piece system trades better bone stability for more prosthetic maintenance, so plan for regular maintenance either way.",
       "linked_episodes": [
         "sharehub/share-44"
       ],
@@ -130649,8 +130653,8 @@
       "type": "retrospective study",
       "local_path": "",
       "file_size": 385558,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "In a retrospective radiographic study of 153 adjacent posterior implants, a vertical level discrepancy between implant platforms was associated with more marginal bone loss around the coronal implant. The association was limited to implants with a horizontal inter-implant distance of 3 mm or less.",
+      "clinical_bottom_line": "When adjacent implants sit close together (3 mm or less), avoid placing them at different vertical levels, since the more coronal implant tends to lose more bone.",
       "linked_episodes": [
         "sharehub/share-45"
       ],
@@ -130697,8 +130701,8 @@
       "type": "retrospective study",
       "local_path": "",
       "file_size": 3353376,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "In this retrospective chart review, adjacent implants whose platforms sat at different vertical levels (0.5 mm or more) had a clearly higher chance of at least 1 mm marginal bone loss, and splinting the crowns together increased that risk further compared with non-splinted restorations.",
+      "clinical_bottom_line": "When placing two or three adjacent implants, aim for platforms at the same vertical level, and be cautious about splinting implants that are at different heights.",
       "linked_episodes": [
         "sharehub/share-45"
       ],
@@ -130748,8 +130752,8 @@
       "type": "finite element analysis",
       "local_path": "",
       "file_size": 1794015,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "In a finite element model of three splinted implants in a posterior mandible, placing the central implant subcrestally while the outer two stayed crestal concentrated the highest stress in cortical bone, above the physiological limit under oblique load. Keeping all three implants at the same level, especially subcrestal, gave lower and more even stresses, and the peak implant stress was always at the implant-abutment connection.",
+      "clinical_bottom_line": "When splinting adjacent implants, keep their platforms at a uniform vertical level; avoid mixing crestal and subcrestal positions. This is a simulation, so clinical confirmation is needed.",
       "linked_episodes": [
         "sharehub/share-45"
       ],
@@ -130798,8 +130802,8 @@
       "type": "narrative review",
       "local_path": "",
       "file_size": 417188,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "This review recommends providing routine restorations by the conformative approach, which keeps the patient's existing jaw relationship and occlusal contacts unchanged. It teaches a four-step EDEC sequence (Examine, Design, Execute, Check) for direct and indirect restorations, including recording the pre-existing occlusion for the laboratory and keeping it with a well-fitting temporary crown.",
+      "clinical_bottom_line": "Record the patient's occlusion before preparing a tooth, design and execute the restoration to preserve it, and check that other teeth still contact as before.",
       "linked_episodes": [
         "sharehub/share-47"
       ],
@@ -130848,8 +130852,8 @@
       "type": "systematic review",
       "local_path": "",
       "file_size": 916523,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "This systematic review of 11 randomised trials found that root-retained overdentures remain a viable option, giving better denture stability, preservation of bone around the abutment teeth and high patient satisfaction. Caries on the abutment teeth was the most frequently reported complication and the main risk for losing them, but most of the trials had a high risk of bias and could not be pooled.",
+      "clinical_bottom_line": "Keeping roots for an overdenture is reasonable, but it depends on meticulous oral hygiene, caries prevention and regular recall visits.",
       "linked_episodes": [
         "sharehub/share-50"
       ],
@@ -130895,8 +130899,8 @@
       "type": "narrative review",
       "local_path": "",
       "file_size": 427297,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "This review of 72 articles found that food impaction arises from proximal contact loss, occlusal disharmony, morphological deformity, positional abnormality and loss of the interdental papilla. Because causes differ, management ranges from restoration and occlusal adjustment to orthodontic, nonsurgical or surgical treatment.",
+      "clinical_bottom_line": "Identify the cause of food impaction before treating it, then choose the management (restoring contact, adjusting occlusion, orthodontics or periodontal treatment) that fits that cause.",
       "linked_episodes": [
         "episodes/episode-163"
       ],
@@ -130944,8 +130948,8 @@
       "type": "narrative review",
       "local_path": "",
       "file_size": 1030707,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "This narrative review covers five situations where orthodontics before restorative treatment helps: multiple missing teeth, excessive deep overbite, worn anterior teeth, tilted molars, and orthodontic extrusion for crown lengthening. It stresses planning with a diagnostic wax-up and close communication between orthodontist and restorative dentist, and notes that the underlying literature is mostly clinical reports and opinion.",
+      "clinical_bottom_line": "Consider an orthodontic referral before restoring patients with deep bites, worn anterior teeth, tilted molars or subgingival margins, and plan together from a diagnostic wax-up.",
       "linked_episodes": [
         "sharehub/share-53"
       ],
@@ -130993,8 +130997,8 @@
       "type": "case report",
       "local_path": "",
       "file_size": 11360925,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "In a 65-year-old man with skeletal Class III malocclusion, lost vertical dimension and severe wear, a stable centric relation was first established with a CAD-CAM provisional denture, then implants restored the posterior support and zirconia crowns the remaining teeth. The anterior crossbite became edge-to-edge with mutually protected occlusion, with no fracture, loss or joint problems at one year.",
+      "clinical_bottom_line": "In skeletal Class III patients with collapsed posterior support, establish centric relation and the new vertical dimension with a trial provisional stage before committing to definitive implant and crown work.",
       "linked_episodes": [
         "sharehub/share-53"
       ],

@@ -21,11 +21,13 @@ follow_up, materials_brands, funding_coi, limitations; key_finding and
 clinical_bottom_line only where the catalogue had none), `cites_in_cabinet`
 (catalogue ids this paper cites, from its reference list, mechanically).
 
-Coverage: 2036 papers in `results.jsonl` (slice 1: 661, 2026-11-15; slice 2:
-681 and slice 3: 674, 2026-11-16; 20 image-only scans after OCR, 2026-11-16).
-Not read yet: 127 catalogue papers; 6 PDFs Drive would not serve (P0034,
-P0478, P0679, P2205, P2298, P2300). `todo` lists the unread ones again at the
-front of every slice.
+Coverage (final, 2026-11-16): every one of the 2124 catalogue papers has been
+read; `todo` returns nothing. `results.jsonl` has 2169 rows (slice 1: 661,
+2026-11-15; slice 2: 681 and slice 3: 674, 2026-11-16; 20 image-only scans
+after OCR; slice 4: the last 133 plus 15 re-read after OCR, 2026-11-16). The
+45 rows whose ids were removed from the catalogue stay so `todo` does not list
+them again; the site file skips them. Live rows carry 6655 accepted library
+tags and 158 accepted new tags.
 
 ## Live since 2026-11-15
 
@@ -90,3 +92,38 @@ corrected (P0321 case report, P1485 narrative review). P2440 (TISSEEL SmPC,
 judged off-topic) kept: the founder's own Tisseel folder. Still garbled text
 (not image scans, OCR would help): P0360, P2136, P2562, P2712, P2716, P2771,
 P2661-P2667.
+
+Slice 4, the last one (2026-11-16): the 127 unread papers and the 6 PDFs Drive
+would not serve. Those six are encrypted PDFs: Drive answers with its
+«can't scan this file for viruses» page instead of the file. The form on that
+page (`drive.usercontent.google.com/download` with `confirm=t`) returns the PDF;
+`pikepdf` (installed with ocrmypdf) saves a decrypted copy as `<work>/<id>.pdf`
+and `prepare` reads it as usual. 391 of 492 gated tags accepted across the 148
+papers of this slice (one new tag: ceria-stabilized-zirconia). Catalogue:
+P2898 -> technique report (IAAD working instructions, no experiment); P2940
+stays a systematic review (the judge suggested narrative review, but the text
+reports a PRISMA database search); 26 empty key_finding / clinical_bottom_line
+filled, plus P2848 journal, P2896 year, P2661 and P2663 author (P2798's
+proposed key finding described the extraction, not the document, so it was not
+used). No document removed: the off-topic ones (P2889 LLM diagnostic-reasoning
+trial, P2925 tirzepatide obesity trial, P2939 gynaecological local-anaesthesia
+trial) and the «unusable» P2938 (trigeminal-neuralgia guideline, only its front
+matter extracted) all have linked episodes. Kept as borderline: P2829 (Persian
+consent form for emergency dental treatment during the pandemic, dental but no
+research content), the VITA and Champions manufacturer documents (dental
+products the founder filed on purpose).
+
+OCR, second round (2026-11-16): P0360, P1058, P1414, P2136, P2562, P2712,
+P2716, P2771 and the Persian series P2661-P2667 were OCR'd and read again; their
+rows were replaced and all now read as good or partial text. Persian needs
+`tesseract-ocr-fas` and `-l fas+eng`, and one more step: the text layer
+ocrmypdf writes for Persian comes out in reversed character order when pdftotext
+or pdfplumber read it back, so for Persian take `ocrmypdf --sidecar <file>.txt`
+(tesseract's logical-order text) and put that through `cabinet_enrich`'s
+`reading_text` / `references_dois` in place of the PDF text.
+
+Still only partly readable (all dental, all kept; OCR would not help the
+front-matter-only ones, whose content is in images or missing from the file):
+garbled text P0111, P0112, P0202, P0309, P0873, P0948, P1555, P1652, P1698,
+P1752, P2829; front matter only P0270, P0420, P0736, P0785, P0869, P0959,
+P1064, P1392, P1478, P1533, P2798, P2938.
