@@ -1,0 +1,1016 @@
+[
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "FULL_TEXT",
+  "claims": [
+   {
+    "id": "u1",
+    "claim_quote": "ایمپلنت به‌عنوان پایهٔ پارسیل (ICRPD)؛ چه زمانی و چگونه از آن استفاده کنیم؟",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u2",
+    "claim_quote": "English",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "link label"
+   },
+   {
+    "id": "u3",
+    "claim_quote": "چرا ایمپلنت را به طراحی پارسیل اضافه کنیم؟",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u4",
+    "claim_quote": "یکی از مشکلات پروتزهای پارسیل، به‌خصوص در موارد انتهای آزاد، حرکت پروتز هنگام جویدن است.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "However, RPDs can cause discomfort owing to rota-\ntion or movement, especially if only a few abutments\nare left.",
+    "source_ref": null,
+    "note": "free-end emphasis and chewing not addressed; silent half"
+   },
+   {
+    "id": "u5",
+    "claim_quote": "علت این است که دندان پایه و مخاط زیر بیس دنچر، تحت نیرو رفتار یکسانی ندارند.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "Introduction and Discussion read; no comparison of tooth and mucosal support under load"
+   },
+   {
+    "id": "u6",
+    "claim_quote": "دندان به کمک لیگامان پریودنتال حمایت می‌شود، درحالی‌که بیس پروتز روی مخاط و ریج قرار می‌گیرد و جابه‌جایی بیشتری دارد.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "no periodontal ligament vs mucosa statement anywhere in the text"
+   },
+   {
+    "id": "u7",
+    "claim_quote": "هرچه تعداد دندان‌های باقی‌مانده کمتر باشد، کنترل حرکت پروتز و تأمین گیر و حمایت آن دشوارتر می‌شود.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "However, RPDs can cause discomfort owing to rota-\ntion or movement, especially if only a few abutments\nare left.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u8",
+    "claim_quote": "در چنین شرایطی، همیشه لازم نیست به سمت درمان ثابت گسترده برویم.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Therefore, strategic implant placement to in-\ncrease the number of abutments for better support\nand retention accommodated by RPD can be a useful\ntreatment option to compensate for the problems of\nfixed implant prostheses and RPD.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u9",
+    "claim_quote": "گاهی با قرار دادن یک یا چند ایمپلنت در موقعیت مناسب می‌توان حمایت و گیر پروتز پارسیل را بهتر کرد.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Therefore, strategic implant placement to in-\ncrease the number of abutments for better support\nand retention accommodated by RPD can be a useful\ntreatment option to compensate for the problems of\nfixed implant prostheses and RPD.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u10",
+    "claim_quote": "به این روش Implant-Assisted Removable Partial Denture (IARPD) گفته می‌شود.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "In 1991, the clini-\ncal application of dental implants into RPD treatment\nwas reported and later referred to as implant-re-\ntained RPD or implant-supported RPD and is now re-\nferred to as implant-assisted RPD (IARPD).",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u11",
+    "claim_quote": "برای این درمان دو رویکرد اصلی وجود دارد:",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "signpost announcing the following list, ends in colon; judge over sweeper MATCHES (states a number, so not a signpost): The unit ends in a colon and only announces the two approaches that u13-u19 then state. F1 (v2.9) makes a unit that announces what the following units cover a signpost even when it gives a count, as in «Smith دو حالت را از هم تفکیک می‌کند». The approaches themselves are judged in the units that follow."
+   },
+   {
+    "id": "u12",
+    "claim_quote": "۱.",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "list numeral"
+   },
+   {
+    "id": "u13",
+    "claim_quote": "استفاده از اتچمنت",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "label only"
+   },
+   {
+    "id": "u14",
+    "claim_quote": "ایمپلنت زیر پروتز قرار می‌گیرد و با اتچمنت‌هایی مثل Locator، بال یا مگنت به دنچر متصل می‌شود.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Two types of treatment are available for IARPDs:\none uses implants as surveyed crowns or bridges with\nrest seats and retentive clasps of RPDs, termed im-\nplant-crown-retained RPD (ICRPD) in previous stud-\n4-6\nies, while others use implants for attachments such\nas balls, magnets, locators, and bars beneath the\nRPD (overdenture-type IARPD).",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u15",
+    "claim_quote": "در واقع، منطق درمان به اوردنچر ایمپلنتی نزدیک است.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Two types of treatment are available for IARPDs:\none uses implants as surveyed crowns or bridges with\nrest seats and retentive clasps of RPDs, termed im-\nplant-crown-retained RPD (ICRPD) in previous stud-\n4-6\nies, while others use implants for attachments such\nas balls, magnets, locators, and bars beneath the\nRPD (overdenture-type IARPD).",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u16",
+    "claim_quote": "۲.",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "list numeral"
+   },
+   {
+    "id": "u17",
+    "claim_quote": "استفاده از روکش سوروی‌شده (ICRPD)",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "label only"
+   },
+   {
+    "id": "u18",
+    "claim_quote": "روی ایمپلنت روکش یا بریجی ساخته می‌شود که مانند یک دندان پایهٔ پارسیل طراحی شده است؛ یعنی Rest Seat و آندرکات کنترل‌شده دارد و کلاسپ پروتز روی آن قرار می‌گیرد.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Two types of treatment are available for IARPDs:\none uses implants as surveyed crowns or bridges with\nrest seats and retentive clasps of RPDs, termed im-\nplant-crown-retained RPD (ICRPD) in previous stud-\n4-6\nies, while others use implants for attachments such\nas balls, magnets, locators, and bars beneath the\nRPD (overdenture-type IARPD).",
+    "source_ref": null,
+    "note": "controlled undercut not addressed; silent half"
+   },
+   {
+    "id": "u19",
+    "claim_quote": "در این روش، ایمپلنت نقش یک دندان پایه را ایفا می‌کند و پروتز پارسیل با اصول معمول طراحی RPD، شامل Rest و کلاسپ، ساخته می‌شود.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Two types of treatment are available for IARPDs:\none uses implants as surveyed crowns or bridges with\nrest seats and retentive clasps of RPDs, termed im-\nplant-crown-retained RPD (ICRPD) in previous stud-\n4-6\nies, while others use implants for attachments such\nas balls, magnets, locators, and bars beneath the\nRPD (overdenture-type IARPD).",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u20",
+    "claim_quote": "در ادامه، تمرکز ما روی روش دوم، یعنی ICRPD است.",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "page's own scope"
+   },
+   {
+    "id": "u21",
+    "claim_quote": "چه بیمارانی کاندید مناسبی هستند؟",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u22",
+    "claim_quote": "این روش می‌تواند در بیمارانی مطرح شود که:",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "signpost ending in colon"
+   },
+   {
+    "id": "u23",
+    "claim_quote": "تعداد محدودی دندان باقی‌مانده دارند و پارسیل آن‌ها، به‌خصوص در نواحی انتهای آزاد، حرکت زیادی دارد یا گیر مناسبی ندارد.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Therefore, strategic implant placement to in-\ncrease the number of abutments for better support\nand retention accommodated by RPD can be a useful\ntreatment option to compensate for the problems of\nfixed implant prostheses and RPD.",
+    "source_ref": null,
+    "note": "list item read with its lead-in u22"
+   },
+   {
+    "id": "u24",
+    "claim_quote": "امکان یا تمایل به انجام درمان ثابت گسترده وجود ندارد؛ مثلاً به‌دلیل شرایط استخوان، هزینه یا محدودیت‌های درمانی بیمار.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Under these circumstances, some older individu-\nals choose removable partial dentures (RPDs) over\nfixed implant prostheses in areas of missing teeth.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u25",
+    "claim_quote": "ریج خلفی تحلیل زیادی دارد و قرار دادن ایمپلنت در ناحیهٔ خلفی به پیوند استخوان یا سینوس لیفت نیاز پیدا می‌کند.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Furthermore, substantial bone graft or sinus floor ele-\nvation surgery is required in case of insufficient alveo-\nlar bone for placing implants, which might be a finan-\ncial and health burden on older individuals.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u26",
+    "claim_quote": "البته انتخاب روش به فک و اولویت بیمار هم بستگی دارد.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "source reports satisfaction by jaw but never states that the choice depends on jaw or patient priority"
+   },
+   {
+    "id": "u27",
+    "claim_quote": "در مطالعات، از نظر زیبایی در هر دو فک رضایت از اوردنچر ایمپلنتی ظاهراً بیشتر بوده است.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Patient satisfaction signifi-\ncantly improved after both ICRPD and overdenture\ntreatment; however, the overdenture seemed to be\nmore fulfilling in the mandible aesthetically, whereas\nfunctionally, the ICRPD showed higher satisfaction.",
+    "source_ref": null,
+    "note": "Mandible: the source hedges the finding («seemed to be more fulfilling»). Maxilla: the next sentence states it plainly («While in the maxilla, the overdenture was more satisfactory aesthetically»). The source reports the aesthetic advantage of the overdenture for both jaws, the claim's hedge «ظاهراً» matches the quoted sentence, and no sentence states the opposite."
+   },
+   {
+    "id": "u28",
+    "claim_quote": "از نظر عملکرد، در فک پایین ICRPD رضایت بیشتری داشته و در فک بالا تفاوتی دیده نشده است.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Patient satisfaction signifi-\ncantly improved after both ICRPD and overdenture\ntreatment; however, the overdenture seemed to be\nmore fulfilling in the mandible aesthetically, whereas\nfunctionally, the ICRPD showed higher satisfaction.",
+    "source_ref": null,
+    "note": "maxilla half matches the following sentence"
+   },
+   {
+    "id": "u29",
+    "claim_quote": "محل قرارگیری ایمپلنت؛ مهم‌تر از تعداد آن",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u30",
+    "claim_quote": "یک نکتهٔ مهم در این درمان این است که ابتدا باید پارسیل را طراحی کنیم و بعد محل ایمپلنت را مشخص کنیم، نه برعکس.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "Discussion says position must be carefully planned but gives no sequence of design before implant placement"
+   },
+   {
+    "id": "u31",
+    "claim_quote": "مسیر ورود پروتز، محل Rest، موقعیت کلاسپ و طراحی کانکتور اصلی باید مشخص باشند تا بتوانیم بهترین موقعیت ایمپلنت را انتخاب کنیم.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "no statement linking path of insertion, rest or clasp position to implant site selection"
+   },
+   {
+    "id": "u32",
+    "claim_quote": "بنابراین، صرفاً مناسب بودن استخوان یا راحت‌تر بودن جراحی، نباید تعیین‌کنندهٔ محل ایمپلنت باشد.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "inference; conclusion not stated in source"
+   },
+   {
+    "id": "u33",
+    "claim_quote": "ترجیح اول: ناحیهٔ قدامی یا پرمولر، در مجاورت دندان طبیعی",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u34",
+    "claim_quote": "در این مرور، ایمپلنت‌هایی که در ناحیهٔ قدامی و در کنار دندان طبیعی قرار گرفته بودند، بالاترین میزان بقا و موفقیت را نشان دادند.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Yie t al. investigated that\nICRPDs with implants adjacent to the abutment tooth\nin the anterior area had the highest survival rates\namong the implant-surveyed-crowns.",
+    "source_ref": null,
+    "note": "One predicate over a list of objects (survival and success), so this is one claim. The quoted sentence gives the ranking for survival. Success is reported in the same direction in Table 2 and the Discussion: «strategic implant abutments of the ICRPD adjacent to natural teeth exhibited higher success rates of implants than those away from a natural tooth abutment». The finding comes from one included study (Yi et al.), which the review reports."
+   },
+   {
+    "id": "u35",
+    "claim_quote": "یکی از ترکیب‌های رایج و موفق، استفاده از ایمپلنت در ناحیهٔ قدامی یا پرمولر به‌عنوان روکش سوروی‌شده، همراه با پارسیل انتهای آزاد کلاس I بود.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Additionally, combinations of anterior implants\nutilized as surveyed crowns and distal extension RPDs\nmay be clinically acceptable options, particularly for\nindividuals with a significant absorptive ridge in a\nposterior location.",
+    "source_ref": null,
+    "note": "Sweeper: ALTERED/HEDGE_REMOVED — 'common' half matches the case-report sentence; 'successful' half is stated with 'may'; overruled by the judge: The unit restates an observation in the past tense: a combination that was common and successful in the reports. The source states both parts plainly. It says most case reports showed anterior implant surveyed crowns with Kennedy Class I RPD, and that the case reports showed good prognoses. The sweeper's 'may be clinically acceptable options' sentence is a different proposition, a recommendation about acceptability, not an observed outcome. So it cannot make the observation HEDGE_REMOVED. Close because 'successful' rests on a separate prognosis sentence."
+   },
+   {
+    "id": "u36",
+    "claim_quote": "این موقعیت می‌تواند نیاز به پیوند استخوان و درمان‌های جراحی پیچیده را کاهش دهد و در نتیجه زمان و هزینهٔ درمان را کمتر کند.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Furthermore, strategic implant placement around an-\nterior teeth or premolars, as indicated in the majority\nof ICRPD studies, can decrease the additional bone\ngrafts or sinus lifts, reducing treatment duration and\ncosts.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u37",
+    "claim_quote": "چرا قرار دادن ایمپلنت فقط در انتهای خلفی قوس می‌تواند مشکل‌ساز باشد؟",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u38",
+    "claim_quote": "چند نکتهٔ بیومکانیکی در این مورد اهمیت دارد:",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "signpost ending in colon"
+   },
+   {
+    "id": "u39",
+    "claim_quote": "ایمپلنت برخلاف دندان طبیعی، لیگامان پریودنتال ندارد و در برابر نیروهای جانبی رفتار متفاوتی نشان می‌دهد.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Implants\nare relatively weak against lateral forces, and the re-\ntentive arm of the RPD generates force at a distance\nfrom the implant up to crown height, generating a\ngreater torque than the attachment directly above\n49,50\nthe implant.",
+    "source_ref": null,
+    "note": "periodontal ligament half not addressed; silent half"
+   },
+   {
+    "id": "u40",
+    "claim_quote": "کلاسپ در ناحیهٔ تاج و با فاصله از سطح استخوان به ایمپلنت نیرو وارد می‌کند.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Implants\nare relatively weak against lateral forces, and the re-\ntentive arm of the RPD generates force at a distance\nfrom the implant up to crown height, generating a\ngreater torque than the attachment directly above\n49,50\nthe implant.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u41",
+    "claim_quote": "این فاصله می‌تواند گشتاور قابل‌توجهی ایجاد کند.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Implants\nare relatively weak against lateral forces, and the re-\ntentive arm of the RPD generates force at a distance\nfrom the implant up to crown height, generating a\ngreater torque than the attachment directly above\n49,50\nthe implant.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u42",
+    "claim_quote": "وقتی تنها ایمپلنت موجود در انتهای خلفی قوس قرار گرفته باشد، بخش زیادی از حرکت افقی پروتز و نیروهای ناشی از آن به همان ایمپلنت منتقل می‌شود.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Furthermore, implants placed alone\nin the posterior teeth must withstand more horizon-\ntal movement of the denture than implants placed\nin the anterior teeth, resulting in greater lateral forc-\nes.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u43",
+    "claim_quote": "در گزارش‌های موجود، شکست ایمپلنت‌های خلفی بیشتر در موقعیت‌های انتهایی قوس دیده شده است.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "source reports failed implants in the posterior end position (Jung) but ranks no positions; ranking is silence"
+   },
+   {
+    "id": "u44",
+    "claim_quote": "آیا ایمپلنت خلفی انتخاب اشتباهی است؟",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u45",
+    "claim_quote": "خیر.",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "bare answer to the heading; its content is stated and judged in u46"
+   },
+   {
+    "id": "u46",
+    "claim_quote": "میزان بقای ایمپلنت‌های خلفی حدود ۹۷ درصد گزارش شده و حتی قرار دادن ایمپلنت در ناحیهٔ مولر اول از نظر بیومکانیکی می‌تواند مفید باشد.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Junge t al. reported a 96.9% implant survival\nrate for implant-surveyed-crowns in the posterior site\nand an implant success rate of 90.6%.",
+    "source_ref": null,
+    "note": "first-molar half matches the Ortiz-Puigpelat sentence"
+   },
+   {
+    "id": "u47",
+    "claim_quote": "اما همهٔ موقعیت‌های خلفی شرایط یکسانی ندارند.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "no sentence compares posterior positions with each other as a general statement"
+   },
+   {
+    "id": "u48",
+    "claim_quote": "در برخی مطالعات، انتقال موقعیت ایمپلنت از آخرین مولر به ناحیهٔ پرمولر باعث توزیع بهتر نیروها شده است.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Cunhae t al.\nfound that as the implant was shifted from the last\nmolar to the premolar area in IARPD, the force distri-\nbution of RPD into the remnant tooth and around the\nedentulous ridge became more favorable.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u49",
+    "claim_quote": "بنابراین، مسئله صرفاً قدامی یا خلفی بودن ایمپلنت نیست؛ بلکه موقعیت آن نسبت به دندان‌های باقی‌مانده و طراحی پارسیل اهمیت دارد.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Implant abutments\nadjacent to the natural\ntooth had higher success\n- 1\nrates than those away\nfrom the natural teeth\nabutments.",
+    "source_ref": null,
+    "note": "position relative to natural teeth stated; role of RPD design not addressed, silent half"
+   },
+   {
+    "id": "u50",
+    "claim_quote": "تعداد پایه‌ها هم اهمیت دارد",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u51",
+    "claim_quote": "با افزایش تعداد پایه‌ها، میزان شکست کمتر بوده است.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Additionally, according\nto that study, the failure rate decreased as the num-\nber of abutments increased.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u52",
+    "claim_quote": "در مقابل، ریسک شکست یا عارضه در شرایط زیر بیشتر گزارش شده است:",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "signpost ending in colon; conditions judged in u53-u55"
+   },
+   {
+    "id": "u53",
+    "claim_quote": "پارسیل کلاس II نسبت به کلاس I کندی",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Yie t al. identified that\nKennedy Class II ICRPD showed a higher failure risk\nthan Class I ICRPD, and the implant survival rate in\nthe mandible exhibited a higher success rate than\nthat in the maxilla in ICRPDs.",
+    "source_ref": null,
+    "note": "list item read with its lead-in u52"
+   },
+   {
+    "id": "u54",
+    "claim_quote": "فک بالا نسبت به فک پایین",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Yie t al. identified that\nKennedy Class II ICRPD showed a higher failure risk\nthan Class I ICRPD, and the implant survival rate in\nthe mandible exhibited a higher success rate than\nthat in the maxilla in ICRPDs.",
+    "source_ref": null,
+    "note": "list item read with its lead-in u52"
+   },
+   {
+    "id": "u55",
+    "claim_quote": "درمان هم‌زمان هر دو فک",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "In addition,\npatients treated in both arches had a higher risk of\nimplant complications than those treated in a single\narch.",
+    "source_ref": null,
+    "note": "list item read with its lead-in u52"
+   },
+   {
+    "id": "u56",
+    "claim_quote": "اصول طراحی پروتز",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u57",
+    "claim_quote": "در این روش، روکش ایمپلنت باید به‌عنوان بخشی از طراحی پارسیل در نظر گرفته شود، نه صرفاً یک روکش معمولی که بعداً کلاسپ روی آن قرار می‌گیرد.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "Discussion advises careful planning of implant position and number, not this design principle for the crown"
+   },
+   {
+    "id": "u58",
+    "claim_quote": "چند نکته در طراحی اهمیت ویژه دارند:",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "signpost ending in colon"
+   },
+   {
+    "id": "u59",
+    "claim_quote": "۱.",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u60",
+    "claim_quote": "کانکتور اصلی صلب و سخت باشد",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u61",
+    "claim_quote": "در موارد موفق، استفاده از کانکتور اصلی صلب یکی از ویژگی‌های مشترک بود.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "While ICRPD research is rare and ongoing, it appears\nto be important to adhere to basic concepts, such as\nadopting a rigid major connector design to prevent\nunnecessary force being transmitted to the implant,\nand the most successful case reports showed that\nthis was followed.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u62",
+    "claim_quote": "کانکتور صلب کمک می‌کند حرکت بخش‌های مختلف پروتز بهتر کنترل شود و نیروهای ناشی از جابه‌جایی دنچر کمتر به ایمپلنت منتقل شوند.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "While ICRPD research is rare and ongoing, it appears\nto be important to adhere to basic concepts, such as\nadopting a rigid major connector design to prevent\nunnecessary force being transmitted to the implant,\nand the most successful case reports showed that\nthis was followed.",
+    "source_ref": null,
+    "note": "force-transmission purpose stated; 'appears' qualifies importance; movement-control half silent"
+   },
+   {
+    "id": "u63",
+    "claim_quote": "۲.",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u64",
+    "claim_quote": "روکش ایمپلنت مانند یک دندان پایه طراحی شود",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u65",
+    "claim_quote": "روکش باید Rest Seat مناسب و آندرکات کنترل‌شده داشته باشد.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Two types of treatment are available for IARPDs:\none uses implants as surveyed crowns or bridges with\nrest seats and retentive clasps of RPDs, termed im-\nplant-crown-retained RPD (ICRPD) in previous stud-\n4-6\nies, while others use implants for attachments such\nas balls, magnets, locators, and bars beneath the\nRPD (overdenture-type IARPD).",
+    "source_ref": null,
+    "note": "controlled undercut not addressed; silent half"
+   },
+   {
+    "id": "u66",
+    "claim_quote": "طراحی کلاسپ هم باید به شکلی باشد که ضمن تأمین گیر کافی، نیروهای جانبی غیرضروری به ایمپلنت وارد نکند.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "source describes torque from the retentive arm but neither advises on clasp design nor reports the effect of such a design"
+   },
+   {
+    "id": "u67",
+    "claim_quote": "۳.",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u68",
+    "claim_quote": "در انتخاب سمان دقت کنیم",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u69",
+    "claim_quote": "یکی از عوارض شایع در مطالعات، جدا شدن روکش سوروی‌شده به‌دلیل شسته شدن سمان موقت بود.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "In an-\nother study by Kange t al., 31.2% of the complica-\ntions were also related to crown issues, with the most\nprevalent complication being the dislodgement of\nthe implant-surveyed crowns owing to the washout\nof temporary cement.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u70",
+    "claim_quote": "بنابراین استفاده از سمان موقت برای این روکش‌ها انتخاب مناسبی نیست و باید از روش سمان کردن پایدارتری استفاده شود.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "inference; source reports washout of temporary cement but neither advises against it nor reports results with another cement"
+   },
+   {
+    "id": "u71",
+    "claim_quote": "نتایج درمان چه انتظاری به ما می‌دهند؟",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u72",
+    "claim_quote": "بر اساس مطالعات بررسی‌شده، نتایج کلی به این صورت بوده است:",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "signpost ending in colon"
+   },
+   {
+    "id": "u73",
+    "claim_quote": "بقای ایمپلنت: حدود ۹۵ تا ۱۰۰ درصد",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "The overall implant survival rates reported in the\nincluded studies varied from 95.1% to 100%, where-\nas the implant success rates ranged from 70.9% to\n17 19\n90.6%.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u74",
+    "claim_quote": "موفقیت ایمپلنت: حدود ۷۰ تا ۹۰ درصد",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "The overall implant survival rates reported in the\nincluded studies varied from 95.1% to 100%, where-\nas the implant success rates ranged from 70.9% to\n17 19\n90.6%.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u75",
+    "claim_quote": "تحلیل استخوان مارژینال: معمولاً محدود؛ در برخی مقایسه‌ها کمتر از روش اتچمنت، اما نه در تمام مطالعات.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "According to the findings of this systematic review, ICRPD has a reasonable sur-\nvival/success rate, minimal bone loss, and high patient satisfaction.",
+    "source_ref": null,
+    "note": "comparison halves match Bae (significantly lower) and Kang/Yoo (no significant difference)"
+   },
+   {
+    "id": "u76",
+    "claim_quote": "عوارض کلی: کمتر از رویکرد مبتنی بر اتچمنت.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Several studies showed that the incidence\nrate of complications in overdenture-type IARPD was\nhigher than that in ICRPD.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u77",
+    "claim_quote": "رضایت بیمار: پس از درمان بهبود پیدا کرده است.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Patient satisfaction signifi-\ncantly improved after both ICRPD and overdenture\ntreatment; however, the overdenture seemed to be\nmore fulfilling in the mandible aesthetically, whereas\nfunctionally, the ICRPD showed higher satisfaction.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u78",
+    "claim_quote": "نکتهٔ مهم این است که بقای ایمپلنت را نباید با موفقیت آن یکی بدانیم.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "source reports survival and success separately but states no distinction between them"
+   },
+   {
+    "id": "u79",
+    "claim_quote": "ممکن است ایمپلنت همچنان در دهان باقی مانده باشد، اما تحلیل استخوان یا التهاب بافت اطراف، آن را از معیار موفقیت خارج کرده باشد.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "success criteria not defined anywhere in the text"
+   },
+   {
+    "id": "u80",
+    "claim_quote": "عوارض شایع و نکات نگهداری",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u81",
+    "claim_quote": "در این درمان، بخش قابل‌توجهی از مشکلات مربوط به اجزای پروتز است، نه خود ایمپلنت.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Kange t al. conducted a clinical evaluation of com-\nplications associated with ICRPD, and the dislodg-\nment of temporarily cemented prosthetic crowns was\nthe most common result, with a rate of 10.8%.",
+    "source_ref": null,
+    "note": "'not the implant itself' contrast not addressed; silent half"
+   },
+   {
+    "id": "u82",
+    "claim_quote": "عارضه",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "table header"
+   },
+   {
+    "id": "u83",
+    "claim_quote": "اقدام بالینی",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "table header"
+   },
+   {
+    "id": "u84",
+    "claim_quote": "جدا شدن روکش به‌دلیل شسته شدن سمان موقت",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "In an-\nother study by Kange t al., 31.2% of the complica-\ntions were also related to crown issues, with the most\nprevalent complication being the dislodgement of\nthe implant-surveyed crowns owing to the washout\nof temporary cement.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u85",
+    "claim_quote": "استفاده از سمان مناسب و بررسی ثبات روکش در ریکال",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "no maintenance or cement advice in the text"
+   },
+   {
+    "id": "u86",
+    "claim_quote": "کاهش گیر کلاسپ (در کلاس I حدود ۳۳ تا ۴۳ درصد)",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Clasp loosening was\nalso a serious issue in Kennedy class I ICRPD, with\n42.8% of cases occurring in the maxilla and 33.3% in\nthe mandible.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u87",
+    "claim_quote": "بررسی و تنظیم دوره‌ای کلاسپ",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "no maintenance advice in the text"
+   },
+   {
+    "id": "u88",
+    "claim_quote": "شکست یا تغییر شکل فریم‌ورک، Rest یا کلاسپ",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Some studies have reported that the most\nfrequent complication in ICRPD was fracture or defor-\nmation of the RPD framework, including fracture of\n18,19 5,19\nrests and clasps.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u89",
+    "claim_quote": "بررسی فریم‌ورک و تماس Rest در جلسات ریکال",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "no maintenance advice in the text"
+   },
+   {
+    "id": "u90",
+    "claim_quote": "شل شدن یا شکست پیچ",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Other reported complications\n16,18\ninclude screw fracture of implants, screw loosen-\n16,18,21 16,18\ning of implants, opposing tooth fractures,\n16,18,19,20\nveneer porcelain fractures, artificial tooth frac-\n16,18 4-6 5,6\ntures, sore spots, and crestal bone resorption.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u91",
+    "claim_quote": "بررسی ثبات پیچ و اجزای پروتزی",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "no maintenance advice in the text"
+   },
+   {
+    "id": "u92",
+    "claim_quote": "شکست ونیر، دندان مصنوعی یا دندان مقابل",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Other reported complications\n16,18\ninclude screw fracture of implants, screw loosen-\n16,18,21 16,18\ning of implants, opposing tooth fractures,\n16,18,19,20\nveneer porcelain fractures, artificial tooth frac-\n16,18 4-6 5,6\ntures, sore spots, and crestal bone resorption.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u93",
+    "claim_quote": "بررسی و کنترل اکلوژن",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "no maintenance advice in the text"
+   },
+   {
+    "id": "u94",
+    "claim_quote": "ایجاد زخم مخاطی",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Other reported complications\n16,18\ninclude screw fracture of implants, screw loosen-\n16,18,21 16,18\ning of implants, opposing tooth fractures,\n16,18,19,20\nveneer porcelain fractures, artificial tooth frac-\n16,18 4-6 5,6\ntures, sore spots, and crestal bone resorption.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u95",
+    "claim_quote": "بررسی و اصلاح نواحی فشاری بیس دنچر",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "no maintenance advice in the text"
+   },
+   {
+    "id": "u96",
+    "claim_quote": "بافت اطراف ایمپلنت را هم نباید فراموش کنیم",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u97",
+    "claim_quote": "در مطالعات، موکوزیت اطراف ایمپلنت حدود ۱۸ درصد و پری‌ایمپلنتایتیس حدود ۹ درصد گزارش شده است.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "In a study by Yie t al., the overall prevalence of\nperi-mucositis was 18.4%, and that of peri-implantitis\nwas 9.4%.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u98",
+    "claim_quote": "نکتهٔ جالب اینکه تجمع جرم روی روکش‌های سوروی‌شده حدود ۳۰ درصد بود؛ درحالی‌که این میزان در رویکرد مبتنی بر اتچمنت حدود ۴ درصد گزارش شده بود.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Calculi were significantly more frequently observed in\nthe ICRPD group (30.4%) than that in the IARPD group\n(3.6%).",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u99",
+    "claim_quote": "وجود Rest Seat و آندرکات روی روکش ایمپلنت می‌تواند محل مناسبی برای تجمع پلاک ایجاد کند.",
+    "verdict": "AUTHOR_VIEW",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "hedged explanation of a finding (می‌تواند)"
+   },
+   {
+    "id": "u100",
+    "claim_quote": "به همین دلیل، آموزش بهداشت متناسب با طراحی پروتز اهمیت زیادی دارد.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "inference; conclusion about hygiene instruction not stated in source"
+   },
+   {
+    "id": "u101",
+    "claim_quote": "بررسی بافت نرم اطراف ایمپلنت، پروبینگ و رادیوگرافی دوره‌ای باید در برنامهٔ نگهداری این بیماران قرار بگیرد.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "no maintenance-program advice in the text"
+   },
+   {
+    "id": "u102",
+    "claim_quote": "قدرت شواهد چقدر است؟",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u103",
+    "claim_quote": "با وجود نتایج امیدوارکننده، باید در تفسیر این یافته‌ها احتیاط کنیم.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "However, evidence re-\ngarding the clinical performance of IARPD with\nimplant-surveyed-crowns, termed ICRPD, is limited.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u104",
+    "claim_quote": "بخش عمدهٔ شواهد از مطالعات گذشته‌نگر و گزارش‌های موردی به دست آمده و همهٔ مطالعات بالینی واردشده از کره جنوبی بوده‌اند.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "The characteristics of the selected studies were as\nfollows: one systematic review (English), including\nfive ICRPD case reports, revealed duplication of data,\nand only one case report was finally considered val-\nid; 9 retrospective studies (eight English, one Korean;\n4,5,16-21\nshown in Table 2 and Table 3), 4 - 6, and 21 case\nreports (all Korean; shown in Table 4 with one case\nreport obtained systematic review article described\n22-42\nabove).",
+    "source_ref": null,
+    "note": "Korea half per Table 2 nation column for every retrospective study"
+   },
+   {
+    "id": "u105",
+    "claim_quote": "همچنین ارزیابی کیفیت مطالعات انجام نشده و کارآزمایی‌های بالینی کنترل‌شده‌ای در این مجموعه وجود نداشته است.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Scoping reviews do not examine the\npossibility of bias or heterogeneity of included stud-\nies, hence no quality assessments were undertak-\n13,14\nen.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u106",
+    "claim_quote": "بنابراین، ICRPD را می‌توان یک گزینهٔ درمانی معقول و کاربردی برای بعضی بیماران دانست، اما هنوز شواهد کافی برای اثبات برتری آن نسبت به روش‌های مبتنی بر اتچمنت نداریم.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Collectively, the ICRPD is a promis-\ning and viable treatment modality for partially or ful-\nly edentulous patients, providing a broader support\narea with rest and improved retention with retentive\narm.",
+    "source_ref": null,
+    "note": "superiority half consistent with Kang and Yoo reporting no significant differences"
+   },
+   {
+    "id": "u107",
+    "claim_quote": "جمع‌بندی بالینی",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u108",
+    "claim_quote": "در ICRPD، ایمپلنت صرفاً یک پایهٔ اضافه برای پروتز پارسیل نیست؛ بلکه باید از ابتدا به‌عنوان بخشی از طراحی پروتز در نظر گرفته شود.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "Discussion advises careful planning of position and number; integrating the implant into the design from the start is not stated"
+   },
+   {
+    "id": "u109",
+    "claim_quote": "انتخاب موقعیت مناسب ایمپلنت بر اساس طرح پارسیل، استفاده از کانکتور اصلی صلب، طراحی درست روکش سوروی‌شده و توجه به نگهداری دوره‌ای، به نظر می‌رسد از عوامل مهم در موفقیت این درمان باشند.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "While ICRPD research is rare and ongoing, it appears\nto be important to adhere to basic concepts, such as\nadopting a rigid major connector design to prevent\nunnecessary force being transmitted to the implant,\nand the most successful case reports showed that\nthis was followed.",
+    "source_ref": null,
+    "note": "One predicate over a list of subjects. The governing sentence links a rigid major connector to success with the same hedge («it appears to be important» against «به نظر می‌رسد»). The source also says «The implant position and number of the ICRPD must be carefully planned» and mentions long-term maintenance of the implant as a planning factor. Correct surveyed-crown design as a success factor is not stated anywhere in the source. None of the five named alterations fits, and the direction agrees."
+   },
+   {
+    "id": "u110",
+    "claim_quote": "این روش می‌تواند بدون نیاز به تبدیل کل درمان به پروتز ثابت، حمایت و گیر پارسیل را بهبود دهد؛ به‌خصوص در بیمارانی که دندان‌های پایهٔ محدود و ریج خلفی تحلیل‌رفته دارند.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Therefore, strategic implant placement to in-\ncrease the number of abutments for better support\nand retention accommodated by RPD can be a useful\ntreatment option to compensate for the problems of\nfixed implant prostheses and RPD.",
+    "source_ref": null,
+    "note": ""
+   }
+  ],
+  "counts": {
+   "matches": 52,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 22,
+   "not_assessable": 0,
+   "author_view": 1,
+   "not_a_claim": 35
+  },
+  "assessable": 52,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": false,
+  "source_conclusion": "Furthermore, strategic implant placement around an- terior teeth or premolars, as indicated in the majority of ICRPD studies, can decrease the additional bone grafts or sinus lifts, reducing treatment duration and costs.",
+  "fact_fa": "از ۵۲ ادعایی که منبع به آن پرداخته‌اند، ۵۲ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۲۲ جمله‌ی دیگر در منبع نیامده است.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ }
+]
