@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="dc-notify" content="true">
+
+<title>آیا می‌توان دهان بی‌دندان را واقعاً دیجیتال ثبت کرد؟ | مرور منابع – دنت‌کست</title>
+
+<meta name="description" content="اسکنر داخل‌دهانی شکل مخاط بی‌دندان را خوب ثبت می‌کند، اما حرکت عضلات و حاشیه‌های فانکشنال را چه؟ دو مقالهٔ مروری نشان می‌دهند دیجیتال کجا کافی است و کجا هنوز نه.">
+
+<link rel="canonical" href="https://dentcast.org/sharehub/share-54.html">
+<link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/sharehub/share-54.html">
+<link rel="alternate" hreflang="fa" href="https://dentcast.org/sharehub/share-54.html">
+<link rel="alternate" hreflang="x-default" href="https://dentcast.org/sharehub/share-54.html">
+
+  <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
+  <link rel="stylesheet" href="/dc-article.css?v=6">
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --bg1:#eaf1ff;
+      --bg2:#f5f8ff;
+      --text:#111;
+      --muted:#444;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.2);
+    }
+
+    p { margin: 0.875rem 0; }
+
+
+    ul {
+      list-style: none;
+      padding-right: 0;
+      margin: 0.875rem 0;
+    }
+
+    ul li::before {
+      content: "✦ ";
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    /* summary tables — same pattern as .text-box table elsewhere on the site */
+    .glass-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .glass-box table th,
+    .glass-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:right;
+      vertical-align:top;
+    }
+    .glass-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .glass-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+    @media (max-width:768px){
+      .glass-box table{font-size:.9rem;}
+      .glass-box table th,.glass-box table td{padding:0.45rem 0.5rem;}
+    }
+
+    /* images with a visible caption */
+    .glass-box figure { max-width: 30rem; margin: 1.25rem auto; }
+    .glass-box figcaption {
+      text-align: center;
+      font-size: .85rem;
+      opacity: .75;
+      margin-top: 0.5rem;
+      line-height: 1.8;
+    }
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* section kicker above the title */
+    .sh-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      direction: ltr;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: .02em;
+      margin: 0 0 0.5rem;
+    }
+
+    /* references list */
+    .sh-refs { margin-top: 0.5rem; }
+    .sh-refs li { font-size: 0.95rem; line-height: 1.9; }
+    .sh-refs a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .sh-refs a:hover { text-decoration: underline; }
+
+    /* figure pairs and wide tables */
+    .glass-box .sh-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+    .glass-box .sh-pair figure { margin: 0; }
+    .glass-box .sh-pair img { width: 100%; height: auto; }
+    /* Keep the supplied clinical crops at their native size; shrink only on narrow screens. */
+    .glass-box figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+    .sh-scroll { overflow-x: auto; }
+    .sh-scroll img { min-width: 32rem; }
+    @media (max-width:420px){ .glass-box .sh-pair { grid-template-columns: 1fr; } }
+
+
+    /* permission chips (مجاز / با محدودیت / استفاده نکن) */
+    .chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: .05rem .55rem; border-radius: 999px; line-height: 1.7; white-space: nowrap; margin-inline-start: .25rem; }
+    .chip.ok { color: #1f7a3a; background: rgba(47,122,60,.14); }
+    .chip.warn { color: #9a6200; background: rgba(214,150,20,.16); }
+    .chip.no { color: #b3342b; background: rgba(179,52,43,.13); }
+    [data-theme="dark"] .chip.ok { color: #7fcf8a; }
+    [data-theme="dark"] .chip.warn { color: #f0bb5b; }
+    [data-theme="dark"] .chip.no { color: #f08a80; }
+
+    /* English-version toggle button */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 auto 1.125rem 0;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { line-height: 1.9;}
+    }
+  </style>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="theme-color" content="#0b5fff">
+
+  <!-- Share Hub Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://dentcast.org/sharehub/share-54.html",
+      "url": "https://dentcast.org/sharehub/share-54.html",
+      "name": "آیا می‌توان دهان بی‌دندان را واقعاً دیجیتال ثبت کرد؟",
+      "inLanguage": "fa",
+      "isPartOf": {
+        "@id": "https://dentcast.org/#website"
+      },
+      "about": {
+        "@id": "https://dentcast.org/sharehub/share-54.html#creativework"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://dentcast.org/sharehub/share-54.html#creativework",
+      "name": "آیا می‌توان دهان بی‌دندان را واقعاً دیجیتال ثبت کرد؟",
+      "headline": "آیا می‌توان دهان بی‌دندان را واقعاً دیجیتال ثبت کرد؟",
+      "description": "اسکنر داخل‌دهانی شکل مخاط بی‌دندان را خوب ثبت می‌کند، اما حرکت عضلات و حاشیه‌های فانکشنال را چه؟ دو مقالهٔ مروری نشان می‌دهند دیجیتال کجا کافی است و کجا هنوز نه.",
+      "inLanguage": "fa",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "دکتر فواد شهابیان"
+        }
+      ],
+      "creator": [
+        {
+          "@type": "Person",
+          "name": "دکتر فواد شهابیان"
+        }
+      ],
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://dentcast.org/#org-dentcast",
+        "name": "DentCast",
+        "url": "https://dentcast.org/",
+        "logo": {"@type": "ImageObject", "url": "https://dentcast.org/logo-v2.png"}
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/sharehub/share-54.html"
+      },
+      "datePublished": "2026-11-16",
+      "dateModified": "2026-11-16",
+      "genre": "Dental Education",
+      "keywords": [
+        "قالب‌گیری دیجیتال دنچر کامل",
+        "اسکن داخل‌دهانی فک کاملاً بی‌دندان",
+        "دقت اسکنر در نواحی دنچربیرینگ (Denture-Bearing Areas)",
+        "قالب‌گیری فانکشنال (Functional Impression)",
+        "بوردر مولدینگ (Border Molding)",
+        "سیل محیطی (Peripheral Seal)",
+        "قالب‌گیری موکوستاتیک (Mucostatic Impression)",
+        "قالب‌گیری با فشار انتخابی (Selective Pressure Impression)",
+        "مخاط متحرک وستیبول، کام نرم و نواحی زیرزبانی",
+        "اسکن فک پایین بی‌دندان",
+        "ورکفلوی هیبرید (Hybrid Workflow) در ساخت دنچر",
+        "ساخت دنچر از اسکن مستقیم بدون قالب‌گیری فانکشنال",
+        "مرور سیستماتیک رسایی ۲۰۲۱ و Scoping Review نگوین ۲۰۲۵",
+        "intraoral scanner accuracy in edentulous arches",
+        "denture-bearing areas",
+        "functional impression",
+        "border molding",
+        "hybrid digital workflow",
+        "digital complete denture"
+      ]
+    }
+  ]
+}
+</script>
+
+    <link rel="stylesheet" href="/dc-theme.css?v=19">
+<link rel="stylesheet" href="/dc-nav.css?v=18">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="آیا می‌توان دهان بی‌دندان را واقعاً دیجیتال ثبت کرد؟ | مرور منابع – دنت‌کست">
+  <meta property="og:description" content="اسکنر داخل‌دهانی شکل مخاط بی‌دندان را خوب ثبت می‌کند، اما حرکت عضلات و حاشیه‌های فانکشنال را چه؟ دو مقالهٔ مروری نشان می‌دهند دیجیتال کجا کافی است و کجا هنوز نه.">
+  <meta property="og:url" content="https://dentcast.org/sharehub/share-54.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="آیا می‌توان دهان بی‌دندان را واقعاً دیجیتال ثبت کرد؟ | مرور منابع – دنت‌کست">
+  <meta name="twitter:description" content="اسکنر داخل‌دهانی شکل مخاط بی‌دندان را خوب ثبت می‌کند، اما حرکت عضلات و حاشیه‌های فانکشنال را چه؟ دو مقالهٔ مروری نشان می‌دهند دیجیتال کجا کافی است و کجا هنوز نه.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "DentCast",
+      "item": "https://dentcast.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "مرور منابع",
+      "item": "https://dentcast.org/sharehub/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "آیا می‌توان دهان بی‌دندان را واقعاً دیجیتال ثبت کرد؟ | مرور منابع – دنت‌کست",
+      "item": "https://dentcast.org/sharehub/share-54.html"
+    }
+  ]
+}
+</script>
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
+</head>
+
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<div class="sh-kicker"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 21 12 16l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> مرور منابع</div>
+<h1>آیا می‌توان دهان بی‌دندان را واقعاً دیجیتال ثبت کرد؟</h1>
+<div class="glass-box">
+<a class="lang-btn" href="en/share-54.html" rel="noopener">English</a>
+<div class="sh-dialogue">
+<p>فرض کنیم بیماری برای ساخت دنچر کامل مراجعه کرده است. به‌جای قالب‌گیری سنتی، <a href="/glossary/intraoral-scanner.html">اسکنر داخل‌دهانی</a> را برمی‌داریم و از هر دو فک اسکن می‌گیریم. تصویر سه‌بعدی قوس‌ها روی مانیتور ظاهر می‌شود و حالا می‌توانیم طراحی و ساخت دنچر را به‌صورت دیجیتال ادامه بدهیم.</p>
+<p>اما آیا اطلاعاتی که اسکنر ثبت کرده، واقعاً برای ساخت یک دنچر کامل کافی است؟</p>
+<p>در پروتز ثابت، هدف اصلی اسکن، ثبت دقیق هندسهٔ دندان‌ها و بافت‌های اطراف آن‌هاست. اما در دنچر کامل شرایط متفاوت است. پروتز روی مجموعه‌ای از بافت‌های ثابت و متحرک قرار می‌گیرد و عملکرد آن فقط به تطابق سطح داخلی با مخاط وابسته نیست؛ گسترش مناسب حاشیه‌ها و ارتباط آن‌ها با حرکات عضلات هم اهمیت دارد.</p>
+<p>برای مثال، در قالب‌گیری فانکشنال (Functional Impression)، با استفاده از بوردر مولدینگ (Border Molding) تلاش می‌کنیم محدودهٔ مناسب گسترش دنچر را با توجه به حرکات بافت‌های اطراف مشخص کنیم. هدف این است که حاشیهٔ پروتز نه آن‌قدر بلند باشد که حرکت عضلات آن را جابه‌جا کند و نه آن‌قدر کوتاه که بخشی از ظرفیت ساپورت و سیل محیطی (Peripheral Seal) از دست برود.</p>
+<p>در مقابل، اسکنر داخل‌دهانی شکل سطح مخاط را فقط در وضعیت بدون فشار ثبت می‌کند؛ چیزی نزدیک به مفهوم قالب‌گیری موکوستاتیک (Mucostatic Impression).</p>
+<p>اسکنر شکل یک ناحیه را با دقت مناسبی ثبت می‌کند، اما اطلاعات کافی دربارهٔ رفتار همان بافت هنگام عملکرد در اختیار ما قرار نمی‌دهد.</p>
+<p>البته قالب‌گیری سنتی هم محدودیت‌های خودش را دارد. کنترل فشار، تغییرات ابعادی مواد قالب‌گیری و خطاهای تهیهٔ مدل گچی همگی می‌توانند بر نتیجه اثر بگذارند. دیجیتال‌شدن بخشی از این مشکلات را حذف می‌کند، اما در مقابل با محدودیت‌های دیگری روبه‌رو می‌شویم.</p>
+<p>یکی از مهم‌ترین آن‌ها، نحوهٔ بازسازی مدل سه‌بعدی توسط اسکنر است.</p>
+<p>اسکنر تصاویر متوالی را ثبت می‌کند و نرم‌افزار با اتصال آن‌ها به یکدیگر، مدل سه‌بعدی را می‌سازد؛ فرایندی که استیچینگ (Stitching) نام دارد.</p>
+<p>در قوس دندانی، ویژگی‌های هندسی دندان‌ها به نرم‌افزار کمک می‌کنند تصاویر را به‌درستی کنار هم قرار بدهد. اما در فک کاملاً بی‌دندان، سطح مخاط نسبتاً یکنواخت است و نشانه‌های مشخص کمتری برای اتصال تصاویر وجود دارد. به همین دلیل، احتمال تجمع خطا هنگام اسکن قوس کامل افزایش پیدا می‌کند.</p>
+<p>بزاق و حرکت بافت‌های نرم هم مشکل را پیچیده‌تر می‌کنند. برای مثال، هنگام اسکن وستیبول معمولاً مجبوریم لب یا گونه را کنار بزنیم؛ درحالی‌که همین کار ممکن است موقعیت مخاط را تغییر بدهد.</p>
+<p>پس حتی اگر تصویر ثبت‌شده دقیق باشد، هنوز باید بپرسیم این بافت در چه موقعیتی ثبت شده است؟</p>
+<p>برای بررسی این موضوع، رسایی و همکاران در سال ۲۰۲۱ یک مرور سیستماتیک دربارهٔ دقت اسکنرهای داخل‌دهانی در ثبت نواحی دنچربیرینگ (Denture-Bearing Areas) منتشر کردند.</p>
+<p>پژوهشگران مطالعات آزمایشگاهی و بالینی را بررسی کردند و نتایج نشان داد که دقت اسکن در بخش‌های مختلف قوس یکسان نیست.</p>
+<p>در نواحی دارای مخاط نسبتاً ثابت، مانند بخش‌هایی از ریج باقیمانده و کام سخت، اسکنرها در بسیاری از مطالعات دقت قابل قبولی داشتند. اما در نواحی متحرک، مانند وستیبول، کام نرم و نواحی زیرزبانی، اختلاف‌ها و مشکلات ثبت بیشتر بودند.</p>
+<p>در یکی از مطالعات، وقتی نواحی محیطی متحرک از ارزیابی کنار گذاشته شدند، میزان خطای اندازه‌گیری‌شده به‌شدت کاهش پیدا کرد.</p>
+<p>این یافته نشان می‌دهد که بخشی از مشکل اسکن فک بی‌دندان، به ویژگی‌های بافت متحرک مربوط است و نه فقط وسعت قوس.</p>
+<p>در همین مرور، ثبت فک پایین معمولاً دشوارتر بود. حضور زبان، حرکت کف دهان و کنترل دشوارتر بزاق می‌توانند در این موضوع نقش داشته باشند.</p>
+<p>با این حال، در برخی مطالعات، وقتی فقط سطوح ثابت ارزیابی شدند، دقت اسکن فک پایین حتی از فک بالا بهتر بود.</p>
+<p>بنابراین نمی‌توانیم به‌صورت مطلق بگوییم اسکنر در فک پایین دقت کمتری دارد؛ باید مشخص کنیم کدام بافت و کدام بخش از قوس را بررسی می‌کنیم.</p>
+<p>پژوهشگران همچنین راهکارهایی مانند استفاده از مارکرهای کمکی، تغییر مسیر اسکن و انتخاب سر اسکنر مناسب را بررسی کرده بودند. بعضی از این تغییرات، به‌ویژه در مطالعات آزمایشگاهی، باعث بهبود دقت شدند؛ اما هنوز یک تکنیک استاندارد و قابل اعتماد برای تمام شرایط بالینی وجود ندارد.</p>
+<p>محدودیت دیگر این است که بسیاری از مطالعات روی مدل‌های ثابت انجام شده‌اند. دقت مطلوب در یک مدل آزمایشگاهی الزاماً به معنای ثبت موفق همان ناحیه در دهان بیمار نیست. ضمن اینکه بیماران با ریج‌های به‌شدت تحلیل‌رفته یا آندرکات‌های شدید، در مطالعات بالینی قوس کاملاً بی‌دندان این مرور حضور نداشتند.</p>
+<p>حالا به مقالهٔ دوم برسیم.</p>
+<p>نگوین و همکاران در سال ۲۰۲۵ یک Scoping Review منتشر کردند که سؤال متفاوتی داشت: ثبت فانکشنال قوس‌های کاملاً بی‌دندان در گردش کار دیجیتال چگونه انجام می‌شود؟</p>
+<p>نتیجهٔ مهم این مرور آن بود که در روش‌های بررسی‌شده، هنوز یک تکنیک کاملاً دیجیتال برای ثبت فانکشنال قوس‌های بی‌دندان وجود نداشت.</p>
+<p>این نتیجه به معنای غیرممکن‌بودن ساخت دنچر دیجیتال نیست. مسئله این است که در بسیاری از ورکفلوها، مرحلهٔ ثبت فانکشنال همچنان به روش سنتی انجام می‌شود یا اساساً حذف شده است.</p>
+<p>در بعضی روش‌ها، ابتدا اسکن داخل‌دهانی تهیه می‌شود، اما ثبت نهایی حاشیه‌ها با قالب‌گیری سنتی انجام می‌گیرد. در روش‌های دیگر، ابتدا قالب فانکشنال تهیه و سپس قالب یا مدل حاصل دیجیتالی می‌شود.</p>
+<p>این ترکیب روش‌های سنتی و دیجیتال را ورکفلوی هیبرید (Hybrid Workflow) می‌نامیم.</p>
+<p>مزیت رویکرد هیبرید این است که می‌توانیم اطلاعات فانکشنال را با روش سنتی ثبت کنیم، اما طراحی و ساخت پروتز را در محیط دیجیتال ادامه بدهیم.</p>
+<p>در مقابل، روش‌هایی هم گزارش شده‌اند که دنچر را مستقیماً بر اساس اسکن داخل‌دهانی و بدون قالب‌گیری فانکشنال ساخته‌اند.</p>
+<p>در برخی گزارش‌های موردی، به‌ویژه در فک بالا با شرایط آناتومیک مساعد، نتایج اولیه از نظر ریتنشن و رضایت بیمار مطلوب بوده است.</p>
+<p>اما این شواهد محدودند. گزارش موردی نمی‌تواند برابری یا برتری یک روش را ثابت کند و در بعضی موارد، با وجود نتیجهٔ اولیهٔ مناسب، بعداً به ریلاین نیاز پیدا شده است.</p>
+<p>یک تفاوت دیگر هم هست: ثبت هندسهٔ مخاط با ثبت رفتار آن تحت فشار یکی نیست.</p>
+<p>در قالب‌گیری با فشار انتخابی (Selective Pressure Impression)، می‌توانیم توزیع فشار را در نواحی مختلف کنترل کنیم. اما اسکنر به‌خودی‌خود چنین اطلاعاتی را ثبت نمی‌کند.</p>
+<p>درنتیجه، وقتی فقط از اسکن مستقیم استفاده می‌کنیم، بخشی از تصمیم‌گیری دربارهٔ ریلیف، فشار بافتی و گسترش فانکشنال حاشیه‌ها به مراحل طراحی منتقل می‌شود.</p>
+<p>حالا این اطلاعات چه کاربردی در تصمیم‌گیری کلینیکی دارند؟</p>
+<p>اول باید بین استفاده از اسکن برای قالب اولیه و استفاده از آن به‌عنوان تنها مبنای ساخت دنچر نهایی تفاوت بگذاریم.</p>
+<p>شواهد مرور رسایی نشان می‌دهند که اسکن داخل‌دهانی برای ثبت اولیهٔ بسیاری از قوس‌های بی‌دندان قابل استفاده است. اما در قالب نهایی، علاوه بر هندسهٔ ریج و کام، باید اطلاعات کافی دربارهٔ نواحی محیطی و رفتار بافت‌ها هم داشته باشیم.</p>
+<p>برای بیماری با فک بالای مساعد، ریج مناسب و مخاط پایدار، استفادهٔ گسترده‌تر از اسکن مستقیم می‌تواند قابل بررسی باشد. اما در شرایط دشوارتر، مانند ریج بسیار تحلیل‌رفته، مخاط متحرک نزدیک به کرست یا مشکلات فانکشنال فک پایین، اتکای صرف به اسکن مستقیم پشتوانهٔ کافی ندارد.</p>
+<p>در چنین شرایطی، رویکرد هیبرید می‌تواند انتخاب منطقی‌تری باشد؛ یعنی از اسکن برای ثبت آناتومی و از قالب‌گیری سنتی برای اطلاعاتی استفاده کنیم که به حرکت و رفتار بافت وابسته‌اند.</p>
+<p>البته نباید از این دو مرور نتیجه بگیریم که روش هیبرید در تمام شاخص‌های کلینیکی برتر است. مرور اول بیشتر بر دقت ثبت سطوح تمرکز داشت و مرور دوم نیز روش‌های موجود را شناسایی و دسته‌بندی کرده بود.</p>
+<p>بنابراین هنوز شواهد کافی برای نتیجه‌گیری قطعی دربارهٔ تأثیر هر گردش کار بر طول عمر دنچر، تعداد مراجعات پس از تحویل یا رضایت بلندمدت بیمار وجود ندارد.</p>
+<p>در نهایت، سؤال اصلی این نیست که اسکن دیجیتال بهتر است یا قالب‌گیری سنتی.</p>
+<p>سؤال این است که چه اطلاعاتی برای ساخت پروتز نیاز داریم و هر روش کدام بخش از این اطلاعات را بهتر ثبت می‌کند.</p>
+<p>اسکنر می‌تواند ابزار ارزشمندی برای ثبت هندسهٔ بافت‌ها باشد، اما دقت هندسی به‌تنهایی تضمین‌کنندهٔ ثبت اطلاعات فانکشنال نیست.</p>
+<p>شاید انتخاب منطقی در شرایط فعلی این باشد که به‌جای اصرار بر دیجیتال‌کردن تمام مراحل، از هر فناوری در جایی استفاده کنیم که شواهد از توانایی آن حمایت می‌کنند.</p>
+<h3>∆ منابع</h3>
+<ul class="sh-refs">
+  <li><a href="https://doi.org/10.1111/jopr.13345" target="_blank" rel="noopener noreferrer">مرور سیستماتیک دقت اسکنرهای داخل‌دهانی در ثبت نواحی دنچربیرینگ (رسایی و همکاران، ۲۰۲۱)</a></li>
+  <li><a href="https://doi.org/10.1016/j.jdent.2025.105981" target="_blank" rel="noopener noreferrer">مرور قالب‌گیری فانکشنال قوس‌های بی‌دندان در گردش کار دیجیتال (نگوین و همکاران، ۲۰۲۵)</a></li>
+</ul>
+</div>
+<div class="author-note">نویسنده: <a href="https://dentcast.org/#person-foad">دکتر فواد شهابیان</a></div>
+</div>
+
+
+
+<div class="dc-related-section">
+<h2 class="dc-related-label">کاوش بیشتر</h2>
+<div class="dc-related-capsules">
+<a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
+<a href="/pillar/removable-pros/" class="dc-related-capsule">فهرست موضوعی</a>
+<a href="/insight/insight-51.html" class="dc-related-capsule">درمان دیجیتال بیمار کاملاً بی‌دندان</a>
+<a href="/dentai/dentai-32.html" class="dc-related-capsule">عوامل مؤثر بر دقت اسکنر داخل‌دهانی</a>
+</div>
+</div>
+  <footer class="dc-site-footer">
+  <div style="margin-bottom:1.375rem;">
+    <a href="/sharehub/"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> برگشت به صفحه‌ی قبل
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=29" defer></script>
+<script src="/dc-nav.js?v=350" defer></script>
+</body>
+</html>
