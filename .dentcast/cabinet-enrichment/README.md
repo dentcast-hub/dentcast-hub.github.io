@@ -21,10 +21,11 @@ follow_up, materials_brands, funding_coi, limitations; key_finding and
 clinical_bottom_line only where the catalogue had none), `cites_in_cabinet`
 (catalogue ids this paper cites, from its reference list, mechanically).
 
-Coverage: 1342 papers in `results.jsonl` (slice 1: 661, 2026-11-15; slice 2:
-681, 2026-11-16). 808 catalogue papers not read yet, plus 19 that could not be
-read (16 image-only scans needing OCR, 3 PDFs Drive would not serve: P0034,
-P0478, P0679); `todo` lists them again at the front of every slice.
+Coverage: 2016 papers in `results.jsonl` (slice 1: 661, 2026-11-15; slice 2:
+681 and slice 3: 674, 2026-11-16). 26 could not be read (20 image-only scans
+needing OCR; 6 PDFs Drive would not serve: P0034, P0478, P0679, P2205, P2298,
+P2300); 127 catalogue papers not read yet; `todo` lists them again at
+the front of every slice.
 
 ## Live since 2026-11-15
 
@@ -67,3 +68,14 @@ All instructions live here: `PROPOSE.md` (Sonnet), `JUDGE.md` (Opus),
     # Workflow: batches of 10 «ok» ids (text_status) -> propose (sonnet) + check + judge (opus) -> $W/J/
     python3 tools/cabinet_enrich.py merge   --work $W --judges J --out $W/merged.jsonl
     python3 tools/cabinet_enrich.py publish --work $W --merged $W/merged.jsonl   # results.jsonl + site file
+
+Slice 3 (2026-11-16): 13 study types corrected, 45 empty key_finding /
+clinical_bottom_line and a few year / doi / authors / journal filled. Removed
+from the catalogue and moved to the Drive trash (founder's standing rule):
+P2402 (automotive surface finish), P2675 (nuclear zirconium hydrides), P2690
+(zirconia microspheres for photonics), P2612 (a stray last page of another
+article). Kept as borderline: P2750 (only carrier of tetragonal-zirconia for
+the site's zirconia-phase topic), P1828 (orthopaedic strain theory), P2093 and
+P2094 (lithium disilicate glass theses), P2658 (part 1 of a Persian zirconia
+series). Text not readable without OCR: P2136, P2562, P2712, P2716, P2771
+(garbled extraction) and the Persian zirconia series P2661-P2667.
