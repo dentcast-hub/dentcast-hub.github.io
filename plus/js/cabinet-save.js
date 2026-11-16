@@ -6,8 +6,8 @@
 // addReferenceTo in collections.js), which also owns the three states: a
 // guest is asked to log in, a free reader sees the premium gate, a subscriber
 // picks (or makes) a board.
-import { openCollectionPicker } from './collections.js?v=248';
-import { api } from './api.js?v=248';
+import { openCollectionPicker } from './collections.js?v=249';
+import { api } from './api.js?v=249';
 
 window.dcCabinetSave = (paper) => openCollectionPicker({ reference: paper });
 // Full text: resolves to {results, indexed}, or null for a guest, a free

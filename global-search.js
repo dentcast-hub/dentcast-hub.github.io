@@ -44,8 +44,14 @@
    («تریتمنت پلن», «اکلوزیون», «occlusion») also finds what carries that
    hashtag — site content for everyone, and (button on) the papers mapped to
    it. A name inside a longer query, or a query inside a longer name, counts
-   only where it starts a word. The reference is fetched once, on the first
-   query. No model involved.
+   only where it starts a word; spaces, ZWNJ, hyphens, slashes and dots inside
+   a name do not matter («فایبرپست» = «فایبر پست», "cad/cam" = "cadcam"); of
+   two names one inside the other only the longer is meant («کراون لنتنینگ»
+   is not روکش); a concept's co_tags come with it; and a query word listed in
+   the reference's `manual_aliases` is also tried in that spelling. All of it
+   is in the shared helpers below (dcFold … dcPaperHits), used by both
+   engines. The reference is fetched once, on the first query. No model
+   involved.
 
    Deliberately NOT here: a DES filter. Bands are comparable only
    inside one question_type and are never shown apart from it
@@ -63,17 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!globalBox || !searchInput || !resultsBox) return;
 
   /* ------------ helpers --------------- */
-  /* Matching only, never display: Arabic ي/ى/ك typed on an Arabic keyboard
-     and ZWNJ/zero-width marks would otherwise miss the Persian spelling
-     («كراون» found nothing where «کراون» found 13). Same fold as
-     plus/js/hl-view.js foldFa. */
-  const foldFa = (s) => String(s || "")
-    .replace(/[يى]/g, "ی")
-    .replace(/ك/g, "ک")
-    .replace(/[​-‏ً-ْـ]/g, "")
-    .replace(/\s+/g, " ")
-    .toLowerCase()
-    .trim();
+  const foldFa = dcFold;   // matching only, never display (see dcFold)
   const faDigits = (s) => String(s).replace(/[0-9]/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
   const enDigits = (s) => String(s).replace(/[۰-۹]/g, (d) => String(d.charCodeAt(0) - 0x06F0));
   const escHtml = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -293,7 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
       DB = out;
       dcAliasForms(foldFa).then((f) => {
         ALIAS = f;
-        if (f.length && searchInput.value.trim()) performSearch(searchInput.value.trim());
+        if (f.forms.length && searchInput.value.trim()) performSearch(searchInput.value.trim());
       });
       /* اگه کاربر قبل از لود دیتابیس سرچ کرده بود (مثلاً از URL) */
       if (searchInput.value.trim()) {
@@ -313,7 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ------------ the library's papers (premium button) ------------ */
   let LIB_FA = [];
-  let ALIAS = [];
+  let ALIAS = null;         // the hashtag vocabulary (dcAliasForms)
   let papersOn = false;     // the button is ON and the papers are loaded
   let libLoaded = false;
   let isPremium = dcPremiumHint() ? null : false;   // null = hint says premium, not yet confirmed
@@ -372,11 +368,19 @@ document.addEventListener("DOMContentLoaded", () => {
   if (dcPapersWanted()) askMe();
 
   /* ------------ the pipeline ------------ */
+  /* The text match: title 3 (4 when it opens with the query), keywords and
+     hashtags 2, caption 1 — the best of the query's spellings. On top of it
+     a hashtag the query names adds its weight (dcAliasKeys): 2 when a whole
+     name is in the query, 1 when the query is only a piece of a longer name
+     or the hashtag is a co_tag of a concept named in full — so «ایمپلنت» lists what is
+     tagged ایمپلنت above what is only tagged پری ایمپلنتیتیس. Papers come
+     after site content whatever they score (sortResults). */
   function score(item, q) {
+    if (!q) return 0;
     let s = 0;
-    if (item._t.includes(q)) s += item._t.startsWith(q) ? 4 : 3;
-    if (item._k.includes(q)) s += 2;
-    if (item._c.includes(q)) s += 1;
+    if (dcTextHas(item._t, q)) s += item._t.startsWith(q) ? 4 : 3;
+    if (dcTextHas(item._k, q)) s += 2;
+    if (dcTextHas(item._c, q)) s += 1;
     return s;
   }
   /* Every filter EXCEPT the tab — the tab counts are read off this. */
@@ -387,12 +391,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const now = todayOrd();
       if (now != null) cutoff = now - state.years * 372;
     }
-    const ak = dcAliasKeys(ALIAS, q);
-    const fa = dcPaperHits(LIB_FA, q, ak);
+    const qs = dcSpellings(ALIAS, q);
+    const ak = dcAliasKeys(ALIAS, qs);
+    const fa = dcPaperHits(LIB_FA, qs, ak);
     for (const item of DB) {
       if (item._pid && !papersOn) continue;
-      const sc = score(item, q) + (item._pid ? fa.get(item._pid) || 0 : 0) +
-        (ak.size && item._h && item._h.some((h) => ak.has(h)) ? 2 : 0);
+      let text = 0;
+      for (const x of qs) text = Math.max(text, score(item, x));
+      const sc = text + (item._pid ? fa.get(item._pid) || 0 : 0) + dcTagWeight(ak, item);
       if (!sc) continue;
       if (state.pillars.size && !state.pillars.has(item._p)) continue;
       if (cutoff != null) {
@@ -822,13 +828,13 @@ function dcPapersSetWanted(on) {
 function dcPremiumHint() { try { return localStorage.getItem("dcAds.vc") === "premium"; } catch (_) { return false; } }
 /* The answer AND why: "confirmed not premium" and "could not ask" differ. */
 function dcMe() {
-  return import('/plus/js/api.js?v=248')
+  return import('/plus/js/api.js?v=249')
     .then((m) => m.currentUser().then((u) => ({ u, status: m.meStatus() })))
     .catch(() => ({ u: null, status: "error" }));
 }
 /* The library's own gate card (plus/js/library-gate.js), with its own ?from=. */
 function dcPaperGate() {
-  return Promise.all([import('/plus/js/sheet.js?v=248'), import('/plus/js/premium-cta.js?v=248')])
+  return Promise.all([import('/plus/js/sheet.js?v=249'), import('/plus/js/premium-cta.js?v=249')])
     .then(([sheet, cta]) => {
       sheet.openSheet(sheet.gateCard({
         title: "جستجو در مقاله‌های کتابخانه ویژه‌ی پریمیوم است",
@@ -865,64 +871,198 @@ function dcPaperRows(data, fold) {
   const fa = Object.keys(data.fa).map((k) => [fold(k), data.fa[k]]);
   return { items, fa };
 }
-/* Hashtag concepts by every name they answer to: [folded form, folded key
-   with spaces]. The reference is the single source of the vocabulary. The
-   key is built from the concept's `tag` exactly as dcItemTags builds an
-   item's tags: the reference's `key` turns ZWNJ into a space while the fold
-   deletes it, so a key from `key` never met «#درمان_محافظه‌کارانه» on a page.
-   Variants are stored with their leading `#`, which comes off here. */
+/* Matching only, never display — applied to items and query alike, so it is
+   symmetric. Arabic ي/ى/ك typed on an Arabic keyboard and ZWNJ/zero-width
+   marks would otherwise miss the Persian spelling («كراون» found nothing
+   where «کراون» found 13); the same goes for آ/أ/إ/ٱ and ا («امالگام» ↔
+   «آمالگام»), ؤ and و, ة/ۀ/هٔ and ه, and Persian or Arabic-Indic digits and
+   Latin ones («دندان 6» ↔ «دندان ۶»). A hashtag is matched as its words:
+   `#` goes and `_` is a space, in the query too. A superset of
+   plus/js/hl-view.js foldFa. */
+function dcFold(s) {
+  return String(s || "")
+    .replace(/[يى]/g, "ی")
+    .replace(/ك/g, "ک")
+    .replace(/[آأإٱ]/g, "ا")
+    .replace(/ؤ/g, "و")
+    .replace(/[ةۀ]/g, "ه")
+    .replace(/[​-‏ً-ٕـ]/g, "")
+    .replace(/[۰-۹]/g, (d) => String(d.charCodeAt(0) - 0x06F0))
+    .replace(/[٠-٩]/g, (d) => String(d.charCodeAt(0) - 0x0660))
+    .replace(/#/g, "")
+    .replace(/_/g, " ")
+    .replace(/\s+/g, " ")
+    .toLowerCase()
+    .trim();
+}
+/* The text match. One word is found anywhere, as it always was; a query of
+   several words must start where a word starts, or «ای آی» (folded «ای ای»)
+   would be found in every «…های ایمپلنت». */
+function dcTextHas(hay, q) {
+  let i = hay.indexOf(q);
+  if (i === -1 || !q.includes(" ")) return i !== -1;
+  for (; i !== -1; i = hay.indexOf(q, i + 1)) {
+    if (i === 0 || !/[\p{L}\p{N}]/u.test(hay[i - 1])) return true;
+  }
+  return false;
+}
+/* A folded name as its words: `s` the letters and digits with everything
+   between them squeezed out, `b` where each word starts in `s`, `n` its
+   length written with single spaces. Two names that differ only in spaces,
+   ZWNJ (the fold deletes it), hyphens, slashes, dots or `&` have the same
+   `s`: «پری‌ایمپلنتیتیس» = «پری ایمپلنتیتیس», "cad/cam" = "cadcam",
+   "e.max" = "emax". */
+function dcWords(str) {
+  const w = String(str || "").split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+  const b = [];
+  let n = 0;
+  for (const x of w) { b.push(n); n += x.length; }
+  return { s: w.join(""), b, n: n + Math.max(0, w.length - 1) };
+}
+/* The hashtag vocabulary, read once: the reference is its single source.
+     forms   every name a concept answers to (key, tag, aliases, variants, and
+             a co_tag that is not a concept of its own), as dcWords plus `k`,
+             the concept's folded key with spaces. The key is built from the
+             concept's `tag` exactly as dcItemTags builds an item's tags: the
+             reference's `key` turns ZWNJ into a space while the fold deletes
+             it, so a key from `key` never met «#درمان_محافظه‌کارانه» on a page.
+     co      concept key → the keys of its co_tags: tags deliberately carried
+             alongside it, two doors to one concept (`#debonding` ↔
+             `#افتادن_روکش`).
+     manual  `manual_aliases`: spellings of one word («اکلوژال» → «اکلوزال»,
+             «اسمارت» → "smart"), longest first. An entry whose target repeats
+             a word or contains its own key is ignored. */
 function dcAliasForms(fold) {
   if (!dcAliasForms.p) {
     dcAliasForms.p = fetch("/dentcast-hashtag-reference.json")
       .then((r) => (r.ok ? r.json() : null))
       .then((j) => {
-        const out = [];
-        ((j && j.concepts) || []).forEach((c) => {
-          if (!c || !c.key) return;
-          const k = fold(String(c.tag || c.key).replace(/^#/, "").replace(/_/g, " "));
-          [c.key, c.tag].concat(c.aliases || [], c.variants || []).forEach((n) => {
-            const f = fold(String(n || "").replace(/^#/, "").replace(/_/g, " "));
-            if (f.length >= 2) out.push([f, k]);
+        const forms = [], co = new Map(), manual = [], seen = new Set();
+        const concepts = ((j && j.concepts) || []).filter((c) => c && c.key);
+        const keyOf = (c) => fold(String(c.tag || c.key));
+        const own = new Set(concepts.map(keyOf));
+        concepts.forEach((c) => {
+          const k = keyOf(c);
+          const cos = (c.co_tags || []).map((t) => fold(t)).filter((t) => t && t !== k);
+          if (cos.length) co.set(k, cos);
+          [c.key, c.tag].concat(c.aliases || [], c.variants || [], cos.filter((t) => !own.has(t))).forEach((n) => {
+            const f = dcWords(fold(n));
+            const id = f.s + "|" + f.b.join(",") + "|" + k;
+            if (f.n < 2 || seen.has(id)) return;
+            seen.add(id);
+            f.k = k;
+            forms.push(f);
           });
         });
-        return out;
+        const m = (j && j.manual_aliases) || {};
+        Object.keys(m).forEach((from) => {
+          const a = fold(from), t = fold(m[from]), tw = t.split(" ");
+          if (!a || !t || t.includes(a) || new Set(tw).size !== tw.length) return;
+          manual.push([a, t]);
+        });
+        manual.sort((x, y) => y[0].length - x[0].length);
+        return { forms, co, manual };
       })
-      .catch(() => []);
+      .catch(() => ({ forms: [], co: new Map(), manual: [] }));
   }
   return dcAliasForms.p;
 }
-/* The concepts a query names: exactly, as the start of a word in a longer
-   name (4+ letters), or as a name starting a word inside a longer query.
-   Never mid-word: «اپیزود» does not name پیزو, «اطمینان» not مینای دندان. */
-function dcAliasKeys(forms, q) {
-  const keys = new Set();
-  if (!forms || !forms.length || !q) return keys;
-  for (const [f, k] of forms) {
-    if (f === q || (q.length >= 4 && dcWordStart(f, q)) || (f.length >= 4 && dcWordStart(q, f))) keys.add(k);
-  }
-  return keys;
+/* The spellings a query is tried in: itself, and itself with every whole
+   word that `manual_aliases` knows replaced. Both are used for the text match
+   and for naming concepts. */
+function dcSpellings(ix, q) {
+  if (!ix || !ix.manual.length || !q) return [q];
+  let s = " " + q + " ";
+  for (const [a, t] of ix.manual) if (s.includes(" " + a + " ")) s = s.split(" " + a + " ").join(" " + t + " ");
+  s = s.trim();
+  return s === q ? [q] : [q, s];
 }
-/* `needle` occurs in `hay` starting at a word boundary (the end is free, so
-   «ایمپلنتی» and "implants" still match). */
-function dcWordStart(hay, needle) {
-  let i = hay.indexOf(needle);
-  while (i !== -1) {
-    if (i === 0 || !/[\p{L}\p{N}]/u.test(hay[i - 1])) return true;
-    i = hay.indexOf(needle, i + 1);
+/* Does the name `needle` sit in `hay` at offset `i` of the squeezed letters?
+   Never mid-word: it must start where a word of `hay` starts («اپیزود» does
+   not name پیزو, «اطمینان» not مینای دندان). Then either the two are cut
+   into words the same way over that stretch — the end is free, so «ایمپلنتی»
+   and "implants" still match — or they differ only in how they are spaced
+   («فایبرپست» / «فایبر پست»), and then the name must also END a word of `hay`,
+   give or take a two-letter suffix: «پست کوتاه» does not name a «پستک». */
+function dcNameAt(hay, needle, i) {
+  if (!hay.b.includes(i)) return false;
+  const e = i + needle.s.length;
+  let same = needle.b.every((x) => !x || hay.b.includes(i + x));
+  if (same) same = hay.b.every((x) => x <= i || x >= e || needle.b.includes(x - i));
+  if (same) return true;
+  let end = hay.s.length;
+  for (const x of hay.b) if (x >= e) { end = x; break; }
+  return end - e <= 2;
+}
+/* The concepts a query names, as Map(key → weight); `qs` are its spellings.
+     2  a whole name is in the query: the query IS a name (spacing aside), or
+        a name of 4+ letters starts a word inside a longer query;
+     1  the query (4+ letters) is only a piece of a longer name, starting one
+        of its words — someone typing «ایمپلنت» still reaches «پری ایمپلنتیتیس»
+        and «روکش ایمپلنت»; and the co_tags of a concept named with weight 2
+        (one hop, never from a piece of a name and never onward).
+   The longest name wins: a name lying inside a longer name found in the same
+   query is not named — «کراون لنتنینگ» is افزایش طول تاج and not روکش,
+   «روکش ایمپلنتی» is روکش ایمپلنت and not روکش plus ایمپلنت — and when the
+   whole query is a piece of a longer name, a name covering only some of its
+   words is not either («پری ایمپلنتیت» is پری ایمپلنتیتیس, not ایمپلنت).
+   «ایمپلنت و سیگار» still names both. `.dropped` holds the keys set aside
+   this way, so the papers' plain text match does not bring them back. */
+function dcAliasKeys(ix, qs) {
+  const keys = new Map();
+  keys.dropped = new Set();
+  if (!ix || !ix.forms.length) return keys;
+  const lost = new Set();
+  const put = (k, w) => { if ((keys.get(k) || 0) < w) keys.set(k, w); };
+  for (const q of [].concat(qs || [])) {
+    const Q = dcWords(q), len = Q.s.length;
+    if (!len) continue;
+    const found = [];   // [start, end, key] of each name inside the query
+    const part = [];
+    for (const F of ix.forms) {
+      const fl = F.s.length;
+      if (fl === len) { if (F.s === Q.s) found.push([0, len, F.k]); continue; }
+      if (fl < len) {
+        if (F.n < 4) continue;
+        for (let i = Q.s.indexOf(F.s); i !== -1; i = Q.s.indexOf(F.s, i + 1)) {
+          if (dcNameAt(Q, F, i)) found.push([i, i + fl, F.k]);
+        }
+      } else if (Q.n >= 4) {
+        for (let i = F.s.indexOf(Q.s); i !== -1; i = F.s.indexOf(Q.s, i + 1)) {
+          if (dcNameAt(F, Q, i)) { part.push(F.k); break; }
+        }
+      }
+    }
+    const last = Q.b[Q.b.length - 1];
+    for (const m of found) {
+      const inside = found.some((o) => o[0] <= m[0] && o[1] >= m[1] && o[1] - o[0] > m[1] - m[0]) ||
+        (part.length && !(m[0] === 0 && m[1] > last));
+      if (inside) lost.add(m[2]); else put(m[2], 2);
+    }
+    part.forEach((k) => put(k, 1));
   }
-  return false;
+  for (const [k, w] of Array.from(keys)) if (w === 2) (ix.co.get(k) || []).forEach((c) => put(c, 1));
+  lost.forEach((k) => { if (!keys.has(k)) keys.dropped.add(k); });
+  return keys;
 }
 /* An item's own hashtags, folded the same way as the keys. */
 function dcItemTags(item, fold) {
-  return (item.hashtags || []).map((h) => fold(String(h).replace(/^#/, "").replace(/_/g, " ")));
+  return (item.hashtags || []).map((h) => fold(h));
+}
+/* How strongly the query names one of an item's hashtags (0 = it does not). */
+function dcTagWeight(ak, item) {
+  let w = 0;
+  if (ak.size && item._h) for (const h of item._h) { const x = ak.get(h) || 0; if (x > w) w = x; }
+  return w;
 }
 /* A Persian query names site hashtags; each brings its papers, best first.
    `ak` is the set of concepts the query names through an alias. */
-function dcPaperHits(fa, q, ak) {
+function dcPaperHits(fa, qs, ak) {
   const hits = new Map();
-  if (!fa || !fa.length || !q) return hits;
+  if (!fa || !fa.length) return hits;
   for (const [k, ids] of fa) {
-    if (!(k.includes(q) || (q.length >= 3 && k.length >= 3 && q.includes(k)) || (ak && ak.has(k)))) continue;
+    if (!(ak && ak.has(k)) && !(!(ak && ak.dropped.has(k)) &&
+      qs.some((q) => q && (k.includes(q) || (q.length >= 3 && k.length >= 3 && q.includes(k)))))) continue;
     ids.forEach((id, i) => {
       const b = 3 + 0.5 * (1 - i / ids.length);
       if (b > (hits.get(id) || 0)) hits.set(id, b);
@@ -941,19 +1081,9 @@ function dcLegacySearch() {
   /* ------------ DB --------------- */
   let DB = [];
   let LIB = [], LIB_FA = [];   // premium only: the library's papers
-  let ALIAS = [];              // hashtag concepts by every name
+  let ALIAS = null;            // the hashtag vocabulary (dcAliasForms)
 
-  /* Matching only, never display: Arabic ي/ى/ك typed on an Arabic keyboard
-     and ZWNJ/zero-width marks would otherwise miss the Persian spelling
-     («كراون» found nothing where «کراون» found 13). Same fold as
-     plus/js/hl-view.js foldFa. */
-  const foldFa = (s) => String(s || "")
-    .replace(/[يى]/g, "ی")
-    .replace(/ك/g, "ک")
-    .replace(/[\u200B-\u200F\u064B-\u0652\u0640]/g, "")
-    .replace(/\s+/g, " ")
-    .toLowerCase()
-    .trim();
+  const foldFa = dcFold;   // matching only, never display (see dcFold)
   const faDigits = (s) => String(s).replace(/[0-9]/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
   const escHtml = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const _lib = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg>';
@@ -1003,10 +1133,14 @@ const TYPE_MAP = {
       const data = await res.json();
       if (!Array.isArray(data)) throw new Error("Invalid search index");
       DB = data;
-      DB.forEach((it) => { it._h = dcItemTags(it, foldFa); });
+      DB.forEach((it) => {
+        it._h = dcItemTags(it, foldFa);
+        it._b = foldFa((it.title || "") + " " + (it.caption || "") + " " +
+          (it.keywords || []).join(" ") + " " + (it.hashtags || []).join(" "));
+      });
       dcAliasForms(foldFa).then((f) => {
         ALIAS = f;
-        if (f.length && searchInput.value.trim()) performSearch(searchInput.value.trim());
+        if (f.forms.length && searchInput.value.trim()) performSearch(searchInput.value.trim());
       });
       /* اگه کاربر قبل از لود دیتابیس سرچ کرده بود (مثلاً از URL) */
       if (searchInput.value.trim()) {
@@ -1212,8 +1346,8 @@ const TYPE_MAP = {
       return;
     }
 
-    const query = foldFa(q);
-    const ak = dcAliasKeys(ALIAS, query);
+    const qs = dcSpellings(ALIAS, foldFa(q));
+    const ak = dcAliasKeys(ALIAS, qs);
     let results = [];
 
     for (const item of DB) {
@@ -1224,22 +1358,15 @@ const TYPE_MAP = {
 
       if (!activeFilters.has(group)) continue;
 
-      const blob = (
-        (item.title || "") + " " +
-        (item.caption || "") + " " +
-        (item.keywords || []).join(" ") + " " +
-        (item.hashtags || []).join(" ")
-      );
-
-      if (foldFa(blob).includes(query) || (ak.size && item._h && item._h.some((h) => ak.has(h)))) results.push(item);
+      if (qs.some((x) => x && dcTextHas(item._b, x)) || dcTagWeight(ak, item)) results.push(item);
     }
 
     /* The library's papers, after site content (premium, button on). */
     askMe();
-    const faHits = dcPaperHits(LIB_FA, query, ak);
+    const faHits = dcPaperHits(LIB_FA, qs, ak);
     const papers = [];
     for (const it of (papersOn ? LIB : [])) {
-      const sc = (it._t.includes(query) ? 4 : 0) + (it._k.includes(query) ? 2 : 0) + (faHits.get(it._pid) || 0);
+      const sc = (qs.some((x) => x && dcTextHas(it._t, x)) ? 4 : 0) + (qs.some((x) => x && dcTextHas(it._k, x)) ? 2 : 0) + (faHits.get(it._pid) || 0);
       if (sc) papers.push([sc, it]);
     }
     papers.sort((a, b) => b[0] - a[0]);
