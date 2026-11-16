@@ -1,0 +1,56 @@
+{
+  "scored_at": "2026-11-16",
+  "sources": [
+    {
+      "des_version": "3.7",
+      "content_type": "COMMENTARY",
+      "question_type": null,
+      "text_basis": "FULL_TEXT",
+      "citation": {
+        "title": "جراحی افزایش طول تاج در مجاورت ایمپلنت",
+        "authors": "فؤاد شهابیان",
+        "year": 2026,
+        "journal": "DentCast Chairside",
+        "doi": ""
+      },
+      "journal_quartile": {
+        "value": "NR",
+        "source": "NR"
+      },
+      "s_design": null,
+      "q_method": null,
+      "penalties": null,
+      "commentary_checklist": [
+        {
+          "item": "reasoning chain is explicit",
+          "points": 4,
+          "evidence_quote": "برداشتن این استخوان ممکن است باعث اکسپوز شدن تردهای ایمپلنت و از دست رفتن ساپورت استخوانی آن شود.",
+          "note": "the decision is tied to a stated mechanism: proximal bone removal in CL takes away the implant's bone support on that side"
+        },
+        {
+          "item": "relationship to published evidence is stated",
+          "points": 0,
+          "evidence_quote": "",
+          "note": "the text does not place itself against the literature anywhere; the agreement of the perio specialist is a clinical consultation, not published evidence"
+        },
+        {
+          "item": "scope of the claim is bounded",
+          "points": 3,
+          "evidence_quote": "محدودیت اصلی، مجاورت دندان با ایمپلنت بود.",
+          "note": "root length and the tooth itself are stated to permit CL, so the claim is limited to the condition of an adjacent implant"
+        },
+        {
+          "item": "explicitly labeled as experience/opinion, not evidence",
+          "points": 3,
+          "evidence_quote": "Chairside متن‌های آموزشی یا کیس‌ریپورت نیستند؛ ثبت لحظه‌های واقعی و مسیر فکر بالینی‌اند.",
+          "note": "اعلانِ سطحِ بخش، از chairside/index.html"
+        }
+      ],
+      "des_score": 15,
+      "band": "E",
+      "provisional": false,
+      "fact_fa": "این متن Commentary امتیاز ۱۵ گرفته و در باند E، یعنی سطح تجربه و نظر، قرار دارد.",
+      "interpretation_fa": "متن به یک محدودیت در تصمیم‌گیری برای CL می‌پردازد، یعنی اثر برداشت استخوان پروگزیمال بر ساپورت ایمپلنت مجاور. استدلال روشن است و ادعا به شرایط مجاورت ایمپلنت محدود شده، اما به شواهد منتشرشده ارجاع نمی‌دهد و تأیید متخصص پریو جای داده‌ی پژوهشی را نمی‌گیرد."
+    }
+  ]
+}

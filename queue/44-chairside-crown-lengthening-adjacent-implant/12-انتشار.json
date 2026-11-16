@@ -1,0 +1,157 @@
+{
+  "schema": "dentcast-queue-manifest/1",
+  "category": {
+    "value": "chairside",
+    "from": "folder name"
+  },
+  "title_fa": {
+    "value": "جراحی افزایش طول تاج در مجاورت ایمپلنت",
+    "from": "02-عنوان-کپشن.md:2"
+  },
+  "caption_fa": {
+    "value": "دندان ۴ برای داشتن فرول کافی به جراحی افزایش طول تاج نیاز داشت، اما در مجاورت آن یک ایمپلنت بود. وقتی خود دندان اجازه‌ی CL را می‌دهد، چه چیزی ممکن است آن را ناممکن کند؟",
+    "from": "02-عنوان-کپشن.md:5"
+  },
+  "title_en": {
+    "value": "Crown lengthening surgery next to an implant",
+    "from": "06-انگلیسی.md:2"
+  },
+  "caption_en": {
+    "value": "Tooth 4 needed crown lengthening surgery to gain an adequate ferrule, but an implant stood next to it. When the tooth itself allows CL, what may still make it impossible?",
+    "from": "06-انگلیسی.md:5"
+  },
+  "body_en": {
+    "value": "A patient came in for a consultation about tooth 4. To have an adequate ferrule, this tooth needed crown lengthening surgery (CL). An implant was located next to this tooth.\n\n[[تصویر:01]]\n\nThe root length of the tooth was adequate, and as far as the tooth itself was concerned, CL was feasible. The main limitation was the tooth's proximity to the implant.\n\nIn CL, a few millimetres of bone must be removed to create a ferrule, and this removal is also done on the proximal surface. In this patient, the proximal bone between the tooth and the implant provides the implant's bone support on that side. Removing this bone may expose the implant threads and cause the loss of its bone support.\n\nFor this reason, I explained to the patient that CL is probably not feasible for this tooth. This was also discussed with a periodontist, who confirmed the same view.\n\nWhen assessing whether CL is feasible, besides the root length and the condition of the tooth itself, the effect of bone removal on the support of adjacent teeth or implants must also be evaluated.",
+    "from": "06-انگلیسی.md:8-18"
+  },
+  "images": {
+    "value": [
+      {
+        "n": "01",
+        "file": {
+          "value": "03-تصاویر/01-periapical-tooth-4-adjacent-implant.webp",
+          "from": "03-تصاویر/01-periapical-tooth-4-adjacent-implant.webp"
+        },
+        "alt_fa": {
+          "value": "رادیوگرافی پری‌اپیکال دندان ۴ و ایمپلنت مجاور",
+          "from": "03-تصاویر/تصاویر.md:3"
+        },
+        "caption_fa": {
+          "value": "تصویر ۱. رادیوگرافی پری‌اپیکال دندان ۴ و ایمپلنت مجاور.",
+          "from": "03-تصاویر/تصاویر.md:3"
+        },
+        "alt_en": {
+          "value": "Periapical radiograph of tooth 4 and the adjacent implant",
+          "from": "03-تصاویر/تصاویر.md:3"
+        },
+        "caption_en": {
+          "value": "Fig. 1. Periapical radiograph of tooth 4 and the adjacent implant.",
+          "from": "03-تصاویر/تصاویر.md:3"
+        }
+      }
+    ],
+    "from": "03-تصاویر/تصاویر.md"
+  },
+  "credit": {
+    "value": {
+      "mode": "none"
+    },
+    "from": "04-منبع/منابع.md:1"
+  },
+  "catalog": {
+    "value": [],
+    "from": "04-منبع/منابع.md: no paper"
+  },
+  "hashtags": {
+    "value": [
+      "#ویزیت",
+      "#کیس_بالینی",
+      "#افزایش_طول_تاج",
+      "#فرول",
+      "#معماری_استخوان",
+      "#تصمیم_درمانی"
+    ],
+    "from": "07-ورودی‌ها.md:19"
+  },
+  "mint": {
+    "value": [],
+    "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+  },
+  "pillar": {
+    "value": {
+      "primary": "treatment-planning",
+      "subtopic": "comprehensive-diagnosis",
+      "secondary": []
+    },
+    "from": "07-ورودی‌ها.md:13"
+  },
+  "pulse": {
+    "value": {
+      "html": "یک ویزیت با عنوانِ «<a href=\"{url}\">جراحی افزایش طول تاج در مجاورت ایمپلنت</a>» منتشر شد.",
+      "link_phrase": "جراحی افزایش طول تاج در مجاورت ایمپلنت"
+    },
+    "from": "07-ورودی‌ها.md:17-18"
+  },
+  "keywords": {
+    "value": [
+      "استخوان پروگزیمال",
+      "ساپورت استخوانی ایمپلنت",
+      "اکسپوز شدن تردهای ایمپلنت",
+      "برداشت استخوان",
+      "طول ریشه",
+      "ایمپلنت‌های مجاور"
+    ],
+    "from": "09-کلیدواژه‌ها.md"
+  },
+  "links_48": {
+    "value": [
+      {
+        "phrase": "فرول",
+        "href": "/glossary/ferrule-effect.html",
+        "from": "11-لینک‌های-گلاسری.md:13"
+      },
+      {
+        "phrase": "جراحی افزایش طول تاج",
+        "href": "/glossary/crown-lengthening.html",
+        "from": "11-لینک‌های-گلاسری.md:14"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md:7"
+  },
+  "backlinks_47": {
+    "value": [],
+    "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+  },
+  "explore_49": {
+    "value": [
+      {
+        "href": "/chairside/chairside-6.html",
+        "label": "محدودیت افزایش طول تاج و فورکا",
+        "from": "11-لینک‌های-گلاسری.md:27"
+      },
+      {
+        "href": "/chairside/chairside-16.html",
+        "label": "هزینهٔ استخوانی افزایش طول تاج",
+        "from": "11-لینک‌های-گلاسری.md:28"
+      },
+      {
+        "href": "/episodes/episode-75.html",
+        "label": "مقایسهٔ DME و CL",
+        "from": "11-لینک‌های-گلاسری.md:29"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md:25"
+  },
+  "pathway": {
+    "value": null,
+    "from": "default: mechanical pathway rule"
+  },
+  "author": {
+    "value": null,
+    "from": "not in the legacy contract"
+  },
+  "legacy_review": {
+    "value": null,
+    "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+  }
+}
