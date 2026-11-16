@@ -4,6 +4,9 @@
 /dentcast_cabinet_full_catalog.json
   X-Robots-Tag: noindex
 
+/plus/cabinet-search.json
+  X-Robots-Tag: noindex
+
 /plus/faq-corpus.json
   X-Robots-Tag: noindex
 

@@ -28,9 +28,9 @@
 //   4. ONE LINK, to the price page (a real <a>, so it can be opened in a tab).
 //
 // The exported name is kept so plus/js/header.js needs no change.
-import { el } from './util.js?v=243';
-import { premiumBenefits } from './premium-benefits.js?v=243';
-import { premiumCta } from './premium-cta.js?v=243';
+import { el } from './util.js?v=246';
+import { premiumBenefits } from './premium-benefits.js?v=246';
+import { premiumCta } from './premium-cta.js?v=246';
 
 /** Where the buy link points from here, so pricing.html can report the source. */
 const FROM = 'articleend';
