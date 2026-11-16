@@ -46,7 +46,7 @@ The root catalog is a JSON **object** whose `papers` key holds a flat array of e
    - `file_name` → the real filename; `file_size` → its byte size.
    - **`drive_link` / `drive_view` / `drive_download` / `drive_id` → from Part 1.**
    - `status` → as the template (e.g. `"linked"`); `semantic_tagged` → `true`.
-   - `linked_episodes` → the page being published, if any, in the template's value shape — never a LiteCast page (nothing links to LiteCast); paper-only keeps the template's empty shape (e.g. `[]`). `key_finding` / `clinical_bottom_line` may stay `""` unless the content gives them clearly.
+   - `linked_episodes` → the page being published, if any, in the template's value shape — never a LiteCast page (nothing links to LiteCast); paper-only keeps the template's empty shape (e.g. `[]`). `key_finding` / `clinical_bottom_line` come from step 9 when the entry has none.
 4. **Hashtags (`tags`) — semantic + the article's own name.** Semantic tags for the paper's concepts in the **lowercase-kebab style of existing `tags`** (`marginal-bone-loss`, `rct`, `clinical-trial`), **the `topic:<subfolder>` tag** of the catalog convention, **and a tag derived from the article's own title.** No junk/generic tags (standing acceptance, recorded).
 5. **Top-level counters.** Keep roll-up integers that track the array (`unique_papers`, `total_files_scanned`, the drive-match count) consistent with the added entry. Never hand-rewrite the derived analytics blocks (`tag_index`, `semantic_pass`, `enrichment`, `drive_match_breakdown`); whether a counter should move, when unclear, is an M1 fact.
 6. **Verify:** the entry is appended to `papers`, the JSON is well-formed, its key set equals the template's, the Drive link is present, and the paper appears and filters correctly in `dentcast_cabinet_search.html` (title, topic, tags, View/Download). **Open that page directly** — on the site the library is premium-gated (`plus/js/library-gate.js`, installed from `plus/js/header.js`, gates the archive card, the desktop topbar icon and the hamburger's «کتابخانه» for `tier === 'premium'`), so the three doors are no way to check your work. The page itself is a plain static file; the gate is a product gate, not access control.
@@ -67,6 +67,19 @@ The root catalog is a JSON **object** whose `papers` key holds a flat array of e
    - Wherever the edit happens, finish with `python3 tools/build_cabinet_papers.py --check` (green) and commit the catalog, the bridge, `plus/cabinet-papers.json` and `plus/cabinet-search.json` (the same run's second output: premium site search) together.
    **Report:** the site tag key(s) the paper is reachable from, its position in `byTag`, and every (a)/(b)/(c) edit — or the explicit «library-only» line.
 <!-- /paper-reachability-step-8:v1 -->
+
+9. **Full-text enrichment — every paper that enters the cabinet, on every path (page or paper-only).** The cabinet's search reads, for each paper, tags and study facts taken from its full text (`dentcast_cabinet_enrichment.json`, built from `.dentcast/cabinet-enrichment/results.jsonl`). A new paper is read the same way, once, in this step:
+   ```bash
+   W=<scratch dir outside the repo>
+   python3 tools/cabinet_enrich.py vocab   --work $W
+   python3 tools/cabinet_enrich.py prepare --ids <P####> --work $W      # PDF from Drive -> $W/paper_<id>.json
+   # proposer: Sonnet, its own context, PROPOSE.md as instructions, file tools limited to $W -> $W/proposal_<id>.json
+   python3 tools/cabinet_enrich.py check   --work $W --ids <P####>      # mechanical gates -> checked_<id>.json
+   # judge: Opus, another context, JUDGE.md as instructions -> $W/J/judge_<id>.json
+   python3 tools/cabinet_enrich.py merge   --work $W --judges J --out $W/merged.jsonl
+   python3 tools/cabinet_enrich.py publish --work $W --merged $W/merged.jsonl   # results.jsonl + site file
+   ```
+   Claude Code runs each role as `cd $W && claude -p --model <sonnet|opus> --system-prompt-file .dentcast/cabinet-enrichment/<PROPOSE|JUDGE>.md --allowedTools Read Write Grep Glob --add-dir $W …`; another client uses its own isolated run (`agent-parity.md`, «اجرای ایزوله»). The instructions, gates and tag rules are those of `.dentcast/cabinet-enrichment/` and are not changed here. Then: an empty `key_finding` / `clinical_bottom_line` of the entry takes the run's own; a `catalog_type_ok: false` takes its `suggested_type`; an `off_topic: true` is a founder decision, asked when it arises. `python3 tools/build_cabinet_papers.py` and `--check` run after it, and `results.jsonl`, `dentcast_cabinet_enrichment.json`, the catalogue and the two `plus/cabinet-*.json` files are committed together. `python3 tools/cabinet_enrich.py coverage --check` must be green: CI fails a catalogue paper with no enrichment row. A queue item arrives with its row already frozen (`publish-queue.md`, step 2) and the publish-day tool installs it.
 
 #### Part 3 — Find the DOI on the web and add a first-author → DOI credit on the page (ShareHub style)
 

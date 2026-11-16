@@ -58,6 +58,15 @@ every «unusable» item whose only problem is unreadable text (OCR later).
 Rows stay in results.jsonl so `todo` does not list them again; the site file
 skips ids that are no longer in the catalogue.
 
+## Every new paper
+
+A paper that enters the catalogue after the bulk run is enriched on its way in, by the
+same instructions and gates: module 06 Part 2 step 9 (direct publication and the
+paper-only path) and publish-queue step 2 (the row is frozen in the queue item as
+`04-منبع/انریچ.json` and installed by `tools/queue_apply.py` under the new catalogue id).
+`python3 tools/cabinet_enrich.py coverage --check` runs in CI and fails while any
+catalogue paper has no row.
+
 ## Running the next slice (any session)
 
 All instructions live here: `PROPOSE.md` (Sonnet), `JUDGE.md` (Opus),

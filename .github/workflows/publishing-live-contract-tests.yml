@@ -74,6 +74,16 @@ on:
       - 'tools/run_test_shard.py'
       - 'tests/test_protocol_hygiene.py'
       - '.dentcast/protocol-budget.json'
+      - 'tools/rule_files.py'
+      - 'tools/check_rule_changes.py'
+      - 'tools/cabinet_enrich.py'
+      - 'tools/queue_apply.py'
+      - 'tests/test_cabinet_enrich_new_paper.py'
+      - 'dentcast_cabinet_full_catalog.json'
+      - 'dentcast_cabinet_enrichment.json'
+      - '.dentcast/cabinet-enrichment/**'
+      - '.dentcast/des-v*-knowledge.md'
+      - '.dentcast/dentcast-evidence-score-v*.md'
   pull_request:
   workflow_dispatch:
 permissions:
@@ -131,6 +141,26 @@ jobs:
         run: python3 -m unittest discover -s tests -p test_dentcast_global_rules.py -v
       - name: Protocol files hold current rules only (no history, byte ceilings)
         run: python3 -m unittest discover -s tests -p test_protocol_hygiene.py -v
+      - name: Every cabinet paper is full-text enriched (new papers included)
+        run: |
+          python3 tools/cabinet_enrich.py coverage --check
+          python3 -m unittest discover -s tests -p test_cabinet_enrich_new_paper.py -v
+      - name: No rule change without the founder's request (Founder-request line)
+        env:
+          PR_BASE_REF: ${{ github.base_ref }}
+          EVENT_BEFORE: ${{ github.event.before }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == "pull_request" ]]; then
+            git fetch --no-tags origin "refs/heads/$PR_BASE_REF:refs/remotes/origin/$PR_BASE_REF"
+            python3 tools/check_rule_changes.py --base "origin/$PR_BASE_REF"
+          elif [[ "$EVENT_NAME" == "push" && -n "$EVENT_BEFORE" && ! "$EVENT_BEFORE" =~ ^0+$ ]] \
+               && git cat-file -e "$EVENT_BEFORE^{commit}" 2>/dev/null; then
+            python3 tools/check_rule_changes.py --base "$EVENT_BEFORE"
+          else
+            echo "no base to compare (manual run or new branch): skipped"
+          fi
       - name: Check active entrypoints and preserved source rules
         run: python3 -m unittest discover -s tests -p test_dentcast_agent_entrypoint_migration.py -v
       - name: Prove the lifecycle shards cover every test exactly once

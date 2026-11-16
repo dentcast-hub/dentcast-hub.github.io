@@ -131048,8 +131048,8 @@
       "type": "scoping review",
       "local_path": "",
       "file_size": 1475698,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "This scoping review of 31 studies found that no fully digital technique exists for functional impressions of edentulous arches. Most used hybrid workflows with conventional border molding and a definitive impression, or skipped the step. Intraoral scans captured static tissue well but not mobile tissue.",
+      "clinical_bottom_line": "Functional impressions for complete dentures still need a conventional step, so use a hybrid workflow rather than a fully digital one.",
       "linked_episodes": [
         "sharehub/share-54"
       ],
