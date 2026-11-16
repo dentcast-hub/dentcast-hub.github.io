@@ -1,6 +1,6 @@
 # Publication protocol — hook and CI coverage
 
-Moved verbatim from `publish-checkpoints.md` (founder 1405/08/07). Read it when
+Read it when
 changing hooks, CI or the publication protocol; a publication run does not need it.
 
 - `scripts/cursor-parity-notice.mjs` recognizes active nested modules/global rules, the `.claude/skills/` and `.agents/skills/` copies (it warns when they are no longer byte-identical) and the three hook configurations, avoids backup snapshots, reminds shared client edits and active-run checkpointing, and never writes publication state or marks work done. After a Bash call it compares `git status` with its previous snapshot (a small file in the OS temp directory) and stays silent unless a path changed since then; the repository root comes from the hook payload's `cwd`, because in worktree subagents `CLAUDE_PROJECT_DIR` can name the main checkout.

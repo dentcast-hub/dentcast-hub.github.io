@@ -338,7 +338,7 @@ approvals, semantic quality or external outcomes. A stale/missing/corrupt state 
   `check-pr --repository owner/repo --number N --expected-head SHA --expected-base SHA
   --expected-branch BRANCH [--token-env NAME]` (or the same reads through connected GitHub tools).
   A moved ref or closed PR: preserve work, re-plan, never force.
-- Merge is the agent's, never asked (founder 2026-11-07: merge is reversible and was never refused):
+- Merge is the agent's, never asked (merge is reversible):
   once delivery 3, Phase F, the PR's checks and a fresh `check-pr` are green, merge. A red gate means
   no merge. Only an explicit «مرج نکن» from the founder for that publication stops before merge.
   Distinguish prepared, verified, committed, pushed, merged and live; no invented ETA.
@@ -347,16 +347,13 @@ approvals, semantic quality or external outcomes. A stale/missing/corrupt state 
   mirrors: their statuses are never requested, awaited, a gate or a completion criterion. A merge
   GitHub refuses over an unrelated required check is reported as that blocker; branch protection is
   never weakened.
-- Absent is not green (2026-11-11, PRs #1170 and #1171): GitHub accepted both merges while every
-  `push`/`pull_request` run of the repository's own guards stayed `queued` with zero jobs for hours
-  (cancel 409, re-run 403), and the Pages build ended in `startup_failure`, so `dentcast.org` kept
-  the pre-merge build and `dentcast.ir` stayed behind too. A queued run with no jobs is missing from
-  the PR's check list, which then shows only the backup mirrors' previews. Before merge, read the
-  guard runs themselves for the head SHA; after merge, confirm that the Pages build (`.org`) and
-  `deploy-arvan.yml` (`.ir`) completed. Fresh `workflow_dispatch` runs started normally; what
-  recovered it was dispatching `deploy-arvan.yml`, `asset-version-guard.yml`,
-  `spot-version-guard.yml`, `publishing-live-contract-tests.yml`, `nul-guard.yml` and
-  `sitemap_only.yml` on `main`.
+- Absent is not green: a guard run that sits `queued` with zero jobs is missing from the PR's
+  check list, which then shows only the backup mirrors' previews. Before merge, read the guard runs
+  themselves for the head SHA; after merge, confirm that the Pages build (`.org`) and
+  `deploy-arvan.yml` (`.ir`) completed. A run stuck `queued` with no jobs is replaced by a fresh
+  `workflow_dispatch` on `main` (`deploy-arvan.yml`, `asset-version-guard.yml`,
+  `spot-version-guard.yml`, `publishing-live-contract-tests.yml`, `nul-guard.yml`,
+  `sitemap_only.yml`).
 
 Hooks and CI behind this protocol: `publish-maintenance.md` (only when changing hooks, CI or this
 protocol).
