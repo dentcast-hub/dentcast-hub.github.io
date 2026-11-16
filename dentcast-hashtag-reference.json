@@ -263,7 +263,7 @@
     "#اینسایت"
    ],
    "co_tags": [],
-   "count": 126,
+   "count": 127,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -390,7 +390,8 @@
     "insight/insight-104",
     "insight/insight-105",
     "insight/insight-106",
-    "insight/insight-107"
+    "insight/insight-107",
+    "insight/insight-109"
    ]
   },
   {
@@ -1191,7 +1192,7 @@
     "#Implant_Prosthetics"
    ],
    "co_tags": [],
-   "count": 38,
+   "count": 39,
    "content_ids": [
     "episodes/episode-31",
     "episodes/episode-83",
@@ -1230,7 +1231,8 @@
     "episodes/episode-162",
     "insight/insight-77",
     "insight/insight-78",
-    "chairside/chairside-48"
+    "chairside/chairside-48",
+    "insight/insight-109"
    ]
   },
   {
@@ -3646,6 +3648,36 @@
    ]
   },
   {
+   "key": "قالبگیری",
+   "tag": "#قالبگیری",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "ثبتِ وضعیتِ دهان برای ساختِ کار — چترِ عامِ قالب‌گیری.",
+   "use_when": "همراه تگ مشخص‌ترِ تکنیک بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "impression",
+    "ایمپرشن",
+    "قالب گیری"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-20",
+    "episodes/episode-21",
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "metanotes/meta-9",
+    "insight/insight-34",
+    "dentai/dentai-20",
+    "insight/insight-75",
+    "insight/insight-80",
+    "insight/insight-83",
+    "sharehub/share-54",
+    "insight/insight-109"
+   ]
+  },
+  {
    "key": "قدرت_باند",
    "tag": "#قدرت_باند",
    "domain": null,
@@ -3679,6 +3711,44 @@
     "sharehub/share-23",
     "notecast/episode-43",
     "notecast/episode-44"
+   ]
+  },
+  {
+   "key": "پروفایل_امرجنس",
+   "tag": "#پروفایل_امرجنس",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Emergence Profile — کانتورِ خروجِ رستوریشن از زیرِ لثه که فرمِ بافتِ نرم و سلامتِ آن را تعیین می‌کند.",
+   "use_when": "مقاله پروفایلِ امرجنس را متغیرِ طراحی یا سلامتِ بافت بداند.",
+   "aliases": [
+    "emergence profile",
+    "پروفایل ظهور",
+    "پروفایل خروج",
+    "کانتور امرجنس",
+    "امرجنس پروفایل",
+    "ایمرجنس پروفایل"
+   ],
+   "variants": [
+    "#EmergenceProfile",
+    "#Emergence_Profile"
+   ],
+   "co_tags": [
+    "#Emergence_Profile"
+   ],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-112",
+    "episodes/episode-125-2",
+    "episodes/episode-130",
+    "chairside/chairside-10",
+    "episodes/episode-158",
+    "insight/insight-50",
+    "chairside/chairside-36",
+    "insight/insight-69",
+    "insight/insight-70",
+    "insight/insight-79",
+    "insight/insight-80",
+    "insight/insight-109"
    ]
   },
   {
@@ -4051,35 +4121,6 @@
    ]
   },
   {
-   "key": "قالبگیری",
-   "tag": "#قالبگیری",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "ثبتِ وضعیتِ دهان برای ساختِ کار — چترِ عامِ قالب‌گیری.",
-   "use_when": "همراه تگ مشخص‌ترِ تکنیک بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "impression",
-    "ایمپرشن",
-    "قالب گیری"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-20",
-    "episodes/episode-21",
-    "notecast/episode-20",
-    "notecast/episode-21",
-    "metanotes/meta-9",
-    "insight/insight-34",
-    "dentai/dentai-20",
-    "insight/insight-75",
-    "insight/insight-80",
-    "insight/insight-83",
-    "sharehub/share-54"
-   ]
-  },
-  {
    "key": "متاآنالیز",
    "tag": "#متاآنالیز",
    "domain": null,
@@ -4179,43 +4220,6 @@
     "dentai/dentai-25",
     "metanotes/meta-14",
     "chairside/chairside-32"
-   ]
-  },
-  {
-   "key": "پروفایل_امرجنس",
-   "tag": "#پروفایل_امرجنس",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "Emergence Profile — کانتورِ خروجِ رستوریشن از زیرِ لثه که فرمِ بافتِ نرم و سلامتِ آن را تعیین می‌کند.",
-   "use_when": "مقاله پروفایلِ امرجنس را متغیرِ طراحی یا سلامتِ بافت بداند.",
-   "aliases": [
-    "emergence profile",
-    "پروفایل ظهور",
-    "پروفایل خروج",
-    "کانتور امرجنس",
-    "امرجنس پروفایل",
-    "ایمرجنس پروفایل"
-   ],
-   "variants": [
-    "#EmergenceProfile",
-    "#Emergence_Profile"
-   ],
-   "co_tags": [
-    "#Emergence_Profile"
-   ],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-112",
-    "episodes/episode-125-2",
-    "episodes/episode-130",
-    "chairside/chairside-10",
-    "episodes/episode-158",
-    "insight/insight-50",
-    "chairside/chairside-36",
-    "insight/insight-69",
-    "insight/insight-70",
-    "insight/insight-79",
-    "insight/insight-80"
    ]
   },
   {
@@ -4736,6 +4740,37 @@
    ]
   },
   {
+   "key": "فیت_پروتز",
+   "tag": "#فیت_پروتز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نشستنِ کاملِ کار روی تکیه‌گاه.",
+   "use_when": "مقاله فیت را بسنجد یا نبودش را علتِ شکست بداند.",
+   "aliases": [
+    "پسیو فیت",
+    "passive fit",
+    "فیت روکش",
+    "misfit",
+    "prosthesis fit",
+    "فیت پسیو",
+    "میس فیت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "insight/insight-26",
+    "insight/insight-31",
+    "insight/insight-35",
+    "insight/insight-44",
+    "insight/insight-52",
+    "metanotes/meta-20",
+    "dentcast-plus/video-14",
+    "insight/insight-102",
+    "insight/insight-109"
+   ]
+  },
+  {
    "key": "پیچ_اباتمنت",
    "tag": "#پیچ_اباتمنت",
    "domain": "clinical",
@@ -5151,36 +5186,6 @@
     "taraz/taraz1-7",
     "taraz/taraz1-8",
     "taraz/taraz1-9"
-   ]
-  },
-  {
-   "key": "فیت_پروتز",
-   "tag": "#فیت_پروتز",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نشستنِ کاملِ کار روی تکیه‌گاه.",
-   "use_when": "مقاله فیت را بسنجد یا نبودش را علتِ شکست بداند.",
-   "aliases": [
-    "پسیو فیت",
-    "passive fit",
-    "فیت روکش",
-    "misfit",
-    "prosthesis fit",
-    "فیت پسیو",
-    "میس فیت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "insight/insight-26",
-    "insight/insight-31",
-    "insight/insight-35",
-    "insight/insight-44",
-    "insight/insight-52",
-    "metanotes/meta-20",
-    "dentcast-plus/video-14",
-    "insight/insight-102"
    ]
   },
   {
@@ -10690,6 +10695,30 @@
    ]
   },
   {
+   "key": "خطای_قالبگیری",
+   "tag": "#خطای_قالبگیری",
+   "domain": null,
+   "words": 2,
+   "definition": "خطایی که در مرحله‌ی ثبت وارد کار می‌شود و بعداً دیده می‌شود.",
+   "use_when": "مقاله منشأ خطا را به قالب‌گیری برگرداند.",
+   "aliases": [
+    "خطای قالب",
+    "ایمپرشن اشتباه",
+    "impression error",
+    "خطای ایمپرشن",
+    "impression distortion",
+    "دیستورشن قالب"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "chairside/chairside-12",
+    "insight/insight-75",
+    "insight/insight-109"
+   ]
+  },
+  {
    "key": "داروشناسی",
    "tag": "#داروشناسی",
    "domain": "clinical",
@@ -13302,29 +13331,6 @@
    ]
   },
   {
-   "key": "خطای_قالبگیری",
-   "tag": "#خطای_قالبگیری",
-   "domain": null,
-   "words": 2,
-   "definition": "خطایی که در مرحله‌ی ثبت وارد کار می‌شود و بعداً دیده می‌شود.",
-   "use_when": "مقاله منشأ خطا را به قالب‌گیری برگرداند.",
-   "aliases": [
-    "خطای قالب",
-    "ایمپرشن اشتباه",
-    "impression error",
-    "خطای ایمپرشن",
-    "impression distortion",
-    "دیستورشن قالب"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "chairside/chairside-12",
-    "insight/insight-75"
-   ]
-  },
-  {
    "key": "خطای_مدل",
    "tag": "#خطای_مدل",
    "domain": "ai",
@@ -14713,6 +14719,31 @@
    "content_ids": [
     "insight/insight-14",
     "chairside/chairside-37"
+   ]
+  },
+  {
+   "key": "هگز_ایمپلنت",
+   "tag": "#هگز_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "هندسه‌ی ضدچرخشِ داخلِ فیکسچر که اباتمنت باید کاملاً رویش بنشیند.",
+   "use_when": "مقاله ننشستن روی هگز را منشأ خطا بداند.",
+   "aliases": [
+    "هگز",
+    "hex",
+    "internal hex",
+    "ایندکس اباتمنت",
+    "هگز داخلی",
+    "اینترنال هگز",
+    "external hex",
+    "هگز خارجی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-52",
+    "insight/insight-109"
    ]
   },
   {
@@ -22381,30 +22412,6 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-70"
-   ]
-  },
-  {
-   "key": "هگز_ایمپلنت",
-   "tag": "#هگز_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "هندسه‌ی ضدچرخشِ داخلِ فیکسچر که اباتمنت باید کاملاً رویش بنشیند.",
-   "use_when": "مقاله ننشستن روی هگز را منشأ خطا بداند.",
-   "aliases": [
-    "هگز",
-    "hex",
-    "internal hex",
-    "ایندکس اباتمنت",
-    "هگز داخلی",
-    "اینترنال هگز",
-    "external hex",
-    "هگز خارجی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-52"
    ]
   },
   {
