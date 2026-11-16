@@ -1,0 +1,44 @@
+[
+ {
+  "doi": "10.4047/jap.2024.16.4.255",
+  "ft_tags": [
+   "patient-satisfaction"
+  ],
+  "new_tags": [],
+  "doc_class": "systematic_review",
+  "off_topic": false,
+  "off_topic_reason": null,
+  "catalog_type_ok": true,
+  "suggested_type": null,
+  "text_quality": "partial",
+  "facts": {
+   "authors": [
+    "So-Yeun Kim",
+    "Young-Eun Cho",
+    "Seoung-Jin Hong",
+    "Jung-Bo Huh",
+    "Se-Wook Pyo",
+    "Yuseung Yi",
+    "Soo-Yeon Yoo"
+   ],
+   "year": 2024,
+   "journal": "Journal of Advanced Prosthodontics",
+   "population": "Partially or completely edentulous patients with an RPD connected to implant-surveyed crowns/bridges",
+   "intervention": "Implant-surveyed crowns and/or bridges for RPD (ICRPD)",
+   "comparison": "Conventional RPD on natural tooth abutments and implants used as attachment system under RPD/CD",
+   "outcomes": [
+    "implant survival/success",
+    "marginal bone loss",
+    "periodontal status",
+    "clinical complications",
+    "patient satisfaction"
+   ],
+   "main_result": "Implant survival rates in included studies ranged 95.1% to 100% and success rates 70.9% to 90.6%.",
+   "sample_size": "31 eligible studies (9 retrospective, 21 case reports, 1 systematic review)",
+   "limitations": "Clinical evidence is mostly retrospective studies and case reports; no quality assessment was undertaken.",
+   "key_finding": "This review of 31 studies found implant-surveyed-crown RPDs had implant survival of 95.1-100% with low marginal bone loss and good prognoses in case reports. Evidence is limited to retrospective studies and case reports.",
+   "clinical_bottom_line": "Implants used as surveyed crowns in RPDs appear a reliable option, ideally placed near anterior teeth or premolars, though evidence is low-level."
+  },
+  "cites_dois": []
+ }
+]
