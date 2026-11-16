@@ -2,11 +2,14 @@
 
 Two guards, both mechanical:
 
-1. No history in a protocol file: no queue-item or PR number cited as the origin of
+Rule files are listed in tools/rule_files.py (publication and queue protocols, global
+rules, Cursor rules, skills, enrichment prompts, DES specs, CLAUDE.md, AGENTS.md).
+
+1. No history in a publication or queue protocol file: no queue-item or PR number cited as the origin of
    a rule, no dated founder provenance («(founder 2026-11-07)», «(بنیان‌گذار ۱۴۰۵/۰۸/۲۰)»),
    no «used to …» incident story. The reason a rule changed belongs in the commit
    message, where git keeps it.
-2. No silent growth: every protocol file has a byte ceiling in
+2. No silent growth: every rule file has a byte ceiling in
    `.dentcast/protocol-budget.json`. A file that outgrows its ceiling fails. Raising a
    ceiling is a founder decision, quoted in the commit message that raises it
    (agent-parity.md §7).
@@ -15,19 +18,21 @@ Two guards, both mechanical:
 """
 import json
 import re
+import sys
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'tools'))
+import rule_files  # noqa: E402
+
 BUDGET = ROOT / '.dentcast/protocol-budget.json'
-HISTORY_FILE = '.dentcast/workflows/des-version-history.md'
+HISTORY_FILE = rule_files.HISTORY_FILE
 
 
 def protocol_files():
-    files = sorted((ROOT / '.dentcast/workflows').glob('*.md'))
-    files += sorted((ROOT / '.dentcast/workflows/modules').glob('*.md'))
-    files += [ROOT / 'CLAUDE.md', ROOT / 'AGENTS.md']
-    return [p.relative_to(ROOT).as_posix() for p in files]
+    """Every rule file with a byte ceiling (tools/rule_files.py)."""
+    return rule_files.budgeted_files()
 
 
 HISTORY_MARKERS = [
@@ -45,9 +50,7 @@ HISTORY_MARKERS = [
 class ProtocolHygieneTests(unittest.TestCase):
     def test_no_history_in_protocol_files(self):
         found = []
-        for rel in protocol_files():
-            if rel == HISTORY_FILE:
-                continue
+        for rel in rule_files.history_free_files():
             for n, line in enumerate((ROOT / rel).read_text(encoding='utf-8').splitlines(), 1):
                 for pattern, why in HISTORY_MARKERS:
                     m = pattern.search(line)
@@ -71,6 +74,23 @@ class ProtocolHygieneTests(unittest.TestCase):
         self.assertEqual(problems, [], 'a protocol file grew past its ceiling; remove the text it '
                          'replaces, or record the founder\'s decision to raise it:\n'
                          + '\n'.join(problems))
+
+
+class RuleChangeGateTests(unittest.TestCase):
+    def test_rule_files_cover_every_instruction_surface(self):
+        for rel in ('.dentcast/workflows/modules/08-des-fidelity.md', '.dentcast/workflows/global/plus-premium.md',
+                    '.cursor/rules/dentcast-router.mdc', '.claude/skills/glossary-writer/SKILL.md',
+                    '.dentcast/cabinet-enrichment/PROPOSE.md', '.dentcast/des-v3.7-knowledge.md',
+                    '.dentcast/protocol-budget.json', 'CLAUDE.md', 'AGENTS.md'):
+            self.assertTrue(rule_files.is_rule_file(rel), rel)
+        for rel in ('tools/queue_apply.py', '.dentcast/cabinet-enrichment/results.jsonl', 'index.html'):
+            self.assertFalse(rule_files.is_rule_file(rel), rel)
+
+    def test_founder_request_line_is_required_and_must_say_something(self):
+        import check_rule_changes as crc  # noqa: PLC0415
+        self.assertTrue(crc.has_request('x\n\nFounder-request: «همین رو بذار»\n'))
+        self.assertFalse(crc.has_request('x\n\nFounder-request:   \n'))
+        self.assertFalse(crc.has_request('a commit with no request'))
 
 
 if __name__ == '__main__':

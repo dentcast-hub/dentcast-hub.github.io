@@ -10,8 +10,12 @@ and is deleted with it. What survives is metadata, written to a staging file
 that the founder reviews before anything reaches the catalogue.
 
     prepare  --ids P0001,P0002 --work DIR    PDF from Drive -> text -> sections -> DIR/paper_<id>.json
+    prepare  --id NEW --pdf F --entry E --work DIR   the same for a paper not yet in the catalogue
+             (E: its catalogue entry, e.g. a queue item's 04-منبع/کاتالوگ.json)
     check    --work DIR                      model proposals -> mechanical gates -> DIR/checked_<id>.json
     merge    --work DIR --judges A[,B] --out results.jsonl   judge verdicts applied, one line per paper
+    freeze   --work DIR --merged M --doi D --out F   a not-yet-catalogued paper's row, keyed by DOI
+    coverage [--check]                       catalogue ids with no row in results.jsonl
 
 Gates in `check` are mechanical and never relaxed: a tag must exist in the
 library vocabulary (after tag_aliases), must not repeat the paper's current
@@ -155,7 +159,30 @@ def cmd_prepare(a):
     cat = catalog()
     P = {p['id']: p for p in cat['papers']}
     stats = Counter()
-    for pid in a.ids.split(','):
+    if a.pdf or a.entry:
+        # A paper that is not in the catalogue yet: its entry and its PDF come from the caller.
+        if not (a.entry and a.id) or a.ids:
+            sys.exit('prepare for a new paper needs --id and --entry (and no --ids); --pdf, or the entry\'s drive_download')
+        e = json.loads(Path(a.entry).read_text(encoding='utf-8'))
+        if isinstance(e, list):
+            e = [x for x in e if not x.get('link_existing') and not x.get('skip')]
+            if a.doi:
+                e = [x for x in e if (x.get('doi') or '').lower() == a.doi.lower()]
+            elif a.drive_id:
+                e = [x for x in e if x.get('drive_id') == a.drive_id]
+            if len(e) != 1:
+                sys.exit(f'--entry holds {len(e)} new papers; name one with --doi')
+            e = e[0]
+        P = {a.id: e}
+        ids = [a.id]
+        if a.pdf:
+            import shutil  # noqa: PLC0415
+            shutil.copyfile(Path(a.pdf).resolve(), work / f'{a.id}.pdf')
+    elif a.ids:
+        ids = a.ids.split(',')
+    else:
+        sys.exit('prepare needs --ids, or --id/--pdf/--entry for a new paper')
+    for pid in ids:
         out = work / f'paper_{pid}.json'
         if out.exists():
             stats['kept'] += 1
@@ -347,17 +374,8 @@ def cmd_publish(a):
         r = json.loads(line)
         pf = work / f"paper_{r['id']}.json"
         refs = json.loads(pf.read_text(encoding='utf-8')).get('ref_dois', []) if pf.exists() else []
-        facts = {k: ([_val(m) for m in (v or [])] if k == 'materials_brands' else _val(v))
-                 for k, v in (r.get('facts') or {}).items()}
-        rows[r['id']] = {
-            'id': r['id'], 'ft_tags': [t['tag'] for t in r['ft_tags']], 'new_tags': [t['tag'] for t in r.get('new_tags', [])],
-            'doc_class': r.get('doc_class'), 'off_topic': r.get('off_topic', False), 'off_topic_reason': r.get('off_topic_reason'),
-            'catalog_type_ok': r.get('catalog_type_ok', True), 'suggested_type': r.get('suggested_type'),
-            'text_quality': r.get('text_quality'),
-            'facts': {k: v for k, v in facts.items() if v not in (None, '', [])},
-            'cites_in_cabinet': sorted({doi2id[d] for d in refs if d in doi2id and doi2id[d] != r['id']}),
-        }
-    RESULTS.write_text(''.join(json.dumps(rows[k], ensure_ascii=False) + '\n' for k in sorted(rows)), encoding='utf-8')
+        rows[r['id']] = row_from_merged(r, refs, doi2id, r['id'])
+    RESULTS.write_text(results_text(rows), encoding='utf-8')
     build_site_file(rows, P)
     print(f'{len(rows)} papers in results.jsonl; site file rebuilt')
 
@@ -366,7 +384,19 @@ SITE_FACTS = ('population', 'intervention', 'comparison', 'outcomes', 'main_resu
               'materials_brands', 'funding_coi', 'limitations')
 
 
+def results_text(rows):
+    return ''.join(json.dumps(rows[k], ensure_ascii=False) + '\n' for k in sorted(rows))
+
+
+def parse_results(text):
+    return {json.loads(l)['id']: json.loads(l) for l in (text or '').splitlines() if l.strip()}
+
+
 def build_site_file(rows, P):
+    SITE_FILE.write_text(site_text(rows, P), encoding='utf-8')
+
+
+def site_text(rows, P):
     """What the cabinet page reads: tags (accepted + accepted new), facts, and cited
     papers still in the catalogue. Robots-blocked like the catalogue itself."""
     papers = {}
@@ -376,8 +406,79 @@ def build_site_file(rows, P):
         f = {k: r['facts'][k] for k in SITE_FACTS if r['facts'].get(k)}
         e = {'t': r['ft_tags'] + r.get('new_tags', []), 'f': f, 'c': [c for c in r['cites_in_cabinet'] if c in P]}
         papers[i] = {k: v for k, v in e.items() if v}
-    SITE_FILE.write_text(json.dumps({'version': 1, 'papers': papers}, ensure_ascii=False, separators=(',', ':')),
-                         encoding='utf-8')
+    return json.dumps({'version': 1, 'papers': papers}, ensure_ascii=False, separators=(',', ':'))
+
+
+def row_from_merged(r, refs, doi2id, self_id):
+    """One results.jsonl row from a merged line (no quotes, no text)."""
+    facts = {k: ([_val(m) for m in (v or [])] if k == 'materials_brands' else _val(v))
+             for k, v in (r.get('facts') or {}).items()}
+    return {
+        'id': self_id, 'ft_tags': [t['tag'] for t in r['ft_tags']], 'new_tags': [t['tag'] for t in r.get('new_tags', [])],
+        'doc_class': r.get('doc_class'), 'off_topic': r.get('off_topic', False), 'off_topic_reason': r.get('off_topic_reason'),
+        'catalog_type_ok': r.get('catalog_type_ok', True), 'suggested_type': r.get('suggested_type'),
+        'text_quality': r.get('text_quality'),
+        'facts': {k: v for k, v in facts.items() if v not in (None, '', [])},
+        'cites_in_cabinet': sorted({doi2id[d] for d in refs if d in doi2id and doi2id[d] != self_id}),
+    }
+
+
+def cmd_freeze(a):
+    """A paper that is not catalogued yet: its row keyed by DOI, with the DOIs it cites
+    that the catalogue holds. The catalogue id is given on the day the entry is written
+    (tools/queue_apply.py, install_frozen)."""
+    work = outside_repo(a.work)
+    lines = [json.loads(l) for l in Path(a.merged).read_text(encoding='utf-8').splitlines() if l.strip()]
+    if len(lines) != 1:
+        sys.exit(f'freeze expects exactly one merged paper, got {len(lines)}')
+    r = lines[0]
+    refs = json.loads((work / f"paper_{r['id']}.json").read_text(encoding='utf-8')).get('ref_dois', [])
+    known = {(p.get('doi') or '').lower() for p in catalog()['papers'] if p.get('doi')}
+    row = row_from_merged(r, [], {}, None)
+    row.pop('id')
+    row.pop('cites_in_cabinet')
+    out = {'doi': (a.doi or '').strip().lower(), **row, 'cites_dois': sorted(d for d in refs if d in known)}
+    if not out['doi']:
+        if not a.drive_id:
+            sys.exit('a paper with no DOI is frozen under its --drive-id')
+        out['drive_id'] = a.drive_id
+    Path(a.out).write_text(json.dumps([out], ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+    print(json.dumps({'frozen': out['doi'] or out.get('drive_id'), 'ft_tags': out['ft_tags'], 'new_tags': out['new_tags'],
+                      'doc_class': out['doc_class'], 'off_topic': out['off_topic'],
+                      'catalog_type_ok': out['catalog_type_ok'], 'suggested_type': out['suggested_type'],
+                      'key_finding': out['facts'].get('key_finding'),
+                      'clinical_bottom_line': out['facts'].get('clinical_bottom_line')}, ensure_ascii=False))
+
+
+def install_frozen(results, frozen, new_ids, P):
+    """results.jsonl and site-file text with the frozen rows of newly catalogued papers.
+    new_ids: {key: catalogue id}, key = the DOI, or the Drive id of a paper with no DOI.
+    A new paper with no frozen row raises KeyError(key)."""
+    rows = parse_results(results)
+    by_doi = {r['doi'] or r.get('drive_id'): r for r in frozen}
+    doi2id = {(p.get('doi') or '').lower(): i for i, p in P.items() if p.get('doi')}
+    for doi, pid in new_ids.items():
+        if doi not in by_doi:
+            raise KeyError(doi)
+        r = dict(by_doi[doi])
+        cites = r.pop('cites_dois', [])
+        r.pop('doi')
+        r.pop('drive_id', None)
+        rows[pid] = {'id': pid, **r, 'cites_in_cabinet': sorted({doi2id[d] for d in cites
+                                                                 if d in doi2id and doi2id[d] != pid})}
+    return results_text(rows), site_text(rows, P)
+
+
+def missing_ids():
+    done = done_ids()
+    return [p['id'] for p in catalog()['papers'] if p['id'] not in done]
+
+
+def cmd_coverage(a):
+    miss = missing_ids()
+    print(json.dumps({'catalogue': len(catalog()['papers']), 'missing': miss}))
+    if a.check and miss:
+        sys.exit(1)
 
 
 def cmd_site(a):
@@ -390,7 +491,12 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
     sub = ap.add_subparsers(dest='cmd', required=True)
     p = sub.add_parser('prepare')
-    p.add_argument('--ids', required=True)
+    p.add_argument('--ids')
+    p.add_argument('--id', help='a working id for a paper not yet in the catalogue')
+    p.add_argument('--pdf', help='the new paper\'s PDF (copied into --work, never into the repository)')
+    p.add_argument('--entry', help='the new paper\'s catalogue entry (JSON object, or a list: pick with --doi)')
+    p.add_argument('--doi', help='with a list --entry: the new paper to prepare')
+    p.add_argument('--drive-id', help='with a list --entry: a paper with no DOI')
     p.add_argument('--work', required=True)
     p.add_argument('--keep-pdf', action='store_true')
     c = sub.add_parser('check')
@@ -408,9 +514,17 @@ def main(argv=None):
     pb.add_argument('--work', required=True)
     pb.add_argument('--merged', required=True)
     sub.add_parser('site', help='rebuild dentcast_cabinet_enrichment.json from results.jsonl')
+    fz = sub.add_parser('freeze', help='a not-yet-catalogued paper: its row keyed by DOI')
+    fz.add_argument('--work', required=True)
+    fz.add_argument('--merged', required=True)
+    fz.add_argument('--doi', help='the DOI (empty for a paper that has none: give --drive-id)')
+    fz.add_argument('--drive-id', help='the key of a paper with no DOI')
+    fz.add_argument('--out', required=True)
+    cv = sub.add_parser('coverage', help='catalogue ids with no row in results.jsonl')
+    cv.add_argument('--check', action='store_true', help='exit 1 when any catalogue paper is not enriched')
     a = ap.parse_args(argv)
     {'prepare': cmd_prepare, 'check': cmd_check, 'merge': cmd_merge, 'vocab': cmd_vocab, 'todo': cmd_todo,
-     'publish': cmd_publish, 'site': cmd_site}[a.cmd](a)
+     'publish': cmd_publish, 'site': cmd_site, 'freeze': cmd_freeze, 'coverage': cmd_coverage}[a.cmd](a)
 
 
 if __name__ == '__main__':

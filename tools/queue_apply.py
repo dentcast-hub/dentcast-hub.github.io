@@ -1373,6 +1373,40 @@ def catalog(w, cid, m):
     return {"entries": done}
 
 
+ENRICH_ROWS = "04-منبع/انریچ.json"
+ENRICH_RESULTS = ".dentcast/cabinet-enrichment/results.jsonl"
+ENRICH_SITE = "dentcast_cabinet_enrichment.json"
+
+
+def enrichment(w, item, m, cat_report):
+    """Every paper this publish adds to the catalogue arrives full-text enriched: its
+    frozen row (keyed by DOI, `04-منبع/انریچ.json`) is installed under the catalogue id
+    it was just given, and the cabinet's enrichment site file is rebuilt."""
+    import cabinet_enrich as ce  # noqa: PLC0415
+    new = {}
+    for e, got in zip(m["catalog"] or [], cat_report.get("entries") or []):
+        if isinstance(got, str):
+            key = (e.get("doi") or "").strip().lower() or e.get("drive_id") or ""
+            if not key:
+                refuse("ENRICHMENT_NO_KEY", "a new catalogue entry has neither a DOI nor a drive_id")
+            new[key] = got
+    if not new:
+        return {"skip": "no paper added to the catalogue"}
+    f = item / ENRICH_ROWS
+    if not f.is_file():
+        refuse("ENRICHMENT_MISSING", f"{ENRICH_ROWS} is missing: every paper added to the cabinet is "
+               "enriched in preparation (publish-queue.md, step 2)", dois=sorted(new))
+    frozen = json.loads(f.read_text(encoding="utf-8"))
+    P = {p["id"]: p for p in json.loads(w.text("dentcast_cabinet_full_catalog.json"))["papers"]}
+    try:
+        results, site = ce.install_frozen(w.text(ENRICH_RESULTS) or "", frozen, new, P)
+    except KeyError as k:
+        refuse("ENRICHMENT_MISSING", f"no enrichment row for {k.args[0]} in {ENRICH_ROWS}")
+    w.put(ENRICH_RESULTS, results)
+    w.put(ENRICH_SITE, site)
+    return {"installed": sorted(new.values())}
+
+
 def explore_backlinks(w, cid, m):
     """4.7: a back-link from an approved glossary term only while that term's
     «کاوش بیشتر» is under the cap; nothing is removed or moved."""
@@ -1745,9 +1779,10 @@ def assemble(a):
     entry = brain_entry(w, cat, n, m, tentry)
     if m.get("bridge"):
         bridge(w, m["bridge"])
-    report = {"faq": faq(w, cid, item, m), "exam": exam(w, cid, item), "catalog": catalog(w, cid, m),
+    report = {"faq": faq(w, cid, item, m), "exam": exam(w, cid, item), "catalog": catalog(w, cid, m)}
+    report.update({"enrichment": enrichment(w, item, m, report["catalog"]),
               "backlinks_47": explore_backlinks(w, cid, m), "pulse": pulse(w, cat, cid, m),
-              "explore_49": page_info["explore"], "links_48": page_info["links_done"]}
+              "explore_49": page_info["explore"], "links_48": page_info["links_done"]})
     base = {"status": "dry_run" if a.dry_run else "assembled", "content_id": cid, "queue_item": f"queue/{item.name}",
             "date": date, "sums": info["sums"], "status_sha256": info["status_sha256"],
             "manifest_source": d["_source"]["value"], "manual_steps": (d.get("_manual") or {}).get("value") or [],
