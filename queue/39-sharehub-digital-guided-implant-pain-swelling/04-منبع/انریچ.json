@@ -1,0 +1,53 @@
+[
+ {
+  "doi": "10.1186/s12903-017-0441-y",
+  "ft_tags": [
+   "surgical-guide",
+   "digital-workflow",
+   "implant-survival",
+   "marginal-bone-loss",
+   "patient-satisfaction"
+  ],
+  "new_tags": [],
+  "doc_class": "systematic_review",
+  "off_topic": false,
+  "off_topic_reason": null,
+  "catalog_type_ok": true,
+  "suggested_type": null,
+  "text_quality": "good",
+  "facts": {
+   "doi": "10.1186/s12903-017-0441-y",
+   "authors": [
+    "Marco Colombo",
+    "Carlo Mangano",
+    "Eitan Mijiritsky",
+    "Mischa Krebs",
+    "Uli Hauschild",
+    "Thomas Fortin"
+   ],
+   "year": 2017,
+   "journal": "BMC Oral Health",
+   "population": "Patients in RCTs of implant placement (two included RCTs: 59 fully edentulous patients; 51 fully or partially edentulous patients)",
+   "intervention": "Computer-guided (digital workflow) implant placement with 3D planning and surgical guide",
+   "comparison": "Conventional free-hand implant placement",
+   "outcomes": [
+    "prosthesis failure",
+    "implant failure",
+    "biological/prosthetic complications",
+    "peri-implant marginal bone loss",
+    "post-surgical pain and swelling",
+    "treatment duration",
+    "cost",
+    "patient satisfaction/quality of life"
+   ],
+   "main_result": "Only two RCTs qualified; no statistically significant differences in implant survival or patient outcomes between guided and conventional placement, though one RCT reported more pain and swelling in the conventional group.",
+   "sample_size": "2 RCTs included (59 and 51 patients) from 37 screened abstracts",
+   "follow_up": "1 year in both included RCTs (minimum 6 months required)",
+   "funding_coi": "No funding; no competing interests",
+   "limitations": "Based on only two RCTs with risk of bias; overall scientific evidence is low.",
+   "key_finding": "This critical review of RCTs found only two eligible trials comparing computer-guided with conventional implant placement. Implant survival and patient outcomes did not differ significantly, with less pain and swelling reported in the guided group of one trial.",
+   "clinical_bottom_line": "Guided surgery performs similarly to free-hand placement in survival; it may be justified for flapless surgery, optimal positioning and immediate loading, but firm recommendations cannot be given."
+  },
+  "cites_dois": []
+ }
+]

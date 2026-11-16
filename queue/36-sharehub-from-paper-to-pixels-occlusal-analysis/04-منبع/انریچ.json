@@ -1,0 +1,36 @@
+[
+ {
+  "doi": "10.3390/dj14090573",
+  "ft_tags": [
+   "digital-workflow"
+  ],
+  "new_tags": [],
+  "doc_class": "narrative_review",
+  "off_topic": false,
+  "off_topic_reason": null,
+  "catalog_type_ok": true,
+  "suggested_type": null,
+  "text_quality": "partial",
+  "facts": {
+   "authors": [
+    "May Aljanahi",
+    "Gerry Mckenna",
+    "Keyvan Moharamzadeh",
+    "Haitham Elbishari"
+   ],
+   "year": 2026,
+   "intervention": "Conventional and digital occlusal analysis methods (articulating paper, shimstock, T-Scan, OccluSense, Accura, intraoral scanners, virtual articulators, jaw tracking)",
+   "comparison": "Conventional versus digital methods",
+   "outcomes": [
+    "occlusal contacts",
+    "force distribution",
+    "timing",
+    "mandibular movements"
+   ],
+   "main_result": "Conventional methods are simple but subjective and cannot quantify occlusal force; digital systems give objective contact, force, timing and movement data but are limited by cost and training.",
+   "funding_coi": "No specific funding; no conflicts of interest",
+   "limitations": "Digital use may be limited by cost, technical requirements and operator training."
+  },
+  "cites_dois": []
+ }
+]

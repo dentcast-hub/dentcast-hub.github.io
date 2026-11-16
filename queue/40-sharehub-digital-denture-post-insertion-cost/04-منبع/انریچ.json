@@ -1,0 +1,82 @@
+[
+ {
+  "doi": "10.1016/j.prosdent.2025.05.019",
+  "ft_tags": [
+   "complications",
+   "patient-satisfaction",
+   "milling"
+  ],
+  "new_tags": [],
+  "doc_class": "systematic_review",
+  "off_topic": false,
+  "off_topic_reason": null,
+  "catalog_type_ok": true,
+  "suggested_type": null,
+  "text_quality": "good",
+  "facts": {
+   "authors": [
+    "Kathleen Smets",
+    "Stefan Vandeweghe",
+    "Lucas Ongenae",
+    "Rani D’haese"
+   ],
+   "year": 2026,
+   "journal": "The Journal of Prosthetic Dentistry",
+   "population": "Patients with complete dentures (11 included clinical studies)",
+   "intervention": "Digitally fabricated (3D printed or milled) complete dentures",
+   "comparison": "Conventionally fabricated complete dentures",
+   "outcomes": [
+    "occlusion",
+    "retention/stability",
+    "pain",
+    "number of postinsertion visits"
+   ],
+   "main_result": "Fabrication technique influenced complication type and number; results for occlusion and retention were contradictory, and digital dentures needed similar or more follow-up visits.",
+   "sample_size": "11 studies included of 63 articles (6 RCTs, 5 non-RCTs)",
+   "funding_coi": "No competing interests declared",
+   "limitations": "Heterogeneity of populations and data collection methods precluded statistical analysis."
+  },
+  "cites_dois": []
+ },
+ {
+  "doi": "10.1111/jopr.70074",
+  "ft_tags": [
+   "milling",
+   "3d-printing",
+   "operator-experience"
+  ],
+  "new_tags": [],
+  "doc_class": "systematic_review",
+  "off_topic": false,
+  "off_topic_reason": null,
+  "catalog_type_ok": true,
+  "suggested_type": null,
+  "text_quality": "good",
+  "facts": {
+   "doi": "10.1111/jopr.70074",
+   "authors": [
+    "Elena Muehlemann",
+    "Aspasia Pachiou",
+    "Gustavo Sáenz-Ravello",
+    "Ronald E. Jung",
+    "Franz J. Strauss",
+    "Margherita G. Liguori"
+   ],
+   "year": 2026,
+   "journal": "Journal of Prosthodontics",
+   "population": "Edentulous patients who received removable complete dentures",
+   "intervention": "Digitally designed and manufactured RCDs (milling and/or 3D printing)",
+   "comparison": "Conventionally fabricated RCDs (compression molding)",
+   "outcomes": [
+    "laboratory cost",
+    "clinical cost",
+    "total cost",
+    "number of treatment sessions"
+   ],
+   "main_result": "No significant differences between digital and conventional RCD workflows in laboratory (MD -239.77 USD), clinical, total costs (MD -357.76 USD) or sessions (MD -1.47).",
+   "sample_size": "5 studies, 184 patients, 202 RCDs",
+   "funding_coi": "No conflicts of interest declared"
+  },
+  "cites_dois": []
+ }
+]

@@ -1,0 +1,86 @@
+[
+ {
+  "doi": "10.1016/j.identj.2024.11.007",
+  "ft_tags": [
+   "cad-cam",
+   "pmma"
+  ],
+  "new_tags": [],
+  "doc_class": "systematic_review",
+  "off_topic": false,
+  "off_topic_reason": null,
+  "catalog_type_ok": true,
+  "suggested_type": null,
+  "text_quality": "good",
+  "facts": {
+   "doi": "10.1016/j.identj.2024.11.007",
+   "authors": [
+    "Erfan Khorasani",
+    "Aida Mokhlesi",
+    "Sarah Arzani",
+    "Safoura Ghodsi",
+    "Seyed Ali Mosaddad"
+   ],
+   "journal": "International Dental Journal",
+   "population": "Digitally fabricated removable complete dentures (4 clinical studies)",
+   "intervention": "Additive manufacturing (3D-printed dentures)",
+   "comparison": "Subtractive manufacturing (milled dentures)",
+   "outcomes": [
+    "denture retention",
+    "patient satisfaction"
+   ],
+   "main_result": "3D-printed and milled complete dentures did not differ significantly in retention (SMD 0.165, P = .343) or satisfaction (SMD -0.595, P = .236).",
+   "sample_size": "4 studies included in the meta-analysis",
+   "materials_brands": [
+    "NextDent PMMA (Vertex-Dental)"
+   ],
+   "funding_coi": "No external funding; no competing interests declared"
+  },
+  "cites_dois": []
+ },
+ {
+  "doi": "10.3390/dj14040221",
+  "ft_tags": [
+   "edentulous",
+   "cad-cam",
+   "patient-satisfaction",
+   "ivoclar"
+  ],
+  "new_tags": [],
+  "doc_class": "primary_research",
+  "off_topic": false,
+  "off_topic_reason": null,
+  "catalog_type_ok": true,
+  "suggested_type": null,
+  "text_quality": "partial",
+  "facts": {
+   "doi": "10.3390/dj14040221",
+   "authors": [
+    "Jonas Rechlin",
+    "Florian Beuer",
+    "Robert Nicic",
+    "Rebecca Noetzel",
+    "Wolfgang Hannak",
+    "Elisabeth Prause"
+   ],
+   "year": 2026,
+   "population": "15 edentulous patients (aged 58-83) needing upper and lower complete dentures",
+   "intervention": "Digitally fabricated (milled) complete denture, Ivoclar Digital Denture protocol",
+   "comparison": "Conventionally fabricated complete denture",
+   "outcomes": [
+    "OHRQoL (OHIP-G49)",
+    "clinical performance evaluation",
+    "patient satisfaction"
+   ],
+   "main_result": "Both denture types improved OHIP-G49 versus baseline (median 70 to 19 conventional, 16 digital) with no significant difference between them (p=0.656).",
+   "sample_size": "15 edentulous patients",
+   "follow_up": "3 months per denture",
+   "materials_brands": [
+    "Ivoclar Digital Denture"
+   ],
+   "funding_coi": "Funded by Ivoclar; sponsor had no role in design, analysis or reporting",
+   "limitations": "Exploratory pilot with limited statistical power and small sample."
+  },
+  "cites_dois": []
+ }
+]
