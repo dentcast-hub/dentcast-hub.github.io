@@ -22,7 +22,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         {
           "decision": "\u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a: \u0647\u062f\u0641",
           "evidence": [
-            "founder chose this exact title in chat (AskUserQuestion answer) 2026-11-16"
+            "restored from dependency_invalidation_v1 audit: founder chose this exact title in chat 2026-11-16; title unchanged by the fix"
           ],
           "scope": "title",
           "status": "confirmed"
@@ -30,7 +30,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         {
           "decision": "\u062f\u0631 \u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062f\u0646\u0628\u0627\u0644 \u06a9\u067e\u06cc \u0633\u0637\u062d \u0646\u06cc\u0633\u062a\u06cc\u0645\u061b \u0645\u0648\u0642\u0639\u06cc\u062a \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0628\u0627 \u06a9\u0648\u067e\u06cc\u0646\u06af \u0648 \u0622\u0646\u0627\u0644\u0648\u06af \u0627\u0632 \u062f\u0647\u0627\u0646 \u0628\u0647 \u0645\u062f\u0644 \u06af\u0686\u06cc \u0645\u0646\u062a\u0642\u0644 \u0645\u06cc\u200c\u0634\u0648\u062f: \u062c\u0627\u06cc\u06af\u0627\u0647 \u0648 \u0639\u0645\u0642\u060c \u0632\u0627\u0648\u06cc\u0647 \u0648 \u062c\u0647\u062a \u0686\u0631\u062e\u0634\u06cc\u060c \u0628\u0647\u200c\u0639\u0644\u0627\u0648\u0647\u0654 \u0634\u06a9\u0644 \u0644\u062b\u0647.",
           "evidence": [
-            "agent-composed caption, standing acceptance (Hard Rule 14), listed in Push-2 report"
+            "restored from dependency_invalidation_v1 audit: agent caption, standing acceptance; caption unchanged by the fix"
           ],
           "scope": "caption",
           "status": "confirmed"
@@ -146,6 +146,169 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
               "status": "resolved"
             }
           ]
+        },
+        {
+          "from_step": "C.4.11",
+          "kind": "dependency_invalidation_v1",
+          "reason": "Runner Phase F (run 43883943666) FAIL 4.11 cards / 4.12 quiz: insight/insight-109 FAQ+DefinedTermSet entry was appended at the top level of plus/faq-corpus.json instead of under byContent; verify_publish reads byContent only. Fix = move the same entry under byContent; affects C.4.11 onward",
+          "superseded": {
+            "approvals": [
+              {
+                "decision": "\u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a: \u0647\u062f\u0641",
+                "evidence": [
+                  "founder chose this exact title in chat (AskUserQuestion answer) 2026-11-16"
+                ],
+                "scope": "title",
+                "status": "confirmed"
+              },
+              {
+                "decision": "\u062f\u0631 \u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062f\u0646\u0628\u0627\u0644 \u06a9\u067e\u06cc \u0633\u0637\u062d \u0646\u06cc\u0633\u062a\u06cc\u0645\u061b \u0645\u0648\u0642\u0639\u06cc\u062a \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0628\u0627 \u06a9\u0648\u067e\u06cc\u0646\u06af \u0648 \u0622\u0646\u0627\u0644\u0648\u06af \u0627\u0632 \u062f\u0647\u0627\u0646 \u0628\u0647 \u0645\u062f\u0644 \u06af\u0686\u06cc \u0645\u0646\u062a\u0642\u0644 \u0645\u06cc\u200c\u0634\u0648\u062f: \u062c\u0627\u06cc\u06af\u0627\u0647 \u0648 \u0639\u0645\u0642\u060c \u0632\u0627\u0648\u06cc\u0647 \u0648 \u062c\u0647\u062a \u0686\u0631\u062e\u0634\u06cc\u060c \u0628\u0647\u200c\u0639\u0644\u0627\u0648\u0647\u0654 \u0634\u06a9\u0644 \u0644\u062b\u0647.",
+                "evidence": [
+                  "agent-composed caption, standing acceptance (Hard Rule 14), listed in Push-2 report"
+                ],
+                "scope": "caption",
+                "status": "confirmed"
+              }
+            ],
+            "delivery": [],
+            "inputs": [
+              {
+                "note": "founder text (Claude Docs, rev 104) with founder-chosen title",
+                "ref": "claude-docs:QnvQHznqT3oksW21pRWZQC#rev104",
+                "sha256": "1b0868b21e0088b7bdbdc9837d52244e6f8afc8c46142c6c267d07b01fe09560"
+              }
+            ],
+            "steps": [
+              {
+                "evidence": [
+                  "plus/faq-corpus.json[insight/insight-109].definedTermSets: 6 authored DefinedTerms #flashcards-c1..c6 (\u0627\u06cc\u0645\u067e\u0631\u0634\u0646 \u06a9\u0648\u067e\u06cc\u0646\u06af\u060c \u0622\u0646\u0627\u0644\u0648\u06af\u060c \u0632\u0646\u062c\u06cc\u0631\u0647\u200c\u06cc \u0627\u0646\u062a\u0642\u0627\u0644\u060c \u0622\u0646\u062a\u06cc\u200c\u0631\u0648\u062a\u06cc\u0634\u0646/\u0647\u06af\u0632\u060c \u0627\u0645\u0631\u062c\u0646\u0633 \u067e\u0631\u0648\u0641\u0627\u06cc\u0644\u060c Passive fit); none equals a FAQ answer with or without verdict; FAQ pairs 2-4 and 7 (explain-shaped) covered by authored cards rather than copied; not in page JSON-LD"
+                ],
+                "id": "C.4.11",
+                "module": "07-flashcards-and-quiz.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "FAQPage #faq: 9 standalone questions, no article deixis; 5 binary (\u0622\u06cc\u0627\u2026) all open with \u00ab\u062e\u06cc\u0631\u061b\u00bb; 4 open/explain questions excluded from scored bank by shape. 4.12-\u0628: evaluated at 5.6"
+                ],
+                "id": "C.4.12",
+                "module": "07-flashcards-and-quiz.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.4.14",
+                "module": "09-challenge.md",
+                "reason": "\u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc at Question 4.9; not a \u0686\u0627\u0644\u0634, no data-dc-challenge-question markup",
+                "status": "skipped"
+              },
+              {
+                "evidence": [
+                  "Questions: (1) \u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062f\u0642\u06cc\u0642\u0627\u064b \u0686\u06cc \u0631\u0648 \u0645\u0646\u062a\u0642\u0644 \u0645\u06cc\u200c\u06a9\u0646\u0647\u061f (2) \u0647\u06af\u0632 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062a\u0648 \u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0686\u0647 \u0627\u0647\u0645\u06cc\u062a\u06cc \u062f\u0627\u0631\u0647\u061f (3) \u0686\u0631\u0627 \u067e\u0631\u0648\u062a\u0632 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a passive fit \u0646\u062f\u0627\u0631\u0647\u061f (4) \u0627\u0645\u0631\u062c\u0646\u0633 \u067e\u0631\u0648\u0641\u0627\u06cc\u0644 \u0631\u0648 \u0645\u0648\u0642\u0639 \u0642\u0627\u0644\u0628 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0628\u0627\u06cc\u062f \u062b\u0628\u062a \u06a9\u0631\u062f\u061f (5) \u062e\u0637\u0627\u06cc \u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0628\u0639\u062f\u0627\u064b \u062c\u0628\u0631\u0627\u0646 \u0645\u06cc\u0634\u0647\u061f All reused, no mint: #\u0646\u06a9\u062a\u0647_\u06a9\u0644\u06cc\u0646\u06cc\u06a9\u06cc (series) \u00b7 #\u0642\u0627\u0644\u0628\u06af\u06cc\u0631\u06cc \u00ab\u067e\u0633 \u062f\u0631 \u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062f\u0646\u0628\u0627\u0644 \u06a9\u067e\u06cc \u06a9\u0631\u062f\u0646 \u0633\u0637\u062d \u0646\u06cc\u0633\u062a\u06cc\u0645\u060c \u0628\u0644\u06a9\u0647 \u0645\u0648\u0642\u0639\u06cc\u062a \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0631\u0627 \u2026 \u0645\u0646\u062a\u0642\u0644 \u0645\u06cc\u200c\u06a9\u0646\u06cc\u0645.\u00bb \u00b7 #\u062e\u0637\u0627\u06cc_\u0642\u0627\u0644\u0628\u06af\u06cc\u0631\u06cc \u00ab\u0627\u06af\u0631 \u0647\u0645\u06cc\u0646\u200c\u062c\u0627 \u062c\u0627\u06cc\u06af\u0627\u0647\u060c \u0632\u0627\u0648\u06cc\u0647 \u06cc\u0627 \u062c\u0647\u062a \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0627\u0634\u062a\u0628\u0627\u0647 \u0645\u0646\u062a\u0642\u0644 \u0634\u0648\u062f\u060c \u0645\u0631\u062d\u0644\u0647\u200c\u0647\u0627\u06cc \u0628\u0639\u062f\u06cc \u0622\u0646 \u0631\u0627 \u062c\u0628\u0631\u0627\u0646 \u0646\u0645\u06cc\u200c\u06a9\u0646\u0646\u062f\u00bb \u00b7 #\u0641\u06cc\u062a_\u067e\u0631\u0648\u062a\u0632 \u00ab\u0646\u062a\u06cc\u062c\u0647\u200c\u06cc \u0686\u0646\u06cc\u0646 \u062e\u0637\u0627\u06cc\u06cc \u0627\u06cc\u0646 \u0627\u0633\u062a \u06a9\u0647 \u067e\u0631\u0648\u062a\u0632 passive fit \u0646\u062f\u0627\u0631\u062f\u00bb \u00b7 #\u0647\u06af\u0632_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u00ab\u0627\u06af\u0631 \u062c\u0647\u062a \u0647\u06af\u0632 \u062f\u0631 \u0645\u062f\u0644 \u0628\u0627 \u062f\u0647\u0627\u0646 \u06cc\u06a9\u06cc \u0646\u0628\u0627\u0634\u062f\u060c \u0627\u0628\u0627\u062a\u0645\u0646\u062a \u062f\u0631 \u062f\u0647\u0627\u0646 \u0686\u0646\u062f \u062f\u0631\u062c\u0647 \u0686\u0631\u062e\u06cc\u062f\u0647 \u0645\u06cc\u200c\u0646\u0634\u06cc\u0646\u062f\u00bb \u00b7 #\u067e\u0631\u0648\u0641\u0627\u06cc\u0644_\u0627\u0645\u0631\u062c\u0646\u0633 \u00ab\u0627\u06af\u0631 \u0627\u06cc\u0646 \u0634\u06a9\u0644 \u062b\u0628\u062a \u0646\u0634\u0648\u062f\u060c \u062a\u06a9\u0646\u0633\u06cc\u0646 \u0622\u0646 \u0631\u0627 \u062d\u062f\u0633\u06cc \u0637\u0631\u0627\u062d\u06cc \u0645\u06cc\u200c\u06a9\u0646\u062f\u00bb \u00b7 #\u067e\u0631\u0648\u062a\u0632_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a umbrella in addition. Composition: series + decision (#\u0641\u06cc\u062a_\u067e\u0631\u0648\u062a\u0632,#\u062e\u0637\u0627\u06cc_\u0642\u0627\u0644\u0628\u06af\u06cc\u0631\u06cc) + specific \u226410 (#\u0647\u06af\u0632_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a 2, #\u062e\u0637\u0627\u06cc_\u0642\u0627\u0644\u0628\u06af\u06cc\u0631\u06cc 3, #\u0641\u06cc\u062a_\u067e\u0631\u0648\u062a\u0632 9) + umbrella. Dropped as mention: #\u0634\u0644_\u0634\u062f\u0646_\u067e\u06cc\u0686, #\u067e\u0648\u0632\u06cc\u0634\u0646_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a, #\u06a9\u0627\u0646\u06a9\u0634\u0646_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a. --sync done, --check OK, build_cabinet_papers --check OK. Reachability: Q2 -> label \u00ab\u0647\u06af\u0632 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u00bb (2 pages) -> page in first 4 of chip: PASS; Q3 \u00ab\u0641\u06cc\u062a \u067e\u0631\u0648\u062a\u0632\u00bb (9 pages, rank depends on API order) recorded uncertain. content-index/assistant-tags reverted (runner C.8). No chip row on insight template."
+                ],
+                "id": "C.5.0",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "dentcast-brain.json: clinical-109 appended as last array element, keys identical to clinical-108 [type,id,title,caption,hashtags,keywords,page_url,pillar]; keywords 8 from text, none repeats a hashtag; json valid"
+                ],
+                "id": "C.5",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "pillar implantology/prosthetic-components = C.2.4 decision; capsule /pillar/implantology/ matches; no new subtopic"
+                ],
+                "id": "C.5.5",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "pathway_place: implant-prosthetic STRONG -> inserted after insight/insight-26 (index 23, 97 steps, no milestone). Not placed (ASK, conservative): fixed-pros 57 (after insight-80), implant-surgical 21, treatment-planning 15, digital 13, occlusion 10, failure-troubleshooting 10. Coverage: 1.52 per item (baseline 1.38; already above before this publish). 4.12-\u0628: 3 MCQ rows in plus/exam-questions.json byContent[insight/insight-109] (r-23331122, r-3a73f3fb, r-804f45d2), draft-check 0 errors, each approved by founder in M2; validate_exam_questions --content: 0 errors; drawn by implant-prosthetic"
+                ],
+                "id": "C.5.6",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "candidate bundle-implant-parts (continues implant-prosthetic): \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1 \u2014 folder insight/ is never a bundle type). No bundle edit, no home-bundles.js change"
+                ],
+                "id": "C.5.6-b",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "Pulse first line added/oldest removed (7 lines); insight/en/insight-109.html authored (Phase D agent part: chrome from en/insight-108 i.e. meta-1 standard, insight glass-box body translated structure-faithfully, 3 h3 + 10 figures, GA4 x1, canonical self .org, noindex follow, zero hreflang, inLanguage/og:locale en, no same-word gloss duplicates, no specialist links); fa toggle en/insight-109.html present; meta-1 unchanged; ten-scope lock recorded; pending_questions empty"
+                ],
+                "id": "C.6",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.8",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "C.7",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "D",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "E",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "F",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "G",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              }
+            ],
+            "validation": [
+              {
+                "kind": "des_commentary_v3.7",
+                "result": "insight/insight-109 COMMENTARY 15/E FULL_TEXT provisional=false; checklist 4/0/3/3 (item4 = insight/index.html section declaration, note present); Part3 (1) quotes verbatim (items1,3 in page body; item4 in insight/index.html) (2) 5+10=15 (3) band E (4) key set equals spec/precedent; (6) verify_publish --des-text ok; des_record_guard check ok; fidelity [null] (basket 1 self-record, Part 2b). Run: claude -p --system-prompt-file .dentcast/des-v3.7-knowledge.md (sha256 709be964f19c1d5c12fada54fe3827d112d729150368dcddc3108d343a94e2e9) --tools \"\" --model opus, empty dir; modelUsage claude-opus-5-5. Run 1 without section metadata scored 12/E (item4=0, model said section unknown); run 2 added metadata line \u00absection: insight/\u00bb and is the stored record. No Part 2d audit (COMMENTARY). No DOI/abstract/quartile guessed.",
+                "step": "C.4.13"
+              }
+            ]
+          }
         }
       ],
       "delivery": [],
@@ -158,13 +321,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       ],
       "pending_questions": [],
       "unrelated_changes": [],
-      "validation": [
-        {
-          "kind": "des_commentary_v3.7",
-          "result": "insight/insight-109 COMMENTARY 15/E FULL_TEXT provisional=false; checklist 4/0/3/3 (item4 = insight/index.html section declaration, note present); Part3 (1) quotes verbatim (items1,3 in page body; item4 in insight/index.html) (2) 5+10=15 (3) band E (4) key set equals spec/precedent; (6) verify_publish --des-text ok; des_record_guard check ok; fidelity [null] (basket 1 self-record, Part 2b). Run: claude -p --system-prompt-file .dentcast/des-v3.7-knowledge.md (sha256 709be964f19c1d5c12fada54fe3827d112d729150368dcddc3108d343a94e2e9) --tools \"\" --model opus, empty dir; modelUsage claude-opus-5-5. Run 1 without section metadata scored 12/E (item4=0, model said section unknown); run 2 added metadata line \u00absection: insight/\u00bb and is the stored record. No Part 2d audit (COMMENTARY). No DOI/abstract/quartile guessed.",
-          "step": "C.4.13"
-        }
-      ]
+      "validation": []
     },
     "external_actions": [],
     "status": "in_progress",
@@ -476,7 +633,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "plus/faq-corpus.json[insight/insight-109].definedTermSets: 6 authored DefinedTerms #flashcards-c1..c6 (\u0627\u06cc\u0645\u067e\u0631\u0634\u0646 \u06a9\u0648\u067e\u06cc\u0646\u06af\u060c \u0622\u0646\u0627\u0644\u0648\u06af\u060c \u0632\u0646\u062c\u06cc\u0631\u0647\u200c\u06cc \u0627\u0646\u062a\u0642\u0627\u0644\u060c \u0622\u0646\u062a\u06cc\u200c\u0631\u0648\u062a\u06cc\u0634\u0646/\u0647\u06af\u0632\u060c \u0627\u0645\u0631\u062c\u0646\u0633 \u067e\u0631\u0648\u0641\u0627\u06cc\u0644\u060c Passive fit); none equals a FAQ answer with or without verdict; FAQ pairs 2-4 and 7 (explain-shaped) covered by authored cards rather than copied; not in page JSON-LD"
+          "plus/faq-corpus.json byContent[insight/insight-109].definedTermSets: same 6 authored cards #flashcards-c1..c6, now under byContent; verify_publish 4.11 rows ok locally"
         ],
         "id": "C.4.11",
         "module": "07-flashcards-and-quiz.md",
@@ -485,7 +642,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "FAQPage #faq: 9 standalone questions, no article deixis; 5 binary (\u0622\u06cc\u0627\u2026) all open with \u00ab\u062e\u06cc\u0631\u061b\u00bb; 4 open/explain questions excluded from scored bank by shape. 4.12-\u0628: evaluated at 5.6"
+          "byContent[insight/insight-109].faqPages: 9 standalone questions, 5 binary opening \u00ab\u062e\u06cc\u0631\u061b\u00bb; verify_publish 4.12 rows ok locally. 4.12-\u0628: evaluated at 5.6"
         ],
         "id": "C.4.12",
         "module": "07-flashcards-and-quiz.md",
@@ -496,12 +653,12 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "evidence": [],
         "id": "C.4.14",
         "module": "09-challenge.md",
-        "reason": "\u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc at Question 4.9; not a \u0686\u0627\u0644\u0634, no data-dc-challenge-question markup",
+        "reason": "\u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc at Question 4.9; not a \u0686\u0627\u0644\u0634",
         "status": "skipped"
       },
       {
         "evidence": [
-          "Questions: (1) \u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062f\u0642\u06cc\u0642\u0627\u064b \u0686\u06cc \u0631\u0648 \u0645\u0646\u062a\u0642\u0644 \u0645\u06cc\u200c\u06a9\u0646\u0647\u061f (2) \u0647\u06af\u0632 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062a\u0648 \u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0686\u0647 \u0627\u0647\u0645\u06cc\u062a\u06cc \u062f\u0627\u0631\u0647\u061f (3) \u0686\u0631\u0627 \u067e\u0631\u0648\u062a\u0632 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a passive fit \u0646\u062f\u0627\u0631\u0647\u061f (4) \u0627\u0645\u0631\u062c\u0646\u0633 \u067e\u0631\u0648\u0641\u0627\u06cc\u0644 \u0631\u0648 \u0645\u0648\u0642\u0639 \u0642\u0627\u0644\u0628 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0628\u0627\u06cc\u062f \u062b\u0628\u062a \u06a9\u0631\u062f\u061f (5) \u062e\u0637\u0627\u06cc \u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0628\u0639\u062f\u0627\u064b \u062c\u0628\u0631\u0627\u0646 \u0645\u06cc\u0634\u0647\u061f All reused, no mint: #\u0646\u06a9\u062a\u0647_\u06a9\u0644\u06cc\u0646\u06cc\u06a9\u06cc (series) \u00b7 #\u0642\u0627\u0644\u0628\u06af\u06cc\u0631\u06cc \u00ab\u067e\u0633 \u062f\u0631 \u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062f\u0646\u0628\u0627\u0644 \u06a9\u067e\u06cc \u06a9\u0631\u062f\u0646 \u0633\u0637\u062d \u0646\u06cc\u0633\u062a\u06cc\u0645\u060c \u0628\u0644\u06a9\u0647 \u0645\u0648\u0642\u0639\u06cc\u062a \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0631\u0627 \u2026 \u0645\u0646\u062a\u0642\u0644 \u0645\u06cc\u200c\u06a9\u0646\u06cc\u0645.\u00bb \u00b7 #\u062e\u0637\u0627\u06cc_\u0642\u0627\u0644\u0628\u06af\u06cc\u0631\u06cc \u00ab\u0627\u06af\u0631 \u0647\u0645\u06cc\u0646\u200c\u062c\u0627 \u062c\u0627\u06cc\u06af\u0627\u0647\u060c \u0632\u0627\u0648\u06cc\u0647 \u06cc\u0627 \u062c\u0647\u062a \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0627\u0634\u062a\u0628\u0627\u0647 \u0645\u0646\u062a\u0642\u0644 \u0634\u0648\u062f\u060c \u0645\u0631\u062d\u0644\u0647\u200c\u0647\u0627\u06cc \u0628\u0639\u062f\u06cc \u0622\u0646 \u0631\u0627 \u062c\u0628\u0631\u0627\u0646 \u0646\u0645\u06cc\u200c\u06a9\u0646\u0646\u062f\u00bb \u00b7 #\u0641\u06cc\u062a_\u067e\u0631\u0648\u062a\u0632 \u00ab\u0646\u062a\u06cc\u062c\u0647\u200c\u06cc \u0686\u0646\u06cc\u0646 \u062e\u0637\u0627\u06cc\u06cc \u0627\u06cc\u0646 \u0627\u0633\u062a \u06a9\u0647 \u067e\u0631\u0648\u062a\u0632 passive fit \u0646\u062f\u0627\u0631\u062f\u00bb \u00b7 #\u0647\u06af\u0632_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u00ab\u0627\u06af\u0631 \u062c\u0647\u062a \u0647\u06af\u0632 \u062f\u0631 \u0645\u062f\u0644 \u0628\u0627 \u062f\u0647\u0627\u0646 \u06cc\u06a9\u06cc \u0646\u0628\u0627\u0634\u062f\u060c \u0627\u0628\u0627\u062a\u0645\u0646\u062a \u062f\u0631 \u062f\u0647\u0627\u0646 \u0686\u0646\u062f \u062f\u0631\u062c\u0647 \u0686\u0631\u062e\u06cc\u062f\u0647 \u0645\u06cc\u200c\u0646\u0634\u06cc\u0646\u062f\u00bb \u00b7 #\u067e\u0631\u0648\u0641\u0627\u06cc\u0644_\u0627\u0645\u0631\u062c\u0646\u0633 \u00ab\u0627\u06af\u0631 \u0627\u06cc\u0646 \u0634\u06a9\u0644 \u062b\u0628\u062a \u0646\u0634\u0648\u062f\u060c \u062a\u06a9\u0646\u0633\u06cc\u0646 \u0622\u0646 \u0631\u0627 \u062d\u062f\u0633\u06cc \u0637\u0631\u0627\u062d\u06cc \u0645\u06cc\u200c\u06a9\u0646\u062f\u00bb \u00b7 #\u067e\u0631\u0648\u062a\u0632_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a umbrella in addition. Composition: series + decision (#\u0641\u06cc\u062a_\u067e\u0631\u0648\u062a\u0632,#\u062e\u0637\u0627\u06cc_\u0642\u0627\u0644\u0628\u06af\u06cc\u0631\u06cc) + specific \u226410 (#\u0647\u06af\u0632_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a 2, #\u062e\u0637\u0627\u06cc_\u0642\u0627\u0644\u0628\u06af\u06cc\u0631\u06cc 3, #\u0641\u06cc\u062a_\u067e\u0631\u0648\u062a\u0632 9) + umbrella. Dropped as mention: #\u0634\u0644_\u0634\u062f\u0646_\u067e\u06cc\u0686, #\u067e\u0648\u0632\u06cc\u0634\u0646_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a, #\u06a9\u0627\u0646\u06a9\u0634\u0646_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a. --sync done, --check OK, build_cabinet_papers --check OK. Reachability: Q2 -> label \u00ab\u0647\u06af\u0632 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u00bb (2 pages) -> page in first 4 of chip: PASS; Q3 \u00ab\u0641\u06cc\u062a \u067e\u0631\u0648\u062a\u0632\u00bb (9 pages, rank depends on API order) recorded uncertain. content-index/assistant-tags reverted (runner C.8). No chip row on insight template."
+          "re-verified: 7 canonical tags unchanged (see prior C.5.0 evidence in audit); hashtag_ref --check OK"
         ],
         "id": "C.5.0",
         "module": "10-brain-and-pathways.md",
@@ -510,7 +667,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "dentcast-brain.json: clinical-109 appended as last array element, keys identical to clinical-108 [type,id,title,caption,hashtags,keywords,page_url,pillar]; keywords 8 from text, none repeats a hashtag; json valid"
+          "re-verified: clinical-109 last brain element, key parity with clinical-108"
         ],
         "id": "C.5",
         "module": "10-brain-and-pathways.md",
@@ -519,7 +676,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "pillar implantology/prosthetic-components = C.2.4 decision; capsule /pillar/implantology/ matches; no new subtopic"
+          "re-verified: implantology/prosthetic-components = C.2.4"
         ],
         "id": "C.5.5",
         "module": "10-brain-and-pathways.md",
@@ -528,7 +685,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "pathway_place: implant-prosthetic STRONG -> inserted after insight/insight-26 (index 23, 97 steps, no milestone). Not placed (ASK, conservative): fixed-pros 57 (after insight-80), implant-surgical 21, treatment-planning 15, digital 13, occlusion 10, failure-troubleshooting 10. Coverage: 1.52 per item (baseline 1.38; already above before this publish). 4.12-\u0628: 3 MCQ rows in plus/exam-questions.json byContent[insight/insight-109] (r-23331122, r-3a73f3fb, r-804f45d2), draft-check 0 errors, each approved by founder in M2; validate_exam_questions --content: 0 errors; drawn by implant-prosthetic"
+          "re-verified: implant-prosthetic after insight-26; exam rows r-23331122, r-3a73f3fb, r-804f45d2 approved in M2, validate --content 0 errors"
         ],
         "id": "C.5.6",
         "module": "10-brain-and-pathways.md",
@@ -537,7 +694,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "candidate bundle-implant-parts (continues implant-prosthetic): \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1 \u2014 folder insight/ is never a bundle type). No bundle edit, no home-bundles.js change"
+          "bundle-implant-parts \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1)"
         ],
         "id": "C.5.6-b",
         "module": "10-brain-and-pathways.md",
@@ -546,7 +703,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Pulse first line added/oldest removed (7 lines); insight/en/insight-109.html authored (Phase D agent part: chrome from en/insight-108 i.e. meta-1 standard, insight glass-box body translated structure-faithfully, 3 h3 + 10 figures, GA4 x1, canonical self .org, noindex follow, zero hreflang, inLanguage/og:locale en, no same-word gloss duplicates, no specialist links); fa toggle en/insight-109.html present; meta-1 unchanged; ten-scope lock recorded; pending_questions empty"
+          "re-verified after fix: Pulse first line intact (7 lines), insight/en/insight-109.html unchanged, toggles inverse, ten-scope lock unchanged (content_record now byContent entry), pending_questions empty"
         ],
         "id": "C.6",
         "module": "11-build-and-version.md",
@@ -579,7 +736,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: dentcast-brain.json, dentcast-hashtag-reference.json, index.html, insight/insight-109.html, plus/exam-questions.json, plus/faq-corpus.json, plus/pathways.json, insight/en/insight-109.html"
+    "note": "Index-only refresh after staging delivery paths: plus/faq-corpus.json"
   },
   "schema": "publish-handoff-v3"
 }
