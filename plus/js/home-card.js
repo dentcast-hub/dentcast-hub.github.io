@@ -1,14 +1,14 @@
 // Homepage personal card, in the existing "یادگیری هفتگی" slot (spec 2.4).
 // Two states: anonymous invitation, and logged-in free daily status. NO due-card
 // counter for free users, not even a zero or a locked stub. No minutes target.
-import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=247';
-import { currentUser, api } from './api.js?v=247';
-import { openLoginModal, openOrgNotice } from './login-modal.js?v=247';
-import { getModel, contentInfo } from './content-index.js?v=247';
-import { isOrgHost, detectContentId, baleEnabled, telegramLoginEnabled } from './config.js?v=247';
-import { ensurePushSubscription, removePushSubscription } from './push.js?v=247';
-import { leagueChip, maybeAnnounceOutcome } from './league.js?v=247';
-import { flushOutbox } from './outbox.js?v=247';
+import { el, faNum, streakIsActiveToday, STREAK_ACTIVITY_EVENT } from './util.js?v=249';
+import { currentUser, api } from './api.js?v=249';
+import { openLoginModal, openOrgNotice } from './login-modal.js?v=249';
+import { getModel, contentInfo } from './content-index.js?v=249';
+import { isOrgHost, detectContentId, baleEnabled, telegramLoginEnabled } from './config.js?v=249';
+import { ensurePushSubscription, removePushSubscription } from './push.js?v=249';
+import { leagueChip, maybeAnnounceOutcome } from './league.js?v=249';
+import { flushOutbox } from './outbox.js?v=249';
 
 function flame(active) {
   const s = el('span', { class: 'dc-plus-flame' + (active ? ' is-active' : ''), 'aria-hidden': 'true' });
