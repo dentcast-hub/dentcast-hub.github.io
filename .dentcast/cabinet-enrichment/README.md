@@ -47,6 +47,14 @@ filled. P0309's file does not match its catalogue authors/journal (nothing
 filled there). Text not readable without OCR: P0360 (font codes), P1414
 (image scan behind a ResearchGate cover).
 
+Founder's decision 2026-11-16: the 38 off-topic documents read so far were
+removed from the catalogue and moved to the Drive trash (36 from the Covid-19
+folder, P1658 contraceptive-implant leaflet, P1677 industrial MACOR brochure).
+Kept on purpose: P0184 and P0268 (soft-tissue graft materials, borderline) and
+every «unusable» item whose only problem is unreadable text (OCR later).
+Rows stay in results.jsonl so `todo` does not list them again; the site file
+skips ids that are no longer in the catalogue.
+
 ## Running the next slice (any session)
 
 All instructions live here: `PROPOSE.md` (Sonnet), `JUDGE.md` (Opus),
