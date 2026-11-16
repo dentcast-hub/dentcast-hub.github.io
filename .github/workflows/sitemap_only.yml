@@ -40,7 +40,8 @@ jobs:
 
       - name: 2b2. Rebuild the assistant's library-paper suggestions
         # plus/cabinet-papers.json follows the content index (site hashtags)
-        # and the paper library; either changing leaves it stale.
+        # and the paper library; either changing leaves it stale. The same run
+        # writes plus/cabinet-search.json (premium site search).
         run: python3 tools/build_cabinet_papers.py
 
       - name: 2b3. Rebuild the per-page DES record files
@@ -86,7 +87,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name  "github-actions[bot]"
-          git add sitemap.xml sitemap-ir.xml plus/content-index.json plus/assistant-tags.json plus/cabinet-papers.json service-worker.js
+          git add sitemap.xml sitemap-ir.xml plus/content-index.json plus/assistant-tags.json plus/cabinet-papers.json plus/cabinet-search.json service-worker.js
           git add -A -- plus/des
           # The stamper rewrites every `dentcast-brain.json?v=` URL in the HTML
           # (today index.html + player.html). Staging tracked+modified HTML by

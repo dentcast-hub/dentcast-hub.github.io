@@ -235,7 +235,7 @@ def rollback(backup, extra=()):
 
 TOOL_OUTPUTS = ("plus/des-scores.json", "dentcast-brain.json", ".dentcast/queue-frozen-des.json", ".dentcast/des-source-markers.json",
                 "plus/pathways.json", "dentcast-hashtag-reference.json", "plus/assistant-tags.json",
-                "plus/content-index.json", "plus/cabinet-papers.json")
+                "plus/content-index.json", "plus/cabinet-papers.json", "plus/cabinet-search.json")
 
 
 def additions_only(old, new):

@@ -24,6 +24,18 @@ page's own source first. share-40 (veneer-retained bridge) was built on
 Alikhasi 2025, yet under #جایگزینی_دندان and #بریج the library offered
 unrelated papers and, under #RBFDP, ranked it sixth behind «بیشتر».
 
+Second output (premium site search, global-search.js)
+  plus/cabinet-search.json
+    p:  {id: [title, year, type, journal, words]}  every listed paper; words is
+        the lowercase English the query is matched against: title, library
+        tags, the tags read from the full text (dentcast_cabinet_enrichment.json),
+        journal and author surnames
+    fa: {site tag key: [paper id, ...]}  the same ranking as byTag, at most
+        PER_SEARCH_TAG: a Persian query reaches English papers through the
+        site hashtags it names
+  Only a premium reader's browser fetches it; robots.txt and _headers keep it
+  out of search engines like the catalogue itself.
+
 Usage: python3 tools/build_cabinet_papers.py [--check]
   --check  verify the output is up to date and the bridge names only real tags
 """
@@ -36,6 +48,9 @@ INDEX = os.path.join(ROOT, 'plus', 'content-index.json')
 OUT = os.path.join(ROOT, 'plus', 'cabinet-papers.json')
 
 PER_TAG = 12
+PER_SEARCH_TAG = 40
+ENRICHMENT = os.path.join(ROOT, 'dentcast_cabinet_enrichment.json')
+SEARCH_OUT = os.path.join(ROOT, 'plus', 'cabinet-search.json')
 KF_MAX = 320
 TAG_WEIGHT = [1.0, 0.7, 0.5, 0.4]
 # A page's own source paper outranks anything matched by tags alone — when it
@@ -146,7 +161,7 @@ def build():
                 sources.setdefault(key, []).append(p)
 
     problems = []
-    by_tag, used = {}, {}
+    by_tag, used, search_fa = {}, {}, {}
     for key in sorted(tooth_topics - set(bridge)):
         problems.append(f'tooth_topics names a site tag with no bridge: {key}')
     for key, ids in sorted(exclude.items()):
@@ -208,8 +223,10 @@ def build():
             # rounded, so float noise (2.1999… vs 2.2) never outranks the year
             return (-round(total, 6), -year, pid)
 
-        ids = sorted(score, key=rank)[:PER_TAG]
+        ranked = sorted(score, key=rank)
+        ids = ranked[:PER_TAG]
         by_tag[key] = ids
+        search_fa[key] = ranked[:PER_SEARCH_TAG]
         for pid in ids:
             used[pid] = papers[pid]
 
@@ -235,12 +252,31 @@ def build():
         'paperCount': len(out_papers),
         'byTag': by_tag,
         'papers': out_papers,
-    }, problems
+    }, search_index(cat, by_lib, search_fa), problems
+
+
+def search_index(cat, by_lib, search_fa):
+    """Every paper the library lists, as a premium site-search row."""
+    enr = load(ENRICHMENT).get('papers', {}) if os.path.exists(ENRICHMENT) else {}
+    listed = {p['id'] for ps in by_lib.values() for p in ps}
+    rows = {}
+    for p in cat['papers']:
+        if p['id'] not in listed:
+            continue
+        title = re.sub(r'\s+', ' ', p.get('display_title') or p.get('real_title') or p.get('title') or '').strip()
+        tags = [t for t in p.get('tags', []) if not t.startswith('topic:')] + (enr.get(p['id'], {}).get('t') or [])
+        names = [a.split()[-1] for a in p.get('authors') or [] if isinstance(a, str) and a.split()]
+        words = ' '.join([title, ' '.join(t.replace('-', ' ') for t in tags), p.get('journal') or '', ' '.join(names)])
+        words = ' '.join(dict.fromkeys(re.sub(r'\s+', ' ', words).lower().split()))
+        rows[p['id']] = [title, p.get('crossref_year') or 0, p.get('type') or '', p.get('journal') or '', words]
+    return {'version': 1, 'p': rows,
+            'fa': {k: [i for i in v if i in rows] for k, v in sorted(search_fa.items())}}
 
 
 def main():
-    out, problems = build()
+    out, search, problems = build()
     text = json.dumps(out, ensure_ascii=False, separators=(',', ':')) + '\n'
+    search_text = json.dumps(search, ensure_ascii=False, separators=(',', ':')) + '\n'
     for p in problems:
         print('WARN', p, file=sys.stderr)
     if '--check' in sys.argv:
@@ -248,16 +284,23 @@ def main():
         if current != text:
             print('plus/cabinet-papers.json is stale: run python3 tools/build_cabinet_papers.py', file=sys.stderr)
             sys.exit(1)
+        current = open(SEARCH_OUT, encoding='utf-8').read() if os.path.exists(SEARCH_OUT) else ''
+        if current != search_text:
+            print('plus/cabinet-search.json is stale: run python3 tools/build_cabinet_papers.py', file=sys.stderr)
+            sys.exit(1)
         # Every problem fails the check: a renamed site tag, a bridge row that
         # yields nothing, a stale exclusion. The build itself only warns, so the
         # post-merge regeneration on main never stops over one of them.
         if problems:
             sys.exit(1)
-        print('OK - cabinet-papers.json matches the bridge and the library.')
+        print('OK - cabinet-papers.json and cabinet-search.json match the bridge and the library.')
         return
     with open(OUT, 'w', encoding='utf-8') as f:
         f.write(text)
+    with open(SEARCH_OUT, 'w', encoding='utf-8') as f:
+        f.write(search_text)
     print(f"Wrote plus/cabinet-papers.json: {out['tagCount']} site tags -> {out['paperCount']} papers.")
+    print(f"Wrote plus/cabinet-search.json: {len(search['p'])} papers, {len(search['fa'])} site tags.")
 
 
 if __name__ == '__main__':

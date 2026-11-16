@@ -25,6 +25,16 @@
    file leaves an empty .dc-gs-spot-anchor there on every render and
    announces it with the `dc:search-rendered` event.
 
+   Papers from the library («کتابخانهٔ دنت‌کست») — premium only (founder,
+   1405/08/26). The library is a premium surface, so its rows join the
+   results only after /me confirms a premium reader; nobody else ever
+   fetches plus/cabinet-search.json, and nothing here sells the library
+   (no lock, no teaser). A Persian query reaches the English papers through
+   the site hashtags it names (`fa`, built by tools/build_cabinet_papers.py
+   with the assistant's own ranking); an English one through the paper's
+   title, tags, journal and authors. A paper opens the cabinet page on its
+   title. Papers come after site content in «همه».
+
    Deliberately NOT here: a DES filter. Bands are comparable only
    inside one question_type and are never shown apart from it
    (global rules, DES display), so «band B or better» across the
@@ -91,14 +101,15 @@ document.addEventListener("DOMContentLoaded", () => {
     ["dentcast_plus", "ویدیوها",             "sr"],
     ["promptologist", "آموزش هوش مصنوعی",   "sr"],
     ["plak_sefr",     "آموزش ساخت سایت",    "sr"],
-    ["taraz",         "آموزش نقد مقاله",    "sr"]
+    ["taraz",         "آموزش نقد مقاله",    "sr"],
+    ["library",       "کتابخانه",            "wr"]
   ];
   /* The tag on a result names ONE item, so it is singular. */
   const TAG = {
     dentcast: "اپیزود", notecast: "خلاصهٔ اپیزود", clinical: "نکتهٔ کلینیکی",
     glossary: "دانشنامه", sharehub: "مرور منابع", chairside: "ویزیت", meta: "ایده",
     dentcast_plus: "ویدیو", promptologist: "پرامپتولوژیست", plak_sefr: "پلاک صفر",
-    taraz: "تراز شواهد"
+    taraz: "تراز شواهد", library: "مقاله"
   };
   const GROUP_HUE = {};
   GROUPS.forEach((g) => { GROUP_HUE[g[0]] = g[2]; });
@@ -259,6 +270,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }, "glossary"));
       });
       DB = out;
+      /* Premium only: the library's papers join the index once /me says so. */
+      dcPaperLibrary().then((data) => {
+        if (!data) return;
+        const lib = dcPaperRows(data, foldFa);
+        LIB_FA = lib.fa;
+        DB = DB.concat(lib.items);
+        if (searchInput.value.trim()) performSearch(searchInput.value.trim());
+      });
       /* اگه کاربر قبل از لود دیتابیس سرچ کرده بود (مثلاً از URL) */
       if (searchInput.value.trim()) {
         performSearch(searchInput.value.trim());
@@ -276,6 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ------------ the pipeline ------------ */
+  let LIB_FA = [];
   function score(item, q) {
     let s = 0;
     if (item._t.includes(q)) s += item._t.startsWith(q) ? 4 : 3;
@@ -291,8 +311,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const now = todayOrd();
       if (now != null) cutoff = now - state.years * 372;
     }
+    const fa = dcPaperHits(LIB_FA, q);
     for (const item of DB) {
-      const sc = score(item, q);
+      const sc = score(item, q) + (item._pid ? fa.get(item._pid) || 0 : 0);
       if (!sc) continue;
       if (state.pillars.size && !state.pillars.has(item._p)) continue;
       if (cutoff != null) {
@@ -308,8 +329,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (state.sort === "new" && dates) {
       return list.slice().sort((a, b) => (dates[b._path] || 0) - (dates[a._path] || 0) || b._s - a._s);
     }
-    /* Stable: equal scores keep the index order. */
-    return list.map((it, i) => [it, i]).sort((a, b) => b[0]._s - a[0]._s || a[1] - b[1]).map((x) => x[0]);
+    /* Stable: equal scores keep the index order. Papers after site content. */
+    return list.map((it, i) => [it, i]).sort((a, b) => (!!a[0]._pid - !!b[0]._pid) || b[0]._s - a[0]._s || a[1] - b[1]).map((x) => x[0]);
   }
 
   /* ------------ ساخت یک آیتم HTML ---------- */
@@ -325,11 +346,12 @@ document.addEventListener("DOMContentLoaded", () => {
   function buildItem(item, rawQ) {
     const g = item._group;
     const title = (item.title || "").trim();
-    const num = g === "dentcast" && item.episode ? '<span class="dc-gs-n">قسمت ' + faDigits(item.episode) + "</span>" : "";
+    const num = g === "dentcast" && item.episode ? '<span class="dc-gs-n">قسمت ' + faDigits(item.episode) + "</span>"
+      : g === "library" && item._year ? '<span class="dc-gs-n">' + faDigits(item._year) + "</span>" : "";
     const cap = (item.caption || "").trim();
-    return '<div class="dc-result-item dc-gs-res" role="button" tabindex="0" data-url="' + escHtml(item._url) + '" data-title="' + escHtml(title) + '">' +
+    return '<div class="dc-result-item dc-gs-res" role="button" tabindex="0" data-url="' + escHtml(item._url) + '" data-title="' + escHtml(title) + '"' + (item._pid ? ' data-paper="1"' : "") + ">" +
       '<div class="dc-gs-tg"><span class="dc-gs-tp dc-gs-tp--' + (GROUP_HUE[g] || "wr") + '">' + TAG[g] + "</span>" + num + "</div>" +
-      '<div class="dc-gs-ti"' + (g === "glossary" ? ' dir="auto"' : "") + ">" + markTitle(title, rawQ) + "</div>" +
+      '<div class="dc-gs-ti"' + (g === "glossary" || g === "library" ? ' dir="auto"' : "") + ">" + markTitle(title, rawQ) + "</div>" +
       (cap ? '<div class="dc-gs-cap" dir="auto">' + escHtml(cap) + "</div>" : "") +
       "</div>";
   }
@@ -446,6 +468,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let url = item.getAttribute("data-url") || "";
     if (!url) return;
     if (!/^https?:/.test(url)) url = location.origin + url;
+    /* A paper opens the cabinet page itself, never inside col-C. */
+    if (item.hasAttribute("data-paper")) { window.location.href = url; return; }
     /* On the desktop shell, open content in col-C via dcdOpen (which also
        dismisses the search overlay); on mobile navigate directly. Keyed off
        the actual UI mode (body.dc-desktop-ui), not a px threshold. */
@@ -688,6 +712,53 @@ document.addEventListener("DOMContentLoaded", () => {
    test index.html's isMob() uses to decide the desktop shell).
    ============================================================ */
 
+/* ============================================================
+   The library's papers in site search — PREMIUM ONLY
+   ------------------------------------------------------------
+   Shared by both engines below. Nothing is fetched until /me answers,
+   and only a confirmed premium reader fetches plus/cabinet-search.json
+   (an unreachable API means no papers, never a lock or an offer).
+============================================================ */
+function dcPaperLibrary() {
+  if (!dcPaperLibrary.p) {
+    dcPaperLibrary.p = import('/plus/js/api.js?v=244')
+      .then((m) => m.currentUser())
+      .then((u) => (u && u.tier === "premium"
+        ? fetch("/plus/cabinet-search.json").then((r) => (r.ok ? r.json() : null))
+        : null))
+      .then((d) => (d && d.p && d.fa ? d : null))
+      .catch(() => null);
+  }
+  return dcPaperLibrary.p;
+}
+/* Rows in the shape the engines search: _t title, _k English words. */
+function dcPaperRows(data, fold) {
+  const items = [];
+  Object.keys(data.p).forEach((id) => {
+    const r = data.p[id];
+    items.push({
+      title: r[0], caption: r[3] || "", _year: r[1] || 0, _pid: id, _group: "library",
+      _url: "/dentcast_cabinet_search.html?q=" + encodeURIComponent(r[0]).replace(/'/g, "%27"),
+      _path: "", _t: fold(r[0]), _k: fold(r[4]), _c: fold(r[3] || ""), _p: null
+    });
+  });
+  const fa = Object.keys(data.fa).map((k) => [fold(k), data.fa[k]]);
+  return { items, fa };
+}
+/* A Persian query names site hashtags; each brings its papers, best first. */
+function dcPaperHits(fa, q) {
+  const hits = new Map();
+  if (!fa || !fa.length || !q) return hits;
+  for (const [k, ids] of fa) {
+    if (!(k.includes(q) || (q.length >= 3 && k.length >= 3 && q.includes(k)))) continue;
+    ids.forEach((id, i) => {
+      const b = 3 + 0.5 * (1 - i / ids.length);
+      if (b > (hits.get(id) || 0)) hits.set(id, b);
+    });
+  }
+  return hits;
+}
+
 function dcLegacySearch() {
 
   /* ------------ DOM ------------- */
@@ -697,6 +768,7 @@ function dcLegacySearch() {
 
   /* ------------ DB --------------- */
   let DB = [];
+  let LIB = [], LIB_FA = [];   // premium only: the library's papers
 
   /* Matching only, never display: Arabic ي/ى/ك typed on an Arabic keyboard
      and ZWNJ/zero-width marks would otherwise miss the Persian spelling
@@ -711,6 +783,7 @@ function dcLegacySearch() {
     .trim();
   const faDigits = (s) => String(s).replace(/[0-9]/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
   const escHtml = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const _lib = '<svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg>';
 
   /* ------------ فیلترهای فعال -------------- */
  let activeFilters = new Set([
@@ -757,6 +830,12 @@ const TYPE_MAP = {
       const data = await res.json();
       if (!Array.isArray(data)) throw new Error("Invalid search index");
       DB = data;
+      dcPaperLibrary().then((lib) => {
+        if (!lib) return;
+        const rows = dcPaperRows(lib, foldFa);
+        LIB = rows.items; LIB_FA = rows.fa;
+        if (searchInput.value.trim()) performSearch(searchInput.value.trim());
+      });
       /* اگه کاربر قبل از لود دیتابیس سرچ کرده بود (مثلاً از URL) */
       if (searchInput.value.trim()) {
         performSearch(searchInput.value.trim());
@@ -927,7 +1006,23 @@ const TYPE_MAP = {
       if (foldFa(blob).includes(query)) results.push(item);
     }
 
-    if (!results.length) {
+    /* The library's papers, after site content (premium only). */
+    const faHits = dcPaperHits(LIB_FA, query);
+    const papers = [];
+    for (const it of LIB) {
+      const sc = (it._t.includes(query) ? 4 : 0) + (it._k.includes(query) ? 2 : 0) + (faHits.get(it._pid) || 0);
+      if (sc) papers.push([sc, it]);
+    }
+    papers.sort((a, b) => b[0] - a[0]);
+    const paperRow = (it) => '<div class="dc-result-item" role="button" tabindex="0" dir="auto" onclick="window.location.href=\'' + it._url + '\'">' +
+      _lib + " مقاله — " + escHtml(it.title) + (it._year ? " (" + it._year + ")" : "") + "</div>";
+    const papersHtml = papers.length
+      ? '<div class="dc-result-item dc-no-results" role="presentation">کتابخانه — ' + faDigits(papers.length) + " مقاله</div>" +
+        papers.slice(0, 30).map((x) => paperRow(x[1])).join("") +
+        (papers.length > 30 ? '<div class="dc-result-item" role="button" tabindex="0" onclick="window.location.href=\'/dentcast_cabinet_search.html?q=' + encodeURIComponent(q).replace(/'/g, "%27") + '\'">همهٔ مقاله‌ها در کتابخانه ›</div>' : "")
+      : "";
+
+    if (!results.length && !papers.length) {
       resultsBox.style.display = "block";
       resultsBox.innerHTML = `
       <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
@@ -950,6 +1045,7 @@ const TYPE_MAP = {
       <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
       ${visible.map(buildItem).join("")}
       ${more ? `<div class="dc-more-btn">مشاهده ادامه نتایج… (${results.length})</div>` : ""}
+      ${papersHtml}
     `;
 
     /* ------------ بستن نتایج ------------- */
@@ -964,7 +1060,7 @@ const TYPE_MAP = {
       moreBtn.onclick = () => {
         resultsBox.innerHTML =
           `<button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>` +
-          results.map(buildItem).join("");
+          results.map(buildItem).join("") + papersHtml;
 
         resultsBox.querySelector(".dc-close-results").onclick = () => {
           resultsBox.style.display = "none";
