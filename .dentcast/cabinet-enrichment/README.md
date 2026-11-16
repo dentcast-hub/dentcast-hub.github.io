@@ -21,11 +21,11 @@ follow_up, materials_brands, funding_coi, limitations; key_finding and
 clinical_bottom_line only where the catalogue had none), `cites_in_cabinet`
 (catalogue ids this paper cites, from its reference list, mechanically).
 
-Coverage: 2016 papers in `results.jsonl` (slice 1: 661, 2026-11-15; slice 2:
-681 and slice 3: 674, 2026-11-16). 26 could not be read (20 image-only scans
-needing OCR; 6 PDFs Drive would not serve: P0034, P0478, P0679, P2205, P2298,
-P2300); 127 catalogue papers not read yet; `todo` lists them again at
-the front of every slice.
+Coverage: 2036 papers in `results.jsonl` (slice 1: 661, 2026-11-15; slice 2:
+681 and slice 3: 674, 2026-11-16; 20 image-only scans after OCR, 2026-11-16).
+Not read yet: 127 catalogue papers; 6 PDFs Drive would not serve (P0034,
+P0478, P0679, P2205, P2298, P2300). `todo` lists the unread ones again at the
+front of every slice.
 
 ## Live since 2026-11-15
 
@@ -79,3 +79,14 @@ the site's zirconia-phase topic), P1828 (orthopaedic strain theory), P2093 and
 P2094 (lithium disilicate glass theses), P2658 (part 1 of a Persian zirconia
 series). Text not readable without OCR: P2136, P2562, P2712, P2716, P2771
 (garbled extraction) and the Persian zirconia series P2661-P2667.
+
+OCR (2026-11-16): the 20 image-only scans were read after OCR. `prepare`
+uses an existing `<work>/<id>.pdf` instead of downloading, so: download the
+PDF, run `ocrmypdf --force-ocr -l eng` (add `--rotate-pages` for rotated
+pages, as P1690 needed) into `<work>/<id>.pdf`, then `prepare` and the
+workflow as usual. Tesseract and ocrmypdf are not installed by default
+(`apt-get install tesseract-ocr`, `pip install ocrmypdf`). Two study types
+corrected (P0321 case report, P1485 narrative review). P2440 (TISSEEL SmPC,
+judged off-topic) kept: the founder's own Tisseel folder. Still garbled text
+(not image scans, OCR would help): P0360, P2136, P2562, P2712, P2716, P2771,
+P2661-P2667.
