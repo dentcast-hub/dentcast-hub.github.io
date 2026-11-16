@@ -39,6 +39,12 @@
    paper opens the cabinet page on its title. Papers come after site
    content in «همه».
 
+   Hashtag aliases (founder, 1405/08/26): a query that is the name, an
+   alias or a variant of a hashtag concept in dentcast-hashtag-reference.json
+   («تریتمنت پلن», «اکلوزیون», «occlusion») also finds what carries that
+   hashtag — site content for everyone, and (button on) the papers mapped to
+   it. The reference is fetched once, on the first query. No model involved.
+
    Deliberately NOT here: a DES filter. Bands are comparable only
    inside one question_type and are never shown apart from it
    (global rules, DES display), so «band B or better» across the
@@ -252,6 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
     item._k = foldFa((item.keywords || []).join(" ") + " " + (item.hashtags || []).join(" "));
     item._c = foldFa(item.caption || "");
     item._p = (item.pillar && item.pillar.primary) || null;
+    item._h = dcItemTags(item, foldFa);
     return item;
   }
 
@@ -282,6 +289,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }, "glossary"));
       });
       DB = out;
+      dcAliasForms(foldFa).then((f) => {
+        ALIAS = f;
+        if (f.length && searchInput.value.trim()) performSearch(searchInput.value.trim());
+      });
       /* اگه کاربر قبل از لود دیتابیس سرچ کرده بود (مثلاً از URL) */
       if (searchInput.value.trim()) {
         performSearch(searchInput.value.trim());
@@ -300,6 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ------------ the library's papers (premium button) ------------ */
   let LIB_FA = [];
+  let ALIAS = [];
   let papersOn = false;     // the button is ON and the papers are loaded
   let libLoaded = false;
   let isPremium = dcPremiumHint() ? null : false;   // null = hint says premium, not yet confirmed
@@ -373,10 +385,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const now = todayOrd();
       if (now != null) cutoff = now - state.years * 372;
     }
-    const fa = dcPaperHits(LIB_FA, q);
+    const ak = dcAliasKeys(ALIAS, q);
+    const fa = dcPaperHits(LIB_FA, q, ak);
     for (const item of DB) {
       if (item._pid && !papersOn) continue;
-      const sc = score(item, q) + (item._pid ? fa.get(item._pid) || 0 : 0);
+      const sc = score(item, q) + (item._pid ? fa.get(item._pid) || 0 : 0) +
+        (ak.size && item._h && item._h.some((h) => ak.has(h)) ? 2 : 0);
       if (!sc) continue;
       if (state.pillars.size && !state.pillars.has(item._p)) continue;
       if (cutoff != null) {
@@ -806,13 +820,13 @@ function dcPapersSetWanted(on) {
 function dcPremiumHint() { try { return localStorage.getItem("dcAds.vc") === "premium"; } catch (_) { return false; } }
 /* The answer AND why: "confirmed not premium" and "could not ask" differ. */
 function dcMe() {
-  return import('/plus/js/api.js?v=246')
+  return import('/plus/js/api.js?v=247')
     .then((m) => m.currentUser().then((u) => ({ u, status: m.meStatus() })))
     .catch(() => ({ u: null, status: "error" }));
 }
 /* The library's own gate card (plus/js/library-gate.js), with its own ?from=. */
 function dcPaperGate() {
-  return Promise.all([import('/plus/js/sheet.js?v=246'), import('/plus/js/premium-cta.js?v=246')])
+  return Promise.all([import('/plus/js/sheet.js?v=247'), import('/plus/js/premium-cta.js?v=247')])
     .then(([sheet, cta]) => {
       sheet.openSheet(sheet.gateCard({
         title: "جستجو در مقاله‌های کتابخانه ویژه‌ی پریمیوم است",
@@ -849,12 +863,49 @@ function dcPaperRows(data, fold) {
   const fa = Object.keys(data.fa).map((k) => [fold(k), data.fa[k]]);
   return { items, fa };
 }
-/* A Persian query names site hashtags; each brings its papers, best first. */
-function dcPaperHits(fa, q) {
+/* Hashtag concepts by every name they answer to: [folded form, folded key
+   with spaces]. The reference is the single source of the vocabulary. */
+function dcAliasForms(fold) {
+  if (!dcAliasForms.p) {
+    dcAliasForms.p = fetch("/dentcast-hashtag-reference.json")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => {
+        const out = [];
+        ((j && j.concepts) || []).forEach((c) => {
+          if (!c || !c.key) return;
+          const k = fold(String(c.key).replace(/_/g, " "));
+          [c.key].concat(c.aliases || [], c.variants || []).forEach((n) => {
+            const f = fold(String(n).replace(/_/g, " "));
+            if (f.length >= 2) out.push([f, k]);
+          });
+        });
+        return out;
+      })
+      .catch(() => []);
+  }
+  return dcAliasForms.p;
+}
+/* The concepts a query names: exactly, as part of a longer name (4+ letters),
+   or as a name inside a longer query. */
+function dcAliasKeys(forms, q) {
+  const keys = new Set();
+  if (!forms || !forms.length || !q) return keys;
+  for (const [f, k] of forms) {
+    if (f === q || (q.length >= 4 && f.includes(q)) || (f.length >= 4 && q.includes(f))) keys.add(k);
+  }
+  return keys;
+}
+/* An item's own hashtags, folded the same way as the keys. */
+function dcItemTags(item, fold) {
+  return (item.hashtags || []).map((h) => fold(String(h).replace(/^#/, "").replace(/_/g, " ")));
+}
+/* A Persian query names site hashtags; each brings its papers, best first.
+   `ak` is the set of concepts the query names through an alias. */
+function dcPaperHits(fa, q, ak) {
   const hits = new Map();
   if (!fa || !fa.length || !q) return hits;
   for (const [k, ids] of fa) {
-    if (!(k.includes(q) || (q.length >= 3 && k.length >= 3 && q.includes(k)))) continue;
+    if (!(k.includes(q) || (q.length >= 3 && k.length >= 3 && q.includes(k)) || (ak && ak.has(k)))) continue;
     ids.forEach((id, i) => {
       const b = 3 + 0.5 * (1 - i / ids.length);
       if (b > (hits.get(id) || 0)) hits.set(id, b);
@@ -873,6 +924,7 @@ function dcLegacySearch() {
   /* ------------ DB --------------- */
   let DB = [];
   let LIB = [], LIB_FA = [];   // premium only: the library's papers
+  let ALIAS = [];              // hashtag concepts by every name
 
   /* Matching only, never display: Arabic ي/ى/ك typed on an Arabic keyboard
      and ZWNJ/zero-width marks would otherwise miss the Persian spelling
@@ -934,6 +986,11 @@ const TYPE_MAP = {
       const data = await res.json();
       if (!Array.isArray(data)) throw new Error("Invalid search index");
       DB = data;
+      DB.forEach((it) => { it._h = dcItemTags(it, foldFa); });
+      dcAliasForms(foldFa).then((f) => {
+        ALIAS = f;
+        if (f.length && searchInput.value.trim()) performSearch(searchInput.value.trim());
+      });
       /* اگه کاربر قبل از لود دیتابیس سرچ کرده بود (مثلاً از URL) */
       if (searchInput.value.trim()) {
         performSearch(searchInput.value.trim());
@@ -1139,6 +1196,7 @@ const TYPE_MAP = {
     }
 
     const query = foldFa(q);
+    const ak = dcAliasKeys(ALIAS, query);
     let results = [];
 
     for (const item of DB) {
@@ -1156,12 +1214,12 @@ const TYPE_MAP = {
         (item.hashtags || []).join(" ")
       );
 
-      if (foldFa(blob).includes(query)) results.push(item);
+      if (foldFa(blob).includes(query) || (ak.size && item._h && item._h.some((h) => ak.has(h)))) results.push(item);
     }
 
     /* The library's papers, after site content (premium, button on). */
     askMe();
-    const faHits = dcPaperHits(LIB_FA, query);
+    const faHits = dcPaperHits(LIB_FA, query, ak);
     const papers = [];
     for (const it of (papersOn ? LIB : [])) {
       const sc = (it._t.includes(query) ? 4 : 0) + (it._k.includes(query) ? 2 : 0) + (faHits.get(it._pid) || 0);
