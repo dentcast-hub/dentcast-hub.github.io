@@ -1,0 +1,105 @@
+{
+ "scored_at": "2026-11-16",
+ "sources": [
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "FULL_TEXT",
+   "citation": {
+    "title": "Clinical performance of implant-assisted removable partial dentures using implant surveyed crowns: a systematic review and meta-analysis",
+    "authors": "Kim SY, Cho YE, Hong SJ, Huh JB, Pyo SW, Yi Y, Yoo SY",
+    "year": 2024,
+    "journal": "The Journal of Advanced Prosthodontics",
+    "doi": "10.4047/jap.2024.16.4.255"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 100,
+    "anchor": "Systematic review of retrospective studies and case reports with no pooled analysis performed (THERAPY SR/MA row, 100, via Step 2 routing)",
+    "evidence_quote": "This systematic review was conducted according to"
+   },
+   "q_method": {
+    "tool": "AMSTAR-2",
+    "domains": [
+     {
+      "domain": "protocol registered before commencement",
+      "rating": "high",
+      "evidence_quote": "",
+      "note": "Absent. Read Methods (PRISMA/PICO, study selection, databases, inclusion criteria, search string, data extraction) and the front matter. No protocol, PROSPERO or registration wording anywhere in the text."
+     },
+     {
+      "domain": "adequacy of the literature search",
+      "rating": "low",
+      "evidence_quote": "PubMed, Cochrane Library, Web of Science, and Korea",
+      "note": "At least 2 bibliographic databases were searched (MEDLINE/PubMed, Cochrane, Web of Science, KCI). The full search string is given in Table 1, and reference lists were also hand-checked."
+     },
+     {
+      "domain": "justification for excluding individual studies",
+      "rating": "some_concerns",
+      "evidence_quote": "A total of 214 articles were obtained.",
+      "note": "There is no per-study list of excluded full texts. The review reports (a) a screening account with counts and a flowchart (Fig. 1) and (b) explicit inclusion criteria, so the rating is some_concerns under 3b-iii."
+     },
+     {
+      "domain": "risk of bias assessment of included studies",
+      "rating": "high",
+      "evidence_quote": "",
+      "note": "Absent. The text states that no appraisal was done: 'Scoping reviews do not examine the possibility of bias or heterogeneity of included studies, hence no quality assessments were undertaken'. Results and Discussion contain no appraisal tool or quality wording."
+     },
+     {
+      "domain": "appropriateness of meta-analytical methods",
+      "rating": "high",
+      "evidence_quote": "",
+      "note": "Absent. Despite the title, Methods (selection → search → data extraction) and Results describe no pooling, effect model, heterogeneity test or statistical analysis of any kind. Findings are only listed narratively by study."
+     },
+     {
+      "domain": "assessment of publication bias",
+      "rating": "high",
+      "evidence_quote": "",
+      "note": "Absent. Methods, Results and Discussion contain no funnel plot, Egger test or publication/small-study bias wording."
+     }
+    ],
+    "multiplier": 0.3
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 8,
+     "evidence_quote": "This research was performed with",
+     "note": "The only declaration in the text is a funding line naming the Korean Academy of Prosthodontics, which is an academic society and not a manufacturer. I searched the full text for a conflict-of-interest or competing-interest statement, including ligature variants, and none appears."
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: not an RCT"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable to a secondary study"
+    },
+    {
+     "item": "follow-up shorter than the outcome plausibly requires",
+     "base_points": 3,
+     "points": 3,
+     "evidence_quote": "at least one year.",
+     "note": "The conclusion presents ICRPD as effective as a long-term treatment strategy. The 100% survival figures it summarises rest on implants observed for at least one year, which is short relative to that long-term survival claim."
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 19,
+   "band": "E",
+   "provisional": false,
+   "fact_fa": "امتیاز DES این مقاله ۱۹ و باند آن E (سطح زمینه/نظر) برای پرسش از نوع THERAPY است.",
+   "interpretation_fa": "عنوان مقاله meta-analysis است، اما هیچ تحلیل تجمیعی در آن انجام نشده است. کیفیت مطالعات واردشده هم ارزیابی نشده و ثبت پروتکلی گزارش نشده است. شواهد آن به مطالعات retrospective و case reportهای عمدتاً کره‌ای محدود است. ارزش بالینی آن در حد نقشه‌ای از تجربه‌های موجود درباره‌ی ICRPD است، نه شاهدی برای برتری یا دوام طولانی‌مدت آن."
+  }
+ ]
+}
