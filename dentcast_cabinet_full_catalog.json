@@ -14458,11 +14458,11 @@
       "file_name": "stress braking for direct composit.pdf",
       "topic": "biomimetic",
       "topic_path": "biomimetic",
-      "type": "other document",
+      "type": "case report",
       "local_path": "E:\\Paper farzad\\biomimetic\\stress braking for direct composit.pdf",
       "file_size": 5404741,
-      "key_finding": "",
-      "clinical_bottom_line": "",
+      "key_finding": "The article presents a Stress Reducing Direct Composite technique for conservative cuspal-coverage composite restorations: a thin flowable base, small wedge-shaped dentin increments cured separately, one cusp of enamel at a time, and progressive/pulse light curing to limit polymerization shrinkage stress. It is illustrated with a single case and no outcome data.",
+      "clinical_bottom_line": "In high C-factor conservative preparations, careful incremental layering with a flowable base and softstart curing is proposed to protect the adhesive bond, but no clinical outcomes support it here.",
       "linked_episodes": [],
       "drive_link": "",
       "status": "linked",
@@ -14482,12 +14482,15 @@
       "semantic_tagged": true,
       "real_title": "Stress-reduced direct composite layering diagram: dentin and enamel replacement with \"Deli-bits\"",
       "doi": "",
-      "journal": "",
-      "crossref_year": null,
+      "journal": "Practical Procedures & Aesthetic Dentistry",
+      "crossref_year": 2009,
       "subjects": [],
       "abstract": "",
       "display_title": "Stress-reduced direct composite layering diagram: dentin and enamel replacement with \"Deli-bits\"",
-      "authors": []
+      "authors": [
+        "Simone Deliperi",
+        "David Alleman"
+      ]
     },
     {
       "id": "P0322",
@@ -66256,7 +66259,7 @@
       "file_name": "55 Turner.pdf",
       "topic": "increase vd",
       "topic_path": "increase vd",
-      "type": "other primary research",
+      "type": "narrative review",
       "local_path": "E:\\Paper farzad\\increase vd\\55 Turner.pdf",
       "file_size": 2007260,
       "key_finding": "Clinical review (1984) of the etiology, occlusal vertical dimension evaluation and restoration of extremely worn dentitions, classifying patients into three treatment categories. The authors state there is no definitive evidence that wear reduces vertical dimension, and that arbitrary increases should be avoided and tested first with removable splints and provisionals.",
