@@ -1,0 +1,297 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "sharehub",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "انتقال امرجنس پروفایل با اسکن روکش موقت",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "caption_fa": {
+  "value": "وقتی روکش موقت لثه را شکل داده، این شکل را در قالب‌گیری دیجیتال چطور به لابراتوار برسانیم؟ سه اسکن، دو راه برای ثبت داخل لثه، و پروتکل E-merge که اسکن بادی را کنار می‌گذارد.",
+  "from": "02-عنوان-کپشن.md:9"
+ },
+ "title_en": {
+  "value": "Transferring the Emergence Profile by Scanning the Provisional Crown",
+  "from": "06-انگلیسی.md:1"
+ },
+ "caption_en": {
+  "value": "Once the provisional crown has shaped the gingiva, how do we get that shape to the laboratory in a digital impression? Three scans, two ways to capture the inside of the gingiva, and the E-merge protocol, which leaves the scan body out.",
+  "from": "06-انگلیسی.md:3"
+ },
+ "body_en": {
+  "value": "Over a few weeks, the provisional crown has shaped the gingiva around itself. When we remove the provisional crown, the gingiva may start to collapse [1, 3], and a narrow scan body does not prevent this collapse either. So if we scan only the scan body, the laboratory sees the collapsed gingiva, and the definitive crown will not have the shape we built with the provisional crown.\n\nIn conventional impressions we solve this problem with a customized impression coping. We screw the provisional crown onto an analog and push it into silicone so that the imprint of its transmucosal part stays in the silicone. Then we screw the impression coping onto the same analog and fill the space between the coping and the silicone with acrylic resin or flowable composite, so that the coping takes on the same transmucosal form as the provisional crown [1]. The details of this method are covered in part five of the implant impression series.\n\nIn the digital method the idea is the same: the shape of the gingiva is on the provisional crown itself. The part of the provisional crown that sits inside the gingiva (the transmucosal part) has exactly the shape the gingiva has taken. Only this time, instead of copying this shape onto a coping, we scan the provisional crown itself [2].\n\n[[Image:01]]\n\n*Figure 1: The formed emergence profile at three implant sites after the provisional restoration phase. Source: Atri and Nokar, 2025 (CC BY).*\n\n## Steps\n\nWe take three scans, and the software superimposes them [2, 3]:\n\n1. A scan with the provisional crown in the mouth. The coronal part of the provisional crown, the gingival margin and the adjacent teeth are captured.\n\n2. Removing the provisional crown and capturing the shape inside the gingiva, with one of the two ways described below [1].\n\n3. Connecting the scan body and scanning it, to capture the implant position.\n\nThe software superimposes the scans using their shared parts, such as the adjacent teeth and the coronal part of the provisional crown [2]. That is why these parts must be captured completely in every scan.\n\n## Way one: a quick scan of the gingiva\n\nIf the gingiva stays in place for about a minute after the provisional crown is removed, we scan the inside of the gingiva right then, in about 10 seconds [1]. This usually happens when the implant is shallow (the platform less than 4 millimeters below the gingival margin), the gingiva is thick and the emergence profile is conical. These numbers are criteria of the method's original protocol [1, 3].\n\n## Way two: scanning the provisional crown outside the mouth\n\nIf the implant is deep or the gingiva collapses quickly, there is no time to scan the gingiva [1]. Here we screw the provisional crown onto an analog and scan it all around outside the mouth, including the part that was inside the gingiva [1, 3]. The software matches this scan to the first scan using the coronal part of the provisional crown. In this way, the part of the provisional crown that was inside the gingiva lands in its correct place in the file, and the shape of the gingiva is built from it [2]. That is why the provisional crown must not change at all between these two scans.\n\n[[Image:02]]\n\n*Figure 2: Scan of a provisional bridge on two analogs outside the mouth, including the part that was inside the gingiva. Source: Atri and Nokar, 2025 (CC BY).*\n\n[[Image:03]]\n\n*Figure 3: The same scan after it was superimposed on the intraoral scan. Source: Atri and Nokar, 2025 (CC BY).*\n\n## Without a scan body: the E-merge protocol\n\nThe E-merge protocol was introduced by Dada and colleagues for single-tooth immediate implants. In this method the scan body is never connected in the mouth, and the provisional crown is not removed after healing either [4]. The steps are:\n\n1. Before placing the provisional crown in the mouth, we screw it onto a special analog (Straumann RB Repositionable Implant Analog) and scan the two together outside the mouth [4]. The outer surface of this analog has an index that shows the position of the platform and the rotational orientation of the connection in the scan. In other words, here the analog does the scan body's job. The result of the final scan of the crown is a file that has both the complete shape of the provisional crown and the implant position relative to it.\n\n2. We screw the provisional crown into the mouth.\n\n3. After the gingiva has healed, with the provisional crown in place, we take a regular scan of the mouth and superimpose the two files [4]. The coronal part of the provisional crown is in both files, and the two files are matched using it. Because the implant position relative to the provisional crown was known in the first file, the implant position in the mouth is obtained as well.\n\nThis method works only if the provisional crown has not changed at all after the first scan.\n\nE-merge differs from the reverse scan body, although the logic of both is that the implant position is obtained from the prosthesis itself. With the reverse scan body, the scan bodies are connected to the intaglio surface of a full-arch provisional prosthesis, and the prosthesis is scanned outside the mouth so that the position of several implants is captured without an intraoral scan of the scan bodies [5]. E-merge is for single units and immediate implants, and it uses an indexed analog instead of a scan body.\n\n## Limitation\n\nThe accuracy of implant scanning may be affected by the scanning method and the implant depth [1]. The sources of this article have described the method, but they have not compared its accuracy with the customized coping.",
+  "from": "06-انگلیسی.md:6-62"
+ },
+ "images": {
+  "value": [
+   {
+    "n": "01",
+    "file": {
+     "value": "03-تصاویر/01-formed-emergence-profile-three-implants.webp",
+     "from": "03-تصاویر/تصاویر.md:8"
+    },
+    "alt_fa": {
+     "value": "امرجنس پروفایل شکل‌گرفته",
+     "from": "03-تصاویر/تصاویر.md:9"
+    },
+    "alt_en": {
+     "value": "Formed emergence profile",
+     "from": "03-تصاویر/تصاویر.md:10"
+    },
+    "caption_fa": {
+     "value": "تصویر ۱: امرجنس پروفایل شکل‌گرفته در ناحیه‌ی سه ایمپلنت بعد از دوره‌ی روکش موقت. منبع: Atri و Nokar، 2025 (CC BY).",
+     "from": "03-تصاویر/تصاویر.md:11"
+    },
+    "caption_en": {
+     "value": "Figure 1: The formed emergence profile at three implant sites after the provisional restoration phase. Source: Atri and Nokar, 2025 (CC BY).",
+     "from": "06-انگلیسی.md:65"
+    }
+   },
+   {
+    "n": "02",
+    "file": {
+     "value": "03-تصاویر/02-provisional-bridge-scanned-on-analogs.webp",
+     "from": "03-تصاویر/تصاویر.md:19"
+    },
+    "alt_fa": {
+     "value": "اسکن موقت روی آنالوگ",
+     "from": "03-تصاویر/تصاویر.md:20"
+    },
+    "alt_en": {
+     "value": "Provisional scanned on analogs",
+     "from": "03-تصاویر/تصاویر.md:21"
+    },
+    "caption_fa": {
+     "value": "تصویر ۲: اسکن یک بریج موقت روی دو آنالوگ بیرون از دهان، با قسمتی که داخل لثه بوده است. منبع: Atri و Nokar، 2025 (CC BY).",
+     "from": "03-تصاویر/تصاویر.md:22"
+    },
+    "caption_en": {
+     "value": "Figure 2: Scan of a provisional bridge on two analogs outside the mouth, including the part that was inside the gingiva. Source: Atri and Nokar, 2025 (CC BY).",
+     "from": "06-انگلیسی.md:66"
+    }
+   },
+   {
+    "n": "03",
+    "file": {
+     "value": "03-تصاویر/03-provisional-scan-superimposed-intraoral.webp",
+     "from": "03-تصاویر/تصاویر.md:30"
+    },
+    "alt_fa": {
+     "value": "اسکن موقت روی اسکن داخل دهانی",
+     "from": "03-تصاویر/تصاویر.md:31"
+    },
+    "alt_en": {
+     "value": "Provisional scan on the intraoral scan",
+     "from": "03-تصاویر/تصاویر.md:32"
+    },
+    "caption_fa": {
+     "value": "تصویر ۳: همان اسکن بعد از قرار گرفتن روی اسکن داخل دهانی. منبع: Atri و Nokar، 2025 (CC BY).",
+     "from": "03-تصاویر/تصاویر.md:33"
+    },
+    "caption_en": {
+     "value": "Figure 3: The same scan after it was superimposed on the intraoral scan. Source: Atri and Nokar, 2025 (CC BY).",
+     "from": "06-انگلیسی.md:67"
+    }
+   }
+  ],
+  "from": "03-تصاویر/تصاویر.md"
+ },
+ "credit": {
+  "value": {
+   "mode": "references",
+   "items": [
+    {
+     "label_fa": "Atri و Nokar، Clin Exp Dent Res، ۲۰۲۵",
+     "label_en": "Atri and Nokar, Clin Exp Dent Res, 2025",
+     "href": "https://doi.org/10.1002/cre2.70097",
+     "from": "04-منبع/منابع.md:39"
+    },
+    {
+     "label_fa": "Monaco و همکاران، Clin Oral Implants Res، ۲۰۱۶",
+     "label_en": "Monaco et al., Clin Oral Implants Res, 2016",
+     "href": "https://doi.org/10.1111/clr.12599",
+     "from": "04-منبع/منابع.md:40"
+    },
+    {
+     "label_fa": "Monaco و همکاران، J Prosthodont، ۲۰۱۹",
+     "label_en": "Monaco et al., J Prosthodont, 2019",
+     "href": "https://doi.org/10.1111/jopr.12991",
+     "from": "04-منبع/منابع.md:41"
+    },
+    {
+     "label_fa": "Dada و همکاران، Int J Comput Dent، ۲۰۲۱",
+     "label_en": "Dada et al., Int J Comput Dent, 2021",
+     "href": "https://doi.org/10.3290/j.ijcd.b2382983",
+     "from": "04-منبع/منابع.md:42"
+    },
+    {
+     "label_fa": "Papaspyridakos و همکاران، J Prosthodont، ۲۰۲۴",
+     "label_en": "Papaspyridakos et al., J Prosthodont, 2024",
+     "href": "https://doi.org/10.1111/jopr.13921",
+     "from": "04-منبع/منابع.md:43"
+    }
+   ]
+  },
+  "from": "04-منبع/منابع.md:35"
+ },
+ "catalog": {
+  "value": [
+   {
+    "title": "Prosthetic Soft Tissue Management in Esthetic Implant Restorations, Part II: Post-surgical Considerations and Impression Techniques. A Narrative Review",
+    "file_name": "Prosthetic Soft Tissue Management in Esthetic Implant Restorations, Part II: Post-surgical Considerations and Impression Techniques. A Narrative Review.pdf",
+    "topic": "Impression",
+    "topic_path": "Impression",
+    "type": "narrative review",
+    "local_path": "",
+    "file_size": 1265691,
+    "key_finding": "Narrative review of postsurgical prosthetic soft tissue management around anterior implants: healing and definitive abutment options, provisional contour management, and four ways to transfer peri-implant soft tissue shape (customized coping, emergence profile cast, soft material injection in the master cast, digital impression).",
+    "clinical_bottom_line": "Use primary stability to decide on immediate restoration, rebuild collapsed tissue with a contoured provisional, and transfer the resulting gingival profile to the lab with a customized technique or digital impression.",
+    "drive_link": "https://drive.google.com/file/d/1ASYX-Q3Fk0tKkbXjKH02ehLNs5VDnyuX/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=1ASYX-Q3Fk0tKkbXjKH02ehLNs5VDnyuX",
+    "drive_view": "https://drive.google.com/file/d/1ASYX-Q3Fk0tKkbXjKH02ehLNs5VDnyuX/view",
+    "drive_id": "1ASYX-Q3Fk0tKkbXjKH02ehLNs5VDnyuX",
+    "tags": [
+     "dental-implant",
+     "esthetic-zone",
+     "emergence-profile",
+     "provisional-restoration",
+     "soft-tissue-management",
+     "impression-coping",
+     "digital-impression",
+     "impression-technique",
+     "custom-abutment",
+     "narrative-review",
+     "topic:impression",
+     "prosthetic-soft-tissue-management-esthetic-implant-restorations-post-surgical-impression-techniques"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Prosthetic Soft Tissue Management in Esthetic Implant Restorations, Part II: Post-surgical Considerations and Impression Techniques. A Narrative Review",
+    "doi": "10.1002/cre2.70097",
+    "journal": "Clinical and Experimental Dental Research",
+    "crossref_year": 2025,
+    "subjects": [],
+    "abstract": "Objectives: This two-part review article delineates various techniques to enhance esthetic outcomes in anterior implant treatments. Part I concentrates on presurgical measures, case selection, implant placement, and restoration timing. Part II discusses postsurgical steps, the temporary restoration phase, the emergence profile contour, abutment types, and impression techniques. Material and Methods: A comprehensive search was conducted using Medline/PubMed, Embase, Scopus, and the Cochrane Library. The primary keywords included: “Dental Implants,” “Dental Prosthesis, Implant-Supported,” “Esthetics, Dental,” “Dental Impression Techniques,” and “Tissue Management.” Results: Initially, 1472 studies were identified, from which 187 were selected based on publication year and title relevance. After removing duplicates, 84 abstracts were reviewed in full text, culminating in 59 studies being thoroughly analyzed. Conclusions: The decision to deliver an immediate restoration following implant insertion depends on the primary stability. However, in cases where delayed restoration is chosen, it is essential to consider the potential collapse of the soft tissue. A temporary restoration phase could be beneficial to aid in rebuilding the soft tissue. After achieving the desirable level of soft tissue, several techniques are available to achieve a precise transfer of molded gingival architecture, including customized impression coping, injection of soft material around the provisional restoration in the master cast, and digital impression.",
+    "display_title": "Prosthetic Soft Tissue Management in Esthetic Implant Restorations, Part II: Post-surgical Considerations and Impression Techniques. A Narrative Review",
+    "authors": [
+     "Faezeh Atri",
+     "Kimia Nokar"
+    ]
+   }
+  ],
+  "from": "04-منبع/کاتالوگ.json"
+ },
+ "hashtags": {
+  "value": [
+   "#مرور_منابع",
+   "#پروفایل_امرجنس",
+   "#روکش_موقت",
+   "#قالب‌گیری_دیجیتال",
+   "#اسکن_بادی",
+   "#مدیریت_بافت_نرم",
+   "#ایمپلنت_فوری",
+   "#پروتز_ایمپلنت"
+  ],
+  "from": "07-ورودی‌ها.md:15"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "implantology",
+   "subtopic": "prosthetic-components",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:12"
+ },
+ "pulse": {
+  "value": {
+   "text": null,
+   "link_phrase": "انتقال امرجنس پروفایل با اسکن روکش موقت"
+  },
+  "from": "07-ورودی‌ها.md:21"
+ },
+ "keywords": {
+  "value": [
+   "انتقال امرجنس پروفایل",
+   "اسکن روکش موقت",
+   "قالب‌گیری دیجیتال ایمپلنت",
+   "کلپس لثه بعد از باز کردن روکش موقت",
+   "ایمپرشن کوپینگ کاستومایز",
+   "بخش ترانس‌موکوزال روکش موقت",
+   "روی هم گذاشتن سه اسکن",
+   "اسکن روکش موقت روی آنالوگ بیرون از دهان",
+   "پروتکل E-merge",
+   "ایمپلنت فوری تک‌واحد",
+   "آنالوگ ایندکس‌دار",
+   "ریورس اسکن بادی"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "امرجنس پروفایل",
+    "href": "/glossary/emergence-profile.html",
+    "from": "11-لینک‌های-گلاسری.md:12"
+   },
+   {
+    "phrase": "اسکن بادی",
+    "href": "/glossary/scan-body.html",
+    "from": "11-لینک‌های-گلاسری.md:13"
+   },
+   {
+    "phrase": "قسمت پنجم سری قالب‌گیری ایمپلنت",
+    "href": "/insight/insight-113.html",
+    "from": "11-لینک‌های-گلاسری.md:14"
+   },
+   {
+    "phrase": "ریورس اسکن بادی",
+    "href": "/sharehub/share-38.html",
+    "from": "11-لینک‌های-گلاسری.md:15"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:8"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "/insight/insight-112.html",
+    "label": "قالب‌گیری ایمپلنت: اسکن دیجیتال",
+    "from": "11-لینک‌های-گلاسری.md:31"
+   },
+   {
+    "href": "/sharehub/share-48.html",
+    "label": "بعد از کاشت ایمپلنت قدامی، جای خالی دندان را چطور پر کنیم؟",
+    "from": "11-لینک‌های-گلاسری.md:32"
+   },
+   {
+    "href": "/episodes/episode-125-2.html",
+    "label": "اینسایت — روکش موقت فوری و بافت نرم (Esthetic Zone)",
+    "from": "11-لینک‌های-گلاسری.md:33"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:27"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
