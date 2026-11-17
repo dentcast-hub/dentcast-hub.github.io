@@ -187,7 +187,14 @@ export function renderQuickPublish(): string {
     function inBody(img) { return body.value.indexOf('](' + img.path + ')') >= 0; }
     // Isolated left-to-right (U+2066 … U+2069) so the image line reads straight in the right-to-left
     // textarea instead of the path scrambled around the caption; the server ignores the two marks.
-    function line(img) { return '\u2066![' + (img.alt || '').replace(/[\[\]\n]/g, ' ').trim() + '](' + img.path + ')\u2069'; }
+    function cleanAlt(img) { return (img.alt || '').replace(/[\[\]\n]/g, ' ').trim(); }
+    function line(img) { return '\u2066![' + cleanAlt(img) + '](' + img.path + ')\u2069'; }
+    // A caption typed after «درج در متن» goes into the line already in the text; the line is what gets published.
+    function relabel(img) {
+      var at = body.value.indexOf('](' + img.path + ')'), open = at < 0 ? -1 : body.value.lastIndexOf('![', at);
+      if (open < 0 || /[\]\n]/.test(body.value.slice(open + 2, at))) return;
+      body.value = body.value.slice(0, open + 2) + cleanAlt(img) + body.value.slice(at);
+    }
     function drawImages() {
       var box = el('qpImages'); box.textContent = '';
       images.forEach(function (img, i) {
@@ -195,7 +202,7 @@ export function renderQuickPublish(): string {
         var t = document.createElement('img'); t.src = shown[img.path] || ('https://dentcast.ir' + img.path); t.alt = ''; card.appendChild(t);
         var main = document.createElement('div'); main.className = 'qp-img-main';
         var alt = document.createElement('input'); alt.placeholder = 'زیرنویس عکس (اختیاری؛ زیر عکس دیده می‌شود)'; alt.maxLength = 200; alt.value = img.alt || '';
-        alt.addEventListener('input', function () { img.alt = alt.value; saveDraft(); });
+        alt.addEventListener('input', function () { img.alt = alt.value; relabel(img); saveDraft(); });
         main.appendChild(alt);
         main.appendChild(text('div', inBody(img) ? 'در متن درج شده' : 'هنوز در متن نیست — اگر درج نکنی ته متن می‌آید', 'muted qp-in'));
         var row = document.createElement('div'); row.className = 'qp-row';
@@ -392,7 +399,7 @@ export function renderQuickPublish(): string {
         var st = el('qpStatus'), sel = el('qpType');
         if (!sel.options.length) {
           Object.keys(j.types).forEach(function (k) { var o = text('option', j.types[k]); o.value = k; sel.appendChild(o); });
-          if (!el('qpEditing').value) { try { fill(JSON.parse(localStorage.getItem(DRAFT) || '{}')); } catch (e) {} }
+          if (!el('qpEditing').value) { try { fill(JSON.parse(localStorage.getItem(DRAFT) || '{}')); } catch (e) { fill({}); } }
         }
         var sw = el('qpSwitch'), btn = el('qpSwitchBtn');
         sw.hidden = false; btn.setAttribute('data-on', j.enabled ? '1' : '0');

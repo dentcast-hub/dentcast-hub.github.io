@@ -543,8 +543,12 @@ export function publish(input: QpInput): Promise<{ item: QpItem; url: string }> 
     if (!rawLedger && (await one('select 1 from quick_publications limit 1'))) throw new QpError('ledger_missing', 409);
     await ensureMedia(store, rendered.media);
     const t = QP_TYPES[v.type];
+    // The API's own backups count too: an item a deploy wiped from the bucket (page, brain
+    // entry and ledger line) still owns its number, or a new page would take its id and
+    // overwrite the only copy of it.
+    const backedUp = (await query<{ n: number | null }>(`select (record->>'n')::int as n from quick_publications where type = $1`, [v.type])).rows;
     let n = Math.max(0, ...brain.filter(e => e.type === v.type).map(e => numberFrom(e[t.urlKey] ?? e.url ?? e.page_url, v.type)),
-      ...ledger.items.filter(x => x.type === v.type).map(x => x.n)) + 1;
+      ...ledger.items.filter(x => x.type === v.type).map(x => x.n), ...backedUp.map(r => r.n ?? 0)) + 1;
     // A page already at that address means the bucket and its brain disagree;
     // never overwrite someone else's page — take the next free number.
     for (let tries = 0; await store.get(`${t.folder}/${t.stem}${n}.html`); tries++) {
@@ -632,6 +636,10 @@ async function restoreNow(id: string): Promise<{ restored: string[] }> {
       const media = await one<{ content_type: string; data: Buffer }>('select content_type, data from quick_publish_media where path = $1', [m]);
       if (media) { await store.put(m, media.data, media.content_type); restored.push(m); }
     }
+    // Past import, git owns the section list, the Pulse, the brain entry and the ledger
+    // line (the full workflow may have rewritten all of them): only a missing page or
+    // image is put back, the minimal entry never replaces git's.
+    if (listed && listed.state !== 'live') return { restored };
     if (item.landing) {
       const current = (await store.get(item.landing.file))?.toString('utf8');
       if (current !== undefined && !current.includes(`<li><a href="${item.landing.href}">`)) {
@@ -740,19 +748,35 @@ export async function status(): Promise<{ enabled: boolean; configured: boolean;
   if (!store) return { enabled, configured: false, template: false, items: [] };
   try {
     const [template, raw] = await Promise.all([store.get(TEMPLATE_KEY), store.get(LEDGER_KEY)]);
-    const ledger = parseLedger(raw);
-    const rows = (await query<{ record: QpItem }>('select record from quick_publications order by created_at')).rows.map(r => r.record);
-    const byId = new Map(ledger.items.map(x => [x.id, x]));
+    let ledger = parseLedger(raw);
+    const backups = async () => (await query<{ record: QpItem }>('select record from quick_publications order by created_at')).rows.map(r => r.record);
+    let rows = await backups();
     // A deploy that overwrote the bucket ledger mid-sync can drop a pick: the API's
     // copy is the founder's last word, so put it back (the guard then holds until git has it).
-    let heal = false;
-    for (const r of rows) {
-      const it = byId.get(r.id);
-      if (it && it.state !== 'completed' && (it.workflow_requested_at ?? null) !== (r.workflow_requested_at ?? null)) {
-        it.workflow_requested_at = r.workflow_requested_at ?? null; heal = true;
+    const healPicks = (l: Ledger, from: QpItem[]): boolean => {
+      const byId = new Map(l.items.map(x => [x.id, x]));
+      let changed = false;
+      for (const r of from) {
+        const it = byId.get(r.id);
+        if (it && it.state !== 'completed' && (it.workflow_requested_at ?? null) !== (r.workflow_requested_at ?? null)) {
+          it.workflow_requested_at = r.workflow_requested_at ?? null; changed = true;
+        }
       }
+      return changed;
+    };
+    if (raw && (healPicks(ledger, rows) || (ledger.panel_enabled ?? false) !== enabled)) {
+      // Under the writer lock and on a fresh read: the copy read above may be older than a
+      // publish that ran meanwhile, and writing it back would drop that publish's line.
+      await serial(async () => {
+        const fresh = await store.get(LEDGER_KEY);
+        if (!fresh) return;
+        ledger = parseLedger(fresh);
+        rows = await backups();
+        healPicks(ledger, rows);
+        await saveLedger(store, ledger);
+      });
     }
-    if (raw && (heal || (ledger.panel_enabled ?? false) !== enabled)) await serial(() => saveLedger(store, ledger));
+    const byId = new Map(ledger.items.map(x => [x.id, x]));
     const missing = rows.filter(r => !byId.has(r.id)).map(({ body: _b, ...r }: QpItem & { body?: string }) => ({ ...r, missing: true }));
     return { enabled, configured: true, template: !!template, items: [...ledger.items, ...missing] };
   } catch (err) {

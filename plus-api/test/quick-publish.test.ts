@@ -177,12 +177,13 @@ describe('quick publish — homepage Pulse', () => {
 
   it('replaces an existing line in place on an edit, and leaves a rolled-off page alone', () => {
     const home = homeFile();
-    const out = applyPulse(home, pulseFor('meta', 23, 'عنوان'), true)!;
-    const edited = applyPulse(out, pulseFor('meta', 23, 'عنوان تازه'), false)!;
+    // A number no real page has, so the only place it can appear is the line under test.
+    const out = applyPulse(home, pulseFor('meta', 9001, 'عنوان'), true)!;
+    const edited = applyPulse(out, pulseFor('meta', 9001, 'عنوان تازه'), false)!;
     expect(pulseLis(edited)).toHaveLength(PULSE_LINES);
     expect(pulseLis(edited)[0]).toContain('عنوان تازه');
-    expect((edited.match(/meta-23\.html/g) ?? []).length).toBe(1);
-    expect(applyPulse(home, pulseFor('meta', 99, 'قدیمی'), false)).toBe(home);
+    expect((edited.match(/meta-9001\.html/g) ?? []).length).toBe(1);
+    expect(applyPulse(home, pulseFor('meta', 9002, 'قدیمی'), false)).toBe(home);
     expect(applyPulse('<html>no list</html>', pulseFor('meta', 23, 'ع'), true)).toBeNull();
   });
 
@@ -629,6 +630,66 @@ describe('quick publish — admin routes', () => {
     expect(store.files.get(item.path.slice(1))!.toString()).toBe('<html>git completed version</html>');
     expect(store.files.get(BRAIN_KEY)!.toString()).toBe(brainBefore);
     expect(store.files.has(LEDGER_KEY)).toBe(false);
+  });
+
+  it('never hands a wiped publication’s number to a new page: the backup keeps its id', async () => {
+    const a = (await post(input('نکتهٔ پاک‌شده'))).json().item;
+    // An unguarded deploy put git's copies back: no page, no brain entry, no ledger line for it.
+    store.files.delete(a.path.slice(1));
+    store.files.set(BRAIN_KEY, Buffer.from(brainText));
+    store.files.set(LEDGER_KEY, Buffer.from(JSON.stringify({ version: 1, items: [] })));
+    const b = (await post(input('نکتهٔ تازه'))).json().item;
+    expect(b.n).toBe(a.n + 1);
+    const rows = (await pool.query(`select id, record->>'title' as title from quick_publications order by created_at`)).rows;
+    expect(rows).toEqual([{ id: a.id, title: 'نکتهٔ پاک‌شده' }, { id: b.id, title: 'نکتهٔ تازه' }]);
+    // …and the wiped one still comes back whole.
+    expect((await restoreOf(a.id)).json().restored).toEqual(expect.arrayContaining(['page', 'brain', 'ledger']));
+    expect(brainOf().filter(e => e.id === a.id || e.id === b.id).map(e => e.title)).toEqual(['نکتهٔ تازه', 'نکتهٔ پاک‌شده']);
+  });
+
+  it('restore on an imported item puts back only a missing page; git’s brain entry, lists and ledger line stay', async () => {
+    const { item } = (await post(input('واردشده'))).json();
+    // git imported it, the full workflow rewrote its brain entry, and a deploy synced that.
+    const l = ledger(); l.items[0].state = 'imported'; l.items[0].imported_at = '2026-11-02T00:00:00+00:00';
+    store.files.set(LEDGER_KEY, Buffer.from(JSON.stringify(l, null, 2) + '\n'));
+    const full = { ...item.brain_entry, hashtags: ['#نکته_کلینیکی'], keywords: ['کلید'] };
+    const brainNow = store.files.get(BRAIN_KEY)!.toString();
+    store.files.set(BRAIN_KEY, Buffer.from(replaceBrainEntry(brainNow, item.brain_entry, full)!));
+    const home = store.files.get('index.html')?.toString();
+
+    const brainBefore = store.files.get(BRAIN_KEY)!.toString(), ledgerBefore = store.files.get(LEDGER_KEY)!.toString();
+    expect((await restoreOf(item.id)).json().restored).toEqual([]);
+    store.files.delete(item.path.slice(1));
+    expect((await restoreOf(item.id)).json().restored).toEqual(['page']);
+    expect(store.files.get(BRAIN_KEY)!.toString()).toBe(brainBefore);
+    expect(store.files.get(LEDGER_KEY)!.toString()).toBe(ledgerBefore);
+    expect(store.files.get('index.html')?.toString()).toBe(home);
+  });
+
+  it('a status read that started before a publish never writes its older ledger copy over the new line', async () => {
+    const a = (await post(input('نکتهٔ اول'))).json().item;
+    // The bucket ledger disagrees with the switch, so this status read will want to write it back.
+    const l = ledger(); l.panel_enabled = false;
+    store.files.set(LEDGER_KEY, Buffer.from(JSON.stringify(l)));
+    // Hold the status read on its first ledger GET until a publish has gone through.
+    const realGet = store.get.bind(store);
+    let release!: () => void;
+    const gate = new Promise<void>(r => { release = r; });
+    let held = false;
+    store.get = async (k: string) => {
+      const b = await realGet(k);
+      if (k === LEDGER_KEY && !held) { held = true; await gate; }
+      return b;
+    };
+    const statusRead = getStatus();
+    while (!held) await new Promise(r => setTimeout(r, 5));
+    const b = (await post(input('نکتهٔ دوم'))).json().item;
+    release();
+    const s = await statusRead;
+    store.get = realGet;
+    expect(ledger().items.map(i => i.id)).toEqual([a.id, b.id]);
+    expect(ledger().panel_enabled).toBe(true);
+    expect(s.items.map((i: { id: string; missing?: boolean }) => [i.id, !!i.missing])).toEqual([[a.id, false], [b.id, false]]);
   });
 
   describe('wiped ledger safety', () => {

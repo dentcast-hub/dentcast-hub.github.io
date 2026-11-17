@@ -85,6 +85,24 @@ describe('quick publish panel — images', () => {
     expect(sent.body.endsWith('\u2066![](/quick-publish/media/20261101-00000002.jpg)\u2069\n')).toBe(true);
   });
 
+  it('a caption typed after «درج در متن» goes into the line already in the text', async () => {
+    await flush();
+    radio('yes').checked = true; radio('yes').dispatchEvent(new Event('change'));
+    type('qpTitle', 'عنوان'); type('qpCaption', 'کپشن کوتاه مطلب'); type('qpBody', 'پاراگراف اول.');
+    pick(new File(['a'], 'a.jpg', { type: 'image/jpeg' }));
+    await flush();
+    const card = () => el('qpImages').querySelector('.qp-img')!;
+    (card().querySelector('button') as HTMLButtonElement).click();
+    const body = el<HTMLTextAreaElement>('qpBody');
+    expect(body.value).toContain('\u2066![](/quick-publish/media/20261101-00000001.jpg)\u2069');
+    const alt = card().querySelector('input') as HTMLInputElement;
+    alt.value = 'نمای [باکال]'; alt.dispatchEvent(new Event('input'));
+    expect(body.value).toContain('\u2066![نمای  باکال](/quick-publish/media/20261101-00000001.jpg)\u2069');
+    alt.value = ''; alt.dispatchEvent(new Event('input'));
+    expect(body.value).toContain('\u2066![](/quick-publish/media/20261101-00000001.jpg)\u2069');
+    expect(body.value.match(/quick-publish\/media/g)).toHaveLength(1);
+  });
+
   it('brings the photos back with the phone draft', async () => {
     await flush();
     radio('yes').checked = true; radio('yes').dispatchEvent(new Event('change'));
