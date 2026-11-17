@@ -4,6 +4,7 @@ import { makeApp, resetDb } from './helpers.js';
 import { pool } from '../src/db.js';
 import { config } from '../src/config.js';
 import { dayRuns } from '../src/services/streak.js';
+import { dayInTz } from '../src/services/time.js';
 import { diagnoseStreak, repairStreak } from '../src/services/streak-repair.js';
 
 /**
@@ -392,5 +393,79 @@ describe('رتبه‌بندی استریک‌ها — the live-streak board', ()
     const page = await app.inject({ method: 'GET', url: '/admin', headers: { authorization: auth } });
     expect(page.body).toContain('رتبه‌بندی استریک‌ها');
     expect(page.body).toContain("fetch('/admin/streak/board?page='");
+  });
+});
+
+describe('حضور در بازهٔ اخیر — active days inside a fixed window', () => {
+  // The window ends on the TEHRAN day, so the fixture days are counted from it too.
+  const today = dayInTz(new Date(), config.streakTimezone);
+  const get = (qs = '') => app.inject({ method: 'GET', url: '/admin/streak/presence' + qs, headers: { authorization: auth } });
+
+  /** Every other day, newest first, `count` of them, ending today. */
+  function everyOther(count: number): string[] {
+    return runBack(today, count * 2).filter((_, i) => i % 2 === 1);
+  }
+
+  it('defaults to two thirds of thirty days and ignores history before the window', async () => {
+    // 22 of the last 30, with a gap: qualifies although the streak is short.
+    const steady = await reader([...runBack(today, 30).slice(0, 12), ...runBack(today, 10)], { current: 10, longest: 12 }, '09150000011');
+    // A 90-day veteran whose run ended 35 days ago: nothing inside the window.
+    const old = new Date(Date.now() - 35 * 86400000).toISOString().slice(0, 10);
+    await reader(runBack(old, 90), { current: 0, longest: 90 }, '09150000012');
+    // Two days out of two is not a result: below the floor.
+    await reader(runBack(today, 2), { current: 2, longest: 2 }, '09150000013');
+    // 15 of 30, every other day: below two thirds.
+    await reader(everyOther(15), { current: 1, longest: 1 }, '09150000014');
+
+    const res = await get();
+    expect(res.statusCode).toBe(200);
+    const j = res.json();
+    expect(j.days).toBe(30);
+    expect(j.min_days).toBe(20);
+    expect(j.to_day).toBe(today);
+    expect(j.from_day).toBe(runBack(today, 30)[0]);
+    expect(j.active_total).toBe(3);
+    expect(j.qualified_total).toBe(1);
+    expect(j.rows).toHaveLength(1);
+    expect(j.rows[0].user_id).toBe(steady);
+    expect(j.rows[0].active_days).toBe(22);
+    expect(j.rows[0].longest_run).toBe(12);
+    expect(j.rows[0].last_day).toBe(today);
+  });
+
+  it('takes its own window and floor, and orders by active days', async () => {
+    const a = await reader(runBack(today, 40), { current: 40, longest: 40 }, '09150000021');
+    const b = await reader(everyOther(25), { current: 1, longest: 1 }, '09150000022');
+
+    const wide = (await get('?days=50')).json();
+    expect(wide.min_days).toBe(34);
+    expect(wide.rows.map((r: { user_id: string }) => r.user_id)).toEqual([a]);
+
+    const loose = (await get('?days=50&min=25')).json();
+    expect(loose.rows.map((r: { user_id: string }) => r.user_id)).toEqual([a, b]);
+    expect(loose.rows[1].active_days).toBe(25);
+    expect(loose.rows[1].longest_run).toBe(1);
+
+    // Several actions on one day are still one day.
+    await pool.query(`insert into user_activity (user_id, action) values ($1, 'article_completed'), ($1, 'episode_listened')`, [b]);
+    expect((await get('?days=50&min=25')).json().rows[1].active_days).toBe(25);
+  });
+
+  it('rejects a window or floor that is not a usable number', async () => {
+    expect((await get('?days=0')).statusCode).toBe(400);
+    expect((await get('?days=400')).statusCode).toBe(400);
+    expect((await get('?days=abc')).statusCode).toBe(400);
+    expect((await get('?days=30&min=31')).statusCode).toBe(400);
+    expect((await get('?days=30&min=0')).statusCode).toBe(400);
+    const empty = await get('?days=30&min=');
+    expect(empty.statusCode).toBe(200);
+    expect(empty.json().min_days).toBe(20);
+  });
+
+  it('needs admin auth and the panel carries the block', async () => {
+    expect((await app.inject({ method: 'GET', url: '/admin/streak/presence' })).statusCode).toBe(401);
+    const page = await app.inject({ method: 'GET', url: '/admin', headers: { authorization: auth } });
+    expect(page.body).toContain('حضور در بازهٔ اخیر');
+    expect(page.body).toContain("fetch('/admin/streak/presence?days='");
   });
 });

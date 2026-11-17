@@ -19,6 +19,9 @@ import { normalizePhone } from '../services/phone.js';
 import { diagnoseStreak, repairStreak } from '../services/streak-repair.js';
 import { streakBoard } from '../services/streak-board.js';
 import {
+  streakPresence, defaultMinDays, PRESENCE_DEFAULT_DAYS, PRESENCE_MAX_DAYS,
+} from '../services/streak-presence.js';
+import {
   activateMonths, activateDays, grantLifetime, revokeSubscription, reduceSubscriptionDays, getSubscription,
   summarizeSubscription, sweepExpiredSubscriptions, subscriptionReport, neverPremiumUserIds,
   type Subscription,
@@ -2303,6 +2306,81 @@ ${renderQuickPublish()}
   })();
   </script>
 
+  <h3 style="margin-top:26px">حضور در بازهٔ اخیر</h3>
+  <div class="muted">چه کسانی در <b>N روزِ اخیر</b> (تا امروز، به وقت تهران) دست‌کم به تعدادِ مشخصی روز فعال بوده‌اند. روزِ فعال یعنی روزی که خودِ کاربر کاری کرده؛ روزی که سپر پوشانده شمرده نمی‌شود. سابقهٔ پیش از بازه هیچ اثری ندارد، پس کاربرِ قدیمی و تازه از یک خط شروع می‌کنند. اگر «حداقل روز فعال» خالی بماند، دو‌سومِ بازه حساب می‌شود (۲۰ از ۳۰، ۳۴ از ۵۰).</div>
+  <form class="bc" id="spForm" onsubmit="return false">
+    <div class="row">
+      <div><label for="spDays">بازه (روز)</label><input id="spDays" type="text" inputmode="numeric" value="30" style="width:110px"></div>
+      <div><label for="spMin">حداقل روز فعال</label><input id="spMin" type="text" inputmode="numeric" placeholder="دو‌سوم" style="width:110px"></div>
+      <button id="spGo" type="button">نمایش</button>
+    </div>
+  </form>
+  <div id="spInfo" class="muted" style="margin-top:8px"></div>
+  <div id="spOut" style="margin-top:8px"></div>
+  <script>
+  (function () {
+    var out = document.getElementById('spOut');
+    if (!out) return;
+    var go = document.getElementById('spGo');
+    var info = document.getElementById('spInfo');
+    var busy = false;
+    function esc(t) {
+      return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+    function fa(n) { return String(n).replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'.charAt(+d); }); }
+    // Founder types Persian digits as often as Latin ones; both must mean the same number.
+    function num(id) {
+      return document.getElementById(id).value.trim()
+        .replace(/[۰-۹]/g, function (d) { return String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)); })
+        .replace(/[٠-٩]/g, function (d) { return String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)); });
+    }
+    function day(d) {
+      if (!d) return '—';
+      try {
+        return new Date(d + 'T12:00:00Z').toLocaleDateString('fa-IR-u-ca-persian', { timeZone: 'UTC' });
+      } catch (e) { return esc(d); }
+    }
+    function render(j) {
+      if (!j.rows.length) { out.textContent = 'هیچ‌کس به این حد نرسیده است.'; return; }
+      var rows = j.rows.map(function (r, i) {
+        return '<tr><td>' + fa(i + 1) + '</td>'
+          + '<td>' + esc(r.display_name || '—') + '<div class="muted">' + esc(r.phone || '') + '</div></td>'
+          + '<td><b>' + fa(r.active_days) + '</b> از ' + fa(j.days)
+          + '<div class="muted">' + fa(Math.round(r.active_days * 100 / j.days)) + '٪</div></td>'
+          + '<td>' + fa(r.longest_run) + ' روز</td>'
+          + '<td>' + fa(r.current_streak) + ' روز</td>'
+          + '<td>' + day(r.last_day) + '</td></tr>';
+      }).join('');
+      out.innerHTML = '<div class="tblwrap"><table><thead><tr>'
+        + '<th>#</th><th>کاربر</th><th>روزِ فعال در بازه</th><th>بلندترین توالی در بازه</th>'
+        + '<th>استریکِ الان</th><th>آخرین روزِ فعال</th></tr></thead><tbody>'
+        + rows + '</tbody></table></div>';
+    }
+    function load() {
+      if (busy) return;
+      var d = num('spDays'), m = num('spMin');
+      busy = true; go.disabled = true; info.textContent = '';
+      out.textContent = 'در حال خواندن...';
+      fetch('/admin/streak/presence?days=' + encodeURIComponent(d) + '&min=' + encodeURIComponent(m), { credentials: 'include' })
+        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          busy = false; go.disabled = false;
+          if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+          var j = res.j;
+          render(j);
+          info.textContent = fa(j.qualified_total) + ' نفر با دست‌کم ' + fa(j.min_days) + ' روزِ فعال از ' + fa(j.days)
+            + ' روز · از ' + day(j.from_day) + ' تا ' + day(j.to_day)
+            + ' · ' + fa(j.active_total) + ' نفر در این بازه دست‌کم یک روز فعال بوده‌اند'
+            + (j.qualified_total > j.cap ? ' (فقط ' + fa(j.cap) + ' نفر اول نمایش داده می‌شود)' : '');
+        })
+        .catch(function () { busy = false; go.disabled = false; out.textContent = 'خوانده نشد.'; });
+    }
+    go.addEventListener('click', load);
+  })();
+  </script>
+
   <h3 style="margin-top:26px">ترمیم استریک شکسته</h3>
   <div class="muted">دورهٔ فعلیِ خواننده را با دوره‌ای که <b>خودت انتخاب می‌کنی</b> جمع می‌کند، تا شکستن استریک چیزی از او نگیرد. دوره‌ها هیچ‌جا ذخیره نشده‌اند — از فعالیتِ خودِ کاربر حساب می‌شوند، پس اول «بررسی» را بزن. <b>انتخاب دست توست چون «دورهٔ قبلِ شکست» فقط برای کسی یک‌معنا دارد که یک بار شکسته باشد</b>؛ کسی که سه بار شکسته، دورهٔ بلافاصله‌قبلش شاید یک دورهٔ ۵ روزهٔ بی‌اهمیت باشد و آن دورهٔ بلندی که منظور توست چند تا عقب‌تر. رکورد هرگز پایین نمی‌آید (<code>max</code> گرفته می‌شود) و دوباره زدنِ دکمه بی‌اثر است. توجه: این دو عدد cache‌اند و <code>rebuild-streaks</code> از روی فعالیت بازمی‌سازدشان و این را برمی‌گرداند؛ تقویمِ روزهای «گزارش ماهانه» عوض نمی‌شود، چون log دست‌نخورده می‌ماند.</div>
   <form class="bc" id="srForm" onsubmit="return false">
@@ -3639,6 +3717,7 @@ ${renderQuickPublish()}
         ['forever', 'پریمیوم ابدی به یک نفر', 'پریمیومِ ابدی', '', 0, 'ابدی همیشگی'],
         ['badge', 'اهدای نشان', 'اهدای نشان', '', 0, 'نشان همراه دانشجو ستون تخفیف'],
         ['streak-board', 'رتبه‌بندی استریک‌ها', 'رتبه‌بندی استریک', '', 0, 'استریک رتبه برترین جایزه بالاترین'],
+        ['streak-presence', 'حضور در بازهٔ اخیر', 'حضور در بازه', '', 0, 'حضور روز فعال بازه جایزه دو سوم قرعه'],
         ['streak', 'ترمیم استریک شکسته', 'ترمیم استریک', '', 0, 'استریک ترمیم']
       ] },
       { id: 'learn', name: 'مسیر، آزمون، گواهی', icon: '🎓', tint: 't-learn', items: [
@@ -5268,6 +5347,33 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
   app.get('/admin/streak/board', async (request, reply) => {
     const q = request.query as { page?: string };
     return reply.send({ ok: true, ...await streakBoard(Number(q.page) || 1) });
+  });
+
+  /**
+   * GET /admin/streak/presence?days=D&min=N — readers active on at least N of
+   * the last D Tehran days, today included (services/streak-presence.ts).
+   * `days` defaults to 30; `min` defaults to two thirds of `days`, rounded up.
+   * Read-only.
+   */
+  app.get('/admin/streak/presence', async (request, reply) => {
+    const q = request.query as { days?: string; min?: string };
+    const whole = (v: string | undefined): number | null => {
+      if (v == null || v.trim() === '') return null;
+      return /^[0-9]{1,4}$/.test(v.trim()) ? Number(v.trim()) : NaN;
+    };
+    const days = whole(q.days) ?? PRESENCE_DEFAULT_DAYS;
+    if (!(days >= 1 && days <= PRESENCE_MAX_DAYS)) {
+      return reply.code(400).send({
+        error: 'invalid_days', message: 'بازه باید عددی بین ۱ و ' + PRESENCE_MAX_DAYS + ' روز باشد.',
+      });
+    }
+    const min = whole(q.min) ?? defaultMinDays(days);
+    if (!(min >= 1 && min <= days)) {
+      return reply.code(400).send({
+        error: 'invalid_min', message: 'حداقلِ روزِ فعال باید بین ۱ و طولِ بازه باشد.',
+      });
+    }
+    return reply.send({ ok: true, ...await streakPresence(days, min) });
   });
 
   app.get('/admin/streak', async (request, reply) => {
