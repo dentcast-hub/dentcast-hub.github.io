@@ -218,38 +218,59 @@ describe('persistent Spot controls', () => {
   });
 });
 
-describe('three-visit Spot campaign controls', () => {
+describe('four-beat Spot schedule controls', () => {
+  const blank = { badge: '', title: '', text: '', cta: '', url: '', image: null };
+  // The published shape: sponsor, our own card, sponsor, sponsor.
   const sessions = [
-    { ...creative, title: 'اسپانسر', url: 'https://example.com/' },
-    { ...creative, title: 'معرفی دنت‌کست', url: '/plus/' },
-    { ...creative, enabled: false, title: '', text: '', url: '', image: null },
+    { ...blank, mode: 'custom', title: 'اسپانسر', url: 'https://example.com/' },
+    { ...blank, mode: 'house' },
+    { ...blank, mode: 'custom', image: '/spot/img/banner.webp' },
+    { ...blank, mode: 'off' },
   ];
-  it('validates exactly three sessions and persists their selected content', async () => {
-    for (const body of [{ sessions: [] }, { sessions: sessions.slice(0, 2) }, { sessions: [...sessions.slice(0, 2), { ...creative, url: 'javascript:alert(1)' }] }]) {
-      expect((await app.inject({ method: 'PUT', url: '/admin/spot/campaign', headers, payload: body })).statusCode).toBe(400);
-    }
-    const saved = await app.inject({ method: 'PUT', url: '/admin/spot/campaign', headers, payload: { sessions } });
-    expect(saved.statusCode).toBe(200);
-    const publicConfig = await app.inject('/spot/config');
-    expect(publicConfig.json().campaign.sessions).toHaveLength(3);
-    expect(publicConfig.json().campaign.sessions.map((s: { enabled: boolean }) => s.enabled)).toEqual([true, true, false]);
-    expect(publicConfig.json().campaign.sessions[0].creative).toMatchObject({ id: 'managed-session-1', title: 'اسپانسر', url: 'https://example.com/' });
-    expect(publicConfig.json().campaign.sessions[1].creative.url).toBe('/plus/');
+  const put = (body: unknown) => app.inject({ method: 'PUT', url: '/admin/spot/campaign', headers, payload: body as object });
+
+  it('validates exactly four beats and persists what each one shows', async () => {
+    for (const body of [
+      { sessions: [] }, { sessions: sessions.slice(0, 3) }, { sessions: [...sessions, sessions[0]] },
+      { sessions: [...sessions.slice(0, 3), { ...blank, mode: 'custom', title: 'x', url: 'javascript:alert(1)' }] },
+      // A custom beat with nothing to show is not a beat.
+      { sessions: [...sessions.slice(0, 3), { ...blank, mode: 'custom' }] },
+      // A mode nobody defined, and the 0070 shape with no mode at all.
+      { sessions: [...sessions.slice(0, 3), { ...blank, mode: 'sponsor' }] },
+      { sessions: [...sessions.slice(0, 3), { ...blank, enabled: true, title: 'قدیمی' }] },
+      // A house or empty beat may be blank, but a bad link in it is still a bad link.
+      { sessions: [...sessions.slice(0, 3), { ...blank, mode: 'house', url: 'javascript:alert(1)' }] },
+    ]) expect((await put(body)).statusCode).toBe(400);
+
+    expect((await put({ sessions })).statusCode).toBe(200);
+    const beats = (await app.inject('/spot/config')).json().campaign.sessions;
+    expect(beats).toHaveLength(4);
+    expect(beats.map((s: { enabled: boolean; house?: boolean }) => [s.enabled, !!s.house])).toEqual(
+      [[true, false], [true, true], [true, false], [false, false]]);
+    expect(beats[0].creative).toMatchObject({ id: 'managed-session-1', title: 'اسپانسر', url: 'https://example.com/' });
+    expect(beats[2].creative).toMatchObject({ id: 'managed-session-3', image: '/spot/img/banner.webp' });
     await app.close(); app = await makeApp();
-    expect((await app.inject({ url: '/admin/spot/campaign', headers })).json().sessions).toHaveLength(3);
+    expect((await app.inject({ url: '/admin/spot/campaign', headers })).json().sessions).toHaveLength(4);
     await app.inject({ method: 'POST', url: '/admin/spot/campaign/reset', headers });
     expect((await app.inject('/spot/config')).json()).toEqual({ slots: {} });
     expect((await pool.query('select sessions, use_default from spot_campaign_controls where id = true')).rows[0].use_default).toBe(true);
   });
-  it('accepts image-only, text-only and mixed campaign cards', async () => {
-    const values = [
-      { ...creative, title: '', text: '', url: '', image: '/spot/img/banner.webp' },
-      { ...creative, title: 'فقط متن', image: null },
-      { ...creative, title: 'ترکیبی', image: '/spot/img/banner.webp', url: '/plus/' },
+  it('keeps what was typed in a beat that is switched to our own card or to nothing', async () => {
+    const kept = [
+      { ...blank, mode: 'house', title: 'نگه‌داشته', url: '/plus/' },
+      { ...blank, mode: 'off', title: 'خاموش ولی نوشته‌شده' },
+      { ...blank, mode: 'custom', title: 'فقط متن' },
+      { ...blank, mode: 'custom', title: 'ترکیبی', image: '/spot/img/banner.webp', url: '/plus/' },
     ];
-    expect((await app.inject({ method: 'PUT', url: '/admin/spot/campaign', headers, payload: { sessions: values } })).statusCode).toBe(200);
-    expect((await app.inject('/spot/config')).json().campaign.sessions.map((s: any) => [s.creative.title, s.creative.image])).toEqual([
-      ['', '/spot/img/banner.webp'], ['فقط متن', null], ['ترکیبی', '/spot/img/banner.webp'],
+    expect((await put({ sessions: kept })).statusCode).toBe(200);
+    const beats = (await app.inject({ url: '/admin/spot/campaign', headers })).json().sessions;
+    expect(beats.map((s: any) => [s.creative.title, s.creative.image])).toEqual([
+      ['نگه‌داشته', null], ['خاموش ولی نوشته‌شده', null], ['فقط متن', null], ['ترکیبی', '/spot/img/banner.webp'],
     ]);
+  });
+  it('still serves a three-entry schedule saved before the four-beat panel', async () => {
+    const old = [1, 2, 3].map((n) => ({ enabled: n < 3, creative: { id: 'managed-session-' + n, badge: '', title: 'v' + n, text: '', cta: '', url: '', image: null } }));
+    await pool.query('insert into spot_campaign_controls (id, sessions, use_default) values (true, $1::jsonb, false)', [JSON.stringify(old)]);
+    expect((await app.inject('/spot/config')).json().campaign.sessions).toHaveLength(3);
   });
 });

@@ -596,26 +596,138 @@ describe('saved placement controls', () => {
     me.user = { tier: 'premium' }; me.status = 'user';
     await boot(); expect(cards()).toBe(0); expect(posts).toHaveLength(0);
   });
-  it('uses the first enabled campaign from the admin three-visit schedule', async () => {
-    campaign = { sessions: [
-      { enabled: true, creative: { id: 'managed-session-1', title: 'visit one', text: '', url: 'https://brand.test/', image: null } },
-      { enabled: true, creative: { id: 'managed-session-2', title: 'visit two', text: '', url: '/plus/', image: null } },
-      { enabled: false, creative: { id: 'managed-session-3', title: '', text: '', url: '', image: null } },
-    ] };
+  // ── the four-beat schedule saved from the admin panel ──
+  const custom = (n: number, extra: Record<string, unknown> = {}) =>
+    ({ enabled: true, creative: { id: 'managed-session-' + n, title: 'beat ' + n, text: '', url: '', image: null, ...extra } });
+  const house = (n: number) => ({ enabled: true, house: true, creative: { id: 'managed-session-' + n, title: '', text: '', url: '', image: null } });
+  const off = (n: number) => ({ enabled: false, creative: { id: 'managed-session-' + n, title: '', text: '', url: '', image: null } });
+  const withConfig = async (patch: (c: any) => void, run: () => Promise<void>) => {
+    const before = structuredClone(CONFIG);
+    patch(CONFIG);
+    try { await run(); } finally { Object.assign(CONFIG, before); }
+  };
+
+  it('shows the content saved for the current beat', async () => {
+    campaign = { sessions: [custom(1, { url: 'https://brand.test/' }), house(2), custom(3), custom(4)] };
     await boot();
     expect(creativeShown()).toBe('managed-session-1');
-    expect(document.querySelector('.dc-spot-title')?.textContent).toBe('visit one');
+    expect(document.querySelector('.dc-spot-title')?.textContent).toBe('beat 1');
     expect(document.querySelector('.dc-spot a')?.getAttribute('rel')).toContain('sponsored');
   });
-  it('treats an intentionally empty visit as empty instead of falling back to another campaign', async () => {
-    campaign = { sessions: [
-      { enabled: true, creative: { id: 'managed-session-1', title: 'visit one', text: '', url: '', image: null } },
-      { enabled: false, creative: { id: 'managed-session-2', title: '', text: '', url: '', image: null } },
-      { enabled: true, creative: { id: 'managed-session-3', title: 'visit three', text: '', url: '', image: null } },
-    ] };
+  it('shows the site\'s own card on a beat set to «خودمون», not something typed for another beat', async () => {
+    // Beat 3 has an internal link, which makes it look like a house card.
+    campaign = { sessions: [custom(1), house(2), custom(3, { url: '/plus/' }), custom(4)] };
+    localStorage.setItem('dcAds.tick', '1');
+    await boot();
+    expect(creativeShown()).toBe('premium');
+  });
+  it('treats a beat set to nothing as empty instead of falling back to another campaign', async () => {
+    campaign = { sessions: [custom(1), off(2), custom(3), custom(4)] };
     localStorage.setItem('dcAds.tick', '1');
     await boot();
     expect(cards()).toBe(0);
+  });
+  // Found by walking the schedule through the real pages: nothing renders on an
+  // empty beat, so no impression ever moved the rotation past it, and every
+  // later page view sat on the same empty beat. One beat set to nothing ended
+  // the schedule for the reader who reached it.
+  it('moves past an empty beat instead of staying on it for good', async () => {
+    campaign = { sessions: [custom(1), off(2), custom(3), custom(4)] };
+    localStorage.setItem('dcAds.tick', '1');
+    await boot();
+    // This page view really is empty; the beat is spent when the next one opens.
+    expect(cards()).toBe(0);
+    expect(localStorage.getItem('dcAds.tick')).toBe('1');
+    await boot();
+    expect(localStorage.getItem('dcAds.tick')).toBe('2');
+    expect(creativeShown()).toBe('managed-session-3');
+  });
+  it('moves past an empty beat under per-visit cadence too', async () => {
+    await withConfig((c) => { c.rotation.advance = 'session'; c.rotation.session_minutes = 30; }, async () => {
+      campaign = { sessions: [custom(1), off(2), custom(3), custom(4)] };
+      localStorage.setItem('dcAds.tick', '1');
+      await boot();
+      expect(cards()).toBe(0);
+      expect(localStorage.getItem('dcAds.held')).toBe('1');
+      // Thirty-one minutes later the reader is back: a new visit, the next beat.
+      localStorage.setItem('dcAds.seen', String(Date.now() - 31 * 60_000));
+      await boot();
+      expect(creativeShown()).toBe('managed-session-3');
+    });
+  });
+  // The panel replaces WHAT each beat shows. How the rotation advances stays
+  // what spot-config.json says — the first version of this schedule forced a
+  // per-visit cadence of its own, which is a different rotation, not this one
+  // made editable.
+  it('keeps the published cadence: one beat per seen page view', async () => {
+    campaign = { sessions: [custom(1), custom(2), custom(3), custom(4)] };
+    await boot();
+    expect(creativeShown()).toBe('managed-session-1');
+    await seen();
+    expect(localStorage.getItem('dcAds.tick')).toBe('1');
+    expect(localStorage.getItem('dcAds.held')).toBeNull();
+    await boot();
+    expect(creativeShown()).toBe('managed-session-2');
+  });
+  it('wraps to the first beat after the fourth', async () => {
+    campaign = { sessions: [custom(1), custom(2), custom(3), custom(4)] };
+    localStorage.setItem('dcAds.tick', '4');
+    await boot();
+    expect(creativeShown()).toBe('managed-session-1');
+  });
+  it('drops the published paid sponsor while a schedule is live', async () => {
+    // A signed-in reader on the house beat: the house card is anon-only here, so
+    // the beat falls through to a sponsor — which must be a scheduled one, never
+    // the published sponsor the schedule was saved to replace.
+    me.user = { tier: 'free' }; me.status = 'user';
+    campaign = { sessions: [house(1), custom(2), custom(3), custom(4)] };
+    await boot();
+    expect(creativeShown()).toMatch(/^managed-session-[2-4]$/);
+  });
+  it('still reads a three-entry schedule saved before the four-beat panel', async () => {
+    campaign = { sessions: [custom(1), custom(2), off(3)] };
+    localStorage.setItem('dcAds.tick', '1');
+    await boot();
+    expect(creativeShown()).toBe('managed-session-2');
+  });
+
+  // The homepage slot is paid-only: a paid sponsor on every view, never the
+  // house card. Under a schedule it keeps that promise but follows the beat.
+  describe('a paid-only slot under a saved schedule', () => {
+    const paidOnly = (c: any) => { c.slots.home.paid_only = true; };
+    it('shows the sponsor of the current beat', async () => {
+      await withConfig(paidOnly, async () => {
+        campaign = { sessions: [custom(1), house(2), custom(3), custom(4)] };
+        localStorage.setItem('dcAds.tick', '2');
+        await boot();
+        expect(creativeShown()).toBe('managed-session-3');
+      });
+    });
+    it('shows a scheduled sponsor, not the house card, on the house beat', async () => {
+      await withConfig(paidOnly, async () => {
+        campaign = { sessions: [custom(1), house(2), custom(3), custom(4)] };
+        localStorage.setItem('dcAds.tick', '1');
+        await boot();
+        expect(creativeShown()).toMatch(/^managed-session-[134]$/);
+      });
+    });
+    it('shows nothing on a beat set to nothing', async () => {
+      await withConfig(paidOnly, async () => {
+        campaign = { sessions: [custom(1), off(2), custom(3), custom(4)] };
+        localStorage.setItem('dcAds.tick', '1');
+        await boot();
+        expect(cards()).toBe(0);
+      });
+    });
+    it('stays outside the rotation when no schedule is saved', async () => {
+      await withConfig(paidOnly, async () => {
+        me.user = { tier: 'free' }; me.status = 'user';
+        localStorage.setItem('dcAds.tick', '5');
+        await boot();
+        // The only paid sponsor, whatever the tick says — and never the house card.
+        expect(creativeShown()).toBe('brand-invite');
+      });
+    });
   });
 });
 

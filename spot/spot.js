@@ -69,7 +69,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=250';
+import { findProseRoot } from '/plus/js/config.js?v=253';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -117,7 +117,7 @@ let viewerNow = () => 'anon';
 // Authentication refreshes via /me are NOT page views. A new document counts
 // once, and desktop-shell article navigation counts once more per new article.
 function countContentView() {
-  import('/plus/js/api.js?v=250')
+  import('/plus/js/api.js?v=253')
     .then((m) => m.apiBase())
     .then((base) => fetch(base + '/pageview', {
       method: 'POST', credentials: 'include', cache: 'no-store', keepalive: true,
@@ -193,7 +193,7 @@ function sendPending(task) {
     body: JSON.stringify({ [key]: SPOT_EVENT[task.kind],
       content_id: task.slot + ':' + task.creative, event_id: task.id }),
   });
-  import('/plus/js/api.js?v=250').then((m) => m.apiBase()).then((base) => {
+  import('/plus/js/api.js?v=253').then((m) => m.apiBase()).then((base) => {
     if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
     return post(base, '/activity', 'action')
       .then((res) => res.status === 401 ? post(base, '/anon/event', 'event') : res);
@@ -218,7 +218,7 @@ function sendPending(task) {
     task.attempts = (task.attempts || 0) + 1;
     task.nextAt = Date.now() + SPOT_RETRY[Math.min(task.attempts - 1, 3)];
     savePending();
-    import('/plus/js/api.js?v=250').then((m) => m.forgetBase()).catch(() => {});
+    import('/plus/js/api.js?v=253').then((m) => m.forgetBase()).catch(() => {});
     if (document.visibilityState === 'visible')
       setTimeout(() => sendPending(task), task.nextAt - Date.now());
   }).finally(() => { spotSending.delete(task.id); });
@@ -309,7 +309,10 @@ function nextSponsor(cfg, slotName, audience) {
 }
 
 function nextHouse(cfg, slotName, audience) {
-  return pickSponsor(cfg, slotName, audience, isHouse);
+  // `managed` creatives are beats the founder typed in the panel. One of them
+  // with an internal link looks like a house card to isHouse(), and the house
+  // beat must stay the site's own card, not another beat's content.
+  return pickSponsor(cfg, slotName, audience, (s) => isHouse(s) && s.managed !== true);
 }
 
 // One creative per page view: every slot on the page shows the same campaign,
@@ -357,9 +360,23 @@ function isPaidOnly(cfg, slotName) {
 
 function pickCreative(cfg, slotName, audience) {
   if (cfg.slots?.[slotName]?.creative) return cfg.slots[slotName].creative;
-  if (isPaidOnly(cfg, slotName)) return pickSponsor(cfg, slotName, audience, (s) => !isHouse(s));
   const seq = rotationSequence(cfg);
-  return resolveStep(cfg, seq[lsGet(K_TICK) % seq.length], slotName, audience);
+  const step = seq[lsGet(K_TICK) % seq.length];
+  if (isPaidOnly(cfg, slotName)) {
+    // Under a schedule saved from the admin panel the slot keeps its promise —
+    // a paid sponsor on every view, never the house card — but follows the beat
+    // where it can: the sponsor of THIS beat when the beat is a sponsor's, any
+    // scheduled sponsor on the house beat, and nothing on a beat set to show
+    // nothing. Left on its own cursor it showed a different beat's sponsor than
+    // the article beside it, and a card on the beat meant to be empty.
+    if (cfg.rotation && cfg.rotation.managed === true) {
+      if (step === 'none') return null;
+      const own = enabledSponsors(cfg, slotName, audience).find((s) => s.id === step && !isHouse(s));
+      if (own) return own;
+    }
+    return pickSponsor(cfg, slotName, audience, (s) => !isHouse(s));
+  }
+  return resolveStep(cfg, step, slotName, audience);
 }
 
 function resolveStep(cfg, step, slotName, audience) {
@@ -401,12 +418,25 @@ let sessionMode = false;
 function openRotationWindow(cfg) {
   const rot = cfg.rotation || {};
   sessionMode = rot.advance === 'session';
-  if (!sessionMode) return;
+  if (!sessionMode) {
+    // Per-view cadence has the same hole holdEmptyStep closes for sessions: an
+    // empty beat renders nothing, so nothing would ever move past it. It is
+    // spent the same way — held now, taken when the NEXT page view opens — so
+    // the page view that landed on the empty beat really is empty, rather than
+    // skipping straight to the beat after it.
+    if (lsGet(K_HELD) === 1) {
+      lsSet(K_TICK, lsGet(K_TICK) + 1);
+      lsSet(K_RR, lsGet(K_RR) + 1);
+      lsSet(K_HELD, 0);
+    }
+    holdEmptyStep(cfg);
+    return;
+  }
   const m = Number(rot.session_minutes);
   const minutes = m > 0 ? m : DEFAULT_SESSION_MINUTES;
   const now = Date.now();
   const last = lsGet(K_SEEN);
-  if (last && now - last <= minutes * 60000) { lsSet(K_SEEN, now); return; } // same visit → frozen
+  if (last && now - last <= minutes * 60000) { lsSet(K_SEEN, now); holdEmptyStep(cfg); return; } // same visit → frozen
   // New session: take the step the previous session earned, then re-arm.
   if (lsGet(K_HELD) === 1) {
     lsSet(K_TICK, lsGet(K_TICK) + 1);
@@ -414,6 +444,17 @@ function openRotationWindow(cfg) {
     lsSet(K_HELD, 0);
   }
   lsSet(K_SEEN, now);
+  holdEmptyStep(cfg);
+}
+
+// A step of `none` is a beat that is MEANT to show nothing. Nothing renders,
+// so no impression ever marks it used — and by the rule above the rotation
+// would then sit on the same empty beat for good: one beat set to nothing
+// ended the schedule for every reader who reached it. An intentionally empty
+// beat is delivered by taking place, so it holds its step the moment it opens.
+function holdEmptyStep(cfg) {
+  const seq = rotationSequence(cfg);
+  if (seq[lsGet(K_TICK) % seq.length] === 'none') lsSet(K_HELD, 1);
 }
 
 let ticked = false;
@@ -1474,7 +1515,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=250')
+  return import('/plus/js/api.js?v=253')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
@@ -1547,7 +1588,7 @@ async function main() {
   // Untouched placements retain the checked-in rotation and targeting. Only
   // explicitly saved placements have a database override. Public read, no login.
   try {
-    const { apiBase } = await import('/plus/js/api.js?v=250');
+    const { apiBase } = await import('/plus/js/api.js?v=253');
     const base = await apiBase();
     const response = await fetch(base + '/spot/config', { cache: 'no-store', signal: AbortSignal.timeout(2500) });
     if (response.ok) {
@@ -1556,16 +1597,29 @@ async function main() {
         if (!cfg.slots?.[name] || typeof value.enabled !== 'boolean') continue;
         cfg.slots[name] = { ...cfg.slots[name], enabled: value.enabled, creative: value.creative };
       }
-      // Admin-managed campaigns replace the published rotation only after an
-      // explicit save. Each entry is one visit; "none" is a deliberate empty
-      // visit and must not fall through to another campaign.
+      // A schedule saved from the admin panel stands in for the published
+      // rotation, beat for beat: each entry is one beat — the founder's own
+      // content, the site's house card (`house`), or nothing. Only WHAT each
+      // beat shows is replaced; how the rotation advances (rotation.advance)
+      // stays whatever spot-config.json says, so the panel controls the four
+      // beats as they are rather than a different rotation.
+      //
+      // The published PAID sponsors leave the pool while a schedule is live:
+      // the schedule is what replaced them, and a paid-only slot or a fallback
+      // must not bring one back. Published HOUSE cards stay — they are what the
+      // house beat shows.
       const sessions = saved.campaign && saved.campaign.sessions;
-      if (Array.isArray(sessions) && sessions.length === 3 && sessions.every((s) => s && typeof s.enabled === 'boolean' && s.creative)) {
-        const managed = sessions.filter((s) => s.enabled).map((s) => ({ ...s.creative, enabled: true }));
+      if (Array.isArray(sessions) && sessions.length >= 1 && sessions.length <= 8
+        && sessions.every((s) => s && typeof s.enabled === 'boolean' && s.creative)) {
+        const stepId = (i) => 'managed-session-' + (i + 1);
+        const managed = [];
+        sessions.forEach((s, i) => {
+          if (s.enabled && s.house !== true) managed.push({ ...s.creative, id: stepId(i), enabled: true, managed: true });
+        });
         cfg.creatives = cfg.creatives || {};
-        cfg.creatives.sponsors = (cfg.creatives.sponsors || []).filter((c) => !/^managed-session-[1-3]$/.test(c && c.id)).concat(managed);
-        cfg.rotation = { ...(cfg.rotation || {}), advance: 'session', session_minutes: 30,
-          sequence: sessions.map((s, i) => s.enabled ? 'managed-session-' + (i + 1) : 'none') };
+        cfg.creatives.sponsors = (cfg.creatives.sponsors || []).filter((c) => c && isHouse(c)).concat(managed);
+        cfg.rotation = { ...(cfg.rotation || {}), managed: true,
+          sequence: sessions.map((s, i) => !s.enabled ? 'none' : s.house === true ? 'premium' : stepId(i)) };
       }
     }
   } catch (_) { /* API unavailable: retain the published configuration. */ }
