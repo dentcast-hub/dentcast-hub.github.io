@@ -1,0 +1,248 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "sharehub",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "اوردنچر دیجیتال: آیا واقعاً تجربه‌ی بهتری برای بیمار می‌سازه؟",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "caption_fa": {
+  "value": "ورک‌فلوی تمام‌دیجیتال برای اوردنچر ایمپلنتی، در یک کارآزمایی متقاطع که هر بیمار هر دو پروتز را یک سال استفاده کرد، چه فرقی برای بیمار ایجاد کرد و چقدر از آن به طراحی بار و اتچمنت برمی‌گردد؟",
+  "from": "02-عنوان-کپشن.md:9"
+ },
+ "title_en": {
+  "value": "Digital Overdentures: Do They Really Give the Patient a Better Experience?",
+  "from": "06-انگلیسی.md:1"
+ },
+ "caption_en": {
+  "value": "In a crossover trial where each patient used both prostheses for a year, what difference did a fully digital workflow for implant overdentures make for the patient, and how much of it comes down to the design of the bar and attachment?",
+  "from": "06-انگلیسی.md:3"
+ },
+ "body_en": {
+  "value": "Suppose we have an edentulous patient whose maxillary ridge is severely resorbed and who is not happy with their complete denture either. One of the options we have is an implant overdenture. But we know the job is not over once the implants are placed: which attachment we choose, how we design the bar and which method we use to make the prosthesis all affect the result.\n\nThe question that comes up here is this: if we do all these steps digitally, does only our way of working change, or does the patient really get a better prosthesis too?\n\nA clinical trial published in 2025 looked at exactly this question. What makes the study interesting is that every patient tried both prostheses, that is, lived for one year with a conventional overdenture and for one year with a digital overdenture. The patients all had the situation I described: their maxilla was severely resorbed and they were not happy with their denture. First they received a bone graft, and then four to six implants were placed in the maxilla.\n\nIn the digital method, instead of taking impressions, the patient's existing denture and the implants were scanned and the prosthesis was designed in software. The bar was titanium, retention of the prosthesis came from a PEEK component on the bar, and the base and teeth were milled as well. The whole job was done in three sessions, whereas the conventional method took five or six sessions. In the conventional group, most patients had Locators in the maxilla.\n\n[[Image:01]]\n\n*Figure 1. Mandible. (A) Conventional bar with ball attachments at both ends. (B) Inside the conventional overdenture; the green VKS matrices are visible. (C) Digital bar designed for a PEEK sliding attachment. (D) Inside the digital overdenture. Source: Van de Winkel et al., 2025 (CC BY).*\n\n[[Image:02]]\n\n*Figure 2. Maxilla. (A) Locators on the maxillary implants. (B) Inside the conventional overdenture with nylon rings. (C) Digital bar. (D) Thin 2-mm bar with the PEEK attachment. (E) Inside the digital overdenture, with the PEEK glued in. Source: Van de Winkel et al., 2025 (CC BY).*\n\nSo, did the patients feel a difference or not?\n\nLet me say first that both types of overdenture, conventional and digital alike, were much better than the complete denture. Patient satisfaction with the complete denture was about 25 out of 100, and with the overdenture it rose to about 80 to 90. That means most of this improvement is due to the implant overdenture itself, not to its being digital.\n\nBut if we compare the two methods with each other, digital was a little better. Patient satisfaction was about 7 points out of 100 higher, and the difference was seen mostly in the prosthesis's function, pain and comfort. So the difference is real, but it is not large. One interesting point is that the patients could not tell from the look of the prosthesis which one was digital, but at the end of the study, when they were asked to choose one to keep for good, roughly two out of every three chose the digital one.\n\nProsthetic problems were also fewer with the digital method, especially in the maxilla. But this has to be read with caution, because many of the conventional group's problems related to the Locator itself, for example replacing the nylon ring, which is more part of this system's routine maintenance than a treatment failure. These numbers were also only counted, and no statistical analysis was done on them.\n\nBut the main point is that this advantage cannot all be credited to the digital workflow. The two groups did not differ only in the fabrication method; their attachment type and prosthesis design differed as well. The authors themselves link the reason mainly to the design, that is, the good retention of the PEEK, the slimmer prosthesis and the fact that less of the palate was covered. So an important part of this result may be due to the bar and the attachment, not to the scan.\n\nTwo practical points also come out of this study. First, ten of the patients could not get a digital prosthesis for the mandible, because their implant brand was not in the software's library. That means whether we can work digitally depends on the implant the patient already has. Second, the jaw relation is taken from the patient's existing denture, so that denture must still have correct occlusion.\n\nThey saw one more thing: in the second year, patients were more satisfied, whichever prosthesis they had. Probably because in the first year they were still getting used to an implant-borne prosthesis. So the passage of time and the patient getting used to it may also affect their satisfaction.\n\nSo if I want to sum up, the digital workflow works for overdentures, and in this study, with fewer sessions, it produced a prosthesis that patients were at least as satisfied with as the conventional method, and probably a little more. But this advantage is small, it is not clear how much of it belongs to the digital workflow and how much to the prosthesis design, and it was seen in patients who had a particular situation. Whether the digital method reduces cost has also not yet been properly studied.\n\nThat is why choosing the method still depends on the case itself: the implant the patient has, the space we have, the attachment that suits that case, and the facilities we and our laboratory have. Digital is useful when it makes the work more predictable in that case, not just because it is the newer method.",
+  "from": "06-انگلیسی.md:6-40"
+ },
+ "images": {
+  "value": [
+   {
+    "n": "01",
+    "file": {
+     "value": "03-تصاویر/01-mandibular-conventional-vs-digital-bar.webp",
+     "from": "03-تصاویر/تصاویر.md:9"
+    },
+    "alt_fa": {
+     "value": "فک پایین: بار متداول با ball attachment در برابر بار دیجیتال با PEEK",
+     "from": "03-تصاویر/تصاویر.md:10"
+    },
+    "alt_en": {
+     "value": "Mandible: conventional bar with ball attachments versus digital bar with a PEEK attachment",
+     "from": "03-تصاویر/تصاویر.md:11"
+    },
+    "caption_fa": {
+     "value": "تصویر ۱. فک پایین. (A) بار متداول با ball attachment در دو انتها. (B) داخل اوردنچر متداول؛ ماتریکس‌های سبز VKS دیده می‌شن. (C) بار دیجیتال که برای اتچمنت sliding از جنس PEEK طراحی شده. (D) داخل اوردنچر دیجیتال. منبع: Van de Winkel et al., 2025 (CC BY).",
+     "from": "03-تصاویر/تصاویر.md:12"
+    },
+    "caption_en": {
+     "value": "Figure 1. Mandible. (A) Conventional bar with ball attachments at both ends. (B) Inside the conventional overdenture; the green VKS matrices are visible. (C) Digital bar designed for a PEEK sliding attachment. (D) Inside the digital overdenture. Source: Van de Winkel et al., 2025 (CC BY).",
+     "from": "06-انگلیسی.md:43"
+    }
+   },
+   {
+    "n": "02",
+    "file": {
+     "value": "03-تصاویر/02-maxillary-locators-vs-digital-bar.webp",
+     "from": "03-تصاویر/تصاویر.md:20"
+    },
+    "alt_fa": {
+     "value": "فک بالا: Locator در برابر بار دیجیتال با PEEK",
+     "from": "03-تصاویر/تصاویر.md:21"
+    },
+    "alt_en": {
+     "value": "Maxilla: Locator attachments versus digital bar with a PEEK attachment",
+     "from": "03-تصاویر/تصاویر.md:22"
+    },
+    "caption_fa": {
+     "value": "تصویر ۲. فک بالا. (A) Locatorها روی ایمپلنت‌های ماگزیلا. (B) داخل اوردنچر متداول با nylon ringها. (C) بار دیجیتال. (D) بار نازک ۲ میلی‌متری همراه با اتچمنت PEEK. (E) داخل اوردنچر دیجیتال که PEEK داخلش چسبانده شده. منبع: Van de Winkel et al., 2025 (CC BY).",
+     "from": "03-تصاویر/تصاویر.md:23"
+    },
+    "caption_en": {
+     "value": "Figure 2. Maxilla. (A) Locators on the maxillary implants. (B) Inside the conventional overdenture with nylon rings. (C) Digital bar. (D) Thin 2-mm bar with the PEEK attachment. (E) Inside the digital overdenture, with the PEEK glued in. Source: Van de Winkel et al., 2025 (CC BY).",
+     "from": "06-انگلیسی.md:44"
+    }
+   }
+  ],
+  "from": "03-تصاویر/تصاویر.md"
+ },
+ "credit": {
+  "value": {
+   "mode": "author-doi",
+   "label_fa": "Thomas Van de Winkel",
+   "label_en": "Thomas Van de Winkel",
+   "href": "https://doi.org/10.1111/cid.13398"
+  },
+  "from": "07-ورودی‌ها.md:27"
+ },
+ "catalog": {
+  "value": [
+   {
+    "title": "Fully digital versus conventional workflow: Are removable complete overdentures equally good? A randomized crossover trial",
+    "file_name": "Fully Digital Versus Conventional Workflow: Are Removable Complete Overdentures Equally Good? A Randomized Crossover Trial.pdf",
+    "topic": "overdenture",
+    "topic_path": "overdenture",
+    "type": "randomized controlled trial",
+    "local_path": "",
+    "file_size": 8348028,
+    "key_finding": "In a randomized crossover trial of 36 edentulous patients, fully digital implant overdentures gave significantly better OHIP-20 and satisfaction scores than conventional ones, with little difference in general health.",
+    "clinical_bottom_line": "A fully digital workflow for implant overdentures gave better patient-reported outcomes than the conventional one in this trial.",
+    "drive_link": "https://drive.google.com/file/d/1hY54dTxFWC8RgKwp9sAzgCuRZBP21pXF/view",
+    "status": "linked",
+    "drive_download": "https://drive.google.com/uc?export=download&id=1hY54dTxFWC8RgKwp9sAzgCuRZBP21pXF",
+    "drive_view": "https://drive.google.com/file/d/1hY54dTxFWC8RgKwp9sAzgCuRZBP21pXF/view",
+    "drive_id": "1hY54dTxFWC8RgKwp9sAzgCuRZBP21pXF",
+    "tags": [
+     "overdenture",
+     "implant-overdenture",
+     "digital-workflow",
+     "cad-cam",
+     "milled-bar",
+     "peek",
+     "locator",
+     "prom",
+     "patient-satisfaction",
+     "randomized-controlled-trial",
+     "crossover-trial",
+     "edentulous-maxilla",
+     "prosthetic-complications",
+     "topic:overdenture",
+     "fully-digital-versus-conventional-workflow-removable-complete-overdentures-randomized-crossover-trial"
+    ],
+    "name_bucket": "meaningful",
+    "semantic_tagged": true,
+    "real_title": "Fully digital versus conventional workflow: Are removable complete overdentures equally good? A randomized crossover trial",
+    "doi": "10.1111/cid.13398",
+    "journal": "Clinical Implant Dentistry and Related Research",
+    "crossref_year": 2025,
+    "subjects": [],
+    "abstract": "Introduction: Implant-supported removable complete overdentures (IODs) are a common treatment in case of edentulism and malfunctioning of the conventional denture. Manufacturing IODs in a conventional way (C-IODs) is time-consuming, but in a digital workflow, this can be done in three sessions. Digitally produced IODs (3D-IODs) are also more advantageous than C-IODs because lost or broken 3D-IODs can be swiftly reproduced as the digital design is always available. Purpose: To prove in a non-inferiority study, with a margin of 0.3 point per Oral Health Impact Profile-20 (OHIP-20) question, that IODs made according to a fully digital workflow (3D-IODs), function as good as C-IODs with respect to patient-reported outcome measures (PROMs). Materials and Methods: This randomized crossover study included 36 fully edentulous patients who showed extreme resorption of the maxillary alveolar process, making denture retention difficult. After a maxillary bone augmentation and the installation of 4-6 implants, each patient wore both types of IOD for 1 year each, with the order reversed in two subsets of patients. The 3D-IODs and C-IODs were fabricated in advance for both jaws (at least two mandibular implants were already present). The OHIP-20 survey was performed at baseline, after 1 year (before the IOD switch), and after 2 years to determine patient satisfaction scores using a visual analog scale (VAS). The general health status was assessed using the Short Form (SF-36) questionnaire. Results: Regarding the PROMs, patients preferred the 3D-IOD: the improvement on the overall OHIP scale (0-4), expressed as a mean, was 0.26 points greater than for the C-IOD (p < 0.001). This applied also to the VAS scale (1-100) with an increase of 7.37 points (p < 0.001). Regarding the SF-36 scale, only for the item \"emotional well-being,\" the 3D-IOD scored significantly better (p = 0.033). Conclusion: Compared with conventionally fabricated C-IODs, fully digitally produced 3D-IODs resulted in significantly higher OHIP-20 and satisfaction scores.",
+    "display_title": "Fully digital versus conventional workflow: Are removable complete overdentures equally good? A randomized crossover trial",
+    "authors": [
+     "Thomas Van de Winkel",
+     "Frans Delfos",
+     "Olleke van der Heijden",
+     "Ewald Bronkhorst",
+     "Luc Verhamme",
+     "Gert Meijer"
+    ]
+   }
+  ],
+  "from": "04-منبع/کاتالوگ.json"
+ },
+ "hashtags": {
+  "value": [
+   "#مرور_منابع",
+   "#اوردنچر",
+   "#اتچمنت_اوردنچر",
+   "#پروتز_دیجیتال",
+   "#لایبرری_دیجیتال",
+   "#بیمار_بی_دندان",
+   "#تصمیم_درمانی",
+   "#پروتز_متحرک"
+  ],
+  "from": "07-ورودی‌ها.md:15"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "removable-pros",
+   "subtopic": "implant-overdentures",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:12"
+ },
+ "pulse": {
+  "value": {
+   "text": null,
+   "link_phrase": "اوردنچر دیجیتال: آیا واقعاً تجربه‌ی بهتری برای بیمار می‌سازه؟"
+  },
+  "from": "07-ورودی‌ها.md:21"
+ },
+ "keywords": {
+  "value": [
+   "اوردنچر دیجیتال",
+   "اوردنچر روی ایمپلنت",
+   "ورک‌فلوی دیجیتال اوردنچر",
+   "اوردنچر معمولی در برابر دیجیتال",
+   "بار تیتانیومی و اتچمنت PEEK",
+   "Locator و تعویض nylon ring",
+   "ball attachment",
+   "تحلیل ریج فک بالا",
+   "رضایت بیمار از اوردنچر",
+   "library نرم‌افزار و برند ایمپلنت",
+   "ثبت رابطهٔ فکی از روی دنچر قبلی",
+   "کارآزمایی بالینی"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "اوردنچر",
+    "href": "/glossary/overdenture.html",
+    "from": "11-لینک‌های-گلاسری.md:12"
+   },
+   {
+    "phrase": "میلینگ",
+    "href": "/glossary/milling.html",
+    "from": "11-لینک‌های-گلاسری.md:13"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:8"
+ },
+ "backlinks_47": {
+  "value": [
+   {
+    "term": "milling",
+    "anchor": "اوردنچر ایمپلنتی تمام‌دیجیتال در برابر روش معمولی",
+    "from": "11-لینک‌های-گلاسری.md:25"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:21"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "/notecast/episode-27.html",
+    "label": "بار–کلیپ یا بال–اورینگ؟",
+    "from": "11-لینک‌های-گلاسری.md:32"
+   },
+   {
+    "href": "/insight/insight-51.html",
+    "label": "درمان دیجیتالی بیمار کاملاً بی‌دندان",
+    "from": "11-لینک‌های-گلاسری.md:33"
+   },
+   {
+    "href": "/chairside/chairside-11.html",
+    "label": "نبود اکلوژن خلفی؛ مانعی پنهان برای اوردنچر فک بالا",
+    "from": "11-لینک‌های-گلاسری.md:34"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:28"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
