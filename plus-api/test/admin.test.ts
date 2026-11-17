@@ -724,6 +724,14 @@ describe('score forensics', () => {
       method: 'POST', url: '/activity', headers: { cookie },
       payload: { action: 'article_completed', content_id: 'insight/insight-1' },
     });
+    // The four reviews are written at wall-clock time, a few hundred ms apart.
+    // When the loop straddles a minute boundary (it did in CI at 17:49:59 →
+    // 17:50:00) they land two and two, and «four in one minute» reads 2. What
+    // is under test is the per-minute column, not how fast the loop ran — so
+    // pin the four rows inside one minute.
+    await pool.query(
+      `update user_activity set created_at = date_trunc('minute', now()) + interval '10 seconds'
+        where user_id = $1 and action = 'card_reviewed_manual'`, [uid]);
 
     const res = await app.inject({
       method: 'GET', url: '/admin/score?user=09121400002', headers: { authorization: auth },
