@@ -1,0 +1,48 @@
+[
+ {
+  "doi": "10.1111/cid.13398",
+  "ft_tags": [
+   "nobel-biocare",
+   "quality-of-life"
+  ],
+  "new_tags": [],
+  "doc_class": "primary_research",
+  "off_topic": false,
+  "off_topic_reason": null,
+  "catalog_type_ok": true,
+  "suggested_type": null,
+  "text_quality": "partial",
+  "facts": {
+   "doi": "10.1111/cid.13398",
+   "authors": [
+    "Thomas Van de Winkel",
+    "Frans Delfos",
+    "Olleke van der Heijden",
+    "Ewald Bronkhorst",
+    "Luc Verhamme",
+    "Gert Meijer"
+   ],
+   "year": 2025,
+   "journal": "Clinical Implant Dentistry and Related Research",
+   "population": "36 fully edentulous patients with extreme maxillary alveolar resorption, after maxillary bone augmentation and 4-6 implants",
+   "intervention": "Fully digitally produced implant overdentures (3D-IOD)",
+   "comparison": "Conventionally fabricated implant overdentures (C-IOD)",
+   "outcomes": [
+    "OHIP-20",
+    "patient satisfaction (VAS)",
+    "SF-36 general health"
+   ],
+   "main_result": "3D-IODs improved OHIP-20 by 0.26 points more than C-IODs (p<0.001) and VAS satisfaction by 7.37 points (p<0.001); SF-36 only emotional wellbeing better (p=0.033).",
+   "sample_size": "36 edentulous patients (18 per sequence group)",
+   "follow_up": "1 year per prosthesis type (2 years total)",
+   "materials_brands": [
+    "Nobel Parallel Conical Connection implants (Nobel Biocare)",
+    "Dolder matrix (Cendres Metaux)"
+   ],
+   "funding_coi": "Funded by ZonMw",
+   "key_finding": "In a randomized crossover trial of 36 edentulous patients, fully digital implant overdentures gave significantly better OHIP-20 and satisfaction scores than conventional ones, with little difference in general health.",
+   "clinical_bottom_line": "A fully digital workflow for implant overdentures gave better patient-reported outcomes than the conventional one in this trial."
+  },
+  "cites_dois": []
+ }
+]
