@@ -53,6 +53,12 @@ describe('GET /admin/badges/rarity', () => {
     const flame = (lv: number) => j.rows.find((r) => r.key === 'flame' && r.level === lv)!;
     expect([flame(0).holders, flame(1).holders, flame(2).holders]).toEqual([3, 2, 1]);
     expect(flame(2).level_fa).toBe('طلا');
+    // Each row carries what the badge means, so the panel can explain it on a tap.
+    expect(flame(2)).toMatchObject({ need_fa: '۱۰۰ روز' });
+    expect((flame(2) as unknown as { unlock_fa: string; detail_fa: string }).unlock_fa.length).toBeGreaterThan(5);
+    expect((flame(0) as unknown as { detail_fa: string }).detail_fa).toContain('استریک');
+    const wayfarer = j.rows.find((r) => r.key === 'wayfarer' && r.level === 2) as unknown as { need_fa: string };
+    expect(wayfarer.need_fa).toBe('همهٔ مسیرها');
 
     // Held ones first, ascending; nobody-yet ones after every held one.
     const held = j.rows.filter((r) => r.holders > 0).map((r) => r.holders);
@@ -113,5 +119,6 @@ describe('the panel', () => {
     const page = await get('/admin');
     expect(page.body).toContain('نشان‌های کمیاب');
     expect(page.body).toContain("get('/admin/badges/rarity'");
+    expect(page.body).toContain('brNameBtn');
   });
 });

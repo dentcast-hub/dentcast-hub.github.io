@@ -50,11 +50,28 @@ export interface RarityRow {
   level_fa: string;
   kind: 'badge' | 'medal';
   visibility: string;
+  /** What it takes, in the catalog's own unit: «۳۰ روز», «همهٔ مسیرها». Empty when the catalog gives no number. */
+  need_fa: string;
+  /** The catalog's sentence for reaching this level, and its longer explanation. */
+  unlock_fa: string;
+  detail_fa: string;
   /** Readers whose ledger row is at this level or above. */
   holders: number;
 }
 
-interface Slot { key: string; level: number; title_fa: string; level_fa: string; kind: 'badge' | 'medal'; visibility: string }
+interface Slot {
+  key: string; level: number; title_fa: string; level_fa: string; kind: 'badge' | 'medal'; visibility: string;
+  need_fa: string; unlock_fa: string; detail_fa: string;
+}
+
+const toFa = (n: number): string => String(n).replace(/[0-9]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
+
+/** «۳۰ روز» / «همهٔ مسیر» — the threshold as the wall would say it, or '' for a one-shot with no unit. */
+function needOf(threshold: number | 'all' | undefined, unit: string | undefined): string {
+  if (threshold === 'all') return unit ? `همهٔ ${unit}ها` : 'همه';
+  if (typeof threshold !== 'number') return '';
+  return unit ? `${toFa(threshold)} ${unit}` : (threshold > 1 ? toFa(threshold) : '');
+}
 
 /** Every (key, level) the panel can ask about, in catalog order. */
 async function slots(): Promise<Slot[]> {
@@ -62,12 +79,16 @@ async function slots(): Promise<Slot[]> {
   const out: Slot[] = [];
   for (const b of catalog.badges) {
     if (b.leveled && b.levels?.length) {
-      b.levels.forEach((_, i) => out.push({
+      b.levels.forEach((lv, i) => out.push({
         key: b.key, level: i, title_fa: b.title_fa, level_fa: METAL_FA[i] ?? String(i + 1),
         kind: 'badge', visibility: b.visibility,
+        need_fa: needOf(lv.threshold, b.unit_fa), unlock_fa: lv.unlock_fa ?? '', detail_fa: b.detail_fa ?? '',
       }));
     } else {
-      out.push({ key: b.key, level: 0, title_fa: b.title_fa, level_fa: '', kind: 'badge', visibility: b.visibility });
+      out.push({
+        key: b.key, level: 0, title_fa: b.title_fa, level_fa: '', kind: 'badge', visibility: b.visibility,
+        need_fa: needOf(b.threshold, b.unit_fa), unlock_fa: b.unlock_fa ?? '', detail_fa: b.detail_fa ?? '',
+      });
     }
   }
   const tiers = await getTiers();
@@ -76,6 +97,7 @@ async function slots(): Promise<Slot[]> {
       out.push({
         key: `medal:${m.key}`, level: t.tier_order, title_fa: `${m.metal_fa} ${t.name_fa}`,
         level_fa: '', kind: 'medal', visibility: 'always',
+        need_fa: `رتبهٔ ${toFa(m.rank)} گروه در لیگِ ${t.name_fa}`, unlock_fa: m.unlock_fa ?? '', detail_fa: m.detail_fa ?? '',
       });
     }
   }
