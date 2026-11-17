@@ -59047,5 +59047,64 @@
     "fidelity": [
       null
     ]
+  },
+  "insight/insight-112": {
+    "scored_at": "2026-11-17",
+    "sources": [
+      {
+        "des_version": "3.7",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "قالب‌گیری ایمپلنت: اسکن دیجیتال",
+          "authors": "دکتر فواد شهابیان",
+          "year": 2026,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "پس دقت کار به دو چیز بستگی دارد: اسکن بادی کامل سر جایش نشسته باشد و نرم‌افزار آن را درست شناسایی کند.",
+            "note": "ادعاها به سازوکار ثبت اسکن بادی و انطباق فایل لایبرری وصل شده‌اند"
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "متن هیچ‌جا خود را با شواهد منتشرشده مقایسه نمی‌کند و نبود شواهد را هم بیان نمی‌کند"
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "در یک یا دو ایمپلنت کنار دندان‌های طبیعی، دندان‌ها نقطه‌های مرجع خوبی هستند و دقت کار برای کلینیک کافی است.",
+            "note": "دامنه‌ی ادعا بین ایمپلنت‌های محدود کنار دندان طبیعی و فول آرچ یا اسپن بلند جدا شده است"
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "Insightها نکته‌های شخصی‌اند؛ مبنایشان علمی است اما به رفرنس مشخصی ارجاع نمی‌دهند، پس تجربه و تحلیل‌اند نه گزارش یک یافته‌ی پژوهشی.",
+            "note": "اعلانِ سطحِ بخش، از insight/index.html"
+          }
+        ],
+        "des_score": 15,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این نوشته کامنتری است و امتیاز DES آن ۱۵ از ۱۰۰ در باند E، یعنی سطح زمینه و نظر، است.",
+        "interpretation_fa": "متن منطق کار اسکن بادی و منابع خطای قالب‌گیری دیجیتال ایمپلنت را قدم‌به‌قدم توضیح می‌دهد و دامنه‌ی ادعا را بین ایمپلنت محدود و فول آرچ جدا می‌کند. نسبتی با شواهد منتشرشده برقرار نمی‌کند، پس امتیاز در سطح نظر کارشناسی می‌ماند. ارزش بالینی‌اش در جمع‌بندی روشن خطاهای قابل پیشگیری در این روش است."
+      }
+    ],
+    "fidelity": [
+      null
+    ]
   }
 }

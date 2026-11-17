@@ -263,7 +263,7 @@
     "#اینسایت"
    ],
    "co_tags": [],
-   "count": 129,
+   "count": 130,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -393,7 +393,8 @@
     "insight/insight-107",
     "insight/insight-109",
     "insight/insight-110",
-    "insight/insight-111"
+    "insight/insight-111",
+    "insight/insight-112"
    ]
   },
   {
@@ -1194,7 +1195,7 @@
     "#Implant_Prosthetics"
    ],
    "co_tags": [],
-   "count": 41,
+   "count": 42,
    "content_ids": [
     "episodes/episode-31",
     "episodes/episode-83",
@@ -1236,7 +1237,8 @@
     "chairside/chairside-48",
     "insight/insight-109",
     "insight/insight-110",
-    "insight/insight-111"
+    "insight/insight-111",
+    "insight/insight-112"
    ]
   },
   {
@@ -2911,6 +2913,43 @@
    ]
   },
   {
+   "key": "قالب_گیری_دیجیتال",
+   "tag": "#قالب‌گیری_دیجیتال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ثبتِ دیجیتالِ آرچ با اسکنر، به‌جای قالب سنتی.",
+   "use_when": "مقاله دقت یا پروتکلِ ثبت دیجیتال را بررسی کند.",
+   "aliases": [
+    "قالب گیری دیجیتال",
+    "digital impression",
+    "اسکن دیجیتال",
+    "digital scan",
+    "دیجیتال اسکن"
+   ],
+   "variants": [
+    "#اسکن_دیجیتال"
+   ],
+   "co_tags": [],
+   "count": 15,
+   "content_ids": [
+    "insight/insight-3",
+    "insight/insight-19",
+    "litecast/lite-CAST14",
+    "insight/insight-26",
+    "insight/insight-31",
+    "insight/insight-33",
+    "insight/insight-38",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "insight/insight-51",
+    "sharehub/share-15",
+    "insight/insight-67",
+    "dentai/dentai-32",
+    "sharehub/share-54",
+    "insight/insight-112"
+   ]
+  },
+  {
    "key": "کامپوزیت",
    "tag": "#کامپوزیت",
    "domain": "clinical",
@@ -3246,42 +3285,6 @@
    ]
   },
   {
-   "key": "قالب_گیری_دیجیتال",
-   "tag": "#قالب‌گیری_دیجیتال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ثبتِ دیجیتالِ آرچ با اسکنر، به‌جای قالب سنتی.",
-   "use_when": "مقاله دقت یا پروتکلِ ثبت دیجیتال را بررسی کند.",
-   "aliases": [
-    "قالب گیری دیجیتال",
-    "digital impression",
-    "اسکن دیجیتال",
-    "digital scan",
-    "دیجیتال اسکن"
-   ],
-   "variants": [
-    "#اسکن_دیجیتال"
-   ],
-   "co_tags": [],
-   "count": 14,
-   "content_ids": [
-    "insight/insight-3",
-    "insight/insight-19",
-    "litecast/lite-CAST14",
-    "insight/insight-26",
-    "insight/insight-31",
-    "insight/insight-33",
-    "insight/insight-38",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "insight/insight-51",
-    "sharehub/share-15",
-    "insight/insight-67",
-    "dentai/dentai-32",
-    "sharehub/share-54"
-   ]
-  },
-  {
    "key": "قالبگیری",
    "tag": "#قالبگیری",
    "domain": "clinical",
@@ -3471,6 +3474,45 @@
     "insight/insight-91",
     "insight/insight-92",
     "sharehub/share-40"
+   ]
+  },
+  {
+   "key": "پروفایل_امرجنس",
+   "tag": "#پروفایل_امرجنس",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Emergence Profile — کانتورِ خروجِ رستوریشن از زیرِ لثه که فرمِ بافتِ نرم و سلامتِ آن را تعیین می‌کند.",
+   "use_when": "مقاله پروفایلِ امرجنس را متغیرِ طراحی یا سلامتِ بافت بداند.",
+   "aliases": [
+    "emergence profile",
+    "پروفایل ظهور",
+    "پروفایل خروج",
+    "کانتور امرجنس",
+    "امرجنس پروفایل",
+    "ایمرجنس پروفایل"
+   ],
+   "variants": [
+    "#EmergenceProfile",
+    "#Emergence_Profile"
+   ],
+   "co_tags": [
+    "#Emergence_Profile"
+   ],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-112",
+    "episodes/episode-125-2",
+    "episodes/episode-130",
+    "chairside/chairside-10",
+    "episodes/episode-158",
+    "insight/insight-50",
+    "chairside/chairside-36",
+    "insight/insight-69",
+    "insight/insight-70",
+    "insight/insight-79",
+    "insight/insight-80",
+    "insight/insight-109",
+    "insight/insight-112"
    ]
   },
   {
@@ -3717,44 +3759,6 @@
     "sharehub/share-23",
     "notecast/episode-43",
     "notecast/episode-44"
-   ]
-  },
-  {
-   "key": "پروفایل_امرجنس",
-   "tag": "#پروفایل_امرجنس",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "Emergence Profile — کانتورِ خروجِ رستوریشن از زیرِ لثه که فرمِ بافتِ نرم و سلامتِ آن را تعیین می‌کند.",
-   "use_when": "مقاله پروفایلِ امرجنس را متغیرِ طراحی یا سلامتِ بافت بداند.",
-   "aliases": [
-    "emergence profile",
-    "پروفایل ظهور",
-    "پروفایل خروج",
-    "کانتور امرجنس",
-    "امرجنس پروفایل",
-    "ایمرجنس پروفایل"
-   ],
-   "variants": [
-    "#EmergenceProfile",
-    "#Emergence_Profile"
-   ],
-   "co_tags": [
-    "#Emergence_Profile"
-   ],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-112",
-    "episodes/episode-125-2",
-    "episodes/episode-130",
-    "chairside/chairside-10",
-    "episodes/episode-158",
-    "insight/insight-50",
-    "chairside/chairside-36",
-    "insight/insight-69",
-    "insight/insight-70",
-    "insight/insight-79",
-    "insight/insight-80",
-    "insight/insight-109"
    ]
   },
   {
@@ -4879,6 +4883,38 @@
    ]
   },
   {
+   "key": "اسکن_بادی",
+   "tag": "#اسکن_بادی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "قطعه‌ی اسکن‌بادی روی ایمپلنت.",
+   "use_when": "مقاله انتخاب یا رفتار اسکن‌بادی را دخیل بداند.",
+   "aliases": [
+    "scanbody",
+    "اسکن بادی ایمپلنت",
+    "scan body",
+    "اسکن‌بادی",
+    "scan abutment"
+   ],
+   "variants": [
+    "#Scan_Body"
+   ],
+   "co_tags": [
+    "#Scan_Body"
+   ],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-133",
+    "sharehub/share-2",
+    "insight/insight-26",
+    "insight/insight-31",
+    "insight/insight-35",
+    "sharehub/share-38",
+    "chairside/chairside-48",
+    "insight/insight-112"
+   ]
+  },
+  {
    "key": "انتخاب_سمان",
    "tag": "#انتخاب_سمان",
    "domain": "clinical",
@@ -5357,37 +5393,6 @@
     "insight/insight-73",
     "chairside/chairside-50",
     "episodes/episode-163"
-   ]
-  },
-  {
-   "key": "اسکن_بادی",
-   "tag": "#اسکن_بادی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "قطعه‌ی اسکن‌بادی روی ایمپلنت.",
-   "use_when": "مقاله انتخاب یا رفتار اسکن‌بادی را دخیل بداند.",
-   "aliases": [
-    "scanbody",
-    "اسکن بادی ایمپلنت",
-    "scan body",
-    "اسکن‌بادی",
-    "scan abutment"
-   ],
-   "variants": [
-    "#Scan_Body"
-   ],
-   "co_tags": [
-    "#Scan_Body"
-   ],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-133",
-    "sharehub/share-2",
-    "insight/insight-26",
-    "insight/insight-31",
-    "insight/insight-35",
-    "sharehub/share-38",
-    "chairside/chairside-48"
    ]
   },
   {
@@ -8654,6 +8659,30 @@
    ]
   },
   {
+   "key": "خطای_استیچینگ",
+   "tag": "#خطای_استیچینگ",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "خطایی که با بزرگ‌تر شدنِ محدوده‌ی اسکن انباشته می‌شود.",
+   "use_when": "مقاله وسعتِ اسکن را عاملِ افتِ دقت بداند.",
+   "aliases": [
+    "stitching",
+    "استیچینگ",
+    "خطای دوخت",
+    "stitching error",
+    "خطای استیچ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-33",
+    "insight/insight-51",
+    "sharehub/share-54",
+    "insight/insight-112"
+   ]
+  },
+  {
    "key": "دیواره_نازک",
    "tag": "#دیواره_نازک",
    "domain": "clinical",
@@ -10678,29 +10707,6 @@
    ]
   },
   {
-   "key": "خطای_استیچینگ",
-   "tag": "#خطای_استیچینگ",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "خطایی که با بزرگ‌تر شدنِ محدوده‌ی اسکن انباشته می‌شود.",
-   "use_when": "مقاله وسعتِ اسکن را عاملِ افتِ دقت بداند.",
-   "aliases": [
-    "stitching",
-    "استیچینگ",
-    "خطای دوخت",
-    "stitching error",
-    "خطای استیچ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-33",
-    "insight/insight-51",
-    "sharehub/share-54"
-   ]
-  },
-  {
    "key": "خطای_اسکن",
    "tag": "#خطای_اسکن",
    "domain": "clinical",
@@ -12602,6 +12608,32 @@
    ]
   },
   {
+   "key": "اسکن_فول_آرچ",
+   "tag": "#اسکن_فول_آرچ",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "اسکنِ دیجیتالِ تمامِ قوس روی ایمپلنت‌های متعدد و چالشِ دقتِ آن.",
+   "use_when": "مقاله اسکنِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
+   "aliases": [
+    "full arch scan",
+    "اسکن فول آرچ",
+    "full-arch scan",
+    "اسکن تمام قوس",
+    "complete arch scan",
+    "full arch scanning",
+    "full arch digital impression",
+    "اسکن کل قوس",
+    "اسکن ایمپلنت فول آرچ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-144-2",
+    "insight/insight-112"
+   ]
+  },
+  {
    "key": "اناملوپلاستی",
    "tag": "#اناملوپلاستی",
    "domain": "clinical",
@@ -14176,6 +14208,31 @@
    "content_ids": [
     "chairside/chairside-2",
     "chairside/chairside-50"
+   ]
+  },
+  {
+   "key": "فوتوگرامتری",
+   "tag": "#فوتوگرامتری",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "Photogrammetry — ثبتِ دقیقِ موقعیتِ سه‌بعدیِ ایمپلنت‌های فول‌آرچ با عکاسیِ کالیبره، جایگزینِ اسکنِ مستقیمِ کم‌دقت‌تر.",
+   "use_when": "مقاله فوتوگرامتری را روشِ ثبتِ موقعیتِ ایمپلنت بداند.",
+   "aliases": [
+    "photogrammetry",
+    "فوتوگرامتری",
+    "pic system",
+    "فتوگرامتری",
+    "stereophotogrammetry",
+    "iCam4D",
+    "MicronMapper",
+    "PIC camera"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "episodes/episode-144-2",
+    "insight/insight-112"
    ]
   },
   {
@@ -16795,31 +16852,6 @@
    "count": 1,
    "content_ids": [
     "sharehub/share-15"
-   ]
-  },
-  {
-   "key": "اسکن_فول_آرچ",
-   "tag": "#اسکن_فول_آرچ",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "اسکنِ دیجیتالِ تمامِ قوس روی ایمپلنت‌های متعدد و چالشِ دقتِ آن.",
-   "use_when": "مقاله اسکنِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
-   "aliases": [
-    "full arch scan",
-    "اسکن فول آرچ",
-    "full-arch scan",
-    "اسکن تمام قوس",
-    "complete arch scan",
-    "full arch scanning",
-    "full arch digital impression",
-    "اسکن کل قوس",
-    "اسکن ایمپلنت فول آرچ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "episodes/episode-144-2"
    ]
   },
   {
@@ -21083,30 +21115,6 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-157"
-   ]
-  },
-  {
-   "key": "فوتوگرامتری",
-   "tag": "#فوتوگرامتری",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "Photogrammetry — ثبتِ دقیقِ موقعیتِ سه‌بعدیِ ایمپلنت‌های فول‌آرچ با عکاسیِ کالیبره، جایگزینِ اسکنِ مستقیمِ کم‌دقت‌تر.",
-   "use_when": "مقاله فوتوگرامتری را روشِ ثبتِ موقعیتِ ایمپلنت بداند.",
-   "aliases": [
-    "photogrammetry",
-    "فوتوگرامتری",
-    "pic system",
-    "فتوگرامتری",
-    "stereophotogrammetry",
-    "iCam4D",
-    "MicronMapper",
-    "PIC camera"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "episodes/episode-144-2"
    ]
   },
   {
