@@ -108,6 +108,15 @@ describe('the presence draw the panel ships', () => {
     expect(await draw(win, '6')).toHaveLength(6);
   });
 
+  it('gives each winner a «پیام بده» button carrying who to message', async () => {
+    const win = await mount();
+    await draw(win, '2');
+    const buttons = Array.from(win.document.querySelectorAll('#pzWin .pzMsg')) as HTMLButtonElement[];
+    expect(buttons).toHaveLength(2);
+    const phones = PEOPLE.map((p) => p.phone);
+    for (const b of buttons) expect(phones).toContain(b.getAttribute('data-user'));
+  });
+
   it('reaches everybody over many draws', async () => {
     const win = await mount();
     const seen = new Set<string>();
@@ -123,7 +132,7 @@ describe('the presence draw the panel ships', () => {
 // count with nothing under it. No jsdom mount of one block alone can see that.
 describe('ids of the presence and rarity blocks are theirs alone', () => {
   it('appear exactly once on the whole page', () => {
-    for (const heading of ['حضور در بازهٔ اخیر</h3>', 'نشان‌های کمیاب</h3>']) {
+    for (const heading of ['حضور در بازهٔ اخیر</h3>', 'نشان‌های کمیاب</h3>', 'پیام به یک نفر</h3>']) {
       const from = body.indexOf(heading);
       expect(from).toBeGreaterThan(-1);
       const block = body.slice(from, body.indexOf('<h3', from + heading.length));

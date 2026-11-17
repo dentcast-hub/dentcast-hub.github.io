@@ -2236,6 +2236,59 @@ ${renderQuickPublish()}
   })();
   </script>
 
+  <h3 style="margin-top:26px">پیام به یک نفر</h3>
+  <div class="muted">یک پیام فقط برای یک کاربر — مثلاً برندهٔ قرعه. همان لحظه، در هر ساعتی، در «اطلاعیه‌ها»ی او می‌نشیند و نقطهٔ قرمز را روشن می‌کند. اگر تیکِ نوتیف روشن باشد، روی مرورگر/گوشی و پیام‌رسانش هم می‌رود؛ این نیمه فقط به کسی می‌رسد که اجازهٔ نوتیف داده یا «بله» را وصل کرده باشد. هیچ‌کسِ دیگری این پیام را نمی‌بیند.</div>
+  <form class="bc" id="pmForm" onsubmit="return false">
+    <div><label for="pmUser">کاربر (موبایل، نام کاربری یا شناسه)</label><input id="pmUser" type="text" dir="ltr" placeholder="0912…"></div>
+    <div><label for="pmTitle">عنوان</label><input id="pmTitle" type="text" maxlength="120" placeholder="مثلاً: برندهٔ قرعه‌کشی این ماه شدی"></div>
+    <div><label for="pmBody">متن (اختیاری)</label><textarea id="pmBody" maxlength="600" placeholder="مثلاً: برای هماهنگیِ تحویلِ هدیه، از بخش پشتیبانی به ما پیام بده."></textarea></div>
+    <div><label for="pmUrl">لینک (اختیاری) — با زدنِ پیام باز می‌شود</label><input id="pmUrl" type="text" dir="ltr" placeholder="/plus/support.html"></div>
+    <div class="row">
+      <label class="chk"><input id="pmPush" type="checkbox" checked> نوتیف (پوش/پیام‌رسان) هم بفرست</label>
+      <label class="chk"><input id="pmForce" type="checkbox"> حتی خارج از ۹ تا ۲۲</label>
+    </div>
+    <button id="pmSend" type="button">ارسال به همین یک نفر</button>
+    <div id="pmOut" class="muted" role="status" aria-live="polite"></div>
+  </form>
+  <script>
+  (function () {
+    var btn = document.getElementById('pmSend');
+    if (!btn) return;
+    var out = document.getElementById('pmOut');
+    function val(id) { return document.getElementById(id).value.trim(); }
+    btn.addEventListener('click', function () {
+      var user = val('pmUser'), title = val('pmTitle');
+      if (!user) { out.textContent = 'اول بگو برای چه کسی: موبایل، نام کاربری یا شناسه.'; return; }
+      if (!title) { out.textContent = 'عنوان لازم است.'; return; }
+      // An اطلاعیه row cannot be unsent, and a mistyped digit is somebody else.
+      if (!confirm('این پیام برای «' + user + '» فرستاده شود؟')) return;
+      btn.disabled = true; out.textContent = 'در حال ارسال...';
+      fetch('/admin/notices/user', {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          user: user, title: title,
+          body: val('pmBody') || undefined, url: val('pmUrl') || undefined,
+          push: document.getElementById('pmPush').checked,
+          force: document.getElementById('pmForce').checked
+        })
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          btn.disabled = false;
+          if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+          var m = 'در «اطلاعیه‌ها»ی ' + (res.j.display_name ? '«' + res.j.display_name + '»' : 'این کاربر') + ' نشست.';
+          if (res.j.push === 'queued') m += ' نوتیف هم فرستاده شد.';
+          else if (res.j.push_skipped) m += ' نوتیف نرفت، چون الان خارج از ۹ تا ۲۲ است. دوباره نفرست (اطلاعیهٔ تکراری می‌سازد)؛ اگر نوتیفِ همین حالا مهم است، دفعهٔ بعد تیکِ «حتی خارج از ۹ تا ۲۲» را بزن.';
+          out.textContent = m;
+          document.getElementById('pmTitle').value = '';
+          document.getElementById('pmBody').value = '';
+          document.getElementById('pmUrl').value = '';
+        })
+        .catch(function () { btn.disabled = false; out.textContent = 'ارسال نشد.'; });
+    });
+  })();
+  </script>
+
   <h3 style="margin-top:26px">رتبه‌بندی استریک‌ها</h3>
   <div class="muted">بلندترین استریکِ <b>زنده</b> در همین لحظه، ده‌تا ده‌تا. زنده یعنی آخرین فعالیت امروز یا دیروز (به وقت تهران) بوده؛ استریکی که شکسته ولی هنوز در کش مانده شمرده نمی‌شود. تاریخ شروع از فعالیت‌های خودِ کاربر حساب می‌شود. فقط ۱۰۰ نفرِ اول نمایش داده می‌شود. هم‌رتبه‌ها شمارهٔ رتبهٔ یکسان دارند.</div>
   <div class="row" style="margin-top:8px">
@@ -2416,7 +2469,13 @@ ${renderQuickPublish()}
         function tick() {
           if (c >= ticks) {
             var w = last.rows[winners[n]], li = document.createElement('li');
-            li.textContent = who(w) + ' — ' + fa(w.active_days) + ' از ' + fa(last.days) + ' روز';
+            li.textContent = who(w) + ' — ' + fa(w.active_days) + ' از ' + fa(last.days) + ' روز ';
+            // Names are pseudonyms and the phone is all there is: the way to
+            // tell a winner is a message, so the winner hands off to that form.
+            var pm = document.createElement('button');
+            pm.type = 'button'; pm.textContent = 'پیام بده'; pm.className = 'pzMsg';
+            pm.setAttribute('data-user', w.phone || w.user_id);
+            li.appendChild(pm);
             winList.appendChild(li);
             rowsEl[winners[n]].style.background = 'rgba(11,95,255,.12)';
             if (n + 1 < k) { reveal(n + 1); return; }
@@ -2434,6 +2493,13 @@ ${renderQuickPublish()}
       reveal(0);
     }
     drawGo.addEventListener('click', draw);
+    winList.addEventListener('click', function (e) {
+      var b = e.target, f = document.getElementById('pmUser');
+      if (!b || b.className !== 'pzMsg' || !f) return;
+      f.value = b.getAttribute('data-user');
+      location.hash = 'notice-user';
+      setTimeout(function () { var t = document.getElementById('pmTitle'); if (t) t.focus(); }, 50);
+    });
     function load() {
       if (busy || drawing) return;
       var d = num('pzDays'), m = num('pzMin');
@@ -3945,6 +4011,7 @@ ${renderQuickPublish()}
       ] },
       { id: 'comm', name: 'اطلاع‌رسانی و مطب', icon: '📣', tint: 't-comm', items: [
         ['notice', 'اطلاعیهٔ بنیان‌گذار', 'اطلاعیه', '', 0, 'اطلاعیه broadcast پوش'],
+        ['notice-user', 'پیام به یک نفر', 'پیام به یک نفر', '', 0, 'پیام نوتیف اختصاصی شخصی برنده قرعه یک نفر خصوصی'],
         ['clinic', 'تعطیلی مطب', 'تعطیلی مطب', '', 0, 'مطب تعطیل کارت']
       ] }
     ];
