@@ -263,7 +263,7 @@
     "#اینسایت"
    ],
    "co_tags": [],
-   "count": 128,
+   "count": 129,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -392,7 +392,8 @@
     "insight/insight-106",
     "insight/insight-107",
     "insight/insight-109",
-    "insight/insight-110"
+    "insight/insight-110",
+    "insight/insight-111"
    ]
   },
   {
@@ -1193,7 +1194,7 @@
     "#Implant_Prosthetics"
    ],
    "co_tags": [],
-   "count": 40,
+   "count": 41,
    "content_ids": [
     "episodes/episode-31",
     "episodes/episode-83",
@@ -1234,7 +1235,8 @@
     "insight/insight-78",
     "chairside/chairside-48",
     "insight/insight-109",
-    "insight/insight-110"
+    "insight/insight-110",
+    "insight/insight-111"
    ]
   },
   {
@@ -3280,6 +3282,38 @@
    ]
   },
   {
+   "key": "قالبگیری",
+   "tag": "#قالبگیری",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "ثبتِ وضعیتِ دهان برای ساختِ کار — چترِ عامِ قالب‌گیری.",
+   "use_when": "همراه تگ مشخص‌ترِ تکنیک بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "impression",
+    "ایمپرشن",
+    "قالب گیری"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-20",
+    "episodes/episode-21",
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "metanotes/meta-9",
+    "insight/insight-34",
+    "dentai/dentai-20",
+    "insight/insight-75",
+    "insight/insight-80",
+    "insight/insight-83",
+    "sharehub/share-54",
+    "insight/insight-109",
+    "insight/insight-110",
+    "insight/insight-111"
+   ]
+  },
+  {
    "key": "ویدیو",
    "tag": "#ویدیو",
    "domain": "brand",
@@ -3395,37 +3429,6 @@
     "dentcast-plus/video-11",
     "insight/insight-73",
     "insight/insight-85"
-   ]
-  },
-  {
-   "key": "قالبگیری",
-   "tag": "#قالبگیری",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "ثبتِ وضعیتِ دهان برای ساختِ کار — چترِ عامِ قالب‌گیری.",
-   "use_when": "همراه تگ مشخص‌ترِ تکنیک بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "impression",
-    "ایمپرشن",
-    "قالب گیری"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-20",
-    "episodes/episode-21",
-    "notecast/episode-20",
-    "notecast/episode-21",
-    "metanotes/meta-9",
-    "insight/insight-34",
-    "dentai/dentai-20",
-    "insight/insight-75",
-    "insight/insight-80",
-    "insight/insight-83",
-    "sharehub/share-54",
-    "insight/insight-109",
-    "insight/insight-110"
    ]
   },
   {
@@ -4470,6 +4473,38 @@
    ]
   },
   {
+   "key": "فیت_پروتز",
+   "tag": "#فیت_پروتز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نشستنِ کاملِ کار روی تکیه‌گاه.",
+   "use_when": "مقاله فیت را بسنجد یا نبودش را علتِ شکست بداند.",
+   "aliases": [
+    "پسیو فیت",
+    "passive fit",
+    "فیت روکش",
+    "misfit",
+    "prosthesis fit",
+    "فیت پسیو",
+    "میس فیت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "insight/insight-26",
+    "insight/insight-31",
+    "insight/insight-35",
+    "insight/insight-44",
+    "insight/insight-52",
+    "metanotes/meta-20",
+    "dentcast-plus/video-14",
+    "insight/insight-102",
+    "insight/insight-109",
+    "insight/insight-111"
+   ]
+  },
+  {
    "key": "github",
    "tag": "#GitHub",
    "domain": "ai",
@@ -4740,37 +4775,6 @@
     "notecast/episode-28",
     "insight/insight-72",
     "insight/insight-108"
-   ]
-  },
-  {
-   "key": "فیت_پروتز",
-   "tag": "#فیت_پروتز",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نشستنِ کاملِ کار روی تکیه‌گاه.",
-   "use_when": "مقاله فیت را بسنجد یا نبودش را علتِ شکست بداند.",
-   "aliases": [
-    "پسیو فیت",
-    "passive fit",
-    "فیت روکش",
-    "misfit",
-    "prosthesis fit",
-    "فیت پسیو",
-    "میس فیت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "insight/insight-26",
-    "insight/insight-31",
-    "insight/insight-35",
-    "insight/insight-44",
-    "insight/insight-52",
-    "metanotes/meta-20",
-    "dentcast-plus/video-14",
-    "insight/insight-102",
-    "insight/insight-109"
    ]
   },
   {
@@ -7112,6 +7116,38 @@
    ]
   },
   {
+   "key": "ایمپلنت_زاویه_دار",
+   "tag": "#ایمپلنت_زاویه_دار",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "فیکسچری با زاویه‌ی نامناسب — مسئله‌ای فراتر از انتخابِ اباتمنت.",
+   "use_when": "مقاله زاویه را عاملِ عوارضِ بعدی بداند، نه صرفاً مسئله‌ی مسیر.",
+   "aliases": [
+    "ایمپلنت زاویه دار",
+    "angled implant",
+    "زاویه فیکسچر",
+    "ایمپلنت کج",
+    "tilted implant",
+    "angulated implant",
+    "implant angulation",
+    "ایمپلنت تیلت شده",
+    "فیکسچر زاویه دار",
+    "فیکسچر کج",
+    "انگولیشن ایمپلنت",
+    "زاویه ایمپلنت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-144-1",
+    "insight/insight-47",
+    "dentai/dentai-31",
+    "insight/insight-83",
+    "insight/insight-111"
+   ]
+  },
+  {
    "key": "ایمپلنت_فوری",
    "tag": "#ایمپلنت_فوری",
    "domain": "clinical",
@@ -7313,6 +7349,32 @@
     "dentai/dentai-2",
     "episodes/episode-159-1",
     "chairside/chairside-35"
+   ]
+  },
+  {
+   "key": "خطای_قالبگیری",
+   "tag": "#خطای_قالبگیری",
+   "domain": null,
+   "words": 2,
+   "definition": "خطایی که در مرحله‌ی ثبت وارد کار می‌شود و بعداً دیده می‌شود.",
+   "use_when": "مقاله منشأ خطا را به قالب‌گیری برگرداند.",
+   "aliases": [
+    "خطای قالب",
+    "ایمپرشن اشتباه",
+    "impression error",
+    "خطای ایمپرشن",
+    "impression distortion",
+    "دیستورشن قالب"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "chairside/chairside-12",
+    "insight/insight-75",
+    "insight/insight-109",
+    "insight/insight-110",
+    "insight/insight-111"
    ]
   },
   {
@@ -8262,37 +8324,6 @@
    ]
   },
   {
-   "key": "ایمپلنت_زاویه_دار",
-   "tag": "#ایمپلنت_زاویه_دار",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "فیکسچری با زاویه‌ی نامناسب — مسئله‌ای فراتر از انتخابِ اباتمنت.",
-   "use_when": "مقاله زاویه را عاملِ عوارضِ بعدی بداند، نه صرفاً مسئله‌ی مسیر.",
-   "aliases": [
-    "ایمپلنت زاویه دار",
-    "angled implant",
-    "زاویه فیکسچر",
-    "ایمپلنت کج",
-    "tilted implant",
-    "angulated implant",
-    "implant angulation",
-    "ایمپلنت تیلت شده",
-    "فیکسچر زاویه دار",
-    "فیکسچر کج",
-    "انگولیشن ایمپلنت",
-    "زاویه ایمپلنت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-144-1",
-    "insight/insight-47",
-    "dentai/dentai-31",
-    "insight/insight-83"
-   ]
-  },
-  {
    "key": "برداشت_ترمیم",
    "tag": "#برداشت_ترمیم",
    "domain": "clinical",
@@ -8620,31 +8651,6 @@
     "insight/insight-71",
     "metanotes/meta-22",
     "insight/insight-108"
-   ]
-  },
-  {
-   "key": "خطای_قالبگیری",
-   "tag": "#خطای_قالبگیری",
-   "domain": null,
-   "words": 2,
-   "definition": "خطایی که در مرحله‌ی ثبت وارد کار می‌شود و بعداً دیده می‌شود.",
-   "use_when": "مقاله منشأ خطا را به قالب‌گیری برگرداند.",
-   "aliases": [
-    "خطای قالب",
-    "ایمپرشن اشتباه",
-    "impression error",
-    "خطای ایمپرشن",
-    "impression distortion",
-    "دیستورشن قالب"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "chairside/chairside-12",
-    "insight/insight-75",
-    "insight/insight-109",
-    "insight/insight-110"
    ]
   },
   {
@@ -14223,6 +14229,31 @@
    "content_ids": [
     "insight/insight-80",
     "insight/insight-83"
+   ]
+  },
+  {
+   "key": "قالبگیری_اوپن_تری",
+   "tag": "#قالبگیری_اوپن_تری",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "قالب‌گیری ایمپلنت با تری باز: ایمپرشن کوپینگ (یا قطعه‌ی متصل به آن) داخل قالب می‌ماند و پس از باز کردن پیچ از روی تری، همراه قالب از دهان خارج می‌شود تا موقعیت ایمپلنت به کست منتقل شود.",
+   "use_when": "مقاله روش قالب‌گیری open tray، یا خارج کردن کوپینگ یا اباتمنت همراه قالب را توضیح دهد.",
+   "aliases": [
+    "open tray",
+    "open tray impression",
+    "open-tray",
+    "قالب اوپن تری",
+    "قالب‌گیری تری باز",
+    "pick-up coping impression",
+    "اوپن تری",
+    "تری باز"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "insight/insight-83",
+    "insight/insight-111"
    ]
   },
   {
@@ -21189,30 +21220,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-65"
-   ]
-  },
-  {
-   "key": "قالبگیری_اوپن_تری",
-   "tag": "#قالبگیری_اوپن_تری",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "قالب‌گیری ایمپلنت با تری باز: ایمپرشن کوپینگ (یا قطعه‌ی متصل به آن) داخل قالب می‌ماند و پس از باز کردن پیچ از روی تری، همراه قالب از دهان خارج می‌شود تا موقعیت ایمپلنت به کست منتقل شود.",
-   "use_when": "مقاله روش قالب‌گیری open tray، یا خارج کردن کوپینگ یا اباتمنت همراه قالب را توضیح دهد.",
-   "aliases": [
-    "open tray",
-    "open tray impression",
-    "open-tray",
-    "قالب اوپن تری",
-    "قالب‌گیری تری باز",
-    "pick-up coping impression",
-    "اوپن تری",
-    "تری باز"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "insight/insight-83"
    ]
   },
   {
