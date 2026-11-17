@@ -263,7 +263,7 @@
     "#اینسایت"
    ],
    "co_tags": [],
-   "count": 127,
+   "count": 128,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -391,7 +391,8 @@
     "insight/insight-105",
     "insight/insight-106",
     "insight/insight-107",
-    "insight/insight-109"
+    "insight/insight-109",
+    "insight/insight-110"
    ]
   },
   {
@@ -1192,7 +1193,7 @@
     "#Implant_Prosthetics"
    ],
    "co_tags": [],
-   "count": 39,
+   "count": 40,
    "content_ids": [
     "episodes/episode-31",
     "episodes/episode-83",
@@ -1232,7 +1233,8 @@
     "insight/insight-77",
     "insight/insight-78",
     "chairside/chairside-48",
-    "insight/insight-109"
+    "insight/insight-109",
+    "insight/insight-110"
    ]
   },
   {
@@ -3396,6 +3398,37 @@
    ]
   },
   {
+   "key": "قالبگیری",
+   "tag": "#قالبگیری",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "ثبتِ وضعیتِ دهان برای ساختِ کار — چترِ عامِ قالب‌گیری.",
+   "use_when": "همراه تگ مشخص‌ترِ تکنیک بیاید، نه به‌تنهایی.",
+   "aliases": [
+    "impression",
+    "ایمپرشن",
+    "قالب گیری"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-20",
+    "episodes/episode-21",
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "metanotes/meta-9",
+    "insight/insight-34",
+    "dentai/dentai-20",
+    "insight/insight-75",
+    "insight/insight-80",
+    "insight/insight-83",
+    "sharehub/share-54",
+    "insight/insight-109",
+    "insight/insight-110"
+   ]
+  },
+  {
    "key": "لیتیوم_دی_سیلیکات",
    "tag": "#لیتیوم_دی_سیلیکات",
    "domain": "clinical",
@@ -3645,36 +3678,6 @@
     "plak-sefr/plak1-11",
     "plak-sefr/plak1-12",
     "plak-sefr/plak1-13"
-   ]
-  },
-  {
-   "key": "قالبگیری",
-   "tag": "#قالبگیری",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "ثبتِ وضعیتِ دهان برای ساختِ کار — چترِ عامِ قالب‌گیری.",
-   "use_when": "همراه تگ مشخص‌ترِ تکنیک بیاید، نه به‌تنهایی.",
-   "aliases": [
-    "impression",
-    "ایمپرشن",
-    "قالب گیری"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-20",
-    "episodes/episode-21",
-    "notecast/episode-20",
-    "notecast/episode-21",
-    "metanotes/meta-9",
-    "insight/insight-34",
-    "dentai/dentai-20",
-    "insight/insight-75",
-    "insight/insight-80",
-    "insight/insight-83",
-    "sharehub/share-54",
-    "insight/insight-109"
    ]
   },
   {
@@ -8472,6 +8475,41 @@
    ]
   },
   {
+   "key": "تری_قالبگیری",
+   "tag": "#تری_قالبگیری",
+   "domain": null,
+   "words": 2,
+   "definition": "تری و چسبِ آن به‌عنوان عاملِ دقت.",
+   "use_when": "مقاله تری را عاملِ خطا یا دقت بداند.",
+   "aliases": [
+    "impression tray",
+    "قاشقک",
+    "custom tray",
+    "تری اختصاصی",
+    "کاستوم تری",
+    "تری کاستوم",
+    "stock tray",
+    "تری پیش ساخته",
+    "تری استوک",
+    "tray adhesive",
+    "چسب تری",
+    "تری ادهزیو",
+    "special tray",
+    "اسپشیال تری",
+    "تری فلزی",
+    "تری پلاستیکی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "insight/insight-34",
+    "insight/insight-110"
+   ]
+  },
+  {
    "key": "تکنیک_خارج_سازی",
    "tag": "#تکنیک_خارج_سازی",
    "domain": "clinical",
@@ -8582,6 +8620,31 @@
     "insight/insight-71",
     "metanotes/meta-22",
     "insight/insight-108"
+   ]
+  },
+  {
+   "key": "خطای_قالبگیری",
+   "tag": "#خطای_قالبگیری",
+   "domain": null,
+   "words": 2,
+   "definition": "خطایی که در مرحله‌ی ثبت وارد کار می‌شود و بعداً دیده می‌شود.",
+   "use_when": "مقاله منشأ خطا را به قالب‌گیری برگرداند.",
+   "aliases": [
+    "خطای قالب",
+    "ایمپرشن اشتباه",
+    "impression error",
+    "خطای ایمپرشن",
+    "impression distortion",
+    "دیستورشن قالب"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "chairside/chairside-12",
+    "insight/insight-75",
+    "insight/insight-109",
+    "insight/insight-110"
    ]
   },
   {
@@ -10329,40 +10392,6 @@
    ]
   },
   {
-   "key": "تری_قالبگیری",
-   "tag": "#تری_قالبگیری",
-   "domain": null,
-   "words": 2,
-   "definition": "تری و چسبِ آن به‌عنوان عاملِ دقت.",
-   "use_when": "مقاله تری را عاملِ خطا یا دقت بداند.",
-   "aliases": [
-    "impression tray",
-    "قاشقک",
-    "custom tray",
-    "تری اختصاصی",
-    "کاستوم تری",
-    "تری کاستوم",
-    "stock tray",
-    "تری پیش ساخته",
-    "تری استوک",
-    "tray adhesive",
-    "چسب تری",
-    "تری ادهزیو",
-    "special tray",
-    "اسپشیال تری",
-    "تری فلزی",
-    "تری پلاستیکی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "notecast/episode-20",
-    "notecast/episode-21",
-    "insight/insight-34"
-   ]
-  },
-  {
    "key": "تست_اندو",
    "tag": "#تست_اندو",
    "domain": "clinical",
@@ -10692,30 +10721,6 @@
     "sharehub/share-2",
     "dentai/dentai-21",
     "metanotes/meta-16"
-   ]
-  },
-  {
-   "key": "خطای_قالبگیری",
-   "tag": "#خطای_قالبگیری",
-   "domain": null,
-   "words": 2,
-   "definition": "خطایی که در مرحله‌ی ثبت وارد کار می‌شود و بعداً دیده می‌شود.",
-   "use_when": "مقاله منشأ خطا را به قالب‌گیری برگرداند.",
-   "aliases": [
-    "خطای قالب",
-    "ایمپرشن اشتباه",
-    "impression error",
-    "خطای ایمپرشن",
-    "impression distortion",
-    "دیستورشن قالب"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "chairside/chairside-12",
-    "insight/insight-75",
-    "insight/insight-109"
    ]
   },
   {
@@ -11389,6 +11394,31 @@
     "episodes/episode-128-2",
     "dentai/dentai-27",
     "sharehub/share-52"
+   ]
+  },
+  {
+   "key": "مولتی_یونیت_اباتمنت",
+   "tag": "#مولتی_یونیت_اباتمنت",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "Multi-Unit Abutment — اباتمنتِ واسطه که پروتزِ پیچ‌شونده‌ی چندواحدی را از سطحِ لثه می‌گیرد و زاویه‌ی فیکسچرها را جبران می‌کند.",
+   "use_when": "مقاله MUA را انتخاب یا کاربردش را موضوع داشته باشد.",
+   "aliases": [
+    "multi unit",
+    "مولتی یونیت",
+    "MUA",
+    "multi-unit abutment",
+    "مالتی یونیت",
+    "اباتمنت مولتی یونیت",
+    "ام یو ای"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-108",
+    "insight/insight-57",
+    "insight/insight-110"
    ]
   },
   {
@@ -14440,30 +14470,6 @@
    "content_ids": [
     "insight/insight-19",
     "insight/insight-38"
-   ]
-  },
-  {
-   "key": "مولتی_یونیت_اباتمنت",
-   "tag": "#مولتی_یونیت_اباتمنت",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "Multi-Unit Abutment — اباتمنتِ واسطه که پروتزِ پیچ‌شونده‌ی چندواحدی را از سطحِ لثه می‌گیرد و زاویه‌ی فیکسچرها را جبران می‌کند.",
-   "use_when": "مقاله MUA را انتخاب یا کاربردش را موضوع داشته باشد.",
-   "aliases": [
-    "multi unit",
-    "مولتی یونیت",
-    "MUA",
-    "multi-unit abutment",
-    "مالتی یونیت",
-    "اباتمنت مولتی یونیت",
-    "ام یو ای"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-108",
-    "insight/insight-57"
    ]
   },
   {
