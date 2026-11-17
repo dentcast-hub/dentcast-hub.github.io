@@ -3908,6 +3908,38 @@
     "reserved": {}
   },
   {
+    "id": "bundle-implant-impression",
+    "kind": "bundle",
+    "glyph": "icon-implant",
+    "title_fa": "قالب‌گیری ایمپلنت: شروع کن",
+    "description_fa": "هدف، ابزار، اوپن تری یا کلوز تری، اسکن دیجیتال و چک پیش از ارسال — قالب‌گیری ایمپلنت در ۵ قدم.",
+    "premium": true,
+    "continues_pathway": "implant-prosthetic",
+    "steps": [
+      {
+        "content_id": "insight/insight-109",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-110",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-111",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-112",
+        "milestone": false
+      },
+      {
+        "content_id": "insight/insight-113",
+        "milestone": true
+      }
+    ],
+    "reserved": {}
+  },
+  {
     "id": "bundle-implant-surgery",
     "kind": "bundle",
     "glyph": "icon-scalpel",
