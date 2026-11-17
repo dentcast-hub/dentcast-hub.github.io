@@ -53,6 +53,26 @@ describe('GET /admin/badges/rarity', () => {
     const flame = (lv: number) => j.rows.find((r) => r.key === 'flame' && r.level === lv)!;
     expect([flame(0).holders, flame(1).holders, flame(2).holders]).toEqual([3, 2, 1]);
     expect(flame(2).level_fa).toBe('طلا');
+    // Each row says in one plain sentence what its holder did.
+    const meaning = (key: string, lv: number) =>
+      (j.rows.find((r) => r.key === key && r.level === lv) as unknown as { meaning_fa: string }).meaning_fa;
+    expect(meaning('flame', 2)).toBe('کسی که ۱۰۰ روز پشتِ‌سرهم فعال بوده.');
+    expect(meaning('eagle', 2)).toBe('کسی که ۲۵ بار مطلبی را در ساعتِ اولِ انتشارش خوانده.');
+    expect(meaning('conqueror', 0)).toBe('کسی که همهٔ مطالبِ یک بخش را تمام کرده.');
+    expect(meaning('wayfarer', 2)).toBe('کسی که همهٔ مسیرهای یادگیری را کامل تمام کرده.');
+    expect(meaning('treasury', 0)).toBe('کسی که اولین کالکشنش را ساخته.');
+    expect(meaning('night_owl', 0)).toBe('کسی که بین نیمه‌شب و ۴ صبح فعال بوده.');
+    // No badge in the catalog is left with the thin fallback sentence.
+    for (const r of j.rows.filter((x) => x.kind === 'badge')) {
+      const m = (r as unknown as { meaning_fa: string }).meaning_fa;
+      expect(m, r.key).toMatch(/^کسی که /);
+      expect(m, r.key).not.toContain('رسیده.');
+    }
+    expect(flame(2)).toMatchObject({ need_fa: '۱۰۰ روز' });
+    expect((flame(2) as unknown as { unlock_fa: string; detail_fa: string }).unlock_fa.length).toBeGreaterThan(5);
+    expect((flame(0) as unknown as { detail_fa: string }).detail_fa).toContain('استریک');
+    const wayfarer = j.rows.find((r) => r.key === 'wayfarer' && r.level === 2) as unknown as { need_fa: string };
+    expect(wayfarer.need_fa).toBe('همهٔ مسیرها');
 
     // Held ones first, ascending; nobody-yet ones after every held one.
     const held = j.rows.filter((r) => r.holders > 0).map((r) => r.holders);
@@ -113,5 +133,6 @@ describe('the panel', () => {
     const page = await get('/admin');
     expect(page.body).toContain('نشان‌های کمیاب');
     expect(page.body).toContain("get('/admin/badges/rarity'");
+    expect(page.body).toContain('brNameBtn');
   });
 });
