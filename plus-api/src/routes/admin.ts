@@ -39,6 +39,7 @@ import {
 } from '../services/gift-redemption.js';
 import { grantBadge, revokeBadgeGrant, listBadgeGrants } from '../services/badge-grants.js';
 import { grantableBadges } from '../badges.js';
+import { badgeRarity, badgeHolders } from '../services/badge-holders.js';
 import {
   getSpotStats, defaultRange, isCalendarDay, SPOT_HOSTS, type GroupBy,
 } from '../services/spot-stats.js';
@@ -2642,6 +2643,90 @@ ${renderQuickPublish()}
   })();
   </script>
 
+  <h3 style="margin-top:26px">نشان‌های کمیاب</h3>
+  <div class="muted">هر نشان و هر سطحش، با تعدادِ کسانی که به آن رسیده‌اند — کمیاب‌ترین بالا، و آن‌هایی که هنوز هیچ‌کس نگرفته پایین. «چه کسانی؟» فهرستِ دارنده‌ها را زیرِ جدول باز می‌کند. دو نکته: عدد یعنی «تا حالا به این سطح رسیده»، نه «همین الان دارد» (نشانی که بعداً خاموش شده هم شمرده می‌شود)؛ و دارندهٔ طلا در شمارِ نقره و برنز هم هست. حسابی که از زمانِ راه‌افتادنِ اعلانِ نشان‌ها هیچ کاری نکرده در این آمار نیست.</div>
+  <div class="row" style="margin-top:8px">
+    <button id="brLoad" type="button">نمایش</button>
+    <span id="brInfo" class="muted"></span>
+  </div>
+  <div id="brOut" style="margin-top:8px"></div>
+  <div id="brWho" style="margin-top:14px"></div>
+  <script>
+  (function () {
+    var out = document.getElementById('brOut');
+    if (!out) return;
+    var loadBtn = document.getElementById('brLoad');
+    var info = document.getElementById('brInfo');
+    var who = document.getElementById('brWho');
+    var busy = false, list = [];
+    function esc(t) {
+      return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+    function fa(n) { return String(n).replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'.charAt(+d); }); }
+    function when(t) {
+      try { return new Date(t).toLocaleDateString('fa-IR-u-ca-persian', { timeZone: 'Asia/Tehran' }); }
+      catch (e) { return esc(t); }
+    }
+    function pct(n, of) {
+      if (!of || !n) return '';
+      var p = n * 100 / of;
+      return (p < 1 ? 'کمتر از ۱' : fa(Math.round(p))) + '٪';
+    }
+    var VIS = { mystery: 'مخفی تا کسب', earned_only: 'فقط برای دارنده' };
+    function render(j) {
+      list = j.rows;
+      var rows = j.rows.map(function (r, i) {
+        var tag = r.kind === 'medal' ? 'مدال لیگ' : (VIS[r.visibility] || '');
+        return '<tr' + (r.holders ? '' : ' style="opacity:.55"') + '>'
+          + '<td>' + esc(r.title_fa) + (tag ? '<div class="muted">' + esc(tag) + '</div>' : '') + '</td>'
+          + '<td>' + esc(r.level_fa || '—') + '</td>'
+          + '<td><b>' + fa(r.holders) + '</b> نفر</td>'
+          + '<td>' + pct(r.holders, j.accounts) + '</td>'
+          + '<td>' + (r.holders ? '<button type="button" class="brWhoBtn" data-i="' + i + '">چه کسانی؟</button>' : 'هنوز هیچ‌کس') + '</td></tr>';
+      }).join('');
+      out.innerHTML = '<div class="tblwrap"><table><thead><tr>'
+        + '<th>نشان</th><th>سطح</th><th>رسیده‌اند</th><th>از حساب‌ها</th><th></th></tr></thead><tbody>'
+        + rows + '</tbody></table></div>';
+      info.textContent = 'از ' + fa(j.accounts) + ' حسابی که دیوارِ نشان‌شان ثبت شده';
+    }
+    function renderWho(j) {
+      var head = '<b>' + esc(j.title_fa) + (j.level_fa ? ' · ' + esc(j.level_fa) : '') + '</b> — ' + fa(j.total) + ' نفر'
+        + (j.total > j.cap ? ' (فقط ' + fa(j.cap) + ' نفر اول نمایش داده می‌شود)' : '');
+      var rows = j.rows.map(function (r, i) {
+        return '<tr><td>' + fa(i + 1) + '</td>'
+          + '<td>' + esc(r.display_name || '—') + '<div class="muted">' + esc(r.phone || '') + '</div></td>'
+          + '<td>' + esc(r.level_fa || '—') + '</td>'
+          + '<td>' + (r.seeded ? '<span class="muted">پیش از ثبتِ تاریخ</span>' : when(r.announced_at)) + '</td></tr>';
+      }).join('');
+      who.innerHTML = '<div>' + head + '</div><div class="tblwrap" style="margin-top:6px"><table><thead><tr>'
+        + '<th>#</th><th>کاربر</th><th>بالاترین سطحِ خودش</th><th>تاریخِ اعلام</th></tr></thead><tbody>'
+        + rows + '</tbody></table></div>';
+    }
+    function get(url, ok, target) {
+      if (busy) return;
+      busy = true; loadBtn.disabled = true; target.textContent = 'در حال خواندن...';
+      fetch(url, { credentials: 'include' })
+        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          busy = false; loadBtn.disabled = false;
+          if (!res.ok) { target.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+          ok(res.j);
+        })
+        .catch(function () { busy = false; loadBtn.disabled = false; target.textContent = 'خوانده نشد.'; });
+    }
+    loadBtn.addEventListener('click', function () { who.innerHTML = ''; get('/admin/badges/rarity', render, out); });
+    out.addEventListener('click', function (e) {
+      var b = e.target;
+      if (!b || b.className !== 'brWhoBtn') return;
+      var r = list[Number(b.getAttribute('data-i'))];
+      if (!r) return;
+      get('/admin/badges/holders?badge=' + encodeURIComponent(r.key) + '&level=' + encodeURIComponent(r.level), renderWho, who);
+    });
+  })();
+  </script>
+
   <h3 style="margin-top:26px">صف واریز به حساب</h3>
   <div class="muted">
     <b>این‌ها واریز نیستند — درخواست‌اند.</b> ردیف همان لحظه‌ای ساخته می‌شود که خریدار «دریافت کد پیگیری»
@@ -3791,6 +3876,7 @@ ${renderQuickPublish()}
         ['gift-day', 'هدیهٔ روز پریمیوم به یک نفر', 'هدیه‌ی روزِ پریمیوم', '', 0, 'هدیه روز'],
         ['forever', 'پریمیوم ابدی به یک نفر', 'پریمیومِ ابدی', '', 0, 'ابدی همیشگی'],
         ['badge', 'اهدای نشان', 'اهدای نشان', '', 0, 'نشان همراه دانشجو ستون تخفیف'],
+        ['badge-rarity', 'نشان‌های کمیاب', 'نشان‌های کمیاب', '', 0, 'نشان کمیاب دارنده مدال طلا نقره برنز چه کسی'],
         ['streak-board', 'رتبه‌بندی استریک‌ها', 'رتبه‌بندی استریک', '', 0, 'استریک رتبه برترین جایزه بالاترین'],
         ['streak-presence', 'حضور در بازهٔ اخیر', 'حضور در بازه', '', 0, 'حضور روز فعال بازه جایزه دو سوم قرعه'],
         ['streak', 'ترمیم استریک شکسته', 'ترمیم استریک', '', 0, 'استریک ترمیم']
@@ -5385,6 +5471,26 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     if (!who) return reply;
     const removed = await revokeBadgeGrant(who.id, body.badge);
     return reply.send({ ok: true, user_id: who.id, badge_key: body.badge, removed });
+  });
+
+  /**
+   * GET /admin/badges/rarity — every badge level and medal tier with how many
+   * readers reached it, rarest first (services/badge-holders.ts). Read-only.
+   */
+  app.get('/admin/badges/rarity', async (_request, reply) => {
+    return reply.send({ ok: true, ...await badgeRarity() });
+  });
+
+  /** GET /admin/badges/holders?badge=KEY&level=N — who reached that level. Read-only. */
+  app.get('/admin/badges/holders', async (request, reply) => {
+    const q = request.query as { badge?: string; level?: string };
+    const key = (q.badge ?? '').trim();
+    const lv = (q.level ?? '0').trim();
+    const page = key && /^[0-9]{1,2}$/.test(lv) ? await badgeHolders(key, Number(lv)) : null;
+    if (!page) {
+      return reply.code(404).send({ error: 'unknown_badge', message: 'چنین نشان یا سطحی در کاتالوگ نیست.' });
+    }
+    return reply.send({ ok: true, ...page });
   });
 
   // GET /admin/badges/grants?user= — one account's grant list, plus the keys
