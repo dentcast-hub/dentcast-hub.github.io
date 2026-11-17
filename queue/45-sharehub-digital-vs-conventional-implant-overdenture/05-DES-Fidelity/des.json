@@ -1,0 +1,99 @@
+{
+ "scored_at": "2026-11-17",
+ "sources": [
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "FULL_TEXT",
+   "citation": {
+    "title": "Fully digital versus conventional workflow: Are removable complete overdentures equally good? A randomized crossover trial",
+    "authors": "Thomas Van de Winkel, Frans Delfos, Olleke van der Heijden, Ewald Bronkhorst, Luc Verhamme, Gert Meijer",
+    "year": 2025,
+    "journal": "Clinical Implant Dentistry and Related Research",
+    "doi": "10.1111/cid.13398"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 85,
+    "anchor": "randomized crossover controlled trial (THERAPY RCT row, 85)",
+    "evidence_quote": "A randomized crossover trial"
+   },
+   "q_method": {
+    "tool": "RoB2",
+    "domains": [
+     {
+      "domain": "randomization process",
+      "rating": "low",
+      "evidence_quote": "An independent secretary prepared a stack of sealed study enve",
+      "note": "computer-generated schedule with permuted blocks of random sizes; sealed envelopes prepared by an independent secretary and opened in sequence"
+     },
+     {
+      "domain": "deviations from intended interventions",
+      "rating": "some_concerns",
+      "evidence_quote": "only the clinician knew which IOD type was to be installed",
+      "note": "patients and researcher blinded, treating clinician aware; no washout period between periods; 10 patients could not receive a mandibular 3D-IOD and wore a mandibular C-IOD throughout"
+     },
+     {
+      "domain": "missing outcome data",
+      "rating": "low",
+      "evidence_quote": "In total, 32 patients, 16 men and 16 women, completed the study.",
+      "note": "36 enrolled, 4 discontinued with reasons stated (two deaths, deteriorated vision, moved abroad), none related to the denture type"
+     },
+     {
+      "domain": "measurement of the outcome",
+      "rating": "low",
+      "evidence_quote": "Furthermore, researchers and research assistants were blinded when",
+      "note": "PROMs reported by blinded patients; blinding checked at study end (14 guessed correctly, 18 incorrectly); assessors and statisticians blinded"
+     },
+     {
+      "domain": "selection of the reported result",
+      "rating": "high",
+      "evidence_quote": "",
+      "note": "no trial registration, published protocol or pre-specified analysis plan in Methods (ethics approval, trial design, centers, sample size, statistics), Funding, Ethics statement or Data availability; the NL number given is the ethics committee dossier, not a trial registry; the power calculation fixes a primary outcome and margin but is not a plan against which the reported analyses can be checked"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement or manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "The authors declare no conflicts of interest.",
+     "note": "CoI statement present; funded by the governmental organization ZonMw, not a manufacturer"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "covered in Q_method"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "therefore, a power calculation was focused",
+     "note": "power calculation reported with alpha, power, margin and SD"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "each patient wore both types of IOD for 1 year each,",
+     "note": "primary outcome is patient-reported quality of life after one year per denture, not a long-term survival claim; does not fire"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 47,
+   "band": "C",
+   "provisional": false,
+   "fact_fa": "امتیاز DES این مقاله ۴۷ از ۱۰۰ است و در باند C (شواهد محدود) برای سؤال THERAPY قرار می‌گیرد.",
+   "interpretation_fa": "یک RCT کراس‌اوور با تخصیص پنهان و ارزیابی blinded نتایج گزارش‌شده توسط بیمار است، اما ثبت کارآزمایی یا پروتکل منتشرشده‌ای گزارش نکرده و با اینکه برای non-inferiority طراحی شده، نتیجه را برتری 3D-IOD گزارش کرده است. برتری 3D-IOD در OHIP-20 و رضایت بیمار برای maxilla تقویت‌شده با ۴ تا ۶ ایمپلنت معنا دارد، ولی اثر طرح باریک‌تر و اتچمنت PEEK از اثر خود workflow دیجیتال جدا نشده است."
+  }
+ ]
+}
