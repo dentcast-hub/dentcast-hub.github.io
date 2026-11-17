@@ -2644,7 +2644,7 @@ ${renderQuickPublish()}
   </script>
 
   <h3 style="margin-top:26px">نشان‌های کمیاب</h3>
-  <div class="muted">هر نشان و هر سطحش، با تعدادِ کسانی که به آن رسیده‌اند — کمیاب‌ترین بالا، و آن‌هایی که هنوز هیچ‌کس نگرفته پایین. روی نامِ هر نشان بزن تا بگوید چیست و چطور به دست می‌آید؛ «چه کسانی؟» فهرستِ دارنده‌ها را درست زیرِ همان ردیف باز می‌کند. هر دو با زدنِ دوباره بسته می‌شوند. دو نکته: عدد یعنی «تا حالا به این سطح رسیده»، نه «همین الان دارد» (نشانی که بعداً خاموش شده هم شمرده می‌شود)؛ و دارندهٔ طلا در شمارِ نقره و برنز هم هست. حسابی که از زمانِ راه‌افتادنِ اعلانِ نشان‌ها هیچ کاری نکرده در این آمار نیست.</div>
+  <div class="muted">هر نشان و هر سطحش، با تعدادِ کسانی که به آن رسیده‌اند — کمیاب‌ترین بالا، و آن‌هایی که هنوز هیچ‌کس نگرفته پایین. زیرِ نامِ هر نشان نوشته که دارنده‌اش چه کرده؛ روی نام بزن تا متنِ خودِ کاتالوگ را هم ببینی. «چه کسانی؟» فهرستِ دارنده‌ها را درست زیرِ همان ردیف باز می‌کند. هر دو با زدنِ دوباره بسته می‌شوند. دو نکته: عدد یعنی «تا حالا به این سطح رسیده»، نه «همین الان دارد» (نشانی که بعداً خاموش شده هم شمرده می‌شود)؛ و دارندهٔ طلا در شمارِ نقره و برنز هم هست. حسابی که از زمانِ راه‌افتادنِ اعلانِ نشان‌ها هیچ کاری نکرده در این آمار نیست.</div>
   <div class="row" style="margin-top:8px">
     <button id="brLoad" type="button">نمایش</button>
     <span id="brInfo" class="muted"></span>
@@ -2682,6 +2682,7 @@ ${renderQuickPublish()}
         // button nobody finds.
         return '<tr' + (r.holders ? '' : ' style="opacity:.55"') + '>'
           + '<td style="white-space:normal"><button type="button" class="brNameBtn" data-i="' + i + '" style="all:unset;cursor:pointer;color:#0b5fff;font-weight:700;border-bottom:1px dashed #9db4dd">' + esc(r.title_fa) + '</button>' + (r.level_fa ? ' · ' + esc(r.level_fa) : '')
+          + (r.meaning_fa ? '<div style="font-size:.86rem;line-height:1.8;margin-top:2px">' + esc(r.meaning_fa) + '</div>' : '')
           + (tag ? '<div class="muted">' + esc(tag) + '</div>' : '') + '</td>'
           + '<td><b>' + fa(r.holders) + '</b> نفر'
           + (r.holders ? '<div class="muted">' + pct(r.holders, j.accounts) + '</div>' : '') + '</td>'
@@ -2719,7 +2720,7 @@ ${renderQuickPublish()}
         return value ? '<div style="padding:5px 0"><span class="muted">' + label + '</span> ' + esc(value) + '</div>' : '';
       };
       td.innerHTML = '<div style="margin-bottom:4px"><b>' + esc(r.title_fa) + (r.level_fa ? ' · ' + esc(r.level_fa) : '') + '</b></div>'
-        + line('شرط:', r.need_fa)
+        + (r.meaning_fa ? '<div style="padding:5px 0">' + esc(r.meaning_fa) + '</div>' : '')
         + line('جمله‌ای که کاربر می‌بیند:', r.unlock_fa)
         + line('توضیح:', r.detail_fa)
         + (r.kind === 'medal' ? '' : line('نمایش:', r.visibility === 'mystery' ? 'تا کسب نشده فقط یک «؟» است.'
