@@ -3891,7 +3891,6 @@ ${renderQuickPublish()}
       ] },
       { id: 'users', name: 'کاربران و اشتراک', icon: '👥', tint: 't-users', items: [
         ['member-list', 'فهرست اعضا', 'فهرست اعضا', '', 0, 'عضویت جستجو پرداخت اشتراک'],
-        ['spot-controls', 'مدیریت جایگاه‌های تبلیغ', 'مدیریت جایگاه‌های تبلیغ', '', 0, 'آگهی تصویر spot'],
         ['subs', 'گزارش کاربران و اشتراک', 'گزارش کاربران', '', 0, 'پرمیوم پریمیوم اشتراک تمدید'],
         ['gift-new', 'هدیهٔ پریمیوم به تازه‌واردها', 'هدیه‌ی پریمیوم به کسانی', '', 0, 'هدیه تجربه نکرده'],
         ['gift-day', 'هدیهٔ روز پریمیوم به یک نفر', 'هدیه‌ی روزِ پریمیوم', '', 0, 'هدیه روز'],
@@ -3912,7 +3911,8 @@ ${renderQuickPublish()}
         ['quick-publish', 'انتشار حداقلی (اضطراری)', 'انتشار حداقلی', 'qpWaiting', 1, 'انتشار سریع قطعی اینترنت گوشی مطلب جدید اضطراری'],
         ['challenge-report', 'گزارش چالش‌ها', 'گزارش چالش', 'chRepCount', 0, 'چالش آمار'],
         ['challenge-edit', 'ثبت/ویرایش چالش', 'ثبت/ویرایش', '', 0, 'چالش کلید نکته'],
-        ['des-library', 'افزودن به کتابخانهٔ DES', 'افزودنِ مستقیم', '', 0, 'des کتابخانه json pmid']
+        ['des-library', 'افزودن به کتابخانهٔ DES', 'افزودنِ مستقیم', '', 0, 'des کتابخانه json pmid'],
+        ['spot-controls', 'برنامهٔ تبلیغ‌ها (سه بازدید)', 'برنامهٔ سه‌بازدیدی', '', 0, 'آگهی تبلیغ اسپانسر بازدید جایگاه تصویر spot']
       ] },
       { id: 'rep', name: 'گزارش‌ها', icon: '📈', tint: 't-rep', items: [
         ['league', 'گزارش لیگ', 'گزارش لیگ', '', 0, 'لیگ رده هفته'],
@@ -3939,6 +3939,11 @@ ${renderQuickPublish()}
       var s = '', n;
       for (n = h.firstChild; n; n = n.nextSibling) if (n.nodeType === 3) s += n.nodeValue;
       return norm(s);
+    }
+    function rawHeading(h) {
+      var s = '', n;
+      for (n = h.firstChild; n; n = n.nextSibling) if (n.nodeType === 3) s += n.nodeValue;
+      return s.replace(/ +/g, ' ').replace(/^ | $/g, '');
     }
     function find(h) {
       var i, it, m, t = headingText(h);
@@ -3967,7 +3972,9 @@ ${renderQuickPublish()}
       if (k.tagName === 'H3' || k.tagName === 'H4') {
         var it = find(k);
         if (!it && k.tagName === 'H3') {
-          it = { key: 'other-' + (OTHER.items.length + 1), name: headingText(k) || 'بخش', match: '', pill: '', hot: false,
+          // headingText() is the MATCHING form (spaces and ZWNJ stripped); shown as a
+          // name it reads «برنامهٔسهبازدیدیتبلیغها». A heading nobody filed keeps its own words.
+          it = { key: 'other-' + (OTHER.items.length + 1), name: rawHeading(k) || 'بخش', match: '', pill: '', hot: false,
             kw: '', g: OTHER, count: 0, sec: null };
           OTHER.items.push(it); ITEMS.push(it); BY[it.key] = it;
         }

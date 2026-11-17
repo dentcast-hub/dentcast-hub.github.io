@@ -69,7 +69,7 @@
 // user-select:none + hidden entirely in study mode (body.dcp-study) so the
 // میز کار experience stays clean.
 
-import { findProseRoot } from '/plus/js/config.js?v=250';
+import { findProseRoot } from '/plus/js/config.js?v=251';
 
 const CONFIG_URL = '/spot/spot-config.json';
 const SPOT_V = new URL(import.meta.url).search; // carry ?v= from the loader onto the config fetch
@@ -117,7 +117,7 @@ let viewerNow = () => 'anon';
 // Authentication refreshes via /me are NOT page views. A new document counts
 // once, and desktop-shell article navigation counts once more per new article.
 function countContentView() {
-  import('/plus/js/api.js?v=250')
+  import('/plus/js/api.js?v=251')
     .then((m) => m.apiBase())
     .then((base) => fetch(base + '/pageview', {
       method: 'POST', credentials: 'include', cache: 'no-store', keepalive: true,
@@ -193,7 +193,7 @@ function sendPending(task) {
     body: JSON.stringify({ [key]: SPOT_EVENT[task.kind],
       content_id: task.slot + ':' + task.creative, event_id: task.id }),
   });
-  import('/plus/js/api.js?v=250').then((m) => m.apiBase()).then((base) => {
+  import('/plus/js/api.js?v=251').then((m) => m.apiBase()).then((base) => {
     if (viewerNow() !== 'plus') return post(base, '/anon/event', 'event');
     return post(base, '/activity', 'action')
       .then((res) => res.status === 401 ? post(base, '/anon/event', 'event') : res);
@@ -218,7 +218,7 @@ function sendPending(task) {
     task.attempts = (task.attempts || 0) + 1;
     task.nextAt = Date.now() + SPOT_RETRY[Math.min(task.attempts - 1, 3)];
     savePending();
-    import('/plus/js/api.js?v=250').then((m) => m.forgetBase()).catch(() => {});
+    import('/plus/js/api.js?v=251').then((m) => m.forgetBase()).catch(() => {});
     if (document.visibilityState === 'visible')
       setTimeout(() => sendPending(task), task.nextAt - Date.now());
   }).finally(() => { spotSending.delete(task.id); });
@@ -352,6 +352,13 @@ function pinnedCreative(cfg, slotName, audience) {
  */
 let paidOnlySlots = [];
 function isPaidOnly(cfg, slotName) {
+  // A three-visit schedule saved from the admin panel is the founder's own
+  // content for EVERY placement, one creative per visit. A paid-only slot that
+  // kept its own weighted cursor under it showed a different visit's creative
+  // than the article beside it — or the published sponsor the schedule was
+  // saved to replace — and showed something on a visit set to show nothing. So
+  // while a managed schedule is live, no slot stands outside the rotation.
+  if (cfg.rotation && cfg.rotation.managed === true) return false;
   return cfg.slots?.[slotName]?.paid_only === true;
 }
 
@@ -401,12 +408,18 @@ let sessionMode = false;
 function openRotationWindow(cfg) {
   const rot = cfg.rotation || {};
   sessionMode = rot.advance === 'session';
-  if (!sessionMode) return;
+  if (!sessionMode) {
+    // Per-view cadence has the same hole as holdEmptyStep closes for sessions:
+    // an empty step renders nothing, so nothing would ever move past it.
+    const seq = rotationSequence(cfg);
+    if (seq[lsGet(K_TICK) % seq.length] === 'none') advanceRotation();
+    return;
+  }
   const m = Number(rot.session_minutes);
   const minutes = m > 0 ? m : DEFAULT_SESSION_MINUTES;
   const now = Date.now();
   const last = lsGet(K_SEEN);
-  if (last && now - last <= minutes * 60000) { lsSet(K_SEEN, now); return; } // same visit → frozen
+  if (last && now - last <= minutes * 60000) { lsSet(K_SEEN, now); holdEmptyStep(cfg); return; } // same visit → frozen
   // New session: take the step the previous session earned, then re-arm.
   if (lsGet(K_HELD) === 1) {
     lsSet(K_TICK, lsGet(K_TICK) + 1);
@@ -414,6 +427,18 @@ function openRotationWindow(cfg) {
     lsSet(K_HELD, 0);
   }
   lsSet(K_SEEN, now);
+  holdEmptyStep(cfg);
+}
+
+// A step of `none` is a visit that is MEANT to show nothing. Nothing renders,
+// so no impression ever marks it used — and by the rule above the next session
+// would then sit on the same empty step, and the one after, for good: one
+// switched-off visit in a three-visit schedule ended the schedule for every
+// reader who reached it. An intentionally empty visit is delivered by taking
+// place, so it holds its step the moment it opens.
+function holdEmptyStep(cfg) {
+  const seq = rotationSequence(cfg);
+  if (seq[lsGet(K_TICK) % seq.length] === 'none') lsSet(K_HELD, 1);
 }
 
 let ticked = false;
@@ -1474,7 +1499,7 @@ function classOf(user) {
 // means the question could not be asked at all — treated very differently from
 // a confirmed 'anon' below.
 function viewerProbe() {
-  return import('/plus/js/api.js?v=250')
+  return import('/plus/js/api.js?v=251')
     .then((m) => m.currentUser().then((user) => ({ user, status: m.meStatus() })))
     .catch(() => ({ user: null, status: 'error' }));
 }
@@ -1547,7 +1572,7 @@ async function main() {
   // Untouched placements retain the checked-in rotation and targeting. Only
   // explicitly saved placements have a database override. Public read, no login.
   try {
-    const { apiBase } = await import('/plus/js/api.js?v=250');
+    const { apiBase } = await import('/plus/js/api.js?v=251');
     const base = await apiBase();
     const response = await fetch(base + '/spot/config', { cache: 'no-store', signal: AbortSignal.timeout(2500) });
     if (response.ok) {
@@ -1564,7 +1589,7 @@ async function main() {
         const managed = sessions.filter((s) => s.enabled).map((s) => ({ ...s.creative, enabled: true }));
         cfg.creatives = cfg.creatives || {};
         cfg.creatives.sponsors = (cfg.creatives.sponsors || []).filter((c) => !/^managed-session-[1-3]$/.test(c && c.id)).concat(managed);
-        cfg.rotation = { ...(cfg.rotation || {}), advance: 'session', session_minutes: 30,
+        cfg.rotation = { ...(cfg.rotation || {}), managed: true, advance: 'session', session_minutes: 30,
           sequence: sessions.map((s, i) => s.enabled ? 'managed-session-' + (i + 1) : 'none') };
       }
     }

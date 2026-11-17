@@ -617,6 +617,56 @@ describe('saved placement controls', () => {
     await boot();
     expect(cards()).toBe(0);
   });
+  // Found by walking four visits through the real pages: nothing renders on an
+  // empty visit, so no impression ever marked it used, and every later visit
+  // sat on the same empty step. One switched-off visit ended the schedule.
+  it('moves past an intentionally empty visit instead of staying on it for good', async () => {
+    campaign = { sessions: [
+      { enabled: true, creative: { id: 'managed-session-1', title: 'visit one', text: '', url: '', image: null } },
+      { enabled: false, creative: { id: 'managed-session-2', title: '', text: '', url: '', image: null } },
+      { enabled: true, creative: { id: 'managed-session-3', title: 'visit three', text: '', url: '', image: null } },
+    ] };
+    localStorage.setItem('dcAds.tick', '1');
+    await boot();
+    expect(cards()).toBe(0);
+    expect(localStorage.getItem('dcAds.held')).toBe('1');
+    // Thirty-one minutes later the reader is back: a new visit, the next step.
+    localStorage.setItem('dcAds.seen', String(Date.now() - 31 * 60_000));
+    await boot();
+    expect(creativeShown()).toBe('managed-session-3');
+  });
+  // The homepage slot is paid-only and normally keeps its own cursor outside
+  // the rotation. Under a saved schedule that showed the WRONG visit's card on
+  // the homepage (or the published sponsor the schedule replaced), and showed
+  // something on a visit set to show nothing.
+  it('keeps a paid-only slot on the same visit as every other slot', async () => {
+    const home = CONFIG.slots.home as { enabled: boolean; paid_only?: boolean };
+    home.paid_only = true;
+    try {
+      campaign = { sessions: [
+        { enabled: true, creative: { id: 'managed-session-1', title: 'visit one', text: '', url: '', image: null } },
+        { enabled: true, creative: { id: 'managed-session-2', title: 'visit two', text: '', url: '', image: null } },
+        { enabled: false, creative: { id: 'managed-session-3', title: '', text: '', url: '', image: null } },
+      ] };
+      localStorage.setItem('dcAds.tick', '1');
+      await boot();
+      expect(creativeShown()).toBe('managed-session-2');
+      localStorage.setItem('dcAds.tick', '2');
+      await boot();
+      expect(cards()).toBe(0);
+    } finally { delete home.paid_only; }
+  });
+  it('leaves a paid-only slot outside the rotation when no schedule is saved', async () => {
+    const home = CONFIG.slots.home as { enabled: boolean; paid_only?: boolean };
+    home.paid_only = true;
+    try {
+      me.user = { tier: 'free' }; me.status = 'user';
+      localStorage.setItem('dcAds.tick', '5');
+      await boot();
+      // The only paid sponsor, whatever the tick says — and never the house card.
+      expect(creativeShown()).toBe('brand-invite');
+    } finally { delete home.paid_only; }
+  });
 });
 
 describe('mounted versus viewable measurements', () => {
