@@ -1,0 +1,42 @@
+[
+ {
+  "doi": "10.1002/cre2.70097",
+  "ft_tags": [
+   "healing-abutment",
+   "one-abutment-one-time",
+   "critical-contour",
+   "subcritical-contour",
+   "cad-cam"
+  ],
+  "new_tags": [],
+  "doc_class": "narrative_review",
+  "off_topic": false,
+  "off_topic_reason": null,
+  "catalog_type_ok": true,
+  "suggested_type": null,
+  "text_quality": "good",
+  "facts": {
+   "doi": "10.1002/cre2.70097",
+   "authors": [
+    "Faezeh Atri",
+    "Kimia Nokar"
+   ],
+   "year": 2025,
+   "journal": "Clinical and Experimental Dental Research",
+   "population": "Published studies on implant placement and restoration in the anterior region",
+   "intervention": "Postsurgical steps, provisional phase, emergence profile contour, abutment types and impression techniques for esthetic implant restorations",
+   "outcomes": [
+    "soft tissue support",
+    "emergence profile",
+    "esthetic outcome",
+    "impression accuracy of soft tissue"
+   ],
+   "main_result": "Immediate restoration depends on primary stability; delayed cases need a provisional phase to rebuild collapsed soft tissue, then customized impression coping, soft material injection around the provisional in the master cast, or digital impression to transfer the gingival architecture.",
+   "sample_size": "59 studies analyzed (1472 identified)",
+   "funding_coi": "No specific funding",
+   "key_finding": "Narrative review of postsurgical prosthetic soft tissue management around anterior implants: healing and definitive abutment options, provisional contour management, and four ways to transfer peri-implant soft tissue shape (customized coping, emergence profile cast, soft material injection in the master cast, digital impression).",
+   "clinical_bottom_line": "Use primary stability to decide on immediate restoration, rebuild collapsed tissue with a contoured provisional, and transfer the resulting gingival profile to the lab with a customized technique or digital impression."
+  },
+  "cites_dois": []
+ }
+]
