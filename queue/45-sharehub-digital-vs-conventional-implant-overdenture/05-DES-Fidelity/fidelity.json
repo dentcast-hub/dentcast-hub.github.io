@@ -1,0 +1,491 @@
+[
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "FULL_TEXT",
+  "claims": [
+   {
+    "id": "u1",
+    "claim_quote": "اوردنچر دیجیتال: آیا واقعاً تجربه‌ی بهتری برای بیمار می‌سازه؟",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "heading only"
+   },
+   {
+    "id": "u2",
+    "claim_quote": "English",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "link label"
+   },
+   {
+    "id": "u3",
+    "claim_quote": "فرض کنید یه بیمار بی‌دندان داریم که ریج فک بالاش خیلی تحلیل رفته و از دنچر کاملش هم راضی نیست.",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "hypothetical scenario that only announces the topic"
+   },
+   {
+    "id": "u4",
+    "claim_quote": "یکی از گزینه‌هایی که داریم اوردنچر روی ایمپلنته.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Implant-supported removable complete overdentures (IODs) are a\ncommon treatment in case of edentulism and malfunctioning of the conventional\ndenture.",
+    "source_ref": null
+   },
+   {
+    "id": "u5",
+    "claim_quote": "ولی خب می‌دونیم که کار فقط با گذاشتن ایمپلنت تموم نمی‌شه، و اینکه چه اتچمنتی انتخاب کنیم، بار رو چطور طراحی کنیم و پروتز رو با چه روشی بسازیم، همه روی نتیجه اثر داره.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "one predicate over a list (attachment, bar design, fabrication method all affect the outcome); searched Introduction, Methods 2.6-2.8, Discussion 5.3 and 5.6; no sentence states that these choices together determine the outcome. The source reports a fabrication-method difference, and its sensitivity analysis found no PROM difference between attachment types, but neither sentence states this proposition"
+   },
+   {
+    "id": "u6",
+    "claim_quote": "سؤالی که اینجا پیش میاد اینه که اگه همه‌ی این مراحل رو دیجیتال انجام بدیم، فقط روش کار ما عوض می‌شه یا بیمار هم واقعاً پروتز بهتری می‌گیره؟",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "question with no answer in it"
+   },
+   {
+    "id": "u7",
+    "claim_quote": "یه کارآزمایی بالینی که سال ۲۰۲۵ منتشر شده دقیقاً همین سؤال رو بررسی کرده.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "This non-inferiority study entailed a randomized crossover pro-\nspective clinical trial.",
+    "source_ref": null,
+    "note": "publication year 2025 is stated in the citation line (Clin Implant Dent Relat Res. 2025;27(1):e13398)"
+   },
+   {
+    "id": "u8",
+    "claim_quote": "چیزی که این مطالعه رو جالب می‌کنه اینه که هر بیمار هر دو پروتز رو امتحان کرده، یعنی یک سال با اوردنچر معمولی و یک سال با اوردنچر دیجیتال زندگی کرده.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "After a maxillary bone augmentation and the\ninstallation of 4–6 implants, each patient wore both types of IOD for 1 year each,\nwith the order reversed in two subsets of patients.",
+    "source_ref": null
+   },
+   {
+    "id": "u9",
+    "claim_quote": "بیمارها هم همه همین وضعیتی رو داشتن که گفتم، یعنی فک بالاشون خیلی تحلیل رفته بود و از دنچرشون راضی نبودن.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Materials and Methods: This randomized crossover study included 36 fully edentu-\nlous patients who showed extreme resorption of the maxillary alveolar process, mak-\ning denture retention difficult.",
+    "source_ref": null,
+    "note": "dissatisfaction half matches «An important fact is that all patients were dissatisfied with their upper CD.»"
+   },
+   {
+    "id": "u10",
+    "claim_quote": "اول براشون پیوند استخوان انجام شد و بعد چهار تا شش ایمپلنت در فک بالا گذاشتن.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "After a maxillary bone augmentation and the\ninstallation of 4–6 implants, each patient wore both types of IOD for 1 year each,\nwith the order reversed in two subsets of patients.",
+    "source_ref": null
+   },
+   {
+    "id": "u11",
+    "claim_quote": "در روش دیجیتال، به جای قالب‌گیری، دنچر قبلی بیمار و ایمپلنت‌ها رو اسکن کردن و پروتز رو توی نرم‌افزار طراحی کردن.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "After scanning (TRIOS 3™; 3Shape)\nboth the upper and lower dentures (step 4), an intra-oral scan of the\nmaxilla and mandible was taken with scan bodies (TRIOS 3™) mounted\nonto the implants (step 5).",
+    "source_ref": null
+   },
+   {
+    "id": "u12",
+    "claim_quote": "بار از تیتانیوم بود، گیر پروتز رو یه قطعه‌ی PEEK روی بار ایجاد می‌کرد، و بیس و دندان‌ها هم میلینگ شدن.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "In the same ses-\nsion, the matrix, that is, the future sliding mechanism made of poly-\netheretherketone (PEEK), was digitally designed (Figure 2D,E).",
+    "source_ref": null,
+    "note": "titanium bar and milled base and teeth are stated in the Methods 2.8 sentences on milling"
+   },
+   {
+    "id": "u13",
+    "claim_quote": "کل کار توی سه جلسه انجام شد، در حالی که روش معمولی پنج شش جلسه طول کشید.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Manufacturing IODs in a conventional way (C-IODs) is time-consuming, but\nin a digital workflow, this can be done in three sessions.",
+    "source_ref": null,
+    "note": "5-6 sessions for C-IOD stated in «C-IODs were manufactured in 5–6 clinical sessions.»"
+   },
+   {
+    "id": "u14",
+    "claim_quote": "توی گروه معمولی هم بیشتر بیمارها در فک بالا Locator داشتن.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Furthermore, no uniformity was present between the\nattachment systems of the maxillary C-IODs: in Nijmegen, all\n27 patients wore a C-IOD supported by Locators™, whereas in Breda\nthe other five participants were provided with a bar-supported\nC-IOD.",
+    "source_ref": null
+   },
+   {
+    "id": "u15",
+    "claim_quote": "تصویر ۱. فک پایین.",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "figure label"
+   },
+   {
+    "id": "u16",
+    "claim_quote": "(A) بار متداول با ball attachment در دو انتها.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "To provide addi-\ntional retention to the C-IOD, the mandibular titanium bar ended in a\nball attachment combined with a VKS™ matrix (Bredent Medical, Sen-\nden, Germany; Figure 1A,B).",
+    "source_ref": null
+   },
+   {
+    "id": "u17",
+    "claim_quote": "(B) داخل اوردنچر متداول؛ ماتریکس‌های سبز VKS دیده می‌شن.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "F I G U R E 1 The mandible:\n(A) Intraoral view of a conventional bar\nincluding ball attachments, (B) Inside\nthe C-IOD the green VKS matrices are\nvisible, (C) Bar suitable for the PEEK\nsliding attachment, (D) Inside the\n3D-IOD.",
+    "source_ref": null
+   },
+   {
+    "id": "u18",
+    "claim_quote": "(C) بار دیجیتال که برای اتچمنت sliding از جنس PEEK طراحی شده.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "F I G U R E 1 The mandible:\n(A) Intraoral view of a conventional bar\nincluding ball attachments, (B) Inside\nthe C-IOD the green VKS matrices are\nvisible, (C) Bar suitable for the PEEK\nsliding attachment, (D) Inside the\n3D-IOD.",
+    "source_ref": null
+   },
+   {
+    "id": "u19",
+    "claim_quote": "(D) داخل اوردنچر دیجیتال.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "F I G U R E 1 The mandible:\n(A) Intraoral view of a conventional bar\nincluding ball attachments, (B) Inside\nthe C-IOD the green VKS matrices are\nvisible, (C) Bar suitable for the PEEK\nsliding attachment, (D) Inside the\n3D-IOD.",
+    "source_ref": null
+   },
+   {
+    "id": "u20",
+    "claim_quote": "منبع: Van de Winkel et al., 2025 (CC BY).",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "figure source line"
+   },
+   {
+    "id": "u21",
+    "claim_quote": "تصویر ۲. فک بالا.",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "figure label"
+   },
+   {
+    "id": "u22",
+    "claim_quote": "(A) Locatorها روی ایمپلنت‌های ماگزیلا.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "For the upper implants, the treating den-\ntist preferred the Locator™ system (ZEST Anchors, Carlsbad,\nCalifornia, USA) (Figure 2A,B).",
+    "source_ref": null
+   },
+   {
+    "id": "u23",
+    "claim_quote": "(B) داخل اوردنچر متداول با nylon ringها.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "(B) Inside the upper C-IOD, showing\nthe nylon rings.",
+    "source_ref": null
+   },
+   {
+    "id": "u24",
+    "claim_quote": "(C) بار دیجیتال.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "(C) 3D bar suitable for\nthe PEEK sliding attachment.",
+    "source_ref": null
+   },
+   {
+    "id": "u25",
+    "claim_quote": "(D) بار نازک ۲ میلی‌متری همراه با اتچمنت PEEK.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "(D) The\nthin (2-mm) 3D bar in combination\nwith the PEEK attachment.",
+    "source_ref": null
+   },
+   {
+    "id": "u26",
+    "claim_quote": "(E) داخل اوردنچر دیجیتال که PEEK داخلش چسبانده شده.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "(E) Inside\nthe 3D-IOD, into which the PEEK is\nglued.",
+    "source_ref": null
+   },
+   {
+    "id": "u27",
+    "claim_quote": "منبع: Van de Winkel et al., 2025 (CC BY).",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "figure source line"
+   },
+   {
+    "id": "u28",
+    "claim_quote": "خب، حالا بیمار فرقی حس کرد یا نه؟",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "question with no answer in it"
+   },
+   {
+    "id": "u29",
+    "claim_quote": "اول اینو بگم که هر دو نوع اوردنچر، چه معمولی چه دیجیتال، نسبت به دنچر کامل خیلی بهتر بودن.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "This\nimproved to 12.0 for the C-IOD and even further to 6.8 for the\n3D-IOD.",
+    "source_ref": null
+   },
+   {
+    "id": "u30",
+    "claim_quote": "رضایت بیمارها با دنچر کامل حدود ۲۵ از ۱۰۰ بود و با اوردنچر رسید به حدود ۸۰ تا ۹۰.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "At the baseline (CD), and after wearing the C-IOD or 3D-IOD for\n1 year, the VAS outcomes were 25.6, 79.8, and 87.6 points, respec-\ntively (Figure 5).",
+    "source_ref": null
+   },
+   {
+    "id": "u31",
+    "claim_quote": "یعنی بیشترِ این بهتر شدن به خاطر خود اوردنچر روی ایمپلنته، نه به خاطر دیجیتال بودنش.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "inference judged on its conclusion (share of improvement due to the IOD itself vs digital); searched Results 4.1 and Discussion 5.5; the source does not apportion the improvement. Its own explanation for the improvement in both IODs is patients' high expectations (hedged «may explain»), a different proposition"
+   },
+   {
+    "id": "u32",
+    "claim_quote": "اما اگه دو روش رو با هم مقایسه کنیم، دیجیتال یه کم بهتر بود.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Results: Regarding the PROMs, patients preferred the 3D-IOD: the improvement on\nthe overall OHIP scale (0–4), expressed as a mean, was 0.26 points greater than for\nthe C-IOD (p < 0.001).",
+    "source_ref": null,
+    "note": "direction matches; the size word «یه کم» is not contradicted by any qualitative size statement in the source"
+   },
+   {
+    "id": "u33",
+    "claim_quote": "رضایت بیمارها حدود ۷ امتیاز از ۱۰۰ بیشتر بود و فرق بیشتر توی عملکرد پروتز، درد و راحتیش دیده شد.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "This applied also to the VAS scale (1–100) with an increase of\nhttps://doi.org/10.1111/cid.13398\n7.37 points (p < 0.001).",
+    "source_ref": null,
+    "note": "domain half matches the Results sentence listing functional limitation, physical pain, discomfort and physical disability as significantly better"
+   },
+   {
+    "id": "u34",
+    "claim_quote": "یعنی تفاوت واقعاً هست، ولی زیاد نیست.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "inference judged on its whole conclusion; the source reports a significant difference but nowhere judges its size as small (Results 3.4, 4.1, Discussion 5.4)"
+   },
+   {
+    "id": "u35",
+    "claim_quote": "یه نکته‌ی جالب هم اینه که بیمارها از ظاهر پروتز نمی‌فهمیدن کدوم دیجیتاله، ولی آخر مطالعه که ازشون خواستن یکی رو برای همیشه انتخاب کنن، تقریباً از هر سه نفر دو نفر دیجیتال رو انتخاب کردن.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "To\nverify whether the study was really blinded for the participants, all\nwere asked at the end of the study if they were confident about the\ntype of IOD they were wearing at that moment; 14 patients guessed\ncorrectly and 18 guessed incorrectly.",
+    "source_ref": null,
+    "note": "preference half matches «11 patients preferred the C-IOD and 21 preferred the 3D-IOD»"
+   },
+   {
+    "id": "u36",
+    "claim_quote": "مشکلات پروتزی هم توی روش دیجیتال کمتر بود، مخصوصاً در فک بالا.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "For the upper jaw, the C-IOD on Locators™ showed 47 complica-\ntions, such as pressure ulcers, changing nylon rings, or losing housing\nmatrices.",
+    "source_ref": null
+   },
+   {
+    "id": "u37",
+    "claim_quote": "ولی این رو باید با احتیاط نگاه کرد، چون خیلی از مشکلات گروه معمولی مربوط به خود Locator بود، مثلاً عوض کردن nylon ring، که بیشتر جزو نگهداری روتین این سیستمه تا شکست درمان.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "For the upper jaw, the C-IOD on Locators™ showed 47 complica-\ntions, such as pressure ulcers, changing nylon rings, or losing housing\nmatrices.",
+    "source_ref": null,
+    "note": "reason half matches; the instruction to read with caution and the characterisation as routine maintenance rather than failure are not addressed by the source (silent halves)"
+   },
+   {
+    "id": "u38",
+    "claim_quote": "این عددها هم فقط شمرده شدن و آنالیز آماری روشون انجام نشده.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "searched Statistics 2.10 and Results 3.3; the analyses listed cover OHIP-20, PS and SF-36 only, and complications are given as counts, but no sentence states that complications were not analysed"
+   },
+   {
+    "id": "u39",
+    "claim_quote": "ولی نکته‌ی اصلی اینه که این برتری رو نمی‌شه همه‌ش رو به حساب دیجیتال بودن گذاشت.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "searched Discussion 5.6 and Conclusion; the source attributes the preference to PEEK retention, slender design and palatal coverage but never separates digital fabrication from design"
+   },
+   {
+    "id": "u40",
+    "claim_quote": "دو گروه فقط در روش ساخت با هم فرق نداشتن، نوع اتچمنت و طراحی پروتزشون هم فرق داشت.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Regarding a mandibular C-IOD using bar/metal clip attachment\nand a 3D-IOD using a bar/PEEK attachment, the sensitivity analysis\npointed out that no significant difference was seen.",
+    "source_ref": null,
+    "note": "negated «فقط» judged by its proposition; design difference also stated in «the palate remained more uncovered by the 3D-IOD than the C-IOD»"
+   },
+   {
+    "id": "u41",
+    "claim_quote": "خود نویسنده‌ها هم دلیلش رو بیشتر به طراحی ربط می‌دن، یعنی گیر خوب PEEK، باریک‌تر بودن پروتز و اینکه کام کمتر پوشونده می‌شد.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "The most logical explanation is that the retention of the PEEK attach-\nment was more than sufficient.",
+    "source_ref": null
+   },
+   {
+    "id": "u42",
+    "claim_quote": "پس ممکنه بخش مهمی از این نتیجه به خاطر بار و اتچمنت باشه، نه به خاطر اسکن.",
+    "verdict": "AUTHOR_VIEW",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "hedged explanation of a finding: ممکنه"
+   },
+   {
+    "id": "u43",
+    "claim_quote": "از این مطالعه دو تا نکته‌ی عملی هم درمیاد.",
+    "verdict": "NOT_A_CLAIM",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "signpost announcing following units"
+   },
+   {
+    "id": "u44",
+    "claim_quote": "اول اینکه ده تا از بیمارها نتونستن برای فک پایین پروتز دیجیتال بگیرن، چون برند ایمپلنتشون توی library نرم‌افزار نبود.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "In the remaining 10 patients,\na lower C-IOD was worn throughout the entire 2-year study period,\nas relatively unknown implant brands had already been installed.",
+    "source_ref": null
+   },
+   {
+    "id": "u45",
+    "claim_quote": "یعنی اینکه بتونیم دیجیتال کار کنیم یا نه، به ایمپلنتی که بیمار از قبل داره بستگی داره.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "These implant brands were not represented in the TRIOS™ Design\nStudio program (3Shape), making the creation of a 3D design impossi-\nble (Table 1).",
+    "source_ref": null
+   },
+   {
+    "id": "u46",
+    "claim_quote": "دوم اینکه رابطه‌ی فکی رو از روی دنچر قبلی بیمار برمی‌دارن، پس اون دنچر باید هنوز اکلوژن درستی داشته باشه.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "conclusion after «پس» judged; the premise matches Methods 2.8 (dentures checked for centric occlusion, jaw relation captured from the scanned dentures) but no sentence states the requirement that the denture must still occlude correctly"
+   },
+   {
+    "id": "u47",
+    "claim_quote": "یه چیز دیگه هم دیدن: بیمارها توی سال دوم، هر پروتزی که داشتن، راضی‌تر بودن.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "In the second period of the study, patients scored 0.184\npoints lower (better) than in the first period regardless of the type of\nIOD worn at that time ( p = 0.002).",
+    "source_ref": null,
+    "note": "VAS period effect also positive and significant in Table 2 (8.267, p < 0.001)"
+   },
+   {
+    "id": "u48",
+    "claim_quote": "احتمالاً چون سال اول هنوز داشتن به پروتز روی ایمپلنت عادت می‌کردن.",
+    "verdict": "AUTHOR_VIEW",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "hedged explanation of a finding: احتمالاً"
+   },
+   {
+    "id": "u49",
+    "claim_quote": "پس گذشت زمان و عادت کردن بیمار هم ممکنه روی رضایتش اثر داشته باشه.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "An explanation could be that patients had to adjust to the phenomenon of an implant-borne con-\nstruction during the transition from the CD to the first IOD, while\npatients were already used to it during the transition from the first to\nthe second IOD.",
+    "source_ref": null,
+    "note": "Inference after «پس», judged on its conclusion (F1). The source offers adaptation over time as a hedged explanation («could») for the period effect, and the unit keeps the hedge («ممکنه»). The period effect on satisfaction itself is stated plainly elsewhere in the source: «The MRA (Table 2) showed a significant effect for “IOD type” and “period,” but not for “OHIP score at baseline” (Table 2).»"
+   },
+   {
+    "id": "u50",
+    "claim_quote": "پس اگه بخوام جمع‌بندی کنم، ورک‌فلوی دیجیتال برای اوردنچر جواب می‌ده و توی این مطالعه با جلسات کمتر، پروتزی ساخته شد که بیمارها حداقل به اندازه‌ی روش معمولی، و احتمالاً یه کم بیشتر، ازش راضی بودن.",
+    "verdict": "AUTHOR_VIEW",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "first-person summary marker: اگه بخوام جمع‌بندی کنم"
+   },
+   {
+    "id": "u51",
+    "claim_quote": "ولی این برتری کمه، معلوم نیست چقدرش مال دیجیتال بودنه و چقدرش مال طراحی پروتز، و توی بیمارهایی دیده شده که شرایط خاصی داشتن.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Materials and Methods: This randomized crossover study included 36 fully edentu-\nlous patients who showed extreme resorption of the maxillary alveolar process, mak-\ning denture retention difficult.",
+    "source_ref": null,
+    "note": "special-population half matches; «small» and the digital-vs-design split are not addressed by the source (silent halves)"
+   },
+   {
+    "id": "u52",
+    "claim_quote": "اینکه روش دیجیتال هزینه رو کم می‌کنه یا نه هم هنوز درست بررسی نشده.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Whether digital\ntechniques also reduce the number of treatment sessions and costs,\nas has been claimed, 78 remains to be thoroughly investigated.",
+    "source_ref": null
+   },
+   {
+    "id": "u53",
+    "claim_quote": "برای همین انتخاب روش هنوز به خود کیس بستگی داره: ایمپلنتی که بیمار داره، فضایی که داریم، اتچمنتی که به اون کیس می‌خوره، و امکاناتی که ما و لابراتوارمون داریم.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "inference conclusion on choosing a workflow case by case; searched Discussion 5.3 and 5.6; the source discusses attachment choice by dentist preference, not choice of fabrication workflow"
+   },
+   {
+    "id": "u54",
+    "claim_quote": "دیجیتال وقتی به درد می‌خوره که توی اون کیس کار رو قابل پیش‌بینی‌تر کنه، نه فقط به این دلیل که روش جدیدتریه.",
+    "verdict": "NOT_IN_SOURCE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "no sentence on predictability as the criterion for using a digital workflow"
+   }
+  ],
+  "counts": {
+   "matches": 33,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 8,
+   "not_assessable": 0,
+   "author_view": 3,
+   "not_a_claim": 10
+  },
+  "assessable": 33,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": false,
+  "source_conclusion": "Their slender design, together with the well-functioning PEEK attachment system, may explain the high PS score and the low, thus improved, OHIP-20 score for the 3D-IODs when compared with C-IODs.",
+  "fact_fa": "از ۳۳ ادعایی که منبع به آن پرداخته‌اند، ۳۳ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۸ جمله‌ی دیگر در منبع نیامده است.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ }
+]
