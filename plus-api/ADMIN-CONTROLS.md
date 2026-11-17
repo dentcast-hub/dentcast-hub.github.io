@@ -18,23 +18,30 @@ bearer codes and settings are not returned. Subscription granting is unchanged.
 
 Migration **0069_member_spot_controls** adds a profile ordering index and the
 per-placement `spot_controls` table. Migration **0070_spot_campaign_sessions**
-adds one optional three-visit campaign schedule. Both migrations are additive;
-their down migrations retain saved controls so rollback cannot discard them.
-The admin page leads with three plain-language visit cards. Each can be off,
-image-only, text-only, or mixed, with an optional link. Saving makes the
-schedule advance once per visit; a visit continues until 30 minutes without a
-page view. Resetting resumes the published static rotation. An empty/unsaved
-schedule leaves published behavior unchanged.
+adds one optional campaign schedule, and **0076_spot_campaign_four_beats**
+widens it from three entries to the rotation's four beats. All three are
+additive; their down migrations retain saved controls so rollback cannot
+discard them. The admin page leads with four plain-language beat cards — the
+four beats of the published rotation. Each beat is a sponsor ad the founder
+enters (image-only, text-only, or mixed, with an optional link), the site's own
+house card, or nothing. With nothing saved the form opens on what the published
+rotation is running, so one beat can be changed without retyping the rest.
+Saving replaces WHAT each beat shows; how the rotation advances stays whatever
+`rotation.advance` in `spot/spot-config.json` says. Resetting resumes the
+published static rotation. An empty/unsaved schedule leaves published behavior
+unchanged.
 
 The detailed per-placement editor remains under **«تنظیم جداگانهٔ محل‌های
 نمایش (پیشرفته)»**. It controls eleven technical placements, not campaign
-visits. Resetting one placement retains its saved creative and sets
+beats. Resetting one placement retains its saved creative and sets
 `use_default`; an explicit save reactivates its override.
 
 The checked-in Spot configuration currently contains eleven placement keys.
-The three-visit schedule is separate from those placements: it chooses the
-campaign for each visit, while the placement switches determine where a card
-can appear. A saved campaign schedule is applied by `GET /spot/config`; existing
+The four-beat schedule is separate from those placements: it chooses the
+campaign for each beat, while the placement switches determine where a card
+can appear. While a schedule is live the published paid sponsors leave the
+pool; the paid-only homepage slot shows the sponsor of the current beat, a
+scheduled sponsor on the house beat, and nothing on an empty beat. A saved campaign schedule is applied by `GET /spot/config`; existing
 placement overrides continue to take precedence for their own placement. The
 schedule preserves premium exclusion and impression/click reporting. On an API
 outage the renderer retains the published static configuration. Reload a page

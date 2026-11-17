@@ -1,7 +1,7 @@
-import { el } from './util.js?v=251';
-import * as apiMod from './api.js?v=251';
-import { PRICING_URL, guestPremiumExtras } from './premium-cta.js?v=251';
-import { trapFocus } from './focus-trap.js?v=251';
+import { el } from './util.js?v=253';
+import * as apiMod from './api.js?v=253';
+import { PRICING_URL, guestPremiumExtras } from './premium-cta.js?v=253';
+import { trapFocus } from './focus-trap.js?v=253';
 
 /**
  * The bottom sheet — one implementation, for every surface that needs to ask
@@ -93,7 +93,7 @@ export function gateCard({ title, sub, cta, guest, from }) {
     const login = el('button', { class: 'dcp-btn dcp-btn-primary', type: 'button' }, 'ورود');
     login.addEventListener('click', () => {
       closeSheet();
-      import('./login-modal.js?v=251')
+      import('./login-modal.js?v=253')
         .then((m) => m.openLoginModal({ returnTo: location.pathname + location.search + location.hash }))
         // Reload on success: the gated surface and the header both read /me at
         // boot, so a sign-in that only closed the modal looked like a failed one.

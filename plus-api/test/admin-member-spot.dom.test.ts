@@ -110,25 +110,48 @@ describe('admin member and Spot UI', () => {
     });
     expect(el('spotControlMode').textContent).toContain('چرخش فعلی سایت');
   });
-  it('offers three clear visit cards and saves image/text/link choices as one schedule', async () => {
+  it('opens on the four beats the site is running and saves them as one schedule', async () => {
     await flush();
     expect(el('campaignForm').hidden).toBe(false);
-    expect(el('campaignSessions').children).toHaveLength(3);
-    el<HTMLInputElement>('campaign1Enabled').checked = true;
+    expect(el('campaignSessions').children).toHaveLength(4);
+    // Nothing saved yet: the published rotation is ['premium'], so every beat is our own card.
+    expect([1, 2, 3, 4].map(i => el<HTMLSelectElement>('campaign' + i + 'Mode').value)).toEqual(['house', 'house', 'house', 'house']);
+    expect(el('campaignStatus').textContent).toContain('همان چرخشِ فعلیِ سایت');
+    expect(el('campaignSteps').children).toHaveLength(4);
+
+    const set = (i: number, mode: string) => {
+      const m = el<HTMLSelectElement>('campaign' + i + 'Mode'); m.value = mode;
+      m.dispatchEvent(new Event('change', { bubbles: true }));
+    };
+    set(1, 'custom');
     el<HTMLSelectElement>('campaign1Kind').value = 'text';
     el<HTMLInputElement>('campaign1Title').value = 'آگهی بیرونی';
     el<HTMLInputElement>('campaign1Url').value = 'https://brand.example/';
-    el<HTMLInputElement>('campaign2Enabled').checked = true;
-    el<HTMLSelectElement>('campaign2Kind').value = 'text';
-    el<HTMLInputElement>('campaign2Title').value = 'دنت‌کست';
-    el<HTMLInputElement>('campaign2Url').value = '/plus/';
+    set(3, 'off');
+    // The body of a beat is only there for a sponsor beat.
+    expect(el('campaign1Card').querySelector<HTMLElement>('.cmp-body')!.hidden).toBe(false);
+    expect(el('campaign2Card').querySelector<HTMLElement>('.cmp-body')!.hidden).toBe(true);
+    expect(el('campaign2Card').querySelector<HTMLElement>('.cmp-note-house')!.hidden).toBe(false);
+    expect(el('campaign3Card').querySelector<HTMLElement>('.cmp-note-off')!.hidden).toBe(false);
+    expect(el('campaignDirty').hidden).toBe(false);
+    expect(Array.from(el('campaignSteps').children).map(c => c.textContent)).toEqual(
+      ['زمان اولاسپانسر', 'زمان دومدنت‌کست', 'زمان سومخالی', 'زمان چهارمدنت‌کست']);
+
     el('campaignForm').dispatchEvent(new Event('submit', { cancelable: true })); await flush();
     const save = calls.find(c => c.url === '/admin/spot/campaign' && c.opts.method === 'PUT')!;
     const body = JSON.parse(save.opts.body);
-    expect(body.sessions).toHaveLength(3);
-    expect(body.sessions.map((s: any) => s.enabled)).toEqual([true, true, false]);
+    expect(body.sessions.map((s: any) => s.mode)).toEqual(['custom', 'house', 'off', 'house']);
     expect(body.sessions[0]).toMatchObject({ title: 'آگهی بیرونی', url: 'https://brand.example/' });
-    expect(body.sessions[1]).toMatchObject({ title: 'دنت‌کست', url: '/plus/' });
     expect(el('campaignStatus').textContent).toContain('برنامه ذخیره شد');
+    expect(el('campaignDirty').hidden).toBe(true);
+  });
+  it('refuses a sponsor beat with nothing in it, naming the beat', async () => {
+    await flush();
+    const m = el<HTMLSelectElement>('campaign2Mode'); m.value = 'custom';
+    m.dispatchEvent(new Event('change', { bubbles: true }));
+    el('campaignForm').dispatchEvent(new Event('submit', { cancelable: true })); await flush();
+    expect(calls.some(c => c.url === '/admin/spot/campaign' && c.opts.method === 'PUT')).toBe(false);
+    expect(el('campaignStatus').textContent).toContain('زمان دوم');
+    expect(el('campaignStatus').className).toContain('err');
   });
 });

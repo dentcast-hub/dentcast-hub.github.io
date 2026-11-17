@@ -1,6 +1,6 @@
-import { el, faNum } from './util.js?v=251';
-import { api } from './api.js?v=251';
-import { sameMirrorUrl } from './config.js?v=251';
+import { el, faNum } from './util.js?v=253';
+import { api } from './api.js?v=253';
+import { sameMirrorUrl } from './config.js?v=253';
 
 /**
  * اطلاعیه — the in-app inbox, opened from the account menu.

@@ -79,10 +79,22 @@ export async function saveSpotControl(slot: SpotSlot, value: { enabled: boolean;
   [slot, value.enabled, JSON.stringify(value.creative)]);
 }
 
-export interface SpotCampaignSession { enabled: boolean; creative: SpotCreative }
+/** How many beats the panel schedules — the length of the published rotation it stands in for. */
+export const SPOT_CAMPAIGN_BEATS = 4;
+export type SpotBeatMode = 'custom' | 'house' | 'off';
 
-// This is an optional, API-backed three-visit schedule. Until the admin saves
-// one, the published JSON remains the only source of rotation behavior.
+/**
+ * One beat of the schedule. `enabled: false` is a beat that shows nothing;
+ * `house: true` is the site's own card (the `premium` step of spot-config.json,
+ * with its audience split — not something typed here); otherwise `creative` is
+ * the content the founder entered. `creative` is kept for every mode so that
+ * switching a beat to «خودمون» and back does not throw away what was typed.
+ */
+export interface SpotCampaignSession { enabled: boolean; house?: boolean; creative: SpotCreative }
+
+// An optional, API-backed schedule for the rotation's beats. Until the admin
+// saves one, the published JSON remains the only source of rotation behavior.
+// The key stays `sessions` (0070's name, and what an older spot.js looks for).
 export async function spotCampaign(): Promise<SpotCampaignSession[] | null> {
   const result = await query<{ sessions: SpotCampaignSession[] }>(
     'select sessions from spot_campaign_controls where id = true and not use_default',
@@ -93,13 +105,21 @@ export async function spotCampaign(): Promise<SpotCampaignSession[] | null> {
 export function parseSpotCampaign(body: unknown): SpotCampaignSession[] | null {
   if (!body || typeof body !== 'object' || Array.isArray(body)) return null;
   const sessions = (body as Record<string, unknown>).sessions;
-  if (!Array.isArray(sessions) || sessions.length !== 3) return null;
+  if (!Array.isArray(sessions) || sessions.length !== SPOT_CAMPAIGN_BEATS) return null;
   const parsed: SpotCampaignSession[] = [];
   for (let index = 0; index < sessions.length; index++) {
-    const value = parseSpotCreative('home', sessions[index]);
+    const raw = sessions[index];
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+    const mode = (raw as Record<string, unknown>).mode;
+    if (mode !== 'custom' && mode !== 'house' && mode !== 'off') return null;
+    // Only a custom beat has to carry something to show; the fields of a house
+    // or empty beat are still validated (a bad link is a bad link) but may be blank.
+    const value = parseSpotCreative('home', { ...(raw as object), enabled: mode === 'custom' });
     if (!value) return null;
     value.creative.id = `managed-session-${index + 1}`;
-    parsed.push(value);
+    parsed.push(mode === 'house'
+      ? { enabled: true, house: true, creative: value.creative }
+      : { enabled: mode === 'custom', creative: value.creative });
   }
   return parsed;
 }
