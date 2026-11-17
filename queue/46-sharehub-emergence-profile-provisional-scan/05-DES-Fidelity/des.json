@@ -1,0 +1,305 @@
+{
+ "scored_at": "2026-11-17",
+ "sources": [
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "FULL_TEXT",
+   "citation": {
+    "title": "Prosthetic Soft Tissue Management in Esthetic Implant Restorations, Part II: Post-surgical Considerations and Impression Techniques. A Narrative Review",
+    "authors": "Faezeh Atri, Kimia Nokar",
+    "year": 2025,
+    "journal": "Clinical and Experimental Dental Research",
+    "doi": "10.1002/cre2.70097"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 15,
+    "anchor": "narrative review with a reported database search but study selection by title relevance and no appraisal (THERAPY narrative review row, 15)",
+    "evidence_quote": "Impression Techniques. A Narrative Review"
+   },
+   "q_method": {
+    "tool": "AMSTAR-2",
+    "domains": [
+     {
+      "domain": "protocol registered before commencement",
+      "rating": "high",
+      "evidence_quote": "",
+      "note": "no protocol, registration (PROSPERO or other) or a-priori plan in Materials and Methods (databases → search terms → inclusion → exclusion → priority → language), Results, Author Contributions or Data Availability; no protocol/register/registration wording anywhere in the text"
+     },
+     {
+      "domain": "adequacy of the literature search",
+      "rating": "low",
+      "evidence_quote": "A search of electronic databases, including Medline/PubMed, Embase, Scopus, and Cochrane, was conducted from January",
+      "note": "four bibliographic databases (Medline/PubMed counted once), date range and MeSH terms stated"
+     },
+     {
+      "domain": "justification for excluding individual studies",
+      "rating": "some_concerns",
+      "evidence_quote": "Initially, 1472 studies were identified, from which 187 were selected based on publication year and title relevance.",
+      "note": "no list of excluded full-text studies; (a) screening account with counts present (1472 → 187 → 84 full texts → 59 included) and (b) explicit inclusion/exclusion criteria present in Materials and Methods"
+     },
+     {
+      "domain": "risk of bias assessment of included studies",
+      "rating": "high",
+      "evidence_quote": "",
+      "note": "no appraisal step in Materials and Methods (search → MeSH terms → inclusion → exclusion → priority by design → language) or Results; no quality/bias/appraisal/critical-appraisal wording anywhere in the text; design priority is not an appraisal of included studies"
+     },
+     {
+      "domain": "appropriateness of meta-analytical methods",
+      "rating": "high",
+      "evidence_quote": "",
+      "note": "no meta-analysis, pooling, statistical or other stated synthesis method in Materials and Methods or Results; synthesis is narrative throughout"
+     },
+     {
+      "domain": "assessment of publication bias",
+      "rating": "high",
+      "evidence_quote": "",
+      "note": "no publication-bias, small-study or funnel-plot wording in Materials and Methods, Results or Conclusions"
+     }
+    ],
+    "multiplier": 0.3
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "The authors declare no conflicts of interest.",
+     "note": "CoI declared; funding statement: no specific funding"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: RCTs only"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable to a secondary study"
+    },
+    {
+     "item": "follow-up shorter than the outcome plausibly requires",
+     "base_points": 3,
+     "points": 1,
+     "evidence_quote": "study evaluated 40 cases, with a 1‐year follow‐up.",
+     "note": "the review's own caveat on the trial it uses to support equivalence of healing abutment and immediate provisionalization; scaled 3 × 15 ÷ 100 = 0.45, floored to 1"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 4,
+   "band": "E",
+   "provisional": false,
+   "fact_fa": "امتیاز DES این مقاله ۴ از ۱۰۰ است، در باند E (سطح زمینه و نظر) برای سؤال از نوع THERAPY.",
+   "interpretation_fa": "این مقاله یک narrative review است که جستجو در چهار پایگاه داده و شمار مطالعات غربال‌شده را گزارش می‌کند، اما پروتکل ثبت‌شده، ارزیابی risk of bias و سنتز کمّی ندارد. ارزش عملی آن در جمع‌بندی تکنیک‌هاست: critical و subcritical contour، healing abutment سفارشی و چهار روش انتقال پروفایل نسج نرم."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "A fully digital approach to replicate peri-implant soft tissue contours and emergence profile in the esthetic zone",
+    "authors": "Carlo Monaco, Edoardo Evangelisti, Roberto Scotti, Giuseppe Mignani, Giovanni Zucchelli",
+    "year": 2016,
+    "journal": "Clinical Oral Implants Research",
+    "doi": "10.1111/clr.12599"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 30,
+    "anchor": "technique report (short communication) describing a novel digital impression workflow, with no patient sample, comparison or outcome measurement reported (THERAPY case series / case report row, 30)",
+    "evidence_quote": "This short communication reports on a novel digital technique"
+   },
+   "q_method": {
+    "tool": "ROBINS-I",
+    "domains": [
+     {
+      "domain": "confounding",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract describes a single technique with no comparison group or analysis; confounding control not addressed"
+     },
+     {
+      "domain": "selection of participants",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no patient selection, number of cases or eligibility criteria stated in the abstract"
+     },
+     {
+      "domain": "classification of interventions/exposures",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract describes the steps of the technique itself; it states no safeguard about how the intervention was classified or applied across cases"
+     },
+     {
+      "domain": "missing data",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no enrolled vs analysed numbers, losses or exclusions stated in the abstract"
+     },
+     {
+      "domain": "measurement of the outcome",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no outcome measure, examiner, calibration or blinding described; the claim of a rapid approach is not tied to any measurement in the abstract"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "applies to RCTs only; this is a technique report"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "source text makes no survival or success claim and does not address follow-up duration"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 17,
+   "band": "E",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۱۷ از ۱۰۰ و باند E (سطح پیش‌زمینه یا نظر) در نوع سؤال THERAPY است و چون فقط چکیده در دسترس بود، نتیجه موقت است.",
+   "interpretation_fa": "این short communication یک workflow دیجیتال (FDT) را برای ثبت emergence profile و بافت نرم اطراف ایمپلنت با intraoral scanner و superimposition فایل‌های STL توصیف می‌کند. چکیده هیچ نمونه، مقایسه یا اندازه‌گیری دقتی گزارش نمی‌کند، پس «سریع بودن» روش آزموده نشده است. ارزشش در معرفی راهی عملی برای انتقال شکل پروویژنال به CAD/CAM abutment است، نه اثبات برتری آن."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "Implant Digital Impression in the Esthetic Area",
+    "authors": "Carlo Monaco, Lorenzo Scheda, Paolo Baldissara, Giovanni Zucchelli",
+    "year": 2019,
+    "journal": "Journal of Prosthodontics",
+    "doi": "10.1111/jopr.12991"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 30,
+    "anchor": "clinical technique report describing two digital impression protocols applied in different clinical scenarios (THERAPY case series / case report row, 30)",
+    "evidence_quote": "The aim of this report is to describe two standardized protocols for digital impression when implant support rehabilitation is used in the esthetic area."
+   },
+   "q_method": {
+    "tool": "ROBINS-I",
+    "domains": [
+     {
+      "domain": "confounding",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract does not address confounding control. Separately, critical flaw (no control group where the question requires one): the abstract makes a comparative claim from a single-arm technique report, \"reducing the duration of clinical procedures\", with no comparator, which forces the multiplier to 0.30"
+     },
+     {
+      "domain": "selection of participants",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract does not describe how patients or cases were selected"
+     },
+     {
+      "domain": "classification of interventions/exposures",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract describes the two protocols but not how cases were assigned to direct or indirect technique beyond indications; no classification safeguard stated"
+     },
+     {
+      "domain": "missing data",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract gives no number of cases, losses or exclusions"
+     },
+     {
+      "domain": "measurement of the outcome",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract does not state how predictability or procedure duration was measured"
+     }
+    ],
+    "multiplier": 0.3
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "applies to RCTs only"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract; no follow-up duration stated"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 9,
+   "band": "E",
+   "provisional": true,
+   "fact_fa": "این مقاله با امتیاز ۹ در باند E (THERAPY) قرار می‌گیرد و امتیاز آن بر پایه‌ی چکیده و مقدماتی است.",
+   "interpretation_fa": "این مقاله یک technique report است که دو پروتکل digital impression برای انتقال پروفایل provisional در ناحیه‌ی زیبایی ایمپلنت را شرح می‌دهد. ادعای کاهش زمان کار بالینی بدون گروه مقایسه مطرح شده است. ارزش آن در توضیح گام‌به‌گام تکنیک‌های direct و indirect است، نه در اثبات برتری بالینی آن‌ها.",
+   "issuing_bodies": null,
+   "issuing_quote": null,
+   "evidence_basis": null,
+   "basis_quote": null
+  },
+  {
+   "des_version": "3.7",
+   "error": "INSUFFICIENT_TEXT"
+  },
+  {
+   "des_version": "3.7",
+   "error": "INSUFFICIENT_TEXT"
+  }
+ ]
+}
