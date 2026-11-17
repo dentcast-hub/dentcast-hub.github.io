@@ -263,7 +263,7 @@
     "#اینسایت"
    ],
    "co_tags": [],
-   "count": 130,
+   "count": 131,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -394,7 +394,8 @@
     "insight/insight-109",
     "insight/insight-110",
     "insight/insight-111",
-    "insight/insight-112"
+    "insight/insight-112",
+    "insight/insight-113"
    ]
   },
   {
@@ -1195,7 +1196,7 @@
     "#Implant_Prosthetics"
    ],
    "co_tags": [],
-   "count": 42,
+   "count": 43,
    "content_ids": [
     "episodes/episode-31",
     "episodes/episode-83",
@@ -1238,7 +1239,8 @@
     "insight/insight-109",
     "insight/insight-110",
     "insight/insight-111",
-    "insight/insight-112"
+    "insight/insight-112",
+    "insight/insight-113"
    ]
   },
   {
@@ -3350,6 +3352,46 @@
    ]
   },
   {
+   "key": "پروفایل_امرجنس",
+   "tag": "#پروفایل_امرجنس",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Emergence Profile — کانتورِ خروجِ رستوریشن از زیرِ لثه که فرمِ بافتِ نرم و سلامتِ آن را تعیین می‌کند.",
+   "use_when": "مقاله پروفایلِ امرجنس را متغیرِ طراحی یا سلامتِ بافت بداند.",
+   "aliases": [
+    "emergence profile",
+    "پروفایل ظهور",
+    "پروفایل خروج",
+    "کانتور امرجنس",
+    "امرجنس پروفایل",
+    "ایمرجنس پروفایل"
+   ],
+   "variants": [
+    "#EmergenceProfile",
+    "#Emergence_Profile"
+   ],
+   "co_tags": [
+    "#Emergence_Profile"
+   ],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-112",
+    "episodes/episode-125-2",
+    "episodes/episode-130",
+    "chairside/chairside-10",
+    "episodes/episode-158",
+    "insight/insight-50",
+    "chairside/chairside-36",
+    "insight/insight-69",
+    "insight/insight-70",
+    "insight/insight-79",
+    "insight/insight-80",
+    "insight/insight-109",
+    "insight/insight-112",
+    "insight/insight-113"
+   ]
+  },
+  {
    "key": "افتادن_روکش",
    "tag": "#افتادن_روکش",
    "domain": "clinical",
@@ -3391,6 +3433,57 @@
     "insight/insight-85",
     "insight/insight-86",
     "chairside/chairside-47"
+   ]
+  },
+  {
+   "key": "ایمپلنت_فول_آرچ",
+   "tag": "#ایمپلنت_فول_آرچ",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
+   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
+   "aliases": [
+    "all on 4",
+    "all-on-4",
+    "آل آن فور",
+    "allon4",
+    "ایمپلنت تمام فک",
+    "all on 6",
+    "all on four",
+    "all-on-four",
+    "allonfour",
+    "Full Arch Implant",
+    "ایمپلنت فول ماوس",
+    "full mouth implant",
+    "ایمپلنت تمام دهان",
+    "فول ماوس ایمپلنت",
+    "all on x",
+    "آل آن سیکس",
+    "all on six"
+   ],
+   "variants": [
+    "#AllOn4",
+    "#Full_Arch_Implant",
+    "#ایمپلنت_فول_ماوس"
+   ],
+   "co_tags": [
+    "#Full_Arch_Implant"
+   ],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-108",
+    "episodes/episode-123-4",
+    "episodes/episode-144-1",
+    "insight/insight-51",
+    "metanotes/meta-17",
+    "sharehub/share-11",
+    "insight/insight-60",
+    "dentai/dentai-31",
+    "insight/insight-80",
+    "insight/insight-82",
+    "sharehub/share-38",
+    "sharehub/share-46",
+    "insight/insight-113"
    ]
   },
   {
@@ -3474,45 +3567,6 @@
     "insight/insight-91",
     "insight/insight-92",
     "sharehub/share-40"
-   ]
-  },
-  {
-   "key": "پروفایل_امرجنس",
-   "tag": "#پروفایل_امرجنس",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "Emergence Profile — کانتورِ خروجِ رستوریشن از زیرِ لثه که فرمِ بافتِ نرم و سلامتِ آن را تعیین می‌کند.",
-   "use_when": "مقاله پروفایلِ امرجنس را متغیرِ طراحی یا سلامتِ بافت بداند.",
-   "aliases": [
-    "emergence profile",
-    "پروفایل ظهور",
-    "پروفایل خروج",
-    "کانتور امرجنس",
-    "امرجنس پروفایل",
-    "ایمرجنس پروفایل"
-   ],
-   "variants": [
-    "#EmergenceProfile",
-    "#Emergence_Profile"
-   ],
-   "co_tags": [
-    "#Emergence_Profile"
-   ],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-112",
-    "episodes/episode-125-2",
-    "episodes/episode-130",
-    "chairside/chairside-10",
-    "episodes/episode-158",
-    "insight/insight-50",
-    "chairside/chairside-36",
-    "insight/insight-69",
-    "insight/insight-70",
-    "insight/insight-79",
-    "insight/insight-80",
-    "insight/insight-109",
-    "insight/insight-112"
    ]
   },
   {
@@ -3638,56 +3692,6 @@
     "dentcast-plus/video-14",
     "insight/insight-97",
     "sharehub/share-52"
-   ]
-  },
-  {
-   "key": "ایمپلنت_فول_آرچ",
-   "tag": "#ایمپلنت_فول_آرچ",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
-   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
-   "aliases": [
-    "all on 4",
-    "all-on-4",
-    "آل آن فور",
-    "allon4",
-    "ایمپلنت تمام فک",
-    "all on 6",
-    "all on four",
-    "all-on-four",
-    "allonfour",
-    "Full Arch Implant",
-    "ایمپلنت فول ماوس",
-    "full mouth implant",
-    "ایمپلنت تمام دهان",
-    "فول ماوس ایمپلنت",
-    "all on x",
-    "آل آن سیکس",
-    "all on six"
-   ],
-   "variants": [
-    "#AllOn4",
-    "#Full_Arch_Implant",
-    "#ایمپلنت_فول_ماوس"
-   ],
-   "co_tags": [
-    "#Full_Arch_Implant"
-   ],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-108",
-    "episodes/episode-123-4",
-    "episodes/episode-144-1",
-    "insight/insight-51",
-    "metanotes/meta-17",
-    "sharehub/share-11",
-    "insight/insight-60",
-    "dentai/dentai-31",
-    "insight/insight-80",
-    "insight/insight-82",
-    "sharehub/share-38",
-    "sharehub/share-46"
    ]
   },
   {
@@ -4131,6 +4135,39 @@
    ]
   },
   {
+   "key": "فیت_پروتز",
+   "tag": "#فیت_پروتز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نشستنِ کاملِ کار روی تکیه‌گاه.",
+   "use_when": "مقاله فیت را بسنجد یا نبودش را علتِ شکست بداند.",
+   "aliases": [
+    "پسیو فیت",
+    "passive fit",
+    "فیت روکش",
+    "misfit",
+    "prosthesis fit",
+    "فیت پسیو",
+    "میس فیت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "insight/insight-26",
+    "insight/insight-31",
+    "insight/insight-35",
+    "insight/insight-44",
+    "insight/insight-52",
+    "metanotes/meta-20",
+    "dentcast-plus/video-14",
+    "insight/insight-102",
+    "insight/insight-109",
+    "insight/insight-111",
+    "insight/insight-113"
+   ]
+  },
+  {
    "key": "متاآنالیز",
    "tag": "#متاآنالیز",
    "domain": null,
@@ -4474,38 +4511,6 @@
     "chairside/chairside-40",
     "insight/insight-97",
     "insight/insight-107"
-   ]
-  },
-  {
-   "key": "فیت_پروتز",
-   "tag": "#فیت_پروتز",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نشستنِ کاملِ کار روی تکیه‌گاه.",
-   "use_when": "مقاله فیت را بسنجد یا نبودش را علتِ شکست بداند.",
-   "aliases": [
-    "پسیو فیت",
-    "passive fit",
-    "فیت روکش",
-    "misfit",
-    "prosthesis fit",
-    "فیت پسیو",
-    "میس فیت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "insight/insight-26",
-    "insight/insight-31",
-    "insight/insight-35",
-    "insight/insight-44",
-    "insight/insight-52",
-    "metanotes/meta-20",
-    "dentcast-plus/video-14",
-    "insight/insight-102",
-    "insight/insight-109",
-    "insight/insight-111"
    ]
   },
   {
@@ -6113,6 +6118,35 @@
    ]
   },
   {
+   "key": "ارتباط_با_لابراتوار",
+   "tag": "#ارتباط_با_لابراتوار",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتقال اطلاعاتی که تکنسین برای ساخت کار لازم دارد و خودش نمی‌تواند در بیمار ببیند، مثل رنگ، شفافیت، لکه‌ها و ویژگی‌های سطح دندان، از طریق عکس، نوشته یا مرجع مشترک.",
+   "use_when": "مقاله توضیح دهد چه اطلاعاتی و چطور باید از مطب به لابراتوار برسد.",
+   "aliases": [
+    "lab communication",
+    "laboratory communication",
+    "shade communication",
+    "ارتباط با تکنسین",
+    "ارسال رنگ به لابراتوار",
+    "dentist technician communication",
+    "ارتباط دندانپزشک و لابراتوار",
+    "ارتباط با لابراتور"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "sharehub/share-26",
+    "insight/insight-101",
+    "insight/insight-103",
+    "sharehub/share-47",
+    "insight/insight-108",
+    "insight/insight-113"
+   ]
+  },
+  {
    "key": "اسکرو_سمنتد",
    "tag": "#اسکرو_سمنتد",
    "domain": "clinical",
@@ -6373,6 +6407,33 @@
     "plak-sefr/plak1-4",
     "plak-sefr/plak1-5",
     "plak-sefr/plak1-6"
+   ]
+  },
+  {
+   "key": "خطای_قالبگیری",
+   "tag": "#خطای_قالبگیری",
+   "domain": null,
+   "words": 2,
+   "definition": "خطایی که در مرحله‌ی ثبت وارد کار می‌شود و بعداً دیده می‌شود.",
+   "use_when": "مقاله منشأ خطا را به قالب‌گیری برگرداند.",
+   "aliases": [
+    "خطای قالب",
+    "ایمپرشن اشتباه",
+    "impression error",
+    "خطای ایمپرشن",
+    "impression distortion",
+    "دیستورشن قالب"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "chairside/chairside-12",
+    "insight/insight-75",
+    "insight/insight-109",
+    "insight/insight-110",
+    "insight/insight-111",
+    "insight/insight-113"
    ]
   },
   {
@@ -6697,6 +6758,32 @@
    ]
   },
   {
+   "key": "نشست_ناقص",
+   "tag": "#نشست_ناقص",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ننشستنِ کاملِ کار روی تکیه‌گاه، به هر علت.",
+   "use_when": "مقاله علتِ عدم نشست را دنبال کند.",
+   "aliases": [
+    "عدم نشست",
+    "incomplete seating",
+    "ننشستن",
+    "نشست ناکامل",
+    "سیت نشدن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "insight/insight-26",
+    "insight/insight-30",
+    "insight/insight-52",
+    "chairside/chairside-37",
+    "dentcast-plus/video-14",
+    "insight/insight-113"
+   ]
+  },
+  {
    "key": "هوش_مصنوعی_دندانپزشکی",
    "tag": "#هوش_مصنوعی_دندانپزشکی",
    "domain": "ai",
@@ -6925,34 +7012,6 @@
     "episodes/episode-11",
     "episodes/episode-16",
     "episodes/episode-136"
-   ]
-  },
-  {
-   "key": "ارتباط_با_لابراتوار",
-   "tag": "#ارتباط_با_لابراتوار",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتقال اطلاعاتی که تکنسین برای ساخت کار لازم دارد و خودش نمی‌تواند در بیمار ببیند، مثل رنگ، شفافیت، لکه‌ها و ویژگی‌های سطح دندان، از طریق عکس، نوشته یا مرجع مشترک.",
-   "use_when": "مقاله توضیح دهد چه اطلاعاتی و چطور باید از مطب به لابراتوار برسد.",
-   "aliases": [
-    "lab communication",
-    "laboratory communication",
-    "shade communication",
-    "ارتباط با تکنسین",
-    "ارسال رنگ به لابراتوار",
-    "dentist technician communication",
-    "ارتباط دندانپزشک و لابراتوار",
-    "ارتباط با لابراتور"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "sharehub/share-26",
-    "insight/insight-101",
-    "insight/insight-103",
-    "sharehub/share-47",
-    "insight/insight-108"
    ]
   },
   {
@@ -7357,32 +7416,6 @@
    ]
   },
   {
-   "key": "خطای_قالبگیری",
-   "tag": "#خطای_قالبگیری",
-   "domain": null,
-   "words": 2,
-   "definition": "خطایی که در مرحله‌ی ثبت وارد کار می‌شود و بعداً دیده می‌شود.",
-   "use_when": "مقاله منشأ خطا را به قالب‌گیری برگرداند.",
-   "aliases": [
-    "خطای قالب",
-    "ایمپرشن اشتباه",
-    "impression error",
-    "خطای ایمپرشن",
-    "impression distortion",
-    "دیستورشن قالب"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "chairside/chairside-12",
-    "insight/insight-75",
-    "insight/insight-109",
-    "insight/insight-110",
-    "insight/insight-111"
-   ]
-  },
-  {
    "key": "درمان_بین_رشته_ای",
    "tag": "#درمان_بین_رشته_ای",
    "domain": null,
@@ -7674,31 +7707,6 @@
     "insight/insight-44",
     "sharehub/share-10",
     "insight/insight-102"
-   ]
-  },
-  {
-   "key": "نشست_ناقص",
-   "tag": "#نشست_ناقص",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ننشستنِ کاملِ کار روی تکیه‌گاه، به هر علت.",
-   "use_when": "مقاله علتِ عدم نشست را دنبال کند.",
-   "aliases": [
-    "عدم نشست",
-    "incomplete seating",
-    "ننشستن",
-    "نشست ناکامل",
-    "سیت نشدن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "insight/insight-26",
-    "insight/insight-30",
-    "insight/insight-52",
-    "chairside/chairside-37",
-    "dentcast-plus/video-14"
    ]
   },
   {
