@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "insight/insight-113"
 - Status: in_progress
-- Next canonical step: "C.4.7"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -18,7 +18,24 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     "category": "clinical",
     "content_id": "insight/insight-113",
     "context": {
-      "approvals": [],
+      "approvals": [
+        {
+          "decision": "\u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a: \u0646\u06a9\u0627\u062a \u06a9\u0644\u06cc\u062f\u06cc",
+          "evidence": [
+            "founder doc heading (Claude Docs rev272), already in the series form the founder chose for parts 1-2"
+          ],
+          "scope": "title",
+          "status": "confirmed"
+        },
+        {
+          "decision": "\u067e\u06cc\u0634 \u0627\u0632 \u0641\u0631\u0633\u062a\u0627\u062f\u0646 \u0642\u0627\u0644\u0628 \u06cc\u0627 \u0627\u0633\u06a9\u0646 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0628\u0647 \u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631 \u0686\u0646\u062f \u0686\u06cc\u0632 \u0686\u06a9 \u0645\u06cc\u200c\u0634\u0648\u062f: \u0646\u0634\u0633\u062a\u0646 \u06a9\u0627\u0645\u0644 \u06a9\u0648\u067e\u06cc\u0646\u06af \u06cc\u0627 \u0627\u0633\u06a9\u0646 \u0628\u0627\u062f\u06cc\u060c \u062b\u0628\u062a \u0627\u0645\u0631\u062c\u0646\u0633 \u067e\u0631\u0648\u0641\u0627\u06cc\u0644\u060c \u0633\u0644\u0627\u0645\u062a \u0642\u0627\u0644\u0628\u060c \u0648\u0635\u0644 \u06a9\u0631\u062f\u0646 \u062f\u0631\u0633\u062a \u0622\u0646\u0627\u0644\u0648\u06af \u0648 \u062f\u0631 \u0641\u0648\u0644 \u0622\u0631\u0686 \u062f\u0642\u062a \u0645\u062f\u0644 \u0628\u0627 \u062c\u06cc\u06af \u0648\u0631\u06cc\u0641\u06cc\u06a9\u06cc\u0634\u0646.",
+          "evidence": [
+            "agent-composed caption, standing acceptance (Hard Rule 14), listed in Push-2 report"
+          ],
+          "scope": "caption",
+          "status": "confirmed"
+        }
+      ],
       "decisions": [
         {
           "decision": "founder chose \u00ab\u0628\u0627\u0632\u0646\u0648\u06cc\u0633\u06cc \u0631\u0633\u0645\u06cc\u00bb in chat for the colloquial parenthetical note in the radiography section (option text with \u00ab\u0627\u06cc\u0646 \u0631\u0648\u0634 \u062f\u0631 \u0628\u06cc\u0634\u062a\u0631 \u0645\u0648\u0627\u0631\u062f \u0628\u062f\u0648\u0646 \u0631\u0627\u062f\u06cc\u0648\u06af\u0631\u0627\u0641\u06cc \u0647\u0645 \u0627\u0637\u0645\u06cc\u0646\u0627\u0646 \u0645\u06cc\u200c\u062f\u0647\u062f\u00bb)",
@@ -36,6 +53,107 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         },
         {
           "kind": "fixed_three_deliveries_v2"
+        },
+        {
+          "decision": "founder approved all three in chat (AskUserQuestion, \u00ab\u062a\u0623\u06cc\u06cc\u062f\u00bb \u00d73): r-8690e29f, r-5480d8b7, r-99d46cc7",
+          "evidence": [
+            "founder chat answer 2026-11-17"
+          ],
+          "kind": "m2_exam_questions",
+          "step": "C.5.6"
+        },
+        {
+          "evidence": [
+            "insight/insight-113.html first <p> in .glass-box = founder paragraph 1"
+          ],
+          "kind": "first_cut_lead_provenance_v1",
+          "origin": "author_original",
+          "source_ref": "founder text (Claude Docs rev272) first paragraph \u00ab\u0627\u06af\u0631 \u0642\u0627\u0644\u0628 \u06cc\u0627 \u0627\u0633\u06a9\u0646 \u062e\u0637\u0627\u06cc\u06cc \u062f\u0627\u0634\u062a\u0647 \u0628\u0627\u0634\u062f\u2026\u00bb opens the body before any heading or list"
+        },
+        {
+          "english": {
+            "evidence": [
+              "file on disk, toggle ../insight-113.html; fa toggle en/insight-113.html; metanotes/en/meta-1.html unchanged"
+            ],
+            "path": "insight/en/insight-113.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "all founder messages closed: M1 none, M3b none, M2 answered"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "plus/des-scores.json[insight/insight-113] COMMENTARY 15/E, Part 3 green; no Fidelity owed; no M3b"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Question 4.9 \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc; C.4.14 skipped"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "pillar implantology / prosthetic-components, capsule /pillar/implantology/, landing row insight/index.html"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "4.7: 0; 4.8: scan-body, flowable-resin, emergence-profile, insight-111 inline; 4.9: insight-112, insight-111, insight-109 (5/5)"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "8 canonical tags reused, no mint; --check OK"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "dentcast-brain.json clinical-113 at tail; plus/faq-corpus.json byContent[insight/insight-113] 11 FAQ + 6 cards"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "implant-prosthetic after insight-112; 3 exam rows approved in M2; bundle-implant-parts rejected gate 1"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "index.html: new first line for insight-113, oldest (share-53) removed, 7 lines"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "insight/en/insight-113.html authored from locked text; toggles inverse; noindex, follow; no hreflang"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "title confirmed (founder heading), caption confirmed (standing acceptance), note rewrite chosen by founder, M2 approved x3"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -329,6 +447,119 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "08-des-fidelity.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [
+          "fresh review of 110 glossary terms: strong = scan-body, emergence-profile (at/over cap 5/5, 7/5) -> 0; flowable-resin has room (1/5) but is borderline (one material option in one step), not linked; dental-implant generic"
+        ],
+        "id": "C.4.7",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.7-b",
+        "module": "05-semantic-linking.md",
+        "reason": "4.7-\u0628: skipped \u2014 not a glossary publish",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "inline (first body occurrence, headings excluded): \u00ab\u0627\u0633\u06a9\u0646 \u0628\u0627\u062f\u06cc\u00bb -> /glossary/scan-body.html; \u00ab\u06a9\u0627\u0645\u067e\u0648\u0632\u06cc\u062a \u0641\u0644\u0648\u00bb (step 5 of the list) -> /glossary/flowable-resin.html; \u00ab\u06a9\u0648\u067e\u06cc\u0646\u06af \u0627\u0648\u067e\u0646 \u062a\u0631\u06cc\u00bb (its retentive features, explained in part 3) -> /insight/insight-111.html; \u00ab\u0627\u0645\u0631\u062c\u0646\u0633 \u067e\u0631\u0648\u0641\u0627\u06cc\u0644\u00bb -> /glossary/emergence-profile.html. Borderline skipped: \u00ab\u062c\u06cc\u06af \u0648\u0631\u06cc\u0641\u06cc\u06a9\u06cc\u0634\u0646\u00bb -> insight-112 (only mentioned there; detailed here), \u00ab\u06a9\u0644\u0648\u0632 \u062a\u0631\u06cc\u00bb -> insight-111 (already linked once), \u00ab\u0631\u0627\u062f\u06cc\u0648\u06af\u0631\u0627\u0641\u06cc\u00bb (no matching page). git diff only <a> insertions"
+        ],
+        "id": "C.4.8",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "cap: 2 nav -> 3 free; added: insight-112 \u00ab\u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a: \u0627\u0633\u06a9\u0646 \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644\u00bb (previous part), insight-111 \u00ab\u0627\u0648\u067e\u0646 \u062a\u0631\u06cc \u062f\u0631 \u0628\u0631\u0627\u0628\u0631 \u06a9\u0644\u0648\u0632 \u062a\u0631\u06cc\u00bb, insight-109 \u00ab\u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a: \u0647\u062f\u0641\u00bb (series start). Skipped for cap: insight-110, insight-80 pick-up, chairside-48, insight-83. related_cap 5/5"
+        ],
+        "id": "C.4.9",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "plus/faq-corpus.json byContent[insight/insight-113].definedTermSets: 6 authored DefinedTerms #flashcards-c1..c6 (\u0631\u0627\u062f\u06cc\u0648\u06af\u0631\u0627\u0641\u06cc \u0646\u0634\u0633\u062a\u0646\u060c \u06a9\u0648\u067e\u06cc\u0646\u06af \u06a9\u0627\u0633\u062a\u0648\u0645\u0627\u06cc\u0632\u060c \u062d\u0633 \u0642\u0641\u0644 \u0634\u062f\u0646\u060c \u0646\u06af\u0647 \u062f\u0627\u0634\u062a\u0646 \u0622\u0646\u0627\u0644\u0648\u06af\u060c \u062c\u06cc\u06af \u0648\u0631\u06cc\u0641\u06cc\u06a9\u06cc\u0634\u0646\u060c \u0622\u0632\u0645\u0648\u0646 \u06cc\u06a9\u200c\u067e\u06cc\u0686); none equals a FAQ answer; not in page JSON-LD"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "byContent[insight/insight-113].faqPages: 11 standalone questions, no deixis; 4 binary (\u0622\u06cc\u0627\u2026): 3 \u00ab\u062e\u06cc\u0631\u061b\u00bb, 1 \u00ab\u0628\u0644\u0647\u061b\u00bb; 7 how/why questions excluded from scored bank by shape. 4.12-\u0628: evaluated at 5.6"
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "\u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc at Question 4.9; not a \u0686\u0627\u0644\u0634",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Questions: (1) \u0642\u0628\u0644 \u0627\u0632 \u0641\u0631\u0633\u062a\u0627\u062f\u0646 \u0642\u0627\u0644\u0628 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0628\u0647 \u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631 \u0686\u06cc \u0631\u0648 \u0686\u06a9 \u06a9\u0646\u0645\u061f (2) \u0686\u0637\u0648\u0631 \u0628\u0641\u0647\u0645\u0645 \u06a9\u0648\u067e\u06cc\u0646\u06af \u06a9\u0627\u0645\u0644 \u0646\u0634\u0633\u062a\u0647\u061f \u0631\u0627\u062f\u06cc\u0648\u06af\u0631\u0627\u0641\u06cc \u0644\u0627\u0632\u0645\u0647\u061f (3) \u0627\u0645\u0631\u062c\u0646\u0633 \u067e\u0631\u0648\u0641\u0627\u06cc\u0644 \u0631\u0648 \u062a\u0648 \u0642\u0627\u0644\u0628 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0686\u0637\u0648\u0631 \u062b\u0628\u062a \u06a9\u0646\u0645\u061f \u06a9\u0648\u067e\u06cc\u0646\u06af \u06a9\u0627\u0633\u062a\u0648\u0645\u0627\u06cc\u0632 (4) \u062c\u06cc\u06af \u0648\u0631\u06cc\u0641\u06cc\u06a9\u06cc\u0634\u0646 \u0641\u0648\u0644 \u0622\u0631\u0686 \u0686\u0637\u0648\u0631 \u0627\u0645\u062a\u062d\u0627\u0646 \u0645\u06cc\u0634\u0647\u061f (5) \u0686\u0647 \u0627\u0637\u0644\u0627\u0639\u0627\u062a\u06cc \u0628\u0631\u0627\u06cc \u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631 \u0628\u0646\u0648\u06cc\u0633\u0645\u061f All reused, no mint: #\u0646\u06a9\u062a\u0647_\u06a9\u0644\u06cc\u0646\u06cc\u06a9\u06cc (series) \u00b7 #\u062e\u0637\u0627\u06cc_\u0642\u0627\u0644\u0628\u06af\u06cc\u0631\u06cc \u00ab\u0627\u06af\u0631 \u0642\u0627\u0644\u0628 \u06cc\u0627 \u0627\u0633\u06a9\u0646 \u062e\u0637\u0627\u06cc\u06cc \u062f\u0627\u0634\u062a\u0647 \u0628\u0627\u0634\u062f\u060c \u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631 \u0645\u0639\u0645\u0648\u0644\u0627\u064b \u0645\u062a\u0648\u062c\u0647 \u0622\u0646 \u0646\u0645\u06cc\u200c\u0634\u0648\u062f \u0648 \u0647\u0645\u0627\u0646 \u062e\u0637\u0627 \u0645\u0633\u062a\u0642\u06cc\u0645 \u0628\u0647 \u067e\u0631\u0648\u062a\u0632 \u0645\u0646\u062a\u0642\u0644 \u0645\u06cc\u200c\u0634\u0648\u062f.\u00bb \u00b7 #\u0646\u0634\u0633\u062a_\u0646\u0627\u0642\u0635 \u00ab\u0627\u06af\u0631 \u06a9\u0648\u067e\u06cc\u0646\u06af \u062f\u0631 \u062c\u0627\u06cc\u0634 \u0644\u0642 \u0627\u0633\u062a \u06cc\u0627 \u062a\u0627 \u0627\u0646\u062a\u0647\u0627 \u062c\u0627 \u0646\u0645\u06cc\u200c\u0627\u0641\u062a\u062f\u060c \u0628\u0647 \u0627\u06cc\u0646 \u0642\u0627\u0644\u0628 \u0627\u0639\u062a\u0645\u0627\u062f \u0646\u0645\u06cc\u200c\u06a9\u0646\u06cc\u0645.\u00bb \u00b7 #\u067e\u0631\u0648\u0641\u0627\u06cc\u0644_\u0627\u0645\u0631\u062c\u0646\u0633 \u00ab\u0631\u0627\u0647 \u062d\u0644 \u0627\u06cc\u0646 \u0627\u0633\u062a \u06a9\u0647 \u06a9\u0648\u067e\u06cc\u0646\u06af \u0631\u0627 \u0647\u0645\u200c\u0634\u06a9\u0644 \u0628\u062e\u0634 \u0632\u06cc\u0631\u0644\u062b\u0647\u200c\u0627\u06cc \u0631\u0648\u06a9\u0634 \u0645\u0648\u0642\u062a \u06a9\u0646\u06cc\u0645\u060c \u06cc\u0639\u0646\u06cc \u06a9\u0648\u067e\u06cc\u0646\u06af \u0631\u0627 \u06a9\u0627\u0633\u062a\u0648\u0645\u0627\u06cc\u0632 \u06a9\u0646\u06cc\u0645\u00bb \u00b7 #\u0641\u06cc\u062a_\u067e\u0631\u0648\u062a\u0632 \u00ab\u062f\u0631 \u06a9\u0627\u0631\u0647\u0627\u06cc \u0641\u0648\u0644 \u0622\u0631\u0686 \u0647\u0645\u0647\u200c\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u200c\u0647\u0627 \u0628\u0627 \u06cc\u06a9 \u0641\u0631\u06cc\u0645\u200c\u0648\u0631\u06a9 \u06cc\u06a9\u200c\u062a\u06a9\u0647 \u0628\u0647 \u0647\u0645 \u0648\u0635\u0644 \u0645\u06cc\u200c\u0634\u0648\u0646\u062f \u0648 \u062e\u0637\u0627\u06cc \u06a9\u0648\u0686\u06a9 \u0645\u062f\u0644\u060c \u067e\u0633\u06cc\u0648 \u0641\u06cc\u062a \u0631\u0627 \u0627\u0632 \u0628\u06cc\u0646 \u0645\u06cc\u200c\u0628\u0631\u062f.\u00bb \u00b7 #\u0627\u0631\u062a\u0628\u0627\u0637_\u0628\u0627_\u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631 \u00ab\u0646\u0648\u0639 \u0627\u0633\u06a9\u0646 \u0628\u0627\u062f\u06cc\u060c \u0633\u06cc\u0633\u062a\u0645 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0648 \u0642\u0637\u0631 \u067e\u0644\u062a\u0641\u0631\u0645 \u0631\u0627 \u0647\u0645 \u062f\u0642\u06cc\u0642 \u0628\u0631\u0627\u06cc \u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631 \u0645\u06cc\u200c\u0646\u0648\u06cc\u0633\u06cc\u0645.\u00bb \u00b7 #\u0627\u06cc\u0645\u067e\u0644\u0646\u062a_\u0641\u0648\u0644_\u0622\u0631\u0686 \u00ab\u0628\u0631\u0627\u06cc \u0647\u0645\u06cc\u0646 \u067e\u06cc\u0634 \u0627\u0632 \u0633\u0627\u062e\u062a \u0641\u0631\u06cc\u0645\u200c\u0648\u0631\u06a9 \u0646\u0647\u0627\u06cc\u06cc\u060c \u062f\u0642\u062a \u0645\u062f\u0644 \u0631\u0627 \u0628\u0627 \u062c\u06cc\u06af \u0648\u0631\u06cc\u0641\u06cc\u06a9\u06cc\u0634\u0646 \u0686\u06a9 \u0645\u06cc\u200c\u06a9\u0646\u06cc\u0645.\u00bb \u00b7 #\u067e\u0631\u0648\u062a\u0632_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a umbrella. Composition: series + decision (#\u062e\u0637\u0627\u06cc_\u0642\u0627\u0644\u0628\u06af\u06cc\u0631\u06cc, #\u0646\u0634\u0633\u062a_\u0646\u0627\u0642\u0635) + specific \u226410 + umbrellas. Not minted: verification jig and customized coping (no library concept; #\u0631\u0627\u0633\u062a\u06cc_\u0622\u0632\u0645\u0627\u06cc\u06cc is the AI-domain \u00abfact checking\u00bb concept, not this). --sync, --check OK, cabinet --check OK. Reachability: Q2 \u00ab\u0646\u0634\u0633\u062a \u0646\u0627\u0642\u0635\u00bb (6) and Q5 \u00ab\u0627\u0631\u062a\u0628\u0627\u0637 \u0628\u0627 \u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631\u00bb (6) pages rank 6 -> uncertain; Q1 \u00ab\u062e\u0637\u0627\u06cc \u0642\u0627\u0644\u0628\u06af\u06cc\u0631\u06cc\u00bb (6) uncertain; recorded. content-index/assistant-tags reverted"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "dentcast-brain.json: clinical-113 appended last (622), keys identical to clinical-112; 7 keywords from text, none repeats a hashtag, same as page JSON-LD keywords; json valid"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pillar implantology/prosthetic-components = C.2.4; capsule matches; no new subtopic"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pathway_place: implant-prosthetic STRONG (122) -> placed after insight/insight-112 (series part 5 closes the run 109-113; tool anchor insight-109 not used to keep order). Not placed: fixed-pros (74, ASK), digital (27, ASK; part 4 already there), implant-surgical (ASK). Coverage 1.52 per item. 4.12-\u0628: 3 MCQ rows in plus/exam-questions.json byContent[insight/insight-113], draft-check 0/0, each approved in M2; validate --content 0 errors; drawn by implant-prosthetic"
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "candidate bundle-implant-parts (continues implant-prosthetic): \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1 \u2014 folder insight/)"
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Pulse first line added/oldest share-53 removed (7 lines); insight/en/insight-113.html authored (chrome from en/insight-112, body translated structure-faithfully: 13 p, 7 h3, 7 figures, 5 li; GA4 x1, canonical self .org, noindex follow, zero hreflang, en locale, no gloss duplicates, no specialist links); toggles inverse; meta-1 unchanged; ten-scope lock recorded; pending_questions empty"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
@@ -353,7 +584,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: insight/insight-113.html, insight/index.html, insight/insight113-1.webp, insight/insight113-2.webp, insight/insight113-3.webp, insight/insight113-4.webp, insight/insight113-5.webp, insight/insight113-6.webp, insight/insight113-7.webp, plus/des-scores.json"
+    "note": "Index-only refresh after staging delivery paths: dentcast-brain.json, dentcast-hashtag-reference.json, index.html, insight/insight-113.html, insight/en/insight-113.html, plus/exam-questions.json, plus/faq-corpus.json, plus/pathways.json"
   },
   "schema": "publish-handoff-v3"
 }
