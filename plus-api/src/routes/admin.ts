@@ -2309,38 +2309,38 @@ ${renderQuickPublish()}
 
   <h3 style="margin-top:26px">حضور در بازهٔ اخیر</h3>
   <div class="muted">چه کسانی در <b>N روزِ اخیر</b> (تا امروز، به وقت تهران) دست‌کم به تعدادِ مشخصی روز فعال بوده‌اند. روزِ فعال یعنی روزی که خودِ کاربر کاری کرده؛ روزی که سپر پوشانده شمرده نمی‌شود. سابقهٔ پیش از بازه هیچ اثری ندارد، پس کاربرِ قدیمی و تازه از یک خط شروع می‌کنند. اگر «حداقل روز فعال» خالی بماند، دو‌سومِ بازه حساب می‌شود (۲۰ از ۳۰، ۳۴ از ۵۰).</div>
-  <form class="bc" id="spForm" onsubmit="return false">
+  <form class="bc" id="pzForm" onsubmit="return false">
     <div class="row">
-      <div><label for="spDays">بازه (روز)</label><input id="spDays" type="text" inputmode="numeric" value="30" style="width:110px"></div>
-      <div><label for="spMin">حداقل روز فعال</label><input id="spMin" type="text" inputmode="numeric" placeholder="دو‌سوم" style="width:110px"></div>
-      <button id="spGo" type="button">نمایش</button>
+      <div><label for="pzDays">بازه (روز)</label><input id="pzDays" type="text" inputmode="numeric" value="30" style="width:110px"></div>
+      <div><label for="pzMin">حداقل روز فعال</label><input id="pzMin" type="text" inputmode="numeric" placeholder="دو‌سوم" style="width:110px"></div>
+      <button id="pzGo" type="button">نمایش</button>
     </div>
   </form>
-  <div id="spInfo" class="muted" style="margin-top:8px"></div>
-  <div id="spOut" style="margin-top:8px"></div>
-  <div id="spDraw" hidden style="margin-top:14px">
+  <div id="pzInfo" class="muted" style="margin-top:8px"></div>
+  <div id="pzOut" style="margin-top:8px"></div>
+  <div id="pzDraw" hidden style="margin-top:14px">
     <div class="muted">قرعه‌کشی بین کسانی که در جدولِ بالا تیک دارند. تیکِ هر ردیف را بردار تا از قرعه بیرون بماند (حسابِ خودت، حسابِ آزمایشی، کسی که قبلاً برده). انتخاب با مولّدِ تصادفیِ امنِ مرورگر انجام می‌شود و همه شانسِ برابر دارند؛ نتیجه جایی ذخیره نمی‌شود، پس همان لحظه یادداشتش کن.</div>
     <form class="bc" onsubmit="return false" style="margin-top:8px">
       <div class="row">
-        <div><label for="spK">تعداد برنده</label><input id="spK" type="text" inputmode="numeric" value="1" style="width:110px"></div>
-        <button id="spDrawGo" type="button">قرعه‌کشی</button>
-        <span id="spPool" class="muted"></span>
+        <div><label for="pzK">تعداد برنده</label><input id="pzK" type="text" inputmode="numeric" value="1" style="width:110px"></div>
+        <button id="pzDrawGo" type="button">قرعه‌کشی</button>
+        <span id="pzPool" class="muted"></span>
       </div>
     </form>
-    <div id="spSpin" style="margin-top:10px;min-height:2.2em;font-size:1.25rem;font-weight:700"></div>
-    <ol id="spWin" style="margin:6px 0 0;padding-inline-start:22px;line-height:2"></ol>
+    <div id="pzSpin" style="margin-top:10px;min-height:2.2em;font-size:1.25rem;font-weight:700"></div>
+    <ol id="pzWin" style="margin:6px 0 0;padding-inline-start:22px;line-height:2"></ol>
   </div>
   <script>
   (function () {
-    var out = document.getElementById('spOut');
+    var out = document.getElementById('pzOut');
     if (!out) return;
-    var go = document.getElementById('spGo');
-    var info = document.getElementById('spInfo');
-    var drawBox = document.getElementById('spDraw');
-    var drawGo = document.getElementById('spDrawGo');
-    var poolInfo = document.getElementById('spPool');
-    var spin = document.getElementById('spSpin');
-    var winList = document.getElementById('spWin');
+    var go = document.getElementById('pzGo');
+    var info = document.getElementById('pzInfo');
+    var drawBox = document.getElementById('pzDraw');
+    var drawGo = document.getElementById('pzDrawGo');
+    var poolInfo = document.getElementById('pzPool');
+    var spin = document.getElementById('pzSpin');
+    var winList = document.getElementById('pzWin');
     var busy = false, drawing = false, last = null;
     function esc(t) {
       return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) {
@@ -2365,7 +2365,7 @@ ${renderQuickPublish()}
       drawBox.hidden = !j.rows.length;
       if (!j.rows.length) { out.textContent = 'هیچ‌کس به این حد نرسیده است.'; return; }
       var rows = j.rows.map(function (r, i) {
-        return '<tr><td><input type="checkbox" class="spIn" checked aria-label="در قرعه"></td><td>' + fa(i + 1) + '</td>'
+        return '<tr><td><input type="checkbox" class="pzIn" checked aria-label="در قرعه"></td><td>' + fa(i + 1) + '</td>'
           + '<td>' + esc(r.display_name || '—') + '<div class="muted">' + esc(r.phone || '') + '</div></td>'
           + '<td><b>' + fa(r.active_days) + '</b> از ' + fa(j.days)
           + '<div class="muted">' + fa(Math.round(r.active_days * 100 / j.days)) + '٪</div></td>'
@@ -2383,12 +2383,12 @@ ${renderQuickPublish()}
     // Indices (into last.rows) of the rows still ticked.
     function pool() {
       var p = [];
-      trs().forEach(function (tr, i) { var c = tr.querySelector('.spIn'); if (c && c.checked) p.push(i); });
+      trs().forEach(function (tr, i) { var c = tr.querySelector('.pzIn'); if (c && c.checked) p.push(i); });
       return p;
     }
     function poolSize() { poolInfo.textContent = fa(pool().length) + ' نفر در قرعه'; }
     out.addEventListener('change', function (e) {
-      if (e.target && e.target.className === 'spIn' && !drawing) poolSize();
+      if (e.target && e.target.className === 'pzIn' && !drawing) poolSize();
     });
     // A uniform integer in [0, n). Rejection sampling, because a bare modulo
     // of a 32-bit value favours the low indices whenever n does not divide 2^32.
@@ -2400,7 +2400,7 @@ ${renderQuickPublish()}
     function who(r) { return (r.display_name || '—') + (r.phone ? ' · ' + r.phone : ''); }
     function draw() {
       if (drawing || busy || !last) return;
-      var p = pool(), kRaw = num('spK'), k = /^[0-9]{1,4}$/.test(kRaw) ? Number(kRaw) : 0;
+      var p = pool(), kRaw = num('pzK'), k = /^[0-9]{1,4}$/.test(kRaw) ? Number(kRaw) : 0;
       winList.innerHTML = '';
       trs().forEach(function (tr) { tr.style.background = ''; });
       if (k < 1) { spin.textContent = 'تعداد برنده باید یک عدد باشد.'; return; }
@@ -2436,7 +2436,7 @@ ${renderQuickPublish()}
     drawGo.addEventListener('click', draw);
     function load() {
       if (busy || drawing) return;
-      var d = num('spDays'), m = num('spMin');
+      var d = num('pzDays'), m = num('pzMin');
       busy = true; go.disabled = true; info.textContent = '';
       out.textContent = 'در حال خواندن...';
       fetch('/admin/streak/presence?days=' + encodeURIComponent(d) + '&min=' + encodeURIComponent(m), { credentials: 'include' })
@@ -2644,21 +2644,19 @@ ${renderQuickPublish()}
   </script>
 
   <h3 style="margin-top:26px">نشان‌های کمیاب</h3>
-  <div class="muted">هر نشان و هر سطحش، با تعدادِ کسانی که به آن رسیده‌اند — کمیاب‌ترین بالا، و آن‌هایی که هنوز هیچ‌کس نگرفته پایین. «چه کسانی؟» فهرستِ دارنده‌ها را زیرِ جدول باز می‌کند. دو نکته: عدد یعنی «تا حالا به این سطح رسیده»، نه «همین الان دارد» (نشانی که بعداً خاموش شده هم شمرده می‌شود)؛ و دارندهٔ طلا در شمارِ نقره و برنز هم هست. حسابی که از زمانِ راه‌افتادنِ اعلانِ نشان‌ها هیچ کاری نکرده در این آمار نیست.</div>
+  <div class="muted">هر نشان و هر سطحش، با تعدادِ کسانی که به آن رسیده‌اند — کمیاب‌ترین بالا، و آن‌هایی که هنوز هیچ‌کس نگرفته پایین. «چه کسانی؟» فهرستِ دارنده‌ها را درست زیرِ همان ردیف باز می‌کند و با زدنِ دوباره می‌بندد. دو نکته: عدد یعنی «تا حالا به این سطح رسیده»، نه «همین الان دارد» (نشانی که بعداً خاموش شده هم شمرده می‌شود)؛ و دارندهٔ طلا در شمارِ نقره و برنز هم هست. حسابی که از زمانِ راه‌افتادنِ اعلانِ نشان‌ها هیچ کاری نکرده در این آمار نیست.</div>
   <div class="row" style="margin-top:8px">
     <button id="brLoad" type="button">نمایش</button>
     <span id="brInfo" class="muted"></span>
   </div>
   <div id="brOut" style="margin-top:8px"></div>
-  <div id="brWho" style="margin-top:14px"></div>
   <script>
   (function () {
     var out = document.getElementById('brOut');
     if (!out) return;
     var loadBtn = document.getElementById('brLoad');
     var info = document.getElementById('brInfo');
-    var who = document.getElementById('brWho');
-    var busy = false, list = [];
+    var busy = false, list = [], openBtn = null;
     function esc(t) {
       return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) {
         return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
@@ -2679,50 +2677,73 @@ ${renderQuickPublish()}
       list = j.rows;
       var rows = j.rows.map(function (r, i) {
         var tag = r.kind === 'medal' ? 'مدال لیگ' : (VIS[r.visibility] || '');
+        // Three columns, so the whole row — button included — fits a phone
+        // without a sideways scroll: a button that starts off-screen is a
+        // button nobody finds.
         return '<tr' + (r.holders ? '' : ' style="opacity:.55"') + '>'
-          + '<td>' + esc(r.title_fa) + (tag ? '<div class="muted">' + esc(tag) + '</div>' : '') + '</td>'
-          + '<td>' + esc(r.level_fa || '—') + '</td>'
-          + '<td><b>' + fa(r.holders) + '</b> نفر</td>'
-          + '<td>' + pct(r.holders, j.accounts) + '</td>'
-          + '<td>' + (r.holders ? '<button type="button" class="brWhoBtn" data-i="' + i + '">چه کسانی؟</button>' : 'هنوز هیچ‌کس') + '</td></tr>';
+          + '<td style="white-space:normal"><b>' + esc(r.title_fa) + '</b>' + (r.level_fa ? ' · ' + esc(r.level_fa) : '')
+          + (tag ? '<div class="muted">' + esc(tag) + '</div>' : '') + '</td>'
+          + '<td><b>' + fa(r.holders) + '</b> نفر'
+          + (r.holders ? '<div class="muted">' + pct(r.holders, j.accounts) + '</div>' : '') + '</td>'
+          + '<td>' + (r.holders ? '<button type="button" class="brWhoBtn" data-i="' + i + '">چه کسانی؟</button>' : '<span class="muted">هنوز هیچ‌کس</span>') + '</td></tr>';
       }).join('');
-      out.innerHTML = '<div class="tblwrap"><table><thead><tr>'
-        + '<th>نشان</th><th>سطح</th><th>رسیده‌اند</th><th>از حساب‌ها</th><th></th></tr></thead><tbody>'
+      out.innerHTML = '<div class="tblwrap"><table style="min-width:0;width:100%"><thead><tr>'
+        + '<th>نشان</th><th>رسیده‌اند</th><th></th></tr></thead><tbody>'
         + rows + '</tbody></table></div>';
       info.textContent = 'از ' + fa(j.accounts) + ' حسابی که دیوارِ نشان‌شان ثبت شده';
     }
-    function renderWho(j) {
+    // The holders open in a row of their own directly under the row that was
+    // tapped. Under the whole table they were a screen or more below the
+    // button on a phone, and a tap that changes nothing in view reads as broken.
+    function renderWho(td, j) {
       var head = '<b>' + esc(j.title_fa) + (j.level_fa ? ' · ' + esc(j.level_fa) : '') + '</b> — ' + fa(j.total) + ' نفر'
         + (j.total > j.cap ? ' (فقط ' + fa(j.cap) + ' نفر اول نمایش داده می‌شود)' : '');
       var rows = j.rows.map(function (r, i) {
-        return '<tr><td>' + fa(i + 1) + '</td>'
-          + '<td>' + esc(r.display_name || '—') + '<div class="muted">' + esc(r.phone || '') + '</div></td>'
-          + '<td>' + esc(r.level_fa || '—') + '</td>'
-          + '<td>' + (r.seeded ? '<span class="muted">پیش از ثبتِ تاریخ</span>' : when(r.announced_at)) + '</td></tr>';
+        return '<div style="padding:7px 0;border-top:1px solid rgba(98,119,154,.25)">'
+          + fa(i + 1) + '. <b>' + esc(r.display_name || '—') + '</b>'
+          + (r.phone ? ' · <span dir="ltr">' + esc(r.phone) + '</span>' : '')
+          + '<div class="muted">' + (r.level_fa ? 'سطحِ خودش: ' + esc(r.level_fa) + ' · ' : '')
+          + (r.seeded ? 'پیش از ثبتِ تاریخ' : 'اعلام: ' + when(r.announced_at)) + '</div></div>';
       }).join('');
-      who.innerHTML = '<div>' + head + '</div><div class="tblwrap" style="margin-top:6px"><table><thead><tr>'
-        + '<th>#</th><th>کاربر</th><th>بالاترین سطحِ خودش</th><th>تاریخِ اعلام</th></tr></thead><tbody>'
-        + rows + '</tbody></table></div>';
+      td.innerHTML = '<div style="margin-bottom:6px">' + head + '</div>' + rows;
     }
-    function get(url, ok, target) {
+    function closeWho() {
+      var old = out.querySelector('.brWhoRow');
+      if (old) old.parentNode.removeChild(old);
+      openBtn = null;
+    }
+    function get(url, ok, fail) {
       if (busy) return;
-      busy = true; loadBtn.disabled = true; target.textContent = 'در حال خواندن...';
+      busy = true; loadBtn.disabled = true;
       fetch(url, { credentials: 'include' })
         .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
         .then(function (res) {
           busy = false; loadBtn.disabled = false;
-          if (!res.ok) { target.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+          if (!res.ok) { fail('نشد: ' + (res.j.message || res.j.error || 'خطا')); return; }
           ok(res.j);
         })
-        .catch(function () { busy = false; loadBtn.disabled = false; target.textContent = 'خوانده نشد.'; });
+        .catch(function () { busy = false; loadBtn.disabled = false; fail('خوانده نشد.'); });
     }
-    loadBtn.addEventListener('click', function () { who.innerHTML = ''; get('/admin/badges/rarity', render, out); });
+    loadBtn.addEventListener('click', function () {
+      if (busy) return;
+      openBtn = null; out.textContent = 'در حال خواندن...';
+      get('/admin/badges/rarity', render, function (m) { out.textContent = m; });
+    });
     out.addEventListener('click', function (e) {
       var b = e.target;
-      if (!b || b.className !== 'brWhoBtn') return;
-      var r = list[Number(b.getAttribute('data-i'))];
+      if (!b || b.className !== 'brWhoBtn' || busy) return;
+      var again = b === openBtn;
+      closeWho();
+      if (again) return;
+      var r = list[Number(b.getAttribute('data-i'))], tr = b.parentNode.parentNode;
       if (!r) return;
-      get('/admin/badges/holders?badge=' + encodeURIComponent(r.key) + '&level=' + encodeURIComponent(r.level), renderWho, who);
+      var row = document.createElement('tr'), td = document.createElement('td');
+      row.className = 'brWhoRow'; td.colSpan = 3; td.style.whiteSpace = 'normal';
+      td.textContent = 'در حال خواندن...';
+      row.appendChild(td); tr.parentNode.insertBefore(row, tr.nextSibling);
+      openBtn = b;
+      get('/admin/badges/holders?badge=' + encodeURIComponent(r.key) + '&level=' + encodeURIComponent(r.level),
+        function (j) { renderWho(td, j); }, function (m) { td.textContent = m; });
     });
   })();
   </script>

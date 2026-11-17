@@ -13,6 +13,7 @@ import { config } from '../src/config.js';
 let app: FastifyInstance;
 let markup = '';
 let script = '';
+let body = '';
 
 const basic = 'Basic ' + Buffer.from(`${config.admin.user}:${config.admin.password}`).toString('base64');
 
@@ -21,7 +22,8 @@ beforeAll(async () => {
   app = await makeApp();
   const page = await app.inject({ method: 'GET', url: '/admin', headers: { authorization: basic } });
   expect(page.statusCode).toBe(200);
-  const start = page.body.indexOf('<form class="bc" id="spForm"');
+  body = page.body;
+  const start = page.body.indexOf('<form class="bc" id="pzForm"');
   expect(start).toBeGreaterThan(-1);
   const open = page.body.indexOf('<script>', start);
   const close = page.body.indexOf('</script>', open);
@@ -51,8 +53,8 @@ async function mount(): Promise<Window & typeof globalThis> {
   // The spin is cosmetic; run its timers at once so the test waits on nothing.
   w.setTimeout = (fn: () => void) => { setImmediate(fn); return 0; };
   dom.window.eval(script);
-  (win.document.getElementById('spGo') as HTMLButtonElement).click();
-  await until(() => win.document.querySelectorAll('#spOut tbody tr').length === PEOPLE.length);
+  (win.document.getElementById('pzGo') as HTMLButtonElement).click();
+  await until(() => win.document.querySelectorAll('#pzOut tbody tr').length === PEOPLE.length);
   return win;
 }
 
@@ -62,18 +64,18 @@ async function until(cond: () => boolean): Promise<void> {
 }
 
 async function draw(win: Window, k: string): Promise<string[]> {
-  (win.document.getElementById('spK') as HTMLInputElement).value = k;
-  const btn = win.document.getElementById('spDrawGo') as HTMLButtonElement;
+  (win.document.getElementById('pzK') as HTMLInputElement).value = k;
+  const btn = win.document.getElementById('pzDrawGo') as HTMLButtonElement;
   btn.click();
   await until(() => !btn.disabled);
-  return Array.from(win.document.querySelectorAll('#spWin li')).map((li) => li.textContent ?? '');
+  return Array.from(win.document.querySelectorAll('#pzWin li')).map((li) => li.textContent ?? '');
 }
 
 describe('the presence draw the panel ships', () => {
   it('shows the draw only once there is a list, and counts the pool', async () => {
     const win = await mount();
-    expect((win.document.getElementById('spDraw') as HTMLElement).hidden).toBe(false);
-    expect(win.document.getElementById('spPool')!.textContent).toContain('۶');
+    expect((win.document.getElementById('pzDraw') as HTMLElement).hidden).toBe(false);
+    expect(win.document.getElementById('pzPool')!.textContent).toContain('۶');
   });
 
   it('picks exactly the number asked for, each person once', async () => {
@@ -81,16 +83,16 @@ describe('the presence draw the panel ships', () => {
     const won = await draw(win, '۳');
     expect(won).toHaveLength(3);
     expect(new Set(won).size).toBe(3);
-    const marked = Array.from(win.document.querySelectorAll('#spOut tbody tr'))
+    const marked = Array.from(win.document.querySelectorAll('#pzOut tbody tr'))
       .filter((tr) => (tr as HTMLElement).style.background !== '');
     expect(marked).toHaveLength(3);
   });
 
   it('never picks an unticked row', async () => {
     const win = await mount();
-    const boxes = Array.from(win.document.querySelectorAll('#spOut .spIn')) as HTMLInputElement[];
+    const boxes = Array.from(win.document.querySelectorAll('#pzOut .pzIn')) as HTMLInputElement[];
     boxes.slice(0, 4).forEach((b) => { b.checked = false; b.dispatchEvent(new win.Event('change', { bubbles: true })); });
-    expect(win.document.getElementById('spPool')!.textContent).toContain('۲');
+    expect(win.document.getElementById('pzPool')!.textContent).toContain('۲');
     for (let i = 0; i < 5; i += 1) {
       const won = await draw(win, '2');
       expect(won).toHaveLength(2);
@@ -101,7 +103,7 @@ describe('the presence draw the panel ships', () => {
   it('refuses more winners than people, and a count that is not a number', async () => {
     const win = await mount();
     expect(await draw(win, '7')).toHaveLength(0);
-    expect(win.document.getElementById('spSpin')!.textContent).toContain('۶');
+    expect(win.document.getElementById('pzSpin')!.textContent).toContain('۶');
     expect(await draw(win, 'x')).toHaveLength(0);
     expect(await draw(win, '6')).toHaveLength(6);
   });
@@ -111,5 +113,25 @@ describe('the presence draw the panel ships', () => {
     const seen = new Set<string>();
     for (let i = 0; i < 60; i += 1) (await draw(win, '1')).forEach((t) => seen.add(t));
     expect(seen.size).toBe(PEOPLE.length);
+  });
+});
+
+// The panel is ONE document: every block's ids share a namespace, and
+// getElementById returns the first match. The presence block shipped with
+// `spOut`/`spWin`, which the ad report already owned, so its table and its
+// winners were written into that other (hidden) section and the founder saw a
+// count with nothing under it. No jsdom mount of one block alone can see that.
+describe('ids of the presence and rarity blocks are theirs alone', () => {
+  it('appear exactly once on the whole page', () => {
+    for (const heading of ['حضور در بازهٔ اخیر</h3>', 'نشان‌های کمیاب</h3>']) {
+      const from = body.indexOf(heading);
+      expect(from).toBeGreaterThan(-1);
+      const block = body.slice(from, body.indexOf('<h3', from + heading.length));
+      const ids = Array.from(block.matchAll(/ id="([^"]+)"/g)).map((m) => m[1]);
+      expect(ids.length).toBeGreaterThanOrEqual(3);
+      for (const id of ids) {
+        expect(body.split(` id="${id}"`).length - 1, id).toBe(1);
+      }
+    }
   });
 });
