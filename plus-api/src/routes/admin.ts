@@ -2317,13 +2317,30 @@ ${renderQuickPublish()}
   </form>
   <div id="spInfo" class="muted" style="margin-top:8px"></div>
   <div id="spOut" style="margin-top:8px"></div>
+  <div id="spDraw" hidden style="margin-top:14px">
+    <div class="muted">قرعه‌کشی بین کسانی که در جدولِ بالا تیک دارند. تیکِ هر ردیف را بردار تا از قرعه بیرون بماند (حسابِ خودت، حسابِ آزمایشی، کسی که قبلاً برده). انتخاب با مولّدِ تصادفیِ امنِ مرورگر انجام می‌شود و همه شانسِ برابر دارند؛ نتیجه جایی ذخیره نمی‌شود، پس همان لحظه یادداشتش کن.</div>
+    <form class="bc" onsubmit="return false" style="margin-top:8px">
+      <div class="row">
+        <div><label for="spK">تعداد برنده</label><input id="spK" type="text" inputmode="numeric" value="1" style="width:110px"></div>
+        <button id="spDrawGo" type="button">قرعه‌کشی</button>
+        <span id="spPool" class="muted"></span>
+      </div>
+    </form>
+    <div id="spSpin" style="margin-top:10px;min-height:2.2em;font-size:1.25rem;font-weight:700"></div>
+    <ol id="spWin" style="margin:6px 0 0;padding-inline-start:22px;line-height:2"></ol>
+  </div>
   <script>
   (function () {
     var out = document.getElementById('spOut');
     if (!out) return;
     var go = document.getElementById('spGo');
     var info = document.getElementById('spInfo');
-    var busy = false;
+    var drawBox = document.getElementById('spDraw');
+    var drawGo = document.getElementById('spDrawGo');
+    var poolInfo = document.getElementById('spPool');
+    var spin = document.getElementById('spSpin');
+    var winList = document.getElementById('spWin');
+    var busy = false, drawing = false, last = null;
     function esc(t) {
       return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) {
         return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
@@ -2343,9 +2360,11 @@ ${renderQuickPublish()}
       } catch (e) { return esc(d); }
     }
     function render(j) {
+      last = j; spin.textContent = ''; winList.innerHTML = '';
+      drawBox.hidden = !j.rows.length;
       if (!j.rows.length) { out.textContent = 'هیچ‌کس به این حد نرسیده است.'; return; }
       var rows = j.rows.map(function (r, i) {
-        return '<tr><td>' + fa(i + 1) + '</td>'
+        return '<tr><td><input type="checkbox" class="spIn" checked aria-label="در قرعه"></td><td>' + fa(i + 1) + '</td>'
           + '<td>' + esc(r.display_name || '—') + '<div class="muted">' + esc(r.phone || '') + '</div></td>'
           + '<td><b>' + fa(r.active_days) + '</b> از ' + fa(j.days)
           + '<div class="muted">' + fa(Math.round(r.active_days * 100 / j.days)) + '٪</div></td>'
@@ -2354,12 +2373,68 @@ ${renderQuickPublish()}
           + '<td>' + day(r.last_day) + '</td></tr>';
       }).join('');
       out.innerHTML = '<div class="tblwrap"><table><thead><tr>'
-        + '<th>#</th><th>کاربر</th><th>روزِ فعال در بازه</th><th>بلندترین توالی در بازه</th>'
+        + '<th>در قرعه</th><th>#</th><th>کاربر</th><th>روزِ فعال در بازه</th><th>بلندترین توالی در بازه</th>'
         + '<th>استریکِ الان</th><th>آخرین روزِ فعال</th></tr></thead><tbody>'
         + rows + '</tbody></table></div>';
+      poolSize();
     }
+    function trs() { return Array.prototype.slice.call(out.querySelectorAll('tbody tr')); }
+    // Indices (into last.rows) of the rows still ticked.
+    function pool() {
+      var p = [];
+      trs().forEach(function (tr, i) { var c = tr.querySelector('.spIn'); if (c && c.checked) p.push(i); });
+      return p;
+    }
+    function poolSize() { poolInfo.textContent = fa(pool().length) + ' نفر در قرعه'; }
+    out.addEventListener('change', function (e) {
+      if (e.target && e.target.className === 'spIn' && !drawing) poolSize();
+    });
+    // A uniform integer in [0, n). Rejection sampling, because a bare modulo
+    // of a 32-bit value favours the low indices whenever n does not divide 2^32.
+    function rnd(n) {
+      var a = new Uint32Array(1), lim = Math.floor(4294967296 / n) * n;
+      do { window.crypto.getRandomValues(a); } while (a[0] >= lim);
+      return a[0] % n;
+    }
+    function who(r) { return (r.display_name || '—') + (r.phone ? ' · ' + r.phone : ''); }
+    function draw() {
+      if (drawing || busy || !last) return;
+      var p = pool(), kRaw = num('spK'), k = /^[0-9]{1,4}$/.test(kRaw) ? Number(kRaw) : 0;
+      winList.innerHTML = '';
+      trs().forEach(function (tr) { tr.style.background = ''; });
+      if (k < 1) { spin.textContent = 'تعداد برنده باید یک عدد باشد.'; return; }
+      if (k > p.length) { spin.textContent = 'فقط ' + fa(p.length) + ' نفر در قرعه‌اند؛ ' + fa(k) + ' برنده نمی‌شود.'; return; }
+      // The winners are settled HERE, by one Fisher-Yates pass, before anything
+      // moves on screen. The spin below only reveals them; it decides nothing.
+      var i, j, t;
+      for (i = p.length - 1; i > 0; i--) { j = rnd(i + 1); t = p[i]; p[i] = p[j]; p[j] = t; }
+      var winners = p.slice(0, k), rowsEl = trs();
+      drawing = true; drawGo.disabled = true; go.disabled = true;
+      function reveal(n) {
+        var ticks = n === 0 ? 20 : 12, c = 0;
+        function tick() {
+          if (c >= ticks) {
+            var w = last.rows[winners[n]], li = document.createElement('li');
+            li.textContent = who(w) + ' — ' + fa(w.active_days) + ' از ' + fa(last.days) + ' روز';
+            winList.appendChild(li);
+            rowsEl[winners[n]].style.background = 'rgba(11,95,255,.12)';
+            if (n + 1 < k) { reveal(n + 1); return; }
+            spin.textContent = k === 1 ? 'برنده مشخص شد.' : fa(k) + ' برنده مشخص شدند.';
+            drawing = false; drawGo.disabled = false; go.disabled = false;
+            return;
+          }
+          spin.textContent = who(last.rows[p[rnd(p.length)]]);
+          c += 1;
+          // Slows as it goes, so the last names can be read before it lands.
+          setTimeout(tick, 50 + Math.round(0.6 * c * c));
+        }
+        tick();
+      }
+      reveal(0);
+    }
+    drawGo.addEventListener('click', draw);
     function load() {
-      if (busy) return;
+      if (busy || drawing) return;
       var d = num('spDays'), m = num('spMin');
       busy = true; go.disabled = true; info.textContent = '';
       out.textContent = 'در حال خواندن...';
