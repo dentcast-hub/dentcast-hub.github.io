@@ -1504,7 +1504,7 @@
    "co_tags": [
     "#Laminate_Veneer"
    ],
-   "count": 31,
+   "count": 32,
    "content_ids": [
     "episodes/episode-9",
     "episodes/episode-19",
@@ -1536,7 +1536,8 @@
     "insight/insight-92",
     "sharehub/share-40",
     "chairside/chairside-45",
-    "insight/insight-107"
+    "insight/insight-107",
+    "dentcast-plus/video-15"
    ]
   },
   {
@@ -2952,6 +2953,40 @@
    ]
   },
   {
+   "key": "ویدیو",
+   "tag": "#ویدیو",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام بخش ویدیوها (پیش‌تر DentCast+ / دنت‌کست پلاس) — آموزش‌های کوتاه ویدیویی دنت‌کست.",
+   "use_when": "روی هر مدخل ویدیوها (پوشهٔ dentcast-plus/)، و هیچ‌جای دیگر.",
+   "aliases": [
+    "دنتکست پلاس",
+    "dentcast plus"
+   ],
+   "variants": [
+    "#دنتکست_پلاس"
+   ],
+   "co_tags": [],
+   "count": 15,
+   "content_ids": [
+    "dentcast-plus/video-1",
+    "dentcast-plus/video-2",
+    "dentcast-plus/video-3",
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5",
+    "dentcast-plus/video-6",
+    "dentcast-plus/video-7",
+    "dentcast-plus/video-8",
+    "dentcast-plus/video-9",
+    "dentcast-plus/video-10",
+    "dentcast-plus/video-11",
+    "dentcast-plus/video-12",
+    "dentcast-plus/video-13",
+    "dentcast-plus/video-14",
+    "dentcast-plus/video-15"
+   ]
+  },
+  {
    "key": "کامپوزیت",
    "tag": "#کامپوزیت",
    "domain": "clinical",
@@ -3316,39 +3351,6 @@
     "insight/insight-109",
     "insight/insight-110",
     "insight/insight-111"
-   ]
-  },
-  {
-   "key": "ویدیو",
-   "tag": "#ویدیو",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام بخش ویدیوها (پیش‌تر DentCast+ / دنت‌کست پلاس) — آموزش‌های کوتاه ویدیویی دنت‌کست.",
-   "use_when": "روی هر مدخل ویدیوها (پوشهٔ dentcast-plus/)، و هیچ‌جای دیگر.",
-   "aliases": [
-    "دنتکست پلاس",
-    "dentcast plus"
-   ],
-   "variants": [
-    "#دنتکست_پلاس"
-   ],
-   "co_tags": [],
-   "count": 14,
-   "content_ids": [
-    "dentcast-plus/video-1",
-    "dentcast-plus/video-2",
-    "dentcast-plus/video-3",
-    "dentcast-plus/video-4",
-    "dentcast-plus/video-5",
-    "dentcast-plus/video-6",
-    "dentcast-plus/video-7",
-    "dentcast-plus/video-8",
-    "dentcast-plus/video-9",
-    "dentcast-plus/video-10",
-    "dentcast-plus/video-11",
-    "dentcast-plus/video-12",
-    "dentcast-plus/video-13",
-    "dentcast-plus/video-14"
    ]
   },
   {
@@ -4406,6 +4408,34 @@
    ]
   },
   {
+   "key": "ایزولاسیون",
+   "tag": "#ایزولاسیون",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "خشک و ایزوله نگه داشتنِ میدانِ کار برای باندِ قابل‌اعتماد.",
+   "use_when": "مقاله ایزولاسیون را شرط یا مانع درمان بداند.",
+   "aliases": [
+    "isolation",
+    "ایزوله کردن",
+    "ایزولیشن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-7",
+    "notecast/episode-7",
+    "insight/insight-36",
+    "insight/insight-54",
+    "chairside/chairside-32",
+    "insight/insight-74",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "metanotes/meta-21",
+    "dentcast-plus/video-15"
+   ]
+  },
+  {
    "key": "بریج",
    "tag": "#بریج",
    "domain": "clinical",
@@ -4635,33 +4665,6 @@
     "sharehub/share-24",
     "chairside/chairside-42",
     "chairside/chairside-43"
-   ]
-  },
-  {
-   "key": "ایزولاسیون",
-   "tag": "#ایزولاسیون",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "خشک و ایزوله نگه داشتنِ میدانِ کار برای باندِ قابل‌اعتماد.",
-   "use_when": "مقاله ایزولاسیون را شرط یا مانع درمان بداند.",
-   "aliases": [
-    "isolation",
-    "ایزوله کردن",
-    "ایزولیشن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-7",
-    "notecast/episode-7",
-    "insight/insight-36",
-    "insight/insight-54",
-    "chairside/chairside-32",
-    "insight/insight-74",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "metanotes/meta-21"
    ]
   },
   {
@@ -7416,6 +7419,31 @@
    ]
   },
   {
+   "key": "حفظ_مینا",
+   "tag": "#حفظ_مینا",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "باقی گذاشتنِ حداکثریِ مینا برای باندِ پایدار.",
+   "use_when": "مقاله حفظ مینا را اصلِ حاکم بداند.",
+   "aliases": [
+    "enamel preservation",
+    "حفظ انامل",
+    "نگه داشتن مینا",
+    "enamel conservation",
+    "preserving enamel"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "sharehub/share-8",
+    "notecast/episode-38",
+    "chairside/chairside-35",
+    "insight/insight-79",
+    "dentcast-plus/video-15"
+   ]
+  },
+  {
    "key": "درمان_بین_رشته_ای",
    "tag": "#درمان_بین_رشته_ای",
    "domain": null,
@@ -8612,30 +8640,6 @@
    ]
   },
   {
-   "key": "حفظ_مینا",
-   "tag": "#حفظ_مینا",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "باقی گذاشتنِ حداکثریِ مینا برای باندِ پایدار.",
-   "use_when": "مقاله حفظ مینا را اصلِ حاکم بداند.",
-   "aliases": [
-    "enamel preservation",
-    "حفظ انامل",
-    "نگه داشتن مینا",
-    "enamel conservation",
-    "preserving enamel"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "sharehub/share-8",
-    "notecast/episode-38",
-    "chairside/chairside-35",
-    "insight/insight-79"
-   ]
-  },
-  {
    "key": "خط_لب",
    "tag": "#خط_لب",
    "domain": "clinical",
@@ -8713,6 +8717,30 @@
     "chairside/chairside-22",
     "insight/insight-84",
     "metanotes/meta-23"
+   ]
+  },
+  {
+   "key": "رابردم",
+   "tag": "#رابردم",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "ایزولاسیون با رابردم.",
+   "use_when": "مقاله رابردم را ابزارِ حلِ مسئله بداند.",
+   "aliases": [
+    "rubber dam",
+    "رابر دم",
+    "رابردام",
+    "رابر دام",
+    "dental dam"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "sharehub/share-4",
+    "sharehub/share-22",
+    "metanotes/meta-21",
+    "dentcast-plus/video-15"
    ]
   },
   {
@@ -10232,6 +10260,27 @@
    ]
   },
   {
+   "key": "بقای_رستوریشن",
+   "tag": "#بقای_رستوریشن",
+   "domain": null,
+   "words": 2,
+   "definition": "نرخِ ماندگاریِ ترمیم در طول زمان.",
+   "use_when": "مقاله بقا را کمّی گزارش کند.",
+   "aliases": [
+    "طول عمر ترمیم",
+    "restoration survival",
+    "ماندگاری رستوریشن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "notecast/episode-15",
+    "sharehub/share-22",
+    "dentcast-plus/video-15"
+   ]
+  },
+  {
    "key": "بلک_تراینگل",
    "tag": "#بلک_تراینگل",
    "domain": "clinical",
@@ -10879,29 +10928,6 @@
     "insight/insight-10",
     "insight/insight-66",
     "chairside/chairside-44"
-   ]
-  },
-  {
-   "key": "رابردم",
-   "tag": "#رابردم",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "ایزولاسیون با رابردم.",
-   "use_when": "مقاله رابردم را ابزارِ حلِ مسئله بداند.",
-   "aliases": [
-    "rubber dam",
-    "رابر دم",
-    "رابردام",
-    "رابر دام",
-    "dental dam"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "sharehub/share-4",
-    "sharehub/share-22",
-    "metanotes/meta-21"
    ]
   },
   {
@@ -12861,6 +12887,33 @@
    ]
   },
   {
+   "key": "باند_به_دنتین",
+   "tag": "#باند_به_دنتین",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "باندینگ ادهزیوی روی سطح دنتین به‌جای انامل. به دلیل ماهیت مرطوب دنتین و لایه‌ی هیدروژلی غنی از پروتئوگلیکان، نفوذ رزین در آن دشوارتر و ناقص‌تر از باند به انامل است و اتصال حاصل معمولاً کمتر قابل‌اعتماد و بادوام است، هرچند با پروتکل ادهزیو و آماده‌سازی سطح مناسب قابل بهبود است.",
+   "use_when": "مقاله‌ای که کیفیت/بقای اتصال ادهزیو روی دنتین (در برابر انامل یا کامپوزیت) را بررسی می‌کند، یا چالش‌های خاص باند به دنتین (نفوذ رزین، اکسپوژر دنتین، IDS) را مطرح می‌کند.",
+   "aliases": [
+    "dentin bonding",
+    "adhesion to dentin",
+    "باند دنتین",
+    "چسبندگی به دنتین",
+    "اتصال به دنتین",
+    "bonding to dentin",
+    "dentin adhesion",
+    "dentine bonding",
+    "دنتین باندینگ",
+    "باندینگ عاج"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/dentai-30",
+    "dentcast-plus/video-15"
+   ]
+  },
+  {
    "key": "باند_به_فلز",
    "tag": "#باند_به_فلز",
    "domain": "clinical",
@@ -12959,26 +13012,6 @@
    "content_ids": [
     "episodes/episode-109-1",
     "insight/insight-22"
-   ]
-  },
-  {
-   "key": "بقای_رستوریشن",
-   "tag": "#بقای_رستوریشن",
-   "domain": null,
-   "words": 2,
-   "definition": "نرخِ ماندگاریِ ترمیم در طول زمان.",
-   "use_when": "مقاله بقا را کمّی گزارش کند.",
-   "aliases": [
-    "طول عمر ترمیم",
-    "restoration survival",
-    "ماندگاری رستوریشن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "notecast/episode-15",
-    "sharehub/share-22"
    ]
   },
   {
@@ -17722,32 +17755,6 @@
    "count": 1,
    "content_ids": [
     "insight/insight-20"
-   ]
-  },
-  {
-   "key": "باند_به_دنتین",
-   "tag": "#باند_به_دنتین",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "باندینگ ادهزیوی روی سطح دنتین به‌جای انامل. به دلیل ماهیت مرطوب دنتین و لایه‌ی هیدروژلی غنی از پروتئوگلیکان، نفوذ رزین در آن دشوارتر و ناقص‌تر از باند به انامل است و اتصال حاصل معمولاً کمتر قابل‌اعتماد و بادوام است، هرچند با پروتکل ادهزیو و آماده‌سازی سطح مناسب قابل بهبود است.",
-   "use_when": "مقاله‌ای که کیفیت/بقای اتصال ادهزیو روی دنتین (در برابر انامل یا کامپوزیت) را بررسی می‌کند، یا چالش‌های خاص باند به دنتین (نفوذ رزین، اکسپوژر دنتین، IDS) را مطرح می‌کند.",
-   "aliases": [
-    "dentin bonding",
-    "adhesion to dentin",
-    "باند دنتین",
-    "چسبندگی به دنتین",
-    "اتصال به دنتین",
-    "bonding to dentin",
-    "dentin adhesion",
-    "dentine bonding",
-    "دنتین باندینگ",
-    "باندینگ عاج"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "dentai/dentai-30"
    ]
   },
   {
