@@ -277,6 +277,9 @@ def precheck(args):
         refuse("MANIFEST_INCOMPLETE", "the item lacks: " + ", ".join(miss) +
                " — supply each (origin required) with --supplement; nothing is inferred", missing=miss)
     m = qm.plain(d)
+    msg = qm.pillar_problem(m.get("pillar"), ROOT / "tools")
+    if msg:
+        refuse("PILLAR_SUBTOPIC", msg + " — the item goes back to «در حال آماده‌سازی»; nothing is written")
     cat = m["category"]
     if cat not in CATEGORIES:
         refuse("CATEGORY_UNSUPPORTED", f"category «{cat}» has no verified queue template yet; publish it on the "

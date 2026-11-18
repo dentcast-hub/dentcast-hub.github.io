@@ -405,6 +405,18 @@ def check_des_package(item, problems, warnings=None):
         problems.append(f"P4 {PLAN}: {bad} are not source indexes of des.json")
 
 
+def check_pillar(item, problems):
+    """P6: the frozen pillar/subtopic must pass Phase F row «2.4 pillar» against
+    the live PILLARS of this checkout (queue_manifest.pillar_problem)."""
+    try:
+        pillar = (qm.draft(item).get("pillar") or {}).get("value")
+    except QueueRefusal:
+        return
+    msg = qm.pillar_problem(pillar)
+    if msg:
+        problems.append("P6 07-ورودی‌ها.md: " + msg)
+
+
 def checks(item):
     """{problems, warnings}: mechanical cross-file errors a human review would otherwise have to catch."""
     problems, warnings, notes = [], [], []
@@ -413,6 +425,7 @@ def checks(item):
     check_keywords(item, warnings, notes)
     check_cards(item, warnings, notes)
     check_leftovers(item, warnings)
+    check_pillar(item, problems)
     return {"problems": problems, "warnings": warnings + notes}
 
 
