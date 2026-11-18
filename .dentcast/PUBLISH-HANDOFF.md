@@ -22,7 +22,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         {
           "decision": "\u0631\u0627\u0628\u0631\u062f\u0645 \u0639\u0645\u0631 \u0644\u0645\u06cc\u0646\u06cc\u062a \u0631\u0627 \u0628\u06cc\u0634\u062a\u0631 \u0645\u06cc\u200c\u06a9\u0646\u062f\u061f",
           "evidence": [
-            "founder data: first line of the founder's caption (chat 2026-11-18), per video-14 precedent; copied codepoint for codepoint"
+            "founder data: first line of the founder's caption (chat 2026-11-18); restored from dependency_invalidation_v1 audit, unchanged"
           ],
           "scope": "title",
           "status": "confirmed"
@@ -30,7 +30,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         {
           "decision": "\u0631\u0627\u0628\u0631\u062f\u0645 \u0639\u0645\u0631 \u0644\u0645\u06cc\u0646\u06cc\u062a \u0631\u0627 \u0628\u06cc\u0634\u062a\u0631 \u0645\u06cc\u200c\u06a9\u0646\u062f\u061f\n\n\u0645\u0631\u0648\u0631 \u06a9\u0627\u06a9\u0631\u06cc\u0646 \u06f2\u06f0\u06f2\u06f1 \u0628\u0631\u0627\u06cc \u0644\u0645\u06cc\u0646\u06cc\u062a \u062d\u062a\u06cc \u06cc\u06a9 \u06a9\u0627\u0631\u0622\u0632\u0645\u0627\u06cc\u06cc \u0648\u0627\u062c\u062f \u0634\u0631\u0627\u06cc\u0637 \u067e\u06cc\u062f\u0627 \u0646\u06a9\u0631\u062f. \u0648\u0644\u06cc \u062f\u0631 \u0645\u0637\u0627\u0644\u0639\u0627\u062a \u0628\u0644\u0646\u062f\u0645\u062f\u062a\u060c \u0634\u06a9\u0633\u062a\u200c\u0647\u0627 \u0631\u0648\u06cc \u062f\u0646\u062a\u06cc\u0646 \u0628\u0648\u062f: \u0645\u0627\u0631\u0698\u06cc\u0646 \u0631\u0648\u06cc \u062f\u0646\u062a\u06cc\u0646 \u0631\u06cc\u0633\u06a9 \u0634\u06a9\u0633\u062a \u0631\u0627 \u062d\u062f\u0648\u062f \u06f1\u06f0 \u0628\u0631\u0627\u0628\u0631 \u06a9\u0631\u062f \u0648 \u062a\u0631\u0627\u0634 \u06a9\u0627\u0645\u0644\u0627\u064b \u062f\u0631 \u0627\u0646\u0627\u0645\u0644 \u0628\u0647 \u0628\u0642\u0627\u06cc \u06f9\u06f9\u066a \u0631\u0633\u06cc\u062f.\n\n\u0633\u0631\u0646\u0648\u0634\u062a \u0644\u0645\u06cc\u0646\u06cc\u062a \u0631\u0627 \u0633\u0637\u062d \u0632\u06cc\u0631 \u0628\u0627\u0646\u062f \u062a\u0639\u06cc\u06cc\u0646 \u0645\u06cc\u200c\u06a9\u0646\u062f\u060c \u0646\u0647 \u0631\u0648\u0634 \u0627\u06cc\u0632\u0648\u0644\u0627\u0633\u06cc\u0648\u0646.",
           "evidence": [
-            "founder data: caption text supplied in chat 2026-11-18 (digest e4b10fb2\u2026)"
+            "founder data: caption supplied in chat 2026-11-18 (digest e4b10fb2\u2026); restored from audit, unchanged"
           ],
           "scope": "caption",
           "status": "confirmed"
@@ -118,10 +118,10 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             },
             {
               "evidence": [
-                "Q5: no existing Pulse line announces dentcast_plus -> documented skip"
+                "index.html Pulse: new top line linking /dentcast-plus/video-15.html; bottom line (insight-108) removed; 7 lines"
               ],
               "scope": "pulse",
-              "status": "not_applicable"
+              "status": "resolved"
             },
             {
               "evidence": [
@@ -138,6 +138,93 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
               "status": "resolved"
             }
           ]
+        },
+        {
+          "from_step": "C.6",
+          "kind": "dependency_invalidation_v1",
+          "reason": "runner run 44245805149 Phase F FAIL \"6 pulse\" x3: verify_publish requires a Pulse line for this page; my Q5 documented skip was wrong. Redo C.6 with a Pulse line.",
+          "superseded": {
+            "approvals": [
+              {
+                "decision": "\u0631\u0627\u0628\u0631\u062f\u0645 \u0639\u0645\u0631 \u0644\u0645\u06cc\u0646\u06cc\u062a \u0631\u0627 \u0628\u06cc\u0634\u062a\u0631 \u0645\u06cc\u200c\u06a9\u0646\u062f\u061f",
+                "evidence": [
+                  "founder data: first line of the founder's caption (chat 2026-11-18), per video-14 precedent; copied codepoint for codepoint"
+                ],
+                "scope": "title",
+                "status": "confirmed"
+              },
+              {
+                "decision": "\u0631\u0627\u0628\u0631\u062f\u0645 \u0639\u0645\u0631 \u0644\u0645\u06cc\u0646\u06cc\u062a \u0631\u0627 \u0628\u06cc\u0634\u062a\u0631 \u0645\u06cc\u200c\u06a9\u0646\u062f\u061f\n\n\u0645\u0631\u0648\u0631 \u06a9\u0627\u06a9\u0631\u06cc\u0646 \u06f2\u06f0\u06f2\u06f1 \u0628\u0631\u0627\u06cc \u0644\u0645\u06cc\u0646\u06cc\u062a \u062d\u062a\u06cc \u06cc\u06a9 \u06a9\u0627\u0631\u0622\u0632\u0645\u0627\u06cc\u06cc \u0648\u0627\u062c\u062f \u0634\u0631\u0627\u06cc\u0637 \u067e\u06cc\u062f\u0627 \u0646\u06a9\u0631\u062f. \u0648\u0644\u06cc \u062f\u0631 \u0645\u0637\u0627\u0644\u0639\u0627\u062a \u0628\u0644\u0646\u062f\u0645\u062f\u062a\u060c \u0634\u06a9\u0633\u062a\u200c\u0647\u0627 \u0631\u0648\u06cc \u062f\u0646\u062a\u06cc\u0646 \u0628\u0648\u062f: \u0645\u0627\u0631\u0698\u06cc\u0646 \u0631\u0648\u06cc \u062f\u0646\u062a\u06cc\u0646 \u0631\u06cc\u0633\u06a9 \u0634\u06a9\u0633\u062a \u0631\u0627 \u062d\u062f\u0648\u062f \u06f1\u06f0 \u0628\u0631\u0627\u0628\u0631 \u06a9\u0631\u062f \u0648 \u062a\u0631\u0627\u0634 \u06a9\u0627\u0645\u0644\u0627\u064b \u062f\u0631 \u0627\u0646\u0627\u0645\u0644 \u0628\u0647 \u0628\u0642\u0627\u06cc \u06f9\u06f9\u066a \u0631\u0633\u06cc\u062f.\n\n\u0633\u0631\u0646\u0648\u0634\u062a \u0644\u0645\u06cc\u0646\u06cc\u062a \u0631\u0627 \u0633\u0637\u062d \u0632\u06cc\u0631 \u0628\u0627\u0646\u062f \u062a\u0639\u06cc\u06cc\u0646 \u0645\u06cc\u200c\u06a9\u0646\u062f\u060c \u0646\u0647 \u0631\u0648\u0634 \u0627\u06cc\u0632\u0648\u0644\u0627\u0633\u06cc\u0648\u0646.",
+                "evidence": [
+                  "founder data: caption text supplied in chat 2026-11-18 (digest e4b10fb2\u2026)"
+                ],
+                "scope": "caption",
+                "status": "confirmed"
+              }
+            ],
+            "delivery": [],
+            "inputs": [
+              {
+                "note": "founder caption text (title = its first line)",
+                "ref": "founder-chat:caption",
+                "sha256": "e4b10fb245db9ac2f1658cab0fb6b37e20b80a685bf974f5f1b539a6586bf3d5"
+              }
+            ],
+            "steps": [
+              {
+                "evidence": [
+                  "Pulse: documented skip (no dentcast_plus precedent line); des-exemptions page-bound entry (page_sha256 ff37bc52\u2026); en mirror + toggles on disk; ten-scope lock recorded"
+                ],
+                "id": "C.6",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.8",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "C.7",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "D",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "E",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "F",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "G",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              }
+            ],
+            "validation": []
+          }
         }
       ],
       "delivery": [],
@@ -530,7 +617,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "Pulse: documented skip (no dentcast_plus precedent line); des-exemptions page-bound entry (page_sha256 ff37bc52\u2026); en mirror + toggles on disk; ten-scope lock recorded"
+          "Pulse: \u00ab\u06cc\u06a9 \u0648\u06cc\u062f\u06cc\u0648 \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab\u0631\u0627\u0628\u0631\u062f\u0645 \u0639\u0645\u0631 \u0644\u0645\u06cc\u0646\u06cc\u062a \u0631\u0627 \u0628\u06cc\u0634\u062a\u0631 \u0645\u06cc\u200c\u06a9\u0646\u062f\u061f\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f\u00bb at top (title-only, no spoiler), oldest line (insight-108) dropped, 7 lines; des-exemptions page hash unchanged; en mirror + lock as before"
         ],
         "id": "C.6",
         "module": "11-build-and-version.md",
@@ -554,7 +641,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: dentcast-plus/video-15.html, dentcast-plus/en/video-15.html, dentcast-plus/index.html, dentcast-brain.json, dentcast-hashtag-reference.json, plus/faq-corpus.json, plus/pathways.json, plus/exam-questions.json, .dentcast/des-exemptions.json"
+    "note": "Index-only refresh after staging delivery paths: index.html"
   },
   "schema": "publish-handoff-v3"
 }
