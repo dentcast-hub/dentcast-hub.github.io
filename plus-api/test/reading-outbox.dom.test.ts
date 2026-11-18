@@ -15,13 +15,16 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 const calls: Array<{ action: string; id: string; keepalive: boolean }> = [];
-let fail = false;
+let fail: false | number | true = false; // a number fails with that HTTP status
 
 vi.mock('/plus/js/api.js', () => ({
   api: {
     activity: (action: string, id: string, _meta: unknown, opts: { keepalive?: boolean } = {}) => {
       calls.push({ action, id, keepalive: !!opts.keepalive });
-      return fail ? Promise.reject(new Error('network')) : Promise.resolve({ ok: true });
+      if (fail === false) return Promise.resolve({ ok: true });
+      const err = new Error('network') as Error & { status?: number };
+      if (typeof fail === 'number') err.status = fail;
+      return Promise.reject(err);
     },
   },
 }));
@@ -114,4 +117,52 @@ describe('reading tracker outbox', () => {
     await flush();
     expect(calls).toEqual([]);
   });
+
+  // Same-page re-send (user report: two afternoon reads, and the 20:00 streak
+  // reminder still said nothing was recorded — the queued completions waited
+  // for a next page boot that came only after the reminder brought her back).
+  it('a refused completion is re-sent on the SAME page after a backoff, without a new page', async () => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+    try {
+      fail = 409; // published after the API's last index refresh
+      const { sendCompletion } = await import('/plus/js/outbox.js');
+      expect(await sendCompletion('article_completed', 'insight/insight-200')).toBe(false);
+      expect(localStorage.getItem('dcp:outbox:article_completed|insight/insight-200')).toBeTruthy();
+      fail = false;
+      await vi.advanceTimersByTimeAsync(20000);
+      expect(calls.length).toBe(2);
+      expect(localStorage.getItem('dcp:outbox:article_completed|insight/insight-200')).toBeNull();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('coming back to the tab flushes a queued completion at once', async () => {
+    fail = true;
+    const { sendCompletion } = await import('/plus/js/outbox.js');
+    await sendCompletion('article_completed', 'x/back');
+    fail = false;
+    Object.defineProperty(document, 'hidden', { value: false, configurable: true });
+    document.dispatchEvent(new Event('visibilitychange'));
+    await flush();
+    // ≥ 2, not 2: module instances from earlier cases (vi.resetModules) keep
+    // their document listeners in this one jsdom; a real page has one instance.
+    expect(calls.filter((c) => c.id === 'x/back').length).toBeGreaterThanOrEqual(2);
+    expect(localStorage.getItem('dcp:outbox:article_completed|x/back')).toBeNull();
+  });
+
+  it('a 401 is not retried on the page (signed out: it waits for a sign-in)', async () => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+    try {
+      fail = 401;
+      const { sendCompletion } = await import('/plus/js/outbox.js');
+      await sendCompletion('article_completed', 'x/anon');
+      await vi.advanceTimersByTimeAsync(700000);
+      expect(calls.length).toBe(1);
+      expect(localStorage.getItem('dcp:outbox:article_completed|x/anon')).toBeTruthy();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 });
+

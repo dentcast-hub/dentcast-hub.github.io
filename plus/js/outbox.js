@@ -14,7 +14,18 @@
 // every page (plus.js boot) and is awaited by any surface about to READ
 // progress, so «بازگشت به فهرست» never shows a count one short of the truth.
 // A repeat is harmless: the server's log is append-only and prices repeats.
-import { api } from './api.js?v=253';
+//
+// It also re-sends on the SAME page. A completion the server refused for a
+// reason that clears by itself — a network drop, a 409 for an article published
+// after the API's last index refresh (the API pulls the index forward on that
+// very 409), a 429 pace ceiling — used to wait for the next page boot. A reader
+// who finished an article and then closed the browser until evening had a read
+// that counted only once they happened to open the site again, which for the
+// streak means: not on the day it was earned unless something brought them back
+// before midnight (user report: two articles read in the afternoon, the 20:00
+// streak reminder still said nothing was recorded). So a failure arms a backoff
+// timer, and coming back online or back to the tab flushes at once.
+import { api } from './api.js?v=255';
 
 const PREFIX = 'dcp:outbox:'; // + action + '|' + contentId -> epoch ms it was earned
 const MAX_AGE_MS = 30 * 24 * 3600 * 1000;
@@ -25,11 +36,33 @@ function lsDel(k) { try { localStorage.removeItem(k); } catch (_) { /* ignore */
 
 const inFlight = new Map(); // key -> Promise<boolean>
 
+// Re-send backoff for the page that earned (or inherited) a failed completion.
+// The last delay repeats for as long as the page stays open and something is
+// still queued; each success resets it.
+const RETRY_DELAYS_MS = [20000, 60000, 180000, 600000];
+let retryTimer = null;
+let retryStep = 0;
+let leaving = false;
+// A 401 is the one refusal that will not clear by waiting: the reader is signed
+// out on this device. The entry stays queued for the page after a sign-in.
+let signedOut = false;
+
+function scheduleRetry() {
+  if (retryTimer !== null || leaving || signedOut) return;
+  const ms = RETRY_DELAYS_MS[Math.min(retryStep, RETRY_DELAYS_MS.length - 1)];
+  retryStep += 1;
+  retryTimer = setTimeout(() => { retryTimer = null; flushOutbox(); }, ms);
+}
+
 function deliver(key, action, contentId, keepalive) {
   if (inFlight.has(key)) return inFlight.get(key);
   const p = api.activity(action, contentId, undefined, { keepalive })
-    .then(() => { lsDel(key); return true; })
-    .catch(() => false)
+    .then(() => { lsDel(key); retryStep = 0; signedOut = false; return true; })
+    .catch((e) => {
+      if (e && e.status === 401) signedOut = true;
+      else scheduleRetry();
+      return false;
+    })
     .finally(() => { inFlight.delete(key); });
   inFlight.set(key, p);
   return p;
@@ -47,7 +80,8 @@ export function sendCompletion(action, contentId, { keepalive = false } = {}) {
 }
 
 let flushing = null;
-/** Re-send every queued completion (memoised per page). Never rejects. */
+/** Re-send every queued completion. Concurrent callers share one pass; a call
+ *  after that pass settled runs a fresh one. Never rejects. */
 export function flushOutbox() {
   if (flushing) return flushing;
   const keys = [];
@@ -64,6 +98,34 @@ export function flushOutbox() {
     const bar = rest.indexOf('|');
     if (now - at > MAX_AGE_MS || bar < 1) { lsDel(k); return false; }
     return deliver(k, rest.slice(0, bar), rest.slice(bar + 1), false);
-  })).then(() => undefined);
+  })).then(() => undefined).finally(() => { flushing = null; });
   return flushing;
 }
+
+function hasQueued() {
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith(PREFIX)) return true;
+    }
+  } catch (_) { /* no storage */ }
+  return false;
+}
+
+// Back online, or back on the tab: try now instead of waiting out the timer.
+function flushIfQueued() {
+  if (leaving || !hasQueued()) return;
+  if (retryTimer !== null) { clearTimeout(retryTimer); retryTimer = null; }
+  flushOutbox();
+}
+
+try {
+  window.addEventListener('online', flushIfQueued);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) flushIfQueued(); });
+  window.addEventListener('pagehide', () => {
+    leaving = true;
+    if (retryTimer !== null) { clearTimeout(retryTimer); retryTimer = null; }
+  });
+  // Restored from the back/forward cache: the page is live again.
+  window.addEventListener('pageshow', (e) => { if (e.persisted) { leaving = false; flushIfQueued(); } });
+} catch (_) { /* no window */ }
