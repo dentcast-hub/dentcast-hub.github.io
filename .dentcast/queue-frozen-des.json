@@ -484,5 +484,56 @@
       ],
       "dropped": []
     }
+  },
+  "sharehub/share-55": {
+    "queue_ref": "queue/22-sharehub-digital-rpd-design",
+    "record_sha256": "3afec11d85cd5d6467466c376c1628bd74bec835156dee9670a48f33f83d39a5",
+    "installed_at": "2026-11-18",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [
+        "u1",
+        "u2",
+        "u3",
+        "u4",
+        "u5",
+        "u7",
+        "u8",
+        "u9",
+        "u11",
+        "u13",
+        "u19",
+        "u20",
+        "u21",
+        "u22",
+        "u23",
+        "u24",
+        "u28",
+        "u32",
+        "u33",
+        "u35",
+        "u43",
+        "u44",
+        "u46",
+        "u49",
+        "u50",
+        "u53",
+        "u54",
+        "u57",
+        "u58",
+        "u59",
+        "u60",
+        "u61"
+      ],
+      "dropped": []
+    }
   }
 }
