@@ -34,5 +34,17 @@
         "founder chat 2026-11-15 (Claude Code session 012Gx447RbmAcPCp7mJaLPV3): «گلوساری‌ها همه یه فرمت داشته باشند…» then the explicit choice «DES از هر سه برداشته شود»"
       ]
     }
+  },
+  "dentcast-plus/video-15": {
+    "content_id": "dentcast-plus/video-15",
+    "page_sha256": "ff37bc523f2a515113cda2dc27aa544345e5e350f4a05db6b45799147873914b",
+    "reason": "founder_without_des",
+    "approval": {
+      "status": "confirmed",
+      "decision": "Founder decision 2026-11-18 at Question 4.8 (basket 3: caption cites the 2021 Cochrane review and long-term studies without identifiers): publish dentcast-plus/video-15 without DES; offered candidate DOIs 10.1002/14651858.CD009858.pub3 and 10.11607/prd.1488 were declined.",
+      "evidence": [
+        "founder chat 2026-11-18 (Claude Code session 012Gx4431ESxdU6rQZWDb8m3): answer «بدون DES» to the Q4.8 basket-3 question"
+      ]
+    }
   }
 }
