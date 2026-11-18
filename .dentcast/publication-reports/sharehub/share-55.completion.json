@@ -1,0 +1,1055 @@
+{
+  "schema": "publish-completion-v1",
+  "state": {
+    "publication": {
+      "blocker": null,
+      "category": "sharehub",
+      "content_id": "sharehub/share-55",
+      "context": {
+        "approvals": [
+          {
+            "decision": "\u0637\u0631\u0627\u062d\u06cc RPD \u062f\u0631 \u0639\u0635\u0631 \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644\u061b \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0648\u0627\u0642\u0639\u0627\u064b \u062a\u063a\u06cc\u06cc\u0631 \u06a9\u0631\u062f\u0647 \u0627\u0633\u062a\u061f",
+            "evidence": [
+              "founder data: first line of founder text 2026-11-06 (queue/22 02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md), Hard Rule 16"
+            ],
+            "scope": "title",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u0627\u0633\u06a9\u0646 \u0648 \u0633\u0627\u062e\u062a \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644 \u0634\u062f\u0647\u200c\u0627\u0646\u062f\u060c \u0627\u0645\u0627 \u0645\u0633\u06cc\u0631 \u0648\u0631\u0648\u062f\u060c \u0622\u0646\u062f\u0631\u06a9\u0627\u062a\u200c\u0647\u0627 \u0648 \u0637\u0631\u062d \u0627\u062c\u0632\u0627\u06cc RPD \u0631\u0627 \u0686\u0647 \u06a9\u0633\u06cc \u062a\u0639\u06cc\u06cc\u0646 \u0645\u06cc\u200c\u06a9\u0646\u062f\u061f \u0633\u0647 \u0645\u0642\u0627\u0644\u0647 \u0646\u0634\u0627\u0646 \u0645\u06cc\u200c\u062f\u0647\u0646\u062f \u0633\u0648\u0631\u0648\u06cc \u0648 \u0637\u0631\u0627\u062d\u06cc \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0631\u0627 \u062a\u063a\u06cc\u06cc\u0631 \u062f\u0627\u062f\u0647 \u0648 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0631\u0627 \u0646\u0647.",
+            "evidence": [
+              "agent proposal accepted under founder standing-acceptance ruling, queue/22 00-\u0648\u0636\u0639\u06cc\u062a.md approval 2; frozen in 02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md"
+            ],
+            "scope": "caption",
+            "status": "confirmed"
+          }
+        ],
+        "decisions": [
+          {
+            "date": "2026-11-18",
+            "decision": "Publish queue item 22 through the normal new-publication route using the queue folder's frozen files as the founder's input",
+            "evidence": [
+              "founder chat 2026-11-18 (relayed by orchestrating session)"
+            ],
+            "founder_verbatim": [
+              "\u0628\u0647 \u0646\u0638\u0631\u0645 \u06a9\u0644\u0627 \u0645\u0646\u062a\u0634\u0631\u0634 \u06a9\u0646 \u0646\u0645\u06cc\u062e\u0648\u0627\u062f \u0628\u0630\u0627\u0631\u06cc\u0634 \u062a\u0648 \u0635\u0641 \u0641\u0627\u06cc\u0644\u0647\u0627\u0634 \u0647\u0633\u062a \u0647\u0645\u0648\u0646\u0627\u0631\u0648 \u0628\u0631\u062f\u0627\u0631 \u0645\u0646\u062a\u0634\u0631 \u06a9\u0646 \u062e\u0648\u062f\u062a",
+              "\u0627\u0648\u06a9\u06cc \u0645\u0631\u062c \u06a9\u0646 \u0648 \u0645\u0646\u062a\u0634\u0631\u0634 \u06a9\u0646"
+            ],
+            "kind": "founder_ruling_route"
+          },
+          {
+            "date": "2026-11-18",
+            "decision": "pillar.primary=removable-pros, pillar.subtopic=digital-removable (founder decision; subtopic live on main via PR #1234)",
+            "evidence": [
+              "founder chat 2026-11-18",
+              "tools/build_pillar.py PILLARS on origin/main"
+            ],
+            "kind": "founder_ruling_taxonomy"
+          },
+          {
+            "kind": "ledger_order_v2"
+          },
+          {
+            "kind": "fixed_three_deliveries_v1"
+          },
+          {
+            "kind": "fixed_three_deliveries_v2"
+          },
+          {
+            "decision": "Only total_papers moves (+3, 2125->2128) and tag_index per tag, following the live precedent of share-54 and earlier catalog commits; unique_papers/total_files_scanned/drive_matched describe the original local-scan snapshot and were not moved by any recent publish",
+            "evidence": [
+              "git log -p dentcast_cabinet_full_catalog.json (ed7a05511f)"
+            ],
+            "kind": "catalog_counters"
+          },
+          {
+            "date": "2026-11-18",
+            "decision": "Reuse the frozen queue/22 data exactly (DES des.json byte-for-byte, fidelity.json, plan.json, 3b outcomes, English, keywords, flashcards/FAQ, links, exam questions, hashtags/pulse/pathway, catalog/enrichment); no new scientific or authoring work. Exceptions only for mechanical needs with no frozen equivalent (content_id, builders, stamp, sitemap, pillar subtopic digital-removable).",
+            "evidence": [
+              "founder chat 2026-11-18 (relayed by orchestrating session)"
+            ],
+            "founder_verbatim": [
+              "\u062d\u0648\u0627\u0633\u0645 \u0646\u0628\u0648\u062f \u06a9\u0647 \u0627\u0632 \u0627\u0648\u0644 \u0628\u0628\u06cc\u0646 \u062a\u0645\u0627\u0645 \u0627\u0637\u0644\u0627\u0639\u0627\u062a \u0641\u06cc\u062f\u0644\u06cc\u062a\u06cc \u0648 \u062f\u0633 \u0648 \u0647\u0645\u0647 \u0686\u06cc \u0647\u0645\u0648\u0646\u06cc\u0647 \u06a9\u0647 \u062a\u0648\u06cc \u0635\u0641 \u0627\u0633\u062a \u0647\u06cc\u0686 \u06a9\u0627\u0631 \u062c\u062f\u06cc\u062f\u06cc \u0635\u0648\u0631\u062a \u0646\u06af\u06cc\u0631\u0647 \u0648 \u0627\u0632 \u0647\u0645\u0648\u0646\u0627 \u0647\u0645\u0648\u0646 \u0627\u0637\u0644\u0627\u0639\u0627\u062a \u0627\u0633\u062a\u0641\u0627\u062f\u0647 \u0628\u0634\u0647 \u0627\u06cc\u0646 \u0641\u0631\u0645\u0627\u0646 \u0628\u0646\u06cc\u0627\u0646\u06af\u0630\u0627\u0631\u0647"
+            ],
+            "kind": "founder_ruling_reuse_frozen",
+            "superseded_local_work": "Fresh v3.7 DES SOURCE runs (S1 55/C, S2 16/E after one INSUFFICIENT_TEXT run, S3 36/D) made before this ruling are discarded unused; nothing from them is stored"
+          },
+          {
+            "evidence": [
+              "sharehub/share-55.html first <p> == 01-\u0645\u062a\u0646.md paragraph 1"
+            ],
+            "kind": "first_cut_lead_provenance_v1",
+            "origin": "author_original",
+            "source_ref": "queue/22 01-\u0645\u062a\u0646.md paragraph 1 (founder text; prose opens the body before any list)"
+          },
+          {
+            "decision": "C.4.12 evidence miscounted the binary bank as 11/4; actual: 10 yes/no questions open with \u0628\u0644\u0647/\u062e\u06cc\u0631, 5 open questions (explain/what)",
+            "evidence": [
+              "plus/faq-corpus.json byContent[sharehub/share-55]"
+            ],
+            "kind": "correction_note"
+          },
+          {
+            "decision": "Top line <li><a href=\"/sharehub/share-55.html\">TITLE</a></li> (frozen ShareHub title-only pattern, queue/22 07, approval 2); bottom line share-54 removed; 7 lines",
+            "evidence": [
+              "git diff index.html"
+            ],
+            "kind": "pulse"
+          },
+          {
+            "english": {
+              "evidence": [
+                "structure == sharehub/en/share-54.html chrome/type; body == queue/22 06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md"
+              ],
+              "path": "sharehub/en/share-55.html",
+              "status": "ready"
+            },
+            "evidence": [
+              "publish-checkpoints.md \u00abDelivery cuts 1 and 2\u00bb"
+            ],
+            "kind": "second_cut_editorial_lock_v1",
+            "scopes": [
+              {
+                "evidence": [
+                  "C.4.13: frozen DES 55/C,16/E,36/D + Fidelity 100/HIGH x3 installed (queue_install_des.py, --accept exit 0); 3b u45 founder \u00ab\u0627\u0635\u0644\u0627\u062d \u06a9\u0646\u00bb"
+                ],
+                "scope": "scientific",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "Q4.9 \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc; C.4.14 skipped"
+                ],
+                "scope": "challenge",
+                "status": "not_applicable"
+              },
+              {
+                "evidence": [
+                  "founder decision removable-pros/digital-removable; brain entry; capsule /pillar/removable-pros/"
+                ],
+                "scope": "taxonomy",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.4.7 undercut backlink; C.4.8 inline undercut; C.4.9 share-54 capsule (frozen 11)"
+                ],
+                "scope": "links",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.5.0: 8 canonical tags (#Share_Hub alias -> #\u0645\u0631\u0648\u0631_\u0645\u0646\u0627\u0628\u0639), --check OK"
+                ],
+                "scope": "hashtags",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.5 brain entry at tail; C.4.11/C.4.12 corpus node; catalog P2961-P2963"
+                ],
+                "scope": "content_record",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.5.6 fixed-pros + implant-prosthetic; 3 exam questions (approval 5); C.5.6-b all candidates \u0631\u062f"
+                ],
+                "scope": "pathways",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "index.html Pulse top line share-55, 7 lines"
+                ],
+                "scope": "pulse",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "sharehub/en/share-55.html from frozen 06 (36 paragraphs equal), noindex, toggles inverse"
+                ],
+                "scope": "english",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "title/caption confirmed; exam approval 5; 3b approval 4; founder rulings 2026-11-18 recorded"
+                ],
+                "scope": "author_approvals",
+                "status": "resolved"
+              }
+            ]
+          }
+        ],
+        "delivery": [
+          {
+            "evidence": [
+              "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/44299674222"
+            ],
+            "scope": "GitHub Actions post-Push-2 mechanical continuation"
+          }
+        ],
+        "inputs": [
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/00-\u0648\u0636\u0639\u06cc\u062a.md",
+            "sha256": "209b786b8e6db3b11b2bc5856ca4482b52ef5d21c298eb775dac8ce8231e8cc5"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/01-\u0645\u062a\u0646.md",
+            "sha256": "a106f71486b93cab3c904fdc01065b5e03968849cc87f074bee91553c4b7c99e"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md",
+            "sha256": "af1e4cbeff5957485bcedfcdfada27525efc26e87cbda15082a59387267c4acb"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/03-\u062a\u0635\u0627\u0648\u06cc\u0631/01-mandibular-kennedy-class-i.webp",
+            "sha256": "f45104cdcb93ad48f3471504407e89c87fc38e058ba6c999d22d5ccc7d1da751"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/03-\u062a\u0635\u0627\u0648\u06cc\u0631/02-digital-survey-undercut-marking.webp",
+            "sha256": "a1b8076f1a27cb83b1499fcf6ca1a48bf837c072ff36bb8050e15659d428a0a7"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/03-\u062a\u0635\u0627\u0648\u06cc\u0631/03-digital-rpd-design-module.webp",
+            "sha256": "307b6a4f2636fd94ca15b7616ac88457abfa92d9b43a7014c6b06aa9a0433f37"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/03-\u062a\u0635\u0627\u0648\u06cc\u0631/04-retained-survey-tripod-physical-mounting.webp",
+            "sha256": "f5ff6c23c0b7c1fba12cfafe49d482f8c3c16376a8918e22cad30845d797640a"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/03-\u062a\u0635\u0627\u0648\u06cc\u0631/\u062a\u0635\u0627\u0648\u06cc\u0631.md",
+            "sha256": "9642491eb094d6d647e637299bfcb5559f19d51903987af07fb5d140ac6b55ca"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/04-\u0645\u0646\u0628\u0639/\u0627\u0646\u0631\u06cc\u0686.json",
+            "sha256": "13ee59ddceb13da1962785cde9cd3d9ea0997a5852d7683e80dce12831334e29"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/04-\u0645\u0646\u0628\u0639/\u0645\u0646\u0627\u0628\u0639.md",
+            "sha256": "0b379fd935ddc6cd3f8d3541d15e13707ca44c730d6d45da60f01d8518595584"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/04-\u0645\u0646\u0628\u0639/\u06a9\u0627\u062a\u0627\u0644\u0648\u06af.json",
+            "sha256": "d73f1612a0466dd42b45b4377929d55a0bf3c65f64bbbe2be66096486c88d500"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/05-DES-Fidelity/des.json",
+            "sha256": "f6bc93f4577a53eb995a4c18552fc4fede43be663f56ad8bf41dc426cb257e11"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/05-DES-Fidelity/fidelity.json",
+            "sha256": "8fb9fc54a407febf582b27648da5c7b59f51814198cbad9b32ecde0f3ad3ec9e"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/05-DES-Fidelity/plan.json",
+            "sha256": "2d655e06492cfeda868e650b8682216954a915d70c1e3b722fa943332fbc8a6b"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/05-DES-Fidelity/\u0627\u062c\u0631\u0627.md",
+            "sha256": "4a27c4155041adf03e166c25877652009aeca0260d3b250692001ae7a34a491f"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/05-DES-Fidelity/\u062a\u0635\u0645\u06cc\u0645\u200c\u0647\u0627\u06cc-3b.md",
+            "sha256": "ffb62f66b3073c4eed16d7ab2803682f63ee40030f3612ac38241163e2bc20d4"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md",
+            "sha256": "de9d93f2512abc05efe5ac70395dcecae17c742fb682d0e5a389b76d7e794186"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md",
+            "sha256": "c80d63756660d7835e82bcea6dbef3bfec20ae67390b64f3c5bab0462d96b081"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/08-\u0633\u0624\u0627\u0644\u200c\u0647\u0627\u06cc-\u0622\u0632\u0645\u0648\u0646.json",
+            "sha256": "5b9d85427a99029bae40b37fbed39e021c2506ab79721ee2907efb633b6337d7"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/09-\u06a9\u0644\u06cc\u062f\u0648\u0627\u0698\u0647\u200c\u0647\u0627.md",
+            "sha256": "f9e274fe5f2cab0b75392a687cda73569f087de4713dff933f35b8835e84680f"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/10-\u0641\u0644\u0634\u200c\u06a9\u0627\u0631\u062a-FAQ.json",
+            "sha256": "b0fe0e195558196b264b25756cf7472e7c242b1af0c5bc7798ca7a1b9d2053b3"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/11-\u0644\u06cc\u0646\u06a9\u200c\u0647\u0627\u06cc-\u06af\u0644\u0627\u0633\u0631\u06cc.md",
+            "sha256": "66e0e13aff34c0e998a9657ad7d93fcda2af4b7ef8bdf682af784e559f71026c"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/12-\u0627\u0646\u062a\u0634\u0627\u0631.json",
+            "sha256": "336d796e9fe6f03d6f3b6caec396737f416823ece5dd5cf291beef3b1d248ef6"
+          },
+          {
+            "note": "founder-input frozen queue item 22",
+            "ref": "git:queue@b8b0ba504633:queue/22-sharehub-digital-rpd-design/SHA256SUMS",
+            "sha256": "0d28e4fba3aefa3923cccf6cc13a1e62f7cf7e75d9765a594a571c4cd0065ca1"
+          }
+        ],
+        "pending_questions": [],
+        "unrelated_changes": [],
+        "validation": [
+          {
+            "content_id": "sharehub/share-55",
+            "evidence": [
+              "queue/22 05-DES-Fidelity/*",
+              "queue/22 00-\u0648\u0636\u0639\u06cc\u062a.md approval 4",
+              "tools/queue_install_des.py receipt"
+            ],
+            "kind": "des_fidelity_frozen_reuse",
+            "result": "Frozen queue/22 05-DES-Fidelity installed with tools/queue_install_des.py (no model call): record_sha256 3afec11d85cd5d6467466c376c1628bd74bec835156dee9670a48f33f83d39a5; sources and fidelity byte-identical to des.json/fidelity.json; 61 units, 0 renumbered, 0 text_synced, 0 added/dropped; DES S1 Alqutaibi 55/C (RESEARCH, MATERIAL, AMSTAR-2, FULL_TEXT), S2 Mahrous 16/E (COMMENTARY, FULL_TEXT), S3 Elgamal 36/D (RESEARCH, THERAPY, ROBINS-I, FULL_TEXT), all stamped 3.5; Fidelity S1 100/HIGH (1 unit), S2 100/HIGH (24 units: 18 MATCHES, 5 NOT_IN_SOURCE, 1 NOT_A_CLAIM), S3 100/HIGH (4 units); plan = frozen orphan-sweep plan.json; des_fidelity_units --accept with re-extracted texts (PDF sha256 match queue run): 52 passed, 0 failed, ACCEPTED; verify_publish --des-text ok; Part 3b: u45 fixed earlier by founder \u00ab\u0627\u0635\u0644\u0627\u062d \u06a9\u0646\u00bb (approval 4), nothing still flagged -> no M3b"
+          },
+          {
+            "content_id": "sharehub/share-55",
+            "exit_code": 0,
+            "expected_caption": "\u0627\u0633\u06a9\u0646 \u0648 \u0633\u0627\u062e\u062a \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644 \u0634\u062f\u0647\u200c\u0627\u0646\u062f\u060c \u0627\u0645\u0627 \u0645\u0633\u06cc\u0631 \u0648\u0631\u0648\u062f\u060c \u0622\u0646\u062f\u0631\u06a9\u0627\u062a\u200c\u0647\u0627 \u0648 \u0637\u0631\u062d \u0627\u062c\u0632\u0627\u06cc RPD \u0631\u0627 \u0686\u0647 \u06a9\u0633\u06cc \u062a\u0639\u06cc\u06cc\u0646 \u0645\u06cc\u200c\u06a9\u0646\u062f\u061f \u0633\u0647 \u0645\u0642\u0627\u0644\u0647 \u0646\u0634\u0627\u0646 \u0645\u06cc\u200c\u062f\u0647\u0646\u062f \u0633\u0648\u0631\u0648\u06cc \u0648 \u0637\u0631\u0627\u062d\u06cc \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0631\u0627 \u062a\u063a\u06cc\u06cc\u0631 \u062f\u0627\u062f\u0647 \u0648 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0631\u0627 \u0646\u0647.",
+            "expected_title": "\u0637\u0631\u0627\u062d\u06cc RPD \u062f\u0631 \u0639\u0635\u0631 \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644\u061b \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0648\u0627\u0642\u0639\u0627\u064b \u062a\u063a\u06cc\u06cc\u0631 \u06a9\u0631\u062f\u0647 \u0627\u0633\u062a\u061f",
+            "kind": "phase_f",
+            "output_sha256": "e66a1663c92c49ea51b7de9df4af8d4cc64319953fd0b393c5d7e8e4958a59dc",
+            "recorded_at": "2026-11-18T12:00:59+00:00",
+            "summary": "212 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+          }
+        ]
+      },
+      "external_actions": [],
+      "status": "in_progress",
+      "steps": [
+        {
+          "evidence": [
+            "read complete: CLAUDE.md, .dentcast/workflows/README.md, global/README.md + all 15 selected global sections (dentcast_global_rules.py --read pages 1-10 for planned paths), agent-parity.md, publish-checkpoints.md, publish-handoff-tool.md, modules 01 and 02; readpack prepared (sharehub/paper yes/challenge no, manifest in scratch)"
+          ],
+          "id": "rules",
+          "module": "01-hard-rules.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Phase 0: text yes (queue/22 01-\u0645\u062a\u0646.md, founder text) + paper files yes (3 PDFs already filed in Drive cabinet, ids in 04-\u0645\u0646\u0628\u0639/\u0645\u0646\u0627\u0628\u0639.md) -> normal publish + step 4.10 Parts 1-3"
+          ],
+          "id": "0",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Brain parsed once (623 entries); categories incl. sharehub; latest sharehub = id 54 (/sharehub/share-54.html), key set [type,id,title,caption,author,source,hashtags,keywords,url,pillar]; live PILLARS read from origin/main 0d85edbd06: removable-pros subtopics [implant-overdentures, complete-dentures, snap-on-smile, digital-removable]"
+          ],
+          "id": "A",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Type sharehub (founder 2026-11-06 \u00ab\u0628\u0631\u0627\u06cc ShareHub\u00bb, queue/22 00-\u0648\u0636\u0639\u06cc\u062a.md approval 1; founder 2026-11-18 ruling to publish this item)"
+          ],
+          "id": "B.1",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Next number share-55 (max sharehub id 54 + 1, no gap); content_id sharehub/share-55"
+          ],
+          "id": "B.2",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Text = queue/22 01-\u0645\u062a\u0646.md (founder text, first line moved to title in 02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md), sha256 bound in context.inputs"
+          ],
+          "id": "B.3",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Q3.5 already run once on the as-submitted text during queue prep (07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md): two filler-phrase removals applied under standing acceptance (founder approval 2), borderlines left; not repeated (one pass)"
+          ],
+          "id": "B.3.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Media: 4 CC BY figures (Elgamal Fig1, Mahrous Fig5-7) cropped to WebP in queue/22 03-\u062a\u0635\u0627\u0648\u06cc\u0631 with captions/alt/credits (founder approval 3); sharehub entries have no media brain field"
+          ],
+          "id": "B.4",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Paper files: 3 papers (Alqutaibi 2026 JPR, Mahrous 2026 J Prosthodont, Elgamal 2025 BMC Oral Health) -> step 4.10 branch ACTIVE; PDFs in Drive cabinet (04-\u0645\u0646\u0628\u0639/\u0645\u0646\u0627\u0628\u0639.md)"
+          ],
+          "id": "B.4.7",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Basket 2 RESEARCH with determinate sources: 3 DOIs (10.2186/jpr.JPR_D_25_00028, 10.1111/jopr.14059, 10.1186/s12903-025-06214-9), FULL_TEXT each"
+          ],
+          "id": "B.4.8",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Ordinary article (\u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc), not a challenge (07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md)"
+          ],
+          "id": "B.4.9",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pulse: agent-drafted, title-only link (ShareHub pattern, queue/22 07 + approval 2 standing acceptance); founder wrote none"
+          ],
+          "id": "B.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast: category sharehub (module 03 step 0 applies only to LiteCast)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.1",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast (sharehub)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.2",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast (sharehub)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.3",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast (sharehub)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.4",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast (sharehub)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Template = sharehub/share-54.html (previous same-category page, series part 1); enrolled in target_paths; must stay byte-unchanged (checked at C.4)"
+          ],
+          "id": "C.1",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "sharehub/share-55.html cloned from share-54 (structure identical; only title/meta/canonical/JSON-LD values/keywords/dates/h1/lang-btn/body/refs/URLs changed); body 36 paragraphs byte-identical to queue/22 01-\u0645\u062a\u0646.md; title+caption byte-identical to 02 (8 and 4 occurrences); 4 figures sharehub/share55-fig1..4.webp copied byte-for-byte from queue/22 03-\u062a\u0635\u0627\u0648\u06cc\u0631 with alt+captions from \u062a\u0635\u0627\u0648\u06cc\u0631.md at the marker positions; refs list per 04-\u0645\u0646\u0628\u0639/\u0645\u0646\u0627\u0628\u0639.md table; GA once, 2 preconnect, no trustseal, opening <p> precedes any list; domain dentcast.org kept; no chip row (sharehub template has none); lead = founder first paragraph (author_original)"
+          ],
+          "id": "C.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.5",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast (sharehub)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.6",
+          "module": "03-litecast-and-page.md",
+          "reason": "Not LiteCast (sharehub)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "FOUNDER DECISION (not agent proposal), 2026-11-18: pillar.primary=removable-pros, pillar.subtopic=digital-removable (\u00ab\u067e\u0631\u0648\u062a\u0632 \u0645\u062a\u062d\u0631\u06a9 \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644\u00bb, live in PILLARS on origin/main via PR #1234). Supersedes queue-prep null subtopic in 07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md"
+          ],
+          "id": "C.2.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Typed brain entry -> both capsules present from clone: /glossary/ (\u062f\u0627\u0646\u0634\u0646\u0627\u0645\u0647) + /pillar/removable-pros/ (\u0641\u0647\u0631\u0633\u062a \u0645\u0648\u0636\u0648\u0639\u06cc); 2 of 5 budget used"
+          ],
+          "id": "C.2.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "sharehub/index.html is hand-maintained (top-newest list): added <li><a href=\"share-55.html\">TITLE (\u0645\u0637\u0644\u0628\u06cc \u0627\u0632 \u062f\u06a9\u062a\u0631 \u0641\u0648\u0627\u062f \u0634\u0647\u0627\u0628\u06cc\u0627\u0646)</a></li> above share-54, sibling style exactly; unnumbered type"
+          ],
+          "id": "C.2.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Date audit: before (clone) datePublished/dateModified 2026-11-16 -> after 2026-11-18 (today) both OK; no other meta/OG/Twitter/visible date in sharehub template (footer \u00a9 2025 is static chrome, unchanged as in template)"
+          ],
+          "id": "C.3",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "git diff --quiet -- sharehub/share-54.html: exit 0 (template unchanged)"
+          ],
+          "id": "C.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Not a NoteCast (sharehub); parent-episode step applies only to NoteCast",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.5-b",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Not a NoteCast (sharehub); no NoteCast credit target",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "Not Promptologist (sharehub); prev/next wiring applies only to Promptologist",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Drive: all 3 PDFs already filed (founder upload, prior queue prep 2026-11-06, approval 3) in existing cabinet subfolder `removable partial denture` (folder 1kF3slJ_-2GPEmasDJUN9sIVTmX9abx9I under cabinet 1iDwq4Uj-y7_FO99-QW1Th0hVRN5yfk9f), named with real titles; re-verified today via Drive get_file_metadata: drive:1eMuNvGdV4bze1llvx6yXOaZ1jRn9Xtea (Alqutaibi, 1838694 B), drive:1ug6sKGDQaHLM3iBA3DiuTFIeFHRJwj95 (Mahrous, 3020563 B), drive:1MerX9UUUKpowV6t1CPNipx9nVpTqkZRX (Elgamal, 1963766 B); no rename/move/upload needed"
+          ],
+          "id": "C.4.10.1",
+          "module": "06-paper-ingestion.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Catalog: appended P2961 (Alqutaibi 2026, doi 10.2186/jpr.jpr_d_25_00028), P2962 (Mahrous 2026, doi 10.1111/jopr.14059), P2963 (Elgamal 2025, doi 10.1186/s12903-025-06214-9) from frozen queue/22 04-\u0645\u0646\u0628\u0639/\u06a9\u0627\u062a\u0627\u0644\u0648\u06af.json (none existed by DOI); key set == template; topic/topic_path `removable partial denture`; linked_episodes [sharehub/share-55]; tag_index +1 per tag; total_papers 2125->2128. Step 9 enrichment: frozen rows (queue/22 04-\u0645\u0646\u0628\u0639/\u0627\u0646\u0631\u06cc\u0686.json, founder ruling 2026-11-16) installed into .dentcast/cabinet-enrichment/results.jsonl + dentcast_cabinet_enrichment.json; cabinet_enrich coverage --check green (2128, missing []). build_cabinet_papers.py + --check green. Paper-count claim 2128 < 2200: \u00ab\u0628\u06cc\u0634 \u0627\u0632 \u06f2\u06f1\u06f0\u06f0\u00bb unchanged. Reachability (step 8) deferred to step 5.0 per module 06"
+          ],
+          "id": "C.4.10.2",
+          "module": "06-paper-ingestion.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Several papers -> \u00ab\u2206 \u0645\u0646\u0627\u0628\u0639\u00bb list (share-22/share-54 precedent) with one DOI anchor per paper on share-55: doi.org/10.2186/jpr.JPR_D_25_00028, doi.org/10.1111/jopr.14059, doi.org/10.1186/s12903-025-06214-9; DOIs/first authors from PDFs + PubMed (Mahrous PMID 40249066, Elgamal PMID 40437453; Alqutaibi from PDF, not in PubMed) per queue/22 04-\u0645\u0646\u0628\u0639/\u0645\u0646\u0627\u0628\u0639.md; site author-note kept; no isBasedOn in sharehub template; no M1 fact open"
+          ],
+          "id": "C.4.10.3",
+          "module": "06-paper-ingestion.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Frozen DES+Fidelity reused per founder ruling 2026-11-18 (see validation des_fidelity_frozen_reuse): plus/des-scores.json[sharehub/share-55], .dentcast/queue-frozen-des.json, .dentcast/des-fidelity-plans/sharehub/share-55.json; --accept exit 0; no ALTERED/REVERSED -> no M3b"
+          ],
+          "id": "C.4.13",
+          "module": "08-des-fidelity.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Frozen decision (queue/22 11-\u0644\u06cc\u0646\u06a9\u200c\u0647\u0627\u06cc-\u06af\u0644\u0627\u0633\u0631\u06cc.md, standing acceptance approval 2; founder ruling 2026-11-18 reuse): candidate undercut -> linked; live cap glossary/undercut.html 1/5 before -> appended capsule \u00ab\u0637\u0631\u0627\u062d\u06cc RPD \u062f\u0631 \u0639\u0635\u0631 \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644\u00bb -> /sharehub/share-55.html (git diff +1 line). Skipped: intraoral-scanner (over cap, unrelated), retention, abutment (full, different concept)"
+          ],
+          "id": "C.4.7",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.7-b",
+          "module": "05-semantic-linking.md",
+          "reason": "Not a glossary publish: scoped cross-link (cross-link.md --slug) runs only on a glossary-term publish (module 05 / agent-parity \u00a75)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Frozen decision (11-\u0644\u06cc\u0646\u06a9\u200c\u0647\u0627\u06cc-\u06af\u0644\u0627\u0633\u0631\u06cc.md 4.8): first qualifying occurrence \u00ab\u0622\u0646\u062f\u0631\u06a9\u0627\u062a\u200c\u0647\u0627\u06cc\u00bb (paragraph 1) -> /glossary/undercut.html inserted; skipped borderline/unrelated: \u0627\u0633\u06a9\u0646 \u062f\u0627\u062e\u0644\u200c\u062f\u0647\u0627\u0646\u06cc (borderline), \u0631\u06cc\u062a\u0646\u0634\u0646, \u0627\u0628\u0627\u062a\u0645\u0646\u062a, Path of Insertion, Height of Contour, Guide Planes, \u062a\u0631\u06cc\u067e\u0627\u062f\u06cc\u0646\u06af, \u0633\u0648\u0631\u0648\u06cc\u0648\u0631, \u0631\u0633\u062a, \u06a9\u0644\u0627\u0633\u067e, \u0645\u0627\u0698\u0648\u0631 \u06a9\u0627\u0646\u06a9\u062a\u0648\u0631, \u0641\u0631\u06cc\u0645\u200c\u0648\u0631\u06a9, \u067e\u0631\u06cc\u0646\u062a \u0633\u0647\u200c\u0628\u0639\u062f\u06cc, RPD (no same-concept target); no episode qualified"
+          ],
+          "id": "C.4.8",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Frozen decision (11 4.9; series part 1 = queue:21 -> published /sharehub/share-54.html): capsule \u00ab\u062b\u0628\u062a \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644 \u062f\u0647\u0627\u0646 \u0628\u06cc\u200c\u062f\u0646\u062f\u0627\u0646\u00bb added; cap 2 nav + 1 = 3/5 (related_cap.py); borderline skipped: insight-58, dentai-35; considered and not proposed: episode-126-1, episode-118-1, chairside-8, meta-14, insight-83"
+          ],
+          "id": "C.4.9",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Frozen queue/22 10-\u0641\u0644\u0634\u200c\u06a9\u0627\u0631\u062a-FAQ.json installed (founder ruling reuse; standing acceptance approval 2) under byContent[sharehub/share-55] in plus/faq-corpus.json: DefinedTermSet #flashcards with 15 DefinedTerms #flashcards-c1..c15 (prep: rewritten after independent review, no near-copy); not in page JSON-LD"
+          ],
+          "id": "C.4.11",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "FAQPage 15 Q in the same corpus node; deixis scan: 0 hits; 11 yes/no-shaped questions open with \u0628\u0644\u0647/\u062e\u06cc\u0631 verdict (binary bank), 4 open (explain/what) kept as reference; no rewrite needed. 4.12-\u0628: evaluated at 5.6"
+          ],
+          "id": "C.4.12",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.4.14",
+          "module": "09-challenge.md",
+          "reason": "Not a challenge (Question 4.9: \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc); no data-dc-challenge-question markup",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "Frozen hashtag list (queue/22 07, standing acceptance approval 2; no mint) used, with ONE mechanical resolution: frozen \u00ab#Share_Hub\u00bb is not a library concept (alias of canonical #\u0645\u0631\u0648\u0631_\u0645\u0646\u0627\u0628\u0639 per hashtag_ref --simulate; Hard Rule 15 forbids an alias as a tag) -> replaced in place by canonical #\u0645\u0631\u0648\u0631_\u0645\u0646\u0627\u0628\u0639 (share-47/51/52 precedent). Final: #\u0645\u0631\u0648\u0631_\u0645\u0646\u0627\u0628\u0639 #Curated_Content #\u067e\u0631\u0648\u062a\u0632_\u0645\u062a\u062d\u0631\u06a9 #\u067e\u0631\u0648\u062a\u0632_\u067e\u0627\u0631\u0633\u06cc\u0644 #\u0637\u0631\u0627\u062d\u06cc_\u067e\u0631\u0648\u062a\u0632 #\u0645\u0633\u06cc\u0631_\u0646\u0634\u0633\u062a #\u06af\u0627\u06cc\u062f_\u067e\u0644\u06cc\u0646 #\u0627\u0631\u062a\u0628\u0627\u0637_\u0628\u0627_\u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631. Questions + resolving sentences: queue/22 07. --sync done (dentcast-hashtag-reference.json counts), build_plus_index run then content-index/assistant-tags reverted (runner outputs), hashtag_ref --check OK. Reachability: page in content-index under \u0645\u0633\u06cc\u0631 \u0646\u0634\u0633\u062a (2 pages, rank 2), \u06af\u0627\u06cc\u062f \u067e\u0644\u06cc\u0646 (2, rank 2), \u0637\u0631\u0627\u062d\u06cc \u067e\u0631\u0648\u062a\u0632 (3, rank 3), \u0627\u0631\u062a\u0628\u0627\u0637 \u0628\u0627 \u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631 (7), \u067e\u0631\u0648\u062a\u0632 \u067e\u0627\u0631\u0633\u06cc\u0644 (7) -> surfaces in first 4 of a specific chip. Papers: P2961/P2962/P2963 reachable via existing bridge rows (e.g. \u067e\u0631\u0648\u062a\u0632 \u0645\u062a\u062d\u0631\u06a9 byTag pos 0/3/1, \u0645\u0633\u06cc\u0631 \u0646\u0634\u0633\u062a 0/2/1); no bridge edit; build_cabinet_papers --check OK"
+          ],
+          "id": "C.5.0",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Brain entry appended as last element (624 entries): type sharehub, id 55, title/caption byte-identical to queue/22 02, author/source as share-54, hashtags = C.5.0 list, keywords = frozen 09/12 (21), url /sharehub/share-55.html, pillar {primary removable-pros, secondary [], subtopic digital-removable}; key set/order == share-54"
+          ],
+          "id": "C.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Recorded pillar removable-pros / subtopic digital-removable == C.2.4 founder decision; subtopic already live in PILLARS (no build_pillar.py change in this run); C.2.5 capsule /pillar/removable-pros/ matches"
+          ],
+          "id": "C.5.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Frozen pathway value null + \u00abdefault: mechanical pathway rule\u00bb (queue/22 07/12; founder ruling reuse): pathway_place.py STRONG candidates, max two: fixed-pros after insight/insight-103 (score 91, STRONG core 6/6) and implant-prosthetic after sharehub/share-54 (62, STRONG, series sibling part 1); inserted with --insert (no --confirmed); json ok; coverage 1.52 per item (baseline 1.38). ASK not placed: esthetic, occlusion, treatment-planning, removable-pros, biomimetic; post-and-core STRONG but third pathway -> not placed. 4.12-\u0628: page in 2 full pathways -> frozen founder-approved 08 (3 MCQ, approval 5 \u00ab\u0633\u0648\u0627\u0644\u0627\u062a \u0647\u0645 \u062a\u0627\u06cc\u06cc\u062f\u00bb, draft-check 0 errors/0 warnings) written to plus/exam-questions.json byContent[sharehub/share-55]: r-7be9b274 (key 1), r-e34e0db5 (key 2), r-1c35306e (key 0); validate_exam_questions 0 errors (12 pre-existing duplicate-prompt warnings on other pages); M2 answered by approval 5 (no new message)"
+          ],
+          "id": "C.5.6",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Candidates (continues_pathway in joined full pathways): bundle-crown-prep (fixed-pros) \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f3: RPD design fills no hole in a crown prep/impression starter); bundle-implant-parts \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f3: not an implant-component sub-topic); bundle-implant-impression \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f3: not implant impression). Gate 1 passed (sharehub) for all; no insertion, no home-bundles.js change"
+          ],
+          "id": "C.5.6-b",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Pulse: index.html top line -> /sharehub/share-55.html (title only), bottom share-54 line removed, 7 lines; English mirror sharehub/en/share-55.html (frozen 06; chrome/type == sharehub/en/share-54.html; noindex, 0 hreflang, GA once, toggle ../share-55.html; fa toggle en/share-55.html from clone; no gloss duplicates; metanotes/en/meta-1.html unchanged); ten-scope editorial lock recorded; no pending questions"
+          ],
+          "id": "C.6",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "All applicable canonical C.8 builders passed; logs are in the recovery artifact."
+          ],
+          "id": "C.8",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "tools/stamp-version.py passed after C.8"
+          ],
+          "id": "C.7",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Technical English, noindex, hreflang, sitemap, and final version checks passed; logs are in the recovery artifact."
+          ],
+          "id": "D",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Canonical dc-notify marker present exactly once"
+          ],
+          "id": "E",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "phase_f:e66a1663c92c49ea51b7de9df4af8d4cc64319953fd0b393c5d7e8e4958a59dc"
+          ],
+          "id": "F",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/44299674222"
+          ],
+          "id": "G",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        }
+      ],
+      "target_paths": [
+        ".dentcast/cabinet-enrichment/results.jsonl",
+        ".dentcast/des-fidelity-plans/sharehub/share-55.json",
+        ".dentcast/queue-frozen-des.json",
+        "dentcast-brain.json",
+        "dentcast-hashtag-reference.json",
+        "dentcast_cabinet_enrichment.json",
+        "dentcast_cabinet_full_catalog.json",
+        "glossary/undercut.html",
+        "index.html",
+        "pillar/index.html",
+        "pillar/removable-pros/index.html",
+        "pillar/removable-pros/structure.json",
+        "pillar/structure.json",
+        "player.html",
+        "plus/assistant-tags.json",
+        "plus/cabinet-papers.json",
+        "plus/cabinet-search.json",
+        "plus/content-index.json",
+        "plus/des-scores.json",
+        "plus/des/sharehub/share-55.json",
+        "plus/exam-questions.json",
+        "plus/faq-corpus.json",
+        "plus/flashcards-index.json",
+        "plus/pathways.json",
+        "plus/quiz-index.json",
+        "service-worker.js",
+        "sharehub/en/share-55.html",
+        "sharehub/index.html",
+        "sharehub/share-54.html",
+        "sharehub/share-55.html",
+        "sharehub/share55-fig1.webp",
+        "sharehub/share55-fig2.webp",
+        "sharehub/share55-fig3.webp",
+        "sharehub/share55-fig4.webp",
+        "sitemap.xml",
+        "up-board/index.json"
+      ]
+    },
+    "snapshot": {
+      "files": {
+        ".dentcast/cabinet-enrichment/results.jsonl": {
+          "kind": "file",
+          "sha256": "39aeb18993ccf8dde0a07f09d9fc18a15390ebd5fa866ac52a95835606db755c",
+          "executable": false
+        },
+        ".dentcast/des-fidelity-plans/sharehub/share-55.json": {
+          "kind": "file",
+          "sha256": "2b9fecd3c377c38ca22bb1f1ebbea2395bbb6cc672431aad0e8ec782436c67b1",
+          "executable": false
+        },
+        ".dentcast/queue-frozen-des.json": {
+          "kind": "file",
+          "sha256": "e06817d5718b38db07461f7549b21c65208959a75bb952b18696b25cc02b921d",
+          "executable": false
+        },
+        "dentcast-brain.json": {
+          "kind": "file",
+          "sha256": "3a4e666ca536a2fac46bc9fc86425a5d547d985dfcacb561440e6639c731bc78",
+          "executable": false
+        },
+        "dentcast-hashtag-reference.json": {
+          "kind": "file",
+          "sha256": "5353d2692fc0d760c264a30f10f9e77e8c50fdca72fc87b252227d17381b338f",
+          "executable": false
+        },
+        "dentcast_cabinet_enrichment.json": {
+          "kind": "file",
+          "sha256": "10741e00653208421f0101c91fd8d2c1185d84e9f1ebf62c31f25abcfda4b847",
+          "executable": false
+        },
+        "dentcast_cabinet_full_catalog.json": {
+          "kind": "file",
+          "sha256": "e0b7683bfd2a7f0f52b14474f4d9e57f39905dc3632220bb2eea9e26eba6ba64",
+          "executable": false
+        },
+        "glossary/undercut.html": {
+          "kind": "file",
+          "sha256": "de89c71dc58ac414b3d88aa9b1dc09358bf7ab4c8b8dc3c4ccc6ca0417d63cfc",
+          "executable": false
+        },
+        "index.html": {
+          "kind": "file",
+          "sha256": "60bd57191d20b3defe58ae2c7453c474c70ad6220dab840e178e803c6117d24e",
+          "executable": false
+        },
+        "pillar/index.html": {
+          "kind": "file",
+          "sha256": "62d9c798755c811a2a5800a33593a018c740b11a7467a24456d02d1816378b5d",
+          "executable": false
+        },
+        "pillar/removable-pros/index.html": {
+          "kind": "file",
+          "sha256": "05af97b3e1be42cfa4fd8f14ea944ec06b1eb7cba9c723d263473e9498748d97",
+          "executable": false
+        },
+        "pillar/removable-pros/structure.json": {
+          "kind": "file",
+          "sha256": "a5237bd9b8b0668895f5b88fd69c97cd3e9fcbed86dbc0090418205ea0926a5b",
+          "executable": false
+        },
+        "pillar/structure.json": {
+          "kind": "file",
+          "sha256": "bea03034a8d7a647f4a3495aa843c74a51d73d02b0b29206ac9d3361f6b55ae7",
+          "executable": false
+        },
+        "player.html": {
+          "kind": "file",
+          "sha256": "00d59c372e28c857fcc14798d0d94b5f7ac2dc68a1fddd1dbac13c4abe02793b",
+          "executable": false
+        },
+        "plus/assistant-tags.json": {
+          "kind": "file",
+          "sha256": "444a9fc3ea76689e84d48ccb5feef61b79c0c063bcea164499f9743ec43768cd",
+          "executable": false
+        },
+        "plus/cabinet-papers.json": {
+          "kind": "file",
+          "sha256": "2e5209fd1e625fe8d62e5952d27686dddaf1c094b8cfacd867ef8c938e3e53d6",
+          "executable": false
+        },
+        "plus/cabinet-search.json": {
+          "kind": "file",
+          "sha256": "77b1b7cb692eaa8dcb74b96df2f5dba045c45ed855417373cfbc7ba3d20a795e",
+          "executable": false
+        },
+        "plus/content-index.json": {
+          "kind": "file",
+          "sha256": "9c555b5378ef5e2316a6b0b61c19fe76fea84dfc823c0c2d5659cfab0cbe56cb",
+          "executable": false
+        },
+        "plus/des-scores.json": {
+          "kind": "file",
+          "sha256": "9b35b94f951ed239959585e5dae641b22685b67b9648dc8486788832c741c869",
+          "executable": false
+        },
+        "plus/des/sharehub/share-55.json": {
+          "kind": "file",
+          "sha256": "920479540e1466167b8634354f9bb68bb02ab3668cd7b69104ce94b00e7a385b",
+          "executable": false
+        },
+        "plus/exam-questions.json": {
+          "kind": "file",
+          "sha256": "632b8a3b71c765b38a29a52d17a3c56fd2b0f8f5113c9dfabe4b6ce6e9bd3b2e",
+          "executable": false
+        },
+        "plus/faq-corpus.json": {
+          "kind": "file",
+          "sha256": "47402a5edfc95b72395eb6275d99989b0c782666a2fa09d1d68c43b049d73479",
+          "executable": false
+        },
+        "plus/flashcards-index.json": {
+          "kind": "file",
+          "sha256": "c760d11165c860d5e1ec3f5c5f860cf4a0e2f4801be0ea1c2e412515ba702106",
+          "executable": false
+        },
+        "plus/pathways.json": {
+          "kind": "file",
+          "sha256": "bf0b6ec5a8e99163451d9c85673174b60da338e23d41c3cd9f2723e3f58a4dac",
+          "executable": false
+        },
+        "plus/quiz-index.json": {
+          "kind": "file",
+          "sha256": "4e5c693b36c876254cb0af14a76604ed4357080970a8cb929602a0fdb442dadb",
+          "executable": false
+        },
+        "service-worker.js": {
+          "kind": "file",
+          "sha256": "17c59273d8c34c71af391bc4fc90557bc409180736d3ca36031cd1f7cca2b17f",
+          "executable": false
+        },
+        "sharehub/en/share-55.html": {
+          "kind": "file",
+          "sha256": "989500c06486e611ca88b5d0bd1d3b4705ee575e4c643ee87afeb8e46a7782f5",
+          "executable": false
+        },
+        "sharehub/index.html": {
+          "kind": "file",
+          "sha256": "9842a836618a39b5190551bd094fbde08e45c4a8677b93ac6caa588dd2133877",
+          "executable": false
+        },
+        "sharehub/share-54.html": {
+          "kind": "file",
+          "sha256": "d69120300267e348c315e4f77aa05f679a73bed3f5adcaf63ad74552816bc3f9",
+          "executable": false
+        },
+        "sharehub/share-55.html": {
+          "kind": "file",
+          "sha256": "b9ef7c88a45171b912c32ed742572e175635a8b96272eaa8a020d3d01ccce19f",
+          "executable": false
+        },
+        "sharehub/share55-fig1.webp": {
+          "kind": "file",
+          "sha256": "f45104cdcb93ad48f3471504407e89c87fc38e058ba6c999d22d5ccc7d1da751",
+          "executable": false
+        },
+        "sharehub/share55-fig2.webp": {
+          "kind": "file",
+          "sha256": "a1b8076f1a27cb83b1499fcf6ca1a48bf837c072ff36bb8050e15659d428a0a7",
+          "executable": false
+        },
+        "sharehub/share55-fig3.webp": {
+          "kind": "file",
+          "sha256": "307b6a4f2636fd94ca15b7616ac88457abfa92d9b43a7014c6b06aa9a0433f37",
+          "executable": false
+        },
+        "sharehub/share55-fig4.webp": {
+          "kind": "file",
+          "sha256": "f5ff6c23c0b7c1fba12cfafe49d482f8c3c16376a8918e22cad30845d797640a",
+          "executable": false
+        },
+        "sitemap.xml": {
+          "kind": "file",
+          "sha256": "7d11ceca97d88fdd5e692c06c87842a77da15e71ce9a0388fcd4f280fe523098",
+          "executable": false
+        },
+        "up-board/index.json": {
+          "kind": "file",
+          "sha256": "8fe9616d7786e7f32a5f5ba6e55f7ae9d64bf5dca08630131263ed31438539a6",
+          "executable": false
+        }
+      },
+      "workflow": {
+        ".dentcast/workflows/README.md": "172337c6e52b1143888d1a7c43f56c71da74457ab9ed4b247db9cbd242ba81d8",
+        ".dentcast/workflows/agent-parity.md": "4b943e299ecfcd67d61befe7b64dc536f970b3a6fd5107a201bede2eb281ab2b",
+        ".dentcast/workflows/publish-handoff.md": "d58cb5472df896dc0d33c37b79340d44c65897d90348f1bfbc98a0e56badc249",
+        ".dentcast/workflows/routing-details.md": "72a45a419c576fb4680fd3571d4dd3931d888e3f6cc69a3a6c79c47c11d1324c",
+        ".dentcast/workflows/global/README.md": "5ec762efe1522eeca5841e37f8e61d938b6a1421904bffe32cecd51ddab4a39b",
+        ".dentcast/workflows/global/LOAD-MAP.json": "43bcd76104ffb77218b008c8a613865ef8fec9df4e09142bec3950b72ff19256",
+        "tools/dentcast_global_rules.py": "c92d378a875dec54ed7845015797c37f211f0acab93150f669b0f820dfd94464",
+        ".dentcast/workflows/global/repo-conventions.md": "89afa9b633d19b723435618abc547ea9576f5caf998256755c6b998e53a0211b",
+        ".dentcast/workflows/global/plus-premium.md": "c4a6bdcffa7916252f9ee64e76fc73198fd9477568debd6e516e567f4a71eab9",
+        ".dentcast/workflows/global/site-invariants.md": "55d4fcd8c566d55011a01eb395d04260e7ca867d78be4b1401acf36a23886feb",
+        "tools/dentcast_publish_handoff.py": "5ac5843a3c668b71e4827d787479e9a9bab312b0c14ea881477780cb6d1814cd",
+        "tools/dentcast_publish_lifecycle.py": "c40548cadf6d12d5a24370a4666e8ddf16a338cf61c154627c3a8f24f7cc1932",
+        "tools/verify_publish.py": "41d939f7769ffa36078955a8a38548143bb6b180282e1a87b62ce602f519ecbb",
+        "tools/dentcast_text_io.py": "225c0a696e8ebc5e175b5dd9739210d4624938358af96baeb777f8c4a07726d8",
+        "tools/text_io.mjs": "c6f9208e26983c8eade43d8cf3effe865e6479df903d2cee661cd0a928565536",
+        "tools/dentcast_post_cut2_runner.py": "443494d00da1a8890a9d69f2d716358328120c562c1c24df0f8227eae3182b0e",
+        ".github/workflows/post-cut2-mechanical.yml": "f4c06799b68560aaa14b364e63d720ae658187962221607c862bfce42a19f106",
+        ".dentcast/workflows/publish-checkpoints.md": "d4cb378f8e225071b46def537302646dbcc804ada547fc57924b0823a50a0740",
+        ".dentcast/workflows/publish-after-push2.md": "101bf989270f0ba6d5f34dc350b94d4820f49d361ec0b99192b46854e7cea905",
+        ".dentcast/workflows/modules/01-hard-rules.md": "1cb57aa6db9c90675d90a6732e5d789ac9188977dc58906ef56b131960d83cb9",
+        ".dentcast/workflows/modules/02-routing-intake.md": "c9dc1b414dfdacf3376b4f9cb916ce911b428184550610950ef7f8e8132e9a74",
+        ".dentcast/workflows/modules/03-litecast-and-page.md": "f6bf2d4a9004e54525c698db895cfecac3d65e7090b015b634bae0bee7bc6723",
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "53a8860265c40465d8060bea1c9d4f701d24794f704de14a609b2d806c294fa9",
+        ".dentcast/workflows/modules/05-semantic-linking.md": "22379f060007b543c9544f2dd8a3aee600a930af19711fd1ee49e797ef9c7722",
+        ".dentcast/workflows/modules/06-paper-ingestion.md": "e7406f830c12b2d25c8cb97515a0bb271c74e99a02506c4456a14c74d4f2296b",
+        ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "fcd126bef9e887f67b8f6d19527be5bf77b3e987661c5feb77cc26f4b2b13e6d",
+        ".dentcast/workflows/modules/08-des-fidelity.md": "c864dc6cdcb2a8b4d7bd786ad3aea9114898853e855c8eb0b791c38e0fa8626b",
+        ".dentcast/workflows/modules/09-challenge.md": "5ec2a39ce0e3f3777360a0b0c1092d34e240f6546d43103498e2d65a5a16f120",
+        ".dentcast/workflows/modules/10-brain-and-pathways.md": "5e4c5266d20e786eae7d3f410a2209c547c698781d8655d78828251c052ab66c",
+        ".dentcast/workflows/modules/11-build-and-version.md": "3b58272ec511d861e35af835f026cb91910d1ef40c1e164cbdc88f8637dcf310",
+        ".dentcast/workflows/modules/12-english-notify-verify.md": "89230e2261966297a9c26cc9df88a37862d5b4a71c1bd7ed44f20d6cc2596552"
+      }
+    }
+  },
+  "second_delivery_commit": "a46a8ee2b32d1142aaaba52c3405556f4eddf671",
+  "verification": {
+    "kind": "phase_f",
+    "content_id": "sharehub/share-55",
+    "expected_title": "\u0637\u0631\u0627\u062d\u06cc RPD \u062f\u0631 \u0639\u0635\u0631 \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644\u061b \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0648\u0627\u0642\u0639\u0627\u064b \u062a\u063a\u06cc\u06cc\u0631 \u06a9\u0631\u062f\u0647 \u0627\u0633\u062a\u061f",
+    "expected_caption": "\u0627\u0633\u06a9\u0646 \u0648 \u0633\u0627\u062e\u062a \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644 \u0634\u062f\u0647\u200c\u0627\u0646\u062f\u060c \u0627\u0645\u0627 \u0645\u0633\u06cc\u0631 \u0648\u0631\u0648\u062f\u060c \u0622\u0646\u062f\u0631\u06a9\u0627\u062a\u200c\u0647\u0627 \u0648 \u0637\u0631\u062d \u0627\u062c\u0632\u0627\u06cc RPD \u0631\u0627 \u0686\u0647 \u06a9\u0633\u06cc \u062a\u0639\u06cc\u06cc\u0646 \u0645\u06cc\u200c\u06a9\u0646\u062f\u061f \u0633\u0647 \u0645\u0642\u0627\u0644\u0647 \u0646\u0634\u0627\u0646 \u0645\u06cc\u200c\u062f\u0647\u0646\u062f \u0633\u0648\u0631\u0648\u06cc \u0648 \u0637\u0631\u0627\u062d\u06cc \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0631\u0627 \u062a\u063a\u06cc\u06cc\u0631 \u062f\u0627\u062f\u0647 \u0648 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0631\u0627 \u0646\u0647.",
+    "exit_code": 0,
+    "output_sha256": "e66a1663c92c49ea51b7de9df4af8d4cc64319953fd0b393c5d7e8e4958a59dc",
+    "summary": "212 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+  }
+}
