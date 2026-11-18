@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "sharehub/share-55"
 - Status: in_progress
-- Next canonical step: "C.4.7"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -18,7 +18,24 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     "category": "sharehub",
     "content_id": "sharehub/share-55",
     "context": {
-      "approvals": [],
+      "approvals": [
+        {
+          "decision": "\u0637\u0631\u0627\u062d\u06cc RPD \u062f\u0631 \u0639\u0635\u0631 \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644\u061b \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0648\u0627\u0642\u0639\u0627\u064b \u062a\u063a\u06cc\u06cc\u0631 \u06a9\u0631\u062f\u0647 \u0627\u0633\u062a\u061f",
+          "evidence": [
+            "founder data: first line of founder text 2026-11-06 (queue/22 02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md), Hard Rule 16"
+          ],
+          "scope": "title",
+          "status": "confirmed"
+        },
+        {
+          "decision": "\u0627\u0633\u06a9\u0646 \u0648 \u0633\u0627\u062e\u062a \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644 \u0634\u062f\u0647\u200c\u0627\u0646\u062f\u060c \u0627\u0645\u0627 \u0645\u0633\u06cc\u0631 \u0648\u0631\u0648\u062f\u060c \u0622\u0646\u062f\u0631\u06a9\u0627\u062a\u200c\u0647\u0627 \u0648 \u0637\u0631\u062d \u0627\u062c\u0632\u0627\u06cc RPD \u0631\u0627 \u0686\u0647 \u06a9\u0633\u06cc \u062a\u0639\u06cc\u06cc\u0646 \u0645\u06cc\u200c\u06a9\u0646\u062f\u061f \u0633\u0647 \u0645\u0642\u0627\u0644\u0647 \u0646\u0634\u0627\u0646 \u0645\u06cc\u200c\u062f\u0647\u0646\u062f \u0633\u0648\u0631\u0648\u06cc \u0648 \u0637\u0631\u0627\u062d\u06cc \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0631\u0627 \u062a\u063a\u06cc\u06cc\u0631 \u062f\u0627\u062f\u0647 \u0648 \u0686\u0647 \u0686\u06cc\u0632\u06cc \u0631\u0627 \u0646\u0647.",
+          "evidence": [
+            "agent proposal accepted under founder standing-acceptance ruling, queue/22 00-\u0648\u0636\u0639\u06cc\u062a.md approval 2; frozen in 02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md"
+          ],
+          "scope": "caption",
+          "status": "confirmed"
+        }
+      ],
       "decisions": [
         {
           "date": "2026-11-18",
@@ -68,6 +85,113 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           ],
           "kind": "founder_ruling_reuse_frozen",
           "superseded_local_work": "Fresh v3.7 DES SOURCE runs (S1 55/C, S2 16/E after one INSUFFICIENT_TEXT run, S3 36/D) made before this ruling are discarded unused; nothing from them is stored"
+        },
+        {
+          "evidence": [
+            "sharehub/share-55.html first <p> == 01-\u0645\u062a\u0646.md paragraph 1"
+          ],
+          "kind": "first_cut_lead_provenance_v1",
+          "origin": "author_original",
+          "source_ref": "queue/22 01-\u0645\u062a\u0646.md paragraph 1 (founder text; prose opens the body before any list)"
+        },
+        {
+          "decision": "C.4.12 evidence miscounted the binary bank as 11/4; actual: 10 yes/no questions open with \u0628\u0644\u0647/\u062e\u06cc\u0631, 5 open questions (explain/what)",
+          "evidence": [
+            "plus/faq-corpus.json byContent[sharehub/share-55]"
+          ],
+          "kind": "correction_note"
+        },
+        {
+          "decision": "Top line <li><a href=\"/sharehub/share-55.html\">TITLE</a></li> (frozen ShareHub title-only pattern, queue/22 07, approval 2); bottom line share-54 removed; 7 lines",
+          "evidence": [
+            "git diff index.html"
+          ],
+          "kind": "pulse"
+        },
+        {
+          "english": {
+            "evidence": [
+              "structure == sharehub/en/share-54.html chrome/type; body == queue/22 06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md"
+            ],
+            "path": "sharehub/en/share-55.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "publish-checkpoints.md \u00abDelivery cuts 1 and 2\u00bb"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "C.4.13: frozen DES 55/C,16/E,36/D + Fidelity 100/HIGH x3 installed (queue_install_des.py, --accept exit 0); 3b u45 founder \u00ab\u0627\u0635\u0644\u0627\u062d \u06a9\u0646\u00bb"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Q4.9 \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc; C.4.14 skipped"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "founder decision removable-pros/digital-removable; brain entry; capsule /pillar/removable-pros/"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.7 undercut backlink; C.4.8 inline undercut; C.4.9 share-54 capsule (frozen 11)"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5.0: 8 canonical tags (#Share_Hub alias -> #\u0645\u0631\u0648\u0631_\u0645\u0646\u0627\u0628\u0639), --check OK"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5 brain entry at tail; C.4.11/C.4.12 corpus node; catalog P2961-P2963"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5.6 fixed-pros + implant-prosthetic; 3 exam questions (approval 5); C.5.6-b all candidates \u0631\u062f"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "index.html Pulse top line share-55, 7 lines"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "sharehub/en/share-55.html from frozen 06 (36 paragraphs equal), noindex, toggles inverse"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "title/caption confirmed; exam approval 5; 3b approval 4; founder rulings 2026-11-18 recorded"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -487,6 +611,119 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "08-des-fidelity.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [
+          "Frozen decision (queue/22 11-\u0644\u06cc\u0646\u06a9\u200c\u0647\u0627\u06cc-\u06af\u0644\u0627\u0633\u0631\u06cc.md, standing acceptance approval 2; founder ruling 2026-11-18 reuse): candidate undercut -> linked; live cap glossary/undercut.html 1/5 before -> appended capsule \u00ab\u0637\u0631\u0627\u062d\u06cc RPD \u062f\u0631 \u0639\u0635\u0631 \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644\u00bb -> /sharehub/share-55.html (git diff +1 line). Skipped: intraoral-scanner (over cap, unrelated), retention, abutment (full, different concept)"
+        ],
+        "id": "C.4.7",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.7-b",
+        "module": "05-semantic-linking.md",
+        "reason": "Not a glossary publish: scoped cross-link (cross-link.md --slug) runs only on a glossary-term publish (module 05 / agent-parity \u00a75)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Frozen decision (11-\u0644\u06cc\u0646\u06a9\u200c\u0647\u0627\u06cc-\u06af\u0644\u0627\u0633\u0631\u06cc.md 4.8): first qualifying occurrence \u00ab\u0622\u0646\u062f\u0631\u06a9\u0627\u062a\u200c\u0647\u0627\u06cc\u00bb (paragraph 1) -> /glossary/undercut.html inserted; skipped borderline/unrelated: \u0627\u0633\u06a9\u0646 \u062f\u0627\u062e\u0644\u200c\u062f\u0647\u0627\u0646\u06cc (borderline), \u0631\u06cc\u062a\u0646\u0634\u0646, \u0627\u0628\u0627\u062a\u0645\u0646\u062a, Path of Insertion, Height of Contour, Guide Planes, \u062a\u0631\u06cc\u067e\u0627\u062f\u06cc\u0646\u06af, \u0633\u0648\u0631\u0648\u06cc\u0648\u0631, \u0631\u0633\u062a, \u06a9\u0644\u0627\u0633\u067e, \u0645\u0627\u0698\u0648\u0631 \u06a9\u0627\u0646\u06a9\u062a\u0648\u0631, \u0641\u0631\u06cc\u0645\u200c\u0648\u0631\u06a9, \u067e\u0631\u06cc\u0646\u062a \u0633\u0647\u200c\u0628\u0639\u062f\u06cc, RPD (no same-concept target); no episode qualified"
+        ],
+        "id": "C.4.8",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Frozen decision (11 4.9; series part 1 = queue:21 -> published /sharehub/share-54.html): capsule \u00ab\u062b\u0628\u062a \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644 \u062f\u0647\u0627\u0646 \u0628\u06cc\u200c\u062f\u0646\u062f\u0627\u0646\u00bb added; cap 2 nav + 1 = 3/5 (related_cap.py); borderline skipped: insight-58, dentai-35; considered and not proposed: episode-126-1, episode-118-1, chairside-8, meta-14, insight-83"
+        ],
+        "id": "C.4.9",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Frozen queue/22 10-\u0641\u0644\u0634\u200c\u06a9\u0627\u0631\u062a-FAQ.json installed (founder ruling reuse; standing acceptance approval 2) under byContent[sharehub/share-55] in plus/faq-corpus.json: DefinedTermSet #flashcards with 15 DefinedTerms #flashcards-c1..c15 (prep: rewritten after independent review, no near-copy); not in page JSON-LD"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "FAQPage 15 Q in the same corpus node; deixis scan: 0 hits; 11 yes/no-shaped questions open with \u0628\u0644\u0647/\u062e\u06cc\u0631 verdict (binary bank), 4 open (explain/what) kept as reference; no rewrite needed. 4.12-\u0628: evaluated at 5.6"
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "Not a challenge (Question 4.9: \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc); no data-dc-challenge-question markup",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "Frozen hashtag list (queue/22 07, standing acceptance approval 2; no mint) used, with ONE mechanical resolution: frozen \u00ab#Share_Hub\u00bb is not a library concept (alias of canonical #\u0645\u0631\u0648\u0631_\u0645\u0646\u0627\u0628\u0639 per hashtag_ref --simulate; Hard Rule 15 forbids an alias as a tag) -> replaced in place by canonical #\u0645\u0631\u0648\u0631_\u0645\u0646\u0627\u0628\u0639 (share-47/51/52 precedent). Final: #\u0645\u0631\u0648\u0631_\u0645\u0646\u0627\u0628\u0639 #Curated_Content #\u067e\u0631\u0648\u062a\u0632_\u0645\u062a\u062d\u0631\u06a9 #\u067e\u0631\u0648\u062a\u0632_\u067e\u0627\u0631\u0633\u06cc\u0644 #\u0637\u0631\u0627\u062d\u06cc_\u067e\u0631\u0648\u062a\u0632 #\u0645\u0633\u06cc\u0631_\u0646\u0634\u0633\u062a #\u06af\u0627\u06cc\u062f_\u067e\u0644\u06cc\u0646 #\u0627\u0631\u062a\u0628\u0627\u0637_\u0628\u0627_\u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631. Questions + resolving sentences: queue/22 07. --sync done (dentcast-hashtag-reference.json counts), build_plus_index run then content-index/assistant-tags reverted (runner outputs), hashtag_ref --check OK. Reachability: page in content-index under \u0645\u0633\u06cc\u0631 \u0646\u0634\u0633\u062a (2 pages, rank 2), \u06af\u0627\u06cc\u062f \u067e\u0644\u06cc\u0646 (2, rank 2), \u0637\u0631\u0627\u062d\u06cc \u067e\u0631\u0648\u062a\u0632 (3, rank 3), \u0627\u0631\u062a\u0628\u0627\u0637 \u0628\u0627 \u0644\u0627\u0628\u0631\u0627\u062a\u0648\u0627\u0631 (7), \u067e\u0631\u0648\u062a\u0632 \u067e\u0627\u0631\u0633\u06cc\u0644 (7) -> surfaces in first 4 of a specific chip. Papers: P2961/P2962/P2963 reachable via existing bridge rows (e.g. \u067e\u0631\u0648\u062a\u0632 \u0645\u062a\u062d\u0631\u06a9 byTag pos 0/3/1, \u0645\u0633\u06cc\u0631 \u0646\u0634\u0633\u062a 0/2/1); no bridge edit; build_cabinet_papers --check OK"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Brain entry appended as last element (624 entries): type sharehub, id 55, title/caption byte-identical to queue/22 02, author/source as share-54, hashtags = C.5.0 list, keywords = frozen 09/12 (21), url /sharehub/share-55.html, pillar {primary removable-pros, secondary [], subtopic digital-removable}; key set/order == share-54"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Recorded pillar removable-pros / subtopic digital-removable == C.2.4 founder decision; subtopic already live in PILLARS (no build_pillar.py change in this run); C.2.5 capsule /pillar/removable-pros/ matches"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Frozen pathway value null + \u00abdefault: mechanical pathway rule\u00bb (queue/22 07/12; founder ruling reuse): pathway_place.py STRONG candidates, max two: fixed-pros after insight/insight-103 (score 91, STRONG core 6/6) and implant-prosthetic after sharehub/share-54 (62, STRONG, series sibling part 1); inserted with --insert (no --confirmed); json ok; coverage 1.52 per item (baseline 1.38). ASK not placed: esthetic, occlusion, treatment-planning, removable-pros, biomimetic; post-and-core STRONG but third pathway -> not placed. 4.12-\u0628: page in 2 full pathways -> frozen founder-approved 08 (3 MCQ, approval 5 \u00ab\u0633\u0648\u0627\u0644\u0627\u062a \u0647\u0645 \u062a\u0627\u06cc\u06cc\u062f\u00bb, draft-check 0 errors/0 warnings) written to plus/exam-questions.json byContent[sharehub/share-55]: r-7be9b274 (key 1), r-e34e0db5 (key 2), r-1c35306e (key 0); validate_exam_questions 0 errors (12 pre-existing duplicate-prompt warnings on other pages); M2 answered by approval 5 (no new message)"
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Candidates (continues_pathway in joined full pathways): bundle-crown-prep (fixed-pros) \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f3: RPD design fills no hole in a crown prep/impression starter); bundle-implant-parts \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f3: not an implant-component sub-topic); bundle-implant-impression \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f3: not implant impression). Gate 1 passed (sharehub) for all; no insertion, no home-bundles.js change"
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Pulse: index.html top line -> /sharehub/share-55.html (title only), bottom share-54 line removed, 7 lines; English mirror sharehub/en/share-55.html (frozen 06; chrome/type == sharehub/en/share-54.html; noindex, 0 hreflang, GA once, toggle ../share-55.html; fa toggle en/share-55.html from clone; no gloss duplicates; metanotes/en/meta-1.html unchanged); ten-scope editorial lock recorded; no pending questions"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
@@ -499,8 +736,10 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       "dentcast_cabinet_full_catalog.json",
       "glossary/undercut.html",
       "index.html",
+      "plus/assistant-tags.json",
       "plus/cabinet-papers.json",
       "plus/cabinet-search.json",
+      "plus/content-index.json",
       "plus/des-scores.json",
       "plus/exam-questions.json",
       "plus/faq-corpus.json",
@@ -516,7 +755,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: sharehub/share-55.html, sharehub/share55-fig1.webp, sharehub/share55-fig2.webp, sharehub/share55-fig3.webp, sharehub/share55-fig4.webp, sharehub/index.html, dentcast_cabinet_full_catalog.json, dentcast_cabinet_enrichment.json, .dentcast/cabinet-enrichment/results.jsonl, plus/cabinet-papers.json, plus/cabinet-search.json, plus/des-scores.json, .dentcast/queue-frozen-des.json, .dentcast/des-fidelity-plans/sharehub/share-55.json"
+    "note": "Index-only refresh after staging delivery paths: dentcast-brain.json, dentcast-hashtag-reference.json, glossary/undercut.html, index.html, plus/cabinet-papers.json, plus/cabinet-search.json, plus/exam-questions.json, plus/faq-corpus.json, plus/pathways.json, sharehub/share-55.html, sharehub/en/share-55.html"
   },
   "schema": "publish-handoff-v3"
 }
