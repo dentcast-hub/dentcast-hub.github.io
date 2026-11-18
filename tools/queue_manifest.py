@@ -888,6 +888,30 @@ def missing(d):
     return out
 
 
+def pillar_problem(pillar, tools_dir=None):
+    """Phase F row «2.4 pillar», ahead of time: a structured pillar (one in
+    PILLARS of tools/build_pillar.py) needs a live subtopic slug; an
+    unstructured one needs subtopic null. Returns the problem text, or None.
+    Checked at freeze (queue_stamp.py) and in the publish-day dry run
+    (queue_apply.py), so the item never reaches Push 2 with a subtopic Phase F
+    would reject (queue item 22, 2026-11-18)."""
+    if not isinstance(pillar, dict) or pillar.get("primary") is None:
+        return None
+    tools = str(Path(tools_dir) if tools_dir else Path(__file__).resolve().parent)
+    if tools not in sys.path:
+        sys.path.insert(0, tools)
+    from build_pillar import PILLARS  # noqa: E402
+    primary, sub = pillar.get("primary"), pillar.get("subtopic")
+    if primary in PILLARS:
+        slugs = [s["slug"] for s in PILLARS[primary]["subtopics"]]
+        if sub not in slugs:
+            return (f"pillar {primary} is structured: subtopic {sub!r} is not one of its live subtopics {slugs}; "
+                    "pick one, or get the founder's yes for a new subtopic on main first (module 04, 2.4 step 3)")
+    elif sub is not None:
+        return f"pillar {primary} is unstructured: subtopic must be null, not {sub!r}"
+    return None
+
+
 def plain(d):
     """Strip origins: the manifest the assembler consumes."""
     out = {}
