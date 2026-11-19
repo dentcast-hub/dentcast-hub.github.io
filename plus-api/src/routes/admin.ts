@@ -2192,8 +2192,8 @@ ${renderQuickPublish()}
       <input id="tfText" type="text" maxlength="${FOOTER_TEXT_MAX}" placeholder="مثلاً: دورهٔ تازهٔ ایمپلنت ثبت‌نام می‌کند"></div>
     <div><label for="tfUrl">لینک</label>
       <input id="tfUrl" type="text" dir="ltr" placeholder="https://…"></div>
-    <div><label for="tfLabel">اسم نمایشی لینک (اختیاری)</label>
-      <input id="tfLabel" type="text" maxlength="${FOOTER_LABEL_MAX}" placeholder="خالی = خودِ لینک نشان داده می‌شود؛ پر = لینک پشتِ این اسم می‌رود"></div>
+    <div><label for="tfLabel">اسم نمایشی لینک (اختیاری؛ خالی = خودِ لینک دیده می‌شود)</label>
+      <input id="tfLabel" type="text" maxlength="${FOOTER_LABEL_MAX}" placeholder="مثلاً: ثبت‌نام دوره"></div>
     <button id="tfSave" type="button">ذخیره</button>
     <div id="tfOut"></div>
   </form>
@@ -2223,7 +2223,7 @@ ${renderQuickPublish()}
       pv.innerHTML = d.enabled
         ? 'الان زیر هر پیام:<br><b>' + esc(d.text) + '</b><br>'
           + (d.label
-            ? '<a href="' + esc(d.url) + '" target="_blank" rel="noopener">' + esc(d.label) + '</a>'
+            ? '<a href="' + esc(d.url) + '" target="_blank" rel="noopener" style="color:#0b5fff;text-decoration:none">' + esc(d.label) + '</a>'
             : '<span dir="ltr">' + esc(d.url) + '</span>')
         : 'الان: خاموش — پیام‌ها چیزی اضافه ندارند.';
     }
