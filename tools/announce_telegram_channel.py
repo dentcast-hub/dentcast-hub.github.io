@@ -154,8 +154,9 @@ def first_added_sha(path):
 
 
 def build_message(title, description, url, footer=None):
-    """Title (bold) + one-line description + link, then the optional footer
-    (sentence on one line, its link visible on the next). HTML parse mode with
+    """Title (bold) + one-line description + link, then the optional footer:
+    sentence on one line, its link on the next — the raw URL, or, when the
+    founder set a display name, that name as a clickable link. HTML parse mode with
     everything escaped: a Persian title containing & or < would otherwise make
     Telegram reject the whole send with a 400 and the item would vanish."""
     lines = [f"<b>{html.escape(title)}</b>"]
@@ -163,12 +164,17 @@ def build_message(title, description, url, footer=None):
         lines.append(html.escape(description))
     lines.append(html.escape(url))
     if footer:
-        lines.append(f"{html.escape(footer['text'])}\n{html.escape(footer['url'])}")
+        if footer.get("label"):
+            link = (f'<a href="{html.escape(footer["url"], quote=True)}">'
+                    f'{html.escape(footer["label"])}</a>')
+        else:
+            link = html.escape(footer["url"])
+        lines.append(f"{html.escape(footer['text'])}\n{link}")
     return "\n\n".join(lines)
 
 
 def fetch_footer(api_base, user, password, timeout=10):
-    """The «امضای پیام تلگرام» set in /admin, as {"text", "url"}, or None.
+    """The «امضای پیام تلگرام» set in /admin, as {"text", "url", "label"}, or None.
 
     None for every reason it should not appear: switched off, not configured
     here, or the API unreachable/erroring. Never raises — the footer is optional
@@ -194,8 +200,9 @@ def fetch_footer(api_base, user, password, timeout=10):
     if not re.match(r"^https?://\S+$", link):
         print("footer: stored link is not an http(s) URL; sending without footer.")
         return None
-    print(f"footer: on — {text} | {link}")
-    return {"text": text, "url": link}
+    label = (data.get("label") or "").strip()
+    print(f"footer: on — {text} | {label + ' → ' if label else ''}{link}")
+    return {"text": text, "url": link, "label": label}
 
 
 def send_message(token, chat_id, text, timeout=20, preview_url=None):

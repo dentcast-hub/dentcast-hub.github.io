@@ -17,22 +17,26 @@ import { one, query } from '../db.js';
 
 export const FOOTER_TEXT_MAX = 120;
 export const FOOTER_URL_MAX = 500;
+export const FOOTER_LABEL_MAX = 60;
 
 export interface TelegramFooter {
   enabled: boolean;
   text: string;
   url: string;
+  /** Display name for the link; empty = show the raw link. */
+  label: string;
   updated_at: string | null;
 }
 
 export async function getFooter(): Promise<TelegramFooter> {
-  const row = await one<{ enabled: boolean; text: string; url: string; updated_at: Date }>(
-    'select enabled, text, url, updated_at from telegram_footer_settings where id = true');
-  if (!row) return { enabled: false, text: '', url: '', updated_at: null };
+  const row = await one<{ enabled: boolean; text: string; url: string; label: string; updated_at: Date }>(
+    'select enabled, text, url, label, updated_at from telegram_footer_settings where id = true');
+  if (!row) return { enabled: false, text: '', url: '', label: '', updated_at: null };
   return {
     enabled: row.enabled,
     text: row.text,
     url: row.url,
+    label: row.label,
     updated_at: row.updated_at ? new Date(row.updated_at).toISOString() : null,
   };
 }
@@ -44,14 +48,18 @@ export type FooterError = { error: string; message: string };
  * ON: turning it off keeps the last copy so turning it back on is one tap.
  */
 export async function setFooter(input: {
-  enabled?: unknown; text?: unknown; url?: unknown;
+  enabled?: unknown; text?: unknown; url?: unknown; label?: unknown;
 }): Promise<TelegramFooter | FooterError> {
   const enabled = input.enabled === true;
   const text = typeof input.text === 'string' ? input.text.replace(/\s+/g, ' ').trim() : '';
   const url = typeof input.url === 'string' ? input.url.trim() : '';
+  const label = typeof input.label === 'string' ? input.label.replace(/\s+/g, ' ').trim() : '';
 
   if (text.length > FOOTER_TEXT_MAX) {
     return { error: 'text_too_long', message: `متن حداکثر ${FOOTER_TEXT_MAX} نویسه است.` };
+  }
+  if (label.length > FOOTER_LABEL_MAX) {
+    return { error: 'label_too_long', message: `اسم نمایشی حداکثر ${FOOTER_LABEL_MAX} نویسه است.` };
   }
   if (url.length > FOOTER_URL_MAX) {
     return { error: 'url_too_long', message: 'لینک خیلی بلند است.' };
@@ -66,11 +74,12 @@ export async function setFooter(input: {
     return { error: 'url_required', message: 'برای روشن کردن، لینک را بنویس.' };
   }
 
-  await query(`insert into telegram_footer_settings (id, enabled, text, url)
-      values (true, $1, $2, $3)
+  await query(`insert into telegram_footer_settings (id, enabled, text, url, label)
+      values (true, $1, $2, $3, $4)
     on conflict (id) do update
-      set enabled = excluded.enabled, text = excluded.text, url = excluded.url, updated_at = now()`,
-  [enabled, text, url]);
+      set enabled = excluded.enabled, text = excluded.text, url = excluded.url,
+          label = excluded.label, updated_at = now()`,
+  [enabled, text, url, label]);
   return getFooter();
 }
 
