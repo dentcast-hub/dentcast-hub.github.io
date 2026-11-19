@@ -819,6 +819,74 @@
    ]
   },
   {
+   "key": "curated_content",
+   "tag": "#Curated_Content",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
+   "use_when": "روی مدخل‌های بازنشر.",
+   "aliases": [
+    "محتوای گلچین شده",
+    "کیوریتد",
+    "بازنشر محتوا"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 50,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25",
+    "sharehub/share-26",
+    "sharehub/share-27",
+    "sharehub/share-28",
+    "sharehub/share-29",
+    "sharehub/share-30",
+    "sharehub/share-31",
+    "sharehub/share-32",
+    "sharehub/share-33",
+    "sharehub/share-34",
+    "sharehub/share-35",
+    "sharehub/share-36",
+    "sharehub/share-38",
+    "sharehub/share-39",
+    "sharehub/share-41",
+    "sharehub/share-42",
+    "sharehub/share-43",
+    "sharehub/share-44",
+    "sharehub/share-45",
+    "sharehub/share-48",
+    "sharehub/share-49",
+    "sharehub/share-50",
+    "sharehub/share-53",
+    "sharehub/share-54",
+    "sharehub/share-55",
+    "sharehub/share-56"
+   ]
+  },
+  {
    "key": "کیس_بالینی",
    "tag": "#کیس_بالینی",
    "domain": "brand",
@@ -889,73 +957,6 @@
     "chairside/chairside-50",
     "chairside/chairside-51",
     "chairside/chairside-52"
-   ]
-  },
-  {
-   "key": "curated_content",
-   "tag": "#Curated_Content",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
-   "use_when": "روی مدخل‌های بازنشر.",
-   "aliases": [
-    "محتوای گلچین شده",
-    "کیوریتد",
-    "بازنشر محتوا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 49,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24",
-    "sharehub/share-25",
-    "sharehub/share-26",
-    "sharehub/share-27",
-    "sharehub/share-28",
-    "sharehub/share-29",
-    "sharehub/share-30",
-    "sharehub/share-31",
-    "sharehub/share-32",
-    "sharehub/share-33",
-    "sharehub/share-34",
-    "sharehub/share-35",
-    "sharehub/share-36",
-    "sharehub/share-38",
-    "sharehub/share-39",
-    "sharehub/share-41",
-    "sharehub/share-42",
-    "sharehub/share-43",
-    "sharehub/share-44",
-    "sharehub/share-45",
-    "sharehub/share-48",
-    "sharehub/share-49",
-    "sharehub/share-50",
-    "sharehub/share-53",
-    "sharehub/share-54",
-    "sharehub/share-55"
    ]
   },
   {
@@ -2698,6 +2699,80 @@
    ]
   },
   {
+   "key": "دقت_اسکن",
+   "tag": "#دقت_اسکن",
+   "domain": null,
+   "words": 2,
+   "definition": "دقتِ نهاییِ اسکن و آنچه آن را خراب می‌کند.",
+   "use_when": "مقاله دقت را بسنجد یا بهبود دهد.",
+   "aliases": [
+    "scanning accuracy",
+    "trueness",
+    "صحت اسکن",
+    "scan accuracy",
+    "دقت اسکنر"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 16,
+   "content_ids": [
+    "episodes/episode-122-2",
+    "episodes/episode-128-1",
+    "episodes/episode-133",
+    "episodes/episode-144-2",
+    "sharehub/share-2",
+    "insight/insight-33",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "insight/insight-51",
+    "metanotes/meta-16",
+    "sharehub/share-15",
+    "dentai/dentai-29",
+    "dentai/dentai-32",
+    "insight/insight-74",
+    "sharehub/share-54",
+    "sharehub/share-56"
+   ]
+  },
+  {
+   "key": "قالب_گیری_دیجیتال",
+   "tag": "#قالب‌گیری_دیجیتال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ثبتِ دیجیتالِ آرچ با اسکنر، به‌جای قالب سنتی.",
+   "use_when": "مقاله دقت یا پروتکلِ ثبت دیجیتال را بررسی کند.",
+   "aliases": [
+    "قالب گیری دیجیتال",
+    "digital impression",
+    "اسکن دیجیتال",
+    "digital scan",
+    "دیجیتال اسکن"
+   ],
+   "variants": [
+    "#اسکن_دیجیتال"
+   ],
+   "co_tags": [],
+   "count": 16,
+   "content_ids": [
+    "insight/insight-3",
+    "insight/insight-19",
+    "litecast/lite-CAST14",
+    "insight/insight-26",
+    "insight/insight-31",
+    "insight/insight-33",
+    "insight/insight-38",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "insight/insight-51",
+    "sharehub/share-15",
+    "insight/insight-67",
+    "dentai/dentai-32",
+    "sharehub/share-54",
+    "insight/insight-112",
+    "sharehub/share-56"
+   ]
+  },
+  {
    "key": "کشیدن_دندان",
    "tag": "#کشیدن_دندان",
    "domain": null,
@@ -2767,41 +2842,6 @@
     "chairside/chairside-44",
     "sharehub/share-43",
     "sharehub/share-50"
-   ]
-  },
-  {
-   "key": "دقت_اسکن",
-   "tag": "#دقت_اسکن",
-   "domain": null,
-   "words": 2,
-   "definition": "دقتِ نهاییِ اسکن و آنچه آن را خراب می‌کند.",
-   "use_when": "مقاله دقت را بسنجد یا بهبود دهد.",
-   "aliases": [
-    "scanning accuracy",
-    "trueness",
-    "صحت اسکن",
-    "scan accuracy",
-    "دقت اسکنر"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 15,
-   "content_ids": [
-    "episodes/episode-122-2",
-    "episodes/episode-128-1",
-    "episodes/episode-133",
-    "episodes/episode-144-2",
-    "sharehub/share-2",
-    "insight/insight-33",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "insight/insight-51",
-    "metanotes/meta-16",
-    "sharehub/share-15",
-    "dentai/dentai-29",
-    "dentai/dentai-32",
-    "insight/insight-74",
-    "sharehub/share-54"
    ]
   },
   {
@@ -2915,43 +2955,6 @@
     "notecast/episode-43",
     "insight/insight-88",
     "sharehub/share-34"
-   ]
-  },
-  {
-   "key": "قالب_گیری_دیجیتال",
-   "tag": "#قالب‌گیری_دیجیتال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ثبتِ دیجیتالِ آرچ با اسکنر، به‌جای قالب سنتی.",
-   "use_when": "مقاله دقت یا پروتکلِ ثبت دیجیتال را بررسی کند.",
-   "aliases": [
-    "قالب گیری دیجیتال",
-    "digital impression",
-    "اسکن دیجیتال",
-    "digital scan",
-    "دیجیتال اسکن"
-   ],
-   "variants": [
-    "#اسکن_دیجیتال"
-   ],
-   "co_tags": [],
-   "count": 15,
-   "content_ids": [
-    "insight/insight-3",
-    "insight/insight-19",
-    "litecast/lite-CAST14",
-    "insight/insight-26",
-    "insight/insight-31",
-    "insight/insight-33",
-    "insight/insight-38",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "insight/insight-51",
-    "sharehub/share-15",
-    "insight/insight-67",
-    "dentai/dentai-32",
-    "sharehub/share-54",
-    "insight/insight-112"
    ]
   },
   {
@@ -3136,6 +3139,58 @@
     "dentai/dentai-34",
     "chairside/chairside-38",
     "sharehub/share-50"
+   ]
+  },
+  {
+   "key": "ایمپلنت_فول_آرچ",
+   "tag": "#ایمپلنت_فول_آرچ",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
+   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
+   "aliases": [
+    "all on 4",
+    "all-on-4",
+    "آل آن فور",
+    "allon4",
+    "ایمپلنت تمام فک",
+    "all on 6",
+    "all on four",
+    "all-on-four",
+    "allonfour",
+    "Full Arch Implant",
+    "ایمپلنت فول ماوس",
+    "full mouth implant",
+    "ایمپلنت تمام دهان",
+    "فول ماوس ایمپلنت",
+    "all on x",
+    "آل آن سیکس",
+    "all on six"
+   ],
+   "variants": [
+    "#AllOn4",
+    "#Full_Arch_Implant",
+    "#ایمپلنت_فول_ماوس"
+   ],
+   "co_tags": [
+    "#Full_Arch_Implant"
+   ],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-108",
+    "episodes/episode-123-4",
+    "episodes/episode-144-1",
+    "insight/insight-51",
+    "metanotes/meta-17",
+    "sharehub/share-11",
+    "insight/insight-60",
+    "dentai/dentai-31",
+    "insight/insight-80",
+    "insight/insight-82",
+    "sharehub/share-38",
+    "sharehub/share-46",
+    "insight/insight-113",
+    "sharehub/share-56"
    ]
   },
   {
@@ -3437,57 +3492,6 @@
     "insight/insight-85",
     "insight/insight-86",
     "chairside/chairside-47"
-   ]
-  },
-  {
-   "key": "ایمپلنت_فول_آرچ",
-   "tag": "#ایمپلنت_فول_آرچ",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
-   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
-   "aliases": [
-    "all on 4",
-    "all-on-4",
-    "آل آن فور",
-    "allon4",
-    "ایمپلنت تمام فک",
-    "all on 6",
-    "all on four",
-    "all-on-four",
-    "allonfour",
-    "Full Arch Implant",
-    "ایمپلنت فول ماوس",
-    "full mouth implant",
-    "ایمپلنت تمام دهان",
-    "فول ماوس ایمپلنت",
-    "all on x",
-    "آل آن سیکس",
-    "all on six"
-   ],
-   "variants": [
-    "#AllOn4",
-    "#Full_Arch_Implant",
-    "#ایمپلنت_فول_ماوس"
-   ],
-   "co_tags": [
-    "#Full_Arch_Implant"
-   ],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-108",
-    "episodes/episode-123-4",
-    "episodes/episode-144-1",
-    "insight/insight-51",
-    "metanotes/meta-17",
-    "sharehub/share-11",
-    "insight/insight-60",
-    "dentai/dentai-31",
-    "insight/insight-80",
-    "insight/insight-82",
-    "sharehub/share-38",
-    "sharehub/share-46",
-    "insight/insight-113"
    ]
   },
   {
@@ -7449,6 +7453,31 @@
    ]
   },
   {
+   "key": "خطای_استیچینگ",
+   "tag": "#خطای_استیچینگ",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "خطایی که با بزرگ‌تر شدنِ محدوده‌ی اسکن انباشته می‌شود.",
+   "use_when": "مقاله وسعتِ اسکن را عاملِ افتِ دقت بداند.",
+   "aliases": [
+    "stitching",
+    "استیچینگ",
+    "خطای دوخت",
+    "stitching error",
+    "خطای استیچ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-33",
+    "insight/insight-51",
+    "sharehub/share-54",
+    "insight/insight-112",
+    "sharehub/share-56"
+   ]
+  },
+  {
    "key": "درمان_بین_رشته_ای",
    "tag": "#درمان_بین_رشته_ای",
    "domain": null,
@@ -8676,30 +8705,6 @@
    ]
   },
   {
-   "key": "خطای_استیچینگ",
-   "tag": "#خطای_استیچینگ",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "خطایی که با بزرگ‌تر شدنِ محدوده‌ی اسکن انباشته می‌شود.",
-   "use_when": "مقاله وسعتِ اسکن را عاملِ افتِ دقت بداند.",
-   "aliases": [
-    "stitching",
-    "استیچینگ",
-    "خطای دوخت",
-    "stitching error",
-    "خطای استیچ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-33",
-    "insight/insight-51",
-    "sharehub/share-54",
-    "insight/insight-112"
-   ]
-  },
-  {
    "key": "دیواره_نازک",
    "tag": "#دیواره_نازک",
    "domain": "clinical",
@@ -9914,6 +9919,33 @@
     "episodes/episode-145",
     "sharehub/share-17",
     "sharehub/share-42"
+   ]
+  },
+  {
+   "key": "اسکن_فول_آرچ",
+   "tag": "#اسکن_فول_آرچ",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "اسکنِ دیجیتالِ تمامِ قوس روی ایمپلنت‌های متعدد و چالشِ دقتِ آن.",
+   "use_when": "مقاله اسکنِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
+   "aliases": [
+    "full arch scan",
+    "اسکن فول آرچ",
+    "full-arch scan",
+    "اسکن تمام قوس",
+    "complete arch scan",
+    "full arch scanning",
+    "full arch digital impression",
+    "اسکن کل قوس",
+    "اسکن ایمپلنت فول آرچ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-144-2",
+    "insight/insight-112",
+    "sharehub/share-56"
    ]
   },
   {
@@ -11349,6 +11381,32 @@
    ]
   },
   {
+   "key": "قالبگیری_اوپن_تری",
+   "tag": "#قالبگیری_اوپن_تری",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "قالب‌گیری ایمپلنت با تری باز: ایمپرشن کوپینگ (یا قطعه‌ی متصل به آن) داخل قالب می‌ماند و پس از باز کردن پیچ از روی تری، همراه قالب از دهان خارج می‌شود تا موقعیت ایمپلنت به کست منتقل شود.",
+   "use_when": "مقاله روش قالب‌گیری open tray، یا خارج کردن کوپینگ یا اباتمنت همراه قالب را توضیح دهد.",
+   "aliases": [
+    "open tray",
+    "open tray impression",
+    "open-tray",
+    "قالب اوپن تری",
+    "قالب‌گیری تری باز",
+    "pick-up coping impression",
+    "اوپن تری",
+    "تری باز"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-83",
+    "insight/insight-111",
+    "sharehub/share-56"
+   ]
+  },
+  {
    "key": "لایبرری_دیجیتال",
    "tag": "#لایبرری_دیجیتال",
    "domain": "clinical",
@@ -12670,32 +12728,6 @@
    "content_ids": [
     "litecast/lite-CAST8",
     "litecast/lite-CAST9"
-   ]
-  },
-  {
-   "key": "اسکن_فول_آرچ",
-   "tag": "#اسکن_فول_آرچ",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "اسکنِ دیجیتالِ تمامِ قوس روی ایمپلنت‌های متعدد و چالشِ دقتِ آن.",
-   "use_when": "مقاله اسکنِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
-   "aliases": [
-    "full arch scan",
-    "اسکن فول آرچ",
-    "full-arch scan",
-    "اسکن تمام قوس",
-    "complete arch scan",
-    "full arch scanning",
-    "full arch digital impression",
-    "اسکن کل قوس",
-    "اسکن ایمپلنت فول آرچ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-144-2",
-    "insight/insight-112"
    ]
   },
   {
@@ -14333,31 +14365,6 @@
    "content_ids": [
     "insight/insight-80",
     "insight/insight-83"
-   ]
-  },
-  {
-   "key": "قالبگیری_اوپن_تری",
-   "tag": "#قالبگیری_اوپن_تری",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "قالب‌گیری ایمپلنت با تری باز: ایمپرشن کوپینگ (یا قطعه‌ی متصل به آن) داخل قالب می‌ماند و پس از باز کردن پیچ از روی تری، همراه قالب از دهان خارج می‌شود تا موقعیت ایمپلنت به کست منتقل شود.",
-   "use_when": "مقاله روش قالب‌گیری open tray، یا خارج کردن کوپینگ یا اباتمنت همراه قالب را توضیح دهد.",
-   "aliases": [
-    "open tray",
-    "open tray impression",
-    "open-tray",
-    "قالب اوپن تری",
-    "قالب‌گیری تری باز",
-    "pick-up coping impression",
-    "اوپن تری",
-    "تری باز"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-83",
-    "insight/insight-111"
    ]
   },
   {
