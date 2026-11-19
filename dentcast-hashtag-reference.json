@@ -263,7 +263,7 @@
     "#اینسایت"
    ],
    "co_tags": [],
-   "count": 131,
+   "count": 132,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -395,7 +395,8 @@
     "insight/insight-110",
     "insight/insight-111",
     "insight/insight-112",
-    "insight/insight-113"
+    "insight/insight-113",
+    "insight/insight-114"
    ]
   },
   {
@@ -2810,6 +2811,59 @@
    ]
   },
   {
+   "key": "ایمپلنت_فول_آرچ",
+   "tag": "#ایمپلنت_فول_آرچ",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
+   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
+   "aliases": [
+    "all on 4",
+    "all-on-4",
+    "آل آن فور",
+    "allon4",
+    "ایمپلنت تمام فک",
+    "all on 6",
+    "all on four",
+    "all-on-four",
+    "allonfour",
+    "Full Arch Implant",
+    "ایمپلنت فول ماوس",
+    "full mouth implant",
+    "ایمپلنت تمام دهان",
+    "فول ماوس ایمپلنت",
+    "all on x",
+    "آل آن سیکس",
+    "all on six"
+   ],
+   "variants": [
+    "#AllOn4",
+    "#Full_Arch_Implant",
+    "#ایمپلنت_فول_ماوس"
+   ],
+   "co_tags": [
+    "#Full_Arch_Implant"
+   ],
+   "count": 15,
+   "content_ids": [
+    "episodes/episode-108",
+    "episodes/episode-123-4",
+    "episodes/episode-144-1",
+    "insight/insight-51",
+    "metanotes/meta-17",
+    "sharehub/share-11",
+    "insight/insight-60",
+    "dentai/dentai-31",
+    "insight/insight-80",
+    "insight/insight-82",
+    "sharehub/share-38",
+    "sharehub/share-46",
+    "insight/insight-113",
+    "sharehub/share-56",
+    "insight/insight-114"
+   ]
+  },
+  {
    "key": "حفظ_دندان",
    "tag": "#حفظ_دندان",
    "domain": "clinical",
@@ -3139,58 +3193,6 @@
     "dentai/dentai-34",
     "chairside/chairside-38",
     "sharehub/share-50"
-   ]
-  },
-  {
-   "key": "ایمپلنت_فول_آرچ",
-   "tag": "#ایمپلنت_فول_آرچ",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
-   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
-   "aliases": [
-    "all on 4",
-    "all-on-4",
-    "آل آن فور",
-    "allon4",
-    "ایمپلنت تمام فک",
-    "all on 6",
-    "all on four",
-    "all-on-four",
-    "allonfour",
-    "Full Arch Implant",
-    "ایمپلنت فول ماوس",
-    "full mouth implant",
-    "ایمپلنت تمام دهان",
-    "فول ماوس ایمپلنت",
-    "all on x",
-    "آل آن سیکس",
-    "all on six"
-   ],
-   "variants": [
-    "#AllOn4",
-    "#Full_Arch_Implant",
-    "#ایمپلنت_فول_ماوس"
-   ],
-   "co_tags": [
-    "#Full_Arch_Implant"
-   ],
-   "count": 14,
-   "content_ids": [
-    "episodes/episode-108",
-    "episodes/episode-123-4",
-    "episodes/episode-144-1",
-    "insight/insight-51",
-    "metanotes/meta-17",
-    "sharehub/share-11",
-    "insight/insight-60",
-    "dentai/dentai-31",
-    "insight/insight-80",
-    "insight/insight-82",
-    "sharehub/share-38",
-    "sharehub/share-46",
-    "insight/insight-113",
-    "sharehub/share-56"
    ]
   },
   {
@@ -4835,6 +4837,36 @@
    ]
   },
   {
+   "key": "کانتی_لیور",
+   "tag": "#کانتی_لیور",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "واحدِ طره‌ای که فقط از یک سمت تکیه دارد.",
+   "use_when": "مقاله کانتی‌لیور را انتخاب یا رد کند.",
+   "aliases": [
+    "کانتیلور",
+    "کانتی‌لیور",
+    "کانتیلیور",
+    "cantilever",
+    "کانتیلر",
+    "کنتیلور"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "dentai/dentai-7",
+    "sharehub/share-3",
+    "metanotes/meta-18",
+    "episodes/episode-161",
+    "dentai/dentai-31",
+    "chairside/chairside-36",
+    "episodes/episode-162",
+    "chairside/chairside-52",
+    "insight/insight-114"
+   ]
+  },
+  {
    "key": "ids",
    "tag": "#IDS",
    "domain": null,
@@ -5319,35 +5351,6 @@
    ]
   },
   {
-   "key": "کانتی_لیور",
-   "tag": "#کانتی_لیور",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "واحدِ طره‌ای که فقط از یک سمت تکیه دارد.",
-   "use_when": "مقاله کانتی‌لیور را انتخاب یا رد کند.",
-   "aliases": [
-    "کانتیلور",
-    "کانتی‌لیور",
-    "کانتیلیور",
-    "cantilever",
-    "کانتیلر",
-    "کنتیلور"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "dentai/dentai-7",
-    "sharehub/share-3",
-    "metanotes/meta-18",
-    "episodes/episode-161",
-    "dentai/dentai-31",
-    "chairside/chairside-36",
-    "episodes/episode-162",
-    "chairside/chairside-52"
-   ]
-  },
-  {
    "key": "گروپ_فانکشن",
    "tag": "#گروپ_فانکشن",
    "domain": "clinical",
@@ -5441,6 +5444,34 @@
    ]
   },
   {
+   "key": "اکلوژن_ایمپلنت",
+   "tag": "#اکلوژن_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "طرح و تنظیمِ اکلوژن روی رستوریشن‌های ایمپلنتی (implant-protected occlusion) — ایمپلنت لیگامان پریودنتال و حسِ عمقیِ دندان را ندارد، پس شدتِ تماس، بارِ طرفی و طرحِ اکلوزال روی آن جداگانه تصمیم گرفته می‌شود؛ و نقشِ اکلوژن در عوارضِ مکانیکی (شل شدن و شکستِ پیچ، شکستِ اباتمنت و فیکسچر) و تحلیلِ استخوانِ اطرافِ ایمپلنت.",
+   "use_when": "مقاله بگوید اکلوژن روی ایمپلنت چطور طراحی یا تنظیم شود، یا اثرِ اکلوژن/اورلود را بر ایمپلنت تعیین تکلیف کند؛ نه هر مقاله‌ی ایمپلنتی که اکلوژن را فقط نام می‌برد.",
+   "aliases": [
+    "implant occlusion",
+    "implant protected occlusion",
+    "implant-protected occlusion",
+    "اکلوژن روی ایمپلنت",
+    "اکلوزن ایمپلنت",
+    "اکلوژن ایمپلنتی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-23",
+    "episodes/episode-60",
+    "notecast/episode-23",
+    "insight/insight-47",
+    "sharehub/share-28",
+    "insight/insight-104",
+    "insight/insight-114"
+   ]
+  },
+  {
    "key": "باندینگ_سرامیک",
    "tag": "#باندینگ_سرامیک",
    "domain": "clinical",
@@ -5465,6 +5496,44 @@
     "episodes/episode-136",
     "notecast/episode-9",
     "notecast/episode-10"
+   ]
+  },
+  {
+   "key": "براکسیسم",
+   "tag": "#براکسیسم",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "سایشِ پارافانکشنالِ دندان‌ها.",
+   "use_when": "مقاله بروکسیسم را تشخیص بدهد یا اثرش را مدیریت کند.",
+   "aliases": [
+    "بروکسیسم",
+    "براکسیزم",
+    "بروکسیزم",
+    "bruxism",
+    "دندان قروچه",
+    "clenching",
+    "کلینچینگ",
+    "ساییدن دندان",
+    "teeth grinding",
+    "بروکسر",
+    "براکسر"
+   ],
+   "variants": [
+    "#bruxism",
+    "#دندان_قروچه"
+   ],
+   "co_tags": [
+    "#bruxism"
+   ],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-145",
+    "dentai/dentai-23",
+    "dentai/dentai-26",
+    "sharehub/share-11",
+    "sharehub/share-17",
+    "chairside/chairside-36",
+    "insight/insight-114"
    ]
   },
   {
@@ -6240,70 +6309,6 @@
     "insight/insight-61",
     "insight/insight-79",
     "chairside/chairside-50"
-   ]
-  },
-  {
-   "key": "اکلوژن_ایمپلنت",
-   "tag": "#اکلوژن_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "طرح و تنظیمِ اکلوژن روی رستوریشن‌های ایمپلنتی (implant-protected occlusion) — ایمپلنت لیگامان پریودنتال و حسِ عمقیِ دندان را ندارد، پس شدتِ تماس، بارِ طرفی و طرحِ اکلوزال روی آن جداگانه تصمیم گرفته می‌شود؛ و نقشِ اکلوژن در عوارضِ مکانیکی (شل شدن و شکستِ پیچ، شکستِ اباتمنت و فیکسچر) و تحلیلِ استخوانِ اطرافِ ایمپلنت.",
-   "use_when": "مقاله بگوید اکلوژن روی ایمپلنت چطور طراحی یا تنظیم شود، یا اثرِ اکلوژن/اورلود را بر ایمپلنت تعیین تکلیف کند؛ نه هر مقاله‌ی ایمپلنتی که اکلوژن را فقط نام می‌برد.",
-   "aliases": [
-    "implant occlusion",
-    "implant protected occlusion",
-    "implant-protected occlusion",
-    "اکلوژن روی ایمپلنت",
-    "اکلوزن ایمپلنت",
-    "اکلوژن ایمپلنتی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-23",
-    "episodes/episode-60",
-    "notecast/episode-23",
-    "insight/insight-47",
-    "sharehub/share-28",
-    "insight/insight-104"
-   ]
-  },
-  {
-   "key": "براکسیسم",
-   "tag": "#براکسیسم",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "سایشِ پارافانکشنالِ دندان‌ها.",
-   "use_when": "مقاله بروکسیسم را تشخیص بدهد یا اثرش را مدیریت کند.",
-   "aliases": [
-    "بروکسیسم",
-    "براکسیزم",
-    "بروکسیزم",
-    "bruxism",
-    "دندان قروچه",
-    "clenching",
-    "کلینچینگ",
-    "ساییدن دندان",
-    "teeth grinding",
-    "بروکسر",
-    "براکسر"
-   ],
-   "variants": [
-    "#bruxism",
-    "#دندان_قروچه"
-   ],
-   "co_tags": [
-    "#bruxism"
-   ],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-145",
-    "dentai/dentai-23",
-    "dentai/dentai-26",
-    "sharehub/share-11",
-    "sharehub/share-17",
-    "chairside/chairside-36"
    ]
   },
   {
@@ -9155,6 +9160,29 @@
    ]
   },
   {
+   "key": "عوارض_مکانیکی",
+   "tag": "#عوارض_مکانیکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "شکستِ قطعات: پیچ، پرسلن، فریم.",
+   "use_when": "مقاله عارضه‌ی مکانیکی را پیش‌بینی یا مدیریت کند.",
+   "aliases": [
+    "mechanical complications",
+    "عارضه مکانیکی",
+    "شکست قطعات پروتز",
+    "کامپلیکیشن مکانیکی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "chairside/chairside-23",
+    "sharehub/share-11",
+    "sharehub/share-28",
+    "insight/insight-114"
+   ]
+  },
+  {
    "key": "فرم_رزیستنس",
    "tag": "#فرم_رزیستنس",
    "domain": "clinical",
@@ -10730,6 +10758,34 @@
    ]
   },
   {
+   "key": "تیتانیوم_بار",
+   "tag": "#تیتانیوم_بار",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بار تیتانیومی به‌عنوان ساختار صلب یا تقویت‌کننده در پروتز متکی بر ایمپلنت.",
+   "use_when": "مقاله ضرورت، نقش، طراحی یا روش استفاده از بار تیتانیومی در ساخت یا تقویت پروتز ایمپلنتی را توضیح دهد.",
+   "aliases": [
+    "titanium bar",
+    "تایتانیوم بار",
+    "تایتانیوم‌بار",
+    "تیتانیوم‌بار",
+    "بار تیتانیومی",
+    "تیتانیم بار",
+    "بار فلزی فول آرچ",
+    "ti bar",
+    "بار تایتانیومی",
+    "بار تیتانیوم"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "sharehub/share-35",
+    "sharehub/share-46",
+    "insight/insight-114"
+   ]
+  },
+  {
    "key": "جمینای",
    "tag": "#جمینای",
    "domain": "ai",
@@ -11215,6 +11271,29 @@
    ]
   },
   {
+   "key": "طراحی_فریم_ورک",
+   "tag": "#طراحی_فریم_ورک",
+   "domain": null,
+   "words": 3,
+   "definition": "طرحِ اسکلتِ فلزی یا سرامیکیِ پروتز.",
+   "use_when": "مقاله طرح فریم‌ورک را عاملِ نتیجه بداند.",
+   "aliases": [
+    "framework design",
+    "فریم ورک پروتز",
+    "طراحی فریم",
+    "دیزاین فریم ورک",
+    "prosthetic framework"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "notecast/episode-13",
+    "dentai/dentai-7",
+    "insight/insight-114"
+   ]
+  },
+  {
    "key": "طراحی_پروتز",
    "tag": "#طراحی_پروتز",
    "domain": "clinical",
@@ -11238,28 +11317,6 @@
     "episodes/episode-112",
     "sharehub/share-3",
     "sharehub/share-55"
-   ]
-  },
-  {
-   "key": "عوارض_مکانیکی",
-   "tag": "#عوارض_مکانیکی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "شکستِ قطعات: پیچ، پرسلن، فریم.",
-   "use_when": "مقاله عارضه‌ی مکانیکی را پیش‌بینی یا مدیریت کند.",
-   "aliases": [
-    "mechanical complications",
-    "عارضه مکانیکی",
-    "شکست قطعات پروتز",
-    "کامپلیکیشن مکانیکی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "chairside/chairside-23",
-    "sharehub/share-11",
-    "sharehub/share-28"
    ]
   },
   {
@@ -13338,33 +13395,6 @@
    ]
   },
   {
-   "key": "تیتانیوم_بار",
-   "tag": "#تیتانیوم_بار",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "بار تیتانیومی به‌عنوان ساختار صلب یا تقویت‌کننده در پروتز متکی بر ایمپلنت.",
-   "use_when": "مقاله ضرورت، نقش، طراحی یا روش استفاده از بار تیتانیومی در ساخت یا تقویت پروتز ایمپلنتی را توضیح دهد.",
-   "aliases": [
-    "titanium bar",
-    "تایتانیوم بار",
-    "تایتانیوم‌بار",
-    "تیتانیوم‌بار",
-    "بار تیتانیومی",
-    "تیتانیم بار",
-    "بار فلزی فول آرچ",
-    "ti bar",
-    "بار تایتانیومی",
-    "بار تیتانیوم"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "sharehub/share-35",
-    "sharehub/share-46"
-   ]
-  },
-  {
    "key": "ثبات_قبل_از_سمان",
    "tag": "#ثبات_قبل_از_سمان",
    "domain": "clinical",
@@ -14149,28 +14179,6 @@
    "content_ids": [
     "dentai/promptologist/prompt1-4",
     "dentai/promptologist/prompt7-2"
-   ]
-  },
-  {
-   "key": "طراحی_فریم_ورک",
-   "tag": "#طراحی_فریم_ورک",
-   "domain": null,
-   "words": 3,
-   "definition": "طرحِ اسکلتِ فلزی یا سرامیکیِ پروتز.",
-   "use_when": "مقاله طرح فریم‌ورک را عاملِ نتیجه بداند.",
-   "aliases": [
-    "framework design",
-    "فریم ورک پروتز",
-    "طراحی فریم",
-    "دیزاین فریم ورک",
-    "prosthetic framework"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "notecast/episode-13",
-    "dentai/dentai-7"
    ]
   },
   {
