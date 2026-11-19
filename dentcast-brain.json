@@ -19010,5 +19010,37 @@
       "secondary": [],
       "subtopic": "restoration-design"
     }
+  },
+  {
+    "type": "notecast",
+    "id": "45",
+    "title": "مقایسه لودینگ فوری (Immediate) و زودهنگام (Early) در ایمپلنت‌های تک‌واحدی",
+    "caption": "خلاصه‌ای از دنت‌کست بر اساس مرور نظام‌مند Pigozzo و همکاران (۲۰۱۸)؛ مقایسهٔ بقا و تحلیل استخوان مارجینال ایمپلنت‌های تک‌واحدی در دو پروتکل Immediate و Early Loading.",
+    "hashtags": [
+      "#خلاصه_اپیزود",
+      "#زمان_لود_ایمپلنت",
+      "#ثبات_اولیه",
+      "#تحلیل_استخوان_کرستال",
+      "#بقای_ایمپلنت",
+      "#ایمپلنت"
+    ],
+    "keywords": [
+      "immediate loading",
+      "early loading",
+      "single implant crown",
+      "implant survival rate",
+      "marginal bone loss",
+      "insertion torque",
+      "primary stability",
+      "loading protocol",
+      "systematic review",
+      "microgap"
+    ],
+    "url": "/notecast/episode-45.html",
+    "pillar": {
+      "primary": "implantology",
+      "secondary": [],
+      "subtopic": "surgical-planning"
+    }
   }
 ]

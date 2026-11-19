@@ -418,7 +418,7 @@
     "#Implant"
    ],
    "co_tags": [],
-   "count": 96,
+   "count": 97,
    "content_ids": [
     "episodes/episode-23",
     "episodes/episode-24",
@@ -515,7 +515,8 @@
     "chairside/chairside-38",
     "sharehub/share-35",
     "chairside/chairside-42",
-    "chairside/chairside-44"
+    "chairside/chairside-44",
+    "notecast/episode-45"
    ]
   },
   {
@@ -1122,7 +1123,7 @@
     "#نوت_کست"
    ],
    "co_tags": [],
-   "count": 43,
+   "count": 44,
    "content_ids": [
     "notecast/episode-2",
     "notecast/episode-3",
@@ -1166,7 +1167,8 @@
     "notecast/episode-41",
     "notecast/episode-42",
     "notecast/episode-43",
-    "notecast/episode-44"
+    "notecast/episode-44",
+    "notecast/episode-45"
    ]
   },
   {
@@ -3705,6 +3707,43 @@
    ]
   },
   {
+   "key": "تحلیل_استخوان_کرستال",
+   "tag": "#تحلیل_استخوان_کرستال",
+   "domain": null,
+   "words": 3,
+   "definition": "MBL — تحلیل استخوانِ حاشیه‌ای اطراف ایمپلنت.",
+   "use_when": "مقاله MBL را پیامدِ کمّی گزارش کند.",
+   "aliases": [
+    "marginal bone loss",
+    "MBL",
+    "تحلیل استخوان حاشیه ای",
+    "تحلیل کرستال",
+    "تحلیل استخوان مارژینال",
+    "استخوان مارژینال",
+    "crestal bone loss",
+    "تحلیل استخوان مارجینال",
+    "تحلیل کرست",
+    "ام بی ال"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-59",
+    "episodes/episode-82",
+    "episodes/episode-110",
+    "episodes/episode-111",
+    "episodes/episode-130",
+    "notecast/episode-26",
+    "sharehub/share-13",
+    "episodes/episode-161",
+    "episodes/episode-162",
+    "sharehub/share-44",
+    "sharehub/share-45",
+    "notecast/episode-45"
+   ]
+  },
+  {
    "key": "سایت_مطب",
    "tag": "#سایت_مطب",
    "domain": "web",
@@ -3949,42 +3988,6 @@
     "chairside/chairside-9",
     "insight/insight-49",
     "metanotes/meta-21"
-   ]
-  },
-  {
-   "key": "تحلیل_استخوان_کرستال",
-   "tag": "#تحلیل_استخوان_کرستال",
-   "domain": null,
-   "words": 3,
-   "definition": "MBL — تحلیل استخوانِ حاشیه‌ای اطراف ایمپلنت.",
-   "use_when": "مقاله MBL را پیامدِ کمّی گزارش کند.",
-   "aliases": [
-    "marginal bone loss",
-    "MBL",
-    "تحلیل استخوان حاشیه ای",
-    "تحلیل کرستال",
-    "تحلیل استخوان مارژینال",
-    "استخوان مارژینال",
-    "crestal bone loss",
-    "تحلیل استخوان مارجینال",
-    "تحلیل کرست",
-    "ام بی ال"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-59",
-    "episodes/episode-82",
-    "episodes/episode-110",
-    "episodes/episode-111",
-    "episodes/episode-130",
-    "notecast/episode-26",
-    "sharehub/share-13",
-    "episodes/episode-161",
-    "episodes/episode-162",
-    "sharehub/share-44",
-    "sharehub/share-45"
    ]
   },
   {
@@ -4520,6 +4523,57 @@
    ]
   },
   {
+   "key": "زمان_لود_ایمپلنت",
+   "tag": "#زمان_لود_ایمپلنت",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "زمان‌بندی و پروتکلِ بارگذاریِ ایمپلنت — فوری، زودهنگام یا تأخیری — و اثرش بر ثبات، استخوانِ کرستال و موفقیت؛ همان «بارگذاری ایمپلنت».",
+   "use_when": "مقاله زمان یا پروتکلِ لود را انتخاب، مقایسه یا برای گروهی از بیماران (مثلاً دیابتی‌ها) محدود کند. اضافه‌بارِ اکلوزالی #اورلود_اکلوزالی است.",
+   "aliases": [
+    "loading protocol",
+    "immediate loading",
+    "لود فوری",
+    "لود زودهنگام",
+    "زمان لود",
+    "immediate load",
+    "ایمیدیت لود",
+    "early load",
+    "ارلی لود",
+    "implant loading",
+    "بارگذاری ایمپلنت",
+    "بارگذاری فیکسچر",
+    "بارگزاری ایمپلنت",
+    "زمان بارگذاری",
+    "پروتکل بارگذاری",
+    "پروتکل لود",
+    "بارگذاری فوری",
+    "بارگذاری زودهنگام",
+    "بارگذاری تاخیری",
+    "لود تاخیری",
+    "delayed loading",
+    "early loading",
+    "loading time",
+    "لودینگ ایمپلنت"
+   ],
+   "variants": [
+    "#بارگذاری_ایمپلنت"
+   ],
+   "co_tags": [],
+   "count": 10,
+   "content_ids": [
+    "episodes/episode-26",
+    "episodes/episode-45",
+    "episodes/episode-52",
+    "notecast/episode-26",
+    "litecast/lite-CAST13",
+    "sharehub/share-13",
+    "dentai/dentai-31",
+    "insight/insight-82",
+    "sharehub/share-35",
+    "notecast/episode-45"
+   ]
+  },
+  {
    "key": "سمان_موقت",
    "tag": "#سمان_موقت",
    "domain": "clinical",
@@ -4710,56 +4764,6 @@
     "insight/insight-87",
     "insight/insight-95",
     "sharehub/share-36"
-   ]
-  },
-  {
-   "key": "زمان_لود_ایمپلنت",
-   "tag": "#زمان_لود_ایمپلنت",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "زمان‌بندی و پروتکلِ بارگذاریِ ایمپلنت — فوری، زودهنگام یا تأخیری — و اثرش بر ثبات، استخوانِ کرستال و موفقیت؛ همان «بارگذاری ایمپلنت».",
-   "use_when": "مقاله زمان یا پروتکلِ لود را انتخاب، مقایسه یا برای گروهی از بیماران (مثلاً دیابتی‌ها) محدود کند. اضافه‌بارِ اکلوزالی #اورلود_اکلوزالی است.",
-   "aliases": [
-    "loading protocol",
-    "immediate loading",
-    "لود فوری",
-    "لود زودهنگام",
-    "زمان لود",
-    "immediate load",
-    "ایمیدیت لود",
-    "early load",
-    "ارلی لود",
-    "implant loading",
-    "بارگذاری ایمپلنت",
-    "بارگذاری فیکسچر",
-    "بارگزاری ایمپلنت",
-    "زمان بارگذاری",
-    "پروتکل بارگذاری",
-    "پروتکل لود",
-    "بارگذاری فوری",
-    "بارگذاری زودهنگام",
-    "بارگذاری تاخیری",
-    "لود تاخیری",
-    "delayed loading",
-    "early loading",
-    "loading time",
-    "لودینگ ایمپلنت"
-   ],
-   "variants": [
-    "#بارگذاری_ایمپلنت"
-   ],
-   "co_tags": [],
-   "count": 9,
-   "content_ids": [
-    "episodes/episode-26",
-    "episodes/episode-45",
-    "episodes/episode-52",
-    "notecast/episode-26",
-    "litecast/lite-CAST13",
-    "sharehub/share-13",
-    "dentai/dentai-31",
-    "insight/insight-82",
-    "sharehub/share-35"
    ]
   },
   {
@@ -6399,6 +6403,35 @@
    ]
   },
   {
+   "key": "ثبات_اولیه",
+   "tag": "#ثبات_اولیه",
+   "domain": null,
+   "words": 2,
+   "definition": "گیرِ مکانیکیِ ایمپلنت در لحظه‌ی جراحی.",
+   "use_when": "مقاله ثبات اولیه را شرطِ لود بداند.",
+   "aliases": [
+    "primary stability",
+    "ثبات اولیه ایمپلنت",
+    "ISQ",
+    "insertion torque",
+    "تورک اینسرشن",
+    "پرایمری استابیلیتی",
+    "استابیلیتی اولیه",
+    "initial stability"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-45",
+    "notecast/episode-25",
+    "notecast/episode-26",
+    "dentai/dentai-31",
+    "insight/insight-82",
+    "notecast/episode-45"
+   ]
+  },
+  {
    "key": "جراحی_ایمپلنت",
    "tag": "#جراحی_ایمپلنت",
    "domain": "clinical",
@@ -7372,34 +7405,6 @@
     "chairside/chairside-39",
     "insight/insight-95",
     "chairside/chairside-52"
-   ]
-  },
-  {
-   "key": "ثبات_اولیه",
-   "tag": "#ثبات_اولیه",
-   "domain": null,
-   "words": 2,
-   "definition": "گیرِ مکانیکیِ ایمپلنت در لحظه‌ی جراحی.",
-   "use_when": "مقاله ثبات اولیه را شرطِ لود بداند.",
-   "aliases": [
-    "primary stability",
-    "ثبات اولیه ایمپلنت",
-    "ISQ",
-    "insertion torque",
-    "تورک اینسرشن",
-    "پرایمری استابیلیتی",
-    "استابیلیتی اولیه",
-    "initial stability"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-45",
-    "notecast/episode-25",
-    "notecast/episode-26",
-    "dentai/dentai-31",
-    "insight/insight-82"
    ]
   },
   {
@@ -8425,6 +8430,35 @@
     "chairside/chairside-7",
     "insight/insight-58",
     "insight/insight-105"
+   ]
+  },
+  {
+   "key": "بقای_ایمپلنت",
+   "tag": "#بقای_ایمپلنت",
+   "domain": null,
+   "words": 2,
+   "definition": "نرخِ ماندگاریِ ایمپلنت.",
+   "use_when": "مقاله بقا را کمّی گزارش کند.",
+   "aliases": [
+    "implant survival",
+    "بقای فیکسچر",
+    "سروایوال ایمپلنت",
+    "ماندگاری ایمپلنت",
+    "طول عمر ایمپلنت",
+    "implant longevity",
+    "دوام ایمپلنت",
+    "بقاء ایمپلنت"
+   ],
+   "variants": [
+    "#Implant_Survival"
+   ],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "notecast/episode-25",
+    "notecast/episode-26",
+    "sharehub/share-44",
+    "notecast/episode-45"
    ]
   },
   {
@@ -10294,34 +10328,6 @@
     "insight/insight-31",
     "chairside/chairside-17",
     "insight/insight-48"
-   ]
-  },
-  {
-   "key": "بقای_ایمپلنت",
-   "tag": "#بقای_ایمپلنت",
-   "domain": null,
-   "words": 2,
-   "definition": "نرخِ ماندگاریِ ایمپلنت.",
-   "use_when": "مقاله بقا را کمّی گزارش کند.",
-   "aliases": [
-    "implant survival",
-    "بقای فیکسچر",
-    "سروایوال ایمپلنت",
-    "ماندگاری ایمپلنت",
-    "طول عمر ایمپلنت",
-    "implant longevity",
-    "دوام ایمپلنت",
-    "بقاء ایمپلنت"
-   ],
-   "variants": [
-    "#Implant_Survival"
-   ],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "notecast/episode-25",
-    "notecast/episode-26",
-    "sharehub/share-44"
    ]
   },
   {

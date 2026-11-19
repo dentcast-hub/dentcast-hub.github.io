@@ -60840,12 +60840,12 @@
           },
           {
             "id": "u16",
-            "claim_quote": "بقای ایمپلنت (Survival Rate): در پیگیری ۱ تا ۳ ساله، هیچ تفاوت آماری معنی‌داری میان میزان بقای ایمپلنت‌ها در دو روش Immediate Load و Early Load مشاهده نشد و هر دو پروتکل نتایج قابل پیش‌بینی و ایمنی دارند.",
-            "verdict": "ALTERED",
-            "change_kind": "POPULATION_OR_CONDITION_CHANGED",
-            "source_quote": "When implants are placed with high insertion\ntorque, neither immediate nor early loading\njeopardizes implant success.",
+            "claim_quote": "بقای ایمپلنت (Survival Rate): در پیگیری ۱ تا ۳ ساله، هیچ تفاوت آماری معنی‌داری میان میزان بقای ایمپلنت‌ها در دو روش Immediate Load و Early Load مشاهده نشد و در صورت گشتاور جای‌گذاری بالا، هر دو پروتکل نتایج قابل پیش‌بینی و ایمنی دارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In conclusion, the difference between these tech-\nniques (immediate and early loading) did not affect the\nsurvival rate of implants for 1year and 3 years, or even\nthe marginal bone loss at 1 or 3 years.",
             "source_ref": null,
-            "note": "the no-difference half MATCHES the abstract Results; the safety half drops the high insertion torque condition the source attaches to it (F3: ALTERED outranks MATCHES)"
+            "note": "Two halves, and both match. Survival: the quoted sentence states the finding plainly and without the single-crown qualifier, so it is the faithful sentence under F2-v step 3. High insertion torque: the source states this half in its Clinical Implications, «When implants are placed with high insertion torque, neither immediate nor early loading jeopardizes implant success.»"
           },
           {
             "id": "u17",
@@ -60876,12 +60876,12 @@
           },
           {
             "id": "u20",
-            "claim_quote": "چالش‌های ۳۰ روز اول در بارگذاری فوری: برخی مطالعات خارج از این مرور نشان داده‌اند که در لودینگ فوری، احتمال تحلیل استخوان بیشتر در ۳۰ روز اول وجود دارد.",
-            "verdict": "ALTERED",
-            "change_kind": "HEDGE_ADDED",
+            "claim_quote": "چالش‌های ۳۰ روز اول در بارگذاری فوری: برخی مطالعات خارج از این مرور نشان داده‌اند که در لودینگ فوری، تحلیل استخوان در ۳۰ روز اول با شدت بیشتری رخ می‌دهد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
             "source_quote": "Marginal bone loss in immediately\nloaded implants occurs with a high intensity during the\nﬁrst 30 days.",
             "source_ref": null,
-            "note": "the source states the 30-day bone loss plainly; the page qualifies it with «احتمال»"
+            "note": "The source reports this from a study it cites (ref 29), not from its included trials, which matches «خارج از این مرور». The source's «high intensity during the first 30 days» states the same time-concentrated pattern as «با شدت بیشتری در ۳۰ روز اول». Both are plain statements with no hedge."
           },
           {
             "id": "u21",
@@ -60939,8 +60939,8 @@
           }
         ],
         "counts": {
-          "matches": 10,
-          "altered": 2,
+          "matches": 12,
+          "altered": 0,
           "reversed": 0,
           "not_in_source": 1,
           "not_assessable": 0,
@@ -60948,12 +60948,12 @@
           "not_a_claim": 12
         },
         "assessable": 12,
-        "fidelity_score": 92,
+        "fidelity_score": 100,
         "level": "HIGH",
         "provisional": false,
         "source_conclusion": "No signiﬁcant differences were found in terms of marginal bone loss at 1 or 3 years between early and immediate loading protocols for single implant- supported crowns.",
-        "fact_fa": "از ۱۲ ادعایی که منبع به آن پرداخته‌اند، ۱۰ مورد مطابق است، ۲ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۱ جمله‌ی دیگر در منبع نیامده است.",
-        "interpretation_fa": "موارد تغییریافته یا برعکس: «بقای ایمپلنت (Survival Rate): در پیگیری ۱ تا ۳ سال…» (دامنه گسترده‌تر از منبع)؛ «چالش‌های ۳۰ روز اول در بارگذاری فوری: برخی مطالعات…» (محتاط‌تر از منبع)."
+        "fact_fa": "از ۱۲ ادعایی که منبع به آن پرداخته‌اند، ۱۲ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۱ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       }
     ]
   },

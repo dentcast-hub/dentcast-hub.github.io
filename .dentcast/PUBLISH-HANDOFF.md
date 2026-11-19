@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "notecast/episode-45"
 - Status: in_progress
-- Next canonical step: "C.4.13"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -18,7 +18,24 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     "category": "notecast",
     "content_id": "notecast/episode-45",
     "context": {
-      "approvals": [],
+      "approvals": [
+        {
+          "decision": "\u0645\u0642\u0627\u06cc\u0633\u0647 \u0644\u0648\u062f\u06cc\u0646\u06af \u0641\u0648\u0631\u06cc (Immediate) \u0648 \u0632\u0648\u062f\u0647\u0646\u06af\u0627\u0645 (Early) \u062f\u0631 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u200c\u0647\u0627\u06cc \u062a\u06a9\u200c\u0648\u0627\u062d\u062f\u06cc",
+          "evidence": [
+            "founder text heading line 2, copied (Hard Rule 16)"
+          ],
+          "scope": "title",
+          "status": "confirmed"
+        },
+        {
+          "decision": "\u062e\u0644\u0627\u0635\u0647\u200c\u0627\u06cc \u0627\u0632 \u062f\u0646\u062a\u200c\u06a9\u0633\u062a \u0628\u0631 \u0627\u0633\u0627\u0633 \u0645\u0631\u0648\u0631 \u0646\u0638\u0627\u0645\u200c\u0645\u0646\u062f Pigozzo \u0648 \u0647\u0645\u06a9\u0627\u0631\u0627\u0646 (\u06f2\u06f0\u06f1\u06f8)\u061b \u0645\u0642\u0627\u06cc\u0633\u0647\u0654 \u0628\u0642\u0627 \u0648 \u062a\u062d\u0644\u06cc\u0644 \u0627\u0633\u062a\u062e\u0648\u0627\u0646 \u0645\u0627\u0631\u062c\u06cc\u0646\u0627\u0644 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u200c\u0647\u0627\u06cc \u062a\u06a9\u200c\u0648\u0627\u062d\u062f\u06cc \u062f\u0631 \u062f\u0648 \u067e\u0631\u0648\u062a\u06a9\u0644 Immediate \u0648 Early Loading.",
+          "evidence": [
+            "agent-composed caption, standing acceptance (Hard Rule 14)"
+          ],
+          "scope": "caption",
+          "status": "confirmed"
+        }
+      ],
       "decisions": [
         {
           "decision": "Founder chose \u00abFidelity \u0627\u062c\u0631\u0627 \u0634\u0648\u062f\u00bb after initially saying Fidelity not needed; DES uses the founder's text.",
@@ -35,6 +52,121 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         },
         {
           "kind": "fixed_three_deliveries_v2"
+        },
+        {
+          "decision": "u16 \u00ab\u0627\u0635\u0644\u0627\u062d \u06a9\u0646\u00bb (added \u00ab\u062f\u0631 \u0635\u0648\u0631\u062a \u06af\u0634\u062a\u0627\u0648\u0631 \u062c\u0627\u06cc\u200c\u06af\u0630\u0627\u0631\u06cc \u0628\u0627\u0644\u0627\u060c\u00bb); u20 \u00ab\u0627\u0635\u0644\u0627\u062d \u06a9\u0646\u00bb (\u00ab\u0627\u062d\u062a\u0645\u0627\u0644 \u062a\u062d\u0644\u06cc\u0644 \u0627\u0633\u062a\u062e\u0648\u0627\u0646 \u0628\u06cc\u0634\u062a\u0631 \u062f\u0631 \u06f3\u06f0 \u0631\u0648\u0632 \u0627\u0648\u0644 \u0648\u062c\u0648\u062f \u062f\u0627\u0631\u062f\u00bb -> \u00ab\u062a\u062d\u0644\u06cc\u0644 \u0627\u0633\u062a\u062e\u0648\u0627\u0646 \u062f\u0631 \u06f3\u06f0 \u0631\u0648\u0632 \u0627\u0648\u0644 \u0628\u0627 \u0634\u062f\u062a \u0628\u06cc\u0634\u062a\u0631\u06cc \u0631\u062e \u0645\u06cc\u200c\u062f\u0647\u062f\u00bb); re-check of u16,u20 only (--vote --base): both MATCHES, judge agreed; fidelity 92 HIGH -> 100 HIGH (12/12)",
+          "evidence": [
+            "AskUserQuestion M3b answers in session",
+            "des_fidelity_units --accept exit 0 on fid2/voted-src0.json"
+          ],
+          "kind": "m3b_answers"
+        },
+        {
+          "evidence": [
+            "notecast/episode-45.html first <p> = founder text line 3"
+          ],
+          "kind": "first_cut_lead_provenance_v1",
+          "origin": "author_original",
+          "source_ref": "founder text first paragraph \u00ab\u062f\u0631 \u0627\u06cc\u0646 \u0642\u0633\u0645\u062a \u0628\u0647 \u0628\u0631\u0631\u0633\u06cc \u06cc\u06a9 \u0645\u0642\u0627\u0644\u0647 \u0645\u0631\u0648\u0631 \u0646\u0638\u0627\u0645\u200c\u0645\u0646\u062f \u2026\u00bb opens the body before the first ul"
+        },
+        {
+          "decision": "M2: both exam questions \u00ab\u062a\u0623\u06cc\u06cc\u062f\u00bb (r-ids appended under notecast/episode-45)",
+          "evidence": [
+            "AskUserQuestion M2 answers in session"
+          ],
+          "kind": "m2_exam_answers"
+        },
+        {
+          "decision": "founder: paper and DES belong to both episode-45 and notecast-45, linked both ways like older pairs; episode gets DES only; merge at end. Catalog P2965 linked_episodes now [notecast/episode-45, episodes/episode-45] (notecast-44/P2950 precedent)",
+          "evidence": [
+            "founder message in session"
+          ],
+          "kind": "founder_request_pair"
+        },
+        {
+          "english": {
+            "evidence": [
+              "en page on disk, noindex, toggle ../episode-45.html"
+            ],
+            "path": "notecast/en/episode-45.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "session ledger C.0-C.5.6-b"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "C.4.13 DES 44/C + Fidelity 100 (M3b applied); founder accuracy fixes at B.3"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Q4.9 ordinary article; C.4.14 skipped"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "C.2.4 implantology/surgical-planning"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.7 0 (cap), C.4.8 2 glossary anchors, C.4.9 2 capsules, episode<->notecast links both ways"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5.0 six canonical tags, --check OK"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5 brain entry id 45; catalog P2965 linked to both pages"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5.6 implant-surgical after episodes/episode-45; M2 2 questions approved; C.5.6-b bundle rejected gate 4"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.6 pulse line inserted at top, oldest (insight-111) removed, 7 lines"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "notecast/en/episode-45.html authored from locked text; toggles inverse"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "M3b u16/u20 \u0627\u0635\u0644\u0627\u062d \u06a9\u0646; M2 both \u062a\u0623\u06cc\u06cc\u062f; title founder, caption standing acceptance"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -45,14 +177,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "sha256": "3c35530cba45c065ebf18fde2046adb257a6b9ef2671115585f37f00c1542d92"
         }
       ],
-      "pending_questions": [
-        {
-          "answered": false,
-          "message": "M3b",
-          "question": "u16 (POPULATION_OR_CONDITION_CHANGED) and u20 (HEDGE_ADDED): \u00ab\u0627\u0635\u0644\u0627\u062d \u06a9\u0646\u00bb / \u00ab\u062e\u0648\u062f\u0645 \u0645\u06cc\u200c\u0646\u0648\u06cc\u0633\u0645\u00bb / \u00ab\u0647\u0645\u06cc\u0646 \u0628\u0645\u0627\u0646\u062f\u00bb",
-          "step": "C.4.13"
-        }
-      ],
+      "pending_questions": [],
       "unrelated_changes": [],
       "validation": [
         {
@@ -359,11 +484,126 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "DES: lookup 0 prior; SOURCE run claude -p opus (claude-opus-5-5), spec sha256 709be964\u2026; RESEARCH THERAPY AMSTAR-2 44 C FULL_TEXT non-provisional; Part 3 (1)-(4),(6),(7) green; Part 2d audit exit 0. Fidelity: sweeper+judge separate opus contexts, single source no orphan sweep; M3b u16/u20 \u00ab\u0627\u0635\u0644\u0627\u062d \u06a9\u0646\u00bb applied, re-check only those units; final 100 HIGH 12/12, u9 NOT_IN_SOURCE (conventional-loading definition, author background), u21 AUTHOR_VIEW; --accept exit 0; stored notecast/episode-45 {scored_at,sources,fidelity}; mirror episodes/episode-45 {scored_at,sources} (no fidelity, audio episode); save point pushed 3b6e276e"
+        ],
         "id": "C.4.13",
         "module": "08-des-fidelity.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "fresh semantic review of 110 glossary terms: strong implant-loading, osseointegration; borderline implant-supported-crown, dental-implant, zero-bone-loss (not linked); all strong candidates at cap 5/5 (related_cap.py: implant-loading, osseointegration, implant-supported-crown each 5/5, and implant-loading/osseointegration already link /episodes/episode-45.html) -> 0 back-links added"
+        ],
+        "id": "C.4.7",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.7-b",
+        "module": "05-semantic-linking.md",
+        "reason": "4.7-\u0628: skipped \u2014 not a glossary publish (category notecast)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "inline glossary-link anchors on first qualifying occurrence: \u00ab\u0632\u0645\u0627\u0646 \u062a\u062d\u0648\u06cc\u0644 \u067e\u0631\u0648\u062a\u0632\u00bb (u8, loading-timing concept) -> /glossary/implant-loading.html; \u00abOsseointegration\u00bb (u9, technical) -> /glossary/osseointegration.html; borderline skipped: \u00ab\u062a\u062d\u0644\u06cc\u0644 \u0627\u0633\u062a\u062e\u0648\u0627\u0646 \u0645\u0627\u0631\u062c\u06cc\u0646\u0627\u0644\u00bb -> notecast/episode-26 (reader goes there via 4.9 instead), \u00ab\u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u00bb generic; text unchanged (--accept still exit 0)"
+        ],
+        "id": "C.4.8",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "section had 3/5 (2 nav + episode-45 audio capsule); 2 free slots: added notecast/episode-26 \u00ab\u0632\u0645\u0627\u0646 \u0644\u0648\u062f \u0648 \u062a\u062d\u0644\u06cc\u0644 \u0627\u0633\u062a\u062e\u0648\u0627\u0646 \u0645\u0627\u0631\u062c\u06cc\u0646\u0627\u0644\u00bb (loading timing vs MBL, strongest) and insight/insight-82 \u00ab\u0644\u0648\u062f \u0641\u0648\u0631\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062c\u0627\u06cc\u06af\u0632\u06cc\u0646\u00bb (immediate-loading decision); borderline skipped: episodes/episode-130-1 early failure, episodes/episode-59 MBL factors, sharehub/share-9; now 5/5 at cap"
+        ],
+        "id": "C.4.9",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "plus/faq-corpus.json byContent['notecast/episode-45'].definedTermSets: 5 DefinedTerm #flashcards-c1..c5 (c1 faq#2, c2 faq#3, c4 faq#4, c5 faq#5, c3 authored); skipped faq#0/#1 as comparison-shaped (Immediate vs Early outcome comparisons); descriptions rewritten as standalone concepts, not FAQ answers; nothing in page JSON-LD; builder runs in runner C.8"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "FAQPage #faq with 6 standalone questions (no deixis); binary: #0 \u00ab\u062e\u06cc\u0631\u061b\u00bb, #1 \u00ab\u062e\u06cc\u0631\u061b\u00bb, #4 \u00ab\u062e\u06cc\u0631\u061b\u00bb -> 3 scored; #2,#3 definitions and #5 factors are open (excluded from bank, kept for cards); 4.12-\u0628: evaluated at 5.6"
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "not a Challenge (Q4.9 ordinary article)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "questions: \u00ab\u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062a\u06a9 \u0631\u0648 \u0627\u06cc\u0645\u06cc\u062f\u06cc\u062a \u0644\u0648\u062f \u06a9\u0646\u0645 \u06cc\u0627 \u0627\u0631\u0644\u06cc\u061f\u00bb, \u00abimmediate loading \u0628\u0642\u0627\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0631\u0648 \u06a9\u0645 \u0645\u06cc\u200c\u06a9\u0646\u0647\u061f\u00bb, \u00ab\u0628\u0631\u0627\u06cc \u0644\u0648\u062f \u0641\u0648\u0631\u06cc \u0686\u0647 \u062a\u0648\u0631\u06a9\u06cc \u0644\u0627\u0632\u0645\u0647\u061f\u00bb, \u00ab\u062a\u062d\u0644\u06cc\u0644 \u0627\u0633\u062a\u062e\u0648\u0627\u0646 \u0645\u0627\u0631\u062c\u06cc\u0646\u0627\u0644 \u0628\u0639\u062f \u0627\u0632 \u0644\u0648\u062f \u0641\u0648\u0631\u06cc \u0628\u06cc\u0634\u062a\u0631\u0647\u061f\u00bb; all reused, 0 minted: #\u062e\u0644\u0627\u0635\u0647_\u0627\u067e\u06cc\u0632\u0648\u062f (series), #\u0632\u0645\u0627\u0646_\u0644\u0648\u062f_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a (decision; u23), #\u062b\u0628\u0627\u062a_\u0627\u0648\u0644\u06cc\u0647 (specific 5\u21926; u18/u23), #\u062a\u062d\u0644\u06cc\u0644_\u0627\u0633\u062a\u062e\u0648\u0627\u0646_\u06a9\u0631\u0633\u062a\u0627\u0644 (u17), #\u0628\u0642\u0627\u06cc_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a (specific 3\u21924; u16), #\u0627\u06cc\u0645\u067e\u0644\u0646\u062a (umbrella); --sync + --check OK; paper P2965 reachable via existing bridge rows \u00ab\u0632\u0645\u0627\u0646 \u0644\u0648\u062f \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u00bb and \u00ab\u062b\u0628\u0627\u062a \u0627\u0648\u0644\u06cc\u0647\u00bb (byTag rank 0), build_cabinet_papers --check OK, no bridge edit; reachability: page in first 4 of chip \u00ab\u0628\u0642\u0627\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u00bb; content-index/assistant-tags reverted for runner"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "brain entry appended at array end: type notecast, id 45, keys = notecast-44 key set/order, url /notecast/episode-45.html, pillar implantology/[]/surgical-planning, canonical hashtags from 5.0, 10 English keywords (notecast precedent)"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pillar recorded = step 2.4 decision (implantology/surgical-planning); capsule /pillar/implantology/ matches; no new subtopic"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pathway_place: placed notecast/episode-45 in implant-surgical after episodes/episode-45 (twin unit, notecast-44/biomimetic precedent; episode-45 is in implant-surgical only); tool's STRONG flags for implant-prosthetic/fixed-pros/biomimetic/treatment-planning/esthetic/ceramics came from a spurious 'own series' (episode numbering) anchor episode-162/163/149 \u2014 not placed, conservative (implant-prosthetic borderline: loading timing is also prosthetic, recorded for founder); coverage 1.52/item (baseline 1.38, unchanged by design); 4.12-\u0628: 2 MCQ approved in M2, written to plus/exam-questions.json, validate_exam_questions OK"
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "candidate bundle-implant-surgery (continues implant-surgical): \u00ab\u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1 \u067e\u0627\u0633\u060c \u06af\u06cc\u062a \u06f4: twin episodes/episode-45 already in bundle)\u00bb; no other candidates"
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Pulse: \u00ab\u062e\u0644\u0627\u0635\u0647\u0654 \u0627\u067e\u06cc\u0632\u0648\u062f \u06f4\u06f5 \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab<title>\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f\u00bb at top, removed bottom line (insight-111), 7 lines kept; English mirror notecast/en/episode-45.html (clone of notecast/en/episode-44 chrome/type, LTR translated, same 5 sections/li counts, noindex, no hreflang, inLanguage en, toggle ../episode-45.html; fa toggle en/episode-45.html already present from clone; meta-1 unchanged; no gloss duplicates); ten-scope lock recorded"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
@@ -388,7 +628,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: notecast/episode-45.html, notecast/index.html, episodes/episode-45.html, dentcast_cabinet_full_catalog.json, .dentcast/cabinet-enrichment/results.jsonl, dentcast_cabinet_enrichment.json, plus/des-scores.json"
+    "note": "Index-only refresh after staging delivery paths: dentcast-brain.json, dentcast-hashtag-reference.json, dentcast_cabinet_full_catalog.json, index.html, notecast/episode-45.html, plus/cabinet-papers.json, plus/cabinet-search.json, plus/des-scores.json, plus/exam-questions.json, plus/faq-corpus.json, plus/pathways.json, notecast/en/episode-45.html"
   },
   "schema": "publish-handoff-v3"
 }
