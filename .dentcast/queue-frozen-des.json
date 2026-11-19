@@ -535,5 +535,23 @@
       ],
       "dropped": []
     }
+  },
+  "sharehub/share-56": {
+    "queue_ref": "queue/24-sharehub-fullarch-implant-ios-accuracy",
+    "record_sha256": "d009c4d210ef1e7f8d604928c79007abc3e6e89fcbf6904027551ded7103cf14",
+    "installed_at": "2026-11-19",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }
