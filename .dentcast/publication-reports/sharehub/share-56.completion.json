@@ -1,0 +1,540 @@
+{
+  "schema": "publish-completion-v1",
+  "state": {
+    "publication": {
+      "blocker": null,
+      "category": "sharehub",
+      "content_id": "sharehub/share-56",
+      "context": {
+        "approvals": [
+          {
+            "decision": "\u0627\u0633\u06a9\u0646 \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644 \u0641\u0648\u0644\u200c\u0622\u0631\u0686 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u061b \u0648\u0627\u0642\u0639\u0627\u064b \u0686\u0642\u062f\u0631 \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u06cc\u0645 \u0628\u0647 \u0622\u0646 \u0627\u0639\u062a\u0645\u0627\u062f \u06a9\u0646\u06cc\u0645\u061f",
+            "evidence": [
+              "queue/24-sharehub-fullarch-implant-ios-accuracy/02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md",
+              "queue/24-sharehub-fullarch-implant-ios-accuracy/00-\u0648\u0636\u0639\u06cc\u062a.md (founder approvals table, sha256 9d087442e589ad8f63fb37b630f1ad26beea90bf60235e4982c9750cad28231a)",
+              "queue/24-sharehub-fullarch-implant-ios-accuracy/SHA256SUMS (frozen files, sha256 bca2126ca9968faef8138ce904ab1da74a0800c543ff0cf981f8b3ee52833bf5)"
+            ],
+            "scope": "title",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u0627\u0633\u06a9\u0646\u0631 \u062f\u0627\u062e\u0644\u200c\u062f\u0647\u0627\u0646\u06cc \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f \u0645\u0648\u0642\u0639\u06cc\u062a \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u200c\u0647\u0627\u06cc \u06cc\u06a9 \u0642\u0648\u0633 \u06a9\u0627\u0645\u0644 \u0631\u0627 \u0628\u0647\u200c\u0627\u0646\u062f\u0627\u0632\u0647\u0654 \u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0645\u062a\u062f\u0627\u0648\u0644 \u062b\u0628\u062a \u06a9\u0646\u062f\u061f \u0645\u0631\u0648\u0631 \u0633\u06cc\u0633\u062a\u0645\u0627\u062a\u06cc\u06a9\u06cc \u062f\u0631 JPD \u0646\u0634\u0627\u0646 \u0645\u06cc\u200c\u062f\u0647\u062f \u067e\u0627\u0633\u062e \u0628\u0647 \u0641\u0627\u0635\u0644\u0647\u0654 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u200c\u0647\u0627 \u0648 \u0631\u0648\u0634 \u0627\u0633\u06a9\u0646 \u0628\u0633\u062a\u06af\u06cc \u062f\u0627\u0631\u062f.",
+            "evidence": [
+              "queue/24-sharehub-fullarch-implant-ios-accuracy/02-\u0639\u0646\u0648\u0627\u0646-\u06a9\u067e\u0634\u0646.md",
+              "queue/24-sharehub-fullarch-implant-ios-accuracy/00-\u0648\u0636\u0639\u06cc\u062a.md (founder approvals table, sha256 9d087442e589ad8f63fb37b630f1ad26beea90bf60235e4982c9750cad28231a)",
+              "queue/24-sharehub-fullarch-implant-ios-accuracy/SHA256SUMS (frozen files, sha256 bca2126ca9968faef8138ce904ab1da74a0800c543ff0cf981f8b3ee52833bf5)"
+            ],
+            "scope": "caption",
+            "status": "confirmed"
+          }
+        ],
+        "decisions": [
+          {
+            "kind": "queue_lane_v1"
+          },
+          {
+            "kind": "fixed_three_deliveries_v1"
+          },
+          {
+            "kind": "fixed_three_deliveries_v2"
+          },
+          {
+            "evidence": [
+              "queue/24-sharehub-fullarch-implant-ios-accuracy/00-\u0648\u0636\u0639\u06cc\u062a.md (founder approvals table, sha256 9d087442e589ad8f63fb37b630f1ad26beea90bf60235e4982c9750cad28231a)",
+              "queue/24-sharehub-fullarch-implant-ios-accuracy/SHA256SUMS (frozen files, sha256 bca2126ca9968faef8138ce904ab1da74a0800c543ff0cf981f8b3ee52833bf5)"
+            ],
+            "kind": "queue_approvals_v1",
+            "queue_ref": "queue/24-sharehub-fullarch-implant-ios-accuracy",
+            "receipt_sha256": "de7e9adf48748bb90bcee77fdd51edcd6f05669e86292ab12523d1ac0efc3b78",
+            "sha256sums": "bca2126ca9968faef8138ce904ab1da74a0800c543ff0cf981f8b3ee52833bf5",
+            "status_sha256": "9d087442e589ad8f63fb37b630f1ad26beea90bf60235e4982c9750cad28231a"
+          },
+          {
+            "evidence": [
+              "queue/24-sharehub-fullarch-implant-ios-accuracy/00-\u0648\u0636\u0639\u06cc\u062a.md (founder approvals table, sha256 9d087442e589ad8f63fb37b630f1ad26beea90bf60235e4982c9750cad28231a)",
+              "queue/24-sharehub-fullarch-implant-ios-accuracy/SHA256SUMS (frozen files, sha256 bca2126ca9968faef8138ce904ab1da74a0800c543ff0cf981f8b3ee52833bf5)"
+            ],
+            "kind": "first_cut_lead_provenance_v1",
+            "origin": "author_original",
+            "source_ref": "queue/24-sharehub-fullarch-implant-ios-accuracy/01-\u0645\u062a\u0646.md (frozen; its opening paragraph was approved in preparation)"
+          },
+          {
+            "english": {
+              "evidence": [
+                "queue/24-sharehub-fullarch-implant-ios-accuracy/06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md (frozen)"
+              ],
+              "path": "sharehub/en/share-56.html",
+              "status": "ready"
+            },
+            "evidence": [
+              "generated by tools/queue_ledger.py from the frozen item (receipt de7e9adf48748bb90bcee77fdd51edcd6f05669e86292ab12523d1ac0efc3b78)"
+            ],
+            "kind": "second_cut_editorial_lock_v1",
+            "scopes": [
+              {
+                "evidence": [
+                  "queue/24-sharehub-fullarch-implant-ios-accuracy/00-\u0648\u0636\u0639\u06cc\u062a.md (founder approvals table, sha256 9d087442e589ad8f63fb37b630f1ad26beea90bf60235e4982c9750cad28231a)",
+                  "queue/24-sharehub-fullarch-implant-ios-accuracy/SHA256SUMS (frozen files, sha256 bca2126ca9968faef8138ce904ab1da74a0800c543ff0cf981f8b3ee52833bf5)",
+                  "mechanical defaults: {\"field\": \"backlinks_47\", \"rule\": \"11-\u0644\u06cc\u0646\u06a9\u200c\u0647\u0627\u06cc-\u06af\u0644\u0627\u0633\u0631\u06cc.md 4.7 has no frozen back-link with its link text \u2014 none is added\", \"value\": []}; {\"field\": \"pathway\", \"rule\": \"mechanical pathway rule\", \"value\": null}; {\"rule\": \"hashtag not in the library and not ordered minted: dropped\", \"tags\": [\"#Share_Hub\"]}; {\"field\": \"author\", \"rule\": \"the author/source of the latest sharehub brain entry\", \"value\": {\"name\": \"\u062f\u06a9\u062a\u0631 \u0641\u0648\u0627\u062f \u0634\u0647\u0627\u0628\u06cc\u0627\u0646\", \"source\": \"https://dentcast.org\"}}"
+                ],
+                "scope": "author_approvals",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "queue/24-sharehub-fullarch-implant-ios-accuracy/09-\u06a9\u0644\u06cc\u062f\u0648\u0627\u0698\u0647\u200c\u0647\u0627.md; brain entry /sharehub/share-56.html"
+                ],
+                "scope": "content_record",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "queue/24-sharehub-fullarch-implant-ios-accuracy/06-\u0627\u0646\u06af\u0644\u06cc\u0633\u06cc.md verbatim -> sharehub/en/share-56.html"
+                ],
+                "scope": "english",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "queue/24-sharehub-fullarch-implant-ios-accuracy/07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md list; hashtag_ref.py --sync/--check passed"
+                ],
+                "scope": "hashtags",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "queue/24-sharehub-fullarch-implant-ios-accuracy/11-\u0644\u06cc\u0646\u06a9\u200c\u0647\u0627\u06cc-\u06af\u0644\u0627\u0633\u0631\u06cc.md; applied ['\u0627\u0633\u06a9\u0646\u0631 \u062f\u0627\u062e\u0644\\u200c\u062f\u0647\u0627\u0646\u06cc', '\u0627\u0633\u06a9\u0646\\u200c\u0628\u0627\u062f\u06cc\\u200c\u0647\u0627']; 4.7 []; 4.9 [['/sharehub/share-2.html', '\u0628\u0647\u06cc\u0646\u0647\\u200c\u0633\u0627\u0632\u06cc \u062f\u0642\u062a \u0627\u0633\u06a9\u0646 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a'], ['/episodes/episode-144-2.html', '\u0641\u0648\u062a\u0648\u06af\u0631\u0627\u0645\u062a\u0631\u06cc \u062f\u0631 \u0627\u0633\u06a9\u0646 \u0641\u0648\u0644 \u0622\u0631\u0686'], ['/episodes/episode-133.html', '\u0627\u0641\u0632\u0627\u06cc\u0634 \u062f\u0642\u062a \u0627\u0633\u06a9\u0646 \u0628\u0627 \u0627\u0633\u06a9\u0646\\u200c\u0628\u0627\u062f\u06cc\\u200c\u0647\u0627']]"
+                ],
+                "scope": "links",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "pathway_place.py mechanical rule: [{'pathway': 'implant-prosthetic', 'after': 'insight/insight-112', 'why': 'STRONG'}, {'pathway': 'fixed-pros', 'after': 'insight/insight-103', 'why': 'STRONG'}]"
+                ],
+                "scope": "pathways",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "queue/24-sharehub-fullarch-implant-ios-accuracy/07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md Q5; seven-line rotation {'added': '<a href=\"/sharehub/share-56.html\">\u0627\u0633\u06a9\u0646 \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644 \u0641\u0648\u0644\\u200c\u0622\u0631\u0686 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u061b \u0648\u0627\u0642\u0639\u0627\u064b \u0686\u0642\u062f\u0631 \u0645\u06cc\\u200c\u062a\u0648\u0627\u0646\u06cc\u0645 \u0628\u0647 \u0622\u0646 \u0627\u0639\u062a\u0645\u0627\u062f \u06a9\u0646\u06cc\u0645\u061f</a>', 'dropped': '<li>\u06cc\u06a9 \u0646\u06a9\u062a\u0647\u0654 \u06a9\u0644\u06cc\u0646\u06cc\u06a9\u06cc \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab<a href=\"/insight/insight-109.html\">\u0642\u0627\u0644\u0628\\u200c\u06af\u06cc\u0631\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a: \u0647\u062f\u0641</a>\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f</li>'}"
+                ],
+                "scope": "pulse",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "queue/24-sharehub-fullarch-implant-ios-accuracy/05-DES-Fidelity installed by queue_install_des.py (record d009c4d210ef1e7f8d604928c79007abc3e6e89fcbf6904027551ded7103cf14)"
+                ],
+                "scope": "scientific",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "queue/24-sharehub-fullarch-implant-ios-accuracy/07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md pillar/subtopic (brain entry written by queue_apply)"
+                ],
+                "scope": "taxonomy",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "queue/24-sharehub-fullarch-implant-ios-accuracy/07-\u0648\u0631\u0648\u062f\u06cc\u200c\u0647\u0627.md Q4.9: not a Challenge (the queue lane refuses Challenge items)"
+                ],
+                "scope": "challenge",
+                "status": "not_applicable"
+              }
+            ]
+          }
+        ],
+        "delivery": [
+          {
+            "evidence": [
+              "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/44477898822"
+            ],
+            "scope": "GitHub Actions post-Push-2 mechanical continuation"
+          }
+        ],
+        "inputs": [],
+        "pending_questions": [],
+        "unrelated_changes": [],
+        "validation": [
+          {
+            "content_id": "sharehub/share-56",
+            "exit_code": 0,
+            "expected_caption": "\u0627\u0633\u06a9\u0646\u0631 \u062f\u0627\u062e\u0644\u200c\u062f\u0647\u0627\u0646\u06cc \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f \u0645\u0648\u0642\u0639\u06cc\u062a \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u200c\u0647\u0627\u06cc \u06cc\u06a9 \u0642\u0648\u0633 \u06a9\u0627\u0645\u0644 \u0631\u0627 \u0628\u0647\u200c\u0627\u0646\u062f\u0627\u0632\u0647\u0654 \u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0645\u062a\u062f\u0627\u0648\u0644 \u062b\u0628\u062a \u06a9\u0646\u062f\u061f \u0645\u0631\u0648\u0631 \u0633\u06cc\u0633\u062a\u0645\u0627\u062a\u06cc\u06a9\u06cc \u062f\u0631 JPD \u0646\u0634\u0627\u0646 \u0645\u06cc\u200c\u062f\u0647\u062f \u067e\u0627\u0633\u062e \u0628\u0647 \u0641\u0627\u0635\u0644\u0647\u0654 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u200c\u0647\u0627 \u0648 \u0631\u0648\u0634 \u0627\u0633\u06a9\u0646 \u0628\u0633\u062a\u06af\u06cc \u062f\u0627\u0631\u062f.",
+            "expected_title": "\u0627\u0633\u06a9\u0646 \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644 \u0641\u0648\u0644\u200c\u0622\u0631\u0686 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u061b \u0648\u0627\u0642\u0639\u0627\u064b \u0686\u0642\u062f\u0631 \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u06cc\u0645 \u0628\u0647 \u0622\u0646 \u0627\u0639\u062a\u0645\u0627\u062f \u06a9\u0646\u06cc\u0645\u061f",
+            "kind": "phase_f",
+            "output_sha256": "f4ff11f59bc97c3441f2116631576aa3ad60d5f7f4e567c7e6c559ad40864753",
+            "recorded_at": "2026-11-19T07:14:24+00:00",
+            "summary": "145 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+          }
+        ]
+      },
+      "external_actions": [],
+      "status": "in_progress",
+      "steps": [
+        {
+          "evidence": [
+            "queue-route.md read; tools/queue_publish.py run"
+          ],
+          "id": "rules",
+          "module": "01-hard-rules.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "queue_manifest check complete; dry run clean (24-sharehub-fullarch-implant-ios-accuracy)"
+          ],
+          "id": "0",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "queue_apply receipt sha256 58c4751fa4166625a8aeb92e36d651181c4808e445abee30ff8690a7a7bb3438"
+          ],
+          "id": "C.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "4.8 ['\u0627\u0633\u06a9\u0646\u0631 \u062f\u0627\u062e\u0644\\u200c\u062f\u0647\u0627\u0646\u06cc', '\u0627\u0633\u06a9\u0646\\u200c\u0628\u0627\u062f\u06cc\\u200c\u0647\u0627']; 4.7 []; 4.9 [['/sharehub/share-2.html', '\u0628\u0647\u06cc\u0646\u0647\\u200c\u0633\u0627\u0632\u06cc \u062f\u0642\u062a \u0627\u0633\u06a9\u0646 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a'], ['/episodes/episode-144-2.html', '\u0641\u0648\u062a\u0648\u06af\u0631\u0627\u0645\u062a\u0631\u06cc \u062f\u0631 \u0627\u0633\u06a9\u0646 \u0641\u0648\u0644 \u0622\u0631\u0686'], ['/episodes/episode-133.html', '\u0627\u0641\u0632\u0627\u06cc\u0634 \u062f\u0642\u062a \u0627\u0633\u06a9\u0646 \u0628\u0627 \u0627\u0633\u06a9\u0646\\u200c\u0628\u0627\u062f\u06cc\\u200c\u0647\u0627']]"
+          ],
+          "id": "C.4.9",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "pathways [{'pathway': 'implant-prosthetic', 'after': 'insight/insight-112', 'why': 'STRONG'}, {'pathway': 'fixed-pros', 'after': 'insight/insight-103', 'why': 'STRONG'}]"
+          ],
+          "id": "C.5.6",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "single delivery before the Action"
+          ],
+          "id": "C.6",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "All applicable canonical C.8 builders passed; logs are in the recovery artifact."
+          ],
+          "id": "C.8",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "tools/stamp-version.py passed after C.8"
+          ],
+          "id": "C.7",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Technical English, noindex, hreflang, sitemap, and final version checks passed; logs are in the recovery artifact."
+          ],
+          "id": "D",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Canonical dc-notify marker present exactly once"
+          ],
+          "id": "E",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "phase_f:f4ff11f59bc97c3441f2116631576aa3ad60d5f7f4e567c7e6c559ad40864753"
+          ],
+          "id": "F",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/44477898822"
+          ],
+          "id": "G",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        }
+      ],
+      "target_paths": [
+        ".dentcast/cabinet-enrichment/results.jsonl",
+        ".dentcast/queue-frozen-des.json",
+        "dentcast-brain.json",
+        "dentcast-hashtag-reference.json",
+        "dentcast_cabinet_enrichment.json",
+        "dentcast_cabinet_full_catalog.json",
+        "index.html",
+        "pillar/digital/index.html",
+        "pillar/digital/structure.json",
+        "pillar/index.html",
+        "pillar/structure.json",
+        "player.html",
+        "plus/assistant-tags.json",
+        "plus/cabinet-papers.json",
+        "plus/cabinet-search.json",
+        "plus/content-index.json",
+        "plus/des-scores.json",
+        "plus/des/sharehub/share-56.json",
+        "plus/exam-questions.json",
+        "plus/faq-corpus.json",
+        "plus/flashcards-index.json",
+        "plus/pathways.json",
+        "plus/quiz-index.json",
+        "service-worker.js",
+        "sharehub/en/share-56.html",
+        "sharehub/index.html",
+        "sharehub/share-56.html",
+        "sharehub/share56-fig1.webp",
+        "sharehub/share56-fig2.webp",
+        "sharehub/share56-fig3.webp",
+        "sharehub/share56-fig4.webp",
+        "sharehub/share56-fig5.webp",
+        "sitemap.xml",
+        "up-board/index.json"
+      ]
+    },
+    "snapshot": {
+      "files": {
+        ".dentcast/cabinet-enrichment/results.jsonl": {
+          "kind": "file",
+          "sha256": "c9946b35976484dd10996a8a2b44252e80ae2515315a151f2b7b757bde61e6c8",
+          "executable": false
+        },
+        ".dentcast/queue-frozen-des.json": {
+          "kind": "file",
+          "sha256": "aa38859f8327a12f2e3bdb92bf9f3f6a14b553c627fad1abcba53d5628b5c0ea",
+          "executable": false
+        },
+        "dentcast-brain.json": {
+          "kind": "file",
+          "sha256": "06fe6acfbd837273e41a0f613084963bdd6b785625b4b29033a704ea67b9b01a",
+          "executable": false
+        },
+        "dentcast-hashtag-reference.json": {
+          "kind": "file",
+          "sha256": "d50b1a9f83a1ce281e24507f7e38a230a94112a827477b97d9af02de4428f641",
+          "executable": false
+        },
+        "dentcast_cabinet_enrichment.json": {
+          "kind": "file",
+          "sha256": "9be2f4b5c1d964ed6a3a31b403477a46ab4c819e3ac30f3cccbaef388c792a86",
+          "executable": false
+        },
+        "dentcast_cabinet_full_catalog.json": {
+          "kind": "file",
+          "sha256": "03598941ddbe16954e9fa1cf4ae817b83ad97b1e0982ec259010254fd1f98380",
+          "executable": false
+        },
+        "index.html": {
+          "kind": "file",
+          "sha256": "e46ea8b67430d3e3695be1178c3adc586b449bd9d559974d2d2cabfbfbb39728",
+          "executable": false
+        },
+        "pillar/digital/index.html": {
+          "kind": "file",
+          "sha256": "0330024fabfd6781a93b1f53344689c5c0603f41e4061ee34290a609493b3023",
+          "executable": false
+        },
+        "pillar/digital/structure.json": {
+          "kind": "file",
+          "sha256": "e1d9d292f95a8b9023e10ae5cc762b568ef0c138ca27a991fc7b5c394ba181a3",
+          "executable": false
+        },
+        "pillar/index.html": {
+          "kind": "file",
+          "sha256": "d2504dbc40a55a65cb2050beec593dd9c84bb4e4dead21e48aa5940abbf5608a",
+          "executable": false
+        },
+        "pillar/structure.json": {
+          "kind": "file",
+          "sha256": "4d13293807de6b4bd7c766b20f6f890956ef2f852514018b246fafeaf5df5b17",
+          "executable": false
+        },
+        "player.html": {
+          "kind": "file",
+          "sha256": "462a23e4e065f1d7ebd8806cefb1e5b97a0045f569bfb825b10db8504ae234d3",
+          "executable": false
+        },
+        "plus/assistant-tags.json": {
+          "kind": "file",
+          "sha256": "67e6d771a50a7cf9b043272ba8698e498d538ad8b3f07a932c79a105696a6532",
+          "executable": false
+        },
+        "plus/cabinet-papers.json": {
+          "kind": "file",
+          "sha256": "098fe89a5ad11c8788b6c0b50137b866fa28f3d678f609867c59ac23c94e8b47",
+          "executable": false
+        },
+        "plus/cabinet-search.json": {
+          "kind": "file",
+          "sha256": "89489ade123a3600cc07ba47e61cda90bdc69106e24e93f776e7ae5c673b737c",
+          "executable": false
+        },
+        "plus/content-index.json": {
+          "kind": "file",
+          "sha256": "22544cf0db7f7c750bd080fb25fb8b65b4dcae1fda0cfcc8f7ecc48d77fbc8bf",
+          "executable": false
+        },
+        "plus/des-scores.json": {
+          "kind": "file",
+          "sha256": "9292a9da81750a6de503038e60c0d40fe495856b512d973d9702beae37ecff70",
+          "executable": false
+        },
+        "plus/des/sharehub/share-56.json": {
+          "kind": "file",
+          "sha256": "fce6822ec6d75a199af8616370341c60c86ae90e68ec51faab1ecbd89d3997a7",
+          "executable": false
+        },
+        "plus/exam-questions.json": {
+          "kind": "file",
+          "sha256": "6f91995006682dab9c87160a59712b5d55dbaf69ca2eb9427116a1002f9c4b95",
+          "executable": false
+        },
+        "plus/faq-corpus.json": {
+          "kind": "file",
+          "sha256": "599dd2ae7dbf85a1b7eef5c3dc7e51af67664a84f298533b061966484447b26c",
+          "executable": false
+        },
+        "plus/flashcards-index.json": {
+          "kind": "file",
+          "sha256": "ea70f6f3910f4f8b9a14526b56ac1f854e302de24e40eb8fa5f8e9fd4fcc6d5e",
+          "executable": false
+        },
+        "plus/pathways.json": {
+          "kind": "file",
+          "sha256": "da3aaa43950c436d00195674ead831a881246c6ee6d30fc14241d93b5e0d9df3",
+          "executable": false
+        },
+        "plus/quiz-index.json": {
+          "kind": "file",
+          "sha256": "19232d70a20309ea99cf63e69c4c4ab71607f5392d55296552e0cb97aed4afd3",
+          "executable": false
+        },
+        "service-worker.js": {
+          "kind": "file",
+          "sha256": "fe0b2e800ec2841942817a9fd77dcc6ae5d060797776f2b9e510e12198d4a905",
+          "executable": false
+        },
+        "sharehub/en/share-56.html": {
+          "kind": "file",
+          "sha256": "2a6a2ff5595cba87bd9964e0f2a641fd44e17bcc865af21835b992fe0522bed1",
+          "executable": false
+        },
+        "sharehub/index.html": {
+          "kind": "file",
+          "sha256": "6b4c1da18e84b964652e8db470ae0ad2b0a0ab3e873ad2bf541bd5550bc6e385",
+          "executable": false
+        },
+        "sharehub/share-56.html": {
+          "kind": "file",
+          "sha256": "e69fe2ca6366e6951f53175221c99d1b4cdddff832dd2f2b186e7c0fce9326ca",
+          "executable": false
+        },
+        "sharehub/share56-fig1.webp": {
+          "kind": "file",
+          "sha256": "3b459c397c68c7507f0dbd33b084df92838206f52b1fe38eca910159097fcdd4",
+          "executable": false
+        },
+        "sharehub/share56-fig2.webp": {
+          "kind": "file",
+          "sha256": "88de20699279bfc5b4c3a2b30c93e53c3f1c609a629de57aa891b75e6dac8929",
+          "executable": false
+        },
+        "sharehub/share56-fig3.webp": {
+          "kind": "file",
+          "sha256": "d86feccd5ea27fec18a5effb1d3fb6902b76f4c252a5c363461293d10ea252da",
+          "executable": false
+        },
+        "sharehub/share56-fig4.webp": {
+          "kind": "file",
+          "sha256": "23ce29d9d22e482e2953bffc2e709c1e9e2a05a03ce39ec7393c5ccb7e3b980e",
+          "executable": false
+        },
+        "sharehub/share56-fig5.webp": {
+          "kind": "file",
+          "sha256": "617d2ae554aeb7c5994315d06c3ddcbffc9c86c362108942ffbb81d1b4c7f1a8",
+          "executable": false
+        },
+        "sitemap.xml": {
+          "kind": "file",
+          "sha256": "3678fe4df839100faaa699e6000763117309935b30edb5875962301e7fd7bce5",
+          "executable": false
+        },
+        "up-board/index.json": {
+          "kind": "file",
+          "sha256": "7e043b794b9490d81bdd95a18df72e79f6431f9f5496cc759ec07aba49f1e9e1",
+          "executable": false
+        }
+      },
+      "workflow": {
+        ".dentcast/workflows/README.md": "172337c6e52b1143888d1a7c43f56c71da74457ab9ed4b247db9cbd242ba81d8",
+        ".dentcast/workflows/agent-parity.md": "4b943e299ecfcd67d61befe7b64dc536f970b3a6fd5107a201bede2eb281ab2b",
+        ".dentcast/workflows/publish-handoff.md": "d58cb5472df896dc0d33c37b79340d44c65897d90348f1bfbc98a0e56badc249",
+        ".dentcast/workflows/routing-details.md": "72a45a419c576fb4680fd3571d4dd3931d888e3f6cc69a3a6c79c47c11d1324c",
+        ".dentcast/workflows/global/README.md": "5ec762efe1522eeca5841e37f8e61d938b6a1421904bffe32cecd51ddab4a39b",
+        ".dentcast/workflows/global/LOAD-MAP.json": "43bcd76104ffb77218b008c8a613865ef8fec9df4e09142bec3950b72ff19256",
+        "tools/dentcast_global_rules.py": "c92d378a875dec54ed7845015797c37f211f0acab93150f669b0f820dfd94464",
+        ".dentcast/workflows/global/repo-conventions.md": "89afa9b633d19b723435618abc547ea9576f5caf998256755c6b998e53a0211b",
+        ".dentcast/workflows/global/plus-premium.md": "c4a6bdcffa7916252f9ee64e76fc73198fd9477568debd6e516e567f4a71eab9",
+        ".dentcast/workflows/global/site-invariants.md": "55d4fcd8c566d55011a01eb395d04260e7ca867d78be4b1401acf36a23886feb",
+        "tools/dentcast_publish_handoff.py": "5ac5843a3c668b71e4827d787479e9a9bab312b0c14ea881477780cb6d1814cd",
+        "tools/dentcast_publish_lifecycle.py": "c40548cadf6d12d5a24370a4666e8ddf16a338cf61c154627c3a8f24f7cc1932",
+        "tools/verify_publish.py": "41d939f7769ffa36078955a8a38548143bb6b180282e1a87b62ce602f519ecbb",
+        "tools/dentcast_text_io.py": "225c0a696e8ebc5e175b5dd9739210d4624938358af96baeb777f8c4a07726d8",
+        "tools/text_io.mjs": "c6f9208e26983c8eade43d8cf3effe865e6479df903d2cee661cd0a928565536",
+        "tools/dentcast_post_cut2_runner.py": "443494d00da1a8890a9d69f2d716358328120c562c1c24df0f8227eae3182b0e",
+        ".github/workflows/post-cut2-mechanical.yml": "f4c06799b68560aaa14b364e63d720ae658187962221607c862bfce42a19f106",
+        ".dentcast/workflows/publish-checkpoints.md": "d4cb378f8e225071b46def537302646dbcc804ada547fc57924b0823a50a0740",
+        ".dentcast/workflows/publish-after-push2.md": "101bf989270f0ba6d5f34dc350b94d4820f49d361ec0b99192b46854e7cea905",
+        ".dentcast/workflows/modules/01-hard-rules.md": "1cb57aa6db9c90675d90a6732e5d789ac9188977dc58906ef56b131960d83cb9",
+        ".dentcast/workflows/modules/02-routing-intake.md": "c9dc1b414dfdacf3376b4f9cb916ce911b428184550610950ef7f8e8132e9a74",
+        ".dentcast/workflows/modules/03-litecast-and-page.md": "f6bf2d4a9004e54525c698db895cfecac3d65e7090b015b634bae0bee7bc6723",
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "53a8860265c40465d8060bea1c9d4f701d24794f704de14a609b2d806c294fa9",
+        ".dentcast/workflows/modules/05-semantic-linking.md": "22379f060007b543c9544f2dd8a3aee600a930af19711fd1ee49e797ef9c7722",
+        ".dentcast/workflows/modules/06-paper-ingestion.md": "e7406f830c12b2d25c8cb97515a0bb271c74e99a02506c4456a14c74d4f2296b",
+        ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "fcd126bef9e887f67b8f6d19527be5bf77b3e987661c5feb77cc26f4b2b13e6d",
+        ".dentcast/workflows/modules/08-des-fidelity.md": "c864dc6cdcb2a8b4d7bd786ad3aea9114898853e855c8eb0b791c38e0fa8626b",
+        ".dentcast/workflows/modules/09-challenge.md": "5ec2a39ce0e3f3777360a0b0c1092d34e240f6546d43103498e2d65a5a16f120",
+        ".dentcast/workflows/modules/10-brain-and-pathways.md": "5e4c5266d20e786eae7d3f410a2209c547c698781d8655d78828251c052ab66c",
+        ".dentcast/workflows/modules/11-build-and-version.md": "3b58272ec511d861e35af835f026cb91910d1ef40c1e164cbdc88f8637dcf310",
+        ".dentcast/workflows/modules/12-english-notify-verify.md": "89230e2261966297a9c26cc9df88a37862d5b4a71c1bd7ed44f20d6cc2596552"
+      }
+    }
+  },
+  "second_delivery_commit": "81a3bfdf02bcca9d062eb1cb903dea7cdc849d02",
+  "verification": {
+    "kind": "phase_f",
+    "content_id": "sharehub/share-56",
+    "expected_title": "\u0627\u0633\u06a9\u0646 \u062f\u06cc\u062c\u06cc\u062a\u0627\u0644 \u0641\u0648\u0644\u200c\u0622\u0631\u0686 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u061b \u0648\u0627\u0642\u0639\u0627\u064b \u0686\u0642\u062f\u0631 \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u06cc\u0645 \u0628\u0647 \u0622\u0646 \u0627\u0639\u062a\u0645\u0627\u062f \u06a9\u0646\u06cc\u0645\u061f",
+    "expected_caption": "\u0627\u0633\u06a9\u0646\u0631 \u062f\u0627\u062e\u0644\u200c\u062f\u0647\u0627\u0646\u06cc \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f \u0645\u0648\u0642\u0639\u06cc\u062a \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u200c\u0647\u0627\u06cc \u06cc\u06a9 \u0642\u0648\u0633 \u06a9\u0627\u0645\u0644 \u0631\u0627 \u0628\u0647\u200c\u0627\u0646\u062f\u0627\u0632\u0647\u0654 \u0642\u0627\u0644\u0628\u200c\u06af\u06cc\u0631\u06cc \u0645\u062a\u062f\u0627\u0648\u0644 \u062b\u0628\u062a \u06a9\u0646\u062f\u061f \u0645\u0631\u0648\u0631 \u0633\u06cc\u0633\u062a\u0645\u0627\u062a\u06cc\u06a9\u06cc \u062f\u0631 JPD \u0646\u0634\u0627\u0646 \u0645\u06cc\u200c\u062f\u0647\u062f \u067e\u0627\u0633\u062e \u0628\u0647 \u0641\u0627\u0635\u0644\u0647\u0654 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u200c\u0647\u0627 \u0648 \u0631\u0648\u0634 \u0627\u0633\u06a9\u0646 \u0628\u0633\u062a\u06af\u06cc \u062f\u0627\u0631\u062f.",
+    "exit_code": 0,
+    "output_sha256": "f4ff11f59bc97c3441f2116631576aa3ad60d5f7f4e567c7e6c559ad40864753",
+    "summary": "145 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+  }
+}
