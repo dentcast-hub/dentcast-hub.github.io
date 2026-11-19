@@ -96,6 +96,7 @@ import {
 import {
   listClosures, addClosure, removeClosure, clinicStatus, backOn, closureText, today as tehranToday,
 } from '../services/clinic.js';
+import { getFooter, setFooter, FOOTER_TEXT_MAX } from '../services/telegram-footer.js';
 import { parseJalali, formatJalaliLong, formatJalaliDay } from '../services/jalali.js';
 import { config } from '../config.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
@@ -2178,6 +2179,72 @@ ${renderQuickPublish()}
   })();
   </script>
 
+  <h3 style="margin-top:26px">امضای پیام تلگرام</h3>
+  <div class="muted">
+    زیرِ هر پیامی که با انتشارِ مطلبِ تازه در کانال تلگرام می‌رود، یک جملهٔ کوتاه و یک لینک می‌نشیند.
+    <b>خاموش یعنی هیچ‌چیز اضافه نمی‌شود.</b> تغییر از انتشارِ بعدی اعمال می‌شود. مستقل از تبلیغ‌های سایت است.
+  </div>
+  <form class="bc" id="tfForm" onsubmit="return false">
+    <div class="row">
+      <label class="chk"><input id="tfOn" type="checkbox"> روشن</label>
+    </div>
+    <div><label for="tfText">جمله</label>
+      <input id="tfText" type="text" maxlength="${FOOTER_TEXT_MAX}" placeholder="مثلاً: دورهٔ تازهٔ ایمپلنت ثبت‌نام می‌کند"></div>
+    <div><label for="tfUrl">لینک</label>
+      <input id="tfUrl" type="text" dir="ltr" placeholder="https://…"></div>
+    <button id="tfSave" type="button">ذخیره</button>
+    <div id="tfOut"></div>
+  </form>
+  <div id="tfPreview" class="muted" style="white-space:pre-wrap;margin-top:8px"></div>
+  <script>
+  (function () {
+    var on = document.getElementById('tfOn');
+    var txt = document.getElementById('tfText');
+    var url = document.getElementById('tfUrl');
+    var btn = document.getElementById('tfSave');
+    var out = document.getElementById('tfOut');
+    var pv = document.getElementById('tfPreview');
+    if (!btn) return;
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+    // What the bottom of the next Telegram message will look like, from what is
+    // SAVED (not what is typed), so the line answers "what goes out right now".
+    function show(d) {
+      on.checked = !!d.enabled;
+      txt.value = d.text || '';
+      url.value = d.url || '';
+      pv.innerHTML = d.enabled
+        ? 'الان زیر هر پیام:<br><b>' + esc(d.text) + '</b><br><span dir="ltr">' + esc(d.url) + '</span>'
+        : 'الان: خاموش — پیام‌ها چیزی اضافه ندارند.';
+    }
+    function load() {
+      fetch('/admin/telegram-footer', { credentials: 'include' })
+        .then(function (r) { return r.json(); })
+        .then(show)
+        .catch(function () { pv.textContent = 'تنظیمات نیامد.'; });
+    }
+    btn.addEventListener('click', function () {
+      btn.disabled = true; out.textContent = 'در حال ذخیره…';
+      fetch('/admin/telegram-footer', {
+        method: 'POST', credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ enabled: on.checked, text: txt.value, url: url.value })
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          btn.disabled = false;
+          if (!res.ok) { out.textContent = 'نشد: ' + (res.j.message || res.j.error || 'خطا'); return; }
+          out.textContent = 'ذخیره شد.';
+          show(res.j);
+        })
+        .catch(function () { btn.disabled = false; out.textContent = 'ذخیره نشد.'; });
+    });
+    load();
+  })();
+  </script>
+
   <h3 style="margin-top:26px">اطلاعیهٔ بنیان‌گذار</h3>
   <div class="muted">در «اطلاعیه‌ها»ی کاربر می‌نشیند و نقطهٔ قرمز را روشن می‌کند — همین حالا، در هر ساعتی. یک ردیف برای همه؛ چیزی برای هیچ‌کس جداگانه فرستاده نمی‌شود.</div>
   <form class="bc" id="bcForm" onsubmit="return false">
@@ -4012,7 +4079,8 @@ ${renderQuickPublish()}
       { id: 'comm', name: 'اطلاع‌رسانی و مطب', icon: '📣', tint: 't-comm', items: [
         ['notice', 'اطلاعیهٔ بنیان‌گذار', 'اطلاعیه', '', 0, 'اطلاعیه broadcast پوش'],
         ['notice-user', 'پیام به یک نفر', 'پیام به یک نفر', '', 0, 'پیام نوتیف اختصاصی شخصی برنده قرعه یک نفر خصوصی'],
-        ['clinic', 'تعطیلی مطب', 'تعطیلی مطب', '', 0, 'مطب تعطیل کارت']
+        ['clinic', 'تعطیلی مطب', 'تعطیلی مطب', '', 0, 'مطب تعطیل کارت'],
+        ['tg-footer', 'امضای پیام تلگرام', 'امضای پیام تلگرام', '', 0, 'تلگرام کانال پیام انتشار امضا لینک تبلیغ جمله']
       ] }
     ];
     var OTHER = { id: 'other', name: 'سایر', icon: '•', tint: 't-rep', items: [] };
@@ -6440,6 +6508,21 @@ export async function adminRoutes(app: FastifyInstance): Promise<void> {
     const removed = await removeClosure(id);
     if (!removed) return reply.code(404).send({ error: 'not_found' });
     return reply.send({ ok: true });
+  });
+
+  /**
+   * امضای پیام تلگرام — see services/telegram-footer.ts. GET is also what the
+   * GitHub runner calls (Basic auth, the same admin credentials the
+   * article_published step already uses) right before it posts to the channel.
+   */
+  app.get('/admin/telegram-footer', async (_request, reply) => {
+    return reply.send({ ok: true, ...(await getFooter()) });
+  });
+
+  app.post('/admin/telegram-footer', async (request, reply) => {
+    const saved = await setFooter((request.body ?? {}) as Record<string, unknown>);
+    if ('error' in saved) return reply.code(400).send(saved);
+    return reply.send({ ok: true, ...saved });
   });
 
   /**

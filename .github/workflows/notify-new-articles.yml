@@ -66,6 +66,12 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          # The «امضای پیام تلگرام» footer is set in /admin and read from the
+          # Plus API with the same admin credentials as the step above. Missing
+          # or unreachable means the message goes out without a footer.
+          PLUS_API_BASE: ${{ secrets.PLUS_API_BASE }}
+          ADMIN_USER: ${{ secrets.PLUS_ADMIN_USER }}
+          ADMIN_PASSWORD: ${{ secrets.PLUS_ADMIN_PASSWORD }}
           # Which mirror the channel links to. A repository VARIABLE (not a
           # secret — it is a public URL) so the domain can be switched from the
           # GitHub UI without a code change or a deploy; falls back to .org.
