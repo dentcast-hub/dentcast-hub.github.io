@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "insight/insight-114"
 - Status: in_progress
-- Next canonical step: "C.4.7"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -18,7 +18,24 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     "category": "clinical",
     "content_id": "insight/insight-114",
     "context": {
-      "approvals": [],
+      "approvals": [
+        {
+          "decision": "\u0686\u0631\u0627 \u06cc\u06a9 \u0628\u0627\u0631 \u062a\u06cc\u062a\u0627\u0646\u06cc\u0648\u0645\u06cc \u062f\u0642\u06cc\u0642\u0627\u064b \u0627\u0632 \u0648\u0633\u0637 \u06a9\u0627\u0646\u0627\u0644 \u067e\u06cc\u0686 \u0645\u06cc\u200c\u0634\u06a9\u0646\u062f\u061f",
+          "evidence": [
+            "founder data: doc heading (paragraph hash b15008ba verified)"
+          ],
+          "scope": "title",
+          "status": "confirmed"
+        },
+        {
+          "decision": "\u0628\u0627\u0631 \u062a\u06cc\u062a\u0627\u0646\u06cc\u0648\u0645\u06cc \u06cc\u06a9 \u067e\u0631\u0648\u062a\u0632 \u062b\u0627\u0628\u062a \u0641\u0648\u0644\u200c\u0622\u0631\u0686 \u0631\u0648\u06cc \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0627\u0632 \u0648\u0633\u0637 \u06a9\u0627\u0646\u0627\u0644 \u067e\u06cc\u0686 \u0622\u062e\u0631\u06cc\u0646 \u0627\u0628\u0627\u062a\u0645\u0646\u062a \u0634\u06a9\u0633\u062a\u0647 \u0627\u0633\u062a\u060c \u0646\u0647 \u0627\u0632 \u06a9\u0627\u0646\u062a\u06cc\u0644\u0648\u0631. \u0686\u0631\u0627 \u0627\u06cc\u0646 \u0646\u0642\u0637\u0647 \u0628\u06cc\u0634\u062a\u0631 \u0627\u0632 \u0628\u0642\u06cc\u0647\u200c\u06cc \u0628\u0627\u0631 \u062f\u0631 \u062e\u0637\u0631 \u0634\u06a9\u0633\u062a\u0646 \u0628\u0648\u062f\u0647 \u0648 \u062f\u0631 \u0637\u0631\u0627\u062d\u06cc \u062c\u062f\u06cc\u062f \u0686\u0647 \u0628\u0627\u06cc\u062f \u062a\u063a\u06cc\u06cc\u0631 \u06a9\u0646\u062f\u061f",
+          "evidence": [
+            "agent proposal, standing acceptance (Hard Rule 14); listed in Push-2 report"
+          ],
+          "scope": "caption",
+          "status": "confirmed"
+        }
+      ],
       "decisions": [
         {
           "kind": "ledger_order_v2"
@@ -68,6 +85,290 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "step": "C.4.13",
           "system_prompt_sha256": "709be964f19c1d5c12fada54fe3827d112d729150368dcddc3108d343a94e2e9",
           "track": "COMMENTARY"
+        },
+        {
+          "basis": "standing acceptance (Hard Rule 14)",
+          "c4_7": {
+            "applied": [],
+            "borderline_skipped": [
+              "abutment: article is about the bar, abutment only named",
+              "occlusal-splint: night guard is one closing sentence",
+              "flexural-strength: text means section geometry, glossary entry is ceramic material property"
+            ],
+            "strong": [
+              "bruxism (cap 6/5 -> skipped)",
+              "screw-retained (cap 5/5 -> skipped)"
+            ]
+          },
+          "c4_8": {
+            "applied": [
+              {
+                "phrase": "\u0627\u0628\u0627\u062a\u0645\u0646\u062a",
+                "reason": "technical sense: the last abutment whose screw channel fractured",
+                "target": "/glossary/abutment.html"
+              },
+              {
+                "phrase": "\u0628\u0631\u0627\u06a9\u0633\u06cc\u0633\u0645",
+                "reason": "patient condition, clinical sense",
+                "target": "/glossary/bruxism.html"
+              },
+              {
+                "phrase": "\u0646\u0627\u06cc\u062a\u200c\u06af\u0627\u0631\u062f",
+                "reason": "night guard is an occlusal splint, recommended as treatment",
+                "target": "/glossary/occlusal-splint.html"
+              }
+            ],
+            "borderline_skipped": [
+              "\u0645\u0642\u0627\u0648\u0645\u062a \u062f\u0631 \u0628\u0631\u0627\u0628\u0631 \u0634\u06a9\u0633\u062a\u0646 (Bending Strength) -> flexural-strength: geometric vs material sense",
+              "\u0645\u06cc\u0644\u200c\u0634\u062f\u0647 -> milling: passing mention",
+              "\u0627\u06a9\u0644\u0648\u0698\u0646/\u062d\u0631\u06a9\u0627\u062a \u0637\u0631\u0641\u06cc -> insight-87 canine guidance: tangential"
+            ]
+          },
+          "c4_9": {
+            "applied": [
+              {
+                "label": "\u062a\u06cc\u062a\u0627\u0646\u06cc\u0648\u0645\u200c\u0628\u0627\u0631 \u062f\u0631 \u067e\u0631\u0648\u062a\u0632 \u0641\u0648\u0644\u200c\u0622\u0631\u0686",
+                "reason": "same object: titanium bar in full-arch",
+                "target": "/sharehub/share-46.html"
+              },
+              {
+                "label": "\u0628\u0631\u0627\u06a9\u0633\u06cc\u0633\u0645 \u0648 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0641\u0648\u0644 \u0622\u0631\u0686",
+                "reason": "bruxism + full-arch implant prosthesis",
+                "target": "/sharehub/share-11.html"
+              },
+              {
+                "label": "\u0634\u06a9\u0633\u062a \u0627\u0628\u0627\u062a\u0645\u0646\u062a \u0627\u0632 \u0646\u06cc\u0631\u0648\u0647\u0627\u06cc \u067e\u0627\u0631\u0627\u0641\u0627\u0646\u06a9\u0634\u0646\u0627\u0644",
+                "reason": "implant component fracture under concentrated paraphunctional load",
+                "target": "/chairside/chairside-23.html"
+              }
+            ],
+            "borderline_skipped": [
+              "/sharehub/share-17.html zirconia bridge in bruxer (material differs)",
+              "/insight/insight-87.html canine guidance in full arch",
+              "/chairside/chairside-38.html abutment screw fracture (impact cause)"
+            ],
+            "cap": "5/5 after",
+            "free_slots": 3
+          },
+          "kind": "links",
+          "step": "C.4.7-C.4.9"
+        },
+        {
+          "checks": "hashtag_ref --sync ok; --check OK; build_plus_index run and both outputs reverted",
+          "composition": "brand + decision (#\u06a9\u0627\u0646\u062a\u06cc_\u0644\u06cc\u0648\u0631, #\u0637\u0631\u0627\u062d\u06cc_\u0641\u0631\u06cc\u0645_\u0648\u0631\u06a9) + specific <=10 (#\u062a\u06cc\u062a\u0627\u0646\u06cc\u0648\u0645_\u0628\u0627\u0631 3, #\u0637\u0631\u0627\u062d\u06cc_\u0641\u0631\u06cc\u0645_\u0648\u0631\u06a9 3, #\u0639\u0648\u0627\u0631\u0636_\u0645\u06a9\u0627\u0646\u06cc\u06a9\u06cc 4)",
+          "final": [
+            "#\u0646\u06a9\u062a\u0647_\u06a9\u0644\u06cc\u0646\u06cc\u06a9\u06cc",
+            "#\u062a\u06cc\u062a\u0627\u0646\u06cc\u0648\u0645_\u0628\u0627\u0631",
+            "#\u0637\u0631\u0627\u062d\u06cc_\u0641\u0631\u06cc\u0645_\u0648\u0631\u06a9",
+            "#\u06a9\u0627\u0646\u062a\u06cc_\u0644\u06cc\u0648\u0631",
+            "#\u0639\u0648\u0627\u0631\u0636_\u0645\u06a9\u0627\u0646\u06cc\u06a9\u06cc",
+            "#\u0627\u06cc\u0645\u067e\u0644\u0646\u062a_\u0641\u0648\u0644_\u0622\u0631\u0686",
+            "#\u0628\u0631\u0627\u06a9\u0633\u06cc\u0633\u0645",
+            "#\u0627\u06a9\u0644\u0648\u0698\u0646_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a"
+          ],
+          "gate": "pass (>=1)",
+          "kind": "hashtags",
+          "minted": [],
+          "questions": [
+            "\u0628\u0627\u0631 \u062a\u06cc\u062a\u0627\u0646\u06cc\u0648\u0645\u06cc \u0641\u0648\u0644 \u0622\u0631\u0686 \u0686\u0631\u0627 \u0627\u0632 \u06a9\u0627\u0646\u0627\u0644 \u067e\u06cc\u0686 \u0634\u06a9\u0633\u062a\u061f",
+            "\u0637\u0648\u0644 \u06a9\u0627\u0646\u062a\u06cc\u0644\u0648\u0631 \u062f\u0631 \u067e\u0631\u0648\u062a\u0632 \u0641\u0648\u0644 \u0622\u0631\u0686 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u06cc \u0686\u0642\u062f\u0631 \u0628\u0627\u0634\u0647\u061f",
+            "\u0628\u06cc\u0645\u0627\u0631 \u0628\u0631\u0627\u06a9\u0633\u06cc\u0633\u062a \u0628\u0627 \u067e\u0631\u0648\u062a\u0632 \u0641\u0648\u0644 \u0622\u0631\u0686 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u06cc \u0686\u0647 \u0645\u0644\u0627\u062d\u0638\u0627\u062a\u06cc \u062f\u0627\u0631\u0647\u061f",
+            "\u0628\u0627\u0631 \u0641\u0648\u0644 \u0622\u0631\u0686 \u0631\u0648 \u0686\u0637\u0648\u0631 \u0637\u0631\u0627\u062d\u06cc \u06a9\u0646\u06cc\u0645 \u06a9\u0647 \u0646\u0634\u06a9\u0646\u0647\u061f"
+          ],
+          "reachability": {
+            "Q1": "\u062a\u06cc\u062a\u0627\u0646\u06cc\u0648\u0645 \u0628\u0627\u0631 rank 3 / \u0639\u0648\u0627\u0631\u0636 \u0645\u06a9\u0627\u0646\u06cc\u06a9\u06cc rank 4 -> surfaces",
+            "Q2": "\u06a9\u0627\u0646\u062a\u06cc \u0644\u06cc\u0648\u0631 rank 9 -> not in first 4",
+            "Q3": "\u0628\u0631\u0627\u06a9\u0633\u06cc\u0633\u0645 rank 7 -> not in first 4",
+            "Q4": "\u0637\u0631\u0627\u062d\u06cc \u0641\u0631\u06cc\u0645 \u0648\u0631\u06a9 rank 3 -> surfaces"
+          },
+          "resolving": {
+            "#\u0627\u06a9\u0644\u0648\u0698\u0646_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a": "\u0648\u0642\u062a\u06cc \u0647\u0631 \u062f\u0648 \u0641\u06a9 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u062f\u0627\u0631\u0646\u062f\u060c \u0627\u06cc\u0646 \u0628\u0627\u0632\u062e\u0648\u0631\u062f \u062d\u0633\u06cc \u062f\u0631 \u0647\u0631 \u062f\u0648 \u0637\u0631\u0641 \u06a9\u0645\u062a\u0631 \u0627\u0633\u062a.",
+            "#\u0627\u06cc\u0645\u067e\u0644\u0646\u062a_\u0641\u0648\u0644_\u0622\u0631\u0686": "\u062f\u0631 \u067e\u0631\u0648\u062a\u0632 \u0641\u0648\u0644\u200c\u0622\u0631\u0686\u060c \u0627\u0633\u062a\u062d\u06a9\u0627\u0645 \u062a\u06cc\u062a\u0627\u0646\u06cc\u0648\u0645 \u0628\u0647\u200c\u062a\u0646\u0647\u0627\u06cc\u06cc \u062f\u0648\u0627\u0645 \u067e\u0631\u0648\u062a\u0632 \u0631\u0627 \u062a\u0636\u0645\u06cc\u0646 \u0646\u0645\u06cc\u200c\u06a9\u0646\u062f.",
+            "#\u0628\u0631\u0627\u06a9\u0633\u06cc\u0633\u0645": "\u062f\u0631 \u0628\u06cc\u0645\u0627\u0631 \u0628\u0631\u0627\u06a9\u0633\u06cc\u0633\u062a\u060c \u062a\u0645\u0627\u0633\u200c\u0647\u0627\u06cc \u0633\u0646\u06af\u06cc\u0646 \u0631\u0648\u06cc \u06a9\u0627\u0646\u062a\u06cc\u0644\u0648\u0631 \u0628\u0627\u06cc\u062f \u062d\u0630\u0641 \u0634\u0648\u0646\u062f \u0648 \u0646\u0627\u06cc\u062a\u200c\u06af\u0627\u0631\u062f \u0647\u0645 \u0628\u062e\u0634\u06cc \u0627\u0632 \u062f\u0631\u0645\u0627\u0646 \u062f\u0631 \u0646\u0638\u0631 \u06af\u0631\u0641\u062a\u0647 \u0634\u0648\u062f.",
+            "#\u062a\u06cc\u062a\u0627\u0646\u06cc\u0648\u0645_\u0628\u0627\u0631": "\u062f\u0631 \u0636\u062e\u06cc\u0645 \u06a9\u0631\u062f\u0646 \u0628\u0627\u0631\u060c \u062c\u0647\u062a \u0622\u0646 \u0645\u0647\u0645 \u0627\u0633\u062a.",
+            "#\u0637\u0631\u0627\u062d\u06cc_\u0641\u0631\u06cc\u0645_\u0648\u0631\u06a9": "\u067e\u0633 \u0627\u06af\u0631 \u0641\u0636\u0627 \u0627\u062c\u0627\u0632\u0647 \u0628\u062f\u0647\u062f\u060c \u0628\u0647\u062a\u0631 \u0627\u0633\u062a \u0627\u0631\u062a\u0641\u0627\u0639 \u0628\u0627\u0631 \u062f\u0631 \u0646\u0627\u062d\u06cc\u0647\u200c\u06cc \u0622\u062e\u0631\u06cc\u0646 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0628\u06cc\u0634\u062a\u0631 \u0634\u0648\u062f.",
+            "#\u0639\u0648\u0627\u0631\u0636_\u0645\u06a9\u0627\u0646\u06cc\u06a9\u06cc": "\u0648\u0642\u062a\u06cc \u0628\u06cc\u0634\u062a\u0631\u06cc\u0646 \u0646\u06cc\u0631\u0648 \u0648 \u06a9\u0645\u062a\u0631\u06cc\u0646 \u0641\u0644\u0632 \u062f\u0631 \u06cc\u06a9 \u0646\u0642\u0637\u0647 \u0628\u0627\u0634\u0646\u062f\u060c \u0637\u0628\u06cc\u0639\u06cc \u0627\u0633\u062a \u06a9\u0647 \u0627\u06cc\u0646 \u0646\u0642\u0637\u0647 \u0636\u0639\u06cc\u0641\u200c\u062a\u0631\u06cc\u0646 \u0628\u062e\u0634 \u0628\u0627\u0631 \u0628\u0627\u0634\u062f.",
+            "#\u06a9\u0627\u0646\u062a\u06cc_\u0644\u06cc\u0648\u0631": "\u0628\u0627 \u06a9\u0648\u062a\u0627\u0647 \u0634\u062f\u0646 \u06a9\u0627\u0646\u062a\u06cc\u0644\u0648\u0631\u060c \u0628\u0627\u0632\u0648\u06cc \u0627\u0647\u0631\u0645 (Lever Arm) \u06a9\u0648\u062a\u0627\u0647 \u0645\u06cc\u200c\u0634\u0648\u062f \u0648 \u0646\u06cc\u0631\u0648\u06cc \u062e\u0645\u0634\u06cc \u0631\u0648\u06cc \u0622\u062e\u0631\u06cc\u0646 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u06a9\u0645 \u0645\u06cc\u200c\u0634\u0648\u062f."
+          },
+          "reused": "all 8 canonical (simulate)",
+          "skipped": {
+            "#\u0634\u06a9\u0633\u062a_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a": "implant itself not lost",
+            "#\u0641\u06cc\u062a_\u067e\u0631\u0648\u062a\u0632": "Passive Fit only a possible factor, not established as cause",
+            "#\u067e\u0631\u0648\u062a\u0632_\u0627\u06cc\u0645\u067e\u0644\u0646\u062a": "umbrella, density already 8"
+          },
+          "step": "C.5.0"
+        },
+        {
+          "basis": "standing acceptance",
+          "keywords": [
+            "\u06a9\u0627\u0646\u0627\u0644 \u067e\u06cc\u0686",
+            "\u0646\u06cc\u0631\u0648\u06cc \u062e\u0645\u0634\u06cc",
+            "\u062e\u0633\u062a\u06af\u06cc \u0641\u0644\u0632",
+            "Stress Concentration",
+            "\u0627\u0631\u062a\u0641\u0627\u0639 \u0628\u0627\u0631",
+            "Passive Fit",
+            "\u0644\u06cc\u06af\u0627\u0645\u0627\u0646 \u067e\u0631\u06cc\u0648\u062f\u0646\u062a\u0627\u0644",
+            "\u0646\u0627\u06cc\u062a\u200c\u06af\u0627\u0631\u062f"
+          ],
+          "kind": "brain_keywords",
+          "note": "page JSON-LD keywords set to the same list",
+          "step": "C.5"
+        },
+        {
+          "coverage": "full pathways 1.52 per item (curated baseline 1.38)",
+          "kind": "pathways",
+          "not_placed": {
+            "ceramics": "material differs",
+            "fixed-pros": "tooth-borne focus",
+            "implant-surgical": "surgical pathway, not prosthetic design",
+            "occlusion": "occlusion only a sub-factor",
+            "post-and-core": "unrelated",
+            "treatment-planning": "tangential"
+          },
+          "placed": [
+            {
+              "after": "chairside/chairside-36",
+              "milestone": false,
+              "pathway": "implant-prosthetic",
+              "reason": "full-arch implant framework biomechanics; sits after the cantilever/splinting design block (episodes 161-162, share-28, share-45, chairside-36)"
+            },
+            {
+              "after": "chairside/chairside-36",
+              "milestone": false,
+              "pathway": "failure-troubleshooting",
+              "reason": "analysis of a prosthetic failure and redesign"
+            }
+          ],
+          "step": "C.5.6",
+          "tool_flags": "all ASK (scores 51/15); placed by semantic judgment as unmistakable homes per module 10 step 2"
+        },
+        {
+          "keys": [
+            1,
+            2,
+            0
+          ],
+          "kind": "exam_questions",
+          "m2": "sent; founder approved all three one by one (\u062a\u0623\u06cc\u06cc\u062f \u00d73)",
+          "pathways": [
+            "implant-prosthetic",
+            "failure-troubleshooting"
+          ],
+          "rows": [
+            "r-4ca78763",
+            "r-7490ea85",
+            "r-3b3afbf1"
+          ],
+          "step": "C.5.6 (4.12-\u0628)",
+          "validator": "validate_exam_questions.py 0 errors (12 pre-existing warnings, none on insight-114); --draft-check 0/0"
+        },
+        {
+          "candidates": {
+            "bundle-implant-impression": "\u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1: \u067e\u0648\u0634\u0647\u0654 insight/)",
+            "bundle-implant-parts": "\u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1: \u067e\u0648\u0634\u0647\u0654 insight/)"
+          },
+          "kind": "bundles",
+          "step": "C.5.6-b"
+        },
+        {
+          "evidence": [
+            "insight/insight-114.html first <p> = founder paragraph byte-identical"
+          ],
+          "kind": "first_cut_lead_provenance_v1",
+          "origin": "author_original",
+          "source_ref": "founder doc first body paragraph (hash 395794fa) opens the page body"
+        },
+        {
+          "count": 7,
+          "inserted": "\u06cc\u06a9 \u0646\u06a9\u062a\u0647\u0654 \u06a9\u0644\u06cc\u0646\u06cc\u06a9\u06cc \u0628\u0627 \u0639\u0646\u0648\u0627\u0646\u0650 \u00ab<a href=\"/insight/insight-114.html\">\u0686\u0631\u0627 \u06cc\u06a9 \u0628\u0627\u0631 \u062a\u06cc\u062a\u0627\u0646\u06cc\u0648\u0645\u06cc \u062f\u0642\u06cc\u0642\u0627\u064b \u0627\u0632 \u0648\u0633\u0637 \u06a9\u0627\u0646\u0627\u0644 \u067e\u06cc\u0686 \u0645\u06cc\u200c\u0634\u06a9\u0646\u062f\u061f</a>\u00bb \u0645\u0646\u062a\u0634\u0631 \u0634\u062f",
+          "kind": "pulse",
+          "removed": "insight-110 line",
+          "step": "C.6"
+        },
+        {
+          "english": {
+            "evidence": [
+              "file on disk; 7 h3/9 p/3 figures parity with fa"
+            ],
+            "path": "insight/en/insight-114.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "all founder messages closed (pending_questions empty)"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "C.4.13 des_run: COMMENTARY 15/E stored, fidelity null (basket 1), no M3b"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "Question 4.9: \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc; C.4.14 skipped"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "pillar implantology/restoration-design (C.2.4), landing row insight/index.html"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.7 0 back-links (caps), C.4.8 3 inline, C.4.9 3 capsules 5/5"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5.0 8 canonical tags, 0 mints, --check OK"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "brain clinical-114 appended, keyset parity; faq-corpus FAQ 9 + cards 4"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "implant-prosthetic + failure-troubleshooting; exam rows r-4ca78763,r-7490ea85,r-3b3afbf1 approved in M2; bundles rejected gate 1"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "index.html pulse: new top line, oldest removed, 7 lines"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "insight/en/insight-114.html authored from locked text; toggles inverse; noindex; 0 hreflang; meta-1 untouched"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "title founder data; caption standing acceptance; M2 approved x3; no M1/M3b"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -370,21 +671,140 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "08-des-fidelity.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [
+          "fresh semantic review of 110 glossary terms: strong bruxism, screw-retained both at/over cap (related_cap 6/5, 5/5) -> skipped; borderline abutment, occlusal-splint, flexural-strength skipped; 0 back-links written (decision links)"
+        ],
+        "id": "C.4.7",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.7-b",
+        "module": "05-semantic-linking.md",
+        "reason": "4.7-\u0628: skipped \u2014 not a glossary publish",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "3 inline anchors on first occurrence: \u0627\u0628\u0627\u062a\u0645\u0646\u062a->/glossary/abutment.html, \u0628\u0631\u0627\u06a9\u0633\u06cc\u0633\u0645->/glossary/bruxism.html, \u0646\u0627\u06cc\u062a\u200c\u06af\u0627\u0631\u062f->/glossary/occlusal-splint.html; borderline recorded; git diff shows only anchors"
+        ],
+        "id": "C.4.8",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "related section 2 nav + 3 content = 5/5 (related_cap): share-46, share-11, chairside-23; borderline recorded"
+        ],
+        "id": "C.4.9",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "plus/faq-corpus.json byContent insight/insight-114 definedTermSets: 4 authored DefinedTerms #flashcards-c1..c4 (Fulcrum, Stress Concentration, Fatigue, section height effect); none copies a FAQ answer; comparison-shaped FAQ #9 not carded"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "FAQPage 9 Q/A, all standalone (no deixis); 6 binary (\u0622\u06cc\u0627\u2026) each opening \u0628\u0644\u0647\u061b/\u062e\u06cc\u0631\u061b (Q1,4,6,7,8); Q2,3,5,9 open-ended; 4.12-\u0628: evaluated at 5.6"
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "ordinary post (Question 4.9 \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc); no challenge markup",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "8 canonical tags reused, 0 minted; --sync + --check OK; reachability passes for Q1/Q4 (decision hashtags)"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "clinical-114 appended at end of brain array (json_append), key set/order identical to clinical-113 incl. pillar{primary,secondary,subtopic}"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "brain pillar implantology/restoration-design == C.2.4 decision; capsule href /pillar/implantology/ matches; no new subtopic"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "pathways.json: insight-114 in implant-prosthetic + failure-troubleshooting after chairside-36; coverage 1.52; 4.12-\u0628: 3 MCQ approved in M2, written to plus/exam-questions.json, validator 0 errors"
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "bundle-implant-parts \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1), bundle-implant-impression \u0631\u062f \u0634\u062f (\u06af\u06cc\u062a \u06f1): insight/ folder; no bundle edit"
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "Pulse line inserted at top of index.html .dc-pulse-list, insight-110 line removed (7 lines); en mirror insight/en/insight-114.html + fa toggle; second_cut_editorial_lock_v1 recorded (10 scopes)"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
       "dentcast-brain.json",
+      "dentcast-hashtag-reference.json",
+      "index.html",
+      "insight/en/insight-114.html",
       "insight/index.html",
       "insight/insight-113.html",
       "insight/insight-114.html",
       "insight/insight114-1.webp",
       "insight/insight114-2.webp",
       "insight/insight114-3.webp",
-      "plus/des-scores.json"
+      "plus/des-scores.json",
+      "plus/exam-questions.json",
+      "plus/faq-corpus.json",
+      "plus/pathways.json"
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: insight/insight-114.html, insight/index.html, insight/insight114-1.webp, insight/insight114-2.webp, insight/insight114-3.webp, plus/des-scores.json"
+    "note": "Index-only refresh after staging delivery paths: insight/insight-114.html, insight/en/insight-114.html, index.html, dentcast-brain.json, dentcast-hashtag-reference.json, plus/faq-corpus.json, plus/pathways.json, plus/exam-questions.json"
   },
   "schema": "publish-handoff-v3"
 }
