@@ -60741,21 +60741,21 @@
           },
           {
             "id": "u5",
-            "claim_quote": "در این قسمت به بررسی یک مقاله مرور نظام‌مند (Systematic Review) چاپ شده در ژورنال معتبر JPD (سال ۲۰۱۸) پرداختیم.",
+            "claim_quote": "در این قسمت به بررسی یک مقالهٔ مرور نظام‌مند (Systematic Review) چاپ‌شده در ژورنال معتبر JPD (سال ۲۰۱۸) پرداختیم.",
             "verdict": "NOT_A_CLAIM",
             "change_kind": null,
             "source_quote": "",
             "source_ref": null,
-            "note": "states the page's own scope (what this episode covers)"
+            "note": "states the page's own scope (در این قسمت … پرداختیم); a topic announcement with bibliographic framing, no finding"
           },
           {
             "id": "u6",
-            "claim_quote": "هدف این مطالعه، مقایسه میزان موفقیت و تحلیل استخوان اطراف ایمپلنت‌های تک‌واحدی (Single Implant) تحت دو پروتکل درمانی Immediate Load و Early Load در بازه زمانی ۱ تا ۳ سال است.",
+            "claim_quote": "هدف این مطالعه، مقایسهٔ میزان موفقیت و تحلیل استخوان اطراف ایمپلنت‌های تک‌واحدی (Single Implant) تحت دو پروتکل درمانی Immediate Load و Early Load در بازه زمانی ۱ تا ۳ سال است.",
             "verdict": "MATCHES",
             "change_kind": null,
             "source_quote": "This systematic review and meta-analysis investigated whether the immediate loading\nprotocol has more clinical disadvantages than the early loading protocol for single dental\nimplants in terms of the marginal bone loss and survival rate of single implant crowns.",
             "source_ref": null,
-            "note": "the 1 to 3 year window is not part of the stated aim; it is the follow-up of the analyses, noted not scored"
+            "note": "stated aim (survival rate and marginal bone loss, immediate vs early, single implant crowns); the 1 and 3 year time points are those the source analyses (Results). The page renders survival rate as میزان موفقیت."
           },
           {
             "id": "u7",
@@ -60768,12 +60768,12 @@
           },
           {
             "id": "u8",
-            "claim_quote": "در ادبیات علمی ایمپلنتولوژی، زمان تحویل پروتز به سه دسته کلی تقسیم می‌شود (که البته بر اساس منابع مختلف، بازه‌های زمانی آن کمی متفاوت تعریف می‌شود):",
-            "verdict": "MATCHES",
+            "claim_quote": "در منابع علمی ایمپلنتولوژی، زمان‌بندی تحویل پروتز در سه دستهٔ کلی تعریف می‌شود (که البته بر اساس منابع مختلف، بازه‌های زمانی آن کمی متفاوت تعریف می‌شود):",
+            "verdict": "NOT_A_CLAIM",
             "change_kind": null,
-            "source_quote": "Immediate loading is deﬁned as a prosthesis being placed\nin occlusion within 48 hours of implant surgery 7 or 72\nhours after implant placement.",
+            "source_quote": "",
             "source_ref": null,
-            "note": "the half on definitions varying between sources is stated; the three-category division is not addressed by the source (silent half)"
+            "note": "ends in «:» and introduces the categories stated in the following units; the parenthetical is framing about how the topic is defined across the literature (talk-about-the-topic), not a finding"
           },
           {
             "id": "u9",
@@ -60813,12 +60813,12 @@
           },
           {
             "id": "u13",
-            "claim_quote": "پژوهشگران با جست‌وجوی جامع و بدون محدودیت زمانی در پایگاه‌های داده معتبر (مانند PubMed، Cochrane و Embase) تا سال ۲۰۱۶، مطالعات کارآزمایی بالینی تصادفی‌سازی شده (RCT) و کوهورت (آینده‌نگر و گذشته‌نگر) با حداقل ۱۰ شرکت‌کننده و بیمارانی با بی‌دندانی پارسیل (Partial Edentulism) را بررسی کردند.",
+            "claim_quote": "پژوهشگران با جست‌وجوی جامع و بدون محدودیت زمانی در پایگاه‌های داده معتبر (مانند PubMed، Cochrane و Embase) تا سال ۲۰۱۶، مطالعات کارآزمایی بالینی تصادفی‌سازی‌شده (RCT) و کوهورت (آینده‌نگر و گذشته‌نگر) را که دست‌کم ۱۰ شرکت‌کننده با بی‌دندانی پارسیل (Partial Edentulism) داشتند، بررسی کردند.",
             "verdict": "MATCHES",
             "change_kind": null,
             "source_quote": "Two reviewers conducted an advanced electronic database search, with no\nlanguage or date restriction, in Medline/PubMed, Embase, and the Cochrane Library up to May\n2016.",
             "source_ref": null,
-            "note": "the study types, n of at least 10 and partial edentulism are the inclusion criteria stated in the next abstract sentence"
+            "note": "the eligibility half (RCTs and prospective/retrospective cohorts, partially edentulous patients, at least 10 participants) also matches the abstract's inclusion-criteria sentence"
           },
           {
             "id": "u14",
@@ -60840,12 +60840,12 @@
           },
           {
             "id": "u16",
-            "claim_quote": "بقای ایمپلنت (Survival Rate): در پیگیری ۱ تا ۳ ساله، هیچ تفاوت آماری معنی‌داری میان میزان بقای ایمپلنت‌ها در دو روش Immediate Load و Early Load مشاهده نشد و در صورت گشتاور جای‌گذاری بالا، هر دو پروتکل نتایج قابل پیش‌بینی و ایمنی دارند.",
+            "claim_quote": "بقای ایمپلنت (Survival Rate): در پیگیری ۱ تا ۳ ساله، هیچ تفاوت آماری معنی‌داری میان میزان بقای ایمپلنت‌ها در دو روش Immediate Load و Early Load مشاهده نشد و در صورت تورک بالا حین جای‌گذاری، هر دو پروتکل نتایج قابل پیش‌بینی و ایمنی دارند.",
             "verdict": "MATCHES",
             "change_kind": null,
-            "source_quote": "In conclusion, the difference between these tech-\nniques (immediate and early loading) did not affect the\nsurvival rate of implants for 1year and 3 years, or even\nthe marginal bone loss at 1 or 3 years.",
+            "source_quote": "The trials included showed no signiﬁcant differences between early and immediate\nloading protocols in single implant crowns with regard to survival rate at 1 and 3 years (RD, −0.00;\n95% CI, −0.04 to 0.04; P=.990 for 1 year and P=.980 for 3 years) or marginal bone loss at 1 year\n(MD, 0.09; 95% CI, −0.02 to 0.19; P=.110) and 3 years (MD, −0.23; 95% CI, −0.47 to 0.01; P=.060).",
             "source_ref": null,
-            "note": "Two halves, and both match. Survival: the quoted sentence states the finding plainly and without the single-crown qualifier, so it is the faithful sentence under F2-v step 3. High insertion torque: the source states this half in its Clinical Implications, «When implants are placed with high insertion torque, neither immediate nor early loading jeopardizes implant success.»"
+            "note": "the high-torque half matches the Clinical Implications sentence «When implants are placed with high insertion torque, neither immediate nor early loading jeopardizes implant success.»"
           },
           {
             "id": "u17",
@@ -60858,12 +60858,12 @@
           },
           {
             "id": "u18",
-            "claim_quote": "اهمیت Insertion Torque و ثبات اولیه: بر اساس مطالعه Ottoni و همکاران که در متن مقاله به آن اشاره شد، دستیابی به گشتاور اولیه ۳۲ نیوتن‌سانتی‌متر نقش حیاتی در کاهش شکست درمان و تضمین Osseointegration موفق در بارگذاری فوری دارد (حتی مهم‌تر از کیفیت استخوان یا طول ایمپلنت).",
+            "claim_quote": "اهمیت Insertion Torque و ثبات اولیه: بر اساس مطالعه Ottoni و همکاران که در متن مقاله به آن اشاره شده است، دستیابی به گشتاور اولیه ۳۲ نیوتن‌سانتی‌متر نقش حیاتی در کاهش شکست درمان و تضمین Osseointegration موفق در بارگذاری فوری دارد (حتی مهم‌تر از کیفیت استخوان یا طول ایمپلنت).",
             "verdict": "MATCHES",
             "change_kind": null,
             "source_quote": "According to Ottoni\net al, 20 the failure was lower when a torque of 32 Ncm\nwas used to insert an implant, whereas torques of 20 and\n45 Ncm were associated with greater failure rates.",
             "source_ref": null,
-            "note": "the source also states 32 Ncm is deemed necessary for osseointegration in immediately loaded implants; the ranking «مهم‌تر از کیفیت استخوان یا طول ایمپلنت» is silent, since the source says survival was independent of bone quality and length but ranks nothing"
+            "note": "the osseointegration part matches «A torque of 32 Ncm is deemed necessary to achieve osseointegration in immediately loaded implants.»; the comparison with bone quality and implant length matches «implant survival rates were independent of bone quality, site, implant length but were related to insertion torque.»"
           },
           {
             "id": "u19",
@@ -60885,12 +60885,12 @@
           },
           {
             "id": "u21",
-            "claim_quote": "این امر می‌تواند ناشی از ورود زودهنگام نیرو، تفاوت در روند Remodeling استخوان، و یا وجود Microgap در محل اتصال ایمپلنت و اباتمنت و تجمع باکتری‌ها باشد (علاوه بر فاکتورهایی نظیر طراحی ایمپلنت، ترومای جراحی و مهارت جراح).",
+            "claim_quote": "این امر می‌تواند ناشی از ورود زودهنگام نیرو، تفاوت در روند Remodeling استخوان، یا وجود Microgap در محل اتصال ایمپلنت و اباتمنت و تجمع باکتری‌ها باشد (علاوه بر فاکتورهایی نظیر طراحی ایمپلنت، ترومای جراحی و مهارت جراح).",
             "verdict": "AUTHOR_VIEW",
             "change_kind": null,
             "source_quote": "",
             "source_ref": null,
-            "note": "explanation of a finding carrying a possibility hedge «می‌تواند … باشد» (F1 line 2c)"
+            "note": "F1 line 2(c): an explanation for a finding carrying a possibility hedge (می‌تواند … باشد, «may»). The source's Discussion gives the same mechanisms (functional remodeling, microgap, implant design, surgical trauma, surgeon experience)."
           },
           {
             "id": "u22",
@@ -60903,12 +60903,12 @@
           },
           {
             "id": "u23",
-            "claim_quote": "در درمان‌های تک‌واحدی، انتخاب بین پروتکل Immediate Load و Early Load از نظر میزان بقا و حفظ استخوان مارجینال در بازه ۱ تا ۳ سال تفاوتی ایجاد نمی‌کند؛ به شرطی که بیمار به درستی انتخاب شده و ثبات اولیه (Primary Stability) مناسب هنگام جراحی به دست آمده باشد.",
+            "claim_quote": "در درمان‌های تک‌واحدی، بین دو پروتکل Immediate Load و Early Load از نظر میزان بقا و حفظ استخوان مارجینال در بازهٔ ۱ تا ۳ سال تفاوتی وجود ندارد؛ به شرطی که بیمار به‌درستی انتخاب شده باشد و ثبات اولیه (Primary Stability) مناسب هنگام جراحی به دست آمده باشد.",
             "verdict": "MATCHES",
             "change_kind": null,
             "source_quote": "The trials included showed no signiﬁcant differences between early and immediate\nloading protocols in single implant crowns with regard to survival rate at 1 and 3 years (RD, −0.00;\n95% CI, −0.04 to 0.04; P=.990 for 1 year and P=.980 for 3 years) or marginal bone loss at 1 year\n(MD, 0.09; 95% CI, −0.02 to 0.19; P=.110) and 3 years (MD, −0.23; 95% CI, −0.47 to 0.01; P=.060).",
             "source_ref": null,
-            "note": "the added condition (patient selection, primary stability) narrows the finding and is not a change"
+            "note": "the attached condition narrows the finding rather than widening it, which is consistent with the source's «in selected patients» and its high-insertion-torque Clinical Implications"
           },
           {
             "id": "u24",
@@ -60939,20 +60939,20 @@
           }
         ],
         "counts": {
-          "matches": 12,
+          "matches": 11,
           "altered": 0,
           "reversed": 0,
           "not_in_source": 1,
           "not_assessable": 0,
           "author_view": 1,
-          "not_a_claim": 12
+          "not_a_claim": 13
         },
-        "assessable": 12,
+        "assessable": 11,
         "fidelity_score": 100,
         "level": "HIGH",
         "provisional": false,
         "source_conclusion": "No signiﬁcant differences were found in terms of marginal bone loss at 1 or 3 years between early and immediate loading protocols for single implant- supported crowns.",
-        "fact_fa": "از ۱۲ ادعایی که منبع به آن پرداخته‌اند، ۱۲ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۱ جمله‌ی دیگر در منبع نیامده است.",
+        "fact_fa": "از ۱۱ ادعایی که منبع به آن پرداخته‌اند، ۱۱ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۱ جمله‌ی دیگر در منبع نیامده است.",
         "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       }
     ]
