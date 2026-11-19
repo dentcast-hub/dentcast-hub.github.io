@@ -44069,6 +44069,112 @@
           ]
         }
       ]
+    },
+    "notecast/episode-45": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/notecast/episode-45.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا در ایمپلنت‌های تک‌واحدی، میزان بقای ایمپلنت در پروتکل Immediate Load با Early Load در پیگیری ۱ تا ۳ ساله تفاوت معنی‌داری دارد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ در یک مرور نظام‌مند چاپ‌شده در JPD (۲۰۱۸) هیچ تفاوت آماری معنی‌داری میان میزان بقای ایمپلنت‌ها در این دو روش در پیگیری ۱ تا ۳ ساله مشاهده نشد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا تحلیل استخوان مارجینال اطراف ایمپلنت‌های تک‌واحدی در پروتکل Immediate Load بیشتر از Early Load است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ در همان مرور نظام‌مند، میزان تحلیل استخوان اطراف ایمپلنت در هر دو گروه در بازه ۱ تا ۳ سال مشابه بود و تفاوت معنی‌داری ثبت نشد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Immediate Loading در ایمپلنت به چه معناست؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "تحویل رستوریشن (اصلی یا موقت) بلافاصله پس از جراحی؛ کتاب Misch (2020) این بازه را تا ۲ هفته در نظر می‌گیرد، اما در مرور نظام‌مند Pigozzo و همکاران (JPD، ۲۰۱۸) بازه تا ۷۲ ساعت ملاک بود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Early Loading در ایمپلنت به چه معناست؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "تحویل پروتز در بازه میانی؛ یعنی پس از اتمام دوره Immediate (بعد از ۷۲ ساعت یا ۲ هفته، بسته به تعریف) و پیش از تکمیل دوره ۳ ماهه کانونشنال."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا در بارگذاری فوری ایمپلنت، گشتاور جای‌گذاری ۴۵ نیوتن‌سانتی‌متر نسبت به ۳۲ نیوتن‌سانتی‌متر نرخ شکست کمتری دارد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ بر اساس مطالعه Ottoni و همکاران، در گشتاورهای ۲۰ یا ۴۵ نیوتن‌سانتی‌متر نرخ شکست نسبت به ۳۲ نیوتن‌سانتی‌متر بیشتر گزارش شده است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "در لودینگ فوری ایمپلنت، چه عواملی می‌توانند تحلیل استخوان در ۳۰ روز اول را توضیح دهند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "ورود زودهنگام نیرو، تفاوت در روند Remodeling استخوان، و وجود Microgap در محل اتصال ایمپلنت و اباتمنت و تجمع باکتری‌ها؛ علاوه بر فاکتورهایی مانند طراحی ایمپلنت، ترومای جراحی و مهارت جراح."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/notecast/episode-45.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/notecast/episode-45.html#flashcards-c1",
+              "name": "Immediate Loading در ایمپلنت",
+              "description": "پروتکلی که رستوریشن اصلی یا موقت بلافاصله بعد از جراحی ایمپلنت تحویل داده می‌شود. مرز زمانی‌اش بین منابع فرق دارد: در کتاب Misch (2020) تا ۲ هفته و در مرور نظام‌مند Pigozzo و همکاران تا ۷۲ ساعت.",
+              "source": "faq",
+              "sourceFaqIndex": 2
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/notecast/episode-45.html#flashcards-c2",
+              "name": "Early Loading در ایمپلنت",
+              "description": "بارگذاری در فاصله‌ی میان دوره‌ی Immediate و دوره‌ی کانونشنال: بعد از ۷۲ ساعت یا ۲ هفته (بسته به تعریف) و قبل از کامل شدن انتظار ۳ ماهه.",
+              "source": "faq",
+              "sourceFaqIndex": 3
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/notecast/episode-45.html#flashcards-c3",
+              "name": "Conventional (Delayed) Loading",
+              "description": "انتظاری حدود ۳ ماهه بعد از جراحی تا فرآیند Osseointegration کامل شود و بعد تحویل پروتز.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/notecast/episode-45.html#flashcards-c4",
+              "name": "گشتاور ۳۲ نیوتن‌سانتی‌متر در بارگذاری فوری",
+              "description": "طبق مطالعه Ottoni و همکاران، رسیدن به گشتاور اولیه حدود ۳۲ نیوتن‌سانتی‌متر در بارگذاری فوری با شکست کمتر همراه بود؛ گشتاورهای ۲۰ و ۴۵ نیوتن‌سانتی‌متر هر دو شکست بیشتری داشتند، یعنی گشتاور بالاتر لزوماً بهتر نیست.",
+              "source": "faq",
+              "sourceFaqIndex": 4
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/notecast/episode-45.html#flashcards-c5",
+              "name": "علل احتمالی تحلیل استخوان زودهنگام در لودینگ فوری",
+              "description": "سه سازوکار برای تحلیل استخوان در ۳۰ روز اول لودینگ فوری مطرح است: نیروی زودهنگام، روند متفاوت Remodeling استخوان، و Microgap محل اتصال ایمپلنت و اباتمنت با تجمع باکتری؛ طراحی ایمپلنت، ترومای جراحی و مهارت جراح هم اثر دارند.",
+              "source": "faq",
+              "sourceFaqIndex": 5
+            }
+          ]
+        }
+      ]
     }
   }
 }
