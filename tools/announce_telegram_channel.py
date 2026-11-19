@@ -34,12 +34,22 @@ Usage (CI):
 Usage (local):
     python tools/announce_telegram_channel.py --files insight/insight-58.html --dry-run
 
+Footer («امضای پیام تلگرام»): when switched on in /admin, one short line and a
+visible link go under every message. It is stored in the Plus API (table
+`telegram_footer_settings`) and read ONCE per run from GET /admin/telegram-footer,
+so the founder changes it from the panel with no variable and no commit. Off
+means nothing is added. If the API cannot be reached, the announcement still goes
+out, without the footer: an ad line must never be able to stop a publish notice.
+
 Environment:
     TELEGRAM_BOT_TOKEN    bot token (GitHub Actions secret) — never hardcode it
     TELEGRAM_CHANNEL_ID   channel id (-100…) or @username (GitHub Actions secret)
     SITE_BASE_URL         link origin, default https://dentcast.ir
+    PLUS_API_BASE, ADMIN_USER, ADMIN_PASSWORD
+                          where the footer is read from (optional; unset = no footer)
 """
 import argparse
+import base64
 import html
 import json
 import os
@@ -143,23 +153,63 @@ def first_added_sha(path):
     return lines[-1] if lines else None
 
 
-def build_message(title, description, url):
-    """Title (bold) + one-line description + link. HTML parse mode with
+def build_message(title, description, url, footer=None):
+    """Title (bold) + one-line description + link, then the optional footer
+    (sentence on one line, its link visible on the next). HTML parse mode with
     everything escaped: a Persian title containing & or < would otherwise make
     Telegram reject the whole send with a 400 and the item would vanish."""
     lines = [f"<b>{html.escape(title)}</b>"]
     if description:
         lines.append(html.escape(description))
     lines.append(html.escape(url))
+    if footer:
+        lines.append(f"{html.escape(footer['text'])}\n{html.escape(footer['url'])}")
     return "\n\n".join(lines)
 
 
-def send_message(token, chat_id, text, timeout=20):
-    payload = json.dumps({
+def fetch_footer(api_base, user, password, timeout=10):
+    """The «امضای پیام تلگرام» set in /admin, as {"text", "url"}, or None.
+
+    None for every reason it should not appear: switched off, not configured
+    here, or the API unreachable/erroring. Never raises — the footer is optional
+    and the announcement goes out regardless."""
+    if not api_base or not user or not password:
+        print("footer: PLUS_API_BASE / ADMIN_USER / ADMIN_PASSWORD not set; no footer.")
+        return None
+    auth = base64.b64encode(f"{user}:{password}".encode("utf-8")).decode("ascii")
+    req = urllib.request.Request(
+        api_base.rstrip("/") + "/admin/telegram-footer",
+        headers={"authorization": f"Basic {auth}", "accept": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as res:
+            data = json.loads(res.read().decode("utf-8"))
+    except Exception as e:  # noqa: BLE001 — any failure means "no footer", never a crash
+        print(f"footer: could not read it ({e}); sending without footer.")
+        return None
+    text = (data.get("text") or "").strip()
+    link = (data.get("url") or "").strip()
+    if not data.get("enabled") or not text or not link:
+        print("footer: off.")
+        return None
+    if not re.match(r"^https?://\S+$", link):
+        print("footer: stored link is not an http(s) URL; sending without footer.")
+        return None
+    print(f"footer: on — {text} | {link}")
+    return {"text": text, "url": link}
+
+
+def send_message(token, chat_id, text, timeout=20, preview_url=None):
+    body = {
         "chat_id": chat_id,
         "text": text,
         "parse_mode": "HTML",
-    }).encode("utf-8")
+    }
+    if preview_url:
+        # With a footer the message holds two links, and Telegram previews the
+        # first one it likes. Pin the preview to the article so the card under
+        # the message is always the publish, never the footer's site.
+        body["link_preview_options"] = {"url": preview_url}
+    payload = json.dumps(body).encode("utf-8")
     req = urllib.request.Request(
         API.format(token=token), data=payload,
         headers={"content-type": "application/json"}, method="POST")
@@ -255,6 +305,8 @@ def main():
         return 0
 
     sent, skipped, errors = [], [], 0
+    footer = None
+    footer_read = False
     # One message per item, in publish order — never a batched summary: each item
     # gets its own link preview, and a reader can forward or reply to one alone.
     for cid, path, title, desc, reason in candidates(files, commits, brain_titles, brain_captions):
@@ -262,14 +314,22 @@ def main():
             skipped.append((cid, reason))
             continue
 
+        # Read the footer once, and only when something is actually going out:
+        # most pushes announce nothing and should not touch the API at all.
+        if not footer_read:
+            footer = fetch_footer(os.environ.get("PLUS_API_BASE", ""),
+                                  os.environ.get("ADMIN_USER", ""),
+                                  os.environ.get("ADMIN_PASSWORD", ""))
+            footer_read = True
+
         url = args.site_base.rstrip("/") + to_path(path)
-        text = build_message(title, desc, url)
+        text = build_message(title, desc, url, footer)
         if args.dry_run:
             print(f"WOULD post:\n{text}\n")
             sent.append(cid)
             continue
         try:
-            send_message(token, channel, text)
+            send_message(token, channel, text, preview_url=url)
             print(f"posted: {cid}")
             sent.append(cid)
         except RuntimeError as e:
