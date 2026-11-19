@@ -96,7 +96,7 @@ import {
 import {
   listClosures, addClosure, removeClosure, clinicStatus, backOn, closureText, today as tehranToday,
 } from '../services/clinic.js';
-import { getFooter, setFooter, FOOTER_TEXT_MAX } from '../services/telegram-footer.js';
+import { getFooter, setFooter, FOOTER_TEXT_MAX, FOOTER_LABEL_MAX } from '../services/telegram-footer.js';
 import { parseJalali, formatJalaliLong, formatJalaliDay } from '../services/jalali.js';
 import { config } from '../config.js';
 import type { NotificationMessage } from '../providers/notifications/types.js';
@@ -2192,6 +2192,8 @@ ${renderQuickPublish()}
       <input id="tfText" type="text" maxlength="${FOOTER_TEXT_MAX}" placeholder="مثلاً: دورهٔ تازهٔ ایمپلنت ثبت‌نام می‌کند"></div>
     <div><label for="tfUrl">لینک</label>
       <input id="tfUrl" type="text" dir="ltr" placeholder="https://…"></div>
+    <div><label for="tfLabel">اسم نمایشی لینک (اختیاری؛ خالی = خودِ لینک دیده می‌شود)</label>
+      <input id="tfLabel" type="text" maxlength="${FOOTER_LABEL_MAX}" placeholder="مثلاً: ثبت‌نام دوره"></div>
     <button id="tfSave" type="button">ذخیره</button>
     <div id="tfOut"></div>
   </form>
@@ -2201,6 +2203,7 @@ ${renderQuickPublish()}
     var on = document.getElementById('tfOn');
     var txt = document.getElementById('tfText');
     var url = document.getElementById('tfUrl');
+    var lab = document.getElementById('tfLabel');
     var btn = document.getElementById('tfSave');
     var out = document.getElementById('tfOut');
     var pv = document.getElementById('tfPreview');
@@ -2216,8 +2219,12 @@ ${renderQuickPublish()}
       on.checked = !!d.enabled;
       txt.value = d.text || '';
       url.value = d.url || '';
+      lab.value = d.label || '';
       pv.innerHTML = d.enabled
-        ? 'الان زیر هر پیام:<br><b>' + esc(d.text) + '</b><br><span dir="ltr">' + esc(d.url) + '</span>'
+        ? 'الان زیر هر پیام:<br><b>' + esc(d.text) + '</b><br>'
+          + (d.label
+            ? '<a href="' + esc(d.url) + '" target="_blank" rel="noopener" style="color:#0b5fff;text-decoration:none">' + esc(d.label) + '</a>'
+            : '<span dir="ltr">' + esc(d.url) + '</span>')
         : 'الان: خاموش — پیام‌ها چیزی اضافه ندارند.';
     }
     function load() {
@@ -2231,7 +2238,7 @@ ${renderQuickPublish()}
       fetch('/admin/telegram-footer', {
         method: 'POST', credentials: 'include',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ enabled: on.checked, text: txt.value, url: url.value })
+        body: JSON.stringify({ enabled: on.checked, text: txt.value, url: url.value, label: lab.value })
       }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
         .then(function (res) {
           btn.disabled = false;

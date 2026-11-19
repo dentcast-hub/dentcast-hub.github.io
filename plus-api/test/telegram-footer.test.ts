@@ -21,7 +21,7 @@ describe('/admin/telegram-footer', () => {
   it('is off with nothing stored before the founder ever saves', async () => {
     const res = await get();
     expect(res.statusCode).toBe(200);
-    expect(res.json()).toMatchObject({ ok: true, enabled: false, text: '', url: '' });
+    expect(res.json()).toMatchObject({ ok: true, enabled: false, text: '', url: '', label: '' });
   });
 
   it('needs the admin credentials — the runner reads it with Basic auth', async () => {
@@ -56,6 +56,15 @@ describe('/admin/telegram-footer', () => {
     expect(off.json()).toMatchObject({ enabled: false, text: 'سلام', url: 'https://example.com' });
   });
 
+  it('stores an optional display name for the link; empty means raw link', async () => {
+    const withLabel = await post({ enabled: true, text: 'سلام', url: 'https://example.com', label: ' ثبت‌نام  دوره ' });
+    expect(withLabel.json()).toMatchObject({ label: 'ثبت‌نام دوره' });
+    const without = await post({ enabled: true, text: 'سلام', url: 'https://example.com' });
+    expect(without.json()).toMatchObject({ label: '' });
+    expect((await post({ enabled: true, text: 'سلام', url: 'https://example.com', label: 'ب'.repeat(61) })).json().error)
+      .toBe('label_too_long');
+  });
+
   it('caps the sentence length', async () => {
     const res = await post({ enabled: true, text: 'ا'.repeat(121), url: 'https://example.com' });
     expect(res.json().error).toBe('text_too_long');
@@ -67,5 +76,6 @@ describe('/admin/telegram-footer', () => {
     expect(res.body).toContain('امضای پیام تلگرام');
     expect(res.body).toContain('id="tfSave"');
     expect(res.body).toContain('maxlength="120"');
+    expect(res.body).toContain('id="tfLabel"');
   });
 });
