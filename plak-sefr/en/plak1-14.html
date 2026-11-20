@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filling the Ledger: Your Site on Your Own Domain | Plak-e Sefr | DentCast</title>
+  <meta name="description" content="Part 14: the domain’s ledger is now with Arvan, but it is still empty. In this part you write five new lines in the ledger, tell GitHub that this name belongs to your site, and turn on the site’s lock. With three signs to tell you it was done right.">
+  <link rel="canonical" href="https://dentcast.org/plak-sefr/en/plak1-14.html">
+  <meta name="author" content="Dr. Foad Shahabian">
+  <meta name="robots" content="noindex, follow">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="Filling the Ledger: Your Site on Your Own Domain | DentCast">
+  <meta property="og:description" content="Part 14: the domain’s ledger is now with Arvan, but it is still empty. In this part you write five new lines in the ledger, tell GitHub that this name belongs to your site, and turn on the site’s lock. With three signs to tell you it was done right.">
+  <meta property="og:url" content="https://dentcast.org/plak-sefr/en/plak1-14.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Filling the Ledger: Your Site on Your Own Domain | DentCast">
+  <meta name="twitter:description" content="Part 14: the domain’s ledger is now with Arvan, but it is still empty. In this part you write five new lines in the ledger, tell GitHub that this name belongs to your site, and turn on the site’s lock. With three signs to tell you it was done right.">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dentcast.org/plak-sefr/en/plak1-14.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dentcast.org/plak-sefr/en/plak1-14.html"
+      },
+      "url": "https://dentcast.org/plak-sefr/en/plak1-14.html",
+      "headline": "Filling the Ledger: Your Site on Your Own Domain",
+      "description": "Part 14: the domain’s ledger is now with Arvan, but it is still empty. In this part you write five new lines in the ledger, tell GitHub that this name belongs to your site, and turn on the site’s lock. With three signs to tell you it was done right.",
+      "datePublished": "2026-11-20",
+      "dateModified": "2026-11-20",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dentcast.org/dentcast-cover.webp",
+        "width": 1200,
+        "height": 630
+      },
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "name": "Plak-e Sefr",
+        "url": "https://dentcast.org/plak-sefr"
+      },
+      "author": {
+        "@id": "https://dentcast.org/#person-foad"
+      },
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DentCast",
+          "item": "https://dentcast.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Plak-e Sefr",
+          "item": "https://dentcast.org/plak-sefr"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Filling the Ledger: Your Site on Your Own Domain",
+          "item": "https://dentcast.org/plak-sefr/en/plak1-14.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <link rel="preload" as="font" href="/fonts/Vazirmatn[wght].woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/dc-theme.css?v=19">
+  <link rel="stylesheet" href="/dc-nav.css?v=18">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <link rel="icon" href="/logo-v2.png" type="image/png" sizes="512x512">
+  <meta name="theme-color" content="#F3F5F7">
+  <style>
+@font-face{font-family:'Vazirmatn';src:url('/fonts/Vazirmatn[wght].woff2') format('woff2');font-display:swap;}
+body{font-family:'Vazirmatn',system-ui,-apple-system,sans-serif;}
+.ep-page{max-width:47.5rem;margin:0 auto;padding:2.5rem 1.25rem 5rem;}
+.ep-back{display:inline-flex;align-items:center;gap:0.375rem;font-size:.85rem;color:var(--txt3);text-decoration:none;margin-bottom:1.75rem;transition:color .15s;}
+.ep-back:hover{color:var(--ac);}
+.ep-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:1.125rem;box-shadow:var(--card-sh);overflow:hidden;margin-bottom:1.25rem;}
+.ep-box-head{padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--card-border);}
+.ep-badge{display:inline-flex;align-items:center;background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.72rem;font-weight:700;padding:0.1875rem 0.75rem;border-radius:3.125rem;margin-bottom:0.875rem;letter-spacing:.03em;}
+.ep-badge.sub{background:var(--surface2);color:var(--txt3);}
+.ep-title{font-size:1.55rem;font-weight:800;color:var(--txt);line-height:1.45;margin:0 0 0.75rem;}
+.ep-meta{display:flex;gap:1.125rem;font-size:.8rem;color:var(--txt3);flex-wrap:wrap;}
+.ep-section{padding:1.375rem 1.75rem 0;}
+.ep-section:last-child{padding-bottom:1.75rem;}
+.ep-section-label{font-size:1rem;font-weight:700;color:var(--ac);border-left:4px solid var(--ac);padding-left:0.75rem;margin-bottom:0.875rem;}
+.ep-caption{font-size:.95rem;color:var(--txt);line-height:1.9;margin:0;}
+.ep-caption p{margin:0 0 1.8rem;}
+.ep-caption p:last-child{margin-bottom:0;}
+.ep-fig{display:block;max-width:18.75rem;width:100%;height:auto;margin:1.125rem auto;border:1px solid var(--card-border);border-radius:0.875rem;box-shadow:var(--card-sh);}
+.ep-fig-wide{max-width:100%;border-radius:0.875rem;}
+.ep-figure{margin:1.5rem 0;}
+.ep-figcap{text-align:center;font-size:.85rem;color:var(--txt3);line-height:1.8;margin-top:0.5rem;}
+.ep-table-wrap{overflow-x:auto;margin:1.25rem 0;}
+.ep-table{width:100%;border-collapse:collapse;font-size:.9rem;line-height:1.7;}
+.ep-table th,.ep-table td{border:1px solid var(--card-border);padding:0.5rem 0.7rem;text-align:left;}
+.ep-table thead th{background:var(--surface2);font-weight:700;}
+.ep-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-chip{background:var(--chip-bg);border:1px solid var(--chip-bd);color:var(--chip-txt);font-size:.78rem;padding:0.25rem 0.75rem;border-radius:3.125rem;}
+.ep-chip-link{text-decoration:none;transition:background .15s,color .15s;}
+.ep-chip-link:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+.ep-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.ep-hashtag{font-size:.8rem;color:var(--ac);font-weight:600;}
+.ep-nav{display:flex;justify-content:space-between;gap:0.75rem;margin-top:1.75rem;}
+.ep-nav-btn{flex:1;text-align:center;padding:0.75rem 1rem;border:1px solid var(--card-border);border-radius:0.75rem;text-decoration:none;font-size:.85rem;font-weight:600;color:var(--txt2);background:var(--card-bg);transition:all .15s;}
+.ep-nav-btn:hover{border-color:var(--ac);color:var(--ac);}
+.ep-nav-empty{cursor:default;opacity:.3;pointer-events:none;}
+@media(max-width:480px){.ep-title{font-size:1.25rem;}.ep-box-head,.ep-section{padding-right:1.125rem;padding-left:1.125rem;}}
+.lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+  
+/* Body prose — canonical measure, shared with every article page.
+   This page does not load /dc-article.css, so the rule lives here. */
+p{ margin:0.875rem 0; font-size:1.02rem; }
+</style>
+  <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
+</head>
+<body>
+
+<!-- ── TOP BAR (English chrome, cloned from metanotes/en/meta-1.html) ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GLOBAL SEARCH ── -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<!-- ── MAIN CONTENT (Promptologist structure, translated, LTR) ── -->
+<main class="article-content-wrap ep-page">
+  <a href="/plak-sefr/" class="ep-back">&#8592; Back to Plak-e Sefr</a>
+
+  <!-- 🌐 Persian Version (SEO-friendly language toggle) -->
+  <a class="lang-btn" href="../plak1-14.html" rel="noopener">
+    <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> فارسی
+  </a>
+
+  <div class="ep-box">
+    <div class="ep-box-head">
+      <div class="ep-badge">Part 14</div>
+      <h1 class="ep-title">Filling the Ledger: Your Site on Your Own Domain</h1>
+      <div class="ep-meta">
+        <span>&#9201; 7 min read</span>
+      </div>
+    </div>
+
+    <div class="ep-section">
+      <h2 class="ep-section-label">This Part</h2>
+      <div class="ep-caption"><p>Your site is on now, but it opens with a temporary address that GitHub gave it, such as drsamadi.github.io (a hypothetical example). Last time, when you put Arvan’s two Name Server addresses in the IRNIC panel in place of the old ones, your domain’s ledger, for example drsamadi.ir, reached Arvan. But the ledger is still empty and nowhere does it say where your site is; that is why, if you type the domain on your phone now, still nothing opens. In this part we do three things: we write in the ledger where the site is, we tell GitHub that this name belongs to your site, and we turn on the site’s lock. At the end, drsamadi.ir opens on your phone.</p><p><strong>One site, two addresses</strong></p><p>You have surely seen that some addresses start with www, such as www.drsamadi.ir, and some do not, such as drsamadi.ir. You may think the two are the same, but to the internet they are two separate names. It is like a patient who once introduces himself as “Rezaei” and once as “Ali Rezaei”; if the secretary has written only one of the two in her ledger, next time she will not find the file.</p><p>Patients type both forms. So in the ledger we write a line both for drsamadi.ir and for www.drsamadi.ir, and send both to the same site.</p><p><strong>New lines in the ledger</strong></p><p>The DNS ledger in the Arvan panel is a table. Each row of this table is one line of the ledger and is called a “record”. Each record has three columns:</p><ul><li><strong>Name:</strong> the name the patient types on the phone. Because every name in this ledger ends with drsamadi.ir, that part is no longer written and only the first part of the name goes here. For www.drsamadi.ir you write only www. drsamadi.ir itself has no first part, so you put the @ sign in its place.</li><li><strong>Value:</strong> the place the patient should go to by typing that name.</li><li><strong>Type:</strong> says what this line is for. The ledger is not only for the site; for example, if you also have email with your domain, a line also says where the emails are delivered. Like the secretary’s ledger where one column is the file number and one column is the phone number; the type is that column name and says what we wrote the value for.</li></ul><figure class="ep-figure"><img class="ep-fig" src="/plak-sefr/arvan-records-table.webp" alt="DNS records table in Arvan with three columns: type, name and value" width="1080" height="1492" loading="lazy"><figcaption class="ep-figcap">DentCast’s own ledger in Arvan: each row is one record. Your ledger needs five new rows: four for drsamadi.ir and one for www.</figcaption></figure><p>If you open the list of types, you see many names. So that they are not strangers, very briefly:</p><ul><li><strong>A and CNAME:</strong> the site’s address. These two are all you need.</li><li><strong>AAAA:</strong> like A, but for the internet’s new-generation numbers, which are longer.</li><li><strong>ANAME:</strong> like CNAME, but for the domain itself without www.</li><li><strong>NS:</strong> the same two lines that brought the ledger from IRNIC to Arvan.</li><li><strong>MX:</strong> says where the domain’s emails, for example a letter sent to info@drsamadi.ir, are delivered.</li><li><strong>TXT:</strong> a note in the ledger, usually to show a service such as Google that the domain is yours.</li><li><strong>SRV, PTR and CAA:</strong> technical jobs that have nothing to do with a practice website.</li></ul><p>In this part you only work with A and CNAME and do not touch the rest.</p><figure class="ep-figure"><img class="ep-fig" src="/plak-sefr/arvan-record-types.webp" alt="List of record types in Arvan" width="938" height="1320" loading="lazy"></figure><p>The difference between A and CNAME is like the difference between two ways of giving a patient directions: either you say the building’s street number, or you say “the same building where the pharmacy is”.</p><ul><li><strong>An A record</strong> means an address by number. Every server on the internet has a number, like a building’s street number, made of four numbers with dots, such as 185.199.108.153. This number is called an IP.</li><li><strong>A CNAME record</strong> means an address by name: “go to the same place this name goes”.</li></ul><p>Now let’s get to work. In the Arvan panel, in the narrow bar at the side of the screen, tap the CDN icon (shaped like a planet with a ring), and then, from the menu that opens, tap “DNS records”.</p><figure class="ep-figure"><img class="ep-fig" src="/plak-sefr/arvan-dns-menu.webp" alt="The CDN icon in the side bar and the DNS records option in the Arvan menu" width="1080" height="2040" loading="lazy"></figure><p>On this page you see the green “+ New record” button. Every time you tap it, a new line is added to the ledger. At the bottom of the same page there are two Name Server lines that you saw last time; do not touch them.</p><figure class="ep-figure"><img class="ep-fig" src="/plak-sefr/arvan-new-record.webp" alt="The New record button on the DNS records page" width="1080" height="1740" loading="lazy"></figure><p><strong>Four lines for drsamadi.ir:</strong></p><p>GitHub has four numbers (IPs). These four numbers are like four doors of one building; if one is closed, the patient comes in through another. You make a separate line for each number, so there are four lines that differ only in their value:</p><div class="ep-table-wrap"><table class="ep-table"><thead><tr><th>Type</th><th>Name</th><th>Value</th><th>Cloud switch</th></tr></thead><tbody><tr><td>A</td><td>@</td><td>185.199.108.153</td><td>Off</td></tr><tr><td>A</td><td>@</td><td>185.199.109.153</td><td>Off</td></tr><tr><td>A</td><td>@</td><td>185.199.110.153</td><td>Off</td></tr><tr><td>A</td><td>@</td><td>185.199.111.153</td><td>Off</td></tr></tbody></table></div><p>That is, you tap “+ New record” four times and each time set the type to A and the name to @; only the value’s number changes. The @ sign in all four lines means drsamadi.ir itself.</p><p><strong>One line for www.drsamadi.ir:</strong></p><ul><li>Type: CNAME</li><li>Name: www</li><li>Value: your site’s temporary address on GitHub, for example drsamadi.github.io. That is, a patient who typed www goes to the same place your GitHub address goes.</li><li>Cloud switch: off</li></ul><figure class="ep-figure"><img class="ep-fig" src="/plak-sefr/arvan-dns-records.webp" alt="The new records in the Arvan ledger" width="1080" height="1810" loading="lazy"><figcaption class="ep-figcap">In this picture one line of each type is visible: A for the address without www and CNAME for the address with www. Instead of one A line, you make four</figcaption></figure><p>Why is the cloud switch off? Having this switch on means Arvan itself stands at the site’s door. But when the site is on GitHub and Arvan stands in front of it, GitHub cannot see that this name really belongs to you and does not get a lock for the site. So for now Arvan only keeps the ledger and sends the patient straight to GitHub.</p><p><strong>Tell GitHub this name belongs to your site</strong></p><p>The ledger now sends the patient to GitHub. But GitHub is like a large medical building with many sites inside. The guard of this building must know which floor to send a patient who says “drsamadi.ir”.</p><p>Go to the site’s repo on GitHub. On the phone, from the More menu tap Settings, and in the list open Pages. This is the same page you turned the site on with.</p><figure class="ep-figure"><img class="ep-fig" src="/plak-sefr/gh-more-settings.webp" alt="The More menu and Settings on GitHub" width="1080" height="1110" loading="lazy"></figure><figure class="ep-figure"><img class="ep-fig" src="/plak-sefr/gh-settings-pages.webp" alt="The Pages option in the settings list" width="1080" height="2040" loading="lazy"></figure><p>At the bottom of this page there is a section called Custom domain. In its box write your domain name without www, for example drsamadi.ir, and tap the Save button. You do not need to enter the www form separately; GitHub works out by itself that www.drsamadi.ir also belongs to this site.</p><figure class="ep-figure"><img class="ep-fig" src="/plak-sefr/gh-custom-domain.webp" alt="The Custom domain section right after Save" width="1080" height="1240" loading="lazy"><figcaption class="ep-figcap">Right after Save: GitHub is looking at the ledger</figcaption></figure><p>After Save, a yellow message appears under the box: DNS Check in Progress, meaning “checking the ledger”. GitHub is looking at your ledger in Arvan to make sure this name really points to your site. This check may take from a few minutes to a day. During this time it also says next to Enforce HTTPS that it is not available for now; this is normal and nothing is broken.</p><p>At the top of the same page, next to Your site is live at, you see the site’s new address.</p><figure class="ep-figure"><img class="ep-fig" src="/plak-sefr/gh-pages-live.webp" alt="Top of the Pages page: the site’s new address" width="1080" height="1820" loading="lazy"></figure><p><strong>The site’s lock</strong></p><p>You have surely seen a small lock next to the address of some sites in your phone’s browser. This lock means that what passes between the patient’s phone and the site is like a letter in a sealed envelope and is not opened on the way. The technical name of this lock is HTTPS. A site without a lock opens on some phones with a “Not secure” warning and frightens the patient.</p><p>GitHub itself gives your site its lock, and it is free. When the ledger check is finished, the yellow message gives way to the green message DNS check successful, meaning “the ledger is correct”. Now next to Enforce HTTPS there is a small box you can tick. Enforce HTTPS means “always with the lock”. Tick it so that from now on the site opens only with the lock.</p><p>If after a day the yellow message is still there, check two things in Arvan: that all four GitHub numbers are written correctly, and that the cloud switch is off on all five lines.</p><p><strong>Open the site on your phone</strong></p><p>Type drsamadi.ir in your phone’s browser. The same page you have been seeing with drsamadi.github.io until today should open, this time with your own name and with a lock next to the address. Try www.drsamadi.ir too; it should open the same page.</p><p>From today, the address you give patients is drsamadi.ir. If a patient still types the temporary github.io address, GitHub itself takes them to the new address.</p><p><strong>You have done it right if:</strong></p><ul><li>drsamadi.ir opens on the phone and has a lock next to the address.</li><li>www.drsamadi.ir also opens the same page.</li><li>On GitHub’s Pages page, the green message DNS check successful has appeared and Enforce HTTPS is ticked.</li></ul></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Keywords</h2>
+      <div class="ep-chips"><span class="ep-chip">To the internet, www.drsamadi.ir and drsamadi.ir are two separate names</span><span class="ep-chip">Each line of the DNS ledger is a record with three columns: name, value and type</span><span class="ep-chip">An A record is an address by number and a CNAME record an address by name</span><span class="ep-chip">Four A records with GitHub’s four IPs bring the domain without www to the site</span><span class="ep-chip">The cloud switch stays off so GitHub can get a lock for the site</span><span class="ep-chip">Custom domain in the Pages settings tells GitHub this name belongs to your site</span><span class="ep-chip">Enforce HTTPS means the site always opens with the lock</span></div>
+    </div>
+    <div class="ep-section">
+      <h2 class="ep-section-label">Tags</h2>
+      <div class="ep-tags"><span class="ep-hashtag">#PlakESefr</span><span class="ep-hashtag">#PracticeWebsite</span><span class="ep-hashtag">#SiteDomain</span><span class="ep-hashtag">#GitHub</span></div>
+    </div>
+  </div>
+  <!-- Series prev/next (en tier). Targets are en counterparts only.
+       The previous part's en page (plak1-13.html) exists, so the previous
+       slot links to it; there is no next part yet, so the next slot stays a
+       disabled placeholder. -->
+  <div class="ep-nav">
+    <a href="plak1-13.html" class="ep-nav-btn">&#8592; Previous Part</a>
+    <span class="ep-nav-btn ep-nav-empty">Next Part &#8594;</span>
+  </div>
+</main>
+
+<script src="/global-search.js?v=29" defer></script>
+<script src="/dc-nav.js?v=356" defer></script>
+</body>
+</html>
