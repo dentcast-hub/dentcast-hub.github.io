@@ -61061,14 +61061,14 @@
           {
             "item": "reasoning chain is explicit",
             "points": 4,
-            "evidence_quote": "ولی وقتی سایت در گیت‌هاب است و آروان جلویش بایستد، گیت‌هاب نمی‌تواند ببیند این اسم واقعاً مال شماست و برای سایت قفل نمی‌گیرد.",
+            "evidence_quote": "ولی وقتی سایت در گیت‌هاب است و آروان جلویش ایستاده، گیت‌هاب نمی‌تواند ببیند این اسم واقعاً مال شماست و برای سایت قفل نمی‌گیرد.",
             "note": ""
           },
           {
             "item": "relationship to published evidence is stated",
             "points": 0,
             "evidence_quote": "",
-            "note": "متن هیچ‌جا خود را با منبع یا مستندات منتشرشده‌ای مقایسه نمی‌کند و حتی نبودِ منبع را هم بیان نمی‌کند"
+            "note": "the text does not position itself against any published source and does not state that evidence is absent"
           },
           {
             "item": "scope of the claim is bounded",
@@ -61080,14 +61080,14 @@
             "item": "explicitly labeled as experience/opinion, not evidence",
             "points": 0,
             "evidence_quote": "",
-            "note": "هیچ جمله‌ای در متن آن را تجربه یا نظر شخصی معرفی نمی‌کند؛ بخش این صفحه در فهرست بسته‌ی اعلان‌های سطح بخش (chairside، metanotes، insight) مشخص نیست"
+            "note": "no in-text label as experience or opinion; the page is not from chairside/, metanotes/ or insight/, so no section-level declaration applies"
           }
         ],
         "des_score": 12,
         "band": "E",
         "provisional": false,
-        "fact_fa": "این نوشته‌ی خود دنت‌کست در مسیر COMMENTARY امتیاز ۱۲ و باند E گرفته است.",
-        "interpretation_fa": "این متن راهنمای گام‌به‌گام اتصال دامنه به سایت GitHub Pages با رکوردهای DNS در آروان است و ادعای بالینی یا پژوهشی ندارد. دلیل گام‌ها، مثل خاموش ماندن کلید ابر، توضیح داده شده و دامنه‌ی کار به A و CNAME محدود شده است. به منبعی ارجاع نمی‌دهد و خود را تجربه‌ی شخصی نمی‌نامد. ارزشش فنی و عملی است، نه بالینی."
+        "fact_fa": "این متن در مسیر Commentary امتیاز ۱۲ و باند E می‌گیرد.",
+        "interpretation_fa": "این متن یک راهنمای فنی گام‌به‌گام برای اتصال دامنه به GitHub Pages با DNS آروان است و هیچ ادعای بالینی یا پژوهشی ندارد. ارزشش عملی و آموزشی برای راه‌اندازی سایت مطب است و جای شواهد علمی را نمی‌گیرد."
       }
     ]
   }
