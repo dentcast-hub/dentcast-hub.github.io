@@ -61061,33 +61061,33 @@
           {
             "item": "reasoning chain is explicit",
             "points": 4,
-            "evidence_quote": "ولی وقتی سایت در گیت‌هاب است و آروان جلویش بایستد، گیت‌هاب نمی‌تواند ببیند این اسم واقعاً مال شماست و برای سایت قفل نمی‌گیرد.",
-            "note": ""
+            "evidence_quote": "اگر آروان جلوی آن بایستد، گیت‌هاب نمی‌تواند ببیند که این اسم واقعاً مال شماست، و برای سایت قفل نمی‌گیرد.",
+            "note": "each step is tied to a stated mechanism (why the cloud switch must be off, why both name forms need records)"
           },
           {
             "item": "relationship to published evidence is stated",
             "points": 0,
             "evidence_quote": "",
-            "note": "متن هیچ‌جا خود را با منبع یا مستندات منتشرشده‌ای مقایسه نمی‌کند و حتی نبودِ منبع را هم بیان نمی‌کند"
+            "note": "the text does not position itself against any published literature and does not state that evidence is absent; no citation or reference anywhere in the text"
           },
           {
             "item": "scope of the claim is bounded",
             "points": 3,
             "evidence_quote": "در این قسمت فقط با A و CNAME کار دارید و به بقیه دست نمی‌زنید.",
-            "note": ""
+            "note": "the text states which record types the procedure covers and which it does not"
           },
           {
             "item": "explicitly labeled as experience/opinion, not evidence",
             "points": 0,
             "evidence_quote": "",
-            "note": "هیچ جمله‌ای در متن آن را تجربه یا نظر شخصی معرفی نمی‌کند؛ بخش این صفحه در فهرست بسته‌ی اعلان‌های سطح بخش (chairside، metanotes، insight) مشخص نیست"
+            "note": "no sentence labels the text as experience or opinion; section not supplied in the input and no section-level declaration applies, so the item is not earned"
           }
         ],
         "des_score": 12,
         "band": "E",
         "provisional": false,
-        "fact_fa": "این نوشته‌ی خود دنت‌کست در مسیر COMMENTARY امتیاز ۱۲ و باند E گرفته است.",
-        "interpretation_fa": "این متن راهنمای گام‌به‌گام اتصال دامنه به سایت GitHub Pages با رکوردهای DNS در آروان است و ادعای بالینی یا پژوهشی ندارد. دلیل گام‌ها، مثل خاموش ماندن کلید ابر، توضیح داده شده و دامنه‌ی کار به A و CNAME محدود شده است. به منبعی ارجاع نمی‌دهد و خود را تجربه‌ی شخصی نمی‌نامد. ارزشش فنی و عملی است، نه بالینی."
+        "fact_fa": "این متن یک COMMENTARY از خود DentCast است و امتیاز DES آن ۱۲ در باند E است.",
+        "interpretation_fa": "این متن یک راهنمای فنی گام‌به‌گام برای اتصال دامنه به سایت مطب است و ادعای بالینی یا پژوهشی ندارد. دلیل هر گام را توضیح می‌دهد و دامنه‌ی کار را محدود می‌کند، اما نسبتش با منابع منتشرشده را بیان نمی‌کند و خود را تجربه یا نظر معرفی نمی‌کند. ارزشش عملی و آموزشی است، نه شواهد دندانپزشکی."
       }
     ]
   }
