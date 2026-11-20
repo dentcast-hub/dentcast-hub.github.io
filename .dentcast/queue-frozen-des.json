@@ -553,5 +553,23 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "insight/insight-115": {
+    "queue_ref": "queue/26-insight-close-contact-composite-tooth-or-crown",
+    "record_sha256": "4b339606ad7b444d64e7e5f2bd9b1a1ed5c123292dd9af1f1df060f21f7af648",
+    "installed_at": "2026-11-20",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }
