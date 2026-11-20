@@ -3781,6 +3781,38 @@
    ]
   },
   {
+   "key": "سایلان",
+   "tag": "#سایلان",
+   "domain": null,
+   "words": 1,
+   "definition": "عاملِ جفت‌کننده‌ی بین سرامیک و رزین.",
+   "use_when": "مقاله نقش یا پروتکلِ سایلان را شرح دهد.",
+   "aliases": [
+    "silane",
+    "سیلان",
+    "silane coupling",
+    "سایلن",
+    "سیلن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-10",
+    "episodes/episode-16",
+    "episodes/episode-136",
+    "notecast/episode-10",
+    "notecast/episode-12",
+    "notecast/episode-16",
+    "insight/insight-42",
+    "notecast/episode-42",
+    "notecast/episode-43",
+    "sharehub/share-41",
+    "notecast/episode-44",
+    "insight/insight-115"
+   ]
+  },
+  {
    "key": "قدرت_باند",
    "tag": "#قدرت_باند",
    "domain": null,
@@ -3962,6 +3994,43 @@
    ]
   },
   {
+   "key": "اچ_سرامیک",
+   "tag": "#اچ_سرامیک",
+   "domain": null,
+   "words": 2,
+   "definition": "اچ کردنِ سطح سرامیک با هیدروفلوریک.",
+   "use_when": "مقاله پروتکل اچ سرامیک را تعیین کند.",
+   "aliases": [
+    "HF",
+    "هیدروفلوریک",
+    "hydrofluoric",
+    "اچ HF",
+    "ceramic etching",
+    "hf",
+    "اچ کردن سرامیک",
+    "اچینگ سرامیک",
+    "porcelain etching"
+   ],
+   "variants": [
+    "#HF"
+   ],
+   "co_tags": [],
+   "count": 11,
+   "content_ids": [
+    "episodes/episode-10",
+    "episodes/episode-16",
+    "notecast/episode-9",
+    "notecast/episode-10",
+    "notecast/episode-12",
+    "notecast/episode-16",
+    "notecast/episode-29",
+    "insight/insight-42",
+    "sharehub/share-32",
+    "sharehub/share-41",
+    "insight/insight-115"
+   ]
+  },
+  {
    "key": "برداشت_پوسیدگی",
    "tag": "#برداشت_پوسیدگی",
    "domain": "clinical",
@@ -4109,37 +4178,6 @@
     "insight/insight-62",
     "chairside/chairside-33",
     "insight/insight-101"
-   ]
-  },
-  {
-   "key": "سایلان",
-   "tag": "#سایلان",
-   "domain": null,
-   "words": 1,
-   "definition": "عاملِ جفت‌کننده‌ی بین سرامیک و رزین.",
-   "use_when": "مقاله نقش یا پروتکلِ سایلان را شرح دهد.",
-   "aliases": [
-    "silane",
-    "سیلان",
-    "silane coupling",
-    "سایلن",
-    "سیلن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-10",
-    "episodes/episode-16",
-    "episodes/episode-136",
-    "notecast/episode-10",
-    "notecast/episode-12",
-    "notecast/episode-16",
-    "insight/insight-42",
-    "notecast/episode-42",
-    "notecast/episode-43",
-    "sharehub/share-41",
-    "notecast/episode-44"
    ]
   },
   {
@@ -4414,42 +4452,6 @@
     "episodes/episode-159-1",
     "metanotes/meta-14",
     "dentai/dentai-29"
-   ]
-  },
-  {
-   "key": "اچ_سرامیک",
-   "tag": "#اچ_سرامیک",
-   "domain": null,
-   "words": 2,
-   "definition": "اچ کردنِ سطح سرامیک با هیدروفلوریک.",
-   "use_when": "مقاله پروتکل اچ سرامیک را تعیین کند.",
-   "aliases": [
-    "HF",
-    "هیدروفلوریک",
-    "hydrofluoric",
-    "اچ HF",
-    "ceramic etching",
-    "hf",
-    "اچ کردن سرامیک",
-    "اچینگ سرامیک",
-    "porcelain etching"
-   ],
-   "variants": [
-    "#HF"
-   ],
-   "co_tags": [],
-   "count": 10,
-   "content_ids": [
-    "episodes/episode-10",
-    "episodes/episode-16",
-    "notecast/episode-9",
-    "notecast/episode-10",
-    "notecast/episode-12",
-    "notecast/episode-16",
-    "notecast/episode-29",
-    "insight/insight-42",
-    "sharehub/share-32",
-    "sharehub/share-41"
    ]
   },
   {
@@ -5112,6 +5114,35 @@
    ]
   },
   {
+   "key": "تحویل_روکش",
+   "tag": "#تحویل_روکش",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "جلسه‌ی امتحان و تحویل روکش — از پروو تا سمان و کنترل نهایی.",
+   "use_when": "مقاله مرحله‌ای از همین جلسه را تعیین تکلیف کند.",
+   "aliases": [
+    "crown delivery",
+    "دلیوری روکش",
+    "جلسه تحویل روکش",
+    "تحویل کار",
+    "دلیوری کراون",
+    "تحویل کراون"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "dentcast-plus/video-2",
+    "dentcast-plus/video-3",
+    "metanotes/meta-12",
+    "insight/insight-44",
+    "insight/insight-52",
+    "insight/insight-69",
+    "chairside/chairside-37",
+    "insight/insight-115"
+   ]
+  },
+  {
    "key": "تراش_دندان",
    "tag": "#تراش_دندان",
    "domain": "clinical",
@@ -5358,6 +5389,40 @@
    ]
   },
   {
+   "key": "کانتکت_باز",
+   "tag": "#کانتکت_باز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نبودِ تماس پروگزیمالِ مؤثر بین دو دندان مجاور؛ معمولاً با گیر کردن غذا و درد موضعی بروز می‌کند.",
+   "use_when": "مقاله کانتکت باز را تشخیص بدهد، علتش را بررسی کند، یا راه اصلاحش را بگوید.",
+   "aliases": [
+    "open contact",
+    "تماس باز پروگزیمال",
+    "باز بودن تماس",
+    "اپن کانتکت",
+    "loose contact",
+    "کانتکت لوز",
+    "open proximal contact"
+   ],
+   "variants": [
+    "#تماس_باز"
+   ],
+   "co_tags": [
+    "#تماس_باز"
+   ],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-121-1",
+    "photocast/episode-1",
+    "insight/insight-29",
+    "metanotes/meta-12",
+    "insight/insight-69",
+    "insight/insight-80",
+    "episodes/episode-163",
+    "insight/insight-115"
+   ]
+  },
+  {
    "key": "گروپ_فانکشن",
    "tag": "#گروپ_فانکشن",
    "domain": "clinical",
@@ -5577,34 +5642,6 @@
     "insight/insight-18",
     "chairside/chairside-7",
     "insight/insight-106"
-   ]
-  },
-  {
-   "key": "تحویل_روکش",
-   "tag": "#تحویل_روکش",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "جلسه‌ی امتحان و تحویل روکش — از پروو تا سمان و کنترل نهایی.",
-   "use_when": "مقاله مرحله‌ای از همین جلسه را تعیین تکلیف کند.",
-   "aliases": [
-    "crown delivery",
-    "دلیوری روکش",
-    "جلسه تحویل روکش",
-    "تحویل کار",
-    "دلیوری کراون",
-    "تحویل کراون"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "dentcast-plus/video-2",
-    "dentcast-plus/video-3",
-    "metanotes/meta-12",
-    "insight/insight-44",
-    "insight/insight-52",
-    "insight/insight-69",
-    "chairside/chairside-37"
    ]
   },
   {
@@ -5971,6 +6008,35 @@
    ]
   },
   {
+   "key": "فلدسپاتیک",
+   "tag": "#فلدسپاتیک",
+   "domain": null,
+   "words": 1,
+   "definition": "پرسلن فلدسپاتیک.",
+   "use_when": "مقاله رفتار یا اندیکاسیون فلدسپاتیک را بگوید.",
+   "aliases": [
+    "feldspathic",
+    "feldspathic porcelain",
+    "پرسلن فلدسپاتیک",
+    "سرامیک فلدسپاتیک",
+    "فلداسپاتیک"
+   ],
+   "variants": [
+    "#feldspathic_porcelain"
+   ],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "notecast/episode-8",
+    "notecast/episode-9",
+    "notecast/episode-10",
+    "notecast/episode-16",
+    "insight/insight-42",
+    "sharehub/share-27",
+    "insight/insight-115"
+   ]
+  },
+  {
    "key": "مدیریت_بافت_نرم",
    "tag": "#مدیریت_بافت_نرم",
    "domain": "clinical",
@@ -6032,39 +6098,6 @@
     "insight/insight-105",
     "metanotes/meta-23",
     "sharehub/share-55"
-   ]
-  },
-  {
-   "key": "کانتکت_باز",
-   "tag": "#کانتکت_باز",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نبودِ تماس پروگزیمالِ مؤثر بین دو دندان مجاور؛ معمولاً با گیر کردن غذا و درد موضعی بروز می‌کند.",
-   "use_when": "مقاله کانتکت باز را تشخیص بدهد، علتش را بررسی کند، یا راه اصلاحش را بگوید.",
-   "aliases": [
-    "open contact",
-    "تماس باز پروگزیمال",
-    "باز بودن تماس",
-    "اپن کانتکت",
-    "loose contact",
-    "کانتکت لوز",
-    "open proximal contact"
-   ],
-   "variants": [
-    "#تماس_باز"
-   ],
-   "co_tags": [
-    "#تماس_باز"
-   ],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-121-1",
-    "photocast/episode-1",
-    "insight/insight-29",
-    "metanotes/meta-12",
-    "insight/insight-69",
-    "insight/insight-80",
-    "episodes/episode-163"
    ]
   },
   {
@@ -6722,34 +6755,6 @@
     "episodes/episode-161",
     "episodes/episode-162",
     "sharehub/share-44"
-   ]
-  },
-  {
-   "key": "فلدسپاتیک",
-   "tag": "#فلدسپاتیک",
-   "domain": null,
-   "words": 1,
-   "definition": "پرسلن فلدسپاتیک.",
-   "use_when": "مقاله رفتار یا اندیکاسیون فلدسپاتیک را بگوید.",
-   "aliases": [
-    "feldspathic",
-    "feldspathic porcelain",
-    "پرسلن فلدسپاتیک",
-    "سرامیک فلدسپاتیک",
-    "فلداسپاتیک"
-   ],
-   "variants": [
-    "#feldspathic_porcelain"
-   ],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "notecast/episode-8",
-    "notecast/episode-9",
-    "notecast/episode-10",
-    "notecast/episode-16",
-    "insight/insight-42",
-    "sharehub/share-27"
    ]
   },
   {
@@ -13171,6 +13176,28 @@
    ]
   },
   {
+   "key": "بستن_کانتکت",
+   "tag": "#بستن_کانتکت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "اصلاح کانتکت باز پروگزیمال — افزودن کامپوزیت، یا اصلاح/تعویض رستوریشن.",
+   "use_when": "مقاله راهکار عملی بستن کانتکت باز بدهد. مفهوم معکوسِ #باز_کردن_کانتکت است؛ جابه‌جا به کار نرود.",
+   "aliases": [
+    "closing contact",
+    "بستن تماس",
+    "اصلاح کانتکت باز",
+    "contact closure",
+    "بستن کنتاکت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "photocast/episode-1",
+    "insight/insight-115"
+   ]
+  },
+  {
    "key": "تحلیل_مفهومی",
    "tag": "#تحلیل_مفهومی",
    "domain": "clinical",
@@ -17982,27 +18009,6 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-143-1"
-   ]
-  },
-  {
-   "key": "بستن_کانتکت",
-   "tag": "#بستن_کانتکت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "اصلاح کانتکت باز پروگزیمال — افزودن کامپوزیت، یا اصلاح/تعویض رستوریشن.",
-   "use_when": "مقاله راهکار عملی بستن کانتکت باز بدهد. مفهوم معکوسِ #باز_کردن_کانتکت است؛ جابه‌جا به کار نرود.",
-   "aliases": [
-    "closing contact",
-    "بستن تماس",
-    "اصلاح کانتکت باز",
-    "contact closure",
-    "بستن کنتاکت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "photocast/episode-1"
    ]
   },
   {
