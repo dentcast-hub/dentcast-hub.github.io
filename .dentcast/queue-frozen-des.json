@@ -571,5 +571,47 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "sharehub/share-57": {
+    "queue_ref": "queue/27-sharehub-rpd-3d-printed-vs-cast-framework",
+    "record_sha256": "c415e737845cdd3526fe40efc7ef90a7afdeba237e69f90a38f4a81e646c820f",
+    "installed_at": "2026-11-21",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [
+        "u1",
+        "u2",
+        "u3",
+        "u4",
+        "u5",
+        "u6",
+        "u13",
+        "u14",
+        "u18",
+        "u23",
+        "u24",
+        "u25",
+        "u27",
+        "u28",
+        "u44",
+        "u45",
+        "u46",
+        "u50",
+        "u54",
+        "u55",
+        "u59",
+        "u64",
+        "u67"
+      ],
+      "dropped": []
+    }
   }
 }

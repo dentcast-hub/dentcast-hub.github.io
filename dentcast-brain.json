@@ -19099,5 +19099,50 @@
       "secondary": [],
       "subtopic": "clinical"
     }
+  },
+  {
+    "type": "sharehub",
+    "id": "57",
+    "title": "فریم‌ورک RPD؛ آیا پرینت سه‌بعدی فلز واقعاً بهتر از ریخته‌گری است؟",
+    "caption": "دقتِ اندازه‌گیری‌شدهٔ یک فریم‌ورک پارسیل با نشستنش در دهان یکی نیست. یک مرور سیستماتیک و یک مطالعهٔ کلینیکی نشان می‌دهند پرینت فلز و ریخته‌گری را چطور باید با هم سنجید.",
+    "author": "دکتر فواد شهابیان",
+    "source": "https://dentcast.org",
+    "hashtags": [
+      "#Curated_Content",
+      "#پروتز_متحرک",
+      "#پروتز_پارسیل",
+      "#پرینت_سه_بعدی",
+      "#فیت_پروتز",
+      "#دقت_اسکن",
+      "#اسکنر_داخل_دهانی"
+    ],
+    "keywords": [
+      "فریم‌ورک پارسیل متحرک (RPD Framework)",
+      "ریخته‌گری حذف موم (Lost-Wax Casting)",
+      "ذوب انتخابی با لیزر (SLM) و DMLS",
+      "گردش‌کار نیمه‌دیجیتال (Partial Digital Workflow)",
+      "ترونس و پرسیژن (Trueness and Precision)",
+      "فیت و اداپتیشن (Fit and Adaptation)",
+      "نشست رست (Rest Seat)",
+      "پروگزیمال پلیت و لینگوال پلیت",
+      "انتهای کلاسپ آی‌بار (I-bar Clasp)",
+      "ریتنشن کلاسپ",
+      "کلاس یک کندی فک پایین (Kennedy Class I)",
+      "فریم‌ورک کبالت‌کروم",
+      "اسکن داخل‌دهانی در برابر قالب‌گیری سنتی",
+      "برتری آماری و مزیت درمانی",
+      "زبری سطح و تخلخل داخلی (Porosity)",
+      "مقاومت به خستگی (Fatigue Resistance)",
+      "مرور سیستماتیک Alqutaibi ۲۰۲۶ و مطالعهٔ کلینیکی Elgamal ۲۰۲۵",
+      "3D-printed removable partial denture framework",
+      "selective laser melting RPD",
+      "lost-wax casting versus metal 3D printing"
+    ],
+    "url": "/sharehub/share-57.html",
+    "pillar": {
+      "primary": "removable-pros",
+      "secondary": [],
+      "subtopic": "digital-removable"
+    }
   }
 ]

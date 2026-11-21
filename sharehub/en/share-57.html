@@ -1,0 +1,539 @@
+<!doctype html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RPD Framework: Is 3D-Printed Metal Really Better Than Casting? | Share Hub – DentCast</title>
+
+<meta name="description" content="The measured accuracy of a partial denture framework is not the same as how well it seats in the mouth. A systematic review and a clinical study show how 3D-printed metal and casting should be compared.">
+
+<link rel="canonical" href="https://dentcast.org/sharehub/en/share-57.html">
+
+<meta name="robots" content="noindex, follow">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="DentCast">
+<meta property="og:title" content="RPD Framework: Is 3D-Printed Metal Really Better Than Casting? | Share Hub – DentCast">
+<meta property="og:description" content="The measured accuracy of a partial denture framework is not the same as how well it seats in the mouth. A systematic review and a clinical study show how 3D-printed metal and casting should be compared.">
+<meta property="og:url" content="https://dentcast.org/sharehub/en/share-57.html">
+<meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RPD Framework: Is 3D-Printed Metal Really Better Than Casting? | Share Hub – DentCast">
+<meta name="twitter:description" content="The measured accuracy of a partial denture framework is not the same as how well it seats in the mouth. A systematic review and a clinical study show how 3D-printed metal and casting should be compared.">
+<meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+
+  <!-- Shared design system -->
+  <link rel="stylesheet" href="/dc-theme.css?v=19">
+  <link rel="stylesheet" href="/dc-nav.css?v=18">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Theme init — no flash -->
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --radius:18px;
+    }
+
+    html,body { margin:0; padding:0; }
+
+    body {
+      font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+      direction: ltr;
+      background: #f0f2f5;
+      color: #0a1a33;
+      max-width: 47.5rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 6.25rem;line-height:1.9;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizelegibility;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0a1020;
+      font-weight: 800;
+      font-size: 1.7rem;
+      line-height: 1.35;
+      margin: 0 0 1.875rem;
+    }
+
+    .glass-box {
+      background: #fff;
+      border: 1px solid rgba(2,35,96,.09);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.875rem;
+      box-shadow: 0 10px 30px rgba(2,35,96,.06);
+    }
+
+    p { margin: 0.875rem 0; font-size: 1.02rem; text-align: left; }
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin: 1.5rem 0 0.625rem;
+      border-left: 4px solid #0b5fff;
+      padding-left: 0.75rem;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.875rem 0;
+    }
+
+    ul li::before {
+      content: "✦ ";
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    /* summary tables — LTR counterpart of the .text-box table pattern used elsewhere on the site */
+    .glass-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .glass-box table th,
+    .glass-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:left;
+      vertical-align:top;
+    }
+    .glass-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .glass-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+    @media (max-width:768px){
+      .glass-box table{font-size:.9rem;}
+      .glass-box table th,.glass-box table td{padding:0.45rem 0.5rem;}
+    }
+
+    .text-divider {
+      margin: 1.75rem 0;
+      border: 0;
+      height: 0.0625rem;
+      background-image: linear-gradient(
+        to right,
+        rgba(0,0,0,0),
+        rgba(11,95,255,0.4),
+        rgba(0,0,0,0)
+      );
+    }
+
+    /* images with a visible caption */
+    .glass-box figure { max-width: 30rem; margin: 1.25rem auto; }
+    .glass-box figcaption {
+      text-align: center;
+      font-size: .85rem;
+      opacity: .75;
+      margin-top: 0.5rem;
+      line-height: 1.7;
+    }
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: #4a5568;
+      font-weight: 600;
+    }
+
+    /* images with a visible caption */
+    .glass-box figure { max-width: 30rem; margin: 1.25rem auto; }
+    .glass-box figcaption {
+      text-align: center;
+      font-size: .85rem;
+      opacity: .75;
+      margin-top: 0.5rem;
+      line-height: 1.8;
+    }
+
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* section kicker above the title */
+    .sh-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: .02em;
+      margin: 0 0 0.5rem;
+    }
+
+    /* references list */
+    .sh-refs { margin-top: 0.5rem; }
+    .sh-refs li { font-size: 0.95rem; line-height: 1.9; }
+    .sh-refs a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .sh-refs a:hover { text-decoration: underline; }
+
+    /* figure pairs and wide tables */
+    .glass-box .sh-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+    .glass-box .sh-pair figure { margin: 0; }
+    .glass-box .sh-pair img { width: 100%; height: auto; }
+    /* Keep the supplied clinical crops at their native size; shrink only on narrow screens. */
+    .glass-box figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+    .sh-scroll { overflow-x: auto; }
+    .sh-scroll img { min-width: 32rem; }
+    @media (max-width:420px){ .glass-box .sh-pair { grid-template-columns: 1fr; } }
+
+    /* permission chips */
+    .chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: .05rem .55rem; border-radius: 999px; line-height: 1.7; white-space: nowrap; margin-inline-start: .25rem; }
+    .chip.ok { color: #1f7a3a; background: rgba(47,122,60,.14); }
+    .chip.warn { color: #9a6200; background: rgba(214,150,20,.16); }
+    .chip.no { color: #b3342b; background: rgba(179,52,43,.13); }
+    [data-theme="dark"] .chip.ok { color: #7fcf8a; }
+    [data-theme="dark"] .chip.warn { color: #f0bb5b; }
+    [data-theme="dark"] .chip.no { color: #f08a80; }
+
+    /* Persian-version toggle button */
+    .lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+
+    @media (max-width:768px){
+      h1 { font-size: 1.4rem; }
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { line-height: 1.9;}
+    }
+  
+ h2{font-size:1.2rem;color:var(--blue);border-left:4px solid #0b5fff;padding-left:.75rem;margin-top:1.75rem;}
+
+    /* figure pairs and wide tables */
+    .glass-box .sh-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+    .glass-box .sh-pair figure { margin: 0; }
+    .glass-box .sh-pair img { width: 100%; height: auto; }
+    /* Keep the supplied clinical crops at their native size; shrink only on narrow screens. */
+    .glass-box figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+    .sh-scroll { overflow-x: auto; }
+    .sh-scroll img { min-width: 32rem; }
+    @media (max-width:420px){ .glass-box .sh-pair { grid-template-columns: 1fr; } }
+
+
+    /* permission chips (مجاز / با محدودیت / استفاده نکن) */
+    .chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: .05rem .55rem; border-radius: 999px; line-height: 1.7; white-space: nowrap; margin-inline-start: .25rem; }
+    .chip.ok { color: #1f7a3a; background: rgba(47,122,60,.14); }
+    .chip.warn { color: #9a6200; background: rgba(214,150,20,.16); }
+    .chip.no { color: #b3342b; background: rgba(179,52,43,.13); }
+    [data-theme="dark"] .chip.ok { color: #7fcf8a; }
+    [data-theme="dark"] .chip.warn { color: #f0bb5b; }
+    [data-theme="dark"] .chip.no { color: #f08a80; }
+
+    /* English-version toggle button */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 auto 1.125rem 0;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { line-height: 1.9;}
+    }
+  </style>
+
+  <meta name="theme-color" content="#0b5fff">
+
+  <!-- Share Hub Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://dentcast.org/sharehub/en/share-57.html",
+      "url": "https://dentcast.org/sharehub/en/share-57.html",
+      "name": "RPD Framework: Is 3D-Printed Metal Really Better Than Casting?",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://dentcast.org/#website"
+      },
+      "about": {
+        "@id": "https://dentcast.org/sharehub/en/share-57.html#creativework"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://dentcast.org/sharehub/en/share-57.html#creativework",
+      "name": "RPD Framework: Is 3D-Printed Metal Really Better Than Casting?",
+      "headline": "RPD Framework: Is 3D-Printed Metal Really Better Than Casting?",
+      "description": "The measured accuracy of a partial denture framework is not the same as how well it seats in the mouth. A systematic review and a clinical study show how 3D-printed metal and casting should be compared.",
+      "inLanguage": "en",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Dr. Foad Shahabian"
+        }
+      ],
+      "creator": [
+        {
+          "@type": "Person",
+          "name": "Dr. Foad Shahabian"
+        }
+      ],
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/sharehub/en/share-57.html"
+      },
+      "datePublished": "2026-11-21",
+      "dateModified": "2026-11-21",
+      "genre": "Dental Education",
+      "keywords": [
+        "RPD Framework: Is 3D-Printed Metal Really Better Than Casting?"
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "DentCast",
+      "item": "https://dentcast.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Share Hub",
+      "item": "https://dentcast.org/sharehub/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "RPD Framework: Is 3D-Printed Metal Really Better Than Casting? | Share Hub – DentCast",
+      "item": "https://dentcast.org/sharehub/en/share-57.html"
+    }
+  ]
+}
+</script>
+  <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
+</head>
+
+<body>
+
+<!-- ── TOP BAR ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GLOBAL SEARCH ── -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<main class="article-content-wrap">
+<div class="sh-kicker">Share Hub</div>
+<h1>RPD Framework: Is 3D-Printed Metal Really Better Than Casting?</h1>
+<div class="glass-box">
+<a class="lang-btn" href="../share-57.html" rel="noopener">فارسی</a>
+<div class="sh-dialogue">
+<p>Imagine an RPD framework arrives from the laboratory, but at the try-in it does not seat completely. The rest does not sit well in its place, the proximal plate has a gap, or the clasps need adjustment.</p>
+<p>Now the question is: if we had made this same framework by 3D metal printing instead of conventional casting, would these problems have been fewer?</p>
+<p>To answer, we need to separate three fabrication methods.</p>
+<p>In the conventional method, the framework is made by the lost-wax casting technique. This method has a long history and acceptable results, but the many steps of pattern making, investing and casting can be sources of error.</p>
+<p>In the hybrid or partial digital workflow, the design or the pattern is digitized, but the metal is still produced by casting.</p>
+<p>In the third method, the framework is built directly from metal powder, layer by layer. Technologies such as selective laser melting (SLM) and direct metal laser sintering (DMLS) belong to this group.</p>
+<p>Of course, metal printing does not mean every step is digital; the initial data may come from an intraoral scan or from a scan of a stone cast.</p>
+<p>But which method is more accurate?</p>
+<p>To answer, we have to distinguish between fabrication accuracy and clinical fit.</p>
+<p>Trueness shows how close the fabricated piece is to the original reference, and precision shows how similar the results of repeating a process are to one another.</p>
+<p>But these two concepts are not necessarily equivalent to a good fit. Fit mostly concerns the relationship of the framework with hard surfaces such as the abutment tooth, whereas adaptation is usually used for the relationship of the prosthesis with soft tissue.</p>
+<p>So greater measurement accuracy, by itself, does not prove that the framework seats better in the mouth.</p>
+<p>In 2026, Alqutaibi et al., in a systematic review, examined 30 studies on metal partial denture frameworks.</p>
+<p>The results showed that, under many conditions, printed frameworks are comparable to conventional casting in accuracy and fit, and sometimes perform better.</p>
+<p>But the results were not uniform. In some studies, the conventional or partial digital method was more accurate, and even among printed frameworks, certain areas such as the rests, guide plates and minor connectors showed more error.</p>
+<p>This difference matters, because an error does not have the same consequence in every part of the framework. For example, a gap at the rest seat may affect seating and force transfer, whereas an error at the end of the clasp may affect retention. Of course, merely measuring a gap does not prove a functional disturbance.</p>
+<p>On the other hand, print orientation, layer thickness, supports and post-processing steps also affect accuracy. So the quality of all SLM frameworks is not necessarily the same.</p>
+<p>But what does the clinical evidence say?</p>
+<p>In 2025, Elgamal et al. carried out a study on 24 patients with a mandibular Kennedy Class I. For each patient, two cobalt-chromium frameworks were made.</p>
+<p>In the first method, a conventional impression was taken and the stone cast was scanned with a laboratory scanner. In the second method, the data were recorded directly with an intraoral scanner.</p>
+<p>Both frameworks were made by SLM. So the study did not compare casting with metal printing; it examined two methods of recording data within the same fabrication process.</p>
+<figure><img src="/sharehub/share57-fig1.webp" alt="A cobalt-chromium RPD framework made by SLM, shown outside the mouth and during the intraoral try-in." width="1488" height="606" loading="lazy" decoding="async"><figcaption>Figure 1. Cobalt-chromium framework made by SLM: (A) after finishing and polishing, (B) during the intraoral try-in. Source: Elgamal et al. 2025, Fig. 2 (CC BY 4.0)</figcaption></figure>
+<p>By superimposing the scan files, the researchers measured the distance of the framework at the rest, proximal plate, lingual plate and the terminal of the I-bar clasp.</p>
+<figure><img src="/sharehub/share57-fig2.webp" alt="Color maps of framework adaptation against the reference scan for the conventional-impression workflow and the fully digital workflow." width="969" height="402" loading="lazy" decoding="async"><figcaption>Figure 2. Color maps of framework adaptation against the reference scan: (A) conventional impression with cast scanning, (B) fully digital workflow. Green means close contact, yellow and orange mean gaps within an acceptable range, and red means larger gaps. Source: Elgamal et al. 2025, Fig. 5 (CC BY 4.0)</figcaption></figure>
+<p>The fully digital workflow was more accurate in all these areas, and the differences were statistically significant.</p>
+<p>But the mean difference between the two methods was only about eleven microns.</p>
+<figure><img src="/sharehub/share57-fig3.webp" alt="Bar chart of the mean gap at the rest, proximal plate, lingual plate and I-bar clasp terminal areas for the two workflows." width="1488" height="843" loading="lazy" decoding="async"><figcaption>Figure 3. Mean gap (mm) at the rest, proximal plate, lingual plate and I-bar clasp terminal areas; blue is the impression and cast-scan workflow, red the fully digital workflow. The small difference in bar height shows how small the difference is. Source: Elgamal et al. 2025, Fig. 10 (CC BY 4.0)</figcaption></figure>
+<p>The authors themselves stressed that this difference, despite its statistical significance, has no clinical importance, and that both methods were clinically acceptable.</p>
+<p>This is exactly the important difference between statistical superiority and therapeutic benefit. The study showed that the fully digital workflow is more accurate, but it did not prove that this small difference improves the treatment outcome.</p>
+<p>The more practical point of this study lies elsewhere. Both frameworks were made with the same method, so the difference probably came from the data-recording step. The authors regard this step as the weakest link of the combined workflow, because errors of impression taking, pouring the stone and scanning the cast add up. That is, if we are looking for a more accurate framework, the quality of the impression or scan matters as much as the fabrication method.</p>
+<p>Now, if fabrication accuracy is not always better, what about mechanical properties?</p>
+<p>The Alqutaibi systematic review showed that in some studies, SLM frameworks were better than cast samples in yield strength, hardness and some other mechanical properties. Their microstructure was also sometimes finer and more uniform.</p>
+<p>But greater surface roughness and internal porosity were among the raised concerns, and some studies also showed no important difference in fatigue resistance.</p>
+<p>This matters especially for clasps. In the clinic, initial strength is not the only thing that counts; maintaining retention, resistance to deformation and long-term durability matter too.</p>
+<p>For now, we do not have enough evidence to say that printed frameworks are necessarily more durable.</p>
+<p>In some clinical studies, patient satisfaction with frameworks made by laser technology, especially in comfort, stability and cleaning of the prosthesis, was higher. But the number of these studies is limited, and most of the systematic review's evidence comes from laboratory studies.</p>
+<p>So what conclusion do we draw for clinical decision-making?</p>
+<p>3D metal printing is no longer merely an experimental technology. With it, one can make frameworks with acceptable accuracy and performance that are sometimes equal to or even better than the conventional method. But we still do not have enough evidence to consider conventional casting obsolete.</p>
+<p>The quality of the initial data, the framework design, control of the fabrication process and the experience of the laboratory all play a role in the result.</p>
+<p>More importantly, being digital does not remove the need for a clinical try-in. The seating of the rests, the relationship of the proximal plates, the state of the connectors, the retention of the clasps and possible pressure on the tissues must still be checked.</p>
+<p>Digital technology has changed the way the framework is made, but it has not yet been shown that this change necessarily leads to greater clinical success or longer durability.</p>
+<p>3D metal printing is a valuable fabrication method, not a guarantee of a better framework.</p>
+<h3>∆ References</h3>
+<ul class="sh-refs">
+  <li><a href="https://doi.org/10.2186/jpr.JPR_D_25_00028" target="_blank" rel="noopener noreferrer">Systematic review of 3D-printed RPD metal frameworks compared with conventional and partially digital methods (Alqutaibi et al., 2026)</a></li>
+  <li><a href="https://doi.org/10.1186/s12903-025-06214-9" target="_blank" rel="noopener noreferrer">Cross-over clinical study of the accuracy of SLM RPD frameworks made with two workflows (Elgamal et al., 2025)</a></li>
+</ul>
+</div>
+<div class="author-note">Author: <a href="https://dentcast.org/about.html#person-fouad-shahabian">Dr. Foad Shahabian</a></div>
+</div>
+</main>
+
+
+<script src="/global-search.js?v=29" defer></script>
+<script src="/dc-nav.js?v=356" defer></script>
+</body>
+</html>

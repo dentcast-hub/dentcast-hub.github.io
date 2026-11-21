@@ -754,6 +754,75 @@
    ]
   },
   {
+   "key": "curated_content",
+   "tag": "#Curated_Content",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
+   "use_when": "روی مدخل‌های بازنشر.",
+   "aliases": [
+    "محتوای گلچین شده",
+    "کیوریتد",
+    "بازنشر محتوا"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 51,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25",
+    "sharehub/share-26",
+    "sharehub/share-27",
+    "sharehub/share-28",
+    "sharehub/share-29",
+    "sharehub/share-30",
+    "sharehub/share-31",
+    "sharehub/share-32",
+    "sharehub/share-33",
+    "sharehub/share-34",
+    "sharehub/share-35",
+    "sharehub/share-36",
+    "sharehub/share-38",
+    "sharehub/share-39",
+    "sharehub/share-41",
+    "sharehub/share-42",
+    "sharehub/share-43",
+    "sharehub/share-44",
+    "sharehub/share-45",
+    "sharehub/share-48",
+    "sharehub/share-49",
+    "sharehub/share-50",
+    "sharehub/share-53",
+    "sharehub/share-54",
+    "sharehub/share-55",
+    "sharehub/share-56",
+    "sharehub/share-57"
+   ]
+  },
+  {
    "key": "ویزیت",
    "tag": "#ویزیت",
    "domain": "brand",
@@ -818,74 +887,6 @@
     "chairside/chairside-51",
     "chairside/chairside-53",
     "chairside/chairside-54"
-   ]
-  },
-  {
-   "key": "curated_content",
-   "tag": "#Curated_Content",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نشانه‌ی اینکه محتوا گلچین‌شده از منبع دیگری است، نه تولید اصلی.",
-   "use_when": "روی مدخل‌های بازنشر.",
-   "aliases": [
-    "محتوای گلچین شده",
-    "کیوریتد",
-    "بازنشر محتوا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 50,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24",
-    "sharehub/share-25",
-    "sharehub/share-26",
-    "sharehub/share-27",
-    "sharehub/share-28",
-    "sharehub/share-29",
-    "sharehub/share-30",
-    "sharehub/share-31",
-    "sharehub/share-32",
-    "sharehub/share-33",
-    "sharehub/share-34",
-    "sharehub/share-35",
-    "sharehub/share-36",
-    "sharehub/share-38",
-    "sharehub/share-39",
-    "sharehub/share-41",
-    "sharehub/share-42",
-    "sharehub/share-43",
-    "sharehub/share-44",
-    "sharehub/share-45",
-    "sharehub/share-48",
-    "sharehub/share-49",
-    "sharehub/share-50",
-    "sharehub/share-53",
-    "sharehub/share-54",
-    "sharehub/share-55",
-    "sharehub/share-56"
    ]
   },
   {
@@ -2577,6 +2578,43 @@
    ]
   },
   {
+   "key": "دقت_اسکن",
+   "tag": "#دقت_اسکن",
+   "domain": null,
+   "words": 2,
+   "definition": "دقتِ نهاییِ اسکن و آنچه آن را خراب می‌کند.",
+   "use_when": "مقاله دقت را بسنجد یا بهبود دهد.",
+   "aliases": [
+    "scanning accuracy",
+    "trueness",
+    "صحت اسکن",
+    "scan accuracy",
+    "دقت اسکنر"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 17,
+   "content_ids": [
+    "episodes/episode-122-2",
+    "episodes/episode-128-1",
+    "episodes/episode-133",
+    "episodes/episode-144-2",
+    "sharehub/share-2",
+    "insight/insight-33",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "insight/insight-51",
+    "metanotes/meta-16",
+    "sharehub/share-15",
+    "dentai/dentai-29",
+    "dentai/dentai-32",
+    "insight/insight-74",
+    "sharehub/share-54",
+    "sharehub/share-56",
+    "sharehub/share-57"
+   ]
+  },
+  {
    "key": "روکش_موقت",
    "tag": "#روکش_موقت",
    "domain": null,
@@ -2702,42 +2740,6 @@
    ]
   },
   {
-   "key": "دقت_اسکن",
-   "tag": "#دقت_اسکن",
-   "domain": null,
-   "words": 2,
-   "definition": "دقتِ نهاییِ اسکن و آنچه آن را خراب می‌کند.",
-   "use_when": "مقاله دقت را بسنجد یا بهبود دهد.",
-   "aliases": [
-    "scanning accuracy",
-    "trueness",
-    "صحت اسکن",
-    "scan accuracy",
-    "دقت اسکنر"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 16,
-   "content_ids": [
-    "episodes/episode-122-2",
-    "episodes/episode-128-1",
-    "episodes/episode-133",
-    "episodes/episode-144-2",
-    "sharehub/share-2",
-    "insight/insight-33",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "insight/insight-51",
-    "metanotes/meta-16",
-    "sharehub/share-15",
-    "dentai/dentai-29",
-    "dentai/dentai-32",
-    "insight/insight-74",
-    "sharehub/share-54",
-    "sharehub/share-56"
-   ]
-  },
-  {
    "key": "قالب_گیری_دیجیتال",
    "tag": "#قالب‌گیری_دیجیتال",
    "domain": "clinical",
@@ -2810,6 +2812,50 @@
     "sharehub/share-19",
     "insight/insight-89",
     "insight/insight-93"
+   ]
+  },
+  {
+   "key": "اسکنر_داخل_دهانی",
+   "tag": "#اسکنر_داخل_دهانی",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "اسکنرِ داخل‌دهانی که قالبِ دیجیتالِ مستقیم می‌گیرد.",
+   "use_when": "مقاله اسکنر داخل‌دهانی را موضوع داشته باشد.",
+   "aliases": [
+    "intraoral scanner",
+    "اسکنر دیجیتال",
+    "IOS",
+    "اسکنر",
+    "اینترااورال اسکنر",
+    "اسکنر اینترااورال",
+    "اسکنر دهانی",
+    "اسکنر اینتراورال",
+    "اینتراورال اسکنر"
+   ],
+   "variants": [
+    "#اسکن_داخل_دهانی",
+    "#Intraoral_Scanner"
+   ],
+   "co_tags": [
+    "#Intraoral_Scanner"
+   ],
+   "count": 15,
+   "content_ids": [
+    "episodes/episode-106-2",
+    "episodes/episode-122-2",
+    "episodes/episode-128-1",
+    "episodes/episode-149-2",
+    "sharehub/share-2",
+    "insight/insight-33",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "metanotes/meta-16",
+    "sharehub/share-15",
+    "dentai/dentai-29",
+    "dentai/dentai-32",
+    "insight/insight-74",
+    "insight/insight-88",
+    "sharehub/share-57"
    ]
   },
   {
@@ -3116,49 +3162,6 @@
     "notecast/episode-6",
     "dentai/dentai-8",
     "dentai/dentai-16"
-   ]
-  },
-  {
-   "key": "اسکنر_داخل_دهانی",
-   "tag": "#اسکنر_داخل_دهانی",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "اسکنرِ داخل‌دهانی که قالبِ دیجیتالِ مستقیم می‌گیرد.",
-   "use_when": "مقاله اسکنر داخل‌دهانی را موضوع داشته باشد.",
-   "aliases": [
-    "intraoral scanner",
-    "اسکنر دیجیتال",
-    "IOS",
-    "اسکنر",
-    "اینترااورال اسکنر",
-    "اسکنر اینترااورال",
-    "اسکنر دهانی",
-    "اسکنر اینتراورال",
-    "اینتراورال اسکنر"
-   ],
-   "variants": [
-    "#اسکن_داخل_دهانی",
-    "#Intraoral_Scanner"
-   ],
-   "co_tags": [
-    "#Intraoral_Scanner"
-   ],
-   "count": 14,
-   "content_ids": [
-    "episodes/episode-106-2",
-    "episodes/episode-122-2",
-    "episodes/episode-128-1",
-    "episodes/episode-149-2",
-    "sharehub/share-2",
-    "insight/insight-33",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "metanotes/meta-16",
-    "sharehub/share-15",
-    "dentai/dentai-29",
-    "dentai/dentai-32",
-    "insight/insight-74",
-    "insight/insight-88"
    ]
   },
   {
@@ -3650,6 +3653,45 @@
    ]
   },
   {
+   "key": "پروتز_متحرک",
+   "tag": "#پروتز_متحرک",
+   "domain": null,
+   "words": 2,
+   "definition": "دنچر و پروتزهای برداشتنی.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [
+    "دنچر",
+    "denture",
+    "پروتز کامل",
+    "دست دندان",
+    "removable prosthesis",
+    "removable denture",
+    "complete denture",
+    "دنچر کامل",
+    "removable prosthodontics"
+   ],
+   "variants": [
+    "#دنچر"
+   ],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-118-1",
+    "episodes/episode-147-1",
+    "litecast/lite-CAST2",
+    "notecast/episode-32",
+    "chairside/chairside-8",
+    "notecast/episode-33",
+    "episodes/episode-160",
+    "dentai/dentai-34",
+    "sharehub/share-19",
+    "dentai/dentai-35",
+    "sharehub/share-54",
+    "sharehub/share-55",
+    "sharehub/share-57"
+   ]
+  },
+  {
    "key": "پری_ایمپلنتیتیس",
    "tag": "#پری_ایمپلنتیتیس",
    "domain": "clinical",
@@ -3813,6 +3855,40 @@
    ]
   },
   {
+   "key": "فیت_پروتز",
+   "tag": "#فیت_پروتز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نشستنِ کاملِ کار روی تکیه‌گاه.",
+   "use_when": "مقاله فیت را بسنجد یا نبودش را علتِ شکست بداند.",
+   "aliases": [
+    "پسیو فیت",
+    "passive fit",
+    "فیت روکش",
+    "misfit",
+    "prosthesis fit",
+    "فیت پسیو",
+    "میس فیت"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "insight/insight-26",
+    "insight/insight-31",
+    "insight/insight-35",
+    "insight/insight-44",
+    "insight/insight-52",
+    "metanotes/meta-20",
+    "dentcast-plus/video-14",
+    "insight/insight-102",
+    "insight/insight-109",
+    "insight/insight-111",
+    "insight/insight-113",
+    "sharehub/share-57"
+   ]
+  },
+  {
    "key": "قدرت_باند",
    "tag": "#قدرت_باند",
    "domain": null,
@@ -3846,44 +3922,6 @@
     "sharehub/share-23",
     "notecast/episode-43",
     "notecast/episode-44"
-   ]
-  },
-  {
-   "key": "پروتز_متحرک",
-   "tag": "#پروتز_متحرک",
-   "domain": null,
-   "words": 2,
-   "definition": "دنچر و پروتزهای برداشتنی.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
-   "aliases": [
-    "دنچر",
-    "denture",
-    "پروتز کامل",
-    "دست دندان",
-    "removable prosthesis",
-    "removable denture",
-    "complete denture",
-    "دنچر کامل",
-    "removable prosthodontics"
-   ],
-   "variants": [
-    "#دنچر"
-   ],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-118-1",
-    "episodes/episode-147-1",
-    "litecast/lite-CAST2",
-    "notecast/episode-32",
-    "chairside/chairside-8",
-    "notecast/episode-33",
-    "episodes/episode-160",
-    "dentai/dentai-34",
-    "sharehub/share-19",
-    "dentai/dentai-35",
-    "sharehub/share-54",
-    "sharehub/share-55"
    ]
   },
   {
@@ -4223,39 +4261,6 @@
     "chairside/chairside-31",
     "insight/insight-78",
     "sharehub/share-53"
-   ]
-  },
-  {
-   "key": "فیت_پروتز",
-   "tag": "#فیت_پروتز",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نشستنِ کاملِ کار روی تکیه‌گاه.",
-   "use_when": "مقاله فیت را بسنجد یا نبودش را علتِ شکست بداند.",
-   "aliases": [
-    "پسیو فیت",
-    "passive fit",
-    "فیت روکش",
-    "misfit",
-    "prosthesis fit",
-    "فیت پسیو",
-    "میس فیت"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "insight/insight-26",
-    "insight/insight-31",
-    "insight/insight-35",
-    "insight/insight-44",
-    "insight/insight-52",
-    "metanotes/meta-20",
-    "dentcast-plus/video-14",
-    "insight/insight-102",
-    "insight/insight-109",
-    "insight/insight-111",
-    "insight/insight-113"
    ]
   },
   {
@@ -5389,6 +5394,38 @@
    ]
   },
   {
+   "key": "پروتز_پارسیل",
+   "tag": "#پروتز_پارسیل",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پروتز پارسیل متحرک و الزاماتش روی پایه‌ها.",
+   "use_when": "مقاله طراحیِ RPD یا پایه‌هایش را موضوع کند.",
+   "aliases": [
+    "RPD",
+    "پارسیل",
+    "پروتز پارسیل متحرک",
+    "partial denture",
+    "پارسیل دفینیتیو",
+    "removable partial denture",
+    "پارسیل دنچر",
+    "پروتز متحرک پارسیل",
+    "آر پی دی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-126-1",
+    "insight/insight-58",
+    "dentai/dentai-35",
+    "insight/insight-96",
+    "insight/insight-105",
+    "metanotes/meta-23",
+    "sharehub/share-55",
+    "sharehub/share-57"
+   ]
+  },
+  {
    "key": "کانتکت_باز",
    "tag": "#کانتکت_باز",
    "domain": "clinical",
@@ -6067,37 +6104,6 @@
     "insight/insight-50",
     "insight/insight-63",
     "insight/insight-73"
-   ]
-  },
-  {
-   "key": "پروتز_پارسیل",
-   "tag": "#پروتز_پارسیل",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پروتز پارسیل متحرک و الزاماتش روی پایه‌ها.",
-   "use_when": "مقاله طراحیِ RPD یا پایه‌هایش را موضوع کند.",
-   "aliases": [
-    "RPD",
-    "پارسیل",
-    "پروتز پارسیل متحرک",
-    "partial denture",
-    "پارسیل دفینیتیو",
-    "removable partial denture",
-    "پارسیل دنچر",
-    "پروتز متحرک پارسیل",
-    "آر پی دی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-126-1",
-    "insight/insight-58",
-    "dentai/dentai-35",
-    "insight/insight-96",
-    "insight/insight-105",
-    "metanotes/meta-23",
-    "sharehub/share-55"
    ]
   },
   {
@@ -11999,6 +12005,34 @@
    ]
   },
   {
+   "key": "پرینت_سه_بعدی",
+   "tag": "#پرینت_سه_بعدی",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "پرینتِ سه‌بعدی در دندانپزشکی — ساختِ افزایشیِ گاید، مدل و قطعاتِ سفارشی.",
+   "use_when": "مقاله پرینتِ سه‌بعدی را موضوع داشته باشد.",
+   "aliases": [
+    "3d printing",
+    "پرینت سه بعدی",
+    "پرینت سه‌بعدی",
+    "additive manufacturing",
+    "چاپ سه بعدی",
+    "پرینتر سه بعدی",
+    "3d printer",
+    "تری دی پرینت",
+    "ساخت افزایشی",
+    "پرینت ۳ بعدی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-147-9",
+    "sharehub/share-37",
+    "sharehub/share-57"
+   ]
+  },
+  {
    "key": "پست_دو_تکه",
    "tag": "#پست_دو_تکه",
    "domain": "clinical",
@@ -15034,33 +15068,6 @@
    "content_ids": [
     "insight/insight-51",
     "insight/insight-60"
-   ]
-  },
-  {
-   "key": "پرینت_سه_بعدی",
-   "tag": "#پرینت_سه_بعدی",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "پرینتِ سه‌بعدی در دندانپزشکی — ساختِ افزایشیِ گاید، مدل و قطعاتِ سفارشی.",
-   "use_when": "مقاله پرینتِ سه‌بعدی را موضوع داشته باشد.",
-   "aliases": [
-    "3d printing",
-    "پرینت سه بعدی",
-    "پرینت سه‌بعدی",
-    "additive manufacturing",
-    "چاپ سه بعدی",
-    "پرینتر سه بعدی",
-    "3d printer",
-    "تری دی پرینت",
-    "ساخت افزایشی",
-    "پرینت ۳ بعدی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-147-9",
-    "sharehub/share-37"
    ]
   },
   {
