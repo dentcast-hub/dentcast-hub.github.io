@@ -2696,6 +2696,60 @@
    ]
   },
   {
+   "key": "ایمپلنت_فول_آرچ",
+   "tag": "#ایمپلنت_فول_آرچ",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
+   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
+   "aliases": [
+    "all on 4",
+    "all-on-4",
+    "آل آن فور",
+    "allon4",
+    "ایمپلنت تمام فک",
+    "all on 6",
+    "all on four",
+    "all-on-four",
+    "allonfour",
+    "Full Arch Implant",
+    "ایمپلنت فول ماوس",
+    "full mouth implant",
+    "ایمپلنت تمام دهان",
+    "فول ماوس ایمپلنت",
+    "all on x",
+    "آل آن سیکس",
+    "all on six"
+   ],
+   "variants": [
+    "#AllOn4",
+    "#Full_Arch_Implant",
+    "#ایمپلنت_فول_ماوس"
+   ],
+   "co_tags": [
+    "#Full_Arch_Implant"
+   ],
+   "count": 16,
+   "content_ids": [
+    "episodes/episode-108",
+    "episodes/episode-123-4",
+    "episodes/episode-144-1",
+    "insight/insight-51",
+    "metanotes/meta-17",
+    "sharehub/share-11",
+    "insight/insight-60",
+    "dentai/dentai-31",
+    "insight/insight-80",
+    "insight/insight-82",
+    "sharehub/share-38",
+    "sharehub/share-46",
+    "insight/insight-113",
+    "sharehub/share-56",
+    "insight/insight-114",
+    "dentcast-plus/video-16"
+   ]
+  },
+  {
    "key": "تنظیم_اکلوژن",
    "tag": "#تنظیم_اکلوژن",
    "domain": "clinical",
@@ -2778,6 +2832,41 @@
    ]
   },
   {
+   "key": "ویدیو",
+   "tag": "#ویدیو",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام بخش ویدیوها (پیش‌تر DentCast+ / دنت‌کست پلاس) — آموزش‌های کوتاه ویدیویی دنت‌کست.",
+   "use_when": "روی هر مدخل ویدیوها (پوشهٔ dentcast-plus/)، و هیچ‌جای دیگر.",
+   "aliases": [
+    "دنتکست پلاس",
+    "dentcast plus"
+   ],
+   "variants": [
+    "#دنتکست_پلاس"
+   ],
+   "co_tags": [],
+   "count": 16,
+   "content_ids": [
+    "dentcast-plus/video-1",
+    "dentcast-plus/video-2",
+    "dentcast-plus/video-3",
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5",
+    "dentcast-plus/video-6",
+    "dentcast-plus/video-7",
+    "dentcast-plus/video-8",
+    "dentcast-plus/video-9",
+    "dentcast-plus/video-10",
+    "dentcast-plus/video-11",
+    "dentcast-plus/video-12",
+    "dentcast-plus/video-13",
+    "dentcast-plus/video-14",
+    "dentcast-plus/video-15",
+    "dentcast-plus/video-16"
+   ]
+  },
+  {
    "key": "کشیدن_دندان",
    "tag": "#کشیدن_دندان",
    "domain": null,
@@ -2856,59 +2945,6 @@
     "insight/insight-74",
     "insight/insight-88",
     "sharehub/share-57"
-   ]
-  },
-  {
-   "key": "ایمپلنت_فول_آرچ",
-   "tag": "#ایمپلنت_فول_آرچ",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "بازسازیِ تمامِ قوسِ فک روی ایمپلنت — از جمله پروتکل‌هایی مثل All-on-4/All-on-6.",
-   "use_when": "مقاله درمانِ فول‌آرچِ ایمپلنت را موضوع داشته باشد.",
-   "aliases": [
-    "all on 4",
-    "all-on-4",
-    "آل آن فور",
-    "allon4",
-    "ایمپلنت تمام فک",
-    "all on 6",
-    "all on four",
-    "all-on-four",
-    "allonfour",
-    "Full Arch Implant",
-    "ایمپلنت فول ماوس",
-    "full mouth implant",
-    "ایمپلنت تمام دهان",
-    "فول ماوس ایمپلنت",
-    "all on x",
-    "آل آن سیکس",
-    "all on six"
-   ],
-   "variants": [
-    "#AllOn4",
-    "#Full_Arch_Implant",
-    "#ایمپلنت_فول_ماوس"
-   ],
-   "co_tags": [
-    "#Full_Arch_Implant"
-   ],
-   "count": 15,
-   "content_ids": [
-    "episodes/episode-108",
-    "episodes/episode-123-4",
-    "episodes/episode-144-1",
-    "insight/insight-51",
-    "metanotes/meta-17",
-    "sharehub/share-11",
-    "insight/insight-60",
-    "dentai/dentai-31",
-    "insight/insight-80",
-    "insight/insight-82",
-    "sharehub/share-38",
-    "sharehub/share-46",
-    "insight/insight-113",
-    "sharehub/share-56",
-    "insight/insight-114"
    ]
   },
   {
@@ -3057,40 +3093,6 @@
     "notecast/episode-43",
     "insight/insight-88",
     "sharehub/share-34"
-   ]
-  },
-  {
-   "key": "ویدیو",
-   "tag": "#ویدیو",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام بخش ویدیوها (پیش‌تر DentCast+ / دنت‌کست پلاس) — آموزش‌های کوتاه ویدیویی دنت‌کست.",
-   "use_when": "روی هر مدخل ویدیوها (پوشهٔ dentcast-plus/)، و هیچ‌جای دیگر.",
-   "aliases": [
-    "دنتکست پلاس",
-    "dentcast plus"
-   ],
-   "variants": [
-    "#دنتکست_پلاس"
-   ],
-   "co_tags": [],
-   "count": 15,
-   "content_ids": [
-    "dentcast-plus/video-1",
-    "dentcast-plus/video-2",
-    "dentcast-plus/video-3",
-    "dentcast-plus/video-4",
-    "dentcast-plus/video-5",
-    "dentcast-plus/video-6",
-    "dentcast-plus/video-7",
-    "dentcast-plus/video-8",
-    "dentcast-plus/video-9",
-    "dentcast-plus/video-10",
-    "dentcast-plus/video-11",
-    "dentcast-plus/video-12",
-    "dentcast-plus/video-13",
-    "dentcast-plus/video-14",
-    "dentcast-plus/video-15"
    ]
   },
   {
@@ -7656,6 +7658,30 @@
    ]
   },
   {
+   "key": "عوارض_مکانیکی",
+   "tag": "#عوارض_مکانیکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "شکستِ قطعات: پیچ، پرسلن، فریم.",
+   "use_when": "مقاله عارضه‌ی مکانیکی را پیش‌بینی یا مدیریت کند.",
+   "aliases": [
+    "mechanical complications",
+    "عارضه مکانیکی",
+    "شکست قطعات پروتز",
+    "کامپلیکیشن مکانیکی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "chairside/chairside-23",
+    "sharehub/share-11",
+    "sharehub/share-28",
+    "insight/insight-114",
+    "dentcast-plus/video-16"
+   ]
+  },
+  {
    "key": "لبه_اینسایزال",
    "tag": "#لبه_اینسایزال",
    "domain": "clinical",
@@ -8696,6 +8722,35 @@
    ]
   },
   {
+   "key": "تیتانیوم_بار",
+   "tag": "#تیتانیوم_بار",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بار تیتانیومی به‌عنوان ساختار صلب یا تقویت‌کننده در پروتز متکی بر ایمپلنت.",
+   "use_when": "مقاله ضرورت، نقش، طراحی یا روش استفاده از بار تیتانیومی در ساخت یا تقویت پروتز ایمپلنتی را توضیح دهد.",
+   "aliases": [
+    "titanium bar",
+    "تایتانیوم بار",
+    "تایتانیوم‌بار",
+    "تیتانیوم‌بار",
+    "بار تیتانیومی",
+    "تیتانیم بار",
+    "بار فلزی فول آرچ",
+    "ti bar",
+    "بار تایتانیومی",
+    "بار تیتانیوم"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "sharehub/share-35",
+    "sharehub/share-46",
+    "insight/insight-114",
+    "dentcast-plus/video-16"
+   ]
+  },
+  {
    "key": "ثبت_رابطه",
    "tag": "#ثبت_رابطه",
    "domain": "clinical",
@@ -9208,26 +9263,27 @@
    ]
   },
   {
-   "key": "عوارض_مکانیکی",
-   "tag": "#عوارض_مکانیکی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "شکستِ قطعات: پیچ، پرسلن، فریم.",
-   "use_when": "مقاله عارضه‌ی مکانیکی را پیش‌بینی یا مدیریت کند.",
+   "key": "طراحی_فریم_ورک",
+   "tag": "#طراحی_فریم_ورک",
+   "domain": null,
+   "words": 3,
+   "definition": "طرحِ اسکلتِ فلزی یا سرامیکیِ پروتز.",
+   "use_when": "مقاله طرح فریم‌ورک را عاملِ نتیجه بداند.",
    "aliases": [
-    "mechanical complications",
-    "عارضه مکانیکی",
-    "شکست قطعات پروتز",
-    "کامپلیکیشن مکانیکی"
+    "framework design",
+    "فریم ورک پروتز",
+    "طراحی فریم",
+    "دیزاین فریم ورک",
+    "prosthetic framework"
    ],
    "variants": [],
    "co_tags": [],
    "count": 4,
    "content_ids": [
-    "chairside/chairside-23",
-    "sharehub/share-11",
-    "sharehub/share-28",
-    "insight/insight-114"
+    "notecast/episode-13",
+    "dentai/dentai-7",
+    "insight/insight-114",
+    "dentcast-plus/video-16"
    ]
   },
   {
@@ -10778,34 +10834,6 @@
    ]
   },
   {
-   "key": "تیتانیوم_بار",
-   "tag": "#تیتانیوم_بار",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "بار تیتانیومی به‌عنوان ساختار صلب یا تقویت‌کننده در پروتز متکی بر ایمپلنت.",
-   "use_when": "مقاله ضرورت، نقش، طراحی یا روش استفاده از بار تیتانیومی در ساخت یا تقویت پروتز ایمپلنتی را توضیح دهد.",
-   "aliases": [
-    "titanium bar",
-    "تایتانیوم بار",
-    "تایتانیوم‌بار",
-    "تیتانیوم‌بار",
-    "بار تیتانیومی",
-    "تیتانیم بار",
-    "بار فلزی فول آرچ",
-    "ti bar",
-    "بار تایتانیومی",
-    "بار تیتانیوم"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "sharehub/share-35",
-    "sharehub/share-46",
-    "insight/insight-114"
-   ]
-  },
-  {
    "key": "جمینای",
    "tag": "#جمینای",
    "domain": "ai",
@@ -11315,29 +11343,6 @@
     "insight/insight-22",
     "metanotes/meta-8",
     "chairside/chairside-38"
-   ]
-  },
-  {
-   "key": "طراحی_فریم_ورک",
-   "tag": "#طراحی_فریم_ورک",
-   "domain": null,
-   "words": 3,
-   "definition": "طرحِ اسکلتِ فلزی یا سرامیکیِ پروتز.",
-   "use_when": "مقاله طرح فریم‌ورک را عاملِ نتیجه بداند.",
-   "aliases": [
-    "framework design",
-    "فریم ورک پروتز",
-    "طراحی فریم",
-    "دیزاین فریم ورک",
-    "prosthetic framework"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "notecast/episode-13",
-    "dentai/dentai-7",
-    "insight/insight-114"
    ]
   },
   {
