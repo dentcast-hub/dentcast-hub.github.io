@@ -177,12 +177,28 @@ def ref_lines(text):
     return out
 
 
+def surname(full_name):
+    """The surname of «First Last» or of PubMed's «Last Initials» («de Souza Batista VE» → «desouzabatista»)."""
+    words = full_name.split()
+    if len(words) > 1 and INITIALS.match(words[-1]):
+        return norm(" ".join(words[:-1]))
+    return norm(words[-1]) if words else ""
+
+
+def same_name(full_name, sur):
+    """One author: a «First Last» name ends with the surname, a «Last Initials» name is the surname."""
+    words = full_name.split()
+    if len(words) > 1 and INITIALS.match(words[-1]):
+        return surname(full_name) == sur
+    return norm(full_name).endswith(sur)
+
+
 def same_order(full_names, surnames):
-    """Full names («First Last») against bare surnames; «…» (et al.) ends the comparison."""
+    """Full names («First Last» or «Last Initials») against bare surnames; «…» (et al.) ends the comparison."""
     if "…" in surnames:
         k = surnames.index("…")
         return len(full_names) >= k and same_order(full_names[:k], surnames[:k])
-    return len(full_names) == len(surnames) and all(norm(f).endswith(s) and s for f, s in zip(full_names, surnames))
+    return len(full_names) == len(surnames) and all(s and same_name(f, s) for f, s in zip(full_names, surnames))
 
 
 def check_authors(item, problems, notes):
@@ -214,9 +230,9 @@ def check_authors(item, problems, notes):
         names = e.get("authors")
         if not isinstance(names, list) or not names:
             continue
-        sur = [norm(n.split()[-1]) for n in names if n.split()]
+        sur = [surname(n) for n in names if n.split()]
         if key in des_authors and des_authors[key]:
-            dsur = [norm(n.split()[-1]) for n in des_authors[key] if n.split()]
+            dsur = [surname(n) for n in des_authors[key] if n.split()]
             if dsur != sur:
                 problems.append(f"P1 {doi}: author order differs between {CATALOG} {sur} and {DES} {dsur}")
         if key in refs and not same_order(names, refs[key]):
