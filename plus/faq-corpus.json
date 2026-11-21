@@ -44588,6 +44588,62 @@
           ]
         }
       ]
+    },
+    "dentcast-plus/video-16": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/dentcast-plus/video-16.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا در قطعهٔ تیتانیومیِ پروتز روی ایمپلنت، کانال پیچ آخرین ایمپلنت نقطهٔ مستعد شکست است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ بیشترین خمش در همان نقطه است و کانال پیچ هم مقدار فلز را در آن‌جا کم کرده است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا تیتانیومی بودن یک قطعه در پروتز روی ایمپلنت، آن را از شکست در امان نگه می‌دارد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ قطعهٔ تیتانیومی هم می‌شکند، و در این مورد درست از وسط کانال پیچ آخرین ایمپلنت شکست."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا جویدنِ مکرر می‌تواند در قطعهٔ تیتانیومیِ پروتز روی ایمپلنت ترکی ریز بسازد که به شکست برسد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ میلیون‌ها بار جویدن یک ترک ریز می‌سازد و همان ترک کار قطعه را تمام می‌کند."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/dentcast-plus/video-16.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentcast-plus/video-16.html#flashcards-c1",
+              "name": "محل مستعد شکست در قطعهٔ تیتانیومیِ پروتز روی ایمپلنت",
+              "description": "کانال پیچ آخرین ایمپلنت: جایی که بیشترین خمش به قطعه می‌رسد و هم‌زمان حفرهٔ کانال پیچ از ضخامت فلز کاسته است؛ بیشترین نیرو و کمترین فلز در یک نقطه.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentcast-plus/video-16.html#flashcards-c2",
+              "name": "سازوکار شکست تدریجی قطعهٔ تیتانیومی زیر جویدن",
+              "description": "شکستی که از تکرار می‌آید نه از یک ضربه: میلیون‌ها چرخهٔ جویدن ابتدا ترکی ریز در فلز ایجاد می‌کند و همین ترک در نهایت به جدا شدن کامل قطعه می‌رسد.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
