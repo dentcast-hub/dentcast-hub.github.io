@@ -44644,6 +44644,69 @@
           ]
         }
       ]
+    },
+    "dentcast-plus/video-17": {
+      "faqPages": [
+        {
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/dentcast-plus/video-17.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا ساختِ پروتزِ جدید به‌تنهایی کجیِ پلن اکلوژنی را که از سوپرااراپشنِ دندان‌های باقی‌مانده آمده برطرف می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ اگر بدون اصلاحِ همان پلن قالب گرفته و دندان‌ها چیده شود، پروتزِ جدید همان کجی را کپی می‌کند؛ طرح درمان از اصلاحِ پلن شروع می‌شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا در سوپرااراپشنِ دندانِ بی‌آنتاگونیست، فقط خودِ دندان جابه‌جا می‌شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ دندان تنها بالا نمی‌آید و لثه و استخوان آلوئولار را هم با خودش می‌آورد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا کشیدنِ دندانی که از پلن اکلوژن بیرون زده، یکی از راه‌های اصلاحِ پلن پیش از ساختِ پروتزِ جدید است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ کوتاه‌کردنِ دندان، درمان ریشه و کوتاه‌کردن، یا کشیدن راه‌های اصلاحِ پلن‌اند و پروتزِ جدید بعد از آن ساخته می‌شود."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/dentcast-plus/video-17.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentcast-plus/video-17.html#flashcards-c1",
+              "name": "سوپرااراپشن",
+              "description": "ادامهٔ رویشِ دندانی که آنتاگونیست ندارد به سمت فضای خالیِ روبه‌رو؛ حرکتی که دندان را همراه با لثه و استخوان آلوئولارِ اطرافش جابه‌جا می‌کند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentcast-plus/video-17.html#flashcards-c2",
+              "name": "اثر دندان‌های سوپرااراپت‌شده بر پلن اکلوژن پروتز",
+              "description": "دندان‌های باقی‌ماندهٔ بی‌آنتاگونیست، با بالا یا پایین آمدن، سطحِ دندان‌های طبیعی را کج می‌کنند؛ پروتزی که روی همین پلن قالب‌گیری و چیده شود، کجی را عیناً تکرار می‌کند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/dentcast-plus/video-17.html#flashcards-c3",
+              "name": "گزینه‌های اصلاح پلن برای دندانِ بیرون‌زده از پلن پیش از پروتز",
+              "description": "سه راه: کوتاه‌کردنِ دندان، درمان ریشه و سپس کوتاه‌کردن، یا کشیدنِ آن؛ پروتزِ تازه فقط بعد از این اصلاح ساخته می‌شود.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
