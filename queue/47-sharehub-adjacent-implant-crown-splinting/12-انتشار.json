@@ -1,0 +1,214 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "sharehub",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "اسپلینت کردن روکش‌های ایمپلنت مجاور؛ چه زمانی به نفع ماست؟",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "caption_fa": {
+  "value": "روکش‌های ایمپلنت مجاور را به هم اسپلینت کنیم یا جدا بسازیم؟ شواهد درباره‌ی شل شدن پیچ، استخوان مارژینال و عوارض بیولوژیک، و نکته‌ای درباره‌ی خارج کردن پروتز سمان‌شده.",
+  "from": "02-عنوان-کپشن.md:9"
+ },
+ "title_en": {
+  "value": "Splinting Crowns on Adjacent Implants: When Does It Work in Our Favor?",
+  "from": "06-انگلیسی.md:1"
+ },
+ "caption_en": {
+  "value": "Should crowns on adjacent implants be splinted or made separately? The evidence on screw loosening, marginal bone and biological complications, and a note on removing a cemented prosthesis.",
+  "from": "06-انگلیسی.md:3"
+ },
+ "body_en": {
+  "value": "When two implants sit next to each other, one of the decisions we have to make about the prosthesis design is whether to splint the crowns together or to give each implant its own separate crown.\n\nThere is a sentence we hear a lot on this subject: \"Studies have shown that splinting does not reduce complications.\"\n\nThis sentence is not entirely baseless, but it oversimplifies the problem. Because when we talk about complications, we have to specify which complication we mean. Screw loosening, ceramic chipping and marginal bone loss do not necessarily behave the same way, and splinting may affect each of them differently.\n\nLet us look at the evidence separately.\n\n## Splinting and mechanical complications, especially screw loosening\n\nOne of the frequently cited meta-analyses found no significant difference in prosthetic complications, including screw loosening and ceramic chipping, between splinted and nonsplinted crowns [1].\n\nIn the same study, however, implant survival was reported to be higher in the splinted group: about 99 percent versus 96.5 percent [1]. These figures come from that paper itself and belong to the time of its publication (2019), and they should not be taken as a definitive estimate for every situation.\n\nBut a more recent meta-analysis that specifically examined adjacent implants with an internal connection in the posterior region reached a different conclusion. In this review, mechanical complications were significantly more frequent in single crowns [2]. Based on the authors' own estimate in that paper, the risk of mechanical complications in the splinted group was about one third of that in the nonsplinted group [2].\n\nThe results of some clinical studies point in the same direction.\n\nIn a split-mouth study, each patient received splinted crowns on one side and single crowns on the opposite side. All cases of screw loosening occurred on the nonsplinted side, and most of them involved 6-mm implants [3].\n\nIn another evaluation of posterior implant prostheses, all cases of screw loosening were also reported in the single-crown group [4].\n\nIn very short implants, that is, 6 mm or shorter, splinting has been associated with less screw loosening and fewer prosthetic complications [5]. Not all studies reach this conclusion, though. For example, a meta-analysis that examined short implants up to 8.5 mm in length found no significant difference in mechanical complications between the two approaches [6].\n\nSo we cannot say that splinting reduces mechanical complications in every situation, but the more recent evidence, especially for posterior and short implants, mostly favors splinting [2, 3, 5].\n\n## Splinting and marginal bone: a different story\n\nWhen we talk about biological complications, the results are not this clear.\n\nIn the de Souza Batista meta-analysis, no significant difference in marginal bone loss was seen between the two groups [1]. The meta-analysis on posterior implants also found no difference in biological complications between the two groups [2].\n\nBy contrast, a more recent systematic review published by Lin and colleagues reported less marginal bone loss around nonsplinted implants [7].\n\nIn another study of two terminal implants in the molar region, screw loosening was lower in the splinted group, but mucositis and peri-implantitis were more frequent in that same group [8].\n\nThis finding matters clinically, because it shows that in some situations the mechanical advantage of splinting may come with more biological problems [8].\n\n## Why do the study results differ?\n\nPart of these differences comes down to study design. Most of the studies are retrospective, and in practice we usually turn to splinting when the conditions are more difficult from the start; for example, the implant is shorter or the patient has bruxism. So the splinted group was in a more difficult situation from the very beginning. In addition, the connection type, implant length, prosthesis retention type and even the definition of a \"complication\" are not the same across studies, and when all of these are pooled in one meta-analysis, real differences may stay hidden beneath the overall average.\n\n## What happens when one of the screws loosens?\n\nHere I also want to mention a point from my own clinical experience.\n\nIn my experience, when two crowns are splinted together and cemented with temporary cement, removing the prosthesis when needed is usually easier than removing a single crown.\n\nThe reason mostly comes down to how the crown remover is used. On a splinted prosthesis, there is usually a more defined place to engage the instrument and deliver the impact. On a single crown, however, finding a suitable point for this is not always easy.\n\nOf course, one might ask whether delivering an impact to an implant crown is a sound thing to do at all.\n\nIn a clinical study, all cemented implant crowns were removed with an impact crown remover without any technical complication and without damage [9]. In that study, the type of cement had the greatest effect on the number of impacts needed to remove the crown [9].\n\nThe number of impacts also had little relation to the patient's discomfort, although the authors recommended that the patient's perception be taken into account as well [9].\n\nIn a laboratory study, no sign of wear was seen on the abutment screws after the crowns were removed with the same kind of instrument [10].\n\nIn another laboratory evaluation that simulated the removal of implant bridges, the best result was obtained with long, slightly tapered abutments and temporary cement [11].\n\nIt should be noted that these studies examined the condition of the crown and the abutment screw, not the effect of the impact on the implant itself and the surrounding bone [9, 10, 11]. Nor can the results of laboratory studies be generalized to every clinical situation without considering their limitations.\n\n## Clinical summary\n\nIf we want to sum up the available evidence in plain words, splinting crowns on adjacent implants cannot be considered an approach that is superior in every situation.\n\nBut it is not true either to say that splinting does nothing to reduce complications.\n\nFor screw loosening, the more recent evidence mostly favors splinting, especially in the posterior region and in short implants [2, 3, 5].\n\nFor marginal bone loss and biological complications, the results are still not consistent [1, 2, 7, 8], and some studies have even favored single crowns [7, 8].\n\nSo when choosing between splinted and single crowns, it is better not to rely on a single general rule. Implant length, its position, the occlusal conditions, the likelihood of mechanical overload and the possibility of maintaining hygiene should be assessed together.\n\nAnd one important point: if we decide to splint, we must not forget the embrasure design. Connecting two crowns is a suitable choice when the patient can still clean the areas between them well.",
+  "from": "06-انگلیسی.md:6-81"
+ },
+ "images": {
+  "value": [],
+  "from": "03-تصاویر: no image files"
+ },
+ "credit": {
+  "value": {
+   "mode": "references",
+   "items": [
+    {
+     "label_fa": "de Souza Batista و همکاران، J Prosthet Dent، ۲۰۱۹",
+     "label_en": "de Souza Batista et al., J Prosthet Dent, 2019",
+     "href": "https://doi.org/10.1016/j.prosdent.2018.03.004",
+     "from": "04-منبع/منابع.md:41"
+    },
+    {
+     "label_fa": "Pascoal و همکاران، J Prosthet Dent، ۲۰۲۵",
+     "label_en": "Pascoal et al., J Prosthet Dent, 2025",
+     "href": "https://doi.org/10.1016/j.prosdent.2024.05.020",
+     "from": "04-منبع/منابع.md:42"
+    },
+    {
+     "label_fa": "Clelland و همکاران، Int J Oral Maxillofac Implants، ۲۰۱۶",
+     "label_en": "Clelland et al., Int J Oral Maxillofac Implants, 2016",
+     "href": "https://doi.org/10.11607/jomi.4565",
+     "from": "04-منبع/منابع.md:43"
+    },
+    {
+     "label_fa": "Hsu و همکاران، Int J Oral Maxillofac Implants، ۲۰۱۹",
+     "label_en": "Hsu et al., Int J Oral Maxillofac Implants, 2019",
+     "href": "https://doi.org/10.11607/jomi.7365",
+     "from": "04-منبع/منابع.md:44"
+    },
+    {
+     "label_fa": "Ravidà و همکاران، Int J Oral Maxillofac Implants، ۲۰۱۹",
+     "label_en": "Ravidà et al., Int J Oral Maxillofac Implants, 2019",
+     "href": "https://doi.org/10.11607/jomi.6893",
+     "from": "04-منبع/منابع.md:45"
+    },
+    {
+     "label_fa": "Li و همکاران، J Prosthodont، ۲۰۲۲",
+     "label_en": "Li et al., J Prosthodont, 2022",
+     "href": "https://doi.org/10.1111/jopr.13402",
+     "from": "04-منبع/منابع.md:46"
+    },
+    {
+     "label_fa": "Lin و همکاران، J Periodontol، ۲۰۲۵",
+     "label_en": "Lin et al., J Periodontol, 2025",
+     "href": "https://doi.org/10.1002/JPER.24-0144",
+     "from": "04-منبع/منابع.md:47"
+    },
+    {
+     "label_fa": "Lee و همکاران، J Adv Prosthodont، ۲۰۱۶",
+     "label_en": "Lee et al., J Adv Prosthodont, 2016",
+     "href": "https://doi.org/10.4047/jap.2016.8.6.494",
+     "from": "04-منبع/منابع.md:48"
+    },
+    {
+     "label_fa": "Worni و همکاران، Int J Prosthodont، ۲۰۱۵",
+     "label_en": "Worni et al., Int J Prosthodont, 2015",
+     "href": "https://doi.org/10.11607/ijp.4119",
+     "from": "04-منبع/منابع.md:49"
+    },
+    {
+     "label_fa": "Mehl و همکاران، Clin Oral Implants Res، ۲۰۱۲",
+     "label_en": "Mehl et al., Clin Oral Implants Res, 2012",
+     "href": "https://doi.org/10.1111/j.1600-0501.2011.02236.x",
+     "from": "04-منبع/منابع.md:50"
+    },
+    {
+     "label_fa": "Lugas و همکاران، Materials (Basel)، ۲۰۲۰",
+     "label_en": "Lugas et al., Materials (Basel), 2020",
+     "href": "https://doi.org/10.3390/ma13122797",
+     "from": "04-منبع/منابع.md:51"
+    }
+   ]
+  },
+  "from": "04-منبع/منابع.md:37"
+ },
+ "catalog": {
+  "value": [
+   {
+    "skip": "catalog Part 2 fields are not frozen in the item; nothing is written to the catalog (a follow-up for the founder, never a publish-day guess)"
+   }
+  ],
+  "from": "default: 04-منبع/منابع.md holds no frozen catalog entry"
+ },
+ "hashtags": {
+  "value": [
+   "#مرور_منابع",
+   "#اسپلینت_ایمپلنت",
+   "#شل_شدن_پیچ",
+   "#عوارض_مکانیکی",
+   "#تحلیل_استخوان_کرستال",
+   "#ایمپلنت_کوتاه",
+   "#پری_ایمپلنتیتیس",
+   "#بهداشت_پذیری"
+  ],
+  "from": "07-ورودی‌ها.md:15"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "implantology",
+   "subtopic": "restoration-design",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:12"
+ },
+ "pulse": {
+  "value": {
+   "text": null,
+   "link_phrase": "اسپلینت کردن روکش‌های ایمپلنت مجاور؛ چه زمانی به نفع ماست؟"
+  },
+  "from": "07-ورودی‌ها.md:21"
+ },
+ "keywords": {
+  "value": [
+   "اسپلینت کردن روکش‌های ایمپلنت مجاور",
+   "روکش اسپلینت یا تکی روی ایمپلنت",
+   "شل شدن پیچ در روکش‌های تکی ایمپلنت",
+   "ایمپلنت‌های مجاور خلفی با اتصال داخلی",
+   "اسپلینت ایمپلنت‌های کوتاه ۶ میلی‌متری",
+   "مطالعهٔ Split-Mouth اسپلینت و غیراسپلینت",
+   "موکوزیت و پری‌ایمپلنتیت در ایمپلنت‌های اسپلینت‌شده",
+   "خارج کردن روکش ایمپلنتی سمان‌شده با کراون ریموور",
+   "اثر نوع سمان بر خارج کردن روکش ایمپلنت",
+   "طراحی امبرژور در روکش‌های اسپلینت",
+   "splinted vs nonsplinted implant crowns",
+   "screw loosening",
+   "crown remover"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "براکسیسم",
+    "href": "/glossary/bruxism.html",
+    "from": "11-لینک‌های-گلاسری.md:12"
+   },
+   {
+    "phrase": "پری‌ایمپلنتیت",
+    "href": "/glossary/peri-implantitis.html",
+    "from": "11-لینک‌های-گلاسری.md:13"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:8"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "/sharehub/share-28.html",
+    "label": "اسپلینت یا روکش جدا روی ایمپلنت‌های مجاور",
+    "from": "11-لینک‌های-گلاسری.md:33"
+   },
+   {
+    "href": "/insight/insight-16.html",
+    "label": "مراقبت بیولوژیک در ایمپلنت‌های اسپلینت‌شده",
+    "from": "11-لینک‌های-گلاسری.md:34"
+   },
+   {
+    "href": "/sharehub/share-45.html",
+    "label": "اختلاف ارتفاع ایمپلنت‌های مجاور و اسپلینت",
+    "from": "11-لینک‌های-گلاسری.md:35"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:29"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
