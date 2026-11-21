@@ -1,0 +1,1083 @@
+{
+ "scored_at": "2026-11-21",
+ "sources": [
+  {
+   "des_version": "3.5",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "Should the restoration of adjacent implants be splinted or nonsplinted? A systematic review and meta-analysis",
+    "authors": "de Souza Batista VE, Verri FR, Lemos CAA, Cruz RS, Oliveira HFF, Gomes JML, Pellizzer EP",
+    "year": 2019,
+    "journal": "The Journal of Prosthetic Dentistry",
+    "doi": "10.1016/j.prosdent.2018.03.004"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 100,
+    "anchor": "SR/meta-analysis; the design of the included studies is not stated in the abstract (THERAPY SR/MA row, 100)",
+    "evidence_quote": "The purpose of this systematic review and meta-analysis was to assess the marginal bone loss, implant survival rate, and prosthetic complications of splinted and nonsplinted implant restorations."
+   },
+   "q_method": {
+    "tool": "AMSTAR-2",
+    "domains": [
+     {
+      "domain": "protocol registered before commencement",
+      "rating": "some_concerns",
+      "evidence_quote": "this review was registered at the International Prospective Register of Systematic Reviews (PROSPERO) (CRD42017080162)",
+      "note": "The abstract reports registration but does not say whether it happened before the review began."
+     },
+     {
+      "domain": "adequacy of the literature search",
+      "rating": "low",
+      "evidence_quote": "An electronic search in the PubMed/MEDLINE, Cochrane Library, and Scopus databases was conducted up to November 2017",
+      "note": "Three bibliographic databases were searched. PubMed/MEDLINE counts as one."
+     },
+     {
+      "domain": "justification for excluding individual studies",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "Not addressed in the abstract. Under ABSTRACT_ONLY, silence is NR."
+     },
+     {
+      "domain": "risk of bias assessment of included studies",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "The abstract mentions no quality, bias or appraisal step. Under ABSTRACT_ONLY, silence is NR."
+     },
+     {
+      "domain": "appropriateness of meta-analytical methods",
+      "rating": "low",
+      "evidence_quote": "The meta-analysis was based on the Mantel-Haenszel and inverse variance methods",
+      "note": "The pooling methods are described."
+     },
+     {
+      "domain": "assessment of publication bias",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "Not addressed in the abstract. Under ABSTRACT_ONLY, silence is NR."
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "Applies to RCTs only. This paper is an SR/meta-analysis."
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable to a secondary study"
+    },
+    {
+     "item": "follow-up shorter than the outcome plausibly requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "the mean follow-up was 87.8 months (range=12-264 months)",
+     "note": "A mean follow-up of about 7.3 years is adequate for a survival claim. The abstract does not affirmatively show that follow-up was too short."
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 55,
+   "band": "C",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۵۵ از ۱۰۰ است و در باند C (شواهد محدود) با نوع سؤال THERAPY قرار می‌گیرد؛ این امتیاز چون فقط بر پایه‌ی چکیده است، موقت است.",
+   "interpretation_fa": "این مرور سیستماتیک در PROSPERO ثبت شده و در سه پایگاه داده جست‌وجو کرده است. اما چکیده درباره‌ی ارزیابی risk of bias مطالعات، فهرست مطالعات حذف‌شده و publication bias چیزی نمی‌گوید و نوع مطالعات واردشده را هم مشخص نمی‌کند. یافته‌ها این است که marginal bone loss و عوارض پروتزی تفاوتی نداشتند و survival در ترمیم‌های splinted بالاتر بود. این یافته‌ها فعلاً در حد شواهد محدود قابل اتکا هستند."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "Impact of splinting implant-supported crowns on the performance of adjacent posterior implants: A systematic review and meta-analysis",
+    "authors": "Pascoal ALB, Paiva KRG, Marinho LCN, Bezerra ADS, Calderon PDS",
+    "year": 2025,
+    "journal": "J Prosthet Dent",
+    "doi": "10.1016/j.prosdent.2024.05.020"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 100,
+    "anchor": "SR/meta-analysis of clinical comparative studies, randomized and non-randomized (appraised with the Cochrane tool and Newcastle-Ottawa) (THERAPY SR/MA row, 100, via Step 2 routing)",
+    "evidence_quote": "The purpose of this systematic review with meta-analysis was to assess whether adjacent implants with internal connections in the posterior region should be treated with splinted or nonsplinted crowns."
+   },
+   "q_method": {
+    "tool": "AMSTAR-2",
+    "domains": [
+     {
+      "domain": "protocol registered before commencement",
+      "rating": "low",
+      "evidence_quote": "The systematic review was registered on the prospective register of systematic reviews (PROSPERO) under the code, CRD42021248525.",
+      "note": "PROSPERO registration stated with its code"
+     },
+     {
+      "domain": "adequacy of the literature search",
+      "rating": "low",
+      "evidence_quote": "Two authors searched 4 electronic databases (PubMed, Cochrane Library, Scopus, and Web of Science) independently for articles published up to December 2023.",
+      "note": "4 distinct bibliographic databases, above the 3b-i threshold of 2; hand search reported in addition"
+     },
+     {
+      "domain": "justification for excluding individual studies",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract only: no list of excluded studies and no screening account with counts; per 3b-iii silence under ABSTRACT_ONLY stays NR"
+     },
+     {
+      "domain": "risk of bias assessment of included studies",
+      "rating": "low",
+      "evidence_quote": "Risk of bias and quality were assessed using the Cochrane Collaboration's Tool for Assessing Risk and the Newcastle-Ottawa scale.",
+      "note": ""
+     },
+     {
+      "domain": "appropriateness of meta-analytical methods",
+      "rating": "some_concerns",
+      "evidence_quote": "A single-arm meta-analysis was conducted using RevMan.",
+      "note": "method addressed but ambiguous: described as single-arm while results report a comparative RR; effect model not stated in the abstract"
+     },
+     {
+      "domain": "assessment of publication bias",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract only: publication bias not mentioned"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered (RCTs only)",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: systematic review, and its PROSPERO registration is stated"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable to a secondary study"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "A total of 2085 implants (1244 splinted and 841 nonsplinted) were inserted in 1027 participants, with observation times ranging from 5 months to 16 years.",
+     "note": "claim concerns complication incidence, not long-term survival; the stated range extends to 16 years and the abstract does not affirmatively show follow-up too short for the outcome"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 55,
+   "band": "C",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۵۵ و در باند C (شواهد محدود) با نوع سؤال THERAPY است و چون فقط abstract در دست بود مقدماتی است.",
+   "interpretation_fa": "این systematic review و meta-analysis ثبت در PROSPERO، جستجوی چهار پایگاه داده و ارزیابی risk of bias را گزارش می‌کند، اما abstract درباره‌ی publication bias، مطالعات حذف‌شده و مدل آماری روشن نیست. یافته‌ی اصلی کمتر بودن عوارض مکانیکی در کراون‌های splinted روی ایمپلنت‌های مجاور خلفی با کانکشن داخلی است، بدون تفاوت در عوارض بیولوژیک. دوره‌ی پیگیری مطالعات از ۵ ماه تا ۱۶ سال متغیر است."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "Split-Mouth Comparison of Splinted and Nonsplinted Prostheses on Short Implants: 3-Year Results",
+    "authors": "Clelland N, Chaudhry J, Rashid RG, McGlumphy E",
+    "year": 2016,
+    "journal": "Int J Oral Maxillofac Implants",
+    "doi": "10.11607/jomi.4565"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 85,
+    "anchor": "randomized split-mouth trial, side allocated at random (THERAPY RCT row, 85)",
+    "evidence_quote": "After 3 to 5 months, patients were randomly restored with splinted prostheses on their left or right side."
+   },
+   "q_method": {
+    "tool": "RoB2",
+    "domains": [
+     {
+      "domain": "randomization process",
+      "rating": "some_concerns",
+      "evidence_quote": "patients were randomly restored with splinted prostheses on their left or right side",
+      "note": "random allocation of side stated; sequence generation and allocation concealment not described in the abstract"
+     },
+     {
+      "domain": "deviations from intended interventions",
+      "rating": "some_concerns",
+      "evidence_quote": "one deviated from study protocol by smoking, and one was splinted on both sides due to repeated screw breakage",
+      "note": "two protocol deviations reported; how they were handled in the analysis is not stated"
+     },
+     {
+      "domain": "missing outcome data",
+      "rating": "some_concerns",
+      "evidence_quote": "One patient was lost to follow-up",
+      "note": "18 enrolled, 15 with 3-year bone level comparisons; handling of the missing patients not described"
+     },
+     {
+      "domain": "measurement of the outcome",
+      "rating": "some_concerns",
+      "evidence_quote": "Radiographic bone levels were analyzed and compared (SAS 9.4) to determine differences between splinted and nonsplinted implants.",
+      "note": "radiographic measurement described; examiner blinding and calibration not mentioned"
+     },
+     {
+      "domain": "selection of the reported result",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no trial registration, protocol or pre-specified analysis plan in the abstract; silence under ABSTRACT_ONLY is NR"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "Results of this prospective 3-year study",
+     "note": "3-year follow-up is adequate for the bone level and complication outcomes reported"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 47,
+   "band": "C",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۴۷ و در Band C (شواهد محدود) با نوع پرسش THERAPY است و نتیجه بر پایه‌ی abstract، مقدماتی است.",
+   "interpretation_fa": "طراحی split-mouth تصادفی، مقایسه‌ی splinted و nonsplinted را در یک بیمار ممکن کرده است، اما abstract جزئیات randomization، blinding ارزیاب و نحوه‌ی برخورد با سه بیمار خارج‌شده را نمی‌دهد. یافته‌ی اصلی بالینی تمرکز screw loosening در سمت nonsplinted و تفاوت bone level فقط برای implant های ۶ میلی‌متری است، با نمونه‌ی ۱۵ بیمار.",
+   "issuing_bodies": null,
+   "issuing_quote": null,
+   "evidence_basis": null,
+   "basis_quote": null
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "Retrospective and Clinical Evaluation of Aftermarket CAD/CAM Titanium Abutments Supporting Posterior Splinted Prostheses and Single Crowns.",
+    "authors": "Hsu KW, Wei PC, Chen YL, Liou EJ",
+    "year": 2019,
+    "journal": "Int J Oral Maxillofac Implants",
+    "doi": "10.11607/jomi.7365"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 50,
+    "anchor": "retrospective cohort, single arm (THERAPY retrospective cohort row, 50)",
+    "evidence_quote": "This study retrospectively evaluated the records of patients"
+   },
+   "q_method": {
+    "tool": "ROBINS-I",
+    "domains": [
+     {
+      "domain": "confounding",
+      "rating": "some_concerns",
+      "evidence_quote": "A logistic regression was conducted to evaluate the influence of variables on the occurrence of complications and success rates.",
+      "note": "regression on variables described; which confounders were included is not reported in the abstract"
+     },
+     {
+      "domain": "selection of participants",
+      "rating": "some_concerns",
+      "evidence_quote": "This study retrospectively evaluated the records of patients who received posterior implant-supported splinted restorations and single crowns supported by aftermarket CAD/CAM titanium abutments.",
+      "note": "the population is described, but no eligibility criteria and no account of how recalled patients relate to all eligible records"
+     },
+     {
+      "domain": "classification of interventions/exposures",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "the abstract does not describe how abutment or restoration type was classified from the records; ABSTRACT_ONLY, silence is NR"
+     },
+     {
+      "domain": "missing data",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no eligible vs examined numbers, losses or exclusions in the abstract; the recalled count alone does not address missing data; ABSTRACT_ONLY, silence is NR"
+     },
+     {
+      "domain": "measurement of the outcome",
+      "rating": "some_concerns",
+      "evidence_quote": "examined clinically and radiographically",
+      "note": "outcome assessment described, but examiner calibration and blinding are not mentioned"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: RCTs only; this is a retrospective cohort"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "after a mean observation period of 6.3 ± 1.2 years (range 4.1 to 9 years)",
+     "note": "a mean follow-up of more than 6 years, minimum 4.1, is adequate for the survival and success claims"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 28,
+   "band": "D",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۲۸ از ۱۰۰ است. باند آن D (شواهد ضعیف) در نوع سؤال THERAPY است و چون فقط abstract در دست بود، امتیاز موقت است.",
+   "interpretation_fa": "این مطالعه یک retrospective cohort با follow-up میانگین شش سال است. abstract آن انتخاب بیماران، داده‌های گمشده و blinding را گزارش نمی‌کند، و این ضریب روش را پایین آورده است. ارزش بالینی مطالعه در داده‌های survival و عوارض aftermarket CAD/CAM titanium abutment در ناحیه‌ی خلفی است، به‌ویژه screw loosening در single crown."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "Long-Term Effectiveness of Extra-Short (≤ 6 mm) Dental Implants: A Systematic Review.",
+    "authors": "Ravidà A, Barootchi S, Askar H, Suárez-López Del Amo F, Tavelli L, Wang HL",
+    "year": 2019,
+    "journal": "Int J Oral Maxillofac Implants",
+    "doi": "10.11607/jomi.6893"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 100,
+    "anchor": "SR/meta-analysis of clinical implant studies, included designs not stated in abstract (THERAPY SR/MA row, 100, via Step 2 routing)",
+    "evidence_quote": "This systematic review evaluated the mean survival rate and marginal bone loss (MBL) of dental implants with ≤ 6 mm in length"
+   },
+   "q_method": {
+    "tool": "AMSTAR-2",
+    "domains": [
+     {
+      "domain": "protocol registered before commencement",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract does not mention a protocol or registration (PROSPERO or other); silence under ABSTRACT_ONLY is NR"
+     },
+     {
+      "domain": "adequacy of the literature search",
+      "rating": "low",
+      "evidence_quote": "An electronic literature search in PubMed (MEDLINE) and EMBASE (OVID) and Cochrane were performed",
+      "note": "three bibliographic databases (PubMed/MEDLINE, Embase via Ovid, Cochrane); manual journal search not counted; 3b-i threshold of 2 met"
+     },
+     {
+      "domain": "justification for excluding individual studies",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract gives only 515 screened and 19 included, no list or reasons for exclusions; per 3b-iii, ABSTRACT_ONLY silence stays NR"
+     },
+     {
+      "domain": "risk of bias assessment of included studies",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no quality, bias or appraisal step mentioned in Materials and Methods or elsewhere in the abstract"
+     },
+     {
+      "domain": "appropriateness of meta-analytical methods",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract reports pooled results (mean survival, RR with 95% CI) but describes no model, weighting or heterogeneity handling; results do not address the methods domain (3b-ii)"
+     },
+     {
+      "domain": "assessment of publication bias",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no funnel plot, Egger test or other publication-bias assessment mentioned in the abstract"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "applies to RCTs only; this is a systematic review"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable to a secondary study"
+    },
+    {
+     "item": "follow-up shorter than the outcome plausibly requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "After 5 years of follow-up, a mean survival rate of 94.1% (90% in the maxilla and 96% in the mandible) and a maximum bone loss of 0.53 mm were demonstrated.",
+     "note": "survival claim rests on a stated 5-year follow-up, not shorter than the 3-year bar for survival claims; penalty does not fire"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 55,
+   "band": "C",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۵۵ و در باند C (شواهد محدود) با نوع سؤال THERAPY است و چون فقط چکیده در دست بود، نتیجه موقت است.",
+   "interpretation_fa": "این systematic review با جستجو در سه پایگاه داده، بقای ۹۴.۱ درصدی implantهای extra-short را در پنج سال گزارش می‌کند. ثبت protocol، ارزیابی risk of bias مطالعات و روش‌های meta-analysis در چکیده نیامده و ضریب روش را پایین آورده است. برای برتری splinting در شکست implant، فاصله اطمینان RR از ۱ عبور می‌کند و این بخش از نتیجه قطعی نیست."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "Survival Rates of Splinted and Nonsplinted Prostheses Supported by Short Dental Implants (≤8.5 mm): A Systematic Review and Meta-Analysis",
+    "authors": "Li QL, Yao MF, Cao RY, Zhao K, Wang XD",
+    "year": 2022,
+    "journal": "J Prosthodont",
+    "doi": "10.1111/jopr.13402"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 100,
+    "anchor": "SR/meta-analysis of comparative clinical studies appraised with the Newcastle-Ottawa Scale, i.e. predominantly non-randomized (THERAPY SR/MA row, 100, via Step 2 routing)",
+    "evidence_quote": "Within the limitations of the present meta-analysis"
+   },
+   "q_method": {
+    "tool": "AMSTAR-2",
+    "domains": [
+     {
+      "domain": "protocol registered before commencement",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no protocol or registration mentioned; abstract only"
+     },
+     {
+      "domain": "adequacy of the literature search",
+      "rating": "low",
+      "evidence_quote": "Electronic database (MEDLINE, CENTRAL, Web of Science, and EMBASE) and manual searches up to May 2021 were conducted",
+      "note": "4 bibliographic databases plus manual search"
+     },
+     {
+      "domain": "justification for excluding individual studies",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no screening account or excluded-studies list in abstract"
+     },
+     {
+      "domain": "risk of bias assessment of included studies",
+      "rating": "low",
+      "evidence_quote": "The quality of included studies and risk-of-bias were assessed according to the Newcastle-Ottawa Scale.",
+      "note": ""
+     },
+     {
+      "domain": "appropriateness of meta-analytical methods",
+      "rating": "low",
+      "evidence_quote": "A random-effects model was used to analyze the data.",
+      "note": ""
+     },
+     {
+      "domain": "assessment of publication bias",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "publication bias not mentioned; abstract only"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: RCTs only"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable to a secondary study"
+    },
+    {
+     "item": "follow-up shorter than the outcome plausibly requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "with a follow-up time ranging from 1 to 16 years",
+     "note": "abstract gives only a range extending to 16 years and does not show the survival claim rests mainly on short follow-up; flaw not affirmatively shown in abstract"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 55,
+   "band": "C",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۵۵ و در باند C (شواهد محدود) برای سؤال THERAPY است و چون فقط abstract در دسترس بود، مقدماتی است.",
+   "interpretation_fa": "طراحی systematic review و meta-analysis بالاترین جایگاه طراحی را دارد، اما ثبت protocol، توجیه مطالعات حذف‌شده و publication bias از abstract قابل ارزیابی نیست و امتیاز را پایین آورده است. یافته اصلی این است که اسپلینت کردن ایمپلنت‌های کوتاه (≤8.5 mm) در survival، marginal bone loss و عوارض مکانیکی برتری آماری نداشته است."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "The influence of prosthetic designs on peri-implant bone loss: An AO/AAP systematic review and meta-analysis.",
+    "authors": "Lin GH, Lee E, Barootchi S, Rosen PS, Curtis D, Kan J, Wang HL",
+    "year": 2025,
+    "journal": "J Periodontol",
+    "doi": "10.1002/jper.24-0144"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 100,
+    "anchor": "SR/meta-analysis of clinical implant studies, design mix of included studies not stated (THERAPY SR/MA row, 100, via Step 2 routing)",
+    "evidence_quote": "This systematic review and meta-analysis explored emerging concepts in prosthetic considerations"
+   },
+   "q_method": {
+    "tool": "AMSTAR-2",
+    "domains": [
+     {
+      "domain": "protocol registered before commencement",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no protocol or registration mentioned; abstract only"
+     },
+     {
+      "domain": "adequacy of the literature search",
+      "rating": "low",
+      "evidence_quote": "An electronic search of three databases and a manual search of peer-reviewed journals",
+      "note": "three bibliographic databases, above the 3b-i threshold of 2"
+     },
+     {
+      "domain": "justification for excluding individual studies",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no screening account or excluded-studies list; abstract only"
+     },
+     {
+      "domain": "risk of bias assessment of included studies",
+      "rating": "some_concerns",
+      "evidence_quote": "appraising the level of evidence and clinical significance of these suprastructures on peri-implant marginal bone loss (MBL)",
+      "note": "an appraisal of level of evidence is stated, but no risk-of-bias tool or procedure is named"
+     },
+     {
+      "domain": "appropriateness of meta-analytical methods",
+      "rating": "some_concerns",
+      "evidence_quote": "Inverse variance meta-analyses were performed to compare various prosthetic factors and their impact on MBL and the risk of peri-implantitis",
+      "note": "weighting method stated; effect model and heterogeneity handling not described"
+     },
+     {
+      "domain": "assessment of publication bias",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no publication-bias assessment mentioned; abstract only"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "applies to RCTs only"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable to a secondary study"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract: only a minimum eligibility of ≥12 months is given, no follow-up durations of included studies are reported"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 55,
+   "band": "C",
+   "provisional": true,
+   "fact_fa": "این مقاله با امتیاز ۵۵ در باند C (شواهد محدود) برای نوع سؤال THERAPY قرار می‌گیرد و امتیاز آن مقدماتی است.",
+   "interpretation_fa": "این امتیاز مقدماتی است، چون بیشتر جزئیات روش‌شناسی مرور در abstract گزارش نشده و متن کامل می‌تواند آن را جابه‌جا کند. ارزش بالینی در مقایسه‌ی مستقیم طراحی‌های پروتزی است: nonsplinted، platform switching، abutment با ارتفاع حداقل ۲ میلی‌متر و پروتکل one abutment-one time با MBL کمتر همراه بودند. نوع retention و crown-to-implant ratio تفاوت معناداری نشان ندادند."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "The prognosis of splinted restoration of the most-distal implants in the posterior region.",
+    "authors": "Lee JB, Kim MY, Kim CS, Kim YT",
+    "year": 2016,
+    "journal": "J Adv Prosthodont",
+    "doi": "10.4047/jap.2016.8.6.494"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 50,
+    "anchor": "retrospective cohort from hospital records (THERAPY retrospective cohort row, 50)",
+    "evidence_quote": "The following clinical factors were examined in the 1-IR and 2-IS groups based on the total hospital records of the patients"
+   },
+   "q_method": {
+    "tool": "ROBINS-I",
+    "domains": [
+     {
+      "domain": "confounding",
+      "rating": "some_concerns",
+      "evidence_quote": "In analysis of two groups, the chi-square test and Student's t-test were used to identify the relationship between clinical factors and complication rates.",
+      "note": "clinical factors were compared between groups with univariate tests; no adjustment, matching, restriction or stratification is described, and the abstract does not affirmatively state that none was done"
+     },
+     {
+      "domain": "selection of participants",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract gives no inclusion or exclusion criteria; the patient count alone does not address selection"
+     },
+     {
+      "domain": "classification of interventions/exposures",
+      "rating": "some_concerns",
+      "evidence_quote": "The following clinical factors were examined in the 1-IR and 2-IS groups based on the total hospital records of the patients",
+      "note": "group status was taken retrospectively from hospital records; how it was defined and recorded is not described"
+     },
+     {
+      "domain": "missing data",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract has no statement of losses, exclusions or records analysed versus eligible; the sample count is not a statement about missing data"
+     },
+     {
+      "domain": "measurement of the outcome",
+      "rating": "some_concerns",
+      "evidence_quote": "The mechanical complications [i.e., screw loosening (SL), screw fracture, crown fracture, and repeated SL] and biological complications [i.e., peri-implant mucositis (PM) and peri-implantitis (PI)] were also evaluated for each patient.",
+      "note": "the outcomes are named, but diagnostic criteria, the assessors and blinding are not described"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: not an RCT"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "follow-up shorter than outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "over a mean functional loading period (FLP) of 40 months",
+     "note": "a mean of 40 months is not shorter than the complication-rate claims plausibly require"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 28,
+   "band": "D",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۲۸ (باند D، شواهد ضعیف) برای پرسش THERAPY است و چون فقط abstract در دست بود، مقدماتی است.",
+   "interpretation_fa": "این یک retrospective cohort بر پایه‌ی پرونده‌های بیمارستانی است و abstract هیچ adjustment برای confounderها گزارش نمی‌کند. تحلیل گروه‌ها با chi-square و t-test انجام شده است. یافته‌ی اصلی این است که splinting دو ایمپلنت مولر عارضه‌ی مکانیکی کمتر و عارضه‌ی بیولوژیک بیشتری داشته است. این یافته بیشتر برای طرح فرضیه ارزش دارد تا برای تصمیم بالینی قطعی."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "THERAPY",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "Retrievability of implant-supported crowns when using three different cements: a controlled clinical trial.",
+    "authors": "Worni A, Gholami H, Marchand L, Katsoulis J, Mericske-Stern R, Enkling N",
+    "year": 2015,
+    "journal": "Int J Prosthodont",
+    "doi": "10.11607/ijp.4119"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 85,
+    "anchor": "Controlled clinical trial with cements randomly assigned to patients (THERAPY RCT row, 85)",
+    "evidence_quote": "were used and randomly assigned to the patients"
+   },
+   "q_method": {
+    "tool": "RoB2",
+    "domains": [
+     {
+      "domain": "randomization process",
+      "rating": "some_concerns",
+      "evidence_quote": "were used and randomly assigned to the patients",
+      "note": "random assignment stated; sequence generation method and allocation concealment not described in the abstract"
+     },
+     {
+      "domain": "deviations from intended interventions",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "not addressed in the abstract"
+     },
+     {
+      "domain": "missing outcome data",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no statement of enrolled vs analysed numbers, losses or withdrawals in the abstract; result statements covering all crowns do not address this domain (3b-ii)"
+     },
+     {
+      "domain": "measurement of the outcome",
+      "rating": "some_concerns",
+      "evidence_quote": "Eight months later, one blinded investigator removed all crowns.",
+      "note": "activation count recorded by a blinded investigator, but patient perception was collected by a questionnaire completed retrospectively"
+     },
+     {
+      "domain": "selection of the reported result",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no trial registration or pre-specified analysis plan mentioned in the abstract"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "no sample size justification / power analysis",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "Eight months later, one blinded investigator removed all crowns.",
+     "note": "outcome is crown retrievability at a planned removal, not a survival claim; 8 months does not fall short of it"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 47,
+   "band": "C",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۴۷ از ۱۰۰ و باند C (شواهد محدود) در نوع سؤال THERAPY است و چون فقط abstract در دسترس بود مقدماتی است.",
+   "interpretation_fa": "کارآزمایی بالینی با تخصیص تصادفی سمان‌ها سقف طراحی بالایی دارد، اما abstract درباره‌ی allocation concealment، ریزش بیماران و ثبت کارآزمایی ساکت است و پرسشنامه گذشته‌نگر پر شده. ۷۴ ایمپلنت از ۲۱ بیمار آمده و واحد تحلیل روشن نیست. ارزش بالینی آن نشان‌دادن نقش بیشتر نوع سمان نسبت به ارتفاع اباتمنت در سهولت خارج‌کردن تاج با CORONAflex است."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "MATERIAL",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "In vitro influence of ultrasonic stress, removal force preload and thermocycling on the retrievability of implant-retained crowns.",
+    "authors": "Mehl C, Harder S, Schwarz D, Steiner M, Vollrath O, Kern M",
+    "year": 2012,
+    "journal": "Clin Oral Implants Res",
+    "doi": "10.1111/j.1600-0501.2011.02236.x"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 65,
+    "anchor": "in-vitro retrievability study with a fully described protocol, defined aging and loading, and no ISO standard or established method cited (MATERIAL row, 65)",
+    "evidence_quote": "150 days of storage with 37,500 thermal cycles between 5°C and 55°C"
+   },
+   "q_method": {
+    "tool": "QUIN",
+    "domains": [
+     {
+      "domain": "clearly stated aims",
+      "rating": "low",
+      "evidence_quote": "The main goals of this in vitro study were to evaluate the influence of thermocycling, ultrasonic stress and the removal force preload on the retrievability of cemented implant crowns",
+      "note": ""
+     },
+     {
+      "domain": "sample size justification",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract gives the specimen count (36 crowns) but no power calculation or stated reason for it; a count alone does not address the domain (3b-ii); silence under ABSTRACT_ONLY is NR"
+     },
+     {
+      "domain": "randomization / allocation of specimens",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no statement in the abstract of how crowns were assigned to cement, storage or ultrasonic groups"
+     },
+     {
+      "domain": "operator and assessor blinding",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no mention of operator or assessor blinding in the abstract"
+     },
+     {
+      "domain": "appropriate statistical analysis",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract reports P values in Results but names no statistical test or analysis method; results do not address the domain (3b-ii)"
+     },
+     {
+      "domain": "conflict of interest / funding",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no funding or conflict-of-interest statement in the abstract"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding without independent-analysis statement",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: in-vitro study, not an RCT"
+    },
+    {
+     "item": "specimen count per group <10 with no justification",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract: group sizes and any justification are not stated"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: laboratory retrievability outcome with defined artificial aging, no clinical survival claim"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 36,
+   "band": "D",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۳۶ و در باند D (شواهد ضعیف) برای سؤال MATERIAL است و بر پایه‌ی چکیده، موقت محسوب می‌شود.",
+   "interpretation_fa": "یک مطالعه‌ی in-vitro است؛ بیشتر حوزه‌های روش‌شناختی در چکیده گزارش نشده‌اند و امتیاز را پایین آورده‌اند. روی abutment مخروطی Camlog، Ketac Cem راحت‌تر از Durelon جدا شد و ultrasonic stress اثری بر retrievability نداشت. تعمیم این یافته به شرایط دهان و سیستم‌های دیگر ایمپلنت مستقیم نیست."
+  },
+  {
+   "des_version": "3.7",
+   "content_type": "RESEARCH",
+   "question_type": "MATERIAL",
+   "text_basis": "ABSTRACT_ONLY",
+   "citation": {
+    "title": "In Vitro Simulation of Dental Implant Bridges Removal: Influence of Luting Agent and Abutments Geometry on Retrievability",
+    "authors": "Lugas AT, Terzini M, Zanetti EM, Schierano G, Manzella C, Baldi D, Bignardi C, Audenino AL",
+    "year": 2020,
+    "journal": "Materials (Basel)",
+    "doi": "10.3390/ma13122797"
+   },
+   "journal_quartile": {
+    "value": "NR",
+    "source": "NR"
+   },
+   "s_design": {
+    "value": 65,
+    "anchor": "in-vitro bench study with a non-standard (custom impulsive-removal) protocol described in its essentials: factors, loading, outcome indexes, specimen count and statistics (MATERIAL row, 65)",
+    "evidence_quote": "Impulsive forces were applied to dental bridge models to simulate crowns' retrievability in clinical conditions."
+   },
+   "q_method": {
+    "tool": "QUIN",
+    "domains": [
+     {
+      "domain": "clearly stated aims",
+      "rating": "low",
+      "evidence_quote": "In this study, the retrievability of implant-fixed dental prostheses was investigated considering two of the main factors dental practitioners have to deal with: the abutments geometry and the luting agent."
+     },
+     {
+      "domain": "sample size justification",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract gives the number of tests and combinations but no sample size calculation or stated reason for the count; the count itself does not address the domain (3b-ii)"
+     },
+     {
+      "domain": "randomization / allocation of specimens",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract does not describe how specimens or tests were assigned to bridge/cement combinations"
+     },
+     {
+      "domain": "operator and assessor blinding",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "no mention of operator or assessor blinding in the abstract"
+     },
+     {
+      "domain": "appropriate statistical analysis",
+      "rating": "low",
+      "evidence_quote": "a Kruskal-Wallis test was performed on the results"
+     },
+     {
+      "domain": "conflict of interest / funding",
+      "rating": "NR",
+      "evidence_quote": "",
+      "note": "abstract carries no funding or conflict-of-interest statement, as is conventional"
+     }
+    ],
+    "multiplier": 0.55
+   },
+   "penalties": [
+    {
+     "item": "no conflict-of-interest statement / manufacturer funding",
+     "base_points": 8,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not assessable in abstract"
+    },
+    {
+     "item": "clinical trial not prospectively registered",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: in-vitro study, not an RCT"
+    },
+    {
+     "item": "specimen count per group <10 with no justification (in-vitro)",
+     "base_points": 5,
+     "points": 0,
+     "evidence_quote": "One-hundred-and-five tests were conducted on 21 combinations of bridges and luting agents",
+     "note": "not assessable in abstract: about 5 tests per combination are reported, but whether a justification exists cannot be read from the abstract"
+    },
+    {
+     "item": "follow-up shorter than the outcome requires",
+     "base_points": 3,
+     "points": 0,
+     "evidence_quote": "",
+     "note": "not applicable: bench retrievability test, no survival or longitudinal claim"
+    }
+   ],
+   "commentary_checklist": null,
+   "des_score": 36,
+   "band": "D",
+   "provisional": true,
+   "fact_fa": "امتیاز DES این مقاله ۳۶ و در باند D (شواهد ضعیف) برای سؤال از نوع MATERIAL است و چون فقط abstract در دسترس بود، نتیجه مقدماتی است.",
+   "interpretation_fa": "این یک مطالعه‌ی in-vitro است و abstract درباره‌ی توجیه تعداد نمونه، تخصیص نمونه‌ها، blinding و تضاد منافع چیزی نمی‌گوید. یافته‌ی اصلی اثر هندسه‌ی اباتمنت بر تعداد ضربه‌ی لازم برای برداشتن بریج است و نیرو رابطه‌ی روشنی با retrievability نداشت. ارزش آن در حد جهت‌دهی برای ترجیح اباتمنت بلند با taper کم و سمان موقت است، نه شاهد بالینی."
+  }
+ ]
+}

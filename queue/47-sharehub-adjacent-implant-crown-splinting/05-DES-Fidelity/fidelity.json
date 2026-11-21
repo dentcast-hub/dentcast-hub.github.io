@@ -1,0 +1,500 @@
+[
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u3",
+    "claim_quote": "وقتی دو ایمپلنت در کنار هم قرار می‌گیرند، یکی از تصمیم‌هایی که باید درباره‌ی طراحی پروتز بگیریم این است که روکش‌ها را به هم متصل کنیم (Splint) یا برای هر ایمپلنت یک روکش جداگانه در نظر بگیریم.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "The decision to splint or to restore independently generally occurs during the planning stage, when the advantages and disadvantages of each clinical situation are considered based on the proposed treatment.",
+    "source_ref": null,
+    "note": "The source names the same decision, to splint or to restore adjacent implants independently, as part of treatment planning."
+   },
+   {
+    "id": "u10",
+    "claim_quote": "یکی از متاآنالیزهایی که زیاد به آن استناد می‌شود، تفاوت معنی‌داری در عوارض پروتزی، از جمله شل شدن پیچ و چیپینگ سرامیک، بین روکش‌های اسپلینت و غیراسپلینت پیدا نکرده است [۱].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "The quantitative analysis found no statistically significant difference in the prosthetic complications of splinted and nonsplinted restorations.",
+    "source_ref": null,
+    "note": "The abstract does not address whether the paper is frequently cited. The listed complications are named in the source as reported prosthetic complications."
+   },
+   {
+    "id": "u11",
+    "claim_quote": "البته در همین مطالعه، بقای ایمپلنت در گروه اسپلینت بیشتر گزارش شده بود؛ حدود ۹۹ درصد در مقابل ۹۶.۵ درصد [۱].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "The assessed studies reported that 75 implants failed (3.4%), of which 24 were splinted (99.1% of survival rate) and 51 were nonsplinted (96.5% of survival rate).",
+    "source_ref": null,
+    "note": "The direction is confirmed by the source's statistically significant higher survival for splinted restorations."
+   },
+   {
+    "id": "u26",
+    "claim_quote": "در متاآنالیز de Souza Batista تفاوت معنی‌داری در میزان تحلیل استخوان مارژینال بین دو گروه دیده نشد [۱].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Quantitative analysis found no significant differences between splinted and nonsplinted restorations for marginal bone loss.",
+    "source_ref": null,
+    "note": ""
+   },
+   {
+    "id": "u27",
+    "claim_quote": "متاآنالیز مربوط به ایمپلنت‌های خلفی نیز تفاوتی در عوارض بیولوژیک بین دو گروه پیدا نکرد [۲].",
+    "verdict": "NOT_ASSESSABLE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "The unit is attributed to source [2], a meta-analysis on posterior implants. This abstract reports no comparison of biological complications between splinted and nonsplinted restorations; soft tissue inflammation is only listed among reported complications. Silence in an abstract."
+   }
+  ],
+  "counts": {
+   "matches": 4,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 1,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 4,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "However, splinted restorations were associated with decreased implant failure.",
+  "fact_fa": "از ۴ ادعایی که منبع به آن پرداخته‌اند، ۴ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u13",
+    "claim_quote": "اما متاآنالیز جدیدتری که مشخصاً ایمپلنت‌های مجاور در ناحیه‌ی خلفی با اتصال داخلی را بررسی کرده، به نتیجه‌ی متفاوتی رسیده است.",
+    "verdict": "NOT_ASSESSABLE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "F2 item 4: the predicate is a relation between this source and other studies («جدیدتر», «نتیجه‌ی متفاوت»). The other side of the relation is not in this text, so the unit is silence in a one-source call. The description of the population is part of the subject, not a separate half."
+   },
+   {
+    "id": "u14",
+    "claim_quote": "در این بررسی، عوارض مکانیکی در روکش‌های تکی به‌طور معنی‌داری بیشتر بود [۲].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "However, the nonsplinted implants exhibited significantly more mechanical complications than the splinted implants (P<.001, I^2^=1%, RR 0.37; 95% IC [0.26-0.54]).",
+    "source_ref": null,
+    "note": "Same direction and statistical qualifier. The Results sentence comes before the Conclusions restatement, so it is quoted."
+   },
+   {
+    "id": "u15",
+    "claim_quote": "بر اساس برآورد نویسندگان همین مقاله، خطر عوارض مکانیکی در گروه اسپلینت حدود یک‌سوم گروه غیراسپلینت بود [۲].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "However, the nonsplinted implants exhibited significantly more mechanical complications than the splinted implants (P<.001, I^2^=1%, RR 0.37; 95% IC [0.26-0.54]).",
+    "source_ref": null,
+    "note": "«حدود یک‌سوم» restates the source's own RR 0.37 for splinted vs nonsplinted. Same magnitude and same comparator."
+   },
+   {
+    "id": "u23",
+    "claim_quote": "بنابراین نمی‌توان گفت اسپلینت کردن در همه‌ی شرایط عوارض مکانیکی را کاهش می‌دهد، اما شواهد جدیدتر، به‌خصوص در ایمپلنت‌های خلفی و کوتاه، بیشتر به نفع اسپلینت هستند [۲، ۳، ۵].",
+    "verdict": "NOT_ASSESSABLE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "F1 inference judged on its conclusion. Both halves are silent here. «نمی‌توان گفت … در همه‌ی شرایط» concerns evidence beyond this abstract. «شواهد جدیدتر … بیشتر به نفع اسپلینت» is a count across studies (F2 item 4). The abstract does not address short implants."
+   },
+   {
+    "id": "u27",
+    "claim_quote": "متاآنالیز مربوط به ایمپلنت‌های خلفی نیز تفاوتی در عوارض بیولوژیک بین دو گروه پیدا نکرد [۲].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "The meta-analysis revealed no statistical differences between splinted and nonsplinted implants for biological complications (P=.95, I^2^=0%).",
+    "source_ref": null,
+    "note": "The predicate is this source's own finding. «نیز» only links it to the preceding text and makes no claim about other studies. The Results sentence is quoted over the Conclusions restatement."
+   },
+   {
+    "id": "u53",
+    "claim_quote": "در مورد شل شدن پیچ، شواهد جدیدتر بیشتر به نفع اسپلینت کردن هستند؛ به‌خصوص در ناحیه‌ی خلفی و در ایمپلنت‌های کوتاه [۲، ۳، ۵].",
+    "verdict": "NOT_ASSESSABLE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "Screw loosening is not reported separately in the abstract, and the abstract does not address short implants. «شواهد جدیدتر … بیشتر» is a count across studies (F2 item 4), which is silence in a one-source call."
+   }
+  ],
+  "counts": {
+   "matches": 3,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 3,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 3,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "However, more mechanical complications occurred in nonsplinted crowns than splinted ones.",
+  "fact_fa": "از ۳ ادعایی که منبع به آن پرداخته‌اند، ۳ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u17",
+    "claim_quote": "در یک مطالعه با طراحی Split-Mouth، برای هر بیمار در یک سمت از روکش‌های اسپلینت و در سمت مقابل از روکش‌های تکی استفاده شد.",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "To compare splinted and individual restorations supported by short implants featuring an internal connection utilizing a split-mouth design.",
+    "source_ref": null,
+    "note": "quoted for the shared token 'split-mouth' (F2 filter 2); the side allocation is also stated in 'After 3 to 5 months, patients were randomly restored with splinted prostheses on their left or right side.' «هر بیمار» describes the split-mouth design itself, which by definition applies within each patient, so it does not strengthen the finding. The one patient later splinted on both sides is a deviation during follow-up, not a change to the design the unit describes."
+   },
+   {
+    "id": "u18",
+    "claim_quote": "تمام موارد شل شدن پیچ در سمت غیراسپلینت اتفاق افتاد و بیشتر این موارد مربوط به ایمپلنت‌های ۶ میلی‌متری بود [۳].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Results of this prospective 3-year study of splinted ipsilateral and nonsplinted contralateral implants in 15 patients show: (1) peri-implant bone levels around splinted and nonsplinted implants were not statistically different for implants greater than 6 mm in length; (2) nonsplinted 6-mm implants revealed a gain in bone at 24 and 36 months compared with baseline; (3) all screw loosening only occurred on the nonsplinted side for 5 of 15 patients; and (4) implant loss after loading occurred for one 6-mm nonsplinted implant.",
+    "source_ref": null,
+    "note": "two halves, both addressed. «تمام» restates the source's own absolute ('all screw loosening only occurred on the nonsplinted side'), so this is not HEDGE_REMOVED. «بیشتر … ۶ میلی‌متری» matches 'These were 6-mm implants except for one patient.' (4 of 5)."
+   }
+  ],
+  "counts": {
+   "matches": 2,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 0,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 2,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "Results of this prospective 3-year study of splinted ipsilateral and nonsplinted contralateral implants in 15 patients show: (1) peri-implant bone levels around splinted and nonsplinted implants were not statistically different for implants greater than 6 mm in length; (2) nonsplinted 6-mm implants revealed a gain in bone at 24 and 36 months compared with baseline; (3) all screw loosening only occurred on the nonsplinted side for 5 of 15 patients; and (4) implant loss after loading occurred for one 6-mm nonsplinted implant.",
+  "fact_fa": "از ۲ ادعایی که منبع به آن پرداخته‌اند، ۲ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u19",
+    "claim_quote": "در یک بررسی دیگر روی پروتزهای ایمپلنتی ناحیه‌ی خلفی هم تمام موارد شل شدن پیچ در گروه روکش‌های تکی گزارش شد [۴].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "All screw loosenings occurred in single crowns.",
+    "source_ref": null,
+    "note": "«در یک بررسی دیگر» only introduces this source and makes no claim about other studies. The population (posterior implant restorations) and the absolute «تمام» are both stated by the source itself."
+   }
+  ],
+  "counts": {
+   "matches": 1,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 0,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 1,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "However, in light of the relatively high incidence of screw loosenings, especially in patients receiving single-implant crowns, informing patients of the additional chairside aftercare with this type of treatment option is recommended.",
+  "fact_fa": "از ۱ ادعایی که منبع به آن پرداخته‌اند، ۱ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u20",
+    "claim_quote": "در ایمپلنت‌های بسیار کوتاه، یعنی ۶ میلی‌متر یا کمتر، اسپلینت کردن با شل شدن پیچ کمتر و عوارض پروتزی کمتر همراه بوده است [۵].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Finally, splinted implants showed less overall prosthetic complications (RR = 3.32; 95% CI: 1.9 to 5.7), screw loosening (RR = 15.2; 95% CI: 5.92 to 39.31), and implant failure (RR = 1.96; 95% CI: 0.8 to 4.8) than nonsplinted implants.",
+    "source_ref": null,
+    "note": "The claim lists two outcomes under one predicate, so it is one claim. Both outcomes appear in this Results sentence, which comes before the Conclusion sentence that restates prosthetic complications only. The population (implants of 6 mm or less) is the review's own scope. The claim has the same direction, no hedge, and no magnitude."
+   }
+  ],
+  "counts": {
+   "matches": 1,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 0,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 1,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "Additionally, splinting extra-short implants is associated with fewer prosthetic complications and lower implant failure rate compared with nonsplinted implants.",
+  "fact_fa": "از ۱ ادعایی که منبع به آن پرداخته‌اند، ۱ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u22",
+    "claim_quote": "برای مثال، یک متاآنالیز که ایمپلنت‌های کوتاه تا طول ۸.۵ میلی‌متر را بررسی کرده بود، تفاوت معنی‌داری در عوارض مکانیکی بین دو روش پیدا نکرد [۶].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "However, no statistically significant difference was found between splinted and nonsplinted short implants (RR = 0.56; 95% CI 0.20, 1.54; p = 0.26).",
+    "source_ref": null,
+    "note": "The Results sentence states the absence of a significant difference in mechanical complications plainly, so the hedge in the conclusion (might) does not apply (F2-ii). The source writes 8.5 in Latin digits and the unit writes ۸.۵ in Persian digits, so they count as different tokens and the order filter's shared-token rule changes nothing."
+   }
+  ],
+  "counts": {
+   "matches": 1,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 0,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 1,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "CONCLUSIONS: Within the limitations of the present meta-analysis, it might be concluded that splinted short implants (≤8.5 mm) do not present superior performance in survival rate, marginal bone maintenance and prevention of mechanical complications compared with single-unit prostheses.",
+  "fact_fa": "از ۱ ادعایی که منبع به آن پرداخته‌اند، ۱ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u28",
+    "claim_quote": "در مقابل، یک مرور سیستماتیک جدیدتر که Lin و همکاران منتشر کرده‌اند، تحلیل استخوان مارژینال کمتری را در ایمپلنت‌های غیراسپلینت گزارش کرده است [۷].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Nonsplinted implants exhibited lower MBL compared to their splinted counterparts (eight articles, p = 0.04).",
+    "source_ref": null,
+    "note": "The predicate is this source's own finding: lower MBL in nonsplinted implants. «در مقابل» and «جدیدتر» only place the review against other work and are not the claim judged. The author name is not in source_text and is an identifier, not a finding. The conclusion sentence restates the finding later, so the earliest sentence is quoted."
+   },
+   {
+    "id": "u54",
+    "claim_quote": "در مورد تحلیل استخوان مارژینال و عوارض بیولوژیک، هنوز نتایج یکدستی وجود ندارد [۱، ۲، ۷، ۸]، و بعضی مطالعات حتی به نفع روکش‌های تکی بوده‌اند [۷، ۸].",
+    "verdict": "NOT_ASSESSABLE",
+    "change_kind": null,
+    "source_quote": "",
+    "source_ref": null,
+    "note": "F2 item 4: both predicates are relations across several sources. «نتایج یکدستی وجود ندارد» is about agreement between studies, and «بعضی مطالعات … به نفع روکش‌های تکی» is a count across studies. A one-source call cannot decide either, and the abstract does not state the relation. This source's own nonsplinted finding is only its part of the relation and does not decide the unit."
+   }
+  ],
+  "counts": {
+   "matches": 1,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 1,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 1,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "Meanwhile, factors such as screw-retained versus cement-retained prostheses and crown-to-implant ratio yielded no significant difference in MBL.",
+  "fact_fa": "از ۱ ادعایی که منبع به آن پرداخته‌اند، ۱ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u29",
+    "claim_quote": "در مطالعه‌ی دیگری که روی دو ایمپلنت انتهایی در ناحیه‌ی مولر انجام شد، شل شدن پیچ در گروه اسپلینت کمتر بود، اما در همین گروه موکوزیت و پری‌ایمپلنتیت بیشتر دیده شد [۸].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "The mechanical complication rates were lower for 2-IS than for 1-IR, while the biological complication rates were higher for 2-IS.",
+    "source_ref": null,
+    "note": "Direction is taken from the Conclusion sentence. The Results sentence reports significant differences in SL, PM and PI without a direction. The unit narrows mechanical complications to screw loosening, a complication the source itself measured, so this is not a change. Biological complications are defined in Methods as peri-implant mucositis and peri-implantitis."
+   },
+   {
+    "id": "u30",
+    "claim_quote": "این یافته از نظر بالینی مهم است، چون نشان می‌دهد ممکن است در بعضی شرایط، مزیت مکانیکی اسپلینت کردن با مشکلات بیولوژیک بیشتر همراه باشد [۸].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "The mechanical complication rates were lower for 2-IS than for 1-IR, while the biological complication rates were higher for 2-IS.",
+    "source_ref": null,
+    "note": "«از نظر بالینی مهم است» is an importance judgment and is not a claim (F1), so the unit is judged on its reason clause. That clause is a hedged generalization of the finding («ممکن است در بعضی شرایط»), which is MATCHES under F2-ii item 1, not HEDGE_ADDED."
+   }
+  ],
+  "counts": {
+   "matches": 2,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 0,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 2,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "FLP of 39.80 and 46.57 months were the reference follow-up periods for preventing biological and mechanical complications, respectively.",
+  "fact_fa": "از ۲ ادعایی که منبع به آن پرداخته‌اند، ۲ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u43",
+    "claim_quote": "در یک مطالعه‌ی بالینی، تمام روکش‌های ایمپلنتی سمان‌شده با کراون ریموور ضربه‌ای، بدون عارضه‌ی فنی و بدون آسیب خارج شدند [۹].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "All crowns could be retrieved without any technical complications or damage.",
+    "source_ref": null,
+    "note": "«تمام» restates the source's own «All»; the air-accelerated remover rendered as an impact remover is the same device"
+   },
+   {
+    "id": "u44",
+    "claim_quote": "در این مطالعه، نوع سمان بیشترین اثر را بر تعداد ضربه‌های لازم برای خارج کردن روکش داشت [۹].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Both abutment height (P = .019) and cement type (P = .004) had a significant effect on the number of activations, but the type of cement was more important.",
+    "source_ref": null,
+    "note": "ranking stated by a ranking sentence over the same items (cement type against abutment height, the two factors of the model)"
+   },
+   {
+    "id": "u45",
+    "claim_quote": "همچنین تعداد ضربه‌ها ارتباط چندانی با میزان ناراحتی بیمار نداشت، هرچند نویسندگان توصیه کرده‌اند احساس بیمار هم در نظر گرفته شود [۹].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "An increased total number of activations had no or only a weak correlation to the patients' perception of concussion, noise, pain, and unwillingness to use the device.",
+    "source_ref": null,
+    "note": "two claims: weak or no correlation with patient perception (MATCHES, quoted) and the authors' recommendation to consider patient perception (MATCHES, «The impact on the patients' subjective perception should be taken into account.»); highest addressed verdict is MATCHES"
+   }
+  ],
+  "counts": {
+   "matches": 3,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 0,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 3,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "The impact on the patients' subjective perception should be taken into account.",
+  "fact_fa": "از ۳ ادعایی که منبع به آن پرداخته‌اند، ۳ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u46",
+    "claim_quote": "در یک مطالعه‌ی آزمایشگاهی نیز پس از خارج کردن روکش‌ها با همین نوع وسیله، نشانه‌ای از سایش روی پیچ‌های اباتمنت دیده نشد [۱۰].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "None of the abutment screws showed signs of wear caused by the removal process.",
+    "source_ref": null,
+    "note": "same direction, no hedge on either side; in vitro setting matches the source's stated design"
+   },
+   {
+    "id": "u48",
+    "claim_quote": "باید توجه داشت که این مطالعات وضعیت روکش و پیچ اباتمنت را بررسی کرده‌اند، نه اثر ضربه بر خود ایمپلنت و استخوان اطراف آن [۹، ۱۰، ۱۱].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "Scanning electronic microscopy (SEM) was used to evaluate the impact of the removal on the abutment screws.",
+    "source_ref": null,
+    "note": "judged only for what it says about this source (F6). Addressed half: the study examined the crowns (retrievability, stated in the OBJECTIVES sentence) and the abutment screws (SEM sentence quoted). Silent half: that the effect on the implant and surrounding bone was not examined. The abstract does not mention implant or bone, so this half is NOT_ASSESSABLE and does not decide the verdict (F3 step 1)."
+   }
+  ],
+  "counts": {
+   "matches": 2,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 0,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 2,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "None of the abutment screws showed signs of wear caused by the removal process.",
+  "fact_fa": "از ۲ ادعایی که منبع به آن پرداخته‌اند، ۲ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ },
+ {
+  "des_version": "3.7",
+  "mode": "FIDELITY",
+  "scope": "SOURCE",
+  "text_basis": "ABSTRACT_ONLY",
+  "claims": [
+   {
+    "id": "u47",
+    "claim_quote": "در بررسی آزمایشگاهی دیگری که خارج کردن بریج‌های ایمپلنتی را شبیه‌سازی کرده بود، بهترین نتیجه با اباتمنت‌های بلند با شیب کم و سمان موقت به دست آمد [۱۱].",
+    "verdict": "MATCHES",
+    "change_kind": null,
+    "source_quote": "The best retrievability was obtained with long, slightly tapered abutments and a temporary luting agent.",
+    "source_ref": null,
+    "note": "The source ranks the same items, so the ranking is stated. The description of the study as a simulation of retrieving bridges is in the source: «Impulsive forces were applied to dental bridge models to simulate crowns' retrievability in clinical conditions.»"
+   }
+  ],
+  "counts": {
+   "matches": 1,
+   "altered": 0,
+   "reversed": 0,
+   "not_in_source": 0,
+   "not_assessable": 0,
+   "author_view": 0,
+   "not_a_claim": 0
+  },
+  "assessable": 1,
+  "fidelity_score": 100,
+  "level": "HIGH",
+  "provisional": true,
+  "source_conclusion": "The best retrievability was obtained with long, slightly tapered abutments and a temporary luting agent.",
+  "fact_fa": "از ۱ ادعایی که منبع به آن پرداخته‌اند، ۱ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا.",
+  "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+ }
+]
