@@ -414,6 +414,28 @@ class StampCheckTests(unittest.TestCase):
                 self.assertEqual(qs.main([str(item), "--dry-run"]), 4)
             self.assertEqual(json.loads(buf.getvalue())["checks"]["problems"], out["problems"])
 
+    def test_pubmed_style_des_authors_in_the_same_order_pass(self):
+        # A SOURCE record echoes the metadata it was given; PubMed's «Last Initials» form is the same order.
+        pubmed = ["Mahrous A", "Botsko DL", "El-Gendy T", "Elgreatly A"]
+        with tempfile.TemporaryDirectory() as t:
+            des = {"sources": [{"citation": {"doi": DOI_A.lower(), "authors": ", ".join(pubmed)}}]}
+            out = qs.checks(self.item(t, **{"05-DES-Fidelity/des.json": des}))
+            self.assertEqual(out["problems"], [], out)
+        swapped = [pubmed[0], pubmed[2], pubmed[1], pubmed[3]]
+        with tempfile.TemporaryDirectory() as t:
+            des = {"sources": [{"citation": {"doi": DOI_A.lower(), "authors": ", ".join(swapped)}}]}
+            out = qs.checks(self.item(t, **{"05-DES-Fidelity/des.json": des}))
+            self.assertEqual(len(out["problems"]), 1, out)
+            self.assertIn(DOI_A, out["problems"][0])
+
+    def test_surname_reads_both_name_forms(self):
+        self.assertEqual(qs.surname("de Souza Batista VE"), "desouzabatista")
+        self.assertEqual(qs.surname("Victor E de Souza Batista"), "batista")
+        self.assertEqual(qs.surname("Suárez-López Del Amo F"), "suarezlopezdelamo")
+        self.assertTrue(qs.same_name("Victor E. de Souza Batista", "desouzabatista"))
+        self.assertTrue(qs.same_name("de Souza Batista VE", "desouzabatista"))
+        self.assertFalse(qs.same_name("Batista VE", "desouzabatista"))
+
     def test_doi_missing_from_references_is_a_problem(self):
         with tempfile.TemporaryDirectory() as t:
             refs = "\n".join(l for l in checked_files()["04-منبع/منابع.md"].splitlines() if DOI_C not in l)
