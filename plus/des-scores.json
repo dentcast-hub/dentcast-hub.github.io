@@ -61849,5 +61849,61 @@
         "interpretation_fa": "این متن شکستِ یک قطعهٔ تیتانیومی درست در وسطِ کانالِ پیچِ آخرین ایمپلنت را با یک سازوکار مکانیکی توضیح می‌دهد: بیشترین خمش در همان نقطه است، کانالِ پیچ فلز را کم کرده و جویدنِ مکرر به یک ترکِ ریز و شکست رسیده است. این توضیح به شواهد منتشرشده ارجاع نمی‌دهد و دامنهٔ ادعا را هم مشخص نمی‌کند."
       }
     ]
+  },
+  "dentcast-plus/video-17": {
+    "scored_at": "2026-11-21",
+    "sources": [
+      {
+        "des_version": "3.7",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "پلن اکلوژن پروتز کجه؛ پروتز رو دوباره بسازیم؟",
+          "authors": "دکتر فواد شهابیان",
+          "year": 2026,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "The text states where the tilt begins («شروعش زیر پروتزه») but gives no rationale or mechanism for it. The reasoning may be in the video, which is not part of source_text."
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "The text does not mention published literature anywhere: no agreement, extension, departure or statement that evidence is absent."
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "The text does not say when the claim applies and when it does not, and gives no frequency qualifier."
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "The text has no in-page label marking it as experience or opinion. The input does not name the page's section, so a section-level declaration (chairside/, metanotes/, insight/) cannot be used."
+          }
+        ],
+        "des_score": 5,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این متن یک Commentary است و امتیاز DES آن ۵ از ۱۰۰ در باند E (سطح پیش‌زمینه و نظر) است.",
+        "interpretation_fa": "متن یک مشاهده‌ی بالینی کوتاه است که شروع کجی پلن اکلوژن را به زیر پروتز نسبت می‌دهد. دلیل یا مکانیسم این نسبت در خود متن نیامده است. متن جایگاهش را نسبت به مقالات و محدوده‌ی کاربرد ادعا را هم مشخص نکرده است. ارزش بالینی آن در طرح این پرسش است که منشأ کجی پیش از تصمیم به ساخت مجدد پروتز کجاست."
+      }
+    ]
   }
 }
