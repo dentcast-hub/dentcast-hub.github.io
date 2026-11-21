@@ -539,7 +539,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 55,
+   "count": 56,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-25",
@@ -595,7 +595,8 @@
     "chairside/chairside-43",
     "chairside/chairside-44",
     "chairside/chairside-53",
-    "chairside/chairside-54"
+    "chairside/chairside-54",
+    "dentcast-plus/video-17"
    ]
   },
   {
@@ -697,7 +698,7 @@
     "#Occlusion"
    ],
    "co_tags": [],
-   "count": 52,
+   "count": 53,
    "content_ids": [
     "episodes/episode-14",
     "episodes/episode-23",
@@ -750,7 +751,8 @@
     "sharehub/share-47",
     "chairside/chairside-51",
     "chairside/chairside-53",
-    "episodes/episode-163"
+    "episodes/episode-163",
+    "dentcast-plus/video-17"
    ]
   },
   {
@@ -2658,6 +2660,42 @@
    ]
   },
   {
+   "key": "ویدیو",
+   "tag": "#ویدیو",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام بخش ویدیوها (پیش‌تر DentCast+ / دنت‌کست پلاس) — آموزش‌های کوتاه ویدیویی دنت‌کست.",
+   "use_when": "روی هر مدخل ویدیوها (پوشهٔ dentcast-plus/)، و هیچ‌جای دیگر.",
+   "aliases": [
+    "دنتکست پلاس",
+    "dentcast plus"
+   ],
+   "variants": [
+    "#دنتکست_پلاس"
+   ],
+   "co_tags": [],
+   "count": 17,
+   "content_ids": [
+    "dentcast-plus/video-1",
+    "dentcast-plus/video-2",
+    "dentcast-plus/video-3",
+    "dentcast-plus/video-4",
+    "dentcast-plus/video-5",
+    "dentcast-plus/video-6",
+    "dentcast-plus/video-7",
+    "dentcast-plus/video-8",
+    "dentcast-plus/video-9",
+    "dentcast-plus/video-10",
+    "dentcast-plus/video-11",
+    "dentcast-plus/video-12",
+    "dentcast-plus/video-13",
+    "dentcast-plus/video-14",
+    "dentcast-plus/video-15",
+    "dentcast-plus/video-16",
+    "dentcast-plus/video-17"
+   ]
+  },
+  {
    "key": "پروگنوز_دندان",
    "tag": "#پروگنوز_دندان",
    "domain": null,
@@ -2829,41 +2867,6 @@
     "sharehub/share-54",
     "insight/insight-112",
     "sharehub/share-56"
-   ]
-  },
-  {
-   "key": "ویدیو",
-   "tag": "#ویدیو",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام بخش ویدیوها (پیش‌تر DentCast+ / دنت‌کست پلاس) — آموزش‌های کوتاه ویدیویی دنت‌کست.",
-   "use_when": "روی هر مدخل ویدیوها (پوشهٔ dentcast-plus/)، و هیچ‌جای دیگر.",
-   "aliases": [
-    "دنتکست پلاس",
-    "dentcast plus"
-   ],
-   "variants": [
-    "#دنتکست_پلاس"
-   ],
-   "co_tags": [],
-   "count": 16,
-   "content_ids": [
-    "dentcast-plus/video-1",
-    "dentcast-plus/video-2",
-    "dentcast-plus/video-3",
-    "dentcast-plus/video-4",
-    "dentcast-plus/video-5",
-    "dentcast-plus/video-6",
-    "dentcast-plus/video-7",
-    "dentcast-plus/video-8",
-    "dentcast-plus/video-9",
-    "dentcast-plus/video-10",
-    "dentcast-plus/video-11",
-    "dentcast-plus/video-12",
-    "dentcast-plus/video-13",
-    "dentcast-plus/video-14",
-    "dentcast-plus/video-15",
-    "dentcast-plus/video-16"
    ]
   },
   {
@@ -5297,6 +5300,35 @@
    ]
   },
   {
+   "key": "سوپرااراپشن",
+   "tag": "#سوپرااراپشن",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "رویشِ بیش‌ازحدِ دندان پس از رفتنِ آنتاگونیست.",
+   "use_when": "مقاله اشغالِ فضای رستوریتیو را مسئله بداند.",
+   "aliases": [
+    "supraeruption",
+    "رویش بیش از حد",
+    "سوپرا اراپت",
+    "overeruption",
+    "اور اراپشن",
+    "سوپراراپشن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "insight/insight-6",
+    "insight/insight-8",
+    "insight/insight-46",
+    "chairside/chairside-19",
+    "chairside/chairside-31",
+    "sharehub/share-14",
+    "sharehub/share-53",
+    "dentcast-plus/video-17"
+   ]
+  },
+  {
    "key": "طراحی_مطالعه",
    "tag": "#طراحی_مطالعه",
    "domain": "clinical",
@@ -5955,34 +5987,6 @@
     "sharehub/share-4",
     "dentcast-plus/video-11",
     "dentcast-plus/video-13"
-   ]
-  },
-  {
-   "key": "سوپرااراپشن",
-   "tag": "#سوپرااراپشن",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "رویشِ بیش‌ازحدِ دندان پس از رفتنِ آنتاگونیست.",
-   "use_when": "مقاله اشغالِ فضای رستوریتیو را مسئله بداند.",
-   "aliases": [
-    "supraeruption",
-    "رویش بیش از حد",
-    "سوپرا اراپت",
-    "overeruption",
-    "اور اراپشن",
-    "سوپراراپشن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "insight/insight-6",
-    "insight/insight-8",
-    "insight/insight-46",
-    "chairside/chairside-19",
-    "chairside/chairside-31",
-    "sharehub/share-14",
-    "sharehub/share-53"
    ]
   },
   {
@@ -12061,6 +12065,33 @@
    ]
   },
   {
+   "key": "پلان_اکلوژن",
+   "tag": "#پلان_اکلوژن",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "صفحه‌ی اکلوزال و جهت‌گیری‌اش در کل قوس.",
+   "use_when": "مقاله به‌هم‌ریختن یا اصلاحِ پلن اکلوزال را موضوع کند.",
+   "aliases": [
+    "occlusal plane",
+    "صفحه اکلوزال",
+    "پلن اکلوزال",
+    "plane of occlusion",
+    "پلن اکلوژن",
+    "پلین اکلوزال",
+    "اکلوزال پلن",
+    "صفحه اکلوژن",
+    "پلان اکلوزال"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-6",
+    "insight/insight-78",
+    "dentcast-plus/video-17"
+   ]
+  },
+  {
    "key": "پلی_کریستالین",
    "tag": "#پلی_کریستالین",
    "domain": null,
@@ -15098,32 +15129,6 @@
    "content_ids": [
     "dentai/promptologist/prompt-append2-1",
     "dentai/promptologist/prompt-append2-6"
-   ]
-  },
-  {
-   "key": "پلان_اکلوژن",
-   "tag": "#پلان_اکلوژن",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "صفحه‌ی اکلوزال و جهت‌گیری‌اش در کل قوس.",
-   "use_when": "مقاله به‌هم‌ریختن یا اصلاحِ پلن اکلوزال را موضوع کند.",
-   "aliases": [
-    "occlusal plane",
-    "صفحه اکلوزال",
-    "پلن اکلوزال",
-    "plane of occlusion",
-    "پلن اکلوژن",
-    "پلین اکلوزال",
-    "اکلوزال پلن",
-    "صفحه اکلوژن",
-    "پلان اکلوزال"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-6",
-    "insight/insight-78"
    ]
   },
   {
