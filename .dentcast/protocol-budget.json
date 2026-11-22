@@ -10,7 +10,7 @@
   ".cursor/rules/dentcast-operating-protocol.mdc": 1576,
   ".cursor/rules/dentcast-plus-premium.mdc": 13086,
   ".cursor/rules/dentcast-publishing.mdc": 1842,
-  ".cursor/rules/dentcast-router.mdc": 5699,
+  ".cursor/rules/dentcast-router.mdc": 5777,
   ".cursor/rules/dentcast-spot-report.mdc": 3338,
   ".dentcast/cabinet-enrichment/JUDGE.md": 3272,
   ".dentcast/cabinet-enrichment/PROPOSE.md": 4854,
@@ -86,7 +86,8 @@
   ".dentcast/workflows/queue-route.md": 21741,
   ".dentcast/workflows/routing-details.md": 27560,
   ".dentcast/workflows/spot-report.md": 18500,
-  "AGENTS.md": 5538,
-  "CLAUDE.md": 5594
+  ".dentcast/workflows/video-reel.md": 7502,
+  "AGENTS.md": 5616,
+  "CLAUDE.md": 5672
  }
 }
