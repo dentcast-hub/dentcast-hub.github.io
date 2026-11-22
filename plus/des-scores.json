@@ -61964,5 +61964,62 @@
     "fidelity": [
       null
     ]
+  },
+  "insight/insight-117": {
+    "scored_at": "2026-11-22",
+    "sources": [
+      {
+        "des_version": "3.7",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "هگز اباتمنت ایمپلنت درگیر نمی‌شود؛ خطای انتخاب سیستم در لابراتوار",
+          "authors": "دکتر فواد شهابیان",
+          "year": 2026,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "به همین دلیل اباتمنت داخل کانکشن می‌رفت ولی قفل نمی‌شد"
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": "",
+            "note": "متن هیچ نسبتی با شواهد منتشرشده برقرار نمی‌کند و به نبودِ شواهد هم اشاره ندارد"
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "وقتی پیچ اباتمنت بسته می‌شود ولی آنتی‌روتیشن درگیر نمی‌شود، اول باید بررسی کرد که قطعهٔ ساخته‌شده واقعاً با سیستم ایمپلنت سازگار است یا نه."
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "Insightها نکته‌های شخصی‌اند؛ مبنایشان علمی است اما به رفرنس مشخصی ارجاع نمی‌دهند، پس تجربه و تحلیل‌اند نه گزارش یک یافته‌ی پژوهشی.",
+            "note": "اعلانِ سطحِ بخش، از insight/index.html"
+          }
+        ],
+        "des_score": 15,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این نوشته از نوع Commentary است و امتیاز DES آن ۱۵ از ۱۰۰ در باند E است.",
+        "interpretation_fa": "این گزارش تجربهٔ بالینی یک کیس است. زنجیرهٔ علت و معلول خطا را روشن نشان می‌دهد و شرط کاربرد نکته را مشخص می‌کند، اما با شواهد منتشرشده ارتباطی برقرار نمی‌کند. ارزش عملی آن یک روش تشخیصی ساده است: مقایسهٔ مستقیم کانکشن اباتمنت لابراتوار با قطعه‌ای که روی همان ایمپلنت درست می‌نشیند. همچنین نشان می‌دهد نشاندن اباتمنت با راهنمای روکش می‌تواند درگیر نشدن هگز را پنهان کند."
+      }
+    ],
+    "fidelity": [
+      null
+    ]
   }
 }
