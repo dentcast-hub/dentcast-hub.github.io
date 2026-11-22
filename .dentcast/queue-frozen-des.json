@@ -613,5 +613,23 @@
       ],
       "dropped": []
     }
+  },
+  "insight/insight-116": {
+    "queue_ref": "queue/48-insight-zirconia-implant-crown-connector-fracture-parafunction",
+    "record_sha256": "176b6103387329d36042e75b6f7ddf90f9f5570b63ce0e7321b46e027998c9f4",
+    "installed_at": "2026-11-22",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }
