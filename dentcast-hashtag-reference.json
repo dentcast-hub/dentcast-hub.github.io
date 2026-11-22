@@ -263,7 +263,7 @@
     "#اینسایت"
    ],
    "co_tags": [],
-   "count": 132,
+   "count": 133,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -396,7 +396,8 @@
     "insight/insight-111",
     "insight/insight-112",
     "insight/insight-113",
-    "insight/insight-114"
+    "insight/insight-114",
+    "insight/insight-116"
    ]
   },
   {
@@ -4782,6 +4783,34 @@
    ]
   },
   {
+   "key": "زیرکونیا_مونولیتیک",
+   "tag": "#زیرکونیا_مونولیتیک",
+   "domain": null,
+   "words": 2,
+   "definition": "زیرکونیای یکپارچه بدون لایه‌ی پرسلن.",
+   "use_when": "مقاله رفتار مونولیتیک را بررسی کند.",
+   "aliases": [
+    "monolithic zirconia",
+    "مونولیتیک",
+    "full contour zirconia",
+    "زیرکونیا فول کانتور"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-123-4",
+    "episodes/episode-125-1",
+    "notecast/episode-18",
+    "insight/insight-42",
+    "dentai/dentai-26",
+    "insight/insight-62",
+    "chairside/chairside-36",
+    "sharehub/share-46",
+    "insight/insight-116"
+   ]
+  },
+  {
    "key": "طراحی_لبخند",
    "tag": "#طراحی_لبخند",
    "domain": null,
@@ -5091,6 +5120,35 @@
    ]
   },
   {
+   "key": "اکلوژن_ایمپلنت",
+   "tag": "#اکلوژن_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "طرح و تنظیمِ اکلوژن روی رستوریشن‌های ایمپلنتی (implant-protected occlusion) — ایمپلنت لیگامان پریودنتال و حسِ عمقیِ دندان را ندارد، پس شدتِ تماس، بارِ طرفی و طرحِ اکلوزال روی آن جداگانه تصمیم گرفته می‌شود؛ و نقشِ اکلوژن در عوارضِ مکانیکی (شل شدن و شکستِ پیچ، شکستِ اباتمنت و فیکسچر) و تحلیلِ استخوانِ اطرافِ ایمپلنت.",
+   "use_when": "مقاله بگوید اکلوژن روی ایمپلنت چطور طراحی یا تنظیم شود، یا اثرِ اکلوژن/اورلود را بر ایمپلنت تعیین تکلیف کند؛ نه هر مقاله‌ی ایمپلنتی که اکلوژن را فقط نام می‌برد.",
+   "aliases": [
+    "implant occlusion",
+    "implant protected occlusion",
+    "implant-protected occlusion",
+    "اکلوژن روی ایمپلنت",
+    "اکلوزن ایمپلنت",
+    "اکلوژن ایمپلنتی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-23",
+    "episodes/episode-60",
+    "notecast/episode-23",
+    "insight/insight-47",
+    "sharehub/share-28",
+    "insight/insight-104",
+    "insight/insight-114",
+    "insight/insight-116"
+   ]
+  },
+  {
    "key": "ایمپلنت_قدامی",
    "tag": "#ایمپلنت_قدامی",
    "domain": "clinical",
@@ -5270,33 +5328,6 @@
     "metanotes/meta-21",
     "chairside/chairside-49",
     "sharehub/share-51"
-   ]
-  },
-  {
-   "key": "زیرکونیا_مونولیتیک",
-   "tag": "#زیرکونیا_مونولیتیک",
-   "domain": null,
-   "words": 2,
-   "definition": "زیرکونیای یکپارچه بدون لایه‌ی پرسلن.",
-   "use_when": "مقاله رفتار مونولیتیک را بررسی کند.",
-   "aliases": [
-    "monolithic zirconia",
-    "مونولیتیک",
-    "full contour zirconia",
-    "زیرکونیا فول کانتور"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-123-4",
-    "episodes/episode-125-1",
-    "notecast/episode-18",
-    "insight/insight-42",
-    "dentai/dentai-26",
-    "insight/insight-62",
-    "chairside/chairside-36",
-    "sharehub/share-46"
    ]
   },
   {
@@ -5494,6 +5525,46 @@
    ]
   },
   {
+   "key": "کانین_رایز",
+   "tag": "#کانین_رایز",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Canine Guidance/Rise — جدا شدنِ دندان‌های خلفی در حرکتِ لترال به‌وسیله‌ی هدایتِ نیش.",
+   "use_when": "مقاله هدایتِ کانین را طرحِ اکلوزال انتخاب یا مقایسه کند.",
+   "aliases": [
+    "canine rise",
+    "canine guidance",
+    "کانین رایز",
+    "هدایت کانین",
+    "راهنمای نیش",
+    "canine guided",
+    "راهنمایی کانین",
+    "هدایت طرفی کانین",
+    "گایدنس کانین",
+    "کانین گاید",
+    "canine guide",
+    "canine protected occlusion",
+    "canine protection",
+    "کانین پروتکتد",
+    "کانین گایدنس"
+   ],
+   "variants": [
+    "#گایدنس_کانین"
+   ],
+   "co_tags": [],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-131",
+    "episodes/episode-132",
+    "dentcast-plus/video-6",
+    "insight/insight-37",
+    "chairside/chairside-15",
+    "sharehub/share-6",
+    "insight/insight-87",
+    "insight/insight-116"
+   ]
+  },
+  {
    "key": "گروپ_فانکشن",
    "tag": "#گروپ_فانکشن",
    "domain": "clinical",
@@ -5584,34 +5655,6 @@
     "insight/insight-108",
     "insight/insight-113",
     "sharehub/share-55"
-   ]
-  },
-  {
-   "key": "اکلوژن_ایمپلنت",
-   "tag": "#اکلوژن_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "طرح و تنظیمِ اکلوژن روی رستوریشن‌های ایمپلنتی (implant-protected occlusion) — ایمپلنت لیگامان پریودنتال و حسِ عمقیِ دندان را ندارد، پس شدتِ تماس، بارِ طرفی و طرحِ اکلوزال روی آن جداگانه تصمیم گرفته می‌شود؛ و نقشِ اکلوژن در عوارضِ مکانیکی (شل شدن و شکستِ پیچ، شکستِ اباتمنت و فیکسچر) و تحلیلِ استخوانِ اطرافِ ایمپلنت.",
-   "use_when": "مقاله بگوید اکلوژن روی ایمپلنت چطور طراحی یا تنظیم شود، یا اثرِ اکلوژن/اورلود را بر ایمپلنت تعیین تکلیف کند؛ نه هر مقاله‌ی ایمپلنتی که اکلوژن را فقط نام می‌برد.",
-   "aliases": [
-    "implant occlusion",
-    "implant protected occlusion",
-    "implant-protected occlusion",
-    "اکلوژن روی ایمپلنت",
-    "اکلوزن ایمپلنت",
-    "اکلوژن ایمپلنتی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-23",
-    "episodes/episode-60",
-    "notecast/episode-23",
-    "insight/insight-47",
-    "sharehub/share-28",
-    "insight/insight-104",
-    "insight/insight-114"
    ]
   },
   {
@@ -6113,42 +6156,41 @@
    ]
   },
   {
-   "key": "کانین_رایز",
-   "tag": "#کانین_رایز",
+   "key": "نسل_زیرکونیا",
+   "tag": "#نسل_زیرکونیا",
    "domain": "clinical",
    "words": 2,
-   "definition": "Canine Guidance/Rise — جدا شدنِ دندان‌های خلفی در حرکتِ لترال به‌وسیله‌ی هدایتِ نیش.",
-   "use_when": "مقاله هدایتِ کانین را طرحِ اکلوزال انتخاب یا مقایسه کند.",
+   "definition": "نسل‌های زیرکونیا (3Y تا 5Y) — سازشِ میانِ استحکام و شفافیت.",
+   "use_when": "مقاله نسل‌ها یا زیرکونیای ترنسلوسنت را مقایسه یا معرفی کند.",
    "aliases": [
-    "canine rise",
-    "canine guidance",
-    "کانین رایز",
-    "هدایت کانین",
-    "راهنمای نیش",
-    "canine guided",
-    "راهنمایی کانین",
-    "هدایت طرفی کانین",
-    "گایدنس کانین",
-    "کانین گاید",
-    "canine guide",
-    "canine protected occlusion",
-    "canine protection",
-    "کانین پروتکتد",
-    "کانین گایدنس"
+    "3Y",
+    "4Y",
+    "5Y",
+    "نسل زیرکونیا",
+    "زیرکونیا ترنسلوسنت",
+    "generation zirconia",
+    "زیرکونیای شفاف",
+    "زیرکونیا شفاف",
+    "translucent zirconia",
+    "zirconia generations",
+    "نسل های زیرکونیا",
+    "3y tzp",
+    "5y psz",
+    "4y psz",
+    "زیرکونیا ترانسلوسنت",
+    "high translucency zirconia"
    ],
-   "variants": [
-    "#گایدنس_کانین"
-   ],
+   "variants": [],
    "co_tags": [],
    "count": 7,
    "content_ids": [
-    "episodes/episode-131",
-    "episodes/episode-132",
-    "dentcast-plus/video-6",
-    "insight/insight-37",
-    "chairside/chairside-15",
-    "sharehub/share-6",
-    "insight/insight-87"
+    "episodes/episode-17",
+    "episodes/episode-18",
+    "episodes/episode-88",
+    "episodes/episode-107",
+    "insight/insight-27",
+    "sharehub/share-46",
+    "insight/insight-116"
    ]
   },
   {
@@ -6770,6 +6812,31 @@
    ]
   },
   {
+   "key": "عوارض_مکانیکی",
+   "tag": "#عوارض_مکانیکی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "شکستِ قطعات: پیچ، پرسلن، فریم.",
+   "use_when": "مقاله عارضه‌ی مکانیکی را پیش‌بینی یا مدیریت کند.",
+   "aliases": [
+    "mechanical complications",
+    "عارضه مکانیکی",
+    "شکست قطعات پروتز",
+    "کامپلیکیشن مکانیکی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "chairside/chairside-23",
+    "sharehub/share-11",
+    "sharehub/share-28",
+    "insight/insight-114",
+    "dentcast-plus/video-16",
+    "insight/insight-116"
+   ]
+  },
+  {
    "key": "قضاوت_بالینی",
    "tag": "#قضاوت_بالینی",
    "domain": "clinical",
@@ -6817,43 +6884,6 @@
     "episodes/episode-140",
     "episodes/episode-141",
     "episodes/episode-146",
-    "sharehub/share-46"
-   ]
-  },
-  {
-   "key": "نسل_زیرکونیا",
-   "tag": "#نسل_زیرکونیا",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نسل‌های زیرکونیا (3Y تا 5Y) — سازشِ میانِ استحکام و شفافیت.",
-   "use_when": "مقاله نسل‌ها یا زیرکونیای ترنسلوسنت را مقایسه یا معرفی کند.",
-   "aliases": [
-    "3Y",
-    "4Y",
-    "5Y",
-    "نسل زیرکونیا",
-    "زیرکونیا ترنسلوسنت",
-    "generation zirconia",
-    "زیرکونیای شفاف",
-    "زیرکونیا شفاف",
-    "translucent zirconia",
-    "zirconia generations",
-    "نسل های زیرکونیا",
-    "3y tzp",
-    "5y psz",
-    "4y psz",
-    "زیرکونیا ترانسلوسنت",
-    "high translucency zirconia"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-17",
-    "episodes/episode-18",
-    "episodes/episode-88",
-    "episodes/episode-107",
-    "insight/insight-27",
     "sharehub/share-46"
    ]
   },
@@ -7111,6 +7141,33 @@
     "notecast/episode-26",
     "sharehub/share-9",
     "sharehub/share-13"
+   ]
+  },
+  {
+   "key": "اسپلینت_ایمپلنت",
+   "tag": "#اسپلینت_ایمپلنت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "implant splinting",
+    "اسپلینت کردن ایمپلنت",
+    "splinted implants",
+    "splinting implants",
+    "اسپلینتینگ ایمپلنت",
+    "ایمپلنت اسپلینت شده",
+    "splinted implant crowns"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "episodes/episode-147-5",
+    "insight/insight-16",
+    "sharehub/share-28",
+    "sharehub/share-45",
+    "insight/insight-116"
    ]
   },
   {
@@ -7659,30 +7716,6 @@
     "dentai/dentai-17",
     "sharehub/share-22",
     "sharehub/share-23"
-   ]
-  },
-  {
-   "key": "عوارض_مکانیکی",
-   "tag": "#عوارض_مکانیکی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "شکستِ قطعات: پیچ، پرسلن، فریم.",
-   "use_when": "مقاله عارضه‌ی مکانیکی را پیش‌بینی یا مدیریت کند.",
-   "aliases": [
-    "mechanical complications",
-    "عارضه مکانیکی",
-    "شکست قطعات پروتز",
-    "کامپلیکیشن مکانیکی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "chairside/chairside-23",
-    "sharehub/share-11",
-    "sharehub/share-28",
-    "insight/insight-114",
-    "dentcast-plus/video-16"
    ]
   },
   {
@@ -8318,32 +8351,6 @@
     "insight/insight-29",
     "metanotes/meta-12",
     "episodes/episode-159"
-   ]
-  },
-  {
-   "key": "اسپلینت_ایمپلنت",
-   "tag": "#اسپلینت_ایمپلنت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "implant splinting",
-    "اسپلینت کردن ایمپلنت",
-    "splinted implants",
-    "splinting implants",
-    "اسپلینتینگ ایمپلنت",
-    "ایمپلنت اسپلینت شده",
-    "splinted implant crowns"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "episodes/episode-147-5",
-    "insight/insight-16",
-    "sharehub/share-28",
-    "sharehub/share-45"
    ]
   },
   {
@@ -9517,6 +9524,30 @@
     "chairside/chairside-15",
     "insight/insight-47",
     "insight/insight-87"
+   ]
+  },
+  {
+   "key": "پارافانکشن",
+   "tag": "#پارافانکشن",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "عملکردِ خارج از فانکشنِ طبیعی — کلنچ، بروکسیسم.",
+   "use_when": "مقاله نیروی پارافانکشنال را عاملِ تصمیم بداند.",
+   "aliases": [
+    "parafunction",
+    "پارافانکشنال",
+    "عادت پارافانکشنال",
+    "parafunctional habit",
+    "عادات پارافانکشنال"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "dentai/dentai-23",
+    "sharehub/share-11",
+    "sharehub/share-17",
+    "insight/insight-116"
    ]
   },
   {
@@ -11870,29 +11901,6 @@
     "sharehub/share-29",
     "insight/insight-91",
     "insight/insight-98"
-   ]
-  },
-  {
-   "key": "پارافانکشن",
-   "tag": "#پارافانکشن",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "عملکردِ خارج از فانکشنِ طبیعی — کلنچ، بروکسیسم.",
-   "use_when": "مقاله نیروی پارافانکشنال را عاملِ تصمیم بداند.",
-   "aliases": [
-    "parafunction",
-    "پارافانکشنال",
-    "عادت پارافانکشنال",
-    "parafunctional habit",
-    "عادات پارافانکشنال"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "dentai/dentai-23",
-    "sharehub/share-11",
-    "sharehub/share-17"
    ]
   },
   {
