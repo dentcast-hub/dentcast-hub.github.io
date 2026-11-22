@@ -1,0 +1,222 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "insight",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "شکست مکرر کانکتور روکش‌های ایمپلنتی زیرکونیا در بیمار پارافانکشنال",
+  "from": "02-عنوان-کپشن.md:2"
+ },
+ "caption_fa": {
+  "value": "روکش‌های ایمپلنتی متصل زیرکونیا در بیمار پارافانکشنال دو بار از کانکتور شکستند. مسئله نیروست؛ تنظیم اکلوژن، روکش‌های جدا از هم، زیرکونیای 3Y و کنترل نیرو باید با هم دیده شوند.",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "title_en": {
+  "value": "Repeated Connector Fracture of Zirconia Implant Crowns in a Parafunctional Patient",
+  "from": "06-انگلیسی.md:2"
+ },
+ "caption_en": {
+  "value": "Splinted zirconia implant crowns in a parafunctional patient fractured twice at the connector. The issue is force; occlusal adjustment, separate crowns, 3Y zirconia and force control have to be considered together.",
+  "from": "06-انگلیسی.md:5"
+ },
+ "body_en": {
+  "value": "## Question\n\nThe patient is a 65-year-old man with very strong masticatory muscles and signs of parafunction. His occlusion is group function and he has wear facets. All of his previous implant crowns chipped. The single-unit monolithic zirconia crown I made for implant 16 also fractured once.\n\n[[تصویر:01]]\n\nIn the upper left, I made the implant crowns splinted, in monolithic zirconia and screw-cemented. After eight months they fractured at the connector between 25 and 26. The second time I reduced the occlusion slightly, and the slight lack of seating from the first time was no longer present. Even so, after two months they fractured again at the same connector.\n\n[[تصویر:02]]\n\n[[تصویر:03]]\n\nThe blanks were from two different brands (XD Cera and Amann Girrbach). The patient does not wear the night guard I made for him.\n\nWhere is my mistake, and what should I do now?\n\n## Answer\n\nWhen a restoration fractures at the connector, the issue is force. A restoration does not fracture without force. The wear facets showed from the outset that the patient has parafunction, and in these patients restoration complications are more frequent. So the treatment plan has to be built on force control from the start.\n\n**Occlusal assessment:** Adjusting the occlusion is not just shortening the crowns. When the occlusion is group function, the slopes of the posterior cusps come into contact in lateral movements, and there may be an interference that was not seen on examination. Much of the problem probably comes from these interferences. Lateral movements should be checked carefully and the posterior cusp slopes flattened so that the implant crowns are taken out of group function. In a parafunctional patient, taking the posterior teeth out of lateral movements and shifting the guidance to the canine reduces muscle activity in lateral clenching. All the later changes work only if this occlusal adjustment has been done properly.\n\n**Crown design:** When fracture occurs at the connector, it is better to make the crowns separate from each other, because the connector is the weak point of the restoration and force transmitted to this area makes it fracture there. Wherever a single crown is possible, it is better to remove the splinting.\n\n**Zirconia type:** Instead of translucent zirconia it is better to use 3Y zirconia, because it is stronger. In areas at risk of fracture, the crown should be made monolithic (without layering). The drawback of 3Y is its color, and layering carries a risk of chipping. But in this area color matters only for 25, and the more distal crowns can be monolithic 3Y without concern.\n\n**Force control:** The patient does not wear the current guard, and it is better to consider a soft guard. Increasing strength and removing weak points must go together with force control. If the crowns are made in monolithic 3Y and separate from each other but force is not controlled, the force goes to the next weakest component of the system, and this time the screw may be what fails. Removing one weak point without controlling force only moves the site of failure.",
+  "from": "06-انگلیسی.md:8-36"
+ },
+ "images": {
+  "value": [
+   {
+    "n": "01",
+    "file": {
+     "value": "03-تصاویر/01-panoramic-before-treatment.webp",
+     "from": "03-تصاویر/تصاویر.md:12"
+    },
+    "alt_fa": {
+     "value": "رادیوگرافی پانورامیک قبل از شروع درمان",
+     "from": "03-تصاویر/تصاویر.md:14"
+    },
+    "alt_en": {
+     "value": "Panoramic radiograph before treatment began",
+     "from": "03-تصاویر/تصاویر.md:15"
+    },
+    "caption_fa": {
+     "value": "",
+     "from": "03-تصاویر/تصاویر.md:16"
+    },
+    "caption_en": {
+     "value": "",
+     "from": "03-تصاویر/تصاویر.md:16 (no caption)"
+    }
+   },
+   {
+    "n": "02",
+    "file": {
+     "value": "03-تصاویر/02-panoramic-after-treatment.webp",
+     "from": "03-تصاویر/تصاویر.md:21"
+    },
+    "alt_fa": {
+     "value": "رادیوگرافی پانورامیک بعد از درمان",
+     "from": "03-تصاویر/تصاویر.md:23"
+    },
+    "alt_en": {
+     "value": "Panoramic radiograph after treatment",
+     "from": "03-تصاویر/تصاویر.md:24"
+    },
+    "caption_fa": {
+     "value": "",
+     "from": "03-تصاویر/تصاویر.md:25"
+    },
+    "caption_en": {
+     "value": "",
+     "from": "03-تصاویر/تصاویر.md:25 (no caption)"
+    }
+   },
+   {
+    "n": "03",
+    "file": {
+     "value": "03-تصاویر/03-upper-left-splinted-implant-crowns.webp",
+     "from": "03-تصاویر/تصاویر.md:30"
+    },
+    "alt_fa": {
+     "value": "نمای داخل دهانی روکش‌های متصل سمت چپ بالا",
+     "from": "03-تصاویر/تصاویر.md:32"
+    },
+    "alt_en": {
+     "value": "Intraoral view of the splinted crowns in the upper left",
+     "from": "03-تصاویر/تصاویر.md:33"
+    },
+    "caption_fa": {
+     "value": "",
+     "from": "03-تصاویر/تصاویر.md:34"
+    },
+    "caption_en": {
+     "value": "",
+     "from": "03-تصاویر/تصاویر.md:34 (no caption)"
+    }
+   }
+  ],
+  "from": "03-تصاویر/تصاویر.md"
+ },
+ "credit": {
+  "value": {
+   "mode": "none"
+  },
+  "from": "04-منبع/منابع.md:1"
+ },
+ "catalog": {
+  "value": [],
+  "from": "04-منبع/منابع.md: no paper"
+ },
+ "hashtags": {
+  "value": [
+   "#نکته_کلینیکی",
+   "#اسپلینت_ایمپلنت",
+   "#پارافانکشن",
+   "#اکلوژن_ایمپلنت",
+   "#کانین_رایز",
+   "#نسل_زیرکونیا",
+   "#زیرکونیا_مونولیتیک",
+   "#عوارض_مکانیکی"
+  ],
+  "from": "07-ورودی‌ها.md:15"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "implantology",
+   "subtopic": "restoration-design",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:12"
+ },
+ "pulse": {
+  "value": {
+   "html": "یک اینسایت بالینی با عنوانِ «<a href=\"{url}\">شکست مکرر کانکتور روکش‌های ایمپلنتی زیرکونیا در بیمار پارافانکشنال</a>» منتشر شد",
+   "link_phrase": "شکست مکرر کانکتور روکش‌های ایمپلنتی زیرکونیا در بیمار پارافانکشنال"
+  },
+  "from": "07-ورودی‌ها.md:23"
+ },
+ "keywords": {
+  "value": [
+   "کانکتور",
+   "کلنچ طرفی",
+   "شیب کاسپ",
+   "تک‌روکش",
+   "گروپ فانکشن",
+   "فست‌های سایشی",
+   "اسکروسمنتد",
+   "کنترل نیرو"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "روکش‌های ایمپلنتی",
+    "href": "/glossary/implant-supported-crown.html",
+    "from": "11-لینک‌های-گلاسری.md:12"
+   },
+   {
+    "phrase": "گروپ فانکشن",
+    "href": "/glossary/group-function.html",
+    "from": "11-لینک‌های-گلاسری.md:13"
+   },
+   {
+    "phrase": "زیرکونیا",
+    "href": "/glossary/zirconia.html",
+    "from": "11-لینک‌های-گلاسری.md:14"
+   },
+   {
+    "phrase": "نایت گارد (لنگر روی کل واژهٔ «نایت گاردی»)",
+    "href": "/glossary/occlusal-splint.html",
+    "from": "11-لینک‌های-گلاسری.md:15"
+   },
+   {
+    "phrase": "گاید به کانین",
+    "href": "/glossary/canine-guidance.html",
+    "from": "11-لینک‌های-گلاسری.md:16"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:8"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "/sharehub/share-17.html",
+    "label": "شکست بریج زیرکونیا در بیمار بروکسر",
+    "from": "11-لینک‌های-گلاسری.md:31"
+   },
+   {
+    "href": "/sharehub/share-28.html",
+    "label": "اسپلینت یا جدا: روکش‌های ایمپلنت‌های مجاور",
+    "from": "11-لینک‌های-گلاسری.md:32"
+   },
+   {
+    "href": "/chairside/chairside-23.html",
+    "label": "شکست اباتمنت ایمپلنت از نیروهای پارافانکشنال",
+    "from": "11-لینک‌های-گلاسری.md:33"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:27"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
