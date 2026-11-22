@@ -1,0 +1,155 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "chairside",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "دنچر بالایی که موقع غذا خوردن از جا درمی‌آید",
+  "from": "02-عنوان-کپشن.md:2"
+ },
+ "caption_fa": {
+  "value": "بیمار با دنچر کامل بالا و روکش‌های قدام پایین از جا افتادن دنچر موقع غذا خوردن شکایت دارد. در معاینه، تماس پیش‌رس و تماسی که فقط در قدام است دیده شد.",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "title_en": {
+  "value": "An upper denture that comes loose while eating",
+  "from": "06-انگلیسی.md:2"
+ },
+ "caption_en": {
+  "value": "A patient with a maxillary complete denture and crowned mandibular anterior teeth complains that the denture dislodges while eating. On examination, a premature contact and contact confined to the anterior region were found.",
+  "from": "06-انگلیسی.md:5"
+ },
+ "body_en": {
+  "value": "[[تصویر:01]]\n\nThe patient had a complete denture in the maxilla, and in the mandible the teeth up to tooth 4 had been crowned. Their main complaint was that the upper denture is not stable while eating and comes out of place, even when they use denture adhesive.\n\nOn examination I saw that when the jaw is placed in the correct relationship, there is a premature contact, and the teeth contact only in the anterior region. In addition, anteriorly, the crowns of the natural lower teeth sit opposite the upper denture. All of these work against the stability of the upper denture.\n\nI explained to the patient that if I also just make a new denture for the upper jaw, the same problem will most likely recur. And if we place implants in the upper jaw and make an overdenture, the denture will no longer move, but instead we will probably face chipping of the prosthetic teeth. So the solution is not to repeat the same previous treatment; both jaws need to be treated at the same time to achieve better support.\n\nThe patient had diabetes and also a history of major heart surgery, so implants were removed from the treatment plan. The final treatment plan became removable prostheses for both jaws, together with occlusal correction and correction of the form of the mandibular anterior crowns.",
+  "from": "06-انگلیسی.md:8-16"
+ },
+ "images": {
+  "value": [
+   {
+    "n": "01",
+    "file": {
+     "value": "03-تصاویر/01-upper-denture-anterior-crowns-frontal.webp",
+     "from": "03-تصاویر/01-upper-denture-anterior-crowns-frontal.webp"
+    },
+    "alt_fa": {
+     "value": "نمای روبه‌رو: دنچر کامل بالا در مقابل روکش‌های قدام پایین",
+     "from": "03-تصاویر/تصاویر.md:3"
+    },
+    "caption_fa": {
+     "value": "تصویر ۱. نمای روبه‌رو: دنچر کامل بالا در مقابل روکش‌های قدام پایین.",
+     "from": "03-تصاویر/تصاویر.md:3"
+    },
+    "alt_en": {
+     "value": "Frontal view: the maxillary complete denture opposing the mandibular anterior crowns",
+     "from": "03-تصاویر/تصاویر.md:3"
+    },
+    "caption_en": {
+     "value": "Fig. 1. Frontal view: the maxillary complete denture opposing the mandibular anterior crowns.",
+     "from": "03-تصاویر/تصاویر.md:3"
+    }
+   }
+  ],
+  "from": "03-تصاویر/تصاویر.md"
+ },
+ "credit": {
+  "value": {
+   "mode": "none"
+  },
+  "from": "04-منبع/منابع.md:1"
+ },
+ "catalog": {
+  "value": [],
+  "from": "04-منبع/منابع.md: no paper"
+ },
+ "hashtags": {
+  "value": [
+   "#ویزیت",
+   "#کیس_بالینی",
+   "#پروتز_متحرک",
+   "#تماس_زودرس",
+   "#شکایت_اصلی",
+   "#طرح_درمان",
+   "#اکلوژن"
+  ],
+  "from": "07-ورودی‌ها.md:19"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "removable-pros",
+   "subtopic": "complete-dentures",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:13"
+ },
+ "pulse": {
+  "value": {
+   "html": "یک ویزیت با عنوانِ «<a href=\"{url}\">دنچر بالایی که موقع غذا خوردن از جا درمی‌آید</a>» منتشر شد.",
+   "link_phrase": "دنچر بالایی که موقع غذا خوردن از جا درمی‌آید"
+  },
+  "from": "07-ورودی‌ها.md:17-18"
+ },
+ "keywords": {
+  "value": [
+   "دنچر کامل بالا",
+   "ثبات دنچر بالا",
+   "تماس پیش‌رس",
+   "تماس فقط در ناحیه‌ی قدام",
+   "چسب دنچر",
+   "پریدگی دندان‌های پروتز",
+   "درمان هم‌زمان هر دو فک",
+   "اصلاح فرم روکش‌های قدام پایین"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "اوردنچر",
+    "href": "/glossary/overdenture.html",
+    "from": "11-لینک‌های-گلاسری.md:13"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:7"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "/dentai/dentai-35.html",
+    "label": "کامبینیشن سندروم",
+    "from": "11-لینک‌های-گلاسری.md:25"
+   },
+   {
+    "href": "/chairside/chairside-11.html",
+    "label": "اکلوژن خلفی و اوردنچر فک بالا",
+    "from": "11-لینک‌های-گلاسری.md:26"
+   },
+   {
+    "href": "/chairside/chairside-34.html",
+    "label": "آیا درمان شکایت اصلی را بهتر می‌کند؟",
+    "from": "11-لینک‌های-گلاسری.md:27"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:23"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
