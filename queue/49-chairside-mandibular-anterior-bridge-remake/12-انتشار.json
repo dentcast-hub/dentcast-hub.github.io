@@ -1,0 +1,201 @@
+{
+  "schema": "dentcast-queue-manifest/1",
+  "category": {
+    "value": "chairside",
+    "from": "folder name"
+  },
+  "title_fa": {
+    "value": "بیمار با بریج قدامی فک پایین؛ تصمیم برای ساخت مجدد",
+    "from": "02-عنوان-کپشن.md:2"
+  },
+  "caption_fa": {
+    "value": "بیمار برای ساخت مجدد بریج قدامی فک پایین برگشته و شکایت اصلی‌اش زیبایی است. در معاینه، فرم حجیم لبه‌ی انسیزال روکش‌های پایه سؤالی درباره‌ی ارتفاع خود کورها پیش می‌کشد.",
+    "from": "02-عنوان-کپشن.md:5"
+  },
+  "title_en": {
+    "value": "Patient with a mandibular anterior bridge: the decision to remake it",
+    "from": "06-انگلیسی.md:2"
+  },
+  "caption_en": {
+    "value": "The patient has come back to have a mandibular anterior bridge remade, and their main complaint is esthetics. On examination, the bulky form of the abutment crowns at the incisal edge raises a question about the height of the cores themselves.",
+    "from": "06-انگلیسی.md:5"
+  },
+  "body_en": {
+    "value": "## Patient history and complaint\n\nI had previously placed the posts and cores of the abutment teeth for this patient myself, but the crowns and the bridge were made at another practice. Now the patient has come back, saying they are not satisfied with the current work and want a new bridge made for them. When I asked what exactly bothers them, it became clear that their main complaint is esthetics.\n\n## Examination and diagnosis\n\nWhen a patient comes in, I usually see the problems of the work and their solutions during the examination. Even so, I also ask the patient what they do not like, to understand their point of view and to compare their expectation with what is possible in practice. For example, if the patient's complaint is the gingival area under the pontic, even if we remake the bridge, we may not be able to fully meet that wish.\n\nOn examining this bridge, the form of the crowns and the pontic is not appropriate. The bridge retainers are incomplete, and in some areas the crown margins also continue over the gingiva, like a ridge-lap pontic that sits on the gingiva but is hollow underneath. It appears that the impression was taken without retraction cord and the work was made in the laboratory from that same impression.\n\n[[تصویر:01]]\n\n[[تصویر:02]]\n\nAnother point I noticed in the examination concerns the cores themselves. At the incisal edge of the abutment crowns, the crown form is bulky and inappropriate. This usually means that the ceramic has been forced out of the natural tooth form to cover a long core. To make sure, I check the ceramic thickness in this area. If the ceramic thickness is normal, the problem lies in the core height, and the core was longer than necessary.\n\n[[تصویر:03]]\n\n## Treatment plan\n\nI use the previous bridge as a guide. Given the finding above, I shorten the cores before the impression so that there is enough space for the ceramic and the technician can make the crowns with the right form.\n\n## Cost considerations\n\nThe patient's bill also included the cost of a provisional crown, which I removed. The previous bridge both helped with the diagnosis and, between appointments, keeps the abutment teeth from shifting. So there is no need for a separate provisional crown, and there is no reason to impose an extra cost on the patient.",
+    "from": "06-انگلیسی.md:8-32"
+  },
+  "images": {
+    "value": [
+      {
+        "n": "01",
+        "file": {
+          "value": "03-تصاویر/01-current-bridge-in-mouth.webp",
+          "from": "03-تصاویر/01-current-bridge-in-mouth.webp"
+        },
+        "alt_fa": {
+          "value": "بریج قدامی فک پایین در دهان بیمار",
+          "from": "03-تصاویر/تصاویر.md:3"
+        },
+        "caption_fa": {
+          "value": "تصویر ۱. بریج فعلی بیمار در دهان.",
+          "from": "03-تصاویر/تصاویر.md:3"
+        },
+        "alt_en": {
+          "value": "Mandibular anterior bridge in the patient's mouth",
+          "from": "03-تصاویر/تصاویر.md:3"
+        },
+        "caption_en": {
+          "value": "Fig. 1. The patient's current bridge in the mouth.",
+          "from": "03-تصاویر/تصاویر.md:3"
+        }
+      },
+      {
+        "n": "02",
+        "file": {
+          "value": "03-تصاویر/02-previous-bridge-out-of-mouth.webp",
+          "from": "03-تصاویر/02-previous-bridge-out-of-mouth.webp"
+        },
+        "alt_fa": {
+          "value": "بریج قبلی خارج از دهان",
+          "from": "03-تصاویر/تصاویر.md:4"
+        },
+        "caption_fa": {
+          "value": "تصویر ۲. بریج قبلی خارج از دهان: فرم روکش‌ها ناقص است و لبه‌ی آن‌ها تا هر جا که لثه کنار زده نشده بود، امتداد پیدا کرده است.",
+          "from": "03-تصاویر/تصاویر.md:4"
+        },
+        "alt_en": {
+          "value": "The previous bridge out of the mouth",
+          "from": "03-تصاویر/تصاویر.md:4"
+        },
+        "caption_en": {
+          "value": "Fig. 2. The previous bridge out of the mouth: the form of the crowns is incomplete, and their margins extend wherever the gingiva had not been retracted.",
+          "from": "03-تصاویر/تصاویر.md:4"
+        }
+      },
+      {
+        "n": "03",
+        "file": {
+          "value": "03-تصاویر/03-bulky-incisal-abutment-crowns.webp",
+          "from": "03-تصاویر/03-bulky-incisal-abutment-crowns.webp"
+        },
+        "alt_fa": {
+          "value": "نواحی انسیزال روکش‌های پایه که با دایره مشخص شده‌اند",
+          "from": "03-تصاویر/تصاویر.md:5"
+        },
+        "caption_fa": {
+          "value": "تصویر ۳. نواحی مشخص‌شده: فرم حجیم روکش‌های پایه در لبه‌ی انسیزال.",
+          "from": "03-تصاویر/تصاویر.md:5"
+        },
+        "alt_en": {
+          "value": "Incisal areas of the abutment crowns marked with circles",
+          "from": "03-تصاویر/تصاویر.md:5"
+        },
+        "caption_en": {
+          "value": "Fig. 3. Marked areas: the bulky form of the abutment crowns at the incisal edge.",
+          "from": "03-تصاویر/تصاویر.md:5"
+        }
+      }
+    ],
+    "from": "03-تصاویر/تصاویر.md"
+  },
+  "credit": {
+    "value": {
+      "mode": "none"
+    },
+    "from": "04-منبع/منابع.md:1"
+  },
+  "catalog": {
+    "value": [],
+    "from": "04-منبع/منابع.md: no paper"
+  },
+  "hashtags": {
+    "value": [
+      "#ویزیت",
+      "#کیس_بالینی",
+      "#بریج",
+      "#تکرار_کار",
+      "#کانتور_ترمیم",
+      "#فضای_رستوریتیو",
+      "#مارجین_روکش",
+      "#طرح_درمان"
+    ],
+    "from": "07-ورودی‌ها.md:19"
+  },
+  "mint": {
+    "value": [],
+    "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+  },
+  "pillar": {
+    "value": {
+      "primary": "fixed-pros",
+      "subtopic": "failures",
+      "secondary": []
+    },
+    "from": "07-ورودی‌ها.md:13"
+  },
+  "pulse": {
+    "value": {
+      "html": "یک ویزیت با عنوانِ «<a href=\"{url}\">بیمار با بریج قدامی فک پایین؛ تصمیم برای ساخت مجدد</a>» منتشر شد.",
+      "link_phrase": "بیمار با بریج قدامی فک پایین؛ تصمیم برای ساخت مجدد"
+    },
+    "from": "07-ورودی‌ها.md:17-18"
+  },
+  "keywords": {
+    "value": [
+      "ساخت مجدد بریج",
+      "ریتینرهای بریج ناقص",
+      "قالب‌گیری بدون نخ‌گذاری",
+      "ارتفاع کور",
+      "ضخامت سرامیک",
+      "لبه‌ی انسیزال روکش‌های پایه",
+      "هزینه‌ی روکش موقت"
+    ],
+    "from": "09-کلیدواژه‌ها.md"
+  },
+  "links_48": {
+    "value": [
+      {
+        "phrase": "پست و کور",
+        "href": "/glossary/post-and-core.html",
+        "from": "11-لینک‌های-گلاسری.md:13"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md:7"
+  },
+  "backlinks_47": {
+    "value": [],
+    "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+  },
+  "explore_49": {
+    "value": [
+      {
+        "href": "/chairside/chairside-34.html",
+        "label": "شکایت اصلی بیمار و تعویض بریج",
+        "from": "11-لینک‌های-گلاسری.md:24"
+      },
+      {
+        "href": "/insight/insight-66.html",
+        "label": "کلیرنس در ساخت کور قدامی",
+        "from": "11-لینک‌های-گلاسری.md:25"
+      },
+      {
+        "href": "/insight/insight-81.html",
+        "label": "روکش قدیمی به‌جای روکش موقت",
+        "from": "11-لینک‌های-گلاسری.md:26"
+      }
+    ],
+    "from": "11-لینک‌های-گلاسری.md:22"
+  },
+  "pathway": {
+    "value": null,
+    "from": "default: mechanical pathway rule"
+  },
+  "author": {
+    "value": null,
+    "from": "not in the legacy contract"
+  },
+  "legacy_review": {
+    "value": null,
+    "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+  }
+}
