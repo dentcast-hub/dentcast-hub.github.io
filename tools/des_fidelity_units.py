@@ -58,6 +58,14 @@ before) the assignment is completed on the caller's side:
     a source text that grew, when every non-MATCHES unit was re-checked
     (rule 14).
 
+The presentation layer is outside the units (module 03 «Structure, chips and
+callout boxes», module 08 Part 2b): an element carrying `data-dc-presentation`
+(an added section heading, a bold sub-label, a status chip, a callout-box
+label) is removed before the cut, so adding, editing or removing one moves no
+unit id, no claim_quote and no verdict. Unmarked headings and labels stay
+units. `tools/presentation_diff.py` proves that a later change to a page or a
+queue text touched only that layer.
+
 A core audio episode (`episodes/…`) gets DES only, never a FIDELITY call
 (founder, 1405/08/04): its page is a caption, a player and labels, not a
 write-up of the paper. The tool says so and builds nothing for it.
@@ -334,7 +342,23 @@ def split_page(content_id, sources, legacy=None, fidelity=STORED):
     passes the frozen one); `legacy=True`/`False` forces a cut."""
     if legacy is None:
         return split_for(content_id, sources, stored_fidelity(content_id) if fidelity is STORED else fidelity)
-    doc = (ROOT / f"{content_id}.html").read_text(encoding="utf-8")
+    return split_html((ROOT / f"{content_id}.html").read_text(encoding="utf-8"), sources, legacy)
+
+
+def split_html(doc, sources, legacy=False):
+    """split_page's cut over a page given as text (the retrofit check,
+    tools/presentation_diff.py, cuts an old and a new version with it).
+
+    The presentation layer is not page text (module 08 Part 2b): an element
+    carrying `data-dc-presentation` — an added section heading, a sub-label, a
+    status chip, a callout-box label — is taken out before the cut
+    (verify_publish.article_region), so it takes no id and reaches no call. An
+    unmarked heading or label is a unit exactly as before. A malformed marker
+    is refused rather than guessed at."""
+    bad = vp.presentation_problems(doc)
+    if bad:
+        sys.exit("presentation layer: " + "; ".join(bad) + " — fix the marker (module 03 «Structure, chips and "
+                 "callout boxes»); the units are not cut from a page whose marked elements cannot be told apart")
     h1 = re.search(r"<h1[^>]*>(.*?)</h1>", doc, re.S)
     reg = vp.article_region(doc)
     reg = re.sub(r"(?is)<h[1-6]\b[^>]*>(.*?)</h[1-6]>",
@@ -1537,6 +1561,10 @@ def main():
                          ensure_ascii=False, indent=1))
         return
     print(f"{a.content_id}: {len(units)} units, scope {mode}")
+    _doc = (ROOT / f"{a.content_id}.html").read_text(encoding="utf-8")
+    if vp.PRESENTATION_ATTR in _doc:
+        print(f"  presentation layer: {len(vp.presentation_spans(vp.article_region(_doc, presentation=True)))} "
+              "marked element(s), outside the units")
     left = unswept(a.content_id, units, sources, mode, plan)
     if left:
         print(f"  orphan sweep owed before the build: {len(left)} body sentence(s) reach no source {left}")

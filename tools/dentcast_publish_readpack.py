@@ -27,14 +27,14 @@ MODULES = WORKFLOW + 'modules/'
 # occurs exactly once and that no skipped section changed its applicability; the
 # reason for each re-pin belongs in the commit message, not here.
 PINNED_BLOBS = {
-    '03-litecast-and-page.md': 'aa71e6b3b980e68115188987732ab530274910f7',
+    '03-litecast-and-page.md': '9861f997cdc3d2bee79f631e15c06f27b9df5137',
     '04-taxonomy-and-navigation.md': '46bc329065fdaa0d1677b494ecc5b7cdf7359872',
     '05-semantic-linking.md': '6ba95d74e28f1e423e034d31327d6c9351f85c20',
     '06-paper-ingestion.md': '07d4320fb9935d4752e38bc8b485009c6e86caf5',
-    '08-des-fidelity.md': '30fb30e1f0f4134cac151d956a96aa3d761ef402',
+    '08-des-fidelity.md': '9b79d9fbc1cda2d4183240f896e76b6e275fce40',
     '09-challenge.md': '3ac5856ddb021aa9f36cbfb35d6363531ae038c8',
     '11-build-and-version.md': 'f74bf83102c57da9743127623191e686474bf74d',
-    '12-english-notify-verify.md': 'ef029c3da2565788090c80989e4d313cbef87cf9',
+    '12-english-notify-verify.md': 'fc44e5550513e85da51a6ef07bccdd6327fc93c5',
 }
 
 REQUIRED = [
@@ -299,7 +299,7 @@ QUEUE_PREP = (
     # The «Opening paragraph before any list» block has several paragraphs,
     # including the bold-lead «This lead paragraph is authored text» standing-acceptance
     # rule, and ends with the «To check a page you just built:» check. The only
-    # bold-lead block after it is «Callout boxes», which preparation also needs
+    # bold-lead block after it is «Structure, chips and callout boxes», which preparation also needs
     # (publish-queue.md, «فهرست خواندن»), so its end marker is the next Markdown
     # heading (today: none, i.e. end of file). The check sentence must sit inside
     # the slice, so a truncated block blocks instead of passing.

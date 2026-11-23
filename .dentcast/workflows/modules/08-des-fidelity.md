@@ -114,7 +114,9 @@ from the paper's title, or from what you happen to know about the study.
 
 **COMMENTARY basket:** `source_text` is the page's **own body text** — the متن of
 record from Question 3.5 (with its recorded rewrites, and the lead paragraph
-when module 03 added one), exactly as it will ship. `text_basis` is `FULL_TEXT`. No DOI, no lookup, done.
+when module 03 added one), exactly as it will ship and without the presentation
+layer (below, Part 2b): `python3 tools/presentation_diff.py --text-of-record
+<page.html | 01-متن.md>` prints it. `text_basis` is `FULL_TEXT`. No DOI, no lookup, done.
 
 <!-- des-record-guard:v1 -->
 **RESEARCH basket, first: one DES record per paper — look the DOI up before scoring.**
@@ -435,6 +437,35 @@ on the earlier cut keeps it (`split_for`), as it keeps its `source_conclusion`:
 no stored id moves. Segmentation and attribution stay out
 of the model's hands because they are the largest sources of run-to-run
 disagreement.
+
+<!-- presentation-layer:v1 -->
+**The presentation layer is not page text.** An element that carries
+`data-dc-presentation` (module 03, «Structure, chips and callout boxes»: an
+added section heading, a bold sub-label, a status chip, a callout-box label,
+the number added to an author's heading) is removed before the cut, in the
+tool and in every reader of the page text (`article_region()`: Phase F's
+quote haystacks, the COMMENTARY `source_text`, the queue's text check). It
+takes no unit id, reaches no call, and is in no `claim_quote`,
+`evidence_quote`, count or score. The «derivative text» of the spec's appendix
+rule 7 is the page without this layer; that is the caller's half of the rule
+and is stated here. Only a marked element is skipped: a heading or label
+without the marker is a unit exactly as before, so no record made before the
+layer existed moves. A malformed marker (on another tag, never closed, around a
+link, image or list) is refused by the tool and fails Phase F.
+
+So a change that touches only this layer (elements added, edited or removed; a
+run of the author's sentences wrapped in place in a callout box) changes no
+id, quote or verdict, and the stored record stays valid: no re-check, no
+`--carry`, no model call. That it touched nothing else is proved, never
+assumed: `python3 tools/presentation_diff.py` (module 03) compares the old
+version with the new one and passes only when the units are the same under
+both cuts, the text of record is identical codepoint for codepoint and, on a
+page with two or more cited sources, the paragraphs are the same (a sentence
+takes its source from its paragraph, so a box wraps whole paragraphs there and
+the recomputed plan must come out unchanged). Otherwise it names the first
+differing sentence, and that change is a text change: Part 3b's re-check for an
+edited sentence, the full step for anything else.
+<!-- /presentation-layer:v1 -->
 
 **The output** is the spec's F5 object. Validate it in Part 3(5), then store it
 in Part 4.

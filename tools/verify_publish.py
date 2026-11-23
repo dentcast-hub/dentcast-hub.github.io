@@ -203,8 +203,104 @@ def related_section(doc):
     return re.search(r'<div class="dc-related-section">.*?</div>\s*</div>', doc, re.S)
 
 
-def article_region(doc):
-    """The authored body: between the <h1> and the related/author blocks."""
+# The presentation layer (module 03 «Structure, chips and callout boxes»; module
+# 08 Part 2b). An element carrying `data-dc-presentation` is structure the agent
+# added for the reader — a numbered section heading, a bold sub-label, a status
+# chip, a callout-box label. It is not the author's text: every reader of the
+# page text for DES / Fidelity / the queue's text check takes it out first, so
+# adding, editing or removing such an element never moves a unit, a quote or a
+# verdict. Only MARKED elements are skipped: an unmarked heading or label is
+# page text exactly as before (every page published before the layer existed).
+PRESENTATION_ATTR = "data-dc-presentation"
+PRESENTATION_TAGS = ("h2", "h3", "h4", "h5", "h6", "p", "span")
+_TAG_OPEN = re.compile(r"<([A-Za-z][A-Za-z0-9]*)\b((?:[^>\"']|\"[^\"]*\"|'[^']*')*)>")
+_ATTR_VALUE = re.compile(r"\"[^\"]*\"|'[^']*'")
+_PRES_NAME = re.compile(r"(?<![\w-])" + PRESENTATION_ATTR + r"(?![\w-])")
+_PRES_NO_INSIDE = re.compile(r"(?i)<(a|img|figure|figcaption|li|ul|ol|table|blockquote|div|h1)\b")
+
+
+def presentation_spans(fragment):
+    """[(start, end, tag, problem|None)] for every outermost element of
+    `fragment` that carries the marker, in order. `end` is past the closing tag
+    (or the open tag itself when the element never closes — a problem)."""
+    spans, pos = [], 0
+    for m in _TAG_OPEN.finditer(fragment):
+        if m.start() < pos or not _PRES_NAME.search(_ATTR_VALUE.sub('""', m.group(2))):
+            continue
+        tag = m.group(1).lower()
+        depth, end = 1, None
+        for t in re.finditer(r"(?i)<(/?)%s\b[^>]*>" % re.escape(tag), fragment[m.end():]):
+            depth += -1 if t.group(1) else 1
+            if depth == 0:
+                end = m.end() + t.end()
+                break
+        problem = None
+        if end is None:
+            problem, end = f"<{tag} {PRESENTATION_ATTR}> never closes", m.end()
+        elif tag not in PRESENTATION_TAGS:
+            problem = f"<{tag}> cannot carry {PRESENTATION_ATTR} (allowed: {', '.join(PRESENTATION_TAGS)})"
+        else:
+            inner = fragment[m.end():end]
+            bad = _PRES_NO_INSIDE.search(inner)
+            if bad:
+                problem = f"<{tag} {PRESENTATION_ATTR}> holds a <{bad.group(1).lower()}>: a marked element is a label, never a link, image, list or box"
+        spans.append((m.start(), end, tag, problem))
+        pos = end
+    return spans
+
+
+def strip_presentation(fragment):
+    """`fragment` without its presentation-layer elements (tag and content).
+    A fragment with no marker is returned as it is, byte for byte. Raises
+    ValueError on a malformed marker (presentation_problems names it)."""
+    if PRESENTATION_ATTR not in fragment:
+        return fragment
+    out, pos = [], 0
+    for start, end, _tag, problem in presentation_spans(fragment):
+        if problem:
+            raise ValueError(problem)
+        # Taking an element out must read as if it had never been there, so
+        # the whitespace that only set it apart goes with it: after an opening
+        # or closing tag («<li><span …>مجاز</span> متن») the space behind it,
+        # before a tag the space in front of it, between two words one of the
+        # two. Phase F searches quotes in the text with tags dropped and no
+        # space put in their place; a space left behind would split «الف.ب».
+        before = fragment[pos:start]
+        lead = before.rstrip()
+        gap = len(fragment) - len(fragment[end:].lstrip())  # index of the first non-space after the element
+        opens = not lead or lead.endswith(">")
+        closes = gap == len(fragment) or fragment[gap] == "<"
+        if opens:
+            end = gap
+        elif closes:
+            before = lead
+        elif len(before) > len(lead) and gap > end:
+            end = gap
+        out.append(before)
+        pos = end
+    out.append(fragment[pos:])
+    return "".join(out)
+
+
+def presentation_problems(doc):
+    """Why this page's presentation-layer markers cannot be trusted ([] when
+    they can, and always [] for a page with no marker)."""
+    if PRESENTATION_ATTR not in doc:
+        return []
+    body = strip_code(doc)
+    out = [p for _s, _e, _t, p in presentation_spans(body) if p]
+    h1 = re.search(r"<h1\b([^>]*)>", body)
+    if h1 and _PRES_NAME.search(h1.group(1)):
+        out.append(f"the <h1> carries {PRESENTATION_ATTR}: the title is page text")
+    return out
+
+
+def article_region(doc, presentation=False):
+    """The authored body: between the <h1> and the related/author blocks,
+    without the presentation layer (`presentation=True` keeps it, for the
+    checks that read markup rather than the author's text). A malformed marker
+    is left in place, so its words stay page text; presentation_problems()
+    reports it and the units tool refuses the page."""
     body = strip_code(doc)
     start = body.find("</h1>")
     if start == -1:
@@ -214,7 +310,13 @@ def article_region(doc):
         i = body.find(marker, start)
         if i != -1:
             end = min(end, i)
-    return body[start:end]
+    region = body[start:end]
+    if presentation or PRESENTATION_ATTR not in region:
+        return region
+    try:
+        return strip_presentation(region)
+    except ValueError:
+        return region
 
 
 def content_version():
@@ -1511,6 +1613,14 @@ def _verify_core(content_id, rep, expect_title=None, expect_caption=None, sweep=
               "prose paragraph precedes the first list (Spot card has an interior boundary)",
               "body opens with a list — the in-article Spot card has nowhere to land",
               "step 2 — write a real 2-4 sentence lead before the first <ul>")
+    if PRESENTATION_ATTR in doc:
+        _pres = presentation_problems(doc)
+        rep.check(not _pres, "2 body",
+                  f"presentation layer is well-formed ({len(presentation_spans(article_region(doc, presentation=True)))} "
+                  "marked element(s), outside the DES/Fidelity text)",
+                  "presentation-layer marker is malformed: " + "; ".join(_pres),
+                  f"module 03 «Structure, chips and callout boxes» — {PRESENTATION_ATTR} sits only on an added "
+                  "heading, sub-label, chip or box label, and the element closes")
 
     # ---------------- series / parent navigation (steps 4.5, 4.6) ----------------
     if etype == "notecast":
