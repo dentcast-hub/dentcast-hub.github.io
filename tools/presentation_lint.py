@@ -39,7 +39,7 @@ CONCLUSION = re.compile(r"جمع[‌ ]?بندی|نتیجه|خلاصه|حرف آ�
 BOTTOM_LABELS = {"نتیجه", "Bottom line"}
 AUTHOR_LABEL = re.compile(r"^\W{0,3}([^.؟?!:：\n]{2,60})[:：]")
 LABEL_WORD = re.compile(r"نکته|نتیجه|خلاصه|جمع[\u200c ]?بندی|پیام|هشدار|توصیه|راه[\u200c ]?حل|tip|note|takeaway|summary|message|"
-                        r"warning|point|conclusion|solution|bottom line|in short", re.I)
+                        r"warning|point|conclusion|solution|bottom line|in short|مرز|محدودیت|احتیاط|خوانش|درس|حرف آخر|limit|caveat|caution|reading|lesson|take[- ]?home|final word", re.I)
 
 
 def author_label(body):
@@ -160,7 +160,11 @@ def lint(doc, mirror_doc=None, source_doc=None):
             out.append(("BOX_EMPTY", "a box wraps none of the author's words"))
             continue
         above = prev_block(b)
-        owns_label = author_label(body) is not None
+        lead = next((squash(k.text()) for k in b.walk() if k.tag in ("strong", "b") and not k.marked
+                     and not (k.parent is not None and k.parent.marked)), "")
+        # the author's own label: «Clinical Tip: …», or a bold lead that names it («**نکته‌ی کلینیکی**»)
+        owns_label = author_label(body) is not None or bool(
+            lead and body.startswith(lead) and len(lead.split()) <= 6 and LABEL_WORD.search(lead))
         if label is not None:
             text = squash(label.text())
             if text in BOTTOM_LABELS and above is not None and above.tag in HEADINGS and CONCLUSION.search(above.text()):
