@@ -370,6 +370,17 @@ class RenderFixesTests(unittest.TestCase):
         md2 = "| A | B |\n|---|---|\n| 1 | 2 |"
         self.assertEqual(qa.blocks(md2), [("table", [["A", "B"], ["1", "2"]])])
 
+    def test_labelled_quote_block_is_a_callout_box_in_every_renderer(self):
+        md = "متن.\n\n> **نتیجه**\n>\n> جملهٔ نویسنده.\n\n> جملهٔ پایانی."
+        box = ('<p style="margin:0;"><strong>نتیجه</strong></p>', '<p style="margin:0;">جملهٔ نویسنده.</p>')
+        for out in (qa.render_body(md, {}, None, None), qa.render_insight(md, {}, None, None, "fa"),
+                    qa.render_chairside(md, {}, None, None, "fa"), qa.render_metanote(md, {}, None, None, "fa")):
+            self.assertIn(qa.NOTE_OPEN, out)
+            for p in box:
+                self.assertIn(p, out)
+        # MetaNote keeps an unlabelled `>` block as the series' closing blockquote
+        self.assertIn("<blockquote>\nجملهٔ پایانی.\n</blockquote>", qa.render_metanote(md, {}, None, None, "fa"))
+
     def test_italic_line_after_an_image_is_its_caption(self):
         md = "متن.\n\n[[تصویر:01]]\n\n*تصویر: زیرنویس متن*\n\nادامه."
         self.assertEqual(qa.blocks(md)[1], ("img", "01", "تصویر: زیرنویس متن"))

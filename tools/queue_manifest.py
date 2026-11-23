@@ -450,6 +450,68 @@ def draft(item):
     return d
 
 
+# ---- the presentation layer in the queue's markdown (01-متن.md, 06-انگلیسی.md) ----
+# publish-queue.md «لایهٔ نمایش»; the rule is module 03 «Structure, chips and
+# callout boxes». Two forms, both written with the queue's `[[…]]` marker
+# convention (a marker is never text on the page):
+#   * a line that starts with `[[+]]` (after an optional box `>`) is a
+#     presentation line, whole: `[[+]] ### ∆ ۱. عنوان بخش` a section heading,
+#     `[[+]] **اپی‌نفرین** [[مجاز]]` a bold sub-label, `> [[+]] **نکته‌ی بالینی**`
+#     the label of a callout box;
+#   * `[[<label>]]` inside a line is a status chip; the labels are a closed list;
+#   * `[[+:<words>]]` inside a line is a marked span — the number added to a
+#     heading the author wrote: `### ∆ [[+:۱.]] عنوان نویسنده`.
+# queue_apply.py renders both with `data-dc-presentation`, so the units tool and
+# the publish-day text check never read them as the author's text.
+PRES_MARK = "[[+]]"
+PRES_LINE = re.compile(r"^(\s*>\s?)?\s*\[\[\+\]\][ \t]*(.*?)\s*$")
+CHIP = re.compile(r"\[\[([^\[\]\n:+]+)\]\]")
+PRES_SPAN = re.compile(r"\[\[\+:([^\[\]\n]+)\]\]")
+CHIP_LABELS = {
+    "ok": ("مجاز", "Allowed"),
+    "caution": ("با احتیاط", "با محدودیت", "با مشورت", "Caution", "Restricted", "Consult first"),
+    "no": ("استفاده نکن", "هرگز", "Avoid", "Never"),
+}
+CHIP_KIND = {label: kind for kind, labels in CHIP_LABELS.items() for label in labels}
+
+
+def chip_kind(label):
+    """ok / caution / no for a chip label of the closed list, else None."""
+    return CHIP_KIND.get(label.strip())
+
+
+def presentation_md_problems(md):
+    """Presentation syntax the renderer would refuse: a chip label outside the
+    closed list, or a `[[+]]` that does not open its line."""
+    out = []
+    for n, line in enumerate(md.split("\n"), 1):
+        body = line
+        m = PRES_LINE.match(line)
+        if m:
+            body = m.group(2)
+            if not CHIP.sub("", body).strip():
+                out.append(f"line {n}: a presentation line needs its own words (a heading or a label)")
+        if PRES_MARK in body:
+            out.append(f"line {n}: `{PRES_MARK}` opens a line (after an optional `>`), nowhere else")
+        for c in CHIP.finditer(body):
+            if chip_kind(c.group(1)) is None:
+                out.append(f"line {n}: chip «{c.group(1)}» is not in the closed list (module 03)")
+    return out
+
+
+def strip_presentation_md(md):
+    """The text of record: `md` without its presentation lines and chips. A text
+    that uses neither is returned unchanged, byte for byte."""
+    if "[[" not in md:
+        return md
+    out = []
+    for line in md.split("\n"):
+        if PRES_LINE.match(line):
+            continue
+        out.append(PRES_SPAN.sub("", CHIP.sub("", line)) if "[[" in line else line)
+    return "\n".join(out)
+
+
 def split_sources_tail(md):
     """A final `---` followed only by bare source-link lines (a DOI link, a
     `doi:` line) is the sources tail of an older item: on the page the sources

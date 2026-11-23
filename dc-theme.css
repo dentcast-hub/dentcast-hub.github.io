@@ -1918,3 +1918,40 @@ body:has(.dc-topbar) .back:hover {
     color: var(--txt2);
   }
 }
+
+/* =====================================================
+   PRESENTATION LAYER — status chips and sub-labels
+   (workflow module 03, «Structure, chips and callout boxes»)
+   The markup is static in the page (`data-dc-presentation`, never injected)
+   and styled here, in the one render-blocking sheet every inner page loads,
+   so nothing moves after first paint. Mirrored in index.html under
+   `.dcd-content-area`: the desktop shell strips a fetched article's CSS.
+   Three status colours, each chosen so it is not a colour that already
+   means something on this site: never amber (premium), never --heart
+   (the like), never the DES band's grey→green scale or its indigo chrome,
+   never the certificate green.
+     ok       teal — «مجاز»
+     caution  the deep brand blue (--heading), outlined — «با احتیاط»
+     no       brick red, the destructive red of the tools — «استفاده نکن»
+===================================================== */
+:root {
+  --st-ok: #0f766e;       --st-ok-bg: rgba(15,118,110,.11);
+  --st-caution: #08327a;  --st-caution-bg: rgba(8,50,122,.06);  --st-caution-bd: rgba(8,50,122,.40);
+  --st-no: #b3342b;       --st-no-bg: rgba(179,52,43,.11);
+}
+[data-theme="dark"] {
+  --st-ok: #5ed1c4;       --st-ok-bg: rgba(94,209,196,.14);
+  --st-caution: #a8c8ff;  --st-caution-bg: rgba(138,180,248,.10);  --st-caution-bd: rgba(168,200,255,.46);
+  --st-no: #f08a80;       --st-no-bg: rgba(240,138,128,.14);
+}
+.dc-chip {
+  display: inline-block;
+  font-size: .78rem; font-weight: 700; line-height: 1.7;
+  padding: .05rem .55rem; margin-inline: .1rem .3rem;
+  border: 1px solid transparent; border-radius: var(--r-f, 999px);
+  white-space: nowrap; vertical-align: baseline;
+}
+.dc-chip-ok      { color: var(--st-ok);      background: var(--st-ok-bg); }
+.dc-chip-caution { color: var(--st-caution); background: var(--st-caution-bg); border-color: var(--st-caution-bd); }
+.dc-chip-no      { color: var(--st-no);      background: var(--st-no-bg); }
+.dc-sublabel { margin: 1.1rem 0 .4rem; }

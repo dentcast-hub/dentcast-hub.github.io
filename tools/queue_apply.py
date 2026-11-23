@@ -339,7 +339,14 @@ def blocks(md):
     """Markdown subset → blocks: ('h', level, text) ('p', text) ('ul', [items])
     ('note', [paras]) ('img', NN, caption|None) ('table', [rows]) ('hr',).
     An italic-only line right after an image marker is that image's caption as
-    the text writes it (it replaces the 03 caption on the page)."""
+    the text writes it (it replaces the 03 caption on the page).
+
+    The presentation layer (queue_manifest.PRES_LINE; module 03 «Structure,
+    chips and callout boxes»): a `[[+]]` line is ('ph', level, text) when it
+    is a `##`–`####` heading and ('pl', text) otherwise (a bold sub-label); in
+    a `>` box it is the box's label, kept in the note as PRES + text. Chips
+    (`[[label]]`) and marked spans (`[[+:…]]`) stay in the text for inline().
+    A text with no `[[+]]` line yields exactly the blocks it always did."""
     out, para, items, note, rows = [], [], [], [], []
 
     def flush():
@@ -362,6 +369,16 @@ def blocks(md):
         s = line.rstrip()
         if not s.strip():
             flush()
+            continue
+        if pm := qm.PRES_LINE.match(s):
+            if pm.group(1):
+                if para or items or rows:
+                    flush()
+                note.append(PRES + pm.group(2))
+                continue
+            flush()
+            hm = re.fullmatch(r"(#{2,4})\s+(.+)", pm.group(2))
+            out.append(("ph", len(hm.group(1)), hm.group(2).strip()) if hm else ("pl", pm.group(2)))
             continue
         if m := IMAGE_MARKER.fullmatch(s):
             flush()
@@ -438,6 +455,8 @@ class Linker:
         segs = []  # (start, end, href)
         for ln in list(self.pending):
             k = raw_text.find(ln["phrase"])
+            while k >= 0 and "[[" in raw_text and inside_presentation(raw_text, k, k + len(ln["phrase"])):
+                k = raw_text.find(ln["phrase"], k + 1)  # a chip's own word is never the phrase's first occurrence
             if k < 0:
                 continue
             e = k + len(ln["phrase"])
@@ -456,6 +475,10 @@ class Linker:
         return "".join(out)
 
 
+def inside_presentation(t, k, e):
+    return any(m.start() < e and k < m.end() for m in list(qm.CHIP.finditer(t)) + list(qm.PRES_SPAN.finditer(t)))
+
+
 def inside_markup(t, k, e):
     for m in MD_LINK.finditer(t):
         if m.start() < e and k < m.end():
@@ -466,8 +489,77 @@ def inside_markup(t, k, e):
     return False
 
 
+PRES = "\x00+"  # a callout-box label line inside a ('note', …) block
+PRES_ATTR = "data-dc-presentation"  # verify_publish.PRESENTATION_ATTR: outside the DES/Fidelity text
+CHIP_CLASS = {"ok": "dc-chip dc-chip-ok", "caution": "dc-chip dc-chip-caution", "no": "dc-chip dc-chip-no"}
+
+
+def chip_html(m):
+    kind = qm.chip_kind(html.unescape(m.group(1)))
+    if kind is None:
+        refuse("CHIP_UNKNOWN", f"chip «{m.group(1)}» is not in the closed list of module 03 «Structure, chips and "
+               f"callout boxes»: {', '.join(qm.CHIP_KIND)}")
+    return f'<span class="{CHIP_CLASS[kind]}" {PRES_ATTR}>{m.group(1).strip()}</span>'
+
+
+def note_p(x, txt):
+    """One line of a callout box: its label (a `[[+]]` line) is presentation
+    layer; every other line is the author's sentence."""
+    if x.startswith(PRES):
+        return f'<p style="margin:0;" {PRES_ATTR}>{inline(x[len(PRES):])}</p>'
+    return f'<p style="margin:0;">{txt(x)}</p>'
+
+
+def note_paragraphs(lines):
+    """render_body's grouping of a box: consecutive `>` lines are one
+    paragraph, an empty `>` separates; a label line stands alone."""
+    if not any(x.startswith(PRES) for x in lines):
+        return [p for p in " \n".join(lines).split(" \n \n")]
+    out, run = [], []
+
+    def close():
+        while run and not run[0]:
+            run.pop(0)
+        while run and not run[-1]:
+            run.pop()
+        if run:
+            out.extend(" \n".join(run).split(" \n \n"))
+        run.clear()
+    for x in lines:
+        if x.startswith(PRES):
+            close()
+            out.append(x)
+        else:
+            run.append(x)
+    close()
+    return out
+
+
+def note_lines(lines, txt):
+    """The inside of a callout box, one <p> per `>` line (Insight, Chairside,
+    MetaNote). A box with a presentation label keeps a line break between its
+    paragraphs and drops the empty `>`: the page text then reads across the
+    box exactly as it read across the paragraphs it wraps."""
+    if any(x.startswith(PRES) for x in lines):
+        return "\n".join(note_p(x, txt) for x in lines if x)
+    return "".join(note_p(x, txt) for x in lines)
+
+
+def pres_block(b, indent=""):
+    """A presentation heading or sub-label, the same markup in every category."""
+    if b[0] == "ph":
+        return f"{indent}<h{b[1]} {PRES_ATTR}>{inline(b[2])}</h{b[1]}>"
+    return f'{indent}<p class="dc-sublabel" {PRES_ATTR}>{inline(b[1])}</p>'
+
+
 def inline(t):
     t = esc(t)
+    if "[[" in t:
+        if qm.PRES_MARK in t:
+            refuse("PRESENTATION_SYNTAX", f"`{qm.PRES_MARK}` opens a line (after an optional `>`), nowhere else: «{t[:60]}» "
+                   "(publish-queue.md «لایهٔ نمایش»)")
+        t = qm.PRES_SPAN.sub(lambda m: f"<span {PRES_ATTR}>{m.group(1).strip()}</span>", t)
+        t = qm.CHIP.sub(chip_html, t)
     t = MD_LINK.sub(lambda m: f'<a href="{m.group(2)}" target="_blank" rel="noopener noreferrer">{m.group(1)}</a>'
                     if m.group(2).startswith("http") else f'<a href="{m.group(2)}">{m.group(1)}</a>', t)
     t = INLINE_BOLD.sub(r"<strong>\1</strong>", t)
@@ -510,9 +602,11 @@ def render_body(md, images, img_url, linker, lang="fa", style="compact", link_cl
         elif b[0] == "ul":
             lis = "".join(f"<li>{linker.apply(i) if linker else inline(i)}</li>" for i in b[1])
             out.append(f"<ul>{lis}</ul>")
+        elif b[0] in ("ph", "pl"):
+            out.append(pres_block(b))
         elif b[0] == "note":
-            paras = [p for p in " \n".join(b[1]).split(" \n \n")]
-            inner = "".join(f'<p style="margin:0;">{linker.apply(p) if linker else inline(p)}</p>' for p in paras)
+            sep = "\n" if any(x.startswith(PRES) for x in b[1]) else ""
+            inner = sep.join(note_p(p, lambda t: linker.apply(t) if linker else inline(t)) for p in note_paragraphs(b[1]))
             out.append(NOTE_OPEN + inner + "</div>")
         elif b[0] == "img":
             img = images.get(b[1])
@@ -544,7 +638,15 @@ def render_indented(md, linker, link_class):
         if b[0] == "h":
             out.append(f"    <h{b[1]}>{inline(b[2])}</h{b[1]}>")
             continue
-        if b[0] == "p":
+        if b[0] == "ph":
+            out.append(pres_block(b, "    "))
+            continue
+        if b[0] == "pl":
+            block = pres_block(b, "    ")
+        elif b[0] == "note" and any(x.startswith(PRES) for x in b[1]):
+            # a callout box (module 03): only the labelled form, the series has no other `>` precedent
+            block = "    " + NOTE_OPEN + "\n" + "\n".join("      " + note_p(x, txt) for x in b[1] if x) + "\n    </div>"
+        elif b[0] == "p":
             block = f"    <p>\n        {txt(b[1])}\n    </p>"
         elif b[0] == "ul":
             block = "    <ul>\n" + "\n".join(f"      <li>{txt(i)}</li>" for i in b[1]) + "\n    </ul>"
@@ -797,8 +899,10 @@ def render_insight(md, imgs, img_url, linker, lang):
             out.append(f"<h{max(b[1], 3)}>{inline(b[2])}</h{max(b[1], 3)}>")
         elif b[0] == "ul":
             out.append("<ul>" + "".join(f"<li>{txt(i)}</li>" for i in b[1]) + "</ul>")
+        elif b[0] in ("ph", "pl"):
+            out.append(pres_block(("ph", max(b[1], 3), b[2]) if b[0] == "ph" else b))
         elif b[0] == "note":
-            out.append(NOTE_OPEN + "".join(f'<p style="margin:0;">{txt(x)}</p>' for x in b[1]) + "</div>")
+            out.append(NOTE_OPEN + note_lines(b[1], txt) + "</div>")
         elif b[0] == "img":
             img = imgs.get(b[1])
             if img is None:
@@ -910,8 +1014,10 @@ def render_chairside(md, imgs, img_url, linker, lang):
             out.append(f"<h{b[1]}>{inline(b[2])}</h{b[1]}>")
         elif b[0] == "ul":
             out.append("<ul>\n" + "\n".join(f"  <li>{txt(i)}</li>" for i in b[1]) + "\n</ul>")
+        elif b[0] in ("ph", "pl"):
+            out.append(pres_block(b))
         elif b[0] == "note":
-            out.append(NOTE_OPEN + "".join(f'<p style="margin:0;">{txt(x)}</p>' for x in b[1]) + "</div>")
+            out.append(NOTE_OPEN + note_lines(b[1], txt) + "</div>")
         elif b[0] == "img":
             img = imgs.get(b[1])
             if img is None:
@@ -1001,7 +1107,7 @@ METANOTE_SERIES_KW = ("MetaNote", "دکتر فواد شهابیان")
 
 def render_metanote(md, imgs, img_url, linker, lang):
     """MetaNote markup (metanotes/meta-20..22): <p> text on its own line,
-    <hr> for a `---` divider, a `>` line is the closing <blockquote>."""
+    <hr> for a `---` divider, an unlabelled `>` block is the closing <blockquote>."""
     out = []
     txt = (lambda t: linker.apply(t) if linker else inline(t))
     for b in blocks(md):
@@ -1011,6 +1117,11 @@ def render_metanote(md, imgs, img_url, linker, lang):
             out.append(f"<h{b[1]}>{inline(b[2])}</h{b[1]}>")
         elif b[0] == "hr":
             out.append("<hr>")
+        elif b[0] in ("ph", "pl"):
+            out.append(pres_block(b))
+        elif b[0] == "note" and b[1] and (b[1][0].startswith(PRES) or re.fullmatch(r"\*\*[^*]+\*\*", b[1][0])):
+            # a labelled `>` block is a callout box (module 03, «Structure, chips and callout boxes»)
+            out.append(NOTE_OPEN + note_lines([x for x in b[1] if x], txt) + "</div>")
         elif b[0] == "note":
             out.append("<blockquote>\n" + "\n".join(txt(x) for x in b[1] if x) + "\n</blockquote>")
         elif b[0] == "ul":

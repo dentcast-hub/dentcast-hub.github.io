@@ -156,11 +156,13 @@ DES و Fidelity مطلبی که
 
 ## قراردادهای فنی تثبیت‌شده
 
-- **کادر یادداشت (note/callout) در صفحه** رنگ پس‌زمینه و حاشیهٔ خنثی با توکن‌های چیپ
-  می‌گیرد: `var(--chip-bg)` و `var(--chip-bd)` از `dc-theme.css`، که در حالت تیره هم تعریف
-  شده‌اند. هرگز amber: amber (`--x-amber*`، `--amber*`) رنگ پریمیوم است
-  (`global/site-invariants.md`). نمونهٔ منتشرشده: `chairside/chairside-46.html`
-  (`<div role="note" style="background:var(--chip-bg);border:1px solid var(--chip-bd);
-  border-right:4px solid var(--chip-bd);...">`). CSS تازه برای این کار اضافه نمی‌شود.
+- **لایهٔ نمایش و کادر**: قاعده و مارک‌آپ فقط در ماژول 03، «Structure, chips and callout boxes»؛ نحو صف در
+  `publish-queue.md`، «لایهٔ نمایش» (`queue_manifest.py`: `PRES_LINE`، `CHIP`، `PRES_SPAN`). `queue_apply.py` در هر پنج
+  رندرر خط `[[+]]` را عنوان یا برچسب نشان‌دار، `[[برچسب]]` را چیپ و `[[+:…]]` را span نشان‌دار می‌کشد (همه با
+  `data-dc-presentation`) و هر بلوک `>` را با `NOTE_OPEN` کادر می‌کند: برچسب `[[+]]` نشان‌دار، جمله‌های نویسنده
+  بی‌نشان. بلوک `>` بی `[[+]]` همان است که بود: برچسب پررنگش متن و یک واحد است؛ در متانوت بلوک بی‌برچسب
+  `<blockquote>` پایانی سری می‌ماند و نوت‌کست فقط کادر برچسب‌دار `[[+]]` را می‌پذیرد. `queue_install_des.py` لایهٔ
+  نمایش را نه در `01` می‌خواند نه در صفحه. بازمهر مطلب «آماده» بعد از تغییرِ فقط لایهٔ نمایش:
+  `tools/presentation_diff.py --queue-item … --restamp` (`publish-queue.md` اصل ۴)؛ `queue_stamp.py` برای آن اجرا نمی‌شود.
 - **ساخت PR در این نوبت‌ها با REST API** (`gh api repos/<owner>/<repo>/pulls -f ...`)،
   چون GraphQL مسدود است؛ `gh pr create` و هر دستور وابسته به GraphQL کار نمی‌کند.
