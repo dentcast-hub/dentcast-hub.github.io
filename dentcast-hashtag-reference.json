@@ -263,7 +263,7 @@
     "#اینسایت"
    ],
    "co_tags": [],
-   "count": 134,
+   "count": 135,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -398,7 +398,8 @@
     "insight/insight-113",
     "insight/insight-114",
     "insight/insight-116",
-    "insight/insight-117"
+    "insight/insight-117",
+    "insight/insight-119"
    ]
   },
   {
@@ -2599,7 +2600,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 17,
+   "count": 18,
    "content_ids": [
     "episodes/episode-122-2",
     "episodes/episode-128-1",
@@ -2617,7 +2618,8 @@
     "insight/insight-74",
     "sharehub/share-54",
     "sharehub/share-56",
-    "sharehub/share-57"
+    "sharehub/share-57",
+    "insight/insight-119"
    ]
   },
   {
@@ -2661,6 +2663,45 @@
     "insight/insight-88",
     "insight/insight-95",
     "sharehub/share-47"
+   ]
+  },
+  {
+   "key": "قالب_گیری_دیجیتال",
+   "tag": "#قالب‌گیری_دیجیتال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ثبتِ دیجیتالِ آرچ با اسکنر، به‌جای قالب سنتی.",
+   "use_when": "مقاله دقت یا پروتکلِ ثبت دیجیتال را بررسی کند.",
+   "aliases": [
+    "قالب گیری دیجیتال",
+    "digital impression",
+    "اسکن دیجیتال",
+    "digital scan",
+    "دیجیتال اسکن"
+   ],
+   "variants": [
+    "#اسکن_دیجیتال"
+   ],
+   "co_tags": [],
+   "count": 17,
+   "content_ids": [
+    "insight/insight-3",
+    "insight/insight-19",
+    "litecast/lite-CAST14",
+    "insight/insight-26",
+    "insight/insight-31",
+    "insight/insight-33",
+    "insight/insight-38",
+    "insight/insight-40",
+    "dentai/dentai-21",
+    "insight/insight-51",
+    "sharehub/share-15",
+    "insight/insight-67",
+    "dentai/dentai-32",
+    "sharehub/share-54",
+    "insight/insight-112",
+    "sharehub/share-56",
+    "insight/insight-119"
    ]
   },
   {
@@ -2870,44 +2911,6 @@
     "sharehub/share-24",
     "sharehub/share-53",
     "sharehub/share-58"
-   ]
-  },
-  {
-   "key": "قالب_گیری_دیجیتال",
-   "tag": "#قالب‌گیری_دیجیتال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ثبتِ دیجیتالِ آرچ با اسکنر، به‌جای قالب سنتی.",
-   "use_when": "مقاله دقت یا پروتکلِ ثبت دیجیتال را بررسی کند.",
-   "aliases": [
-    "قالب گیری دیجیتال",
-    "digital impression",
-    "اسکن دیجیتال",
-    "digital scan",
-    "دیجیتال اسکن"
-   ],
-   "variants": [
-    "#اسکن_دیجیتال"
-   ],
-   "co_tags": [],
-   "count": 16,
-   "content_ids": [
-    "insight/insight-3",
-    "insight/insight-19",
-    "litecast/lite-CAST14",
-    "insight/insight-26",
-    "insight/insight-31",
-    "insight/insight-33",
-    "insight/insight-38",
-    "insight/insight-40",
-    "dentai/dentai-21",
-    "insight/insight-51",
-    "sharehub/share-15",
-    "insight/insight-67",
-    "dentai/dentai-32",
-    "sharehub/share-54",
-    "insight/insight-112",
-    "sharehub/share-56"
    ]
   },
   {
@@ -3397,6 +3400,48 @@
    ]
   },
   {
+   "key": "فینیش_لاین",
+   "tag": "#فینیش_لاین",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "خط ختم تراش — مرزی که مارجین رستوریشن روی آن می‌نشیند.",
+   "use_when": "مقاله شکل، موقعیت، یا کیفیت خط ختم را تعیین کند.",
+   "aliases": [
+    "فینیشینگ لاین",
+    "فینیش‌لاین",
+    "خط ختم",
+    "finish line",
+    "finishing line",
+    "خط خاتمه",
+    "شولدر",
+    "شمفر",
+    "shoulder",
+    "chamfer",
+    "چمفر"
+   ],
+   "variants": [
+    "#فینیشینگ_لاین"
+   ],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-95",
+    "episodes/episode-114",
+    "dentcast-plus/video-1",
+    "notecast/episode-20",
+    "notecast/episode-21",
+    "insight/insight-18",
+    "chairside/chairside-12",
+    "insight/insight-40",
+    "notecast/episode-37",
+    "insight/insight-67",
+    "dentcast-plus/video-11",
+    "insight/insight-73",
+    "insight/insight-85",
+    "insight/insight-119"
+   ]
+  },
+  {
    "key": "قالبگیری",
    "tag": "#قالبگیری",
    "domain": "clinical",
@@ -3578,47 +3623,6 @@
     "plak-sefr/plak1-12",
     "plak-sefr/plak1-13",
     "plak-sefr/plak1-14"
-   ]
-  },
-  {
-   "key": "فینیش_لاین",
-   "tag": "#فینیش_لاین",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "خط ختم تراش — مرزی که مارجین رستوریشن روی آن می‌نشیند.",
-   "use_when": "مقاله شکل، موقعیت، یا کیفیت خط ختم را تعیین کند.",
-   "aliases": [
-    "فینیشینگ لاین",
-    "فینیش‌لاین",
-    "خط ختم",
-    "finish line",
-    "finishing line",
-    "خط خاتمه",
-    "شولدر",
-    "شمفر",
-    "shoulder",
-    "chamfer",
-    "چمفر"
-   ],
-   "variants": [
-    "#فینیشینگ_لاین"
-   ],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-95",
-    "episodes/episode-114",
-    "dentcast-plus/video-1",
-    "notecast/episode-20",
-    "notecast/episode-21",
-    "insight/insight-18",
-    "chairside/chairside-12",
-    "insight/insight-40",
-    "notecast/episode-37",
-    "insight/insight-67",
-    "dentcast-plus/video-11",
-    "insight/insight-73",
-    "insight/insight-85"
    ]
   },
   {
@@ -7815,6 +7819,39 @@
    ]
   },
   {
+   "key": "نخ_زیرلثه",
+   "tag": "#نخ_زیرلثه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "نخِ ریترکشن، تنها یا آغشته به هموستاتیک.",
+   "use_when": "مقاله نخ را ابزارِ کنارزدنِ لثه یا کنترلِ خون بداند.",
+   "aliases": [
+    "retraction cord",
+    "نخ رترکشن",
+    "نخ زیر لثه",
+    "دابل کورد",
+    "double cord",
+    "نخ ریترکشن",
+    "نخ رتراکشن",
+    "ریترکشن کورد",
+    "رترکشن کورد",
+    "کورد گذاری",
+    "نخ گذاری",
+    "cord packing",
+    "displacement cord"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-40",
+    "insight/insight-63",
+    "insight/insight-67",
+    "insight/insight-73",
+    "insight/insight-119"
+   ]
+  },
+  {
    "key": "نسبت_تاج_به_ریشه",
    "tag": "#نسبت_تاج_به_ریشه",
    "domain": "clinical",
@@ -8046,6 +8083,35 @@
     "episodes/episode-92",
     "episodes/episode-93",
     "episodes/episode-94"
+   ]
+  },
+  {
+   "key": "کنترل_خونریزی",
+   "tag": "#کنترل_خونریزی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پایدارسازیِ میدان پیش از ثبت — شرطِ دیده شدنِ مارجین.",
+   "use_when": "مقاله خونریزی را مانعِ ثبتِ دقیق بداند.",
+   "aliases": [
+    "hemostasis",
+    "کنترل خونریزی",
+    "هموستاتیک",
+    "بند آوردن خون",
+    "haemostasis",
+    "هموستاز",
+    "bleeding control",
+    "بند آوردن خونریزی",
+    "hemostatic agent"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-40",
+    "insight/insight-63",
+    "insight/insight-73",
+    "sharehub/share-23",
+    "insight/insight-119"
    ]
   },
   {
@@ -9567,38 +9633,6 @@
    ]
   },
   {
-   "key": "نخ_زیرلثه",
-   "tag": "#نخ_زیرلثه",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "نخِ ریترکشن، تنها یا آغشته به هموستاتیک.",
-   "use_when": "مقاله نخ را ابزارِ کنارزدنِ لثه یا کنترلِ خون بداند.",
-   "aliases": [
-    "retraction cord",
-    "نخ رترکشن",
-    "نخ زیر لثه",
-    "دابل کورد",
-    "double cord",
-    "نخ ریترکشن",
-    "نخ رتراکشن",
-    "ریترکشن کورد",
-    "رترکشن کورد",
-    "کورد گذاری",
-    "نخ گذاری",
-    "cord packing",
-    "displacement cord"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-40",
-    "insight/insight-63",
-    "insight/insight-67",
-    "insight/insight-73"
-   ]
-  },
-  {
    "key": "نوع_ریتنشن",
    "tag": "#نوع_ریتنشن",
    "domain": "clinical",
@@ -9855,31 +9889,24 @@
    ]
   },
   {
-   "key": "کنترل_خونریزی",
-   "tag": "#کنترل_خونریزی",
-   "domain": "clinical",
+   "key": "کنترل_رطوبت",
+   "tag": "#کنترل_رطوبت",
+   "domain": null,
    "words": 2,
-   "definition": "پایدارسازیِ میدان پیش از ثبت — شرطِ دیده شدنِ مارجین.",
-   "use_when": "مقاله خونریزی را مانعِ ثبتِ دقیق بداند.",
+   "definition": "خشک نگه داشتنِ سطح، به‌عنوان شرطِ دقت یا باند.",
+   "use_when": "مقاله رطوبت را عاملِ خطا بداند.",
    "aliases": [
-    "hemostasis",
-    "کنترل خونریزی",
-    "هموستاتیک",
-    "بند آوردن خون",
-    "haemostasis",
-    "هموستاز",
-    "bleeding control",
-    "بند آوردن خونریزی",
-    "hemostatic agent"
+    "moisture control",
+    "blow drying"
    ],
    "variants": [],
    "co_tags": [],
    "count": 4,
    "content_ids": [
-    "insight/insight-40",
-    "insight/insight-63",
-    "insight/insight-73",
-    "sharehub/share-23"
+    "dentai/dentai-21",
+    "insight/insight-74",
+    "sharehub/share-22",
+    "insight/insight-119"
    ]
   },
   {
@@ -12336,26 +12363,6 @@
     "dentai/promptologist/prompt1-append1",
     "dentai/promptologist/prompt6-1",
     "dentai/promptologist/prompt6-2"
-   ]
-  },
-  {
-   "key": "کنترل_رطوبت",
-   "tag": "#کنترل_رطوبت",
-   "domain": null,
-   "words": 2,
-   "definition": "خشک نگه داشتنِ سطح، به‌عنوان شرطِ دقت یا باند.",
-   "use_when": "مقاله رطوبت را عاملِ خطا بداند.",
-   "aliases": [
-    "moisture control",
-    "blow drying"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "dentai/dentai-21",
-    "insight/insight-74",
-    "sharehub/share-22"
    ]
   },
   {
@@ -15446,6 +15453,30 @@
    "content_ids": [
     "sharehub/share-13",
     "sharehub/share-16"
+   ]
+  },
+  {
+   "key": "کنترل_لثه",
+   "tag": "#کنترل_لثه",
+   "domain": null,
+   "words": 2,
+   "definition": "کنار زدن و خشک نگه داشتنِ لثه هنگام ثبت.",
+   "use_when": "مقاله روش کنترل لثه را بدهد.",
+   "aliases": [
+    "gingival retraction",
+    "ریترکشن لثه",
+    "جینگوال ریترکشن",
+    "نخ کشی",
+    "gingival displacement",
+    "کنار زدن لثه",
+    "رترکشن لثه"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "notecast/episode-20",
+    "insight/insight-119"
    ]
   },
   {
@@ -23398,29 +23429,6 @@
    "count": 1,
    "content_ids": [
     "episodes/episode-106-1"
-   ]
-  },
-  {
-   "key": "کنترل_لثه",
-   "tag": "#کنترل_لثه",
-   "domain": null,
-   "words": 2,
-   "definition": "کنار زدن و خشک نگه داشتنِ لثه هنگام ثبت.",
-   "use_when": "مقاله روش کنترل لثه را بدهد.",
-   "aliases": [
-    "gingival retraction",
-    "ریترکشن لثه",
-    "جینگوال ریترکشن",
-    "نخ کشی",
-    "gingival displacement",
-    "کنار زدن لثه",
-    "رترکشن لثه"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "notecast/episode-20"
    ]
   },
   {

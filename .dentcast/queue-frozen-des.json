@@ -667,5 +667,23 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "insight/insight-119": {
+    "queue_ref": "queue/53-insight-retraction-cord-intraoral-scan",
+    "record_sha256": "47ed6323bb4467f45c6c3b9d19202fc9c77f6762dfb5a18a878d5ddef5728082",
+    "installed_at": "2026-11-23",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }
