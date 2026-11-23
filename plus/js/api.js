@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import * as CFG from './config.js?v=261';
+import * as CFG from './config.js?v=263';
 
 const API_BASES = CFG.API_BASES;
 
@@ -452,6 +452,13 @@ export const api = {
   // source. No deadline — up to ten minutes of audio on a slow line is not a
   // stalled host.
   clipAudio: (id) => request('/clips/' + encodeURIComponent(id) + '/audio', { blob: true, timeoutMs: 0 }),
+
+  // کادرهای ذخیره‌شده — saved callout boxes (routes/boxes.ts). Saving is
+  // premium; the per-page list and deleting are any-plan.
+  listBoxes: (content_id) => request('/boxes', { query: { content_id } }),
+  boxLibrary: () => request('/boxes/library'),
+  saveBox: (b) => request('/boxes', { method: 'POST', body: b }),
+  deleteBox: (id) => request('/boxes/' + encodeURIComponent(id), { method: 'DELETE' }),
 
   // per-article note (independent of highlights)
   getArticleNote: (content_id) => request('/article-note', { query: { content_id } }),

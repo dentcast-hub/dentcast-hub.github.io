@@ -32,8 +32,8 @@
   <link rel="manifest" href="/plus/manifest.webmanifest">
   <meta name="theme-color" content="#f0f2f5">
   <link rel="stylesheet" href="/dc-theme.css?v=23">
-  <link rel="stylesheet" href="/plus/plus.css?v=69">
-  <link rel="stylesheet" href="/plus/plus-pages.css?v=65">
+  <link rel="stylesheet" href="/plus/plus.css?v=70">
+  <link rel="stylesheet" href="/plus/plus-pages.css?v=66">
   <link rel="stylesheet" href="/plus/plus-desktop.css?v=7">
 </head>
 <body class="dcp-page">
@@ -44,7 +44,7 @@
   <main class="dcp-page-main">
     <div id="dcp-root"></div>
   </main>
-  <script type="module" src="/plus/js/profile-page.js?v=102"></script>
+  <script type="module" src="/plus/js/profile-page.js?v=103"></script>
   <!-- DentCast Spot loader — this standalone page renders the SAME profile
        view as the header overlay (which gets Spot via dc-nav.js's own loader),
        but it does not load dc-nav.js itself (it has its own minimal header, not
@@ -55,7 +55,7 @@
     (function () {
       if (window.__dcSpotLoaded) return;
       window.__dcSpotLoaded = true;
-      var SPOT_V = '99';
+      var SPOT_V = '100';
       var js = document.createElement('script');
       js.type = 'module';
       js.src = '/spot/spot.js?v=' + SPOT_V;

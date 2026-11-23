@@ -38,7 +38,7 @@ export async function resetDb(): Promise<void> {
     try {
       await pool.query(`
         truncate table
-          profiles, user_activity, highlights_all, card_state, audio_clips, content_votes,
+          profiles, user_activity, highlights_all, card_state, audio_clips, saved_boxes, content_votes,
           collections, collection_items, snippets, user_pathways,
           subscriptions, payments, gift_redemptions, certificates, pathway_exams,
           pathway_exam_forms, pathway_exam_attempts, pathway_exam_examples, content_exam_questions, anon_events,

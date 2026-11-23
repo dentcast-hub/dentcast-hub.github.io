@@ -2,34 +2,34 @@
 // enhancement. It decides the page type and wires only what belongs there. For
 // anonymous visitors the page must look exactly as before except the two
 // invitation points (spec 2.3): the workbench button and the homepage card.
-import { detectContentId, findProseRoot, findProseBox, findProseEnd, rowText, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE, pageSearch } from './js/config.js?v=261';
-import { currentUser, api } from './js/api.js?v=261';
-import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=261';
-import { openCollectionPicker } from './js/collections.js?v=261';
-import { el, faNum } from './js/util.js?v=261';
-import { initHomeCard } from './js/home-card.js?v=261';
-import { initHomeFeatures } from './js/home-features.js?v=261';
-import { initPremiumPanel } from './js/premium-panel.js?v=261';
-import { initHomeBundles } from './js/home-bundles.js?v=261';
-import { initHomeUpboard } from './js/home-upboard.js?v=261';
-import { initDesTool } from './js/des-scorer.js?v=261';
-import { initHeader } from './js/header.js?v=261';
-import { initTourAutostart } from './js/tour.js?v=261';
-import { initReadingTracker, flushPendingReads } from './js/reading.js?v=261';
-import { armLateReading } from './js/late-reading.js?v=261';
-import { initListeningTracker } from './js/listening.js?v=261';
-import { initShareScoring, buildShareButton } from './js/share.js?v=261';
-import { initHeart, buildHeartChip } from './js/votes.js?v=261';
-import { mountClipControl, landOnClip } from './js/clips.js?v=261';
-import { mountArticleThreads } from './js/article-threads.js?v=261';
-import { mountChallenge } from './js/challenge.js?v=261';
-import { mountGlossaryNotes } from './js/glossary-notes.js?v=261';
-import { mountDes } from './js/des.js?v=261';
-import { mountPresentation } from './js/presentation.js?v=261';
-import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=261';
-import { initAudioHub } from './js/audio-hub.js?v=261';
-import { initAudioFallback } from './js/audio-fallback.js?v=261';
-import { getModel, freshFolders } from './js/content-index.js?v=261';
+import { detectContentId, findProseRoot, findProseBox, findProseEnd, rowText, SS_MODE, SS_RETURN_STUDY, isOrgHost, PROGRESS_EXCLUDE, pageSearch } from './js/config.js?v=263';
+import { currentUser, api } from './js/api.js?v=263';
+import { openLoginModal, openOrgNotice } from './js/login-modal.js?v=263';
+import { openCollectionPicker } from './js/collections.js?v=263';
+import { el, faNum } from './js/util.js?v=263';
+import { initHomeCard } from './js/home-card.js?v=263';
+import { initHomeFeatures } from './js/home-features.js?v=263';
+import { initPremiumPanel } from './js/premium-panel.js?v=263';
+import { initHomeBundles } from './js/home-bundles.js?v=263';
+import { initHomeUpboard } from './js/home-upboard.js?v=263';
+import { initDesTool } from './js/des-scorer.js?v=263';
+import { initHeader } from './js/header.js?v=263';
+import { initTourAutostart } from './js/tour.js?v=263';
+import { initReadingTracker, flushPendingReads } from './js/reading.js?v=263';
+import { armLateReading } from './js/late-reading.js?v=263';
+import { initListeningTracker } from './js/listening.js?v=263';
+import { initShareScoring, buildShareButton } from './js/share.js?v=263';
+import { initHeart, buildHeartChip } from './js/votes.js?v=263';
+import { mountClipControl, landOnClip } from './js/clips.js?v=263';
+import { mountArticleThreads } from './js/article-threads.js?v=263';
+import { mountChallenge } from './js/challenge.js?v=263';
+import { mountGlossaryNotes } from './js/glossary-notes.js?v=263';
+import { mountDes } from './js/des.js?v=263';
+import { mountPresentation } from './js/presentation.js?v=263';
+import { mountReturnTrail, markReturnTrail } from './js/return-trail.js?v=263';
+import { initAudioHub } from './js/audio-hub.js?v=263';
+import { initAudioFallback } from './js/audio-fallback.js?v=263';
+import { getModel, freshFolders } from './js/content-index.js?v=263';
 
 // The workbench is the one module still loaded lazily, and its import is
 // stamped like every other one in this file — by tools/asset_version.py, from
@@ -39,7 +39,7 @@ import { getModel, freshFolders } from './js/content-index.js?v=261';
 // module requests hit the plain browser HTTP cache, so an unversioned import
 // kept serving a stale workbench.js. That reasoning was right and applied to
 // every import in this file; it had simply been fixed for one of them.
-const loadWorkbench = () => import('./js/workbench.js?v=261').then((m) => m.Workbench);
+const loadWorkbench = () => import('./js/workbench.js?v=263').then((m) => m.Workbench);
 
 // Beside میزکار (always visible - no need to enter study mode) sits a second,
 // single-purpose button that saves the WHOLE page to a collection. This is
@@ -568,7 +568,7 @@ async function initArticle() {
   // The presentation layer's run-time side: «در یک نگاه» (already built by
   // dc-nav.js on this page; find-or-create), the section pill, the glossary
   // preview. After the workbench, so a card it adds is never anchored against.
-  mountPresentation(proseRoot, articleBoxes(document), document);
+  mountPresentation(proseRoot, articleBoxes(document), document, contentId);
   mountChallenge(findProseEnd() || proseRoot, contentId);
   // گفت‌وگوی زیر مطلب, under the prose. Draws itself lazily, always visible now
   // (2026-08-19) — only the write side stays gated, and only on request.
@@ -660,7 +660,7 @@ async function mountArticleWorkbench(root, url) {
   if (!mounted || !alive()) return; // a newer article took the column meanwhile; it mounts itself
   const { wb, updateBtn, bindButton } = mounted;
   desktopWb = wb;
-  mountPresentation(proseRoot, articleBoxes(root), root); // «در یک نگاه», section pill, glossary preview
+  mountPresentation(proseRoot, articleBoxes(root), root, contentId); // «در یک نگاه», section pill, glossary preview
   mountChallenge(findProseEnd(root) || proseRoot, contentId, root); // چالش, above the conversation
   mountArticleThreads(findProseEnd(root) || proseRoot, contentId); // under the article, not after its first box
   mountDesHere(findProseEnd(root) || proseRoot, contentId, root);  // the score, under that conversation
@@ -809,7 +809,7 @@ function folderForPath(folders) {
 }
 
 function openSeenGate() {
-  Promise.all([import('./js/sheet.js?v=261'), import('./js/premium-cta.js?v=261')])
+  Promise.all([import('./js/sheet.js?v=263'), import('./js/premium-cta.js?v=263')])
     .then(([sheet, cta]) => sheet.openSheet(sheet.gateCard({
       title: 'کدام‌ها را خوانده‌ای',
       sub: 'کنارِ هر مطلب یک نشان می‌گذارد: بازش کرده‌ای، یا تا آخر خوانده‌ای. '

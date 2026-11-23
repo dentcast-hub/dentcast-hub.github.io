@@ -2680,3 +2680,39 @@ body.dcp-has-abar #dc-theme-toggle { bottom: max(76px, calc(var(--dcp-abar-top, 
 }
 :is(.dcp-sheet, .dcp-modal-card) .dcp-btn { box-shadow: none; }
 :is(.dcp-sheet, .dcp-modal-card) .dcp-btn.dc-plus-cta:hover { box-shadow: none; transform: none; }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   «ذخیره در دفترچه» on a callout box (plus/js/box-save.js; approved mockup).
+   Built at run time under every .dc-box; marked data-dc-presentation, so no
+   reader of the page text counts it. Premium: a quiet pill in the box's own
+   blue. Guest / free: the same pill already amber with its lock — amber is
+   «this is what a subscription buys» and nothing else — and the tap opens one
+   line under the box, in the flow, never a window. Here, not in dc-theme.css:
+   plus.css is the sheet both shells load (the article-threads rule). */
+.dc-box > .dc-box-save { display:flex; justify-content:flex-end; margin-top:.7rem; }
+.dc-box-save-btn {
+  display:inline-flex; align-items:center; gap:.3rem; font:inherit; font-size:.78rem; font-weight:500; line-height:1.9;
+  padding:.1rem .75rem; border-radius:var(--dcp-radius-pill, 999px); cursor:pointer;
+  background:var(--bg, #fff); color:var(--chip-txt, #022360); border:1px solid var(--chip-bd, rgba(11, 95, 255, .2));
+}
+.dc-box-save-btn[aria-pressed="true"] { background:var(--ac, #0b5fff); border-color:var(--ac, #0b5fff); color:var(--bg, #fff); }
+.dc-box-save-btn.is-locked { background:var(--dcp-gold-bg); border-color:color-mix(in srgb, var(--dcp-gold) 40%, transparent); color:var(--dcp-gold); }
+.dc-box-save-btn svg, .dc-box-gate-ico svg { width:.95em; height:.95em; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.dc-box-save-btn:disabled { opacity:.7; cursor:progress; }
+.dc-box-save-btn:focus-visible, .dc-box-gate-login:focus-visible { outline:2px solid var(--ac, #0b5fff); outline-offset:2px; }
+.dc-box > .dc-box-gate {
+  display:flex; gap:.45rem; align-items:flex-start; margin-top:.6rem; padding:.45rem .7rem; border-radius:10px;
+  font-size:.84rem; line-height:1.8; background:var(--dcp-gold-bg); border:1px solid color-mix(in srgb, var(--dcp-gold) 30%, transparent); color:var(--dcp-gold);
+}
+.dc-box-gate-ico { flex:none; margin-top:.3em; display:inline-flex; }
+/* .dc-box > beats the article's own link colour (body:has(.dc-topbar) main a) */
+.dc-box > .dc-box-gate a, .dc-box > .dc-box-gate .dc-box-gate-login { color:inherit; font:inherit; font-weight:700; text-decoration:underline; text-underline-offset:.2em; background:none; border:0; padding:0; cursor:pointer; }
+/* The legacy article sheets force `.text-box p` and `.text-box span` to the
+   body text colour with !important, so the line under a box is a <div> of
+   <i>/<div>/<a> and the button's words a <b> (box-save.js) — elements those
+   rules do not name — instead of out-shouting them. */
+.dc-box-save-btn b { font-weight:inherit; }
+.dc-box-gate-ico { font-style:normal; }
+/* The link itself is an <a>, which the article sheets colour in more than one
+   rule per theme; the gate's link is amber, never the article's blue. */
+.dc-box > .dc-box-gate a { color:var(--dcp-gold) !important; }
