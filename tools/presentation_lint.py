@@ -37,15 +37,15 @@ import verify_publish as vp  # noqa: E402
 ATTR = vp.PRESENTATION_ATTR
 CONCLUSION = re.compile(r"جمع[‌ ]?بندی|نتیجه|خلاصه|حرف آخر|conclusion|summary|bottom line|take[- ]?(home|away)|in short", re.I)
 BOTTOM_LABELS = {"نتیجه", "Bottom line"}
-AUTHOR_LABEL = re.compile(r"^\W{0,3}([^.؟?!:：\n]{2,40})[:：]")
+AUTHOR_LABEL = re.compile(r"^\W{0,3}([^.؟?!:：\n]{2,60})[:：]")
 LABEL_WORD = re.compile(r"نکته|نتیجه|خلاصه|جمع[\u200c ]?بندی|پیام|هشدار|توصیه|راه[\u200c ]?حل|tip|note|takeaway|summary|message|"
-                        r"warning|point|conclusion|solution|bottom line", re.I)
+                        r"warning|point|conclusion|solution|bottom line|in short", re.I)
 
 
 def author_label(body):
     """The author's own label at the head of a paragraph («Clinical Tip:», «نکتهٔ کلینیکی:»), or None."""
     m = AUTHOR_LABEL.match(body)
-    return m.group(1).strip() if m and len(m.group(1).split()) <= 5 and LABEL_WORD.search(m.group(1)) else None
+    return m.group(1).strip() if m and len(m.group(1).split()) <= 10 and LABEL_WORD.search(m.group(1)) else None
 DIGITS = str.maketrans("۰۱۲۳۴۵۶۷۸۹", "0123456789")
 VOID = {"br", "img", "hr", "input", "meta", "link", "source", "wbr", "col", "area", "base", "embed", "track", "param"}
 HEADINGS = {"h2", "h3", "h4", "h5", "h6"}
@@ -136,7 +136,11 @@ def prev_block(n):
     return None
 
 
-def lint(doc, mirror_doc=None):
+def lint(doc, mirror_doc=None, source_doc=None):
+    """`mirror_doc`: the page's English mirror (parity). `source_doc`: for an English mirror, the
+    Persian page it mirrors — a box that takes no label there takes none here, whatever the
+    translation did to the author's own label."""
+    bare = [next((k for k in b.elements() if k.marked), None) is None for b in facts(source_doc)["boxes"]] if source_doc else []
     out = [("MARKER_MALFORMED", p) for p in vp.presentation_problems(doc)]
     f = facts(doc)
     for n in f["nodes"]:
@@ -146,7 +150,7 @@ def lint(doc, mirror_doc=None):
                 out.append(("CHIP_UNKNOWN", f"«{label}»"))
     if len(f["boxes"]) > 2:
         out.append(("BOX_COUNT", f"{len(f['boxes'])} boxes; at most two"))
-    for b in f["boxes"]:
+    for i, b in enumerate(f["boxes"]):
         label = next((k for k in b.elements() if k.marked), None)
         body = squash(b.text(skip_marked=True))
         head = f"«{body[:60]}»"
@@ -164,7 +168,7 @@ def lint(doc, mirror_doc=None):
                             "instead, or drop the label"))
             if owns_label:
                 out.append(("LABEL_DUPLICATES_AUTHOR", f"«{text}» on {head}: the author's own words already label it"))
-        elif not owns_label and not (above is not None and above.tag in HEADINGS):
+        elif not owns_label and not (above is not None and above.tag in HEADINGS) and not (i < len(bare) and bare[i]):
             out.append(("LABEL_MISSING", f"{head}: a box takes no label only where the author's words already label it"))
     numbered = []
     for n in f["nodes"]:
@@ -237,7 +241,9 @@ def main(argv=None):
     for p in pages:
         p = p if p.is_absolute() else ROOT / p
         m = mirror_of(p)
-        for code, detail in lint(p.read_text(encoding="utf-8"), m.read_text(encoding="utf-8") if m else None):
+        src = p.parent.parent / p.name if p.parent.name == "en" else None
+        for code, detail in lint(p.read_text(encoding="utf-8"), m.read_text(encoding="utf-8") if m else None,
+                                 src.read_text(encoding="utf-8") if src is not None and src.exists() else None):
             findings.append({"page": str(p.relative_to(ROOT)), "code": code, "detail": detail})
     print(json.dumps({"status": "clean" if not findings else "findings", "pages": len(pages),
                       "count": len(findings), "findings": findings}, ensure_ascii=False, indent=1))
