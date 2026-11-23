@@ -631,5 +631,23 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "sharehub/share-58": {
+    "queue_ref": "queue/51-sharehub-ovd-change-when-how-far",
+    "record_sha256": "43188ce2d239f268a9e6619260634935d3a64e57734d3d12a94e1354310be334",
+    "installed_at": "2026-11-23",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }
