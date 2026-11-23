@@ -3833,6 +3833,38 @@
    ]
   },
   {
+   "key": "برداشت_پوسیدگی",
+   "tag": "#برداشت_پوسیدگی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "حذفِ کاملِ پوسیدگی پیش از قضاوت درباره‌ی ساختارِ باقی‌مانده.",
+   "use_when": "مقاله برداشتِ کامل پوسیدگی را شرطِ تصمیم بداند.",
+   "aliases": [
+    "حذف پوسیدگی",
+    "برداشتن پوسیدگی",
+    "caries removal",
+    "caries excavation",
+    "پوسیدگی برداری"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-65",
+    "episodes/episode-66",
+    "episodes/episode-67",
+    "episodes/episode-135",
+    "dentai/dentai-3",
+    "dentai/dentai-11",
+    "dentai/dentai-12",
+    "dentai/dentai-15",
+    "chairside/chairside-9",
+    "insight/insight-49",
+    "metanotes/meta-21",
+    "insight/insight-118"
+   ]
+  },
+  {
    "key": "تحلیل_استخوان_کرستال",
    "tag": "#تحلیل_استخوان_کرستال",
    "domain": null,
@@ -4124,37 +4156,6 @@
     "sharehub/share-32",
     "sharehub/share-41",
     "insight/insight-115"
-   ]
-  },
-  {
-   "key": "برداشت_پوسیدگی",
-   "tag": "#برداشت_پوسیدگی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "حذفِ کاملِ پوسیدگی پیش از قضاوت درباره‌ی ساختارِ باقی‌مانده.",
-   "use_when": "مقاله برداشتِ کامل پوسیدگی را شرطِ تصمیم بداند.",
-   "aliases": [
-    "حذف پوسیدگی",
-    "برداشتن پوسیدگی",
-    "caries removal",
-    "caries excavation",
-    "پوسیدگی برداری"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-65",
-    "episodes/episode-66",
-    "episodes/episode-67",
-    "episodes/episode-135",
-    "dentai/dentai-3",
-    "dentai/dentai-11",
-    "dentai/dentai-12",
-    "dentai/dentai-15",
-    "chairside/chairside-9",
-    "insight/insight-49",
-    "metanotes/meta-21"
    ]
   },
   {
@@ -6229,6 +6230,41 @@
    ]
   },
   {
+   "key": "پوسیدگی",
+   "tag": "#پوسیدگی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "ضایعه‌ی پوسیدگی و عواملش.",
+   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
+   "aliases": [
+    "caries",
+    "کاریز",
+    "پوسیدگی دندان",
+    "Dental Caries",
+    "tooth decay",
+    "carious lesion",
+    "ضایعه پوسیدگی",
+    "کرم خوردگی دندان"
+   ],
+   "variants": [
+    "#پوسیدگی_دندان",
+    "#Dental_Caries"
+   ],
+   "co_tags": [
+    "#Dental_Caries"
+   ],
+   "count": 7,
+   "content_ids": [
+    "episodes/episode-134",
+    "episodes/episode-135",
+    "dentai/dentai-3",
+    "dentai/dentai-12",
+    "sharehub/share-7",
+    "sharehub/share-50",
+    "insight/insight-118"
+   ]
+  },
+  {
    "key": "کتاب_لینکویچیوس",
    "tag": "#کتاب_لینکویچیوس",
    "domain": "clinical",
@@ -6979,40 +7015,6 @@
     "dentai/promptologist/prompt1-4",
     "dentai/promptologist/prompt3-1",
     "dentai/dentai-28"
-   ]
-  },
-  {
-   "key": "پوسیدگی",
-   "tag": "#پوسیدگی",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "ضایعه‌ی پوسیدگی و عواملش.",
-   "use_when": "همراه یک تگ مشخص‌تر بیاید.",
-   "aliases": [
-    "caries",
-    "کاریز",
-    "پوسیدگی دندان",
-    "Dental Caries",
-    "tooth decay",
-    "carious lesion",
-    "ضایعه پوسیدگی",
-    "کرم خوردگی دندان"
-   ],
-   "variants": [
-    "#پوسیدگی_دندان",
-    "#Dental_Caries"
-   ],
-   "co_tags": [
-    "#Dental_Caries"
-   ],
-   "count": 6,
-   "content_ids": [
-    "episodes/episode-134",
-    "episodes/episode-135",
-    "dentai/dentai-3",
-    "dentai/dentai-12",
-    "sharehub/share-7",
-    "sharehub/share-50"
    ]
   },
   {
@@ -8753,6 +8755,37 @@
    ]
   },
   {
+   "key": "تشخیص_پوسیدگی",
+   "tag": "#تشخیص_پوسیدگی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "تشخیص ضایعه‌ی پوسیدگی.",
+   "use_when": "مقاله خودِ تشخیص را موضوع کند، یا آن را نمونه‌ی کارِ AI تشخیصی قرار دهد.",
+   "aliases": [
+    "caries detection",
+    "تشخیص کاریز",
+    "کشف پوسیدگی",
+    "caries diagnosis",
+    "detection of caries",
+    "کاریز دیتکشن",
+    "شناسایی پوسیدگی",
+    "یافتن پوسیدگی",
+    "تشخیص زودهنگام پوسیدگی",
+    "carious lesion detection",
+    "تشخیص ضایعات پوسیدگی",
+    "تشخیص کاریس"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "dentai/dentai-4",
+    "dentai/promptologist/prompt1-1",
+    "dentai/promptologist/prompt1-2",
+    "insight/insight-118"
+   ]
+  },
+  {
    "key": "تفکیک_منشأ_خطا",
    "tag": "#تفکیک_منشأ_خطا",
    "domain": "clinical",
@@ -9932,6 +9965,33 @@
    ]
   },
   {
+   "key": "caries_detector",
+   "tag": "#Caries_Detector",
+   "domain": null,
+   "words": 2,
+   "definition": "محلول رنگیِ تشخیص پوسیدگی.",
+   "use_when": "مقاله کاربرد یا اثرِ این محلول را بررسی کند.",
+   "aliases": [
+    "کریز دیتکتور",
+    "caries detector dye",
+    "CDD",
+    "محلول تشخیص پوسیدگی",
+    "caries detecting dye",
+    "caries indicator dye",
+    "کریز دتکتور",
+    "دتکتور پوسیدگی",
+    "رنگ تشخیص پوسیدگی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "dentai/dentai-4",
+    "dentai/dentai-12",
+    "insight/insight-118"
+   ]
+  },
+  {
    "key": "debonding",
    "tag": "#debonding",
    "domain": "clinical",
@@ -10758,36 +10818,6 @@
     "insight/insight-11",
     "insight/insight-45",
     "sharehub/share-12"
-   ]
-  },
-  {
-   "key": "تشخیص_پوسیدگی",
-   "tag": "#تشخیص_پوسیدگی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "تشخیص ضایعه‌ی پوسیدگی.",
-   "use_when": "مقاله خودِ تشخیص را موضوع کند، یا آن را نمونه‌ی کارِ AI تشخیصی قرار دهد.",
-   "aliases": [
-    "caries detection",
-    "تشخیص کاریز",
-    "کشف پوسیدگی",
-    "caries diagnosis",
-    "detection of caries",
-    "کاریز دیتکشن",
-    "شناسایی پوسیدگی",
-    "یافتن پوسیدگی",
-    "تشخیص زودهنگام پوسیدگی",
-    "carious lesion detection",
-    "تشخیص ضایعات پوسیدگی",
-    "تشخیص کاریس"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "dentai/dentai-4",
-    "dentai/promptologist/prompt1-1",
-    "dentai/promptologist/prompt1-2"
    ]
   },
   {
@@ -12417,32 +12447,6 @@
    "content_ids": [
     "dentai/promptologist/prompt1-5",
     "dentai/promptologist/prompt7-2"
-   ]
-  },
-  {
-   "key": "caries_detector",
-   "tag": "#Caries_Detector",
-   "domain": null,
-   "words": 2,
-   "definition": "محلول رنگیِ تشخیص پوسیدگی.",
-   "use_when": "مقاله کاربرد یا اثرِ این محلول را بررسی کند.",
-   "aliases": [
-    "کریز دیتکتور",
-    "caries detector dye",
-    "CDD",
-    "محلول تشخیص پوسیدگی",
-    "caries detecting dye",
-    "caries indicator dye",
-    "کریز دتکتور",
-    "دتکتور پوسیدگی",
-    "رنگ تشخیص پوسیدگی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "dentai/dentai-4",
-    "dentai/dentai-12"
    ]
   },
   {

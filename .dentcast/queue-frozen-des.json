@@ -649,5 +649,23 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "insight/insight-118": {
+    "queue_ref": "queue/29-insight-probe-catch-caries-detection",
+    "record_sha256": "b7d5634405b0f430b7d7df030c259d9f77d7013778f85516095618cf28290b04",
+    "installed_at": "2026-11-23",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }
