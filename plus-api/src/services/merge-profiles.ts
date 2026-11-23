@@ -50,6 +50,17 @@ export async function mergeProfiles(
   );
   await client.query('update pathway_exams set user_id = $2 where user_id = $1', [fromId, toId]);
 
+  // saved_boxes: one save per (reader, page, box) — saved_boxes_one_per_box.
+  // A box both accounts kept stays once, on the kept account's row.
+  await client.query(
+    `delete from saved_boxes sb
+      where sb.user_id = $1
+        and exists (select 1 from saved_boxes k
+                     where k.user_id = $2 and k.content_id = sb.content_id and k.text_hash = sb.text_hash)`,
+    [fromId, toId],
+  );
+  await client.query('update saved_boxes set user_id = $2 where user_id = $1', [fromId, toId]);
+
   // pathway_exam_attempts: unique on (form, reader, attempt_no). Two accounts
   // that both sat the same exam collide on attempt numbers; the kept
   // account's rows win and the dropped account's colliding rows go — an

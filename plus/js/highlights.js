@@ -17,18 +17,20 @@
 //      scrolls to the mark).
 //   4. Every filter lives in the URL, so a filtered view survives a refresh,
 //      the back button, and being sent to yourself.
-import { el, faNum, debounce } from './util.js?v=261';
-import { api } from './api.js?v=261';
-import { FOLDER_EN } from './content-index.js?v=261';
-import { openCollectionPicker } from './collections.js?v=261';
-import { LABELS, PALETTE } from './config.js?v=261';
+import { el, faNum, debounce } from './util.js?v=262';
+import { api } from './api.js?v=262';
+import { FOLDER_EN } from './content-index.js?v=262';
+import { openCollectionPicker } from './collections.js?v=262';
+import { LABELS, PALETTE } from './config.js?v=262';
 import {
   foldFa, highlightHref, hlMark, noteBlock, labelChip, actionBtn, asText,
   copyToClipboard, toast, skeleton, confirmStrip, inlineEditor,
-} from './hl-view.js?v=261';
+} from './hl-view.js?v=262';
 // قطعه‌های صوتی ride in the same library: a clip is a highlight in time, so it
 // sits in its episode's group beside the caption highlights (clip-view.js).
-import { clipCard, createClipPlayer, clipAsText } from './clip-view.js?v=261';
+import { clipCard, createClipPlayer, clipAsText } from './clip-view.js?v=262';
+// کادرهای ذخیره‌شده ride in it too: a box kept whole from an article (box-view.js).
+import { boxCard, boxAsText } from './box-view.js?v=262';
 
 // How many article groups (or flat cards) are drawn before the "load more"
 // sentinel takes over. A library of a few thousand highlights must not build a
@@ -55,8 +57,8 @@ function readState() {
     color: p.get('color') || '',
     folder: p.get('folder') || '',
     concept: p.get('concept') || '',
-    // «نوع»: text highlights, audio clips, or both (the default).
-    kind: p.get('kind') === 'clip' || p.get('kind') === 'text' ? p.get('kind') : '',
+    // «نوع»: text highlights, audio clips, saved boxes, or all (the default).
+    kind: ['clip', 'text', 'box'].includes(p.get('kind')) ? p.get('kind') : '',
     sort: SORTS.some((s) => s.key === sort) ? sort : 'recent',
     view: p.get('view') === 'flat' ? 'flat' : 'grouped',
   };
@@ -78,10 +80,13 @@ function writeState(state) {
   history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
 }
 
-// --- one item (a text highlight or an audio clip) ---------------------------
+// --- one item (a text highlight, an audio clip or a saved box) -------------
 const isClip = (h) => h && h.kind === 'clip';
-/** Plain text of either kind, for the copy actions. */
-const itemText = (h, article = null) => (isClip(h) ? clipAsText(h, article) : asText(h));
+const isBox = (h) => h && h.kind === 'box';
+/** 'text' | 'clip' | 'box' — what the «نوع» filter compares. */
+const kindOf = (h) => (isClip(h) ? 'clip' : isBox(h) ? 'box' : 'text');
+/** Plain text of any kind, for the copy actions. */
+const itemText = (h, article = null) => (isClip(h) ? clipAsText(h, article) : isBox(h) ? boxAsText(h, article) : asText(h));
 /** «where it came from», for the flat view — one line, both kinds. */
 function sourceLink(article) {
   return el('a', { class: 'dcp-hlib-src', href: article.url }, [
@@ -90,6 +95,7 @@ function sourceLink(article) {
   ]);
 }
 function itemCard(article, h, ctx) {
+  if (isBox(h)) return boxCard(article, h, { ...ctx, source: sourceLink });
   return isClip(h)
     ? clipCard(article, h, { ...ctx, source: sourceLink, onCollect: (clip) => openCollectionPicker({ clipId: clip.id }) })
     : highlightCard(article, h, ctx);
@@ -172,10 +178,12 @@ function articleGroup(article, ctx) {
       article.title + '\n\n' + article.highlights.map((h) => itemText(h)).join('\n\n'), e.currentTarget,
     ),
   });
-  // «۲ هایلایت · ۱ هایلایت صوتی» — each kind counted by its own name.
-  const nText = article.highlights.filter((h) => !isClip(h)).length;
-  const nClip = article.highlights.length - nText;
-  const countText = [nText ? faNum(nText) + ' هایلایت' : null, nClip ? faNum(nClip) + ' هایلایت صوتی' : null].filter(Boolean).join(' · ');
+  // «۲ هایلایت · ۱ هایلایت صوتی · ۱ کادر» — each kind counted by its own name.
+  const nClip = article.highlights.filter(isClip).length;
+  const nBox = article.highlights.filter(isBox).length;
+  const nText = article.highlights.length - nClip - nBox;
+  const countText = [nText ? faNum(nText) + ' هایلایت' : null, nClip ? faNum(nClip) + ' هایلایت صوتی' : null,
+    nBox ? faNum(nBox) + ' کادر' : null].filter(Boolean).join(' · ');
 
   const head = el('div', { class: 'dcp-hlib-ghead' }, [
     toggle,
@@ -225,6 +233,35 @@ function mergeClips(data, clipLib) {
   data.article_count = data.articles.length;
 }
 
+/**
+ * The saved boxes (GET /boxes/library) join the same way: a box is an item of
+ * its article's group with kind 'box', in the order the reader saved them.
+ * `box_total` is kept beside `total` so the headline can name the kind.
+ */
+function mergeBoxes(data, boxLib) {
+  const byId = new Map(data.articles.map((a) => [a.content_id, a]));
+  let added = 0;
+  for (const g of boxLib.articles || []) {
+    let a = byId.get(g.content_id);
+    if (!a) {
+      a = { ...g, highlights: [], last_highlight_at: g.last_box_at, count: 0 };
+      delete a.boxes;
+      byId.set(g.content_id, a);
+      data.articles.push(a);
+    }
+    for (const b of g.boxes || []) {
+      a.highlights.push({ ...b, kind: 'box' });
+      added += 1;
+    }
+    if (g.last_box_at > (a.last_highlight_at || '')) a.last_highlight_at = g.last_box_at;
+    a.count = a.highlights.length;
+  }
+  data.articles.sort((x, y) => String(y.last_highlight_at || '').localeCompare(String(x.last_highlight_at || '')));
+  data.total = (data.total || 0) + added;
+  data.box_total = added;
+  data.article_count = data.articles.length;
+}
+
 /** GET /plus/highlights.html — the whole library. */
 export async function renderHighlightLibrary(container) {
   container.replaceChildren(skeleton(3));
@@ -232,12 +269,14 @@ export async function renderHighlightLibrary(container) {
   // The concept catalog rides beside the library: every concept the reader's
   // highlights reach, with counts (plus-api services/highlight-concepts.ts).
   // Optional — a library with no concept row is still the library.
-  const [data, conceptCatalog, clipLib] = await Promise.all([
+  const [data, conceptCatalog, clipLib, boxLib] = await Promise.all([
     api.highlightLibrary().catch(() => null),
     api.highlightConcepts().catch(() => null),
     api.clipLibrary().catch(() => null),
+    api.boxLibrary().catch(() => null),
   ]);
   if (data && clipLib) mergeClips(data, clipLib);
+  if (data && boxLib) mergeBoxes(data, boxLib);
   if (!data) {
     container.replaceChildren(el('div', { class: 'dcp-empty' }, [
       el('p', {}, 'هایلایت‌ها در دسترس نیست.'),
@@ -331,14 +370,16 @@ export async function renderHighlightLibrary(container) {
 
   function matches(a, h) {
     if (state.folder && a.folder !== state.folder) return false;
-    if (state.kind === 'clip' && !isClip(h)) return false;
-    if (state.kind === 'text' && isClip(h)) return false;
-    if (state.label && h.label !== state.label) return false;
-    // A clip has no colour, so a colour filter is a text filter by definition.
-    if (state.color && (isClip(h) || (h.color || '') !== state.color)) return false;
+    if (state.kind && kindOf(h) !== state.kind) return false;
+    // A saved box's label is the article's («نکته‌ی بالینی»), not one of the
+    // reader's highlight labels, so a label filter is a filter on the others.
+    if (state.label && (isBox(h) || h.label !== state.label)) return false;
+    // A clip or a box has no colour, so a colour filter is a text filter by definition.
+    if (state.color && (kindOf(h) !== 'text' || (h.color || '') !== state.color)) return false;
     if (!state.q) return true;
     const q = foldFa(state.q);
-    return foldFa(h.exact).includes(q) || foldFa(h.note).includes(q) || foldFa(a.title).includes(q);
+    return foldFa(h.exact).includes(q) || foldFa(h.note).includes(q) || foldFa(h.text).includes(q)
+      || foldFa(h.label && isBox(h) ? h.label : '').includes(q) || foldFa(a.title).includes(q);
   }
 
   function filteredGroups() {
@@ -359,6 +400,7 @@ export async function renderHighlightLibrary(container) {
       m.articles = m.articles.filter((a) => a.highlights.length);
       m.total = m.articles.reduce((n, a) => n + a.highlights.length, 0);
       m.clip_total = m.articles.reduce((n, a) => n + a.highlights.filter(isClip).length, 0);
+      m.box_total = m.articles.reduce((n, a) => n + a.highlights.filter(isBox).length, 0);
       m.article_count = m.articles.length;
     }
     render();
@@ -389,7 +431,7 @@ export async function renderHighlightLibrary(container) {
     const concepts = (conceptCatalog && conceptCatalog.concepts) || [];
     // A concept view carries no clips (server-side, text only), so under the
     // «هایلایت صوتی» filter the row could only ever lead out of it.
-    if (!concepts.length || state.kind === 'clip') { conceptChips.hidden = true; return; }
+    if (!concepts.length || state.kind === 'clip' || state.kind === 'box') { conceptChips.hidden = true; return; }
     conceptChips.hidden = false;
     // Eight by default; the chosen one always among them, so a deep link to
     // the twentieth concept still shows its own chip lit.
@@ -453,9 +495,9 @@ export async function renderHighlightLibrary(container) {
       if (state.folder && a.folder !== state.folder) continue;
       // Counts follow the «نوع» filter, or the label chips under «هایلایت
       // صوتی» would advertise text highlights the list cannot show.
-      if (state.kind === 'clip' && !isClip(h)) continue;
-      if (state.kind === 'text' && isClip(h)) continue;
+      if (state.kind && kindOf(h) !== state.kind) continue;
       total += 1;
+      if (isBox(h)) continue; // a box carries no reader label and no colour
       counts.set('l:' + (h.label || ''), (counts.get('l:' + (h.label || '')) || 0) + 1);
       counts.set('c:' + (h.color || ''), (counts.get('c:' + (h.color || '')) || 0) + 1);
     }
@@ -475,7 +517,7 @@ export async function renderHighlightLibrary(container) {
     // Colour is how a reader actually files things while reading, so it is a
     // first-class filter, shown as the swatches themselves. A clip has no
     // colour, so the row is empty under the «هایلایت صوتی» filter.
-    const swatches = state.kind === 'clip' ? [] : PALETTE.filter((p) => (counts.get('c:' + p.key) || 0) > 0);
+    const swatches = state.kind === 'clip' || state.kind === 'box' ? [] : PALETTE.filter((p) => (counts.get('c:' + p.key) || 0) > 0);
     colorRow.replaceChildren(...(swatches.length ? [
       ...swatches.map((p) => {
         const b = el('button', {
@@ -498,14 +540,16 @@ export async function renderHighlightLibrary(container) {
   function buildKindChips() {
     const all = allHighlights();
     const nClip = all.filter(({ h }) => isClip(h)).length;
-    if (!nClip || conceptView) { kindChips.replaceChildren(); kindChips.hidden = true; return; }
+    const nBox = all.filter(({ h }) => isBox(h)).length;
+    if ((!nClip && !nBox) || conceptView) { kindChips.replaceChildren(); kindChips.hidden = true; return; }
     kindChips.hidden = false;
-    const nText = all.length - nClip;
+    const nText = all.length - nClip - nBox;
     const defs = [
       { key: '', fa: 'همه', n: all.length },
       { key: 'text', fa: 'متن', n: nText },
-      { key: 'clip', fa: '🎧 هایلایت صوتی', n: nClip },
-    ];
+      nClip ? { key: 'clip', fa: '🎧 هایلایت صوتی', n: nClip } : null,
+      nBox ? { key: 'box', fa: '▭ کادرها', n: nBox } : null,
+    ].filter(Boolean);
     kindChips.replaceChildren(el('span', { class: 'dcp-hlib-chips-label' }, 'نوع'), ...defs.map((d) => {
       const b = el('button', {
         class: 'dcp-hlib-chip' + (d.key === state.kind ? ' is-on' : ''), type: 'button', 'data-kind': d.key,
@@ -578,13 +622,15 @@ export async function renderHighlightLibrary(container) {
     // With clips in the library the headline counts each kind by its name:
     // «۱۳۲ هایلایت · ۹ هایلایت صوتی در ۴۱ مطلب».
     const clipTotal = src.clip_total || 0;
-    const textTotal = src.total - clipTotal;
-    const kinds = clipTotal
-      ? faNum(textTotal) + ' هایلایت · ' + faNum(clipTotal) + ' هایلایت صوتی'
+    const boxTotal = src.box_total || 0;
+    const textTotal = src.total - clipTotal - boxTotal;
+    const kinds = clipTotal || boxTotal
+      ? [faNum(textTotal) + ' هایلایت', clipTotal ? faNum(clipTotal) + ' هایلایت صوتی' : null,
+        boxTotal ? faNum(boxTotal) + ' کادر' : null].filter(Boolean).join(' · ')
       : faNum(src.total) + ' هایلایت';
-    // Filtered, with both kinds in the library, «۳ از ۴ مورد» — «۳ از ۱ هایلایت
-    // · ۳ هایلایت صوتی» reads as a sum that does not add up.
-    const of = clipTotal ? faNum(src.total) + ' مورد' : faNum(src.total) + ' هایلایت';
+    // Filtered, with more than one kind in the library, «۳ از ۴ مورد» — «۳ از
+    // ۱ هایلایت · ۳ هایلایت صوتی» reads as a sum that does not add up.
+    const of = clipTotal || boxTotal ? faNum(src.total) + ' مورد' : faNum(src.total) + ' هایلایت';
     countLine.replaceChildren(...(shown === src.total
       ? [document.createTextNode(kinds + ' در ' + faNum(src.article_count) + ' مطلب')]
       : [el('b', {}, faNum(shown)), document.createTextNode(' از ' + of + '، در ' + faNum(groups.length) + ' مطلب')]));

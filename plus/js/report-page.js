@@ -2,13 +2,13 @@
 // reading-compass-page.js: a stranger is asked to sign in, a free reader sees
 // the upsell, an unreachable API is NOT a missing subscription, and a premium
 // reader gets the report (report.js).
-import { el } from './util.js?v=261';
-import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=261';
-import { currentUser, meStatus } from './api.js?v=261';
-import { openLoginModal } from './login-modal.js?v=261';
-import { renderReportPage, monthFromUrl } from './report.js?v=261';
-import { registerSW } from './pwa.js?v=261';
-import { wirePageBack } from './page-back.js?v=261';
+import { el } from './util.js?v=262';
+import { premiumCta, lapsedNote, guestPremiumExtras, unreachableGate } from './premium-cta.js?v=262';
+import { currentUser, meStatus } from './api.js?v=262';
+import { openLoginModal } from './login-modal.js?v=262';
+import { renderReportPage, monthFromUrl } from './report.js?v=262';
+import { registerSW } from './pwa.js?v=262';
+import { wirePageBack } from './page-back.js?v=262';
 
 function premiumGate(root, me) {
   root.replaceChildren(el('div', { class: 'dcp-gate' }, [

@@ -20,6 +20,8 @@ let conceptsResponse: any = null;
 let conceptViewResponse: any = null;
 const conceptCalls: string[] = [];
 let clipLibResponse: any = null;
+let boxLibResponse: any = null;
+const boxDeleted: string[] = [];
 const addedToCollection: Array<{ id: string; item: any }> = [];
 const clipDeleted: string[] = [];
 const clipPatched: Array<{ id: string; patch: any }> = [];
@@ -39,6 +41,8 @@ vi.mock('/plus/js/api.js', () => ({
     listCollections: () => Promise.resolve({ collections: [{ id: 'c1', title: 'برد اول', item_count: 0, preview: [] }] }),
     addToCollection: (id: string, item: any) => { addedToCollection.push({ id, item }); return Promise.resolve({ ok: true }); },
     clipLibrary: () => (clipLibResponse ? Promise.resolve(clipLibResponse) : Promise.reject(new Error('none'))),
+    boxLibrary: () => (boxLibResponse ? Promise.resolve(boxLibResponse) : Promise.reject(new Error('none'))),
+    deleteBox: (id: string) => { boxDeleted.push(id); return Promise.resolve({ ok: true }); },
     deleteClip: (id: string) => { clipDeleted.push(id); return Promise.resolve({ ok: true }); },
     clipAudio: (id: string) => { clipAudioCalls.push(id); return clipAudioImpl(id); },
     updateClip: (id: string, patch: any) => {
@@ -599,5 +603,82 @@ describe('a clip card downloads its audio', () => {
     expect(clicked).toEqual([]);
     expect(document.querySelector('.dcp-cl-toast')!.textContent).toContain('دانلود نشد');
     expect(btn.disabled).toBe(false);
+  });
+});
+
+
+// --- کادرهای ذخیره‌شده in the same library ---------------------------------------
+function boxLibrary() {
+  return {
+    total: 2, article_count: 1,
+    articles: [{
+      content_id: 'sharehub/share-10',
+      title: 'Resistance Form در روکش‌ها', url: '/sharehub/share-10.html',
+      type: 'sharehub', folder: 'sharehub', folder_fa: 'مرور منابع',
+      last_box_at: '2026-11-23T10:00:00Z', count: 2,
+      boxes: [
+        { id: 'box-1', content_id: 'sharehub/share-10', label: 'نکته‌ی بالینی', text: 'resistance form عمدتاً در مرحلهٔ تراش تعیین می‌شود.', created_at: '2026-11-23T09:00:00Z' },
+        { id: 'box-2', content_id: 'sharehub/share-10', label: null, text: 'Clinical Tip: روکش را اول کامل بنشانید.', created_at: '2026-11-23T10:00:00Z' },
+      ],
+    }],
+  };
+}
+
+describe('saved boxes in the library («کادرها»)', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '<div id="root"></div>';
+    history.replaceState(null, '', '/plus/highlights.html');
+    libraryResponse = library();
+    clipLibResponse = null;
+    boxLibResponse = boxLibrary();
+    conceptsResponse = null;
+    boxDeleted.length = 0;
+  });
+
+  it('a saved box is a card in its article\'s group — the label, then the whole text — and the headline names the kind', async () => {
+    await renderHighlightLibrary(document.getElementById('root')!);
+    expect(document.querySelectorAll('.dcp-hlib-group')).toHaveLength(3);
+    expect(document.querySelector('.dcp-hlib-group .dcp-hlib-gtitle')!.textContent).toBe('Resistance Form در روکش‌ها');
+    const cards = [...document.querySelectorAll('.dcp-box-card')];
+    expect(cards).toHaveLength(2);
+    expect(cards[0].querySelector('.dcp-box-card-k')!.textContent).toBe('نکته‌ی بالینی');
+    expect(cards[0].querySelector('.dcp-box-card-t')!.textContent).toBe('resistance form عمدتاً در مرحلهٔ تراش تعیین می‌شود.');
+    expect(cards[1].querySelector('.dcp-box-card-k')!.textContent).toBe('کادر');
+    expect(cards[0].closest('a')).toBeNull();
+    expect(document.querySelector('.dcp-hlib-count')!.textContent).toContain('۲ کادر');
+  });
+
+  it('the «نوع» row offers «کادرها», and the filter lives in the URL', async () => {
+    await renderHighlightLibrary(document.getElementById('root')!);
+    const kinds = document.querySelector('.dcp-hlib-kinds') as HTMLElement;
+    expect(kinds.hidden).toBe(false);
+    (kinds.querySelector('[data-kind="box"]') as HTMLElement).click();
+    expect(location.search).toBe('?kind=box');
+    expect(document.querySelectorAll('.dcp-hlib-card')).toHaveLength(2);
+    expect(document.querySelectorAll('.dcp-box-card')).toHaveLength(2);
+    expect(kinds.querySelector('[data-kind="clip"]')).toBeNull(); // no clips, no clip chip
+  });
+
+  it('a colour filter never matches a box; a search reads the box\'s words', async () => {
+    history.replaceState(null, '', '/plus/highlights.html?color=green');
+    await renderHighlightLibrary(document.getElementById('root')!);
+    expect(document.querySelectorAll('.dcp-box-card')).toHaveLength(0);
+    history.replaceState(null, '', '/plus/highlights.html?q=' + encodeURIComponent('کامل بنشانید'));
+    document.body.innerHTML = '<div id="root"></div>';
+    libraryResponse = library(); boxLibResponse = boxLibrary(); // the first render merged into these
+    await renderHighlightLibrary(document.getElementById('root')!);
+    expect(document.querySelectorAll('.dcp-hlib-card')).toHaveLength(1);
+    expect(document.querySelectorAll('.dcp-box-card')).toHaveLength(1);
+  });
+
+  it('«حذف» asks, then removes the box from the notebook', async () => {
+    await renderHighlightLibrary(document.getElementById('root')!);
+    const card = document.querySelector('.dcp-box-card') as HTMLElement;
+    actNamed('حذف', card).click();
+    (card.querySelector('.dcp-recent-confirm .dcp-btn-danger') as HTMLElement).click();
+    await new Promise((r) => setTimeout(r, 0));
+    await new Promise((r) => setTimeout(r, 0));
+    expect(boxDeleted).toEqual(['box-1']);
+    expect(document.querySelectorAll('.dcp-box-card')).toHaveLength(1);
   });
 });

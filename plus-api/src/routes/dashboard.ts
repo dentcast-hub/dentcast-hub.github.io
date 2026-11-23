@@ -343,6 +343,14 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
         order by content_id asc, start_s asc`,
       [request.user!.id],
     );
+    // کادرهای ذخیره‌شده (saved_boxes): premium to SAVE, the reader's own data
+    // after that — the same rule as the clips above.
+    const boxes = await pool.query(
+      `select content_id, label, text, created_at
+         from saved_boxes where user_id = $1
+        order by content_id asc, created_at asc`,
+      [request.user!.id],
+    );
     reply.header('content-disposition', 'attachment; filename="dentcast-highlights.json"');
     return reply.send({
       exported_at: new Date().toISOString(),
@@ -351,6 +359,7 @@ export async function dashboardRoutes(app: FastifyInstance): Promise<void> {
       highlights: rows.rows,
       snippets: snippets.rows,
       clips: clips.rows,
+      boxes: boxes.rows,
     });
   });
 }

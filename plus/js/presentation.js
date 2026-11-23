@@ -9,7 +9,8 @@
 // it on a standalone page (it runs before first paint, so nothing moves), and
 // buildGlance() here builds it in the desktop shell, where that script is
 // stripped from the fetched article. Both find-or-create `#dcGlance`.
-import { el, faNum } from './util.js?v=261';
+import { el, faNum } from './util.js?v=262';
+import { mountBoxSave, boxLabel } from './box-save.js?v=262';
 
 const LAYER = '[data-dc-presentation]';
 const BOX = '.dc-box, div[role="note"]';
@@ -22,7 +23,7 @@ const TEXT = {
 };
 
 // The author's words inside a box: its text without the layer's label.
-function boxText(box) {
+export function boxText(box) {
   let s = '';
   const w = document.createTreeWalker(box, NodeFilter.SHOW_TEXT);
   let n;
@@ -67,9 +68,9 @@ export function buildGlance(boxes, scope = document) {
   const card = el('div', { class: 'dc-glance', id: 'dcGlance', 'data-dc-presentation': '' },
     [el('p', { class: 'dc-glance-h' }, T.glance)]);
   notes.forEach((box) => {
-    const label = box.querySelector(':scope > ' + LAYER);
+    const label = boxLabel(box); // never the «ذخیره در دفترچه» row box-save.js appends
     const btn = el('button', { type: 'button' }, [
-      el('span', { class: 'dc-glance-lab' }, label ? label.textContent.trim() : '•'),
+      el('span', { class: 'dc-glance-lab' }, label || '•'),
       el('span', { class: 'dc-glance-tx' }, boxText(box)),
     ]);
     btn.addEventListener('click', () => flashBox(box));
@@ -235,9 +236,12 @@ export function mountGlossaryPreview(root) {
 }
 
 /** Everything a page's presentation layer gets at run time, on either shell. */
-export function mountPresentation(root, boxes, scope = document) {
+export function mountPresentation(root, boxes, scope = document, contentId = null) {
   if (!root) return;
   try { buildGlance(boxes, scope); } catch (_) { /* never take an article down */ }
   try { mountSectionPill(root); } catch (_) { /* same */ }
   try { mountGlossaryPreview(root); } catch (_) { /* same */ }
+  // «ذخیره در دفترچه» on every box (box-save.js) — after «در یک نگاه», which
+  // reads the boxes' words, and asynchronous: it waits for /me.
+  if (contentId) mountBoxSave(pageBoxes(boxes), contentId, boxText).catch(() => {});
 }

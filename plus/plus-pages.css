@@ -2498,3 +2498,11 @@ body.dcp-page a.dcb-railcard { background: var(--p2-card); border-color: transpa
 /* QA 2026-10-27 */
 /* a pasted URL or a long unbroken label must wrap, not widen the page */
 .dcp-pw-step-title { overflow-wrap: anywhere; min-width: 0; }
+
+/* A saved box in the دفترچه (plus/js/box-view.js): the box as the author framed
+   it — its label, then its words — drawn in the box's own blue frame (the
+   inline-start rule of .dc-box on the page), so it reads as the article's
+   words kept whole, not as a highlight the reader drew. */
+.dcp-box-card { border-inline-start:4px solid var(--chip-bd, rgba(11, 95, 255, .2)); }
+.dcp-box-card-k { display:inline-block; font-size:.8rem; font-weight:700; color:var(--chip-txt, #022360); }
+.dcp-box-card-t { margin:.15rem 0 .4rem; line-height:1.9; white-space:pre-line; }
