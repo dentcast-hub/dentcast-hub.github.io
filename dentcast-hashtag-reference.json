@@ -894,6 +894,77 @@
    ]
   },
   {
+   "key": "مرور_منابع",
+   "tag": "#مرور_منابع",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام بخش مرور منابع (پیش‌تر Share Hub / شیرهاب) — خوانش دنت‌کست از یک یا چند مقاله، همیشه با ذکر منبع.",
+   "use_when": "روی هر مدخل مرور منابع (پوشهٔ sharehub/)، و هیچ‌جای دیگر.",
+   "aliases": [
+    "share hub",
+    "share_hub",
+    "شیرهاب",
+    "شر هاب"
+   ],
+   "variants": [
+    "#Share_Hub"
+   ],
+   "co_tags": [],
+   "count": 50,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25",
+    "sharehub/share-26",
+    "sharehub/share-27",
+    "sharehub/share-28",
+    "sharehub/share-29",
+    "sharehub/share-30",
+    "sharehub/share-31",
+    "sharehub/share-32",
+    "sharehub/share-33",
+    "sharehub/share-34",
+    "sharehub/share-35",
+    "sharehub/share-36",
+    "sharehub/share-38",
+    "sharehub/share-39",
+    "sharehub/share-40",
+    "sharehub/share-41",
+    "sharehub/share-42",
+    "sharehub/share-43",
+    "sharehub/share-44",
+    "sharehub/share-45",
+    "sharehub/share-46",
+    "sharehub/share-47",
+    "sharehub/share-51",
+    "sharehub/share-52",
+    "sharehub/share-55",
+    "sharehub/share-58"
+   ]
+  },
+  {
    "key": "کیس_بالینی",
    "tag": "#کیس_بالینی",
    "domain": "brand",
@@ -964,76 +1035,6 @@
     "chairside/chairside-50",
     "chairside/chairside-51",
     "chairside/chairside-52"
-   ]
-  },
-  {
-   "key": "مرور_منابع",
-   "tag": "#مرور_منابع",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام بخش مرور منابع (پیش‌تر Share Hub / شیرهاب) — خوانش دنت‌کست از یک یا چند مقاله، همیشه با ذکر منبع.",
-   "use_when": "روی هر مدخل مرور منابع (پوشهٔ sharehub/)، و هیچ‌جای دیگر.",
-   "aliases": [
-    "share hub",
-    "share_hub",
-    "شیرهاب",
-    "شر هاب"
-   ],
-   "variants": [
-    "#Share_Hub"
-   ],
-   "co_tags": [],
-   "count": 49,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24",
-    "sharehub/share-25",
-    "sharehub/share-26",
-    "sharehub/share-27",
-    "sharehub/share-28",
-    "sharehub/share-29",
-    "sharehub/share-30",
-    "sharehub/share-31",
-    "sharehub/share-32",
-    "sharehub/share-33",
-    "sharehub/share-34",
-    "sharehub/share-35",
-    "sharehub/share-36",
-    "sharehub/share-38",
-    "sharehub/share-39",
-    "sharehub/share-40",
-    "sharehub/share-41",
-    "sharehub/share-42",
-    "sharehub/share-43",
-    "sharehub/share-44",
-    "sharehub/share-45",
-    "sharehub/share-46",
-    "sharehub/share-47",
-    "sharehub/share-51",
-    "sharehub/share-52",
-    "sharehub/share-55"
    ]
   },
   {
@@ -2835,6 +2836,43 @@
    ]
   },
   {
+   "key": "سایش_دندان",
+   "tag": "#سایش_دندان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتنِ ساختار در اثر نیروهای مکرر.",
+   "use_when": "مقاله سایش را بسنجد یا مدیریت کند.",
+   "aliases": [
+    "tooth wear",
+    "ساییدگی دندان",
+    "attrition",
+    "ساییدگی",
+    "اتریشن",
+    "tooth surface loss"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 16,
+   "content_ids": [
+    "episodes/episode-34",
+    "episodes/episode-125",
+    "episodes/episode-127",
+    "insight/insight-6",
+    "insight/insight-11",
+    "insight/insight-43",
+    "notecast/episode-34",
+    "notecast/episode-35",
+    "dentai/dentai-24",
+    "dentai/dentai-26",
+    "chairside/chairside-23",
+    "sharehub/share-11",
+    "sharehub/share-21",
+    "sharehub/share-24",
+    "sharehub/share-53",
+    "sharehub/share-58"
+   ]
+  },
+  {
    "key": "قالب_گیری_دیجیتال",
    "tag": "#قالب‌گیری_دیجیتال",
    "domain": "clinical",
@@ -2954,6 +2992,48 @@
    ]
   },
   {
+   "key": "بعد_عمودی",
+   "tag": "#بعد_عمودی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Vertical Dimension — ارتفاع عمودی صورت در اکلوژن؛ متغیری که تغییرش کل بازسازی را جابه‌جا می‌کند.",
+   "use_when": "مقاله بعد عمودی را بسنجد، تغییر بدهد، یا درباره‌ی تغییرش تصمیم بگیرد.",
+   "aliases": [
+    "ارتفاع عمودی",
+    "دایمنشن عمودی",
+    "بعد عمودی صورت",
+    "Vertical Dimension",
+    "ورتیکال دایمنشن",
+    "ورتیکال دیمنشن"
+   ],
+   "variants": [
+    "#VerticalDimension",
+    "#Vertical_Dimension"
+   ],
+   "co_tags": [
+    "#Vertical_Dimension",
+    "#VDO"
+   ],
+   "count": 15,
+   "content_ids": [
+    "episodes/episode-14",
+    "insight/insight-2",
+    "insight/insight-6",
+    "insight/insight-12",
+    "notecast/episode-14",
+    "episodes/episode-154",
+    "episodes/episode-155",
+    "insight/insight-43",
+    "notecast/episode-34",
+    "notecast/episode-35",
+    "insight/insight-51",
+    "insight/insight-60",
+    "metanotes/meta-22",
+    "sharehub/share-53",
+    "sharehub/share-58"
+   ]
+  },
+  {
    "key": "حفظ_دندان",
    "tag": "#حفظ_دندان",
    "domain": "clinical",
@@ -3022,42 +3102,6 @@
     "insight/insight-76",
     "insight/insight-84",
     "sharehub/share-30"
-   ]
-  },
-  {
-   "key": "سایش_دندان",
-   "tag": "#سایش_دندان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "از دست رفتنِ ساختار در اثر نیروهای مکرر.",
-   "use_when": "مقاله سایش را بسنجد یا مدیریت کند.",
-   "aliases": [
-    "tooth wear",
-    "ساییدگی دندان",
-    "attrition",
-    "ساییدگی",
-    "اتریشن",
-    "tooth surface loss"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 15,
-   "content_ids": [
-    "episodes/episode-34",
-    "episodes/episode-125",
-    "episodes/episode-127",
-    "insight/insight-6",
-    "insight/insight-11",
-    "insight/insight-43",
-    "notecast/episode-34",
-    "notecast/episode-35",
-    "dentai/dentai-24",
-    "dentai/dentai-26",
-    "chairside/chairside-23",
-    "sharehub/share-11",
-    "sharehub/share-21",
-    "sharehub/share-24",
-    "sharehub/share-53"
    ]
   },
   {
@@ -3206,47 +3250,6 @@
     "dentai/dentai-34",
     "chairside/chairside-38",
     "sharehub/share-50"
-   ]
-  },
-  {
-   "key": "بعد_عمودی",
-   "tag": "#بعد_عمودی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "Vertical Dimension — ارتفاع عمودی صورت در اکلوژن؛ متغیری که تغییرش کل بازسازی را جابه‌جا می‌کند.",
-   "use_when": "مقاله بعد عمودی را بسنجد، تغییر بدهد، یا درباره‌ی تغییرش تصمیم بگیرد.",
-   "aliases": [
-    "ارتفاع عمودی",
-    "دایمنشن عمودی",
-    "بعد عمودی صورت",
-    "Vertical Dimension",
-    "ورتیکال دایمنشن",
-    "ورتیکال دیمنشن"
-   ],
-   "variants": [
-    "#VerticalDimension",
-    "#Vertical_Dimension"
-   ],
-   "co_tags": [
-    "#Vertical_Dimension",
-    "#VDO"
-   ],
-   "count": 14,
-   "content_ids": [
-    "episodes/episode-14",
-    "insight/insight-2",
-    "insight/insight-6",
-    "insight/insight-12",
-    "notecast/episode-14",
-    "episodes/episode-154",
-    "episodes/episode-155",
-    "insight/insight-43",
-    "notecast/episode-34",
-    "notecast/episode-35",
-    "insight/insight-51",
-    "insight/insight-60",
-    "metanotes/meta-22",
-    "sharehub/share-53"
    ]
   },
   {
@@ -3794,6 +3797,42 @@
    ]
   },
   {
+   "key": "افزایش_vd",
+   "tag": "#افزایش_VD",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بالا بردن بعد عمودی — تصمیمی که فضا می‌سازد و همزمان ریسک می‌آورد.",
+   "use_when": "مقاله درباره‌ی خودِ افزایش VD تصمیم بگیرد: اندیکاسیون، مقدار، یا ریسک.",
+   "aliases": [
+    "بالا بردن بعد عمودی",
+    "افزایش بعد عمودی",
+    "افزایش دایمنشن عمودی",
+    "افزایش ورتیکال",
+    "افزایش ارتفاع عمودی",
+    "افزایش vdo",
+    "increasing vdo",
+    "bite raising",
+    "بایت ریزینگ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "episodes/episode-14",
+    "episodes/episode-34",
+    "episodes/episode-35",
+    "insight/insight-12",
+    "notecast/episode-14",
+    "episodes/episode-154",
+    "episodes/episode-155",
+    "insight/insight-43",
+    "notecast/episode-35",
+    "insight/insight-77",
+    "insight/insight-88",
+    "sharehub/share-58"
+   ]
+  },
+  {
    "key": "تحلیل_استخوان_کرستال",
    "tag": "#تحلیل_استخوان_کرستال",
    "domain": null,
@@ -3860,6 +3899,52 @@
     "sharehub/share-41",
     "notecast/episode-44",
     "insight/insight-115"
+   ]
+  },
+  {
+   "key": "فضای_رستوریتیو",
+   "tag": "#فضای_رستوریتیو",
+   "domain": null,
+   "words": 2,
+   "definition": "فضای عمودیِ لازم برای بازسازی.",
+   "use_when": "مقاله کمبود یا اشغالِ این فضا را مسئله بداند.",
+   "aliases": [
+    "فضای بازسازی",
+    "restorative space",
+    "فضای پروتزی",
+    "فضای بین فکی",
+    "interocclusal space",
+    "کمبود فضای عمودی",
+    "فضای عمودی کم",
+    "فضای عمودی",
+    "فضای اینتراکلوزال",
+    "فضای بین اکلوزالی",
+    "فضای اکلوزالی",
+    "کمبود فضای بازسازی",
+    "interocclusal clearance",
+    "prosthetic space",
+    "crown height space",
+    "interarch space",
+    "فضای ترمیمی"
+   ],
+   "variants": [
+    "#کمبود_فضای_عمودی"
+   ],
+   "co_tags": [],
+   "count": 12,
+   "content_ids": [
+    "insight/insight-6",
+    "insight/insight-10",
+    "insight/insight-19",
+    "insight/insight-43",
+    "notecast/episode-34",
+    "insight/insight-46",
+    "chairside/chairside-19",
+    "insight/insight-57",
+    "chairside/chairside-31",
+    "insight/insight-78",
+    "sharehub/share-53",
+    "sharehub/share-58"
    ]
   },
   {
@@ -3966,41 +4051,6 @@
     "dentai/dentai-30",
     "sharehub/share-27",
     "sharehub/share-32"
-   ]
-  },
-  {
-   "key": "افزایش_vd",
-   "tag": "#افزایش_VD",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "بالا بردن بعد عمودی — تصمیمی که فضا می‌سازد و همزمان ریسک می‌آورد.",
-   "use_when": "مقاله درباره‌ی خودِ افزایش VD تصمیم بگیرد: اندیکاسیون، مقدار، یا ریسک.",
-   "aliases": [
-    "بالا بردن بعد عمودی",
-    "افزایش بعد عمودی",
-    "افزایش دایمنشن عمودی",
-    "افزایش ورتیکال",
-    "افزایش ارتفاع عمودی",
-    "افزایش vdo",
-    "increasing vdo",
-    "bite raising",
-    "بایت ریزینگ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "episodes/episode-14",
-    "episodes/episode-34",
-    "episodes/episode-35",
-    "insight/insight-12",
-    "notecast/episode-14",
-    "episodes/episode-154",
-    "episodes/episode-155",
-    "insight/insight-43",
-    "notecast/episode-35",
-    "insight/insight-77",
-    "insight/insight-88"
    ]
   },
   {
@@ -4227,51 +4277,6 @@
    ]
   },
   {
-   "key": "فضای_رستوریتیو",
-   "tag": "#فضای_رستوریتیو",
-   "domain": null,
-   "words": 2,
-   "definition": "فضای عمودیِ لازم برای بازسازی.",
-   "use_when": "مقاله کمبود یا اشغالِ این فضا را مسئله بداند.",
-   "aliases": [
-    "فضای بازسازی",
-    "restorative space",
-    "فضای پروتزی",
-    "فضای بین فکی",
-    "interocclusal space",
-    "کمبود فضای عمودی",
-    "فضای عمودی کم",
-    "فضای عمودی",
-    "فضای اینتراکلوزال",
-    "فضای بین اکلوزالی",
-    "فضای اکلوزالی",
-    "کمبود فضای بازسازی",
-    "interocclusal clearance",
-    "prosthetic space",
-    "crown height space",
-    "interarch space",
-    "فضای ترمیمی"
-   ],
-   "variants": [
-    "#کمبود_فضای_عمودی"
-   ],
-   "co_tags": [],
-   "count": 11,
-   "content_ids": [
-    "insight/insight-6",
-    "insight/insight-10",
-    "insight/insight-19",
-    "insight/insight-43",
-    "notecast/episode-34",
-    "insight/insight-46",
-    "chairside/chairside-19",
-    "insight/insight-57",
-    "chairside/chairside-31",
-    "insight/insight-78",
-    "sharehub/share-53"
-   ]
-  },
-  {
    "key": "متاآنالیز",
    "tag": "#متاآنالیز",
    "domain": null,
@@ -4465,6 +4470,42 @@
     "episodes/episode-159-1",
     "metanotes/meta-14",
     "dentai/dentai-29"
+   ]
+  },
+  {
+   "key": "ارتودنسی",
+   "tag": "#ارتودنسی",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "درمان ارتودنتیک به‌عنوان بخشی از طرح درمان.",
+   "use_when": "مقاله تعاملِ ارتو و پروتز را دخیل بداند.",
+   "aliases": [
+    "ارتو",
+    "ortho",
+    "درمان ارتودنتیک",
+    "Orthodontics",
+    "orthodontic treatment",
+    "ارتدنسی",
+    "ارتودونسی"
+   ],
+   "variants": [
+    "#Orthodontics"
+   ],
+   "co_tags": [
+    "#Orthodontics"
+   ],
+   "count": 10,
+   "content_ids": [
+    "insight/insight-19",
+    "sharehub/share-5",
+    "insight/insight-38",
+    "insight/insight-42",
+    "sharehub/share-19",
+    "chairside/chairside-39",
+    "sharehub/share-24",
+    "chairside/chairside-42",
+    "chairside/chairside-43",
+    "sharehub/share-58"
    ]
   },
   {
@@ -4711,41 +4752,6 @@
     "litecast/lite-CAST17",
     "litecast/lite-CAST18",
     "litecast/lite-CAST19"
-   ]
-  },
-  {
-   "key": "ارتودنسی",
-   "tag": "#ارتودنسی",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "درمان ارتودنتیک به‌عنوان بخشی از طرح درمان.",
-   "use_when": "مقاله تعاملِ ارتو و پروتز را دخیل بداند.",
-   "aliases": [
-    "ارتو",
-    "ortho",
-    "درمان ارتودنتیک",
-    "Orthodontics",
-    "orthodontic treatment",
-    "ارتدنسی",
-    "ارتودونسی"
-   ],
-   "variants": [
-    "#Orthodontics"
-   ],
-   "co_tags": [
-    "#Orthodontics"
-   ],
-   "count": 9,
-   "content_ids": [
-    "insight/insight-19",
-    "sharehub/share-5",
-    "insight/insight-38",
-    "insight/insight-42",
-    "sharehub/share-19",
-    "chairside/chairside-39",
-    "sharehub/share-24",
-    "chairside/chairside-42",
-    "chairside/chairside-43"
    ]
   },
   {
@@ -6315,6 +6321,34 @@
    ]
   },
   {
+   "key": "vdo",
+   "tag": "#VDO",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "سرنامِ Vertical Dimension of Occlusion.",
+   "use_when": "همراه #بعد_عمودی — درِ ورودیِ سرنامی همان مفهوم.",
+   "aliases": [
+    "vertical dimension of occlusion",
+    "وی دی او",
+    "بعد عمودی اکلوزال",
+    "ovd",
+    "occlusal vertical dimension",
+    "بعد عمودی اکلوژن",
+    "ارتفاع عمودی اکلوژن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 6,
+   "content_ids": [
+    "episodes/episode-14",
+    "insight/insight-6",
+    "insight/insight-12",
+    "episodes/episode-154",
+    "episodes/episode-155",
+    "sharehub/share-58"
+   ]
+  },
+  {
    "key": "اتصال_پیچ_شونده",
    "tag": "#اتصال_پیچ_شونده",
    "domain": "clinical",
@@ -7061,33 +7095,6 @@
     "episodes/episode-67",
     "dentai/dentai-11",
     "dentai/dentai-15"
-   ]
-  },
-  {
-   "key": "vdo",
-   "tag": "#VDO",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "سرنامِ Vertical Dimension of Occlusion.",
-   "use_when": "همراه #بعد_عمودی — درِ ورودیِ سرنامی همان مفهوم.",
-   "aliases": [
-    "vertical dimension of occlusion",
-    "وی دی او",
-    "بعد عمودی اکلوزال",
-    "ovd",
-    "occlusal vertical dimension",
-    "بعد عمودی اکلوژن",
-    "ارتفاع عمودی اکلوژن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "episodes/episode-14",
-    "insight/insight-6",
-    "insight/insight-12",
-    "episodes/episode-154",
-    "episodes/episode-155"
    ]
   },
   {
