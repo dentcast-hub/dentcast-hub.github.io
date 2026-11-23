@@ -156,11 +156,8 @@ DES و Fidelity مطلبی که
 
 ## قراردادهای فنی تثبیت‌شده
 
-- **کادر یادداشت (note/callout) در صفحه** رنگ پس‌زمینه و حاشیهٔ خنثی با توکن‌های چیپ
-  می‌گیرد: `var(--chip-bg)` و `var(--chip-bd)` از `dc-theme.css`، که در حالت تیره هم تعریف
-  شده‌اند. هرگز amber: amber (`--x-amber*`، `--amber*`) رنگ پریمیوم است
-  (`global/site-invariants.md`). نمونهٔ منتشرشده: `chairside/chairside-46.html`
-  (`<div role="note" style="background:var(--chip-bg);border:1px solid var(--chip-bd);
-  border-right:4px solid var(--chip-bd);...">`). CSS تازه برای این کار اضافه نمی‌شود.
+- **کادر (note/callout)**: قاعده و مارک‌آپ فقط در ماژول 03، «Callout boxes». `queue_apply.py` هر بلوک `>`
+  ِ `01`/`06` را با `NOTE_OPEN` همان کادر می‌کشد (برچسب و جمله، جداشده با `>` خالی، هرکدام یک `<p>`)؛ در متانوت فقط بلوکی که خط اولش برچسب
+  پررنگ (`**…**`) است کادر می‌شود و بلوک بی‌برچسب همان `<blockquote>` پایانی سری می‌ماند. CSS تازه نه.
 - **ساخت PR در این نوبت‌ها با REST API** (`gh api repos/<owner>/<repo>/pulls -f ...`)،
   چون GraphQL مسدود است؛ `gh pr create` و هر دستور وابسته به GraphQL کار نمی‌کند.

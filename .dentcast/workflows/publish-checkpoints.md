@@ -66,7 +66,7 @@ order and the only delivery model: `init` writes both markers, any other plan is
 (`OLD_DELIVERY_MODEL_RETIRED`) and never continued: start a new run instead.
 
 **Standing acceptance.** Agent proposals are not sent for confirmation: title/caption the agent
-proposed, lead paragraph, Q3.5 rewrites, hashtags and mint, keywords, pillar/subtopic, borderline
+proposed, lead paragraph, callout boxes, Q3.5 rewrites, hashtags and mint, keywords, pillar/subtopic, borderline
 links at 4.7/4.8/4.9 (conservative default: skip), flashcard/FAQ choices, catalog tags and the Drive
 subfolder among existing ones, the Pulse line, pathway borderline and third pathway, uncertain bundle,
 English mirror. Each is built per its module, recorded with evidence in the handoff and listed in the

@@ -1001,7 +1001,7 @@ METANOTE_SERIES_KW = ("MetaNote", "دکتر فواد شهابیان")
 
 def render_metanote(md, imgs, img_url, linker, lang):
     """MetaNote markup (metanotes/meta-20..22): <p> text on its own line,
-    <hr> for a `---` divider, a `>` line is the closing <blockquote>."""
+    <hr> for a `---` divider, an unlabelled `>` block is the closing <blockquote>."""
     out = []
     txt = (lambda t: linker.apply(t) if linker else inline(t))
     for b in blocks(md):
@@ -1011,6 +1011,9 @@ def render_metanote(md, imgs, img_url, linker, lang):
             out.append(f"<h{b[1]}>{inline(b[2])}</h{b[1]}>")
         elif b[0] == "hr":
             out.append("<hr>")
+        elif b[0] == "note" and b[1] and re.fullmatch(r"\*\*[^*]+\*\*", b[1][0]):
+            # a labelled `>` block is a callout box (module 03, «Callout boxes»)
+            out.append(NOTE_OPEN + "".join(f'<p style="margin:0;">{txt(x)}</p>' for x in b[1] if x) + "</div>")
         elif b[0] == "note":
             out.append("<blockquote>\n" + "\n".join(txt(x) for x in b[1] if x) + "\n</blockquote>")
         elif b[0] == "ul":

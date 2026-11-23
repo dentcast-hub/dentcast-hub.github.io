@@ -27,14 +27,14 @@ MODULES = WORKFLOW + 'modules/'
 # occurs exactly once and that no skipped section changed its applicability; the
 # reason for each re-pin belongs in the commit message, not here.
 PINNED_BLOBS = {
-    '03-litecast-and-page.md': 'e82aee946648f09d7ed130b7bcdd93b3fbc14694',
+    '03-litecast-and-page.md': 'aa71e6b3b980e68115188987732ab530274910f7',
     '04-taxonomy-and-navigation.md': '46bc329065fdaa0d1677b494ecc5b7cdf7359872',
     '05-semantic-linking.md': '6ba95d74e28f1e423e034d31327d6c9351f85c20',
     '06-paper-ingestion.md': '07d4320fb9935d4752e38bc8b485009c6e86caf5',
     '08-des-fidelity.md': '30fb30e1f0f4134cac151d956a96aa3d761ef402',
     '09-challenge.md': '3ac5856ddb021aa9f36cbfb35d6363531ae038c8',
     '11-build-and-version.md': 'f74bf83102c57da9743127623191e686474bf74d',
-    '12-english-notify-verify.md': '5c9b65ee4416fd67607e6d35ca88272832ee86ec',
+    '12-english-notify-verify.md': 'ef029c3da2565788090c80989e4d313cbef87cf9',
 }
 
 REQUIRED = [
@@ -298,10 +298,11 @@ QUEUE_PREP = (
     (MODULES + '12-english-notify-verify.md', [('## Phase D', '## Phase E', None)], False),
     # The «Opening paragraph before any list» block has several paragraphs,
     # including the bold-lead «This lead paragraph is authored text» standing-acceptance
-    # rule, and ends with the «To check a page you just built:» check. No
-    # unrelated bold-lead paragraph follows it, so its end marker is the next
-    # Markdown heading (today: none, i.e. end of file). The check sentence must
-    # sit inside the slice, so a truncated block blocks instead of passing.
+    # rule, and ends with the «To check a page you just built:» check. The only
+    # bold-lead block after it is «Callout boxes», which preparation also needs
+    # (publish-queue.md, «فهرست خواندن»), so its end marker is the next Markdown
+    # heading (today: none, i.e. end of file). The check sentence must sit inside
+    # the slice, so a truncated block blocks instead of passing.
     (MODULES + '03-litecast-and-page.md',
      [('**Opening paragraph before any list', NEXT_HEADING,
        'To check a page you just built:')], False),
