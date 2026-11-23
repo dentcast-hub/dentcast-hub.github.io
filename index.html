@@ -2325,6 +2325,36 @@ body.dc-desktop-ui #dc-desktop-root{
 .dcd-content-area .dc-chip-caution{ color:var(--st-caution); background:var(--st-caution-bg); border-color:var(--st-caution-bd); }
 .dcd-content-area .dc-chip-no{ color:var(--st-no); background:var(--st-no-bg); }
 .dcd-content-area .dc-sublabel{ margin:1.1rem 0 .4rem; }
+:root { --dc-key-bg: rgba(11,95,255,.06); }
+[data-theme="dark"] { --dc-key-bg: rgba(91,156,246,.09); }
+.dcd-content-area .dc-box { background:var(--chip-bg); border:1px solid var(--chip-bd); border-inline-start:4px solid var(--chip-bd); border-radius:var(--r-lg, 1.125rem); padding:1rem 1.25rem; margin:1.25rem 0; scroll-margin-top:5rem; transition:box-shadow .3s; }
+.dcd-content-area .dc-box > p { margin:0; }
+.dcd-content-area .dc-box > p + p { margin-top:.6rem; }
+.dcd-content-area .dc-box > .dc-box-label + p { margin-top:0; }
+.dcd-content-area .dc-box > ul, .dcd-content-area .dc-box > ol { margin-block:.25rem 0; }
+.dcd-content-area li > .dc-box { margin:.25rem 0; }
+.dcd-content-area .dc-box-label { display:flex; align-items:center; gap:.45rem; }
+.dcd-content-area .dc-box-label::before { content:""; display:none; flex:none; width:1.1em; height:1.1em; background:var(--chip-txt); -webkit-mask:var(--dc-box-ico) center/contain no-repeat; mask:var(--dc-box-ico) center/contain no-repeat; }
+.dcd-content-area .dc-box-tip > .dc-box-label::before { display:block; --dc-box-ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z'/%3E%3C/svg%3E"); }
+.dcd-content-area .dc-box-bottom > .dc-box-label::before { display:block; --dc-box-ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 21V4M5 4h11l-2 4 2 4H5'/%3E%3C/svg%3E"); }
+.dcd-content-area .dc-box-bottom { background:transparent; border:1.5px solid var(--chip-bd); border-top:4px solid var(--chip-bd); }
+.dcd-content-area .dc-box.dc-flash { box-shadow:0 0 0 4px var(--chip-bd); }
+.dcd-content-area .dc-key { background:var(--dc-key-bg); box-shadow:inset 0 -2px 0 var(--chip-bd); border-radius:3px; padding:.1em .15em; -webkit-box-decoration-break:clone; box-decoration-break:clone; }
+.dcd-content-area .dc-glance { border:1px solid var(--border); border-radius:14px; padding:.8rem 1rem; margin:0 0 1.25rem; background:var(--surface2); }
+.dcd-content-area .dc-glance-h { font-weight:700; font-size:.9rem; color:var(--txt2); margin:0 0 .35rem; }
+.dcd-content-area .dc-glance button { display:grid; grid-template-columns:auto 1fr; gap:.55rem; width:100%; text-align:start; background:none; border:0; border-top:1px solid var(--border); padding:.55rem 0; font:inherit; color:inherit; line-height:1.8; cursor:pointer; }
+.dcd-content-area .dc-glance button:first-of-type { border-top:0; }
+.dcd-content-area .dc-glance-lab { font-size:.75rem; font-weight:700; color:var(--chip-txt); background:var(--chip-bg); border-radius:999px; padding:.05rem .6rem; height:max-content; margin-top:.2rem; white-space:nowrap; }
+.dcd-content-area .dc-glance-tx { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.dc-secpill { position:fixed; z-index:40; display:flex; gap:.5rem; align-items:center; max-width:min(30rem, calc(100vw - 2rem)); padding:.2rem .8rem; border-radius:999px; font-size:.8rem; line-height:1.9; color:var(--txt2); background:var(--surface, #fff); border:1px solid var(--chip-bd); box-shadow:0 2px 10px rgba(2,35,96,.12); opacity:0; pointer-events:none; transition:opacity .2s; }
+.dc-secpill.is-on { opacity:1; }
+.dc-secpill b { color:var(--chip-txt); white-space:nowrap; }
+.dc-secpill span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; }
+.dc-gloss-pop { position:fixed; z-index:60; max-width:min(22rem, calc(100vw - 2rem)); background:var(--surface, #fff); color:var(--txt); border:1px solid var(--chip-bd); border-radius:12px; padding:.75rem .9rem; font-size:.88rem; line-height:1.85; box-shadow:0 8px 28px rgba(2,35,96,.18); }
+.dc-gloss-pop b { display:block; color:var(--chip-txt); margin-bottom:.2rem; }
+.dc-gloss-pop p { margin:0; }
+.dc-gloss-pop a { display:inline-block; margin-top:.4rem; font-size:.82rem; }
+@media (prefers-reduced-motion: reduce) { .dcd-content-area .dc-box, .dc-secpill { transition:none; } }
 
 /* ── DentCast+ video containers (CSS stripped during fetch, restored here) ── */
 .dcd-content-area .r1_iframe_embed{

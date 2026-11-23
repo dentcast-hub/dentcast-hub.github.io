@@ -131,12 +131,31 @@ class QueueSyntaxTests(unittest.TestCase):
             for piece in (f"<h3 {A}>∆ ۱. بخش</h3>", f"<h3>∆ <span {A}>۲.</span> عنوان نویسنده</h3>",
                           f'<p class="dc-sublabel" {A}><strong>اپی‌نفرین</strong> <span class="dc-chip dc-chip-ok" {A}>مجاز</span></p>',
                           f'<span class="dc-chip dc-chip-no" {A}>استفاده نکن</span> آرتیکائین را نزن.',
-                          f'<p style="margin:0;" {A}><strong>نتیجه</strong></p>',
-                          '<p style="margin:0;">جملهٔ پایانی. جملهٔ دوم.</p>'):
+                          '<div role="note" class="dc-box dc-box-bottom">',
+                          f'<p class="dc-box-label" {A}><strong>نتیجه</strong></p>',
+                          '<p>جملهٔ پایانی. جملهٔ دوم.</p>'):
                 self.assertIn(piece, out, cat)
-            self.assertIn(qa.NOTE_OPEN, out, cat)
+            self.assertNotIn(qa.NOTE_OPEN, out, cat)
             self.assertEqual(vp.presentation_problems(page(out)), [], cat)
             self.assertNotIn("[[", out, cat)
+
+    def test_a_box_without_a_label_and_the_key_sentence_frame(self):
+        md = ("لید.\n\nجمله یک. [[+key]]جملهٔ کلیدی نویسنده.[[+/key]] جمله سه.\n\n"
+              "> [[+]]\n>\n> نکتهٔ کلینیکی: همان برچسب نویسنده.\n\n> [[+]] **نکته‌ی بالینی**\n>\n> جملهٔ دیگر.")
+        plain = "لید.\n\nجمله یک. جملهٔ کلیدی نویسنده. جمله سه.\n\nنکتهٔ کلینیکی: همان برچسب نویسنده.\n\nجملهٔ دیگر."
+        self.assertEqual(qm.presentation_md_problems(md), [])
+        self.assertTrue(qm.presentation_md_problems("جمله [[+key]]باز مانده."))
+        for cat, out in self.renders(md).items():
+            self.assertIn('<span class="dc-key">جملهٔ کلیدی نویسنده.</span>', out, cat)
+            self.assertIn('<div role="note" class="dc-box">', out, cat)          # the frame alone
+            self.assertIn('<div role="note" class="dc-box dc-box-tip">', out, cat)
+            self.assertEqual(out.count("dc-box-label"), 1, cat)
+            self.assertEqual(vp.presentation_problems(page(out)), [], cat)
+            self.assertNotIn("[[", out, cat)
+        for cat in qm.CATEGORIES:
+            a = pd.render_md(md, cat)
+            b = pd.render_md(plain, cat)
+            self.assertEqual([u["text"] for u in U.split_html(a, [])], [u["text"] for u in U.split_html(b, [])], cat)
 
     def test_rendered_units_equal_the_plain_text_in_every_category(self):
         for cat in qm.CATEGORIES:

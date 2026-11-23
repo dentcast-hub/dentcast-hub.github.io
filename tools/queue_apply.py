@@ -502,12 +502,18 @@ def chip_html(m):
     return f'<span class="{CHIP_CLASS[kind]}" {PRES_ATTR}>{m.group(1).strip()}</span>'
 
 
-def note_p(x, txt):
-    """One line of a callout box: its label (a `[[+]]` line) is presentation
-    layer; every other line is the author's sentence."""
+def is_pres_box(lines):
+    return any(x.startswith(PRES) for x in lines)
+
+
+def note_p(x, txt, boxed=False):
+    """One line of a callout box. In a presentation box (one that carries a
+    `[[+]]` line) the label is presentation layer and the box is styled by
+    class; an author's own `>` block keeps the markup it always had."""
     if x.startswith(PRES):
-        return f'<p style="margin:0;" {PRES_ATTR}>{inline(x[len(PRES):])}</p>'
-    return f'<p style="margin:0;">{txt(x)}</p>'
+        label = x[len(PRES):].strip()
+        return f'<p class="dc-box-label" {PRES_ATTR}>{inline(label)}</p>' if label else ""
+    return f'<p>{txt(x)}</p>' if boxed else f'<p style="margin:0;">{txt(x)}</p>'
 
 
 def note_paragraphs(lines):
@@ -537,11 +543,11 @@ def note_paragraphs(lines):
 
 def note_lines(lines, txt):
     """The inside of a callout box, one <p> per `>` line (Insight, Chairside,
-    MetaNote). A box with a presentation label keeps a line break between its
-    paragraphs and drops the empty `>`: the page text then reads across the
-    box exactly as it read across the paragraphs it wraps."""
-    if any(x.startswith(PRES) for x in lines):
-        return "\n".join(note_p(x, txt) for x in lines if x)
+    MetaNote). A presentation box keeps a line break between its paragraphs
+    and drops the empty `>`: the page text then reads across the box exactly
+    as it read across the paragraphs it wraps."""
+    if is_pres_box(lines):
+        return "\n".join(x for x in (note_p(l, txt, True) for l in lines if l) if x)
     return "".join(note_p(x, txt) for x in lines)
 
 
@@ -558,6 +564,7 @@ def inline(t):
         if qm.PRES_MARK in t:
             refuse("PRESENTATION_SYNTAX", f"`{qm.PRES_MARK}` opens a line (after an optional `>`), nowhere else: «{t[:60]}» "
                    "(publish-queue.md «لایهٔ نمایش»)")
+        t = qm.KEY.sub(lambda m: f'<span class="dc-key">{m.group(1)}</span>', t)
         t = qm.PRES_SPAN.sub(lambda m: f"<span {PRES_ATTR}>{m.group(1).strip()}</span>", t)
         t = qm.CHIP.sub(chip_html, t)
     t = MD_LINK.sub(lambda m: f'<a href="{m.group(2)}" target="_blank" rel="noopener noreferrer">{m.group(1)}</a>'
@@ -570,6 +577,21 @@ def inline(t):
 NOTE_OPEN = ('<div role="note" style="background:var(--chip-bg);border:1px solid var(--chip-bd);'
              'border-right:4px solid var(--chip-bd);border-radius:var(--r-lg,1.125rem);padding:1rem 1.25rem;'
              'margin:1.25rem 0;">')
+
+
+BOX_OPEN = '<div role="note" class="dc-box'  # module 03: the callout box, styled by class in dc-theme.css
+BOX_KIND = {"نکته‌ی بالینی": " dc-box-tip", "Clinical tip": " dc-box-tip", "نتیجه": " dc-box-bottom", "Bottom line": " dc-box-bottom"}
+
+
+def note_open(lines):
+    """The opening tag of a `>` block. A presentation box takes its look from
+    its label («نکته‌ی بالینی» / «نتیجه»); with another label, or with a bare
+    `[[+]]` line (the author's own words already label it), it is the plain
+    frame. A block with no `[[+]]` line is the author's own note box."""
+    if not is_pres_box(lines):
+        return NOTE_OPEN
+    label = next((x[len(PRES):] for x in lines if x.startswith(PRES)), "")
+    return BOX_OPEN + BOX_KIND.get(re.sub(r"[*_]", "", label).strip(), "") + '">'
 
 
 def webp_size(data):
@@ -606,8 +628,10 @@ def render_body(md, images, img_url, linker, lang="fa", style="compact", link_cl
             out.append(pres_block(b))
         elif b[0] == "note":
             sep = "\n" if any(x.startswith(PRES) for x in b[1]) else ""
-            inner = sep.join(note_p(p, lambda t: linker.apply(t) if linker else inline(t)) for p in note_paragraphs(b[1]))
-            out.append(NOTE_OPEN + inner + "</div>")
+            boxed = is_pres_box(b[1])
+            inner = sep.join(x for x in (note_p(p, lambda t: linker.apply(t) if linker else inline(t), boxed)
+                                         for p in note_paragraphs(b[1])) if x)
+            out.append(note_open(b[1]) + inner + "</div>")
         elif b[0] == "img":
             img = images.get(b[1])
             if img is None:
@@ -645,7 +669,7 @@ def render_indented(md, linker, link_class):
             block = pres_block(b, "    ")
         elif b[0] == "note" and any(x.startswith(PRES) for x in b[1]):
             # a callout box (module 03): only the labelled form, the series has no other `>` precedent
-            block = "    " + NOTE_OPEN + "\n" + "\n".join("      " + note_p(x, txt) for x in b[1] if x) + "\n    </div>"
+            block = "    " + note_open(b[1]) + "\n" + "\n".join("      " + y for y in (note_p(x, txt, True) for x in b[1] if x) if y) + "\n    </div>"
         elif b[0] == "p":
             block = f"    <p>\n        {txt(b[1])}\n    </p>"
         elif b[0] == "ul":
@@ -902,7 +926,7 @@ def render_insight(md, imgs, img_url, linker, lang):
         elif b[0] in ("ph", "pl"):
             out.append(pres_block(("ph", max(b[1], 3), b[2]) if b[0] == "ph" else b))
         elif b[0] == "note":
-            out.append(NOTE_OPEN + note_lines(b[1], txt) + "</div>")
+            out.append(note_open(b[1]) + note_lines(b[1], txt) + "</div>")
         elif b[0] == "img":
             img = imgs.get(b[1])
             if img is None:
@@ -1017,7 +1041,7 @@ def render_chairside(md, imgs, img_url, linker, lang):
         elif b[0] in ("ph", "pl"):
             out.append(pres_block(b))
         elif b[0] == "note":
-            out.append(NOTE_OPEN + note_lines(b[1], txt) + "</div>")
+            out.append(note_open(b[1]) + note_lines(b[1], txt) + "</div>")
         elif b[0] == "img":
             img = imgs.get(b[1])
             if img is None:
@@ -1121,7 +1145,7 @@ def render_metanote(md, imgs, img_url, linker, lang):
             out.append(pres_block(b))
         elif b[0] == "note" and b[1] and (b[1][0].startswith(PRES) or re.fullmatch(r"\*\*[^*]+\*\*", b[1][0])):
             # a labelled `>` block is a callout box (module 03, «Structure, chips and callout boxes»)
-            out.append(NOTE_OPEN + note_lines([x for x in b[1] if x], txt) + "</div>")
+            out.append(note_open(b[1]) + note_lines([x for x in b[1] if x], txt) + "</div>")
         elif b[0] == "note":
             out.append("<blockquote>\n" + "\n".join(txt(x) for x in b[1] if x) + "\n</blockquote>")
         elif b[0] == "ul":
