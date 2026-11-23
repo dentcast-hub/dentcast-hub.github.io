@@ -177,6 +177,15 @@ def paragraphs(units):
     return out
 
 
+def plan_fits(content_id, units):
+    """True when the page has no recorded plan, or every id the plan names is a unit of this cut."""
+    path = U.plan_path(content_id) if content_id else None
+    if not path or not path.exists():
+        return True
+    plan = json.loads(path.read_text(encoding="utf-8")).get("plan") or {}
+    return {i for ids in plan.values() for i in ids} <= {u["id"] for u in units}
+
+
 def compare(old_doc, new_doc, sources=None, content_id=None, page=True):
     """Raises Refusal unless `new_doc` differs from `old_doc` only in the
     presentation layer. Returns the receipt."""
@@ -216,6 +225,7 @@ def compare(old_doc, new_doc, sources=None, content_id=None, page=True):
         raise Refusal("OUTSIDE_BODY_CHANGED", "the page differs outside its body (head, JSON-LD, title, related block): "
                       f"old «{(a[k] if k < len(a) else '')[:120]}» / new «{(b[k] if k < len(b) else '')[:120]}»")
     multi = len(cited(sources)) >= 2
+    plan_cut = {legacy: plan_fits(content_id, old["cuts"][legacy]) for legacy in (False, True)}
     if multi:
         for legacy in (False, True):
             po, pn = paragraphs(old["cuts"][legacy]), paragraphs(new["cuts"][legacy])
@@ -226,7 +236,11 @@ def compare(old_doc, new_doc, sources=None, content_id=None, page=True):
                               f"cut one. Paragraph {k + 1} was {po[k] if k < len(po) else None}, is now "
                               f"{pn[k] if k < len(pn) else None}", paragraph=k + 1)
             if content_id:
-                ao, an = U.assign(old["cuts"][legacy], sources, content_id), U.assign(new["cuts"][legacy], sources, content_id)
+                # a recorded plan names the ids of the cut its record was judged on (des_fidelity_units
+                # split_for); on the other cut those ids do not exist, so the plan is checked only where
+                # it fits and the computed assignment is compared on the other cut
+                cid = content_id if plan_cut[legacy] or not any(plan_cut.values()) else None
+                ao, an = U.assign(old["cuts"][legacy], sources, cid), U.assign(new["cuts"][legacy], sources, cid)
                 if ao != an:
                     raise Refusal("ATTRIBUTION_CHANGED", "the units reach other sources than before "
                                   "(des_fidelity_units.assign)", old=str(ao)[:400], new=str(an)[:400])

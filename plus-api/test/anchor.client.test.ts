@@ -110,3 +110,52 @@ describe('client anchoring round-trip', () => {
     expect(re).toBeNull();
   });
 });
+
+// The presentation layer (module 03: `data-dc-presentation`) is not page text.
+describe('anchoring ignores the presentation layer', () => {
+  beforeEach(() => { document.body.innerHTML = ''; });
+
+  // as published pages are written: blocks on their own lines, indented
+  const PLAIN = '\n  <h3>∆ چرا مهم است؟</h3>\n  <p>اهمیتش فقط تئوریک نیست. در مطالعات بالینی دیده شد.</p>\n  <p>به‌دست آوردنش هم آسان نیست.</p>\n';
+  const LAYERED = '\n  <h3>∆ <span data-dc-presentation>۱. </span>چرا مهم است؟</h3>\n'
+    + '  <p>اهمیتش فقط تئوریک نیست. <span class="dc-chip dc-chip-ok" data-dc-presentation>مجاز</span> در مطالعات بالینی دیده شد.</p>\n'
+    + '  <p class="dc-sublabel" data-dc-presentation><strong>مولرها</strong></p>\n  <p>به‌دست آوردنش هم آسان نیست.</p>\n';
+  const squash = (s: string) => s.replace(/\s+/g, ' ');
+
+  it('a quote saved before the layer still anchors across a chip, a number and a sub-label', () => {
+    let root = setProse(PLAIN);
+    const acrossChip = serializeRange(rangeForOccurrence(root, 'تئوریک نیست. در مطالعات'), root);
+    const acrossBlocks = serializeRange(rangeForOccurrence(root, 'دیده شد.\n  به‌دست آوردنش'), root);
+    const acrossNumber = serializeRange(rangeForOccurrence(root, '∆ چرا مهم'), root);
+    for (const q of [acrossChip, acrossBlocks, acrossNumber]) {
+      root = setProse(LAYERED);
+      const r = anchorQuote(q, root);
+      expect(r).not.toBeNull();
+      const marks = wrapRange(r as Range);
+      expect(squash(marks.map((m) => m.textContent).join(''))).toBe(squash(q.exact));
+      for (const m of marks) expect(m.closest('[data-dc-presentation]')).toBeNull();
+    }
+  });
+
+  it('a quote taken on a layered page holds no layer text and survives the layer being removed', () => {
+    expect(squash(fullText(setProse(LAYERED)))).toBe(squash(fullText(setProse(PLAIN))));
+    let root = setProse(LAYERED);
+    const p = root.querySelectorAll('p')[0];
+    const r = document.createRange();
+    r.setStart(p.firstChild as Text, 'اهمیتش فقط '.length);
+    r.setEnd(p.lastChild as Text, ' در مطالعات'.length);
+    const q = serializeRange(r, root);
+    expect(squash(q.exact)).toBe('تئوریک نیست. در مطالعات');
+    expect(q.exact).not.toContain('مجاز');
+    root = setProse(PLAIN);
+    expect(squash((anchorQuote(q, root) as Range).toString())).toBe(squash(q.exact));
+  });
+
+  it('a quote saved while the layer was still read as text anchors through the fallback', () => {
+    const root = setProse(LAYERED);
+    const legacy = { exact: '∆ ۱. چرا مهم است؟', prefix: '', suffix: 'اهمیتش فقط تئوریک نیست.' };
+    const r = anchorQuote(legacy, root);
+    expect(r).not.toBeNull();
+    expect((r as Range).toString()).toBe(legacy.exact);
+  });
+});

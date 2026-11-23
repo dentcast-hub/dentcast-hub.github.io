@@ -254,6 +254,16 @@ class DiffTests(unittest.TestCase):
         self.assertNotEqual(U.assign(U.split_html(page(cut), TWO), TWO)[1], {0: ["u2", "u3"], 1: ["u4"]})
         self.assertEqual(self.refused(page(old), page(cut), TWO, content_id="sharehub/none")["code"], "PARAGRAPH_CHANGED")
 
+    def test_a_plan_recorded_on_the_earlier_cut_is_checked_on_that_cut_only(self):
+        # sharehub/share-53: its record was judged on the cut before `sentences()`, so the plan's ids
+        # are units of that cut alone; the unchanged page must pass, not stop inside recorded_plan
+        cid = "sharehub/share-53"
+        doc = (ROOT / "sharehub/share-53.html").read_text(encoding="utf-8")
+        sources = pd.page_sources(cid)
+        cuts = {legacy: U.split_html(doc, sources, legacy=legacy) for legacy in (False, True)}
+        self.assertEqual({k: pd.plan_fits(cid, v) for k, v in cuts.items()}, {False: False, True: True})
+        self.assertEqual(pd.compare(doc, doc, sources, cid)["status"], "presentation_only")
+
 
 def frozen_item(base, name="07-chairside-test", status="آماده"):
     d = Path(base) / name
