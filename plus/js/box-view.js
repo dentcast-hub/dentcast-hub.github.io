@@ -3,9 +3,9 @@
 // clip-view.js: a card, never a link. Its content is the box as the author
 // framed it — the label, then the words — and going to the article is one
 // action among others.
-import { el } from './util.js?v=262';
-import { api } from './api.js?v=262';
-import { actionBtn, confirmStrip, toast, copyToClipboard } from './hl-view.js?v=262';
+import { el } from './util.js?v=263';
+import { api } from './api.js?v=263';
+import { actionBtn, confirmStrip, toast, copyToClipboard } from './hl-view.js?v=263';
 
 /** Plain-text form of a saved box, for the copy actions. */
 export function boxAsText(box, article = null) {

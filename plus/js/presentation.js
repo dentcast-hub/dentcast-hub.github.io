@@ -9,8 +9,8 @@
 // it on a standalone page (it runs before first paint, so nothing moves), and
 // buildGlance() here builds it in the desktop shell, where that script is
 // stripped from the fetched article. Both find-or-create `#dcGlance`.
-import { el, faNum } from './util.js?v=262';
-import { mountBoxSave } from './box-save.js?v=262';
+import { el, faNum } from './util.js?v=263';
+import { mountBoxSave } from './box-save.js?v=263';
 
 const LAYER = '[data-dc-presentation]';
 const BOX = '.dc-box, div[role="note"]';

@@ -20,13 +20,14 @@ globalThis.fetch = vi.fn(() => Promise.reject(new Error('no network'))) as any;
 let user: any = null;
 let status = 'user';
 let savedRows: any[] = [];
+let listFails: any = null;
 const saves: any[] = [];
 const deletes: string[] = [];
 let loginOpened = 0;
 
 vi.mock('/plus/js/api.js', () => ({
   api: {
-    listBoxes: () => Promise.resolve({ boxes: savedRows }),
+    listBoxes: () => (listFails ? Promise.reject(listFails) : Promise.resolve({ boxes: savedRows })),
     saveBox: (b: any) => { saves.push(b); return Promise.resolve({ box: { id: 'box-' + saves.length, ...b } }); },
     deleteBox: (id: string) => { deletes.push(id); return Promise.resolve({ ok: true }); },
   },
@@ -67,7 +68,7 @@ const buttons = () => Array.from(document.querySelectorAll<HTMLButtonElement>('.
 
 beforeEach(() => {
   _resetBoxSave();
-  user = null; status = 'anon'; savedRows = [];
+  user = null; status = 'anon'; savedRows = []; listFails = null;
   saves.length = 0; deletes.length = 0; loginOpened = 0;
 });
 
@@ -88,7 +89,8 @@ describe('the button', () => {
     user = { tier: 'premium' }; status = 'user';
     await mount();
     const labs = Array.from(document.querySelectorAll('.dc-glance-lab')).map((x) => x.textContent);
-    expect(labs).toEqual(['نکته‌ی بالینی', '•']);
+    // the frame-alone box is named by the author's own «Clinical Tip:» (glanceRow)
+    expect(labs).toEqual(['نکته‌ی بالینی', 'Clinical Tip']);
   });
 
   it('is not drawn when /me could not be asked', async () => {
@@ -160,5 +162,20 @@ describe('premium', () => {
     const [b, other] = buttons();
     expect(b.getAttribute('aria-pressed')).toBe('true');
     expect(other.getAttribute('aria-pressed')).toBe('false');
+  });
+
+  it('an API without the route yet (404) draws no button for a subscriber — never one that can only fail', async () => {
+    user = { tier: 'premium' }; status = 'user';
+    listFails = Object.assign(new Error('not found'), { status: 404 });
+    await mount();
+    expect(buttons()).toHaveLength(0);
+  });
+
+  it('any other failure of the list still draws the button, as «not saved»', async () => {
+    user = { tier: 'premium' }; status = 'user';
+    listFails = Object.assign(new Error('down'), { status: 503 });
+    await mount();
+    expect(buttons()).toHaveLength(2);
+    expect(buttons()[0].getAttribute('aria-pressed')).toBe('false');
   });
 });

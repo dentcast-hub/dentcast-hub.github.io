@@ -17,10 +17,10 @@
 //                may be a subscriber signed out on this device).
 //   · «we could not ask» (/me unreachable) — no button at all. A redeploy must
 //                never read as «you are not premium» (unreachableGate's rule).
-import { el } from './util.js?v=262';
-import { api, currentUser, meStatus } from './api.js?v=262';
-import { openLoginModal } from './login-modal.js?v=262';
-import { pricingHref } from './premium-cta.js?v=262';
+import { el } from './util.js?v=263';
+import { api, currentUser, meStatus } from './api.js?v=263';
+import { openLoginModal } from './login-modal.js?v=263';
+import { pricingHref } from './premium-cta.js?v=263';
 
 const LAYER = 'data-dc-presentation';
 const LOCK = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
@@ -76,7 +76,13 @@ export async function mountBoxSave(boxes, contentId, textOf) {
     try {
       const res = await api.listBoxes(contentId);
       for (const b of (res && res.boxes) || []) saved.set(foldBoxText(b.text), b.id);
-    } catch (_) { /* the button still saves; it just starts as «not saved» */ }
+    } catch (e) {
+      // 404: this API does not have the route yet (the site can go out before
+      // the API's migration 0079 is deployed). A button that can only fail is
+      // worse than none, so a subscriber sees nothing until it is there. Any
+      // other failure: the button still saves; it just starts as «not saved».
+      if (e && e.status === 404) return;
+    }
   }
 
   for (const box of boxes) {
