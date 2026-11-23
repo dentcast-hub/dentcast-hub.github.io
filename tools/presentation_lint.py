@@ -160,7 +160,11 @@ def lint(doc, mirror_doc=None, source_doc=None):
             out.append(("BOX_EMPTY", "a box wraps none of the author's words"))
             continue
         above = prev_block(b)
-        owns_label = author_label(body) is not None
+        lead = next((squash(k.text()) for k in b.walk() if k.tag in ("strong", "b") and not k.marked
+                     and not (k.parent is not None and k.parent.marked)), "")
+        # the author's own label: «Clinical Tip: …», or a bold lead that names it («**نکته‌ی کلینیکی**»)
+        owns_label = author_label(body) is not None or bool(
+            lead and body.startswith(lead) and len(lead.split()) <= 6 and LABEL_WORD.search(lead))
         if label is not None:
             text = squash(label.text())
             if text in BOTTOM_LABELS and above is not None and above.tag in HEADINGS and CONCLUSION.search(above.text()):
