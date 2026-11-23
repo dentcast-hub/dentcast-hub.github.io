@@ -19,6 +19,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 import des_fidelity_units as U  # noqa: E402
 import presentation_diff as pd  # noqa: E402
+import presentation_lint as pl  # noqa: E402
 import queue_apply as qa  # noqa: E402
 import queue_install_des as qi  # noqa: E402
 import queue_manifest as qm  # noqa: E402
@@ -131,12 +132,31 @@ class QueueSyntaxTests(unittest.TestCase):
             for piece in (f"<h3 {A}>∆ ۱. بخش</h3>", f"<h3>∆ <span {A}>۲.</span> عنوان نویسنده</h3>",
                           f'<p class="dc-sublabel" {A}><strong>اپی‌نفرین</strong> <span class="dc-chip dc-chip-ok" {A}>مجاز</span></p>',
                           f'<span class="dc-chip dc-chip-no" {A}>استفاده نکن</span> آرتیکائین را نزن.',
-                          f'<p style="margin:0;" {A}><strong>نتیجه</strong></p>',
-                          '<p style="margin:0;">جملهٔ پایانی. جملهٔ دوم.</p>'):
+                          '<div role="note" class="dc-box dc-box-bottom">',
+                          f'<p class="dc-box-label" {A}><strong>نتیجه</strong></p>',
+                          '<p>جملهٔ پایانی. جملهٔ دوم.</p>'):
                 self.assertIn(piece, out, cat)
-            self.assertIn(qa.NOTE_OPEN, out, cat)
+            self.assertNotIn(qa.NOTE_OPEN, out, cat)
             self.assertEqual(vp.presentation_problems(page(out)), [], cat)
             self.assertNotIn("[[", out, cat)
+
+    def test_a_box_without_a_label_and_the_key_sentence_frame(self):
+        md = ("لید.\n\nجمله یک. [[+key]]جملهٔ کلیدی نویسنده.[[+/key]] جمله سه.\n\n"
+              "> [[+]]\n>\n> نکتهٔ کلینیکی: همان برچسب نویسنده.\n\n> [[+]] **نکته‌ی بالینی**\n>\n> جملهٔ دیگر.")
+        plain = "لید.\n\nجمله یک. جملهٔ کلیدی نویسنده. جمله سه.\n\nنکتهٔ کلینیکی: همان برچسب نویسنده.\n\nجملهٔ دیگر."
+        self.assertEqual(qm.presentation_md_problems(md), [])
+        self.assertTrue(qm.presentation_md_problems("جمله [[+key]]باز مانده."))
+        for cat, out in self.renders(md).items():
+            self.assertIn('<span class="dc-key">جملهٔ کلیدی نویسنده.</span>', out, cat)
+            self.assertIn('<div role="note" class="dc-box">', out, cat)          # the frame alone
+            self.assertIn('<div role="note" class="dc-box dc-box-tip">', out, cat)
+            self.assertEqual(out.count("dc-box-label"), 1, cat)
+            self.assertEqual(vp.presentation_problems(page(out)), [], cat)
+            self.assertNotIn("[[", out, cat)
+        for cat in qm.CATEGORIES:
+            a = pd.render_md(md, cat)
+            b = pd.render_md(plain, cat)
+            self.assertEqual([u["text"] for u in U.split_html(a, [])], [u["text"] for u in U.split_html(b, [])], cat)
 
     def test_rendered_units_equal_the_plain_text_in_every_category(self):
         for cat in qm.CATEGORIES:
@@ -465,10 +485,65 @@ class StyleTests(unittest.TestCase):
         for value in list(light.values()) + list(dark.values()):
             self.assertNotIn(value.strip().lower(), self.RESERVED)
 
+    def test_box_frame_and_run_time_styles_are_mirrored_for_the_desktop_shell(self):
+        theme = (ROOT / "dc-theme.css").read_text(encoding="utf-8")
+        shell = (ROOT / "index.html").read_text(encoding="utf-8")
+        for cls in (".dc-box", ".dc-box-label", ".dc-box-tip", ".dc-box-bottom", ".dc-key", ".dc-glance"):
+            self.assertIn("\n" + cls + " ", theme)
+            self.assertIn("\n.dcd-content-area " + cls + " ", shell)
+        for cls in (".dc-secpill", ".dc-gloss-pop"):   # appended to <body>: never scoped to the column
+            self.assertIn("\n" + cls + " {", theme)
+            self.assertIn("\n" + cls + " {", shell)
+        box = theme[theme.index("\n.dc-box {"):theme.index("\n.dc-secpill {")]
+        for value in self.RESERVED:                     # two looks, no new colour
+            self.assertNotIn(value, box.lower())
+
     def test_no_page_needs_an_inline_style_for_the_layer(self):
         out = qa.render_body(QueueSyntaxTests.MD, {}, None, None)
         self.assertNotIn("<style", out)
         self.assertNotIn("<script", out)
+
+
+class LintTests(unittest.TestCase):
+    """tools/presentation_lint.py: the layer itself is well formed."""
+    BOXC = '<div role="note" class="dc-box dc-box-bottom">'
+    LBL = f'<p class="dc-box-label" {A}><strong>نتیجه</strong></p>'
+
+    def codes(self, body, mirror=None):
+        return sorted({c for c, _ in pl.lint(page(body), page(mirror) if mirror is not None else None)})
+
+    def test_a_well_formed_page_is_clean(self):
+        body = (f"<p>لید مطلب.</p>\n<h3>∆ <span {A}>۱. </span>بخش اول</h3>\n<p>جمله. <span class=\"dc-key\">جملهٔ کلیدی.</span></p>\n"
+                f"<h3>∆ <span {A}>۲. </span>بخش دوم</h3>\n{self.BOXC}{self.LBL}\n<p>حرف آخر نویسنده همین است.</p></div>\n"
+                '<div role="note" class="dc-box"><p>نکتهٔ کلینیکی: برچسب خود نویسنده.</p></div>')
+        self.assertEqual(self.codes(body), [])
+        self.assertEqual(self.codes(body, body), [])
+
+    def test_each_finding_is_named(self):
+        cases = {
+            "LABEL_ECHOES_HEADING": f"<p>لید.</p>\n<h3>جمع‌بندی</h3>\n{self.BOXC}{self.LBL}\n<p>حرف آخر.</p></div>",
+            "LABEL_DUPLICATES_AUTHOR": f"<p>لید.</p>\n{self.BOXC}{self.LBL}\n<p>خلاصه: همان برچسب نویسنده است.</p></div>",
+            "LABEL_MISSING": '<p>لید.</p>\n<div role="note" class="dc-box"><p>جمله‌ای بی هیچ برچسبی از نویسنده.</p></div>',
+            "BOX_IN_LIST": f'<p>لید.</p>\n<ul>{self.BOXC}{self.LBL}<li>آیتم نویسنده.</li></div></ul>',
+            "BOX_EMPTY": f"<p>لید.</p>\n{self.BOXC}{self.LBL}</div>",
+            "BOX_COUNT": "<p>لید.</p>\n" + 3 * f"{self.BOXC}{self.LBL}\n<p>جمله.</p></div>\n",
+            "NUMBER_LONE": f"<p>لید.</p>\n<h3><span {A}>۱. </span>تنها بخش</h3>\n<p>جمله.</p>",
+            "NUMBER_ORDER": f"<p>لید.</p>\n<h3><span {A}>۱. </span>یک</h3>\n<h3><span {A}>۳. </span>سه</h3>",
+            "NUMBER_LEVELS": f"<p>لید.</p>\n<h3><span {A}>۱. </span>یک</h3>\n<h4><span {A}>۲. </span>زیر</h4>",
+            "CHIP_UNKNOWN": f'<p>لید.</p>\n<p class="dc-sublabel" {A}><strong>دارو</strong> <span class="dc-chip dc-chip-ok" {A}>خوب</span></p>',
+            "KEY_PLACE": f'<p>لید.</p>\n{self.BOXC}{self.LBL}\n<p><span class="dc-key">جمله در کادر.</span></p></div>',
+            "KEY_COUNT": "<p>لید.</p>\n<p>" + 4 * '<span class="dc-key">جمله.</span> ' + "</p>",
+        }
+        for code, body in cases.items():
+            self.assertIn(code, self.codes(body), code)
+        fa = f"<p>لید.</p>\n{self.BOXC}{self.LBL}\n<p>حرف آخر.</p></div>"
+        self.assertIn("MIRROR_PARITY", self.codes(fa, "<p>Lead.</p>\n<p>The last word.</p>"))
+
+    def test_a_box_goes_around_a_whole_list_or_inside_one_item(self):
+        around = f"<p>لید.</p>\n{self.BOXC}{self.LBL}\n<ul><li>یک.</li><li>دو.</li></ul></div>"
+        inside = f'<p>لید.</p>\n<ul><li>یک.</li><li>{self.BOXC}{self.LBL}\n<p>دو.</p></div></li></ul>'
+        self.assertEqual(self.codes(around), [])
+        self.assertEqual(self.codes(inside), [])
 
 
 class CorpusTests(unittest.TestCase):

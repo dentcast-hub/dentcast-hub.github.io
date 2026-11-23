@@ -25,7 +25,7 @@
 // before midnight (user report: two articles read in the afternoon, the 20:00
 // streak reminder still said nothing was recorded). So a failure arms a backoff
 // timer, and coming back online or back to the tab flushes at once.
-import { api } from './api.js?v=257';
+import { api } from './api.js?v=261';
 
 const PREFIX = 'dcp:outbox:'; // + action + '|' + contentId -> epoch ms it was earned
 const MAX_AGE_MS = 30 * 24 * 3600 * 1000;

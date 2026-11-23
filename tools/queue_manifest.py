@@ -461,12 +461,19 @@ def draft(item):
 #   * `[[<label>]]` inside a line is a status chip; the labels are a closed list;
 #   * `[[+:<words>]]` inside a line is a marked span — the number added to a
 #     heading the author wrote: `### ∆ [[+:۱.]] عنوان نویسنده`.
-# queue_apply.py renders both with `data-dc-presentation`, so the units tool and
-# the publish-day text check never read them as the author's text.
+#   * `> [[+]]` with no words opens a box that takes no label (the author's own
+#     words already label it): the frame alone;
+#   * `[[+key]]…[[+/key]]` around one whole sentence is the key-sentence frame:
+#     the markers go, the sentence stays where it is, word for word.
+# queue_apply.py renders these with `data-dc-presentation` (the key-sentence
+# frame is a bare wrapper with no words of its own), so the units tool and the
+# publish-day text check never read them as the author's text.
 PRES_MARK = "[[+]]"
 PRES_LINE = re.compile(r"^(\s*>\s?)?\s*\[\[\+\]\][ \t]*(.*?)\s*$")
 CHIP = re.compile(r"\[\[([^\[\]\n:+]+)\]\]")
 PRES_SPAN = re.compile(r"\[\[\+:([^\[\]\n]+)\]\]")
+KEY = re.compile(r"\[\[\+key\]\](.+?)\[\[\+/key\]\]")
+KEY_MARK = re.compile(r"\[\[\+/?key\]\]")
 CHIP_LABELS = {
     "ok": ("مجاز", "Allowed"),
     "caution": ("با احتیاط", "با محدودیت", "با مشورت", "Caution", "Restricted", "Consult first"),
@@ -489,10 +496,12 @@ def presentation_md_problems(md):
         m = PRES_LINE.match(line)
         if m:
             body = m.group(2)
-            if not CHIP.sub("", body).strip():
+            if not CHIP.sub("", body).strip() and not (m.group(1) and not body.strip()):
                 out.append(f"line {n}: a presentation line needs its own words (a heading or a label)")
         if PRES_MARK in body:
             out.append(f"line {n}: `{PRES_MARK}` opens a line (after an optional `>`), nowhere else")
+        if len(KEY_MARK.findall(body)) != 2 * len(KEY.findall(body)):
+            out.append(f"line {n}: `[[+key]]` and `[[+/key]]` come as a pair around one sentence, on one line")
         for c in CHIP.finditer(body):
             if chip_kind(c.group(1)) is None:
                 out.append(f"line {n}: chip «{c.group(1)}» is not in the closed list (module 03)")
@@ -508,7 +517,7 @@ def strip_presentation_md(md):
     for line in md.split("\n"):
         if PRES_LINE.match(line):
             continue
-        out.append(PRES_SPAN.sub("", CHIP.sub("", line)) if "[[" in line else line)
+        out.append(KEY_MARK.sub("", PRES_SPAN.sub("", CHIP.sub("", line))) if "[[" in line else line)
     return "\n".join(out)
 
 

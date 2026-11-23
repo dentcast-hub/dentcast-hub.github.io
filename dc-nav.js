@@ -885,6 +885,70 @@
           firstBox.parentNode.insertBefore(toc, firstBox);
         }
       }
+
+      /* 7d) «در یک نگاه» — the sentences the page's own callout boxes frame
+             (module 03, the presentation layer), gathered under the opening
+             paragraph; a tap goes to the box. Two boxes or more only: with
+             one, the card would repeat a sentence the reader is about to
+             meet. Built here, before first paint, so nothing moves;
+             plus/js/presentation.js builds the same card in the desktop shell
+             (find-or-create #dcGlance) and owns the section pill and the
+             glossary preview. The card is marked data-dc-presentation: it
+             repeats the article, and the highlight anchoring (anchor.js) must
+             not read it as page text a second time. */
+      (function () {
+        if (document.getElementById('dcGlance') || !dcBoxes.length) return;
+        var BOX = '.dc-box, div[role="note"]', LAYER = '[data-dc-presentation]';
+        function own(box) {
+          var c = box.cloneNode(true), m = c.querySelectorAll(LAYER), i;
+          for (i = 0; i < m.length; i++) m[i].parentNode.removeChild(m[i]);
+          return (c.textContent || '').replace(/\s+/g, ' ').trim();
+        }
+        var notes = [], lead = null, bi, i;
+        for (bi = 0; bi < dcBoxes.length; bi++) {
+          var ns = dcBoxes[bi].querySelectorAll(BOX);
+          for (i = 0; i < ns.length; i++) {
+            if (!ns[i].closest('.dc-related-section, .author-note') && own(ns[i])) notes.push(ns[i]);
+          }
+          var ps = lead ? [] : dcBoxes[bi].querySelectorAll('p');
+          for (i = 0; i < ps.length; i++) {
+            var p = ps[i];
+            if (p.closest(BOX) || p.closest(LAYER) || /dc-disclaimer|kicker/.test(p.className)) continue;
+            if (p.querySelector('.lang-btn') && !(p.textContent || '').replace(/English|فارسی/g, '').trim()) continue;
+            if ((p.textContent || '').trim().length > 40) { lead = p; break; }
+          }
+        }
+        if (notes.length < 2 || !lead) return;
+        var card = document.createElement('div');
+        card.id = 'dcGlance';
+        card.className = 'dc-glance';
+        card.setAttribute('data-dc-presentation', '');
+        var h = document.createElement('p');
+        h.className = 'dc-glance-h';
+        h.textContent = /\/en\//.test(location.pathname) ? 'At a glance' : 'در یک نگاه';
+        card.appendChild(h);
+        function row(box) {
+          var b = document.createElement('button'), lab = document.createElement('span'), tx = document.createElement('span');
+          var own1 = null, kids = box.children, k;
+          for (k = 0; k < kids.length; k++) if (kids[k].hasAttribute('data-dc-presentation')) { own1 = kids[k]; break; }
+          b.type = 'button';
+          lab.className = 'dc-glance-lab';
+          lab.textContent = own1 ? (own1.textContent || '').trim() : '•';
+          tx.className = 'dc-glance-tx';
+          tx.textContent = own(box);
+          b.appendChild(lab);
+          b.appendChild(tx);
+          b.addEventListener('click', function () {
+            var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            box.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'center' });
+            box.classList.add('dc-flash');
+            setTimeout(function () { box.classList.remove('dc-flash'); }, 1400);
+          });
+          return b;
+        }
+        for (i = 0; i < notes.length; i++) card.appendChild(row(notes[i]));
+        lead.parentNode.insertBefore(card, lead.nextSibling);
+      })();
     }
   })();
 
@@ -2858,7 +2922,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '319';
+  var V = '323';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now
