@@ -9,7 +9,7 @@
 // it on a standalone page (it runs before first paint, so nothing moves), and
 // buildGlance() here builds it in the desktop shell, where that script is
 // stripped from the fetched article. Both find-or-create `#dcGlance`.
-import { el, faNum } from './util.js?v=259';
+import { el, faNum } from './util.js?v=261';
 
 const LAYER = '[data-dc-presentation]';
 const BOX = '.dc-box, div[role="note"]';
@@ -118,9 +118,29 @@ export function mountSectionPill(root) {
     queued = false;
     if (!root.isConnected) { off(); return; }
     const box = root.getBoundingClientRect();
-    const header = document.querySelector('header.dc-header, .dc-topbar, header');
-    const hb = header ? header.getBoundingClientRect() : null;
-    const top = Math.max(hb && hb.bottom > 0 && hb.top <= 0 ? hb.bottom : 0, 0) + 8;
+    // Just under whatever covers the top of the article's column: a fixed or
+    // sticky bar there (the site header, the shell's top bar), or the top edge
+    // of the column that scrolls (the desktop shell scrolls a column, not the window).
+    let top = 0;
+    const x = Math.min(Math.max(box.left + box.width / 2, 1), innerWidth - 1);
+    for (const hit of document.elementsFromPoint(x, 2)) {
+      let n = hit;
+      while (n && n !== document.body && n !== pill) {
+        const pos = getComputedStyle(n).position;
+        if (pos === 'fixed' || pos === 'sticky') {
+          const r = n.getBoundingClientRect(); // a bar, not a full-height shell that happens to be fixed
+          if (r.height < innerHeight * 0.4) { top = Math.max(top, r.bottom); break; }
+        }
+        n = n.parentElement;
+      }
+    }
+    for (let n = root.parentElement; n && n !== document.body; n = n.parentElement) {
+      if (/(auto|scroll)/.test(getComputedStyle(n).overflowY) && n.scrollHeight > n.clientHeight) {
+        top = Math.max(top, n.getBoundingClientRect().top);
+        break;
+      }
+    }
+    top += 8;
     let cur = -1;
     const line = top + innerHeight * 0.35; // a section is current once its heading is in the upper part of the screen
     secs.forEach((s, i) => { if (s.el.getBoundingClientRect().top < line) cur = i; });
