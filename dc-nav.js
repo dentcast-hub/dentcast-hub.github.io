@@ -904,11 +904,46 @@
           for (i = 0; i < m.length; i++) m[i].parentNode.removeChild(m[i]);
           return (c.textContent || '').replace(/\s+/g, ' ').trim();
         }
+        /* What one box gives the card (plus/js/presentation.js glanceRow,
+           the same rules): its NAME — the box's own label, else the heading
+           right above it («حرف آخر»: a frame-alone box is unlabelled on
+           purpose there), else the author's own label opening its words
+           («Clinical Tip:»); no name anywhere, no row (never a bare «•») —
+           and its words from the first sentence that does not open by
+           pointing back with a demonstrative at the paragraph before the box
+           («این ایمنی …»; «این کیس/مقاله …» names the page and stays):
+           the card sits above the article, before that paragraph. */
+        var ANAPHOR = /^(?:(?:این|آن|اون|همین|همان|همون)(?![‌\s]*(?:کیس|مطالعه|مقاله|مقالهٔ|مقاله‌ی|اپیزود|مطلب|صفحه|مرور|ویدیو|ایده|قسمت|بخش|نوشته)(?:[\s‌،,.:;]|$))|اینجا|اونجا|اینها|آنها|به همین|this|that|these|those|it|here|there)(?=[\s‌،,.:;]|$)/i;
+        var AUTHOR_LABEL = /^\s*([^.؟?!:：\n]{2,40})[:：]\s*/;
+        function glanceRow(box) {
+          var text = own(box), label = null, kids = box.children, k, m;
+          for (k = 0; k < kids.length; k++) {
+            if (kids[k].hasAttribute('data-dc-presentation') && !/dc-box-save|dc-box-gate/.test(kids[k].className)) { label = (kids[k].textContent || '').replace(/\s+/g, ' ').trim(); break; }
+          }
+          if (!label) {
+            var prev = box.previousElementSibling;
+            if (prev && /^H[2-6]$/.test(prev.tagName)) {
+              var hc = prev.cloneNode(true), hm = hc.querySelectorAll(LAYER);
+              for (k = 0; k < hm.length; k++) hm[k].parentNode.removeChild(hm[k]);
+              label = (hc.textContent || '').replace(/^[∆\s]+/, '').replace(/\s+/g, ' ').trim() || null;
+            }
+          }
+          if (!label && (m = AUTHOR_LABEL.exec(text)) && m[1].trim().split(/\s+/).length <= 6) {
+            label = m[1].trim();
+            text = text.slice(m[0].length);
+          }
+          if (!label) return null;
+          var ss = text.replace(/([.؟?!])\s+/g, '$1\u0001').split('\u0001');
+          for (k = 0; k < ss.length; k++) if (!ANAPHOR.test(ss[k].replace(/^\s+/, ''))) return { label: label, text: ss.slice(k).join(' ') };
+          return null;
+        }
         var notes = [], lead = null, bi, i;
         for (bi = 0; bi < dcBoxes.length; bi++) {
           var ns = dcBoxes[bi].querySelectorAll(BOX);
           for (i = 0; i < ns.length; i++) {
-            if (!ns[i].closest('.dc-related-section, .author-note') && own(ns[i])) notes.push(ns[i]);
+            if (ns[i].closest('.dc-related-section, .author-note') || !own(ns[i])) continue;
+            var gr = glanceRow(ns[i]);
+            if (gr) notes.push({ box: ns[i], row: gr });
           }
           var ps = lead ? [] : dcBoxes[bi].querySelectorAll('p');
           for (i = 0; i < ps.length; i++) {
@@ -927,15 +962,14 @@
         h.className = 'dc-glance-h';
         h.textContent = /\/en\//.test(location.pathname) ? 'At a glance' : 'در یک نگاه';
         card.appendChild(h);
-        function row(box) {
+        function row(note) {
+          var box = note.box;
           var b = document.createElement('button'), lab = document.createElement('span'), tx = document.createElement('span');
-          var own1 = null, kids = box.children, k;
-          for (k = 0; k < kids.length; k++) if (kids[k].hasAttribute('data-dc-presentation')) { own1 = kids[k]; break; }
           b.type = 'button';
           lab.className = 'dc-glance-lab';
-          lab.textContent = own1 ? (own1.textContent || '').trim() : '•';
+          lab.textContent = note.row.label;
           tx.className = 'dc-glance-tx';
-          tx.textContent = own(box);
+          tx.textContent = note.row.text;
           b.appendChild(lab);
           b.appendChild(tx);
           b.addEventListener('click', function () {
