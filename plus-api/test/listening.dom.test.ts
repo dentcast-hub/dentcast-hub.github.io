@@ -7,8 +7,10 @@
 // Both are numbers a future edit could move without anything failing: the
 // threshold lives in config.js as a bare constant, and the repeat gate is a
 // storage key whose semantics changed from "once per session" to "once per
-// 20h" when re-listening started to earn (2026-08-10). Nothing on the server
-// can catch either — it is handed a finished event and believes it.
+// 20h" when re-listening started to earn (2026-08-10), and from "20h" to "once
+// per Tehran day" in 1405/09, when the window was found skipping real days.
+// Nothing on the server can catch either — it is handed a finished event and
+// believes it.
 import {
   describe, it, expect, beforeEach, afterEach, vi,
 } from 'vitest';
@@ -161,5 +163,70 @@ describe('listening tracker', () => {
     await flush(); await flush();
     expect(localStorage.getItem('dcp:outbox:episode_listened|episodes/episode-150')).toBeTruthy();
     expect(Object.keys(localStorage).some((k) => k.startsWith('dcp:listen:'))).toBe(false);
+  });
+
+  // 1405/09 — an active listener whose days were not counted.
+
+  it('a second sitting the next day counts even under 20 hours later', async () => {
+    nowMs = Date.UTC(2026, 7, 10, 18, 30, 0); // 22:00 Tehran
+    const night = new FakeAudio();
+    initListeningTracker({ contentId: 'episodes/episode-170', audioEl: night });
+    play(night, 241);
+    await flush();
+    expect(posted).toHaveLength(1);
+
+    nowMs = Date.UTC(2026, 7, 11, 11, 30, 0); // 15:00 Tehran the next day, 17h later
+    const afternoon = new FakeAudio();
+    expect(initListeningTracker({ contentId: 'episodes/episode-170', audioEl: afternoon })).not.toBeNull();
+    play(afternoon, 241);
+    await flush();
+    expect(posted).toHaveLength(2);
+  });
+
+  it('short sittings on separate pages add up to the threshold', async () => {
+    // 1200s episode → threshold 240s. Three sittings of 100s, each on a new
+    // page (a fresh tracker), none enough alone.
+    for (let i = 0; i < 3; i += 1) {
+      const audio = new FakeAudio();
+      const t = initListeningTracker({ contentId: 'episodes/episode-171', audioEl: audio });
+      audio.currentTime = i * 100;
+      play(audio, 100);
+      audio.dispatchEvent(new Event('pause'));
+      t?.stop();
+      await flush();
+      if (i < 2) expect(posted).toHaveLength(0);
+    }
+    expect(posted).toHaveLength(1);
+    // The bank is emptied once reported.
+    expect(localStorage.getItem('dcp:listen-acc:episodes/episode-171')).toBeNull();
+  });
+
+  it('a scrub still adds nothing to the bank', async () => {
+    const audio = new FakeAudio();
+    const t = initListeningTracker({ contentId: 'episodes/episode-172', audioEl: audio });
+    seekTo(audio, 1100);
+    play(audio, 10);
+    t?.stop();
+    const bank = JSON.parse(localStorage.getItem('dcp:listen-acc:episodes/episode-172') || '{"s":0}');
+    expect(bank.s).toBeLessThanOrEqual(10);
+  });
+
+  it('lights the flame only once the server has the listen', async () => {
+    let flames = 0;
+    const onFlame = () => { flames += 1; };
+    document.addEventListener('dcp:streak-activity', onFlame);
+    try {
+      globalThis.fetch = vi.fn((url: string) => {
+        if (String(url).endsWith('/health')) return Promise.resolve({ ok: true, status: 200, json: async () => ({}) });
+        return Promise.reject(new TypeError('network'));
+      }) as unknown as typeof fetch;
+      const audio = new FakeAudio();
+      initListeningTracker({ contentId: 'episodes/episode-173', audioEl: audio });
+      play(audio, 241);
+      await flush(); await flush();
+      expect(flames).toBe(0);
+    } finally {
+      document.removeEventListener('dcp:streak-activity', onFlame);
+    }
   });
 });

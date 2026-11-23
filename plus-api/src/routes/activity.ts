@@ -34,16 +34,22 @@ export async function activityRoutes(app: FastifyInstance): Promise<void> {
           content_id: { type: 'string', maxLength: 200 },
           meta: { type: 'object', additionalProperties: true, maxProperties: 50 },
           event_id: { type: 'string', maxLength: 36 },
+          // Epoch ms the completion was EARNED, from the browser outbox. Only
+          // consulted for completions, and only within the bounds
+          // services/activity.ts honouredEarnedAt() sets.
+          earned_at: { type: 'number' },
         },
       },
     },
   }, async (request, reply) => {
-    const { action, content_id, meta, event_id } = request.body as {
+    const { action, meta, event_id, earned_at } = request.body as {
       action: string;
       content_id?: string;
       meta?: Record<string, unknown>;
       event_id?: string;
+      earned_at?: number;
     };
+    let { content_id } = request.body as { content_id?: string };
     if (!ACTION_RE.test(action)) {
       return reply.code(400).send({ error: 'invalid_action' });
     }
@@ -166,6 +172,24 @@ export async function activityRoutes(app: FastifyInstance): Promise<void> {
     // re-sent by the outbox, so a fast reader is paid later, not never.
     if ((CONSUMPTION_ACTIONS as readonly string[]).includes(action)) {
       if (!content_id) return reply.code(400).send({ error: 'invalid_content_id' });
+      // An /en/ mirror is a second reading surface for a Persian page, never a
+      // content item of its own: it has no brain entry and no row in the
+      // index (repo conventions, en-version protocol). Its reading tracker
+      // still runs, and until 1405/09 every English read was a 409 the outbox
+      // re-sent for thirty days and that never counted. The read is credited
+      // to the page it mirrors — the same content_id, so it is one distinct
+      // page for score and pathways, not a second one.
+      const mirror = /^(.+)\/en\/([^/]+)$/.exec(content_id);
+      if (mirror && !getContentInfo(content_id)) {
+        const fa = `${mirror[1]}/${mirror[2]}`;
+        if (!getContentInfo(fa)) {
+          // A mirror with no Persian twin (an English-only page such as an
+          // «about»): nothing to credit, now or after any refresh. 404, which
+          // the outbox drops instead of re-sending.
+          return reply.code(404).send({ error: 'unknown_content' });
+        }
+        content_id = fa;
+      }
       if (!getContentInfo(content_id)) {
         refreshSoon();
         return reply.code(409).send({ error: 'unknown_content' });
@@ -184,7 +208,10 @@ export async function activityRoutes(app: FastifyInstance): Promise<void> {
 
     // `card_reviewed_manual` counts for the streak but MUST NOT touch card_state.
     // recordActivity only appends to the log, so that invariant holds here.
-    const row = await recordActivity(request.user!.id, action, content_id ?? null, meta ?? {});
+    const earnedAt = (CONSUMPTION_ACTIONS as readonly string[]).includes(action)
+      && typeof earned_at === 'number' && Number.isFinite(earned_at)
+      ? new Date(earned_at) : null;
+    const row = await recordActivity(request.user!.id, action, content_id ?? null, meta ?? {}, undefined, { earnedAt });
     // The badge wall stores nothing, so nothing else can notice that finishing
     // this article just lit «خواننده». Debounced and off the response (see
     // achievement-sync.ts): a reading session is twenty of these, and the reader

@@ -235,7 +235,9 @@ export async function highlightRoutes(app: FastifyInstance): Promise<void> {
     // Pace ceiling: creating a highlight pays league XP, and the per-content
     // weekly cap resets for each distinct content_id, so without this a script
     // posting a fresh id each time farms XP at the raw request rate. 150/hour is
-    // far past any real reading session; a 429 is re-sent by the client outbox.
+    // far past any real reading session. A highlight does NOT go through the
+    // client outbox (that queue carries completions only): a 429 reaches the
+    // reader as workbench.js's failure toast, and the mark is not drawn.
     const limit = consume(`highlights:user:${userId}`, config.highlights.maxPerUserPerHour, HOUR_MS);
     if (!limit.allowed) {
       reply.header('retry-after', Math.ceil(limit.retryAfterMs / 1000));

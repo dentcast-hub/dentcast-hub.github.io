@@ -1,4 +1,5 @@
 import type { FastifyInstance } from 'fastify';
+import type pg from 'pg';
 import { config } from '../config.js';
 import { requireAuth } from '../middleware/auth.js';
 import { requirePremium } from '../middleware/require-premium.js';
@@ -10,6 +11,29 @@ import { nextBox, intervalDaysForBox } from '../services/leitner.js';
 import { resolveTopic } from '../content-index.js';
 import { getConsumedContentTimes } from '../services/consumption.js';
 import { getCard, getCardsFor } from '../flashcards.js';
+
+/**
+ * An answer to a card that was NOT due still happened. It must not pay (see
+ * POST /review/answer: due-ness is the unit of study), but until 1405/09 it
+ * also wrote nothing at all — so a reader whose only study that day was an
+ * early review saw the flame light (review.js signals on every answer) and
+ * then found the day empty, bridged by a shield. `review_early` is in the
+ * streak's QUALIFYING_ACTIONS and in none of the paying sets, and one row per
+ * Tehran day is all the streak needs, so a repeat the same day writes nothing.
+ */
+async function keepEarlyReviewDay(
+  client: pg.PoolClient, userId: string, contentId: string, meta: Record<string, unknown>,
+): Promise<void> {
+  const today = await client.query(
+    `select 1 from user_activity
+      where user_id = $1 and action = 'review_early'
+        and (created_at at time zone $2)::date = (now() at time zone $2)::date
+      limit 1`,
+    [userId, config.streakTimezone],
+  );
+  if (today.rowCount) return;
+  await recordActivity(userId, 'review_early', contentId, meta, client);
+}
 
 // Phase 2: the premium Leitner review engine, scoped to highlights only (spec's
 // free/premium line — the card FORM is free, the SCHEDULE is premium). Notes
@@ -247,6 +271,8 @@ export async function reviewRoutes(app: FastifyInstance): Promise<void> {
       // again" into an XP tap. Due-ness, not the press, is the unit of study.
       if (wasDue) {
         await recordActivity(userId, 'review_finished', content_id, { highlight_id, result }, client);
+      } else {
+        await keepEarlyReviewDay(client, userId, content_id, { highlight_id, result });
       }
       return res.rows[0];
     });
@@ -343,6 +369,8 @@ export async function reviewRoutes(app: FastifyInstance): Promise<void> {
       // a DUE answer counts as a finished review for XP/streak/score/badges.
       if (wasDue) {
         await recordActivity(userId, 'review_finished', content_id, { card_id, result }, client);
+      } else {
+        await keepEarlyReviewDay(client, userId, content_id, { card_id, result });
       }
       return res.rows[0];
     });

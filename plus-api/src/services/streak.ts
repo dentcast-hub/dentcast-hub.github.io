@@ -16,6 +16,11 @@ export const QUALIFYING_ACTIONS = new Set([
   'highlight_created',
   'card_reviewed_manual', // free path
   'review_finished', // premium scheduled session (Phase 2)
+  // A premium card answered BEFORE it was due. It pays nothing (not in
+  // SCORING_ACTIONS — due-ness is the unit of study, routes/review.ts), but the
+  // reader did review that day, and the day is what the streak counts. Written
+  // at most once per Tehran day.
+  'review_early',
   'challenge_answered', // only written on a fully-correct attempt
 ]);
 

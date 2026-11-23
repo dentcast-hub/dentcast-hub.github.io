@@ -6,9 +6,9 @@
 // though the server counts it as a qualifying streak + scoring action. So plain
 // reading earned no score, no active day and no streak — only highlighting did.
 // This closes that gap; the streak flame also lights live via signalStreakActivity.
-import { sendCompletion, flushOutbox } from './outbox.js?v=255';
-import { signalStreakActivity } from './util.js?v=255';
-import { READ_WPM, READ_FRACTION, READ_MIN_MS, READ_MAX_MS, SS_READ_DONE } from './config.js?v=255';
+import { sendCompletion, flushOutbox } from './outbox.js?v=256';
+import { signalStreakActivity, tehranDay } from './util.js?v=256';
+import { READ_WPM, READ_FRACTION, READ_MIN_MS, READ_MAX_MS, SS_READ_DONE } from './config.js?v=256';
 
 // Dwell threshold for THIS article, scaled by its length. Persian words are
 // space-separated; the ZWNJ (‌) that joins parts of one word is NOT
@@ -25,9 +25,12 @@ function ssGet(k) { try { return sessionStorage.getItem(k); } catch (_) { return
 
 // The completion goes through the shared outbox (outbox.js): queued first, sent
 // second, and the session flag set only once the server has accepted it.
+// The flag holds the Tehran DAY it landed on, not '1': a tab (or an installed
+// app, whose session can live for days) that re-reads the same article
+// tomorrow must send again — tomorrow is a different streak day.
 function send(contentId, opts) {
   return sendCompletion('article_completed', contentId, opts)
-    .then((ok) => { if (ok) ssSet(SS_READ_DONE + contentId, '1'); return ok; });
+    .then((ok) => { if (ok) ssSet(SS_READ_DONE + contentId, tehranDay()); return ok; });
 }
 
 // Kept under its old name for callers: flushing is the outbox's job now.
@@ -40,7 +43,7 @@ export function initReadingTracker({ contentId, proseRoot }) {
   // LANDED (send() sets the flag on success, never before). The backend log is
   // append-only and a repeat within the same Tehran day changes neither score
   // nor active-day, but there is no reason to send it twice.
-  if (ssGet(SS_READ_DONE + contentId)) return;
+  if (ssGet(SS_READ_DONE + contentId) === tehranDay()) return;
 
   const completeMs = completeMsFor(proseRoot);
   let dwellMs = 0;
@@ -82,8 +85,10 @@ export function initReadingTracker({ contentId, proseRoot }) {
     cleanup();
     // requireAuth rejects an anonymous caller quietly and we never surface an
     // error — this is a silent background signal. A failure stays queued.
-    send(contentId, { keepalive: leaving });
-    signalStreakActivity(); // light the header flame live, like a highlight does
+    // The flame lights when the SERVER has the read, not when it was sent: a
+    // send that did not land used to light it anyway, and the reader left
+    // believing a day was kept that the server never saw.
+    send(contentId, { keepalive: leaving }).then((ok) => { if (ok) signalStreakActivity(); });
   }
 
   // Tick once a second so firing is prompt once both conditions hold (the reader

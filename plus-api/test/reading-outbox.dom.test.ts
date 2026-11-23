@@ -15,12 +15,15 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 const calls: Array<{ action: string; id: string; keepalive: boolean }> = [];
+const earned: Array<number | undefined> = []; // earned_at per call, same order as `calls`
+let flames = 0;
 let fail: false | number | true = false; // a number fails with that HTTP status
 
 vi.mock('/plus/js/api.js', () => ({
   api: {
-    activity: (action: string, id: string, _meta: unknown, opts: { keepalive?: boolean } = {}) => {
+    activity: (action: string, id: string, _meta: unknown, opts: { keepalive?: boolean; earned_at?: number } = {}) => {
       calls.push({ action, id, keepalive: !!opts.keepalive });
+      earned.push(opts.earned_at);
       if (fail === false) return Promise.resolve({ ok: true });
       const err = new Error('network') as Error & { status?: number };
       if (typeof fail === 'number') err.status = fail;
@@ -28,7 +31,15 @@ vi.mock('/plus/js/api.js', () => ({
     },
   },
 }));
-vi.mock('/plus/js/util.js', () => ({ signalStreakActivity: () => {} }));
+vi.mock('/plus/js/util.js', () => ({
+  signalStreakActivity: () => { flames += 1; },
+  tehranDay: (d: Date = new Date()) => new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Tehran', year: 'numeric', month: '2-digit', day: '2-digit',
+  }).format(d),
+}));
+const tehranToday = () => new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'Asia/Tehran', year: 'numeric', month: '2-digit', day: '2-digit',
+}).format(new Date());
 
 let perfNow = 0;
 
@@ -46,6 +57,8 @@ describe('reading tracker outbox', () => {
   beforeEach(() => {
     vi.resetModules();
     calls.length = 0;
+    earned.length = 0;
+    flames = 0;
     fail = false;
     localStorage.clear();
     sessionStorage.clear();
@@ -91,7 +104,7 @@ describe('reading tracker outbox', () => {
     window.dispatchEvent(new Event('pagehide'));
     await flush();
     expect(calls.filter((c) => c.id === 'x/a').length).toBeGreaterThanOrEqual(2);
-    expect(sessionStorage.getItem('dcp:read:x/a')).toBe('1');
+    expect(sessionStorage.getItem('dcp:read:x/a')).toBe(tehranToday());
   });
 
   it('leaving before the end, or before the dwell, sends nothing', async () => {
@@ -163,6 +176,61 @@ describe('reading tracker outbox', () => {
     } finally {
       vi.useRealTimers();
     }
+  });
+
+  // 1405/09 — «هر روز اومدم، سه روز سپر خورده». The rest of this block pins the
+  // ways an active day went uncounted, or looked counted when it was not.
+
+  it('a queued completion carries the time it was EARNED to every re-send', async () => {
+    fail = true;
+    const { sendCompletion } = await import('/plus/js/outbox.js');
+    const before = Date.now();
+    await sendCompletion('article_completed', 'x/late');
+    const at = earned[0];
+    expect(at).toBeGreaterThanOrEqual(before);
+    fail = false;
+    vi.resetModules();
+    const { flushOutbox } = await import('/plus/js/outbox.js');
+    await flushOutbox();
+    expect(earned.at(-1)).toBe(at); // the re-send says when, not "now"
+  });
+
+  it('flushes oldest first, one at a time', async () => {
+    localStorage.setItem('dcp:outbox:article_completed|x/newer', String(Date.now() - 1000));
+    localStorage.setItem('dcp:outbox:article_completed|x/older', String(Date.now() - 50000));
+    const { flushOutbox } = await import('/plus/js/outbox.js');
+    await flushOutbox();
+    expect(calls.map((c) => c.id)).toEqual(['x/older', 'x/newer']);
+  });
+
+  it('a 404 is final: dropped from the queue, never re-sent', async () => {
+    fail = 404; // an English-only page with no Persian twin
+    const { sendCompletion } = await import('/plus/js/outbox.js');
+    expect(await sendCompletion('article_completed', 'x/en/orphan')).toBe(false);
+    expect(localStorage.getItem('dcp:outbox:article_completed|x/en/orphan')).toBeNull();
+  });
+
+  it('lights the flame only once the server has the read', async () => {
+    fail = true;
+    const { initReadingTracker } = await import('/plus/js/reading.js');
+    initReadingTracker({ contentId: 'x/flame', proseRoot: prose(500) });
+    perfNow = 31000;
+    window.dispatchEvent(new Event('pagehide'));
+    await flush();
+    expect(flames).toBe(0);
+  });
+
+  it('a read flagged on an earlier day is sent again today', async () => {
+    sessionStorage.setItem('dcp:read:x/yesterday', '2000-01-01');
+    sessionStorage.setItem('dcp:read:x/today', tehranToday());
+    const { initReadingTracker } = await import('/plus/js/reading.js');
+    initReadingTracker({ contentId: 'x/yesterday', proseRoot: prose(500) });
+    initReadingTracker({ contentId: 'x/today', proseRoot: prose(500) });
+    perfNow = 31000;
+    window.dispatchEvent(new Event('pagehide'));
+    await flush();
+    expect(calls.map((c) => c.id)).toEqual(['x/yesterday']);
+    expect(flames).toBe(1);
   });
 });
 
