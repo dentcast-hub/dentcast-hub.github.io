@@ -1,0 +1,277 @@
+{
+ "schema": "dentcast-queue-manifest/1",
+ "category": {
+  "value": "sharehub",
+  "from": "folder name"
+ },
+ "title_fa": {
+  "value": "تغییر OVD؛ توی کلینیک از کجا شروع کنیم؟ (قسمت دوم)",
+  "from": "02-عنوان-کپشن.md:5"
+ },
+ "caption_fa": {
+  "value": "شش قدم برای تغییر OVD در بیمار دندان‌دار، از ثبت بایت توی CR با دپروگرمر تا تست با پروویژنال ثابت قبل از تراش؛ بر اساس مرور Calamita و همکاران (2019).",
+  "from": "02-عنوان-کپشن.md:9"
+ },
+ "title_en": {
+  "value": "Changing the OVD: Where Do We Start in the Clinic? (Part 2)",
+  "from": "06-انگلیسی.md:1"
+ },
+ "caption_en": {
+  "value": "Six steps for changing the OVD in a dentate patient, from recording the bite in CR with a deprogrammer to testing with fixed provisionals before preparation; based on the review by Calamita et al. (2019).",
+  "from": "06-انگلیسی.md:3"
+ },
+ "body_en": {
+  "value": "Imagine you have concluded that your patient needs an increase in OVD. Now, in the clinic, what exactly should you do, and in what order? The approach proposed by Calamita et al. (2019) can be summarized in six steps. Its general rule is that we do not choose the OVD number or amount at the outset: first the position of the maxillary anterior incisal edges is determined, and then it becomes clear how much opening this edge needs.\n\n## Step 1: Record the bite in CR\n\nWhen the OVD is going to change, the patient's current bite is no longer the reference, because it is exactly what we want to change. You have to record the bite in a position that does not depend on the teeth and is repeatable every time, that is, CR (or, if the joint is not completely healthy but has adapted and become stable, adapted centric posture).\n\nThe problem is that the patient does not close in CR on their own. Their muscles have learned over the years to pull the jaw into the same habitual bite, and this memorized muscle pattern is called an engram. In the authors' view, the solution is an anterior deprogrammer such as the Kois Deprogrammer: a removable appliance with a small platform behind the maxillary anterior teeth that only the mandibular anterior teeth touch, while the posterior teeth stay apart. When the posterior teeth cannot meet, the muscles let go of the old pattern and the condyles settle into their proper position.\n\nWhat you do:\n\n- The patient wears the deprogrammer and closes on its anterior stop.\n- In this same position you record the bite, with a registration material or an intraoral scanner.\n- The casts are mounted with this record and a facebow.\n\n[[Image:01]]\n\n*The Kois Deprogrammer provides a stable and reliable position for recording CR or adapted centric posture. (Calamita et al. 2019, Fig. 9)*\n\n## Step 2: Determine the position of the maxillary incisal edge on the patient's face\n\nThe starting point of the treatment plan is the maxillary anterior teeth, not the posterior teeth and not the OVD number. Look at the patient's face and decide where the incisal edge of the maxillary anterior teeth should be. You look at three things:\n\n- How much of the teeth shows with the lips at rest.\n- How much of the teeth shows when smiling.\n- How much lip support the teeth provide.\n\nThe maxillary occlusal plane is also determined at this point. That is, it is not only the edge of the anterior teeth: the continuation of the same line toward the maxillary premolars and molars must also be in harmony with the face. The order is that the maxillary teeth (anterior and posterior) are set to the face first, and then the mandibular teeth to the face and to the maxillary teeth.\n\nThen look at the mandibular teeth and note two things. One is the mandibular anterior teeth: is their length adequate, or are they worn and shortened, and how much do they show when speaking and smiling? The other is the mandibular occlusal plane: is it in harmony with the face and with the maxillary plane, or does it have an extruded or tilted tooth that has disrupted the plane? Whatever you find here will be needed in steps 4 and 5.\n\n## Step 3: Try the new length in the mouth with a mock-up\n\nThe length you chose for the maxillary teeth on the cast or in the software must be seen in the patient's mouth before any other decision. Transfer the wax-up onto the teeth as a mock-up with a silicone index and look at it together with the patient: are the length and form of the edges good? Is the occlusal plane in harmony with the face?\n\nMake any correction needed right here, and do not move on to the OVD number until the incisal length is approved, because if the length changes later, the required OVD changes too.\n\n## Step 4: Decide whether the OVD should be opened\n\nNow that the incisal length is approved, ask one question on the articulator: does the new edge lie in the path of the mandibular teeth or not? During chewing and speaking the mandible moves within a defined space called the envelope of function, and the lengthened edge must not enter this space.\n\n- **If it is not in the way:** functionally, there is no need to touch the OVD.\n- **If it is in the way:** either open the OVD to make room, or correct the mandibular anterior teeth themselves with orthodontics, reshaping or restorations.\n\nThis is where what you saw about the mandibular anterior teeth in step 2 comes into play. If you opened the OVD and the anterior teeth no longer meet, one option is to lengthen the mandibular anterior teeth instead of thickening the maxillary lingual surface. But assess the esthetics first, because in older patients the mandibular anterior teeth usually already show a lot.\n\nThe amount of opening follows from how much the edge is lengthened: the longer the edge, the more opening. The authors give no exact number for it, and their recommendation is that the change be the minimum necessary. The limitations from part one (the 1:2:3 rule and the Angle class) also come into play here.\n\n[[Image:02]]\n\n*The effect of incisal edge lengthening on the envelope of function. If the position of the edge interferes with mandibular movements, the risk of functional and structural problems increases. (Calamita et al. 2019, Fig. 15)*\n\n## Step 5: Adjust the lingual surfaces of the anterior teeth and the posterior occlusion\n\nDuring closing and chewing, the mandibular teeth move along the lingual surface of the maxillary anterior teeth. If you only lengthen the edge and leave the lingual surface untouched, this path becomes steeper, and a steeper path means more torque on the abutment tooth and more shear force on the restorative material. According to the study by Gurel et al. (2013) on laminate veneers, cited in the article, lengthening the incisal edge can increase the risk of failure up to 2.3 times.\n\nSet the posterior occlusal plane based on the same assessment from step 2. What you need to achieve:\n\n- The lingual surface of the maxillary anterior teeth should be shaped so that the path of movement of the mandibular teeth is as shallow as possible.\n- The posterior contacts should be bilateral and simultaneous, and the load should be directed along the long axis of the tooth (axially).\n- The posterior teeth should not catch on each other during jaw movements, and the lateral force on them should be minimal. This is why the posterior occlusal plane is not made flat but has an anteroposterior curve and a lateral curve.\n\n[[Image:03]]\n\n*The relationship between incisal edge lengthening and the functional pathways. To reduce risk, the goal is the smallest angle, so that mandibular movements are not restricted and no posterior interference occurs. (Calamita et al. 2019, Fig. 16)*\n\n## Step 6: Test with fixed provisionals before preparation\n\nUp to this point everything was a plan. Before any irreversible step such as tooth preparation, you must try the new OVD, the new tooth length and the new occlusion in the patient's mouth with an adhesive mock-up or fixed provisionals. You check three things:\n\n- The patient chews well.\n- The patient speaks comfortably, especially the \"s\" sound, which is sensitive to the position of the maxillary incisal edge relative to the mandibular teeth.\n- The patient has no discomfort and is satisfied with the appearance.\n\nAn occlusal splint or a removable prosthesis is not suitable for this test. According to Spear (2006), cited in the article, a splint does not have the natural form of the teeth, does not provide enough stability and interferes with speech, so what the patient experiences with it does not resemble the final treatment.\n\nIf the patient has mild symptoms early on, do not worry. According to the review by Abduo (2012), cited in the article, these symptoms usually resolve on their own within about two weeks. Once everything has been tested and approved, the definitive treatment is carried out, and after cementation the occlusion is adjusted at the new OVD.\n\n[[Image:04]]\n\n*Milled, bonded, no-prep PMMA provisionals for testing the new esthetic and functional design. (Calamita et al. 2019, Fig. 19)*\n\n[[Image:05]]\n\n*The final result after cementation of the veneers, onlays and crowns, and equilibration. (Calamita et al. 2019, Fig. 20)*\n\n## Final word\n\nThe order of work is: the bite in CR, the position of the maxillary incisal edge based on the face, its approval with a mock-up, the decision about the OVD, adjustment of the lingual surfaces and the posterior occlusion, and finally a test with fixed provisionals before preparation. In this sequence the OVD is not the starting point but the result of the earlier decisions, and the smaller its change, the more easily the patient adapts to it.",
+  "from": "06-انگلیسی.md:6-95"
+ },
+ "images": {
+  "value": [
+   {
+    "n": "01",
+    "file": {
+     "value": "03-تصاویر/01-fig-09-kois-deprogrammer.webp",
+     "from": "03-تصاویر/تصاویر.md:8"
+    },
+    "alt_fa": {
+     "value": "Kois Deprogrammer در دهان",
+     "from": "03-تصاویر/تصاویر.md:9"
+    },
+    "alt_en": {
+     "value": "Kois Deprogrammer in the mouth",
+     "from": "03-تصاویر/تصاویر.md:10"
+    },
+    "caption_fa": {
+     "value": "Kois Deprogrammer یه موقعیت پایدار و قابل اتکا برای ثبت CR یا adapted centric posture می‌ده. (Calamita و همکاران 2019، شکل ۹)",
+     "from": "03-تصاویر/تصاویر.md:11"
+    },
+    "caption_en": {
+     "value": "The Kois Deprogrammer provides a stable and reliable position for recording CR or adapted centric posture. (Calamita et al. 2019, Fig. 9)",
+     "from": "06-انگلیسی.md:98"
+    }
+   },
+   {
+    "n": "02",
+    "file": {
+     "value": "03-تصاویر/02-fig-15-envelope-of-function.webp",
+     "from": "03-تصاویر/تصاویر.md:18"
+    },
+    "alt_fa": {
+     "value": "اثر بلند کردن لبه‌ی انسیزال روی انولوپ آو فانکشن",
+     "from": "03-تصاویر/تصاویر.md:19"
+    },
+    "alt_en": {
+     "value": "Effect of incisal edge lengthening on the envelope of function",
+     "from": "03-تصاویر/تصاویر.md:20"
+    },
+    "caption_fa": {
+     "value": "اثر بلند کردن لبه‌ی انسیزال روی انولوپ آو فانکشن. اگه موقعیت لبه با حرکات مندیبل تداخل کنه، خطر مشکلات فانکشنال و ساختاری بالا می‌ره. (Calamita و همکاران 2019، شکل ۱۵)",
+     "from": "03-تصاویر/تصاویر.md:21"
+    },
+    "caption_en": {
+     "value": "The effect of incisal edge lengthening on the envelope of function. If the position of the edge interferes with mandibular movements, the risk of functional and structural problems increases. (Calamita et al. 2019, Fig. 15)",
+     "from": "06-انگلیسی.md:99"
+    }
+   },
+   {
+    "n": "03",
+    "file": {
+     "value": "03-تصاویر/03-fig-16-incisal-guidance-slope.webp",
+     "from": "03-تصاویر/تصاویر.md:28"
+    },
+    "alt_fa": {
+     "value": "رابطه‌ی طول انسیزال و مسیر فانکشنال",
+     "from": "03-تصاویر/تصاویر.md:29"
+    },
+    "alt_en": {
+     "value": "Incisal length and the functional path",
+     "from": "03-تصاویر/تصاویر.md:30"
+    },
+    "caption_fa": {
+     "value": "رابطه‌ی بلند کردن لبه‌ی انسیزال و مسیرهای فانکشنال. برای کم کردن خطر، هدف کمترین زاویه‌ست تا حرکات مندیبل محدود نشه و تداخل خلفی پیش نیاد. (Calamita و همکاران 2019، شکل ۱۶)",
+     "from": "03-تصاویر/تصاویر.md:31"
+    },
+    "caption_en": {
+     "value": "The relationship between incisal edge lengthening and the functional pathways. To reduce risk, the goal is the smallest angle, so that mandibular movements are not restricted and no posterior interference occurs. (Calamita et al. 2019, Fig. 16)",
+     "from": "06-انگلیسی.md:100"
+    }
+   },
+   {
+    "n": "04",
+    "file": {
+     "value": "03-تصاویر/04-fig-19-bonded-pmma-provisionals.webp",
+     "from": "03-تصاویر/تصاویر.md:38"
+    },
+    "alt_fa": {
+     "value": "پروویژنال‌های PMMA",
+     "from": "03-تصاویر/تصاویر.md:39"
+    },
+    "alt_en": {
+     "value": "PMMA provisionals",
+     "from": "03-تصاویر/تصاویر.md:40"
+    },
+    "caption_fa": {
+     "value": "پروویژنال‌های PMMA میل‌شده، ادهزیو و بدون تراش، برای تست طراحی جدید زیبایی و فانکشنال. (Calamita و همکاران 2019، شکل ۱۹)",
+     "from": "03-تصاویر/تصاویر.md:41"
+    },
+    "caption_en": {
+     "value": "Milled, bonded, no-prep PMMA provisionals for testing the new esthetic and functional design. (Calamita et al. 2019, Fig. 19)",
+     "from": "06-انگلیسی.md:101"
+    }
+   },
+   {
+    "n": "05",
+    "file": {
+     "value": "03-تصاویر/05-fig-20-final-restorations-occlusion.webp",
+     "from": "03-تصاویر/تصاویر.md:48"
+    },
+    "alt_fa": {
+     "value": "نتیجه‌ی نهایی",
+     "from": "03-تصاویر/تصاویر.md:49"
+    },
+    "alt_en": {
+     "value": "Final result",
+     "from": "03-تصاویر/تصاویر.md:50"
+    },
+    "caption_fa": {
+     "value": "نتیجه‌ی نهایی بعد از سمان کردن ونیرها، انلی‌ها و کراون‌ها و اکوئیلیبریشن. (Calamita و همکاران 2019، شکل ۲۰)",
+     "from": "03-تصاویر/تصاویر.md:51"
+    },
+    "caption_en": {
+     "value": "The final result after cementation of the veneers, onlays and crowns, and equilibration. (Calamita et al. 2019, Fig. 20)",
+     "from": "06-انگلیسی.md:102"
+    }
+   }
+  ],
+  "from": "03-تصاویر/تصاویر.md"
+ },
+ "credit": {
+  "value": {
+   "mode": "references",
+   "items": [
+    {
+     "label_fa": "Calamita و همکاران، ۲۰۱۹",
+     "label_en": "Calamita et al., 2019",
+     "href": "https://pubmed.ncbi.nlm.nih.gov/31061997/",
+     "from": "04-منبع/منابع.md:31"
+    }
+   ]
+  },
+  "from": "04-منبع/منابع.md:27"
+ },
+ "catalog": {
+  "value": [
+   {
+    "skip": "same paper as queue 51 (Calamita et al. 2019, drive_id 18szK2MylWx4Mie2m_c4E8xm3XC8Z2aP-); its single catalog entry is frozen in 51. The paper has no DOI and queue_apply matches an existing entry by DOI only, so a second entry here would duplicate it."
+   }
+  ],
+  "from": "04-منبع/کاتالوگ.json"
+ },
+ "hashtags": {
+  "value": [
+   "#مرور_منابع",
+   "#افزایش_VD",
+   "#بعد_عمودی",
+   "#رابطه_مرکزی",
+   "#ثبت_رابطه",
+   "#انولوپ_آو_فانکشن",
+   "#گایدنس_قدامی",
+   "#روکش_موقت"
+  ],
+  "from": "07-ورودی‌ها.md:17"
+ },
+ "mint": {
+  "value": [],
+  "from": "07-ورودی‌ها.md (legacy items mint nothing unless a supplement orders it)"
+ },
+ "pillar": {
+  "value": {
+   "primary": "occlusion",
+   "subtopic": "vertical-dimension",
+   "secondary": []
+  },
+  "from": "07-ورودی‌ها.md:14"
+ },
+ "pulse": {
+  "value": {
+   "text": null,
+   "link_phrase": "تغییر OVD؛ توی کلینیک از کجا شروع کنیم؟ (قسمت دوم)"
+  },
+  "from": "07-ورودی‌ها.md:24"
+ },
+ "keywords": {
+  "value": [
+   "ثبت بایت در CR پیش از تغییر OVD",
+   "adapted centric posture",
+   "Kois Deprogrammer و انگرام عضلانی",
+   "تعیین لبه‌ی انسیزال بالا بر اساس صورت",
+   "ماک‌آپ برای تأیید طول انسیزال",
+   "لبه‌ی انسیزال و انولوپ آو فانکشن",
+   "شیب لینگوال قدامی‌های بالا",
+   "تست OVD با پروویژنال ثابت پیش از تراش",
+   "envelope of function",
+   "fixed provisional restorations"
+  ],
+  "from": "09-کلیدواژه‌ها.md"
+ },
+ "links_48": {
+  "value": [
+   {
+    "phrase": "OVD",
+    "href": "/glossary/vertical-dimension-of-occlusion.html",
+    "from": "11-لینک‌های-گلاسری.md:13"
+   },
+   {
+    "phrase": "CR",
+    "href": "/glossary/centric-relation.html",
+    "from": "11-لینک‌های-گلاسری.md:14"
+   },
+   {
+    "phrase": "اسپلینت اکلوزال",
+    "href": "/glossary/occlusal-splint.html",
+    "from": "11-لینک‌های-گلاسری.md:15"
+   },
+   {
+    "phrase": "قسمت اول",
+    "href": "queue:51",
+    "from": "11-لینک‌های-گلاسری.md:16"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:9"
+ },
+ "backlinks_47": {
+  "value": [],
+  "from": "default: 11-لینک‌های-گلاسری.md 4.7 has no frozen back-link with its link text — none is added"
+ },
+ "explore_49": {
+  "value": [
+   {
+    "href": "queue:51",
+    "label": "تغییر OVD؛ کی لازمه و تا کجا می‌شه رفت؟ (قسمت اول)",
+    "from": "11-لینک‌های-گلاسری.md:40"
+   },
+   {
+    "href": "/sharehub/share-36.html",
+    "label": "بازسازی اکلوژن از قدام بالا",
+    "from": "11-لینک‌های-گلاسری.md:41"
+   },
+   {
+    "href": "/sharehub/share-53.html",
+    "label": "وقتی قدامی‌های پایین جا نمی‌گذارند",
+    "from": "11-لینک‌های-گلاسری.md:42"
+   }
+  ],
+  "from": "11-لینک‌های-گلاسری.md:36"
+ },
+ "pathway": {
+  "value": null,
+  "from": "default: mechanical pathway rule"
+ },
+ "author": {
+  "value": null,
+  "from": "not in the legacy contract"
+ },
+ "legacy_review": {
+  "value": null,
+  "from": "11-لینک‌های-گلاسری.md and 00-وضعیت.md hold prose decisions"
+ }
+}
