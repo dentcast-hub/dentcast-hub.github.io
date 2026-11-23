@@ -1961,8 +1961,8 @@ body:has(.dc-topbar) .back:hover {
    from them at run time: the «در یک نگاه» card, the section pill, the glossary
    preview. A box written before these classes carries its own inline style and
    is left as it is. */
-:root { --dc-key-bg: rgba(11,95,255,.06); }
-[data-theme="dark"] { --dc-key-bg: rgba(91,156,246,.09); }
+:root { --dc-key-bg: rgba(11,95,255,.10); }
+[data-theme="dark"] { --dc-key-bg: rgba(91,156,246,.16); }
 .dc-box { background:var(--chip-bg); border:1px solid var(--chip-bd); border-inline-start:4px solid var(--chip-bd); border-radius:var(--r-lg, 1.125rem); padding:1rem 1.25rem; margin:1.25rem 0; scroll-margin-top:5rem; transition:box-shadow .3s; }
 .dc-box > p { margin:0; }
 .dc-box > p + p { margin-top:.6rem; }
@@ -1975,7 +1975,7 @@ li > .dc-box { margin:.25rem 0; }
 .dc-box-bottom > .dc-box-label::before { display:block; --dc-box-ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 21V4M5 4h11l-2 4 2 4H5'/%3E%3C/svg%3E"); }
 .dc-box-bottom { background:transparent; border:1.5px solid var(--chip-bd); border-top:4px solid var(--chip-bd); }
 .dc-box.dc-flash { box-shadow:0 0 0 4px var(--chip-bd); }
-.dc-key { background:var(--dc-key-bg); box-shadow:inset 0 -2px 0 var(--chip-bd); border-radius:3px; padding:.1em .15em; -webkit-box-decoration-break:clone; box-decoration-break:clone; }
+.dc-key { background:var(--dc-key-bg); border-radius:2px; padding:.12em 0; -webkit-box-decoration-break:clone; box-decoration-break:clone; }
 .dc-glance { border:1px solid var(--border); border-radius:14px; padding:.8rem 1rem; margin:0 0 1.25rem; background:var(--surface2); }
 .dc-glance-h { font-weight:700; font-size:.9rem; color:var(--txt2); margin:0 0 .35rem; }
 .dc-glance button { display:grid; grid-template-columns:auto 1fr; gap:.55rem; width:100%; text-align:start; background:none; border:0; border-top:1px solid var(--border); padding:.55rem 0; font:inherit; color:inherit; line-height:1.8; cursor:pointer; }
