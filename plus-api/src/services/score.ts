@@ -59,8 +59,9 @@ export const SHIELD_BASE = 200; // score needed for the first shield
 export const SHIELD_STEP = 50;  // each further shield costs this much more
 
 // Actions that count toward an "active day" for the score. Kept local (not the
-// streak module's QUALIFYING_ACTIONS) to avoid a circular import; the two sets
-// are intentionally the same today.
+// streak module's QUALIFYING_ACTIONS) to avoid a circular import. The streak
+// set has exactly one more member, `review_early` — a premium card answered
+// before it was due keeps the day but pays nothing (routes/review.ts).
 export const SCORING_ACTIONS = ['article_completed', 'episode_listened', 'highlight_created', 'card_reviewed_manual', 'review_finished', 'challenge_answered'];
 
 /**

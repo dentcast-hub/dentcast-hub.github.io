@@ -25,10 +25,13 @@
 // before midnight (user report: two articles read in the afternoon, the 20:00
 // streak reminder still said nothing was recorded). So a failure arms a backoff
 // timer, and coming back online or back to the tab flushes at once.
-import { api } from './api.js?v=255';
+import { api } from './api.js?v=256';
 
 const PREFIX = 'dcp:outbox:'; // + action + '|' + contentId -> epoch ms it was earned
 const MAX_AGE_MS = 30 * 24 * 3600 * 1000;
+// How long a waiting entry's earned time is worth keeping over a fresh one —
+// the server's own window for dating a late delivery (EARNED_AT_MAX_AGE_MS).
+const EARNED_KEEP_MS = 72 * 3600 * 1000;
 
 function lsGet(k) { try { return localStorage.getItem(k); } catch (_) { return null; } }
 function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (_) { /* private mode */ } }
@@ -54,12 +57,21 @@ function scheduleRetry() {
   retryTimer = setTimeout(() => { retryTimer = null; flushOutbox(); }, ms);
 }
 
-function deliver(key, action, contentId, keepalive) {
+// `at` is when the completion was EARNED, and it travels with every send: the
+// server dates a late delivery on that day (within its own bounds — see
+// plus-api services/activity.ts honouredEarnedAt). Until 1405/09 it was stored
+// here and never sent, so a read that landed the next morning was counted the
+// next morning, and the day it was actually earned took a shield.
+function deliver(key, action, contentId, keepalive, at) {
   if (inFlight.has(key)) return inFlight.get(key);
-  const p = api.activity(action, contentId, undefined, { keepalive })
+  const p = api.activity(action, contentId, undefined, { keepalive, earned_at: at || undefined })
     .then(() => { lsDel(key); retryStep = 0; signedOut = false; return true; })
     .catch((e) => {
-      if (e && e.status === 401) signedOut = true;
+      const st = e && e.status;
+      if (st === 401) signedOut = true;
+      // 400 / 404 are final answers (a malformed id, an English-only page with
+      // no Persian twin): re-sending them for thirty days changes nothing.
+      else if (st === 400 || st === 404) lsDel(key);
       else scheduleRetry();
       return false;
     })
@@ -75,8 +87,12 @@ function deliver(key, action, contentId, keepalive) {
  */
 export function sendCompletion(action, contentId, { keepalive = false } = {}) {
   const key = PREFIX + action + '|' + contentId;
-  lsSet(key, String(Date.now()));
-  return deliver(key, action, contentId, keepalive);
+  // An entry still waiting from an earlier, undelivered completion keeps ITS
+  // time: that earlier day is the one with nothing on it yet.
+  const prev = Number(lsGet(key)) || 0;
+  const at = prev && Date.now() - prev < EARNED_KEEP_MS ? prev : Date.now();
+  lsSet(key, String(at));
+  return deliver(key, action, contentId, keepalive, at);
 }
 
 let flushing = null;
@@ -92,13 +108,22 @@ export function flushOutbox() {
     }
   } catch (_) { /* no storage → nothing queued */ }
   const now = Date.now();
-  flushing = Promise.all(keys.map((k) => {
+  const queued = [];
+  for (const k of keys) {
     const at = Number(lsGet(k)) || 0;
     const rest = k.slice(PREFIX.length);
     const bar = rest.indexOf('|');
-    if (now - at > MAX_AGE_MS || bar < 1) { lsDel(k); return false; }
-    return deliver(k, rest.slice(0, bar), rest.slice(bar + 1), false);
-  })).then(() => undefined).finally(() => { flushing = null; });
+    if (now - at > MAX_AGE_MS || bar < 1) { lsDel(k); continue; }
+    queued.push({ k, at, action: rest.slice(0, bar), contentId: rest.slice(bar + 1) });
+  }
+  // Oldest first, one at a time. The server dates a late completion on its own
+  // day only when that day is not before the last day already counted, so a
+  // newer completion landing first would push an older one onto today.
+  queued.sort((a, b) => a.at - b.at);
+  flushing = queued.reduce(
+    (chain, q) => chain.then(() => deliver(q.k, q.action, q.contentId, false, q.at)),
+    Promise.resolve(),
+  ).then(() => undefined).finally(() => { flushing = null; });
   return flushing;
 }
 

@@ -1,5 +1,5 @@
 // DentCast Plus API client. Health-checked base with failover, cookie sessions.
-import * as CFG from './config.js?v=255';
+import * as CFG from './config.js?v=256';
 
 const API_BASES = CFG.API_BASES;
 
@@ -402,8 +402,14 @@ export const api = {
   logout: () => request('/auth/logout', { method: 'POST', pinned: true, timeoutMs: LOGOUT_TIMEOUT_MS }),
 
   // activity + anon
-  activity: (action, content_id, meta, { keepalive = false } = {}) =>
-    request('/activity', { method: 'POST', body: { action, content_id, meta }, keepalive }),
+  // `earned_at` (epoch ms): when a queued completion was earned — outbox.js
+  // sends it so a late delivery is dated on its own day (server-bounded).
+  activity: (action, content_id, meta, { keepalive = false, earned_at } = {}) =>
+    request('/activity', {
+      method: 'POST',
+      body: earned_at ? { action, content_id, meta, earned_at } : { action, content_id, meta },
+      keepalive,
+    }),
   anonEvent: (event, content_id) =>
     request('/anon/event', { method: 'POST', body: { event, content_id } }),
 

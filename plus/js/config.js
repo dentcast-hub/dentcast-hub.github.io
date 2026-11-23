@@ -464,7 +464,7 @@ export function pageSearch() {
 // Mode choice is remembered per session only (never auto-enter across sessions).
 export const SS_MODE = 'dcp:mode:'; // + contentId -> 'study'
 export const SS_RETURN_STUDY = 'dcp:return-study'; // path to auto-enter after login
-export const SS_READ_DONE = 'dcp:read:'; // + contentId -> '1' once article_completed fired this session
+export const SS_READ_DONE = 'dcp:read:'; // + contentId -> Tehran day ('YYYY-MM-DD') article_completed last landed this session
 // Listening is the one signal that REPEATS: re-hearing an episode pays again
 // (once per league week, decided server-side in score.ts / league.ts). So its
 // key is a localStorage TIMESTAMP, not a session flag — a session flag both
@@ -472,8 +472,22 @@ export const SS_READ_DONE = 'dcp:read:'; // + contentId -> '1' once article_comp
 // remembered too long (a pinned mobile tab keeps one session alive for weeks,
 // which is exactly the reader who re-listens and is told they earned nothing).
 // The client only de-duplicates; what a repeat is WORTH is the server's call.
+//
+// The gate is the Tehran DAY of that stamp, not a 20-hour window (changed
+// 1405/09). The window skipped a real day whenever the gap between two
+// sittings was under 20 hours across midnight — heard at 22:00, picked up
+// again at 15:00 the next day — and that next day, the listener's only
+// activity, went to a shield. One post per episode per streak day is exactly
+// the de-dup the server needs.
 export const LS_LISTEN_AT = 'dcp:listen:'; // + contentId -> epoch ms of the last episode_listened
-export const LISTEN_REPEAT_MS = 20 * 3600 * 1000; // don't re-post the same episode within 20h
+// Played seconds carried ACROSS page loads (1405/09). playedS used to start at
+// zero on every page, so an episode heard in sittings shorter than its
+// threshold — a few minutes at a time, or interrupted by a page change and
+// resumed from «ادامه‌ی شنیدن» — never counted however much of it was heard.
+// The threshold is unchanged; only real forward play is ever added here, and
+// the bank is emptied when the listen is reported.
+export const LS_LISTEN_ACC = 'dcp:listen-acc:'; // + contentId -> {"s": seconds heard, "t": epoch ms last added}
+export const LISTEN_ACC_MAX_AGE_MS = 30 * 24 * 3600 * 1000; // an untouched bank older than this is dropped
 
 // One-sentence invitation shown to anonymous users at the workbench button.
 export const INVITE_LINE =

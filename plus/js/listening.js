@@ -14,11 +14,27 @@
 // Real play only: we accumulate the forward delta of `currentTime` between
 // timeupdate ticks, ignoring pauses and seeks (a jump to the end is a large or
 // negative delta and is discarded), so seeking to the finish cannot fake it.
-import { sendCompletion } from './outbox.js?v=255';
-import { signalStreakActivity } from './util.js?v=255';
+import { sendCompletion } from './outbox.js?v=256';
+import { signalStreakActivity, tehranDay } from './util.js?v=256';
 import {
-  LISTEN_FRACTION, LISTEN_MIN_S, LISTEN_MAX_S, LS_LISTEN_AT, LISTEN_REPEAT_MS,
-} from './config.js?v=255';
+  LISTEN_FRACTION, LISTEN_MIN_S, LISTEN_MAX_S, LS_LISTEN_AT, LS_LISTEN_ACC, LISTEN_ACC_MAX_AGE_MS,
+} from './config.js?v=256';
+
+// Date.now()-based so the day follows the same clock as every other time here.
+const dayOf = (ms) => tehranDay(new Date(ms));
+
+function readBank(key) {
+  try {
+    const v = JSON.parse(localStorage.getItem(key) || 'null');
+    if (!v || typeof v.s !== 'number' || !(v.s >= 0)) return 0;
+    if (Date.now() - (Number(v.t) || 0) > LISTEN_ACC_MAX_AGE_MS) { localStorage.removeItem(key); return 0; }
+    return v.s;
+  } catch (_) { return 0; }
+}
+function writeBank(key, s) {
+  try { localStorage.setItem(key, JSON.stringify({ s, t: Date.now() })); } catch (_) { /* private mode */ }
+}
+function dropBank(key) { try { localStorage.removeItem(key); } catch (_) { /* ignore */ } }
 
 // Headroom on the wall-clock ceiling below, for tick jitter and for a playback
 // rate that changes part-way through a tick.
@@ -27,19 +43,33 @@ const RATE_TOLERANCE = 1.5;
 export function initListeningTracker({ contentId, audioEl }) {
   if (!contentId || !audioEl) return null;
 
-  // At most one post per episode per LISTEN_REPEAT_MS — not once per session,
-  // because a re-listen is now worth something (once per league week, priced
-  // server-side). 20h rather than 24 so a daily listener who starts a little
-  // earlier each day is never silently skipped by their own habit.
+  // At most one post per episode per Tehran day — not once per session,
+  // because a re-listen is worth something (once per league week, priced
+  // server-side), and not per 20h window, which skipped a real streak day
+  // whenever two sittings were less than 20 hours apart across midnight.
   //
-  // The window only suppresses duplicate posts; the payment rules live on the
+  // The gate only suppresses duplicate posts; the payment rules live on the
   // server, so being generous here costs nothing but a log row — and that row
   // is what keeps a re-listener's streak alive on the day they hear it again.
   const atKey = LS_LISTEN_AT + contentId;
-  const lastAt = Number(localStorage.getItem(atKey) || 0);
-  if (lastAt && Date.now() - lastAt < LISTEN_REPEAT_MS) return null;
+  let lastAt = 0;
+  try { lastAt = Number(localStorage.getItem(atKey) || 0); } catch (_) { /* no storage */ }
+  if (lastAt && dayOf(lastAt) === dayOf(Date.now())) return null;
 
-  let playedS = 0;       // accumulated seconds of REAL forward playback
+  // Seconds heard on earlier pages (LS_LISTEN_ACC). This page's own play is
+  // added in `unsaved` and folded into the bank every few seconds, ADDITIVELY
+  // (read-add-write), so two trackers for one episode — the shell swapping
+  // players, the hub's bar taking over — never overwrite each other's time.
+  const bankKey = LS_LISTEN_ACC + contentId;
+  let unsaved = 0;
+  const saveBank = () => {
+    if (unsaved <= 0) return;
+    writeBank(bankKey, readBank(bankKey) + unsaved);
+    unsaved = 0;
+  };
+  const heardS = () => readBank(bankKey) + unsaved;
+
+  let playedS = 0;       // accumulated seconds of REAL forward playback (this page)
   let lastTime = null;   // audioEl.currentTime at the previous credited tick
   let lastWall = 0;      // Date.now() at that same tick
   let fired = false;
@@ -72,7 +102,12 @@ export function initListeningTracker({ contentId, audioEl }) {
     if (lastTime !== null) {
       const delta = t - lastTime;
       const allowed = ((now - lastWall) / 1000) * (audioEl.playbackRate || 1) * RATE_TOLERANCE;
-      if (delta > 0) playedS += Math.min(delta, Math.max(0, allowed));
+      if (delta > 0) {
+        const add = Math.min(delta, Math.max(0, allowed));
+        playedS += add;
+        unsaved += add;
+        if (unsaved >= 5) saveBank();
+      }
     }
     lastTime = t;
     lastWall = now;
@@ -80,7 +115,7 @@ export function initListeningTracker({ contentId, audioEl }) {
 
   function onTime() {
     credit();
-    if (!fired && playedS >= thresholdS()) complete();
+    if (!fired && heardS() >= thresholdS()) complete();
   }
 
   // A seek resets the reference point WITHOUT crediting the skipped span. This
@@ -91,14 +126,21 @@ export function initListeningTracker({ contentId, audioEl }) {
   function complete() {
     fired = true;
     cleanup();
+    // The bank has done its job: the next report of this episode (another day)
+    // starts from zero, the same threshold as anyone's first.
+    unsaved = 0;
+    dropBank(bankKey);
     // Queued first, sent second (outbox.js): the 20h de-dup stamp is written
     // only once the server has accepted the listen. Stamping first — as this
     // did until 1405/07/02 — meant a send lost to a navigation or a network
     // blink was never retried, and the next 20 hours refused to try again.
+    // The flame lights once the server HAS the listen — lighting it on send
+    // told a listener whose request never landed that the day was kept.
     sendCompletion('episode_listened', contentId).then((ok) => {
-      if (ok) { try { localStorage.setItem(atKey, String(Date.now())); } catch (_) { /* private mode */ } }
+      if (!ok) return;
+      try { localStorage.setItem(atKey, String(Date.now())); } catch (_) { /* private mode */ }
+      signalStreakActivity();
     });
-    signalStreakActivity(); // light the header flame live
   }
 
   // Reaching the end counts ONLY if it was genuinely played through — this both
@@ -112,20 +154,40 @@ export function initListeningTracker({ contentId, audioEl }) {
     if (fired) return;
     credit();
     const dur = audioEl.duration || 0;
-    if (playedS >= thresholdS() || (dur > 0 && playedS >= dur * 0.85)) complete();
+    const heard = heardS();
+    if (heard >= thresholdS() || (dur > 0 && heard >= dur * 0.85)) complete();
+    else saveBank();
   }
+
+  // A pause, a hidden tab or a page going away is where a sitting ends: bank
+  // what this page heard so the next page carries on from it.
+  function onPause() { if (!fired) saveBank(); }
+
+  function onHidden() { if (document.hidden) onPause(); }
 
   function cleanup() {
     audioEl.removeEventListener('timeupdate', onTime);
     audioEl.removeEventListener('seeking', onSeeking);
     audioEl.removeEventListener('ended', onEnded);
+    audioEl.removeEventListener('pause', onPause);
+    try {
+      document.removeEventListener('visibilitychange', onHidden);
+      window.removeEventListener('pagehide', onPause);
+    } catch (_) { /* no window */ }
   }
 
   audioEl.addEventListener('timeupdate', onTime);
   audioEl.addEventListener('seeking', onSeeking);
   audioEl.addEventListener('ended', onEnded);
+  audioEl.addEventListener('pause', onPause);
+  try {
+    document.addEventListener('visibilitychange', onHidden);
+    window.addEventListener('pagehide', onPause);
+  } catch (_) { /* no window */ }
 
   // Handle so a shared player (player.html) can tear this down when it swaps to
-  // a different episode and start a fresh tracker for the new content_id.
-  return { stop: cleanup, contentId };
+  // a different episode and start a fresh tracker for the new content_id. A
+  // stop banks what was heard first: the swap ends this sitting, not the
+  // listener's progress through the episode.
+  return { stop: () => { if (!fired) saveBank(); cleanup(); }, contentId };
 }

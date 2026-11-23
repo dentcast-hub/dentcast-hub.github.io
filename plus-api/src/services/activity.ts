@@ -1,7 +1,8 @@
 import type pg from 'pg';
 import { pool, withTransaction, lockProfileForWrite } from '../db.js';
 import { QUALIFYING_ACTIONS, applyStreak } from './streak.js';
-import { awardLeagueXp } from './league.js';
+import { awardLeagueXp, leagueWeek } from './league.js';
+import { getLeagueConfig } from './league-config.js';
 import { dayInTz } from './time.js';
 import { getSubscription, isPremiumNow } from './subscription.js';
 
@@ -18,12 +19,59 @@ import { getSubscription, isPremiumNow } from './subscription.js';
  * but MUST NOT touch `card_state`. Nothing here writes to `card_state`; keep it
  * that way.
  */
+/**
+ * How late a completion may arrive and still be dated when it was EARNED.
+ *
+ * The browser's outbox (plus/js/outbox.js) keeps a completion it could not
+ * deliver — network drop, a page closed mid-send, a 429 pace ceiling, a 409
+ * for a page newer than the API's index, a lapsed session — and re-sends it
+ * later, sometimes days later. Dated by arrival, that read landed on the wrong
+ * Tehran day: the day it was earned stayed empty and a shield was spent on it
+ * (user report 1405/09: «هر روز اومدم، سه روز سپر خورده»).
+ *
+ * The earned instant is honoured only when it cannot rewrite history:
+ *   · it is in the past and at most EARNED_AT_MAX_AGE_MS old;
+ *   · its Tehran day is not before the profile's last counted day — the
+ *     streak engine is forward-only (computeStreakUpdate), and a day earlier
+ *     than the last one would read as a reset, not a repair;
+ *   · it falls in the CURRENT league week, so league XP is never written into
+ *     a week that may already be finalized.
+ * Anything else is dated on arrival, exactly as before. The row itself carries
+ * the earned instant as its created_at, so every reader of the log — rebuild,
+ * repair, presence board, monthly report, league counts — agrees with the live
+ * decision without a second date column to keep in step.
+ */
+export const EARNED_AT_MAX_AGE_MS = 72 * 3600 * 1000;
+
+async function honouredEarnedAt(
+  client: pg.PoolClient,
+  userId: string,
+  earnedAt: Date | null | undefined,
+  now: Date,
+): Promise<Date | null> {
+  if (!earnedAt || Number.isNaN(earnedAt.getTime())) return null;
+  const age = now.getTime() - earnedAt.getTime();
+  if (age <= 0 || age > EARNED_AT_MAX_AGE_MS) return null;
+  const earnedDay = dayInTz(earnedAt);
+  if (earnedDay === dayInTz(now)) return null; // same day: arrival time is already right
+  const prof = await client.query<{ last_active_day: string | null }>(
+    `select to_char(last_active_day, 'YYYY-MM-DD') as last_active_day from profiles where id = $1`,
+    [userId],
+  );
+  const last = prof.rows[0]?.last_active_day ?? null;
+  if (last && earnedDay < last) return null;
+  const tz = (await getLeagueConfig(client)).timezone;
+  if (leagueWeek(dayInTz(earnedAt, tz)).week_start !== leagueWeek(dayInTz(now, tz)).week_start) return null;
+  return earnedAt;
+}
+
 async function insertAndScore(
   client: pg.PoolClient,
   userId: string,
   action: string,
   contentId: string | null,
   meta: Record<string, unknown>,
+  earnedAt?: Date | null,
 ): Promise<{ id: number }> {
   // FIRST, before the user_activity insert takes FOR KEY SHARE on this profile
   // via its FK: take the full FOR UPDATE lock up front so same-user scoring
@@ -41,11 +89,15 @@ async function insertAndScore(
   // the account premium today", which would quietly restate every point a
   // lapsed subscriber ever earned. See migration 0023.
   const premium = isPremiumNow(await getSubscription(userId, client));
+  // After the lock: last_active_day cannot move under this decision.
+  const now = new Date();
+  const at = await honouredEarnedAt(client, userId, earnedAt, now);
+  const rowMeta = at ? { ...(meta ?? {}), received_at: now.toISOString() } : (meta ?? {});
   const res = await client.query<{ id: number; created_at: Date }>(
-    `insert into user_activity (user_id, action, content_id, meta, premium)
-     values ($1, $2, $3, $4::jsonb, $5)
+    `insert into user_activity (user_id, action, content_id, meta, premium, created_at)
+     values ($1, $2, $3, $4::jsonb, $5, coalesce($6::timestamptz, now()))
      returning id, created_at`,
-    [userId, action, contentId, JSON.stringify(meta ?? {}), premium],
+    [userId, action, contentId, JSON.stringify(rowMeta), premium, at],
   );
   const row = res.rows[0];
   if (QUALIFYING_ACTIONS.has(action)) {
@@ -113,6 +165,9 @@ export const SERVER_MINTED_ACTIONS: ReadonlySet<string> = new Set([
   'reactivation_sent',
   'report_viewed',
   'review_finished',
+  // A premium card answered before it was due (routes/review.ts): keeps the
+  // day, pays nothing.
+  'review_early',
   'streak_freeze_used',
   'streak_kept',
   'streak_reminder_sent',
@@ -148,7 +203,8 @@ export async function recordActivity(
   contentId: string | null = null,
   meta: Record<string, unknown> = {},
   client?: pg.PoolClient,
+  opts: { earnedAt?: Date | null } = {},
 ): Promise<{ id: number }> {
-  if (client) return insertAndScore(client, userId, action, contentId, meta);
-  return withTransaction((c) => insertAndScore(c, userId, action, contentId, meta));
+  if (client) return insertAndScore(client, userId, action, contentId, meta, opts.earnedAt);
+  return withTransaction((c) => insertAndScore(c, userId, action, contentId, meta, opts.earnedAt));
 }

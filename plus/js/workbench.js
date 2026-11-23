@@ -1,11 +1,11 @@
 // Study mode controller. A mode of the article page, not a separate page. It
 // inherits the site's typography (styles live in plus.css and reference the
 // site's own CSS variables). Never auto-enters; the caller decides when.
-import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './util.js?v=255';
-import { api } from './api.js?v=255';
-import { PALETTE, LABELS, SS_MODE } from './config.js?v=255';
-import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js?v=255';
-import { openCollectionPicker } from './collections.js?v=255';
+import { el, faNum, debounce, signalStreakActivity, renderNoteLines } from './util.js?v=256';
+import { api } from './api.js?v=256';
+import { PALETTE, LABELS, SS_MODE } from './config.js?v=256';
+import { serializeRange, anchorQuote, wrapRange, unwrapMarks, fullText, hashText } from './anchor.js?v=256';
+import { openCollectionPicker } from './collections.js?v=256';
 
 /**
  * The workbench's history — undo/redo over SERVER writes.
@@ -868,7 +868,10 @@ export class Workbench {
       try {
         const r = await api.saveArticleNote(this.contentId, val);
         this.articleNote = (r && r.note) || null;
-        signalStreakActivity();
+        // No flame here: an article note is not a qualifying action
+        // (routes/article-note.ts writes no activity row), and lighting the
+        // flame for it told the reader a day was kept that the server never
+        // counted.
         this._closeEditor();
         if (val !== prev) {
           const cid = this.contentId;
@@ -913,7 +916,7 @@ export class Workbench {
     if (e && e.status === 401) {
       this._toast('نشستِ ورودت تمام شده؛ دوباره وارد شو.', {
         action: { label: 'ورود', run: async () => {
-          const { openLoginModal } = await import('./login-modal.js?v=255');
+          const { openLoginModal } = await import('./login-modal.js?v=256');
           openLoginModal();
         } },
       });
