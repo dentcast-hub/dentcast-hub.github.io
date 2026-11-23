@@ -21,8 +21,8 @@
   "from": "06-انگلیسی.md:3"
  },
  "body_en": {
-  "value": "When a patient says, “It hits here first,” after a crown is seated, we first need to decide what information we are looking for. Contact location, contact presence, contact sequence, and mandibular movement are four different questions. In the narrative review by Aljanahi and colleagues, each tool provides part of that information.\n\n## Articulating paper: Where is the contact?\n\nArticulating paper marks contact locations on teeth or restorations. Paper thickness affects the size and visibility of the marks. A large or dark mark alone cannot establish the magnitude of the force.\n\n[[تصویر:01]]\n\n## Shimstock: Is there a contact?\n\nShimstock is a thin foil. When the patient closes their teeth together, resistance to withdrawal helps confirm contact. The foil leaves no colored mark and does not measure force. Articulating paper and shimstock can therefore be used together.\n\n[[تصویر:02]]\n\n## T-Scan: In what order do contacts occur?\n\nT-Scan records contact sequence and timing, as well as relative force distribution. It shows when the first contact occurs and how the distribution changes during closure. The force output is relative and is not reported as absolute force in newtons.\n\n[[تصویر:03]]\n\n[[تصویر:04]]\n\nIn the same review, OccluSense provides a color-coded pressure map, while Accura is described as a tool for visualizing static contact distribution. Their outputs should be interpreted in light of each device's capabilities.\n\n## Intraoral scanning: How were the two arches registered?\n\nAn intraoral scanner (IOS) can show the relationship between the arches in the recorded bite and visualize areas of static contact. The scanner alone does not record contact sequence, timing, or intensity. Some studies cited in the review also found inconsistent detection of light contacts.\n\n[[تصویر:05]]\n\n## Jaw tracking: What path does the mandible follow?\n\nTools such as Modjaw and Cadiax record mandibular movement. Modjaw, for example, can capture opening, closing, and lateral movements. Motion data help assess dynamics, but do not directly measure tooth contacts.\n\n[[تصویر:06]]\n\nThe authors conclude that conventional indicators for intraoral verification and digital tools for quantitative data can complement one another. More longitudinal studies are needed to establish long-term clinical validity and to determine whether changes in the recorded measures affect patient or prosthetic outcomes.",
-  "from": "06-انگلیسی.md:6-44"
+  "value": "When a patient says, “It hits here first,” after a crown is seated, we first need to decide what information we are looking for. Contact location, contact presence, contact sequence, and mandibular movement are four different questions. In the narrative review by Aljanahi and colleagues, each tool provides part of that information.\n\n## [[+:1.]] Articulating paper: Where is the contact?\n\nArticulating paper marks contact locations on teeth or restorations. Paper thickness affects the size and visibility of the marks. [[+key]]A large or dark mark alone cannot establish the magnitude of the force.[[+/key]]\n\n[[تصویر:01]]\n\n## [[+:2.]] Shimstock: Is there a contact?\n\nShimstock is a thin foil. When the patient closes their teeth together, resistance to withdrawal helps confirm contact. The foil leaves no colored mark and does not measure force. Articulating paper and shimstock can therefore be used together.\n\n[[تصویر:02]]\n\n## [[+:3.]] T-Scan: In what order do contacts occur?\n\nT-Scan records contact sequence and timing, as well as relative force distribution. It shows when the first contact occurs and how the distribution changes during closure. The force output is relative and is not reported as absolute force in newtons.\n\n[[تصویر:03]]\n\n[[تصویر:04]]\n\nIn the same review, OccluSense provides a color-coded pressure map, while Accura is described as a tool for visualizing static contact distribution. Their outputs should be interpreted in light of each device's capabilities.\n\n## [[+:4.]] Intraoral scanning: How were the two arches registered?\n\nAn intraoral scanner (IOS) can show the relationship between the arches in the recorded bite and visualize areas of static contact. The scanner alone does not record contact sequence, timing, or intensity. Some studies cited in the review also found inconsistent detection of light contacts.\n\n[[تصویر:05]]\n\n## [[+:5.]] Jaw tracking: What path does the mandible follow?\n\nTools such as Modjaw and Cadiax record mandibular movement. Modjaw, for example, can capture opening, closing, and lateral movements. [[+key]]Motion data help assess dynamics, but do not directly measure tooth contacts.[[+/key]]\n\n[[تصویر:06]]\n\n> [[+]]\n>\n> The authors conclude that conventional indicators for intraoral verification and digital tools for quantitative data can complement one another. More longitudinal studies are needed to establish long-term clinical validity and to determine whether changes in the recorded measures affect patient or prosthetic outcomes.",
+  "from": "06-انگلیسی.md:6-46"
  },
  "images": {
   "value": [
@@ -46,7 +46,7 @@
     },
     "caption_en": {
      "value": "Fig. 1. Articulating paper and contact marks on a veneer. Source: Aljanahi et al. 2026, Fig. 1.",
-     "from": "06-انگلیسی.md:47"
+     "from": "06-انگلیسی.md:49"
     }
    },
    {
@@ -69,7 +69,7 @@
     },
     "caption_en": {
      "value": "Fig. 2. Shimstock assessment in the maxillary premolar region. Source: Aljanahi et al. 2026, Fig. 2.",
-     "from": "06-انگلیسی.md:48"
+     "from": "06-انگلیسی.md:50"
     }
    },
    {
@@ -92,7 +92,7 @@
     },
     "caption_en": {
      "value": "Fig. 3. Digital occlusal analysis with T-Scan. Source: Aljanahi et al. 2026, Fig. 4.",
-     "from": "06-انگلیسی.md:49"
+     "from": "06-انگلیسی.md:51"
     }
    },
    {
@@ -115,7 +115,7 @@
     },
     "caption_en": {
      "value": "Fig. 4. Example of a T-Scan display and its interpretation. Source: Aljanahi et al. 2026, Fig. 5.",
-     "from": "06-انگلیسی.md:50"
+     "from": "06-انگلیسی.md:52"
     }
    },
    {
@@ -138,7 +138,7 @@
     },
     "caption_en": {
      "value": "Fig. 5. Lateral and frontal intraoral scan views of the bite. Source: Aljanahi et al. 2026, Fig. 7.",
-     "from": "06-انگلیسی.md:51"
+     "from": "06-انگلیسی.md:53"
     }
    },
    {
@@ -161,7 +161,7 @@
     },
     "caption_en": {
      "value": "Fig. 6. Mandibular movements captured with Modjaw. Source: Aljanahi et al. 2026, Fig. 8.",
-     "from": "06-انگلیسی.md:52"
+     "from": "06-انگلیسی.md:54"
     }
    }
   ],
