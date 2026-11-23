@@ -473,7 +473,9 @@ class CorpusTests(unittest.TestCase):
         # a page or queue text that carries the layer is counted apart (it differs by design)
         self.assertEqual(out["page_differences"], [], out)
         self.assertEqual(out["queue_differences"], [], out)
-        self.assertGreater(out["pages"] - out["marked_pages"], 300)
+        # floor on the unmarked pages still compared with the pre-layer tools; it drops as
+        # pages get the layer (the ShareHub retrofit marked 55 of 350)
+        self.assertGreater(out["pages"] - out["marked_pages"], 250)
         self.assertEqual(out["status"], "identical")
 
 
