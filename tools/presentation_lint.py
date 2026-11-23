@@ -39,7 +39,7 @@ CONCLUSION = re.compile(r"جمع[‌ ]?بندی|نتیجه|خلاصه|حرف آ�
 BOTTOM_LABELS = {"نتیجه", "Bottom line"}
 AUTHOR_LABEL = re.compile(r"^\W{0,3}([^.؟?!:：\n]{2,60})[:：]")
 LABEL_WORD = re.compile(r"نکته|نتیجه|خلاصه|جمع[\u200c ]?بندی|پیام|هشدار|توصیه|راه[\u200c ]?حل|tip|note|takeaway|summary|message|"
-                        r"warning|point|conclusion|solution|bottom line|in short", re.I)
+                        r"warning|point|conclusion|solution|bottom line|in short|مرز|محدودیت|احتیاط|خوانش|limit|caveat|caution|reading", re.I)
 
 
 def author_label(body):
