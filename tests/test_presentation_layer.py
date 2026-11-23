@@ -546,6 +546,20 @@ class LintTests(unittest.TestCase):
         self.assertEqual(self.codes(inside), [])
 
 
+class LintCorpusTests(unittest.TestCase):
+    def test_every_page_that_carries_the_layer_is_clean(self):
+        pages = pl.layered_pages()
+        self.assertGreater(len(pages), 300)
+        findings = []
+        for p in pages:
+            m = pl.mirror_of(p)
+            src = p.parent.parent / p.name if p.parent.name == "en" else None
+            findings += [(str(p.relative_to(ROOT)), c, d) for c, d in pl.lint(
+                p.read_text(encoding="utf-8"), m.read_text(encoding="utf-8") if m else None,
+                src.read_text(encoding="utf-8") if src is not None and src.exists() else None)]
+        self.assertEqual(findings, [])
+
+
 class CorpusTests(unittest.TestCase):
     """Backward compatibility: this checkout's tools cut every page with a DES record, and
     render and cut every queue text, exactly as the tools before the layer did."""
