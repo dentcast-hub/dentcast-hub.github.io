@@ -44963,6 +44963,100 @@
           ]
         }
       ]
+    },
+    "insight/insight-118": {
+      "faqPages": [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/insight/insight-118.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا گیر کردن نوک سوند در شیار اکلوزال به‌تنهایی نشانهٔ قطعی پوسیدگی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ گیر کردن سوند یک مشاهده مکانیکی است، نه تشخیص قطعی. بعضی شیارها طبیعی باریک و عمیق‌اند و نوک سوند صرفاً به دلیل آناتومی در آن‌ها گیر می‌کند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا وارد کردن سوند تیز با فشار زیاد می‌تواند به یک ضایعه اولیه پوسیدگی آسیب بزند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ ممکن است سطح یک ضایعه اولیه و غیرحفره‌ای (Non-cavitated Lesion) را تخریب کند، ضایعه‌ای که شاید بدون تراش و با کنترل عوامل خطر و رمینرالیزاسیون قابل مدیریت بود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا رنگ گرفتن دنتین با Caries Detector به‌تنهایی نشان می‌دهد که آن عاج عفونی است و باید برداشته شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ رنگ گرفتن دنتین الزاماً به معنی عفونی بودن آن یا ضرورت برداشتش نیست، و تصمیم صرفاً بر اساس رنگ، به‌خصوص در پوسیدگی‌های عمیق، احتمال برداشت بیش‌ازحد عاج وجود دارد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "در تشخیص پوسیدگی، روش اصلی معاینه چیست و چه کمکی به آن اضافه می‌شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "معاینه چشمی دقیق روی سطح تمیز و خشک دندان؛ در سیستم‌هایی مثل ICDAS تغییرات ظاهری مینا، وضوح ضایعه پس از خشک کردن و وجود یا نبود حفره اهمیت دارند. در صورت نیاز رادیوگرافی بایت‌وینگ هم کمک می‌کند."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/insight/insight-118.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-118.html#flashcards-c1",
+              "name": "گیر کردن نوک سوند در شیار اکلوزال",
+              "description": "مشاهده‌ای مکانیکی که به شکل، زاویه و قطر نوک سوند و نیروی واردشده بستگی دارد و در شیارِ به‌طور طبیعی باریک و عمیق هم رخ می‌دهد؛ پس به‌تنهایی پوسیدگی را تشخیص نمی‌دهد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-118.html#flashcards-c2",
+              "name": "روش اصلی تشخیص پوسیدگی امروز",
+              "description": "معاینه چشمی دقیق روی سطح تمیز و خشک دندان؛ در صورت نیاز با رادیوگرافی بایت‌وینگ تکمیل می‌شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-118.html#flashcards-c3",
+              "name": "خطر وارد کردن سوند تیز با فشار زیاد",
+              "description": "سطح ضایعهٔ اولیهٔ بدون حفره با فشار زیاد سوند تیز ممکن است تخریب شود؛ چنین ضایعه‌ای شاید بدون تراش، با کنترل عوامل خطر و رمینرالیزاسیون، قابل مدیریت باشد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-118.html#flashcards-c4",
+              "name": "جایگاه سوند با نوک گرد در معاینه سطح",
+              "description": "برای بررسی ویژگی‌های سطح، سوند با نوک گرد و فشار ملایم به فشار دادن نوک تیز داخل شیار ترجیح دارد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-118.html#flashcards-c5",
+              "name": "جایگاه Caries Detector در پوسیدگی",
+              "description": "ابزاری برای ارزیابی عاج هنگام برداشت پوسیدگی، نه جایگزین معاینه اولیه برای تشخیص پوسیدگی.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-118.html#flashcards-c6",
+              "name": "تفاوت تشخیص پوسیدگی با تصمیم برداشت بافت پوسیده",
+              "description": "دو موضوع جدا با معیارهای متفاوت‌اند: وجود پوسیدگی یک پرسش است و میزان برداشت بافت پوسیده پرسش دیگر.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
