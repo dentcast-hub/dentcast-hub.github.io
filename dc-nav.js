@@ -904,6 +904,40 @@
           for (i = 0; i < m.length; i++) m[i].parentNode.removeChild(m[i]);
           return (c.textContent || '').replace(/\s+/g, ' ').trim();
         }
+        /* A row is an excerpt of the author's words, so it must never end
+           mid-clause. The two-line clamp this card used to lean on stopped the
+           words wherever the line ran out («… adapted و»), which on a card that
+           sits above the article reads as a broken sentence. Cut at a clause
+           boundary the author already wrote («… پایدار باشه،») or, failing
+           one inside the budget, between two words — never inside one, never
+           on a dangling «و» — and mark the omission with «…». The row still
+           opens the whole box. plus/js/presentation.js rowPreview keeps the
+           same rules. */
+        var ROW_MAX = 70, ROW_MIN = 32, ROW_LINK = /^(?:و|یا|تا|از|به|در|که|با|بر|برای|هم)$/;
+        function rowPreview(text) {
+          text = text || '';
+          if (text.length <= ROW_MAX) return text;
+          var re = /[،؛,;:.؟?!]\s/g, m, cut = 0;
+          while ((m = re.exec(text))) {
+            var at = m.index + 1;
+            if (at > ROW_MAX) break;
+            if (at >= ROW_MIN) cut = at;
+          }
+          if (!cut) {
+            var g, sp = text.lastIndexOf(' ', ROW_MAX), nx = text.indexOf(' ', ROW_MAX), tail = function (s) {
+              return s.replace(/\s+$/, '').split(/\s+/).pop() || '';
+            };
+            /* always between two words: a single long token may push the row
+               past the budget rather than be sliced */
+            cut = sp >= ROW_MIN ? sp : (nx > 0 ? nx : text.length);
+            /* never leave the row ending on a connective («… adapted و») */
+            for (g = 0; g < 2 && ROW_LINK.test(tail(text.slice(0, cut))); g++) {
+              cut = text.slice(0, cut).replace(/\s+[^\s]+$/, '').length;
+            }
+          }
+          /* NBSP so the «…» can never sit alone on a line of its own */
+          return text.slice(0, cut).replace(/\s+$/, '') + '\u00A0…';
+        }
         var notes = [], lead = null, bi, i;
         for (bi = 0; bi < dcBoxes.length; bi++) {
           var ns = dcBoxes[bi].querySelectorAll(BOX);
@@ -935,7 +969,7 @@
           lab.className = 'dc-glance-lab';
           lab.textContent = own1 ? (own1.textContent || '').trim() : '•';
           tx.className = 'dc-glance-tx';
-          tx.textContent = own(box);
+          tx.textContent = rowPreview(own(box));
           b.appendChild(lab);
           b.appendChild(tx);
           b.addEventListener('click', function () {
@@ -2922,7 +2956,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '323';
+  var V = '327';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now

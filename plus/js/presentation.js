@@ -9,7 +9,7 @@
 // it on a standalone page (it runs before first paint, so nothing moves), and
 // buildGlance() here builds it in the desktop shell, where that script is
 // stripped from the fetched article. Both find-or-create `#dcGlance`.
-import { el, faNum } from './util.js?v=261';
+import { el, faNum } from './util.js?v=265';
 
 const LAYER = '[data-dc-presentation]';
 const BOX = '.dc-box, div[role="note"]';
@@ -51,6 +51,43 @@ function openingParagraph(boxes) {
   return null;
 }
 
+// A row is an excerpt of the author's words, so it must never end mid-clause.
+// The two-line clamp it used to lean on (dc-theme.css) stopped the words
+// wherever the line ran out («… adapted و»), which on a card that sits above
+// the article reads as a broken sentence. Cut at a clause boundary the author
+// already wrote («… پایدار باشه،») or, failing one inside the budget, between
+// two words — never inside one, never on a dangling «و» — and mark the omission
+// with «…». The row still opens the whole box. dc-nav.js rowPreview keeps the
+// same rules.
+const ROW_MAX = 70;
+const ROW_MIN = 32;
+const ROW_LINK = /^(?:و|یا|تا|از|به|در|که|با|بر|برای|هم)$/;
+
+function rowPreview(text) {
+  const full = String(text || '');
+  if (full.length <= ROW_MAX) return full;
+  let cut = 0;
+  for (const m of full.matchAll(/[،؛,;:.؟?!]\s/g)) {
+    const at = m.index + 1;
+    if (at > ROW_MAX) break;
+    if (at >= ROW_MIN) cut = at;
+  }
+  if (!cut) {
+    const sp = full.lastIndexOf(' ', ROW_MAX);
+    const nx = full.indexOf(' ', ROW_MAX);
+    const tail = (s) => s.replace(/\s+$/, '').split(/\s+/).pop() || '';
+    // always between two words: a single long token may push the row past the
+    // budget rather than be sliced
+    cut = sp >= ROW_MIN ? sp : (nx > 0 ? nx : full.length);
+    // never leave the row ending on a connective («… adapted و»)
+    for (let g = 0; g < 2 && ROW_LINK.test(tail(full.slice(0, cut))); g++) {
+      cut = full.slice(0, cut).replace(/\s+[^\s]+$/, '').length;
+    }
+  }
+  // NBSP so the «…» can never sit alone on a line of its own
+  return full.slice(0, cut).replace(/\s+$/, '') + '\u00A0…';
+}
+
 /**
  * «در یک نگاه»: the page's boxed sentences, gathered under the opening
  * paragraph; a tap goes to the box. Only when the page has two boxes or more —
@@ -70,7 +107,7 @@ export function buildGlance(boxes, scope = document) {
     const label = box.querySelector(':scope > ' + LAYER);
     const btn = el('button', { type: 'button' }, [
       el('span', { class: 'dc-glance-lab' }, label ? label.textContent.trim() : '•'),
-      el('span', { class: 'dc-glance-tx' }, boxText(box)),
+      el('span', { class: 'dc-glance-tx' }, rowPreview(boxText(box))),
     ]);
     btn.addEventListener('click', () => flashBox(box));
     card.appendChild(btn);
