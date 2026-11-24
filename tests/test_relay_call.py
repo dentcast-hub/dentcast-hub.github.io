@@ -40,7 +40,7 @@ class RelayTests(unittest.TestCase):
         self.assertIn("SPEC TEXT", t)
         self.assertIn(json.dumps(self.block), t)
 
-    def test_pack_refuses_a_path_inside_the_repo(self):
+    def test_pack_refuses_a_path_inside_the_repo_outside_relay_folder(self):
         r = run("pack", "--input", str(self.d / "input-src0.json"), "--answer-to", "x.json",
                 "--out", str(ROOT / "relay-test.md"))
         self.assertNotEqual(r.returncode, 0)

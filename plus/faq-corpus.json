@@ -45391,6 +45391,86 @@
           ]
         }
       ]
+    },
+    "insight/insight-121": {
+      "faqPages": [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/insight/insight-121.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا زیرکونیا یک فلز است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ زیرکونیا یا دی‌اکسید زیرکونیوم (ZrO₂) یک سرامیک اکسیدی است و فلز نیست."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا اچ نشدن زیرکونیا با اسید هیدروفلوئوریک به معنای ناتوانی آن در ایجاد باند مناسب است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ زیرکونیا با اسید هیدروفلوئوریک اچ نمی‌شود، اما با سندبلاست کنترل‌شده و پرایمر حاوی MDP باند مناسب ایجاد می‌کند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا گسترش تراش برای افزایش گیر مکانیکی، راه‌حل مناسبی برای محدودیت باندینگ ونیر است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ ونیر رستوریشنی متکی بر باندینگ است و تراش گسترده‌تر با عبور از مینا و رسیدن به عاج، بستر مینایی را تضعیف می‌کند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا تراش بیشتر به‌تنهایی باعث پوسیدگی دندان می‌شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ پوسیدگی فرآیندی چندعاملی است، اما آماده‌سازی غیرضروری و تهاجمی نسج سالم را از بین می‌برد و شرایط درمان را پیچیده‌تر می‌کند."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/insight/insight-121.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-121.html#flashcards-c1",
+              "name": "زیرکونیا",
+              "description": "دی‌اکسید زیرکونیوم (ZrO₂)؛ یک سرامیک اکسیدی که سال‌ها در ساخت کراون، بریج و سایر رستوریشن‌ها به کار می‌رود و فلز نیست.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-121.html#flashcards-c2",
+              "name": "باندینگ زیرکونیا",
+              "description": "برخلاف گلس‌سرامیک‌ها با اسید هیدروفلوئوریک اچ نمی‌شود؛ برای باند آن سندبلاست کنترل‌شده و پرایمر حاوی MDP به کار می‌رود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-121.html#flashcards-c3",
+              "name": "گیر مکانیکی در ونیر",
+              "description": "ونیر سرامیکی رستوریشنی متکی بر باندینگ است، نه گیر مکانیکی؛ گسترش تراش برای گیر بیشتر جایگزین مناسبی برای باندینگ نیست.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/insight/insight-121.html#flashcards-c4",
+              "name": "حفظ مینا در طراحی تراش ونیر",
+              "description": "تراش گسترده‌تر احتمال عبور از مینا و رسیدن به عاج را بالا می‌برد؛ باند رزینی به مینا قابل پیش‌بینی‌تر و بادوام‌تر از باند به عاج است.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
