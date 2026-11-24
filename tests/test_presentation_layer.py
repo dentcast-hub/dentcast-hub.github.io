@@ -546,6 +546,56 @@ class LintTests(unittest.TestCase):
         self.assertEqual(self.codes(inside), [])
 
 
+class GlanceTests(unittest.TestCase):
+    """«در یک نگاه» has one builder (dc-nav.js) and every box the rules let go without the
+    layer's label still gets a real pill from the author's own words, never a placeholder."""
+    NAV = (ROOT / "dc-nav.js").read_text(encoding="utf-8")
+    PRES = (ROOT / "plus/js/presentation.js").read_text(encoding="utf-8")
+
+    def block(self):
+        return self.NAV[self.NAV.index("var DC_GL_LAYER"):self.NAV.index("window.dcBuildGlance = dcBuildGlance;")]
+
+    def test_one_builder_and_no_placeholder(self):
+        self.assertEqual(self.NAV.count("card.id = 'dcGlance'"), 1)
+        self.assertNotIn("dc-glance-lab", self.PRES)          # no second copy in the module graph
+        self.assertIn("window.dcBuildGlance(", self.PRES)
+        self.assertIn("dcBuildGlance(dcBoxes, document)", self.NAV)
+        for js in (self.block(), self.PRES):
+            self.assertNotIn("'•'", js)
+
+    def test_the_card_reads_labels_with_the_lints_own_patterns(self):
+        word = re.search(r"var DC_GL_LABEL_WORD = /(.*)/i;", self.block()).group(1)
+        self.assertEqual(word, pl.LABEL_WORD.pattern)
+        author = re.search(r"var DC_GL_AUTHOR_LABEL = /\^\[\^\\p\{L\}\\p\{N\}_\]\{0,3\}(.*)/u;", self.block()).group(1)
+        self.assertEqual(author, pl.AUTHOR_LABEL.pattern[len(r"^\W{0,3}"):])
+
+    def test_glance_label_follows_the_rule_order(self):
+        def first_box(body):
+            return pl.facts(page(body))["boxes"][0]
+        self.assertEqual(pl.glance_label(first_box(
+            f'<div role="note" class="dc-box dc-box-tip"><p class="dc-box-label" {A}><strong>نکته‌ی بالینی</strong></p><p>متن.</p></div>')),
+            "نکته‌ی بالینی")
+        self.assertEqual(pl.glance_label(first_box('<div role="note" class="dc-box"><p>نکتهٔ کلینیکی: متن نویسنده.</p></div>')),
+                         "نکتهٔ کلینیکی")
+        self.assertEqual(pl.glance_label(first_box('<div role="note" class="dc-box"><p><strong>نکته‌ی کلینیکی</strong> متن.</p></div>')),
+                         "نکته‌ی کلینیکی")
+        self.assertEqual(pl.glance_label(first_box(
+            f'<h2><span {A}>۵. </span>حرف آخر</h2>\n<div role="note" class="dc-box"><p>متن نویسنده.</p></div>')), "حرف آخر")
+        self.assertIsNone(pl.glance_label(first_box('<p>لید.</p>\n<div role="note" class="dc-box"><p>متن نویسنده.</p></div>')))
+
+    def test_every_published_box_gets_a_pill_unless_it_mirrors_a_bare_box(self):
+        bad = []
+        for p in pl.layered_pages():
+            boxes = pl.facts(p.read_text(encoding="utf-8"))["boxes"]
+            src = p.parent.parent / p.name if p.parent.name == "en" else None
+            bare = ([next((k for k in b.elements() if k.marked), None) is None
+                     for b in pl.facts(src.read_text(encoding="utf-8"))["boxes"]] if src and src.exists() else [])
+            for i, b in enumerate(boxes):
+                if pl.glance_label(b) is None and not (i < len(bare) and bare[i]):
+                    bad.append(f"{p.relative_to(ROOT)}: «{pl.squash(b.text(skip_marked=True))[:50]}»")
+        self.assertEqual(bad, [])
+
+
 class LintCorpusTests(unittest.TestCase):
     def test_every_page_that_carries_the_layer_is_clean(self):
         pages = pl.layered_pages()

@@ -136,6 +136,28 @@ def prev_block(n):
     return None
 
 
+def glance_label(b):
+    """The pill a box gets in the run-time «در یک نگاه» card (dc-nav.js `dcGlanceLabel`, the one
+    builder for both shells), or None: the layer's label; else the author's own label opening the
+    box; else the author's heading right above it. A box this returns None for must be one the
+    lint lets go bare for another reason (an English mirror of a bare Persian box)."""
+    label = next((k for k in b.elements() if k.marked), None)
+    if label is not None:
+        return squash(label.text())
+    body = squash(b.text(skip_marked=True))
+    own = author_label(body)
+    if own:
+        return own
+    lead = next((squash(k.text()) for k in b.walk() if k.tag in ("strong", "b") and not k.marked
+                 and not (k.parent is not None and k.parent.marked)), "")
+    if lead and body.startswith(lead) and len(lead.split()) <= 6 and LABEL_WORD.search(lead):
+        return lead.rstrip(" :：")
+    above = prev_block(b)
+    if above is not None and above.tag in HEADINGS:
+        return squash(above.text(skip_marked=True)).lstrip("∆ ").strip() or None
+    return None
+
+
 def lint(doc, mirror_doc=None, source_doc=None):
     """`mirror_doc`: the page's English mirror (parity). `source_doc`: for an English mirror, the
     Persian page it mirrors — a box that takes no label there takes none here, whatever the

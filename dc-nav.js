@@ -119,6 +119,136 @@
   window.dcSvgIcon = dcSvgIcon;
   window.dcHydrateUiIcons = hydrateUiIcons;
 
+  /* ── «در یک نگاه» — ONE builder, both shells ──────
+     The card under the opening paragraph that repeats the sentences the
+     page's own callout boxes frame (module 03, the presentation layer). It
+     used to be built twice — here and in plus/js/presentation.js — and both
+     copies assumed every box carries the layer's label, filling «•» where it
+     did not. Module 03 leaves three kinds of box without one, by rule: the
+     author's own words open with a label («Clinical Tip:», «**نکتهٔ
+     کلینیکی**»), the author's heading right above already names it
+     («حرف آخر», «جمع‌بندی»), or an English mirror of a Persian box that took
+     none. Every page with such a box got a dot (user report, share-58).
+     Now one function, here, decides a row's label the way
+     tools/presentation_lint.py decides a box needs none, and
+     presentation.js calls window.dcBuildGlance instead of keeping a copy:
+       1. the layer's label inside the box;
+       2. the author's own label opening the box — shown as the pill, and
+          the row's text starts after it, so it is not read twice;
+       3. the author's heading right above the box, without the layer's
+          section number;
+       4. otherwise no pill and the text takes the whole row. Never a
+          placeholder.
+     LABEL_WORD and AUTHOR_LABEL are presentation_lint.py's, verbatim
+     (tests/test_presentation_layer.py holds them equal). */
+  var DC_GL_LAYER = '[data-dc-presentation]';
+  var DC_GL_BOX = '.dc-box, div[role="note"]';
+  var DC_GL_LABEL_WORD = /نکته|نتیجه|خلاصه|جمع[\u200c ]?بندی|پیام|هشدار|توصیه|راه[\u200c ]?حل|tip|note|takeaway|summary|message|warning|point|conclusion|solution|bottom line|in short|مرز|محدودیت|احتیاط|خوانش|درس|حرف آخر|limit|caveat|caution|reading|lesson|take[- ]?home|final word/i;
+  var DC_GL_AUTHOR_LABEL = /^[^\p{L}\p{N}_]{0,3}([^.؟?!:：\n]{2,60})[:：]/u;
+  function dcGlSquash(s) { return (s || '').replace(/\s+/g, ' ').trim(); }
+  /* The author's words in a node: its text without the layer's. */
+  function dcGlOwn(node) {
+    var c = node.cloneNode(true), m = c.querySelectorAll(DC_GL_LAYER), i;
+    for (i = 0; i < m.length; i++) m[i].parentNode.removeChild(m[i]);
+    return dcGlSquash(c.textContent);
+  }
+  /* The element just before `n` in reading order (the lint's prev_block),
+     never leaving the article container. */
+  function dcGlPrev(n, stop) {
+    while (n && n !== stop) {
+      if (n.previousElementSibling) return n.previousElementSibling;
+      n = n.parentElement;
+    }
+    return null;
+  }
+  function dcGlanceLabel(box, container) {
+    var kids = box.children, k;
+    var body = dcGlOwn(box);
+    for (k = 0; k < kids.length; k++) {
+      if (kids[k].hasAttribute('data-dc-presentation')) return { lab: dcGlSquash(kids[k].textContent), tx: body };
+    }
+    var m = body.match(DC_GL_AUTHOR_LABEL);
+    if (m && m[1].trim().split(/\s+/).length <= 10 && DC_GL_LABEL_WORD.test(m[1])) {
+      return { lab: m[1].trim(), tx: body.slice(m[0].length).trim() || body };
+    }
+    var bs = box.querySelectorAll('strong, b'), lead = '';
+    for (k = 0; k < bs.length; k++) {
+      if (bs[k].closest(DC_GL_LAYER)) continue;
+      lead = dcGlSquash(bs[k].textContent);
+      break;
+    }
+    if (lead && body.indexOf(lead) === 0 && lead.split(' ').length <= 6 && DC_GL_LABEL_WORD.test(lead)) {
+      return { lab: lead.replace(/[\s:：]+$/, ''), tx: body.slice(lead.length).replace(/^[\s:：،\-–—]+/, '') || body };
+    }
+    var above = dcGlPrev(box, container);
+    if (above && /^H[2-6]$/.test(above.tagName)) {
+      var h = dcGlOwn(above).replace(/^[∆\s]+/, '');
+      if (h) return { lab: h, tx: body };
+    }
+    return { lab: '', tx: body };
+  }
+  function dcFlashBox(box) {
+    var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    box.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'center' });
+    box.classList.add('dc-flash');
+    setTimeout(function () { box.classList.remove('dc-flash'); }, 1400);
+  }
+  /* boxes: the article's prose containers; scope: where #dcGlance is looked
+     for (the document, or the desktop shell's content area). Two boxes or
+     more only: with one, the card would repeat a sentence the reader is
+     about to meet. The card is marked data-dc-presentation: it repeats the
+     article, and the highlight anchoring (anchor.js) must not read it as page
+     text a second time. */
+  function dcBuildGlance(boxes, scope) {
+    scope = scope || document;
+    if (!boxes || !boxes.length || scope.querySelector('#dcGlance')) return null;
+    var notes = [], lead = null, bi, i;
+    for (bi = 0; bi < boxes.length; bi++) {
+      var ns = boxes[bi].querySelectorAll(DC_GL_BOX);
+      for (i = 0; i < ns.length; i++) {
+        if (!ns[i].closest('.dc-related-section, .author-note') && dcGlOwn(ns[i])) notes.push([ns[i], boxes[bi]]);
+      }
+      var ps = lead ? [] : boxes[bi].querySelectorAll('p');
+      for (i = 0; i < ps.length; i++) {
+        var p = ps[i];
+        if (p.closest(DC_GL_BOX) || p.closest(DC_GL_LAYER) || /(^|\s)(dc-disclaimer|kicker)(\s|$)/.test(p.className)) continue;
+        if (p.querySelector('.lang-btn') && !(p.textContent || '').replace(/English|فارسی/g, '').trim()) continue;
+        if ((p.textContent || '').trim().length > 40) { lead = p; break; }
+      }
+    }
+    if (notes.length < 2 || !lead) return null;
+    var langEl = lead.closest('[lang]');
+    var en = /\/en\//.test(location.pathname) || !!(langEl && /^en\b/i.test(langEl.getAttribute('lang')));
+    var card = document.createElement('div');
+    card.id = 'dcGlance';
+    card.className = 'dc-glance';
+    card.setAttribute('data-dc-presentation', '');
+    var h = document.createElement('p');
+    h.className = 'dc-glance-h';
+    h.textContent = en ? 'At a glance' : 'در یک نگاه';
+    card.appendChild(h);
+    notes.forEach(function (pair) {
+      var box = pair[0], l = dcGlanceLabel(box, pair[1]);
+      var b = document.createElement('button'), tx = document.createElement('span');
+      b.type = 'button';
+      if (l.lab) {
+        var lab = document.createElement('span');
+        lab.className = 'dc-glance-lab';
+        lab.textContent = l.lab;
+        lab.title = l.lab;
+        b.appendChild(lab);
+      }
+      tx.className = 'dc-glance-tx';
+      tx.textContent = l.tx;
+      b.appendChild(tx);
+      b.addEventListener('click', function () { dcFlashBox(box); });
+      card.appendChild(b);
+    });
+    lead.parentNode.insertBefore(card, lead.nextSibling);
+    return card;
+  }
+  window.dcBuildGlance = dcBuildGlance;
+
   /* ── CONTENT-ONLY MODE (?view=content) ────────────
      When loaded in the desktop iframe, hide all chrome
      so only the article content is displayed.
@@ -886,82 +1016,10 @@
         }
       }
 
-      /* 7d) «در یک نگاه» — the sentences the page's own callout boxes frame
-             (module 03, the presentation layer), gathered under the opening
-             paragraph; a tap goes to the box. Two boxes or more only: with
-             one, the card would repeat a sentence the reader is about to
-             meet. Built here, before first paint, so nothing moves;
-             plus/js/presentation.js builds the same card in the desktop shell
-             (find-or-create #dcGlance) and owns the section pill and the
-             glossary preview. The card is marked data-dc-presentation: it
-             repeats the article, and the highlight anchoring (anchor.js) must
-             not read it as page text a second time. */
-      (function () {
-        if (document.getElementById('dcGlance') || !dcBoxes.length) return;
-        var BOX = '.dc-box, div[role="note"]', LAYER = '[data-dc-presentation]';
-        function own(box) {
-          var c = box.cloneNode(true), m = c.querySelectorAll(LAYER), i;
-          for (i = 0; i < m.length; i++) m[i].parentNode.removeChild(m[i]);
-          return (c.textContent || '').replace(/\s+/g, ' ').trim();
-        }
-        var notes = [], lead = null, bi, i;
-        for (bi = 0; bi < dcBoxes.length; bi++) {
-          var ns = dcBoxes[bi].querySelectorAll(BOX);
-          for (i = 0; i < ns.length; i++) {
-            if (!ns[i].closest('.dc-related-section, .author-note') && own(ns[i])) notes.push(ns[i]);
-          }
-          var ps = lead ? [] : dcBoxes[bi].querySelectorAll('p');
-          for (i = 0; i < ps.length; i++) {
-            var p = ps[i];
-            if (p.closest(BOX) || p.closest(LAYER) || /dc-disclaimer|kicker/.test(p.className)) continue;
-            if (p.querySelector('.lang-btn') && !(p.textContent || '').replace(/English|فارسی/g, '').trim()) continue;
-            if ((p.textContent || '').trim().length > 40) { lead = p; break; }
-          }
-        }
-        if (notes.length < 2 || !lead) return;
-        var card = document.createElement('div');
-        card.id = 'dcGlance';
-        card.className = 'dc-glance';
-        card.setAttribute('data-dc-presentation', '');
-        var h = document.createElement('p');
-        h.className = 'dc-glance-h';
-        h.textContent = /\/en\//.test(location.pathname) ? 'At a glance' : 'در یک نگاه';
-        card.appendChild(h);
-        /* The layer's own label, or — on a box the author's words already
-           label (module 03) — the author's short heading right above it;
-           otherwise none, never a placeholder. */
-        function label(box) {
-          var kids = box.children, k;
-          for (k = 0; k < kids.length; k++) if (kids[k].hasAttribute('data-dc-presentation')) return (kids[k].textContent || '').trim();
-          var hd = box.previousElementSibling;
-          if (!hd || !/^H[2-6]$/.test(hd.tagName)) return '';
-          var t = own(hd).replace(/^[∆\s]+/, '').trim();
-          return t.length <= 24 ? t : '';
-        }
-        function row(box) {
-          var b = document.createElement('button'), tx = document.createElement('span');
-          var l = label(box);
-          b.type = 'button';
-          if (l) {
-            var lab = document.createElement('span');
-            lab.className = 'dc-glance-lab';
-            lab.textContent = l;
-            b.appendChild(lab);
-          }
-          tx.className = 'dc-glance-tx';
-          tx.textContent = own(box);
-          b.appendChild(tx);
-          b.addEventListener('click', function () {
-            var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            box.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'center' });
-            box.classList.add('dc-flash');
-            setTimeout(function () { box.classList.remove('dc-flash'); }, 1400);
-          });
-          return b;
-        }
-        for (i = 0; i < notes.length; i++) card.appendChild(row(notes[i]));
-        lead.parentNode.insertBefore(card, lead.nextSibling);
-      })();
+      /* 7d) «در یک نگاه» — built here, before first paint, so nothing moves,
+             by the one builder above (dcBuildGlance); the desktop shell's
+             plus/js/presentation.js calls the same function. */
+      dcBuildGlance(dcBoxes, document);
     }
   })();
 
@@ -2935,7 +2993,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '324';
+  var V = '325';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now
