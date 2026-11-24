@@ -263,7 +263,7 @@
     "#اینسایت"
    ],
    "co_tags": [],
-   "count": 135,
+   "count": 136,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -399,7 +399,8 @@
     "insight/insight-114",
     "insight/insight-116",
     "insight/insight-117",
-    "insight/insight-119"
+    "insight/insight-119",
+    "insight/insight-120"
    ]
   },
   {
@@ -1518,7 +1519,7 @@
    "co_tags": [
     "#Laminate_Veneer"
    ],
-   "count": 32,
+   "count": 33,
    "content_ids": [
     "episodes/episode-9",
     "episodes/episode-19",
@@ -1551,7 +1552,8 @@
     "sharehub/share-40",
     "chairside/chairside-45",
     "insight/insight-107",
-    "dentcast-plus/video-15"
+    "dentcast-plus/video-15",
+    "insight/insight-120"
    ]
   },
   {
@@ -4800,6 +4802,41 @@
    ]
   },
   {
+   "key": "درمان_ریشه",
+   "tag": "#درمان_ریشه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "root canal",
+    "روت کانال",
+    "عصب کشی",
+    "درمان کانال ریشه",
+    "root canal treatment",
+    "root canal therapy",
+    "عصبکشی",
+    "endodontic treatment",
+    "endodontic therapy",
+    "درمان اندودنتیک",
+    "روت کانال تراپی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 9,
+   "content_ids": [
+    "insight/insight-17",
+    "insight/insight-20",
+    "chairside/chairside-4",
+    "metanotes/meta-11",
+    "sharehub/share-19",
+    "metanotes/meta-21",
+    "chairside/chairside-49",
+    "sharehub/share-51",
+    "insight/insight-120"
+   ]
+  },
+  {
    "key": "زیرکونیا_مونولیتیک",
    "tag": "#زیرکونیا_مونولیتیک",
    "domain": null,
@@ -5311,40 +5348,6 @@
     "notecast/episode-38",
     "chairside/chairside-35",
     "sharehub/share-27"
-   ]
-  },
-  {
-   "key": "درمان_ریشه",
-   "tag": "#درمان_ریشه",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "root canal",
-    "روت کانال",
-    "عصب کشی",
-    "درمان کانال ریشه",
-    "root canal treatment",
-    "root canal therapy",
-    "عصبکشی",
-    "endodontic treatment",
-    "endodontic therapy",
-    "درمان اندودنتیک",
-    "روت کانال تراپی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 8,
-   "content_ids": [
-    "insight/insight-17",
-    "insight/insight-20",
-    "chairside/chairside-4",
-    "metanotes/meta-11",
-    "sharehub/share-19",
-    "metanotes/meta-21",
-    "chairside/chairside-49",
-    "sharehub/share-51"
    ]
   },
   {
@@ -7722,6 +7725,35 @@
    ]
   },
   {
+   "key": "سمان_مجدد",
+   "tag": "#سمان_مجدد",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "چسباندنِ دوباره‌ی روکشِ افتاده — بی‌هدف یا پس از یافتنِ علت.",
+   "use_when": "مقاله سمانِ مجدد را مشروط به یافتنِ علت بداند.",
+   "aliases": [
+    "سمان مجدد",
+    "recementation",
+    "چسباندن مجدد",
+    "ری سمان",
+    "سمان دوباره",
+    "ری سمنت",
+    "ریسمنتیشن",
+    "سمان کردن مجدد",
+    "چسباندن دوباره روکش"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-54",
+    "chairside/chairside-32",
+    "insight/insight-65",
+    "chairside/chairside-47",
+    "insight/insight-120"
+   ]
+  },
+  {
    "key": "طراحی_روکش",
    "tag": "#طراحی_روکش",
    "domain": "clinical",
@@ -9304,34 +9336,6 @@
    ]
   },
   {
-   "key": "سمان_مجدد",
-   "tag": "#سمان_مجدد",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "چسباندنِ دوباره‌ی روکشِ افتاده — بی‌هدف یا پس از یافتنِ علت.",
-   "use_when": "مقاله سمانِ مجدد را مشروط به یافتنِ علت بداند.",
-   "aliases": [
-    "سمان مجدد",
-    "recementation",
-    "چسباندن مجدد",
-    "ری سمان",
-    "سمان دوباره",
-    "ری سمنت",
-    "ریسمنتیشن",
-    "سمان کردن مجدد",
-    "چسباندن دوباره روکش"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-54",
-    "chairside/chairside-32",
-    "insight/insight-65",
-    "chairside/chairside-47"
-   ]
-  },
-  {
    "key": "سندبلاست",
    "tag": "#سندبلاست",
    "domain": null,
@@ -9781,6 +9785,29 @@
     "episodes/episode-122",
     "sharehub/share-18",
     "sharehub/share-51"
+   ]
+  },
+  {
+   "key": "پیش_آگهی",
+   "tag": "#پیش_آگهی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "پیش‌بینیِ سرنوشتِ دندان یا درمان، و شرط‌هایی که آن پیش‌بینی رویشان بنا شده.",
+   "use_when": "مقاله اعتبار یا شرط‌های یک پیش‌آگهی را بررسی کند.",
+   "aliases": [
+    "پروگنوز درمان",
+    "پیش بینی درمان",
+    "پیش آگهی درمان",
+    "treatment prognosis"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "metanotes/meta-1",
+    "metanotes/meta-2",
+    "metanotes/meta-3",
+    "insight/insight-120"
    ]
   },
   {
@@ -12273,28 +12300,6 @@
     "episodes/episode-30",
     "notecast/episode-29",
     "notecast/episode-30"
-   ]
-  },
-  {
-   "key": "پیش_آگهی",
-   "tag": "#پیش_آگهی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "پیش‌بینیِ سرنوشتِ دندان یا درمان، و شرط‌هایی که آن پیش‌بینی رویشان بنا شده.",
-   "use_when": "مقاله اعتبار یا شرط‌های یک پیش‌آگهی را بررسی کند.",
-   "aliases": [
-    "پروگنوز درمان",
-    "پیش بینی درمان",
-    "پیش آگهی درمان",
-    "treatment prognosis"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "metanotes/meta-1",
-    "metanotes/meta-2",
-    "metanotes/meta-3"
    ]
   },
   {
