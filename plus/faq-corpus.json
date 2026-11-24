@@ -45326,6 +45326,71 @@
           ]
         }
       ]
+    },
+    "chairside/chairside-55": {
+      "faqPages": [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/chairside/chairside-55.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا اتصال (اسپلینت) روکش‌های خلفی و اورهنگ لبه‌ها می‌تواند زمینهٔ تحلیل استخوان بین‌دندانی را فراهم کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ اتصال روکش‌ها و اورهنگ، مسیر عبور نخ دندان را می‌بندد و با گیر غذایی مداوم، تحلیل استخوان بین‌دندانی را رقم می‌زند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا در دندانی با درمان ریشهٔ ناقص و ضایعهٔ انتهای ریشه زیر روکش متصل، پیش از بررسی نسج باقی‌مانده باید درمان مجدد ریشه انجام شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ ابتدا روکش برداشته می‌شود و پس از پاک‌سازی پوسیدگی، نسج سالم باقی‌مانده و پروگنوز دندان بررسی می‌شود؛ ری‌اندو برای دندان قابل نگهداری در اولویت بعدی است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا تحویل روکش‌های مجزا (Single-unit) به‌جای روکش‌های به‌هم‌چسبیده، بهداشت بین‌دندانی را آسان‌تر می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ روکش مجزا با کانتور استاندارد، عبور نخ دندان را ممکن می‌کند و حفظ سلامت لثه را ساده‌تر می‌سازد."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/chairside/chairside-55.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-55.html#flashcards-c1",
+              "name": "اثر اورهنگ و اتصال روکش‌های خلفی",
+              "description": "اتصال روکش‌های مجاور و اورهنگ لبه‌ها مانع عبور نخ دندان و بهداشت بین‌دندانی می‌شود؛ گیر غذایی مداوم حاصل از آن، تحلیل استخوان بین‌دندانی را رقم می‌زند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-55.html#flashcards-c2",
+              "name": "ترتیب درمان دندان زیر روکش متصل با ضایعهٔ انتهای ریشه",
+              "description": "ابتدا روکش‌های اسپلینت برداشته و پس از پاک‌سازی پوسیدگی، ساختار سالم و پروگنوز هر دندان ارزیابی می‌شود؛ سپس برای دندان قابل نگهداری ری‌اندو و در پایان بازسازی تاج و روکش تک‌واحد انجام می‌شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/chairside/chairside-55.html#flashcards-c3",
+              "name": "مزیت روکش مجزا نسبت به اسپلینت",
+              "description": "روکش‌های تک‌واحد با کانتور استاندارد، عبور نخ دندان را ممکن می‌کنند و هم بهداشت بین‌دندانی و هم سلامت لثه را بهتر حفظ می‌کنند.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }

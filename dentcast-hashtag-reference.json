@@ -760,6 +760,74 @@
    ]
   },
   {
+   "key": "ویزیت",
+   "tag": "#ویزیت",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام بخش ویزیت (پیش‌تر Chairside / چیرساید) — روایت کوتاه یک کیس واقعی و تصمیمی که کنار یونیت گرفته شد.",
+   "use_when": "روی هر مدخل ویزیت (پوشهٔ chairside/)، و هیچ‌جای دیگر — نه برای تکنیک مستقیمِ «چیرساید».",
+   "aliases": [],
+   "variants": [
+    "#چیرساید"
+   ],
+   "co_tags": [],
+   "count": 52,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30",
+    "chairside/chairside-31",
+    "chairside/chairside-32",
+    "chairside/chairside-33",
+    "chairside/chairside-34",
+    "chairside/chairside-35",
+    "chairside/chairside-36",
+    "chairside/chairside-37",
+    "chairside/chairside-38",
+    "chairside/chairside-39",
+    "chairside/chairside-40",
+    "chairside/chairside-41",
+    "chairside/chairside-42",
+    "chairside/chairside-44",
+    "chairside/chairside-45",
+    "chairside/chairside-46",
+    "chairside/chairside-47",
+    "chairside/chairside-48",
+    "chairside/chairside-50",
+    "chairside/chairside-51",
+    "chairside/chairside-53",
+    "chairside/chairside-54",
+    "chairside/chairside-55"
+   ]
+  },
+  {
    "key": "curated_content",
    "tag": "#Curated_Content",
    "domain": "brand",
@@ -898,73 +966,6 @@
     "sharehub/share-55",
     "sharehub/share-58",
     "sharehub/share-59"
-   ]
-  },
-  {
-   "key": "ویزیت",
-   "tag": "#ویزیت",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام بخش ویزیت (پیش‌تر Chairside / چیرساید) — روایت کوتاه یک کیس واقعی و تصمیمی که کنار یونیت گرفته شد.",
-   "use_when": "روی هر مدخل ویزیت (پوشهٔ chairside/)، و هیچ‌جای دیگر — نه برای تکنیک مستقیمِ «چیرساید».",
-   "aliases": [],
-   "variants": [
-    "#چیرساید"
-   ],
-   "co_tags": [],
-   "count": 51,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-7",
-    "chairside/chairside-8",
-    "chairside/chairside-9",
-    "chairside/chairside-10",
-    "chairside/chairside-11",
-    "chairside/chairside-12",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-15",
-    "chairside/chairside-16",
-    "chairside/chairside-17",
-    "chairside/chairside-18",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "chairside/chairside-30",
-    "chairside/chairside-31",
-    "chairside/chairside-32",
-    "chairside/chairside-33",
-    "chairside/chairside-34",
-    "chairside/chairside-35",
-    "chairside/chairside-36",
-    "chairside/chairside-37",
-    "chairside/chairside-38",
-    "chairside/chairside-39",
-    "chairside/chairside-40",
-    "chairside/chairside-41",
-    "chairside/chairside-42",
-    "chairside/chairside-44",
-    "chairside/chairside-45",
-    "chairside/chairside-46",
-    "chairside/chairside-47",
-    "chairside/chairside-48",
-    "chairside/chairside-50",
-    "chairside/chairside-51",
-    "chairside/chairside-53",
-    "chairside/chairside-54"
    ]
   },
   {
@@ -2670,6 +2671,45 @@
    ]
   },
   {
+   "key": "پروگنوز_دندان",
+   "tag": "#پروگنوز_دندان",
+   "domain": null,
+   "words": 2,
+   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
+   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
+   "aliases": [
+    "پروگنوز",
+    "prognosis",
+    "پیش آگهی دندان"
+   ],
+   "variants": [
+    "#پروگنوز",
+    "#ارزیابی_دندان"
+   ],
+   "co_tags": [],
+   "count": 18,
+   "content_ids": [
+    "episodes/episode-150-2",
+    "episodes/episode-151",
+    "insight/insight-7",
+    "insight/insight-14",
+    "episodes/episode-152",
+    "episodes/episode-153",
+    "chairside/chairside-4",
+    "chairside/chairside-9",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-21",
+    "chairside/chairside-30",
+    "insight/insight-95",
+    "chairside/chairside-47",
+    "chairside/chairside-52",
+    "sharehub/share-49",
+    "chairside/chairside-54",
+    "chairside/chairside-55"
+   ]
+  },
+  {
    "key": "قالب_گیری_دیجیتال",
    "tag": "#قالب‌گیری_دیجیتال",
    "domain": "clinical",
@@ -2742,44 +2782,6 @@
     "dentcast-plus/video-15",
     "dentcast-plus/video-16",
     "dentcast-plus/video-17"
-   ]
-  },
-  {
-   "key": "پروگنوز_دندان",
-   "tag": "#پروگنوز_دندان",
-   "domain": null,
-   "words": 2,
-   "definition": "پیش‌بینیِ سرنوشت یک دندانِ مشخص پیش از سرمایه‌گذاری روی آن.",
-   "use_when": "مقاله پیش از درمان قطعی پروگنوز را بسنجد.",
-   "aliases": [
-    "پروگنوز",
-    "prognosis",
-    "پیش آگهی دندان"
-   ],
-   "variants": [
-    "#پروگنوز",
-    "#ارزیابی_دندان"
-   ],
-   "co_tags": [],
-   "count": 17,
-   "content_ids": [
-    "episodes/episode-150-2",
-    "episodes/episode-151",
-    "insight/insight-7",
-    "insight/insight-14",
-    "episodes/episode-152",
-    "episodes/episode-153",
-    "chairside/chairside-4",
-    "chairside/chairside-9",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-21",
-    "chairside/chairside-30",
-    "insight/insight-95",
-    "chairside/chairside-47",
-    "chairside/chairside-52",
-    "sharehub/share-49",
-    "chairside/chairside-54"
    ]
   },
   {
@@ -3042,6 +3044,43 @@
    ]
   },
   {
+   "key": "تحلیل_استخوان",
+   "tag": "#تحلیل_استخوان",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "از دست رفتنِ استخوانِ اطرافِ دندان یا ایمپلنت.",
+   "use_when": "مقاله تحلیل استخوان را پیامد یا معیار قرار دهد.",
+   "aliases": [
+    "bone loss",
+    "تحلیل استخوانی",
+    "تغییرات استخوان",
+    "bone resorption",
+    "ریزورپشن استخوان"
+   ],
+   "variants": [
+    "#استخوان"
+   ],
+   "co_tags": [],
+   "count": 15,
+   "content_ids": [
+    "episodes/episode-23",
+    "episodes/episode-24",
+    "episodes/episode-26",
+    "episodes/episode-59",
+    "episodes/episode-147-8",
+    "episodes/episode-148-1",
+    "litecast/lite-CAST3",
+    "litecast/lite-CAST4",
+    "notecast/episode-23",
+    "notecast/episode-24",
+    "metanotes/meta-4",
+    "chairside/chairside-14",
+    "insight/insight-72",
+    "sharehub/share-28",
+    "chairside/chairside-55"
+   ]
+  },
+  {
    "key": "حفظ_دندان",
    "tag": "#حفظ_دندان",
    "domain": "clinical",
@@ -3258,42 +3297,6 @@
     "dentai/dentai-34",
     "chairside/chairside-38",
     "sharehub/share-50"
-   ]
-  },
-  {
-   "key": "تحلیل_استخوان",
-   "tag": "#تحلیل_استخوان",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "از دست رفتنِ استخوانِ اطرافِ دندان یا ایمپلنت.",
-   "use_when": "مقاله تحلیل استخوان را پیامد یا معیار قرار دهد.",
-   "aliases": [
-    "bone loss",
-    "تحلیل استخوانی",
-    "تغییرات استخوان",
-    "bone resorption",
-    "ریزورپشن استخوان"
-   ],
-   "variants": [
-    "#استخوان"
-   ],
-   "co_tags": [],
-   "count": 14,
-   "content_ids": [
-    "episodes/episode-23",
-    "episodes/episode-24",
-    "episodes/episode-26",
-    "episodes/episode-59",
-    "episodes/episode-147-8",
-    "episodes/episode-148-1",
-    "litecast/lite-CAST3",
-    "litecast/lite-CAST4",
-    "notecast/episode-23",
-    "notecast/episode-24",
-    "metanotes/meta-4",
-    "chairside/chairside-14",
-    "insight/insight-72",
-    "sharehub/share-28"
    ]
   },
   {
@@ -4969,6 +4972,42 @@
    ]
   },
   {
+   "key": "گیر_غذایی",
+   "tag": "#گیر_غذایی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "گیر کردنِ غذا در فضای بین‌دندانی.",
+   "use_when": "مقاله گیر غذایی را نشانه یا پیامدِ یک تصمیم بداند.",
+   "aliases": [
+    "food impaction",
+    "گیر کردن غذا",
+    "ایمپکشن غذا",
+    "فود ایمپکشن",
+    "ایمپکشن غذایی",
+    "گیر مواد غذایی",
+    "food trapping",
+    "فودایمپکشن"
+   ],
+   "variants": [
+    "#Food_Impaction"
+   ],
+   "co_tags": [
+    "#Food_Impaction"
+   ],
+   "count": 9,
+   "content_ids": [
+    "episodes/episode-121-1",
+    "insight/insight-7",
+    "episodes/episode-159",
+    "chairside/chairside-28",
+    "chairside/chairside-37",
+    "insight/insight-73",
+    "chairside/chairside-50",
+    "episodes/episode-163",
+    "chairside/chairside-55"
+   ]
+  },
+  {
    "key": "ids",
    "tag": "#IDS",
    "domain": null,
@@ -5610,41 +5649,6 @@
     "insight/insight-47",
     "insight/insight-65",
     "insight/insight-87"
-   ]
-  },
-  {
-   "key": "گیر_غذایی",
-   "tag": "#گیر_غذایی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "گیر کردنِ غذا در فضای بین‌دندانی.",
-   "use_when": "مقاله گیر غذایی را نشانه یا پیامدِ یک تصمیم بداند.",
-   "aliases": [
-    "food impaction",
-    "گیر کردن غذا",
-    "ایمپکشن غذا",
-    "فود ایمپکشن",
-    "ایمپکشن غذایی",
-    "گیر مواد غذایی",
-    "food trapping",
-    "فودایمپکشن"
-   ],
-   "variants": [
-    "#Food_Impaction"
-   ],
-   "co_tags": [
-    "#Food_Impaction"
-   ],
-   "count": 8,
-   "content_ids": [
-    "episodes/episode-121-1",
-    "insight/insight-7",
-    "episodes/episode-159",
-    "chairside/chairside-28",
-    "chairside/chairside-37",
-    "insight/insight-73",
-    "chairside/chairside-50",
-    "episodes/episode-163"
    ]
   },
   {
@@ -7677,6 +7681,39 @@
    ]
   },
   {
+   "key": "ریتریتمنت",
+   "tag": "#ریتریتمنت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "درمانِ مجددِ ریشه، وقتی درمانِ اول کافی نبوده.",
+   "use_when": "مقاله ضرورت یا امکانِ ری‌تریتمنت را بسنجد.",
+   "aliases": [
+    "retreatment",
+    "ری تریتمنت",
+    "درمان مجدد ریشه",
+    "درمان ریشه مجدد",
+    "اندو مجدد",
+    "ری اندو",
+    "عصب کشی مجدد",
+    "ریترتمنت",
+    "درمان مجدد اندو",
+    "re endo",
+    "درمان مجدد کانال"
+   ],
+   "variants": [
+    "#درمان_مجدد_ریشه"
+   ],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-20",
+    "chairside/chairside-9",
+    "chairside/chairside-39",
+    "chairside/chairside-54",
+    "chairside/chairside-55"
+   ]
+  },
+  {
    "key": "ریسک_فاکتور",
    "tag": "#ریسک_فاکتور",
    "domain": null,
@@ -8589,6 +8626,30 @@
    ]
   },
   {
+   "key": "اورهنگ",
+   "tag": "#اورهنگ",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "لبه‌ی اضافیِ ترمیمِ قدیمی نزدیک لثه.",
+   "use_when": "مقاله برداشتنِ اورهنگ را علتِ تماس با لثه بداند.",
+   "aliases": [
+    "overhang",
+    "اورهنگ",
+    "لبه اضافه",
+    "اوورهنگ",
+    "اورهانگ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-40",
+    "chairside/chairside-28",
+    "insight/insight-73",
+    "chairside/chairside-55"
+   ]
+  },
+  {
    "key": "اورکانتور",
    "tag": "#اورکانتور",
    "domain": "clinical",
@@ -9164,6 +9225,30 @@
    ]
   },
   {
+   "key": "روکش_اسپلینت",
+   "tag": "#روکش_اسپلینت",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "روکش‌های متصل به هم، که می‌توانند یک دندانِ هپلس را پنهان کنند.",
+   "use_when": "مقاله اسپلینت بودن را عاملِ عدم قطعیت بداند.",
+   "aliases": [
+    "اسپلینت روکش",
+    "splinted crowns",
+    "روکش متصل",
+    "روکش های به هم چسبیده",
+    "روکش اسپلینت شده"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-14",
+    "insight/insight-88",
+    "sharehub/share-31",
+    "chairside/chairside-55"
+   ]
+  },
+  {
    "key": "روکش_سرامیکی",
    "tag": "#روکش_سرامیکی",
    "domain": "clinical",
@@ -9190,38 +9275,6 @@
     "insight/insight-28",
     "insight/insight-29",
     "insight/insight-32"
-   ]
-  },
-  {
-   "key": "ریتریتمنت",
-   "tag": "#ریتریتمنت",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "درمانِ مجددِ ریشه، وقتی درمانِ اول کافی نبوده.",
-   "use_when": "مقاله ضرورت یا امکانِ ری‌تریتمنت را بسنجد.",
-   "aliases": [
-    "retreatment",
-    "ری تریتمنت",
-    "درمان مجدد ریشه",
-    "درمان ریشه مجدد",
-    "اندو مجدد",
-    "ری اندو",
-    "عصب کشی مجدد",
-    "ریترتمنت",
-    "درمان مجدد اندو",
-    "re endo",
-    "درمان مجدد کانال"
-   ],
-   "variants": [
-    "#درمان_مجدد_ریشه"
-   ],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-20",
-    "chairside/chairside-9",
-    "chairside/chairside-39",
-    "chairside/chairside-54"
    ]
   },
   {
@@ -10419,29 +10472,6 @@
    ]
   },
   {
-   "key": "اورهنگ",
-   "tag": "#اورهنگ",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "لبه‌ی اضافیِ ترمیمِ قدیمی نزدیک لثه.",
-   "use_when": "مقاله برداشتنِ اورهنگ را علتِ تماس با لثه بداند.",
-   "aliases": [
-    "overhang",
-    "اورهنگ",
-    "لبه اضافه",
-    "اوورهنگ",
-    "اورهانگ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-40",
-    "chairside/chairside-28",
-    "insight/insight-73"
-   ]
-  },
-  {
    "key": "ایمپلنت_کوتاه",
    "tag": "#ایمپلنت_کوتاه",
    "domain": null,
@@ -11328,29 +11358,6 @@
     "episodes/episode-122-4",
     "insight/insight-3",
     "insight/insight-56"
-   ]
-  },
-  {
-   "key": "روکش_اسپلینت",
-   "tag": "#روکش_اسپلینت",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "روکش‌های متصل به هم، که می‌توانند یک دندانِ هپلس را پنهان کنند.",
-   "use_when": "مقاله اسپلینت بودن را عاملِ عدم قطعیت بداند.",
-   "aliases": [
-    "اسپلینت روکش",
-    "splinted crowns",
-    "روکش متصل",
-    "روکش های به هم چسبیده",
-    "روکش اسپلینت شده"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-14",
-    "insight/insight-88",
-    "sharehub/share-31"
    ]
   },
   {

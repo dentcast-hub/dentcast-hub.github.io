@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "chairside/chairside-55"
 - Status: in_progress
-- Next canonical step: "C.4.7"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -19,6 +19,22 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     "content_id": "chairside/chairside-55",
     "context": {
       "approvals": [
+        {
+          "decision": "\u062a\u062d\u0644\u06cc\u0644 \u0627\u0633\u062a\u062e\u0648\u0627\u0646 \u0648 \u0636\u0627\u06cc\u0639\u0647 \u0627\u0646\u062a\u0647\u0627\u06cc \u0631\u06cc\u0634\u0647 \u0632\u06cc\u0631 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u0645\u062a\u0635\u0644\u061b \u0628\u0631\u0631\u0633\u06cc \u06cc\u06a9 \u06a9\u06cc\u0633 \u0628\u0627\u0644\u06cc\u0646\u06cc \u0648 \u0637\u0631\u062d \u062f\u0631\u0645\u0627\u0646 \u0645\u062c\u062f\u062f",
+          "evidence": [
+            "founder's message, copied codepoint for codepoint"
+          ],
+          "scope": "title",
+          "status": "confirmed"
+        },
+        {
+          "decision": "\u062f\u0648 \u0631\u0648\u06a9\u0634 \u0645\u0648\u0644\u0631 \u0641\u06a9 \u067e\u0627\u06cc\u06cc\u0646 \u06a9\u0647 \u0628\u0647 \u0647\u0645 \u0645\u062a\u0635\u0644 \u0634\u062f\u0647\u200c\u0627\u0646\u062f: \u0627\u0648\u0631\u0647\u0646\u06af \u0644\u0628\u0647\u200c\u0647\u0627\u060c \u06af\u06cc\u0631 \u063a\u0630\u0627\u06cc\u06cc \u0648 \u062a\u062d\u0644\u06cc\u0644 \u0627\u0633\u062a\u062e\u0648\u0627\u0646 \u0628\u06cc\u0646\u200c\u062f\u0646\u062f\u0627\u0646\u06cc\u060c \u062f\u0631 \u06a9\u0646\u0627\u0631 \u062f\u0631\u0645\u0627\u0646 \u0631\u06cc\u0634\u0647 \u0646\u0627\u0642\u0635 \u0648 \u0636\u0627\u06cc\u0639\u0647 \u0627\u0646\u062a\u0647\u0627\u06cc \u0631\u06cc\u0634\u0647\u061b \u062f\u0644\u06cc\u0644 \u062e\u0627\u0631\u062c \u06a9\u0631\u062f\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627 \u0648 \u0637\u0631\u062d \u062f\u0631\u0645\u0627\u0646 \u0645\u062c\u062f\u062f.",
+          "evidence": [
+            "agent proposal under standing acceptance (Hard Rule 14); no founder caption supplied"
+          ],
+          "scope": "caption",
+          "status": "confirmed"
+        },
         {
           "decision": "approved two drafted MCQs verbatim",
           "evidence": [
@@ -44,6 +60,99 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         },
         {
           "kind": "fixed_three_deliveries_v2"
+        },
+        {
+          "evidence": [
+            "C.3 build: body opens with the founder's paragraph before any list"
+          ],
+          "kind": "first_cut_lead_provenance_v1",
+          "origin": "author_original",
+          "source_ref": "founder's own first paragraph opens the body (\u0634\u0631\u062d \u062d\u0627\u0644 \u0648 \u0631\u0648\u0627\u06cc\u062a \u0628\u06cc\u0645\u0627\u0631)"
+        },
+        {
+          "english": {
+            "evidence": [
+              "cloned en chrome of chairside-54, translated body, structure-faithful"
+            ],
+            "path": "chairside/en/chairside-55.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "C.6 editorial lock before Push 2"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "C.4.13 COMMENTARY DES record under chairside/chairside-55; verify_publish --des-text ok"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "ordinary post; C.4.14 skipped"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "pillar fixed-props/failures; 7 canonical hashtags; hashtag_ref --check green"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.7 no free slot (cap); C.4.8 two inline anchors; C.4.9 at cap 5/5"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "#\u0648\u06cc\u0632\u06cc\u062a #\u0631\u0648\u06a9\u0634_\u0627\u0633\u067e\u0644\u06cc\u0646\u062a #\u0627\u0648\u0631\u0647\u0646\u06af #\u06af\u06cc\u0631_\u063a\u0630\u0627\u06cc\u06cc #\u062a\u062d\u0644\u06cc\u0644_\u0627\u0633\u062a\u062e\u0648\u0627\u0646 #\u0631\u06cc\u062a\u0631\u06cc\u062a\u0645\u0646\u062a #\u067e\u0631\u0648\u06af\u0646\u0648\u0632_\u062f\u0646\u062f\u0627\u0646; no mint"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "chairside-55 appended at the tail of dentcast-brain.json"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "fixed-props (after insight-72) and failure-troubleshooting (after insight-7); bundle-crown-prep rejected at gate 1"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "no chairside Pulse precedent in index.html; documented skip per Hard Rule 14"
+              ],
+              "scope": "pulse",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "chairside/en/chairside-55.html with noindex,follow, no hreflang, inverse toggles"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "M2 approved; title/caption confirmed"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -327,11 +436,119 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "status": "completed"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "glossary candidates (post-and-core, subgingival-margin, ferrule-effect, crown-lengthening) all at cap 6/5 per related_cap: 0 backlinks added"
+        ],
         "id": "C.4.7",
         "module": "05-semantic-linking.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "skipped \u2014 not a glossary publish"
+        ],
+        "id": "C.4.7-b",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "2 strong matches applied: \u00ab\u0627\u0633\u067e\u0644\u06cc\u0646\u062a\u00bb \u2192 insight-55, \u00ab\u067e\u0633\u062a \u0648 \u06a9\u0648\u0631\u00bb \u2192 glossary/post-and-core; borderline candidates skipped"
+        ],
+        "id": "C.4.8",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "section at cap 5/5 (\u062f\u0627\u0646\u0634\u0646\u0627\u0645\u0647 + fixed-pros capsule + insight-14, chairside-53, insight-76); strongest semantic first"
+        ],
+        "id": "C.4.9",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "3 authored DefinedTerms under chairside/chairside-55 (#flashcards-c1..c3): overhang/splint effect, retreatment order, single-unit advantage; none a copied FAQ answer"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "3 binary FAQ pairs, standalone, explicit \u0628\u0644\u0647/\u062e\u06cc\u0631 verdicts grounded in the body"
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "ordinary post, not a challenge",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "questions: \u00ab\u0627\u0648\u0631\u0647\u0646\u06af \u0631\u0648\u06a9\u0634 \u0628\u0627\u0639\u062b \u062a\u062d\u0644\u06cc\u0644 \u0627\u0633\u062a\u062e\u0648\u0627\u0646 \u0645\u06cc\u0634\u0648\u062f\u061f\u00bb, \u00ab\u0631\u0648\u06a9\u0634\u0647\u0627\u06cc \u0628\u0647 \u0647\u0645 \u0686\u0633\u0628\u06cc\u062f\u0647 \u0631\u0627 \u062c\u062f\u0627 \u06a9\u0646\u0645\u061f\u00bb, \u00ab\u0628\u0627 \u0636\u0627\u06cc\u0639\u0647\u0654 \u0627\u0646\u062a\u0647\u0627\u06cc \u0631\u06cc\u0634\u0647 \u0627\u0648\u0644 \u0627\u0646\u062f\u0648 \u06cc\u0627 \u0627\u0648\u0644 \u0631\u0648\u06a9\u0634\u061f\u00bb; all tags reused canonical via --simulate: #\u0648\u06cc\u0632\u06cc\u062a (series), #\u0631\u0648\u06a9\u0634_\u0627\u0633\u067e\u0644\u06cc\u0646\u062a, #\u0627\u0648\u0631\u0647\u0646\u06af, #\u06af\u06cc\u0631_\u063a\u0630\u0627\u06cc\u06cc, #\u062a\u062d\u0644\u06cc\u0644_\u0627\u0633\u062a\u062e\u0648\u0627\u0646, #\u0631\u06cc\u062a\u0631\u06cc\u062a\u0645\u0646\u062a, #\u067e\u0631\u0648\u06af\u0646\u0648\u0632_\u062f\u0646\u062f\u0627\u0646; no mint; composition gate met; --check green; page ranks 4th in \u0627\u0648\u0631\u0647\u0646\u06af and \u0631\u0648\u06a9\u0634 \u0627\u0633\u067e\u0644\u06cc\u0646\u062a chips (reachable)"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "appended chairside-55 at the end of the flat brain array (last was clinical-120); chairside-54 key set; 7 canonical hashtags; 8 keywords; pillar fixed-pros/failures"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "brain pillar fixed-pros/failures equals the step-2.4 decision; subtopic present; capsule points to /pillar/fixed-pros/"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "placed in 2 full pathways: fixed-pros (after insight-72) and failure-troubleshooting (after insight-7); 4.12-\u0628: 2 MCQs written to plus/exam-questions.json (r-ffc8f179, r-3d30e7fb) after the founder's M2 approval \u00ab\u062a\u0627\u06cc\u06cc\u062f\u00bb; validate_exam_questions 0 errors"
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "one candidate bundle (bundle-crown-prep, continues fixed-props): rejected at GATE 1 \u2014 chairside/ folder is never bundle-eligible; no other candidate"
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "en mirror chairside/en/chairside-55.html written before the cut (noindex,follow, no hreflang, inverse toggles, translation structure-faithful); Pulse: documented skip \u2014 no chairside line exists in the Pulse list; ten-scope editorial lock and approvals recorded"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
@@ -349,7 +566,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: chairside/chairside-55.html, chairside/cs55-1.webp, chairside/index.html, plus/des-scores.json, insight/insight-121.html, insight/insight121-1.webp"
+    "note": "Index-only refresh after staging delivery paths: chairside/chairside-55.html, chairside/en/chairside-55.html, chairside/cs55-1.webp, chairside/index.html, dentcast-brain.json, plus/faq-corpus.json, plus/pathways.json, plus/des-scores.json, plus/exam-questions.json, dentcast-hashtag-reference.json"
   },
   "schema": "publish-handoff-v3"
 }
