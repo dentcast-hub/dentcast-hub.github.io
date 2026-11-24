@@ -24,7 +24,7 @@ not use this.
 keeps the one JSON object, checks it parses and — for a Fidelity sweeper or judge
 answer — that it answers every unit of the input, and writes it, unchanged, to the
 path the relay names. It never edits a verdict. A RELAY.md holds the paper's text:
-keep it outside the repository (pack refuses a path inside it) and never commit it.
+keep it under .dentcast/relay/ or outside the repository (pack refuses any other path inside it).
 """
 import argparse
 import hashlib
@@ -52,9 +52,9 @@ def sha(b):
 
 def pack(a):
     out = Path(a.out).resolve()
-    if ROOT.resolve() in out.parents:
-        sys.exit("--out must be outside the repository: a relay file holds the paper's text, which never "
-                 "enters public Git history")
+    allowed = (ROOT / ".dentcast" / "relay").resolve()
+    if ROOT.resolve() in out.parents and allowed not in out.parents:
+        sys.exit("--out inside the repository must be under .dentcast/relay/ (the founder's relay folder)")
     inp = Path(a.input).read_bytes()
     try:
         json.loads(inp)
@@ -147,7 +147,7 @@ def main():
     p.add_argument("--system", help="the system prompt file (omit when the block names its own task)")
     p.add_argument("--input", required=True, help="the input block (JSON), the only user turn")
     p.add_argument("--answer-to", required=True, help="where ingest writes the answer")
-    p.add_argument("--out", required=True, help="the relay file, outside the repository")
+    p.add_argument("--out", required=True, help="the relay file: outside the repository or under .dentcast/relay/")
     i = sub.add_parser("ingest")
     i.add_argument("reply", help="the chat's whole reply, saved as text")
     i.add_argument("--relay", required=True, help="the relay file the call was made from")

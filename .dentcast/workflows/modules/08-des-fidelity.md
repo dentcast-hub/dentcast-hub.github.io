@@ -94,8 +94,8 @@ the page and the source; how it was produced cannot be checked from the file at 
    on the same final page text: exit 0 means accepted and written into
    `plus/des-scores.json`; then Part 3b for any unit still `ALTERED`/`REVERSED`, and Phase F
    (which repeats the DES arithmetic, band and schema checks) as always. It reruns no model
-   call and asks for nothing else. The packet holds the papers' text: it stays outside the
-   repository and is never committed. If the receiver's page text differs from the
+   call and asks for nothing else. The packet holds the papers' text: it may be committed
+   under `.dentcast/relay/`. If the receiver's page text differs from the
    producer's, `--accept` names the sentences; only those are re-checked (Part 3b's
    `--vote --base`), never the whole step.
 <!-- /fidelity-mechanical-acceptance:v1 -->
