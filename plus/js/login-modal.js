@@ -1,14 +1,14 @@
 // Login is a MODAL, never a page (spec 2.5). Two steps: phone -> OTP code.
 // Resolves with { user, return_to } on success, or null if the user cancels.
-import { el, faNum } from './util.js?v=261';
-import { api, ApiError, currentUser, meStatus } from './api.js?v=261';
+import { el, faNum } from './util.js?v=262';
+import { api, ApiError, currentUser, meStatus } from './api.js?v=262';
 import {
   isOrgHost, irMirrorUrl,
   telegramLoginEnabled, telegramCallbackUrl, telegramBotUsername,
   googleLoginEnabled,
-} from './config.js?v=261';
-import { mountGoogleButton } from './google-login.js?v=261';
-import { trapFocus } from './focus-trap.js?v=261';
+} from './config.js?v=262';
+import { mountGoogleButton } from './google-login.js?v=262';
+import { trapFocus } from './focus-trap.js?v=262';
 
 let overlay = null;
 // While the mandatory nickname step is showing, every dismissal path (×,

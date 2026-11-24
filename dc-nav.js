@@ -927,16 +927,29 @@
         h.className = 'dc-glance-h';
         h.textContent = /\/en\//.test(location.pathname) ? 'At a glance' : 'در یک نگاه';
         card.appendChild(h);
+        /* The layer's own label, or — on a box the author's words already
+           label (module 03) — the author's short heading right above it;
+           otherwise none, never a placeholder. */
+        function label(box) {
+          var kids = box.children, k;
+          for (k = 0; k < kids.length; k++) if (kids[k].hasAttribute('data-dc-presentation')) return (kids[k].textContent || '').trim();
+          var hd = box.previousElementSibling;
+          if (!hd || !/^H[2-6]$/.test(hd.tagName)) return '';
+          var t = own(hd).replace(/^[∆\s]+/, '').trim();
+          return t.length <= 24 ? t : '';
+        }
         function row(box) {
-          var b = document.createElement('button'), lab = document.createElement('span'), tx = document.createElement('span');
-          var own1 = null, kids = box.children, k;
-          for (k = 0; k < kids.length; k++) if (kids[k].hasAttribute('data-dc-presentation')) { own1 = kids[k]; break; }
+          var b = document.createElement('button'), tx = document.createElement('span');
+          var l = label(box);
           b.type = 'button';
-          lab.className = 'dc-glance-lab';
-          lab.textContent = own1 ? (own1.textContent || '').trim() : '•';
+          if (l) {
+            var lab = document.createElement('span');
+            lab.className = 'dc-glance-lab';
+            lab.textContent = l;
+            b.appendChild(lab);
+          }
           tx.className = 'dc-glance-tx';
           tx.textContent = own(box);
-          b.appendChild(lab);
           b.appendChild(tx);
           b.addEventListener('click', function () {
             var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2922,7 +2935,7 @@
 (function () {
   if (window.__dcPlusLoaded) return;
   window.__dcPlusLoaded = true;
-  var V = '323';
+  var V = '324';
 
   /* The anti-FOUC block that used to live here is gone, along with the header
      transformation it was covering for. The music + library buttons are now

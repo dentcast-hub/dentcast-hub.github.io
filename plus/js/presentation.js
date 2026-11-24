@@ -9,7 +9,7 @@
 // it on a standalone page (it runs before first paint, so nothing moves), and
 // buildGlance() here builds it in the desktop shell, where that script is
 // stripped from the fetched article. Both find-or-create `#dcGlance`.
-import { el, faNum } from './util.js?v=261';
+import { el, faNum } from './util.js?v=262';
 
 const LAYER = '[data-dc-presentation]';
 const BOX = '.dc-box, div[role="note"]';
@@ -28,6 +28,18 @@ function boxText(box) {
   let n;
   while ((n = w.nextNode())) if (!n.parentElement.closest(LAYER)) s += n.data;
   return s.replace(/\s+/g, ' ').trim();
+}
+
+// A box's label in the card: the layer's own label, or — on a box the author's
+// words already label (module 03) — the author's heading right above it when
+// it is short; otherwise none, never a placeholder.
+function glanceLabel(box) {
+  const own = box.querySelector(':scope > ' + LAYER);
+  if (own) return own.textContent.trim();
+  const h = box.previousElementSibling;
+  if (!h || !/^H[2-6]$/.test(h.tagName)) return '';
+  const t = boxText(h).replace(/^[∆\s]+/, '').trim();
+  return t.length <= 24 ? t : '';
 }
 
 export function pageBoxes(boxes) {
@@ -67,11 +79,11 @@ export function buildGlance(boxes, scope = document) {
   const card = el('div', { class: 'dc-glance', id: 'dcGlance', 'data-dc-presentation': '' },
     [el('p', { class: 'dc-glance-h' }, T.glance)]);
   notes.forEach((box) => {
-    const label = box.querySelector(':scope > ' + LAYER);
+    const label = glanceLabel(box);
     const btn = el('button', { type: 'button' }, [
-      el('span', { class: 'dc-glance-lab' }, label ? label.textContent.trim() : '•'),
+      label ? el('span', { class: 'dc-glance-lab' }, label) : null,
       el('span', { class: 'dc-glance-tx' }, boxText(box)),
-    ]);
+    ].filter(Boolean));
     btn.addEventListener('click', () => flashBox(box));
     card.appendChild(btn);
   });

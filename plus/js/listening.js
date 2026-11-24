@@ -14,11 +14,11 @@
 // Real play only: we accumulate the forward delta of `currentTime` between
 // timeupdate ticks, ignoring pauses and seeks (a jump to the end is a large or
 // negative delta and is discarded), so seeking to the finish cannot fake it.
-import { sendCompletion } from './outbox.js?v=261';
-import { signalStreakActivity, tehranDay } from './util.js?v=261';
+import { sendCompletion } from './outbox.js?v=262';
+import { signalStreakActivity, tehranDay } from './util.js?v=262';
 import {
   LISTEN_FRACTION, LISTEN_MIN_S, LISTEN_MAX_S, LS_LISTEN_AT, LS_LISTEN_ACC, LISTEN_ACC_MAX_AGE_MS,
-} from './config.js?v=261';
+} from './config.js?v=262';
 
 // Date.now()-based so the day follows the same clock as every other time here.
 const dayOf = (ms) => tehranDay(new Date(ms));

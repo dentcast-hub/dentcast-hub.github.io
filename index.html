@@ -2347,6 +2347,7 @@ body.dc-desktop-ui #dc-desktop-root{
 .dcd-content-area .dc-glance button { display:grid; grid-template-columns:auto 1fr; gap:.55rem; width:100%; text-align:start; background:none; border:0; border-top:1px solid var(--border); padding:.55rem 0; font:inherit; color:inherit; line-height:1.8; cursor:pointer; }
 .dcd-content-area .dc-glance button:first-of-type { border-top:0; }
 .dcd-content-area .dc-glance-lab { font-size:.75rem; font-weight:700; color:var(--chip-txt); background:var(--chip-bg); border-radius:999px; padding:.05rem .6rem; height:max-content; margin-top:.2rem; white-space:nowrap; }
+.dcd-content-area .dc-glance-tx:only-child { grid-column:1 / -1; }
 .dcd-content-area .dc-glance-tx { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
 .dc-secpill { position:fixed; z-index:40; display:flex; gap:.5rem; align-items:center; max-width:min(30rem, calc(100vw - 2rem)); padding:.2rem .8rem; border-radius:999px; font-size:.8rem; line-height:1.9; color:var(--txt2); background:var(--surface, #fff); border:1px solid var(--chip-bd); box-shadow:0 2px 10px rgba(2,35,96,.12); opacity:0; pointer-events:none; transition:opacity .2s; }
 .dc-secpill.is-on { opacity:1; }
@@ -7916,7 +7917,7 @@ scrollBody.addEventListener('touchend',e=>{
 </script>
 
 <!-- Theme toggle behavior moved to /dc-nav.js (single source) -->
-<script src="/dc-nav.js?v=362" defer></script>
+<script src="/dc-nav.js?v=363" defer></script>
 
 <!-- Toolbar drawer toggle is handled by /dc-nav.js (single source) -->
 
