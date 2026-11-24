@@ -828,6 +828,78 @@
    ]
   },
   {
+   "key": "مرور_منابع",
+   "tag": "#مرور_منابع",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام بخش مرور منابع (پیش‌تر Share Hub / شیرهاب) — خوانش دنت‌کست از یک یا چند مقاله، همیشه با ذکر منبع.",
+   "use_when": "روی هر مدخل مرور منابع (پوشهٔ sharehub/)، و هیچ‌جای دیگر.",
+   "aliases": [
+    "share hub",
+    "share_hub",
+    "شیرهاب",
+    "شر هاب"
+   ],
+   "variants": [
+    "#Share_Hub"
+   ],
+   "co_tags": [],
+   "count": 51,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25",
+    "sharehub/share-26",
+    "sharehub/share-27",
+    "sharehub/share-28",
+    "sharehub/share-29",
+    "sharehub/share-30",
+    "sharehub/share-31",
+    "sharehub/share-32",
+    "sharehub/share-33",
+    "sharehub/share-34",
+    "sharehub/share-35",
+    "sharehub/share-36",
+    "sharehub/share-38",
+    "sharehub/share-39",
+    "sharehub/share-40",
+    "sharehub/share-41",
+    "sharehub/share-42",
+    "sharehub/share-43",
+    "sharehub/share-44",
+    "sharehub/share-45",
+    "sharehub/share-46",
+    "sharehub/share-47",
+    "sharehub/share-51",
+    "sharehub/share-52",
+    "sharehub/share-55",
+    "sharehub/share-58",
+    "sharehub/share-59"
+   ]
+  },
+  {
    "key": "ویزیت",
    "tag": "#ویزیت",
    "domain": "brand",
@@ -892,77 +964,6 @@
     "chairside/chairside-51",
     "chairside/chairside-53",
     "chairside/chairside-54"
-   ]
-  },
-  {
-   "key": "مرور_منابع",
-   "tag": "#مرور_منابع",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام بخش مرور منابع (پیش‌تر Share Hub / شیرهاب) — خوانش دنت‌کست از یک یا چند مقاله، همیشه با ذکر منبع.",
-   "use_when": "روی هر مدخل مرور منابع (پوشهٔ sharehub/)، و هیچ‌جای دیگر.",
-   "aliases": [
-    "share hub",
-    "share_hub",
-    "شیرهاب",
-    "شر هاب"
-   ],
-   "variants": [
-    "#Share_Hub"
-   ],
-   "co_tags": [],
-   "count": 50,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24",
-    "sharehub/share-25",
-    "sharehub/share-26",
-    "sharehub/share-27",
-    "sharehub/share-28",
-    "sharehub/share-29",
-    "sharehub/share-30",
-    "sharehub/share-31",
-    "sharehub/share-32",
-    "sharehub/share-33",
-    "sharehub/share-34",
-    "sharehub/share-35",
-    "sharehub/share-36",
-    "sharehub/share-38",
-    "sharehub/share-39",
-    "sharehub/share-40",
-    "sharehub/share-41",
-    "sharehub/share-42",
-    "sharehub/share-43",
-    "sharehub/share-44",
-    "sharehub/share-45",
-    "sharehub/share-46",
-    "sharehub/share-47",
-    "sharehub/share-51",
-    "sharehub/share-52",
-    "sharehub/share-55",
-    "sharehub/share-58"
    ]
   },
   {
@@ -2644,7 +2645,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 17,
+   "count": 18,
    "content_ids": [
     "episodes/episode-125-2",
     "insight/insight-2",
@@ -2662,7 +2663,8 @@
     "chairside/chairside-39",
     "insight/insight-88",
     "insight/insight-95",
-    "sharehub/share-47"
+    "sharehub/share-47",
+    "sharehub/share-59"
    ]
   },
   {
@@ -2833,6 +2835,49 @@
    ]
   },
   {
+   "key": "بعد_عمودی",
+   "tag": "#بعد_عمودی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "Vertical Dimension — ارتفاع عمودی صورت در اکلوژن؛ متغیری که تغییرش کل بازسازی را جابه‌جا می‌کند.",
+   "use_when": "مقاله بعد عمودی را بسنجد، تغییر بدهد، یا درباره‌ی تغییرش تصمیم بگیرد.",
+   "aliases": [
+    "ارتفاع عمودی",
+    "دایمنشن عمودی",
+    "بعد عمودی صورت",
+    "Vertical Dimension",
+    "ورتیکال دایمنشن",
+    "ورتیکال دیمنشن"
+   ],
+   "variants": [
+    "#VerticalDimension",
+    "#Vertical_Dimension"
+   ],
+   "co_tags": [
+    "#Vertical_Dimension",
+    "#VDO"
+   ],
+   "count": 16,
+   "content_ids": [
+    "episodes/episode-14",
+    "insight/insight-2",
+    "insight/insight-6",
+    "insight/insight-12",
+    "notecast/episode-14",
+    "episodes/episode-154",
+    "episodes/episode-155",
+    "insight/insight-43",
+    "notecast/episode-34",
+    "notecast/episode-35",
+    "insight/insight-51",
+    "insight/insight-60",
+    "metanotes/meta-22",
+    "sharehub/share-53",
+    "sharehub/share-58",
+    "sharehub/share-59"
+   ]
+  },
+  {
    "key": "تنظیم_اکلوژن",
    "tag": "#تنظیم_اکلوژن",
    "domain": "clinical",
@@ -2992,48 +3037,6 @@
     "insight/insight-74",
     "insight/insight-88",
     "sharehub/share-57"
-   ]
-  },
-  {
-   "key": "بعد_عمودی",
-   "tag": "#بعد_عمودی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "Vertical Dimension — ارتفاع عمودی صورت در اکلوژن؛ متغیری که تغییرش کل بازسازی را جابه‌جا می‌کند.",
-   "use_when": "مقاله بعد عمودی را بسنجد، تغییر بدهد، یا درباره‌ی تغییرش تصمیم بگیرد.",
-   "aliases": [
-    "ارتفاع عمودی",
-    "دایمنشن عمودی",
-    "بعد عمودی صورت",
-    "Vertical Dimension",
-    "ورتیکال دایمنشن",
-    "ورتیکال دیمنشن"
-   ],
-   "variants": [
-    "#VerticalDimension",
-    "#Vertical_Dimension"
-   ],
-   "co_tags": [
-    "#Vertical_Dimension",
-    "#VDO"
-   ],
-   "count": 15,
-   "content_ids": [
-    "episodes/episode-14",
-    "insight/insight-2",
-    "insight/insight-6",
-    "insight/insight-12",
-    "notecast/episode-14",
-    "episodes/episode-154",
-    "episodes/episode-155",
-    "insight/insight-43",
-    "notecast/episode-34",
-    "notecast/episode-35",
-    "insight/insight-51",
-    "insight/insight-60",
-    "metanotes/meta-22",
-    "sharehub/share-53",
-    "sharehub/share-58"
    ]
   },
   {
@@ -3590,6 +3593,43 @@
    ]
   },
   {
+   "key": "افزایش_vd",
+   "tag": "#افزایش_VD",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "بالا بردن بعد عمودی — تصمیمی که فضا می‌سازد و همزمان ریسک می‌آورد.",
+   "use_when": "مقاله درباره‌ی خودِ افزایش VD تصمیم بگیرد: اندیکاسیون، مقدار، یا ریسک.",
+   "aliases": [
+    "بالا بردن بعد عمودی",
+    "افزایش بعد عمودی",
+    "افزایش دایمنشن عمودی",
+    "افزایش ورتیکال",
+    "افزایش ارتفاع عمودی",
+    "افزایش vdo",
+    "increasing vdo",
+    "bite raising",
+    "بایت ریزینگ"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 13,
+   "content_ids": [
+    "episodes/episode-14",
+    "episodes/episode-34",
+    "episodes/episode-35",
+    "insight/insight-12",
+    "notecast/episode-14",
+    "episodes/episode-154",
+    "episodes/episode-155",
+    "insight/insight-43",
+    "notecast/episode-35",
+    "insight/insight-77",
+    "insight/insight-88",
+    "sharehub/share-58",
+    "sharehub/share-59"
+   ]
+  },
+  {
    "key": "سایت_مطب",
    "tag": "#سایت_مطب",
    "domain": "web",
@@ -3798,42 +3838,6 @@
     "dentcast-plus/video-14",
     "insight/insight-97",
     "sharehub/share-52"
-   ]
-  },
-  {
-   "key": "افزایش_vd",
-   "tag": "#افزایش_VD",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "بالا بردن بعد عمودی — تصمیمی که فضا می‌سازد و همزمان ریسک می‌آورد.",
-   "use_when": "مقاله درباره‌ی خودِ افزایش VD تصمیم بگیرد: اندیکاسیون، مقدار، یا ریسک.",
-   "aliases": [
-    "بالا بردن بعد عمودی",
-    "افزایش بعد عمودی",
-    "افزایش دایمنشن عمودی",
-    "افزایش ورتیکال",
-    "افزایش ارتفاع عمودی",
-    "افزایش vdo",
-    "increasing vdo",
-    "bite raising",
-    "بایت ریزینگ"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 12,
-   "content_ids": [
-    "episodes/episode-14",
-    "episodes/episode-34",
-    "episodes/episode-35",
-    "insight/insight-12",
-    "notecast/episode-14",
-    "episodes/episode-154",
-    "episodes/episode-155",
-    "insight/insight-43",
-    "notecast/episode-35",
-    "insight/insight-77",
-    "insight/insight-88",
-    "sharehub/share-58"
    ]
   },
   {
@@ -7501,6 +7505,38 @@
    ]
   },
   {
+   "key": "ثبت_رابطه",
+   "tag": "#ثبت_رابطه",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "ثبتِ رابطه‌ی فکین.",
+   "use_when": "مقاله روش یا خطای ثبت رابطه را بررسی کند.",
+   "aliases": [
+    "bite registration",
+    "ثبت اکلوژن",
+    "رکورد گیری",
+    "ثبت رابطه فکین",
+    "jaw relation record",
+    "interocclusal record",
+    "بایت رجیستریشن",
+    "ثبت بایت",
+    "بایت گیری",
+    "رکورد بایت",
+    "ثبت روابط فکی",
+    "ثبت رابطه فکی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 5,
+   "content_ids": [
+    "insight/insight-2",
+    "metanotes/meta-16",
+    "insight/insight-60",
+    "sharehub/share-47",
+    "sharehub/share-59"
+   ]
+  },
+  {
    "key": "حداقل_تهاجم",
    "tag": "#حداقل_تهاجم",
    "domain": "clinical",
@@ -8931,37 +8967,6 @@
    ]
   },
   {
-   "key": "ثبت_رابطه",
-   "tag": "#ثبت_رابطه",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "ثبتِ رابطه‌ی فکین.",
-   "use_when": "مقاله روش یا خطای ثبت رابطه را بررسی کند.",
-   "aliases": [
-    "bite registration",
-    "ثبت اکلوژن",
-    "رکورد گیری",
-    "ثبت رابطه فکین",
-    "jaw relation record",
-    "interocclusal record",
-    "بایت رجیستریشن",
-    "ثبت بایت",
-    "بایت گیری",
-    "رکورد بایت",
-    "ثبت روابط فکی",
-    "ثبت رابطه فکی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 4,
-   "content_ids": [
-    "insight/insight-2",
-    "metanotes/meta-16",
-    "insight/insight-60",
-    "sharehub/share-47"
-   ]
-  },
-  {
    "key": "خط_لب",
    "tag": "#خط_لب",
    "domain": "clinical",
@@ -9933,6 +9938,32 @@
     "insight/insight-41",
     "insight/insight-49",
     "insight/insight-76"
+   ]
+  },
+  {
+   "key": "گایدنس_قدامی",
+   "tag": "#گایدنس_قدامی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "مسیرِ هدایتِ دندان‌های قدامی در حرکات پیش‌گرایی.",
+   "use_when": "مقاله تنظیمِ گایدنس قدامی را عاملِ نتیجه بداند.",
+   "aliases": [
+    "anterior guidance",
+    "گایدنس قدامی",
+    "هدایت قدامی",
+    "راهنمای قدامی",
+    "انتریور گایدنس",
+    "incisal guidance",
+    "اینسایزال گایدنس"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "insight/insight-37",
+    "sharehub/share-21",
+    "insight/insight-94",
+    "sharehub/share-59"
    ]
   },
   {
@@ -11229,6 +11260,29 @@
    ]
   },
   {
+   "key": "رابطه_مرکزی",
+   "tag": "#رابطه_مرکزی",
+   "domain": null,
+   "words": 2,
+   "definition": "Centric Relation — موقعیت مرجعِ فکی.",
+   "use_when": "مقاله CR را مبنای ثبت یا تصمیم قرار دهد.",
+   "aliases": [
+    "centric relation",
+    "CR",
+    "سنتریک ریلیشن",
+    "سنتریک رلیشن",
+    "رابطه سنتریک"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-143",
+    "notecast/episode-14",
+    "sharehub/share-59"
+   ]
+  },
+  {
    "key": "راحتی_بیمار",
    "tag": "#راحتی_بیمار",
    "domain": "clinical",
@@ -12389,31 +12443,6 @@
    ]
   },
   {
-   "key": "گایدنس_قدامی",
-   "tag": "#گایدنس_قدامی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "مسیرِ هدایتِ دندان‌های قدامی در حرکات پیش‌گرایی.",
-   "use_when": "مقاله تنظیمِ گایدنس قدامی را عاملِ نتیجه بداند.",
-   "aliases": [
-    "anterior guidance",
-    "گایدنس قدامی",
-    "هدایت قدامی",
-    "راهنمای قدامی",
-    "انتریور گایدنس",
-    "incisal guidance",
-    "اینسایزال گایدنس"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "insight/insight-37",
-    "sharehub/share-21",
-    "insight/insight-94"
-   ]
-  },
-  {
    "key": "گلاس_سرامیک",
    "tag": "#گلاس_سرامیک",
    "domain": null,
@@ -13043,6 +13072,34 @@
    "content_ids": [
     "metanotes/meta-7",
     "metanotes/meta-15"
+   ]
+  },
+  {
+   "key": "انولوپ_آو_فانکشن",
+   "tag": "#انولوپ_آو_فانکشن",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "مسیر کوچک‌تر و تکرارشونده‌ای که نقطه‌ی اینسایزال در عملکرد روزمره — جویدن، بلع و تکلم — طی می‌کند، نزدیک به قسمت فوقانی انولوپ آو موشن؛ شکلش به کانتور پالاتال قدامی‌های بالا، طول لبه‌ی اینسایزال و گاید قدامی وابسته است.",
+   "use_when": "مقاله درباره‌ی برخورد رستوریشن با مسیر عادی جویدن باشد — طراحی گاید قدامی، طول کانین و لبه‌ی اینسایزال، شیب پالاتال، یا شکست و ساییدگی ناشی از تجاوز به این مسیر و الگوی جویدن محدودشده.",
+   "aliases": [
+    "envelope of function",
+    "constricted chewing pattern",
+    "پاکت عملکردی",
+    "مسیر عملکردی فک",
+    "الگوی جویدن محدود",
+    "chewing envelope",
+    "انولوپ آف فانکشن",
+    "انولوپ فانکشن",
+    "انولوپ عملکردی",
+    "functional envelope",
+    "envelop of function"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "sharehub/share-21",
+    "sharehub/share-59"
    ]
   },
   {
@@ -13957,28 +14014,6 @@
    "content_ids": [
     "episodes/episode-111-1",
     "photocast/episode-3"
-   ]
-  },
-  {
-   "key": "رابطه_مرکزی",
-   "tag": "#رابطه_مرکزی",
-   "domain": null,
-   "words": 2,
-   "definition": "Centric Relation — موقعیت مرجعِ فکی.",
-   "use_when": "مقاله CR را مبنای ثبت یا تصمیم قرار دهد.",
-   "aliases": [
-    "centric relation",
-    "CR",
-    "سنتریک ریلیشن",
-    "سنتریک رلیشن",
-    "رابطه سنتریک"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-143",
-    "notecast/episode-14"
    ]
   },
   {
@@ -17267,33 +17302,6 @@
    "count": 1,
    "content_ids": [
     "metanotes/meta-13"
-   ]
-  },
-  {
-   "key": "انولوپ_آو_فانکشن",
-   "tag": "#انولوپ_آو_فانکشن",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "مسیر کوچک‌تر و تکرارشونده‌ای که نقطه‌ی اینسایزال در عملکرد روزمره — جویدن، بلع و تکلم — طی می‌کند، نزدیک به قسمت فوقانی انولوپ آو موشن؛ شکلش به کانتور پالاتال قدامی‌های بالا، طول لبه‌ی اینسایزال و گاید قدامی وابسته است.",
-   "use_when": "مقاله درباره‌ی برخورد رستوریشن با مسیر عادی جویدن باشد — طراحی گاید قدامی، طول کانین و لبه‌ی اینسایزال، شیب پالاتال، یا شکست و ساییدگی ناشی از تجاوز به این مسیر و الگوی جویدن محدودشده.",
-   "aliases": [
-    "envelope of function",
-    "constricted chewing pattern",
-    "پاکت عملکردی",
-    "مسیر عملکردی فک",
-    "الگوی جویدن محدود",
-    "chewing envelope",
-    "انولوپ آف فانکشن",
-    "انولوپ فانکشن",
-    "انولوپ عملکردی",
-    "functional envelope",
-    "envelop of function"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "sharehub/share-21"
    ]
   },
   {

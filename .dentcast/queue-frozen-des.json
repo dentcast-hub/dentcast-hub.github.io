@@ -685,5 +685,23 @@
       "unassigned": [],
       "dropped": []
     }
+  },
+  "sharehub/share-59": {
+    "queue_ref": "queue/52-sharehub-ovd-change-clinical-sequence",
+    "record_sha256": "b50123f4394a5581ea9fbfb48790f5ec7b91c96b7f3b112183d818e12dd383d3",
+    "installed_at": "2026-11-24",
+    "approval": {
+      "status": "confirmed",
+      "decision": "DES و Fidelity مطلب «آماده»ی صف همان‌طور که بنیان‌گذار تأیید کرده ثبت می‌شود و مانع انتشار نیست (queue-maintainer.md «DES و Fidelity صف»)",
+      "evidence": [
+        "queue-maintainer.md «DES و Fidelity صف»"
+      ]
+    },
+    "sync": {
+      "text_synced": [],
+      "added": [],
+      "unassigned": [],
+      "dropped": []
+    }
   }
 }
