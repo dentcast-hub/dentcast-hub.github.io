@@ -30,7 +30,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         {
           "decision": "\u062f\u0648 \u0631\u0648\u06a9\u0634 \u0645\u0648\u0644\u0631 \u0641\u06a9 \u067e\u0627\u06cc\u06cc\u0646 \u06a9\u0647 \u0628\u0647 \u0647\u0645 \u0645\u062a\u0635\u0644 \u0634\u062f\u0647\u200c\u0627\u0646\u062f: \u0627\u0648\u0631\u0647\u0646\u06af \u0644\u0628\u0647\u200c\u0647\u0627\u060c \u06af\u06cc\u0631 \u063a\u0630\u0627\u06cc\u06cc \u0648 \u062a\u062d\u0644\u06cc\u0644 \u0627\u0633\u062a\u062e\u0648\u0627\u0646 \u0628\u06cc\u0646\u200c\u062f\u0646\u062f\u0627\u0646\u06cc\u060c \u062f\u0631 \u06a9\u0646\u0627\u0631 \u062f\u0631\u0645\u0627\u0646 \u0631\u06cc\u0634\u0647 \u0646\u0627\u0642\u0635 \u0648 \u0636\u0627\u06cc\u0639\u0647 \u0627\u0646\u062a\u0647\u0627\u06cc \u0631\u06cc\u0634\u0647\u061b \u062f\u0644\u06cc\u0644 \u062e\u0627\u0631\u062c \u06a9\u0631\u062f\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627 \u0648 \u0637\u0631\u062d \u062f\u0631\u0645\u0627\u0646 \u0645\u062c\u062f\u062f.",
           "evidence": [
-            "agent proposal under standing acceptance (Hard Rule 14); no founder caption supplied"
+            "agent proposal under standing acceptance (Hard Rule 14)"
           ],
           "scope": "caption",
           "status": "confirmed"
@@ -70,15 +70,104 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "source_ref": "founder's own first paragraph opens the body (\u0634\u0631\u062d \u062d\u0627\u0644 \u0648 \u0631\u0648\u0627\u06cc\u062a \u0628\u06cc\u0645\u0627\u0631)"
         },
         {
+          "from_step": "C.6",
+          "kind": "dependency_invalidation_v1",
+          "reason": "Phase F failed: Pulse line was wrongly skipped; the line is now written and the bottom line dropped",
+          "superseded": {
+            "approvals": [
+              {
+                "decision": "\u062a\u062d\u0644\u06cc\u0644 \u0627\u0633\u062a\u062e\u0648\u0627\u0646 \u0648 \u0636\u0627\u06cc\u0639\u0647 \u0627\u0646\u062a\u0647\u0627\u06cc \u0631\u06cc\u0634\u0647 \u0632\u06cc\u0631 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627\u06cc \u0645\u062a\u0635\u0644\u061b \u0628\u0631\u0631\u0633\u06cc \u06cc\u06a9 \u06a9\u06cc\u0633 \u0628\u0627\u0644\u06cc\u0646\u06cc \u0648 \u0637\u0631\u062d \u062f\u0631\u0645\u0627\u0646 \u0645\u062c\u062f\u062f",
+                "evidence": [
+                  "founder's message, copied codepoint for codepoint"
+                ],
+                "scope": "title",
+                "status": "confirmed"
+              },
+              {
+                "decision": "\u062f\u0648 \u0631\u0648\u06a9\u0634 \u0645\u0648\u0644\u0631 \u0641\u06a9 \u067e\u0627\u06cc\u06cc\u0646 \u06a9\u0647 \u0628\u0647 \u0647\u0645 \u0645\u062a\u0635\u0644 \u0634\u062f\u0647\u200c\u0627\u0646\u062f: \u0627\u0648\u0631\u0647\u0646\u06af \u0644\u0628\u0647\u200c\u0647\u0627\u060c \u06af\u06cc\u0631 \u063a\u0630\u0627\u06cc\u06cc \u0648 \u062a\u062d\u0644\u06cc\u0644 \u0627\u0633\u062a\u062e\u0648\u0627\u0646 \u0628\u06cc\u0646\u200c\u062f\u0646\u062f\u0627\u0646\u06cc\u060c \u062f\u0631 \u06a9\u0646\u0627\u0631 \u062f\u0631\u0645\u0627\u0646 \u0631\u06cc\u0634\u0647 \u0646\u0627\u0642\u0635 \u0648 \u0636\u0627\u06cc\u0639\u0647 \u0627\u0646\u062a\u0647\u0627\u06cc \u0631\u06cc\u0634\u0647\u061b \u062f\u0644\u06cc\u0644 \u062e\u0627\u0631\u062c \u06a9\u0631\u062f\u0646 \u0631\u0648\u06a9\u0634\u200c\u0647\u0627 \u0648 \u0637\u0631\u062d \u062f\u0631\u0645\u0627\u0646 \u0645\u062c\u062f\u062f.",
+                "evidence": [
+                  "agent proposal under standing acceptance (Hard Rule 14); no founder caption supplied"
+                ],
+                "scope": "caption",
+                "status": "confirmed"
+              },
+              {
+                "decision": "approved two drafted MCQs verbatim",
+                "evidence": [
+                  "chat: \u00ab\u062a\u0627\u06cc\u06cc\u062f\u00bb over the two questions shown"
+                ],
+                "scope": "M2 exam questions",
+                "status": "confirmed"
+              }
+            ],
+            "delivery": [],
+            "inputs": [],
+            "steps": [
+              {
+                "evidence": [
+                  "en mirror chairside/en/chairside-55.html written before the cut (noindex,follow, no hreflang, inverse toggles, translation structure-faithful); Pulse: documented skip \u2014 no chairside line exists in the Pulse list; ten-scope editorial lock and approvals recorded"
+                ],
+                "id": "C.6",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.8",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "C.7",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "D",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "E",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "F",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "G",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              }
+            ],
+            "validation": []
+          }
+        },
+        {
           "english": {
             "evidence": [
-              "cloned en chrome of chairside-54, translated body, structure-faithful"
+              "cloned en chrome of chairside-54, translated body"
             ],
             "path": "chairside/en/chairside-55.html",
             "status": "ready"
           },
           "evidence": [
-            "C.6 editorial lock before Push 2"
+            "C.6 lock re-recorded after the Phase F failure"
           ],
           "kind": "second_cut_editorial_lock_v1",
           "scopes": [
@@ -126,28 +215,28 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             },
             {
               "evidence": [
-                "fixed-props (after insight-72) and failure-troubleshooting (after insight-7); bundle-crown-prep rejected at gate 1"
+                "fixed-props and failure-troubleshooting; bundle rejected at gate 1"
               ],
               "scope": "pathways",
               "status": "resolved"
             },
             {
               "evidence": [
-                "no chairside Pulse precedent in index.html; documented skip per Hard Rule 14"
+                "index.html: new first Pulse line linking /chairside/chairside-55.html; previous bottom line dropped; seven lines kept"
               ],
               "scope": "pulse",
-              "status": "not_applicable"
+              "status": "resolved"
             },
             {
               "evidence": [
-                "chairside/en/chairside-55.html with noindex,follow, no hreflang, inverse toggles"
+                "chairside/en/chairside-55.html noindex,follow, no hreflang, inverse toggles"
               ],
               "scope": "english",
               "status": "resolved"
             },
             {
               "evidence": [
-                "M2 approved; title/caption confirmed"
+                "title, caption and M2 restored after invalidation"
               ],
               "scope": "author_approvals",
               "status": "resolved"
@@ -543,7 +632,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "en mirror chairside/en/chairside-55.html written before the cut (noindex,follow, no hreflang, inverse toggles, translation structure-faithful); Pulse: documented skip \u2014 no chairside line exists in the Pulse list; ten-scope editorial lock and approvals recorded"
+          "Pulse line written at the top linking chairside-55 and the previous bottom line dropped; en mirror unchanged; lock and approvals restored"
         ],
         "id": "C.6",
         "module": "11-build-and-version.md",
@@ -566,7 +655,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: chairside/chairside-55.html, chairside/en/chairside-55.html, chairside/cs55-1.webp, chairside/index.html, dentcast-brain.json, plus/faq-corpus.json, plus/pathways.json, plus/des-scores.json, plus/exam-questions.json, dentcast-hashtag-reference.json"
+    "note": "Index-only refresh after staging delivery paths: index.html"
   },
   "schema": "publish-handoff-v3"
 }
