@@ -5,84 +5,30 @@
 // the numbers already on the headings, and the glossary preview shows the
 // first lines of the term page a link in the text already points to.
 //
-// The card is built twice by design, as the contents list is: dc-nav.js builds
-// it on a standalone page (it runs before first paint, so nothing moves), and
-// buildGlance() here builds it in the desktop shell, where that script is
+// The card has one builder, dc-nav.js's `window.dcBuildGlance`: dc-nav.js
+// calls it on a standalone page (before first paint, so nothing moves), and
+// buildGlance() here calls it in the desktop shell, where that script is
 // stripped from the fetched article. Both find-or-create `#dcGlance`.
-import { el, faNum } from './util.js?v=261';
+import { el, faNum } from './util.js?v=263';
 
 const LAYER = '[data-dc-presentation]';
-const BOX = '.dc-box, div[role="note"]';
 const isEn = (root) => !!(root && root.closest && root.closest('[lang="en"], [dir="ltr"]'))
   || /\/en\//.test((typeof location !== 'undefined' && location.pathname) || '');
 
 const TEXT = {
-  fa: { glance: 'در یک نگاه', sec: (i, n) => 'بخش ' + faNum(i) + ' از ' + faNum(n), more: 'صفحهٔ کامل در دانشنامه' },
-  en: { glance: 'At a glance', sec: (i, n) => 'Section ' + i + ' of ' + n, more: 'Full entry in the glossary' },
+  fa: { sec: (i, n) => 'بخش ' + faNum(i) + ' از ' + faNum(n), more: 'صفحهٔ کامل در دانشنامه' },
+  en: { sec: (i, n) => 'Section ' + i + ' of ' + n, more: 'Full entry in the glossary' },
 };
 
-// The author's words inside a box: its text without the layer's label.
-function boxText(box) {
-  let s = '';
-  const w = document.createTreeWalker(box, NodeFilter.SHOW_TEXT);
-  let n;
-  while ((n = w.nextNode())) if (!n.parentElement.closest(LAYER)) s += n.data;
-  return s.replace(/\s+/g, ' ').trim();
-}
-
-export function pageBoxes(boxes) {
-  const out = [];
-  boxes.forEach((b) => b.querySelectorAll(BOX).forEach((x) => {
-    if (!x.closest('.dc-related-section, .author-note') && boxText(x)) out.push(x);
-  }));
-  return out;
-}
-
-// The opening paragraph: the first paragraph of prose that is the author's own
-// and stands on its own (not a label, not inside a box, not the disclaimer).
-function openingParagraph(boxes) {
-  for (const b of boxes) {
-    for (const p of b.querySelectorAll('p')) {
-      if (p.closest(BOX) || p.closest(LAYER) || p.matches(LAYER + ', .dc-disclaimer, .kicker')) continue;
-      if (p.querySelector('.lang-btn') && !p.textContent.replace(/English|فارسی/g, '').trim()) continue;
-      if (p.textContent.trim().length > 40) return p;
-    }
-  }
-  return null;
-}
-
 /**
- * «در یک نگاه»: the page's boxed sentences, gathered under the opening
- * paragraph; a tap goes to the box. Only when the page has two boxes or more —
- * with one, the card would repeat a sentence the reader is about to meet.
+ * «در یک نگاه»: one builder for both shells, `window.dcBuildGlance` in
+ * dc-nav.js (which always loads first: it is what injects plus.js). It decides
+ * each row's label the way tools/presentation_lint.py decides a box needs
+ * none, and never shows a placeholder. No copy here: two copies drifted once
+ * and showed «•» for every box the author's words already label.
  */
 export function buildGlance(boxes, scope = document) {
-  if (scope.querySelector('#dcGlance')) return;
-  const notes = pageBoxes(boxes);
-  const lead = openingParagraph(boxes);
-  if (notes.length < 2 || !lead) return;
-  const T = TEXT[isEn(lead) ? 'en' : 'fa'];
-  // marked as presentation layer: it repeats the article's sentences, and the
-  // highlight anchoring (anchor.js) must not read them as page text a second time
-  const card = el('div', { class: 'dc-glance', id: 'dcGlance', 'data-dc-presentation': '' },
-    [el('p', { class: 'dc-glance-h' }, T.glance)]);
-  notes.forEach((box) => {
-    const label = box.querySelector(':scope > ' + LAYER);
-    const btn = el('button', { type: 'button' }, [
-      el('span', { class: 'dc-glance-lab' }, label ? label.textContent.trim() : '•'),
-      el('span', { class: 'dc-glance-tx' }, boxText(box)),
-    ]);
-    btn.addEventListener('click', () => flashBox(box));
-    card.appendChild(btn);
-  });
-  lead.insertAdjacentElement('afterend', card);
-}
-
-export function flashBox(box) {
-  const calm = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  box.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'center' });
-  box.classList.add('dc-flash');
-  setTimeout(() => box.classList.remove('dc-flash'), 1400);
+  if (typeof window !== 'undefined' && typeof window.dcBuildGlance === 'function') window.dcBuildGlance(boxes, scope);
 }
 
 // ── the section pill ─────────────────────────────────────────────────────────
