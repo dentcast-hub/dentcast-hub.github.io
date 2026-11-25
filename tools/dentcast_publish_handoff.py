@@ -1580,7 +1580,7 @@ def main(argv=None):
     p.add_argument("--evidence", required=True)
     p = sub.add_parser("stage-delivery", help="At the save point, Push 2 or a v1 cut (or the paper-only final handoff): git add reviewed paths, refresh the checkpoint, stage it, run the pre-commit guard")
     p.add_argument("--expected-sha256", help="digest of the last write; omitted = the handoff as it is on disk now")
-    p.add_argument("--path", action="append", required=True)
+    p.add_argument("--path", action="append", help="omitted = every enrolled path of the publication")
     p = sub.add_parser("finish")
     p.add_argument("--expected-sha256", help="digest of the last write; omitted = the handoff as it is on disk now")
     sub.add_parser("confirm-cleanup")

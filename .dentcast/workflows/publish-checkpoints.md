@@ -183,7 +183,7 @@ note is not replacement evidence.
 The save point and Push 2 use the same command:
 
 ```bash
-python3 tools/dentcast_publish_handoff.py stage-delivery --expected-sha256 <digest> --path <scoped-path>   # repeat --path
+python3 tools/dentcast_publish_handoff.py stage-delivery   # every enrolled path; --path <p> narrows it
 ```
 
 `stage-delivery` stages the scoped work, refreshes the checkpoint in the index, stages the handoff

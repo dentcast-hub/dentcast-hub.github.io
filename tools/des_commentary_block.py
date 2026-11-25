@@ -5,11 +5,11 @@
 
 A page with no cited source is scored on its own body (module 08 Part 1). The block is
 built here, never by hand, so it always carries what the spec needs to place the page:
-the text of record (without the presentation layer), the page's URL and its section
-folder. The section matters: for `chairside/`, `metanotes/` and `insight/` checklist
+the body of the text of record (no presentation layer, no title, date line, language
+button or disclaimer), the page's URL and its section folder. The section matters: for `chairside/`, `metanotes/` and `insight/` checklist
 item 4 can be earned from the section's own published declaration, which the spec
 quotes in a closed table, and a block that does not say which section the page is in
-silently loses those points (chairside-56 was scored 12 instead of 15 that way).
+loses those points.
 """
 import argparse
 import json
@@ -28,7 +28,8 @@ def build(content_id):
     if not page.is_file():
         sys.exit(f"no page at {page.relative_to(ROOT)}")
     doc = page.read_text(encoding="utf-8")
-    text = "\n".join(pd.text_of_record(doc))  # title line, then one block per line
+    frame = re.sub(r'(?is)<p\b[^>]*\bclass="[^"]*\bdc-disclaimer\b[^"]*"[^>]*>.*?</p>', "", pd.FRAME.sub("", doc))
+    text = "\n".join(pd.text_of_record(frame)[1 if "<h1" in doc else 0:])  # the body, one block per line
     if not text.strip():
         sys.exit("the page has no text of record")
     h1 = re.search(r"<h1[^>]*>(.*?)</h1>", doc, re.S)

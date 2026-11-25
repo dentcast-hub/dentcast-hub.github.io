@@ -947,7 +947,6 @@ def stage_delivery(root, expected, paths):
         require_fixed_cut_readiness(p, root)
     stale = stale_checkout(root)
     h.require(stale is None, stale)
-    h.require(bool(paths), "STAGE_DELIVERY_PATHS_REQUIRED")
     # finish requires context.delivery on that exact delivered handoff, so a
     # paper-only final handoff without it would need a second final commit.
     h.require(not paper_final or (bool(p["context"]["delivery"]) and all(
@@ -958,6 +957,11 @@ def stage_delivery(root, expected, paths):
         "filing) before staging the paper-only final handoff")
     scope = set(p["target_paths"]) | set(state["snapshot"]["files"])
     local_only = h.local_only_inputs(root, p)
+    if not paths:  # every enrolled path that is on disk or known to git
+        known = set(h.git(root, "ls-files", "--", *sorted(scope)).splitlines()) if scope else set()
+        paths = sorted(x for x in scope if x != h.STATE_PATH and x not in local_only
+                       and ((Path(root) / x).exists() or x in known))
+    h.require(bool(paths), "STAGE_DELIVERY_PATHS_REQUIRED")
     for path in paths:
         h.require(h.relative_path(path) in scope and path != h.STATE_PATH, "STAGE_PATH_OUTSIDE_PUBLICATION:" + path)
         h.require(path not in local_only, "LOCAL_ONLY_INPUT_IS_NEVER_DELIVERED:" + path)
