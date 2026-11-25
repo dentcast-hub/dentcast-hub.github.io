@@ -1611,6 +1611,9 @@ def main(argv=None):
         if hasattr(args, "expected_sha256") and not args.expected_sha256 and args.command not in ("note", "close"):
             # No digest given: the handoff as it is on disk now (the advisory lock still serialises writers).
             args.expected_sha256 = load_state(_root())[1]
+        if args.command in ("step", "advance") and not args.reconcile_note:
+            # The files a step changed are that step's work; the agent no longer types this each time.
+            args.reconcile_note = "changes since the last checkpoint are the work of step " + str(args.id or "(skips)")
         root = None if args.command in ("plan", "check-pr") or (args.command == 'discover' and args.repository) else Path(text_git(Path(args.repo).resolve(), "rev-parse", "--show-toplevel")).resolve()
         if args.command == 'discover':
             require(args.recover_incomplete, 'RECOVERY_REQUEST_REQUIRED: branch discovery is only for explicitly requested incomplete-publication recovery')
