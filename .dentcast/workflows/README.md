@@ -48,8 +48,8 @@ python3 tools/dentcast_publish_readpack.py \
    - `modules/12-english-notify-verify.md`
 
    File numbers are not the execution order. Execute in the ledger order of `publish-checkpoints.md` («Order, messages, text lock, deliveries»): paper ingestion (06) and DES/Fidelity (08) run before links (05) and flashcards/FAQ (07). Read each module just before its first step.
-3. Agent proposals are built, recorded and reported, never sent for confirmation; the founder gets at most three messages (M1 open facts, M3b still-flagged Part 3b sentences at C.4.13, M2 exam questions) plus the real decisions listed in `publish-checkpoints.md`; the agent's Push-2 report lists every proposal and answer.
-4. Close all authoring, semantic judgments, DES/Fidelity, the authored English mirror (unless LiteCast/Challenge) and every founder message (M1, M3b, M2, each only when it has content) **through C.6**, write the ten-scope editorial lock, then Push 2. After Push 2 the runner does C.8, C.7, D, E, F, G and opens the PR when the `QUEUE_PUBLISH_TOKEN` secret is configured (otherwise the agent or the founder opens it by hand); the agent monitors (`publish-after-push2.md`).
+3. Agent proposals are built, recorded and reported, never sent for confirmation; the founder gets at most two messages (M1 open facts, M2 exam questions; sentences Fidelity flags are reported at Push 2, never asked) plus the real decisions listed in `publish-checkpoints.md`; the agent's Push-2 report lists every proposal and answer.
+4. Close all authoring, semantic judgments, DES/Fidelity, the authored English mirror (unless LiteCast/Challenge) and every founder message (M1, M2, each only when it has content) **through C.6**, write the ten-scope editorial lock, then Push 2. After Push 2 the runner does C.8, C.7, D, E, F, G and opens the PR when the `QUEUE_PUBLISH_TOKEN` secret is configured (otherwise the agent or the founder opens it by hand); the agent monitors (`publish-after-push2.md`).
 5. Respect every category exception, semantic decision, founder decision, builder order, versioning and complete Phase F. A skipped module needs its canonical exemption and a recorded reason; "not loaded" is not an exemption.
 6. Use actual tools. Report a missing capability or failed gate; never substitute simulated scientific results, synthetic receipts or Boolean assertions. No staging, draft or legacy tool exists in the tree (an older version lives only in Git history and is never execution authority); the live engine is `dentcast_publish_handoff.py`, `dentcast_publish_lifecycle.py` and `dentcast_post_cut2_runner.py`.
 7. Keep private/restricted material out of public history. No arbitrary branch merges, no inferred approval.
@@ -75,4 +75,4 @@ Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details
 
 ## Checkpoints, deliveries, completion
 
-`publish-checkpoints.md`: ledger, the founder messages (at most three), text lock, the save point and the deliveries, hosting and merge. Hashes or checkpoints alone are not publication.
+`publish-checkpoints.md`: ledger, the founder messages (at most two), text lock, the save point and the deliveries, hosting and merge. Hashes or checkpoints alone are not publication.

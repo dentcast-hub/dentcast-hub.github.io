@@ -73,24 +73,23 @@ English mirror. Each is built per its module, recorded with evidence in the hand
 **agent's Push-2 report** (below). The founder may change any of them; the change follows the
 invalidation rules below.
 
-**At most three founder messages**, each sent only when it has content:
+**At most two founder messages** (M1, M2), each sent only when it has content:
 
 1. **M1, open facts** — at the first step that needs a fact no real source answered (normally
    C.4.10.1, the paper branch: DOI, first author, which Drive file, catalog counters; a NoteCast credit
    target at C.4.5-b; Hard Rule 13). One message gathers every open fact known at that point; the
    dependent step waits, independent work continues. A rare later fact (an abstract the tool cannot
    fetch, module 08 Part 1) is asked where it arises. A page with no paper and no open fact has no M1.
-2. **M3b, Part 3b** — not sent. A sentence measured `ALTERED`/`REVERSED` never holds the
+   **Flagged Fidelity sentences have no message.** A sentence measured `ALTERED`/`REVERSED` never holds the
    publication (module 08, «Scored once» rule 5): each one goes into the agent's Push-2 report with
    the source's sentence and a proposed rewrite, and the founder fixes it afterwards if he wants
    («تطابق X رو کامل کن»). C.4.13 completes when the record is stored.
-3. **M2, exam questions** — at 4.12-ب, approved one by one (module 07). Mandatory for every page in a full
+2. **M2, exam questions** — at 4.12-ب, approved one by one (module 07). Mandatory for every page in a full
    pathway: the agent drafts and sends them, never asks whether to.
 
-M1 and M3b are closed before Push 2: completing C.6 and the cut refuse a non-empty
+M1 is closed before Push 2: completing C.6 and the cut refuse a non-empty
 `pending_questions` list, answered or not — clear each record once its answer is recorded as that
-step's evidence or as a decision (record shape: `publish-handoff-tool.md`). The save point may carry
-an open M3b; that is its purpose.
+step's evidence or as a decision (record shape: `publish-handoff-tool.md`).
 
 Asked when they arise, because they are real decisions: a new subtopic in `PILLARS`, a new Drive
 subfolder, DES basket 3 / publish without DES, a missing Fidelity runtime capability, a NoteCast pair
@@ -108,7 +107,7 @@ their only home:
 
 | Push | When | Contents | Who |
 |---|---|---|---|
-| Save point (Push 1) | once, after `C.4.13` starts: just before M3b goes out, or when C.4.13 completes if there is no M3b | scoped work + latest handoff | agent |
+| Save point (Push 1) | once, when `C.4.13` has stored the record | scoped work + latest handoff | agent |
 | Push 2 (delivery 2) | after `C.6`: DES/Fidelity, Challenge, links, flashcards/FAQ, hashtags, content record, pathways, Pulse, English mirror and every founder message closed | scoped work + latest handoff | agent |
 | Delivery 3 | after C.8, C.7, D, E, real Phase F, G | final work + completion receipt + handoff deletion, one commit | `post-cut2-mechanical.yml` |
 
@@ -267,7 +266,7 @@ PR comes from `queue-publish.yml`). Before Phase F it refuses a regenerated page
 Immediately after Push 2 is confirmed, one message: the agent-side work has reached Push 2, GitHub
 Actions is running the remaining mechanical delivery, the agent is monitoring it; branch, Push-2 SHA
 and run link when available, **plus the agent's report**: the standing-acceptance list (what was
-applied, what was skipped and why), every M1/M3b/M2 question with its answer, the doubtful Fidelity units, the orphan sentences
+applied, what was skipped and why), every M1/M2 question with its answer, every sentence Fidelity flagged (with the source's sentence and a proposed rewrite), the doubtful units of an optional judge run, the orphan sentences
 of the Fidelity sweep, and any real decision asked. Report G, written by the runner's `finish`, is
 technical only (ledger, Phase F, fingerprints) and deliberately omits approvals; the agent's Push-2
 report is the only human record of them. Not a completion claim. **Then read `publish-after-push2.md`

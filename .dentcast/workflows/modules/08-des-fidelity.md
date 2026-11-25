@@ -641,7 +641,7 @@ in the publish report (outside the spec's score objects).
    unanswered sentence or a `source_quote` that is not verbatim in that source,
    adds every found sentence to its source in the recorded plan (origin
    `orphan_sweep`, with the receipt). The sentences found nowhere are listed
-   for the founder as information (the agent's Push-2 report, and M3b when M3b is sent), never as
+   for the founder as information (the agent's Push-2 report), never as
    faults: they are the author's own reasoning or background unless the founder
    points to a source the run did not have.
 
