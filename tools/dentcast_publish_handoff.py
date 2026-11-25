@@ -1600,7 +1600,7 @@ def main(argv=None):
     p.add_argument("--approval", help="JSON object {scope, decision, status, evidence}")
     p.add_argument("--pending", help="JSON object {message, step, question, answered}")
     p.add_argument("--clear-pending", action="store_true")
-    p.add_argument("--target-path", action="append", default=[], help="enroll one more path")
+    p.add_argument("--target-path", action="append", default=[], help="enroll a path; repeat the flag for several in one call")
     p.add_argument("--reconcile-note")
     p = sub.add_parser("close", help="At C.6: build approvals, lead provenance and the editorial lock from the ledger, complete C.6")
     p.add_argument("--expected-sha256")

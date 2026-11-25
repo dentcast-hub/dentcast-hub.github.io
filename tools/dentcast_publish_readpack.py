@@ -27,11 +27,11 @@ MODULES = WORKFLOW + 'modules/'
 # occurs exactly once and that no skipped section changed its applicability; the
 # reason for each re-pin belongs in the commit message, not here.
 PINNED_BLOBS = {
-    '03-litecast-and-page.md': 'b4fc6b2a9133ba1590322d6cf624037adca904a0',
+    '03-litecast-and-page.md': 'aaaf22b50d3adbff9a65ccbe0e21756faaa77b8a',
     '04-taxonomy-and-navigation.md': 'b6366cddd2989ef18aa542d7b9ae22b76fd9b639',
     '05-semantic-linking.md': '5069cc0e1dff5858258f875258fdf23ddaf39c40',
     '06-paper-ingestion.md': 'ce9ff376c0a10d83be94ce18fa8d1d72c999d612',
-    '08-des-fidelity.md': 'da211f789ba04988f227d5f2ed8e9b9b839de8f4',
+    '08-des-fidelity.md': 'cbaf72f8223e410384d42004172493a1e8e0ffc4',
     '09-challenge.md': 'b1faa96b9e0d71dd1fd70ff2fe0075dc5ad4c2cc',
     '11-build-and-version.md': 'd2d35ca0fba390eac9a21619290c9cbf6af143ab',
     '12-english-notify-verify.md': 'b429fab3438ca187b86897d56914e6a277573e4a',

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """DES is scored once: repair a model's SOURCE answer instead of running it again.
 
-Founder decision 2026-11-25 (module 08, «Scored once»). A DES answer is run again in
+Module 08, «Scored once». A DES answer is run again in
 exactly two cases: it is about another paper, or it is not a usable JSON object.
 Everything else the model got wrong around its own ratings is repaired here,
 deterministically, and reported:

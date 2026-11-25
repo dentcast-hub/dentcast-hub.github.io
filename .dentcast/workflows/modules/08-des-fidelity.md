@@ -175,13 +175,13 @@ queue with `git show origin/queue:…` (or `--queue-dir <queue/>` on disk) and w
 nothing. Then:
 
 - **A stored record with the same `text_basis`, stamped with the current spec (3.7, or 3.6: 3.7 moved no score), that
-  passes Part 3 (including (7)) is reused verbatim** — no SOURCE call, no rerun. Copy the
-  object byte for byte into this page's `sources`; record «reused from <content_id or
-  queue item>, index <i>, sha256 <…>» in the run report (queue: `اجرا.md`). **Write it under this page's `content_id` now** (Part 4, with `"fidelity": [null]`): `--build` and `--accept` read the record from there. Still resolve its `source_text` by the ladder
+  passes Part 3 (including (7)) is reused** — no SOURCE call, no rerun: its ratings, points and labels are kept as they are. Pass the
+  object through `python3 tools/des_repair.py <object.json> --texts texts.json` (it only snaps the quotes to this run's source text) and put the result into this page's `sources`; record «reused from <content_id or
+  queue item>, index <i>, sha256 <…>» in the run report (queue: `اجرا.md`). **Write it under this page's `content_id` now** (Part 4, with `"fidelity": [null]`): `--build` and `--accept` read the record from there, and `--install` puts the fidelity result into that same record. Still resolve its `source_text` by the ladder
   below — the FIDELITY call needs it.
 - **No stored record, or only one under another `text_basis` or an older stamp** (an
   abstract scored before the full text was in hand, a 3.2 record): score it once
-  (Part 2). A stored record is never re-labelled or edited.
+  (Part 2). A stored record's ratings are never re-labelled or edited.
 - Two stored records of one DOI that already disagree with each other (`lookup` shows
   both) are reported to the founder; the newer one is used meanwhile.
 <!-- /des-record-guard:v1 -->
