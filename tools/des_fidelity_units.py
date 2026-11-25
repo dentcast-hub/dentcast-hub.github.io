@@ -1251,6 +1251,11 @@ def main():
             packet = None
     if a.pack and a.des:
         rec = json.loads(Path(a.des).read_text(encoding="utf-8"))
+        # des_repair.py writes one SOURCE object (or the agent keeps a list): same record
+        if isinstance(rec, list):
+            rec = {"sources": rec}
+        elif isinstance(rec, dict) and "sources" not in rec:
+            rec = {"sources": [rec]}
     if not rec:
         sys.exit(f"no DES record for {a.content_id}")
     if is_audio_episode(a.content_id):

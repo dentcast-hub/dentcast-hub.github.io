@@ -45,7 +45,7 @@ monitors, merges as soon as every gate is green (never asked), and reports. A qu
    yourself, before the end-of-run message, with the connected GitHub tool (`create_pull_request`) or
    `gh pr create --base main --head <branch> --title "<content_id>: <title>"`, then wait for its checks. Put the link in the end message and say there that the runner could not.
 4. No message here when the merge follows; its facts go into the merge message: `content_id`, branch,
-   Push-2 SHA, run link, PR link and the Phase F summary line (the standing-acceptance list, the M1/M2 answers, the flagged Fidelity sentences and the orphan sentences were
+   Push-2 SHA, run link, PR link and the Phase F summary line (the standing-acceptance list, the M1/M2 answers and the orphan sentences were
    already in the agent's Push-2 report; repeat nothing). Not "published" until merged.
 5. **Merge**, without asking (`publish-checkpoints.md`, «Waiting, services, merge»): fresh
    `check-pr` (`python3 tools/dentcast_publish_handoff.py check-pr --repository <owner>/<repo> --number <n>
