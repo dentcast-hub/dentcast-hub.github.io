@@ -64041,12 +64041,12 @@
           },
           {
             "id": "u9",
-            "claim_quote": "همچنین مطالعاتی که رضایت بیماران را بررسی کرده بودند، عموماً افزایش رضایت پس از درمان را گزارش کرده‌اند.",
-            "verdict": "ALTERED",
-            "change_kind": "HEDGE_REMOVED",
+            "claim_quote": "همچنین مطالعاتی که رضایت بیماران را بررسی کرده بودند، عموماً توانسته‌اند افزایش رضایت پس از درمان را نشان دهند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
             "source_quote": "Moreover, the studies which\nanalyzed overall patient experience could generally note an in-\ncrease of patient satisfaction before and after ceramic laminate\nveneer treatment [37, 41, 50, 51, 55, 60, 61, 64].",
             "source_ref": null,
-            "note": "source says «could generally note»; «could» is a hedge in every sentence (F2-ii) and no other sentence states it plainly"
+            "note": "source's «could generally note» is carried over by the same modal in the claim («عموماً توانسته‌اند … نشان دهند»); direction, scope and quantifier (generally/عموماً) unchanged"
           },
           {
             "id": "u10",
@@ -64374,12 +64374,12 @@
           },
           {
             "id": "u46",
-            "claim_quote": "البته این نتایج از یک مطالعه به دست آمده‌اند؛ با این حال، استفاده از گارد اکلوزال پس از سمان کردن لمینت در بیماران دارای عادت‌های پارافانکشن، اقدام منطقی‌ای است.",
-            "verdict": "ALTERED",
-            "change_kind": "HEDGE_REMOVED",
+            "claim_quote": "البته این نتایج از یک مطالعه به دست آمده‌اند؛ با این حال، استفاده از گارد اکلوزال پس از سمان کردن لمینت در بیماران دارای عادت‌های پارافانکشن، می‌تواند مفید باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
             "source_quote": "Occlusal guards as a protective measure might therefore be ben-\neficial to reduce the risk of laminate veneer fracture, especially in\npatients with parafunctional habits.",
             "source_ref": null,
-            "note": "F3: the first claim (results come from one study) matches; the recommendation is stated without a hedge where the source says «might … be beneficial», and no other sentence states it plainly"
+            "note": "two claims, both addressed and both MATCHES (F3): the hedged benefit of occlusal guards (might be beneficial / می‌تواند مفید باشد) is the quoted sentence; the «from one study» half is stated by «One study observed a twofold increase in risk of laminate veneer fracture in patients with bruxism compared to those without [39].»; «post-cementation» is stated in the sentence on studies implementing occlusal guards"
           },
           {
             "id": "u47",
@@ -64392,8 +64392,8 @@
           }
         ],
         "counts": {
-          "matches": 33,
-          "altered": 2,
+          "matches": 35,
+          "altered": 0,
           "reversed": 0,
           "not_in_source": 1,
           "not_assessable": 0,
@@ -64401,12 +64401,12 @@
           "not_a_claim": 10
         },
         "assessable": 35,
-        "fidelity_score": 97,
+        "fidelity_score": 100,
         "level": "HIGH",
         "provisional": false,
         "source_conclusion": "The long-­term performance of zirconia laminate veneers remains uncertain.",
-        "fact_fa": "از ۳۵ ادعایی که منبع به آن پرداخته‌اند، ۳۳ مورد مطابق است، ۲ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۱ جمله‌ی دیگر در منبع نیامده است.",
-        "interpretation_fa": "موارد تغییریافته یا برعکس: «همچنین مطالعاتی که رضایت بیماران را بررسی کرده بود…» (قاطع‌تر از منبع)؛ «البته این نتایج از یک مطالعه به دست آمده‌اند؛ با ا…» (قاطع‌تر از منبع)."
+        "fact_fa": "از ۳۵ ادعایی که منبع به آن پرداخته‌اند، ۳۵ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۱ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       }
     ]
   }

@@ -263,7 +263,7 @@
     "#اینسایت"
    ],
    "co_tags": [],
-   "count": 136,
+   "count": 137,
    "content_ids": [
     "episodes/episode-122-1",
     "episodes/episode-122-2",
@@ -400,7 +400,8 @@
     "insight/insight-116",
     "insight/insight-117",
     "insight/insight-119",
-    "insight/insight-120"
+    "insight/insight-120",
+    "insight/insight-121"
    ]
   },
   {
@@ -760,6 +761,79 @@
    ]
   },
   {
+   "key": "مرور_منابع",
+   "tag": "#مرور_منابع",
+   "domain": "brand",
+   "words": 2,
+   "definition": "نام بخش مرور منابع (پیش‌تر Share Hub / شیرهاب) — خوانش دنت‌کست از یک یا چند مقاله، همیشه با ذکر منبع.",
+   "use_when": "روی هر مدخل مرور منابع (پوشهٔ sharehub/)، و هیچ‌جای دیگر.",
+   "aliases": [
+    "share hub",
+    "share_hub",
+    "شیرهاب",
+    "شر هاب"
+   ],
+   "variants": [
+    "#Share_Hub"
+   ],
+   "co_tags": [],
+   "count": 52,
+   "content_ids": [
+    "sharehub/share-1",
+    "sharehub/share-2",
+    "sharehub/share-3",
+    "sharehub/share-4",
+    "sharehub/share-5",
+    "sharehub/share-6",
+    "sharehub/share-7",
+    "sharehub/share-8",
+    "sharehub/share-9",
+    "sharehub/share-10",
+    "sharehub/share-11",
+    "sharehub/share-12",
+    "sharehub/share-13",
+    "sharehub/share-14",
+    "sharehub/share-15",
+    "sharehub/share-16",
+    "sharehub/share-17",
+    "sharehub/share-18",
+    "sharehub/share-19",
+    "sharehub/share-20",
+    "sharehub/share-21",
+    "sharehub/share-22",
+    "sharehub/share-23",
+    "sharehub/share-24",
+    "sharehub/share-25",
+    "sharehub/share-26",
+    "sharehub/share-27",
+    "sharehub/share-28",
+    "sharehub/share-29",
+    "sharehub/share-30",
+    "sharehub/share-31",
+    "sharehub/share-32",
+    "sharehub/share-33",
+    "sharehub/share-34",
+    "sharehub/share-35",
+    "sharehub/share-36",
+    "sharehub/share-38",
+    "sharehub/share-39",
+    "sharehub/share-40",
+    "sharehub/share-41",
+    "sharehub/share-42",
+    "sharehub/share-43",
+    "sharehub/share-44",
+    "sharehub/share-45",
+    "sharehub/share-46",
+    "sharehub/share-47",
+    "sharehub/share-51",
+    "sharehub/share-52",
+    "sharehub/share-55",
+    "sharehub/share-58",
+    "sharehub/share-59",
+    "sharehub/share-60"
+   ]
+  },
+  {
    "key": "ویزیت",
    "tag": "#ویزیت",
    "domain": "brand",
@@ -894,78 +968,6 @@
     "sharehub/share-55",
     "sharehub/share-56",
     "sharehub/share-57"
-   ]
-  },
-  {
-   "key": "مرور_منابع",
-   "tag": "#مرور_منابع",
-   "domain": "brand",
-   "words": 2,
-   "definition": "نام بخش مرور منابع (پیش‌تر Share Hub / شیرهاب) — خوانش دنت‌کست از یک یا چند مقاله، همیشه با ذکر منبع.",
-   "use_when": "روی هر مدخل مرور منابع (پوشهٔ sharehub/)، و هیچ‌جای دیگر.",
-   "aliases": [
-    "share hub",
-    "share_hub",
-    "شیرهاب",
-    "شر هاب"
-   ],
-   "variants": [
-    "#Share_Hub"
-   ],
-   "co_tags": [],
-   "count": 51,
-   "content_ids": [
-    "sharehub/share-1",
-    "sharehub/share-2",
-    "sharehub/share-3",
-    "sharehub/share-4",
-    "sharehub/share-5",
-    "sharehub/share-6",
-    "sharehub/share-7",
-    "sharehub/share-8",
-    "sharehub/share-9",
-    "sharehub/share-10",
-    "sharehub/share-11",
-    "sharehub/share-12",
-    "sharehub/share-13",
-    "sharehub/share-14",
-    "sharehub/share-15",
-    "sharehub/share-16",
-    "sharehub/share-17",
-    "sharehub/share-18",
-    "sharehub/share-19",
-    "sharehub/share-20",
-    "sharehub/share-21",
-    "sharehub/share-22",
-    "sharehub/share-23",
-    "sharehub/share-24",
-    "sharehub/share-25",
-    "sharehub/share-26",
-    "sharehub/share-27",
-    "sharehub/share-28",
-    "sharehub/share-29",
-    "sharehub/share-30",
-    "sharehub/share-31",
-    "sharehub/share-32",
-    "sharehub/share-33",
-    "sharehub/share-34",
-    "sharehub/share-35",
-    "sharehub/share-36",
-    "sharehub/share-38",
-    "sharehub/share-39",
-    "sharehub/share-40",
-    "sharehub/share-41",
-    "sharehub/share-42",
-    "sharehub/share-43",
-    "sharehub/share-44",
-    "sharehub/share-45",
-    "sharehub/share-46",
-    "sharehub/share-47",
-    "sharehub/share-51",
-    "sharehub/share-52",
-    "sharehub/share-55",
-    "sharehub/share-58",
-    "sharehub/share-59"
    ]
   },
   {
@@ -1422,63 +1424,6 @@
    ]
   },
   {
-   "key": "زیرکونیا",
-   "tag": "#زیرکونیا",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "زیرکونیای دندانی به‌عنوان متریال رستوریشن.",
-   "use_when": "مقاله انتخاب، آماده‌سازی یا رفتار بالینی زیرکونیا را تعیین کند.",
-   "aliases": [
-    "زیرکونیوم",
-    "زیرکونیم",
-    "zirconia",
-    "زیرکونیای",
-    "زیرکنیا",
-    "zirconium",
-    "زیرکون",
-    "زیرکنیوم",
-    "ذیرکونیا"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 33,
-   "content_ids": [
-    "episodes/episode-11",
-    "episodes/episode-17",
-    "episodes/episode-18",
-    "episodes/episode-87",
-    "episodes/episode-88",
-    "episodes/episode-89",
-    "episodes/episode-107",
-    "episodes/episode-122-5",
-    "episodes/episode-136",
-    "episodes/episode-139",
-    "episodes/episode-140",
-    "episodes/episode-146",
-    "insight/insight-5",
-    "photocast/episode-3",
-    "notecast/episode-2",
-    "notecast/episode-3",
-    "notecast/episode-5",
-    "notecast/episode-8",
-    "notecast/episode-11",
-    "notecast/episode-13",
-    "notecast/episode-17",
-    "notecast/episode-18",
-    "notecast/episode-30",
-    "insight/insight-27",
-    "dentai/dentai-26",
-    "insight/insight-62",
-    "sharehub/share-17",
-    "sharehub/share-20",
-    "insight/insight-91",
-    "insight/insight-92",
-    "sharehub/share-39",
-    "sharehub/share-41",
-    "insight/insight-107"
-   ]
-  },
-  {
    "key": "لمینیت_سرامیکی",
    "tag": "#لمینیت_سرامیکی",
    "domain": "clinical",
@@ -1520,7 +1465,7 @@
    "co_tags": [
     "#Laminate_Veneer"
    ],
-   "count": 33,
+   "count": 35,
    "content_ids": [
     "episodes/episode-9",
     "episodes/episode-19",
@@ -1554,7 +1499,67 @@
     "chairside/chairside-45",
     "insight/insight-107",
     "dentcast-plus/video-15",
-    "insight/insight-120"
+    "insight/insight-120",
+    "insight/insight-121",
+    "sharehub/share-60"
+   ]
+  },
+  {
+   "key": "زیرکونیا",
+   "tag": "#زیرکونیا",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "زیرکونیای دندانی به‌عنوان متریال رستوریشن.",
+   "use_when": "مقاله انتخاب، آماده‌سازی یا رفتار بالینی زیرکونیا را تعیین کند.",
+   "aliases": [
+    "زیرکونیوم",
+    "زیرکونیم",
+    "zirconia",
+    "زیرکونیای",
+    "زیرکنیا",
+    "zirconium",
+    "زیرکون",
+    "زیرکنیوم",
+    "ذیرکونیا"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 34,
+   "content_ids": [
+    "episodes/episode-11",
+    "episodes/episode-17",
+    "episodes/episode-18",
+    "episodes/episode-87",
+    "episodes/episode-88",
+    "episodes/episode-89",
+    "episodes/episode-107",
+    "episodes/episode-122-5",
+    "episodes/episode-136",
+    "episodes/episode-139",
+    "episodes/episode-140",
+    "episodes/episode-146",
+    "insight/insight-5",
+    "photocast/episode-3",
+    "notecast/episode-2",
+    "notecast/episode-3",
+    "notecast/episode-5",
+    "notecast/episode-8",
+    "notecast/episode-11",
+    "notecast/episode-13",
+    "notecast/episode-17",
+    "notecast/episode-18",
+    "notecast/episode-30",
+    "insight/insight-27",
+    "dentai/dentai-26",
+    "insight/insight-62",
+    "sharehub/share-17",
+    "sharehub/share-20",
+    "insight/insight-91",
+    "insight/insight-92",
+    "sharehub/share-39",
+    "sharehub/share-41",
+    "insight/insight-107",
+    "insight/insight-121"
    ]
   },
   {
@@ -1572,7 +1577,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 30,
+   "count": 31,
    "content_ids": [
     "episodes/episode-4",
     "episodes/episode-5",
@@ -1603,7 +1608,8 @@
     "notecast/episode-41",
     "notecast/episode-42",
     "sharehub/share-23",
-    "notecast/episode-44"
+    "notecast/episode-44",
+    "insight/insight-121"
    ]
   },
   {
@@ -2221,6 +2227,46 @@
    ]
   },
   {
+   "key": "انتخاب_متریال",
+   "tag": "#انتخاب_متریال",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "انتخاب جنس رستوریشن بر اساس شرایط کیس.",
+   "use_when": "مقاله بین متریال‌ها انتخاب کند.",
+   "aliases": [
+    "material selection",
+    "انتخاب ماده",
+    "انتخاب جنس رستوریشن",
+    "متریال سلکشن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 21,
+   "content_ids": [
+    "episodes/episode-15",
+    "episodes/episode-18",
+    "episodes/episode-41",
+    "episodes/episode-69",
+    "episodes/episode-89",
+    "episodes/episode-98",
+    "episodes/episode-141",
+    "dentai/dentai-6",
+    "insight/insight-10",
+    "notecast/episode-8",
+    "notecast/episode-29",
+    "notecast/episode-30",
+    "insight/insight-27",
+    "insight/insight-42",
+    "episodes/episode-158",
+    "episodes/episode-159-1",
+    "insight/insight-57",
+    "notecast/episode-41",
+    "sharehub/share-37",
+    "sharehub/share-46",
+    "sharehub/share-60"
+   ]
+  },
+  {
    "key": "تشخیص_افتراقی",
    "tag": "#تشخیص_افتراقی",
    "domain": "clinical",
@@ -2389,45 +2435,6 @@
     "metanotes/meta-23",
     "chairside/chairside-52",
     "sharehub/share-49"
-   ]
-  },
-  {
-   "key": "انتخاب_متریال",
-   "tag": "#انتخاب_متریال",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "انتخاب جنس رستوریشن بر اساس شرایط کیس.",
-   "use_when": "مقاله بین متریال‌ها انتخاب کند.",
-   "aliases": [
-    "material selection",
-    "انتخاب ماده",
-    "انتخاب جنس رستوریشن",
-    "متریال سلکشن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 20,
-   "content_ids": [
-    "episodes/episode-15",
-    "episodes/episode-18",
-    "episodes/episode-41",
-    "episodes/episode-69",
-    "episodes/episode-89",
-    "episodes/episode-98",
-    "episodes/episode-141",
-    "dentai/dentai-6",
-    "insight/insight-10",
-    "notecast/episode-8",
-    "notecast/episode-29",
-    "notecast/episode-30",
-    "insight/insight-27",
-    "insight/insight-42",
-    "episodes/episode-158",
-    "episodes/episode-159-1",
-    "insight/insight-57",
-    "notecast/episode-41",
-    "sharehub/share-37",
-    "sharehub/share-46"
    ]
   },
   {
@@ -3482,6 +3489,49 @@
    ]
   },
   {
+   "key": "لیتیوم_دی_سیلیکات",
+   "tag": "#لیتیوم_دی_سیلیکات",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "گلاس‌سرامیکِ لیتیوم‌دی‌سیلیکات (اِمکس) — تعادلِ استحکام و زیبایی برای ونیر، اینله/آنله و روکشِ تک‌واحدی.",
+   "use_when": "مقاله لیتیوم‌دی‌سیلیکات یا اِمکس را انتخاب یا ارزیابی کند.",
+   "aliases": [
+    "lithium disilicate",
+    "emax",
+    "e.max",
+    "ایمکس",
+    "امکس",
+    "اینگات ایمکس",
+    "لیتیوم دیسیلیکات",
+    "لیتیم دی سیلیکات",
+    "ای مکس",
+    "lds",
+    "لیتیوم دای سیلیکات",
+    "لیتیوم دی سیلیکیت"
+   ],
+   "variants": [
+    "#lithium_disilicate"
+   ],
+   "co_tags": [],
+   "count": 14,
+   "content_ids": [
+    "episodes/episode-69",
+    "episodes/episode-123-1",
+    "notecast/episode-8",
+    "notecast/episode-9",
+    "notecast/episode-10",
+    "dentai/dentai-25",
+    "episodes/episode-159-1",
+    "metanotes/meta-14",
+    "dentai/dentai-26",
+    "sharehub/share-27",
+    "insight/insight-91",
+    "insight/insight-92",
+    "sharehub/share-40",
+    "sharehub/share-60"
+   ]
+  },
+  {
    "key": "پروفایل_امرجنس",
    "tag": "#پروفایل_امرجنس",
    "domain": "clinical",
@@ -3668,48 +3718,6 @@
     "plak-sefr/plak1-12",
     "plak-sefr/plak1-13",
     "plak-sefr/plak1-14"
-   ]
-  },
-  {
-   "key": "لیتیوم_دی_سیلیکات",
-   "tag": "#لیتیوم_دی_سیلیکات",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "گلاس‌سرامیکِ لیتیوم‌دی‌سیلیکات (اِمکس) — تعادلِ استحکام و زیبایی برای ونیر، اینله/آنله و روکشِ تک‌واحدی.",
-   "use_when": "مقاله لیتیوم‌دی‌سیلیکات یا اِمکس را انتخاب یا ارزیابی کند.",
-   "aliases": [
-    "lithium disilicate",
-    "emax",
-    "e.max",
-    "ایمکس",
-    "امکس",
-    "اینگات ایمکس",
-    "لیتیوم دیسیلیکات",
-    "لیتیم دی سیلیکات",
-    "ای مکس",
-    "lds",
-    "لیتیوم دای سیلیکات",
-    "لیتیوم دی سیلیکیت"
-   ],
-   "variants": [
-    "#lithium_disilicate"
-   ],
-   "co_tags": [],
-   "count": 13,
-   "content_ids": [
-    "episodes/episode-69",
-    "episodes/episode-123-1",
-    "notecast/episode-8",
-    "notecast/episode-9",
-    "notecast/episode-10",
-    "dentai/dentai-25",
-    "episodes/episode-159-1",
-    "metanotes/meta-14",
-    "dentai/dentai-26",
-    "sharehub/share-27",
-    "insight/insight-91",
-    "insight/insight-92",
-    "sharehub/share-40"
    ]
   },
   {
@@ -5275,6 +5283,45 @@
    ]
   },
   {
+   "key": "براکسیسم",
+   "tag": "#براکسیسم",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "سایشِ پارافانکشنالِ دندان‌ها.",
+   "use_when": "مقاله بروکسیسم را تشخیص بدهد یا اثرش را مدیریت کند.",
+   "aliases": [
+    "بروکسیسم",
+    "براکسیزم",
+    "بروکسیزم",
+    "bruxism",
+    "دندان قروچه",
+    "clenching",
+    "کلینچینگ",
+    "ساییدن دندان",
+    "teeth grinding",
+    "بروکسر",
+    "براکسر"
+   ],
+   "variants": [
+    "#bruxism",
+    "#دندان_قروچه"
+   ],
+   "co_tags": [
+    "#bruxism"
+   ],
+   "count": 8,
+   "content_ids": [
+    "episodes/episode-145",
+    "dentai/dentai-23",
+    "dentai/dentai-26",
+    "sharehub/share-11",
+    "sharehub/share-17",
+    "chairside/chairside-36",
+    "insight/insight-114",
+    "sharehub/share-60"
+   ]
+  },
+  {
    "key": "تحویل_روکش",
    "tag": "#تحویل_روکش",
    "domain": "clinical",
@@ -5709,44 +5756,6 @@
    ]
   },
   {
-   "key": "براکسیسم",
-   "tag": "#براکسیسم",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "سایشِ پارافانکشنالِ دندان‌ها.",
-   "use_when": "مقاله بروکسیسم را تشخیص بدهد یا اثرش را مدیریت کند.",
-   "aliases": [
-    "بروکسیسم",
-    "براکسیزم",
-    "بروکسیزم",
-    "bruxism",
-    "دندان قروچه",
-    "clenching",
-    "کلینچینگ",
-    "ساییدن دندان",
-    "teeth grinding",
-    "بروکسر",
-    "براکسر"
-   ],
-   "variants": [
-    "#bruxism",
-    "#دندان_قروچه"
-   ],
-   "co_tags": [
-    "#bruxism"
-   ],
-   "count": 7,
-   "content_ids": [
-    "episodes/episode-145",
-    "dentai/dentai-23",
-    "dentai/dentai-26",
-    "sharehub/share-11",
-    "sharehub/share-17",
-    "chairside/chairside-36",
-    "insight/insight-114"
-   ]
-  },
-  {
    "key": "بیولوژیک_ویدث",
    "tag": "#بیولوژیک_ویدث",
    "domain": "clinical",
@@ -5911,6 +5920,33 @@
     "metanotes/meta-20",
     "metanotes/meta-21",
     "metanotes/meta-22"
+   ]
+  },
+  {
+   "key": "حفظ_مینا",
+   "tag": "#حفظ_مینا",
+   "domain": "clinical",
+   "words": 3,
+   "definition": "باقی گذاشتنِ حداکثریِ مینا برای باندِ پایدار.",
+   "use_when": "مقاله حفظ مینا را اصلِ حاکم بداند.",
+   "aliases": [
+    "enamel preservation",
+    "حفظ انامل",
+    "نگه داشتن مینا",
+    "enamel conservation",
+    "preserving enamel"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 7,
+   "content_ids": [
+    "sharehub/share-8",
+    "notecast/episode-38",
+    "chairside/chairside-35",
+    "insight/insight-79",
+    "dentcast-plus/video-15",
+    "insight/insight-121",
+    "sharehub/share-60"
    ]
   },
   {
@@ -7574,31 +7610,6 @@
    ]
   },
   {
-   "key": "حفظ_مینا",
-   "tag": "#حفظ_مینا",
-   "domain": "clinical",
-   "words": 3,
-   "definition": "باقی گذاشتنِ حداکثریِ مینا برای باندِ پایدار.",
-   "use_when": "مقاله حفظ مینا را اصلِ حاکم بداند.",
-   "aliases": [
-    "enamel preservation",
-    "حفظ انامل",
-    "نگه داشتن مینا",
-    "enamel conservation",
-    "preserving enamel"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 5,
-   "content_ids": [
-    "sharehub/share-8",
-    "notecast/episode-38",
-    "chairside/chairside-35",
-    "insight/insight-79",
-    "dentcast-plus/video-15"
-   ]
-  },
-  {
    "key": "خطای_استیچینگ",
    "tag": "#خطای_استیچینگ",
    "domain": "clinical",
@@ -8574,6 +8585,45 @@
    ]
   },
   {
+   "key": "اسپلینت",
+   "tag": "#اسپلینت",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "اسپلینت/اپلاینسِ اکلوزال — وسیله‌ی متحرکِ روی دندان برای مدیریتِ اکلوژن، TMD یا براکسیسم. نایت‌گارد (اسپلینتِ شبانه برای براکسیسم) هم همین مفهوم است.",
+   "use_when": "مقاله اسپلینتِ اکلوزال را موضوع داشته باشد.",
+   "aliases": [
+    "splint",
+    "occlusal appliance",
+    "اسپلینت تراپی",
+    "اپلاینس اکلوزال",
+    "اکلوزال اسپلینت",
+    "نایت گارد",
+    "night guard",
+    "گارد شبانه",
+    "nightguard",
+    "occlusal splint",
+    "occlusal guard",
+    "bite guard",
+    "محافظ شبانه",
+    "بایت گارد",
+    "stabilization splint",
+    "michigan splint",
+    "occlusal device",
+    "محافظ دندان قروچه"
+   ],
+   "variants": [
+    "#نایت_گارد"
+   ],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "episodes/episode-145",
+    "sharehub/share-17",
+    "sharehub/share-42",
+    "sharehub/share-60"
+   ]
+  },
+  {
    "key": "اطمینان_کاذب",
    "tag": "#اطمینان_کاذب",
    "domain": "ai",
@@ -8754,6 +8804,28 @@
     "notecast/episode-26",
     "sharehub/share-44",
     "notecast/episode-45"
+   ]
+  },
+  {
+   "key": "بقای_رستوریشن",
+   "tag": "#بقای_رستوریشن",
+   "domain": null,
+   "words": 2,
+   "definition": "نرخِ ماندگاریِ ترمیم در طول زمان.",
+   "use_when": "مقاله بقا را کمّی گزارش کند.",
+   "aliases": [
+    "طول عمر ترمیم",
+    "restoration survival",
+    "ماندگاری رستوریشن"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "notecast/episode-15",
+    "sharehub/share-22",
+    "dentcast-plus/video-15",
+    "sharehub/share-60"
    ]
   },
   {
@@ -10309,44 +10381,6 @@
    ]
   },
   {
-   "key": "اسپلینت",
-   "tag": "#اسپلینت",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "اسپلینت/اپلاینسِ اکلوزال — وسیله‌ی متحرکِ روی دندان برای مدیریتِ اکلوژن، TMD یا براکسیسم. نایت‌گارد (اسپلینتِ شبانه برای براکسیسم) هم همین مفهوم است.",
-   "use_when": "مقاله اسپلینتِ اکلوزال را موضوع داشته باشد.",
-   "aliases": [
-    "splint",
-    "occlusal appliance",
-    "اسپلینت تراپی",
-    "اپلاینس اکلوزال",
-    "اکلوزال اسپلینت",
-    "نایت گارد",
-    "night guard",
-    "گارد شبانه",
-    "nightguard",
-    "occlusal splint",
-    "occlusal guard",
-    "bite guard",
-    "محافظ شبانه",
-    "بایت گارد",
-    "stabilization splint",
-    "michigan splint",
-    "occlusal device",
-    "محافظ دندان قروچه"
-   ],
-   "variants": [
-    "#نایت_گارد"
-   ],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "episodes/episode-145",
-    "sharehub/share-17",
-    "sharehub/share-42"
-   ]
-  },
-  {
    "key": "اسکن_فول_آرچ",
    "tag": "#اسکن_فول_آرچ",
    "domain": "clinical",
@@ -10668,27 +10702,6 @@
     "insight/insight-31",
     "chairside/chairside-17",
     "insight/insight-48"
-   ]
-  },
-  {
-   "key": "بقای_رستوریشن",
-   "tag": "#بقای_رستوریشن",
-   "domain": null,
-   "words": 2,
-   "definition": "نرخِ ماندگاریِ ترمیم در طول زمان.",
-   "use_when": "مقاله بقا را کمّی گزارش کند.",
-   "aliases": [
-    "طول عمر ترمیم",
-    "restoration survival",
-    "ماندگاری رستوریشن"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "notecast/episode-15",
-    "sharehub/share-22",
-    "dentcast-plus/video-15"
    ]
   },
   {
