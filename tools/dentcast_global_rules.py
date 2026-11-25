@@ -48,7 +48,7 @@ def select(manifest, blocks, paths=(), all_rules=False):
     return [b for b in blocks if b['id'] in selected]
 
 
-PAGE_CHARS = 20000
+PAGE_CHARS = 9000  # Persian is ~2 bytes a character: a page stays under common 20-30 KB tool-output caps
 
 
 def emitted_lines(chosen):

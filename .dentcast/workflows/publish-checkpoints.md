@@ -50,6 +50,7 @@ reading less.
 | Before C.4.10.1 (paper attached) | module 06 |
 | Before C.4.13 | module 08 complete; LiteCast and Challenge read its opening up to `#### Conditional path for founder-supplied results` for the skip line |
 | Before C.4.7 | module 05 |
+| At Question 6 (intake, M2) | module 07 §4.12-ب only (`sed`, from the heading to the end of the module); its result is recorded in the evidence of `B.5` |
 | Before C.4.11 / C.4.14 / C.5.0 | modules 07 / 09 (Challenge only) / 10 |
 | At C.2, for the page's chip row | Hard Rule 15 only (module 01, already read): existing canonical concepts, resolved with `hashtag_ref.py --simulate`, no mint. Step 5.0 settles the final list and corrects the row before the brain write |
 | Before writing the English mirror (before C.6) | `en-version.md`, module 12 through the end of Phase D, module 11 above its `module-11-boundary` marker (§6) |
@@ -154,10 +155,11 @@ python3 tools/dentcast_publish_handoff.py step --id <id> --status started --expe
 python3 tools/dentcast_publish_handoff.py advance --id <id> --evidence <receipt-ref> --start-next --expected-sha256 <digest> --reconcile-note '<actual changes reviewed>'
 ```
 
-- Prefer `advance`: it saves each transition separately, passes digests internally and stops at a
-  delivery cut (`delivery_required`). Omit `--start-next` at an unread-module boundary or a wait.
-  Consecutive inapplicable steps: repeated `--skip '<id>=<canonical exception>'` in order (no `--id`
-  with `--skip`); a row an
+- Prefer `advance`: it saves each transition separately and passes digests internally. After
+  `C.6` completes, run `stage-delivery` (Push 2); a later transition before that push is refused
+  (`delivery_required`). `inspect` shows `blocked` while a step is `started`: that is its normal state. Omit `--start-next` at an unread-module boundary or a wait.
+  Consecutive inapplicable steps: repeated `--skip '<id>=<canonical exception>'` in order (with
+  `--id`, that step completes first); a row an
   earlier `--start-next` opened may be skipped while it has no evidence, external action or change.
   `failed`/`blocked` use `step`. On a mid-sequence failure `transitions_written` and the last digest
   show what was saved; never replay a completed action.

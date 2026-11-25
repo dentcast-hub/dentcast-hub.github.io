@@ -165,4 +165,4 @@ A Pulse sentence the founder wrote is copied (Hard Rule 16). Otherwise the agent
 
 ### Question 6 — Exam questions (message M2), before any page work
 
-For every specialist page (not LiteCast, چالش, glossary), draft the exam questions now from the text of Question 3 (module 07 §4.12-ب, `--draft-check`) and send them as M2, with any M1 fact, in one message. The run waits only here. Record the answer (approved questions verbatim, or «بدون سؤال») in the handoff; step 5.6 writes them.
+For every specialist page (not LiteCast, چالش, glossary), draft the exam questions now from the text of Question 3 (module 07 §4.12-ب, `--draft-check`) and send them as M2, with any M1 fact, in one message. The run waits only here. Record the answer (approved questions verbatim, or «بدون سؤال») as a decision and in the evidence of `B.5`; step 5.6 writes them.

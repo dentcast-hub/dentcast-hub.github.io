@@ -277,6 +277,9 @@ def builder_output(path):
         "plus/flashcards-index.json",
         "plus/quiz-index.json", "plus/challenges.json", "up-board/index.json",
         "sitemap.xml", "sitemap-ir.xml",
+        # outputs of tools the publication steps themselves require (module 10 step 5.0,
+        # module 06 step 8): enrolled when they change, like the builders' files
+        "dentcast-hashtag-reference.json", "plus/cabinet-papers.json", "plus/cabinet-search.json",
     } or re.fullmatch(r"pillar/[a-z0-9-]+/(?:index\.html|structure\.json)", path) is not None \
       or re.fullmatch(r"plus/des/[a-z0-9][a-z0-9_-]*(?:/[A-Za-z0-9][A-Za-z0-9_.-]*)*\.json", path) is not None
 

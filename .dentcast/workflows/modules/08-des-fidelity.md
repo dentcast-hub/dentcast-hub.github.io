@@ -160,8 +160,10 @@ from the paper's title, or from what you happen to know about the study.
 **COMMENTARY basket:** `source_text` is the page's **own body text** — the متن of
 record from Question 3.5 (with its recorded rewrites, and the lead paragraph
 when module 03 added one), exactly as it will ship and without the presentation
-layer (below, Part 2b): `python3 tools/presentation_diff.py --text-of-record
-<page.html | 01-متن.md>` prints it. `text_basis` is `FULL_TEXT`. No DOI, no lookup, done.
+layer (below, Part 2b). **Build the whole Step 0 block with the tool, never by hand:**
+`python3 tools/des_commentary_block.py <content_id> -o block.json` (text of record, `FULL_TEXT`,
+the page URL and its section folder; without the section the model cannot earn checklist item 4
+from the section's declaration). A queue item's `01-متن.md`: `presentation_diff.py --text-of-record`.
 
 <!-- des-record-guard:v1 -->
 **RESEARCH basket, first: one DES record per paper — look the DOI up before scoring.**
