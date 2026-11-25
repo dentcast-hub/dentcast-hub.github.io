@@ -1225,7 +1225,8 @@ def main():
                     "about how it was produced")
     ap.add_argument("--pack", metavar="OUT", help="write ONE handoff file (DES + FIDELITY + the source texts they "
                     "were judged on) for another agent or client; needs --texts, takes --fidelity, refuses unless the "
-                    "packet passes --accept. OUT must be outside the repository (it holds the papers' text)")
+                    "packet passes --accept. OUT goes outside the repository or under .dentcast/relay/ (the founder's relay "
+                    "folder, committed by founder's rule); any other path in the repository is refused")
     ap.add_argument("--fidelity", metavar="FILE_OR_DIR", help="with --pack: the finished FIDELITY result (a file, or "
                     "the vote directory with voted-src<k>.json / pooled.json); default: the stored record's")
     ap.add_argument("--des", metavar="FILE", help="with --pack: the DES record {scored_at, sources} when it is not "
@@ -1263,9 +1264,9 @@ def main():
         if not a.texts:
             sys.exit("--pack needs --texts (the packet carries the text every quote is checked against)")
         out = Path(a.pack).resolve()
-        if ROOT.resolve() in out.parents:
-            sys.exit("--pack OUT must be outside the repository: the packet holds the papers' text, which never "
-                     "enters public Git history")
+        relay = (ROOT / ".dentcast" / "relay").resolve()
+        if ROOT.resolve() in out.parents and relay not in out.parents:
+            sys.exit("--pack OUT inside the repository must be under .dentcast/relay/ (the founder's relay folder)")
         texts = {k.lower(): v for k, v in json.loads(Path(a.texts).read_text(encoding="utf-8")).items()}
         fid = fidelity_from(a.fidelity, sources) if a.fidelity else rec.get("fidelity")
         if fid is None:

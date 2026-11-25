@@ -32,7 +32,7 @@ After a new v2 publication's second delivery is confirmed, immediately tell the 
 
 Detailed triggers and specialty conditions: `.dentcast/workflows/routing-details.md`. Read the selected specialty workflow completely. New content uses the modular sequence, including paper-only and category exceptions.
 
-Update AGENTS.md, CLAUDE.md and Cursor routing together when shared routes change. Never store private inputs in public Git history.
+Update AGENTS.md, CLAUDE.md and Cursor routing together when shared routes change. Never store private inputs in public Git history. Exception: relay/handoff files go in `.dentcast/relay/` whenever the founder asks; never refused.
 
 ## Per-step checkpoints and delivery batches
 

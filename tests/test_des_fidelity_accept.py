@@ -130,6 +130,14 @@ class PacketFlowTests(unittest.TestCase):
             self.main('--texts', str(self.out / 'texts.json'), '--fidelity', str(self.out / 'fid.json'),
                       '--pack', str(self.root / 'p.json'))
 
+    def test_pack_writes_under_the_founders_relay_folder(self):
+        self.store.write_text(json.dumps({CID: {'scored_at': '2026-11-09', 'sources': SRC}}), encoding='utf-8')
+        (self.root / '.dentcast' / 'relay').mkdir(parents=True, exist_ok=True)
+        out = self.root / '.dentcast' / 'relay' / 'p.json'
+        self.main('--texts', str(self.out / 'texts.json'), '--fidelity', str(self.out / 'fid.json'),
+                  '--pack', str(out))
+        self.assertTrue(out.exists())
+
     def test_packet_for_another_page_is_refused(self):
         pk = self.out / 'other.json'
         pk.write_text(json.dumps({'kind': units.PACKET_KIND, 'content_id': 'sharehub/share-x',
