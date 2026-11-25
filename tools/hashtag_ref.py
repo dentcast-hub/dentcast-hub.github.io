@@ -848,6 +848,34 @@ def cmd_simulate(query: str) -> None:
         print("(nothing cleared the 0.5 threshold — falls back to the pillar tree)")
 
 
+def cmd_reach(tags: list) -> int:
+    """Would the assistant surface a NEW page carrying these tags? (module 10, step 5.0)
+
+    The site shows a chip's first 4 pages, in the order the brain lists them, and a new
+    entry is the last one. So the page is visible under a tag exactly when that tag has
+    at most 3 pages today; one such tag passes the gate. Also refuses a tag the library
+    does not hold as a canonical concept. Reads the brain and the library, writes nothing.
+    """
+    ref = by_tag(load_ref())
+    pages = brain_tag_map(load_brain())
+    ok, bad = False, False
+    for t in tags:
+        if t not in ref:
+            print(f"NOT CANONICAL  {t}  (resolve it with --simulate, or mint it by a batch)")
+            bad = True
+            continue
+        n = len([c for c in pages[t]["content_ids"] if not c.startswith("litecast/")]) if t in pages else 0
+        seen = n + 1 <= 4
+        ok = ok or seen
+        kind = "umbrella" if n > 20 else "specific" if n <= 10 else "mid"
+        print(f"{'visible ' if seen else 'hidden  '} {t}  pages today {n} ({kind}) -> the new page is #{n + 1} of {n + 1}")
+    if bad:
+        return 2
+    print("REACHABLE: the page surfaces under at least one tag" if ok else
+          "NOT REACHABLE: every tag already has 4 or more pages; add a specific concept the page resolves (Steps 1-4)")
+    return 0 if ok else 1
+
+
 def cmd_say(tag: str, forms: list) -> None:
     """Add spoken/written variants to one concept, then recompile."""
     ref = load_ref()
@@ -959,6 +987,9 @@ def main() -> None:
     g.add_argument("--words", metavar="TAG")
     g.add_argument("--apply", metavar="BATCH")
     g.add_argument("--simulate", metavar="QUERY")
+    g.add_argument("--reach", metavar="TAGS",
+                   help='step 5.0 reachability, no file written: --reach "#tag1 #tag2 …" for the list a new page '
+                        "will carry; prints each tag's pages and the rank the new page takes under it")
     g.add_argument("--say", nargs="+", metavar=("TAG", "FORM"),
                    help='record other ways a dentist writes/says a tag: '
                         '--say "#بیومیمتیک" "بایو میمتیک" "بایومیمتیک"')
@@ -974,6 +1005,8 @@ def main() -> None:
         cmd_apply(a.apply)
     elif a.simulate:
         cmd_simulate(a.simulate)
+    elif a.reach:
+        sys.exit(cmd_reach(a.reach.split()))
     elif a.say:
         cmd_say(a.say[0], a.say[1:])
     elif a.words is not None:

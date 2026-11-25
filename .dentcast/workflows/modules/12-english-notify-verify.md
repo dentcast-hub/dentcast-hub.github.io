@@ -13,6 +13,7 @@ Ledger steps in this module: `D`, `E`, `F`, `G` — the post-Push-2 runner's. Th
 
 **Steps:**
 
+0. **Start the mirror with the tool, finish it with its check.** `python3 tools/en_mirror_head.py <content_id> --title "…" --description "…"` clones the newest English page of the section with the slug, title, description, dates and JSON-LD already swapped; translate the Persian body over the template's; then `python3 tools/en_mirror_head.py <content_id> --check` must pass (nothing of the template left) before C.6. Steps 1–4 say what the finished page must be.
 1. **Hand off to the English-version workflow.** With the fa page (`{type}/{file}.html`) as source, run **`.dentcast/workflows/en-version.md`**; it owns every detail — do not re-improvise here:
    - en page at `/{type}/en/{file}.html`; **English chrome cloned from `metanotes/en/meta-1.html`** (`<html lang="en" dir="ltr" data-dc-no-header>`, English topbar/toolbar labels, the `.lang-btn` CSS + markup), GA4 exactly once.
    - **Body, box/section CSS classes and JSON-LD `@type`/shape from THIS page's own type** (e.g. insight `.glass-box`), LTR and **translated** structure-faithfully (same headings, same number of `<li>`, nothing added or dropped), the module-03 lead included.

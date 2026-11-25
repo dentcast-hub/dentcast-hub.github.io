@@ -6,9 +6,35 @@
       "sha256": "89afa9b633d19b723435618abc547ea9576f5caf998256755c6b998e53a0211b",
       "sections": [
         {
-          "id": "repo-core",
+          "id": "repo-sections",
           "lines": [
             1,
+            87
+          ],
+          "core": true,
+          "publication": false
+        },
+        {
+          "id": "repo-core",
+          "lines": [
+            88,
+            124
+          ],
+          "core": true
+        },
+        {
+          "id": "repo-shell",
+          "lines": [
+            125,
+            164
+          ],
+          "core": true,
+          "publication": false
+        },
+        {
+          "id": "repo-dirs",
+          "lines": [
+            165,
             168
           ],
           "core": true
@@ -27,7 +53,8 @@
             265,
             274
           ],
-          "core": true
+          "core": true,
+          "publication": false
         },
         {
           "id": "clinic",
@@ -135,7 +162,8 @@
             1,
             156
           ],
-          "core": true
+          "core": true,
+          "publication": false
         }
       ]
     }

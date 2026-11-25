@@ -867,6 +867,15 @@ def advance(root, expected, sid=None, evidence=None, skips=(), start_next=False,
         row.update(status="skipped", evidence=[], reason=reason)
         operations.append((skip_id, "skipped", [], reason))
         require_plan(p)
+    # Steps this category never runs are skipped here with their canonical reason,
+    # so the agent does not spend a call (or a wrong reason) on each of them.
+    import dentcast_publish_shortcuts as shortcuts
+    while (sid is not None or skips or start_next) and shortcuts.auto_skip(p):
+        skip_id, reason = shortcuts.auto_skip(p)
+        row = next(s for s in p["steps"] if s["id"] == skip_id)
+        row.update(status="skipped", evidence=[], reason=reason)
+        operations.append((skip_id, "skipped", [], reason))
+        require_plan(p)
     if start_next and h.next_step(p) is not None:
         next_id = h.next_step(p)
         row = next(s for s in p["steps"] if s["id"] == next_id)

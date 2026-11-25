@@ -1529,7 +1529,7 @@ def main(argv=None):
         if command != "inspect":
             p.add_argument("--input", required=True, help="Public-safe publication JSON, outside the checkout")
             if command == "record":
-                p.add_argument("--expected-sha256", required=True)
+                p.add_argument("--expected-sha256", help="digest of the last write; omitted = the handoff as it is on disk now")
                 p.add_argument("--reconcile-note")
     p = sub.add_parser("plan")
     p.add_argument("--paper-only", action="store_true")
@@ -1550,45 +1550,67 @@ def main(argv=None):
     p.add_argument("--expected-branch", required=True)
     p.add_argument("--token-env")
     p = sub.add_parser("step")
-    p.add_argument("--expected-sha256", required=True)
+    p.add_argument("--expected-sha256", help="digest of the last write; omitted = the handoff as it is on disk now")
     p.add_argument("--id", required=True)
     p.add_argument("--status", choices=("started", "completed", "skipped", "blocked", "failed"), required=True)
     p.add_argument("--evidence", action="append", default=[])
     p.add_argument("--reason")
     p.add_argument("--reconcile-note")
     p = sub.add_parser("advance", help="Record a verified result, explicit skips, and optionally start the next step")
-    p.add_argument("--expected-sha256", required=True)
+    p.add_argument("--expected-sha256", help="digest of the last write; omitted = the handoff as it is on disk now")
     p.add_argument("--id", help="Already-started step whose result the operator verified")
     p.add_argument("--evidence", action="append", default=[])
     p.add_argument("--skip", action="append", default=[], metavar="ID=REASON")
     p.add_argument("--start-next", action="store_true", help="Next module has been read and the next action is ready")
     p.add_argument("--reconcile-note")
     p = sub.add_parser("invalidate", help="Preserve old evidence and reset its dependent suffix")
-    p.add_argument("--expected-sha256", required=True)
+    p.add_argument("--expected-sha256", help="digest of the last write; omitted = the handoff as it is on disk now")
     p.add_argument("--from-step", required=True)
     p.add_argument("--reconcile-note", required=True)
     p = sub.add_parser("verify")
-    p.add_argument("--expected-sha256", required=True)
+    p.add_argument("--expected-sha256", help="digest of the last write; omitted = the handoff as it is on disk now")
     p.add_argument("--expect-title")
     p.add_argument("--expect-caption")
     p.add_argument("--catalog-id")
     p = sub.add_parser("bind")
-    p.add_argument("--expected-sha256", required=True)
+    p.add_argument("--expected-sha256", help="digest of the last write; omitted = the handoff as it is on disk now")
     p.add_argument("--content-id", required=True)
     p.add_argument("--category", required=True)
     p.add_argument("--target-path", action="append", required=True)
     p.add_argument("--evidence", required=True)
     p = sub.add_parser("stage-delivery", help="At the save point, Push 2 or a v1 cut (or the paper-only final handoff): git add reviewed paths, refresh the checkpoint, stage it, run the pre-commit guard")
-    p.add_argument("--expected-sha256", required=True)
+    p.add_argument("--expected-sha256", help="digest of the last write; omitted = the handoff as it is on disk now")
     p.add_argument("--path", action="append", required=True)
     p = sub.add_parser("finish")
-    p.add_argument("--expected-sha256", required=True)
+    p.add_argument("--expected-sha256", help="digest of the last write; omitted = the handoff as it is on disk now")
     sub.add_parser("confirm-cleanup")
     sub.add_parser("restore-cleanup")
     p = sub.add_parser("guard")
     p.add_argument("--phase", choices=("stop", "pre-commit", "ci"), required=True)
+    p = sub.add_parser("start", help="Create the handoff from four facts (no input JSON)")
+    p.add_argument("--content-id", required=True)
+    p.add_argument("--category", required=True)
+    p.add_argument("--target-path", action="append", default=[], required=True)
+    p = sub.add_parser("note", help="Record one decision, approval or pending question")
+    p.add_argument("--expected-sha256")
+    p.add_argument("--decision", help="JSON object appended to context.decisions")
+    p.add_argument("--approval", help="JSON object {scope, decision, status, evidence}")
+    p.add_argument("--pending", help="JSON object {message, step, question, answered}")
+    p.add_argument("--clear-pending", action="store_true")
+    p.add_argument("--target-path", action="append", default=[], help="enroll one more path")
+    p.add_argument("--reconcile-note")
+    p = sub.add_parser("close", help="At C.6: build approvals, lead provenance and the editorial lock from the ledger, complete C.6")
+    p.add_argument("--expected-sha256")
+    p.add_argument("--lead", required=True, choices=["author_original", "agent_authored", "not_applicable"])
+    p.add_argument("--lead-ref")
+    p.add_argument("--title-from", choices=["founder", "agent"], default="founder")
+    p.add_argument("--caption-from", choices=["founder", "agent"], default="agent")
     args = ap.parse_args(argv)
     try:
+        _root = lambda: Path(text_git(Path(args.repo).resolve(), "rev-parse", "--show-toplevel")).resolve()
+        if hasattr(args, "expected_sha256") and not args.expected_sha256 and args.command not in ("note", "close"):
+            # No digest given: the handoff as it is on disk now (the advisory lock still serialises writers).
+            args.expected_sha256 = load_state(_root())[1]
         root = None if args.command in ("plan", "check-pr") or (args.command == 'discover' and args.repository) else Path(text_git(Path(args.repo).resolve(), "rev-parse", "--show-toplevel")).resolve()
         if args.command == 'discover':
             require(args.recover_incomplete, 'RECOVERY_REQUEST_REQUIRED: branch discovery is only for explicitly requested incomplete-publication recovery')
@@ -1617,6 +1639,17 @@ def main(argv=None):
                 raise Blocked("CLEANUP_DELIVERY_PENDING:confirm-cleanup_or_restore-cleanup")
             result = inspect(root, args.check_remote)
             lifecycle.require_plan(result["recorded_state"]["publication"])
+        elif args.command == "note":
+            import dentcast_publish_shortcuts as shortcuts
+            result = shortcuts.note(root, args.expected_sha256,
+                                    decode_json(args.decision) if args.decision else None,
+                                    decode_json(args.approval) if args.approval else None,
+                                    decode_json(args.pending) if args.pending else None,
+                                    args.clear_pending, args.target_path, args.reconcile_note)
+        elif args.command == "close":
+            import dentcast_publish_shortcuts as shortcuts
+            result = shortcuts.close(root, args.expected_sha256, args.lead, args.lead_ref,
+                                     args.title_from, args.caption_from)
         elif args.command == "step":
             result = lifecycle.step(root, args.expected_sha256, args.id, args.status,
                                     args.evidence, args.reason, args.reconcile_note)
@@ -1646,9 +1679,14 @@ def main(argv=None):
         elif args.command == "guard":
             result = lifecycle.guard(root, args.phase)
         else:
-            path = Path(args.input)
-            require(path.stat().st_size <= LIMIT, "INPUT_TOO_LARGE")
-            publication = decode_json(path.read_text(encoding="utf-8"))
+            if args.command == "start":
+                import dentcast_publish_shortcuts as shortcuts
+                publication = shortcuts.start_input(args.content_id, args.category, args.target_path)
+                args.command, args.check_remote = "init", False
+            else:
+                path = Path(args.input)
+                require(path.stat().st_size <= LIMIT, "INPUT_TOO_LARGE")
+                publication = decode_json(path.read_text(encoding="utf-8"))
             if args.command == "init" and isinstance(publication, dict):
                 publication["category"] = require_category_input(publication.get("category"))
                 # A new run records the current canonical ledger order (v2).

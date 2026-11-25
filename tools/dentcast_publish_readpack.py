@@ -29,12 +29,12 @@ MODULES = WORKFLOW + 'modules/'
 PINNED_BLOBS = {
     '03-litecast-and-page.md': '42d6c04405df3109315723b8eb83759d5368777a',
     '04-taxonomy-and-navigation.md': '46bc329065fdaa0d1677b494ecc5b7cdf7359872',
-    '05-semantic-linking.md': '6ba95d74e28f1e423e034d31327d6c9351f85c20',
+    '05-semantic-linking.md': '13c66b806781e5a3413b92a2a1f2d65899660bfe',
     '06-paper-ingestion.md': '64747d6e9972c08796f3396792e1a4df5c6f6a11',
     '08-des-fidelity.md': '39660462ea6ad832a332ba66a289467d150f9a71',
     '09-challenge.md': '3ac5856ddb021aa9f36cbfb35d6363531ae038c8',
     '11-build-and-version.md': 'f74bf83102c57da9743127623191e686474bf74d',
-    '12-english-notify-verify.md': 'a08d0f6a86558f839d31b7a995b2a2a4e6b5dbcb',
+    '12-english-notify-verify.md': 'a39d7ddb0cde64425b7f22d4a6f518ec0a34d50c',
 }
 
 REQUIRED = [

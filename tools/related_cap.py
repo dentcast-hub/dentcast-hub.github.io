@@ -58,9 +58,27 @@ def count(path):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("pages", nargs="+", help="page files (relative to the repository root or absolute)")
+    ap.add_argument("pages", nargs="*", help="page files (relative to the repository root or absolute)")
+    ap.add_argument("--glossary-room", action="store_true",
+                    help="step 4.7: list only the glossary term pages that still have a free slot (run this "
+                         "BEFORE the semantic review; a page at the cap can take no back-link)")
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args(argv)
+    if a.glossary_room:
+        room = []
+        for path in sorted((ROOT / "glossary").glob("*.html")):
+            if path.name == "index.html":
+                continue
+            r = count(path)
+            if r["section"] == "dc-related-section" and r["free"] > 0:
+                title = re.search(r"<h1[^>]*>(.*?)</h1>", path.read_text(encoding="utf-8"), re.S)
+                room.append((path.stem, r["free"], re.sub(r"<[^>]+>", "", title.group(1)).strip() if title else ""))
+        for slug, free, title in room:
+            print(f"{slug}\tfree {free}\t{title}")
+        print(f"{len(room)} glossary page(s) can still take a back-link; every other term page is at the cap or has no section")
+        return 0
+    if not a.pages:
+        ap.error("give page files, or --glossary-room")
     out, rc = [], 0
     for p in a.pages:
         path = Path(p) if Path(p).is_absolute() or Path(p).exists() else ROOT / p

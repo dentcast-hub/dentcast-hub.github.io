@@ -13,7 +13,7 @@ Runs on every publish, whatever the category. It surfaces the new content from t
 
 #### Step 1 — Semantic review of glossary terms
 
-Compare the new content's conceptual subject with each term's meaning and scope. Be **conservative**: link only where the relationship is real and would help a reader. Strong → Step 2; borderline → not linked, recorded.
+**First** `python3 tools/related_cap.py --glossary-room`: only the term pages it lists have a free slot. Review those alone; a related term that is not listed is recorded «at cap», without opening its page. Compare the new content's conceptual subject with each term's meaning and scope. Be **conservative**: link only where the relationship is real and would help a reader. Strong → Step 2; borderline → not linked, recorded.
 
 #### Step 2 — Per-term back-link (independent, per page)
 

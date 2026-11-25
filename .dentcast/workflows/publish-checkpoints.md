@@ -131,18 +131,18 @@ reaches only the save point.
    `SHALLOW_CLONE_DEEPEN_REQUIRED` → `git fetch --deepen=50 origin` (or `--unshallow`) and retry.
 2. Check only that `.dentcast/PUBLISH-HANDOFF.md` does not exist (section above). Then run the
    global selector with every path this run will touch and read what it adds
-   (`python3 tools/dentcast_global_rules.py --path <path> … [--read]`, `global/README.md`); rerun it
-   when the scope grows. It selects per file, so a pathway step loads the standings/certificate
-   sections and not the exam internals.
-3. `python3 tools/dentcast_publish_handoff.py plan` (paper-only: `plan --paper-only`, category
-   `paper-only`); its full `steps` go into the input JSON (`publish-handoff-tool.md`). `init` and
-   `record` reject an incomplete ledger.
-4. Identity known → `init` with the real `content_id` and category. Otherwise `init` with content ID
-   `unassigned`, category `pending`, the full ledger and a watched path such as
-   `dentcast-brain.json`, then once `bind --expected-sha256 <digest> --content-id <id> --category
-   <category> --target-path <path> --evidence <intake-reference>` during intake, before authoring.
-   Completed, evidenced founder-requested external actions (e.g. a Drive move) do not block `bind`.
-   A real identity is never rebound.
+   (`python3 tools/dentcast_global_rules.py --publication --path <path> … [--read]`, `global/README.md`;
+   `--publication` is for a page cloned from the previous one and leaves out what the clone inherits);
+   rerun it when the scope grows.
+3. Identity known → `python3 tools/dentcast_publish_handoff.py start --content-id <section>/<slug>
+   --category <category> --target-path <path> …` (the tool writes the full ledger itself; no input
+   JSON). Paper-only, or identity not yet known: `plan [--paper-only]` → `init --input` → `bind`
+   (`publish-handoff-tool.md`). A real identity is never rebound.
+4. The tool keeps the books: `--expected-sha256` may be omitted everywhere (the handoff as it is on
+   disk); `advance` skips by itself the steps this category never runs; one more path, a decision,
+   an approval or a pending question is `note --target-path … | --decision '{…}' | --approval '{…}'
+   | --pending '{…}' | --clear-pending`; and `close` writes everything C.6 needs (below).
+   `publish-handoff-tool.md` is read only when a command refuses.
 5. `content_id` = `<section>/<slug>` = page path without `.html` (`insight/insight-99`); the English
    mirror `<section>/en/<slug>.html` and receipts derive from it; other forms → `CONTENT_ID_INVALID`.
    Paper-only keeps its catalog id.
@@ -237,8 +237,13 @@ the `authored-intro` approval). `origin`: `author_original` (founder's own first
 evidence is the standing-acceptance record); `not_applicable` (reviewed exception, reason in
 `source_ref`).
 
-**What the writer validates at cut 2** (and at completion): one `second_cut_editorial_lock_v1`
-decision with all ten scopes, each `resolved` or `not_applicable` with a real reference:
+**C.6 is closed by one command:** `python3 tools/dentcast_publish_handoff.py close --lead
+author_original|agent_authored|not_applicable [--title-from founder|agent] [--caption-from
+founder|agent]`. It reads the title and caption from the brain entry, records both approvals and the
+lead provenance, builds the ten-scope lock from the evidence already on the ledger, checks the Pulse
+line and the English mirror on disk, and completes C.6. Then `stage-delivery`, one commit, one push.
+Never hand-write the records below; this is what the tool writes and what the cut validates: one
+`second_cut_editorial_lock_v1` decision with all ten scopes, each `resolved` or `not_applicable`:
 
 ```json
 {"kind": "second_cut_editorial_lock_v1",
