@@ -1,0 +1,838 @@
+{
+  "schema": "publish-completion-v1",
+  "state": {
+    "publication": {
+      "blocker": null,
+      "category": "chairside",
+      "content_id": "chairside/chairside-56",
+      "context": {
+        "approvals": [
+          {
+            "decision": "\u0642\u0628\u0644 \u0627\u0632 \u062e\u0627\u0631\u062c \u06a9\u0631\u062f\u0646 \u06cc\u06a9 \u0628\u0631\u06cc\u062c \u0642\u062f\u06cc\u0645\u06cc\u060c \u0686\u0631\u0627 \u0628\u0627\u06cc\u062f \u0627\u0645\u06a9\u0627\u0646 \u062c\u0627\u06cc\u06af\u0632\u06cc\u0646\u06cc \u0622\u0646 \u0631\u0627 \u0628\u0631\u0631\u0633\u06cc \u06a9\u0646\u06cc\u0645\u061f",
+            "evidence": [
+              "founder data: first line of the submitted text, copied codepoint for codepoint"
+            ],
+            "scope": "title",
+            "status": "confirmed"
+          },
+          {
+            "decision": "\u0628\u06cc\u0645\u0627\u0631 \u0628\u0627 \u0633\u0627\u0628\u0642\u0647 \u0627\u0633\u062a\u0641\u0627\u062f\u0647 \u0637\u0648\u0644\u0627\u0646\u06cc\u200c\u0645\u062f\u062a \u0627\u0632 \u06cc\u06a9 \u0628\u0631\u06cc\u062c \u0642\u062f\u06cc\u0645\u06cc \u062f\u0631 \u0646\u0627\u062d\u06cc\u0647 \u062e\u0644\u0641\u06cc \u0641\u06a9 \u067e\u0627\u06cc\u06cc\u0646 \u0631\u0627\u0633\u062a (\u062f\u0646\u062f\u0627\u0646\u200c\u0647\u0627\u06cc \u06f5 \u062a\u0627 \u06f8) \u0628\u0631\u0627\u06cc \u0645\u0634\u0627\u0648\u0631\u0647 \u0628\u0647\u200c\u0645\u0646\u0638\u0648\u0631 \u062f\u0631\u0645\u0627\u0646 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0645\u0631\u0627\u062c\u0639\u0647 \u06a9\u0631\u062f. \u0686\u0631\u0627 \u067e\u06cc\u0634 \u0627\u0632 \u062e\u0627\u0631\u062c \u06a9\u0631\u062f\u0646 \u0628\u0631\u06cc\u062c\u060c \u0628\u0627\u06cc\u062f \u0627\u0645\u06a9\u0627\u0646 \u062c\u0627\u06cc\u06af\u0632\u06cc\u0646\u06cc \u0622\u0646 \u0628\u0631\u0631\u0633\u06cc \u0648 \u062a\u0623\u06cc\u06cc\u062f \u0634\u0648\u062f\u061f",
+            "evidence": [
+              "agent proposal under standing acceptance, built from the founder's own sentences"
+            ],
+            "scope": "caption",
+            "status": "confirmed"
+          }
+        ],
+        "decisions": [
+          {
+            "kind": "ledger_order_v2"
+          },
+          {
+            "kind": "fixed_three_deliveries_v1"
+          },
+          {
+            "kind": "fixed_three_deliveries_v2"
+          },
+          {
+            "decision": "\u0633\u0647 \u067e\u06cc\u0634\u200c\u0646\u0648\u06cc\u0633 \u0631\u062f \u0634\u062f\u061b \u0641\u0642\u0637 \u0633\u0624\u0627\u0644 \u06f2 \u062a\u0623\u06cc\u06cc\u062f \u0648 \u062f\u0631 plus/exam-questions.json \u0646\u0648\u0634\u062a\u0647 \u0634\u062f (r-ed885e82\u060c \u06a9\u0644\u06cc\u062f \u06af\u0632\u06cc\u0646\u0647\u0654 \u06f3)\u061b \u0628\u0642\u06cc\u0647 \u0646\u0648\u0634\u062a\u0647 \u0646\u0634\u062f",
+            "evidence": [
+              "validate_exam_questions.py --content chairside/chairside-56: 1 live, 0 error, 0 warning"
+            ],
+            "kind": "exam_bank_decision_v1",
+            "source_ref": "founder message: \u00ab\u0633\u0648\u0627\u0644 \u06f2 \u062a\u0627\u06cc\u06cc\u062f\u00bb"
+          },
+          {
+            "evidence": [
+              "body opens with the founder's paragraph; no agent-authored lead was added"
+            ],
+            "kind": "first_cut_lead_provenance_v1",
+            "origin": "author_original",
+            "source_ref": "founder's own first paragraph opens the body: \u00ab\u0628\u06cc\u0645\u0627\u0631\u06cc \u0628\u0627 \u0633\u0627\u0628\u0642\u0647 \u0627\u0633\u062a\u0641\u0627\u062f\u0647 \u0637\u0648\u0644\u0627\u0646\u06cc\u200c\u0645\u062f\u062a \u0627\u0632 \u06cc\u06a9 \u0628\u0631\u06cc\u062c \u0642\u062f\u06cc\u0645\u06cc \u2026 \u0645\u0631\u0627\u062c\u0639\u0647 \u06a9\u0631\u062f.\u00bb"
+          },
+          {
+            "english": {
+              "evidence": [
+                "translated from locked text; metanotes/en/meta-1.html untouched"
+              ],
+              "path": "chairside/en/chairside-56.html",
+              "status": "ready"
+            },
+            "evidence": [
+              "pulse, English mirror, brain entry, pathways, DES record and exam row all written before Push 2"
+            ],
+            "kind": "second_cut_editorial_lock_v1",
+            "scopes": [
+              {
+                "evidence": [
+                  "C.4.13: COMMENTARY DES via relay, score 12 band E, Part 3 green, stored under chairside/chairside-56"
+                ],
+                "scope": "scientific",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.4.14 skipped \u2014 ordinary post, no data-dc-challenge-question markup"
+                ],
+                "scope": "challenge",
+                "status": "not_applicable"
+              },
+              {
+                "evidence": [
+                  "pillar treatment-planning / replacing-missing-teeth (C.2.4, C.5.5); brain tail parity; canonical hashtags"
+                ],
+                "scope": "taxonomy",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.4.7 both glossary candidates at cap 5/5 (none added); C.4.8 two inline anchors; C.4.9 three capsules, related_cap 5/5"
+                ],
+                "scope": "links",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.5.0 five reused canonical tags; hashtag_ref --sync green, --check OK"
+                ],
+                "scope": "hashtags",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "C.5 brain entry appended last, same 8 keys; JSON valid"
+                ],
+                "scope": "content_record",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "5.6 fixed-pros after sharehub/share-39, treatment-planning after sharehub/share-48; bundle candidate rejected GATE 1; exam row r-ed885e82 approved"
+                ],
+                "scope": "pathways",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "index.html: new pulse line first, oldest line removed"
+                ],
+                "scope": "pulse",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "chairside/en/chairside-56.html authored before C.6; noindex follow, self-canonical .org, zero hreflang, inverse toggles, presentation_lint clean"
+                ],
+                "scope": "english",
+                "status": "resolved"
+              },
+              {
+                "evidence": [
+                  "title (founder data) and caption (standing acceptance) confirmed; lead origin author_original; M2 question approved"
+                ],
+                "scope": "author_approvals",
+                "status": "resolved"
+              }
+            ]
+          }
+        ],
+        "delivery": [
+          {
+            "evidence": [
+              "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/45638591084"
+            ],
+            "scope": "GitHub Actions post-Push-2 mechanical continuation"
+          }
+        ],
+        "inputs": [],
+        "pending_questions": [],
+        "unrelated_changes": [],
+        "validation": [
+          {
+            "content_id": "chairside/chairside-56",
+            "exit_code": 0,
+            "expected_caption": "\u0628\u06cc\u0645\u0627\u0631 \u0628\u0627 \u0633\u0627\u0628\u0642\u0647 \u0627\u0633\u062a\u0641\u0627\u062f\u0647 \u0637\u0648\u0644\u0627\u0646\u06cc\u200c\u0645\u062f\u062a \u0627\u0632 \u06cc\u06a9 \u0628\u0631\u06cc\u062c \u0642\u062f\u06cc\u0645\u06cc \u062f\u0631 \u0646\u0627\u062d\u06cc\u0647 \u062e\u0644\u0641\u06cc \u0641\u06a9 \u067e\u0627\u06cc\u06cc\u0646 \u0631\u0627\u0633\u062a (\u062f\u0646\u062f\u0627\u0646\u200c\u0647\u0627\u06cc \u06f5 \u062a\u0627 \u06f8) \u0628\u0631\u0627\u06cc \u0645\u0634\u0627\u0648\u0631\u0647 \u0628\u0647\u200c\u0645\u0646\u0638\u0648\u0631 \u062f\u0631\u0645\u0627\u0646 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0645\u0631\u0627\u062c\u0639\u0647 \u06a9\u0631\u062f. \u0686\u0631\u0627 \u067e\u06cc\u0634 \u0627\u0632 \u062e\u0627\u0631\u062c \u06a9\u0631\u062f\u0646 \u0628\u0631\u06cc\u062c\u060c \u0628\u0627\u06cc\u062f \u0627\u0645\u06a9\u0627\u0646 \u062c\u0627\u06cc\u06af\u0632\u06cc\u0646\u06cc \u0622\u0646 \u0628\u0631\u0631\u0633\u06cc \u0648 \u062a\u0623\u06cc\u06cc\u062f \u0634\u0648\u062f\u061f",
+            "expected_title": "\u0642\u0628\u0644 \u0627\u0632 \u062e\u0627\u0631\u062c \u06a9\u0631\u062f\u0646 \u06cc\u06a9 \u0628\u0631\u06cc\u062c \u0642\u062f\u06cc\u0645\u06cc\u060c \u0686\u0631\u0627 \u0628\u0627\u06cc\u062f \u0627\u0645\u06a9\u0627\u0646 \u062c\u0627\u06cc\u06af\u0632\u06cc\u0646\u06cc \u0622\u0646 \u0631\u0627 \u0628\u0631\u0631\u0633\u06cc \u06a9\u0646\u06cc\u0645\u061f",
+            "kind": "phase_f",
+            "output_sha256": "d194b8901ceb698eb5da277cd0b746a16ea8867f2a1551f62a2d41d80d2a9345",
+            "recorded_at": "2026-11-25T14:52:30+00:00",
+            "summary": "104 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+          }
+        ]
+      },
+      "external_actions": [],
+      "status": "in_progress",
+      "steps": [
+        {
+          "evidence": [
+            "README + global router and all selected global sections + agent-parity + publish-checkpoints + modules 01/02 read completely (this session)"
+          ],
+          "id": "rules",
+          "module": "01-hard-rules.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0645\u062a\u0646 \u0647\u0633\u062a (\u0634\u0631\u062d \u0648\u06cc\u0632\u06cc\u062a \u0648 \u0686\u06cc\u0631\u0633\u0627\u06cc\u062f)\u061b \u0641\u0627\u06cc\u0644 \u0645\u0642\u0627\u0644\u0647\u0654 \u067e\u0698\u0648\u0647\u0634\u06cc \u067e\u06cc\u0648\u0633\u062a \u0646\u0634\u062f\u0647 \u2192 \u0645\u0633\u06cc\u0631 \u0627\u0646\u062a\u0634\u0627\u0631 \u0639\u0627\u062f\u06cc \u0628\u062f\u0648\u0646 \u0634\u0627\u062e\u0647\u0654 \u067e\u06cc\u067e\u0631"
+          ],
+          "id": "0",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "brain \u06cc\u06a9\u200c\u0628\u0627\u0631 parse \u0634\u062f: 642 \u0627\u0646\u062a\u0631\u06cc\u060c 55 chairside\u060c \u0622\u062e\u0631\u06cc\u0646 chairside-55 \u0628\u0627 \u0647\u0645\u0627\u0646 \u06a9\u0644\u06cc\u062f\u0647\u0627\u061b PILLARS \u0632\u0646\u062f\u0647 \u0627\u0632 tools/build_pillar.py \u062e\u0648\u0627\u0646\u062f\u0647 \u0634\u062f"
+          ],
+          "id": "A",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0646\u0648\u0639 \u0642\u0641\u0644 \u0634\u062f: chairside (\u0648\u06cc\u0632\u06cc\u062a) \u2014 \u0628\u0646\u06cc\u0627\u0646\u200c\u06af\u0630\u0627\u0631: \u00ab\u0634\u0631\u062d \u0648\u06cc\u0632\u06cc\u062a \u0648 \u0686\u06cc\u0631\u0633\u0627\u06cc\u062f \u0647\u0633\u062a\u00bb"
+          ],
+          "id": "B.1",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0634\u0645\u0627\u0631\u0647\u0654 \u0628\u0639\u062f\u06cc: chairside-56 (\u0628\u06cc\u0634\u06cc\u0646\u0647\u0654 \u0633\u0631\u06cc 55 + 1)"
+          ],
+          "id": "B.2",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0645\u062a\u0646 \u06a9\u0627\u0645\u0644 \u0627\u0632 \u0628\u0646\u06cc\u0627\u0646\u200c\u06af\u0630\u0627\u0631 \u062f\u0631 \u0647\u0645\u06cc\u0646 \u062f\u0631\u062e\u0648\u0627\u0633\u062a \u062f\u0631\u06cc\u0627\u0641\u062a \u0634\u062f"
+          ],
+          "id": "B.3",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u067e\u0627\u0633 de-AI \u0631\u0648\u06cc \u0645\u062a\u0646 \u0627\u0646\u062c\u0627\u0645 \u0634\u062f: \u0645\u062a\u0646 \u0637\u0628\u06cc\u0639\u06cc \u0627\u0633\u062a\u060c \u0647\u06cc\u0686 \u0628\u0627\u0632\u0646\u0648\u06cc\u0633\u06cc\u0650 \u0633\u0628\u06a9\u06cc \u0644\u0627\u0632\u0645 \u0646\u0628\u0648\u062f (\u06f0 \u062a\u063a\u06cc\u06cc\u0631)"
+          ],
+          "id": "B.3.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0639\u06a9\u0633 \u067e\u06cc\u0648\u0633\u062a\u200c\u0634\u062f\u0647 \u0628\u0647 WebP \u062a\u0628\u062f\u06cc\u0644 \u0634\u062f: chairside/cs56-1.webp\u060c 1568\u00d71152\u060c 87KB (\u2264300KB\u060c long edge \u22641600) \u0648 \u0628\u0631\u0627\u06cc \u0635\u0641\u062d\u0647 \u0627\u0633\u062a\u0641\u0627\u062f\u0647 \u0645\u06cc\u200c\u0634\u0648\u062f"
+          ],
+          "id": "B.4",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "B.4.7",
+          "module": "02-routing-intake.md",
+          "reason": "\u067e\u06cc\u067e\u0631\u06cc \u067e\u06cc\u0648\u0633\u062a \u0646\u0634\u062f\u0647 \u2014 \u0645\u0633\u06cc\u0631 \u06f4.\u06f1\u06f0 \u063a\u06cc\u0631\u0641\u0639\u0627\u0644 (skip \u0645\u0633\u062a\u0646\u062f \u0633\u0624\u0627\u0644 \u06f4.\u06f7)",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "\u0633\u0628\u062f\u0650 \u06f1 COMMENTARY \u2014 \u0645\u062a\u0646 \u062a\u0623\u0644\u06cc\u0641\u06cc\u0650 \u062e\u0648\u062f\u0650 \u0628\u0646\u06cc\u0627\u0646\u200c\u06af\u0630\u0627\u0631 (\u0631\u0648\u0627\u06cc\u062a \u0648\u06cc\u0632\u06cc\u062a)\u060c \u0647\u06cc\u0686 DOI/PubMed/\u0641\u0647\u0631\u0633\u062a \u0645\u0646\u0627\u0628\u0639 \u062f\u0631 \u0635\u0641\u062d\u0647 \u0646\u06cc\u0633\u062a\u061b source_text = \u0645\u062a\u0646 \u062e\u0648\u062f\u0650 \u0635\u0641\u062d\u0647"
+          ],
+          "id": "B.4.8",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u067e\u0633\u062a \u0645\u0639\u0645\u0648\u0644\u06cc \u0627\u0633\u062a\u060c \u0646\u0647 \u0686\u0627\u0644\u0634\u061b \u0633\u0624\u0627\u0644 \u06f4.\u06f9 = \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc (C.4.14 \u0628\u0639\u062f\u0627\u064b skipped)"
+          ],
+          "id": "B.4.9",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u062c\u0645\u0644\u0647\u0654 \u067e\u0627\u0644\u0633 \u0631\u0627 \u0628\u0646\u06cc\u0627\u0646\u200c\u06af\u0630\u0627\u0631 \u0646\u0646\u0648\u0634\u062a\u0647\u061b \u0627\u06cc\u062c\u0646\u062a \u062f\u0631 C.6 \u062f\u0631 \u0627\u0644\u06af\u0648\u06cc \u0647\u0645\u0627\u0646 \u0646\u0648\u0639 (\u0648\u06cc\u0632\u06cc\u062a) \u067e\u06cc\u0634\u200c\u0646\u0647\u0627\u062f \u0645\u06cc\u200c\u062f\u0647\u062f \u2014 \u0628\u06cc\u200c\u0627\u0633\u067e\u0648\u06cc\u0644\u0631\u060c \u0645\u062a\u0646 \u0644\u06cc\u0646\u06a9 = \u0639\u0646\u0648\u0627\u0646"
+          ],
+          "id": "B.5",
+          "module": "02-routing-intake.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0634\u0627\u062e\u0647\u0654 LiteCast \u063a\u06cc\u0631\u0641\u0639\u0627\u0644 \u0627\u0633\u062a \u2014 \u0646\u0648\u0639 \u0642\u0641\u0644\u200c\u0634\u062f\u0647 chairside \u0627\u0633\u062a\u061b \u0645\u0631\u0627\u062d\u0644 \u06f0.\u06f1\u2013\u06f0.\u06f6 \u0627\u0650\u0639\u0645\u0627\u0644 \u0646\u0645\u06cc\u200c\u0634\u0648\u062f"
+          ],
+          "id": "C.0",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.1",
+          "module": "03-litecast-and-page.md",
+          "reason": "\u063a\u06cc\u0631\u0641\u0639\u0627\u0644 \u2014 LiteCast \u0646\u06cc\u0633\u062a",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.2",
+          "module": "03-litecast-and-page.md",
+          "reason": "\u063a\u06cc\u0631\u0641\u0639\u0627\u0644 \u2014 LiteCast \u0646\u06cc\u0633\u062a",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.3",
+          "module": "03-litecast-and-page.md",
+          "reason": "\u063a\u06cc\u0631\u0641\u0639\u0627\u0644 \u2014 LiteCast \u0646\u06cc\u0633\u062a",
+          "status": "skipped"
+        },
+        {
+          "evidence": [],
+          "id": "C.0.4",
+          "module": "03-litecast-and-page.md",
+          "reason": "\u063a\u06cc\u0631\u0641\u0639\u0627\u0644 \u2014 LiteCast \u0646\u06cc\u0633\u062a",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "\u062a\u0645\u067e\u0644\u06cc\u062a \u0642\u0641\u0644 \u0634\u062f: chairside/chairside-55.html \u2014 \u062f\u0631 target_paths \u062b\u0628\u062a \u0648 \u0628\u0627 git diff --quiet \u062f\u0633\u062a\u200c\u0646\u062e\u0648\u0631\u062f\u0647 \u062a\u0623\u06cc\u06cc\u062f \u0634\u062f"
+          ],
+          "id": "C.1",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "chairside-56.html \u0627\u0632 \u062a\u0645\u067e\u0644\u06cc\u062a \u06a9\u0644\u0648\u0646 \u0634\u062f\u061b \u0645\u062a\u0646 \u062b\u0628\u062a\u200c\u0634\u062f\u0647 (\u067e\u0633 \u0627\u0632 Q3.5) \u0628\u0627 \u0633\u0627\u062e\u062a\u0627\u0631 \u0646\u0645\u0627\u06cc\u0634\u06cc: \u06f4 \u0639\u0646\u0648\u0627\u0646 \u0634\u0645\u0627\u0631\u0647\u200c\u062f\u0627\u0631\u060c \u06cc\u06a9 \u0642\u0627\u0628 \u062c\u0645\u0644\u0647\u0654 \u06a9\u0644\u06cc\u062f\u06cc\u060c \u06cc\u06a9 \u06a9\u0627\u062f\u0631 \u00ab\u0646\u062a\u06cc\u062c\u0647\u00bb\u061b GA4 \u0648 preconnect \u0627\u0632 \u06a9\u0644\u0648\u0646 \u0633\u0627\u0644\u0645\u061b JSON-LD \u0645\u0639\u062a\u0628\u0631\u061b presentation_lint \u0633\u0628\u0632\u061b \u062f\u0627\u0645\u0646\u0647\u0654 .org \u062d\u0641\u0638 \u0634\u062f"
+          ],
+          "id": "C.2",
+          "module": "03-litecast-and-page.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0646\u0648\u0639 chairside"
+          ],
+          "id": "C.0.5",
+          "module": "03-litecast-and-page.md",
+          "reason": "\u063a\u06cc\u0631\u0641\u0639\u0627\u0644 \u2014 LiteCast \u0646\u06cc\u0633\u062a",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "\u0646\u0648\u0639 chairside"
+          ],
+          "id": "C.0.6",
+          "module": "03-litecast-and-page.md",
+          "reason": "\u063a\u06cc\u0631\u0641\u0639\u0627\u0644 \u2014 LiteCast \u0646\u06cc\u0633\u062a",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "\u067e\u06cc\u0644\u0627\u0631: treatment-planning\u060c \u0633\u0627\u0628\u200c\u062a\u0627\u067e\u06cc\u06a9: replacing-missing-teeth \u2014 \u0645\u0648\u0636\u0648\u0639\u060c \u062a\u0631\u062a\u06cc\u0628 \u062f\u0631\u0645\u0627\u0646 \u062c\u0627\u06cc\u06af\u0632\u06cc\u0646\u06cc \u0628\u0631\u06cc\u062c \u0628\u0627 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0627\u0633\u062a\u061b \u06af\u0632\u06cc\u0646\u0647\u0654 \u0646\u0632\u062f\u06cc\u06a9\u200c\u062a\u0631: extraction-vs-preservation \u06a9\u0647 \u062f\u0631\u0628\u0627\u0631\u0647\u0654 \u0646\u06af\u0647\u200c\u062f\u0627\u0634\u062a\u0646/\u06a9\u0634\u06cc\u062f\u0646 \u06cc\u06a9 \u062f\u0646\u062f\u0627\u0646 \u0627\u0633\u062a \u0646\u0647 \u062a\u0635\u0645\u06cc\u0645 \u062f\u0648\u0645\u0631\u062d\u0644\u0647\u200c\u0627\u06cc \u062c\u0627\u06cc\u06af\u0632\u06cc\u0646\u06cc"
+          ],
+          "id": "C.2.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u062f\u0648 \u06a9\u067e\u0633\u0648\u0644 \u067e\u0627\u06cc\u0647: \u062f\u0627\u0646\u0634\u0646\u0627\u0645\u0647 \u2192 /glossary/ \u0648 \u0641\u0647\u0631\u0633\u062a \u0645\u0648\u0636\u0648\u0639\u06cc \u2192 /pillar/treatment-planning/\u061b \u0633\u0647 \u062c\u0627\u06cc \u0627\u0632 \u0633\u0642\u0641 \u06f5 \u0628\u0631\u0627\u06cc \u06f4.\u06f8/\u06f4.\u06f9 \u0645\u0627\u0646\u062f\u0647"
+          ],
+          "id": "C.2.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "chairside/index.html \u062f\u0633\u062a\u06cc \u0646\u06af\u0647 \u062f\u0627\u0634\u062a\u0647 \u0645\u06cc\u200c\u0634\u0648\u062f\u061b \u0631\u062f\u06cc\u0641 \u00ab\u0648\u06cc\u0632\u06cc\u062a \u06f5\u06f6 \u2014 <\u0639\u0646\u0648\u0627\u0646>\u00bb \u0628\u0627\u0644\u0627\u06cc \u0631\u062f\u06cc\u0641 \u06f5\u06f5 \u0627\u0641\u0632\u0648\u062f\u0647 \u0634\u062f"
+          ],
+          "id": "C.2.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u062a\u0627\u0631\u06cc\u062e 2026-11-25 \u062f\u0631 title/JSON-LD/og/trustline \u06cc\u06a9\u0633\u0627\u0646 \u0634\u062f (datePublished=dateModified=lastReviewed)\u061b \u0647\u06cc\u0686 2026-11-24 \u0628\u0627\u0642\u06cc \u0646\u0645\u0627\u0646\u062f\u0647"
+          ],
+          "id": "C.3",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "git diff --quiet -- chairside/chairside-55.html \u0633\u0628\u0632 \u0627\u0633\u062a\u061b \u062a\u0645\u067e\u0644\u06cc\u062a \u062f\u0633\u062a\u200c\u0646\u062e\u0648\u0631\u062f\u0647"
+          ],
+          "id": "C.4",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0628\u062f\u0648\u0646 \u0627\u067e\u06cc\u0632\u0648\u062f \u0648\u0627\u0644\u062f"
+          ],
+          "id": "C.4.5",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "\u0641\u0642\u0637 NoteCast \u2014 \u0627\u06cc\u0646 \u0627\u0646\u062a\u0634\u0627\u0631 chairside \u0627\u0633\u062a",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "\u0628\u062f\u0648\u0646 \u062c\u0641\u062a \u0627\u067e\u06cc\u0632\u0648\u062f"
+          ],
+          "id": "C.4.5-b",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "\u0641\u0642\u0637 NoteCast/\u0627\u067e\u06cc\u0632\u0648\u062f \u2014 \u0627\u06cc\u0646 \u0627\u0646\u062a\u0634\u0627\u0631 chairside \u0627\u0633\u062a",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "\u0635\u0641\u062d\u0647\u0654 \u0642\u0628\u0644\u06cc \u0641\u0627\u0642\u062f \u0646\u0648\u0627\u0631 \u0642\u0628\u0644\u06cc/\u0628\u0639\u062f\u06cc"
+          ],
+          "id": "C.4.6",
+          "module": "04-taxonomy-and-navigation.md",
+          "reason": "\u0633\u0631\u06cc \u0634\u0645\u0627\u0631\u0647\u200c\u062f\u0627\u0631 \u0628\u0627 ep-nav \u0646\u06cc\u0633\u062a\u061b chairside-55 \u0647\u06cc\u0686 \u0628\u0644\u0627\u06a9 ep-nav \u0646\u062f\u0627\u0631\u062f",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "\u0628\u062f\u0648\u0646 \u0641\u0627\u06cc\u0644 \u0645\u0642\u0627\u0644\u0647"
+          ],
+          "id": "C.4.10.1",
+          "module": "06-paper-ingestion.md",
+          "reason": "\u067e\u06cc\u067e\u0631\u06cc \u067e\u06cc\u0648\u0633\u062a \u0646\u0634\u062f\u0647 \u2014 \u0634\u0627\u062e\u0647\u0654 \u06f4.\u06f1\u06f0 \u063a\u06cc\u0631\u0641\u0639\u0627\u0644 \u0627\u0633\u062a",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "\u0628\u062f\u0648\u0646 \u06a9\u0627\u062a\u0627\u0644\u0648\u06af/Drive"
+          ],
+          "id": "C.4.10.2",
+          "module": "06-paper-ingestion.md",
+          "reason": "\u067e\u06cc\u067e\u0631\u06cc \u067e\u06cc\u0648\u0633\u062a \u0646\u0634\u062f\u0647 \u2014 \u0634\u0627\u062e\u0647\u0654 \u06f4.\u06f1\u06f0 \u063a\u06cc\u0631\u0641\u0639\u0627\u0644 \u0627\u0633\u062a",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "\u0628\u062f\u0648\u0646 \u06a9\u0631\u062f\u06cc\u062a \u0646\u0648\u06cc\u0633\u0646\u062f\u0647/DOI"
+          ],
+          "id": "C.4.10.3",
+          "module": "06-paper-ingestion.md",
+          "reason": "\u067e\u06cc\u067e\u0631\u06cc \u067e\u06cc\u0648\u0633\u062a \u0646\u0634\u062f\u0647 \u2014 \u0634\u0627\u062e\u0647\u0654 \u06f4.\u06f1\u06f0 \u063a\u06cc\u0631\u0641\u0639\u0627\u0644 \u0627\u0633\u062a",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "\u0645\u0633\u06cc\u0631 \u0631\u0644\u0647 (\u0686\u062a \u062a\u0627\u0632\u0647\u0654 \u0628\u0646\u06cc\u0627\u0646\u200c\u06af\u0630\u0627\u0631)\u061b system prompt des-v3.7-knowledge.md sha256 709be964\u2026\u061b model UNVERIFIED (\u0628\u0646\u06cc\u0627\u0646\u200c\u06af\u0630\u0627\u0631 \u0646\u0627\u0645\u0634 \u0631\u0627 \u0646\u06af\u0641\u062a)\u061b source_text = \u0645\u062a\u0646 \u062b\u0628\u062a\u200c\u0634\u062f\u0647\u0654 \u0635\u0641\u062d\u0647 \u0627\u0632 presentation_diff (FULL_TEXT\u060c COMMENTARY)\u061b des_repair \u0628\u062f\u0648\u0646 \u062a\u0631\u0645\u06cc\u0645\u061b \u0646\u0642\u0644\u200c\u0642\u0648\u0644\u200c\u0647\u0627 verbatim\u061b \u062d\u0633\u0627\u0628 5+4+0+3+0=12\u061b \u0628\u0627\u0646\u062f E (\u06f5\u2013\u06f1\u06f9)\u061b schema/Commentary Checklist \u062f\u0631\u0633\u062a\u061b verify_publish --des-text \u0633\u0628\u0632 (\u0628\u062f\u0648\u0646 \u06a9\u0644\u0645\u0647\u0654 \u0645\u0645\u0646\u0648\u0639\u0647)\u061b \u0631\u06a9\u0648\u0631\u062f \u062f\u0631 plus/des-scores.json \u0632\u06cc\u0631 chairside/chairside-56 \u0630\u062e\u06cc\u0631\u0647 \u0634\u062f\u060c \u0628\u062f\u0648\u0646 fidelity (\u0628\u0633\u06a9\u062a \u06f1)"
+          ],
+          "id": "C.4.13",
+          "module": "08-des-fidelity.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0628\u0631\u0631\u0633\u06cc \u0645\u0639\u0646\u0627\u06cc\u06cc \u06f1\u06f1\u06f0 \u062a\u0631\u0645 \u062f\u0627\u0646\u0634\u0646\u0627\u0645\u0647: dental-implant \u0648 treatment-plan (\u0627\u0646\u0648\u0627\u0639 \u0642\u0627\u0628\u0644\u200c\u062f\u0627\u0646\u0634\u200c\u0646\u0627\u0645\u0647)\u060c \u0647\u0631 \u062f\u0648 \u0628\u0627 related_cap \u062f\u0631 \u06f5/\u06f5 (at_cap) \u0648 \u0647\u06cc\u0686 \u0628\u06a9\u200c\u0644\u06cc\u0646\u06a9\u06cc \u0627\u0641\u0632\u0648\u062f\u0647 \u0646\u0634\u062f\u061b \u0647\u06cc\u0686 \u0635\u0641\u062d\u0647\u0654 \u062f\u0627\u0646\u0634\u0646\u0627\u0645\u0647 \u062a\u063a\u06cc\u06cc\u0631 \u0646\u06a9\u0631\u062f"
+          ],
+          "id": "C.4.7",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0646\u0648\u0639 chairside \u0627\u0633\u062a\u060c \u0646\u0647 \u0648\u0627\u0698\u0647\u200c\u0646\u0627\u0645\u0647"
+          ],
+          "id": "C.4.7-b",
+          "module": "05-semantic-linking.md",
+          "reason": "4.7-\u0628: skipped \u2014 not a glossary publish",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "\u062a\u062d\u0644\u06cc\u0644 \u0645\u0639\u0646\u0627\u06cc\u06cc \u062a\u0627\u0632\u0647 \u0631\u0648\u06cc \u0628\u062f\u0646\u0647: \u00ab\u0627\u06cc\u0645\u067e\u0644\u0646\u062a\u00bb (\u067e\u0627\u0631\u0627\u06af\u0631\u0627\u0641 \u0634\u0631\u062d \u062d\u0627\u0644) \u2192 /glossary/dental-implant.html \u0648 \u00ab\u062a\u0645\u0627\u0633 \u0645\u0624\u062b\u0631\u06cc \u0646\u062f\u0627\u0631\u062f\u00bb \u2192 /chairside/chairside-51.html\u061b \u0645\u0631\u0632\u06cc\u200c\u0647\u0627\u06cc \u0631\u062f\u0634\u062f\u0647: \u00ab\u062a\u0631\u062a\u06cc\u0628 \u0627\u0646\u062c\u0627\u0645 \u062f\u0631\u0645\u0627\u0646\u00bb \u2192 treatment-plan\u060c \u00ab\u0628\u0627\u0631\u0647\u0627\u06cc \u0627\u06a9\u0644\u0648\u0632\u0627\u0644\u06cc\u00bb \u0648 \u00ab\u067e\u0631\u06cc\u0648\u062f\u0646\u062a\u06cc\u0633\u062a\u00bb \u0628\u06cc\u200c\u0647\u062f\u0641\u061b text-of-record \u06cc\u06a9\u0633\u0627\u0646 \u0645\u0627\u0646\u062f"
+          ],
+          "id": "C.4.8",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u06f2 \u06a9\u067e\u0633\u0648\u0644 \u067e\u0627\u06cc\u0647 + \u06f3 \u062c\u0627\u06cc \u0622\u0632\u0627\u062f\u061b \u0633\u0647 \u0644\u06cc\u0646\u06a9 \u0642\u0648\u06cc \u0627\u0636\u0627\u0641\u0647 \u0634\u062f: chairside-52\u060c chairside-51\u060c insight-13\u061b related_cap = 5/5 at_cap\u061b \u0645\u0631\u0632\u06cc\u200c\u0647\u0627\u06cc episode-150-2 \u0648 insight-42 \u0631\u062f \u0634\u062f\u0646\u062f"
+          ],
+          "id": "C.4.9",
+          "module": "05-semantic-linking.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0633\u0647 DefinedTerm \u0632\u06cc\u0631 chairside/chairside-56 \u062f\u0631 plus/faq-corpus.json (c1 \u062f\u0648\u0627\u0645 \u0628\u0631\u06cc\u062c\u060c c2 \u062a\u0631\u062a\u06cc\u0628 \u062f\u0631\u0645\u0627\u0646\u060c c3 \u067e\u06cc\u0627\u0645\u062f \u063a\u06cc\u0631\u0642\u0627\u0628\u0644\u200c\u0628\u0631\u06af\u0634\u062a)\u061b \u0647\u0645\u0647 authored \u0648 \u0645\u0633\u062a\u0642\u0644 \u0627\u0632 \u0645\u062a\u0646 FAQ"
+          ],
+          "id": "C.4.11",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0633\u0647 \u067e\u0631\u0633\u0634 \u0628\u0627\u06cc\u0646\u0631\u06cc \u0628\u062f\u0648\u0646 \u062f\u06cc\u06a9\u0633\u06cc\u0633 \u0628\u0627 \u067e\u0627\u0633\u062e\u200c\u0647\u0627\u06cc \u00ab\u062e\u06cc\u0631\u061b/\u0628\u0644\u0647\u061b/\u062e\u06cc\u0631\u061b\u00bb \u062f\u0631 FAQPage \u0632\u06cc\u0631 chairside/chairside-56"
+          ],
+          "id": "C.4.12",
+          "module": "07-flashcards-and-quiz.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0633\u0624\u0627\u0644 \u06f4.\u06f9 = \u0645\u0637\u0644\u0628 \u0645\u0639\u0645\u0648\u0644\u06cc"
+          ],
+          "id": "C.4.14",
+          "module": "09-challenge.md",
+          "reason": "\u067e\u0633\u062a \u0639\u0627\u062f\u06cc \u0627\u0633\u062a\u060c \u0646\u0647 \u0686\u0627\u0644\u0634 \u2014 \u0647\u06cc\u0686 \u0645\u0627\u0631\u06a9\u200c\u0622\u067e data-dc-challenge-question \u0631\u0648\u06cc \u0635\u0641\u062d\u0647 \u0646\u06cc\u0633\u062a",
+          "status": "skipped"
+        },
+        {
+          "evidence": [
+            "\u06f4 \u0633\u0624\u0627\u0644 \u062f\u0646\u062f\u0627\u0646\u200c\u067e\u0632\u0634\u06a9\u061b \u0644\u06cc\u0633\u062a \u06a9\u0627\u0646\u0648\u0646\u06cc\u06a9\u0627\u0644 \u0647\u0645\u0647 reuse \u0628\u062f\u0648\u0646 mint: #\u0648\u06cc\u0632\u06cc\u062a\u060c #\u062a\u0648\u0627\u0644\u06cc_\u062f\u0631\u0645\u0627\u0646\u060c #\u062c\u0627\u06cc\u06af\u0632\u06cc\u0646\u06cc_\u062f\u0646\u062f\u0627\u0646\u060c #\u0628\u0631\u06cc\u062c\u060c #\u062a\u0635\u0645\u06cc\u0645_\u062f\u0631\u0645\u0627\u0646\u06cc\u061b \u06af\u06cc\u062a \u062a\u0631\u06a9\u06cc\u0628 \u06af\u0630\u0634\u062a\u061b \u0635\u0641\u062d\u0647 \u0686\u06cc\u067e\u200c\u0631\u0648 \u0646\u062f\u0627\u0631\u062f"
+          ],
+          "id": "C.5.0",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u0627\u0646\u062a\u0631\u06cc chairside-56 \u0622\u062e\u0631\u06cc\u0646 \u0639\u0646\u0635\u0631 \u0622\u0631\u0627\u06cc\u0647 \u0628\u0627 \u0647\u0645\u0627\u0646 \u06f8 \u06a9\u0644\u06cc\u062f chairside-55\u061b caption/title \u0639\u06cc\u0646 \u0635\u0641\u062d\u0647\u061b hashtag_ref --sync \u0648 --check \u0633\u0628\u0632\u061b build_cabinet_papers --check OK\u061b build_plus_index \u0627\u062c\u0631\u0627 \u0648 revert \u0634\u062f"
+          ],
+          "id": "C.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "brain.pillar = treatment-planning / replacing-missing-teeth\u060c \u062f\u0642\u06cc\u0642\u0627\u064b \u0645\u0642\u062f\u0627\u0631 C.2.4\u061b \u0633\u0627\u0628\u200c\u062a\u0627\u067e\u06cc\u06a9 \u062f\u0631 PILLARS \u0645\u0648\u062c\u0648\u062f\u061b \u06a9\u067e\u0633\u0648\u0644 /pillar/treatment-planning/"
+          ],
+          "id": "C.5.5",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u062f\u0648 \u0645\u0633\u06cc\u0631 STRONG: fixed-pros \u0628\u0639\u062f \u0627\u0632 sharehub/share-39 \u0648 treatment-planning \u0628\u0639\u062f \u0627\u0632 sharehub/share-48\u061b \u0647\u0631 \u062f\u0648 insert \u0634\u062f\u061b coverage \u0628\u062f\u0648\u0646 UNCOVERED. 4.12-\u0628: \u062f\u0648 \u067e\u06cc\u0634\u200c\u0646\u0648\u06cc\u0633 \u0631\u062f \u0648 \u0633\u0624\u0627\u0644 \u06f2 \u062a\u0623\u06cc\u06cc\u062f \u0634\u062f \u0648 \u062f\u0631 \u0628\u0627\u0646\u06a9 \u0646\u0648\u0634\u062a\u0647 \u0634\u062f (r-ed885e82)\u061b validate \u0633\u0628\u0632"
+          ],
+          "id": "C.5.6",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u06cc\u06a9 \u06a9\u0627\u0646\u062f\u06cc\u062f: bundle-crown-prep (\u0627\u062f\u0627\u0645\u0647\u0654 fixed-pros) \u2014 \u06af\u06cc\u062a \u06f1 (\u0646\u0648\u0639): \u067e\u0648\u0634\u0647\u0654 chairside \u0647\u0631\u06af\u0632 \u0648\u0627\u0631\u062f \u0628\u0627\u0646\u062f\u0644 \u0646\u0645\u06cc\u200c\u0634\u0648\u062f \u21d2 \u0631\u062f \u0634\u062f"
+          ],
+          "id": "C.5.6-b",
+          "module": "10-brain-and-pathways.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "\u067e\u0627\u0644\u0633: \u062e\u0637 \u00ab\u0642\u0628\u0644 \u0627\u0632 \u062e\u0627\u0631\u062c \u06a9\u0631\u062f\u0646 \u06cc\u06a9 \u0628\u0631\u06cc\u062c \u0642\u062f\u06cc\u0645\u06cc\u2026\u00bb \u0628\u0627\u0644\u0627\u062a\u0631\u06cc\u0646 \u0648 \u062e\u0637 insight-118 \u062d\u0630\u0641 \u0634\u062f\u061b \u0622\u06cc\u0646\u0647\u0654 \u0627\u0646\u06af\u0644\u06cc\u0633\u06cc chairside/en/chairside-56.html (noindex follow\u060c self-canonical .org\u060c \u0635\u0641\u0631 hreflang\u060c \u062a\u0627\u06af\u0644 \u0645\u0639\u06a9\u0648\u0633\u060c presentation_lint \u0633\u0628\u0632)\u061b \u062a\u0627\u06af\u0644 fa \u2192 en/chairside-56.html\u061b \u0642\u0641\u0644 \u062f\u0647\u200c\u0628\u062e\u0634\u06cc second_cut_editorial_lock_v1 \u062b\u0628\u062a \u0634\u062f\u061b M2 \u0628\u0633\u062a\u0647 \u0634\u062f (\u0633\u0624\u0627\u0644 \u06f2 \u062a\u0623\u06cc\u06cc\u062f \u0648 \u062f\u0631 \u0628\u0627\u0646\u06a9)\u061b approvals \u0639\u0646\u0648\u0627\u0646/\u06a9\u067e\u0634\u0646 \u0648 first_cut_lead_provenance=author_original \u062b\u0628\u062a \u0634\u062f"
+          ],
+          "id": "C.6",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "All applicable canonical C.8 builders passed; logs are in the recovery artifact."
+          ],
+          "id": "C.8",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "tools/stamp-version.py passed after C.8"
+          ],
+          "id": "C.7",
+          "module": "11-build-and-version.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Technical English, noindex, hreflang, sitemap, and final version checks passed; logs are in the recovery artifact."
+          ],
+          "id": "D",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "Canonical dc-notify marker present exactly once"
+          ],
+          "id": "E",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "phase_f:d194b8901ceb698eb5da277cd0b746a16ea8867f2a1551f62a2d41d80d2a9345"
+          ],
+          "id": "F",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        },
+        {
+          "evidence": [
+            "https://github.com/dentcast-hub/dentcast-hub.github.io/actions/runs/45638591084"
+          ],
+          "id": "G",
+          "module": "12-english-notify-verify.md",
+          "reason": null,
+          "status": "completed"
+        }
+      ],
+      "target_paths": [
+        ".dentcast/relay/des-chairside-56.md",
+        "chairside/chairside-55.html",
+        "chairside/chairside-56-1.webp",
+        "chairside/chairside-56.html",
+        "chairside/cs56-1.webp",
+        "chairside/en/chairside-56.html",
+        "chairside/index.html",
+        "dentcast-brain.json",
+        "dentcast-hashtag-reference.json",
+        "index.html",
+        "pillar/index.html",
+        "pillar/structure.json",
+        "pillar/treatment-planning/index.html",
+        "pillar/treatment-planning/structure.json",
+        "player.html",
+        "plus/assistant-tags.json",
+        "plus/content-index.json",
+        "plus/des-scores.json",
+        "plus/des/chairside/chairside-56.json",
+        "plus/exam-questions.json",
+        "plus/faq-corpus.json",
+        "plus/flashcards-index.json",
+        "plus/pathways.json",
+        "plus/quiz-index.json",
+        "service-worker.js",
+        "sitemap.xml",
+        "up-board/index.json"
+      ]
+    },
+    "snapshot": {
+      "files": {
+        ".dentcast/relay/des-chairside-56.md": {
+          "kind": "file",
+          "sha256": "a1a98dfcbb476c26b526f8f23c416e94bfb3960b6134cc4578a0db198c56ee45",
+          "executable": false
+        },
+        "chairside/chairside-55.html": {
+          "kind": "file",
+          "sha256": "3cb211b3c2f303412990c5395b918e85ca6f6d662c1e0946c0ecf61c049c2a0b",
+          "executable": false
+        },
+        "chairside/chairside-56-1.webp": {
+          "kind": "missing",
+          "sha256": null,
+          "executable": false
+        },
+        "chairside/chairside-56.html": {
+          "kind": "file",
+          "sha256": "c4b36fcc4ecdfd9a65afe5848ede74d672d3686350762cd9170db4a6a180aff2",
+          "executable": false
+        },
+        "chairside/cs56-1.webp": {
+          "kind": "file",
+          "sha256": "f1d60a5093150f97adc89bdc16d81b353a7504d4f6cdd8e2b870f7bc9eebe108",
+          "executable": false
+        },
+        "chairside/en/chairside-56.html": {
+          "kind": "file",
+          "sha256": "788cb65212f5e8798c196b10e3e1cce77b393d9fec4b61d2829b421923f5b18a",
+          "executable": false
+        },
+        "chairside/index.html": {
+          "kind": "file",
+          "sha256": "aa87f0dc356b93fb898ff6874c28f40c8cf272afc9f3f75d0fe7b89ca5e7d891",
+          "executable": false
+        },
+        "dentcast-brain.json": {
+          "kind": "file",
+          "sha256": "1df86c790b42015eecc829e120c31db337520b340ac1816c5271001418e53202",
+          "executable": false
+        },
+        "dentcast-hashtag-reference.json": {
+          "kind": "file",
+          "sha256": "0bbef3ba2e1e4501e915fed11277cd8b04ce375d3490f84286ecc87270ea64fe",
+          "executable": false
+        },
+        "index.html": {
+          "kind": "file",
+          "sha256": "446540842bf2a8e9b254f65d9f5f969f021ace2a868df0214804c0c16bb74f60",
+          "executable": false
+        },
+        "pillar/index.html": {
+          "kind": "file",
+          "sha256": "5b7841fc42559800af7e542d5ec8e7dd1045687216770245c35764c2c6b8a485",
+          "executable": false
+        },
+        "pillar/structure.json": {
+          "kind": "file",
+          "sha256": "8c94e4833e4370f6ff4659a0e74302b7c8c8bdcfb184cdc4d61d42a3cdf184f7",
+          "executable": false
+        },
+        "pillar/treatment-planning/index.html": {
+          "kind": "file",
+          "sha256": "2f95bfd47a9c4988a43f6a9d78cf4b4f08017851ad1a23f722e3383d99d087a9",
+          "executable": false
+        },
+        "pillar/treatment-planning/structure.json": {
+          "kind": "file",
+          "sha256": "df29dd18ab7622bf79a0cb4c753d1f43b447ade38bc2fd9590a72ce8c76b1070",
+          "executable": false
+        },
+        "player.html": {
+          "kind": "file",
+          "sha256": "bd9406e567f42c2c9136ef1e6e3daa802f54acdb85c5266155f812e4011c9798",
+          "executable": false
+        },
+        "plus/assistant-tags.json": {
+          "kind": "file",
+          "sha256": "fda8c6f152f5cd2b78eaa54eb4599c38755c2251ee7bf63d7ad704a4fce677b1",
+          "executable": false
+        },
+        "plus/content-index.json": {
+          "kind": "file",
+          "sha256": "0ffa2983fdc1fad7ff9061726c6b0bd73ee58144817465a7463012fd5ef6c6b6",
+          "executable": false
+        },
+        "plus/des-scores.json": {
+          "kind": "file",
+          "sha256": "354b51bcf5d06cd44f81359ebadfc72b9a77275aee51b879b84e58eba8010125",
+          "executable": false
+        },
+        "plus/des/chairside/chairside-56.json": {
+          "kind": "file",
+          "sha256": "1572c3ac38b6941b857d1f45c02776e65187371e10deb5a74817b28aa0fc8727",
+          "executable": false
+        },
+        "plus/exam-questions.json": {
+          "kind": "file",
+          "sha256": "744c0901fcdf5a330c07629f7ba2cc50941053f41ffd9585ec0e528ab4236470",
+          "executable": false
+        },
+        "plus/faq-corpus.json": {
+          "kind": "file",
+          "sha256": "7759280b2010f1a79638872d615d5e8b67e6c6999a690fb91793de29bf0261c6",
+          "executable": false
+        },
+        "plus/flashcards-index.json": {
+          "kind": "file",
+          "sha256": "c8f3c6e2842203d937129f876cc0bfe2257cd44721ee49fc57b5340a517d841a",
+          "executable": false
+        },
+        "plus/pathways.json": {
+          "kind": "file",
+          "sha256": "0eadd55933d1c8cf8027c7a44b1af07d3d7db7768aa2bee7334d07c9efe6e595",
+          "executable": false
+        },
+        "plus/quiz-index.json": {
+          "kind": "file",
+          "sha256": "c969796977abbe38eaa3370082c48213427b6f2e5b78b67307063d3dab774556",
+          "executable": false
+        },
+        "service-worker.js": {
+          "kind": "file",
+          "sha256": "46fcabaed0365c59b29df1199f4ab2ae899242600d11ee0b89c04ed22f6c822b",
+          "executable": false
+        },
+        "sitemap.xml": {
+          "kind": "file",
+          "sha256": "61b98ee18336d54bb71866805486f430689005adfc0c172edd1c3483b854aa37",
+          "executable": false
+        },
+        "up-board/index.json": {
+          "kind": "file",
+          "sha256": "c60cb9f34d0bf5f0779a99cd1489aff83d93a05af3fe3ea7f3f6e8cab7d15104",
+          "executable": false
+        }
+      },
+      "workflow": {
+        ".dentcast/workflows/README.md": "92d735800bcb6ca59bb1b1c1b716f4ff8ada3ddcc0590fbd2b0f840193187791",
+        ".dentcast/workflows/agent-parity.md": "9be87c554de2274a83520588dbe94cf1bc814091d2aeb7d195b6f66da685c5ab",
+        ".dentcast/workflows/publish-handoff.md": "3a273987d72105de9d1c7e8a3f8584294383f57c35a77c5f70c27df08ae4ac65",
+        ".dentcast/workflows/routing-details.md": "72a45a419c576fb4680fd3571d4dd3931d888e3f6cc69a3a6c79c47c11d1324c",
+        ".dentcast/workflows/global/README.md": "5ec762efe1522eeca5841e37f8e61d938b6a1421904bffe32cecd51ddab4a39b",
+        ".dentcast/workflows/global/LOAD-MAP.json": "43bcd76104ffb77218b008c8a613865ef8fec9df4e09142bec3950b72ff19256",
+        "tools/dentcast_global_rules.py": "c92d378a875dec54ed7845015797c37f211f0acab93150f669b0f820dfd94464",
+        ".dentcast/workflows/global/repo-conventions.md": "89afa9b633d19b723435618abc547ea9576f5caf998256755c6b998e53a0211b",
+        ".dentcast/workflows/global/plus-premium.md": "c4a6bdcffa7916252f9ee64e76fc73198fd9477568debd6e516e567f4a71eab9",
+        ".dentcast/workflows/global/site-invariants.md": "55d4fcd8c566d55011a01eb395d04260e7ca867d78be4b1401acf36a23886feb",
+        "tools/dentcast_publish_handoff.py": "5ac5843a3c668b71e4827d787479e9a9bab312b0c14ea881477780cb6d1814cd",
+        "tools/dentcast_publish_lifecycle.py": "c40548cadf6d12d5a24370a4666e8ddf16a338cf61c154627c3a8f24f7cc1932",
+        "tools/verify_publish.py": "d93ee86594aee38897738755ffeb1e7dcfc3b7ac5ebfc51429475044f7696e1b",
+        "tools/dentcast_text_io.py": "225c0a696e8ebc5e175b5dd9739210d4624938358af96baeb777f8c4a07726d8",
+        "tools/text_io.mjs": "c6f9208e26983c8eade43d8cf3effe865e6479df903d2cee661cd0a928565536",
+        "tools/dentcast_post_cut2_runner.py": "443494d00da1a8890a9d69f2d716358328120c562c1c24df0f8227eae3182b0e",
+        ".github/workflows/post-cut2-mechanical.yml": "f4c06799b68560aaa14b364e63d720ae658187962221607c862bfce42a19f106",
+        ".dentcast/workflows/publish-checkpoints.md": "fe05db705255835bb4552b07c74a698745565894680b64ffa9d1c9739820e716",
+        ".dentcast/workflows/publish-after-push2.md": "22110d14628f33250f403470e6e98f36fec47b8c286838a9139d5084fb2222a0",
+        ".dentcast/workflows/modules/01-hard-rules.md": "da7d37b04b316c0005b2a3fa28172a5357823e91550b1d93263cf5d6dbbeb9d7",
+        ".dentcast/workflows/modules/02-routing-intake.md": "c9dc1b414dfdacf3376b4f9cb916ce911b428184550610950ef7f8e8132e9a74",
+        ".dentcast/workflows/modules/03-litecast-and-page.md": "3b620992a868fe8dad7ba1260f32bccdb66733670a834e10c6a341e961b8c449",
+        ".dentcast/workflows/modules/04-taxonomy-and-navigation.md": "53a8860265c40465d8060bea1c9d4f701d24794f704de14a609b2d806c294fa9",
+        ".dentcast/workflows/modules/05-semantic-linking.md": "22379f060007b543c9544f2dd8a3aee600a930af19711fd1ee49e797ef9c7722",
+        ".dentcast/workflows/modules/06-paper-ingestion.md": "e7406f830c12b2d25c8cb97515a0bb271c74e99a02506c4456a14c74d4f2296b",
+        ".dentcast/workflows/modules/07-flashcards-and-quiz.md": "fcd126bef9e887f67b8f6d19527be5bf77b3e987661c5feb77cc26f4b2b13e6d",
+        ".dentcast/workflows/modules/08-des-fidelity.md": "baf5b64391de6339327315c8d5bcc24128fdc4145f67e316be909cc75d820b62",
+        ".dentcast/workflows/modules/09-challenge.md": "5ec2a39ce0e3f3777360a0b0c1092d34e240f6546d43103498e2d65a5a16f120",
+        ".dentcast/workflows/modules/10-brain-and-pathways.md": "5e4c5266d20e786eae7d3f410a2209c547c698781d8655d78828251c052ab66c",
+        ".dentcast/workflows/modules/11-build-and-version.md": "3b58272ec511d861e35af835f026cb91910d1ef40c1e164cbdc88f8637dcf310",
+        ".dentcast/workflows/modules/12-english-notify-verify.md": "75cb541a540ae8bb189da3a38145410f18720e5160c56de5f4e4ba798603237c"
+      }
+    }
+  },
+  "second_delivery_commit": "84a52407a9be249a42531da08cbc230f6f55f433",
+  "verification": {
+    "kind": "phase_f",
+    "content_id": "chairside/chairside-56",
+    "expected_title": "\u0642\u0628\u0644 \u0627\u0632 \u062e\u0627\u0631\u062c \u06a9\u0631\u062f\u0646 \u06cc\u06a9 \u0628\u0631\u06cc\u062c \u0642\u062f\u06cc\u0645\u06cc\u060c \u0686\u0631\u0627 \u0628\u0627\u06cc\u062f \u0627\u0645\u06a9\u0627\u0646 \u062c\u0627\u06cc\u06af\u0632\u06cc\u0646\u06cc \u0622\u0646 \u0631\u0627 \u0628\u0631\u0631\u0633\u06cc \u06a9\u0646\u06cc\u0645\u061f",
+    "expected_caption": "\u0628\u06cc\u0645\u0627\u0631 \u0628\u0627 \u0633\u0627\u0628\u0642\u0647 \u0627\u0633\u062a\u0641\u0627\u062f\u0647 \u0637\u0648\u0644\u0627\u0646\u06cc\u200c\u0645\u062f\u062a \u0627\u0632 \u06cc\u06a9 \u0628\u0631\u06cc\u062c \u0642\u062f\u06cc\u0645\u06cc \u062f\u0631 \u0646\u0627\u062d\u06cc\u0647 \u062e\u0644\u0641\u06cc \u0641\u06a9 \u067e\u0627\u06cc\u06cc\u0646 \u0631\u0627\u0633\u062a (\u062f\u0646\u062f\u0627\u0646\u200c\u0647\u0627\u06cc \u06f5 \u062a\u0627 \u06f8) \u0628\u0631\u0627\u06cc \u0645\u0634\u0627\u0648\u0631\u0647 \u0628\u0647\u200c\u0645\u0646\u0638\u0648\u0631 \u062f\u0631\u0645\u0627\u0646 \u0627\u06cc\u0645\u067e\u0644\u0646\u062a \u0645\u0631\u0627\u062c\u0639\u0647 \u06a9\u0631\u062f. \u0686\u0631\u0627 \u067e\u06cc\u0634 \u0627\u0632 \u062e\u0627\u0631\u062c \u06a9\u0631\u062f\u0646 \u0628\u0631\u06cc\u062c\u060c \u0628\u0627\u06cc\u062f \u0627\u0645\u06a9\u0627\u0646 \u062c\u0627\u06cc\u06af\u0632\u06cc\u0646\u06cc \u0622\u0646 \u0628\u0631\u0631\u0633\u06cc \u0648 \u062a\u0623\u06cc\u06cc\u062f \u0634\u0648\u062f\u061f",
+    "exit_code": 0,
+    "output_sha256": "d194b8901ceb698eb5da277cd0b746a16ea8867f2a1551f62a2d41d80d2a9345",
+    "summary": "104 passed, 0 warned, 0 failed  \u2014 publish is COMPLETE"
+  }
+}
