@@ -131372,6 +131372,58 @@
         "Newton Sesma",
         "John Kois"
       ]
+    },
+    {
+      "id": "P2967",
+      "title": "Survival and Complication Rates of Feldspathic, Leucite-Reinforced, Lithium Disilicate and Zirconia Ceramic Laminate Veneers: A Systematic Review and Meta-Analysis",
+      "file_name": "Survival and Complication Rates of Feldspathic, Leucite-Reinforced, Lithium Disilicate and Zirconia Ceramic Laminate Veneers: A Systematic Review and Meta-Analysis.pdf",
+      "topic": "Laminate and rubber dam",
+      "topic_path": "Laminate and rubber dam",
+      "type": "systematic review",
+      "local_path": "",
+      "file_size": 4931578,
+      "key_finding": "Across 29 clinical studies, ceramic laminate veneers of feldspathic porcelain, leucite-reinforced glass-ceramic and lithium disilicate all showed high survival (about 94-97% pooled at 10.4 years), with lithium disilicate having the fewest long-term technical, esthetic and biological complications. Zirconia veneers showed 100% survival but only at 2.6 years, with no long-term data.",
+      "clinical_bottom_line": "Feldspathic, leucite-reinforced and lithium disilicate laminate veneers are reliable long-term options, with lithium disilicate preferred where long-term complication risk matters; zirconia veneer evidence is still short-term only.",
+      "linked_episodes": [
+        "sharehub/share-60"
+      ],
+      "drive_link": "https://drive.google.com/file/d/1t4GxA8iJsDsr8XDdBXs0K8KnmJr-ReF_/view",
+      "status": "linked",
+      "drive_download": "https://drive.google.com/uc?export=download&id=1t4GxA8iJsDsr8XDdBXs0K8KnmJr-ReF_",
+      "drive_view": "https://drive.google.com/file/d/1t4GxA8iJsDsr8XDdBXs0K8KnmJr-ReF_/view",
+      "drive_id": "1t4GxA8iJsDsr8XDdBXs0K8KnmJr-ReF_",
+      "tags": [
+        "porcelain-laminate-veneer",
+        "lithium-disilicate",
+        "feldspathic-porcelain",
+        "leucite-reinforced-ceramic",
+        "zirconia",
+        "survival",
+        "prosthetic-complications",
+        "meta-analysis",
+        "topic:Laminate and rubber dam",
+        "ceramic-laminate-veneer-survival-meta-analysis"
+      ],
+      "name_bucket": "meaningful",
+      "semantic_tagged": true,
+      "real_title": "Survival and Complication Rates of Feldspathic, Leucite-Reinforced, Lithium Disilicate and Zirconia Ceramic Laminate Veneers: A Systematic Review and Meta-Analysis",
+      "doi": "10.1111/jerd.13351",
+      "journal": "Journal of Esthetic and Restorative Dentistry",
+      "crossref_year": 2025,
+      "subjects": [],
+      "abstract": "Objectives: To analyze survival and complication rates for anterior and premolar laminate-veneers out of different ceramic materials (feldspathic, leucite-reinforced glass-ceramic [LRGC], lithium-disilicate [LDS] and zirconia). Material and Methods: A systematic literature search was conducted across multiple databases for clinical studies on ceramic laminate-veneers with a minimum follow-up of 1 year, last searched on February 19, 2024; survival, technical, esthetic and biological events were assessed at short- (1-3 years), mid- (4-6 years) and long-term (7 years or more) observation periods. Results: Twenty-nine studies were included. Meta-analysis revealed a pooled survival rate of 96.13% for feldspathic, 93.70% for LRGC and 96.81% for LDS at 10.4 years, with no difference between materials; technical/esthetic/biological complication rates at 10.4 years were 41.48%/19.64%/6.51% for feldspathic, 29.87%/17.89%/4.4% for LRGC and 6.1%/1.9%/0.45% for LDS. Zirconia showed a 100% survival rate with no complications at 2.6 years, and no long-term data was available for zirconia. Conclusions: Feldspathic, LRGC and LDS laminate-veneers showed high survival rates at long-term observation; LDS slightly outperforms feldspathic and LRGC laminate-veneers with lower long-term complication rates; more studies providing long-term data on zirconia laminate-veneers are needed.",
+      "display_title": "Survival and Complication Rates of Feldspathic, Leucite-Reinforced, Lithium Disilicate and Zirconia Ceramic Laminate Veneers: A Systematic Review and Meta-Analysis",
+      "authors": [
+        "Patrick Klein",
+        "Frank A. Spitznagel",
+        "Anja Zembic",
+        "Lea S. Prott",
+        "Stefano Pieralli",
+        "Brenda Bongaerts",
+        "Maria-Inti Metzendorf",
+        "Robert Langner",
+        "Petra C. Gierthmuehlen"
+      ]
     }
   ],
   "drive_matched": 2849,
@@ -133494,7 +133546,7 @@
     "note": "682 content-unidentified papers moved to private quarantine file",
     "quarantined_unidentified": 682
   },
-  "total_papers": 2131,
+  "total_papers": 2132,
   "tag_aliases": {
     "additive-manufacturing": "3d-printing",
     "adhesion": "bonding",

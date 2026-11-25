@@ -617,13 +617,10 @@ voted (it runs one call per part and `--merge`).
 <!-- des-rating-audit:v1 -->
 #### Part 2d — The DES rating audit by the stronger reviewer (every new RESEARCH record)
 
-**When.** For every RESEARCH SOURCE record scored in this run (any `text_basis`), after
-it passes Part 3 (1)–(4) and (7) and before Part 4 stores it — and for both records when
-Part 1's `compare` found a difference. A record reused verbatim under Part 1 is not
+**When.** Only when the founder asks for it, or when Part 1's `compare` found two records
+of the same paper that disagree. A record that passes Part 3 is stored as it stands: the
+audit is an extra check, never a gate. A record reused verbatim under Part 1 is not
 audited again; COMMENTARY and `NOT_APPRAISABLE` records have no domains and no audit.
-**Why every new record and not only a flagged one:** Part 3(7) sees a wrong rating only
-when the record's own note says so; a scorer that writes a neutral note passes it. The
-audit costs one stronger-model call per paper, and Part 1 makes it once per paper ever.
 
 **What the reviewer does: it finds the line, it never scores.** The strong model
 of Part 2c's table, in a fresh tool-less context (Part 2's run method), receives the
@@ -678,7 +675,9 @@ appendix's checks yourself — an output that fails these is not a score:
    runs, strip soft hyphens and line-break hyphenation, expand fi/fl ligatures,
    straighten curly quotes, nbsp → space, Unicode NFKC). A failure is **flagged for
    manual review, not silently dropped** — the appendix notes that recurrent failures
-   usually mean bad PDF text extraction rather than model fabrication.
+   usually mean bad PDF text extraction rather than model fabrication. A quote that
+   differs only in soft hyphens, line-break hyphenation or spacing is that artifact:
+   review accepts it and the run continues — no rerun.
    **One quote is checked against a different file:** a `chairside/`, `metanotes/`
    or `insight/` COMMENTARY item 4 earned from the section-level declaration quotes
    that section's `index.html`, not the article, and must carry a `note` saying so.
@@ -830,19 +829,12 @@ never a «بله» to the others.
   17): every such surface in the same commit. In a direct run the mirror, brain
   entry and Pulse line are written after C.4.13 from the locked text, so they
   start from the fixed sentence.
-- **Re-check only the edited sentences** — the last
-  full run already judged every other sentence, and judging them again buys
-  nothing but fresh run-to-run noise on sentences nobody touched. Build blocks
-  for the edited units alone (`--build <dir2> --only u…`, same `source_text`,
-  same basis), run them by Part 2c (the sweeper over those units, then `--judge` and
-  the judge over them), then
-  `python3 tools/des_fidelity_units.py <content_id> --vote <dir2> --base <dir1>`,
-  where `<dir1>` holds the `voted-src<k>.json` of the last full run. The tool
-  keeps the base verdict for every unit not re-checked, recomputes counts,
-  score, level and the Persian lines, and **refuses** when the edit shifted the
-  page's unit ids (a sentence split or joined), when a changed unit was not
-  re-checked, or when a re-check judged old text — in those cases, and only
-  those, run the full step again. Never patch a verdict by hand.
+- **The founder's answer ends the loop.** An accepted edit is copied into the page and
+  that is the text of record; no re-check is owed by default. When the founder asks for
+  a new grade, measure only the edited units (`--build <dir2> --only u…`, the same
+  `source_text` and basis, sweeper then `--judge`, then
+  `--vote <dir2> --base <dir1>` against `<dir1>`'s `voted-src<k>.json`). Never patch a
+  verdict by hand.
 - **Figure captions added after the full run** — only the captions are checked;
   every other verdict stands. A `<figcaption>` is page text and its sentences are units, so
   inserting one renumbers every unit after it. Do not rerun the page:
@@ -867,9 +859,8 @@ never a «بله» to the others.
   not `MATCHES` (`NOT_IN_SOURCE` and `NOT_ASSESSABLE` included — the new pages may
   speak to them) and keep the `MATCHES` units; anything else changed in the text
   is refused, and then the full step runs again.
-- Report the grade **before → after** («تطابق خیلی بالا → کاملاً مطابق»). If the
-  new run still flags a sentence — including one just rewritten — offer it
-  again; the loop ends when nothing is flagged or the founder says «همین بماند».
+- Report the grade **before → after** («تطابق خیلی بالا → کاملاً مطابق»). Each flagged
+  sentence is offered once; after the founder's answer the record is stored.
 
 Only then go on to Part 4, which stores the **final** result.
 
