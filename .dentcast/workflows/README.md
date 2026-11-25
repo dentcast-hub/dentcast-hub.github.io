@@ -12,13 +12,14 @@ A publication reads one file. Settle the four intake facts the selector takes (c
 
 ```bash
 python3 tools/dentcast_publish_readpack.py --category <cat> --attached-paper <yes|no> \\
-  --challenge <yes|no> --des-basket <commentary|research> \\
+  --challenge <yes|no> --des-basket <commentary|research> [--isolated-call yes] [--sources one] \\
   --output <scratch>/pack.txt --manifest <scratch>/pack.json
 ```
 
 Read `pack.txt` once, top to bottom, in bounded chunks, before the first write. It carries, copied byte for byte, this router, the global rules of a page publication, `agent-parity.md`, `publish-checkpoints.md`, modules 01 and 02 and the parts of modules 03–12 that apply. No other rule file is opened; a tool that refuses names the one file to read.
 
 - A fact that is not settled is `unknown`; the module it decides is then carried whole.
+- `--isolated-call yes`: the agent runs each DES/Fidelity call itself in a separate context and the founder supplied no result; the relay and supplied-result paths are left out. `--sources one`: the page cites exactly one source; the orphan sweep is left out. Either is given only when certain.
 - A step the pack leaves out still takes its canonical SKIP reason in the ledger; the manifest's `selection_reason` is that reason.
 - Module 11 is carried above its `module-11-boundary` marker and module 12 through Phase D: the rest is the runner's.
 - A changed source or intake fact: build the pack again and read what changed.
