@@ -1,5 +1,5 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
-> **Checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision. Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
+> **Checkpoint protocol.** The ledger protocol is `.dentcast/workflows/publish-checkpoints.md` (in the reading pack). Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
 > **Order, founder messages, the save point and the deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
@@ -165,4 +165,4 @@ A Pulse sentence the founder wrote is copied (Hard Rule 16). Otherwise the agent
 
 ### Question 6 — Exam questions (message M2), before any page work
 
-For every specialist page (not LiteCast, چالش, glossary), draft the exam questions now from the text of Question 3 (module 07 §4.12-ب, `--draft-check`) and send them as M2, with any M1 fact, in one message. The run waits only here. Record the answer (approved questions verbatim, or «بدون سؤال») in the handoff; step 5.6 writes them.
+For every specialist page (not LiteCast, چالش, glossary), draft the exam questions now from the text of Question 3 (module 07 §4.12-ب, `--draft-check`) and send them as M2, with any M1 fact, in one message. The run waits only here. Record the answer (approved questions verbatim, or «بدون سؤال») as a decision and in the evidence of `B.5`; step 5.6 writes them.

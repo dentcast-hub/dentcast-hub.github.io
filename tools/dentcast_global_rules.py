@@ -32,8 +32,11 @@ def sections(root=ROOT):
     return manifest, result
 
 
-def select(manifest, blocks, paths=(), all_rules=False):
-    selected = {b['id'] for b in blocks if b['core']}
+def select(manifest, blocks, paths=(), all_rules=False, publication=False):
+    # publication=True: a page publication built by cloning the previous page. The sections a
+    # clone inherits unchanged (site chrome, analytics, closed sections, the reader shell) are
+    # left out; the template and Phase F carry them. Any other work keeps the full core.
+    selected = {b['id'] for b in blocks if b['core'] and not (publication and b.get('publication') is False)}
     if all_rules:
         return blocks
     for path in paths:
@@ -48,7 +51,7 @@ def select(manifest, blocks, paths=(), all_rules=False):
     return [b for b in blocks if b['id'] in selected]
 
 
-PAGE_CHARS = 20000
+PAGE_CHARS = 9000  # Persian is ~2 bytes a character: a page stays under common 20-30 KB tool-output caps
 
 
 def emitted_lines(chosen):
@@ -79,6 +82,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--path', action='append', default=[], help='Each planned edit path; repeat as scope expands')
     parser.add_argument('--all', action='store_true')
+    parser.add_argument('--publication', action='store_true',
+                        help='a page publication cloned from the previous page: only the data and surface rules')
     parser.add_argument('--loaded', action='append', default=[], help='Section already read completely in this same session and source revision')
     parser.add_argument('--read', action='store_true', help='Emit complete exact sections instead of the small load plan')
     parser.add_argument('--section', action='append', default=[], help='Restrict to this section id (repeatable); see --list')
@@ -88,7 +93,7 @@ def main():
     args = parser.parse_args()
     try:
         manifest, blocks = sections()
-        chosen = select(manifest, blocks, args.path, args.all)
+        chosen = select(manifest, blocks, args.path, args.all, args.publication)
         if not set(args.loaded) <= {b['id'] for b in blocks}:
             raise ValueError('UNKNOWN_LOADED_SECTION')
         chosen = [b for b in chosen if b['id'] not in args.loaded]

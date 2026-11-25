@@ -1,5 +1,5 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
-> **Checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision. Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
+> **Checkpoint protocol.** The ledger protocol is `.dentcast/workflows/publish-checkpoints.md` (in the reading pack). Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
 > **Order, founder messages, the save point and the deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
@@ -86,7 +86,7 @@ Clone the previous same-category page exactly — identical HTML tree, CSS class
 - JSON-LD field VALUES → adapted; the schema shape stays identical.
 - Media sources → from intake.
 - All URLs/slugs → the new identifier.
-- The hashtag chip row → tags for the new content, never the cloned part's own row. The **one** rule that binds it here is Hard Rule 15: each chip is an **existing** canonical concept of `dentcast-hashtag-reference.json`, found with `python3 tools/hashtag_ref.py --simulate "<phrase>"` and reused verbatim — no fresh spelling, no alias as a tag, and **no mint**. Which concepts, how many and any mint are settled later, by **step 5.0** (module 10), whose final list this row must equal before the brain write; it corrects the row there if it changed. `keywords` live only in the brain entry (step 5) — no page carries them.
+- The hashtag chip row → tags for the new content, never the cloned part's own row. The **one** rule that binds it here is Hard Rule 15: each chip is an **existing** canonical concept of `dentcast-hashtag-reference.json`, found with `python3 tools/hashtag_ref.py --simulate "<phrase>"` and reused verbatim — no fresh spelling, no alias as a tag, and **no mint**. Which concepts, how many and any mint are settled later, by **step 5.0** (module 10), whose final list this row must equal before the brain write; it corrects the row there if it changed. `keywords` are authored in the brain entry (step 5); a template whose JSON-LD has `keywords` gets this page's own there, and the page shows none.
 
 **Identity invariant (domain follows the clone).** The clone swaps the **PATH only** and **keeps the domain** — never domain-swap during a clone. LiteCast stays on `https://dentcast.ir` with no hreflang and root-relative links; every other category on `https://dentcast.org` (Hard Rule 10). Confirm the cloned domain survived.
 

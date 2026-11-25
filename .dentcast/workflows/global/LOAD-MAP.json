@@ -6,9 +6,35 @@
       "sha256": "89afa9b633d19b723435618abc547ea9576f5caf998256755c6b998e53a0211b",
       "sections": [
         {
-          "id": "repo-core",
+          "id": "repo-sections",
           "lines": [
             1,
+            87
+          ],
+          "core": true,
+          "publication": false
+        },
+        {
+          "id": "repo-core",
+          "lines": [
+            88,
+            124
+          ],
+          "core": true
+        },
+        {
+          "id": "repo-shell",
+          "lines": [
+            125,
+            164
+          ],
+          "core": true,
+          "publication": false
+        },
+        {
+          "id": "repo-dirs",
+          "lines": [
+            165,
             168
           ],
           "core": true
@@ -27,7 +53,8 @@
             265,
             274
           ],
-          "core": true
+          "core": true,
+          "publication": false
         },
         {
           "id": "clinic",
@@ -89,15 +116,24 @@
     },
     {
       "path": ".dentcast/workflows/global/plus-premium.md",
-      "sha256": "c4a6bdcffa7916252f9ee64e76fc73198fd9477568debd6e516e567f4a71eab9",
+      "sha256": "d8cf5b30c9a1cddadd2290d2bf1e7f0ec2772faa8b3887fbcbe92794d9215ab5",
       "sections": [
         {
           "id": "publication-surfaces",
           "lines": [
             1,
-            109
+            24
           ],
           "core": true
+        },
+        {
+          "id": "plus-architecture",
+          "lines": [
+            25,
+            109
+          ],
+          "core": true,
+          "publication": false
         },
         {
           "id": "badges-ai",
@@ -135,7 +171,8 @@
             1,
             156
           ],
-          "core": true
+          "core": true,
+          "publication": false
         }
       ]
     }

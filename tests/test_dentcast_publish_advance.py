@@ -23,10 +23,12 @@ class AdvanceTests(unittest.TestCase):
         self.assertEqual(observed, [[('rules', 'completed'), ('0', 'pending')], [('rules', 'completed'), ('0', 'started')]])
         self.assertFalse(result['publication_completed'])
 
-    def test_cannot_complete_unstarted_work(self):
+    def test_the_next_pending_step_is_opened_and_closed_in_one_call(self):
         initial = self.prepare()
-        with self.assertRaisesRegex(h.Blocked, 'STEP_MUST_BE_STARTED'):
-            lc.advance(self.root, initial['sha256'], 'rules', ['fixture'])
+        result = lc.advance(self.root, initial['sha256'], 'rules', ['fixture'])
+        self.assertEqual([t['status'] for t in result['transitions_written']], ['started', 'completed'])
+        with self.assertRaisesRegex(h.Blocked, 'NOT_NEXT_CANONICAL_STEP'):
+            lc.advance(self.root, result['sha256'], 'A', ['fixture'])
 
     def test_invalid_skip_preflight_writes_nothing(self):
         initial = self.prepare()

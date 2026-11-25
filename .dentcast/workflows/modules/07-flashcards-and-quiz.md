@@ -1,5 +1,5 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
-> **Checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision. Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
+> **Checkpoint protocol.** The ledger protocol is `.dentcast/workflows/publish-checkpoints.md` (in the reading pack). Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
 > **Order, founder messages, the save point and the deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
@@ -92,7 +92,7 @@ The runner's C.8 runs `node tools/build_quiz_index.mjs` (never hand-edit `plus/q
 ```
 
 - `id` is **load-bearing and never re-minted** (attempt snapshots and the «unseen first» draw reference it) and carries the `r-` class so it never collides with a form's `qN` or a table row's `c-…`. Mint it from `sha1("<content_id>|publish-<n>")[:8]` with `n` the next free ordinal for the page; a later wording fix keeps the id.
-- `correct` is the 0-based index; vary the key position across the page's questions (the API does not shuffle).
+- `correct` is the 0-based index; vary the key position across the page's questions **in the draft, before M2** (the API does not shuffle). An approved question is written exactly as approved.
 - `source` is `"publish"` (rows derived from the quiz bank carry `"quiz"` + `source_quiz_id`).
 
 **Existing rows are append-only** — CI, the validator and Phase F's «4.12-ب bank» row FAIL when any existing row (this page's or another's) is deleted or changed, naming the lost `content_id#id`; retire a row with `"status": "rejected"`. Reordering only WARNs (ids, not positions, are load-bearing). The single exception is a fix the founder approves in chat for an existing row (wording, key): keep its `id`, edit the row, then record that approval for exactly the edited bytes in `.dentcast/exam-edit-approvals.json` (add it to `target_paths`):

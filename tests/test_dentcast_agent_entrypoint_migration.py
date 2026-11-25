@@ -70,6 +70,9 @@ class EntrypointMigrationTests(unittest.TestCase):
     s=read(p); self.assertIn("**The agent's work ends at Push 2.**",s)
     self.assertIn("Do not monitor the run, wait for it or merge",s)
     self.assertNotIn("Keep checking the run until it succeeds or fails",s)
+ def test_kilo_reads_the_same_bytes_as_the_shared_entrypoint(self):
+  # Kilo's rule file drifted from AGENTS.md once and Kilo ran on stale rules; it is a copy, kept identical.
+  self.assertEqual((ROOT/'.kilocode/rules/dentcast.md').read_bytes(),(ROOT/'AGENTS.md').read_bytes())
  def test_specialty_routes_preserved(self):
   for p in ("AGENTS.md","CLAUDE.md",".cursor/rules/dentcast-router.mdc"):
    for route in ("en-version.md","ads.md","spot-report.md","cross-link.md","new-section.md",

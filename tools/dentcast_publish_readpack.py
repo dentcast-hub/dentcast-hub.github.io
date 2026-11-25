@@ -27,14 +27,14 @@ MODULES = WORKFLOW + 'modules/'
 # occurs exactly once and that no skipped section changed its applicability; the
 # reason for each re-pin belongs in the commit message, not here.
 PINNED_BLOBS = {
-    '03-litecast-and-page.md': '42d6c04405df3109315723b8eb83759d5368777a',
-    '04-taxonomy-and-navigation.md': '46bc329065fdaa0d1677b494ecc5b7cdf7359872',
-    '05-semantic-linking.md': '6ba95d74e28f1e423e034d31327d6c9351f85c20',
-    '06-paper-ingestion.md': '07d4320fb9935d4752e38bc8b485009c6e86caf5',
-    '08-des-fidelity.md': '0b66cf9d2a1b6efa5afc576ab9e2b291231f9e05',
-    '09-challenge.md': '3ac5856ddb021aa9f36cbfb35d6363531ae038c8',
-    '11-build-and-version.md': 'f74bf83102c57da9743127623191e686474bf74d',
-    '12-english-notify-verify.md': 'a08d0f6a86558f839d31b7a995b2a2a4e6b5dbcb',
+    '03-litecast-and-page.md': 'aaaf22b50d3adbff9a65ccbe0e21756faaa77b8a',
+    '04-taxonomy-and-navigation.md': 'b6366cddd2989ef18aa542d7b9ae22b76fd9b639',
+    '05-semantic-linking.md': '5069cc0e1dff5858258f875258fdf23ddaf39c40',
+    '06-paper-ingestion.md': 'ce9ff376c0a10d83be94ce18fa8d1d72c999d612',
+    '08-des-fidelity.md': 'cbaf72f8223e410384d42004172493a1e8e0ffc4',
+    '09-challenge.md': 'b1faa96b9e0d71dd1fd70ff2fe0075dc5ad4c2cc',
+    '11-build-and-version.md': 'd2d35ca0fba390eac9a21619290c9cbf6af143ab',
+    '12-english-notify-verify.md': 'b429fab3438ca187b86897d56914e6a277573e4a',
 }
 
 REQUIRED = [
@@ -115,6 +115,18 @@ def route_spans(name, lines, *, category, attached_paper, challenge, des_basket=
     if lite and challenge == 'yes':
         raise UnsafeSelection('CONFLICTING_LITECAST_CHALLENGE_INTAKE')
 
+    if name == 'agent-parity.md':
+        # Sections 4 and 5 are review checklists that restate the modules; the rules of a
+        # publication end where they begin.
+        marks = [i for i, line in enumerate(lines) if line.startswith('## 4. ')]
+        if len(marks) == 1:
+            return include([(0, marks[0])], size), 'OMIT_REVIEW_CHECKLISTS'
+        return whole, 'FULL_REQUIRED'
+
+    if name == 'README.md' and lines and lines[0].startswith('# Shared active global rules'):
+        # global/README.md explains the selector; this pack carries the selected sections themselves.
+        return [], 'GLOBAL_SECTIONS_ARE_IN_THIS_PACK'
+
     if name == '03-litecast-and-page.md' and not lite:
         # The preamble keeps what a non-LiteCast run still needs from the branch's head: the
         # module's own ledger-steps line and step 0's own paragraph, which IS the canonical
@@ -167,13 +179,22 @@ def route_spans(name, lines, *, category, attached_paper, challenge, des_basket=
         # Basket 1 (the page's own text, no cited source): one SOURCE call on the page text and
         # no FIDELITY call (module 08 Part 2b, «When»). Parts 2b-2d (the FIDELITY protocol and
         # the retired audit) and Part 3b (flagged sentences) have nothing to act on.
+        supplied = boundary(lines, '#### Conditional path for founder-supplied results')
+        once_a = boundary(lines, '<!-- des-scored-once:v1 -->')
+        once_b = boundary(lines, '<!-- /des-scored-once:v1 -->') + 1
+        part1 = boundary(lines, '#### Part 1 — Resolve `source_text`')
+        guard = boundary(lines, '<!-- des-record-guard:v1 -->')
+        part2 = boundary(lines, '#### Part 2 — Run the prompt file')
         fid = boundary(lines, '#### Part 2b — Run the FIDELITY call')
         checks = boundary(lines, '#### Part 3 — Validate the output mechanically')
         fixes = boundary(lines, '#### Part 3b — Report every differing sentence')
         store = boundary(lines, '#### Part 4 — Store the record')
-        if not (fid < checks < fixes < store):
+        if not (supplied < once_a < once_b <= part1 < guard < part2 < fid < checks < fixes < store):
             raise UnsafeSelection('INVALID_MODULE_08_ORDER')
-        return include([(0, fid), (checks, fixes), (store, size)], size), 'COMMENTARY_BASKET_NO_FIDELITY_LOCKED_AT_Q4_8'
+        # Kept: when the step runs or is skipped, the five rules, the page's own text as
+        # source (Part 1 up to the paper lookup), the scoring call, its checks and storage.
+        return include([(0, supplied), (once_a, once_b), (part1, guard), (part2, fid), (checks, fixes),
+                        (store, size)], size), 'COMMENTARY_BASKET_NO_FIDELITY_LOCKED_AT_Q4_8'
 
     if name == '11-build-and-version.md':
         # Everything below the marker is the post-Push-2 runner's C.8/C.7 part, which
@@ -275,6 +296,16 @@ def build(root, *, category, attached_paper, challenge, after_intake=False, des_
                 if not lines[b-1].endswith('\n'):
                     pieces.append('\n')
             pieces.append(f'=== END SOURCE {path} ===\n')
+    if not after_intake and (root / WORKFLOW / 'global' / 'LOAD-MAP.json').is_file():
+        # The global rules of a page publication, byte for byte: the pack is the one file read.
+        import dentcast_global_rules as global_rules
+        g_manifest, blocks = global_rules.sections(root)
+        chosen = global_rules.select(g_manifest, blocks, (), False, publication=True)
+        text = ''.join(global_rules.emitted_lines(chosen))
+        pieces.append('\n\n=== BEGIN GLOBAL RULES (publication profile) ===\n' + text
+                      + ('' if text.endswith('\n') else '\n') + '=== END GLOBAL RULES ===\n')
+        manifest['global_sections'] = [b['id'] for b in chosen]
+        selected_total += len(text.encode('utf-8'))
     manifest['source_bytes_total'] = raw_total
     manifest['selected_bytes_total'] = selected_total
     manifest['bytes_saved'] = raw_total - selected_total

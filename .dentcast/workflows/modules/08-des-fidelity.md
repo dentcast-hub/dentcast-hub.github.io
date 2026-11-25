@@ -1,5 +1,5 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
-> **Checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision. Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
+> **Checkpoint protocol.** The ledger protocol is `.dentcast/workflows/publish-checkpoints.md` (in the reading pack). Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
 > **Order, founder messages, the save point and the deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
@@ -42,7 +42,7 @@ At intake and again before Part 1, check whether the founder supplied a DES scor
 
 1. **DES supplied:** Require the complete canonical SOURCE/COMMENTARY JSON object for every cited/scored source, with original `des_version`, identity/DOI, `text_basis`, evidence quotes, calculations, score and band. A `plus/des-scores.json`-shaped packet keyed by this exact `content_id`, or that structure plus explicit same-page identity, is acceptable. Obtain or reuse the actual matching `source_text` through Part 1, without executing any DES scoring, and check the correct page/source set, exact quote substrings, source basis, spec version, arithmetic and band using Part 3. When valid, **DO NOT rerun the DES/SOURCE/COMMENTARY model calls**: preserve the founder-supplied original JSON objects verbatim for Part 4. A separate model-run receipt is **not required for a valid DES JSON**; record its public-safe provenance and validation. A number without the canonical JSON is never sufficient.
 
-2. **Fidelity supplied** (by the founder, another agent or another client — Claude, Codex, Cursor, Cowork alike): This is a separate track, not a prerequisite to accepting valid DES JSON. The one test is «Acceptance is mechanical» below: `tools/des_fidelity_units.py <content_id> --texts texts.json --accept FILE` on the final page text, for all owed source/POOLED calls. **No run receipts, model ids, preflight record or proof of independent contexts are asked for**, and their absence is never a reason to refuse. When it exits 0, **DO NOT rerun Fidelity model calls**; preserve the JSON verbatim. Units it leaves `ALTERED`/`REVERSED` go to Part 3b as usual (the founder gate is unchanged); a unit the supplier's judge (or, under the earlier protocol, stronger review) already overruled is `MATCHES` in the JSON and is not asked again. If Fidelity is **not supplied** but is canonically owed, run **only the missing Fidelity calls** under Parts 2b/2c, not the already accepted DES. For COMMENTARY self-records and other lawful Fidelity exceptions, record the correct `null`/error/zero-unit outcome rather than fabricating model calls.
+2. **Fidelity supplied** (by the founder, another agent or another client — Claude, Codex, Cursor, Cowork alike): This is a separate track, not a prerequisite to accepting valid DES JSON. The one test is «Acceptance is mechanical» below: `tools/des_fidelity_units.py <content_id> --texts texts.json --accept FILE` on the final page text, for all owed source/POOLED calls. **No run receipts, model ids, preflight record or proof of independent contexts are asked for**, and their absence is never a reason to refuse. When it exits 0, **DO NOT rerun Fidelity model calls**; preserve the JSON verbatim. Units it leaves `ALTERED`/`REVERSED` are reported by Part 3b; a unit the supplier's judge or reviewer already overruled is `MATCHES` in the JSON and is not asked again. If Fidelity is **not supplied** but is canonically owed, run **only the missing Fidelity calls** under Parts 2b/2c, not the already accepted DES. For COMMENTARY self-records and other lawful Fidelity exceptions, record the correct `null`/error/zero-unit outcome rather than fabricating model calls.
 
 3. **No supplied results:** Execute the usual Parts 1–4, including all owed DES and Fidelity calls. If a supplied track's JSON is incomplete, stale, inconsistent, from another content ID, unverifiable against actual source text, or otherwise fails Part 3 (for Fidelity: `--accept` exits non-zero), **record 4.13 as blocked** with the exact failing rows and request corrected data. **Never silently rerun the founder's supplied result** to work around a bad/missing JSON; do not label the absence as a founder «بدون DES» exemption. Partial source sets are not a completed DES packet.
 
@@ -104,9 +104,8 @@ the page and the source; how it was produced cannot be checked from the file at 
 #### Scored once — the whole step in five rules
 
 The goal is to publish, and to tell the reader honestly how strong the paper is and
-whether the page says what it says. Everything below serves that and nothing else.
-These five rules hold on every route (own isolated process, sub-agent, relay) and
-override any older sentence that asks for more.
+whether the page says what it says. These five rules hold on every route (own isolated
+process, sub-agent, relay).
 
 1. **DES is scored once per paper.** The SOURCE call is run again in exactly two
    cases: the answer is about another paper (`WRONG_PAPER`: its `citation.doi` is not
@@ -121,28 +120,25 @@ override any older sentence that asks for more.
    it, and otherwise left as written and listed `UNVERIFIED` in the publish report.
    The ratings are the model's and are never touched. Its output is what Part 3
    validates and Part 4 stores.
-2. **No second opinion on the score.** There is no rating audit, no three-times
-   reproducibility run and no comparison of reruns (there are no reruns). A stored
-   record of the same paper is reused (Part 1); two stored records that disagree are
-   reported to the founder, nothing more. The `ABSENCE_NOTE` finding of Part 3(7) is a
-   warning in the report; `EMPTY_QUOTE` stays a failure (a rating with no evidence at
-   all is not a rating).
+2. **The score is the model's one answer.** A stored record of the same paper is
+   reused (Part 1); two stored records that disagree are reported to the founder.
+   Part 3(7)'s `ABSENCE_NOTE` is a warning in the report; `EMPTY_QUOTE` is a failure
+   (a rating with no evidence at all is not a rating).
 3. **Fidelity is one call per source.** One sweeper run is the result:
    `--vote <dir>` settles a directory that holds only `out-src<k>-1.json`, recomputing
-   counts, score and level. The judge is optional on every route: an agent that can
-   start a second isolated process itself may run it (Part 2c), at no cost to the
-   founder; it is never carried through the relay and never a reason to wait.
+   counts, score and level. A judge (Part 2c) is optional: an agent that can start a
+   second isolated process itself may run it; it is never carried through the relay
+   and never a reason to wait.
 4. **Relay: one file per paper, one trip.**
    `python3 tools/relay_call.py pack-paper --system .dentcast/des-v3.7-knowledge.md --source-block BLOCK.json --fidelity-input <dir>/input-src<k>.json --des-to <dir>/des-src<k>.json --fidelity-to <dir>/out-src<k>-1.json --out .dentcast/relay/<name>.md`
    carries the SOURCE call and the Fidelity sweep of that paper together; `ingest`
    splits the reply and refuses only another paper's answer. A page with five papers
-   is five trips. The two-context separation of SOURCE and FIDELITY is given up on this
-   route only, knowingly: the rating follows the paper's own text and closed rules.
+   is five trips. On this route SOURCE and FIDELITY share one context.
 5. **Flagged sentences never hold the publication.** `ALTERED`/`REVERSED` units are
    listed in the agent's Push-2 report, each with the source's sentence and one
    proposed rewrite (Part 3b's block). The page ships with the author's text and the
    record says what was measured. The founder fixes them afterwards, when he wants,
-   with «تطابق X رو کامل کن». There is no message M3b and no stop at C.4.13.
+   with «تطابق X رو کامل کن». C.4.13 completes when the record is stored.
 <!-- /des-scored-once:v1 -->
 
 **Order matters: this runs after 4.10 on purpose.** When a paper file was attached,
@@ -160,8 +156,10 @@ from the paper's title, or from what you happen to know about the study.
 **COMMENTARY basket:** `source_text` is the page's **own body text** — the متن of
 record from Question 3.5 (with its recorded rewrites, and the lead paragraph
 when module 03 added one), exactly as it will ship and without the presentation
-layer (below, Part 2b): `python3 tools/presentation_diff.py --text-of-record
-<page.html | 01-متن.md>` prints it. `text_basis` is `FULL_TEXT`. No DOI, no lookup, done.
+layer (below, Part 2b). **Build the whole Step 0 block with the tool, never by hand:**
+`python3 tools/des_commentary_block.py <content_id> -o block.json` (text of record, `FULL_TEXT`,
+the page URL and its section folder; without the section the model cannot earn checklist item 4
+from the section's declaration); its answer goes through `des_repair.py ANSWER --block block.json`. A queue item's `01-متن.md`: `presentation_diff.py --text-of-record`.
 
 <!-- des-record-guard:v1 -->
 **RESEARCH basket, first: one DES record per paper — look the DOI up before scoring.**
@@ -177,14 +175,13 @@ queue with `git show origin/queue:…` (or `--queue-dir <queue/>` on disk) and w
 nothing. Then:
 
 - **A stored record with the same `text_basis`, stamped with the current spec (3.7, or 3.6: 3.7 moved no score), that
-  passes Part 3 (including (7)) is reused verbatim** — no SOURCE call, no rerun. Copy the
-  object byte for byte into this page's `sources`; record «reused from <content_id or
-  queue item>, index <i>, sha256 <…>» in the run report (queue: `اجرا.md`). Part 2d's
-  audit is not repeated for a reused record. Still resolve its `source_text` by the ladder
+  passes Part 3 (including (7)) is reused** — no SOURCE call, no rerun: its ratings, points and labels are kept as they are. Pass the
+  object through `python3 tools/des_repair.py <object.json> --texts texts.json` (it only snaps the quotes to this run's source text) and put the result into this page's `sources`; record «reused from <content_id or
+  queue item>, index <i>, sha256 <…>» in the run report (queue: `اجرا.md`). **Write it under this page's `content_id` now** (Part 4, with `"fidelity": [null]`): `--build` and `--accept` read the record from there, and `--install` puts the fidelity result into that same record. Still resolve its `source_text` by the ladder
   below — the FIDELITY call needs it.
 - **No stored record, or only one under another `text_basis` or an older stamp** (an
   abstract scored before the full text was in hand, a 3.2 record): score it once
-  (Part 2). A stored record is never re-labelled or edited.
+  (Part 2). A stored record's ratings are never re-labelled or edited.
 - Two stored records of one DOI that already disagree with each other (`lookup` shows
   both) are reported to the founder; the newer one is used meanwhile.
 <!-- /des-record-guard:v1 -->
@@ -396,10 +393,9 @@ the written page, and only when its paper accompanies it**; the audio episode ne
 references attributes fewer than three claims to it and lands on
 `INSUFFICIENT_CLAIMS` by itself (spec appendix rule 9).
 
-**The model must not have seen the page's text in the SOURCE call, and must not
-see the SOURCE score here.** Two calls, two contexts. A model that read the
-write-up before scoring the paper can be led by it; a model that knows the band
-before judging the write-up confuses a weak paper with an unfaithful summary.
+**An agent that runs the calls itself gives each its own context:** the SOURCE call
+does not see the page's text and the FIDELITY call does not see the SOURCE score. The
+relay route carries both in one file («Scored once», rule 4).
 
 **Build the input blocks with the tool, never by hand** (spec F0, F6, appendix rules 7 and 10):
 
@@ -505,20 +501,18 @@ in Part 4.
 
 #### Part 2c — How the FIDELITY call is run: one sweeper run; the judge is optional
 
-Records and work directories made under the earlier protocol (two checker runs, a
-tie-break, a stronger review) keep their record; `--vote` still reads such a
-directory (two run files and `review.json`/`adjudicate.json`, no
-`judge-src<k>.json`). Every new run, re-check and caption check is **one sweeper run** (step 1), settled by
+Every run, re-check and caption check is **one sweeper run** (step 1), settled by
 `--vote` (step 3). Steps 2 and 4 describe the optional judge («Scored once», rule 3):
-run it only when you can start a second isolated process yourself. This changes the caller's protocol only:
-the spec, its verdict rules, F4 and the bands are untouched, and where the spec's
-appendix (rule 12) names «two checker runs, tie-break, stronger review» it means
-this Part 2c, which now reads «sweeper, judge».
+run it only when you can start a second isolated process yourself. This is the caller's
+protocol: the spec, its verdict rules, F4 and the bands stand as written, and where the
+spec's appendix (rule 12) names «two checker runs, tie-break, stronger review» it means
+this Part 2c. `--vote` also reads a stored work directory of two run files with
+`review.json`/`adjudicate.json`; such a record stays as it is.
 
-**Two roles, both the strongest reasoning model the environment exposes, each in
-its own fresh context:**
+**The sweeper is the strongest reasoning model the environment exposes, in a fresh
+context; an optional judge is the same class of model in a context of its own:**
 
-| Environment | Sweeper and judge (the same model is fine; the contexts are separate) |
+| Environment | Sweeper (and the optional judge) |
 |---|---|
 | Claude / Anthropic | Opus |
 | ChatGPT / Codex / OpenAI | the strongest reasoning model exposed, e.g. `gpt-6-astra` |
@@ -527,16 +521,14 @@ its own fresh context:**
 
 These are role examples, not fixed versions or quality equivalences; verify the
 actual model ids before starting and write them in the publish report
-(`UNVERIFIED` when the runtime does not show them). A lighter model is never used
-for either role; no stronger model available ⇒ the available one takes both, and
-that is not a reason to stop or to ask. **Price is never a gate. The one thing
-that cannot be replaced is the separate context:** the judge must not be the
-context that made the sweep. Two sequential tool-less processes (`agent-parity.md`
-«اجرای ایزوله») are enough — no parallel agents, no multi-agent tool. If the
-runtime gives no separate context at all (ChatGPT, a cloud agent with no CLI), use
-the relay route (`agent-parity.md` «مسیر رله», `tools/relay_call.py pack-paper`): one
-file per paper, sweeper only, no judge; only if the founder declines it,
-«توانمندی ندارم». Never present one context's self-review as a judge.
+(`UNVERIFIED` when the runtime does not show them). A lighter model is never
+chosen when a stronger one is exposed; with none, the available one runs, and that is
+not a reason to stop or to ask. **Price is never a gate.** The call runs in a tool-less
+process of its own (`agent-parity.md` «اجرای ایزوله»); a judge, when run, is a second
+such process, never the context that made the sweep. A runtime with no separate
+context at all (ChatGPT, a cloud agent with no CLI) uses the relay route
+(`agent-parity.md` «مسیر رله», `tools/relay_call.py pack-paper`): one file per paper;
+only if the founder declines it, «توانمندی ندارم».
 
 1. **Sweeper — one full run per input block.** The spec file
    (`.dentcast/des-v3.7-knowledge.md`) as the system prompt, the block
@@ -648,15 +640,6 @@ in the publish report (outside the spec's score objects).
 `voted-src<k>.json` is what Part 3 validates and Part 4 stores — one object per
 source, the spec's own shape. `--vote` is for SOURCE scope; a POOLED page is not
 voted (it runs one call per part and `--merge`).
-
-<!-- des-rating-audit:v1 -->
-#### Part 2d — retired
-
-The rating audit by a second reviewer is no longer a step («Scored once», rule 2).
-`tools/des_record_guard.py audit-build` / `audit-apply` remain for the one case the
-founder asks for an audit of a named record by himself; nothing in a publication
-runs them and nothing waits for them.
-<!-- /des-rating-audit:v1 -->
 
 #### Part 3 — Validate the output mechanically (the appendix's contract)
 
@@ -912,8 +895,7 @@ run command, model and system-prompt sha256 (Part 2); and every repair and `UNVE
 appendix rule 5), the count line («۵۰ از ۵۲ ادعایی که منابع به آن پرداخته‌اند
 مطابق است؛ ۴ جملهٔ دیگر در منابع نیامده»), every `ALTERED` and `REVERSED` unit
 with its `change_kind`, every doubtful unit (Part 2c step 4: the sweeper's and the judge's answer and the
-judge's reason, as information; records made under the earlier protocol: every unit
-the stronger review overruled to `MATCHES`), or the reason for a `null` or `INSUFFICIENT_TEXT` slot. And Part 3b's outcome: each
+judge's reason, as information), or the reason for a `null` or `INSUFFICIENT_TEXT` slot. And Part 3b's outcome: each
 offered sentence with the founder's answer («اصلاح کن» / «خودم می‌نویسم» /
 «همین بماند»), and the grade before → after the re-run. For a skip, the documented
 reason line. Explicitly confirm that no DOI, abstract, or quartile was guessed.

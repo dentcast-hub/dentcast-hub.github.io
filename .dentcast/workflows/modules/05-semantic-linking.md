@@ -1,5 +1,5 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
-> **Checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision. Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
+> **Checkpoint protocol.** The ledger protocol is `.dentcast/workflows/publish-checkpoints.md` (in the reading pack). Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
 > **Order, founder messages, the save point and the deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
@@ -13,7 +13,7 @@ Runs on every publish, whatever the category. It surfaces the new content from t
 
 #### Step 1 — Semantic review of glossary terms
 
-Compare the new content's conceptual subject with each term's meaning and scope. Be **conservative**: link only where the relationship is real and would help a reader. Strong → Step 2; borderline → not linked, recorded.
+**First** `python3 tools/related_cap.py --glossary-room`: only the term pages it lists have a free slot. Review those alone; a related term that is not listed is recorded «at cap», without opening its page. Compare the new content's conceptual subject with each term's meaning and scope. Be **conservative**: link only where the relationship is real and would help a reader. Strong → Step 2; borderline → not linked, recorded.
 
 #### Step 2 — Per-term back-link (independent, per page)
 

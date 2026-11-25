@@ -1,5 +1,5 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
-> **Checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision. Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
+> **Checkpoint protocol.** The ledger protocol is `.dentcast/workflows/publish-checkpoints.md` (in the reading pack). Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
 > **Order, founder messages, the save point and the deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
@@ -7,13 +7,14 @@ Ledger steps in this module: `D`, `E`, `F`, `G` — the post-Push-2 runner's. Th
 
 ## Phase D — English mirror & language toggle (MANDATORY; Hard Rule 12)
 
-**Not the «… رو انگلیسی کن» trigger — it is part of every `.org` publish** (Hard Rule 12). The en page and the toggle are produced together by reusing the English-version workflow.
+**Part of every `.org` publish** (Hard Rule 12): the en page and the toggle are produced together.
 
 **Two documented skips, and no others** (Hard Rule 12 gives the reasons): **LiteCast** — "Phase D: skipped — LiteCast (Hard Rule 10)"; **چالش** — "Phase D: skipped — چالش (Hard Rule 12, RULE 16)". Every other publish runs it.
 
 **Steps:**
 
-1. **Hand off to the English-version workflow.** With the fa page (`{type}/{file}.html`) as source, run **`.dentcast/workflows/en-version.md`**; it owns every detail — do not re-improvise here:
+0. **Start the mirror with the tool, finish it with its check.** `python3 tools/en_mirror_head.py <content_id> --title "…" --description "…"` clones the newest English page of the section with the slug, title, description, dates and JSON-LD already swapped; translate the Persian body over the template's; then `python3 tools/en_mirror_head.py <content_id> --check` must pass (nothing of the template left) before C.6. Steps 1–4 say what the finished page is.
+1. **What the mirror is** (the standalone «… رو انگلیسی کن» route, `.dentcast/workflows/en-version.md`, makes the same page; a publication follows the steps here):
    - en page at `/{type}/en/{file}.html`; **English chrome cloned from `metanotes/en/meta-1.html`** (`<html lang="en" dir="ltr" data-dc-no-header>`, English topbar/toolbar labels, the `.lang-btn` CSS + markup), GA4 exactly once.
    - **Body, box/section CSS classes and JSON-LD `@type`/shape from THIS page's own type** (e.g. insight `.glass-box`), LTR and **translated** structure-faithfully (same headings, same number of `<li>`, nothing added or dropped), the module-03 lead included.
    - **Scripts/analytics follow this type's conventions, not meta-1's extras.**

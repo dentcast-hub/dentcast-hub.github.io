@@ -1272,6 +1272,8 @@ def main():
         if not a.texts:
             sys.exit("--pack needs --texts (the packet carries the text every quote is checked against)")
         out = Path(a.pack).resolve()
+        if out.is_dir():
+            sys.exit("--pack OUT is a file path (e.g. <dir>/packet.json), not a directory")
         relay = (ROOT / ".dentcast" / "relay").resolve()
         if ROOT.resolve() in out.parents and relay not in out.parents:
             sys.exit("--pack OUT inside the repository must be under .dentcast/relay/ (the founder's relay folder)")
@@ -1315,13 +1317,21 @@ def main():
         if a.install:
             if not packet:
                 sys.exit("--install takes a packet (--pack's file)")
+            import datetime  # noqa: PLC0415
+            had = store.get(a.content_id)
             new_rec = {**packet["des"], "fidelity": packet["fidelity"]}
-            if store.get(a.content_id) == new_rec:
+            new_rec["scored_at"] = (new_rec.get("scored_at") or (had or {}).get("scored_at")
+                                    or datetime.date.today().isoformat())
+            if had == new_rec:
                 print("plus/des-scores.json already holds exactly this record — nothing to write")
                 return
             import queue_install_des as qi  # noqa: PLC0415  (the queue's byte-preserving writer)
             path = ROOT / "plus/des-scores.json"
-            path.write_bytes(qi.append_entries(path, [(a.content_id, new_rec)]).encode("utf-8"))
+            if had and had.get("sources") == new_rec["sources"] and not any(had.get("fidelity") or []):
+                import dentcast_text_io as tio  # noqa: PLC0415  (the DES-only record of Part 1 gets its fidelity)
+                tio.write_raw(path, tio.json_replace_value(tio.read_raw(path), [a.content_id], new_rec))
+            else:
+                path.write_bytes(qi.append_entries(path, [(a.content_id, new_rec)]).encode("utf-8"))
             print(f"INSTALLED into plus/des-scores.json[{a.content_id!r}] — Part 3b for any unit still "
                   "ALTERED/REVERSED, then Phase F (verify_publish.py) as always")
         return

@@ -1,5 +1,5 @@
 <!-- dentcast-checkpoint-protocol:v1 -->
-> **Checkpoint protocol.** Read `.dentcast/workflows/publish-checkpoints.md` completely once per unchanged revision. Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
+> **Checkpoint protocol.** The ledger protocol is `.dentcast/workflows/publish-checkpoints.md` (in the reading pack). Mark each ledger step `started` with `tools/dentcast_publish_handoff.py`, then record its real evidence or canonical skip reason before the next; never auto-mark semantic or scientific work complete. Interrupted publication: `publish-checkpoints.md`, «Interrupted publication».
 > **Order, founder messages, the save point and the deliveries:** `.dentcast/workflows/publish-checkpoints.md` («Order, messages, text lock, deliveries»). Delivery 3 (C.8, C.7, D, E, F, G) is the post-Push-2 runner's, never run locally; intermediate checkpoints stay local.
 <!-- /dentcast-checkpoint-protocol:v1 -->
 
@@ -37,6 +37,7 @@ The DentCast paper cabinet is the Drive folder `https://drive.google.com/drive/f
 
 The root catalog is a JSON **object** whose `papers` key holds a flat array of entries. Add the new paper:
 
+0. **Already in the catalog?** Look the DOI up first (case-insensitive). A paper that is already an entry gets no second one: append this page to that entry's `linked_episodes` with `dentcast_text_io` (`json_append`), keep its id for step 8, and skip steps 1–7 and 9.
 1. **Next id.** `P` + the zero-padded successor of the current max `P####` (after `P2876` → `P2877`), confirmed by scanning `papers`.
 2. **Match the ENRICHED entry shape exactly.** A recent `semantic_tagged: true` entry is the template — same keys, nesting and order, no extras, no omissions. Its key set: `id`, `title`, `file_name`, `topic`, `topic_path`, `type`, `local_path`, `file_size`, `key_finding`, `clinical_bottom_line`, `linked_episodes`, `drive_link`, `status`, `drive_download`, `drive_view`, `drive_id`, `tags`, `name_bucket`, `semantic_tagged`, `real_title`, `doi`, `journal`, `crossref_year`, `subjects`, `abstract`, `display_title`. **Confirm the live shape from the file**; never add a field the template lacks.
 3. **Fill from the paper and the lookup:**

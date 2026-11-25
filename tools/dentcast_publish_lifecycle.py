@@ -801,7 +801,7 @@ def step(root, expected, sid, status, evidence, reason, note=None):
         h.require(not any(a['status'] in ('started', 'outcome_unknown') for a in p['external_actions']),
                   'EXTERNAL_OUTCOME_UNKNOWN_DO_NOT_RETRY')
     h.require(row["status"] != status or row["evidence"] != evidence or row["reason"] != reason,
-              "NO_STEP_STATE_CHANGE: do not repeat this transition; perform or diagnose the current action first")
+              "NO_STEP_STATE_CHANGE: " + sid + " is already " + status + "; do the step's work, then `advance --id " + sid + " --evidence …`")
     row.update(status=status, evidence=evidence, reason=reason)
     p["status"] = "blocked" if status in ("blocked", "failed") else "in_progress"
     p["blocker"] = f"{sid}: {reason}" if p["status"] == "blocked" else None
@@ -844,7 +844,13 @@ def advance(root, expected, sid=None, evidence=None, skips=(), start_next=False,
         h.require(sid == h.next_step(p), "NOT_NEXT_CANONICAL_STEP")
         row = next(s for s in p["steps"] if s["id"] == sid)
         h.require(sid != "F", "USE_REAL_VERIFY_FOR_PHASE_F")
-        h.require(row["status"] == "started", "STEP_MUST_BE_STARTED_FIRST")
+        h.require(row["status"] in ("started", "pending"), "STEP_MUST_BE_STARTED_FIRST")
+        if row["status"] == "pending":
+            # The next canonical step is opened and closed in one call: a separate
+            # «started» write for work that is already done only costs the agent a refusal.
+            h.require(bool(evidence) and all(h.nonempty(x) for x in evidence), "COMPLETION_EVIDENCE_REQUIRED")
+            row.update(status="started")
+            operations.append((sid, "started", [], None))
         row.update(status="completed", evidence=evidence or [], reason=None)
         operations.append((sid, "completed", evidence or [], None))
         require_plan(p)
@@ -864,6 +870,15 @@ def advance(root, expected, sid=None, evidence=None, skips=(), start_next=False,
                   + " and has evidence, an external action or work changed since the last checkpoint; "
                   "record that work first, or use: step --id " + skip_id + " --status skipped --reason '<canonical reason>' "
                   "and then step --id <next> --status started")
+        row.update(status="skipped", evidence=[], reason=reason)
+        operations.append((skip_id, "skipped", [], reason))
+        require_plan(p)
+    # Steps this category never runs are skipped here with their canonical reason,
+    # so the agent does not spend a call (or a wrong reason) on each of them.
+    import dentcast_publish_shortcuts as shortcuts
+    while (sid is not None or skips or start_next) and shortcuts.auto_skip(p):
+        skip_id, reason = shortcuts.auto_skip(p)
+        row = next(s for s in p["steps"] if s["id"] == skip_id)
         row.update(status="skipped", evidence=[], reason=reason)
         operations.append((skip_id, "skipped", [], reason))
         require_plan(p)
@@ -932,7 +947,6 @@ def stage_delivery(root, expected, paths):
         require_fixed_cut_readiness(p, root)
     stale = stale_checkout(root)
     h.require(stale is None, stale)
-    h.require(bool(paths), "STAGE_DELIVERY_PATHS_REQUIRED")
     # finish requires context.delivery on that exact delivered handoff, so a
     # paper-only final handoff without it would need a second final commit.
     h.require(not paper_final or (bool(p["context"]["delivery"]) and all(
@@ -943,6 +957,11 @@ def stage_delivery(root, expected, paths):
         "filing) before staging the paper-only final handoff")
     scope = set(p["target_paths"]) | set(state["snapshot"]["files"])
     local_only = h.local_only_inputs(root, p)
+    if not paths:  # every enrolled path that is on disk or known to git
+        known = set(h.git(root, "ls-files", "--", *sorted(scope)).splitlines()) if scope else set()
+        paths = sorted(x for x in scope if x != h.STATE_PATH and x not in local_only
+                       and ((Path(root) / x).exists() or x in known))
+    h.require(bool(paths), "STAGE_DELIVERY_PATHS_REQUIRED")
     for path in paths:
         h.require(h.relative_path(path) in scope and path != h.STATE_PATH, "STAGE_PATH_OUTSIDE_PUBLICATION:" + path)
         h.require(path not in local_only, "LOCAL_ONLY_INPUT_IS_NEVER_DELIVERED:" + path)

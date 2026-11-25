@@ -49,6 +49,8 @@ on:
       - 'tools/des_repair.py'
       - 'tools/relay_call.py'
       - 'tests/test_des_repair.py'
+      - 'tools/des_commentary_block.py'
+      - 'tests/test_des_commentary_block.py'
       - 'tools/related_cap.py'
       - '.dentcast/queue-frozen-des.json'
       - 'tests/fixtures/**'
@@ -188,6 +190,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p test_relay_call.py -v
       - name: Check that a DES answer is repaired, not rerun (module 08 «Scored once»)
         run: python3 -m unittest discover -s tests -p test_des_repair.py -v
+      - name: Check the DES block of a page scored on its own text (section named, tool-built)
+        run: python3 -m unittest discover -s tests -p test_des_commentary_block.py -v
       - name: Check the queue-prep fixes of item 24 (caption carry, sentence split, empty conclusion, 05 shapes, cap count, cleanup)
         run: python3 -m unittest discover -s tests -p test_queue_prep_fixes.py -v
       - name: Check the DES rating rule, one record per paper and the rating audit (module 08 Part 2d, Part 3(7))

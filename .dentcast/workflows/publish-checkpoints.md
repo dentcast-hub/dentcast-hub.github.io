@@ -28,32 +28,7 @@ This section is the only home of this rule; entrypoints point here.
 
 ## Source loading
 
-- Choose the route and its sources at the start. Read each needed source completely, in bounded
-  numbered ranges. Keep `(path, revision, ranges read)` in the session, no state file. An unchanged
-  source already read is not reread; reload only a changed source, an authorized recovery source or a
-  source needed to diagnose a new error, and say why. Summaries and memory never replace the first
-  complete reading.
-- The byte-exact readpack (`tools/dentcast_publish_readpack.py`): rules in `README.md` only. The pack
-  is the text source, read at the moments below, not a preload.
-
-**Just-in-time loading.** Up front: `README.md`, `global/README.md` with its selected sections,
-`agent-parity.md`, this file, modules 01 and 02. After Phase B is locked, each module (or its readpack
-ranges) is read completely immediately before the first ledger step its preface lists, and stays
-loaded. A module whose steps are all canonically skipped is not read. Reading later never means
-reading less.
-
-| When | Read |
-|---|---|
-| Phase B locked, Question 4.9 = «چالش» | module 09 complete, before C.1 (its markup shapes the page) |
-| Founder hands over DES/Fidelity JSON at intake | module 08 opening through «Conditional path for founder-supplied results», before Question 4.8 |
-| Before C.0 … C.2 / C.2.4 … C.4.6 | modules 03 / 04 |
-| Before C.4.10.1 (paper attached) | module 06 |
-| Before C.4.13 | module 08 complete; LiteCast and Challenge read its opening up to `#### Conditional path for founder-supplied results` for the skip line |
-| Before C.4.7 | module 05 |
-| Before C.4.11 / C.4.14 / C.5.0 | modules 07 / 09 (Challenge only) / 10 |
-| At C.2, for the page's chip row | Hard Rule 15 only (module 01, already read): existing canonical concepts, resolved with `hashtag_ref.py --simulate`, no mint. Step 5.0 settles the final list and corrects the row before the brain write |
-| Before writing the English mirror (before C.6) | `en-version.md`, module 12 through the end of Phase D, module 11 above its `module-11-boundary` marker (§6) |
-| Never in a normal run | module 11 below its `module-11-boundary` marker (§7–§8) and module 12's Phase E and Phase F: the runner does them; read only for guarded recovery (`publish-after-push2.md`). Module 12's «Final output summary» is **not** in that set: it lists what the agent's own Push-2 report must carry |
+The rules of a publication are its reading pack (`README.md`, «Reading: one pack per publication»): one file, read once, top to bottom, in bounded chunks, before the first write. Nothing else is opened unless a tool refuses and names a file. A changed source or intake fact means a new pack; summaries and memory never replace the reading. Two parts of the pack are used early: module 07 §4.12-ب at Question 6 (M2), and module 09 before C.1 on a Challenge page. Guarded recovery after Push 2 (`publish-after-push2.md`) reads modules 11 and 12 whole.
 
 ## Order, messages, text lock, deliveries
 
@@ -128,20 +103,17 @@ reaches only the save point.
    `post-cut2-mechanical.yml` (its push filter is `**`). A branch that holds commits is never moved
    (`TOOL_OLDER_THAN_ORIGIN_MAIN` then names `git merge --no-edit origin/main`).
    `SHALLOW_CLONE_DEEPEN_REQUIRED` → `git fetch --deepen=50 origin` (or `--unshallow`) and retry.
-2. Check only that `.dentcast/PUBLISH-HANDOFF.md` does not exist (section above). Then run the
-   global selector with every path this run will touch and read what it adds
-   (`python3 tools/dentcast_global_rules.py --path <path> … [--read]`, `global/README.md`); rerun it
-   when the scope grows. It selects per file, so a pathway step loads the standings/certificate
-   sections and not the exam internals.
-3. `python3 tools/dentcast_publish_handoff.py plan` (paper-only: `plan --paper-only`, category
-   `paper-only`); its full `steps` go into the input JSON (`publish-handoff-tool.md`). `init` and
-   `record` reject an incomplete ledger.
-4. Identity known → `init` with the real `content_id` and category. Otherwise `init` with content ID
-   `unassigned`, category `pending`, the full ledger and a watched path such as
-   `dentcast-brain.json`, then once `bind --expected-sha256 <digest> --content-id <id> --category
-   <category> --target-path <path> --evidence <intake-reference>` during intake, before authoring.
-   Completed, evidenced founder-requested external actions (e.g. a Drive move) do not block `bind`.
-   A real identity is never rebound.
+2. Check only that `.dentcast/PUBLISH-HANDOFF.md` does not exist (section above).
+3. Identity known → `python3 tools/dentcast_publish_handoff.py start --content-id <section>/<slug>
+   --category <category> --attached-paper <yes|no> --challenge <yes|no> --target-path <path> …` (the
+   tool writes the full ledger itself; no input JSON). The paper-only route and an intake whose identity is not yet known are in
+   `publish-handoff-tool.md`. A real identity is never rebound.
+4. The tool keeps the books: `--expected-sha256` may be omitted everywhere (the handoff as it is on
+   disk); `advance` skips by itself the steps this publication never runs (another category's rows, and
+   the paper and Challenge rows answered «no» at `start`); `status` prints the next step in one line; one more path, a decision,
+   an approval or a pending question is `note --target-path … | --decision '{…}' | --approval '{…}'
+   | --pending '{…}' | --clear-pending`; and `close` writes everything C.6 needs (below).
+   `publish-handoff-tool.md` is read only when a command refuses.
 5. `content_id` = `<section>/<slug>` = page path without `.html` (`insight/insight-99`); the English
    mirror `<section>/en/<slug>.html` and receipts derive from it; other forms → `CONTENT_ID_INVALID`.
    Paper-only keeps its catalog id.
@@ -154,10 +126,11 @@ python3 tools/dentcast_publish_handoff.py step --id <id> --status started --expe
 python3 tools/dentcast_publish_handoff.py advance --id <id> --evidence <receipt-ref> --start-next --expected-sha256 <digest> --reconcile-note '<actual changes reviewed>'
 ```
 
-- Prefer `advance`: it saves each transition separately, passes digests internally and stops at a
-  delivery cut (`delivery_required`). Omit `--start-next` at an unread-module boundary or a wait.
-  Consecutive inapplicable steps: repeated `--skip '<id>=<canonical exception>'` in order (no `--id`
-  with `--skip`); a row an
+- Prefer `advance`: it saves each transition separately and passes digests internally. After
+  `C.6` completes, run `stage-delivery` (Push 2); a later transition before that push is refused
+  (`delivery_required`). `inspect` shows `blocked` while a step is `started`: that is its normal state. Omit `--start-next` at an unread-module boundary or a wait.
+  Consecutive inapplicable steps: repeated `--skip '<id>=<canonical exception>'` in order (with
+  `--id`, that step completes first); a row an
   earlier `--start-next` opened may be skipped while it has no evidence, external action or change.
   `failed`/`blocked` use `step`. On a mid-sequence failure `transitions_written` and the last digest
   show what was saved; never replay a completed action.
@@ -210,7 +183,7 @@ note is not replacement evidence.
 The save point and Push 2 use the same command:
 
 ```bash
-python3 tools/dentcast_publish_handoff.py stage-delivery --expected-sha256 <digest> --path <scoped-path>   # repeat --path
+python3 tools/dentcast_publish_handoff.py stage-delivery   # every enrolled path; --path <p> narrows it
 ```
 
 `stage-delivery` stages the scoped work, refreshes the checkpoint in the index, stages the handoff
@@ -235,8 +208,13 @@ the `authored-intro` approval). `origin`: `author_original` (founder's own first
 evidence is the standing-acceptance record); `not_applicable` (reviewed exception, reason in
 `source_ref`).
 
-**What the writer validates at cut 2** (and at completion): one `second_cut_editorial_lock_v1`
-decision with all ten scopes, each `resolved` or `not_applicable` with a real reference:
+**C.6 is closed by one command:** `python3 tools/dentcast_publish_handoff.py close --lead
+author_original|agent_authored|not_applicable [--title-from founder|agent] [--caption-from
+founder|agent]`. It reads the title and caption from the brain entry, records both approvals and the
+lead provenance, builds the ten-scope lock from the evidence already on the ledger, checks the Pulse
+line and the English mirror on disk, and completes C.6. Then `stage-delivery`, one commit, one push.
+Never hand-write the records below; this is what the tool writes and what the cut validates: one
+`second_cut_editorial_lock_v1` decision with all ten scopes, each `resolved` or `not_applicable`:
 
 ```json
 {"kind": "second_cut_editorial_lock_v1",

@@ -1570,6 +1570,24 @@ def _verify_core(content_id, rep, expect_title=None, expect_caption=None, sweep=
                           f"JSON-LD {node_type}.{field} = {node.get(field)!r}, brain title = {title!r}",
                           "Hard Rule 16")
 
+    # A cloned page that kept its template's JSON-LD description describes another
+    # article to every crawler (chairside-56 shipped visit 55's, share-38 share-37's).
+    own = re.findall(r'"description":\s*"((?:[^"\\]|\\.)*)"', doc)
+    if own:
+        stale = []
+        for other in sorted(Path(ROOT / page_rel).parent.glob("*.html")):
+            if other.name in (Path(page_rel).name, "index.html"):
+                continue
+            if any(('"description": "' + d + '"') in other.read_text(encoding="utf-8", errors="replace")
+                   or ('"description":"' + d + '"') in other.read_text(encoding="utf-8", errors="replace") for d in own if len(d) > 40):
+                stale.append(other.name)
+        msg = f"JSON-LD description is identical to {', '.join(stale[:3])}: left over from the cloned template"
+        if stale and sweep:
+            rep.warn("2 clone", msg)
+        else:
+            rep.check(not stale, "2 clone", "JSON-LD description is this page's own", msg,
+                      "module 03 step 2: replace the template's JSON-LD description (fa and en) with this page's")
+
     # 57% of the site keeps meta description == caption; the rest deliberately
     # writes a tighter search snippet. Not a universal convention, so a
     # divergence is surfaced rather than failed — but it is surfaced, because a
