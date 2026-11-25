@@ -105,11 +105,12 @@ reaches only the save point.
    `SHALLOW_CLONE_DEEPEN_REQUIRED` → `git fetch --deepen=50 origin` (or `--unshallow`) and retry.
 2. Check only that `.dentcast/PUBLISH-HANDOFF.md` does not exist (section above).
 3. Identity known → `python3 tools/dentcast_publish_handoff.py start --content-id <section>/<slug>
-   --category <category> --target-path <path> …` (the tool writes the full ledger itself; no input
-   JSON). The paper-only route and an intake whose identity is not yet known are in
+   --category <category> --attached-paper <yes|no> --challenge <yes|no> --target-path <path> …` (the
+   tool writes the full ledger itself; no input JSON). The paper-only route and an intake whose identity is not yet known are in
    `publish-handoff-tool.md`. A real identity is never rebound.
 4. The tool keeps the books: `--expected-sha256` may be omitted everywhere (the handoff as it is on
-   disk); `advance` skips by itself the steps this category never runs; one more path, a decision,
+   disk); `advance` skips by itself the steps this publication never runs (another category's rows, and
+   the paper and Challenge rows answered «no» at `start`); `status` prints the next step in one line; one more path, a decision,
    an approval or a pending question is `note --target-path … | --decision '{…}' | --approval '{…}'
    | --pending '{…}' | --clear-pending`; and `close` writes everything C.6 needs (below).
    `publish-handoff-tool.md` is read only when a command refuses.

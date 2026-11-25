@@ -179,13 +179,22 @@ def route_spans(name, lines, *, category, attached_paper, challenge, des_basket=
         # Basket 1 (the page's own text, no cited source): one SOURCE call on the page text and
         # no FIDELITY call (module 08 Part 2b, «When»). Parts 2b-2d (the FIDELITY protocol and
         # the retired audit) and Part 3b (flagged sentences) have nothing to act on.
+        supplied = boundary(lines, '#### Conditional path for founder-supplied results')
+        once_a = boundary(lines, '<!-- des-scored-once:v1 -->')
+        once_b = boundary(lines, '<!-- /des-scored-once:v1 -->') + 1
+        part1 = boundary(lines, '#### Part 1 — Resolve `source_text`')
+        guard = boundary(lines, '<!-- des-record-guard:v1 -->')
+        part2 = boundary(lines, '#### Part 2 — Run the prompt file')
         fid = boundary(lines, '#### Part 2b — Run the FIDELITY call')
         checks = boundary(lines, '#### Part 3 — Validate the output mechanically')
         fixes = boundary(lines, '#### Part 3b — Report every differing sentence')
         store = boundary(lines, '#### Part 4 — Store the record')
-        if not (fid < checks < fixes < store):
+        if not (supplied < once_a < once_b <= part1 < guard < part2 < fid < checks < fixes < store):
             raise UnsafeSelection('INVALID_MODULE_08_ORDER')
-        return include([(0, fid), (checks, fixes), (store, size)], size), 'COMMENTARY_BASKET_NO_FIDELITY_LOCKED_AT_Q4_8'
+        # Kept: when the step runs or is skipped, the five rules, the page's own text as
+        # source (Part 1 up to the paper lookup), the scoring call, its checks and storage.
+        return include([(0, supplied), (once_a, once_b), (part1, guard), (part2, fid), (checks, fixes),
+                        (store, size)], size), 'COMMENTARY_BASKET_NO_FIDELITY_LOCKED_AT_Q4_8'
 
     if name == '11-build-and-version.md':
         # Everything below the marker is the post-Push-2 runner's C.8/C.7 part, which

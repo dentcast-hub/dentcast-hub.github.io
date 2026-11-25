@@ -801,7 +801,7 @@ def step(root, expected, sid, status, evidence, reason, note=None):
         h.require(not any(a['status'] in ('started', 'outcome_unknown') for a in p['external_actions']),
                   'EXTERNAL_OUTCOME_UNKNOWN_DO_NOT_RETRY')
     h.require(row["status"] != status or row["evidence"] != evidence or row["reason"] != reason,
-              "NO_STEP_STATE_CHANGE: do not repeat this transition; perform or diagnose the current action first")
+              "NO_STEP_STATE_CHANGE: " + sid + " is already " + status + "; do the step's work, then `advance --id " + sid + " --evidence …`")
     row.update(status=status, evidence=evidence, reason=reason)
     p["status"] = "blocked" if status in ("blocked", "failed") else "in_progress"
     p["blocker"] = f"{sid}: {reason}" if p["status"] == "blocked" else None

@@ -32,22 +32,39 @@ SCOPE_STEPS = {
 }
 
 
+FACTS = "intake_facts_v1"
+FACT_ROWS = {"C.4.10.1": ("attached_paper", "no attached paper (Question 4.7)"),
+             "C.4.10.2": ("attached_paper", "no attached paper (Question 4.7)"),
+             "C.4.10.3": ("attached_paper", "no attached paper (Question 4.7)"),
+             "C.4.14": ("challenge", "ordinary post, not a Challenge (Question 4.9)")}
+
+
 def auto_skip(publication):
-    """(step id, reason) for the next step when this category never runs it, else None."""
+    """(step id, reason) for the next step when this publication never runs it, else None:
+    a row of another category, or a paper/Challenge row the intake facts answered «no»."""
     sid = h.next_step(publication)
-    if sid not in CATEGORY_ONLY:
+    if sid is None:
         return None
-    cats, reason = CATEGORY_ONLY[sid]
     row = next(s for s in publication["steps"] if s["id"] == sid)
-    if h.publication_category(publication) in cats or row["status"] != "pending":
+    if row["status"] != "pending":
         return None
-    return sid, reason
+    if sid in CATEGORY_ONLY:
+        cats, reason = CATEGORY_ONLY[sid]
+        return None if h.publication_category(publication) in cats else (sid, reason)
+    if sid in FACT_ROWS:
+        facts = next((d for d in publication["context"]["decisions"]
+                      if isinstance(d, dict) and d.get("kind") == FACTS), {})
+        key, reason = FACT_ROWS[sid]
+        return (sid, reason) if facts.get(key) == "no" else None
+    return None
 
 
-def start_input(content_id, category, target_paths):
+def start_input(content_id, category, target_paths, attached_paper=None, challenge=None):
+    facts = {k: v for k, v in (("attached_paper", attached_paper), ("challenge", challenge)) if v in ("yes", "no")}
     return {"content_id": content_id, "category": category, "target_paths": sorted(set(target_paths)),
             "status": "in_progress", "blocker": None,
-            "context": {"inputs": [], "decisions": [], "approvals": [], "pending_questions": [],
+            "context": {"inputs": [], "decisions": [{"kind": FACTS, **facts}] if facts else [],
+                        "approvals": [], "pending_questions": [],
                         "validation": [], "delivery": [], "unrelated_changes": []},
             "steps": lifecycle.plan(), "external_actions": []}
 

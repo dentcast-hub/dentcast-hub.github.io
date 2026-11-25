@@ -72,7 +72,8 @@ Ledger, the save point (once C.4.13 starts), Push 2 (after `C.6`), delivery 3 by
   `git restore -- <file>` و تکرار با ابزار. این چک در همان دستور shell انجام شود.
 - ویرایش رشته‌ای با `replace` سراسری ممنوع؛ همیشه با بافت یکتا
   (خط قبل/بعد) و `count==1`، وگرنه ممکن است انتریِ انتشار دیگر عوض شود.
-- فایل‌های CRLF: جای‌گذاری با `\r\n`؛ ابزار `dentcast_text_io` این را حفظ می‌کند.
+- فایل‌های CRLF: جای‌گذاری با `\r\n`؛ ابزار `dentcast_text_io` این را حفظ می‌کند. صفحه‌های فهرست
+  (`<section>/index.html`، `index.html`) هم فقط با `read_raw`/`write_raw` ویرایش می‌شوند.
 
 ## ۴. بیلدرها: صفر اجرای محلی
 - `build_quiz_index`, `build_flashcards_index`, `build_plus_index`, `build_pillar`,

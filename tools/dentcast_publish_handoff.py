@@ -1591,6 +1591,9 @@ def main(argv=None):
     p.add_argument("--content-id", required=True)
     p.add_argument("--category", required=True)
     p.add_argument("--target-path", action="append", default=[], required=True)
+    p.add_argument("--attached-paper", choices=["yes", "no"], help="Question 4.7; «no» lets advance skip the paper rows itself")
+    p.add_argument("--challenge", choices=["yes", "no"], help="Question 4.9; «no» lets advance skip the Challenge row itself")
+    p = sub.add_parser("status", help="One line: next step, its state, the digest")
     p = sub.add_parser("note", help="Record one decision, approval or pending question")
     p.add_argument("--expected-sha256")
     p.add_argument("--decision", help="JSON object appended to context.decisions")
@@ -1642,6 +1645,16 @@ def main(argv=None):
                 raise Blocked("CLEANUP_DELIVERY_PENDING:confirm-cleanup_or_restore-cleanup")
             result = inspect(root, args.check_remote)
             lifecycle.require_plan(result["recorded_state"]["publication"])
+        elif args.command == "status":
+            state, digest = load_state(root)
+            pub = state["publication"]
+            nxt = next_step(pub)
+            row = next((s for s in pub["steps"] if s["id"] == nxt), None)
+            result = {"status": "ok", "content_id": pub["content_id"], "next_step": nxt,
+                      "next_step_state": row["status"] if row else None,
+                      "done": sum(s["status"] in ("completed", "skipped") for s in pub["steps"]),
+                      "of": len(pub["steps"]), "pending_questions": len(pub["context"]["pending_questions"]),
+                      "sha256": digest, "publication_completed": False}
         elif args.command == "note":
             import dentcast_publish_shortcuts as shortcuts
             result = shortcuts.note(root, args.expected_sha256,
@@ -1684,7 +1697,8 @@ def main(argv=None):
         else:
             if args.command == "start":
                 import dentcast_publish_shortcuts as shortcuts
-                publication = shortcuts.start_input(args.content_id, args.category, args.target_path)
+                publication = shortcuts.start_input(args.content_id, args.category, args.target_path,
+                                                    args.attached_paper, args.challenge)
                 args.command, args.check_remote = "init", False
             else:
                 path = Path(args.input)
@@ -1726,7 +1740,8 @@ def main(argv=None):
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError):
         import sys
         exc = sys.exc_info()[1]
-        code = str(exc) if isinstance(exc, Blocked) else "INVALID_INPUT_OR_STATE"
+        code = str(exc) if isinstance(exc, Blocked) else (
+            "INVALID_INPUT_OR_STATE: " + type(exc).__name__ + ": " + str(exc)[:300])
         action = "Resolve the named blocker in the current run; preserve work and review actual changes before reconciliation. Do not repeat an unchanged failed command or discover branches."
         if code == "HANDOFF_MISSING":
             action = ("Restore the exact current-run receipt; initialize only if no publication action began. A missing receipt does not authorize branch discovery; "
