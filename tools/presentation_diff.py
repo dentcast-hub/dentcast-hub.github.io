@@ -512,6 +512,7 @@ def corpus_check(ref, queue_dir=None, queue_ref="origin/queue"):
             r = subprocess.run(["git", "-C", str(ROOT), "archive", queue_ref, "queue"], capture_output=True)
             if r.returncode != 0:
                 out["queue"] = f"skipped: {queue_ref} is not available ({r.stderr.decode('utf-8', 'replace').strip()[:120]})"
+                out["status"] = "identical" if not out["page_differences"] else "DIFFERENT"
                 return out
             qtmp = Path(tmp) / "queue-snap"
             qtmp.mkdir()
