@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="dc-notify" content="true">
+
+<title>لمینت‌های سرامیکی؛ کدام متریال و چه انتظاری از ماندگاری؟ | مرور منابع – دنت‌کست</title>
+
+<meta name="description" content="بقای لمینت‌های فلدسپاتیک، لوسایت، لیتیوم دی‌سیلیکات و زیرکونیا در یک مرور سیستماتیک و متاآنالیز؛ تفاوت عوارض تکنیکال و بیولوژیک، نقش باند به عاج و اثر براکسیسم بر شکست؛ بر اساس Klein و همکاران (۲۰۲۵).">
+
+<link rel="canonical" href="https://dentcast.org/sharehub/share-60.html">
+<link rel="alternate" hreflang="fa-IR" href="https://dentcast.ir/sharehub/share-60.html">
+<link rel="alternate" hreflang="fa" href="https://dentcast.org/sharehub/share-60.html">
+<link rel="alternate" hreflang="x-default" href="https://dentcast.org/sharehub/share-60.html">
+
+  <!-- Shared article layer (body/headings/lists/boxes/byline) — page-specific rules below -->
+  <link rel="stylesheet" href="/dc-article.css?v=6">
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --bg1:#eaf1ff;
+      --bg2:#f5f8ff;
+      --text:#111;
+      --muted:#444;
+      --radius:18px;
+      --shadow:0 18px 50px rgba(0,0,0,.2);
+    }
+
+    p { margin: 0.875rem 0; }
+
+
+    ul {
+      list-style: none;
+      padding-right: 0;
+      margin: 0.875rem 0;
+    }
+
+    ul li::before {
+      content: "✦ ";
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    /* summary tables — same pattern as .text-box table elsewhere on the site */
+    .glass-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .glass-box table th,
+    .glass-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:right;
+      vertical-align:top;
+    }
+    .glass-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .glass-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+    @media (max-width:768px){
+      .glass-box table{font-size:.9rem;}
+      .glass-box table th,.glass-box table td{padding:0.45rem 0.5rem;}
+    }
+
+    /* images with a visible caption */
+    .glass-box figure { max-width: 30rem; margin: 1.25rem auto; }
+    .glass-box figcaption {
+      text-align: center;
+      font-size: .85rem;
+      opacity: .75;
+      margin-top: 0.5rem;
+      line-height: 1.8;
+    }
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* section kicker above the title */
+    .sh-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      direction: ltr;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: .02em;
+      margin: 0 0 0.5rem;
+    }
+
+    /* references list */
+    .sh-refs { margin-top: 0.5rem; }
+    .sh-refs li { font-size: 0.95rem; line-height: 1.9; }
+    .sh-refs a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .sh-refs a:hover { text-decoration: underline; }
+
+    /* figure pairs and wide tables */
+    .glass-box .sh-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+    .glass-box .sh-pair figure { margin: 0; }
+    .glass-box .sh-pair img { width: 100%; height: auto; }
+    /* Keep the supplied clinical crops at their native size; shrink only on narrow screens. */
+    .glass-box figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+    .sh-scroll { overflow-x: auto; }
+    .sh-scroll img { min-width: 32rem; }
+    @media (max-width:420px){ .glass-box .sh-pair { grid-template-columns: 1fr; } }
+
+
+    /* permission chips (مجاز / با محدودیت / استفاده نکن) */
+    .chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: .05rem .55rem; border-radius: 999px; line-height: 1.7; white-space: nowrap; margin-inline-start: .25rem; }
+    .chip.ok { color: #1f7a3a; background: rgba(47,122,60,.14); }
+    .chip.warn { color: #9a6200; background: rgba(214,150,20,.16); }
+    .chip.no { color: #b3342b; background: rgba(179,52,43,.13); }
+    [data-theme="dark"] .chip.ok { color: #7fcf8a; }
+    [data-theme="dark"] .chip.warn { color: #f0bb5b; }
+    [data-theme="dark"] .chip.no { color: #f08a80; }
+
+    /* English-version toggle button */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 auto 1.125rem 0;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { line-height: 1.9;}
+    }
+  </style>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="theme-color" content="#0b5fff">
+
+  <!-- Share Hub Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://dentcast.org/sharehub/share-60.html",
+      "url": "https://dentcast.org/sharehub/share-60.html",
+      "name": "لمینت‌های سرامیکی؛ کدام متریال و چه انتظاری از ماندگاری؟",
+      "inLanguage": "fa",
+      "isPartOf": {
+        "@id": "https://dentcast.org/#website"
+      },
+      "about": {
+        "@id": "https://dentcast.org/sharehub/share-60.html#creativework"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://dentcast.org/sharehub/share-60.html#creativework",
+      "name": "لمینت‌های سرامیکی؛ کدام متریال و چه انتظاری از ماندگاری؟",
+      "headline": "لمینت‌های سرامیکی؛ کدام متریال و چه انتظاری از ماندگاری؟",
+      "description": "بقای لمینت‌های فلدسپاتیک، لوسایت، لیتیوم دی‌سیلیکات و زیرکونیا در یک مرور سیستماتیک و متاآنالیز؛ تفاوت عوارض تکنیکال و بیولوژیک، نقش باند به عاج و اثر براکسیسم بر شکست؛ بر اساس Klein و همکاران (۲۰۲۵).",
+      "inLanguage": "fa",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "دکتر فواد شهابیان"
+        }
+      ],
+      "creator": [
+        {
+          "@type": "Person",
+          "name": "دکتر فواد شهابیان"
+        }
+      ],
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://dentcast.org/#org-dentcast",
+        "name": "DentCast",
+        "url": "https://dentcast.org/",
+        "logo": {"@type": "ImageObject", "url": "https://dentcast.org/logo-v2.png"}
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/sharehub/share-60.html"
+      },
+      "datePublished": "2026-11-25",
+      "dateModified": "2026-11-25",
+      "genre": "Dental Education",
+      "keywords": [
+        "بقای لمینت‌های سرامیکی در متاآنالیز",
+        "مقایسه فلدسپاتیک، لوسایت و لیتیوم دی‌سیلیکات",
+        "عوارض تکنیکال و بیولوژیک لمینت",
+        "زیرکونیا در لمینت ونیر",
+        "گپ مارجینال و تغییر رنگ مارجین",
+        "باند به عاج به‌عنوان عامل خطر شکست",
+        "اورلپ اینسایزال و حفظ مینا",
+        "براکسیسم و شکست لمینت",
+        "گارد اکلوزال پس از سمان کردن لمینت",
+        "laminate veneer survival"
+      ]
+    }
+  ]
+}
+</script>
+
+    <link rel="stylesheet" href="/dc-theme.css?v=25">
+<link rel="stylesheet" href="/dc-nav.css?v=18">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="DentCast">
+  <meta property="og:title" content="لمینت‌های سرامیکی؛ کدام متریال و چه انتظاری از ماندگاری؟ | مرور منابع – دنت‌کست">
+  <meta property="og:description" content="بقای لمینت‌های فلدسپاتیک، لوسایت، لیتیوم دی‌سیلیکات و زیرکونیا در یک مرور سیستماتیک و متاآنالیز؛ تفاوت عوارض تکنیکال و بیولوژیک، نقش باند به عاج و اثر براکسیسم بر شکست؛ بر اساس Klein و همکاران (۲۰۲۵).">
+  <meta property="og:url" content="https://dentcast.org/sharehub/share-60.html">
+  <meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="لمینت‌های سرامیکی؛ کدام متریال و چه انتظاری از ماندگاری؟ | مرور منابع – دنت‌کست">
+  <meta name="twitter:description" content="بقای لمینت‌های فلدسپاتیک، لوسایت، لیتیوم دی‌سیلیکات و زیرکونیا در یک مرور سیستماتیک و متاآنالیز؛ تفاوت عوارض تکنیکال و بیولوژیک، نقش باند به عاج و اثر براکسیسم بر شکست؛ بر اساس Klein و همکاران (۲۰۲۵).">
+  <meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "DentCast",
+      "item": "https://dentcast.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "مرور منابع",
+      "item": "https://dentcast.org/sharehub/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "لمینت‌های سرامیکی؛ کدام متریال و چه انتظاری از ماندگاری؟ | مرور منابع – دنت‌کست",
+      "item": "https://dentcast.org/sharehub/share-60.html"
+    }
+  ]
+}
+</script>
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
+</head>
+
+<body>
+<!-- DC NAV: TOP BAR -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="صفحه اصلی دنت‌کست" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;"><img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;"></a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="ابزارها" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="رادار"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="جستجو"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <a href="/about.html" class="dc-topbar-brand-sub">دکتر فواد شهابیان</a>
+  </div>
+</header>
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">ابزارها</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">نصب</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">مشاوره</span></button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about"><span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">درباره</span></button>
+  </div>
+</div>
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+
+<main class="article-content-wrap">
+<div class="sh-kicker"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 21 12 16l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> مرور منابع</div>
+<h1>لمینت‌های سرامیکی؛ کدام متریال و چه انتظاری از ماندگاری؟</h1>
+<div class="glass-box">
+<a class="lang-btn" href="en/share-60.html" rel="noopener">English</a>
+<div class="sh-dialogue">
+<p>لمینت سرامیکی یکی از گزینه‌های کم‌تهاجمی و قابل اعتماد برای بازسازی دندان‌های قدامی و پرمولر است. اما وقتی صحبت از ماندگاری می‌شود، چند سؤال مطرح است: آیا نوع سرامیک تفاوتی در طول عمر درمان ایجاد می‌کند؟ کدام عوارض در طول زمان بیشتر دیده می‌شوند؟ و چه عواملی می‌توانند احتمال شکست درمان را افزایش دهند؟</p>
+<p>یک مرور سیستماتیک و متاآنالیز که جستجوی مطالعات آن تا فوریه ۲۰۲۴ ادامه داشته، عملکرد لمینت‌های ساخته‌شده از سرامیک فلدسپاتیک، گلس‌سرامیک تقویت‌شده با لوسایت، لیتیوم دی‌سیلیکات و زیرکونیا را بررسی کرده است.</p>
+<p>بر اساس نتایج این مطالعه، میزان بقای لمینت‌ها در میانگین پیگیری ۱۰/۴ سال، ۹۶/۰۵ درصد بوده است. همچنین مطالعاتی که رضایت بیماران را بررسی کرده بودند، عموماً افزایش رضایت پس از درمان را گزارش کرده‌اند.</p>
+<h2><span data-dc-presentation>۱. </span>تفاوت متریال‌ها در چیست؟</h2>
+<p>از نظر بقای لمینت در پیگیری ۱۰/۴ ساله، تفاوت معنی‌داری بین سه سرامیک اصلی دیده نشد:</p>
+<ul><li>فلدسپاتیک: ۹۶/۱۳ درصد</li><li>گلس‌سرامیک تقویت‌شده با لوسایت: ۹۳/۷ درصد</li><li>لیتیوم دی‌سیلیکات: ۹۶/۸۱ درصد</li></ul>
+<p><span class="dc-key">بنابراین، بر اساس این مطالعه نمی‌توان گفت یکی از این سه متریال از نظر بقای درمان برتری مشخصی دارد.</span> اما وقتی سراغ عوارض می‌رویم، تفاوت‌ها بیشتر خودشان را نشان می‌دهند.</p>
+<p>در همین دوره، میزان عوارض تکنیکال برای فلدسپاتیک ۴۱/۴۸ درصد، برای لوسایت ۲۹/۸۷ درصد و برای لیتیوم دی‌سیلیکات ۶/۱ درصد گزارش شده است. عوارض بیولوژیک نیز در گروه لیتیوم دی‌سیلیکات کمتر بود.</p>
+<p>البته این اعداد به معنی از دست رفتن لمینت یا نیاز به تعویض آن نیستند. بسیاری از عوارض، بدون تعویض رستوریشن مدیریت شده‌اند. با این حال، نتایج نشان می‌دهند که لیتیوم دی‌سیلیکات در این مرور با عوارض تکنیکال و بیولوژیک کمتری همراه بوده است.</p>
+<p>این تفاوت را باید با احتیاط تفسیر کرد؛ چون مقایسه بر اساس مطالعات غیرتصادفی و ناهمگون انجام شده و نمی‌توان آن را به‌عنوان برتری قطعی یک متریال در نظر گرفت.</p>
+<p>در مورد زیرکونیا، یک مطالعه با میانگین پیگیری ۲/۶ سال، بقای ۱۰۰ درصد و بدون عارضه را گزارش کرده است. اما در این مرور هنوز مطالعه‌ای با پیگیری بلندمدت برای زیرکونیا وجود نداشت؛ بنابراین نمی‌توان این نتیجه را به ماندگاری طولانی‌مدت زیرکونیا تعمیم داد.</p>
+<h2><span data-dc-presentation>۲. </span>با گذشت زمان چه عوارضی بیشتر دیده می‌شوند؟</h2>
+<p>در سال‌های ابتدایی پس از درمان، عوارض بیولوژیک و زیبایی چندان شایع نیستند و بیشتر مشکلات از نوع تکنیکال‌اند؛ از جمله چیپینگ و ایجاد گپ مارجینال.</p>
+<p>در پیگیری‌های طولانی‌تر، گپ مارجینال و تغییر رنگ در ناحیه مارجین بیشتر دیده می‌شوند. یکی از توضیحات احتمالی برای این یافته، تحلیل لثه در طول زمان است؛ اتفاقی که می‌تواند باعث نمایان شدن مارجین و نشت در فصل مشترک باندینگ شود.</p>
+<p>هر تغییر مارجینال به معنی شکست درمان نیست. در مطالعات این مرور، گپ مارجینال و تغییر رنگ مارجینال به‌ندرت به تعویض لمینت منجر شده‌اند.</p>
+<p>عوارضی که واقعاً به ساخت رستوریشن جدید نیاز پیدا می‌کنند، کمتر دیده شده‌اند. در پیگیری ۱۰/۴ ساله، میزان شکستگی حجیم (Bulk fracture) برابر با ۲/۵۱ درصد و دی‌باند ۲/۲ درصد گزارش شده است. پوسیدگی ثانویه ۲/۸۳ درصد و عوارض اندودنتیک نیز ۰/۹۶ درصد بوده‌اند.</p>
+<h2><span data-dc-presentation>۳. </span>تراش؛ تا جای ممکن مینا را حفظ کنیم</h2>
+<p>یکی از نکاتی که در برخی از مطالعات این مرور به چشم می‌آید، این است که لمینت‌های باندشده به سطح وسیع‌تری از عاج، در طول زمان عوارض بیشتری داشته‌اند. به همین دلیل، باند به عاج به‌عنوان یکی از عوامل خطر احتمالی شکست مطرح می‌شود.</p>
+<p>مرورهای سیستماتیک دیگری که نویسندگان به آن‌ها اشاره کرده‌اند نیز نشان داده‌اند که باند به مینا، به‌خصوص در ناحیه مارجین، و وجود اورلپ اینسایزال با میزان شکست کمتری همراه است.</p>
+<p>این یافته‌ها اهمیت حفظ مینا را در طراحی و آماده‌سازی دندان برای لمینت نشان می‌دهند.</p>
+<p>اگر شرایط کلینیکی اجازه استفاده از لمینت را می‌دهد، روکش فول‌کاوریج لزوماً انتخاب بهتری نیست. در یک مرور سیستماتیک دیگر، عوارض بیولوژیک در روکش‌های تکی قدامی ۵۰ درصد بیشتر از رستوریشن‌های پارسیل گزارش شده است. نویسندگان این تفاوت را به تراش تهاجمی‌تر در روکش‌ها نسبت می‌دهند.</p>
+<h2><span data-dc-presentation>۴. </span>براکسیسم؛ نقش گارد اکلوزال</h2>
+<p>براکسیسم هم می‌تواند بر احتمال شکست لمینت تأثیر بگذارد. در یکی از مطالعات این مرور، خطر شکستگی لمینت در بیماران دارای براکسیسم دو برابر بیماران بدون براکسیسم گزارش شده است.</p>
+<p>در میان بیماران دارای براکسیسم نیز خطر شکستگی در افرادی که از اسپلینت استفاده نمی‌کردند، هفت برابر افرادی بود که اسپلینت داشتند.</p>
+<div role="note" class="dc-box dc-box-tip"><p class="dc-box-label" data-dc-presentation><strong>نکته‌ی بالینی</strong></p>
+<p>البته این نتایج از یک مطالعه به دست آمده‌اند؛ با این حال، استفاده از گارد اکلوزال پس از سمان کردن لمینت در بیماران دارای عادت‌های پارافانکشن، اقدام منطقی‌ای است. ریکال منظم و مراقبت‌های نگهداری نیز می‌توانند به حفظ نتیجه درمان در طول زمان کمک کنند.</p></div>
+<h3>∆ منابع</h3>
+<ul class="sh-refs">
+  <li><a href="https://doi.org/10.1111/jerd.13351" target="_blank" rel="noopener noreferrer">Klein و همکاران، ۲۰۲۵ — Survival and Complication Rates of Feldspathic, Leucite-Reinforced, Lithium Disilicate and Zirconia Ceramic Laminate Veneers: A Systematic Review and Meta-Analysis</a></li>
+</ul>
+<div class="author">نویسنده: <a href="https://doi.org/10.1111/jerd.13351" target="_blank" rel="noopener noreferrer">Patrick Klein</a></div>
+</div>
+<div class="author-note">نویسنده: <a href="https://dentcast.org/#person-foad">دکتر فواد شهابیان</a></div>
+</div>
+
+
+
+<div class="dc-related-section">
+<h2 class="dc-related-label">کاوش بیشتر</h2>
+<div class="dc-related-capsules">
+<a href="/glossary/" class="dc-related-capsule">دانشنامه</a>
+<a href="/pillar/esthetic/" class="dc-related-capsule">فهرست موضوعی</a>
+</div>
+</div>
+  <footer class="dc-site-footer">
+  <div style="margin-bottom:1.375rem;">
+    <a href="/sharehub/"
+       style="
+         display:inline-block;
+         background:rgba(11,95,255,0.18);
+         color:var(--link);
+         border:1.8px solid rgba(var(--link-rgb),0.45);
+         border-radius:0.75rem;
+         padding:0.75rem 2.625rem;
+         font-weight:700;
+         text-decoration:none;
+         font-size:1rem;
+         box-shadow:0 0 14px rgba(11,95,255,0.15);
+         transition:all .25s ease;">
+      <svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> برگشت به صفحه‌ی قبل
+    </a>
+  </div>
+
+  <div style="margin-top:0.375rem;">
+    © 2025 DentCast
+  </div>
+</footer>
+
+</main>
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+    <button class="dc-filter-btn active" data-type="meta">metanote</button>
+    <button class="dc-filter-btn active" data-type="chairside">chairside</button>
+    <button class="dc-filter-btn active" data-type="sharehub">Share Hub</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+<script src="/global-search.js?v=30" defer></script>
+<script src="/dc-nav.js?v=364" defer></script>
+</body>
+</html>
