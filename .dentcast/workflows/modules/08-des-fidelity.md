@@ -87,15 +87,15 @@ the page and the source; how it was produced cannot be checked from the file at 
    Fidelity رو اجرا کن», takes the file it gives, and hands that file to another agent
    (Codex, Cursor, Cowork…) without anything else. The producing agent, after its vote,
    writes the file with
-   `python3 tools/des_fidelity_units.py <content_id> --texts texts.json --fidelity <vote dir or file> [--des des.json] --pack <path outside the repo>`;
+   `python3 tools/des_fidelity_units.py <content_id> --texts texts.json --fidelity <vote dir or file> [--des des.json] --pack <.dentcast/relay/… or outside the repo>`;
    the packet carries the DES record, the FIDELITY result and the source texts they were
    judged on, and `--pack` refuses a result that would not pass `--accept`. The receiving
    agent runs `python3 tools/des_fidelity_units.py <content_id> --accept <file> --install`
    on the same final page text: exit 0 means accepted and written into
    `plus/des-scores.json`; then Part 3b for any unit still `ALTERED`/`REVERSED`, and Phase F
    (which repeats the DES arithmetic, band and schema checks) as always. It reruns no model
-   call and asks for nothing else. The packet holds the papers' text: it stays outside the
-   repository and is never committed. If the receiver's page text differs from the
+   call and asks for nothing else. The packet holds the papers' text: on the founder's request it is
+   committed under `.dentcast/relay/`, never refused; otherwise it stays outside. If the receiver's page text differs from the
    producer's, `--accept` names the sentences; only those are re-checked (Part 3b's
    `--vote --base`), never the whole step.
 <!-- /fidelity-mechanical-acceptance:v1 -->
