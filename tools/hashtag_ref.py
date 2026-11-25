@@ -872,8 +872,10 @@ def cmd_reach(tags: list) -> int:
     if bad:
         return 2
     print("REACHABLE: the page surfaces under at least one tag" if ok else
-          "NOT REACHABLE: every tag already has 4 or more pages; add a specific concept the page resolves (Steps 1-4)")
-    return 0 if ok else 1
+          "NOT REACHABLE: every tag already has 4 or more pages. Add a tag ONLY if the article truly resolves a more "
+          "specific existing concept (Step 5 sentence); never add a tag to pass this line. Otherwise keep the list and "
+          "write «not reachable under its tags» in the Push-2 report.")
+    return 0
 
 
 def cmd_say(tag: str, forms: list) -> None:

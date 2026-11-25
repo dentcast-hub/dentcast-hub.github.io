@@ -217,6 +217,8 @@ def main():
     ap.add_argument("answer")
     ap.add_argument("--texts", help="texts.json (Part 1); without it quotes are not checked")
     ap.add_argument("--doi", help="the DOI the call was made for (default: the only key of texts.json)")
+    ap.add_argument("--block", help="the Step 0 block the call was made with (a page scored on its own text: "
+                                    "tools/des_commentary_block.py); its source_text is the text the quotes are checked against")
     ap.add_argument("-o", "--out")
     a = ap.parse_args()
     obj = one_object(Path(a.answer).read_text(encoding="utf-8"))
@@ -226,6 +228,9 @@ def main():
     texts = json.loads(Path(a.texts).read_text(encoding="utf-8")) if a.texts else {}
     want = a.doi or (next(iter(texts)) if len(texts) == 1 else None)
     t = next((v for k, v in texts.items() if doi_of(k) == doi_of(want)), None) if want else None
+    if a.block:
+        b = json.loads(Path(a.block).read_text(encoding="utf-8"))
+        want, t = b.get("doi") or None, {"source_text": b.get("source_text", ""), "text_basis": b.get("text_basis")}
     log, unverified = [], []
     obj = repair(obj, (t or {}).get("source_text"), (t or {}).get("text_basis"), want, log, unverified)
     out = Path(a.out) if a.out else Path(a.answer).with_suffix(".repaired.json")

@@ -163,7 +163,7 @@ when module 03 added one), exactly as it will ship and without the presentation
 layer (below, Part 2b). **Build the whole Step 0 block with the tool, never by hand:**
 `python3 tools/des_commentary_block.py <content_id> -o block.json` (text of record, `FULL_TEXT`,
 the page URL and its section folder; without the section the model cannot earn checklist item 4
-from the section's declaration). A queue item's `01-متن.md`: `presentation_diff.py --text-of-record`.
+from the section's declaration); its answer goes through `des_repair.py ANSWER --block block.json`. A queue item's `01-متن.md`: `presentation_diff.py --text-of-record`.
 
 <!-- des-record-guard:v1 -->
 **RESEARCH basket, first: one DES record per paper — look the DOI up before scoring.**
@@ -182,7 +182,7 @@ nothing. Then:
   passes Part 3 (including (7)) is reused verbatim** — no SOURCE call, no rerun. Copy the
   object byte for byte into this page's `sources`; record «reused from <content_id or
   queue item>, index <i>, sha256 <…>» in the run report (queue: `اجرا.md`). Part 2d's
-  audit is not repeated for a reused record. Still resolve its `source_text` by the ladder
+  audit is not repeated for a reused record. **Write it under this page's `content_id` now** (Part 4, with `"fidelity": [null]`): `--build` and `--accept` read the record from there. Still resolve its `source_text` by the ladder
   below — the FIDELITY call needs it.
 - **No stored record, or only one under another `text_basis` or an older stamp** (an
   abstract scored before the full text was in hand, a 3.2 record): score it once

@@ -67,6 +67,29 @@ def swap(doc, old, new, what, minimum=1):
     return doc
 
 
+def numbers(tpl_stem, slug):
+    a, b = re.search(r"(\d+)$", tpl_stem), re.search(r"(\d+)$", slug)
+    return (a.group(1), b.group(1)) if a and b and a.group(1) != b.group(1) else (None, None)
+
+
+LABEL = r"(\b[A-Z][A-Za-z]*\s#?)"
+
+
+def template_marks(doc, tpl_stem, slug, section):
+    """What a clone carries beside slug, title and description: the visible «Section N»
+    label of the template and its own images."""
+    old, _ = numbers(tpl_stem, slug)
+    marks = []
+    if old:
+        labels = sorted(set(m.group(0) for m in re.finditer(LABEL + old + r"(?!\d)(?![-/.]\d)", doc)))
+        if labels:
+            marks.append("the template's number label (" + ", ".join(labels[:3]) + ")")
+        imgs = sorted(set(re.findall(r'src="(/' + re.escape(section) + r'/[^"]*?' + old + r'[^"/]*\.(?:webp|jpg|png))"', doc)))
+        if imgs:
+            marks.append("the template's image(s) " + ", ".join(imgs[:3]))
+    return marks
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("content_id")
@@ -95,6 +118,7 @@ def main():
             left.append("the template's title")
         if t_desc and t_desc in html.unescape(doc):
             left.append("the template's description")
+        left += template_marks(doc, tpl.stem, slug, section)
         same = paragraphs(doc) & {p for p in paragraphs(t_doc) if len(p) > 80}
         if same:
             left.append(f"{len(same)} body paragraph(s) of the template, e.g. «{sorted(same)[0][:60]}…»")
@@ -113,6 +137,10 @@ def main():
     doc = swap(doc, t_desc, a.description, "description", 1)
     n = len(re.findall(r"(?<![\w-])" + re.escape(tpl.stem) + r"(?!\d)", doc))
     doc = re.sub(r"(?<![\w-])" + re.escape(tpl.stem) + r"(?!\d)", slug, doc)
+    old_n, new_n = numbers(tpl.stem, slug)
+    if old_n:
+        # the visible «Chairside 55» / «Insight 120» label, wherever the template wrote it
+        doc = re.sub(LABEL + old_n + r"(?!\d)(?![-/.]\d)", lambda m: m.group(1) + new_n, doc)
     fa_doc = fa.read_text(encoding="utf-8")
     for key in ("datePublished", "dateModified"):
         new = re.search(r'"' + key + r'":\s*"([^"]+)"', fa_doc)

@@ -8,7 +8,7 @@
 
 ## Always-load before routing
 
-Read `.dentcast/workflows/global/README.md` and the complete active sections it selects for the current edit scope, the complete `.dentcast/workflows/agent-parity.md`, `publish-checkpoints.md`, and complete `modules/01-hard-rules.md` and `modules/02-routing-intake.md`. Detailed triggers: `.dentcast/workflows/routing-details.md`.
+Read `.dentcast/workflows/global/README.md` and the complete active sections it selects for the current edit scope, `.dentcast/workflows/agent-parity.md` up to its «## 4» (the rest is a review checklist), `publish-checkpoints.md`, and complete `modules/01-hard-rules.md` and `modules/02-routing-intake.md`. Detailed triggers: `.dentcast/workflows/routing-details.md`.
 
 **Authority** (stated only here): applicable canonical workflow and active modules > active shared global rules > agent-parity > client summaries. User instructions take priority. Surface a genuine active-rule conflict; never fall back to backups.
 

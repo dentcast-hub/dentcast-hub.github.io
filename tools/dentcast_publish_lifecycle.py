@@ -844,7 +844,13 @@ def advance(root, expected, sid=None, evidence=None, skips=(), start_next=False,
         h.require(sid == h.next_step(p), "NOT_NEXT_CANONICAL_STEP")
         row = next(s for s in p["steps"] if s["id"] == sid)
         h.require(sid != "F", "USE_REAL_VERIFY_FOR_PHASE_F")
-        h.require(row["status"] == "started", "STEP_MUST_BE_STARTED_FIRST")
+        h.require(row["status"] in ("started", "pending"), "STEP_MUST_BE_STARTED_FIRST")
+        if row["status"] == "pending":
+            # The next canonical step is opened and closed in one call: a separate
+            # «started» write for work that is already done only costs the agent a refusal.
+            h.require(bool(evidence) and all(h.nonempty(x) for x in evidence), "COMPLETION_EVIDENCE_REQUIRED")
+            row.update(status="started")
+            operations.append((sid, "started", [], None))
         row.update(status="completed", evidence=evidence or [], reason=None)
         operations.append((sid, "completed", evidence or [], None))
         require_plan(p)
