@@ -105,6 +105,25 @@ def include(ranges, size):
     return selected
 
 
+def without(lines, cuts):
+    """The ranges of `lines` that remain after dropping each [start marker, end marker) span.
+    A span whose two markers are not both found exactly once, in order, is kept."""
+    spans = []
+    for start, end in cuts:
+        a = [i for i, line in enumerate(lines) if line.startswith(start)]
+        b = [i for i, line in enumerate(lines) if line.startswith(end)]
+        if len(a) == 1 and len(b) == 1 and a[0] < b[0]:
+            spans.append((a[0], b[0]))
+    kept, cursor = [], 0
+    for a, b in sorted(spans):
+        if a > cursor:
+            kept.append((cursor, a))
+        cursor = max(cursor, b)
+    if cursor < len(lines):
+        kept.append((cursor, len(lines)))
+    return kept
+
+
 def route_spans(name, lines, *, category, attached_paper, challenge, des_basket='unknown'):
     """Decide safe line ranges; everything not explicitly proven safe stays."""
     size = len(lines)
@@ -126,6 +145,29 @@ def route_spans(name, lines, *, category, attached_paper, challenge, des_basket=
     if name == 'README.md' and lines and lines[0].startswith('# Shared active global rules'):
         # global/README.md explains the selector; this pack carries the selected sections themselves.
         return [], 'GLOBAL_SECTIONS_ARE_IN_THIS_PACK'
+
+    if name == 'publish-checkpoints.md':
+        # A page publication ends for the agent at Push 2: the paper-only delivery and the
+        # merge/hosting notes describe nothing it does.
+        marks = {h: [i for i, line in enumerate(lines) if line.startswith(h)]
+                 for h in ('## Paper-only (one delivery)', '## Phase F, DES exemptions', '## Waiting, services, merge')}
+        if all(len(v) == 1 for v in marks.values()):
+            paper, phase_f, waiting = (marks[h][0] for h in marks)
+            if paper < phase_f < waiting:
+                return include([(0, paper), (phase_f, waiting)], size), 'OMIT_PAPER_ONLY_AND_AFTER_MERGE_NOTES'
+        return whole, 'FULL_REQUIRED'
+
+    if name == '02-routing-intake.md':
+        # The category is locked: the paper-only fast path is another route, and the Insight
+        # image rules bind Insight pages only.
+        cuts = [('**Paper-only fast path (text-less) detail.**', '## Phase A — Discover')]
+        if category not in {'insight', 'clinical'}:
+            cuts.append(('**Insight images and caption.**', '### Question 4.7'))
+        return include(without(lines, cuts), size), 'OMIT_OTHER_ROUTES_OF_A_LOCKED_CATEGORY'
+
+    if name == '10-brain-and-pathways.md' and category not in {'insight', 'clinical'}:
+        return include(without(lines, [('**Insight `keywords`.**', '### 5.5. Verify the recorded pillar')]), size), \
+            'OMIT_INSIGHT_ONLY_KEYWORDS'
 
     if name == '03-litecast-and-page.md' and not lite:
         # The preamble keeps what a non-LiteCast run still needs from the branch's head: the
@@ -195,6 +237,16 @@ def route_spans(name, lines, *, category, attached_paper, challenge, des_basket=
         # source (Part 1 up to the paper lookup), the scoring call, its checks and storage.
         return include([(0, supplied), (once_a, once_b), (part1, guard), (part2, fid), (checks, fixes),
                         (store, size)], size), 'COMMENTARY_BASKET_NO_FIDELITY_LOCKED_AT_Q4_8'
+
+    if name == '08-des-fidelity.md' and des_basket == 'research':
+        # Basket 2 (cited sources): the page's own text is never the source, so the COMMENTARY
+        # source rule and its checklist carve-out have nothing to act on; neither has the
+        # re-check of a page that is already published.
+        return include(without(lines, [
+            ('**COMMENTARY basket:**', '<!-- des-record-guard:v1 -->'),
+            ('**The COMMENTARY track has one carve-out.**', '#### Part 2b — Run the FIDELITY call'),
+            ('**For a page already published**', '#### Part 4 — Store the record'),
+        ]), size), 'RESEARCH_BASKET_LOCKED_AT_Q4_8'
 
     if name == '11-build-and-version.md':
         # Everything below the marker is the post-Push-2 runner's C.8/C.7 part, which

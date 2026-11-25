@@ -266,6 +266,22 @@ class LiveReadpackPinTests(unittest.TestCase):
                 self.assertNotIn('SOURCE_CHANGED_FULL_FALLBACK_REAUDIT_MAP', reasons)
                 self.assertGreater(m['bytes_saved'], 0)
 
+    def test_live_research_pack_leaves_out_what_a_cited_page_never_uses(self):
+        root = SCRIPT.parents[1]
+        text, _ = rp.build(root, category='sharehub', attached_paper='yes', challenge='no', des_basket='research')
+        for gone in ('**COMMENTARY basket:**', '**The COMMENTARY track has one carve-out.**',
+                     '**For a page already published**', '**Paper-only fast path (text-less) detail.**',
+                     '**Insight images and caption.**', '**Insight `keywords`.**',
+                     '## Paper-only (one delivery)', '## Waiting, services, merge'):
+            self.assertNotIn(gone, text)
+        for kept in ('**RESEARCH basket:**', '<!-- des-record-guard:v1 -->', '## Phase F, DES exemptions',
+                     '#### Part 2b — Run the FIDELITY call', '#### Part 4 — Store the record',
+                     '### 5.5. Verify the recorded pillar', '### Question 4.7'):
+            self.assertIn(kept, text)
+        insight, _ = rp.build(root, category='insight', attached_paper='yes', challenge='no', des_basket='research')
+        self.assertIn('**Insight images and caption.**', insight)
+        self.assertIn('**Insight `keywords`.**', insight)
+
 
 QUEUE_FIXTURES = {
     'modules/01-hard-rules.md': 'BANNER_01\n# DentCast Publishing Router\nHARD_RULES_ALL\n',
