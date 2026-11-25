@@ -31,10 +31,10 @@ PINNED_BLOBS = {
     '04-taxonomy-and-navigation.md': '46bc329065fdaa0d1677b494ecc5b7cdf7359872',
     '05-semantic-linking.md': '6ba95d74e28f1e423e034d31327d6c9351f85c20',
     '06-paper-ingestion.md': '07d4320fb9935d4752e38bc8b485009c6e86caf5',
-    '08-des-fidelity.md': 'c9403d33256c35f0a886fda14a85d52fc028bfeb',
+    '08-des-fidelity.md': '0b66cf9d2a1b6efa5afc576ab9e2b291231f9e05',
     '09-challenge.md': '3ac5856ddb021aa9f36cbfb35d6363531ae038c8',
     '11-build-and-version.md': 'f74bf83102c57da9743127623191e686474bf74d',
-    '12-english-notify-verify.md': 'fc44e5550513e85da51a6ef07bccdd6327fc93c5',
+    '12-english-notify-verify.md': 'a08d0f6a86558f839d31b7a995b2a2a4e6b5dbcb',
 }
 
 REQUIRED = [

@@ -6,7 +6,7 @@
 
 Before content changes, read `.dentcast/workflows/global/README.md`, the complete active sections selected by that router for the current edit scope, and `.dentcast/workflows/agent-parity.md`. All clients use these same rules. Exception: publishing an item from the queue reads only `.dentcast/workflows/queue-route.md`; its tools carry these rules.
 
-New publication → `.dentcast/workflows/README.md`. Read complete `modules/01-hard-rules.md` and `02-routing-intake.md`, then all applicable verbatim rules in the ledger order of `publish-checkpoints.md`: full modules by default, or the verified readpack (README). No AI summaries or unverified omissions. Agent proposals are built and reported, not asked; the founder gets at most three messages (M1 open facts, M3b still-flagged Part 3b sentences, M2 exam questions) plus real decisions. Preserve source-dependent DES/Fidelity, category exceptions, English and final Phase F.
+New publication → `.dentcast/workflows/README.md`. Read complete `modules/01-hard-rules.md` and `02-routing-intake.md`, then all applicable verbatim rules in the ledger order of `publish-checkpoints.md`: full modules by default, or the verified readpack (README). No AI summaries or unverified omissions. Agent proposals are built and reported, not asked; the founder gets at most two messages (M1 open facts, M2 exam questions) plus real decisions. Preserve source-dependent DES/Fidelity, category exceptions, English and final Phase F.
 
 After a new v2 publication's second delivery is confirmed, immediately tell the user that the agent-side work has reached Push 2, GitHub Actions is running the remaining mechanical delivery (C.8 onward, delivery 3, and the PR when the `QUEUE_PUBLISH_TOKEN` secret is configured, otherwise the agent opens it by hand), and the agent is monitoring it. Include the branch, Push-2 SHA and Actions run link when available. Do not go silent or call the publication complete. Keep checking the run until it succeeds or fails, without periodic status messages: then merge as soon as every gate is green, without asking, and report once at the merge (`.dentcast/workflows/publish-after-push2.md`).
 
@@ -90,9 +90,8 @@ Ledger, the save point (once C.4.13 starts), Push 2 (after `C.6`), delivery 3 by
   `build_plus_index` فقط برای تست دسترس‌پذیری، با `git checkout` بلافاصله بعد.
 
 ## ۵. DES/Fidelity
-- اسپک ۱۵۴KB هرگز در بافت اصلی خوانده/کپی نمی‌شود. فراخوانی مدل در بافت جدا
-  (subagent/پروسهٔ جدا) با **مسیر** فایل، و فقط بلوک Step 0 به‌عنوان ورودی.
-- اعتبارسنجی با `verify_publish.py --des-text` + گارد رکورد؛ نه بازخوانی متن صفحه.
+- اسپک هرگز در بافت اصلی خوانده نمی‌شود؛ مدل در بافت جدا، با مسیر فایل و بلوک Step 0.
+- DES یک‌بار: `des_repair.py` ترمیم می‌کند؛ Fidelity یک جاروزن؛ رله `pack-paper` (ماژول 08).
 
 ## ۶. حافظه و گزارش
 - دست‌ورزی‌های دفتر: `advance --start-next` و `--skip`های پشت‌سرهم در **یک** فراخوانی

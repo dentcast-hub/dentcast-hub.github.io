@@ -270,14 +270,19 @@ class TwoCheckerRunsTests(Tmp):
                 patch.object(sys, 'argv', ['x', CID, '--vote', str(run)]):
             units.main()
 
-    def test_one_run_is_refused_even_for_a_single_source(self):
+    def test_one_sweeper_run_without_a_judge_is_the_result(self):
+        # Founder 2026-11-25: the judge is optional; one full sweeper run settles as it
+        # stands, with its counts and score recomputed by the tool.
         run = self.d / 'run'
         run.mkdir()
-        (run / 'out-src0-1.json').write_text(json.dumps(self.claims()), encoding='utf-8')
-        with self.assertRaises(SystemExit) as e:
-            self.vote(run)
-        self.assertIn('judge', str(e.exception))
-        self.assertFalse((run / 'voted-src0.json').exists())
+        bad = self.claims()
+        bad['counts'] = {'matches': 99}
+        bad['fidelity_score'] = 1
+        (run / 'out-src0-1.json').write_text(json.dumps(bad), encoding='utf-8')
+        self.vote(run)
+        out = json.loads((run / 'voted-src0.json').read_text(encoding='utf-8'))
+        self.assertEqual(out['counts']['matches'], sum(c['verdict'] == 'MATCHES' for c in out['claims']))
+        self.assertNotEqual(out['fidelity_score'], 1)
 
     def test_two_agreeing_runs_vote_without_tiebreak_or_reviewer(self):
         run = self.d / 'run'
