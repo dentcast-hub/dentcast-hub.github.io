@@ -108,23 +108,32 @@ def include(ranges, size):
 def without(lines, cuts):
     """The ranges of `lines` that remain after dropping each [start marker, end marker) span.
     A span whose two markers are not both found exactly once, in order, is kept."""
+    return remaining(len(lines), spans_of(lines, cuts))
+
+
+def spans_of(lines, cuts):
     spans = []
     for start, end in cuts:
         a = [i for i, line in enumerate(lines) if line.startswith(start)]
         b = [i for i, line in enumerate(lines) if line.startswith(end)]
         if len(a) == 1 and len(b) == 1 and a[0] < b[0]:
             spans.append((a[0], b[0]))
+    return spans
+
+
+def remaining(size, spans):
     kept, cursor = [], 0
     for a, b in sorted(spans):
         if a > cursor:
             kept.append((cursor, a))
         cursor = max(cursor, b)
-    if cursor < len(lines):
-        kept.append((cursor, len(lines)))
+    if cursor < size:
+        kept.append((cursor, size))
     return kept
 
 
-def route_spans(name, lines, *, category, attached_paper, challenge, des_basket='unknown'):
+def route_spans(name, lines, *, category, attached_paper, challenge, des_basket='unknown',
+                isolated_call='unknown', sources='unknown'):
     """Decide safe line ranges; everything not explicitly proven safe stays."""
     size = len(lines)
     whole = [(0, size)]
@@ -138,8 +147,17 @@ def route_spans(name, lines, *, category, attached_paper, challenge, des_basket=
         # Sections 4 and 5 are review checklists that restate the modules; the rules of a
         # publication end where they begin.
         marks = [i for i, line in enumerate(lines) if line.startswith('## 4. ')]
-        if len(marks) == 1:
-            return include([(0, marks[0])], size), 'OMIT_REVIEW_CHECKLISTS'
+        end = marks[0] if len(marks) == 1 else size
+        cuts = [(end, size)] if end < size else []
+        if isolated_call == 'yes':
+            # The agent runs each model call in its own context: nothing travels by relay or
+            # from one agent to another.
+            cuts += [(a, b) for a, b in spans_of(lines, [
+                ('**مسیر رله — ', '**FIDELITY و انتخاب مدل:**'),
+                ('**دست‌به‌دست کردن DES/Fidelity بین ایجنت‌ها', '### پروتکل «توانمندی ندارم»')]) if b <= end]
+        if cuts:
+            return include(remaining(size, cuts), size), 'OMIT_REVIEW_CHECKLISTS' + (
+                '_AND_RELAY' if len(cuts) > 1 else '')
         return whole, 'FULL_REQUIRED'
 
     if name == 'README.md' and lines and lines[0].startswith('# Shared active global rules'):
@@ -238,15 +256,28 @@ def route_spans(name, lines, *, category, attached_paper, challenge, des_basket=
         return include([(0, supplied), (once_a, once_b), (part1, guard), (part2, fid), (checks, fixes),
                         (store, size)], size), 'COMMENTARY_BASKET_NO_FIDELITY_LOCKED_AT_Q4_8'
 
-    if name == '08-des-fidelity.md' and des_basket == 'research':
-        # Basket 2 (cited sources): the page's own text is never the source, so the COMMENTARY
-        # source rule and its checklist carve-out have nothing to act on; neither has the
-        # re-check of a page that is already published.
-        return include(without(lines, [
-            ('**COMMENTARY basket:**', '<!-- des-record-guard:v1 -->'),
-            ('**The COMMENTARY track has one carve-out.**', '#### Part 2b — Run the FIDELITY call'),
-            ('**For a page already published**', '#### Part 4 — Store the record'),
-        ]), size), 'RESEARCH_BASKET_LOCKED_AT_Q4_8'
+    if name == '08-des-fidelity.md':
+        cuts, why = [], []
+        if des_basket == 'research':
+            # Basket 2 (cited sources): the page's own text is never the source, so the
+            # COMMENTARY source rule and its checklist carve-out have nothing to act on;
+            # neither has the re-check of a page that is already published.
+            cuts += [('**COMMENTARY basket:**', '<!-- des-record-guard:v1 -->'),
+                     ('**The COMMENTARY track has one carve-out.**', '#### Part 2b — Run the FIDELITY call'),
+                     ('**For a page already published**', '#### Part 4 — Store the record')]
+            why.append('RESEARCH_BASKET_LOCKED_AT_Q4_8')
+        if isolated_call == 'yes':
+            # Every call is the agent's own: no result arrives from the founder.
+            cuts.append(('#### Conditional path for founder-supplied results',
+                         '<!-- fidelity-mechanical-acceptance:v1 -->'))
+            why.append('OWN_ISOLATED_CALLS')
+        if sources == 'one':
+            # One cited source: every sentence goes to it, so no orphan sweep is ever owed.
+            cuts += [('<!-- fidelity-sweep-first:v1 -->', '**The model is part of the measurement:**'),
+                     ('5. **Orphan sweep', '`voted-src<k>.json` is what Part 3')]
+            why.append('ONE_SOURCE_NO_ORPHAN_SWEEP')
+        if cuts:
+            return include(without(lines, cuts), size), '+'.join(why)
 
     if name == '11-build-and-version.md':
         # Everything below the marker is the post-Push-2 runner's C.8/C.7 part, which
@@ -283,7 +314,8 @@ def route_spans(name, lines, *, category, attached_paper, challenge, des_basket=
     return whole, 'FULL_REQUIRED'
 
 
-def build(root, *, category, attached_paper, challenge, after_intake=False, des_basket='unknown'):
+def build(root, *, category, attached_paper, challenge, after_intake=False, des_basket='unknown',
+          isolated_call='unknown', sources='unknown'):
     root = Path(root).resolve(strict=True)
     category = selector_category(category)
     manifest = {
@@ -324,7 +356,8 @@ def build(root, *, category, attached_paper, challenge, after_intake=False, des_
             spans, reason = [(0, len(lines))], 'SOURCE_CHANGED_FULL_FALLBACK_REAUDIT_MAP'
         else:
             spans, reason = route_spans(name, lines, category=category,
-                                        attached_paper=attached_paper, challenge=challenge, des_basket=des_basket)
+                                        attached_paper=attached_paper, challenge=challenge, des_basket=des_basket,
+                                        isolated_call=isolated_call, sources=sources)
         spans = include(spans, len(lines)) if spans else []
         selected = ''.join(''.join(lines[start:end]) for start, end in spans)
         selected_bytes = selected.encode('utf-8')
@@ -545,6 +578,11 @@ def main(argv=None):
     p.add_argument('--after-intake', action='store_true',
                    help='omit routers + modules 01/02 already read in this same session')
     p.add_argument('--output', type=Path, required=True, help='temporary UTF-8 verbatim reading pack')
+    p.add_argument('--isolated-call', choices=['yes', 'no', 'unknown'], default='unknown',
+                   help='yes = the agent runs each DES/Fidelity call itself in a separate context and the founder '
+                        'supplied no result (the relay and supplied-result paths are left out)')
+    p.add_argument('--sources', choices=['one', 'many', 'unknown'], default='unknown',
+                   help='one = the page cites exactly one source (the orphan sweep is left out)')
     p.add_argument('--manifest', type=Path, required=True, help='temporary provenance/coverage JSON')
     a = p.parse_args(argv)
     if a.queue_prep:
@@ -566,6 +604,7 @@ def main(argv=None):
         else:
             pack, report = build(a.root, category=a.category,
                                  attached_paper=a.attached_paper, challenge=a.challenge, des_basket=a.des_basket,
+                                 isolated_call=a.isolated_call, sources=a.sources,
                                  after_intake=a.after_intake)
         atomic_write(a.output, pack)
         atomic_write(a.manifest, json.dumps(report, ensure_ascii=False, indent=2) + '\n')

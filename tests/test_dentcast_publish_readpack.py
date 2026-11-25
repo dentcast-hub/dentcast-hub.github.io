@@ -282,6 +282,29 @@ class LiveReadpackPinTests(unittest.TestCase):
         self.assertIn('**Insight images and caption.**', insight)
         self.assertIn('**Insight `keywords`.**', insight)
 
+    def test_live_optional_facts_leave_out_relay_and_orphan_sweep_only_when_given(self):
+        root = SCRIPT.parents[1]
+        kw = dict(category='sharehub', attached_paper='yes', challenge='no', des_basket='research')
+        base, _ = rp.build(root, **kw)
+        relay = ('**مسیر رله — ', '#### Conditional path for founder-supplied results',
+                 '**دست‌به‌دست کردن DES/Fidelity بین ایجنت‌ها')
+        sweep = ('<!-- fidelity-sweep-first:v1 -->', '5. **Orphan sweep')
+        for marker in relay + sweep:
+            self.assertIn(marker, base)
+        own, _ = rp.build(root, isolated_call='yes', **kw)
+        one, _ = rp.build(root, sources='one', **kw)
+        for marker in relay:
+            self.assertNotIn(marker, own)
+            self.assertIn(marker, one)
+        for marker in sweep:
+            self.assertNotIn(marker, one)
+            self.assertIn(marker, own)
+        for kept in ('#### Acceptance is mechanical', '**FIDELITY و انتخاب مدل:**', '### پروتکل «توانمندی ندارم»',
+                     '**The model is part of the measurement:**', '`voted-src<k>.json` is what Part 3',
+                     '<!-- fidelity-single-source-tier:v1 -->'):
+            self.assertIn(kept, own)
+            self.assertIn(kept, one)
+
 
 QUEUE_FIXTURES = {
     'modules/01-hard-rules.md': 'BANNER_01\n# DentCast Publishing Router\nHARD_RULES_ALL\n',
