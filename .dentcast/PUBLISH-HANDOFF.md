@@ -455,9 +455,28 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       ],
       "delivery": [],
       "inputs": [],
-      "pending_questions": [],
+      "pending_questions": [
+        {
+          "answered": false,
+          "message": "M3b",
+          "question": "u9: \u00ab\u0647\u0645\u0686\u0646\u06cc\u0646 \u0645\u0637\u0627\u0644\u0639\u0627\u062a\u06cc \u06a9\u0647 \u0631\u0636\u0627\u06cc\u062a \u0628\u06cc\u0645\u0627\u0631\u0627\u0646 \u0631\u0627 \u0628\u0631\u0631\u0633\u06cc \u06a9\u0631\u062f\u0647 \u0628\u0648\u062f\u0646\u062f\u060c \u0639\u0645\u0648\u0645\u0627\u064b \u0627\u0641\u0632\u0627\u06cc\u0634 \u0631\u0636\u0627\u06cc\u062a \u067e\u0633 \u0627\u0632 \u062f\u0631\u0645\u0627\u0646 \u0631\u0627 \u06af\u0632\u0627\u0631\u0634 \u06a9\u0631\u062f\u0647\u200c\u0627\u0646\u062f.\u00bb \u0642\u0627\u0637\u0639\u200c\u062a\u0631 \u0627\u0632 \u0645\u0646\u0628\u0639 (could generally note)\u061b \u0627\u0635\u0644\u0627\u062d \u06a9\u0646 / \u062e\u0648\u062f\u0645 \u0645\u06cc\u200c\u0646\u0648\u06cc\u0633\u0645 / \u0647\u0645\u06cc\u0646 \u0628\u0645\u0627\u0646\u062f",
+          "step": "C.4.13"
+        },
+        {
+          "answered": false,
+          "message": "M3b",
+          "question": "u46: \u00ab\u2026\u0627\u0633\u062a\u0641\u0627\u062f\u0647 \u0627\u0632 \u06af\u0627\u0631\u062f \u0627\u06a9\u0644\u0648\u0632\u0627\u0644 \u067e\u0633 \u0627\u0632 \u0633\u0645\u0627\u0646 \u06a9\u0631\u062f\u0646 \u0644\u0645\u06cc\u0646\u062a \u062f\u0631 \u0628\u06cc\u0645\u0627\u0631\u0627\u0646 \u062f\u0627\u0631\u0627\u06cc \u0639\u0627\u062f\u062a\u200c\u0647\u0627\u06cc \u067e\u0627\u0631\u0627\u0641\u0627\u0646\u06a9\u0634\u0646\u060c \u0627\u0642\u062f\u0627\u0645 \u0645\u0646\u0637\u0642\u06cc\u200c\u0627\u06cc \u0627\u0633\u062a.\u00bb \u0642\u0627\u0637\u0639\u200c\u062a\u0631 \u0627\u0632 \u0645\u0646\u0628\u0639 (might be beneficial)\u061b \u0627\u0635\u0644\u0627\u062d \u06a9\u0646 / \u062e\u0648\u062f\u0645 \u0645\u06cc\u200c\u0646\u0648\u06cc\u0633\u0645 / \u0647\u0645\u06cc\u0646 \u0628\u0645\u0627\u0646\u062f",
+          "step": "C.4.13"
+        }
+      ],
       "unrelated_changes": [],
-      "validation": []
+      "validation": [
+        {
+          "kind": "fidelity",
+          "result": "sweeper+judge in two isolated tool-less claude -p processes (model claude-fable-5-2, spec sha256 of .dentcast/des-v3.7-knowledge.md as system prompt); judge agreed on all 47 units; --accept exit 0; 33/35 MATCHES, 2 ALTERED (u9,u46 HEDGE_REMOVED), score 97 HIGH; source_conclusion pinned to the paper's last Conclusion sentence; source_text recovered from .dentcast/relay/01-source-des.md",
+          "step": "C.4.13"
+        }
+      ]
     },
     "external_actions": [],
     "status": "in_progress",
@@ -763,7 +782,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: sharehub/share-60.html, sharehub/index.html, dentcast_cabinet_full_catalog.json, .dentcast/cabinet-enrichment/results.jsonl, plus/des-scores.json, .dentcast/relay/HANDOFF-share-60.md"
+    "note": "Index-only refresh after staging delivery paths: plus/des-scores.json"
   },
   "schema": "publish-handoff-v3"
 }

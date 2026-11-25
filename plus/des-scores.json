@@ -63961,7 +63961,453 @@
       }
     ],
     "fidelity": [
-      null
+      {
+        "des_version": "3.7",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "لمینت‌های سرامیکی؛ کدام متریال و چه انتظاری از ماندگاری؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "English",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "link label"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "لمینت سرامیکی یکی از گزینه‌های کم‌تهاجمی و قابل اعتماد برای بازسازی دندان‌های قدامی و پرمولر است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Therefore, ceramic laminate veneers can be considered as a\nreliable and minimally invasive treatment option for the re-\nhabilitation of anterior teeth.",
+            "source_ref": null,
+            "note": "the review's stated scope covers anterior teeth and premolars"
+          },
+          {
+            "id": "u4",
+            "claim_quote": "اما وقتی صحبت از ماندگاری می‌شود، چند سؤال مطرح است: آیا نوع سرامیک تفاوتی در طول عمر درمان ایجاد می‌کند؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "question with no answer in it"
+          },
+          {
+            "id": "u5",
+            "claim_quote": "کدام عوارض در طول زمان بیشتر دیده می‌شوند؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "question with no answer in it"
+          },
+          {
+            "id": "u6",
+            "claim_quote": "و چه عواملی می‌توانند احتمال شکست درمان را افزایش دهند؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "question with no answer in it"
+          },
+          {
+            "id": "u7",
+            "claim_quote": "یک مرور سیستماتیک و متاآنالیز که جستجوی مطالعات آن تا فوریه ۲۰۲۴ ادامه داشته، عملکرد لمینت‌های ساخته‌شده از سرامیک فلدسپاتیک، گلس‌سرامیک تقویت‌شده با لوسایت، لیتیوم دی‌سیلیکات و زیرکونیا را بررسی کرده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The date of last search was on February 19, 2024.",
+            "source_ref": null,
+            "note": "the four materials are named in the Objectives sentence of the abstract"
+          },
+          {
+            "id": "u8",
+            "claim_quote": "بر اساس نتایج این مطالعه، میزان بقای لمینت‌ها در میانگین پیگیری ۱۰/۴ سال، ۹۶/۰۵ درصد بوده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Ceramic laminate veneers showed a pooled survival rate of\n97.76% (95% CI: 96.42%–99.01%) in the short-­term, 97.12% (95%\nCI: 95.22%–98.79%) at 5.0 years and 96.05% (95% CI: 93.87%–\n97.46%) at 10.4 years of follow-­up, showing favorable results\nacross all time points.",
+            "source_ref": null,
+            "note": "the same figure is first reported in Results 3.4.3"
+          },
+          {
+            "id": "u9",
+            "claim_quote": "همچنین مطالعاتی که رضایت بیماران را بررسی کرده بودند، عموماً افزایش رضایت پس از درمان را گزارش کرده‌اند.",
+            "verdict": "ALTERED",
+            "change_kind": "HEDGE_REMOVED",
+            "source_quote": "Moreover, the studies which\nanalyzed overall patient experience could generally note an in-\ncrease of patient satisfaction before and after ceramic laminate\nveneer treatment [37, 41, 50, 51, 55, 60, 61, 64].",
+            "source_ref": null,
+            "note": "source says «could generally note»; «could» is a hedge in every sentence (F2-ii) and no other sentence states it plainly"
+          },
+          {
+            "id": "u10",
+            "claim_quote": "تفاوت متریال‌ها در چیست؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u11",
+            "claim_quote": "از نظر بقای لمینت در پیگیری ۱۰/۴ ساله، تفاوت معنی‌داری بین سه سرامیک اصلی دیده نشد:",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "No difference was found between materials.",
+            "source_ref": null,
+            "note": "ends in a colon but states its own finding, so it is judged"
+          },
+          {
+            "id": "u12",
+            "claim_quote": "فلدسپاتیک: ۹۶/۱۳ درصد",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Meta-­analysis revealed a pooled survival-­rate of 96.13% for feldspathic, 93.70% for\nLRGC and 96.81% for LDS at 10.4 years.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u13",
+            "claim_quote": "گلس‌سرامیک تقویت‌شده با لوسایت: ۹۳/۷ درصد",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Meta-­analysis revealed a pooled survival-­rate of 96.13% for feldspathic, 93.70% for\nLRGC and 96.81% for LDS at 10.4 years.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u14",
+            "claim_quote": "لیتیوم دی‌سیلیکات: ۹۶/۸۱ درصد",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Meta-­analysis revealed a pooled survival-­rate of 96.13% for feldspathic, 93.70% for\nLRGC and 96.81% for LDS at 10.4 years.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u15",
+            "claim_quote": "بنابراین، بر اساس این مطالعه نمی‌توان گفت یکی از این سه متریال از نظر بقای درمان برتری مشخصی دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "No difference was found between materials.",
+            "source_ref": null,
+            "note": "inference judged on its conclusion, which restates the finding of no difference in survival"
+          },
+          {
+            "id": "u16",
+            "claim_quote": "اما وقتی سراغ عوارض می‌رویم، تفاوت‌ها بیشتر خودشان را نشان می‌دهند.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost: the differences it announces are stated by the following units"
+          },
+          {
+            "id": "u17",
+            "claim_quote": "در همین دوره، میزان عوارض تکنیکال برای فلدسپاتیک ۴۱/۴۸ درصد، برای لوسایت ۲۹/۸۷ درصد و برای لیتیوم دی‌سیلیکات ۶/۱ درصد گزارش شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Complication rates (technical/esthetic/\nbiological) were as follows: Feldspathic: 41.48%/19.64%/6.51%; LRGC: 29.87%/17.89%/4.4%; LDS: 6.1%/1.9%/0.45% at 10.4 years.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u18",
+            "claim_quote": "عوارض بیولوژیک نیز در گروه لیتیوم دی‌سیلیکات کمتر بود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Complication rates (technical/esthetic/\nbiological) were as follows: Feldspathic: 41.48%/19.64%/6.51%; LRGC: 29.87%/17.89%/4.4%; LDS: 6.1%/1.9%/0.45% at 10.4 years.",
+            "source_ref": null,
+            "note": "Results 3.7 also reports the comparison as significant (LDS vs feldspathic and LDS vs LRGC)"
+          },
+          {
+            "id": "u19",
+            "claim_quote": "البته این اعداد به معنی از دست رفتن لمینت یا نیاز به تعویض آن نیستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Although\nfeldspathic and LRGC laminate veneers exhibited more frequent\ncomplications than LDS, biological failures were rarely observed\nand technical complications were addressed mostly without res-\ntoration replacement.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u20",
+            "claim_quote": "بسیاری از عوارض، بدون تعویض رستوریشن مدیریت شده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Although\nfeldspathic and LRGC laminate veneers exhibited more frequent\ncomplications than LDS, biological failures were rarely observed\nand technical complications were addressed mostly without res-\ntoration replacement.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u21",
+            "claim_quote": "با این حال، نتایج نشان می‌دهند که لیتیوم دی‌سیلیکات در این مرور با عوارض تکنیکال و بیولوژیک کمتری همراه بوده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However,\nat 10.4 years, LDS slightly outperformed both feldspathic and\nLRGC laminate veneers in terms of pooled technical and biolog-\nical complications.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u22",
+            "claim_quote": "این تفاوت را باید با احتیاط تفسیر کرد؛ چون مقایسه بر اساس مطالعات غیرتصادفی و ناهمگون انجام شده و نمی‌توان آن را به‌عنوان برتری قطعی یک متریال در نظر گرفت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "However, the findings should be interpreted with caution due\nto several limitations.",
+            "source_ref": null,
+            "note": "the reason clause is stated by the following limitation sentences (absence of RCTs comparing materials, high heterogeneity, only general tendencies rather than robust conclusions)"
+          },
+          {
+            "id": "u23",
+            "claim_quote": "در مورد زیرکونیا، یک مطالعه با میانگین پیگیری ۲/۶ سال، بقای ۱۰۰ درصد و بدون عارضه را گزارش کرده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Zirconia showed a 100% survival-­rate with no complications at 2.6 years.",
+            "source_ref": null,
+            "note": "the source states elsewhere that zirconia data come from one study"
+          },
+          {
+            "id": "u24",
+            "claim_quote": "اما در این مرور هنوز مطالعه‌ای با پیگیری بلندمدت برای زیرکونیا وجود نداشت؛ بنابراین نمی‌توان این نتیجه را به ماندگاری طولانی‌مدت زیرکونیا تعمیم داد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The\nlong-­term performance of zirconia laminate veneers remains\nuncertain.",
+            "source_ref": null,
+            "note": "inference judged on its conclusion; the premise (no long-term zirconia data) is also stated in the abstract"
+          },
+          {
+            "id": "u25",
+            "claim_quote": "با گذشت زمان چه عوارضی بیشتر دیده می‌شوند؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u26",
+            "claim_quote": "در سال‌های ابتدایی پس از درمان، عوارض بیولوژیک و زیبایی چندان شایع نیستند و بیشتر مشکلات از نوع تکنیکال‌اند؛ از جمله چیپینگ و ایجاد گپ مارجینال.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "No biological complications were reported in the short-­term.",
+            "source_ref": null,
+            "note": "plain sentence quoted; short-term esthetic rate (2.51%) and technical rate (6.59%) are reported in Results, and chipping and marginal gap are listed as the most frequent short-term technical complications; the Discussion sentence «it seems that … can be neglected» is hedged"
+          },
+          {
+            "id": "u27",
+            "claim_quote": "در پیگیری‌های طولانی‌تر، گپ مارجینال و تغییر رنگ در ناحیه مارجین بیشتر دیده می‌شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "At 10.4 years, the most prevalent complications were: marginal\ngap formation (95 events) [38, 50, 61] and marginal discoloration\n(92 events) [38, 48, 50, 61] for feldspathic porcelain, marginal\ndiscoloration (17 events) and marginal gap (10 events) [36, 62]\nfor LRGC and marginal gap (53 events) [51] and marginal dis-\ncoloration (48 events) [51] for LDS.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u28",
+            "claim_quote": "یکی از توضیحات احتمالی برای این یافته، تحلیل لثه در طول زمان است؛ اتفاقی که می‌تواند باعث نمایان شدن مارجین و نشت در فصل مشترک باندینگ شود.",
+            "verdict": "AUTHOR_VIEW",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "F1 line 2(c): hedged explanation of a finding (احتمالی · می‌تواند), study not named; the source offers the same explanation with «might be»"
+          },
+          {
+            "id": "u29",
+            "claim_quote": "هر تغییر مارجینال به معنی شکست درمان نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Nevertheless, laminate veneers were\nrarely replaced due to marginal gap formation or discoloration\n[50, 51, 61].",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u30",
+            "claim_quote": "در مطالعات این مرور، گپ مارجینال و تغییر رنگ مارجینال به‌ندرت به تعویض لمینت منجر شده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Nevertheless, laminate veneers were\nrarely replaced due to marginal gap formation or discoloration\n[50, 51, 61].",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u31",
+            "claim_quote": "عوارضی که واقعاً به ساخت رستوریشن جدید نیاز پیدا می‌کنند، کمتر دیده شده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Failures requiring a new restoration, such\nas bulk fractures (2.51%) and debondings (2.2%) were also sel-\ndomly encountered at long-­term follow-­up.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u32",
+            "claim_quote": "در پیگیری ۱۰/۴ ساله، میزان شکستگی حجیم (Bulk fracture) برابر با ۲/۵۱ درصد و دی‌باند ۲/۲ درصد گزارش شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Failures requiring a new restoration, such\nas bulk fractures (2.51%) and debondings (2.2%) were also sel-\ndomly encountered at long-­term follow-­up.",
+            "source_ref": null,
+            "note": "the same figures are first reported in Results 3.5 at a mean follow-up of 10.4 years"
+          },
+          {
+            "id": "u33",
+            "claim_quote": "پوسیدگی ثانویه ۲/۸۳ درصد و عوارض اندودنتیک نیز ۰/۹۶ درصد بوده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The\nsame applies to the criteria of secondary caries (2.83%) and end-\nodontic complications (0.96%).",
+            "source_ref": null,
+            "note": "the same figures are first reported in Results 3.7"
+          },
+          {
+            "id": "u34",
+            "claim_quote": "تراش؛ تا جای ممکن مینا را حفظ کنیم",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u35",
+            "claim_quote": "یکی از نکاتی که در برخی از مطالعات این مرور به چشم می‌آید، این است که لمینت‌های باندشده به سطح وسیع‌تری از عاج، در طول زمان عوارض بیشتری داشته‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Ceramic laminate veneers, which were bonded\nto larger areas of dentin were more likely to cause complications\nover time and thus identified as a potential risk factor for failures\n[45, 48, 54, 60].",
+            "source_ref": null,
+            "note": "«more likely to cause complications» read as a comparative risk statement, not an epistemic hedge"
+          },
+          {
+            "id": "u36",
+            "claim_quote": "به همین دلیل، باند به عاج به‌عنوان یکی از عوامل خطر احتمالی شکست مطرح می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Ceramic laminate veneers, which were bonded\nto larger areas of dentin were more likely to cause complications\nover time and thus identified as a potential risk factor for failures\n[45, 48, 54, 60].",
+            "source_ref": null,
+            "note": "inference judged on its conclusion, which the source states with the same hedge (potential)"
+          },
+          {
+            "id": "u37",
+            "claim_quote": "مرورهای سیستماتیک دیگری که نویسندگان به آن‌ها اشاره کرده‌اند نیز نشان داده‌اند که باند به مینا، به‌خصوص در ناحیه مارجین، و وجود اورلپ اینسایزال با میزان شکست کمتری همراه است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Other systematic reviews concluded that incisal\noverlapping and bonding to enamel, especially at margins, led\nto lower failure rates compared non-­overlapping and bonding to\ndentin and existing restorations [14, 20].",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u38",
+            "claim_quote": "این یافته‌ها اهمیت حفظ مینا را در طراحی و آماده‌سازی دندان برای لمینت نشان می‌دهند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The success and long-­term performance of\nlaminate veneers depends on a minimal and mostly enamel-­\nbased preparation as well as a strong adhesive bond between\nthe ceramic-­tooth interface [11].",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u39",
+            "claim_quote": "اگر شرایط کلینیکی اجازه استفاده از لمینت را می‌دهد، روکش فول‌کاوریج لزوماً انتخاب بهتری نیست.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "ranking of crown against veneer as a treatment choice; Discussion read (the paragraph citing ref. 27 on crowns vs partial-coverage restorations): it reports survival and biological complication figures for both but ranks neither as the better choice"
+          },
+          {
+            "id": "u40",
+            "claim_quote": "در یک مرور سیستماتیک دیگر، عوارض بیولوژیک در روکش‌های تکی قدامی ۵۰ درصد بیشتر از رستوریشن‌های پارسیل گزارش شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Biological complications (caries, endodontic and\nperiodontal problems, root fracture) were 50% higher for single\ncrowns than for partial-­ coverage restorations in the anterior\nregion owing to a more aggressive preparation design for full-­\ncoverage restorations [27].",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u41",
+            "claim_quote": "نویسندگان این تفاوت را به تراش تهاجمی‌تر در روکش‌ها نسبت می‌دهند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Biological complications (caries, endodontic and\nperiodontal problems, root fracture) were 50% higher for single\ncrowns than for partial-­ coverage restorations in the anterior\nregion owing to a more aggressive preparation design for full-­\ncoverage restorations [27].",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u42",
+            "claim_quote": "براکسیسم؛ نقش گارد اکلوزال",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u43",
+            "claim_quote": "براکسیسم هم می‌تواند بر احتمال شکست لمینت تأثیر بگذارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "One study observed\na twofold increase in risk of laminate veneer fracture in patients\nwith bruxism compared to those without [39].",
+            "source_ref": null,
+            "note": "hedged generalization from a stated finding (F2-ii item 1)"
+          },
+          {
+            "id": "u44",
+            "claim_quote": "در یکی از مطالعات این مرور، خطر شکستگی لمینت در بیماران دارای براکسیسم دو برابر بیماران بدون براکسیسم گزارش شده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "One study observed\na twofold increase in risk of laminate veneer fracture in patients\nwith bruxism compared to those without [39].",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u45",
+            "claim_quote": "در میان بیماران دارای براکسیسم نیز خطر شکستگی در افرادی که از اسپلینت استفاده نمی‌کردند، هفت برابر افرادی بود که اسپلینت داشتند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Furthermore, in\nbruxism patients, the risk of fracture was seven times higher\nfor those not wearing a splint than for those who wore one [39].",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u46",
+            "claim_quote": "البته این نتایج از یک مطالعه به دست آمده‌اند؛ با این حال، استفاده از گارد اکلوزال پس از سمان کردن لمینت در بیماران دارای عادت‌های پارافانکشن، اقدام منطقی‌ای است.",
+            "verdict": "ALTERED",
+            "change_kind": "HEDGE_REMOVED",
+            "source_quote": "Occlusal guards as a protective measure might therefore be ben-\neficial to reduce the risk of laminate veneer fracture, especially in\npatients with parafunctional habits.",
+            "source_ref": null,
+            "note": "F3: the first claim (results come from one study) matches; the recommendation is stated without a hedge where the source says «might … be beneficial», and no other sentence states it plainly"
+          },
+          {
+            "id": "u47",
+            "claim_quote": "ریکال منظم و مراقبت‌های نگهداری نیز می‌توانند به حفظ نتیجه درمان در طول زمان کمک کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Another factor which was under-­reported in most\nof the studies, but can contribute to the longevity of laminate\nveneer restorations are recall intervals as well as special instruc-\ntions for maintenance care and protective measures (e.g., night-­\nguards).",
+            "source_ref": null,
+            "note": ""
+          }
+        ],
+        "counts": {
+          "matches": 33,
+          "altered": 2,
+          "reversed": 0,
+          "not_in_source": 1,
+          "not_assessable": 0,
+          "author_view": 1,
+          "not_a_claim": 10
+        },
+        "assessable": 35,
+        "fidelity_score": 97,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "The long-­term performance of zirconia laminate veneers remains uncertain.",
+        "fact_fa": "از ۳۵ ادعایی که منبع به آن پرداخته‌اند، ۳۳ مورد مطابق است، ۲ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۱ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "موارد تغییریافته یا برعکس: «همچنین مطالعاتی که رضایت بیماران را بررسی کرده بود…» (قاطع‌تر از منبع)؛ «البته این نتایج از یک مطالعه به دست آمده‌اند؛ با ا…» (قاطع‌تر از منبع)."
+      }
     ]
   }
 }
