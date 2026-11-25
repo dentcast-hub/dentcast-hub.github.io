@@ -80,11 +80,10 @@ invalidation rules below.
    target at C.4.5-b; Hard Rule 13). One message gathers every open fact known at that point; the
    dependent step waits, independent work continues. A rare later fact (an abstract the tool cannot
    fetch, module 08 Part 1) is asked where it arises. A page with no paper and no open fact has no M1.
-2. **M3b, Part 3b** — at C.4.13, only when a sentence is still `ALTERED`/`REVERSED` after the judge,
-   or the judge differed from the sweeper on a sentence (a doubtful unit, module 08 Part 2c step 4):
-   each flagged one with its three named answers, each doubtful one as information whose text the
-   founder may change (module 08). Pages without C.4.13 (LiteCast, Challenge,
-   «بدون DES») have no M3b.
+2. **M3b, Part 3b** — not sent. A sentence measured `ALTERED`/`REVERSED` never holds the
+   publication (module 08, «Scored once» rule 5): each one goes into the agent's Push-2 report with
+   the source's sentence and a proposed rewrite, and the founder fixes it afterwards if he wants
+   («تطابق X رو کامل کن»). C.4.13 completes when the record is stored.
 3. **M2, exam questions** — at 4.12-ب, approved one by one (module 07). Mandatory for every page in a full
    pathway: the agent drafts and sends them, never asks whether to.
 

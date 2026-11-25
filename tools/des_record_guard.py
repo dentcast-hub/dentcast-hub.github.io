@@ -212,6 +212,11 @@ def rating_findings(src):
     return out
 
 
+# Module 08 «Scored once» rule 2: only a rating with no evidence at all sends a record
+# back; ABSENCE_NOTE is a regex approximation and is reported as a warning everywhere.
+BLOCKING = {"EMPTY_QUOTE"}
+
+
 def rating_rule_binding(src, scored_at):
     """Phase F: FAIL (True) or WARN (False). A record about to be stored has no scored_at yet: binding."""
     return ver_ge(src.get("des_version"), RATING_RULE_VERSION) and (not scored_at or str(scored_at) >= RATING_RULE_FROM)
@@ -475,10 +480,13 @@ def cmd_check(path):
     found = 0
     for label, _, s in sources_of(load(path)):
         for f in rating_findings(s):
+            if f["code"] not in BLOCKING:
+                print(f"WARN  {label} {f['code']}: {f['detail']} (reported, never a rerun)")
+                continue
             found += 1
             print(f"FAIL  {label} {f['code']}: {f['detail']}")
     if not found:
-        print("ok    no rating-rule finding (spec 3b: EMPTY_QUOTE, ABSENCE_NOTE)")
+        print("ok    no blocking rating-rule finding (spec 3b: EMPTY_QUOTE fails, ABSENCE_NOTE is a warning)")
     return 1 if found else 0
 
 

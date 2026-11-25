@@ -770,13 +770,14 @@ def des_text_report(path):
         print(f"FAIL  {p}: «{word}» → «{good}» (founder vocabulary; the agent rewrites it, no founder question)")
     if not bad:
         print("ok    no word from the founder's avoid list (fact_fa / interpretation_fa)")
-    # Part 3(7): the rating rule, on every object about to be stored (binding:
-    # a new record). Unlike the wording, this is never fixed by editing the
-    # record — the SOURCE call is rerun (module 08 Part 3(7)).
-    rated = [(label, f) for label, _, s in _des_guard().sources_of(rec) for f in des_rating_findings(s)]
-    for label, f in rated:
-        print(f"FAIL  {label} {f['code']}: {f['detail']} — rerun the SOURCE call, never hand-patch (module 08 Part 3(7))")
-    if not rated:
+    # Part 3(7): the rating rule, on every object about to be stored. EMPTY_QUOTE
+    # fails; ABSENCE_NOTE is a warning for the publish report (module 08 «Scored once»).
+    found = [(label, f) for label, _, s in _des_guard().sources_of(rec) for f in des_rating_findings(s)]
+    rated = [x for x in found if x[1]["code"] in _des_guard().BLOCKING]
+    for label, f in found:
+        kind = "FAIL" if f["code"] in _des_guard().BLOCKING else "WARN"
+        print(f"{kind}  {label} {f['code']}: {f['detail']} (module 08 Part 3(7))")
+    if not found:
         print("ok    rating rule (spec 3b): no EMPTY_QUOTE / ABSENCE_NOTE domain")
     bad = bad or rated
     print("\nPart 3(6): each sentence below must say only what the scored text or the record itself says.")
@@ -2074,12 +2075,8 @@ def _verify_core(content_id, rep, expect_title=None, expect_caption=None, sweep=
                 for f in des_rating_findings(s):
                     if f["code"] != "ABSENCE_NOTE":
                         continue
-                    fix = ("module 08 Part 3(7) — rerun the SOURCE call (spec as the system prompt, Part 2) "
-                           "and audit it (Part 2d); never hand-patch the rating")
-                    if des_rating_binding(s, rec.get("scored_at")):
-                        _gate(rep, sweep, False, "4.13 DES", "", f"{tag} {f['detail']}", fix)
-                    else:
-                        rep.warn("4.13 DES", f"{tag} (before {DES_RATING_RULE_FROM}, not re-scored) {f['detail']}", fix)
+                    fix = "module 08 «Scored once» rule 2 — reported in the publish report; not a rerun"
+                    rep.warn("4.13 DES", f"{tag} {f['detail']}", fix)
 
                 # 1b — the v1.6 section-level carve-out on checklist item 4.
                 # A `note` on that item is what says "this quote is not from the

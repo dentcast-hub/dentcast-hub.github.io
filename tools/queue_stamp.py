@@ -394,11 +394,11 @@ def check_des_package(item, problems, warnings=None):
     import des_record_guard as guard  # noqa: PLC0415
     for i, s in enumerate(des["sources"]):
         for f in guard.rating_findings(s):
-            msg = (f"{DES} sources[{i}] {f['code']}: {f['detail']} — rerun the SOURCE call and audit it "
-                   "(module 08 Part 2d, Part 3(7)); never hand-patch the rating")
-            if guard.rating_rule_binding(s, des.get("scored_at")) or warnings is None:
+            msg = (f"{DES} sources[{i}] {f['code']}: {f['detail']} "
+                   "(module 08 Part 3(7), «Scored once» rule 2)")
+            if f["code"] in guard.BLOCKING and (guard.rating_rule_binding(s, des.get("scored_at")) or warnings is None):
                 problems.append("P5 " + msg)
-            else:
+            elif warnings is not None:
                 warnings.append("W6 " + msg)
     pp = item / PLAN
     if not pp.is_file():

@@ -1130,14 +1130,17 @@ def des_quote_rows(rep, sources, texts):
         bad = [q for q in research if q and vp.des_norm(q) not in hay]
         rep.check(not bad, "accept", f"{tag} every DES evidence_quote is verbatim in the source text",
                   f"{tag} has {len(bad)} evidence_quote(s) not in the source text, e.g. {bad[0][:60]!r}" if bad else "",
-                  "Part 3(1) — rerun the SOURCE call, never hand-patch")
+                  "Part 3(1) — python3 tools/des_repair.py repairs the quotes; never a rerun, never by hand")
         com = [c for c in (s.get("commentary_checklist") or []) if c.get("evidence_quote")]
         off = [c for c in com if vp.des_norm(c["evidence_quote"]) not in hay and not c.get("note")]
         rep.check(not off, "accept", f"{tag} commentary quotes are in the text (or carry their section note)",
                   f"{tag} has {len(off)} commentary quote(s) in neither the text nor a noted section page",
                   "Part 3(1)")
         for f in guard.rating_findings(s):
-            rep.fail("accept", f"{tag} {f['code']}: {f['detail']}", "Part 3(7) — rerun and audit, never hand-patch")
+            if f["code"] in guard.BLOCKING:
+                rep.fail("accept", f"{tag} {f['code']}: {f['detail']}", "Part 3(7)")
+            else:
+                rep.warn("accept", f"{tag} {f['code']}: {f['detail']}", "reported, not a rerun («Scored once» rule 2)")
 
 
 def accept(content_id, sources, units, mode, plan, packet, texts):
@@ -1365,7 +1368,7 @@ def main():
                 base, carried = carried_base(a.content_id, base, [by_id[i] for i in plan[k]], k)
                 if carried:
                     # Part 2c step 1 for the units judged now: two runs each
-                    need = 1 if (d / f"judge-src{k}.json").exists() else 2
+                    need = 1 if (d / f"judge-src{k}.json").exists() or len(runs) <= 1 else 2
                     short = [i for i in carried if sum(i in {c["id"] for c in r["claims"]} for r in runs) < need]
                     if short:
                         sys.exit(f"src{k}: captions added since the base: {short} need the sweeper's run "
@@ -1396,6 +1399,8 @@ def main():
                     if len(runs) != 1 or not full:
                         sys.exit(f"src{k}: the sweeper protocol takes exactly one full run (out-src{k}-1.json, every "
                                  f"unit of the block) beside {judge_p.name}; {len(runs)} run file(s) found")
+                elif len(runs) == 1 and full:
+                    pass  # one sweeper run, no judge (founder 2026-11-25): settled below as it stands
                 elif len(full) < 2:
                     # records prepared before 2026-11-11: two full checker runs, tie-break, review
                     sys.exit(f"src{k}: --vote needs the sweeper's full run (out-src{k}-1.json) and the judge's answer "
@@ -1418,6 +1423,15 @@ def main():
                       f"of which flagged → MATCHES {overruled or '—'} · "
                       f"awaiting the judge {unjudged or '—'} · judge answer invalid {invalid or '—'}")
                 open_units += len(unjudged) + len(invalid)
+                continue
+            if len(runs) == 1:
+                # Founder 2026-11-25: the judge is optional. One sweeper run is the result;
+                # its counts, score, level and Persian lines are recomputed, never trusted.
+                out = refold(runs[0], runs[0]["claims"])
+                (d / f"voted-src{k}.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+                flagged = [c["id"] for c in out["claims"] if c["verdict"] in FLAGGED]
+                print(f"src{k}: sweeper only (no judge) · {out['fidelity_score']} {out['level']} · "
+                      f"flagged (publish report) {flagged or '—'}")
                 continue
             overruled = []
             out, tiebreak, unresolved, unreviewed = vote_source(runs, adj.get(f"src{k}"), rev.get(f"src{k}"),

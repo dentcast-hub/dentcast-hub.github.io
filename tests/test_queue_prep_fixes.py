@@ -179,7 +179,7 @@ class CaptionCarryTests(Site):
         old = {c["claim_quote"]: c["verdict"] for c in claims}
         self.assertTrue(all(old[c["claim_quote"]] == c["verdict"] for c in voted["claims"] if c["id"] != "u2"))
 
-    def test_vote_needs_the_judge_over_each_caption(self):
+    def test_vote_settles_one_sweeper_run_over_the_captions(self):
         base, _ = self.base_dir()
         self.write_page(CAPTIONS)
         caps = [u for u in units.split_page(CID, [SRC]) if u.get("caption")]
@@ -187,9 +187,9 @@ class CaptionCarryTests(Site):
         run2.mkdir()
         (run2 / "out-src0-1.json").write_text(json.dumps(fid([claim(u) for u in caps]), ensure_ascii=False),
                                               encoding="utf-8")
-        with self.assertRaises(SystemExit) as e:
-            self.main("--vote", str(run2), "--base", str(base))
-        self.assertIn("judge-src0.json", str(e.exception))
+        # The judge is optional (module 08 «Scored once» rule 3): one run is settled.
+        self.main("--vote", str(run2), "--base", str(base))
+        self.assertTrue((run2 / "voted-src0.json").exists())
 
     def test_recorded_plan_with_old_ids_is_refused(self):
         base, _ = self.base_dir()

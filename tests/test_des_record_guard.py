@@ -162,11 +162,19 @@ class RatingRuleTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             bad = write(tmp, 'bad.json', {'scored_at': '2026-11-07', 'sources': [wrong()]})
             good = write(tmp, 'good.json', {'scored_at': '2026-11-07', 'sources': [right()]})
-            self.assertEqual(quiet(guard.main, ['check', str(bad)])[0], 1)
+            # ABSENCE_NOTE is reported as a warning and never sends a record back
+            # (module 08 «Scored once» rule 2); only EMPTY_QUOTE fails.
+            code, out = quiet(guard.main, ['check', str(bad)])
+            self.assertEqual(code, 0)
+            self.assertIn('WARN', out)
             self.assertEqual(quiet(guard.main, ['check', str(good)])[0], 0)
             code, out = quiet(vp.des_text_report, str(bad))
-            self.assertEqual(code, 1)
+            self.assertEqual(code, 0)
             self.assertIn('ABSENCE_NOTE', out)
+            empty = wrong()
+            empty['q_method']['domains'][0].update(rating='low', evidence_quote='')
+            none = write(tmp, 'none.json', {'scored_at': '2026-11-07', 'sources': [empty]})
+            self.assertEqual(quiet(guard.main, ['check', str(none)])[0], 1)
             self.assertEqual(quiet(vp.des_text_report, str(good))[0], 0)
 
     def test_reader_library_validate(self):
@@ -177,7 +185,7 @@ class RatingRuleTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             item = Path(tmp) / '30-sharehub-x'
             (item / '05-DES-Fidelity').mkdir(parents=True)
-            for date, want in (('2026-11-07', 'P5'), ('2026-10-01', 'W6')):
+            for date, want in (('2026-11-07', 'W6'), ('2026-10-01', 'W6')):
                 (item / '05-DES-Fidelity/des.json').write_text(
                     json.dumps({'scored_at': date, 'sources': [wrong()]}), encoding='utf-8')
                 problems, warnings = [], []
