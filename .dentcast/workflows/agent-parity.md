@@ -2,18 +2,18 @@
 
 **LIVE_MODULAR_PUBLISHING_ENABLED.** Legacy files are backup only; do not read them for execution or use them as authority.
 
-Before content changes, read `.dentcast/workflows/global/README.md`, the complete active sections selected by that router for the current edit scope, and `.dentcast/workflows/agent-parity.md`. All clients use these same rules.
+A publication reads one reading pack (`.dentcast/workflows/README.md`). Any other content change reads `.dentcast/workflows/global/README.md`, the sections its selector picks for the edited paths, and this file. All clients use these same rules.
 
-New publication → `.dentcast/workflows/README.md`: complete modules 01 and 02, then every applicable canonical rule in the ledger order, full modules or the verified readpack (README). Preserve every founder decision, category exception, builder, English and final Phase F. Stage-only planning tools and synthetic receipts do not perform or authorize live publication.
+New publication → `.dentcast/workflows/README.md`. Preserve every founder decision, category exception, builder, English and final Phase F. Stage-only planning tools and synthetic receipts do not perform or authorize live publication.
 
 **Interrupted publication** («انتشار ناقص داشتم»), the run state `.dentcast/PUBLISH-HANDOFF.md` and recovery through `.dentcast/workflows/publish-handoff.md`: `publish-checkpoints.md`, «Interrupted publication».
 
-## Rule 0 — فایل فعال را کامل بخوان
+## Rule 0 — یک فایل، یک‌بار
 
-**در انتشار محتوا فقط بخش‌های ۰ تا ۳ این فایل خوانده می‌شود** (تا سر «## 4»). بخش‌های ۴ و ۵ چک‌لیست بازبینی‌اند، نه قاعدهٔ اجرا: قاعدهٔ هر گام در ماژول خودش است و فاز F همان‌ها را می‌سنجد.
+بخش‌های ۴ و ۵ این فایل چک‌لیست بازبینی‌اند، نه قاعدهٔ اجرا؛ بستهٔ خواندن انتشار این فایل را تا سر «## 4» دارد.
 
-1. پیش از انتشار یا ویرایش محتوا، `.dentcast/workflows/global/README.md` و تمام بخش‌های فعالی را که روتر برای محدودهٔ کار انتخاب می‌کند کامل بخوان؛ پیش از تغییر فایل‌های جدید، انتخاب را با مسیرهای جدید به‌روز کن. اگر محدوده ناشناخته یا ابزار انتخاب نامعتبر بود، هر سه فایل کانونی را کامل بخوان؛ این منبع مشترک Cursor، Codex و Claude است. قواعد سراسری دیگر در فایل‌های بزرگِ ورودی یا بک‌آپ خوانده نمی‌شوند.
-2. برای انتشار جدید، روتر `.dentcast/workflows/README.md`، دو ماژول 01 و 02 و سپس تمام قواعد لازمِ ماژول‌های مربوط را به ترتیب لجر بخوان، هر ماژول درست پیش از اولین گامش (`publish-checkpoints.md`). بعد از قفل Phase B پیش‌فرض readpack است (`README.md`)؛ فایل کامل فقط جایی که manifest پوشش نمی‌دهد. خلاصهٔ مدل، حافظهٔ جلسه یا انتخاب سلیقه‌ایِ پاراگراف‌ها هرگز جای متن منبع را نمی‌گیرد. در ابهام یا تغییر نسخه، فایل کامل خوانده می‌شود.
+1. انتشار جدید: بستهٔ خواندن (`.dentcast/workflows/README.md`، «Reading: one pack per publication») تنها متن قاعده است؛ یک‌بار، از اول تا آخر، پیش از اولین نوشتن خوانده می‌شود. فایل قاعدهٔ دیگری باز نمی‌شود مگر ابزاری رد کند و نامش را بگوید. خلاصهٔ مدل یا حافظهٔ جلسه هرگز جای آن را نمی‌گیرد.
+2. ویرایش محتوای دیگر: `.dentcast/workflows/global/README.md` و بخش‌هایی که انتخاب‌گرش برای مسیرهای ویرایش می‌دهد؛ با اضافه شدن مسیر تازه، انتخاب دوباره اجرا می‌شود. محدودهٔ ناشناخته یعنی همهٔ بخش‌ها.
 3. برای مسیرهای تخصصی، فایل کانونی همان مسیر کامل خوانده می‌شود؛ `routing-details.md` فقط تریگرها را نگه می‌دارد.
 4. اگر ابزار فایل را تکه‌تکه می‌خواند، همهٔ تکه‌های فایل فعالِ لازم را بخوان. برای هر کار یک مسیر زنده هست و بس؛ نسخهٔ قدیمی‌ای در درخت نیست که خوانده شود.
 5. نسخهٔ گیت‌هاب را از برنچ کاری و revision تأییدشده بخوان؛ برای ادامهٔ انتشار، نبود فایل روی main دلیل نبود آن روی برنچ کاری نیست.
@@ -70,7 +70,7 @@ New publication → `.dentcast/workflows/README.md`: complete modules 01 and 02,
 | پایش GitHub Actions بعد از Push 2 | `gh` یا GitHub MCP | `gh` | `gh` یا ابزار GitHub؛ هیچ‌کدام: REST با توکن (`--token-env`) یا لینک اجرا از بنیان‌گذار |
 | ایجنت یا context ایزوله (DES/Fidelity، بازبین مستقل) | Agent tool، یا `claude -p` (پایین) | subagent کرسر، یا `cursor-agent -p` اگر هست | sub-agent اگر هست، یا `codex exec` (پایین)؛ هیچ‌کدام: **مسیر رله** (پایین) |
 
-**پیش‌بررسی توانمندی، پیش از Phase B.** پیش از هر نوشتن، در یک خط ثبت کن کدام‌یک هست: (۱) `git ls-remote origin` کار می‌کند، (۲) push به برنچی جز `main` ممکن است (دو تحویل لازم دارد)، (۳) پایش Actions (`gh`، MCP، REST با توکن) یا بنیان‌گذار لینک اجرا را می‌دهد، (۴) راهِ باز کردن PR و مرج. هرچه نیست همان اول به بنیان‌گذار گفته می‌شود (پروتکل «توانمندی ندارم»)، نه بعد از ساعت‌ها تألیف در C.4.9؛ او تصمیم می‌گیرد: خودش push یا پایش می‌کند، یا کار همین‌جا می‌ماند.
+**پیش‌بررسی توانمندی، پیش از Phase B.** پیش از هر نوشتن، در یک خط ثبت کن کدام‌یک هست: (۱) `git ls-remote origin` کار می‌کند، (۲) push به برنچی جز `main` ممکن است (ذخیره و Push 2).  بعد از Push 2 کاری از ایجنت نمی‌ماند: رانر تحویل سوم و PR را می‌سازد و `publish-auto-merge.yml` مرج می‌کند. هرچه نیست همان اول به بنیان‌گذار گفته می‌شود (پروتکل «توانمندی ندارم»)، نه بعد از ساعت‌ها تألیف در C.4.9؛ او تصمیم می‌گیرد: خودش push می‌کند، یا کار همین‌جا می‌ماند.
 
 **اجرای ایزوله وقتی ابزار واگذاری نیست (هر کلاینت).** فراخوانی DES و FIDELITY به زمینهٔ جدا و مستقل نیاز دارد (ماژول 08 بخش ۲ و ۲c). اگر محیط ابزار ساختِ ایجنت جدا را **ندارد**، شبیه‌سازی نکن و اسکیپ هم نکن: همان فایل اسپک را در یک پروسهٔ جدا و از یک پوشهٔ خالی به‌عنوان system prompt اجرا کن —
 ```bash
@@ -82,7 +82,7 @@ cd "$(mktemp -d)" && codex exec --model <مدلِ همان نقش> --sandbox rea
 ```
 ویندوز (PowerShell): همان دستور با `$env:TEMP` به‌جای `mktemp -d`. هیچ‌کدام در دسترس نیست (مثلاً ChatGPT یا ایجنت ابری بی CLI): **مسیر رله**، بلافاصله پایین؛ C.4.13 شبیه‌سازی نمی‌شود.
 
-**مسیر رله — وقتی ایجنت خودش زمینهٔ جدا ندارد.** برای ChatGPT و هر ایجنت دیگری که نه sub-agent دارد نه CLI؛ مسیرِ Claude (Agent tool / `claude -p`) از آن استفاده نمی‌کند و عوض نمی‌شود. **هر مقاله یک فایل و یک رفت‌وبرگشت** (ماژول 08، «Scored once»): DES و جاروی Fidelity همان مقاله با هم می‌روند؛ داور و ممیزی از رله نمی‌روند.
+**مسیر رله — وقتی ایجنت خودش زمینهٔ جدا ندارد.** برای ChatGPT و هر ایجنت دیگری که نه sub-agent دارد نه CLI؛ مسیرِ Claude (Agent tool / `claude -p`) از آن استفاده نمی‌کند و عوض نمی‌شود. **هر مقاله یک فایل و یک رفت‌وبرگشت** (ماژول 08، «Scored once»): DES و جاروی Fidelity همان مقاله با هم می‌روند؛ داور از رله نمی‌روند.
 ```bash
 python3 tools/relay_call.py pack-paper --system .dentcast/des-v3.7-knowledge.md --source-block <بلوک Step 0> --fidelity-input <dir>/input-src<k>.json --des-to <dir>/des-src<k>.json --fidelity-to <dir>/out-src<k>-1.json --out <.dentcast/relay/ یا بیرون از ریپو>/relay.md
 python3 tools/relay_call.py ingest <جوابِ کامل چت، ذخیره‌شده> --relay <همان relay.md>      # جواب را دو فایل می‌کند

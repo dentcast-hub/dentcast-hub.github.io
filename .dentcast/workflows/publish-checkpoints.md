@@ -28,33 +28,7 @@ This section is the only home of this rule; entrypoints point here.
 
 ## Source loading
 
-- Choose the route and its sources at the start. Read each needed source completely, in bounded
-  numbered ranges. Keep `(path, revision, ranges read)` in the session, no state file. An unchanged
-  source already read is not reread; reload only a changed source, an authorized recovery source or a
-  source needed to diagnose a new error, and say why. Summaries and memory never replace the first
-  complete reading.
-- The byte-exact readpack (`tools/dentcast_publish_readpack.py`): rules in `README.md` only. The pack
-  is the text source, read at the moments below, not a preload.
-
-**Just-in-time loading.** Up front: `README.md`, `global/README.md` with its selected sections,
-`agent-parity.md`, this file, modules 01 and 02. After Phase B is locked, each module (or its readpack
-ranges) is read completely immediately before the first ledger step its preface lists, and stays
-loaded. A module whose steps are all canonically skipped is not read. Reading later never means
-reading less.
-
-| When | Read |
-|---|---|
-| Phase B locked, Question 4.9 = «چالش» | module 09 complete, before C.1 (its markup shapes the page) |
-| Founder hands over DES/Fidelity JSON at intake | module 08 opening through «Conditional path for founder-supplied results», before Question 4.8 |
-| Before C.0 … C.2 / C.2.4 … C.4.6 | modules 03 / 04 |
-| Before C.4.10.1 (paper attached) | module 06 |
-| Before C.4.13 | module 08 complete; LiteCast and Challenge read its opening up to `#### Conditional path for founder-supplied results` for the skip line |
-| Before C.4.7 | module 05 |
-| At Question 6 (intake, M2) | module 07 §4.12-ب only (`sed`, from the heading to the end of the module); its result is recorded in the evidence of `B.5` |
-| Before C.4.11 / C.4.14 / C.5.0 | modules 07 / 09 (Challenge only) / 10 |
-| At C.2, for the page's chip row | Hard Rule 15 only (module 01, already read): existing canonical concepts, resolved with `hashtag_ref.py --simulate`, no mint. Step 5.0 settles the final list and corrects the row before the brain write |
-| Before writing the English mirror (before C.6) | `en-version.md`, module 12 through the end of Phase D, module 11 above its `module-11-boundary` marker (§6) |
-| Never in a normal run | module 11 below its `module-11-boundary` marker (§7–§8) and module 12's Phase E and Phase F: the runner does them; read only for guarded recovery (`publish-after-push2.md`). Module 12's «Final output summary» is **not** in that set: it lists what the agent's own Push-2 report must carry |
+The rules of a publication are its reading pack (`README.md`, «Reading: one pack per publication»): one file, read once, top to bottom, in bounded chunks, before the first write. Nothing else is opened unless a tool refuses and names a file. A changed source or intake fact means a new pack; summaries and memory never replace the reading. Two parts of the pack are used early: module 07 §4.12-ب at Question 6 (M2), and module 09 before C.1 on a Challenge page. Guarded recovery after Push 2 (`publish-after-push2.md`) reads modules 11 and 12 whole.
 
 ## Order, messages, text lock, deliveries
 
@@ -129,15 +103,11 @@ reaches only the save point.
    `post-cut2-mechanical.yml` (its push filter is `**`). A branch that holds commits is never moved
    (`TOOL_OLDER_THAN_ORIGIN_MAIN` then names `git merge --no-edit origin/main`).
    `SHALLOW_CLONE_DEEPEN_REQUIRED` → `git fetch --deepen=50 origin` (or `--unshallow`) and retry.
-2. Check only that `.dentcast/PUBLISH-HANDOFF.md` does not exist (section above). Then run the
-   global selector with every path this run will touch and read what it adds
-   (`python3 tools/dentcast_global_rules.py --publication --path <path> … [--read]`, `global/README.md`;
-   `--publication` is for a page cloned from the previous one and leaves out what the clone inherits);
-   rerun it when the scope grows.
+2. Check only that `.dentcast/PUBLISH-HANDOFF.md` does not exist (section above).
 3. Identity known → `python3 tools/dentcast_publish_handoff.py start --content-id <section>/<slug>
    --category <category> --target-path <path> …` (the tool writes the full ledger itself; no input
-   JSON). Paper-only, or identity not yet known: `plan [--paper-only]` → `init --input` → `bind`
-   (`publish-handoff-tool.md`). A real identity is never rebound.
+   JSON). The paper-only route and an intake whose identity is not yet known are in
+   `publish-handoff-tool.md`. A real identity is never rebound.
 4. The tool keeps the books: `--expected-sha256` may be omitted everywhere (the handoff as it is on
    disk); `advance` skips by itself the steps this category never runs; one more path, a decision,
    an approval or a pending question is `note --target-path … | --decision '{…}' | --approval '{…}'

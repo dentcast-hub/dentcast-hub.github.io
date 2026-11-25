@@ -1,6 +1,7 @@
 # Shared active global rules
 
-Before content work, read this router and the complete `agent-parity.md` once.
+A publication's reading pack already carries its global sections. For any other
+content work, read this router and `agent-parity.md` once.
 Then run `python3 tools/dentcast_global_rules.py --read` to load all core
 sections. These include repository/content restrictions, publishing data,
 cache rules, ads integration, publication surfaces and every

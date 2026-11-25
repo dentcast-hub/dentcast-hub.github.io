@@ -11,8 +11,8 @@
 ماژول‌های 01 تا 12 روز انتشار صف خوانده نمی‌شوند.
 
 **روز انتشار تماماً روی GitHub Actions است.** ایجنت (یا بنیان‌گذار از تب Actions، حتی با گوشی) فقط
-`.github/workflows/queue-publish.yml` را اجرا و پایش می‌کند؛ برداشتن، قفل، برنچ، `run`، Push 2، تحویل سوم و PR
-همه آنجا ساخته می‌شوند، و پاک‌کردن صف بعد از مرج با `.github/workflows/queue-publish-done.yml`.
+`.github/workflows/queue-publish.yml` را اجرا می‌کند؛ برداشتن، قفل، برنچ، `run`، Push 2، تحویل سوم و PR
+همه آنجا ساخته می‌شوند، مرج با `.github/workflows/publish-auto-merge.yml` است، و پاک‌کردن صف بعد از مرج با `.github/workflows/queue-publish-done.yml`.
 
 > **قاعدهٔ سخت.** ایجنت هیچ فایلی را از راه API یا blob به گیت‌هاب نمی‌برد و هیچ Push 2 را از سندباکس خودش
 > نمی‌فرستد. اگر به هر دلیلی مجبور به اجرای محلی شد و push شکست، `PUSH_FAILED` را عیناً گزارش می‌کند و

@@ -33,7 +33,7 @@ Router only: triggers and the canonical file each request goes to. Rules live in
 
 وقتی کاربر محتوای جدیدی برای انتشار می‌آورد:
 
-1. `.dentcast/workflows/README.md` را کامل بخوان؛ دو ماژول آغازین و سپس هر ماژولِ مربوط را کامل، درست پیش از اولین گامش و به ترتیب لجرِ `publish-checkpoints.md` بخوان و اجرا کن.
+1. بستهٔ خواندن را بساز و یک‌بار بخوان (`.dentcast/workflows/README.md`، «Reading: one pack per publication»)؛ بعد به ترتیب لجرِ `publish-checkpoints.md` اجرا کن.
 2. `dentcast-brain.json` منبع حقیقتِ ساختار، اسکیما و دستهٔ هر نوع محتواست.
    همیشه **آخرین انتریِ هم‌دسته** را الگوی انتری جدید بگیر.
 3. **هرگز دسته‌ها را قاطی نکن.** NoteCast در NoteCast می‌ماند، Insight در
@@ -287,5 +287,5 @@ dentai، dentcast-plus، insight، notecast) را که اصلاً تگِ Open Gr
 - آماده‌سازی فقط روی برنچ `queue` می‌نویسد و انتشار شروع نمی‌کند؛ main و برنچ انتشار دست نمی‌خورند.
 - انتشار از صف قدیمی‌ترین مقالهٔ «آماده» (یا مطلبی که بنیان‌گذار نام برده) را برمی‌دارد و با
   ابزار `tools/queue_publish.py` و دو تحویل، تماماً روی GitHub Actions (`.github/workflows/queue-publish.yml`؛ ایجنت فقط
-  اجرا و پایش می‌کند و هیچ فایلی را خودش push یا آپلود نمی‌کند) انجام می‌شود؛ DES/Fidelity منجمدِ آماده‌سازی عیناً نصب می‌شود
+  اجرا می‌کند و هیچ فایلی را خودش push یا آپلود نمی‌کند؛ مرج با `publish-auto-merge.yml` است) انجام می‌شود؛ DES/Fidelity منجمدِ آماده‌سازی عیناً نصب می‌شود
   و از بنیان‌گذار چیزی پرسیده نمی‌شود (`queue-route.md`).
