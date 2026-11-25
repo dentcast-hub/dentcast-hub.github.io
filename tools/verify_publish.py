@@ -2457,9 +2457,9 @@ def _verify_core(content_id, rep, expect_title=None, expect_caption=None, sweep=
             if sweep:
                 rep.skip("4.12-ب exam", "no exam question for this page (older than the mandatory rule)")
             else:
-                rep.fail("4.12-ب exam", "page is a step of a full pathway but has no exam question — "
-                         "step 4.12-ب is mandatory (1-3 questions approved in message M2)",
-                         "module 07 §4.12-ب: draft, --draft-check, M2, then append to plus/exam-questions.json")
+                # The founder's answer to M2 is final, «بدون سؤال» included: reported, never a stop.
+                rep.warn("4.12-ب exam", "page is a step of a full pathway and has no exam question "
+                         "(module 07 §4.12-ب: drafted at intake; none approved)")
         else:
             r = subprocess.run([sys.executable, str(ROOT / "tools" / "validate_exam_questions.py"), "--content", content_id],
                                capture_output=True, text=True)

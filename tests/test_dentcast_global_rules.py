@@ -25,19 +25,21 @@ class GlobalRulesTests(unittest.TestCase):
         chosen = rules.select(self.manifest, self.blocks)
         self.assertLess(sum(len(b['text'].encode()) for b in chosen), sum(len(b['text'].encode()) for b in self.blocks))
         self.assertIn('site-invariants', self.ids([]))
-        self.assertIn('des-display', self.ids([]))
+        # DES display is the shared renderer's contract: loaded for plus/js/des.js, not for a publication.
+        self.assertNotIn('des-display', self.ids([]))
+        self.assertIn('des-display', self.ids(['plus/js/des.js']))
         self.assertIn('repo-core', self.ids([]))
 
     def test_standard_page_does_not_load_unrelated_account_features(self):
         self.assertNotIn('google-auth', self.ids(['sharehub/share-36.html', 'plus/des-scores.json']))
 
-    def test_pathway_edit_loads_certificate_and_exam_constraints(self):
-        # A step insertion can change progress derivation and certifiability, so it loads those two;
-        # the exam-bank internals are a separate section, loaded by the file they govern (2026-11-06).
+    def test_pathway_and_exam_data_load_only_core(self):
+        # A publication adds one pathway step (tools/pathway_place.py) and appends exam rows
+        # (modules 07 and 10 hold that contract); the backend doctrine of standings,
+        # certificates and the exam service is not needed for it and is no longer loaded.
         core = {b['id'] for b in self.blocks if b['core']}
-        self.assertEqual(self.ids(['plus/pathways.json']), core | {'pathway-standings', 'pathway-certificate'})
-        self.assertEqual(self.ids(['plus/exam-questions.json']), core | {'pathway-exam', 'pathway-certificate'})
-        self.assertNotIn('pathway-exam', self.ids(['plus/pathways.json']))
+        self.assertEqual(self.ids(['plus/pathways.json']), core)
+        self.assertEqual(self.ids(['plus/exam-questions.json']), core)
 
     def test_routine_publication_paths_load_only_core(self):
         core = {b['id'] for b in self.blocks if b['core']}

@@ -1,31 +1,21 @@
-# After Push 2 — monitor, pull, confirm, merge
+# After Push 2 — only when the founder reports a problem
 
-Read completely right after the second delivery of a page publication is confirmed
-(`publish-checkpoints.md`, «After Push 2»). Not read before Push 2. After Push 2 nothing is the
+The agent's work ends at Push 2 (`publish-checkpoints.md`, «After Push 2»): it does not read this
+file, monitor the run or merge. `publish-auto-merge.yml` merges the PR when every check is green and
+comments on it otherwise. Read this file only when the founder says a run or PR is stuck, then
+follow the part that fits. After Push 2 nothing is the
 agent's: `post-cut2-mechanical.yml` runs C.8, C.7, D, E, Phase F and G from the exact Push-2 commit,
 pushes delivery 3 and opens the PR when the `QUEUE_PUBLISH_TOKEN` secret is set (otherwise the job
 summary says to open it by hand; a queue item's PR is opened by `queue-publish.yml`). It never merges.
 Before Phase F it refuses any regenerated page that lost or lowered a `?v=` stamp it had at Push 2
-(`ASSET_VERSION_REGRESSION`); the agent never runs `git diff -G'\?v='` by hand on this route. The agent
-monitors, merges as soon as every gate is green (never asked), and reports. A queue item (`queue-route.md`) reads only the
+(`ASSET_VERSION_REGRESSION`); the agent never runs `git diff -G'\?v='` by hand on this route.  A queue item (`queue-route.md`) reads only the
 «Transient» bullet of the Failure section below: its lane forbids `invalidate` and any extra commit.
 
-## Monitor
+## Finding the run
 
-- Stay with the run until it is terminal; do not end the turn while it is queued or running. No
-  periodic status messages: one at Push 2 (already sent) and one at merge (or at a failure that stops it).
-- `gh run watch <id>` (`gh run list --workflow post-cut2-mechanical.yml --branch <branch> --json databaseId,headSha`
-  finds the id), or without `gh` the GitHub MCP tools: `actions_list` (the branch's runs of
-  `post-cut2-mechanical.yml`), `actions_get` (status, conclusion), `get_job_logs` (failed jobs); without
-  either, REST `GET repos/<owner>/<repo>/actions/workflows/post-cut2-mechanical.yml/runs?branch=<branch>`
-  with a token, or the run link the founder reads from the Actions tab. A client that cannot stay
-  with the run says so and hands over: «ادامه انتشار» resumes the monitoring in a later session.
-  The branch may have **more than one** run — a save-point push starts one too, which skips
-  itself. The run to monitor is the one whose `head_sha` is the Push-2 SHA; never judge by position
-  or by the newest run.
-- No run, or preflight skipped: inspect the event, branch and handoff before saying Actions started.
-- Logs and recovery bundle: run artifact `post-cut2-<Push-2 SHA>` (14 days), through the Actions API
-  (list the run's artifacts, download that zip), not from the branch.
+`gh run list --workflow post-cut2-mechanical.yml --branch <branch>`, or the GitHub MCP tools
+(`actions_list`, `actions_get`, `get_job_logs`). The run to read is the one whose `head_sha` is the
+Push-2 SHA. Logs and recovery bundle: run artifact `post-cut2-<Push-2 SHA>` (14 days).
 
 ## Success
 
@@ -49,7 +39,7 @@ monitors, merges as soon as every gate is green (never asked), and reports. A qu
    already in the agent's Push-2 report; repeat nothing). Not "published" until merged.
 5. **Merge**, without asking (`publish-checkpoints.md`, «Waiting, services, merge»): fresh
    `check-pr` (`python3 tools/dentcast_publish_handoff.py check-pr --repository <owner>/<repo> --number <n>
-   --expected-head <sha> --expected-base main --expected-branch <branch>`; unauthenticated works on this
+   --expected-head <sha> --expected-base <base SHA> --expected-branch <branch>`; unauthenticated works on this
    public repository), gates green, then merge (`gh pr merge <n> --merge`, the GitHub tool
    `merge_pull_request`, or the founder in the web UI). Message at merge. A red gate means no merge.
    Re-dispatch by hand: `gh workflow run post-cut2-mechanical.yml --ref <branch> -f target_branch=<branch>

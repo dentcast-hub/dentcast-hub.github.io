@@ -105,7 +105,7 @@ def include(ranges, size):
     return selected
 
 
-def route_spans(name, lines, *, category, attached_paper, challenge):
+def route_spans(name, lines, *, category, attached_paper, challenge, des_basket='unknown'):
     """Decide safe line ranges; everything not explicitly proven safe stays."""
     size = len(lines)
     whole = [(0, size)]
@@ -163,6 +163,18 @@ def route_spans(name, lines, *, category, attached_paper, challenge):
         stop = boundary(lines, '#### Conditional path for founder-supplied results')
         return include([(0, stop)], size), 'CANONICAL_LITECAST_OR_CHALLENGE_DES_SKIP_ONLY'
 
+    if name == '08-des-fidelity.md' and des_basket == 'commentary':
+        # Basket 1 (the page's own text, no cited source): one SOURCE call on the page text and
+        # no FIDELITY call (module 08 Part 2b, «When»). Parts 2b-2d (the FIDELITY protocol and
+        # the retired audit) and Part 3b (flagged sentences) have nothing to act on.
+        fid = boundary(lines, '#### Part 2b — Run the FIDELITY call')
+        checks = boundary(lines, '#### Part 3 — Validate the output mechanically')
+        fixes = boundary(lines, '#### Part 3b — Report every differing sentence')
+        store = boundary(lines, '#### Part 4 — Store the record')
+        if not (fid < checks < fixes < store):
+            raise UnsafeSelection('INVALID_MODULE_08_ORDER')
+        return include([(0, fid), (checks, fixes), (store, size)], size), 'COMMENTARY_BASKET_NO_FIDELITY_LOCKED_AT_Q4_8'
+
     if name == '11-build-and-version.md':
         # Everything below the marker is the post-Push-2 runner's C.8/C.7 part, which
         # publish-checkpoints.md lists as never read in a normal run (2026-11-06).
@@ -198,7 +210,7 @@ def route_spans(name, lines, *, category, attached_paper, challenge):
     return whole, 'FULL_REQUIRED'
 
 
-def build(root, *, category, attached_paper, challenge, after_intake=False):
+def build(root, *, category, attached_paper, challenge, after_intake=False, des_basket='unknown'):
     root = Path(root).resolve(strict=True)
     category = selector_category(category)
     manifest = {
@@ -239,7 +251,7 @@ def build(root, *, category, attached_paper, challenge, after_intake=False):
             spans, reason = [(0, len(lines))], 'SOURCE_CHANGED_FULL_FALLBACK_REAUDIT_MAP'
         else:
             spans, reason = route_spans(name, lines, category=category,
-                                        attached_paper=attached_paper, challenge=challenge)
+                                        attached_paper=attached_paper, challenge=challenge, des_basket=des_basket)
         spans = include(spans, len(lines)) if spans else []
         selected = ''.join(''.join(lines[start:end]) for start, end in spans)
         selected_bytes = selected.encode('utf-8')
@@ -444,6 +456,9 @@ def main(argv=None):
                    help='locked Phase B Q4.7; unknown retains complete modules')
     p.add_argument('--challenge', choices=['yes', 'no', 'unknown'],
                    help='locked Phase B Q4.9; unknown retains complete modules')
+    p.add_argument('--des-basket', choices=['commentary', 'research', 'unknown'], default='unknown',
+                   help='Question 4.8: commentary = the page\'s own text, no cited source (module 08 without the '
+                        'FIDELITY parts); anything else keeps the whole module')
     p.add_argument('--after-intake', action='store_true',
                    help='omit routers + modules 01/02 already read in this same session')
     p.add_argument('--output', type=Path, required=True, help='temporary UTF-8 verbatim reading pack')
@@ -467,7 +482,7 @@ def main(argv=None):
             pack, report = build_queue_prep(a.root, attached_paper=a.attached_paper)
         else:
             pack, report = build(a.root, category=a.category,
-                                 attached_paper=a.attached_paper, challenge=a.challenge,
+                                 attached_paper=a.attached_paper, challenge=a.challenge, des_basket=a.des_basket,
                                  after_intake=a.after_intake)
         atomic_write(a.output, pack)
         atomic_write(a.manifest, json.dumps(report, ensure_ascii=False, indent=2) + '\n')

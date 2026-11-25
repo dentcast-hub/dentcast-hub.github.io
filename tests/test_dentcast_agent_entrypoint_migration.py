@@ -14,7 +14,7 @@ def read(p): return (ROOT/p).read_text(encoding="utf-8")
 class EntrypointMigrationTests(unittest.TestCase):
  def test_progress_reporting_is_timely_without_per_command_noise(self):
   s=read(".dentcast/workflows/agent-parity.md")
-  for term in ("بعد از Push 2 دقیقاً دو پیام", "برای هر دستور، فایل‌خوانی یا چکِ ریز پیام جدا نفرست",
+  for term in ("کار ایجنت در Push 2 تمام می‌شود", "برای هر دستور، فایل‌خوانی یا چکِ ریز پیام جدا نفرست",
    "همان‌جا سؤال دقیق را بپرس", "نتیجه و قدم بعد"):
    with self.subTest(term=term): self.assertIn(term,s)
  def test_clients_use_active_authority(self):
@@ -64,10 +64,12 @@ class EntrypointMigrationTests(unittest.TestCase):
   for gone in ("Never insert links on the user's behalf","همین‌طوری درج کنم یا رد شم؟","لینک بشه / رد شه","short menu"):
    self.assertNotIn(gone,s)
  def test_post_push2_handoff_notice_shared(self):
-  for p in ("AGENTS.md","CLAUDE.md",".cursor/rules/dentcast-router.mdc"):
+  # The agent stops at Push 2; GitHub (publish-auto-merge.yml) merges. Kilo reads the same rule.
+  for p in ("AGENTS.md","CLAUDE.md",".cursor/rules/dentcast-router.mdc",".kilocode/rules/dentcast.md"):
    with self.subTest(path=p):
-    s=read(p); self.assertIn("After a new v2 publication's second delivery is confirmed",s)
-    self.assertIn("Keep checking the run until it succeeds or fails",s)
+    s=read(p); self.assertIn("**The agent's work ends at Push 2.**",s)
+    self.assertIn("Do not monitor the run, wait for it or merge",s)
+    self.assertNotIn("Keep checking the run until it succeeds or fails",s)
  def test_specialty_routes_preserved(self):
   for p in ("AGENTS.md","CLAUDE.md",".cursor/rules/dentcast-router.mdc"):
    for route in ("en-version.md","ads.md","spot-report.md","cross-link.md","new-section.md",

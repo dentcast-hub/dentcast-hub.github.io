@@ -84,8 +84,8 @@ invalidation rules below.
    publication (module 08, «Scored once» rule 5): each one goes into the agent's Push-2 report with
    the source's sentence and a proposed rewrite, and the founder fixes it afterwards if he wants
    («تطابق X رو کامل کن»). C.4.13 completes when the record is stored.
-2. **M2, exam questions** — at 4.12-ب, approved one by one (module 07). Mandatory for every page in a full
-   pathway: the agent drafts and sends them, never asks whether to.
+2. **M2, exam questions** — at intake (module 02, Question 6), with M1 in one message: drafted from
+   the text, approved one by one, written at 5.6 (module 07). His answer is final, «بدون سؤال» included.
 
 M1 is closed before Push 2: completing C.6 and the cut refuse a non-empty
 `pending_questions` list, answered or not — clear each record once its answer is recorded as that
@@ -107,7 +107,7 @@ their only home:
 
 | Push | When | Contents | Who |
 |---|---|---|---|
-| Save point (Push 1) | once, when `C.4.13` has stored the record | scoped work + latest handoff | agent |
+| Save point | when `C.4.13` has stored the record, and again whenever a turn ends before Push 2 | scoped work + latest handoff | agent |
 | Push 2 (delivery 2) | after `C.6`: DES/Fidelity, Challenge, links, flashcards/FAQ, hashtags, content record, pathways, Pulse, English mirror and every founder message closed | scoped work + latest handoff | agent |
 | Delivery 3 | after C.8, C.7, D, E, real Phase F, G | final work + completion receipt + handoff deletion, one commit | `post-cut2-mechanical.yml` |
 
@@ -256,7 +256,7 @@ exact text in `decision` and its evidence (founder data, or standing acceptance 
 proposal), or `not_required` with a decision and evidence; at least one is `confirmed` so Phase F has
 exact text. Missing either blocks cut 2. The runner reads these frozen records and never prompts.
 
-## After Push 2 — nothing is the agent's
+## After Push 2 — the agent is done
 
 The runner (`post-cut2-mechanical.yml`, from the exact Push-2 commit) does C.8, C.7, D (technical),
 E, real Phase F, G, delivery 3 and opens the PR (with the `QUEUE_PUBLISH_TOKEN` secret; a queue item's
@@ -264,14 +264,13 @@ PR comes from `queue-publish.yml`). Before Phase F it refuses a regenerated page
 `?v=` stamp (`ASSET_VERSION_REGRESSION`). The agent does not run C.8 onward locally.
 
 Immediately after Push 2 is confirmed, one message: the agent-side work has reached Push 2, GitHub
-Actions is running the remaining mechanical delivery, the agent is monitoring it; branch, Push-2 SHA
-and run link when available, **plus the agent's report**: the standing-acceptance list (what was
+Actions runs the remaining mechanical delivery and merges the PR by itself; branch and Push-2 SHA, **plus the agent's report**: the standing-acceptance list (what was
 applied, what was skipped and why), every M1/M2 question with its answer, every sentence Fidelity flagged (with the source's sentence and a proposed rewrite), the doubtful units of an optional judge run, the orphan sentences
 of the Fidelity sweep, and any real decision asked. Report G, written by the runner's `finish`, is
 technical only (ledger, Phase F, fingerprints) and deliberately omits approvals; the agent's Push-2
-report is the only human record of them. Not a completion claim. **Then read `publish-after-push2.md`
-completely** and follow it. Two messages in all after Push 2: at Push 2 and at the merge (or at a
-failure that stops it). A mechanical step that reveals a needed substantive change stops the run's path: invalidate,
+report is the only human record of them. Then the agent stops: no monitoring, no waiting, no merge. `publish-auto-merge.yml` merges the PR when
+every check is green, or comments on it what is red. `publish-after-push2.md` is read only when the
+founder reports a problem with that run. A mechanical step that reveals a needed substantive change stops the run's path: invalidate,
 never fix silently in D or F.
 
 ## Paper-only (one delivery)
@@ -332,13 +331,10 @@ approvals, semantic quality or external outcomes. A stale/missing/corrupt state 
 - A real wait: report the step, the pending result and whether it blocks; continue independent work;
   refresh only the relevant result after a plausible change. Never poll every PR/check after each
   step.
-- Before merge, freshly read the exact PR, its head/base SHAs and branch:
-  `check-pr --repository owner/repo --number N --expected-head SHA --expected-base SHA
-  --expected-branch BRANCH [--token-env NAME]` (or the same reads through connected GitHub tools).
-  A moved ref or closed PR: preserve work, re-plan, never force.
-- Merge is the agent's, never asked (merge is reversible):
-  once delivery 3, Phase F, the PR's checks and a fresh `check-pr` are green, merge. A red gate means
-  no merge. Only an explicit «مرج نکن» from the founder for that publication stops before merge.
+- Merge is GitHub's (`publish-auto-merge.yml`): every check on the PR's head green, then merge; a red
+  gate means no merge and one comment on the PR. The label `hold` on the PR is the founder's «مرج نکن».
+  An agent merges by hand only when the founder asks it to look at a stuck PR (`check-pr` with the
+  base SHA, not the branch name, first).
   Distinguish prepared, verified, committed, pushed, merged and live; no invented ETA.
 - Hosting (only home): DentCast is served from ArvanCloud and GitHub Pages (`dentcast.org`/`www` are
   CNAMEs to `dentcast-hub.github.io`, via Cloudflare DNS). Cloudflare Pages and Vercel are backup
