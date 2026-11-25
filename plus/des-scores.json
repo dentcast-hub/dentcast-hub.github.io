@@ -64465,5 +64465,58 @@
         "interpretation_fa": "متن تجربه‌ی بالینی نویسنده درباره‌ی ترتیب درمان است و استدلال آن روشن بیان شده، اما به هیچ مطالعه‌ی منتشرشده‌ای تکیه نمی‌کند. ارزش عملی آن در یادآوری این نکته است که تأیید امکان جراحی ایمپلنت پیش از خارج کردن بریج، بیمار را از یک وضعیت غیرقابل‌برگشت حفظ می‌کند."
       }
     ]
+  },
+  "chairside/chairside-57": {
+    "scored_at": "2026-11-25",
+    "sources": [
+      {
+        "des_version": "3.7",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "درد مبهم در فک بالا؛ وقتی تشخیص قبلی مسیر معاینه را محدود می‌کند",
+          "authors": "دکتر فواد شهابیان",
+          "year": 2026,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "چون بیمار پیش‌تر توسط متخصص اندودانتیکس معاینه شده بود، ناخودآگاه تصور می‌کردم بررسی اندودانتیک به‌طور کامل انجام شده و احتمال اینکه درد از یک مشکل اندودانتیک باشد، قبلاً بررسی و رد شده است. همین فرض باعث شد بعضی از بررسی‌های بالینی را که در معاینه معمول پروتزی هم اهمیت دارند، با دقت و اولویت کافی انجام ندهم."
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 0,
+            "evidence_quote": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "این تجربه دوباره یادآوری کرد که حتی وقتی بیمار با تشخیص قبلی و ارجاع مشخص مراجعه می‌کند، نباید معاینه مستقل خودمان را به آن تشخیص محدود کنیم."
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "Chairside متن‌های آموزشی یا کیس‌ریپورت نیستند؛ ثبت لحظه‌های واقعی و مسیر فکر بالینی‌اند.",
+            "note": "اعلان سطح بخش، از chairside/index.html"
+          }
+        ],
+        "des_score": 15,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این مطلب در بخش Commentary با امتیاز ۱۵ در باند E قرار می‌گیرد.",
+        "interpretation_fa": "این یادداشت بالینی نشان می‌دهد چگونه اتکا به تشخیص قبلی و ارجاع محدود می‌تواند معاینه مستقل را منحرف کند و تشخیص درد را به تأخیر بیندازد. ارزش عملی آن در یادآوری انجام سیستماتیک معاینه بالینی از جمله لمس و بررسی endodontic و prosthetic مستقل از پیش‌فرض‌هاست."
+      }
+    ]
   }
 }

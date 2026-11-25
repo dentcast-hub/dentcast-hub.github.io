@@ -684,6 +684,76 @@
    ]
   },
   {
+   "key": "ویزیت",
+   "tag": "#ویزیت",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام بخش ویزیت (پیش‌تر Chairside / چیرساید) — روایت کوتاه یک کیس واقعی و تصمیمی که کنار یونیت گرفته شد.",
+   "use_when": "روی هر مدخل ویزیت (پوشهٔ chairside/)، و هیچ‌جای دیگر — نه برای تکنیک مستقیمِ «چیرساید».",
+   "aliases": [],
+   "variants": [
+    "#چیرساید"
+   ],
+   "co_tags": [],
+   "count": 54,
+   "content_ids": [
+    "chairside/chairside-1",
+    "chairside/chairside-2",
+    "chairside/chairside-3",
+    "chairside/chairside-4",
+    "chairside/chairside-5",
+    "chairside/chairside-6",
+    "chairside/chairside-7",
+    "chairside/chairside-8",
+    "chairside/chairside-9",
+    "chairside/chairside-10",
+    "chairside/chairside-11",
+    "chairside/chairside-12",
+    "chairside/chairside-13",
+    "chairside/chairside-14",
+    "chairside/chairside-15",
+    "chairside/chairside-16",
+    "chairside/chairside-17",
+    "chairside/chairside-18",
+    "chairside/chairside-19",
+    "chairside/chairside-20",
+    "chairside/chairside-21",
+    "chairside/chairside-22",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30",
+    "chairside/chairside-31",
+    "chairside/chairside-32",
+    "chairside/chairside-33",
+    "chairside/chairside-34",
+    "chairside/chairside-35",
+    "chairside/chairside-36",
+    "chairside/chairside-37",
+    "chairside/chairside-38",
+    "chairside/chairside-39",
+    "chairside/chairside-40",
+    "chairside/chairside-41",
+    "chairside/chairside-42",
+    "chairside/chairside-44",
+    "chairside/chairside-45",
+    "chairside/chairside-46",
+    "chairside/chairside-47",
+    "chairside/chairside-48",
+    "chairside/chairside-50",
+    "chairside/chairside-51",
+    "chairside/chairside-53",
+    "chairside/chairside-54",
+    "chairside/chairside-55",
+    "chairside/chairside-56",
+    "chairside/chairside-57"
+   ]
+  },
+  {
    "key": "اکلوژن",
    "tag": "#اکلوژن",
    "domain": "clinical",
@@ -758,75 +828,6 @@
     "chairside/chairside-53",
     "episodes/episode-163",
     "dentcast-plus/video-17"
-   ]
-  },
-  {
-   "key": "ویزیت",
-   "tag": "#ویزیت",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام بخش ویزیت (پیش‌تر Chairside / چیرساید) — روایت کوتاه یک کیس واقعی و تصمیمی که کنار یونیت گرفته شد.",
-   "use_when": "روی هر مدخل ویزیت (پوشهٔ chairside/)، و هیچ‌جای دیگر — نه برای تکنیک مستقیمِ «چیرساید».",
-   "aliases": [],
-   "variants": [
-    "#چیرساید"
-   ],
-   "co_tags": [],
-   "count": 53,
-   "content_ids": [
-    "chairside/chairside-1",
-    "chairside/chairside-2",
-    "chairside/chairside-3",
-    "chairside/chairside-4",
-    "chairside/chairside-5",
-    "chairside/chairside-6",
-    "chairside/chairside-7",
-    "chairside/chairside-8",
-    "chairside/chairside-9",
-    "chairside/chairside-10",
-    "chairside/chairside-11",
-    "chairside/chairside-12",
-    "chairside/chairside-13",
-    "chairside/chairside-14",
-    "chairside/chairside-15",
-    "chairside/chairside-16",
-    "chairside/chairside-17",
-    "chairside/chairside-18",
-    "chairside/chairside-19",
-    "chairside/chairside-20",
-    "chairside/chairside-21",
-    "chairside/chairside-22",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "chairside/chairside-30",
-    "chairside/chairside-31",
-    "chairside/chairside-32",
-    "chairside/chairside-33",
-    "chairside/chairside-34",
-    "chairside/chairside-35",
-    "chairside/chairside-36",
-    "chairside/chairside-37",
-    "chairside/chairside-38",
-    "chairside/chairside-39",
-    "chairside/chairside-40",
-    "chairside/chairside-41",
-    "chairside/chairside-42",
-    "chairside/chairside-44",
-    "chairside/chairside-45",
-    "chairside/chairside-46",
-    "chairside/chairside-47",
-    "chairside/chairside-48",
-    "chairside/chairside-50",
-    "chairside/chairside-51",
-    "chairside/chairside-53",
-    "chairside/chairside-54",
-    "chairside/chairside-55",
-    "chairside/chairside-56"
    ]
   },
   {
@@ -2181,6 +2182,48 @@
    ]
   },
   {
+   "key": "تشخیص_افتراقی",
+   "tag": "#تشخیص_افتراقی",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "رسیدن به علت با رد کردن گزینه‌های رقیب، نه با تأیید مستقیم اولین حدس.",
+   "use_when": "مقاله چند علت محتمل را کنار هم بگذارد و یکی‌یکی ردشان کند.",
+   "aliases": [
+    "differential diagnosis",
+    "افتراق تشخیصی",
+    "ddx",
+    "دیفرنشیال دیاگنوز",
+    "تشخیص های افتراقی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 22,
+   "content_ids": [
+    "episodes/episode-117",
+    "episodes/episode-119",
+    "dentai/dentai-1",
+    "insight/insight-9",
+    "insight/insight-11",
+    "photocast/episode-1",
+    "episodes/episode-152",
+    "insight/insight-23",
+    "insight/insight-25",
+    "dentai/dentai-13",
+    "dentai/dentai-14",
+    "chairside/chairside-7",
+    "insight/insight-43",
+    "chairside/chairside-18",
+    "insight/insight-45",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "sharehub/share-12",
+    "chairside/chairside-29",
+    "chairside/chairside-45",
+    "episodes/episode-163",
+    "chairside/chairside-57"
+   ]
+  },
+  {
    "key": "سمان_رزینی",
    "tag": "#سمان_رزینی",
    "domain": "clinical",
@@ -2266,47 +2309,6 @@
     "sharehub/share-37",
     "sharehub/share-46",
     "sharehub/share-60"
-   ]
-  },
-  {
-   "key": "تشخیص_افتراقی",
-   "tag": "#تشخیص_افتراقی",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "رسیدن به علت با رد کردن گزینه‌های رقیب، نه با تأیید مستقیم اولین حدس.",
-   "use_when": "مقاله چند علت محتمل را کنار هم بگذارد و یکی‌یکی ردشان کند.",
-   "aliases": [
-    "differential diagnosis",
-    "افتراق تشخیصی",
-    "ddx",
-    "دیفرنشیال دیاگنوز",
-    "تشخیص های افتراقی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 21,
-   "content_ids": [
-    "episodes/episode-117",
-    "episodes/episode-119",
-    "dentai/dentai-1",
-    "insight/insight-9",
-    "insight/insight-11",
-    "photocast/episode-1",
-    "episodes/episode-152",
-    "insight/insight-23",
-    "insight/insight-25",
-    "dentai/dentai-13",
-    "dentai/dentai-14",
-    "chairside/chairside-7",
-    "insight/insight-43",
-    "chairside/chairside-18",
-    "insight/insight-45",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "sharehub/share-12",
-    "chairside/chairside-29",
-    "chairside/chairside-45",
-    "episodes/episode-163"
    ]
   },
   {
@@ -8557,6 +8559,32 @@
    ]
   },
   {
+   "key": "ارجاع_تخصصی",
+   "tag": "#ارجاع_تخصصی",
+   "domain": null,
+   "words": 2,
+   "definition": "فرستادنِ کیس به تخصصِ دیگر به‌جای ادامه دادن.",
+   "use_when": "مقاله ارجاع را تصمیمِ درست بداند.",
+   "aliases": [
+    "ریفرال",
+    "referral",
+    "ارجاع بیمار",
+    "ارجاع به متخصص",
+    "ریفر کردن",
+    "ریفر بیمار",
+    "ارجاع کیس"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 4,
+   "content_ids": [
+    "chairside/chairside-22",
+    "sharehub/share-12",
+    "chairside/chairside-29",
+    "chairside/chairside-57"
+   ]
+  },
+  {
    "key": "از_دست_رفتن_کانتکت",
    "tag": "#از_دست_رفتن_کانتکت",
    "domain": "clinical",
@@ -10337,31 +10365,6 @@
    ]
   },
   {
-   "key": "ارجاع_تخصصی",
-   "tag": "#ارجاع_تخصصی",
-   "domain": null,
-   "words": 2,
-   "definition": "فرستادنِ کیس به تخصصِ دیگر به‌جای ادامه دادن.",
-   "use_when": "مقاله ارجاع را تصمیمِ درست بداند.",
-   "aliases": [
-    "ریفرال",
-    "referral",
-    "ارجاع بیمار",
-    "ارجاع به متخصص",
-    "ریفر کردن",
-    "ریفر بیمار",
-    "ارجاع کیس"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 3,
-   "content_ids": [
-    "chairside/chairside-22",
-    "sharehub/share-12",
-    "chairside/chairside-29"
-   ]
-  },
-  {
    "key": "استیج_بندی_درمان",
    "tag": "#استیج_بندی_درمان",
    "domain": null,
@@ -10508,6 +10511,31 @@
     "episodes/episode-102",
     "episodes/episode-103",
     "episodes/episode-115"
+   ]
+  },
+  {
+   "key": "اندودنتیکس",
+   "tag": "#اندودنتیکس",
+   "domain": "clinical",
+   "words": 1,
+   "definition": "",
+   "use_when": "",
+   "aliases": [
+    "اندودانتیکس",
+    "اندودونتیکس",
+    "endodontics",
+    "اندودنتیک",
+    "اندودانتیک"
+   ],
+   "variants": [
+    "#اندودانتیکس"
+   ],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "insight/insight-17",
+    "notecast/episode-36",
+    "chairside/chairside-57"
    ]
   },
   {
@@ -11829,6 +11857,32 @@
    ]
   },
   {
+   "key": "معاینه_بیمار",
+   "tag": "#معاینه_بیمار",
+   "domain": "clinical",
+   "words": 2,
+   "definition": "معاینه‌ی سیستماتیکِ بیمار و ثبتِ یافته‌ها پیش از تشخیص و طرحِ درمان.",
+   "use_when": "مقاله مراحلِ معاینه‌ی بالینی را موضوع داشته باشد.",
+   "aliases": [
+    "patient examination",
+    "معاینه کلینیکی",
+    "معاینه بالینی",
+    "clinical exam",
+    "clinical examination",
+    "oral examination",
+    "معاینه دهان",
+    "معاینه دندانپزشکی"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 3,
+   "content_ids": [
+    "episodes/episode-117",
+    "metanotes/meta-22",
+    "chairside/chairside-57"
+   ]
+  },
+  {
    "key": "مفصل_فکی",
    "tag": "#مفصل_فکی",
    "domain": "clinical",
@@ -13061,30 +13115,6 @@
    ]
   },
   {
-   "key": "اندودنتیکس",
-   "tag": "#اندودنتیکس",
-   "domain": "clinical",
-   "words": 1,
-   "definition": "",
-   "use_when": "",
-   "aliases": [
-    "اندودانتیکس",
-    "اندودونتیکس",
-    "endodontics",
-    "اندودنتیک",
-    "اندودانتیک"
-   ],
-   "variants": [
-    "#اندودانتیکس"
-   ],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "insight/insight-17",
-    "notecast/episode-36"
-   ]
-  },
-  {
    "key": "اندودنتیکس_ترمیمی",
    "tag": "#اندودنتیکس_ترمیمی",
    "domain": "clinical",
@@ -13953,6 +13983,29 @@
    "content_ids": [
     "insight/insight-11",
     "photocast/episode-1"
+   ]
+  },
+  {
+   "key": "درد_مبهم",
+   "tag": "#درد_مبهم",
+   "domain": null,
+   "words": 2,
+   "definition": "دردی که بیمار نمی‌تواند دقیق موضعش را نشان دهد.",
+   "use_when": "مقاله منشأ دردِ مبهم را دنبال کند.",
+   "aliases": [
+    "درد نامشخص",
+    "درد گنگ",
+    "vague pain",
+    "diffuse pain",
+    "dull pain",
+    "درد منتشر"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "chairside/chairside-7",
+    "chairside/chairside-57"
    ]
   },
   {
@@ -14825,31 +14878,6 @@
    "content_ids": [
     "episodes/episode-100",
     "episodes/episode-109-2"
-   ]
-  },
-  {
-   "key": "معاینه_بیمار",
-   "tag": "#معاینه_بیمار",
-   "domain": "clinical",
-   "words": 2,
-   "definition": "معاینه‌ی سیستماتیکِ بیمار و ثبتِ یافته‌ها پیش از تشخیص و طرحِ درمان.",
-   "use_when": "مقاله مراحلِ معاینه‌ی بالینی را موضوع داشته باشد.",
-   "aliases": [
-    "patient examination",
-    "معاینه کلینیکی",
-    "معاینه بالینی",
-    "clinical exam",
-    "clinical examination",
-    "oral examination",
-    "معاینه دهان",
-    "معاینه دندانپزشکی"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 2,
-   "content_ids": [
-    "episodes/episode-117",
-    "metanotes/meta-22"
    ]
   },
   {
@@ -19247,28 +19275,6 @@
    "count": 1,
    "content_ids": [
     "sharehub/share-12"
-   ]
-  },
-  {
-   "key": "درد_مبهم",
-   "tag": "#درد_مبهم",
-   "domain": null,
-   "words": 2,
-   "definition": "دردی که بیمار نمی‌تواند دقیق موضعش را نشان دهد.",
-   "use_when": "مقاله منشأ دردِ مبهم را دنبال کند.",
-   "aliases": [
-    "درد نامشخص",
-    "درد گنگ",
-    "vague pain",
-    "diffuse pain",
-    "dull pain",
-    "درد منتشر"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "chairside/chairside-7"
    ]
   },
   {
