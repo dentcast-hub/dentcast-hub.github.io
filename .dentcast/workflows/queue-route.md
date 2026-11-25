@@ -59,28 +59,15 @@
    `queue_publish.py unlock` به «آماده» برمی‌گرداند (شکست یا لغو اجرا)؛ مطلب هیچ‌وقت در قفل یک اجرای مرده
    نمی‌ماند. وقتی ابزار مطلب را رد می‌کند (جدول پایین) هم همین unlock اجرا می‌شود: مطلب «آماده» می‌ماند و
    بازگرداندنش به «در حال آماده‌سازی» کار آماده‌ساز است، نه workflow.
-3. **پایش.** اجرای `queue-publish.yml` را تا پایان دنبال کن (`gh run watch <id> --exit-status`؛ MCP:
-   `actions_get` / `actions_list` (`list_workflow_jobs`) و `get_job_logs`؛ REST:
-   `GET repos/…/actions/runs/<id>` و `…/runs/<id>/jobs`؛ هیچ‌کدام: لینک اجرا را بنیان‌گذار می‌دهد). job دوم،
-   `await-delivery-3`، خودش اجرای `post-cut2-mechanical.yml` روی همان برنچ و همان SHA Push 2 را تا ۶۰ دقیقه
-   پایش می‌کند، تحویل سوم را وارسی می‌کند (job `mechanical-continuation` سبز، سرِ برنچ جلوتر از Push 2،
-   handoff پاک) و PR به main را باز می‌کند.
-4. **گزارش به بنیان‌گذار.** `content_id`، برنچ، SHA Push 2، لینک اجرای post-cut2، لینک PR، و
-   `mechanical_defaults` و `manual_steps`، هر کدام یک خط. منبع: خلاصهٔ اجرا (job summary) در UI؛ همان JSON در
-   لاگ گام «Run the item» (خط `result=`) و لینک PR در لاگ گام «Open the PR» (خط `PR:`) و بدنهٔ خود PR هست،
-   چون API و `gh` خلاصهٔ اجرا را برنمی‌گردانند. شکست یا timeout: لینک اجرا و خروجی JSON ابزار عیناً، بعد
-   `status` و `next_step` آن.
-5. **مرج.** مرج بدون پرسیدن انجام می‌شود (برگشت‌پذیر است):
-   وقتی تحویل سوم، Phase F و گیت‌های PR سبزند (`gh pr checks <n>`، MCP `pull_request_read` با `get_status`، یا
-   REST `GET repos/…/commits/<sha>/check-runs`)، ایجنت همان لحظه PR را مرج می‌کند؛ فقط یک «مرج نکن» صریحِ
-   بنیان‌گذار برای همین مطلب جلوی آن را می‌گیرد (`gh pr merge <n> --merge`، MCP `merge_pull_request`، یا REST `PUT repos/…/pulls/<n>/merge`؛
-   `queue-publish-done.yml` کامیت‌های PR را از API می‌خواند، پس روش مرج آزاد است). گیت قرمز یعنی مرج نه.
-   ابزار مرج در دسترس نیست: لینک PR و وضعیت گیت‌ها گزارش می‌شود و بنیان‌گذار Merge را می‌زند.
-6. **پاک‌کردن صف.** خودکار: `queue-publish-done.yml` بعد از مرج پوشهٔ مطلب را با کامیت
+3. **پایان کار ایجنت.** بعد از dispatch و تأیید این‌که اجرا شروع شده، یک پیام (شمارهٔ مطلب، لینک اجرا) و پایان؛
+   ایجنت پایش نمی‌کند و مرج نمی‌کند. job دوم (`await-delivery-3`) خودش تحویل سوم را وارسی و PR به main را باز
+   می‌کند، و `publish-auto-merge.yml` وقتی همهٔ گیت‌ها سبزند مرج می‌کند یا روی PR می‌نویسد چه چیزی قرمز است
+   (برچسب `hold` روی PR یعنی «مرج نکن»). اگر بنیان‌گذار خبر داد اجرا یا PR گیر کرده: `status` و جدول پایین.
+4. **پاک‌کردن صف.** خودکار: `queue-publish-done.yml` بعد از مرج پوشهٔ مطلب را با کامیت
    `queue: NN published as <content_id> (PR #n)` از `queue` برمی‌دارد. فقط اگر آن workflow شکست خورد:
    `python3 tools/queue_publish.py done <پوشه> --content-id <id> --pr <n>` در یک checkout برنچ `queue` و push چاپ‌شده.
 
-**checkout برنچ `queue`** (گام ۶ و `unlock`): `git fetch origin queue && git worktree add -B queue ../dentcast-queue origin/queue`
+**checkout برنچ `queue`** (گام ۴ و `unlock`): `git fetch origin queue && git worktree add -B queue ../dentcast-queue origin/queue`
 (worktree‌ای که برنچ محلی‌اش `queue` نام دارد، تا `git -C … push origin queue` چاپ‌شده کار کند). نام ایجنت در
 `unlock --agent` همان مقدار `lock` است که `status` چاپ می‌کند.
 
@@ -108,8 +95,8 @@ Contents: read and write، Pull requests: read and write، Actions: read و Meta
 | `PUSH2_RECONCILIATION_REQUIRED` | سرِ برنچ از کامیت checkpoint handoff جلوتر است؛ post-cut2 با `RECONCILIATION_REQUIRED` رد می‌کند. مسیر صف کامیت تازه از سندباکس ندارد: فقط گزارش با `commits_after_handoff` به بنیان‌گذار؛ او تصمیم می‌گیرد |
 | `PUSH2_RUN_IN_PROGRESS` | صبر و پایش همان اجرا |
 | `DELIVERY3_NO_PR` | PR به main با عنوان `<content_id>: publish queue item NN` و بدنهٔ Push-2 SHA + `mechanical_defaults` + `manual_steps` از خط `result=` لاگ (`gh pr create --base main --head <برنچ> --title … --body …`، MCP `create_pull_request`، یا REST `POST repos/…/pulls`؛ هیچ‌کدام: گزارش به بنیان‌گذار) |
-| `PR_OPEN` | مرج وقتی گیت‌ها سبزند (گام ۵) |
-| `PR_MERGED_ITEM_IN_QUEUE` | `done` (گام ۶) |
+| `PR_OPEN` | مرج با `publish-auto-merge.yml` وقتی گیت‌ها سبزند (گام ۳) |
+| `PR_MERGED_ITEM_IN_QUEUE` | `done` (گام ۴) |
 | `MULTIPLE` | چند مطلب «در حال انتشار»: هیچ انتشار تازه‌ای شروع نمی‌شود؛ `items[].next_step` هر کدام به ترتیب از قدیمی‌ترین دنبال یا گزارش می‌شود |
 | `PR_CLOSED_UNMERGED`، `BRANCH_WITHOUT_HANDOFF`، `UNKNOWN`، `*_UNKNOWN` | گزارش با شواهد خروجی؛ API در دسترس نیست یعنی تب Actions و PRهای همان برنچ |
 | رد با `QUEUE_UNAVAILABLE` (خروج ۲) | `origin/queue` نه fetch شد و نه کپی محلی دارد: شبکه، بعد دوباره `status`؛ نشد، شبکه/دسترسی گزارش می‌شود و انتشار شروع نمی‌شود |

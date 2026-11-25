@@ -3,7 +3,7 @@
 Before content work, read this router and the complete `agent-parity.md` once.
 Then run `python3 tools/dentcast_global_rules.py --read` to load all core
 sections. These include repository/content restrictions, publishing data,
-cache rules, ads integration, publication surfaces, DES display and every
+cache rules, ads integration, publication surfaces and every
 site-wide invariant. Full canonical publication modules remain mandatory.
 If a client caps tool output (the full read is tens of thousands of characters),
 read the same selection in parts instead: `--list` shows the chosen sections,
@@ -25,11 +25,9 @@ The map covers all lines of the three canonical sources, without summaries:
 - `.dentcast/workflows/global/plus-premium.md`
 - `.dentcast/workflows/global/site-invariants.md`
 
-Pathway data changes additionally load the complete sections that govern the
-file at hand — `plus/pathways.json` the standings/progress and certificate
-sections, `plus/exam-questions.json` the exam and certificate sections;
-episode/audio paths load the audio-hub rules. Routine
-publication data (brain, catalogs, `plus/cabinet-papers.json`,
+Episode/audio paths load the audio-hub rules; `plus/js/des.js` loads the DES
+display section. Routine
+publication data (brain, catalogs, `plus/pathways.json`, `plus/exam-questions.json`, `plus/cabinet-papers.json`,
 `plus/cabinet-bridge.json`, `plus/assistant-tags.json`, DES records and
 `.dentcast/des-fidelity-plans/`) loads only the core sections. Unknown
 paths (including API/admin, unfamiliar shared code, new categories and

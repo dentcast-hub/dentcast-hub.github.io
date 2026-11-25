@@ -113,7 +113,7 @@
             119,
             128
           ],
-          "core": true
+          "core": false
         },
         {
           "id": "plus-features",
@@ -505,17 +505,11 @@
     },
     {
       "pattern": "plus/pathways.json",
-      "sections": [
-        "pathway-standings",
-        "pathway-certificate"
-      ]
+      "sections": []
     },
     {
       "pattern": "plus/exam-questions.json",
-      "sections": [
-        "pathway-exam",
-        "pathway-certificate"
-      ]
+      "sections": []
     },
     {
       "pattern": "plus/bundles.json",
@@ -539,6 +533,12 @@
       "pattern": "up-board/*",
       "sections": [
         "up-board"
+      ]
+    },
+    {
+      "pattern": "plus/js/des.js",
+      "sections": [
+        "des-display"
       ]
     }
   ]

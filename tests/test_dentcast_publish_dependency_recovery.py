@@ -192,6 +192,15 @@ class DependencyRecoveryTests(unittest.TestCase):
         with self.assertRaisesRegex(h.Blocked,'WATCHED_PATHS_CANNOT_BE_DROPPED'):
             h.save(self.root,p,expected=first['sha256'],note='fixture concealment')
 
+    def test_a_mistaken_path_that_names_no_file_can_be_dropped(self):
+        # A file name guessed at init (a photo not yet named) never existed: it may leave the list.
+        first=self.start()
+        p=copy.deepcopy(h.load_state(self.root)[0]['publication']);p['target_paths'].append('chairside/guessed-name.webp')
+        d=h.save(self.root,p,expected=first['sha256'],note='fixture enroll guess')['sha256']
+        p=copy.deepcopy(h.load_state(self.root)[0]['publication']);p['target_paths'].remove('chairside/guessed-name.webp')
+        h.save(self.root,p,expected=d,note='fixture drop the guess')
+        self.assertNotIn('chairside/guessed-name.webp',h.load_state(self.root)[0]['publication']['target_paths'])
+
     def test_external_outcome_and_history_survive_invalidation(self):
         first=self.start();d=lc.step(self.root,first['sha256'],'rules','started',[],None)['sha256']
         d=lc.step(self.root,d,'rules','completed',['fixture:rules'],None)['sha256']

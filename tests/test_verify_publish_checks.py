@@ -351,16 +351,18 @@ class DesPersianWordingTests(unittest.TestCase):
 
 
 class ExamMandatoryTests(unittest.TestCase):
-    """Founder 2026-11-07: 4.12-ب is mandatory for a page in a full pathway."""
+    """A full-pathway page without an approved exam question publishes with a warning."""
 
     def rows(self, cid, sweep):
         rep = vp.verify(cid, vp.Report(cid), sweep=sweep)
         return [f for f in rep.failures if f[1] == '4.12-ب exam']
 
-    def test_new_publication_without_questions_fails(self):
-        # A live full-pathway step that predates the rule and has no questions
-        # (insight-17 got none in the 2026-11-10 backfill: nothing gradable).
-        self.assertTrue(self.rows('insight/insight-17', sweep=False))
+    def test_new_publication_without_questions_only_warns(self):
+        # The founder's «بدون سؤال» is final: insight-17 has no question and is a
+        # full-pathway step; the row is a warning, never a failure.
+        self.assertFalse(self.rows('insight/insight-17', sweep=False))
+        rep = vp.verify('insight/insight-17', vp.Report('insight/insight-17'), sweep=False)
+        self.assertTrue([r for r in rep.rows if r[0] == 'WARN' and r[1] == '4.12-ب exam'])
 
     def test_sweep_does_not_fail_older_pages(self):
         self.assertFalse(self.rows('insight/insight-17', sweep=True))

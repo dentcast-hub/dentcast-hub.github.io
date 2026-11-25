@@ -859,7 +859,11 @@ def advance(root, expected, sid=None, evidence=None, skips=(), start_next=False,
         bare_start = (row["status"] == "started" and not row["evidence"] and row["reason"] is None
                       and skip_id not in owners and None not in owners
                       and not h.differences(root, state, h.current_snapshot(root, state)))
-        h.require(row["status"] == "pending" or bare_start, "ONLY_PENDING_STEPS_CAN_BE_BATCH_SKIPPED")
+        h.require(row["status"] == "pending" or bare_start,
+                  "ONLY_PENDING_STEPS_CAN_BE_BATCH_SKIPPED: " + skip_id + " is " + row["status"]
+                  + " and has evidence, an external action or work changed since the last checkpoint; "
+                  "record that work first, or use: step --id " + skip_id + " --status skipped --reason '<canonical reason>' "
+                  "and then step --id <next> --status started")
         row.update(status="skipped", evidence=[], reason=reason)
         operations.append((skip_id, "skipped", [], reason))
         require_plan(p)

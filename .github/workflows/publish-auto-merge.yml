@@ -1,0 +1,105 @@
+# Auto-merge of a finished publication PR (founder decision: the agent's work ends
+# at Push 2; nothing waits for it afterwards).
+#
+# post-cut2-mechanical.yml (and queue-publish.yml for a queue item) deliver the
+# publication and open the PR. When the PR's contract checks finish, this workflow
+# merges it if every check on the head commit is green, or leaves one comment on the
+# PR saying what is red. It spends no agent time: it runs entirely on GitHub.
+#
+# Only publication PRs are touched: the title must be the one those two workflows
+# write, the head must be a branch of this repository and the base the default
+# branch. A PR labelled `hold` is never merged here («مرج نکن»).
+#
+# Token: QUEUE_PUBLISH_TOKEN (the fine-grained PAT of queue-publish.yml: Contents
+# read/write, Pull requests read/write). A merge made with GITHUB_TOKEN would not
+# start the workflows that run on the push to main (deploy, indexes, notify).
+
+name: Publication auto-merge
+
+on:
+  workflow_run:
+    workflows: ["Live publishing contracts and recovery guards"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-auto-merge-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: false
+
+jobs:
+  merge:
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ secrets.QUEUE_PUBLISH_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+      SHA: ${{ github.event.workflow_run.head_sha }}
+      BRANCH: ${{ github.event.workflow_run.head_branch }}
+      BASE: ${{ github.event.repository.default_branch }}
+      CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+      RUN_URL: ${{ github.event.workflow_run.html_url }}
+    steps:
+      - name: Find the publication PR for this commit
+        id: pr
+        run: |
+          set -euo pipefail
+          if [[ -z "$GH_TOKEN" ]]; then
+            echo "QUEUE_PUBLISH_TOKEN is not set: no auto-merge; merge the PR by hand." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          pr="$(gh api "repos/$GH_REPO/commits/$SHA/pulls" | jq -c --arg b "$BRANCH" --arg base "$BASE" \
+            '[.[] | select(.state == "open" and .head.ref == $b and .base.ref == $base and .head.sha == env.SHA)] | first // empty')"
+          if [[ -z "$pr" ]]; then
+            echo "No open PR with head $SHA: nothing to do." >> "$GITHUB_STEP_SUMMARY"; exit 0
+          fi
+          title="$(jq -r .title <<<"$pr")"
+          if ! grep -Eq ': publish \(delivery 3 by post-cut2-mechanical\)$|: publish queue item [0-9]+$' <<<"$title"; then
+            echo "PR «$title» is not a publication PR: left alone." >> "$GITHUB_STEP_SUMMARY"; exit 0
+          fi
+          if jq -e '[.labels[].name] | index("hold")' <<<"$pr" > /dev/null; then
+            echo "PR carries the label «hold»: not merged." >> "$GITHUB_STEP_SUMMARY"; exit 0
+          fi
+          echo "number=$(jq -r .number <<<"$pr")" >> "$GITHUB_OUTPUT"
+
+      - name: Wait for every check on the head commit, then merge or say what is red
+        if: steps.pr.outputs.number != ''
+        env:
+          NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          set -euo pipefail
+          say() {  # one comment per head commit and reason
+            local marker="<!-- publish-auto-merge:$SHA -->"
+            if gh api "repos/$GH_REPO/issues/$NUMBER/comments" --paginate | jq -e --arg m "$marker" 'any(.[]; .body | contains($m))' > /dev/null; then return 0; fi
+            gh api "repos/$GH_REPO/issues/$NUMBER/comments" -f body="$1"$'\n\n'"$marker" > /dev/null
+          }
+          if [[ "$CONCLUSION" != "success" ]]; then
+            say "مرج خودکار انجام نشد: چک‌های قرارداد انتشار قرمز است ($CONCLUSION). لاگ: $RUN_URL"
+            echo "Contracts concluded $CONCLUSION: not merged." >> "$GITHUB_STEP_SUMMARY"; exit 0
+          fi
+          bad=""; pending="x"
+          for _ in $(seq 1 40); do
+            runs="$(gh api "repos/$GH_REPO/commits/$SHA/check-runs?per_page=100" --jq '[.check_runs[] | select(.name != "merge")]')"
+            pending="$(jq -r '[.[] | select(.status != "completed") | .name] | join(", ")' <<<"$runs")"
+            bad="$(jq -r '[.[] | select(.status == "completed" and (.conclusion | IN("success","skipped","neutral") | not)) | "\(.name) (\(.conclusion))"] | join(", ")' <<<"$runs")"
+            [[ -n "$bad" || -z "$pending" ]] && break
+            sleep 15
+          done
+          if [[ -n "$bad" ]]; then
+            say "مرج خودکار انجام نشد: این چک‌ها قرمزند: $bad"
+            echo "Red checks: $bad" >> "$GITHUB_STEP_SUMMARY"; exit 0
+          fi
+          if [[ -n "$pending" ]]; then
+            say "مرج خودکار انجام نشد: این چک‌ها بعد از ۱۰ دقیقه هنوز تمام نشده‌اند: $pending"
+            echo "Still pending: $pending" >> "$GITHUB_STEP_SUMMARY"; exit 0
+          fi
+          if out="$(gh api -X PUT "repos/$GH_REPO/pulls/$NUMBER/merge" -f sha="$SHA" -f merge_method=merge 2>&1)"; then
+            echo "Merged PR #$NUMBER at $SHA." >> "$GITHUB_STEP_SUMMARY"
+          else
+            say "مرج خودکار انجام نشد (همهٔ چک‌ها سبز بود): $(jq -r '.message // empty' <<<"$out" 2>/dev/null || true) احتمالاً main جلو رفته و تعارض هست؛ به یک ایجنت بگو «PR #$NUMBER را با main یکی کن و مرج کن»."
+            echo "Merge refused: $out" >> "$GITHUB_STEP_SUMMARY"
+          fi

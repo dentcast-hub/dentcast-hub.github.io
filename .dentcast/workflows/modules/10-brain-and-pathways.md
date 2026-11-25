@@ -123,7 +123,7 @@ The catalog and doctrine live in `plus/pathways.json` and `reports/pathways-cata
 
 **Pathways are LIVE — this edit is user-visible, it is not staging.** `/plus/pathways.html`, `/plus/pathway.html?id=` and the «مسیر یادگیری» block of `/plus/` render this file, and `GET /me`'s `active_pathway` reads through it. It needs **no API redeploy**: `plus-api/src/content-refresh.ts` re-fetches the published `plus/pathways.json` every few minutes (validated, upgrade-only, last-good copy on failure). So a wrong placement is visible to real subscribers, and the file must be valid JSON at commit time (`python3 -m json.tool plus/pathways.json > /dev/null`).
 
-**Then run step 4.12-ب** (`modules/07-flashcards-and-quiz.md`, message M2) now that full-pathway membership is known: write its exam questions if the page landed in at least one full pathway, otherwise record the skip — either way in the evidence of **C.5.6**.
+**Then step 4.12-ب** (`modules/07-flashcards-and-quiz.md`): write the questions the founder approved at intake (M2) if the page landed in at least one full pathway; otherwise record why. Either way in the evidence of **C.5.6**; nothing is asked here.
 
 ### 5.6-ب. Bundle check (runs after every full-pathway placement)
 

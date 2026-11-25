@@ -1382,9 +1382,16 @@ def save(root, publication, expected=None, note=None, check_remote=False, initia
                                             {p for p in dirty if builder_output(p)})
         targets = set(publication["target_paths"])
         if previous:
-            require(set(previous['publication']['target_paths']) <= targets,
-                    'WATCHED_PATHS_CANNOT_BE_DROPPED')
-            targets.update(previous["snapshot"]["files"])
+            # A path enrolled by mistake (a file name guessed before the real one was known)
+            # may be dropped while it names nothing: no file on disk, none in HEAD, no bound input.
+            bound = {i.get("path") or i.get("ref") for i in publication["context"].get("inputs", [])
+                     if isinstance(i, dict)}
+            dropped = set(previous['publication']['target_paths']) - targets
+            kept = sorted(p for p in dropped if (root / p).exists() or p in bound
+                          or git(root, "cat-file", "-e", "HEAD:" + p, optional=True) is not None)
+            require(not kept, 'WATCHED_PATHS_CANNOT_BE_DROPPED:' + ",".join(kept) if kept
+                    else 'WATCHED_PATHS_CANNOT_BE_DROPPED')
+            targets.update(p for p in previous["snapshot"]["files"] if p not in dropped)
             unknown = [p for p in dirty if p not in targets and p not in WORKFLOW_PATHS]
             require(not unknown, "UNREVIEWED_PATHS_OUTSIDE_PUBLICATION:" + ",".join(sorted(unknown)) +
                     "; preserve these files; add only reviewed related paths to target_paths")
