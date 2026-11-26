@@ -694,3 +694,18 @@ class StampShapeTests(unittest.TestCase):
             m = json.loads((item / qm.MANIFEST_FILE).read_text(encoding="utf-8"))
             self.assertEqual(m["title_fa"]["value"], "دو")
             self.assertEqual(m["alt_headline_fa"]["value"], "دستی")
+
+    def test_draft_write_drops_a_file_value_the_file_no_longer_gives(self):
+        with tempfile.TemporaryDirectory() as d:
+            item = Path(d) / "99-metanote-x"
+            item.mkdir()
+            (item / "02-عنوان-کپشن.md").write_text("## عنوان\nیک\n\n## کپشن\nک\n", encoding="utf-8")
+            (item / "07-ورودی‌ها.md").write_text("## پالس\n- جمله: «ایدهٔ تازه: «یک» منتشر شد»\n", encoding="utf-8")
+            argv = ["queue_manifest.py", "draft", str(item), "--write"]
+            with patch.object(sys, "argv", argv), contextlib.redirect_stdout(io.StringIO()):
+                qm.main()
+            self.assertIsNotNone(json.loads((item / qm.MANIFEST_FILE).read_text(encoding="utf-8"))["pulse"]["value"])
+            (item / "02-عنوان-کپشن.md").write_text("## عنوان\nدو\n\n## کپشن\nک\n", encoding="utf-8")
+            with patch.object(sys, "argv", argv), contextlib.redirect_stdout(io.StringIO()):
+                qm.main()
+            self.assertIsNone(json.loads((item / qm.MANIFEST_FILE).read_text(encoding="utf-8"))["pulse"]["value"])

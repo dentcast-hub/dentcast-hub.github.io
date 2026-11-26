@@ -266,8 +266,8 @@ def main(argv=None):
         receipt["build_dir"] = str(out)
         receipt["next"] = (f"module 08 Part 2c: the sweeper (strong model, fresh context) answers each "
                            f"{out}/input-src<k>.json as {out}/out-src<k>-1.json; then, in the checkout, units_tool {cid} "
-                           f"--judge {out}; the judge (strong model, another fresh context) answers each "
-                           f"judge-input-src<k>.json as judge-src<k>.json; then units_tool {cid} --vote {out}")
+                           f"--vote {out} (optional judge first: units_tool {cid} --judge {out}, a strong model in "
+                           f"another fresh context answers each judge-input-src<k>.json as judge-src<k>.json)")
     print(json.dumps(receipt, ensure_ascii=False, indent=1))
     return 0
 

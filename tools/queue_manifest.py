@@ -1017,9 +1017,12 @@ def main():
             # 12; a field the files do not carry (MetaNote's five page fields, a hand-closed value)
             # keeps what 12 already holds.
             fresh = draft(info["path"], from_files=True)
+            # only a hand-written value is carried (its origin names no file of the item):
+            # a value 12 once took from a file follows that file, even to null
             d = fresh | {k: v for k, v in d.items() if not k.startswith("_")
                          and (k not in fresh or fresh[k].get("value") is None)
-                         and isinstance(v, dict) and v.get("value") is not None}
+                         and isinstance(v, dict) and v.get("value") is not None
+                         and not re.match(r"\d\d-", str(v.get("from") or ""))}
         if a.supplement:
             d = merge_supplement(info["path"], d, json.loads(Path(a.supplement).read_text(encoding="utf-8")))
     except QueueRefusal as e:
