@@ -1278,7 +1278,7 @@
    ],
    "variants": [],
    "co_tags": [],
-   "count": 36,
+   "count": 37,
    "content_ids": [
     "episodes/episode-109",
     "episodes/episode-109-2",
@@ -1315,7 +1315,8 @@
     "dentai/promptologist/prompt-append2-4",
     "dentai/promptologist/prompt-append2-5",
     "dentai/promptologist/prompt-append2-6",
-    "plak-sefr/plak1-12"
+    "plak-sefr/plak1-12",
+    "metanotes/meta-24"
    ]
   },
   {
@@ -2055,6 +2056,50 @@
    ]
   },
   {
+   "key": "ایده",
+   "tag": "#ایده",
+   "domain": "brand",
+   "words": 1,
+   "definition": "نام بخش ایده‌ها (پیش‌تر MetaNote / متانوت) — مدل‌های ذهنی و چارچوب‌های تصمیم.",
+   "use_when": "روی هر مدخل ایده‌ها (پوشهٔ metanotes/)، و هیچ‌جای دیگر.",
+   "aliases": [
+    "متانوت",
+    "metanote",
+    "meta note",
+    "متا نوت"
+   ],
+   "variants": [
+    "#متانوت"
+   ],
+   "co_tags": [],
+   "count": 23,
+   "content_ids": [
+    "metanotes/meta-1",
+    "metanotes/meta-2",
+    "metanotes/meta-3",
+    "metanotes/meta-4",
+    "metanotes/meta-5",
+    "metanotes/meta-6",
+    "metanotes/meta-7",
+    "metanotes/meta-8",
+    "metanotes/meta-9",
+    "metanotes/meta-10",
+    "metanotes/meta-11",
+    "metanotes/meta-12",
+    "metanotes/meta-13",
+    "metanotes/meta-14",
+    "metanotes/meta-15",
+    "metanotes/meta-16",
+    "metanotes/meta-17",
+    "metanotes/meta-18",
+    "metanotes/meta-19",
+    "metanotes/meta-20",
+    "metanotes/meta-21",
+    "metanotes/meta-22",
+    "metanotes/meta-24"
+   ]
+  },
+  {
    "key": "سرامیک",
    "tag": "#سرامیک",
    "domain": "clinical",
@@ -2140,49 +2185,6 @@
    ]
   },
   {
-   "key": "ایده",
-   "tag": "#ایده",
-   "domain": "brand",
-   "words": 1,
-   "definition": "نام بخش ایده‌ها (پیش‌تر MetaNote / متانوت) — مدل‌های ذهنی و چارچوب‌های تصمیم.",
-   "use_when": "روی هر مدخل ایده‌ها (پوشهٔ metanotes/)، و هیچ‌جای دیگر.",
-   "aliases": [
-    "متانوت",
-    "metanote",
-    "meta note",
-    "متا نوت"
-   ],
-   "variants": [
-    "#متانوت"
-   ],
-   "co_tags": [],
-   "count": 22,
-   "content_ids": [
-    "metanotes/meta-1",
-    "metanotes/meta-2",
-    "metanotes/meta-3",
-    "metanotes/meta-4",
-    "metanotes/meta-5",
-    "metanotes/meta-6",
-    "metanotes/meta-7",
-    "metanotes/meta-8",
-    "metanotes/meta-9",
-    "metanotes/meta-10",
-    "metanotes/meta-11",
-    "metanotes/meta-12",
-    "metanotes/meta-13",
-    "metanotes/meta-14",
-    "metanotes/meta-15",
-    "metanotes/meta-16",
-    "metanotes/meta-17",
-    "metanotes/meta-18",
-    "metanotes/meta-19",
-    "metanotes/meta-20",
-    "metanotes/meta-21",
-    "metanotes/meta-22"
-   ]
-  },
-  {
    "key": "تشخیص_افتراقی",
    "tag": "#تشخیص_افتراقی",
    "domain": "clinical",
@@ -2222,6 +2224,51 @@
     "chairside/chairside-45",
     "episodes/episode-163",
     "chairside/chairside-57"
+   ]
+  },
+  {
+   "key": "دکتر_شهابیان",
+   "tag": "#دکتر_شهابیان",
+   "domain": "brand",
+   "words": 2,
+   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
+   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
+   "aliases": [
+    "شهابیان",
+    "کانسپت شهابیان",
+    "foad shahabian",
+    "دکتر فواد شهابیان",
+    "fouad shahabian",
+    "shahabian",
+    "dr shahabian",
+    "فؤاد شهابیان"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 22,
+   "content_ids": [
+    "episodes/episode-148-2",
+    "chairside/chairside-23",
+    "chairside/chairside-24",
+    "chairside/chairside-25",
+    "chairside/chairside-26",
+    "chairside/chairside-27",
+    "chairside/chairside-28",
+    "chairside/chairside-29",
+    "chairside/chairside-30",
+    "chairside/chairside-31",
+    "chairside/chairside-32",
+    "chairside/chairside-33",
+    "chairside/chairside-34",
+    "chairside/chairside-35",
+    "chairside/chairside-36",
+    "chairside/chairside-37",
+    "chairside/chairside-38",
+    "chairside/chairside-39",
+    "chairside/chairside-40",
+    "chairside/chairside-41",
+    "chairside/chairside-42",
+    "metanotes/meta-24"
    ]
   },
   {
@@ -2310,50 +2357,6 @@
     "sharehub/share-37",
     "sharehub/share-46",
     "sharehub/share-60"
-   ]
-  },
-  {
-   "key": "دکتر_شهابیان",
-   "tag": "#دکتر_شهابیان",
-   "domain": "brand",
-   "words": 2,
-   "definition": "دکتر فؤاد شهابیان — میزبانِ دنتکست و صاحبِ کانسپت‌های اختصاصی.",
-   "use_when": "روی محتوایی که کانسپتِ شخصیِ او موضوع است.",
-   "aliases": [
-    "شهابیان",
-    "کانسپت شهابیان",
-    "foad shahabian",
-    "دکتر فواد شهابیان",
-    "fouad shahabian",
-    "shahabian",
-    "dr shahabian",
-    "فؤاد شهابیان"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 21,
-   "content_ids": [
-    "episodes/episode-148-2",
-    "chairside/chairside-23",
-    "chairside/chairside-24",
-    "chairside/chairside-25",
-    "chairside/chairside-26",
-    "chairside/chairside-27",
-    "chairside/chairside-28",
-    "chairside/chairside-29",
-    "chairside/chairside-30",
-    "chairside/chairside-31",
-    "chairside/chairside-32",
-    "chairside/chairside-33",
-    "chairside/chairside-34",
-    "chairside/chairside-35",
-    "chairside/chairside-36",
-    "chairside/chairside-37",
-    "chairside/chairside-38",
-    "chairside/chairside-39",
-    "chairside/chairside-40",
-    "chairside/chairside-41",
-    "chairside/chairside-42"
    ]
   },
   {
@@ -13217,6 +13220,32 @@
    ]
   },
   {
+   "key": "ایجنت_هوش_مصنوعی",
+   "tag": "#ایجنت_هوش_مصنوعی",
+   "domain": "ai",
+   "words": 3,
+   "definition": "مدلی که اجازه دارد بینِ گرفتنِ سؤال و دادنِ جوابِ نهایی چند کارِ واقعی هم انجام بدهد — جستجو کند، فایل بسازد، کدی را اجرا کند — و خودش دربارهٔ قدمِ بعدی تصمیم بگیرد، برخلافِ مدلِ معمولی که فقط متن تولید می‌کند.",
+   "use_when": "مقاله دربارهٔ مدلی باشد که خودش چند قدمِ عملی بین سؤال و جواب برمی‌دارد — نه صرفاً مدلی که یک‌باره متن تولید می‌کند.",
+   "aliases": [
+    "AI Agent",
+    "Agentic AI",
+    "ایجنتیک",
+    "عامل هوش مصنوعی",
+    "عامل هوشمند",
+    "ای آی ایجنت",
+    "ایجنت هوشمند",
+    "llm agent",
+    "agent mode"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 2,
+   "content_ids": [
+    "dentai/promptologist/prompt6-1",
+    "metanotes/meta-24"
+   ]
+  },
+  {
    "key": "ایمنی_بیمار",
    "tag": "#ایمنی_بیمار",
    "domain": null,
@@ -17618,31 +17647,6 @@
    ]
   },
   {
-   "key": "ایجنت_هوش_مصنوعی",
-   "tag": "#ایجنت_هوش_مصنوعی",
-   "domain": "ai",
-   "words": 3,
-   "definition": "مدلی که اجازه دارد بینِ گرفتنِ سؤال و دادنِ جوابِ نهایی چند کارِ واقعی هم انجام بدهد — جستجو کند، فایل بسازد، کدی را اجرا کند — و خودش دربارهٔ قدمِ بعدی تصمیم بگیرد، برخلافِ مدلِ معمولی که فقط متن تولید می‌کند.",
-   "use_when": "مقاله دربارهٔ مدلی باشد که خودش چند قدمِ عملی بین سؤال و جواب برمی‌دارد — نه صرفاً مدلی که یک‌باره متن تولید می‌کند.",
-   "aliases": [
-    "AI Agent",
-    "Agentic AI",
-    "ایجنتیک",
-    "عامل هوش مصنوعی",
-    "عامل هوشمند",
-    "ای آی ایجنت",
-    "ایجنت هوشمند",
-    "llm agent",
-    "agent mode"
-   ],
-   "variants": [],
-   "co_tags": [],
-   "count": 1,
-   "content_ids": [
-    "dentai/promptologist/prompt6-1"
-   ]
-  },
-  {
    "key": "ایران",
    "tag": "#ایران",
    "domain": "ai",
@@ -20506,6 +20510,26 @@
    "count": 1,
    "content_ids": [
     "insight/insight-39"
+   ]
+  },
+  {
+   "key": "سیستم_سازی",
+   "tag": "#سیستم_سازی",
+   "domain": "web",
+   "words": 2,
+   "definition": "یک بار تصمیم گرفتن درباره‌ی مقدار، زمان و روش انجام هر کار تکراری و از آن به بعد فقط اجرای همان تصمیم، به‌جای برنامه‌ریزی دوباره در هر روز.",
+   "use_when": "مطلب درباره‌ی سازمان دادن کارهای تکراری دندانپزشک (مطب، تولید محتوا، مطالعه) با قاعده‌های ازپیش‌تعیین‌شده باشد، نه با برنامه‌ریزی روزانه.",
+   "aliases": [
+    "system building",
+    "سیستم بیلدینگ",
+    "سیستم‌ سازی",
+    "سیستم ساختن برای کارها"
+   ],
+   "variants": [],
+   "co_tags": [],
+   "count": 1,
+   "content_ids": [
+    "metanotes/meta-24"
    ]
   },
   {
@@ -24596,6 +24620,7 @@
   "درمان ترمیمی آتروماتیک": "art",
   "درمان حمایتی پریودنتال": "spt",
   "زیبایی دندان های قدامی": "زیبایی قدامی",
+  "سیستم ساختن برای کارها": "سیستم سازی",
   "عوامل بیولوژیک ایمپلنت": "بیولوژی ایمپلنت",
   "محرمانگی اطلاعات بیمار": "حریم بیمار",
   "مطالعه بدون گروه کنترل": "مطالعه بدون کنترل",
@@ -26144,6 +26169,7 @@
   "stitching error": "خطای استیچینگ",
   "substrate color": "رنگ دندان پایه",
   "supporting cusp": "کاسپ فانکشنال",
+  "system building": "سیستم سازی",
   "tabletop bridge": "آنله بریج",
   "temporary crown": "روکش موقت",
   "tmj dislocation": "دررفتگی فک",
@@ -27162,6 +27188,7 @@
   "سکانس باندینگ": "توالی باند",
   "سیستم ایمپلنت": "برند ایمپلنت",
   "سیستم باندینگ": "نسل باندینگ",
+  "سیستم بیلدینگ": "سیستم سازی",
   "شکست رستوریشن": "شکست ترمیم",
   "شکستن درخواست": "شکستن کار",
   "شکستگی سرامیک": "شکست سرامیک",

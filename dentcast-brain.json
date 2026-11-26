@@ -19614,5 +19614,34 @@
       "secondary": [],
       "subtopic": "intraoral-scanning"
     }
+  },
+  {
+    "type": "meta",
+    "id": "meta-24",
+    "title": "سیستم‌سازی به‌جای برنامه‌ریزی روزانه",
+    "caption": "چطور با یک بار تصمیم گرفتن برای هر کار تکراری، بدون برنامه‌ریزی روزانه، کلینیک، سایت، پادکست، ورزش و کتاب خواندن کنار هم پیش می‌روند.",
+    "hashtags": [
+      "#ایده",
+      "#سیستم_سازی",
+      "#ایجنت_هوش_مصنوعی",
+      "#هوش_مصنوعی",
+      "#دکتر_شهابیان"
+    ],
+    "keywords": [
+      "system building",
+      "daily planning",
+      "implementation intention",
+      "habit formation",
+      "situational self-control",
+      "cognitive offloading",
+      "AI note-keeping",
+      "publishing queue"
+    ],
+    "page_url": "/metanotes/meta-24.html",
+    "pillar": {
+      "primary": "practice-infrastructure",
+      "secondary": [],
+      "subtopic": "llm-tools"
+    }
   }
 ]
