@@ -66656,5 +66656,64 @@
         "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
       }
     ]
+  },
+  "metanotes/meta-24": {
+    "scored_at": "2026-11-26",
+    "sources": [
+      {
+        "des_version": "3.7",
+        "content_type": "COMMENTARY",
+        "question_type": null,
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "سیستم‌سازی به‌جای برنامه‌ریزی روزانه",
+          "authors": "دکتر فواد شهابیان",
+          "year": 2026,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": null,
+        "q_method": null,
+        "penalties": null,
+        "commentary_checklist": [
+          {
+            "item": "reasoning chain is explicit",
+            "points": 4,
+            "evidence_quote": "دلیلش این است که تصمیم قبلاً گرفته شده و چیزی برای فکر کردن نمانده است.",
+            "note": ""
+          },
+          {
+            "item": "relationship to published evidence is stated",
+            "points": 4,
+            "evidence_quote": "این روش چند بخش دارد که چهار تای آن‌ها در روان‌شناسی اسم و پژوهش دارند.",
+            "note": ""
+          },
+          {
+            "item": "scope of the claim is bounded",
+            "points": 3,
+            "evidence_quote": "استوری‌های اینستاگرام که بیشتر از همه دیده می‌شوند، هیچ‌کدام از این قاعده‌ها را ندارند.",
+            "note": ""
+          },
+          {
+            "item": "explicitly labeled as experience/opinion, not evidence",
+            "points": 3,
+            "evidence_quote": "MetaNoteها می‌توانند ایده‌های شخصی یا برداشت‌های الهام‌گرفته از دیگران باشند.",
+            "note": "اعلانِ سطحِ بخش، از metanotes/index.html"
+          }
+        ],
+        "des_score": 19,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "این MetaNote در مسیر Commentary امتیاز ۱۹ گرفته و در باند E، یعنی سطح زمینه‌ای و نظر، قرار دارد.",
+        "interpretation_fa": "متن تجربه‌ی شخصی نویسنده در مدیریت کار روزانه را با زنجیره‌ی استدلال روشن روایت می‌کند. چهار جزء روش به مفاهیم پژوهش‌شده‌ی روان‌شناسی مانند Implementation Intention، Habit، Situational Self-Control و Cognitive Offloading وصل شده‌اند. ارزش آن الگوی عملی برگرفته از یک تجربه است، نه شواهد بالینی، و موضوعش مدیریت کار است نه تصمیم‌گیری پروتزی."
+      }
+    ],
+    "fidelity": [
+      null
+    ]
   }
 }
