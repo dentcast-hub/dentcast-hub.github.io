@@ -12,13 +12,15 @@
 // Phrased as a question because a slow phone can also cross the line: the note
 // is a door, never a verdict, and it leaves as soon as playback starts.
 //
-// The link is the show on Acast, not the episode: no per-episode Acast address
-// exists anywhere in the repo (dentcast.json carries the Arvan file only).
+// The link is the show on Castbox, not the episode (dentcast.json carries the
+// Arvan file only). It was the show on Acast by slug until 2026-11-26, when the
+// founder, listening from abroad behind a VPN, found that link would not open
+// and named the Castbox address as the better door.
 // No page carries this markup; it is drawn next to whatever #ep-audio is on the
 // page, the standalone episode and the desktop shell's injected one alike.
 
 export const PATIENCE_MS = 10000;
-export const ACAST_SHOW_URL = 'https://shows.acast.com/dentcast';
+export const ALT_SHOW_URL = 'https://castbox.fm/va/4889954';
 
 const watched = new WeakMap(); // element → its play handler
 
@@ -36,12 +38,12 @@ function noteFor(audioEl) {
   note.className = 'dc-audio-alt';
   note.setAttribute('role', 'status');
   note.hidden = true;
-  note.append('پخش شروع نشد؟ این قسمت روی Acast هم هست. ');
+  note.append('پخش شروع نشد؟ این قسمت روی Castbox هم هست. ');
   const a = document.createElement('a');
-  a.href = ACAST_SHOW_URL;
+  a.href = ALT_SHOW_URL;
   a.target = '_blank';
   a.rel = 'noopener';
-  a.textContent = 'شنیدن در Acast ›';
+  a.textContent = 'شنیدن در Castbox ›';
   note.append(a);
   wrap.after(note);
   return note;

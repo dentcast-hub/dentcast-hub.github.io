@@ -1138,7 +1138,7 @@ function boot() {
   step('article', () => { rowBuilders.push(initArticle()); });
   step('listening', () => initListening()); // episode-page audio → episode_listened
   step('audio-hub', () => initAudioHub()); // one resume record + lock screen + «ادامه‌ی شنیدن» bar for every episode player
-  step('audio-fallback', () => initAudioFallback()); // «پخش شروع نشد؟» → Acast, only after a failed play
+  step('audio-fallback', () => initAudioFallback()); // «پخش شروع نشد؟» → Castbox, only after a failed play
   step('home-card', () => initHomeCard()); // homepage personal card on all viewports (desktop + mobile)
   step('home-features', () => initHomeFeatures()); // homepage premium section, under the ad card (both layouts)
   step('premium-panel', () => initPremiumPanel()); // homepage «پریمیوم» tab: the full catalog, locked or live (both layouts)
