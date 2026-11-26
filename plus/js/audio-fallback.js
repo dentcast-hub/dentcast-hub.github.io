@@ -19,7 +19,9 @@
 // No page carries this markup; it is drawn next to whatever #ep-audio is on the
 // page, the standalone episode and the desktop shell's injected one alike.
 
-export const PATIENCE_MS = 10000;
+// 5 s, not 10 (founder, 2026-11-26): a reader whose file never comes may leave
+// the page before a longer wait ends.
+export const PATIENCE_MS = 5000;
 export const ALT_SHOW_URL = 'https://castbox.fm/va/4889954';
 
 const watched = new WeakMap(); // element → its play handler
