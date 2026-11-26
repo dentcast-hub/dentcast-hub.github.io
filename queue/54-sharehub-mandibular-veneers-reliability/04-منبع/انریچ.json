@@ -1,0 +1,143 @@
+[
+ {
+  "doi": "10.1111/jerd.12000",
+  "ft_tags": [
+   "pressable-ceramic",
+   "etch-and-rinse-adhesive",
+   "restoration-fracture"
+  ],
+  "new_tags": [],
+  "doc_class": "primary_research",
+  "off_topic": false,
+  "off_topic_reason": null,
+  "catalog_type_ok": true,
+  "suggested_type": null,
+  "text_quality": "good",
+  "facts": {
+   "doi": "10.1111/jerd.12000",
+   "authors": [
+    "Sven Rinke",
+    "Katharina Lange",
+    "Dirk Ziebolz"
+   ],
+   "year": 2012,
+   "journal": "Journal of Esthetic and Restorative Dentistry",
+   "population": "37 patients (130 teeth) restored with extensive anterior ceramic veneers in a private practice",
+   "intervention": "Extensive adhesively luted heat-pressed ceramic veneers (Cergo) with etch-and-rinse adhesive and dual-curing composite cement",
+   "outcomes": [
+    "survival (in situ criteria)",
+    "success (intervention-free survival)",
+    "ceramic fracture",
+    "recementation",
+    "endodontic treatment",
+    "effect of veneer position and dentin exposure"
+   ],
+   "main_result": "36-month Kaplan-Meier survival was 95.1% and success 92.8%; veneers with >50% exposed dentin had a higher intervention risk (HR 10.6, p = 0.026) but no survival effect, and jaw position had no influence.",
+   "sample_size": "130 veneers (teeth) in 37 patients; 76 maxillary, 54 mandibular",
+   "follow_up": "36 months",
+   "materials_brands": [
+    "Cergo heat-pressed ceramic (DeguDent)",
+    "Optibond FL etch-and-rinse adhesive (Kerr)",
+    "Variolink and Calibra composite cements"
+   ],
+   "funding_coi": "Authors report no financial interest in the companies whose materials were used",
+   "key_finding": "After 36 months, extensive heat-pressed ceramic veneers in a private practice had a 95.1% survival rate and 92.8% success rate, with ceramic fracture the main failure cause. Upper and lower jaw performed alike, while veneers with more than 50% exposed dentin needed significantly more interventions.",
+   "clinical_bottom_line": "Extensive pressable ceramic veneers can be placed on mandibular as well as maxillary anterior teeth, but large exposed dentin areas raise the risk of recementation or endodontic intervention."
+  },
+  "cites_dois": []
+ },
+ {
+  "doi": "10.1111/jerd.12372",
+  "ft_tags": [
+   "pressable-ceramic",
+   "etch-and-rinse-adhesive",
+   "restoration-fracture"
+  ],
+  "new_tags": [],
+  "doc_class": "primary_research",
+  "off_topic": false,
+  "off_topic_reason": null,
+  "catalog_type_ok": true,
+  "suggested_type": null,
+  "text_quality": "partial",
+  "facts": {
+   "doi": "10.1111/jerd.12372",
+   "year": 2018,
+   "population": "31 patients (101 teeth) with extended anterior veneers placed in a private practice",
+   "intervention": "Extended adhesively luted heat-pressed glass-ceramic veneers (Cergo)",
+   "comparison": "Veneers with >50% vs <50% exposed dentin; maxilla vs mandible",
+   "outcomes": [
+    "survival (in situ criteria)",
+    "success (intervention-free)",
+    "ceramic fracture",
+    "recementation",
+    "effect of jaw position and dentin exposure"
+   ],
+   "main_result": "7-year Kaplan-Meier survival was 93.6% and success 84.3%; >50% exposed dentin increased intervention risk (HR 3.71, P = .0041) without affecting survival; jaw position had no influence.",
+   "sample_size": "101 veneers (teeth) in 31 patients; 65 maxillary, 36 mandibular",
+   "follow_up": "mean 7 years",
+   "materials_brands": [
+    "Cergo heat-pressed glass-ceramic (Dentsply Sirona)",
+    "OptibondFL adhesive (Kerr)",
+    "Variolink (Ivoclar Vivadent) and Calibra (Dentsply Sirona) dual-curing cements",
+    "Luxatemp provisional material (DMG)"
+   ],
+   "funding_coi": "No conflicts of interest declared",
+   "key_finding": "After a mean of 7 years, extended heat-pressed glass-ceramic veneers had a 93.6% survival rate and 84.3% success rate, with ceramic fracture the main failure cause. Jaw position did not matter, but veneers on more than 50% exposed dentin needed significantly more clinical interventions.",
+   "clinical_bottom_line": "Extended pressable veneers perform comparably in upper and lower anterior teeth, but dentin exposure above 50% of the preparation should be avoided or managed because it raises intervention risk."
+  },
+  "cites_dois": []
+ },
+ {
+  "doi": "10.1111/jerd.12597",
+  "ft_tags": [
+   "pressable-ceramic",
+   "leucite-reinforced-ceramic",
+   "restoration-fracture"
+  ],
+  "new_tags": [],
+  "doc_class": "primary_research",
+  "off_topic": false,
+  "off_topic_reason": null,
+  "catalog_type_ok": true,
+  "suggested_type": null,
+  "text_quality": "good",
+  "facts": {
+   "doi": "10.1111/jerd.12597",
+   "authors": [
+    "Sven Rinke",
+    "Lara Bettenhäuser-Hartung",
+    "Andreas Leha",
+    "Matthias Rödiger",
+    "Gerhard Schmalz",
+    "Dirk Ziebolz"
+   ],
+   "year": 2020,
+   "population": "31 patients (101 teeth) with extended anterior ceramic laminate veneers placed in a private practice",
+   "intervention": "Adhesively luted heat-pressed leucite-reinforced glass-ceramic extended anterior laminate veneers (Cergo)",
+   "comparison": "Veneers with >50% vs ≤50% exposed dentin; maxilla vs mandible",
+   "outcomes": [
+    "survival (in situ criterion)",
+    "success (intervention-free)",
+    "ceramic fracture",
+    "recementation",
+    "effect of jaw position and dentin exposure"
+   ],
+   "main_result": "10-year survival was 91.8% and success 78.6%; >50% exposed dentin raised intervention risk (HR 2.98, P = .019; success 68.0%) without affecting survival; jaw position had no influence.",
+   "sample_size": "101 veneers in 31 patients; 65 maxillary, 36 mandibular",
+   "follow_up": "mean 129.7 ± 29.9 months (max 184.7)",
+   "materials_brands": [
+    "Cergo heat-pressed leucite-reinforced glass-ceramic (Dentsply Sirona)",
+    "OptiBond FL adhesive (Kerr)",
+    "Variolink (Ivoclar Vivadent) and Calibra (Dentsply Sirona) dual-curing luting agents",
+    "Monobond S silane (Ivoclar Vivadent)",
+    "Vita Ceramics Etch 5%"
+   ],
+   "funding_coi": "Authors report no financial interest in the companies whose materials were used",
+   "limitations": "Retrospective design with broad indications, varied preparation designs, loss of patients to follow-up, single operator",
+   "key_finding": "After a mean of about 10 years, extended heat-pressed laminate veneers had a 91.8% survival rate and 78.6% success rate, with ceramic fracture the main failure cause and debonding the main complication. Mandibular and maxillary veneers performed alike, but veneers on more than 50% exposed dentin had a significantly higher intervention risk.",
+   "clinical_bottom_line": "Extended veneers are a reasonable alternative to anterior full crowns, even in the mandible, but dentin exposure should be avoided or managed with different conditioning or luting strategies."
+  },
+  "cites_dois": []
+ }
+]
