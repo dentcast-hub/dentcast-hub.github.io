@@ -64518,5 +64518,113 @@
         "interpretation_fa": "این یادداشت بالینی نشان می‌دهد چگونه اتکا به تشخیص قبلی و ارجاع محدود می‌تواند معاینه مستقل را منحرف کند و تشخیص درد را به تأخیر بیندازد. ارزش عملی آن در یادآوری انجام سیستماتیک معاینه بالینی از جمله لمس و بررسی endodontic و prosthetic مستقل از پیش‌فرض‌هاست."
       }
     ]
+  },
+  "sharehub/share-61": {
+    "scored_at": "2026-11-26",
+    "sources": [
+      {
+        "des_version": "3.7",
+        "content_type": "RESEARCH",
+        "question_type": "DIAGNOSTIC",
+        "text_basis": "FULL_TEXT",
+        "citation": {
+          "title": "Full Arch Implant Acquisition Methods: Which Is Most Accurate?",
+          "authors": "@dr.jonathanng x @sourceeducation",
+          "year": null,
+          "journal": "",
+          "doi": ""
+        },
+        "journal_quartile": {
+          "value": "NR",
+          "source": "NR"
+        },
+        "s_design": {
+          "value": 15,
+          "anchor": "educational slide notebook summarising published implant-acquisition accuracy studies and reviews, with no methods (DIAGNOSTIC narrative review row, 15)",
+          "evidence_quote": "By the end of this notebook, you'll know what a micron figure on a brochure actually measures"
+        },
+        "q_method": {
+          "tool": "AMSTAR-2",
+          "domains": [
+            {
+              "domain": "protocol registered before commencement",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Read all 18 slides, including body text, tables, notes and citation lines. Found no protocol, registration or PROSPERO wording, and no Methods section."
+            },
+            {
+              "domain": "adequacy of the literature search",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Read all 18 slides. No database, search string, date range or search description appears anywhere. Studies are cited by author and year only."
+            },
+            {
+              "domain": "justification for excluding individual studies",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "3b-iii: no list of excluded studies. (a) No screening account with counts and no flow diagram. (b) No inclusion or exclusion criteria. Read all 18 slides and their citation lines."
+            },
+            {
+              "domain": "risk of bias assessment of included studies",
+              "rating": "some_concerns",
+              "evidence_quote": "A number is only as good as its reference.",
+              "note": "Slide 8 grades studies by their reference standard (CMM or lab scanner, photogrammetry, intraoral scanner). Single studies are flagged for maker involvement (Lerner 2026) and for having no comparison group (Klein 2023). No systematic appraisal tool is used for the included studies."
+            },
+            {
+              "domain": "appropriateness of meta-analytical methods",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "No pooling, statistical model or heterogeneity assessment is described anywhere in the 18 slides. Numeric averages are taken from cited reviews. Slide 6 is only an arithmetic illustration."
+            },
+            {
+              "domain": "assessment of publication bias",
+              "rating": "high",
+              "evidence_quote": "",
+              "note": "Read all 18 slides. No publication-bias, small-study, funnel-plot or selective-reporting wording appears anywhere."
+            }
+          ],
+          "multiplier": 0.3
+        },
+        "penalties": [
+          {
+            "item": "conflict-of-interest statement / manufacturer funding",
+            "base_points": 8,
+            "points": 1,
+            "evidence_quote": "",
+            "note": "No conflict-of-interest or disclosure statement anywhere in the 18 slides, headers or footers. The text also promotes one product's workflow ('Comment ELITE to receive a link...'). Scaled: max(1, round_half_up(8 × 15 ÷ 100)) = 1."
+          },
+          {
+            "item": "clinical trial not prospectively registered",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "applies to RCTs only"
+          },
+          {
+            "item": "no sample size justification / power analysis",
+            "base_points": 5,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "not applicable to a secondary study"
+          },
+          {
+            "item": "follow-up shorter than the outcome requires",
+            "base_points": 3,
+            "points": 0,
+            "evidence_quote": "",
+            "note": "Outcome is measurement accuracy (trueness), not survival or success, so no follow-up-dependent claim is made."
+          }
+        ],
+        "commentary_checklist": null,
+        "des_score": 4,
+        "band": "E",
+        "provisional": false,
+        "fact_fa": "امتیاز DES این منبع ۴ از ۱۰۰ است، در باند E (سطح پس‌زمینه/نظر) برای پرسش DIAGNOSTIC.",
+        "interpretation_fa": "این متن یک notebook آموزشی است. نتایج مطالعات accuracy را بدون جست‌وجوی سیستماتیک، معیار انتخاب یا ارزیابی منظم سوگیری کنار هم گذاشته است. ارزشش آموزشی است و تفاوت precision و trueness و معنای میانگین linear trueness را روشن می‌کند. اعداد آن فقط به اندازه‌ی مطالعات اصلی اعتبار دارند. نویسنده خودش از workflow محصول Shining 3D Elite استفاده می‌کند و لینک ویدیوی آموزشی آن را پیشنهاد می‌دهد؛ بیانیه‌ی conflict of interest در متن نیست."
+      }
+    ],
+    "fidelity": [
+      null
+    ]
   }
 }
