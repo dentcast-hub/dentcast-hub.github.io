@@ -33,7 +33,7 @@ PINNED_BLOBS = {
     '06-paper-ingestion.md': 'ce9ff376c0a10d83be94ce18fa8d1d72c999d612',
     '08-des-fidelity.md': 'cbaf72f8223e410384d42004172493a1e8e0ffc4',
     '09-challenge.md': 'b1faa96b9e0d71dd1fd70ff2fe0075dc5ad4c2cc',
-    '11-build-and-version.md': 'd2d35ca0fba390eac9a21619290c9cbf6af143ab',
+    '11-build-and-version.md': '451907512ba6c8f51b73d11b35981ad14b9a45a9',
     '12-english-notify-verify.md': 'b429fab3438ca187b86897d56914e6a277573e4a',
 }
 

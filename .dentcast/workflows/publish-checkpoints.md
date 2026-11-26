@@ -69,7 +69,8 @@ step's evidence or as a decision (record shape: `publish-handoff-tool.md`).
 Asked when they arise, because they are real decisions: a new subtopic in `PILLARS`, a new Drive
 subfolder, DES basket 3 / publish without DES, a missing Fidelity runtime capability, a NoteCast pair
 where neither episode has a related-content block (4.5) or a previous Promptologist part without an
-`ep-nav` block (4.6). Merge is not asked (below). Founder data (text, title, any string given) is final and
+`ep-nav` block (4.6), a page with no strong learning pathway (module 10, 5.6: named candidates or
+«بدون مسیر»). Merge is not asked (below). Founder data (text, title, any string given) is final and
 copied (Hard Rule 16).
 
 **Text lock.** After C.4.13 the body text, title, caption and image captions are locked (4.7–4.9 still

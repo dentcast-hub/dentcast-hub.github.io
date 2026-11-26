@@ -704,7 +704,11 @@ def draft_pathway(l07):
             continue
         if not inside or not t.startswith("-") or "پیشنهاد نمی‌شود" in t:
             continue
-        m = re.match(r"^-\s*(?:[^`]*?:\s*)?`([a-z][a-z0-9-]*)`[^`]*?(?:درج|افزودن)\s+پس از\s+`([a-z]+/[A-Za-z0-9-]+)`", t)
+        if re.match(r"^-\s*(?:[^`]*?:\s*)?«?بدون مسیر»?", t):
+            # Founder 2026-11-26: no pathway fits and the founder said so at
+            # preparation; publish day writes .dentcast/pathway-exclusions.json.
+            return V("none", f"07-ورودی‌ها.md:{n}")
+        m = re.match(r"^-\s*(?:[^`]*?:\s*)?`([a-z][a-z0-9-]*)`[^`]*?(?:درج|افزودن)\s+پس از\s+`([a-z-]+(?:/[a-z-]+)*/[A-Za-z0-9-]+)`", t)
         if m:
             out.append({"id": m.group(1), "after": m.group(2), "from": f"07-ورودی‌ها.md:{n}"})
     if out:

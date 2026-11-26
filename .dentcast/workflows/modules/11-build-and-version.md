@@ -16,6 +16,7 @@ Use the Pulse sentence from Question 5 (the founder's, copied; or the agent's dr
 - Remove the **bottom-most** (oldest) line entirely — no empty container left behind; the rule is positional.
 - The chosen word links to the new page's URL; match the exact HTML/classes of the other Pulse items.
 - Keep exactly **7** Pulse lines. Phase F checks the count, first position, and preservation of the previous first six lines when a new URL is added against main.
+- **Never a gate.** Pulse is not shown on the site (founder, 2026-11-26). Phase F reports every Pulse row as a warning and `close` records a missing line as `not_applicable`; a Pulse defect never holds a publication.
 
 Glossary terms are not announced (documented skip); LiteCast follows its own convention.
 

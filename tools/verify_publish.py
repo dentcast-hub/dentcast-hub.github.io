@@ -108,6 +108,30 @@ class Report:
     def failures(self):
         return [r for r in self.rows if r[0] == "FAIL"]
 
+    def advisory(self):
+        """The same report, but every FAIL it records becomes a WARN.
+        Founder 2026-11-26: Pulse is not shown on the site any more (only its
+        markup frame stays), so a Pulse defect is reported, never a failure."""
+        outer = self
+
+        class _Advisory:
+            def ok(self, step, msg):
+                outer.ok(step, msg)
+
+            def skip(self, step, msg):
+                outer.skip(step, msg)
+
+            def warn(self, step, msg, fix=None):
+                outer.warn(step, msg, fix)
+
+            def fail(self, step, msg, fix=None):
+                outer.warn(step, msg + " (advisory: Pulse is not shown on the site)", fix)
+
+            def check(self, cond, step, ok_msg, fail_msg, fix=None):
+                self.ok(step, ok_msg) if cond else self.fail(step, fail_msg, fix)
+                return cond
+        return _Advisory()
+
     def render(self):
         width = max((len(r[1]) for r in self.rows), default=4)
         out = [f"\n── verify_publish: {self.content_id} " + "─" * 30]
@@ -1146,6 +1170,28 @@ def check_bank_preservation(rep, content_id):
     elif old is not None and cur is None:
         rep.fail("F pathways kept", f"plus/pathways.json deleted (it existed at {label})",
                  f"restore it from {label}")
+
+
+PATHWAY_EXCLUSIONS = ".dentcast/pathway-exclusions.json"
+
+
+def pathway_exclusion(content_id):
+    """The founder's own «بدون مسیر» decision for one page (module 10, 5.6):
+    a confirmed approval in .dentcast/pathway-exclusions.json. Returns its
+    decision text, or None. Never inferred: no entry means no exclusion."""
+    path = ROOT / PATHWAY_EXCLUSIONS
+    if not path.is_file():
+        return None
+    try:
+        entry = json.loads(path.read_text(encoding="utf-8")).get(content_id)
+    except (ValueError, AttributeError):
+        return None
+    if not isinstance(entry, dict) or entry.get("content_id") != content_id:
+        return None
+    approval = entry.get("approval") or {}
+    if approval.get("status") != "confirmed" or not approval.get("decision") or not approval.get("evidence"):
+        return None
+    return approval["decision"]
 
 
 def check_pulse(rep, home, url, sweep=False, previous_home=None):
@@ -2324,8 +2370,9 @@ def _verify_core(content_id, rep, expect_title=None, expect_caption=None, sweep=
     elif is_gloss:
         rep.skip("6 pulse", "glossary: not customary in Pulse")
     else:
-        previous_home = None if sweep else pulse_baseline(rep)
-        check_pulse(rep, home, url, sweep, previous_home)
+        advisory = rep.advisory()
+        previous_home = None if sweep else pulse_baseline(advisory)
+        check_pulse(advisory, home, url, sweep, previous_home)
 
     rail = re.search(r'<a class="dc-rail-card"[^>]*href="%s">(.*?)</a>' % re.escape(url), home, re.S)
     if rail:
@@ -2495,10 +2542,16 @@ def _verify_core(content_id, rep, expect_title=None, expect_caption=None, sweep=
                                      "excluded from learning pathways")
         else:
             paths = read("plus/pathways.json")
-            rep.check(f'"{content_id}"' in paths, "5.6 pathway",
-                      "placed in at least one learning pathway",
-                      "in no learning pathway — place it, or state the deliberate exclusion",
-                      f"python3 tools/pathway_place.py {content_id}")
+            excluded = pathway_exclusion(content_id)
+            if f'"{content_id}"' not in paths and excluded:
+                rep.skip("5.6 pathway", "founder decision: no learning pathway "
+                                        f"(.dentcast/pathway-exclusions.json: {excluded})")
+            else:
+                rep.check(f'"{content_id}"' in paths, "5.6 pathway",
+                          "placed in at least one learning pathway",
+                          "in no learning pathway — place it, or record the founder's «بدون مسیر» "
+                          "decision in .dentcast/pathway-exclusions.json",
+                          f"python3 tools/pathway_place.py {content_id}")
             if content_id.startswith("taraz/"):
                 # Founder, 1405/07/03: every تراز شواهد part is a step of
                 # evidence-literacy — required, not a scorer's suggestion
