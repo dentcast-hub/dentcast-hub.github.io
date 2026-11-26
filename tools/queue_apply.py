@@ -696,6 +696,16 @@ def template_facts(cat, prev_n):
     return cid, doc, entry
 
 
+def body_end_pattern(doc, body_open):
+    """Where a ShareHub template's body ends: at its paper-credit block or the founder's
+    author-note, or, on a template with neither (sharehub/share-61), where the dialogue and
+    its wrapper close before the related section (fa) or </main> (en). Returns (pattern, bare)."""
+    std = r"\n</div>\n<div class=\"author(?:-note)?\">"
+    if re.search(re.escape(body_open) + r"\n.*?" + std, doc, re.S):
+        return std, False
+    return r"\n</div>\n</div>\n(?=\s*(?:<div class=\"dc-related-section\">|</main>))", True
+
+
 def swap_region(doc, start_pat, end_pat, new, what):
     m = re.search(start_pat, doc, re.S)
     if not m:
@@ -784,9 +794,8 @@ def build_page(cat, n, prev_n, m, date, item, lang="fa"):
     # (sharehub/share-42, share-45) — at the founder's author-note; a template
     # with neither (sharehub/share-61) ends it where the dialogue and its
     # wrapper close, just before the related section (fa) or </main> (en)
-    body_end = r"\n</div>\n<div class=\"author(?:-note)?\">"
-    if not re.search(re.escape(c["body_open"]) + r"\n.*?" + body_end, doc, re.S):
-        body_end = r"\n</div>\n</div>\n(?=\s*(?:<div class=\"dc-related-section\">|</main>))"
+    body_end, bare = body_end_pattern(doc, c["body_open"])
+    if bare:
         if credit["mode"] == "author-doi":
             # the credit block sits inside the dialogue, right after the body (sharehub/share-60)
             word = "نویسنده:" if lang == "fa" else "Author:"

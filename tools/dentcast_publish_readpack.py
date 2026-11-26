@@ -411,9 +411,11 @@ QUEUE_PREP = (
     (MODULES + '01-hard-rules.md', [('# DentCast Publishing Router', None, None)], False),
     # Phase 0 through Question 5 (its last heading) runs to the end of the module.
     (MODULES + '02-routing-intake.md', [('## Phase 0', None, None)], False),
+    # Parts 1 to 3: preparation files the PDF (Part 1), writes the catalog entry and runs the
+    # full-text enrichment (Part 2, steps 0-4 and 9) and finds the DOI and first author (Part 3,
+    # step 1); publish-queue.md step 2 names which steps publish day does instead.
     (MODULES + '06-paper-ingestion.md',
-     [('#### Part 1 — File the paper into Google Drive (correct topical subfolder)',
-       '#### Part 2 —', None)], True),
+     [('#### Part 1 — File the paper into Google Drive (correct topical subfolder)', None, None)], True),
     (MODULES + '08-des-fidelity.md', [('### 4.13. DES', None, None)], False),
     # Sections 5.0 (hashtags) and 5 (brain entry) are contiguous.
     (MODULES + '10-brain-and-pathways.md',
@@ -458,6 +460,16 @@ def intersect(spans_a, spans_b):
             lo, hi = max(a0, b0), min(a1, b1)
             if lo < hi:
                 out.append((lo, hi))
+    return out
+
+
+def merge_spans(spans):
+    out = []
+    for a, b in sorted(spans):
+        if out and a <= out[-1][1]:
+            out[-1] = (out[-1][0], max(out[-1][1], b))
+        else:
+            out.append((a, b))
     return out
 
 
@@ -546,7 +558,16 @@ def build_queue_prep(root, *, attached_paper, category='unknown', des_basket='un
                                         challenge='no', des_basket=des_basket,
                                         isolated_call=isolated_call, sources=sources)
                 if why != 'FULL_REQUIRED' and not why.startswith('UNLOCKED'):
-                    spans = include(intersect(spans, kept), len(lines))
+                    cut = intersect(spans, kept)
+                    if name == '08-des-fidelity.md' and des_basket == 'research':
+                        # The research cut of the live route also drops the Step 0 input block
+                        # (doi / source_text / text_basis / metadata, one block per source) that
+                        # sits after the COMMENTARY carve-out; preparation runs that call, so the
+                        # block stays in its pack.
+                        step0 = (boundary(lines, "The user turn is the spec's Step 0 input block"),
+                                 boundary(lines, '#### Part 2b — Run the FIDELITY call'))
+                        cut = merge_spans(cut + intersect(spans, [step0]))
+                    spans = include(cut, len(lines))
                     reason += '+' + why
         selected_total_file = 0
         pieces.append(f'\n\n=== BEGIN SOURCE {path} SHA256 {sha256(raw)} ===\n')

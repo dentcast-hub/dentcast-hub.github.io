@@ -1,5 +1,6 @@
 """Queue lane: byte-preserving writers, manifest refusals, deterministic pieces."""
 import hashlib
+import re
 import json
 import struct
 import sys
@@ -114,6 +115,15 @@ class TailAndRenderTests(unittest.TestCase):
     def test_unknown_image_marker_refuses(self):
         with self.assertRaises(qm.QueueRefusal):
             qa.render_body("[[تصویر:02]]", {}, lambda k: "", qa.Linker([]))
+
+    def test_sharehub_body_end_with_and_without_author_block(self):
+        for page, bare in (("sharehub/share-60.html", False), ("sharehub/share-61.html", True),
+                           ("sharehub/en/share-61.html", True)):
+            doc = (qa.ROOT / page).read_text(encoding="utf-8").replace("\r\n", "\n")
+            pat, got = qa.body_end_pattern(doc, '<div class="sh-dialogue">')
+            self.assertEqual(got, bare, page)
+            start = doc.index('<div class="sh-dialogue">\n') + len('<div class="sh-dialogue">\n')
+            self.assertIsNotNone(re.search(pat, doc[start:], re.S), page)
 
     def test_webp_size_vp8x(self):
         data = b"RIFF" + b"\0" * 4 + b"WEBPVP8X" + b"\0" * 8 + (247).to_bytes(3, "little") + (392).to_bytes(3, "little")

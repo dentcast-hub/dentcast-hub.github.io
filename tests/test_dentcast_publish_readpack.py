@@ -368,11 +368,12 @@ class QueuePrepTests(unittest.TestCase):
     def pack(self, paper='yes'):
         return rp.build_queue_prep(self.root, attached_paper=paper)
 
-    def test_paper_controls_module_06_part_1(self):
+    def test_paper_controls_module_06_parts_1_to_3(self):
         with_paper, m = self.pack('yes')
         without, m2 = self.pack('no')
         self.assertIn('PAPER_PART1', with_paper)
-        self.assertNotIn('PAPER_PART2', with_paper)
+        self.assertIn('PAPER_PART2', with_paper)  # catalog entry and full-text enrichment are preparation's
+        self.assertNotIn('PAPER_PART2', without)
         self.assertNotIn('PAPER_INTRO', with_paper)
         self.assertNotIn('PAPER_PART1', without)
         self.assertEqual(m['mode'], 'queue-prep')
@@ -522,6 +523,8 @@ class LiveQueuePrepTests(unittest.TestCase):
         self.assertNotIn('**Paper-only fast path (text-less) detail.**', text)
         self.assertNotIn('**Insight `keywords`.**', text)
         self.assertIn('#### Part 2b — Run the FIDELITY call', text)
+        self.assertIn("The user turn is the spec's Step 0 input block, **one block per source**", text)
+        self.assertNotIn('**The COMMENTARY track has one carve-out.**', text)
         self.assertIn('#### Part 4 — Store the record', text)
         com, _ = rp.build_queue_prep(root, attached_paper='no', category='metanote',
                                      des_basket='commentary', isolated_call='yes')

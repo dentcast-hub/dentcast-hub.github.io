@@ -367,6 +367,8 @@ def check_des_package(item, problems, warnings=None):
     has no sweep and so no plan.json (publish-queue.md, 05-DES-Fidelity)."""
     p = item / DES
     if not p.is_file():
+        # publish day refuses an item without it (queue_apply.py DES_PACKAGE_MISSING)
+        problems.append(f"P3 {DES}: missing (module 08 Part 4 stores the record here before the freeze)")
         return
     try:
         des = json.loads(p.read_text(encoding="utf-8"))
@@ -433,10 +435,36 @@ def check_pillar(item, problems):
         problems.append("P6 07-ورودی‌ها.md: " + msg)
 
 
+# JSON files publish day reads as they are: a «ندارد» line or another shape there is a
+# traceback on publish day, so the shape is a problem at the freeze. A file with nothing to
+# record is left out (04), or written in its empty form (08 {"questions": []}, 10 {"skip": …}).
+JSON_SHAPES = (("04-منبع/کاتالوگ.json", list, "a list of catalog entries"),
+               ("04-منبع/انریچ.json", list, "the list cabinet_enrich.py freeze writes (several papers: one list)"),
+               ("08-سؤال‌های-آزمون.json", dict, '{"questions": [...]} (no questions: {"questions": []})'),
+               ("10-فلش‌کارت-FAQ.json", dict, '{"definedTermSets": …, "faqPages": …} or {"skip": "<reason>"}'))
+
+
+def check_json_shapes(item, problems):
+    """P7: every JSON file of the item parses and has the shape its reader takes."""
+    for rel, kind, shape in JSON_SHAPES:
+        p = item / rel
+        if not p.is_file():
+            continue
+        try:
+            data = json.loads(p.read_text(encoding="utf-8"))
+        except ValueError:
+            problems.append(f"P7 {rel}: not JSON; write {shape}, or leave the file out when there is nothing to record"
+                            if rel.startswith("04") else f"P7 {rel}: not JSON; write {shape}")
+            continue
+        if not isinstance(data, kind) or (rel.startswith("08") and not isinstance(data.get("questions"), list)):
+            problems.append(f"P7 {rel}: write {shape}")
+
+
 def checks(item):
     """{problems, warnings}: mechanical cross-file errors a human review would otherwise have to catch."""
     problems, warnings, notes = [], [], []
     check_des_package(item, problems, warnings)
+    check_json_shapes(item, problems)
     check_authors(item, problems, notes)
     check_keywords(item, warnings, notes)
     check_cards(item, warnings, notes)
