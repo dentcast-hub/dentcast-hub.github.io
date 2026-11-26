@@ -19579,5 +19579,40 @@
       "secondary": [],
       "subtopic": "comprehensive-diagnosis"
     }
+  },
+  {
+    "type": "sharehub",
+    "id": "61",
+    "title": "ثبت موقعیت ایمپلنت در فول‌آرچ دیجیتال؛ کدام روش دقیق‌تر است؟",
+    "caption": "اسکن بادی عمودی، اسپلینت و Scan aid، گیج افقی و فتوگرامتری داخل و خارج دهانی در ثبت موقعیت ایمپلنت فول‌آرچ چه دقتی دارند و عدد دقت را چطور باید خواند؛ بر اساس پست آموزشی Dr. Jonathan Ng.",
+    "author": "Dr. Jonathan Ng",
+    "source": "https://www.instagram.com/dr.jonathanng/",
+    "hashtags": [
+      "#Curated_Content",
+      "#اسکن_فول_آرچ",
+      "#فوتوگرامتری",
+      "#اسکن_بادی",
+      "#خطای_استیچینگ",
+      "#دقت_اسکن",
+      "#ایمپلنت_فول_آرچ"
+    ],
+    "keywords": [
+      "ثبت دیجیتال موقعیت ایمپلنت در فول‌آرچ",
+      "Precision و Trueness",
+      "Linear trueness و فاصله اقلیدسی",
+      "Angular trueness و حد ۰٫۴ درجه",
+      "مرجع اندازه‌گیری CMM و اسکنر لابراتواری",
+      "خطای استیچینگ در طول قوس",
+      "اسکن بادی عمودی و تلرانس ساخت",
+      "اسپلینت کردن اسکن بادی‌ها و Scan aid",
+      "گیج افقی کالیبره و غیرکالیبره",
+      "فتوگرامتری داخل دهانی و خارج دهانی"
+    ],
+    "url": "/sharehub/share-61.html",
+    "pillar": {
+      "primary": "digital",
+      "secondary": [],
+      "subtopic": "intraoral-scanning"
+    }
   }
 ]

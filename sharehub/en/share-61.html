@@ -1,0 +1,613 @@
+<!doctype html>
+<!-- data-dc-no-header: opt out of the shared (Persian/RTL) header injected by dc-nav.js; this page keeps its own English/LTR header. -->
+<html lang="en" dir="ltr" data-dc-no-header>
+<head>
+  <!-- Open the API connection while the HTML is still parsing: /me gates the
+       ad card, and on a first visit the TLS handshake was in front of it. -->
+  <link rel="preconnect" href="https://api.dentcast.ir" crossorigin>
+  <link rel="preconnect" href="https://api.dentcast.org" crossorigin>
+  <!-- Google Analytics (deferred: loads only after the page is fully rendered) -->
+  <script>
+    window.addEventListener('load', function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-GMM0WC8X3M');
+      var ga = document.createElement('script');
+      ga.async = true;
+      ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMM0WC8X3M';
+      document.head.appendChild(ga);
+    });
+  </script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Recording Implant Position in the Digital Full Arch: Which Method Is More Accurate? | Share Hub – DentCast</title>
+
+<meta name="description" content="How accurate are vertical scan bodies, splints and scan aids, horizontal gauges, and intraoral and extraoral photogrammetry for recording full-arch implant positions, and how should an accuracy figure be read; based on an educational post by Dr. Jonathan Ng.">
+
+<link rel="canonical" href="https://dentcast.org/sharehub/en/share-61.html">
+
+<meta name="robots" content="noindex, follow">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="DentCast">
+<meta property="og:title" content="Recording Implant Position in the Digital Full Arch: Which Method Is More Accurate? | Share Hub – DentCast">
+<meta property="og:description" content="How accurate are vertical scan bodies, splints and scan aids, horizontal gauges, and intraoral and extraoral photogrammetry for recording full-arch implant positions, and how should an accuracy figure be read; based on an educational post by Dr. Jonathan Ng.">
+<meta property="og:url" content="https://dentcast.org/sharehub/en/share-61.html">
+<meta property="og:image" content="https://dentcast.org/dentcast-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Recording Implant Position in the Digital Full Arch: Which Method Is More Accurate? | Share Hub – DentCast">
+<meta name="twitter:description" content="How accurate are vertical scan bodies, splints and scan aids, horizontal gauges, and intraoral and extraoral photogrammetry for recording full-arch implant positions, and how should an accuracy figure be read; based on an educational post by Dr. Jonathan Ng.">
+<meta name="twitter:image" content="https://dentcast.org/dentcast-cover.webp">
+
+  <!-- Shared design system -->
+  <link rel="stylesheet" href="/dc-theme.css?v=25">
+  <link rel="stylesheet" href="/dc-nav.css?v=18">
+  <link rel="stylesheet" href="/global-search.css?v=5">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Theme init — no flash -->
+  <script>(function(){var s=localStorage.getItem('dc-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.setAttribute('data-theme','dark');})()</script>
+
+  <style>
+    :root {
+      --blue:#0b5fff;
+      --lightblue:rgba(11,95,255,0.15);
+      --radius:18px;
+    }
+
+    html,body { margin:0; padding:0; }
+
+    body {
+      font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+      direction: ltr;
+      background: #f0f2f5;
+      color: #0a1a33;
+      max-width: 47.5rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 6.25rem;line-height:1.9;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizelegibility;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0a1020;
+      font-weight: 800;
+      font-size: 1.7rem;
+      line-height: 1.35;
+      margin: 0 0 1.875rem;
+    }
+
+    .glass-box {
+      background: #fff;
+      border: 1px solid rgba(2,35,96,.09);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.875rem;
+      box-shadow: 0 10px 30px rgba(2,35,96,.06);
+    }
+
+    p { margin: 0.875rem 0; font-size: 1.02rem; text-align: left; }
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin: 1.5rem 0 0.625rem;
+      border-left: 4px solid #0b5fff;
+      padding-left: 0.75rem;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.875rem 0;
+    }
+
+    ul li::before {
+      content: "✦ ";
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    /* summary tables — LTR counterpart of the .text-box table pattern used elsewhere on the site */
+    .glass-box table{
+      width:100%;
+      border-collapse:collapse;
+      margin:1.25rem 0 1.5rem;
+      font-size:.98rem;
+      line-height:1.7;
+    }
+    .glass-box table th,
+    .glass-box table td{
+      border:1px solid rgba(0,0,0,0.12);
+      padding:0.6rem 0.8rem;
+      text-align:left;
+      vertical-align:top;
+    }
+    .glass-box table thead th{
+      background:rgba(11,95,255,0.08);
+      color:#0a1638;
+      font-weight:700;
+    }
+    .glass-box table tbody tr:nth-child(even){
+      background:rgba(11,95,255,0.03);
+    }
+    @media (max-width:768px){
+      .glass-box table{font-size:.9rem;}
+      .glass-box table th,.glass-box table td{padding:0.45rem 0.5rem;}
+    }
+
+    .text-divider {
+      margin: 1.75rem 0;
+      border: 0;
+      height: 0.0625rem;
+      background-image: linear-gradient(
+        to right,
+        rgba(0,0,0,0),
+        rgba(11,95,255,0.4),
+        rgba(0,0,0,0)
+      );
+    }
+
+    /* images with a visible caption */
+    .glass-box figure { max-width: 30rem; margin: 1.25rem auto; }
+    .glass-box figcaption {
+      text-align: center;
+      font-size: .85rem;
+      opacity: .75;
+      margin-top: 0.5rem;
+      line-height: 1.7;
+    }
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: #4a5568;
+      font-weight: 600;
+    }
+
+    /* images with a visible caption */
+    .glass-box figure { max-width: 30rem; margin: 1.25rem auto; }
+    .glass-box figcaption {
+      text-align: center;
+      font-size: .85rem;
+      opacity: .75;
+      margin-top: 0.5rem;
+      line-height: 1.8;
+    }
+
+
+    .author {
+      text-align: center;
+      margin-top: 3.125rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* section kicker above the title */
+    .sh-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: .02em;
+      margin: 0 0 0.5rem;
+    }
+
+    /* references list */
+    .sh-refs { margin-top: 0.5rem; }
+    .sh-refs li { font-size: 0.95rem; line-height: 1.9; }
+    .sh-refs a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .sh-refs a:hover { text-decoration: underline; }
+
+    /* figure pairs and wide tables */
+    .glass-box .sh-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+    .glass-box .sh-pair figure { margin: 0; }
+    .glass-box .sh-pair img { width: 100%; height: auto; }
+    /* Keep the supplied clinical crops at their native size; shrink only on narrow screens. */
+    .glass-box figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+    .sh-scroll { overflow-x: auto; }
+    .sh-scroll img { min-width: 32rem; }
+    @media (max-width:420px){ .glass-box .sh-pair { grid-template-columns: 1fr; } }
+
+    /* permission chips */
+    .chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: .05rem .55rem; border-radius: 999px; line-height: 1.7; white-space: nowrap; margin-inline-start: .25rem; }
+    .chip.ok { color: #1f7a3a; background: rgba(47,122,60,.14); }
+    .chip.warn { color: #9a6200; background: rgba(214,150,20,.16); }
+    .chip.no { color: #b3342b; background: rgba(179,52,43,.13); }
+    [data-theme="dark"] .chip.ok { color: #7fcf8a; }
+    [data-theme="dark"] .chip.warn { color: #f0bb5b; }
+    [data-theme="dark"] .chip.no { color: #f08a80; }
+
+    /* Persian-version toggle button */
+    .lang-btn{
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 auto 1.125rem 0;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0b5fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}
+
+.lang-btn:hover{
+  background:#fff;
+  transform: scale(1.03);
+}
+
+    @media (max-width:768px){
+      h1 { font-size: 1.4rem; }
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { line-height: 1.9;}
+    }
+  
+ h2{font-size:1.2rem;color:var(--blue);border-left:4px solid #0b5fff;padding-left:.75rem;margin-top:1.75rem;}
+
+    /* figure pairs and wide tables */
+    .glass-box .sh-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+    .glass-box .sh-pair figure { margin: 0; }
+    .glass-box .sh-pair img { width: 100%; height: auto; }
+    /* Keep the supplied clinical crops at their native size; shrink only on narrow screens. */
+    .glass-box figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+    .sh-scroll { overflow-x: auto; }
+    .sh-scroll img { min-width: 32rem; }
+    @media (max-width:420px){ .glass-box .sh-pair { grid-template-columns: 1fr; } }
+
+
+    /* permission chips (مجاز / با محدودیت / استفاده نکن) */
+    .chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: .05rem .55rem; border-radius: 999px; line-height: 1.7; white-space: nowrap; margin-inline-start: .25rem; }
+    .chip.ok { color: #1f7a3a; background: rgba(47,122,60,.14); }
+    .chip.warn { color: #9a6200; background: rgba(214,150,20,.16); }
+    .chip.no { color: #b3342b; background: rgba(179,52,43,.13); }
+    [data-theme="dark"] .chip.ok { color: #7fcf8a; }
+    [data-theme="dark"] .chip.warn { color: #f0bb5b; }
+    [data-theme="dark"] .chip.no { color: #f08a80; }
+
+    /* English-version toggle button */
+    .lang-btn{
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 0.375rem;
+      margin: 0 auto 1.125rem 0;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #0b5fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .lang-btn:hover{
+      background:#fff;
+      transform: scale(1.03);
+    }
+
+    @media (max-width:768px){
+      .glass-box { padding: 1.25rem 1.375rem;}
+      p { line-height: 1.9;}
+    }
+  </style>
+
+  <meta name="theme-color" content="#0b5fff">
+
+  <!-- Share Hub Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://dentcast.org/sharehub/en/share-61.html",
+      "url": "https://dentcast.org/sharehub/en/share-61.html",
+      "name": "Recording Implant Position in the Digital Full Arch: Which Method Is More Accurate?",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://dentcast.org/#website"
+      },
+      "about": {
+        "@id": "https://dentcast.org/sharehub/en/share-61.html#creativework"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://dentcast.org/sharehub/en/share-61.html#creativework",
+      "name": "Recording Implant Position in the Digital Full Arch: Which Method Is More Accurate?",
+      "headline": "Recording Implant Position in the Digital Full Arch: Which Method Is More Accurate?",
+      "description": "How accurate are vertical scan bodies, splints and scan aids, horizontal gauges, and intraoral and extraoral photogrammetry for recording full-arch implant positions, and how should an accuracy figure be read; based on an educational post by Dr. Jonathan Ng.",
+      "inLanguage": "en",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Dr. Foad Shahabian"
+        }
+      ],
+      "creator": [
+        {
+          "@type": "Person",
+          "name": "Dr. Foad Shahabian"
+        }
+      ],
+      "publisher": {
+        "@id": "https://dentcast.org/#org-dentcast"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://dentcast.org/sharehub/en/share-61.html"
+      },
+      "datePublished": "2026-11-26",
+      "dateModified": "2026-11-26",
+      "genre": "Dental Education",
+      "keywords": [
+        "digital recording of full-arch implant position",
+        "precision and trueness",
+        "linear trueness and Euclidean distance",
+        "angular trueness and the 0.4 degree limit",
+        "CMM and laboratory scanner reference",
+        "stitching error along the arch",
+        "vertical scan bodies and manufacturing tolerance",
+        "splinting scan bodies and scan aids",
+        "calibrated and non-calibrated horizontal gauges",
+        "intraoral and extraoral photogrammetry"
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "DentCast",
+      "item": "https://dentcast.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Share Hub",
+      "item": "https://dentcast.org/sharehub/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Recording Implant Position in the Digital Full Arch: Which Method Is More Accurate? | Share Hub – DentCast",
+      "item": "https://dentcast.org/sharehub/en/share-61.html"
+    }
+  ]
+}
+</script>
+  <script>/* PWA: park beforeinstallprompt for the deferred /dc-nav.js (window.__dcBip) */addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__dcBip=e;});</script>
+</head>
+
+<body>
+
+<!-- ── TOP BAR ── -->
+<header class="dc-topbar">
+  <div class="dc-topbar-actions">
+    <a href="/" aria-label="DentCast Homepage" style="display:flex;align-items:center;margin-left:0.5rem;flex-shrink:0;">
+      <img src="/logo-v2.png" alt="DentCast" width="38" height="38" style="display:block;object-fit:contain;">
+    </a>
+    <button class="dc-topbar-btn" id="btn-toolbar-toggle" aria-label="Tools" aria-expanded="false"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="dc-topbar-btn" id="btn-radar-topbar" aria-label="Radar"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 12 7-7"/><path d="M12 12h.01"/></svg></button>
+    <button class="dc-topbar-btn dcOpenSearch" aria-label="Search"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  </div>
+  <div class="dc-topbar-brand">
+    <div class="dc-topbar-brand-name">DentCast</div>
+    <span class="dc-topbar-brand-sub">Dr. Foad Shahabian</span>
+  </div>
+</header>
+
+<!-- ── TOOLBAR DRAWER ── -->
+<div id="dcToolbarDrawer" class="dc-toolbar-drawer" aria-hidden="true">
+  <div class="dc-toolbar-drawer-inner">
+    <span class="dc-toolbar-drawer-label">Tools</span>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-pwa">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10 18h4"/><path d="M12 7v6"/><path d="m9.5 10.5 2.5 2.5 2.5-2.5"/></svg></span><span class="dc-drawer-tool-txt">Install</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-consult">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span class="dc-drawer-tool-txt">Contact</span>
+    </button>
+    <button class="dc-drawer-tool-seg" type="button" id="tool-about">
+      <span class="dc-drawer-tool-ico"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M12 3l1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span><span class="dc-drawer-tool-txt">About</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── RADAR OVERLAY ── -->
+<div id="dcRadarOverlay" class="radar-overlay" aria-hidden="true">
+  <div class="radar-overlay-header">
+    <button id="dcCloseRadarOverlay" class="radar-close-btn">&times;</button>
+    <div class="radar-header-title">رادار دنت‌کست (جایگزین گوگل)</div>
+  </div>
+  <div class="radar-overlay-body">
+    <div class="radar-search-box">
+      <input type="text" id="dcRadarInput" placeholder="نام سایت، زمینه فعالیت یا کلمه کلیدی..." autocomplete="off">
+    </div>
+    <div id="dcRadarResults" class="radar-results">
+      <div class="radar-initial-msg">برای جستجو در بین سایت‌های دندانپزشکی، تایپ کنید...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GLOBAL SEARCH ── -->
+<div class="dc-global-filter-box" id="dcGlobalBox">
+  <button class="dc-close-results"><svg class="dc-svg-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;vertical-align:-.15em;display:inline-block"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <h3 class="dc-global-filter-title">جستجوی سراسری دنت‌کست</h3>
+  <input id="dcSearch" class="dc-search-input" placeholder="جستجو در همهٔ بخش‌های دنت‌کست…">
+  <div class="dc-filter-list">
+    <button class="dc-filter-btn active" data-type="dentcast">دنت‌کست</button>
+    <button class="dc-filter-btn active" data-type="notecast">نوت‌کست</button>
+    <button class="dc-filter-btn active" data-type="clinical">نکات کلینیکی</button>
+    <button class="dc-filter-btn active" data-type="litecast">لایت‌کست</button>
+    <button class="dc-filter-btn active" data-type="photocast">فوتوکست</button>
+    <button class="dc-filter-btn active" data-type="dentcast_plus">ویدیوها</button>
+    <button class="dc-filter-btn active" data-type="dentai">مقالات</button>
+    <button class="dc-filter-btn active" data-type="promptologist">پرامپتولوژیست</button>
+  </div>
+  <div class="dc-results-box" id="dcResults"></div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<main class="article-content-wrap">
+<div class="sh-kicker">Share Hub</div>
+<h1>Recording Implant Position in the Digital Full Arch: Which Method Is More Accurate?</h1>
+<div class="glass-box">
+<a class="lang-btn" href="../share-61.html" rel="noopener">فارسی</a>
+<div class="sh-dialogue">
+<p>Recording implant positions in a digital full-arch reconstruction is not as simple as it may first appear. When the implants are far apart and the scanner has to travel from one side of the arch to the other, small scanning errors can add up, until the implant positions in the digital file differ from their real positions.</p>
+<p>This is not only about which scanner you choose. The type of scan body, how the scan bodies are connected to each other, the marker design, the scanning technique and even the quality of the reference used to evaluate accuracy all play a part in the final result.</p>
+<p>Several methods have been introduced for digitally recording implant positions in the full arch. In this article we look at how these methods differ, what the scientific evidence says about their performance, and what to pay attention to when choosing a system.</p>
+<h2><span data-dc-presentation>1. </span>Methods for digitally recording implant position</h2>
+<p>There are currently four main families for digitally recording implant positions in the full arch:</p>
+<ul><li>Vertical scan bodies: the usual scan bodies that are screwed onto the implant and scanned with an intraoral scanner.</li><li>Horizontal gauges: pieces that, instead of standing on the implant, are attached horizontally and fill the space between the implants.</li><li>Intraoral photogrammetry: markers with defined dots are attached to the implants, and the intraoral scanner records the implant positions from those dots.</li><li>Extraoral photogrammetry: the same job done with a dedicated camera placed outside the mouth.</li></ul>
+<figure><img src="/sharehub/share61-fig1.webp" alt="Four methods for recording implant position in the full arch" width="860" height="600" loading="lazy" decoding="async"></figure>
+<p>If we also take into account how these systems are designed and calibrated, they can be divided into six groups:</p>
+<ol><li>Ordinary vertical scan bodies, not connected to each other (non-splinting)</li><li>Splints or printed scan aids used without calibration</li><li>Non-calibrated horizontal gauges</li><li>Calibrated horizontal gauges</li><li>Intraoral photogrammetry with calibrated markers</li><li>Extraoral photogrammetry using a camera or dedicated systems</li></ol>
+<figure><img src="/sharehub/share61-fig2.webp" alt="Six methods for digitally recording implant position" width="860" height="540" loading="lazy" decoding="async"></figure>
+<p>A scan aid is an auxiliary piece placed between the scan bodies so that the scanner also has something to scan in the gaps between implants. Calibrated means that the dimensions of each piece are measured individually after manufacture, and the software has those real dimensions.</p>
+<p>What these methods have in common is creating hard, relatively immobile landmarks so that the software can record the implant positions with more confidence.</p>
+<p>But why do we need these different methods at all?</p>
+<p>An intraoral scanner does not capture the whole arch at once. It takes the image piece by piece, and the software joins the pieces together. We call this stitching.</p>
+<p>The main problem of a digital full-arch scan can be summed up in three factors: stitching error along the arch (cross stitching), movement and deformation of the soft tissue, and the lack of stable hard-tissue landmarks. The newer methods try to reduce the effect of these problems through better scan-body design and by creating a mechanical connection between the scan bodies.</p>
+<h2><span data-dc-presentation>2. </span>Before comparing methods, we need to know how accuracy is measured</h2>
+<p>In papers on digital scanning, two terms come up again and again: precision and trueness. The two concepts are related, but they do not measure the same thing.</p>
+<p>Suppose we have scanned one model 100 times with one scanner.</p>
+<p>Precision, or repeatability, shows how similar these 100 scans are to each other. Here the scans are compared with each other, and how close they are to the original model does not matter.</p>
+<p>Trueness shows how close the scans are to the real model.</p>
+<figure><img src="/sharehub/share61-fig3.webp" alt="Precision and trueness on four targets" width="860" height="315" loading="lazy" decoding="async"></figure>
+<p>So a scanner may produce almost the same result in each of the 100 scans, while all of those results are off from the original model. Such a scanner has good precision but low trueness.</p>
+<p>The reverse can also happen: the scans are widely scattered, but their average is close to the original model.</p>
+<figure><img src="/sharehub/share61-fig4.webp" alt="A precise but wrong scanner versus a scattered scanner with a correct average" width="860" height="404" loading="lazy" decoding="async"></figure>
+<p>Accuracy, or overall correctness, needs both properties: adequate repeatability and closeness to the true value.</p>
+<p><strong>Practical point:</strong> Precision means repeatability and trueness means being correct. When a figure is given as a scanner's accuracy, it should be clear which one is meant, and it is better to ask for both figures.</p>
+<h2><span data-dc-presentation>3. </span>When we say the scan error is 36 microns, what exactly are we talking about?</h2>
+<p>One common way of assessing trueness in the full arch is to measure the distances between implants, known as linear trueness.</p>
+<p>For this we first have a reference model (master model) in which the real distance between the implants is known. The model is scanned several times and the corresponding distances are measured in the digital files. Each distance is then compared with its real value on the master model.</p>
+<p>For example, in a model with six implants, 15 pairwise distances can be measured. The difference of each of these distances from the real value is calculated, and the differences are averaged.</p>
+<figure><img src="/sharehub/share61-fig5.webp" alt="Euclidean distances between six implants" width="860" height="412" loading="lazy" decoding="async"></figure>
+<p>Each straight line between two implants is a Euclidean distance. So linear trueness in this method shows the mean measurement error of these distances.</p>
+<p>But there is one important point: this average does not mean that the position of every implant has at most this much error.</p>
+<p>To make this clearer, let us take five distances from the first implant in a hypothetical example:</p>
+<table><thead><tr><th>Distance</th><th>On the model</th><th>On the scan</th><th>Error</th></tr></thead><tbody><tr><td>1 to 2</td><td>15.04 mm</td><td>15.06 mm</td><td>20 µm</td></tr><tr><td>1 to 3</td><td>23.41 mm</td><td>23.38 mm</td><td>30 µm</td></tr><tr><td>1 to 4</td><td>46.53 mm</td><td>46.57 mm</td><td>40 µm</td></tr><tr><td>1 to 5</td><td>47.28 mm</td><td>47.24 mm</td><td>40 µm</td></tr><tr><td>1 to 6</td><td>49.00 mm</td><td>49.05 mm</td><td>50 µm</td></tr><tr><td>Sum of errors</td><td></td><td></td><td>180 µm</td></tr><tr><td>Mean error</td><td></td><td></td><td>36 µm</td></tr></tbody></table>
+<p>These numbers are only for explaining the concept and are not taken from a real study.</p>
+<p>As we can see, the mean error is 36 microns, but one of the distances is off by 50 microns.</p>
+<p>So when we read in a paper that the linear trueness of a system is 36 microns, we should not assume that all implants were recorded within exactly 36 microns.</p>
+<p>This number:</p>
+<ul><li>is not the maximum deviation.</li><li>is not the cumulative error of the whole arch.</li><li>does not count as a clinical tolerance limit.</li><li>does not specify the direction and amount of displacement of each implant individually.</li></ul>
+<p>In fact, an average can hide some of the larger errors. That is why it is better to look at the spread of the results and the largest deviation as well as the mean.</p>
+<div role="note" class="dc-box dc-box-tip"><p><strong>Practical point:</strong> The mean linear trueness is never the worst error you will see in practice.</p></div>
+<h2><span data-dc-presentation>4. </span>How much does angular error, or angular trueness, matter?</h2>
+<p>The distance between implants is not the only thing that matters; the implant axes must also be recorded correctly in the digital file. Angular trueness shows how far the axis recorded for an implant deviates in angle from its real axis.</p>
+<p>In many studies 0.4 degrees is presented as the acceptable value, but this number did not come from a clinical study. In 2014 Andriessen assumed that an implant can move 50 microns laterally in bone, and calculated the angle that this displacement would cause.</p>
+<figure><img src="/sharehub/share61-fig6.webp" alt="Calculating the 0.4 degree limit for angular trueness" width="910" height="403" loading="lazy" decoding="async"></figure>
+<p><strong>Practical point:</strong> 0.4 degrees is a calculated limit, not a proven safety limit. The best current systems average about 0.2 degrees of error, and ordinary scan bodies about 0.5 degrees.</p>
+<p>References: Andriessen, J Prosthet Dent 2014; Revilla-León and Prasad, J Prosthet Dent 2026 (three reviews).</p>
+<h2><span data-dc-presentation>5. </span>Against what reference was a system's accuracy measured?</h2>
+<p>When we are told that a system deviates by 20 microns, an important question remains: compared with what reference was this number obtained? Because the reference itself also has error.</p>
+<p>In laboratory studies the model is measured with a CMM or a laboratory scanner. A CMM is an industrial measuring machine whose probe touches the part point by point, and its error is in the range of a few microns. But these machines cannot be taken into the mouth; for this reason clinical studies use extraoral photogrammetry as the reference, which is less certain.</p>
+<figure><img src="/sharehub/share61-fig7.webp" alt="Accuracy of measurement references" width="940" height="353" loading="lazy" decoding="async"></figure>
+<p><strong>Practical point:</strong> Always read an accuracy figure together with its reference. A figure obtained against a CMM or a laboratory scanner is more reliable, and a figure measured against another intraoral scanner should be interpreted with caution.</p>
+<p>References: Revilla-León, J Prosthet Dent 2021, 2025 and 2026; Spagopoulos, Dent J 2023; Pozzi, J Dent 2022; Ma 2021.</p>
+<h2><span data-dc-presentation>6. </span>Why does scan error increase along a full arch?</h2>
+<p>As we said, the scanner takes the image piece by piece and the software joins the pieces together. Teeth have enough grooves and ridges to match these pieces, but an edentulous ridge and the palate are uniform, and soft-tissue movement, saliva and blood make the job harder. If one piece is matched wrongly, that error is carried into all the following pieces.</p>
+<p>In repeated scans of one mandible with a TRIOS 3 scanner, the difference between scans near the first implant was about 30 microns, and at the eighth implant it reached 204 microns (Orejas-Perez 2022).</p>
+<figure><img src="/sharehub/share61-fig8.webp" alt="Error increasing along the arch in a full-arch scan, Orejas-Perez 2022" width="860" height="370" loading="lazy" decoding="async"></figure>
+<p><strong>Practical point:</strong> Error accumulates along the scan path, and the largest error is seen at the far end of the arch.</p>
+<p>Reference: Orejas-Perez, Int J Environ Res Public Health 2022.</p>
+<h2><span data-dc-presentation>7. </span>Why is recording ordinary vertical scan bodies difficult?</h2>
+<p>To fully record a tall, thin scan body, you have to scan it from the top, from one side and then from the other side. Each change of scanner angle makes matching the frames harder, whereas the best scans are taken at a constant angle with a smooth motion.</p>
+<figure><img src="/sharehub/share61-fig9.webp" alt="Three scanning angles for a vertical scan body" width="840" height="218" loading="lazy" decoding="async"></figure>
+<p>The second problem has to do with the scan body itself. The software does not see the implant itself; it finds the scan body in the scan, fits the 3D file of that same scan body from the digital library onto it, and obtains the implant position this way. But because of manufacturing tolerance, the piece in our hand is not exactly the same as the library file (Lerner 2021).</p>
+<p><strong>Practical point:</strong> An ordinary vertical scan body is both harder to scan and not a perfect copy of its library file. In a review of 100 studies, its mean deviation was 113 microns (Revilla-León 2026).</p>
+<p>References: Lerner, Int J Prosthodont 2021; Revilla-León, J Prosthet Dent 2026.</p>
+<h2><span data-dc-presentation>8. </span>Why do we connect the scan bodies to each other?</h2>
+<p>When there is only soft tissue between several scan bodies, the scanner has no hard, stable landmark for joining the frames. As we said, this can make the stitching process slip.</p>
+<p>The idea of splinting scan bodies is simple: instead of the scanner having to join the frames via soft tissue, we place a hard, rigid structure between the scan bodies so that along the arch there is a defined, stable geometry to scan.</p>
+<figure><img src="/sharehub/share61-fig10.webp" alt="Ordinary scan bodies versus connected scan bodies" width="860" height="346" loading="lazy" decoding="async"></figure>
+<p>Splints, printed scan aids and horizontal gauges are all different forms of this same idea.</p>
+<p>In one study, splinting reduced the error at the two posterior implants, where the largest deviation was seen (Pozzi 2022).</p>
+<p><strong>Practical point:</strong> Soft tissue gives the scanner nothing solid for stitching. By connecting the scan bodies, the scanner scans a hard, rigid geometry instead.</p>
+<p>References: Azevedo, Clin Oral Implants Res 2025; Pozzi, J Dent 2022.</p>
+<h2><span data-dc-presentation>9. </span>Do all splints and scan aids perform the same?</h2>
+<p>No. All these systems aim to reduce stitching error, but their design makes a large difference to the result. Some products did well; for example, OptiSplint reduced deviation compared with scanning without it, and Scan Ladder and Apollo SmartFlag got the best results in a comparison of several scan aids. But in another study, an ordinary vertical scan body did better than two scan aids with horizontal arms (PoLo and M6).</p>
+<figure><img src="/sharehub/share61-fig11.webp" alt="Ordinary scan body, Straumann EXACT and ioConnect on one model, Blivajs 2026" width="624" height="188" loading="lazy" decoding="async"><figcaption>Image: three set-ups on one model; (A) ordinary scan bodies, (B) Straumann EXACT and (C) ioConnect. (Blivajs 2026; image from the Dent J 2026 article under a CC BY 4.0 licence)</figcaption></figure>
+<div role="note" class="dc-box dc-box-tip"><p><strong>Practical point:</strong> Being a splint does not guarantee that a system is more accurate than an ordinary scan body. Before choosing, you have to look at the study on that same product.</p></div>
+<p>References: Blivajs 2026; Lin 2026; Laureti 2025; Prott 2025; Nuytens 2024.</p>
+<h2><span data-dc-presentation>10. </span>Horizontal gauges: another way to reduce stitching error</h2>
+<figure><img src="/sharehub/share61-fig12.webp" alt="Calibrated (Nexus IOS) and non-calibrated (ioConnect) horizontal gauges" width="860" height="218" loading="lazy" decoding="async"></figure>
+<p>Instead of a tall vertical scan body, horizontal gauges give the scanner horizontal, more accessible surfaces and also fill the space between the implants. These gauges come in two kinds: in the calibrated kind, such as Nexus IOS, each piece is measured individually after manufacture and each kit has its own library file, while the non-calibrated kind, such as ioConnect, uses a standard file.</p>
+<p>In independent laboratory studies, Nexus was better than an ordinary scan body in some scanner and operator combinations and no different in the rest (Azevedo 2025; Laureti 2025). The non-calibrated ioConnect gauge also reduced linear deviation with all five scanners in a laboratory study: 26 to 58 microns versus 70 to 195 microns with ordinary scan bodies (Revilla-León 2026). So changing the scan-body design can help even without individual calibration, but not all designs behave the same, and the result of one product cannot be generalised to the others.</p>
+<p><strong>Practical point:</strong> In most comparisons a horizontal gauge was better than or level with an ordinary scan body, and technique mattered more than the scanner itself.</p>
+<p>References: Azevedo 2025; Laureti 2025; Revilla-León, J Prosthet Dent 2026.</p>
+<h2><span data-dc-presentation>11. </span>How close has intraoral photogrammetry come to extraoral systems?</h2>
+<p>Extraoral photogrammetry is one of the accurate methods for recording implant positions in full-arch reconstructions. Its main advantage is that, instead of relying on stitching successive frames over soft tissue, it records the position of dedicated markers with an imaging system. The software calculates the position of each implant from where the dots on these markers are.</p>
+<p>Intraoral photogrammetry systems do the same with the intraoral scanner set-up and calibrated markers.</p>
+<figure><img src="/sharehub/share61-fig13.webp" alt="Comparison of five photogrammetry systems on one model" width="860" height="433" loading="lazy" decoding="async"></figure>
+<p>In a laboratory study of five systems, intraoral photogrammetry was about 10 microns away from the best extraoral cameras. In patients too, its deviation, both in distance and in angle, was about half that of ordinary scan bodies (Eldabe 2026).</p>
+<p><strong>Practical point:</strong> In accuracy, intraoral photogrammetry has come close to extraoral systems, and it is done with the same intraoral scanner set-up.</p>
+<p>References: Revilla-León, J Prosthet Dent 2025 and 2026; Eldabe, J Prosthet Dent 2026. Image of the models from Revilla-León 2025.</p>
+<h2><span data-dc-presentation>12. </span>Can photogrammetry be done with a phone or a tablet?</h2>
+<p>One of the new directions in this field is using a phone or tablet instead of a dedicated photogrammetry camera. In this method, coded scan bodies are attached to the implants and an app records their positions with the device's own camera.</p>
+<figure><img src="/sharehub/share61-fig14.webp" alt="Photogrammetry with a tablet and coded scan bodies" width="590" height="160" loading="lazy" decoding="async"></figure>
+<p>In 9 studies, most of them laboratory studies, the deviation of this method was reported as 17 to 88 microns, depending on the marker type, the device and the measurement reference; that is, close to dedicated cameras in some studies and weaker than them in others. These results are promising, and this method can greatly reduce the cost of the equipment needed for photogrammetry, but most of the available evidence is still from the laboratory.</p>
+<p>References: Revilla-León 2026 (three studies); Santamaría-Laorden 2025; Omar 2026; Alghraisi 2026.</p>
+<h2><span data-dc-presentation>13. </span>Comparing methods for recording implant position in the full arch</h2>
+<p>Now that we have reviewed the different methods, we can put the results side by side in one table.</p>
+<p>The figures below show the mean deviation reported against a laboratory reference. A lower value means less deviation.</p>
+<table><thead><tr><th>Method</th><th>Linear deviation</th><th>Angular deviation</th><th>Type of evidence</th></tr></thead><tbody><tr><td>Ordinary vertical scan body</td><td>113 microns</td><td>0.48 degrees</td><td>review of 100 studies</td></tr><tr><td>Splint or printed scan aid</td><td>all within 150 microns</td><td></td><td>review of 12 studies</td></tr><tr><td>Non-calibrated horizontal gauge</td><td>26 to 58 microns (ioConnect); 45 to 100 microns (SmartFlag)</td><td>0.25 to 0.39 degrees</td><td>laboratory, each with five scanners</td></tr><tr><td>Calibrated horizontal gauge</td><td>10 to 40 microns (surface measure)</td><td></td><td>two independent laboratory studies</td></tr><tr><td>Intraoral photogrammetry</td><td>36 microns</td><td>0.23 degrees</td><td>review</td></tr><tr><td>Extraoral photogrammetry</td><td>26 microns</td><td>0.21 degrees</td><td>review</td></tr><tr><td>Phone or tablet photogrammetry</td><td>17 to 88 microns</td><td>0.07 to 0.54 degrees</td><td>9 studies, mostly laboratory</td></tr></tbody></table>
+<p>But these numbers are not the whole story. Operator technique is one of the most important factors, and the quality of the milling process matters just as much.</p>
+<p>Recording the implant positions is only the first part of the workflow; so we should not rely only on the published figures.</p>
+<p>References: Revilla-León and Prasad 2025 to 2026 (reviews); Azevedo and Laureti 2025; 9 phone and tablet studies.</p>
+<h2><span data-dc-presentation>14. </span>In the end, which system should we choose?</h2>
+<p>The answer to this question is not the same for everyone and depends on several factors:</p>
+<ul><li>The cost of the system against how often we use it</li><li>The skill the system requires</li><li>Ease of use</li><li>Accuracy</li><li>Laboratory support</li><li>The laboratory's milling process</li></ul>
+<p>The last item is usually overlooked more than the others. Even the most accurate camera cannot make up for the error of a low-quality milling machine.</p>
+<p><a href="https://www.instagram.com/dr.jonathanng/" target="_blank" rel="noopener noreferrer">Dr. Jonathan Ng</a>, the author of the original post, records the implant positions in every full arch with intraoral photogrammetry. The reasons he gives are that the performance of this method is very close to extraoral photogrammetry, his results are consistent, his assistant team is familiar with the intraoral scanner set-up, and access to the posterior regions is easy.</p>
+<figure><img src="/sharehub/share61-fig15.webp" alt="Shining 3D Elite intraoral photogrammetry scan bodies after surgery" width="555" height="370" loading="lazy" decoding="async"><figcaption>Image: Shining 3D Elite intraoral photogrammetry scan bodies seated after surgery.</figcaption></figure>
+<p>This article is based on an educational post by <a href="https://www.instagram.com/dr.jonathanng/" target="_blank" rel="noopener noreferrer">Dr. Jonathan Ng</a>.</p>
+<div class="author">Author: <a href="https://www.instagram.com/dr.jonathanng/" target="_blank" rel="noopener noreferrer">Dr. Jonathan Ng</a></div>
+</div>
+<div class="author-note">Author: <a href="https://dentcast.org/about.html#person-fouad-shahabian">Dr. Foad Shahabian</a></div>
+</div>
+</main>
+
+
+<script src="/global-search.js?v=30" defer></script>
+<script src="/dc-nav.js?v=364" defer></script>
+</body>
+</html>
