@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "metanotes/meta-24"
 - Status: in_progress
-- Next canonical step: "C.4.7"
+- Next canonical step: "C.8"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -18,7 +18,24 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
     "category": "meta",
     "content_id": "metanotes/meta-24",
     "context": {
-      "approvals": [],
+      "approvals": [
+        {
+          "decision": "\u0633\u06cc\u0633\u062a\u0645\u200c\u0633\u0627\u0632\u06cc \u0628\u0647\u200c\u062c\u0627\u06cc \u0628\u0631\u0646\u0627\u0645\u0647\u200c\u0631\u06cc\u0632\u06cc \u0631\u0648\u0632\u0627\u0646\u0647",
+          "evidence": [
+            "founder-supplied, copied verbatim (Hard Rule 16)"
+          ],
+          "scope": "title",
+          "status": "confirmed"
+        },
+        {
+          "decision": "\u0686\u0637\u0648\u0631 \u0628\u0627 \u06cc\u06a9 \u0628\u0627\u0631 \u062a\u0635\u0645\u06cc\u0645 \u06af\u0631\u0641\u062a\u0646 \u0628\u0631\u0627\u06cc \u0647\u0631 \u06a9\u0627\u0631 \u062a\u06a9\u0631\u0627\u0631\u06cc\u060c \u0628\u062f\u0648\u0646 \u0628\u0631\u0646\u0627\u0645\u0647\u200c\u0631\u06cc\u0632\u06cc \u0631\u0648\u0632\u0627\u0646\u0647\u060c \u06a9\u0644\u06cc\u0646\u06cc\u06a9\u060c \u0633\u0627\u06cc\u062a\u060c \u067e\u0627\u062f\u06a9\u0633\u062a\u060c \u0648\u0631\u0632\u0634 \u0648 \u06a9\u062a\u0627\u0628 \u062e\u0648\u0627\u0646\u062f\u0646 \u06a9\u0646\u0627\u0631 \u0647\u0645 \u067e\u06cc\u0634 \u0645\u06cc\u200c\u0631\u0648\u0646\u062f.",
+          "evidence": [
+            "agent proposal under standing acceptance (Hard Rule 14)"
+          ],
+          "scope": "caption",
+          "status": "confirmed"
+        }
+      ],
       "decisions": [
         {
           "attached_paper": "no",
@@ -38,6 +55,102 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "answer": "\u0628\u062f\u0648\u0646 \u0633\u0624\u0627\u0644",
           "kind": "exam_questions_m2",
           "source": "founder chat 2026-11-26: \u00ab\u0633\u0648\u0627\u0644 \u0647\u0645 \u0646\u062f\u0627\u0631\u0647 \u0646\u0645\u06cc\u200c\u062e\u0648\u0627\u062f \u0628\u0631\u0627\u06cc \u0633\u0648\u0627\u0644 \u0635\u0628\u0631 \u06a9\u0646\u06cc\u00bb"
+        },
+        {
+          "evidence": [
+            "first paragraph of metanotes/meta-24.html"
+          ],
+          "kind": "first_cut_lead_provenance_v1",
+          "origin": "author_original",
+          "source_ref": "the founder's own first paragraph (intake text)"
+        },
+        {
+          "english": {
+            "evidence": [
+              "metanotes/en/meta-24.html on disk, toggles wired"
+            ],
+            "path": "metanotes/en/meta-24.html",
+            "status": "ready"
+          },
+          "evidence": [
+            "built by `close` from the ledger evidence of the steps through C.5.6-b"
+          ],
+          "kind": "second_cut_editorial_lock_v1",
+          "scopes": [
+            {
+              "evidence": [
+                "C.4.13: DES COMMENTARY: block des_commentary_block.py (FULL_TEXT, section metanotes/); isolated run cd mktemp -d && claude -p --system-prompt-file .dentcast/des-v3.7-knowledge.md (sha256 709be964\u2026e2e9) --tools \"\" --model opus, model reported claude-opus-5-5; des_repair usable, 0 repairs, 0 unverified; verify_publish --des-text ok; score 19 band E (item 4 from metanotes/index.html declaration, note present); fidelity [null] basket 1; stored plus/des-scores.json (+59 lines)"
+              ],
+              "scope": "scientific",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.14 skipped: ordinary post, not a Challenge (Question 4.9)"
+              ],
+              "scope": "challenge",
+              "status": "not_applicable"
+            },
+            {
+              "evidence": [
+                "C.2.4: pillar practice-infrastructure / subtopic llm-tools (closest semantic match; page is about personal work systems incl. AI notebook, AI tidying dictation and AI-run publish queue; competing: no clinical pillar fits; llm-tools = \u0627\u0628\u0632\u0627\u0631\u0647\u0627 \u0648 \u0641\u0636\u0627\u06cc \u06a9\u0627\u0631). Standing acceptance"
+              ],
+              "scope": "taxonomy",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.4.7: 4.7: related_cap --glossary-room listed 48 terms with room (bonding/ceramics/cements/caries); none conceptually related to a personal work-systems piece; 0 back-links (documented empty result)",
+                "C.4.8: 4.8: candidates = 110 glossary terms + brain entries with pages; body uses \u00ab\u0647\u0648\u0634 \u0645\u0635\u0646\u0648\u0639\u06cc\u00bb, \u00ab\u062f\u0641\u062a\u0631 \u06cc\u0627\u062f\u062f\u0627\u0634\u062a\u00bb, \u00ab\u0635\u0641 \u0627\u0646\u062a\u0634\u0627\u0631\u00bb only in everyday/personal sense; promptologist pages (prompt6-2 workspace, prompt-append2-3 AI+GitHub) borderline as inline targets -> not inserted; 0 inline links",
+                "C.4.9: 4.9: section 2 capsules, free 3; added /dentai/promptologist/prompt-append2-3.html \u00ab\u0647\u0648\u0634 \u0645\u0635\u0646\u0648\u0639\u06cc \u0631\u0627 \u0628\u0647 \u06af\u06cc\u062a\u200c\u0647\u0627\u0628 \u0648\u0635\u0644 \u06a9\u0646\u06cc\u0645\u00bb (strong: the AI-run publishing the page describes in section \u06f5); skipped borderline prompt6-5 (breaking big work into pieces), prompt6-2 (workspace/RAG), prompt1-5; now 3/5"
+              ],
+              "scope": "links",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5.0: 5.0: questions in batch .dentcast/hashtag-batches/meta-24-system-building.json; final #\u0627\u06cc\u062f\u0647 #\u0633\u06cc\u0633\u062a\u0645_\u0633\u0627\u0632\u06cc #\u0627\u06cc\u062c\u0646\u062a_\u0647\u0648\u0634_\u0645\u0635\u0646\u0648\u0639\u06cc #\u0647\u0648\u0634_\u0645\u0635\u0646\u0648\u0639\u06cc #\u062f\u06a9\u062a\u0631_\u0634\u0647\u0627\u0628\u06cc\u0627\u0646; minted #\u0633\u06cc\u0633\u062a\u0645_\u0633\u0627\u0632\u06cc (decision-level; aliases 4 slots; bridge: no library equivalent); reused 4; composition gate passed; --reach REACHABLE (#\u0633\u06cc\u0633\u062a\u0645_\u0633\u0627\u0632\u06cc #1, #\u0627\u06cc\u062c\u0646\u062a_\u0647\u0648\u0634_\u0645\u0635\u0646\u0648\u0639\u06cc #2); resolving sentences per tag in batch note/report"
+              ],
+              "scope": "hashtags",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5: brain: meta-24 appended at array end (+29 lines), key set/order identical to meta-23; hashtags = 5.0 list; pillar practice-infrastructure/llm-tools; hashtag_ref --sync run after brain write, --check OK, build_cabinet_papers --check OK"
+              ],
+              "scope": "content_record",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "C.5.6: 5.6: pathway_place: all candidates ASK (ai-dentistry 62 ASK, others \u22646); personal work-systems meta piece -> not placed (conservative default), reported; plus/pathways.json unchanged. 4.12-\u0628: founder answered \u00ab\u0628\u062f\u0648\u0646 \u0633\u0624\u0627\u0644\u00bb and page in no full pathway -> 0 rows written",
+                "C.5.6-b: 5.6-\u0628: no full pathway joined -> \u0628\u0627\u0646\u062f\u0644: \u0628\u062f\u0648\u0646 \u06a9\u0627\u0646\u062f\u06cc\u062f"
+              ],
+              "scope": "pathways",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "first Pulse line of index.html links /metanotes/meta-24.html"
+              ],
+              "scope": "pulse",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "metanotes/en/meta-24.html on disk"
+              ],
+              "scope": "english",
+              "status": "resolved"
+            },
+            {
+              "evidence": [
+                "pending_questions empty; founder answers recorded as decisions"
+              ],
+              "scope": "author_approvals",
+              "status": "resolved"
+            }
+          ]
         }
       ],
       "delivery": [],
@@ -319,16 +432,135 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "module": "08-des-fidelity.md",
         "reason": null,
         "status": "completed"
+      },
+      {
+        "evidence": [
+          "4.7: related_cap --glossary-room listed 48 terms with room (bonding/ceramics/cements/caries); none conceptually related to a personal work-systems piece; 0 back-links (documented empty result)"
+        ],
+        "id": "C.4.7",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.7-b",
+        "module": "05-semantic-linking.md",
+        "reason": "glossary-publish-only back-link step",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "4.8: candidates = 110 glossary terms + brain entries with pages; body uses \u00ab\u0647\u0648\u0634 \u0645\u0635\u0646\u0648\u0639\u06cc\u00bb, \u00ab\u062f\u0641\u062a\u0631 \u06cc\u0627\u062f\u062f\u0627\u0634\u062a\u00bb, \u00ab\u0635\u0641 \u0627\u0646\u062a\u0634\u0627\u0631\u00bb only in everyday/personal sense; promptologist pages (prompt6-2 workspace, prompt-append2-3 AI+GitHub) borderline as inline targets -> not inserted; 0 inline links"
+        ],
+        "id": "C.4.8",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "4.9: section 2 capsules, free 3; added /dentai/promptologist/prompt-append2-3.html \u00ab\u0647\u0648\u0634 \u0645\u0635\u0646\u0648\u0639\u06cc \u0631\u0627 \u0628\u0647 \u06af\u06cc\u062a\u200c\u0647\u0627\u0628 \u0648\u0635\u0644 \u06a9\u0646\u06cc\u0645\u00bb (strong: the AI-run publishing the page describes in section \u06f5); skipped borderline prompt6-5 (breaking big work into pieces), prompt6-2 (workspace/RAG), prompt1-5; now 3/5"
+        ],
+        "id": "C.4.9",
+        "module": "05-semantic-linking.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "4.11: 6 authored DefinedTerms #flashcards-c1..c6 (\u0633\u06cc\u0633\u062a\u0645\u200c\u0633\u0627\u0632\u06cc\u060c Implementation Intention\u060c Habit\u060c Situational Self-Control\u060c Cognitive Offloading\u060c \u062c\u062f\u0627 \u06a9\u0631\u062f\u0646 \u0632\u0645\u0627\u0646 \u062a\u0648\u0644\u06cc\u062f \u0627\u0632 \u0627\u0646\u062a\u0634\u0627\u0631) in plus/faq-corpus.json byContent[metanotes/meta-24]; no near-copy of FAQ answers"
+        ],
+        "id": "C.4.11",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "4.12: FAQPage 5 yes/no questions, standalone (no deixis), each answer opens with \u0628\u0644\u0647/\u062e\u06cc\u0631 -> 5 binary quiz items; 4.12-\u0628: written at 5.6 (founder: \u0628\u062f\u0648\u0646 \u0633\u0624\u0627\u0644)"
+        ],
+        "id": "C.4.12",
+        "module": "07-flashcards-and-quiz.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [],
+        "id": "C.4.14",
+        "module": "09-challenge.md",
+        "reason": "ordinary post, not a Challenge (Question 4.9)",
+        "status": "skipped"
+      },
+      {
+        "evidence": [
+          "5.0: questions in batch .dentcast/hashtag-batches/meta-24-system-building.json; final #\u0627\u06cc\u062f\u0647 #\u0633\u06cc\u0633\u062a\u0645_\u0633\u0627\u0632\u06cc #\u0627\u06cc\u062c\u0646\u062a_\u0647\u0648\u0634_\u0645\u0635\u0646\u0648\u0639\u06cc #\u0647\u0648\u0634_\u0645\u0635\u0646\u0648\u0639\u06cc #\u062f\u06a9\u062a\u0631_\u0634\u0647\u0627\u0628\u06cc\u0627\u0646; minted #\u0633\u06cc\u0633\u062a\u0645_\u0633\u0627\u0632\u06cc (decision-level; aliases 4 slots; bridge: no library equivalent); reused 4; composition gate passed; --reach REACHABLE (#\u0633\u06cc\u0633\u062a\u0645_\u0633\u0627\u0632\u06cc #1, #\u0627\u06cc\u062c\u0646\u062a_\u0647\u0648\u0634_\u0645\u0635\u0646\u0648\u0639\u06cc #2); resolving sentences per tag in batch note/report"
+        ],
+        "id": "C.5.0",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "brain: meta-24 appended at array end (+29 lines), key set/order identical to meta-23; hashtags = 5.0 list; pillar practice-infrastructure/llm-tools; hashtag_ref --sync run after brain write, --check OK, build_cabinet_papers --check OK"
+        ],
+        "id": "C.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "5.5: pillar practice-infrastructure in PILLARS, subtopic llm-tools exists; capsule /pillar/practice-infrastructure/ matches"
+        ],
+        "id": "C.5.5",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "5.6: pathway_place: all candidates ASK (ai-dentistry 62 ASK, others \u22646); personal work-systems meta piece -> not placed (conservative default), reported; plus/pathways.json unchanged. 4.12-\u0628: founder answered \u00ab\u0628\u062f\u0648\u0646 \u0633\u0624\u0627\u0644\u00bb and page in no full pathway -> 0 rows written"
+        ],
+        "id": "C.5.6",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "5.6-\u0628: no full pathway joined -> \u0628\u0627\u0646\u062f\u0644: \u0628\u062f\u0648\u0646 \u06a9\u0627\u0646\u062f\u06cc\u062f"
+        ],
+        "id": "C.5.6-b",
+        "module": "10-brain-and-pathways.md",
+        "reason": null,
+        "status": "completed"
+      },
+      {
+        "evidence": [
+          "C.6: Pulse line, English mirror and the ten-scope lock (built by close)"
+        ],
+        "id": "C.6",
+        "module": "11-build-and-version.md",
+        "reason": null,
+        "status": "completed"
       }
     ],
     "target_paths": [
+      ".dentcast/hashtag-batches/meta-24-system-building.json",
+      "dentcast-brain.json",
+      "dentcast-hashtag-reference.json",
+      "index.html",
+      "metanotes/en/meta-24.html",
       "metanotes/index.html",
       "metanotes/meta-24.html",
-      "plus/des-scores.json"
+      "plus/des-scores.json",
+      "plus/faq-corpus.json"
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: metanotes/index.html, metanotes/meta-24.html, plus/des-scores.json"
+    "note": "Index-only refresh after staging delivery paths: .dentcast/hashtag-batches/meta-24-system-building.json, dentcast-brain.json, dentcast-hashtag-reference.json, index.html, metanotes/en/meta-24.html, metanotes/index.html, metanotes/meta-24.html, plus/des-scores.json, plus/faq-corpus.json"
   },
   "schema": "publish-handoff-v3"
 }

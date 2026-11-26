@@ -45822,6 +45822,108 @@
           ]
         }
       ]
+    },
+    "metanotes/meta-24": {
+      "faqPages": [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/metanotes/meta-24.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا برای اجرای منظم کارهای تکراری، برنامه‌ریزی دقیق روزانه لازم است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر. می‌توان برای هر کار تکراری یک بار تصمیم گرفت که چقدر، چه وقت و چطور انجام شود و از آن به بعد فقط همان تصمیم را اجرا کرد؛ به این کار سیستم‌سازی می‌گویند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا تبدیل هدف به یک جمله‌ی «اگر، آن‌گاه» (Implementation Intention) شروع کار را آسان‌تر می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله. وقتی برنامه به شکل «اگر جمعه صبح شد، آن‌گاه پادکست ضبط می‌کنم» باشد، با رسیدن آن موقعیت کار بلافاصله شروع می‌شود، حتی اگر ذهن درگیر چیز دیگری باشد، چون تصمیم قبلاً گرفته شده است."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا ثابت بودن زمان و مکان یک کار تکراری به خودکار شدن آن کمک می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله. کاری که بارها در همان زمان و همان مکان تکرار شود به عادت (Habit) تبدیل می‌شود و خودِ موقعیت آن را راه می‌اندازد؛ هر چه موقعیت ثابت‌تر باشد، کار زودتر خودکار می‌شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا تکیه بر اراده در لحظه‌ی شروع، راه اصلی شروع کردن یک کار سخت است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر. در Situational Self-Control شرایط از قبل طوری چیده می‌شود که کار درست راحت‌ترین کار باشد، مثل آماده کردن وسایل از شب قبل؛ آن‌وقت کلنجار لحظه‌ی شروع اصلاً پیش نمی‌آید."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا سپردن کارهای ذهنی به یک ابزار (Cognitive Offloading) جا را برای کارهای مهم‌تر باز می‌کند؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله. ذهن ظرفیت محدودی دارد و هر چیزی که بتوان به یک ابزار سپرد، مثل یادآور گوشی برای قرار ملاقات، جا را برای کارهای مهم‌تر باز می‌کند."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/metanotes/meta-24.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/metanotes/meta-24.html#flashcards-c1",
+              "name": "سیستم‌سازی در کارهای تکراری",
+              "description": "یک بار تصمیم گرفتن درباره‌ی مقدار، زمان و روش انجام یک کار تکراری و پس از آن فقط اجرای همان تصمیم، به‌جای تصمیم‌گیری دوباره در هر روز.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/metanotes/meta-24.html#flashcards-c2",
+              "name": "Implementation Intention",
+              "description": "برنامه‌ای به شکل «اگر موقعیت X پیش آمد، آن‌گاه کار Y را انجام می‌دهم» که کار را به یک موقعیت مشخص گره می‌زند تا با رسیدن آن موقعیت، بدون فکر دوباره شروع شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/metanotes/meta-24.html#flashcards-c3",
+              "name": "عادت (Habit) در روان‌شناسی",
+              "description": "رفتاری که بر اثر تکرار در زمان و مکان ثابت، با خودِ موقعیت راه می‌افتد و دیگر به یادآوری هدف نیازی ندارد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/metanotes/meta-24.html#flashcards-c4",
+              "name": "Situational Self-Control",
+              "description": "چیدن شرایط از پیش، طوری که کار درست راحت‌ترین گزینه باشد، به‌جای تکیه بر اراده در لحظه‌ی شروع.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/metanotes/meta-24.html#flashcards-c5",
+              "name": "Cognitive Offloading",
+              "description": "سپردن بخشی از کار ذهن، مثل به خاطر سپردن یا مرتب کردن متن، به یک ابزار بیرونی تا ظرفیت محدود ذهن برای کارهای مهم‌تر آزاد بماند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/metanotes/meta-24.html#flashcards-c6",
+              "name": "جدا کردن زمان تولید از زمان انتشار",
+              "description": "آماده کردن مطلب هر وقت فرصت هست و نگه داشتن آن در یک صف تا زمان مناسب انتشار، تا انتشار به وقت آزاد همان روز وابسته نباشد.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }

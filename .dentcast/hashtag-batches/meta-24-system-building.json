@@ -1,0 +1,14 @@
+{
+ "type": "meta",
+ "note": "metanotes/meta-24 — «سیستم‌سازی به‌جای برنامه‌ریزی روزانه». Questions a dentist would type (Step 1): (1) چطور هم مطب برم هم محتوا تولید کنم بدون اینکه هر روز برنامه بریزم؟ (2) برنامه ریزی روزانه بهتره یا سیستم ساختن برای کارای تکراری؟ (3) هوش مصنوعی چطور می‌تونه کارای انتشار مطلب رو خودش انجام بده؟ (4) چطور عادت کتاب خوندن بسازم با وجود مطب شلوغ؟ REUSED: #ایده (series), #هوش_مصنوعی (umbrella), #ایجنت_هوش_مصنوعی (1 page), #دکتر_شهابیان (his own method). NEWLY MINTED: #سیستم_سازی — --simulate «سیستم سازی کارها» reaches only #سیستم_پایدار (clinical, unrelated: asymptomatic stable occlusion) on the shared word «سیستم»; «برنامه ریزی روزانه» reaches nothing. Gate (a): no concept covers it. Gate (b): decision-level — it names the decision the page resolves (plan every day vs decide once per recurring task and only execute); no second page resolves it yet, so no articles row. Domain web: the non-clinical practice-infrastructure family (same pillar). Alias checklist: English «system building»; Finglish «سیستم بیلدینگ»; misspelling «سیستم‌ سازی»; colloquial «سیستم ساختن برای کارها». Bridge decision: no library equivalent (searched catalog tags/titles for habit, productivity, implementation intention, self-control, cognitive offloading, time management: only dental digital-workflow papers).",
+ "concepts": [
+  {
+   "tag": "#سیستم_سازی",
+   "domain": "web",
+   "definition": "یک بار تصمیم گرفتن درباره‌ی مقدار، زمان و روش انجام هر کار تکراری و از آن به بعد فقط اجرای همان تصمیم، به‌جای برنامه‌ریزی دوباره در هر روز.",
+   "use_when": "مطلب درباره‌ی سازمان دادن کارهای تکراری دندانپزشک (مطب، تولید محتوا، مطالعه) با قاعده‌های ازپیش‌تعیین‌شده باشد، نه با برنامه‌ریزی روزانه.",
+   "aliases": ["system building", "سیستم بیلدینگ", "سیستم‌ سازی", "سیستم ساختن برای کارها"]
+  }
+ ],
+ "articles": {}
+}
