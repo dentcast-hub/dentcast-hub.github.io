@@ -66636,24 +66636,6 @@
             "source_quote": "",
             "source_ref": null,
             "note": "byline fragment"
-          },
-          {
-            "id": "u224",
-            "claim_quote": "نویسنده: Dr.",
-            "verdict": "NOT_A_CLAIM",
-            "change_kind": null,
-            "source_quote": "",
-            "source_ref": null,
-            "note": "byline fragment"
-          },
-          {
-            "id": "u225",
-            "claim_quote": "Jonathan Ng",
-            "verdict": "NOT_A_CLAIM",
-            "change_kind": null,
-            "source_quote": "",
-            "source_ref": null,
-            "note": "byline fragment"
           }
         ],
         "counts": {
@@ -66663,7 +66645,7 @@
           "not_in_source": 8,
           "not_assessable": 0,
           "author_view": 0,
-          "not_a_claim": 68
+          "not_a_claim": 66
         },
         "assessable": 149,
         "fidelity_score": 100,
