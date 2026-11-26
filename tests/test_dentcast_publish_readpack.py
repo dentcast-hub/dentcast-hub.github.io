@@ -509,3 +509,23 @@ class LiveQueuePrepTests(unittest.TestCase):
                 self.assertIn('**Opening paragraph before any list', text)
                 self.assertIn('To check a page you just built:', text)
                 self.assertEqual('#### Part 1 — File the paper' in text, paper == 'yes')
+
+    def test_live_queue_prep_cuts_like_a_publication(self):
+        """The queue pack takes the publication's intake facts and cuts 02, 08 and 10 the same way."""
+        root = SCRIPT.parents[1]
+        _, full = rp.build_queue_prep(root, attached_paper='yes')
+        text, m = rp.build_queue_prep(root, attached_paper='yes', category='notecast',
+                                      des_basket='research', isolated_call='yes', sources='one')
+        self.assertLess(m['selected_bytes_total'], full['selected_bytes_total'])
+        self.assertEqual(m['classification']['des_basket'], 'research')
+        self.assertNotIn('#### Conditional path for founder-supplied results', text)
+        self.assertNotIn('**Paper-only fast path (text-less) detail.**', text)
+        self.assertNotIn('**Insight `keywords`.**', text)
+        self.assertIn('#### Part 2b — Run the FIDELITY call', text)
+        self.assertIn('#### Part 4 — Store the record', text)
+        com, _ = rp.build_queue_prep(root, attached_paper='no', category='metanote',
+                                     des_basket='commentary', isolated_call='yes')
+        self.assertNotIn('#### Part 2b — Run the FIDELITY call', com)
+        self.assertIn('#### Part 2 — Run the prompt file', com)
+        with self.assertRaises(rp.UnsafeSelection):
+            rp.build_queue_prep(root, attached_paper='no', category='litecast')

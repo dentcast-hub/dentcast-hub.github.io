@@ -108,7 +108,7 @@ class ManifestDraftTests(unittest.TestCase):
 
     def test_a_paper_item_can_draft_its_manifest_before_it_is_frozen(self):
         # 2026-11-06: the catalog freeze was asserted in draft(), but SHA256SUMS is written by
-        # queue_stamp AFTER 12-انتشار.json is drafted (publish-queue.md step 7), so every paper
+        # queue_stamp AFTER 12-انتشار.json is drafted (publish-queue.md step 5), so every paper
         # item's own draft was refused CATALOG_NOT_FROZEN. The freeze binds a frozen item only.
         with tempfile.TemporaryDirectory() as t:
             item = make_item(t, extra={"04-منبع/کاتالوگ.json": json.dumps([{"title": "x"}])})

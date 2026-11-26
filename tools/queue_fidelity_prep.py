@@ -28,7 +28,7 @@ blocks, the checker outputs) is a full copy of the site, so it is not left
 behind: a new run for the same item replaces that item's older work directories
 (a rerun means a fresh draft), and `--cleanup` removes the named work
 directories, or with `--all` every one under the temp dir, once the FIDELITY
-record is stored in 05-DES-Fidelity/ (publish-queue.md, step 5). Removal is
+record is stored in 05-DES-Fidelity/ (publish-queue.md, step 3). Removal is
 Python's shutil.rmtree on a directory that passes is_work_dir(): the
 `dentcast-fidelity-prep-` prefix, this tool's prep.json, the throwaway marker
 in checkout/, no `.git`, no symlink. No shell `rm` is run, and `--cleanup`

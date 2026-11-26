@@ -303,7 +303,7 @@ def draft(item):
     cat_rel = "04-منبع/کاتالوگ.json"
     if (item / cat_rel).exists():
         # The freeze is asserted only once the item claims to be frozen. SHA256SUMS is written by
-        # queue_stamp.py, which runs AFTER 12-انتشار.json is drafted (publish-queue.md step 7), so
+        # queue_stamp.py, which runs AFTER 12-انتشار.json is drafted (publish-queue.md step 5), so
         # demanding it here refused every paper item's own draft (2026-11-06).
         sums = item / "SHA256SUMS"
         if sums.exists() and not re.search(r"\s(?:\./)?%s\s*$" % re.escape(cat_rel),
