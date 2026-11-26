@@ -4,7 +4,7 @@ Semantic progress and evidence; current Git facts are read from Git.
 - Schema: publish-handoff-v3
 - Content: "sharehub/share-61"
 - Status: in_progress
-- Next canonical step: "C.4.13"
+- Next canonical step: "C.4.7"
 - Blocker: null
 
 The structured record preserves semantic decisions, approvals, scientific results, step outcomes and external actions.
@@ -325,11 +325,13 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
         "status": "skipped"
       },
       {
-        "evidence": [],
+        "evidence": [
+          "basket 2, one DOI-less source S1 (founder-supplied English slide transcript, FULL_TEXT). SOURCE: isolated claude -p, model claude-opus-5-5, system prompt .dentcast/des-v3.7-knowledge.md sha256 709be964\u2026; RESEARCH DIAGNOSTIC narrative-review row, des_score 4 band E provisional false; des_repair usable, 0 repairs, 0 UNVERIFIED; record_guard ok; Part 3(6) one interpretation_fa sentence narrowed. FIDELITY: one sweeper run (same model, isolated), 225 units, 149 MATCHES / 0 ALTERED / 0 REVERSED / 8 NOT_IN_SOURCE / 68 NOT_A_CLAIM, score 100 HIGH; --vote, --accept exit 0; no judge; single source \u2192 no orphan sweep. Stored plus/des-scores.json sharehub/share-61"
+        ],
         "id": "C.4.13",
         "module": "08-des-fidelity.md",
         "reason": null,
-        "status": "started"
+        "status": "completed"
       }
     ],
     "target_paths": [

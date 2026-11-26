@@ -64624,7 +64624,2055 @@
       }
     ],
     "fidelity": [
-      null
+      {
+        "des_version": "3.7",
+        "mode": "FIDELITY",
+        "scope": "SOURCE",
+        "text_basis": "FULL_TEXT",
+        "claims": [
+          {
+            "id": "u1",
+            "claim_quote": "ثبت موقعیت ایمپلنت در فول‌آرچ دیجیتال؛ کدام روش دقیق‌تر است؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u2",
+            "claim_quote": "English",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "link label"
+          },
+          {
+            "id": "u3",
+            "claim_quote": "ثبت موقعیت ایمپلنت‌ها در یک بازسازی فول‌آرچ دیجیتال، برخلاف چیزی که ممکن است در نگاه اول به نظر برسد، کار ساده‌ای نیست.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "I read all 18 slides. No sentence says that full-arch implant capture in general is difficult. Slide 10 says this only about vertical scan bodies."
+          },
+          {
+            "id": "u4",
+            "claim_quote": "وقتی فاصله ایمپلنت‌ها زیاد می‌شود و اسکنر باید از یک سمت قوس به سمت دیگر حرکت کند، خطاهای کوچک اسکن می‌توانند روی هم جمع شوند و در نهایت باعث شوند موقعیت ایمپلنت‌ها در فایل دیجیتال با موقعیت واقعی آن‌ها تفاوت داشته باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "One wrong stitch is carried into every frame after it, so the error grows towards the far side.",
+            "source_ref": null,
+            "note": "I read «می‌توانند» as «can» (a capability), not as a hedge."
+          },
+          {
+            "id": "u5",
+            "claim_quote": "این موضوع فقط به انتخاب اسکنر مربوط نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Mostly yes, and the technique mattered more than the scanner.",
+            "source_ref": null,
+            "note": "«فقط» is used in a negated sense here, so I judged the proposition."
+          },
+          {
+            "id": "u6",
+            "claim_quote": "نوع اسکن بادی، نحوه اتصال آن‌ها به یکدیگر، طراحی مارکرها، تکنیک اسکن و حتی کیفیت مرجعی که برای ارزیابی دقت استفاده می‌شود، همگی در نتیجه نهایی نقش دارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Across nine studies, the apps ranged from 17 to 88 µm depending on markers, device and reference, and the T-Marker's angles beat the gauges' in all three comparisons.",
+            "source_ref": null,
+            "note": "This is one claim with a list of subjects. The other factors are supported on slides 8, 11, 12 and 14."
+          },
+          {
+            "id": "u7",
+            "claim_quote": "برای ثبت دیجیتال موقعیت ایمپلنت‌ها در فول‌آرچ، روش‌های مختلفی معرفی شده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "SIX WAYS TO CAPTURE IMPLANTS",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u8",
+            "claim_quote": "در این مطلب می‌خواهیم ببینیم این روش‌ها چه تفاوتی با هم دارند، شواهد علمی درباره عملکرد آن‌ها چه می‌گویند و هنگام انتخاب یک سیستم باید به چه نکاتی توجه کنیم.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "states the page's own scope"
+          },
+          {
+            "id": "u9",
+            "claim_quote": "روش‌های ثبت دیجیتال موقعیت ایمپلنت",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u10",
+            "claim_quote": "در حال حاضر چهار خانواده اصلی برای ثبت دیجیتال موقعیت ایمپلنت‌ها در فول‌آرچ وجود دارد:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost: ends in a colon and announces the units that follow"
+          },
+          {
+            "id": "u11",
+            "claim_quote": "اسکن بادی‌های عمودی (Vertical scan bodies): همان اسکن بادی‌های رایج که روی ایمپلنت بسته می‌شوند و با اسکنر داخل دهانی اسکن می‌شوند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "I checked slides 1, 2, 8 and 10. The source never describes what a vertical scan body is or how it is attached."
+          },
+          {
+            "id": "u12",
+            "claim_quote": "گیج‌های افقی (Horizontal gauges): قطعه‌هایی که به‌جای ایستادن روی ایمپلنت، به‌صورت افقی بسته می‌شوند و فضای بین ایمپلنت‌ها را پر می‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Splints, scan aids and horizontal gauges are all versions of this idea (Azevedo 2025).",
+            "source_ref": null,
+            "note": "Only the 'fills the space between implants' half is addressed. The 'attached horizontally instead of standing' half is silent."
+          },
+          {
+            "id": "u13",
+            "claim_quote": "فتوگرامتری داخل دهانی (Intraoral photogrammetry): روی ایمپلنت‌ها مارکرهایی با نقطه‌های مشخص بسته می‌شود و اسکنر داخل دهانی موقعیت ایمپلنت‌ها را از روی همین نقطه‌ها ثبت می‌کند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "I checked slides 2, 15 and 18. The marker-dot mechanism is never described. The source only gives the label 'calibrated markers'."
+          },
+          {
+            "id": "u14",
+            "claim_quote": "فتوگرامتری خارج دهانی (Extraoral photogrammetry): همان کار با یک دوربین مخصوص انجام می‌شود که بیرون از دهان قرار دارد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "I checked slides 2, 8 and 15. The source never states how extraoral photogrammetry works."
+          },
+          {
+            "id": "u15",
+            "claim_quote": "البته اگر نحوه طراحی و کالیبراسیون این سیستم‌ها را هم در نظر بگیریم، می‌توان آن‌ها را به شش گروه تقسیم کرد:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost: ends in a colon and introduces the list"
+          },
+          {
+            "id": "u16",
+            "claim_quote": "اسکن بادی‌های عمودی معمولی، بدون اتصال به یکدیگر (Non-splinting)",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Vertical scan bodies (sub-label: non-splinting)",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u17",
+            "claim_quote": "اسپلینت‌ها یا Scan aidهای پرینت‌شده که به‌صورت غیرکالیبره استفاده می‌شوند",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Splint or printed aid (sub-label: non-calibrated splinting)",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u18",
+            "claim_quote": "گیج‌های افقی غیرکالیبره",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Horizontal gauges, not calibrated (sub-label: non-calibrated splinting)",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u19",
+            "claim_quote": "گیج‌های افقی کالیبره‌شده",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Horizontal gauges, calibrated (sub-label: calibrated scan bodies)",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u20",
+            "claim_quote": "فتوگرامتری داخل دهانی با مارکرهای کالیبره",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Intraoral photogrammetry (sub-label: calibrated markers)",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u21",
+            "claim_quote": "فتوگرامتری خارج دهانی با استفاده از دوربین یا سیستم‌های اختصاصی",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Extraoral photogrammetry (sub-label: camera or tablet)",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u22",
+            "claim_quote": "Scan aid قطعه‌ای کمکی است که بین اسکن بادی‌ها قرار می‌گیرد تا اسکنر در فاصله بین ایمپلنت‌ها هم چیزی برای اسکن داشته باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Splints, scan aids and horizontal gauges are all versions of this idea (Azevedo 2025).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u23",
+            "claim_quote": "منظور از کالیبره هم این است که ابعاد هر قطعه بعد از ساخت جداگانه اندازه‌گیری شده و نرم‌افزار همان ابعاد واقعی را در اختیار دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Calibrated gauges are each measured on a CMM after they are made, so your kit gets its own library file.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u24",
+            "claim_quote": "وجه مشترک این روش‌ها ایجاد لندمارک‌های سخت و نسبتاً بدون حرکت است تا نرم‌افزار بتواند موقعیت ایمپلنت‌ها را با اطمینان بیشتری ثبت کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Every method chases the same thing: rigid landmarks the software can lock onto.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u25",
+            "claim_quote": "اما چرا اصلاً به این روش‌های مختلف نیاز داریم؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "question with no answer in it"
+          },
+          {
+            "id": "u26",
+            "claim_quote": "اسکنر داخل دهانی کل قوس را یک‌جا ثبت نمی‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A scanner stitches small 3D frames together like a jigsaw.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u27",
+            "claim_quote": "تصویر را تکه‌تکه می‌گیرد و نرم‌افزار این تکه‌ها را به هم می‌چسباند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A scanner stitches small 3D frames together like a jigsaw.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u28",
+            "claim_quote": "به این کار Stitching می‌گوییم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A scanner stitches small 3D frames together like a jigsaw.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u29",
+            "claim_quote": "مشکل اصلی اسکن دیجیتال فول‌آرچ را می‌توان در سه عامل خلاصه کرد: خطای استیچینگ در طول قوس (Cross stitching)، حرکت و تغییر شکل بافت نرم و کمبود لندمارک‌های پایدار بافت سخت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The drawback of digital acquisition of implants is cross stitching, soft tissue and lack of hard tissue references/landmarks",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u30",
+            "claim_quote": "روش‌های جدید تلاش می‌کنند با طراحی بهتر اسکن بادی‌ها و ایجاد ارتباط مکانیکی بین آن‌ها، اثر این مشکلات را کاهش دهند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Linking the scan bodies means you are scanning something hard and rigid rather than soft tissue, all the way round.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u31",
+            "claim_quote": "قبل از مقایسه روش‌ها، باید بدانیم دقت را چطور اندازه می‌گیریم",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u32",
+            "claim_quote": "در مقاله‌های مربوط به اسکن دیجیتال، دو اصطلاح Precision و Trueness مرتب تکرار می‌شوند.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "describes how the profession talks about the topic"
+          },
+          {
+            "id": "u33",
+            "claim_quote": "این دو مفهوم به هم مرتبط‌اند، اما یک چیز را اندازه نمی‌گیرند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Precision is how close those 100 scans are to each other.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u34",
+            "claim_quote": "فرض کنید یک مدل را ۱۰۰ بار با یک اسکنر اسکن کرده‌ایم.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "hypothetical set-up, no assertion"
+          },
+          {
+            "id": "u35",
+            "claim_quote": "Precision یا تکرارپذیری نشان می‌دهد این ۱۰۰ اسکن چقدر به یکدیگر شبیه هستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Precision is how close those 100 scans are to each other.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u36",
+            "claim_quote": "در اینجا اسکن‌ها با هم مقایسه می‌شوند و کاری نداریم که چقدر به مدل اصلی نزدیک‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Not to the model, just amongst themselves.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u37",
+            "claim_quote": "Trueness یا درستی نشان می‌دهد اسکن‌ها چقدر به مدل واقعی نزدیک هستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Trueness is how close those 100 scans are to the model itself.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u38",
+            "claim_quote": "بنابراین ممکن است یک اسکنر در هر ۱۰۰ بار اسکن تقریباً نتیجه یکسانی تولید کند، اما همه این نتایج از مدل اصلی فاصله داشته باشند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A scanner can repeat the same wrong answer every time, and a scattered one can still look true on average.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u39",
+            "claim_quote": "چنین اسکنری Precision خوبی دارد، ولی Trueness آن پایین است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Precise, not true",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u40",
+            "claim_quote": "حالت عکس هم ممکن است اتفاق بیفتد: اسکن‌ها پراکندگی زیادی داشته باشند، اما میانگین آن‌ها به مدل اصلی نزدیک باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Trueness is usually reported as an average, so a scanner whose scans scatter all over the place can still average out to the right answer.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u41",
+            "claim_quote": "Accuracy یا صحت کلی به هر دو ویژگی نیاز دارد؛ یعنی هم تکرارپذیری مناسب و هم نزدیکی به مقدار واقعی.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Accuracy needs both.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u42",
+            "claim_quote": "نکته عملی: Precision یعنی تکرارپذیری و Trueness یعنی درست بودن.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Precision means repeatable.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u43",
+            "claim_quote": "وقتی عددی به‌عنوان دقت یک اسکنر گفته می‌شود، باید مشخص باشد کدام‌یک منظور است و بهتر است هر دو عدد را بخواهیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Always ask for both numbers.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u44",
+            "claim_quote": "وقتی می‌گوییم خطای اسکن ۳۶ میکرون است، دقیقاً از چه چیزی حرف می‌زنیم؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u45",
+            "claim_quote": "یکی از روش‌های رایج ارزیابی Trueness در فول‌آرچ، اندازه‌گیری فاصله بین ایمپلنت‌هاست که با عنوان Linear trueness شناخته می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "That average is the linear trueness.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u46",
+            "claim_quote": "برای این کار ابتدا یک مدل مرجع (مستر مدل) داریم که فاصله واقعی بین ایمپلنت‌های آن مشخص است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Start with a master model where the true distance between every pair of implants is known.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u47",
+            "claim_quote": "مدل چندین بار اسکن می‌شود و فاصله‌های متناظر در فایل‌های دیجیتال اندازه‌گیری می‌شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Scan it, say, 20 times, and measure the same distances on every scan.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u48",
+            "claim_quote": "سپس هر فاصله با مقدار واقعی آن در مستر مدل مقایسه می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Compare each with the master and average the differences.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u49",
+            "claim_quote": "برای مثال، در مدلی با شش ایمپلنت، ۱۵ فاصله دوتایی قابل اندازه‌گیری است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Six implants give 15 distances.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u50",
+            "claim_quote": "اختلاف هرکدام از این فاصله‌ها با مقدار واقعی محاسبه می‌شود و از آن‌ها میانگین گرفته می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Compare each with the master and average the differences.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u51",
+            "claim_quote": "هر خط مستقیم بین دو ایمپلنت، یک فاصله اقلیدسی (Euclidean distance) است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Each straight line between two implants is a Euclidean distance.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u52",
+            "claim_quote": "بنابراین Linear trueness در این روش، میانگین خطای اندازه‌گیری این فاصله‌ها را نشان می‌دهد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "That average is the linear trueness.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u53",
+            "claim_quote": "اما یک نکته مهم وجود دارد: این میانگین به معنی آن نیست که موقعیت تمام ایمپلنت‌ها حداکثر به همین اندازه خطا دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It is not the maximum deviation, not cumulative and not a limit.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u54",
+            "claim_quote": "برای روشن‌تر شدن موضوع، پنج فاصله از ایمپلنت اول را در یک مثال فرضی در نظر بگیریم:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost: ends in a colon"
+          },
+          {
+            "id": "u55",
+            "claim_quote": "فاصله",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table header cell"
+          },
+          {
+            "id": "u56",
+            "claim_quote": "روی مدل",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table header cell"
+          },
+          {
+            "id": "u57",
+            "claim_quote": "روی اسکن",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table header cell"
+          },
+          {
+            "id": "u58",
+            "claim_quote": "خطا",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table header cell"
+          },
+          {
+            "id": "u59",
+            "claim_quote": "۱ تا ۲",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table row label"
+          },
+          {
+            "id": "u60",
+            "claim_quote": "15.04 mm",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "15.04 mm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u61",
+            "claim_quote": "15.06 mm",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "15.06 mm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u62",
+            "claim_quote": "20 µm",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "20 µm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u63",
+            "claim_quote": "۱ تا ۳",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table row label"
+          },
+          {
+            "id": "u64",
+            "claim_quote": "23.41 mm",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "23.41 mm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u65",
+            "claim_quote": "23.38 mm",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "23.38 mm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u66",
+            "claim_quote": "30 µm",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "30 µm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u67",
+            "claim_quote": "۱ تا ۴",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table row label"
+          },
+          {
+            "id": "u68",
+            "claim_quote": "46.53 mm",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "46.53 mm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u69",
+            "claim_quote": "46.57 mm",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "46.57 mm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u70",
+            "claim_quote": "40 µm",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "40 µm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u71",
+            "claim_quote": "۱ تا ۵",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table row label"
+          },
+          {
+            "id": "u72",
+            "claim_quote": "47.28 mm",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "47.28 mm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u73",
+            "claim_quote": "47.24 mm",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "47.24 mm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u74",
+            "claim_quote": "40 µm",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "40 µm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u75",
+            "claim_quote": "۱ تا ۶",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table row label"
+          },
+          {
+            "id": "u76",
+            "claim_quote": "49.00 mm",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "49.00 mm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u77",
+            "claim_quote": "49.05 mm",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "49.05 mm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u78",
+            "claim_quote": "50 µm",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "50 µm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u79",
+            "claim_quote": "مجموع خطاها",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table row label"
+          },
+          {
+            "id": "u80",
+            "claim_quote": "180 µm",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "180 µm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u81",
+            "claim_quote": "میانگین خطا",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table row label"
+          },
+          {
+            "id": "u82",
+            "claim_quote": "36 µm",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "= 36 µm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u83",
+            "claim_quote": "این اعداد صرفاً برای توضیح مفهوم هستند و از یک مطالعه واقعی گرفته نشده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Illustrative example.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u84",
+            "claim_quote": "همان‌طور که می‌بینیم، میانگین خطا ۳۶ میکرون است، اما یکی از فاصله‌ها ۵۰ میکرون اختلاف دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The 1 to 6 distance was out by 50 µm.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u85",
+            "claim_quote": "بنابراین وقتی در یک مقاله می‌خوانیم Linear trueness یک سیستم ۳۶ میکرون است، نباید تصور کنیم همه ایمپلنت‌ها دقیقاً در محدوده ۳۶ میکرون ثبت شده‌اند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It is not the maximum deviation, not cumulative and not a limit.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u86",
+            "claim_quote": "این عدد:",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost: ends in a colon"
+          },
+          {
+            "id": "u87",
+            "claim_quote": "حداکثر انحراف نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It is not the maximum deviation, not cumulative and not a limit.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u88",
+            "claim_quote": "خطای تجمعی کل قوس نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It is not the maximum deviation, not cumulative and not a limit.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u89",
+            "claim_quote": "حد مجاز بالینی محسوب نمی‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It is not the maximum deviation, not cumulative and not a limit.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u90",
+            "claim_quote": "جهت و میزان جابه‌جایی هر ایمپلنت را به‌صورت جداگانه مشخص نمی‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It also can't tell you which implant is out, or in which direction.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u91",
+            "claim_quote": "در واقع، میانگین می‌تواند بخشی از خطاهای بزرگ‌تر را پنهان کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Some pairs will be better than the mean and some worse.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u92",
+            "claim_quote": "به همین دلیل بهتر است علاوه بر میانگین، پراکندگی نتایج و بیشترین انحراف هم بررسی شوند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "This is an inference conclusion. The source advises asking for precision and trueness, but never advises checking spread or maximum deviation (slides 3 to 6 read)."
+          },
+          {
+            "id": "u93",
+            "claim_quote": "نکته عملی: میانگین Linear trueness هیچ‌وقت بدترین خطایی نیست که در عمل دیده می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A mean linear trueness is never the worst error you will see.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u94",
+            "claim_quote": "خطای زاویه‌ای یا Angular trueness چقدر اهمیت دارد؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u95",
+            "claim_quote": "فقط فاصله بین ایمپلنت‌ها مهم نیست؛ محور ایمپلنت‌ها هم باید در فایل دیجیتال به‌درستی ثبت شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Angular trueness is the same idea for the implant axes: how far the scanned axes tilt from the true ones, in degrees.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u96",
+            "claim_quote": "Angular trueness نشان می‌دهد محور ثبت‌شده برای ایمپلنت چقدر با محور واقعی آن اختلاف زاویه دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Angular trueness is the same idea for the implant axes: how far the scanned axes tilt from the true ones, in degrees.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u97",
+            "claim_quote": "در بسیاری از مطالعات، ۰٫۴ درجه به‌عنوان مقدار قابل قبول مطرح شده است، اما این عدد از یک مطالعه بالینی به‌دست نیامده است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Most papers call 0.4 degrees acceptable.",
+            "source_ref": null,
+            "note": "The second half matches 'That number is mainly a calculation, rather than a clinical finding'."
+          },
+          {
+            "id": "u98",
+            "claim_quote": "Andriessen در سال ۲۰۱۴ فرض کرد که یک ایمپلنت می‌تواند در استخوان ۵۰ میکرون به‌صورت جانبی جابه‌جا شود و زاویه ناشی از این جابه‌جایی را محاسبه کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "That number is mainly a calculation, rather than a clinical finding: Andriessen 2014 assumed an implant can shift 50 µm sideways in bone and worked out the tilt that would cause.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u99",
+            "claim_quote": "نکته عملی: ۰٫۴ درجه یک حد محاسباتی است، نه یک حد ایمنی اثبات‌شده.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "That number is mainly a calculation, rather than a clinical finding: Andriessen 2014 assumed an implant can shift 50 µm sideways in bone and worked out the tilt that would cause.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u100",
+            "claim_quote": "بهترین سیستم‌های فعلی به‌طور میانگین حدود ۰٫۲ درجه و اسکن بادی‌های معمولی حدود ۰٫۵ درجه خطا دارند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The best systems now average about 0.2 degrees, plain scan bodies about 0.5.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u101",
+            "claim_quote": "منابع: Andriessen، J Prosthet Dent 2014؛ Revilla-León و Prasad، J Prosthet Dent 2026 (سه مرور).",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation line"
+          },
+          {
+            "id": "u102",
+            "claim_quote": "دقت یک سیستم را نسبت به چه مرجعی اندازه گرفته‌اند؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u103",
+            "claim_quote": "وقتی گفته می‌شود انحراف یک سیستم ۲۰ میکرون است، هنوز یک سؤال مهم باقی می‌ماند: این عدد در مقایسه با چه مرجعی به‌دست آمده است؟",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "When a rep tells you their scanner is 20 microns, ask the question deeper: what did you actually measure that against?",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u104",
+            "claim_quote": "چون خود مرجع هم خطا دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A number is only as good as its reference.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u105",
+            "claim_quote": "در مطالعات آزمایشگاهی، مدل را با CMM یا اسکنر لابراتواری اندازه می‌گیرند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "the cast is scanned on the bench",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u106",
+            "claim_quote": "CMM یک دستگاه اندازه‌گیری صنعتی است که پروب آن نقطه‌به‌نقطه قطعه را لمس می‌کند و خطای آن در حد چند میکرون است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "a stylus touches each implant",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u107",
+            "claim_quote": "اما این دستگاه‌ها را نمی‌توان داخل دهان برد؛ به همین دلیل مطالعات بالینی از فتوگرامتری خارج دهانی به‌عنوان مرجع استفاده می‌کنند که قطعیت کمتری دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "You can't fit a lab scanner in a mouth, so clinical studies have to use photogrammetry as their reference, which is less certain.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u108",
+            "claim_quote": "نکته عملی: عدد دقت را همیشه همراه با مرجع آن بخوانیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A number is only as good as its reference.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u109",
+            "claim_quote": "عددی که نسبت به CMM یا اسکنر لابراتواری به‌دست آمده قابل اعتمادتر است و عددی که نسبت به یک اسکنر داخل دهانی دیگر سنجیده شده، باید با احتیاط تفسیر شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Against a CMM or a lab scanner, trust it more.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u110",
+            "claim_quote": "منابع: Revilla-León، J Prosthet Dent 2021، 2025 و 2026؛ Spagopoulos، Dent J 2023؛ Pozzi، J Dent 2022؛ Ma 2021.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation line"
+          },
+          {
+            "id": "u111",
+            "claim_quote": "چرا خطای اسکن در طول قوس فول‌آرچ بیشتر می‌شود؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u112",
+            "claim_quote": "همان‌طور که گفتیم، اسکنر تصویر را تکه‌تکه می‌گیرد و نرم‌افزار این تکه‌ها را به هم می‌چسباند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A scanner stitches small 3D frames together like a jigsaw.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u113",
+            "claim_quote": "دندان‌ها شیار و برجستگی کافی برای تطبیق این تکه‌ها دارند، اما ریج بی‌دندان و کام یکنواخت‌اند و حرکت بافت نرم، بزاق و خون هم کار را دشوارتر می‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Teeth give it plenty to match; an edentulous ridge, palate and blood give it very little.",
+            "source_ref": null,
+            "note": "The source does not mention saliva (silent half)."
+          },
+          {
+            "id": "u114",
+            "claim_quote": "اگر یک تکه اشتباه تطبیق داده شود، این خطا به همه تکه‌های بعدی منتقل می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "One wrong stitch is carried into every frame after it, so the error grows towards the far side.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u115",
+            "claim_quote": "در اسکن‌های تکراری یک مندیبل با اسکنر TRIOS 3، اختلاف اسکن‌ها در نزدیکی ایمپلنت اول حدود ۳۰ میکرون بود و در ایمپلنت هشتم به ۲۰۴ میکرون رسید (Orejas-Perez 2022).",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Once the scan crossed the midline it rose to 82, 118 and 149 µm, and to 204 µm at the patient's eighth implant.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u116",
+            "claim_quote": "نکته عملی: خطا در طول مسیر اسکن روی هم جمع می‌شود و بیشترین خطا در انتهای دور قوس دیده می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Error builds up as you sweep, so it is worst at the far end of the arch.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u117",
+            "claim_quote": "منبع: Orejas-Perez، Int J Environ Res Public Health 2022.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation line"
+          },
+          {
+            "id": "u118",
+            "claim_quote": "چرا ثبت اسکن بادی‌های عمودی معمولی دشوار است؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u119",
+            "claim_quote": "برای ثبت کامل یک اسکن بادی بلند و باریک باید از بالا، یک سمت و سپس سمت دیگر آن اسکن کرد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "To capture a tall post you go over the top, then round one side, then round the other.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u120",
+            "claim_quote": "هر بار تغییر زاویه اسکنر، تطبیق فریم‌ها را دشوارتر می‌کند؛ درحالی‌که بهترین اسکن‌ها با زاویه ثابت و حرکت یکنواخت گرفته می‌شوند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Every change of angle adds stitching error.",
+            "source_ref": null,
+            "note": "The second half matches 'The best scans hold one angle and glide.'"
+          },
+          {
+            "id": "u121",
+            "claim_quote": "مشکل دوم به خود اسکن بادی مربوط می‌شود.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost: announces the topic stated in the next units"
+          },
+          {
+            "id": "u122",
+            "claim_quote": "نرم‌افزار خود ایمپلنت را نمی‌بیند؛ اسکن بادی را در اسکن پیدا می‌کند، فایل سه‌بعدی همان اسکن بادی را از کتابخانه دیجیتال روی آن منطبق می‌کند و از این راه موقعیت ایمپلنت را به دست می‌آورد.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "I read slides 10 and 13. The library-file matching mechanism is never described. The source only says the scan body differs from its library file."
+          },
+          {
+            "id": "u123",
+            "claim_quote": "اما قطعه‌ای که در دست ماست، به دلیل تلرانس ساخت، دقیقاً با فایل کتابخانه یکی نیست (Lerner 2021).",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "And the scan body in your hand isn't calibrated, it is not exactly its digital library file: six commercial brands all showed manufacturing tolerances, mostly in height (Lerner 2021).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u124",
+            "claim_quote": "نکته عملی: اسکن بادی عمودی معمولی هم اسکن سخت‌تری دارد و هم کپی کامل فایل کتابخانه‌اش نیست.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "A tall thin post makes you change angle at every implant, and the post itself is not a perfect copy of its library file.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u125",
+            "claim_quote": "در مرور ۱۰۰ مطالعه، میانگین انحراف آن ۱۱۳ میکرون بود (Revilla-León 2026).",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Across 100 studies, plain scan bodies averaged 113 µm and 0.48 degrees from the reference (Revilla-León 2026).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u126",
+            "claim_quote": "منابع: Lerner، Int J Prosthodont 2021؛ Revilla-León، J Prosthet Dent 2026.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation line"
+          },
+          {
+            "id": "u127",
+            "claim_quote": "چرا اسکن بادی‌ها را به هم متصل می‌کنیم؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u128",
+            "claim_quote": "وقتی بین چند اسکن بادی فقط بافت نرم وجود دارد، اسکنر لندمارک سخت و پایداری برای اتصال فریم‌ها در اختیار ندارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Between plain scan bodies there is only gum: smooth, with few features, and it moves.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u129",
+            "claim_quote": "همان‌طور که گفتیم، این موضوع می‌تواند باعث لغزش در فرایند Stitching شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "With little to match, stitches slip, and every slip carries on across the arch.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u130",
+            "claim_quote": "ایده اسپلینت کردن اسکن بادی‌ها ساده است: به‌جای اینکه اسکنر مجبور باشد فریم‌ها را از طریق بافت نرم به هم متصل کند، یک ساختار سخت و ریجید بین اسکن بادی‌ها قرار می‌دهیم تا در طول قوس، هندسه مشخص و پایداری برای اسکن وجود داشته باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Linking the scan bodies means you are scanning something hard and rigid rather than soft tissue, all the way round.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u131",
+            "claim_quote": "اسپلینت‌ها، Scan aidهای پرینت‌شده و گیج‌های افقی، همگی شکل‌های مختلفی از همین ایده هستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Splints, scan aids and horizontal gauges are all versions of this idea (Azevedo 2025).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u132",
+            "claim_quote": "در یک مطالعه، اسپلینت کردن خطا را در دو ایمپلنت خلفی، یعنی جایی که بیشترین انحراف دیده می‌شد، کاهش داد (Pozzi 2022).",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Splinting can cut the error at the two back implants, where it was worst: 142.7 to 96.6 µm at one, 0.61 to 0.49 degrees at the other (Pozzi 2022).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u133",
+            "claim_quote": "نکته عملی: بافت نرم چیز محکمی برای استیچینگ در اختیار اسکنر نمی‌گذارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Soft tissue gives the scanner nothing solid to stitch to.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u134",
+            "claim_quote": "با متصل کردن اسکن بادی‌ها، اسکنر به‌جای آن یک هندسه سخت و ریجید را اسکن می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Linking the scan bodies means you are scanning something hard and rigid rather than soft tissue, all the way round.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u135",
+            "claim_quote": "منابع: Azevedo، Clin Oral Implants Res 2025؛ Pozzi، J Dent 2022.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation line"
+          },
+          {
+            "id": "u136",
+            "claim_quote": "آیا همه اسپلینت‌ها و Scan aidها عملکرد یکسانی دارند؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u137",
+            "claim_quote": "خیر.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "No.",
+            "source_ref": null,
+            "note": "The pointing answer reads through to the heading question on slide 12."
+          },
+          {
+            "id": "u138",
+            "claim_quote": "هدف همه این سیستم‌ها کاهش خطای استیچینگ است، اما طراحی آن‌ها تفاوت زیادی در نتیجه ایجاد می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Some helped a lot; some did no better than a plain scan body.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u139",
+            "claim_quote": "بعضی محصولات نتیجه خوبی داشته‌اند؛ مثلاً OptiSplint انحراف را نسبت به اسکن بدون آن کم کرد و Scan Ladder و Apollo SmartFlag در مقایسه چند Scan aid بهترین نتیجه‌ها را گرفتند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Scan Ladder (textured bars) | 18.4 µm, the best of four aids on one model (Lin 2026)",
+            "source_ref": null,
+            "note": "SmartFlag was second of four in Lin 2026. OptiSplint scored 30.9 vs 56 µm (Prott 2025)."
+          },
+          {
+            "id": "u140",
+            "claim_quote": "اما در یک مطالعه دیگر، اسکن بادی عمودی معمولی از دو Scan aid با بازوهای افقی (PoLo و M6) نتیجه بهتری داشت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "PoLo and M6 (horizontal arms) | a plain vertical scan body did better (Laureti 2025)",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u141",
+            "claim_quote": "تصویر: سه وضعیت روی یک مدل؛ (A) اسکن بادی‌های معمولی، (B) Straumann EXACT و (C) ioConnect.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "figure caption"
+          },
+          {
+            "id": "u142",
+            "claim_quote": "(Blivajs 2026؛ تصویر از مقاله Dent J 2026 با مجوز CC BY 4.0)",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "figure credit"
+          },
+          {
+            "id": "u143",
+            "claim_quote": "نکته عملی: اسپلینت بودن یک سیستم تضمین نمی‌کند که از اسکن بادی معمولی دقیق‌تر باشد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Some helped a lot; some did no better than a plain scan body.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u144",
+            "claim_quote": "قبل از انتخاب، باید مطالعه مربوط به همان محصول را دید.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Check the study for your product.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u145",
+            "claim_quote": "منابع: Blivajs 2026؛ Lin 2026؛ Laureti 2025؛ Prott 2025؛ Nuytens 2024.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation line"
+          },
+          {
+            "id": "u146",
+            "claim_quote": "گیج‌های افقی؛ راه دیگری برای کاهش خطای استیچینگ",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u147",
+            "claim_quote": "گیج‌های افقی به‌جای یک اسکن بادی بلند و عمودی، سطوح افقی و قابل دسترس‌تری در اختیار اسکنر می‌گذارند و فضای بین ایمپلنت‌ها را هم پر می‌کنند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Splints, scan aids and horizontal gauges are all versions of this idea (Azevedo 2025).",
+            "source_ref": null,
+            "note": "The 'more accessible horizontal surfaces' half is not addressed by the source (silent half)."
+          },
+          {
+            "id": "u148",
+            "claim_quote": "این گیج‌ها دو نوع دارند: در نوع کالیبره، مانند Nexus IOS، هر قطعه بعد از ساخت جداگانه اندازه‌گیری می‌شود و هر کیت فایل کتابخانه مخصوص خودش را دارد، اما نوع غیرکالیبره، مانند ioConnect، از یک فایل استاندارد استفاده می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Calibrated: Nexus IOS (sub-label: they overlap; scan once from each side)",
+            "source_ref": null,
+            "note": "The calibration content matches 'Calibrated gauges are each measured on a CMM after they are made, so your kit gets its own library file.'"
+          },
+          {
+            "id": "u149",
+            "claim_quote": "در مطالعات آزمایشگاهی مستقل، Nexus در بعضی ترکیب‌های اسکنر و اپراتور از اسکن بادی معمولی بهتر بود و در بقیه تفاوتی با آن نداشت (Azevedo 2025؛ Laureti 2025).",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In the two independent studies, Nexus was clearly better in 3 of 8 scanner and operator pairings in each, and no different in the rest.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u150",
+            "claim_quote": "گیج غیرکالیبره ioConnect هم در یک مطالعه آزمایشگاهی با پنج اسکنر، انحراف خطی را در همه آن‌ها کاهش داد؛ ۲۶ تا ۵۸ میکرون در برابر ۷۰ تا ۱۹۵ میکرون با اسکن بادی معمولی (Revilla-León 2026).",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "With gauges angled to the palate, every scanner got closer to the reference (Revilla-León 2026).",
+            "source_ref": null,
+            "note": "The ranges 26 to 58 and 70 to 195 µm agree with the slide 14 chart."
+          },
+          {
+            "id": "u151",
+            "claim_quote": "بنابراین تغییر طراحی اسکن بادی می‌تواند حتی بدون کالیبراسیون اختصاصی مفید باشد، اما همه طراحی‌ها رفتار یکسانی ندارند و نتیجه یک محصول را نمی‌توان به بقیه تعمیم داد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "But gauge designs don't all behave the same.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u152",
+            "claim_quote": "نکته عملی: گیج افقی در بیشتر مقایسه‌ها از اسکن بادی معمولی بهتر یا هم‌سطح آن بوده و تکنیک بیشتر از خود اسکنر اهمیت داشته است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Mostly yes, and the technique mattered more than the scanner.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u153",
+            "claim_quote": "منابع: Azevedo 2025؛ Laureti 2025؛ Revilla-León، J Prosthet Dent 2026.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation line"
+          },
+          {
+            "id": "u154",
+            "claim_quote": "فتوگرامتری داخل دهانی چقدر به سیستم‌های خارج دهانی نزدیک شده است؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u155",
+            "claim_quote": "فتوگرامتری خارج دهانی یکی از روش‌های دقیق ثبت موقعیت ایمپلنت‌ها در بازسازی‌های فول‌آرچ است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Extraoral photogrammetry | measured across studies; used as the reference in patients | 10 to 77 µm",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u156",
+            "claim_quote": "مزیت اصلی آن این است که به‌جای اتکا به Stitching فریم‌های متوالی روی بافت نرم، موقعیت مارکرهای اختصاصی را با یک سیستم تصویربرداری ثبت می‌کند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "I read slides 2, 8, 15 and 17. The source never states the mechanism or advantage of extraoral photogrammetry."
+          },
+          {
+            "id": "u157",
+            "claim_quote": "نرم‌افزار از روی جای نقطه‌های روی این مارکرها، موقعیت هر ایمپلنت را محاسبه می‌کند.",
+            "verdict": "NOT_IN_SOURCE",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "I read slides 2, 15, 16 and 18. Marker-dot computation is never described."
+          },
+          {
+            "id": "u158",
+            "claim_quote": "سیستم‌های فتوگرامتری داخل دهانی همین کار را با ستاپ اسکنر داخل دهانی و مارکرهای کالیبره انجام می‌دهند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Intraoral photogrammetry (sub-label: calibrated markers)",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u159",
+            "claim_quote": "در یک مطالعه آزمایشگاهی روی پنج سیستم، فتوگرامتری داخل دهانی حدود ۱۰ میکرون با بهترین دوربین‌های خارج دهانی فاصله داشت.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Within about 10 µm of the best extraoral cameras in the lab.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u160",
+            "claim_quote": "در بیماران هم انحراف آن، چه در فاصله و چه در زاویه، حدود نصف اسکن بادی‌های معمولی بود (Eldabe 2026).",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In patients, it deviated 30.7 µm against 59.8 µm for plain scan bodies, and 0.78 against 1.4 degrees (Eldabe 2026).",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u161",
+            "claim_quote": "نکته عملی: فتوگرامتری داخل دهانی از نظر دقت به سیستم‌های خارج دهانی نزدیک شده است و با همان ستاپ اسکنر داخل دهانی انجام می‌شود.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "In a lab study of five systems on one model, the Elite measured 27 µm, inside the extraoral range.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u162",
+            "claim_quote": "منابع: Revilla-León، J Prosthet Dent 2025 و 2026؛ Eldabe، J Prosthet Dent 2026.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation line"
+          },
+          {
+            "id": "u163",
+            "claim_quote": "تصویر مدل‌ها از Revilla-León 2025.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "figure credit"
+          },
+          {
+            "id": "u164",
+            "claim_quote": "آیا می‌توان با موبایل یا تبلت فتوگرامتری انجام داد؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u165",
+            "claim_quote": "یکی از مسیرهای تازه در این حوزه، استفاده از موبایل یا تبلت به‌جای دوربین فتوگرامتری اختصاصی است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Promising results have been shown with tablet or phone based photogammetry, cutting the equipment costs required for photogrammetry by a huge margim",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u166",
+            "claim_quote": "در این روش، اسکن بادی‌های کدگذاری‌شده روی ایمپلنت‌ها بسته می‌شوند و یک اپلیکیشن با دوربین خود دستگاه، موقعیت آن‌ها را ثبت می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "coded scan bodies on the implants",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u167",
+            "claim_quote": "در ۹ مطالعه که بیشترشان آزمایشگاهی بوده‌اند، انحراف این روش بسته به نوع مارکر، دستگاه و مرجع اندازه‌گیری، بین ۱۷ تا ۸۸ میکرون گزارش شده است؛ یعنی در بعضی مطالعات نزدیک به دوربین‌های اختصاصی و در بعضی دیگر ضعیف‌تر از آن‌ها.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Across nine studies, the apps ranged from 17 to 88 µm depending on markers, device and reference, and the T-Marker's angles beat the gauges' in all three comparisons.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u168",
+            "claim_quote": "این نتایج امیدوارکننده‌اند و این روش می‌تواند هزینه تجهیزات لازم برای فتوگرامتری را به مقدار زیادی کاهش دهد، اما بیشتر شواهد موجود هنوز آزمایشگاهی است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Promising results have been shown with tablet or phone based photogammetry, cutting the equipment costs required for photogrammetry by a huge margim",
+            "source_ref": null,
+            "note": "The 'mostly lab' half matches the slide 17 row 'nine studies, mostly lab'."
+          },
+          {
+            "id": "u169",
+            "claim_quote": "منابع: Revilla-León 2026 (سه مطالعه)؛ Santamaría-Laorden 2025؛ Omar 2026؛ Alghraisi 2026.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation line"
+          },
+          {
+            "id": "u170",
+            "claim_quote": "مقایسه روش‌های ثبت موقعیت ایمپلنت در فول‌آرچ",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u171",
+            "claim_quote": "حالا که روش‌های مختلف را بررسی کردیم، می‌توانیم نتایج را در یک جدول کنار هم قرار دهیم.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "signpost"
+          },
+          {
+            "id": "u172",
+            "claim_quote": "اعداد زیر میانگین انحراف گزارش‌شده نسبت به مرجع لابراتواری را نشان می‌دهند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Average deviation from a lab reference (lower is better)",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u173",
+            "claim_quote": "مقدار کمتر به معنی انحراف کمتر است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Average deviation from a lab reference (lower is better)",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u174",
+            "claim_quote": "روش",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table header cell"
+          },
+          {
+            "id": "u175",
+            "claim_quote": "انحراف خطی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table header cell"
+          },
+          {
+            "id": "u176",
+            "claim_quote": "انحراف زاویه‌ای",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table header cell"
+          },
+          {
+            "id": "u177",
+            "claim_quote": "نوع شواهد",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table header cell"
+          },
+          {
+            "id": "u178",
+            "claim_quote": "اسکن بادی عمودی معمولی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table row label"
+          },
+          {
+            "id": "u179",
+            "claim_quote": "۱۱۳ میکرون",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Plain vertical scan bodies | 113 µm | 0.48° | review, 100 studies",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u180",
+            "claim_quote": "۰٫۴۸ درجه",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Plain vertical scan bodies | 113 µm | 0.48° | review, 100 studies",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u181",
+            "claim_quote": "مرور ۱۰۰ مطالعه",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Plain vertical scan bodies | 113 µm | 0.48° | review, 100 studies",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u182",
+            "claim_quote": "اسپلینت یا Scan aid پرینت‌شده",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table row label"
+          },
+          {
+            "id": "u183",
+            "claim_quote": "همه در محدوده ۱۵۰ میکرون",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Splint or printed aid | all within 150 µm | | review, 12 studies",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u184",
+            "claim_quote": "مرور ۱۲ مطالعه",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Splint or printed aid | all within 150 µm | | review, 12 studies",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u185",
+            "claim_quote": "گیج افقی غیرکالیبره",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table row label"
+          },
+          {
+            "id": "u186",
+            "claim_quote": "۲۶ تا ۵۸ میکرون (ioConnect)؛ ۴۵ تا ۱۰۰ میکرون (SmartFlag)",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Horizontal gauges, not calibrated | 26 to 58 µm (ioConnect); 45 to 100 µm (SmartFlag) | 0.25 to 0.39° | lab, five scanners each",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u187",
+            "claim_quote": "۰٫۲۵ تا ۰٫۳۹ درجه",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Horizontal gauges, not calibrated | 26 to 58 µm (ioConnect); 45 to 100 µm (SmartFlag) | 0.25 to 0.39° | lab, five scanners each",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u188",
+            "claim_quote": "آزمایشگاهی، هرکدام با پنج اسکنر",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Horizontal gauges, not calibrated | 26 to 58 µm (ioConnect); 45 to 100 µm (SmartFlag) | 0.25 to 0.39° | lab, five scanners each",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u189",
+            "claim_quote": "گیج افقی کالیبره‌شده",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table row label"
+          },
+          {
+            "id": "u190",
+            "claim_quote": "۱۰ تا ۴۰ میکرون (اندازه‌گیری سطحی)",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Horizontal gauges, calibrated | 10 to 40 µm (surface measure) | | two independent lab studies",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u191",
+            "claim_quote": "دو مطالعه آزمایشگاهی مستقل",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Horizontal gauges, calibrated | 10 to 40 µm (surface measure) | | two independent lab studies",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u192",
+            "claim_quote": "فتوگرامتری داخل دهانی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table row label"
+          },
+          {
+            "id": "u193",
+            "claim_quote": "۳۶ میکرون",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Intraoral photogrammetry (highlighted, bold) | 36 µm | 0.23° | review",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u194",
+            "claim_quote": "۰٫۲۳ درجه",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Intraoral photogrammetry (highlighted, bold) | 36 µm | 0.23° | review",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u195",
+            "claim_quote": "مرور",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Intraoral photogrammetry (highlighted, bold) | 36 µm | 0.23° | review",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u196",
+            "claim_quote": "فتوگرامتری خارج دهانی",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table row label"
+          },
+          {
+            "id": "u197",
+            "claim_quote": "۲۶ میکرون",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Extraoral photogrammetry (highlighted, bold) | 26 µm | 0.21° | review",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u198",
+            "claim_quote": "۰٫۲۱ درجه",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Extraoral photogrammetry (highlighted, bold) | 26 µm | 0.21° | review",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u199",
+            "claim_quote": "مرور",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Extraoral photogrammetry (highlighted, bold) | 26 µm | 0.21° | review",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u200",
+            "claim_quote": "فتوگرامتری با موبایل یا تبلت",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "table row label"
+          },
+          {
+            "id": "u201",
+            "claim_quote": "۱۷ تا ۸۸ میکرون",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Phone or tablet photogrammetry | 17 to 88 µm | 0.07 to 0.54° | nine studies, mostly lab",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u202",
+            "claim_quote": "۰٫۰۷ تا ۰٫۵۴ درجه",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Phone or tablet photogrammetry | 17 to 88 µm | 0.07 to 0.54° | nine studies, mostly lab",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u203",
+            "claim_quote": "۹ مطالعه، بیشتر آزمایشگاهی",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Phone or tablet photogrammetry | 17 to 88 µm | 0.07 to 0.54° | nine studies, mostly lab",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u204",
+            "claim_quote": "اما این اعداد همه ماجرا نیستند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Don't hang your hat on just the published figures as acquisition is only the first part of the workflow.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u205",
+            "claim_quote": "تکنیک اپراتور یکی از مهم‌ترین عوامل است و کیفیت فرایند میلینگ هم همین اهمیت را دارد.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Operator technique is one of the most important factors as well as the quality of your milling process.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u206",
+            "claim_quote": "ثبت موقعیت ایمپلنت‌ها فقط اولین بخش از مسیر کار است؛ بنابراین نباید فقط به اعداد منتشرشده تکیه کنیم.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Don't hang your hat on just the published figures as acquisition is only the first part of the workflow.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u207",
+            "claim_quote": "منابع: Revilla-León و Prasad 2025 تا 2026 (مرورها)؛ Azevedo و Laureti 2025؛ ۹ مطالعه موبایل و تبلت.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "citation line"
+          },
+          {
+            "id": "u208",
+            "claim_quote": "در نهایت کدام سیستم را انتخاب کنیم؟",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "heading only"
+          },
+          {
+            "id": "u209",
+            "claim_quote": "پاسخ این سؤال برای همه یکسان نیست و به چند عامل بستگی دارد:",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Which is best for you is multifactorial: cost against how often you'll use it, the skill it needs, ease of use, accuracy, your lab's support, and the one nobody talks about, your lab's milling process.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u210",
+            "claim_quote": "هزینه سیستم در برابر تعداد دفعاتی که از آن استفاده می‌کنیم",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Which is best for you is multifactorial: cost against how often you'll use it, the skill it needs, ease of use, accuracy, your lab's support, and the one nobody talks about, your lab's milling process.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u211",
+            "claim_quote": "مهارتی که کار با سیستم لازم دارد",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Which is best for you is multifactorial: cost against how often you'll use it, the skill it needs, ease of use, accuracy, your lab's support, and the one nobody talks about, your lab's milling process.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u212",
+            "claim_quote": "سادگی استفاده",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Which is best for you is multifactorial: cost against how often you'll use it, the skill it needs, ease of use, accuracy, your lab's support, and the one nobody talks about, your lab's milling process.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u213",
+            "claim_quote": "دقت",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Which is best for you is multifactorial: cost against how often you'll use it, the skill it needs, ease of use, accuracy, your lab's support, and the one nobody talks about, your lab's milling process.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u214",
+            "claim_quote": "پشتیبانی لابراتوار",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Which is best for you is multifactorial: cost against how often you'll use it, the skill it needs, ease of use, accuracy, your lab's support, and the one nobody talks about, your lab's milling process.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u215",
+            "claim_quote": "فرایند میلینگ لابراتوار",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "Which is best for you is multifactorial: cost against how often you'll use it, the skill it needs, ease of use, accuracy, your lab's support, and the one nobody talks about, your lab's milling process.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u216",
+            "claim_quote": "مورد آخر معمولاً کمتر از بقیه دیده می‌شود.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "describes how the profession talks about the topic"
+          },
+          {
+            "id": "u217",
+            "claim_quote": "دقیق‌ترین دوربین هم نمی‌تواند خطای یک دستگاه میلینگ کم‌کیفیت را جبران کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "The most accurate camera can't fix a cheap mill.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u218",
+            "claim_quote": "Dr.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "name fragment"
+          },
+          {
+            "id": "u219",
+            "claim_quote": "Jonathan Ng، نویسنده مطلب اصلی، در همه فول‌آرچ‌ها موقعیت ایمپلنت‌ها را با فتوگرامتری داخل دهانی ثبت می‌کند.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "For every full arch, I capture the implant positions with intraoral photogrammetry.",
+            "source_ref": null,
+            "note": ""
+          },
+          {
+            "id": "u220",
+            "claim_quote": "دلایلی که ذکر می‌کند این است که عملکرد این روش به فتوگرامتری خارج دهانی بسیار نزدیک است، نتایجش یکدست است، تیم دستیارانش با ستاپ اسکنر داخل دهانی آشنا هستند و دسترسی به نواحی خلفی هم آسان است.",
+            "verdict": "MATCHES",
+            "change_kind": null,
+            "source_quote": "It performs very close to extraoral photogrammetry, and my results are tight and consistent and my auxillary team is familiar with a intra-oral scanner setup.",
+            "source_ref": null,
+            "note": "The posterior-access half matches 'I also can get to the posterior regions easily.'"
+          },
+          {
+            "id": "u221",
+            "claim_quote": "تصویر: اسکن بادی‌های فتوگرامتری داخل دهانی Shining 3D Elite که بعد از جراحی بسته شده‌اند.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "figure caption"
+          },
+          {
+            "id": "u222",
+            "claim_quote": "این مطلب بر اساس پست آموزشی Dr.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "byline fragment"
+          },
+          {
+            "id": "u223",
+            "claim_quote": "Jonathan Ng نوشته شده است.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "byline fragment"
+          },
+          {
+            "id": "u224",
+            "claim_quote": "نویسنده: Dr.",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "byline fragment"
+          },
+          {
+            "id": "u225",
+            "claim_quote": "Jonathan Ng",
+            "verdict": "NOT_A_CLAIM",
+            "change_kind": null,
+            "source_quote": "",
+            "source_ref": null,
+            "note": "byline fragment"
+          }
+        ],
+        "counts": {
+          "matches": 149,
+          "altered": 0,
+          "reversed": 0,
+          "not_in_source": 8,
+          "not_assessable": 0,
+          "author_view": 0,
+          "not_a_claim": 68
+        },
+        "assessable": 149,
+        "fidelity_score": 100,
+        "level": "HIGH",
+        "provisional": false,
+        "source_conclusion": "(On the slide, \"ELITE\" is underlined.)",
+        "fact_fa": "از ۱۴۹ ادعایی که منبع به آن پرداخته‌اند، ۱۴۹ مورد مطابق است، ۰ مورد تغییر یافته و ۰ مورد برعکس؛ سطح انطباق بالا؛ ۸ جمله‌ی دیگر در منبع نیامده است.",
+        "interpretation_fa": "هر ادعای قابل‌بررسی با منبع مطابق است."
+      }
     ]
   }
 }
