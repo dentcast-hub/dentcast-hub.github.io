@@ -45712,6 +45712,116 @@
           ]
         }
       ]
+    },
+    "sharehub/share-61": {
+      "faqPages": [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": "https://dentcast.org/sharehub/share-61.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "آیا اسکنری که در اسکن‌های تکراری یک مدل نتیجه تقریباً یکسانی می‌دهد، لزوماً اسکنر دقیقی است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ چنین اسکنری Precision خوبی دارد، اما ممکن است همه اسکن‌هایش از مدل اصلی فاصله داشته باشند و Trueness آن پایین باشد. Accuracy به هر دو ویژگی نیاز دارد."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا Linear trueness گزارش‌شده برای ثبت فول‌آرچ ایمپلنت، بیشترین خطای موقعیت ایمپلنت‌ها را نشان می‌دهد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ این عدد میانگین خطای فاصله‌های بین ایمپلنت‌هاست و حداکثر انحراف، خطای تجمعی کل قوس یا حد مجاز بالینی نیست. بعضی فاصله‌ها خطای بیشتری از میانگین دارند."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا حد ۰٫۴ درجه برای Angular trueness در ثبت موقعیت ایمپلنت از یک مطالعه بالینی به‌دست آمده است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ Andriessen در سال ۲۰۱۴ فرض کرد ایمپلنت می‌تواند ۵۰ میکرون به‌صورت جانبی در استخوان جابه‌جا شود و زاویه ناشی از آن را محاسبه کرد؛ پس ۰٫۴ درجه یک حد محاسباتی است، نه حد ایمنی اثبات‌شده."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا در اسکن داخل دهانی فول‌آرچ ایمپلنت، خطا در طول مسیر اسکن روی هم جمع می‌شود؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ اسکنر تصویر را تکه‌تکه می‌گیرد و اگر یک تکه اشتباه تطبیق داده شود، خطا به تکه‌های بعدی منتقل می‌شود؛ به همین دلیل بیشترین خطا در انتهای دور قوس دیده می‌شود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا اسپلینت یا Scan aid بودن یک سیستم تضمین می‌کند که ثبت فول‌آرچ دقیق‌تر از اسکن بادی عمودی معمولی باشد؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "خیر؛ بعضی Scan aidها مثل OptiSplint، Scan Ladder و Apollo SmartFlag نتیجه خوبی داشته‌اند، اما در یک مطالعه اسکن بادی عمودی معمولی از دو Scan aid با بازوهای افقی (PoLo و M6) بهتر بود."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "آیا فتوگرامتری داخل دهانی از نظر دقت به سیستم‌های فتوگرامتری خارج دهانی نزدیک شده است؟",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "بله؛ در یک مطالعه آزمایشگاهی روی پنج سیستم، فتوگرامتری داخل دهانی حدود ۱۰ میکرون با بهترین دوربین‌های خارج دهانی فاصله داشت و در بیماران انحرافش حدود نصف اسکن بادی‌های معمولی بود."
+              }
+            }
+          ]
+        }
+      ],
+      "definedTermSets": [
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTermSet",
+          "@id": "https://dentcast.org/sharehub/share-61.html#flashcards",
+          "hasDefinedTerm": [
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-61.html#flashcards-c1",
+              "name": "Precision و Trueness در اسکن دیجیتال",
+              "description": "Precision (تکرارپذیری) شباهت اسکن‌های تکراری یک مدل به یکدیگر است و Trueness (درستی) نزدیکی اسکن‌ها به مدل واقعی؛ Accuracy به هر دو نیاز دارد.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-61.html#flashcards-c2",
+              "name": "Linear trueness در ثبت فول‌آرچ ایمپلنت",
+              "description": "میانگین خطای فاصله‌های اقلیدسی بین جفت ایمپلنت‌ها روی اسکن نسبت به مستر مدل؛ در مدل شش ایمپلنتی ۱۵ فاصله دوتایی اندازه‌گیری می‌شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-61.html#flashcards-c3",
+              "name": "Angular trueness",
+              "description": "اختلاف زاویه محور ثبت‌شده ایمپلنت با محور واقعی آن؛ ۰٫۴ درجه یک حد محاسباتی (Andriessen 2014) است و بهترین سیستم‌ها حدود ۰٫۲ و اسکن بادی معمولی حدود ۰٫۵ درجه خطا دارند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-61.html#flashcards-c4",
+              "name": "خطای استیچینگ در اسکن فول‌آرچ",
+              "description": "اسکنر قوس را تکه‌تکه ثبت می‌کند و نرم‌افزار تکه‌ها را به هم می‌چسباند؛ روی ریج بی‌دندان و کام یکنواخت، تطبیق نادرست یک تکه به تکه‌های بعدی منتقل می‌شود و خطا تا انتهای قوس بیشتر می‌شود.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-61.html#flashcards-c5",
+              "name": "گیج افقی کالیبره و غیرکالیبره",
+              "description": "قطعه‌های افقی که فضای بین ایمپلنت‌ها را پر می‌کنند؛ در نوع کالیبره (مثل Nexus IOS) هر قطعه بعد از ساخت اندازه‌گیری می‌شود و فایل کتابخانه اختصاصی دارد، نوع غیرکالیبره (مثل ioConnect) از فایل استاندارد استفاده می‌کند.",
+              "source": "authored"
+            },
+            {
+              "@type": "DefinedTerm",
+              "@id": "https://dentcast.org/sharehub/share-61.html#flashcards-c6",
+              "name": "مرجع اندازه‌گیری در مطالعات دقت اسکن",
+              "description": "در آزمایشگاه CMM یا اسکنر لابراتواری با خطای چند میکرونی مرجع است؛ در مطالعات بالینی فتوگرامتری خارج دهانی مرجع است که قطعیت کمتری دارد؛ عدد سنجیده‌شده نسبت به یک اسکنر داخل دهانی دیگر را باید با احتیاط تفسیر کرد.",
+              "source": "authored"
+            }
+          ]
+        }
+      ]
     }
   }
 }
