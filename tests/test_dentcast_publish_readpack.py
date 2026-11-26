@@ -368,11 +368,12 @@ class QueuePrepTests(unittest.TestCase):
     def pack(self, paper='yes'):
         return rp.build_queue_prep(self.root, attached_paper=paper)
 
-    def test_paper_controls_module_06_part_1(self):
+    def test_paper_controls_module_06_parts_1_to_3(self):
         with_paper, m = self.pack('yes')
         without, m2 = self.pack('no')
         self.assertIn('PAPER_PART1', with_paper)
-        self.assertNotIn('PAPER_PART2', with_paper)
+        self.assertIn('PAPER_PART2', with_paper)  # catalog entry and full-text enrichment are preparation's
+        self.assertNotIn('PAPER_PART2', without)
         self.assertNotIn('PAPER_INTRO', with_paper)
         self.assertNotIn('PAPER_PART1', without)
         self.assertEqual(m['mode'], 'queue-prep')
@@ -509,3 +510,34 @@ class LiveQueuePrepTests(unittest.TestCase):
                 self.assertIn('**Opening paragraph before any list', text)
                 self.assertIn('To check a page you just built:', text)
                 self.assertEqual('#### Part 1 — File the paper' in text, paper == 'yes')
+
+    def test_live_queue_prep_cuts_like_a_publication(self):
+        """The queue pack takes the publication's intake facts and cuts 02, 08 and 10 the same way."""
+        root = SCRIPT.parents[1]
+        _, full = rp.build_queue_prep(root, attached_paper='yes')
+        text, m = rp.build_queue_prep(root, attached_paper='yes', category='notecast',
+                                      des_basket='research', isolated_call='yes', sources='one')
+        self.assertLess(m['selected_bytes_total'], full['selected_bytes_total'])
+        self.assertEqual(m['classification']['des_basket'], 'research')
+        self.assertNotIn('#### Conditional path for founder-supplied results', text)
+        self.assertNotIn('**Paper-only fast path (text-less) detail.**', text)
+        self.assertNotIn('**Insight `keywords`.**', text)
+        self.assertIn('#### Part 2b — Run the FIDELITY call', text)
+        self.assertIn("The user turn is the spec's Step 0 input block, **one block per source**", text)
+        self.assertNotIn('**The COMMENTARY track has one carve-out.**', text)
+        self.assertIn('#### Part 4 — Store the record', text)
+        com, _ = rp.build_queue_prep(root, attached_paper='no', category='metanote',
+                                     des_basket='commentary', isolated_call='yes')
+        self.assertNotIn('#### Part 2b — Run the FIDELITY call', com)
+        self.assertIn('#### Part 2 — Run the prompt file', com)
+        with self.assertRaises(rp.UnsafeSelection):
+            rp.build_queue_prep(root, attached_paper='no', category='litecast')
+
+    def test_live_research_pack_keeps_the_step0_block(self):
+        """A research page runs the SOURCE call itself: its pack carries the Step 0 input block."""
+        root = SCRIPT.parents[1]
+        text, _ = rp.build(root, category='sharehub', attached_paper='yes', challenge='no',
+                           des_basket='research', isolated_call='yes', sources='one')
+        self.assertIn("The user turn is the spec's Step 0 input block, **one block per source**", text)
+        self.assertIn('**`journal_quartile` has no source anywhere in this repo.**', text)
+        self.assertNotIn('**The COMMENTARY track has one carve-out.**', text)

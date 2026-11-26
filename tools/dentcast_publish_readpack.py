@@ -263,7 +263,8 @@ def route_spans(name, lines, *, category, attached_paper, challenge, des_basket=
             # COMMENTARY source rule and its checklist carve-out have nothing to act on;
             # neither has the re-check of a page that is already published.
             cuts += [('**COMMENTARY basket:**', '<!-- des-record-guard:v1 -->'),
-                     ('**The COMMENTARY track has one carve-out.**', '#### Part 2b — Run the FIDELITY call'),
+                     # up to the Step 0 input block, which a research call needs (one block per source)
+                     ('**The COMMENTARY track has one carve-out.**', "The user turn is the spec's Step 0 input block"),
                      ('**For a page already published**', '#### Part 4 — Store the record')]
             why.append('RESEARCH_BASKET_LOCKED_AT_Q4_8')
         if isolated_call == 'yes':
@@ -411,9 +412,11 @@ QUEUE_PREP = (
     (MODULES + '01-hard-rules.md', [('# DentCast Publishing Router', None, None)], False),
     # Phase 0 through Question 5 (its last heading) runs to the end of the module.
     (MODULES + '02-routing-intake.md', [('## Phase 0', None, None)], False),
+    # Parts 1 to 3: preparation files the PDF (Part 1), writes the catalog entry and runs the
+    # full-text enrichment (Part 2, steps 0-4 and 9) and finds the DOI and first author (Part 3,
+    # step 1); publish-queue.md step 2 names which steps publish day does instead.
     (MODULES + '06-paper-ingestion.md',
-     [('#### Part 1 — File the paper into Google Drive (correct topical subfolder)',
-       '#### Part 2 —', None)], True),
+     [('#### Part 1 — File the paper into Google Drive (correct topical subfolder)', None, None)], True),
     (MODULES + '08-des-fidelity.md', [('### 4.13. DES', None, None)], False),
     # Sections 5.0 (hashtags) and 5 (brain entry) are contiguous.
     (MODULES + '10-brain-and-pathways.md',
@@ -443,6 +446,24 @@ QUEUE_PREP = (
 )
 
 
+# The intake facts the queue settles before its pack, as in a page publication. A queue
+# item is never LiteCast or a Challenge, so module 08 is cut exactly as the normal route
+# cuts it for a non-LiteCast, non-Challenge page; modules 02 and 10 also need the category.
+QUEUE_CATEGORIES = {'sharehub': 'sharehub', 'notecast': 'notecast', 'insight': 'insight',
+                    'chairside': 'chairside', 'metanote': 'metanotes', 'metanotes': 'metanotes'}
+QUEUE_ROUTE_CUT = {'02-routing-intake.md', '08-des-fidelity.md', '10-brain-and-pathways.md'}
+
+
+def intersect(spans_a, spans_b):
+    out = []
+    for a0, a1 in spans_a:
+        for b0, b1 in spans_b:
+            lo, hi = max(a0, b0), min(a1, b1)
+            if lo < hi:
+                out.append((lo, hi))
+    return out
+
+
 def queue_prep_spans(lines, segments):
     spans = []
     for start_marker, end_marker, required_inside in segments:
@@ -462,15 +483,20 @@ def queue_prep_spans(lines, segments):
     return include(spans, len(lines))
 
 
-def build_queue_prep(root, *, attached_paper):
+def build_queue_prep(root, *, attached_paper, category='unknown', des_basket='unknown',
+                     isolated_call='unknown', sources='unknown'):
     """Assemble the queue-preparation reading list; any unsafe marker blocks all."""
     if attached_paper not in ('yes', 'no'):
         raise UnsafeSelection('QUEUE_PREP_NEEDS_LOCKED_PAPER_ANSWER')
+    if category != 'unknown' and category not in QUEUE_CATEGORIES:
+        raise UnsafeSelection('CATEGORY_UNSUPPORTED:' + str(category))
     root = Path(root).resolve(strict=True)
     manifest = {
         'schema': 'dentcast_publish_readpack_v1',
         'mode': 'queue-prep',
-        'classification': {'attached_paper': attached_paper},
+        'classification': {'attached_paper': attached_paper, 'category': category,
+                           'des_basket': des_basket, 'isolated_call': isolated_call,
+                           'sources': sources},
         'contract': 'READING_SELECTION_ONLY_NOT_SCIENTIFIC_APPROVAL',
         'not_included': [WORKFLOW + 'publish-queue.md (read first, separately)'],
         'source_paths': [],
@@ -512,6 +538,19 @@ def build_queue_prep(root, *, attached_paper):
             spans, reason = [(0, len(lines))], 'SOURCE_CHANGED_FULL_FALLBACK_REAUDIT_MAP'
         else:
             spans, reason = queue_prep_spans(lines, segments), 'QUEUE_PREP_LISTED_SECTIONS'
+            if name in QUEUE_ROUTE_CUT:
+                # The same cuts as a page publication with the same facts. Module 08 needs no
+                # category (a queue item is never LiteCast or a Challenge); 02 and 10 do.
+                if name == '08-des-fidelity.md':
+                    route_cat = QUEUE_CATEGORIES.get(category, 'sharehub')
+                else:
+                    route_cat = QUEUE_CATEGORIES.get(category, 'unknown')
+                kept, why = route_spans(name, lines, category=route_cat, attached_paper=attached_paper,
+                                        challenge='no', des_basket=des_basket,
+                                        isolated_call=isolated_call, sources=sources)
+                if why != 'FULL_REQUIRED' and not why.startswith('UNLOCKED'):
+                    spans = include(intersect(spans, kept), len(lines))
+                    reason += '+' + why
         selected_total_file = 0
         pieces.append(f'\n\n=== BEGIN SOURCE {path} SHA256 {sha256(raw)} ===\n')
         for a, b in spans:
@@ -566,7 +605,8 @@ def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--root', type=Path, default=ROOT)
     p.add_argument('--queue-prep', action='store_true',
-                   help='queue preparation reading list (publish-queue.md); needs only --attached-paper')
+                   help='queue preparation reading list (publish-queue.md); needs --attached-paper and '
+                        'takes --category, --des-basket, --isolated-call and --sources as a publication does')
     p.add_argument('--category', help='locked Phase B category; unknown means full files')
     p.add_argument('--attached-paper', choices=['yes', 'no', 'unknown'],
                    help='locked Phase B Q4.7; unknown retains complete modules')
@@ -588,8 +628,11 @@ def main(argv=None):
     if a.queue_prep:
         if a.attached_paper not in ('yes', 'no'):
             p.error('--queue-prep requires --attached-paper yes|no')
-        if a.category is not None or a.challenge is not None or a.after_intake:
-            p.error('--queue-prep does not take --category, --challenge or --after-intake')
+        if a.challenge is not None or a.after_intake:
+            p.error('--queue-prep does not take --challenge or --after-intake (a queue item is never a Challenge)')
+        if a.category is not None and a.category not in QUEUE_CATEGORIES and a.category != 'unknown':
+            p.error('--queue-prep takes only a queue category (sharehub, notecast, insight, chairside, '
+                    'metanote): any other is CATEGORY_UNSUPPORTED and goes through the normal route')
     else:
         missing = [flag for flag, value in (('--category', a.category),
                                             ('--attached-paper', a.attached_paper),
@@ -600,7 +643,9 @@ def main(argv=None):
         p.error('--output and --manifest must differ')
     try:
         if a.queue_prep:
-            pack, report = build_queue_prep(a.root, attached_paper=a.attached_paper)
+            pack, report = build_queue_prep(a.root, attached_paper=a.attached_paper,
+                                            category=a.category or 'unknown', des_basket=a.des_basket,
+                                            isolated_call=a.isolated_call, sources=a.sources)
         else:
             pack, report = build(a.root, category=a.category,
                                  attached_paper=a.attached_paper, challenge=a.challenge, des_basket=a.des_basket,

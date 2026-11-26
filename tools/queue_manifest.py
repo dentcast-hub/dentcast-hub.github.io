@@ -208,7 +208,7 @@ def V(value, origin):
 INPUTS_FILE = "07-ورودی‌ها.md"
 
 
-def draft(item):
+def draft(item, from_files=False):
     """The manifest from the frozen files. Fields are {"value","from"}; a field
     whose exact pattern is absent has value None. The legacy path (no
     12-انتشار.json) reads its decisions from 07-ورودی‌ها.md; without that file
@@ -216,7 +216,7 @@ def draft(item):
     named by `missing` (a preparation draft may not have written 07 yet)."""
     item = Path(item)
     mf = item / MANIFEST_FILE
-    if mf.exists():
+    if mf.exists() and not from_files:
         try:
             data = json.loads(mf.read_text(encoding="utf-8"))
         except ValueError as e:
@@ -303,13 +303,16 @@ def draft(item):
     cat_rel = "04-منبع/کاتالوگ.json"
     if (item / cat_rel).exists():
         # The freeze is asserted only once the item claims to be frozen. SHA256SUMS is written by
-        # queue_stamp.py, which runs AFTER 12-انتشار.json is drafted (publish-queue.md step 7), so
+        # queue_stamp.py, which runs AFTER 12-انتشار.json is drafted (publish-queue.md step 5), so
         # demanding it here refused every paper item's own draft (2026-11-06).
         sums = item / "SHA256SUMS"
         if sums.exists() and not re.search(r"\s(?:\./)?%s\s*$" % re.escape(cat_rel),
                                            sums.read_text(encoding="utf-8"), re.M):
             raise QueueRefusal("CATALOG_NOT_FROZEN", f"{cat_rel} is not in SHA256SUMS")
-        entries = json.loads((item / cat_rel).read_text(encoding="utf-8"))
+        try:
+            entries = json.loads((item / cat_rel).read_text(encoding="utf-8"))
+        except ValueError:
+            raise QueueRefusal("CATALOG_JSON", f"{cat_rel} is not JSON (an item without a paper has no such file)")
         if not isinstance(entries, list) or not all(isinstance(e, dict) for e in entries):
             raise QueueRefusal("CATALOG_SHAPE", f"{cat_rel} must be a list of catalog entries")
         d["catalog"] = V(entries, cat_rel)
@@ -1002,12 +1005,24 @@ def main():
     ap.add_argument("--supplement")
     ap.add_argument("--agent", help="the publishing agent's own lock name")
     ap.add_argument("--write", action="store_true",
-                    help="draft only: write the draft into the item as " + MANIFEST_FILE
-                         + " (schema + the {value,from} fields), overwriting what is there")
+                    help="draft only: derive the draft from the item's files again and write it as "
+                         + MANIFEST_FILE + " (schema + the {value,from} fields); a field the files do not "
+                         "carry keeps the value already in " + MANIFEST_FILE)
     a = ap.parse_args()
     try:
         info = load_item(a.item, agent=a.agent) if a.cmd == "check" else {"path": Path(a.item)}
         d = draft(info["path"])
+        if a.write and a.cmd == "draft" and (info["path"] / MANIFEST_FILE).exists():
+            # --write derives again from the item's files, so a fix in 02, 06, 07, 09 or 11 reaches
+            # 12; a field the files do not carry (MetaNote's five page fields, a hand-closed value)
+            # keeps what 12 already holds.
+            fresh = draft(info["path"], from_files=True)
+            # only a hand-written value is carried (its origin names no file of the item):
+            # a value 12 once took from a file follows that file, even to null
+            d = fresh | {k: v for k, v in d.items() if not k.startswith("_")
+                         and (k not in fresh or fresh[k].get("value") is None)
+                         and isinstance(v, dict) and v.get("value") is not None
+                         and not re.match(r"\d\d-", str(v.get("from") or ""))}
         if a.supplement:
             d = merge_supplement(info["path"], d, json.loads(Path(a.supplement).read_text(encoding="utf-8")))
     except QueueRefusal as e:
