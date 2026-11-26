@@ -57,6 +57,105 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
           "source": "founder chat 2026-11-26: \u00ab\u0633\u0648\u0627\u0644 \u0647\u0645 \u0646\u062f\u0627\u0631\u0647 \u0646\u0645\u06cc\u200c\u062e\u0648\u0627\u062f \u0628\u0631\u0627\u06cc \u0633\u0648\u0627\u0644 \u0635\u0628\u0631 \u06a9\u0646\u06cc\u00bb"
         },
         {
+          "from_step": "C.5.6",
+          "kind": "dependency_invalidation_v1",
+          "reason": "Runner Phase F (run 45792286231) failed 5.6 pathway: in no learning pathway; verify_publish has no exclusion path for non-glossary pages. Placing in ai-dentistry (founder approved everything for this publication).",
+          "superseded": {
+            "approvals": [
+              {
+                "decision": "\u0633\u06cc\u0633\u062a\u0645\u200c\u0633\u0627\u0632\u06cc \u0628\u0647\u200c\u062c\u0627\u06cc \u0628\u0631\u0646\u0627\u0645\u0647\u200c\u0631\u06cc\u0632\u06cc \u0631\u0648\u0632\u0627\u0646\u0647",
+                "evidence": [
+                  "founder-supplied, copied verbatim (Hard Rule 16)"
+                ],
+                "scope": "title",
+                "status": "confirmed"
+              },
+              {
+                "decision": "\u0686\u0637\u0648\u0631 \u0628\u0627 \u06cc\u06a9 \u0628\u0627\u0631 \u062a\u0635\u0645\u06cc\u0645 \u06af\u0631\u0641\u062a\u0646 \u0628\u0631\u0627\u06cc \u0647\u0631 \u06a9\u0627\u0631 \u062a\u06a9\u0631\u0627\u0631\u06cc\u060c \u0628\u062f\u0648\u0646 \u0628\u0631\u0646\u0627\u0645\u0647\u200c\u0631\u06cc\u0632\u06cc \u0631\u0648\u0632\u0627\u0646\u0647\u060c \u06a9\u0644\u06cc\u0646\u06cc\u06a9\u060c \u0633\u0627\u06cc\u062a\u060c \u067e\u0627\u062f\u06a9\u0633\u062a\u060c \u0648\u0631\u0632\u0634 \u0648 \u06a9\u062a\u0627\u0628 \u062e\u0648\u0627\u0646\u062f\u0646 \u06a9\u0646\u0627\u0631 \u0647\u0645 \u067e\u06cc\u0634 \u0645\u06cc\u200c\u0631\u0648\u0646\u062f.",
+                "evidence": [
+                  "agent proposal under standing acceptance (Hard Rule 14)"
+                ],
+                "scope": "caption",
+                "status": "confirmed"
+              }
+            ],
+            "delivery": [],
+            "inputs": [],
+            "steps": [
+              {
+                "evidence": [
+                  "5.6: pathway_place: all candidates ASK (ai-dentistry 62 ASK, others \u22646); personal work-systems meta piece -> not placed (conservative default), reported; plus/pathways.json unchanged. 4.12-\u0628: founder answered \u00ab\u0628\u062f\u0648\u0646 \u0633\u0624\u0627\u0644\u00bb and page in no full pathway -> 0 rows written"
+                ],
+                "id": "C.5.6",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "5.6-\u0628: no full pathway joined -> \u0628\u0627\u0646\u062f\u0644: \u0628\u062f\u0648\u0646 \u06a9\u0627\u0646\u062f\u06cc\u062f"
+                ],
+                "id": "C.5.6-b",
+                "module": "10-brain-and-pathways.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [
+                  "C.6: Pulse line, English mirror and the ten-scope lock (built by close)"
+                ],
+                "id": "C.6",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "completed"
+              },
+              {
+                "evidence": [],
+                "id": "C.8",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "C.7",
+                "module": "11-build-and-version.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "D",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "E",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "F",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              },
+              {
+                "evidence": [],
+                "id": "G",
+                "module": "12-english-notify-verify.md",
+                "reason": null,
+                "status": "pending"
+              }
+            ],
+            "validation": []
+          }
+        },
+        {
           "evidence": [
             "first paragraph of metanotes/meta-24.html"
           ],
@@ -123,8 +222,8 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
             },
             {
               "evidence": [
-                "C.5.6: 5.6: pathway_place: all candidates ASK (ai-dentistry 62 ASK, others \u22646); personal work-systems meta piece -> not placed (conservative default), reported; plus/pathways.json unchanged. 4.12-\u0628: founder answered \u00ab\u0628\u062f\u0648\u0646 \u0633\u0624\u0627\u0644\u00bb and page in no full pathway -> 0 rows written",
-                "C.5.6-b: 5.6-\u0628: no full pathway joined -> \u0628\u0627\u0646\u062f\u0644: \u0628\u062f\u0648\u0646 \u06a9\u0627\u0646\u062f\u06cc\u062f"
+                "C.5.6: 5.6 (redo): Phase F requires pathway membership for every specialist page (no exclusion path); placed in ai-dentistry after dentai/promptologist/prompt-append2-6 (end of the AI-does-the-file-work run), milestone no; pathway_place --insert; founder approved the whole publication. 4.12-\u0628: founder \u00ab\u0628\u062f\u0648\u0646 \u0633\u0624\u0627\u0644\" -> 0 rows",
+                "C.5.6-b: 5.6-\u0628: no bundle continues ai-dentistry -> \u0628\u0627\u0646\u062f\u0644: \u0628\u062f\u0648\u0646 \u06a9\u0627\u0646\u062f\u06cc\u062f (and Gate 1: metanotes/ is always NO)"
               ],
               "scope": "pathways",
               "status": "resolved"
@@ -521,7 +620,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "5.6: pathway_place: all candidates ASK (ai-dentistry 62 ASK, others \u22646); personal work-systems meta piece -> not placed (conservative default), reported; plus/pathways.json unchanged. 4.12-\u0628: founder answered \u00ab\u0628\u062f\u0648\u0646 \u0633\u0624\u0627\u0644\u00bb and page in no full pathway -> 0 rows written"
+          "5.6 (redo): Phase F requires pathway membership for every specialist page (no exclusion path); placed in ai-dentistry after dentai/promptologist/prompt-append2-6 (end of the AI-does-the-file-work run), milestone no; pathway_place --insert; founder approved the whole publication. 4.12-\u0628: founder \u00ab\u0628\u062f\u0648\u0646 \u0633\u0624\u0627\u0644\" -> 0 rows"
         ],
         "id": "C.5.6",
         "module": "10-brain-and-pathways.md",
@@ -530,7 +629,7 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       },
       {
         "evidence": [
-          "5.6-\u0628: no full pathway joined -> \u0628\u0627\u0646\u062f\u0644: \u0628\u062f\u0648\u0646 \u06a9\u0627\u0646\u062f\u06cc\u062f"
+          "5.6-\u0628: no bundle continues ai-dentistry -> \u0628\u0627\u0646\u062f\u0644: \u0628\u062f\u0648\u0646 \u06a9\u0627\u0646\u062f\u06cc\u062f (and Gate 1: metanotes/ is always NO)"
         ],
         "id": "C.5.6-b",
         "module": "10-brain-and-pathways.md",
@@ -556,11 +655,12 @@ Git facts are reconstructed from Git and are not duplicated in this handoff.
       "metanotes/index.html",
       "metanotes/meta-24.html",
       "plus/des-scores.json",
-      "plus/faq-corpus.json"
+      "plus/faq-corpus.json",
+      "plus/pathways.json"
     ]
   },
   "reconciliation": {
-    "note": "Index-only refresh after staging delivery paths: .dentcast/hashtag-batches/meta-24-system-building.json, dentcast-brain.json, dentcast-hashtag-reference.json, index.html, metanotes/en/meta-24.html, metanotes/index.html, metanotes/meta-24.html, plus/des-scores.json, plus/faq-corpus.json"
+    "note": "Index-only refresh after staging delivery paths: .dentcast/hashtag-batches/meta-24-system-building.json, dentcast-brain.json, dentcast-hashtag-reference.json, index.html, metanotes/en/meta-24.html, metanotes/index.html, metanotes/meta-24.html, plus/des-scores.json, plus/faq-corpus.json, plus/pathways.json"
   },
   "schema": "publish-handoff-v3"
 }
