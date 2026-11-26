@@ -1,0 +1,26 @@
+{
+ "S1": {
+  "markers": [
+   "[1]"
+  ],
+  "disambiguators": []
+ },
+ "S2": {
+  "markers": [
+   "[2]"
+  ],
+  "disambiguators": []
+ },
+ "S3": {
+  "markers": [
+   "[3]"
+  ],
+  "disambiguators": []
+ },
+ "S4": {
+  "markers": [
+   "[4]"
+  ],
+  "disambiguators": []
+ }
+}
