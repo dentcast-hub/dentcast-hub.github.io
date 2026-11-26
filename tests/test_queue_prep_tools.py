@@ -657,3 +657,40 @@ class ExamDraftCheckTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class StampShapeTests(unittest.TestCase):
+    """queue_stamp refuses at the freeze what publish day would otherwise crash on."""
+
+    def test_missing_des_and_bad_json_shapes_are_problems(self):
+        with tempfile.TemporaryDirectory() as d:
+            item = Path(d) / "99-metanote-x"
+            (item / "04-منبع").mkdir(parents=True)
+            (item / "04-منبع" / "کاتالوگ.json").write_text("ندارد: بی پیپر\n", encoding="utf-8")
+            (item / "08-سؤال‌های-آزمون.json").write_text("[]\n", encoding="utf-8")
+            (item / "10-فلش‌کارت-FAQ.json").write_text('{"skip": "x"}\n', encoding="utf-8")
+            problems = []
+            qs.check_des_package(item, problems)
+            qs.check_json_shapes(item, problems)
+            self.assertTrue(any(p.startswith("P3 05-DES-Fidelity/des.json: missing") for p in problems), problems)
+            self.assertTrue(any(p.startswith("P7 04-منبع/کاتالوگ.json") for p in problems), problems)
+            self.assertTrue(any(p.startswith("P7 08-") for p in problems), problems)
+            self.assertFalse(any("10-" in p for p in problems), problems)
+
+    def test_draft_write_derives_again_and_keeps_hand_fields(self):
+        with tempfile.TemporaryDirectory() as d:
+            item = Path(d) / "99-sharehub-x"
+            item.mkdir()
+            (item / "02-عنوان-کپشن.md").write_text("## عنوان\nیک\n\n## کپشن\nک\n", encoding="utf-8")
+            argv = ["queue_manifest.py", "draft", str(item), "--write"]
+            with patch.object(sys, "argv", argv), contextlib.redirect_stdout(io.StringIO()):
+                qm.main()
+            m = json.loads((item / qm.MANIFEST_FILE).read_text(encoding="utf-8"))
+            m["alt_headline_fa"] = {"value": "دستی", "from": "پذیرش ایستا #1"}
+            (item / qm.MANIFEST_FILE).write_text(json.dumps(m, ensure_ascii=False), encoding="utf-8")
+            (item / "02-عنوان-کپشن.md").write_text("## عنوان\nدو\n\n## کپشن\nک\n", encoding="utf-8")
+            with patch.object(sys, "argv", argv), contextlib.redirect_stdout(io.StringIO()):
+                qm.main()
+            m = json.loads((item / qm.MANIFEST_FILE).read_text(encoding="utf-8"))
+            self.assertEqual(m["title_fa"]["value"], "دو")
+            self.assertEqual(m["alt_headline_fa"]["value"], "دستی")
