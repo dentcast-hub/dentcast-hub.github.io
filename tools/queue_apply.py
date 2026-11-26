@@ -781,8 +781,17 @@ def build_page(cat, n, prev_n, m, date, item, lang="fa"):
         body += f'\n<h3>{head}</h3>\n<ul class="sh-refs">\n{lis}\n</ul>'
     # the template's body ends at its paper-credit block, or — when the template
     # page itself credited a «منابع» list and so carries no such block
-    # (sharehub/share-42, share-45) — at the founder's author-note
-    doc = swap_region(doc, re.escape(c["body_open"]) + r"\n", r"\n</div>\n<div class=\"author(?:-note)?\">", body, "body")
+    # (sharehub/share-42, share-45) — at the founder's author-note; a template
+    # with neither (sharehub/share-61) ends it where the dialogue and its
+    # wrapper close, just before the related section (fa) or </main> (en)
+    body_end = r"\n</div>\n<div class=\"author(?:-note)?\">"
+    if not re.search(re.escape(c["body_open"]) + r"\n.*?" + body_end, doc, re.S):
+        body_end = r"\n</div>\n</div>\n(?=\s*(?:<div class=\"dc-related-section\">|</main>))"
+        if credit["mode"] == "author-doi":
+            # the credit block sits inside the dialogue, right after the body (sharehub/share-60)
+            word = "نویسنده:" if lang == "fa" else "Author:"
+            body += f'\n<div class="author">\n{word}\n<a href="#" target="_blank" rel="noopener noreferrer">x</a></div>'
+    doc = swap_region(doc, re.escape(c["body_open"]) + r"\n", body_end, body, "body")
     # 6. credit block
     if credit["mode"] == "author-doi":
         label = credit["label_fa" if lang == "fa" else "label_en"]
