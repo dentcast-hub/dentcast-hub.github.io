@@ -263,7 +263,8 @@ def route_spans(name, lines, *, category, attached_paper, challenge, des_basket=
             # COMMENTARY source rule and its checklist carve-out have nothing to act on;
             # neither has the re-check of a page that is already published.
             cuts += [('**COMMENTARY basket:**', '<!-- des-record-guard:v1 -->'),
-                     ('**The COMMENTARY track has one carve-out.**', '#### Part 2b — Run the FIDELITY call'),
+                     # up to the Step 0 input block, which a research call needs (one block per source)
+                     ('**The COMMENTARY track has one carve-out.**', "The user turn is the spec's Step 0 input block"),
                      ('**For a page already published**', '#### Part 4 — Store the record')]
             why.append('RESEARCH_BASKET_LOCKED_AT_Q4_8')
         if isolated_call == 'yes':
@@ -463,16 +464,6 @@ def intersect(spans_a, spans_b):
     return out
 
 
-def merge_spans(spans):
-    out = []
-    for a, b in sorted(spans):
-        if out and a <= out[-1][1]:
-            out[-1] = (out[-1][0], max(out[-1][1], b))
-        else:
-            out.append((a, b))
-    return out
-
-
 def queue_prep_spans(lines, segments):
     spans = []
     for start_marker, end_marker, required_inside in segments:
@@ -558,16 +549,7 @@ def build_queue_prep(root, *, attached_paper, category='unknown', des_basket='un
                                         challenge='no', des_basket=des_basket,
                                         isolated_call=isolated_call, sources=sources)
                 if why != 'FULL_REQUIRED' and not why.startswith('UNLOCKED'):
-                    cut = intersect(spans, kept)
-                    if name == '08-des-fidelity.md' and des_basket == 'research':
-                        # The research cut of the live route also drops the Step 0 input block
-                        # (doi / source_text / text_basis / metadata, one block per source) that
-                        # sits after the COMMENTARY carve-out; preparation runs that call, so the
-                        # block stays in its pack.
-                        step0 = (boundary(lines, "The user turn is the spec's Step 0 input block"),
-                                 boundary(lines, '#### Part 2b — Run the FIDELITY call'))
-                        cut = merge_spans(cut + intersect(spans, [step0]))
-                    spans = include(cut, len(lines))
+                    spans = include(intersect(spans, kept), len(lines))
                     reason += '+' + why
         selected_total_file = 0
         pieces.append(f'\n\n=== BEGIN SOURCE {path} SHA256 {sha256(raw)} ===\n')

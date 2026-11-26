@@ -532,3 +532,12 @@ class LiveQueuePrepTests(unittest.TestCase):
         self.assertIn('#### Part 2 — Run the prompt file', com)
         with self.assertRaises(rp.UnsafeSelection):
             rp.build_queue_prep(root, attached_paper='no', category='litecast')
+
+    def test_live_research_pack_keeps_the_step0_block(self):
+        """A research page runs the SOURCE call itself: its pack carries the Step 0 input block."""
+        root = SCRIPT.parents[1]
+        text, _ = rp.build(root, category='sharehub', attached_paper='yes', challenge='no',
+                           des_basket='research', isolated_call='yes', sources='one')
+        self.assertIn("The user turn is the spec's Step 0 input block, **one block per source**", text)
+        self.assertIn('**`journal_quartile` has no source anywhere in this repo.**', text)
+        self.assertNotIn('**The COMMENTARY track has one carve-out.**', text)
