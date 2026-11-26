@@ -1,1 +1,13 @@
-{}
+{
+  "metanotes/meta-24": {
+    "content_id": "metanotes/meta-24",
+    "reason": "founder_no_pathway",
+    "approval": {
+      "status": "confirmed",
+      "decision": "ایدهٔ ۲۴ (سیستم‌سازی به‌جای برنامه‌ریزی روزانه) هیچ مسیری ندارد؛ یک ایدهٔ ساده است. از مسیر ai-dentistry بیرون بیاید.",
+      "evidence": [
+        "founder chat 2026-11-26: «ایده آخری که گذاشتیم هیچ مسیری نداره یه ایده ساده است، اینم حکم بنیانگذار بیارش بیرون»"
+      ]
+    }
+  }
+}
