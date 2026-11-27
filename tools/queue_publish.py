@@ -468,12 +468,6 @@ def run(item, agent, supplement=None):
     cid = f"{c['dir']}/{c['stem']}{n}"
     sup = ["--supplement", supplement] if supplement else []
     # 1. everything that can refuse, before anything is written
-    import queue_stamp as qs
-    below = []
-    qs.check_fidelity_gate(item, below)
-    if below:
-        raise Stop("FIDELITY_FOUNDER_DECISION_REQUIRED", "below a full Fidelity match: the founder answers each "
-                   "sentence first (module 08 «Scored once» rule 5)", problems=below)
     chk = as_json(py("tools/queue_manifest.py", "check", item, "--agent", agent, *sup))
     if chk.get("status") != "complete":
         raise Stop(chk.get("code") or "MANIFEST_INCOMPLETE", chk.get("message") or "fields missing",

@@ -46,7 +46,7 @@ class FidelityGate(unittest.TestCase):
 
 
 class QueueGate(unittest.TestCase):
-    """queue_stamp P6 / queue_publish: a queue item below a full match needs the founder's answer per unit."""
+    """queue_stamp P6: a queue item below a full match is not «آماده» without the founder's answer per unit."""
     def run_gate(self, claims, decisions=None):
         import json, tempfile
         import queue_stamp as qs
