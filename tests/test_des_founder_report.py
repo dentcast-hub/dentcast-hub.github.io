@@ -1,5 +1,5 @@
-"""founder_report in tools/des_fidelity_units.py (founder, 2026-11-27): a sentence one
-reference confirms is accepted, but nothing a pooled fold settled may stay unreported."""
+"""founder_report in tools/des_fidelity_units.py (founder, 2026-11-27): only a sentence the
+reference addresses and the page says differently (ALTERED, REVERSED) keeps a page below a full match."""
 from pathlib import Path
 import sys
 import unittest
@@ -17,12 +17,12 @@ class FounderReport(unittest.TestCase):
     def test_pooled_fold_hides_nothing(self):
         pooled = {'scope': 'POOLED', 'claims': [
             c(1, 'MATCHES', 'other sources: S2: MATCHES'),           # confirmed: silent
-            c(2, 'MATCHES', 'other sources: S3: REVERSED'),          # a reference says the opposite
-            c(3, 'NOT_ASSESSABLE'),                                   # in no reference
+            c(2, 'MATCHES', 'other sources: S3: REVERSED'),          # one reference confirms: a match
+            c(3, 'NOT_ASSESSABLE'),                                   # no reference addresses it: not reported
             c(4, 'ALTERED', kind='HEDGE_REMOVED'),
             c(5, 'REVERSED'),
             c(6, 'NOT_A_CLAIM')]}
-        self.assertEqual([r[0] for r in units.founder_report(pooled)], ['u2', 'u3', 'u4', 'u5'])
+        self.assertEqual([r[0] for r in units.founder_report(pooled)], ['u4', 'u5'])
 
     def test_per_source_list_and_nulls(self):
         self.assertEqual([r[0] for r in units.founder_report([None, {'claims': [c(7, 'ALTERED')]}])], ['u7'])

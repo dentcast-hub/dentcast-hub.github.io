@@ -55,8 +55,8 @@ invalidation rules below.
    target at C.4.5-b; Hard Rule 13). One message gathers every open fact known at that point; the
    dependent step waits, independent work continues. A rare later fact (an abstract the tool cannot
    fetch, module 08 Part 1) is asked where it arises. A page with no paper and no open fact has no M1.
-   **M3b, below a full Fidelity match**: after C.4.13 every sentence
-   `founder_report()` lists goes to the founder with the source's sentence, why it cannot match and a
+   **M3b, below a full Fidelity match**: after C.4.13 every sentence measured
+   `ALTERED`/`REVERSED` goes to the founder with the source's sentence, why it cannot match and a
    proposed rewrite (module 08, «Scored once» rule 5). The publication waits: C.6 refuses until each
    unit has his «اصلاح کن» / «خودم می‌نویسم» / «ادامه بده», recorded as `fidelity_founder_decision_v1`.
 2. **M2, exam questions** — at intake (module 02, Question 6), with M1 in one message: drafted from

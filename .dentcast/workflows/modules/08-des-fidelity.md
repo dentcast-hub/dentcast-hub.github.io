@@ -134,9 +134,9 @@ process, sub-agent, relay).
    carries the SOURCE call and the Fidelity sweep of that paper together; `ingest`
    splits the reply and refuses only another paper's answer. A page with five papers
    is five trips. On this route SOURCE and FIDELITY share one context.
-5. **Below a full match the publication waits for the founder (M3b).** Every sentence
-   `des_fidelity_units.founder_report()` lists (ALTERED, REVERSED, a pooled MATCHES another
-   source contradicts, a claim no reference supports) goes to him after Part 4, with Part 3b's
+5. **Below a full match the publication waits for the founder (M3b).** Every sentence the
+   final result measures `ALTERED` or `REVERSED` (`des_fidelity_units.founder_report()`; one
+   reference confirming a sentence makes it a match) goes to him after Part 4, with Part 3b's
    block and why it cannot be a full match. C.6 refuses until each unit has his answer, recorded
    as a `fidelity_founder_decision_v1` decision: «اصلاح کن», «خودم می‌نویسم» or «ادامه بده».
 <!-- /des-scored-once:v1 -->
@@ -730,7 +730,7 @@ right score was.
 
 **The fidelity grade exists to make the writing better, and the goal is
 «کاملاً مطابق»**. So when a validated FIDELITY result
-carries any unit `founder_report()` lists, **the publication waits** (message M3b): Part 4
+carries any `ALTERED` or `REVERSED` unit, **the publication waits** (message M3b): Part 4
 stores the result as measured, and the founder gets one block per such sentence
 («Scored once», rule 5). C.6 refuses until each is answered; an answer that changes the
 text is applied as below, before the English mirror and the brain entry are written.
@@ -754,10 +754,10 @@ For **each** `ALTERED` / `REVERSED` unit, one block, in this order:
    is copied verbatim), **«ادامه بده»** (no change — the author's right; the
    sentence stays flagged in the record and the publication goes on).
 
-Sentences no reference addresses (`NOT_IN_SOURCE`, `NOT_ASSESSABLE`) do not lower the
-grade (spec v2.8 F4) but are offered too: «ادامه بده» for the
-author's own reasoning. Never edit a sentence without its own «اصلاح کن» /
-«خودم می‌نویسم»; a «بله» to one is never a «بله» to the others.
+Sentences no reference addresses (`NOT_IN_SOURCE`, `NOT_ASSESSABLE`) are **not** offered:
+they are not faults and do not lower the grade (spec v2.8 F4). Never edit a
+sentence without its own «اصلاح کن» / «خودم می‌نویسم»; a «بله» to one is
+never a «بله» to the others.
 
 **After any accepted edit:**
 

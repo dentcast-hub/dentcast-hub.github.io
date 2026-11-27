@@ -31,7 +31,7 @@ PINNED_BLOBS = {
     '04-taxonomy-and-navigation.md': 'b6366cddd2989ef18aa542d7b9ae22b76fd9b639',
     '05-semantic-linking.md': '5069cc0e1dff5858258f875258fdf23ddaf39c40',
     '06-paper-ingestion.md': 'ce9ff376c0a10d83be94ce18fa8d1d72c999d612',
-    '08-des-fidelity.md': 'e54a4050bc174f1d339850d0e64cc09e1f0caac9',
+    '08-des-fidelity.md': 'a1d43d64419afd9d9532da628c6eb48390c88a74',
     '09-challenge.md': 'b1faa96b9e0d71dd1fd70ff2fe0075dc5ad4c2cc',
     '11-build-and-version.md': 'd2d35ca0fba390eac9a21619290c9cbf6af143ab',
     '12-english-notify-verify.md': 'b429fab3438ca187b86897d56914e6a277573e4a',
