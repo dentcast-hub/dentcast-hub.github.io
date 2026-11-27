@@ -31,6 +31,11 @@ Three modes, decided here and nowhere else:
   * several, some named inline → each unit goes to the source(s) it names, or
     to the one named last earlier in its paragraph (scope SOURCE, one call per
     source that received at least one unit).
+  * numbered citations (founder, 2026-11-27): a sentence citing «[n]» goes to the
+    n-th item of the page's reference list, matched to the record's source by DOI
+    or title, and to that source only; a number that matches no single source
+    stops the tool. Uncited sentences go to the orphan sweep. A record judged
+    before this rule (pooled, or a stored list it cannot map) keeps its assignment.
   * several, none named inline → scope POOLED: one call PER SOURCE (each
     `input-pooled-S<n>.json`, judged as SOURCE), then `--merge DIR` folds the
     answers (`out-S<n>.json`) into the one pooled object by spec F6.
@@ -421,6 +426,71 @@ def split_for(content_id, sources, fidelity=None):
     return units if fit(units) > fit(old) else old
 
 
+CITE_NUM = re.compile(r"\[\s*([0-9۰-۹٠-٩]+(?:\s*[,،–-]\s*[0-9۰-۹٠-٩]+)*)\s*\]")
+
+
+def cited_numbers(text):
+    """The reference numbers a sentence cites: «[2, 3]», «[۴–۶]» → {2, 3, 4, 5, 6}."""
+    out = set()
+    for m in CITE_NUM.finditer(text.translate(FA_DIGITS)):
+        for part in re.split(r"\s*[,،]\s*", m.group(1)):
+            ends = [int(x) for x in re.split(r"\s*[–-]\s*", part)]
+            out.update(range(ends[0], ends[-1] + 1))
+    return out
+
+
+def numbered_sources(content_id, sources):
+    """Numbered citations (founder, 2026-11-27, after sharehub/share-62): «[n]» in a
+    sentence is the n-th item of the page's own reference list (the last <ol> of the
+    article), and that item is the record's source whose DOI, or failing that whose
+    title, it carries. Returns {n: source index}; {} when the page cites no number.
+    Exact or nothing: a number with no list item, or a list item that matches no source
+    or several, stops the tool, because a guessed mapping would measure a sentence
+    against a paper it never cited."""
+    if not content_id:
+        return {}
+    path = ROOT / f"{content_id}.html"
+    if not path.exists():
+        return {}
+    doc = path.read_text(encoding="utf-8")
+    region = vp.article_region(doc)
+    nums = set()
+    for line in html.unescape(re.sub(r"<[^>]+>", " ", region)).split("\n"):
+        nums |= cited_numbers(line)
+    if not nums:
+        return {}
+    lists = re.findall(r"(?is)<ol\b[^>]*>(.*?)</ol>", doc)
+    items = re.findall(r"(?is)<li\b[^>]*>(.*?)</li>", lists[-1]) if lists else []
+    # a record judged before this rule keeps the assignment it was judged on: a pooled
+    # record stays pooled, and a stored record whose list cannot be mapped keeps markers
+    stored = stored_fidelity(content_id)
+    if isinstance(stored, dict):
+        return {}
+    legacy = bool(stored) and any(isinstance(x, dict) for x in stored)  # [null, …] = not judged yet
+    out = {}
+    for n in sorted(nums):
+        if n < 1 or n > len(items):
+            if legacy:
+                return {}
+            sys.exit(f"{content_id}: the page cites [{n}] but its reference list has {len(items)} item(s) — "
+                     f"numbered citations must point at the list")
+        li = html.unescape(items[n - 1]).lower()
+        hit = [i for i, s in enumerate(sources)
+               if ((s.get("citation") or {}).get("doi") or "").lower() and
+               ((s.get("citation") or {}).get("doi") or "").lower() in li]
+        if not hit:
+            hit = [i for i, s in enumerate(sources)
+                   if len(((s.get("citation") or {}).get("title") or "").rstrip(".")) > 12 and
+                   ((s.get("citation") or {}).get("title") or "").lower().rstrip(".") in re.sub(r"\s+", " ", li)]
+        if len(hit) != 1:
+            if legacy:
+                return {}
+            sys.exit(f"{content_id}: reference [{n}] matches {len(hit)} sources of the DES record — each list "
+                     f"item must carry exactly one recorded source's DOI or title")
+        out[n] = hit[0]
+    return out
+
+
 def assign(units, sources, content_id=None):
     """Spec F6 + appendix rule 10. Markers come from EVERY cited source (a book
     with no text still takes the units that name it — they are about the book,
@@ -449,7 +519,11 @@ def assign(units, sources, content_id=None):
             year = (sources[i].get("citation") or {}).get("year")
             dis[i] = set(decl.get(i, {}).get("disambiguators", [])) | ({str(year)} if year else set())
 
+        numbered = numbered_sources(content_id, sources)
+
         def hits(text):
+            if numbered and cited_numbers(text):
+                return sorted({numbered[n] for n in cited_numbers(text)})
             h = [i for i in cited if names_v35(text, marks[i])]
             if len(h) > 1:
                 keep = [i for i in h if dis[i] and names_v35(text, dis[i])]
